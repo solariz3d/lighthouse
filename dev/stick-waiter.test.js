@@ -27,7 +27,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e && e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'stick-waiter-'));
+const tmp = require('../consonance/tools/scratch.js').mkdtemp('stick-waiter-');
 let seq = 0;
 const put = (p, body) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, body || '{}'); };
 const volume = () => { const v = path.join(tmp, `vol${++seq}`); fs.mkdirSync(v, { recursive: true }); return v; };

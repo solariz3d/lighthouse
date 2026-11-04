@@ -1,0 +1,543 @@
+{
+ "W006": {
+  "turnStart": "2026-09-16T14:53:37.000Z",
+  "instructions": {
+   "line": 25968,
+   "ts": "2026-09-16T14:53:37.938Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Users\\nname\\.claude\\CLAUDE.md",
+     "len": 7548
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 141520
+    }
+   ],
+   "ageMin": 0
+  },
+  "systemPrompt": {
+   "line": 25027,
+   "ts": "2026-09-16T13:00:36.587Z",
+   "chars": 12767,
+   "toolsChars": 113897,
+   "ageMin": 113
+  }
+ },
+ "W010": {
+  "turnStart": "2026-09-18T07:37:41.000Z",
+  "instructions": {
+   "line": 26953,
+   "ts": "2026-09-16T19:12:57.490Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 146498
+    },
+    {
+     "p": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\memory\\MEMORY.md",
+     "len": 971
+    }
+   ],
+   "ageMin": 2185
+  },
+  "systemPrompt": {
+   "line": 25027,
+   "ts": "2026-09-16T13:00:36.587Z",
+   "chars": 12767,
+   "toolsChars": 113897,
+   "ageMin": 2557
+  }
+ },
+ "W018": {
+  "turnStart": "2026-09-23T06:59:21.000Z",
+  "instructions": {
+   "line": 45296,
+   "ts": "2026-09-23T06:59:21.436Z",
+   "reason": "account_change",
+   "files": [
+    {
+     "p": "C:\\Users\\zackn\\.claude\\CLAUDE.md",
+     "len": 7454
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140027
+    },
+    {
+     "p": "C:\\Users\\zackn\\.claude\\projects\\C--Consonance-instances-librarian\\memory\\MEMORY.md",
+     "len": 1931
+    }
+   ],
+   "ageMin": 0
+  },
+  "systemPrompt": {
+   "line": 44041,
+   "ts": "2026-09-22T23:55:58.323Z",
+   "chars": 7073,
+   "toolsChars": 134573,
+   "ageMin": 423
+  }
+ },
+ "W019": {
+  "turnStart": "2026-09-23T07:33:35.000Z",
+  "instructions": {
+   "line": 45404,
+   "ts": "2026-09-23T07:07:40.087Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140050
+    }
+   ],
+   "ageMin": 26
+  },
+  "systemPrompt": {
+   "line": 44041,
+   "ts": "2026-09-22T23:55:58.323Z",
+   "chars": 7073,
+   "toolsChars": 134573,
+   "ageMin": 458
+  }
+ },
+ "W020": {
+  "turnStart": "2026-09-23T09:20:23.000Z",
+  "instructions": {
+   "line": 45404,
+   "ts": "2026-09-23T07:07:40.087Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140050
+    }
+   ],
+   "ageMin": 133
+  },
+  "systemPrompt": {
+   "line": 44041,
+   "ts": "2026-09-22T23:55:58.323Z",
+   "chars": 7073,
+   "toolsChars": 134573,
+   "ageMin": 564
+  }
+ },
+ "W021": {
+  "turnStart": "2026-09-23T09:19:12.000Z",
+  "instructions": {
+   "line": 45404,
+   "ts": "2026-09-23T07:07:40.087Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140050
+    }
+   ],
+   "ageMin": 132
+  },
+  "systemPrompt": {
+   "line": 44041,
+   "ts": "2026-09-22T23:55:58.323Z",
+   "chars": 7073,
+   "toolsChars": 134573,
+   "ageMin": 563
+  }
+ },
+ "W022": {
+  "turnStart": "2026-09-23T23:36:49.000Z",
+  "instructions": {
+   "line": 48734,
+   "ts": "2026-09-23T21:20:46.957Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Users\\nname\\.claude\\CLAUDE.md",
+     "len": 7548
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140337
+    },
+    {
+     "p": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\memory\\MEMORY.md",
+     "len": 1964
+    }
+   ],
+   "ageMin": 136
+  },
+  "systemPrompt": {
+   "line": 48313,
+   "ts": "2026-09-23T13:40:07.212Z",
+   "chars": 7046,
+   "toolsChars": 134639,
+   "ageMin": 597
+  }
+ },
+ "W032": {
+  "turnStart": "2026-09-27T18:43:43.000Z",
+  "instructions": {
+   "line": 57365,
+   "ts": "2026-09-27T14:34:20.185Z",
+   "files": [
+    {
+     "p": "C:\\Users\\nname\\.claude\\CLAUDE.md",
+     "len": 7548
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 139814
+    },
+    {
+     "p": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\memory\\MEMORY.md",
+     "len": 2271
+    }
+   ],
+   "ageMin": 249
+  },
+  "systemPrompt": {
+   "line": 57381,
+   "ts": "2026-09-27T14:34:29.939Z",
+   "chars": 7046,
+   "toolsChars": 136405,
+   "ageMin": 249
+  }
+ },
+ "W034": {
+  "turnStart": "2026-09-28T05:43:10.000Z",
+  "instructions": {
+   "line": 57365,
+   "ts": "2026-09-27T14:34:20.185Z",
+   "files": [
+    {
+     "p": "C:\\Users\\nname\\.claude\\CLAUDE.md",
+     "len": 7548
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 139814
+    },
+    {
+     "p": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\memory\\MEMORY.md",
+     "len": 2271
+    }
+   ],
+   "ageMin": 909
+  },
+  "systemPrompt": {
+   "line": 57381,
+   "ts": "2026-09-27T14:34:29.939Z",
+   "chars": 7046,
+   "toolsChars": 136405,
+   "ageMin": 909
+  }
+ },
+ "W084": {
+  "turnStart": "2026-09-11T08:12:35.000Z",
+  "instructions": {
+   "line": 13078,
+   "ts": "2026-09-11T08:06:31.851Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Users\\nname\\.claude\\CLAUDE.md",
+     "len": 7548
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140103
+    }
+   ],
+   "ageMin": 6
+  },
+  "systemPrompt": {
+   "line": 11796,
+   "ts": "2026-09-09T08:57:30.435Z",
+   "chars": 12879,
+   "toolsChars": 138062,
+   "ageMin": 2835
+  }
+ },
+ "W088": {
+  "turnStart": "2026-09-11T08:20:20.000Z",
+  "instructions": {
+   "line": 13078,
+   "ts": "2026-09-11T08:06:31.851Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Users\\nname\\.claude\\CLAUDE.md",
+     "len": 7548
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140103
+    }
+   ],
+   "ageMin": 14
+  },
+  "systemPrompt": {
+   "line": 11796,
+   "ts": "2026-09-09T08:57:30.435Z",
+   "chars": 12879,
+   "toolsChars": 138062,
+   "ageMin": 2843
+  }
+ },
+ "W092": {
+  "turnStart": "2026-09-14T10:45:48.000Z",
+  "instructions": {
+   "line": 14595,
+   "ts": "2026-09-14T06:57:01.307Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Users\\zackn\\.claude\\CLAUDE.md",
+     "len": 7454
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140299
+    }
+   ],
+   "ageMin": 229
+  },
+  "systemPrompt": {
+   "line": 13364,
+   "ts": "2026-09-11T08:24:24.692Z",
+   "chars": 12879,
+   "toolsChars": 153761,
+   "ageMin": 4461
+  }
+ },
+ "W100": {
+  "turnStart": "2026-09-01T10:38:15.000Z",
+  "instructions": {
+   "line": 43919,
+   "ts": "2026-09-01T09:48:54.182Z",
+   "files": [
+    {
+     "p": "C:\\Users\\zackn\\.claude\\CLAUDE.md",
+     "len": 7454
+    },
+    {
+     "p": "C:\\Consonance\\instances\\main\\CLAUDE.md",
+     "len": 90728
+    },
+    {
+     "p": "C:\\Users\\zackn\\.claude\\projects\\C--Consonance-instances-main\\memory\\MEMORY.md",
+     "len": 406
+    }
+   ],
+   "ageMin": 49
+  },
+  "systemPrompt": {
+   "line": 43935,
+   "ts": "2026-09-01T09:49:21.598Z",
+   "chars": 10076,
+   "toolsChars": 48618,
+   "ageMin": 49
+  }
+ },
+ "W101": {
+  "turnStart": "2026-10-10T15:41:38.000Z",
+  "instructions": {
+   "line": 89156,
+   "ts": "2026-10-10T15:12:14.373Z",
+   "files": [
+    {
+     "p": "C:\\Users\\nname\\.claude\\CLAUDE.md",
+     "len": 8848
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 139954
+    },
+    {
+     "p": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\memory\\MEMORY.md",
+     "len": 3870
+    }
+   ],
+   "ageMin": 29
+  },
+  "systemPrompt": {
+   "line": 89170,
+   "ts": "2026-10-10T15:12:21.788Z",
+   "chars": 7493,
+   "toolsChars": 139207,
+   "ageMin": 29
+  }
+ },
+ "W079": {
+  "turnStart": "2026-09-09T12:25:12.000Z",
+  "instructions": {
+   "line": 12293,
+   "ts": "2026-09-09T11:19:32.992Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140402
+    }
+   ],
+   "ageMin": 66
+  },
+  "systemPrompt": {
+   "line": 11796,
+   "ts": "2026-09-09T08:57:30.435Z",
+   "chars": 12879,
+   "toolsChars": 138062,
+   "ageMin": 208
+  }
+ },
+ "W080": {
+  "turnStart": "2026-09-09T12:17:15.000Z",
+  "instructions": {
+   "line": 12293,
+   "ts": "2026-09-09T11:19:32.992Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140402
+    }
+   ],
+   "ageMin": 58
+  },
+  "systemPrompt": {
+   "line": 11796,
+   "ts": "2026-09-09T08:57:30.435Z",
+   "chars": 12879,
+   "toolsChars": 138062,
+   "ageMin": 200
+  }
+ },
+ "W044": {
+  "turnStart": "2026-09-01T08:50:13.000Z",
+  "instructions": null,
+  "systemPrompt": null
+ },
+ "W049": {
+  "turnStart": "2026-09-01T10:13:14.000Z",
+  "instructions": {
+   "line": 43919,
+   "ts": "2026-09-01T09:48:54.182Z",
+   "files": [
+    {
+     "p": "C:\\Users\\zackn\\.claude\\CLAUDE.md",
+     "len": 7454
+    },
+    {
+     "p": "C:\\Consonance\\instances\\main\\CLAUDE.md",
+     "len": 90728
+    },
+    {
+     "p": "C:\\Users\\zackn\\.claude\\projects\\C--Consonance-instances-main\\memory\\MEMORY.md",
+     "len": 406
+    }
+   ],
+   "ageMin": 24
+  },
+  "systemPrompt": {
+   "line": 43935,
+   "ts": "2026-09-01T09:49:21.598Z",
+   "chars": 10076,
+   "toolsChars": 48618,
+   "ageMin": 24
+  }
+ },
+ "W053": {
+  "turnStart": "2026-09-01T13:45:39.000Z",
+  "instructions": {
+   "line": 22,
+   "ts": "2026-09-01T13:36:20.851Z",
+   "files": [
+    {
+     "p": "C:\\Users\\zackn\\.claude\\CLAUDE.md",
+     "len": 7454
+    },
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 128043
+    }
+   ],
+   "ageMin": 9
+  },
+  "systemPrompt": {
+   "line": 33,
+   "ts": "2026-09-01T13:36:32.116Z",
+   "chars": 11067,
+   "toolsChars": 48619,
+   "ageMin": 9
+  }
+ },
+ "W054": {
+  "turnStart": "2026-09-02T07:58:24.000Z",
+  "instructions": {
+   "line": 260,
+   "ts": "2026-09-02T07:08:46.802Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 139768
+    }
+   ],
+   "ageMin": 50
+  },
+  "systemPrompt": {
+   "line": 272,
+   "ts": "2026-09-02T07:09:17.176Z",
+   "chars": 11067,
+   "toolsChars": 50821,
+   "ageMin": 49
+  }
+ },
+ "W056": {
+  "turnStart": "2026-09-02T11:32:36.000Z",
+  "instructions": {
+   "line": 749,
+   "ts": "2026-09-02T08:39:22.756Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140268
+    }
+   ],
+   "ageMin": 173
+  },
+  "systemPrompt": {
+   "line": 761,
+   "ts": "2026-09-02T08:39:38.820Z",
+   "chars": 11067,
+   "toolsChars": 50496,
+   "ageMin": 173
+  }
+ },
+ "W058": {
+  "turnStart": "2026-09-02T10:04:05.000Z",
+  "instructions": {
+   "line": 749,
+   "ts": "2026-09-02T08:39:22.756Z",
+   "reason": "session_start",
+   "files": [
+    {
+     "p": "C:\\Consonance\\instances\\librarian\\CLAUDE.md",
+     "len": 140268
+    }
+   ],
+   "ageMin": 85
+  },
+  "systemPrompt": {
+   "line": 761,
+   "ts": "2026-09-02T08:39:38.820Z",
+   "chars": 11067,
+   "toolsChars": 50496,
+   "ageMin": 84
+  }
+ }
+}

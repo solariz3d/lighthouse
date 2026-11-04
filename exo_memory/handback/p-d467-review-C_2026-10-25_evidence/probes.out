@@ -1,0 +1,30 @@
+## why.js e467 test10.t180track 3000 80 3e-4
+[0,22] REFUSED BAD_CUP BAD_CUP: piece 0 (p1): the cup must stay within 0 to 150°, but a control point is -1.9955535123585875 to 1.5217669370859528° (the walls of a 150°+ bowl touch)
+[22] converged [33mtrue[39m closed in 2 step(s): 0.050 mm, tangent 1.5e-8 rad 638 ms
+[0] REFUSED BAD_CUP BAD_CUP: the cup must be a number of degrees from 0, got -1.111186300305808e-15
+[4] REFUSED CLOSE_WINDOW CLOSE_WINDOW: close: can't close using only 1,000 m (p5): the closing equations cannot be met by moving only these pieces. Widen the window or reshape the end
+[4,22] converged [33mtrue[39m closed in 2 step(s): 0.488 mm, tangent 1.0e-7 rad 711 ms
+## why.js e467 test10-smoothed.t180track 3000 80 3e-4
+[0,22] converged [33mtrue[39m closed in 2 step(s): 0.792 mm, tangent 1.1e-7 rad 933 ms
+[22] converged [33mtrue[39m closed in 2 step(s): 0.050 mm, tangent 1.5e-8 rad 593 ms
+[0] converged [33mtrue[39m closed in 5 step(s): 0.081 mm, tangent 2.1e-8 rad 1982 ms
+[4] REFUSED CLOSE_WINDOW CLOSE_WINDOW: close: can't close using only 1,000 m (p5): the closing equations cannot be met by moving only these pieces. Widen the window or reshape the end
+[4,22] converged [33mtrue[39m closed in 2 step(s): 0.488 mm, tangent 1.0e-7 rad 890 ms
+## joint.js e467
+s0 381: window [1] | kept 1.0000 | the lap is closed again: to keep your bend, the start of the lap moved
+   p2 kh[0..2] base 6.000e-9 1.200e-8 5.780e-3 | dragged 6.000e-9 1.200e-8 5.780e-3 | closed 4.901e-4 4.711e-4 5.780e-3
+s0 385: window [1] | kept 1.0000 | the lap is closed again: to keep your bend, the start of the lap moved
+   p2 kh[0..2] base 6.000e-9 1.200e-8 5.780e-3 | dragged 6.000e-9 1.200e-8 5.780e-3 | closed 4.987e-4 4.788e-4 5.780e-3
+s0 390: window [1] | kept 1.0000 | the lap is closed again: to keep your bend, the start of the lap moved
+   p2 kh[0..2] base 6.000e-9 1.200e-8 5.780e-3 | dragged 6.000e-9 1.200e-8 5.780e-3 | closed 5.771e-4 5.532e-4 5.780e-3
+s0 400: window [1] | kept 1.0000 | the lap is closed again: to keep your bend, the start of the lap moved
+   p2 kh[0..2] base 6.000e-9 1.200e-8 5.780e-3 | dragged 6.000e-9 1.200e-8 5.780e-3 | closed 5.885e-4 5.584e-4 5.780e-3
+s0 450: window [1] | kept 1.0000 | the lap is closed again: to keep your bend, the start of the lap moved
+   p2 kh[0..2] base 6.000e-9 1.200e-8 5.780e-3 | dragged 6.000e-9 1.200e-8 5.780e-3 | closed 8.841e-4 8.352e-4 5.780e-3
+## climb.js
+t180-wt-e467 climb 0.0001: the lap is closed again: closing it took back 39% of your climb (closed in 2 step(s): 0.023 mm, tangent 1.5e-8 rad)
+  drag peak Δkv p2 0.00556 °/m | close peak Δkv p1 0.00000 p6 0.00002 p2 -0.00189
+  export: ok, [33m0[39m ambers
+old climb 0.0001: the lap is closed again: closing it took back 39% of your climb (closed in 2 step(s): 0.023 mm, tangent 1.5e-8 rad)
+  drag peak Δkv p2 0.00556 °/m | close peak Δkv p1 0.00000 p6 0.00002 p2 -0.00189
+  export: ok, [33m0[39m ambers

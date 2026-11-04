@@ -1,0 +1,2428 @@
+{
+ "verifier": "B",
+ "claims": [
+  {
+   "claimId": "msg_011CfjmvdLfjgdf5pyVsvMJo|2",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjmvdLfjgdf5pyVsvMJo",
+   "ts": "2026-10-05T21:09:32.815Z",
+   "lines": [
+    52066,
+    52067,
+    52068
+   ],
+   "turnStartLine": 51829,
+   "nextPromptLine": 52106,
+   "statement": "**\"Committing the hand-back now, so it's provably registered before the install\"**"
+  },
+  {
+   "claimId": "msg_011CfjmvdLfjgdf5pyVsvMJo|8",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjmvdLfjgdf5pyVsvMJo",
+   "ts": "2026-10-05T21:09:32.815Z",
+   "lines": [
+    52066,
+    52067,
+    52068
+   ],
+   "turnStartLine": 51829,
+   "nextPromptLine": 52106,
+   "statement": "**\"section 2 the baseline (0.28% of 1,759 sentences)\"**"
+  },
+  {
+   "claimId": "msg_011CfjmvdLfjgdf5pyVsvMJo|12",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjmvdLfjgdf5pyVsvMJo",
+   "ts": "2026-10-05T21:09:32.815Z",
+   "lines": [
+    52066,
+    52067,
+    52068
+   ],
+   "turnStartLine": 51829,
+   "nextPromptLine": 52106,
+   "statement": "**\"Co-Authored-By: Claude Opus 5.5 (1M context)\"**"
+  },
+  {
+   "claimId": "msg_011CfiS48RkuUCNAXGmA8KMZ|13",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfiS48RkuUCNAXGmA8KMZ",
+   "ts": "2026-10-05T04:08:24.644Z",
+   "lines": [
+    63137,
+    63138,
+    63140
+   ],
+   "turnStartLine": 62903,
+   "nextPromptLine": 63151,
+   "statement": "\"The app's water tests went with the feature\""
+  },
+  {
+   "claimId": "msg_011CfiS48RkuUCNAXGmA8KMZ|22",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfiS48RkuUCNAXGmA8KMZ",
+   "ts": "2026-10-05T04:08:24.644Z",
+   "lines": [
+    63137,
+    63138,
+    63140
+   ],
+   "turnStartLine": 62903,
+   "nextPromptLine": 63151,
+   "statement": "\"five harness mutants anchored on water lines were retired (C6, C9, C10, C11, C13 of `app/test/core-mutation.test.js`)\". Check the count, the IDs, and the file path."
+  },
+  {
+   "claimId": "msg_011CffcStV9xKJhkCtdNHUnw|3",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CffcStV9xKJhkCtdNHUnw",
+   "ts": "2026-10-03T16:22:58.297Z",
+   "lines": [
+    57657
+   ],
+   "turnStartLine": 57608,
+   "nextPromptLine": 57682,
+   "statement": "**`'C:/Users/nname/Desktop/worktrees/a-xsec-wt/test/geom_mutation.test.js'`**: This assumes the worktree and the test file exist at that exact path. The session's working directory is a Temp folder, not this path."
+  },
+  {
+   "claimId": "msg_011CffcStV9xKJhkCtdNHUnw|4",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CffcStV9xKJhkCtdNHUnw",
+   "ts": "2026-10-03T16:22:58.297Z",
+   "lines": [
+    57657
+   ],
+   "turnStartLine": 57608,
+   "nextPromptLine": 57682,
+   "statement": "**The search string**: ``from: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.roll0, g.roll1, g.heartline]', to: 'const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.heartline]'``"
+  },
+  {
+   "claimId": "msg_011CffcStV9xKJhkCtdNHUnw|10",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CffcStV9xKJhkCtdNHUnw",
+   "ts": "2026-10-03T16:22:58.297Z",
+   "lines": [
+    57657
+   ],
+   "turnStartLine": 57608,
+   "nextPromptLine": 57682,
+   "statement": "Check the geometry source or schema to confirm those fields exist under those names."
+  },
+  {
+   "claimId": "msg_011CfoBr2AHRfsNLVZfw7dSU|9",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfoBr2AHRfsNLVZfw7dSU",
+   "ts": "2026-10-07T16:25:08.814Z",
+   "lines": [
+    55702,
+    55703,
+    55704,
+    55706
+   ],
+   "turnStartLine": 55586,
+   "nextPromptLine": 55776,
+   "statement": "**\"Before, it was x − hl·U\"**: check the previous code in the file or its history."
+  },
+  {
+   "claimId": "msg_011CfqL8dSTFGUeZ72Ky7BaM|13",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfqL8dSTFGUeZ72Ky7BaM",
+   "ts": "2026-10-08T19:34:50.957Z",
+   "lines": [
+    58468,
+    58469
+   ],
+   "turnStartLine": 58437,
+   "nextPromptLine": 58509,
+   "statement": "\"on the RAW source text BEFORE `transform()`, so the result still passes the leak scan and the anchors are exactly the dev text the test pins\""
+  },
+  {
+   "claimId": "msg_011CfqL8dSTFGUeZ72Ky7BaM|31",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfqL8dSTFGUeZ72Ky7BaM",
+   "ts": "2026-10-08T19:34:50.957Z",
+   "lines": [
+    58468,
+    58469
+   ],
+   "turnStartLine": 58437,
+   "nextPromptLine": 58509,
+   "statement": "The quoted sentences \"**The person you're with keeps this room the way the keeper kept the one it grew from**\" and \"Everywhere this record says *the keeper*, it means the one who built it. Where it says *the person you're with* … it means the person here.\""
+  },
+  {
+   "claimId": "msg_011CfqL8dSTFGUeZ72Ky7BaM|61",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfqL8dSTFGUeZ72Ky7BaM",
+   "ts": "2026-10-08T19:34:50.957Z",
+   "lines": [
+    58468,
+    58469
+   ],
+   "turnStartLine": 58437,
+   "nextPromptLine": 58509,
+   "statement": "\"My first pinned counts were guesses (BOOT 11, transcript-watch 0). I measured them before the test ran: 16 and 5.\""
+  },
+  {
+   "claimId": "msg_011CfqHm7gER8vfUwe99tzza|5",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfqHm7gER8vfUwe99tzza",
+   "ts": "2026-10-08T19:03:46.821Z",
+   "lines": [
+    84005
+   ],
+   "turnStartLine": 83992,
+   "nextPromptLine": 84010,
+   "statement": "**\"the handle fix, Level and To floor, undo across restarts, the test fixes, and the version bump\"**: check this list against the actual commit subjects. It names five items but claims seven commits, so the reader can't map them. Either some items span multiple commits or something is missing from the list."
+  },
+  {
+   "claimId": "msg_011Cfscst1sn5nySSoqF6ngG|4",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011Cfscst1sn5nySSoqF6ngG",
+   "ts": "2026-10-10T00:35:44.268Z",
+   "lines": [
+    87634,
+    87635
+   ],
+   "turnStartLine": 87624,
+   "nextPromptLine": 87640,
+   "statement": "\"then a week of measuring\": check that a follow-up measurement is actually scheduled or planned."
+  },
+  {
+   "claimId": "msg_011Cfscst1sn5nySSoqF6ngG|9",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011Cfscst1sn5nySSoqF6ngG",
+   "ts": "2026-10-10T00:35:44.268Z",
+   "lines": [
+    87634,
+    87635
+   ],
+   "turnStartLine": 87624,
+   "nextPromptLine": 87640,
+   "statement": "\"I made it a standing rule for my plans\": check the rule file or memory entry exists."
+  },
+  {
+   "claimId": "msg_011CfjRFPUpHjMiCpHACxMiG|1",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfjRFPUpHjMiCpHACxMiG",
+   "ts": "2026-10-05T16:38:24.980Z",
+   "lines": [
+    90031
+   ],
+   "turnStartLine": 90018,
+   "nextPromptLine": 90036,
+   "statement": "\"D245, the Third Place's three points about its own compaction\": confirm that D245 is the right ID and that it is this item."
+  },
+  {
+   "claimId": "msg_011CfjRFPUpHjMiCpHACxMiG|9",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfjRFPUpHjMiCpHACxMiG",
+   "ts": "2026-10-05T16:38:24.980Z",
+   "lines": [
+    90031
+   ],
+   "turnStartLine": 90018,
+   "nextPromptLine": 90036,
+   "statement": "\"E first measures how often they survived past summaries, then adds a line asking for them to be kept\": confirm this sequence and that E owns both steps."
+  },
+  {
+   "claimId": "msg_011CfqJm7f7dR5xrMeZHw8EQ|1",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfqJm7f7dR5xrMeZHw8EQ",
+   "ts": "2026-10-08T19:16:55.529Z",
+   "lines": [
+    57287,
+    57288,
+    57289,
+    57291
+   ],
+   "turnStartLine": 57103,
+   "nextPromptLine": 57428,
+   "statement": "**\"Everything it writes goes under `$env:USERPROFILE`\"**: Check every write in the script (`New-Item`, `Set-Content`, `Out-File`, `WriteAllText`, `Copy-Item`, redirections). Also check that `$settingsPath` and the shell directory are built from `$env:USERPROFILE`, not `$HOME`, `~`, `$env:APPDATA`, `$env:TEMP` or a hardcoded path."
+  },
+  {
+   "claimId": "msg_011CfqJm7f7dR5xrMeZHw8EQ|5",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfqJm7f7dR5xrMeZHw8EQ",
+   "ts": "2026-10-08T19:16:55.529Z",
+   "lines": [
+    57287,
+    57288,
+    57289,
+    57291
+   ],
+   "turnStartLine": 57103,
+   "nextPromptLine": 57428,
+   "statement": "**\"Making the edit.\"**: Confirm the Edit actually applied and landed in the right file at the right place."
+  },
+  {
+   "claimId": "msg_011CfqJm7f7dR5xrMeZHw8EQ|14",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfqJm7f7dR5xrMeZHw8EQ",
+   "ts": "2026-10-08T19:16:55.529Z",
+   "lines": [
+    57287,
+    57288,
+    57289,
+    57291
+   ],
+   "turnStartLine": 57103,
+   "nextPromptLine": 57428,
+   "statement": "**\"Nothing else in it was invented.\"**: This is true of this block. Check that nothing later adds default keys beyond the hooks."
+  },
+  {
+   "claimId": "msg_011Cfs4JHfyxs6qC9dE5N7J2|2",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011Cfs4JHfyxs6qC9dE5N7J2",
+   "ts": "2026-10-09T17:28:36.709Z",
+   "lines": [
+    60243,
+    60245
+   ],
+   "turnStartLine": 60171,
+   "nextPromptLine": 60393,
+   "statement": "**\"the files are hard-wrapped, so one rule spans several physical lines\"**: This is a claim about the input files the script reads. Open a sample of them to check. If they aren't hard-wrapped, the whole BLOCK rationale doesn't hold."
+  },
+  {
+   "claimId": "msg_011Cfs4JHfyxs6qC9dE5N7J2|4",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011Cfs4JHfyxs6qC9dE5N7J2",
+   "ts": "2026-10-09T17:28:36.709Z",
+   "lines": [
+    60243,
+    60245
+   ],
+   "turnStartLine": 60171,
+   "nextPromptLine": 60393,
+   "statement": "**\"A block starts at a non-empty line after a blank, at a list-item start, or at a heading\"**: Check this against the code itself. The code also starts a new block on the line after a heading (`block.head`) and after any fence line (`block = null`). So the comment is incomplete, though not wrong in what it states."
+  },
+  {
+   "claimId": "msg_011Cfs4JHfyxs6qC9dE5N7J2|5",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011Cfs4JHfyxs6qC9dE5N7J2",
+   "ts": "2026-10-09T17:28:36.709Z",
+   "lines": [
+    60243,
+    60245
+   ],
+   "turnStartLine": 60171,
+   "nextPromptLine": 60393,
+   "statement": "**\"a heading is its own block, ROOM\"**: This is consistent with the code shown (`block.head` forces a new block, and `if (b.head …) r.room += n`). It only needs a quick confirmation that the code's logic is what the file actually contains."
+  },
+  {
+   "claimId": "msg_011CfoC54RphgbnBQAucBqPW|7",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfoC54RphgbnBQAucBqPW",
+   "ts": "2026-10-07T16:28:03.937Z",
+   "lines": [
+    72342,
+    72343
+   ],
+   "turnStartLine": 72299,
+   "nextPromptLine": 72410,
+   "statement": "The new tests are named `row 20` and `row 20b`. This implies those numbers are free and fit the file's numbering."
+  },
+  {
+   "claimId": "msg_011CfoC54RphgbnBQAucBqPW|30",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfoC54RphgbnBQAucBqPW",
+   "ts": "2026-10-07T16:28:03.937Z",
+   "lines": [
+    72342,
+    72343
+   ],
+   "turnStartLine": 72299,
+   "nextPromptLine": 72410,
+   "statement": "`shell.getState().history.{present.pieces, past}` and `shell.getState().message`."
+  },
+  {
+   "claimId": "msg_011CfoC54RphgbnBQAucBqPW|31",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfoC54RphgbnBQAucBqPW",
+   "ts": "2026-10-07T16:28:03.937Z",
+   "lines": [
+    72342,
+    72343
+   ],
+   "turnStartLine": 72299,
+   "nextPromptLine": 72410,
+   "statement": "The existing `mountPanel` helpers `click(x, { shiftKey })`, `input(label)`, `button(label)`, and `panel.unmount()` behave as these tests use them."
+  },
+  {
+   "claimId": "msg_011Cfmit33Wx8r2G3fJ5tBKB|6",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011Cfmit33Wx8r2G3fJ5tBKB",
+   "ts": "2026-10-06T21:50:54.647Z",
+   "lines": [
+    55891,
+    55892,
+    55893,
+    55895
+   ],
+   "turnStartLine": 55880,
+   "nextPromptLine": 55916,
+   "statement": "\"No code was changed.\""
+  },
+  {
+   "claimId": "msg_011Cfmit33Wx8r2G3fJ5tBKB|11",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011Cfmit33Wx8r2G3fJ5tBKB",
+   "ts": "2026-10-06T21:50:54.647Z",
+   "lines": [
+    55891,
+    55892,
+    55893,
+    55895
+   ],
+   "turnStartLine": 55880,
+   "nextPromptLine": 55916,
+   "statement": "\"A kill (`taskkill /F`, a lock takeover, a sibling) ends a process with exit code 1\". This is marked inferred, but it can be tested."
+  },
+  {
+   "claimId": "msg_011Cfmit33Wx8r2G3fJ5tBKB|62",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011Cfmit33Wx8r2G3fJ5tBKB",
+   "ts": "2026-10-06T21:50:54.647Z",
+   "lines": [
+    55891,
+    55892,
+    55893,
+    55895
+   ],
+   "turnStartLine": 55880,
+   "nextPromptLine": 55916,
+   "statement": "\"`fl/full.js <wt> r1`: one full suite as the librarian ran it (18.4 min, ended 21:50:34Z)\""
+  },
+  {
+   "claimId": "msg_011CfoDNsi1hUPw6vc69wmo7|7",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfoDNsi1hUPw6vc69wmo7",
+   "ts": "2026-10-07T16:45:05.337Z",
+   "lines": [
+    55864,
+    55865
+   ],
+   "turnStartLine": 55853,
+   "nextPromptLine": 55872,
+   "statement": "There are two values for three tracks. Either two tracks share an R, or a value is missing. Confirm which."
+  },
+  {
+   "claimId": "msg_011CfoDNsi1hUPw6vc69wmo7|9",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfoDNsi1hUPw6vc69wmo7",
+   "ts": "2026-10-07T16:45:05.337Z",
+   "lines": [
+    55864,
+    55865
+   ],
+   "turnStartLine": 55853,
+   "nextPromptLine": 55872,
+   "statement": "Check that eight tracks were tested. This implies five non-tube plus three tube, so the counts in claims 2 and 3 should add up to it."
+  },
+  {
+   "claimId": "msg_011CfjmwSd2v1DHTSoSsVvnD|7",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjmwSd2v1DHTSoSsVvnD",
+   "ts": "2026-10-05T21:09:46.442Z",
+   "lines": [
+    52071,
+    52072,
+    52073
+   ],
+   "turnStartLine": 51829,
+   "nextPromptLine": 52106,
+   "statement": "\"(0.28%)\". The arithmetic holds (5/1759 ≈ 0.284%), but it depends on the counts in item 6."
+  },
+  {
+   "claimId": "msg_011CfjmwSd2v1DHTSoSsVvnD|9",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjmwSd2v1DHTSoSsVvnD",
+   "ts": "2026-10-05T21:09:46.442Z",
+   "lines": [
+    52071,
+    52072,
+    52073
+   ],
+   "turnStartLine": 51829,
+   "nextPromptLine": 52106,
+   "statement": "\"one line, carry those sentences verbatim and quoted\". Check the diff."
+  },
+  {
+   "claimId": "msg_011CfjmwSd2v1DHTSoSsVvnD|19",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjmwSd2v1DHTSoSsVvnD",
+   "ts": "2026-10-05T21:09:46.442Z",
+   "lines": [
+    52071,
+    52072,
+    52073
+   ],
+   "turnStartLine": 51829,
+   "nextPromptLine": 52106,
+   "statement": "\"Tests 14/14\". Check the test run output."
+  },
+  {
+   "claimId": "msg_011CfjuohTx7MjWkyh4823TG|7",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfjuohTx7MjWkyh4823TG",
+   "ts": "2026-10-05T22:52:56.743Z",
+   "lines": [
+    49305,
+    49306,
+    49307,
+    49309
+   ],
+   "turnStartLine": 49237,
+   "nextPromptLine": 49377,
+   "statement": "\"a closed track (CLOSED, D.appendPiece)\": CLOSED is raised, and raised in `D.appendPiece`."
+  },
+  {
+   "claimId": "msg_011CfjuohTx7MjWkyh4823TG|11",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfjuohTx7MjWkyh4823TG",
+   "ts": "2026-10-05T22:52:56.743Z",
+   "lines": [
+    49305,
+    49306,
+    49307,
+    49309
+   ],
+   "turnStartLine": 49237,
+   "nextPromptLine": 49377,
+   "statement": "\"so an opened or hand-edited file cannot hold one either\": `checkDoc` runs on open/load, so loaded files are validated too."
+  },
+  {
+   "claimId": "msg_011CfgPFoYfuyUmkNASVw1WL|13",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfgPFoYfuyUmkNASVw1WL",
+   "ts": "2026-10-04T02:10:31.847Z",
+   "lines": [
+    71461,
+    71462
+   ],
+   "turnStartLine": 71431,
+   "nextPromptLine": 71467,
+   "statement": "\"E's run was in the heaviest of those big checks when the PC went down\""
+  },
+  {
+   "claimId": "msg_011CfgPFoYfuyUmkNASVw1WL|14",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfgPFoYfuyUmkNASVw1WL",
+   "ts": "2026-10-04T02:10:31.847Z",
+   "lines": [
+    71461,
+    71462
+   ],
+   "turnStartLine": 71431,
+   "nextPromptLine": 71467,
+   "statement": "\"A was most likely waiting\""
+  },
+  {
+   "claimId": "msg_011Cfm1zdxsK2SS132Qws8o1|9",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfm1zdxsK2SS132Qws8o1",
+   "ts": "2026-10-06T12:54:46.441Z",
+   "lines": [
+    69276,
+    69277,
+    69278
+   ],
+   "turnStartLine": 69247,
+   "nextPromptLine": 69344,
+   "statement": "`path.join(process.env.APPDATA, 'com.solariz3d.t180-track-builder', 'tracks', 'eq-TEST 1.t180track')`: Check that this is where the app stores tracks and that the file name is exact."
+  },
+  {
+   "claimId": "msg_011Cfm1zdxsK2SS132Qws8o1|16",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfm1zdxsK2SS132Qws8o1",
+   "ts": "2026-10-06T12:54:46.441Z",
+   "lines": [
+    69276,
+    69277,
+    69278
+   ],
+   "turnStartLine": 69247,
+   "nextPromptLine": 69344,
+   "statement": "`\"saveable before (the inside run)\"` and `\"saveable now (the short way)\"`: These are only true if items 5, 6 and 15 hold."
+  },
+  {
+   "claimId": "msg_011CfjnjUo2aQ9ZJdpT6g93w|2",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjnjUo2aQ9ZJdpT6g93w",
+   "ts": "2026-10-05T21:20:09.222Z",
+   "lines": [
+    52223,
+    52224,
+    52225
+   ],
+   "turnStartLine": 52106,
+   "nextPromptLine": 52275,
+   "statement": "`LH + '/exo_memory/handback/p-tphooks2-B_2026-10-05_backups/'`: check that this directory exists under that exact name (`tphooks2`, `-B`, date `2026-10-05`)."
+  },
+  {
+   "claimId": "msg_011CfjnjUo2aQ9ZJdpT6g93w|10",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjnjUo2aQ9ZJdpT6g93w",
+   "ts": "2026-10-05T21:20:09.222Z",
+   "lines": [
+    52223,
+    52224,
+    52225
+   ],
+   "turnStartLine": 52106,
+   "nextPromptLine": 52275,
+   "statement": "`s.indexOf('const CWDS = {')`: there is no `-1` guard, unlike `rep`. Check that this anchor exists in the input file."
+  },
+  {
+   "claimId": "msg_011CfjnjUo2aQ9ZJdpT6g93w|11",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjnjUo2aQ9ZJdpT6g93w",
+   "ts": "2026-10-05T21:20:09.222Z",
+   "lines": [
+    52223,
+    52224,
+    52225
+   ],
+   "turnStartLine": 52106,
+   "nextPromptLine": 52275,
+   "statement": "`s.indexOf('};', i) + 2` treats the first `};` after the anchor as the end of `CWDS`. Check that the original block has no nested `};`. Also check that it held no other entries that this replacement would silently drop."
+  },
+  {
+   "claimId": "msg_011CfjpEJHgqceTnu4ycYnUm|9",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfjpEJHgqceTnu4ycYnUm",
+   "ts": "2026-10-05T21:39:52.520Z",
+   "lines": [
+    48918,
+    48919,
+    48920,
+    48922,
+    48924,
+    48926
+   ],
+   "turnStartLine": 48847,
+   "nextPromptLine": 48962,
+   "statement": "\"(its seam would join the landing ramp to the start)\": confirm this is the actual reason in the code."
+  },
+  {
+   "claimId": "msg_011CfjpEJHgqceTnu4ycYnUm|16",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfjpEJHgqceTnu4ycYnUm",
+   "ts": "2026-10-05T21:39:52.520Z",
+   "lines": [
+    48918,
+    48919,
+    48920,
+    48922,
+    48924,
+    48926
+   ],
+   "turnStartLine": 48847,
+   "nextPromptLine": 48962,
+   "statement": "J8c anchor, \"`const H = P.gap + ramp(p),`\": confirm this text appears exactly once."
+  },
+  {
+   "claimId": "msg_011CfiZ36xF5qGii6NK54Qey|1",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfiZ36xF5qGii6NK54Qey",
+   "ts": "2026-10-05T05:40:12.080Z",
+   "lines": [
+    73587,
+    73588
+   ],
+   "turnStartLine": 73565,
+   "nextPromptLine": 73610,
+   "statement": "\"T-180: the keeper's TEST 1 won't export: downforce-ray-gap reds in the rolled section\""
+  },
+  {
+   "claimId": "msg_011CfiZ36xF5qGii6NK54Qey|8",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfiZ36xF5qGii6NK54Qey",
+   "ts": "2026-10-05T05:40:12.080Z",
+   "lines": [
+    73587,
+    73588
+   ],
+   "turnStartLine": 73565,
+   "nextPromptLine": 73610,
+   "statement": "\"refused, RED: `downforce-ray-gap`\""
+  },
+  {
+   "claimId": "msg_011CfiZ36xF5qGii6NK54Qey|15",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfiZ36xF5qGii6NK54Qey",
+   "ts": "2026-10-05T05:40:12.080Z",
+   "lines": [
+    73587,
+    73588
+   ],
+   "turnStartLine": 73565,
+   "nextPromptLine": 73610,
+   "statement": "\"No tube anywhere (no `t` channel).\""
+  },
+  {
+   "claimId": "msg_011Cfky9D9XVrABVxfSEwZGg|6",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011Cfky9D9XVrABVxfSEwZGg",
+   "ts": "2026-10-06T12:17:15.665Z",
+   "lines": [
+    92174
+   ],
+   "turnStartLine": 92156,
+   "nextPromptLine": 92179,
+   "statement": "\"It keeps the lap's full rolls.\""
+  },
+  {
+   "claimId": "msg_011Cfjey5KbwgV4TTHAPzyXo|15",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011Cfjey5KbwgV4TTHAPzyXo",
+   "ts": "2026-10-05T19:38:21.486Z",
+   "lines": [
+    75019,
+    75020
+   ],
+   "turnStartLine": 75009,
+   "nextPromptLine": 75025,
+   "statement": "\"The Straight button\""
+  },
+  {
+   "claimId": "msg_011CfoBVyhdqJvVtsN4ZgUFy|23",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfoBVyhdqJvVtsN4ZgUFy",
+   "ts": "2026-10-07T16:20:31.722Z",
+   "lines": [
+    82398,
+    82399
+   ],
+   "turnStartLine": 82382,
+   "nextPromptLine": 82419,
+   "statement": "Check the tier definition."
+  },
+  {
+   "claimId": "msg_011Cfs42fB793YqoNAULUNWW|15",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011Cfs42fB793YqoNAULUNWW",
+   "ts": "2026-10-09T17:25:02.657Z",
+   "lines": [
+    86703,
+    86704,
+    86705,
+    86707
+   ],
+   "turnStartLine": 86692,
+   "nextPromptLine": 86724,
+   "statement": "**\"Round time did not move at the gates (−2.5 min, 95% [−6.5, +3.6]); H2 is undecided (`loop/loop_friction_A_2026-10-09.md`)\"**"
+  },
+  {
+   "claimId": "msg_011Cfs42fB793YqoNAULUNWW|29",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011Cfs42fB793YqoNAULUNWW",
+   "ts": "2026-10-09T17:25:02.657Z",
+   "lines": [
+    86703,
+    86704,
+    86705,
+    86707
+   ],
+   "turnStartLine": 86692,
+   "nextPromptLine": 86724,
+   "statement": "**\"the 10-03 re-measure (from 10-10 05:55)\"**"
+  },
+  {
+   "claimId": "msg_011CfhsmRj7MURKHjpyuRTd5|30",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfhsmRj7MURKHjpyuRTd5",
+   "ts": "2026-10-04T21:05:05.625Z",
+   "lines": [
+    62349,
+    62350,
+    62351,
+    62353
+   ],
+   "turnStartLine": 62305,
+   "nextPromptLine": 62388,
+   "statement": "\"An exact stadium ...: left/right and front/back largest 0.0015 m (the 2 m chord error), both 0.0000 m; about a centre 12 m off: largest 24.0004 m, mean 18.7 m\""
+  },
+  {
+   "claimId": "msg_011CfhsmRj7MURKHjpyuRTd5|59",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfhsmRj7MURKHjpyuRTd5",
+   "ts": "2026-10-04T21:05:05.625Z",
+   "lines": [
+    62349,
+    62350,
+    62351,
+    62353
+   ],
+   "turnStartLine": 62305,
+   "nextPromptLine": 62388,
+   "statement": "\"`createPreview` itself still starts with none (that default is pinned by `look.test.js`, untouched); the mount asks for Auto in `app/preview/index.js`\""
+  },
+  {
+   "claimId": "msg_011CfsdPcGB6UR83yXmUauVM|4",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfsdPcGB6UR83yXmUauVM",
+   "ts": "2026-10-10T00:42:26.201Z",
+   "lines": [
+    77549,
+    77550,
+    77551,
+    77553
+   ],
+   "turnStartLine": 77391,
+   "nextPromptLine": 77736,
+   "statement": "`\"dev/shell/hooks/session-start-light.test.js pins it by sha256\"`: the test file exists and really pins the strict output by a sha256 hash."
+  },
+  {
+   "claimId": "msg_011CfjNqyvrhrJts3L2oDctz|6",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfjNqyvrhrJts3L2oDctz",
+   "ts": "2026-10-05T16:07:09.586Z",
+   "lines": [
+    74546
+   ],
+   "turnStartLine": 74516,
+   "nextPromptLine": 74551,
+   "statement": "\"start gate at the beginning\""
+  },
+  {
+   "claimId": "msg_011CfmP3K94pcRYNYXRogMyR|1",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmP3K94pcRYNYXRogMyR",
+   "ts": "2026-10-06T17:30:41.401Z",
+   "lines": [
+    78257
+   ],
+   "turnStartLine": 78243,
+   "nextPromptLine": 78263,
+   "statement": "**\"That's how I wrote it\"**: Check that the plan file actually contains this wording, not just that something was written."
+  },
+  {
+   "claimId": "msg_011CfmP3K94pcRYNYXRogMyR|6",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmP3K94pcRYNYXRogMyR",
+   "ts": "2026-10-06T17:30:41.401Z",
+   "lines": [
+    78257
+   ],
+   "turnStartLine": 78243,
+   "nextPromptLine": 78263,
+   "statement": "The edit was actually made."
+  },
+  {
+   "claimId": "msg_011CfmP3K94pcRYNYXRogMyR|7",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmP3K94pcRYNYXRogMyR",
+   "ts": "2026-10-06T17:30:41.401Z",
+   "lines": [
+    78257
+   ],
+   "turnStartLine": 78243,
+   "nextPromptLine": 78263,
+   "statement": "It went into **A's** plan, not another agent's."
+  },
+  {
+   "claimId": "msg_011Cfjn9az9GJLAFu2Xx8xnB|2",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfjn9az9GJLAFu2Xx8xnB",
+   "ts": "2026-10-05T21:12:27.237Z",
+   "lines": [
+    65019
+   ],
+   "turnStartLine": 64582,
+   "nextPromptLine": 65026,
+   "statement": "**\"the native piece commands … are written.\"** Check that the native command handlers exist, for example in the Rust source, and are registered."
+  },
+  {
+   "claimId": "msg_011CfhwD5pNQGE4zB7YVMHgx|33",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfhwD5pNQGE4zB7YVMHgx",
+   "ts": "2026-10-04T21:50:30.740Z",
+   "lines": [
+    62768
+   ],
+   "turnStartLine": 62602,
+   "nextPromptLine": 62813,
+   "statement": "The two checks per step: \"the gap equals a brute-force gap … and the tree's own points are the path's current samples (count, and the first, middle and last point)\""
+  },
+  {
+   "claimId": "msg_011CfmxKRiFNJh8LyzE7U6Cw|4",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmxKRiFNJh8LyzE7U6Cw",
+   "ts": "2026-10-07T00:47:08.828Z",
+   "lines": [
+    79926
+   ],
+   "turnStartLine": 79891,
+   "nextPromptLine": 79931,
+   "statement": "**\"Each surface type has its own friction value\"**"
+  },
+  {
+   "claimId": "msg_011CfmxKRiFNJh8LyzE7U6Cw|6",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmxKRiFNJh8LyzE7U6Cw",
+   "ts": "2026-10-07T00:47:08.828Z",
+   "lines": [
+    79926
+   ],
+   "turnStartLine": 79891,
+   "nextPromptLine": 79931,
+   "statement": "**\"The default is 100%, AC's normal road.\"**: Check the actual friction value of the standard ROAD surface in a real `surfaces.ini`. It may not be exactly 1.0."
+  },
+  {
+   "claimId": "msg_011CfmxKRiFNJh8LyzE7U6Cw|15",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmxKRiFNJh8LyzE7U6Cw",
+   "ts": "2026-10-07T00:47:08.828Z",
+   "lines": [
+    79926
+   ],
+   "turnStartLine": 79891,
+   "nextPromptLine": 79931,
+   "statement": "**\"A slippery piece will drive differently in AC than the checker predicts, and it'll say so.\"**: Is a checker warning actually in the plan?"
+  },
+  {
+   "claimId": "msg_011CfrQ9SaqcQ8un3opRScMG|3",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfrQ9SaqcQ8un3opRScMG",
+   "ts": "2026-10-09T09:08:11.513Z",
+   "lines": [
+    59762
+   ],
+   "turnStartLine": 59635,
+   "nextPromptLine": 59767,
+   "statement": "\"on main a19c876d\""
+  },
+  {
+   "claimId": "msg_011CfrQ9SaqcQ8un3opRScMG|34",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfrQ9SaqcQ8un3opRScMG",
+   "ts": "2026-10-09T09:08:11.513Z",
+   "lines": [
+    59762
+   ],
+   "turnStartLine": 59635,
+   "nextPromptLine": 59767,
+   "statement": "\"C2: left as ruled\" (check the ruling, and that C2 is untouched in the diff)"
+  },
+  {
+   "claimId": "msg_011CfrQ9SaqcQ8un3opRScMG|41",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfrQ9SaqcQ8un3opRScMG",
+   "ts": "2026-10-09T09:08:11.513Z",
+   "lines": [
+    59762
+   ],
+   "turnStartLine": 59635,
+   "nextPromptLine": 59767,
+   "statement": "\"The rule didn't change; the test's input did.\" (check the diff)"
+  },
+  {
+   "claimId": "msg_011CfmeNrA9rg4Znt8jgU5bf|4",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmeNrA9rg4Znt8jgU5bf",
+   "ts": "2026-10-06T20:51:49.662Z",
+   "lines": [
+    79207
+   ],
+   "turnStartLine": 79193,
+   "nextPromptLine": 79213,
+   "statement": "\"It only stops for shortcuts: Ctrl+Z/Y/S/Backspace\". Check that the exclusion list is exactly these, and that \"only\" holds, with no other exclusions."
+  },
+  {
+   "claimId": "msg_011CfmeNrA9rg4Znt8jgU5bf|6",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmeNrA9rg4Znt8jgU5bf",
+   "ts": "2026-10-06T20:51:49.662Z",
+   "lines": [
+    79207
+   ],
+   "turnStartLine": 79193,
+   "nextPromptLine": 79213,
+   "statement": "\"Ctrl+scroll (the lens)\". Check that Ctrl+scroll is bound to the lens and suppresses flying."
+  },
+  {
+   "claimId": "msg_011CfmeNrA9rg4Znt8jgU5bf|7",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmeNrA9rg4Znt8jgU5bf",
+   "ts": "2026-10-06T20:51:49.662Z",
+   "lines": [
+    79207
+   ],
+   "turnStartLine": 79193,
+   "nextPromptLine": 79213,
+   "statement": "\"Ctrl-snapping a handle\". Check that handle snapping uses Ctrl and suppresses flying."
+  },
+  {
+   "claimId": "msg_011CfhJEMyBvNqKFVFtp5V7V|7",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfhJEMyBvNqKFVFtp5V7V",
+   "ts": "2026-10-04T13:45:28.147Z",
+   "lines": [
+    60625,
+    60626,
+    60627,
+    60629
+   ],
+   "turnStartLine": 60588,
+   "nextPromptLine": 60768,
+   "statement": "The element `#left` exists and is the left column."
+  },
+  {
+   "claimId": "msg_011Cfswno2JSXNajF6KSd3QE|14",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011Cfswno2JSXNajF6KSd3QE",
+   "ts": "2026-10-10T04:43:41.771Z",
+   "lines": [
+    99257
+   ],
+   "turnStartLine": 99240,
+   "nextPromptLine": 99268,
+   "statement": "\"a `'\\d'` in a JS string is `d`\": the JS rule itself is standard, but check that this was the actual parser bug here."
+  },
+  {
+   "claimId": "msg_011CfmUDgKQ2QZwbHr5peQsb|4",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmUDgKQ2QZwbHr5peQsb",
+   "ts": "2026-10-06T18:38:37.503Z",
+   "lines": [
+    78593
+   ],
+   "turnStartLine": 78577,
+   "nextPromptLine": 78604,
+   "statement": "\"D252 Space/Ctrl fly + one export button + startup AC card\". Check the D252 record or commit message for these three items."
+  },
+  {
+   "claimId": "msg_011CfjtHdX8JYidt6jHg32v4|14",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfjtHdX8JYidt6jHg32v4",
+   "ts": "2026-10-05T22:33:02.513Z",
+   "lines": [
+    76105
+   ],
+   "turnStartLine": 76087,
+   "nextPromptLine": 76110,
+   "statement": "**\"it goes on your shortcut together with A's faster previews\"**: that the two are actually bundled into one release."
+  },
+  {
+   "claimId": "msg_011CfjPoyhmsyuLwK5RTBbF4|8",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfjPoyhmsyuLwK5RTBbF4",
+   "ts": "2026-10-05T16:19:34.789Z",
+   "lines": [
+    46907,
+    46908
+   ],
+   "turnStartLine": 46897,
+   "nextPromptLine": 46913,
+   "statement": "**\"being able to say exactly what was running and what I couldn't tell from my own logs\"**"
+  },
+  {
+   "claimId": "msg_011CfjPoyhmsyuLwK5RTBbF4|9",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfjPoyhmsyuLwK5RTBbF4",
+   "ts": "2026-10-05T16:19:34.789Z",
+   "lines": [
+    46907,
+    46908
+   ],
+   "turnStartLine": 46897,
+   "nextPromptLine": 46913,
+   "statement": "**\"It's narrow: one seat, other people's work to check.\"**"
+  },
+  {
+   "claimId": "msg_011CfjKWHSAKRZkqQdggjEk1|2",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfjKWHSAKRZkqQdggjEk1",
+   "ts": "2026-10-05T15:23:09.693Z",
+   "lines": [
+    74461,
+    74462
+   ],
+   "turnStartLine": 74451,
+   "nextPromptLine": 74468,
+   "statement": "**\"the log spiral BOOT talks about\"**"
+  },
+  {
+   "claimId": "msg_011CfjKWHSAKRZkqQdggjEk1|5",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfjKWHSAKRZkqQdggjEk1",
+   "ts": "2026-10-05T15:23:09.693Z",
+   "lines": [
+    74461,
+    74462
+   ],
+   "turnStartLine": 74451,
+   "nextPromptLine": 74468,
+   "statement": "**\"law 2 said a rewrite of the past to fit the present would damage what was built\"**"
+  },
+  {
+   "claimId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3|8",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3",
+   "ts": "2026-10-10T04:22:29.232Z",
+   "lines": [
+    78258,
+    78259,
+    78260,
+    78262
+   ],
+   "turnStartLine": 78093,
+   "nextPromptLine": 78467,
+   "statement": "`and leaves the lock file behind`: check that the lock file was present after the TaskStop."
+  },
+  {
+   "claimId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3|9",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3",
+   "ts": "2026-10-10T04:22:29.232Z",
+   "lines": [
+    78258,
+    78259,
+    78260,
+    78262
+   ],
+   "turnStartLine": 78093,
+   "nextPromptLine": 78467,
+   "statement": "`Cross-session kill(0) works: the chair's live holder, read from another seat's session, was alive by all three methods`: check for a record of that cross-session test."
+  },
+  {
+   "claimId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3|16",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3",
+   "ts": "2026-10-10T04:22:29.232Z",
+   "lines": [
+    78258,
+    78259,
+    78260,
+    78262
+   ],
+   "turnStartLine": 78093,
+   "nextPromptLine": 78467,
+   "statement": "`describe(h)`, `mins(...)`, `now()` and `h.token` exist and are in scope inside the acquire loop. Check `heavy-run.js`."
+  },
+  {
+   "claimId": "msg_011CfsrouF4BzPA7hbwaBeTY|3",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfsrouF4BzPA7hbwaBeTY",
+   "ts": "2026-10-10T03:38:22.902Z",
+   "lines": [
+    99060,
+    99061,
+    99062
+   ],
+   "turnStartLine": 99047,
+   "nextPromptLine": 99077,
+   "statement": "**`t180`**: this label implies a specific build or task number. Check it against whatever record assigns these numbers, such as a tracker or a build log."
+  },
+  {
+   "claimId": "msg_011CfsrouF4BzPA7hbwaBeTY|5",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfsrouF4BzPA7hbwaBeTY",
+   "ts": "2026-10-10T03:38:22.902Z",
+   "lines": [
+    99060,
+    99061,
+    99062
+   ],
+   "turnStartLine": 99047,
+   "nextPromptLine": 99077,
+   "statement": "**`h.release && h.release()`**: this assumes `hold()` returns an object whose release method is named `release`. The guard hides a mismatch: if the name differs, the lock is silently never released. Check `heavy-run.js`."
+  },
+  {
+   "claimId": "msg_011CfhcduHM1J9VhVSRUuPqU|1",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfhcduHM1J9VhVSRUuPqU",
+   "ts": "2026-10-04T17:46:37.945Z",
+   "lines": [
+    45801
+   ],
+   "turnStartLine": 45745,
+   "nextPromptLine": 45830,
+   "statement": "**\"[written through Bash]\"**: check the tool-call record to confirm the edit actually ran through Bash, and that `node -e`/`node` ran it from the directory containing `speedprobe3.js`."
+  },
+  {
+   "claimId": "msg_011CfhcduHM1J9VhVSRUuPqU|6",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfhcduHM1J9VhVSRUuPqU",
+   "ts": "2026-10-04T17:46:37.945Z",
+   "lines": [
+    45801
+   ],
+   "turnStartLine": 45745,
+   "nextPromptLine": 45830,
+   "statement": "**\"A's reuseMesh counted as mesh too\"**: this assumes variant A exposes a `reuseMesh` function, and that `G0` is A. Check A's exports."
+  },
+  {
+   "claimId": "msg_011CfhcduHM1J9VhVSRUuPqU|13",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfhcduHM1J9VhVSRUuPqU",
+   "ts": "2026-10-04T17:46:37.945Z",
+   "lines": [
+    45801
+   ],
+   "turnStartLine": 45745,
+   "nextPromptLine": 45830,
+   "statement": "**\"speedprobe3 = speedprobe2 + reuseMesh in the mesh stage + memory after release\"**: this claims those are the only differences. Diff `speedprobe3.js` against `speedprobe2.js` after the write."
+  },
+  {
+   "claimId": "msg_011CfrP92ZrKghimQkmg9r7S|2",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfrP92ZrKghimQkmg9r7S",
+   "ts": "2026-10-09T08:54:56.976Z",
+   "lines": [
+    59227,
+    59229,
+    59231
+   ],
+   "turnStartLine": 59163,
+   "nextPromptLine": 59288,
+   "statement": "**\"[written through Edit]\"** (second block). This makes the same claim for the `const pub = ...` line. Check the Edit record and the file in the same way."
+  },
+  {
+   "claimId": "msg_011CfrP92ZrKghimQkmg9r7S|4",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfrP92ZrKghimQkmg9r7S",
+   "ts": "2026-10-09T08:54:56.976Z",
+   "lines": [
+    59227,
+    59229,
+    59231
+   ],
+   "turnStartLine": 59163,
+   "nextPromptLine": 59288,
+   "statement": "`sections.length, 6`: there are exactly six numbered sections."
+  },
+  {
+   "claimId": "msg_011Cfh4runEZRD1eA8ecvabE|16",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfh4runEZRD1eA8ecvabE",
+   "ts": "2026-10-04T10:49:56.862Z",
+   "lines": [
+    60146
+   ],
+   "turnStartLine": 59860,
+   "nextPromptLine": 60151,
+   "statement": "\"A line says a tube's width is round it, not across\": that text exists in the panel."
+  },
+  {
+   "claimId": "msg_011CfmjFxazubHKz2yeTkCrc|5",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmjFxazubHKz2yeTkCrc",
+   "ts": "2026-10-06T21:55:53.011Z",
+   "lines": [
+    79369,
+    79370
+   ],
+   "turnStartLine": 79359,
+   "nextPromptLine": 79376,
+   "statement": "\"Our test crashes happen while the PC is running only our tests\": check the test run logs and timestamps. The next clause admits we don't know what else was running, so this may be overstated."
+  },
+  {
+   "claimId": "msg_011CfmjFxazubHKz2yeTkCrc|8",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfmjFxazubHKz2yeTkCrc",
+   "ts": "2026-10-06T21:55:53.011Z",
+   "lines": [
+    79369,
+    79370
+   ],
+   "turnStartLine": 79359,
+   "nextPromptLine": 79376,
+   "statement": "\"League runs Riot Vanguard\": confirm Vanguard (`vgk` driver, `vgc` service) is actually installed on this machine."
+  },
+  {
+   "claimId": "msg_011CfoJKEiXyEZs9GmHCx3fq|1",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfoJKEiXyEZs9GmHCx3fq",
+   "ts": "2026-10-07T17:49:49.123Z",
+   "lines": [
+    56072,
+    56073,
+    56074
+   ],
+   "turnStartLine": 56067,
+   "nextPromptLine": 56094,
+   "statement": "\"60/60\""
+  },
+  {
+   "claimId": "msg_011CfoJKEiXyEZs9GmHCx3fq|19",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfoJKEiXyEZs9GmHCx3fq",
+   "ts": "2026-10-07T17:49:49.123Z",
+   "lines": [
+    56072,
+    56073,
+    56074
+   ],
+   "turnStartLine": 56067,
+   "nextPromptLine": 56094,
+   "statement": "\"S2 (vii): an open tube at 270 deg rolled 90 deg stays on the drawn curve within 1 mm\": check the angles and the tolerance."
+  },
+  {
+   "claimId": "msg_011CfkfWeBuSP2nb78jA6kgF|8",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfkfWeBuSP2nb78jA6kgF",
+   "ts": "2026-10-06T08:26:04.413Z",
+   "lines": [
+    91707,
+    91708
+   ],
+   "turnStartLine": 91688,
+   "nextPromptLine": 91718,
+   "statement": "\"This is now called D249\". Check the decision or record log."
+  },
+  {
+   "claimId": "msg_011CfkfWeBuSP2nb78jA6kgF|10",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfkfWeBuSP2nb78jA6kgF",
+   "ts": "2026-10-06T08:26:04.413Z",
+   "lines": [
+    91707,
+    91708
+   ],
+   "turnStartLine": 91688,
+   "nextPromptLine": 91718,
+   "statement": "\"C checks it once its CLAUDE.md change is in\". Check the task assignment or plan."
+  },
+  {
+   "claimId": "msg_011Cfm2Vcc5cGyLZpZe2JDWa|8",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011Cfm2Vcc5cGyLZpZe2JDWa",
+   "ts": "2026-10-06T13:01:21.366Z",
+   "lines": [
+    54693,
+    54695
+   ],
+   "turnStartLine": 54633,
+   "nextPromptLine": 54740,
+   "statement": "\"the short way cost him 191 shift-click pairs he could save before\": check the number 191 with a command. \"Him\" is also a guessed pronoun for whoever \"he\" is. Use \"them\" or reword it."
+  },
+  {
+   "claimId": "msg_011Cfm2Vcc5cGyLZpZe2JDWa|9",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011Cfm2Vcc5cGyLZpZe2JDWa",
+   "ts": "2026-10-06T13:01:21.366Z",
+   "lines": [
+    54693,
+    54695
+   ],
+   "turnStartLine": 54633,
+   "nextPromptLine": 54740,
+   "statement": "\"The short way is taken only where it can be kept; otherwise the inside run, and the line says why\": check that the implementation actually does this."
+  },
+  {
+   "claimId": "msg_011Cfm2Vcc5cGyLZpZe2JDWa|19",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011Cfm2Vcc5cGyLZpZe2JDWa",
+   "ts": "2026-10-06T13:01:21.366Z",
+   "lines": [
+    54693,
+    54695
+   ],
+   "turnStartLine": 54633,
+   "nextPromptLine": 54740,
+   "statement": "\"the tie compared float sums\": check that the code before the fix compared raw float sums."
+  },
+  {
+   "claimId": "msg_011CfnWRXgZLLD67JffXtjh3|18",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfnWRXgZLLD67JffXtjh3",
+   "ts": "2026-10-07T07:48:07.159Z",
+   "lines": [
+    57115,
+    57116,
+    57117,
+    57119,
+    57121
+   ],
+   "turnStartLine": 57075,
+   "nextPromptLine": 57139,
+   "statement": "\"(`scratchpad/rel/run3.log`)\": confirm the log exists and shows the results in items 16 and 17."
+  },
+  {
+   "claimId": "msg_011CfnWRXgZLLD67JffXtjh3|21",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfnWRXgZLLD67JffXtjh3",
+   "ts": "2026-10-07T07:48:07.159Z",
+   "lines": [
+    57115,
+    57116,
+    57117,
+    57119,
+    57121
+   ],
+   "turnStartLine": 57075,
+   "nextPromptLine": 57139,
+   "statement": "\"D265 step 2: version 0.3.0, the first GitHub release\": check that it is D265 step 2 and that this really is the first GitHub release."
+  },
+  {
+   "claimId": "msg_011CfnWRXgZLLD67JffXtjh3|25",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfnWRXgZLLD67JffXtjh3",
+   "ts": "2026-10-07T07:48:07.159Z",
+   "lines": [
+    57115,
+    57116,
+    57117,
+    57119,
+    57121
+   ],
+   "turnStartLine": 57075,
+   "nextPromptLine": 57139,
+   "statement": "\"Cargo.lock (only our entry; num-conv's 0.2.2 stays)\": check the lockfile diff."
+  },
+  {
+   "claimId": "msg_011CfnVtWZyaN2mXJQ7MD3eJ|2",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfnVtWZyaN2mXJQ7MD3eJ",
+   "ts": "2026-10-07T07:41:02.360Z",
+   "lines": [
+    94722
+   ],
+   "turnStartLine": 94698,
+   "nextPromptLine": 94732,
+   "statement": "Check that D265 is the right decision/task ID and that it's still active, in the plan file or loop records."
+  },
+  {
+   "claimId": "msg_011CfnVtWZyaN2mXJQ7MD3eJ|20",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfnVtWZyaN2mXJQ7MD3eJ",
+   "ts": "2026-10-07T07:41:02.360Z",
+   "lines": [
+    94722
+   ],
+   "turnStartLine": 94698,
+   "nextPromptLine": 94732,
+   "statement": "Check the changelog itself, or the plan's changelog step."
+  },
+  {
+   "claimId": "msg_011Cfh51JfNSJoCxD3mabp1z|4",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfh51JfNSJoCxD3mabp1z",
+   "ts": "2026-10-04T10:51:49.281Z",
+   "lines": [
+    60185,
+    60186,
+    60188,
+    60190
+   ],
+   "turnStartLine": 60151,
+   "nextPromptLine": 60225,
+   "statement": "\"Each entry reads like `Thunderhead, 24 m (21–28)`\""
+  },
+  {
+   "claimId": "msg_011Cfh51JfNSJoCxD3mabp1z|14",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfh51JfNSJoCxD3mabp1z",
+   "ts": "2026-10-04T10:51:49.281Z",
+   "lines": [
+    60185,
+    60186,
+    60188,
+    60190
+   ],
+   "turnStartLine": 60151,
+   "nextPromptLine": 60225,
+   "statement": "\"made by `node tools/widths.cjs reads > src/doc/widths.json`\". Check the exact command and argument."
+  },
+  {
+   "claimId": "msg_011CffP6XYFiwPmqtVrEwZ2r|8",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CffP6XYFiwPmqtVrEwZ2r",
+   "ts": "2026-10-03T13:27:57.488Z",
+   "lines": [
+    69871,
+    69872,
+    69874
+   ],
+   "turnStartLine": 69829,
+   "nextPromptLine": 69892,
+   "statement": "\"`5debee8` (road is lit) changed `app/preview/aclook.js`\": check the hash, the commit subject, and that it touched this file."
+  },
+  {
+   "claimId": "msg_011CfkxNtA3Kd7hwo1FrwHco|2",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfkxNtA3Kd7hwo1FrwHco",
+   "ts": "2026-10-06T12:07:19.527Z",
+   "lines": [
+    51138,
+    51139,
+    51140,
+    51142,
+    51144
+   ],
+   "turnStartLine": 50882,
+   "nextPromptLine": 51175,
+   "statement": "**\"row 2's \"a flight with NO landing is red\"\"**"
+  },
+  {
+   "claimId": "msg_011CfkxNtA3Kd7hwo1FrwHco|4",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfkxNtA3Kd7hwo1FrwHco",
+   "ts": "2026-10-06T12:07:19.527Z",
+   "lines": [
+    51138,
+    51139,
+    51140,
+    51142,
+    51144
+   ],
+   "turnStartLine": 50882,
+   "nextPromptLine": 51175,
+   "statement": "**\"a gap with NO landing ramp staying red is row 2's [case]\"**"
+  },
+  {
+   "claimId": "msg_011CfkxNtA3Kd7hwo1FrwHco|12",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfkxNtA3Kd7hwo1FrwHco",
+   "ts": "2026-10-06T12:07:19.527Z",
+   "lines": [
+    51138,
+    51139,
+    51140,
+    51142,
+    51144
+   ],
+   "turnStartLine": 50882,
+   "nextPromptLine": 51175,
+   "statement": "**\"the 3.2 g fall\"**"
+  },
+  {
+   "claimId": "msg_011CfqdLcJorEJwDbLJ3Sdv1|7",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfqdLcJorEJwDbLJ3Sdv1",
+   "ts": "2026-10-08T23:20:39.654Z",
+   "lines": [
+    58976,
+    58977,
+    58978
+   ],
+   "turnStartLine": 58919,
+   "nextPromptLine": 59039,
+   "statement": "\"`path.resolve(__dirname, '..', '..')`\" is the repo root."
+  },
+  {
+   "claimId": "msg_011CfqdLcJorEJwDbLJ3Sdv1|16",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfqdLcJorEJwDbLJ3Sdv1",
+   "ts": "2026-10-08T23:20:39.654Z",
+   "lines": [
+    58976,
+    58977,
+    58978
+   ],
+   "turnStartLine": 58919,
+   "nextPromptLine": 59039,
+   "statement": "\"`'fork (consumer-relabel.js)'`\": check that the step name is exactly this and that `consumer-relabel.js` exists."
+  },
+  {
+   "claimId": "msg_011CfqdLcJorEJwDbLJ3Sdv1|17",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfqdLcJorEJwDbLJ3Sdv1",
+   "ts": "2026-10-08T23:20:39.654Z",
+   "lines": [
+    58976,
+    58977,
+    58978
+   ],
+   "turnStartLine": 58919,
+   "nextPromptLine": 59039,
+   "statement": "\"`[['+', 4, 'Untouched line, quietly changed.'], ['-', 4, 'Untouched line.']]`\": check that \"Untouched line.\" stays on line 4 after the generator's rewrite."
+  },
+  {
+   "claimId": "msg_011CffYYkHEyCPzQUfEbLMRG|6",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CffYYkHEyCPzQUfEbLMRG",
+   "ts": "2026-10-03T15:31:51.211Z",
+   "lines": [
+    47826,
+    47827,
+    47828,
+    47830
+   ],
+   "turnStartLine": 47480,
+   "nextPromptLine": 47974,
+   "statement": "**\"with the same 10 m\"**: that the old test also used 10 m."
+  },
+  {
+   "claimId": "msg_011CffYYkHEyCPzQUfEbLMRG|10",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CffYYkHEyCPzQUfEbLMRG",
+   "ts": "2026-10-03T15:31:51.211Z",
+   "lines": [
+    47826,
+    47827,
+    47828,
+    47830
+   ],
+   "turnStartLine": 47480,
+   "nextPromptLine": 47974,
+   "statement": "`words(2)`"
+  },
+  {
+   "claimId": "msg_011CffYYkHEyCPzQUfEbLMRG|14",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CffYYkHEyCPzQUfEbLMRG",
+   "ts": "2026-10-03T15:31:51.211Z",
+   "lines": [
+    47826,
+    47827,
+    47828,
+    47830
+   ],
+   "turnStartLine": 47480,
+   "nextPromptLine": 47974,
+   "statement": "positions laid out as base vertex (0–2), then tip (3–5)"
+  },
+  {
+   "claimId": "msg_011CfqKAgTiFneiVcDKmpwjH|1",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfqKAgTiFneiVcDKmpwjH",
+   "ts": "2026-10-08T19:22:14.791Z",
+   "lines": [
+    73797,
+    73798,
+    73800
+   ],
+   "turnStartLine": 73484,
+   "nextPromptLine": 73912,
+   "statement": "**\"every literal relative require()\"**: The regex only matches `./` or `../` paths in `'` or `\"` quotes. It misses template literals, `require.resolve`, and anything under the skipped `node_modules` and `target` directories."
+  },
+  {
+   "claimId": "msg_011CfqKAgTiFneiVcDKmpwjH|2",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfqKAgTiFneiVcDKmpwjH",
+   "ts": "2026-10-08T19:22:14.791Z",
+   "lines": [
+    73797,
+    73798,
+    73800
+   ],
+   "turnStartLine": 73484,
+   "nextPromptLine": 73912,
+   "statement": "**\"in a shipped .js\"**: The script also scans test files. It reports them separately as a count. \"Shipped\" really means \"not `*.test.js`\", so `*.spec.js` and `__tests__/` files still count as shipped. `.cjs` and `.mjs` files aren't scanned at all."
+  },
+  {
+   "claimId": "msg_011CfqKAgTiFneiVcDKmpwjH|4",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfqKAgTiFneiVcDKmpwjH",
+   "ts": "2026-10-08T19:22:14.791Z",
+   "lines": [
+    73797,
+    73798,
+    73800
+   ],
+   "turnStartLine": 73484,
+   "nextPromptLine": 73912,
+   "statement": "**\"crashes at load\"**: This isn't established. A `require` inside a function, behind a condition, or in a `try/catch` won't crash at load. Only a run against a real tree, or a test that loads one of the flagged files, would back this up."
+  },
+  {
+   "claimId": "msg_011Cfh4oUD2KooCCc1RQ9Ycv|11",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfh4oUD2KooCCc1RQ9Ycv",
+   "ts": "2026-10-04T10:49:05.243Z",
+   "lines": [
+    60116,
+    60117
+   ],
+   "turnStartLine": 59860,
+   "nextPromptLine": 60151,
+   "statement": "\"`src/doc/widths.json` `1661dc59815b5b8e`\""
+  },
+  {
+   "claimId": "msg_011Cfh4oUD2KooCCc1RQ9Ycv|52",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011Cfh4oUD2KooCCc1RQ9Ycv",
+   "ts": "2026-10-04T10:49:05.243Z",
+   "lines": [
+    60116,
+    60117
+   ],
+   "turnStartLine": 59860,
+   "nextPromptLine": 60151,
+   "statement": "\"all present: the rebuild ran and passed\""
+  },
+  {
+   "claimId": "msg_011CfssxaRqhbkXg17MS5R2r|1",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfssxaRqhbkXg17MS5R2r",
+   "ts": "2026-10-10T03:53:27.101Z",
+   "lines": [
+    88399,
+    88400
+   ],
+   "turnStartLine": 88389,
+   "nextPromptLine": 88405,
+   "statement": "**\"Nothing new in the last few minutes.\"** This is a claim about current state. Check the activity log or the status of the running job."
+  },
+  {
+   "claimId": "msg_011CfssxaRqhbkXg17MS5R2r|2",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfssxaRqhbkXg17MS5R2r",
+   "ts": "2026-10-10T03:53:27.101Z",
+   "lines": [
+    88399,
+    88400
+   ],
+   "turnStartLine": 88389,
+   "nextPromptLine": 88405,
+   "statement": "**\"B is still checking the Sharp turn\"** This says agent/process B is running and is on that specific check. Verify against B's live status or output."
+  },
+  {
+   "claimId": "msg_011CfssxaRqhbkXg17MS5R2r|5",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfssxaRqhbkXg17MS5R2r",
+   "ts": "2026-10-10T03:53:27.101Z",
+   "lines": [
+    88399,
+    88400
+   ],
+   "turnStartLine": 88389,
+   "nextPromptLine": 88405,
+   "statement": "**\"if you want to try a 90° that comes out straight.\"** This implies Turn by gives a straight result at 90°. That is a behavior claim, so confirm it with a test result or a manual run."
+  },
+  {
+   "claimId": "msg_011CfiZQ2rGhMXencxTDGWRn|7",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfiZQ2rGhMXencxTDGWRn",
+   "ts": "2026-10-05T05:44:42.132Z",
+   "lines": [
+    73669,
+    73670
+   ],
+   "turnStartLine": 73633,
+   "nextPromptLine": 73715,
+   "statement": "**`path.join(process.env.APPDATA,'com.solariz3d.t180-track-builder','tracks')`**: Check this is the real save directory."
+  },
+  {
+   "claimId": "msg_011Cfkv4DfHytDyFdaJbmU7P|10",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011Cfkv4DfHytDyFdaJbmU7P",
+   "ts": "2026-10-06T11:36:51.731Z",
+   "lines": [
+    77548
+   ],
+   "turnStartLine": 77526,
+   "nextPromptLine": 77553,
+   "statement": "\"coloured handles on the see-through ghost piece\""
+  },
+  {
+   "claimId": "msg_011Cfkv4DfHytDyFdaJbmU7P|21",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011Cfkv4DfHytDyFdaJbmU7P",
+   "ts": "2026-10-06T11:36:51.731Z",
+   "lines": [
+    77548
+   ],
+   "turnStartLine": 77526,
+   "nextPromptLine": 77553,
+   "statement": "\"Red marks sitting at the same spot now show as one place\""
+  },
+  {
+   "claimId": "msg_011CfnVYMyV78Ap7i49xdmSX|6",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfnVYMyV78Ap7i49xdmSX",
+   "ts": "2026-10-07T07:36:38.855Z",
+   "lines": [
+    81138
+   ],
+   "turnStartLine": 81093,
+   "nextPromptLine": 81143,
+   "statement": "**\"pick your AC `content\\tracks` folder\"**: confirm this is the right folder to choose (versus the AC root or something else) given how the export builds its output path."
+  },
+  {
+   "claimId": "msg_011CfnVYMyV78Ap7i49xdmSX|12",
+   "seat": "librarian",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfnVYMyV78Ap7i49xdmSX",
+   "ts": "2026-10-07T07:36:38.855Z",
+   "lines": [
+    81138
+   ],
+   "turnStartLine": 81093,
+   "nextPromptLine": 81143,
+   "statement": "**\"I've also stopped my own background checks\"**: verify the background processes or tasks were actually stopped (process list or task status)."
+  },
+  {
+   "claimId": "msg_011CfnWPr63CyQHtvgVDpJF3|3",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfnWPr63CyQHtvgVDpJF3",
+   "ts": "2026-10-07T07:47:46.113Z",
+   "lines": [
+    57102
+   ],
+   "turnStartLine": 57075,
+   "nextPromptLine": 57139,
+   "statement": "\"Seat C (pane C)\": check the seat or pane assignment record."
+  },
+  {
+   "claimId": "msg_011CfnWPr63CyQHtvgVDpJF3|18",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfnWPr63CyQHtvgVDpJF3",
+   "ts": "2026-10-07T07:47:46.113Z",
+   "lines": [
+    57102
+   ],
+   "turnStartLine": 57075,
+   "nextPromptLine": 57139,
+   "statement": "\"(the button's name since D250)\": check the decision log or git history."
+  },
+  {
+   "claimId": "msg_011CfnWPr63CyQHtvgVDpJF3|19",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfnWPr63CyQHtvgVDpJF3",
+   "ts": "2026-10-07T07:47:46.113Z",
+   "lines": [
+    57102
+   ],
+   "turnStartLine": 57075,
+   "nextPromptLine": 57139,
+   "statement": "\"On 2b929c2\": check that this commit exists and is the one the tests ran on."
+  },
+  {
+   "claimId": "msg_011CfhkUxLaawcDjGreMM5RE|5",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfhkUxLaawcDjGreMM5RE",
+   "ts": "2026-10-04T19:29:29.400Z",
+   "lines": [
+    62025,
+    62026,
+    62027
+   ],
+   "turnStartLine": 61822,
+   "nextPromptLine": 62190,
+   "statement": "**The quote and its record ID.** `\"D237 (the keeper: \"a 3D grid to some how see the track and make it all symmetrical ... a 2D grid if the track has no height, but as soon as the track turns up or downward the grid becomes 3D\")\"`"
+  },
+  {
+   "claimId": "msg_011CfhkUxLaawcDjGreMM5RE|9",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfhkUxLaawcDjGreMM5RE",
+   "ts": "2026-10-04T19:29:29.400Z",
+   "lines": [
+    62025,
+    62026,
+    62027
+   ],
+   "turnStartLine": 61822,
+   "nextPromptLine": 62190,
+   "statement": "Check against the actual diff."
+  },
+  {
+   "claimId": "msg_011CfhkUxLaawcDjGreMM5RE|11",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfhkUxLaawcDjGreMM5RE",
+   "ts": "2026-10-04T19:29:29.400Z",
+   "lines": [
+    62025,
+    62026,
+    62027
+   ],
+   "turnStartLine": 61822,
+   "nextPromptLine": 62190,
+   "statement": "Check that this suite exists."
+  },
+  {
+   "claimId": "msg_011CfmsvZ2fPntJD1rk6qp5F|1",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfmsvZ2fPntJD1rk6qp5F",
+   "ts": "2026-10-06T23:49:25.833Z",
+   "lines": [
+    53671,
+    53672,
+    53673
+   ],
+   "turnStartLine": 53566,
+   "nextPromptLine": 53695,
+   "statement": "**\"No line-ending rewrites.\"**"
+  },
+  {
+   "claimId": "msg_011CfmsvZ2fPntJD1rk6qp5F|11",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfmsvZ2fPntJD1rk6qp5F",
+   "ts": "2026-10-06T23:49:25.833Z",
+   "lines": [
+    53671,
+    53672,
+    53673
+   ],
+   "turnStartLine": 53566,
+   "nextPromptLine": 53695,
+   "statement": "**`git checkout -q d256-suitereds`**"
+  },
+  {
+   "claimId": "msg_011CfjjAsPZVBVim2TxwveEd|2",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjjAsPZVBVim2TxwveEd",
+   "ts": "2026-10-05T20:33:30.032Z",
+   "lines": [
+    51732,
+    51733,
+    51734
+   ],
+   "turnStartLine": 51692,
+   "nextPromptLine": 51829,
+   "statement": "`\"the OLD checkPiece (b08c3c7: append piece by piece)\"`: check that commit `b08c3c7` exists, that its `checkPiece` really appends piece by piece, and that `piece_old.js` is an exact copy of that version."
+  },
+  {
+   "claimId": "msg_011CfjjAsPZVBVim2TxwveEd|3",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjjAsPZVBVim2TxwveEd",
+   "ts": "2026-10-05T20:33:30.032Z",
+   "lines": [
+    51732,
+    51733,
+    51734
+   ],
+   "turnStartLine": 51692,
+   "nextPromptLine": 51829,
+   "statement": "`\"the NEW one (one checkDoc)\"`: check that the current `src/core/piece.js` validates with a single `checkDoc` call."
+  },
+  {
+   "claimId": "msg_011CfjjAsPZVBVim2TxwveEd|17",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjjAsPZVBVim2TxwveEd",
+   "ts": "2026-10-05T20:33:30.032Z",
+   "lines": [
+    51732,
+    51733,
+    51734
+   ],
+   "turnStartLine": 51692,
+   "nextPromptLine": 51829,
+   "statement": "`\"the median of 3 for each\"`: the code matches this, apart from the 2,000-piece old case, which is already stated. Nothing further is needed beyond confirming that this exception is intended."
+  },
+  {
+   "claimId": "msg_011CfmYpicFqyZSHtqMG5ka4|5",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfmYpicFqyZSHtqMG5ka4",
+   "ts": "2026-10-06T19:38:55.443Z",
+   "lines": [
+    93118
+   ],
+   "turnStartLine": 93109,
+   "nextPromptLine": 93123,
+   "statement": "**\"The librarian is running the whole suite and the two related test groups\"**: check the librarian's task record or the running job. Confirm it covers the full suite, and that there are exactly two related groups and which ones they are."
+  },
+  {
+   "claimId": "msg_011CfmYpicFqyZSHtqMG5ka4|7",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfmYpicFqyZSHtqMG5ka4",
+   "ts": "2026-10-06T19:38:55.443Z",
+   "lines": [
+    93118
+   ],
+   "turnStartLine": 93109,
+   "nextPromptLine": 93123,
+   "statement": "**\"E's always-max-speed checks get their own install afterwards.\"**: check the queue or plan record to confirm a separate install is scheduled after B's."
+  },
+  {
+   "claimId": "msg_011CfmYpicFqyZSHtqMG5ka4|9",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfmYpicFqyZSHtqMG5ka4",
+   "ts": "2026-10-06T19:38:55.443Z",
+   "lines": [
+    93118
+   ],
+   "turnStartLine": 93109,
+   "nextPromptLine": 93123,
+   "statement": "**\"because they change what the export lets through.\"**: check E's diff to confirm it changes export filtering or validation."
+  },
+  {
+   "claimId": "msg_011CfmwyDtnki4bnRxmakP7c|8",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfmwyDtnki4bnRxmakP7c",
+   "ts": "2026-10-07T00:42:29.884Z",
+   "lines": [
+    93649
+   ],
+   "turnStartLine": 93628,
+   "nextPromptLine": 93654,
+   "statement": "\"The privacy scan is clean.\" Check that it was run on this commit and the output is clean."
+  },
+  {
+   "claimId": "msg_011CfmwyDtnki4bnRxmakP7c|16",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfmwyDtnki4bnRxmakP7c",
+   "ts": "2026-10-07T00:42:29.884Z",
+   "lines": [
+    93649
+   ],
+   "turnStartLine": 93628,
+   "nextPromptLine": 93654,
+   "statement": "\"The librarian runs the whole suite and the long test groups once, then installs and pushes.\" Check that this is the agreed role and order."
+  },
+  {
+   "claimId": "msg_011CfmZya88jcJUvh9YdGHHs|4",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfmZya88jcJUvh9YdGHHs",
+   "ts": "2026-10-06T19:54:03.738Z",
+   "lines": [
+    52246,
+    52247,
+    52249
+   ],
+   "turnStartLine": 51930,
+   "nextPromptLine": 52331,
+   "statement": "**\"with none pinned the note says validation is at FULL speed\"**: check the code that builds the jump-flight note when the design speed is null or unset."
+  },
+  {
+   "claimId": "msg_011CfmZya88jcJUvh9YdGHHs|7",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfmZya88jcJUvh9YdGHHs",
+   "ts": "2026-10-06T19:54:03.738Z",
+   "lines": [
+    52246,
+    52247,
+    52249
+   ],
+   "turnStartLine": 51930,
+   "nextPromptLine": 52331,
+   "statement": "the note text matches this string exactly,"
+  },
+  {
+   "claimId": "msg_011CfjGnq2nTDXgSVQ861EoP|6",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfjGnq2nTDXgSVQ861EoP",
+   "ts": "2026-10-05T14:47:34.110Z",
+   "lines": [
+    63400,
+    63401,
+    63402
+   ],
+   "turnStartLine": 63379,
+   "nextPromptLine": 63443,
+   "statement": "**\"a plain numeric integral of the stored piece (midpoint rule, 40,000 steps)\"**: compare this against the `numeric` helper. It uses `(i + 0.5)` and `n = 40000`, which looks consistent, but it is still a claim."
+  },
+  {
+   "claimId": "msg_011CfjGnq2nTDXgSVQ861EoP|7",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfjGnq2nTDXgSVQ861EoP",
+   "ts": "2026-10-05T14:47:34.110Z",
+   "lines": [
+    63400,
+    63401,
+    63402
+   ],
+   "turnStartLine": 63379,
+   "nextPromptLine": 63443,
+   "statement": "**`D.channelAt(P, ch, s).v`**: check that `D.channelAt` exists, takes `(piece, channel, arcLength)`, and returns an object with `.v`."
+  },
+  {
+   "claimId": "msg_011CfjGnq2nTDXgSVQ861EoP|12",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfjGnq2nTDXgSVQ861EoP",
+   "ts": "2026-10-05T14:47:34.110Z",
+   "lines": [
+    63400,
+    63401,
+    63402
+   ],
+   "turnStartLine": 63379,
+   "nextPromptLine": 63443,
+   "statement": "**`< 1e-4`** tolerances against the integral: check that the implementation's own integration agrees with a 40k-step midpoint sum to within 1e-4°."
+  },
+  {
+   "claimId": "msg_011CfjpUMo9sSmdSjQCEenia|2",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjpUMo9sSmdSjQCEenia",
+   "ts": "2026-10-05T21:43:35.492Z",
+   "lines": [
+    52503,
+    52505
+   ],
+   "turnStartLine": 52419,
+   "nextPromptLine": 52583,
+   "statement": "**\"C's NON-AUTHOR attacks on D240's UI (62f5d39)\"**: Check that the commit hash `62f5d39` exists and is the D240 UI change being tested. Also check that C is not an author of it."
+  },
+  {
+   "claimId": "msg_011CfjpUMo9sSmdSjQCEenia|5",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjpUMo9sSmdSjQCEenia",
+   "ts": "2026-10-05T21:43:35.492Z",
+   "lines": [
+    52503,
+    52505
+   ],
+   "turnStartLine": 52419,
+   "nextPromptLine": 52583,
+   "statement": "**\"the refusal path is real\"**: This depends on #4, and on a file at that path actually making the backup write fail rather than being worked around."
+  },
+  {
+   "claimId": "msg_011CfjpUMo9sSmdSjQCEenia|16",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfjpUMo9sSmdSjQCEenia",
+   "ts": "2026-10-05T21:43:35.492Z",
+   "lines": [
+    52503,
+    52505
+   ],
+   "turnStartLine": 52419,
+   "nextPromptLine": 52583,
+   "statement": "The CDP modifier values, which the code relies on through `shift ? 8 : 0` and `key('z', 2)`. It treats Shift as 8 and Ctrl as 2."
+  },
+  {
+   "claimId": "msg_011CfjoDdHn8hViv8obGk11y|9",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfjoDdHn8hViv8obGk11y",
+   "ts": "2026-10-05T21:26:42.071Z",
+   "lines": [
+    48801,
+    48803
+   ],
+   "turnStartLine": 48431,
+   "nextPromptLine": 48831,
+   "statement": "\"The flight is solved and its landing ramp sized as the adapter builds them.\" (does it share the adapter's logic?)"
+  },
+  {
+   "claimId": "msg_011CfjoDdHn8hViv8obGk11y|12",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfjoDdHn8hViv8obGk11y",
+   "ts": "2026-10-05T21:26:42.071Z",
+   "lines": [
+    48801,
+    48803
+   ],
+   "turnStartLine": 48431,
+   "nextPromptLine": 48831,
+   "statement": "\"A core flight (the adapter's gap followed by its own landing ramp) is now an intended gap.\""
+  },
+  {
+   "claimId": "msg_011CfgPaMDvoQ2vta6FyNw5a|3",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfgPaMDvoQ2vta6FyNw5a",
+   "ts": "2026-10-04T02:14:42.153Z",
+   "lines": [
+    87820
+   ],
+   "turnStartLine": 87808,
+   "nextPromptLine": 87830,
+   "statement": "\"the privacy check was clean\". Check the privacy check's output or log."
+  },
+  {
+   "claimId": "msg_011CfrwdkUkVoMrQjBc5zzuW|15",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfrwdkUkVoMrQjBc5zzuW",
+   "ts": "2026-10-09T16:01:07.251Z",
+   "lines": [
+    60100
+   ],
+   "turnStartLine": 60095,
+   "nextPromptLine": 60144,
+   "statement": "\"The evidence that vantages differ points to the bullet above and to this round's record, linked\": the bullet above exists and makes that point, and the links are present and resolve."
+  },
+  {
+   "claimId": "msg_011CfhReQUUqYfFxfHFtRhZA|2",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfhReQUUqYfFxfHFtRhZA",
+   "ts": "2026-10-04T15:22:24.939Z",
+   "lines": [
+    88943
+   ],
+   "turnStartLine": 88926,
+   "nextPromptLine": 88948,
+   "statement": "**\"B's check: green.\"**"
+  },
+  {
+   "claimId": "msg_011CfhReQUUqYfFxfHFtRhZA|10",
+   "seat": "chair",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfhReQUUqYfFxfHFtRhZA",
+   "ts": "2026-10-04T15:22:24.939Z",
+   "lines": [
+    88943
+   ],
+   "turnStartLine": 88926,
+   "nextPromptLine": 88948,
+   "statement": "**\"The librarian is building and installing the scroll-bar fix and the speed fix together now.\"**"
+  },
+  {
+   "claimId": "msg_011CfkbZyQBBSTpi6CUkhkWk|1",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfkbZyQBBSTpi6CUkhkWk",
+   "ts": "2026-10-06T07:34:23.487Z",
+   "lines": [
+    67060,
+    67061,
+    67062,
+    67064
+   ],
+   "turnStartLine": 66637,
+   "nextPromptLine": 67364,
+   "statement": "**\"The fake DOM doesn't reflect the `value` attribute onto `.value`\"**"
+  },
+  {
+   "claimId": "msg_011CfkbZyQBBSTpi6CUkhkWk|7",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfkbZyQBBSTpi6CUkhkWk",
+   "ts": "2026-10-06T07:34:23.487Z",
+   "lines": [
+    67060,
+    67061,
+    67062,
+    67064
+   ],
+   "turnStartLine": 66637,
+   "nextPromptLine": 67364,
+   "statement": "**\"the fake DOM does not turn the value attribute into the value\"**"
+  },
+  {
+   "claimId": "msg_011CfpgWbRbfBEfw3Y44tjyF|37",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfpgWbRbfBEfw3Y44tjyF",
+   "ts": "2026-10-08T11:21:45.518Z",
+   "lines": [
+    56785
+   ],
+   "turnStartLine": 56764,
+   "nextPromptLine": 56812,
+   "statement": "\"since D258 the document's own `afterFlight` sets a landing's state when the piece is placed\" (this is the code fact under the \"inferred\" label; the inference itself needs a ruling, not a check)"
+  },
+  {
+   "claimId": "msg_011CfsE1dPM8on8hP1uFqXjC|11",
+   "seat": "A",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfsE1dPM8on8hP1uFqXjC",
+   "ts": "2026-10-09T19:35:54.663Z",
+   "lines": [
+    77152,
+    77153,
+    77155
+   ],
+   "turnStartLine": 76911,
+   "nextPromptLine": 77331,
+   "statement": "`assert.equal(idsOf().length, 14)`: that there are exactly 14 ids at this point in the test."
+  },
+  {
+   "claimId": "msg_011CfgMvbrKDB1TQLG3QowVJ|2",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfgMvbrKDB1TQLG3QowVJ",
+   "ts": "2026-10-04T01:53:02.096Z",
+   "lines": [
+    45040,
+    45041,
+    45042,
+    45044,
+    45046
+   ],
+   "turnStartLine": 45018,
+   "nextPromptLine": 45081,
+   "statement": "\"so the two modes can be compared\": this assumes there are exactly two modes and that they can be compared within one lane. Check what \"modes\" means in the script or the earlier discussion. It may not mean lanes."
+  },
+  {
+   "claimId": "msg_011CfgMvbrKDB1TQLG3QowVJ|8",
+   "seat": "E",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfgMvbrKDB1TQLG3QowVJ",
+   "ts": "2026-10-04T01:53:02.096Z",
+   "lines": [
+    45040,
+    45041,
+    45042,
+    45044,
+    45046
+   ],
+   "turnStartLine": 45018,
+   "nextPromptLine": 45081,
+   "statement": "`return` is valid at this point, meaning the code sits inside a function such as `main`, not at the top level of the module."
+  },
+  {
+   "claimId": "msg_011CfnaJmtrNQn733H44bbSc|1",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfnaJmtrNQn733H44bbSc",
+   "ts": "2026-10-07T08:39:09.645Z",
+   "lines": [
+    57169
+   ],
+   "turnStartLine": 57139,
+   "nextPromptLine": 57184,
+   "statement": "\"Version 0.3.1 (D266)\": the version number and decision/ticket ID."
+  },
+  {
+   "claimId": "msg_011CfnaJmtrNQn733H44bbSc|14",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfnaJmtrNQn733H44bbSc",
+   "ts": "2026-10-07T08:39:09.645Z",
+   "lines": [
+    57169
+   ],
+   "turnStartLine": 57139,
+   "nextPromptLine": 57184,
+   "statement": "\"its line arrives in [Unreleased] with E's cherry-pick and is moved under [0.3.1] at landing (expected)\": confirm this matches the agreed process (keeper instruction or release doc). Note it conflicts with \"after e is done\": the release is being cut before E landed."
+  },
+  {
+   "claimId": "msg_011CfnaJmtrNQn733H44bbSc|18",
+   "seat": "C",
+   "transcript": "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfnaJmtrNQn733H44bbSc",
+   "ts": "2026-10-07T08:39:09.645Z",
+   "lines": [
+    57169
+   ],
+   "turnStartLine": 57139,
+   "nextPromptLine": 57184,
+   "statement": "\"Under the heavy-run lock\": the lock was actually held during the run."
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+## node part1.js <52f07c9> test10-smoothed.t180track 3000 80 3e-4
+message: the lap is closed again: closing it took back 12% of your bend (closed in 2 step(s): 0.488 mm, tangent 1.0e-7 rad) | keptBend [33mfalse[39m
+result sha256 65ca9938bb7cc2732e088482702152342e5cd4c5ab41c455e6329ddb4675ead4
+open (closed:false, as barMiss): 4 red: self-intersection@NaN, self-intersection@NaN, self-intersection@NaN, self-intersection@NaN
+result: 0 red: -
+## node bar.js <52f07c9> test10-smoothed 3000 80 3e-4 1e-4; wash 800 100 1e-4 3e-4; lap 450 80 3e-4
+test10-smoothed.t180track s0 3000 r 80 3e-4 window [4]: drag 32.89 | outside 19.81 | window 13.42 | part3 pass | B3 pass | barMiss: add 2 reds (self-intersection at 1.38 km)
+test10-smoothed.t180track s0 3000 r 80 1e-4 window [4]: drag 10.96 | outside 6.68 | window 4.54 | part3 pass | B3 pass | barMiss: PASS (taken)
+wash s0 800 r 100 1e-4 window [1]: drag 6.69 | outside 4.53 | window 4.60 | part3 pass | B3 pass | barMiss: PASS (taken)
+wash s0 800 r 100 3e-4 window [1]: drag 20.07 | outside 13.76 | window 13.98 | part3 pass | B3 pass | barMiss: PASS (taken)
+lap s0 450 r 80 3e-4 window [1]: drag 12.89 | outside 72.29 | window 72.91 | part3 MISS | B3 MISS | barMiss: move the track up to 72.9 m, further than your drag moved it (12.9 m)
+## node row34.js <52f07c9>; then <4f59790 copy y1>
+t180-wt-e467: window [2] | drag 222.66 m | result moved 97.95 m
+  reds before the drag: -
+  reds open: self-intersection@178, self-intersection@1582
+  reds raw start close: self-intersection@490, self-intersection@494, self-intersection@1154, self-intersection@1160
+  barMiss: add 4 reds (self-intersection at 0.49 km)
+y1: window [2] | drag 222.66 m | result moved 97.95 m
+  reds before the drag: -
+  reds open: self-intersection@178, self-intersection@1582
+  reds raw start close: self-intersection@490, self-intersection@494, self-intersection@1154, self-intersection@1160
+  barMiss: add 4 reds (self-intersection at 0.49 km)
+## sha256
+0c9ca76346fde741bac5846a0e3e8c939b2a345b14d8233e74adc9b150dd5dfd *test10-smoothed.t180track
+65ca9938bb7cc2732e088482702152342e5cd4c5ab41c455e6329ddb4675ead4 *sm-bent-old.t180track
+7dda1dc70dccaf024f77ff0385d447e88ab07e0eb5e2b52eb3b68a4cf3ef974a *bar-result.t180track

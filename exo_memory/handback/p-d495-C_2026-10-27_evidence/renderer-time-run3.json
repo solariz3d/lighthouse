@@ -1,0 +1,53 @@
+{
+ "out": [
+  {
+   "style": "aurora",
+   "camera": "40",
+   "W": 2560,
+   "H": 1440,
+   "median": 0.696,
+   "p95": 0.705,
+   "max": 0.71,
+   "n": 120,
+   "disjoint": 0,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  {
+   "style": "aurora",
+   "camera": "horizon",
+   "W": 2560,
+   "H": 1440,
+   "median": 0.229,
+   "p95": 0.236,
+   "max": 0.389,
+   "n": 120,
+   "disjoint": 0,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  {
+   "style": "aurora",
+   "camera": "up",
+   "W": 2560,
+   "H": 1440,
+   "median": 1.249,
+   "p95": 1.261,
+   "max": 1.265,
+   "n": 120,
+   "disjoint": 0,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  {
+   "style": "aurora",
+   "camera": "free",
+   "W": 2560,
+   "H": 1440,
+   "median": 1.13,
+   "p95": 1.142,
+   "max": 1.379,
+   "n": 120,
+   "disjoint": 0,
+   "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  }
+ ],
+ "errors": []
+}

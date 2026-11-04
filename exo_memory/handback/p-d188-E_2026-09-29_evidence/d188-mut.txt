@@ -1,0 +1,109 @@
+[32m✔ control: the unmutated temp copy passes every test the mutants are run against [90m(10993.1475ms)[39m[39m
+[32m✔ mutation A1 the build view looks backward: applied, and caught by "build view (default)…" [90m(10863.5742ms)[39m[39m
+[32m✔ mutation A2 the build key does nothing from free mode: applied, and caught by "the build view is ONE key away…" [90m(10874.8138ms)[39m[39m
+[32m✔ mutation A3 the switch key skips a mode: applied, and caught by "the switch key walks…" [90m(10893.8675ms)[39m[39m
+[32m✔ mutation A4 chase ignores its lag (sits on the head): applied, and caught by "chase: 25 m behind…" [90m(10813.7766ms)[39m[39m
+[32m✔ mutation A5 chase lifts along world up, not the road's up: applied, and caught by "chase through a loop-the-loop…" [90m(10982.3927ms)[39m[39m
+[32m✔ mutation A6 overhead's loop fallback is a fixed north: applied, and caught by "overhead: inside a loop…" [90m(10854.3212ms)[39m[39m
+[32m✔ mutation A7 free mode follows the head like the build view: applied, and caught by "after an append…" [90m(10909.3184ms)[39m[39m
+[32m✔ mutation A8 entering free does not take over the view: applied, and caught by "entering free keeps the view…" [90m(11369.4222ms)[39m[39m
+[32m✔ mutation A9 the shown pose snaps instead of easing: applied, and caught by "the shown pose eases…" [90m(10944.1262ms)[39m[39m
+[32m✔ mutation A10 the renderer re-uploads every array every frame: applied, and caught by "renderer: every array is uploaded once…" [90m(11095.111ms)[39m[39m
+[32m✔ mutation A11 the renderer never deletes a stale buffer: applied, and caught by "renderer: after a sculpt…" [90m(10942.6087ms)[39m[39m
+[32m✔ mutation A12 batches copy the arrays (a sculpt re-uploads everything): applied, and caught by "renderer: after a sculpt…" [90m(10940.1635ms)[39m[39m
+[32m✔ mutation A13 the track model never extends (always a full build): applied, and caught by "track model: append…" [90m(10909.2574ms)[39m[39m
+[32m✔ mutation A14 the model matrix transposed: applied, and caught by "batches: the node matrix…" [90m(10908.575ms)[39m[39m
+[32m✔ mutation A15 the backing store ignores devicePixelRatio: applied, and caught by "DPR: the backing store is the css size…" [90m(10821.3763ms)[39m[39m
+[32m✔ mutation A16 the size cap drops the aspect (one side clamped alone): applied, and caught by "DPR edges…" [90m(10810.1388ms)[39m[39m
+[32m✔ mutation A17 Ctrl/Alt/Meta ignored by keyAction: applied, and caught by "keys: Ctrl, Alt or Meta…" [90m(10986.0525ms)[39m[39m
+[32m✔ mutation A18 the frame loop passes no modifiers (Ctrl+C cycles the camera): applied, and caught by "keys in the frame loop…" [90m(10970.1207ms)[39m[39m
+[32m✔ mutation A19 a failed mount is swallowed: applied, and caught by "mount failure…" [90m(10893.2666ms)[39m[39m
+[32m✔ mutation A20 the probe skips the perspective divide: applied, and caught by "probe: the head lands in the middle…" [90m(10898.0494ms)[39m[39m
+[32m✔ mutation A21 the judge accepts a view with nothing drawn: applied, and caught by "judge: each failure…" [90m(10896.7723ms)[39m[39m
+[32m✔ mutation A22 the judge never checks DPR: applied, and caught by "judge: each failure…" [90m(11012.5183ms)[39m[39m
+[32m✔ mutation B1 no key light (only ambient and fill): applied, and caught by "light: a floor and a vertical wall…" [90m(10904.7168ms)[39m[39m
+[32m✔ mutation B2 one-sided light (an overhang goes dark): applied, and caught by "light: two-sided…" [90m(11360.1827ms)[39m[39m
+[32m✔ mutation B3 the shader key strength drifts from look.js: applied, and caught by "light: the fragment shader carries…" [90m(10983.1613ms)[39m[39m
+[32m✔ mutation B4 the edge lines one vertex in from the edges: applied, and caught by "edge lines: through the two edge vertices…" [90m(10905.0049ms)[39m[39m
+[32m✔ mutation B5 the lines not lifted off the surface (they would z-fight): applied, and caught by "edge lines: through the two edge vertices…" [90m(10890.7521ms)[39m[39m
+[32m✔ mutation B6 no ties across the road: applied, and caught by "edge lines: a tie across the road…" [90m(10928.2898ms)[39m[39m
+[32m✔ mutation B7 the overhead fit ignores the aspect: applied, and caught by "overhead fit (aspect 0.6)…" [90m(10856.9493ms)[39m[39m
+[32m✔ mutation B8 the overhead fit measures from the box bottom (the top is clipped): applied, and caught by "overhead fit…" [90m(10804.2134ms)[39m[39m
+[32m✔ mutation B9 the world box takes one corner of each local box: applied, and caught by "overhead fit…" [90m(10977.352ms)[39m[39m
+[32m✔ mutation B10 the ghost is built on the live path (no copy): applied, and caught by "ghost: the ghost of a segment tail…" [90m(10926.4573ms)[39m[39m
+[32m✔ mutation B11 placing the word does not retire its ghost: applied, and caught by "preview: showGhost draws the ghost…" [90m(10850.3997ms)[39m[39m
+[32m✔ mutation B12 the candidate ignores the font picker: applied, and caught by "ghost through A…" [90m(10979.1227ms)[39m[39m
+[32m✔ mutation B13 the grid floats above y = 0: applied, and caught by "grid: every vertex at y = 0…" [90m(10962.5917ms)[39m[39m
+[32m✔ mutation B14 the ghost is never drawn: applied, and caught by "preview: showGhost draws the ghost…" [90m(10908.437ms)[39m[39m
+[32m✔ mutation B16 the head marker does not grow with distance (a speck from overhead): applied, and caught by "head marker: it grows…" [90m(10958.3338ms)[39m[39m
+[32m✔ mutation B15 the head marker is never drawn: applied, and caught by "preview: a frame draws the grid and the head marker…" [90m(10871.9022ms)[39m[39m
+[32m✔ mutation P1 a sculpt re-places the path but keeps the old mesh: applied, and caught by "soak:…" [90m(10870.2005ms)[39m[39m
+[32m✔ mutation P2 every change rebuilds the whole track (no per-cell reuse): applied, and caught by "per-cell rebuild: a length sculpt…" [90m(10801.5242ms)[39m[39m
+[32m✔ mutation P3 the preview reaches for the native side: applied, and caught by "no mesh over IPC: app/preview and app/camera…" [90m(10961.4707ms)[39m[39m
+[32m✔ mutation T1 the editor ignores the value it is given: applied, and caught by "editor: an accepted edit changes the canonical text…" [90m(11010.3268ms)[39m[39m
+[32m✔ mutation T2 the panel never calls onChange: applied, and caught by "panel: an accepted edit calls onChange…" [90m(10820.5279ms)[39m[39m
+[32m✔ mutation L1 ksAmbient is read from ksDiffuse: applied, and caught by "mapping: ksAmbient, ksDiffuse…" [90m(10915.16ms)[39m[39m
+[32m✔ mutation L2 a missing property reads 1, not 0: applied, and caught by "mapping: a property the material lacks reads 0…" [90m(10797.2466ms)[39m[39m
+[32m✔ mutation L3 the multilayer R and G scales are swapped: applied, and caught by "mapping: ksMultilayer takes…" [90m(10895.4704ms)[39m[39m
+[32m✔ mutation L4 ksPerPixelNM falls to ksPerPixel: applied, and caught by "mapping: the shader picks the program…" [90m(10863.7109ms)[39m[39m
+[32m✔ mutation L5 the renderer never sets ksSpecular: applied, and caught by "renderer: an AC material…" [90m(11045.0882ms)[39m[39m
+[32m✔ mutation L6 every sampler gets the white texel: applied, and caught by "renderer: a named texture is uploaded…" [90m(10880.4792ms)[39m[39m
+[32m✔ mutation L7 the multilayer scales never reach the shader: applied, and caught by "renderer: the multilayer scales…" [90m(11425.1778ms)[39m[39m
+[32m✔ mutation L8 textures are never deleted: applied, and caught by "renderer: a texture no longer drawn…" [90m(10811.2652ms)[39m[39m
+[32m✔ mutation L9 a shader loses a uniform declaration: applied, and caught by "shaders: every uniform the renderer sets…" [90m(10785.3664ms)[39m[39m
+[32m✔ mutation L10 an untextured set slot replaces the exported material: applied, and caught by "textured: an untextured floor…" [90m(10953.2624ms)[39m[39m
+[32m✔ mutation L11 the set is ignored: applied, and caught by "textured: a word whose floor names…" [90m(11200.3956ms)[39m[39m
+[32m✔ mutation L12 textures are keyed by name, not by the kn5 file: applied, and caught by "textured: the preview's texels…" [90m(11233.0479ms)[39m[39m
+[32m✔ mutation L13 the default look is the word colours: applied, and caught by "preview: the AC look is the default…" [90m(11139.431ms)[39m[39m
+[32m✔ mutation L14 setTextureSet drops the set: applied, and caught by "preview: a texture set with a made floor…" [90m(10949.944ms)[39m[39m
+[32m✔ mutation L15 a property is read from the wrong material: applied, and caught by "list: every mesh the preview draws is in the kn5…" [90m(10633.7163ms)[39m[39m
+[32m✔ mutation L16 L does not change the look (the colour per word is unreachable): applied, and caught by "preview: L toggles the look…" [90m(10161.7265ms)[39m[39m
+[32m✔ mutation L17 the ties never fade (they hatch the road dark at a distance): applied, and caught by "renderer: the ties fade out…" [90m(10139.789ms)[39m[39m
+[32m✔ mutation L18 the canvas is cleared to the fog colour again: applied, and caught by "renderer: the canvas is cleared to CLEAR…" [90m(10181.5026ms)[39m[39m
+[32m✔ mutation N3 a repeated key-down makes the key the newest again: applied, and caught by "a held key that repeats…" [90m(10126.3691ms)[39m[39m
+[32m✔ mutation N4 a key-up lets go of every key: applied, and caught by "releasing the OLDER…" [90m(10160.4907ms)[39m[39m
+[32m✔ mutation N5 the takeover re-fires every frame a key is held (C and B are undone): applied, and caught by "P3: C or B pressed while a movement key is held…" [90m(10164.3144ms)[39m[39m
+[32m✔ mutation E1 an OS key-repeat re-arms the takeover (W1: after C or B, a held W snaps back to free): applied, and caught by "W1: W held and REPEATING…" [90m(10285.4287ms)[39m[39m
+[32m✔ mutation E2 deltaX counts without Shift (W2: a sideways trackpad swipe zooms, or moves the lens): applied, and caught by "W2: a trackpad swipe SIDEWAYS…" [90m(10152.2597ms)[39m[39m
+[32m✔ mutation N6 the wheel ignores deltaX (Shift+wheel is dead on a device that reports it there): applied, and caught by "P5: Shift+wheel is ×4…" [90m(10196.3109ms)[39m[39m
+[32m✔ mutation N7 the key action is looked up by the physical key name, not fixed at key-down: applied, and caught by "P2: a key that flies by its label…" [90m(10186.1658ms)[39m[39m
+[32m✔ mutation N8 the overhead never slides to the head (a black view on a curved track): applied, and caught by "overhead zoomed in (0.05 to 50)…" [90m(10076.3692ms)[39m[39m
+[32m✔ mutation N9 the overhead slides to the head at half the rate: applied, and caught by "overhead zoomed in (0.05 to 50)…" [90m(10164.9119ms)[39m[39m
+[32m✔ mutation N10 the overhead slides past the box centre when zoomed OUT: applied, and caught by "overhead at zoom 1 and out is unchanged…" [90m(9992.4873ms)[39m[39m
+[32m✔ mutation N11 the sprint never ramps (×4 for as long as Shift is held): applied, and caught by "keys: Shift held ramps the speed…" [90m(10061.0054ms)[39m[39m
+[32m✔ mutation N12 the ramp never resets on release (a second press starts at ×20): applied, and caught by "releasing Shift returns to ×1…" [90m(10082.3372ms)[39m[39m
+[32m✔ mutation N13 a blur does not reset the ramp: applied, and caught by "a blur resets the ramp…" [90m(10176.9977ms)[39m[39m
+[32m✔ mutation N14 the ramp is twice too slow (5 s to full): applied, and caught by "the sprint curve…" [90m(10061.759ms)[39m[39m
+[32m✔ mutation N15 the ramp stops at ×10: applied, and caught by "the sprint curve…" [90m(10117.4435ms)[39m[39m
+[32m✔ mutation N16 Enter blurs a text area too (it is a new line there): applied, and caught by "Enter in a text AREA…" [90m(10263.3092ms)[39m[39m
+[32m✔ mutation N17 Esc does not blur a field: applied, and caught by "Esc in a field lets go…" [90m(10131.1822ms)[39m[39m
+[32m✔ mutation N18 Enter does not blur a field: applied, and caught by "Enter in a text field or a number field…" [90m(10267.795ms)[39m[39m
+[32m✔ mutation N19 a click on the canvas leaves the field focused: applied, and caught by "a mouse-down on the canvas…" [90m(11131.3932ms)[39m[39m
+[32m✔ mutation N20 a number field swallows the camera keys: applied, and caught by "a NUMBER field lets the camera keys through…" [90m(11860.2979ms)[39m[39m
+[32m✔ mutation N21 a text field lets the camera keys through (typing moves the camera): applied, and caught by "a TEXT field swallows every camera key…" [90m(11974.3519ms)[39m[39m
+[32m✔ mutation N22 Ctrl+wheel dollies instead of zooming the lens: applied, and caught by "Ctrl+wheel is the LENS…" [90m(11446.1107ms)[39m[39m
+[32m✔ mutation N23 the plain wheel is the lens: applied, and caught by "the plain wheel is unchanged…" [90m(11040.5161ms)[39m[39m
+[32m✔ mutation N24 the middle click does not reset the lens: applied, and caught by "a middle click resets the lens…" [90m(11346.2697ms)[39m[39m
+[32m✔ mutation N25 the HUD never shows the fov: applied, and caught by "the HUD shows the fov…" [90m(12446.6329ms)[39m[39m
+[32m✔ mutation N26 the lens zooms the wrong way: applied, and caught by "the lens: a notch in narrows…" [90m(12177.2779ms)[39m[39m
+[32m✔ mutation N27 the lens is not clamped at 10°: applied, and caught by "the lens: a notch in narrows…" [90m(11831.1848ms)[39m[39m
+[32m✔ mutation N28 the pose ignores the lens: applied, and caught by "the lens changes the pose…" [90m(12915.6004ms)[39m[39m
+[32m✔ mutation D1 movement is newest-key-only again (a newer key zeroes the other axes: no diagonal): applied, and caught by "keys: W then D goes diagonally…" [90m(12839.3715ms)[39m[39m
+[32m✔ mutation D2 on one axis the OLDER key wins: applied, and caught by "on one axis the NEWER key wins…" [90m(11403.5496ms)[39m[39m
+[32m✔ mutation D3 both keys of an axis cancel (W and S held: stand still): applied, and caught by "on one axis the NEWER key wins…" [90m(11667.5324ms)[39m[39m
+[32m✔ mutation D4 a diagonal is not normalised (√2 times a straight line): applied, and caught by "keys: W then D goes diagonally…" [90m(10952.8063ms)[39m[39m
+[32m✔ mutation D5 a diagonal is normalised to the wrong length (÷ n², not ÷ n): applied, and caught by "three axes at once…" [90m(10826.8216ms)[39m[39m
+[32m✔ mutation D6 a newer key on an axis drops the older for good (no handover on release): applied, and caught by "on its release the…" [90m(10986.043ms)[39m[39m
+[32m✔ mutation D7 a key-up lets go of every key (the other axis stops too): applied, and caught by "releasing one key of a diagonal…" [90m(10759.0762ms)[39m[39m
+[32m✔ mutation D8 a repeated key-down makes the key the newer again: applied, and caught by "a held key that repeats…" [90m(10665.4209ms)[39m[39m
+[32m✔ mutation D9 the arrow keys stop turning while a movement key is held: applied, and caught by "the arrow (look) keys are not movement keys…" [90m(11985.7267ms)[39m[39m
+[34mℹ tests 99[39m
+[34mℹ suites 0[39m
+[34mℹ pass 99[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1079120.1741[39m
+
+[lockedD.js] exit 0 in 1079 s

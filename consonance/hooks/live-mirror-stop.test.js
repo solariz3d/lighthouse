@@ -54,7 +54,7 @@ test('quiescence is DELEGATED — the gate lives in state-sync.js and is not re-
 // mid-rewrite, or buries a broken sync under a reassuring "deferred".
 
 function withFakeSync(body, fn) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-hook-'));
+  const dir = require('../tools/scratch.js').mkdtemp('mirror-hook-');
   const tools = path.join(dir, 'tools');
   const hooks = path.join(dir, 'hooks');
   fs.mkdirSync(tools); fs.mkdirSync(hooks);
@@ -99,7 +99,7 @@ test('a clean push is reported as pushed, with a duration', () => {
 test('a missing state-sync.js is an error and NEVER a silent success', () => {
   // The done-vs-never-started failure, on this surface: an instrument that reports success when its
   // dependency is absent. This seat has shipped that bug and caught it repeatedly.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-hook-'));
+  const dir = require('../tools/scratch.js').mkdtemp('mirror-hook-');
   try {
     const hooks = path.join(dir, 'hooks'); const tools = path.join(dir, 'tools');
     fs.mkdirSync(hooks); fs.mkdirSync(tools);
@@ -145,7 +145,7 @@ function resolved(env) {
 }
 
 test('R-C1: nothing declared -> no state repo, ledger or obs dir is invented', () => {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-home-'));
+  const home = require('../tools/scratch.js').mkdtemp('mirror-home-');
   try {
     const r = resolved(bareEnv(home));
     assert.deepStrictEqual(r, { s: null, l: null, o: null },
@@ -155,7 +155,7 @@ test('R-C1: nothing declared -> no state repo, ledger or obs dir is invented', (
 });
 
 test('R-C1: ~/.consonance.json state_dir and data_dir are honoured when env is absent', () => {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-home-'));
+  const home = require('../tools/scratch.js').mkdtemp('mirror-home-');
   try {
     const st = path.join(home, 'st'), dd = path.join(home, 'dd');
     fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ state_dir: st, data_dir: dd }));
@@ -166,7 +166,7 @@ test('R-C1: ~/.consonance.json state_dir and data_dir are honoured when env is a
 
 // ── L069 (pane E): ONE env name for the state dir — CONSONANCE_STATE, as state-sync.js and close.js read it ──
 test('L069: CONSONANCE_STATE wins over state_dir, and the retired CONSONANCE_STATE_REPO is not read', () => {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-home-'));
+  const home = require('../tools/scratch.js').mkdtemp('mirror-home-');
   try {
     fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ state_dir: path.join(home, 'cfg') }));
     assert.strictEqual(resolved(bareEnv(home, { CONSONANCE_STATE: path.join(home, 'env') })).s, path.join(home, 'env'));
@@ -176,7 +176,7 @@ test('L069: CONSONANCE_STATE wins over state_dir, and the retired CONSONANCE_STA
 });
 
 test('R-C1: an undeclared state repo is a LOUD skip naming the fix, not a lease attempt', () => {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-home-'));
+  const home = require('../tools/scratch.js').mkdtemp('mirror-home-');
   try {
     const ledger = path.join(home, 'ledger.jsonl');
     // The seat is given BOTH ways — stdin and the process cwd — because on Windows readStdin() never

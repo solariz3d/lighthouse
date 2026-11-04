@@ -1,0 +1,16 @@
+[32m✔ row 1: one press closes a near lap AT ONCE: one undo step, the line says what it did, and Undo gives the open lap back [90m(1212.5128ms)[39m[39m
+[32m✔ row 2: when no way of closing proves, nothing changes: the same document, a line that says why, and no copy written [90m(3931.343ms)[39m[39m
+[32m✔ row 6: a refused export names EVERY red in plain words, grouped, with where (not the export's first id) [90m(107.8483ms)[39m[39m
+[32m✔ row 7: the press writes the copy from BEFORE the close first (backupNow('pre-close'), the D239 amendment); a copy that fails refuses it by name; an edit while the copy is written is never closed over [90m(4045.8948ms)[39m[39m
+[34mℹ tests 4[39m
+[34mℹ suites 0[39m
+[34mℹ pass 4[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 9416.9815[39m
+
+# stderr
+
+# exit 0 in 9.5 s

@@ -1,0 +1,20 @@
+track | pieces (road / with a bank change) | document sha base = new | exported geometry sha base = new | largest bank change at any 0.5 m station (°)
+eq-CRAZY TEST.t180track | 13 (13 / 3) | 7347e61c334596cc = 7347e61c334596cc | 60961cd44df80562 = 60961cd44df80562 | 0
+eq-ELYSIUM.t180track | 44 (44 / 23) | 3452907a5e4ccfff = 3452907a5e4ccfff | a76231001820ce74 = a76231001820ce74 | 0
+eq-FINAL TEST.t180track | 6 (6 / 0) | 0dc45cc4bdd0d238 = 0dc45cc4bdd0d238 | 37b0bc50901a6b47 = 37b0bc50901a6b47 | 0
+eq-FIRST TRACK.t180track | 23 (23 / 7) | f3db94ab4a6cca63 = f3db94ab4a6cca63 | e0fb517b94e7f448 = e0fb517b94e7f448 | 0
+eq-HUMP BUG.t180track | 3 (3 / 0) | 8dc7b717272c2769 = 8dc7b717272c2769 | b5bb85e190256308 = b5bb85e190256308 | 0
+eq-T-180 OVAL.t180track | 6 (6 / 4) | 794c50efe6f64f2d = 794c50efe6f64f2d | c65e130980f8b9de = c65e130980f8b9de | 0
+eq-T-180 TUBE OVAL.t180track | 6 (6 / 0) | 05220c1769374bbc = 05220c1769374bbc | 37b0bc50901a6b47 = 37b0bc50901a6b47 | 0
+eq-T180 TUBE V2.t180track | 6 (6 / 0) | 0dc45cc4bdd0d238 = 0dc45cc4bdd0d238 | 37b0bc50901a6b47 = 37b0bc50901a6b47 | 0
+eq-TEST 1 recovered.t180track | 46 (46 / 28) | d7d82338b257e01e = d7d82338b257e01e | 73dd9a9f22e38ec1 = 73dd9a9f22e38ec1 | 0
+eq-TEST 1.t180track | 46 (46 / 28) | 9e6f7be8c8c101b8 = 9e6f7be8c8c101b8 | 68794bfa4ba09179 = 68794bfa4ba09179 | 0
+eq-TEST 10.t180track | 23 (23 / 11) | 6b4e8cf0822b57d2 = 6b4e8cf0822b57d2 | 5c28fd8ecb6c1735 = 5c28fd8ecb6c1735 | 0
+eq-TEST OVAL.t180track | 6 (6 / 2) | cab1a3b067ce9ef6 = cab1a3b067ce9ef6 | 6ece4f69de4b9405 = 6ece4f69de4b9405 | 0
+eq-TEST TRACK 10.t180track | 44 (44 / 23) | 4045b7b3e35fcf80 = 4045b7b3e35fcf80 | a76231001820ce74 = a76231001820ce74 | 0
+eq-TEST TRACK 3.t180track | 7 (7 / 0) | 44d3e93570f3ed28 = 44d3e93570f3ed28 | 634dea684134ae2c = 634dea684134ae2c | 0
+eq-TEST.t180track | 6 (6 / 4) | 763299a01b5e5192 = 763299a01b5e5192 | 0f8d0794c2afa5db = 0f8d0794c2afa5db | 0
+eq-TRACK 2.t180track | 24 (23 / 7) | 5b9ec8083e6f0cc7 = 5b9ec8083e6f0cc7 | cfc2589559150c37 = cfc2589559150c37 | 0
+eq-test bump.t180track | 1 (1 / 1) | f976a94f41f69641 = f976a94f41f69641 | 7222d9a9cb284f22 = 7222d9a9cb284f22 | 0
+pieces autosave 2026-10-06.t180track | skipped: not a core document (BAD_DOC)
+tracks that would export differently: 0

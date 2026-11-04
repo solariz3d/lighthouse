@@ -1,0 +1,4 @@
+f44f76e Version 0.4.36
+bf0e7c1 Test comments name the user, not an internal role
+8fb6ecc Edge apron: drawn as its physics again, in the road's asphalt; the pit lane's apron closed at its ends
+e727a6c Edge apron: back to the drawn plank in the road's asphalt, with no lip

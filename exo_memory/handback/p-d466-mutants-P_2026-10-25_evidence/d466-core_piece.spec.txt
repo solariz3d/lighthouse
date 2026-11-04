@@ -1,0 +1,53 @@
+[32m✔ row 1: the relative form: a state is its change from the run's start (first point 0) plus the start, a rate is as the document holds it, and putting them back is EXACT, on real adjusted laps of all three kinds [90m(295.211ms)[39m[39m
+[32m✔ row 1b: the text is canonical: a stable key order, one piece to a line, a final newline; parse(serialize(p)) is p and serialize of it is the same text; the piece is frozen [90m(121.7774ms)[39m[39m
+[32m✔ row 2 (REQUIRED, legacy): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice [90m(3863.7706ms)[39m[39m
+[32m✔ row 2 (REQUIRED, cup): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice [90m(6989.2087ms)[39m[39m
+[32m✔ row 2 (REQUIRED, tube): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice [90m(30306.0505ms)[39m[39m
+[32m✔ row 2b: put where the run does NOT already start (a different head) the export of the result is still the document's own: it exports, and builds the same as the same document made by hand would [90m(81.9977ms)[39m[39m
+[32m✔ row 3: at a DIFFERENT head the run continues from it: the document accepts it, the joint's values and slopes meet, the change across the run is the saved one, and the rates after the first span are the saved ones [90m(243.665ms)[39m[39m
+[32m✔ row 3b: it can be added again and again: a saved bend added three times in a row is a valid track and each copy continues the one before [90m(81.6633ms)[39m[39m
+[32m✔ row 3c: what a head does not carry is continued as Extend continues it: a tube after a cup starts at twice the cup's edge, a cup after a tube at t/2, and a hill or swerve that has not faded carries on into the run (the rest of the run is as saved) [90m(284.6265ms)[39m[39m
+[32m✔ row 4: "keep its own start values" adds the pieces exactly as saved: refused by name (PIECE_START) where they do not meet the head, accepted where they do; on an empty track a run goes in as saved [90m(74.1154ms)[39m[39m
+[32m✔ row 4b: refused by name: a legacy run after a cup or a tube (PIECE_KIND), a closed track (CLOSED), a run that starts with a jump on an empty track, a jump after offsets that have not faded [90m(188.2981ms)[39m[39m
+[32m✔ row 5: the mirror: a mirrored run's path is the mirror image of the original's (x flips; height, distance along and the bank's size do not), with a bank, a hill and a swerve in it; and at a head it is still a valid track [90m(70.4958ms)[39m[39m
+[32m✔ row 6: jumps in a run: a run with a flight in the middle and one that starts with a flight are saved with their flights as they were, and go in at another head [90m(7.5436ms)[39m[39m
+[32m✔ row 6c: a run that starts with a jump goes in exactly as saved after a curving, climbing, banked head (mirrored too); a landing that does not start level is refused by name (LANDING) [90m(1.9178ms)[39m[39m
+[32m✔ row 7: NO PIECE MAKES A DOCUMENT THE DOCUMENT WOULD REFUSE: every kind of run against every kind of head either goes in as a valid track or is refused by a CoreError, never a crash and never a bad document [90m(1580.1082ms)[39m[39m
+[32m✔ row 8: a malformed file is refused BY NAME, case by case (the good one still reads) [90m(3972.1215ms)[39m[39m
+[32m✔ row 8b: a mixed run is refused at SAVE too (MIXED_RUN), and a run of one kind with an edge is a kind of its own [90m(3.0311ms)[39m[39m
+[32m✔ row 9: ranges, names, limits and the summary a library list shows [90m(252.0288ms)[39m[39m
+[32m✔ row 8c: numbers are quantised as they enter, like a document's: a value finer than its channel's step is snapped [90m(132.9527ms)[39m[39m
+[32m✔ row 1c: the start is the FIRST road's first values (states that change from piece to piece, a jump before the road), every stored state number is on its grid, and random pieces come back exactly [90m(16.7467ms)[39m[39m
+[32m✔ row 5b: a mirror flips the bank EXACTLY, the start bank included (a run that starts banked), the turn and the swerve; width and rise stay [90m(2.7984ms)[39m[39m
+[32m✔ row 6b: a run that starts with a jump, put at a head that is TURNING and CLIMBING, has its road after the jump start level (turn and climb 0) with its own saved width [90m(0.8162ms)[39m[39m
+[32m✔ row 4c: a closed track says CLOSED whatever the run is: a legacy run into a closed CUP track is CLOSED, not PIECE_KIND (the kind is the second question) [90m(118.1401ms)[39m[39m
+[32m✔ row 10a: at the open end the pieces simply go: the same document with fewer pieces, the ids kept and not reused, and inserting a saved run then deleting it gets back the track [90m(8.2551ms)[39m[39m
+[32m✔ row 10b: in the middle, when the two sides already join (the deleted run began and ended in the same state) nothing is changed anywhere [90m(0.6516ms)[39m[39m
+[32m✔ row 10c (legacy): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved [90m(1.1392ms)[39m[39m
+[32m✔ row 10c (cup): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved [90m(3.1793ms)[39m[39m
+[32m✔ row 10c (tube): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved [90m(0.5386ms)[39m[39m
+[32m✔ row 10h: a tube after a CUP head starts at twice the edge of the cup (tNext), so the rendered edge is continuous across the re-join [90m(3.1671ms)[39m[39m
+[32m✔ row 10d: jumps: deleting the road before a jump, a jump itself, and the road after it each give a valid track with the jump kept (or its own refusal), the far side untouched [90m(0.6903ms)[39m[39m
+[32m✔ row 10i: deleting the road between two jumps is REFUSED BY NAME (DELETE_REJOIN, naming land on road first), and nothing is touched [90m(0.9257ms)[39m[39m
+[32m✔ row 10j: a run that starts with a jump, added at a head that IS a jump, is refused by name (JUMP_AFTER_JUMP); at a road head it goes in (control) [90m(0.9569ms)[39m[39m
+[32m✔ row 11a: across a closed lap's start line the run is the pieces either side of it, in lap order, and putting it back gives those very pieces (legacy, cup, tube) [90m(229.552ms)[39m[39m
+[32m✔ row 11b: a lap whose bank turns WHOLE times round (TEST 1 ends at -4π): across the line the bank is carried on by those turns, so the run is kept, C1, leaning as the lap leans [90m(96.4467ms)[39m[39m
+[32m✔ row 11c: a closed lap whose road is NOT smooth across its start line (a hand-edited width step there) is refused BY NAME across it (SEAM_RUN); either side alone is kept [90m(49.0653ms)[39m[39m
+[32m✔ row 11d: on an OPEN track from > to is still BAD_RANGE, and a closed lap's out-of-range ends are too [90m(68.3486ms)[39m[39m
+[32m✔ row 10k: a piece FILE that starts with two jumps is refused when it is READ (JUMP_AFTER_JUMP), so the library lists why; one leading jump reads (control) [90m(1.6954ms)[39m[39m
+[32m✔ row 10e: REFUSED BY NAME (DELETE_REJOIN), nothing deleted and nothing reshaped: a jump left with no road before it, and a re-join a limit of the document refuses (a tube held in the slot band) [90m(0.8677ms)[39m[39m
+[32m✔ row 10f: a closed track has no open end (CLOSED); a range that is not in the track is BAD_RANGE [90m(59.1469ms)[39m[39m
+[32m✔ row 10g: EVERY range of every kind of track either goes through as a valid document with only the joint touched, or is refused by name (DELETE_REJOIN): never another error, never an invalid document [90m(9.5743ms)[39m[39m
+[32m✔ row 9b: a run at the limit (2,000 pieces) parses in well under 2 s, and a broken joint at its last piece is still refused BY NAME [90m(61.6543ms)[39m[39m
+[34mℹ tests 41[39m
+[34mℹ suites 0[39m
+[34mℹ pass 41[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 49400.9383[39m
+
+# stderr
+
+# exit 0 in 49.4 s

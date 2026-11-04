@@ -1,0 +1,31 @@
+launched pid 40252; track ELYSIUM
+ok   launch (1.5 s): menus ready
+windows on the user's desktop: 0
+  12.2 s open: 704 MB (page 388, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 311)
+  [open loop 9] headAt 8.2 still 0 prev 1002 last sample 16.3 841 closed false
+  22.3 s open: 935 MB (page 449, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 481)
+  [open loop 19] headAt 8.2 still 4 prev 927 last sample 26.4 933 closed false
+  32.4 s open: 760 MB (page 456, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300)
+  [open loop 29] headAt 8.2 still 3 prev 750 last sample 36.5 756 closed false
+  42.5 s open: 753 MB (page 448, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300)
+  [open loop 39] headAt 8.2 still 13 prev 755 last sample 46.6 756 closed false
+  52.6 s open: 760 MB (page 456, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300)
+ok   open (47.6 s): loaded: head shown at 2.1 s, still from 27.5 s; peak 1002 MB at 15.3 s (page 564, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 433); settled 760 MB (page 45
+  64.2 s install: 1116 MB (page 538, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 59, c4c836ef-a506-45d0-a984-ad8589#5 215)
+  74.3 s install: 1302 MB (page 542, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 59, c4c836ef-a506-45d0-a984-ad8589#5 397)
+  84.4 s install: 1110 MB (page 545, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 259)
+  94.5 s install: 1304 MB (page 549, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 449)
+  104.5 s install: 1638 MB (page 551, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 783)
+  114.6 s install: 1656 MB (page 456, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 895)
+  124.7 s install: 1435 MB (page 459, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 671)
+  135.0 s install: 1617 MB (page 462, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 850)
+  144.9 s install: 1497 MB (page 458, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 733)
+  155.0 s install: 1689 MB (page 456, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 928)
+  165.1 s install: 1543 MB (page 480, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 758)
+  175.2 s install: 1511 MB (page 477, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 729)
+  185.3 s install: 1315 MB (page 439, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 300, srcdoc#4 1, c4c836ef-a506-45d0-a984-ad8589#5 570)
+ok   install (135.7 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  |  | end heading 180.00°, on the 90° grid | expo | files 10, kn5 209117985 B; peak 1886 MB at 108.6 s (page 
+crashes 0; page errors 0; samples 183; overall peak 1886 MB at 108.6 s (page 552, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 300, iframe:about:srcdoc#4 1, worker:c4c836ef-a506-45d0-a984-ad8589#5 1029)
+SOCKET CLOSED {"t":"192.7","what":"the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20","mark":"install"}
+killed pid 40252; t180-track-builder.exe left running: 0
+exit 0

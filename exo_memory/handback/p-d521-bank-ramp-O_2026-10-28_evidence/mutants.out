@@ -1,0 +1,14 @@
+CONTROL: tests 44 pass 44 fail 0
+M1 the rounded shape is never used: caught (2 failed)
+M2 the knots where the rate turns are not added: caught (2 failed)
+M3 only the knots at l, not at l/2: caught (2 failed)
+M11 the bank is not refitted on the inserted knots: caught (2 failed)
+M12 the bank is refitted but not pinned C2 at its ends: caught (2 failed)
+M4 the rounding is a quarter of every ramp: caught (1 failed)
+M5 the rounding is 10 m even on a short ramp: caught (1 failed)
+M6 the rate rises linearly (the bank's curvature steps at the joint): caught (1 failed)
+M7 every cross-section channel is rounded, not only the bank: caught (1 failed)
+M8 an unknown shape is not refused: caught (1 failed)
+M9 the rounded shape is the default for every caller: caught (2 failed)
+M10 the panel never asks for it: caught (1 failed)
+applied 12 / caught 12 / NOT APPLIED 0 / NOT TESTED 0

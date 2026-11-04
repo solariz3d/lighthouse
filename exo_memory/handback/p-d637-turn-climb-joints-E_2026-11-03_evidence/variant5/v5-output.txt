@@ -1,0 +1,32 @@
+ELYSIUM NEW as built: joints U>mid 27 (>2× 22), L>mid 22 (>2× 19); worst joint jerk U 533.2, L 660.0 g/s | route: largest centre-line move 0.000 m, end heading 0.0000°, closure gap 0.0000 m | ramps centred 0, overshoot 0% (monotone by construction)
+    p10|p11: U 504 g/s at -12 m (mid 234); L 660 at -13 m (mid 221)
+    p11|p12: U 182 g/s at 19 m (mid 161); L 216 at 19 m (mid 192)
+    p12|p13: U 533 g/s at -13 m (mid 161); L 635 at -13 m (mid 192)
+    p13|p14: U 65 g/s at -17 m (mid 95); L 577 at -13 m (mid 115)
+    p14|p15: U 363 g/s at -11 m (mid 95); L 453 at -13 m (mid 88)
+    p32|p33: U 134 g/s at 5 m (mid 3); L 81 at 5 m (mid 5)
+    p33|p34: U 290 g/s at 5 m (mid 3); L 233 at 5 m (mid 5)
+ELYSIUM NEW centred (all 29): joints U>mid 26 (>2× 19), L>mid 19 (>2× 13); worst joint jerk U 533.2, L 660.0 g/s | route: largest centre-line move 10.297 m, end heading 0.0009°, closure gap 6.7644 m | ramps centred 29, overshoot 0% (monotone by construction)
+    p10|p11: U 504 g/s at -12 m (mid 234); L 660 at -13 m (mid 221)
+    p11|p12: U 182 g/s at 19 m (mid 161); L 216 at 19 m (mid 192)
+    p12|p13: U 533 g/s at -13 m (mid 161); L 635 at -13 m (mid 192)
+    p13|p14: U 65 g/s at -17 m (mid 95); L 577 at -13 m (mid 115)
+    p14|p15: U 363 g/s at -11 m (mid 95); L 453 at -13 m (mid 88)
+    p32|p33: U 29 g/s at 7 m (mid 6); L 14 at 3 m (mid 13)
+    p33|p34: U 41 g/s at 5 m (mid 12); L 19 at -23 m (mid 18)
+    p32 kv: Δκ 6.807e-4, ramp 0–16.0 m centred at 5.62 m, now ±10.0 m, reaching 4.4 m back into the piece before
+    p33 kh: Δκ -4.346e-3, ramp 0–16.0 m centred at 5.62 m, now ±64.1 m, reaching 58.5 m back into the piece before
+    p33 kv: Δκ -2.513e-3, ramp 0–16.0 m centred at 5.62 m, now ±37.1 m, reaching 31.4 m back into the piece before
+    p34 kh: Δκ 5.428e-3, ramp 0–16.0 m centred at 5.62 m, now ±80.0 m, reaching 74.4 m back into the piece before
+    p34 kv: Δκ 2.897e-3, ramp 0–16.0 m centred at 5.62 m, now ±42.7 m, reaching 37.1 m back into the piece before
+ELYSIUM NEW centred, p33 alone: joints U>mid 27 (>2× 22), L>mid 22 (>2× 19); worst joint jerk U 533.2, L 660.0 g/s | route: largest centre-line move 0.241 m, end heading -0.0001°, closure gap 0.2389 m | ramps centred 2, overshoot 0% (monotone by construction)
+    p10|p11: U 504 g/s at -12 m (mid 234); L 660 at -13 m (mid 221)
+    p11|p12: U 182 g/s at 19 m (mid 161); L 216 at 19 m (mid 192)
+    p12|p13: U 533 g/s at -13 m (mid 161); L 635 at -13 m (mid 192)
+    p13|p14: U 65 g/s at -17 m (mid 95); L 577 at -13 m (mid 115)
+    p14|p15: U 363 g/s at -11 m (mid 95); L 453 at -13 m (mid 88)
+    p32|p33: U 29 g/s at 7 m (mid 4); L 14 at 3 m (mid 5)
+    p33|p34: U 290 g/s at 5 m (mid 4); L 233 at 5 m (mid 5)
+    p33 kh: Δκ -4.346e-3, ramp 0–16.0 m centred at 5.62 m, now ±64.1 m, reaching 58.5 m back into the piece before
+    p33 kv: Δκ -2.513e-3, ramp 0–16.0 m centred at 5.62 m, now ±37.1 m, reaching 31.4 m back into the piece before
+    p33 alone: p32's end (the joint, s 18353) moves 0.056 m; the road after it moves at most 0.241 m (the offset a centred ramp leaves)

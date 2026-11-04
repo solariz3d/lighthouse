@@ -1,0 +1,8 @@
+== t180-wt-c483-base
+F8-mixed-families: DIFFERS in segs, mesh, meshParts
+F9-empty: identical
+6 of 9 differ
+== t180-wt-c483
+F8-mixed-families: DIFFERS in segs, mesh, meshParts
+F9-empty: identical
+6 of 9 differ

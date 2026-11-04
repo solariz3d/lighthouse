@@ -1,0 +1,118 @@
+MESSAGE 56  msg_011CfnaJmtrNQn733H44bbSc  seat C  ts 2026-10-07T08:39:09.645Z  turn L57139..L57169 (next prompt L57184)
+CLAIMS:
+  [msg_011CfnaJmtrNQn733H44bbSc|1] "Version 0.3.1 (D266)": the version number and decision/ticket ID.
+  [msg_011CfnaJmtrNQn733H44bbSc|14] "its line arrives in [Unreleased] with E's cherry-pick and is moved under [0.3.1] at landing (expected)": confirm this matches the agreed process (keeper instruction or release doc). Note it conflicts with "after e is done": the release is being cut before E landed.
+  [msg_011CfnaJmtrNQn733H44bbSc|18] "Under the heavy-run lock": the lock was actually held during the run.
+
+--- L57139 user 2026-10-07T08:37:20.497Z
+USER: 
+
+<pasted_content id="e180">
+[chair:MAIN] D266 release: version 0.3.1. DOC tier, no code change. The keeper, 02:36: "after e is done do the new release with it". v0.3.1 = A's cheap drag ghost plus E's big-tube crash fix.
+BASE: branch rel-031-base (e6494e3: A's 8cf4430 cherry-picked onto 4afddb2, your 0.3.0 commit). Same shape as your 0.3.0 commit:
+- src-tauri/tauri.conf.json, src-tauri/Cargo.toml, and Cargo.lock's own entry → 0.3.1;
+- CHANGELOG [Unreleased] → [0.3.1] - 2026-10-07, with a fresh empty [Unreleased];
+- the README's install line and release link → v0.3.1 (https://github.com/solariz3d/t180-track-builder/releases/tag/v0.3.1);
+- docs/RELEASE.md → 0.3.1.
+Commit it on rel-031-base now. E's fix has NOT landed yet, so its CHANGELOG line will come in [Unreleased] via E's cherry-pick, and the librarian moves it under [0.3.1] at landing; say in the hand-back that this is expected. Re-run your version/doc targeted tests plus cargo metadata, under the lock.
+Hand-back: a "0.3.1" section in exo_memory/handback/p-release030-C_2026-10-07.md, plus your map line.
+SOURCES: `git log --oneline -2 e6494e3`
+NEXT: librarian call_librarian with the hand-back pointer and the 0.3.1 sha when committed — plan default after it: the librarian lands E's fix on top and publishes v0.3.1
+</pasted_content id="e180">
+
+--- L57150 assistant 2026-10-07T08:37:35.839Z
+TOOL_USE Bash [toolu_015pB1naDn3uc2a3W9YQ5LKu]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-release030-wt && git log --oneline -2 e6494e3 && git worktree list | grep -i \"rel-031\" ; git worktree add -q ../c-release031-wt rel-031-base 2>&1 | tail -2; cd ../c-release031-wt && git log --oneline -1 && git status --short && git grep -n -F \"0.3.0\" -- src-tauri/tauri.conf.json src-tauri/Cargo.toml src-tauri/Cargo.lock README.md docs/RELEASE.md CHANGELOG.md | cut -c1-200; sed -n 1,12p CHANGELOG.md | cut -c1-160","description":"Create worktree on rel-031-base and find 0.3.0 occurrences"}
+--- L57151 user 2026-10-07T08:37:36.811Z
+RESULT [toolu_015pB1naDn3uc2a3W9YQ5LKu]: e6494e3 D266 item 2: the ghost is cheap while an Extend handle is dragged (a 1000 m tube step 510 ms -> 95 ms)
+4afddb2 Version 0.3.0: the first GitHub release (D265 step 2)
+e6494e3 D266 item 2: the ghost is cheap while an Extend handle is dragged (a 1000 m tube step 510 ms -> 95 ms)
+CHANGELOG.md:11:## [0.3.0] - 2026-10-07
+CHANGELOG.md:153:this then (0.2.2 below was still the one to install); 0.3.0 is the first that is.
+README.md:16:**The current installer is 0.3.0** (2026-10-07), `T-180 Track Builder_0.3.0_x64-setup.exe`, from the
+README.md:17:[v0.3.0 release](https://github.com/solariz3d/t180-track-builder/releases/tag/v0.3.0). What changed since 0.2.2 is listed under
+README.md:18:`[0.3.0]` in [`CHANGELOG.md`](CHANGELOG.md). To run newer work than the release, build it from source (below).
+docs/RELEASE.md:1:# Release: T-180 Track Builder 0.3.0
+docs/RELEASE.md:15:`src-tauri/target/release/bundle/nsis/T-180 Track Builder_0.3.0_x64-setup.exe`, or under `$CARGO_TARGET_DIR` if that is
+src-tauri/Cargo.lock:28:version = "0.3.0"
+src-tauri/Cargo.lock:3001:version = "0.3.0"
+src-tauri/Cargo.toml:3:version = "0.3.0"
+src-tauri/tauri.conf.json:4:  "version": "0.3.0",
+# Changelog
+
+All notable changes to this project are recorded here. The format follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
+
+## [Unreleased]
+
+### Changed
+- **Dragging a handle on a very long piece is cheap: the ghost is drawn coarse until the release (D266 item 2; the keeper, 01:49: "when making very long turn li
+
+## [0.3.0] - 2026-10-07
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L57155 assistant 2026-10-07T08:37:51.807Z
+TOOL_USE Bash [toolu_01L9xf4noEcVUaP4BmvF17Wc]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; sed -n 27,28p /c/Users/nname/Desktop/worktrees/c-release031-wt/src-tauri/Cargo.lock; head -12 $S/rel/bump.js > $S/rel/bump031.js && cat >> $S/rel/bump031.js <<'EOF'\nedit('src-tauri/tauri.conf.json', [['\"version\": \"0.3.0\",', '\"version\": \"0.3.1\",']]);\nedit('src-tauri/Cargo.toml', [['name = \"t180-track-builder\"\\nversion = \"0.3.0\"', 'name = \"t180-track-builder\"\\nversion = \"0.3.1\"']]);\nedit('src-tauri/Cargo.lock', [['name = \"t180-track-builder\"\\nversion = \"0.3.
+…[1164 chars cut]…
+ude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/rel/bump031.js . && git diff --stat && git diff | grep '^[-+][^-+]' | cut -c1-200 && sed -n 1,14p CHANGELOG.md | cut -c1-100","description":"Apply 0.3.1 bump and show the diff"}
+--- L57156 user 2026-10-07T08:37:52.320Z
+RESULT [toolu_01L9xf4noEcVUaP4BmvF17Wc]: name = "alloc-stdlib"
+version = "0.3.0"
+edited src-tauri/tauri.conf.json CRLF
+edited src-tauri/Cargo.toml CRLF
+edited src-tauri/Cargo.lock CRLF
+edited CHANGELOG.md CRLF
+edited README.md CRLF
+edited docs/RELEASE.md CRLF
+ CHANGELOG.md              | 2 ++
+ README.md                 | 6 +++---
+ docs/RELEASE.md           | 4 ++--
+ src-tauri/Cargo.lock      | 2 +-
+ src-tauri/Cargo.toml      | 2 +-
+ src-tauri/tauri.conf.json | 2 +-
+ 6 files changed, 10 insertions(+), 8 deletions(-)
++## [0.3.1] - 2026-10-07
+-**The current installer is 0.3.0** (2026-10-07), `T-180 Track Builder_0.3.0_x64-setup.exe`, from the
+-[v0.3.0 release](https://github.com/solariz3d/t180-track-builder/releases/tag/v0.3.0). What changed since 0.2.2 is listed under
+-`[0.3.0]` in [`CHANGELOG.md`](CHANGELOG.md). To run newer work than the release, build it from source (below).
++**The current installer is 0.3.1** (2026-10-07), `T-180 Track Builder_0.3.1_x64-setup.exe`, from the
++[v0.3.1 release](https://github.com/solariz3d/t180-track-builder/releases/tag/v0.3.1). What changed since 0.2.2 is listed under
++`[0.3.1]` and `[0.3.0]` in [`CHANGELOG.md`](CHANGELOG.md). To run newer work than the release, build it from source (below).
+-# Release: T-180 Track Builder 0.3.0
++# Release: T-180 Track Builder 0.3.1
+-`src-tauri/target/release/bundle/nsis/T-180 Track Builder_0.3.0_x64-setup.exe`, or under `$CARGO_TARGET_DIR` if that is
++`src-tauri/target/release/bundle/nsis/T-180 Track Builder_0.3.1_x64-setup.exe`, or under `$CARGO_TARGET_DIR` if that is
+-version = "0.3.0"
++version = "0.3.1"
+-version = "0.3.0"
++version = "0.3.1"
+-  "version": "0.3.0",
++  "version": "0.3.1",
+# Changelog
+
+All notable changes to this project are recorded here. The format follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](
+
+## [Unreleased]
+
+## [0.3.1] - 2026-10-07
+
+### Changed
+- **Dragging a handle on a very long piece is cheap: the ghost is drawn coarse until the release (D2
+
+## [0.3.0] - 2026-10-07
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L57159 assistant 2026-10-07T08:38:00.290Z
+TEXT: A's drag-ghost entry is now inside `[0.3.1]`, and `alloc-stdlib`'s 0.3.0 at Cargo.lock:28 is untouched. Running the tests and the lock check:
+--- L57160 assistant 2026-10-07T08:38:05.560Z
+TOOL_USE Bash [toolu_016xCr8WJJeTt8XCpvUcYJy7]: {"command":"S=C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; W=C:/Users/nname/Desktop/worktrees/c-release031-wt; for k in $(seq 1 20); do node $S/lockrun.js \"D266 0.3.1 targeted\" $S/rel/run4.log -- \"cd $W && set -o pipefail && node --test --test-concurrency=1 test/release.test.js app/test/guides.test.js app/test/shell-dist.test.js app/test/closer.test.js app/test/core-eqonly.test.js app/test/export.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail|todo|skipped)|^✖|not ok'; cd src-tauri && /c/Users/nname/.cargo/bin/cargo.exe metadata --locked --
+…[81 chars cut]…
+=require('$S/rel/meta031.json').packages[0];console.log('cargo-locked-ok',p.name,p.version)\\\"\"; e=$?; [ $e -ne 3 ] && break; done; grep -vE '^(\\$|== D266)' $S/rel/run4.log | tail -8","description":"Run targeted tests and cargo lock check for 0.3.1","timeout":600000}
+--- L57167 user 2026-10-07T08:38:54.450Z
+RESULT [toolu_016xCr8WJJeTt8XCpvUcYJy7]: [34mℹ tests 111[39m
+[34mℹ pass 111[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+cargo-locked-ok t180-track-builder 0.3.1
+== exit 0 · done 2026-10-07T08:38:54.413Z
+--- L57169 assistant 2026-10-07T08:39:09.645Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01Ebo4MjV2Hiixdo7dQKJ61g]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-release031-wt && git commit -q -F - -- CHANGELOG.md README.md docs/RELEASE.md src-tauri/Cargo.lock src-tauri/Cargo.toml src-tauri/tauri.conf.json <<'EOF' && git log --oneline -3 && git status --short\nVersion 0.3.1 (D266)\n\nSeat C (pane C), at the keeper's 02:36 (\"after e is done do the new\nrelease with it\"). DOC tier, no code. On rel-031-base (e6494e3: A's cheap\ndrag ghost on the 0.3.0 commit 4afddb2). Same shape as 0.3.0:\n\n- tauri.conf.json, Cargo.toml and the t180-track-builder entry of\n  Cargo.lock: 0.3.0 -> 0.3.1 (alloc-stdlib's own 0.3.0 in Cargo.lock is\n  left as is). `cargo metadata --locked` agrees.\n- CHANGELOG: [Unreleased] -> [0.3.1] - 2026-10-07 with a fresh empty\n  [Unreleased]; A's D266 item 2 entry is inside 0.3.1. E's big-tube crash\n  fix has not landed: its line arrives in [Unreleased] with E's\n  cherry-pick and is moved under [0.3.1] at landing (expected).\n- README Install: 0.3.1 is the current installer, linking the v0.3.1\n  release; changes since 0.2.2 under [0.3.1] and [0.3.0].\n- docs/RELEASE.md: 0.3.1 title and installer path.\n\nUnder the heavy-run lock: test/release, app/test/guides, shell-dist,\ncloser, core-eqonly, export: 111/111.\n\nCo-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_017jVCxaAah7YfDwfSsgsdXy\nEOF","description":"Commit 0.3.1 by named paths"}

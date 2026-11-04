@@ -17,7 +17,7 @@ const TOOL = path.join(__dirname, 'jev-shadow-runner.js');
 const KEY = ['test', 'only', 'runner', 'key', '9b2d'].join('-');
 
 function fixture() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-'));
+  const root = require('./scratch.js').mkdtemp('jev-runner-');
   const shell = path.join(root, 'shell'), disc = path.join(root, 'lighthouse'), store = path.join(root, 'store');
   for (const d of ['hooks', 'l2-jobs', 'l3-jobs']) fs.mkdirSync(path.join(shell, d), { recursive: true });
   fs.mkdirSync(disc);
@@ -410,7 +410,7 @@ test('CAP in the runner: the SHADOW stops at its reserve even when the day has r
 // (hashes, not text) are kept forever. The prune reads only <store>/judge-captures, and deletes only there.
 const DAY = 24 * 3600 * 1000;
 function retentionStore() {
-  const store = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-retain-'));
+  const store = require('./scratch.js').mkdtemp('jev-retain-');
   const caps = path.join(store, 'judge-captures');
   fs.mkdirSync(caps, { recursive: true });
   const now = Date.parse('2026-09-22T10:00:00.000Z');
@@ -459,8 +459,12 @@ test('RETAIN: the prune never touches anything OUTSIDE the capture directory —
     w.put(path.join(w.caps, 'nested'), 'deep.json', 30),
     w.put(path.join(w.store, '..', path.basename(w.store) + '-sibling'), 'x.json', 30),
   ];
-  const r = R.pruneJudgeCaptures({ store: w.store, now: () => new Date(w.now) });
+  const sibling = path.join(w.store, '..', path.basename(w.store) + '-sibling');
+  let r;
+  try {
+  r = R.pruneJudgeCaptures({ store: w.store, now: () => new Date(w.now) });
   for (const p of outside) assert.ok(fs.existsSync(p), `the prune deleted ${p}, outside the capture directory`);
+  } finally { fs.rmSync(sibling, { recursive: true, force: true }); } // D287: a sibling of the store is not inside it, so removing the store never removed this
   assert.ok(r.deleted.length === 1);
   for (const p of r.deleted) assert.strictEqual(path.dirname(path.resolve(p)), path.resolve(w.caps), `deleted ${p} is not directly inside the capture dir`);
 });
@@ -512,7 +516,7 @@ test('the shell dir is byte-identical after a run: the runner reads the judges, 
 // captured FOUR REAL seat turns and sent one to the real gateway under the fake key (HTTP 401, nothing billed) —
 // found in the test store, jev-runner-Bp1Hs8. So the data dir and the projects dir are pinned to empty fixtures here.
 const cliEnv = (f) => {
-  const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-empty-'));
+  const empty = require('./scratch.js').mkdtemp('jev-runner-empty-');
   const e = { ...process.env, JEV_SHADOW_STORE: f.store, CONSONANCE_SHELL_DIR: f.shell, JEV_SHADOW_DISCIPLINE: f.disc,
     JEV_SHADOW_NO_USER_ENV: '1', CONSONANCE_DATA: empty, CLAUDE_PROJECTS_DIR: empty };
   delete e.AI_GATEWAY_API_KEY;
@@ -566,7 +570,7 @@ test('the User-environment reader parses reg.exe output and returns null when th
 // Before: `disciplineDir: env.JEV_SHADOW_DISCIPLINE || path.resolve(__dirname, '..', '..')` — an installed copy read
 // METHOD.md from wherever it happened to sit, and each capture tick logged an error instead of one clear refusal.
 function installedRunner() {
-  const tools = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-inst-')), 'somewhere', 'tools');
+  const tools = path.join(require('./scratch.js').mkdtemp('jev-runner-inst-'), 'somewhere', 'tools');
   fs.mkdirSync(tools, { recursive: true });
   for (const n of ['jev-shadow-runner.js', 'jev-shadow.js', 'jev-judge.js', 'jev-ask.js', 'jev-room.js']) fs.copyFileSync(path.join(__dirname, n), path.join(tools, n));
   return path.join(tools, 'jev-shadow-runner.js');
@@ -575,7 +579,7 @@ function roomAt(f, extra = {}) {
   // The fixture's discipline dir becomes a room: main.rs where roomOf looks, room_path pointing at its BOOT.md.
   fs.mkdirSync(path.join(f.disc, 'consonance', 'src-tauri', 'src'), { recursive: true });
   fs.writeFileSync(path.join(f.disc, 'consonance', 'src-tauri', 'src', 'main.rs'), '// fixture\n');
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-home-'));
+  const home = require('./scratch.js').mkdtemp('jev-runner-home-');
   fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ room_path: path.join(f.disc, 'exo_memory', 'BOOT.md'), ...extra }));
   return home;
 }
@@ -609,7 +613,7 @@ test('L105 CLI, INSTALLED: a copy outside the checkout starts, finding METHOD.md
 test('L105 CLI, INSTALLED, NO ROOM: exits non-zero and the log says the discipline cannot be found, and how to fix it', () => {
   const f = fixture(); const app = fakeApp();
   try {
-    const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-nohome-'));
+    const home = require('./scratch.js').mkdtemp('jev-runner-nohome-');
     const r = spawnSync(process.execPath, [installedRunner(), '--app-pid', String(app.pid)], { encoding: 'utf8', env: installedEnv(f, home), timeout: 20000 });
     assert.notStrictEqual(r.status, 0, r.stderr);
     assert.match(runnerLog(f), /REFUSED .*discipline/);
@@ -619,7 +623,7 @@ test('L105 CLI, INSTALLED, NO ROOM: exits non-zero and the log says the discipli
 
 test('L105 CLI, INSTALLED: the data dir comes from ~/.consonance.json data_dir (the :330 reading, pinned)', { timeout: 30000 }, async () => {
   const f = fixture(); const app = fakeApp();
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-data-'));
+  const data = require('./scratch.js').mkdtemp('jev-runner-data-');
   const env = installedEnv(f, roomAt(f, { data_dir: data }));
   delete env.CONSONANCE_DATA;
   const child = spawn(process.execPath, [installedRunner(), '--app-pid', String(app.pid), '--pid-poll-ms', '50'], { env, stdio: 'ignore' });

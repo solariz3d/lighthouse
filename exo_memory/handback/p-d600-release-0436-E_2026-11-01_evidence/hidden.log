@@ -1,0 +1,7 @@
+launched pid 30700; track ELYSIUM
+ok   launch (1.1 s): menus ready
+windows on the user's desktop: 0
+ok   open (47.9 s): loaded: head shown at 1.5 s, still from 27.9 s; peak 967 MB at 17.7 s (page 547, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 415); settled 746 MB (page 442
+ok   install (90.9 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  |  | end heading 180.00°, on the 90° grid | expo | files 10, kn5 196444469 B; peak 1688 MB at 94.4 s (page 4
+crashes 0; page errors 0; samples 141; overall peak 1688 MB at 94.4 s (page 458, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 300, iframe:about:srcdoc#4 1, worker:d93439a7-c5b7-480f-8aef-cf9a20#5 925)
+killed pid 30700; t180-track-builder.exe left running: 0

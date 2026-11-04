@@ -1,0 +1,114 @@
+$ node --test "test/core_cup_mutation.test.js"
+(exit 0)
+[32m✔ CONTROL: the whole of core_cup.test.js and core_cup_readers.test.js pass on an unmutated copy of src/, tools/ and app/ [90m(24148.9659ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(512.8313ms)[39m[39m
+[32m✔ mutant M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): applied, and caught by "row 1a" [90m(647.593ms)[39m[39m
+[34mℹ M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): 1 of 2 run tests failed[39m
+[32m✔ mutant M2 (K1a-2) only the left edge is cupped: applied, and caught by "row 1a" [90m(606.7001ms)[39m[39m
+[34mℹ M2 (K1a-2) only the left edge is cupped: 2 of 2 run tests failed[39m
+[32m✔ mutant M3 (K1a-3) c is taken as radians: applied, and caught by "row 1a" [90m(602.6126ms)[39m[39m
+[34mℹ M3 (K1a-3) c is taken as radians: 2 of 2 run tests failed[39m
+[32m✔ mutant M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: applied, and caught by "row 1a" [90m(588.1586ms)[39m[39m
+[34mℹ M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: 2 of 2 run tests failed[39m
+[32m✔ mutant M5 (K2-1) MAX raised to 165: applied, and caught by "row 2" [90m(653.5494ms)[39m[39m
+[34mℹ M5 (K2-1) MAX raised to 165: 4 of 7 run tests failed[39m
+[32m✔ mutant M6 (K2-2) no guard on the document: applied, and caught by "row 2" [90m(788.5837ms)[39m[39m
+[34mℹ M6 (K2-2) no guard on the document: 3 of 7 run tests failed[39m
+[32m✔ mutant M7 the fit's ringing is not clamped after the Extend fit: applied, and caught by "row 2" [90m(634.9134ms)[39m[39m
+[34mℹ M7 the fit's ringing is not clamped after the Extend fit: 3 of 7 run tests failed[39m
+[32m✔ mutant M8 Extend does not refuse a typed cup past 150: applied, and caught by "row 2 \(iii\)" [90m(838.1685ms)[39m[39m
+[34mℹ M8 Extend does not refuse a typed cup past 150: 1 of 3 run tests failed[39m
+[32m✔ mutant M9 Extend does not refuse a first-piece cup past 150: applied, and caught by "row 2 PLANTED" [90m(583.4901ms)[39m[39m
+[34mℹ M9 Extend does not refuse a first-piece cup past 150: 1 of 1 run tests failed[39m
+[32m✔ mutant M10 the brush has no cup channel: applied, and caught by "row 2 \(iii\)" [90m(756.0322ms)[39m[39m
+[34mℹ M10 the brush has no cup channel: 1 of 3 run tests failed[39m
+[32m✔ mutant M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): applied, and caught by "ends flat" [90m(620.1081ms)[39m[39m
+[34mℹ M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): 1 of 1 run tests failed[39m
+[32m✔ mutant M10c the document guard has no tolerance for a solver's float noise at the limit: applied, and caught by "ends flat" [90m(684.7508ms)[39m[39m
+[34mℹ M10c the document guard has no tolerance for a solver's float noise at the limit: 1 of 1 run tests failed[39m
+[32m✔ mutant M29 (R2) no morph: a cup after a legacy piece starts on the cup shape, not the legacy one: applied, and caught by "R2" [90m(1037.9779ms)[39m[39m
+[34mℹ M29 (R2) no morph: a cup after a legacy piece starts on the cup shape, not the legacy one: 4 of 8 run tests failed[39m
+[32m✔ mutant M30 (R2) the morph carries no difference (the legacy shape is dropped inside the road): applied, and caught by "R2" [90m(975.5375ms)[39m[39m
+[34mℹ M30 (R2) the morph carries no difference (the legacy shape is dropped inside the road): 4 of 8 run tests failed[39m
+[32m✔ mutant M31 (R2) the morph never fades (the legacy difference stays for the whole piece): applied, and caught by "R2" [90m(989.3044ms)[39m[39m
+[34mℹ M31 (R2) the morph never fades (the legacy difference stays for the whole piece): 1 of 8 run tests failed[39m
+[32m✔ mutant M11 (K3-1) c is left out of the joint test between two cup pieces: applied, and caught by "row 3" [90m(1223.3472ms)[39m[39m
+[34mℹ M11 (K3-1) c is left out of the joint test between two cup pieces: 1 of 11 run tests failed[39m
+[32m✔ mutant M12 (K3-2) c is reset after a flight, like the heading rate: applied, and caught by "row 3" [90m(1120.3673ms)[39m[39m
+[34mℹ M12 (K3-2) c is reset after a flight, like the heading rate: 1 of 11 run tests failed[39m
+[32m✔ mutant M13 (K3-3) c is left out of the closure rows: applied, and caught by "row 3 \(iii\)" [90m(773.1379ms)[39m[39m
+[34mℹ M13 (K3-3) c is left out of the closure rows: 1 of 1 run tests failed[39m
+[32m✔ mutant M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: applied, and caught by "row 3|row 7" [90m(1169.0498ms)[39m[39m
+[34mℹ M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: 1 of 13 run tests failed[39m
+[32m✔ mutant M15 the legacy ↔ cup joint is not checked: applied, and caught by "row 3 \(iv\)" [90m(1039.5805ms)[39m[39m
+[34mℹ M15 the legacy ↔ cup joint is not checked: 1 of 8 run tests failed[39m
+[32m✔ mutant M16 a piece extended after a cup piece is a legacy piece: applied, and caught by "row 3" [90m(1166.3739ms)[39m[39m
+[34mℹ M16 a piece extended after a cup piece is a legacy piece: 2 of 11 run tests failed[39m
+[32m✔ mutant M17 (K1b-1) the blend is dropped: each segment steps to its own profile: applied, and caught by "row 1b" [90m(1972.8177ms)[39m[39m
+[34mℹ M17 (K1b-1) the blend is dropped: each segment steps to its own profile: 12 of 13 run tests failed[39m
+[32m✔ mutant M18 the weight inversion is wrong (z = y, no Newton polish): applied, and caught by "row 1b" [90m(2219.9956ms)[39m[39m
+[34mℹ M18 the weight inversion is wrong (z = y, no Newton polish): 6 of 13 run tests failed[39m
+[32m✔ mutant M19 a segment where c falls does not swap the pair: applied, and caught by "row 1b" [90m(2252.0728ms)[39m[39m
+[34mℹ M19 a segment where c falls does not swap the pair: 6 of 13 run tests failed[39m
+[32m✔ mutant M20 a width change is not a chord: the run keeps the start width: applied, and caught by "row 1b" [90m(2312.2012ms)[39m[39m
+[34mℹ M20 a width change is not a chord: the run keeps the start width: 1 of 13 run tests failed[39m
+[32m✔ mutant M33 (R1) atSegment ignores the distance into the segment: applied, and caught by "atSegment" [90m(1393.7559ms)[39m[39m
+[34mℹ M33 (R1) atSegment ignores the distance into the segment: 2 of 2 run tests failed[39m
+[32m✔ mutant M34 (R1) the marker layout reads segment.profile: applied, and caught by "marker layout" [90m(1334.9316ms)[39m[39m
+[34mℹ M34 (R1) the marker layout reads segment.profile: 1 of 1 run tests failed[39m
+[32m✔ mutant M35 (R1) validation reads segment.profile: applied, and caught by "validation" [90m(1294.6705ms)[39m[39m
+[34mℹ M35 (R1) validation reads segment.profile: 1 of 2 run tests failed[39m
+[32m✔ mutant M36 (R1) the export sections read segment.profile: applied, and caught by "export sections" [90m(1254.368ms)[39m[39m
+[34mℹ M36 (R1) the export sections read segment.profile: 1 of 1 run tests failed[39m
+[32m✔ mutant M37 (R1) the water reads segment.profile: applied, and caught by "water" [90m(1191.4131ms)[39m[39m
+[34mℹ M37 (R1) the water reads segment.profile: 1 of 1 run tests failed[39m
+[32m✔ mutant M38 (R1) the camera's span reads segment.profile: applied, and caught by "camera" [90m(1140.6891ms)[39m[39m
+[34mℹ M38 (R1) the camera's span reads segment.profile: 1 of 1 run tests failed[39m
+[32m✔ mutant M39 (R1) the readers evaluate a word document font-transition blend too (its validation and layout change): applied, and caught by "font-transition" [90m(1129.1842ms)[39m[39m
+[34mℹ M39 (R1) the readers evaluate a word document font-transition blend too (its validation and layout change): 1 of 1 run tests failed[39m
+[32m✔ mutant M40 (R1) the adapter does not mark a cup segment (the readers then take its target for the whole segment): applied, and caught by "validation" [90m(1188.2288ms)[39m[39m
+[34mℹ M40 (R1) the adapter does not mark a cup segment (the readers then take its target for the whole segment): 1 of 2 run tests failed[39m
+[32m✔ mutant M41 (R3) no reverse morph: a cup that closes onto a legacy start is drawn to its own shape: applied, and caught by "R3" [90m(7163.9473ms)[39m[39m
+[34mℹ M41 (R3) no reverse morph: a cup that closes onto a legacy start is drawn to its own shape: 8 of 12 run tests failed[39m
+[32m✔ mutant M42 (R3) the reverse morph never fades in (the tail keeps the cup shape): applied, and caught by "R3" [90m(7248.1805ms)[39m[39m
+[34mℹ M42 (R3) the reverse morph never fades in (the tail keeps the cup shape): 8 of 12 run tests failed[39m
+[32m✔ mutant M43 (R3) the reverse morph carries no difference (the legacy shape is dropped): applied, and caught by "R3" [90m(7037.4365ms)[39m[39m
+[34mℹ M43 (R3) the reverse morph carries no difference (the legacy shape is dropped): 8 of 12 run tests failed[39m
+[32m✔ mutant M44 (R3) close() does not hold the cup at the legacy start edge: applied, and caught by "R3" [90m(8756.867ms)[39m[39m
+[34mℹ M44 (R3) close() does not hold the cup at the legacy start edge: 3 of 12 run tests failed[39m
+[32m✔ mutant M45 (R3) close() never refuses a seam it cannot fade: applied, and caught by "R3" [90m(16022.9465ms)[39m[39m
+[34mℹ M45 (R3) close() never refuses a seam it cannot fade: 1 of 12 run tests failed[39m
+[32m✔ mutant M47 (R3) the mirror: a cup START does not fade out of the legacy END: applied, and caught by "R3" [90m(16713.2693ms)[39m[39m
+[34mℹ M47 (R3) the mirror: a cup START does not fade out of the legacy END: 1 of 12 run tests failed[39m
+[32m✔ mutant M50 (R3) a cup followed by a legacy piece inside the track is not faded (only the lap seam is): applied, and caught by "R3" [90m(16613.1296ms)[39m[39m
+[34mℹ M50 (R3) a cup followed by a legacy piece inside the track is not faded (only the lap seam is): 1 of 12 run tests failed[39m
+[32m✔ mutant M48 (R3) validation does not red a joint step: applied, and caught by "R3" [90m(18057.361ms)[39m[39m
+[34mℹ M48 (R3) validation does not red a joint step: 1 of 12 run tests failed[39m
+[32m✔ mutant M49 (R3) jointSteps ignores the lap seam: applied, and caught by "R3" [90m(15234.8518ms)[39m[39m
+[34mℹ M49 (R3) jointSteps ignores the lap seam: 2 of 12 run tests failed[39m
+[32m✔ mutant M21 a legacy piece is rendered as a cup piece at c = 0: applied, and caught by "row 5" [90m(591.8695ms)[39m[39m
+[34mℹ M21 a legacy piece is rendered as a cup piece at c = 0: 1 of 4 run tests failed[39m
+[32m✔ mutant M22 a /2 piece is read as a cup piece: applied, and caught by "row 5" [90m(576.6081ms)[39m[39m
+[34mℹ M22 a /2 piece is read as a cup piece: 2 of 4 run tests failed[39m
+[32m✔ mutant M23 a legacy piece's text carries a c array: applied, and caught by "row 5" [90m(589.1343ms)[39m[39m
+[34mℹ M23 a legacy piece's text carries a c array: 2 of 4 run tests failed[39m
+[32m✔ mutant M24 (K5-2) the schema is still core/2: applied, and caught by "row 5" [90m(576.6968ms)[39m[39m
+[34mℹ M24 (K5-2) the schema is still core/2: 1 of 4 run tests failed[39m
+[32m✔ mutant M25 a cup brush is allowed to reach a legacy piece: applied, and caught by "row 5e" [90m(558.2951ms)[39m[39m
+[34mℹ M25 a cup brush is allowed to reach a legacy piece: 1 of 1 run tests failed[39m
+[32m✔ mutant M26 (K6-3) the cup feeds the roll: applied, and caught by "row 6" [90m(1165.6268ms)[39m[39m
+[34mℹ M26 (K6-3) the cup feeds the roll: 2 of 2 run tests failed[39m
+[32m✔ mutant M27 (K7-1) cupToDeg reads the wrong station of the document: applied, and caught by "row 7" [90m(570.4993ms)[39m[39m
+[34mℹ M27 (K7-1) cupToDeg reads the wrong station of the document: 2 of 2 run tests failed[39m
+[32m✔ mutant M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): applied, and caught by "row 7" [90m(556.6417ms)[39m[39m
+[34mℹ M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): 1 of 2 run tests failed[39m
+[34mℹ tests 52[39m
+[34mℹ suites 0[39m
+[34mℹ pass 52[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 179018.377[39m
+
+heavy-run: waiting on 12fb81f6 pid 18632 (t180 B D416 sky-crisp, since 2026-10-20T02:15:13.381Z) — one heavy run at a time

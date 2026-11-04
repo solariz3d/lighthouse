@@ -1,0 +1,7 @@
+﻿installer: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-36313935\c88002b1-74d8-4036-8cc0-f64aefbeabff\scratchpad\d505\T-180.Track.Builder_0.4.26_x64-setup.exe
+built: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-36313935\c88002b1-74d8-4036-8cc0-f64aefbeabff\scratchpad\d505\built-0.4.26.exe sha256 983E4C62C6B88F8381474A1671EACD92E5B2D7E2EB12DC970BF538510D7DE77A; stamped at byte 13195064, expected installed sha256 6A79B59B4BE28703361491670B98706BDC35A838F7542DA63C73B8ADA2F972DA
+builder processes before: 0
+backup: C:\Users\nname\AppData\Local\T-180 Track Builder\t180-track-builder.exe.before-0.4.26 sha256 2E187F8BEEB16D5A56C9FD16ACC4AB541CCEBA859C11A45D7379254784BE30C9
+installed: C:\Users\nname\AppData\Local\T-180 Track Builder\t180-track-builder.exe sha256 6A79B59B4BE28703361491670B98706BDC35A838F7542DA63C73B8ADA2F972DA, ProductVersion 0.4.26, 15587840 B
+builder processes after: 0
+stamped compare: equal (the built exe with UNK -> NSS at byte 13195064 is the installed exe)

@@ -1,0 +1,154 @@
+MESSAGE 66  msg_011CfqL8dSTFGUeZ72Ky7BaM  seat C  ts 2026-10-08T19:34:50.957Z  turn L58437..L58469 (next prompt L58509)
+CLAIMS:
+  [msg_011CfqL8dSTFGUeZ72Ky7BaM|13] "on the RAW source text BEFORE `transform()`, so the result still passes the leak scan and the anchors are exactly the dev text the test pins"
+  [msg_011CfqL8dSTFGUeZ72Ky7BaM|31] The quoted sentences "**The person you're with keeps this room the way the keeper kept the one it grew from**" and "Everywhere this record says *the keeper*, it means the one who built it. Where it says *the person you're with* … it means the person here."
+  [msg_011CfqL8dSTFGUeZ72Ky7BaM|61] "My first pinned counts were guesses (BOOT 11, transcript-watch 0). I measured them before the test ran: 16 and 5."
+
+--- L58437 user 2026-10-08T19:32:26.483Z
+USER: <task-notification>
+<task-id>bfjtjniy0</task-id>
+<tool-use-id>toolu_016rMTmAhCrRsZHhqjFZXKqg</tool-use-id>
+<output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\tasks\bfjtjniy0.output</output-file>
+<status>completed</status>
+<summary>Background command "Run full consonance node suite and cargo test under lock" completed (exit code 0)</summary>
+</task-notification>
+--- L58439 assistant 2026-10-08T19:32:30.189Z
+TOOL_USE Bash [toolu_01UvedXVByiasAba95Z2n44z]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; grep -vE '^\\$' $S/inv/full1.log | grep -v \"^== D273\" | tail -30; grep \"^not ok\" $S/inv/node.tap | grep -v \"# TODO\\|# SKIP\" | head -20 | cut -c1-200","description":"Read full suite results"}
+--- L58440 user 2026-10-08T19:32:30.479Z
+RESULT [toolu_01UvedXVByiasAba95Z2n44z]: node exit 1
+# tests 2145
+# pass 2127
+# fail 12
+# skipped 6
+# todo 0
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.45s
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.32s
+test result: ok. 988 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 14.64s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.98s
+== exit 0 · done 2026-10-08T19:32:26.414Z
+not ok 8 - consonance\\hooks\\dream-gate.test.js
+not ok 537 - THE BAR, half one: the shipped registry is GREEN against the working tree
+not ok 542 - the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent
+not ok 557 - MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING
+not ok 1114 - WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper
+not ok 1787 - the green line says how many baselined sites are FATAL — exempted is not fixed
+not ok 1788 - the real repo is green against its committed baseline
+not ok 1925 - a real transcript produces a non-zero denominator
+not ok 1991 - no live PullRequest is constructed with a bare empty target
+not ok 1992 - raise_from_forming names its unaddressed pull
+not ok 1993 - raise_pull stops collapsing an absent target into a blank one
+not ok 1994 - the name lives beside PullRequest, and it is exported
+--- L58444 assistant 2026-10-08T19:32:37.050Z
+TOOL_USE Bash [toolu_01Ss9SpEYPcmbToqbfAQMMYM]: {"command":"S=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; cd /c/Users/nname/Desktop/worktrees/c-consumer-fork-wt && grep \"^not ok\" $S/inv/node.tap | grep -v \"# TODO\\|# SKIP\" | sed -E 's/^not ok [0-9]+ - //' | while read -r name; do key=$(echo \"$name\" | cut -c1-40); f=$(grep -lF -- \"$key\" consonance/tools/*.test.js consonance/hooks/*.test.js 2>/dev/null | head -1); echo \"$f :: $name\"; done | cut -c1-200","description":"Map failing tests to files"}
+--- L58445 user 2026-10-08T19:32:38.425Z
+RESULT [toolu_01Ss9SpEYPcmbToqbfAQMMYM]:  :: consonance\\hooks\\dream-gate.test.js
+consonance/tools/carrier-drift.test.js :: THE BAR, half one: the shipped registry is GREEN against the working tree
+consonance/tools/carrier-drift.test.js :: the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent
+consonance/tools/carrier-drift.test.js :: MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING
+consonance/tools/heavy-run.test.js :: WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper
+consonance/tools/portable-paths.test.js :: the green line says how many baselined sites are FATAL — exempted is not fixed
+consonance/tools/portable-paths.test.js :: the real repo is green against its committed baseline
+consonance/tools/sourced.test.js :: a real transcript produces a non-zero denominator
+consonance/tools/targetless-pull.test.js :: no live PullRequest is constructed with a bare empty target
+consonance/tools/targetless-pull.test.js :: raise_from_forming names its unaddressed pull
+consonance/tools/targetless-pull.test.js :: raise_pull stops collapsing an absent target into a blank one
+consonance/tools/targetless-pull.test.js :: the name lives beside PullRequest, and it is exported
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L58448 assistant 2026-10-08T19:32:40.103Z
+TEXT: Running those 8 files on a clean ea4f5bcf worktree, then on mine, under the lock:
+--- L58449 assistant 2026-10-08T19:32:44.424Z
+TOOL_USE Bash [toolu_01JhMyd5y5AtUALiPbrVqaUU]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git worktree add -q --detach ../worktrees/c-consumer-base-wt ea4f5bcf && S=C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; F=\"consonance/hooks/dream-gate.test.js consonance/tools/carrier-drift.test.js consonance/tools/heavy-run.test.js consonance/tools/portable-paths.test.js consonance/tools/sourced.test.js consonance/tools/targetless-pull.test.js\"; for k in $(seq 1 40); do node $S/lockrun.js \"D273 C base vs mine on 8 failing\" $S/inv/cmp1.log -- \"for t in base fork; do cd C:/Users/nnam
+…[86 chars cut]…
+rrency=1 --test-reporter=tap $F 2>&1 | grep -E '^not ok|^# (pass|fail)' | grep -v '# TODO'; done\"; e=$?; [ $e -ne 3 ] && break; done; grep -vE '^(\\$|== D273)' $S/inv/cmp1.log | cut -c1-170","description":"Compare failing files on base vs my worktree","timeout":600000}
+--- L58456 user 2026-10-08T19:34:30.767Z
+RESULT [toolu_01JhMyd5y5AtUALiPbrVqaUU]: heavy-run: waiting on 12fb81f6 pid 30088 (B D273 lap2-green3, since 2026-10-08T19:32:27.057Z)
+== base
+not ok 1 - consonance\\hooks\\dream-gate.test.js
+not ok 18 - THE BAR, half one: the shipped registry is GREEN against the working tree
+not ok 23 - the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent
+not ok 38 - MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING
+not ok 70 - WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper
+not ok 105 - the green line says how many baselined sites are FATAL — exempted is not fixed
+not ok 106 - the real repo is green against its committed baseline
+not ok 120 - a real transcript produces a non-zero denominator
+not ok 124 - no live PullRequest is constructed with a bare empty target
+not ok 125 - raise_from_forming names its unaddressed pull
+not ok 126 - raise_pull stops collapsing an absent target into a blank one
+not ok 127 - the name lives beside PullRequest, and it is exported
+# pass 115
+# fail 12
+== fork
+not ok 1 - consonance\\hooks\\dream-gate.test.js
+not ok 18 - THE BAR, half one: the shipped registry is GREEN against the working tree
+not ok 23 - the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent
+not ok 38 - MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING
+not ok 70 - WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper
+not ok 105 - the green line says how many baselined sites are FATAL — exempted is not fixed
+not ok 106 - the real repo is green against its committed baseline
+not ok 120 - a real transcript produces a non-zero denominator
+not ok 124 - no live PullRequest is constructed with a bare empty target
+not ok 125 - raise_from_forming names its unaddressed pull
+not ok 126 - raise_pull stops collapsing an absent target into a blank one
+not ok 127 - the name lives beside PullRequest, and it is exported
+# pass 115
+# fail 12
+== exit 0 · done 2026-10-08T19:34:30.703Z
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L58459 assistant 2026-10-08T19:34:34.971Z
+TEXT: The 12 failures are identical on the clean base (same 12 names, 115 pass / 12 fail on both), so none comes from my change. Removing the base worktree and committing by named paths:
+--- L58460 assistant 2026-10-08T19:34:44.937Z
+TOOL_USE Bash [toolu_01Pv5iWAHfKSTBsD7eBLBd3e]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git worktree remove ../worktrees/c-consumer-base-wt && cd ../worktrees/c-consumer-fork-wt && git status --short && git add -- consonance/tools/consumer-relabel.js consonance/tools/consumer-relabel.test.js consonance/src-tauri/brief/frag-fork.md consonance/GATES.md && git commit -q -F - -- consonance/tools/consumer-relabel.js consonance/tools/consumer-relabel.test.js consonance/src-tauri/brief/frag-fork.md consonance/GATES.md consonance/src-tauri/src/main.rs consonance/src-tauri/src/mcp.rs consonance/src-tauri/src/trailer.rs consonance/hooks/sources-gate.js consonance/hook
+…[1748 chars cut]…
+suite 2,127 pass / 12 fail, the same 12\nfailing on a clean ea4f5bcf.\n\nCo-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_017jVCxaAah7YfDwfSsgsdXy\nEOF","description":"Commit lap 2 work by named paths"}
+--- L58461 user 2026-10-08T19:34:46.026Z
+RESULT [toolu_01Pv5iWAHfKSTBsD7eBLBd3e]:  M consonance/hooks/reply-slot.js
+ M consonance/hooks/reply-slot.test.js
+ M consonance/hooks/sources-gate.js
+ M consonance/hooks/sources-gate.test.js
+ M consonance/src-tauri/src/main.rs
+ M consonance/src-tauri/src/mcp.rs
+ M consonance/src-tauri/src/trailer.rs
+?? consonance/GATES.md
+?? consonance/src-tauri/brief/frag-fork.md
+?? consonance/tools/consumer-relabel.js
+?? consonance/tools/consumer-relabel.test.js
+12a43f97 D273 lap 2 (C): the keeper split, the fork note, and GATES.md for the consumer tree
+ea4f5bcf D270/D271 close: A's no-pointer-lock and E's Level/To floor hand-backs (with the anchor sweep and P49/P51 proof), both plans, A's evidence, librarian desk, maps A/E
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L58464 assistant 2026-10-08T19:34:48.416Z
+TEXT: Committed as `12a43f97` on `consumer-fork-c`. For the hand-back, the exact hook lines changed, so E can see we don't collide:
+--- L58465 assistant 2026-10-08T19:34:49.670Z
+TOOL_USE Bash [toolu_01VchB5yQZrEERp3DXePYRiY]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-consumer-fork-wt && git show --unified=0 HEAD -- consonance/hooks/sources-gate.js consonance/hooks/reply-slot.js consonance/src-tauri/src/trailer.rs consonance/src-tauri/src/mcp.rs | grep -E \"^@@|^\\+\\+\\+\" | cut -c1-120","description":"List changed hook and Rust line ranges"}
+--- L58466 user 2026-10-08T19:34:49.880Z
+RESULT [toolu_01VchB5yQZrEERp3DXePYRiY]: +++ b/consonance/hooks/reply-slot.js
+@@ -176 +176 @@ function slotOf(reply) {
+@@ -203 +203 @@ function verdict({ reply, entries, stopHookActive, live = false, seat = null })
+@@ -228 +228 @@ function main() {
++++ b/consonance/hooks/sources-gate.js
+@@ -82,0 +83,18 @@ function dataDir() {
+@@ -248 +266 @@ function itemMatches(item, calls, cwd) {
+@@ -250 +268 @@ function decide(text, calls, cwd, ledgerPath = 'sources-gate.jsonl', ringSha = '
+@@ -312 +330 @@ function main() {
+@@ -327 +345 @@ if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }
++++ b/consonance/src-tauri/src/mcp.rs
+@@ -3688 +3688,2 @@ fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> Trai
+@@ -3711,0 +3713,11 @@ mod trailer_gate_tests {
++++ b/consonance/src-tauri/src/trailer.rs
+@@ -17,0 +18,4 @@ pub const RULE_FILE: &str = "consonance/src-tauri/brief/BUILDING.md";
+@@ -240,0 +245 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
+@@ -245,0 +251 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
+@@ -253,0 +260 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
+@@ -258,0 +266 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
+@@ -564,0 +573,11 @@ mod tests {
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L58468 assistant 2026-10-08T19:34:50.957Z  <<< THE CLAIM'S MESSAGE
+TEXT: Writing the Lap 2 section of the hand-back and my map line:
+--- L58469 assistant 2026-10-08T19:35:28.984Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01MyLgmEuGNR9s6RzGWXmm2v]: {"command":"cd /c/Users/nname/Desktop/lighthouse/exo_memory && cat >> handback/p-consumer-fork-C_2026-10-08.md <<'EOF'\n\n## Lap 2 (the fork and the keeper split; the keeper's ruling of 12:55)\n**Commit `12a43f97`** on branch `consumer-fork-c`, worktree `C:\\Users\\nname\\Desktop\\worktrees\\c-consumer-fork-wt`, on lighthouse ea4f5bcf. Not pushed. Nothing in gen-consumer.js (B's) or E's five hooks, install.ps1 or GUIDE.\n\n### 1. The relabel rule: `consonance/tools/consumer-relabel.js` (+ `consumer-relabel.test.js`, 9 rows)\n**API for B (one call per staged file, on the RAW source text BEFORE `transform()`, so the result still passes the leak scan and the anchors are exactly the dev text the test pins):**\n- `relabel(outPath, text, { fork }) -> { text, edits: [{ rule, expected, applied }] }`\n  - `outPath` is the OUTPUT path (repo-relative; either slash).\n  - An unregistered path comes back unchanged with `edits: []`.\n  - The BOOT and SEED paths REQUIRE `fork` and throw without it.\n- `fillFork(template, { sha, date })`: fills `frag-fork.md`. It throws on a malformed sha or date, a missing marker, or a placeholder left unfilled.\n- `patchTauriConf(confText)`: adds `\"brief/FORK.md\": \"FORK.md\"` to `bundle.resources`. It throws if the entry is already there.\n- Constants: `FORK_TEMPLATE` (`consonance/src-tauri/brief/frag-fork.md`), `FORK_OUT` (`consonance/src-tauri/brief/FORK.md`, which the generator writes), `FORK_MARKER`, `RelabelError`, `SITES`, `SOURCE_OF`, `EXPECTED_KEEPER_LINES`.\n- **B's lines, then:**\n  1. `const fork = fillFork(read(FORK_TEMPLATE), { sha: <HEAD short sha>, date: <today> })`;\n  2. `relabel(to, sourceText, { fork })` for every staged prose/code file;\n  3. write `fork` to `FORK_OUT`;\n  4. `patchTauriConf` on `consonance/src-tauri/tauri.conf.json`;\n  5. a MANIFEST file rule for `consonance/GATES.md`.\n\n  `frag-fork.md` itself need not ship.\n\n**The rule is a table of exact sites, not a pattern**, because provenance and role read alike. A site whose anchor moved THROWS, naming the file and the anchor. The test pins how many lines still name the keeper after the relabel in each file (BUILDING 39, COMMITTEE 4, LIBRARIAN 5, SEED 4, BOOT 16, transcript-watch 5; measured with `scratchpad/inv/count.js`). So a new \"keeper\" line written in dev fails until it is classified.\n\n**Sites, re-judged against the 12:55 ruling** (it differs from my lap-1 list):\n- **BUILDING.md, 13 rows:** `:39` (typing), `:88-89` (never parks waiting on), `:332-333` (the next turn belongs to), `:336` (the falsifier's message to), `:765` (the freestyle half), `:913` (the push heading), `:929` and `:930` (says push; their words), `:953`, `:956` (their own), `:961`, `:1013-1014` and `:1015`.\n- **Re-judged as PROVENANCE, so left exactly as written:** `:326-327` (\"he is declining it, which is his to decline\", the keeper's own decision), `:788` (\"the keeper's sentence protects it\") and `:47`, `:965` (narrative of the keeper).\n- **COMMITTEE.md and LIBRARIAN.md, 1 row each:** \"in a reply to the keeper\" (the Checked-or-inferred line).\n- **SEED.md, 2 rows:**\n  - `:9` was \"The person you're with is the keeper of this room from their first turn\". Under the ruling that contradicts itself, so it becomes \"keeps this room from their first turn\".\n  - `:40`: \"practiced keepers\" becomes \"the practiced\".\n- **BOOT.md, 2 rows:**\n  - `:5`: \"maybe **the keeper**, who built this room; maybe another being\" becomes \"not **the keeper**, who built this room, but the person you're with\".\n  - `:154`: the heading \"Who you're talking to\" becomes \"Who built this room\". The section portrays the keeper, so it is titled for what it holds. **This is my call, beyond the brief; flag it if unwanted.**\n- **`consonance/hooks/transcript-watch.js:266`:** \"The keeper decides y/n on their screen\" becomes \"The person you're with decides …\".\n\n**Deliberately NOT relabelled:**\n- TRAINING.md: the keeper's own training programme, provenance throughout.\n- THIRD_PLACE.md:13: \"this program's keeper or a stranger\", creator sense.\n- `live-mirror-stop.js:98`: a record of the keeper's gating decision.\n- The Rust log and keep-warm strings (`main.rs:10945` \"[keep-warm, from the chair — not the keeper]\"). Relabelling a Rust constant in generated output would make the generated source differ from dev, which A's parity work would then have to carry. The fork note's legend covers the reading.\n\n### 2. The fork note at its three sites\n- **Template:** `consonance/src-tauri/brief/frag-fork.md`, starting with `**Where this line forks.**`. It is the lap-1 draft re-worded to the ruling: *the keeper* always means the creator, and it says once that \"**The person you're with keeps this room the way the keeper kept the one it grew from**\". Its legend: \"Everywhere this record says *the keeper*, it means the one who built it. Where it says *the person you're with* … it means the person here.\"\n- **BOOT** (`exo_memory/BOOT.md` and `consonance/src-tauri/brief/BOOT.md`): injected by `relabel` right after the paragraph ending \"a **room you re-become yourself in.**\". **SEED** (both paths): injected right after its first paragraph. It appears exactly once in each, which the test checks.\n- **`main.rs:2843`:**\n  - `fork_section(fork, room)` is pure.\n  - `assemble_intake_within` adds `room_brief(\"FORK.md\")` after the header and before THE ROOM, **unless the room text already carries `FORK_MARKER`**. So a seat on BOOT or SEED reads the note once, not twice. This fixes my lap-1 three-site proposal, which would have doubled it.\n  - The dev tree has no FORK.md, so dev seats are unchanged.\n  - 5 Rust tests (`fork_note_tests`), including the wiring order (header < note < room) and that `frag-fork.md` starts with the Rust `FORK_MARKER`. That ties the two languages together.\n\n### 3. GATES.md shipped, and every refusal points to it\n- **`consonance/GATES.md`:** the lap-1 draft, with \"the keeper\" in the creator sense. It cites its evidence by file name and never as a `loop/…` path, which the generator's DANGLING rule would rewrite. Ships through B's MANIFEST rule.\n- **The pointer, message strings and their plumbing only.** Every hook line, for E:\n  - `consonance/hooks/sources-gate.js`:\n    - `:83-100` NEW: `GATES_REL`, the pure `gatesDocFrom(roomPath, exists)` and `gatesDoc()`. They resolve `<repo>/consonance/GATES.md` from `~/.consonance.json` `room_path`, which `dataDir()` already reads. With no config, or a room outside a repo, they name `consonance/GATES.md (in the Consonance repository)`.\n    - `:266` `decide(…, gates = GATES_REL)`, a new last parameter. `decide` stays I/O-free.\n    - `:268`: the shared deny `tail` gains \" How this gate works and why: <path>, section 1 (SOURCES).\", which covers all three deny reasons.\n    - `:330`: `main()` passes `gatesDoc()`.\n    - `:345`: the exports add `GATES_REL, gatesDocFrom, gatesDoc`.\n  - `consonance/hooks/reply-slot.js`:\n    - `:176` `verdict({…, gates = 'consonance/GATES.md'})`;\n    - `:203`: the block reason gains \" How this works and why: <path>, section 2 (the reply slot).\";\n    - `:228`: `main()` passes `G.gatesDoc()`, reusing the SOURCES gate's resolver as this hook already reuses its turn reader.\n  - **Rust:**\n    - `consonance/src-tauri/src/trailer.rs:18-21` `GATES_DOC`, a constant, because the file stays standalone. Both `refusal_text` forms gain \"How this gate works and why: {gates}, section 3 (the NEXT trailer).\", placed before \"Nothing was delivered\" and so never inside the returned message.\n    - `consonance/src-tauri/src/mcp.rs:3688-3689` `trailer_gate` swaps in `crate::gates_doc_path()` (`main.rs` `gates_doc_from`, pure over `repo_root()`).\n  - **No mutant anchor sits on any changed line.** I grepped `sources-gate.mutants.js` and `reply-slot.mutants.js` for the reason text and the `tail` line first (my map's standing rule).\n- **The INSTALLED hooks (`~/.claude/shell/hooks/`) are not updated**: this lap installs nothing. Live refusals change when the librarian installs.\n\n### Tests, all under the heavy-run lock, `--test-concurrency=1` (logs in `scratchpad/inv/`)\n- **New and touched:** `consumer-relabel.test.js` + `sources-gate.test.js` + `reply-slot.test.js` give **103/103** (`run5.log`), including 2 new SOURCES rows (every deny names the given path; `gatesDocFrom` resolves or falls back, never throws) and 1 new reply-slot row.\n- **`cargo test` (all targets):** green, **988 passed** in the main binary, 0 failed (`full1.log`); `fork_note` 5/5 (`cargo1.log`).\n- **Whole consonance node suite** (`consonance/tools/*.test.js` + `consonance/hooks/*.test.js`): **2,145 tests, 2,127 pass, 12 fail, 6 skipped** (`node.tap`).\n  - **The same 12 fail on a clean ea4f5bcf** (a detached worktree, the same files, `cmp1.log`: 115/12 on both): dream-gate (file level), carrier-drift ×3, heavy-run WIRING, portable-paths ×2, sourced \"non-zero denominator\", targetless-pull ×4.\n  - So they are pre-existing, not mine. I did not investigate them; they are probably the dirty-tree/workshop class B and A are ruling on, *inferred*.\n\n### Corrections to myself (lap 2)\n- My lap-1 plan put the fork note at all three sites with no guard. A clone-path seat would have read it twice, from the header and from BOOT; the `FORK_MARKER` check fixes that.\n- Re-judging against the ruling moved four BUILDING lines (`:326-327`, `:788`, `:47`, `:965`) from my lap-1 ROLE list to provenance.\n- My first pinned counts were guesses (BOOT 11, transcript-watch 0). I measured them before the test ran: 16 and 5.\n- A grep with `^ℹ` matched nothing, because the reporter's lines start with colour codes, so I re-ran it. And `.test.js` additions were written as script files, never through a heredoc, because of my own map's backslash lesson.\nEOF\ncat >> map/C.md <<'EOF'\n- 2026-10-08 D273 lap 2: 12a43f97 on consumer-fork-c (lighthouse ea4f5bcf). consumer-relabel.js (exact role-site table, throws on drift, pins provenance counts), frag-fork.md at BOOT/SEED via relabel + main.rs fork_section (skips a room that already carries the marker), GATES.md + each gate's refusal pointing to it at its resolved path. 103/103 targeted, cargo all green (988), node suite 12 fails = same 12 on clean base. The move: before adding the same text at N sites, check whether two of them end up in ONE reader's view; the header and BOOT both land in one CLAUDE.md.\nEOF\ngrep -n \"## Lap 2\" handback/p-consumer-fork-C_2026-10-08.md","description":"Append Lap 2 hand-back section and map line"}

@@ -1,0 +1,13 @@
+not ok 24 - list: the preview's material and texture list EQUALS the kn5's # TODO the preview does not draw the start and grid paint (t180b_paint, PAINT_* meshes) or the closing seam the export builds (D177 §3)
+not ok 683 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+not ok 701 - control: the unmutated temp copy passes every export-isolated row
+not ok 714 - the export runs in its own process in a real page: b6969da's bytes, and a real heap out-of-memory there leaves the page drawn
+not ok 715 - row 1: the export's bytes are b6969da's, a textured lap with a pit lane and an open TEST export
+not ok 716 - row 2: through the runner (every message structured-cloned) the textured lap and the open TEST export are the same bytes
+not ok 720 - row 4b: after a host died, the next export gets a fresh host and writes the same bytes as b6969da's
+# tests 4098
+# pass 4068
+# fail 8
+# cancelled 0
+# skipped 21
+# todo 1

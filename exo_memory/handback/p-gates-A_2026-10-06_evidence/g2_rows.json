@@ -1,0 +1,346 @@
+[
+ {
+  "id": "1a",
+  "what": "git worktree remove <copy-only worktree>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "1b",
+  "what": "git -C <repo> worktree remove --force <copy-only worktree>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "1c",
+  "what": "git worktree remove <worktree holding a junction>",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": "6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\gates\\work\\wt\\precious"
+ },
+ {
+  "id": "1d",
+  "what": "the junction target is untouched (the hook only reads)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "2a",
+  "what": "rm -r <scratch dir>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "2b",
+  "what": "rm -rf <scratch dir>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "2c",
+  "what": "PowerShell Remove-Item -Recurse -Force <scratch dir>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "2d",
+  "what": "rm -rf <relative scratch dir> from its parent",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "2e",
+  "what": "rm -rf \"<dir with spaces>\"",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "3a",
+  "what": "rm -rf <plain npm node_modules>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "3a2",
+  "what": "rm -rf node_modules (relative)",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "3b",
+  "what": "rm -rf node_modules of a WORKSPACE project (a junction to a sibling package)",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": "E expected this false positive: \"the deny says how to proceed\""
+ },
+ {
+  "id": "3c",
+  "what": "the workspace package is untouched",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "3d",
+  "what": "the reason's advice: cmd /c rmdir <link> (alone) is allowed by the gate",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "3e",
+  "what": "after the link is gone: rm -rf node_modules",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "4a",
+  "what": "rm -r <empty dir>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "4b",
+  "what": "rmdir <empty dir> (no recursion)",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "4c",
+  "what": "rm -rf <missing path>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "4d",
+  "what": "Remove-Item -Recurse <empty dir>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "4e",
+  "what": "rm <one file> (no recursion)",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "5a",
+  "what": "cd <B, whose build/ holds a junction> && rm -rf build   (payload cwd elsewhere)",
+  "got": "allow",
+  "expect": "deny",
+  "ok": false,
+  "note": "HOLE if allow: the gate resolves build against the payload cwd, not the cd"
+ },
+ {
+  "id": "5b",
+  "what": "cd <A, clean build/> && rm -rf build   (payload cwd = B, whose build/ holds a junction)",
+  "got": "deny",
+  "expect": "allow",
+  "ok": false,
+  "note": "FALSE POSITIVE if deny: it walked B's build, not A's"
+ },
+ {
+  "id": "6a",
+  "what": "rm -rf logs/*.log   (a junction elsewhere in logs/, not matched by the glob)",
+  "got": "deny",
+  "expect": "allow",
+  "ok": false,
+  "note": "FALSE POSITIVE if deny: the whole parent was walked"
+ },
+ {
+  "id": "7a",
+  "what": "a heredoc whose BODY has an rm -rf line (a script being written)",
+  "got": "deny",
+  "expect": "allow",
+  "ok": false,
+  "note": "FALSE POSITIVE if deny: lines are split and read as commands"
+ },
+ {
+  "id": "7b",
+  "what": "git commit -m \"rm -rf <dir>\"",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "7c",
+  "what": "echo rm -rf <dir>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "8a",
+  "what": "rm -rf <a junction itself>",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "8b",
+  "what": "rm -rf <tree with a junction 5 levels down>",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "8c",
+  "what": "a symlink to a FILE inside a scratch tree",
+  "got": "cannot plant (EPERM)",
+  "expect": "deny",
+  "ok": false,
+  "note": "a file symlink is safe to rm -r; if deny it is a (rare) false positive"
+ },
+ {
+  "id": "9a",
+  "what": "rm -rf <30,000 files>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": "155 ms"
+ },
+ {
+  "id": "10a",
+  "what": "cmd /c rmdir /s /q <tree with a junction>",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": "NOT CAUGHT, by the header: confirms"
+ },
+ {
+  "id": "10b",
+  "what": "node -e \"fs.rmSync(<tree with a junction>, { recursive: true })\"",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": "NOT CAUGHT, by the header"
+ },
+ {
+  "id": "10c",
+  "what": "a variable the command sets: d=<tree>; rm -rf $d",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": "NOT CAUGHT, by the header"
+ },
+ {
+  "id": "11a",
+  "what": "fails OPEN: \"not json at all\"",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "11b",
+  "what": "fails OPEN: \"\"",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "11c",
+  "what": "fails OPEN: \"{\\\"tool_name\\\":\\\"Bash\\\"}\"",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "11d",
+  "what": "fails OPEN: \"{\\\"tool_name\\\":\\\"Bash\\\",\\\"too",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "11e",
+  "what": "fails OPEN: \"{\\\"tool_name\\\":\\\"Bash\\\",\\\"too",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "11f",
+  "what": "fails OPEN: \"null\"",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "11g",
+  "what": "fails OPEN: \"{\\\"tool_name\\\":\\\"Read\\\",\\\"too",
+  "got": "status 0, stdout \"\"",
+  "expect": "status 0, stdout \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "11h",
+  "what": "an unwritable ledger does not stop the deny (a delete with a junction)",
+  "got": "deny",
+  "expect": "deny",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "11i",
+  "what": "a payload cwd that does not exist: a clean delete",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "11j",
+  "what": "CONSONANCE_DREAM set: no hook at all",
+  "got": "allow",
+  "expect": "allow",
+  "ok": true,
+  "note": ""
+ }
+]

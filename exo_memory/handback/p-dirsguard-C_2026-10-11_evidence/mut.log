@@ -1,0 +1,13 @@
+== C d300 mutants · asked 2026-10-11T22:26:40.636Z · lock held 2026-10-11T22:26:40.682Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d300/mutrun.sh
+tree 931a9359
+source 2439797baba72791 restored true
+F0 control => TALLY module exe=G:/consonance-scratch/c-d300/tmut.exe args=["dirs_guard_tests"] runs 200: row ok 200 / red 0 / missing 0; sibling red 0; other reds {}; 18 s
+source 2439797baba72791 restored true
+F1 the panicking row shares the writer row pair again => TALLY module exe=G:/consonance-scratch/c-d300/tmut.exe args=["dirs_guard_tests"] runs 200: row ok 6 / red 194 / missing 0; sibling red 6; other reds {}; 22 s
+source 2439797baba72791 restored true
+F2 the guard restores nothing => TALLY module exe=G:/consonance-scratch/c-d300/tmut.exe args=["dirs_guard_tests"] runs 200: row ok 0 / red 200 / missing 0; sibling red 200; other reds {}; 18 s
+source 2439797baba72791 restored true
+F3 the guard restores only on the normal path => TALLY module exe=G:/consonance-scratch/c-d300/tmut.exe args=["dirs_guard_tests"] runs 200: row ok 0 / red 200 / missing 0; sibling red 0; other reds {}; 18 s
+tree after: 0 dirty
+== exit 0 · done 2026-10-11T22:28:28.366Z

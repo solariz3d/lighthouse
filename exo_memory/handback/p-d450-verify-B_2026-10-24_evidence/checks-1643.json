@@ -1,0 +1,4905 @@
+{
+ "at": "2026-10-24T16:43:15.364Z",
+ "priority": 10,
+ "tips": {
+  "local-0.4.17": "1e436f6e10083224ded39db27d3c85bd45a7e9da",
+  "local-0.4.18": "ff88d851cf2d89e73c35387da856b82bd87eab27",
+  "HEAD (main checkout)": "e59991ec9efe7d64a8937ab5164086080ab52a5d",
+  "headBranch": "refs/heads/docs/readme-0.4x",
+  "0.4.17 in 0.4.18": true
+ },
+ "openLaps": [
+  {
+   "lap": "D338",
+   "chain": "working",
+   "since": "2026-10-16T13:03:07.233Z",
+   "note": "Consonance startup priority + EcoQoS opt-out for itself and WebView2"
+  },
+  {
+   "lap": "D402",
+   "chain": "working",
+   "since": "2026-10-24T01:55:13.720Z",
+   "note": "sigil band row"
+  },
+  {
+   "lap": "D403",
+   "chain": "dispatched",
+   "since": "2026-10-19T04:18:21.199Z",
+   "note": null
+  },
+  {
+   "lap": "D408",
+   "chain": "working",
+   "since": "2026-10-20T07:27:28.621Z",
+   "note": null
+  },
+  {
+   "lap": "D415",
+   "chain": "working",
+   "since": "2026-10-19T21:54:26.146Z",
+   "note": null
+  },
+  {
+   "lap": "D422",
+   "chain": "working",
+   "since": "2026-10-20T08:02:30.690Z",
+   "note": null
+  },
+  {
+   "lap": "D425",
+   "chain": "working",
+   "since": "2026-10-22T03:23:05.598Z",
+   "note": "landing local-0.4.13 by B (704e9e1, ae2b108, c29e53a)"
+  },
+  {
+   "lap": "D426",
+   "chain": "return-leg",
+   "since": "2026-10-22T02:58:45.189Z",
+   "note": "accepted; rides the D425 landing"
+  },
+  {
+   "lap": "D427",
+   "chain": "return-leg",
+   "since": "2026-10-22T02:58:46.523Z",
+   "note": "accepted; rides the D425 landing"
+  },
+  {
+   "lap": "D434",
+   "chain": "handbacks-in",
+   "since": "2026-10-23T03:35:04.032Z",
+   "note": "P review: can land; held for D438 P2 + keeper drive"
+  },
+  {
+   "lap": "D437",
+   "chain": "working",
+   "since": "2026-10-23T03:26:58.234Z",
+   "note": "2a E soup/BVH once; 2b B export worker"
+  },
+  {
+   "lap": "D447",
+   "chain": "working",
+   "since": "2026-10-24T14:07:52.773Z",
+   "note": "pre-landing review 2c13316..28eb328"
+  },
+  {
+   "lap": "D449",
+   "chain": "working",
+   "since": "2026-10-24T13:51:45.584Z",
+   "note": "local-0.4.18 = 0.4.17 + D402"
+  }
+ ],
+ "searched": {
+  "loopFiles": 729,
+  "boardLinesNamingAnOpenLap": 649,
+  "openLapRows": 160
+ },
+ "registered": 81,
+ "g1": [
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-040",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "918e55b7358cfb97487bfeed2bea4941d798a1f5",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-a33",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "e3e9b4a0a1d79fd5fd7dfd77a673b0fc1db9f705",
+   "branch": "d421-a",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 0,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D415",
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-a34",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "ea54ac3bff097f32820445c6670d67eab744f59d",
+   "branch": "d421-a-red",
+   "statusOk": true,
+   "dirty": [
+    "?? app/test/sculpt-frame.test.js"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-a35",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "06e0645c88825048c350bf63f75092ecd07b015b",
+   "branch": "d421-a-int",
+   "statusOk": true,
+   "dirty": [
+    "?? app/test/sculpt-frame.test.js"
+   ],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 0,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D427"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-a36",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "57b41f875392b9c1c2c99a4bc321f219c5a5f712",
+   "branch": "d421c-a",
+   "statusOk": true,
+   "dirty": [
+    "?? app/test/sculpt-prof.tmp.js"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-a37",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "1c640b0c54bba5b71b50ec2c1987874c21f33777",
+   "branch": "d421c-a3",
+   "statusOk": true,
+   "dirty": [
+    "?? app/test/sculpt-prof.tmp.js"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-a38",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "c45518fff55158e9c1716445c90a4c22249ff334",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-a427",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "c29e53a35314167b439eec186697bd4f6759fc19",
+   "branch": "d427-seat-a",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 17,
+    "boardLaps": [
+     "D427",
+     "D425"
+    ],
+    "lapOfName": [
+     "D427"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-a429",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "72019887dea73300474eefb7cb4e86b1a151599b",
+   "branch": "d429-a",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 7,
+    "boardLaps": [
+     "D427",
+     "D403"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-b049",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "409d3f834b3364f0391d1e2d9bf9be3ceb5e2b90",
+   "branch": "rel-0.4.9",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 5,
+    "boardLaps": [
+     "D422",
+     "D415",
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-b421",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "8b7ef3e3d309452718148fcb1395e17aeeebb5a0",
+   "branch": "d421-b",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D415",
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-b421c",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "856a386517c05a8c17a6143f855cf55f57e7fb89",
+   "branch": "d421c-b",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-b425",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "ae2b108993915f6e54372514e82b63f323dbeecd",
+   "branch": "d425-b",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 22,
+    "boardLaps": [
+     "D425",
+     "D426",
+     "D427"
+    ],
+    "lapOfName": [
+     "D425"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-b428",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "c1841cae1d769bc5a0ffc2f3a0360b0196a6a16f",
+   "branch": "d428-b",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 6,
+    "boardLaps": [
+     "D425"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-b433",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "d2dff3eb474ddb9fa3ddcd888d78ea2f6a6549ae",
+   "branch": "d433b-b",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 5,
+    "boardLaps": [
+     "D403",
+     "D434"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-b437",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "74d60c8fbcc73a003a951bedce5a1758f4390f79",
+   "branch": "d437b-b",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_batch_0415_landing_2026-10-23.md"
+    ],
+    "board": 17,
+    "boardLaps": [
+     "D437",
+     "D426",
+     "D434",
+     "D427"
+    ],
+    "lapOfName": [
+     "D437"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-c27",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "84e21700dbc8d531d427e10a45e3e3716f2370d2",
+   "branch": "d421-c",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 9,
+    "boardLaps": [
+     "D415",
+     "D422",
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-c28",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "ee43f20adbefe9c85335a9b09dd2ebc1d01c6c54",
+   "branch": "d421b-c",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 3,
+    "boardLaps": [
+     "D415",
+     "D402",
+     "D426"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-c29",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "63e3dd9fc43dcacd71a9062cc692205bd81766c8",
+   "branch": "d426-c",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 13,
+    "boardLaps": [
+     "D426",
+     "D425",
+     "D427",
+     "D437"
+    ],
+    "lapOfName": [
+     "D426"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-c30",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "b575fdbf53aeb2ccd6edaa88317b086824af4f0a",
+   "branch": "d430-c",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_d430_blank_is_zero_2026-10-22.md"
+    ],
+    "board": 7,
+    "boardLaps": [
+     "D426",
+     "D434",
+     "D403"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-c31",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "9233a93927e26fbaae805cef8a6155516102ae11",
+   "branch": "d438-c",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_batch_0415_landing_2026-10-23.md"
+    ],
+    "board": 8,
+    "boardLaps": [
+     "D426",
+     "D437",
+     "D434",
+     "D427"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e23",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "58abf771ca5d21dcda6aa4adc0cb939a8d9db79f",
+   "branch": "d403-a",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 2,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 19,
+    "boardLaps": [
+     "D403",
+     "D402",
+     "D422",
+     "D338",
+     "D437"
+    ],
+    "lapOfName": [
+     "D403"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e26",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "000f13e735d4ba113a5642dd8e6287d1ef4da8ab",
+   "branch": "local-0.4.10",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 2,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_d421_sculpt_build_2026-10-20.md"
+    ],
+    "board": 4,
+    "boardLaps": [
+     "D338",
+     "D402",
+     "D427"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e27",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "dc7d17018b6c1502f08fb0aa78e88af6e0871d06",
+   "branch": "d421-e",
+   "statusOk": true,
+   "dirty": [
+    "?? app/test/sculpt-frame.test.js"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D415",
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e28",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "6e5ea43656ef4259d54fb34ff533a395cff5f07f",
+   "branch": "d421-e-meas",
+   "statusOk": true,
+   "dirty": [
+    "?? app/test/sculpt-frame-prof.test.js"
+   ],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 0,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D415"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e29",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "5168053bfa4f2016b44b830e90f85d90b8d224cc",
+   "branch": "local-0.4.11-e",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 1,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e30",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "7d42d3523381f8d872a641a4aa539c4e0aa0f2fb",
+   "branch": "d421c-e",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e31",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "b6a616c429baca4f3e4a6c826450d642e99afadc",
+   "branch": "local-0.4.12-e",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 1,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D425"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e32",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "704e9e15755ec9c6dc79137406e9a44b6512c434",
+   "branch": "d425-e",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 15,
+    "boardLaps": [
+     "D425"
+    ],
+    "lapOfName": [
+     "D425"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e33",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "cb529ceaf880a9f2e03697c687566c9289cc195b",
+   "branch": "d425-meas-e",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 0,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 5,
+    "boardLaps": [
+     "D425"
+    ],
+    "lapOfName": [
+     "D425"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e34",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "ab895701bd28caf26f569afd679ebc728cc42dd0",
+   "branch": "local-0.4.13-e",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 1,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e35",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "2ccee1ebbc281ca27a8c16f1d66bddf04b947d6f",
+   "branch": "d403-on-0413",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_d429_batch_0414_2026-10-22.md"
+    ],
+    "board": 14,
+    "boardLaps": [
+     "D403",
+     "D427",
+     "D434"
+    ],
+    "lapOfName": [
+     "D403"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e36",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "3c870e34428e9243a9a2ea5bdd12fe31117172e6",
+   "branch": "d432-e",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 6,
+    "plansOtherFiles": [
+     "plan_batch_0415_landing_2026-10-23.md",
+     "plan_d432_stacked_not_red_2026-10-22.md",
+     "plan_d435_d436_2026-10-22.md",
+     "plan_d438_pits_flip_and_closer_joints_2026-10-22.md"
+    ],
+    "board": 18,
+    "boardLaps": [
+     "D403",
+     "D427",
+     "D434",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-e38",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "f2cd310d27241b2678e16edb1bbb98b11162363e",
+   "branch": "d437a-e",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_batch_0415_landing_2026-10-23.md"
+    ],
+    "board": 17,
+    "boardLaps": [
+     "D426",
+     "D403",
+     "D437",
+     "D434",
+     "D427"
+    ],
+    "lapOfName": [
+     "D437"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-land411",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "57b41f875392b9c1c2c99a4bc321f219c5a5f712",
+   "branch": "local-0.4.11",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_d421c_cuts_2026-10-20.md",
+     "plan_d421_sculpt_build_2026-10-20.md"
+    ],
+    "board": 4,
+    "boardLaps": [
+     "D402",
+     "D415",
+     "D427"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-land412",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "a795359321d2ef20110c60b0fd1247a2c5370887",
+   "branch": "local-0.4.12",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [
+     {
+      "file": "plan_d425_sculpt_cues_2026-10-21.md",
+      "line": 9,
+      "laps": [
+       "D425"
+      ],
+      "open": [
+       "D425"
+      ]
+     },
+     {
+      "file": "plan_d425_sculpt_cues_2026-10-21.md",
+      "line": 9,
+      "laps": [
+       "D425"
+      ],
+      "open": [
+       "D425"
+      ]
+     },
+     {
+      "file": "plan_d426_ghost_vanish_2026-10-21.md",
+      "line": 15,
+      "laps": [
+       "D426"
+      ],
+      "open": [
+       "D426"
+      ]
+     }
+    ],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_d421c_cuts_2026-10-20.md"
+    ],
+    "board": 23,
+    "boardLaps": [
+     "D425",
+     "D402",
+     "D426",
+     "D427"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-land413",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "6261a22ec8594c299ec2c9f742e1bc968135ea1a",
+   "branch": "local-0.4.13",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [
+     "D425"
+    ],
+    "plansOpen": [],
+    "plansOther": 6,
+    "plansOtherFiles": [
+     "plan_d429_batch_0414_2026-10-22.md",
+     "plan_d430_blank_is_zero_2026-10-22.md",
+     "plan_d431_close_joint_bump_2026-10-22.md",
+     "plan_d432_stacked_not_red_2026-10-22.md"
+    ],
+    "board": 29,
+    "boardLaps": [
+     "D425",
+     "D434",
+     "D437",
+     "D403",
+     "D427",
+     "D426"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-land414",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "b6969dade259c8649045c7a70cbf8de7fcb2929b",
+   "branch": "heads/local-0.4.14",
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d337/pre-close.t180track",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D403"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-land415",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "42d4c2b26b053d65f1678b50dde415c48c164372",
+   "branch": "heads/local-0.4.15",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D427"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-land416",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "e8e34d00c3ff4324c82182a5e0dba872fc325200",
+   "branch": "heads/local-0.4.16",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D427"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-land417",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "1e436f6e10083224ded39db27d3c85bd45a7e9da",
+   "branch": "heads/local-0.4.17",
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d337/pre-close.t180track",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D447"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o1",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "937f5d45438bc72fb76ffd8d26c9e7af7e9f988b",
+   "branch": "d421-o",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 3,
+    "boardLaps": [
+     "D415",
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o10-kn5",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "63bb38812ff92f3a4bbc576125e9257107ba5ef4",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "M  CHANGELOG.md",
+    "M  app/core/overlapjob.js",
+    "M  app/core/overlapmerge.js",
+    "M  app/test/validate-ui-incval.test.js",
+    "M  app/validate-ui/labels.js",
+    "M  docs/ARCHITECTURE.md",
+    "M  src/core/sharp.js",
+    "M  src/export/pitlane.js",
+    "M  src/geom/bvh.js",
+    "M  src/geom/pitlane.js",
+    "M  src/validate/index.js",
+    "M  src/validate/limits.js",
+    "M  test/core_sharp.test.js",
+    "A  test/stacked_not_red.test.js",
+    "M  test/validate.test.js",
+    "M  test/validate_bounds.test.js",
+    "M  test/validate_incremental.test.js",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": true,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o11-kn5a",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "1a113c356f72ba4d17b79869e3179430ad1dab23",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "UU CHANGELOG.md",
+    "M  app/core/overlapjob.js",
+    "M  app/core/overlapmerge.js",
+    "M  app/test/validate-ui-incval.test.js",
+    "M  app/validate-ui/labels.js",
+    "M  docs/ARCHITECTURE.md",
+    "M  src/core/sharp.js",
+    "M  src/export/pitlane.js",
+    "M  src/geom/bvh.js",
+    "M  src/geom/pitlane.js",
+    "M  src/validate/index.js",
+    "M  src/validate/limits.js",
+    "M  test/core_sharp.test.js",
+    "A  test/stacked_not_red.test.js",
+    "M  test/validate.test.js",
+    "M  test/validate_bounds.test.js",
+    "M  test/validate_incremental.test.js",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": true,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o12",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "cd3dc42dc949b478dbe44711294e711c39b4639f",
+   "branch": "d439-o",
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d337/pre-close.t180track",
+    "?? fixtures-d431/p-t180-l1200-r10.t180track",
+    "?? fixtures-d431/p-t180-l1200-r30.t180track",
+    "?? fixtures-d431/p-t210-l300-r30.t180track",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 4,
+    "plansOtherFiles": [
+     "plan_batch_0415_landing_2026-10-23.md",
+     "plan_d438_pits_flip_and_closer_joints_2026-10-22.md"
+    ],
+    "board": 11,
+    "boardLaps": [
+     "D434",
+     "D437",
+     "D427"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o13-kn5",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "cd3dc42dc949b478dbe44711294e711c39b4639f",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "UU CHANGELOG.md",
+    "M  app/core/overlapjob.js",
+    "M  app/core/overlapmerge.js",
+    "M  app/test/validate-ui-incval.test.js",
+    "M  app/validate-ui/labels.js",
+    "M  docs/ARCHITECTURE.md",
+    "M  src/core/sharp.js",
+    "M  src/export/pitlane.js",
+    "M  src/geom/bvh.js",
+    "M  src/geom/pitlane.js",
+    "M  src/validate/index.js",
+    "M  src/validate/limits.js",
+    "M  test/core_sharp.test.js",
+    "A  test/stacked_not_red.test.js",
+    "M  test/validate.test.js",
+    "M  test/validate_bounds.test.js",
+    "M  test/validate_incremental.test.js",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": true,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o14",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "c422e8ee94a9bb25ab4e8d7c8c5d0525f5920a1a",
+   "branch": "d440-o",
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d337/pre-close.t180track",
+    "?? fixtures-d431/p-t180-l1200-r10.t180track",
+    "?? fixtures-d431/p-t180-l1200-r30.t180track",
+    "?? fixtures-d431/p-t210-l300-r30.t180track",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 4,
+    "plansOtherFiles": [
+     "plan_d438_pits_flip_and_closer_joints_2026-10-22.md"
+    ],
+    "board": 3,
+    "boardLaps": [
+     "D427",
+     "D434"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o15-red",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "cd3dc42dc949b478dbe44711294e711c39b4639f",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "M test/core_finish_bank.test.js"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o16",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "da76067d9fdc9da4ce751eb80e6ab575715f9f0a",
+   "branch": "d443-o",
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d337/pre-close.t180track",
+    "?? fixtures-d431/p-t180-l1200-r10.t180track",
+    "?? fixtures-d431/p-t180-l1200-r30.t180track",
+    "?? fixtures-d431/p-t210-l300-r30.t180track",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_d438_pits_flip_and_closer_joints_2026-10-22.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D434"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o17",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "9fa000aa5265657a6ef21c1763df4e0848f159e3",
+   "branch": "d444-o",
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d337/pre-close.t180track",
+    "?? fixtures-d431/p-t180-l1200-r10.t180track",
+    "?? fixtures-d431/p-t180-l1200-r30.t180track",
+    "?? fixtures-d431/p-t210-l300-r30.t180track",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_batch_0416_landing_2026-10-23.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D427"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o2",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "06e0645c88825048c350bf63f75092ecd07b015b",
+   "branch": "d421-o-int",
+   "statusOk": true,
+   "dirty": [
+    "?? app/test/sculpt-frame.test.js"
+   ],
+   "mergeHead": false,
+   "in17": false,
+   "in18": false,
+   "cherryPlus": 0,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D415"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o3",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "d3be0cbd9846ad08bb8512e88700e6c51e7e7f20",
+   "branch": "d421c-o",
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o4",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "4f96f6b7d87f96594cffbf702cdfa94383da4572",
+   "branch": "d431-o",
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d337/pre-close.t180track",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [
+     {
+      "file": "plan_d434_close_banks_curves_2026-10-22.md",
+      "line": 30,
+      "laps": [
+       "D431",
+       "D434"
+      ],
+      "open": [
+       "D434"
+      ]
+     }
+    ],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_d431_close_joint_bump_2026-10-22.md"
+    ],
+    "board": 33,
+    "boardLaps": [
+     "D434",
+     "D425",
+     "D403",
+     "D437",
+     "D427",
+     "D449"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o5",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "681727f4e111ba814997e6845b5784508506a3c0",
+   "branch": "d434-o",
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d337/pre-close.t180track",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [
+     {
+      "file": "plan_d438_pits_flip_and_closer_joints_2026-10-22.md",
+      "line": 47,
+      "laps": [
+       "D434",
+       "D438"
+      ],
+      "open": [
+       "D434"
+      ]
+     }
+    ],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_batch_0415_landing_2026-10-23.md"
+    ],
+    "board": 32,
+    "boardLaps": [
+     "D434",
+     "D437"
+    ],
+    "lapOfName": [
+     "D434"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o6-scratch",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "15e4e811433591b5c7e16b3895e1bec845f9eb49",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "M  CHANGELOG.md",
+    "M  app/core/overlapjob.js",
+    "M  app/core/overlapmerge.js",
+    "M  app/test/validate-ui-incval.test.js",
+    "M  app/validate-ui/labels.js",
+    "M  docs/ARCHITECTURE.md",
+    "M  src/core/sharp.js",
+    "M  src/export/pitlane.js",
+    "M  src/geom/bvh.js",
+    "M  src/geom/pitlane.js",
+    "M  src/validate/index.js",
+    "M  src/validate/limits.js",
+    "M  test/core_sharp.test.js",
+    "A  test/stacked_not_red.test.js",
+    "M  test/validate.test.js",
+    "M  test/validate_bounds.test.js",
+    "M  test/validate_incremental.test.js",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": true,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 5,
+    "boardLaps": [
+     "D434"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o7",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "7cc2ca4532b857539fee1b80fcb886a0a3218ff6",
+   "branch": "d438-o",
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d337/pre-close.t180track",
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_batch_0415_landing_2026-10-23.md",
+     "plan_d438_pits_flip_and_closer_joints_2026-10-22.md"
+    ],
+    "board": 21,
+    "boardLaps": [
+     "D434",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o8-red",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "681727f4e111ba814997e6845b5784508506a3c0",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track",
+    "?? test/core_finish_joints.test.js"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-o9-d438",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "63bb38812ff92f3a4bbc576125e9257107ba5ef4",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-p438",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "f5e1994bdd396543f310f163d900dd09514a599e",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D434",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-p438b",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "d52c4cc1b6ccbed75b96a3815299fb130aa8d15e",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D434",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-p438c",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "7cc2ca4532b857539fee1b80fcb886a0a3218ff6",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 3,
+    "boardLaps": [
+     "D434",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-p439",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "cd3dc42dc949b478dbe44711294e711c39b4639f",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-p440",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "c422e8ee94a9bb25ab4e8d7c8c5d0525f5920a1a",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-p443",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "da76067d9fdc9da4ce751eb80e6ab575715f9f0a",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [
+    "?? fixtures-d431/test10-open.t180track",
+    "?? fixtures-d431/testtrack10-open.t180track"
+   ],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-p446",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "5a2fbab2c37048e3f20750c265ad6bf53ebe9630",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-wt-p446e",
+   "registered": true,
+   "locked": false,
+   "prunable": false,
+   "exists": true,
+   "head": "e8e34d00c3ff4324c82182a5e0dba872fc325200",
+   "branch": null,
+   "statusOk": true,
+   "dirty": [],
+   "mergeHead": false,
+   "in17": true,
+   "in18": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 3,
+    "boardLaps": [
+     "D447"
+    ],
+    "lapOfName": []
+   }
+  }
+ ],
+ "g2": [
+  {
+   "path": "C:/Users/nname/Downloads/t180-048-shots-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-cargo-c",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-cargo-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d049",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d331",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d341",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d344",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d355",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d358",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 3,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 2,
+    "boardLaps": [
+     "D338",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d359",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d362",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d364",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 2,
+    "boardLaps": [
+     "D338",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d371",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 2,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d373",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d378",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 4,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 2,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d379-b",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d379-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 2,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d381",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d381-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d384",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d384-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d384-msg1.txt",
+   "exists": true,
+   "kind": "file",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d389",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d389-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d390",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d391-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d392",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d393-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d394",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d394-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d394-red-settings.out",
+   "exists": true,
+   "kind": "file",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d395-concepts",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d396",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D403"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d397-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d398-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d399-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d400",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d403-base",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": [
+     "D403"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d403-diag",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": [
+     "D403"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d403-mut",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": [
+     "D403"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d403f-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 5,
+    "boardLaps": [
+     "D403",
+     "D402"
+    ],
+    "lapOfName": [
+     "D403"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d403rev",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D403"
+    ],
+    "lapOfName": [
+     "D403"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d404",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D403"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d404rev-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d405-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d406rev-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d408",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 6,
+    "boardLaps": [
+     "D408",
+     "D415",
+     "D434",
+     "D437"
+    ],
+    "lapOfName": [
+     "D408"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d410",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D408"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d412",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D425"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d413",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 6,
+    "boardLaps": [
+     "D425",
+     "D403",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d414-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_d418_fast_lane_2026-10-19.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d416",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 1,
+    "boardLaps": [
+     "D415"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d421-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 12,
+    "boardLaps": [
+     "D425",
+     "D403",
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d421b",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 3,
+    "boardLaps": [
+     "D425",
+     "D403"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d425-mut",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": [
+     "D425"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d425b",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 5,
+    "boardLaps": [
+     "D425",
+     "D403",
+     "D437"
+    ],
+    "lapOfName": [
+     "D425"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d432-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_d435_d436_2026-10-22.md"
+    ],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d432-mut",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d437-A",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": [
+     "D437"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d437-base",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": [
+     "D437"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d437-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 3,
+    "boardLaps": [
+     "D437",
+     "D427",
+     "D403"
+    ],
+    "lapOfName": [
+     "D437"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d437-mut",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": [
+     "D437"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d437-S",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": [
+     "D437"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d437b",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 3,
+    "boardLaps": [
+     "D437",
+     "D427"
+    ],
+    "lapOfName": [
+     "D437"
+    ]
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d446-e",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 2,
+    "boardLaps": [
+     "D447",
+     "D402"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-d446-mut",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-msgs",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 0,
+    "boardLaps": [],
+    "lapOfName": []
+   }
+  },
+  {
+   "path": "C:/Users/nname/Downloads/t180-sounds-d334",
+   "exists": true,
+   "kind": "dir",
+   "git": null,
+   "registeredWorktree": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 1,
+    "plansOtherFiles": [
+     "plan_t180_handoff_2026-10-15.md"
+    ],
+    "board": 1,
+    "boardLaps": [
+     "D338"
+    ],
+    "lapOfName": []
+   }
+  }
+ ],
+ "uuidTmpInTemp": {
+  "0": 97,
+  "1": 105,
+  "2": 110,
+  "3": 107,
+  "4": 107,
+  "5": 100,
+  "6": 81,
+  "7": 102,
+  "8": 105,
+  "9": 110,
+  "a": 99,
+  "b": 90,
+  "c": 100,
+  "d": 106,
+  "e": 100,
+  "f": 98
+ },
+ "g4": [
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/b437oom-pQNE1l",
+   "name": "b437oom-pQNE1l",
+   "exists": true,
+   "mtime": "2026-10-23T03:33:10.921Z",
+   "kind": "dir",
+   "top": [
+    "ActorSafetyLists",
+    "AmountExtractionHeuristicRegexes",
+    "BrowserMetrics-spare.pma",
+    "CaptchaProviders",
+    "CertificateRevocation",
+    "component_crx_cache",
+    "Crashpad",
+    "CrashpadMetrics-active.pma"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d02524ef-c01f-4ff2-b659-fc7947c6ddd0.tmp",
+   "name": "d02524ef-c01f-4ff2-b659-fc7947c6ddd0.tmp",
+   "exists": true,
+   "mtime": "2026-10-17T23:19:52.993Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d033a605-e153-4d30-ba46-a4bc42b282c1.tmp",
+   "name": "d033a605-e153-4d30-ba46-a4bc42b282c1.tmp",
+   "exists": true,
+   "mtime": "2026-10-20T05:02:43.473Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d08873de-c915-4f43-b7a0-2da228412aa5.tmp",
+   "name": "d08873de-c915-4f43-b7a0-2da228412aa5.tmp",
+   "exists": true,
+   "mtime": "2026-10-17T23:18:40.603Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d160dcb7-3095-4c0f-9171-493cd10bfa8d.tmp",
+   "name": "d160dcb7-3095-4c0f-9171-493cd10bfa8d.tmp",
+   "exists": true,
+   "mtime": "2026-10-19T04:44:12.466Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d1615ec8-ac82-4f7e-95b2-5ef9e05f142b.tmp",
+   "name": "d1615ec8-ac82-4f7e-95b2-5ef9e05f142b.tmp",
+   "exists": true,
+   "mtime": "2026-10-18T23:14:49.740Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d178b8e0-a33f-48bf-acb8-eb0f16b63d7f.tmp",
+   "name": "d178b8e0-a33f-48bf-acb8-eb0f16b63d7f.tmp",
+   "exists": true,
+   "mtime": "2026-10-19T01:31:16.338Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d25014c3-f558-4ed0-8438-145d0740a39c.tmp.woff2",
+   "name": "d25014c3-f558-4ed0-8438-145d0740a39c.tmp.woff2",
+   "exists": true,
+   "mtime": "2026-10-19T23:16:41.269Z",
+   "kind": "file",
+   "magic": "wOF2",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d361list.txt",
+   "name": "d361list.txt",
+   "exists": true,
+   "mtime": "2026-10-17T15:34:54.296Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 1863
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d395files.json",
+   "name": "d395files.json",
+   "exists": true,
+   "mtime": "2026-10-18T22:40:37.604Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 5243
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411-export-author.txt",
+   "name": "d411-export-author.txt",
+   "exists": true,
+   "mtime": "2026-10-19T14:38:55.179Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 892
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411-menubar-page.txt",
+   "name": "d411-menubar-page.txt",
+   "exists": true,
+   "mtime": "2026-10-19T14:38:31.194Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 3284
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411-red.txt",
+   "name": "d411-red.txt",
+   "exists": true,
+   "mtime": "2026-10-19T14:34:35.778Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 14478
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411-settings.txt",
+   "name": "d411-settings.txt",
+   "exists": true,
+   "mtime": "2026-10-19T14:38:55.531Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 1208
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411-theme-mutation.txt",
+   "name": "d411-theme-mutation.txt",
+   "exists": true,
+   "mtime": "2026-10-19T14:38:45.137Z",
+   "kind": "file",
+   "mentionsOurs": false,
+   "size": 5014
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411-theme.txt",
+   "name": "d411-theme.txt",
+   "exists": true,
+   "mtime": "2026-10-19T14:38:55.824Z",
+   "kind": "file",
+   "mentionsOurs": false,
+   "size": 1755
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411edit.js",
+   "name": "d411edit.js",
+   "exists": true,
+   "mtime": "2026-10-19T20:29:18.133Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 3327
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411edit.js.2",
+   "name": "d411edit.js.2",
+   "exists": true,
+   "mtime": "2026-10-19T20:29:24.961Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 3408
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411fix.js",
+   "name": "d411fix.js",
+   "exists": true,
+   "mtime": "2026-10-19T20:37:02.723Z",
+   "kind": "file",
+   "mentionsOurs": false,
+   "size": 2879
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411green.txt",
+   "name": "d411green.txt",
+   "exists": true,
+   "mtime": "2026-10-19T20:42:04.615Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 5748
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411hs.txt",
+   "name": "d411hs.txt",
+   "exists": true,
+   "mtime": "2026-10-19T20:47:48.862Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 2015
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411r6.js",
+   "name": "d411r6.js",
+   "exists": true,
+   "mtime": "2026-10-19T20:37:10.680Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 951
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411red.txt",
+   "name": "d411red.txt",
+   "exists": true,
+   "mtime": "2026-10-19T20:36:44.951Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 4780
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d411x.txt",
+   "name": "d411x.txt",
+   "exists": true,
+   "mtime": "2026-10-20T01:22:06.048Z",
+   "kind": "file",
+   "mentionsOurs": false,
+   "size": 0
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d415e3f7-cb12-4e40-b057-12ff34f652ca.tmp",
+   "name": "d415e3f7-cb12-4e40-b057-12ff34f652ca.tmp",
+   "exists": true,
+   "mtime": "2026-10-17T23:18:17.046Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d438.diff",
+   "name": "d438.diff",
+   "exists": true,
+   "mtime": "2026-10-23T15:19:32.677Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 172187
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d438a.sha",
+   "name": "d438a.sha",
+   "exists": true,
+   "mtime": "2026-10-23T06:26:05.655Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 855
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d438src.sha",
+   "name": "d438src.sha",
+   "exists": true,
+   "mtime": "2026-10-23T05:07:51.176Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 854
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d439.sha",
+   "name": "d439.sha",
+   "exists": true,
+   "mtime": "2026-10-23T08:11:50.861Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 854
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d43925d2-1d89-481e-976b-7e7abe82c161.tmp",
+   "name": "d43925d2-1d89-481e-976b-7e7abe82c161.tmp",
+   "exists": true,
+   "mtime": "2026-10-18T15:20:39.356Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d515af43-d501-4857-9a59-a5b57dba64b6.tmp",
+   "name": "d515af43-d501-4857-9a59-a5b57dba64b6.tmp",
+   "exists": true,
+   "mtime": "2026-10-20T02:15:46.667Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d522be0a-75b3-4894-8e69-b06f697be166.tmp",
+   "name": "d522be0a-75b3-4894-8e69-b06f697be166.tmp",
+   "exists": true,
+   "mtime": "2026-10-19T00:26:11.710Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d551b55c-e6fa-4b3d-a5cc-28c0fa4ceff0.tmp",
+   "name": "d551b55c-e6fa-4b3d-a5cc-28c0fa4ceff0.tmp",
+   "exists": true,
+   "mtime": "2026-10-18T01:53:01.612Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d57389f3-8f23-4098-9d7b-9d8991ef0d9b.tmp",
+   "name": "d57389f3-8f23-4098-9d7b-9d8991ef0d9b.tmp",
+   "exists": true,
+   "mtime": "2026-10-18T13:45:07.337Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d5937f2f-bf09-4131-88b0-6ff52aa6cc0c.tmp",
+   "name": "d5937f2f-bf09-4131-88b0-6ff52aa6cc0c.tmp",
+   "exists": true,
+   "mtime": "2026-10-18T00:06:02.049Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d6029932-c469-4989-bd35-6115458c12ce.tmp",
+   "name": "d6029932-c469-4989-bd35-6115458c12ce.tmp",
+   "exists": true,
+   "mtime": "2026-10-17T23:26:38.866Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d648d115-633a-4a4e-af95-9a554de019e6.tmp",
+   "name": "d648d115-633a-4a4e-af95-9a554de019e6.tmp",
+   "exists": true,
+   "mtime": "2026-10-18T23:04:37.266Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d6727b7f-ab71-4382-b526-79bdd0376f4d.tmp",
+   "name": "d6727b7f-ab71-4382-b526-79bdd0376f4d.tmp",
+   "exists": true,
+   "mtime": "2026-10-18T03:39:02.705Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d742b9fb-e8ba-496c-98c5-95ad397244b4.tmp",
+   "name": "d742b9fb-e8ba-496c-98c5-95ad397244b4.tmp",
+   "exists": true,
+   "mtime": "2026-10-19T01:31:56.378Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d7440b6a-e9c2-46a1-864d-b90a3e32d888.tmp",
+   "name": "d7440b6a-e9c2-46a1-864d-b90a3e32d888.tmp",
+   "exists": true,
+   "mtime": "2026-10-19T20:19:21.802Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d7877de3-c88a-4bc5-b64a-6b736a3cd8be.tmp",
+   "name": "d7877de3-c88a-4bc5-b64a-6b736a3cd8be.tmp",
+   "exists": true,
+   "mtime": "2026-10-17T19:21:24.423Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d797d9f3-cdec-4195-888a-7ed0223d76d9.tmp",
+   "name": "d797d9f3-cdec-4195-888a-7ed0223d76d9.tmp",
+   "exists": true,
+   "mtime": "2026-10-20T03:22:35.651Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d8059fb7-1c21-4d00-ac76-371422a2dcda.tmp",
+   "name": "d8059fb7-1c21-4d00-ac76-371422a2dcda.tmp",
+   "exists": true,
+   "mtime": "2026-10-17T12:59:23.942Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d863aab5-6c85-49da-aa0e-45c4ee704305.tmp",
+   "name": "d863aab5-6c85-49da-aa0e-45c4ee704305.tmp",
+   "exists": true,
+   "mtime": "2026-10-17T23:20:06.654Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/d934ee2b-8aff-4470-89a3-bbf7de23f17c.tmp",
+   "name": "d934ee2b-8aff-4470-89a3-bbf7de23f17c.tmp",
+   "exists": true,
+   "mtime": "2026-10-19T23:36:40.070Z",
+   "kind": "file",
+   "magic": "Cr24",
+   "uuid": true
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/node-compile-cache",
+   "name": "node-compile-cache",
+   "exists": true,
+   "mtime": "2026-10-22T20:28:34.428Z",
+   "kind": "dir",
+   "top": [
+    "v24.14.1-x64-cf738c9d"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/p437exp-4s3hZ6",
+   "name": "p437exp-4s3hZ6",
+   "exists": true,
+   "mtime": "2026-10-23T02:56:16.605Z",
+   "kind": "dir",
+   "top": [
+    "ActorSafetyLists",
+    "AmountExtractionHeuristicRegexes",
+    "BrowserMetrics-spare.pma",
+    "CaptchaProviders",
+    "CertificateRevocation",
+    "component_crx_cache",
+    "Crashpad",
+    "CrashpadMetrics-active.pma"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/p437exp-BFiwF2",
+   "name": "p437exp-BFiwF2",
+   "exists": true,
+   "mtime": "2026-10-23T02:11:21.214Z",
+   "kind": "dir",
+   "top": [
+    "ActorSafetyLists",
+    "AmountExtractionHeuristicRegexes",
+    "BrowserMetrics-spare.pma",
+    "CaptchaProviders",
+    "CertificateRevocation",
+    "component_crx_cache",
+    "Crashpad",
+    "CrashpadMetrics-active.pma"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/p437exp-jlu316",
+   "name": "p437exp-jlu316",
+   "exists": true,
+   "mtime": "2026-10-23T03:11:16.621Z",
+   "kind": "dir",
+   "top": [
+    "ActorSafetyLists",
+    "AmountExtractionHeuristicRegexes",
+    "BrowserMetrics-spare.pma",
+    "CaptchaProviders",
+    "CertificateRevocation",
+    "component_crx_cache",
+    "Crashpad",
+    "CrashpadMetrics-active.pma"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/p437exp-SJtIUW",
+   "name": "p437exp-SJtIUW",
+   "exists": true,
+   "mtime": "2026-10-23T02:26:21.234Z",
+   "kind": "dir",
+   "top": [
+    "ActorSafetyLists",
+    "AmountExtractionHeuristicRegexes",
+    "BrowserMetrics-spare.pma",
+    "CaptchaProviders",
+    "CertificateRevocation",
+    "component_crx_cache",
+    "Crashpad",
+    "CrashpadMetrics-active.pma"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/p446exp-Uttebs",
+   "name": "p446exp-Uttebs",
+   "exists": true,
+   "mtime": "2026-10-23T15:58:40.561Z",
+   "kind": "dir",
+   "top": [
+    "ActorSafetyLists",
+    "AmountExtractionHeuristicRegexes",
+    "Breadcrumbs",
+    "BrowserMetrics-spare.pma",
+    "CaptchaProviders",
+    "CertificateRevocation",
+    "component_crx_cache",
+    "Crashpad"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir16140_1363245528",
+   "name": "scoped_dir16140_1363245528",
+   "exists": true,
+   "mtime": "2026-10-22T21:50:56.821Z",
+   "kind": "dir",
+   "top": [
+    "3b114341-78c9-4a7b-bc00-50022bac67d9.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir16140_351611768",
+   "name": "scoped_dir16140_351611768",
+   "exists": true,
+   "mtime": "2026-10-22T21:50:56.896Z",
+   "kind": "dir",
+   "top": [
+    "9ec4630a-8433-49c1-ad15-d77f37ab804c.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir18796_83526462",
+   "name": "scoped_dir18796_83526462",
+   "exists": true,
+   "mtime": "2026-10-22T18:36:51.077Z",
+   "kind": "dir",
+   "top": [
+    "c795f4bf-766c-4f3c-9c61-3fc142500ea3.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir19572_1801488478",
+   "name": "scoped_dir19572_1801488478",
+   "exists": true,
+   "mtime": "2026-10-22T18:37:52.625Z",
+   "kind": "dir",
+   "top": [
+    "CRX_INSTALL",
+    "f793d712-585f-4e52-b745-28bdf1816766.tmp"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir19572_2103109250",
+   "name": "scoped_dir19572_2103109250",
+   "exists": true,
+   "mtime": "2026-10-22T18:37:52.620Z",
+   "kind": "dir",
+   "top": [
+    "48e5f062-a26c-44b7-9074-019907063f36.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir24092_1870515405",
+   "name": "scoped_dir24092_1870515405",
+   "exists": true,
+   "mtime": "2026-10-22T14:35:02.539Z",
+   "kind": "dir",
+   "top": []
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir32432_1795058767",
+   "name": "scoped_dir32432_1795058767",
+   "exists": true,
+   "mtime": "2026-10-22T18:51:28.811Z",
+   "kind": "dir",
+   "top": [
+    "3b32b1b8-64d4-46c2-8ff3-f8ee136f42e8.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir32432_884874878",
+   "name": "scoped_dir32432_884874878",
+   "exists": true,
+   "mtime": "2026-10-22T18:51:28.789Z",
+   "kind": "dir",
+   "top": [
+    "2c03a3c6-3070-4305-965f-6b2afec83da2.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir36420_1728314846",
+   "name": "scoped_dir36420_1728314846",
+   "exists": true,
+   "mtime": "2026-10-22T21:48:05.494Z",
+   "kind": "dir",
+   "top": [
+    "34bd3cfc-9a6d-415f-b5c5-fd5a96261f1d.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir39172_1787509312",
+   "name": "scoped_dir39172_1787509312",
+   "exists": true,
+   "mtime": "2026-10-22T18:51:09.422Z",
+   "kind": "dir",
+   "top": [
+    "19829c84-9207-459a-a99c-fe649045166d.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir39172_644652556",
+   "name": "scoped_dir39172_644652556",
+   "exists": true,
+   "mtime": "2026-10-22T18:51:09.426Z",
+   "kind": "dir",
+   "top": [
+    "35ff4d2a-7869-4b2c-8ae8-f0b5a07d2a10.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir40204_1407341019",
+   "name": "scoped_dir40204_1407341019",
+   "exists": true,
+   "mtime": "2026-10-22T18:48:48.659Z",
+   "kind": "dir",
+   "top": [
+    "8a970482-296e-4b96-aecd-036f0ebb7ab1.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/scoped_dir40204_1632679282",
+   "name": "scoped_dir40204_1632679282",
+   "exists": true,
+   "mtime": "2026-10-22T18:48:48.646Z",
+   "kind": "dir",
+   "top": [
+    "b4aab9da-c337-4e11-aa69-8734cd99dcb2.tmp",
+    "CRX_INSTALL"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180-water-6yp5Xa",
+   "name": "t180-water-6yp5Xa",
+   "exists": true,
+   "mtime": "2026-10-22T17:55:01.343Z",
+   "kind": "dir",
+   "top": [
+    "W1.js",
+    "W10.js",
+    "W11.js",
+    "W12.js",
+    "W13.js",
+    "W14.js",
+    "W15.js",
+    "W16.js"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180-water-B7a9xn",
+   "name": "t180-water-B7a9xn",
+   "exists": true,
+   "mtime": "2026-10-23T08:48:07.435Z",
+   "kind": "dir",
+   "top": [
+    "W1.js",
+    "W10.js",
+    "W11.js",
+    "W12.js",
+    "W13.js",
+    "W14.js",
+    "W15.js",
+    "W16.js"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180-water-cqzkwd",
+   "name": "t180-water-cqzkwd",
+   "exists": true,
+   "mtime": "2026-10-23T13:46:04.967Z",
+   "kind": "dir",
+   "top": [
+    "W1.js",
+    "W10.js",
+    "W11.js",
+    "W12.js",
+    "W13.js",
+    "W14.js",
+    "W15.js",
+    "W16.js"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180-water-HDhrlb",
+   "name": "t180-water-HDhrlb",
+   "exists": true,
+   "mtime": "2026-10-22T18:59:48.454Z",
+   "kind": "dir",
+   "top": [
+    "W1.js",
+    "W10.js",
+    "W11.js",
+    "W12.js",
+    "W13.js",
+    "W14.js",
+    "W15.js",
+    "W16.js"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180-water-JNufVK",
+   "name": "t180-water-JNufVK",
+   "exists": true,
+   "mtime": "2026-10-22T18:28:11.800Z",
+   "kind": "dir",
+   "top": [
+    "W1.js",
+    "W10.js",
+    "W11.js",
+    "W12.js",
+    "W13.js",
+    "W14.js",
+    "W15.js",
+    "W16.js"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180-water-LFNqDo",
+   "name": "t180-water-LFNqDo",
+   "exists": true,
+   "mtime": "2026-10-22T20:17:10.620Z",
+   "kind": "dir",
+   "top": [
+    "W1.js",
+    "W10.js",
+    "W11.js",
+    "W12.js",
+    "W13.js",
+    "W14.js",
+    "W15.js",
+    "W16.js"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180-water-qBB9kQ",
+   "name": "t180-water-qBB9kQ",
+   "exists": true,
+   "mtime": "2026-10-23T19:51:06.443Z",
+   "kind": "dir",
+   "top": [
+    "W1.js",
+    "W10.js",
+    "W11.js",
+    "W12.js",
+    "W13.js",
+    "W14.js",
+    "W15.js",
+    "W16.js"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180-water-zTop6Y",
+   "name": "t180-water-zTop6Y",
+   "exists": true,
+   "mtime": "2026-10-22T19:30:40.847Z",
+   "kind": "dir",
+   "top": [
+    "W1.js",
+    "W10.js",
+    "W11.js",
+    "W12.js",
+    "W13.js",
+    "W14.js",
+    "W15.js",
+    "W16.js"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180close.txt",
+   "name": "t180close.txt",
+   "exists": true,
+   "mtime": "2026-10-15T04:37:13.765Z",
+   "kind": "file",
+   "mentionsOurs": false,
+   "size": 13407
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180crisp-HwQOYe",
+   "name": "t180crisp-HwQOYe",
+   "exists": true,
+   "mtime": "2026-10-23T19:39:22.630Z",
+   "kind": "dir",
+   "top": [
+    "Default",
+    "extensions_crx_cache",
+    "FileTypePolicies",
+    "FirstPartySetsPreloaded",
+    "first_party_sets.db",
+    "first_party_sets.db-journal",
+    "GPUPersistentCache",
+    "GrShaderCache"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180dec.txt",
+   "name": "t180dec.txt",
+   "exists": true,
+   "mtime": "2026-10-15T08:00:24.545Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 124988
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180df.txt",
+   "name": "t180df.txt",
+   "exists": true,
+   "mtime": "2026-10-15T15:34:44.004Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 42380
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180fin.txt",
+   "name": "t180fin.txt",
+   "exists": true,
+   "mtime": "2026-10-15T18:04:12.110Z",
+   "kind": "file",
+   "mentionsOurs": false,
+   "size": 14565
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180full.txt",
+   "name": "t180full.txt",
+   "exists": true,
+   "mtime": "2026-10-15T01:35:09.496Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 433466
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180full2.txt",
+   "name": "t180full2.txt",
+   "exists": true,
+   "mtime": "2026-10-15T04:50:46.327Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 433857
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180full3.txt",
+   "name": "t180full3.txt",
+   "exists": true,
+   "mtime": "2026-10-15T05:19:27.447Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 435661
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180full4.txt",
+   "name": "t180full4.txt",
+   "exists": true,
+   "mtime": "2026-10-15T16:06:50.629Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 437006
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180full5.txt",
+   "name": "t180full5.txt",
+   "exists": true,
+   "mtime": "2026-10-15T19:50:25.121Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 437994
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180full6.txt",
+   "name": "t180full6.txt",
+   "exists": true,
+   "mtime": "2026-10-15T21:11:39.749Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 438018
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180full7.txt",
+   "name": "t180full7.txt",
+   "exists": true,
+   "mtime": "2026-10-15T22:50:52.498Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 438246
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180h.txt",
+   "name": "t180h.txt",
+   "exists": true,
+   "mtime": "2026-10-15T02:32:18.273Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 35158
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180mut.txt",
+   "name": "t180mut.txt",
+   "exists": true,
+   "mtime": "2026-10-15T08:31:26.095Z",
+   "kind": "file",
+   "mentionsOurs": false,
+   "size": 19557
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180rel-ED1OLp",
+   "name": "t180rel-ED1OLp",
+   "exists": true,
+   "mtime": "2026-10-23T19:38:33.343Z",
+   "kind": "dir",
+   "top": [
+    "CrashpadMetrics-active.pma",
+    "Crowd Deny",
+    "Default",
+    "extensions_crx_cache",
+    "FileTypePolicies",
+    "FirstPartySetsPreloaded",
+    "first_party_sets.db",
+    "first_party_sets.db-journal"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180sculpt-7zE8p8",
+   "name": "t180sculpt-7zE8p8",
+   "exists": true,
+   "mtime": "2026-10-22T18:37:01.902Z",
+   "kind": "dir",
+   "top": [
+    "CrashpadMetrics-active.pma",
+    "Crowd Deny",
+    "Default",
+    "extensions_crx_cache",
+    "FileTypePolicies",
+    "FirstPartySetsPreloaded",
+    "first_party_sets.db",
+    "first_party_sets.db-journal"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180sculpt-YBniii",
+   "name": "t180sculpt-YBniii",
+   "exists": true,
+   "mtime": "2026-10-22T18:38:02.035Z",
+   "kind": "dir",
+   "top": [
+    "CrashpadMetrics-active.pma",
+    "Crowd Deny",
+    "Default",
+    "extensions_crx_cache",
+    "FileTypePolicies",
+    "FirstPartySetsPreloaded",
+    "first_party_sets.db",
+    "first_party_sets.db-journal"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180sweep",
+   "name": "t180sweep",
+   "exists": true,
+   "mtime": "2026-10-22T15:02:23.263Z",
+   "kind": "dir",
+   "top": [
+    "CHANGELOG.md",
+    "README.md"
+   ]
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180t2.txt",
+   "name": "t180t2.txt",
+   "exists": true,
+   "mtime": "2026-10-15T00:26:29.242Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 29251
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180t3.txt",
+   "name": "t180t3.txt",
+   "exists": true,
+   "mtime": "2026-10-15T00:43:15.546Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 35357
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180tests.txt",
+   "name": "t180tests.txt",
+   "exists": true,
+   "mtime": "2026-10-15T00:16:52.208Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 35605
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180_a2.log",
+   "name": "t180_a2.log",
+   "exists": true,
+   "mtime": "2026-10-16T01:27:43.422Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 16139
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180_build.log",
+   "name": "t180_build.log",
+   "exists": true,
+   "mtime": "2026-10-16T02:31:43.632Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 158
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180_c.log",
+   "name": "t180_c.log",
+   "exists": true,
+   "mtime": "2026-10-16T01:22:24.441Z",
+   "kind": "file",
+   "mentionsOurs": false,
+   "size": 19223
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180_fx.log",
+   "name": "t180_fx.log",
+   "exists": true,
+   "mtime": "2026-10-16T07:51:23.065Z",
+   "kind": "file",
+   "mentionsOurs": false,
+   "size": 2879
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/t180_touched.log",
+   "name": "t180_touched.log",
+   "exists": true,
+   "mtime": "2026-10-16T01:06:58.616Z",
+   "kind": "file",
+   "mentionsOurs": true,
+   "size": 6005
+  },
+  {
+   "path": "C:/Users/nname/AppData/Local/Temp/v0414.MxBP",
+   "name": "v0414.MxBP",
+   "exists": true,
+   "mtime": "2026-10-23T15:17:18.224Z",
+   "kind": "dir",
+   "top": [
+    ".claude",
+    ".gitattributes",
+    ".gitignore",
+    "app",
+    "CHANGELOG.md",
+    "docs",
+    "package.json",
+    "README.md"
+   ]
+  }
+ ],
+ "g5": {
+  "path": "C:/build",
+  "exists": true,
+  "top": [
+   "a-d098-target",
+   "a-d111-target",
+   "a-d111-wt-target",
+   "b-d164-target",
+   "b-d168-target",
+   "b-d169-target",
+   "b-d170-target"
+  ],
+  "env": {
+   "CARGO_TARGET_DIR": null
+  },
+  "regUser": null,
+  "regMachine": null,
+  "cargoConfigs": [],
+  "named": {
+   "lapRows": [],
+   "plansOpen": [],
+   "plansOther": 18,
+   "plansOtherFiles": [
+    "corpus_rules_adversarial_2026-08-25.md",
+    "desktop_first_run_2026-08-25.md",
+    "handoff_2026-08-17.md",
+    "handoff_chair_2026-09-01.md",
+    "handoff_chair_2026-09-02.md",
+    "handoff_chair_2026-09-09.md",
+    "opposition_amendment_3.md",
+    "patch_targetless_pull_L044.md",
+    "qc_pool_units_2026-10-02.md",
+    "qs2s_units_v3_2026-10-03.md",
+    "universe_print_registration_2026-08-25.md"
+   ],
+   "board": 1,
+   "boardLaps": [
+    "D437"
+   ],
+   "lapOfName": []
+  }
+ },
+ "g6": [
+  {
+   "path": "C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-d433-P_2026-10-22_evidence\\out",
+   "rel": "exo_memory/handback/p-d433-P_2026-10-22_evidence/out",
+   "exists": true,
+   "tracked": 0,
+   "ignored": false,
+   "lap": "D433",
+   "lapState": "filed",
+   "top": [
+    "t180b_test_10"
+   ]
+  },
+  {
+   "path": "C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-d433-P_2026-10-22_evidence\\out-re",
+   "rel": "exo_memory/handback/p-d433-P_2026-10-22_evidence/out-re",
+   "exists": true,
+   "tracked": 0,
+   "ignored": false,
+   "lap": "D433",
+   "lapState": "filed",
+   "top": [
+    "t180b_test_10"
+   ]
+  },
+  {
+   "path": "C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-d434-O_2026-10-22_evidence\\tracks",
+   "rel": "exo_memory/handback/p-d434-O_2026-10-22_evidence/tracks",
+   "exists": true,
+   "tracked": 0,
+   "ignored": false,
+   "lap": "D434",
+   "lapState": "handbacks-in",
+   "top": [
+    "kn5-tex",
+    "PRIVATE-TRACKS.md",
+    "shots",
+    "shots-input",
+    "test10",
+    "testtrack10"
+   ]
+  },
+  {
+   "path": "C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-d438-O_2026-10-22_evidence\\tracks",
+   "rel": "exo_memory/handback/p-d438-O_2026-10-22_evidence/tracks",
+   "exists": true,
+   "tracked": 0,
+   "ignored": false,
+   "lap": "D438",
+   "lapState": "filed",
+   "top": [
+    "build-15e4e81-d432.t180track",
+    "morning-banked.t180track",
+    "old-saved.t180track",
+    "PRIVATE-TRACKS.md"
+   ]
+  },
+  {
+   "path": "C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-d438-build-O_2026-10-22_evidence\\tracks",
+   "rel": "exo_memory/handback/p-d438-build-O_2026-10-22_evidence/tracks",
+   "exists": true,
+   "tracked": 0,
+   "ignored": false,
+   "lap": "D438",
+   "lapState": "filed",
+   "top": [
+    "kn5-tex",
+    "kn5-tex-a",
+    "PRIVATE-TRACKS.md",
+    "shots",
+    "shots-input"
+   ]
+  },
+  {
+   "path": "C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-d439-O_2026-10-23_evidence\\tracks",
+   "rel": "exo_memory/handback/p-d439-O_2026-10-23_evidence/tracks",
+   "exists": true,
+   "tracked": 0,
+   "ignored": false,
+   "lap": "D439",
+   "lapState": "filed",
+   "top": [
+    "kn5-tex",
+    "PRIVATE-TRACKS.md"
+   ]
+  }
+ ],
+ "branches": [
+  {
+   "branch": "d427-a",
+   "exists": true,
+   "sha": "a795359321d2ef20110c60b0fd1247a2c5370887",
+   "in17": true,
+   "inHEAD": false,
+   "upstream": null,
+   "checkedOut": false,
+   "dWouldSucceed": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 8,
+    "boardLaps": [
+     "D427",
+     "D447",
+     "D437"
+    ],
+    "lapOfName": [
+     "D427"
+    ]
+   }
+  },
+  {
+   "branch": "d446-e",
+   "exists": true,
+   "sha": "a05e4870993fed0005755fcd1edffe9b358852c3",
+   "in17": true,
+   "inHEAD": false,
+   "upstream": null,
+   "checkedOut": false,
+   "dWouldSucceed": false,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 7,
+    "plansOtherFiles": [
+     "plan_batch_0417_landing_2026-10-23.md",
+     "plan_d446_test10_banked_export_red_2026-10-23.md"
+    ],
+    "board": 13,
+    "boardLaps": [
+     "D447",
+     "D402",
+     "D449",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  },
+  {
+   "branch": "land-0.4.8",
+   "exists": true,
+   "sha": "409d3f834b3364f0391d1e2d9bf9be3ceb5e2b90",
+   "in17": true,
+   "inHEAD": true,
+   "upstream": null,
+   "checkedOut": false,
+   "dWouldSucceed": true,
+   "named": {
+    "lapRows": [],
+    "plansOpen": [],
+    "plansOther": 0,
+    "plansOtherFiles": [],
+    "board": 18,
+    "boardLaps": [
+     "D408",
+     "D422",
+     "D338",
+     "D447",
+     "D437"
+    ],
+    "lapOfName": []
+   }
+  }
+ ],
+ "his": {
+  "t180b_untitled": {
+   "path": "C:/Users/nname/Documents/t180b_untitled",
+   "exists": true,
+   "files": [
+    ".t180b-builder.json 327",
+    "ai/fast_lane.ai 24864",
+    "data/map.ini 109",
+    "data/surfaces.ini 356",
+    "map.png 1130765",
+    "models.ini 64",
+    "t180b_untitled.kn5 3379657",
+    "ui/outline.png 280600",
+    "ui/preview.png 284288",
+    "ui/ui_track.json 346"
+   ],
+   "marker": "{\n  \"tool\": \"t180-track-builder\",\n  \"module\": \"src/export/fromwords.js\",\n  \"written\": \"2026-09-27T23:01:02.469Z\",\n  \"files\": [\n    \"t180b_untitled.kn5\",\n    \"data/surfaces.ini\",\n    \"models.ini\",\n    \"ui/ui_track.json\",\n    \"ui/preview.png\",\n    \"ui/outline.png\",\n    \"map.png\",\n    \"data/map.ini\",\n    \"ai/fast_lane.ai\"\n  ]\n}\n"
+  },
+  "t180b_test_oval": {
+   "path": "C:/Users/nname/Documents/Assetto Corsa/content/tracks/t180b_test_oval",
+   "exists": true,
+   "files": [
+    ".t180b-builder.json 328",
+    "ai/fast_lane.ai 92024",
+    "data/map.ini 112",
+    "data/surfaces.ini 771",
+    "map.png 9111263",
+    "models.ini 65",
+    "t180b_test_oval.kn5 46373770",
+    "ui/outline.png 280600",
+    "ui/preview.png 284288",
+    "ui/ui_track.json 347"
+   ],
+   "marker": "{\n  \"tool\": \"t180-track-builder\",\n  \"module\": \"src/export/fromwords.js\",\n  \"written\": \"2026-10-02T21:54:56.673Z\",\n  \"files\": [\n    \"t180b_test_oval.kn5\",\n    \"data/surfaces.ini\",\n    \"models.ini\",\n    \"ui/ui_track.json\",\n    \"ui/preview.png\",\n    \"ui/outline.png\",\n    \"map.png\",\n    \"data/map.ini\",\n    \"ai/fast_lane.ai\"\n  ]\n}\n"
+  },
+  "zips": [
+   {
+    "k": "zip",
+    "f": "C:/Users/nname/Desktop/ELYSIUM (T-180 track).zip",
+    "exists": true,
+    "size": 108406726,
+    "mtime": "2026-10-17T15:54:08.931Z",
+    "sha256": "765f20de4dcde5c95cdbe79f40095d953e1ff8286375dc9a23918faa01d73845",
+    "recorded": "765f20de4dcde5c95cdbe79f40095d953e1ff8286375dc9a23918faa01d73845",
+    "matches": true
+   },
+   {
+    "k": "before-d364",
+    "f": "C:/Users/nname/Desktop/ELYSIUM (T-180 track).before-d364.zip",
+    "exists": true,
+    "size": 108528781,
+    "mtime": "2026-10-17T15:04:41.267Z",
+    "sha256": "a678faa9014ab108575d7bb653976a34d2d431a9a7c263c2a999c80ffe26b632",
+    "recorded": "a678faa9014ab108575d7bb653976a34d2d431a9a7c263c2a999c80ffe26b632",
+    "matches": true
+   },
+   {
+    "k": "before-scifi",
+    "f": "C:/Users/nname/Desktop/ELYSIUM (T-180 track).before-scifi.zip",
+    "exists": true,
+    "size": 101621352,
+    "mtime": "2026-10-12T21:35:48.295Z",
+    "sha256": "206e00bfb618d4b39517187a360b1b6e29d1716891ed70ac5b1d6c345673ebff",
+    "recorded": "206e00bf",
+    "matches": true
+   }
+  ],
+  "desktopWorktrees": [
+   {
+    "path": "C:/Users/nname/Downloads/t180-wt-e19",
+    "registered": true,
+    "locked": false,
+    "prunable": false,
+    "exists": true,
+    "head": "e18a9c5de85c87117ca2522365cc264f70054b33",
+    "branch": "d394-e",
+    "statusOk": true,
+    "dirty": [],
+    "mergeHead": false,
+    "in17": true,
+    "in18": true,
+    "named": {
+     "lapRows": [],
+     "plansOpen": [],
+     "plansOther": 1,
+     "plansOtherFiles": [
+      "plan_cleanup_2026-10-24.md"
+     ],
+     "board": 4,
+     "boardLaps": [
+      "D447",
+      "D437"
+     ],
+     "lapOfName": []
+    },
+    "inDesktopRepo": true,
+    "inDownloadsRepo": true
+   },
+   {
+    "path": "C:/Users/nname/Downloads/t180-wt-e20",
+    "registered": true,
+    "locked": false,
+    "prunable": false,
+    "exists": true,
+    "head": "e46d5a1bb50865f21fa0d33ed38ed12f05098926",
+    "branch": "d398-e",
+    "statusOk": true,
+    "dirty": [],
+    "mergeHead": false,
+    "in17": true,
+    "in18": true,
+    "named": {
+     "lapRows": [],
+     "plansOpen": [],
+     "plansOther": 0,
+     "plansOtherFiles": [],
+     "board": 1,
+     "boardLaps": [
+      "D403"
+     ],
+     "lapOfName": []
+    },
+    "inDesktopRepo": true,
+    "inDownloadsRepo": true
+   },
+   {
+    "path": "C:/Users/nname/Downloads/t180-wt-e21",
+    "registered": true,
+    "locked": false,
+    "prunable": false,
+    "exists": true,
+    "head": "fc8c445dc3c1d9981df3d35bf56ffe7d2db50621",
+    "branch": "d399-e",
+    "statusOk": true,
+    "dirty": [],
+    "mergeHead": false,
+    "in17": true,
+    "in18": true,
+    "named": {
+     "lapRows": [],
+     "plansOpen": [],
+     "plansOther": 0,
+     "plansOtherFiles": [],
+     "board": 3,
+     "boardLaps": [
+      "D402"
+     ],
+     "lapOfName": []
+    },
+    "inDesktopRepo": true,
+    "inDownloadsRepo": true
+   },
+   {
+    "path": "C:/Users/nname/Downloads/t180-wt-e22",
+    "registered": true,
+    "locked": false,
+    "prunable": false,
+    "exists": true,
+    "head": "41eac040ad3f72c1ef7c4a1d6c8054866af705ed",
+    "branch": "skydither-row2-e",
+    "statusOk": true,
+    "dirty": [],
+    "mergeHead": false,
+    "in17": true,
+    "in18": true,
+    "named": {
+     "lapRows": [],
+     "plansOpen": [],
+     "plansOther": 0,
+     "plansOtherFiles": [],
+     "board": 5,
+     "boardLaps": [
+      "D403",
+      "D402"
+     ],
+     "lapOfName": []
+    },
+    "inDesktopRepo": true,
+    "inDownloadsRepo": true
+   },
+   {
+    "path": "C:/Users/nname/Downloads/t180-wt-e24",
+    "registered": true,
+    "locked": false,
+    "prunable": false,
+    "exists": true,
+    "head": "294cacdc30567bfd90cd7234ee58f9aab74930da",
+    "branch": "d405-e",
+    "statusOk": true,
+    "dirty": [],
+    "mergeHead": false,
+    "in17": true,
+    "in18": true,
+    "named": {
+     "lapRows": [],
+     "plansOpen": [],
+     "plansOther": 0,
+     "plansOtherFiles": [],
+     "board": 2,
+     "boardLaps": [
+      "D402"
+     ],
+     "lapOfName": []
+    },
+    "inDesktopRepo": true,
+    "inDownloadsRepo": true
+   }
+  ]
+ },
+ "kept": [
+  {
+   "kept": "C:/Users/nname/Downloads/t180-tutorial",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-handoff",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-archive",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-d402-e",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-track-builder",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-a29",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-land418",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-e43",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-o18",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-o19-before",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-o20-83eaf20",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-o21-2c13316",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-o22-f2459fe",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-p402",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-p447",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-p447f",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-p447g",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Downloads/t180-wt-p447h",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-third-place",
+   "inList": []
+  },
+  {
+   "kept": "C:/Users/nname/Desktop/t180-track-builder",
+   "inList": []
+  }
+ ],
+ "liveTreesNow": [
+  "C:/Users/nname/Downloads/t180-wt-p447i"
+ ]
+}

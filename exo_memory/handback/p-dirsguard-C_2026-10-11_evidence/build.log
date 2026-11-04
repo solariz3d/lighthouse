@@ -1,0 +1,9 @@
+== C d300 build 613+a0e · asked 2026-10-11T20:38:41.753Z · lock held 2026-10-11T20:38:41.804Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d300-613/consonance/src-tauri && CARGO_TARGET_DIR=G:/ctarget/c-d296-base ~/.cargo/bin/cargo.exe test --bin consonance --no-run 2>&1 | tail -3; cd G:/worktrees/c-d300-a0e/consonance/src-tauri && CARGO_TARGET_DIR=G:/ctarget/c-d296-new ~/.cargo/bin/cargo.exe test --bin consonance --no-run 2>&1 | tail -3
+warning: `consonance` (bin "consonance" test) generated 6 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 20.43s
+  Executable unittests src\main.rs (G:/ctarget/c-d296-base\debug\deps\consonance-1fac528b6fcd74f5.exe)
+warning: `consonance` (bin "consonance" test) generated 6 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.01s
+  Executable unittests src\main.rs (G:/ctarget/c-d296-new\debug\deps\consonance-1fac528b6fcd74f5.exe)
+== exit 0 · done 2026-10-11T20:39:27.769Z

@@ -1,0 +1,33 @@
+2026-10-19T13:31:14.733Z waiting: A holds the heavy-run lock — heavy-run.2.lock: t180 A D407 timing session (since 2026-10-19T13:08:36.985Z)
+[L1-N] exit 0  wall 3718 s turns 4 
+[L1-R] exit 0  wall 3813 s turns 8 
+[L2-N] exit 0  wall 729 s turns 18 
+[L2-R] exit null SIGTERM wall 7199 s turns null LAUNCHER-KILLED
+Error: ENOENT: no such file or directory, copyfile 'C:\Users\nname\Desktop\worktrees\p-d411-L2-R\HANDBACK.md' -> 'C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-d411-P_2026-10-19_evidence\out\L2-R-handback.md'
+    at Object.copyFileSync (node:fs:3104:11)
+    at builders (C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-d411-P_2026-10-19_evidence\run.js:214:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-d411-P_2026-10-19_evidence\run.js:385:33
+2026-10-19T16:43:15.297Z waiting: A holds the heavy-run lock — heavy-run.lock: t180 A D407 timing session (ABAB) (since 2026-10-19T16:28:34.435Z)
+skip L1-R: already run (one shot, never re-run)
+skip L1-N: already run (one shot, never re-run)
+skip L2-N: already run (one shot, never re-run)
+[L2-R] exit 0  wall 10011 s (others held the lock 167 min) turns 5 
+skip L3-R: HANDBACK.md already there
+skip L3-N: HANDBACK.md already there
+skip L4-R: HANDBACK.md already there
+skip L4-N: HANDBACK.md already there
+skip L5-R: HANDBACK.md already there
+skip L5-N: HANDBACK.md already there
+2026-10-19T19:31:29.966Z HOLD: out/HOLD present, L1 not started
+2026-10-19T19:57:30.407Z HOLD lifted, starting L1
+skip L1-R: already run (one shot, never re-run)
+skip L1-N: already run (one shot, never re-run)
+skip L2-R: already run (one shot, never re-run)
+skip L2-N: already run (one shot, never re-run)
+[L3-N] exit 0  wall 1444 s (others held the lock 23 min) turns 3 
+[L3-R] exit 0  wall 1785 s (others held the lock 28 min) turns 4 
+[L4-R] exit 0  wall 1221 s (others held the lock 19 min) turns 3 
+[L4-N] exit 0  wall 1254 s (others held the lock 20 min) turns 10 
+[L5-R] exit 0  wall 1044 s (others held the lock 17 min) turns 3 
+[L5-N] exit 0  wall 1499 s (others held the lock 24 min) turns 3 

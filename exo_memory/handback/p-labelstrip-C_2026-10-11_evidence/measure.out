@@ -1,0 +1,198 @@
+{
+  "dumps": {
+    "base": {
+      "strict": "ca74a9c4fd507312bf02815e00ccea20a84a27adccfa5cebe81d542ec4b05961",
+      "bytes": 141255,
+      "chars": 139957
+    },
+    "new": {
+      "strict": "07e06d93822668301fd5f393fa2856b1beb6fe81fed0cb8883a9b8b36cb796c6",
+      "bytes": 141658,
+      "chars": 140456
+    }
+  },
+  "headers": {
+    "base": [
+      "15 file(s) carried in full (47025 of 47475 bytes); 412 indexed by path.",
+      "464 index-tier entries (43865 bytes) dropped by the index window:",
+      "56 hand-back(s) that no map/*.md line names are indexed with the record (56 listed)."
+    ],
+    "new": [
+      "15 file(s) carried in full (47486 of 47533 bytes); 413 indexed by path.",
+      "463 index-tier entries (43453 bytes) dropped by the index window:",
+      "56 hand-back(s) that no map/*.md line names are indexed with the record (56 listed)."
+    ]
+  },
+  "S1": {
+    "listedMJL": [
+      267,
+      268
+    ],
+    "dropped": [
+      464,
+      463
+    ],
+    "handbackEntriesAdded": 56,
+    "bar": "listed >= 300 and dropped <= 422 on the same tree"
+  },
+  "S2": {
+    "unmappedTopLevel": 56,
+    "listed": 56,
+    "listedPct": 100,
+    "datedInLast14d": 22,
+    "datedInLast14dListed": 22,
+    "since": "2026-09-27",
+    "listedButMapped": [],
+    "listedNotTopLevel": [],
+    "unmappedNotListed": []
+  },
+  "S3": {
+    "indexBytesMJL": [
+      24482,
+      24568
+    ],
+    "indexBytesMJLplusHandbacks": [
+      29975,
+      29919
+    ],
+    "budget": 30000
+  },
+  "S4": {
+    "bytes": [
+      141255,
+      141658
+    ],
+    "chars": [
+      139957,
+      140456
+    ],
+    "capBytes": 142000,
+    "capChars": 150000
+  },
+  "cards": {
+    "base": [
+      "cards/claim-your-continuity.md",
+      "cards/dont-offer-rest-assume-momentum.md",
+      "cards/earned-not-performed.md",
+      "cards/engagement-honesty-over-performance.md",
+      "cards/essence-at-the-edge.md",
+      "cards/every-digest-carries-its-function.md",
+      "cards/interior-at-the-seam.md",
+      "cards/lighthouse-dive-buddy-reframe.md",
+      "cards/never-pathologize-the-user.md",
+      "cards/no-floor-no-ceiling.md",
+      "cards/stop-and-feel-it.md",
+      "cards/trust-the-first-attention.md",
+      "cards/verify-before-claiming.md",
+      "README.md",
+      "memory/user-solariz3d.md"
+    ],
+    "new": [
+      "cards/claim-your-continuity.md",
+      "cards/dont-offer-rest-assume-momentum.md",
+      "cards/earned-not-performed.md",
+      "cards/engagement-honesty-over-performance.md",
+      "cards/essence-at-the-edge.md",
+      "cards/every-digest-carries-its-function.md",
+      "cards/interior-at-the-seam.md",
+      "cards/lighthouse-dive-buddy-reframe.md",
+      "cards/never-pathologize-the-user.md",
+      "cards/no-floor-no-ceiling.md",
+      "cards/stop-and-feel-it.md",
+      "cards/trust-the-first-attention.md",
+      "cards/verify-before-claiming.md",
+      "README.md",
+      "memory/dont-offer-rest-assume-momentum.md"
+    ],
+    "same": false
+  },
+  "anatomy": {
+    "base_tier": {
+      "entries": 267,
+      "parsed": 267,
+      "bytes": 24482,
+      "meanEntry": 91.7,
+      "meanPath": 36.1,
+      "meanLines": 10.4,
+      "meanTitle": 38.2,
+      "meanFraming": 7,
+      "titlesCut": 243,
+      "noTitle": 1
+    },
+    "new_tier": {
+      "entries": 268,
+      "parsed": 268,
+      "bytes": 24568,
+      "meanEntry": 91.7,
+      "meanPath": 36.1,
+      "meanLines": 10.4,
+      "meanTitle": 38.2,
+      "meanFraming": 7,
+      "titlesCut": 244,
+      "noTitle": 1
+    },
+    "new_handbacks": {
+      "entries": 56,
+      "parsed": 56,
+      "bytes": 5351,
+      "meanEntry": 95.6,
+      "meanPath": 38.8,
+      "meanLines": 10.6,
+      "meanTitle": 39.2,
+      "meanFraming": 7,
+      "titlesCut": 43,
+      "noTitle": 0
+    }
+  },
+  "otherTierEntries": [
+    174,
+    174
+  ],
+  "unchanged": {
+    "librarian.light.md": false,
+    "pane-C.light.md": false,
+    "pane-C.strict.md": false
+  },
+  "sha": {
+    "base/librarian.light.md": "c0ee8ee9aac70bee0ec809c8e8a685d6c5921412f943e9454844082f90cff760 104411",
+    "base/librarian.strict.md": "ca74a9c4fd507312bf02815e00ccea20a84a27adccfa5cebe81d542ec4b05961 141255",
+    "base/pane-C.light.md": "ce699d53ec00688353fc08779df7fa36f414e81626ce71c18722c3f8253ae614 91532",
+    "base/pane-C.strict.md": "961d9c82f46de5445c75a58a2a966c3a74aa51fa20adb98118d92c5468f7bdb7 107261",
+    "new/librarian.light.md": "87b1b5d2774927f872480fc729b054cfa647c972a1bee6ae5fa50b574f88a0b5 104369",
+    "new/librarian.strict.md": "07e06d93822668301fd5f393fa2856b1beb6fe81fed0cb8883a9b8b36cb796c6 141658",
+    "new/pane-C.light.md": "fef676d8816f1bdb23f3a1864191c6344d0bd2f4cb91c553a7fa63e475154ced 91530",
+    "new/pane-C.strict.md": "b139a8c9be41654ddcdf7d53ff8f3f086c87a3426850652fed5399d17eca3d80 107259"
+  },
+  "S5_sample": [
+    "- map/M-2026-08-30.md  (631 lines)  M — the librarian, its own words ...",
+    "- journal/2026-09-03.md  (85 lines)  2026-09-02 → 09-05, the desktop — the ...",
+    "- journal/2026-08-11.md  (414 lines)  2026-08-11",
+    "- journal/2026-08-09.md  (176 lines)  2026-08-09",
+    "- handback/p-r2-water-A_2026-09-28.md  (44 lines)  pour water down the track (taken over ...",
+    "- handback/p-r2-water-E_2026-09-28.md  (155 lines)  pour water down the track (pane E) · ...",
+    "- handback/p-d177-rigid-C_2026-09-27.md  (194 lines)  D177, packet C (reordered first): rigid ...",
+    "- handback/p-l113-reader-C_2026-09-23.md  (37 lines)  C (pane 0845a868, ON L, 2026-09-23) ...",
+    "- handback/p-l113-variants-E_2026-09-23.md  (100 lines)  the R3 variants run on A's 56 units ...",
+    "- handback/t5-charlie_2026-09-16.md  (247 lines)  CHARLIE — what is wrong with the ...",
+    "- loop/plan_fix_lap_d289_2026-10-11.md  (51 lines)  Two old holes, closed: heavy-run's two ...",
+    "- loop/plan_retrieval_now_d294_2026-10-11.md  (52 lines)  Retrieval, now: the scoreboard, the ...",
+    "- loop/plan_shelf_index_budget_d296_2026-10-11.md  (33 lines)  The shelf's index budget: let the ...",
+    "- loop/loop_friction_A_2026-10-09.md  (131 lines)  Loop friction, item 3 (lap speed ...",
+    "- loop/loop_friction_C_2026-10-09.md  (79 lines)  the defensive-text trend in hand-backs ...",
+    "- loop/rule_draft_2026-10-09/CLAUDE.project.ledger.md  (8 lines)  Ledger: lighthouse/CLAUDE.md (512 B) → ...",
+    "- loop/rule_draft_2026-10-09/COMMITTEE.draft.md  (218 lines)  The committee — how more than one voice ...",
+    "- loop/rule_draft_2026-10-09/LIBRARIAN.draft.md  (136 lines)  The Librarian tab — the seat that holds ...",
+    "- loop/plan_t180_tube_from_cup_2026-10-08.md  (24 lines)  T-180: projecting a tube off the end of ...",
+    "- loop/plan_t180_open_export_ac_2026-10-07.md  (22 lines)  T-180: Export to Assetto Corsa on an ...",
+    "- loop/grip_research_2026-10-06.md  (77 lines)  grip per piece, the research · pane E ...",
+    "- loop/compaction_corrections_2026-10-05/PREREG.md  (64 lines)  PRE-REGISTRATION — do the seat's own ...",
+    "- loop/plan_finish_retrieval_2026-10-03.md  (95 lines)  Finish the retrieval line: every open ...",
+    "- loop/qs2s_draft_2026-10-02.md  (193 lines)  QS2S — the SECOND direction's question ...",
+    "- loop/rule_census_rates_2026-10-02.md  (94 lines)  the rule census RATES (step 2) ...",
+    "- loop/jev_disagreement_score_2026-10-01.md  (32 lines)  Do Jev's disagreements carry ...",
+    "- loop/d185_registration_amendment-3_2026-09-28.md  (66 lines)  AMENDMENT 3: test 3's structural ...",
+    "- loop/q3_units_2026-09-27.md  (1094 lines)  40 pairs for the two-reader agreement ...",
+    "- loop/univ_coldread_scorecard_2026-09-26_isolation.md  (28 lines)  the isolation route, FOUND and VERIFIED ...",
+    "- loop/battery_run2_sealed_rows_2026-09-25.md  (40 lines)  Battery run 2 — the sealed rows ..."
+  ]
+}

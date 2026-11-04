@@ -60,7 +60,7 @@ function test(name, fn) {
 }
 
 const TOOL = path.join(__dirname, 'open-items.js');
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'universe-'));
+const tmp = require('./scratch.js').mkdtemp('universe-');
 
 // Two fixture data dirs, identical but for ONE truncated line. That single difference is the
 // whole experiment: anything the two runs disagree about is caused by the unparseable row.

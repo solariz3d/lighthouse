@@ -1,0 +1,30 @@
+== D9 on a462
+applied to core/piece.js
+✖ row 10h: a tube after a CUP head starts at twice the edge of the cup (tNext), so the rendered edge is continuous across the re-join (0.9767ms)
+ℹ tests 13
+ℹ pass 12
+ℹ fail 1
+✖ failing tests:
+✖ row 10h: a tube after a CUP head starts at twice the edge of the cup (tNext), so the rendered edge is continuous across the re-join (0.9767ms) 
+0.7 s; dir C:\Users\nname\AppData\Local\Temp\t180-p466-huuMVq
+== KE2-6 on a462
+applied to core/extend.js
+✖ EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2) (3.0071ms)
+ℹ tests 1
+ℹ pass 0
+ℹ fail 1
+✖ failing tests:
+✖ EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2) (3.0071ms) 
+0.2 s; dir C:\Users\nname\AppData\Local\Temp\t180-p466-7oU91X
+== D9 on p466
+applied to core/piece.js
+ℹ tests 13
+ℹ pass 13
+ℹ fail 0 
+0.7 s; dir C:\Users\nname\AppData\Local\Temp\t180-p466-6RMYj6
+== KE2-6 on p466
+applied to core/extend.js
+ℹ tests 1
+ℹ pass 1
+ℹ fail 0 
+0.2 s; dir C:\Users\nname\AppData\Local\Temp\t180-p466-jqOLXL

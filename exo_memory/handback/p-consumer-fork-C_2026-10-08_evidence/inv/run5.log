@@ -1,0 +1,10 @@
+== D273 hook + relabel tests · asked 2026-10-08T19:20:09.187Z · lock held 2026-10-08T19:21:13.636Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/testadd.js C:/Users/nname/Desktop/worktrees/c-consumer-fork-wt && cd C:/Users/nname/Desktop/worktrees/c-consumer-fork-wt && node --test --test-concurrency=1 consonance/hooks/sources-gate.test.js consonance/hooks/reply-slot.test.js consonance/tools/consumer-relabel.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail|todo|skipped)|✖' | head -30
+appended consonance/hooks/sources-gate.test.js
+appended consonance/hooks/reply-slot.test.js
+[34mℹ tests 103[39m
+[34mℹ pass 103[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+== exit 0 · done 2026-10-08T19:21:23.191Z

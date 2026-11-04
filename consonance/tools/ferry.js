@@ -28,13 +28,25 @@
 //   node ferry.js --report                    miss rate and latency over all history
 //
 // The ledger lives OUTSIDE the repo, beside board.jsonl, because it is machine state and not a
-// trace: C:\Consonance\data\ferry.jsonl
+// trace: <data dir>/ferry.jsonl.
 
 const { execSync } = require('child_process');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
-const LEDGER = process.env.FERRY_LEDGER || 'C:\\Consonance\\data\\ferry.jsonl';
+/* D273 lap 2 (pane B, 2026-10-08): the data dir is found the way the app finds it (main.rs default_data): CONSONANCE_DATA, else data_dir in
+ * ~/.consonance.json, else ~/.consonance. It was a hardcoded machine path, right on this room's two machines only because their data_dir
+ * says so, and nowhere for anyone else. */
+function dataDir() {
+  if (process.env.CONSONANCE_DATA) return process.env.CONSONANCE_DATA;
+  try {
+    const v = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, ''));
+    if (v && typeof v.data_dir === 'string' && v.data_dir.trim()) return v.data_dir.trim();
+  } catch (_) { /* no config: the app's own default below */ }
+  return path.join(os.homedir(), '.consonance');
+}
+const LEDGER = process.env.FERRY_LEDGER || path.join(dataDir(), 'ferry.jsonl');
 
 // The one sha-length threshold, shared by record() and status()/report(). A sha shorter than this
 // is refused rather than matched loosely, because at 6 characters collisions stop being
@@ -51,8 +63,10 @@ const ARTIFACT_DIRS = ['exo_memory/loop/', 'exo_memory/map/', 'exo_memory/journa
 function git(args) {
   return execSync(`git ${args}`, { cwd: repoRoot(), encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 }
+/* D273 lap 2: FERRY_REPO, else the checkout this file is in (<repo>/consonance/tools/ferry.js). It was a hardcoded path that exists on neither
+ * machine of this room and became an unexpandable '%CONSONANCE_HOME%' in the consumer tree, where --due died "spawnSync cmd.exe ENOENT". */
 function repoRoot() {
-  return process.env.FERRY_REPO || 'C:\\Consonance\\lighthouse';
+  return process.env.FERRY_REPO || path.resolve(__dirname, '..', '..');
 }
 
 /** Every commit that touched a claim-bearing file, newest first. */
@@ -252,4 +266,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { artifactCommits, ledger, record, status, report, epoch, joinRows, panesOf, LEDGER, ARTIFACT_DIRS, MIN_SHA };
+module.exports = { repoRoot, artifactCommits, ledger, record, status, report, epoch, joinRows, panesOf, LEDGER, ARTIFACT_DIRS, MIN_SHA };

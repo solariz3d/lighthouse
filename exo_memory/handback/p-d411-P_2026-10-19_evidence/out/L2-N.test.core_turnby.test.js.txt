@@ -1,0 +1,18 @@
+$ node --test "test/core_turnby.test.js"
+(exit 0)
+[32m✔ row 1, the cause: a piece eased to a turn rate turns −90° and ENDS at that rate, so "turn 0 at start" after it still turns about −1.35° [90m(10.1807ms)[39m[39m
+[32m✔ row 2 (B1, B2): Turn by −90 turns −90° within 0.01° on the path and in the readout, and ends with turn rate 0, C1 from the head [90m(67.4172ms)[39m[39m
+[32m✔ row 3 (B3): a Straight after Turn by reads 0.0° change [90m(40.7603ms)[39m[39m
+[32m✔ row 4: from a head that is STILL TURNING (the eased −90° piece), Turn by +90 is still exact and still ends at rate 0 [90m(38.9183ms)[39m[39m
+[32m✔ row 5 (B4): a piece too short to shape is refused by name with the shortest length that works, which then works; a closed loop is refused [90m(21.798ms)[39m[39m
+[32m✔ row 6 (B6, amended D331 C): Turn by −90 over 750 m eases in and out symmetrically: its peak within 10% of the middle, its let-go no steeper than its build-up, no tighter than today's curve ended [90m(7.4307ms)[39m[39m
+[32m✔ row 7 (D411): a kept answer is never served to fields that only print alike (NaN, null), nor to a document frozen only at the top whose pieces then change [90m(8.5404ms)[39m[39m
+[34mℹ tests 7[39m
+[34mℹ suites 0[39m
+[34mℹ pass 7[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 454.4784[39m
+

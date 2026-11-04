@@ -1,0 +1,2026 @@
+TAP version 13
+# Subtest: a lean mesh is the same scene, cells and folds as the full one, and keeps no piece's spare rows
+ok 1 - a lean mesh is the same scene, cells and folds as the full one, and keeps no piece's spare rows
+  ---
+  duration_ms: 18817.4927
+  type: 'test'
+  ...
+# Subtest: the validator with leanLines keeps each station's centreline and hardest-hit line, and judges the track and draws the graph exactly as without
+ok 2 - the validator with leanLines keeps each station's centreline and hardest-hit line, and judges the track and draws the graph exactly as without
+  ---
+  duration_ms: 14787.1412
+  type: 'test'
+  ...
+# Subtest: the track checker's worker job makes no colour map and lean lines, and answers what the page's own check answers
+ok 3 - the track checker's worker job makes no colour map and lean lines, and answers what the page's own check answers
+  ---
+  duration_ms: 11180.7387
+  type: 'test'
+  ...
+# Subtest: the overlap check (lean) answers exactly what the full mesh and full validator answer
+ok 4 - the overlap check (lean) answers exactly what the full mesh and full validator answer
+  ---
+  duration_ms: 26320.0236
+  type: 'test'
+  ...
+# Subtest: the strings: two decimals (2026-10-15: "everything to 0.00"), the unit written, a sign on angles, 0.00° bare, half away from zero, no wrap
+ok 5 - the strings: two decimals (2026-10-15: "everything to 0.00"), the unit written, a sign on angles, 0.00° bare, half away from zero, no wrap
+  ---
+  duration_ms: 5.0177
+  type: 'test'
+  ...
+# Subtest: the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled
+ok 6 - the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled
+  ---
+  duration_ms: 3.4549
+  type: 'test'
+  ...
+# Subtest: the layout: a label anchored on a large head keep-out is placed clear of it, not culled
+ok 7 - the layout: a label anchored on a large head keep-out is placed clear of it, not culled
+  ---
+  duration_ms: 0.2068
+  type: 'test'
+  ...
+# Subtest: the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head
+ok 8 - the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head
+  ---
+  duration_ms: 1.2021
+  type: 'test'
+  ...
+# Subtest: the layout: no label is placed under a panel over the view, the head's own label included
+ok 9 - the layout: no label is placed under a panel over the view, the head's own label included
+  ---
+  duration_ms: 0.4933
+  type: 'test'
+  ...
+# Subtest: a piece whose middle is behind the camera is labelled, when hovered, on the part of it that is in view
+ok 10 - a piece whose middle is behind the camera is labelled, when hovered, on the part of it that is in view
+  ---
+  duration_ms: 494.5226
+  type: 'test'
+  ...
+# Subtest: the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head)
+ok 11 - the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head)
+  ---
+  duration_ms: 137.0745
+  type: 'test'
+  ...
+# Subtest: the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1
+ok 12 - the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1
+  ---
+  duration_ms: 19.8253
+  type: 'test'
+  ...
+# Subtest: a skin change recolours the label boxes already made, and their background stays opaque
+ok 13 - a skin change recolours the label boxes already made, and their background stays opaque
+  ---
+  duration_ms: 337.5882
+  type: 'test'
+  ...
+# Subtest: the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings
+ok 14 - the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings
+  ---
+  duration_ms: 172.6384
+  type: 'test'
+  ...
+# Subtest: the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame)
+ok 15 - the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame)
+  ---
+  duration_ms: 613.6711
+  type: 'test'
+  ...
+# Subtest: the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece
+ok 16 - the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece
+  ---
+  duration_ms: 39.803
+  type: 'test'
+  ...
+# Subtest: the labels on the track: the head's own piece always, any other only when hovered; the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing
+ok 17 - the labels on the track: the head's own piece always, any other only when hovered; the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing
+  ---
+  duration_ms: 503.2201
+  type: 'test'
+  ...
+# Subtest: the head's own piece is labelled in the build view, where its middle is behind the camera
+ok 18 - the head's own piece is labelled in the build view, where its middle is behind the camera
+  ---
+  duration_ms: 63.4867
+  type: 'test'
+  ...
+# Subtest: the labels follow a path the preview extends IN PLACE (a hovered later piece is labelled), and survive the preview clearing \#preview after they mounted
+ok 19 - the labels follow a path the preview extends IN PLACE (a hovered later piece is labelled), and survive the preview clearing \#preview after they mounted
+  ---
+  duration_ms: 478.5885
+  type: 'test'
+  ...
+# Subtest: extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here)
+ok 20 - extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here)
+  ---
+  duration_ms: 0.2295
+  type: 'test'
+  ...
+# Subtest: the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c
+ok 21 - the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c
+  ---
+  duration_ms: 174.6185
+  type: 'test'
+  ...
+# Subtest: the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's
+ok 22 - the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's
+  ---
+  duration_ms: 169.2255
+  type: 'test'
+  ...
+# Subtest: the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why
+ok 23 - the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why
+  ---
+  duration_ms: 88.4273
+  type: 'test'
+  ...
+# Subtest: the brush's channel list gains cup (channel c), with a drag rate in degrees
+ok 24 - the brush's channel list gains cup (channel c), with a drag rate in degrees
+  ---
+  duration_ms: 2.7519
+  type: 'test'
+  ...
+# Subtest: the brush's channel list offers the cross-section channels e, s and t (D225), each with a drag rate
+ok 25 - the brush's channel list offers the cross-section channels e, s and t (D225), each with a drag rate
+  ---
+  duration_ms: 27.0152
+  type: 'test'
+  ...
+# Subtest: on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks
+ok 26 - on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks
+  ---
+  duration_ms: 4.7433
+  type: 'test'
+  ...
+# Subtest: after Extend and Redo the fields show the head's END state in their own units (°/100m, °, m); after Undo, the undone piece's own values (D242 item 7)
+ok 27 - after Extend and Redo the fields show the head's END state in their own units (°/100m, °, m); after Undo, the undone piece's own values (D242 item 7)
+  ---
+  duration_ms: 93.7782
+  type: 'test'
+  ...
+# Subtest: on OPENING a saved track the fields show its head
+ok 28 - on OPENING a saved track the fields show its head
+  ---
+  duration_ms: 16.9028
+  type: 'test'
+  ...
+# Subtest: a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again
+ok 29 - a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again
+  ---
+  duration_ms: 98.1502
+  type: 'test'
+  ...
+# Subtest: a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not
+ok 30 - a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not
+  ---
+  duration_ms: 194.1137
+  type: 'test'
+  ...
+# Subtest: the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start
+ok 31 - the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start
+  ---
+  duration_ms: 66.4221
+  type: 'test'
+  ...
+# Subtest: the first piece is the typed BANK, TURN and CLIMB from s = 0
+ok 32 - the first piece is the typed BANK, TURN and CLIMB from s = 0
+  ---
+  duration_ms: 84.7166
+  type: 'test'
+  ...
+# Subtest: a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1)
+ok 33 - a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1)
+  ---
+  duration_ms: 17.5123
+  type: 'test'
+  ...
+# Subtest: the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before
+ok 34 - the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before
+  ---
+  duration_ms: 90.3311
+  type: 'test'
+  ...
+# Subtest: a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on)
+ok 35 - a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on)
+  ---
+  duration_ms: 12229.4989
+  type: 'test'
+  ...
+# Subtest: extendOptions "at start": a ticked field WITH a target goes in transition as { channel: 20 m }; unticked or untouched fields do not
+ok 36 - extendOptions "at start": a ticked field WITH a target goes in transition as { channel: 20 m }; unticked or untouched fields do not
+  ---
+  duration_ms: 0.9312
+  type: 'test'
+  ...
+# Subtest: the panel: an "at start" box beside each field, OFF by default; ticking one redraws the ghost and readout inside its handler, and Extend sends it
+ok 37 - the panel: an "at start" box beside each field, OFF by default; ticking one redraws the ghost and readout inside its handler, and Extend sends it
+  ---
+  duration_ms: 54.9574
+  type: 'test'
+  ...
+# Subtest: "at start" on a field left as shown sends nothing (no target, D193); the box stays ticked for the next piece
+ok 38 - "at start" on a field left as shown sends nothing (no target, D193); the box stays ticked for the next piece
+  ---
+  duration_ms: 42.9283
+  type: 'test'
+  ...
+# Subtest: no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water
+ok 39 - no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water
+  ---
+  duration_ms: 349.655
+  type: 'test'
+  ...
+# Subtest: Close the loop writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes, in one press
+ok 40 - Close the loop writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes, in one press
+  ---
+  duration_ms: 8449.5967
+  type: 'test'
+  ...
+# Subtest: Close says it is working at once, and a refusal shows in the Close box, in red
+ok 41 - Close says it is working at once, and a refusal shows in the Close box, in red
+  ---
+  duration_ms: 18380.6442
+  type: 'test'
+  ...
+# Subtest: if that copy cannot be written, the press changes nothing and says why
+ok 42 - if that copy cannot be written, the press changes nothing and says why
+  ---
+  duration_ms: 5691.496
+  type: 'test'
+  ...
+# Subtest: D271: Level ends the piece straight and level; To floor too short says the length that works, which then works; each is one undo step
+ok 43 - D271: Level ends the piece straight and level; To floor too short says the length that works, which then works; each is one undo step
+  ---
+  duration_ms: 1332.1667
+  type: 'test'
+  ...
+# Subtest: D280: Turn by places a piece that turns exactly the typed angle and ends straight; a Straight after it turns 0.0°; one undo step; too short names the length
+ok 44 - D280: Turn by places a piece that turns exactly the typed angle and ends straight; a Straight after it turns 0.0°; one undo step; too short names the length
+  ---
+  duration_ms: 145.5694
+  type: 'test'
+  ...
+# Subtest: Turn to grid: the line under the buttons says how far the end is off the grid, and the button turns onto it (90 by default, 45 when picked)
+ok 45 - Turn to grid: the line under the buttons says how far the end is off the grid, and the button turns onto it (90 by default, 45 when picked)
+  ---
+  duration_ms: 171.199
+  type: 'test'
+  ...
+# Subtest: D282: Sharp places a corner of the typed angle at the typed radius as ONE undo step; too tight a radius names the tightest at this width and places nothing
+ok 46 - D282: Sharp places a corner of the typed angle at the typed radius as ONE undo step; too tight a radius names the tightest at this width and places nothing
+  ---
+  duration_ms: 9676.9718
+  type: 'test'
+  ...
+# Subtest: D242: after a 30°/100m turn, Straight extends a piece whose turn and climb are 0 from 20 m on, and puts the "at start" boxes back; turn 0 without "at start" shows the hint
+ok 47 - D242: after a 30°/100m turn, Straight extends a piece whose turn and climb are 0 from 20 m on, and puts the "at start" boxes back; turn 0 without "at start" shows the hint
+  ---
+  duration_ms: 47.3585
+  type: 'test'
+  ...
+# Subtest: D242 item 7: Undo gives back the undone piece's values: the fields read what it was extended with, and Extend again rebuilds it byte-identical; Redo shows the head as before
+ok 48 - D242 item 7: Undo gives back the undone piece's values: the fields read what it was extended with, and Extend again rebuilds it byte-identical; Redo shows the head as before
+  ---
+  duration_ms: 159.4359
+  type: 'test'
+  ...
+# Subtest: the piece labels equal a fresh read after a placement, an undo, a redo, a bend in the middle and a moved start
+ok 49 - the piece labels equal a fresh read after a placement, an undo, a redo, a bend in the middle and a moved start
+  ---
+  duration_ms: 126.7576
+  type: 'test'
+  ...
+# Subtest: the panel shows the corner (its turn, "ends turning at …", what turn 0 at start would add) and the gravity bank, for the piece Extend would add
+ok 50 - the panel shows the corner (its turn, "ends turning at …", what turn 0 at start would add) and the gravity bank, for the piece Extend would add
+  ---
+  duration_ms: 44.9083
+  type: 'test'
+  ...
+# Subtest: D331 B: by default the turn field is a corner: it shows nothing at the head, a typed 90 is the ghost's and the placed piece's exact 90.00°, ending straight
+ok 51 - D331 B: by default the turn field is a corner: it shows nothing at the head, a typed 90 is the ghost's and the placed piece's exact 90.00°, ending straight
+  ---
+  duration_ms: 60.662
+  type: 'test'
+  ...
+# Subtest: D331 B: "turn as" rate is the old field (°/100 m, the head's rate shown); switching back puts the field back; Level, To floor and Jump refuse a corner by name and place nothing
+ok 52 - D331 B: "turn as" rate is the old field (°/100 m, the head's rate shown); switching back puts the field back; Level, To floor and Jump refuse a corner by name and place nothing
+  ---
+  duration_ms: 20.9273
+  type: 'test'
+  ...
+# Subtest: D331 climb: by default the climb field is a corner: blank at the head, a typed 10 is the ghost's and the placed piece's exact 10.00°, at a steady pitch after; the climb corner cell reads it
+ok 53 - D331 climb: by default the climb field is a corner: blank at the head, a typed 10 is the ghost's and the placed piece's exact 10.00°, at a steady pitch after; the climb corner cell reads it
+  ---
+  duration_ms: 36.3638
+  type: 'test'
+  ...
+# Subtest: the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim
+ok 54 - the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim
+  ---
+  duration_ms: 553.8827
+  type: 'test'
+  ...
+# Subtest: extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly
+ok 55 - extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly
+  ---
+  duration_ms: 327.5697
+  type: 'test'
+  ...
+# Subtest: the ghost of an extension is exactly what the click then builds
+ok 56 - the ghost of an extension is exactly what the click then builds
+  ---
+  duration_ms: 5.3184
+  type: 'test'
+  ...
+# Subtest: extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres
+ok 57 - extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres
+  ---
+  duration_ms: 2.5824
+  type: 'test'
+  ...
+# Subtest: a failed extend changes nothing and says why
+ok 58 - a failed extend changes nothing and says why
+  ---
+  duration_ms: 3.1726
+  type: 'test'
+  ...
+# Subtest: the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly
+ok 59 - the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly
+  ---
+  duration_ms: 138.6355
+  type: 'test'
+  ...
+# Subtest: the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is
+ok 60 - the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is
+  ---
+  duration_ms: 94.2873
+  type: 'test'
+  ...
+# Subtest: with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode
+ok 61 - with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode
+  ---
+  duration_ms: 10.717
+  type: 'test'
+  ...
+# Subtest: a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown)
+ok 62 - a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown)
+  ---
+  duration_ms: 160.479
+  type: 'test'
+  ...
+# Subtest: the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default)
+ok 63 - the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default)
+  ---
+  duration_ms: 10.3477
+  type: 'test'
+  ...
+# Subtest: E's refusal (a hill with no offset channel yet) is the message, and nothing changes
+ok 64 - E's refusal (a hill with no offset channel yet) is the message, and nothing changes
+  ---
+  duration_ms: 20.8508
+  type: 'test'
+  ...
+# Subtest: close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it
+ok 65 - close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it
+  ---
+  duration_ms: 1148.1841
+  type: 'test'
+  ...
+# Subtest: export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written
+ok 66 - export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written
+  ---
+  duration_ms: 11897.3675
+  type: 'test'
+  ...
+# Subtest: save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here
+ok 67 - save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here
+  ---
+  duration_ms: 14.4615
+  type: 'test'
+  ...
+# Subtest: openExample refuses files that are not a fit and a read, and changes nothing
+ok 68 - openExample refuses files that are not a fit and a read, and changes nothing
+  ---
+  duration_ms: 7.2949
+  type: 'test'
+  ...
+# Subtest: the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend
+ok 69 - the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend
+  ---
+  duration_ms: 1163.5302
+  type: 'test'
+  ...
+# Subtest: the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5
+ok 70 - the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5
+  ---
+  duration_ms: 13198.8947
+  type: 'test'
+  ...
+# Subtest: landed core: a 1 m hill brushed in the app is in the preview's path and the export's
+ok 71 - landed core: a 1 m hill brushed in the app is in the preview's path and the export's
+  ---
+  duration_ms: 2140.4629
+  type: 'test'
+  ...
+# Subtest: landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed)
+ok 72 - landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed)
+  ---
+  duration_ms: 63.5352
+  type: 'test'
+  ...
+# Subtest: a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports
+ok 73 - a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports
+  ---
+  duration_ms: 9296.8592
+  type: 'test'
+  ...
+# Subtest: the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track
+ok 74 - the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track
+  ---
+  duration_ms: 8.9996
+  type: 'test'
+  ...
+# Subtest: D226 export (core): an EMPTY folder made directly in content\\tracks exports to content\\tracks and is removed; a folder with anything in it is refused and kept
+ok 75 - D226 export (core): an EMPTY folder made directly in content\\tracks exports to content\\tracks and is removed; a folder with anything in it is refused and kept
+  ---
+  duration_ms: 5981.3675
+  type: 'test'
+  ...
+# Subtest: D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE
+ok 76 - D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE
+  ---
+  duration_ms: 79.5341
+  type: 'test'
+  ...
+# Subtest: D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone
+ok 77 - D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone
+  ---
+  duration_ms: 5597.6
+  type: 'test'
+  ...
+# Subtest: D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written
+ok 78 - D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written
+  ---
+  duration_ms: 10612.4321
+  type: 'test'
+  ...
+# Subtest: D234 a successful export is unchanged: written to content\\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder
+ok 79 - D234 a successful export is unchanged: written to content\\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder
+  ---
+  duration_ms: 8333.3681
+  type: 'test'
+  ...
+# Subtest: D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused
+ok 80 - D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused
+  ---
+  duration_ms: 4226.8469
+  type: 'test'
+  ...
+# Subtest: D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam)
+ok 81 - D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam)
+  ---
+  duration_ms: 3940.7052
+  type: 'test'
+  ...
+# Subtest: a hand-placed line (along 100 on a 400 m first piece) does not move when a Straight, a broad turn, Turn by and Sharp are added
+ok 82 - a hand-placed line (along 100 on a 400 m first piece) does not move when a Straight, a broad turn, Turn by and Sharp are added
+  ---
+  duration_ms: 1754.8554
+  type: 'test'
+  ...
+# Subtest: the automatic line on an open track stays put when a Straight is added to the straight it is on (the keeper's case: it followed the head)
+ok 83 - the automatic line on an open track stays put when a Straight is added to the straight it is on (the keeper's case: it followed the head)
+  ---
+  duration_ms: 262.609
+  type: 'test'
+  ...
+# Subtest: the automatic line stays put through a broad turn, Turn by and Sharp: none of them makes a longer straight
+ok 84 - the automatic line stays put through a broad turn, Turn by and Sharp: none of them makes a longer straight
+  ---
+  duration_ms: 1816.2237
+  type: 'test'
+  ...
+# Subtest: the automatic line moves when a genuinely longer straight is added, and the panel still says the start is automatic
+ok 85 - the automatic line moves when a genuinely longer straight is added, and the panel still says the start is automatic
+  ---
+  duration_ms: 195.371
+  type: 'test'
+  ...
+# Subtest: save, reopen, append: neither the hand-placed nor the automatic line moves
+ok 86 - save, reopen, append: neither the hand-placed nor the automatic line moves
+  ---
+  duration_ms: 198.6484
+  type: 'test'
+  ...
+# Subtest: a CLOSED lap keeps its automatic start where it was: 15 m before the end of the longest straight run (the export of a finished track is unchanged)
+ok 87 - a CLOSED lap keeps its automatic start where it was: 15 m before the end of the longest straight run (the export of a finished track is unchanged)
+  ---
+  duration_ms: 1584.6619
+  type: 'test'
+  ...
+# Subtest: row 1: a flat track draws the ground grid only: no lattice, no levels, no labels, no drop lines
+ok 88 - row 1: a flat track draws the ground grid only: no lattice, no levels, no labels, no drop lines
+  ---
+  duration_ms: 31.8535
+  type: 'test'
+  ...
+# Subtest: row 2: a track with height draws the lattice, and it spans the track's lowest to its highest point, with level labels, verticals, rings and drop lines
+ok 89 - row 2: a track with height draws the lattice, and it spans the track's lowest to its highest point, with level labels, verticals, rings and drop lines
+  ---
+  duration_ms: 6.3035
+  type: 'test'
+  ...
+# Subtest: row 3: the line count stays bounded however long the track is (a 14 km one is about a thousand pairs, the grid itself well under)
+ok 90 - row 3: the line count stays bounded however long the track is (a 14 km one is about a thousand pairs, the grid itself well under)
+  ---
+  duration_ms: 175.3946
+  type: 'test'
+  ...
+# Subtest: row 4: the modes force what they say; off draws nothing; the guides can run without the grid; a bad mode is refused
+ok 91 - row 4: the modes force what they say; off draws nothing; the guides can run without the grid; a bad mode is refused
+  ---
+  duration_ms: 13.4275
+  type: 'test'
+  ...
+# Subtest: row 5: the centre is the box's middle unless set; the two axes and the vertical pass through it, three strokes each
+ok 92 - row 5: the centre is the box's middle unless set; the two axes and the vertical pass through it, three strokes each
+  ---
+  duration_ms: 2.0017
+  type: 'test'
+  ...
+# Subtest: row 6: the gap reads a KNOWN offset: a straight at x = 10 mirrored about x = 0 is 20 m away everywhere; a line at z = 60 mirrored about z = 50 is 20 m
+ok 93 - row 6: the gap reads a KNOWN offset: a straight at x = 10 mirrored about x = 0 is 20 m away everywhere; a line at z = 60 mirrored about z = 50 is 20 m
+  ---
+  duration_ms: 4.4045
+  type: 'test'
+  ...
+# Subtest: row 7: an oval's mirror gap is about 0 about its own centre, for left/right, front/back and both
+ok 94 - row 7: an oval's mirror gap is about 0 about its own centre, for left/right, front/back and both
+  ---
+  duration_ms: 2791.4092
+  type: 'test'
+  ...
+# Subtest: row 8: the mirror modes flip what they say: x flips x, z flips z, both is the half turn, and height never changes
+ok 95 - row 8: the mirror modes flip what they say: x flips x, z flips z, both is the half turn, and height never changes
+  ---
+  duration_ms: 1.306
+  type: 'test'
+  ...
+# Subtest: row 9: the dashes alternate on and off along the line, never stall on a boundary, and cover about half of it
+ok 96 - row 9: the dashes alternate on and off along the line, never stall on a boundary, and cover about half of it
+  ---
+  duration_ms: 0.9141
+  type: 'test'
+  ...
+# Subtest: row 10: a point projects and the pointer ray through it lands back on it on the base plane (the centre handle's drag)
+ok 97 - row 10: a point projects and the pointer ray through it lands back on it on the base plane (the centre handle's drag)
+  ---
+  duration_ms: 3.6963
+  type: 'test'
+  ...
+# Subtest: row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once
+ok 98 - row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once
+  ---
+  duration_ms: 985.4102
+  type: 'test'
+  ...
+# Subtest: row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame's plan and is disposed with the preview
+ok 99 - row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame's plan and is disposed with the preview
+  ---
+  duration_ms: 563.9602
+  type: 'test'
+  ...
+# Subtest: row 12: with no gridMode and no ground the preview draws no grid, as before; ground: true is the old grid at y = 0
+ok 100 - row 12: with no gridMode and no ground the preview draws no grid, as before; ground: true is the old grid at y = 0
+  ---
+  duration_ms: 858.9705
+  type: 'test'
+  ...
+# Subtest: row 13: the layer puts a label at each level in view and the handle at the centre, and dragging the handle moves the centre to the point under the pointer
+ok 101 - row 13: the layer puts a label at each level in view and the handle at the centre, and dragging the handle moves the centre to the point under the pointer
+  ---
+  duration_ms: 10.6192
+  type: 'test'
+  ...
+# Subtest: row 14: the camera panel's buttons send the events the preview takes, follow its state, and say the numbers in words
+ok 102 - row 14: the camera panel's buttons send the events the preview takes, follow its state, and say the numbers in words
+  ---
+  duration_ms: 2.9772
+  type: 'test'
+  ...
+# Subtest: row 15: the whole lap is the preview's: nothing in src/, the export or the document changed (the diff against the base), and the sealed fixtures are untouched
+ok 103 - row 15: the whole lap is the preview's: nothing in src/, the export or the document changed (the diff against the base), and the sealed fixtures are untouched
+  ---
+  duration_ms: 315.3155
+  type: 'test'
+  ...
+# Subtest: row 16: the gap search is EXACT: the same largest, mean and count as measuring every mirrored point against every segment, on asymmetric, open, closed, lifted, far-centre and long tracks
+ok 104 - row 16: the gap search is EXACT: the same largest, mean and count as measuring every mirrored point against every segment, on asymmetric, open, closed, lifted, far-centre and long tracks
+  ---
+  duration_ms: 59626.6317
+  type: 'test'
+  ...
+# Subtest: row 17: the search is CHEAP and does not depend on how far the mirror lies: a few dozen segment tests per point, not every segment (B: 95 to 230 ms a rebuild)
+ok 105 - row 17: the search is CHEAP and does not depend on how far the mirror lies: a few dozen segment tests per point, not every segment (B: 95 to 230 ms a rebuild)
+  ---
+  duration_ms: 127.2575
+  type: 'test'
+  ...
+# Subtest: row 18: the segment tree is built once per path: a centre drag or a change of mirror reuses it; a new path builds its own, and the answer is the same either way
+ok 106 - row 18: the segment tree is built once per path: a centre drag or a change of mirror reuses it; a new path builds its own, and the answer is the same either way
+  ---
+  duration_ms: 108.9189
+  type: 'test'
+  ...
+# Subtest: row 19: the mirror ghost's line count is BOUNDED however long the track is (B: 3,249 lines on 14 km coiled into a 300 m box, 8,316 on 40 km), and a short track keeps its short dashes
+ok 107 - row 19: the mirror ghost's line count is BOUNDED however long the track is (B: 3,249 lines on 14 km coiled into a 300 m box, 8,316 on 40 km), and a short track keeps its short dashes
+  ---
+  duration_ms: 1528.8894
+  type: 'test'
+  ...
+# Subtest: row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place
+ok 108 - row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place
+  ---
+  duration_ms: 534.5793
+  type: 'test'
+  ...
+# Subtest: row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush
+ok 109 - row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush
+  ---
+  duration_ms: 389.8664
+  type: 'test'
+  ...
+# Subtest: row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree
+ok 110 - row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree
+  ---
+  duration_ms: 131.6807
+  type: 'test'
+  ...
+# Subtest: row 1: coarsen thins the row grid, keeps the road's two edges, keeps shared grids shared and unchanged segments the same objects; detail 1 is the same array
+ok 111 - row 1: coarsen thins the row grid, keeps the road's two edges, keeps shared grids shared and unchanged segments the same objects; detail 1 is the same array
+  ---
+  duration_ms: 8.5225
+  type: 'test'
+  ...
+# Subtest: row 2: the model meshes far fewer vertices at a coarse detail, comes back to EXACTLY a fresh full build, returns the real segments, builds nothing for the same document
+ok 112 - row 2: the model meshes far fewer vertices at a coarse detail, comes back to EXACTLY a fresh full build, returns the real segments, builds nothing for the same document
+  ---
+  duration_ms: 8747.3182
+  type: 'test'
+  ...
+# Subtest: row 2b: a change of detail on an OPEN track is a full rebuild, not an incremental one; and a closed loop's same-document update is the same build (it used to rebuild in full every time)
+ok 113 - row 2b: a change of detail on an OPEN track is a full rebuild, not an incremental one; and a closed loop's same-document update is the same build (it used to rebuild in full every time)
+  ---
+  duration_ms: 7953.1273
+  type: 'test'
+  ...
+# Subtest: row 3: batchesOf(mesh, from) is the batches of the pieces from there on, equal to the full list filtered; the ghost builds only the new pieces
+ok 114 - row 3: batchesOf(mesh, from) is the batches of the pieces from there on, equal to the full list filtered; the ghost builds only the new pieces
+  ---
+  duration_ms: 3175.8705
+  type: 'test'
+  ...
+# Subtest: row 4: a brush drag makes the preview coarse; full detail comes back ONCE, shortly after the drag ends, and not if another drag starts first
+ok 115 - row 4: a brush drag makes the preview coarse; full detail comes back ONCE, shortly after the drag ends, and not if another drag starts first
+  ---
+  duration_ms: 11967.1889
+  type: 'test'
+  ...
+# Subtest: row 5: the panel coalesces pointer moves to ONE brushTo per animation frame with the LATEST position, and the release applies the last position still waiting
+ok 116 - row 5: the panel coalesces pointer moves to ONE brushTo per animation frame with the LATEST position, and the release applies the last position still waiting
+  ---
+  duration_ms: 502.8435
+  type: 'test'
+  ...
+# Subtest: row 6: the fast change key is the JSON key's equality, hashed: equal content equal keys, any one-bit change differs, and on real segments it finds exactly the segments JSON finds
+ok 117 - row 6: the fast change key is the JSON key's equality, hashed: equal content equal keys, any one-bit change differs, and on real segments it finds exactly the segments JSON finds
+  ---
+  duration_ms: 3257.9444
+  type: 'test'
+  ...
+# Subtest: row 7: a cup or plain segment gets a coarse row grid too (shared across a held cross-section, the road's two edges kept) and the coarse mesh is a fraction of the vertices
+ok 118 - row 7: a cup or plain segment gets a coarse row grid too (shared across a held cross-section, the road's two edges kept) and the coarse mesh is a fraction of the vertices
+  ---
+  duration_ms: 3008.7544
+  type: 'test'
+  ...
+# Subtest: row 8: a closed loop rebuilt from the pieces that changed EQUALS a full rebuild: every coarse drag step, the release, an undo; and it meshes only what the brush reached
+ok 119 - row 8: a closed loop rebuilt from the pieces that changed EQUALS a full rebuild: every coarse drag step, the release, an undo; and it meshes only what the brush reached
+  ---
+  duration_ms: 53832.8409
+  type: 'test'
+  ...
+# Subtest: row 8b: a brush across the loop's own joint (the last piece to the first), a hill (a lifted path) and a heading brush that re-closes the whole loop: all equal a full rebuild
+ok 120 - row 8b: a brush across the loop's own joint (the last piece to the first), a hill (a lifted path) and a heading brush that re-closes the whole loop: all equal a full rebuild
+  ---
+  duration_ms: 5706.933
+  type: 'test'
+  ...
+# Subtest: row 9: reuseMesh does not change the mesh it was given, refuses a different number of segments, and an unflagged piece is remeshed
+ok 121 - row 9: reuseMesh does not change the mesh it was given, refuses a different number of segments, and an unflagged piece is remeshed
+  ---
+  duration_ms: 748.8089
+  type: 'test'
+  ...
+# Subtest: row 9b: a piece that takes its font from the piece before it (a word segment, no blend of its own) is remeshed when that one changes
+ok 122 - row 9b: a piece that takes its font from the piece before it (a word segment, no blend of its own) is remeshed when that one changes
+  ---
+  duration_ms: 830.01
+  type: 'test'
+  ...
+# Subtest: row 9c: reuseMesh checks a piece's start pitch and bank itself: a flag that says "same" for a piece whose start changed does not keep a stale shape
+ok 123 - row 9c: reuseMesh checks a piece's start pitch and bank itself: a flag that says "same" for a piece whose start changed does not keep a stale shape
+  ---
+  duration_ms: 1079.261
+  type: 'test'
+  ...
+# Subtest: row 9d: a seam between two pieces that only MOVED moves with them (a step in the font with no ramp makes a real seam)
+ok 124 - row 9d: a seam between two pieces that only MOVED moves with them (a step in the font with no ramp makes a real seam)
+  ---
+  duration_ms: 759.6344
+  type: 'test'
+  ...
+# Subtest: row 9e: a closed loop whose number of segments changed is built in full, not reused (the model checks the count before it trusts a slot)
+ok 125 - row 9e: a closed loop whose number of segments changed is built in full, not reused (the model checks the count before it trusts a slot)
+  ---
+  duration_ms: 2998.9169
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 126 - row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 25719.8535
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 127 - row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 22198.764
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 128 - row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 13866.4873
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 129 - row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 14509.3947
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 130 - row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 10479.9178
+  type: 'test'
+  ...
+# Subtest: row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+ok 131 - row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red
+  ---
+  duration_ms: 10967.0529
+  type: 'test'
+  ...
+# Subtest: row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+ok 132 - row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+  ---
+  duration_ms: 8030.9826
+  type: 'test'
+  ...
+# Subtest: row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+ok 133 - row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+  ---
+  duration_ms: 5387.7952
+  type: 'test'
+  ...
+# Subtest: row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+ok 134 - row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore)
+  ---
+  duration_ms: 6350.1588
+  type: 'test'
+  ...
+# Subtest: row 4 (iii): a start straight cupped to 150° (a 4.45 m floor: not two columns, one slot) exports with a single-column grid and says so, not a crash
+ok 135 - row 4 (iii): a start straight cupped to 150° (a 4.45 m floor: not two columns, one slot) exports with a single-column grid and says so, not a crash
+  ---
+  duration_ms: 8017.9843
+  type: 'test'
+  ...
+# Subtest: row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it
+ok 136 - row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it
+  ---
+  duration_ms: 0.8144
+  type: 'test'
+  ...
+# Subtest: row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+ok 137 - row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+  ---
+  duration_ms: 3.5918
+  type: 'test'
+  ...
+# Subtest: row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+ok 138 - row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+  ---
+  duration_ms: 0.235
+  type: 'test'
+  ...
+# Subtest: row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+ok 139 - row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+  ---
+  duration_ms: 3057.1994
+  type: 'test'
+  ...
+# Subtest: row 4: refusals by name: a closed loop, an empty track
+ok 140 - row 4: refusals by name: a closed loop, an empty track
+  ---
+  duration_ms: 1970.1455
+  type: 'test'
+  ...
+# Subtest: row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+ok 141 - row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+  ---
+  duration_ms: 10871.4347
+  type: 'test'
+  ...
+# Subtest: row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+ok 142 - row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+  ---
+  duration_ms: 13703.6606
+  type: 'test'
+  ...
+# Subtest: row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+ok 143 - row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+  ---
+  duration_ms: 17101.9494
+  type: 'test'
+  ...
+# Subtest: row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+ok 144 - row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+  ---
+  duration_ms: 22425.8449
+  type: 'test'
+  ...
+# Subtest: row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+ok 145 - row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+  ---
+  duration_ms: 11089.2499
+  type: 'test'
+  ...
+# Subtest: row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+ok 146 - row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+  ---
+  duration_ms: 2836.664
+  type: 'test'
+  ...
+# Subtest: row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+ok 147 - row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+  ---
+  duration_ms: 3576.1324
+  type: 'test'
+  ...
+# Subtest: row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+ok 148 - row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+  ---
+  duration_ms: 485.1286
+  type: 'test'
+  ...
+# Subtest: row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+ok 149 - row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+  ---
+  duration_ms: 1.9313
+  type: 'test'
+  ...
+# Subtest: row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+ok 150 - row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+  ---
+  duration_ms: 977.8227
+  type: 'test'
+  ...
+# Subtest: row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves
+ok 151 - row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.1723
+  type: 'test'
+  ...
+# Subtest: row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+ok 152 - row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+  ---
+  duration_ms: 2634.0865
+  type: 'test'
+  ...
+# Subtest: row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+ok 153 - row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+  ---
+  duration_ms: 10367.3916
+  type: 'test'
+  ...
+# Subtest: row 1: Jump (the button) places the current piece as Extend would, then a landing 40 m ahead at the same height, lined up, level: a 60 m straight
+ok 154 - row 1: Jump (the button) places the current piece as Extend would, then a landing 40 m ahead at the same height, lined up, level: a 60 m straight
+  ---
+  duration_ms: 315.0623
+  type: 'test'
+  ...
+# Subtest: row 1: the landing starts EXACTLY at its pose: forward, left and up in the take-off's heading frame, its heading turn, its pitch and its bank
+ok 155 - row 1: the landing starts EXACTLY at its pose: forward, left and up in the take-off's heading frame, its heading turn, its pitch and its bank
+  ---
+  duration_ms: 325.4166
+  type: 'test'
+  ...
+# Subtest: row 1: the landing is ordinary road NOT C1 with the take-off: its own width and cross-section; only a level start at the flight's bank is asked (LANDING)
+ok 156 - row 1: the landing is ordinary road NOT C1 with the take-off: its own width and cross-section; only a level start at the flight's bank is asked (LANDING)
+  ---
+  duration_ms: 7.2673
+  type: 'test'
+  ...
+# Subtest: row 1: the landing MOVES while it is the head (a partial pose keeps the rest, the bank follows); LANDING_NOT_HEAD once road is extended from it; deleting back frees it
+ok 157 - row 1: the landing MOVES while it is the head (a partial pose keeps the rest, the bank follows); LANDING_NOT_HEAD once road is extended from it; deleting back frees it
+  ---
+  duration_ms: 36.4791
+  type: 'test'
+  ...
+# Subtest: row 1: deleting the LANDING itself leaves the jump waiting for one: the flight is the head, movable, and Jump's landing can be laid again
+ok 158 - row 1: deleting the LANDING itself leaves the jump waiting for one: the flight is the head, movable, and Jump's landing can be laid again
+  ---
+  duration_ms: 178.328
+  type: 'test'
+  ...
+# Subtest: row 1: refused by name: no road to take off from, a closed track, a landing too close, pitched to vertical, a turn past 180°, not a number
+ok 159 - row 1: refused by name: no road to take off from, a closed track, a landing too close, pitched to vertical, a turn past 180°, not a number
+  ---
+  duration_ms: 4.194
+  type: 'test'
+  ...
+# Subtest: row 1: LAND ON ROAD FIRST is a rule of the document: two flights in a row are refused by name; road between them is accepted
+ok 160 - row 1: LAND ON ROAD FIRST is a rule of the document: two flights in a row are refused by name; road between them is accepted
+  ---
+  duration_ms: 41.0452
+  type: 'test'
+  ...
+# Subtest: row 1: a free jump ROUND-TRIPS: serialize, reopen gives the same text and track, and the reopened one extends the same
+ok 161 - row 1: a free jump ROUND-TRIPS: serialize, reopen gives the same text and track, and the reopened one extends the same
+  ---
+  duration_ms: 102.8443
+  type: 'test'
+  ...
+# Subtest: row 2: the free jump's gap is INTENDED: no red over the flight; no arcs, no landing zone, no reach; the lap proof says nothing about it
+ok 162 - row 2: the free jump's gap is INTENDED: no red over the flight; no arcs, no landing zone, no reach; the lap proof says nothing about it
+  ---
+  duration_ms: 3200.2728
+  type: 'test'
+  ...
+# Subtest: row 2: a landing placed BEHIND its take-off WARNS (jump-gap-not-forward, amber): he put it there; it is not red
+ok 163 - row 2: a landing placed BEHIND its take-off WARNS (jump-gap-not-forward, amber): he put it there; it is not red
+  ---
+  duration_ms: 65.1583
+  type: 'test'
+  ...
+# Subtest: row 2: a real HOLE in the core's road is still red: a stretch of the landing road made into a gap (no flight pose on it)
+ok 164 - row 2: a real HOLE in the core's road is still red: a stretch of the landing road made into a gap (no flight pose on it)
+  ---
+  duration_ms: 820.5321
+  type: 'test'
+  ...
+# Subtest: row 2: a flight with NO landing yet is red: the open end is over nothing (head-in-the-air)
+ok 165 - row 2: a flight with NO landing yet is red: the open end is over nothing (head-in-the-air)
+  ---
+  duration_ms: 62.0715
+  type: 'test'
+  ...
+# Subtest: row 4: a lap with a free jump CLOSES (whole lap): the flight is the very same piece, the landing's start is held in every channel, it is stored closed
+ok 166 - row 4: a lap with a free jump CLOSES (whole lap): the flight is the very same piece, the landing's start is held in every channel, it is stored closed
+  ---
+  duration_ms: 924.8429
+  type: 'test'
+  ...
+# Subtest: row 4: a free-jump lap closes through B's LOCAL window too: only the window moves, every piece before it is the same object
+ok 167 - row 4: a free-jump lap closes through B's LOCAL window too: only the window moves, every piece before it is the same object
+  ---
+  duration_ms: 2026.5371
+  type: 'test'
+  ...
+# Subtest: row 4: a jump that LANDS turned, to the side and ON A SLOPE closes in pitch and heading too: the measured tangent at the seam closes
+ok 168 - row 4: a jump that LANDS turned, to the side and ON A SLOPE closes in pitch and heading too: the measured tangent at the seam closes
+  ---
+  duration_ms: 1207.4522
+  type: 'test'
+  ...
+# Subtest: row 4: the close's position model predicts the adapter ACROSS a free jump: a control point bumped before it (heading and pitch) and after it moves the end as J says
+ok 169 - row 4: the close's position model predicts the adapter ACROSS a free jump: a control point bumped before it (heading and pitch) and after it moves the end as J says
+  ---
+  duration_ms: 435.786
+  type: 'test'
+  ...
+# Subtest: row 4: a lap that ENDS in a jump is refused by name, FLIGHT_AT_END (its seam would join the air to the start)
+ok 170 - row 4: a lap that ENDS in a jump is refused by name, FLIGHT_AT_END (its seam would join the air to the start)
+  ---
+  duration_ms: 11.7653
+  type: 'test'
+  ...
+# Subtest: row 5: a CLOSED free-jump lap exports through the app's route (kn5, AI line, no red, no jump warning); an OPEN one is still refused, by name
+ok 171 - row 5: a CLOSED free-jump lap exports through the app's route (kn5, AI line, no red, no jump warning); an OPEN one is still refused, by name
+  ---
+  duration_ms: 20631.2398
+  type: 'test'
+  ...
+# Subtest: row 6: a saved run with a free flight re-adds as the same pieces, and its mirror lands on the other side, turned and banked the other way
+ok 172 - row 6: a saved run with a free flight re-adds as the same pieces, and its mirror lands on the other side, turned and banked the other way
+  ---
+  duration_ms: 71.6864
+  type: 'test'
+  ...
+# Subtest: row 6: a saved piece with an OLD jump (gap, drop, land) is refused by name, OLD_FLIGHT
+ok 173 - row 6: a saved piece with an OLD jump (gap, drop, land) is refused by name, OLD_FLIGHT
+  ---
+  duration_ms: 16.9765
+  type: 'test'
+  ...
+# Subtest: row 6: an OLD document jump opens as the free flight that lands where the road after it was, the end of its generated ramp, and saves as one
+ok 174 - row 6: an OLD document jump opens as the free flight that lands where the road after it was, the end of its generated ramp, and saves as one
+  ---
+  duration_ms: 157.0855
+  type: 'test'
+  ...
+# Subtest: row 7: the readout of a flight gives its pose for the number boxes, its turn, climb and the landing's bank
+ok 175 - row 7: the readout of a flight gives its pose for the number boxes, its turn, climb and the landing's bank
+  ---
+  duration_ms: 131.9335
+  type: 'test'
+  ...
+# Subtest: a 5 m hill on a level straight: grade = h′ and |κ| = |h″|/(1 + h′²)^{3/2} at every sample (ref 09 §7, the plane-graph curvature of ref 02 §1)
+ok 176 - a 5 m hill on a level straight: grade = h′ and |κ| = |h″|/(1 + h′²)^{3/2} at every sample (ref 09 §7, the plane-graph curvature of ref 02 §1)
+  ---
+  duration_ms: 201.1544
+  type: 'test'
+  ...
+# Subtest: outside the hill NOTHING changes: every sample is the SAME object (bit for bit), and the path length is the base's
+ok 177 - outside the hill NOTHING changes: every sample is the SAME object (bit for bit), and the path length is the base's
+  ---
+  duration_ms: 93.5502
+  type: 'test'
+  ...
+# Subtest: the frame is RECOMPUTED, not shifted: T, L, U orthonormal, the roll about T kept, and bankG and grade read from the new frame
+ok 178 - the frame is RECOMPUTED, not shifted: T, L, U orthonormal, the roll about T kept, and bankG and grade read from the new frame
+  ---
+  duration_ms: 35.7788
+  type: 'test'
+  ...
+# Subtest: a swerve (l) on a CURVED base: the exact κ̃ agrees with a finite difference of the lifted tangent (the R′ and R″ terms, ref 09 §7)
+ok 179 - a swerve (l) on a CURVED base: the exact κ̃ agrees with a finite difference of the lifted tangent (the R′ and R″ terms, ref 09 §7)
+  ---
+  duration_ms: 263.1925
+  type: 'test'
+  ...
+# Subtest: the mesh closes every segment on a LIFTED end sample (path.segEnd), and the build head is the lifted last sample
+ok 180 - the mesh closes every segment on a LIFTED end sample (path.segEnd), and the build head is the lifted last sample
+  ---
+  duration_ms: 764.9002
+  type: 'test'
+  ...
+# Subtest: h and l serialise canonically, undo removes a hill, and a core/1 file opens with both at zero
+ok 181 - h and l serialise canonically, undo removes a hill, and a core/1 file opens with both at zero
+  ---
+  duration_ms: 10.023
+  type: 'test'
+  ...
+# Subtest: checkDoc: an offset channel of the wrong length is refused; offsets must fade to 0 before a jump (FLIGHT_OFFSET) and start at 0 after it
+ok 182 - checkDoc: an offset channel of the wrong length is refused; offsets must fade to 0 before a jump (FLIGHT_OFFSET) and start at 0 after it
+  ---
+  duration_ms: 7.3234
+  type: 'test'
+  ...
+# Subtest: with no offset set anywhere the adapter returns the geometry's own path object untouched
+ok 183 - with no offset set anywhere the adapter returns the geometry's own path object untouched
+  ---
+  duration_ms: 15.0252
+  type: 'test'
+  ...
+# Subtest: row 1: a hill on ONE piece of a long track: bit for bit the old lift, and every sample outside it the very same object as the base path's
+ok 184 - row 1: a hill on ONE piece of a long track: bit for bit the old lift, and every sample outside it the very same object as the base path's
+  ---
+  duration_ms: 1386.2883
+  type: 'test'
+  ...
+# Subtest: row 2: a swerve across a joint, and offsets on every piece: bit for bit the old lift
+ok 185 - row 2: a swerve across a joint, and offsets on every piece: bit for bit the old lift
+  ---
+  duration_ms: 1316.2888
+  type: 'test'
+  ...
+# Subtest: row 3: no offset anywhere: the very same path object back
+ok 186 - row 3: no offset anywhere: the very same path object back
+  ---
+  duration_ms: 233.8935
+  type: 'test'
+  ...
+# Subtest: row 1: the relative form: a state is its change from the run's start (first point 0) plus the start, a rate is as the document holds it, and putting them back is EXACT, on real adjusted laps of all three kinds
+ok 187 - row 1: the relative form: a state is its change from the run's start (first point 0) plus the start, a rate is as the document holds it, and putting them back is EXACT, on real adjusted laps of all three kinds
+  ---
+  duration_ms: 4617.3009
+  type: 'test'
+  ...
+# Subtest: row 1b: the text is canonical: a stable key order, one piece to a line, a final newline; parse(serialize(p)) is p and serialize of it is the same text; the piece is frozen
+ok 188 - row 1b: the text is canonical: a stable key order, one piece to a line, a final newline; parse(serialize(p)) is p and serialize of it is the same text; the piece is frozen
+  ---
+  duration_ms: 1418.636
+  type: 'test'
+  ...
+# Subtest: row 2 (REQUIRED, legacy): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+ok 189 - row 2 (REQUIRED, legacy): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+  ---
+  duration_ms: 39008.8915
+  type: 'test'
+  ...
+# Subtest: row 2 (REQUIRED, cup): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+ok 190 - row 2 (REQUIRED, cup): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+  ---
+  duration_ms: 38877.8911
+  type: 'test'
+  ...
+# Subtest: row 2 (REQUIRED, tube): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+ok 191 - row 2 (REQUIRED, tube): a track built from a saved and re-inserted run at the same start is the SAME DOCUMENT and exports the SAME BYTES: the rest of the lap after its first piece, the whole lap into an empty track, in pieces, through the text, and mirrored twice
+  ---
+  duration_ms: 78539.9868
+  type: 'test'
+  ...
+# Subtest: row 2b: put where the run does NOT already start (a different head) the export of the result is still the document's own: it exports, and builds the same as the same document made by hand would
+ok 192 - row 2b: put where the run does NOT already start (a different head) the export of the result is still the document's own: it exports, and builds the same as the same document made by hand would
+  ---
+  duration_ms: 143.8257
+  type: 'test'
+  ...
+# Subtest: row 3: at a DIFFERENT head the run continues from it: the document accepts it, the joint's values and slopes meet, the change across the run is the saved one, and the rates after the first span are the saved ones
+ok 193 - row 3: at a DIFFERENT head the run continues from it: the document accepts it, the joint's values and slopes meet, the change across the run is the saved one, and the rates after the first span are the saved ones
+  ---
+  duration_ms: 1452.0451
+  type: 'test'
+  ...
+# Subtest: row 3b: it can be added again and again: a saved bend added three times in a row is a valid track and each copy continues the one before
+ok 194 - row 3b: it can be added again and again: a saved bend added three times in a row is a valid track and each copy continues the one before
+  ---
+  duration_ms: 113.4173
+  type: 'test'
+  ...
+# Subtest: row 3c: what a head does not carry is continued as Extend continues it: a tube after a cup starts at twice the cup's edge, a cup after a tube at t/2, and a hill or swerve that has not faded carries on into the run (the rest of the run is as saved)
+ok 195 - row 3c: what a head does not carry is continued as Extend continues it: a tube after a cup starts at twice the cup's edge, a cup after a tube at t/2, and a hill or swerve that has not faded carries on into the run (the rest of the run is as saved)
+  ---
+  duration_ms: 1421.5809
+  type: 'test'
+  ...
+# Subtest: row 4: "keep its own start values" adds the pieces exactly as saved: refused by name (PIECE_START) where they do not meet the head, accepted where they do; on an empty track a run goes in as saved
+ok 196 - row 4: "keep its own start values" adds the pieces exactly as saved: refused by name (PIECE_START) where they do not meet the head, accepted where they do; on an empty track a run goes in as saved
+  ---
+  duration_ms: 97.4691
+  type: 'test'
+  ...
+# Subtest: row 4b: refused by name: a legacy run after a cup or a tube (PIECE_KIND), a closed track (CLOSED), a run that starts with a jump on an empty track, a jump after offsets that have not faded
+ok 197 - row 4b: refused by name: a legacy run after a cup or a tube (PIECE_KIND), a closed track (CLOSED), a run that starts with a jump on an empty track, a jump after offsets that have not faded
+  ---
+  duration_ms: 311.2886
+  type: 'test'
+  ...
+# Subtest: row 5: the mirror: a mirrored run's path is the mirror image of the original's (x flips; height, distance along and the bank's size do not), with a bank, a hill and a swerve in it; and at a head it is still a valid track
+ok 198 - row 5: the mirror: a mirrored run's path is the mirror image of the original's (x flips; height, distance along and the bank's size do not), with a bank, a hill and a swerve in it; and at a head it is still a valid track
+  ---
+  duration_ms: 97.7042
+  type: 'test'
+  ...
+# Subtest: row 6: jumps in a run: a run with a flight in the middle and one that starts with a flight are saved with their flights as they were, and go in at another head
+ok 199 - row 6: jumps in a run: a run with a flight in the middle and one that starts with a flight are saved with their flights as they were, and go in at another head
+  ---
+  duration_ms: 9.6044
+  type: 'test'
+  ...
+# Subtest: row 6c: a run that starts with a jump goes in exactly as saved after a curving, climbing, banked head (mirrored too); a landing that does not start level is refused by name (LANDING)
+ok 200 - row 6c: a run that starts with a jump goes in exactly as saved after a curving, climbing, banked head (mirrored too); a landing that does not start level is refused by name (LANDING)
+  ---
+  duration_ms: 2.7879
+  type: 'test'
+  ...
+# Subtest: row 7: NO PIECE MAKES A DOCUMENT THE DOCUMENT WOULD REFUSE: every kind of run against every kind of head either goes in as a valid track or is refused by a CoreError, never a crash and never a bad document
+ok 201 - row 7: NO PIECE MAKES A DOCUMENT THE DOCUMENT WOULD REFUSE: every kind of run against every kind of head either goes in as a valid track or is refused by a CoreError, never a crash and never a bad document
+  ---
+  duration_ms: 5620.2107
+  type: 'test'
+  ...
+# Subtest: row 8: a malformed file is refused BY NAME, case by case (the good one still reads)
+ok 202 - row 8: a malformed file is refused BY NAME, case by case (the good one still reads)
+  ---
+  duration_ms: 5267.1951
+  type: 'test'
+  ...
+# Subtest: row 8b: a mixed run is refused at SAVE too (MIXED_RUN), and a run of one kind with an edge is a kind of its own
+ok 203 - row 8b: a mixed run is refused at SAVE too (MIXED_RUN), and a run of one kind with an edge is a kind of its own
+  ---
+  duration_ms: 1.7705
+  type: 'test'
+  ...
+# Subtest: row 9: ranges, names, limits and the summary a library list shows
+ok 204 - row 9: ranges, names, limits and the summary a library list shows
+  ---
+  duration_ms: 326.24
+  type: 'test'
+  ...
+# Subtest: row 8c: numbers are quantised as they enter, like a document's: a value finer than its channel's step is snapped
+ok 205 - row 8c: numbers are quantised as they enter, like a document's: a value finer than its channel's step is snapped
+  ---
+  duration_ms: 172.7008
+  type: 'test'
+  ...
+# Subtest: row 1c: the start is the FIRST road's first values (states that change from piece to piece, a jump before the road), every stored state number is on its grid, and random pieces come back exactly
+ok 206 - row 1c: the start is the FIRST road's first values (states that change from piece to piece, a jump before the road), every stored state number is on its grid, and random pieces come back exactly
+  ---
+  duration_ms: 19.4426
+  type: 'test'
+  ...
+# Subtest: row 5b: a mirror flips the bank EXACTLY, the start bank included (a run that starts banked), the turn and the swerve; width and rise stay
+ok 207 - row 5b: a mirror flips the bank EXACTLY, the start bank included (a run that starts banked), the turn and the swerve; width and rise stay
+  ---
+  duration_ms: 1.036
+  type: 'test'
+  ...
+# Subtest: row 6b: a run that starts with a jump, put at a head that is TURNING and CLIMBING, has its road after the jump start level (turn and climb 0) with its own saved width
+ok 208 - row 6b: a run that starts with a jump, put at a head that is TURNING and CLIMBING, has its road after the jump start level (turn and climb 0) with its own saved width
+  ---
+  duration_ms: 0.6515
+  type: 'test'
+  ...
+# Subtest: row 4c: a closed track says CLOSED whatever the run is: a legacy run into a closed CUP track is CLOSED, not PIECE_KIND (the kind is the second question)
+ok 209 - row 4c: a closed track says CLOSED whatever the run is: a legacy run into a closed CUP track is CLOSED, not PIECE_KIND (the kind is the second question)
+  ---
+  duration_ms: 158.1261
+  type: 'test'
+  ...
+# Subtest: row 10a: at the open end the pieces simply go: the same document with fewer pieces, the ids kept and not reused, and inserting a saved run then deleting it gets back the track
+ok 210 - row 10a: at the open end the pieces simply go: the same document with fewer pieces, the ids kept and not reused, and inserting a saved run then deleting it gets back the track
+  ---
+  duration_ms: 7.7538
+  type: 'test'
+  ...
+# Subtest: row 10b: in the middle, when the two sides already join (the deleted run began and ended in the same state) nothing is changed anywhere
+ok 211 - row 10b: in the middle, when the two sides already join (the deleted run began and ended in the same state) nothing is changed anywhere
+  ---
+  duration_ms: 0.5509
+  type: 'test'
+  ...
+# Subtest: row 10c (legacy): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+ok 212 - row 10c (legacy): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+  ---
+  duration_ms: 1.1136
+  type: 'test'
+  ...
+# Subtest: row 10c (cup): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+ok 213 - row 10c (cup): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+  ---
+  duration_ms: 1.4636
+  type: 'test'
+  ...
+# Subtest: row 10c (tube): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+ok 214 - row 10c (tube): in the middle with the sides NOT joined, the far side's first piece is re-joined C1 by its first two control points (the D190 rule) and nothing else is moved
+  ---
+  duration_ms: 1.1569
+  type: 'test'
+  ...
+# Subtest: row 10h: a tube after a CUP head starts at twice the edge of the cup (tNext), so the rendered edge is continuous across the re-join
+ok 215 - row 10h: a tube after a CUP head starts at twice the edge of the cup (tNext), so the rendered edge is continuous across the re-join
+  ---
+  duration_ms: 0.6998
+  type: 'test'
+  ...
+# Subtest: row 10d: jumps: deleting the road before a jump, a jump itself, and the road after it each give a valid track with the jump kept (or its own refusal), the far side untouched
+ok 216 - row 10d: jumps: deleting the road before a jump, a jump itself, and the road after it each give a valid track with the jump kept (or its own refusal), the far side untouched
+  ---
+  duration_ms: 0.8784
+  type: 'test'
+  ...
+# Subtest: row 10i: deleting the road between two jumps is REFUSED BY NAME (DELETE_REJOIN, naming land on road first), and nothing is touched
+ok 217 - row 10i: deleting the road between two jumps is REFUSED BY NAME (DELETE_REJOIN, naming land on road first), and nothing is touched
+  ---
+  duration_ms: 0.8706
+  type: 'test'
+  ...
+# Subtest: row 10j: a run that starts with a jump, added at a head that IS a jump, is refused by name (JUMP_AFTER_JUMP); at a road head it goes in (control)
+ok 218 - row 10j: a run that starts with a jump, added at a head that IS a jump, is refused by name (JUMP_AFTER_JUMP); at a road head it goes in (control)
+  ---
+  duration_ms: 0.9226
+  type: 'test'
+  ...
+# Subtest: row 11a: across a closed lap's start line the run is the pieces either side of it, in lap order, and putting it back gives those very pieces (legacy, cup, tube)
+ok 219 - row 11a: across a closed lap's start line the run is the pieces either side of it, in lap order, and putting it back gives those very pieces (legacy, cup, tube)
+  ---
+  duration_ms: 1153.2422
+  type: 'test'
+  ...
+# Subtest: row 11b: a lap whose bank turns WHOLE times round (TEST 1 ends at -4π): across the line the bank is carried on by those turns, so the run is kept, C1, leaning as the lap leans
+ok 220 - row 11b: a lap whose bank turns WHOLE times round (TEST 1 ends at -4π): across the line the bank is carried on by those turns, so the run is kept, C1, leaning as the lap leans
+  ---
+  duration_ms: 121.8024
+  type: 'test'
+  ...
+# Subtest: row 11c: a closed lap whose road is NOT smooth across its start line (a hand-edited width step there) is refused BY NAME across it (SEAM_RUN); either side alone is kept
+ok 221 - row 11c: a closed lap whose road is NOT smooth across its start line (a hand-edited width step there) is refused BY NAME across it (SEAM_RUN); either side alone is kept
+  ---
+  duration_ms: 77.7777
+  type: 'test'
+  ...
+# Subtest: row 11d: on an OPEN track from > to is still BAD_RANGE, and a closed lap's out-of-range ends are too
+ok 222 - row 11d: on an OPEN track from > to is still BAD_RANGE, and a closed lap's out-of-range ends are too
+  ---
+  duration_ms: 80.8369
+  type: 'test'
+  ...
+# Subtest: row 10k: a piece FILE that starts with two jumps is refused when it is READ (JUMP_AFTER_JUMP), so the library lists why; one leading jump reads (control)
+ok 223 - row 10k: a piece FILE that starts with two jumps is refused when it is READ (JUMP_AFTER_JUMP), so the library lists why; one leading jump reads (control)
+  ---
+  duration_ms: 2.1204
+  type: 'test'
+  ...
+# Subtest: row 10e: REFUSED BY NAME (DELETE_REJOIN), nothing deleted and nothing reshaped: a jump left with no road before it, and a re-join a limit of the document refuses (a tube held in the slot band)
+ok 224 - row 10e: REFUSED BY NAME (DELETE_REJOIN), nothing deleted and nothing reshaped: a jump left with no road before it, and a re-join a limit of the document refuses (a tube held in the slot band)
+  ---
+  duration_ms: 1.9585
+  type: 'test'
+  ...
+# Subtest: row 10f: a closed track has no open end (CLOSED); a range that is not in the track is BAD_RANGE
+ok 225 - row 10f: a closed track has no open end (CLOSED); a range that is not in the track is BAD_RANGE
+  ---
+  duration_ms: 78.0459
+  type: 'test'
+  ...
+# Subtest: row 10g: EVERY range of every kind of track either goes through as a valid document with only the joint touched, or is refused by name (DELETE_REJOIN): never another error, never an invalid document
+ok 226 - row 10g: EVERY range of every kind of track either goes through as a valid document with only the joint touched, or is refused by name (DELETE_REJOIN): never another error, never an invalid document
+  ---
+  duration_ms: 8.0798
+  type: 'test'
+  ...
+# Subtest: row 9b: a run at the limit (2,000 pieces) parses in well under 2 s, and a broken joint at its last piece is still refused BY NAME
+ok 227 - row 9b: a run at the limit (2,000 pieces) parses in well under 2 s, and a broken joint at its last piece is still refused BY NAME
+  ---
+  duration_ms: 87.7175
+  type: 'test'
+  ...
+# Subtest: a 90° cup lap refuses a pit lane; flattened beside it, the same lane builds
+ok 228 - a 90° cup lap refuses a pit lane; flattened beside it, the same lane builds
+  ---
+  duration_ms: 1710.5594
+  type: 'test'
+  ...
+# Subtest: the route does not move: every centreline station is where it was, to the bit
+ok 229 - the route does not move: every centreline station is where it was, to the bit
+  ---
+  duration_ms: 1376.6945
+  type: 'test'
+  ...
+# Subtest: only the shape beside the lane changes: the cup is 0 under the lane, untouched past the ramp, and no other channel moves
+ok 230 - only the shape beside the lane changes: the cup is 0 under the lane, untouched past the ramp, and no other channel moves
+  ---
+  duration_ms: 1081.2436
+  type: 'test'
+  ...
+# Subtest: a closed TUBE lap opens beside the lane, and the lane builds
+ok 231 - a closed TUBE lap opens beside the lane, and the lane builds
+  ---
+  duration_ms: 4657.7442
+  type: 'test'
+  ...
+# Subtest: a plain road has nothing to flatten, and says so
+ok 232 - a plain road has nothing to flatten, and says so
+  ---
+  duration_ms: 1958.6097
+  type: 'test'
+  ...
+# Subtest: the result saves and opens byte for byte (a valid document)
+ok 233 - the result saves and opens byte for byte (a valid document)
+  ---
+  duration_ms: 1411.2909
+  type: 'test'
+  ...
+# Subtest: the weight is 1 on the stretch, eases to 0 over the ramp, and is 0 beyond it
+ok 234 - the weight is 1 on the stretch, eases to 0 over the ramp, and is 0 beyond it
+  ---
+  duration_ms: 0.2511
+  type: 'test'
+  ...
+# Subtest: row 1: adding a tube after a cup leaves every placed segment byte for byte as it was
+ok 235 - row 1: adding a tube after a cup leaves every placed segment byte for byte as it was
+  ---
+  duration_ms: 176.1063
+  type: 'test'
+  ...
+# Subtest: row 2: the handover is seamless: the tube morphs out of the cup's own end, the rows meet, the centre is on the curve, no self-intersection, stacking or red
+ok 236 - row 2: the handover is seamless: the tube morphs out of the cup's own end, the rows meet, the centre is on the curve, no self-intersection, stacking or red
+  ---
+  duration_ms: 27353.5269
+  type: 'test'
+  ...
+# Subtest: row 3: an EDGE piece after a cup leaves the placed cup as it was and morphs out of the cup's own end
+ok 237 - row 3: an EDGE piece after a cup leaves the placed cup as it was and morphs out of the cup's own end
+  ---
+  duration_ms: 492.7725
+  type: 'test'
+  ...
+# Subtest: row 1: the road's centre stays on the curve the user drew at every station of the closing and opening pieces (≤ 1 cm)
+ok 238 - row 1: the road's centre stays on the curve the user drew at every station of the closing and opening pieces (≤ 1 cm)
+  ---
+  duration_ms: 2.7246
+  type: 'test'
+  ...
+# Subtest: row 2: the floor is level through the closing and opening pieces: its centre's height moves ≤ 1 cm (no climb anywhere, no hump)
+ok 239 - row 2: the floor is level through the closing and opening pieces: its centre's height moves ≤ 1 cm (no climb anywhere, no hump)
+  ---
+  duration_ms: 0.2624
+  type: 'test'
+  ...
+# Subtest: row 2b: the keeper's own case (the panel's fields, widths 44 and 30): a track that is a closed 45 m tube from its start, still turning, opened in 254.1 m
+ok 240 - row 2b: the keeper's own case (the panel's fields, widths 44 and 30): a track that is a closed 45 m tube from its start, still turning, opened in 254.1 m
+  ---
+  duration_ms: 58339.3104
+  type: 'test'
+  ...
+# Subtest: row 3: in the opening piece the walls rise above the floor no more than a fixed-width circular arc must at the row's sweep, and the self-check finds no self-intersection
+ok 241 - row 3: in the opening piece the walls rise above the floor no more than a fixed-width circular arc must at the row's sweep, and the self-check finds no self-intersection
+  ---
+  duration_ms: 15.2197
+  type: 'test'
+  ...
+# Subtest: row 4: the cross-sections are the adapter's, untouched, and the open end is on the curve, as before
+ok 242 - row 4: the cross-sections are the adapter's, untouched, and the open end is on the curve, as before
+  ---
+  duration_ms: 0.4158
+  type: 'test'
+  ...
+# Subtest: row 5: a ROLLED closed tube still turns about its own axis, hl above the curve; the word builder's constant heartline is as it was
+ok 243 - row 5: a ROLLED closed tube still turns about its own axis, hl above the curve; the word builder's constant heartline is as it was
+  ---
+  duration_ms: 5459.0935
+  type: 'test'
+  ...
+# Subtest: row 1: which cells: off none, all every core road cell, ranges the overlapping cells widened by the pad, an empty list none
+ok 244 - row 1: which cells: off none, all every core road cell, ranges the overlapping cells widened by the pad, an empty list none
+  ---
+  duration_ms: 3.8087
+  type: 'test'
+  ...
+# Subtest: row 2: a catch cell is the road's own surface CATCH_OFFSET_M below it: its normals and winding, about 32 columns, a seam row whole, never visible
+ok 245 - row 2: a catch cell is the road's own surface CATCH_OFFSET_M below it: its normals and winding, about 32 columns, a seam row whole, never visible
+  ---
+  duration_ms: 3.0267
+  type: 'test'
+  ...
+# Subtest: row 3: with no sustained load, the default export is the very kn5 of before (and so is 'off')
+ok 246 - row 3: with no sustained load, the default export is the very kn5 of before (and so is 'off')
+  ---
+  duration_ms: 15349.6197
+  type: 'test'
+  ...
+# Subtest: row 4: 'all' lays a closed underside under every road chunk, in 1ROAD_CATCH_ chunks of their own, and nothing else in the kn5 changes
+ok 247 - row 4: 'all' lays a closed underside under every road chunk, in 1ROAD_CATCH_ chunks of their own, and nothing else in the kn5 changes
+  ---
+  duration_ms: 23444.8925
+  type: 'test'
+  ...
+# Subtest: row 5: explicit ranges catch only the cells there, and surfaces.ini is the file of before
+ok 248 - row 5: explicit ranges catch only the cells there, and surfaces.ini is the file of before
+  ---
+  duration_ms: 11737.6485
+  type: 'test'
+  ...
+# Subtest: row 1: a grip key is GRIP and three digits, none at 100, and no key is the start of another (nor of ROAD or PIT)
+ok 249 - row 1: a grip key is GRIP and three digits, none at 100, and no key is the start of another (nor of ROAD or PIT)
+  ---
+  duration_ms: 12.0501
+  type: 'test'
+  ...
+# Subtest: row 2: surfaces.ini is the file it was without grips; with grips, a GRIPnnn surface each, AC's ROAD but KEY and FRICTION, and the MESHES line names 1GRIP?
+ok 250 - row 2: surfaces.ini is the file it was without grips; with grips, a GRIPnnn surface each, AC's ROAD but KEY and FRICTION, and the MESHES line names 1GRIP?
+  ---
+  duration_ms: 1.2724
+  type: 'test'
+  ...
+# Subtest: row 3: the merge splits at grip boundaries: a chunk is one surface, never 1ROAD_ with 1GRIPnnn_ or two grips
+ok 251 - row 3: the merge splits at grip boundaries: a chunk is one surface, never 1ROAD_ with 1GRIPnnn_ or two grips
+  ---
+  duration_ms: 44.8535
+  type: 'test'
+  ...
+# Subtest: row 4: a low and a high piece export as 1GRIP070_/1GRIP125_ meshes on two surfaces; the triangles are the all-100 export's; back at 100, byte for byte
+ok 252 - row 4: a low and a high piece export as 1GRIP070_/1GRIP125_ meshes on two surfaces; the triangles are the all-100 export's; back at 100, byte for byte
+  ---
+  duration_ms: 41079.2855
+  type: 'test'
+  ...
+# Subtest: row 1: the merge keeps every vertex and every triangle (position, normal, uv), byte for byte, and joins consecutive road cells and skins
+ok 253 - row 1: the merge keeps every vertex and every triangle (position, normal, uv), byte for byte, and joins consecutive road cells and skins
+  ---
+  duration_ms: 23.207
+  type: 'test'
+  ...
+# Subtest: row 2b: with the default budget no chunk passes 32,768 vertices (AC left the keeper's two chunks near 65,536 undrawn: the road went invisible but drivable)
+ok 254 - row 2b: with the default budget no chunk passes 32,768 vertices (AC left the keeper's two chunks near 65,536 undrawn: the road went invisible but drivable)
+  ---
+  duration_ms: 44.8878
+  type: 'test'
+  ...
+# Subtest: row 2: a chunk never passes the 16-bit index budget or its length; a lone mesh stays as it was; another material or other flags never join
+ok 255 - row 2: a chunk never passes the 16-bit index budget or its length; a lone mesh stays as it was; another material or other flags never join
+  ---
+  duration_ms: 39.1371
+  type: 'test'
+  ...
+# Subtest: row 3: markers, walls, paint and the pit lane stay where they were, unchanged; a chunk sits where its first mesh sat
+ok 256 - row 3: markers, walls, paint and the pit lane stay where they were, unchanged; a chunk sits where its first mesh sat
+  ---
+  duration_ms: 2.8242
+  type: 'test'
+  ...
+# Subtest: row 4: an exported closed lap has a few meshes instead of hundreds, the SAME triangle set as the unmerged export, and every road chunk is a 1ROAD physics name
+ok 257 - row 4: an exported closed lap has a few meshes instead of hundreds, the SAME triangle set as the unmerged export, and every road chunk is a 1ROAD physics name
+  ---
+  duration_ms: 27850.8371
+  type: 'test'
+  ...
+# Subtest: row 1: asphalt: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5
+ok 258 - row 1: asphalt: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5
+  ---
+  duration_ms: 13137.6384
+  type: 'test'
+  ...
+# Subtest: row 2: image: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5
+ok 259 - row 2: image: every pit box wears the road's floor material and the same diffuse texture, in the scene and in the kn5
+  ---
+  duration_ms: 7736.5419
+  type: 'test'
+  ...
+# Subtest: row 3: solid colour: the pit boxes wear the road's own t180b_road, so they no longer show (what was asked, and named here)
+ok 260 - row 3: solid colour: the pit boxes wear the road's own t180b_road, so they no longer show (what was asked, and named here)
+  ---
+  duration_ms: 5128.3403
+  type: 'test'
+  ...
+# Subtest: row 4: the start line and grid paint, the AC_PIT_n spawn markers and the read-back are unchanged
+ok 261 - row 4: the start line and grid paint, the AC_PIT_n spawn markers and the read-back are unchanged
+  ---
+  duration_ms: 8650.1328
+  type: 'test'
+  ...
+# Subtest: row 5: a box's texture coordinates are the road's there: v = (s + offset) / tileLength, within the box's own stretch of road
+ok 262 - row 5: a box's texture coordinates are the road's there: v = (s + offset) / tileLength, within the box's own stretch of road
+  ---
+  duration_ms: 4079.5056
+  type: 'test'
+  ...
+# Subtest: row 1: the infill is there, drivable, and wears the lane's floor (the road's), in the scene and in the kn5
+ok 263 - row 1: the infill is there, drivable, and wears the lane's floor (the road's), in the scene and in the kn5
+  ---
+  duration_ms: 12540.5721
+  type: 'test'
+  ...
+# Subtest: row 2: NO GAP: the car's downforce ray over the road, the lane and the infill finds no gap in the lane's span
+ok 264 - row 2: NO GAP: the car's downforce ray over the road, the lane and the infill finds no gap in the lane's span
+  ---
+  duration_ms: 6755.0113
+  type: 'test'
+  ...
+# Subtest: row 3: untextured (solid): the infill wears t180b_road, as the lane and the road do
+ok 265 - row 3: untextured (solid): the infill wears t180b_road, as the lane and the road do
+  ---
+  duration_ms: 5440.1933
+  type: 'test'
+  ...
+# Subtest: row 4: the lane's self-check and its check against the road stay clean, and the full export of the closed lap passes
+ok 266 - row 4: the lane's self-check and its check against the road stay clean, and the full export of the closed lap passes
+  ---
+  duration_ms: 5033.1953
+  type: 'test'
+  ...
+# Subtest: a NORMAL export of an open track still refuses (unchanged): NOT_CLOSED, nothing written
+ok 267 - a NORMAL export of an open track still refuses (unchanged): NOT_CLOSED, nothing written
+  ---
+  duration_ms: 47.2884
+  type: 'test'
+  ...
+# Subtest: the TEST export of the same open track writes a folder marked unfinished, in name and folder
+ok 268 - the TEST export of the same open track writes a folder marked unfinished, in name and folder
+  ---
+  duration_ms: 2112.0936
+  type: 'test'
+  ...
+# Subtest: D256: the TEST export checks the open track at FULL speed, so where F7's hill lets the car leave the road is LISTED (and does not block)
+ok 269 - D256: the TEST export checks the open track at FULL speed, so where F7's hill lets the car leave the road is LISTED (and does not block)
+  ---
+  duration_ms: 69.3362
+  type: 'test'
+  ...
+# Subtest: in TEST mode a red is LISTED and does not block: a hole's gap-in-road red is in the TEST file and the warnings
+ok 270 - in TEST mode a red is LISTED and does not block: a hole's gap-in-road red is in the TEST file and the warnings
+  ---
+  duration_ms: 1952.1896
+  type: 'test'
+  ...
+# Subtest: the TEST folder carries point-to-point gates and the named end wall in its kn5
+ok 271 - the TEST folder carries point-to-point gates and the named end wall in its kn5
+  ---
+  duration_ms: 0.7421
+  type: 'test'
+  ...
+# Subtest: the TEST folder's AI line is OPEN and reads back
+ok 272 - the TEST folder's AI line is OPEN and reads back
+  ---
+  duration_ms: 0.7313
+  type: 'test'
+  ...
+# Subtest: an open AI line is written only when asked for: the same line without open still refuses NOT_CLOSED
+ok 273 - an open AI line is written only when asked for: the same line without open still refuses NOT_CLOSED
+  ---
+  duration_ms: 479.9998
+  type: 'test'
+  ...
+# Subtest: row 1: a tube oval 40 m wide exports, with a single-column grid on the centreline, nose to tail, and a warning that names it
+ok 274 - row 1: a tube oval 40 m wide exports, with a single-column grid on the centreline, nose to tail, and a warning that names it
+  ---
+  duration_ms: 25993.3944
+  type: 'test'
+  ...
+# Subtest: row 1: the same at 31 m and 60 m (a wider tube has a wider floor, and still one column)
+ok 275 - row 1: the same at 31 m and 60 m (a wider tube has a wider floor, and still one column)
+  ---
+  duration_ms: 42662.1739
+  type: 'test'
+  ...
+# Subtest: row 2: a tube too narrow for even one slot is refused BY NAME at the grid, with the floor it measured (not a crash, not a one-slot grid)
+ok 276 - row 2: a tube too narrow for even one slot is refused BY NAME at the grid, with the floor it measured (not a crash, not a one-slot grid)
+  ---
+  duration_ms: 2207.2522
+  type: 'test'
+  ...
+# Subtest: row 3: the one-slot bar is the slot's half width plus 0.1 m, and the two-column bar did not move
+ok 277 - row 3: the one-slot bar is the slot's half width plus 0.1 m, and the two-column bar did not move
+  ---
+  duration_ms: 8303.1797
+  type: 'test'
+  ...
+# Subtest: row 4: gridSlots and resolveLayout: a 1-column grid is one u per slot, 8 m apart, and only it carries the amber note
+ok 278 - row 4: gridSlots and resolveLayout: a 1-column grid is one u per slot, 8 m apart, and only it carries the amber note
+  ---
+  duration_ms: 1.9042
+  type: 'test'
+  ...
+# Subtest: row 5: the two-column layout of an ordinary road is unchanged (2-staggered, a 6 m gap, a 16 m row), and no single-column note appears
+ok 279 - row 5: the two-column layout of an ordinary road is unchanged (2-staggered, a 6 m gap, a 16 m row), and no single-column note appears
+  ---
+  duration_ms: 2016.1377
+  type: 'test'
+  ...
+# Subtest: row 5b: the grid's length need is the same for the single column as for the staggered pair (the last slot is 34 m behind the line in both)
+ok 280 - row 5b: the grid's length need is the same for the single column as for the staggered pair (the last slot is 34 m behind the line in both)
+  ---
+  duration_ms: 0.4208
+  type: 'test'
+  ...
+# Subtest: row 1a: a lap whose ONLY findings are a jump's reach (a fall not caught, a landing too deep) PASSES, and they are warnings
+ok 281 - row 1a: a lap whose ONLY findings are a jump's reach (a fall not caught, a landing too deep) PASSES, and they are warnings
+  ---
+  duration_ms: 2.3737
+  type: 'test'
+  ...
+# Subtest: row 1b: a STALL (a road station at 0 km/h) still FAILS the lap proof, in where (not a warning)
+ok 282 - row 1b: a STALL (a road station at 0 km/h) still FAILS the lap proof, in where (not a warning)
+  ---
+  duration_ms: 0.2294
+  type: 'test'
+  ...
+# Subtest: row 1b: the car LEAVING THE SURFACE (a negative normal load on the centreline) still FAILS the lap proof, in where (not a warning)
+ok 283 - row 1b: the car LEAVING THE SURFACE (a negative normal load on the centreline) still FAILS the lap proof, in where (not a warning)
+  ---
+  duration_ms: 0.3789
+  type: 'test'
+  ...
+# Subtest: row 1b: a jump whose landing is NOT AHEAD of its take-off still FAILS the lap proof, in where (not a warning)
+ok 284 - row 1b: a jump whose landing is NOT AHEAD of its take-off still FAILS the lap proof, in where (not a warning)
+  ---
+  duration_ms: 0.0963
+  type: 'test'
+  ...
+# Subtest: row 2: a real HOLE (a road segment of the landing road made a gap, no ramp) in a closed jump lap is RED and refused; the lap without it exports
+ok 285 - row 2: a real HOLE (a road segment of the landing road made a gap, no ramp) in a closed jump lap is RED and refused; the lap without it exports
+  ---
+  duration_ms: 8930.7205
+  type: 'test'
+  ...
+# Subtest: the row no longer starts at the lane's midpoint: pit 1 (AC_PIT_0) is the first box after the entry, and each next box is further on
+ok 286 - the row no longer starts at the lane's midpoint: pit 1 (AC_PIT_0) is the first box after the entry, and each next box is further on
+  ---
+  duration_ms: 235.5849
+  type: 'test'
+  ...
+# Subtest: 2 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper
+ok 287 - 2 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper
+  ---
+  duration_ms: 145.0616
+  type: 'test'
+  ...
+# Subtest: 6 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper
+ok 288 - 6 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper
+  ---
+  duration_ms: 146.5052
+  type: 'test'
+  ...
+# Subtest: 12 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper
+ok 289 - 12 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper
+  ---
+  duration_ms: 119.2448
+  type: 'test'
+  ...
+# Subtest: the boxes stand on the lane, with the count asked for, and the checks pass
+ok 290 - the boxes stand on the lane, with the count asked for, and the checks pass
+  ---
+  duration_ms: 258.9966
+  type: 'test'
+  ...
+# Subtest: a row longer than the lane's straight is still centred, and an amber says the end boxes stand on the tapers
+ok 291 - a row longer than the lane's straight is still centred, and an amber says the end boxes stand on the tapers
+  ---
+  duration_ms: 148.927
+  type: 'test'
+  ...
+# Subtest: a closed lap: AC_TIME_1 and AC_TIME_2 a third and two thirds of the lap past the start line, on road
+ok 292 - a closed lap: AC_TIME_1 and AC_TIME_2 a third and two thirds of the lap past the start line, on road
+  ---
+  duration_ms: 143.8634
+  type: 'test'
+  ...
+# Subtest: an open track has no sector gates
+ok 293 - an open track has no sector gates
+  ---
+  duration_ms: 38.6746
+  type: 'test'
+  ...
+# Subtest: row 1: a core export WITH a texture set writes its DDS and its material, and the kn5 reads back with the road wearing it
+ok 294 - row 1: a core export WITH a texture set writes its DDS and its material, and the kn5 reads back with the road wearing it
+  ---
+  duration_ms: 7749.2524
+  type: 'test'
+  ...
+# Subtest: row 2: WITHOUT a set nothing changes: the scene is returned as it is and flowUvs has nothing to do
+ok 295 - row 2: WITHOUT a set nothing changes: the scene is returned as it is and flowUvs has nothing to do
+  ---
+  duration_ms: 6909.8937
+  type: 'test'
+  ...
+# Subtest: row 3: with a set the coordinates FLOW: v is the path's arc length over 10, continuous through every segment and seam; mesh.js restarts it every segment
+ok 296 - row 3: with a set the coordinates FLOW: v is the path's arc length over 10, continuous through every segment and seam; mesh.js restarts it every segment
+  ---
+  duration_ms: 687.1949
+  type: 'test'
+  ...
+# Subtest: row 4: a CLOSED TUBE wraps a whole number of repeats round the ring, evenly: no stretch beyond the rounding, and the ends meet at the ceiling
+ok 297 - row 4: a CLOSED TUBE wraps a whole number of repeats round the ring, evenly: no stretch beyond the rounding, and the ends meet at the ceiling
+  ---
+  duration_ms: 36863.7879
+  type: 'test'
+  ...
+# Subtest: row 5: an open road keeps u = arc / 10 across (only v flows), and an OPEN tube is not wrapped
+ok 298 - row 5: an open road keeps u = arc / 10 across (only v flows), and an OPEN tube is not wrapped
+  ---
+  duration_ms: 644.553
+  type: 'test'
+  ...
+# Subtest: row 5b: the seam rows of a tube that changes carry the path's arc length at the seam, one value for the whole row
+ok 299 - row 5b: the seam rows of a tube that changes carry the path's arc length at the seam, one value for the whole row
+  ---
+  duration_ms: 9675.4115
+  type: 'test'
+  ...
+# Subtest: row 6: a WORD document's coordinates are untouched by a set (flow is for the equation core only)
+ok 300 - row 6: a WORD document's coordinates are untouched by a set (flow is for the equation core only)
+  ---
+  duration_ms: 15.8304
+  type: 'test'
+  ...
+# Subtest: closedRing gives a frozen segment the answer of reading it, ring or not, and reads an unfrozen segment again after it changes
+ok 301 - closedRing gives a frozen segment the answer of reading it, ring or not, and reads an unfrozen segment again after it changes
+  ---
+  duration_ms: 4789.6662
+  type: 'test'
+  ...
+# Subtest: row 7 (35 m): fit 'fit' runs u from -0.5 to 0.5 across every row of an open road, whatever tileWidth says
+ok 302 - row 7 (35 m): fit 'fit' runs u from -0.5 to 0.5 across every row of an open road, whatever tileWidth says
+  ---
+  duration_ms: 432.814
+  type: 'test'
+  ...
+# Subtest: row 7 (60 m): fit 'fit' runs u from -0.5 to 0.5 across every row of an open road, whatever tileWidth says
+ok 303 - row 7 (60 m): fit 'fit' runs u from -0.5 to 0.5 across every row of an open road, whatever tileWidth says
+  ---
+  duration_ms: 579.5561
+  type: 'test'
+  ...
+# Subtest: row 8: fit 'fit' follows a road that changes width: every row spans -0.5 to 0.5 from 35 m to 60 m, and the seam rows stay inside
+ok 304 - row 8: fit 'fit' follows a road that changes width: every row spans -0.5 to 0.5 from 35 m to 60 m, and the seam rows stay inside
+  ---
+  duration_ms: 904.9776
+  type: 'test'
+  ...
+# Subtest: row 9: fit 'fit' on a closed tube is one repeat round the ring (u from -0.5 to 0.5); tile keeps its whole-number wrap
+ok 305 - row 9: fit 'fit' on a closed tube is one repeat round the ring (u from -0.5 to 0.5); tile keeps its whole-number wrap
+  ---
+  duration_ms: 13459.2007
+  type: 'test'
+  ...
+# Subtest: row 10: fit 'tile' and no fit setting are what they were: the coordinates of the 31 m lap pinned by digest
+ok 306 - row 10: fit 'tile' and no fit setting are what they were: the coordinates of the 31 m lap pinned by digest
+  ---
+  duration_ms: 1427.1218
+  type: 'test'
+  ...
+# Subtest: row 10b: a floor whose settings carry no fit at all (a hand-made set) is mapped as tile, not as fit
+ok 307 - row 10b: a floor whose settings carry no fit at all (a hand-made set) is mapped as tile, not as fit
+  ---
+  duration_ms: 576.8118
+  type: 'test'
+  ...
+# Subtest: row 1: a closed tube export has an underside skin on every cell: the road's own normal, 0.5 m away from the driver (outward), normals out, castShadows, its own dark material
+ok 308 - row 1: a closed tube export has an underside skin on every cell: the road's own normal, 0.5 m away from the driver (outward), normals out, castShadows, its own dark material
+  ---
+  duration_ms: 30845.5132
+  type: 'test'
+  ...
+# Subtest: row 2: on an OPEN road the skin is BELOW it: the road keeps its light material, the skin is under every cell, and on the flat start straight it is 0.5 m down
+ok 309 - row 2: on an OPEN road the skin is BELOW it: the road keeps its light material, the skin is under every cell, and on the flat start straight it is 0.5 m down
+  ---
+  duration_ms: 3559.4099
+  type: 'test'
+  ...
+# Subtest: row 3: the DARK interior (ksAmbient 0.02) is on closed-ring cells only, the textured ones too; the set's shared material is untouched; the skin runs under the slot zone, the dark does not
+ok 310 - row 3: the DARK interior (ksAmbient 0.02) is on closed-ring cells only, the textured ones too; the set's shared material is untouched; the skin runs under the slot zone, the dark does not
+  ---
+  duration_ms: 35907.9496
+  type: 'test'
+  ...
+# Subtest: row 4: the ROAD nodes are the ones mesh.js made (the same objects): only skin nodes and materials are added; a word document comes back as the very same scene
+ok 311 - row 4: the ROAD nodes are the ones mesh.js made (the same objects): only skin nodes and materials are added; a word document comes back as the very same scene
+  ---
+  duration_ms: 13077.1829
+  type: 'test'
+  ...
+# Subtest: row 5: the skin is not a physics surface: no leading digit, no 1ROAD, no "seam", no surfaces.ini MESHES pattern matches it, and the 1ROAD meshes are as many as before
+ok 312 - row 5: the skin is not a physics surface: no leading digit, no 1ROAD, no "seam", no surfaces.ini MESHES pattern matches it, and the 1ROAD meshes are as many as before
+  ---
+  duration_ms: 17063.5734
+  type: 'test'
+  ...
+# Subtest: row 6: the skin is light: about SKIN_COLUMNS vertices across, a fraction of the road's (under 60% on an open road, under 15% on a tube)
+ok 313 - row 6: the skin is light: about SKIN_COLUMNS vertices across, a fraction of the road's (under 60% on an open road, under 15% on a tube)
+  ---
+  duration_ms: 14860.0042
+  type: 'test'
+  ...
+# Subtest: row 7: the ring rule on a synthetic mesh: a seam row is a ring only when BOTH its segments are, and the lap's first seam joins the last piece to the first
+ok 314 - row 7: the ring rule on a synthetic mesh: a seam row is a ring only when BOTH its segments are, and the lap's first seam joins the last piece to the first
+  ---
+  duration_ms: 1392.9761
+  type: 'test'
+  ...
+# Subtest: row 8: a seam row's skin (every vertex kept, no grid) is the road's triangles reversed and its vertices moved 0.5 m against the normal, on a zipper with area
+ok 315 - row 8: a seam row's skin (every vertex kept, no grid) is the road's triangles reversed and its vertices moved 0.5 m against the normal, on a zipper with area
+  ---
+  duration_ms: 0.2978
+  type: 'test'
+  ...
+# Subtest: row 1a: on synthetic roads, rayGaps is the first form, gap for gap (slits, holes, welds across a bucket boundary, degenerates, several meshes)
+ok 316 - row 1a: on synthetic roads, rayGaps is the first form, gap for gap (slits, holes, welds across a bucket boundary, degenerates, several meshes)
+  ---
+  duration_ms: 1090.9298
+  type: 'test'
+  ...
+# Subtest: row 1b: on built roads (an open coil that runs into itself, a closed lap, a tube) rayGaps is the first form, gap for gap
+ok 317 - row 1b: on built roads (an open coil that runs into itself, a closed lap, a tube) rayGaps is the first form, gap for gap
+  ---
+  duration_ms: 20556.845
+  type: 'test'
+  ...
+# Subtest: row 2: the check's lean mesh gives the check on buildMesh's own self-checked mesh, on a coil that overlaps itself; its two parts are the one-piece check
+ok 318 - row 2: the check's lean mesh gives the check on buildMesh's own self-checked mesh, on a coil that overlaps itself; its two parts are the one-piece check
+  ---
+  duration_ms: 11759.8146
+  type: 'test'
+  ...
+# Subtest: row 3: on a closed 6 × 1000 m tube oval, each part of the overlap check and the whole check finish within a 1,500 MB heap
+ok 319 - row 3: on a closed 6 × 1000 m tube oval, each part of the overlap check and the whole check finish within a 1,500 MB heap
+  ---
+  duration_ms: 76334.4673
+  type: 'test'
+  ...
+# Subtest: S1: bank 360° over 300 m is accepted and read back as 360, then −540 (nothing wraps, clamps or refuses); the adapter rolls continuously
+ok 320 - S1: bank 360° over 300 m is accepted and read back as 360, then −540 (nothing wraps, clamps or refuses); the adapter rolls continuously
+  ---
+  duration_ms: 54.8396
+  type: 'test'
+  ...
+# Subtest: S3: a full 360° of bank is RED over 300 m (the keeper's own example, 1.80°/m), AMBER over 450 m (1.20), clear over 600 m (0.90): the bar is 1.2144 red, 0.9338 amber, read over a 20 m chord
+ok 321 - S3: a full 360° of bank is RED over 300 m (the keeper's own example, 1.80°/m), AMBER over 450 m (1.20), clear over 600 m (0.90): the bar is 1.2144 red, 0.9338 amber, read over a 20 m chord
+  ---
+  duration_ms: 532.2764
+  type: 'test'
+  ...
+# Subtest: S3: the rate is the frame-intrinsic one: a plain climbing turn (constant bank, the frame twisting) reads 0, and revalidate equals validate (the check is recomputed whole)
+ok 322 - S3: the rate is the frame-intrinsic one: a plain climbing turn (constant bank, the frame twisting) reads 0, and revalidate equals validate (the check is recomputed whole)
+  ---
+  duration_ms: 246.9421
+  type: 'test'
+  ...
+# Subtest: S3 (KS3-3): on a climbing turn at constant bank the validator's roll rate EQUALS §1's frame-intrinsic rate value for value (worst difference < 1e-9 °/m), and is not the gravity-frame φ′, which is 0 there
+ok 323 - S3 (KS3-3): on a climbing turn at constant bank the validator's roll rate EQUALS §1's frame-intrinsic rate value for value (worst difference < 1e-9 °/m), and is not the gravity-frame φ′, which is 0 there
+  ---
+  duration_ms: 16.5678
+  type: 'test'
+  ...
+# Subtest: T1 iv (ruling 1, corrected to 9.74 m): a CLOSED tube narrower than 9.74 m is red by name (tube-too-narrow), 9.8 m, 12 m and 31 m are not: the 3 m chase eye plus the seal's 0.1 m margin must fit under the ceiling 2R = w/π
+ok 324 - T1 iv (ruling 1, corrected to 9.74 m): a CLOSED tube narrower than 9.74 m is red by name (tube-too-narrow), 9.8 m, 12 m and 31 m are not: the 3 m chase eye plus the seal's 0.1 m margin must fit under the ceiling 2R = w/π
+  ---
+  duration_ms: 2313.8901
+  type: 'test'
+  ...
+# Subtest: E2: the validator reds an edge past the cap by name (edge-past-cap) on a segment built past it, and not on any a document can hold
+ok 325 - E2: the validator reds an edge past the cap by name (edge-past-cap) on a segment built past it, and not on any a document can hold
+  ---
+  duration_ms: 1148.131
+  type: 'test'
+  ...
+# Subtest: S2 (i, ii): every segment of the closed tube carries the heartline R = w/2π, and the road centre steps at most 1 mm at every segment joint, including where the tube closes
+ok 326 - S2 (i, ii): every segment of the closed tube carries the heartline R = w/2π, and the road centre steps at most 1 mm at every segment joint, including where the tube closes
+  ---
+  duration_ms: 299.6729
+  type: 'test'
+  ...
+# Subtest: S2 (iii): the floor of the spiral is a smooth helix: the road centre has curvature (finite differences) at most 1.1 × the helix R·ω²/(1 + R²ω²) + 1e-3, and lies at radius R from the tube axis within 5 mm
+ok 327 - S2 (iii): the floor of the spiral is a smooth helix: the road centre has curvature (finite differences) at most 1.1 × the helix R·ω²/(1 + R²ω²) + 1e-3, and lies at radius R from the tube axis within 5 mm
+  ---
+  duration_ms: 237.274
+  type: 'test'
+  ...
+# Subtest: S2 (vi): a tube that CLOSES WHILE BANKED (60°): the road centre steps at most 1 mm at every segment joint (the heartline is continuous along the road, never a step per segment)
+ok 328 - S2 (vi): a tube that CLOSES WHILE BANKED (60°): the road centre steps at most 1 mm at every segment joint (the heartline is continuous along the road, never a step per segment)
+  ---
+  duration_ms: 170.534
+  type: 'test'
+  ...
+# Subtest: S2 (vii): an OPEN tube (sweep below 300°) has no roll axis of its own: rolled 90°, its road centre stays on the drawn curve within 1 mm (the heartline grows in from 300° only)
+ok 329 - S2 (vii): an OPEN tube (sweep below 300°) has no roll axis of its own: rolled 90°, its road centre stays on the drawn curve within 1 mm (the heartline grows in from 300° only)
+  ---
+  duration_ms: 201.1515
+  type: 'test'
+  ...
+# Subtest: S4: the validator reads the spiral's load: the floor centre's normal load is 1 g·(gravity along the floor normal) + v²·κ_helix/g within 0.05 g at 460 km/h (KS4-1: from kvec of the integrated curve it would read 1 g)
+ok 330 - S4: the validator reads the spiral's load: the floor centre's normal load is 1 g·(gravity along the floor normal) + v²·κ_helix/g within 0.05 g at 460 km/h (KS4-1: from kvec of the integrated curve it would read 1 g)
+  ---
+  duration_ms: 687.6373
+  type: 'test'
+  ...
+# Subtest: S2 (iv): water over a heartline offset is refused BY NAME (WATER_HEARTLINE), never an anonymous throw
+ok 331 - S2 (iv): water over a heartline offset is refused BY NAME (WATER_HEARTLINE), never an anonymous throw
+  ---
+  duration_ms: 238.7543
+  type: 'test'
+  ...
+# Subtest: E5 (a) bowl c 135 + e 15 at s 0.64: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+ok 332 - E5 (a) bowl c 135 + e 15 at s 0.64: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+  ---
+  duration_ms: 34582.8191
+  type: 'test'
+  ...
+# Subtest: E5 (b) flat + e 147 at s 0.5: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+ok 333 - E5 (b) flat + e 147 at s 0.5: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+  ---
+  duration_ms: 65459.746
+  type: 'test'
+  ...
+# Subtest: E5 (c) flat + e 147 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+ok 334 - E5 (c) flat + e 147 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+  ---
+  duration_ms: 55706.7927
+  type: 'test'
+  ...
+# Subtest: E5 (d) half-pipe c 120 + e 30 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+ok 335 - E5 (d) half-pipe c 120 + e 30 at s 0.95: the closed lap goes through the app's export route (csp on) with no red, a kn5 read back and no NaN; with csp off it is refused by steep-without-raycast
+  ---
+  duration_ms: 14998.9675
+  type: 'test'
+  ...
+# Subtest: X1 and T2 iv (ruling 3): a lap whose tube CLOSES along the road is refused by downforce-ray-gap over the slot zone ONLY (no exemption, no other red); the ceiling meshes of a closed tube are drivable road (1ROAD), not wall
+ok 336 - X1 and T2 iv (ruling 3): a lap whose tube CLOSES along the road is refused by downforce-ray-gap over the slot zone ONLY (no exemption, no other red); the ceiling meshes of a closed tube are drivable road (1ROAD), not wall
+  ---
+  duration_ms: 4558.9772
+  type: 'test'
+  ...
+1..336
+# tests 336
+# suites 0
+# pass 335
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 236995.1345

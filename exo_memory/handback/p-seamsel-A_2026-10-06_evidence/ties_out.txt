@@ -1,0 +1,6 @@
+eq-T-180 OVAL.t180track: 6 pieces, exact ties 3, of which the rule would take the WRONG (across the line) way: 0
+eq-T-180 TUBE OVAL.t180track: 6 pieces, exact ties 3, of which the rule would take the WRONG (across the line) way: 0
+eq-TEST 1.t180track: 46 pieces, exact ties 0, of which the rule would take the WRONG (across the line) way: 0
+eq-TEST OVAL.t180track: 6 pieces, exact ties 3, of which the rule would take the WRONG (across the line) way: 0
+closed laps 4, piece pairs 1080, exact ties 9, flipped by floating point 0
+[]

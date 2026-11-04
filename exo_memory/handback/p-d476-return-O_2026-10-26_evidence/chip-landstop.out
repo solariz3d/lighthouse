@@ -1,0 +1,98 @@
+ui/chain-indicator
+  ok   a dispatch row is read as orch -> pane, and the arrow points at the PANE
+  ok   a hand-back row is read as pane -> LIB, and the arrow points at LIB
+  ok   a ring row is read as LIB -> orch, and the arrow points at the ORCHESTRATOR
+  ok   the arrow names the NEXT hop, never the party that just acted
+  ok   a pane letter replaces the short id when the mapping is known, and is never invented
+  ok   HOSTILE: a PANE row quoting an audit line verbatim is NOT read as a hop
+  ok   POSITIVE CONTROL: the identical text on a chair row IS read
+  ok   a FAILED delivery is not a hop — "chair_inject" (underscore) is the failure path
+  ok   a refused call_librarian is not a hop
+  ok   a refused or expired call_chair is not a hop
+  ok   a failed dispatch does not mask the real last hop behind it
+  ok   an unreadable board yields no position and NO ARROW
+  ok   an EMPTY ring — the state after every relaunch — says unknown and draws NO ARROW
+  ok   an open blind window suppresses the arrow even though a hop is present
+  ok   a CLOSED blind window restores the reading
+  ok   under the threshold it is quiet; at the registered 15 minutes it escalates
+  ok   the payload CHANGES while the state does not — R2/A4, the static-state paradox
+  ok   no rendered string calls anything stalled, stuck, dead or broken
+  ok   render() writes through textContent, never innerHTML — the board is instance-written
+  ok   POSITIVE CONTROL: the comment-stripped scan still catches a real innerHTML write
+  ok   main.rs still emits the three audit formats this chip parses
+  ok   main.rs still writes failures under "chair_inject", not "chair injected"
+  ok   main.rs still stamps audit rows with pane="chair" — the spoof guard depends on it
+  ok   the board ring is still NOT rehydrated at startup — the unknown state is load-bearing
+  ok   index.html declares the chip and loads the script AFTER term.js
+  ok   app.css styles every state the view can return
+  ok   DEFECT 1 — an unconfirmed dispatch is READ as a hop but draws NO ARROW
+  ok   DEFECT 1 — an unconfirmed notchecked is READ as a hop but draws NO ARROW
+  ok   DEFECT 1 — an unconfirmed handback is READ as a hop but draws NO ARROW
+  ok   DEFECT 1 — an unconfirmed ring is READ as a hop but draws NO ARROW
+  ok   DEFECT 1 — POSITIVE CONTROL: the confirmed spelling at each edge still draws its arrow
+  ok   DEFECT 1 — an unconfirmed hop does NOT fall back to the older hop behind it
+  ok   DEFECT 1 — the elapsed figure IS shown, unlike the other no-arrow states
+  ok   DEFECT 2 — THE BAR: 4 dispatched, 1 back — the chip says 3 out, NOT "at LIB"
+  ok   DEFECT 2 — the count falls as hand-backs arrive, and only clears at zero
+  ok   DEFECT 2 — elapsed is measured from the OLDEST STILL-OUTSTANDING dispatch, not the newest receipt
+  ok   DEFECT 2 — a `ring` closes the leg: dispatches before it are not counted as outstanding
+  ok   DEFECT 2 — dispatches AFTER a ring belong to the new leg and are counted
+  ok   DEFECT 2 — a re-dispatch to the SAME pane is not counted twice
+  ok   DEFECT 2 — the window limit is STATED: the count is a floor, not a total
+  ok   DEFECT 2 — LIVE-FIRE SHAPE: a hand-back that CROSSES a ring still closes its dispatch
+  ok   DEFECT 2 — THE RESIDUAL, pinned rather than hidden: a ring closes a pane on its FIRST appearance
+  ok   DEFECT 2 — a target that NEVER hands back is ring-closable, so the librarian does not stick
+  ok   DEFECT 2 — an unresolved pane id is still named when nothing has returned
+  ok   ADDRESS_TABLE still has exactly 2 rows — `call_chair` has no actor in its audit line
+  ok   a Third Place ring is read with its actor, and is not a hop
+  ok   main.rs still emits the Third Place ring in the shape this chip reads its actor from
+  ok   THE BAR — a relaunch with a lap open shows the LAP, not "position unknown"
+  ok   the chip's PRE-RENDER placeholder must not read as any state this file renders
+  ok   THE VOCABULARY IS THE LIBRARIAN'S RULING, and a holder outside it draws no arrow and says whose
+  ok   THE BAR — with NO lap ever opened the chip renders, and says so as BOOT rather than as an error
+  ok   the holder -> next hop mapping is the ruling: chair->panes, panes->LIB, librarian->orch
+  ok   BOTH sources: the command sets the stage TEXT and the ring sets the ARROW
+  ok   BOTH sources, LAST-HOP branch too: a receipt arrow still beats the holder-derived one
+  ok   `note` is NEVER rendered, in any state — the ruling says so explicitly
+  ok   self_reported is surfaced as a flag wherever the position came from the command
+  ok   the two sources fail INDEPENDENTLY — a dead board still shows an open lap
+  ok   the UI actually CALLS chain_state — the command is inert until something invokes it
+  ok   main.rs still exposes chain_state as a command with the fields this reads
+  ok   M3 — a lap dispatched to the PANES lights the TOP dot, and no other dot
+  ok   M1 — the lit dot follows the holder: chair -> bottom-left, librarian -> bottom-right
+  ok   MUTANT ORACLE — the orchestrator and librarian dots are NOT interchangeable
+  ok   M5 — a FILED ledger is CHILL GOLD and STILL on the librarian dot, never radiant
+  ok   M4 — `unknown` dashes all three dots; `idle` leaves the plain logo
+  ok   an OPEN lap whose holder is not a station renders UNKNOWN, never the plain logo
+  ok   M2 / D1 — an UNCONFIRMED delivery keeps its lit dot and draws NO ARC
+  ok   the arc runs CLOCKWISE from the lit dot to the next one, at all three hops
+  ok   the arc is OPTIONAL and its absence costs nothing — the dot still carries the position
+  ok   the escalated state is AMBER WITH A RING on the holder dot, not a fourth dot
+  ok   ONE INDICATOR, NOT TWO — no tab ever carries an aura and the old marker stays hidden
+  ok   the Third Place has no dot at all — it is not a seat in the loop
+  ok   renderLogo and renderTabs are inert without their elements — never throw into the page
+  ok   the dot colours still match app.css — the duplication has an oracle, not a comment
+  ok   index.html carries the logo, its three dots and the arc renderLogo needs
+  ok   BAR 1 — the live case: holder chair, board ring LIB -> orch, arrow points at the TERMINAL
+  ok   BAR 2a — hop kind DISPATCH: holder panes, arrow points at the LIBRARIAN
+  ok   BAR 2b — hop kind HANDBACK: holder librarian, arrow points at the ORCHESTRATOR
+  ok   BAR 2c — hop kind RING: holder chair, arrow points at the TERMINAL
+  ok   the arrow never points at the lit tab in a state where ledger and board AGREE
+  ok   THE GUARD SURVIVES AS A STALENESS DETECTOR: ledger and board disagreeing draws NO arrow
+  ok   THE ARROW IS THE BOARD'S, NOT THE HOLDER'S: a stale ledger row does not move it
+  ok   D1 IS NOT UNDONE: an unconfirmed delivery still keeps the aura and loses the arrow
+  ok   renderTabs is inert without a nav — it must never throw into the page
+  ok   main.rs still returns the exact `reason` COMPLETE is keyed on
+  ok   the chip yields WIDTH in the stream bar but never yields its EXISTENCE
+  ok   index.html carries the nav id and the arrow element renderTabs needs
+  ok   start() finds the chip and writes a real position and arrow into the DOM
+  ok   a hop older than the threshold reaches the DOM in the escalated state, with the minutes
+  ok   a REJECTED invoke renders the unavailable state rather than leaving a stale value
+  ok   the (claimed) flag reaches the DOM, not just the view object
+  ok   a dead chain_state does not stop the board half from rendering
+  ok   END TO END — start() lights the LOGO, not only the chip at the bottom
+  ok   END TO END — a dead chain_state dashes the dots, never the plain logo
+  ok   start() registers exactly one poll, at the declared cadence
+  ok   start() is inert when the chip is absent — it must never throw into the page
+
+95 passed, 0 failed

@@ -1,0 +1,7 @@
+== d297 portable-paths · asked 2026-10-11T19:38:51.078Z · lock held 2026-10-11T19:38:51.131Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d297-wt && node consonance/tools/portable-paths.js 2>&1 | tail -5
+portable-paths: green — 380 files in scope, 455 known sites, 0 new
+  universe: 342 code (git ls-files under SCOPE_IN, .js/.rs/.ps1/.py)
+          + 38 shipped prose from 15 bundle.resources entr(ies) in consonance/src-tauri/tauri.conf.json, globs expanded · 0 skipped
+  53 baselined site(s) still need fixing (FATAL/DISGUISED/REVIEW) — exempted, NOT fixed. Run --fatal to see them.
+== exit 0 · done 2026-10-11T19:38:54.884Z

@@ -1,0 +1,152 @@
+MESSAGE 59  msg_011CfoC54RphgbnBQAucBqPW  seat A  ts 2026-10-07T16:28:03.937Z  turn L72299..L72343 (next prompt L72410)
+CLAIMS:
+  [msg_011CfoC54RphgbnBQAucBqPW|7] The new tests are named `row 20` and `row 20b`. This implies those numbers are free and fit the file's numbering.
+  [msg_011CfoC54RphgbnBQAucBqPW|30] `shell.getState().history.{present.pieces, past}` and `shell.getState().message`.
+  [msg_011CfoC54RphgbnBQAucBqPW|31] The existing `mountPanel` helpers `click(x, { shiftKey })`, `input(label)`, `button(label)`, and `panel.unmount()` behave as these tests use them.
+
+--- L72299 user 2026-10-07T16:27:17.813Z
+USER: 
+
+<pasted_content id="e589">
+[chair:MAIN] D269: saved pieces move to a "Pieces ▾" drop-down in the top bar. FEEL tier, rows and fake hosts only. The keeper, 10:26: "take the saved pieces off the side, and add it somewhere to the top bar, and it will have like a drop down menu where all the saved pieces will be, think of like a sony vegas or something".
+Plan: exo_memory/loop/plan_t180_pieces_menu_2026-10-07.md.
+1. A "Pieces ▾" button beside Open… / Previous versions… opens a drop-down PANEL (a media-bin feel, not a <select>). One row per saved piece: thumbnail, name, and the one-line summary. Each row has Add at head, mirrored, Rename and Delete; a click on the row adds it at the head. Esc or a click outside closes it.
+2. The library leaves the left column. "Save as piece" stays with the selection. The empty-state words move into the menu.
+3. Saving, the files and Add are unchanged; reuse shell.listPieces() and the actions as they are.
+BASE: t180 main e05247c. Your D267 is now landed on main as a fast-forward; the librarian had already installed it. Rows red first. Targeted tests plus app/test/core-xsec.test.js. Add a CHANGELOG entry under [Unreleased]. E is on D268 (the xsec core) at the same time; no shared files are expected.
+Hand-back: exo_memory/handback/p-piecesmenu-A_2026-10-07.md, plus your map line. inferred: a drop-down bin. If you think a docked strip fits "sony vegas" better, say so.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_pieces_menu_2026-10-07.md · `git rev-parse --short main`
+NEXT: librarian call_librarian with the hand-back pointer when the commit and targeted tests are in — plan default after it: install, then 0.3.2 with D267 and D268
+</pasted_content id="e589">
+
+--- L72309 assistant 2026-10-07T16:27:20.513Z
+TOOL_USE Bash [toolu_01Fy1dD37hA2KheceMN3S5PM]: {"command":"cd C:/Users/nname/Desktop/lighthouse/exo_memory/loop && cat plan_t180_pieces_menu_2026-10-07.md | cut -c1-1200; cd C:/Users/nname/Desktop/worktrees && git -C a-declutter-wt worktree add -b piecesmenu-a ../a-pm-wt e05247c 2>&1 | tail -1; cd a-pm-wt && git log -1 --format=\"%h %s\" | cat; sed -n 44,125p app/core/piecesui.js | cut -c1-250"}
+--- L72310 user 2026-10-07T16:27:21.159Z
+RESULT [toolu_01Fy1dD37hA2KheceMN3S5PM]: # T-180: saved pieces off the left column, into a top-bar drop-down menu. Librarian, on D, 2026-10-07 10:2x. Lap D269.
+
+The keeper, 10:26: "also take the saved pieces off the side, and add it somewhere to the top bar, and it will have like a drop down menu where all the
+saved pieces will be, think of like a sony vegas or something design IDK".
+
+## Where it lives (read at A's `e05247c`)
+- `app/core/piecesui.js` (D240): the selection block ("Save as piece", `:40`) and THE LIBRARY (`:80`): every saved piece with name, length, turn, climb and
+  a plan thumbnail; Add at head (optionally mirrored), Rename, Delete.
+
+## The lap (A, who just moved the share codes into ⋯ and knows the top bar; FEEL tier: rows and fake hosts, no real window)
+1. **A "Pieces ▾" button in the top bar** (beside Open… / Previous versions…). It opens a drop-down PANEL (the editor-style one he points at: a media-bin
+   feel), not a plain `<select>`. It holds one row per saved piece: the plan thumbnail, the name, and the one-line summary (`3 pieces · 540 m · turn +90°`).
+   Each row has its actions: Add at head, mirrored, Rename and Delete; a click on the row adds it at the head. Esc or a click outside closes it.
+2. **The library leaves the left column.** "Save as piece" stays with the SELECTION (it acts on the selected pieces), and after a save the new piece is in
+   the menu. The empty-state words move into the menu.
+3. Nothing about saving, the files or Add changes: `shell.listPieces()` and the actions are reused as they are.
+- Rows: the library is not in the left column; the menu lists every piece with its thumbnail and summary; Add / mirrored / Rename / Delete from the
+  menu do what they did; it closes on Esc and outside. Red first, targeted tests on
+…[8322 chars cut]…
+tNote.textContent = `the library could not be read: 
+  };
+
+  // ── a click on the track ──
+  let down = null;
+  const onDown = (e) => { down = e.button === 0 && !armed() ? { x: e.clientX, y: e.clientY } : null; };
+  const onUp = (e) => {
+    const d = down; down = null;
+    if (!d || armed() || (e.button !== undefined && e.button !== 0)) return;
+    if (e.target && e.target !== stage && e.target.tagName !== 'CANVAS') return;   // a handle or a button over the preview is its own
+    if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > CLICK_PX) return;           // a drag: the camera's
+    const r = stage.getBoundingClientRect ? stage.getBoundingClientRect() : { left: 0, top: 0 };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L72313 assistant 2026-10-07T16:27:25.854Z
+TOOL_USE Bash [toolu_01V3bcCV1oza1BAu1qsxkMCF]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-pm-wt && grep -n \"more\\b\\|'more'\\|getElementById('more')\\|\\$('more')\" app/index.html | cut -c1-220 | head -20; sed -n 262,300p app/index.html | cut -c1-230"}
+--- L72314 user 2026-10-07T16:27:26.135Z
+RESULT [toolu_01V3bcCV1oza1BAu1qsxkMCF]: 24:  .more { position: relative; }
+25:  .more > summary { list-style: none; cursor: pointer; background: #222834; border: 1px solid var(--line); border-radius: 4px; padding: 5px 9px; }
+26:  .more > summary::-webkit-details-marker { display: none; }
+27:  .more[open] > summary { border-color: var(--accent); }
+28:  .more-menu { position: absolute; top: calc(100% + 4px); right: 0; z-index: 30; display: flex; flex-direction: column; align-items: stretch; gap: 6px; padding: 8px; min-width: 260px; background: var(--panel); border:
+29:  .more-menu > span { display: flex; flex-direction: column; gap: 6px; }
+30:  .more-menu #share { display: flex; flex-direction: column; gap: 6px; }   /* D267: the share codes live in the menu (they were a section of the left column) */
+31:  .more-menu #share textarea { width: 100%; box-sizing: border-box; }
+92:  <details id="more" class="more"><summary title="more: export into a folder you pick, the test export, the Assetto Corsa folder, See it in Assetto">⋯</summary><div class="more-menu">
+95:    <span id="more-install"></span>
+185:    if (win && win.onCloseRequested) win.onCloseRequested(async (ev) => { ev.preventDefault(); try { await win.destroy(); } catch (err) { /* nothing more to try */ } });
+294:    await panels.mountPanel($('install'), 'install', () => loadCjs('app/install/index.js', get).then((m) => ({ mount: (root, sh) => m.mount(root, sh, { native, pickFolder, getTextures: () => textureSet, more: $('more
+        await notExportedAlert(shell.getState(), seam);
+      } catch (e) { status.textContent = `export failed: ${e.message || e}`; }
+    };
+    // D243a: the TEST export of an unfinished track, its own button (never the default Export). D264: it goes into Assetto Corsa by the install
+…[2603 chars cut]…
+}),
+      seeIt: (track, layout) => call('see_it_in_assetto', { track, layout }),
+    };
+    const pickFolder = (title) => call('plugin:dialog|open', { options: { directory: true, multiple: false, title } });
+    await panels.mountPanel($('share'), 'share', () => loadCjs('app/share/index.js', get, coreOpts), shell);
+    await panels.mountPanel($('install'), 'install', () => loadCjs('app/install/index.js', get).then((m) => ({ mount: (root, sh) => m.mount(root, sh, { native, pickFolder, getTextures: () => textureSet, more: $('more-install'), ca
+    await panels.mountPanel($('guide'), 'onboarding', () => loadCjs('app/onboarding/index.js', get), shell);
+  }
+
+})();
+</script>
+</body>
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L72323 assistant 2026-10-07T16:27:46.649Z
+TOOL_USE Bash [toolu_01B2sj9N9i2DVtSEjvYKBgtZ]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-pm-wt && grep -rn \"fakeWindow\" app/test/*.js | head -3 | cut -c1-120; F=$(grep -ln \"function fakeWindow\" app/test/*.js app/test/*/*.js 2>/dev/null | head -1); echo $F; grep -n \"function fakeWindow\" -A40 $F | cut -c1-220 | head -70"}
+--- L72324 user 2026-10-07T16:27:46.950Z
+RESULT [toolu_01B2sj9N9i2DVtSEjvYKBgtZ]: app/test/core-pieces-ui.test.js:313:function fakeWindow() {
+app/test/core-pieces-ui.test.js:326:  const { doc, win, tick: frame } = fakeWindow();
+app/test/core-readout-display.test.js:33:function fakeWindow() {
+app/test/core-pieces-ui.test.js
+313:function fakeWindow() {
+314-  const doc = { ids: {}, listeners: {}, createElement: (t) => new El(t, doc) };
+315-  doc.getElementById = (id) => doc.ids[id] || null;
+316-  doc.addEventListener = (e, f) => { (doc.listeners[e] = doc.listeners[e] || []).push(f); };
+317-  doc.removeEventListener = (e, f) => { doc.listeners[e] = (doc.listeners[e] || []).filter((x) => x !== f); };
+318-  doc.dispatchEvent = (ev) => { for (const f of (doc.listeners[ev.type] || []).slice()) f(ev); return true; };
+319-  const frames = [];
+320-  const win = { CustomEvent: class { constructor(type, init = {}) { this.type = type; this.detail = init.detail; } }, Option: class { constructor(t, v) { this.textContent = t; this.value = v; } },
+321-    requestAnimationFrame: (f) => { frames.push(f); return frames.length; }, cancelAnimationFrame: () => {}, setTimeout: () => 0, clearTimeout: () => {}, frames };
+322-  doc.defaultView = win;
+323-  return { doc, win, tick: () => { const fs2 = frames.splice(0); for (const f of fs2) f(0); } };
+324-}
+325-async function mountPanel(st = store()) {
+326-  const { doc, win, tick: frame } = fakeWindow();
+327-  const stage = doc.createElement('div'); stage.setAttribute('id', 'preview'); stage.clientWidth = 900; stage.clientHeight = 600; stage.isRoot = true;
+328-  const root = doc.createElement('div'), shell = await track(st);
+329-  // the preview's side of the events the panel asks: a pick answers the station the test sets; the track is the shell's
+330-  const T = { s: 100 };
+331-
+…[2227 chars cut]…
+ionInfo().from, shell.selectionInfo().to], [1, 1], 'a plain click replaces it'); const kept = shell.getState().selection;
+350-  P1.T.s = 700; P1.pointer('pointerdown', 50, 50); P1.pointer('pointerup', 80, 50); assert.equal(shell.getState().selection, kept, 'a drag (the camera\'s) selects nothing');
+351-  const armed = P1.input('brush on'); armed.checked = true; P1.click(100); assert.equal(shell.getState().selection, kept, 'with the brush armed the click is the brush\'s'); armed.checked = false;
+352-  P1.click(null); assert.equal(shell.getState().selection, null, 'a click on nothing clears the selection'); P1.click(100);
+353-  // Save as piece: the name box, the button, the list
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L72327 assistant 2026-10-07T16:27:50.219Z
+TOOL_USE Bash [toolu_018uG46UnCaSjd94C74MVYg2]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-pm-wt && sed -n '/^class El/,/^}/p' app/test/core-pieces-ui.test.js | cut -c1-260 | head -40"}
+--- L72328 user 2026-10-07T16:27:50.440Z
+RESULT [toolu_018uG46UnCaSjd94C74MVYg2]: class El {
+  constructor(tag, doc) { this.tagName = tag.toUpperCase(); this.ownerDocument = doc; this.children = []; this.attrs = {}; this.style = {}; this._text = ''; this.listeners = {}; this.value = ''; this.checked = false; this.disabled = false; this.clientWidth = 0
+  append(...k) { for (const c of k) { if (c == null) continue; const n = typeof c === 'string' ? Object.assign(new El('#text', this.ownerDocument), { _text: c }) : c; n.parent = this; this.children.push(n); } }
+  replaceChildren(...k) { for (const c of this.children) c.parent = null; this.children = []; this.append(...k); }
+  remove() { if (this.parent) { this.parent.children = this.parent.children.filter((c) => c !== this); this.parent = null; } }
+  setAttribute(k, v) { this.attrs[k] = String(v); if (k === 'id') this.ownerDocument.ids[v] = this; }
+  getAttribute(k) { return this.attrs[k]; }
+  set textContent(t) { this._text = String(t); this.children = []; }
+  get textContent() { return this._text + this.children.map((c) => c.textContent).join(''); }
+  addEventListener(e, f) { (this.listeners[e] = this.listeners[e] || []).push(f); }
+  removeEventListener(e, f) { this.listeners[e] = (this.listeners[e] || []).filter((x) => x !== f); }
+  getBoundingClientRect() { return { left: 0, top: 0, width: this.clientWidth, height: this.clientHeight }; }
+  get isConnected() { let e = this; while (e.parent) e = e.parent; return !!e.isRoot; }
+  get offsetWidth() { return this.isConnected ? 9 * Math.max(...this.textContent.split('\n').map((l) => l.length)) + 16 : 0; }
+  get offsetHeight() { return this.isConnected ? 20 * this.textContent.split('\n').length + 8 : 0; }
+  all() { return [this, ...this.children.flatMap((c) => (c.all ? c.all() : []))]; }
+}
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L72337 assistant 2026-10-07T16:27:54.100Z
+TOOL_USE Bash [toolu_013c5t7Z794us1RtK2tJjqcm]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-pm-wt && grep -n \"Add at head\" app/core/piecesui.js | cut -c1-700; grep -n \"pieces.nodes\\|nodes.library\\|nodes.selection\" app/core/panel.js | cut -c1-200; grep -n \"piece-row\\|pieces-list\" app/index.html | head"}
+--- L72338 user 2026-10-07T16:27:54.370Z
+RESULT [toolu_013c5t7Z794us1RtK2tJjqcm]: 9://   THE LIBRARY: every saved piece with its name, length, turn, climb and a plan thumbnail; Add at head (optionally mirrored left/right), Rename, Delete. A file that cannot
+103:      if (!it.error) buttons.push(el('button', { text: 'Add at head', title: `put ${it.name} where the track ends${mirror.checked ? ', mirrored' : ''} (one undo step)`, 'aria-label': `add ${it.name} at the head`, onclick: () => { void shell.insertPiece(it.name, { mirror: mirror.checked }); } }));
+414:    ...pieces.nodes.selection, ...pieces.nodes.library,
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L72343 assistant 2026-10-07T16:28:26.812Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Write [toolu_01BqothsGSsio8GNZPnE8Gjg]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\pm\\ed_tests.js","content":"const fs = require('fs'), W = 'C:/Users/nname/Desktop/worktrees/a-pm-wt/';\nconst rw = (f, fn) => { let s = fs.readFileSync(W + f, 'utf8'); const crlf = s.includes('\\r\\n'); s = s.replace(/\\r\\n/g, '\\n'); s = fn(s); fs.writeFileSync(W + f, crlf ? s.replace(/\\n/g, '\\r\\n') : s); };\nconst once = (s, a, b) => { const i = s.indexOf(a); if (i < 0 || s.indexOf(a, i + 1) >= 0) throw new Error('not exactly once: ' + a.slice(0, 80)); return s.replace(a, () => b); };\nrw('app/test/core-pieces-ui.test.js', (s) => {\n  // mountPanel: an optional bin (the top bar's Pieces menu: a <details id=\"pieces\"> holding <div id=\"pieces-bin\">), found by the panel by id like #preview\n  s = once(s, \"async function mountPanel(st = store()) {\\n  const { doc, win, tick: frame } = fakeWindow();\", \"async function mountPanel(st = store(), { bin = false } = {}) {\\n  const { doc, win, tick: frame } = fakeWindow();\\n  let menuEl = null, binEl = null;   // D269: the top bar's Pieces menu (index.html: <details id=\\\"pieces\\\"><div id=\\\"pieces-bin\\\">), found by the panel by id as #preview is\\n  if (bin) { menuEl = doc.createElement('details'); menuEl.setAttribute('id', 'pieces'); menuEl.open = false; binEl = doc.createElement('div'); binEl.setAttribute('id', 'pieces-bin'); menuEl.append(binEl); }\");\n  s = once(s, \"  return { doc, win, frame, stage, root, shell, panel, st, T, button, buttons, pointer, click, input, rows, text, all };\\n}\", \"  const binAll = () => (binEl ? binEl.all() : []), binRows = () => binAll().filter((e) => e.attrs['data-piece']), binButton = (t) => binAll().find((e) => e.tagName === 'BUTTON' && e.textContent === t), binButtons = (t) => binAll().filter((e) => e.tagName === 'BUTTON' && e.textContent === t);\\n  return { doc, win, frame, stage, root, shell, panel, st, T, button, buttons, pointer, click, input, rows, text, all, menuEl, binEl, binAll, binRows, binButton, binButtons };\\n}\");\n  const at = s.indexOf(\"test('row 15:\"); if (at < 0) throw new Error('row 15');\n  const rows = `// D269 (the keeper, 10:26: \"take the saved pieces off the side, and add it somewhere to the top bar, and it will have like a drop down menu where all the saved pieces will be, think of like a sony vegas or something\")\ntest('row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection', async () => {\n  const st = store(), P1 = await mountPanel(st, { bin: true }), { shell } = P1, tick = () => new Promise((r) => setImmediate(r));\n  // the library is not in the left column\n  assert.deepEqual(P1.all().filter((e) => e.attrs['aria-label'] === 'saved pieces' || e.attrs['data-piece'] || e.attrs['aria-label'] === 'mirror on insert'), [], 'nothing of the library is under the panel root'); assert.ok(!P1.all().some((e) => e.tagName === 'H3' && /Pieces library/.test(e.textContent)), 'no \"Pieces library\" heading in the left column');\n  assert.ok(P1.binAll().some((e) => e.attrs['aria-label'] === 'saved pieces'), 'the list is in the menu'); await tick(); assert.match(P1.binAll().map((e) => e.textContent).join('|'), /No saved pieces yet: select pieces on the track and press Save as piece\\\\./, 'the empty words are in the menu');\n  // Save as piece stays with the selection; after a save the piece is in the menu\n  P1.click(400); P1.click(550, { shiftKey: true }); assert.equal(P1.button('Save as piece').disabled, false, 'Save as piece is in the left column, with the selection'); assert.equal(P1.binButton('Save as piece'), undefined);\n  P1.input('piece name').value = 'two turns'; P1.button('Save as piece').onclick(); await tick(); await tick(); await tick();\n  const row = () => P1.binRows()[0]; assert.equal(P1.binRows().length, 1); assert.equal(row().attrs['data-piece'], 'two turns');\n  assert.ok(row().all().some((e) => e.tagName === 'CANVAS' && e.attrs['aria-label'] === 'plan view of two turns'), 'its thumbnail'); assert.match(P1.binAll().find((e) => e.attrs['aria-label'] === 'two turns details').textContent, /^2 pieces · 300 m · turn \\\\+\\\\d+\\\\.\\\\d° · climb 0\\\\.0° · plain$/, 'its one-line summary'); assert.ok(row().all().some((e) => e.style && e.style.fontWeight === undefined && e.textContent === 'two turns') || row().textContent.includes('two turns'), 'its name');\n  // Add at head: one undo step\n  const n0 = shell.getState().history.present.pieces.length, past0 = shell.getState().history.past.length;\n  P1.binButton('Add at head').onclick(); await tick(); await tick(); assert.equal(shell.getState().history.present.pieces.length, n0 + 2); assert.equal(shell.getState().history.past.length, past0 + 1, 'ONE undo step');\n  // Add mirrored: its own button on the row, the mirror image\n  const n1 = shell.getState().history.present.pieces.length; P1.binButton('Add mirrored').onclick(); await tick(); await tick(); assert.equal(shell.getState().history.present.pieces.length, n1 + 2); assert.match(shell.getState().message, /mirrored/);\n  const plainTurn = D.createDoc('x'); assert.ok(shell.getState().history.present.pieces.slice(n0, n0 + 2).some((p, i) => p.channels && shell.getState().history.present.pieces.slice(n1)[i] && JSON.stringify(shell.getState().history.present.pieces.slice(n1)[i].channels.kh) !== JSON.stringify(p.channels.kh)), 'the mirrored copy turns the other way');\n  // a click on the row (not on a button) adds it at the head; a click on one of its buttons is that button's only\n  const n2 = shell.getState().history.present.pieces.length; row().onclick({ target: row() }); await tick(); await tick(); assert.equal(shell.getState().history.present.pieces.length, n2 + 2, 'a click on the row adds it at the head');\n  const n3 = shell.getState().history.present.pieces.length, b = P1.binButton('Rename'); row().onclick({ target: b }); await tick(); assert.equal(shell.getState().history.present.pieces.length, n3, 'a click that began on a button is not a row click');\n  // Rename and Delete from the menu, as before\n  P1.binButton('Rename').onclick(); const nin = P1.binAll().find((e) => e.attrs['aria-label'] === 'new name'); assert.ok(nin); nin.value = 'bends'; P1.binButton('OK').onclick(); await tick(); await tick(); await tick(); assert.deepEqual(await st.listPieces(), ['bends'], 'renamed'); assert.equal(P1.binRows()[0].attrs['data-piece'], 'bends');\n  P1.binButtons('Delete').find((x) => x.attrs['aria-label'] === 'delete the saved piece bends').onclick(); assert.ok(P1.binButton('Yes, delete') && P1.binButton('No'), 'it asks first'); P1.binButton('No').onclick(); assert.deepEqual(await st.listPieces(), ['bends']);\n  P1.binButtons('Delete').find((x) => x.attrs['aria-label'] === 'delete the saved piece bends').onclick(); P1.binButton('Yes, delete').onclick(); await tick(); await tick(); await tick(); assert.deepEqual(await st.listPieces(), []); assert.match(P1.binAll().map((e) => e.textContent).join('|'), /No saved pieces yet/);\n  P1.panel.unmount();\n});\n\ntest('row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions…', async () => {\n  const st = store(); await st.savePiece('one', PC.serialize(PC.saveRun(await (async () => { const s = await track(); return s.getState().history.present; })(), 0, 1, { name: 'one' })));\n  const P1 = await mountPanel(st, { bin: true }), menu = P1.menuEl, tick = () => new Promise((r) => setImmediate(r));\n  assert.equal(menu.open, false); menu.open = true; for (const f of (menu.listeners.toggle || []).slice()) f({}); await tick(); await tick(); assert.equal(P1.binRows().length, 1, 'opening it lists the saved pieces');\n  P1.doc.dispatchEvent({ type: 'keydown', key: 'a' }); assert.equal(menu.open, true, 'another key leaves it'); P1.doc.dispatchEvent({ type: 'keydown', key: 'Escape' }); assert.equal(menu.open, false, 'Esc closes it');\n  P1.doc.dispatchEvent({ type: 'keydown', key: 'Escape' }); assert.equal(menu.open, false, 'Esc with it closed does nothing');\n  menu.open = true; P1.doc.dispatchEvent({ type: 'pointerdown', target: P1.binRows()[0] }); assert.equal(menu.open, true, 'a press inside the menu keeps it open'); P1.doc.dispatchEvent({ type: 'pointerdown', target: P1.stage }); assert.equal(menu.open, false, 'a press outside (on the 3D view) closes it');\n  menu.open = true; P1.doc.dispatchEvent({ type: 'pointerdown', target: menu }); assert.equal(menu.open, true, 'a press on the Pieces button itself is the browser\\\\'s own toggle'); menu.open = false;\n  P1.panel.unmount(); P1.doc.dispatchEvent({ type: 'keydown', key: 'Escape' });   // after unmount the listeners are gone: nothing throws\n  // the top bar: <details id=\"pieces\"> beside Open and Previous versions, before the ⋯ menu; the bin inside it\n  const html = fs.readFileSync(path.join(REPO, 'app/index.html'), 'utf8'), bar = html.slice(html.indexOf('<header'), html.indexOf('</header>'));\n  assert.ok(/id=\"open\"[\\\\s\\\\S]*id=\"versions\"[\\\\s\\\\S]*<details id=\"pieces\"[^>]*><summary[^>]*>Pieces ▾<\\\\/summary><div class=\"more-menu\" id=\"pieces-bin\"><\\\\/div><\\\\/details>[\\\\s\\\\S]*id=\"more\"/.test(bar), 'Pieces ▾ is in the top bar between Previous versions and ⋯');\n  assert.ok(!/<aside id=\"palette\">[\\\\s\\\\S]*pieces-bin/.test(html.replace(bar, '')), 'and not in the left column');\n});\n\n`;\n  return s.slice(0, at) + rows + s.slice(at);\n});\n"}

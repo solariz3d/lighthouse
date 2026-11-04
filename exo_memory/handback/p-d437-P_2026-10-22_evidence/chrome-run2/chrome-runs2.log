@@ -1,0 +1,85 @@
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+heavy-run: waiting on c88002b1 pid 30988 (t180 O D421 part 2 (second slot), since 2026-10-23T02:26:22.392Z) — it holds this tree
+=== b6969da
+    1.4 s menubar ready errors [33m0[39m js heap {"usedMB":12.9,"totalMB":25.5,"limitMB":4192}
+    7.2 s opened: 44 pieces · 27,592 m · closed loop | ELYSIUM · closed loop | js heap {"usedMB":1329.2,"totalMB":1390.7,"limitMB":4192}
+   67.2 s main thread answered in [33m0[39m ms 
+   67.2 s main thread answered in [33m0[39m ms 
+   67.2 s main thread answered in [33m0[39m ms 
+   67.2 s preview after 60 s: ELYSIUM · closed loop | js heap {"usedMB":1559.6,"totalMB":1610.7,"limitMB":4192}
+   70.2 s main thread answered in [33m1[39m ms with the frame loop stopped
+   70.2 s main thread answered in [33m0[39m ms with the frame loop stopped
+   70.2 s preview settled: ELYSIUM · closed loop | js heap {"usedMB":1559.8,"totalMB":1610.7,"limitMB":4192}
+   70.2 s export-like buttons: ["Export…","Test export (unfinished)…","Export layouts…","See it in Assetto","Assetto Corsa folder…","Export to Assetto Corsa"]
+   70.2 s before the press: js heap {"usedMB":1559.8,"totalMB":1610.7,"limitMB":4192}
+   70.2 s pressed Export to Assetto Corsa
+   72.2 s page busy (main thread blocked)
+  112.6 s page busy (main thread blocked)
+  153.0 s page busy (main thread blocked)
+  193.4 s page busy (main thread blocked)
+  233.9 s page busy (main thread blocked)
+  274.2 s page busy (main thread blocked)
+  314.5 s page busy (main thread blocked)
+  354.8 s page busy (main thread blocked)
+  395.2 s page busy (main thread blocked)
+  435.6 s page busy (main thread blocked)
+  476.0 s page busy (main thread blocked)
+  516.4 s page busy (main thread blocked)
+  556.8 s page busy (main thread blocked)
+  597.2 s page busy (main thread blocked)
+  637.6 s page busy (main thread blocked)
+  678.0 s page busy (main thread blocked)
+  718.4 s page busy (main thread blocked)
+  758.8 s page busy (main thread blocked)
+  799.2 s page busy (main thread blocked)
+  839.5 s page busy (main thread blocked)
+  879.9 s page busy (main thread blocked)
+exit [1mnull[22m SIGTERM
+=== 6261a22
+    1.4 s menubar ready errors [33m0[39m js heap {"usedMB":13.2,"totalMB":24.2,"limitMB":4192}
+    7.0 s opened: 44 pieces · 27,592 m · closed loop | ELYSIUM · closed loop | js heap {"usedMB":1354.8,"totalMB":1404.1,"limitMB":4192}
+   67.0 s main thread answered in [33m1[39m ms 
+   67.0 s main thread answered in [33m0[39m ms 
+   67.0 s main thread answered in [33m0[39m ms 
+   67.0 s preview after 60 s: ELYSIUM · closed loop | js heap {"usedMB":1563.8,"totalMB":1624.9,"limitMB":4192}
+   70.0 s main thread answered in [33m1[39m ms with the frame loop stopped
+   70.0 s main thread answered in [33m0[39m ms with the frame loop stopped
+   70.0 s preview settled: ELYSIUM · closed loop | js heap {"usedMB":1563.9,"totalMB":1624.9,"limitMB":4192}
+   70.0 s export-like buttons: ["Export…","Test export (unfinished)…","Export layouts…","See it in Assetto","Assetto Corsa folder…","Export to Assetto Corsa"]
+   70.0 s before the press: js heap {"usedMB":1563.9,"totalMB":1624.9,"limitMB":4192}
+   70.0 s pressed Export to Assetto Corsa
+   72.0 s page busy (main thread blocked)
+  112.3 s page busy (main thread blocked)
+  152.7 s page busy (main thread blocked)
+  193.1 s page busy (main thread blocked)
+  233.6 s page busy (main thread blocked)
+  274.0 s page busy (main thread blocked)
+  314.4 s page busy (main thread blocked)
+  354.7 s page busy (main thread blocked)
+  395.1 s page busy (main thread blocked)
+  435.5 s page busy (main thread blocked)
+  475.9 s page busy (main thread blocked)
+  516.3 s page busy (main thread blocked)
+  556.7 s page busy (main thread blocked)
+  597.1 s page busy (main thread blocked)
+  637.6 s page busy (main thread blocked)
+  678.0 s page busy (main thread blocked)
+  718.3 s page busy (main thread blocked)
+  758.7 s page busy (main thread blocked)
+  799.1 s page busy (main thread blocked)
+  839.5 s page busy (main thread blocked)
+  879.9 s page busy (main thread blocked)
+exit [1mnull[22m SIGTERM
+exit 0

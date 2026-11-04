@@ -1,0 +1,7 @@
+doc doc/eq-ELYSIUM.t180track 105126 B; undo 1940240 B
+step      ms        heap before  peak during  retained after  arraybuffers after  (MB)
+open          1542         11.7        109.7           109.7                 0.0   pieces 44 segments 13798 closed true undo-past 73
+preview      20663        109.7       1052.1          1052.1               267.2   how full samples 13799 lengthM 27592 cells 13803
+check        19960       1052.1       2637.0          2201.8               267.9   how full error null red 0
+export      127461       2201.8       5159.9          3930.4              1231.8   files 10 bytes 242173116 largest t180b_x/t180b_x.kn5 218786117, t180b_x/map.png 22397168, t180b_x/ai/fast_lane.ai 423224
+handoff-bytes      225       3930.2       3930.2          3930.1               738.4   body bytes 242173604

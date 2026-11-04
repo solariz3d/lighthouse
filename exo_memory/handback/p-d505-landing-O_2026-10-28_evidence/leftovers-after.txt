@@ -1,0 +1,10 @@
+leftovers · 2026-10-28T04:15:02.617Z · read-only
+tab proxies          UNCALIBRATED (read 0, and the control made none (0 → 0 → 0))
+worktrees            Desktop/lighthouse 47 linked + main
+strays               not scanned (give --strays <folder> --prefix <name>-)
+fake roots           0
+orphan browsers      0 headless roots whose parent is gone
+our long-running     3 (older than 120 min, infrastructure left out)
+  pid 43272  4h 0m  cmd.exe  [sibling-3d57124e]  C:\WINDOWS\System32\cmd.exe C:\WINDOWS\System32\cmd.exe /d /s /c ""C:\WINDOWS\System32\chcp.com" 65001 >nul & "C:\Windows\System32\WindowsPo…
+  pid 54712  4h 0m  powershell.exe  [sibling-3d57124e]  C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionP…
+  pid 29824  3h 24m  powershell.exe  [sibling-3d57124e]  C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionP…

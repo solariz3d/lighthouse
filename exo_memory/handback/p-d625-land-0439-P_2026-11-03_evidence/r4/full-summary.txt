@@ -1,0 +1,11 @@
+# tests 4316
+# pass 4292
+# fail 2
+# cancelled 0
+# skipped 21
+# todo 1
+# duration_ms 2441181.1474
+
+red rows (bar the TODO):
+4369:not ok 689 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+7853:not ok 1244 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms

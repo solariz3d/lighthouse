@@ -1,0 +1,62 @@
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+heavy-run: waiting on 0845a868 pid 3872 (t180 C: D195 C: core mutation, since 2026-09-30T08:47:51.538Z)
+[32m✔ 1 · a number (or no) transition is unchanged: case 0 serialises exactly as it did at 4ccdd58 [90m(3.9639ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 1 serialises exactly as it did at 4ccdd58 [90m(1.3542ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 2 serialises exactly as it did at 4ccdd58 [90m(1.9089ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 3 serialises exactly as it did at 4ccdd58 [90m(1.6432ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 4 serialises exactly as it did at 4ccdd58 [90m(0.6793ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 5 serialises exactly as it did at 4ccdd58 [90m(0.8387ms)[39m[39m
+[32m✔ 2/3 · w 31 → 12 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31] [90m(5.3193ms)[39m[39m
+[32m✔ 2/3 · w 12 → 31 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31] [90m(3.3049ms)[39m[39m
+[32m✔ 2/3 · w 31 → 8 on a 200 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 31] [90m(5.5145ms)[39m[39m
+[32m✔ 2/3 · w 31 → 12 on a 45 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31] [90m(1.4846ms)[39m[39m
+[32m✔ 2/3 · w 20 → 8 on a 60 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 20] [90m(1.4127ms)[39m[39m
+[32m✔ 2/3 · w 31 → 12 on a 30 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31] [90m(0.629ms)[39m[39m
+[32m✔ 2/3 · w 31 → 31.5 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [31, 31.5] [90m(2.3562ms)[39m[39m
+[32m✔ 2/3 · w 12 → 30 on a 25 m piece with the ramp 'start': it reaches the target by R = 12.5 m and holds exactly, and never leaves [12, 30] [90m(0.8414ms)[39m[39m
+[32m✔ 2 · an explicit number of metres in the map is the ramp: w reaches the target by 30 m and holds [90m(2.0499ms)[39m[39m
+[32m✔ 2/3 · the same holds for the bank (phi) and the cup (c): a short ramp reaches its target and never leaves the range [90m(3.9108ms)[39m[39m
+[32m✔ 3 · a joint that carries a slope on w: the first two control points keep it (C1), the rest never leave the range of start, target and those two [90m(2.718ms)[39m[39m
+[32m✔ 4 · a channel not in the map keeps the whole-piece blend: phi follows the number-transition document within 0.1% of its change [90m(1.6626ms)[39m[39m
+[32m✔ 4 · a map naming only a channel with no target changes nothing: the document equals the number-transition one [90m(1.1268ms)[39m[39m
+[32m✔ 4 · 'start' on a piece no longer than one span is the whole-piece blend (nothing to ramp inside the piece) [90m(0.4511ms)[39m[39m
+[32m✔ 4 · startRampM is the first knot span: 20 m for a long piece, the piece for a short one, and follows knotM [90m(0.4244ms)[39m[39m
+[32m✔ 4 · the extra knots: RAMP_KNOTS subdivisions of the ramp, strictly increasing, inside the piece, and the even knots they would crowd are dropped [90m(0.0771ms)[39m[39m
+[32m✔ 5 · joints are C1 into the ramped piece, out of it (a piece after the hold), and the document validates [90m(0.8135ms)[39m[39m
+[32m✔ 5 · a lap with ramped pieces still closes (the close reads the same control points) [90m(246.1012ms)[39m[39m
+[32m✔ 6 · a map with an unknown channel is refused by name (BAD_TRANSITION) [90m(0.6295ms)[39m[39m
+[32m✔ 6 · a map with zero is refused by name (BAD_TRANSITION) [90m(0.4012ms)[39m[39m
+[32m✔ 6 · a map with negative is refused by name (BAD_TRANSITION) [90m(0.3965ms)[39m[39m
+[32m✔ 6 · a map with longer than the piece is refused by name (BAD_TRANSITION) [90m(0.2703ms)[39m[39m
+[32m✔ 6 · a map with not a number is refused by name (BAD_TRANSITION) [90m(0.2476ms)[39m[39m
+[32m✔ 6 · a map with a string that is not start is refused by name (BAD_TRANSITION) [90m(0.3301ms)[39m[39m
+[32m✔ 6 · a number transition is still checked as before: 0 and a value past the length are refused [90m(0.81ms)[39m[39m
+[34mℹ tests 31[39m
+[34mℹ suites 0[39m
+[34mℹ pass 31[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 364.0345[39m

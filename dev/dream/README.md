@@ -19,7 +19,8 @@ git pull
 powershell -ExecutionPolicy Bypass -File dev\dream\install_dream.ps1
 ```
 
-Needs: Consonance instances under `C:\Consonance\instances`, the `claude` CLI
+Needs: Consonance instances in your Instances folder (Settings; `instances_dir` in `~/.consonance.json`, else
+`%USERPROFILE%\claude-instances`), the `claude` CLI
 logged in, and a machine that sleeps (S3) instead of shutting down. Re-run the
 installer any time; it's idempotent.
 

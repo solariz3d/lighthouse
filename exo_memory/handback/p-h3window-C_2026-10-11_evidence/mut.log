@@ -1,0 +1,7 @@
+== C d303 mutants (copy) · asked 2026-10-12T05:01:49.363Z · lock held 2026-10-12T05:01:49.402Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d303/mut.sh
+control: 0 failing
+M1 h3 never closes (closes: null): not ok 17 not ok 18 
+M2 the window ends a day early: not ok 17 not ok 19 
+M3 the guard never refuses: not ok 6 not ok 17 not ok 18 
+== exit 0 · done 2026-10-12T05:02:08.650Z

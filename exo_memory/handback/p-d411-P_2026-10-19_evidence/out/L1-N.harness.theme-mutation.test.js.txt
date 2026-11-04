@@ -1,0 +1,45 @@
+$ node --test "app/test/theme-mutation.test.js"
+(exit 0)
+[32m✔ control: the unmutated copy passes theme.test.js [90m(589.9416ms)[39m[39m
+[32m✔ control: the unmutated copy passes sky.test.js [90m(705.1794ms)[39m[39m
+[32m✔ mutation T1 any name sets a skin: applied, and caught by "each melody sets its own skin…" [90m(560.9966ms)[39m[39m
+[32m✔ mutation T2 the head rounds the pick: applied, and caught by "the page sets the skin in its head…" [90m(576.3914ms)[39m[39m
+[32m✔ mutation T3 the head names the melodies in another order: applied, and caught by "the page sets the skin in its head…" [90m(532.5884ms)[39m[39m
+[32m✔ mutation T4 the boot does not follow the player: applied, and caught by "the page sets the skin in its head…" [90m(574.9938ms)[39m[39m
+[32m✔ mutation T14 the head ignores a saved theme: applied, and caught by "D394: the head reads the saved theme…" [90m(543.1843ms)[39m[39m
+[32m✔ mutation T15 the head takes any saved text as a theme: applied, and caught by "D394: the head reads the saved theme…" [90m(543.9935ms)[39m[39m
+[32m✔ mutation T16 sigil shows a skin: applied, and caught by "D394: Settings ▸ Theme has six choices…" [90m(566.3112ms)[39m[39m
+[32m✔ mutation T5 a skin change keeps the old colours: applied, and caught by "the reader reads again…" [90m(565.2391ms)[39m[39m
+[32m✔ mutation T6 the reader watches the wrong attribute: applied, and caught by "the reader reads again…" [90m(550.4577ms)[39m[39m
+[32m✔ mutation T7 a translucent token comes back opaque: applied, and caught by "the reader understands every colour form…" [90m(573.094ms)[39m[39m
+[32m✔ mutation T8 color(srgb) floats are rounded to bytes: applied, and caught by "the reader understands every colour form…" [90m(560.1787ms)[39m[39m
+[32m✔ mutation T9 solid keeps a skin's alpha: applied, and caught by "the reader understands every colour form…" [90m(554.1386ms)[39m[39m
+[32m✔ mutation T10 a missing token is black, not today's colour: applied, and caught by "the reader falls back…" [90m(545.5678ms)[39m[39m
+[32m✔ mutation T11 an unreadable token is not reported: applied, and caught by "the reader falls back…" [90m(556.6918ms)[39m[39m
+[32m✔ mutation T12 the 3D sky ignores the skin: applied, and caught by "SIGIL's 3D frame is the same…" [90m(584.3104ms)[39m[39m
+[32m✔ mutation T13 SIGIL's grid token drifts from the literal: applied, and caught by "SIGIL's tokens are today's literals…" [90m(558.571ms)[39m[39m
+[32m✔ mutation S1 the sky follows the camera's position: applied, and caught by "moving or zooming without turning…" [90m(712.3698ms)[39m[39m
+[32m✔ mutation S2 the rays turn the other way: applied, and caught by "a sky feature moves on screen…" [90m(660.9801ms)[39m[39m
+[32m✔ mutation S3 the shader builds its rays without the basis: applied, and caught by "the sky pass runs before the track…" [90m(662.1924ms)[39m[39m
+[32m✔ mutation S4 the sky writes depth: applied, and caught by "the sky pass runs before the track…" [90m(672.2828ms)[39m[39m
+[32m✔ mutation S5 the pattern gets no time: applied, and caught by "the sky pass runs before the track…" [90m(666.618ms)[39m[39m
+[32m✔ mutation S6 none still draws a sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…" [90m(699.4883ms)[39m[39m
+[32m✔ mutation S7 going back to none keeps the old sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…" [90m(702.3275ms)[39m[39m
+[32m✔ mutation S8 an unknown style is quietly none: applied, and caught by "an unknown sky style fails loudly…" [90m(657.6654ms)[39m[39m
+[32m✔ mutation S9 --sky-a falls back to black-ish, not the skin's sky: applied, and caught by "the skin names its sky…" [90m(670.8604ms)[39m[39m
+[32m✔ mutation S10 the style word keeps its quotes: applied, and caught by "the skin names its sky…" [90m(668.4205ms)[39m[39m
+[32m✔ mutation S11 reduced motion still drifts: applied, and caught by "the drift stops under prefers-reduced-motion…" [90m(679.8623ms)[39m[39m
+[32m✔ mutation S12 the preview hands the sky no time: applied, and caught by "the drift stops under prefers-reduced-motion…" [90m(674.9967ms)[39m[39m
+[32m✔ mutation S13 Skyline names no sky: applied, and caught by "the skin names its sky…" [90m(667.2914ms)[39m[39m
+[32m✔ mutation S14 Glass names no sky (D384 widened): applied, and caught by "Glass names the prism sky…" [90m(674.2901ms)[39m[39m
+[32m✔ mutation S15 the registry leaves prism out (D384 widened): applied, and caught by "Glass names the prism sky…" [90m(664.008ms)[39m[39m
+[32m✔ mutation S16 the sky pass does not dither (D398): applied, and caught by "D398: the shared sky pass dithers…" [90m(660.5089ms)[39m[39m
+[34mℹ tests 34[39m
+[34mℹ suites 0[39m
+[34mℹ pass 34[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 21127.0992[39m
+

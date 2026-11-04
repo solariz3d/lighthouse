@@ -1,0 +1,7 @@
+
+t180-track-builder.exe: 15840768 bytes, no private paths
+T-180 Track Builder_0.4.39_x64-setup.exe: 8133890 bytes, no private paths
+release: G:\Consonance-tools\scratch-P-d625\target\release\bundle\nsis\T-180 Track Builder_0.4.39_x64-setup.exe
+
+eb86af9d2ed540149629ab7ec7a3130870545b75bfeec70f4dda60ad1baa99b4 *G:/Consonance-tools/scratch-P-d625/target/release/bundle/nsis/T-180 Track Builder_0.4.39_x64-setup.exe
+586113dadcd3398ed0296142a0ca360a64db59483671793142ac081259c46540 *G:/Consonance-tools/scratch-P-d625/target/release/t180-track-builder.exe

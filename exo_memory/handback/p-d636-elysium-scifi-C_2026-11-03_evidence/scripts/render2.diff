@@ -1,0 +1,4 @@
+58c58
+<   const fwd = unit(sub(v.at, v.eye)), right = unit(cross(fwd, [0, 1, 0])), up = cross(right, fwd);
+---
+>   const fwd = unit(sub(v.at, v.eye)), right = unit(cross(fwd, v.up || [0, 1, 0])), up = cross(right, fwd);   // D636: v.up rolls the camera (a follow cam on a banked road)

@@ -1,0 +1,4 @@
+[32m✔ row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does [90m(64395.6582ms)[39m[39m
+[34mℹ main thread 23610 ms CPU, process 31219 ms CPU, 23830 ms wall; routes 7132, checks 16018[39m
+t180-wt-o19-before: [34mℹ main thread 22234 ms CPU, process 29469 ms CPU, 22406 ms wall; routes 6464, checks 15346[39m
+t180-wt-o18: [34mℹ main thread 22672 ms CPU, process 29734 ms CPU, 23528 ms wall; routes 6898, checks 16046[39m

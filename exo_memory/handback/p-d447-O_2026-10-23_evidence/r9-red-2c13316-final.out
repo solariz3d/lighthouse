@@ -1,0 +1,11 @@
+[31m✖ row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld [90m(3452.5353ms)[39m[39m
+[31m✖ row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld [90m(3320.6694ms)[39m[39m
+[31m✖ row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld [90m(3346.9839ms)[39m[39m
+[31m✖ row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld [90m(3400.9847ms)[39m[39m
+[34mℹ fail 4[39m
+[34mℹ pass 53[39m
+[34mℹ tests 57[39m
+  AssertionError [ERR_ASSERTION]: a 58 m straight: the curve from 1854 to 2150 m leans in by -0.0° on average away from a flip
+  AssertionError [ERR_ASSERTION]: a 60 m straight: the curve from 1856 to 2152 m leans in by -0.0° on average away from a flip
+  AssertionError [ERR_ASSERTION]: a link at R 1200: the curve from 1956 to 2252 m leans in by -0.0° on average away from a flip
+  AssertionError [ERR_ASSERTION]: a link at R 3000: the curve from 1956 to 2252 m leans in by -0.0° on average away from a flip

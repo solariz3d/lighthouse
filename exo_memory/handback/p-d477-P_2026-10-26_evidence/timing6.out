@@ -1,0 +1,4 @@
+test10-open.t180track (20 pieces, close()): press 1 OLD 257/184 ms NEW 647/664 ms; DIFFER (7f6aae121789296d); level OLD ["p19"] NEW ["p18","p19"]
+  press 2: NEW same doc in 573 ms (OLD changed/other in 437 ms, two presses)
+testtrack10-open.t180track (40 pieces, close()): press 1 OLD 415/354 ms NEW 395/348 ms; BYTE-EQUAL (b1b8b6932ddaf903); level OLD ["p24"] NEW ["p24"]
+  press 2: NEW same doc in 367 ms (OLD same in 685 ms, two presses)

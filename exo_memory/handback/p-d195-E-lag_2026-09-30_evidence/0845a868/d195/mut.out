@@ -1,0 +1,93 @@
+[32m✔ control: the unmutated temp copy passes every core-shell test [90m(25193.7089ms)[39m[39m
+[32m✔ mutation R1 the sign of an angle flipped: applied, and caught by "the strings…" [90m(25388.2484ms)[39m[39m
+[32m✔ mutation R2 zero is signed: applied, and caught by "the strings…" [90m(24537.7637ms)[39m[39m
+[32m✔ mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…" [90m(25346.4211ms)[39m[39m
+[32m✔ mutation R4 rounding without the binary guard: applied, and caught by "the strings…" [90m(26351.9338ms)[39m[39m
+[32m✔ mutation R5 the head keep-out ignored: applied, and caught by "the layout…" [90m(26568.8691ms)[39m[39m
+[32m✔ mutation R6 labels may overlap: applied, and caught by "the layout…" [90m(25270.1155ms)[39m[39m
+[32m✔ mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(25309.0691ms)[39m[39m
+[32m✔ mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(23609.5595ms)[39m[39m
+[32m✔ mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…" [90m(22228.9679ms)[39m[39m
+[32m✔ mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…" [90m(21633.2333ms)[39m[39m
+[32m✔ mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…" [90m(21750.2556ms)[39m[39m
+[32m✔ mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…" [90m(21684.8617ms)[39m[39m
+[32m✔ mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…" [90m(21080.2332ms)[39m[39m
+[32m✔ mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…" [90m(25492.4526ms)[39m[39m
+[32m✔ mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…" [90m(25771.124ms)[39m[39m
+[32m✔ mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…" [90m(25907.9889ms)[39m[39m
+[32m✔ mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…" [90m(25847.9809ms)[39m[39m
+[32m✔ mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…" [90m(22835.8165ms)[39m[39m
+[32m✔ mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…" [90m(21762.6944ms)[39m[39m
+[32m✔ mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…" [90m(21772.8459ms)[39m[39m
+[32m✔ mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…" [90m(21418.8166ms)[39m[39m
+[32m✔ mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…" [90m(20890.2014ms)[39m[39m
+[32m✔ mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…" [90m(21002.7048ms)[39m[39m
+[31m✖ mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…" [90m(26650.3234ms)[39m[39m
+[32m✔ mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…" [90m(25370.053ms)[39m[39m
+[32m✔ mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…" [90m(25267.2443ms)[39m[39m
+[32m✔ mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…" [90m(26852.4206ms)[39m[39m
+[32m✔ mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…" [90m(24419.1752ms)[39m[39m
+[32m✔ mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…" [90m(22998.5563ms)[39m[39m
+[32m✔ mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…" [90m(24018.2675ms)[39m[39m
+[32m✔ mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…" [90m(23253.3679ms)[39m[39m
+[32m✔ mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…" [90m(23805.8468ms)[39m[39m
+[32m✔ mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…" [90m(23971.0307ms)[39m[39m
+[32m✔ mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…" [90m(23931.4243ms)[39m[39m
+[32m✔ mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…" [90m(23551.5653ms)[39m[39m
+[32m✔ mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…" [90m(6929.0434ms)[39m[39m
+[32m✔ mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…" [90m(24555.9945ms)[39m[39m
+[32m✔ mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…" [90m(23685.4665ms)[39m[39m
+[32m✔ mutation C4 a second close runs again: applied, and caught by "close: one click…" [90m(24337.7114ms)[39m[39m
+[32m✔ mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…" [90m(23509.4724ms)[39m[39m
+[32m✔ mutation C6 an edit keeps the old water: applied, and caught by "a successful edit retires the water…" [90m(24196.4985ms)[39m[39m
+[32m✔ mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…" [90m(22074.0257ms)[39m[39m
+[32m✔ mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…" [90m(23076.9483ms)[39m[39m
+[32m✔ mutation C9 the water runs on across a jump's flight: applied, and caught by "water stops at a jump…" [90m(24219.0339ms)[39m[39m
+[32m✔ mutation C10 a spill names the wrong edge: applied, and caught by "redText…" [90m(23940.3897ms)[39m[39m
+[32m✔ mutation C11 a shock is drawn nowhere: applied, and caught by "water: poured over a window…" [90m(23717.2771ms)[39m[39m
+[32m✔ mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…" [90m(23597.9646ms)[39m[39m
+[32m✔ mutation C13 the overlay draws points, not line pairs: applied, and caught by "water: poured over a window…" [90m(24690.2068ms)[39m[39m
+[32m✔ mutation C14 the pick takes the farthest station: applied, and caught by "the pick…" [90m(23990.0468ms)[39m[39m
+[32m✔ mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…" [90m(24347.3678ms)[39m[39m
+[32m✔ mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…" [90m(23564.2434ms)[39m[39m
+[32m✔ mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…" [90m(21662.2664ms)[39m[39m
+[32m✔ mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…" [90m(19552.7336ms)[39m[39m
+[32m✔ mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…" [90m(23922.0401ms)[39m[39m
+[32m✔ mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…" [90m(24358.047ms)[39m[39m
+[32m✔ mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(24841.8128ms)[39m[39m
+[32m✔ mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…" [90m(24228.8595ms)[39m[39m
+[32m✔ mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(24146.7294ms)[39m[39m
+[32m✔ mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…" [90m(23918.8116ms)[39m[39m
+[32m✔ mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…" [90m(24084.9936ms)[39m[39m
+[32m✔ mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…" [90m(24567.1314ms)[39m[39m
+[32m✔ mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(22354.4333ms)[39m[39m
+[32m✔ mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(22335.4958ms)[39m[39m
+[32m✔ mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…" [90m(22851.0314ms)[39m[39m
+[34mℹ tests 65[39m
+[34mℹ suites 0[39m
+[34mℹ pass 64[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1530069.7758[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-mutation.test.js:140:3
+[31m✖ mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…" [90m(26650.3234ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "for (const f of [len, turn, climb, bank, width, cup])" occurs 0 times in app/core/panel.js
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\c-d195-wt\[39mapp\test\core-mutation.test.js:142:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

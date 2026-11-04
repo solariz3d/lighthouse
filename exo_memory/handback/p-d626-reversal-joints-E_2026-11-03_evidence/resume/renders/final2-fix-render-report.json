@@ -1,0 +1,71 @@
+{
+ "kn5": "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/d626/ribbon.t180track",
+ "legend": [
+  {
+   "class": "apron (its own material)",
+   "rgb": [
+    205,
+    150,
+    80
+   ]
+  },
+  {
+   "class": "underside (the skin's material)",
+   "rgb": [
+    70,
+    80,
+    100
+   ]
+  },
+  {
+   "class": "road material (road, lane, lip)",
+   "rgb": [
+    200,
+    200,
+    196
+   ]
+  },
+  {
+   "class": "scenery",
+   "rgb": [
+    140,
+    160,
+    140
+   ]
+  }
+ ],
+ "views": [
+  {
+   "view": "behind-1750",
+   "file": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d626\\renders\\final2-fix-behind-1750.png",
+   "ms": 151,
+   "trianglesDrawn": {
+    "road material (road, lane, lip)": 10828
+   }
+  },
+  {
+   "view": "behind-3950",
+   "file": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d626\\renders\\final2-fix-behind-3950.png",
+   "ms": 96,
+   "trianglesDrawn": {
+    "road material (road, lane, lip)": 50691
+   }
+  },
+  {
+   "view": "behind-4300",
+   "file": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d626\\renders\\final2-fix-behind-4300.png",
+   "ms": 126,
+   "trianglesDrawn": {
+    "road material (road, lane, lip)": 60105
+   }
+  },
+  {
+   "view": "side",
+   "file": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d626\\renders\\final2-fix-side.png",
+   "ms": 150,
+   "trianglesDrawn": {
+    "road material (road, lane, lip)": 93382
+   }
+  }
+ ]
+}

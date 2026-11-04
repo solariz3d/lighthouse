@@ -1,0 +1,270 @@
+diff --git a/app/core/coreshell.js b/app/core/coreshell.js
+index fd17211..3cf7d46 100644
+--- a/app/core/coreshell.js
++++ b/app/core/coreshell.js
+@@ -42,7 +42,8 @@
+ 'use strict';
+ 
+ const D = require('../../src/core/document.js');
+-const { extend } = require('../../src/core/extend.js');
++const { extend, bankRamp, bankRampAsked } = require('../../src/core/extend.js');
++const { BANK_RATE } = require('../../src/doc/vocab.js');
+ const LV = require('../../src/core/level.js');
+ const TB = require('../../src/core/turnby.js');
+ const GT = require('../../src/core/gridturn.js');   // 2026-10-12: Turn to grid
+@@ -380,6 +381,14 @@ async function createCoreShell({ storage = null, exporter = null, brushFn = type
+   /** Run an edit; a core error becomes the message, and nothing else changes. */
+   const attempt = (fn) => { try { return fn(); } catch (e) { if (e.name === 'CoreError') { set({ message: e.message }); return null; } throw e; } };
+   /** Commit a new document as one undo step, timing the operation plus the adapter. */
++  // D521: a piece too short to bank at real tracks' rate is still banked as asked (extend.js bankRamp: over all of itself); the message line says so, with the length that would
++  // bank it at that rate. Nothing when the bank has no target or is slow enough
++  const bankCue = (opts) => {
++    const t = (opts && opts.targets) || {}; if (t.phi === undefined || t.phi === null || !(opts.length > 0)) return {};
++    const end = D.endState(doc()), from = end ? end.phi.v : opts.first && Number.isFinite(opts.first.phi) ? opts.first.phi : 0;
++    const b = bankRamp(from, t.phi, bankRampAsked(opts, opts.length), opts.length);
++    return b.fast ? { message: `the bank changes ${b.peak.toFixed(2)} °/m over this ${opts.length} m piece, faster than real tracks (${BANK_RATE} °/m): a piece of at least ${b.needM} m banks it at their rate` } : {};
++  };
+   const commit = (op, make, extra = {}) => attempt(() => {
+     const t0 = now(), d = make(), r = resolvedOf(d), ms = now() - t0;
+     return set({ history: D.commit(st.history, d), ...r, dirty: true, message: null, lastStep: { op, ms }, ...extra });
+@@ -633,7 +642,7 @@ async function createCoreShell({ storage = null, exporter = null, brushFn = type
+ 
+     /** EXTEND at the build head: one new piece continuing the last (src/core/extend.js). `targets` set channels (absolute); `turnDeg` (D331 B, the turn field
+      *  read as a corner) makes the piece turn exactly that many degrees and end straight (src/core/turnby.js extendCorner). */
+-    extend: (opts) => commit('extend', () => TB.extendCorner(doc(), opts), { lastEdited: [doc().pieces.length] }),
++    extend: (opts) => commit('extend', () => TB.extendCorner(doc(), opts), { lastEdited: [doc().pieces.length], ...bankCue(opts) }),
+     /** D271 LEVEL: extend with the fields' piece, its climb solved so it ends straight and level (pitch 0); src/core/level.js. One undo step, like extend. */
+     extendLevel: (opts) => commit('level', () => { noCorner(opts, 'Level', true); return LV.extendLevel(doc(), opts); }, { lastEdited: [doc().pieces.length] }),
+     /** D271 TO FLOOR: …and on the floor (height 0). Too short a piece is refused by name with the length that works (FLOOR_TOO_SHORT), as the message. */
+diff --git a/app/core/panel.js b/app/core/panel.js
+index 40518a2..099c76f 100644
+--- a/app/core/panel.js
++++ b/app/core/panel.js
+@@ -48,6 +48,7 @@ const DEG = Math.PI / 180;
+ // if that is shorter: the core needs a transition no longer than the piece), then held for the rest of the piece. Unticked, it blends over
+ // the whole piece as before. The core takes `transition` as a number OR a per-channel map in metres (A's D194b contract).
+ const AT_START_M = 20;
++const BANK_RATE_SHOWN = require('../../src/doc/vocab.js').BANK_RATE;   // D521: the bank's "at start" is as fast as real tracks bank (src/core/extend.js bankRamp)
+ const FIELD_CHANNEL = Object.freeze({ turn: 'kh', climb: 'kv', bank: 'phi', width: 'w', cup: 'c', edge: XS.CHANNEL.edge, edgeR: 'er', start: XS.CHANNEL.start, tube: XS.CHANNEL.tube });
+ // THE TURN AS A CORNER (D331 B; the user, 2026-10-15: turns should "convey the proper degrees to line up with the grid", banked or not). turnAs 'corner' (the
+ // panel's default) reads the turn field as the piece's exact heading change in degrees, ending straight: `turnDeg`, which src/core/turnby.js extendCorner places
+@@ -219,7 +220,8 @@ function mount(root, shell, mountOpts = {}) {
+   // "at start" (D194b): one small box per field, off by default (off = ease to the value over the whole piece, as always). It is kept from
+   // piece to piece, like a preference; it does nothing for a field left as shown, which has no target
+   const atStart = Object.fromEntries(Object.keys(HEAD).map((k) => [k, el('input', { type: 'checkbox', 'aria-label': `${k} at the start`,
+-    title: `at start: reach this ${k} within the first ${AT_START_M} m of the piece and hold it (off: ease to it over the whole piece)` })]));
++    title: k === 'bank' ? `at start: reach this bank as fast as real tracks bank (never faster than ${BANK_RATE_SHOWN} °/m, within the piece) and hold it (off: ease to it over the whole piece)`
++      : `at start: reach this ${k} within the first ${AT_START_M} m of the piece and hold it (off: ease to it over the whole piece)` })]));
+   // the turn field's label says which way it is read (D331 B); switching puts the field back to what it shows, so nothing typed in the other unit is applied
+   const turnLabel = el('span', { text: 'turn °' }), turnField = fieldAt(turnLabel, turn, 'turn'), climbLabel = el('span', { text: 'climb °' }), climbField = fieldAt(climbLabel, climb, 'climb');
+   turnAs.onchange = () => { showTurnHead(shell.headState()); applied.turn = turn.value; applied.climb = climb.value; ghost(); };
+diff --git a/src/core/extend.js b/src/core/extend.js
+index d63ba40..e7d0302 100644
+--- a/src/core/extend.js
++++ b/src/core/extend.js
+@@ -32,6 +32,7 @@
+ 
+ const D = require('./document.js');
+ const { WIDTHS, RATES } = require('../geom/fonts.js');
++const { BANK_RATE } = require('../doc/vocab.js');
+ 
+ const bloss = (u) => (u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u));   // ref 02 §4, IFC-BLOSS: the route channels' blend (C1 at its ends: S″(0) = 6, S″(1) = −6)
+ const smoother = (u) => (u <= 0 ? 0 : u >= 1 ? 1 : u * u * u * (u * (6 * u - 15) + 10));   // 6u⁵ − 15u⁴ + 10u³ (Perlin's smootherstep): S′ = S″ = 0 at both ends, C2
+@@ -68,6 +69,25 @@ const RAMP_KNOTS = 4;
+ /** D459: a C2 channel's short ramp is read at twice the subdivisions. With 4, the compressed quintic read at the Greville abscissae (ξ₃ at the ramp's end) and the zero-curvature
+  *  start (P₂ = P₀) left the whole change to one span: a 54° roll over 100 m read 1.62 °/m against 0.80 before; with 8 it reads the quintic's shape to a few tenths. */
+ const RAMP_KNOTS_C2 = 8;
++
++/**
++ * D521, THE BANK'S FLOOR (the user, 2026-10-28 15:18, a straight into a banked turn: "we cant have this big bump the banking with the turn should be more smooth but we need to
++ * be careful"). A bank's ramp is never faster than real tracks bank: BANK_RATE, the corpus's p90, 0.849 °/m (src/doc/vocab.js; docs/math/04a_bank_ramp.md §3). The bank is a C2
++ * channel, so its ramp is the quintic, steepest at 1.875·|Δφ|/R (the header above); a SHORT ramp is read compressed to (RAMP_KNOTS_C2 − 2)/RAMP_KNOTS_C2 of R (rampKnots,
++ * rampControl), so 4/3 steeper again (measured 1.24× on 30° in 20 m: 3.48 °/m against 2.81). Measured before (D521 Part 1): ticked "at start", 30° rolled at 3.48 °/m and 45°
++ * at 5.22, and the inner edge of a 31 m road fell 6.1 m in the first 10 m: the fold. With the turn ticked too it was the same, so the bank does NOT take the turn's ramp.
++ * The ramp is lengthened inside the piece to the floor; a piece shorter than the floor ramps over all of itself and is still banked as asked (never silently less): `fast`,
++ * with `needM`, the length a whole-piece ramp would need, so the page can say so. A ramp at or under the floor is returned unchanged, so its bytes do not move.
++ *   bankRamp(fromPhi, targetPhi, ramp, length) -> { ramp, fast, needM, peak }   (radians in; m and °/m out)
++ */
++const BANK_PEAK = 1.875, SHORT_SQUEEZE = RAMP_KNOTS_C2 / (RAMP_KNOTS_C2 - 2);
++function bankRamp(fromPhi, targetPhi, ramp, length) {
++  const d = Math.abs(targetPhi - fromPhi) * 180 / Math.PI, peakOf = (R) => (BANK_PEAK * d * (R < length - 1e-9 ? SHORT_SQUEEZE : 1)) / R;
++  let R = ramp;
++  if (d > 0 && peakOf(R) > BANK_RATE + 1e-12) { const need = (BANK_PEAK * SHORT_SQUEEZE * d) / BANK_RATE; R = need < length - 1e-9 ? need : length; }
++  const peak = peakOf(R), fast = peak > BANK_RATE + 1e-9;
++  return { ramp: R, fast, needM: fast ? Math.ceil((BANK_PEAK * d) / BANK_RATE) : null, peak };
++}
+ function rampKnots(length, ramps, knotM, sub = RAMP_KNOTS) {
+   const extra = []; for (const R of new Set(ramps)) for (let j = 1; j <= sub; j++) extra.push((R * j) / sub);
+   const gap = Math.min(...ramps) / (2 * sub), keep = D.evenKnots(length, knotM).filter((k) => extra.every((e) => Math.abs(e - k) > gap));
+@@ -201,7 +221,30 @@ function fitWithHold(piece, ch, f, Lt, target) {
+   free.forEach((i, a) => { C[i] = Number(x[a].toFixed(dec)) + 0; });
+ }
+ 
++/**
++ * D521: Extend, with the bank's FLOOR (bankRamp above). The piece is built as asked; only when its bank has a target, ramps shorter than the piece, and is measured
++ * rolling faster than BANK_RATE is it built again with the bank's ramp lengthened to the floor (within the piece). So every ramp already slow enough keeps its bytes.
++ */
+ function extend(doc, opts = {}) {
++  const out = extendOnce(doc, opts, null), t = opts.targets || {};
++  if (t.phi === undefined || t.phi === null) return out;
++  const P = out.pieces[out.pieces.length - 1], R0 = bankRampAsked(opts, P.length);
++  if (!(R0 < P.length - 1e-9) || bankPeak(P) <= BANK_RATE + 1e-9) return out;
++  return extendOnce(doc, opts, bankRamp(D.valuesAt(P, 0).phi, t.phi, R0, P.length).ramp);
++}
++/** The bank's ramp as the options ask it (extend's own reading of `transition`): a map's phi (a number, or 'start'), else the one number, else the piece. */
++function bankRampAsked({ transition, knotM }, length) {
++  if (transition !== null && typeof transition === 'object' && !Array.isArray(transition)) { const v = transition.phi; return v === undefined ? length : v === 'start' ? startRampM(length, knotM) : v; }
++  return transition === undefined ? length : transition;
++}
++/** A piece's steepest bank change, °/m, read every 0.25 m (the stored spline's own values). */
++function bankPeak(P) {
++  let best = 0, prev = D.valuesAt(P, 0).phi;
++  for (let s = 0.25; s <= P.length + 1e-9; s += 0.25) { const v = D.valuesAt(P, Math.min(s, P.length)).phi; best = Math.max(best, Math.abs(v - prev) / 0.25); prev = v; }
++  return (best * 180) / Math.PI;
++}
++
++function extendOnce(doc, opts = {}, phiFloorIn = null) {
+   let { length, transition, targets = {}, family, knotM, first, grip } = opts;
+   if (!(length > 0)) throw new D.CoreError('BAD_LENGTH', `extend needs a positive length, got ${length}`);
+   // er, the RIGHT edge angle (document.js): an edge angle typed without a right one sets both sides, as before er existed; a right one typed alone
+@@ -235,8 +278,9 @@ function extend(doc, opts = {}) {
+     const Lt = transition === undefined ? length : transition;
+     if (!(Lt > 0 && Lt <= length)) throw new D.CoreError('BAD_TRANSITION', `the transition must be in (0, length], got ${Lt}`);
+   }
+-  const Lof = (ch) => (perChannel ? (ramp[ch] === undefined ? length : ramp[ch]) : transition === undefined ? length : transition);
+-  const shortRamps = Object.keys(ramp).filter((ch) => ramp[ch] < length - 1e-9 && targets[ch] !== undefined && targets[ch] !== null);
++  const phiFloor = phiFloorIn;   // D521: the bank's ramp, floored (bankRamp), when extend found the ramp as asked faster than BANK_RATE
++  const Lof = (ch) => (ch === 'phi' && phiFloor !== null ? phiFloor : perChannel ? (ramp[ch] === undefined ? length : ramp[ch]) : transition === undefined ? length : transition);
++  let shortRamps = Object.keys(ramp).filter((ch) => ramp[ch] < length - 1e-9 && targets[ch] !== undefined && targets[ch] !== null);
+   const last = [...doc.pieces].reverse().find((P) => P.type === 'road');
+   const fam = family || (last ? last.family : 'bowl');
+   let from = D.endState(doc), held = true; const from0 = from;   // from0: null on an empty track (the at-start `first` applies)
+@@ -255,6 +299,10 @@ function extend(doc, opts = {}) {
+     from = Object.fromEntries(D.CHANNELS.map((ch) => [ch, { v: f[ch], m: 0 }])); held = false;
+   }
+   if (from.tNext) from = { ...from, t: from.tNext };   // the tube this piece may start continues from tNext (endState reports t only at a tube head)
++  if (phiFloor !== null && perChannel) {   // D521: the bank's floored ramp (extend, below) takes the map's place for the bank alone
++    ramp.phi = phiFloor;
++    shortRamps = Object.keys(ramp).filter((ch) => ramp[ch] < length - 1e-9 && targets[ch] !== undefined && targets[ch] !== null);
++  }
+   const channels = Object.fromEntries(D.CHANNELS.map((ch) => [ch, channelFn(from[ch], targets[ch], Lof(ch), ch)]));
+   const c2Targets = [...C2_CHANNELS].filter((ch) => given(targets[ch]));
+   const sub = shortRamps.some((ch) => C2_CHANNELS.has(ch)) ? RAMP_KNOTS_C2 : RAMP_KNOTS;   // D459: the short-ramp subdivisions, 8 when a cross-section channel ramps short
+@@ -315,4 +363,4 @@ function extend(doc, opts = {}) {
+   return D.appendPiece(doc, piece);
+ }
+ 
+-module.exports = { extend, channelFn, bloss, smoother, C2_CHANNELS, c2Ends, fitWithHold, sampleBasis, startRampM, rampKnots, RAMP_KNOTS, RAMP_KNOTS_C2 };
++module.exports = { extend, bankRamp, bankRampAsked, bankPeak, channelFn, bloss, smoother, C2_CHANNELS, c2Ends, fitWithHold, sampleBasis, startRampM, rampKnots, RAMP_KNOTS, RAMP_KNOTS_C2 };
+diff --git a/test/core_extend.test.js b/test/core_extend.test.js
+index fc54a34..10b2115 100644
+--- a/test/core_extend.test.js
++++ b/test/core_extend.test.js
+@@ -74,3 +74,48 @@ test('extend refuses a closed track, a bad length and an unknown channel, by nam
+   assert.throws(() => extend(d, { length: 10, transition: 20 }), (e) => e.code === 'BAD_TRANSITION');
+   assert.throws(() => extend(D.checkDoc({ ...d, closed: true }), { length: 10 }), (e) => e.code === 'CLOSED');
+ });
++
++// D521 (the user, 2026-10-28 15:18, a flat straight into a banked turn, the inner edge folding at the joint: "when banking a turn from a straight we cant have this big bump").
++// Part 1 measured it (exo_memory/handback/p-d521-bank-ramp-O_2026-10-28.md): a bank ticked "at start" rolled the road at 3.48 °/m for 30° and 5.22 °/m for 45° (the channel's own rate),
++// against real tracks' p90 0.849 and p99 2.205 °/m (src/doc/vocab.js BANK_RATE, docs/math/04a_bank_ramp.md §3); the inner edge of a 31 m road fell 6.1 m in its first 10 m. The fold is the
++// bank's RATE, not the bank arriving before the turn: ticked with the turn ticked too, it is the same. So a bank's ramp has a FLOOR within the piece: never faster than BANK_RATE.
++const { BANK_RATE } = require('../src/doc/vocab.js');
++const { bankRamp } = require('../src/core/extend.js');
++const bankPeak = (P) => { let best = 0; for (let s = 0.1; s <= P.length + 1e-9; s += 0.1) best = Math.max(best, Math.abs(D.valuesAt(P, s).phi - D.valuesAt(P, s - 0.1).phi) / DEG / 0.1); return best; };
++const DEG = Math.PI / 180;
++const afterStraight = (opts) => extend(extend(D.createDoc('d521'), { length: 100 }), opts);
++for (const bank of [30, 45]) {
++  test(`D521 row 1: a ${bank}° bank ticked "at start" on a 200 m piece rolls no faster than real tracks (BANK_RATE ${BANK_RATE} °/m), and still ends at ${bank}° and holds it`, () => {
++    const P = afterStraight({ length: 200, transition: { phi: 'start' }, targets: { phi: -bank * DEG, kh: (90 * DEG) / 200 } }).pieces[1];
++    assert.ok(bankPeak(P) <= BANK_RATE + 1e-6, `peak ${bankPeak(P).toFixed(3)} °/m`);
++    assert.ok(Math.abs(D.valuesAt(P, P.length).phi / DEG + bank) < 1e-6, 'it ends at the bank asked');
++    const need = bankRamp(0, -bank * DEG, 20, 200).ramp;
++    assert.ok(need < 200 && Math.abs(D.valuesAt(P, need + 1).phi / DEG + bank) < 1e-6, `it holds from its floored ramp (${need.toFixed(1)} m) on, not only at the end`);
++  });
++}
++test('D521 row 2: a single numeric transition shorter than the bank needs floors the bank alone; the other channels keep their ramp', () => {
++  const P = afterStraight({ length: 200, transition: 20, targets: { phi: -30 * DEG, w: 20 } }).pieces[1];
++  assert.ok(bankPeak(P) <= BANK_RATE + 1e-6, `peak ${bankPeak(P).toFixed(3)} °/m`);
++  const noBank = afterStraight({ length: 200, transition: 20, targets: { w: 20 } }).pieces[1];
++  assert.deepEqual(P.channels.w, noBank.channels.w, 'the width is fitted exactly as without the bank: only the bank\'s ramp is floored');
++});
++test('D521 row 3: a piece too short to bank at a real rate ramps over all of itself and says so, with the length a whole-piece ramp needs', () => {
++  const P = afterStraight({ length: 40, targets: { phi: -30 * DEG } }).pieces[1];
++  assert.ok(Math.abs(D.valuesAt(P, 40).phi / DEG + 30) < 1e-6, 'the bank asked is still placed: never silently banked less');
++  const b = bankRamp(0, -30 * DEG, 40, 40);
++  assert.equal(b.fast, true); assert.equal(b.ramp, 40); assert.equal(b.needM, Math.ceil((1.875 * 30) / BANK_RATE));
++  assert.ok(Math.abs(b.peak - 1.875 * 30 / 40) < 1e-9, `the whole-piece quintic's peak, ${b.peak}`);
++  assert.equal(bankRamp(0, -30 * DEG, 200, 200).fast, false, 'a 200 m piece is slow enough');
++});
++test('D521 row 4 (control): a bank already slow enough keeps its ramp byte for byte; a piece with no bank target is untouched', () => {
++  const opts = { length: 200, transition: { phi: 'start' }, targets: { phi: -5 * DEG } };   // 5° in 20 m: 2.5 × 5 / 20 = 0.625 °/m, under the floor's bar
++  assert.equal(bankRamp(0, -5 * DEG, 20, 200).ramp, 20);
++  const w = afterStraight({ length: 100, transition: { w: 'start' }, targets: { w: 20 } });
++  assert.ok(Math.abs(D.valuesAt(w.pieces[1], 20).w - 20) < 1e-3, 'a width at start still reaches it in 20 m');
++  // sha256 (first 16) of D.serialize, the same at 9069bd4 and with the floor (pin.js, the D521 hand-back): a ramp under the bar, or over the whole piece, keeps its bytes
++  const sha = (x) => require('crypto').createHash('sha256').update(D.serialize(x)).digest('hex').slice(0, 16);
++  assert.equal(sha(afterStraight(opts)), 'ec3c4db6632379f5', 'a 5° bank at start: unchanged');
++  assert.equal(sha(afterStraight({ length: 120, transition: 40, targets: { phi: -20 * DEG } })), '363acecf5191cf2a', 'a fitted 20° in 40 m reads 0.750 °/m, under the bar: unchanged');
++  assert.equal(sha(afterStraight({ length: 200, targets: { phi: -30 * DEG, kh: (90 * DEG) / 200 } })), '7a79df2c3bc829a0', 'a whole-piece 30° on 200 m: unchanged');
++  assert.equal(sha(afterStraight({ length: 40, targets: { phi: -30 * DEG } })), '1a8d41e970db9bfd', 'a whole-piece 30° on 40 m (too short: the cue says so): unchanged');
++});
+diff --git a/test/core_ramp.test.js b/test/core_ramp.test.js
+index cad2e11..8bc5877 100644
+--- a/test/core_ramp.test.js
++++ b/test/core_ramp.test.js
+@@ -14,7 +14,7 @@ const test = require('node:test');
+ const assert = require('node:assert/strict');
+ const crypto = require('crypto');
+ const D = require('../src/core/document.js');
+-const { extend, startRampM, rampKnots, RAMP_KNOTS } = require('../src/core/extend.js');
++const { extend, startRampM, rampKnots, RAMP_KNOTS, bankRamp } = require('../src/core/extend.js');
+ 
+ const sha = (s) => crypto.createHash('sha256').update(s).digest('hex').slice(0, 16);
+ const run = (steps) => steps.reduce((d, a) => extend(d, a), D.createDoc('t'));
+@@ -29,7 +29,9 @@ const GOLDEN_CASES = [
+ ];
+ // sha256 (first 16) of D.serialize at 4ccdd58; cases 1, 2 and 3 (a phi or c target) RE-PINNED at D459 (2026-10-25): the bank and the cup blend by the C2 quintic now
+ // (extend.js smoother, c2Ends), so those three documents changed by design; cases 0, 4 and 5 (w, r, kh, kv only) are 4ccdd58's bytes still
+-const GOLDEN = ['6fe0da0b925df898', '5f3d402378472d63', 'c81bd9f10393fb8e', '22f9a9ab712685b9', 'bd27d8e6adcffbbb', 'f4109c3835754b16'];
++// AMENDED (D521): the rule changed by name: a bank's ramp is never faster than real tracks bank (extend.js bankRamp, BANK_RATE 0.849 °/m). Case 1's 17.19° over a numeric 20 m
++// read 0.859 °/m at 9069bd4, over the bar, so its bank is floored and its bytes changed by design (re-pinned; the bank alone: its width is fitted as before). Cases 0 and 2-5 are unchanged
++const GOLDEN = ['6fe0da0b925df898', 'b5a1842295c3d9db', 'c81bd9f10393fb8e', '22f9a9ab712685b9', 'bd27d8e6adcffbbb', 'f4109c3835754b16'];
+ GOLDEN_CASES.forEach((steps, i) => test(`1 · a number (or no) transition is unchanged: case ${i} serialises exactly as it did at ${[1, 2, 3].includes(i) ? 'D459 (re-pinned: the quintic for phi and c)' : '4ccdd58'}`, () => {
+   // D225: the schema string is /4 now; the GOLDEN digests were taken of /3 text, so the only difference allowed is that one string (seal E3c: a /3 document saved as /4 differs ONLY in the schema)
+   const text = D.serialize(run(steps)); assert.ok(text.includes('"schema": "t180b.core/4"'));
+@@ -70,9 +72,12 @@ test('2 · an explicit number of metres in the map is the ramp: w reaches the ta
+   assert.ok(at(P, 'w', 10) > 12.5 && at(P, 'w', 10) < 30.5, 'the ramp is still under way at 10 m');
+ });
+ test('2/3 · the same holds for the bank (phi) and the cup (c): a short ramp reaches its target and never leaves the range', () => {
+-  const d = later({ L: 100, transition: { phi: 'start', c: 'start' }, targets: { phi: 0.5, c: 90 } }), P = d.pieces[1], R = startRampM(100);
++  // AMENDED (D521): the rule changed by name: a bank 'start' is now as fast as real tracks go (extend.js bankRamp), so the bank reaches 0.5 rad at its floored ramp (84.4 m on this
++  // 100 m piece), not at the first knot span; the cup keeps the first knot span
++  const d = later({ L: 100, transition: { phi: 'start', c: 'start' }, targets: { phi: 0.5, c: 90 } }), P = d.pieces[1], R = startRampM(100), Rphi = bankRamp(0, 0.5, R, 100).ramp;
+   const e0 = D.legacyEdgeDeg('bowl', 31, at(d.pieces[0], 'r', 100));
+-  for (const [s, v] of sample(P, 'phi')) { assert.ok(v >= -1e-6 && v <= 0.5 + 1e-6, `phi(${s}) = ${v}`); if (s >= R) assert.ok(Math.abs(v - 0.5) < 1e-4, `phi(${s}) = ${v}`); }
++  assert.ok(Rphi > R && Rphi < 100, `the bank's ramp is floored inside the piece (${Rphi} m)`);
++  for (const [s, v] of sample(P, 'phi')) { assert.ok(v >= -1e-6 && v <= 0.5 + 1e-6, `phi(${s}) = ${v}`); if (s >= Rphi) assert.ok(Math.abs(v - 0.5) < 1e-4, `phi(${s}) = ${v}`); }
+   for (const [s, v] of sample(P, 'c')) { assert.ok(v >= e0 - 1e-3 && v <= 90 + 1e-3, `c(${s}) = ${v}`); if (s >= R) assert.ok(Math.abs(v - 90) < 1e-3, `c(${s}) = ${v}`); }
+ });
+ test('3 · a joint that carries a slope on w (0.5 m/m, a target just below the joint value: the ideal ramp rises past the joint\'s own first two points): C1 at the joint, and no control point outside the range of start, target and those two', () => {
+diff --git a/test/core_smooth_ramps.test.js b/test/core_smooth_ramps.test.js
+index e6ce6dd..4911e94 100644
+--- a/test/core_smooth_ramps.test.js
++++ b/test/core_smooth_ramps.test.js
+@@ -89,10 +89,12 @@ test('row 3: each re-laid ramp goes from its start value to its end value, stays
+     assert.equal(x.over, P.length, `${x.id} ${x.ch}: a ramp over the whole piece stays over the whole piece`);
+     if (x.ch === 'c') assert.ok(c.every((v) => v >= 0 && v <= D.CUP_MAX), 'a cup stays in [0, 150]');
+   }
+-  // a ramp typed with a transition (a 20° bank reached in 'start', then held on a 120 m piece): re-laid over the metres it reached its end in before, held after
++  // a ramp typed with a transition (a 10° bank reached in 'start', then held on a 120 m piece): re-laid over the metres it reached its end in before, held after
++  // AMENDED (D521): the rule changed by name: Extend now floors a bank's ramp at real tracks' rate (extend.js bankRamp), so 20° in 40 m is laid over 58.9 m and its knots are no
++  // longer those of the 0.4.19 file this fixture stands for. 10° in 40 m is under the floor, so Extend lays it on the same 40 m ramp knots as before: the fixture means what it did
+   let d = X.extend(D.createDoc(), { length: 300, family: 'bowl' });
+-  d = asShort0419(X.extend(d, { length: 120, transition: { phi: 40 }, targets: { phi: 20 * DEG } }), 1, 20);
+-  const was = d.pieces[1], v1 = 20 * DEG, U = D.knotVector(was), j = was.channels.phi.indexOf(Number(v1.toFixed(9)));
++  d = asShort0419(X.extend(d, { length: 120, transition: { phi: 40 }, targets: { phi: 10 * DEG } }), 1, 20);
++  const was = d.pieces[1], v1 = 10 * DEG, U = D.knotVector(was), j = was.channels.phi.indexOf(Number(v1.toFixed(9)));
+   const r2 = smoothRamps(d), P = r2.doc.pieces[1], held = (Q) => [30, 40, 60, 80, 100, 120].map((s) => +D.valuesAt(Q, s).phi.toFixed(9));
+   assert.ok(C.c2Breaks(d).length >= 1, 'control: the short ramp steps');
+   assert.equal(r2.ramps.length, 1); assert.equal(r2.ramps[0].over, U[j + 3], `laid over the ${U[j + 3]} m it reached its end in before (${r2.ramps[0].over} m)`);

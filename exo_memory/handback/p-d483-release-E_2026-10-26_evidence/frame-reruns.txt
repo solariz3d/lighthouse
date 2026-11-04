@@ -1,0 +1,33 @@
+run 1: ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+run 1: # p95 ms by look: {"aqua":[4.3],"skyline":[4.1],"glass":[3.7],"aurora":[4.6],"sigil":[3.4]}
+run 1: ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+run 1: # p95 ms by look: {"aqua":[4.3],"skyline":[3.6],"glass":[4.1],"aurora":[4.4],"sigil":[4.1]}
+run 1: ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+run 1: # p95 ms by length: {"1000":[4.2],"2000":[4.8]}
+run 1: ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+run 1: ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+run 1: ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+run 1: # p95 10.0 ms, 360.3 rebuilds a second
+run 1: ok 7 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+run 1: ok 8 - row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+run 1: ok 9 - row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+run 1: not ok 10 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frames together
+run 1:   error: 'a field change: p95 6.1 / 8.4 ms, over 6'
+run 1: # pass 9
+run 1: # fail 1
+run 2: ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+run 2: # p95 ms by look: {"aqua":[3.7],"skyline":[3.8],"glass":[3.3],"aurora":[3.3],"sigil":[3.5]}
+run 2: ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+run 2: # p95 ms by look: {"aqua":[3.5],"skyline":[3.7],"glass":[3.7],"aurora":[4],"sigil":[3.9]}
+run 2: ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+run 2: # p95 ms by length: {"1000":[3.8],"2000":[4.8]}
+run 2: ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+run 2: ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+run 2: ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+run 2: # p95 10.2 ms, 356.3 rebuilds a second
+run 2: ok 7 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+run 2: ok 8 - row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+run 2: ok 9 - row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+run 2: ok 10 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frames together
+run 2: # pass 10
+run 2: # fail 0

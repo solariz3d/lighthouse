@@ -20,11 +20,11 @@ const MAIN = '0c0c0c0a-0000-4000-8000-000000000a01', LIB = '0c0c0c0b-0000-4000-8
 const ROOM_CONFIG = path.join(REPO, 'consonance', 'jev-room', '.jev', 'config.json');
 // D124: the room config states its store as ${LOCALAPPDATA}/consonance/jev-shadow, so every load of it needs LOCALAPPDATA in
 // the env it is given — exactly as the runner's own defaultStore() does. A temp dir stands in for it; nothing is written there.
-const ROOM_ENV = { LOCALAPPDATA: fs.mkdtempSync(path.join(os.tmpdir(), 'jev-module-lad-')) };
+const ROOM_ENV = { LOCALAPPDATA: require('./scratch.js').mkdtemp('jev-module-lad-') };
 
 /** A room: the real L2 hooks, a main.rs with the three fixed ids, the real jev/ module and the real room config. */
 function world({ config = true } = {}) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-module-'));
+  const root = require('./scratch.js').mkdtemp('jev-module-');
   const repo = path.join(root, 'repo'), data = path.join(root, 'data'), projects = path.join(root, 'projects'), store = path.join(root, 'store');
   const cp = (rel) => { fs.mkdirSync(path.dirname(path.join(repo, rel)), { recursive: true }); fs.copyFileSync(path.join(REPO, rel), path.join(repo, rel)); };
   for (const h of ['l2-overseer.js', 'l2-overseer-worker.js']) cp(path.join('dev', 'shell', 'hooks', h));
@@ -37,7 +37,7 @@ function world({ config = true } = {}) {
     `const MAIN_SID: &str = "${MAIN}";\nconst LIBRARIAN_SID: &str = "${LIB}";\nconst THIRD_PLACE_SID: &str = "${TP}";\n`);
   fs.mkdirSync(data, { recursive: true });
   fs.writeFileSync(path.join(data, 'panes.json'), '[]');
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-module-home-'));   // no ~/.consonance.json: the repo is passed
+  const home = require('./scratch.js').mkdtemp('jev-module-home-');   // no ~/.consonance.json: the repo is passed
   return { root, repo, data, projects, store, home };
 }
 let seq = 0;
@@ -73,7 +73,7 @@ test('the switch is CONSONANCE_JEV_MODULE, and only the exact value "on" turns i
 // ── the room's config ──────────────────────────────────────────────────────────────────────────────────────────────
 test('the room config loads through jev/lib/config.js as written: listed seats, audience consonance, the dream guard on', () => {
   const { load } = require(path.join(REPO, 'jev', 'lib', 'config.js'));
-  const c = load({ env: ROOM_ENV, home: path.dirname(path.dirname(ROOM_CONFIG)), cwd: fs.mkdtempSync(path.join(os.tmpdir(), 'jev-module-cwd-')) });
+  const c = load({ env: ROOM_ENV, home: path.dirname(path.dirname(ROOM_CONFIG)), cwd: require('./scratch.js').mkdtemp('jev-module-cwd-') });
   assert.deepStrictEqual([c.judge, c.audience, c.dream, c.optedOut], ['listed', 'consonance', true, false]);
 });
 
@@ -81,7 +81,7 @@ test('D124: the room config STATES its store, and it is the runner\'s own store 
   const { load } = require(path.join(REPO, 'jev', 'lib', 'config.js'));
   const { defaultStore } = require('./jev-shadow-runner.js');
   assert.strictEqual(JSON.parse(fs.readFileSync(ROOM_CONFIG, 'utf8')).ledgerDir, '${LOCALAPPDATA}/consonance/jev-shadow', 'written with the variable, not a machine path');
-  const c = load({ env: ROOM_ENV, home: path.dirname(path.dirname(ROOM_CONFIG)), cwd: fs.mkdtempSync(path.join(os.tmpdir(), 'jev-module-cwd-')), platform: 'win32' });
+  const c = load({ env: ROOM_ENV, home: path.dirname(path.dirname(ROOM_CONFIG)), cwd: require('./scratch.js').mkdtemp('jev-module-cwd-'), platform: 'win32' });
   assert.strictEqual(c.ledgerDir, defaultStore(ROOM_ENV), 'the config and the runner name the same directory');
 });
 

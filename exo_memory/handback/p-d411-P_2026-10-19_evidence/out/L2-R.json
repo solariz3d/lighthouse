@@ -1,0 +1,75 @@
+{
+ "label": "L2-R",
+ "started": "2026-10-19T16:44:21.296Z",
+ "ended": "2026-10-19T19:31:12.339Z",
+ "wall_ms": 10011043,
+ "active_ms": 0,
+ "others_hold_lock_ms": 9990000,
+ "exit_code": 0,
+ "signal": null,
+ "launcher_killed": false,
+ "kill_reason": null,
+ "args": [
+  "-p",
+  "--model",
+  "claude-opus-5-5",
+  "--output-format",
+  "json",
+  "--safe-mode",
+  "--strict-mcp-config",
+  "--dangerously-skip-permissions",
+  "--add-dir",
+  "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L2-R",
+  "--name",
+  "d411-L2-R"
+ ],
+ "cwd": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L2-R",
+ "prompt_sha256": "be844bdedef901e226a585b71074df0ad3b06b7ba875d50fab5d3823b2ca3011",
+ "prompt_bytes": 4953,
+ "session_id": "1325271a-4815-46f0-9cf3-6dc813999a14",
+ "subtype": "success",
+ "is_error": false,
+ "num_turns": 5,
+ "duration_ms": 29227,
+ "duration_api_ms": 167937,
+ "usage": {
+  "input_tokens": 12,
+  "cache_creation_input_tokens": 2988,
+  "cache_read_input_tokens": 322700,
+  "output_tokens": 2535,
+  "output_tokens_details": {
+   "thinking_tokens": 35
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2988,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 782,
+    "cache_read_input_tokens": 65314,
+    "cache_creation_input_tokens": 1409,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1409
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "models": [
+  "claude-opus-5-5"
+ ],
+ "stop_reason": "end_turn",
+ "terminal_reason": "completed",
+ "result": "Both bugs are fixed and committed as `77fc955` on `d411-L2-R` (not pushed). One gap: the frozen-document half of the new test was never shown failing on its own against the base code.\n\n- **NaN vs null:** the kept answers were stored under a `JSON.stringify` key, which writes both `NaN` and `null` as `null`. Both stores now use a stricter key, and when a call's fields would come out ambiguous (`NaN`, ±Infinity, -0, `undefined`, a function), its answer simply isn't kept. So `extendCorner(doc, { length: 400, targets: { kh: NaN } })` now gives BAD_TARGET, as on a fresh document.\n- **Frozen at the top only:** answers were kept for any document whose top level was frozen, so editing its `pieces` array in place brought back the old answer. Now they're only kept when the whole document is frozen all the way down. That check walks the document once and the result is cached, so a handle drag stays fast.\n\n**Tests:**\n- **Before the fix:** the new test, row 7 in `test/core_turnby.test.js`, failed on the base code: 7 tests, 6 pass, 1 fail. The NaN call after the null call didn't throw.\n- **After the fix:** the touched test file plus `test/turn_corner.test.js`, `test/climb_corner.test.js` and `app/test/drag-ghost.test.js` give 30 tests, 29 pass, 0 fail, 1 skipped. The skipped test was already there; it needs the keeper's ELYSIUM save, which isn't in the repository.\n\n**Not done:**\n- The base run stopped at the NaN failure, which comes first in row 7, so the frozen-document half never ran there. My run with only the first fix applied waited its full 2-hour limit behind other sessions' runs and never ran, so I didn't restart it. I expect that half would fail on the base code, but I haven't seen it.\n- I didn't run the full suite.\n- No mutation harness covers `turnby.js`.\n\n**One thing you may want to rule on:** `src/core/close.js:204` keeps answers under the same top-level-only freeze check. It's outside this task, so I left it alone.\n\n`HANDBACK.md` is written and not committed, as asked."
+}

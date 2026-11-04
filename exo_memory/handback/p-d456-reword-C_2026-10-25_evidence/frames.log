@@ -1,0 +1,21 @@
+pub head fc75629 15:00:54Z
+pub exit 1: # pass 4 # fail 5 
+not ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+not ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+not ok 6 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+not ok 9 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th p
+ctl head c965f5e 15:11:55Z
+ctl exit 1: # pass 4 # fail 5 
+not ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+not ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+not ok 6 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+not ok 9 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th p
+pub2 head fc75629 15:14:00Z
+pub2 exit 1: # pass 4 # fail 5 
+not ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+not ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+not ok 6 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+not ok 9 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th p

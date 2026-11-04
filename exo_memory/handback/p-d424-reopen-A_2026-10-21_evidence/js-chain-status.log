@@ -1,0 +1,159 @@
+warning: in the working copy of 'exo_memory/handback/p-landed.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'exo_memory/handback/p-sitting.md', LF will be replaced by CRLF the next time Git touches it
+[32m✔ reader: with a ledger it prints one line naming lap, stage and holder [90m(4.6933ms)[39m[39m
+[32m✔ reader: WITHOUT a ledger it prints nothing on stdout, exits 0, and says why on stderr (never MUTE) [90m(39.4478ms)[39m[39m
+[32m✔ reader: the silence is CHOSEN, not a swallowed crash - --why names the reason [90m(34.3283ms)[39m[39m
+[32m✔ THE BAR: a lap whose newest baton row is `filed` does NOT appear in the line [90m(1.9081ms)[39m[39m
+[32m✔ a filed lap is not resurrected by its own earlier row [90m(1.9824ms)[39m[39m
+[32m✔ an unfiled lap alongside a filed one is the one reported, and the count is stated [90m(2.1195ms)[39m[39m
+[32m✔ two unfiled laps: the newest leads and the line SAYS the others exist [90m(1.8901ms)[39m[39m
+[32m✔ the line states what it cannot see: one machine, and a repo-wide dirty count [90m(1.8504ms)[39m[39m
+[32m✔ an unreadable git tree prints `dirty ?`, never `dirty 0` [90m(1.8309ms)[39m[39m
+[32m✔ a ledger line that will not parse is COUNTED, not filtered away [90m(1.8598ms)[39m[39m
+[32m✔ dirtyCount returns null rather than 0 when git cannot answer [90m(22.5481ms)[39m[39m
+[32m✔ writer: an unknown stage is REFUSED and the vocabulary is printed [90m(56.0215ms)[39m[39m
+[32m✔ writer: a row with no holder is REFUSED - a baton must name a hand [90m(41.8685ms)[39m[39m
+[32m✔ writer: `filed` needs a holder too - no exemption [90m(34.2903ms)[39m[39m
+[32m✔ writer: the chain cannot MINT a lap [90m(38.5111ms)[39m[39m
+[32m✔ writer: an accepted row round-trips to the reader [90m(66.8712ms)[39m[39m
+[32m✔ THE COLLISION: a chain row must not land in the `stage` field, and does not [90m(33.7015ms)[39m[39m
+[32m✔ THE BAR: a lap filed without ever reaching the work leg is NAMED, where this was silent [90m(2.2104ms)[39m[39m
+[32m✔ THE MUTATION: one `working` row silences it, and it is the ONLY thing that changed [90m(3.8132ms)[39m[39m
+[32m✔ THE DISCRIMINATION: a lap that reached `return-leg` with no `working` row is SPARED [90m(1.6907ms)[39m[39m
+[32m✔ a healthy lap prints the line it printed before this section existed, byte for byte [90m(1.805ms)[39m[39m
+[32m✔ the universe rides the claim: the denominator is printed WITH it, never left to the reader [90m(3.4919ms)[39m[39m
+[32m✔ the claim carries its own limit, and ONLY where the claim is made [90m(4.1061ms)[39m[39m
+[32m✔ the loud clause is bounded to the NEWEST lap: an open lap leads, the dead one falls to the count [90m(1.7188ms)[39m[39m
+[32m✔ E-3.1: ONE healthy lap filing after the deaths must not mute the alarm on STDOUT [90m(1.6741ms)[39m[39m
+[32m✔ E-3.1: and it reaches STDOUT through the cli, which is the only channel the pulse reads [90m(97.9208ms)[39m[39m
+[32m✔ E-3.2: the window cap names what it dropped instead of shrinking the count in silence [90m(2.2845ms)[39m[39m
+[32m✔ E-3.3: a lap with a damaged chain row is UNKNOWN, never counted as a chain death [90m(2.1454ms)[39m[39m
+[32m✔ E-3.3: a wholly corrupt ledger reads as CORRUPT on stdout, never as clean [90m(102.1277ms)[39m[39m
+[32m✔ membership, never ordering: the map/dispatched order every real lap uses is read the same [90m(5.4611ms)[39m[39m
+[32m✔ a lap continued after being filed is OPEN, not dead - the two readers agree about `closed` [90m(2.3367ms)[39m[39m
+[32m✔ more unwitnessed laps than the list cap: ids truncate with +N and the COUNT stays exact [90m(2.1128ms)[39m[39m
+[32m✔ a ledger with chain rows and NOTHING unwitnessed still exits 0 with stdout silent, and stderr says why [90m(40.3125ms)[39m[39m
+[32m✔ the dead lap reaches the ACTUAL cli, not only line() - the hook reads stdout [90m(81.0866ms)[39m[39m
+[32m✔ BAR 1 — holder=panes and every dispatched pane has posted: the line SAYS SO [90m(6.901ms)[39m[39m
+[32m✔ BAR 2 — one pane has not posted: SILENT on the claim, and it names who is owed [90m(4.9456ms)[39m[39m
+[32m✔ BAR 2b — a hand-back that PREDATES the dispatch does not count: it answered an older brief [90m(4.434ms)[39m[39m
+[32m✔ BAR 3 — holder=chair is silent on the claim no matter how long every pane has been quiet [90m(4.5311ms)[39m[39m
+[32m✔ BAR 3b — holder=librarian is silent too, on the identical board [90m(4.4871ms)[39m[39m
+[32m✔ THE TRAP — an UNPARSEABLE board says UNKNOWN, never silent [90m(6.126ms)[39m[39m
+[32m✔ FUSED — the live shape (two rows glued `}{`, stray newline after) is RECOVERED, not UNKNOWN [90m(4.8561ms)[39m[39m
+[32m✔ FUSED — the count PRINTS, so the write defect stays visible from the line everyone reads [90m(4.1753ms)[39m[39m
+[32m✔ FUSED — THE GUARD SURVIVES: a DISPATCH hidden inside a fused line is counted, and the pane is owed [90m(3.9073ms)[39m[39m
+[32m✔ FUSED — THE OTHER DIRECTION: `}{` clothing on a line that does NOT decompose is still UNKNOWN [90m(3.7811ms)[39m[39m
+[32m✔ FUSED — the split happens at the boundary that PARSES, not at the first `}{` in the bytes [90m(0.6735ms)[39m[39m
+[32m✔ FUSED — an ordinary single row is untouched: not fused, and the line does not mention it [90m(3.8336ms)[39m[39m
+[32m✔ THE DEADLOCK — a chair ring to the LIBRARIAN is a wake, not a dispatch: the counter still completes [90m(4.2462ms)[39m[39m
+[32m✔ THE DEADLOCK — the exclusion is by SEAT, not by silence: a pane that has not posted is still owed [90m(4.36ms)[39m[39m
+[32m✔ THE NEW ROUTE — a pane's `call_librarian` audit row IS its hand-back [90m(3.8715ms)[39m[39m
+[32m✔ THE NEW ROUTE — a call that PREDATES the dispatch answered an older brief and does not count [90m(4.7356ms)[39m[39m
+[32m✔ THE NEW ROUTE — a REFUSED call is not a hand-back [90m(3.9613ms)[39m[39m
+[32m✔ THE TRAP — an unreadable letters.json says UNKNOWN, and the line carries it [90m(3.4333ms)[39m[39m
+[32m✔ THE TRAP — a dispatch to a pane with NO letter is UNKNOWN, not a smaller round [90m(4.4571ms)[39m[39m
+[32m✔ THE TRAP — an AMBIGUOUS id prefix resolves to nothing rather than to a guess [90m(0.7386ms)[39m[39m
+[32m✔ THE TRAP — a byte tail that does not reach the anchor is UNKNOWN, not "nobody owes" [90m(0.5342ms)[39m[39m
+[32m✔ the anchor scopes the round: a dispatch from BEFORE the last `filed` row is not this cycle [90m(4.3928ms)[39m[39m
+[32m✔ a store with NO board.jsonl is not a room running a committee: n/a and silent [90m(2.0023ms)[39m[39m
+[32m✔ the chair's own board traffic is not a hand-back [90m(3.7452ms)[39m[39m
+[32m✔ a delivery-UNCONFIRMED dispatch is counted and said, not silently treated as delivered [90m(3.619ms)[39m[39m
+[32m✔ THE UNIVERSE rides the claim: N of M and the round are printed, never left to the reader [90m(4.1953ms)[39m[39m
+[32m✔ MUTATION — remove one hand-back row and the fired claim goes silent [90m(7.5574ms)[39m[39m
+[32m✔ BLIND — an active window withholds the claim and DECLARES the mute [90m(3.154ms)[39m[39m
+[32m✔ BLIND — an UNREADABLE marker fails CLOSED, per blind.js decision 3 [90m(3.5472ms)[39m[39m
+[32m✔ BLIND — an EXPIRED marker does not mute: fail-closed is not fail-forever [90m(4.5076ms)[39m[39m
+[32m✔ BLIND — the marker is read from the STORE, never from the live machine [90m(2.2239ms)[39m[39m
+[32m✔ COVERAGE, stated: this claim cannot fire on a lap whose holder never reached panes [90m(3.9002ms)[39m[39m
+[32m✔ TONIGHT, REPRODUCED — the return leg carries the bounce and names what is sitting [90m(4.063ms)[39m[39m
+[32m✔ RED FIRST — the same leg, the same duration, no bounce: no verdict at all [90m(3.833ms)[39m[39m
+[32m✔ a bounce CLEARED by a later delivery is not printed [90m(4.58ms)[39m[39m
+[32m✔ a delivery BEFORE the bounce does not clear it [90m(4.0356ms)[39m[39m
+[32m✔ the clause rides EVERY holder — a bounce under holder=panes is a bounce [90m(4.0994ms)[39m[39m
+[32m✔ the collation segments stay gated: a holder=chair line gains clause 3 and nothing else [90m(4.0313ms)[39m[39m
+[32m✔ a bounce from BEFORE the anchor is not resurrected [90m(4.0594ms)[39m[39m
+[32m✔ a refusal naming a mount that resolves to no letter is COUNTED, never dropped [90m(4.0027ms)[39m[39m
+[32m✔ an unreadable board says delivery UNKNOWN on a line where collation cannot speak [90m(3.2431ms)[39m[39m
+[32m✔ an unreadable tree claims NO hand-backs — `dirty ?` never carries a list [90m(3.9424ms)[39m[39m
+[32m✔ tree() names an UNTRACKED hand-back and not a committed one [90m(301.1439ms)[39m[39m
+[32m✔ tree() on a non-repo is dirty null and hand-backs EMPTY, never a claim [90m(20.7983ms)[39m[39m
+[32m✔ more hand-backs than the list cap are counted, never silently trimmed [90m(4.7976ms)[39m[39m
+[32m✔ IN SYNC — with no sync status in the store, the line is BYTE-IDENTICAL to what it printed before [90m(3.6916ms)[39m[39m
+[32m✔ IN SYNC — one commit hash per machine, and it says AS OF, never a live agreement [90m(4.8014ms)[39m[39m
+[32m✔ IN SYNC — one machine only is a QUESTION, not an agreement [90m(4.5697ms)[39m[39m
+[32m✔ IN SYNC — a machine that has pushed nothing prints `never`, never a blank [90m(4.0768ms)[39m[39m
+[32m✔ IN SYNC — an unparseable status file falls back to the old admission, never to a crash [90m(3.8444ms)[39m[39m
+[32m✔ IN SYNC — the status is read from the STORE, never from the live machine [90m(2.9126ms)[39m[39m
+[32m✔ STALE, THE BAR: an open lap whose last row is older than 24 h is NAMED FIRST, with its id, holder and age [90m(1.9429ms)[39m[39m
+[32m✔ STALE, THE CITED CASE replayed at 13:15:10 on 09-16 — the moment C was refused — names D064 first [90m(2.0847ms)[39m[39m
+[32m✔ STALE, the margin on the cited case: at 13:14:00 on 09-16 the 24 h rule is SILENT — it named D064 by 61 s [90m(1.7727ms)[39m[39m
+[32m✔ STALE, once D064 is parked it is gone from the line entirely [90m(1.6188ms)[39m[39m
+[32m✔ STALE, the boundary is strict: at exactly 24 h a lap is not stale, one millisecond later it is [90m(3.5472ms)[39m[39m
+[32m✔ STALE, the case the old line hid: a stale lap BEHIND a newer open lap is named, not folded into "+1 more open" [90m(2.0199ms)[39m[39m
+[32m✔ STALE, a fresh lap prints no STALE segment, and a filed lap however old is never stale [90m(2.283ms)[39m[39m
+[32m✔ STALE, age is measured from the lap's NEWEST row of any stage — a recent non-chain row keeps it alive [90m(1.7261ms)[39m[39m
+[32m✔ STALE, several: oldest first, capped at the list cap with +N, one line [90m(1.695ms)[39m[39m
+[32m✔ STALE, NEVER THROWS on a damaged ledger, and still names the stale lap it can age [90m(2.0208ms)[39m[39m
+[32m✔ STALE reaches STDOUT through the actual CLI — the only channel the pulse reads [90m(87.8576ms)[39m[39m
+[32m✔ STALE, a DAMAGED row that comes first must not hide a lap that is stale by its well-formed rows (mutant M10) [90m(2.7273ms)[39m[39m
+[32m✔ STALE, NEVER TAKES THE PULSE DOWN: a throw in the stale reader prints STALE UNKNOWN and the line still prints (mutant M11) [90m(2.4312ms)[39m[39m
+[32m✔ QUEUED — a ring waiting 4 min behind stamp=working is printed, naming the seat and when it started waiting [90m(4.3596ms)[39m[39m
+[32m✔ QUEUED — waiting 1 min behind stamp=working is ordinary, and is not printed [90m(4.049ms)[39m[39m
+[32m✔ QUEUED — a ring that was DELIVERED is not printed, however long it waited [90m(4.0577ms)[39m[39m
+[32m✔ QUEUED — a ring FORCE-delivered (the post-D074 row, with "; composer: …") is not printed as waiting [90m(4.1336ms)[39m[39m
+[32m✔ QUEUED — a ring REFUSED because its pane exited is not printed as waiting [90m(3.938ms)[39m[39m
+[32m✔ QUEUED — a ring that was WITHDRAWN is not printed [90m(3.9515ms)[39m[39m
+[32m✔ QUEUED — the librarian as the receiver is printed by name, every seat included [90m(3.8278ms)[39m[39m
+[32m✔ QUEUED — behind stamp=ready it is NOT printed inside the 240 s bound: the app force-delivers it itself [90m(3.8739ms)[39m[39m
+[32m✔ QUEUED — behind stamp=ready but STILL waiting past the bound (5 min +) is printed: the forced delivery did not happen [90m(4.1415ms)[39m[39m
+[32m✔ QUEUED — a ring queued before the app last launched died with the old process, and is not printed as waiting [90m(4.8314ms)[39m[39m
+[32m✔ QUEUED — pairing is by receiver AND label: a delivery to another seat, or of another ring, does not clear it [90m(4.1828ms)[39m[39m
+[32m✔ QUEUED — with NO open lap it still prints: a ring can back up when nothing is open [90m(5.1689ms)[39m[39m
+[32m✔ QUEUED — several waiting at one seat: the OLDEST sets the age, and the count is said [90m(3.9573ms)[39m[39m
+[32m✔ D132 — the LIVE D status (head 9486b30, D last pushed f70d50a) reads NOT in sync, never "in sync" [90m(3.819ms)[39m[39m
+[32m✔ D132 — the machine behind the head is NAMED, with its last push and how long ago [90m(4.6711ms)[39m[39m
+[32m✔ D132 — the machine AT the head is marked as the head, with its age [90m(4.5975ms)[39m[39m
+[32m✔ D132 — the whole line still says AS OF (it is this machine's last sync, never a live check) [90m(3.6068ms)[39m[39m
+[32m✔ D132 — every machine at the head is still "in sync", in the old words [90m(4.096ms)[39m[39m
+[32m✔ D132 — a machine that never pushed, with a head present, reads "never pushed", not "behind" [90m(4.1422ms)[39m[39m
+[32m✔ D132 — a behind machine with no `at` still says behind, and invents no age [90m(3.7756ms)[39m[39m
+[32m✔ UNRECEIVED — a ring written UNCONFIRMED and received 2 min later is silent [90m(4.2609ms)[39m[39m
+[32m✔ UNRECEIVED — a ring written UNCONFIRMED and never received is flagged past 10 min, naming both ends and the send time [90m(3.8277ms)[39m[39m
+[32m✔ UNRECEIVED — inside the 10-minute bound it is not flagged yet [90m(3.9828ms)[39m[39m
+[32m✔ UNRECEIVED — a ring to a busy seat is QUEUED only: the app writes no call_* row for a queued ring (main.rs:11490) [90m(4.3758ms)[39m[39m
+[32m✔ UNRECEIVED — a [Received] ring is trusted on the app's render receipt, even with no transcript row on the board [90m(3.6999ms)[39m[39m
+[32m✔ UNRECEIVED — a pane's call_librarian written UNCONFIRMED and never received names the letter and the librarian [90m(3.7991ms)[39m[39m
+[32m✔ UNRECEIVED — two identical rings and one receipt: one is still flagged (each receipt is consumed once, in order) [90m(4.2406ms)[39m[39m
+[32m✔ UNRECEIVED — a receipt for a DIFFERENT ring, or from a different sender tag, does not clear it [90m(4.3881ms)[39m[39m
+[32m✔ UNRECEIVED — older than the 24 h look-back it stops printing (an old ring is history, not a live fault) [90m(3.9887ms)[39m[39m
+[32m✔ UNRECEIVED — the real 20:15→23:32 case, as the board recorded it, is SILENT: the ring was sent at 23:32:48 and rendered in 0.36 s [90m(4.102ms)[39m[39m
+[32m✔ UNRECEIVED — the one real [Unconfirmed] ring on the board (2026-08-25 17:42:21Z), never received, is flagged [90m(3.8619ms)[39m[39m
+[32m✔ UNRECEIVED — the ring's text in the RIGHT pane WITHOUT the system sender tag is not a receipt (mutant U5) [90m(4.1396ms)[39m[39m
+[32m✔ UNRECEIVED — the tagged text arriving in the WRONG pane is not a receipt (mutant U6) [90m(3.6313ms)[39m[39m
+[32m✔ UNRECEIVED — with NO open lap it still prints: an unreceived ring is a fault whether or not a lap is open (mutant U9) [90m(4.3839ms)[39m[39m
+[32m✔ WAITING — a transcript ending in an unanswered AskUserQuestion prints "<seat> waiting on YOUR answer since <t>" [90m(6.0496ms)[39m[39m
+[32m✔ WAITING — the same transcript WITH its tool_result prints nothing: it clears the moment the answer lands [90m(5.8437ms)[39m[39m
+[32m✔ WAITING — a normal busy turn (last message a running Bash tool_use) is NOT "waiting on YOUR answer" [90m(5.9958ms)[39m[39m
+[32m✔ WAITING — an idle seat whose last message is its own reply is NOT waiting on an answer [90m(4.7611ms)[39m[39m
+[32m✔ WAITING — rows written around a turn (an attachment after the question) do not hide the open question [90m(5.1712ms)[39m[39m
+[32m✔ WAITING — a question typed over (the keeper pressed on with a new prompt) is no longer waiting [90m(4.6319ms)[39m[39m
+[32m✔ WAITING — a question opened before the app last launched died with its dialog, and is not reported [90m(5.2891ms)[39m[39m
+[32m✔ WAITING — a lettered pane is named by its letter, and the chair by "chair" [90m(5.6625ms)[39m[39m
+[32m✔ WAITING — only seats live on the board are read: a seat with no board row is not scanned [90m(4.3996ms)[39m[39m
+[32m✔ WAITING — a transcript outside the room's own dirs is still found (the room's dirs are an ORDER, not a filter) [90m(5.5278ms)[39m[39m
+[32m✔ WAITING — only the TAIL is read: a transcript larger than the tail, cut mid-row, still reads its last message [90m(6.1643ms)[39m[39m
+[32m✔ WAITING — with NO open lap it still prints: the keeper owes an answer whether or not a lap is open [90m(4.688ms)[39m[39m
+[32m✔ WAITING — the real 02:04:45Z → 05:32:16Z case: named while open, silent once answered [90m(10.5489ms)[39m[39m
+[32m✔ WAITING — the test file itself reads NO real transcript: CONSONANCE_PROJECTS_DIR is an empty temp dir [90m(1.1496ms)[39m[39m
+[32m✔ WAITING — a subagent (sidechain) row after the question does not hide it, as main.rs last_request skips them [90m(5.3107ms)[39m[39m
+[32m✔ WAITING — the chair is "chair" even where letters.json gives its session a letter (D's does: "D") (mutant W12) [90m(4.971ms)[39m[39m
+[32m✔ UNRECEIVED — a receipt row that ends on the send line (sent, or sent and held) still pays for its ring (D309) [90m(12.7505ms)[39m[39m
+[34mℹ tests 149[39m
+[34mℹ suites 0[39m
+[34mℹ pass 149[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1685.7862[39m

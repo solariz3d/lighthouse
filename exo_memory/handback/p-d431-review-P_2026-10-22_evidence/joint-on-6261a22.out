@@ -1,0 +1,113 @@
+[31m✖ row 1: TEST TRACK 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves [90m(19247.8376ms)[39m[39m
+[31m✖ row 2: TEST 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves [90m(2440.0316ms)[39m[39m
+[31m✖ row 3: a lap that ends 212 m below its start, level, finishes with no bump or wiggle at its closer joints [90m(918.8116ms)[39m[39m
+[31m✖ row 4: a windowed close rolls the road as gently as the bank allows: a 57° start closes in the last 200 m under the roll-rate bar [90m(277.0834ms)[39m[39m
+[34mℹ tests 4[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 4[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 23121.5959[39m
+
+[31m✖ failing tests:[39m
+
+test at joint-on-6261a22.test.js:70:1
+[31m✖ row 1: TEST TRACK 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves [90m(19247.8376ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: TEST TRACK 10: the joint bar
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'p41|p42 kh: -0.1, -5.99, -12.72 against -5.69 to -2.32 (over by 7.03)',
+  [32m+[39m   'p41|p42 kv: 0.52, -7.11, -15.83 against -4.42 to -3.22 (over by 11.42)',
+  [32m+[39m   'p42|p43 kh: -0.15, -11.81, -23.54 against -9.03 to -5.71 (over by 14.51)',
+  [32m+[39m   'p42|p43 kv: 0.04, 2.01, 4 against 0.96 to 1.51 (over by 2.49)',
+  [32m+[39m   'p43|p44 kh: -0.15, 6.56, 13.2 against 2.93 to 5.12 (over by 8.09)',
+  [32m+[39m   'p43|p44 kv: 0.03, -2.16, -4.33 against -1.56 to -1 (over by 2.77)'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at finishes [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d431\[39mjoint-on-6261a22.test.js:63:10[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d431\[39mjoint-on-6261a22.test.js:71:3[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'p41|p42 kh: -0.1, -5.99, -12.72 against -5.69 to -2.32 (over by 7.03)'[39m, [32m'p41|p42 kv: 0.52, -7.11, -15.83 against -4.42 to -3.22 (over by 11.42)'[39m, [32m'p42|p43 kh: -0.15, -11.81, -23.54 against -9.03 to -5.71 (over by 14.51)'[39m, [32m'p42|p43 kv: 0.04, 2.01, 4 against 0.96 to 1.51 (over by 2.49)'[39m, [32m'p43|p44 kh: -0.15, 6.56, 13.2 against 2.93 to 5.12 (over by 8.09)'[39m, [32m'p43|p44 kv: 0.03, -2.16, -4.33 against -1.56 to -1 (over by 2.77)'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at joint-on-6261a22.test.js:74:1
+[31m✖ row 2: TEST 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves [90m(2440.0316ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: TEST 10: the joint bar
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'p21|p22 kh: -0.03, -0.76, -1.48 against -0.46 to 0.23 (over by 1.01)',
+  [32m+[39m   'p21|p22 kv: 0.02, 0.55, 1.06 against 0.26 to 0.42 (over by 0.64)',
+  [32m+[39m   'p22|p23 kh: -0.03, 0.81, 1.65 against -0.23 to 0.46 (over by 1.19)',
+  [32m+[39m   'p22|p23 kv: 0.02, -0.58, -1.19 against -0.42 to -0.26 (over by 0.77)'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at finishes [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d431\[39mjoint-on-6261a22.test.js:63:10[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d431\[39mjoint-on-6261a22.test.js:77:3[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'p21|p22 kh: -0.03, -0.76, -1.48 against -0.46 to 0.23 (over by 1.01)'[39m, [32m'p21|p22 kv: 0.02, 0.55, 1.06 against 0.26 to 0.42 (over by 0.64)'[39m, [32m'p22|p23 kh: -0.03, 0.81, 1.65 against -0.23 to 0.46 (over by 1.19)'[39m, [32m'p22|p23 kv: 0.02, -0.58, -1.19 against -0.42 to -0.26 (over by 0.77)'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at joint-on-6261a22.test.js:80:1
+[31m✖ row 3: a lap that ends 212 m below its start, level, finishes with no bump or wiggle at its closer joints [90m(918.8116ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the 212 m climb: the joint bar
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'p5|p6 kv: 0.01, -0.07, -0.15 against -0.07 to -0.01 (over by 0.08)'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at finishes [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d431\[39mjoint-on-6261a22.test.js:63:10[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d431\[39mjoint-on-6261a22.test.js:87:3[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'p5|p6 kv: 0.01, -0.07, -0.15 against -0.07 to -0.01 (over by 0.08)'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at joint-on-6261a22.test.js:90:1
+[31m✖ row 4: a windowed close rolls the road as gently as the bank allows: a 57° start closes in the last 200 m under the roll-rate bar [90m(277.0834ms)[39m[39m
+  Error [CoreError]: CLOSE_WINDOW: close: can't close using only the last 200 m (p6): the road would roll too fast there: 2.343°/m over 20 m, past the 1.2144°/m bar (it was 0.000°/m). Widen the window or reshape the end
+      at refuse (C:\Users\nname\Downloads\t180-wt-land413\src\core\close.js:256:27)
+      at Object.close (C:\Users\nname\Downloads\t180-wt-land413\src\core\close.js:304:105)
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d431\[39mjoint-on-6261a22.test.js:98:15[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'CLOSE_WINDOW'[39m
+  }

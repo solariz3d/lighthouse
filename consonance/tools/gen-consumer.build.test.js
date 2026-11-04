@@ -265,7 +265,7 @@ Write-Output (ConvertTo-Json $out -Depth 5 -Compress)
 let PROBE_PATH = null;
 function probeScript() {
   if (!PROBE_PATH) {
-    PROBE_PATH = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'launch-probe-')), 'probe.ps1');
+    PROBE_PATH = path.join(require('./scratch.js').mkdtemp('launch-probe-'), 'probe.ps1');
     fs.writeFileSync(PROBE_PATH, PROBE_PS1, 'utf8');
   }
   return PROBE_PATH;
@@ -387,19 +387,29 @@ function checkStatusDoc(text) {
 
 /** The frame the generator writes. Kept beside its checker so the CONTRACT and the enforcement
  *  cannot drift apart; the generator calls this rather than composing prose of its own. */
+/* D273 lap 4 (the cold read's A15): kept identical to gen-consumer.js's (the drift guard renders both). */
+const GATE_LINE = 'GATE: in the source repository this tree was generated from: node consonance/tools/gen-consumer.build.test.js --gate'
+  + ' (this tree does not carry the generator it drives)\n';
+/* D273 lap 5 (A2): kept identical to gen-consumer.js's MEASURED_LINES (the drift guard renders both). */
+const MEASURED_LINES = (o) => (o.parity ? 'PARITY: (P, M, B) = (' + o.parity.P + ', ' + o.parity.M + ', ' + o.parity.B + ')\n' : '')
+  + (o.rustBreaks != null ? 'RUST: ' + o.rustBreaks + ' parity break(s)\n' : '')
+  + (o.identity ? 'IDENTITY-DIFF: ' + o.identity + '\n' : '')
+  + (o.coldRead ? 'COLD READ: ' + o.coldRead + '\n' : '')
+  + (o.parity || o.rustBreaks != null || o.identity || o.coldRead ? '\n' : '');
 function renderStatusDoc(o) {
   const sec = (head, members) => '## ' + head + '\n\n'
     + (members.length ? members.map((m) => '- ' + m).join('\n') : '(none)') + '\n';
   if (!o.measured) {
     return '# CONSUMER-STATUS\n\nSTATE: UNMEASURED\nGENERATED-FROM: ' + o.sha + '\n'
-      + 'GATE: node consonance/tools/gen-consumer.build.test.js --gate\n\n'
+      + GATE_LINE + '\n'
       + 'This tree was generated but never gated. Nothing here has been run, so nothing here is\n'
-      + 'known to work. Run the GATE line above to replace this file with a measured one.\n';
+      + 'known to work. The gate above, run in the source repository, replaces this file with a measured one.\n';
   }
   return '# CONSUMER-STATUS\n\nSTATE: MEASURED\nGENERATED-FROM: ' + o.sha + '\n'
-    + 'GATE: node consonance/tools/gen-consumer.build.test.js --gate\n'
+    + GATE_LINE
     + 'MEASURED-AT: ' + o.at + '\n\n'
-    + 'This repository is generated from a private working tree and IS INCOMPLETE ON PURPOSE.\n'
+    + MEASURED_LINES(o)
+    + 'This repository is generated from the keeper\'s public working tree and IS INCOMPLETE ON PURPOSE.\n'
     + 'Everything below fails in THIS tree and is named so you can see what you have got, rather\n'
     + 'than discovering it one file at a time.\n\n'
     + sec('JS tests that fail in this tree', o.js || [])
@@ -440,7 +450,7 @@ if (WIN && !PROBE_ON) {
   console.log('BUILD-GATE:   run it where a window appearing is nobody\'s interruption.');
 }
 
-const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'build-gate-'));
+const scratch = require('./scratch.js').mkdtemp('build-gate-');
 const NODE = process.execPath;
 
 function controlWindowScript() {
@@ -702,7 +712,7 @@ function gate() {
   }
 
   const started = Date.now();
-  const tree = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-gate-'));
+  const tree = require('./scratch.js').mkdtemp('consumer-gate-');
   const gen = spawnSync(NODE, [path.join(REPO, 'consonance/tools/gen-consumer.js'), '--out', tree],
     { cwd: REPO, encoding: 'utf8', timeout: 10 * 60 * 1000 });
   say('generate: exit ' + gen.status + ' -> ' + tree);
@@ -718,7 +728,7 @@ function gate() {
   const stale = freshExeProblem(exe, target, started);
   if (stale) { say('REFUSED: ' + stale); process.exit(1); }
 
-  const scratchHome = fs.mkdtempSync(path.join(os.tmpdir(), 'consumer-home-'));
+  const scratchHome = require('./scratch.js').mkdtemp('consumer-home-');
   const v = launchProbe({ exe, expectClass: APP_WINDOW_CLASS,
     expectTitle: '^' + appWindowTitle() + '$', timeoutMs: 60000,
     env: { USERPROFILE: scratchHome } });

@@ -1,0 +1,15 @@
+{
+ "what": "D162, Q3 to Jev. Plan exo_memory/loop/plan_q3_jev_2026-09-27.md (bf840f7). Instructions = the Q3 blockquote of exo_memory/loop/q3_units_2026-09-27.md (sha256 a08b46ff...45ec) header, \"> \" stripped, lines joined by LF. Criteria descriptions are the header's own option texts. Written by pane E before the first call; only `questions` is sent.",
+ "state": "The unit's span from the line '**Output:**' through its '> ' Sentence line, inclusive, exactly as in the unit file (LF-joined, no trailing newline).",
+ "questions": {
+  "q3": {
+   "type": "choice",
+   "instructions": "**Q3.** Here is a command's output, and a sentence written about it. Does the sentence state any number, unit, count or\nverdict that the output does NOT show?\nAnswer: **YES** (it states something the output does not show) · **NO** · **CAN'T TELL**",
+   "criteria": {
+    "YES": "YES (it states something the output does not show)",
+    "NO": "NO",
+    "CANT_TELL": "CAN'T TELL"
+   }
+  }
+ }
+}

@@ -167,6 +167,7 @@ const REASONS = [
   'LEDGER_INCONSISTENT',  // import: agreed state and pending tail do not meet
   'BEHIND',               // import: this machine's file is shorter than the agreed state
   'APPLIED_BUT_DIFFERENT',// import: every tail byte is present, yet the whole file's sha256 differs
+  'NO_PANE_HERE',         // import: this machine has no pane for the seat, and the ledger names no folder to place it in
 ];
 
 /** Verdicts whose seat does not carry and needs a decision. `run` and `toJson` both read this. */
@@ -364,12 +365,20 @@ function flushFailed(what, p, e) {
   return err;
 }
 
+/**
+ * D639: every read and write of a tail goes in calls of at most CHUNK bytes. One call for a whole 1.3 GB tail is about four
+ * minutes on the stick with no byte counted until it returns, and the app now stops a carry by its byte counters standing
+ * still (main.rs CarryBound). At the stick's measured 5.1 MiB/s write a 16 MiB call is about 3 s.
+ */
+const CHUNK = 16 * 1024 * 1024;
+
 /** Open, write, fsync, close — the caller renames. The close error is dropped ONLY when an earlier one is already on its way out. */
 function writeDurable(p, data) {
   const fd = fs.openSync(p, 'w');
   let flushed = false;
   try {
-    fs.writeFileSync(fd, data);
+    if (typeof data === 'string') data = Buffer.from(data, 'utf8');
+    for (let at = 0; at < data.length;) at += fs.writeSync(fd, data, at, Math.min(CHUNK, data.length - at));
     try { IO.fsync(fd, p); } catch (e) { throw flushFailed('could not flush', p, e); }
     flushed = true;
   } finally {
@@ -556,7 +565,7 @@ function readRange(p, start, end) {
   try {
     let at = 0;
     while (at < out.length) {
-      const got = fs.readSync(fd, out, at, out.length - at, start + at);
+      const got = fs.readSync(fd, out, at, Math.min(CHUNK, out.length - at), start + at);
       if (got <= 0) throw new Error(`short read at ${start + at} of ${p}`);
       at += got;
     }
@@ -832,6 +841,8 @@ function applyExport(plan, now) {
     const entry = led.seats[row.sid] || { seat: row.seat, key: row.key, agreed: null, pending: null };
     entry.seat = row.seat;
     entry.key = row.key;
+    // D639: the seat's folder, by name, so a machine with no pane for it can still place it (planImport, `no-pane`).
+    entry.cwdName = path.basename(row.cwd);
     // E-3: the INCOMING conversation's first timestamp, for the window's identity bar.
     //   offset 0 — the stick now carries this WHOLE file, so its first timestamp is recorded, always.
     //   a delta  — recorded only when the entry LACKS one, and never over one that is set (L059 §9 R-4).
@@ -880,7 +891,28 @@ function planImport(o) {
     if (k.key) { row.key = k.key; row.keyLine = k.line; }
   };
 
-  for (const seat of s.seats) {
+  // D639 (the keeper, 2026-11-03: "only 4 panes exist for builders ... i will open a new pane for the ones if they do not
+  // fit"): a seat the stick carries but this machine has no pane for is NOT skipped. It is placed by its session id under
+  // the folder it had on the exporting machine (the ledger's cwdName, under this machine's instances root), and its row is
+  // kind 'no-pane' and says so, so a pane can be opened for it. Every rule below applies to it unchanged, and its
+  // destination is <its folder's slug>/<its own sid>.jsonl, so it can never land on another seat's file.
+  const list = s.seats.slice();
+  const known = new Set(list.map((x) => x.sid));
+  const instances = o.instancesRoot || sync.instancesRoot();
+  for (const sid of Object.keys(led.seats).sort()) {
+    const e = led.seats[sid];
+    if (known.has(sid) || !e || !e.pending) continue;
+    const seat = e.seat || `pane ${sid.slice(0, 8)}`;
+    const name = typeof e.cwdName === 'string' && /^[A-Za-z0-9._-]+$/.test(e.cwdName) && e.cwdName !== '.' && e.cwdName !== '..' ? e.cwdName : null;
+    if (!name) {
+      rows.push({ seat, sid, kind: 'no-pane', entry: e, verdict: 'REFUSED', reason: 'NO_PANE_HERE',
+        why: `this machine has no pane for seat ${sid}, and the stick does not name a plain folder to place it in (a ledger from before D639, or a damaged name). It stays on the stick; open a pane for it and import again.` });
+      continue;
+    }
+    list.push({ seat, sid, cwd: path.join(instances, name), kind: 'no-pane' });
+  }
+
+  for (const seat of list) {
     const entry = led.seats[seat.sid];
     const dest = place.paneJsonl(projectsRoot, seat.cwd, seat.sid);
     const row = { ...seat, dest, entry, verdict: null, why: null, tail: null };
@@ -900,7 +932,7 @@ function planImport(o) {
       row.why = `the ledger names a tail the stick does not hold: ${pend.tailFile}`;
       rows.push(row); continue;
     }
-    const tail = fs.readFileSync(tailPath);
+    const tail = readRange(tailPath, 0, fs.statSync(tailPath).size);
     if (sha256(tail) !== pend.tailSha) {
       row.verdict = 'REFUSED';
       row.reason = 'TAIL_DAMAGED';
@@ -1032,6 +1064,11 @@ function planImport(o) {
 
     row.verdict = 'APPEND';
     rows.push(row);
+  }
+  for (const r of rows) {
+    if (r.kind === 'no-pane' && r.reason !== 'NO_PANE_HERE') {
+      r.why = `${r.why ? r.why + ' ' : ''}This machine has no pane for seat ${r.sid}: its conversation goes to ${r.dest}. Open a pane for it there.`;
+    }
   }
   return { ok: true, code: 0, rows, led, machine, stick, projectsRoot };
 }
@@ -1385,8 +1422,12 @@ function runCarryDir(o, out, no) {
 // WHY IT IS STILL A DOOR AND NOT A HABIT. The stick's own ledger has been corrupt once
 // (`ledger.json.corrupt-20260915T084005`), and a wrong agreed offset would make a tail that is the ONLY copy
 // look redundant. So a candidate must pass all of:
-//   · its name is exactly `<sid>.<from>-<to>.tail` — torn `.writing-*` files, the ledger, its lock and any
-//     `.corrupt-*` copy are never judged by this rule, and each is LISTED with why it was left;
+//   · its name is exactly `<sid>.<from>-<to>.tail` — the ledger, its lock and any `.corrupt-*` copy are never
+//     judged by this rule, and each is LISTED with why it was left;
+//   · D639 (c), the keeper's retention rule (2026-11-03, "so it doesnt get so full fast"): it is not the NEWEST tail
+//     of its conversation (largest `to`) — one is always kept, even when both machines have applied it;
+// and a torn `.writing-<pid>` partial is a candidate only when the ledger lock names no live holder and its own pid
+// is not a live node — a killed close leaves one (10-30 12:36: pid 16716's 609 MB partial and its stale lock).
 //   · the ledger has an agreed offset for the sid, and `to` is at or below it — straddling or above is kept;
 //   · it is not the seat's pending tail, and not a member the transfer manifest names (writeTransferSet names
 //     pending tails there, and verify-set counts a missing member as a failure);
@@ -1436,14 +1477,38 @@ function planPrune(o) {
 
   const candidates = [], notCandidates = [];
   const names = fs.existsSync(dir) ? fs.readdirSync(dir).sort() : [];
+  // D639 (c), the keeper's rule: keep the NEWEST tail of each conversation, whatever else holds — the one copy a
+  // retention may never take. Newest is the largest `to`, then the largest `from`.
+  const newest = new Map();
+  for (const name of names) {
+    const m = name.match(TAIL_RE);
+    if (!m) continue;
+    const cur = newest.get(m[1]), to = Number(m[3]), from = Number(m[2]);
+    if (!cur || to > cur.to || (to === cur.to && from > cur.from)) newest.set(m[1], { name, to, from });
+  }
+  // D639 (c): a `.writing-<pid>` partial is a write that never finished. It is a candidate only when no live process
+  // could still be writing it: the ledger lock names no live holder, AND its own pid is not a live node.
+  let lockHeld = null;
+  try { lockHeld = JSON.parse(fs.readFileSync(path.join(dir, LOCK_NAME), 'utf8')); } catch (e) { if (e.code !== 'ENOENT') lockHeld = { pid: null, unreadable: true }; }
+  // The delete path re-lists while holding the lock itself; its own lock is not another writer.
+  const lockLive = lockHeld && lockHeld.pid !== process.pid && (lockHeld.unreadable || holderLive(lockHeld, o.imageOf));
   for (const name of names) {
     const st = fs.lstatSync(path.join(dir, name));
     if (!st.isFile()) { notCandidates.push({ name, why: 'not a file', bytes: 0 }); continue; }
     const m = name.match(TAIL_RE);
     if (!m) {
+      const w = name.match(/\.writing-(\d+)$/);
+      if (w) {
+        const pid = Number(w[1]);
+        const why = lockLive ? `a write in progress, perhaps: the ledger lock is held (pid ${lockHeld.pid}) or cannot be read`
+          : holderLive({ pid, image: SELF_IMAGE }, o.imageOf) ? `a write in progress, perhaps: pid ${pid} is a live ${SELF_IMAGE}`
+          : null;
+        if (why) notCandidates.push({ name, why, bytes: st.size });
+        else candidates.push({ name, sid: null, partial: true, bytes: st.size });
+        continue;
+      }
       const why = name === LEDGER_NAME ? 'the ledger itself'
         : name === LOCK_NAME ? 'the ledger lock'
-        : /\.writing-\d+$/.test(name) ? 'a torn or in-progress write — not a finished tail, so not this rule\'s to judge'
         : 'not a tail file';
       notCandidates.push({ name, why, bytes: st.size });
       continue;
@@ -1457,6 +1522,8 @@ function planPrune(o) {
       why = from < entry.agreed.offset ? `straddles the agreed offset ${entry.agreed.offset}` : `above the agreed offset ${entry.agreed.offset} — not yet agreed`;
     } else if (manifestNames.has(`${LEDGER_DIR}/${name}`)) why = 'named by the transfer manifest';
     else why = heldHere(sid, entry.agreed);
+    // Last, so a tail that fails an earlier bar is listed under that bar's reason.
+    if (!why && newest.get(sid).name === name) why = 'the newest tail of this conversation — the rule keeps one';
     if (why) notCandidates.push({ name, why, bytes: st.size });
     else candidates.push({ name, sid, from, to, bytes: st.size });
   }
@@ -1465,7 +1532,8 @@ function planPrune(o) {
 }
 
 function printPrune(out, p) {
-  out(`  ${p.candidates.length} tail(s) below the agreed offset and held here, ${p.bytes} bytes`);
+  const partials = p.candidates.filter((c) => c.partial).length;
+  out(`  ${p.candidates.length - partials} tail(s) below the agreed offset and held here, and ${partials} unfinished .writing partial(s) no live process holds, ${p.bytes} bytes`);
   for (const c of p.candidates) out(`  DELETABLE  ${c.name}  ${c.bytes} B`);
   for (const x of p.notCandidates) out(`  KEPT       ${x.name}  — ${x.why}`);
   out(`listing digest ${p.digest}`);

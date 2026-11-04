@@ -1,0 +1,79 @@
+$ node "consonance/tools/heavy-run.mutants.js"
+(exit 0)
+control (unmutated copy)                                        pass 50 fail 0
+ 1 lock: created with "w", not exclusively ("wx"): two runners can both hold it                      pass 49 fail 1  CAUGHT
+ 2 nested: any token is a pass, not only the current holder's                                        pass 48 fail 2  CAUGHT
+ 3 release: removes a lock that is not its own                                                       pass 49 fail 1  CAUGHT
+ 4 release: not on exit or error                                                                     pass 46 fail 4  CAUGHT
+ 5 the max wait RUNS ANYWAY instead of failing loudly                                                pass 26 fail 24  CAUGHT
+ 6 the exit code of a timeout is not 3                                                               pass 49 fail 1  CAUGHT
+ 7 pidAlive: EPERM reads as dead                                                                     pass 49 fail 1  CAUGHT
+ 8 pidAlive: any throw reads as alive                                                                pass 47 fail 3  CAUGHT
+ 9 pidAlive: a bad pid is asked about                                                                pass 48 fail 2  CAUGHT
+10 takeover: a dead holder is never taken (stale is always false)                                    pass 38 fail 12  CAUGHT
+11 takeover: every holder is taken (stale is always true)                                            pass 40 fail 10  CAUGHT
+12 takeover: the takeover is not logged                                                              pass 45 fail 5  CAUGHT
+13 takeover: whom it replaced is not recorded                                                        pass 45 fail 5  CAUGHT
+14 takeover: the set-aside file is left behind                                                       pass 47 fail 3  CAUGHT
+15 race: a live lock caught by the rename is not put back                                            pass 46 fail 4  CAUGHT
+16 race: the moved lock is judged by kill(0) alone (a young one is thrown away without the second witness) pass 49 fail 1  CAUGHT
+17 young: the second witness is never asked                                                          pass 43 fail 7  CAUGHT
+18 young: the boundary is inclusive (a lock exactly 30 minutes old is young)                         pass 49 fail 1  CAUGHT
+19 young: YOUNG_MS is zero                                                                           pass 46 fail 4  CAUGHT
+20 young: YOUNG_MS is one minute                                                                     pass 47 fail 3  CAUGHT
+21 young: a lock of unknown age counts as old                                                        pass 49 fail 1  CAUGHT
+22 young: "cannot tell" (null) counts as gone                                                        pass 49 fail 1  CAUGHT
+23 young: the second reading is asked and its answer ignored                                         pass 44 fail 6  CAUGHT
+24 young: the disagreement is said at every poll, not once                                           pass 49 fail 1  CAUGHT
+25 young: the log does not give the second method's reading                                          pass 49 fail 1  CAUGHT
+26 young: the log says nothing about "cannot confirm"                                                pass 49 fail 1  CAUGHT
+27 tasklist: asked about another pid                                                                 pass 48 fail 2  CAUGHT
+28 tasklist: the pid is read from the name column                                                    pass 48 fail 2  CAUGHT
+29 tasklist: a failed call (status != 0) is read as an answer                                        pass 49 fail 1  CAUGHT
+30 tasklist: a spawn error is read as an answer                                                      pass 49 fail 1  CAUGHT
+31 tasklist: "listed" means gone                                                                     pass 47 fail 3  CAUGHT
+32 tasklist: a throw while asking is read as gone                                                    pass 49 fail 1  CAUGHT
+33 tasklist: asked on every platform                                                                 pass 49 fail 1  CAUGHT
+34 tasklist: not hidden                                                                              pass 49 fail 1  CAUGHT
+35 tasklist: no timeout                                                                              pass 49 fail 1  CAUGHT
+36 slots: the default is one (today's machine-wide lock)                                             pass 48 fail 2  CAUGHT
+37 slots: slot 2 is the same file as slot 1                                                          pass NaN fail NaN  CAUGHT (the suite hung or crashed)
+38 slots: a count of zero is accepted                                                                pass 49 fail 1  CAUGHT
+39 slots: any whole count is accepted (no ceiling)                                                   pass 49 fail 1  CAUGHT
+40 slots: a fractional count is accepted                                                             pass 49 fail 1  CAUGHT
+41 slots: a slot beyond the count can be claimed                                                     pass 47 fail 3  CAUGHT
+42 slots: only the slots up to the count are looked at (a holder in a higher one is invisible)       pass NaN fail NaN  CAUGHT (the suite hung or crashed)
+43 tree: every lock blocks (no parallel runs)                                                        pass NaN fail NaN  CAUGHT (the suite hung or crashed)
+44 tree: no lock blocks but a full house (two runs in one tree)                                      pass 27 fail 23  CAUGHT
+45 tree: a lock with no tree recorded does not block                                                 pass 36 fail 14  CAUGHT
+46 tree: with one slot a different tree runs beside the holder                                       pass 49 fail 1  CAUGHT
+47 tree: the lock does not record its tree                                                           pass NaN fail NaN  CAUGHT (the suite hung or crashed)
+48 tree: the cwd is not asked, every runner is the same tree                                         pass 49 fail 1  CAUGHT
+49 tree: the Windows case is kept (two spellings of one folder are two trees)                        pass 49 fail 1  CAUGHT
+50 tree: a failed git call is read as a tree                                                         pass 49 fail 1  CAUGHT
+51 tree: git failing to run is not the shared bucket                                                 pass 49 fail 1  CAUGHT
+52 tree: a subfolder is its own tree (cwd, not the top level)                                        pass 49 fail 1  CAUGHT
+53 wait: names only the first holder                                                                 pass 48 fail 2  CAUGHT
+54 wait: names every holder even when one tree is the reason                                         pass 49 fail 1  CAUGHT
+55 wait: the waiting line does not say why                                                           pass 49 fail 1  CAUGHT
+56 claim: the second look for a rival is off (two of one tree run)                                   pass 49 fail 1  CAUGHT
+57 claim: the backing-off runner leaves its own claim behind                                         pass 49 fail 1  CAUGHT
+58 claim: the second look takes ANY lock as a rival, even another tree's                             pass NaN fail NaN  CAUGHT (the suite hung or crashed)
+59 nested: only slot 1 is searched for the run's own token                                           pass 49 fail 1  CAUGHT
+60 takeover: only a dead holder in slot 1 is taken                                                   pass 48 fail 2  CAUGHT
+61 takeover: the log does not name the slot                                                          pass 49 fail 1  CAUGHT
+62 disk: the refusal floor is zero (a run starts on a full disk)                                     pass 47 fail 3  CAUGHT
+63 disk: the warning is never given                                                                  pass 49 fail 1  CAUGHT
+64 disk: the ROOMIEST drive decides, not the lowest                                                  pass 48 fail 2  CAUGHT
+65 disk: the guard is never called                                                                   pass 46 fail 4  CAUGHT
+66 disk: an unreadable drive is skipped in silence                                                   pass 49 fail 1  CAUGHT
+67 disk: a refusal exits 2, not 4                                                                    pass 49 fail 1  CAUGHT
+68 disk: CARGO_TARGET_DIR is not counted                                                             pass 49 fail 1  CAUGHT
+69 unreadable: a lock being written this instant is taken at once                                    pass 49 fail 1  CAUGHT
+70 unreadable: an old unreadable lock is never taken                                                 pass 48 fail 2  CAUGHT
+71 race F1: an unreadable moved lock is thrown away (a claim caught before its write: two runners in one slot) pass 48 fail 2  CAUGHT
+72 race F1: an unreadable moved lock is put back only when the first read was readable (the narrower condition) pass 49 fail 1  CAUGHT
+73 race F1: an OLD unreadable moved lock is put back too (the takeover of a junk lock never ends)    pass 49 fail 1  CAUGHT
+
+73 applied · 73 caught · 0 survived · 0 NOT APPLIED
+

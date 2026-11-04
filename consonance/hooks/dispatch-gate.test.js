@@ -53,12 +53,12 @@ const shaOk = (s) => s === '3d33713' || s === '0a7ac2b';
 // COPIES this source, DELETES the CONSONANCE_DATA line, runs the copy against a sandboxed home, and
 // requires the rows to reappear. Without that mutation there is only an assertion that the leak is
 // closed.
-const LEDGER = fs.mkdtempSync(path.join(os.tmpdir(), 'dispatch-gate-ledger-'));
+const LEDGER = require('../tools/scratch.js').mkdtemp('dispatch-gate-ledger-');
 
 // A CLEAN sandbox repo for FERRY_REPO, so `isDirty()` is deterministically false and the question
 // text is a pure function of the verb — which is what lets the two modes be compared byte for byte
 // against `buildQuestion(verb, false)` rather than against whatever the working tree happens to be.
-const SANDBOX_REPO = fs.mkdtempSync(path.join(os.tmpdir(), 'dispatch-gate-repo-'));
+const SANDBOX_REPO = require('../tools/scratch.js').mkdtemp('dispatch-gate-repo-');
 (function initCleanRepo() {
   const g = (args) => spawnSync('git', args, { cwd: SANDBOX_REPO, encoding: 'utf8' });
   g(['init', '-q']);
@@ -174,7 +174,7 @@ function emittedMode(out) {
 // fail 1` and a reader sees no red line — which is what this file did on 2026-08-31 when d00050e
 // changed the declaration's shape. A construction failure is captured and asserted by the FIRST
 // test below, in the words a red uses; every later test that needs an arm fails on the same message.
-const ARM_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'dg-arms-'));
+const ARM_DIR = require('../tools/scratch.js').mkdtemp('dg-arms-');
 let ARMS = null, ARMS_ERROR = null;
 try { ARMS = armsFor(fs.readFileSync(HOOK, 'utf8'), ARM_DIR, 'gate'); }
 catch (e) { ARMS_ERROR = e; ARMS = { print: null, ask: null, flip: 'NOT BUILT' }; }
@@ -399,7 +399,7 @@ test('CONTRACT 5 — the report splits the cited-rate BY MODE and refuses a pool
   assert.ok(/pooled figure: REFUSED/.test(text), 'the refusal must be a printed line');
   assert.ok(!/pooled: \d/.test(text) && !/5 cited of 9/.test(text), 'no pooled rate anywhere in the output');
   // the CLI, against a temp ledger, and the --pooled refusal
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dg-report-'));
+  const dir = require('../tools/scratch.js').mkdtemp('dg-report-');
   fs.writeFileSync(path.join(dir, 'dispatch-gate.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
   const env = Object.assign({}, process.env, { CONSONANCE_DATA: dir });
   const ok = spawnSync(process.execPath, [REPORT], { encoding: 'utf8', env });
@@ -439,8 +439,10 @@ test('findCitationDetail returns the token, and findCitation still returns only 
 });
 
 test('a gated dispatch records the target and the citation, and NEVER the token or the text', () => {
+  // D454 (B, from E's stranger run): FERRY_REPO is the sandbox, as in the mode rows. Without it the hook resolved the repo from THIS machine's
+  // ~/.consonance.json room_path, and on a machine without one it is (rightly) INERT and writes an "inert" row with no target.
   runHook({ tool_name: 'mcp__consonance__chair_inject',
-            tool_input: { target: 'B', token: 'SECRET-CHAIR-TOKEN', text: 'uncited prose' } });
+            tool_input: { target: 'B', token: 'SECRET-CHAIR-TOKEN', text: 'uncited prose' } }, { FERRY_REPO: SANDBOX_REPO });
   const raw = fs.readFileSync(path.join(LEDGER, 'dispatch-gate.jsonl'), 'utf8');
   assert.ok(!raw.includes('SECRET-CHAIR-TOKEN'), 'the chair token reached the ledger');
   assert.ok(!raw.includes('uncited prose'), 'the dispatch text reached the ledger');
@@ -504,7 +506,7 @@ test('a real uncited dispatch that happens to be 43 chars is NOT quarantined on 
 test('MUTATION — deleting the CONSONANCE_DATA line makes the ledger rows reappear', () => {
   if (process.env.DG_MUTANT) return;                    // the copy must not re-enter this test
 
-  const sandbox = fs.mkdtempSync(path.join(os.tmpdir(), 'dg-sandbox-'));
+  const sandbox = require('../tools/scratch.js').mkdtemp('dg-sandbox-');
   const home = path.join(sandbox, 'home');
   const sentinel = path.join(sandbox, 'data');
   fs.mkdirSync(home); fs.mkdirSync(sentinel);
@@ -519,7 +521,8 @@ test('MUTATION — deleting the CONSONANCE_DATA line makes the ledger rows reapp
   const abs = (s) => s
     .replace(/'\.\/dispatch-gate\.js'/g, hookAbs)
     .replace(/path\.join\(__dirname, 'dispatch-gate\.js'\)/g, hookAbs)
-    .replace(/path\.join\(__dirname, '\.\.', 'tools', 'dispatch-gate-report\.js'\)/g, reportAbs);
+    .replace(/path\.join\(__dirname, '\.\.', 'tools', 'dispatch-gate-report\.js'\)/g, reportAbs)
+    .replace(/require\('\.\.\/tools\/scratch\.js'\)/g, 'require(' + JSON.stringify(path.join(__dirname, '..', 'tools', 'scratch.js')) + ')'); // D287: the copy runs from a sandbox, so its scratch require must be absolute too
 
   const FIX = /\n\s*env: Object\.assign\(\{\}, process\.env, \{ CONSONANCE_DATA: LEDGER \}, envOverrides \|\| \{\}\),/;
   assert.ok(FIX.test(src),
@@ -579,7 +582,7 @@ test('MUTATION — deleting the CONSONANCE_DATA line makes the ledger rows reapp
 
 test('MUTATION — every guard in the classifier is load-bearing', () => {
   const src = fs.readFileSync(path.join(__dirname, 'dispatch-gate.js'), 'utf8');
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dg-mut-'));
+  const dir = require('../tools/scratch.js').mkdtemp('dg-mut-');
 
   const slowRun = TEST_SIGNATURE.map((s, k) => ({
     ts: new Date(T0 + k * 60000).toISOString(),
@@ -659,7 +662,7 @@ test('MUTATION — the six contract clauses are load-bearing', () => {
   if (process.env.DG_MUTANT) return;                    // the leak-proof copy runs the light suite only
   const gateSrc = fs.readFileSync(HOOK, 'utf8');
   const reportSrc = fs.readFileSync(REPORT, 'utf8');
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dg-contract-mut-'));
+  const dir = require('../tools/scratch.js').mkdtemp('dg-contract-mut-');
   const INTERRUPT = { tool_name: 'mcp__consonance__chair_inject',
                       tool_input: { target: 'B', text: '[interrupt] stop' } };
 

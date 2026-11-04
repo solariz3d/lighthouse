@@ -1,0 +1,16 @@
+✔ row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels (21774.9997ms)
+✔ row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels (2626.3202ms)
+✔ row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it (20583.3255ms)
+✔ row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it (2374.4165ms)
+✔ row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly (7450.1822ms)
+✔ row 6: a short closer (P's turn 150, tail 300, roll 54) brings the cup home no faster than his own road changes it (2126.381ms)
+✔ row 7: a closer too short for his rate brings the cup home at the slowest rate it allows, and the report says the rate (2513.1465ms)
+✔ row 8: a closer long enough for his rate brings the cup home under it and says nothing of a fallback (P's three laps) (7100.7133ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66717.5887

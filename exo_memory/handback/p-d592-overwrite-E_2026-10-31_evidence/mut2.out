@@ -1,0 +1,25 @@
+pre-flight (unmutated copy): green
+  killed    #1 O1 the open track under its own name asks too   (row 3)
+  killed    #2 O2 the name is matched case-sensitively   (row 4)
+  killed    #3 O3 a save never asks   (row 1 | row 2 | row 4 | row 5)
+  killed    #4 O4 no way to ask counts as Replace   (row 5)
+  killed    #5 O5 any answer but a refusal replaces   (row 2)
+  killed    #6 O6 the date is not carried   (row 1)
+  killed    #7 O7 the open track is matched in its saved case only   (row 3)
+  killed    #8 A1 a different road never asks   (row 6 | row 7)
+  killed    #9 A2 an unrecorded road counts as the same   (row 6)
+  killed    #10 A3 a folder not ours is asked about   (row 6)
+  killed    #11 A4 the export is asked about even when nothing is installed   (row 6)
+  killed    #12 A5 the marker is not found among the files   (row 6 | row 7)
+  killed    #13 A6 Cancel installs anyway   (row 7)
+  killed    #14 A7 no way to ask counts as Replace   (row 7)
+  killed    #15 A9 any answer but a refusal installs   (row 7)
+  killed    #16 A8 the installed date is not carried   (row 7)
+  killed    #17 Q1 Replace is the default   (row 8)
+  killed    #18 Q2 the save question does not name the date   (row 8)
+  killed    #19 Q3 the time is read in UTC   (row 8)
+  killed    #20 W1 Save does not pass the question   (row 9)
+  killed    #21 W2 the installer is not given the question   (row 9)
+
+applied 21 / caught 21 / NOT APPLIED 0
+worktree files unchanged: true

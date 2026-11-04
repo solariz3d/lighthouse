@@ -1,0 +1,35 @@
+﻿lowio: set status 0, io priority now 1, class BelowNormal
+caught       a zero read is printed as a count
+caught       the control rise is not required
+caught       the tray sanity check is dropped
+caught       registered worktrees count as strays
+caught       a dangling .git counts as registered
+caught       the main checkout counts as a stray
+caught       infrastructure is listed
+caught       young processes are listed
+caught       processes not ours are listed
+caught       any --headless process counts as ours
+caught       a headless browser is not ours
+caught       fake- match is loosened
+caught       worktrees are not counted
+caught       a linked worktree is read as if .git were a folder
+caught       names-only is ignored
+caught       strays ignore their prefix
+caught       no default repository
+caught       strays scanned by default in the old place
+caught       a given repo is not ours
+caught       its worktrees are not ours
+caught       the strays folder is not ours
+caught       the scratch root is not ours
+caught       an unknown flag is accepted
+caught       config repos are ignored
+caught       config strays are ignored
+caught       config wins over what is passed
+caught       a non-object leftovers key is accepted
+caught       strays without a prefix are accepted
+caught       repo_names lose names-only
+caught       a BOM breaks the config
+caught       an unreadable config throws
+caught       the old keeper paths are ours again
+applied 32 / caught 32 / NOT APPLIED 0; unmutated copy green
+exit 0

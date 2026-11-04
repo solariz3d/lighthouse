@@ -1,0 +1,25 @@
+[32m✔ 1 · constant width and r (or an r that does not bind the cap): case 0 draws exactly the segments it drew at b7c7676, byte for byte [90m(8.0224ms)[39m[39m
+[32m✔ 1 · constant width and r (or an r that does not bind the cap): case 1 draws exactly the segments it drew at b7c7676, byte for byte [90m(5.1202ms)[39m[39m
+[32m✔ 1 · constant width and r (or an r that does not bind the cap): case 2 draws exactly the segments it drew at b7c7676, byte for byte [90m(3.4714ms)[39m[39m
+[32m✔ 1 · constant width and r (or an r that does not bind the cap): case 3 draws exactly the segments it drew at b7c7676, byte for byte [90m(3.6566ms)[39m[39m
+[32m✔ 2 · a whole-piece width ramp (31 → 12 over 100 m): the width steps between segments are gone (was 0.57 m) and the mesh rows meet within 1 mm inside the piece and at both joints [90m(106.5598ms)[39m[39m
+[32m✔ 2 · a binding r changing (a narrow half-pipe whose rise rate is brushed): rows meet within 1 mm [90m(133.9915ms)[39m[39m
+[32m✔ 3 · w 31 → 12 with the ramp 'start' on a 100 m piece after a straight: the joint into it is within 1 mm (was 262 mm for 31 → 12 on 100 m) and the steps between segments are gone (was 4.8 m) [90m(45.794ms)[39m[39m
+[32m✔ 3 · w 12 → 31 with the ramp 'start' on a 100 m piece after a straight: the joint into it is within 1 mm (was 262 mm for 31 → 12 on 100 m) and the steps between segments are gone (was 4.8 m) [90m(41.662ms)[39m[39m
+[32m✔ 3 · w 31 → 12 with the ramp 'start' on a 45 m piece after a straight: the joint into it is within 1 mm (was 262 mm for 31 → 12 on 100 m) and the steps between segments are gone (was 4.8 m) [90m(44.5302ms)[39m[39m
+[32m✔ 3 · w 31 → 20 with the ramp 'start' on a 100 m piece after a straight: the joint into it is within 1 mm (was 262 mm for 31 → 12 on 100 m) and the steps between segments are gone (was 4.8 m) [90m(64.4991ms)[39m[39m
+[32m✔ 4 · readAt of a chord gives the profile at its START at d = 0 and at its END at d = its length; a segment with no chord is its own profile [90m(2.079ms)[39m[39m
+[32m✔ 4 · the water (profilerOf) reads a chord's blend, and a word document's font-transition blend (no chord, no cup) as its own profile [90m(3.1054ms)[39m[39m
+[32m✔ 4 · validation reads the road as drawn: the wall constants at a chord's start are its start profile's (no steep-without-raycast red at 35° walls that are not there) [90m(12.0878ms)[39m[39m
+[32m✔ 5 · a cup after a legacy piece that is still ramping at its end: the legacy chord's last row is the join, the joint is within 1 mm [90m(164.6359ms)[39m[39m
+[32m✔ 5 · a lap whose legacy START has a width ramp and whose last piece is a cup: close() converges and the lap seam meets within 1 mm [90m(528.5631ms)[39m[39m
+[32m✔ 5 · a cup after a legacy piece that ENDS ON A WIDTH SLOPE (a hand-built linear width: 0.1 m/m at the joint): the join is the chord END row, the joint is within 1 mm [90m(172.3135ms)[39m[39m
+[32m✔ 5 · a lap that STARTS in a cup and ENDS on a legacy piece that is still narrowing (31 → 12 over its last 40 m): the lap seam and every joint meet within 1 mm [90m(1042.9289ms)[39m[39m
+[34mℹ tests 17[39m
+[34mℹ suites 0[39m
+[34mℹ pass 17[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2474.9105[39m

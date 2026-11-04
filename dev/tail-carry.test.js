@@ -48,7 +48,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e && e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'tail-'));
+const tmp = require('../consonance/tools/scratch.js').mkdtemp('tail-');
 let seq = 0;
 
 const SID = 'aaaaaaaa-1111-4111-8111-111111111111';
@@ -1973,29 +1973,76 @@ const tailsDir = (w) => path.join(w.stick, T.LEDGER_DIR);
 const P = (m, extra) => { const q = quiet(); const r = T.run(Object.assign({ out: q.out, stick: m.stick, prune: true, machine: m.machine,
   projectsRoot: m.projectsRoot, instancesRoot: m.instancesRoot, panesPath: m.panesPath }, extra || {})); r.text = q.text(); return r; };
 
-test('prune: after two agreed carries both tails are candidates, and the listing deletes NOTHING', () => {
+// D639 (c) amended this test by name: it said BOTH agreed tails are candidates. The keeper's retention rule
+// (2026-11-03) keeps the newest tail of every conversation, so only the older one is; the newest is listed kept.
+test('prune: after two agreed carries the older tail is a candidate, the newest is kept, and the listing deletes NOTHING', () => {
   const { w, v1, v2 } = agreedTwice();
   const before = snapshot(w.stick);
   const r = P(w.L);
   assert.strictEqual(r.outcome, 'LISTED', r.text);
   assert.strictEqual(r.code, 0);
-  assert.deepStrictEqual(r.prune.candidates.map((c) => c.name).sort(),
-    [`${SID}.0-${v1.length}.tail`, `${SID}.${v1.length}-${v2.length}.tail`].sort());
-  assert.strictEqual(r.prune.bytes, v2.length);
+  assert.deepStrictEqual(r.prune.candidates.map((c) => c.name), [`${SID}.0-${v1.length}.tail`]);
+  assert.ok(r.prune.notCandidates.some((x) => x.name === `${SID}.${v1.length}-${v2.length}.tail` && /newest/.test(x.why)), r.text);
+  assert.strictEqual(r.prune.bytes, v1.length);
   assert.match(r.prune.digest, /^[0-9a-f]{16}$/);
   assert.deepStrictEqual(snapshot(w.stick), before, 'a listing changed the stick');
 });
 
-test('prune: the ledger, a torn .writing- file and a corrupt-ledger copy are never candidates, and each is LISTED with its reason', () => {
+// D639 (c) amended this test by name: a torn .writing- file is no longer "never a candidate" — the keeper's rule
+// clears partials no live process holds (the next tests). This one keeps the partial's writer LIVE, so it is still kept.
+test('prune: the ledger, a .writing- file whose writer is live, and a corrupt-ledger copy are never candidates, and each is LISTED with its reason', () => {
   const { w, v1 } = agreedTwice();
   fs.writeFileSync(path.join(tailsDir(w), `${SID}.0-${v1.length}.tail.writing-4242`), 'torn');
   fs.writeFileSync(path.join(tailsDir(w), `${T.LEDGER_NAME}.corrupt-20260915T084005`), '{');
-  const r = P(w.L);
+  const r = P(w.L, { imageOf: (pid) => (pid === 4242 ? 'node' : null) });
   const names = r.prune.candidates.map((c) => c.name);
   for (const n of [T.LEDGER_NAME, `${SID}.0-${v1.length}.tail.writing-4242`, `${T.LEDGER_NAME}.corrupt-20260915T084005`]) {
     assert.ok(!names.includes(n), `${n} became a candidate`);
     assert.ok(r.prune.notCandidates.some((x) => x.name === n && x.why), `${n} was not listed with a reason`);
   }
+});
+
+// ── D639 (c): the keeper's retention rule — the newest tail of each conversation stays; dead partials go ──
+
+test('retention: a .writing- partial whose pid is not running and with no live ledger lock is a candidate', () => {
+  const { w, v1 } = agreedTwice();
+  const torn = `${SID}.0-${v1.length}.tail.writing-4242`;
+  fs.writeFileSync(path.join(tailsDir(w), torn), 'torn');
+  const r = P(w.L, { imageOf: () => null });
+  const c = r.prune.candidates.find((x) => x.name === torn);
+  assert.ok(c && c.partial && c.bytes === 4, r.text);
+});
+
+test('retention: a dead-pid partial is KEPT while the ledger lock names a live holder', () => {
+  const { w, v1 } = agreedTwice();
+  const torn = `${SID}.0-${v1.length}.tail.writing-4242`;
+  fs.writeFileSync(path.join(tailsDir(w), torn), 'torn');
+  plantLock(w, { pid: 5151, image: 'node', script: 'tail-carry.js', at: new Date().toISOString() });
+  const r = P(w.L, { imageOf: (pid) => (pid === 5151 ? 'node' : null) });
+  assert.ok(!r.prune.candidates.some((x) => x.name === torn), r.text);
+  assert.ok(r.prune.notCandidates.some((x) => x.name === torn && /lock/.test(x.why)), r.text);
+});
+
+test('retention: a conversation with ONE agreed tail keeps it — nothing is deletable', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  go(w.D, 'export', { apply: true });
+  go(w.L, 'import', { apply: true });
+  const r = P(w.L, { imageOf: () => null });
+  assert.strictEqual(r.prune.candidates.length, 0, r.text);
+  assert.ok(r.prune.notCandidates.some((x) => /\.tail$/.test(x.name) && /newest/.test(x.why)), r.text);
+});
+
+test('retention: --delete-listed removes the dead partial and the older tail, and the newest tail is still on the stick', () => {
+  const { w, v1, v2 } = agreedTwice();
+  const torn = `${SID}.0-${v1.length}.tail.writing-4242`;
+  fs.writeFileSync(path.join(tailsDir(w), torn), 'torn');
+  const listed = P(w.L, { imageOf: () => null });
+  const r = P(w.L, { imageOf: () => null, deleteListed: listed.prune.digest });
+  assert.strictEqual(r.outcome, 'PRUNED', r.text);
+  assert.strictEqual(fs.existsSync(path.join(tailsDir(w), torn)), false);
+  assert.strictEqual(fs.existsSync(path.join(tailsDir(w), `${SID}.0-${v1.length}.tail`)), false);
+  assert.strictEqual(fs.existsSync(path.join(tailsDir(w), `${SID}.${v1.length}-${v2.length}.tail`)), true, 'the newest tail was deleted');
 });
 
 test('prune: a tail ABOVE the agreed offset (a pending carry) is not a candidate', () => {
@@ -2428,7 +2475,7 @@ test('R1 · --verify-set with no stick EXITS 2 — the process, not the text', (
 });
 
 test('R1 · --verify-set combined with --carry-dir EXITS 2 — the process, not the text', () => {
-  const src = fs.mkdtempSync(path.join(os.tmpdir(), 'tc-r1-'));
+  const src = require('../consonance/tools/scratch.js').mkdtemp('tc-r1-');
   try {
     const r = cli(['--verify-set', '--carry-dir', src]);
     assert.match(r.stdout, /REFUSED — --carry-dir is its own command/, 'the refusal text is not the one this pins');
@@ -2446,6 +2493,78 @@ test('R1 · the in-process RETURN agrees with the printed code on a combine refu
   const r = J(w.D, ['--stick', w.stick, '--verify-set', '--import']);
   assert.strictEqual(r.obj.code, 2);
   assert.strictEqual(r.code, 2, `main returned ${r.code} while printing code ${r.obj.code}`);
+});
+
+// ── D639: the laptop has fewer panes than the stick has seats (the keeper, 2026-11-03: "only 4 panes exist for builders") ──
+// Every seat lands by its session id; none overwrites another's file; a seat with no pane here is placed on disk under
+// the folder it had on the exporting machine and NAMED, so a pane can be opened for it.
+
+const SID2 = 'cccccccc-3333-4333-8333-333333333333';
+const SID3 = 'dddddddd-4444-4444-8444-444444444444';
+function twoPaneWorld() {
+  const w = world();
+  const y = path.join(w.D.instancesRoot, 'sibling-y');
+  fs.writeFileSync(w.D.panesPath, JSON.stringify([{ pane: SID, cwd: w.D.cwd, label: 'x' }, { pane: SID2, cwd: y, label: 'y' }]));
+  const d2 = place.paneJsonl(w.D.projectsRoot, y, SID2);
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  write({ dest: d2 }, conversation(SID2, ['2026-09-10T08:00:00.000Z', '2026-09-10T09:00:00.000Z']));
+  go(w.D, 'export', { apply: true });
+  return { w, d2, l2: place.paneJsonl(w.L.projectsRoot, path.join(w.L.instancesRoot, 'sibling-y'), SID2) };
+}
+
+test('fewer panes: the export records each seat\'s folder name in the ledger', () => {
+  const { w } = twoPaneWorld();
+  const led = T.readLedger(w.stick);
+  assert.strictEqual(led.seats[SID2].cwdName, 'sibling-y');
+  assert.strictEqual(led.seats[SID].cwdName, 'sibling-x');
+});
+
+test('fewer panes: a seat with no pane here is placed by its session id under its own folder, and NAMED', () => {
+  const { w, d2, l2 } = twoPaneWorld();
+  const reh = go(w.L, 'import');
+  const row = rowFor(reh, SID2);
+  assert.ok(row, 'the seat with no pane here is not in the rehearsal at all');
+  assert.strictEqual(row.verdict, 'FULL');
+  assert.strictEqual(row.kind, 'no-pane');
+  assert.match(row.why, /no pane/i);
+  assert.match(reh.text, new RegExp(SID2), 'the arrival text does not name the seat');
+  const r = go(w.L, 'import', { apply: true });
+  assert.ok(r.ok, r.text);
+  assert.strictEqual(fs.readFileSync(l2, 'utf8'), fs.readFileSync(d2, 'utf8'), 'not placed whole by its session id');
+  assert.strictEqual(fs.readFileSync(w.L.dest, 'utf8'), fs.readFileSync(w.D.dest, 'utf8'), 'the rostered seat did not land');
+});
+
+test('fewer panes: a laptop pane in the same folder under ANOTHER session id keeps its own file untouched', () => {
+  const { w, l2 } = twoPaneWorld();
+  const y = path.join(w.L.instancesRoot, 'sibling-y');
+  fs.writeFileSync(w.L.panesPath, JSON.stringify([{ pane: SID, cwd: w.L.cwd, label: 'x' }, { pane: SID3, cwd: y, label: 'y' }]));
+  const own = write({ dest: place.paneJsonl(w.L.projectsRoot, y, SID3) }, conversation(SID3, ['2026-10-01T00:00:00.000Z']));
+  const before = fs.readFileSync(own);
+  const r = go(w.L, 'import', { apply: true });
+  assert.ok(r.ok, r.text);
+  assert.ok(before.equals(fs.readFileSync(own)), 'another seat\'s file was overwritten');
+  assert.ok(fs.existsSync(l2), 'the carried seat was not placed beside it under its own id');
+});
+
+test('fewer panes: an older ledger with no folder name cannot place the seat, and says so by name — nothing written', () => {
+  const { w, l2 } = twoPaneWorld();
+  const led = T.readLedger(w.stick);
+  delete led.seats[SID2].cwdName;
+  fs.writeFileSync(path.join(w.stick, T.LEDGER_DIR, T.LEDGER_NAME), JSON.stringify(led, null, 2));
+  const r = go(w.L, 'import', { apply: true });
+  const row = rowFor(r, SID2);
+  assert.ok(row && row.verdict === 'REFUSED' && row.reason === 'NO_PANE_HERE', r.text);
+  assert.strictEqual(fs.existsSync(l2), false);
+});
+
+test('fewer panes: a folder name that is not one plain folder is refused, never joined into a path', () => {
+  const { w } = twoPaneWorld();
+  const led = T.readLedger(w.stick);
+  led.seats[SID2].cwdName = '..';
+  fs.writeFileSync(path.join(w.stick, T.LEDGER_DIR, T.LEDGER_NAME), JSON.stringify(led, null, 2));
+  const r = go(w.L, 'import');
+  const row = rowFor(r, SID2);
+  assert.ok(row && row.reason === 'NO_PANE_HERE', r.text);
 });
 
 console.log(`\n  ${pass} passed, ${fail} failed`);

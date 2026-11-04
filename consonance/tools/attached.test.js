@@ -24,7 +24,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 // One tmp DATA root for the in-process producer, bound BEFORE the module loads its constants.
-const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'attached-'));
+const TMP = require('./scratch.js').mkdtemp('attached-');
 process.env.VANTAGE_DATA = TMP;
 delete process.env.VANTAGE_FINDINGS;
 delete process.env.FINDINGS_LEDGER;
@@ -63,6 +63,23 @@ test('WIRE: producer and both consumers resolve the SAME findings path by defaul
     'findings-return.js reads a different default path than second-vantage.js writes — the 2026-08-15 split, again');
   assert.strictEqual(wherePairLedger(), p,
     'pair-ledger.js reads a different default path than second-vantage.js writes');
+});
+
+test('WIRE (D454): on a machine with no data_dir set, all three resolve under that user\'s own .consonance; a configured data_dir moves all three', () => {
+  /* E's stranger run (p-d454-install-E_2026-10-24.md §6): with no ~/.consonance.json, second-vantage.js and pair-ledger.js wrote to a hard-coded
+   * C:\Consonance\data while findings-return.js read %USERPROFILE%\.consonance, the app's rule. On this machine all three agree, because its
+   * data_dir IS C:\Consonance\data, so the row above could not see it. */
+  const home = path.join(TMP, 'stranger-home');
+  fs.mkdirSync(home, { recursive: true });
+  const want = path.join(home, '.consonance', 'vantage_findings.jsonl');
+  const at = { USERPROFILE: home, HOME: home };
+  assert.strictEqual(whereProducer(at).FINDINGS, want, 'second-vantage.js does not write under the user\'s own .consonance');
+  assert.strictEqual(whereConsumer(at).FINDINGS, want, 'findings-return.js does not read under the user\'s own .consonance');
+  assert.strictEqual(wherePairLedger(at), want, 'pair-ledger.js does not read under the user\'s own .consonance');
+  const dataDir = path.join(TMP, 'configured-data');
+  fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ data_dir: dataDir }));
+  const moved = path.join(dataDir, 'vantage_findings.jsonl');
+  assert.deepStrictEqual([whereProducer(at).FINDINGS, whereConsumer(at).FINDINGS, wherePairLedger(at)], [moved, moved, moved], 'a configured data_dir does not move all three');
 });
 
 test('WIRE: one env var moves all three together (VANTAGE_FINDINGS), and VANTAGE_DATA rebases all defaults', () => {

@@ -1,0 +1,14 @@
+const fs = require('fs');
+const P = (f) => JSON.parse(fs.readFileSync(f, 'utf8').replace(/^\uFEFF/, ''));
+const D = 'C:/Users/nname/.claude/';
+const a = P(D + 'settings.json.bak-d218-20261003-040809'), b = P(D + 'settings.json');
+const leaf = (c) => c.split(String.fromCharCode(92)).pop().replace(/"$/, '');
+const show = (x, ev) => JSON.stringify((x.hooks[ev] || []).map((g) => ({ matcher: g.matcher, hooks: g.hooks.map((h) => leaf(h.command)) })));
+console.log('Stop before:', show(a, 'Stop')); console.log('Stop now:   ', show(b, 'Stop'));
+for (const k of new Set([...Object.keys(a.hooks), ...Object.keys(b.hooks)])) if (k !== 'Stop') console.log(k, JSON.stringify(a.hooks[k]) === JSON.stringify(b.hooks[k]) ? 'IDENTICAL' : 'DIFFERS');
+const ra = JSON.parse(JSON.stringify(a)); delete ra.hooks; const rb = JSON.parse(JSON.stringify(b)); delete rb.hooks;
+console.log('non-hook settings', JSON.stringify(ra) === JSON.stringify(rb) ? 'IDENTICAL' : 'DIFFERS');
+const beforeFlat = a.hooks.Stop.flatMap((g) => g.hooks), afterFlat = b.hooks.Stop.flatMap((g) => g.hooks).filter((h) => !/reply-slot\.js/.test(h.command));
+console.log('every existing Stop hook byte-identical and in order:', JSON.stringify(beforeFlat) === JSON.stringify(afterFlat), '; count before/after:', beforeFlat.length, b.hooks.Stop.flatMap((g) => g.hooks).length);
+const rs = b.hooks.Stop.flatMap((g) => g.hooks).filter((h) => /reply-slot\.js/.test(h.command));
+console.log('reply-slot registered', rs.length, 'time(s), timeout', rs[0] && rs[0].timeout, '; Stop groups with a matcher:', b.hooks.Stop.filter((g) => g.matcher).length);

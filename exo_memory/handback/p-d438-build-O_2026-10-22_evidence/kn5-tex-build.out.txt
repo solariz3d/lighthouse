@@ -1,0 +1,42 @@
+plan: RSL at R 300 m: turn -238.8°, 812 m straight, turn 328.8°, after 206 m rolling 54° upright first; 4 new pieces
+textures: asphalt budget 5.3 MiB
+{
+ "folders": [
+  {
+   "folder": "t180b_test_track_10_copy_closer_d438",
+   "files": 10,
+   "kn5": "C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-d438-build-O_2026-10-22_evidence\\tracks\\kn5-tex\\t180b_test_track_10_copy_closer_d438\\t180b_test_track_10_copy_closer_d438.kn5",
+   "kn5Bytes": 206121704,
+   "kn5Sha256": "f88a1a6bcf05520dd7d626a1dd56a792898e617330f932cf17795705ff84c9ca",
+   "kn5Version": 5,
+   "kn5Textures": [
+    {
+     "name": "t180b_made-993b5297d4ad20a5-1024.dds",
+     "active": 1,
+     "bytes": 5592532
+    },
+    {
+     "name": "t180b_solid_128.dds",
+     "active": 1,
+     "bytes": 212
+    },
+    {
+     "name": "t180b_solid_235.dds",
+     "active": 1,
+     "bytes": 212
+    }
+   ]
+  }
+ ],
+ "warnings": [
+  "amber: load-above-proven at s 6051.0–6089.0 m (FINDINGS.md:105, :112-113)",
+  "amber: load-above-proven at s 6237.0–6289.0 m (FINDINGS.md:105, :112-113)",
+  "amber: load-above-proven at s 6551.0–6585.0 m (FINDINGS.md:105, :112-113)",
+  "amber: load-above-proven at s 8559.0–8897.0 m (FINDINGS.md:105, :112-113)",
+  "amber: load-sustained at s 8473.0–8991.0 m (D341: the ELYSIUM replay of 2026-10-16 (56-62 g held for about 2 s: seven passes held, one went through the road); src/validate/limits.js sustainedG, sustainedS)",
+  "amber: load-sustained at s 10861.0–11107.0 m (D341: the ELYSIUM replay of 2026-10-16 (56-62 g held for about 2 s: seven passes held, one went through the road); src/validate/limits.js sustainedG, sustainedS)",
+  "catch: a second road surface 0.3 m under the road on 466 cells, s 8431–11149 m (where the load stays over 55 g for more than 0.5 s); it is a second chance for a body that gets through the road, untested in AC",
+  "188 mesh-node names repeat in the builder's scene (e.g. CELL_p1_body_0 ×500); the kn5 gets unique names (acready.js), INTERFACES §2, C's mesh.js safeId",
+  "csp-only: surfaces.ini sets WAV_PITCH=extended-0, CSP's extended physics (ARCHITECTURE §6). Assetto Corsa without Custom Shaders Patch can crash loading this track (CSP wiki, \"Tracks – Enabling extended physics\"; docs/research/04_ac_physics"
+ ]
+}

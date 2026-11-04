@@ -20,8 +20,8 @@
 //
 // Comments are stripped before every lexical assertion. This file's own subject is a guard
 // whose comment contradicted its code, so reading the comments as evidence would be the exact
-// error under test — and mention-vs-use is a sealed invariant in muscle_map.md, assumed here
-// rather than rediscovered.
+// error under test — and mention-vs-use (a comment MENTIONS a behaviour, only the code USES it) is
+// a sealed invariant of this project, assumed here rather than rediscovered.
 //
 //   node dev/dream/dream_cycle.test.js
 
@@ -97,4 +97,18 @@ test('every skip path says WHY, because a silent skip is how this went unnoticed
     `expected battery, presence and unknown-idle skips to each log a reason; found ${skips.length}`);
   assert.match(CODE, /idle \{0:N1\} min/,
     'the presence skip must log the measured idle value — a reason without its number is not auditable');
+});
+
+// D475: the lineage rip rides the cycle. It must run on a night the dream yields (so BEFORE the presence guard, after the battery guard), and it
+// must not be able to end the cycle (its stderr under $ErrorActionPreference = "Stop" would, so it runs under Continue, inside a try).
+test('the lineage rip runs once a cycle, after the battery guard and before the presence guard, and cannot end the cycle', () => {
+  const at = CODE.indexOf('lineage-rip.js'), battery = CODE.indexOf('Win32_Battery'), presence = CODE.search(/if\s*\(-not\s+\$Force\)/);
+  assert.ok(at > 0 && CODE.indexOf('lineage-rip.js', at + 1) < 0, 'named once, in code');
+  assert.ok(battery < at && at < presence, `the rip sits between the battery guard (${battery}) and the presence guard (${presence}); it is at ${at}`);
+  const block = CODE.slice(CODE.lastIndexOf('if (-not $NoLineage)', at), CODE.indexOf('function Get-IdleMinutes'));
+  assert.match(block, /\$ErrorActionPreference\s*=\s*'Continue'[\s\S]*?&\s*\$node\s+\$rip\s+2>&1/, 'node runs under Continue');
+  assert.match(block, /\}\s*catch\s*\{[\s\S]*?\}\s*finally\s*\{\s*\$ErrorActionPreference\s*=\s*\$prevEap\s*\}/, 'a failure to start is caught, and the preference restored');
+  assert.doesNotMatch(block, /(^|[;{])\s*(exit|throw)\b/m, 'nothing in it ends the cycle (the log line says "exit" as a word, inside a string)');
+  assert.match(block, /Log\s+\("lineage: exit \{0\}/, 'its exit code is logged');
+  assert.match(CODE, /\[switch\]\$NoLineage/, '-NoLineage is a parameter');
 });

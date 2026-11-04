@@ -1,0 +1,13 @@
+'use strict';
+const os = require('os'), path = require('path'), fs = require('fs'), { spawnSync } = require('child_process');
+os.setPriority(os.constants.priority.PRIORITY_BELOW_NORMAL);
+const [T, F, OUT, PREFIX, ST] = process.argv.slice(2);
+require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'P d459: headless preview page run (title zz-headless-test, --mute-audio; BelowNormal; not a timing session)', tree: T });
+const ps = (label) => { const r = spawnSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(__dirname, '..', 'tabproxy-count.ps1')], { encoding: 'utf8' }); fs.writeFileSync(path.join(OUT, `tabproxy-${label}.txt`), (r.stdout || '') + (r.stderr || '')); return (r.stdout || '').trim().split('\n').slice(-6).join(' | '); };
+fs.mkdirSync(OUT, { recursive: true });
+console.log('tabproxy before:', ps('before'));
+const t0 = Date.now();
+const r = spawnSync(process.execPath, [path.join(__dirname, 'run-preview-459.js'), T, F, OUT, PREFIX, ST], { encoding: 'utf8', maxBuffer: 1 << 26, timeout: 20 * 60 * 1000 });
+fs.writeFileSync(path.join(OUT, 'page.log'), (r.stdout || '') + '\n# stderr\n' + (r.stderr || '') + `\n# exit ${r.status} in ${((Date.now() - t0) / 1000).toFixed(1)} s\n`);
+console.log('page exit', r.status, ((Date.now() - t0) / 1000).toFixed(1), 's');
+console.log('tabproxy after:', ps('after'));

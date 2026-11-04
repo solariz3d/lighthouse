@@ -1,0 +1,27 @@
+1 519aefa commit: The 3D view's vignette is drawn by the renderer with the sky's dither, so it no longer bands into rings
+2 f835410 commit: The vignette darkens the sky inside the sky pass, before its dither, so the real page shows no steps under it
+3 51f3a82 commit: A bank typed as exactly one turn is a full turn of roll, not none
+4 3e7b7cd commit: A roll that runs on through a joint is built through it, not stopped at it
+5 4e6398c commit: The sculpt locality test records why the carried roll may move outside a brush's window
+6 72fff66 commit: Builder: refuse a road laid too close over another for its underside and a car; the checker draws its reds on the road
+7 9dac829 commit: Tests: lay the tracks that come back over their own road with the core's pieces, as the builder now refuses them
+8 d3cf1ee commit: Export: warn where another pass comes within a car's room, and where a drawn underside shows through another pass's road
+9 b2d58ef commit: The renderer's stand-in takes the vignette's depth test, and the sky dither row looks where every pixel gets the dither
+10 b6ced2e commit: Tests: the texture page's warning-text row lays a corner that folds, as the builder now refuses a piece that crosses itself
+11 05d01c5 merge: Merge the sky banding fix
+12 3135cdf merge: Merge the ribbon bank carry fix
+13 a17a1d4 merge: Merge the pass clearance checks
+14 e2d5a0f commit: Version 0.4.39
+15 8c921e7 commit: Rounded bank corners: the bank eases where its roll starts, stops or turns back, keeping a curve's lean and long drags fast
+commits 15; added lines over the commits' own diffs 3870; net added lines 2243; net 87 files changed, 2318 insertions(+), 194 deletions(-)
+added-1-519aefa.txt: 71 terms checked, term hits 4 at term index #70×4; room words 0
+added-3-51f3a82.txt: 71 terms checked, term hits 0; room words lap ids (D/L/P + digits) 1
+added-6-72fff66.txt: 71 terms checked, term hits 0; room words lap ids (D/L/P + digits) 6
+added-11-05d01c5.txt: 71 terms checked, term hits 4 at term index #70×4; room words 0
+added-12-3135cdf.txt: 71 terms checked, term hits 0; room words lap ids (D/L/P + digits) 1
+added-13-a17a1d4.txt: 71 terms checked, term hits 0; room words lap ids (D/L/P + digits) 6
+added-15-8c921e7.txt: 71 terms checked, term hits 5 at term index #17×2 #57×3; room words lap ids (D/L/P + digits) 3
+net-added.txt: 71 terms checked, term hits 9 at term index #17×2 #57×3 #70×4; room words lap ids (D/L/P + digits) 10
+total hits 49
+sweep: 31 files; 23 clean
+credentials over 31 files: push-gate findKeys 0; loose prefixes (12 patterns) 0

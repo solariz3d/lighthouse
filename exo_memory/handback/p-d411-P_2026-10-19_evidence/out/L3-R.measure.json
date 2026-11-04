@@ -1,0 +1,67 @@
+{
+ "label": "L3-R",
+ "base": "33278ee",
+ "dir": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L3-R",
+ "commits": "ab6e581 extend: a side brought from below back to 0 never rings above 0 and ends at exactly 0 (D411)",
+ "status": "?? HANDBACK.md",
+ "stat": "src/core/extend.js        |  7 +++++--\n test/core_edgeneg.test.js | 12 ++++++++++++\n 2 files changed, 17 insertions(+), 2 deletions(-)",
+ "numstat": "5\t2\tsrc/core/extend.js\n12\t0\ttest/core_edgeneg.test.js",
+ "files": [
+  "src/core/extend.js",
+  "test/core_edgeneg.test.js"
+ ],
+ "added": 17,
+ "removed": 2,
+ "changed_lines": 19,
+ "test_files": [
+  "test/core_edgeneg.test.js"
+ ],
+ "source_files": [
+  "src/core/extend.js"
+ ],
+ "rows": {
+  "test/core_edgeneg.test.js": {
+   "added": [
+    "row 5c: a side brought from -45.5° back to 0 over a short transition never rings above 0 and ends at exactly 0, flat; the piece after it is plain",
+    "row 6: the edge is sampled by the steeper side counted by its size: -60° gets as many samples as +60°"
+   ],
+   "deleted": [],
+   "rewritten": []
+  }
+ },
+ "rows_added": 2,
+ "rows_deleted": 0,
+ "rows_rewritten": 0,
+ "test_runs": [
+  {
+   "file": "test/core_edgeneg.test.js",
+   "cmd": "node --test \"test/core_edgeneg.test.js\"",
+   "exit": 0,
+   "counts": "pass 10 / fail 0",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  }
+ ],
+ "harness_runs": [
+  {
+   "file": "test/core_cup_mutation.test.js",
+   "cmd": "node --test \"test/core_cup_mutation.test.js\"",
+   "exit": 0,
+   "counts": "pass 52 / fail 0",
+   "mutants": null
+  },
+  {
+   "file": "test/core_ramp_mutation.test.js",
+   "cmd": "node --test \"test/core_ramp_mutation.test.js\"",
+   "exit": 0,
+   "counts": "pass 18 / fail 0",
+   "mutants": null
+  },
+  {
+   "file": "test/core_xsec_mutation.test.js",
+   "cmd": "node --test \"test/core_xsec_mutation.test.js\"",
+   "exit": 0,
+   "counts": "pass 61 / fail 0",
+   "mutants": null
+  }
+ ]
+}

@@ -1,0 +1,388 @@
+[32m✔ the samples carry exactly the fields src/geom's own buildPath emits, from the document's start pose [90m(20.3672ms)[39m[39m
+[32m✔ at the family's own rate the core's cross-section IS fonts.js's (ref 09 §3), and a lower rate lowers the rim [90m(0.3471ms)[39m[39m
+[32m✔ the samples' roll is within the smoothstep bound of the φ channel (ref 09 §5), and 2 m chords move the line under 1 cm over 530 m against 0.25 m chords (the stated deviation, measured) [90m(48.6112ms)[39m[39m
+[32m✔ a flight becomes the old jump: its gap solved, its landing ramp sized by validation, and the road after it continuous [90m(18.4315ms)[39m[39m
+[32m✔ the mesh is built from the adapter's output by the unchanged geometry core, with no folds on a gentle track [90m(68.214ms)[39m[39m
+[32m✔ an empty track, or a bad step, is refused by name [90m(0.7475ms)[39m[39m
+[32m✔ test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it [90m(33.2719ms)[39m[39m
+[32m✔ test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it [90m(25.0761ms)[39m[39m
+[32m✔ test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it [90m(22.28ms)[39m[39m
+[32m✔ test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it [90m(20.7366ms)[39m[39m
+[32m✔ test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it [90m(20.5564ms)[39m[39m
+[32m✔ test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it [90m(34.7807ms)[39m[39m
+[32m✔ test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it [90m(19.8051ms)[39m[39m
+[32m✔ test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it [90m(27.4347ms)[39m[39m
+[32m✔ test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it [90m(20.3389ms)[39m[39m
+[32m✔ test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it [90m(16.9587ms)[39m[39m
+[32m✔ test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it [90m(16.1008ms)[39m[39m
+[32m✔ test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it [90m(27.544ms)[39m[39m
+[32m✔ test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it [90m(16.2957ms)[39m[39m
+[32m✔ test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it [90m(26.6536ms)[39m[39m
+[32m✔ test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it [90m(17.8779ms)[39m[39m
+[32m✔ test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it [90m(17.2735ms)[39m[39m
+[32m✔ test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it [90m(19.6307ms)[39m[39m
+[32m✔ test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it [90m(23.2328ms)[39m[39m
+[32m✔ test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it [90m(28.1969ms)[39m[39m
+[32m✔ test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it [90m(20.0209ms)[39m[39m
+[32m✔ close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false [90m(126.011ms)[39m[39m
+[32m✔ the input document is not changed (it is frozen, and deep-equal afterwards) [90m(349.018ms)[39m[39m
+[32m✔ a lap that already closes (a full circle, R = 200 m) is left where it is: no steps [90m(67.0228ms)[39m[39m
+[32m✔ the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4) [90m(219.8226ms)[39m[39m
+[32m✔ the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first [90m(0.7147ms)[39m[39m
+[32m✔ with no stretch protected (every weight 1) close still closes, seam included [90m(494.1415ms)[39m[39m
+[32m✔ a track with a jump is refused, by name (not built in this version) [90m(4.1112ms)[39m[39m
+[32m✔ row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward) [90m(1.0546ms)[39m[39m
+[32m✔ row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width [90m(0.2883ms)[39m[39m
+[32m✔ row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge) [90m(6.2412ms)[39m[39m
+[31m✖ row 1b: a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(123.5392ms)[39m[39m
+[31m✖ row 1b: a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(105.4672ms)[39m[39m
+[31m✖ row 1b: a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(76.4678ms)[39m[39m
+[31m✖ row 1b: a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(108.031ms)[39m[39m
+[32m✔ row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside) [90m(58.5146ms)[39m[39m
+[31m✖ row 1b: a cup that also changes width (a chord per segment) still has no step over 1° between rows (a seam zip per segment is the stated cost) [90m(63.8566ms)[39m[39m
+[31m✖ row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse [90m(1.1384ms)[39m[39m
+[32m✔ row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard) [90m(2.8308ms)[39m[39m
+[32m✔ row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots [90m(2.2208ms)[39m[39m
+[32m✔ row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it) [90m(0.9045ms)[39m[39m
+[32m✔ row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works [90m(11.2916ms)[39m[39m
+[31m✖ row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit [90m(12.1178ms)[39m[39m
+[32m✔ row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test) [90m(0.5845ms)[39m[39m
+[32m✔ row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate) [90m(2.1972ms)[39m[39m
+[32m✔ row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows) [90m(176.4286ms)[39m[39m
+[32m✔ row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4) [90m(2.6477ms)[39m[39m
+[32m✔ row 5: a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), renders through profileAt with no blend and no new key, and saves as /3 [90m(2.8799ms)[39m[39m
+[32m✔ row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge [90m(1.5829ms)[39m[39m
+[32m✔ row 5b: a cup document round-trips through /3 text (serialize, parse, serialize) [90m(7.0423ms)[39m[39m
+[32m✔ row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°) [90m(8.0744ms)[39m[39m
+[32m✔ row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank) [90m(6.3955ms)[39m[39m
+[32m✔ row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece [90m(1.2767ms)[39m[39m
+[32m✔ row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it [90m(2.0449ms)[39m[39m
+[32m✔ knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel) [90m(3.227ms)[39m[39m
+[32m✔ a clamped cubic starts at P0 with slope 3(P1 − P0)/t4 (ref 09 §1), against a finite difference [90m(2.3962ms)[39m[39m
+[32m✔ a piece placed after another starts at its end value AND slope in every channel (C1 joints, so the line is G2) [90m(2.747ms)[39m[39m
+[32m✔ a joint that is not C1 is refused by name (JOINT) [90m(1.822ms)[39m[39m
+[31m✖ checkDoc REFUSES a hand-built document with a broken joint, by the name JOINT (a κh step, a bank tear, a slope kink) [90m(0.4591ms)[39m[39m
+[32m✔ a flight must follow road; the road after it starts level (κh = κv = 0), the rest carried [90m(0.8683ms)[39m[39m
+[32m✔ load then save is byte-exact, and a value finer than its quantum is snapped as it enters [90m(2.0963ms)[39m[39m
+[32m✔ the same document serialises to the same bytes whatever order its keys were in [90m(0.6195ms)[39m[39m
+[32m✔ a piece whose keys come in another order (as another module may build it) still serialises canonically [90m(0.3234ms)[39m[39m
+[32m✔ a file of a different schema version is refused, saying a newer file needs a newer builder [90m(0.1192ms)[39m[39m
+[32m✔ undo is the document history: undo and redo are byte-identical, and a whole drag is one entry [90m(0.6838ms)[39m[39m
+[32m✔ a fitted channel holds its start exactly and reproduces a cubic polynomial (ref 03 §2: the cubic lies in the spline space) [90m(0.4274ms)[39m[39m
+[32m✔ a circle's position fit loads as κh = 1/R, κv = 0 and no bank (ref 09 §4) [90m(8.7202ms)[39m[39m
+[32m✔ a helix loads with κv = 0 at its constant pitch, and κh = cos p / R (the heading turns about WORLD up) [90m(6.4813ms)[39m[39m
+[90m﹣ a real track from reads/ opens as a LOCAL example (skipped where reads/ has no position fit) [90m(0.301ms)[39m # no local position fit of Serpents Spiral in reads/ (other authors' tracks stay local)[39m
+[32m✔ 2a: a 50 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(22.431ms)[39m[39m
+[32m✔ 2a: a 50 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(10.6157ms)[39m[39m
+[32m✔ 2a: a 200 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(8.9289ms)[39m[39m
+[32m✔ 2a: a 200 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(12.5297ms)[39m[39m
+[32m✔ 2a: a 1000 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(12.1239ms)[39m[39m
+[32m✔ 2a: a 1000 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(8.343ms)[39m[39m
+[32m✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning left, extended 200 m with no handle, keeps growing at 1/A² [90m(6.7718ms)[39m[39m
+[32m✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning right, extended 200 m with no handle, keeps growing at 1/A² [90m(6.3483ms)[39m[39m
+[32m✔ a handle target is reached at the transition with zero channel slope, and the start still holds value and slope (ref 09 §2) [90m(2.2409ms)[39m[39m
+[32m✔ extend refuses a closed track, a bad length and an unknown channel, by name [90m(1.4011ms)[39m[39m
+[32m✔ Boehm's rule is exact: inserting knots (first span, last span, uneven spacing) leaves each channel unchanged to float rounding at 3,001 samples [90m(16.8789ms)[39m[39m
+[32m✔ inserting knots leaves every channel unchanged at dense samples: within half the channel's quantisation step (the three new points are quantised), and bit for bit outside the new knot's span and the two either side [90m(20.4192ms)[39m[39m
+[32m✔ refineKnots cuts every span over [a, b] to ≤ maxSpan, and leaves the spans outside it with the same knots [90m(1.1151ms)[39m[39m
+[32m✔ knots inserted in a LATER piece's first span keep its joint C1 (the document checks every joint) [90m(0.7545ms)[39m[39m
+[32m✔ the new knots serialise canonically (ascending, byte-exact on reload), and undo removes them [90m(0.9689ms)[39m[39m
+[32m✔ refusals by name: a knot already there, outside the piece, a flight, a span under 1 cm [90m(0.5662ms)[39m[39m
+[32m✔ after refining, the r = 20 m kh brush at 25% stays C2 at its ASKED edges s₀ ± 20 (a D185 miss) [90m(82.2365ms)[39m[39m
+[32m✔ after refining, the r = 20 m kh brush at 75% stays C2 at its ASKED edges s₀ ± 20 (a D185 miss) [90m(84.735ms)[39m[39m
+[32m✔ after refining, the r = 20 m kv brush at 25% stays C2 at its ASKED edges s₀ ± 20 (a D185 miss) [90m(67.6046ms)[39m[39m
+[32m✔ refining first does not move the track: the refined base's path is within 1 mm of the unrefined one [90m(35.2275ms)[39m[39m
+[32m✔ a 5 m hill on a level straight: grade = h′ and |κ| = |h″|/(1 + h′²)^{3/2} at every sample (ref 09 §7, the plane-graph curvature of ref 02 §1) [90m(20.6003ms)[39m[39m
+[32m✔ outside the hill NOTHING changes: every sample is the SAME object (bit for bit), and the path length is the base's [90m(17.7105ms)[39m[39m
+[32m✔ the frame is RECOMPUTED, not shifted: T, L, U orthonormal, the roll about T kept, and bankG and grade read from the new frame [90m(9.7489ms)[39m[39m
+[32m✔ a swerve (l) on a CURVED base: the exact κ̃ agrees with a finite difference of the lifted tangent (the R′ and R″ terms, ref 09 §7) [90m(37.9922ms)[39m[39m
+[32m✔ the mesh closes every segment on a LIFTED end sample (path.segEnd), and the build head is the lifted last sample [90m(70.4231ms)[39m[39m
+[32m✔ h and l serialise canonically, undo removes a hill, and a core/1 file opens with both at zero [90m(1.6428ms)[39m[39m
+[32m✔ checkDoc: an offset channel of the wrong length is refused; offsets must fade to 0 before a jump (FLIGHT_OFFSET) and start at 0 after it [90m(1.0133ms)[39m[39m
+[32m✔ with no offset set anywhere the adapter returns the geometry's own path object untouched [90m(5.3583ms)[39m[39m
+[32m✔ a constant-κ piece turns κ·L exactly (ref 09 §8) [90m(4.4695ms)[39m[39m
+[32m✔ a Bloss ramp 0 → T turns T·L/2 (∫₀¹ 3u² − 2u³ = ½; ref 09 §8, ref 02 §4) [90m(2.6466ms)[39m[39m
+[32m✔ a flat piece climbs 0, and its pitch stays where it was [90m(0.9505ms)[39m[39m
+[32m✔ a bank ramp reports its two ends (from 0° to 20°) [90m(0.7721ms)[39m[39m
+[32m✔ the extend candidate's readout (the ghost) equals the placed piece's readout after placing [90m(1.8776ms)[39m[39m
+[32m✔ edge cases, refused by name: an empty track, an index out of range; a candidate on an empty track reads the first piece [90m(1.095ms)[39m[39m
+[32m✔ the integral is exact: it agrees with an independent composite Simpson rule (20,000 panels) on a curving channel [90m(9.6904ms)[39m[39m
+[32m✔ pitch accumulates across pieces, and a flight sets it to its landing pitch (turn 0, climb = land − take-off, length = what the adapter builds) [90m(4.1905ms)[39m[39m
+[32m✔ the geometry the adapter draws integrates by the trapezoid at 2 m: its end heading is within 1e-6 rad of the exact readout (the stated difference, measured) [90m(7.9733ms)[39m[39m
+[32m✔ a hill that fades inside the piece leaves its effective turn and climb unchanged, and makes the road longer [90m(12.327ms)[39m[39m
+[32m✔ the road length over a hill agrees with the lifted path's own chords at 0.1 m (to 1 mm) [90m(31.2568ms)[39m[39m
+[32m✔ a hill still rising at the piece's end changes the effective end pitch by atan(h′) on a level straight [90m(4.8142ms)[39m[39m
+[32m✔ with no h or l anywhere, a piece reports offsets: null [90m(0.3381ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(135.8021ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(124.308ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(120.6573ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(109.9945ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(111.2887ms)[39m[39m
+[32m✔ test 3: brush kh +0.002 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(113.904ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(153.3262ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(115.5181ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(117.3816ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(121.752ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(111.1838ms)[39m[39m
+[32m✔ test 3: brush kv +0.001 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(109.6284ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(111.349ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(107.2215ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(108.8008ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(105.0711ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(108.6879ms)[39m[39m
+[32m✔ test 3: brush phi +0.17453292519943295 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(108.3556ms)[39m[39m
+[32m✔ test 3: brush w +5 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(122.962ms)[39m[39m
+[32m✔ test 3: brush w +5 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(145.3443ms)[39m[39m
+[32m✔ test 3: brush w +5 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(167.9769ms)[39m[39m
+[32m✔ test 3: brush w +5 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(110.4775ms)[39m[39m
+[32m✔ test 3: brush w +5 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(108.5979ms)[39m[39m
+[32m✔ test 3: brush w +5 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(108.8227ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 25% (s₀ 1025 m), r 20 m: bit for bit outside, no kink [90m(163.6132ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 25% (s₀ 1025 m), r 100 m: bit for bit outside, no kink [90m(167.5842ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 50% (s₀ 2050 m), r 20 m: bit for bit outside, no kink [90m(174.1839ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 50% (s₀ 2050 m), r 100 m: bit for bit outside, no kink [90m(173.0211ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 75% (s₀ 3075 m), r 20 m: bit for bit outside, no kink [90m(173.7432ms)[39m[39m
+[32m✔ test 3: brush r +0.5 at 75% (s₀ 3075 m), r 100 m: bit for bit outside, no kink [90m(153.7069ms)[39m[39m
+[32m✔ ref 10 §1: the smootherstep is 0, ½, 1 at 0, ½, 1, and its falloff is 1 at the centre and 0 at the edge and beyond [90m(0.6523ms)[39m[39m
+[32m✔ a brush never reaches a control point whose support leaves the window (the rule, on a bare knot vector) [90m(0.1648ms)[39m[39m
+[32m✔ a brush smaller than 3 knot spans is widened to 3 of the spans UNDER it, and says so [90m(19.433ms)[39m[39m
+[32m✔ the joints stay C1: a brush across a joint passes the document's own joint check, and the input is untouched [90m(28.6568ms)[39m[39m
+[32m✔ an unknown channel and a bad brush are refused by name [90m(0.5021ms)[39m[39m
+[90m﹣ the default brush is a HILL, and while the document has no height channel it is refused by name (never faked through the rate) [90m(0.4784ms)[39m # the offset channels are in: the hill tests below run instead[39m
+[32m✔ a value brush (bank) leaves every sample past W⁺ bit for bit, and calls no close [90m(91.6205ms)[39m[39m
+[32m✔ a RATE brush must be asked for: a heading-rate channel under the hill or value mode is refused [90m(0.4474ms)[39m[39m
+[32m✔ a RATE brush on an OPEN track changes the track downstream and does not close it [90m(87.9681ms)[39m[39m
+[32m✔ a RATE brush on a CLOSED track re-closes it, with the brushed stretch protected [90m(321.7579ms)[39m[39m
+[32m✔ a RATE brush has no kink at its edges: κ_new − κ_old steps no more at the edges than inside [90m(92.4898ms)[39m[39m
+[32m✔ a hill of 5 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(16211.8771ms)[39m[39m
+[32m✔ a hill of 5 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(29062.5202ms)[39m[39m
+[32m✔ a hill of -5 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(16018.631ms)[39m[39m
+[32m✔ a hill of -5 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(28960.8978ms)[39m[39m
+[32m✔ a swerve of 3 m, r 20 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(16068.6665ms)[39m[39m
+[32m✔ a swerve of 3 m, r 100 m: upstream and downstream bit for bit, no close, the other channels untouched, the peak as asked [90m(28503.5749ms)[39m[39m
+[32m✔ a SHARP brush (refine first) acts at the asked radius, and costs what the hand-back says: it is opt-in [90m(63.1493ms)[39m[39m
+[32m✔ a SHARP rate brush on kh at 25%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius [90m(142.1289ms)[39m[39m
+[32m✔ a SHARP rate brush on kh at 75%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius [90m(128.5501ms)[39m[39m
+[32m✔ a SHARP rate brush on kv at 25%, r 20 m (a D185 miss): C2 at s₀ ± 20 on κ_new − κ_old, at the asked radius [90m(147.8531ms)[39m[39m
+[32m✔ a refinement ALONE leaves the curve unchanged up to its stored step: every channel within 2 of its quanta, everywhere (1.69 measured) [90m(8.0939ms)[39m[39m
+[32m✔ undo removes both the brush and its knots: one commit, one undo, the document as it was [90m(38.4126ms)[39m[39m
+[32m✔ a SHARP phi brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared [90m(232.623ms)[39m[39m
+[32m✔ a SHARP w brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared [90m(239.6464ms)[39m[39m
+[32m✔ a SHARP h brush, r 20 m: outside W⁺ every channel moves under half a quantum and the track past it under 0.1 mm, as declared [90m(255.7913ms)[39m[39m
+[32m✔ the brush always reports the radius it used (the default widens, and says how far) [90m(40.4649ms)[39m[39m
+[32m✔ TEST 5a through the core: the balanced 45° ring, as B sealed it [90m(719.6488ms)[39m[39m
+[32m✔ TEST 5b through the core: the 10° ring spills every stream over the OUTER lip, RED, within ±5% / ±5 m [90m(106.2339ms)[39m[39m
+[34mℹ tests 174[39m
+[34mℹ suites 0[39m
+[34mℹ pass 164[39m
+[34mℹ fail 8[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 2[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 143387.019[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup.test.js:90:3
+[31m✖ row 1b: a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(123.5392ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: largest step between rows 1.3540845170522786°
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:96:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:90:3
+[31m✖ row 1b: a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(105.4672ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: rows outside c's range: 280 of 263
+  
+  280 !== 0
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:94:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m280[39m,
+    expected: [33m0[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:90:3
+[31m✖ row 1b: a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(76.4678ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: rows outside c's range: 293 of 250
+  
+  293 !== 0
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:94:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m293[39m,
+    expected: [33m0[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:90:3
+[31m✖ row 1b: a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(108.031ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: largest step between rows 2.047066197090757°
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:96:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:105:1
+[31m✖ row 1b: a cup that also changes width (a chord per segment) still has no step over 1° between rows (a seam zip per segment is the stated cost) [90m(63.8566ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: step 0.9926840198634324°, outside 125
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:108:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:114:1
+[31m✖ row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse [90m(1.1384ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Missing expected exception: parse 150.000001
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:121:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [90mundefined[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:153:1
+[31m✖ row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit [90m(12.1178ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: segment 50 at s 100
+  [32m+ actual[39m [31m- expected[39m
+  ... Skipped lines
+  
+  [39m  {
+  [39m    blend: {
+  [39m      from: {
+  [39m        font: 'bowl',
+  [39m        material: 'ROAD',
+  [34m...[39m
+  [39m      },
+  [32m+[39m     length: 25.33219732101551,
+  [31m-[39m     length: 24.599991181223846,
+  [39m      s0: 0
+  [39m    },
+  [39m    heartline: 0,
+  [39m    id: 'p2',
+  [39m    k0: 0,
+  [34m...[39m
+  [39m      psi: [
+  [32m+[39m       1.1774719728922196,
+  [32m+[39m       1.1774719728922196,
+  [32m+[39m       0.6533070301208445,
+  [32m+[39m       0.20510802108445117,
+  [31m-[39m       1.127217319405758,
+  [31m-[39m       1.127217319405758,
+  [31m-[39m       0.6254238030251302,
+  [31m-[39m       0.19635398467068044,
+  [39m        0,
+  [32m+[39m       0.20510802108445117,
+  [32m+[39m       0.6533070301208445,
+  [32m+[39m       1.1774719728922196,
+  [32m+[39m       1.1774719728922196
+  [31m-[39m       0.19635398467068044,
+  [31m-[39m       0.6254238030251302,
+  [31m-[39m       1.127217319405758,
+  [31m-[39m       1.127217319405758
+  [39m      ],
+  [39m      u: [
+  [39m        -15.5,
+  [39m        -11.625,
+  [39m        -7.75,
+  
+      at [90mC:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:159:98
+      at Array.forEach (<anonymous>)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:159:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: { id: [32m'p2'[39m, word: [32m'core'[39m, part: [32m'body'[39m, kind: [32m'road'[39m, length: [33m2[39m, k0: [33m0[39m, k1: [33m0[39m, kp0: [33m0[39m, kp1: [33m0[39m, roll0: [33m0[39m, roll1: [33m0[39m, heartline: [33m0[39m, profile: { font: [32m'bowl'[39m, u: [36m[Array][39m, psi: [36m[Array][39m, material: [32m'ROAD'[39m }, blend: { from: [36m[Object][39m, s0: [33m0[39m, length: [33m25.33219732101551[39m }, speed: [1mnull[22m },
+    expected: { id: [32m'p2'[39m, word: [32m'core'[39m, part: [32m'body'[39m, kind: [32m'road'[39m, length: [33m2[39m, k0: [33m0[39m, k1: [33m0[39m, kp0: [33m0[39m, kp1: [33m0[39m, roll0: [33m0[39m, roll1: [33m0[39m, heartline: [33m0[39m, profile: { font: [32m'bowl'[39m, u: [36m[Array][39m, psi: [36m[Array][39m, material: [32m'ROAD'[39m }, blend: { from: [36m[Object][39m, s0: [33m0[39m, length: [33m24.599991181223846[39m }, speed: [1mnull[22m },
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_doc.test.js:47:1
+[31m✖ checkDoc REFUSES a hand-built document with a broken joint, by the name JOINT (a κh step, a bank tear, a slope kink) [90m(0.4591ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Got unwanted exception: the same two pieces with a clean joint pass
+  Actual message: "BAD_DOC: piece 0 (p1): channel c needs 5 finite control points"
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_doc.test.js:53:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: CoreError: BAD_DOC: piece 0 (p1): channel c needs 5 finite control points
+        at bad [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:172:32[90m)[39m
+        at [90mC:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:193:161
+        at Array.forEach (<anonymous>)
+        at Object.checkDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:180:14[90m)[39m
+        at [90mC:\Users\nname\Desktop\a-d188-wt\[39mtest\core_doc.test.js:53:31
+    [90m    at getActual (node:assert:611:5)[39m
+    [90m    at strict.doesNotThrow (node:assert:779:32)[39m
+        at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_doc.test.js:53:10[90m)[39m
+    [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m,
+    expected: [90mundefined[39m,
+    operator: [32m'doesNotThrow'[39m,
+    diff: [32m'simple'[39m
+  }

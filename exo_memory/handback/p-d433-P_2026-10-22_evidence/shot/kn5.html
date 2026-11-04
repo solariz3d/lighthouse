@@ -1,0 +1,51 @@
+<!doctype html><meta charset="utf-8"><title>kn5 shot</title>
+<style>html,body{margin:0;background:#101418}canvas{display:block}</style>
+<canvas id="c" width="1400" height="816"></canvas>
+<script>
+// Draws the exported kn5's road triangles (flat, lit) with the core's lines over them: a reviewer's own picture of the place, nothing from the builder's preview.
+// Lines: white = the core's centreline (u = 0); cyan = the profile's two edges; magenta = where the preview draws its centre line (the row vertex nearest u = 0, +0.095 m);
+// amber = the car's lateral line u = 8.4; red = run 2's body path; the yellow box = the bump zone (s 3300-3314, u 6-10.5); the orange tie = the p5/p6 joint at s = 3300.
+window.__draw = async (view) => {
+  const G = await (await fetch('geom.json')).json();
+  const cv = document.getElementById('c'), gl = cv.getContext('webgl', { preserveDrawingBuffer: true, antialias: true });
+  const W = cv.width, H = cv.height;
+  const sh = (ty, s) => { const o = gl.createShader(ty); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, 'attribute vec3 aPos; attribute vec3 aNrm; uniform mat4 uVP; varying vec3 vN; varying vec3 vP; void main(){ vN=aNrm; vP=aPos; gl_Position=uVP*vec4(aPos,1.0); }'));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, 'precision mediump float; varying vec3 vN; varying vec3 vP; uniform vec4 uCol; uniform int uLit; void main(){ if(uLit==1){ vec3 n=normalize(vN); float d=max(0.0,dot(n,normalize(vec3(0.3,1.0,0.2)))); float g=0.35+0.65*d; float stripe = fract(vP.y*0.5) < 0.04 ? 0.85 : 1.0; gl_FragColor=vec4(uCol.rgb*g*stripe,1.0);} else gl_FragColor=uCol; }'));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  const aPos = gl.getAttribLocation(prog, 'aPos'), aNrm = gl.getAttribLocation(prog, 'aNrm'), uVP = gl.getUniformLocation(prog, 'uVP'), uCol = gl.getUniformLocation(prog, 'uCol'), uLit = gl.getUniformLocation(prog, 'uLit');
+  const T = G.tri, n = T.length / 9, pos = new Float32Array(T), nrm = new Float32Array(T.length);
+  for (let i = 0; i < n; i++) {
+    const o = i * 9; const ax = T[o+3]-T[o], ay = T[o+4]-T[o+1], az = T[o+5]-T[o+2], bx = T[o+6]-T[o], by = T[o+7]-T[o+1], bz = T[o+8]-T[o+2];
+    let nx = ay*bz-az*by, ny = az*bx-ax*bz, nz = ax*by-ay*bx; const l = Math.hypot(nx,ny,nz)||1; nx/=l; ny/=l; nz/=l; if (ny < 0) { nx=-nx; ny=-ny; nz=-nz; }
+    for (let k = 0; k < 3; k++) { nrm[o+k*3]=nx; nrm[o+k*3+1]=ny; nrm[o+k*3+2]=nz; }
+  }
+  const buf = (d) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, d, gl.STATIC_DRAW); return b; };
+  const bP = buf(pos), bN = buf(nrm);
+  const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]], cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]], dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2], unit=(a)=>{const l=Math.hypot(a[0],a[1],a[2]);return a.map(x=>x/l);};
+  function lookAt(eye, at, up) { const f = unit(sub(at, eye)), s = unit(cross(f, up)), u = cross(s, f); return [s[0],u[0],-f[0],0, s[1],u[1],-f[1],0, s[2],u[2],-f[2],0, -dot(s,eye),-dot(u,eye),dot(f,eye),1]; }
+  function persp(fov, asp, nr, fr) { const t = 1/Math.tan(fov/2); return [t/asp,0,0,0, 0,t,0,0, 0,0,(fr+nr)/(nr-fr),-1, 0,0,2*fr*nr/(nr-fr),0]; }
+  function mul(a, b) { const r = new Array(16).fill(0); for (let i=0;i<4;i++) for (let j=0;j<4;j++) for (let k=0;k<4;k++) r[i*4+j]+=a[k*4+j]*b[i*4+k]; return r; }
+  const VP = mul(persp(view.fov||1.0, W/H, 1, 2000), lookAt(view.eye, view.at, view.up||[0,1,0]));
+  gl.viewport(0,0,W,H); gl.clearColor(0.06,0.08,0.1,1); gl.enable(gl.DEPTH_TEST); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  gl.uniformMatrix4fv(uVP, false, new Float32Array(VP));
+  gl.bindBuffer(gl.ARRAY_BUFFER, bP); gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos,3,gl.FLOAT,false,0,0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, bN); gl.enableVertexAttribArray(aNrm); gl.vertexAttribPointer(aNrm,3,gl.FLOAT,false,0,0);
+  gl.uniform1i(uLit, 1); gl.uniform4f(uCol, 0.55,0.57,0.6,1); gl.drawArrays(gl.TRIANGLES, 0, n*3);
+  const line = (pts, col, lift) => {
+    const a = new Float32Array(pts.length*3); pts.forEach((p,i)=>{a[i*3]=p[0];a[i*3+1]=p[1]+lift;a[i*3+2]=p[2];});
+    const b = buf(a); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.vertexAttribPointer(aPos,3,gl.FLOAT,false,0,0); gl.disableVertexAttribArray(aNrm); gl.vertexAttrib3f(aNrm,0,1,0);
+    gl.uniform1i(uLit,0); gl.uniform4f(uCol,col[0],col[1],col[2],col[3]); gl.drawArrays(gl.LINE_STRIP,0,pts.length);
+    gl.enableVertexAttribArray(aNrm); gl.bindBuffer(gl.ARRAY_BUFFER,bN); gl.vertexAttribPointer(aNrm,3,gl.FLOAT,false,0,0);
+  };
+  line(G.lines.centre, [1,1,1,1], 0.08); line(G.lines.left, [0.3,0.9,1,1], 0.08); line(G.lines.right, [0.3,0.9,1,1], 0.08); line(G.lines.drawn, [1,0.3,1,1], 0.08); line(G.lines.u84, [1,0.85,0.2,1], 0.08); line(G.car, [1,0.2,0.2,1], 0);
+  const F = G.lines.frames, fr = (s) => F.find((f) => f.s === s);
+  const at = (f, u, v) => [f.pos[0]+f.L[0]*u+f.U[0]*v, f.pos[1]+f.L[1]*u+f.U[1]*v, f.pos[2]+f.L[2]*u+f.U[2]*v];
+  const f0 = fr(3300), f1 = fr(3314);
+  if (f0 && f1) { line([at(f0,6,1.3),at(f0,10.5,2.7),at(f1,10.5,3.0),at(f1,6,1.6),at(f0,6,1.3)], [1,0.9,0.1,1], 0.2); line([at(f0,-13,0.2),at(f0,13,3.6)], [1,0.5,0,1], 0.3); }
+  const fm = fr(3290);
+  if (fm) { line([at(fm,0,0.3),at(fm,0,3)], [1,1,1,1], 0); line([at(fm,-0.352,0.3),at(fm,-0.352,3)], [1,0.5,0,1], 0); line([at(fm,0.095,0.3),at(fm,0.095,3)], [1,0.3,1,1], 0); }
+  return cv.toDataURL('image/png');
+};
+</script>

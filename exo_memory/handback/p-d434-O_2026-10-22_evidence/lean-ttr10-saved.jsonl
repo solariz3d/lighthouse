@@ -1,0 +1,12 @@
+{"piece":"p33","lengthM":750,"turnDeg":-185.3,"bankDeg":[-153.6,-155.6,-157.6],"pitchDeg":[-90,13.7],"curved":371,"meanLeanInto":64.3,"out":0,"maxLatG":4.69}
+{"piece":"p34","lengthM":750,"turnDeg":44.8,"bankDeg":[-157.6,-211.3,-265],"pitchDeg":[-1.6,14.6],"curved":3,"meanLeanInto":53.8,"out":0,"maxLatG":4.53}
+{"piece":"p35","lengthM":750,"turnDeg":46.5,"bankDeg":[-265,-265,-265],"pitchDeg":[-18.1,-1.6],"curved":0,"meanLeanInto":null,"out":0,"maxLatG":0}
+{"piece":"p36","lengthM":750,"turnDeg":77,"bankDeg":[-265,-244.6,-224.1],"pitchDeg":[-18.2,20.4],"curved":371,"meanLeanInto":77.4,"out":0,"maxLatG":2.2}
+{"piece":"p37","lengthM":750,"turnDeg":46,"bankDeg":[-224.1,-225.2,-226.3],"pitchDeg":[11.8,20.7],"curved":2,"meanLeanInto":71.4,"out":0,"maxLatG":0.36}
+{"piece":"p38","lengthM":750,"turnDeg":113.5,"bankDeg":[-226.3,-222.5,-218.8],"pitchDeg":[2.8,11.8],"curved":372,"meanLeanInto":38,"out":0,"maxLatG":3.03}
+{"piece":"p39","lengthM":750,"turnDeg":264.4,"bankDeg":[-218.8,-226.4,-234],"pitchDeg":[-6.2,2.8],"curved":375,"meanLeanInto":44.4,"out":0,"maxLatG":7.6}
+{"piece":"p40","lengthM":125,"turnDeg":2,"bankDeg":[-234,-234,-234],"pitchDeg":[-6.2,-6.2],"curved":4,"meanLeanInto":52,"out":0,"maxLatG":5.49}
+{"piece":"p41","lengthM":87,"turnDeg":-3.6,"bankDeg":[-234,-207,-180],"pitchDeg":[-6.2,-3.7],"curved":0,"meanLeanInto":null,"out":0,"maxLatG":0}
+{"piece":"p42","lengthM":1273,"turnDeg":-228.6,"bankDeg":[-180,-180,-180],"pitchDeg":[-10,8],"curved":430,"meanLeanInto":-3.6,"out":130,"maxLatG":10.68}
+{"piece":"p43","lengthM":760,"turnDeg":-16,"bankDeg":[-180,-180,-180],"pitchDeg":[-12.8,-10],"curved":11,"meanLeanInto":-9.8,"out":11,"maxLatG":5.03}
+{"piece":"p44","lengthM":1744,"turnDeg":338.2,"bankDeg":[-180,-180,-180],"pitchDeg":[-10.2,13.7],"curved":795,"meanLeanInto":1.2,"out":264,"maxLatG":8.2}

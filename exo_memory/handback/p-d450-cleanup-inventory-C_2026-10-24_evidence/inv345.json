@@ -1,0 +1,3319 @@
+{
+ "at": "2026-10-24T14:18:07.838Z",
+ "scratch": [
+  {
+   "name": "bash-edit-diff",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "bk",
+   "sessions": 2,
+   "bytes": 21545,
+   "files": 2,
+   "newest": "2026-09-24T09:27Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "bundled-skills",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-data-vantage-cell",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-fresh-0c607a8e",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-fresh-17635120",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-fresh-476a9b3f",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-fresh-5863b0ee",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-fresh-8960d31a",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-fresh-acf6b85a",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-librarian",
+   "sessions": 3,
+   "bytes": 1643981906,
+   "files": 4468,
+   "newest": "2026-10-24T14:07Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-main",
+   "sessions": 3,
+   "bytes": 24687066,
+   "files": 199,
+   "newest": "2026-10-24T14:07Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-07b8a48f",
+   "sessions": 3,
+   "bytes": 1474597805,
+   "files": 26307,
+   "newest": "2026-10-24T11:41Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-0845a868",
+   "sessions": 3,
+   "bytes": 211309564,
+   "files": 10338,
+   "newest": "2026-10-24T14:18Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-181f513d",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-36313935",
+   "sessions": 5,
+   "bytes": 21659467,
+   "files": 613,
+   "newest": "2026-10-24T14:07Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-372c8abc",
+   "sessions": 4,
+   "bytes": 3492927838,
+   "files": 15343,
+   "newest": "2026-10-24T14:13Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-3d57124e",
+   "sessions": 4,
+   "bytes": 2843813162,
+   "files": 7090,
+   "newest": "2026-10-24T14:16Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-4cbb9f0a",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-5bf9d657",
+   "sessions": 3,
+   "bytes": 196542615,
+   "files": 2557,
+   "newest": "2026-10-24T07:39Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-906f757a",
+   "sessions": 1,
+   "bytes": 405116,
+   "files": 2,
+   "newest": "2026-10-10T19:29Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-a80a1c20",
+   "sessions": 1,
+   "bytes": 692,
+   "files": 9,
+   "newest": "2026-10-10T19:29Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-afa12c33",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-de4ec539",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-sibling-eeb329ed",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Consonance-instances-third-place",
+   "sessions": 4,
+   "bytes": 2533154491,
+   "files": 6310,
+   "newest": "2026-10-24T07:39Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-b-d184-wt",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-b-d184r-wt",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-sibling-07b8a48f-a2122153-a37e-41a6-a86f-534267ec0565-scratchpad-leave-seatcwd",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-sibling-07b8a48f-a2122153-a37e-41a6-a86f-534267ec0565-scratchpad-p1b-cwdA",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-sibling-372c8abc-fbf98f8e-29da-4fb2-8610-c038d6372249-scratchpad-probe",
+   "sessions": 1,
+   "bytes": 0,
+   "files": 0,
+   "newest": "2026-10-19T13:32Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-sibling-3d57124e-6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f-scratchpad-place-probe-cwd",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-sibling-5bf9d657-12fb81f6-f4c0-4ef8-aad8-f0cdce091925-scratchpad-suggest-cwd-off",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-sibling-5bf9d657-12fb81f6-f4c0-4ef8-aad8-f0cdce091925-scratchpad-suggest-cwd-off2",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-sibling-5bf9d657-12fb81f6-f4c0-4ef8-aad8-f0cdce091925-scratchpad-suggest-cwd-off3",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-sibling-5bf9d657-12fb81f6-f4c0-4ef8-aad8-f0cdce091925-scratchpad-suggest-cwd-on",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-C--Consonance-instances-sibling-5bf9d657-12fb81f6-f4c0-4ef8-aad8-f0cdce091925-scratchpad-suggest-cwd-on3",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-claude-vantage-smoke-cell",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-consonance-vantage-cell",
+   "sessions": 132,
+   "bytes": 21467,
+   "files": 14,
+   "newest": "2026-10-24T07:39Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-3W5DHc",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-6xUUUG",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-B0M42z",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-GDTokF",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-l9Yqwr",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-qBsw5Z",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-qlOFM2",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-V77sqI",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-WeFLjT",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-WOxAiu",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-xKhbvw",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-au-zCF6FL",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-0P9eiE",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-5B01y7",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-5beHo3",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-a8Vevh",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-dkT6mH",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-e4sFld",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-gOt4gl",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-HYWHQY",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-jER6Rd",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-KHbklS",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-KX5eCW",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-M3XUUN",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-UgWJ3Q",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-XE0hju",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-ypGtLW",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-cr1-zcdtWB",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-0r2JW7",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-1cygE4",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-2IPqjV",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-4jxPI8",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-7kqceC",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-86Pdia",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-9T8Hf4",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-b7rQe7",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-BmHG51",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-dXOGa5",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-dz8MJI",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-ftKffS",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-GXxbzp",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-j76Kxr",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-JshRjt",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-k1rRaI",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-lh0G1F",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-M2ihXF",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-mkJPrN",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-Mq7Nb3",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-n2mSn9",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-ofTR35",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-oIuh6a",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-OoZYl0",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-p3giwx",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-qU9ZHt",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-RJojd7",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-StEpRJ",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-T6tiSy",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-tkP5XF",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-v1cGXj",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-X7J22F",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-mk-zIdDpX",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-4YeCWt",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-A4lh1g",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-aNGT8X",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-aOuHcd",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-ARYIti",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-BvD79K",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-CGInzW",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-dR64ce",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-gNYJ6I",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-Q6UMb5",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-r8ZMG1",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-RCarVU",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-U9DSiY",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-Uxrxud",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-wkatMz",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-yq4ULD",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-rw-YYuBBG",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-4SVe8b",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-54H2Nl",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-8i7fZZ",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-BB5ual",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-cx2VhD",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-DJup2R",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-eoUFBI",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-fk6Sq8",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-G8RuFz",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-HGjq3d",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-HsjP7Y",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-lsNtXk",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-pqzG15",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-SHxFO1",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-xK6xZJ",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-AppData-Local-Temp-r2p-sc-zYJsuX",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-claude-instances-librarian",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-claude-instances-main",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-claude-instances-sibling-ae846fd6",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-brain-rot",
+   "sessions": 1,
+   "bytes": 151740,
+   "files": 2,
+   "newest": "2026-10-14T11:44Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-fractal",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-NEWEST",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-NEWEST-FOLDER",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-Tilt",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-transcripts",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-valheim-agent",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L1-N",
+   "sessions": 1,
+   "bytes": 15250,
+   "files": 5,
+   "newest": "2026-10-19T14:37Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L1-R",
+   "sessions": 1,
+   "bytes": 2263,
+   "files": 4,
+   "newest": "2026-10-19T14:39Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L1-review",
+   "sessions": 1,
+   "bytes": 0,
+   "files": 0,
+   "newest": "2026-10-20T04:01Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L2-N",
+   "sessions": 1,
+   "bytes": 0,
+   "files": 0,
+   "newest": "2026-10-19T14:51Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L2-R",
+   "sessions": 2,
+   "bytes": 2466,
+   "files": 9,
+   "newest": "2026-10-19T19:30Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L2-review",
+   "sessions": 1,
+   "bytes": 0,
+   "files": 0,
+   "newest": "2026-10-20T04:09Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L3-N",
+   "sessions": 1,
+   "bytes": 76,
+   "files": 2,
+   "newest": "2026-10-19T20:21Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L3-R",
+   "sessions": 1,
+   "bytes": 212,
+   "files": 4,
+   "newest": "2026-10-19T20:26Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L3-review",
+   "sessions": 1,
+   "bytes": 818,
+   "files": 5,
+   "newest": "2026-10-20T04:36Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L4-N",
+   "sessions": 1,
+   "bytes": 393,
+   "files": 1,
+   "newest": "2026-10-19T20:47Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L4-R",
+   "sessions": 1,
+   "bytes": 14223,
+   "files": 5,
+   "newest": "2026-10-19T20:47Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L4-review",
+   "sessions": 1,
+   "bytes": 0,
+   "files": 0,
+   "newest": "2026-10-20T04:48Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L5-N",
+   "sessions": 1,
+   "bytes": 22,
+   "files": 1,
+   "newest": "2026-10-19T21:12Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L5-R",
+   "sessions": 1,
+   "bytes": 22,
+   "files": 1,
+   "newest": "2026-10-19T21:05Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Desktop-worktrees-p-d411-L5-review",
+   "sessions": 1,
+   "bytes": 0,
+   "files": 0,
+   "newest": "2026-10-20T04:50Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "C--Users-nname-Downloads-t180-wt-e4",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "cache-break-state-1fe5e288-c8a7-4983-b8c1-ab2ef3e67526.json",
+   "bytes": 1378,
+   "newest": "2026-10-17T15:05Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-21d643da-b27a-47a1-ac80-1412b255f27c.json",
+   "bytes": 1377,
+   "newest": "2026-10-17T20:48Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-2f2ef2f0-ebe6-4ac9-a253-b1e3fcb431dd.json",
+   "bytes": 1948,
+   "newest": "2026-10-24T10:30Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-2fe00c91-2ba8-4b24-b7f7-ef41c92b80a6.json",
+   "bytes": 1329,
+   "newest": "2026-10-19T06:00Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-3124fa39-adf4-4d3f-8642-725790717271.json",
+   "bytes": 1375,
+   "newest": "2026-10-24T06:08Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-4e4bc00b-4895-4876-b5e1-6dfe55b523d4.json",
+   "bytes": 1378,
+   "newest": "2026-10-17T20:29Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-7b4fa448-51a4-45b3-82ef-6eacd76e42da.json",
+   "bytes": 2678,
+   "newest": "2026-10-19T15:16Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-92239754-e269-43b0-91d2-8452ad28dea5.json",
+   "bytes": 1374,
+   "newest": "2026-10-20T02:52Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-9b04bb66-b7bc-4460-becd-a87970e48a22.json",
+   "bytes": 1376,
+   "newest": "2026-10-19T23:52Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-af6e6b78-2f33-49a6-a891-043958134f43.json",
+   "bytes": 1329,
+   "newest": "2026-10-18T15:21Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-c1a71519-8f4b-43c5-b43e-9573cf44b3be.json",
+   "bytes": 1375,
+   "newest": "2026-10-19T13:32Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-db119876-d8e5-4a57-9fed-8a519e3d3fc3.json",
+   "bytes": 1328,
+   "newest": "2026-10-17T17:57Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-dd394e12-4f92-4b89-a87d-198472a2d1a7.json",
+   "bytes": 1377,
+   "newest": "2026-10-22T17:32Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-de388284-060b-4172-be5c-58293076fdef.json",
+   "bytes": 1378,
+   "newest": "2026-10-22T18:46Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-e9b2225d-af9a-494a-a1e6-1c575312f9d1.json",
+   "bytes": 1330,
+   "newest": "2026-10-19T08:39Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-ecd49a2d-752d-478c-a548-903213833d43.json",
+   "bytes": 1376,
+   "newest": "2026-10-22T05:34Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-ed0722be-9073-403d-9de5-e899ca194891.json",
+   "bytes": 2344,
+   "newest": "2026-10-23T15:18Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-ef3ebad2-27a8-4680-8b25-88aaedc3a54c.json",
+   "bytes": 1329,
+   "newest": "2026-10-17T23:14Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-f01b1d59-da8c-4ea9-9cb9-7e0e933398e2.json",
+   "bytes": 1377,
+   "newest": "2026-10-21T14:57Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "cache-break-state-fa7fc77e-2d5a-4e33-8395-3e90e4eb0e63.json",
+   "bytes": 1329,
+   "newest": "2026-10-17T15:06Z",
+   "files": 1,
+   "links": []
+  },
+  {
+   "name": "fswatch-probe-wZ50tk",
+   "sessions": 1,
+   "bytes": 1,
+   "files": 1,
+   "newest": "2026-09-22T21:50Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "msi-bios",
+   "sessions": 1,
+   "bytes": 16711129,
+   "files": 1,
+   "newest": "2026-10-07T02:07Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "scr",
+   "sessions": 1,
+   "bytes": 547,
+   "files": 1,
+   "newest": "2026-09-24T20:31Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "specimen-P1",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "name": "vantage-smoke",
+   "sessions": 0,
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0
+  }
+ ],
+ "temp": [
+  {
+   "name": "a2553fae-61ea-49f6-81d4-05765d983a1e.tmp",
+   "kind": "other",
+   "bytes": 11185,
+   "files": 1,
+   "newest": "2026-10-18T23:03Z",
+   "links": [],
+   "ctime": "2026-10-18T23:03Z"
+  },
+  {
+   "name": "a449sigil-hD6DT6",
+   "kind": "other",
+   "bytes": 29509391,
+   "files": 546,
+   "newest": "2026-10-24T14:00Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-24T13:59Z"
+  },
+  {
+   "name": "a7870bda-93d5-4d75-ada4-278d4b3a336d.tmp",
+   "kind": "other",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-17T23:16Z",
+   "links": [],
+   "ctime": "2026-10-17T23:16Z"
+  },
+  {
+   "name": "b437oom-pQNE1l",
+   "kind": "other",
+   "bytes": 122024662,
+   "files": 675,
+   "newest": "2026-10-23T03:33Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T03:29Z"
+  },
+  {
+   "name": "c2221dce-aa01-476a-a510-423c16d7739c.tmp",
+   "kind": "other",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-19T01:32Z",
+   "links": [],
+   "ctime": "2026-10-19T01:32Z"
+  },
+  {
+   "name": "c2626fcb-c927-4752-9a68-764e2435ecba.tmp",
+   "kind": "other",
+   "bytes": 11185,
+   "files": 1,
+   "newest": "2026-10-18T23:02Z",
+   "links": [],
+   "ctime": "2026-10-18T23:02Z"
+  },
+  {
+   "name": "c7945aba-a127-470c-97be-3676a4a2652a.tmp",
+   "kind": "other",
+   "bytes": 11185,
+   "files": 1,
+   "newest": "2026-10-19T01:30Z",
+   "links": [],
+   "ctime": "2026-10-19T01:30Z"
+  },
+  {
+   "name": "d02524ef-c01f-4ff2-b659-fc7947c6ddd0.tmp",
+   "kind": "ours by name",
+   "bytes": 11185,
+   "files": 1,
+   "newest": "2026-10-17T23:19Z",
+   "links": [],
+   "ctime": "2026-10-17T23:19Z"
+  },
+  {
+   "name": "d033a605-e153-4d30-ba46-a4bc42b282c1.tmp",
+   "kind": "ours by name",
+   "bytes": 248531,
+   "files": 1,
+   "newest": "2026-10-20T05:02Z",
+   "links": [],
+   "ctime": "2026-10-20T05:02Z"
+  },
+  {
+   "name": "d08873de-c915-4f43-b7a0-2da228412aa5.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-17T23:18Z",
+   "links": [],
+   "ctime": "2026-10-17T23:18Z"
+  },
+  {
+   "name": "d160dcb7-3095-4c0f-9171-493cd10bfa8d.tmp",
+   "kind": "ours by name",
+   "bytes": 248531,
+   "files": 1,
+   "newest": "2026-10-19T04:44Z",
+   "links": [],
+   "ctime": "2026-10-19T04:44Z"
+  },
+  {
+   "name": "d1615ec8-ac82-4f7e-95b2-5ef9e05f142b.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-18T23:14Z",
+   "links": [],
+   "ctime": "2026-10-18T23:14Z"
+  },
+  {
+   "name": "d178b8e0-a33f-48bf-acb8-eb0f16b63d7f.tmp",
+   "kind": "ours by name",
+   "bytes": 11185,
+   "files": 1,
+   "newest": "2026-10-19T01:31Z",
+   "links": [],
+   "ctime": "2026-10-19T01:31Z"
+  },
+  {
+   "name": "d25014c3-f558-4ed0-8438-145d0740a39c.tmp.woff2",
+   "kind": "ours by name",
+   "bytes": 114856,
+   "files": 1,
+   "newest": "2026-10-19T23:16Z",
+   "links": [],
+   "ctime": "2026-10-19T23:16Z"
+  },
+  {
+   "name": "d361list.txt",
+   "kind": "ours by name",
+   "bytes": 1863,
+   "files": 1,
+   "newest": "2026-10-17T15:34Z",
+   "links": [],
+   "ctime": "2026-10-17T15:34Z"
+  },
+  {
+   "name": "d395files.json",
+   "kind": "ours by name",
+   "bytes": 5243,
+   "files": 1,
+   "newest": "2026-10-18T22:40Z",
+   "links": [],
+   "ctime": "2026-10-18T22:40Z"
+  },
+  {
+   "name": "d411-export-author.txt",
+   "kind": "ours by name",
+   "bytes": 892,
+   "files": 1,
+   "newest": "2026-10-19T14:38Z",
+   "links": [],
+   "ctime": "2026-10-19T14:36Z"
+  },
+  {
+   "name": "d411-menubar-page.txt",
+   "kind": "ours by name",
+   "bytes": 3284,
+   "files": 1,
+   "newest": "2026-10-19T14:38Z",
+   "links": [],
+   "ctime": "2026-10-19T14:35Z"
+  },
+  {
+   "name": "d411-red.txt",
+   "kind": "ours by name",
+   "bytes": 14478,
+   "files": 1,
+   "newest": "2026-10-19T14:34Z",
+   "links": [],
+   "ctime": "2026-10-19T13:47Z"
+  },
+  {
+   "name": "d411-settings.txt",
+   "kind": "ours by name",
+   "bytes": 1208,
+   "files": 1,
+   "newest": "2026-10-19T14:38Z",
+   "links": [],
+   "ctime": "2026-10-19T14:36Z"
+  },
+  {
+   "name": "d411-theme-mutation.txt",
+   "kind": "ours by name",
+   "bytes": 5014,
+   "files": 1,
+   "newest": "2026-10-19T14:38Z",
+   "links": [],
+   "ctime": "2026-10-19T14:36Z"
+  },
+  {
+   "name": "d411-theme.txt",
+   "kind": "ours by name",
+   "bytes": 1755,
+   "files": 1,
+   "newest": "2026-10-19T14:38Z",
+   "links": [],
+   "ctime": "2026-10-19T14:36Z"
+  },
+  {
+   "name": "d411edit.js",
+   "kind": "ours by name",
+   "bytes": 3327,
+   "files": 1,
+   "newest": "2026-10-19T20:29Z",
+   "links": [],
+   "ctime": "2026-10-19T20:29Z"
+  },
+  {
+   "name": "d411edit.js.2",
+   "kind": "ours by name",
+   "bytes": 3408,
+   "files": 1,
+   "newest": "2026-10-19T20:29Z",
+   "links": [],
+   "ctime": "2026-10-19T20:29Z"
+  },
+  {
+   "name": "d411fix.js",
+   "kind": "ours by name",
+   "bytes": 2879,
+   "files": 1,
+   "newest": "2026-10-19T20:37Z",
+   "links": [],
+   "ctime": "2026-10-19T20:37Z"
+  },
+  {
+   "name": "d411green.txt",
+   "kind": "ours by name",
+   "bytes": 5748,
+   "files": 1,
+   "newest": "2026-10-19T20:42Z",
+   "links": [],
+   "ctime": "2026-10-19T20:37Z"
+  },
+  {
+   "name": "d411hs.txt",
+   "kind": "ours by name",
+   "bytes": 2015,
+   "files": 1,
+   "newest": "2026-10-19T20:47Z",
+   "links": [],
+   "ctime": "2026-10-19T20:42Z"
+  },
+  {
+   "name": "d411r6.js",
+   "kind": "ours by name",
+   "bytes": 951,
+   "files": 1,
+   "newest": "2026-10-19T20:37Z",
+   "links": [],
+   "ctime": "2026-10-19T20:37Z"
+  },
+  {
+   "name": "d411red.txt",
+   "kind": "ours by name",
+   "bytes": 4780,
+   "files": 1,
+   "newest": "2026-10-19T20:36Z",
+   "links": [],
+   "ctime": "2026-10-19T20:29Z"
+  },
+  {
+   "name": "d411x.txt",
+   "kind": "ours by name",
+   "bytes": 0,
+   "files": 1,
+   "newest": "2026-10-20T01:22Z",
+   "links": [],
+   "ctime": "2026-10-20T01:22Z"
+  },
+  {
+   "name": "d415e3f7-cb12-4e40-b057-12ff34f652ca.tmp",
+   "kind": "ours by name",
+   "bytes": 11185,
+   "files": 1,
+   "newest": "2026-10-17T23:18Z",
+   "links": [],
+   "ctime": "2026-10-17T23:18Z"
+  },
+  {
+   "name": "d438.diff",
+   "kind": "ours by name",
+   "bytes": 172187,
+   "files": 1,
+   "newest": "2026-10-23T15:19Z",
+   "links": [],
+   "ctime": "2026-10-23T15:19Z"
+  },
+  {
+   "name": "d438a.sha",
+   "kind": "ours by name",
+   "bytes": 855,
+   "files": 1,
+   "newest": "2026-10-23T06:26Z",
+   "links": [],
+   "ctime": "2026-10-23T06:26Z"
+  },
+  {
+   "name": "d438src.sha",
+   "kind": "ours by name",
+   "bytes": 854,
+   "files": 1,
+   "newest": "2026-10-23T05:07Z",
+   "links": [],
+   "ctime": "2026-10-23T05:07Z"
+  },
+  {
+   "name": "d439.sha",
+   "kind": "ours by name",
+   "bytes": 854,
+   "files": 1,
+   "newest": "2026-10-23T08:11Z",
+   "links": [],
+   "ctime": "2026-10-23T08:11Z"
+  },
+  {
+   "name": "d43925d2-1d89-481e-976b-7e7abe82c161.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-18T15:20Z",
+   "links": [],
+   "ctime": "2026-10-18T15:20Z"
+  },
+  {
+   "name": "d515af43-d501-4857-9a59-a5b57dba64b6.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-20T02:15Z",
+   "links": [],
+   "ctime": "2026-10-20T02:15Z"
+  },
+  {
+   "name": "d522be0a-75b3-4894-8e69-b06f697be166.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-19T00:26Z",
+   "links": [],
+   "ctime": "2026-10-19T00:26Z"
+  },
+  {
+   "name": "d551b55c-e6fa-4b3d-a5cc-28c0fa4ceff0.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-18T01:53Z",
+   "links": [],
+   "ctime": "2026-10-18T01:53Z"
+  },
+  {
+   "name": "d57389f3-8f23-4098-9d7b-9d8991ef0d9b.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-18T13:45Z",
+   "links": [],
+   "ctime": "2026-10-18T13:45Z"
+  },
+  {
+   "name": "d5937f2f-bf09-4131-88b0-6ff52aa6cc0c.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-18T00:06Z",
+   "links": [],
+   "ctime": "2026-10-18T00:06Z"
+  },
+  {
+   "name": "d6029932-c469-4989-bd35-6115458c12ce.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-17T23:26Z",
+   "links": [],
+   "ctime": "2026-10-17T23:26Z"
+  },
+  {
+   "name": "d648d115-633a-4a4e-af95-9a554de019e6.tmp",
+   "kind": "ours by name",
+   "bytes": 11185,
+   "files": 1,
+   "newest": "2026-10-18T23:04Z",
+   "links": [],
+   "ctime": "2026-10-18T23:04Z"
+  },
+  {
+   "name": "d6727b7f-ab71-4382-b526-79bdd0376f4d.tmp",
+   "kind": "ours by name",
+   "bytes": 248531,
+   "files": 1,
+   "newest": "2026-10-18T03:39Z",
+   "links": [],
+   "ctime": "2026-10-18T03:39Z"
+  },
+  {
+   "name": "d742b9fb-e8ba-496c-98c5-95ad397244b4.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-19T01:31Z",
+   "links": [],
+   "ctime": "2026-10-19T01:31Z"
+  },
+  {
+   "name": "d7440b6a-e9c2-46a1-864d-b90a3e32d888.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-19T20:19Z",
+   "links": [],
+   "ctime": "2026-10-19T20:19Z"
+  },
+  {
+   "name": "d7877de3-c88a-4bc5-b64a-6b736a3cd8be.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-17T19:21Z",
+   "links": [],
+   "ctime": "2026-10-17T19:21Z"
+  },
+  {
+   "name": "d797d9f3-cdec-4195-888a-7ed0223d76d9.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-20T03:22Z",
+   "links": [],
+   "ctime": "2026-10-20T03:22Z"
+  },
+  {
+   "name": "d8059fb7-1c21-4d00-ac76-371422a2dcda.tmp",
+   "kind": "ours by name",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-17T12:59Z",
+   "links": [],
+   "ctime": "2026-10-17T12:59Z"
+  },
+  {
+   "name": "d863aab5-6c85-49da-aa0e-45c4ee704305.tmp",
+   "kind": "ours by name",
+   "bytes": 11185,
+   "files": 1,
+   "newest": "2026-10-17T23:20Z",
+   "links": [],
+   "ctime": "2026-10-17T23:20Z"
+  },
+  {
+   "name": "d934ee2b-8aff-4470-89a3-bbf7de23f17c.tmp",
+   "kind": "ours by name",
+   "bytes": 248531,
+   "files": 1,
+   "newest": "2026-10-19T23:36Z",
+   "links": [],
+   "ctime": "2026-10-19T23:36Z"
+  },
+  {
+   "name": "d9694953-3a0f-440e-ba8d-d45e95baa41e.tmp",
+   "kind": "ours by name",
+   "bytes": 0,
+   "files": 1,
+   "newest": "2026-10-24T14:00Z",
+   "links": [],
+   "ctime": "2026-10-24T14:00Z"
+  },
+  {
+   "name": "e8577cef-a31b-4fd1-8151-7e6e2fb3c667.tmp",
+   "kind": "other",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-19T01:31Z",
+   "links": [],
+   "ctime": "2026-10-19T01:31Z"
+  },
+  {
+   "name": "f1446edc-5fd3-4449-b016-5641e57a1bee.tmp",
+   "kind": "other",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-18T13:44Z",
+   "links": [],
+   "ctime": "2026-10-18T13:44Z"
+  },
+  {
+   "name": "f259cffd-3079-474b-b1cd-e39b34264910.tmp",
+   "kind": "other",
+   "bytes": 248531,
+   "files": 1,
+   "newest": "2026-10-19T01:40Z",
+   "links": [],
+   "ctime": "2026-10-19T01:40Z"
+  },
+  {
+   "name": "f520acdc-1bf7-4743-813d-4b855b75db50.tmp",
+   "kind": "other",
+   "bytes": 162108,
+   "files": 1,
+   "newest": "2026-10-17T23:18Z",
+   "links": [],
+   "ctime": "2026-10-17T23:18Z"
+  },
+  {
+   "name": "f6684dbf-1b44-47b9-8f05-c9146dbb0ed8.tmp",
+   "kind": "other",
+   "bytes": 248531,
+   "files": 1,
+   "newest": "2026-10-19T04:47Z",
+   "links": [],
+   "ctime": "2026-10-19T04:47Z"
+  },
+  {
+   "name": "f8794aaf-ce84-4daa-9ccc-a31f175a2983.tmp.css",
+   "kind": "other",
+   "bytes": 609188,
+   "files": 1,
+   "newest": "2026-10-23T17:19Z",
+   "links": [],
+   "ctime": "2026-10-23T17:19Z"
+  },
+  {
+   "name": "node-compile-cache",
+   "kind": "ours by name",
+   "bytes": 1317976,
+   "files": 528,
+   "newest": "2026-10-22T20:28Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T20:28Z"
+  },
+  {
+   "name": "p437exp-4s3hZ6",
+   "kind": "other",
+   "bytes": 185094590,
+   "files": 742,
+   "newest": "2026-10-23T02:51Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T02:41Z"
+  },
+  {
+   "name": "p437exp-BFiwF2",
+   "kind": "other",
+   "bytes": 185064059,
+   "files": 742,
+   "newest": "2026-10-23T02:06Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T01:56Z"
+  },
+  {
+   "name": "p437exp-jlu316",
+   "kind": "other",
+   "bytes": 185040882,
+   "files": 742,
+   "newest": "2026-10-23T03:11Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T02:56Z"
+  },
+  {
+   "name": "p437exp-SJtIUW",
+   "kind": "other",
+   "bytes": 185049251,
+   "files": 742,
+   "newest": "2026-10-23T02:25Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T02:11Z"
+  },
+  {
+   "name": "p446exp-Uttebs",
+   "kind": "other",
+   "bytes": 189450108,
+   "files": 750,
+   "newest": "2026-10-23T15:58Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T15:48Z"
+  },
+  {
+   "name": "scoped_dir16140_1363245528",
+   "kind": "chrome scoped_dir",
+   "bytes": 596143,
+   "files": 89,
+   "newest": "2026-10-22T21:50Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T21:50Z"
+  },
+  {
+   "name": "scoped_dir16140_351611768",
+   "kind": "chrome scoped_dir",
+   "bytes": 1169375,
+   "files": 55,
+   "newest": "2026-10-22T21:50Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T21:50Z"
+  },
+  {
+   "name": "scoped_dir18796_83526462",
+   "kind": "chrome scoped_dir",
+   "bytes": 567644,
+   "files": 90,
+   "newest": "2026-10-22T18:37Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:36Z"
+  },
+  {
+   "name": "scoped_dir19572_1801488478",
+   "kind": "chrome scoped_dir",
+   "bytes": 1168153,
+   "files": 55,
+   "newest": "2026-10-22T18:38Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:37Z"
+  },
+  {
+   "name": "scoped_dir19572_2103109250",
+   "kind": "chrome scoped_dir",
+   "bytes": 601348,
+   "files": 90,
+   "newest": "2026-10-22T18:38Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:37Z"
+  },
+  {
+   "name": "scoped_dir24092_1870515405",
+   "kind": "chrome scoped_dir",
+   "bytes": 0,
+   "files": 0,
+   "newest": "",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T14:35Z"
+  },
+  {
+   "name": "scoped_dir32432_1795058767",
+   "kind": "chrome scoped_dir",
+   "bytes": 1163722,
+   "files": 53,
+   "newest": "2026-10-22T18:51Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:51Z"
+  },
+  {
+   "name": "scoped_dir32432_884874878",
+   "kind": "chrome scoped_dir",
+   "bytes": 596143,
+   "files": 89,
+   "newest": "2026-10-22T18:51Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:51Z"
+  },
+  {
+   "name": "scoped_dir36420_1728314846",
+   "kind": "chrome scoped_dir",
+   "bytes": 578926,
+   "files": 90,
+   "newest": "2026-10-22T21:48Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T21:48Z"
+  },
+  {
+   "name": "scoped_dir39172_1787509312",
+   "kind": "chrome scoped_dir",
+   "bytes": 164015,
+   "files": 2,
+   "newest": "2026-10-22T18:51Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:51Z"
+  },
+  {
+   "name": "scoped_dir39172_644652556",
+   "kind": "chrome scoped_dir",
+   "bytes": 249629,
+   "files": 2,
+   "newest": "2026-10-22T18:51Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:51Z"
+  },
+  {
+   "name": "scoped_dir40204_1407341019",
+   "kind": "chrome scoped_dir",
+   "bytes": 1168153,
+   "files": 55,
+   "newest": "2026-10-22T18:48Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:48Z"
+  },
+  {
+   "name": "scoped_dir40204_1632679282",
+   "kind": "chrome scoped_dir",
+   "bytes": 596143,
+   "files": 89,
+   "newest": "2026-10-22T18:48Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:48Z"
+  },
+  {
+   "name": "t180-water-6yp5Xa",
+   "kind": "ours by name",
+   "bytes": 386388,
+   "files": 19,
+   "newest": "2026-10-22T17:55Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T17:54Z"
+  },
+  {
+   "name": "t180-water-B7a9xn",
+   "kind": "ours by name",
+   "bytes": 386464,
+   "files": 19,
+   "newest": "2026-10-23T08:48Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T08:47Z"
+  },
+  {
+   "name": "t180-water-cqzkwd",
+   "kind": "ours by name",
+   "bytes": 386464,
+   "files": 19,
+   "newest": "2026-10-23T13:46Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T13:45Z"
+  },
+  {
+   "name": "t180-water-HDhrlb",
+   "kind": "ours by name",
+   "bytes": 386464,
+   "files": 19,
+   "newest": "2026-10-22T18:59Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:58Z"
+  },
+  {
+   "name": "t180-water-JNufVK",
+   "kind": "ours by name",
+   "bytes": 386407,
+   "files": 19,
+   "newest": "2026-10-22T18:28Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:27Z"
+  },
+  {
+   "name": "t180-water-LFNqDo",
+   "kind": "ours by name",
+   "bytes": 386388,
+   "files": 19,
+   "newest": "2026-10-22T20:17Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T20:16Z"
+  },
+  {
+   "name": "t180-water-qBB9kQ",
+   "kind": "ours by name",
+   "bytes": 386464,
+   "files": 19,
+   "newest": "2026-10-23T19:51Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T19:50Z"
+  },
+  {
+   "name": "t180-water-zTop6Y",
+   "kind": "ours by name",
+   "bytes": 386388,
+   "files": 19,
+   "newest": "2026-10-22T19:30Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T19:30Z"
+  },
+  {
+   "name": "t180b-theme-mut-waCr4W",
+   "kind": "ours by name",
+   "bytes": 10429948,
+   "files": 249,
+   "newest": "2026-10-24T14:18Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-24T14:18Z"
+  },
+  {
+   "name": "t180close.txt",
+   "kind": "ours by name",
+   "bytes": 13407,
+   "files": 1,
+   "newest": "2026-10-15T04:37Z",
+   "links": [],
+   "ctime": "2026-10-15T04:29Z"
+  },
+  {
+   "name": "t180crisp-HwQOYe",
+   "kind": "ours by name",
+   "bytes": 63488201,
+   "files": 493,
+   "newest": "2026-10-23T19:39Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T19:38Z"
+  },
+  {
+   "name": "t180dec.txt",
+   "kind": "ours by name",
+   "bytes": 124988,
+   "files": 1,
+   "newest": "2026-10-15T08:00Z",
+   "links": [],
+   "ctime": "2026-10-15T07:34Z"
+  },
+  {
+   "name": "t180df.txt",
+   "kind": "ours by name",
+   "bytes": 42380,
+   "files": 1,
+   "newest": "2026-10-15T15:34Z",
+   "links": [],
+   "ctime": "2026-10-15T15:31Z"
+  },
+  {
+   "name": "t180drag-4LVKff",
+   "kind": "ours by name",
+   "bytes": 78875783,
+   "files": 559,
+   "newest": "2026-10-24T14:00Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-24T13:58Z"
+  },
+  {
+   "name": "t180fin.txt",
+   "kind": "ours by name",
+   "bytes": 14565,
+   "files": 1,
+   "newest": "2026-10-15T18:04Z",
+   "links": [],
+   "ctime": "2026-10-15T17:57Z"
+  },
+  {
+   "name": "t180full.txt",
+   "kind": "ours by name",
+   "bytes": 433466,
+   "files": 1,
+   "newest": "2026-10-15T01:35Z",
+   "links": [],
+   "ctime": "2026-10-15T00:56Z"
+  },
+  {
+   "name": "t180full2.txt",
+   "kind": "ours by name",
+   "bytes": 433857,
+   "files": 1,
+   "newest": "2026-10-15T04:50Z",
+   "links": [],
+   "ctime": "2026-10-15T04:09Z"
+  },
+  {
+   "name": "t180full3.txt",
+   "kind": "ours by name",
+   "bytes": 435661,
+   "files": 1,
+   "newest": "2026-10-15T05:19Z",
+   "links": [],
+   "ctime": "2026-10-15T04:37Z"
+  },
+  {
+   "name": "t180full4.txt",
+   "kind": "ours by name",
+   "bytes": 437006,
+   "files": 1,
+   "newest": "2026-10-15T16:06Z",
+   "links": [],
+   "ctime": "2026-10-15T15:34Z"
+  },
+  {
+   "name": "t180full5.txt",
+   "kind": "ours by name",
+   "bytes": 437994,
+   "files": 1,
+   "newest": "2026-10-15T19:50Z",
+   "links": [],
+   "ctime": "2026-10-15T19:03Z"
+  },
+  {
+   "name": "t180full6.txt",
+   "kind": "ours by name",
+   "bytes": 438018,
+   "files": 1,
+   "newest": "2026-10-15T21:11Z",
+   "links": [],
+   "ctime": "2026-10-15T20:42Z"
+  },
+  {
+   "name": "t180full7.txt",
+   "kind": "ours by name",
+   "bytes": 438246,
+   "files": 1,
+   "newest": "2026-10-15T22:50Z",
+   "links": [],
+   "ctime": "2026-10-15T22:22Z"
+  },
+  {
+   "name": "t180h.txt",
+   "kind": "ours by name",
+   "bytes": 35158,
+   "files": 1,
+   "newest": "2026-10-15T02:32Z",
+   "links": [],
+   "ctime": "2026-10-15T02:32Z"
+  },
+  {
+   "name": "t180menu-scaled-Eq8Avn",
+   "kind": "ours by name",
+   "bytes": 34149364,
+   "files": 553,
+   "newest": "2026-10-24T14:03Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-24T14:03Z"
+  },
+  {
+   "name": "t180mut.txt",
+   "kind": "ours by name",
+   "bytes": 19557,
+   "files": 1,
+   "newest": "2026-10-15T08:31Z",
+   "links": [],
+   "ctime": "2026-10-15T08:06Z"
+  },
+  {
+   "name": "t180rel-ED1OLp",
+   "kind": "ours by name",
+   "bytes": 78576637,
+   "files": 564,
+   "newest": "2026-10-23T19:38Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T19:36Z"
+  },
+  {
+   "name": "t180sculpt-7zE8p8",
+   "kind": "ours by name",
+   "bytes": 37833088,
+   "files": 436,
+   "newest": "2026-10-22T18:37Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:36Z"
+  },
+  {
+   "name": "t180sculpt-upImLG",
+   "kind": "ours by name",
+   "bytes": 24476026,
+   "files": 480,
+   "newest": "2026-10-24T14:09Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-24T14:09Z"
+  },
+  {
+   "name": "t180sculpt-YBniii",
+   "kind": "ours by name",
+   "bytes": 17627948,
+   "files": 326,
+   "newest": "2026-10-22T18:38Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T18:37Z"
+  },
+  {
+   "name": "t180snd-test-ARsdCn",
+   "kind": "ours by name",
+   "bytes": 16262282,
+   "files": 466,
+   "newest": "2026-10-24T14:13Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-24T14:13Z"
+  },
+  {
+   "name": "t180snd-test-SmbHIG",
+   "kind": "ours by name",
+   "bytes": 85349240,
+   "files": 559,
+   "newest": "2026-10-24T14:18Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-24T14:16Z"
+  },
+  {
+   "name": "t180sweep",
+   "kind": "ours by name",
+   "bytes": 296674,
+   "files": 2,
+   "newest": "2026-10-22T15:02Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-22T15:02Z"
+  },
+  {
+   "name": "t180t2.txt",
+   "kind": "ours by name",
+   "bytes": 29251,
+   "files": 1,
+   "newest": "2026-10-15T00:26Z",
+   "links": [],
+   "ctime": "2026-10-15T00:26Z"
+  },
+  {
+   "name": "t180t3.txt",
+   "kind": "ours by name",
+   "bytes": 35357,
+   "files": 1,
+   "newest": "2026-10-15T00:43Z",
+   "links": [],
+   "ctime": "2026-10-15T00:40Z"
+  },
+  {
+   "name": "t180tests.txt",
+   "kind": "ours by name",
+   "bytes": 35605,
+   "files": 1,
+   "newest": "2026-10-15T00:16Z",
+   "links": [],
+   "ctime": "2026-10-15T00:14Z"
+  },
+  {
+   "name": "t180_a2.log",
+   "kind": "ours by name",
+   "bytes": 16139,
+   "files": 1,
+   "newest": "2026-10-16T01:27Z",
+   "links": [],
+   "ctime": "2026-10-16T01:27Z"
+  },
+  {
+   "name": "t180_build.log",
+   "kind": "ours by name",
+   "bytes": 158,
+   "files": 1,
+   "newest": "2026-10-16T02:31Z",
+   "links": [],
+   "ctime": "2026-10-16T02:30Z"
+  },
+  {
+   "name": "t180_c.log",
+   "kind": "ours by name",
+   "bytes": 19223,
+   "files": 1,
+   "newest": "2026-10-16T01:22Z",
+   "links": [],
+   "ctime": "2026-10-16T01:22Z"
+  },
+  {
+   "name": "t180_fx.log",
+   "kind": "ours by name",
+   "bytes": 2879,
+   "files": 1,
+   "newest": "2026-10-16T07:51Z",
+   "links": [],
+   "ctime": "2026-10-16T07:51Z"
+  },
+  {
+   "name": "t180_touched.log",
+   "kind": "ours by name",
+   "bytes": 6005,
+   "files": 1,
+   "newest": "2026-10-16T01:06Z",
+   "links": [],
+   "ctime": "2026-10-16T01:06Z"
+  },
+  {
+   "name": "v0414.MxBP",
+   "kind": "other",
+   "bytes": 13831513,
+   "files": 606,
+   "newest": "2026-10-23T15:17Z",
+   "links": [],
+   "errors": 0,
+   "ctime": "2026-10-23T15:17Z"
+  }
+ ],
+ "fakeRoots": [],
+ "tracks": [
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d437-e/out-typed-force/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 231929707,
+   "newest": "2026-10-23T03:44Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d371/out-tile/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 225378259,
+   "newest": "2026-10-17T18:08Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d371/out-fit/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 225378259,
+   "newest": "2026-10-17T18:09Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d371/out-edge/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 225378259,
+   "newest": "2026-10-17T18:16Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d364/zipstage/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 225378233,
+   "newest": "2026-10-17T15:54Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d364/t180b_elysium.before-d364",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 11,
+   "bytes": 225387808,
+   "newest": "2026-10-17T15:53Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d364/out-fixed/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 225378233,
+   "newest": "2026-10-17T16:20Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d364/out-fitrow/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 225378233,
+   "newest": "2026-10-17T15:51Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d364/out-fitinert/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 225378233,
+   "newest": "2026-10-17T15:49Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d358/zipstage/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 225378233,
+   "newest": "2026-10-17T15:04Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d358/t180b_elysium.before-scifi",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 11,
+   "bytes": 208610592,
+   "newest": "2026-10-17T15:04Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d358/out-scifi/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 225378233,
+   "newest": "2026-10-17T15:02Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Downloads/t180-d358/out-control/t180b_elysium",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 208601017,
+   "newest": "2026-10-17T15:01Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r7/testtrack10-saved-reopened-r7/t180b_d447_testtrack10_saved_reopened_r7",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313986,
+   "newest": "2026-10-24T11:48Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r7/testtrack10-open-r7/t180b_d447_testtrack10_open_r7",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 223008449,
+   "newest": "2026-10-24T11:46Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r7/elysium-reopened-r7/t180b_d447_elysium_reopened_r7",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313956,
+   "newest": "2026-10-24T11:50Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r5/testtrack10-saved-reopened-r5/t180b_d447_testtrack10_saved_reopened_r5",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313986,
+   "newest": "2026-10-24T05:48Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r5/testtrack10-open-r5/t180b_d447_testtrack10_open_r5",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 223008449,
+   "newest": "2026-10-24T07:36Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r5/elysium-reopened-r5/t180b_d447_elysium_reopened_r5",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313956,
+   "newest": "2026-10-24T05:50Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r4/testtrack10-saved-reopened-r4/t180b_d447_testtrack10_saved_reopened_r4",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313986,
+   "newest": "2026-10-24T03:56Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r4/testtrack10-open-r4/t180b_d447_testtrack10_open_r4",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 223008449,
+   "newest": "2026-10-24T03:54Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r4/elysium-reopened-r4/t180b_d447_elysium_reopened_r4",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313956,
+   "newest": "2026-10-24T03:58Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r3/testtrack10-saved-reopened-r3/t180b_d447_testtrack10_saved_reopened_r3",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313986,
+   "newest": "2026-10-24T01:44Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r3/testtrack10-open-r3/t180b_d447_testtrack10_open_r3",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 223008449,
+   "newest": "2026-10-24T01:42Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r3/elysium-reopened-r3/t180b_d447_elysium_reopened_r3",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313956,
+   "newest": "2026-10-24T01:46Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r2/testtrack10-saved-reopened-r2/t180b_d447_testtrack10_saved_reopened_r2",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313986,
+   "newest": "2026-10-24T00:26Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r2/testtrack10-open-r2/t180b_d447_testtrack10_open_r2",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 223008449,
+   "newest": "2026-10-24T00:24Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/r2/elysium-reopened-r2/t180b_d447_elysium_reopened_r2",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313956,
+   "newest": "2026-10-24T00:27Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/o19-before/testtrack10-saved-reopened-o19-before/t180b_d447_testtrack10_saved_reopened_o19_befo",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226314006,
+   "newest": "2026-10-23T19:50Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/o19-before/testtrack10-open-o19-before/t180b_d447_testtrack10_open_o19_before",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 223008473,
+   "newest": "2026-10-23T19:47Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/o19-before/elysium-reopened-o19-before/t180b_d447_elysium_reopened_o19_before",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313980,
+   "newest": "2026-10-23T19:53Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/o18/testtrack10-saved-reopened-o18/t180b_d447_testtrack10_saved_reopened_o18",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313989,
+   "newest": "2026-10-23T19:58Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/o18/testtrack10-open-o18/t180b_d447_testtrack10_open_o18",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 223008452,
+   "newest": "2026-10-23T19:56Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/o18/elysium-reopened-o18/t180b_d447_elysium_reopened_o18",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313959,
+   "newest": "2026-10-23T20:00Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/f1/testtrack10-saved-reopened-f1/t180b_d447_testtrack10_saved_reopened_f1",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313986,
+   "newest": "2026-10-23T21:51Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/f1/testtrack10-open-f1/t180b_d447_testtrack10_open_f1",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 223008449,
+   "newest": "2026-10-23T21:48Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d447-O_2026-10-23_evidence/fakeac/f1/elysium-reopened-f1/t180b_d447_elysium_reopened_f1",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 226313956,
+   "newest": "2026-10-23T21:54Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d439-O_2026-10-23_evidence/tracks/kn5-tex/t180b_test_track_10_copy_closer_d439",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 228624269,
+   "newest": "2026-10-23T08:11Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d438-build-O_2026-10-22_evidence/tracks/kn5-tex-a/t180b_test_track_10_copy_closer_d438a",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 229362981,
+   "newest": "2026-10-23T05:43Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d438-build-O_2026-10-22_evidence/tracks/kn5-tex/t180b_test_track_10_copy_closer_d438",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 229542516,
+   "newest": "2026-10-23T04:27Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d434-O_2026-10-22_evidence/tracks/kn5-tex/t180b_test_track_10_copy_banked_closer",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 231629434,
+   "newest": "2026-10-23T03:19Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d433-P_2026-10-22_evidence/out-re/t180b_test_10",
+   "why": [
+    "models.ini",
+    "ui_track.json"
+   ],
+   "files": 8,
+   "bytes": 742827,
+   "newest": "2026-10-22T15:45Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d433-P_2026-10-22_evidence/out/t180b_test_10",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 67567378,
+   "newest": "2026-10-22T15:40Z",
+   "links": [],
+   "errors": 0
+  },
+  {
+   "dir": "C:/Users/nname/Documents/t180b_untitled",
+   "why": [
+    "models.ini",
+    "kn5",
+    "ui_track.json"
+   ],
+   "files": 10,
+   "bytes": 5101376,
+   "newest": "2026-09-27T23:01Z",
+   "links": [],
+   "errors": 0
+  }
+ ],
+ "hisTracks": {
+  "note": "his folders, rows withheld from this public copy; full list in pane C scratchpad d450/inv345.json",
+  "folders": 51,
+  "bytes": 11278021664
+ },
+ "tempNotOurs": {
+  "note": "names withheld (other software); counted only",
+  "entries": 2115,
+  "bytes": 3657149872
+ }
+}

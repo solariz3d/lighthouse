@@ -1,0 +1,14 @@
+[32m✔ control: the unmutated temp copy passes every test the mutants are run against [90m(12819.1399ms)[39m[39m
+[32m✔ mutation E1 an OS key-repeat re-arms the takeover (W1: after C or B, a held W snaps back to free): applied, and caught by "W1: W held and REPEATING…" [90m(12265.2094ms)[39m[39m
+[32m✔ mutation E2 deltaX counts without Shift (W2: a sideways trackpad swipe zooms, or moves the lens): applied, and caught by "W2: a trackpad swipe SIDEWAYS…" [90m(12096.228ms)[39m[39m
+[32m✔ mutation N6 the wheel ignores deltaX (Shift+wheel is dead on a device that reports it there): applied, and caught by "P5: Shift+wheel is ×4…" [90m(11981.5573ms)[39m[39m
+[34mℹ tests 4[39m
+[34mℹ suites 0[39m
+[34mℹ pass 4[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 49207.8856[39m
+
+[lockedD.js] exit 0 in 49 s

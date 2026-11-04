@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-/* jev-shadow-runner.js — keeps jev-shadow.js running for as long as the app is open. D104.
+/* jev-shadow-runner.js — kept jev-shadow.js running while the app was open. D104. RETIRED 2026-09-27 (D164): nothing starts it now.
  *
  *   node consonance/tools/jev-shadow-runner.js --app-pid <pid> [--shadow-every <sec>] [--max-calls <n>] [--daily-cap <n>]
  *
- * STARTED BY THE APP, not by a service. `main.rs` spawns it beside the exit waiter on every launch (start_jev_shadow,
+ * STARTED BY THE APP until D164 (2026-09-27), never by a service. `main.rs` spawned it beside the exit waiter on every launch (start_jev_shadow,
  * next to start_exit_waiter; L059 §3 made that call site unconditional), windowless, with the app's own pid. It exits
  * by itself when that pid dies. It is not a scheduled task, not a service, and it has no WakeToRun.
  *

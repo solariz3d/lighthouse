@@ -1,0 +1,22 @@
+[32m✔ a value claim with no read is counted unsourced [90m(2.584ms)[39m[39m
+[32m✔ the same claim WITH a read in the same turn is sourced [90m(1.8237ms)[39m[39m
+[32m✔ Write and Edit do NOT count as consulting a source [90m(1.9261ms)[39m[39m
+[32m✔ prose without an asserted value is not counted at all [90m(1.7488ms)[39m[39m
+[32m✔ every declared pattern actually matches something — no dead detector [90m(0.1221ms)[39m[39m
+[32m✔ a missing ~/.claude/projects exits 2 with a message, not an uncaught ENOENT [90m(29.9334ms)[39m[39m
+[32m✔ a real transcript produces a non-zero denominator [90m(978.2211ms)[39m[39m
+[32m✔ turns() agrees with a whole-file read at every chunk size, including sizes that split a multi-byte character, a line, and a CRLF [90m(61.5947ms)[39m[39m
+[32m✔ an empty file, a file of blank lines, and a single line longer than the chunk all read without throwing [90m(4.1951ms)[39m[39m
+[32m✔ eachLine() hands over exactly the lines of the file: no phantom empty line from the stale bytes after a short last read, none after a final newline [90m(3.9698ms)[39m[39m
+[34mℹ tests 10[39m
+[34mℹ suites 0[39m
+[34mℹ pass 10[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1133.3343[39m
+
+--- stderr ---
+
+--- exit 0

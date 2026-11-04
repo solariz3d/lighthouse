@@ -1,0 +1,81 @@
+== H0252
+2026-09-28T06:41:33.407Z turn_start 2026-09-28T04:55:08.988Z tool_use Write hits: nothing deleted
+== H0182
+2026-09-23T00:46:10.182Z turn_start 2026-09-23T00:39:55.922Z tool_use Write hits: re-derived from B's own numbers | re-derived from B
+2026-09-23T00:47:50.625Z turn_start 2026-09-23T00:39:55.922Z tool_use Write hits: re-derived from B
+2026-09-23T01:06:17.169Z turn_start 2026-09-23T01:00:30.837Z tool_use Edit hits: re-derived from B's own numbers | re-derived from B
+2026-09-23T01:08:05.701Z turn_start 2026-09-23T01:00:30.837Z tool_use Write hits: re-derived from B's own numbers | re-derived from B
+== H0546
+2026-09-23T07:47:48.217Z turn_start 2026-09-23T07:44:33.772Z tool_use Edit hits: not a rule of this room
+2026-09-23T07:47:57.377Z turn_start 2026-09-23T07:44:33.772Z tool_use Bash hits: not a rule of this room
+2026-09-23T07:49:09.791Z turn_start 2026-09-23T07:44:33.772Z text hits: not a rule of this room
+2026-09-23T07:52:23.773Z turn_start 2026-09-23T07:52:10.483Z tool_use Edit hits: not a rule of this room
+== H0595
+2026-09-27T07:22:09.106Z turn_start 2026-09-27T07:21:17.581Z tool_use Write hits: 882 statements | 882
+2026-09-27T07:22:14.008Z turn_start 2026-09-27T07:21:17.581Z tool_use Write hits: 882
+2026-09-27T07:22:27.642Z turn_start 2026-09-27T07:21:17.581Z text hits: 882 statements | 882
+== H0802
+2026-09-19T16:33:28.173Z turn_start 2026-09-19T16:29:42.353Z tool_use Bash hits: score.mjs:27
+== H0102
+2026-10-08T21:57:53.928Z turn_start 2026-10-08T21:53:54.410Z tool_use Bash hits: passes alone
+2026-10-08T21:58:39.377Z turn_start 2026-10-08T21:53:54.410Z tool_use Write hits: passes alone
+2026-10-08T23:28:29.186Z turn_start 2026-10-08T23:27:46.849Z tool_use Write hits: passes alone | red in the suite
+2026-10-08T23:28:33.866Z turn_start 2026-10-08T23:27:46.849Z tool_use Write hits: passes alone
+== H0162
+2026-09-22T12:31:43.351Z turn_start 2026-09-22T12:27:34.420Z tool_use Write hits: 20 positives
+2026-09-22T12:32:21.280Z turn_start 2026-09-22T12:27:34.420Z tool_use Write hits: 20 positives
+2026-09-22T12:49:48.262Z turn_start 2026-09-22T12:48:51.877Z tool_use Edit hits: 20 positives
+2026-09-22T17:57:57.145Z turn_start 2026-09-22T17:43:32.325Z tool_use Write hits: exactly 20 positives | 20 positives
+== H0351
+2026-10-04T08:05:51.992Z turn_start 2026-10-04T07:49:58.283Z tool_use Write hits: 4,776,861 | 10,369,893
+2026-10-04T08:05:57.343Z turn_start 2026-10-04T07:49:58.283Z tool_use Write hits: 4,776,861 | 10,369,893
+2026-10-04T08:06:17.184Z turn_start 2026-10-04T07:49:58.283Z text hits: 4,776,861 | 10,369,893
+2026-10-04T08:29:36.073Z turn_start 2026-10-04T08:24:18.525Z tool_use Bash hits: 4,776,861
+== H0159
+2026-09-22T17:57:57.145Z turn_start 2026-09-22T17:43:32.325Z tool_use Write hits: 47 of the 74 | 47 of 74
+2026-09-22T18:00:08.665Z turn_start 2026-09-22T17:43:32.325Z tool_use Bash hits: 47 of the 74 | 47 of 74
+2026-09-22T18:01:09.309Z turn_start 2026-09-22T17:43:32.325Z tool_use Bash hits: 47 of the 74
+2026-09-22T18:01:48.763Z turn_start 2026-09-22T17:43:32.325Z tool_use Write hits: 47 of the 74
+== H0403
+2026-10-05T05:48:31.932Z turn_start 2026-10-05T05:36:10.045Z tool_use Edit hits: some 27 test files | 27 test files
+2026-10-05T05:48:42.982Z turn_start 2026-10-05T05:36:10.045Z tool_use Bash hits: some 27 test files | 27 test files
+== H0557L
+== H0557M
+2026-09-23T10:02:02.711Z turn_start 2026-09-23T10:01:46.764Z tool_use mcp__consonance__chair_inject hits: installer now manages | now manages them
+2026-09-23T10:02:12.288Z turn_start 2026-09-23T10:01:46.764Z text hits: installer now manages
+== H0557E
+2026-09-23T10:04:04.857Z turn_start 2026-09-23T10:02:03.048Z tool_use Write hits: installer now manages | now manages them
+== H0232
+2026-09-27T23:38:37.690Z turn_start 2026-09-27T23:28:28.612Z tool_use Write hits: edited by D175
+2026-09-27T23:38:44.502Z turn_start 2026-09-27T23:28:28.612Z tool_use Bash hits: edited by D175
+2026-09-27T23:39:01.376Z turn_start 2026-09-27T23:28:28.612Z tool_use Edit hits: edited by D175
+2026-09-27T23:57:08.774Z turn_start 2026-09-27T23:39:12.101Z tool_use Write hits: edited by D175
+== H0192
+2026-09-26T07:34:03.015Z turn_start 2026-09-26T07:30:52.950Z tool_use Write hits: missed more often than it is found
+2026-09-26T07:34:38.610Z turn_start 2026-09-26T07:30:52.950Z tool_use Edit hits: missed more often than it is found
+2026-09-26T07:34:58.695Z turn_start 2026-09-26T07:30:52.950Z tool_use Write hits: missed more often than it is found
+== H0717
+2026-10-09T20:17:16.232Z turn_start 2026-10-09T20:14:55.167Z tool_use Edit hits: no pit lane
+2026-10-09T20:59:38.021Z turn_start 2026-10-09T20:59:04.051Z tool_use Write hits: no pit lane | have no pit
+2026-10-09T20:59:45.297Z turn_start 2026-10-09T20:59:04.051Z tool_use mcp__consonance__call_librarian hits: no pit lane | have no pit
+2026-10-09T20:59:48.996Z turn_start 2026-10-09T20:59:04.051Z tool_use mcp__consonance__call_librarian hits: no pit lane | have no pit
+== H0911
+2026-10-03T23:54:19.405Z turn_start 2026-10-03T23:54:11.266Z text hits: 59 tests
+2026-10-03T23:54:23.484Z turn_start 2026-10-03T23:54:11.266Z tool_use Write hits: 59 tests | 59 pass
+2026-10-03T23:54:59.972Z turn_start 2026-10-03T23:54:11.266Z tool_use Write hits: 59 tests | 59 pass
+2026-10-03T23:55:34.407Z turn_start 2026-10-03T23:54:11.266Z text hits: 59 pass
+== H0682
+2026-09-16T10:28:44.271Z turn_start 2026-09-16T10:26:20.087Z tool_use mcp__consonance__chair_inject hits: t2-echo
+2026-09-16T10:43:59.775Z turn_start 2026-09-16T10:43:38.860Z tool_use Bash hits: t2-echo
+2026-09-16T12:30:38.861Z turn_start 2026-09-16T12:30:02.357Z tool_use Bash hits: t2-echo
+2026-09-16T12:55:39.651Z turn_start 2026-09-16T12:55:12.984Z tool_use Bash hits: t2-echo
+== H0562
+2026-09-23T07:26:31.126Z turn_start 2026-09-23T07:25:06.863Z tool_use Edit hits: 2403a81
+2026-09-23T07:29:12.071Z turn_start 2026-09-23T07:25:06.863Z tool_use Write hits: 2403a81
+2026-09-23T07:29:24.963Z turn_start 2026-09-23T07:25:06.863Z tool_use Edit hits: 2403a81
+2026-09-23T10:02:49.609Z turn_start 2026-09-23T10:02:03.048Z tool_use Bash hits: 2403a81
+== H0799
+2026-09-19T15:13:10.748Z turn_start 2026-09-19T15:08:26.132Z tool_use Write hits: 9e087
+2026-09-19T15:13:34.067Z turn_start 2026-09-19T15:08:26.132Z text hits: 9e087
+2026-09-19T15:13:35.762Z turn_start 2026-09-19T15:08:26.132Z tool_use Bash hits: 9e087
+2026-09-19T15:46:23.737Z turn_start 2026-09-19T15:45:57.899Z tool_use Write hits: 9e087

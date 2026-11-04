@@ -1,0 +1,48 @@
+edit [33m1000[39m 
+total sampled 3215 ms
+--- self
+    91.5 ms  samplesAcross geom/profile.js:92
+    70.0 ms  meshPiece geom/mesh.js:136
+    64.9 ms  draw core/handles.js:224
+    54.8 ms  (garbage collector) :0
+    52.6 ms  frame preview/preview.js:308
+    51.5 ms  offsetAt geom/profile.js:72
+    40.0 ms  headMarker preview/look.js:106
+    36.2 ms  stroke :0
+    28.6 ms  linesFor preview/look.js:41
+    24.3 ms  dispatchEvent :0
+    23.5 ms  requestAnimationFrame :0
+    21.2 ms  frame core/selectionlayer.js:44
+    19.6 ms  CustomEvent :0
+    19.5 ms  (anon) core/labels.js:217
+    19.1 ms  frame core/labels.js:172
+    18.0 ms  uniform3f :0
+    15.4 ms  vertex geom/mesh.js:74
+    14.7 ms  draw preview/renderer.js:398
+    14.3 ms  frame core/griplayer.js:40
+    13.8 ms  uniformMatrix4fv :0
+    13.7 ms  placeHandles core/handles.js:104
+    12.7 ms  layout core/handles.js:218
+--- inclusive
+  3214.6 ms  (root) :0
+  1791.0 ms  (program) :0
+   402.8 ms  frame preview/preview.js:308
+   386.5 ms  ghost core/panel.js:285
+   386.5 ms  f.oninput.f.onchange core/panel.js:311
+   365.2 ms  dispatchEvent :0
+   324.4 ms  ghostFor preview/trackmodel.js:178
+   324.4 ms  showGhost preview/preview.js:379
+   324.4 ms  showGhost preview/index.js:75
+   324.4 ms  send core/panel.js:141
+   297.1 ms  (anon) preview/trackmodel.js:202
+   297.1 ms  meshNew preview/trackmodel.js:192
+   296.6 ms  extendMesh geom/mesh.js:291
+   278.8 ms  frame core/handles.js:249
+   270.8 ms  meshRange geom/mesh.js:248
+   264.0 ms  draw preview/renderer.js:398
+   263.3 ms  meshPiece geom/mesh.js:136
+   162.1 ms  draw core/handles.js:224
+   118.5 ms  frame core/labels.js:172
+   111.7 ms  layout core/handles.js:218
+    91.5 ms  samplesAcross geom/profile.js:92
+    74.0 ms  rowWith :79

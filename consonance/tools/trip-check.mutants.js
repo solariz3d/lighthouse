@@ -43,7 +43,7 @@ const MUTANTS = [
 ];
 
 function score(text) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'trip-check-mut-'));
+  const root = require('./scratch.js').mkdtemp('trip-check-mut-');
   try {
     const tools = path.join(root, 'consonance', 'tools');
     fs.mkdirSync(tools, { recursive: true });

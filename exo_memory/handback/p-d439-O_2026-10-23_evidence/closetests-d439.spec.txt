@@ -1,0 +1,100 @@
+[32m✔ test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it [90m(49.7331ms)[39m[39m
+[32m✔ test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it [90m(28.5576ms)[39m[39m
+[32m✔ test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it [90m(26.0852ms)[39m[39m
+[32m✔ test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it [90m(21.8774ms)[39m[39m
+[32m✔ test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it [90m(21.5627ms)[39m[39m
+[32m✔ test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it [90m(39.0787ms)[39m[39m
+[32m✔ test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it [90m(23.0447ms)[39m[39m
+[32m✔ test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it [90m(28.6663ms)[39m[39m
+[32m✔ test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it [90m(19.454ms)[39m[39m
+[32m✔ test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it [90m(19.3225ms)[39m[39m
+[32m✔ test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it [90m(15.455ms)[39m[39m
+[32m✔ test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it [90m(32.4185ms)[39m[39m
+[32m✔ test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it [90m(17.15ms)[39m[39m
+[32m✔ test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it [90m(28.2148ms)[39m[39m
+[32m✔ test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it [90m(15.3359ms)[39m[39m
+[32m✔ test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it [90m(19.266ms)[39m[39m
+[32m✔ test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it [90m(24.1692ms)[39m[39m
+[32m✔ test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it [90m(27.2031ms)[39m[39m
+[32m✔ test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it [90m(61.2056ms)[39m[39m
+[32m✔ test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it [90m(24.6713ms)[39m[39m
+[32m✔ close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false [90m(122.0392ms)[39m[39m
+[32m✔ the input document is not changed (it is frozen, and deep-equal afterwards) [90m(316.5202ms)[39m[39m
+[32m✔ a lap that already closes (a full circle, R = 200 m) is left where it is: no steps [90m(48.4651ms)[39m[39m
+[32m✔ the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4) [90m(224.5989ms)[39m[39m
+[32m✔ the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first [90m(1.6941ms)[39m[39m
+[32m✔ with no stretch protected (every weight 1) close still closes, seam included [90m(643.965ms)[39m[39m
+[32m✔ a track with a jump and no turn is refused as any turnless track is (CLOSE_SINGULAR), not as an unbuilt jump (D243) [90m(15.0987ms)[39m[39m
+[32m✔ row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried [90m(3252.8845ms)[39m[39m
+[32m✔ row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop [90m(10300.7248ms)[39m[39m
+[32m✔ row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it [90m(3907.4148ms)[39m[39m
+[32m✔ row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason [90m(3530.7478ms)[39m[39m
+[32m✔ row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead [90m(1782.089ms)[39m[39m
+[32m✔ row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red [90m(7451.1067ms)[39m[39m
+[32m✔ row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order [90m(0.6212ms)[39m[39m
+[32m✔ row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.4 m, with no new road, and the lap proves [90m(28224.2228ms)[39m[39m
+[32m✔ row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run [90m(2003.1726ms)[39m[39m
+[32m✔ row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track [90m(25266.0666ms)[39m[39m
+[32m✔ row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them [90m(4407.7753ms)[39m[39m
+[32m✔ row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does [90m(52754.3802ms)[39m[39m
+[34mℹ main thread 17141 ms CPU, process 23062 ms CPU, 17355 ms wall; routes 5463, checks 11318[39m
+[32m✔ row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document [90m(3105.2753ms)[39m[39m
+[32m✔ row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen [90m(46634.2728ms)[39m[39m
+[34mℹ main thread: clone 17078 ms, parsed 17187 ms; residual on an unfrozen document 0 of 4; closed sha256 5fc2e6fdd25a[39m
+[32m✔ a lap end in the flipped frame that faces the start exactly has no heading, pitch or bank left to close [90m(151.0107ms)[39m[39m
+[32m✔ the whole-lap close of a flipped-frame lap converges and the seam meets in position and frame [90m(257.9665ms)[39m[39m
+[32m✔ Finish to start from a flipped-frame end lays no roll (the end is already upright) and closes the lap [90m(1463.8603ms)[39m[39m
+[32m✔ Level on a flipped-frame end with a slope ends level (pitch 0), as it does on an upright track [90m(476.2785ms)[39m[39m
+[32m✔ row 1: TEST TRACK 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves [90m(24173.2634ms)[39m[39m
+[32m✔ row 2: TEST 10 finishes with no bump or wiggle at its closer joints, and nothing it did not lay moves [90m(2544.08ms)[39m[39m
+[32m✔ row 3: a lap that ends 212 m below its start, level, finishes with no bump or wiggle at its closer joints [90m(1004.282ms)[39m[39m
+[32m✔ row 4: a windowed close rolls the road as gently as the bank allows: a 57° start closes in the last 200 m under the roll-rate bar [90m(207.84ms)[39m[39m
+[32m✔ row 1: a close confined to the LAST piece leaves every earlier piece bit-identical, closes the loop, and moves the last piece [90m(490.1275ms)[39m[39m
+[32m✔ row 2: the default window covers at least ~20% of the lap from its end (at least the last piece); the whole-lap close, by contrast, moves pieces outside it [90m(499.9879ms)[39m[39m
+[32m✔ row 3: a window that cannot close the loop is REFUSED BY NAME (CLOSE_WINDOW), naming the window, and nothing is handed back [90m(2230.8412ms)[39m[39m
+[32m✔ row 4: a local close may not push the window past the roll-rate bar (1.2144°/m over 20 m): refused by name [90m(269.9205ms)[39m[39m
+[32m✔ row 4 control: the same start banked 0.5 rad closes in the last piece (its roll stays under the bar) [90m(164.981ms)[39m[39m
+[32m✔ row 5: a window with no road piece is refused by name [90m(113.101ms)[39m[39m
+[32m✔ close on two straights is a NAMED refusal (CoreError CLOSE_SINGULAR), never a plain Error [90m(31.9655ms)[39m[39m
+[32m✔ control: a lap that CAN close still closes (a turning track is not refused) [90m(158.9439ms)[39m[39m
+[32m✔ the app shows the refusal by its name: the shell's message carries CLOSE_SINGULAR, and the track stays open [90m(220.2767ms)[39m[39m
+[32m✔ row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose [90m(1.625ms)[39m[39m
+[32m✔ row 2: an end behind the start and pointing at it is one straight of the gap, with no turn [90m(0.1934ms)[39m[39m
+[32m✔ row 3: a track is finished with new pieces only, closed, and the new road ends on the start [90m(962.5402ms)[39m[39m
+[32m✔ row 4: refusals by name: a closed loop, an empty track [90m(751.9061ms)[39m[39m
+[32m✔ row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start [90m(2764.9761ms)[39m[39m
+[32m✔ row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°) [90m(5434.2513ms)[39m[39m
+[32m✔ row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar [90m(3814.1726ms)[39m[39m
+[32m✔ row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126° [90m(5895.7913ms)[39m[39m
+[32m✔ row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road [90m(1978.0269ms)[39m[39m
+[32m✔ row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change [90m(3156.1522ms)[39m[39m
+[32m✔ row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror) [90m(1939.0138ms)[39m[39m
+[32m✔ row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour [90m(342.0434ms)[39m[39m
+[32m✔ row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor [90m(0.7173ms)[39m[39m
+[32m✔ row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop [90m(496.2106ms)[39m[39m
+[32m✔ row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves [90m(45114.628ms)[39m[39m
+[32m✔ row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road [90m(831.5256ms)[39m[39m
+[32m✔ row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop [90m(5225.4047ms)[39m[39m
+[32m✔ row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber [90m(25491.7864ms)[39m[39m
+[32m✔ row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber [90m(2889.932ms)[39m[39m
+[32m✔ row 3: a closer with only gentle curves is banked by its share and no more [90m(2770.1565ms)[39m[39m
+[32m✔ row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way [90m(2801.6619ms)[39m[39m
+[32m✔ row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken [90m(2516.1015ms)[39m[39m
+[32m✔ row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken [90m(2398.7942ms)[39m[39m
+[32m✔ row 4: a straight gets none: a finish that is only a straight keeps the laid bank [90m(386.8511ms)[39m[39m
+[32m✔ row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels [90m(24687.451ms)[39m[39m
+[32m✔ row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels [90m(2572.0308ms)[39m[39m
+[32m✔ row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it [90m(17507.3877ms)[39m[39m
+[32m✔ row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it [90m(1845.5565ms)[39m[39m
+[32m✔ row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly [90m(5459.8718ms)[39m[39m
+[32m✔ row 6: a short closer (P's turn 150, tail 300, roll 54) brings the cup home no faster than his own road changes it [90m(1657.5062ms)[39m[39m
+[32m✔ row 7: a closer too short for his rate brings the cup home at the slowest rate it allows, and the report says the rate [90m(1884.7363ms)[39m[39m
+[32m✔ row 8: a closer long enough for his rate brings the cup home under it and says nothing of a fallback (P's three laps) [90m(5412.5533ms)[39m[39m
+[34mℹ tests 90[39m
+[34mℹ suites 0[39m
+[34mℹ pass 90[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 193339.2591[39m

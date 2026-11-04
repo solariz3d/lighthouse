@@ -1,0 +1,9 @@
+flat (close(), 6 pieces): press 1 OLD 4893c25fdd539ef6 NEW 4893c25fdd539ef6 BYTE-EQUAL; level [] (OLD []); changed p1 54.10° p2 64.03° p3 62.71° p4 62.42° p5 64.06° p6 12.23°
+  press 2 OLD: same doc; NEW: same doc
+  stored max|kh| p1 2.69e-3 p2 8.00e-3 p3 5.58e-3 p4 5.37e-3 p5 8.17e-3 p6 5.56e-3; 250 ms
+loop (close(), 10 pieces): press 1 OLD a712f84f84d977e8 NEW a712f84f84d977e8 BYTE-EQUAL; level ["p4"] (OLD ["p4"]); changed p1 12.46° p2 63.13° p3 1.59° p5 29.38° p6 62.62° p7 19.52° p8 63.35° p9 33.35° p10 63.64°
+  press 2 OLD: CHANGED p3 +1.582°; NEW: same doc
+  stored max|kh| p1 1.88e-3 p2 5.96e-3 p3 2.66e-4 p4 1.98e-3 p5 1.84e-3 p6 5.27e-3 p7 1.37e-3 p8 6.20e-3 p9 3.47e-3 p10 6.67e-3; 463 ms
+t10 (close(), 11 pieces): press 1 OLD dd552a6d5f5adbd2 NEW dd552a6d5f5adbd2 BYTE-EQUAL; level ["p5"] (OLD ["p5"]); changed p1 16.33° p6 2.29° p7 63.75° p8 34.34° p9 63.27° p10 1.53° p11 63.64°
+  press 2 OLD: CHANGED p6 +3.820° p10 +3.820°; NEW: same doc
+  stored max|kh| p1 2.85e-4 p2 3.98e-4 p3 3.72e-3 p4 3.34e-3 p5 2.18e-3 p6 9.00e-4 p7 6.87e-3 p8 1.87e-3 p9 6.08e-3 p10 1.60e-3 p11 6.67e-3; 628 ms

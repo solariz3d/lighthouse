@@ -1,0 +1,72 @@
+{
+  "started": "2026-10-31T17:07:32.799Z",
+  "exe": "C:/Users/nname/Desktop/worktrees/t180-c583/src-tauri/target/release/t180-track-builder.exe",
+  "track": "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d583/doc/eq-STADIUM 50.t180track",
+  "steps": [
+    {
+      "name": "launch",
+      "ok": true,
+      "s": 0.893,
+      "result": "menus ready"
+    },
+    {
+      "name": "open",
+      "ok": true,
+      "s": 24.382,
+      "result": "loaded: head shown at 1.1 s, still from 4.4 s; peak 484 MB at 17.8 s (page 267, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 212); settled 482 MB (page 265, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 212)"
+    },
+    {
+      "name": "export",
+      "ok": false,
+      "s": 62.642,
+      "error": "Error: the page went away; crashes [{\"t\":\"83.8\",\"what\":\"the CDP socket closed: code 1006 reason  clean false; app pid alive; webview/t180 processes 21\",\"mark\":\"export\"}]; peak 1213 MB at 69.3 s (page 235, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 206, iframe:about:srcdoc#4 1, worker:46bded2f-ae3f-4a87-85bd-480510#5 766)"
+    }
+  ],
+  "marks": [
+    {
+      "t": "0.8",
+      "mark": "begin launch"
+    },
+    {
+      "t": "1.7",
+      "mark": "end launch"
+    },
+    {
+      "t": "4.7",
+      "mark": "begin open"
+    },
+    {
+      "t": "29.1",
+      "mark": "end open"
+    },
+    {
+      "t": "29.1",
+      "mark": "begin export"
+    },
+    {
+      "t": "91.7",
+      "mark": "end export"
+    }
+  ],
+  "crashes": [
+    {
+      "t": "83.8",
+      "what": "the CDP socket closed: code 1006 reason  clean false; app pid alive; webview/t180 processes 21",
+      "mark": "export"
+    }
+  ],
+  "pageErrors": [],
+  "targets": {
+    "worker:overlapworker.js#0": "1.1",
+    "worker:overlapworker.js#1": "1.1",
+    "worker:closeworker.js#2": "1.1",
+    "worker:checkworker.js#3": "1.5",
+    "iframe:about:srcdoc#4": "29.3",
+    "worker:46bded2f-ae3f-4a87-85bd-480510#5": "29.5"
+  },
+  "pid": 56052,
+  "fatal": "Error: the page went away; crashes [{\"t\":\"83.8\",\"what\":\"the CDP socket closed: code 1006 reason  clean false; app pid alive; webview/t180 processes 21\",\"mark\":\"export\"}]; peak 1213 MB at 69.3 s (page 235, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 206, iframe:about:srcdoc#4 1, worker:46bded2f-ae3f-4a87-85bd-480510#5 766)",
+  "leftRunning": 0,
+  "exitCode": 1,
+  "nSamples": 80
+}

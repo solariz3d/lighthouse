@@ -1,0 +1,183 @@
+# D481: dragging a straight past ~400 m lags badly in 0.4.21. Librarian, 2026-10-26
+
+The keeper, 16:12: "Something isnt right with track builder, as soon as I drag the straight more than 400m it lags very bad like how it did in the beginning, what happeneed? I could do a 10km straight into a turn and it wouldnt lag that bad before"
+
+## What is known
+- He runs 0.4.21, installed this morning by D471: exe sha256 87aa6a2a…27c3. Before that he had 0.4.19 (D452's install, exe sha256 16dcfb9b…1081, kept as `.before-0.4.21`).
+- So the regression came in between v0.4.19 (496c347) and v0.4.21 (9648a25), across 0.4.20 and 0.4.21.
+- The standard is the keeper's own (memory, preview-at-refresh-rate): the previewer holds the display's refresh rate, 6.9 ms at 144 Hz, and only absurd loads may drop, gracefully. A 10 km straight was fine before.
+- **Suspects, named so they get measured rather than assumed.** These are the changes in that range that run on a drag or revalidate:
+  1. D463's bank-cup-edge amber, `stackCurl` in src/validate/index.js. A's own hand-back (p-d462-A, §3) says it is "read over the whole track on every call", "not memoised per segment", "runs on every revalidate up to the window's end", and "not measured on a drag tick". It took 150 ms over TEST 10.
+  2. D460's mesher change: meshSeam pairing by lateral u, plus weldSeams dropping standing triangles. Does it run per drag tick on the dragged piece, and does its cost grow with length?
+  3. The C2 quintic (D459, 3b and 3c) and the continuity checks (`c2Breaks`, `jointSteps`). Do they run per tick?
+  4. Anything in D465, D467 or D468 on the drag path. The bend bar (closejob barMiss) should only run on release; confirm it does.
+
+## The plan: one pane, the first free (check it to find; the fix is its own order, prove it)
+1. **Reproduce it in a test first** (his bug report, so red first). Use the repo's own drag harness (`app/test/drag-frame.test.js`, a headless browser, `--mute-audio`, titled zz-headless-test). Drag a straight's length handle from 200 m to 400, 1,000, 3,000 and 10,000 m on a simple open lap, and record the frame time per drag tick at each length.
+2. **The same run on v0.4.19, v0.4.20 and v0.4.21**, each in a detached worktree. Report a table of length against frame time for each version. That is the regression measured, not felt.
+3. **Bisect** the 0.4.19 → 0.4.21 range with that measure, down to the commit that made the cost grow with length.
+4. **Profile** the bad tick (a Chrome DevTools CPU profile through the harness), and name the function and file taking the time.
+5. **Hand-back:** the table, the commit, the function, and a red test row that fails on 0.4.21 and passes on 0.4.19: a drag tick at 10 km under a stated budget, the budget derived from 0.4.19's measured time with margin, not invented. No fix yet.
+
+Nothing touches his tracks or his install. Heavy runs go at BelowNormal under the heavy-run lock.
+
+NEXT: chair dispatch D481 to the first free pane now; librarian rules the fix order when its hand-back is in.
+
+## Ruled, 19:10 (A, `p-d481-A_2026-10-26.md` read whole, lighthouse 1be86b9a; red row t180 d481-a 41e7595a)
+
+- **Accepted.** The cause is `fitWithHold`, `src/core/extend.js:123` (t180), from 90f5809 (D459 3b widened), first shipped in 0.4.20. It runs on every pointer move whenever bank, cup or edge is typed. Checked by the librarian at v0.4.21 (9648a25:src/core/extend.js:123–141):
+  - `one(i)` builds an unfrozen piece per free point, so every `channelValue` copies the knot vector;
+  - the B table is dense m × S;
+  - the normal equations are a dense O(m²·S) loop, and the elimination is a dense O(m³) Gauss-Jordan. Its comment says "m is at most a few tens", but m is about 500 at 10 km.
+- My lead suspect (stackCurl) was wrong: 0 samples on the drag tick. A cleared it with the profile. The other suspects are cleared the same way (§5).
+- A's figures I take as A states them: 1 km with all three typed, p95 486 ms on 0.4.21 against 3.6 on 0.4.19. 10 km turn drag: frames of 130 s. The 26b895a and 496c347 bisect rows are inferred (unsaved output); 90f5809's row is on disk (`bis.out`).
+
+## D482, the fix: two parts, in parallel
+
+**Part 1, pane A (prove it: core maths, the bank/cup/edge every exported track carries).** Make `fitWithHold` cost linear in length with the same answer.
+- Compute the basis of each free point only over its own support (a B-spline basis function is non-zero over degree+1 spans). Use one knot vector for the whole fit, not a fresh copy per call.
+- Build the normal equations banded, and solve them with a banded solver. Keep the singular-system return ("the fit as it was").
+- **Same answer, proven:** byte-equal channels after the `toFixed(dec)` rounding on every public fixture, both private fixtures, TEST 10 and TEST TRACK 10, at each typed combination A used. If any value differs in its last kept digit, list it; do not widen a tolerance.
+- **Red to green:** row 6 (41e7595a) goes green unedited. A new node row: `extend()` at 10 km with all three typed finishes under a budget derived from a measured run, stated with its source.
+- The mutation harness covering extend.js, whole. The touched files' tests. CHANGELOG line, 0 "keeper".
+- No change to when the fit runs. Throttling the readout to release is a design change, not this fix.
+
+**Part 2, pane C (check it, find only): A's §7.** On 0.4.19 already, with any of bank, cup or edge typed, about 400 frames a second do more than 1 ms of work during a drag (40–60 untyped), and p95 misses 6.9 ms. Find what redraws every frame while a field is typed: a profile, the function and file. No fix; the fix is its own order.
+
+**The batch:** D482 part 1 joins d473-e + d477-p in the next T-180 release. This is a regression he feels on every drag, so it is the one item that justifies releasing the batch without waiting for his new-track findings. That is a recommendation, and his to veto.
+
+## D482 collated, 20:30 (A 001069f3 / t180 d482-a 883c200 + 1366dfc; C 8f2f8800; both read whole)
+
+Checked by the librarian on disk, from A's evidence (`G:\consonance-scratch\a-d482\`) and the worktree:
+- d482-a sits on 41e7595 with a clean tree: 5 files, +225/−16.
+- `final-proof-all.out`: cases 1036, byte-equal 674, refused alike 361, DIFFER 1.
+- `final2-direct.out`: 6,656 fits, 195,392 points, DIFFER 1. It is the same value, pre-close p43 phi[6].
+- Ramp harness: 35/35/0. Touched files: 943, pass 940, fail 0, skip 3.
+- Row 6 green unedited: p95 10.4 ms against the 13.4 bar.
+
+**Part 1, accepted.**
+- The one differing value is 2 ulp either side of a rounding half-point, with neither more correct, and it is listed as ordered. That is accepted.
+- The near-singular divergence (§3c) is accepted as A states it: a 1 cm knot cluster gives no meaningful bank in either code, and the panel cannot lay one. One line goes in the release notes' known limits, not a fix.
+- 10 km with all three typed: about 10 to 23 ms, against 162 s on 0.4.21.
+- A's two corrections are recorded: untitled D481 drag runs, and an accidental harness run outside the lock. 1366dfc fixes the first for good.
+
+**Part 2, accepted as a finding (C §5).**
+- The every-frame work is `widthAtHead` (preview.js:573). Its `perHead` memo skips the unfrozen ghost head, and it triggers only with an edge typed and nothing placed.
+- The 6.9 ms miss is the per-move rebuild with an edge typed (`handleKey` JSON.stringify, `meshPiece`, `ghostSteps`), placed or not.
+
+OUTPUT → NEXT: changed — after the fit is fixed, A's 1 km page profile puts 47% of the drag in C's perHead path. So the edge-typed costs are now the largest thing between his drag and 144 Hz, and they get their own order.
+
+## D483, two parts
+
+**Part 1, the landing: one pane, E or the first free that is not A or C (prove it: release).**
+- Merge d473-e (a4bfe52) + d477-p (2451dfb, cf03658) + d482-a (41e7595, 1366dfc, 883c200) onto v0.4.21.
+- The full suite. A credential scan on the added lines. 0 "keeper" in public text.
+- Release notes, including the known limits from D477 (two edges) and D482 (§3c).
+- Build, release and push under the standing permission.
+- Install into his T-180 only with the builder closed, a `.before-0.4.22` backup and a sha256 compare.
+- **The batch goes now, without waiting for his new-track findings.** It is a regression he feels on every drag. That is my ruling under his standing word; he can veto.
+
+**Part 2, pane C (prove it: mesh.js and the segment key feed what the preview and the mesher build). The edge-typed drag reaches the 6.9 ms standard.**
+1. `perHead` (or the coarsened copy) answers the dragged ghost's head without recomputing `spanOf` every frame. Output must be equal.
+2. The per-move rebuild with an edge typed: `handleKey`'s whole-segment JSON.stringify first, then whatever the profile names next. The mesh must be byte-equal to the current one on the public fixtures, and a stale-key test must show a changed segment never reuses an old mesh.
+3. Red first: a drag-frame row with a left edge typed, at 1,000 m, empty and placed, under 6.9 ms p95. If 6.9 ms is not reachable in headless runs, C says so with the figures and proposes the bar.
+4. The mutation harness for every touched src file, whole. Touched tests. CHANGELOG line, 0 "keeper".
+5. It builds on d482-a, and rides the next batch, not this one.
+
+## D483 collated, 21:50 (E 1e5d4bd1 `p-d483-release-E_2026-10-26.md`, C 89c36146 `p-d483-C_2026-10-26.md`; both read whole). ALL-CLEAR on 0.4.22.
+
+**Part 1, the landing: verified on disk by the librarian at 21:48.**
+- Installed exe sha256 851b9c9d…3391. The backup `.before-0.4.22` is sha256 87aa6a2a…27c3, the 0.4.21 exe D471 installed.
+- origin main and the v0.4.22 tag are both at b915a035…, and `releases/latest` is v0.4.22, not a draft.
+- The asset is T-180.Track.Builder_0.4.22_x64-setup.exe, 8,015,921 B, sha256 123e87c5…d077, matching E's §0.
+- The push-gate's last line allows at 03:40:13Z. The worktree is clean at b915a03.
+- **The two suite reds, ruled:**
+  - drag-frame row 6 (13.8 against 13.4) is load from the parallel suite. Alone it passes: run 1 p95 10.0 ms, and run 2 10 of 10 ok (`frame-reruns.txt`). Accepted.
+  - release-frame row 4 (a Turn-field change, p95 6.1–8.4 against 6.0) was red at 0.4.21 as well. A row red at two releases running teaches everyone to skip red, so it gets its own part below.
+- **§7, ruled:** E removes `t180-wt-e483` and `t180-wt-e483-rel` with `git worktree remove`, no --force. The branches stay.
+
+**Part 2, C, accepted.** d483-c 1be6832 + d1e93dd, checked: clean tree, meshcmp 34 lines equal on both sides, rows 6–8 green in `dragframe-final.tap`.
+- Placed: p95 4.3 ms, so the 6.9 ms standard is met.
+- Empty track: p95 8.1 ms. **C's bar is accepted for that case:** 10.0 ms plus at most 120 work frames a second. It is the measured state, not the standard. The standard stays 6.9, and part 1 below is how the empty case gets there.
+- d483-c rides the next batch.
+
+OUTPUT → NEXT: changed — C named what is left on the empty track: the extendCorner double fit, the fit's samples recomputed on every length change, and xsecSegments per chord end. Release-frame row 4 is a standing red.
+
+## D484, three parts, in parallel
+
+**Part 1, pane A (prove it: core maths; A rewrote fitWithHold).** The empty-track edge drag reaches 6.9 ms.
+- (a) The readout and the ghost share one fit when their options agree, and the fit's samples carry across a length change where the knot vector allows.
+- (b) `xsecSegments` builds each distinct edge cross-section once per piece, not once per chord end. C's figures: `commonFractions` 0.78 ms and `edgeProfile` 0.46 ms of 3.2 ms.
+- Same answer: byte-equal documents and meshes on the D482/D483 proof sets.
+- Row 8 tightens to 6.9 ms if it gets there. If it doesn't, A gives the figures.
+- The harness for each touched src file, whole. The touched tests. It builds on d483-c.
+
+**Part 2, pane C (check it, find first): release-frame row 4.** A Turn-field change misses 6.0 ms (p95 6.1–8.4) at 0.4.21 and 0.4.22.
+- A profile, then the function and file.
+- Then either a fix with the row green, or the evidence that the bar is wrong. If the bar is wrong, the bar's change comes to the librarian before anyone edits the row.
+
+**Part 3, pane E (just do it).**
+- Remove the two release worktrees (above).
+- Set the zz-headless-test title in the other headless page tests E named: export-isolated-page, sculpt-frame, texture-page and their kin.
+
+The next batch is d483-c plus D484, released when it is all in.
+
+## D484 collated, 04:05 (A c39114be / t180 d484-a cf0102c; C 49257ab9; E §9 c5e6ed5d / t180 d484-e 8472e7d; all read whole)
+
+Checked by the librarian:
+- d484-a sits on d1e93dd with a clean tree.
+- `p1-run.out`: 849 cases, DIFFER 0; 6,656 direct fits, DIFFER 0.
+- `p3-mesh-diff.out`: 146/146 lines equal.
+- `t3-run.out`: row 8 ✔ at 6.9 ms (p95 6.5).
+- NOT APPLIED is 0 in every harness TAP.
+
+**Part 1, A, accepted.** The empty-track edge stretch is now p95 6.0–6.6 ms against 8.8–9.6 before, so the 6.9 ms standard is met on both cases.
+- Byte-equal on documents, direct fits and meshes.
+- 317/317 mutants across nine harnesses.
+- The amended xsec CONTROL floor is accepted. It only gives the new four-row file a floor of all its rows; the existing files keep "more than 5".
+- XS2's catch through row 4 is accepted.
+- **For the landing:** row 8's margin is 0.3–0.9 ms. If it goes red in the parallel full suite, re-run the frame files alone under the gate, as E did for row 6 at 0.4.22. Red alone is a real red.
+
+**Part 2, C: the measure change is ruled yes.** Row 4 keeps its 6.0 ms bar and its case. Each change costs the worst display frame it causes: the handler counted with the first animation frame after it, and each later frame alone.
+- It is accepted on the evidence: 3.7–4.0 ms on every release from 0.4.19 to 0.4.22, and red on b306309 (10.4/11.8 ms), which is what the row was written to catch.
+- **One condition:** the summed figure stays printed in the row's output, not asserted, so a growth in total work per change stays visible.
+- C's falsifier is registered with the ruling: the per-frame figure over 6.0 on a quiet 0.4.22, or green on b306309.
+- The speed cuts C named (assemble over new pieces only; the handles relayout) stay optional, not ordered.
+
+**Part 3, E, accepted.** The two worktrees are removed (0 in `git worktree list`). Nine headless page tests now carry the title, 71/0 with 5 timing rows skipped.
+
+OUTPUT → NEXT: changed — all three are in. The remaining item before the batch is C's one-line row 4 edit, and then the batch lands.
+
+## D485, two parts, in order
+
+**Part 1, pane C (check it).** Edit release-frame row 4 to the per-frame measure as ruled, with the sum printed.
+- Build it on d484-e (8472e7d), which already touches release-frame.test.js.
+- Its own commit, citing this ruling.
+- Red on b306309 and green on 0.4.22, run alone under the gate.
+
+**Part 2, landing pane E (prove it: release), when part 1 is in.**
+- Merge d484-a (cf0102c, which carries d483-c 1be6832 + d1e93dd) and d484-e with C's row 4 commit onto v0.4.22.
+- The full suite, with frame rows re-run alone if red. The scans. Release notes: the edge-typed drag is within one frame at 144 Hz. 0 "keeper".
+- Release 0.4.23 and push.
+- Install with the builder closed, a `.before-0.4.23` backup and a sha256 compare.
+
+## D485 part 1 read, 04:10 (C 76722744 / t180 d485-c 1f56a58, read whole; diff read by the librarian)
+
+- **Accepted.** One file. The measure is exactly as ruled, and the sum is printed in the diagnostic and in the failure message, not asserted. The bar and the case are unchanged.
+- Red on b306309 (12.3 / 11.4 ms, now muted via 8472e7d's launcher). Green 5 of 5 on 0.4.22 (3.9–4.3 ms).
+- The falsifier has not fired.
+- Part 2 goes to E now.
+
+## ALL-CLEAR on 0.4.23, 04:52 (E f8f71b8d, `p-d485-release-E_2026-10-27.md` §0–§2 and §6 read). D481–D485 CLOSED.
+
+Verified on disk by the librarian:
+- The installed exe is sha256 12911ad6…d49c. `.before-0.4.23` is sha256 851b9c9d…3391, the 0.4.22 exe.
+- origin main and the v0.4.23 tag are both at 82afc111. `releases/latest` is v0.4.23, not a draft.
+- The asset is 8,013,405 B, sha256 df646245…e477.
+- The push-gate's last line is allow.
+- Row 8 alone: p95 6.5 and 6.1 ms, both ok. Its suite red (7.4) is load, as ruled.
+- The e484/e485 worktrees: 0 left.
+- The CHANGELOG repair is accepted: [0.4.22] equals the tag's text, and the two entries were moved to [0.4.23].
+- E ended its own idle bash from the 0.4.22 landing.
+
+**Noted for the next release review, not a fix:** row 8 (0.3–0.9 ms margin) and row 6 have now each gone red once in the parallel suite and green alone. If frame rows keep needing a solo re-run every release, the suite should run the frame files alone by design.

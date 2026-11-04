@@ -1,0 +1,203 @@
+worktree-sweep (dry run: nothing changes) · C:\Users\nname\Desktop\lighthouse · 163 worktrees
+classes: DIRTY 8 · LOCK 1 · MAIN 1 · REMOVE 143 · UNLANDED 10
+MAIN       C:\Users\nname\Desktop\lighthouse  [main]  0.00 GB  — the main checkout
+REMOVE     C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-librarian\0c0c0c0b-0000-4000-8000-00000000115b\scratchpad\lh-cold-src  0.07 GB  — clean; every patch is in main (git cherry)
+DIRTY      C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\cfgmerge\base-red-wt  0.07 GB  — 1 changed or untracked path(s)
+             dirty:  M consonance/src-tauri/src/main.rs
+REMOVE     C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\d277r\base-wt  0.08 GB  — clean; HEAD is in main
+DIRTY      C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\install\base-wt  0.07 GB  — 2 changed or untracked path(s)
+             dirty: ?? consonance/hooks/dirs.test.js
+             dirty: ?? dev/shell/install-fresh-home.test.js
+DIRTY      C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\lap3\base-wt  0.07 GB  — 1 changed or untracked path(s)
+             dirty:  M dev/shell/install-fresh-home.test.js
+DIRTY      C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\usb\base-red-wt  0.07 GB  — 1 changed or untracked path(s)
+             dirty:  M consonance/src-tauri/src/main.rs
+DIRTY      C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\usb\base-wt  0.07 GB  — 1 changed or untracked path(s)
+             dirty: ?? consonance/ui/usb-mode-wiring.test.js
+UNLANDED   C:\Users\nname\Desktop\b-d317-wt  [d317-b]  0.13 GB  — 1 commit(s) whose patch is not in main
+             unlanded: 7bc8950208 D317 part 1: the window's X asks before ending working seats (main.rs)
+REMOVE     C:\Users\nname\Desktop\c-asmbuild-wt  [assembly-build-c]  0.08 GB  — clean; every patch is in main (git cherry)
+UNLANDED   C:\Users\nname\Desktop\c-assembly-wt  [assembly-c]  0.08 GB  — 1 commit(s) whose patch is not in main
+             unlanded: db2d7b0474 D277 part 6 (C), DRAFT only: what the seat-file assembly adds, per section, and what stays indexed
+REMOVE     C:\Users\nname\Desktop\worktrees\a-c2-wt  [carrier2-a]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-ch-wt  [chime-a]  0.07 GB  — clean; every patch is in main (git cherry)
+DIRTY      C:\Users\nname\Desktop\worktrees\a-cw-wt  0.07 GB  — 4 changed or untracked path(s)
+             dirty:  M consonance/src-tauri/fixtures/screens/composer_empty_reads_busy_2026-09-09.bin
+             dirty:  M consonance/src-tauri/fixtures/screens/composer_has_pasted_text_2026-09-19.bin
+             dirty:  M consonance/src-tauri/fixtures/screens/composer_slash_command_reads_empty_2026-09-09.bin
+             dirty:  M consonance/src-tauri/fixtures/screens/composer_unreadable_trust_dialog_2026-09-19.bin
+REMOVE     C:\Users\nname\Desktop\worktrees\a-d203-wt  0.04 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-d205-wt  0.04 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-d212-wt  0.05 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-d214-wt  0.05 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-d215-wt  0.05 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-d218-wt  0.05 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-d220b-wt  0.05 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-d277fix-wt  [d277fix-a]  0.08 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-d287-wt  [d287-a]  0.08 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-dr-wt  [devreds-a]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-dt-wt  [devtruth-a]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-hr-wt  [heavyrun-a]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-l3-wt  [consumer-l3-a]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-l6-wt  [lap6-a]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-lf-wt  [landfix-a]  0.08 GB  — clean; HEAD is in main
+REMOVE     C:\Users\nname\Desktop\worktrees\a-rm-wt  [remeasure-b-a]  0.07 GB  — clean; every patch is in main (git cherry)
+UNLANDED   C:\Users\nname\Desktop\worktrees\a-sd-wt  [startdigest-a]  0.07 GB  — 1 commit(s) whose patch is not in main
+             unlanded: 0794577d18 D277 part 5 (A): the session-start digest behind the gates_mode switch: 13.4 KB becomes 1.4 KB in light mode, today's output byte-identical with the key absent
+REMOVE     C:\Users\nname\Desktop\worktrees\a-se-wt  [session-end-chunked-a]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d203-wt  0.04 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d205-wt  0.04 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d212-wt  0.05 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d214-wt  0.05 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d215-wt  0.05 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d218-wt  0.05 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d273-gates  [b-gen-gates]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d273-lap3  [b-gen-lap3]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d273-lap3p  [b-gen-lap3p]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d273-lap5  [b-gen-lap5]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d273-lap5b  [b-gen-lap5b]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d273-lap6  [b-gen-lap6]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d273-lap7  [b-gen-lap7]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d273-src  [b-gen-lap2]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-d277par-wt  0.08 GB  — clean; HEAD is in main
+REMOVE     C:\Users\nname\Desktop\worktrees\b-rule-draft  [b-rule-draft]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\b-sharp-reg  [b-sharp-reg]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\c-consumer-fork-wt  [consumer-fork-c]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\c-consumer-fork3-wt  [consumer-fork3-c]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\c-d277fix-wt  [d277fix-c]  0.08 GB  — clean; every patch is in main (git cherry)
+UNLANDED   C:\Users\nname\Desktop\worktrees\c-d277margin-wt  [d277margin-c]  0.08 GB  — 2 commit(s) whose patch is not in main
+             unlanded: c4f1c5c56a D277 margin fix: the light intakes' size margins are measured against what strict drops in this room
+             unlanded: b59f01d6da D277 margin fix: the light pointer's span stops at a strict memory heading
+LOCK       C:\Users\nname\Desktop\worktrees\c-d319-wt  [d319-c]  0.13 GB  — a heavy-run lock names it; 3 changed or untracked path(s)
+             dirty:  M consonance/tools/janitor.js
+             dirty:  M consonance/tools/janitor.mutants.js
+             dirty:  M consonance/tools/janitor.test.js
+REMOVE     C:\Users\nname\Desktop\worktrees\c-drift-wt  [drift-awareness-c]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\c-identity-wt  [identity-diff-c]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\c-lap4-wt  [consumer-lap4-c]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\c-lap4b-wt  [consumer-lap4b-c]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\c-lap5-wt  [consumer-lap5-c]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\c-lap5b-wt  [consumer-lap5b-c]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\c-lap6-wt  [consumer-lap6-c]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-cfgmerge-wt  [d273-cfgmerge]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-d277base  0.08 GB  — clean; HEAD is in main
+REMOVE     C:\Users\nname\Desktop\worktrees\e-d277repair-wt  [d277-repair]  0.08 GB  — clean; HEAD is in main
+REMOVE     C:\Users\nname\Desktop\worktrees\e-d287-wt  [d287-e]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-d287base  0.12 GB  — clean; HEAD is in main
+REMOVE     C:\Users\nname\Desktop\worktrees\e-d317-wt  [d317-e]  0.13 GB  — clean; every patch is in main (git cherry)
+DIRTY      C:\Users\nname\Desktop\worktrees\e-d319-wt  [d319-e]  0.13 GB  — 2 changed or untracked path(s); a running process names it (pid 32808, 16928, 43764, 19908)
+             dirty: ?? consonance/tools/worktree-sweep.js
+             dirty: ?? consonance/tools/worktree-sweep.test.js
+REMOVE     C:\Users\nname\Desktop\worktrees\e-front-wt  [d273-frontdoor]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-front4b-wt  [d273-frontdoor-4b]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-install-wt  [d273-install]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-lap3-wt  [d273-lap3-e]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-lap5-wt  [d273-lap5-E]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-lap6-wt  [d273-lap6-E]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-lap7-wt  [d273-lap7-E]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\e-usb-wt  [d273-usbmode]  0.07 GB  — clean; every patch is in main (git cherry)
+REMOVE     C:\Users\nname\Desktop\worktrees\land-d277  0.08 GB  — clean; HEAD is in main
+REMOVE     C:\Users\nname\Desktop\worktrees\land-d277b  [d277-tip]  0.08 GB  — clean; HEAD is in main
+REMOVE     G:\b-d287-wt  [d287-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d289-wt  [d289-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d289b2-wt  [d289-b2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d290-wt  [d290-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d294-base  0.12 GB  — clean; HEAD is in main
+REMOVE     G:\b-d294-wt  [d294-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d296-wt  [d296-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d296r-wt  [d296-b-read]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d297-wt  [d297-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d299-wt  [d299-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d300-wt  [d300-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d301-wt  [d301-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d301b2-wt  [d301-b2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d301b3-wt  [d301-b3]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d303-wt  [d303-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d305-wt  [d305-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d305b2-wt  [d305-b2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d305b3-wt  [d305-b3]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d307-wt  [d307-b]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d311-wt  [d311-b]  0.13 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d311b2-wt  [d311-b2]  0.13 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\b-d311b3-wt  [d311-b3]  0.13 GB  — clean; every patch is in main (git cherry)
+UNLANDED   G:\b-d311b4-wt  [d311-b4]  0.13 GB  — 5 commit(s) whose patch is not in main
+             unlanded: 8d59fb1c1f D311 last bench fix: context fidelity
+             unlanded: 92152b897a D311: neutral paths in the context-fidelity test rows (portable-paths)
+             unlanded: 6443e97125 D311: the context-fidelity baseline, 22 dev units x 5 = 110, and B's 40-reply sample
+             unlanded: 53e525d2f2 D311 context-fidelity run: A's hand-back section and map line
+             unlanded: 7f3fc7dc5e D311 context-fidelity second judge: B's blind REPEATS / not-REPEATS on A's 40 baseline3 replies
+REMOVE     G:\consonance-worktrees\a-d287b-wt  [d287-a2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d288-wt  [d288-a]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d292-wt  [d292-a]  0.12 GB  — clean; every patch is in main (git cherry)
+UNLANDED   G:\consonance-worktrees\a-d294-wt  [d294-a]  0.12 GB  — 1 commit(s) whose patch is not in main
+             unlanded: 1b4cb7c014 D295: the trailing-reminder SHADOW in the Node pulse hook (logs only, never changes the output)
+UNLANDED   G:\consonance-worktrees\a-d296-wt  [d296-a]  0.12 GB  — 1 commit(s) whose patch is not in main
+             unlanded: 873d8239ef D296 hand-back: carrier-drift evidence skip (seat A)
+REMOVE     G:\consonance-worktrees\a-d297-wt  [d297-a]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d299-wt  [d299-a]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d301-wt  [d301-a]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d301a2-wt  [d301-a2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d303-wt  [d303-a]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d305-wt  [d305-a]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d305a2-wt  [d305-a2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d307-wt  [d307-a]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d309-wt  [d309-a]  0.13 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d311-wt  [d311-a]  0.13 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d311a2-wt  [d311-a2]  0.13 GB  — clean; every patch is in main (git cherry)
+UNLANDED   G:\consonance-worktrees\a-d311a3-wt  [d311-a3]  0.13 GB  — 1 commit(s) whose patch is not in main
+             unlanded: 2233be7f27 D311: the 40 R-ids for B's second-judge sample on the re-run
+REMOVE     G:\consonance-worktrees\a-d311a4-wt  [d311-a4]  0.13 GB  — clean; every patch is in main (git cherry)
+UNLANDED   G:\consonance-worktrees\a-d311a5-wt  [d311-a5]  0.13 GB  — 3 commit(s) whose patch is not in main
+             unlanded: d655966fca D311 last bench fix: context fidelity
+             unlanded: 41c8e10f1b D311: neutral paths in the context-fidelity test rows (portable-paths)
+             unlanded: 63303245ab D311: the context-fidelity baseline, 22 dev units x 5 = 110, and B's 40-reply sample
+REMOVE     G:\consonance-worktrees\a-d311a6-wt  [d311-a6]  0.13 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\consonance-worktrees\a-d311a7-wt  [d311-a7]  0.13 GB  — clean; HEAD is in main
+REMOVE     G:\worktrees\c-d289-wt  [d289-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d289c2-wt  [d289-c2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d294-wt  [d294-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d296-base  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d296-wt  [d296-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d297-base  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d297-wt  [d297-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d300-613  0.12 GB  — clean; HEAD is in main
+REMOVE     G:\worktrees\c-d300-a0e  0.12 GB  — clean; HEAD is in main
+REMOVE     G:\worktrees\c-d300-mut  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d300-wt  [d300-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d301-wt  [d301-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d301b-wt  [d301-c2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d303-wt  [d303-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d303b-wt  [d303-c2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d305-base  0.12 GB  — clean; HEAD is in main
+REMOVE     G:\worktrees\c-d305-wt  [d305-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d305b-base  0.12 GB  — clean; HEAD is in main
+REMOVE     G:\worktrees\c-d305b-wt  [d305-c2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d307-wt  [d307-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d309-base  0.12 GB  — clean; HEAD is in main
+REMOVE     G:\worktrees\c-d309-wt  [d309-c]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d311-wt  [d311-c]  0.13 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\c-d311-wt2  [d311-c2]  0.13 GB  — clean; every patch is in main (git cherry)
+UNLANDED   G:\worktrees\c-d311-wt3  [d311-c3]  0.13 GB  — 5 commit(s) whose patch is not in main
+             unlanded: 8d59fb1c1f D311 last bench fix: context fidelity
+             unlanded: 92152b897a D311: neutral paths in the context-fidelity test rows (portable-paths)
+             unlanded: 6443e97125 D311: the context-fidelity baseline, 22 dev units x 5 = 110, and B's 40-reply sample
+             unlanded: 53e525d2f2 D311 context-fidelity run: A's hand-back section and map line
+             unlanded: 144003fee9 D311 context-fidelity run: C's blind verdicts on the 110 replies, before any unseal
+REMOVE     G:\worktrees\e-d287e2-wt  [d287-e2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d288-wt  [d288-e]  0.12 GB  — clean; every patch is in main (git cherry)
+DIRTY      G:\worktrees\e-d288base  0.12 GB  — 1 changed or untracked path(s)
+             dirty:  M consonance/hooks/reply-slot.test.js
+REMOVE     G:\worktrees\e-d288e2-wt  [d288-e2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d292-wt  [d292-e]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d292base  0.12 GB  — clean; HEAD is in main
+REMOVE     G:\worktrees\e-d294-wt  [d294-e]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d297-wt  [d297-e]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d299-wt  [d299-e]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d301-wt  [d301-e]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d303-wt  [d303-e]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d305-wt  [d305-e]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d305e2-wt  [d305-e2]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d307-wt  [d307-e]  0.12 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d311-wt  [d311-e]  0.13 GB  — clean; every patch is in main (git cherry)
+REMOVE     G:\worktrees\e-d313-wt  [d313-e]  0.13 GB  — clean; every patch is in main (git cherry)
+would remove 143, 14.19 GB

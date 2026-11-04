@@ -44,7 +44,7 @@ function capture(parts) {
 // with a side effect on the instrument under test, which is the exact failure dream-gate.test.js
 // documents designing out. Repaired by re-scanning the real capture; kept here as the reason.
 function run(captureText, { reuse } = {}) {
-  const dd = reuse || fs.mkdtempSync(path.join(os.tmpdir(), 'twatch-'));
+  const dd = reuse || require('../tools/scratch.js').mkdtemp('twatch-');
   fs.mkdirSync(path.join(dd, 'captures'), { recursive: true });
   fs.writeFileSync(path.join(dd, 'captures', `${MAIN_SID}.log`), captureText);
   execFileSync(process.execPath, [HOOK], {
@@ -156,7 +156,7 @@ function resolver({ home, withEnv }) {
   return ctx.__r();
 }
 
-function emptyHome() { return fs.mkdtempSync(path.join(os.tmpdir(), 'twatch-home-')); }
+function emptyHome() { return require('../tools/scratch.js').mkdtemp('twatch-home-'); }
 
 t('THE BAR: with no env and no config, the resolver names NO directory and no machine path', () => {
   const got = resolver({ home: emptyHome() });
@@ -212,7 +212,7 @@ t('OFF IS ANNOUNCED: an unresolvable data dir says so instead of exiting like a 
 t('a RESOLVED but empty data dir is still quiet — only the OFF state was made loud', () => {
   // Guard against over-correction: the hook's "quiet when nothing new" contract covers three real
   // nothing-to-say states and this change was allowed to convert exactly one of them.
-  const dd = fs.mkdtempSync(path.join(os.tmpdir(), 'twatch-empty-'));
+  const dd = require('../tools/scratch.js').mkdtemp('twatch-empty-');
   const out = execFileSync(process.execPath, [HOOK], {
     input: JSON.stringify({ session_id: MAIN_SID }),
     env: { ...process.env, CONSONANCE_DATA: dd, CONSONANCE_WATCH_STATE: path.join(dd, 's.json') },

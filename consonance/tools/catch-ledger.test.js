@@ -280,7 +280,7 @@ test('an undated section is undated, never back-filled from its neighbour', () =
 // ---------------------------------------------------------------------- rollup --
 
 test('the ratio is WITHHELD when unattributed events outnumber attributed ones', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'catch-ledger-'));
+  const dir = require('./scratch.js').mkdtemp('catch-ledger-');
   const jdir = path.join(dir, 'exo_memory', 'journal');
   fs.mkdirSync(jdir, { recursive: true });
   fs.writeFileSync(
@@ -314,7 +314,7 @@ test('the two ratios are computed as labelled, and divide-by-zero is null not In
 });
 
 test('declared and extracted are reported side by side and never summed', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'catch-ledger-'));
+  const dir = require('./scratch.js').mkdtemp('catch-ledger-');
   fs.mkdirSync(path.join(dir, 'exo_memory'), { recursive: true });
   const f = path.join(dir, 'exo_memory', 'muscle_map.md');
   fs.writeFileSync(f, ['## Cycle 4 — 2026-07-27', '', 'Keeper-caught: 1, about the aim.', '', 'He caught the ordering.'].join('\n'), 'utf8');
@@ -429,7 +429,7 @@ test('--since filters EVERY collection, so no reported number contradicts the ta
   // header counted all-time events over a filtered table, and RECONCILIATION compared all-time
   // declared against filtered extracted, printing negative deltas under a paragraph that only
   // explained positive ones.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'catch-ledger-'));
+  const dir = require('./scratch.js').mkdtemp('catch-ledger-');
   fs.mkdirSync(path.join(dir, 'exo_memory'), { recursive: true });
   const f = path.join(dir, 'exo_memory', 'muscle_map.md');
   fs.writeFileSync(
@@ -483,7 +483,7 @@ test('the audit never re-classifies — a suspect stays unattributed and stays c
 });
 
 test('an empty corpus produces no windows and no crash', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'catch-ledger-'));
+  const dir = require('./scratch.js').mkdtemp('catch-ledger-');
   const f = path.join(dir, 'empty.md');
   fs.writeFileSync(f, '', 'utf8');
   const index = buildLedger([{ path: f, label: 'empty.md' }]);

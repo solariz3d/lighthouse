@@ -1,0 +1,189 @@
+{
+ "windowInnerWidth": 1818,
+ "leftOffsetWidth": 320,
+ "leftClientWidth": 304,
+ "scrollBarPx": 15,
+ "usableRight": 304,
+ "gutter": "stable",
+ "fields": [
+  {
+   "name": "length m",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "turn °/100m",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "climb °/100m",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "bank °",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "cup °",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "width m",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "width like…",
+   "tag": "SELECT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "edge angle °",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "edge start",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "tube sweep °",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 359,
+   "width": 283,
+   "contentRight": 294,
+   "over": 65,
+   "underBar": true
+  },
+  {
+   "name": "mode",
+   "tag": "SELECT",
+   "left": 76,
+   "right": 294,
+   "width": 218,
+   "contentRight": 294,
+   "over": 0,
+   "underBar": false
+  },
+  {
+   "name": "what",
+   "tag": "SELECT",
+   "left": 76,
+   "right": 294,
+   "width": 218,
+   "contentRight": 294,
+   "over": 0,
+   "underBar": false
+  },
+  {
+   "name": "radius m",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 294,
+   "width": 218,
+   "contentRight": 294,
+   "over": 0,
+   "underBar": false
+  },
+  {
+   "name": "km/h",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 294,
+   "width": 218,
+   "contentRight": 294,
+   "over": 0,
+   "underBar": false
+  },
+  {
+   "name": "streams",
+   "tag": "INPUT",
+   "left": 76,
+   "right": 294,
+   "width": 218,
+   "contentRight": 294,
+   "over": 0,
+   "underBar": false
+  },
+  {
+   "name": "",
+   "tag": "INPUT",
+   "left": 92,
+   "right": 220.7,
+   "width": 129,
+   "contentRight": 294,
+   "over": -73.3,
+   "underBar": false
+  },
+  {
+   "name": "SELECT",
+   "tag": "SELECT",
+   "left": 90,
+   "right": 232.5,
+   "width": 143,
+   "contentRight": 294,
+   "over": -61.5,
+   "underBar": false
+  }
+ ],
+ "widthLike": {
+  "optionCount": 18,
+  "selectedText": "width like…",
+  "right": 359
+ },
+ "leftScrollWidth": 359,
+ "leftScrollHeight": 1711,
+ "leftClientHeight": 1056,
+ "pageErrors": []
+}

@@ -1,0 +1,20 @@
+t180-e624-base ribbon.t180track	peak 0.05854 °/m² at s 5306	segment ends over the bar 62	worst against bar-or-floor 7.04x at s 5306 (0.05854 of 0.00831)
+t180-e624-base ribbon.t180track	turning points 0, kept within 0.05° 0
+t180-e624 ribbon.t180track	peak 0.00575 °/m² at s 1032	segment ends over the bar 0	worst against bar-or-floor 0.99x at s 1032 (0.00575 of 0.00583)
+t180-e624 ribbon.t180track	turning points 0, kept within 0.05° 0
+t180-e624-base eq-ELYSIUM NEW.t180track	peak 0.02304 °/m² at s 6101	segment ends over the bar 184	worst against bar-or-floor 1.40x at s 22673 (0.00817 of 0.00583)
+t180-e624-base eq-ELYSIUM NEW.t180track	turning points 2, kept within 0.05° 2; worst 0.002° at s 22667 (p38: document -216.96°, built -216.96°)
+t180-e624 eq-ELYSIUM NEW.t180track	peak 0.01896 °/m² at s 6019	segment ends over the bar 161	worst against bar-or-floor 1.31x at s 22673 (0.00761 of 0.00583)
+t180-e624 eq-ELYSIUM NEW.t180track	turning points 2, kept within 0.05° 2; worst 0.001° at s 22667 (p38: document -216.96°, built -216.96°)
+t180-e624-base eq-TEST 10.t180track	peak 0.03392 °/m² at s 3734	segment ends over the bar 355	worst against bar-or-floor 1.97x at s 8982 (0.01146 of 0.00583)
+t180-e624-base eq-TEST 10.t180track	turning points 7, kept within 0.05° 7; worst 0.003° at s 8879 (p20: document -0.80°, built -0.80°)
+t180-e624 eq-TEST 10.t180track	peak 0.02286 °/m² at s 3710	segment ends over the bar 259	worst against bar-or-floor 1.97x at s 8982 (0.01146 of 0.00583)
+t180-e624 eq-TEST 10.t180track	turning points 7, kept within 0.05° 7; worst 0.001° at s 9887 (p22: document 5.19°, built 5.19°)
+t180-e624-base eq-CRAZY TEST.t180track	peak 0.00026 °/m² at s 4082	segment ends over the bar 0	worst against bar-or-floor 0.04x at s 4082 (0.00026 of 0.00583)
+t180-e624-base eq-CRAZY TEST.t180track	turning points 0, kept within 0.05° 0
+t180-e624 eq-CRAZY TEST.t180track	peak 0.00026 °/m² at s 4082	segment ends over the bar 0	worst against bar-or-floor 0.04x at s 4082 (0.00026 of 0.00583)
+t180-e624 eq-CRAZY TEST.t180track	turning points 0, kept within 0.05° 0
+t180-e624-base ely-fixture.t180track	peak 0.04086 °/m² at s 23730	segment ends over the bar 176	worst against bar-or-floor 1.02x at s 17605 (0.00840 of 0.00821)
+t180-e624-base ely-fixture.t180track	turning points 0, kept within 0.05° 0
+t180-e624 ely-fixture.t180track	peak 0.03376 °/m² at s 23742	segment ends over the bar 174	worst against bar-or-floor 0.93x at s 10605 (0.00541 of 0.00583)
+t180-e624 ely-fixture.t180track	turning points 0, kept within 0.05° 0

@@ -1,0 +1,21 @@
+message: the lap is closed again: to keep your bend, the start of the lap moved (closed in 2 step(s): 0.792 mm, tangent 1.1e-7 rad) | keptBend [33mtrue[39m
+result sha256 7dda1dc70dccaf024f77ff0385d447e88ab07e0eb5e2b52eb3b68a4cf3ef974a
+open (closed:false, as barMiss): 4 red: self-intersection@NaN, self-intersection@NaN, self-intersection@NaN, self-intersection@NaN
+result: 2 red: self-intersection@NaN, self-intersection@NaN
+## part1b result = 4f59790's result
+open read s [33m0[39m | {"s0":0,"s1":2,"u":-11.621093750000002,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+open read s [33m1376[39m | {"s0":1376,"s1":1378,"u":-12.5,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+open read s [33m4152[39m | {"s0":4152,"s1":4156,"u":-12.500000000000002,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+open read s [33m11482.002173912457[39m | {"s0":11482.002173912457,"s1":11483.999999999412,"u":11.71875,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+result read s [33m1376[39m | {"s0":1376,"s1":1380,"u":-12.5,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+result read s [33m4152[39m | {"s0":4152,"s1":4154,"u":-12.500000000000002,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+## part1b result = f965864's result (sm-bent-old)
+open read s [33m0[39m | {"s0":0,"s1":2,"u":-11.621093750000002,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+open read s [33m1376[39m | {"s0":1376,"s1":1378,"u":-12.5,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+open read s [33m4152[39m | {"s0":4152,"s1":4156,"u":-12.500000000000002,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+open read s [33m11482.002173912457[39m | {"s0":11482.002173912457,"s1":11483.999999999412,"u":11.71875,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+## part1b result = the smoothed copy itself (before the drag)
+open read s [33m0[39m | {"s0":0,"s1":2,"u":-11.621093750000002,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+open read s [33m1376[39m | {"s0":1376,"s1":1378,"u":-12.5,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+open read s [33m4152[39m | {"s0":4152,"s1":4156,"u":-12.500000000000002,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}
+open read s [33m11482.002173912457[39m | {"s0":11482.002173912457,"s1":11483.999999999412,"u":11.71875,"reason":"self-intersection","source":"ARCHITECTURE.md:58, :84","worst":null}

@@ -1,0 +1,8 @@
+b0ef446 Validator: keep the per-segment memos packed, halving the heap a check keeps
+7c8f1e5 A long track's preview mesh keeps a short key per piece and bounded shape memos, so its memory stays small
+93704ec The preview draws the road coarser far from the camera; the export, the checker and the readouts still read the full road
+58ff26d The hover pick skips the stretches of track that cannot be under the pointer, with the same answer, so a long track no longer stalls on a pointer move
+007a34a Merge: Validator: keep the per-segment memos packed, halving the heap a check keeps
+de43a6f Merge: The hover pick skips the stretches of track that cannot be under the pointer, with the same answer, so a long track no longer stalls on a pointer move
+8ead393 Version 0.4.34
+a93ae51 Comments name what they mean, not the work packet that made them

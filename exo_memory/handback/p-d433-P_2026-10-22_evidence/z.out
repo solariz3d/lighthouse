@@ -1,0 +1,25 @@
+{"theta":0,"p":0}
+ 1 p1    1000 s0=0 turn 0.0 climb 0.00 pitch 0.00 -> 0.00 bank 0 -> 0   
+ 2 p2     100 s0=1000 turn -45.0 climb 0.00 pitch 0.00 -> 0.00 bank 0 -> 30   
+ 3 p3     200 s0=1100 turn -45.0 climb 10.00 pitch 0.00 -> 10.00 bank 30 -> 30   
+ 4 p4    1000 s0=1300 turn -540.0 climb -9.08 pitch 10.00 -> 0.92 bank 30 -> 60   
+ 5 p5    1000 s0=2300 turn -540.0 climb -8.52 pitch 0.92 -> -7.60 bank 60 -> 0   
+ 6 p6     100 s0=3300 turn -180.0 climb 0.00 pitch -7.60 -> -7.60 bank 0 -> 30   
+ 7 p7     100 s0=3400 turn -180.0 climb 6.48 pitch -7.60 -> -1.12 bank 30 -> 30   
+ 8 p8     100 s0=3500 turn -90.0 climb -8.66 pitch -1.12 -> -9.78 bank 30 -> 0   
+ 9 p9      50 s0=3600 turn 0.0 climb 9.78 pitch -9.78 -> 0.00 bank 0 -> 0   
+10 p10     50 s0=3650 turn 0.0 climb 0.00 pitch 0.00 -> 0.00 bank 0 -> 0   
+11 p11     50 s0=3700 turn 90.0 climb 0.00 pitch 0.00 -> 0.00 bank 0 -> -10   
+12 p12    100 s0=3750 turn 0.0 climb 0.00 pitch 0.00 -> 0.00 bank -10 -> -10   
+13 p13     50 s0=3850 turn 90.0 climb 0.00 pitch 0.00 -> 0.00 bank -10 -> -10   
+14 p14    100 s0=3900 turn 0.0 climb 0.00 pitch 0.00 -> 0.00 bank -10 -> -10   
+15 p15     50 s0=4000 turn 90.0 climb 0.00 pitch 0.00 -> 0.00 bank -10 -> -10   
+16 p16    600 s0=4050 turn 90.0 climb 0.00 pitch 0.00 -> 0.00 bank -10 -> -10   
+17 p17    100 s0=4650 turn 0.0 climb 0.00 pitch 0.00 -> 0.00 bank -10 -> 0   
+18 p18   2000 s0=4750 turn 90.0 climb 351.00 pitch 0.00 -> 351.00 bank 0 -> 0   
+19 p19   2000 s0=6750 turn 90.0 climb 351.00 pitch 351.00 -> 702.00 bank 0 -> 0   
+20 p20    150 s0=8750 turn 0.0 climb 18.00 pitch 702.00 -> 720.00 bank 0 -> 0   
+21 p21    919 s0=8900 turn 175.0 climb 7.99 pitch 720.00 -> 727.99 bank 0 -> 0   
+22 p22    746 s0=9819 turn -0.2 climb 0.11 pitch 727.99 -> 728.10 bank 0 -> 0   
+23 p23    919 s0=10565 turn -174.8 climb -8.10 pitch 728.10 -> 720.00 bank 0 -> 0   
+total [33m11484[39m pieces [33m23[39m

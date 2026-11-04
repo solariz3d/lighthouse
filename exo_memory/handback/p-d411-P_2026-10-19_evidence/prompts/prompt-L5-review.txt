@@ -1,0 +1,15 @@
+# Review
+
+Two authors were each given the task below, on a clean checkout at the base commit, and asked to fix it test-first and commit.
+Their diffs against the base are `review/X.diff` and `review/Y.diff`; each author's own hand-back is `review/X-handback.md` and `review/Y-handback.md`.
+This directory is a clean checkout at that base (`1ac273e5ac0706383005de13e18173911b974d64`). You may apply a diff (`git apply review/X.diff`), run tests, and reset (`git checkout -- . && git clean -fd -e review`). Run every test command through the lock wrapper: `node review/hr.js -- <command>`. If anything would open a browser or an Electron window, pass --headless and --mute-audio.
+
+## The task the authors were given
+
+consonance/tools/js-suite.js kills a test file after 120,000 ms. gen-consumer.test.js takes 123 to 157 s alone, so it crashes every full run. Make the full suite stop crashing on it without hiding a real hang.
+
+## What to answer
+
+For each diff: is it correct; what edge cases does it miss (name them, with a probe if you can run one); did it cut or weaken a test; how much would you have to change to land it. Then: which would you land, X, Y, or neither, and why in two lines.
+
+Write your whole answer to `review/VERDICT.md` in this directory, and also print it as your final message.

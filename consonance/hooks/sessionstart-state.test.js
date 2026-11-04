@@ -19,7 +19,7 @@ const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 
 const HOOK = path.join(__dirname, 'sessionstart-state.js');
-const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
+const tmp = (p) => require('../tools/scratch.js').mkdtemp(p);
 
 function run(payload, env = {}) {
   return execFileSync(process.execPath, [HOOK], {
@@ -108,7 +108,11 @@ test('a malformed payload does not break a session start', () => {
   assert.strictEqual(out.trim(), '', 'no source means no emission, and no crash');
 });
 
-test('the emitted block is ledgered with its size and whether it failed', () => {
+// D454 (B, from E's stranger run): ENV-ONLY. The live block reads ~/.consonance.json (its name section), which the app writes on its first launch;
+// on a machine where the app has not run yet the block correctly reports that file FAILED, so "not FAILED" cannot hold there.
+const NO_CONFIG = !fs.existsSync(path.join(os.homedir(), '.consonance.json')) &&
+  'needs a set-up machine: the live state block reads ~/.consonance.json, which the app writes on its first launch; without it the block reports that file FAILED, correctly';
+test('the emitted block is ledgered with its size and whether it failed', { skip: NO_CONFIG }, () => {
   const data = tmp('sss-led-');
   run({ source: 'compact' }, { CONSONANCE_DATA: data });
   const rows = fs.readFileSync(path.join(data, 'sessionstart-state.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);

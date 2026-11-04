@@ -34,8 +34,12 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const REPO = path.resolve(__dirname, '..', '..');
-const DATA = process.env.CONSONANCE_DATA || 'C:/Consonance/data';
-const INSTANCES = 'C:/Consonance/instances';
+// D454: both dirs by the app's rule (main.rs data_dir and instances_root): ~/.consonance.json's data_dir / instances_dir when set, else
+// %USERPROFILE%\.consonance and %USERPROFILE%\claude-instances; CONSONANCE_DATA first for the data dir, as before.
+const HOME = process.env.USERPROFILE || require('os').homedir();
+const fromConfig = (key) => { try { const v = (JSON.parse(fs.readFileSync(path.join(HOME, '.consonance.json'), 'utf8').replace(/^\uFEFF/, '')) || {})[key]; return typeof v === 'string' ? v.trim() : ''; } catch (_) { return ''; } };
+const DATA = String(process.env.CONSONANCE_DATA || '').trim() || fromConfig('data_dir') || path.join(HOME, '.consonance');
+const INSTANCES = fromConfig('instances_dir') || path.join(HOME, 'claude-instances');
 
 const sh = (cmd, args) => {
   try { return execFileSync(cmd, args, { encoding: 'utf8', maxBuffer: 1 << 24 }).trim(); }

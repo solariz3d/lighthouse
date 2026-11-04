@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: the closed track after Close, built from the open one, is the closed track a full build draws
+ok 1 - the closed track after Close, built from the open one, is the closed track a full build draws
+  ---
+  duration_ms: 1794.7499
+  type: 'test'
+  ...
+# Subtest: Close's rebuild of a 24 km track it closes with new road costs at most half a full build: the placed straights are kept
+ok 2 - Close's rebuild of a 24 km track it closes with new road costs at most half a full build: the placed straights are kept
+  ---
+  duration_ms: 21084.2844
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23077.5125

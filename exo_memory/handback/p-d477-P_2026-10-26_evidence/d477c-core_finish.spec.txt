@@ -1,0 +1,29 @@
+[32m✔ row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose [90m(0.9413ms)[39m[39m
+[32m✔ row 2: an end behind the start and pointing at it is one straight of the gap, with no turn [90m(0.1056ms)[39m[39m
+[32m✔ row 3: a track is finished with new pieces only, closed, and the new road ends on the start [90m(460.7561ms)[39m[39m
+[32m✔ row 4: refusals by name: a closed loop, an empty track [90m(342.0889ms)[39m[39m
+[32m✔ row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start [90m(1107.0816ms)[39m[39m
+[32m✔ row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°) [90m(2778.1742ms)[39m[39m
+[32m✔ row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar [90m(3639.5756ms)[39m[39m
+[32m✔ row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126° [90m(3471.618ms)[39m[39m
+[32m✔ row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road [90m(1556.7832ms)[39m[39m
+[32m✔ row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change [90m(2818.9687ms)[39m[39m
+[32m✔ row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror) [90m(1626.4491ms)[39m[39m
+[32m✔ row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour [90m(307.6577ms)[39m[39m
+[32m✔ row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor [90m(0.6363ms)[39m[39m
+[32m✔ row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop [90m(443.2073ms)[39m[39m
+[90m﹣ row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves [90m(0.1092ms)[39m # fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)[39m
+[32m✔ row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road [90m(1067.9309ms)[39m[39m
+[32m✔ row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop [90m(6764.1022ms)[39m[39m
+[34mℹ tests 17[39m
+[34mℹ suites 0[39m
+[34mℹ pass 16[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 1[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 26484.9091[39m
+
+# stderr
+
+# exit 0 in 26.5 s

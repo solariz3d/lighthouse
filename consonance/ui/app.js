@@ -33,6 +33,7 @@ async function load() {
   if ($('#ambientlat')) $('#ambientlat').value = state.ambient_lat || '';
   if ($('#ambientlon')) $('#ambientlon').value = state.ambient_lon || '';
   if ($('#ambienttz')) $('#ambienttz').value = state.ambient_tz || '';
+  if ($('#usbmode')) $('#usbmode').checked = state.usb_mode === true;   // D273: the USB mode, OFF unless the config says true
   // fresh machine (no saved config) → land on Settings so directories are the first thing chosen
   try {
     if (!(await invoke('config_exists'))) {
@@ -53,6 +54,7 @@ async function persist() {
   if ($('#ambientlat')) state.ambient_lat = $('#ambientlat').value.trim();
   if ($('#ambientlon')) state.ambient_lon = $('#ambientlon').value.trim();
   if ($('#ambienttz')) state.ambient_tz = $('#ambienttz').value.trim();
+  if ($('#usbmode')) state.usb_mode = !!$('#usbmode').checked;   // D273: persisted with the rest; a save never drops it (Config carries the field)
   await invoke('save_config', { cfg: state });
 }
 

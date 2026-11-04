@@ -1,0 +1,32 @@
+2026-10-25T04:12:13.509Z no timing session in any slot; taking the lock
+consonance/hooks/sources-gate.test.js exit 0 
+consonance/hooks/claim-check.test.js exit 0 
+consonance/tools/heavy-run.test.js exit 0 
+consonance/tools/state-block.test.js exit 0 
+dev/shell/hooks/userprompt_pulse.test.js exit 0 
+consonance/tools/portable-paths.test.js exit 1 
+consonance/tools/heavy-run.mutants.js exit 0 
+consonance/tools/sources-gate.mutants.js exit 0 
+ownmut exit 0
+NOT CAUGHT M1 sources-gate: no third step  (?)
+NOT CAUGHT M2 claim-check: no third step  (?)
+NOT CAUGHT M3 heavy-run: no default dir  (?)
+NOT CAUGHT M4 heavy-run: default dir not created  (?)
+NOT CAUGHT M5 state-block: CONSONANCE_DATA ignored  (?)
+NOT CAUGHT M6 state-block: config data_dir ignored  (?)
+NOT CAUGHT M7 state-block: printed check keeps the old path  (?)
+NOT CAUGHT M8 pulse: no third tier  (?)
+NOT CAUGHT M9 lap-row: the fixed folder of one machine back  (?)
+applied 9 / caught 0 / NOT APPLIED 0
+ M consonance/hooks/claim-check.js
+ M consonance/hooks/claim-check.test.js
+ M consonance/hooks/sources-gate.js
+ M consonance/hooks/sources-gate.test.js
+ M consonance/tools/heavy-run.js
+ M consonance/tools/heavy-run.test.js
+ M consonance/tools/lap-row.js
+ M consonance/tools/lap-row.test.js
+ M consonance/tools/state-block.js
+ M consonance/tools/state-block.test.js
+ M dev/shell/hooks/userprompt_pulse.py
+ M dev/shell/hooks/userprompt_pulse.test.js

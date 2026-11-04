@@ -25,7 +25,7 @@ function t(name, fn) {
 }
 
 function mkdir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'batonwake-'));
+  return require('../tools/scratch.js').mkdtemp('batonwake-');
 }
 
 const PANES = [
@@ -225,7 +225,7 @@ t('SILENT when the lap is filed', () => {
 // ── 4 · IT MUST NEVER TAKE THE TURN DOWN ───────────────────────────────────────────────────────
 
 t('a missing data dir is silence and exit 0, never a crash', () => {
-  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'bwcwd-'));
+  const cwd = require('../tools/scratch.js').mkdtemp('bwcwd-');
   const r = spawnSync(process.execPath, [HOOK], {
     cwd, input: '{}', encoding: 'utf8',
     env: Object.assign({}, process.env, { CONSONANCE_DATA: path.join(cwd, 'does-not-exist') }),

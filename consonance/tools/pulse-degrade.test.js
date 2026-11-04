@@ -127,9 +127,9 @@ function t(name, fn) {
 // The hook keys its state file on the BASENAME of the working directory
 // (`pulse_state.<cwd>.json`), so the cwd is part of the isolation and not incidental.
 function arm({ configDataDir, envDataDir, ledger }) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-home-'));
-  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-cwd-'));
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'pulse-data-'));
+  const home = require('./scratch.js').mkdtemp('pulse-home-');
+  const cwd = require('./scratch.js').mkdtemp('pulse-cwd-');
+  const data = require('./scratch.js').mkdtemp('pulse-data-');
 
   const cfg = { machine_tag: 'TEST' };
   if (configDataDir) cfg.data_dir = data;
@@ -175,7 +175,9 @@ t('THE BAR — ARM B: no env and no data_dir in the config, so the detector SAYS
   // that found nothing.
   const line = arm({ configDataDir: false, ledger: false });
   assert.ok(/restart detection OFF/.test(line), `expected a spoken degrade, got: ${line}`);
-  assert.ok(/CONSONANCE_DATA unset/.test(line), `the degrade must name the cause, got: ${line}`);
+  // AMENDED (D454): the rule changed by name: with no env and no data_dir the data dir is the app's default, %USERPROFILE%\.consonance
+  // (main.rs default_data), so the detector looks there; with no ledger there it is still off, and the cause it names is that layer.
+  assert.ok(/no head-watch\.jsonl under the default data dir/.test(line), `the degrade must name the cause, got: ${line}`);
   assert.ok(!/crosses a restart/.test(line), `it must not also claim a detection: ${line}`);
 });
 

@@ -1,0 +1,13 @@
+== A {"LENF":0,"METRIC":"lat","AF":null,"AMETRIC":"lat"}
+  TEST TRACK 10                        FIRST RSL R300    3990 m  lat 4.51 g  whole 10.69 g  out 0/1198  lean 57.8°  18.2 s
+  TEST 10                              -     LSR R300    2584 m  lat 4.23 g  whole 11.04 g  out 0/624  lean 61.0°  2.5 s
+  core_finish row 6 (quarter)          -     SC R191      700 m  lat 7.63 g  whole 17.23 g  out 0/113  lean 41.6°  0.4 s
+  core_finish row 12 (banked -150/200/54) LAST  RSR R300    1406 m  lat 5.55 g  whole 11.78 g  out 0/371  lean 63.0°  0.9 s
+  (c) P 180/1200/10                    FIRST LSR R300    2527 m  lat 4.68 g  whole 12.85 g  out 0/841  lean 59.2°  2.9 s
+  (c) P 180/1200/30                    FIRST LSR R300    2631 m  lat 4.65 g  whole 12.75 g  out 0/855  lean 59.6°  2.8 s
+  (e) P 210/300/90                     FIRST LSL R300    3737 m  lat 4.42 g  whole 12.15 g  out 0/1111  lean 56.8°  3.2 s
+  (e) P 180/700/90                     FIRST LSL R300    1257 m  lat 5.95 g  whole 11.83 g  out 0/326  lean 53.6°  2.4 s
+  (f) P 180/1200/90                    LAST  RSR R300    3481 m  lat 1.00 g  whole 11.22 g  out 0/953  lean 90.0°  2.6 s
+  (g) P 180/700/54                     FIRST LSL R300    1243 m  lat 6.17 g  whole 11.08 g  out 0/321  lean 53.9°  1.8 s
+  D440 tight 180 over 400, 1200/10     LAST  RSR R300    3624 m  lat 8.70 g  whole 9.07 g  out 0/1153  lean 10.0°  2.8 s
+

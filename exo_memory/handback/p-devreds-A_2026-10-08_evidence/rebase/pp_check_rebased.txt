@@ -1,0 +1,41 @@
+﻿portable-paths: RED — 11 machine-specific path(s) not in the baseline
+System.Management.Automation.RemoteException
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21052
+    let (c, bad) = parse_config(r#"{"data_dir":"C:/d"}"#);
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21068
+    let on = Config { usb_mode: true, data_dir: r"C:\d".into(), ..Config::default() };
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21072
+    assert!(back.usb_mode && bad.is_empty() && back.data_dir == r"C:\d");
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21118
+    "base": "C:/Users/someone/claude-instances",
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21124
+    "state_dir": "C:/Consonance/state",
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21126
+    "room_path": "C:/room/BOOT.md",
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21127
+    "instances_dir": "C:/Consonance/instances",
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21128
+    "data_dir": "C:/Consonance/data",
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21175
+    cfg.data_dir = "E:/elsewhere/data".into();
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21179
+    assert_eq!(after["data_dir"], "E:/elsewhere/data");
+  DRIVE  BENIGN-TEST
+    consonance/src-tauri/src/main.rs:21181
+    assert_eq!(after["instances_dir"], "C:/Consonance/instances", "an owned key the tab did not change moved");
+System.Management.Automation.RemoteException
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.

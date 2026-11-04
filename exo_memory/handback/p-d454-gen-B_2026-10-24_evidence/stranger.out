@@ -1,0 +1,59 @@
+lockrun: holding the lock at 2026-10-25T06:06:17.852Z; starting B D454 E's 13 files in a stranger clone of gen3 and in d454-b (BelowNormal, very low I/O; not a timing run)
+lowio: class BelowNormal, io-priority set to 0 rc 0
+consonance/hooks/claim-check.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/hooks/delete-gate.test.js
+   stranger clone of gen3: exit 1 — AssertionError [ERR_ASSERTION]: the /tmp/... form
+      ✖ RED: the Bash tool's MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/... (the push gate's live failure, 2026-10-06)
+   d454-b worktree, this machine: exit 0
+consonance/hooks/dispatch-gate.test.js
+   stranger clone of gen3: exit 1 — AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+      ✖ a gated dispatch records the target and the citation, and NEVER the token or the text
+   d454-b worktree, this machine: exit 0
+consonance/hooks/dream-gate.test.js
+   stranger clone of gen3: exit 1 — Error: no python.exe found outside the Store stub; cannot verify the pulse gate
+      ✖ consonance\hooks\dream-gate.test.js
+   d454-b worktree, this machine: exit 0
+consonance/hooks/push-gate.test.js
+   stranger clone of gen3: exit 1 — AssertionError [ERR_ASSERTION]: git push -q -u origin HEAD:main: remote: error: unable to write file C:/Users/nname/AppData/Local/Temp/claude/C--Conso
+      ✖ RED: a push whose diff ADDS a line with a key is refused, naming the file and line and the kind, never the secret
+      ✖ RED: every packet shape is caught (sk-ant-, ghp_, AKIA, a private-key header), each by its kind
+      ✖ pass: a clean push is allowed, silently (no output), and logged as allow
+      ✖ pass: a key the push REMOVES is leaving, not arriving: allowed
+      ✖ RED, no upstream: a new branch is scanned from its merge base with origin's default branch
+      ✖ RED: `git -C <repo> push` from another directory scans that repo; a push after && in a chain is seen
+      ✖ RED: the Bash tool's MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/...
+      ✖ RED (A H3): a key ADDED in one unpushed commit and REMOVED in the next is in the pushed history: refused, naming the commit
+      ✖ RED (A H2): a remote NOT called origin, no upstream: what it lacks is scanned
+      ✖ RED (A §4): `cd <repo> && git push` from a session in ANOTHER directory scans the cd's repo
+      ✖ pass: a heredoc that only MENTIONS git push is not a push
+      ✖ a command that is not a push is ignored: no scan, no row
+   d454-b worktree, this machine: exit 0
+consonance/hooks/sessionstart-state.test.js
+   stranger clone of gen3: exit 1 — AssertionError [ERR_ASSERTION]: the live generator must not be reporting FAILED
+      ✖ the emitted block is ledgered with its size and whether it failed
+   d454-b worktree, this machine: exit 0
+consonance/tools/attached.test.js
+   stranger clone of gen3: exit 1 — AssertionError [ERR_ASSERTION]: findings-return.js reads a different default path than second-vantage.js writes — the 2026-08-15 split, again
+      ✖ WIRE: producer and both consumers resolve the SAME findings path by default
+   d454-b worktree, this machine: exit 0
+consonance/tools/claim-check-adapter.test.js
+   stranger clone of gen3: not shipped
+   d454-b worktree, this machine: exit 0
+consonance/tools/claim-replay.test.js
+   stranger clone of gen3: not shipped
+   d454-b worktree, this machine: exit 0
+consonance/tools/janitor.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/tools/mistake-bench.test.js
+   stranger clone of gen3: not shipped
+   d454-b worktree, this machine: exit 0
+consonance/tools/pulse-degrade.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+consonance/tools/scratch.test.js
+   stranger clone of gen3: exit 0
+   d454-b worktree, this machine: exit 0
+lockrun: done at 2026-10-25T06:08:22.719Z, exit 0

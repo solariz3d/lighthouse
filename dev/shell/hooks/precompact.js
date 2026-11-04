@@ -24,10 +24,20 @@ const { execFileSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-const SCRIPT = path.join(
-  process.env.USERPROFILE || process.env.HOME || "",
-  "Desktop", "lighthouse", "exo_memory", "loop", "checkpoint.py"
-);
+// D273 lap 5 (cold read 2, A6): the checkout by THE APP'S OWN RULE (main.rs repo_root / repo_root_from_room_path): ~/.consonance.json's room_path
+// is <repo>\exo_memory\BOOT.md, so the repo is two folders up, and only when that BOOT.md is a file. It used to be %USERPROFILE%\Desktop\lighthouse,
+// one author's checkout; on anyone else's machine that named nothing and left this registered hook silently dead. No repo: no checkpoint (fail-open).
+function roomRepo() {
+  try {
+    const home = process.env.USERPROFILE || process.env.HOME || "";
+    const rp = JSON.parse(fs.readFileSync(path.join(home, ".consonance.json"), "utf8").replace(/^﻿/, "")).room_path;
+    if (typeof rp !== "string" || !rp.trim()) return null;
+    const repo = path.dirname(path.dirname(rp.trim()));
+    return repo && fs.statSync(path.join(repo, "exo_memory", "BOOT.md")).isFile() ? repo : null;
+  } catch { return null; }
+}
+const REPO = roomRepo();
+const SCRIPT = REPO ? path.join(REPO, "exo_memory", "loop", "checkpoint.py") : "";
 
 let input = "";
 try { input = fs.readFileSync(0, "utf8"); } catch { /* no stdin: run with defaults */ }
@@ -44,6 +54,13 @@ try { payload = JSON.parse((input || "{}").replace(/^﻿/, "")); } catch { /* no
 try {
   if (require("../lib/fresh-guard.js").isFreshCwd(payload.cwd)) process.exit(0);
 } catch { /* guard missing: fall through to normal behaviour */ }
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): the checkpoint is the BUILD's state (the repos, the dirty files, the residue) and "This seat is not the build". The same cwd test
+// as board-digest.js:302; the Third Place compacts without it, as a fresh pane does, and no CHECKPOINT is written for its compaction.
+// The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+// (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+if (/[\\/]third-place[\\/]?$/i.test(tpNorm(payload.cwd))) process.exit(0);
 
 try {
   if (!fs.existsSync(SCRIPT)) process.exit(0);   // different machine, no room here

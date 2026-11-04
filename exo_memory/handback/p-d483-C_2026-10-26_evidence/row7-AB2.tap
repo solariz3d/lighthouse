@@ -1,0 +1,14 @@
+lockrun: holding the lock at 2026-10-27T02:45:31.431Z; starting c483 timing session row7-AB2
+[32m✔ row 7: a 1,000 m piece with a left edge typed, stretched on an empty track and turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms) [90m(35094ms)[39m[39m
+[34mℹ empty 8.9@4.8 / 9.2@5.1[39m
+[34mℹ placed 4.4@3.1 / 4.3@3.1[39m
+[34mℹ p95 ms: {"empty":[8.9,9.2],"placed":[4.4,4.3]}[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 1[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 35540.8631[39m
+lockrun: done at 2026-10-27T02:46:07.006Z, exit 0

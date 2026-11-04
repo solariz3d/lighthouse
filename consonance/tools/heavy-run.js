@@ -11,6 +11,15 @@
 // then ~/.consonance.json data_dir) — holding {pid, seat, cmd, started, token}. It is created EXCLUSIVELY ('wx'), so two
 // runners can never both hold it. `seat` is the first 8 of CONSONANCE_PANE (the pane's session id), or 'terminal'.
 //
+// D286 (the keeper, 2026-10-10 09:38: "multiple heavy runs at once"): TWO SLOTS, ONE PER TREE. The lock exists because seats read each other's half-written files IN ONE CHECKOUT, so it
+// only has to serialise within a tree; one machine-wide file made a t180 landing wait on a lighthouse run in another worktree. There are now N slots (default 2; CONSONANCE_HEAVY_SLOTS, 1..8,
+// else the default: a typo must not switch the lock off): <data>/heavy-run.lock, heavy-run.2.lock, ... Each lock records its TREE (`git rev-parse --show-toplevel` of the cwd, lower-cased on
+// Windows; a cwd outside git, or where git cannot run, is the ONE shared bucket "(not in a git tree)", so such runs serialise with each other and run beside a run in a real tree). A runner
+// whose tree already holds a slot WAITS, whichever slot is free; a lock with no tree recorded (written before D286) blocks every tree. With ONE slot every live lock blocks: today's behaviour.
+// The slot scan looks at every slot file (to 8) even when this runner may claim fewer. Two runners of one tree can claim different free slots in the same instant, so after writing its claim a runner
+// looks once more and backs off (removes its own claim, tries again after a jitter) if a blocking lock is there: the one that proceeds is the one that saw nobody. The takeover rules below are
+// applied PER SLOT, unchanged. A runner waiting with every slot held names every holder; one held up by its own tree names that holder.
+//
 // A SECOND RUNNER WAITS and says whom it waits on — `heavy-run: waiting on <seat> pid <pid> (<cmd>, since <t>)` — once at
 // once, then once a minute, polling every 2 s.
 //
@@ -25,10 +34,19 @@
 // and recorded in the new lock as `took_over`. There is no separate log file: a new file in the data dir is UNPLACED at
 // close until the manifest names it, and the lock itself already needs that row (see the hand-back). Liveness is the
 // codebase's own idiom (ledger-union.js :293, head-watch.js, close.mutants.js): process.kill(pid, 0), EPERM = alive.
-// A pid the OS has since REUSED reads alive. Since L124 a lock records its holder's image and start, and a live pid whose
-// process differs is taken over as stale (see PID REUSE below); an OLD lock without them still waits and, at the max
-// wait, fails loudly naming it, which is the safe direction. The takeover moves the stale file aside with an atomic rename; if a race moved a LIVE lock
-// instead, it is put back with linkSync, which cannot overwrite, and the waiter keeps waiting.
+// D283 (the chair, 2026-10-10: "C's run took over my LIVE lock"): checked, and the takeover was RIGHT. The chair's own TaskStop on its land_turnby run is in its
+// transcript at 01:58:50.042Z; the takeover's age_ms was 2,300,472 on a lock started 01:20:31.118Z, i.e. 01:58:51.590Z, 1.5 s later, from a waiter that polls every 2 s. A
+// stopped background task takes its whole tree with it (holder, cmd.exe, child: all three read dead by kill(0), tasklist and CIM) and leaves the lock file behind, so
+// "a stale lock, taken over at once" is what TaskStop produces. Cross-session kill(0) works: the chair's live holder, read from another seat's session, was alive by all
+// three methods, and its CIM creation time matched the lock's started to 27 ms. BUT a lock this young deserves a second witness before it is taken, so it now is:
+//   - a lock YOUNGER than YOUNG_MS (30 min: the longest known full run is 1,570 s) is taken only when pidGone(pid) (tasklist on Windows) ALSO says the holder is gone;
+//     if the two disagree, or the second cannot tell, it waits and says so once. A lock with no readable `started` counts as young (unknown is the safe side). An older
+//     lock is as before: kill(0) alone.
+// A pid the OS has since REUSED reads alive. Since L124 (L's 88278a1, ported at the L/D convergence 2026-11-04) a lock records its holder's image and start,
+// and a live pid whose process differs is taken over as stale (see PID REUSE below); an OLD lock without them still waits and, at the max wait, fails loudly
+// naming it, which is the safe direction. The takeover moves the stale file aside with an atomic rename; if a race moved ANOTHER runner's
+// lock instead, it is put back with linkSync, which cannot overwrite, and the waiter keeps waiting; the next poll judges that lock like any other (D289). That includes
+// an unreadable one younger than the grace: a claim whose write has not landed yet (D289 F1).
 //
 // NESTED RUNS ARE THE SAME RUN. The holder exports its token as CONSONANCE_HEAVY_RUN_TOKEN, which every child inherits;
 // a runner whose environment carries the token of the current lock does not wait (it would wait on its own parent
@@ -37,52 +55,103 @@
 // RELEASED on normal exit and on an uncaught error (both fire process 'exit'), and on SIGINT/SIGTERM/SIGBREAK/SIGHUP. A
 // release removes the lock only if it still carries this run's token.
 //
+// THE DISK GUARD (D287 part 2; C: hit 0 bytes at 12:13 on 2026-10-10, and a run that fills the disk takes every seat's transcript with it).
+// Before it takes a slot, a runner reads the free space of every drive the run will write to: the cwd's, the scratch root's (scratch.js) and
+// CARGO_TARGET_DIR's when set. The lowest decides. Under 50 GB it WARNS once; under 20 GB it REFUSES (exit 4) with the free figure and what
+// the janitor's dry run would free, so the fix is in the message. A nested run is the same run and is not checked again.
+//
 //   const h = require('./heavy-run.js').hold({ cmd: 'js-suite' });   // waits, or exits 3 loudly; releases on exit
 
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { execFileSync } = require('child_process');
+const { spawnSync } = require('child_process');
 const { dataDir: manifestDataDir } = require('./state-manifest.js');
+// D454: the app's third step (main.rs default_data), for a config with no data_dir: a new user's default Data folder. The app creates it at
+// launch; acquire() creates it too, so a heavy run before the first launch is not refused.
+const appDefaultDataDir = () => path.join(process.env.USERPROFILE || require('os').homedir(), '.consonance');
 
-const LOCK_NAME = 'heavy-run.lock';
+const LOCK_NAME = 'heavy-run.lock';   // slot 1; slot k is heavy-run.k.lock (D286)
+const DEFAULT_SLOTS = 2;
+const MAX_SLOTS = 8;
+const NON_GIT_TREE = '(not in a git tree)';
 const TOKEN_ENV = 'CONSONANCE_HEAVY_RUN_TOKEN';
 const MAX_WAIT_MS = 30 * 60 * 1000;
 const POLL_MS = 2000;
 const SAY_EVERY_MS = 60 * 1000;
+const YOUNG_MS = 30 * 60 * 1000;         // D283: a lock younger than this is taken only when a SECOND method also says its holder is gone (the full suite took 1,570 s)
 const UNREADABLE_GRACE_MS = 10 * 1000;   // a lock being written this instant reads empty; only an OLD unreadable one is stale
+const DISK_WARN_BYTES = 50e9;            // D287: under this, warn
+const DISK_REFUSE_BYTES = 20e9;          // D287: under this, refuse to start
 
-function pidAlive(pid) {
-  if (!Number.isInteger(pid) || pid <= 0) return false;
-  try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; }
+/** Free bytes on the drive holding `p` (fs.statfsSync: GetDiskFreeSpaceExW on Windows). */
+function freeBytes(p) { const s = fs.statfsSync(path.parse(path.resolve(p)).root); return s.bavail * s.bsize; }
+/** The paths a run writes to: its cwd, the scratch root, and CARGO_TARGET_DIR when set. scratch.js is required here, not at load. */
+function writePaths(env = process.env, cwd = process.cwd()) {
+  const out = [cwd];
+  try { out.push(require('./scratch.js').scratchRoot(env)); } catch (_) { /* no scratch.js beside this copy: the cwd still counts */ }
+  if (env.CARGO_TARGET_DIR) out.push(env.CARGO_TARGET_DIR);
+  return out;
+}
+/** What the janitor's dry run would free, as text for the refusal; its failure is said, never thrown (the refusal stands either way). */
+function janitorTotal() {
+  try { const p = require('./janitor.js').plan(); return `the janitor's dry run would free ${(p.total / 1e9).toFixed(1)} GB (node consonance/tools/janitor.js to see it, --apply to act)`; }
+  catch (e) { return `the janitor's dry run failed (${e.message}); run node consonance/tools/janitor.js`; }
+}
+/** D287: refuse (throw HEAVY_RUN_DISK) when a drive the run writes to is under DISK_REFUSE_BYTES; warn under DISK_WARN_BYTES. */
+function checkDisk({ paths, free = freeBytes, total = janitorTotal, log }) {
+  let low = null;
+  for (const p of paths) {
+    const root = path.parse(path.resolve(p)).root;
+    let b; try { b = free(p); } catch (e) { log(`heavy-run: could not read the free space of ${root} (${e.code || e.message}); not checked`); continue; }
+    if (low === null || b < low.bytes) low = { root, bytes: b };
+  }
+  if (!low) return null;
+  const gbs = (low.bytes / 1e9).toFixed(1);
+  if (low.bytes < DISK_REFUSE_BYTES) throw Object.assign(new Error(`heavy-run: refusing to start: ${low.root} has ${gbs} GB free, under the ${DISK_REFUSE_BYTES / 1e9} GB floor; a heavy run that fills the disk fails every seat's writes. ${total()}. How it works: consonance/GATES.md, "The heavy-run lock".`), { code: 'HEAVY_RUN_DISK', free: low });
+  if (low.bytes < DISK_WARN_BYTES) log(`heavy-run: WARNING: ${low.root} has ${gbs} GB free, under ${DISK_WARN_BYTES / 1e9} GB; run node consonance/tools/janitor.js`);
+  return low;
 }
 
-// PID REUSE (L124). A live pid is not a live HOLDER: on 2026-09-27 a stale lock's pid 27836 had been handed by Windows to
-// another program's crash handler five seconds after the holder exited, and pidAlive read it as alive. So the lock
-// records who took it — `image` (this executable's base name) and `holder_start` (this process's start) — and a live
-// pid whose process has a DIFFERENT image, or started more than START_TOLERANCE_MS away from the recorded start, is a
-// different process: the lock is stale.
+function pidAlive(pid, kill = process.kill.bind(process)) {
+  if (!Number.isInteger(pid) || pid <= 0) return false;
+  try { kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; }
+}
+/** The SECOND witness (D283): true = the pid is gone, false = a process with that pid is listed, null = cannot tell. On Windows it asks `tasklist /FI "PID eq n"`, which
+ *  is the OS's own process list and does not depend on what kill(0) is allowed to open; elsewhere kill(0) is the whole truth, so there is nothing to add (true). */
+function pidGone(pid, run = spawnSync, platform = process.platform) {
+  if (platform !== 'win32') return true;
+  let r; try { r = run('tasklist', ['/FI', `PID eq ${pid}`, '/FO', 'CSV', '/NH'], { encoding: 'utf8', timeout: 8000, windowsHide: true }); } catch (_) { return null; }
+  if (!r || r.error || r.status !== 0 || typeof r.stdout !== 'string') return null;
+  const listed = r.stdout.split(/\r?\n/).some((line) => { const c = line.match(/"[^"]*"/g); return !!c && c.length >= 2 && Number(c[1].slice(1, -1)) === pid; });
+  return !listed;
+}
+// PID REUSE (L124, L's 88278a1). A live pid is not a live HOLDER: on 2026-09-27 a stale lock's pid 27836 had been handed by Windows to another program's crash
+// handler five seconds after the holder exited, and kill(0) read it as alive. So a lock records who took it — `image` (this executable's base name) and
+// `holder_start` (this process's start) — and a live pid whose process has a DIFFERENT image, or started more than START_TOLERANCE_MS away from the recorded
+// start, is a different process: the lock is stale (reason 'pid_reused'). D283's second witness is not asked here: the pid IS running, and the identity is
+// the witness that it is not the holder.
 //   * RECORDING needs no spawn: the start is Date.now() - process.uptime(), the image path.parse(process.execPath).name.
-//   * ASKING about another pid uses the query this codebase already uses for the same question (whats-live.js:50-52,
-//     `Get-Process … StartTime`): PowerShell, Windows only. Elsewhere, or if the query fails, the identity is UNKNOWN
-//     (null) and the lock is treated as held — today's behaviour. Failing to look is never a reason to take a live lock.
+//   * ASKING about another pid is `Get-Process … StartTime` (whats-live.js's query), Windows only. Elsewhere, or if the query fails, the identity is UNKNOWN
+//     (null) and the lock is treated as held. Failing to look is never a reason to take a live lock.
 //   * An OLD lock (no `image`, no `holder_start`) is never asked about and behaves exactly as before.
-//   * The tolerance absorbs the gap between the OS's creation time and node's own start (node boots first); a pid reused
-//     by the SAME image within that window is not caught — named, not claimed.
+//   * The tolerance absorbs the gap between the OS's creation time and node's own start; a pid reused by the SAME image within that window is not caught.
 const START_TOLERANCE_MS = 10 * 1000;
 const IDENTITY_RECHECK_MS = 60 * 1000;   // a waiter asks the OS about the same holder at most this often, not every poll
 function selfIdentity() {
   return { image: path.parse(process.execPath).name, holder_start: new Date(Date.now() - process.uptime() * 1000).toISOString() };
 }
-function processIdentity(pid) {
-  if (!Number.isInteger(pid) || pid <= 0 || process.platform !== 'win32') return null;
-  let out;
-  try {
-    out = execFileSync('powershell', ['-NoProfile', '-NonInteractive', '-Command',
+/** { image, start } of the process at `pid`, or null when it cannot be told. The pid comes from a lock FILE and is interpolated into PowerShell, so a
+ *  non-integer never reaches the shell. */
+function processIdentity(pid, run = spawnSync, platform = process.platform) {
+  if (!Number.isInteger(pid) || pid <= 0 || platform !== 'win32') return null;
+  let r; try {
+    r = run('powershell', ['-NoProfile', '-NonInteractive', '-Command',
       `$p = Get-Process -Id ${pid} -ErrorAction SilentlyContinue; if ($p) { $s = ''; try { $s = $p.StartTime.ToUniversalTime().ToString('o') } catch {}; $p.ProcessName + '|' + $s }`],
-    { encoding: 'utf8', timeout: 20000, windowsHide: true, stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    { encoding: 'utf8', timeout: 20000, windowsHide: true });
   } catch (_) { return null; }
-  const i = out.lastIndexOf('|');
+  if (!r || r.error || r.status !== 0 || typeof r.stdout !== 'string') return null;
+  const out = r.stdout.trim(), i = out.lastIndexOf('|');
   if (i <= 0) return null;
   const start = Date.parse(out.slice(i + 1));
   return { image: out.slice(0, i), start: Number.isFinite(start) ? start : null };
@@ -96,6 +165,7 @@ function sameHolder(h, id) {
   if (Number.isFinite(recorded) && Number.isFinite(id.start) && Math.abs(id.start - recorded) > START_TOLERANCE_MS) return false;
   return true;
 }
+const ageOf = (h, t) => { const s = Date.parse(h && h.started); return Number.isFinite(s) ? t - s : null; };
 function seatName(env) { const p = String(env.CONSONANCE_PANE || '').trim(); return p ? p.slice(0, 8) : 'terminal'; }
 function sleepSync(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
 function readLock(file) {
@@ -104,90 +174,173 @@ function readLock(file) {
 const describe = (h) => `${h.seat || '?'} pid ${h.pid} (${h.cmd || '?'}, since ${h.started || '?'})`;
 const mins = (ms) => `${Math.round(ms / 60000)}m`;
 
-function acquire({
-  cmd, dataDir, env = process.env,
-  maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
-  alive = pidAlive, identify = processIdentity, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
-} = {}) {
-  const dir = dataDir === undefined ? manifestDataDir() : dataDir;
-  if (!dir) throw Object.assign(new Error('heavy-run: no data dir (CONSONANCE_DATA unset and ~/.consonance.json has no data_dir) — refusing to run without the lock'), { code: 'HEAVY_RUN_NO_DATA' });
-  const file = path.join(dir, LOCK_NAME);
+const slotFile = (dir, k) => path.join(dir, k === 1 ? LOCK_NAME : `heavy-run.${k}.lock`);
+/** The slot count: the `slots` option, else CONSONANCE_HEAVY_SLOTS, else DEFAULT_SLOTS. Anything that is not a whole number from 1 to MAX_SLOTS is the default (a typo must not switch the lock off). */
+function slotCount(raw) {
+  if (raw === undefined || raw === null || raw === '') return DEFAULT_SLOTS;
+  const n = Number(raw);
+  return Number.isInteger(n) && n >= 1 && n <= MAX_SLOTS ? n : DEFAULT_SLOTS;
+}
+/** D286: the tree a run belongs to — `git rev-parse --show-toplevel` of the cwd, lower-cased on Windows (git prints C:/ and the OS may say c:\). A cwd that is not in a git tree (or where git cannot
+ *  run) is NON_GIT_TREE: ONE shared bucket, so non-git runs serialise with each other (unknown is the safe side) and still run beside a run in a real tree. */
+function resolveTree(cwd = process.cwd(), run = spawnSync, platform = process.platform) {
+  let r; try { r = run('git', ['rev-parse', '--show-toplevel'], { cwd, encoding: 'utf8', timeout: 8000, windowsHide: true }); } catch (_) { return NON_GIT_TREE; }
+  const top = r && !r.error && r.status === 0 && typeof r.stdout === 'string' ? r.stdout.trim() : '';
+  if (!top) return NON_GIT_TREE;
+  const p = path.resolve(top);
+  return platform === 'win32' ? p.toLowerCase() : p;
+}
 
-  const current = readLock(file);
-  if (current && env[TOKEN_ENV] && current.token === env[TOKEN_ENV]) {
-    return { file, reentrant: true, holder: current, release() {} };
+function acquire({
+  cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim, beforeTake,
+  maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
+  alive = pidAlive, confirmGone = pidGone, identify = processIdentity, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
+  writes, diskFree = freeBytes, diskTotal = janitorTotal,
+} = {}) {
+  let dir = dataDir === undefined ? manifestDataDir() : dataDir;
+  if (dataDir === undefined && !dir) { dir = appDefaultDataDir(); fs.mkdirSync(dir, { recursive: true }); }
+  if (!dir) throw Object.assign(new Error('heavy-run: no data dir (CONSONANCE_DATA unset and ~/.consonance.json has no data_dir) — refusing to run without the lock'), { code: 'HEAVY_RUN_NO_DATA' });
+  const n = slotCount(slots !== undefined ? slots : process.env.CONSONANCE_HEAVY_SLOTS);
+
+  // A nested run carries the token of the lock it runs under, in whichever slot that lock is.
+  if (env[TOKEN_ENV]) {
+    for (let k = 1; k <= MAX_SLOTS; k++) {
+      const file = slotFile(dir, k), current = readLock(file);
+      if (current && current.token === env[TOKEN_ENV]) return { file, slot: k, reentrant: true, holder: current, release() {} };
+    }
   }
 
+  checkDisk({ paths: writes || writePaths(env), free: diskFree, total: diskTotal, log });   // D287: refuses (throws) under the floor; a nested run returned above
+  const myTree = tree !== undefined ? tree : resolveTree();
   const token = crypto.randomUUID();
   const t0 = now();
   let said = -Infinity;
   let tookOver = null;
-  let probe = null;   // { token, at, id } — the last identity asked of the OS for the current holder
+  const disagreed = new Set();   // tokens whose liveness disagreement has been said once
+  const probes = new Map();      // L124: token -> { at, id }, the last identity asked of the OS for that holder
   const self = selfIdentity();
-  for (;;) {
-    const rec = { pid: process.pid, seat: seatName(env), cmd, started: new Date(now()).toISOString(), token, image: self.image, holder_start: self.holder_start };
-    if (tookOver) rec.took_over = tookOver;
-    try {
-      const fd = fs.openSync(file, 'wx');
-      try { fs.writeSync(fd, JSON.stringify(rec)); } finally { fs.closeSync(fd); }
-      env[TOKEN_ENV] = token;
-      let released = false;
-      return {
-        file, reentrant: false, holder: rec,
-        release() {
-          if (released) return;
-          released = true;
-          const cur = readLock(file);
-          if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) { /* already gone */ } }
-          if (env[TOKEN_ENV] === token) delete env[TOKEN_ENV];
-        },
-      };
-    } catch (e) { if (e.code !== 'EEXIST') throw e; }
+  // Does a lock held by `h` forbid me to run? Always with ONE slot (today's machine-wide lock); else when it is in my tree, or records none (a lock from before D286: unknown is the safe side).
+  const blocks = (h) => n === 1 || !h.tree || h.tree === myTree;
 
-    const h = readLock(file);
-    if (h === null) continue;                                     // released between the open and the read
+  // D283's judgement of one lock file, unchanged: true = the lock was STALE and has been taken out of the way (the slot is free now), false = it is live.
+  function takeIfStale(file, k, h) {
     let stale = false, reason = null, nowRunning = null;
     if (h.unreadable) {
       let age = 0;
-      try { age = now() - fs.statSync(file).mtimeMs; } catch (_) { continue; }
+      try { age = now() - fs.statSync(file).mtimeMs; } catch (_) { return true; }
       stale = age > UNREADABLE_GRACE_MS;
       reason = 'unreadable';
-    } else if (!alive(h.pid)) {
-      stale = true;
+    } else {
+      stale = !alive(h.pid);
       reason = 'dead';
-    } else if (hasIdentity(h)) {
-      if (!probe || probe.token !== h.token || now() - probe.at >= IDENTITY_RECHECK_MS) probe = { token: h.token, at: now(), id: identify(h.pid) };
-      if (!sameHolder(h, probe.id)) { stale = true; reason = 'pid_reused'; nowRunning = probe.id; }
+      if (!stale && hasIdentity(h)) {   // L124: alive, but is it still the holder? (see PID REUSE)
+        const p = probes.get(h.token);
+        if (!p || now() - p.at >= IDENTITY_RECHECK_MS) probes.set(h.token, { at: now(), id: identify(h.pid) });
+        const id = probes.get(h.token).id;
+        if (!sameHolder(h, id)) { stale = true; reason = 'pid_reused'; nowRunning = id; }
+      } else if (stale) {   // D283: a young lock needs a second witness (see the header)
+        const age = ageOf(h, now());
+        if (age === null || age < YOUNG_MS) {
+          const second = confirmGone(h.pid);
+          if (second !== true) {
+            stale = false;
+            if (!disagreed.has(h.token)) {
+              disagreed.add(h.token);
+              log(`heavy-run: ${describe(h)} reads not-running to process.kill(pid, 0) but ${second === false ? 'RUNNING to tasklist' : 'tasklist could not confirm it'}; the lock is ${age === null ? 'of unknown age' : mins(age) + ' old'}, younger than ${mins(YOUNG_MS)}, so it is NOT taken over: waiting`);
+            }
+          }
+        }
+      }
     }
-    if (stale) {
-      const aside = `${file}.stale-${process.pid}-${now()}`;
-      try { fs.renameSync(file, aside); } catch (e) { if (e.code === 'ENOENT') continue; throw e; }
-      const moved = readLock(aside);
-      if (moved && !moved.unreadable && moved.token !== h.token && alive(moved.pid)) {
-        // A race: between our read and our rename another runner took the lock. Put ITS lock back; linkSync fails
-        // rather than overwrite, so a lock created meanwhile is never clobbered either.
-        try { fs.linkSync(aside, file); } catch (_) { /* a newer lock is already there */ }
-        try { fs.unlinkSync(aside); } catch (_) {}
-        continue;
-      }
+    if (!stale) return false;
+    const aside = `${file}.stale-${process.pid}-${now()}`;
+    if (beforeTake) beforeTake({ slot: k, file });   // a seam for the tests: the instant between judging a lock stale and moving it aside (D289 F1)
+    try { fs.renameSync(file, aside); } catch (e) { if (e.code === 'ENOENT') return true; throw e; }
+    const moved = readLock(aside);
+    // D289 F1: an UNREADABLE moved lock is another runner's claim caught between its 'wx' open and its write, unless it is OLD. The rule every unreadable lock gets decides
+    // (UNREADABLE_GRACE_MS, by mtime, which the rename keeps): the old unreadable file the first read saw is still taken, and a fresh claim that replaced it is put back.
+    const movedAge = () => { try { return now() - fs.statSync(aside).mtimeMs; } catch (_) { return 0; } };   // the aside vanished under us: unknown is the safe side (try to put back, judge at the next poll)
+    if (moved && (moved.unreadable ? movedAge() <= UNREADABLE_GRACE_MS : moved.token !== h.token)) {
+      // A race: between our read and our rename another runner took the lock. Put ITS lock back; linkSync fails
+      // rather than overwrite, so a lock created meanwhile is never clobbered either. D289: put back whether or not kill(0) reads it alive, and judged
+      // at the next poll by the rules every lock gets: judging it here by kill(0) alone threw a young lock away without D283's second witness.
+      try { fs.linkSync(aside, file); } catch (_) { /* a newer lock is already there */ }
       try { fs.unlinkSync(aside); } catch (_) {}
-      const age = h.started ? now() - Date.parse(h.started) : null;
-      tookOver = { holder: { pid: h.pid ?? null, seat: h.seat ?? null, cmd: h.cmd ?? null, started: h.started ?? null }, age_ms: Number.isFinite(age) ? age : null, reason };
-      const ageTxt = `it was ${Number.isFinite(age) ? mins(age) : 'an unknown age'} old`;
-      if (reason === 'pid_reused') {
-        const at = Number.isFinite(nowRunning.start) ? new Date(nowRunning.start).toISOString() : null;
-        tookOver.now_running = { image: nowRunning.image ?? null, start: at };
-        log(`heavy-run: took over a stale lock — ${describe(h)}: pid ${h.pid} is now ${nowRunning.image || '?'}, started ${at || '?'} — the pid was reused (the lock recorded ${h.image || '?'}, started ${h.holder_start || '?'}); ${ageTxt}`);
-      } else {
-        log(`heavy-run: took over a stale lock — ${h.unreadable ? `an unreadable lock (${h.unreadable})` : describe(h)} is not running; ${ageTxt}`);
+      return false;
+    }
+    try { fs.unlinkSync(aside); } catch (_) {}
+    const age = h.started ? now() - Date.parse(h.started) : null;
+    tookOver = { holder: { pid: h.pid ?? null, seat: h.seat ?? null, cmd: h.cmd ?? null, started: h.started ?? null }, age_ms: Number.isFinite(age) ? age : null, reason };
+    const ageTxt = `it was ${Number.isFinite(age) ? mins(age) : 'an unknown age'} old (slot ${k})`;
+    if (reason === 'pid_reused') {
+      const at = Number.isFinite(nowRunning.start) ? new Date(nowRunning.start).toISOString() : null;
+      tookOver.now_running = { image: nowRunning.image ?? null, start: at };
+      log(`heavy-run: took over a stale lock — ${describe(h)}: pid ${h.pid} is now ${nowRunning.image || '?'}, started ${at || '?'} — the pid was reused (the lock recorded ${h.image || '?'}, started ${h.holder_start || '?'}); ${ageTxt}`);
+    } else {
+      log(`heavy-run: took over a stale lock — ${h.unreadable ? `an unreadable lock (${h.unreadable})` : describe(h)} is not running; ${ageTxt}`);
+    }
+    return true;
+  }
+
+  for (;;) {
+    // Look at every slot — the ones above n too: a runner told to use fewer slots still honours a holder in another.
+    const live = [], free = [];
+    for (let k = 1; k <= MAX_SLOTS; k++) {
+      const file = slotFile(dir, k), h = readLock(file);
+      if (h === null) { if (k <= n) free.push(k); continue; }
+      if (takeIfStale(file, k, h)) { if (k <= n) free.push(k); continue; }
+      live.push({ k, file, h });
+    }
+    const blockers = live.filter((x) => blocks(x.h));
+    if (blockers.length === 0 && free.length) {
+      const k = free[0], file = slotFile(dir, k);
+      const rec = { pid: process.pid, seat: seatName(env), cmd, tree: myTree, started: new Date(now()).toISOString(), token, image: self.image, holder_start: self.holder_start };
+      if (tookOver) rec.took_over = tookOver;
+      if (beforeClaim) beforeClaim({ slot: k, file });   // a seam for the tests: the instant between looking and claiming
+      let fd;
+      try { fd = fs.openSync(file, 'wx'); } catch (e) { if (e.code === 'EEXIST') continue; throw e; }
+      try { fs.writeSync(fd, JSON.stringify(rec)); } finally { fs.closeSync(fd); }
+      if (onClaim) onClaim({ slot: k, file });
+      // Two runners of one tree can each claim a DIFFERENT free slot in the same instant. Look again: whoever finds another lock that blocks it backs off, so the one that
+      // proceeds is the one that saw nobody, and any later claimer sees it (that claimer's look comes after its own write, which comes after the earlier one's look).
+      let clash = false;
+      for (let j = 1; j <= MAX_SLOTS && !clash; j++) {
+        if (j === k) continue;
+        const o = readLock(slotFile(dir, j));
+        if (o && o.token !== token && blocks(o)) clash = true;
       }
+      if (!clash) {
+        env[TOKEN_ENV] = token;
+        let released = false;
+        return {
+          file, slot: k, reentrant: false, holder: rec,
+          release() {
+            if (released) return;
+            released = true;
+            const cur = readLock(file);
+            if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) { /* already gone */ } }
+            if (env[TOKEN_ENV] === token) delete env[TOKEN_ENV];
+          },
+        };
+      }
+      const cur = readLock(file);
+      if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) {} }
+      sleep(Math.floor(Math.random() * pollMs));
       continue;
     }
+
+    // Wait. Name what holds us: the locks that block us if there are any (the same tree), else every holder (all slots taken).
+    const heldBy = blockers.length ? blockers : live;
+    const named = heldBy.map((x) => x.h);
     const waited = now() - t0;
     if (waited >= maxWaitMs) {
-      throw Object.assign(new Error(`heavy-run: gave up after ${mins(waited)} — ${describe(h)} still holds ${file}. Not running anyway: two heavy runs in one tree make both readings meaningless. Wait for it, or ask that seat.`), { code: 'HEAVY_RUN_TIMEOUT', holder: h });
+      const many = named.length > 1;
+      throw Object.assign(new Error(`heavy-run: gave up after ${mins(waited)} — ${many ? `${named.map(describe).join(' and ')} still hold the slots` : `${describe(named[0])} still holds ${heldBy[0].file}`}. Not running anyway: two heavy runs in one tree make both readings meaningless. Wait for ${many ? 'them' : 'it'}, or ask ${many ? 'those seats' : 'that seat'}.`), { code: 'HEAVY_RUN_TIMEOUT', holder: named[0], holders: named });
     }
-    if (now() - said >= SAY_EVERY_MS) { log(`heavy-run: waiting on ${describe(h)}`); said = now(); }
+    if (now() - said >= SAY_EVERY_MS) {
+      log(`heavy-run: waiting on ${named.map(describe).join(' and ')}${blockers.length ? (n === 1 ? ' — one heavy run at a time' : ' — it holds this tree') : ` — all ${n} slots are held`}`);
+      said = now();
+    }
     sleep(pollMs);
   }
 }
@@ -198,7 +351,7 @@ function hold(opts = {}) {
   let h;
   try { h = acquire(opts); } catch (e) {
     process.stderr.write(e.message + '\n');
-    process.exit(e.code === 'HEAVY_RUN_TIMEOUT' ? 3 : 2);
+    process.exit(e.code === 'HEAVY_RUN_TIMEOUT' ? 3 : e.code === 'HEAVY_RUN_DISK' ? 4 : 2);
   }
   if (h.reentrant) return h;
   process.on('exit', () => h.release());
@@ -211,4 +364,4 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { acquire, hold, pidAlive, processIdentity, sameHolder, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, START_TOLERANCE_MS, IDENTITY_RECHECK_MS };
+module.exports = { acquire, hold, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };

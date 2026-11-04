@@ -1,0 +1,11 @@
+lockrun: holding the lock at 2026-10-27T13:35:46.162Z; starting D490 renders seq
+seq: aurora free: 48950 frames drawn, 10.2 MB
+seq: aurora 40: 53695 frames drawn, 10.7 MB
+seq: aurora1 free: 20697 frames drawn, 8.5 MB
+seq: aurora1 40: 19522 frames drawn, 7.7 MB
+seq: aurora2 free: 9223 frames drawn, 2.3 MB
+seq: aurora2 40: 12521 frames drawn, 4.2 MB
+seq: aurora3 free: 10748 frames drawn, 4.8 MB
+seq: aurora3 40: 11057 frames drawn, 4.3 MB
+lockrun: done at 2026-10-27T13:37:23.184Z, exit 0
+[D490 renders seq] exit 0

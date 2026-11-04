@@ -76,3 +76,20 @@ test('check() names the profile that is NOT running, so nobody measures it', () 
   const profileRow = c.rows.find(r => r[0] === 'app exe');
   assert.ok(profileRow && ['release', 'debug', 'unknown'].includes(profileRow[1]));
 });
+
+// D454 part 3 (pane E, P's cold read 1C.4): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else
+// %USERPROFILE%\.consonance; CONSONANCE_DATA first), not one machine's fixed folder.
+// The instances dir by the same rule (main.rs default_instances: instances_dir when set, else %USERPROFILE%\claude-instances).
+test('APP RULE (D454): with nothing in ~/.consonance.json the board is under USERPROFILE/.consonance and the dreams under USERPROFILE/claude-instances', () => {
+  const cp = require('child_process'), path = require('path'), fs = require('fs');
+  const h = require('./scratch.js').mkdtemp('wl-home-');
+  fs.mkdirSync(path.join(h, 'claude-instances', 'sibling-x', 'dreams'), { recursive: true }); fs.writeFileSync(path.join(h, 'claude-instances', 'sibling-x', 'dreams', 'a.md'), 'x');
+  const env = { ...process.env, USERPROFILE: h, HOME: h }; delete env.CONSONANCE_DATA;
+  const js = 'const w=require(' + JSON.stringify(path.join(__dirname, 'whats-live.js')) + ');const b=w.check().rows.find((r)=>r[0]===\'board\');process.stdout.write(JSON.stringify({board:b&&b[2],live:w.dreams().live}))';
+  const got = JSON.parse(cp.execFileSync(process.execPath, ['-e', js], { env, encoding: 'utf8' }));
+  assert.strictEqual(got.board, path.join(h, '.consonance', 'board.jsonl'), JSON.stringify(got));
+  assert.strictEqual(got.live, 1, 'the one dream under the default instances dir is found');
+  fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify({ data_dir: path.join(h, 'd'), instances_dir: path.join(h, 'i') }));
+  const got2 = JSON.parse(cp.execFileSync(process.execPath, ['-e', js], { env, encoding: 'utf8' }));
+  assert.strictEqual(got2.board, path.join(h, 'd', 'board.jsonl'), JSON.stringify(got2)); assert.strictEqual(got2.live, 0, 'instances_dir is honoured');
+});

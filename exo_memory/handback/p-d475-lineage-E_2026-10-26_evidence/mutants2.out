@@ -1,0 +1,21 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+caught     M1 the in-repo refusal removed  (# fail 1)
+caught     M2 dedup against the store off  (# fail 1)
+caught     M3 dedup within the run off  (# fail 1)
+caught     M4 a month file overwritten, not appended  (# fail 1)
+caught     M5 a malformed line is fatal  (# fail 1)
+caught     M6 an empty line not counted  (# fail 1)
+caught     M7 the machine-made heads kept  (# fail 4)
+caught     M8 system reminders not cut  (# fail 4)
+caught     M9 every folder read as a seat  (# fail 4)
+caught     M10 a row of the wrong length accepted  (# fail 1)
+caught     M11 the lock left behind  (# fail 2)
+caught     M12 sidechains kept  (# fail 4)
+caught     M13 the length floor ignored  (# fail 4)
+caught     M14 a dry run writes  (# fail 1)
+caught     M15 an output inside the transcripts allowed  (# fail 1)
+caught     M16 tool results kept  (# fail 4)
+caught     M17 the attic not marked  (# fail 1)
+caught     M18 the index not appended  (# fail 1)
+applied 18 / caught 18 / NOT APPLIED 0
+restored byte-equal: [33mtrue[39m

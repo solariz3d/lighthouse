@@ -1,0 +1,1051 @@
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+heavy-run: waiting on c88002b1 pid 18664 (t180 O D412 2b mutation.test.js, since 2026-10-19T14:48:57.995Z) and 0845a868 pid 11964 (t180 C D409 coremut, since 2026-10-19T14:51:28.354Z) — all 2 slots are held
+lock held 2026-10-19T15:11:47.252Z [33m33[39m files
+[32m✔ row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it [90m(1540.5389ms)[39m[39m
+[32m✔ row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one [90m(17.1322ms)[39m[39m
+[32m✔ row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost [90m(954.6576ms)[39m[39m
+[32m✔ row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m [90m(54.1892ms)[39m[39m
+[32m✔ row 5: an empty run and a run of one segment are coarsened as before [90m(2.892ms)[39m[39m
+[32m✔ row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh [90m(517.3906ms)[39m[39m
+[32m✔ row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it [90m(4.6125ms)[39m[39m
+[32m✔ row 1: every browser launch site in app/, scripts/ and test/ passes --mute-audio [90m(25.7213ms)[39m[39m
+[32m✔ control: the unmutated temp copy passes every test file the mutants use [90m(128007.918ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(317.1751ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(645.0606ms)[39m[39m
+[32m✔ a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354) [90m(298.4022ms)[39m[39m
+[32m✔ mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(1174.5725ms)[39m[39m
+[32m✔ mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(2803.2192ms)[39m[39m
+[32m✔ mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…" [90m(2254.6122ms)[39m[39m
+[32m✔ mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…" [90m(2242.9616ms)[39m[39m
+[32m✔ mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…" [90m(2077.8001ms)[39m[39m
+[32m✔ mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…" [90m(2209.9164ms)[39m[39m
+[32m✔ mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…" [90m(2181.4054ms)[39m[39m
+[32m✔ mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…" [90m(6448.1783ms)[39m[39m
+[32m✔ mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(4732.0439ms)[39m[39m
+[32m✔ mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(5118.5648ms)[39m[39m
+[32m✔ mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…" [90m(6553.3152ms)[39m[39m
+[32m✔ mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…" [90m(50714.4636ms)[39m[39m
+[32m✔ mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…" [90m(50476.7804ms)[39m[39m
+[32m✔ mutation B3 new road is not put last: applied, and caught by "row 8: the order…" [90m(56281.5331ms)[39m[39m
+[32m✔ mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…" [90m(50966.6214ms)[39m[39m
+[32m✔ mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…" [90m(54047.2555ms)[39m[39m
+[32m✔ mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…" [90m(51506.3677ms)[39m[39m
+[32m✔ mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…" [90m(6735.8748ms)[39m[39m
+[32m✔ mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…" [90m(4550.6851ms)[39m[39m
+[32m✔ mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…" [90m(18484.7151ms)[39m[39m
+[32m✔ mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…" [90m(17288.9856ms)[39m[39m
+[32m✔ mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…" [90m(54962.7123ms)[39m[39m
+[32m✔ mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…" [90m(31549.3056ms)[39m[39m
+[32m✔ mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…" [90m(54997.8988ms)[39m[39m
+[32m✔ mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…" [90m(54608.462ms)[39m[39m
+[32m✔ mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…" [90m(38110.8951ms)[39m[39m
+[32m✔ mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…" [90m(32712.9296ms)[39m[39m
+[32m✔ mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…" [90m(357.9626ms)[39m[39m
+[32m✔ mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…" [90m(355.8998ms)[39m[39m
+[32m✔ mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…" [90m(331.999ms)[39m[39m
+[32m✔ mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(321.3699ms)[39m[39m
+[32m✔ mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…" [90m(325.5753ms)[39m[39m
+[32m✔ mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…" [90m(333.2917ms)[39m[39m
+[32m✔ mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…" [90m(361.6909ms)[39m[39m
+[32m✔ mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…" [90m(322.7378ms)[39m[39m
+[32m✔ mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…" [90m(326.3023ms)[39m[39m
+[32m✔ mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…" [90m(327.8905ms)[39m[39m
+[32m✔ mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…" [90m(10257.2977ms)[39m[39m
+[32m✔ mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…" [90m(9492.3298ms)[39m[39m
+[32m✔ mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(9601.212ms)[39m[39m
+[32m✔ mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…" [90m(9208.8531ms)[39m[39m
+[32m✔ mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…" [90m(9711.0666ms)[39m[39m
+[32m✔ mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(9825.5839ms)[39m[39m
+[32m✔ mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(10034.4403ms)[39m[39m
+[32m✔ mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…" [90m(10220.0223ms)[39m[39m
+[32m✔ control: the unmutated temp copy passes every core-shell test [90m(24611.1376ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(539.1958ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(1057.7649ms)[39m[39m
+[32m✔ a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354) [90m(538.9864ms)[39m[39m
+[32m✔ a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354) [90m(1065.5499ms)[39m[39m
+[32m✔ mutation R1 the sign of an angle flipped: applied, and caught by "the strings…" [90m(23651.0863ms)[39m[39m
+[32m✔ mutation R2 zero is signed: applied, and caught by "the strings…" [90m(24678.8402ms)[39m[39m
+[32m✔ mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…" [90m(24256.3866ms)[39m[39m
+[32m✔ mutation R4 rounding without the binary guard: applied, and caught by "the strings…" [90m(24778.7969ms)[39m[39m
+[32m✔ mutation R5 the head keep-out ignored: applied, and caught by "the layout…" [90m(22564.6007ms)[39m[39m
+[32m✔ mutation R6 labels may overlap: applied, and caught by "the layout…" [90m(23603.2576ms)[39m[39m
+[32m✔ mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(24496.9568ms)[39m[39m
+[32m✔ mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…" [90m(22957.8223ms)[39m[39m
+[32m✔ mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…" [90m(24455.2456ms)[39m[39m
+[32m✔ mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…" [90m(24402.1072ms)[39m[39m
+[32m✔ mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…" [90m(25041.3682ms)[39m[39m
+[32m✔ mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…" [90m(25224.6644ms)[39m[39m
+[32m✔ mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…" [90m(24716.1208ms)[39m[39m
+[32m✔ mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…" [90m(24507.4473ms)[39m[39m
+[32m✔ mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…" [90m(24957.8315ms)[39m[39m
+[32m✔ mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…" [90m(25125.3573ms)[39m[39m
+[32m✔ mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…" [90m(24689.8256ms)[39m[39m
+[32m✔ mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…" [90m(24706.8313ms)[39m[39m
+[32m✔ mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…" [90m(23201.4509ms)[39m[39m
+[32m✔ mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…" [90m(24220.6128ms)[39m[39m
+[32m✔ mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…" [90m(23729.7355ms)[39m[39m
+[32m✔ mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…" [90m(24686.9644ms)[39m[39m
+[32m✔ mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…" [90m(23173.3235ms)[39m[39m
+[32m✔ mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…" [90m(24383.3111ms)[39m[39m
+[32m✔ mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…" [90m(25068.4899ms)[39m[39m
+[32m✔ mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…" [90m(24975.9718ms)[39m[39m
+[32m✔ mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…" [90m(25693.8628ms)[39m[39m
+[32m✔ mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…" [90m(24939.6297ms)[39m[39m
+[32m✔ mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…" [90m(24918.694ms)[39m[39m
+[32m✔ mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…" [90m(25660.1172ms)[39m[39m
+[32m✔ mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…" [90m(21561.3422ms)[39m[39m
+[32m✔ mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…" [90m(24146.8487ms)[39m[39m
+[32m✔ mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…" [90m(23769.7377ms)[39m[39m
+[32m✔ mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…" [90m(24117.3039ms)[39m[39m
+[32m✔ mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…" [90m(24268.2085ms)[39m[39m
+[32m✔ mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…" [90m(15073.0877ms)[39m[39m
+[32m✔ mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…" [90m(21357.3465ms)[39m[39m
+[32m✔ mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…" [90m(28072.7923ms)[39m[39m
+[32m✔ mutation C4 a second close runs again: applied, and caught by "close: one click…" [90m(27446.6516ms)[39m[39m
+[32m✔ mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…" [90m(25811.3238ms)[39m[39m
+[32m✔ mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…" [90m(20853.837ms)[39m[39m
+[32m✔ mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…" [90m(22004.4703ms)[39m[39m
+[32m✔ mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…" [90m(19986.0247ms)[39m[39m
+[32m✔ mutation C14 the pick takes the farthest station: applied, and caught by "the pick…" [90m(20605.1291ms)[39m[39m
+[32m✔ mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…" [90m(19834.794ms)[39m[39m
+[32m✔ mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…" [90m(20027.3776ms)[39m[39m
+[32m✔ mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…" [90m(12790.6215ms)[39m[39m
+[32m✔ mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…" [90m(13185.9472ms)[39m[39m
+[32m✔ mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…" [90m(16089.7242ms)[39m[39m
+[32m✔ mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…" [90m(19767.4831ms)[39m[39m
+[32m✔ mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(20373.3745ms)[39m[39m
+[32m✔ mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…" [90m(20125.5244ms)[39m[39m
+[32m✔ mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…" [90m(19767.7511ms)[39m[39m
+[32m✔ mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…" [90m(19417.3964ms)[39m[39m
+[32m✔ mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…" [90m(21906.7445ms)[39m[39m
+[32m✔ mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…" [90m(25479.825ms)[39m[39m
+[32m✔ mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(23346.1742ms)[39m[39m
+[32m✔ mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…" [90m(20361.0847ms)[39m[39m
+[32m✔ mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…" [90m(19605.6726ms)[39m[39m
+[32m✔ row 1: the pole gap is an optional spawns field: absent = the old 10 m and the same text as before; a number round-trips; nonsense is refused [90m(8.3212ms)[39m[39m
+[32m✔ row 2: the pole gap is where the export puts the pole slot (and 10 m when the block has none) [90m(1315.49ms)[39m[39m
+[32m✔ row 3: a start drag is ONE undo step; on an automatic track it first writes the automatic spawns ("start placed by hand"), inside the same step, and undo puts the track back to automatic [90m(111.8867ms)[39m[39m
+[32m✔ row 4: a drag that moved nothing leaves no undo step; a second drag cannot open inside the first; ending with none open is harmless [90m(84.4422ms)[39m[39m
+[32m✔ row 5: the automatic start on a LATER piece cannot be grabbed (a hand-placed line goes on the first piece): the press is taken, says why in words, and nothing changes [90m(109.6214ms)[39m[39m
+[32m✔ row 6: pickStation: the road under the pointer to a fraction of a metre (continuous, not stepped to the 2 m stations), limited to a stretch and to where the road is [90m(139.3538ms)[39m[39m
+[32m✔ row 7: hitMarks: the line, a grid box, the hotlap and nothing; the hotlap beats a box and a box beats the line when the pointer is as near to both; pit boxes are not grabbed [90m(85.6232ms)[39m[39m
+[32m✔ row 8: the maths: the line moves by the pointer's travel and is clamped to the first piece; the pack changes only the pole gap, clamped; the hotlap lands on the piece under the pointer [90m(0.3071ms)[39m[39m
+[32m✔ row 9: DRAG THE LINE +N m along the road: along moves by N (within 0.5 m), the world line follows, the panel's number follows while the drag is open, one Undo restores [90m(147.7259ms)[39m[39m
+[32m✔ row 10: the line cannot leave the first piece: dragged far past either end it stops at 0 and at the piece's length [90m(111.888ms)[39m[39m
+[32m✔ row 11: DRAG THE PACK: any slot moves the whole pack along the road (only the pole gap changes), the two staggered columns and the spacing are kept, and the line stays [90m(111.7302ms)[39m[39m
+[32m✔ row 12: dragging the pack toward the line stops a metre behind it, and the pack drags BOTH ways [90m(100.2146ms)[39m[39m
+[32m✔ row 13: dragging the LINE carries the pack with it: every slot keeps its distance behind the line [90m(83.5319ms)[39m[39m
+[32m✔ row 14: DRAG THE HOTLAP anywhere on the track: onto a later piece it sets that piece and the distance into it (and the world marker follows) [90m(90.3663ms)[39m[39m
+[32m✔ row 15: the FIRST drag on an automatic track writes the spawns first ("start placed by hand") and the panel numbers show it; the TEST export and the panel read the dragged positions [90m(1253.6625ms)[39m[39m
+[32m✔ row 16: the panel has the pole gap box: it shows 10 by default, takes a typed number (clamped), and follows a pack drag [90m(126.9818ms)[39m[39m
+[32m✔ row 17: NO POINTER LOCK, the camera never sees a press on a mark, and a press anywhere else is left alone [90m(116.9391ms)[39m[39m
+[32m✔ row 18: Escape ends the drag where it is (one step); unmounting in the middle of a drag closes it; the camera does not move: the press is the whole of the drag's input [90m(119.4029ms)[39m[39m
+[32m✔ row 19: the pick follows the grabbed mark's own height: on a cupped road the line hangs 2 m above the path, and a metre of hand travel is still a metre (without the lift it is out by a few per cent) [90m(127.4317ms)[39m[39m
+[32m✔ row 20: the preview draws the AUTOMATIC start too (a line, a pack and a hotlap to grab), and a track with no road yet draws nothing [90m(101.3336ms)[39m[39m
+[32m✔ row 21: a handle under the pointer is the handle's: the press, and the hover cursor, are left alone when the host says one is there, whatever order the listeners run in [90m(109.1166ms)[39m[39m
+[32m✔ the section is there, unticked: the start is automatic and the hand controls are hidden [90m(158.5459ms)[39m[39m
+[32m✔ ticking "place by hand" puts the line near the end of the first piece and the measured pack behind it, all on the road [90m(92.5686ms)[39m[39m
+[32m✔ the line box, the car count and the pack fields change the spawns, one undo step each [90m(87.904ms)[39m[39m
+[32m✔ the pack cannot be condensed past a T-180: below the minimum the field takes the minimum [90m(77.6681ms)[39m[39m
+[32m✔ the hotlap goes on the selected piece, slides along it, says its speed at the line, and comes off again [90m(91.5109ms)[39m[39m
+[32m✔ unticking goes back to automatic: the spawns field is removed [90m(76.326ms)[39m[39m
+[32m✔ the preview layer: a START line, one numbered box per grid slot from pole, the pits and the hotlap [90m(75.8921ms)[39m[39m
+[32m✔ a grid box is the measured T-180 on the road: 6.67 m along, 2.67 m across [90m(0.2057ms)[39m[39m
+[32m✔ the panel still loads through the webview's loader, with no node built-in [90m(7.7231ms)[39m[39m
+[32m✔ the Pit lane section: ticking it puts a lane along the start straight, sized to fit, and says how long it is and how many boxes are on it [90m(73.5724ms)[39m[39m
+[32m✔ the Pit lane section changes the side, the boxes and a join, one undo step each; unticking removes the lane [90m(100.9069ms)[39m[39m
+[32m✔ the start line sits where it is put on the first piece, and the export writes it there [90m(1353.4016ms)[39m[39m
+[32m✔ spawnsInfo answers once per document: asked again with nothing changed it is the same answer, and a moved line is a new one [90m(105.6767ms)[39m[39m
+[32m✔ the grid is numbered from pole, two staggered columns with the pack's spacing behind the line [90m(105.3043ms)[39m[39m
+[32m✔ stretching the pack spreads the slots: rowGap and colGap are the pack's length and width [90m(104.6755ms)[39m[39m
+[32m✔ the line is clamped to the first piece: a distance past its end puts the line at its end [90m(97.2065ms)[39m[39m
+[32m✔ a hotlap put down by hand stands there and reports the speed it reaches by the line [90m(1446.0692ms)[39m[39m
+[32m✔ a hotlap AFTER the line on a closed lap gets the run all the way round to it [90m(98.6502ms)[39m[39m
+[32m✔ a hotlap on a piece that no longer exists is reported as missing, not placed somewhere else [90m(94.6766ms)[39m[39m
+[32m✔ back to automatic: setSpawns(null) removes the field, and the export places the start itself again [90m(3631.6983ms)[39m[39m
+[32m✔ placing the start is one undo step [90m(83.216ms)[39m[39m
+[32m✔ a bad pack is refused in plain words and nothing changes [90m(73.6042ms)[39m[39m
+[32m✔ the "grid on a straight" amber judges an equation piece by its curvature: quiet on the straight, still there on a curve [90m(86.0655ms)[39m[39m
+[32m✔ control: the unmutated temp copy passes every cross-section test [90m(1197.7159ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(637.3026ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(1180.8709ms)[39m[39m
+[32m✔ a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354) [90m(635.0296ms)[39m[39m
+[32m✔ mutation X1 the edge angle sent in radians: applied, and caught by "xsec extendOptions: each field is its channel target…" [90m(1010.2028ms)[39m[39m
+[32m✔ mutation X2 the panel clamps the edge, hiding the core guard (KE2-2): applied, and caught by "xsec extendOptions: nothing is clamped…" [90m(1027.9671ms)[39m[39m
+[32m✔ mutation X3 the tube field is not sent: applied, and caught by "xsec extendOptions: each field is its channel target…" [90m(1058.501ms)[39m[39m
+[32m✔ mutation X4 the edge start sent on the edge channel: applied, and caught by "xsec extendOptions: each field is its channel target…" [90m(1083.0357ms)[39m[39m
+[32m✔ mutation X5 the bank wrapped to ±180 (S1): applied, and caught by "xsec extendOptions: bank winds past…" [90m(992.1205ms)[39m[39m
+[32m✔ mutation X6 (KS1-2) max="180" on the bank input: applied, and caught by "xsec panel: the bank field takes any number…" [90m(1083.116ms)[39m[39m
+[32m✔ mutation X7 (KE7-1, UI) the edge cell shows the typed target: applied, and caught by "xsec panel: a changed field is a target…" [90m(1176.2007ms)[39m[39m
+[32m✔ mutation X8 (KE7-2) the edge cell wired to the cup values: applied, and caught by "xsec panel (A…" [90m(1087.4165ms)[39m[39m
+[32m✔ mutation X9 the edge start shown to one decimal: applied, and caught by "xsec panel: a changed field is a target…" [90m(1139.1143ms)[39m[39m
+[32m✔ mutation X10 the edge field is not on the panel: applied, and caught by "xsec panel: the three fields are on the panel…" [90m(1053.2633ms)[39m[39m
+[32m✔ mutation X11 the new fields do not redraw the readout: applied, and caught by "xsec panel: the edge angle and the edge start each redraw…" [90m(1079.0343ms)[39m[39m
+[32m✔ mutation X12 an untouched edge field is sent as a target: applied, and caught by "xsec panel: the three fields are on the panel…" [90m(1093.7832ms)[39m[39m
+[32m✔ mutation X13 the edge has no "at start": applied, and caught by "xsec extendOptions: the new fields take the "at start" box…" [90m(999.8998ms)[39m[39m
+[32m✔ mutation X14 the head state drops the cross-section channels: applied, and caught by "xsec headState…" [90m(965.8791ms)[39m[39m
+[32m✔ mutation X15 the default edge start is the plan's stale 0.70: applied, and caught by "xsec headState…" [90m(1029.1888ms)[39m[39m
+[32m✔ mutation X16 (X2 ii) the mast stands on world y: applied, and caught by "xsec head marker: the mast follows the road's U…" [90m(1202.478ms)[39m[39m
+[32m✔ mutation X17 the mast is not held below the roof: applied, and caught by "xsec head marker: inside a closed tube…" [90m(1138.692ms)[39m[39m
+[32m✔ mutation X18 the cross and ring reach through the wall: applied, and caught by "xsec head marker: inside a closed tube…" [90m(1071.5331ms)[39m[39m
+[32m✔ mutation X19 an open tube read as closed: applied, and caught by "xsec head marker: the clearance of a closed tube…" [90m(1084.7922ms)[39m[39m
+[32m✔ mutation X20 the roof read sideways: applied, and caught by "xsec head marker: the clearance of a closed tube…" [90m(1136.6237ms)[39m[39m
+[32m✔ mutation X21 the preview never hands the room to the marker: applied, and caught by "xsec head marker: the preview hands…" [90m(1173.9123ms)[39m[39m
+[32m✔ mutation X22 the tube-too-narrow red has no words: applied, and caught by "xsec validation words…" [90m(1087.3631ms)[39m[39m
+[32m✔ mutation X23 the roll-rate red has no words: applied, and caught by "xsec validation words…" [90m(1046.6342ms)[39m[39m
+[32m✔ mutation X24 the readout swallows the refusal's name: applied, and caught by "xsec panel: a core refusal is shown by its name…" [90m(1091.2752ms)[39m[39m
+[32m✔ mutation X25 a typed tube leaves the cup enabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…" [90m(1165.3587ms)[39m[39m
+[32m✔ mutation X29 a non-tube head shows the sweep the core keeps internally (RULING 2): applied, and caught by "xsec headState…" [90m(1338.5155ms)[39m[39m
+[32m✔ mutation X30 the head piece is never read as a tube: applied, and caught by "xsec headState…" [90m(1206.4355ms)[39m[39m
+[32m✔ mutation X31 the tube-too-narrow words keep the first, wrong 9.43 m: applied, and caught by "xsec validation words…" [90m(1197.101ms)[39m[39m
+[32m✔ mutation X27 a new document leaves a field disabled: applied, and caught by "xsec panel: a piece is a cup OR a tube…" [90m(1193.5917ms)[39m[39m
+[32m✔ mutation X28 the cup-or-tube rule is never wired: applied, and caught by "xsec panel: a piece is a cup OR a tube…" [90m(1173.6576ms)[39m[39m
+[32m✔ row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms) [90m(37117.0221ms)[39m[39m
+[34mℹ p95 ms by look: {"aqua":[3.8],"skyline":[3.6],"glass":[3.4],"aurora":[3.7],"sigil":[3.1]}[39m
+[32m✔ row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms) [90m(37881.6251ms)[39m[39m
+[34mℹ p95 ms by look: {"aqua":[3.7],"skyline":[3.8],"glass":[3.7],"aurora":[5],"sigil":[3.3]}[39m
+[32m✔ row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms) [90m(14772.2924ms)[39m[39m
+[34mℹ p95 ms by length: {"1000":[3.4],"2000":[4.2]}[39m
+[32m✔ row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second [90m(11069.3958ms)[39m[39m
+[34mℹ 20,000 m: p95 9 ms, 33.0 rebuilds a second[39m
+[32m✔ row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go [90m(7495.7074ms)[39m[39m
+[34mℹ ghost stations during the drag 97, after the release 1001[39m
+[32m✔ row 1: toSegments: segMFor absent or undefined is the same segments; a piece with its own chord length is that many chords of the same length in all [90m(52.6836ms)[39m[39m
+[32m✔ row 2: the coarse ghost: few chords whatever the length, the placed pieces' segments the same objects, the same end of road, and a short piece unchanged [90m(785.7448ms)[39m[39m
+[32m✔ row 3: the release is byte for byte what it was: the placed mesh and two full ghosts hash to what c2d7cb5 (0.4.7) made [90m(103.1242ms)[39m[39m
+[32m✔ row 4: the cheap ghost: at most 64 stations on its new piece, the same end, the placed path and mesh untouched, a full ghost after it the full ghost, the handles where the full ghost's are [90m(256.0687ms)[39m[39m
+[32m✔ row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object [90m(23.9466ms)[39m[39m
+[32m✔ row 6 (E's review §0): a kept answer is never handed back across a non-finite number: kh null kept, then kh NaN, Infinity or -Infinity refused by name, as on a fresh document [90m(8.6655ms)[39m[39m
+[32m✔ row 7 (E's review §1b): a document frozen at the top only, its pieces array open, keeps no answer, so an edit in place is answered afresh [90m(1.7944ms)[39m[39m
+handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+handles: the cursor could not be put back during the drag: denied
+[32m✔ row 1: every kind is placed where it was marked, and every kind with a side is on BOTH sides, mirrored about the centreline [90m(1.6449ms)[39m[39m
+[32m✔ row 1b: the road's width at the handle sets how far out an edge handle sits, and an unknown or absent kind places nothing [90m(0.1929ms)[39m[39m
+[32m✔ row 2: a positive drag runs outward (width, cup), left on both sides (turn), up on the left edge and down on the right (bank), forward (length: its front end is pulled on), up (climb) [90m(0.166ms)[39m[39m
+[32m✔ row 3: the two mirrored handles change the SAME value: the same outward motion from either side gives the same field value [90m(0.3032ms)[39m[39m
+[32m✔ row 4: a value from a drag in PIXELS: the rates per pixel (today's speeds at the default camera; length five times), the clamps, the rounding, Shift (one step a pixel: D330) and Ctrl (snap) [90m(0.3747ms)[39m[39m
+[32m✔ row 5: the screen: where a handle is, one metre along its axis in px, behind the camera, an axis seen end-on [90m(0.224ms)[39m[39m
+[32m✔ row 6: the hit test takes the nearest handle inside the radius, none outside, and skips a handle behind the camera [90m(0.1704ms)[39m[39m
+[32m✔ row 7: the overlay: a press ON a handle opens the drag and nothing else sees it; a press elsewhere is left alone; one apply a frame; the release applies the last position and ends [90m(1.5024ms)[39m[39m
+[32m✔ row 7b: no model, no pose or a refused press: no handles are drawn and a press is not taken; a right-button press is never a handle [90m(0.2763ms)[39m[39m
+[32m✔ row 8: the speed is per PIXEL: 20 px of drag changes a field by the same amount zoomed in and zoomed out [90m(0.9274ms)[39m[39m
+[32m✔ row 9 (D335, amended): no detents in a drag: it moves from the first pixel and goes through 0 without a hold; Ctrl snaps [90m(0.7598ms)[39m[39m
+[32m✔ row 10: the value is rounded to the step with Shift too: a precise drag lands on the hundredth, never on a fraction of one [90m(0.4167ms)[39m[39m
+[32m✔ row 11: a double-click on a handle resets it: 0 for bank, turn, climb; the value before the last drag for length, width, cup; and it is the handle's, not the camera's [90m(0.2852ms)[39m[39m
+[32m✔ row 12: the label shows the exact value the drag sets, and what a double-click would set [90m(0.7898ms)[39m[39m
+[32m✔ row 13: no pointer lock (D270): a grab never asks for one and registers no lock listener, so Chromium has no notice to show; the pointer is captured, the cursor is hidden for the drag and the value follows the pointer past the stage at the same pixel speed [90m(0.5685ms)[39m[39m
+[32m✔ row 13b: the cursor goes back at the handle through the native window when there is one; with none (a browser, a test host) or a refusal the release still ends cleanly [90m(0.6484ms)[39m[39m
+[32m✔ row 13c: Esc ends the drag where it is, as a release does, and gives the cursor back; Esc with no drag, or another key, does nothing; unmount takes the key listener off [90m(0.2912ms)[39m[39m
+[32m✔ row 11b: the double-click is two presses within 400 ms on one handle that changed nothing (no dblclick need come); a drag between them, or a pause, is not one [90m(0.4396ms)[39m[39m
+[32m✔ row 14: the landing's kinds (D258): four free marks at the landing, each out along its own arrow, the arrows ARE the take-off's heading frame; their speeds, holds, snaps, resets and labels [90m(0.2586ms)[39m[39m
+[32m✔ the turn handle is not clamped: a long drag goes past 90°/100 m either way [90m(0.0443ms)[39m[39m
+[32m✔ the turn handle: a drag to the right is a right turn and to the left a left turn, whichever way the left of the road lies on screen [90m(0.1579ms)[39m[39m
+[32m✔ leaving a hold walks on a pixel at a time: no jump off the hold, for every kind [90m(1.0642ms)[39m[39m
+[32m✔ a long drag never runs out of screen: the hidden cursor is put back at the grab and the travel adds up [90m(2.8072ms)[39m[39m
+[32m✔ a drag with no native window (a browser) behaves as before: the cursor is never moved, the value follows the pointer [90m(0.1557ms)[39m[39m
+[32m✔ if the window refuses to move the cursor, the drag gives the travel back and follows the pointer as before (nothing counted twice) [90m(1.0207ms)[39m[39m
+[32m✔ D330 precise: the gesture is one constant, and with it one pixel of drag is exactly one step (0.01) for every handle kind, both ways, none skipped, no hold [90m(1.6369ms)[39m[39m
+[32m✔ D330 precise through the overlay: a Shift drag of n px along the handle changes turn, width, length and bank by exactly n x 0.01 [90m(0.7543ms)[39m[39m
+[32m✔ D330 wheel: one notch over a handle is exactly one step (0.01) on every handle kind, up adds and down subtracts; over nothing the camera has it; at a clamp it stays [90m(0.6916ms)[39m[39m
+[32m✔ D330 arrows: while a handle is held each arrow press is exactly one step on top of the drag; with nothing held they do nothing and are not taken [90m(0.2494ms)[39m[39m
+[32m✔ a long drag: with the cursor put back promptly and the next event at the grab, the travel adds up (the control the two below depart from) [90m(2.6955ms)[39m[39m
+[32m✔ a long drag whose warp is applied LATE (a busy window thread: the events before it arrive after WARP_WAIT_MS) keeps its travel and keeps warping [90m(2.0829ms)[39m[39m
+[32m✔ a long drag with a FAST hand (the first event after a warp is already 4 px from the grab) does not stall: the return is seen, not waited for [90m(4.0162ms)[39m[39m
+[32m✔ a warp the OS lost is asked for again after WARP_WAIT_MS, and the travel adds up [90m(2.1661ms)[39m[39m
+[32m✔ a window that refuses to move the cursor is tried WARP_MISSES times, never forever, and the travel is counted once [90m(1.547ms)[39m[39m
+[32m✔ row 17 (D335): the gain: the kind's step over perPx at or below the slow speed, exactly 1 at or above the fast one, eased and never falling between [90m(0.8009ms)[39m[39m
+[32m✔ row 17b (D335): a SLOW drag of n pixels is n x 0.01 for every kind, whatever its own perPx, with no key [90m(1.9594ms)[39m[39m
+[32m✔ row 17c (D335): a FLICK covers the old range in the old distance: 100 px in a few events is the kind's own perPx a pixel [90m(0.2763ms)[39m[39m
+[32m✔ row 17d (D335): the rate eases with the hand: a medium drag is between the slow and the flick, and a faster hand never covers less [90m(2.2216ms)[39m[39m
+[32m✔ row 17e (D335): Shift is always 0.01 a pixel, however fast the hand [90m(0.4649ms)[39m[39m
+[32m✔ row 17f (D335): a bank drag of 400 px at the flick rate lands on 180.00 exactly [90m(0.3017ms)[39m[39m
+[32m✔ row 17g (D335): the speed is the hand's over a short window, so one quick event inside a slow scrub does not jump the rate [90m(0.3414ms)[39m[39m
+[32m✔ control: the unmutated temp copy passes every test the mutants are run against [90m(12321.8291ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(2984.085ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(11733.3684ms)[39m[39m
+[32m✔ a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354) [90m(3214.6664ms)[39m[39m
+[32m✔ mutation A1 the build view looks backward: applied, and caught by "build view (default)…" [90m(11966.4776ms)[39m[39m
+[32m✔ mutation A2 the build key does nothing from free mode: applied, and caught by "the build view is ONE key away…" [90m(12023.958ms)[39m[39m
+[32m✔ mutation A3 the switch key skips a mode: applied, and caught by "the switch key walks…" [90m(11325.3645ms)[39m[39m
+[32m✔ mutation A4 chase ignores its lag (sits on the head): applied, and caught by "chase: 25 m behind…" [90m(11908.9708ms)[39m[39m
+[32m✔ mutation A5 chase lifts along world up, not the road's up: applied, and caught by "chase through a loop-the-loop…" [90m(11860.6244ms)[39m[39m
+[32m✔ mutation A6 overhead's loop fallback is a fixed north: applied, and caught by "overhead: inside a loop…" [90m(11703.0187ms)[39m[39m
+[32m✔ mutation A7 free mode follows the head like the build view: applied, and caught by "after an append…" [90m(11906.9965ms)[39m[39m
+[32m✔ mutation A8 entering free does not take over the view: applied, and caught by "entering free keeps the view…" [90m(12099.4335ms)[39m[39m
+[32m✔ mutation A9 the shown pose snaps instead of easing: applied, and caught by "the shown pose eases…" [90m(11838.9674ms)[39m[39m
+[32m✔ mutation A10 the renderer re-uploads every array every frame: applied, and caught by "renderer: every array is uploaded once…" [90m(11517.7047ms)[39m[39m
+[32m✔ mutation A11 the renderer never deletes a stale buffer: applied, and caught by "renderer: after a sculpt…" [90m(12125.4673ms)[39m[39m
+[32m✔ mutation A12 batches copy the arrays (a sculpt re-uploads everything): applied, and caught by "renderer: after a sculpt…" [90m(11851.5722ms)[39m[39m
+[32m✔ mutation A13 the track model never extends (always a full build): applied, and caught by "track model: append…" [90m(11810.7741ms)[39m[39m
+[32m✔ mutation A14 the model matrix transposed: applied, and caught by "batches: the node matrix…" [90m(11699.1713ms)[39m[39m
+[32m✔ mutation A15 the backing store ignores devicePixelRatio: applied, and caught by "DPR: the backing store is the css size…" [90m(11579.0516ms)[39m[39m
+[32m✔ mutation A16 the size cap drops the aspect (one side clamped alone): applied, and caught by "DPR edges…" [90m(11654.9258ms)[39m[39m
+[32m✔ mutation A17 Ctrl/Alt/Meta ignored by keyAction: applied, and caught by "keys: Ctrl, Alt or Meta…" [90m(11657.3119ms)[39m[39m
+[32m✔ mutation A18 the frame loop passes no modifiers (Ctrl+C cycles the camera): applied, and caught by "keys in the frame loop…" [90m(11862.428ms)[39m[39m
+[32m✔ mutation A19 a failed mount is swallowed: applied, and caught by "mount failure…" [90m(14692.3338ms)[39m[39m
+[32m✔ mutation A20 the probe skips the perspective divide: applied, and caught by "probe: the head lands in the middle…" [90m(14558.0507ms)[39m[39m
+[32m✔ mutation A21 the judge accepts a view with nothing drawn: applied, and caught by "judge: each failure…" [90m(13743.2397ms)[39m[39m
+[32m✔ mutation A22 the judge never checks DPR: applied, and caught by "judge: each failure…" [90m(13957.0316ms)[39m[39m
+[32m✔ mutation B1 no key light (only ambient and fill): applied, and caught by "light: a floor and a vertical wall…" [90m(12515.6535ms)[39m[39m
+[32m✔ mutation B2 one-sided light (an overhang goes dark): applied, and caught by "light: two-sided…" [90m(12505.1426ms)[39m[39m
+[32m✔ mutation B3 the shader key strength drifts from look.js: applied, and caught by "light: the fragment shader carries…" [90m(11822.2115ms)[39m[39m
+[31m✖ mutation B4 the edge lines one vertex in from the edges: applied, and caught by "edge lines: through the two edge vertices…" [90m(11629.9539ms)[39m[39m
+[31m✖ mutation B5 the lines not lifted off the surface (they would z-fight): applied, and caught by "edge lines: through the two edge vertices…" [90m(11564.5885ms)[39m[39m
+[31m✖ mutation B6 no ties across the road: applied, and caught by "edge lines: a tie across the road…" [90m(12264.5969ms)[39m[39m
+[32m✔ mutation B7 the overhead fit ignores the aspect: applied, and caught by "overhead fit (aspect 0.6)…" [90m(11902.8588ms)[39m[39m
+[32m✔ mutation B8 the overhead fit measures from the box bottom (the top is clipped): applied, and caught by "overhead fit…" [90m(11705.7424ms)[39m[39m
+[32m✔ mutation B9 the world box takes one corner of each local box: applied, and caught by "overhead fit…" [90m(11624.8805ms)[39m[39m
+[31m✖ mutation B10 the ghost is built on the live path (no copy): applied, and caught by "ghost: the ghost of a segment tail…" [90m(11785.2848ms)[39m[39m
+[31m✖ mutation B11 placing the word does not retire its ghost: applied, and caught by "preview: showGhost draws the ghost…" [90m(13810.8905ms)[39m[39m
+[32m✔ mutation B12 the candidate ignores the font picker: applied, and caught by "ghost through A…" [90m(15588.0539ms)[39m[39m
+[32m✔ mutation B13 the grid floats above y = 0: applied, and caught by "grid: every vertex at y = 0…" [90m(13529.7299ms)[39m[39m
+[32m✔ mutation B14 the ghost is never drawn: applied, and caught by "preview: showGhost draws the ghost…" [90m(15426.1769ms)[39m[39m
+[32m✔ mutation B16 the head marker does not grow with distance (a speck from overhead): applied, and caught by "head marker: it grows…" [90m(16251.0312ms)[39m[39m
+[32m✔ mutation B15 the head marker is never drawn: applied, and caught by "preview: a frame draws the grid and the head marker…" [90m(16053.6691ms)[39m[39m
+[32m✔ mutation P1 a sculpt re-places the path but keeps the old mesh: applied, and caught by "soak:…" [90m(15810.7374ms)[39m[39m
+[32m✔ mutation P2 every change rebuilds the whole track (no per-cell reuse): applied, and caught by "per-cell rebuild: a length sculpt…" [90m(13755.5757ms)[39m[39m
+[32m✔ mutation P3 the preview reaches for the native side: applied, and caught by "no mesh over IPC: app/preview and app/camera…" [90m(12225.35ms)[39m[39m
+[32m✔ mutation T1 the editor ignores the value it is given: applied, and caught by "editor: an accepted edit changes the canonical text…" [90m(12189.8237ms)[39m[39m
+[32m✔ mutation T2 the panel never calls onChange: applied, and caught by "panel: an accepted edit calls onChange…" [90m(12050.0408ms)[39m[39m
+[32m✔ mutation L1 ksAmbient is read from ksDiffuse: applied, and caught by "mapping: ksAmbient, ksDiffuse…" [90m(11697.2731ms)[39m[39m
+[32m✔ mutation L2 a missing property reads 1, not 0: applied, and caught by "mapping: a property the material lacks reads 0…" [90m(11638.5234ms)[39m[39m
+[32m✔ mutation L3 the multilayer R and G scales are swapped: applied, and caught by "mapping: ksMultilayer takes…" [90m(11794.0331ms)[39m[39m
+[32m✔ mutation L4 ksPerPixelNM falls to ksPerPixel: applied, and caught by "mapping: the shader picks the program…" [90m(12221.9469ms)[39m[39m
+[32m✔ mutation L5 the renderer never sets ksSpecular: applied, and caught by "renderer: an AC material…" [90m(12586.8203ms)[39m[39m
+[32m✔ mutation L6 every sampler gets the white texel: applied, and caught by "renderer: a named texture is uploaded…" [90m(12621.1948ms)[39m[39m
+[32m✔ mutation L7 the multilayer scales never reach the shader: applied, and caught by "renderer: the multilayer scales…" [90m(11429.8784ms)[39m[39m
+[32m✔ mutation L8 textures are never deleted: applied, and caught by "renderer: a texture no longer drawn…" [90m(11702.5214ms)[39m[39m
+[32m✔ mutation L9 a shader loses a uniform declaration: applied, and caught by "shaders: every uniform the renderer sets…" [90m(11653.6419ms)[39m[39m
+[32m✔ mutation L10 an untextured set slot replaces the exported material: applied, and caught by "textured: an untextured floor…" [90m(11833.288ms)[39m[39m
+[32m✔ mutation L11 the set is ignored: applied, and caught by "textured: a word whose floor names…" [90m(13133.2336ms)[39m[39m
+[32m✔ mutation L12 textures are keyed by name, not by the kn5 file: applied, and caught by "textured: the preview's texels…" [90m(12121.5708ms)[39m[39m
+[32m✔ mutation L13 the default look is the word colours: applied, and caught by "preview: the AC look is the default…" [90m(11823.5805ms)[39m[39m
+[32m✔ mutation L14 setTextureSet drops the set: applied, and caught by "preview: a texture set with a made floor…" [90m(12426.7445ms)[39m[39m
+[32m✔ mutation L15 a property is read from the wrong material: applied, and caught by "list: every mesh the preview draws is in the kn5…" [90m(15105.2173ms)[39m[39m
+[32m✔ mutation L16 L does not change the look (the colour per word is unreachable): applied, and caught by "preview: L toggles the look…" [90m(15387.5118ms)[39m[39m
+[32m✔ mutation L17 the ties never fade (they hatch the road dark at a distance): applied, and caught by "renderer: the ties fade out…" [90m(13530.6796ms)[39m[39m
+[32m✔ mutation K1 a kept chunk ignores the matrices of its cells (a moved piece is drawn where it was): applied, and caught by "renderer: after a sculpt that moves later pieces, the drawn road equals…" [90m(14890.2813ms)[39m[39m
+[32m✔ mutation K2 the cells are never merged (one draw per cell again): applied, and caught by "renderer: merged chunks draw the triangles…" [90m(14893.7187ms)[39m[39m
+[32m✔ mutation K3 the indices of a merged cell are not moved past the cells before it: applied, and caught by "renderer: merged chunks draw the triangles…" [90m(15091.381ms)[39m[39m
+[32m✔ mutation K4 normals are baked as points (translated with the cell): applied, and caught by "renderer: merged chunks draw the triangles…" [90m(15137.2037ms)[39m[39m
+[32m✔ mutation K5 a chunk may outgrow its vertex limit: applied, and caught by "renderer: merged chunks draw the triangles…" [90m(14770.8591ms)[39m[39m
+[32m✔ mutation L18 the canvas is cleared to the fog colour again: applied, and caught by "renderer: the canvas is cleared to CLEAR…" [90m(15126.2598ms)[39m[39m
+[32m✔ mutation N3 a repeated key-down makes the key the newest again: applied, and caught by "a held key that repeats…" [90m(14776.4862ms)[39m[39m
+[32m✔ mutation N4 a key-up lets go of every key: applied, and caught by "releasing the OLDER…" [90m(15240.3974ms)[39m[39m
+[32m✔ mutation N5 the takeover re-fires every frame a key is held (C and B are undone): applied, and caught by "P3: C or B pressed while a movement key is held…" [90m(14141.3197ms)[39m[39m
+[32m✔ mutation E1 an OS key-repeat re-arms the takeover (W1: after C or B, a held W snaps back to free): applied, and caught by "W1: W held and REPEATING…" [90m(14937.5112ms)[39m[39m
+[32m✔ mutation E2 deltaX counts without Shift (W2: a sideways trackpad swipe zooms, or moves the lens): applied, and caught by "W2: a trackpad swipe SIDEWAYS…" [90m(14546.6174ms)[39m[39m
+[32m✔ mutation N6 the wheel ignores deltaX (Shift+wheel is dead on a device that reports it there): applied, and caught by "P5: Shift+wheel is ×4…" [90m(14573.4351ms)[39m[39m
+[32m✔ mutation N7 the key action is looked up by the physical key name, not fixed at key-down: applied, and caught by "P2: a key that flies by its label…" [90m(14466.4638ms)[39m[39m
+[32m✔ mutation N8 the overhead never slides to the head (a black view on a curved track): applied, and caught by "overhead zoomed in (0.05 to 50)…" [90m(13858.8415ms)[39m[39m
+[32m✔ mutation N9 the overhead slides to the head at half the rate: applied, and caught by "overhead zoomed in (0.05 to 50)…" [90m(11412.5734ms)[39m[39m
+[32m✔ mutation N10 the overhead slides past the box centre when zoomed OUT: applied, and caught by "overhead at zoom 1 and out is unchanged…" [90m(11610.945ms)[39m[39m
+[32m✔ mutation N11 the sprint never ramps (×4 for as long as Shift is held): applied, and caught by "keys: Shift held ramps the speed…" [90m(11614.1536ms)[39m[39m
+[32m✔ mutation N12 the ramp never resets on release (a second press starts at ×20): applied, and caught by "releasing Shift returns to ×1…" [90m(11888.6975ms)[39m[39m
+[32m✔ mutation N13 a blur does not reset the ramp: applied, and caught by "a blur resets the ramp…" [90m(12343.2139ms)[39m[39m
+[32m✔ mutation N14 the ramp is twice too slow (5 s to full): applied, and caught by "the sprint curve…" [90m(14079.2281ms)[39m[39m
+[32m✔ mutation N15 the ramp stops at ×10: applied, and caught by "the sprint curve…" [90m(14761.1937ms)[39m[39m
+[32m✔ mutation N16 Enter blurs a text area too (it is a new line there): applied, and caught by "Enter in a text AREA…" [90m(14265.1875ms)[39m[39m
+[32m✔ mutation N17 Esc does not blur a field: applied, and caught by "Esc in a field lets go…" [90m(14105.8887ms)[39m[39m
+[32m✔ mutation N18 Enter does not blur a field: applied, and caught by "Enter in a text field or a number field…" [90m(11051.6822ms)[39m[39m
+[32m✔ mutation N19 a click on the canvas leaves the field focused: applied, and caught by "a mouse-down on the canvas…" [90m(10988.0112ms)[39m[39m
+[32m✔ mutation N20 a number field swallows the camera keys: applied, and caught by "a NUMBER field lets the camera keys through…" [90m(10964.7888ms)[39m[39m
+[32m✔ mutation N21 a text field lets the camera keys through (typing moves the camera): applied, and caught by "a TEXT field swallows every camera key…" [90m(12138.0575ms)[39m[39m
+[32m✔ mutation N22 Ctrl+wheel dollies instead of zooming the lens: applied, and caught by "Ctrl+wheel is the LENS…" [90m(13602.5983ms)[39m[39m
+[32m✔ mutation N23 the plain wheel is the lens: applied, and caught by "the plain wheel is unchanged…" [90m(12294.8469ms)[39m[39m
+[32m✔ mutation N24 the middle click does not reset the lens: applied, and caught by "a middle click resets the lens…" [90m(12288.2311ms)[39m[39m
+[32m✔ mutation N25 the HUD never shows the fov: applied, and caught by "the HUD shows the fov…" [90m(12149.8415ms)[39m[39m
+[32m✔ mutation N26 the lens zooms the wrong way: applied, and caught by "the lens: a notch in narrows…" [90m(12031.4073ms)[39m[39m
+[32m✔ mutation N27 the lens is not clamped at 10°: applied, and caught by "the lens: a notch in narrows…" [90m(11162.8634ms)[39m[39m
+[32m✔ mutation N28 the pose ignores the lens: applied, and caught by "the lens changes the pose…" [90m(10763.5201ms)[39m[39m
+[32m✔ mutation D1 movement is newest-key-only again (a newer key zeroes the other axes: no diagonal): applied, and caught by "keys: W then D goes diagonally…" [90m(10929.0683ms)[39m[39m
+[32m✔ mutation D2 on one axis the OLDER key wins: applied, and caught by "on one axis the NEWER key wins…" [90m(10750.2659ms)[39m[39m
+[32m✔ mutation D3 both keys of an axis cancel (W and S held: stand still): applied, and caught by "on one axis the NEWER key wins…" [90m(10687.0317ms)[39m[39m
+[32m✔ mutation D4 a diagonal is not normalised (√2 times a straight line): applied, and caught by "keys: W then D goes diagonally…" [90m(10712.1973ms)[39m[39m
+[32m✔ mutation D5 a diagonal is normalised to the wrong length (÷ n², not ÷ n): applied, and caught by "three axes at once…" [90m(10786.4097ms)[39m[39m
+[32m✔ mutation D6 a newer key on an axis drops the older for good (no handover on release): applied, and caught by "on its release the…" [90m(10690.2024ms)[39m[39m
+[32m✔ mutation D7 a key-up lets go of every key (the other axis stops too): applied, and caught by "releasing one key of a diagonal…" [90m(12450.7861ms)[39m[39m
+[32m✔ mutation D8 a repeated key-down makes the key the newer again: applied, and caught by "a held key that repeats…" [90m(11541.4914ms)[39m[39m
+[32m✔ mutation D9 the arrow keys stop turning while a movement key is held: applied, and caught by "the arrow (look) keys are not movement keys…" [90m(11604.8286ms)[39m[39m
+[32m✔ row 1: place then undo restores the track without meshing it, equal to a fresh full build, and placing again from it equals a fresh build [90m(481.8106ms)[39m[39m
+[32m✔ row 2: with a hill on the track (the lift), place then undo is restored and equal to a fresh full build [90m(27530.6821ms)[39m[39m
+[32m✔ row 3: a brush between the placement and the undo drops the copy: the undo rebuilds, and equals a fresh full build [90m(50781.9116ms)[39m[39m
+[32m✔ row 5: a SCULPT of the restored track (it re-places the path's blocks in place) still equals a fresh full build: the restored samples read the blocks the path holds [90m(319.3392ms)[39m[39m
+[32m✔ row 4: two placements undone in a row: the first is restored, the second rebuilt, both equal a fresh full build [90m(421.296ms)[39m[39m
+[32m✔ row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms [90m(67351.6731ms)[39m[39m
+[34mℹ worst ms by case: {"aqua turn":[3.2],"aqua stretch":[3],"skyline turn":[3.6],"skyline stretch":[3],"glass turn":[3.7],"glass stretch":[3.8],"aurora turn":[4],"aurora stretch":[3.6],"sigil turn":[4.8],"sigil stretch":[3.6]}[39m
+[32m✔ row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s [90m(18419.8163ms)[39m[39m
+[34mℹ 20,000 m: handler 43.6, worst frame 71.9 ms; 10001 stations after 10 s[39m
+[32m✔ row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s [90m(6714.1556ms)[39m[39m
+[34mℹ 1868 frames watched; the exact ghost (1001 stations) after 99 ms; 0 without a ghost[39m
+[31m✖ row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frames together [90m(15466.7776ms)[39m[39m
+[34mℹ a field change: p95 11.6 / 6.1 ms (median 4.8 / 4.6)[39m
+[32m✔ row 1: the mesh is byte for byte what v0.4.8 made: placed, placed after four more pieces, and the full ghosts [90m(2298.8391ms)[39m[39m
+[32m✔ row 2: samplesAcrossFor is samplesAcross exactly, and a frozen profile is worked out once [90m(9.9886ms)[39m[39m
+[32m✔ row 3: the answer follows the numbers; the array handed back is the caller own [90m(3.8335ms)[39m[39m
+[32m✔ row 4: a full ghost of 1,000 m walks the cross-section a handful of times, and the cache is bounded [90m(100.6041ms)[39m[39m
+[32m✔ row 5: the exact ghost in slices is ghostFor to the byte, and yields at least once a chord [90m(140.8913ms)[39m[39m
+[32m✔ row 6: the road lines are byte for byte what v0.4.8 made [90m(707.073ms)[39m[39m
+[32m✔ row 7: profileAt keeps one frozen profile per family, width and rate, and refuses bad input every time [90m(1.3347ms)[39m[39m
+[32m✔ row 8: placing the ghost on show takes its work, and the track is the same to the byte; undo and a second placement too; a cheap or stale ghost is never taken [90m(4544.9374ms)[39m[39m
+[32m✔ row 9: spawnsInfo on a growing track is what it is built afresh, and an answer given is never changed by a growth [90m(130.1476ms)[39m[39m
+[32m✔ control: the unmutated copy passes theme.test.js [90m(467.9828ms)[39m[39m
+[32m✔ control: the unmutated copy passes sky.test.js [90m(558.2243ms)[39m[39m
+[32m✔ mutation T1 any name sets a skin: applied, and caught by "each melody sets its own skin…" [90m(483.0201ms)[39m[39m
+[32m✔ mutation T2 the head rounds the pick: applied, and caught by "the page sets the skin in its head…" [90m(448.824ms)[39m[39m
+[32m✔ mutation T3 the head names the melodies in another order: applied, and caught by "the page sets the skin in its head…" [90m(410.4325ms)[39m[39m
+[32m✔ mutation T4 the boot does not follow the player: applied, and caught by "the page sets the skin in its head…" [90m(446.5337ms)[39m[39m
+[32m✔ mutation T14 the head ignores a saved theme: applied, and caught by "D394: the head reads the saved theme…" [90m(402.7026ms)[39m[39m
+[32m✔ mutation T15 the head takes any saved text as a theme: applied, and caught by "D394: the head reads the saved theme…" [90m(427.2894ms)[39m[39m
+[32m✔ mutation T16 sigil shows a skin: applied, and caught by "D394: Settings ▸ Theme has six choices…" [90m(438.2426ms)[39m[39m
+[32m✔ mutation T5 a skin change keeps the old colours: applied, and caught by "the reader reads again…" [90m(502.2544ms)[39m[39m
+[32m✔ mutation T6 the reader watches the wrong attribute: applied, and caught by "the reader reads again…" [90m(604.7166ms)[39m[39m
+[32m✔ mutation T7 a translucent token comes back opaque: applied, and caught by "the reader understands every colour form…" [90m(512.1449ms)[39m[39m
+[32m✔ mutation T8 color(srgb) floats are rounded to bytes: applied, and caught by "the reader understands every colour form…" [90m(470.8624ms)[39m[39m
+[32m✔ mutation T9 solid keeps a skin's alpha: applied, and caught by "the reader understands every colour form…" [90m(469.6139ms)[39m[39m
+[32m✔ mutation T10 a missing token is black, not today's colour: applied, and caught by "the reader falls back…" [90m(455.5572ms)[39m[39m
+[32m✔ mutation T11 an unreadable token is not reported: applied, and caught by "the reader falls back…" [90m(470.7739ms)[39m[39m
+[32m✔ mutation T12 the 3D sky ignores the skin: applied, and caught by "SIGIL's 3D frame is the same…" [90m(464.5307ms)[39m[39m
+[32m✔ mutation T13 SIGIL's grid token drifts from the literal: applied, and caught by "SIGIL's tokens are today's literals…" [90m(452.3478ms)[39m[39m
+[32m✔ mutation S1 the sky follows the camera's position: applied, and caught by "moving or zooming without turning…" [90m(532.76ms)[39m[39m
+[32m✔ mutation S2 the rays turn the other way: applied, and caught by "a sky feature moves on screen…" [90m(553.5151ms)[39m[39m
+[32m✔ mutation S3 the shader builds its rays without the basis: applied, and caught by "the sky pass runs before the track…" [90m(577.2748ms)[39m[39m
+[32m✔ mutation S4 the sky writes depth: applied, and caught by "the sky pass runs before the track…" [90m(533.8175ms)[39m[39m
+[32m✔ mutation S5 the pattern gets no time: applied, and caught by "the sky pass runs before the track…" [90m(533.9783ms)[39m[39m
+[32m✔ mutation S6 none still draws a sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…" [90m(544.5857ms)[39m[39m
+[32m✔ mutation S7 going back to none keeps the old sky: applied, and caught by "'none' draws the very calls cbd7a40 drew…" [90m(557.8831ms)[39m[39m
+[32m✔ mutation S8 an unknown style is quietly none: applied, and caught by "an unknown sky style fails loudly…" [90m(577.5014ms)[39m[39m
+[32m✔ mutation S9 --sky-a falls back to black-ish, not the skin's sky: applied, and caught by "the skin names its sky…" [90m(517.3998ms)[39m[39m
+[32m✔ mutation S10 the style word keeps its quotes: applied, and caught by "the skin names its sky…" [90m(532.9011ms)[39m[39m
+[32m✔ mutation S11 reduced motion still drifts: applied, and caught by "the drift stops under prefers-reduced-motion…" [90m(517.0553ms)[39m[39m
+[32m✔ mutation S12 the preview hands the sky no time: applied, and caught by "the drift stops under prefers-reduced-motion…" [90m(563.3434ms)[39m[39m
+[32m✔ mutation S13 Skyline names no sky: applied, and caught by "the skin names its sky…" [90m(521.2378ms)[39m[39m
+[32m✔ mutation S14 Glass names no sky (D384 widened): applied, and caught by "Glass names the prism sky…" [90m(510.4543ms)[39m[39m
+[32m✔ mutation S15 the registry leaves prism out (D384 widened): applied, and caught by "Glass names the prism sky…" [90m(535.7074ms)[39m[39m
+[32m✔ mutation S16 the sky pass does not dither (D398): applied, and caught by "D398: the shared sky pass dithers…" [90m(762.4801ms)[39m[39m
+[32m✔ the samples carry exactly the fields src/geom's own buildPath emits, from the document's start pose [90m(23.2664ms)[39m[39m
+[32m✔ at the family's own rate the core's cross-section IS fonts.js's (ref 09 §3), and a lower rate lowers the rim [90m(0.897ms)[39m[39m
+[32m✔ the samples' roll is within the smoothstep bound of the φ channel (ref 09 §5), and 2 m chords move the line under 1 cm over 530 m against 0.25 m chords (the stated deviation, measured) [90m(65.9739ms)[39m[39m
+[32m✔ a flight becomes ONE gap segment carrying its landing's pose; the road after it starts exactly there; no ramp is generated [90m(38.6549ms)[39m[39m
+[32m✔ the mesh is built from the adapter's output by the unchanged geometry core, with no folds on a gentle track [90m(314.3293ms)[39m[39m
+[32m✔ an empty track, or a bad step, is refused by name [90m(0.6225ms)[39m[39m
+[32m✔ CONTROL: the whole of core_chord.test.js passes on an unmutated copy of src/, tools/ and app/ [90m(5105.6441ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(349.0986ms)[39m[39m
+[32m✔ mutant K1 every segment counts as constant (no chord is ever drawn): applied, and caught by "2 ·|3 ·|4 ·|5 ·" [90m(3619.1339ms)[39m[39m
+[34mℹ K1 every segment counts as constant (no chord is ever drawn): 14 of 15 run tests failed[39m
+[32m✔ mutant K2 no segment counts as constant (a chord everywhere, even on a constant width): applied, and caught by "1 ·" [90m(616.7866ms)[39m[39m
+[34mℹ K2 no segment counts as constant (a chord everywhere, even on a constant width): 4 of 4 run tests failed[39m
+[32m✔ mutant K3 a chord's profile is the one at its START: applied, and caught by "2 ·|3 ·|4 ·" [90m(1165.5192ms)[39m[39m
+[34mℹ K3 a chord's profile is the one at its START: 7 of 9 run tests failed[39m
+[32m✔ mutant K4 a chord blends from its END profile (no change across the segment): applied, and caught by "2 ·|3 ·|4 ·" [90m(1429.2152ms)[39m[39m
+[34mℹ K4 a chord blends from its END profile (no change across the segment): 7 of 9 run tests failed[39m
+[32m✔ mutant K5 the segment is not marked as a chord (the readers do not evaluate its blend): applied, and caught by "4 ·" [90m(665.971ms)[39m[39m
+[34mℹ K5 the segment is not marked as a chord (the readers do not evaluate its blend): 3 of 3 run tests failed[39m
+[32m✔ mutant K6 a chord's blend runs over twice the segment (its end row is not the end profile): applied, and caught by "2 ·|3 ·" [90m(1161.5123ms)[39m[39m
+[34mℹ K6 a chord's blend runs over twice the segment (its end row is not the end profile): 6 of 6 run tests failed[39m
+[32m✔ mutant K7 a chord's weight is already 1 at its start: applied, and caught by "2 ·|3 ·" [90m(1150.7038ms)[39m[39m
+[34mℹ K7 a chord's weight is already 1 at its start: 6 of 6 run tests failed[39m
+[32m✔ mutant K8 the next piece and a flight take a chord's START as the last profile: applied, and caught by "5 ·|3 ·" [90m(4856.6858ms)[39m[39m
+[34mℹ K8 the next piece and a flight take a chord's START as the last profile: 1 of 10 run tests failed[39m
+[32m✔ mutant K9 a legacy piece's first row for the seam fade is its END: applied, and caught by "5 ·" [90m(2809.398ms)[39m[39m
+[34mℹ K9 a legacy piece's first row for the seam fade is its END: 2 of 6 run tests failed[39m
+[32m✔ mutant K10 a legacy piece's last row for the seam fade is its START: applied, and caught by "5 ·" [90m(4920.5344ms)[39m[39m
+[34mℹ K10 a legacy piece's last row for the seam fade is its START: 1 of 6 run tests failed[39m
+[32m✔ mutant K11 the same-cross-section tolerance is 10 m (a width change is called constant): applied, and caught by "2 ·|3 ·" [90m(1045.9411ms)[39m[39m
+[34mℹ K11 the same-cross-section tolerance is 10 m (a width change is called constant): 5 of 6 run tests failed[39m
+[32m✔ mutant K12 readsBlend leaves the chord out (readAt and the joint check take the target for the whole segment): applied, and caught by "4 ·" [90m(627.8661ms)[39m[39m
+[34mℹ K12 readsBlend leaves the chord out (readAt and the joint check take the target for the whole segment): 3 of 3 run tests failed[39m
+[32m✔ mutant K13 the water does not evaluate a chord's blend: applied, and caught by "4 ·" [90m(670.8012ms)[39m[39m
+[34mℹ K13 the water does not evaluate a chord's blend: 1 of 3 run tests failed[39m
+[32m✔ mutant K14 jointSteps looks at cup segments only (a chord joint is not inspected): applied, and caught by "4 ·" [90m(663.3306ms)[39m[39m
+[34mℹ K14 jointSteps looks at cup segments only (a chord joint is not inspected): 1 of 3 run tests failed[39m
+[32m✔ mutant K15 a constant segment takes the profile at its END, not its middle (today's bytes change): applied, and caught by "1 ·" [90m(605.3478ms)[39m[39m
+[34mℹ K15 a constant segment takes the profile at its END, not its middle (today's bytes change): 4 of 4 run tests failed[39m
+[32m✔ CONTROL: the whole of core_cup.test.js and core_cup_readers.test.js pass on an unmutated copy of src/, tools/ and app/ [90m(14659.9868ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(469.4175ms)[39m[39m
+[32m✔ mutant M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): applied, and caught by "row 1a" [90m(575.5525ms)[39m[39m
+[34mℹ M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): 1 of 2 run tests failed[39m
+[32m✔ mutant M2 (K1a-2) only the left edge is cupped: applied, and caught by "row 1a" [90m(520.6126ms)[39m[39m
+[34mℹ M2 (K1a-2) only the left edge is cupped: 2 of 2 run tests failed[39m
+[32m✔ mutant M3 (K1a-3) c is taken as radians: applied, and caught by "row 1a" [90m(446.4367ms)[39m[39m
+[34mℹ M3 (K1a-3) c is taken as radians: 2 of 2 run tests failed[39m
+[32m✔ mutant M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: applied, and caught by "row 1a" [90m(508.5142ms)[39m[39m
+[34mℹ M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: 2 of 2 run tests failed[39m
+[32m✔ mutant M5 (K2-1) MAX raised to 165: applied, and caught by "row 2" [90m(450.6657ms)[39m[39m
+[34mℹ M5 (K2-1) MAX raised to 165: 4 of 7 run tests failed[39m
+[32m✔ mutant M6 (K2-2) no guard on the document: applied, and caught by "row 2" [90m(562.1867ms)[39m[39m
+[34mℹ M6 (K2-2) no guard on the document: 3 of 7 run tests failed[39m
+[32m✔ mutant M7 the fit's ringing is not clamped after the Extend fit: applied, and caught by "row 2" [90m(434.3004ms)[39m[39m
+[34mℹ M7 the fit's ringing is not clamped after the Extend fit: 3 of 7 run tests failed[39m
+[32m✔ mutant M8 Extend does not refuse a typed cup past 150: applied, and caught by "row 2 \(iii\)" [90m(528.7534ms)[39m[39m
+[34mℹ M8 Extend does not refuse a typed cup past 150: 1 of 3 run tests failed[39m
+[32m✔ mutant M9 Extend does not refuse a first-piece cup past 150: applied, and caught by "row 2 PLANTED" [90m(416.1579ms)[39m[39m
+[34mℹ M9 Extend does not refuse a first-piece cup past 150: 1 of 1 run tests failed[39m
+[32m✔ mutant M10 the brush has no cup channel: applied, and caught by "row 2 \(iii\)" [90m(529.051ms)[39m[39m
+[34mℹ M10 the brush has no cup channel: 1 of 3 run tests failed[39m
+[32m✔ mutant M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): applied, and caught by "ends flat" [90m(407.4489ms)[39m[39m
+[34mℹ M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): 1 of 1 run tests failed[39m
+[32m✔ mutant M10c the document guard has no tolerance for a solver's float noise at the limit: applied, and caught by "ends flat" [90m(413.5673ms)[39m[39m
+[34mℹ M10c the document guard has no tolerance for a solver's float noise at the limit: 1 of 1 run tests failed[39m
+[32m✔ mutant M29 (R2) no morph: a cup after a legacy piece starts on the cup shape, not the legacy one: applied, and caught by "R2" [90m(1122.3213ms)[39m[39m
+[34mℹ M29 (R2) no morph: a cup after a legacy piece starts on the cup shape, not the legacy one: 4 of 8 run tests failed[39m
+[32m✔ mutant M30 (R2) the morph carries no difference (the legacy shape is dropped inside the road): applied, and caught by "R2" [90m(1122.782ms)[39m[39m
+[34mℹ M30 (R2) the morph carries no difference (the legacy shape is dropped inside the road): 4 of 8 run tests failed[39m
+[32m✔ mutant M31 (R2) the morph never fades (the legacy difference stays for the whole piece): applied, and caught by "R2" [90m(1102.5885ms)[39m[39m
+[34mℹ M31 (R2) the morph never fades (the legacy difference stays for the whole piece): 1 of 8 run tests failed[39m
+[32m✔ mutant M11 (K3-1) c is left out of the joint test between two cup pieces: applied, and caught by "row 3" [90m(1193.4906ms)[39m[39m
+[34mℹ M11 (K3-1) c is left out of the joint test between two cup pieces: 1 of 11 run tests failed[39m
+[32m✔ mutant M12 (K3-2) c is reset after a flight, like the heading rate: applied, and caught by "row 3" [90m(1368.0097ms)[39m[39m
+[34mℹ M12 (K3-2) c is reset after a flight, like the heading rate: 1 of 11 run tests failed[39m
+[32m✔ mutant M13 (K3-3) c is left out of the closure rows: applied, and caught by "row 3 \(iii\)" [90m(713.7063ms)[39m[39m
+[34mℹ M13 (K3-3) c is left out of the closure rows: 1 of 1 run tests failed[39m
+[32m✔ mutant M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: applied, and caught by "row 3|row 7" [90m(1316.9564ms)[39m[39m
+[34mℹ M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: 1 of 13 run tests failed[39m
+[32m✔ mutant M15 the legacy ↔ cup joint is not checked: applied, and caught by "row 3 \(iv\)" [90m(1250.8638ms)[39m[39m
+[34mℹ M15 the legacy ↔ cup joint is not checked: 1 of 8 run tests failed[39m
+[32m✔ mutant M16 a piece extended after a cup piece is a legacy piece: applied, and caught by "row 3" [90m(1317.8373ms)[39m[39m
+[34mℹ M16 a piece extended after a cup piece is a legacy piece: 2 of 11 run tests failed[39m
+[32m✔ mutant M17 (K1b-1) the blend is dropped: each segment steps to its own profile: applied, and caught by "row 1b" [90m(1260.8527ms)[39m[39m
+[34mℹ M17 (K1b-1) the blend is dropped: each segment steps to its own profile: 12 of 13 run tests failed[39m
+[32m✔ mutant M18 the weight inversion is wrong (z = y, no Newton polish): applied, and caught by "row 1b" [90m(2976.9056ms)[39m[39m
+[34mℹ M18 the weight inversion is wrong (z = y, no Newton polish): 6 of 13 run tests failed[39m
+[32m✔ mutant M19 a segment where c falls does not swap the pair: applied, and caught by "row 1b" [90m(2999.4297ms)[39m[39m
+[34mℹ M19 a segment where c falls does not swap the pair: 6 of 13 run tests failed[39m
+[32m✔ mutant M20 a width change is not a chord: the run keeps the start width: applied, and caught by "row 1b" [90m(3770.1381ms)[39m[39m
+[34mℹ M20 a width change is not a chord: the run keeps the start width: 1 of 13 run tests failed[39m
+[32m✔ mutant M33 (R1) atSegment ignores the distance into the segment: applied, and caught by "atSegment" [90m(896.979ms)[39m[39m
+[34mℹ M33 (R1) atSegment ignores the distance into the segment: 2 of 2 run tests failed[39m
+[32m✔ mutant M34 (R1) the marker layout reads segment.profile: applied, and caught by "marker layout" [90m(923.8051ms)[39m[39m
+[34mℹ M34 (R1) the marker layout reads segment.profile: 1 of 1 run tests failed[39m
+[32m✔ mutant M35 (R1) validation reads segment.profile: applied, and caught by "validation" [90m(975.3542ms)[39m[39m
+[34mℹ M35 (R1) validation reads segment.profile: 1 of 2 run tests failed[39m
+[32m✔ mutant M36 (R1) the export sections read segment.profile: applied, and caught by "export sections" [90m(895.2983ms)[39m[39m
+[34mℹ M36 (R1) the export sections read segment.profile: 1 of 1 run tests failed[39m
+[32m✔ mutant M37 (R1) the water reads segment.profile: applied, and caught by "water" [90m(931.864ms)[39m[39m
+[34mℹ M37 (R1) the water reads segment.profile: 1 of 1 run tests failed[39m
+[32m✔ mutant M38 (R1) the camera's span reads segment.profile: applied, and caught by "camera" [90m(898.1733ms)[39m[39m
+[34mℹ M38 (R1) the camera's span reads segment.profile: 1 of 1 run tests failed[39m
+[32m✔ mutant M39 (R1) the readers evaluate a word document font-transition blend too (its validation and layout change): applied, and caught by "font-transition" [90m(844.8409ms)[39m[39m
+[34mℹ M39 (R1) the readers evaluate a word document font-transition blend too (its validation and layout change): 1 of 1 run tests failed[39m
+[32m✔ mutant M40 (R1) the adapter does not mark a cup segment (the readers then take its target for the whole segment): applied, and caught by "validation" [90m(926.9176ms)[39m[39m
+[34mℹ M40 (R1) the adapter does not mark a cup segment (the readers then take its target for the whole segment): 1 of 2 run tests failed[39m
+[32m✔ mutant M41 (R3) no reverse morph: a cup that closes onto a legacy start is drawn to its own shape: applied, and caught by "R3" [90m(4010.453ms)[39m[39m
+[34mℹ M41 (R3) no reverse morph: a cup that closes onto a legacy start is drawn to its own shape: 8 of 12 run tests failed[39m
+[32m✔ mutant M42 (R3) the reverse morph never fades in (the tail keeps the cup shape): applied, and caught by "R3" [90m(3884.3916ms)[39m[39m
+[34mℹ M42 (R3) the reverse morph never fades in (the tail keeps the cup shape): 8 of 12 run tests failed[39m
+[32m✔ mutant M43 (R3) the reverse morph carries no difference (the legacy shape is dropped): applied, and caught by "R3" [90m(3382.9476ms)[39m[39m
+[34mℹ M43 (R3) the reverse morph carries no difference (the legacy shape is dropped): 8 of 12 run tests failed[39m
+[32m✔ mutant M44 (R3) close() does not hold the cup at the legacy start edge: applied, and caught by "R3" [90m(8060.7828ms)[39m[39m
+[34mℹ M44 (R3) close() does not hold the cup at the legacy start edge: 3 of 12 run tests failed[39m
+[32m✔ mutant M45 (R3) close() never refuses a seam it cannot fade: applied, and caught by "R3" [90m(7958.957ms)[39m[39m
+[34mℹ M45 (R3) close() never refuses a seam it cannot fade: 1 of 12 run tests failed[39m
+[32m✔ mutant M47 (R3) the mirror: a cup START does not fade out of the legacy END: applied, and caught by "R3" [90m(7616.8898ms)[39m[39m
+[34mℹ M47 (R3) the mirror: a cup START does not fade out of the legacy END: 1 of 12 run tests failed[39m
+[32m✔ mutant M50 (R3) a cup followed by a legacy piece inside the track is not faded (only the lap seam is): applied, and caught by "R3" [90m(8061.5282ms)[39m[39m
+[34mℹ M50 (R3) a cup followed by a legacy piece inside the track is not faded (only the lap seam is): 1 of 12 run tests failed[39m
+[32m✔ mutant M48 (R3) validation does not red a joint step: applied, and caught by "R3" [90m(8301.0053ms)[39m[39m
+[34mℹ M48 (R3) validation does not red a joint step: 1 of 12 run tests failed[39m
+[32m✔ mutant M49 (R3) jointSteps ignores the lap seam: applied, and caught by "R3" [90m(7525.6856ms)[39m[39m
+[34mℹ M49 (R3) jointSteps ignores the lap seam: 2 of 12 run tests failed[39m
+[32m✔ mutant M21 a legacy piece is rendered as a cup piece at c = 0: applied, and caught by "row 5" [90m(448.0421ms)[39m[39m
+[34mℹ M21 a legacy piece is rendered as a cup piece at c = 0: 1 of 4 run tests failed[39m
+[32m✔ mutant M22 a /2 piece is read as a cup piece: applied, and caught by "row 5" [90m(429.6287ms)[39m[39m
+[34mℹ M22 a /2 piece is read as a cup piece: 2 of 4 run tests failed[39m
+[32m✔ mutant M23 a legacy piece's text carries a c array: applied, and caught by "row 5" [90m(426.9692ms)[39m[39m
+[34mℹ M23 a legacy piece's text carries a c array: 2 of 4 run tests failed[39m
+[32m✔ mutant M24 (K5-2) the schema is still core/2: applied, and caught by "row 5" [90m(431.2078ms)[39m[39m
+[34mℹ M24 (K5-2) the schema is still core/2: 1 of 4 run tests failed[39m
+[32m✔ mutant M25 a cup brush is allowed to reach a legacy piece: applied, and caught by "row 5e" [90m(536.6256ms)[39m[39m
+[34mℹ M25 a cup brush is allowed to reach a legacy piece: 1 of 1 run tests failed[39m
+[32m✔ mutant M26 (K6-3) the cup feeds the roll: applied, and caught by "row 6" [90m(1102.2827ms)[39m[39m
+[34mℹ M26 (K6-3) the cup feeds the roll: 2 of 2 run tests failed[39m
+[32m✔ mutant M27 (K7-1) cupToDeg reads the wrong station of the document: applied, and caught by "row 7" [90m(476.8285ms)[39m[39m
+[34mℹ M27 (K7-1) cupToDeg reads the wrong station of the document: 2 of 2 run tests failed[39m
+[32m✔ mutant M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): applied, and caught by "row 7" [90m(497.8957ms)[39m[39m
+[34mℹ M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): 1 of 2 run tests failed[39m
+[32m✔ control: the unmutated copy passes every row of core_jump.test.js [90m(4191.4088ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(457.7105ms)[39m[39m
+[32m✔ mutation J1 a core flight's gap is a hole again (gap-in-road): applied, and caught by row 2 [90m(1166.4397ms)[39m[39m
+[32m✔ mutation J2 any core gap followed by road counts as a flight, with no pose on it (a planted hole is exempt): applied, and caught by row 2 [90m(1387.7066ms)[39m[39m
+[32m✔ mutation J2b a landing behind its take-off is red again: applied, and caught by row 2 [90m(1461.6173ms)[39m[39m
+[32m✔ mutation J3 a track with a jump is refused again (NOT_YET): applied, and caught by row 4 [90m(1123.4465ms)[39m[39m
+[32m✔ mutation J4 the landing is linked across the jump (its start not held): applied, and caught by row 4 [90m(1061.2727ms)[39m[39m
+[32m✔ mutation J5 the close's model skips the flight (no displacement, no heading or pitch reset): applied, and caught by row 4 [90m(2682.2982ms)[39m[39m
+[32m✔ mutation J6 the net pitch is not counted again from a jump, nor its turn added: applied, and caught by row 4 [90m(1433.9503ms)[39m[39m
+[32m✔ mutation J7 the landing pitch and the jumps' turns are left out of the net angles: applied, and caught by row 4 [90m(1416.1996ms)[39m[39m
+[32m✔ mutation J8 the model's pitch is not cut at the flight: applied, and caught by row 4 [90m(2357.3676ms)[39m[39m
+[32m✔ mutation J8c the model leaves out the landing's sideways offset turning with the take-off: applied, and caught by row 4 [90m(1368.1382ms)[39m[39m
+[32m✔ mutation J9 a lap that ends in a jump is not refused by name: applied, and caught by row 4 [90m(1418.6986ms)[39m[39m
+[32m✔ mutation J11 two jumps in a row are accepted by the document (land on road first not enforced): applied, and caught by row 1 [90m(868.7254ms)[39m[39m
+[32m✔ mutation J12 a landing that does not start level at its flight's bank is accepted: applied, and caught by row 1 [90m(1064.2678ms)[39m[39m
+[32m✔ mutation J13 a landing pitch past vertical is accepted: applied, and caught by row 1 [90m(988.3091ms)[39m[39m
+[32m✔ mutation J14 an empty track is not refused by name: applied, and caught by row 1 [90m(986.1511ms)[39m[39m
+[32m✔ mutation J15 a landing that is not the head is moved anyway: applied, and caught by row 1 [90m(989.7141ms)[39m[39m
+[32m✔ mutation J16 the landing is not where its pose says (a metre further on): applied, and caught by row 1 [90m(871.5095ms)[39m[39m
+[32m✔ mutation J17 an old jump opens at its lip, its ramp forgotten (the roads after it move): applied, and caught by row 6 [90m(843.0898ms)[39m[39m
+[32m✔ mutation J18 the mirror of a saved jump does not cross to the other side: applied, and caught by row 6 [90m(916.2188ms)[39m[39m
+[32m✔ row 1, the cause: a piece eased to a turn rate turns −90° and ENDS at that rate, so "turn 0 at start" after it still turns about −1.35° [90m(11.7101ms)[39m[39m
+[32m✔ row 2 (B1, B2): Turn by −90 turns −90° within 0.01° on the path and in the readout, and ends with turn rate 0, C1 from the head [90m(67.5765ms)[39m[39m
+[32m✔ row 3 (B3): a Straight after Turn by reads 0.0° change [90m(44.1644ms)[39m[39m
+[32m✔ row 4: from a head that is STILL TURNING (the eased −90° piece), Turn by +90 is still exact and still ends at rate 0 [90m(38.8689ms)[39m[39m
+[32m✔ row 5 (B4): a piece too short to shape is refused by name with the shortest length that works, which then works; a closed loop is refused [90m(30.4334ms)[39m[39m
+[32m✔ row 6 (B6, amended D331 C): Turn by −90 over 750 m eases in and out symmetrically: its peak within 10% of the middle, its let-go no steeper than its build-up, no tighter than today's curve ended [90m(9.4744ms)[39m[39m
+[32m✔ CONTROL: every water check passes on the unmutated water.js [90m(0.5343ms)[39m[39m
+[32m✔ mutant W1 normal force: gravity term dropped: applied, and CAUGHT [90m(1807.851ms)[39m[39m
+[34mℹ W1 normal force: gravity term dropped: caught by TEST 5a (B, sealed) | 06 §8 (cone turning radius) | 06 §8 (crest) | the normal force matches the cone's closed form N = g·cos β + (v_φ²/r)·sin β at EVERY step of a 45° lap, across the closing seam's short span too | ENERGY | ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused[39m
+[32m✔ mutant W2 normal force: the cross term not doubled: applied, and CAUGHT [90m(2866.5743ms)[39m[39m
+[34mℹ W2 normal force: the cross term not doubled: caught by ENERGY on a TWISTING straight (roll 0 → 0.6 over 120 m), streams crossing it[39m
+[32m✔ mutant W3 no velocity projection onto the tangent plane: applied, and CAUGHT [90m(2526.0791ms)[39m[39m
+[34mℹ W3 no velocity projection onto the tangent plane: caught by ENERGY | ENERGY on a TWISTING straight (roll 0 → 0.6 over 120 m), streams crossing it[39m
+[32m✔ mutant W4 RK4: middle stages weighted 1, not 2: applied, and CAUGHT [90m(1381.0357ms)[39m[39m
+[34mℹ W4 RK4: middle stages weighted 1, not 2: caught by TEST 5a (B, sealed) | TEST 5b (B, sealed) | TEST 5b, tighter than the seal (pane C's own bar) | 06 §8 (cone turning radius) | 06 §8 (crest) | ENERGY | ENERGY on a TWISTING straight (roll 0 → 0.6 over 120 m), streams crossing it | ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused[39m
+[32m✔ mutant W5 spill: the −u lip never checked: applied, and CAUGHT [90m(2392.0389ms)[39m[39m
+[34mℹ W5 spill: the −u lip never checked: caught by TEST 5b (B, sealed) | TEST 5b, tighter than the seal (pane C's own bar)[39m
+[32m✔ mutant W6 spill: the +u lip never checked: applied, and CAUGHT [90m(2429.5331ms)[39m[39m
+[34mℹ W6 spill: the +u lip never checked: caught by 06 §8 (cone, too slow)[39m
+[32m✔ mutant W7 lift-off never flagged: applied, and CAUGHT [90m(3304.2663ms)[39m[39m
+[34mℹ W7 lift-off never flagged: caught by 06 §8 (crest) | a cross-section that STEPS between two samples is a real kink in the surface, and the water reads it (lift-off at the step), never smooths it away | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused[39m
+[32m✔ mutant W8 shock never flagged: applied, and CAUGHT [90m(3022.5629ms)[39m[39m
+[34mℹ W8 shock never flagged: caught by SHOCK[39m
+[32m✔ mutant W9 quintic Hermite: a basis coefficient off: applied, and CAUGHT [90m(3107.735ms)[39m[39m
+[34mℹ W9 quintic Hermite: a basis coefficient off: caught by TEST 5a (B, sealed) | 06 §8 (crest) | the normal force matches the cone's closed form N = g·cos β + (v_φ²/r)·sin β at EVERY step of a 45° lap, across the closing seam's short span too | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused[39m
+[32m✔ mutant W10 frame slope: equal-spacing central difference: applied, and CAUGHT [90m(2978.864ms)[39m[39m
+[34mℹ W10 frame slope: equal-spacing central difference: caught by the normal force matches the cone's closed form N = g·cos β + (v_φ²/r)·sin β at EVERY step of a 45° lap, across the closing seam's short span too | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on[39m
+[32m✔ mutant W11 profile: Y′ without the side's sign: applied, and CAUGHT [90m(2437.3006ms)[39m[39m
+[34mℹ W11 profile: Y′ without the side's sign: caught by ENERGY | a cross-section that STEPS between two samples is a real kink in the surface, and the water reads it (lift-off at the step), never smooths it away | ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it[39m
+[32m✔ mutant W12 profile blend: no s-derivative: applied, and CAUGHT [90m(3128.6242ms)[39m[39m
+[34mℹ W12 profile blend: no s-derivative: caught by ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it[39m
+[32m✔ mutant W13 spill located at the step's end, not inside it: applied, and CAUGHT [90m(2901.5473ms)[39m[39m
+[34mℹ W13 spill located at the step's end, not inside it: caught by TEST 5b, tighter than the seal (pane C's own bar)[39m
+[32m✔ mutant W14 projection: Gauss–Newton step reversed: applied, and CAUGHT [90m(124.1095ms)[39m[39m
+[34mℹ W14 projection: Gauss–Newton step reversed: caught by TEST 5a (B, sealed) | TEST 5b (B, sealed) | TEST 5b, tighter than the seal (pane C's own bar) | 06 §8 (cone, too slow) | 06 §8 (cone turning radius) | 06 §8 (crest) | the normal force matches the cone's closed form N = g·cos β + (v_φ²/r)·sin β at EVERY step of a 45° lap, across the closing seam's short span too | SHOCK | ENERGY | a cross-section that STEPS between two samples is a real kink in the surface, and the water reads it (lift-off at the step), never smooths it away | ENERGY where the dish DEEPENS over 40 m (a different cross-section at every sample), streams crossing it | a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on | a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused[39m
+[32m✔ mutant W15 energy instrument reads nothing: applied, and CAUGHT [90m(3146.9123ms)[39m[39m
+[34mℹ W15 energy instrument reads nothing: caught by ENERGY[39m
+[32m✔ mutant W16 the pos′ = T refusal disabled: applied, and CAUGHT [90m(3261.0565ms)[39m[39m
+[34mℹ W16 the pos′ = T refusal disabled: caught by a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused | refused loudly[39m
+[32m✔ mutant W18 the pos′ = T check without the h²/12 correction: applied, and CAUGHT [90m(2997.6705ms)[39m[39m
+[34mℹ W18 the pos′ = T check without the h²/12 correction: caught by a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on[39m
+[32m✔ mutant W19 a lifted sample's d1 ignored: applied, and CAUGHT [90m(3180.0126ms)[39m[39m
+[34mℹ W19 a lifted sample's d1 ignored: caught by a road whose s is NOT arc length (a lifted sample, D186) rides right when its samples carry d1 = dpos/ds and d2; without them it is refused[39m
+[32m✔ mutant W17 closed seam: the wrap sample not appended: applied, and CAUGHT [90m(2926.6673ms)[39m[39m
+[34mℹ W17 closed seam: the wrap sample not appended: caught by a closed loop whose samples stop 20 m short of the seam is closed by the first sample one lap on[39m
+[32m✔ CONTROL: core_xsec, core_xsec_math and validate_xsec pass whole on an unmutated copy of src/, tools/ and app/ [90m(131771.0267ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(349.8775ms)[39m[39m
+[32m✔ mutant KE1-1 G = t (the slice is a kink): applied, and caught by "slice is no kink|analytic" [90m(478.2295ms)[39m[39m
+[34mℹ KE1-1 G = t (the slice is a kink): 1 of 2 run tests failed[39m
+[32m✔ mutant KE1-2 the edge term is signed by the side (right side −e): applied, and caught by "E1 \(i\)" [90m(485.4234ms)[39m[39m
+[34mℹ KE1-2 the edge term is signed by the side (right side −e): 1 of 1 run tests failed[39m
+[32m✔ mutant KE1-3 e is taken as radians: applied, and caught by "E1 \(i\)" [90m(514.5369ms)[39m[39m
+[34mℹ KE1-3 e is taken as radians: 1 of 1 run tests failed[39m
+[32m✔ mutant KE1-4 four intervals for the outer zone: applied, and caught by "E4 \(v\)" [90m(499.1767ms)[39m[39m
+[34mℹ KE1-4 four intervals for the outer zone: 1 of 1 run tests failed[39m
+[32m✔ mutant KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): applied, and caught by "E1 \(i\)" [90m(516.9774ms)[39m[39m
+[34mℹ KE1-5 the slice is placed at the full width, not the half-width (the edge is never reached): 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-1 the cap is applied to e alone, not the total: applied, and caught by "DOMAIN" [90m(488.3177ms)[39m[39m
+[34mℹ KE2-1 the cap is applied to e alone, not the total: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-2 no guard on the edge in the document: applied, and caught by "DOMAIN" [90m(531.5812ms)[39m[39m
+[34mℹ KE2-2 no guard on the edge in the document: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-3 s has no lower bound: applied, and caught by "DOMAIN" [90m(458.6897ms)[39m[39m
+[34mℹ KE2-3 s has no lower bound: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-4 the floor is not checked (a side may turn down past -30°, a lip): applied, and caught by "DOMAIN" [90m(453.8079ms)[39m[39m
+[34mℹ KE2-4 the floor is not checked (a side may turn down past -30°, a lip): 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-5 extend does not refuse a target the cap cannot hold: applied, and caught by "EXTEND: e, s and t targets" [90m(461.2593ms)[39m[39m
+[34mℹ KE2-5 extend does not refuse a target the cap cannot hold: 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-6 the fit's ringing is not clamped (e): applied, and caught by "ringing" [90m(455.1609ms)[39m[39m
+[34mℹ KE2-6 the fit's ringing is not clamped (e): 1 of 1 run tests failed[39m
+[32m✔ mutant KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): applied, and caught by "DOMAIN" [90m(487.3418ms)[39m[39m
+[34mℹ KE2-7 a legacy piece's total cap ignores its own edge angle (e alone against 150): 1 of 1 run tests failed[39m
+[32m✔ mutant KE3-3 the schema is still /3: applied, and caught by "SCHEMA" [90m(496.4755ms)[39m[39m
+[34mℹ KE3-3 the schema is still /3: 1 of 2 run tests failed[39m
+[32m✔ mutant KE3-4 every piece's text carries e, s and t: applied, and caught by "SCHEMA: new documents" [90m(490.7171ms)[39m[39m
+[34mℹ KE3-4 every piece's text carries e, s and t: 1 of 1 run tests failed[39m
+[32m✔ mutant KE3-5 a /3 file is not read: applied, and caught by "SCHEMA: new documents" [90m(483.6796ms)[39m[39m
+[34mℹ KE3-5 a /3 file is not read: 1 of 1 run tests failed[39m
+[32m✔ mutant KE3-6 a text with an edge array is not read as an edge piece: applied, and caught by "SCHEMA: an edge piece" [90m(326.5061ms)[39m[39m
+[34mℹ KE3-6 a text with an edge array is not read as an edge piece: 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-1 e is left out of the joint test: applied, and caught by "JOINT \(E4 i" [90m(462.8055ms)[39m[39m
+[34mℹ KE4-1 e is left out of the joint test: 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-2 e is reset after a flight, like the heading rate: applied, and caught by "E4 \(ii\)" [90m(518.8645ms)[39m[39m
+[34mℹ KE4-2 e is reset after a flight, like the heading rate: 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): applied, and caught by "E4 \(v\)|E4 \(vi" [90m(522.145ms)[39m[39m
+[34mℹ KE4-3 one blend start for the whole piece (the cup's run trick on a moving slice): 2 of 2 run tests failed[39m
+[32m✔ mutant KE4-4 no blend: one profile per segment (the stair-step): applied, and caught by "E4 \(vi" [90m(463.3669ms)[39m[39m
+[34mℹ KE4-4 no blend: one profile per segment (the stair-step): 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): applied, and caught by "E4 \(vi" [90m(638.6224ms)[39m[39m
+[34mℹ KE4-5 the mesh ignores the piece's shared row grid (each segment samples its own rows: a zip inside the piece): 1 of 1 run tests failed[39m
+[32m✔ mutant KE4-6 the chords do not share one fraction array: applied, and caught by "E4 \(vi" [90m(629.2237ms)[39m[39m
+[34mℹ KE4-6 the chords do not share one fraction array: 1 of 1 run tests failed[39m
+[32m✔ mutant KE5-1 the csp-off steep check is dropped: applied, and caught by "E5 " [90m(110352.779ms)[39m[39m
+[34mℹ KE5-1 the csp-off steep check is dropped: 4 of 4 run tests failed[39m
+[32m✔ mutant KE6-2 e is fed into the roll: applied, and caught by "E6" [90m(478.2614ms)[39m[39m
+[34mℹ KE6-2 e is fed into the roll: 1 of 2 run tests failed[39m
+[32m✔ mutant KE7-1 edgeToDeg reads the start of the piece: applied, and caught by "READOUT" [90m(426.5881ms)[39m[39m
+[34mℹ KE7-1 edgeToDeg reads the start of the piece: 1 of 1 run tests failed[39m
+[32m✔ mutant KE7-3 a plain piece reads the wrong default slice: applied, and caught by "READOUT" [90m(428.8127ms)[39m[39m
+[34mℹ KE7-3 a plain piece reads the wrong default slice: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-1 the tube's edge angle is t, not t/2: applied, and caught by "TUBE" [90m(339.4647ms)[39m[39m
+[34mℹ KT1-1 the tube's edge angle is t, not t/2: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-2 a tube HELD in the slot is not refused: applied, and caught by "DOMAIN" [90m(422.5866ms)[39m[39m
+[34mℹ KT1-2 a tube HELD in the slot is not refused: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-3 the closure is 20 mm short of closing: applied, and caught by "T1 \(ii" [90m(432.7063ms)[39m[39m
+[34mℹ KT1-3 the closure is 20 mm short of closing: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-4 the slot formula has no factor 2: applied, and caught by "tube slot" [90m(341.4766ms)[39m[39m
+[34mℹ KT1-4 the slot formula has no factor 2: 1 of 1 run tests failed[39m
+[32m✔ mutant KT1-5 a sweep past 360 is accepted: applied, and caught by "DOMAIN" [90m(440.2069ms)[39m[39m
+[34mℹ KT1-5 a sweep past 360 is accepted: 1 of 1 run tests failed[39m
+[32m✔ mutant KT2-1 no morph into a tube from another kind (a zip with no fade): applied, and caught by "T1 \(ii" [90m(809.4654ms)[39m[39m
+[34mℹ KT2-1 no morph into a tube from another kind (a zip with no fade): 1 of 1 run tests failed[39m
+[32m✔ mutant KT3-1 CUP_MAX is applied to an open tube's t/2 + e: applied, and caught by "DOMAIN" [90m(429.3471ms)[39m[39m
+[34mℹ KT3-1 CUP_MAX is applied to an open tube's t/2 + e: 1 of 1 run tests failed[39m
+[32m✔ mutant KT3-2 a closed tube takes an edge: applied, and caught by "DOMAIN" [90m(422.6147ms)[39m[39m
+[34mℹ KT3-2 a closed tube takes an edge: 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-1 a cup and a tube are allowed together (extend): applied, and caught by "CUP OR A TUBE" [90m(494.6971ms)[39m[39m
+[34mℹ KT4-1 a cup and a tube are allowed together (extend): 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): applied, and caught by "A TUBE JOINT" [90m(425.8062ms)[39m[39m
+[34mℹ KT4-2 a tube starts at the wrong edge after another kind (t = edge, not 2·edge): 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): applied, and caught by "ENDSTATE" [90m(425.848ms)[39m[39m
+[34mℹ KT4-4 endState reports t at a non-tube head (twice the edge, the internal value leaks): 1 of 1 run tests failed[39m
+[32m✔ mutant KT4-5 a tube after another kind starts from the head's t (0), not from tNext: applied, and caught by "A TUBE JOINT|ENDSTATE" [90m(467.5954ms)[39m[39m
+[34mℹ KT4-5 a tube after another kind starts from the head's t (0), not from tNext: 2 of 2 run tests failed[39m
+[32m✔ mutant KT4-3 a cup after a closed tube is not refused by name: applied, and caught by "X1 and T2" [90m(821.6318ms)[39m[39m
+[34mℹ KT4-3 a cup after a closed tube is not refused by name: 1 of 1 run tests failed[39m
+[32m✔ mutant KS2-1 the roll stays the per-segment smoothstep under a heartline: applied, and caught by "S2 \(iii\)" [90m(832.5433ms)[39m[39m
+[34mℹ KS2-1 the roll stays the per-segment smoothstep under a heartline: 1 of 1 run tests failed[39m
+[32m✔ mutant KS2-2 the heartline is a constant per segment (a step between segments): applied, and caught by "S2 \(i, ii\)|S2 \(vi\)" [90m(1051.1749ms)[39m[39m
+[34mℹ KS2-2 the heartline is a constant per segment (a step between segments): 1 of 2 run tests failed[39m
+[32m✔ mutant KS2-3 a closed tube carries heartline 0: applied, and caught by "S2 \(i, ii\)" [90m(1004.1188ms)[39m[39m
+[34mℹ KS2-3 a closed tube carries heartline 0: 1 of 1 run tests failed[39m
+[32m✔ mutant KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): applied, and caught by "X1 and T2|S2 \(vii\)" [90m(3795.6788ms)[39m[39m
+[34mℹ KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): 1 of 2 run tests failed[39m
+[32m✔ mutant KS2-5 water over a heartline is an anonymous throw: applied, and caught by "S2 \(iv\)" [90m(866.8127ms)[39m[39m
+[34mℹ KS2-5 water over a heartline is an anonymous throw: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-1 the roll rate is read over a 0.5 m chord: applied, and caught by "S3: a full 360" [90m(873.5124ms)[39m[39m
+[34mℹ KS3-1 the roll rate is read over a 0.5 m chord: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-2 the bar is raised to 2.0: applied, and caught by "S3: a full 360" [90m(869.0749ms)[39m[39m
+[34mℹ KS3-2 the bar is raised to 2.0: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): applied, and caught by "S3 \(KS3-3\)" [90m(922.3707ms)[39m[39m
+[34mℹ KS3-3 the gravity-frame φ′ is read instead of the frame-intrinsic rate (blind on a climbing turn at constant bank): 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-4 the amber bar is dropped: applied, and caught by "S3: a full 360" [90m(945.0183ms)[39m[39m
+[34mℹ KS3-4 the amber bar is dropped: 1 of 1 run tests failed[39m
+[32m✔ mutant KS3-5 the roll rate is never checked: applied, and caught by "S3: a full 360" [90m(941.5012ms)[39m[39m
+[34mℹ KS3-5 the roll rate is never checked: 1 of 1 run tests failed[39m
+[32m✔ mutant KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): applied, and caught by "S4" [90m(1119.3832ms)[39m[39m
+[34mℹ KS4-1 the spiral's curvature is not given to the validator (kvec of the integrated curve): 1 of 1 run tests failed[39m
+[32m✔ mutant KS4-2 a lifted sample keeps only its own fields (spread of a view): applied, and caught by "S4|S2 \(i, ii\)" [90m(1524.6768ms)[39m[39m
+[34mℹ KS4-2 a lifted sample keeps only its own fields (spread of a view): 2 of 2 run tests failed[39m
+[32m✔ mutant KV1 tube-too-narrow is never raised: applied, and caught by "T1 iv" [90m(1113.8365ms)[39m[39m
+[34mℹ KV1 tube-too-narrow is never raised: 1 of 1 run tests failed[39m
+[32m✔ mutant KV2 the narrowest tube bar is 5 m: applied, and caught by "T1 iv" [90m(1005.3333ms)[39m[39m
+[34mℹ KV2 the narrowest tube bar is 5 m: 1 of 1 run tests failed[39m
+[32m✔ mutant KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): applied, and caught by "T1 iv" [90m(1076.81ms)[39m[39m
+[34mℹ KV2b the narrowest tube bar is the old 9.43 (the eye on the ceiling): 1 of 1 run tests failed[39m
+[32m✔ mutant KV3 edge-past-cap is never raised: applied, and caught by "E2: the validator" [90m(1169.4276ms)[39m[39m
+[34mℹ KV3 edge-past-cap is never raised: 1 of 1 run tests failed[39m
+[32m✔ mutant KC1 close does not refuse a seam that joins a tube to another kind: applied, and caught by "CLOSE \(E4 iii" [90m(477.8144ms)[39m[39m
+[34mℹ KC1 close does not refuse a seam that joins a tube to another kind: 1 of 1 run tests failed[39m
+[32m✔ mutant KC2 close does not refuse an edge active at one end only: applied, and caught by "CLOSE \(E4 iii" [90m(484.8104ms)[39m[39m
+[34mℹ KC2 close does not refuse an edge active at one end only: 1 of 1 run tests failed[39m
+[32m✔ mutant KC3 close moves e (it joins e at a seam where only one end has it): applied, and caught by "CLOSE: a lap whose edge ends" [90m(785.1375ms)[39m[39m
+[34mℹ KC3 close moves e (it joins e at a seam where only one end has it): 1 of 1 run tests failed[39m
+[32m✔ mutant KB1 an e brush may reach a piece without an edge: applied, and caught by "BRUSH" [90m(443.9559ms)[39m[39m
+[34mℹ KB1 an e brush may reach a piece without an edge: 1 of 1 run tests failed[39m
+[32m✔ match: extending by one word equals a full rebuild (centreline, frame, stations, cells, vertices, folds) [90m(397.3589ms)[39m[39m
+[32m✔ match: growing word by word from one word to thirty equals a full rebuild at the end [90m(431.6737ms)[39m[39m
+[32m✔ cost: a one-word extension costs the same on a 10-word and a 100-word track (operation counts) [90m(1236.8589ms)[39m[39m
+[32m✔ build head: the open end's frame, and a build-view camera behind and above it looking along T [90m(0.6916ms)[39m[39m
+[32m✔ edges: a closed loop cannot be extended, a zero-length tail is refused, and a wider tail profile still extends exactly [90m(15.8656ms)[39m[39m
+[32m✔ loop-the-loop (yaw 0): pitch goes through ±90° and upside down, the frame is continuous and orthonormal, and it exits level [90m(5.6112ms)[39m[39m
+[32m✔ loop-the-loop (yaw 0.004): pitch goes through ±90° and upside down, the frame is continuous and orthonormal, and it exits level [90m(2.6726ms)[39m[39m
+[32m✔ loop-the-loop: no folds on a half-pipe loop of R = 12 m [90m(33.8599ms)[39m[39m
+[32m✔ loop-the-loop: a pure vertical loop closes, in position and in frame [90m(0.6178ms)[39m[39m
+[32m✔ loop-the-loop: the exit over the entry at the bottom is found by selfCheck (a pure loop is not drivable as is) [90m(197.2332ms)[39m[39m
+[32m✔ gravity frame at EXACTLY ±90° pitch: finite, orthonormal, right-handed, and its left is the heading's left [90m(1.4055ms)[39m[39m
+[32m✔ corkscrew: a full roll about a heartline turns the road upside down halfway, continuously, and exits as it entered [90m(1.7046ms)[39m[39m
+[32m✔ chord error: every profile vertex track stays within the stated bound, measured on a 5× finer path [90m(86.2679ms)[39m[39m
+[32m✔ cells: no cell at or over 65,536 vertices, even when a fine profile forces splitting [90m(730.5551ms)[39m[39m
+[32m✔ fold check: a crafted fold fires (a 5 m radius turn under a 13 m half-width road), on the inside edge only [90m(0.8792ms)[39m[39m
+[32m✔ fold check: a proper track reports no folds [90m(45.6425ms)[39m[39m
+[32m✔ ψ past 90°: the wall-ride edge at 110° has the right normal (cos ψ·U − sin ψ·L), faces down, and the winding agrees [90m(6.8711ms)[39m[39m
+[32m✔ scene: T1 shape, passes validateScene, and src/export/kn5write.js writes it unchanged; vertices are cell-relative [90m(73.5008ms)[39m[39m
+[32m✔ gap: a jump gap gets no surface, and splits the road into separate cells [90m(1.5075ms)[39m[39m
+[32m✔ edge: a straight flat road meshes with every normal straight up [90m(1.02ms)[39m[39m
+[32m✔ row 1: the mesh is the same to the byte (scene arrays, matrices, cells, folds) for zipper seams, a closed lap's joint, a tube, a reuse with stale rows, and a lean build [90m(3977.8348ms)[39m[39m
+[32m✔ row 2: a piece's boundary rows are packed: a Float64Array of 6·K numbers (p, n), equal to vertex(); rowVertices reads them back [90m(204.6534ms)[39m[39m
+[32m✔ harness: a try that crashed natively is printed with its number; a try without a crash prints nothing (D353) [90m(0.9975ms)[39m[39m
+[32m✔ harness: the verdict is the own line of the named test (✖ caught, ✔ not caught), and a file-level failure alone is NO verdict [90m(0.1539ms)[39m[39m
+[32m✔ control: the unmutated copy passes every geometry test [90m(8416.072ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(487.736ms)[39m[39m
+[32m✔ mutation M1 the unrolled left from up × T (the level left): undefined at a vertical tangent: applied, and caught by "gravity frame at EXACTLY ±90° pitch…" [90m(364.1572ms)[39m[39m
+[32m✔ mutation M2 the unrolled left does not follow the heading (it stays the start's): applied, and caught by "gravity frame: on an open non-planar curve…" [90m(1214.8382ms)[39m[39m
+[32m✔ mutation M3 fold check disabled (margin ≤ 0 never fires): applied, and caught by "fold check: a crafted fold fires…" [90m(218.9852ms)[39m[39m
+[32m✔ mutation M4 chord-error limit removed from the adaptive step: applied, and caught by "chord error:…" [90m(256.1561ms)[39m[39m
+[32m✔ mutation M5 normals clamped at 90° (ψ past vertical treated as vertical): applied, and caught by "ψ past 90°…" [90m(214.1642ms)[39m[39m
+[32m✔ mutation M6 zero-length word accepted: applied, and caught by "edge: a zero-length word is refused…" [90m(229.1136ms)[39m[39m
+[32m✔ mutation M7 cell vertex cap removed: applied, and caught by "cells: no cell at or over 65,536…" [90m(940.0512ms)[39m[39m
+[32m✔ mutation M8 extendPath keeps the old open end (the seam sample is not re-emitted): applied, and caught by "match: extending by one word…" [90m(519.4711ms)[39m[39m
+[31m✖ mutation M9 extendMesh makes no seam onto the first new piece: applied, and caught by "match: growing word by word…" [90m(783.1986ms)[39m[39m
+[31m✖ mutation M10 extendMesh remeshes every piece (right answer, cost grows with the track): applied, and caught by "cost: a one-word extension…" [90m(1901.3058ms)[39m[39m
+[32m✔ mutation M11 sculptMesh never reuses a downstream piece (right answer, cost grows with the track): applied, and caught by "sculpt cost:…" [90m(3344.5248ms)[39m[39m
+[32m✔ mutation M12 sculpt reuse ignores the start pitch: applied, and caught by "sculpt: a start-pitch change with NO bank change…" [90m(379.1251ms)[39m[39m
+[32m✔ mutation M13 a moved piece's seam keeps its old placement: applied, and caught by "sculpt: editing one piece's length…" [90m(663.285ms)[39m[39m
+[32m✔ mutation M14 a moved piece's boundary rows are not recomputed for the seam beside the sculpted piece: applied, and caught by "sculpt: editing one piece's length…" [90m(608.3738ms)[39m[39m
+[32m✔ mutation M15 rebuildPathFrom regrows from the path start instead of segment g (right answer, path cost grows): applied, and caught by "sculpt: path re-placement…" [90m(307.8712ms)[39m[39m
+[32m✔ mutation M16 coplanar triangles never meet (the 2D branch disabled): applied, and caught by "figure-8, same height…" [90m(245.0905ms)[39m[39m
+[32m✔ mutation M17 the same-pass rule dropped (neighbouring cells tested against each other): applied, and caught by "figure-8, 6 m separation…" [90m(315.1527ms)[39m[39m
+[32m✔ mutation M18 the BVH skips the last triangle of every leaf: applied, and caught by "BVH = brute force…" [90m(349.1427ms)[39m[39m
+[32m✔ mutation M19 the stacked reach is misread (gap scaled ×4): applied, and caught by "figure-8, 1.5 m separation…" [90m(247.2841ms)[39m[39m
+[32m✔ mutation M20 ramps ignored in the mesh (a font jumps at the seam): applied, and caught by "no step at the seam, flat → half-pipe…" [90m(249.0456ms)[39m[39m
+[32m✔ mutation M21 the width does not ramp (the blend jumps to the new width): applied, and caught by "no step at the seam, flat 26 m → flat 36 m…" [90m(251.6136ms)[39m[39m
+[32m✔ mutation M22 a piece never inherits the previous font: applied, and caught by "no step at the seam, half-pipe → flat…" [90m(272.9021ms)[39m[39m
+[32m✔ mutation M23 the ramp ends early (w reaches 1 at half the ramp): applied, and caught by "the ramp ends on the entering font…" [90m(254.9542ms)[39m[39m
+[32m✔ mutation M26 the self-check finds cell records by NAME again: applied, and caught by "names repeat (two adjacent pieces…" [90m(232.7301ms)[39m[39m
+[32m✔ mutation M27 the self-check groups findings by cell NAME: applied, and caught by "names repeat: a real same-height crossing…" [90m(340.353ms)[39m[39m
+[32m✔ mutation M24 the document blend offset s0 ignored (a transition split across segments restarts): applied, and caught by "document blend: a transition split across two segments…" [90m(325.3951ms)[39m[39m
+[32m✔ mutation M25 blend: null overridden by the geometry's own inheritance: applied, and caught by "document blend: null means no ramp…" [90m(302.6215ms)[39m[39m
+[32m✔ mutation R1 the tail is always regrown (nothing is ever re-placed): applied, and caught by "rigid: a straight's length edit on a 1° climb re-places…" [90m(389.5038ms)[39m[39m
+[32m✔ mutation R2 a re-placed block keeps its old placement (its views never move): applied, and caught by "rigid: the re-placed path equals a full rebuild…" [90m(353.2921ms)[39m[39m
+[32m✔ mutation R3 the tail test ignores the start pitch: applied, and caught by "sculpt: a start-pitch change with NO bank change…" [90m(318.9828ms)[39m[39m
+[32m✔ mutation R4 the tail's first-sample indices are not advanced: applied, and caught by "rigid: every downstream cell keeps its local arrays…" [90m(345.8561ms)[39m[39m
+[32m✔ mutation R5 the tail stops regrowing after one block (the rest is re-placed although its inputs differ): applied, and caught by "rigid: a pitch edit upstream is NOT rigid…" [90m(323.1377ms)[39m[39m
+[32m✔ mutation R7 an append does not drop the old open end from its block's count: applied, and caught by "rigid: an append, then a sculpt upstream…" [90m(250.0202ms)[39m[39m
+[32m✔ mutation R8 a segment's roll is not part of its path handles (a roll edit downstream is taken as unchanged tail): applied, and caught by "rigid: a later segment whose ROLL changed…" [90m(241.1196ms)[39m[39m
+[32m✔ mutation R9 a placed sample turns its y component too (the bank against gravity drifts): applied, and caught by "rigid: the displayed bank after the move…" [90m(359.4081ms)[39m[39m
+[32m✔ closure: a planar closed stadium closes in position (≤ 1e-6 m) and in frame (T, L, U within 1e-9) [90m(5.8932ms)[39m[39m
+[32m✔ closure: a NON-planar closed loop closes in frame with no twist to spread (the gravity frame follows the heading) [90m(3.5806ms)[39m[39m
+[32m✔ frame: twist is zero on a planar curve, and the frame stays level (|L·Y| < 1e-9 everywhere) [90m(3.4868ms)[39m[39m
+[32m✔ gravity frame: on an open non-planar curve the unrolled left is the heading's left, so roll 0 means level [90m(2.8128ms)[39m[39m
+[32m✔ frame: (T, L, U) is orthonormal and right-handed, with L = U × T, at every sample [90m(1.8818ms)[39m[39m
+[32m✔ clothoid: heading change over a word is (k0 + k1)·L/2, and curvature is linear in s [90m(0.2424ms)[39m[39m
+[32m✔ edge: a straight line (k = 0) stays on a line with a constant frame [90m(2.0685ms)[39m[39m
+[32m✔ edge: a zero-length word is refused, and so is a loop that does not close [90m(0.7399ms)[39m[39m
+[32m✔ no step at the seam, flat → half-pipe: the entering row lies on the leaving row within 2.19e-3 m [90m(30.1569ms)[39m[39m
+[32m✔ no step at the seam, half-pipe → flat: the entering row lies on the leaving row within 2.19e-3 m [90m(23.2718ms)[39m[39m
+[32m✔ no step at the seam, half-pipe → wall-ride (past vertical): the entering row lies on the leaving row within 2.19e-3 m [90m(23.5742ms)[39m[39m
+[32m✔ no step at the seam, flat 26 m → flat 36 m: the entering row lies on the leaving row within 2.19e-3 m [90m(3.3105ms)[39m[39m
+[32m✔ control: with rampM: 0 the same fonts step by more than 1 m (the check can see a jump) [90m(8.0374ms)[39m[39m
+[32m✔ the ramp ends on the entering font: the row at 20 m lies on its own cross-section [90m(8.4089ms)[39m[39m
+[32m✔ width ramps: halfway through a 26 m → 36 m ramp (w = 0.5) the road is 31 m wide [90m(3.132ms)[39m[39m
+[32m✔ smoothstep: 0 and 1 at the ends, 0.5 halfway, and flat at both ends (no kink where a ramp starts or stops) [90m(0.1162ms)[39m[39m
+[32m✔ edges: same font twice has no ramp; a ramp longer than its piece still ends on the entering font [90m(5.0314ms)[39m[39m
+[32m✔ document blend: { from, s0: 0, length: 20 } on the entering word equals the geometry's own default ramp [90m(18.3287ms)[39m[39m
+[32m✔ document blend: a transition split across two segments of one word continues (no restart, no step, no seam) [90m(15.842ms)[39m[39m
+[32m✔ document blend: null means no ramp, even after a different font (the document spoke; the geometry adds none) [90m(6.5132ms)[39m[39m
+[32m✔ document blend: a malformed field is refused loudly (no from, negative s0, zero length) [90m(2.683ms)[39m[39m
+[32m✔ saved piece: the same handles give the same mesh at two placements (compared in the piece's own frame) [90m(65.2977ms)[39m[39m
+[32m✔ saved piece, the stated limit: with the world-up curve model, a different START PITCH bends the same handles differently [90m(25.933ms)[39m[39m
+[32m✔ sculpt: editing one piece's wall angle changes that piece, the next piece's entry ramp, and their seams; nothing moves [90m(285.5615ms)[39m[39m
+[32m✔ sculpt: editing one piece's length changes only its cells; downstream pieces keep their arrays and only move [90m(374.9839ms)[39m[39m
+[32m✔ sculpt: editing one piece's curvature rotates everything after it about world up; downstream arrays are kept [90m(328.0785ms)[39m[39m
+[32m✔ sculpt cost: the mesh work is the same with 10 or 100 pieces after the edited one (operation counts) [90m(1026.4047ms)[39m[39m
+[32m✔ sculpt: editing a piece's pitch changes the start pitch of everything after it, so those pieces are remeshed, not reused [90m(285.5325ms)[39m[39m
+[32m✔ sculpt: path re-placement costs the edited piece and what follows it, never what comes before (operation counts) [90m(15.044ms)[39m[39m
+[32m✔ sculpt: a start-pitch change with NO bank change still remeshes the curve after it (a straight ramp, then a turn) [90m(37.0612ms)[39m[39m
+[32m✔ rigid: a straight's length edit on a 1° climb re-places every later segment, and regrows none of them [90m(49.5162ms)[39m[39m
+[32m✔ rigid: every downstream cell keeps its local arrays byte for byte; only its matrix moves [90m(58.3117ms)[39m[39m
+[32m✔ rigid: the bank against gravity of every re-placed sample is bit-identical to before the edit (Δbank exactly 0) [90m(47.8505ms)[39m[39m
+[32m✔ rigid: the displayed bank after the move is the moved frame's bank against gravity, and a full rebuild's to 1e-12 [90m(71.9458ms)[39m[39m
+[32m✔ rigid: the re-placed path equals a full rebuild of the edited track EXACTLY (the same chain, the same floats) [90m(47.6058ms)[39m[39m
+[32m✔ rigid: a turn edit (heading) re-places everything after it, turned about world up, equal to a full rebuild [90m(50.5664ms)[39m[39m
+[32m✔ rigid cost: the operation count of an edit is the same whether the downstream pieces are 40 m or 4 km long [90m(4182.8611ms)[39m[39m
+[32m✔ rigid cost: each extra downstream segment adds exactly one operation to the path (its re-placement) [90m(881.8505ms)[39m[39m
+[32m✔ rigid: the path grows on from a re-placed tail exactly as from a grown one (append after a sculpt) [90m(53.5627ms)[39m[39m
+[32m✔ rigid: a pitch edit upstream is NOT rigid under the world-up model: the tail is regrown and equals a full rebuild [90m(88.916ms)[39m[39m
+[32m✔ rigid: a TURN edit on a pitched stretch moves downstream rigidly (Δbank 0) [90m(5.1708ms)[39m[39m
+[32m✔ rigid: a level turn edited before a climb re-places the pitched, banked tail with L·y and bankG bit for bit, bankG = asin(L·y) [90m(5.4966ms)[39m[39m
+[32m✔ rigid: two sculpts in a row compose their motions; the path still equals a full rebuild [90m(4.7909ms)[39m[39m
+[32m✔ rigid: an append, then a sculpt upstream: the re-placed tail includes the appended piece, equal to a full rebuild [90m(4.0452ms)[39m[39m
+[32m✔ rigid: a later segment whose ROLL changed is regrown, not re-placed (the unchanged tail starts after it) [90m(3.2344ms)[39m[39m
+[32m✔ exact: a turn edit on a pitched stretch re-places the whole tail and equals a full rebuild exactly [90m(51.7537ms)[39m[39m
+[32m✔ exact: a level turn edit equals a full rebuild exactly (the tail is regrown with the RMF frame) [90m(43.937ms)[39m[39m
+[32m✔ row 1: sealed is a frozen copy (u and psi too), the original is untouched, and a frozen profile comes back as it is [90m(0.9425ms)[39m[39m
+[32m✔ row 2: offsetAt on the sealed copy is the original's, bit for bit, at every u, on an edge profile and on a blend [90m(3.7139ms)[39m[39m
+[32m✔ row 3: stepBetween is the same measure as on unfrozen profiles [90m(0.4394ms)[39m[39m
+[32m✔ control: the unmutated copy passes every look-match test [90m(391.1727ms)[39m[39m
+[32m✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) [90m(207.7167ms)[39m[39m
+[32m✔ a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353) [90m(589.1672ms)[39m[39m
+[32m✔ a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354) [90m(189.884ms)[39m[39m
+[32m✔ mutation K1 CIEDE2000 without its lightness weight SL: applied, and caught by "metric: CIEDE2000 gives Sharma…" [90m(284.131ms)[39m[39m
+[32m✔ mutation K2 CIEDE2000 without the a* rescaling G: applied, and caught by "metric: CIEDE2000 gives Sharma…" [90m(275.3487ms)[39m[39m
+[32m✔ mutation K3 CIEDE2000 without the blue-region rotation term RT: applied, and caught by "metric: CIEDE2000 gives Sharma…" [90m(261.6358ms)[39m[39m
+[32m✔ mutation K4 the mask reads only one image's alpha: applied, and caught by "metric: sRGB white and black…" [90m(258.7766ms)[39m[39m
+[32m✔ mutation K5 an anchor pointing backwards is not turned round: applied, and caught by "cameras: an anchor whose axis points backwards…" [90m(267.3343ms)[39m[39m
+[32m✔ mutation K6 yaw turns right, not left: applied, and caught by "cameras: forward and right move the eye…" [90m(259.2859ms)[39m[39m
+[32m✔ mutation K7 meshes AC flags invisible are drawn: applied, and caught by "kn5 reader: a mesh AC flags not visible…" [90m(268.9713ms)[39m[39m
+[32m✔ mutation K8 the kn5 v is flipped on reading (a texture upside down): applied, and caught by "kn5 reader: what the export writes reads back…" [90m(270.0179ms)[39m[39m
+[32m✔ mutation K9 DXT1 without its 3-colour mode: applied, and caught by "dds: a DXT1 block decodes…" [90m(273.4312ms)[39m[39m
+[32m✔ mutation K10 the mip level ignores maxSide: applied, and caught by "dds: an uncompressed 32-bit DDS…" [90m(268.4294ms)[39m[39m
+[32m✔ mutation K11 no depth test: applied, and caught by "raster: the nearer surface wins…" [90m(265.3239ms)[39m[39m
+[32m✔ mutation K12 a triangle through the near plane is dropped, not clipped: applied, and caught by "raster: a triangle through the near plane…" [90m(264.138ms)[39m[39m
+[32m✔ mutation K13 the alpha test ignored: applied, and caught by "raster: an alpha-tested material…" [90m(268.72ms)[39m[39m
+[32m✔ mutation K14 no fog: applied, and caught by "raster: far away…" [90m(280.6667ms)[39m[39m
+[32m✔ mutation K15 a render into the repository is allowed: applied, and caught by "cli: a render into the repository is refused…" [90m(302.9698ms)[39m[39m
+[34mℹ tests 724[39m
+[34mℹ suites 0[39m
+[34mℹ pass 716[39m
+[34mℹ fail 8[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2377469.6721[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\mutation.test.js:230:3
+[31m✖ mutation B4 the edge lines one vertex in from the edges: applied, and caught by "edge lines: through the two edge vertices…" [90m(11629.9539ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "for (const k of [0, kc, K - 1])" is not in app/preview/look.js
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-a29\[39mapp\test\mutation.test.js:232:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\mutation.test.js:230:3
+[31m✖ mutation B5 the lines not lifted off the surface (they would z-fight): applied, and caught by "edge lines: through the two edge vertices…" [90m(11564.5885ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "return [P[i] + N[i] * LIFT, P[i + 1] + N[i + 1] * LIFT, P[i + 2] + N[i + 2] * LIFT];" is not in app/preview/look.js
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-a29\[39mapp\test\mutation.test.js:232:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\mutation.test.js:230:3
+[31m✖ mutation B6 no ties across the road: applied, and caught by "edge lines: a tie across the road…" [90m(12264.5969ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "if (!(r === 0 || Math.floor(b.rowS[r] / TIE_M) !== Math.floor(b.rowS[r - 1] / TIE_M))) continue;" is not in app/preview/look.js
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-a29\[39mapp\test\mutation.test.js:232:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\mutation.test.js:230:3
+[31m✖ mutation B10 the ghost is built on the live path (no copy): applied, and caught by "ghost: the ghost of a segment tail…" [90m(11785.2848ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT; failing tests on the mutant: ghost through A's real shell: the candidate for a word equals what shell.place() then builds (25.043ms) | preview: showGhost draws the ghost, clearGhost removes it, and placing the word retires it (28.598ms)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-a29\[39mapp\test\mutation.test.js:233:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\mutation.test.js:230:3
+[31m✖ mutation B11 placing the word does not retire its ghost: applied, and caught by "preview: showGhost draws the ghost…" [90m(13810.8905ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "if (track.how !== 'same' && track.how !== 'kept') ghost = null;" is not in app/preview/preview.js
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-a29\[39mapp\test\mutation.test.js:232:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\release-frame.test.js:145:1
+[31m✖ row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frames together [90m(15466.7776ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: a field change: p95 11.6 / 6.1 ms, over 6
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-a29\[39mapp\test\release-frame.test.js:163:10[90m)[39m
+  [90m    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\geom_mutation.test.js:177:3
+[31m✖ mutation M9 extendMesh makes no seam onto the first new piece: applied, and caught by "match: growing word by word…" [90m(783.1986ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "seamsAround(st, segments.map((_, g) => g).slice(from));" is not in src/geom/mesh.js
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-a29\[39mtest\geom_mutation.test.js:180:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\geom_mutation.test.js:177:3
+[31m✖ mutation M10 extendMesh remeshes every piece (right answer, cost grows with the track): applied, and caught by "cost: a one-word extension…" [90m(1901.3058ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "meshRange(st, path, segments, from, segments.length);" is not in src/geom/mesh.js
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-a29\[39mtest\geom_mutation.test.js:180:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+set exit [33m1[39m 2026-10-19T15:51:24.760Z

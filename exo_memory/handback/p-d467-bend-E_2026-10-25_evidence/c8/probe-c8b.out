@@ -1,0 +1,10 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+L 400 R 40 back 0.004: window [2] open crosses 882; start: crosses 240,256,650,668, move 177.4 vs drag 106.1 (part3 MISS), start straight false; fallback: closed crosses  :: osing it took back 45% of your bend (closed
+L 400 R 60 turn1 0.002: window [1] open crosses 968; start: crosses , move 46.2 vs drag 115.9 (part3 pass), start straight false; fallback: closed crosses  :: ur bend was undone to close the lap; bend f
+L 400 R 60 turn1 0.004: window [1] open crosses 88,718; start: crosses , move 104.6 vs drag 229.4 (part3 pass), start straight false; fallback: closed crosses  :: ur bend was undone to close the lap; bend f
+L 400 R 60 back 0.004: window [2] open crosses 1000,1040; start: crosses , move 203.9 vs drag 121.8 (part3 MISS), start straight false; fallback: closed crosses  :: osing it took back 43% of your bend (closed
+L 700 R 40 back 0.002: window [2] open crosses 1478; start: crosses , move 211.4 vs drag 89.3 (part3 MISS), start straight false; fallback: closed crosses  :: osing it took back 26% of your bend (closed
+L 700 R 40 back 0.004: window [2] open crosses 74,1308; start: crosses 370,374,554,958,1148, move 142.5 vs drag 177.1 (part3 pass), start straight false; fallback: closed crosses  :: osing it took back 31% of your bend (closed
+L 700 R 60 turn1 0.002: window [1] open crosses 406,1174,1184; start: crosses , move 95.5 vs drag 184.5 (part3 pass), start straight true; fallback: closed crosses  :: ur bend was undone to close the lap; bend f
+L 700 R 60 turn1 0.004: window [1] open crosses 460,980; start: crosses , move 136.8 vs drag 365.7 (part3 pass), start straight true; fallback: closed crosses  :: ur bend was undone to close the lap; bend f
+L 700 R 60 back 0.004: window [2] open crosses 1480; start: crosses , move 128.9 vs drag 187.9 (part3 pass), start straight false; fallback: closed crosses  :: osing it took back 27% of your bend (closed

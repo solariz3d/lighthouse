@@ -1,0 +1,8 @@
+no timing lock; head de43a6f changed=[1] SWEEP_SEEDS=60 18:42:59Z
+suite exit 1, 1599 s: ℹ tests 4278 ℹ pass 4255 ℹ fail 1 ℹ cancelled 0 ℹ skipped 21 ℹ todo 1  19:09:38Z
+suite non-TODO not ok rows: 1
+not ok 683 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+fixtures: ok 2043 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+mutant rows: applied-and-caught 786, not ok mutant rows 0, NOT APPLIED mentions 0
+after suite: changed=[1] 19:09:43Z
+DONE

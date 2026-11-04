@@ -1,0 +1,32 @@
+== d297 dumps · asked 2026-10-11T19:32:09.714Z · lock held 2026-10-11T19:32:09.761Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d297/dump3.sh
+snap files 6834
+mirror c-d297-base rc 0 files 6834 head 5d5740b4
+mirror c-d297-wt rc 0 files 6834 head 30f78d0b
+dump start 2026-10-11T19:32:20.037073400Z
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1024 filtered out; finished in 8.72s
+base dumped 2026-10-11T19:32:53.588762000Z
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1031 filtered out; finished in 8.14s
+new dumped 2026-10-11T19:33:02.646184900Z
+base tree == snapshot after dump
+new tree == snapshot after dump
+restored c-d297-base: 0 dirty
+restored c-d297-wt: 0 dirty
+c0ee8ee9aac70bee0ec809c8e8a685d6c5921412f943e9454844082f90cff760 *G:/consonance-scratch/c-d297/base3/librarian.light.md
+ca74a9c4fd507312bf02815e00ccea20a84a27adccfa5cebe81d542ec4b05961 *G:/consonance-scratch/c-d297/base3/librarian.strict.md
+ce699d53ec00688353fc08779df7fa36f414e81626ce71c18722c3f8253ae614 *G:/consonance-scratch/c-d297/base3/pane-C.light.md
+961d9c82f46de5445c75a58a2a966c3a74aa51fa20adb98118d92c5468f7bdb7 *G:/consonance-scratch/c-d297/base3/pane-C.strict.md
+87b1b5d2774927f872480fc729b054cfa647c972a1bee6ae5fa50b574f88a0b5 *G:/consonance-scratch/c-d297/new3/librarian.light.md
+07e06d93822668301fd5f393fa2856b1beb6fe81fed0cb8883a9b8b36cb796c6 *G:/consonance-scratch/c-d297/new3/librarian.strict.md
+fef676d8816f1bdb23f3a1864191c6344d0bd2f4cb91c553a7fa63e475154ced *G:/consonance-scratch/c-d297/new3/pane-C.light.md
+b139a8c9be41654ddcdf7d53ff8f3f086c87a3426850652fed5399d17eca3d80 *G:/consonance-scratch/c-d297/new3/pane-C.strict.md
+104411 G:/consonance-scratch/c-d297/base3/librarian.light.md
+141255 G:/consonance-scratch/c-d297/base3/librarian.strict.md
+ 91532 G:/consonance-scratch/c-d297/base3/pane-C.light.md
+107261 G:/consonance-scratch/c-d297/base3/pane-C.strict.md
+104369 G:/consonance-scratch/c-d297/new3/librarian.light.md
+141658 G:/consonance-scratch/c-d297/new3/librarian.strict.md
+ 91530 G:/consonance-scratch/c-d297/new3/pane-C.light.md
+107259 G:/consonance-scratch/c-d297/new3/pane-C.strict.md
+889275 total
+== exit 0 · done 2026-10-11T19:34:13.415Z

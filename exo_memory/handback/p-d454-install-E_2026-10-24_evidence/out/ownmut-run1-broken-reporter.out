@@ -1,0 +1,10 @@
+NOT CAUGHT M1 sources-gate: no third step  (?)
+NOT CAUGHT M2 claim-check: no third step  (?)
+NOT CAUGHT M3 heavy-run: no default dir  (?)
+NOT CAUGHT M4 heavy-run: default dir not created  (?)
+NOT CAUGHT M5 state-block: CONSONANCE_DATA ignored  (?)
+NOT CAUGHT M6 state-block: config data_dir ignored  (?)
+NOT CAUGHT M7 state-block: printed check keeps the old path  (?)
+NOT CAUGHT M8 pulse: no third tier  (?)
+NOT CAUGHT M9 lap-row: the fixed folder of one machine back  (?)
+applied 9 / caught 0 / NOT APPLIED 0

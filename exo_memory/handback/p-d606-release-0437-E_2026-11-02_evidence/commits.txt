@@ -1,0 +1,16 @@
+b497c5d Version 0.4.37
+6f35f7c Tubes: no crack or sliver at a joint, no jag where a tube opens or closes
+7ecb0fc Pit lane: no notch where it leaves and rejoins the road; a tube's opening without teeth
+3732fe1 Add a tube test: one fixture track of tube cases, judged for jags, open edges, slivers, clipping, collision and the AI line
+022fbd2 The road is a hull, its bottom one smooth curve from apron tip to apron tip
+09e5416 The road is a solid slab, not a slice of a mesh
+1341bbb Changelog: AI line points moved off vertical; sector gates chosen as the export checks them
+e94573d Mutants for the vertical bar
+89b950b Move AI line points off vertical instead of dropping the line
+955b899 Test that a line through vertical is cleared, a vertical straight refused, ELYSIUM unchanged
+f0bc529 Test that the sector search's default height is the markers' own
+afac13b Mutation harness for the vertical AI line
+8a3e5f9 Leave out the AI line when the road goes vertical, and say so
+97765cb Test that a track going vertical exports without an AI line
+8c4541e Measure a sector gate at its dummies, as the export checks it
+4739c18 Test that a sector gate the search picks passes the export's gate check

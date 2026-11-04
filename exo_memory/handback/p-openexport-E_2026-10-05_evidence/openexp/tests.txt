@@ -1,0 +1,11 @@
+# tests 173
+# suites 0
+# pass 173
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# Subtest: row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+ok 116 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+# Subtest: the TEST export of the same open track writes a folder marked unfinished, in name and folder
+ok 123 - the TEST export of the same open track writes a folder marked unfinished, in name and folder

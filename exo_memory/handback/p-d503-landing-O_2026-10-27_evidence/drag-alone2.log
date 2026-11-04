@@ -1,0 +1,20 @@
+00:59:28Z
+tabproxy before: 0
+cpu 42
+exit 1
+ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20
+ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the mo
+ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost wi
+ok 7 - row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 m
+not ok 8 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at
+# pass 7
+# fail 1
+  error: 'aqua, a 1000 m stretch with a left edge typed on an empty track drag: p95 7.4 / 7.0 ms (median 4.5 / 4.6), over 6.9 ms, 57.0 / 59.0 work frames a second (at most 120)'
+tabproxy after: 0
+ls: cannot access '/c/Consonance/data/heavy-run*.lock': No such file or directory
+01:01:52Z
+
+[exited with code 0]

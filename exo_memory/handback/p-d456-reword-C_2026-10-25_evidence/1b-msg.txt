@@ -1,0 +1,12 @@
+Person-neutral wording across the tree: "the user"
+
+The comments, docs, test titles and test data that named the person who uses and directs the builder by an older private
+label now say "the user", in all 199 files that had it, released CHANGELOG sections included: 532 lines, each changed in
+that word only. No code identifier and no string the app shows is renamed. Two sites are left as they are and listed in
+the hand-back for a ruling: a test helper's function name (test/core_tube_open.test.js) and one validator source string
+that the app shows as a tooltip (src/validate/index.js:105).
+
+Seat: pane C (sibling-0845a868), D456 part 1b.
+
+Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_017jVCxaAah7YfDwfSsgsdXy

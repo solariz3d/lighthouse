@@ -1,0 +1,20 @@
+normalize geom/profile.js: 85 ms
+     71 ms  < meshPiece geom/mesh.js:194 < reuseMesh geom/mesh.js:435
+      9 ms  < edgeProfile core/adapter.js:110 < own core/adapter.js:134
+      4 ms  < (anon) geom/profile.js:199 < commonFractions geom/profile.js:198
+      1 ms  < rampShape geom/mesh.js:177 < shapeAt geom/mesh.js:208
+numKey geom/profile.js: 83 ms
+     83 ms  < sealedNormal geom/profile.js:77 < meshPiece geom/mesh.js:194
+keyNum geom/profile.js: 31 ms
+     31 ms  < (anon) geom/profile.js:200 < commonFractions geom/profile.js:198
+keyOf preview/segkey.js: 176 ms
+    176 ms  < keyOf preview/trackmodel.js:45 < ghostSteps preview/trackmodel.js:336
+edgeProfile core/adapter.js: 89 ms
+     89 ms  < own core/adapter.js:134 < (anon) core/adapter.js:136
+deepFreeze core/adapter.js: 37 ms
+     31 ms  < deepFreeze core/adapter.js:281 < deepFreeze core/adapter.js:281
+      5 ms  < deepFreeze core/adapter.js:281 < (anon) core/adapter.js:380
+      1 ms  < (anon) core/adapter.js:380 < toSegments core/adapter.js:318
+hashRounded preview/coarse.js: 30 ms
+     21 ms  < profileKey preview/coarse.js:100 < canon preview/coarse.js:109
+     10 ms  < canonGrid preview/coarse.js:116 < canonSeg preview/coarse.js:121

@@ -19,7 +19,7 @@ const { execFileSync } = require('child_process');
 const { gate } = require('./corrections-gate.js');
 
 function repoWith(commits) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cgate-'));
+  const dir = require('./scratch.js').mkdtemp('cgate-');
   const git = (...a) => execFileSync('git', ['-C', dir, ...a], { encoding: 'utf8' });
   git('init', '-q');
   git('config', 'user.email', 't@t');
@@ -86,7 +86,7 @@ test('a marker inherited from an EARLIER commit does not excuse a later one', ()
 });
 
 test('files outside the guarded set are reported, never failed', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cgate-o-'));
+  const dir = require('./scratch.js').mkdtemp('cgate-o-');
   const git = (...a) => execFileSync('git', ['-C', dir, ...a], { encoding: 'utf8' });
   git('init', '-q'); git('config', 'user.email', 't@t'); git('config', 'user.name', 't');
   fs.writeFileSync(path.join(dir, 'notes.md'), 'x\n');

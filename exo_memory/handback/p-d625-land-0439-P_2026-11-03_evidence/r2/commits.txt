@@ -1,0 +1,18 @@
+* e2d5a0f a17a1d4 | Version 0.4.39
+*   a17a1d4 3135cdf b6ced2e | Merge the pass clearance checks
+|\  
+| * b6ced2e d3cf1ee | Tests: the texture page's warning-text row lays a corner that folds, as the builder now refuses a piece that crosses itself
+| * d3cf1ee 9dac829 | Export: warn where another pass comes within a car's room, and where a drawn underside shows through another pass's road
+| * 9dac829 72fff66 | Tests: lay the tracks that come back over their own road with the core's pieces, as the builder now refuses them
+| * 72fff66 a005e1d | Builder: refuse a road laid too close over another for its underside and a car; the checker draws its reds on the road
+*   3135cdf 05d01c5 4e6398c | Merge the ribbon bank carry fix
+|\  
+| * 4e6398c 3e7b7cd | The sculpt locality test records why the carried roll may move outside a brush's window
+| * 3e7b7cd 51f3a82 | A roll that runs on through a joint is built through it, not stopped at it
+| * 51f3a82 a005e1d | A bank typed as exactly one turn is a full turn of roll, not none
+* 05d01c5 a005e1d b2d58ef | Merge the sky banding fix
+* b2d58ef f835410 | The renderer's stand-in takes the vignette's depth test, and the sky dither row looks where every pixel gets the dither
+* f835410 519aefa | The vignette darkens the sky inside the sky pass, before its dither, so the real page shows no steps under it
+* 519aefa b497c5d | The 3D view's vignette is drawn by the renderer with the sky's dither, so it no longer bands into rings
+
+ 74 files changed, 1630 insertions(+), 174 deletions(-)

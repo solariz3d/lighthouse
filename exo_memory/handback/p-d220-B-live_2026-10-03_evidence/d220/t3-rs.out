@@ -1,0 +1,44 @@
+[32m✔ TOKENS: a reply naming a path, a sha, a commit, a count N/M, "N of M", a percentage or a version is flagged, each by its kind [90m(1.6414ms)[39m[39m
+[32m✔ TOKENS: plain prose, a bare number, a decimal, a word of hex-like letters, a lap id and a URL are not flagged [90m(0.3476ms)[39m[39m
+[32m✔ TOKENS: a sentence-final full stop, comma or closing bracket is not part of the token [90m(0.2445ms)[39m[39m
+[32m✔ TOKENS: a flagged token is clipped, redacted of key shapes, deduplicated and capped at 12; no surrounding text is kept [90m(0.2168ms)[39m[39m
+[32m✔ VERDICT: a Sources line whose items match calls of the turn is pass-matched [90m(38.8679ms)[39m[39m
+[32m✔ VERDICT: an unmatched Sources item is would-block-unmatched and the row names exactly that item [90m(34.4793ms)[39m[39m
+[32m✔ VERDICT: a reply with a token and NO Sources line is would-block-missing; a Sources line that is not the FINAL line (a blank line and prose after it) is too [90m(66.2726ms)[39m[39m
+[32m✔ VERDICT: "Sources: none" passes but is recorded as none; an empty Sources line is would-block-empty; "sources:" in any case and markdown emphasis count [90m(99.9798ms)[39m[39m
+[32m✔ VERDICT: the matcher is the SOURCES gate's: a command item matches a Bash call, an ls does not open, a read before the keeper's message is stale, a notification between is not a boundary [90m(129.5981ms)[39m[39m
+[32m✔ PASSES: no token is pass-notoken; the keep-warm "ok" and a keep-warm turn are skipped; a reply to a ring or a notification is not a reply to the keeper [90m(251.088ms)[39m[39m
+[32m✔ PASSES: a bare "ok" reply, whatever the prompt, and an empty reply are skipped [90m(123.4598ms)[39m[39m
+[32m✔ D218 SCOPE: in the LIBRARIAN session a reply to a [pane: ring is EVALUATED (plain and pasted), and the row says it was a pane ring [90m(102.1428ms)[39m[39m
+[32m✔ D218 SCOPE: a pane-ring reply in the librarian session is judged on its Sources line exactly like a keeper reply (matched, unmatched, none) [90m(96.5046ms)[39m[39m
+[32m✔ D218 SCOPE: in the CHAIR session a [pane: ring (plain or pasted) stays skipped, and so does every other ring; and in the librarian session a chair ring is still skipped [90m(218.482ms)[39m[39m
+[32m✔ D218 SCOPE: keep-warm and machine prompts stay skipped in BOTH sessions, and a turn a notification started while the seat was idle is still not keeper-facing after a pane ring [90m(306.2036ms)[39m[39m
+[32m✔ D218 SCOPE (LIVE since D220): a pane-ring would-block in the librarian session prints the block; the block is produced only for the librarian seat, and never for the chair or with no seat named [90m(66.6812ms)[39m[39m
+[32m✔ WHO: the librarian and the chair are identified by pane id, or by instance directory when there is no pane id; a committee pane and any other session are ignored with NO row [90m(272.8631ms)[39m[39m
+[32m✔ WHO: the two fixed ids are the ones main.rs declares [90m(8.973ms)[39m[39m
+[32m✔ LIVE PIN (D220): SHADOW is false; every would-block prints the Stop block JSON and exits 0 with nothing on stderr; a matched reply, "Sources: none", a no-claim reply and a keep-warm print nothing [90m(224.5705ms)[39m[39m
+[32m✔ LIVE REASON (D220): the block names the unbacked tokens, says what was and was not opened, and gives both ways out: open the source then end with a Sources: line, or drop the claim / Sources: none; and says it blocks once [90m(1.0308ms)[39m[39m
+[32m✔ LIVE FIXABLE (D220): a blocked reply can always be fixed in the same turn: opening the source and ending with a matching Sources: line passes, "Sources: none" passes, and a SECOND Stop in the turn (stop_hook_active) never blocks even when still unbacked [90m(131.6589ms)[39m[39m
+[32m✔ LIVE CHAIR (D220): the chair session blocks a keeper-message would-block too, and skips its pane-ring replies, keep-warm, and machine prompts [90m(130.874ms)[39m[39m
+[32m✔ LIVE (verdict level): with live true a would-block returns the Stop block JSON naming the kinds and the unmatched items; stop_hook_active true returns nothing [90m(0.4389ms)[39m[39m
+[32m✔ GUARD: stop_hook_active true is skip-active even with NO readable transcript (the transcript is not even read), and a notification issued between a tool call and its result is still the keeper's turn [90m(69.2632ms)[39m[39m
+[32m✔ GUARD: stop_hook_active true in a real run logs skip-active, evaluates nothing, prints nothing [90m(29.9656ms)[39m[39m
+[32m✔ LEDGER: a row carries a sha of the reply, its length and the flagged tokens, and NOT the reply text; the shadow flag and the session prefix are there [90m(34.7853ms)[39m[39m
+[32m✔ LEDGER: a key shape in an unmatched Sources item is redacted [90m(33.2089ms)[39m[39m
+[32m✔ FAIL OPEN: garbage or empty stdin, a non-object payload, and a missing last_assistant_message exit 0 with nothing printed [90m(145.3737ms)[39m[39m
+[32m✔ FAIL OPEN: a missing or unparseable transcript logs an error row and never blocks, even for a reply that would block [90m(59.1046ms)[39m[39m
+[32m✔ FAIL OPEN: with no data dir, or a ledger that cannot be written, it still prints nothing and exits 0 [90m(65.4611ms)[39m[39m
+[32m✔ FAIL OPEN: alone in a directory (sources-gate.js not beside it) it logs an error row and exits 0 [90m(44.7026ms)[39m[39m
+[32m✔ GUARDS: the dream gate and the second-reader environment do not get a row [90m(67.8616ms)[39m[39m
+[32m✔ REGISTERED: install.ps1 copies reply-slot.js beside sources-gate.js and registers it on Stop with no matcher; every other Stop entry is still there [90m(1.1758ms)[39m[39m
+[32m✔ PLAN: the plan the hook cites exists [90m(0.1799ms)[39m[39m
+[32m✔ HOOK SOURCE: no process is spawned, no network is called, and nothing but the ledger is written [90m(0.3462ms)[39m[39m
+[34mℹ tests 35[39m
+[34mℹ suites 0[39m
+[34mℹ pass 35[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2935.9422[39m
+exit 0

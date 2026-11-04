@@ -27,7 +27,7 @@ test.after(() => { for (const b of beds) fs.rmSync(b, { recursive: true, force: 
 
 /** A fixture repo with the real tool in it, one carrier, and a registry. */
 function bed({ marker }) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cdw-'));
+  const root = require('../tools/scratch.js').mkdtemp('cdw-');
   beds.push(root);
   const repo = path.join(root, 'repo');
   const data = path.join(root, 'data');

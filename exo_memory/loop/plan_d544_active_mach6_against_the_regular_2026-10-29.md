@@ -1,0 +1,25 @@
+# D544: the "active" Mach 6 against the regular one, on CRAZY TEST, from his replays. Librarian, 2026-10-29 18:3x
+
+The user, 18:34: a community reconfiguration of the T-180 car mod, the "actives", handles "more T-180 like" than the regular cars; he drove the Mach 6 active on CRAZY TEST and saved a replay, to measure the difference against the regular Mach 6 run.
+
+## Facts (checked 18:36)
+
+- Replays (`C:\Users\nname\Documents\Assetto Corsa\replay\`): the ACTIVE run `ohyeah2389_t180_mach6_active_t180b_crazy_test_test_soft_a__291026-182114.acreplay` (18:21 today, 26.7 MB, on the soft_a copy); the REGULAR run `ohyeah2389_t180_mach6_t180b_crazy_test_test__281026-093611.acreplay` (2026-10-28 09:36, 2.4 MB: the D515 run).
+- The road: `t180b_crazy_test_test` and `_soft_a` share one kn5 byte for byte (153,206,112 B, sha256 93daef61…, written 2026-10-28 09:59). BUT the regular replay is from 09:36 that day, 23 minutes BEFORE that kn5 was written, so it was driven on the export before it. D525's note says the document moved between D515's run and the soft copies (source geometry d5aa4fb3 then, a632de95 now). The two replays are therefore NOT on the same road until O checks what changed between the two exports (the track-backups folder holds `eq-CRAZY TEST.2026-10-28_095313.t180track`, saved just before the 09:59 export; O diffs it against the document the 09:36 export came from, if a backup of that exists, else reads the replay's own track checksum fields). Whatever differs is excluded from the comparison or the comparison waits for Part 2.
+- The cars: `content\cars\ohyeah2389_t180_mach6` ships `data.acd` only (packed); `ohyeah2389_t180_mach6_active` ships `data.acd` AND an unpacked `data\` with `ctrl_steer_*.ini`, `ctrl_susp_*.ini` (eight controller files: active suspension and steering through CSP's extended physics), `car_config.lua`, `x.tuned`, plus `aero.ini`, `car.ini`, `suspensions.ini`, `tyres.ini` and the rest. "Active" means a controlled suspension and steering, so the car's ride height, load path and lift-off behaviour differ from the regular's, which is exactly what the checker's Mach 6 limits were measured on (`src/validate/limits.js` MACH6: provenG 90, chassisG 40, sustainedG 55/0.5 s, suspensionStopG 25, wallSwerve; all from the REGULAR car's replays, D341/D515).
+
+## The lap (pane O, CHECK IT: measurement and a comparison, no builder change)
+
+**Part 1a, what "active" is.** Unpack the regular car's `data.acd` into the scratchpad (the ACD scheme is the known one keyed on the folder name; a reader exists in the community's tools and is a few lines of node; nothing is written into the game folder) and diff it against the active car's unpacked `data\`: mass, aero (downforce and lift per speed), suspension travel and rates, tyres, the controllers' targets (ride height, roll, pitch, steer), car_config.lua. One table: what the active changes and by how much, in the units the files use. Where a file is identical, say so.
+
+**Part 1b, the two runs with the D515 tools.** On the active replay: the stages table (load bands, box depth at matched load, longest episodes under the mesh, lift-off, the peak loads and where), the helix (piece 13 and its run-in) and the whole lap's speed trace, exactly as D515 did for the regular car, so the tables sit side by side. On the regular (D515) replay: the same, re-read with the same tool version. Side by side: top speed, speed through the helix, peak load, load held, box depth at 50-55 / 55-60 / 60-64 g, how often and where the car left the road or the line. The road caveat above is stated on every row where the exports differ.
+
+**Part 2, his word, asked by me:** one regular Mach 6 run on the SAME road (`t180b_crazy_test_test_soft_a`), driven the same way, replay saved. With it the comparison is clean and Part 1b is re-run on the pair.
+
+**Output:** a page from me with the two stages tables, the speed traces, and the car diff; and O's answer to the one question that matters to the builder: do the checker's Mach 6 numbers (provenG, chassisG, sustainedG, the stops, wall-swerve) still hold for the active car, or does the active need its own profile (a second constants block the user can pick in Settings: "Mach 6" / "Mach 6 active")? That answer is a recommendation, not a change; the change is its own lap on his word.
+
+Kept out: any builder change; the soft-road variants (D525, still waiting on his four replays; the active run on soft_a is NOT one of those four: it is a different car).
+
+Falsifier: if the active car's loads, depth and lift-off on the same stretches sit inside the regular car's own run-to-run scatter (D515 §4's bands), the handling difference he feels is not in these measures, and the lap says "not these numbers" plainly rather than inventing a profile.
+
+surfaced: the two replay paths, the shared kn5 sha and its 09:59 write time against the 09:36 replay, the active car's data\ listing (ctrl_*.ini, car_config.lua, x.tuned), limits.js MACH6, p-d515-crazytest-O §4-§5, plan_d525.

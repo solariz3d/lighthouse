@@ -1,0 +1,27 @@
+heavy-run: WARNING: C:\ has 22.8 GB free, under 50 GB; run node consonance/tools/janitor.js
+lockrun: holding the lock at 2026-10-31T17:16:02.797Z; starting d583-nativefiles-mutation
+[32m✔ control: the unmutated temp copy passes every row of nativefiles.test.js [90m(1045.8677ms)[39m[39m
+[32m✔ control: the unmutated temp copy passes every row of core-check-lean.test.js [90m(15300.815ms)[39m[39m
+[32m✔ mutation N1 the header length is written big-endian: applied, and caught by "row 1:…" [90m(926.0111ms)[39m[39m
+[32m✔ mutation N2 the files' bytes are left out of the body: applied, and caught by "row 1:…" [90m(993.9332ms)[39m[39m
+[32m✔ mutation N3 a file without bytes is taken: applied, and caught by "row 2:…" [90m(992.8567ms)[39m[39m
+[32m✔ mutation N4 a head that carries files is taken: applied, and caught by "row 2:…" [90m(922.6395ms)[39m[39m
+[32m✔ mutation N5 the body holds each file twice: applied, and caught by "row 1:…" [90m(935.7458ms)[39m[39m
+[32m✔ mutation N10 a long body goes in one call: applied, and caught by "row 5:…" [90m(921.7083ms)[39m[39m
+[32m✔ mutation N11 the command is not told the staged id: applied, and caught by "row 5:…" [90m(925.3865ms)[39m[39m
+[32m✔ mutation N12 every piece says it starts at 0: applied, and caught by "row 5:…" [90m(969.831ms)[39m[39m
+[32m✔ mutation N13 a full piece is reused for the next: applied, and caught by "row 5:…" [90m(983.9238ms)[39m[39m
+[32m✔ mutation N14 the page drops the staged id on its way to the native side: applied, and caught by "row 4:…" [90m(947.0269ms)[39m[39m
+[32m✔ mutation N6 Export to Assetto Corsa sends JSON again: applied, and caught by "row 4:…" [90m(924.0042ms)[39m[39m
+[32m✔ mutation N7 Export for Blender sends JSON again: applied, and caught by "row 4:…" [90m(923.3796ms)[39m[39m
+[32m✔ mutation N8 the checker builds the mesh through buildMeshSteps: applied, and caught by "meshes nothing…" [90m(15301.5606ms)[39m[39m
+[32m✔ mutation N9 the checker reuses a closed lap's mesh through reuseMeshSteps: applied, and caught by "meshes nothing…" [90m(15373.3737ms)[39m[39m
+[34mℹ tests 16[39m
+[34mℹ suites 0[39m
+[34mℹ pass 16[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 58441.1163[39m
+lockrun: done at 2026-10-31T17:17:01.276Z, exit 0

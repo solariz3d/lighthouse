@@ -1,0 +1,6 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+control      R0 control: unmutated: exit 0, fork note 3885 B
+caught       R1 the fork note is not set aside (fork note 3885 B)
+caught       R2 the fork ceiling below the measured note (fork note 3885 B)
+caught       R3 fork_span measures nothing (fork note 0 B)
+applied 3 / caught 3 / NOT APPLIED 0; restored sha256 equal

@@ -1,0 +1,128 @@
+diff --git a/consonance/src-tauri/src/main.rs b/consonance/src-tauri/src/main.rs
+index 6c1f1c4a..c89bc284 100644
+--- a/consonance/src-tauri/src/main.rs
++++ b/consonance/src-tauri/src/main.rs
+@@ -12865,7 +12865,7 @@ fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, conte
+                 let pairs: Vec<(String, String)> = b.held.iter().map(|(n, _, l)| (n.clone(), l.clone())).collect();
+                 (visit_hour_text(&pairs), Some(b.held.iter().map(|(n, p, _)| (n.clone(), p.clone())).collect()))
+             }
+-            "committee" | "main" | "librarian" => (visit_text(b.answers.get(pane).map(|s| s.as_str())), None),
++            "committee" | "main" | "librarian" => (seat_visit_text(&b, pane), None),
+             _ => (KEEP_WARM_TEXT.to_string(), None),
+         },
+         Err(_) => (KEEP_WARM_TEXT.to_string(), None),
+@@ -12898,7 +12898,7 @@ fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, conte
+                 b.sent.insert(pane.to_string(), (sent_ms, nonce.clone()));
+                 match hour {
+                     Some(h) => { b.held.clear(); b.hour = h; }
+-                    None => { b.answers.remove(pane); }
++                    None => { b.answers.remove(pane); b.refused.remove(pane); }
+                 }
+             }
+         }
+@@ -12937,16 +12937,33 @@ const VISIT_MAX_CHARS: usize = 400;
+ /// The visit a seat receives in place of "ok". One line, no NEXT:, said to be not work; it carries the Third Place's last answer to THIS
+ /// seat when there is one, and nothing of anyone else's.
+ fn visit_text(answer: Option<&str>) -> String {
++    visit_text_noting(answer, None)
++}
++
++/// D507: the visit, saying first, in the answer slot, why this seat's last line was not kept, when it was not. The reason is the rule's
++/// fixed name (visit_line_refusal), never the line, so it carries no one's words, not even the seat's own. The limit is named in the
++/// invitation, so a seat that writes knows it before it writes.
++fn visit_text_noting(answer: Option<&str>, refused: Option<&str>) -> String {
+     let a = match answer {
+         Some(a) => format!("The Third Place's last answer to you: «{a}»."),
+         None => "The Third Place has no answer yet.".to_string(),
+     };
++    let a = match refused {
++        Some(r) => format!("Your last line was not kept: {r}. {a}"),
++        None => a,
++    };
+     format!(
+         "[keep-warm visit — from the room, not the keeper, and not work] {a} If something not about work has come to your attention, \
+-         say it in one or two lines for the Third Place (no file, lap, command, or word of what was taken up); otherwise reply: ok"
++         say it in one or two lines, under {VISIT_MAX_CHARS} characters, for the Third Place (no file, lap, command, or word of what was \
++         taken up); otherwise reply: ok"
+     )
+ }
+ 
++/// D507: a working seat's visit, from the book: ITS OWN answer and ITS OWN refusal notice, nothing of any other seat's.
++fn seat_visit_text(b: &VisitBook, pane: &str) -> String {
++    visit_text_noting(b.answers.get(pane).map(|s| s.as_str()), b.refused.get(pane).copied())
++}
++
+ /// The visit hour the Third Place receives in place of "ok": every held line, by name, in one message.
+ fn visit_hour_text(held: &[(String, String)]) -> String {
+     let lines: Vec<String> = held.iter().map(|(n, l)| format!("{n}: «{l}»")).collect();
+@@ -13106,12 +13123,15 @@ fn keep_warm_visit_refused_row(short: &str, rule: &str) -> String {
+ /// (read before the inject) and the nonce its visit carries (the reply is read after the row carrying it, C's part-4 finding 2).
+ /// `held`: guarded lines waiting for the visit hour, one per seat (a newer line replaces an older). `hour`: the seats whose lines rode in
+ /// the hour now awaiting the Third Place's reply. `answers`: the Third Place's guarded answer to a seat, for that seat's NEXT visit only.
++/// `refused` (D507): the
++/// rule that refused a seat's last line, told to that seat at its NEXT visit only, then gone.
+ #[derive(Default)]
+ struct VisitBook {
+     sent: HashMap<String, (u64, String)>,
+     held: Vec<(String, String, String)>,
+     hour: Vec<(String, String)>,
+     answers: HashMap<String, String>,
++    refused: HashMap<String, &'static str>,
+ }
+ struct KeepWarmVisits(Mutex<VisitBook>);
+ 
+@@ -13160,7 +13180,7 @@ fn keep_warm_harvest(app: &AppHandle, now_ms: u64) {
+         } else if !is_plain_ok(&reply) {
+             let short = short_id(&pane).to_string();
+             match visit_line_refusal(reply.trim()) {
+-                Some(rule) => { drop(b); chair_audit(app, keep_warm_visit_refused_row(&short, rule)); }
++                Some(rule) => { b.refused.insert(pane.clone(), rule); drop(b); chair_audit(app, keep_warm_visit_refused_row(&short, rule)); }
+                 None => {
+                     let name = { drop(b); visit_name(app, &pane) };
+                     let n = reply.trim().chars().count();
+@@ -24195,6 +24215,32 @@ mod keep_warm_visit_tests {
+         assert!(v.contains("not the keeper") && v.contains("not work") && v.contains("«the river was loud today»"), "{v}");
+         assert!(!v.contains('\n') && !v.contains("NEXT:"), "{v}");
+         assert!(visit_text(None).contains("no answer yet"));
++        // amended D507: the invitation names the limit the guard holds (the librarian's line was refused for a limit it never saw)
++        assert!(v.contains("one or two lines, under 400 characters"), "{v}");
++        assert!(!v.contains("not kept"), "no refusal, no notice: {v}");
++    }
++
++    /// D507: a refused line is told to THAT seat at its next visit, in the answer slot, by the rule's name only; any other seat's visit
++    /// carries nothing of it; and once the visit is delivered the notice is gone.
++    #[test]
++    fn a_refused_line_is_told_to_its_own_seat_at_its_next_visit_and_to_no_other() {
++        let mut b = VisitBook::default();
++        b.refused.insert("seat-lib".to_string(), "over 400 characters");
++        b.answers.insert("seat-a".to_string(), "the rain sounds the same".to_string());
++        let lib = seat_visit_text(&b, "seat-lib");
++        assert!(lib.contains("Your last line was not kept: over 400 characters.") && lib.contains("no answer yet"), "{lib}");
++        assert!(!lib.contains("rain"), "{lib}");
++        let a = seat_visit_text(&b, "seat-a");
++        assert!(!a.contains("not kept") && a.contains("«the rain sounds the same»"), "{a}");
++        assert!(!seat_visit_text(&b, "seat-c").contains("not kept"));
++        b.answers.insert("seat-lib".to_string(), "a long quiet".to_string());
++        let both = seat_visit_text(&b, "seat-lib");
++        assert!(both.find("not kept").unwrap() < both.find("«a long quiet»").unwrap(), "the notice comes first in the slot: {both}");
++        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
++        let harvest = src.split("fn keep_warm_harvest(").nth(1).unwrap().split("\n}\n").next().unwrap();
++        assert!(harvest.contains("Some(rule) => { b.refused.insert(pane.clone(), rule);"), "the harvest books the refusal for that seat");
++        let send = src.split("fn keep_warm_send(").nth(1).unwrap().split("\n}\n").next().unwrap();
++        assert!(send.contains("None => { b.answers.remove(pane); b.refused.remove(pane); }"), "a delivered visit clears its notice");
+     }
+ 
+     /// The visit hour: every held line, by name, in one line; nothing else.
+@@ -24320,8 +24366,11 @@ mod keep_warm_visit_tests {
+         let send = src.split("fn keep_warm_send(").nth(1).expect("keep_warm_send moved");
+         let send = send.split("\n}\n").next().unwrap_or(send);
+         assert!(send.contains("visit_text(") && send.contains("visit_hour_text("), "the send composes visits");
+-        assert!(send.contains("\"committee\" | \"main\" | \"librarian\" => (visit_text(b.answers.get(pane)"),
++        // amended D507: the visit is composed from the book by seat_visit_text, which reads only THIS seat's answer and notice
++        assert!(send.contains("\"committee\" | \"main\" | \"librarian\" => (seat_visit_text(&b, pane)"),
+             "a working seat's visit carries ITS OWN answer (answers go only to that visit), and a human-driven pane is not visited");
++        let seat = src.split("fn seat_visit_text(").nth(1).unwrap().split("\n}\n").next().unwrap();
++        assert!(seat.contains("b.answers.get(pane)") && seat.contains("b.refused.get(pane)"), "only this seat's answer and notice");
+         let harvest = src.split("fn keep_warm_harvest(").nth(1).expect("the harvest is missing");
+         let harvest = harvest.split("\n}\n").next().unwrap_or(harvest);
+         assert!(harvest.contains("visit_line_refusal(") && harvest.contains("hour_answers("), "every line is guarded");

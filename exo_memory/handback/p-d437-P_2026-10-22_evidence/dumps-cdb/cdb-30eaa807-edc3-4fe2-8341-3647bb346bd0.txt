@@ -1,0 +1,201 @@
+
+************* Path validation summary **************
+Response                         Time (ms)     Location
+Deferred                                       srv*C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-372c8abc/fbf98f8e-29da-4fb2-8610-c038d6372249/scratchpad/d437/sym*https://msdl.microsoft.com/download/symbols
+
+************* Preparing the environment for Debugger Extensions Gallery repositories **************
+   ExtensionRepository : Implicit
+   UseExperimentalFeatureForNugetShare : true
+   AllowNugetExeUpdate : true
+   NonInteractiveNuget : true
+   AllowNugetMSCredentialProviderInstall : true
+   AllowParallelInitializationOfLocalRepositories : true
+
+   -- Configuring repositories
+      ----> Repository : LocalInstalled, Enabled: true
+      ----> Repository : UserExtensions, Enabled: true
+
+>>>>>>>>>>>>> Preparing the environment for Debugger Extensions Gallery repositories completed, duration 0.000 seconds
+
+************* Waiting for Debugger Extensions Gallery to Initialize **************
+
+>>>>>>>>>>>>> Waiting for Debugger Extensions Gallery to Initialize completed, duration 0.188 seconds
+   ----> Repository : UserExtensions, Enabled: true, Packages count: 0
+   ----> Repository : LocalInstalled, Enabled: true, Packages count: 46
+
+Microsoft (R) Windows Debugger Version 10.0.29617.1000 AMD64
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+
+Loading Dump File [C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d437\dumps\30eaa807-edc3-4fe2-8341-3647bb346bd0.dmp]
+User Mini Dump File: Only registers, stack and portions of memory are available
+
+
+************* Path validation summary **************
+Response                         Time (ms)     Location
+Deferred                                       srv*C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-372c8abc/fbf98f8e-29da-4fb2-8610-c038d6372249/scratchpad/d437/sym*https://msdl.microsoft.com/download/symbols
+Symbol search path is: srv*C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-372c8abc/fbf98f8e-29da-4fb2-8610-c038d6372249/scratchpad/d437/sym*https://msdl.microsoft.com/download/symbols
+Executable search path is: 
+Windows 10 Version 26300 MP (16 procs) Free x64
+Product: WinNt, suite: SingleUserTS
+Edition build lab: 26100.1.amd64fre.ge_release.240331-1435
+Debug session time: Thu Oct 22 19:38:29.000 2026 (UTC - 6:00)
+System Uptime: 8 days 14:02:54.665
+Process Uptime: 0 days 0:02:12.000
+.....................
+Loading unloaded module list
+..
+This dump file has an exception of interest stored in it.
+The stored exception information can be accessed via .ecxr
+(44bc.19bc): Unknown exception - code e0000008 (first/second chance not available)
+
++------------------------------------------------------------------------+
+| This target supports Hardware-enforced Stack Protection. A HW based    |
+| "Shadow Stack" may be available to assist in debugging and analysis.   |
+| See aka.ms/userhsp for more info.                                      |
+|                                                                        |
+| dps @ssp                                                               |
+|                                                                        |
++------------------------------------------------------------------------+
+
+For analysis of this file, run !analyze -v
+DBGHELP: c:/users/nname/appdata/local/temp/claude/c--consonance-instances-sibling-372c8abc/fbf98f8e-29da-4fb2-8610-c038d6372249/scratchpad/d437/sym*https://msdl.microsoft.com/download/symbols is not a valid store
+ntdll!ZwDelayExecution+0x14:
+00007ffe`46a623d4 c3              ret
+0:000> cdb: Reading initial command '.exr -1; .ecxr; k 30; lm; !peb; .lastevent; q'
+DBGHELP: c:/users/nname/appdata/local/temp/claude/c--consonance-instances-sibling-372c8abc/fbf98f8e-29da-4fb2-8610-c038d6372249/scratchpad/d437/sym*https://msdl.microsoft.com/download/symbols is not a valid store
+ExceptionAddress: 00007ffe43f7408a (KERNELBASE!RaiseException+0x000000000000008a)
+   ExceptionCode: e0000008
+  ExceptionFlags: 00000081
+NumberParameters: 3
+   Parameter[0]: 0000000000000000
+   Parameter[1]: 0000001efa561000
+   Parameter[2]: 0000001632d3e000
+rax=00000097c1bfad78 rbx=00000097c1bfbb70 rcx=0000000000001000
+rdx=00000097c1bfbe18 rsi=0000000000000001 rdi=00000000e0000008
+rip=00007ffe43f7408a rsp=00000097c1bfba50 rbp=0000000000000003
+ r8=00000097c1bfbf60  r9=0000000000000000 r10=00000097c1bfbe18
+r11=00000097c1bfbdf8 r12=00000097c1bfbe18 r13=0000000000000000
+r14=00000097c1bfbc78 r15=00001b0400578938
+iopl=0         nv up ei pl nz na pe nc
+cs=0033  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00000206
+KERNELBASE!RaiseException+0x8a:
+00007ffe`43f7408a 0f1f440000      nop     dword ptr [rax+rax]
+DBGHELP: c:/users/nname/appdata/local/temp/claude/c--consonance-instances-sibling-372c8abc/fbf98f8e-29da-4fb2-8610-c038d6372249/scratchpad/d437/sym*https://msdl.microsoft.com/download/symbols is not a valid store
+Child-SP          RetAddr               Call Site
+00000097`c1bfba50 00007ffd`55e3e101     KERNELBASE!RaiseException+0x8a
+00000097`c1bfbb50 00007ffd`55e3e119     msedge!Microsoft::Applications::Events::ILogConfiguration::ILogConfiguration+0xc38e41
+00000097`c1bfbbe0 00007ffd`55e3e135     msedge!Microsoft::Applications::Events::ILogConfiguration::ILogConfiguration+0xc38e59
+00000097`c1bfbc10 00007ffd`580c013d     msedge!Microsoft::Applications::Events::ILogConfiguration::ILogConfiguration+0xc38e75
+00000097`c1bfbc40 00007ffd`513afcea     msedge!argon2_encodedlen+0xde64d
+00000097`c1bfbdc0 00007ffd`513afc6a     msedge!Microsoft::Applications::Events::ILogConfiguration::ILogConfiguration+0x1a8f5a
+00000097`c1bfbdf0 00007ffd`4e6e8848     msedge!Microsoft::Applications::Events::ILogConfiguration::ILogConfiguration+0x1a8eda
+00000097`c1bfc1b0 00007ffd`4c7846c3     msedge!CreateSmartScreenClient+0x13f8b38
+00000097`c1bfc200 00007ffd`4ad8cb57     msedge!IsSandboxedProcess+0x5d1013
+00000097`c1bfc290 00007ffd`4ad91c1c     msedge+0x28cb57
+00000097`c1bfc330 00007ffd`4b5ef232     msedge+0x291c1c
+00000097`c1bfc3a0 00007ffd`4fefbf62     msedge+0xaef232
+00000097`c1bfc430 00007ffd`4d15cb9e     msedge!CreateSmartScreenClient+0x2c0c252
+00000097`c1bfc4a0 00007ffd`4baaa47a     msedge!IsSandboxedProcess+0xfa94ee
+00000097`c1bfc510 00007ffd`abf3500b     msedge+0xfaa47a
+00000097`c1bfc558 00007ffd`abf3cb92     0x00007ffd`abf3500b
+00000097`c1bfc648 00007ffd`4ba9f741     0x00007ffd`abf3cb92
+00000097`c1bfc7e0 00007ffd`4ba9f741     msedge+0xf9f741
+00000097`c1bfc8e8 00007ffd`4ba9f741     msedge+0xf9f741
+00000097`c1bfcaa8 00007ffd`4ba9f741     msedge+0xf9f741
+00000097`c1bfcdf8 00007ffd`4ba9f741     msedge+0xf9f741
+00000097`c1bfceb0 00007ffd`4ba9f741     msedge+0xf9f741
+00000097`c1bfcf88 00007ffd`4ba9f741     msedge+0xf9f741
+00000097`c1bfd038 00007ffd`4ba9f741     msedge+0xf9f741
+00000097`c1bfd098 00007ffd`4b8c99ee     msedge+0xf9f741
+00000097`c1bfd1f8 00007ffd`4b8b83b2     msedge+0xdc99ee
+00000097`c1bfd238 00007ffd`4ba9f2bf     msedge+0xdb83b2
+00000097`c1bfd2a8 00007ffd`4beaa623     msedge+0xf9f2bf
+00000097`c1bfd3d0 00007ffd`4b28b269     msedge+0x13aa623
+00000097`c1bfd560 00007ffd`4b28b14e     msedge+0x78b269
+00000097`c1bfd5f0 00007ffd`4b00e5d5     msedge+0x78b14e
+00000097`c1bfd670 00007ffd`4b00c8ee     msedge+0x50e5d5
+00000097`c1bfd850 00007ffd`4bc847de     msedge+0x50c8ee
+00000097`c1bfd930 00007ffd`4b69cc7b     msedge+0x11847de
+00000097`c1bfe1c0 00007ffd`4c8978da     msedge+0xb9cc7b
+00000097`c1bfe2a0 00007ffd`4c7e6e79     msedge!IsSandboxedProcess+0x6e422a
+00000097`c1bfe330 00007ffd`4bf7c425     msedge!IsSandboxedProcess+0x6337c9
+00000097`c1bfe390 00007ffd`4bf75647     msedge!ChromeMain+0x9b15
+00000097`c1bfe600 00007ffd`4bf73ecf     msedge!ChromeMain+0x2d37
+00000097`c1bfea80 00007ffd`4bf73973     msedge!ChromeMain+0x15bf
+00000097`c1bfebd0 00007ffd`4bf73111     msedge!ChromeMain+0x1063
+00000097`c1bfece0 00007ffd`4bf72bf1     msedge!ChromeMain+0x801
+DBGHELP: c:/users/nname/appdata/local/temp/claude/c--consonance-instances-sibling-372c8abc/fbf98f8e-29da-4fb2-8610-c038d6372249/scratchpad/d437/sym*https://msdl.microsoft.com/download/symbols is not a valid store
+00000097`c1bfed70 00007ff6`894906b9     msedge!ChromeMain+0x2e1
+00000097`c1bff0b0 00007ff6`8948dfdc     msedgewebview2+0x906b9
+00000097`c1bff350 00007ff6`8951d3b9     msedgewebview2+0x8dfdc
+DBGHELP: c:/users/nname/appdata/local/temp/claude/c--consonance-instances-sibling-372c8abc/fbf98f8e-29da-4fb2-8610-c038d6372249/scratchpad/d437/sym*https://msdl.microsoft.com/download/symbols is not a valid store
+00000097`c1bff760 00007ffe`45cbdda7     msedgewebview2!IsSandboxedProcess+0x55669
+00000097`c1bff7a0 00007ff6`89762973     kernel32!BaseThreadInitThunk+0x17
+00000097`c1bff7d0 00007ffe`4697ee4c     msedgewebview2!IsSandboxedProcess+0x29ac23
+start             end                 module name
+00000204`f4170000 00000204`f45e1000   ffmpeg     (deferred)             
+00007ff6`89400000 00007ff6`898c3000   msedgewebview2   (export symbols)       C:\Program Files (x86)\Microsoft\EdgeWebView\Application\155.0.4283.62\msedgewebview2.exe
+00007ffd`4ab00000 00007ffd`5fd4b000   msedge     (export symbols)       C:\Program Files (x86)\Microsoft\EdgeWebView\Application\155.0.4283.62\msedge.dll
+00007ffd`82000000 00007ffd`823f9000   msedge_elf   (deferred)             
+00007ffe`32100000 00007ffe`32137000   winmm      (deferred)             
+00007ffe`3caf0000 00007ffe`3cafb000   version    (deferred)             
+00007ffe`3f0e0000 00007ffe`3f34a000   DWrite     (deferred)             
+00007ffe`436c0000 00007ffe`436ca000   dpapi      (deferred)             
+00007ffe`43af0000 00007ffe`43b93000   msvcp_win   (deferred)             
+00007ffe`43ba0000 00007ffe`43c4c000   bcryptprimitives   (deferred)             
+00007ffe`43cf0000 00007ffe`43e6f000   crypt32    (deferred)             
+00007ffe`43eb0000 00007ffe`442b1000   KERNELBASE   (export symbols)       C:\Windows\System32\KernelBase.dll
+00007ffe`442c0000 00007ffe`4440c000   ucrtbase   (deferred)             
+00007ffe`45510000 00007ffe`45628000   rpcrt4     (deferred)             
+00007ffe`456a0000 00007ffe`4575c000   advapi32   (deferred)             
+00007ffe`45c00000 00007ffe`45c81000   ws2_32     (deferred)             
+00007ffe`45c90000 00007ffe`45d5b000   kernel32   (export symbols)       C:\Windows\System32\kernel32.dll
+00007ffe`45ed0000 00007ffe`4625b000   combase    (deferred)             
+00007ffe`463a0000 00007ffe`46448000   sechost    (deferred)             
+00007ffe`46570000 00007ffe`46619000   msvcrt     (deferred)             
+00007ffe`46900000 00007ffe`46b68000   ntdll      (export symbols)       C:\Windows\System32\ntdll.dll
+
+Unloaded modules:
+00007ffe`467c0000 00007ffe`468b9000   shcore.dll
+00007ffe`43010000 00007ffe`43091000   wldp.dll
+PEB at 00000097c1380000
+*************************************************************************
+***                                                                   ***
+***                                                                   ***
+***    Either you specified an unqualified symbol, or your debugger   ***
+***    doesn't have full symbol information.  Unqualified symbol      ***
+***    resolution is turned off by default. Please either specify a   ***
+***    fully qualified symbol module!symbolname, or enable resolution ***
+***    of unqualified symbols by typing ".symopt- 100". Note that     ***
+***    enabling unqualified symbol resolution with network symbol     ***
+***    server shares in the symbol path may cause the debugger to     ***
+***    appear to hang for long periods of time when an incorrect      ***
+***    symbol name is typed or the network symbol server is down.     ***
+***                                                                   ***
+***    For some commands to work properly, your symbol path           ***
+***    must point to .pdb files that have full type information.      ***
+***                                                                   ***
+***    Certain .pdb files (such as the public OS symbols) do not      ***
+***    contain the required information.  Contact the group that      ***
+***    provided you with these symbols if you need this command to    ***
+***    work.                                                          ***
+***                                                                   ***
+***    Type referenced: ntdll!_PEB                                    ***
+***                                                                   ***
+*************************************************************************
+error 3 InitTypeRead( nt!_PEB at 00000097c1380000)...
+Last event: 44bc.19bc: Unknown exception - code e0000008 (first/second chance not available)
+  debugger time: Thu Oct 22 19:41:07.954 2026 (UTC - 6:00)
+quit:
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\atlmfc.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\concurrency.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\cpp_rest.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\ObjectiveC.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\stl.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\Windows.Data.Json.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\Windows.Devices.Geolocation.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\Windows.Devices.Sensors.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\Windows.Media.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\windows.natvis'
+NatVis script unloaded from 'C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2606.22001.0_x64__8wekyb3d8bbwe\amd64\Visualizers\winrt.natvis'

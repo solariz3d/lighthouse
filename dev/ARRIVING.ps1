@@ -6,7 +6,7 @@
 #   powershell -ExecutionPolicy Bypass -File <stick>\ARRIVING.ps1 -DryRun    # only show what it would do
 #
 # What it does, in order:
-#   1. git pull in the lighthouse repo (so the carry tool and the room's files are current)
+#   1. git pull in the lighthouse repo (so the carry tool and the room's files are current; -DryRun skips it)
 #   2. rehearse the import (writes nothing) and read the verdict per seat
 #   3. if a committee PANE is refused because this machine holds a different conversation under
 #      the same id, retire this machine's copy (renamed with a stamp, never deleted) and take the
@@ -21,8 +21,17 @@ param([switch]$DryRun)
 $ErrorActionPreference = 'Stop'
 
 $stick = $PSScriptRoot
-$repo = @('C:\Consonance\lighthouse', 'C:\Users\nname\Desktop\lighthouse') | Where-Object { Test-Path (Join-Path $_ '.git') } | Select-Object -First 1
-if (-not $repo) { Write-Host "[arriving] no lighthouse repo found on this machine"; exit 2 }
+# D273 data: begin. The data folder by the app's own rule (main.rs set_dirs / default_data), the same as the hooks (consonance/hooks/dirs.test.js):
+# ~/.consonance.json's data_dir when set (trimmed), else %USERPROFILE%\.consonance. dev/stick-dirs.test.js runs this block.
+$data = Join-Path $env:USERPROFILE '.consonance'
+try { $dd = (Get-Content (Join-Path $env:USERPROFILE '.consonance.json') -Raw -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop).data_dir; if (($dd -is [string]) -and $dd.Trim()) { $data = $dd.Trim() } } catch { }
+# D273 data: end
+# D273 lap 4 (pane B): the repo is the one ~/.consonance.json's room_path sits in (<repo>\exo_memory\BOOT.md), found the way the app finds it.
+# It used to be a list of this room's two checkout paths, which meant nothing on anyone else's machine.
+$repo = $null
+try { $rp = (Get-Content (Join-Path $env:USERPROFILE '.consonance.json') -Raw | ConvertFrom-Json).room_path; if ($rp) { $repo = Split-Path -Parent (Split-Path -Parent $rp) } } catch { $repo = $null }
+if ($repo -and -not (Test-Path (Join-Path $repo '.git'))) { $repo = $null }
+if (-not $repo) { Write-Host "[arriving] no repo found through room_path in ~/.consonance.json - set it in Settings first"; exit 2 }
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "[arriving] node is not installed on this machine"; exit 2 }
 $fixed = @('0c0c0c0a-0000-4000-8000-000000000a01', '0c0c0c0b-0000-4000-8000-00000000115b', '3d000000-0000-4000-8000-000000003d00')
 
@@ -35,13 +44,18 @@ Write-Host "[arriving] stick $stick"
 # 1. pull
 Push-Location $repo
 try {
-  Write-Host "[arriving] git pull ..."
-  & git pull --ff-only | Out-Host
-  if ($LASTEXITCODE -ne 0) {
-    # a push from the other machine can land mid-pull; one retry covers the race seen on D at 12:55
-    Start-Sleep -Seconds 5
+  # D454: a dry run writes nothing, so it does not pull either (it used to pull, then exit at the dry-run line; dev/stick-dirs.test.js row 3).
+  if ($DryRun) {
+    Write-Host "[arriving] dry run: git pull skipped (a real run pulls first); the rehearsal below uses this checkout as it is."
+  } else {
+    Write-Host "[arriving] git pull ..."
     & git pull --ff-only | Out-Host
-    if ($LASTEXITCODE -ne 0) { Write-Host "[arriving] git pull FAILED twice - the room's files here are stale. Continuing with the carry, because the conversations matter more; tell the librarian seat to sort the pull out." }
+    if ($LASTEXITCODE -ne 0) {
+      # a push from the other machine can land mid-pull; one retry covers the race seen on D at 12:55
+      Start-Sleep -Seconds 5
+      & git pull --ff-only | Out-Host
+      if ($LASTEXITCODE -ne 0) { Write-Host "[arriving] git pull FAILED twice - the room's files here are stale. Continuing with the carry, because the conversations matter more; tell the librarian seat to sort the pull out." }
+    }
   }
   if (-not (Test-Path 'dev\tail-carry.js')) { Write-Host "[arriving] dev\tail-carry.js is not in this repo after the pull - stop and ask"; exit 2 }
 
@@ -130,7 +144,7 @@ $exe = Join-Path $repo 'consonance\src-tauri\target\release\consonance.exe'
 if (Test-Path $exe) {
   Write-Host "[arriving] launching Consonance ..."
   Start-Process -FilePath $exe -WorkingDirectory (Split-Path -Parent $exe) | Out-Null
-  Write-Host "[arriving] done. Every seat should say RESUMED in C:\Consonance\data\persist.log."
+  Write-Host "[arriving] done. Every seat should say RESUMED in $(Join-Path $data 'persist.log')."
   # 6. the reminder that does the work: a window that waits for Consonance to close, then exports
   $onExit = Join-Path $stick 'ON-EXIT.ps1'
   if (Test-Path $onExit) {

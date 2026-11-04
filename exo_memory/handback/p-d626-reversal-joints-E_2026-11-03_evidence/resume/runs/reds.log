@@ -1,0 +1,28 @@
+start 17:59:33Z
+exit 1 18:08:37Z
+# tests 518
+# pass 496
+# fail 21
+# skipped 1
+not ok 65 - row 2: a drag step builds nothing placed: how "drag", the placed path and mesh the very ones, every other batch the placed one, the window a few dozen chords; the release equals a fresh build
+not ok 91 - row 14m (D522, decision 2): a 30 m grab on 20 m knots is sharp: the road changes by more than 0.1 mm only within the 30 m asked, and outside it by under 0.1 mm (Sharp's declared spill)
+not ok 105 - ELYSIUM's AI line (a loop through vertical that AC loads) is byte-identical to before
+not ok 134 - the samples' roll is within the smoothstep bound of the φ channel (ref 09 §5), and 2 m chords move the line under 1 cm over 530 m against 0.25 m chords (the stated deviation, measured)
+not ok 152 - mutant C10 a corner inside a piece is first tried where the runs meet, whether or not that covers it: applied, and caught by "row 2"
+not ok 154 - 1 · constant width and r (or an r that does not bind the cap): case 0 draws exactly the segments it drew at b7c7676, byte for byte
+not ok 155 - 1 · constant width and r (or an r that does not bind the cap): case 1 draws exactly the segments it drew at b7c7676, byte for byte
+not ok 156 - 1 · constant width and r (or an r that does not bind the cap): case 2 draws exactly the segments it drew at b7c7676, byte for byte
+not ok 157 - 1 · constant width and r (or an r that does not bind the cap): case 3 draws exactly the segments it drew at b7c7676, byte for byte
+not ok 173 - CONTROL: the whole of core_chord.test.js passes on an unmutated copy of src/, tools/ and app/
+not ok 309 - row 5 (amended D196): a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), a constant segment renders through profileAt with no blend and no new key, a changing one is a chord, and it saves as /3
+not ok 318 - row 5a (amended D196, D222, D258): against the SEAL's manifest (c964c2d) F4, F6, F8 differ in segs and mesh only, F1, F2 in kn5 only, F7 in segs, path and mesh, and the three others are identical
+not ok 319 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+not ok 320 - row 5b (D225, /4): each fixture parsed, saved as /4 text and read again renders to the same digests (the round trip), its text is /4 and carries no edge or tube channel (seal E3c)
+not ok 321 - row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed
+not ok 335 - CONTROL: the whole of core_cup.test.js and core_cup_readers.test.js pass on an unmutated copy of src/, tools/ and app/
+not ok 382 - mutant M26 (K6-3) the cup feeds the roll: applied, and caught by "row 6"
+not ok 412 - row 8: a jump from a lip with NO offset is BYTE-IDENTICAL to before (segments, path, saved text), on a climbing take-off, by the button and posed
+not ok 425 - mutant R9 the cache keeps a piece built before its next one carried it: applied, and caught by "row 5"
+not ok 427 - a value brush (bank) leaves every sample past W⁺ bit for bit, and calls no close
+not ok 476 - mutant KE6-2 e is fed into the roll: applied, and caught by "E6"
+REDS-END

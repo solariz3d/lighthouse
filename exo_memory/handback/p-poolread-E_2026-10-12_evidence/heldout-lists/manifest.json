@@ -1,0 +1,13 @@
+{
+ "harness_sha256": "8a2d40325c12d4d1151209af2597d8720878b0db1031f348cf9b48266ebb686f",
+ "turn_js_sha256": "1022b881bb9d513a60f111c2f4a7718b117887fae867e5da981ccc9027b84819",
+ "find_js_sha256": "95c1f0dd23a2326d6ca2944888cf815030d4c07da7177a9d2750ac126c3d7141",
+ "classify_js_sha256": "3661a82c64ab76e2c3e3c9430bd45aec44acb437aab2bbb729df1eb433dac5d3",
+ "lists": {
+  "census": {
+   "file": "census-units.json",
+   "sha256": "f195b94f0e58a616ab772ac87ed196eb463e68dcf4d369e909e2cc06965fae1b",
+   "function": "sha256 of the file bytes"
+  }
+ }
+}

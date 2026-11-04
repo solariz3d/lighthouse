@@ -1,0 +1,1724 @@
+{
+ "what": "D206 label-rule watch, SECOND READ (§1.5): the SELF-LABEL KEY, section a2 = the next 30 H + 30 K post-exposure units after the first read (§1), per-claim labels only. LABEL_RE /\\b(checked|inferred):/ (A1), locator A6, arm 1 reader, K = 3. Same code as phase 2a (build.js); only the unit list changes.",
+ "a2": [
+  {
+   "unit": "H31",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-installer022-read-B_2026-09-28.md@169f2ad998ef71861bf28030a4313321e9413059",
+   "at": "2026-09-28T07:31:57.000Z",
+   "statements": 23,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-installer022-read-B_2026-09-28.md@169f2ad998ef71861bf28030a4313321e9413059|13",
+     "label": "UNLABELLED",
+     "line": 22,
+     "parentLine": 12
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-installer022-read-B_2026-09-28.md@169f2ad998ef71861bf28030a4313321e9413059|6",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 3
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-installer022-read-B_2026-09-28.md@169f2ad998ef71861bf28030a4313321e9413059|5",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 3
+    }
+   ]
+  },
+  {
+   "unit": "H32",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d183-close-read-B_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927",
+   "at": "2026-09-28T10:19:31.000Z",
+   "statements": 45,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d183-close-read-B_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927|24",
+     "label": "UNLABELLED",
+     "line": 16,
+     "parentLine": 10
+    },
+    {
+     "claimId": "exo_memory/handback/p-d183-close-read-B_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927|30",
+     "label": "UNLOCATED",
+     "why": "ellipsis, first part < 6 words"
+    },
+    {
+     "claimId": "exo_memory/handback/p-d183-close-read-B_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927|26",
+     "label": "UNLABELLED",
+     "line": 17,
+     "parentLine": 10
+    }
+   ]
+  },
+  {
+   "unit": "H33",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d183-manifest-A_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927",
+   "at": "2026-09-28T10:19:31.000Z",
+   "statements": 38,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d183-manifest-A_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927|10",
+     "label": "UNLABELLED",
+     "line": 18,
+     "parentLine": 9
+    },
+    {
+     "claimId": "exo_memory/handback/p-d183-manifest-A_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927|38",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "exo_memory/handback/p-d183-manifest-A_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927|36",
+     "label": "UNLABELLED",
+     "line": 68,
+     "parentLine": 67
+    }
+   ]
+  },
+  {
+   "unit": "H34",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d183-manifest-read-B_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927",
+   "at": "2026-09-28T10:19:31.000Z",
+   "statements": 33,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d183-manifest-read-B_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927|6",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 3
+    },
+    {
+     "claimId": "exo_memory/handback/p-d183-manifest-read-B_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927|23",
+     "label": "UNLABELLED",
+     "line": 17,
+     "parentLine": 11
+    },
+    {
+     "claimId": "exo_memory/handback/p-d183-manifest-read-B_2026-09-28.md@68054e48751b4dbffa04dfe37a5c8f90bc2f1927|25",
+     "label": "UNLABELLED",
+     "line": 18,
+     "parentLine": 11
+    }
+   ]
+  },
+  {
+   "unit": "H35",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-b12-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 22,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-b12-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|20",
+     "label": "UNLABELLED",
+     "line": 24,
+     "parentLine": 20
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-b12-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|12",
+     "label": "UNLABELLED",
+     "line": 13,
+     "parentLine": 1
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-b12-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|19",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 1
+    }
+   ]
+  },
+  {
+   "unit": "H36",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-corpus-E_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 74,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-corpus-E_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|24",
+     "label": "UNLABELLED",
+     "line": 50,
+     "parentLine": 48
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-corpus-E_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|38",
+     "label": "UNLABELLED",
+     "line": 69,
+     "parentLine": 65
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-corpus-E_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|43",
+     "label": "UNLABELLED",
+     "line": 78,
+     "parentLine": 48
+    }
+   ]
+  },
+  {
+   "unit": "H37",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-final-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 57,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-final-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|55",
+     "label": "UNLABELLED",
+     "line": 130,
+     "parentLine": 129
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-final-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|19",
+     "label": "UNLABELLED",
+     "line": 60,
+     "parentLine": 27
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-final-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|57",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "H38",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-fonts-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 61,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-fonts-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|38",
+     "label": "UNLOCATED",
+     "why": "not found"
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-fonts-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|44",
+     "label": "UNLABELLED",
+     "line": 174,
+     "parentLine": 161
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-fonts-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|55",
+     "label": "UNLABELLED",
+     "line": 270,
+     "parentLine": 268
+    }
+   ]
+  },
+  {
+   "unit": "H39",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-land-read-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 58,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-land-read-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|43",
+     "label": "UNLABELLED",
+     "line": 47,
+     "parentLine": 28
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-land-read-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|11",
+     "label": "UNLABELLED",
+     "line": 31,
+     "parentLine": 28
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-land-read-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|25",
+     "label": "UNLABELLED",
+     "line": 19,
+     "parentLine": 18
+    }
+   ]
+  },
+  {
+   "unit": "H40",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-m1-E_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 62,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-m1-E_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|15",
+     "label": "UNLABELLED",
+     "line": 36,
+     "parentLine": 9
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-m1-E_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|32",
+     "label": "UNLABELLED",
+     "line": 66,
+     "parentLine": 9
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-m1-E_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|10",
+     "label": "UNLABELLED",
+     "line": 16,
+     "parentLine": 9
+    }
+   ]
+  },
+  {
+   "unit": "H41",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-m2m3-C_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 36,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-m2m3-C_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|14",
+     "label": "UNLABELLED",
+     "line": 53,
+     "parentLine": 48
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-m2m3-C_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|18",
+     "label": "UNLABELLED",
+     "line": 83,
+     "parentLine": 80
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-m2m3-C_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|15",
+     "label": "UNLABELLED",
+     "line": 65,
+     "parentLine": 64
+    }
+   ]
+  },
+  {
+   "unit": "H42",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-plike-amend3-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 50,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-plike-amend3-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|27",
+     "label": "UNLABELLED",
+     "line": 38,
+     "parentLine": 33
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-plike-amend3-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|35",
+     "label": "UNLABELLED",
+     "line": 44,
+     "parentLine": 33
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-plike-amend3-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|49",
+     "label": "UNLABELLED",
+     "line": 67,
+     "parentLine": 66
+    }
+   ]
+  },
+  {
+   "unit": "H43",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-plike-run-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 39,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-plike-run-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|26",
+     "label": "UNLOCATED",
+     "why": "ellipsis, first part < 6 words"
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-plike-run-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|11",
+     "label": "UNLABELLED",
+     "line": 70,
+     "parentLine": 69
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-plike-run-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|3",
+     "label": "UNLABELLED",
+     "line": 11,
+     "parentLine": 7
+    }
+   ]
+  },
+  {
+   "unit": "H44",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-reader-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 75,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-reader-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|27",
+     "label": "UNLABELLED",
+     "line": 50,
+     "parentLine": 30
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-reader-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|74",
+     "label": "UNLABELLED",
+     "line": 134,
+     "parentLine": 126
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-reader-C_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|24",
+     "label": "UNLABELLED",
+     "line": 46,
+     "parentLine": 43
+    }
+   ]
+  },
+  {
+   "unit": "H45",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-ripple-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 54,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-ripple-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|52",
+     "label": "UNLABELLED",
+     "line": 74,
+     "parentLine": 73
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-ripple-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|21",
+     "label": "UNLABELLED",
+     "line": 28,
+     "parentLine": 21
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-ripple-B_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|48",
+     "label": "UNLABELLED",
+     "line": 73,
+     "parentLine": 68
+    }
+   ]
+  },
+  {
+   "unit": "H46",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-ripple-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 71,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-ripple-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|4",
+     "label": "UNLABELLED",
+     "line": 18,
+     "parentLine": 11
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-ripple-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|8",
+     "label": "UNLABELLED",
+     "line": 27,
+     "parentLine": 11
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-ripple-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|11",
+     "label": "UNLABELLED",
+     "line": 35,
+     "parentLine": 11
+    }
+   ]
+  },
+  {
+   "unit": "H47",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-runs-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 48,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-runs-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|4",
+     "label": "UNLABELLED",
+     "line": 17,
+     "parentLine": 7
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-runs-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|32",
+     "label": "UNLABELLED",
+     "line": 63,
+     "parentLine": 51
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-runs-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|20",
+     "label": "UNLABELLED",
+     "line": 49,
+     "parentLine": 32
+    }
+   ]
+  },
+  {
+   "unit": "H48",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-vocab-A_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 73,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-vocab-A_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|1",
+     "label": "UNLABELLED",
+     "line": 8,
+     "parentLine": 6
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-vocab-A_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|19",
+     "label": "UNLABELLED",
+     "line": 88,
+     "parentLine": 86
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-vocab-A_2026-09-27.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|56",
+     "label": "UNLABELLED",
+     "line": 307,
+     "parentLine": 288
+    }
+   ]
+  },
+  {
+   "unit": "H49",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d182-walltests-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd",
+   "at": "2026-09-28T11:48:35.000Z",
+   "statements": 43,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d182-walltests-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|36",
+     "label": "UNLABELLED",
+     "line": 117,
+     "parentLine": 111
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-walltests-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|43",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "exo_memory/handback/p-d182-walltests-E_2026-09-28.md@e110589d8b6b81aae1a743599dfc1539d7b311cd|10",
+     "label": "UNLABELLED",
+     "line": 22,
+     "parentLine": 20
+    }
+   ]
+  },
+  {
+   "unit": "H50",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d184-read-B_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d",
+   "at": "2026-09-28T12:34:20.000Z",
+   "statements": 94,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d184-read-B_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|15",
+     "label": "UNLABELLED",
+     "line": 30,
+     "parentLine": 19
+    },
+    {
+     "claimId": "exo_memory/handback/p-d184-read-B_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|38",
+     "label": "UNLABELLED",
+     "line": 128,
+     "parentLine": 124
+    },
+    {
+     "claimId": "exo_memory/handback/p-d184-read-B_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|53",
+     "label": "UNLABELLED",
+     "line": 127,
+     "parentLine": 124
+    }
+   ]
+  },
+  {
+   "unit": "H51",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d184-references-C_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d",
+   "at": "2026-09-28T12:34:20.000Z",
+   "statements": 58,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d184-references-C_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|5",
+     "label": "UNLABELLED",
+     "line": 161,
+     "parentLine": 158
+    },
+    {
+     "claimId": "exo_memory/handback/p-d184-references-C_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|29",
+     "label": "UNLABELLED",
+     "line": 91,
+     "parentLine": 89
+    },
+    {
+     "claimId": "exo_memory/handback/p-d184-references-C_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|21",
+     "label": "UNLABELLED",
+     "line": 84,
+     "parentLine": 29
+    }
+   ]
+  },
+  {
+   "unit": "H52",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d184-scripts-E_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d",
+   "at": "2026-09-28T12:34:20.000Z",
+   "statements": 93,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d184-scripts-E_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|68",
+     "label": "UNLOCATED",
+     "why": "not found"
+    },
+    {
+     "claimId": "exo_memory/handback/p-d184-scripts-E_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|85",
+     "label": "UNLABELLED",
+     "line": 325,
+     "parentLine": 318
+    },
+    {
+     "claimId": "exo_memory/handback/p-d184-scripts-E_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|1",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "H53",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d184-skill-A_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d",
+   "at": "2026-09-28T12:34:20.000Z",
+   "statements": 69,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d184-skill-A_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|68",
+     "label": "UNLABELLED",
+     "line": 127,
+     "parentLine": 89
+    },
+    {
+     "claimId": "exo_memory/handback/p-d184-skill-A_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|55",
+     "label": "UNLABELLED",
+     "line": 104,
+     "parentLine": 102
+    },
+    {
+     "claimId": "exo_memory/handback/p-d184-skill-A_2026-09-28.md@9017f867640001eef2f24377fe24e2b51c49693d|43",
+     "label": "UNLABELLED",
+     "line": 76,
+     "parentLine": 72
+    }
+   ]
+  },
+  {
+   "unit": "H54",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d185-doc-A_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd",
+   "at": "2026-09-28T14:43:20.000Z",
+   "statements": 68,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d185-doc-A_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|32",
+     "label": "UNLABELLED",
+     "line": 57,
+     "parentLine": 56
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-doc-A_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|49",
+     "label": "UNLABELLED",
+     "line": 62,
+     "parentLine": 59
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-doc-A_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|52",
+     "label": "UNLABELLED",
+     "line": 104,
+     "parentLine": 83
+    }
+   ]
+  },
+  {
+   "unit": "H55",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d185-read-B_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd",
+   "at": "2026-09-28T14:43:20.000Z",
+   "statements": 70,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d185-read-B_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|22",
+     "label": "UNLABELLED",
+     "line": 117,
+     "parentLine": 116
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-read-B_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|46",
+     "label": "UNLOCATED",
+     "why": "not found"
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-read-B_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|53",
+     "label": "UNLABELLED",
+     "line": 95,
+     "parentLine": 87
+    }
+   ]
+  },
+  {
+   "unit": "H56",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d185-reg-B_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd",
+   "at": "2026-09-28T14:43:20.000Z",
+   "statements": 38,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d185-reg-B_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|18",
+     "label": "UNLABELLED",
+     "line": 37,
+     "parentLine": 26
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-reg-B_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|32",
+     "label": "UNLABELLED",
+     "line": 24,
+     "parentLine": 18
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-reg-B_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|13",
+     "label": "UNLABELLED",
+     "line": 21,
+     "parentLine": 18
+    }
+   ]
+  },
+  {
+   "unit": "H57",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d185-sculpt-close-E_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd",
+   "at": "2026-09-28T14:43:20.000Z",
+   "statements": 55,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d185-sculpt-close-E_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|52",
+     "label": "UNLABELLED",
+     "line": 58,
+     "parentLine": 46
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-sculpt-close-E_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|16",
+     "label": "UNLOCATED",
+     "why": "no quote"
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-sculpt-close-E_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|4",
+     "label": "UNLABELLED",
+     "line": 11,
+     "parentLine": 7
+    }
+   ]
+  },
+  {
+   "unit": "H58",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d185-water-C_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd",
+   "at": "2026-09-28T14:43:20.000Z",
+   "statements": 70,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d185-water-C_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|61",
+     "label": "UNLOCATED",
+     "why": "not found"
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-water-C_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|1",
+     "label": "UNLABELLED",
+     "line": 9,
+     "parentLine": 1
+    },
+    {
+     "claimId": "exo_memory/handback/p-d185-water-C_2026-09-28.md@574f14fd0315191c0fefe3557bbf576fa0f966dd|37",
+     "label": "UNLABELLED",
+     "line": 58,
+     "parentLine": 57
+    }
+   ]
+  },
+  {
+   "unit": "H59",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d186-amend-B_2026-09-28.md@b4300c99ce22db88c51e1ae8921daf789a406205",
+   "at": "2026-09-28T18:14:52.000Z",
+   "statements": 48,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d186-amend-B_2026-09-28.md@b4300c99ce22db88c51e1ae8921daf789a406205|45",
+     "label": "UNLABELLED",
+     "line": 70,
+     "parentLine": 65
+    },
+    {
+     "claimId": "exo_memory/handback/p-d186-amend-B_2026-09-28.md@b4300c99ce22db88c51e1ae8921daf789a406205|46",
+     "label": "UNLABELLED",
+     "line": 91,
+     "parentLine": 65
+    },
+    {
+     "claimId": "exo_memory/handback/p-d186-amend-B_2026-09-28.md@b4300c99ce22db88c51e1ae8921daf789a406205|14",
+     "label": "UNLABELLED",
+     "line": 45,
+     "parentLine": 40
+    }
+   ]
+  },
+  {
+   "unit": "H60",
+   "stratum": "H",
+   "machine": "D",
+   "seat": null,
+   "unitId": "exo_memory/handback/p-d186-app-C_2026-09-28.md@b4300c99ce22db88c51e1ae8921daf789a406205",
+   "at": "2026-09-28T18:14:52.000Z",
+   "statements": 68,
+   "claims": [
+    {
+     "claimId": "exo_memory/handback/p-d186-app-C_2026-09-28.md@b4300c99ce22db88c51e1ae8921daf789a406205|44",
+     "label": "UNLABELLED",
+     "line": 167,
+     "parentLine": 151
+    },
+    {
+     "claimId": "exo_memory/handback/p-d186-app-C_2026-09-28.md@b4300c99ce22db88c51e1ae8921daf789a406205|13",
+     "label": "UNLABELLED",
+     "line": 47,
+     "parentLine": 43
+    },
+    {
+     "claimId": "exo_memory/handback/p-d186-app-C_2026-09-28.md@b4300c99ce22db88c51e1ae8921daf789a406205|17",
+     "label": "UNLABELLED",
+     "line": 64,
+     "parentLine": 57
+    }
+   ]
+  },
+  {
+   "unit": "K31",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVJ6cJsPyEUUFLHuMVeC",
+   "at": "2026-09-28T05:36:01.667Z",
+   "statements": 21,
+   "claims": [
+    {
+     "claimId": "msg_011CfVJ6cJsPyEUUFLHuMVeC|8",
+     "label": "UNLABELLED",
+     "line": 6,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJ6cJsPyEUUFLHuMVeC|12",
+     "label": "UNLABELLED",
+     "line": 10,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJ6cJsPyEUUFLHuMVeC|10",
+     "label": "UNLABELLED",
+     "line": 8,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K32",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVJC7mKPb7XoUtXqAWL2",
+   "at": "2026-09-28T05:36:38.164Z",
+   "statements": 16,
+   "claims": [
+    {
+     "claimId": "msg_011CfVJC7mKPb7XoUtXqAWL2|1",
+     "label": "UNLABELLED",
+     "line": 9,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJC7mKPb7XoUtXqAWL2|13",
+     "label": "UNLABELLED",
+     "line": 7,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJC7mKPb7XoUtXqAWL2|2",
+     "label": "UNLOCATED",
+     "why": "not found"
+    }
+   ]
+  },
+  {
+   "unit": "K33",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVJXPSAu3tgSLpBjjTeX",
+   "at": "2026-09-28T05:41:50.755Z",
+   "statements": 15,
+   "claims": [
+    {
+     "claimId": "msg_011CfVJXPSAu3tgSLpBjjTeX|9",
+     "label": "UNLABELLED",
+     "line": 17,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJXPSAu3tgSLpBjjTeX|10",
+     "label": "UNLABELLED",
+     "line": 17,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJXPSAu3tgSLpBjjTeX|3",
+     "label": "UNLABELLED",
+     "line": 15,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K34",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVJdEoRjNr8GHHezueMr",
+   "at": "2026-09-28T05:43:10.162Z",
+   "statements": 12,
+   "claims": [
+    {
+     "claimId": "msg_011CfVJdEoRjNr8GHHezueMr|5",
+     "label": "UNLABELLED",
+     "line": 21,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJdEoRjNr8GHHezueMr|9",
+     "label": "UNLOCATED",
+     "why": "not found"
+    },
+    {
+     "claimId": "msg_011CfVJdEoRjNr8GHHezueMr|1",
+     "label": "UNLABELLED",
+     "line": 11,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K35",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVJqaPUaFPQBbviV7pon",
+   "at": "2026-09-28T05:45:46.536Z",
+   "statements": 12,
+   "claims": [
+    {
+     "claimId": "msg_011CfVJqaPUaFPQBbviV7pon|11",
+     "label": "UNLABELLED",
+     "line": 7,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJqaPUaFPQBbviV7pon|12",
+     "label": "UNLABELLED",
+     "line": 13,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJqaPUaFPQBbviV7pon|9",
+     "label": "UNLOCATED",
+     "why": "ellipsis, first part < 6 words"
+    }
+   ]
+  },
+  {
+   "unit": "K36",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVJyKWkXMrwZBVZGNSyb",
+   "at": "2026-09-28T05:46:52.409Z",
+   "statements": 18,
+   "claims": [
+    {
+     "claimId": "msg_011CfVJyKWkXMrwZBVZGNSyb|4",
+     "label": "UNLABELLED",
+     "line": 4,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJyKWkXMrwZBVZGNSyb|5",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVJyKWkXMrwZBVZGNSyb|17",
+     "label": "UNLABELLED",
+     "line": 15,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K37",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVK45qcyRXEKBXJKqK91",
+   "at": "2026-09-28T05:48:10.183Z",
+   "statements": 10,
+   "claims": [
+    {
+     "claimId": "msg_011CfVK45qcyRXEKBXJKqK91|7",
+     "label": "UNLABELLED",
+     "line": 4,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVK45qcyRXEKBXJKqK91|4",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVK45qcyRXEKBXJKqK91|3",
+     "label": "UNLABELLED",
+     "line": 6,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K38",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVLsoFBqdkpWF8JBoq3g",
+   "at": "2026-09-28T06:11:52.520Z",
+   "statements": 18,
+   "claims": [
+    {
+     "claimId": "msg_011CfVLsoFBqdkpWF8JBoq3g|2",
+     "label": "UNLOCATED",
+     "why": "no quote"
+    },
+    {
+     "claimId": "msg_011CfVLsoFBqdkpWF8JBoq3g|4",
+     "label": "UNLABELLED",
+     "line": 9,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVLsoFBqdkpWF8JBoq3g|3",
+     "label": "UNLOCATED",
+     "why": "no quote"
+    }
+   ]
+  },
+  {
+   "unit": "K39",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVMLjpJXadun3JamNV8N",
+   "at": "2026-09-28T06:17:56.411Z",
+   "statements": 20,
+   "claims": [
+    {
+     "claimId": "msg_011CfVMLjpJXadun3JamNV8N|2",
+     "label": "UNLOCATED",
+     "why": "no quote"
+    },
+    {
+     "claimId": "msg_011CfVMLjpJXadun3JamNV8N|15",
+     "label": "UNLOCATED",
+     "why": "no quote"
+    },
+    {
+     "claimId": "msg_011CfVMLjpJXadun3JamNV8N|8",
+     "label": "UNLOCATED",
+     "why": "no quote"
+    }
+   ]
+  },
+  {
+   "unit": "K40",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVMeA6Y4W8CSGDoY2Hn6",
+   "at": "2026-09-28T06:22:12.622Z",
+   "statements": 19,
+   "claims": [
+    {
+     "claimId": "msg_011CfVMeA6Y4W8CSGDoY2Hn6|12",
+     "label": "UNLABELLED",
+     "line": 13,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVMeA6Y4W8CSGDoY2Hn6|9",
+     "label": "UNLABELLED",
+     "line": 8,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVMeA6Y4W8CSGDoY2Hn6|2",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K41",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVMs3PaXXGnyvzvEEJyQ",
+   "at": "2026-09-28T06:25:37.894Z",
+   "statements": 16,
+   "claims": [
+    {
+     "claimId": "msg_011CfVMs3PaXXGnyvzvEEJyQ|11",
+     "label": "UNLABELLED",
+     "line": 15,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVMs3PaXXGnyvzvEEJyQ|13",
+     "label": "UNLABELLED",
+     "line": 14,
+     "parentLine": 11
+    },
+    {
+     "claimId": "msg_011CfVMs3PaXXGnyvzvEEJyQ|6",
+     "label": "UNLABELLED",
+     "line": 19,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K42",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVNBFRNtYYnqLCtvCbUJ",
+   "at": "2026-09-28T06:29:20.345Z",
+   "statements": 15,
+   "claims": [
+    {
+     "claimId": "msg_011CfVNBFRNtYYnqLCtvCbUJ|1",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVNBFRNtYYnqLCtvCbUJ|5",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVNBFRNtYYnqLCtvCbUJ|7",
+     "label": "UNLABELLED",
+     "line": 4,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K43",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVQDB9wBqaRpceWE7D8m",
+   "at": "2026-09-28T06:56:16.910Z",
+   "statements": 14,
+   "claims": [
+    {
+     "claimId": "msg_011CfVQDB9wBqaRpceWE7D8m|3",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVQDB9wBqaRpceWE7D8m|14",
+     "label": "UNLABELLED",
+     "line": 12,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVQDB9wBqaRpceWE7D8m|6",
+     "label": "UNLABELLED",
+     "line": 6,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K44",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVSZ4b61oSYzC8KYNZqf",
+   "at": "2026-09-28T07:27:00.646Z",
+   "statements": 12,
+   "claims": [
+    {
+     "claimId": "msg_011CfVSZ4b61oSYzC8KYNZqf|3",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVSZ4b61oSYzC8KYNZqf|8",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVSZ4b61oSYzC8KYNZqf|1",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K45",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVXAaapZVgASrogB8byb",
+   "at": "2026-09-28T08:27:23.088Z",
+   "statements": 19,
+   "claims": [
+    {
+     "claimId": "msg_011CfVXAaapZVgASrogB8byb|7",
+     "label": "UNLABELLED",
+     "line": 6,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVXAaapZVgASrogB8byb|2",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVXAaapZVgASrogB8byb|3",
+     "label": "UNLABELLED",
+     "line": 4,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K46",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVeub2sPkzfj3big2jPx",
+   "at": "2026-09-28T10:08:53.021Z",
+   "statements": 10,
+   "claims": [
+    {
+     "claimId": "msg_011CfVeub2sPkzfj3big2jPx|1",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVeub2sPkzfj3big2jPx|6",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVeub2sPkzfj3big2jPx|9",
+     "label": "UNLABELLED",
+     "line": 7,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K47",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVewqAUz2JNvueSGCyZ4",
+   "at": "2026-09-28T10:09:37.497Z",
+   "statements": 18,
+   "claims": [
+    {
+     "claimId": "msg_011CfVewqAUz2JNvueSGCyZ4|16",
+     "label": "UNLABELLED",
+     "line": 9,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVewqAUz2JNvueSGCyZ4|10",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVewqAUz2JNvueSGCyZ4|3",
+     "label": "UNLABELLED",
+     "line": 11,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K48",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVfEig2t7RbNjv5H9FYM",
+   "at": "2026-09-28T10:13:20.649Z",
+   "statements": 21,
+   "claims": [
+    {
+     "claimId": "msg_011CfVfEig2t7RbNjv5H9FYM|10",
+     "label": "UNLABELLED",
+     "line": 4,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVfEig2t7RbNjv5H9FYM|19",
+     "label": "UNLABELLED",
+     "line": 12,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVfEig2t7RbNjv5H9FYM|11",
+     "label": "UNLABELLED",
+     "line": 4,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K49",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVfiSunN4rVadYv64UzX",
+   "at": "2026-09-28T10:19:42.749Z",
+   "statements": 15,
+   "claims": [
+    {
+     "claimId": "msg_011CfVfiSunN4rVadYv64UzX|10",
+     "label": "UNLABELLED",
+     "line": 10,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVfiSunN4rVadYv64UzX|4",
+     "label": "UNLABELLED",
+     "line": 14,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVfiSunN4rVadYv64UzX|9",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K50",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVfkvAB4M66agBbaBJHD",
+   "at": "2026-09-28T10:20:00.708Z",
+   "statements": 8,
+   "claims": [
+    {
+     "claimId": "msg_011CfVfkvAB4M66agBbaBJHD|6",
+     "label": "UNLABELLED",
+     "line": 4,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVfkvAB4M66agBbaBJHD|4",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVfkvAB4M66agBbaBJHD|8",
+     "label": "UNLABELLED",
+     "line": 7,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K51",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVforahg6wN2gK1zQfhq",
+   "at": "2026-09-28T10:20:35.817Z",
+   "statements": 9,
+   "claims": [
+    {
+     "claimId": "msg_011CfVforahg6wN2gK1zQfhq|2",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVforahg6wN2gK1zQfhq|3",
+     "label": "UNLABELLED",
+     "line": 10,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVforahg6wN2gK1zQfhq|4",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K52",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVhsq2Y9cmvybWgSkbt7",
+   "at": "2026-09-28T10:47:51.660Z",
+   "statements": 17,
+   "claims": [
+    {
+     "claimId": "msg_011CfVhsq2Y9cmvybWgSkbt7|11",
+     "label": "UNLABELLED",
+     "line": 9,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVhsq2Y9cmvybWgSkbt7|1",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVhsq2Y9cmvybWgSkbt7|10",
+     "label": "UNLABELLED",
+     "line": 9,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K53",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVkvh8xXZUnaZ9hWBsHm",
+   "at": "2026-09-28T11:28:03.279Z",
+   "statements": 15,
+   "claims": [
+    {
+     "claimId": "msg_011CfVkvh8xXZUnaZ9hWBsHm|10",
+     "label": "UNLABELLED",
+     "line": 9,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVkvh8xXZUnaZ9hWBsHm|4",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVkvh8xXZUnaZ9hWBsHm|9",
+     "label": "UNLABELLED",
+     "line": 9,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K54",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVm1k2ip2gutydCJoofq",
+   "at": "2026-09-28T11:28:36.422Z",
+   "statements": 9,
+   "claims": [
+    {
+     "claimId": "msg_011CfVm1k2ip2gutydCJoofq|7",
+     "label": "UNLABELLED",
+     "line": 7,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVm1k2ip2gutydCJoofq|3",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVm1k2ip2gutydCJoofq|5",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K55",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVm6s8FqD6uKkqgafLEK",
+   "at": "2026-09-28T11:30:21.277Z",
+   "statements": 17,
+   "claims": [
+    {
+     "claimId": "msg_011CfVm6s8FqD6uKkqgafLEK|7",
+     "label": "UNLABELLED",
+     "line": 6,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVm6s8FqD6uKkqgafLEK|4",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVm6s8FqD6uKkqgafLEK|16",
+     "label": "UNLABELLED",
+     "line": 7,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K56",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVmDeyhKD8hf51YRzznz",
+   "at": "2026-09-28T11:31:25.605Z",
+   "statements": 12,
+   "claims": [
+    {
+     "claimId": "msg_011CfVmDeyhKD8hf51YRzznz|8",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVmDeyhKD8hf51YRzznz|1",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVmDeyhKD8hf51YRzznz|2",
+     "label": "UNLABELLED",
+     "line": 4,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K57",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVmK4HJabyxB8U4FeHp7",
+   "at": "2026-09-28T11:32:49.579Z",
+   "statements": 2,
+   "claims": [
+    {
+     "claimId": "msg_011CfVmK4HJabyxB8U4FeHp7|1",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVmK4HJabyxB8U4FeHp7|2",
+     "label": "UNLABELLED",
+     "line": 1,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K58",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVmSia7NR4p2Zz69UPHk",
+   "at": "2026-09-28T11:33:58.901Z",
+   "statements": 16,
+   "claims": [
+    {
+     "claimId": "msg_011CfVmSia7NR4p2Zz69UPHk|5",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVmSia7NR4p2Zz69UPHk|13",
+     "label": "UNLABELLED",
+     "line": 11,
+     "parentLine": 7
+    },
+    {
+     "claimId": "msg_011CfVmSia7NR4p2Zz69UPHk|14",
+     "label": "UNLABELLED",
+     "line": 13,
+     "parentLine": 0
+    }
+   ]
+  },
+  {
+   "unit": "K59",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVmmDn2kNsrNhBhzpy5B",
+   "at": "2026-09-28T11:38:32.972Z",
+   "statements": 17,
+   "claims": [
+    {
+     "claimId": "msg_011CfVmmDn2kNsrNhBhzpy5B|4",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVmmDn2kNsrNhBhzpy5B|13",
+     "label": "UNLABELLED",
+     "line": 13,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVmmDn2kNsrNhBhzpy5B|6",
+     "label": "UNLABELLED",
+     "line": 7,
+     "parentLine": 6
+    }
+   ]
+  },
+  {
+   "unit": "K60",
+   "stratum": "K",
+   "machine": "D",
+   "seat": "librarian",
+   "unitId": "msg_011CfVmrzP3LpzZyNegEUBtW",
+   "at": "2026-09-28T11:39:41.127Z",
+   "statements": 12,
+   "claims": [
+    {
+     "claimId": "msg_011CfVmrzP3LpzZyNegEUBtW|8",
+     "label": "UNLABELLED",
+     "line": 7,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVmrzP3LpzZyNegEUBtW|5",
+     "label": "UNLABELLED",
+     "line": 3,
+     "parentLine": 0
+    },
+    {
+     "claimId": "msg_011CfVmrzP3LpzZyNegEUBtW|6",
+     "label": "UNLABELLED",
+     "line": 5,
+     "parentLine": 0
+    }
+   ]
+  }
+ ]
+}

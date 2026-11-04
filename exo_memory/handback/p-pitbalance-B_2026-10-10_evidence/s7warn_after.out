@@ -1,0 +1,15 @@
+=== node --max-old-space-size=8192 C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285/s7warn.js C:/Users/nname/Desktop/worktrees/b-pitbal-wt C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285/autosave-doc.t180track
+=== cwd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285
+=== env {}
+{
+ "warnings": [
+  "TEST EXPORT (unfinished): 0 red finding(s) NOT blocking, listed in t180b_TEST_UNFINISHED.txt",
+  "lap proof not run: open",
+  "4 mesh-node names repeat in the builder's scene (e.g. CELL_p1_body_0 ×500); the kn5 gets unique names (acready.js), INTERFACES §2, C's mesh.js safeId",
+  "csp-only: surfaces.ini sets WAV_PITCH=extended-0, CSP's extended physics (ARCHITECTURE §6). Assetto Corsa without Custom Shaders Patch can crash loading this track (CSP wiki, \"Tracks – Enabling extended physics\"; docs/research/04_ac_physics_drivability.md §2). Turn off \"T-180 track\" to export without it."
+ ],
+ "redKeys": "folders,kn5Sha,kn5Bytes,aiSha,aiLine,readback,lengthM,resolvedVia,markers,paint,layout,warnings",
+ "red": []
+}
+
+=== exit 0 signal null error  1.8s

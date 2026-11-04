@@ -1,0 +1,153 @@
+﻿[32m✔ an unsaved edit is autosaved after the pause, as a core autosave holding the document's canonical text [90m(11.805ms)[39m[39m
+[32m✔ a crash leaves the autosave; the next start OFFERS it (never applies it), and restore brings the track back unsaved [90m(60.6843ms)[39m[39m
+[32m✔ Discard clears the offer and the file; Save under a name clears the autosave; a clean exit clears it [90m(4.7013ms)[39m[39m
+[32m✔ a damaged autosave that cannot be kept aside is left on disk for the whole session, and the app starts anyway, saying so [90m(1.6101ms)[39m[39m
+[32m✔ a damaged autosave (not JSON) is kept as a "damaged autosave" backup BEFORE the session autosaves over it [90m(1.5542ms)[39m[39m
+[32m✔ a damaged autosave (a core autosave whose document does not parse) is kept as a "damaged autosave" backup BEFORE the session autosaves over it [90m(1.5029ms)[39m[39m
+[32m✔ a damaged autosave (JSON that is not a record) is kept as a "damaged autosave" backup BEFORE the session autosaves over it [90m(1.6632ms)[39m[39m
+[32m✔ a damaged autosave whose copy FAILS is never written over, an edit later [90m(1.5557ms)[39m[39m
+[32m✔ an autosave from the OLD Pieces builder is kept aside as a saved word track, named in the message, never overwritten unread [90m(2.6388ms)[39m[39m
+[32m✔ a Pieces autosave that cannot be kept aside is left as it was, and that session does not autosave over it [90m(1.6887ms)[39m[39m
+[32m✔ an equation track's code is its t180b.core/4 text, compressed and checksummed like every code, and reads back exactly [90m(34.1606ms)[39m[39m
+[32m✔ an old Pieces code (a word track, a piece) is REFUSED BY NAME, and nothing changes [90m(3.8208ms)[39m[39m
+[32m✔ a pasted code whose document is not a valid equation track is refused, and nothing changes [90m(1.892ms)[39m[39m
+[32m✔ the share panel, loaded as the page loads it (with the core's node shim), opens an equation code [90m(63.666ms)[39m[39m
+[32m✔ a module that cannot load is the app's failure, never reported as a malformed code [90m(15.1377ms)[39m[39m
+[32m✔ Install to AC writes exactly the files Export writes, byte for byte, under the saved name [90m(2752.4299ms)[39m[39m
+[32m✔ backupNow writes the track AS IT IS NOW under its eq- name (or "unsaved"), and says why [90m(4.2719ms)[39m[39m
+[32m✔ backupNow resolves null where there is nothing to write to, and REJECTS when the write fails (the caller then refuses its operation) [90m(1.3103ms)[39m[39m
+[32m✔ Previous versions lists the open track's backups newest first, with time, length and closed, and opens one as an unsaved COPY [90m(155.3856ms)[39m[39m
+[32m✔ an UNSAVED track's copy from before Close is listed in Previous versions and opens as a copy (B's D239 look, F3a) [90m(145.6117ms)[39m[39m
+[32m✔ the page: Save sends the local time for the backup's name, the three backup commands are wired and registered, and there is a Previous versions picker [90m(0.9679ms)[39m[39m
+[32m✔ each shortcut fires on the equation page: Ctrl+Z undo, Ctrl+Shift+Z and Ctrl+Y redo, Ctrl+S save, Ctrl+Backspace removes the head [90m(8.3416ms)[39m[39m
+[32m✔ no shortcut fires while a TEXT field has focus, and a bare Backspace does nothing [90m(3.2138ms)[39m[39m
+[32m✔ keyAction is MOVED, not copied: app/shell.js re-exports the very function, and the page binds app/core/keys.js to the core shell [90m(2.5586ms)[39m[39m
+[32m✔ removeHead: one undo step; an empty track is refused by name; a closed loop opens again and says Ctrl+Z puts it back [90m(133.2026ms)[39m[39m
+[32m✔ the guide's steps are the equation builder's: extend, brush, close, colours, export, grid [90m(0.3028ms)[39m[39m
+[32m✔ extending 3 pieces, a brush stroke and Close the loop complete their steps in the real core shell [90m(142.7405ms)[39m[39m
+[32m✔ the grid-and-mirror step is a reading step: Next completes it and finishes the guide [90m(0.2321ms)[39m[39m
+[32m✔ app/index.html holds ONE builder: no mode switch, no ?mode, no t180.mode, no piece-builder shell or palette [90m(1.0946ms)[39m[39m
+[32m✔ the equation page mounts the four carried features and clears the autosave on a clean exit [90m(0.7818ms)[39m[39m
+[32m✔ the removed piece-builder modules are gone, and the shared ones the equation page and the exporter use are kept [90m(0.7614ms)[39m[39m
+[32m✔ row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED [90m(274.3486ms)[39m[39m
+[32m✔ row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why [90m(186.6202ms)[39m[39m
+[32m✔ row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case) [90m(6.2614ms)[39m[39m
+[32m✔ row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection [90m(164.588ms)[39m[39m
+[32m✔ row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name [90m(27.7273ms)[39m[39m
+[32m✔ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason [90m(25.0733ms)[39m[39m
+[32m✔ row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed [90m(154.5031ms)[39m[39m
+[32m✔ row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES [90m(2596.2916ms)[39m[39m
+[32m✔ row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece [90m(14.6319ms)[39m[39m
+[32m✔ row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece [90m(22.3822ms)[39m[39m
+[32m✔ row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name [90m(138.8953ms)[39m[39m
+[32m✔ row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN [90m(1292.6089ms)[39m[39m
+[32m✔ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where [90m(2863.181ms)[39m[39m
+[32m✔ row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is [90m(616.3356ms)[39m[39m
+[32m✔ row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm [90m(31.3932ms)[39m[39m
+[32m✔ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved [90m(384.3954ms)[39m[39m
+[32m✔ row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged [90m(278.7141ms)[39m[39m
+[32m✔ row 11b: no ghost, no handles; a press ON a handle is the handle's and the armed brush and the camera keep a press anywhere else; the cup's handles go with the cup field; the switch turns them off [90m(100.8885ms)[39m[39m
+[32m✔ row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window) [90m(219.746ms)[39m[39m
+[32m✔ row 12: Sculpt through the panel: only the shape channels; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back [90m(144.2103ms)[39m[39m
+[32m✔ row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost [90m(308.7957ms)[39m[39m
+[32m✔ row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back [90m(598.5546ms)[39m[39m
+[32m✔ row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing [90m(91.1753ms)[39m[39m
+[32m✔ row 14c: the landing's four handles replace the Extend ghost's; a drag moves the number of its box in ONE undo step; Shift is fine, Ctrl snaps; two quick presses reset one; an Extend takes them away [90m(498.344ms)[39m[39m
+[32m✔ row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back [90m(87.5716ms)[39m[39m
+[32m✔ row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores [90m(70.5539ms)[39m[39m
+[32m✔ row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece [90m(77.1296ms)[39m[39m
+[32m✔ row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's [90m(8.4692ms)[39m[39m
+[32m✔ row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one [90m(81.3193ms)[39m[39m
+[32m✔ row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips [90m(93.9158ms)[39m[39m
+[32m✔ row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop [90m(379.3271ms)[39m[39m
+[32m✔ row 19c: the share codes are in the ⋯ menu as "Copy track code" and "Paste track code…" (D267), not a section of the left column; the code itself is unchanged [90m(17.6298ms)[39m[39m
+[32m✔ row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection [90m(30.2184ms)[39m[39m
+[32m✔ row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions… [90m(23.1311ms)[39m[39m
+[32m✔ row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read) [90m(64.1248ms)[39m[39m
+[32m✔ D259: a typed 300 stays 300 (one full turn either way is allowed), and a typed 400 becomes 40; the field shows them so [90m(69.7166ms)[39m[39m
+[32m✔ D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows [90m(195.0902ms)[39m[39m
+[32m✔ the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim [90m(65.8875ms)[39m[39m
+[32m✔ extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly [90m(12.2078ms)[39m[39m
+[32m✔ the ghost of an extension is exactly what the click then builds [90m(7.1119ms)[39m[39m
+[32m✔ extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres [90m(0.2373ms)[39m[39m
+[32m✔ a failed extend changes nothing and says why [90m(2.2908ms)[39m[39m
+[32m✔ the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly [90m(21.1346ms)[39m[39m
+[32m✔ the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is [90m(10.3013ms)[39m[39m
+[32m✔ with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode [90m(7.9632ms)[39m[39m
+[32m✔ a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown) [90m(7.1036ms)[39m[39m
+[32m✔ the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default) [90m(6.4111ms)[39m[39m
+[32m✔ E's refusal (a hill with no offset channel yet) is the message, and nothing changes [90m(3.9775ms)[39m[39m
+[32m✔ close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it [90m(228.2186ms)[39m[39m
+[32m✔ export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written [90m(1536.8333ms)[39m[39m
+[32m✔ save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here [90m(2.1523ms)[39m[39m
+[32m✔ openExample refuses files that are not a fit and a read, and changes nothing [90m(0.7165ms)[39m[39m
+[32m✔ the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend [90m(201.712ms)[39m[39m
+[32m✔ the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5 [90m(1709.4034ms)[39m[39m
+[32m✔ landed core: a 1 m hill brushed in the app is in the preview's path and the export's [90m(6476.1765ms)[39m[39m
+[32m✔ landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed) [90m(1167.7585ms)[39m[39m
+[32m✔ a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports [90m(754.0572ms)[39m[39m
+[32m✔ the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track [90m(2.8017ms)[39m[39m
+[32m✔ D226 export (core): an EMPTY folder made directly in content\tracks exports to content\tracks and is removed; a folder with anything in it is refused and kept [90m(1088.855ms)[39m[39m
+[32m✔ D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE [90m(21.5741ms)[39m[39m
+[32m✔ D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone [90m(547.2256ms)[39m[39m
+[32m✔ D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written [90m(979.5308ms)[39m[39m
+[32m✔ D234 a successful export is unchanged: written to content\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder [90m(2167.6409ms)[39m[39m
+[32m✔ D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused [90m(1008.8617ms)[39m[39m
+[32m✔ D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam) [90m(1065.8938ms)[39m[39m
+[32m✔ row 1: save, then a fresh shell opens the track: undo walks the same steps back, and redo returns [90m(26.6946ms)[39m[39m
+[32m✔ row 2: a mismatched sidecar is dropped silently; a corrupt one opens the track with no history and says so once; a missing one, or a host without the calls, is no news [90m(16.3488ms)[39m[39m
+[32m✔ row 3: the cap holds: the last 200 steps of the past, and the 200 nearest of the future [90m(14.327ms)[39m[39m
+[32m✔ row 4: the track file is byte-identical with and without the feature, and is written before its sidecar; a sidecar that cannot be written never fails the save [90m(6.9695ms)[39m[39m
+[32m✔ row 5: the autosave keeps its history: Restore after a crash can undo; a damaged history in it restores the track without one and says so [90m(9.4109ms)[39m[39m
+[32m✔ row 6: a second Save replaces the sidecar; Save As leaves the first name's alone; the undo of an edit made after the open is on top of the restored history [90m(6.3784ms)[39m[39m
+[32m✔ xsec extendOptions: each field is its channel target, in the seal's units [90m(2.2226ms)[39m[39m
+[32m✔ xsec extendOptions: nothing is clamped; the core's guards refuse by name (E2 KE2-2) [90m(0.6095ms)[39m[39m
+[32m✔ xsec extendOptions: bank winds past ±180 (the spiral, S1 iv) [90m(0.1239ms)[39m[39m
+[32m✔ xsec extendOptions: the new fields take the "at start" box like the others [90m(0.1796ms)[39m[39m
+[32m✔ xsec headState (A's core): a non-tube head shows tube sweep 0 ("none"); an edge head and a tube head show the document's values [90m(36.1387ms)[39m[39m
+[32m✔ xsec panel: the three fields are on the panel and show the head; left as shown they send nothing [90m(21.9866ms)[39m[39m
+[32m✔ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value [90m(13.3317ms)[39m[39m
+[32m✔ xsec panel: the edge angle and the edge start each redraw the readout on their own, with no other field typed after them [90m(5.5416ms)[39m[39m
+[32m✔ xsec panel: after Extend the fields read back what the document holds [90m(6.6935ms)[39m[39m
+[32m✔ xsec panel (A's core): each cross-section cell is the core's own readout of the candidate [90m(49.0787ms)[39m[39m
+[32m✔ xsec panel: a core that reports no cross-section readout shows — in those cells [90m(3.8283ms)[39m[39m
+[32m✔ xsec panel: a core refusal is shown by its name (BAD_TUBE, BAD_EDGE: A's contract) [90m(12.4336ms)[39m[39m
+[32m✔ xsec panel: a piece is a cup OR a tube — changing one puts the other back and disables it [90m(8.7137ms)[39m[39m
+[32m✔ xsec panel: a cup and a tube sent together anyway are refused by name (BAD_TARGET) [90m(0.8393ms)[39m[39m
+[32m✔ xsec panel: a refusal the REAL core makes on Extend is shown in the panel with its name [90m(3.3004ms)[39m[39m
+[32m✔ xsec panel: the bank field takes any number and keeps it within one turn, its sign kept: 360 is 0 and -540 is -180 (D259) [90m(19.9755ms)[39m[39m
+[32m✔ xsec head marker: the mast follows the road's U, right side up when inverted [90m(0.2921ms)[39m[39m
+[32m✔ xsec head marker: inside a closed tube the marker keeps to the room it has [90m(0.1886ms)[39m[39m
+[32m✔ xsec head marker: the clearance of a closed tube is 0.9 of its roof and of its reach [90m(1.3697ms)[39m[39m
+[32m✔ xsec head marker: the preview hands the closed tube's room to the marker it draws [90m(81.9562ms)[39m[39m
+[32m✔ xsec validation words: the tube-too-narrow and roll-rate reds read in plain words, the id in the tooltip [90m(0.42ms)[39m[39m
+[32m✔ xsec the panel loads in the webview loader with no node built-in (D186) [90m(6.999ms)[39m[39m
+[32m✔ row 1: shell.jump: the take-off as Extend would place it, a free flight, a 60 m straight landing, ONE undo step; the landing 40 m ahead at the same height, lined up; the ghost is a jump's [90m(57.8025ms)[39m[39m
+[32m✔ row 1b: every refusal of the core is said in plain words, with nothing changed and no undo step [90m(1161.826ms)[39m[39m
+[32m✔ row 2: the landing while it is the head: values in the boxes' units; moveLanding is ONE undo step; a drag is ONE step from where it began; a refused step leaves the last good one; fixed after an Extend, movable again after deleting back [90m(46.5791ms)[39m[39m
+[32m✔ row 3: the handles' frames: the arrows ARE the pose's axes: forward moves the landing along the take-off's heading, sideways along its left, height straight up (a turning, climbing take-off too) [90m(31.7282ms)[39m[39m
+[32m✔ row 4: the flight layer: each flight's centreline from the take-off station to the landing, broken behind the camera; the ghost's flights while one shows, the placed track's otherwise [90m(38.1967ms)[39m[39m
+[32m✔ an edit is autosaved: the autosave holds the byte-identical document [90m(4.4532ms)[39m[39m
+[32m✔ after a crash, the next start offers the unsaved track, and restoring it gives it back byte for byte [90m(4.1513ms)[39m[39m
+[32m✔ a clean exit clears the autosave, and the next start offers nothing [90m(0.5788ms)[39m[39m
+[32m✔ saving under a name clears the autosave: the named file holds the track now [90m(0.8478ms)[39m[39m
+[32m✔ the track name rides with the autosave, so a restored named track keeps its name [90m(0.9369ms)[39m[39m
+[32m✔ discarding the offer clears the autosave [90m(0.573ms)[39m[39m
+[32m✔ a session with no edits writes no autosave [90m(0.3152ms)[39m[39m
+[32m✔ a damaged autosave does not stop the app: no offer, and a message saying why [90m(0.437ms)[39m[39m
+[32m✔ edits in quick succession are written once, after the pause (debounced) [90m(0.7807ms)[39m[39m
+[32m✔ an autosave that fails to write says so, and the track is untouched [90m(0.5669ms)[39m[39m
+[32m✔ place straight, straight; sculpt w1 roll1 = 0.74: refused, no history entry, the document byte-identical, a message [90m(6.5902ms)[39m[39m
+[32m✔ the same edit as a DRAG changes nothing either: the drag keeps its last good frame and adds no history [90m(0.901ms)[39m[39m
+[32m✔ a good edit after a refused one commits normally and clears the message [90m(1.4586ms)[39m[39m
+[32m✔ a refused edit returns null, as every other failed action does (app/handles reads null as REFUSED) [90m(0.6269ms)[39m[39m
+[32m✔ placing a word with the DEFAULT timers works where setTimeout must be called on the global (a browser) [90m(4.4337ms)[39m[39m
+[34mℹ tests 144[39m
+[34mℹ suites 0[39m
+[34mℹ pass 144[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 19271.6691[39m
+

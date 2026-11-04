@@ -1,0 +1,3 @@
+== D190 C: core mutation · asked 2026-09-29T21:03:01.047Z · lock held 2026-09-29T21:03:01.052Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd /c/Users/nname/Desktop/c-d190-wt && node --test app/test/core-mutation.test.js > /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d190/mut2.out 2>&1; echo mutation exit $?
+== exit null · done 2026-09-29T21:03:01.054Z

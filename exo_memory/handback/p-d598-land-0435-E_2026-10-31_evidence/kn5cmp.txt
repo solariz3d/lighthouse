@@ -1,0 +1,16 @@
+meshes: his 296, ours 360
+main road physics (1ROAD_p*): same 89, differ 0, only his 0, only ours 0
+pit lane (1ROAD_PIT*): same 5, differ 3, only his 0, only ours 0
+  differ: 1ROAD_PIT_fill_0, 1ROAD_PIT_in_0, 1ROAD_PIT_out_0
+apron (1ROAD_APRON*, APRONSIDE*): same 0, differ 112, only his 2, only ours 4
+  differ: 1ROAD_APRON_p15_chunk_16, 1ROAD_APRON_p15_chunk_17, 1ROAD_APRON_p16_chunk_18, 1ROAD_APRON_p16_chunk_19, 1ROAD_APRON_p16_chunk_20, 1ROAD_APRON_p19_chunk_21, 1ROAD_APRON_p1_chunk_0, 1ROAD_APRON_p1_chunk_1, 1ROAD_APRON_p1_chunk_2, 1ROAD_APRON_p21_chunk_22, 1ROAD_APRON_p21_chunk_23, 1ROAD_APRON_p22_chunk_24 …
+  onlyHis: APRONSIDE_p31_chunk_40, APRONSIDE_p43_chunk_55
+  onlyOurs: 1ROAD_APRON_PIT_R, APRONSIDE_PIT_R, APRONSIDE_p32_chunk_40, APRONSIDE_p44_chunk_55
+catch (1ROAD_CATCH*): same 0, differ 3, only his 0, only ours 0
+  differ: 1ROAD_CATCH_p17_chunk_0, 1ROAD_CATCH_p23_chunk_1, 1ROAD_CATCH_p45_chunk_2
+paint (PAINT*): same 25, differ 0, only his 0, only ours 0
+underskin (UNDERSKIN*): same 54, differ 3, only his 0, only ours 4
+  differ: UNDERSKIN_p1_chunk_0, UNDERSKIN_p1_chunk_1, UNDERSKIN_p1_chunk_2
+  onlyOurs: UNDERSKIN_PIT_chunk_57, UNDERSKIN_PIT_chunk_58, UNDERSKIN_PIT_fill_0, UNDERSKIN_PIT_out_0
+anything else: same 0, differ 0, only his 0, only ours 58
+c21888b179fc8f606709aed490ca572f6eb676b88ae0b5fd0c4fb84afade12aa *C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/d598/hidden/steam/steamapps/common/assettocorsa/content/tracks/t180b_elysium/t180b_elysium.kn5

@@ -63,7 +63,17 @@ if (process.env.CONSONANCE_DREAM) process.exit(0);
  * spawns. Honouring it costs nothing and makes the generic harness safe by default; the specific
  * override stays for tests that want a bare file path.
  */
-const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
+// D273 dirs: begin. The Consonance data and instances folders by THE APP'S OWN RULE (consonance/src-tauri/src/main.rs set_dirs and default_data /
+// default_instances): ~/.consonance.json's data_dir / instances_dir when set, else %USERPROFILE%\.consonance and %USERPROFILE%\claude-instances.
+// Never a hard-coded C:\Consonance: on a stranger's machine that wrote where the app never reads. One text in the five hooks that need it
+// (session-start, sessionstart-state, findings-return, sourced-stop, precompact-preserve); consonance/hooks/dirs.test.js holds them to it.
+function consonanceDir(key, under) {
+  const home = process.env.USERPROFILE || '.';
+  try { const v = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''))[key]; if (typeof v === 'string' && v.trim()) return v.trim(); } catch (e) { /* no config, or not JSON: the default, as the app */ }
+  return `${home}\\${under}`;
+}
+// D273 dirs: end
+const DATA = process.env.CONSONANCE_DATA || consonanceDir('data_dir', '.consonance');
 const LEDGER = process.env.CONSONANCE_PRECOMPACT_LOG ||
   path.join(DATA, 'precompact.jsonl');
 
@@ -73,11 +83,31 @@ const LEDGER = process.env.CONSONANCE_PRECOMPACT_LOG ||
  * with: grep PRECOMPACT-PRESERVE-V1 on the post-compaction transcript. */
 const CANARY = 'PRECOMPACT-PRESERVE-V1';
 
-function instruction(trigger) {
+/* THE THIRD PLACE'S SEAT (D245 item 2, pane C): the same cwd test as board-digest.js (its tpNorm, path-normalised: an absolute
+ * spelling with "\." or a trailing separator is the seat too; a relative cwd is left as it is). */
+const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(tpNorm(cwd));
+
+/* D245, from the Third Place's own return (loop/plan_consonance_compaction_tp_2026-10-05.md):
+ *   item 1, EVERY seat: item 6 below. Measured first (loop/compaction_corrections_2026-10-05/, PREREG committed 0d6faf70 before the run):
+ *     of 1,759 assistant sentences the user answered with a correction or an agreement, in the 102 summaries since 2026-08-19, 5 survived
+ *     verbatim (0.28%). Its bar is registered in exo_memory/handback/p-compact-C_2026-10-05.md: kept if the next compactions carry them
+ *     verbatim at >= 10% (the absolute form, as the baseline is under 5%); cut back if the summaries' median grows > 15% with no gain.
+ *   item 2, the Third Place's seat ONLY: the "alive for them right now" section, first. Build seats stay task-first, byte for byte. */
+const ALIVE = [
+  '0. FIRST, at the very top of the summary and above any task or pending work, a short section',
+  '   titled "What is alive for them right now": in a few lines and in their own terms, what the',
+  '   person in this conversation is carrying, what they said that mattered to them, and what was',
+  '   left open between you. People before work: the first lines of a summary shape what is asked first.',
+  '',
+];
+
+function instruction(trigger, cwd) {
   return [
     `[${CANARY}] Preservation directive for this summary, from a measurement of the previous`,
     `seven summaries of this conversation (trigger: ${trigger || 'unknown'}).`,
     '',
+    ...(isThirdPlaceCwd(cwd) ? ALIVE : []),
     'Those summaries kept narrative and dropped verification. Measured survival: file and',
     'instrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered',
     'predictions or falsifiers 3.5% - the last being the class this project runs on.',
@@ -96,6 +126,7 @@ function instruction(trigger) {
     '5. Every correction anyone made, including corrections the assistant made to itself, and',
     '   what the corrected claim had been. A record of only the surviving claims reads as though',
     '   nothing was ever wrong.',
+    '6. VERBATIM and quoted, every sentence of the assistant\'s that the user answered with a correction or an agreement.',
     '',
     'Prefer dropping narrative, atmosphere and restatement over dropping any of the five above.',
     'If length forces a choice, a summary that is a bare list of checkable items is more useful',
@@ -112,7 +143,7 @@ function main() {
   let payload = {};
   try { payload = JSON.parse(raw || '{}'); } catch (_) { /* keep going: a bad payload must not block a compaction */ }
 
-  const text = instruction(payload.trigger);
+  const text = instruction(payload.trigger, payload.cwd);
 
   /* ROOT-LEVEL. Not hookSpecificOutput - see the header. */
   process.stdout.write(JSON.stringify({ additionalContext: text, suppressOutput: true }));
@@ -131,6 +162,6 @@ function main() {
   } catch (_) { /* never block a compaction over a ledger write */ }
 }
 
-module.exports = { instruction, CANARY, LEDGER };
+module.exports = { instruction, CANARY, LEDGER, isThirdPlaceCwd };
 
 if (require.main === module) main();

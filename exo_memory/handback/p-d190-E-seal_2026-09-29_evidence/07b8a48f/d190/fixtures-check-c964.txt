@@ -1,0 +1,10 @@
+F1-bowl-default-lap-closed: identical
+F2-halfpipe-default-lap-closed: identical
+F3-bowl-narrow-12m-cap-binds: identical
+F4-halfpipe-width-31.5-to-12-along-s: identical
+F5-flat-20m-bank-30: identical
+F6-bowl-r-brushed: identical
+F7-hill-then-jump: identical
+F8-mixed-families: identical
+F9-empty: identical
+0 of 9 differ

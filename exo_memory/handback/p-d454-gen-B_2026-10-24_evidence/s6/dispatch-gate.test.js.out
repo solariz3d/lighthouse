@@ -1,0 +1,67 @@
+    GATE MODE ARMS: flip via env
+    MUTATION (classifier): applied 4 / caught 4 / NOT APPLIED 0
+    MUTATION (contract): applied 7 / caught 7 / NOT APPLIED 0   (items 1, 2a, 2b, 3, 4, 5, 6)
+✔ SETUP — both gate-mode arms were constructed (a suite that cannot build its arms says so HERE, in red) (0.7801ms)
+✔ a dispatch citing a real commit routes an object (0.3284ms)
+✔ a dispatch citing a repo path routes an object (0.182ms)
+✔ the path:line citation format counts (0.0864ms)
+✔ prose with no citation is caught, however long and however confident (0.0561ms)
+✔ a sha-shaped string that does not resolve is not a citation (0.0405ms)
+✔ a path-shaped string that does not exist is not a citation (0.0384ms)
+✔ the interrupt carve-out is explicit and lands in the text the receiver reads (0.0369ms)
+✔ empty and non-string text never throw (0.0536ms)
+✔ an uncited dispatch is QUESTIONED in both modes, and STOPPED only in ask (102.9418ms)
+✔ the question names the cost rather than reciting a rule — on the channel each mode emits (100.5223ms)
+✔ the librarian's verb is gated too, and the question addresses the right seat, in both modes (99.9358ms)
+✔ every other tool passes untouched — this gate has exactly two verbs (109.355ms)
+✔ raise_pull is deliberately not a dispatch verb (0.0705ms)
+✔ malformed stdin fails OPEN — a gate that breaks a dispatch is worse than none (27.7947ms)
+✔ a payload with no tool_input fails OPEN in both modes (99.3438ms)
+✔ CONTRACT 1 — the question text is byte-identical across modes, and equals the one source (105.9266ms)
+✔ CONTRACT 2 — print: systemMessage present and permissionDecision ABSENT; ask: both present (107.1154ms)
+✔ CONTRACT 3 — the row's mode reports what was EMITTED, not what the constant says (161.9519ms)
+✔ CONTRACT 4 — the mode is read from ONE place, and both values are exercised (143.5806ms)
+✔ CONTRACT 5 — the report splits the cited-rate BY MODE and refuses a pooled figure (66.4873ms)
+✔ CONTRACT 6 — [interrupt] is exempt in BOTH modes, unchanged (55.3554ms)
+✔ findCitationDetail returns the token, and findCitation still returns only the kind (0.1347ms)
+✖ a gated dispatch records the target and the citation, and NEVER the token or the text (30.2829ms)
+✔ a test run is quarantined whole, and real rows around it are kept (0.2568ms)
+✔ the values alone are not enough — a quadruple spread over minutes is KEPT, and reported (0.0706ms)
+✔ a partial test run is left in place and reported as an orphan (0.0563ms)
+✔ a real uncited dispatch that happens to be 43 chars is NOT quarantined on its own (0.0354ms)
+✔ MUTATION — deleting the CONSONANCE_DATA line makes the ledger rows reappear (3108.8657ms)
+✔ MUTATION — every guard in the classifier is load-bearing (44.3826ms)
+✔ MUTATION — the six contract clauses are load-bearing (3304.6417ms)
+✔ RESTORED — the gate source is byte-identical to what was loaded; no mutant touched it (0.2685ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 31
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7936.8812
+
+✖ failing tests:
+
+test at consonance\hooks\dispatch-gate.test.js:441:1
+✖ a gated dispatch records the target and the citation, and NEVER the token or the text (30.2829ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 'B'
+  
+      at TestContext.<anonymous> (G:\consonance-scratch\d454s\clone\consonance\hooks\dispatch-gate.test.js:449:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'B',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

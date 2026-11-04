@@ -1,0 +1,188 @@
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DRIVE  FATAL-DEFAULT
+    consonance/tools/clean.js:3
+    const LEDGER = process.env.NOPE || 'C:\\Consonance\\data\\x.jsonl';
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DISGUISED  DISGUISED
+    consonance/tools/clean.js:3
+    const M = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DRIVE  FATAL-DEFAULT
+    consonance/tools/clean.js:3
+    const D = process.env.X || 'C:\\Consonance\\data';
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'baseline.json', LF will be replaced by CRLF the next time Git touches it
+portable-paths: code scope matched ZERO files. Refusing to report green over nothing.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: no baseline at C:\Users\nname\AppData\Local\Temp\portable-paths-6lF3jX\does-not-exist.json. Run --update once, review the diff, commit it.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DRIVE  FATAL-SHIPPED-INSTRUCTION
+    consonance/src-tauri/brief/CLEAN.md:5
+    # Notes go to `C:/Consonance/lighthouse/exo_memory/librarian/` as dated entries
+
+A FATAL-SHIPPED-INSTRUCTION is not a code fix. The file is a brief; the reader is a
+seat, and it will do what the line says on a machine where that path may not exist.
+Write the location the way a reader can resolve it — repo-relative
+(`exo_memory/librarian/`) — not as one checkout's absolute path. If the seat needs an
+absolute path at runtime, that belongs in a tool that can resolve it, not in prose.
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: cannot read the shipped-resource authority consonance/src-tauri/tauri.conf.json — ENOENT: no such file or directory, open 'C:\Users\nname\AppData\Local\Temp\portable-paths-ay0kNz\consonance\src-tauri\tauri.conf.json'
+Refusing to report on a universe I cannot enumerate. There is no fallback list on purpose.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+portable-paths: shipped-prose scope matched ZERO files via consonance/src-tauri/tauri.conf.json.
+Refusing to report green over nothing.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DRIVE  FATAL-USER
+    dev/shell/hooks/userprompt_pulse.py:3
+    STATE = os.environ.get('CONSONANCE_DATA') or 'C:\Users\zackn\Consonance\data\pulse.json'
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+portable-paths: RED — 1 machine-specific path(s) not in the baseline
+
+  DISGUISED  DISGUISED
+    dev/shell/hooks/userprompt_pulse.py:4
+    M = os.path.join(os.path.expanduser('~'), 'Desktop', 'lighthouse', 'METHOD.md')
+
+For code: resolve it the way the peer hooks already do — env override, then
+~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+See consonance/hooks/transcript-watch.js dataDir() for the shape.
+If the site is genuinely benign (a fixture, a test constant), run --update and
+let the baseline diff carry the argument.
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+[32m✔ a drive-letter literal is detected [90m(0.6809ms)[39m[39m
+[32m✔ a url is not a drive path [90m(0.3877ms)[39m[39m
+[32m✔ a portable prefix glued to a machine segment is DISGUISED, and the grep cannot see it [90m(0.0988ms)[39m[39m
+[32m✔ a portable prefix with a fixed-by-convention segment does NOT fire [90m(0.0898ms)[39m[39m
+[32m✔ .consonance is not Consonance — the case distinction is load-bearing [90m(0.4622ms)[39m[39m
+[32m✔ comment-only lines are not scanned [90m(0.0771ms)[39m[39m
+[32m✔ code on a line that merely ENDS a comment is still scanned [90m(0.0596ms)[39m[39m
+[32m✔ the site key ignores indentation and line position [90m(0.0842ms)[39m[39m
+[32m✔ brace-counted cfg(test) regions cover the whole module and stop at its end [90m(0.2441ms)[39m[39m
+[32m✔ THE LINE: a `}` inside a string literal does not close the test module (main.rs:5784, verbatim) [90m(0.2012ms)[39m[39m
+[32m✔ char literals holding a brace are not braces; a lifetime is not a char literal [90m(0.178ms)[39m[39m
+[32m✔ raw strings holding a brace or a quote are not braces [90m(0.117ms)[39m[39m
+[32m✔ a string that spans lines keeps its brace to itself [90m(0.0557ms)[39m[39m
+[32m✔ a quote or apostrophe in a comment opens no string, and a brace in a comment is not code [90m(0.0329ms)[39m[39m
+[32m✔ main.rs has no drive literal in LIVE code, and this is what proves it [90m(13.0818ms)[39m[39m
+[32m✔ guard-census: the TOOL line that was broken on every machine [90m(0.1598ms)[39m[39m
+[32m✔ guard-census: the TEST line, which a blanket test exemption would have hidden [90m(0.2017ms)[39m[39m
+[32m✔ an ordinary fixture string in a test file stays benign [90m(0.0493ms)[39m[39m
+[32m✔ main.rs: the OneDrive fallback that a drive-letter grep cannot see [90m(0.031ms)[39m[39m
+[32m✔ sessionstart-state: the env-override-with-a-one-box-default shape [90m(0.0994ms)[39m[39m
+[32m✔ scope includes what ships and what runs, and excludes what is a dated record [90m(0.093ms)[39m[39m
+[32m✔ THE MUTATION PROOF: a new absolute path turns it red, removing it turns it green [90m(437.3126ms)[39m[39m
+[32m✔ the DISGUISED shape also turns it red — the half a grep would miss [90m(252.8691ms)[39m[39m
+[32m✔ moving a known site does NOT fire, but a second copy of it does [90m(335.7611ms)[39m[39m
+[32m✔ a green run over ZERO files is refused, not reported clean [90m(301.7496ms)[39m[39m
+[32m✔ a missing baseline is a refusal with instructions, not a silent pass [90m(166.1522ms)[39m[39m
+[32m✔ the shipped-prose universe is READ from the manifest, never recited [90m(2.208ms)[39m[39m
+[32m✔ THE MOTIVATING SITE: a bundled brief naming one checkout is FATAL-SHIPPED-INSTRUCTION [90m(0.066ms)[39m[39m
+[32m✔ a synthetic path in prose is a fixture, not an instruction [90m(0.0296ms)[39m[39m
+[32m✔ the code comment rule is OFF for prose, or a markdown heading hides a path [90m(0.0385ms)[39m[39m
+[32m✔ THE BAR: a laptop path planted in a BUNDLED BRIEF turns it red, removing it turns it green [90m(419.9948ms)[39m[39m
+[32m✔ an unreadable manifest is a REFUSAL, and there is no fallback list [90m(217.2094ms)[39m[39m
+[32m✔ a manifest that resolves to zero files is a refusal, not a green [90m(278.917ms)[39m[39m
+[32m✔ a declared resource missing from disk is SKIPPED and NAMED, never silently dropped [90m(259.0551ms)[39m[39m
+[32m✔ the green line says how many baselined sites are FATAL — exempted is not fixed [90m(166.8235ms)[39m[39m
+[32m✔ the real repo is green against its committed baseline [90m(164.7767ms)[39m[39m
+[32m✔ a .py under SCOPE_IN is in the universe at all [90m(278.8093ms)[39m[39m
+[32m✔ THE .py MUTATION PROOF: a machine path in a hook that runs every prompt turns it red [90m(409.1173ms)[39m[39m
+[32m✔ the DISGUISED shape is caught in .py too, not only in .js [90m(246.4831ms)[39m[39m
+[32m✔ a baselined REVIEW site is ANNOUNCED on a green run — exempted must not read as fixed [90m(274.9289ms)[39m[39m
+[32m✔ L063: a field the tool does not generate survives --update [90m(193.4279ms)[39m[39m
+[32m✔ L063: a hand-corrected verdict survives --update [90m(192.982ms)[39m[39m
+[32m✔ L063: --update NAMES each site it newly blesses, rather than only counting them [90m(186.3428ms)[39m[39m
+[34mℹ tests 43[39m
+[34mℹ suites 0[39m
+[34mℹ pass 43[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 4852.1904[39m
+
+--- stderr ---
+
+--- exit 0

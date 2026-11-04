@@ -1,0 +1,4 @@
+heavy-run: waiting on a2122153 pid 22800 (t180 E D484 part 3 headless title tests, since 2026-10-27T03:48:13.260Z) — one heavy run at a time
+lockrun: holding the lock at 2026-10-27T03:53:50.506Z; starting c484 timing session row4 split
+split run 0: 12 pieces, 32 changes; row cost p95 6.10 median 3.80 | handler p95 1.20 median 1.00 | largest single piece p95 3.10
+lockrun: done at 2026-10-27T03:53:58.935Z, exit 0

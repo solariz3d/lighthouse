@@ -1,0 +1,37 @@
+== C d305r addition green · asked 2026-10-12T06:36:55.115Z · lock held 2026-10-12T06:36:55.148Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d305b-wt && echo '## install-only'; node --test --test-reporter=tap consonance/tools/install-only.test.js 2>&1 | grep -E '^not ok|UNDECLARED|^# (tests|pass|fail)'; echo '## gen-consumer (whole file)'; node --test --test-reporter=tap --test-timeout=600000 consonance/tools/gen-consumer.test.js 2>&1 | grep -E '^not ok|^# (tests|pass|fail)'; echo '## every hook test file'; for f in consonance/hooks/*.test.js; do printf '%s: ' $f; node --test --test-reporter=tap $f 2>&1 | grep -E '^# (pass|fail)' | tr '\n' ' '; echo; done
+## install-only
+# tests 1
+# pass 1
+# fail 0
+## gen-consumer (whole file)
+# tests 107
+# pass 107
+# fail 0
+## every hook test file
+consonance/hooks/ask-ending.test.js: # pass 6 # fail 0 
+consonance/hooks/baton-wake-stop.test.js: # pass 1 # fail 0 
+consonance/hooks/blind.test.js: # pass 24 # fail 0 
+consonance/hooks/board-digest.test.js: # pass 35 # fail 0 
+consonance/hooks/carrier-drift-watch.test.js: # pass 9 # fail 0 
+consonance/hooks/claim-check.test.js: # pass 27 # fail 0 
+consonance/hooks/delete-gate.test.js: # pass 13 # fail 0 
+consonance/hooks/dirs.test.js: # pass 5 # fail 0 
+consonance/hooks/dispatch-gate.test.js: # pass 32 # fail 0 
+consonance/hooks/dream-gate.test.js: # pass 1 # fail 0 
+consonance/hooks/dream-watch.test.js: # pass 1 # fail 0 
+consonance/hooks/ferry-watch.test.js: # pass 3 # fail 0 
+consonance/hooks/findings-return.test.js: # pass 16 # fail 0 
+consonance/hooks/gate-mode.test.js: # pass 6 # fail 0 
+consonance/hooks/jev-flags.test.js: # pass 35 # fail 0 
+consonance/hooks/live-mirror-stop.test.js: # pass 12 # fail 0 
+consonance/hooks/precompact-preserve.test.js: # pass 14 # fail 0 
+consonance/hooks/push-gate.test.js: # pass 15 # fail 0 
+consonance/hooks/release-chime.test.js: # pass 12 # fail 0 
+consonance/hooks/reply-slot.test.js: # pass 38 # fail 0 
+consonance/hooks/second-reader.test.js: # pass 29 # fail 0 
+consonance/hooks/sessionstart-state.test.js: # pass 12 # fail 0 
+consonance/hooks/sourced-stop.test.js: # pass 18 # fail 0 
+consonance/hooks/sources-gate.test.js: # pass 64 # fail 0 
+consonance/hooks/transcript-watch.test.js: # pass 1 # fail 0 
+== exit 0 · done 2026-10-12T06:40:27.565Z

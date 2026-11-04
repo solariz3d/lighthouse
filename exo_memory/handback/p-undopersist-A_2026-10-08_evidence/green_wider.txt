@@ -1,0 +1,290 @@
+﻿[32m✔ the strings: one decimal, the unit written, a sign on angles, 0.0° bare, half away from zero, no wrap [90m(1.7946ms)[39m[39m
+[32m✔ the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled [90m(1.8471ms)[39m[39m
+[32m✔ the layout: a label anchored on a large head keep-out is placed clear of it, not culled [90m(0.167ms)[39m[39m
+[32m✔ the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head [90m(0.6654ms)[39m[39m
+[32m✔ a piece whose middle is behind the camera is labelled, when hovered, on the part of it that is in view [90m(107.3932ms)[39m[39m
+[32m✔ the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head) [90m(43.5172ms)[39m[39m
+[32m✔ the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1 [90m(7.1872ms)[39m[39m
+[32m✔ the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings [90m(6.6846ms)[39m[39m
+[32m✔ the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame) [90m(25.5643ms)[39m[39m
+[32m✔ the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece [90m(12.2619ms)[39m[39m
+[32m✔ the labels on the track: the head's own piece always, any other only when hovered; the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing [90m(126.6233ms)[39m[39m
+[32m✔ the head's own piece is labelled in the build view, where its middle is behind the camera [90m(38.5657ms)[39m[39m
+[32m✔ the labels follow a path the preview extends IN PLACE (a hovered later piece is labelled), and survive the preview clearing #preview after they mounted [90m(347.5756ms)[39m[39m
+[32m✔ extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here) [90m(0.2892ms)[39m[39m
+[32m✔ the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c [90m(9.4012ms)[39m[39m
+[32m✔ the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's [90m(10.8566ms)[39m[39m
+[32m✔ the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why [90m(9.2826ms)[39m[39m
+[32m✔ the brush's channel list gains cup (channel c), with a drag rate in degrees [90m(0.9795ms)[39m[39m
+[32m✔ the brush's channel list offers the cross-section channels e, s and t (D225), each with a drag rate [90m(0.7331ms)[39m[39m
+[32m✔ on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks [90m(3.7988ms)[39m[39m
+[32m✔ after Extend and Redo the fields show the head's END state in their own units (°/100m, °, m); after Undo, the undone piece's own values (D242 item 7) [90m(11.8256ms)[39m[39m
+[32m✔ on OPENING a saved track the fields show its head [90m(3.2666ms)[39m[39m
+[32m✔ a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again [90m(19.8623ms)[39m[39m
+[32m✔ a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not [90m(22.4074ms)[39m[39m
+[32m✔ the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start [90m(10.6313ms)[39m[39m
+[32m✔ the first piece is the typed BANK, TURN and CLIMB from s = 0 [90m(9.2123ms)[39m[39m
+[32m✔ a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1) [90m(6.4203ms)[39m[39m
+[32m✔ the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before [90m(13.6691ms)[39m[39m
+[32m✔ a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on) [90m(2463.7175ms)[39m[39m
+[32m✔ extendOptions "at start": a ticked field WITH a target goes in transition as { channel: 20 m }; unticked or untouched fields do not [90m(0.3893ms)[39m[39m
+[32m✔ the panel: an "at start" box beside each field, OFF by default; ticking one redraws the ghost and readout inside its handler, and Extend sends it [90m(14.9257ms)[39m[39m
+[32m✔ "at start" on a field left as shown sends nothing (no target, D193); the box stays ticked for the next piece [90m(11.9855ms)[39m[39m
+[32m✔ no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water [90m(17.8752ms)[39m[39m
+[32m✔ Close the loop, then Apply, writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes [90m(1264.5923ms)[39m[39m
+[32m✔ if that copy cannot be written, Apply changes nothing and says why [90m(1265.7662ms)[39m[39m
+[32m✔ D271: Level ends the piece straight and level; To floor too short says the length that works, which then works; each is one undo step [90m(854.0552ms)[39m[39m
+[32m✔ D242: after a 30°/100m turn, Straight extends a piece whose turn and climb are 0 from 20 m on, and puts the "at start" boxes back; turn 0 without "at start" shows the hint [90m(21.1725ms)[39m[39m
+[32m✔ D242 item 7: Undo gives back the undone piece's values: the fields read what it was extended with, and Extend again rebuilds it byte-identical; Redo shows the head as before [90m(35.3135ms)[39m[39m
+[32m✔ the default road is the asphalt preset: every road piece's floor wears the made asphalt, announced once at the start [90m(1487.2187ms)[39m[39m
+[32m✔ the solid colour is one click away and back: no set at all (the export is what it was), then the asphalt again [90m(49.4055ms)[39m[39m
+[32m✔ bring-your-own stays: a PNG becomes the road surface under its name; a refused file or name changes nothing and says why [90m(43.6719ms)[39m[39m
+[32m✔ a new piece is a new segment id the set must know: refresh() covers it, and the set is reused while the pieces are the same [90m(45.3922ms)[39m[39m
+[32m✔ the Export on the core page writes the set: with it the folder has the DDS and the kn5 wears the material; without it, the solid road as before [90m(4880.1977ms)[39m[39m
+[32m✔ the panel mounts (headless DOM): it announces the asphalt at once, follows the choice, the picture and the track's new pieces, and the page gets the set through t180:textures [90m(14.3635ms)[39m[39m
+[32m✔ Export shows the CSP-only warning in its message, and the exported surfaces.ini carries the switch [90m(17728.6658ms)[39m[39m
+[32m✔ export writes the track folder into the picked folder, and its kn5 reads back through tools/kn5.cjs [90m(550.1541ms)[39m[39m
+[32m✔ the app's export is node's export: the same kn5, AI line and text files byte for byte, and the same pixels [90m(898.8132ms)[39m[39m
+[32m✔ a red track is refused, nothing is written, and the reds are shown with their sources [90m(9514.8735ms)[39m[39m
+[32m✔ an open track is refused with the model's reason, and nothing is written [90m(0.934ms)[39m[39m
+[32m✔ the AC guard: inside content\tracks only t180b_* folders; content\tracks itself and folders elsewhere are fine [90m(0.2257ms)[39m[39m
+[32m✔ an export into another track's folder in an AC install is refused before anything runs or is written [90m(1.0418ms)[39m[39m
+[32m✔ the shim's sha256 and deflate are node's: the same digest, and a stream node inflates back to the input [90m(16.0549ms)[39m[39m
+[32m✔ the shim's Buffer reads and writes like node's for every call the exporter makes [90m(0.2581ms)[39m[39m
+[32m✔ the app's exporter writes a textured floor into the kn5 it hands the native side [90m(694.1939ms)[39m[39m
+[32m✔ a track saved under a name exports as t180b_<that name>, not as the name it was started with [90m(358.0267ms)[39m[39m
+[32m✔ D226 resolveTarget: only an EMPTY folder directly in content\tracks is redirected to content\tracks (the user's own spelling of the path); everything else is refused as before [90m(0.7678ms)[39m[39m
+[32m✔ D227 "." and ".." as the picked folder name are refused BY NAME and never reach the removal: resolveTarget, and the shell on an EMPTY content\tracks whose "tracks\." would otherwise read as an empty folder in it [90m(1.4558ms)[39m[39m
+[32m✔ D226 the empty folder the keeper made exports to content\tracks as the normal t180b_<name> folder and the empty folder is removed, so Content Manager never sees it [90m(296.2219ms)[39m[39m
+[32m✔ D226 a folder with ANYTHING in it is refused as before and never deleted: a file, a nested empty folder, a hidden file [90m(4.1895ms)[39m[39m
+[32m✔ D226 if the empty folder cannot be removed the export still stands, and the message says to delete it by hand [90m(282.6429ms)[39m[39m
+[32m✔ D226 (reversed by D234) a refused export into an EMPTY picked folder removes the folder too, and says so; nothing is written [90m(1.5479ms)[39m[39m
+[32m✔ D226 a t180b_ folder, content\tracks itself and a folder elsewhere export exactly as before and never touch or ask about a folder [90m(903.3852ms)[39m[39m
+[32m✔ D234 (words) an OPEN track and a RED into an EMPTY picked folder: refused, shown, folder gone; a non-empty one untouched; a failed write still tidies; a success unchanged [90m(550.138ms)[39m[39m
+[32m✔ light: the floor gets exactly ambient + key·key.y + fill·fill.y [90m(0.9999ms)[39m[39m
+[32m✔ light: a floor and a vertical wall, and a bank toward and away from the key, differ by at least 0.15 [90m(0.2231ms)[39m[39m
+[32m✔ light: two-sided (an overhang facing down is lit like the floor facing up), and never below ambient or above 1 [90m(0.5516ms)[39m[39m
+[32m✔ light: the fragment shader carries look.js's own constants (the test of shade() is a test of the shader) [90m(0.1562ms)[39m[39m
+[32m✔ edge lines: through the two edge vertices and the centre vertex, lifted 3 cm, on the geometry's own surface [90m(84.4072ms)[39m[39m
+[32m✔ edge lines: a tie across the road at least every 10 m of the cell, and none on seams [90m(121.3947ms)[39m[39m
+[32m✔ overhead fit (aspect 1.7): every vertex of the whole track projects inside the view, and the head is in frame [90m(174.3719ms)[39m[39m
+[32m✔ overhead fit (aspect 0.6): every vertex of the whole track projects inside the view, and the head is in frame [90m(189.2884ms)[39m[39m
+[32m✔ ghost: the ghost of a segment tail equals what placing it builds, and the placed track is untouched by the ghost [90m(23.9569ms)[39m[39m
+[32m✔ ghost: a candidate that does not extend the placed track is refused; on an empty track the ghost stands alone [90m(9.3093ms)[39m[39m
+[32m✔ ghost through A's real shell: the candidate for a word equals what shell.place() then builds [90m(209.9721ms)[39m[39m
+[32m✔ preview: showGhost draws the ghost, clearGhost removes it, and placing the word retires it [90m(35.3288ms)[39m[39m
+[32m✔ preview: a frame draws the grid and the head marker as lines (the grid only with ground: true) [90m(10.716ms)[39m[39m
+[32m✔ preview: by default there is no ground grid, only the track and the head marker [90m(13.7261ms)[39m[39m
+[32m✔ grid: every vertex at y = 0, covering the track's box, and the spacing widens so a long track stays a few hundred lines [90m(96.6818ms)[39m[39m
+[32m✔ head marker: it grows with the camera distance (2%, never under 3 m), and its ring surrounds the head in the road plane [90m(0.9231ms)[39m[39m
+[32m✔ head marker: a 10 m mast from the head along the road's up [90m(0.7945ms)[39m[39m
+[32m✔ the panel drops the default layout on the first straight long enough, and says what stops it before that [90m(104.6275ms)[39m[39m
+[32m✔ once edited the layout is kept, and its markers ride along when an upstream word is sculpted [90m(17.7463ms)[39m[39m
+[32m✔ a slot edited slot by slot, and an overlap it causes is red in the panel [90m(12.4484ms)[39m[39m
+[32m✔ slot edits accumulate: an edit to a second slot keeps the first [90m(56.4479ms)[39m[39m
+[32m✔ removing the word the layout sits on turns the panel red (anchors), not silent [90m(7.1201ms)[39m[39m
+[32m✔ the markers panel loads through A's webview loader and exports mount(root, shell) [90m(7.0831ms)[39m[39m
+[32m✔ the palette lists the starter phrases, and placing one through the shell is one undo step with all its words [90m(42.722ms)[39m[39m
+[32m✔ a user piece may not take a starter phrase name [90m(1.0213ms)[39m[39m
+[32m✔ a saved library still holds only the user pieces (the phrasebook comes from the program) [90m(0.2939ms)[39m[39m
+[32m✔ batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface [90m(116.7527ms)[39m[39m
+[32m✔ batches: one colour per placed word, alternating along the track; a seam is darker than its piece [90m(34.7131ms)[39m[39m
+[32m✔ track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build [90m(318.4946ms)[39m[39m
+[32m✔ track model: a document that does not resolve keeps the last good track and marks it stale [90m(20.686ms)[39m[39m
+[32m✔ track model through A's shell: placing words grows the preview by extend, and it equals a full build [90m(43.6496ms)[39m[39m
+[32m✔ renderer: every array is uploaded once; drawing the same batches again uploads nothing [90m(135.4497ms)[39m[39m
+[32m✔ renderer: after a sculpt that moves later pieces, only the edited piece and its seams are uploaded; stale buffers are deleted [90m(41.2382ms)[39m[39m
+[32m✔ renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused [90m(0.3303ms)[39m[39m
+[32m✔ keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing [90m(0.3198ms)[39m[39m
+[32m✔ the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler [90m(0.3186ms)[39m[39m
+[32m✔ keys: a key held when the window loses focus is let go, so the camera stops (the drift) [90m(6.2166ms)[39m[39m
+[32m✔ keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD) [90m(1.8714ms)[39m[39m
+[32m✔ keys: Shift sprints (×4 the distance per frame) [90m(3.5421ms)[39m[39m
+[32m✔ mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time [90m(1.533ms)[39m[39m
+[32m✔ mouse: the scroll wheel zooms the build view [90m(1.5127ms)[39m[39m
+[32m✔ keys: W then D goes diagonally: both axes at once, the same 3 m a frame as a straight line (1.0×, not √2) [90m(36.5598ms)[39m[39m
+[32m✔ keys: D then W is the same diagonal (the order across axes does not matter) [90m(2.3234ms)[39m[39m
+[32m✔ keys: three axes at once (W, D and E) move along the sum W + D + up at 1.0× in METRES (D189: the world displacement is normalised, not the input) [90m(4.0667ms)[39m[39m
+[32m✔ keys: D and E (right and up are perpendicular) go at 1.0× too: (D + up) / √2, 3 m a frame [90m(3.0024ms)[39m[39m
+[32m✔ keys: releasing one key of a diagonal leaves a straight line on the other, and releasing both stops [90m(5.0148ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (w then s), and on its release the w takes over [90m(3.5281ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (s then w), and on its release the s takes over [90m(2.5213ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (d then a), and on its release the d takes over [90m(2.7456ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (a then d), and on its release the a takes over [90m(5.4131ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (e then q), and on its release the e takes over [90m(23.202ms)[39m[39m
+[32m✔ keys: on one axis the NEWER key wins (q then e), and on its release the q takes over [90m(11.2421ms)[39m[39m
+[32m✔ keys: releasing the OLDER key of an axis leaves the newer moving [90m(2.0658ms)[39m[39m
+[32m✔ keys: an axis with both keys held still combines with another axis: W, S (newer) and D go along (D − W) / √2, and on S released (W + D) / √2 [90m(3.2756ms)[39m[39m
+[32m✔ keys: a held key that repeats (auto-repeat key-down) keeps its place: with W, S (newer) held a repeat of W does not make W the newer [90m(4.2861ms)[39m[39m
+[32m✔ keys: Shift multiplies the diagonal as it does a straight line: ×4 at the press, so 12 m a frame, not 12·√2 [90m(1.3343ms)[39m[39m
+[32m✔ keys: a blur lets go of a diagonal (both keys), so the camera stops [90m(1.0789ms)[39m[39m
+[32m✔ keys: the arrow (look) keys are not movement keys: they turn while the movement keys fly [90m(1.1368ms)[39m[39m
+[32m✔ P3: C or B pressed while a movement key is held leaves free mode and stays out of it [90m(2.1656ms)[39m[39m
+[32m✔ P3: a NEW movement key-down after C takes the view over again [90m(1.0368ms)[39m[39m
+[32m✔ P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY [90m(1.7091ms)[39m[39m
+[32m✔ P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code [90m(1.2833ms)[39m[39m
+[32m✔ the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4)) [90m(0.238ms)[39m[39m
+[32m✔ keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame) [90m(1.7783ms)[39m[39m
+[32m✔ keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again [90m(1.9823ms)[39m[39m
+[32m✔ keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4 [90m(3.2594ms)[39m[39m
+[32m✔ focus: Enter in a text field or a number field lets go of it (and does not touch the camera) [90m(4.0462ms)[39m[39m
+[32m✔ focus: Esc in a field lets go of it, in every kind of field [90m(4.1208ms)[39m[39m
+[32m✔ focus: Enter in a text AREA is a new line, and is left alone [90m(1.0751ms)[39m[39m
+[32m✔ focus: Enter or Esc on the page (no field) does nothing to the camera [90m(1.3242ms)[39m[39m
+[32m✔ focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field [90m(2.8965ms)[39m[39m
+[32m✔ focus: a mouse-down with nothing focused (the page body, or none) is fine [90m(2.9652ms)[39m[39m
+[32m✔ focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn [90m(9.2739ms)[39m[39m
+[32m✔ focus: Shift sprints while a number field has focus [90m(2.2293ms)[39m[39m
+[32m✔ focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped) [90m(2.1293ms)[39m[39m
+[32m✔ focus: a TEXT field swallows every camera key: typing a name never moves the camera [90m(5.2685ms)[39m[39m
+[32m✔ the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays [90m(0.9873ms)[39m[39m
+[32m✔ Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°) [90m(26.8484ms)[39m[39m
+[32m✔ Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too [90m(6.161ms)[39m[39m
+[32m✔ a middle click resets the lens to 60° (and does not start a drag or change the view) [90m(1.6011ms)[39m[39m
+[32m✔ the HUD shows the fov once the lens has moved off 60°, and drops it on the reset [90m(1.4034ms)[39m[39m
+[32m✔ the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all) [90m(3.1104ms)[39m[39m
+[32m✔ W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free [90m(1.2865ms)[39m[39m
+[32m✔ W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free [90m(1.248ms)[39m[39m
+[32m✔ W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom [90m(1.0987ms)[39m[39m
+[32m✔ W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line) [90m(1.4087ms)[39m[39m
+[32m✔ D195: with nothing placed and no ghost, a frame draws, looking at where the first piece will start [90m(0.8276ms)[39m[39m
+[32m✔ D195: with nothing placed, the wheel zooms on the next frame (not later, when a ghost appears) [90m(0.8483ms)[39m[39m
+[32m✔ D195: with nothing placed, W takes the view over and flies on the next frame [90m(0.3818ms)[39m[39m
+[32m✔ D195: with nothing placed, every camera mode draws (chase included, on the start alone) [90m(0.543ms)[39m[39m
+[32m✔ D195: with no start in the document (the piece builder), the empty view looks from the origin along +z, level [90m(0.2908ms)[39m[39m
+[32m✔ D195: the empty track's head is the frame the first piece starts with (src/geom buildPath's first sample, no roll) [90m(0.3533ms)[39m[39m
+[32m✔ D195: once a ghost shows on the empty track, the camera follows the ghost's head, as before [90m(4.3624ms)[39m[39m
+[32m✔ D252: Space held flies UP like E (3 m a frame, world up), and its release stops it [90m(4.9249ms)[39m[39m
+[32m✔ D252: Left Ctrl ALONE flies DOWN like Q; Right Ctrl does not fly [90m(4.4616ms)[39m[39m
+[32m✔ D252: Ctrl+Z never moves the camera: the descent before Z is undone, in free mode and from the build view (the view is kept too) [90m(4.9869ms)[39m[39m
+[32m✔ D257: a SHORTCUT key held BEFORE Ctrl (Z) means Ctrl never flies on that press; Shift or W held first does not stop it, and Ctrl+Shift+Z still leaves the camera put [90m(1.919ms)[39m[39m
+[32m✔ D252: Ctrl+wheel is still the LENS and the camera does not move; a mouse button down (a handle drag, Ctrl to snap) means no descent [90m(1.8847ms)[39m[39m
+[32m✔ D252: Space is TAKEN (preventDefault, down and up) so a focused button is never clicked; in a text field it types and the camera stays [90m(3.8889ms)[39m[39m
+[32m✔ D255: Left Ctrl descends on the FIRST frame, like Space; Ctrl+Z still puts the camera back where Ctrl found it, and the view it found [90m(2.5907ms)[39m[39m
+[32m✔ D255: a LEFT drag never turns the camera, in free mode either; a RIGHT drag still looks [90m(1.8925ms)[39m[39m
+[32m✔ a move key from the OVERHEAD view enters free with no frame throwing: pitch held at -89 degrees, facing where the overhead view had up the screen [90m(15.4512ms)[39m[39m
+[32m✔ a handle drag (pointerdown only, its mousedown suppressed) with Ctrl held past 200 ms to snap: the camera does not move; a press joining Ctrl undoes it [90m(2.8382ms)[39m[39m
+[32m✔ D257: Left Ctrl with W flies down AND forward, whichever went down first (the same move as W with Q) [90m(3.9628ms)[39m[39m
+[32m✔ D257: Left Ctrl with a RIGHT-button look drag flies down and looks [90m(1.3696ms)[39m[39m
+[32m✔ D257: Left Ctrl with Space nets ZERO on the up axis, whichever went down first [90m(5.2179ms)[39m[39m
+[32m✔ D257: Ctrl+Z still leaves the camera where it started (and still undoes): flying with W, the descent is undone and the forward travel kept [90m(2.0106ms)[39m[39m
+[32m✔ Copy code puts the track on the clipboard; Paste code opens it in another session byte-exact, as one undo step [90m(128.715ms)[39m[39m
+[32m✔ a corrupted code changes nothing and says why [90m(53.3484ms)[39m[39m
+[32m✔ a pack code goes to the textures panel's onPack; without one it changes nothing and says so [90m(6.6527ms)[39m[39m
+[32m✔ Install to AC asks for the AC folder once, remembers it, and installs as t180b_<name>, saying so [90m(2571.8922ms)[39m[39m
+[32m✔ See it in Assetto is OFF by default: the native launch is never asked for while it is off [90m(0.4408ms)[39m[39m
+[32m✔ the share and install panels load through the webview loader and export mount [90m(9.7843ms)[39m[39m
+[32m✔ Install to AC hands the build the texture set the page holds, as Export does [90m(0.3395ms)[39m[39m
+[32m✔ D250: a jump the car may fly past is INSTALLED, and the message says so in plain words; the export's other warnings stay out of it [90m(0.7338ms)[39m[39m
+[32m✔ an unnamed track is not installed: the user is asked to name it, and nothing is written [90m(825.3409ms)[39m[39m
+[32m✔ a track saved as "Monza" installs as t180b_monza, so a second unsaved track cannot replace it [90m(2301.8337ms)[39m[39m
+[32m✔ no tooltip on the page carries a tab or a line break (the install one said "content<TAB>racks") [90m(2.095ms)[39m[39m
+[32m✔ the Export to Assetto Corsa button installs the track under the name it was saved as [90m(2038.7697ms)[39m[39m
+[32m✔ D250: with AC found through Steam the button exports with NO folder dialog, and the line says where it went and that exporting again updates it [90m(1844.451ms)[39m[39m
+[32m✔ D250: when AC is NOT found through Steam, the line says so and asks for the folder (the picker, as before) [90m(203.4095ms)[39m[39m
+[32m✔ D264: an open loop is installed as the unfinished TEST export, t180b_<name>_test, and the line says so; never as t180b_<name> [90m(1780.678ms)[39m[39m
+[32m✔ D252: ONE button on the main row, Export to Assetto Corsa; the AC folder and See it in Assetto are in the more menu; there is no "AC folder…" button [90m(0.8247ms)[39m[39m
+[32m✔ D252: at startup with NO folder remembered, a card offers the folder Steam found; Use it remembers exactly that one [90m(0.456ms)[39m[39m
+[32m✔ D252: the card's Choose another… opens the picker and remembers the folder picked; with Steam finding nothing the card asks to pick [90m(0.3659ms)[39m[39m
+[32m✔ D252: with a folder remembered the startup says nothing (no card) [90m(0.1321ms)[39m[39m
+[32m✔ D252 follow-up: once Export to Assetto Corsa has found and remembered AC, the startup card goes [90m(0.3624ms)[39m[39m
+[32m✔ D252 follow-up: a long install note is cut to its box with the whole text in its tooltip, and the ⋯ menu opens toward the window (right-aligned) [90m(2.0353ms)[39m[39m
+[32m✔ D264: Export to Assetto Corsa on an OPEN track writes t180b_<name>_test into the AC tree and says it is an unfinished TEST; a closed track still writes t180b_<name> [90m(3876.2771ms)[39m[39m
+[32m✔ D264: ⋯ Test export (unfinished)… goes into AC by the same path, with no folder dialog when AC is known; only when it is not does it ask for the AC folder [90m(3171.0034ms)[39m[39m
+[32m✔ D264: the guards hold: ⋯ Test export on a CLOSED track is refused by name and nothing is written; an unnamed open track is not installed [90m(239.0191ms)[39m[39m
+[32m✔ closing the loop appends the safest connector as one undo step, and the track is closed [90m(19688.0723ms)[39m[39m
+[32m✔ the connector the shell appends is the connector's FIRST-ranked candidate, the safest by its worst load [90m(12517.4523ms)[39m[39m
+[32m✔ the closed track still resolves for the panels, marked closed, with no resolve error [90m(0.2306ms)[39m[39m
+[32m✔ undo reopens the loop: the open track comes back byte for byte [90m(11392.9666ms)[39m[39m
+[32m✔ closing an empty track says why and changes nothing [90m(0.3467ms)[39m[39m
+[32m✔ the candidate for a built-in word is exactly the track place() then builds, pickers and all [90m(4.6363ms)[39m[39m
+[32m✔ the candidate for one of the user's own pieces is what placing it builds [90m(2.0605ms)[39m[39m
+[32m✔ asking for a candidate commits nothing: the document, the history and the state stay as they were [90m(3.1788ms)[39m[39m
+[32m✔ the candidate for a jump ends on its landing ramp, so the ghost shows where the next piece will start [90m(0.5898ms)[39m[39m
+[32m✔ a candidate that cannot be built is refused with the model's reason, and nothing changes [90m(0.5491ms)[39m[39m
+[32m✔ the shell loaded through the loader builds the same track, byte for byte, as the shell node loads [90m(133.9758ms)[39m[39m
+[32m✔ a node built-in is refused loudly, naming the module and the file that asked for it [90m(13.1196ms)[39m[39m
+[32m✔ a missing file fails when it is really required, not when a comment only mentions it [90m(0.8896ms)[39m[39m
+[32m✔ each file runs once, and a require cycle sees the partial exports, as in node [90m(1.7573ms)[39m[39m
+[32m✔ an injected global does not clash with a file that declares the same name at its top level [90m(0.3153ms)[39m[39m
+[32m✔ a bare name the page supplies as a builtin is served; any other still fails loudly [90m(0.3162ms)[39m[39m
+[32m✔ paths are normalised, and none may climb above the served root [90m(0.1802ms)[39m[39m
+[32m✔ a relative require of a .json file gives its parsed content, as node's require does [90m(0.2381ms)[39m[39m
+[32m✔ place appends the palette word at the head, and undo restores the byte-identical document [90m(4.3823ms)[39m[39m
+[32m✔ each placement is one undo step, and the head grows in order [90m(3.6912ms)[39m[39m
+[32m✔ the pickers shape a built-in word: tempo, font and direction [90m(0.7785ms)[39m[39m
+[32m✔ a picker value that does not exist is refused with a message, and changes nothing [90m(0.406ms)[39m[39m
+[32m✔ a failed placement says why and leaves the document and history as they were [90m(0.6591ms)[39m[39m
+[32m✔ undo with nothing to undo says so and changes nothing [90m(0.2277ms)[39m[39m
+[32m✔ the app's document round-trips through save and open, byte for byte [90m(29.3281ms)[39m[39m
+[32m✔ opening a track starts a fresh history: undo does not reach back into the track that was open before [90m(0.9916ms)[39m[39m
+[32m✔ a track name that could escape the tracks folder is refused before anything is written [90m(0.4111ms)[39m[39m
+[32m✔ opening a file that is not a canonical document says why and keeps the open track [90m(0.67ms)[39m[39m
+[32m✔ saving a selection as a piece puts it in the palette and the library file, and it places back [90m(1.4271ms)[39m[39m
+[32m✔ the saved library comes back when the app starts again [90m(0.8279ms)[39m[39m
+[32m✔ saving a piece needs a selection, and a built-in name is refused [90m(0.3793ms)[39m[39m
+[32m✔ a selection is always a consecutive run in track order, whichever end is clicked first [90m(0.8133ms)[39m[39m
+[32m✔ the resolved track follows every edit, re-resolving only from the change [90m(2.6834ms)[39m[39m
+[32m✔ sculpting is one undo step; a drag is one undo step however many moves it has [90m(3.0131ms)[39m[39m
+[32m✔ subscribers hear every change [90m(0.2998ms)[39m[39m
+[32m✔ an added PNG is decoded at once and listed; a slot set to it reaches the one texture set [90m(55.3517ms)[39m[39m
+[32m✔ a slot edit is one undo step, and undo takes the texture back out of the set [90m(3.0648ms)[39m[39m
+[32m✔ a bad file, a bad name, a duplicate name and a missing image are refused in the panel, by name [90m(2.2958ms)[39m[39m
+[32m✔ an image still used by a slot cannot be removed; once the slot is cleared it can [90m(12.7617ms)[39m[39m
+[32m✔ a non-power-of-two image is added with its warning shown [90m(0.8491ms)[39m[39m
+[32m✔ a file name becomes a texture name the document accepts [90m(1.2683ms)[39m[39m
+[32m✔ a made texture in a slot replaces an image there, reaches the set, and shows in the live budget [90m(69.6765ms)[39m[39m
+[32m✔ a look saved as a pack imports into another session and is worn by every word of its font in one undo step [90m(55.2891ms)[39m[39m
+[32m✔ property (the preview's SHARED path): after every random edit the result equals a full validate exactly [90m(2497.3866ms)[39m[39m
+[32m✔ property (the controller's own path): after every random edit the result equals a full validate exactly [90m(1855.5119ms)[39m[39m
+[32m✔ the property test reaches STACKED road: the edits lay road over road, and it still equals a full validate [90m(1445.6735ms)[39m[39m
+[32m✔ a STALE shared path (built for another document) is not used: the controller grows its own, and stays exact [90m(24.5237ms)[39m[39m
+[32m✔ a shared path the preview REBUILT (a new object) is viewed afresh, never spliced onto the old view [90m(24.6568ms)[39m[39m
+[32m✔ a drag held OPEN on a mid-track word: every tick is windowed and exact where settled, and ending it equals a full validate [90m(743.7972ms)[39m[39m
+[32m✔ never a stale "clean": a settled station stacked on road that the drag moved shows RED during the drag, and the moved road shows PENDING [90m(852.7991ms)[39m[39m
+[32m✔ a windowed result revalidated from BEYOND its pending start still finishes the whole track exactly [90m(17.612ms)[39m[39m
+[32m✔ the panel says what is pending: the load graph shades it to the track end, the summary counts no deferred jump as waiting [90m(36.8973ms)[39m[39m
+[32m✔ the window ends at the second word after the dragged one; none when that is past the end [90m(0.3868ms)[39m[39m
+[32m✔ the preview's 0.5 m path viewed at 2 m IS buildPath at 2 m, value for value; grown in place, the view follows it exactly [90m(37.4898ms)[39m[39m
+[32m✔ a path that cannot be viewed exactly is refused (null), so the controller grows its own [90m(3.5703ms)[39m[39m
+[32m✔ the station-pair stacking check finds exactly what measuring every surface point finds, on tracks that stack [90m(1220.5736ms)[39m[39m
+[32m✔ the stacking check on a CLOSED loop: the start and end are one pass (s wraps), exactly as measuring every point [90m(16018.5445ms)[39m[39m
+[32m✔ on a level straight at a constant speed only gravity acts: each line reads fN = cos ψ and fLat = sign(u)·sin ψ [90m(1.1118ms)[39m[39m
+[32m✔ a closed loop: every drag tick defers the lap, and ending the drag proves it, equal to a full validate's lap [90m(11617.8853ms)[39m[39m
+[32m✔ lapOf proves a deferred lap exactly as an undeferred validate does, and returns any other lap unchanged [90m(10540.5442ms)[39m[39m
+[32m✔ rangeLevels gives every station the level rangeLevel gives it, ranges touching, nested and out of order [90m(1.9426ms)[39m[39m
+[32m✔ the default jump at the default design speed (460 km/h, FINDINGS.md:476) is clean: no red, both landings caught [90m(43.1876ms)[39m[39m
+[32m✔ D256: at the app's own default, FULL speed (970 km/h on this open track), the first jump is still not red: a landing the car flies past only warns [90m(6.0927ms)[39m[39m
+[32m✔ resolve with no speed given sizes the ramp for the same default, so every caller agrees (the export, the connector) [90m(4.7766ms)[39m[39m
+[32m✔ the slider swept over its whole range (50–970 km/h, its own step of 5): clean wherever the car clears the gap, and nowhere else [90m(953.0237ms)[39m[39m
+[32m✔ a jump sculpted past what the car can clear WARNS (amber, D250), and says so: the landings that miss, the heaviest fall [90m(3.6202ms)[39m[39m
+[32m✔ the ramp resize is DERIVED: no undo step, the document unchanged, and the same speed gives the same ramp again [90m(14.8615ms)[39m[39m
+[32m✔ a CLOSED loop keeps its ramps at the default when the slider moves, so it stays closed [90m(19276.1809ms)[39m[39m
+[32m✔ resolve itself refuses a design speed that is not a positive number (a named ResolveError), and takes null as the default [90m(0.759ms)[39m[39m
+[32m✔ a design speed that is not a positive number is refused with a message, and changes nothing [90m(2.6451ms)[39m[39m
+[32m✔ a document with one jump counts 1 jump, even while the jump is the open head and waits for its landing [90m(54.1752ms)[39m[39m
+[32m✔ a pending jump is still counted: a jump placed first (no take-off road) is 1 jump, 1 waiting [90m(4.5765ms)[39m[39m
+[32m✔ the load graph is hidden (no model) while there is no speed, so no empty grey bar [90m(5.2853ms)[39m[39m
+[32m✔ with a design speed the graph is drawn: one point per station, the hardest line's load, the car's two limits [90m(10.9723ms)[39m[39m
+[32m✔ the graph takes the HARDEST line at every station, wherever across the road it is (a right turn: the left wall) [90m(11.7681ms)[39m[39m
+[32m✔ the graph shades the red and amber stretches behind the curve [90m(19.2165ms)[39m[39m
+[32m✔ through the shell: the head is red exactly when it is the flight of a jump; landing road clears it [90m(6.5648ms)[39m[39m
+[32m✔ jump arcs: a jump whose landing lip is behind its take-off lip draws no arc, and nothing throws [90m(22.7196ms)[39m[39m
+[32m✔ the first word builds and colours the whole track (full), and an empty document shows nothing [90m(52.3469ms)[39m[39m
+[32m✔ placing at the head is an APPEND: extendPath, revalidate, only the new span re-coloured, and equal to a full run [90m(24.9085ms)[39m[39m
+[32m✔ a drag on an earlier word is a SCULPT from that word, and still equals a full run [90m(91.4399ms)[39m[39m
+[32m✔ removing the head, and undo, take the full route and still equal a full run [90m(21.8432ms)[39m[39m
+[32m✔ the CSP switch re-validates for vanilla AC: a 60° wall turns red, and back [90m(11.1612ms)[39m[39m
+[32m✔ a jump placed at the open head is drawn once it has landing road (its own ramp, or the next word) [90m(9.4893ms)[39m[39m
+[32m✔ changes arriving before the scheduled update are coalesced into one update [90m(11.9207ms)[39m[39m
+[32m✔ E's panels load through A's webview loader (app/lib/cjs.js), and each exports mount(root, shell) [90m(11.8976ms)[39m[39m
+[32m✔ D256: the validation panel has no design-speed slider and no off box; its one control is the CSP box, and it checks at full speed [90m(113.9872ms)[39m[39m
+[34mℹ tests 281[39m
+[34mℹ suites 0[39m
+[34mℹ pass 281[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 47346.1147[39m
+

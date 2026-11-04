@@ -1,0 +1,90 @@
+== D277 C hooks · asked 2026-10-09T17:26:49.244Z · lock held 2026-10-09T17:26:49.249Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/hooks.js C:/Users/nname/.claude/settings.json C:/Users/nname/.claude/projects/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl
+REGISTERED
+  SessionStart      -                              session-start.js
+  SessionStart      -                              sessionstart-state.js
+  UserPromptSubmit  -                              userprompt-submit.js
+  UserPromptSubmit  -                              findings-return.js
+  UserPromptSubmit  -                              ask-surface.js
+  UserPromptSubmit  -                              ready-prompt.js
+  Stop              -                              stop.js
+  Stop              -                              sourced-stop.js
+  Stop              -                              ready-stop.js
+  Stop              -                              reply-slot.js
+  Stop              -                              ask-ending.js
+  SessionEnd        -                              session-end.js
+  PreCompact        -                              precompact.js
+  PreCompact        -                              precompact-preserve.js
+  PreToolUse        mcp__consonance__call_libraria second-reader.js
+  PreToolUse        mcp__consonance__call_libraria sources-gate.js
+  PreToolUse        Bash|PowerShell                push-gate.js
+  PreToolUse        Bash|PowerShell                delete-gate.js
+
+TRANSCRIPT ENTRY KINDS (hook-related)
+  additionalContext                        n [33m150[39m bytes [33m1421325[39m 
+     {"parentUuid":null,"isSidechain":false,"attachment":{"type":"hook_success","hookName":"SessionStart:startup","toolUseID":"c7eb8dce-8e76-4b25-afe6-1780567bee10","hookEvent":"SessionStart","content":"","stdout":"{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shel
+  hook_success                             n [33m1357[39m bytes [33m1950807[39m 
+     {"parentUuid":null,"isSidechain":false,"attachment":{"type":"hook_success","hookName":"SessionStart:startup","toolUseID":"c7eb8dce-8e76-4b25-afe6-1780567bee10","hookEvent":"SessionStart","content":"","stdout":"{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shel
+  hookEvent                                n [33m2437[39m bytes [33m4448417[39m 
+     {"parentUuid":null,"isSidechain":false,"attachment":{"type":"hook_success","hookName":"SessionStart:startup","toolUseID":"c7eb8dce-8e76-4b25-afe6-1780567bee10","hookEvent":"SessionStart","content":"","stdout":"{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shel
+  attachment:hook_success                  n [33m1355[39m bytes [33m1942106[39m 
+     {"parentUuid":null,"isSidechain":false,"attachment":{"type":"hook_success","hookName":"SessionStart:startup","toolUseID":"c7eb8dce-8e76-4b25-afe6-1780567bee10","hookEvent":"SessionStart","content":"","stdout":"{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"# Shel
+  hook_additional_context                  n [33m1075[39m bytes [33m2394664[39m 
+     {"parentUuid":"90754164-72ad-4f1d-8198-d67751fb666d","isSidechain":false,"attachment":{"type":"hook_additional_context","content":["<persisted-output>\nOutput too large (11.9KB). Full output saved to: C:\\Users\\nname\\.claude\\projects\\C--Users-nname\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\tool-res
+  attachment:hook_additional_context       n [33m1073[39m bytes [33m2385963[39m 
+     {"parentUuid":"90754164-72ad-4f1d-8198-d67751fb666d","isSidechain":false,"attachment":{"type":"hook_additional_context","content":["<persisted-output>\nOutput too large (11.9KB). Full output saved to: C:\\Users\\nname\\.claude\\projects\\C--Users-nname\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\tool-res
+  attachment:environment                   n [33m53[39m bytes [33m87824[39m 
+     {"parentUuid":"44a9fcea-2d94-48b8-881d-2a36c00cd7f7","isSidechain":false,"attachment":{"type":"environment","snapshot":{"workingDirectory":"C:\\Users\\nname","isWorktree":false,"isGitRepo":false,"additionalWorkingDirectories":[],"platform":"win32","shell":"PowerShell (primary); Bash tool also availa
+  attachment:model                         n [33m23[39m bytes [33m21405[39m 
+     {"parentUuid":"107e5361-f3d3-479c-8c79-7138f5ea1cb3","isSidechain":false,"attachment":{"type":"model","identity":{"modelId":"claude-opus-5[1m]","marketingName":"Opus 5 (1M context)","knowledgeCutoff":"May 2026"},"text":"You are powered by the model named Opus 5 (1M context). The exact model ID is cl
+  attachment:deferred_tools_delta          n [33m65[39m bytes [33m97203[39m 
+     {"parentUuid":"21abce03-2003-49f1-a40b-2722586c22d9","isSidechain":false,"attachment":{"type":"deferred_tools_delta","addedNames":["CronCreate","CronDelete","CronList","DesignSync","EndConversation","EnterPlanMode","EnterWorktree","ExitPlanMode","ExitWorktree","Monitor","NotebookEdit","PushNotificat
+  attachment:agent_listing_delta           n [33m38[39m bytes [33m164227[39m 
+     {"parentUuid":"ea14631a-7959-40bf-8ee1-ece191c55eaf","isSidechain":false,"attachment":{"type":"agent_listing_delta","addedTypes":["claude","claude-code-guide","critic","Explore","general-purpose","Plan","researcher","statusline-setup"],"addedLines":["- claude: Catch-all for any task that doesn't fit
+  attachment:mcp_instructions_delta        n [33m44[39m bytes [33m112603[39m 
+     {"parentUuid":"096a5278-3aea-4f9a-800d-0bc4a9ea4cfc","isSidechain":false,"attachment":{"type":"mcp_instructions_delta","addedNames":["consonance"],"addedBlocks":["## consonance\nConsonance committee control plane: post_board / read_board over one board shared across instances. Your posts are attribu
+  attachment:skill_listing                 n [33m28[39m bytes [33m452956[39m 
+     {"parentUuid":"e3b0ab74-d874-436d-bcf9-875259626d50","isSidechain":false,"attachment":{"type":"skill_listing","content":"- duration-status: List all duration goals — status, last fired, iteration budget, recent progress entries.\n- design: Create a design canvas - a multi-artboard visual design publ
+  attachment:auto_mode                     n [33m20[39m bytes [33m22482[39m 
+     {"parentUuid":"ba0390a3-4596-44c0-92e0-28921e9c5d44","isSidechain":false,"attachment":{"type":"auto_mode","autoModeConsentFlow":false,"bashFirst":true,"bashFirstSteer":"strict","steerOnly":true,"bypass":true},"type":"attachment","uuid":"3e5dda01-de97-4ae1-8004-efc8c504f3d5","timestamp":"2026-09-09T1
+  attachment:total_tokens_reminder         n [33m7195[39m bytes [33m4784984[39m 
+     {"parentUuid":"3e5dda01-de97-4ae1-8004-efc8c504f3d5","isSidechain":false,"attachment":{"type":"total_tokens_reminder","text":"<total_tokens>15000000 tokens left</total_tokens>"},"type":"attachment","uuid":"e44a3b48-3457-4f7d-ad54-2363c93f3af5","timestamp":"2026-09-09T15:11:15.157Z","rendered":[{"con
+  attachment:instructions                  n [33m60[39m bytes [33m11360739[39m 
+     {"parentUuid":"572ebda9-56e6-4168-89a4-eab62622b234","isSidechain":false,"attachment":{"type":"instructions","files":[{"path":"C:\\Users\\nname\\.claude\\CLAUDE.md","type":"User","content":"# Verification & Testing\r\n\r\n- Run the relevant test suite after making changes and before reporting succes
+  attachment:session_context               n [33m20[39m bytes [33m27203[39m 
+     {"parentUuid":"ad20d096-62e5-452a-9b60-d2864de0fb1a","isSidechain":false,"attachment":{"type":"session_context","context":{"userEmail":"The user's email address is trynabemlgzn@gmail.com. Use it only to identify the user, such as for authorship, attribution, or filtering their own work. Never send i
+  attachment:date                          n [33m44[39m bytes [33m28672[39m 
+     {"parentUuid":"f7d7dbbe-e782-42c6-ad84-9076499dd093","isSidechain":false,"attachment":{"type":"date","date":"2026-09-09"},"type":"attachment","uuid":"4e93e766-6cc4-4429-bf41-3ccd40456047","timestamp":"2026-09-09T15:11:15.329Z","rendered":[{"content":"<system-reminder>\nToday's date is 2026-09-09.\n<
+  attachment:remote_session_change         n [33m29[39m bytes [33m51292[39m 
+     {"parentUuid":"4e93e766-6cc4-4429-bf41-3ccd40456047","isSidechain":false,"attachment":{"type":"remote_session_change","url":"https://claude.ai/code/session_017jVCxaAah7YfDwfSsgsdXy","commit":"Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/s
+  attachment:prompt_snapshot               n [33m42[39m bytes [33m3279770[39m 
+     {"parentUuid":"71cf4210-5a80-4370-ac7f-7d5d5a962c78","isSidechain":false,"attachment":{"type":"prompt_snapshot","systemPrompt":["\nYou are an interactive agent that helps users with software engineering tasks.\n\nIMPORTANT: Assist with authorized security testing, defensive security, CTF challenges,
+  attachment:queued_command                n [33m100[39m bytes [33m468799[39m 
+     {"parentUuid":"06d8e5dd-663b-4f27-99ee-08976cffe7a9","isSidechain":false,"attachment":{"type":"queued_command","prompt":"<task-notification>\n<task-id>bygaici0d</task-id>\n<tool-use-id>toolu_014oWJyQuHYx4baWL5CJCcZL</tool-use-id>\n<output-file>C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Users
+  attachment:nested_memory                 n [33m1[39m bytes [33m1855[39m 
+     {"parentUuid":"f71e90a6-4c66-4a78-bd2c-1448754d5ba6","isSidechain":false,"attachment":{"type":"nested_memory","path":"C:\\Users\\nname\\Desktop\\lighthouse\\CLAUDE.md","content":{"path":"C:\\Users\\nname\\Desktop\\lighthouse\\CLAUDE.md","type":"Project","content":"# Lighthouse — workspace\r\n\r\nYou
+  attachment:edited_text_file              n [33m313[39m bytes [33m1827025[39m 
+     {"parentUuid":"b221935f-0041-44fd-ac17-c41c90448240","isSidechain":false,"attachment":{"type":"edited_text_file","filename":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-seat-sweep_2026-09-09.md","snippet":"1\t# P-SEAT-SWEEP — the sweep ate the tail, and the tail's absence said not
+  attachment:deferred_tools_record         n [33m376[39m bytes [33m508164[39m 
+     {"parentUuid":"68ffc02f-c8c4-4142-a74c-8f86ce35288d","isSidechain":false,"attachment":{"type":"deferred_tools_record","entries":[{"name":"mcp__consonance__call_librarian","description":"PANE VERB (mount-gated by the address table, committee panes only): deliver your HAND-BACK into the LIBRARIAN's pa
+  hookAdditionalContext                    n [33m640[39m bytes [33m730149[39m 
+     {"parentUuid":"9bad0a53-a69a-458b-a080-ff226c4ee159","isSidechain":false,"type":"system","subtype":"stop_hook_summary","hookCount":4,"hookInfos":[{"command":"\"C:\\Program Files\\nodejs\\node.exe\" \"C:\\Users\\nname\\.claude\\shell\\hooks\\stop.js\"","durationMs":142},{"command":"\"C:\\Program File
+  attachment:silent_turn_reminder          n [33m387[39m bytes [33m294135[39m 
+     {"parentUuid":"de3c5b14-4143-4b8c-a2d6-f249dbb5d58b","isSidechain":false,"attachment":{"type":"silent_turn_reminder","text":"The user hasn't heard from you in a while — say in a few words what you're doing, then continue."},"type":"attachment","uuid":"ceac3ded-3fc8-441d-a6b5-9ec766342f35","timestamp
+  attachment:compact_file_reference        n [33m28[39m bytes [33m27876[39m 
+     {"parentUuid":"4fe99eb3-431b-4340-990b-284618bfe78e","isSidechain":false,"attachment":{"type":"compact_file_reference","filename":"C:\\Consonance\\lighthouse\\exo_memory\\handback\\p-diversity-c0-C_2026-09-15.md","displayPath":"..\\..\\lighthouse\\exo_memory\\handback\\p-diversity-c0-C_2026-09-15.md
+  attachment:file                          n [33m60[39m bytes [33m717518[39m 
+     {"parentUuid":"c5251e09-6736-4b22-9b0e-5abe57125d03","isSidechain":false,"attachment":{"type":"file","filename":"C:\\Users\\zackn\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\encoder-trial\\map-line.md","content":{"type":"
+  attachment:task_status                   n [33m4[39m bytes [33m9214[39m 
+     {"parentUuid":"61132ba7-28a4-4be7-9d8a-a8884136cefa","isSidechain":false,"attachment":{"type":"task_status","taskId":"b5rx6cv3n","taskType":"local_bash","description":"Run the order parameter over all eligible sessions","status":"running","deltaSummary":null,"outputFilePath":"C:\\Users\\zackn\\AppDa
+  attachment:thinking_drop                 n [33m11[39m bytes [33m11360[39m 
+     {"parentUuid":"48b38747-5b22-4031-a4f0-9eb0a54f23ca","isSidechain":false,"attachment":{"type":"thinking_drop","requestId":"req_011CfKQXFvszkeU3E76SKjVF","model":"claude-opus-5-5[1m]","querySource":"repl_main_thread","thinkingBlocksSent":179,"thinkingTurnsSent":161,"newlyDropped":{"blockCount":2,"tur
+  attachment:read_truncation_notice        n [33m2[39m bytes [33m2576[39m 
+     {"parentUuid":"9c57e67d-4868-47e9-ae9d-2c2bb86f4381","isSidechain":false,"attachment":{"type":"read_truncation_notice","banner":"[Truncated: PARTIAL view — C:\\Consonance\\reader_packets\\composition_rescope_2026-09-23.md: showing lines 1-271 of 679 total (53111 tokens, cap 25000). Call Read with of
+  attachment:credential_org                n [33m13[39m bytes [33m7020[39m 
+     {"parentUuid":"4052f345-9152-428a-ac71-cab41e53aac4","isSidechain":false,"attachment":{"type":"credential_org","organizationUuid":"bad3f747-0e68-4c28-bc2a-39ae4ae19b19"},"type":"attachment","uuid":"ab291246-355d-4088-b24e-43d52582db29","timestamp":"2026-09-24T23:07:02.770Z","session_id":"0845a868-38
+  hook_blocking_error                      n [33m2[39m bytes [33m8701[39m 
+     {"parentUuid":"f2cc6265-638b-4ca8-99e6-4a42a5393b88","isSidechain":false,"message":{"model":"claude-opus-5-5","id":"msg_011Cfs4AGvsR83a9LBKbwQih","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01U7aQMvW3PhGa75ocqmkvNE","name":"Write","input":{"file_path":"C:\\Users\\nn
+  hook_non_blocking_error                  n [33m2[39m bytes [33m8701[39m 
+     {"parentUuid":"f2cc6265-638b-4ca8-99e6-4a42a5393b88","isSidechain":false,"message":{"model":"claude-opus-5-5","id":"msg_011Cfs4AGvsR83a9LBKbwQih","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01U7aQMvW3PhGa75ocqmkvNE","name":"Write","input":{"file_path":"C:\\Users\\nn
+== exit 0 · done 2026-10-09T17:26:50.578Z

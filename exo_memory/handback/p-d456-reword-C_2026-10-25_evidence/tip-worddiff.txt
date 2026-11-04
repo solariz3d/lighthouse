@@ -1,0 +1,200 @@
+diff --git a/app/core/buildmenu.js b/app/core/buildmenu.js
+index a76aa54..a86ce41 100644
+--- a/app/core/buildmenu.js
++++ b/app/core/buildmenu.js
+@@ -23 +23 @@ function ask(ctx = {}) {
+// D421 part 3 (design §5, the [-keeper's-]{+user's+} call 4): SCULPT MODE is the first item, a tick, since a Build | Sculpt switch in the top bar does not fit (app/test/menubar-page.test.js
+diff --git a/app/core/closejob.js b/app/core/closejob.js
+index 208a0d8..e30ed03 100644
+--- a/app/core/closejob.js
++++ b/app/core/closejob.js
+@@ -80 +80 @@ function runCloseBest({ doc, edited = null, openReds = null, exhaustive = false
+    // D447 (the [-keeper:-]{+user:+} "closing a loop should bank"): every route's closed lap is banked before it is ranked and checked, so the lap the press proves and lands is
+diff --git a/app/core/coreshell.js b/app/core/coreshell.js
+index feaf2d3..b6839b4 100644
+--- a/app/core/coreshell.js
++++ b/app/core/coreshell.js
+@@ -131 +131 @@ const SCULPT_CHANNELS = Object.freeze(['phi', 'c', 'w', 'e', 's', 'r', 't', 'er'
+// D421 Part 2, SCULPT AS ITS OWN MODE (the [-keeper's-]{+user's+} GO, 2026-10-20 14:53, on P's design exo_memory/loop/design_d421_sculpt_P_2026-10-20.md §3): the tools, named by what the hand does, each
+@@ -392 +392 @@ async function createCoreShell({ storage = null, exporter = null, brushFn = type
+  // (the rate brush's old rule); refused again, the drag is DROPPED whole and the message says so (the [-keeper's-]{+user's+} call 2). The re-closed lap lands as the drag's present: ONE undo step.
+@@ -1142 +1142 @@ async function createCoreShell({ storage = null, exporter = null, brushFn = type
+     * D437b (the [-keeper's-]{+user's+} white window, 2026-10-22: the export ran out of memory on the page's own thread and took the page with it): buildExport's export, run by
+diff --git a/app/core/keys.js b/app/core/keys.js
+index 4fbe723..e8865e9 100644
+--- a/app/core/keys.js
++++ b/app/core/keys.js
+@@ -31 +31 @@ function keyAction({ key, ctrlKey, metaKey, shiftKey, inField, inText }) {
+ * D421 part 3, SCULPT'S KEYS (design §5, the [-keeper's-]{+user's+} GO of 2026-10-20 14:53): Tab toggles Sculpt mode (Blender's Tab; Build ▸ Sculpt mode is the same switch), Esc drops an open brush drag, [ and ] narrow
+diff --git a/app/core/panel.js b/app/core/panel.js
+index ab3a29c..5f8ff98 100644
+--- a/app/core/panel.js
++++ b/app/core/panel.js
+@@ -209 +209 @@ function mount(root, shell, mountOpts = {}) {
+  // D430 (the [-keeper,-]{+user,+} 2026-10-22: "if one is blank auto set it to 0"): a field the user EMPTIED (blank where it showed a value) is 0, for the fields where 0 is a value.
+@@ -387 +387 @@ function mount(root, shell, mountOpts = {}) {
+  // SCULPT (D421 part 3, design §3 and §5, the [-keeper's-]{+user's+} GO 2026-10-20 14:53). Sculpt is a MODE (st.sculpt), set by Build ▸ Sculpt mode (app/core/buildmenu.js) or by Tab; it replaced
+@@ -531 +531 @@ function mount(root, shell, mountOpts = {}) {
+    // [-keeper's-]{+user's+} TEST 10: 1,500 m of 100 m wide bowl, 3,002 steps) never arrived. A preview that does not answer is not building
+diff --git a/app/export/exportjob.js b/app/export/exportjob.js
+index b0110f2..6fd4515 100644
+--- a/app/export/exportjob.js
++++ b/app/export/exportjob.js
+@@ -1 +1 @@
+// exportjob.js: THE EXPORT AS ONE JOB THAT CROSSES A postMessage (D437b: the [-keeper's-]{+user's+} white window was the page dying of a V8 heap out-of-memory inside
+diff --git a/app/export/exportrunner.js b/app/export/exportrunner.js
+index 4a9013b..f2e1c42 100644
+--- a/app/export/exportrunner.js
++++ b/app/export/exportrunner.js
+@@ -2 +2 @@
+// the [-keeper:-]{+user:+} "figure out that crash to prevent it from ever happening"). The shape is the close runner's (app/core/closerunner.js): one warm host, a job
+@@ -4 +4 @@
+//   MEASURED (headless Chrome, and headless Edge 155, the engine of the [-keeper's-]{+user's+} WebView2 155.0.4283.62; exo_memory/handback/p-d437b-B_2026-10-22.md):
+diff --git a/app/install/index.js b/app/install/index.js
+index 5366bf6..b6df87a 100644
+--- a/app/install/index.js
++++ b/app/install/index.js
+@@ -17 +17 @@ function mount(root, shell, { native, pickFolder, getTextures, more = null, card
+  // D437b: buildExportAsync, the export in a process of its own (app/export/exportrunner.js): the [-keeper's-]{+user's+} white window was this press running out of memory on the page
+diff --git a/app/test/core-pieces-ui.test.js b/app/test/core-pieces-ui.test.js
+index 203db1e..4eb41af 100644
+--- a/app/test/core-pieces-ui.test.js
++++ b/app/test/core-pieces-ui.test.js
+@@ -937 +937 @@ test('row 18b: a length drag previews whole 2 m, and the release previews the ex
+// D426 (the [-keeper,-]{+user,+} 2026-10-21 20:41, in 0.4.12-dev, on TEST 10: "within the preview, the ghost of the next piece disapears ... when i saved it, the ghost came back"). With no ghost on
+@@ -954 +954 @@ test('row 18c: a ghost whose sliced build needs more frames than the retry is st
+  // the [-keeper's-]{+user's+} way: Extend, and the ghost of the piece after it comes back too
+@@ -961 +961 @@ test('row 18c: a ghost whose sliced build needs more frames than the retry is st
+// D430 (the [-keeper,-]{+user,+} 2026-10-22: "if a part of the equation is blank, it doesnt count as 0. if one is blank auto set it to 0"). Each field shows the head's value; a field
+diff --git a/app/test/core-readout-display.test.js b/app/test/core-readout-display.test.js
+index c693bb7..2b7a006 100644
+--- a/app/test/core-readout-display.test.js
++++ b/app/test/core-readout-display.test.js
+@@ -502 +502 @@ test('a CHANGED value is a target in the core\'s units; a value typed back to ex
+  // AMENDED D430 (the [-keeper,-]{+user,+} 2026-10-22: "if one is blank auto set it to 0"): this line held that a cleared field is blank and continues (D193). The rule changed: a field
+diff --git a/app/test/export-isolated.test.js b/app/test/export-isolated.test.js
+index 379917a..234bcc1 100644
+--- a/app/test/export-isolated.test.js
++++ b/app/test/export-isolated.test.js
+@@ -2 +2 @@
+// D437b, THE EXPORT OFF THE PAGE. The [-keeper's-]{+user's+} white window (2026-10-22 19:38) was the page's renderer dying of a V8 heap out-of-memory inside the
+@@ -196 +196 @@ for (const how of ['throw', 'die']) {
+    // Export to Assetto Corsa (the [-keeper's-]{+user's+} press: app/install/index.js builds through the shell)
+diff --git a/app/test/sculpt-frame.test.js b/app/test/sculpt-frame.test.js
+index c7ad846..35db40d 100644
+--- a/app/test/sculpt-frame.test.js
++++ b/app/test/sculpt-frame.test.js
+@@ -2 +2 @@
+// D421 (the [-keeper:-]{+user:+} "You can sculpt the pieces you already put down, so its a mode you switch ... tweaking and bending the track like say stretching it or manipulating it in many ways"; the design,
+@@ -4 +4 @@
+// soundrender.js passes --mute-audio), served from this checkout, frames uncapped as in drag-frame.test.js. The bar is the [-keeper's-]{+user's+} 165 Hz display, 6.0 ms (the D404 ruling).
+@@ -16 +16 @@
+//      The design names Twist; the [-keeper's-]{+user's+} call 3 (plan_d421_sculpt_build_2026-10-20.md: "a closed tube past 300 deg: width, bank and sweep stay refused") refuses Twist on this oval, so 4a drags
+@@ -34 +34 @@ const LOOKS = ['aqua', 'skyline', 'glass', 'aurora', 'sigil'];
+const BUDGET = 6.0;          // ms: the [-keeper's-]{+user's+} display is 165 Hz (6.06 ms a frame), the D404 ruling
+@@ -219 +219 @@ test('row 3: Bend on a 10 km CLOSED lap: p95 within 6.0 ms during the drag, the
+for (const [row, track, tool, why] of [['4a', 'tube360', 'grab', 'Grab on the 360 deg tube oval (Twist is refused there: the [-keeper\'s-]{+user\'s+} call 3)'], ['4b', 'tube280', 'twist', 'Twist on the same oval at a 280 deg sweep']]) {
+diff --git a/app/test/sculpt-tools.test.js b/app/test/sculpt-tools.test.js
+index 9099154..aa503c5 100644
+--- a/app/test/sculpt-tools.test.js
++++ b/app/test/sculpt-tools.test.js
+@@ -2 +2 @@
+// D421 Part 2, the shell's half of Sculpt as its own mode (the [-keeper's-]{+user's+} GO 2026-10-20 14:53 on P's design, exo_memory/loop/design_d421_sculpt_P_2026-10-20.md §3-§5; the plan
+diff --git a/docs/ARCHITECTURE.md b/docs/ARCHITECTURE.md
+index 87d7ac2..8404ab4 100644
+--- a/docs/ARCHITECTURE.md
++++ b/docs/ARCHITECTURE.md
+@@ -85 +85 @@ Anything marked **(unverified)** needs a test before we rely on it.
+  - ~~drivable surfaces stacked within about 2 m~~ not red since D432 (2026-10-22): roads may run closer than 2 m "as long as the geometry isnt clipping into eachother" (the [-keeper);-]{+user);+} clipping is the self-intersection above, and the stack is reported as information; less than 1 m of room under another road is AMBER (D435, 'low-overhead'); two passes whose edges come within 1 m side by side are information (D446, 'near-touch'), and the downforce-ray gap counts only the same pass resuming
+diff --git a/src/core/close.js b/src/core/close.js
+index e1d5101..cb88211 100644
+--- a/src/core/close.js
++++ b/src/core/close.js
+@@ -31 +31 @@ const TAU = 2 * Math.PI;
+// D431 (the [-keeper,-]{+user,+} TEST 10: "a bump as the gen came out a bit higher than the end of the track"; "fix the close loop generation itself to be more accurate and
+diff --git a/src/core/finish.js b/src/core/finish.js
+index 8d49bcb..d29b50c 100644
+--- a/src/core/finish.js
++++ b/src/core/finish.js
+@@ -192 +192 @@ function closerLoad(doc, from) {
+// D434 (the [-keeper,-]{+user,+} 2026-10-22, TEST TRACK 10: "there needs to be a nuance for banking in large curves like that to support the car better"; the librarian's ruling,
+@@ -196 +196 @@ function closerLoad(doc, from) {
+// [-keeper's-]{+user's+} own hand bank before it does, 53.8° against 53.2°), so a gentle curve gets its small share and a straight none. The bank follows the curvature, so it
+@@ -205 +205 @@ const BANK_SHARE = 0.75, BANK_TRIES = 3, BANK_ROLL = 0.9, V_DESIGN = MACH6.desig
+// D438 (the [-keeper,-]{+user,+} 2026-10-22 21:33: "where the pieces connect there is too big of a bump"; plan_d438 "Part 2 ruled"): the rate limit bounded how fast the bank
+@@ -279 +279 @@ function banked(doc, plan, minus = null) {
+ * D438 (the [-keeper,-]{+user,+} 2026-10-22: "how the banking and cupping connects to the end of the track doesnt work right"): THE CUP COMES HOME OVER THE CLOSER. The new
+@@ -321 +321 @@ function bankRollPeak(doc, window) {
+ * D447 (the [-keeper,-]{+user,+} 2026-10-23: "closing a loop should bank"; "all closed loops after if the turns and curves need to be banked, so its not just fixing the one
+diff --git a/src/export/pitlane.js b/src/export/pitlane.js
+index 45389b8..bd7d6c6 100644
+--- a/src/export/pitlane.js
++++ b/src/export/pitlane.js
+@@ -30 +30 @@ function laneForExport(mainPath, mainSegments, mainMesh, pitLane, { selfCheck =
+    // clipping into eachother", the [-keeper,-]{+user,+} 2026-10-22); the lane meeting the road is red above, as self-intersection
+diff --git a/src/geom/bvh.js b/src/geom/bvh.js
+index f978758..3c1ab6b 100644
+--- a/src/geom/bvh.js
++++ b/src/geom/bvh.js
+@@ -38 +38 @@ const EPS_BARY = 1e-9;
+// (378 B a vertex, measured on a 20 km straight; on the [-keeper's-]{+user's+} 27.6 km lap with a pit lane, built twice, the export ran out of heap here). One pass now counts the
+@@ -93 +93 @@ function build(S) {
+  // D437a: THE NODES IN TYPED ARRAYS (they were JS objects: 114 B a triangle kept in the heap, 2 million of them on the [-keeper's-]{+user's+} 27.6 km lap, and at the room the page
+diff --git a/src/validate/index.js b/src/validate/index.js
+index 7383dd4..82dab69 100644
+--- a/src/validate/index.js
++++ b/src/validate/index.js
+@@ -415 +415 @@ function core(path, segments, opts, from, carried, upto) {
+  // D432: two passes closer than car.stackedM are INFORMATION, not red. The [-keeper,-]{+user,+} 2026-10-22: "the tracks can be under 2m apart as long as the geometry
+diff --git a/src/validate/limits.js b/src/validate/limits.js
+index cffd409..fa505c1 100644
+--- a/src/validate/limits.js
++++ b/src/validate/limits.js
+@@ -43 +43 @@ const MACH6 = Object.freeze({
+  // ARCHITECTURE.md:85 "drivable surfaces stacked within about 2 m": INFORMATION since D432, not red. The [-keeper,-]{+user,+} 2026-10-22: "the reds are bullshit, the
+@@ -47 +47 @@ const MACH6 = Object.freeze({
+  // D435, the [-keeper-]{+user+} (2026-10-22 15:34, asked how little room under another road should warn): "i think 1m is good". A road with another passing over it, without
+diff --git a/test/core_close_banks_lap.test.js b/test/core_close_banks_lap.test.js
+index 9021d3f..dfda434 100644
+--- a/test/core_close_banks_lap.test.js
++++ b/test/core_close_banks_lap.test.js
+@@ -2 +2 @@
+// D447 (the [-keeper,-]{+user,+} 2026-10-23 11:59: "closing a loop should bank"; 09:48: "all closed loops after if the turns and curves need to be banked, so its not just
+diff --git a/test/core_close_joint.test.js b/test/core_close_joint.test.js
+index 8b5ea21..b165f98 100644
+--- a/test/core_close_joint.test.js
++++ b/test/core_close_joint.test.js
+@@ -2 +2 @@
+// D431 (the [-keeper,-]{+user,+} 2026-10-22 09:17 and 09:49, TEST TRACK 10 and TEST 10: "towards the end there is a bump as the gen came out a bit higher than the end of the
+diff --git a/test/core_finish_bank.test.js b/test/core_finish_bank.test.js
+index c04eaec..003b5a0 100644
+--- a/test/core_finish_bank.test.js
++++ b/test/core_finish_bank.test.js
+@@ -2 +2 @@
+// D434 (the [-keeper,-]{+user,+} 2026-10-22 09:44, TEST TRACK 10: "there needs to be a nuance for banking in large curves like that to support the car better"; 19:48: "did you
+diff --git a/test/core_finish_joints.test.js b/test/core_finish_joints.test.js
+index 850a8b1..c7c0bd7 100644
+--- a/test/core_finish_joints.test.js
++++ b/test/core_finish_joints.test.js
+@@ -2 +2 @@
+// D438 (the [-keeper,-]{+user,+} 2026-10-22 21:33, TEST TRACK 10: "where the pieces connect there is too big of a bump, then how the banking and cupping connects to the end
+diff --git a/test/core_sculpt_modes.test.js b/test/core_sculpt_modes.test.js
+index 640f157..c8767ae 100644
+--- a/test/core_sculpt_modes.test.js
++++ b/test/core_sculpt_modes.test.js
+@@ -136 +136 @@ test('the brush always reports the radius it used (the default widens, and says
+// ── D421 (the [-keeper,-]{+user,+} 2026-10-20 01:32: "brush mode froze the program"): THE BRUSH STEP FITS A FRAME. A drag reruns the brush on its base document at every
+diff --git a/test/geom-pitlane.test.js b/test/geom-pitlane.test.js
+index cf8d093..4ea77af 100644
+--- a/test/geom-pitlane.test.js
++++ b/test/geom-pitlane.test.js
+@@ -122 +122 @@ test('a lane is refused by name: a missing anchor, backwards, too short for its
+// time (10 s and about 1 GB of heap on the [-keeper's-]{+user's+} 27.6 km lap, P's D437 hand-back). Given them, it finds exactly what it finds building its own.
+diff --git a/test/geom_bvh.test.js b/test/geom_bvh.test.js
+index 1197061..2e91eb0 100644
+--- a/test/geom_bvh.test.js
++++ b/test/geom_bvh.test.js
+@@ -119 +119 @@ test('names repeat: a real same-height crossing still fires, between the right p
+// V8's heap (378 B a vertex on a 20 km straight, measured): on the [-keeper's-]{+user's+} 27.6 km lap with a pit lane the export ran out of heap there (P's D437 hand-back).
+@@ -178 +178 @@ test('soup: on a 20 km straight it keeps under 8 B a vertex in the heap (it kept
+// D437a: THE BVH IN TYPED ARRAYS. Its nodes were JS objects (2 million on the [-keeper's-]{+user's+} 27.6 km lap, 114 B a triangle kept, measured), built again for the pit-lane check,

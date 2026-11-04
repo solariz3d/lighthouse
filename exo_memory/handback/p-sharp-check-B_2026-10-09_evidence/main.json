@@ -1,0 +1,172 @@
+{
+ "root": "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d282/t180@8639987",
+ "S1": {
+  "W": 24,
+  "R": 22,
+  "deg": -90,
+  "refused": null,
+  "H": -90,
+  "H_err": 0,
+  "E50": 0,
+  "entry": 0,
+  "exit": 2,
+  "Rmin": 22,
+  "red": [],
+  "amber": [],
+  "pass": true
+ },
+ "S2": {
+  "W": 45,
+  "R": 24.25,
+  "deg": -90,
+  "refused": null,
+  "H": -89.9998,
+  "H_err": -0.0002,
+  "E50": 0,
+  "entry": 0,
+  "exit": 2,
+  "Rmin": 24.25,
+  "red": [],
+  "amber": [],
+  "pass": true
+ },
+ "S3": [
+  {
+   "deg": 45,
+   "refused": null,
+   "H": 44.9998,
+   "H_err": -0.0002,
+   "E50": 0,
+   "entry": 1.8,
+   "exit": 2,
+   "Rmin": 22,
+   "red": [],
+   "amber": [],
+   "pass": true
+  },
+  {
+   "deg": 90,
+   "refused": null,
+   "H": 90,
+   "H_err": 0,
+   "E50": 0,
+   "entry": 0,
+   "exit": 2,
+   "Rmin": 22,
+   "red": [],
+   "amber": [],
+   "pass": true
+  },
+  {
+   "deg": 135,
+   "refused": null,
+   "H": 135,
+   "H_err": 0,
+   "E50": 0,
+   "entry": 0,
+   "exit": 2,
+   "Rmin": 22,
+   "red": [],
+   "amber": [],
+   "pass": true
+  },
+  {
+   "deg": 180,
+   "refused": null,
+   "H": 179.9998,
+   "H_err": -0.0002,
+   "E50": 0,
+   "entry": 0,
+   "exit": 2,
+   "Rmin": 22,
+   "red": [],
+   "amber": [],
+   "pass": true
+  }
+ ],
+ "S4a": {
+  "W": 45,
+  "R": 24,
+  "refused": "SHARP_TOO_TIGHT: R 24 m is too tight for this width (stacked-within-2m): tightest at this width: 24.2 m",
+  "unchanged": true,
+  "named_m": 24,
+  "pass": true
+ },
+ "S4b": {
+  "W": 24,
+  "R": 14,
+  "refused": null,
+  "unchanged": false,
+  "named_m": null,
+  "pass": false
+ },
+ "S4_reported": [
+  {
+   "W": 45,
+   "R": 24.25,
+   "accepted": true,
+   "msg": null
+  },
+  {
+   "W": 24,
+   "R": 15,
+   "accepted": true,
+   "msg": null
+  }
+ ],
+ "W24_limit": {
+  "tightestSharp_core": 13.4,
+  "trials": [
+   {
+    "R": 13.5,
+    "refused": null,
+    "H": -90.0001,
+    "E50": 0,
+    "entry": 1.9,
+    "exit": 2,
+    "red": [],
+    "amber": [],
+    "green": true
+   },
+   {
+    "R": 13.4,
+    "refused": null,
+    "H": -89.9997,
+    "E50": 0,
+    "entry": 1.8,
+    "exit": 2,
+    "red": [],
+    "amber": [],
+    "green": true
+   },
+   {
+    "R": 13.3,
+    "refused": null,
+    "H": -89.9999,
+    "E50": 0,
+    "entry": 1.8,
+    "exit": 2,
+    "red": [],
+    "amber": [],
+    "green": true
+   },
+   {
+    "R": 13.2,
+    "refused": "SHARP_TOO_TIGHT: R 13.2 m is too tight for this width (load-above-proven): tightest at this width: 13.4 m"
+   },
+   {
+    "R": 13,
+    "refused": "SHARP_TOO_TIGHT: R 13 m is too tight for this width (load-above-proven): tightest at this width: 13.4 m"
+   }
+  ]
+ },
+ "S6": {
+  "identical_doc": true,
+  "identical_path": true,
+  "undo_returns_pre_sharp": true,
+  "pieces_after_open": 1,
+  "pass": true,
+  "msg": null
+ }
+}
+

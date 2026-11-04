@@ -1,0 +1,32 @@
+heavy-run: waiting on a2122153 pid 18864 (D243a targeted tests, tap (E), since 2026-10-05T15:56:32.091Z)
+heavy-run: waiting on a2122153 pid 18864 (D243a targeted tests, tap (E), since 2026-10-05T15:56:32.091Z)
+heavy-run: waiting on a2122153 pid 18864 (D243a targeted tests, tap (E), since 2026-10-05T15:56:32.091Z)
+heavy-run: waiting on a2122153 pid 18864 (D243a targeted tests, tap (E), since 2026-10-05T15:56:32.091Z)
+heavy-run: waiting on a2122153 pid 18864 (D243a targeted tests, tap (E), since 2026-10-05T15:56:32.091Z)
+=== C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/close/seq.js C:/Users/nname/Desktop/worktrees/b-close-wt targeted2 tes
+test/core_close_local.test.js: top-level ok 6 not-ok 0 (skip 0, todo 0) exit 0 3.9s
+test/core_close_refusal.test.js: top-level ok 3 not-ok 0 (skip 0, todo 0) exit 0 0.2s
+test/core_close.test.js: top-level ok 27 not-ok 0 (skip 0, todo 0) exit 0 5.3s
+test/core_cup_fixtures.test.js: top-level ok 8 not-ok 0 (skip 0, todo 0) exit 0 17.9s
+test/core_cup_seam.test.js: top-level ok 12 not-ok 0 (skip 0, todo 0) exit 0 6.2s
+test/validate_raygap.test.js: top-level ok 10 not-ok 0 (skip 0, todo 0) exit 0 0.2s
+app/test/redgroups.test.js: top-level ok 6 not-ok 0 (skip 0, todo 0) exit 0 0.1s
+app/test/core-close-preview.test.js: top-level ok 7 not-ok 0 (skip 0, todo 0) exit 0 14.6s
+app/test/core-readout-display.test.js: top-level ok 35 not-ok 0 (skip 0, todo 0) exit 0 2.3s
+app/test/core-shell.test.js: top-level ok 26 not-ok 0 (skip 0, todo 0) exit 0 19.2s
+app/test/core-xsec.test.js: top-level ok 21 not-ok 0 (skip 0, todo 0) exit 0 0.3s
+app/test/export.test.js: top-level ok 18 not-ok 0 (skip 0, todo 0) exit 0 28.1s
+app/test/export-csp.test.js: top-level ok 1 not-ok 0 (skip 0, todo 0) exit 0 9.8s
+app/test/export-selfcheck.test.js: top-level ok 2 not-ok 0 (skip 0, todo 0) exit 0 0.1s
+app/test/validate-ui.test.js: top-level ok 21 not-ok 0 (skip 0, todo 0) exit 0 0.1s
+app/test/validate-ui-panel.test.js: top-level ok 8 not-ok 0 (skip 0, todo 0) exit 0 0.2s
+app/test/preview.test.js: top-level ok 67 not-ok 0 (skip 0, todo 0) exit 0 0.3s
+app/test/preview-speed.test.js: top-level ok 15 not-ok 0 (skip 0, todo 0) exit 0 22.2s
+app/test/guides.test.js: top-level ok 23 not-ok 0 (skip 0, todo 0) exit 0 13.7s
+app/test/layout-css.test.js: top-level ok 3 not-ok 0 (skip 0, todo 0) exit 0 0.1s
+app/test/closer.test.js: top-level ok 34 not-ok 0 (skip 0, todo 0) exit 0 0.1s
+app/test/shell-layout.test.js: top-level ok 3 not-ok 0 (skip 0, todo 0) exit 0 0.1s
+app/test/shell-dist.test.js: top-level ok 2 not-ok 0 (skip 0, todo 0) exit 0 0.1s
+app/test/share-install.test.js: top-level ok 11 not-ok 0 (skip 0, todo 0) exit 0 2.7s
+
+=== exit 0 147.7s

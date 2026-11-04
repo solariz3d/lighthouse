@@ -1,0 +1,16 @@
+const fs = require('fs');
+const P = (f) => JSON.parse(fs.readFileSync(f, 'utf8').replace(/^\uFEFF/, ''));
+const D = 'C:/Users/nname/.claude/';
+const a = P(D + 'settings.json.bak-d215-20261002-162457'), b = P(D + 'settings.json');
+const leaf = (c) => c.split(String.fromCharCode(92)).pop();
+const show = (x) => JSON.stringify(x.hooks.PreToolUse.map((g) => ({ matcher: g.matcher, timeouts: g.hooks.map((h) => h.timeout), hooks: g.hooks.map((h) => leaf(h.command)) })));
+console.log('PreToolUse before:', show(a));
+console.log('PreToolUse now:   ', show(b));
+for (const k of new Set([...Object.keys(a.hooks), ...Object.keys(b.hooks)])) if (k !== 'PreToolUse') console.log(k, JSON.stringify(a.hooks[k]) === JSON.stringify(b.hooks[k]) ? 'IDENTICAL' : 'DIFFERS');
+const ra = JSON.parse(JSON.stringify(a)); delete ra.hooks; const rb = JSON.parse(JSON.stringify(b)); delete rb.hooks;
+console.log('non-hook settings', JSON.stringify(ra) === JSON.stringify(rb) ? 'IDENTICAL' : 'DIFFERS');
+const srB = b.hooks.PreToolUse.find((g) => g.matcher === 'mcp__consonance__call_librarian|mcp__consonance__call_chair');
+console.log('second reader group present with its matcher unchanged:', !!srB, '; its entry byte-identical to before:', JSON.stringify(a.hooks.PreToolUse[0].hooks[0]) === JSON.stringify(srB && srB.hooks[0]), '; entries in that group now:', srB && srB.hooks.length);
+const gateB = b.hooks.PreToolUse.flatMap((g) => g.hooks).filter((h) => /sources-gate\.js/.test(h.command));
+console.log('gate registered', gateB.length, 'time(s); same command and timeout as before:', JSON.stringify(a.hooks.PreToolUse[0].hooks[1]) === JSON.stringify(gateB[0]));
+console.log('empty groups:', b.hooks.PreToolUse.filter((g) => !g.hooks || !g.hooks.length).length);

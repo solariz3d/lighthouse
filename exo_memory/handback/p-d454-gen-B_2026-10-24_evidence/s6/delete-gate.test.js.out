@@ -1,0 +1,41 @@
+✔ RED: every packet form of a recursive delete of a tree holding a junction is refused, naming the junction and where it points (245.1496ms)
+✔ RED: a relative target is read from the cwd, and from `git -C <dir>`; a wildcard is checked at its parent (99.0594ms)
+✖ RED: the Bash tool's MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/... (the push gate's live failure, 2026-10-06) (94.6259ms)
+✔ RED: an environment variable in the target is expanded ($env:NAME, ${NAME}, $NAME) (found live: "$env:TEMP\x" was read as a literal path) (35.7462ms)
+✔ RED (A F1): a relative target after `cd <dir> &&` is read against the cd, not the session cwd (98.5466ms)
+✔ pass (A F2): a wildcard checks the entries it MATCHES, not the whole folder (95.5634ms)
+✔ pass (A F3): a heredoc BODY is text being written, not a command (86.5491ms)
+✔ RED: the target itself being a junction is refused (a recursive delete of the link can empty what it points to) (34.2397ms)
+✔ pass: the same deletes of a tree with no junction are allowed, silently (93.801ms)
+✔ pass: removing the LINK itself without recursing is what the reason asks for, and is allowed (75.7717ms)
+✔ fails OPEN: a missing target, a malformed payload, another tool, a non-delete command: allowed with no output (133.2199ms)
+✔ the parser: recursive deletes are found, non-recursive ones are not (1.0048ms)
+✔ cygpath is looked for on PATH, then under this machine's own Program Files folders, never a drive letter written into the hook (0.1563ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1169.7344
+
+✖ failing tests:
+
+test at consonance\hooks\delete-gate.test.js:48:1
+✖ RED: the Bash tool's MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/... (the push gate's live failure, 2026-10-06) (94.6259ms)
+  AssertionError [ERR_ASSERTION]: the /tmp/... form
+      at TestContext.<anonymous> (G:\consonance-scratch\d454s\clone\consonance\hooks\delete-gate.test.js:53:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

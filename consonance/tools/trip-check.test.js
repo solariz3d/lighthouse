@@ -14,7 +14,7 @@ const path = require('node:path');
 const T = require('./trip-check.js');
 
 const dirs = [];
-function tmp() { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'trip-check-')); dirs.push(d); return d; }
+function tmp() { const d = require('./scratch.js').mkdtemp('trip-check-'); dirs.push(d); return d; }
 process.on('exit', () => { for (const d of dirs) { try { fs.rmSync(d, { recursive: true, force: true }); } catch (_) {} } });
 
 const row = (o) => JSON.stringify(o);

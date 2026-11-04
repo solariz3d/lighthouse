@@ -1,0 +1,17 @@
+[38436:40772:1022/195621.424:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:241] No machine level policy manager exists.
+
+DevTools listening on ws://127.0.0.1:9607/devtools/browser/c0f54bb1-bfd6-4890-b39d-78dff14785f6
+[38436:16424:1022/195625.146:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+Created TensorFlow Lite XNNPACK delegate for CPU.
+[38436:15752:1022/195640.469:ERROR:chrome\updater\ipc\update_service_dialer_win.cc:76] Failed to open named pipe server process 26676: Access is denied. (0x5)
+[38436:2016:1022/195642.534:ERROR:chrome\updater\ipc\update_service_dialer_win.cc:76] Failed to open named pipe server process 28868: Access is denied. (0x5)
+[38436:15752:1022/195644.607:ERROR:chrome\updater\ipc\update_service_dialer_win.cc:76] Failed to open named pipe server process 27788: Access is denied. (0x5)
+[38436:2016:1022/195644.653:ERROR:chrome\updater\ipc\update_service_dialer_win.cc:76] Failed to open named pipe server process 31444: Access is denied. (0x5)
+[38436:15752:1022/195646.717:ERROR:chrome\updater\ipc\update_service_dialer_win.cc:76] Failed to open named pipe server process 27940: Access is denied. (0x5)
+[38436:2016:1022/195648.791:ERROR:chrome\updater\ipc\update_service_dialer_win.cc:76] Failed to open named pipe server process 39664: Access is denied. (0x5)
+[38436:15752:1022/195651.455:INFO:chrome\browser\extensions\extension_garbage_collector.cc:212] Garbage collection for extensions on file thread is complete.
+[38436:16424:1022/195654.383:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[38436:16424:1022/195744.852:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[38436:16424:1022/195925.641:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[38436:16424:1022/200325.313:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[38436:16424:1022/201054.632:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT

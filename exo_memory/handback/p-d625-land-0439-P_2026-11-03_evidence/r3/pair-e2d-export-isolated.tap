@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: row 1: the export's bytes are b6969da's, a textured lap with a pit lane and an open TEST export
+ok 1 - row 1: the export's bytes are b6969da's, a textured lap with a pit lane and an open TEST export
+  ---
+  duration_ms: 4167.803
+  type: 'test'
+  ...
+# Subtest: row 2: through the runner (every message structured-cloned) the textured lap and the open TEST export are the same bytes
+ok 2 - row 2: through the runner (every message structured-cloned) the textured lap and the open TEST export are the same bytes
+  ---
+  duration_ms: 4861.0709
+  type: 'test'
+  ...
+# Subtest: row 2b: a LIFTED lap (a 1 m hill, the offset lift of the core not the identity) gives the same bytes through the runner as on the page
+ok 3 - row 2b: a LIFTED lap (a 1 m hill, the offset lift of the core not the identity) gives the same bytes through the runner as on the page
+  ---
+  duration_ms: 6324.4555
+  type: 'test'
+  ...
+# Subtest: row 3: an export that throws inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+ok 4 - row 3: an export that throws inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+  ---
+  duration_ms: 1820.4548
+  type: 'test'
+  ...
+# Subtest: row 4: an export that dies inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+ok 5 - row 4: an export that dies inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+  ---
+  duration_ms: 2611.4665
+  type: 'test'
+  ...
+# Subtest: row 4b: after a host died, the next export gets a fresh host and writes the same bytes as b6969da's
+ok 6 - row 4b: after a host died, the next export gets a fresh host and writes the same bytes as b6969da's
+  ---
+  duration_ms: 4774.6961
+  type: 'test'
+  ...
+# Subtest: row 5: the runner runs one job at a time; a newer start cancels the older; a stale reply is ignored; cancel replaces the host
+ok 7 - row 5: the runner runs one job at a time; a newer start cancels the older; a stale reply is ignored; cancel replaces the host
+  ---
+  duration_ms: 0.6326
+  type: 'test'
+  ...
+# Subtest: row 6: an export refused inside the host is the same ExportError as on the page, and the host is kept
+ok 8 - row 6: an export refused inside the host is the same ExportError as on the page, and the host is kept
+  ---
+  duration_ms: 487.1374
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 25267.8078

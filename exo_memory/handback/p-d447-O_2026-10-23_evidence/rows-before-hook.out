@@ -1,0 +1,12 @@
+[31m✖ row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds [90m(1744.3229ms)[39m[39m
+[32m✔ row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank [90m(4.0862ms)[39m[39m
+[31m✖ row 3: a curve laid as two pieces banks as one: the lean holds across their joint [90m(20.4279ms)[39m[39m
+[31m✖ row 4: the near path (an end already at the start) closes banked [90m(351.445ms)[39m[39m
+[31m✖ row 5: the road a pit lane runs beside is not banked [90m(1509.5706ms)[39m[39m
+[31m✖ row 6: the bank lands in Close's one undo step [90m(1551.2162ms)[39m[39m
+[31m✖ row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds [90m(1744.3229ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the lap: p2 leans into its turn at every curved station (least 0.0° at +78 m)
+[31m✖ row 3: a curve laid as two pieces banks as one: the lean holds across their joint [90m(20.4279ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: within 20 m of the joint the lean into the turn is at least 30° (least 0.0°)
+[31m✖ row 4: the near path (an end already at the start) closes banked [90m(351.445ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the near path: p2 leans into its turn at every curved station (least 0.0° at +78 m)

@@ -1,0 +1,9 @@
+=== node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285/measure.js C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285/autosave-doc.t180track
+=== cwd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285
+=== env {"T180_ROOT":"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285/base"}
+{"label":"fresh 1200 m, lane 100..900, 2 boxes","boxes":2,"spacing":24,"lane":{"length":800.94,"mid":400.47,"usable":[79.47,721.47]},"box0_s":400.47,"first_reached":1,"s_range":[376.47,400.47],"gap_before_first":294.6,"gap_after_last":318.6,"on_taper":[],"red":[]}
+{"label":"fresh 1200 m, lane 100..900, 6 boxes","boxes":6,"spacing":24,"lane":{"length":800.94,"mid":400.47,"usable":[79.47,721.47]},"box0_s":400.47,"first_reached":5,"s_range":[280.47,400.47],"gap_before_first":198.6,"gap_after_last":318.6,"on_taper":[],"red":[]}
+{"label":"fresh 1200 m, lane 100..900, 12 boxes","boxes":12,"spacing":24,"lane":{"length":800.94,"mid":400.47,"usable":[79.47,721.47]},"box0_s":400.47,"first_reached":11,"s_range":[136.47,400.47],"gap_before_first":54.6,"gap_after_last":318.6,"on_taper":[],"red":[]}
+{"label":"keeper's autosave (COPY, 05:45)","boxes":12,"spacing":13.5,"lane":{"length":502.34,"mid":251.17,"usable":[81.17,421.17]},"box0_s":251.17,"first_reached":11,"s_range":[102.67,251.17],"gap_before_first":19.1,"gap_after_last":167.6,"on_taper":[],"red":[]}
+
+=== exit 0 signal null error  0.5s

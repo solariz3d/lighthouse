@@ -1,0 +1,15 @@
+# touched.tap summary (D473, pane E): the full TAP stays in the session scratchpad (scratchpad/d473/touched.tap); it carries terms off the private list in test names, so only these lines are filed
+# tests 1387
+# suites 0
+# pass 1371
+# fail 2
+# cancelled 0
+# skipped 14
+# todo 0
+# duration_ms 803052.6432
+not ok 551 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 95 - test\\fixtures\\fixtures.js
+      1 SKIP: fixtures-d332/eq-ELYSIUM.t180track is the user's save, kept out of the repository; copy it in read only to run this row
+      4 SKIP: fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+      4 SKIP: fixtures-d431/test10-open.t180track is not here (TEST 10: a private track, kept off the repository)
+      5 SKIP: fixtures-d431/testtrack10-open.t180track is not here (TEST TRACK 10: a private track, kept off the repository)

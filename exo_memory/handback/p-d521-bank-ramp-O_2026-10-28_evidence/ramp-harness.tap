@@ -1,0 +1,275 @@
+TAP version 13
+# Subtest: CONTROL: the whole of core_ramp.test.js and core_joint_c2.test.js passes on an unmutated copy of src/ and tools/
+ok 1 - CONTROL: the whole of core_ramp.test.js and core_joint_c2.test.js passes on an unmutated copy of src/ and tools/
+  ---
+  duration_ms: 24693.6112
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 298.9943
+  type: 'test'
+  ...
+# Subtest: mutant R2 'start' is the whole piece, not the first span: applied, and caught by "2/3"
+ok 3 - mutant R2 'start' is the whole piece, not the first span: applied, and caught by "2/3"
+  ---
+  duration_ms: 340.0868
+  type: 'test'
+  ...
+# R2 'start' is the whole piece, not the first span: 9 of 11 run tests failed
+# Subtest: mutant R3 startRampM is a fixed 20 m even on a short piece: applied, and caught by "4 ·"
+ok 4 - mutant R3 startRampM is a fixed 20 m even on a short piece: applied, and caught by "4 ·"
+  ---
+  duration_ms: 357.5428
+  type: 'test'
+  ...
+# R3 startRampM is a fixed 20 m even on a short piece: 2 of 7 run tests failed
+# Subtest: mutant R4 the extra ramp knots are not added: applied, and caught by "4 ·|2/3"
+ok 5 - mutant R4 the extra ramp knots are not added: applied, and caught by "4 ·|2/3"
+  ---
+  duration_ms: 356.0229
+  type: 'test'
+  ...
+# R4 the extra ramp knots are not added: 9 of 16 run tests failed
+# Subtest: mutant R5 the short-ramp channel is left as the least-squares fit (it rings): applied, and caught by "2/3"
+ok 6 - mutant R5 the short-ramp channel is left as the least-squares fit (it rings): applied, and caught by "2/3"
+  ---
+  duration_ms: 341.2468
+  type: 'test'
+  ...
+# R5 the short-ramp channel is left as the least-squares fit (it rings): 9 of 11 run tests failed
+# Subtest: mutant R6 the ideal ramp is not compressed (the curve completes later than R): applied, and caught by "2/3"
+ok 7 - mutant R6 the ideal ramp is not compressed (the curve completes later than R): applied, and caught by "2/3"
+  ---
+  duration_ms: 357.0529
+  type: 'test'
+  ...
+# R6 the ideal ramp is not compressed (the curve completes later than R): 9 of 11 run tests failed
+# Subtest: mutant R7 the Greville abscissae are shifted (the hold is not exact and the ramp lags): applied, and caught by "2 ·|2/3"
+ok 8 - mutant R7 the Greville abscissae are shifted (the hold is not exact and the ramp lags): applied, and caught by "2 ·|2/3"
+  ---
+  duration_ms: 491.9411
+  type: 'test'
+  ...
+# R7 the Greville abscissae are shifted (the hold is not exact and the ramp lags): 1 of 13 run tests failed
+# Subtest: mutant R8 the joint's first two control points are overwritten too (C1 lost): applied, and caught by "3 ·|5 ·"
+ok 9 - mutant R8 the joint's first two control points are overwritten too (C1 lost): applied, and caught by "3 ·|5 ·"
+  ---
+  duration_ms: 530.1857
+  type: 'test'
+  ...
+# R8 the joint's first two control points are overwritten too (C1 lost): 13 of 15 run tests failed
+# Subtest: mutant R9 the range clamp is dropped (a continued slope can carry the ramp past its target): applied, and caught by "3 ·"
+ok 10 - mutant R9 the range clamp is dropped (a continued slope can carry the ramp past its target): applied, and caught by "3 ·"
+  ---
+  duration_ms: 376.3053
+  type: 'test'
+  ...
+# R9 the range clamp is dropped (a continued slope can carry the ramp past its target): 1 of 12 run tests failed
+# Subtest: mutant R10 a ramp as long as the piece counts as short (the whole-piece blend is replaced): applied, and caught by "4 ·"
+ok 11 - mutant R10 a ramp as long as the piece counts as short (the whole-piece blend is replaced): applied, and caught by "4 ·"
+  ---
+  duration_ms: 398.7483
+  type: 'test'
+  ...
+# R10 a ramp as long as the piece counts as short (the whole-piece blend is replaced): 1 of 7 run tests failed
+# Subtest: mutant R11 a channel with no target still gets the ramp treatment: applied, and caught by "4 ·"
+ok 12 - mutant R11 a channel with no target still gets the ramp treatment: applied, and caught by "4 ·"
+  ---
+  duration_ms: 422.0645
+  type: 'test'
+  ...
+# R11 a channel with no target still gets the ramp treatment: 1 of 7 run tests failed
+# Subtest: mutant R12 an unknown channel in the map is accepted: applied, and caught by "6 ·"
+ok 13 - mutant R12 an unknown channel in the map is accepted: applied, and caught by "6 ·"
+  ---
+  duration_ms: 557.5615
+  type: 'test'
+  ...
+# R12 an unknown channel in the map is accepted: 1 of 9 run tests failed
+# Subtest: mutant R13 a map value longer than the piece is accepted: applied, and caught by "6 ·"
+ok 14 - mutant R13 a map value longer than the piece is accepted: applied, and caught by "6 ·"
+  ---
+  duration_ms: 454.0774
+  type: 'test'
+  ...
+# R13 a map value longer than the piece is accepted: 1 of 9 run tests failed
+# Subtest: mutant R14 a map value of zero or less is accepted: applied, and caught by "6 ·"
+ok 15 - mutant R14 a map value of zero or less is accepted: applied, and caught by "6 ·"
+  ---
+  duration_ms: 369.0095
+  type: 'test'
+  ...
+# R14 a map value of zero or less is accepted: 2 of 9 run tests failed
+# Subtest: mutant R15 the number path no longer refuses a transition past the length: applied, and caught by "6 ·|1 ·"
+ok 16 - mutant R15 the number path no longer refuses a transition past the length: applied, and caught by "6 ·|1 ·"
+  ---
+  duration_ms: 410.1688
+  type: 'test'
+  ...
+# R15 the number path no longer refuses a transition past the length: 1 of 15 run tests failed
+# Subtest: mutant R16 the number path uses a different default (half the piece) for no transition: applied, and caught by "1 ·"
+ok 17 - mutant R16 the number path uses a different default (half the piece) for no transition: applied, and caught by "1 ·"
+  ---
+  duration_ms: 345.8101
+  type: 'test'
+  ...
+# R16 the number path uses a different default (half the piece) for no transition: 3 of 8 run tests failed
+# Subtest: mutant R17 the ramp control points are not rounded to the channel quantum (the document would not round-trip): applied, and caught by "5 ·"
+ok 18 - mutant R17 the ramp control points are not rounded to the channel quantum (the document would not round-trip): applied, and caught by "5 ·"
+  ---
+  duration_ms: 457.6239
+  type: 'test'
+  ...
+# R17 the ramp control points are not rounded to the channel quantum (the document would not round-trip): 1 of 5 run tests failed
+# Subtest: mutant Q1 the cross-section channels blend by the cubic again (c2Ends still pins the ends, so the joints read C2; the ramp's SHAPE is no longer the quintic's): applied, and caught by "row 8"
+ok 19 - mutant Q1 the cross-section channels blend by the cubic again (c2Ends still pins the ends, so the joints read C2; the ramp's SHAPE is no longer the quintic's): applied, and caught by "row 8"
+  ---
+  duration_ms: 359.5703
+  type: 'test'
+  ...
+# Q1 the cross-section channels blend by the cubic again (c2Ends still pins the ends, so the joints read C2; the ramp's SHAPE is no longer the quintic's): 1 of 3 run tests failed
+# Subtest: mutant Q2 the fitted ends are not pinned to zero curvature (the fit alone reads 0.0034 to 0.038 °/m² at the start of a ramp): applied, and caught by "row 1|row 2"
+ok 20 - mutant Q2 the fitted ends are not pinned to zero curvature (the fit alone reads 0.0034 to 0.038 °/m² at the start of a ramp): applied, and caught by "row 1|row 2"
+  ---
+  duration_ms: 5584.9411
+  type: 'test'
+  ...
+# Q2 the fitted ends are not pinned to zero curvature (the fit alone reads 0.0034 to 0.038 °/m² at the start of a ramp): 3 of 6 run tests failed
+# Subtest: mutant Q3 the quintic blends the route channels too (the golden documents with kh, kv, w or r targets change): applied, and caught by "1 ·"
+ok 21 - mutant Q3 the quintic blends the route channels too (the golden documents with kh, kv, w or r targets change): applied, and caught by "1 ·"
+  ---
+  duration_ms: 384.4816
+  type: 'test'
+  ...
+# Q3 the quintic blends the route channels too (the golden documents with kh, kv, w or r targets change): 5 of 8 run tests failed
+# Subtest: mutant Q6 continuity.js reads the start curvature over the wrong knot span (U[5] for U[4]): applied, and caught by "row 0"
+ok 22 - mutant Q6 continuity.js reads the start curvature over the wrong knot span (U[5] for U[4]): applied, and caught by "row 0"
+  ---
+  duration_ms: 361.6818
+  type: 'test'
+  ...
+# Q6 continuity.js reads the start curvature over the wrong knot span (U[5] for U[4]): 1 of 3 run tests failed
+# Subtest: mutant Q7 continuity.js reads the end slope from the wrong points (the last three for the last two): applied, and caught by "row 0"
+ok 23 - mutant Q7 continuity.js reads the end slope from the wrong points (the last three for the last two): applied, and caught by "row 0"
+  ---
+  duration_ms: 383.7617
+  type: 'test'
+  ...
+# Q7 continuity.js reads the end slope from the wrong points (the last three for the last two): 1 of 3 run tests failed
+# Subtest: mutant Q4 a piece with a cross-section target keeps its even knots (a 40 m piece has one interior knot: no free point for both ends, the cup fade stays C1): applied, and caught by "row 2"
+ok 24 - mutant Q4 a piece with a cross-section target keeps its even knots (a 40 m piece has one interior knot: no free point for both ends, the cup fade stays C1): applied, and caught by "row 2"
+  ---
+  duration_ms: 725.0278
+  type: 'test'
+  ...
+# Q4 a piece with a cross-section target keeps its even knots (a 40 m piece has one interior knot: no free point for both ends, the cup fade stays C1): 1 of 3 run tests failed
+# Subtest: mutant F1 a free point at the first column of the band is left out of the normal equations: applied, and caught by "the banded fit equals 0.4.21"
+ok 25 - mutant F1 a free point at the first column of the band is left out of the normal equations: applied, and caught by "the banded fit equals 0.4.21"
+  ---
+  duration_ms: 3296.5224
+  type: 'test'
+  ...
+# F1 a free point at the first column of the band is left out of the normal equations: 1 of 3 run tests failed
+# Subtest: mutant F2 the held points are left out of the residual the free points are fitted to: applied, and caught by "the banded fit equals 0.4.21"
+ok 26 - mutant F2 the held points are left out of the residual the free points are fitted to: applied, and caught by "the banded fit equals 0.4.21"
+  ---
+  duration_ms: 3301.1831
+  type: 'test'
+  ...
+# F2 the held points are left out of the residual the free points are fitted to: 1 of 3 run tests failed
+# Subtest: mutant F3 the right-hand side is not eliminated with its row: applied, and caught by "the banded fit equals 0.4.21"
+ok 27 - mutant F3 the right-hand side is not eliminated with its row: applied, and caught by "the banded fit equals 0.4.21"
+  ---
+  duration_ms: 3333.5529
+  type: 'test'
+  ...
+# F3 the right-hand side is not eliminated with its row: 1 of 3 run tests failed
+# Subtest: mutant F4 the band is two-thirds as wide (an entry past it is dropped by the typed array): applied, and caught by "the banded fit equals 0.4.21"
+ok 28 - mutant F4 the band is two-thirds as wide (an entry past it is dropped by the typed array): applied, and caught by "the banded fit equals 0.4.21"
+  ---
+  duration_ms: 3615.4308
+  type: 'test'
+  ...
+# F4 the band is two-thirds as wide (an entry past it is dropped by the typed array): 1 of 3 run tests failed
+# Subtest: mutant F5 no partial pivoting (on uneven knots that moves only bits below the kept digits; at a column under the singular bar it decides whether the fit goes on): applied, and caught by "pivoting decides"
+ok 29 - mutant F5 no partial pivoting (on uneven knots that moves only bits below the kept digits; at a column under the singular bar it decides whether the fit goes on): applied, and caught by "pivoting decides"
+  ---
+  duration_ms: 622.2536
+  type: 'test'
+  ...
+# F5 no partial pivoting (on uneven knots that moves only bits below the kept digits; at a column under the singular bar it decides whether the fit goes on): 1 of 3 run tests failed
+# Subtest: mutant F6 a swapped row is copied without re-slotting: applied, and caught by "elimination swaps rows"
+ok 30 - mutant F6 a swapped row is copied without re-slotting: applied, and caught by "elimination swaps rows"
+  ---
+  duration_ms: 1550.6743
+  type: 'test'
+  ...
+# F6 a swapped row is copied without re-slotting: 1 of 3 run tests failed
+# Subtest: mutant F7 the elimination stops at the first upper band (with a swap the band is twice as wide): applied, and caught by "elimination swaps rows"
+ok 31 - mutant F7 the elimination stops at the first upper band (with a swap the band is twice as wide): applied, and caught by "elimination swaps rows"
+  ---
+  duration_ms: 1970.4264
+  type: 'test'
+  ...
+# F7 the elimination stops at the first upper band (with a swap the band is twice as wide): 1 of 3 run tests failed
+# Subtest: mutant F8 the back substitution reads one upper band (with a swap there are two): applied, and caught by "elimination swaps rows"
+ok 32 - mutant F8 the back substitution reads one upper band (with a swap there are two): applied, and caught by "elimination swaps rows"
+  ---
+  duration_ms: 2375.8605
+  type: 'test'
+  ...
+# F8 the back substitution reads one upper band (with a swap there are two): 1 of 3 run tests failed
+# Subtest: mutant F9 a singular system is solved anyway (its free points are written: NaN or a blow-up): applied, and caught by "singular system"
+ok 33 - mutant F9 a singular system is solved anyway (its free points are written: NaN or a blow-up): applied, and caught by "singular system"
+  ---
+  duration_ms: 1020.788
+  type: 'test'
+  ...
+# F9 a singular system is solved anyway (its free points are written: NaN or a blow-up): 1 of 3 run tests failed
+# Subtest: mutant F11 the kept samples are read for a piece of the same length and as many knots, whatever the knots: applied, and caught by "knots were replaced|one knot moved"
+ok 34 - mutant F11 the kept samples are read for a piece of the same length and as many knots, whatever the knots: applied, and caught by "knots were replaced|one knot moved"
+  ---
+  duration_ms: 1137.7139
+  type: 'test'
+  ...
+# F11 the kept samples are read for a piece of the same length and as many knots, whatever the knots: 1 of 4 run tests failed
+# Subtest: mutant F14 the kept samples are keyed by the length alone: applied, and caught by "knots were replaced|one knot moved"
+ok 35 - mutant F14 the kept samples are keyed by the length alone: applied, and caught by "knots were replaced|one knot moved"
+  ---
+  duration_ms: 1130.2151
+  type: 'test'
+  ...
+# F14 the kept samples are keyed by the length alone: 2 of 4 run tests failed
+# Subtest: mutant F12 sampleBasis reads the last level's buffer past its end (basisN reads a 0 there): applied, and caught by "sampleBasis gives basisN"
+ok 36 - mutant F12 sampleBasis reads the last level's buffer past its end (basisN reads a 0 there): applied, and caught by "sampleBasis gives basisN"
+  ---
+  duration_ms: 2208.2463
+  type: 'test'
+  ...
+# F12 sampleBasis reads the last level's buffer past its end (basisN reads a 0 there): 1 of 3 run tests failed
+# Subtest: mutant F13 sampleBasis's walk stops one span early on a knot (the binary search takes the span the knot starts): applied, and caught by "sampleBasis gives basisN"
+ok 37 - mutant F13 sampleBasis's walk stops one span early on a knot (the binary search takes the span the knot starts): applied, and caught by "sampleBasis gives basisN"
+  ---
+  duration_ms: 1006.1924
+  type: 'test'
+  ...
+# F13 sampleBasis's walk stops one span early on a knot (the binary search takes the span the knot starts): 1 of 3 run tests failed
+# Subtest: mutant F10 with no free point the fit goes on (and writes past the pins): applied, and caught by "no free point"
+ok 38 - mutant F10 with no free point the fit goes on (and writes past the pins): applied, and caught by "no free point"
+  ---
+  duration_ms: 960.2421
+  type: 'test'
+  ...
+# F10 with no free point the fit goes on (and writes past the pins): 1 of 3 run tests failed
+1..38
+# tests 38
+# suites 0
+# pass 38
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 67208.6311
+

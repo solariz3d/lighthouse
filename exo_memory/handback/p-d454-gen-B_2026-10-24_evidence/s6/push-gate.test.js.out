@@ -1,0 +1,43 @@
+✔ RED: a push whose diff ADDS a line with a key is refused, naming the file and line and the kind, never the secret (539.4887ms)
+✔ RED: every packet shape is caught (sk-ant-, ghp_, AKIA, a private-key header), each by its kind (563.9426ms)
+✔ pass: a clean push is allowed, silently (no output), and logged as allow (530.7621ms)
+✔ pass: a key the push REMOVES is leaving, not arriving: allowed (781.4749ms)
+✔ RED, no upstream: a new branch is scanned from its merge base with origin's default branch (548.3679ms)
+✔ RED: `git -C <repo> push` from another directory scans that repo; a push after && in a chain is seen (641.5199ms)
+✖ RED: the Bash tool's MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/... (580.9172ms)
+✔ RED (A H3): a key ADDED in one unpushed commit and REMOVED in the next is in the pushed history: refused, naming the commit (628.3559ms)
+✔ RED (A H1): the FIRST push to an EMPTY remote scans the whole history (256.0572ms)
+✔ RED (A H2): a remote NOT called origin, no upstream: what it lacks is scanned (629.4451ms)
+✔ RED (A §4): `cd <repo> && git push` from a session in ANOTHER directory scans the cd's repo (806.8564ms)
+✔ pass: a heredoc that only MENTIONS git push is not a push (432.6907ms)
+✔ fails OPEN: not a git repo, no base to diff, a malformed payload, another tool: allowed with no output (116.5091ms)
+✔ a command that is not a push is ignored: no scan, no row (374.1223ms)
+✔ cygpath is looked for on PATH, then under this machine's own Program Files folders, never a drive letter written into the hook (0.1511ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 14
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7583.8076
+
+✖ failing tests:
+
+test at consonance\hooks\push-gate.test.js:85:1
+✖ RED: the Bash tool's MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/... (580.9172ms)
+  AssertionError [ERR_ASSERTION]: cygpath maps /tmp/pg-X0QNBK/work
+      at TestContext.<anonymous> (G:\consonance-scratch\d454s\clone\consonance\hooks\push-gate.test.js:90:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'c:/users/nname/appdata/local/temp/pg-x0qnbk/work',
+    expected: 'g:/consonance-scratch/d454s/home/appdata/local/temp/pg-x0qnbk/work',
+    operator: '==',
+    diff: 'simple'
+  }

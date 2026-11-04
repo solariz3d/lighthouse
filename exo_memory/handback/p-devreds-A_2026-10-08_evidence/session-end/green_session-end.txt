@@ -1,0 +1,16 @@
+﻿✔ 1: the behaviours that already held (16.3458ms)
+✔ 1e: the same behaviours through the real hook, on the code as it stood (green before and after the change) (147.9515ms)
+✔ 2: the same answers at every chunk size, including sizes that cut a multi-byte character and a CRLF (22.1464ms)
+✔ 2b: eachLine() hands over exactly the lines of the file: no phantom empty line from the stale bytes after a short last read, none after a final newline, and returning true stops it (4.6711ms)
+✔ 3: it stops at the first human line and never loads the whole file (4.9541ms)
+✔ 4a: a transcript longer than V8's string limit still gives its first human line (311.4437ms)
+✔ 4b: the real hook, given that transcript at session end, records the opening line in the pulse notes and writes the digest (33.6888ms)
+✔ 5: the hook still tolerates a missing transcript and a payload with none (80.1588ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 692.5603

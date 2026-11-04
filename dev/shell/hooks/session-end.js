@@ -51,27 +51,62 @@ function safeParseJSON(s) {
   try { return JSON.parse(s); } catch (e) { return {}; }
 }
 
-function todayYMD() {
-  const d = new Date();
+// D292 (the keeper chose repair, 2026-10-11): a digest's day is the LOCAL calendar day, and so is every row in it. Before, the file was named by the local
+// date but kept the rows whose UTC timestamp STARTED with that string, so an early-morning end found none (10-02's 50 bytes) and a late-evening end counted
+// the next UTC day (exo_memory/handback/p-digestwriter-E_2026-10-11.md).
+function ymdOf(d) {
   const yy = d.getFullYear();
   const mm = String(d.getMonth() + 1).padStart(2, '0');
   const dd = String(d.getDate()).padStart(2, '0');
   return `${yy}-${mm}-${dd}`;
 }
+function todayYMD() { return ymdOf(new Date()); }
+/** The local date of an ISO timestamp, or null when it does not parse. */
+function localYMD(ts) { const d = new Date(ts); return Number.isNaN(d.getTime()) ? null : ymdOf(d); }
+
+/**
+ * The lines of a file, one at a time, WITHOUT ever holding the whole file as one string; `fn(line)` returns true to STOP reading.
+ *
+ * D273 (devreds, the same repair as tools/sourced.js): firstHumanLine used to be `fs.readFileSync(path, 'utf8').split('\n')` inside a silent catch. V8's longest string is
+ * 0x1fffffe8 = 536,870,888 bytes, a long session's transcript passes it (the chair's was 539,727,123), the read threw, the catch swallowed it, and the opening line came
+ * back null for exactly the longest sessions. Lines are cut on the 0x0A byte BEFORE decoding, so a multi-byte character split across two chunks is never decoded in halves;
+ * a trailing \r is whitespace to JSON.parse; a line that cannot be made a string is skipped, as an unparseable line always was. Self-contained on purpose: each installed
+ * hook stands alone. `chunkBytes` is a parameter only so a test can put every boundary inside a character and a line.
+ */
+function eachLine(file, fn, chunkBytes = 1024 * 1024) {
+  const fd = fs.openSync(file, 'r');
+  try {
+    const buf = Buffer.allocUnsafe(chunkBytes);
+    let carry = [], stop = false;
+    const emit = (bytes) => { let text; try { text = bytes.toString('utf8'); } catch (e) { return; } if (fn(text) === true) stop = true; };
+    for (let n; !stop && (n = fs.readSync(fd, buf, 0, chunkBytes, null)) > 0;) {
+      const view = buf.subarray(0, n);
+      let start = 0;
+      while (!stop) {
+        const nl = view.indexOf(0x0a, start);
+        if (nl < 0) { if (start < n) carry.push(Buffer.from(view.subarray(start))); break; }
+        carry.push(view.subarray(start, nl));
+        emit(carry.length === 1 ? carry[0] : Buffer.concat(carry)); carry = [];
+        start = nl + 1;
+      }
+    }
+    if (!stop && carry.length) emit(Buffer.concat(carry));
+  } finally { fs.closeSync(fd); }
+}
 
 // Pull the first genuine human line from a session transcript (JSONL).
 // Skips tag-wrapped machinery (<local-command-caveat>, <command-name>,
 // system reminders) and the dream anti-instruction. Returns null if the
-// session never had a human say anything real.
-function firstHumanLine(transcriptPath) {
+// session never had a human say anything real. Reads in chunks and stops at that line.
+function firstHumanLine(transcriptPath, chunkBytes) {
   try {
     if (!transcriptPath || !fs.existsSync(transcriptPath)) return null;
-    const lines = fs.readFileSync(transcriptPath, 'utf8').split('\n');
-    for (const line of lines) {
-      if (!line.trim()) continue;
+    let found = null;
+    eachLine(transcriptPath, (line) => {
+      if (!line.trim()) return false;
       let ev;
-      try { ev = JSON.parse(line); } catch (e) { continue; }
-      if (ev.type !== 'user' || !ev.message) continue;
+      try { ev = JSON.parse(line); } catch (e) { return false; }
+      if (ev.type !== 'user' || !ev.message) return false;
       let text = '';
       const c = ev.message.content;
       if (typeof c === 'string') text = c;
@@ -81,14 +116,16 @@ function firstHumanLine(transcriptPath) {
         }
       }
       text = (text || '').trim();
-      if (!text) continue;
-      if (text.startsWith('<')) continue;                      // tag machinery
-      if (text.startsWith('This is a gap-dream cycle')) return null; // never eat the weld
-      if (/^Caveat:/.test(text)) continue;
+      if (!text) return false;
+      if (text.startsWith('<')) return false;                  // tag machinery
+      if (text.startsWith('This is a gap-dream cycle')) return true; // never eat the weld: stop, with nothing found
+      if (/^Caveat:/.test(text)) return false;
       const flat = text.replace(/\s+/g, ' ');
-      return flat.length > 160 ? flat.slice(0, 160) + '...' : flat;
-    }
-  } catch (e) { /* silent */ }
+      found = flat.length > 160 ? flat.slice(0, 160) + '...' : flat;
+      return true;
+    }, chunkBytes);
+    return found;
+  } catch (e) { /* silent: teardown is never blocked; the reader above no longer fails on size */ }
   return null;
 }
 
@@ -127,24 +164,24 @@ function readPulseNotes(ymd) {
   } catch (e) { return []; }
 }
 
-function readEventsForDate(ymd) {
-  if (!fs.existsSync(EVENT_LOG)) return [];
+/** Every event of the log, grouped by the LOCAL date of its timestamp: one read for any number of days. */
+function eventsByDay(log = EVENT_LOG) {
+  const byDay = new Map();
+  if (!fs.existsSync(log)) return byDay;
   try {
-    const lines = fs.readFileSync(EVENT_LOG, 'utf8').trim().split('\n');
-    const events = [];
-    for (const line of lines) {
+    for (const line of fs.readFileSync(log, 'utf8').trim().split('\n')) {
       try {
         const ev = JSON.parse(line);
-        if (ev.timestamp && ev.timestamp.startsWith(ymd)) {
-          events.push(ev);
-        }
+        const day = ev.timestamp ? localYMD(ev.timestamp) : null;
+        if (!day) continue;
+        if (!byDay.has(day)) byDay.set(day, []);
+        byDay.get(day).push(ev);
       } catch (e) { /* skip malformed */ }
     }
-    return events;
-  } catch (e) {
-    return [];
-  }
+  } catch (e) { /* unreadable log: no events */ }
+  return byDay;
 }
+function readEventsForDate(ymd) { return eventsByDay().get(ymd) || []; }
 
 function buildDigest(ymd, events) {
   const lines = [`# ${ymd} Digest`, ''];
@@ -155,7 +192,9 @@ function buildDigest(ymd, events) {
     return lines.join('\n');
   }
 
-  lines.push(`## ${sessionStops.length} session${sessionStops.length === 1 ? '' : 's'}`);
+  // D292: a session_stop row is written at the end of every TURN (hooks/stop.js), so the count is turn ends; the sessions are the distinct session ids
+  const sessions = new Set(sessionStops.map(e => e.session_id || e.transcript_path || 'unknown')).size;
+  lines.push(`## ${sessionStops.length} turn end${sessionStops.length === 1 ? '' : 's'} from ${sessions} session${sessions === 1 ? '' : 's'}`);
   lines.push('');
 
   const byCwd = new Map();
@@ -196,6 +235,36 @@ function buildDigest(ymd, events) {
   return lines.join('\n');
 }
 
+/**
+ * D292 CATCH-UP, called by session-start.js at every wake. A digest is written only when some session ENDS, and on days when nothing ended cleanly (panes
+ * are killed, not exited) there was none; a day whose digest was written before the day was over (an early-morning end) is a part of a day. So for each of
+ * the last `days` LOCAL days before today: no file, or a file written before that day ended, is rebuilt from the event log, if the log has turn ends that
+ * day (a day with none stays as it is). Today is never touched: the SessionEnd write owns it. The log is read once, and only when a day needs it, so a
+ * wake with nothing to do costs a directory listing and `days` stats. Returns { written: [ymd, ...], read } and never throws.
+ */
+function catchUp({ dir = DIGESTS_DIR, log = EVENT_LOG, now = new Date(), days = 14 } = {}) {
+  const out = { written: [], read: false };
+  try {
+    const need = [];
+    for (let k = 1; k <= days; k++) {
+      const day = new Date(now.getFullYear(), now.getMonth(), now.getDate() - k), ymd = ymdOf(day);
+      const ended = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1).getTime();
+      let mtime = null; try { mtime = fs.statSync(path.join(dir, `${ymd}.md`)).mtimeMs; } catch (e) { /* no file */ }
+      if (mtime === null || mtime < ended) need.push(ymd);
+    }
+    if (!need.length) return out;
+    const byDay = eventsByDay(log); out.read = true;
+    for (const ymd of need) {
+      const events = byDay.get(ymd) || [];
+      if (!events.some(e => e.type === 'session_stop')) continue;
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, `${ymd}.md`), buildDigest(ymd, events));
+      out.written.push(ymd);
+    }
+  } catch (e) { /* a wake is never blocked by its digests */ }
+  return out;
+}
+
 function main() {
   const meta = safeParseJSON(safeReadStdin());
 
@@ -217,4 +286,6 @@ function main() {
   process.stdout.write('{}');
 }
 
-main();
+// D273: run only as the hook (`node session-end.js`), so a test can load firstHumanLine without reading stdin or writing a digest.
+if (require.main === module) main();
+module.exports = { firstHumanLine, eachLine, buildDigest, readEventsForDate, eventsByDay, localYMD, catchUp };

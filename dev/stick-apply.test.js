@@ -24,7 +24,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e && e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'stick-apply-'));
+const tmp = require('../consonance/tools/scratch.js').mkdtemp('stick-apply-');
 let seq = 0;
 const EXE = path.join(tmp, 'consonance.exe');       // never executed: relaunch is injected
 // Temp-dir paths, never drive-letter literals: portable-paths fails on ANY unbaselined path site, and a

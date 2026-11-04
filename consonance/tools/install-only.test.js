@@ -48,7 +48,7 @@ function test(name, fn) {
 }
 
 const REPO = path.resolve(__dirname, '..', '..');
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'installonly-'));
+const tmp = require('./scratch.js').mkdtemp('installonly-');
 let seq = 0;
 
 // A throwaway repo: only the two source directories the manifest draws from, plus the script.
@@ -357,6 +357,302 @@ test('WHICH PYTHON: a single install is still found — the sort changes the ORD
   run(repo, home, ['-Only', 'userprompt_pulse.py'], null, pyFixture(['Python312']));
   assert.ok(/[\\/]Python312[\\/]python\.exe/i.test(pulseCommand(home)),
     'one install must still be picked: ' + (pulseCommand(home) || '(not registered)'));
+});
+
+
+// ── D205: THE MERGE'S GROUP HANDLING (B's finding, p-d203-B_2026-10-01 §3). Two defects in one place, both in how a MATCHER-scoped event is merged:
+//   1. an event array that was NEW was seeded with an empty placeholder group {hooks: []} that only an UNMATCHED entry uses, so the first-ever entry on an event
+//      that carried a Matcher left that group behind: the stray { "hooks": [] } now in ~/.claude/settings.json PreToolUse;
+//   2. an UNMATCHED entry went to "the last group", so on PreToolUse, where the last group is the second reader's call_librarian|call_chair group, any future
+//      unmatched PreToolUse hook would have been silently scoped to those two tools instead of firing on every tool call.
+// The fixture adds a synthetic UNMATCHED PreToolUse entry to the throwaway copy of the script (the real manifest has none yet): hooks\session-end.js, a file the
+// throwaway repo carries, which also has its own real SessionEnd entry.
+const SR = 'mcp__consonance__call_librarian|mcp__consonance__call_chair';
+const UNMATCHED = "@{ Event = 'PreToolUse'; Rel = 'hooks\\session-end.js'; Runner = 'node' }";
+const unmatchedAfter = (b) => b.replace(/(Matcher = 'mcp__consonance__call_librarian\|mcp__consonance__call_chair' \})/, (m) => m + '\n  ' + UNMATCHED);
+const unmatchedFirst = (b) => b.replace(/(\$register = @\(\r?\n)/, (m) => m + '  ' + UNMATCHED + '\n');
+const SR_ONLY = ['-Only', 'second-reader.js,second-reader-worker.js'];
+const SR_UN = ['-Only', 'second-reader.js,second-reader-worker.js,session-end.js'];
+const groupsOf = (home) => [].concat(settings(home).hooks.PreToolUse || []);
+const cmdsIn = (g) => [].concat(g.hooks || []).map((h) => h.command);
+const leafs = (g, leaf) => cmdsIn(g).filter((c) => c.toLowerCase().replace(/\//g, '\\').endsWith('\\' + leaf + '"')).length;
+const hasHooks = (g) => [].concat(g.hooks || []).length > 0;
+
+test('D205 RED FIRST: a FRESH PreToolUse whose first entry carries a Matcher yields exactly ONE group (the matcher group), not a stray empty one', () => {
+  const repo = mkRepo(), home = mkHome();
+  const r = run(repo, home, SR_ONLY), g = groupsOf(home);
+  assert.strictEqual(g.length, 1, 'expected one group, got ' + JSON.stringify(g) + '\n' + r.out);
+  assert.strictEqual(g[0].matcher, SR); assert.strictEqual(leafs(g[0], 'second-reader.js'), 1, JSON.stringify(g[0]));
+  assert.ok(g.every(hasHooks), 'an empty group was written: ' + JSON.stringify(g));
+});
+
+test('D205 RED FIRST: an UNMATCHED PreToolUse entry registered AFTER a matcher group lands in a group with NO matcher, never in the matcher group', () => {
+  const repo = mkRepo(unmatchedAfter), home = mkHome();
+  const r = run(repo, home, SR_UN), g = groupsOf(home), sr = g.find((x) => x.matcher === SR), un = g.find((x) => !x.matcher);
+  assert.ok(sr, 'the second reader group is missing: ' + JSON.stringify(g) + '\n' + r.out);
+  assert.strictEqual(leafs(sr, 'session-end.js'), 0, 'the unmatched hook was scoped into the call_librarian|call_chair group: ' + JSON.stringify(sr));
+  assert.strictEqual(leafs(sr, 'second-reader.js'), 1);
+  assert.ok(un && leafs(un, 'session-end.js') === 1, 'the unmatched hook has no matcher-less group of its own: ' + JSON.stringify(g));
+  assert.strictEqual(g.length, 2, 'expected the matcher group and one matcher-less group: ' + JSON.stringify(g));
+});
+
+test('D205: an UNMATCHED entry registered BEFORE the matcher entry gets its matcher-less group, the matcher group stays pure, and there is no third group', () => {
+  const repo = mkRepo(unmatchedFirst), home = mkHome();
+  run(repo, home, SR_UN);
+  const g = groupsOf(home), sr = g.find((x) => x.matcher === SR), un = g.find((x) => !x.matcher);
+  assert.strictEqual(g.length, 2, JSON.stringify(g)); assert.strictEqual(leafs(sr, 'session-end.js'), 0, JSON.stringify(sr));
+  assert.strictEqual(leafs(un, 'session-end.js'), 1, JSON.stringify(un)); assert.strictEqual(leafs(un, 'second-reader.js'), 0);
+});
+
+test('D205: re-running adds nothing: the file is identical after a second run (no growth, no new empty group)', () => {
+  const repo = mkRepo(unmatchedAfter), home = mkHome();
+  run(repo, home, SR_UN);
+  const before = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r = run(repo, home, SR_UN);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), before, 'a second run changed the file:\n' + r.out);
+  assert.ok(/already correct/.test(r.out), r.out);
+});
+
+test('D205 RED FIRST: a stray EMPTY group left by the old installer (the state on D) is removed by the next run, and nothing else changes: the matcher group and every other event are identical', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, SR_ONLY);
+  const clean = settings(home), stray = JSON.parse(JSON.stringify(clean));
+  stray.hooks.PreToolUse = [{ hooks: [] }, ...stray.hooks.PreToolUse];
+  stray.hooks.SessionStart = [{ hooks: [{ type: 'command', command: 'keep me', timeout: 3 }] }];   // another event, untouched by this run
+  fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(stray, null, 2));
+  const r = run(repo, home, SR_ONLY), after = settings(home);
+  assert.deepStrictEqual(after.hooks.PreToolUse, clean.hooks.PreToolUse, 'the empty group is still there, or the matcher group changed:\n' + JSON.stringify(after.hooks.PreToolUse) + '\n' + r.out);
+  assert.deepStrictEqual(after.hooks.SessionStart, stray.hooks.SessionStart); assert.deepStrictEqual(Object.keys(after.hooks).sort(), Object.keys(stray.hooks).sort());
+  assert.ok(/PRUNE/.test(r.out), 'the run must SAY it removed an empty group:\n' + r.out);
+});
+
+test('D205: an empty group on an event this run does NOT register for is left alone (it prunes only what it touched)', () => {
+  const repo = mkRepo(), home = mkHome({ Notification: [{ hooks: [] }] });
+  run(repo, home, SR_ONLY); assert.deepStrictEqual(settings(home).hooks.Notification, [{ hooks: [] }]);
+});
+
+test('D205: a group that holds a real hook is never pruned, even one with no matcher (a hook this script does not manage stays)', () => {
+  const repo = mkRepo(), home = mkHome({ PreToolUse: [{ hooks: [{ type: 'command', command: 'somebody elses hook' }] }, { hooks: [] }] });
+  run(repo, home, SR_ONLY); const g = groupsOf(home);
+  assert.ok(g.some((x) => cmdsIn(x).includes('somebody elses hook')), 'a foreign hook was removed: ' + JSON.stringify(g));
+  assert.ok(g.every(hasHooks), JSON.stringify(g)); assert.strictEqual(g.filter((x) => x.matcher === SR).length, 1);
+});
+
+test('D205: an unmatched entry joins an EXISTING matcher-less group on its event (it does not make a second one)', () => {
+  const repo = mkRepo(unmatchedAfter), home = mkHome({ PreToolUse: [{ hooks: [{ type: 'command', command: 'foreign' }] }] });
+  run(repo, home, SR_UN);
+  const g = groupsOf(home), plain = g.filter((x) => !x.matcher);
+  assert.strictEqual(plain.length, 1, JSON.stringify(g)); assert.ok(cmdsIn(plain[0]).includes('foreign') && leafs(plain[0], 'session-end.js') === 1, JSON.stringify(plain[0]));
+  assert.strictEqual(leafs(g.find((x) => x.matcher === SR), 'session-end.js'), 0);
+});
+
+// ── D205 MUTANTS: each breaks ONE of the three fixes in the throwaway copy of the script and requires the matching defect to come back. "Applied" is checked (the
+// replaced text must have been in the script), so an anchor that moved reads as NOT APPLIED, never as a catch.
+function mutate1(from, to, then) {
+  let hit = false;
+  const fn = (b) => { const o = b.split(from).join(to); hit = hit || o !== b; return then ? then(o) : o; };
+  return { fn, applied: () => hit };
+}
+const strayGroups = (g) => g.filter((x) => !hasHooks(x)).length;
+
+// FIX 1 AND THE PRUNE OVERLAP for this symptom (a placeholder seeded and never used is an empty group, and the prune removes empty groups), so re-seeding alone is an
+// EQUIVALENT mutant (measured: the file comes out clean). It is tested with the prune switched off as well, which shows the seeding fix stands on its own.
+test('D205 MUTANT 1: the placeholder group is seeded for EVERY new event again (with the prune off, so the seeding fix is what is measured), and the fresh-PreToolUse test catches it', () => {
+  const m = mutate1('if ($groups.Count -eq 0 -and -not $e.Matcher) {', 'if ($groups.Count -eq 0) {', (o) => o.split('if ($keep.Count -lt $all.Count) {').join('if ($false) {')), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED: the anchor moved'); assert.ok(strayGroups(groupsOf(home)) > 0 || groupsOf(home).length !== 1, 'the stray empty group did not come back: ' + JSON.stringify(groupsOf(home)));
+});
+test('D205 MUTANT 2: an unmatched entry goes to the LAST group again, and the unmatched-after test catches it', () => {
+  const m = mutate1("foreach ($g in $groups) { if (-not $g.PSObject.Properties['matcher'] -or -not $g.matcher) { $target = $g } }", '$target = $groups[$groups.Count - 1]', unmatchedAfter), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_UN); assert.ok(m.applied(), 'NOT APPLIED');
+  const sr = groupsOf(home).find((x) => x.matcher === SR); assert.strictEqual(leafs(sr, 'session-end.js'), 1, 'the mis-scoping did not come back: ' + JSON.stringify(groupsOf(home)));
+});
+test('D205 MUTANT 3: no matcher-less group is made when none exists, and the unmatched-after test catches it', () => {
+  const m = mutate1('if (-not $target) { $target = [pscustomobject]@{ hooks = @() }; $groups = @($groups) + @($target) }', '', unmatchedAfter), repo = mkRepo(m.fn), home = mkHome();
+  const r = run(repo, home, SR_UN); assert.ok(m.applied(), 'NOT APPLIED');
+  const un = groupsOf(home).find((x) => !x.matcher && leafs(x, 'session-end.js') === 1); assert.ok(!un, 'a matcher-less group was still made: ' + JSON.stringify(groupsOf(home)) + r.out);
+});
+test('D205 MUTANT 4: the prune never removes anything, and the stray-group test catches it', () => {
+  const m = mutate1('if ($keep.Count -lt $all.Count) {', 'if ($false) {'), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_ONLY); const s = settings(home); s.hooks.PreToolUse = [{ hooks: [] }, ...s.hooks.PreToolUse]; fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s));
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.strictEqual(strayGroups(groupsOf(home)), 1, 'the stray group was removed anyway');
+});
+test('D205 MUTANT 5: a prune is not counted as a change, so a run that only prunes writes nothing, and the stray-group test catches it', () => {
+  const m = mutate1('if ($added -eq 0 -and $repointed -eq 0 -and $pruned -eq 0) {', 'if ($added -eq 0 -and $repointed -eq 0) {'), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_ONLY); const s = settings(home); s.hooks.PreToolUse = [{ hooks: [] }, ...s.hooks.PreToolUse]; fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s));
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.strictEqual(strayGroups(groupsOf(home)), 1, 'the stray group was removed anyway');
+});
+test('D205 MUTANT 6: the prune reaches events this run did not register for, and the untouched-event test catches it', () => {
+  const m = mutate1('@($regEntries | Where-Object { -not $_.Excluded } | ForEach-Object { $_.Event } | Select-Object -Unique)', '@($settings.hooks.PSObject.Properties.Name)'), repo = mkRepo(m.fn), home = mkHome({ Notification: [{ hooks: [] }] });
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.notDeepStrictEqual(settings(home).hooks.Notification, [{ hooks: [] }], 'the untouched event was left alone anyway');
+});
+test('D205 MUTANT 7: the prune removes a group that holds a hook, and the foreign-hook test catches it', () => {
+  const m = mutate1('$keep = @($all | Where-Object { $_.hooks -and @($_.hooks).Count -gt 0 })', '$keep = @($all | Where-Object { $false })'), repo = mkRepo(m.fn), home = mkHome({ PreToolUse: [{ hooks: [{ type: 'command', command: 'somebody elses hook' }] }, { hooks: [] }] });
+  run(repo, home, SR_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.ok(!groupsOf(home).some((x) => cmdsIn(x).includes('somebody elses hook')), 'the foreign hook survived the mutant');
+});
+
+// ── D212: THE SOURCES GATE'S REGISTRATION, on the REAL manifest (the hook files are the repo's own, copied into the throwaway repo). It must join the second reader's
+// matcher group AFTER it, on a fresh machine and on the state D is in now (the second reader alone), and change nothing else.
+const SG_ONLY = ['-Only', 'sources-gate.js'];
+const SG_BOTH = ['-Only', 'second-reader.js,second-reader-worker.js,sources-gate.js'];
+const SRSG = 'mcp__consonance__call_librarian|mcp__consonance__call_chair';   // the SECOND READER's matcher, unchanged
+const GATE3 = SRSG + '|mcp__consonance__chair_inject';                       // the SOURCES gate's (D215: + the chair's dispatch verb), so its own group
+const leafOf = (c) => (c.match(/([\w-]+\.js)"?$/) || [])[1];
+test('D212/D215: a fresh PreToolUse gets TWO matcher groups: the second reader on its two verbs, the SOURCES gate on those plus chair_inject; the gate file is installed byte-identical', () => {
+  const repo = mkRepo(), home = mkHome();
+  const r = run(repo, home, SG_BOTH), g = groupsOf(home);
+  assert.strictEqual(g.length, 2, JSON.stringify(g) + r.out);
+  assert.strictEqual(g[0].matcher, SRSG); assert.deepStrictEqual(cmdsIn(g[0]).map(leafOf), ['second-reader.js'], JSON.stringify(g[0]));
+  assert.strictEqual(g[1].matcher, GATE3); assert.deepStrictEqual(cmdsIn(g[1]).map(leafOf), ['sources-gate.js'], JSON.stringify(g[1]));
+  const found = []; const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (e.name === 'sources-gate.js') found.push(p); } };
+  walk(path.join(home, '.claude'));
+  assert.strictEqual(found.length, 1, 'installed copies: ' + found.join(', '));
+  assert.strictEqual(fs.readFileSync(found[0], 'utf8'), fs.readFileSync(path.join(REPO, 'consonance', 'hooks', 'sources-gate.js'), 'utf8'));
+});
+test('D212/D215: on the state D had before the gate (the second reader alone) the gate gets its OWN group after it, the second reader\'s group is untouched, and every other event and setting is identical', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, SR_ONLY);
+  const s = settings(home); s.hooks.SessionStart = [{ hooks: [{ type: 'command', command: 'keep me', timeout: 3 }] }]; s.env = { X: '1' };
+  fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s, null, 2));
+  const before = settings(home), r = run(repo, home, SG_ONLY), after = settings(home);
+  assert.strictEqual(groupsOf(home).length, 2, JSON.stringify(groupsOf(home)) + r.out);
+  assert.deepStrictEqual(groupsOf(home)[0], before.hooks.PreToolUse[0], 'the second reader\'s group changed');
+  assert.strictEqual(groupsOf(home)[1].matcher, GATE3); assert.deepStrictEqual(cmdsIn(groupsOf(home)[1]).map(leafOf), ['sources-gate.js']);
+  const rest = (x) => { const y = JSON.parse(JSON.stringify(x)); delete y.hooks.PreToolUse; return y; };
+  assert.deepStrictEqual(rest(after), rest(before), 'something other than PreToolUse changed');
+});
+test('D212: re-running the gate install changes nothing (the file is byte-identical, "already correct")', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, SG_BOTH);
+  const before = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r = run(repo, home, SG_BOTH);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), before, r.out); assert.ok(/already correct/.test(r.out), r.out);
+});
+
+// ── D215: THE MATCHER MOVE. The SOURCES gate was registered (D212) in the second reader's group, on the two hand-back verbs; D215 widens ITS matcher to add chair_inject. The
+// installer used to read a hook found under another matcher as "already correct" and leave it there, so the widened matcher would never have reached D. It now MOVES the hook
+// to the group of its own matcher (REMATCH), leaves everything it does not manage where it is, and prunes the group it empties.
+function d212State(repo, home, extraInOldGroup) {
+  run(repo, home, SG_BOTH);                                           // learn the real command strings
+  const s = settings(home), sr = s.hooks.PreToolUse.find((x) => x.matcher === SRSG), gate = s.hooks.PreToolUse.find((x) => x.matcher === GATE3).hooks[0];
+  s.hooks.PreToolUse = [{ matcher: SRSG, hooks: [...sr.hooks, gate, ...(extraInOldGroup || [])] }];   // the shape D212 left on D: the gate INSIDE the second reader's group
+  s.hooks.SessionStart = [{ hooks: [{ type: 'command', command: 'keep me', timeout: 3 }] }]; s.env = { X: '1' };
+  fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s, null, 2));
+  return settings(home);
+}
+test('D215: the gate registered in the second reader\'s group (the D212 state) is MOVED to its own group on the widened matcher: said as REMATCH, the second reader untouched, nothing else changed', () => {
+  const repo = mkRepo(), home = mkHome(), before = d212State(repo, home);
+  const r = run(repo, home, SG_ONLY), g = groupsOf(home), after = settings(home);
+  assert.ok(/REMATCH\s+PreToolUse\s+sources-gate\.js/.test(r.out) && /now matcher: .*chair_inject/.test(r.out), r.out);
+  assert.strictEqual(g.length, 2, JSON.stringify(g));
+  assert.strictEqual(g[0].matcher, SRSG); assert.deepStrictEqual(cmdsIn(g[0]).map(leafOf), ['second-reader.js'], 'the gate was left in the second reader\'s group (it would fire on two verbs only)');
+  assert.strictEqual(g[1].matcher, GATE3); assert.deepStrictEqual(cmdsIn(g[1]).map(leafOf), ['sources-gate.js']);
+  assert.strictEqual(cmdsIn(g[0]).concat(cmdsIn(g[1])).filter((c) => /sources-gate\.js/.test(c)).length, 1, 'the gate is registered twice');
+  assert.deepStrictEqual(g[0].hooks[0], before.hooks.PreToolUse[0].hooks[0], 'the second reader entry changed');
+  const rest = (x) => { const y = JSON.parse(JSON.stringify(x)); delete y.hooks.PreToolUse; return y; };
+  assert.deepStrictEqual(rest(after), rest(before), 'something other than PreToolUse changed');
+  assert.ok(g.every(hasHooks), 'an empty group was left behind');
+});
+test('D215: the move is idempotent: a second run says "already correct" and changes nothing', () => {
+  const repo = mkRepo(), home = mkHome(); d212State(repo, home); run(repo, home, SG_ONLY);
+  const before = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r = run(repo, home, SG_ONLY);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), before, r.out); assert.ok(!/REMATCH/.test(r.out), r.out);
+});
+test('D215: a hook the installer does NOT manage that sits in the old group stays exactly where it is when the gate is moved out', () => {
+  const repo = mkRepo(), home = mkHome(), foreign = { type: 'command', command: 'somebody elses hook', timeout: 5 };
+  d212State(repo, home, [foreign]); run(repo, home, SG_ONLY);
+  const g = groupsOf(home), old = g.find((x) => x.matcher === SRSG);
+  assert.ok(old && cmdsIn(old).includes('somebody elses hook'), 'a foreign hook was moved or removed: ' + JSON.stringify(g));
+  assert.ok(!cmdsIn(old).some((c) => /sources-gate\.js/.test(c)), 'the gate is still in the old group');
+});
+test('D215: a gate registered with NO matcher (hand-edited) is moved to its matcher group, and the matcher-less group it empties is pruned', () => {
+  const repo = mkRepo(), home = mkHome(); run(repo, home, SG_BOTH);
+  const s = settings(home), gate = s.hooks.PreToolUse.find((x) => x.matcher === GATE3).hooks[0];
+  s.hooks.PreToolUse = [s.hooks.PreToolUse.find((x) => x.matcher === SRSG), { hooks: [gate] }];
+  fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s, null, 2));
+  const r = run(repo, home, SG_ONLY), g = groupsOf(home);
+  assert.ok(/REMATCH/.test(r.out) && /\(no matcher\)/.test(r.out), r.out);
+  assert.strictEqual(g.length, 2, JSON.stringify(g)); assert.ok(g.every(hasHooks)); assert.strictEqual(g[1].matcher, GATE3);
+});
+test('D215: an entry WITHOUT a matcher is never moved (the rule is for matcher-scoped hooks only): re-running the unmatched-entry fixtures is unchanged', () => {
+  const repo = mkRepo(unmatchedAfter), home = mkHome();
+  run(repo, home, SR_UN); const before = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r = run(repo, home, SR_UN);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), before, r.out); assert.ok(!/REMATCH/.test(r.out), r.out);
+});
+
+// ── D215 MUTANTS of the matcher move: each breaks ONE part of it in the throwaway copy of the script and requires the matching defect to come back ("applied" is asserted).
+test('D215 MUTANT 1: the move is switched off (a hook found under another matcher is "already correct" again), and the migration test catches it', () => {
+  const m = mutate1('if ($e.Matcher -and -not $inSlot) {', 'if ($false) {'), repo = mkRepo(m.fn), home = mkHome(); d212State(repo, home);
+  run(repo, home, SG_ONLY); assert.ok(m.applied(), 'NOT APPLIED: the anchor moved');
+  const old = groupsOf(home).find((x) => x.matcher === SRSG); assert.ok(cmdsIn(old).some((c) => /sources-gate\.js/.test(c)), 'the gate was moved anyway');
+});
+test('D215 MUTANT 2: a hook is dropped from its group and never kept, and the second reader goes missing', () => {
+  const m = mutate1('      $keep += $h\n', '', null), repo = mkRepo(), home = mkHome(); d212State(repo, home);   // the state is built by the UNMUTATED script; only the run under test is mutated
+  fs.writeFileSync(repo.script, m.fn(fs.readFileSync(repo.script, 'utf8')));
+  run(repo, home, SG_ONLY); assert.ok(m.applied(), 'NOT APPLIED');
+  const all = groupsOf(home).flatMap(cmdsIn); assert.ok(!all.some((c) => /second-reader\.js/.test(c)), 'the second reader survived the mutant');
+});
+test('D215 MUTANT 3: the hook is also moved out of its OWN matcher group, so a second run is never "already correct", and the idempotence test catches it', () => {
+  const m = mutate1('if ($e.Matcher -and -not $inSlot) {', 'if ($e.Matcher) {'), repo = mkRepo(m.fn), home = mkHome(); d212State(repo, home); run(repo, home, SG_ONLY);
+  const r = run(repo, home, SG_ONLY); assert.ok(m.applied(), 'NOT APPLIED'); assert.ok(/REMATCH/.test(r.out), 'a hook already in the right group was moved again');
+});
+test('D215 MUTANT 4: the move reaches entries WITHOUT a matcher, and the unmatched-entry fixture catches it', () => {
+  const m = mutate1('if ($e.Matcher -and -not $inSlot) {', 'if (-not $inSlot) {', unmatchedAfter), repo = mkRepo(m.fn), home = mkHome();
+  run(repo, home, SR_UN); const r = run(repo, home, SR_UN); assert.ok(m.applied(), 'NOT APPLIED'); assert.ok(/REMATCH/.test(r.out), 'an unmatched entry was moved');
+});
+
+// ── D218: THE REPLY SLOT'S REGISTRATION, on the REAL manifest. A Stop hook with no matcher, appended to the Stop event; every other Stop hook (and every other event) must stay byte-identical.
+const RS_ONLY = ['-Only', 'reply-slot.js'];
+const RS_BOTH = ['-Only', 'reply-slot.js,sources-gate.js'];
+const stopCmds = (home) => [].concat((settings(home).hooks || {}).Stop || []).flatMap((g) => cmdsIn(g));
+test('D218: on a home that already has Stop hooks, the reply slot is APPENDED to Stop once, every other Stop hook and every other event is byte-identical, and a second run changes nothing', () => {
+  const repo = mkRepo(), foreign = [{ hooks: [{ type: 'command', command: 'stop hook one', timeout: 3 }, { type: 'command', command: 'stop hook two', timeout: 4 }] }, { hooks: [{ type: 'command', command: 'stop hook three' }] }];
+  const home = mkHome({ Stop: foreign, SessionStart: [{ hooks: [{ type: 'command', command: 'keep me', timeout: 3 }] }] });
+  const before = settings(home), r = run(repo, home, RS_ONLY), after = settings(home);
+  assert.strictEqual(stopCmds(home).filter((c) => /reply-slot\.js/.test(c)).length, 1, r.out);
+  const flatAfter = [].concat(after.hooks.Stop).flatMap((g) => g.hooks).filter((h) => !/reply-slot\.js/.test(h.command));
+  assert.deepStrictEqual(flatAfter, [].concat(before.hooks.Stop).flatMap((g) => g.hooks), 'an existing Stop hook changed or moved');
+  assert.ok([].concat(after.hooks.Stop).every((g) => !g.matcher), 'the reply slot got a matcher');
+  const rest = (x) => { const y = JSON.parse(JSON.stringify(x)); delete y.hooks.Stop; return y; };
+  assert.deepStrictEqual(rest(after), rest(before), 'something other than Stop changed');
+  const text = fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), r2 = run(repo, home, RS_ONLY);
+  assert.strictEqual(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'), text, r2.out); assert.ok(/already correct/.test(r2.out), r2.out);
+});
+test('D218: a fresh machine gets reply-slot.js and sources-gate.js in the SAME directory (the hook requires the gate beside it), each byte-identical to the repo\'s', () => {
+  const repo = mkRepo(), home = mkHome(); run(repo, home, RS_BOTH);
+  const found = {}; const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (e.name === 'reply-slot.js' || e.name === 'sources-gate.js') (found[e.name] = found[e.name] || []).push(p); } };
+  walk(path.join(home, '.claude'));
+  assert.strictEqual((found['reply-slot.js'] || []).length, 1); assert.strictEqual((found['sources-gate.js'] || []).length, 1);
+  assert.strictEqual(path.dirname(found['reply-slot.js'][0]), path.dirname(found['sources-gate.js'][0]), 'the two are not side by side');
+  for (const n of ['reply-slot.js', 'sources-gate.js']) assert.strictEqual(fs.readFileSync(found[n][0], 'utf8'), fs.readFileSync(path.join(REPO, 'consonance', 'hooks', n), 'utf8'), n);
+});
+
+// D454 part 3 (pane E, P's cold read 1C.6 / 1B.3): hooks/README says which files are "not in the installer's list". That sentence named three
+// (and jev-flags) while install.ps1's $unmanaged had five rows, claim-check added since 0.1.1. The README now follows the list, and this row holds it there.
+test('D454: hooks/README names exactly the files of install.ps1 $unmanaged as not in the installer list, and says how many', () => {
+  const repo = path.resolve(__dirname, '..', '..');
+  const ps = fs.readFileSync(path.join(repo, 'dev', 'shell', 'install.ps1'), 'utf8');
+  const block = ps.slice(ps.indexOf('$unmanaged = @('), ps.indexOf('\n)', ps.indexOf('$unmanaged = @(')));
+  const listed = [...block.matchAll(/Src = '[^']*\\([^\\']+\.js)'/g)].map((m) => m[1]).sort();
+  assert.ok(listed.length >= 1, 'the $unmanaged list was read');
+  const readme = fs.readFileSync(path.join(repo, 'consonance', 'hooks', 'README.md'), 'utf8');
+  const at = readme.indexOf('As the script stands'), end = readme.indexOf('is a library', at);
+  assert.ok(at >= 0 && end > at, 'the sentence is in the README');
+  const sentence = readme.slice(at, end);
+  const named = [...new Set([...sentence.matchAll(/`([a-z0-9-]+\.js)`/g)].map((m) => m[1]))].filter((n) => n !== 'blind.js').sort();
+  assert.deepStrictEqual(named, listed, 'the README names the $unmanaged files, no more and no fewer');
+  const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  assert.match(sentence, new RegExp('\\b' + words[listed.length] + '\\b'), 'and gives their number, ' + words[listed.length]);
+});
+
+// D631 (b): the second reader's same-turn NOTE waits for the worker's row, which takes 7.1 s at the median and 10.3 s at p90 (the live ledger,
+// 2026-11-03), so it cannot live under the installer's fixed 10 s. An entry's own Timeout is written instead; every other entry keeps 10.
+test('D631: an entry with its own Timeout is registered with it (the second reader\'s note, PostToolUse, 30 s); an entry without one keeps 10', () => {
+  const repo = mkRepo(), home = mkHome();
+  const r = run(repo, home, ['-Only', 'second-reader.js,second-reader-worker.js,second-reader-note.js']);
+  const post = [].concat(settings(home).hooks.PostToolUse || []), g = post.find((x) => x.matcher === 'mcp__consonance__call_chair');   // D631, amended: the note is on call_chair only
+  assert.ok(g, 'no PostToolUse group on call_chair: ' + JSON.stringify(post) + '\n' + r.out);
+  const note = [].concat(g.hooks).find((h) => /second-reader-note\.js"$/.test(h.command.replace(/\//g, '\\')));
+  assert.ok(note, JSON.stringify(g)); assert.strictEqual(note.timeout, 30);
+  const pre = groupsOf(home).find((x) => x.matcher === SR), sr = [].concat(pre.hooks).find((h) => /second-reader\.js"$/.test(h.command));
+  assert.strictEqual(sr.timeout, 10, 'an entry with no Timeout changed');
 });
 
 console.log(`\n${pass} passed, ${fail} failed`);

@@ -1,0 +1,8 @@
+not ok 24 - list: the preview's material and texture list EQUALS the kn5's # TODO the preview does not draw the start and grid paint (t180b_paint, PAINT_* meshes) or the closing seam the export builds (D177 §3)
+not ok 46 - preview: a frame draws the grid and the head marker as lines (the grid only with ground: true)
+not ok 47 - preview: by default there is no ground grid, only the track and the head marker
+not ok 203 - SIGIL's 3D frame is the same, call for call, with its tokens applied; a skin's tokens change it
+# tests 209
+# pass 205
+# fail 3
+# todo 1

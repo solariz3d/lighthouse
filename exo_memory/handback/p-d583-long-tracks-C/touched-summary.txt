@@ -1,0 +1,6 @@
+ℹ fail 1
+ℹ pass 413
+ℹ skipped 8
+ℹ tests 422
+✖ failing tests:
+✖ row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms) (14942.204ms)

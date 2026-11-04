@@ -1,0 +1,55 @@
+=== b6969da
+    1.5 s menubar ready errors [33m0[39m js heap {"usedMB":18.1,"totalMB":28,"limitMB":4192}
+    7.3 s opened: 44 pieces · 27,592 m · closed loop | ELYSIUM · closed loop | js heap {"usedMB":1327.5,"totalMB":1389.9,"limitMB":4192}
+  165.9 s preview settled: ELYSIUM · closed loop | js heap {"usedMB":1339,"totalMB":1372.7,"limitMB":4192}
+  165.9 s export-like buttons: ["Export…","Test export (unfinished)…","Export layouts…","See it in Assetto","Assetto Corsa folder…","Export to Assetto Corsa"]
+  165.9 s before the press: js heap {"usedMB":1339,"totalMB":1372.7,"limitMB":4192}
+  165.9 s pressed Export to Assetto Corsa
+  167.9 s page busy (main thread blocked)
+  208.3 s page busy (main thread blocked)
+  248.7 s page busy (main thread blocked)
+  289.0 s page busy (main thread blocked)
+  329.4 s page busy (main thread blocked)
+  369.8 s page busy (main thread blocked)
+  410.1 s page busy (main thread blocked)
+  450.3 s page busy (main thread blocked)
+  490.7 s page busy (main thread blocked)
+  531.1 s page busy (main thread blocked)
+  571.4 s page busy (main thread blocked)
+  611.7 s page busy (main thread blocked)
+  652.0 s page busy (main thread blocked)
+  692.3 s page busy (main thread blocked)
+  732.6 s page busy (main thread blocked)
+  773.0 s page busy (main thread blocked)
+  813.3 s page busy (main thread blocked)
+  853.6 s page busy (main thread blocked)
+  893.9 s page busy (main thread blocked)
+exit [1mnull[22m SIGTERM
+=== 6261a22
+    1.4 s menubar ready errors [33m0[39m js heap {"usedMB":17,"totalMB":26.7,"limitMB":4192}
+    8.2 s opened: 44 pieces · 27,592 m · closed loop | ELYSIUM · closed loop | js heap {"usedMB":1358.6,"totalMB":1402.6,"limitMB":4192}
+  166.2 s preview settled: ELYSIUM · closed loop | js heap {"usedMB":1297.2,"totalMB":1436.4,"limitMB":4192}
+  166.2 s export-like buttons: ["Export…","Test export (unfinished)…","Export layouts…","See it in Assetto","Assetto Corsa folder…","Export to Assetto Corsa"]
+  166.2 s before the press: js heap {"usedMB":1297.2,"totalMB":1436.4,"limitMB":4192}
+  166.2 s pressed Export to Assetto Corsa
+  168.2 s page busy (main thread blocked)
+  208.5 s page busy (main thread blocked)
+  248.7 s page busy (main thread blocked)
+  289.1 s page busy (main thread blocked)
+  329.5 s page busy (main thread blocked)
+  369.9 s page busy (main thread blocked)
+  410.2 s page busy (main thread blocked)
+  450.6 s page busy (main thread blocked)
+  490.9 s page busy (main thread blocked)
+  531.2 s page busy (main thread blocked)
+  571.5 s page busy (main thread blocked)
+  611.8 s page busy (main thread blocked)
+  652.1 s page busy (main thread blocked)
+  692.5 s page busy (main thread blocked)
+  732.7 s page busy (main thread blocked)
+  773.1 s page busy (main thread blocked)
+  813.4 s page busy (main thread blocked)
+  853.8 s page busy (main thread blocked)
+  894.2 s page busy (main thread blocked)
+exit [1mnull[22m SIGTERM
+exit 0

@@ -1,0 +1,431 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 1ebed17..db7f262 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -5,6 +5,13 @@ All notable changes to this project are recorded here. The format follows
+ 
+ ## [Unreleased]
+ 
++### Changed
++- **The bank that Finish adds is now smooth all the way through its joints.** When Finish closes a lap it banks the turns it lays, and 0.4.20 left a small kink in that bank where one piece met the next and where the closer met the start line: the lean itself was continuous, but how fast it was changing was not, which the outer wheels feel as a tap. The added bank now flows through every joint without that step, with the same limits on how fast and how suddenly it may roll, and the same refusal when a closer would lean out of a turn; a turn keeps its lean right to its exit, and the last of the roll-off now finishes on the first stretch of the straight after it instead of exactly at the joint. Close's banking of a whole lap gets the same. Saved tracks are not changed; Track ▸ Smooth ramps is for those.
++
++### Fixed
++- **Closing a lap whose start is a flat cup takes the start piece into account again.** On such a track (TEST 10 among them) the Close button's first try, which lets the start piece and the last piece share the bend, was quietly refused twice over: once on a rounding whisker below zero in the cup, once because keeping the cup's curvature smooth across the start line would have pushed the cup below zero. The whisker now counts as zero, and where the cup cannot stay smooth across the start line without going below zero the close keeps it merely continuous there and says so in its report, the way Finish already does for a cup that must come home over a short closer.
++- **A track whose edge was still rising or falling at its end can be extended again.** On a track from a file (or after a cut) whose last piece ends with its edge angle still changing, Extend refused every new piece with a message about the joint instead of adding it. The new piece now carries the edge on as it was going; only a piece that truly cannot stay inside the edge's limits is refused, and then it says why.
++
+ ## [0.4.20] - 2026-10-25
+ 
+ ### Added
+diff --git a/app/test/core-close-mutation.test.js b/app/test/core-close-mutation.test.js
+index b74d9c1..4326df8 100644
+--- a/app/test/core-close-mutation.test.js
++++ b/app/test/core-close-mutation.test.js
+@@ -39,6 +39,13 @@ const MUTATIONS = [
+   // D459 3c: the closure's curvature rows (close.js): the seam's, and the moved joints'
+   { id: 'Q8 the seam gets no curvature row (the closure meets value and slope only, as before 3c)', file: 'src/core/close.js', from: "J.push(valueRow(ch, 'curv')); }   // D459 3c: the seam's curvature rows", to: "void 0; }   // D459 3c: the seam's curvature rows", tests: [C2], caughtBy: 'row 9: the closure is C2' },
+   { id: 'Q9 the joints the close moves get no curvature row (only the seam)', file: 'src/core/close.js', from: 'for (const [a, b, ch] of c2Pairs) { const row = new Float64Array(N); curvRow(ch, a, b, row); J.push(row); }', to: 'for (const [a, b, ch] of []) { const row = new Float64Array(N); curvRow(ch, a, b, row); J.push(row); }', tests: [C2], caughtBy: 'row 9: the closure is C2' },
++  // D468 (P): the bank plan's curvature rows (finish.js bankPlan): the added bank is C2 at every joint, 0 where the plan meets road outside it
++  { id: 'Q10 the bank plan\'s curvature rows are not projected', file: 'src/core/finish.js', from: 'for (const r of rows) {', to: 'for (const r of []) {', tests: [C2], caughtBy: 'row 10: through Finish and through bankLap' },
++  { id: 'Q11 at a relaxed joint the later piece\'s first two points are not folded into the row', file: 'src/core/finish.js', from: 'wA[2] += wB[0] + wB[1] * (1 + g1 / h1); wA[1] -= wB[1] * (g1 / h1);', to: 'void 0;', tests: [C2], caughtBy: 'row 10: through Finish and through bankLap' },
++  { id: 'Q12 no row where the plan ends (the window\'s end, the seam)', file: 'src/core/finish.js', from: 'if (!nextLinked) rows.push(', to: 'if (false) rows.push(', tests: [C2], caughtBy: 'row 10: through Finish and through bankLap' },
++  // D469 (P): the cup at a window's seam: the adapter's tolerance on the unrounded solve, and the cup rows' fallback
++  { id: 'Q13 the adapter refuses a cup inside the quantum of 0 (the unrounded solve\'s −1e-15)', file: 'src/core/adapter.js', from: 'if (!Number.isFinite(c) || c < -CUP_TOL) throw', to: 'if (!Number.isFinite(c) || c < 0) throw', tests: [LOCAL], caughtBy: 'row 6: a window on a lap whose cup is flat' },
++  { id: 'Q14 the cup\'s curvature row is kept where it takes the cup below 0 (no fallback)', file: 'src/core/close.js', from: 'if (e instanceof D.CoreError && e.code === \'BAD_CUP\') return closeOnce(', to: 'if (false) return closeOnce(', tests: [LOCAL], caughtBy: 'row 7: the seam\'s cup curvature rows respect c ≥ 0' },
+   // D459: the closer brings the cup home by the C2 quintic where the closer is long enough for its peak rate (finish.js cupHome)
+   { id: "Q5 the closer's cup fade is linear whatever its length (its curvature steps at the user's last joint and at the seam)", file: 'src/core/finish.js', from: 'const ease = c2 ? smoother : (x) => Math.max(0, Math.min(1, x));', to: 'const ease = (x) => Math.max(0, Math.min(1, x));', tests: [C2], caughtBy: 'row 6: through Close' },
+   { id: 'N2 a route that is only a straight is not laid under 10 m', file: 'src/core/finish.js', from: 'else if (alone && r.straightM >= MIN_STRAIGHT_ALONE_M)', to: 'else if (false)', tests: [FIN], caughtBy: 'row 17: an end straight behind the start' },
+diff --git a/docs/CONTINUITY.md b/docs/CONTINUITY.md
+index cb7e89d..2acc999 100644
+--- a/docs/CONTINUITY.md
++++ b/docs/CONTINUITY.md
+@@ -42,8 +42,8 @@ surface on the core to 0.5 mm). The bump was never a gap or a step in the road:
+ | `extendTurnBy`, `extendSharp` | kh (and kv for a climb corner) | the Bloss blend up and down (a symmetric ease), or a 4 m ramp | C1 at the piece's ends; the rate is 0 there | `src/core/turnby.js`, `sharp.js` |
+ | Close: the cup home (`cupHome`) | c, over the closer's new road | the C2 quintic where its peak, 1.875·Δ/L, stays under 0.021 °/m; the linear fade where it would not (the slowest a closer of that length allows), as D438 built it | C2 at the user's last joint and at the start line under the quintic (0.00001–0.00002 °/m² read); C1 under the linear fade (the stored spline bends over one span to meet the line: ≤ 2 × 0.021 / span, 0.0008–0.0013 °/m² read) | `src/core/finish.js` |
+ | Close: the roll straight (`finishToStart`) | φ | laid by `extend`, so the quintic; sized so the checker's 20 m-chord roll rate stays under amber, from a first guess at 1/1.875 of it | C2 where it meets the user's last piece. Its exit joint is bankLap's | `src/core/finish.js` |
+-| Close: the closure itself (`close.js close`, the local or whole-lap bend that makes the end meet the start) | every channel of the pieces it moves, and the seam | the closure system's rows pin each channel's VALUE and SLOPE at the seam to p1's and keep the joints it moves C1; D459 3c adds a CURVATURE row for each of φ, c, e, er at the seam and across every joint the close moves (a free control point on either side), linear in the first and last three control points by the closed forms of continuity.js, so the least-norm step meets them like the others | **C2** at the seam and at every moved joint for the Close button's bends and any plain close (before 3c: C1 only, 19 of 20 closed sweep laps stepped at the seam by 0.002–0.34 °/m²; after: 0 of 40). Finish asks for the edges' rows only (`finish.js FINISH_C2`): its bank plan owns the bank at the closer's joints and the seam (the row above, D447's C1 bound; a curvature row there moved the plan's points 0.46° off their share), and cupHome owns the cup (C2 by its quintic where the rate allows; a row steepened the linear fallback past the rate it reports). A window whose pieces have too few free points for the extra rows is refused by name, as a too-small window always was | `src/core/close.js` |
+-| Close: the bank plan (`bankLap`, `bankPlan`) | φ on the lap's curves | the plan's own rate and acceleration bounds on the control polygon | C1 by construction; the curvature step at a joint is bounded by BANK_ACCEL, 2e-4 rad/m² = 0.0115 °/m² (D447's ruling: 21.7 °/100 m at the wheel, the user's own joints' 90th percentile) | `src/core/finish.js` |
++| Close: the closure itself (`close.js close`, the local or whole-lap bend that makes the end meet the start) | every channel of the pieces it moves, and the seam | the closure system's rows pin each channel's VALUE and SLOPE at the seam to p1's and keep the joints it moves C1; D459 3c adds a CURVATURE row for each of φ, c, e, er at the seam and across every joint the close moves (a free control point on either side), linear in the first and last three control points by the closed forms of continuity.js, so the least-norm step meets them like the others | **C2** at the seam and at every moved joint for the Close button's bends and any plain close (before 3c: C1 only, 19 of 20 closed sweep laps stepped at the seam by 0.002–0.34 °/m²; after: 0 of 40). Finish asks for the edges' rows only (`finish.js FINISH_C2`): its bank plan owns the bank at the closer's joints and the seam (the row below: C2 by its own rows since D468; a closure row there moved the plan's points 0.46° off their share), and cupHome owns the cup (C2 by its quintic where the rate allows; a row steepened the linear fallback past the rate it reports). A window whose pieces have too few free points for the extra rows is refused by name, as a too-small window always was. D469: the cup's row respects c ≥ 0: where it would take a flat cup at p1 below 0 (a fade that ends C1 on the other side, a file from before D459) the row is left out, the cup is C1 at the seam, and the report says so, as cupHome falls back to its straight fade | `src/core/close.js` |
++| Close: the bank plan (`bankLap`, `bankPlan`) | φ on the lap's curves | the plan's own rate and acceleration bounds on the control polygon, and (D468) a curvature-equality row per joint, all projected onto in the same sweeps; 0 curvature where the plan meets road outside it (the window's ends, the seam, his own banked curves); no point of a steady share past it (a box; none where the share rings along a turn's tail, none on the three points nearest a joint); the tail of a roll-off completes on the next straight's third control point (about 1.5°), so a corner keeps its lean to its exit (D447 §10's table) | **C2** at every joint of the added bank (before D468: C1, a step of exactly BANK_ACCEL = 0.0115 °/m² at the closer's first joint and the seam of every Finish and at every relaxed joint of a banked lap). The rate and acceleration bounds stand (D447: BANK_ROLL, BANK_ACCEL) | `src/core/finish.js` |
+ | Sculpt: Grab's lift | h, l | Perlin's smootherstep falloff on the control points the window covers | the lift is C2 along s by its falloff; its joints are the pieces' (C1 continued) | `src/core/sculpt.js` |
+ 
+ The rule for a new ramp maker: if wheels ride on the channel, blend it with `smoother` and pin its ends with `c2Ends` (or lay it through `extend`, which
+@@ -84,5 +84,5 @@ sweep's C2 part (`test/sweep_c2.test.js`, C's generator) runs `c2Breaks` on ever
+ 0.4.19, green with the quintic) and the seam and the joints Close moved (red before the closure's curvature rows, green with them).
+ 
+ What would still be missed: a channel this rule does not cover (the route's kh and kv ramps keep their Bloss ends, and a C3 step of the path is
+-felt as a jerk in the turn, not as a vertical step under the wheels), a bank laid by the plan to its own C1 bound, and anything the mesh does between
+-two stations (that is C's instrument, the fin guard). Each of those is named here so the next reader starts from the list, not from the track.
++felt as a jerk in the turn, not as a vertical step under the wheels), and anything the mesh does between two stations (that is C's instrument, the fin
++guard). The bank plan's own joints were on this list until D468 (`test/core_joint_c2.test.js` row 10 reads them now, through Finish and through bankLap). Each of those is named here so the next reader starts from the list, not from the track.
+diff --git a/src/core/adapter.js b/src/core/adapter.js
+index d60aa69..2daa35c 100644
+--- a/src/core/adapter.js
++++ b/src/core/adapter.js
+@@ -67,11 +67,15 @@ function profileMade(family, w, r) {
+   };
+ }
+ 
++const CUP_TOL = 0.5 * 10 ** -D.DEC.c;   // D469: half the cup's stored quantum (DEC.c decimals): what rounds to 0 is 0
+ /** The CUP cross-section at width w (m) and edge angle c (degrees), ref 09 §9: ψ at the four quarters of each half-width is c·Fᵢ/F_edge, both sides. */
+ function cupProfile(family, w, c) {
+   if (!Object.prototype.hasOwnProperty.call(FLOORS, family)) throw new D.CoreError('BAD_FAMILY', 'family "' + family + '"');
+   if (!(w > 0)) throw new D.CoreError('BAD_WIDTH', 'the road\'s width must be positive, got ' + w + ' m');
+-  if (!Number.isFinite(c) || c < 0) throw new D.CoreError('BAD_CUP', 'the cup must be a number of degrees from 0, got ' + c);
++  // D469 (P; C's D467 review §5): a close measures its path on the UNROUNDED solve, where a flat cup's control point comes back as −1e-15, and this refused it
++  // (TEST 10: the start try [p1, p23] fell through to [p5, p23]). A value within half the stored quantum of 0 is 0; a stored document's own check is document.js's
++  if (!Number.isFinite(c) || c < -CUP_TOL) throw new D.CoreError('BAD_CUP', 'the cup must be a number of degrees from 0, got ' + c);
++  if (c < 0) c = 0;
+   const F = FLOORS[family], side = AT.map((f, i) => [(f * w) / 2, ((c * F[i]) / F[F.length - 1]) * DEG]);
+   return {
+     font: family,
+diff --git a/src/core/close.js b/src/core/close.js
+index 155ea3d..13ebd58 100644
+--- a/src/core/close.js
++++ b/src/core/close.js
+@@ -302,6 +302,21 @@ function residualOf(doc, { cache = null, c2Pairs = [], c2Channels = CN.C2_CHANNE
+  * report "NOT CLOSED …"), and still returns its best document with closed false, so nothing silently claims a closure.
+  */
+ function close(doc, opts = {}) {
++  // D469 (P; C's D467 review §5): THE CUP'S CURVATURE ROWS RESPECT c ≥ 0. Where the seam's cup row (3c) meets a flat cup at p1 against a fade that ends C1 on the
++  // other side (TEST 10's p23: 15 15 0 0, laid before D459), the least-norm step bends p1's cup BELOW 0 to match the curvature (−2.0° on TEST 10), and the document
++  // refuses the step as it is measured (residualOf → toPath → checkDoc: BAD_CUP). The cup cannot go below 0, so the row is left out and the cup stays C1 at the
++  // seam, the way cupHome falls back to its straight fade where the quintic would be too fast; the other channels keep their rows, and the report says so. Once:
++  // the second pass has no cup row to drop, and whatever it refuses is the close's own
++  const c2Asked = opts.c2Channels === undefined ? CN.C2_CHANNELS : opts.c2Channels;
++  if (!opts.cupRowLeftOut && c2Asked.includes('c')) {
++    try { return closeOnce(doc, opts); } catch (e) {
++      if (e instanceof D.CoreError && e.code === 'BAD_CUP') return closeOnce(doc, { ...opts, c2Channels: c2Asked.filter((ch) => ch !== 'c'), cupRowLeftOut: true });
++      throw e;
++    }
++  }
++  return closeOnce(doc, opts);
++}
++function closeOnce(doc, opts = {}) {
+   D.checkDoc(doc); doc = D.fillCup(doc);
+   checkSeamKinds(doc);
+   // D243, D258: a track WITH JUMPS closes like any other (the landing's pose is the user's and stays as it is; see parameters, positionJacobian and netRows).
+@@ -371,7 +386,8 @@ function close(doc, opts = {}) {
+     x = xn; work = wn; m = mn;
+   }
+   // what is STORED is quantised (README): measure the quantised document, and report that
+-  const stored = apply(doc, expand, x, true, keep), ms = residual(stored, { cache, c2Pairs, c2Channels }), converged = done(m) && ms.gapM < 1e-3;   // the closed path's own bar (src/geom/path.js closeTol 1e-3 m): a stored gap past it was reported closed (it was 0.01) and then could not be built (2026-10-14, 1.65 mm on ELYSIUM)
++  const stored = apply(doc, expand, x, true, keep), ms = residual(stored, { cache, c2Pairs, c2Channels }), converged = done(m) && ms.gapM < 1e-3;
++  const cupNote = opts.cupRowLeftOut ? "; the cup's curvature row at the seam was left out (it would have taken the cup below 0), so the cup is C1 there" : '';   // the closed path's own bar (src/geom/path.js closeTol 1e-3 m): a stored gap past it was reported closed (it was 0.01) and then could not be built (2026-10-14, 1.65 mm on ELYSIUM)
+   // D242: a local close that does not close is a REFUSAL by name, never a best try handed back: the window could not do it, and nothing outside it may help
+   if (local && !converged) throw refuse(`it gets no closer than ${ms.gapM.toFixed(3)} m (tangent ${ms.tangentRad.toExponential(1)} rad) in ${it} step(s)`);
+   let out;
+@@ -395,7 +411,7 @@ function close(doc, opts = {}) {
+   return { doc: out, converged, iterations: it, turns: ms.turns, gapM: ms.gapM, tangentRad: ms.tangentRad, cupSeamStepDeg,
+     window: win ? { pieces: [...win.set].sort((a, b) => a - b), ids: win.ids, fromS: win.fromS, lengthM: win.lengthM, text: win.text } : null,
+     residual: Object.fromEntries(ms.names.map((n, i) => [n, ms.r[i]])),
+-    report: converged ? `closed in ${it} step(s): ${(ms.gapM * 1000).toFixed(3)} mm, tangent ${ms.tangentRad.toExponential(1)} rad${cupSeamStepDeg > D.CUP_JOINT_DEG ? `; the cup steps ${cupSeamStepDeg.toFixed(2)}° at the seam (a cup meets a legacy piece there)` : ''}`
++    report: converged ? `closed in ${it} step(s): ${(ms.gapM * 1000).toFixed(3)} mm, tangent ${ms.tangentRad.toExponential(1)} rad${cupNote}${cupSeamStepDeg > D.CUP_JOINT_DEG ? `; the cup steps ${cupSeamStepDeg.toFixed(2)}° at the seam (a cup meets a legacy piece there)` : ''}`
+       : `NOT CLOSED after ${it} step(s): ${ms.gapM.toFixed(4)} m, tangent ${ms.tangentRad.toExponential(1)} rad` };
+ }
+ 
+diff --git a/src/core/document.js b/src/core/document.js
+index 12f4d93..2076b81 100644
+--- a/src/core/document.js
++++ b/src/core/document.js
+@@ -716,7 +716,7 @@ function refineKnots(doc, pieceId, a, b, maxSpan) {
+ module.exports = {
+   boehm, insertKnot, insertKnots, refineKnots,
+   fromPositionFit,
+-  SCHEMA, SCHEMA_SPLIT, isSplit, SCHEMA_NEG, isNegEdge, EDGE_FLOOR, OLD_SCHEMAS, CHANNELS, OFFSETS, FAMILIES, DEC, KNOT_M, CUP_MAX, CUP_JOINT_DEG, legacyEdgeDeg, endIsCup, fillCup, CoreError,
++  SCHEMA, SCHEMA_SPLIT, isSplit, SCHEMA_NEG, isNegEdge, EDGE_FLOOR, OLD_SCHEMAS, CHANNELS, OFFSETS, FAMILIES, DEC, KNOT_M, CUP_MAX, CUP_JOINT_DEG, CUP_EPS, legacyEdgeDeg, endIsCup, fillCup, CoreError,
+   OPTIONAL, OPT_DEFAULT, EDGE_EPS, S_MIN, S_MAX, S_DEFAULT, TUBE_MAX, TUBE_EDGE_MAX, kindOf, endKind, tubeSlotMinDeg,
+   checkSpawns, normSpawns, setSpawns, SPAWN_COUNT_MAX, SPAWN_GAP_MAX, checkPitLane, normPitLane, setPitLane, PIT_DEFAULT, PIT_BOXES_MAX,
+   channelValue, createDoc, roadPiece, flightPiece, GRIP_MIN, GRIP_MAX, GRIP_DEFAULT, gripOf, checkGrip, withGrip, setGrip, FLIGHT_POSE, FLIGHT_MIN_M, LANDING_DEFAULT, afterFlight, appendPiece, endState, pieceEnd, channelAt, valuesAt, knotVector, evenKnots, fitChannel, checkDoc,
+diff --git a/src/core/extend.js b/src/core/extend.js
+index ece9fe2..4dc2160 100644
+--- a/src/core/extend.js
++++ b/src/core/extend.js
+@@ -239,7 +239,10 @@ function extend(doc, opts = {}) {
+       // under it (a cup narrowing under e -45) is lifted to the floor, as the low end always did, not refused
+       const lo = Math.min(0, C[ch][0], given(targets[ch]) ? targets[ch] : 0), top = Math.max(C[ch][0], given(targets[ch]) ? targets[ch] : C[ch][0]);
+       const hi = (i) => (lo < 0 && top <= 0 ? Math.max(top, floor(i)) : Math.max(0, cap(i)));
+-      C[ch] = C[ch].map((x, i) => Math.min(hi(i), Math.max(Math.max(lo, floor(i)), x)));
++      // D468 (P's D466 §4): the joint's own two points, the head's value and slope continued, are the head's and not the fit's: a tail still sloping at a limit
++      // took P₁ past lo or hi, the clamp moved it, and the piece was refused with the document's raw JOINT error. They are left to checkDoc, which refuses a point
++      // past the cap or under the floor BY NAME (a tail still rising at the cap cannot be continued inside it: BAD_EDGE, as it should be)
++      C[ch] = C[ch].map((x, i) => (held && i < 2 ? x : Math.min(hi(i), Math.max(Math.max(lo, floor(i)), x))));
+       const ne = C[ch].length; if (C[ch][ne - 1] <= 1e-3) C[ch][ne - 2] = C[ch][ne - 1];   // an edge that ends at 0 ends flat, so the piece after it starts clean
+     }
+     C.s = C.s.map((x) => Math.min(D.S_MAX, Math.max(D.S_MIN, x)));
+diff --git a/src/core/finish.js b/src/core/finish.js
+index d919cd4..5f7d000 100644
+--- a/src/core/finish.js
++++ b/src/core/finish.js
+@@ -209,7 +209,10 @@ const BANK_SHARE = 0.75, BANK_TRIES = 3, BANK_ROLL = 0.9, V_DESIGN = MACH6.desig
+ // control polygon's slope per metre (rad/m²): at a C1 joint the outer-wheel step is about 8.4 m · 2·BANK_ACCEL, so 21.7 °/100 m (0.00379 /m) allows 2.26e-4.
+ // It acts on the added bank, like the rate limit: the pins already keep it off any roll the route lays (a roll straight is not banked), so bounding the total
+ // instead changed nothing on any track measured, and was removed (D438 J3/J10, exo_memory/handback/p-d438-build-O_2026-10-22.md §4).
+-const BANK_ACCEL = 2e-4, BANK_SWEEPS = 400, ROLL_ACCEL_FIT = 1.5;
++// D468: BANK_SWEEPS 400 → 4000. The curvature rows and the share box joined the sweeps, and alternating projections with a box converge slowly: on
++// core_close_banks_lap's lap the rows were still 1e-3 °/m² short at 400 sweeps, met at 1,500, and the slowest plan measured took 3,800 (a sweep is a pass over
++// the window's control points: the whole budget costs well under a second)
++const BANK_ACCEL = 2e-4, BANK_SWEEPS = 4000, ROLL_ACCEL_FIT = 1.5;
+ const bankOf = (k, share) => -share * Math.atan((V_DESIGN * V_DESIGN * k) / G);
+ /**
+  * The bank to add to each control point of each road piece of `window` ([p] → array, 0 outside), from kFrom's curvature: pinned at the window's ends, rate-limited.
+@@ -227,7 +230,7 @@ function bankPlan(kFrom, window, share, uprightSet, relax = () => false, { flips
+     // D447 (d): a joint `relax` names (two curved upright pieces, bankLap) is not pinned: its points are banked and limited like any other, and the later piece's
+     // second point, like its first, follows the joint (the slope rule below), so a curve laid as several pieces banks as one
+     const freeIn = linked && relax(p), freeOut = nextLinked && relax(p + 1);
+-    for (let i = linked ? (freeIn ? 2 : 1) : 0; i < n; i++) { const pinned = (i < 2 && !freeIn) || (i > n - 3 && !freeOut); seq.push({ p, i, s: startOf.get(p) + (U[i + 1] + U[i + 2] + U[i + 3]) / 3, t: up && !pinned ? bankOf(P.channels.kh[i], share) : 0, pinned, kh: P.channels.kh[i] }); }
++    for (let i = linked ? (freeIn ? 2 : 1) : 0; i < n; i++) { const pinned = (i < 2 && !freeIn) || (i > n - 3 && !freeOut); const t = up && !pinned ? bankOf(P.channels.kh[i], share) : 0; seq.push({ p, i, s: startOf.get(p) + (U[i + 1] + U[i + 2] + U[i + 3]) / 3, t, share: t, pinned, kh: P.channels.kh[i] }); }
+   });
+   // D447, P's review finding 1 (bankLap only, `flips`): WHERE THE TURN FLIPS (the stored turn rate changes sign between two points that both turn, |kh| over
+   // CURVED_KH), every point from the last turning point before the flip to the first after it is pinned at no added bank, as at a straight. The bank then comes
+@@ -240,7 +243,55 @@ function bankPlan(kFrom, window, share, uprightSet, relax = () => false, { flips
+   if (flips) for (const [a, b] of flips) {
+     let lo = -1, hi = -1; for (let k = 0; k < seq.length; k++) { if (seq[k].s < a) lo = k; else if (seq[k].s > b && hi < 0) hi = k; }
+     // a piece is named as eased only where a pin takes away a bank the plan would have given (his own bank and a straight's plan none already: TEST 10's p10, p20)
+-    for (let k = Math.max(0, lo); k <= (hi < 0 ? seq.length - 1 : hi); k++) { if (seq[k].t !== 0) eased.add(seq[k].p); seq[k].t = 0; seq[k].pinned = true; }
++    for (let k = Math.max(0, lo); k <= (hi < 0 ? seq.length - 1 : hi); k++) { if (seq[k].t !== 0) eased.add(seq[k].p); seq[k].t = 0; seq[k].share = 0; seq[k].pinned = true; }
++  }
++  // D468 (P; D459's class of fault, plan_test10_bump § "3b in"): THE PLAN IS C2 AT EVERY JOINT. BANK_ACCEL bounds how fast the polygon's slope may change, so at a
++  // pinned joint (two points at no added bank on each side) the plan's curvature went from 0 to its bound in one knot: a step of exactly BANK_ACCEL (0.0115 °/m²,
++  // 2 × 8.4 m × that under the outer wheels) read by continuity.js at the closer's first joint and the seam of every Finish and at every relaxed joint of a banked
++  // lap. A channel's end curvature is linear in its last three control points and its start curvature in its first three (continuity.js's closed forms, the same
++  // weights as close.js curvRow), so "the added bank's curvature does not step across this joint" is one linear equality on six points: a convex set like the rate
++  // and acceleration bounds, projected onto in the same sweeps (the pins never moved). At a joint the plan leaves to a piece outside the window (the window's two
++  // ends; on a lap, the seam and the joints into his own banked curves) the other side's added bank is 0 everywhere, so the row reads "0 curvature here": with
++  // the two pinned points that is the third point at 0 too. At a relaxed joint (D447 (d)) the later piece's first two points follow the earlier piece (the slope
++  // rule below), so their weights fold into the earlier piece's last two. The ease itself is not a quintic: the plan is not a ramp between two levels but the
++  // curvature's share under rate and acceleration limits, and the equality keeps its shape while the limits still bound it (an ease laid over the limited plan
++  // afterwards would have to be re-limited, and would move the share).
++  const rows = []; const at = new Map(); for (const x of seq) at.set(`${x.p}:${x.i}`, x);
++  const slots = (p, idx) => idx.map((i) => at.get(`${p}:${i}`) || null);   // null: not in seq (a later piece's first two at a linked joint), folded or 0
++  road.forEach((p, j) => {
++    const P = kFrom.pieces[p], U = D.knotVector(P), n = P.channels.kh.length, L = P.length, linked = j > 0 && road[j - 1] === p - 1, nextLinked = road[j + 1] === p + 1;
++    const g1 = U[4], g2 = U[5], wB = [-6 / (g1 * g1), 6 / (g1 * g2) + 6 / (g1 * g1), -6 / (g1 * g2)];   // on B[0], B[1], B[2]: −(the start curvature)
++    if (!linked) rows.push({ terms: slots(p, [0, 1, 2]).map((x, k) => [x, wB[k]]) });   // the window's start: the plan's curvature is 0 where it begins
++    else {
++      const A = kFrom.pieces[p - 1], UA = D.knotVector(A), nA = A.channels.kh.length, LA = A.length, h1 = LA - UA[nA - 1], h2 = LA - UA[nA - 2];
++      const wA = [6 / (h1 * h2), -6 / (h1 * h1) - 6 / (h1 * h2), 6 / (h1 * h1)];   // on A[n−3], A[n−2], A[n−1]: the end curvature
++      // B[0] = A[n−1] and B[1] = A[n−1] + (g1/h1)(A[n−1] − A[n−2]) by the slope rule, so their weights fold into A's last two
++      wA[2] += wB[0] + wB[1] * (1 + g1 / h1); wA[1] -= wB[1] * (g1 / h1);
++      rows.push({ terms: [...slots(p - 1, [nA - 3, nA - 2, nA - 1]).map((x, k) => [x, wA[k]]), [at.get(`${p}:2`), wB[2]]] });
++    }
++    if (!nextLinked) rows.push({ terms: slots(p, [n - 3, n - 2, n - 1]).map((x, k) => [x, [6 / ((L - U[n - 1]) * (L - U[n - 2])), -6 / ((L - U[n - 1]) * (L - U[n - 1])) - 6 / ((L - U[n - 1]) * (L - U[n - 2])), 6 / ((L - U[n - 1]) * (L - U[n - 1]))][k]]) });   // the window's end: 0 curvature where it ends
++  });
++  for (const r of rows) r.terms = r.terms.filter(([x]) => x);   // a slot not in seq is a pinned 0 (a linked piece's first point) and adds nothing
++  // D468: each free point's box, so that no projection carries a point PAST its share (the limits only ever hold a bank back; a projection onto a triple's
++  // acceleration bound moves the two neighbours the other way, and that recoil put TEST 10's p22 point 4 at 6.43° against a share of 6.13°). Three cases:
++  // · a steady share (one sign over the point and the three on either side of it in its piece): [0, the share];
++  // · a ringing share (the fitted kh of a transition to 0 rings about 0, so the share alternates in sign along a turn's tail): no box, the rate and acceleration
++  //   bounds govern the roll-off there as before (a box at those points forced the plan through 0 at every other one: a corner left its turn at 1.7° instead of 50.9°);
++  // · the three points nearest a joint to another planned piece: no box (a straight's or a bent straight's): THE TAIL OF A ROLL-OFF
++  //   MAY COMPLETE ON THE STRAIGHT. A turn's bank ramps from its third control point (its first two are pinned at the joint), so for the joint to be C2 either the
++  //   straight's third point carries that curvature (about 1.5° at one control point, the bank's smooth end over the straight's first span) or the turn's third
++  //   point must be 0 too and every corner reaches its exit a knot later: 24.4° at the last curved station against 32.5° (D447 §10's table, 5° allowed), and the
++  //   20 m flip's second corner leaving at 38.5° against 50.9°. The tail on the straight is the smaller change and the better road; "a straight gets none" reads
++  //   "none of its own" now (core_finish_bank row 4, core_close_banks_lap row 9, amended by name).
++  const RING = 3;
++  for (let k = 0; k < seq.length; k++) {
++    const x = seq[k]; let ring = false, lo = -RING, hi = RING;
++    for (let j = Math.max(0, k - RING); j <= Math.min(seq.length - 1, k + RING); j++) if (seq[j].p === x.p && seq[j].share * x.share < 0) ring = true;
++    if (ring) { x.lo = -Infinity; x.hi = Infinity; continue; }
++    const n = kFrom.pieces[x.p].channels.kh.length, prevLinked = road.includes(x.p - 1), nextL = road.includes(x.p + 1);
++    const tail = (prevLinked && x.i <= 2) || (nextL && x.i >= n - 3);   // the three points nearest a joint to another planned piece: the joint's pins, row and bounds govern them
++    if (tail) { x.lo = -Infinity; x.hi = Infinity; continue; }
++    x.lo = Math.min(0, x.share); x.hi = Math.max(0, x.share); void lo; void hi;
+   }
+   // the pinned points stay where they are in both passes (a pass that moved them would undo the pin: the close would then meet the seam's bank row in one knot)
+   for (let k = 1; k < seq.length; k++) { if (seq[k].pinned) continue; const d = rate * (seq[k].s - seq[k - 1].s); seq[k].t = Math.max(seq[k - 1].t - d, Math.min(seq[k - 1].t + d, seq[k].t)); }
+@@ -263,6 +314,16 @@ function bankPlan(kFrom, window, share, uprightSet, relax = () => false, { flips
+       const sg = Math.sign(c.t - a.t); worst = Math.max(worst, over / (c.s - a.s));
+       if (free.length === 2) { a.t += (sg * over) / 2; c.t -= (sg * over) / 2; } else if (free[0] === c) c.t -= sg * over; else a.t += sg * over;
+     }
++    // D468: the curvature rows (above): each is a hyperplane in its free points; the step is the least one that meets it
++    for (const r of rows) {
++      let res = 0, nn = 0; for (const [x, w] of r.terms) { res += w * x.t; if (!x.pinned) nn += w * w; }
++      if (!nn || Math.abs(res) <= 1e-12) continue;
++      worst = Math.max(worst, Math.abs(res)); for (const [x, w] of r.terms) if (!x.pinned) x.t -= (res * w) / nn;
++    }
++    // D468: and no point past its share, nor the other way past none (a convex box, the last projection of the sweep): the limits above only ever HOLD a bank
++    // back from its share, but a projection onto a triple's acceleration bound moves the two neighbours the other way, and with the curvature rows that recoil
++    // carried a point past its share (TEST 10's p22 point 4: 6.43° against a share of 6.13°) and put a bank on a straight's last free point (share 0)
++    for (const x of seq) { if (x.pinned) continue; if (x.t < x.lo) { worst = Math.max(worst, x.lo - x.t); x.t = x.lo; } else if (x.t > x.hi) { worst = Math.max(worst, x.t - x.hi); x.t = x.hi; } }
+     if (worst < 1e-9) break;
+   }
+   const plan = new Map(road.map((p) => [p, new Array(kFrom.pieces[p].channels.kh.length).fill(0)]));
+diff --git a/test/core_close_banks_lap.test.js b/test/core_close_banks_lap.test.js
+index dfda434..83c0409 100644
+--- a/test/core_close_banks_lap.test.js
++++ b/test/core_close_banks_lap.test.js
+@@ -134,9 +134,17 @@ test('row 8: a tube is not banked; a level curve on the same lap is', () => {
+   assert.ok(b.pieces[1].channels.phi.some((x, j) => Math.abs(x - c.doc.pieces[1].channels.phi[j]) > 30 * DEG), 'control: the level curve before it is banked');
+ });
+ 
+-test('row 9: a straight next to a curve keeps the bank it was laid with', () => {
++// AMENDED by D468 (P; the bank plan is C2, finish.js bankPlan's curvature rows): a straight next to a curve keeps the bank it was laid with but for the TAIL of the
++// curve's roll-off on its third control point from the joint (about 1.5°, the bank's smooth end over the straight's first span: a turn's bank ramps from its third
++// point, and the joint is C2 only if the straight's third point carries that curvature or the turn's is 0 too, which reached every corner's exit a knot later,
++// 24.4° against D447 §10's 32.5°). The joint itself (the first two points) and every other point are byte for byte as laid.
++const TAIL_DEG = 2;
++test('row 9: a straight next to a curve keeps the bank it was laid with, but for the tail of the roll-off on its third point from the joint (D468)', () => {
+   const r = closed(), open = lap(); assert.equal(r.converged, true, r.report);
+-  for (const i of [0, 2]) assert.deepEqual(r.doc.pieces[i].channels.phi, open.pieces[i].channels.phi, `${open.pieces[i].id}, a straight between curves`);
++  for (const i of [0, 2]) {
++    const got = r.doc.pieces[i].channels.phi, was = open.pieces[i].channels.phi, n = got.length;
++    got.forEach((x, k) => { if (k === 2 || k === n - 3) assert.ok(Math.abs(x - was[k]) < TAIL_DEG * DEG, `${open.pieces[i].id} point ${k}: the roll-off's tail, ${((x - was[k]) / DEG).toFixed(2)}°, within ${TAIL_DEG}°`); else assert.equal(x, was[k], `${open.pieces[i].id} point ${k}, a straight between curves, as laid`); });
++  }
+ });
+ 
+ const ROLL_DEG_M = 0.9 * require('../src/validate/index.js').ROLL_AMBER_DEG_M, SHARE_R300 = 0.75 * Math.atan(((460 / 3.6) ** 2 / 300) / 9.80665) / DEG;
+diff --git a/test/core_close_local.test.js b/test/core_close_local.test.js
+index 79e22fd..9dd4fb4 100644
+--- a/test/core_close_local.test.js
++++ b/test/core_close_local.test.js
+@@ -78,3 +78,29 @@ test('row 5: a window with no road piece is refused by name', () => {
+   assert.throws(() => C.close(d, { window: [] }), (e) => e.code === 'CLOSE_WINDOW' && /no road piece/.test(e.message));
+   assert.throws(() => C.close(d, { window: [99] }), (e) => e.code === 'CLOSE_WINDOW');
+ });
++
++// D469 (P; C's D467 review §5: on TEST 10 the start try [p1, p23] is refused and the close falls through to [p5, p23]). A lap from public words whose first piece is
++// a cup laid flat (c 0) and whose last piece's cup fade ends C1 (flat 15, then 0 0: a file from before D459, or 0.4.19's closer; TEST 10's p23 ends 15 15 0 0).
++function flatCupLap() {
++  const DEG = Math.PI / 180, Q3 = (Math.PI * 300) / 2, { extendTurnBy } = require('../src/core/turnby.js');
++  let d = extend(D.createDoc('cup seam'), { length: 1000, family: 'bowl', first: { c: 0 } });
++  for (let i = 0; i < 3; i++) { d = extendTurnBy(d, { length: Q3 }, 90 * DEG); d = extend(d, { length: 300 }); }
++  d = extendTurnBy(d, { length: Q3 }, 90 * DEG); d = extend(d, { length: 300, targets: { c: 15 } }); d = extend(d, { length: 400, targets: { c: 0 } });
++  const open = { ...C.close(d).doc, closed: false }, n = open.pieces[open.pieces.length - 1].channels.c.length;
++  return withChannel(open, open.pieces.length - 1, 'c', (v, i) => (i < n - 2 ? 15 : 0));
++}
++test("row 6: a window on a lap whose cup is flat is not refused on the solve's float noise (D469): the cup read for the window's path is inside the quantum of 0, so the last piece alone, the last two and the first piece close", () => {
++  const d = flatCupLap(), n = lastIdx(d);
++  for (const w of [[n], [n - 1, n], [0]]) { const r = C.close(d, { window: w }); assert.equal(r.converged, true, `window ${JSON.stringify(w)}: ${r.report}`); assert.ok(r.doc.pieces.every((P) => !P.cup || P.channels.c.every((v) => v >= 0)), `window ${JSON.stringify(w)}: no stored cup point is negative`); assert.doesNotMatch(r.report, /left out/, `window ${JSON.stringify(w)}: the cup row needed no fallback here (the noise is the adapter's to read as 0, not the row's to drop): ${r.report}`); }
++});
++test("row 7: the seam's cup curvature rows respect c ≥ 0 (D469): where they would take p1's flat cup below 0 they are left out, the cup stays C1 at the seam like cupHome's straight fade, the close succeeds and says so, and the other channels stay C2 there", () => {
++  const Cn = require('../src/core/continuity.js'), d = flatCupLap(), n = lastIdx(d);
++  const r = C.close(d, { window: [0, n] }); assert.equal(r.converged, true, r.report);
++  assert.ok(r.doc.pieces[0].channels.c.every((v) => v >= 0) && r.doc.pieces[n].channels.c.every((v) => v >= 0), 'no cup point of p1 or the last piece is below 0');
++  assert.match(r.report, /cup.*curvature.*left out|left out.*cup/i, `the report says the cup's curvature row was left out: ${r.report}`);
++  const seam = Cn.jointSteps(r.doc).filter((e) => e.joint.endsWith('|' + r.doc.pieces[0].id));
++  for (const e of seam) if (e.ch !== 'c') assert.ok(Math.abs(e.dkDeg) <= Cn.TOL_K, `${e.ch} is C2 at the seam (steps ${e.dkDeg.toFixed(4)} °/m²)`);
++  assert.ok(seam.find((e) => e.ch === 'c').dm < 1e-4, 'the cup is C1 at the seam');
++  // control: with the cup row kept the close would need a negative cup, which the document refuses; the fallback is what the row above proves
++  const near = nearLap(); const r2 = C.close(near, { window: [lastIdx(near)] }); assert.equal(r2.converged, true, r2.report); assert.doesNotMatch(r2.report, /left out/, 'a lap whose seam needs no fallback does not report one');
++});
+diff --git a/test/core_finish_bank.test.js b/test/core_finish_bank.test.js
+index 127b4bd..e0baf42 100644
+--- a/test/core_finish_bank.test.js
++++ b/test/core_finish_bank.test.js
+@@ -86,7 +86,9 @@ function banked(open, what, flatLatG) {
+   for (const P of r.doc.pieces.slice(n0)) {
+     const ph = P.channels.phi, kh = P.channels.kh, U = D.knotVector(P), g = (i) => (U[i + 1] + U[i + 2] + U[i + 3]) / 3;
+     if (Math.abs(ph[0] - ph[ph.length - 1]) > 1e-4 || !kh.some((k) => Math.abs(k) > 1e-6)) continue;
+-    for (let i = 2; i < ph.length - 2; i++) {
++    // AMENDED by D468 (P; the bank plan is C2, finish.js bankPlan's curvature rows): a joint of the plan now holds THREE points on each side (value, slope and
++    // curvature of the added bank continue across it; the third is 0 where the plan meets road outside it), so the share is read from the fourth point in
++    for (let i = 3; i < ph.length - 3; i++) {
+       const t = (j) => ph[j] - ph[0];
+       if (Math.abs(t(i) - t(i - 1)) > cap * (g(i) - g(i - 1)) || Math.abs(t(i + 1) - t(i)) > cap * (g(i + 1) - g(i))) continue;
+       // AMENDED by D438 (plan_d438 "Part 2 ruled": a second limiter, on the roll's acceleration, finish.js BANK_ACCEL): a point the acceleration limit holds back
+@@ -185,12 +187,21 @@ test('row 8: an end banked the way the closer turns is closed rolled last, on it
+   assert.ok(L.lat < SIDE_BANKED_G + 0.5, `the peak side load at the design speed, ${L.lat.toFixed(2)} g, is under ${SIDE_BANKED_G + 0.5} g (6.12 on the user's own 54°, D459)`);
+ });
+ 
+-test('row 4: a straight gets none: a finish that is only a straight keeps the laid bank', () => {
++// AMENDED by D468 (P; the bank plan is C2, finish.js bankPlan's curvature rows and its box): a straight gets none OF ITS OWN. A turn's bank ramps from its third
++// control point (its first two are pinned at the joint), so for the joint to be C2 the straight's third point from that joint carries the turn's end curvature:
++// about 1.5° at one control point, the bank's smooth end over the straight's first span (the other way, a turn's third point at 0 too, reached every corner's
++// exit a knot later: 24.4° against D447 §10's 32.5°). Every other point of the straight is as laid.
++const TAIL_DEG = 2;
++test('row 4: a straight gets none of its own: a finish that is only a straight keeps the laid bank, but for the tail of a neighbouring roll-off on its third point from the joint (D468)', () => {
+   let d = D.createDoc('straight');
+   d = extend(d, { length: 400, family: 'bowl' });
+   for (let i = 0; i < 4; i++) d = extendTurnBy(d, { length: 300, targets: { kv: 0 } }, Math.PI / 2);
+   d = D.checkDoc({ ...d, pieces: d.pieces.slice(0, -1) });
+   d = extendTurnBy(d, { length: 300, targets: { kv: 0 } }, Math.PI / 2);
+   const r = F.finishToStart(d), n0 = d.pieces.length;
+-  for (const P of r.doc.pieces.slice(n0)) if (Math.max(...P.channels.kh.map(Math.abs)) < 1e-9) assert.ok(P.channels.phi.every((x) => Math.abs(x - P.channels.phi[0]) < 1e-9), `${P.id}, a straight, keeps its laid bank`);
++  for (const P of r.doc.pieces.slice(n0)) if (Math.max(...P.channels.kh.map(Math.abs)) < 1e-9) {
++    const ph = P.channels.phi, n = ph.length;
++    assert.ok(ph.every((x, i) => (i === 2 || i === n - 3 ? Math.abs(x - ph[0]) < TAIL_DEG * DEG : Math.abs(x - ph[0]) < 1e-9)), `${P.id}, a straight, keeps its laid bank but for the roll-off's tail on its third point from each joint (≤ ${TAIL_DEG}°): ${ph.map((x) => ((x - ph[0]) / DEG).toFixed(2)).join(' ')}`);
++    assert.ok(Math.abs(ph[0] - ph[1]) < 1e-9 && Math.abs(ph[n - 1] - ph[n - 2]) < 1e-9, `${P.id}: the joints themselves meet the laid bank flat`);
++  }
+ });
+diff --git a/test/core_joint_c2.test.js b/test/core_joint_c2.test.js
+index 220b169..68bf58e 100644
+--- a/test/core_joint_c2.test.js
++++ b/test/core_joint_c2.test.js
+@@ -184,3 +184,32 @@ test('row 9: the closure is C2: a whole-lap close and a local close leave no cur
+   assert.equal(c.converged, true, `control: the local close closes (${c.report})`);
+   assert.deepEqual(moved(d, c.doc).map((e) => `${e.joint} ${e.ch} ${e.dkDeg.toFixed(4)} °/m²`), [], "closed locally: the seam and the window's joints are C2");
+ });
++
++// D468 (P): THE BANK PLAN IS C2. 3c accepted Finish's edges-only exemption for 0.4.20, so Finish's added bank still stepped in curvature at its joints: by exactly
++// BANK_ACCEL (0.0115 °/m²) at the closer's first joint and the seam of every Finish measured (seven laps, his two among them) and at every relaxed joint of a lap
++// bankLap banks. finish.js bankPlan now projects onto a curvature-equality row per joint in its own sweeps (0 curvature where the plan meets road outside it).
++/** core_finish_bank.test.js's pLap: a cup laid at 10°, a turn of turnDeg over 1,500 m, then a tail rolling rollDeg and cupping to 35° */
++function pLap(turnDeg, tailM, rollDeg) {
++  let d = D.createDoc(`P ${turnDeg}/${tailM}/${rollDeg}`); d = extend(d, { length: 1000, family: 'bowl', first: { c: 10 } }); d = extendTurnBy(d, { length: 1500, targets: { kv: 0 } }, (turnDeg * Math.PI) / 180);
++  return extend(d, { length: tailM, targets: { c: 35, phi: (rollDeg * Math.PI) / 180 } });
++}
++test("row 10: through Finish and through bankLap, the added bank is C2: the bank's second derivative steps at no joint from the closer's first to the seam, and at no joint of a banked lap", () => {
++  const bad = [];
++  for (const [what, open] of [['rolled cup', rolledCup()], ['P 210/300/30', pLap(210, 300, 30)]]) {
++    const n0 = open.pieces.length, r = F.finishToStart(open), doc = r.doc;
++    assert.equal(doc.closed, true, `control: ${what} closes (${r.plan.report})`);
++    const steps = Cn.jointSteps(doc, { channels: ['phi'] }).filter((e) => e.k >= n0 - 1), ids = steps.map((e) => e.joint);
++    assert.ok(steps.length >= 3 && ids[ids.length - 1].endsWith('|' + doc.pieces[0].id), `control: ${what}: the closer's joints and the seam are read (${ids.join(' ')})`);
++    for (const e of steps) if (Math.abs(e.dkDeg) > Cn.TOL_K) bad.push(`${what} ${e.joint}: phi'' steps by ${e.dkDeg.toFixed(4)} °/m²`);
++  }
++  // a closed lap of upright curves banked whole (core_close_banks_lap's lap, closed by Close, which banks it; bankLapWith again on top adds nothing)
++  const Q = (Math.PI * 300) / 2; let l = D.createDoc('lap');
++  l = extend(l, { length: 100, family: 'bowl' }); l = extendTurnBy(l, { length: Q }, 90 * DEG); l = extend(l, { length: 100 }); l = extend(l, { length: Q / 2, targets: { kh: 1 / 300 } }); l = extendTurnBy(l, { length: Q / 2 }, 67.5 * DEG);
++  l = extend(l, { length: 100, targets: { phi: -20 * DEG } }); l = extendTurnBy(l, { length: Q }, 90 * DEG); l = extend(l, { length: 100, targets: { phi: 0 } }); l = extendTurnBy(l, { length: Q }, 90 * DEG);
++  // closed as the press's "last" route does (a local close of the last piece; app/core/closejob.js is not here: the ramp harness copies src/ and tools/ only), then banked as Close banks it
++  const c = close(l, { window: [l.pieces.length - 1] }); assert.equal(c.converged, true, `control: the lap closes (${c.report})`);
++  const b = F.bankLapWith(c.doc), steps = Cn.jointSteps(b.doc, { channels: ['phi'] });
++  assert.ok(steps.length === 9 && b.doc.pieces.some((P, k) => k > 0 && P.channels.phi.some((x) => Math.abs(x) > 1 * DEG) && !l.pieces[k].channels.phi.some((x) => Math.abs(x) > 1 * DEG)), 'control: nine joints read, and a curve laid flat carries a bank');
++  for (const e of steps) if (Math.abs(e.dkDeg) > Cn.TOL_K) bad.push(`the banked lap ${e.joint}: phi'' steps by ${e.dkDeg.toFixed(4)} °/m²`);
++  assert.deepEqual(bad, [], `the added bank is C2 at every joint (bar ${Cn.TOL_K} °/m²)`);
++});
+diff --git a/test/core_xsec.test.js b/test/core_xsec.test.js
+index c9ae1e9..8ba90c1 100644
+--- a/test/core_xsec.test.js
++++ b/test/core_xsec.test.js
+@@ -125,6 +125,25 @@ test('EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a
+   assert.ok(dp.channels.e.every((v) => v >= -30 - 1e-9 && v <= 0 + 1e-9), `a 50 m ramp down to −30° stays in [−30, 0]: e ${Math.min(...dp.channels.e)} to ${Math.max(...dp.channels.e)}`);
+   for (const dd of [long, empty, down]) assert.doesNotThrow(() => D.checkDoc(dd));
+ });
++// D468 part 2 (P's D466 §4): the clamp on the fit's ringing (D406) also moved the joint's own two control points, the head's value and slope continued, when the
++// head's edge was still sloping at a limit of its asked range: a file whose edge ends at −10° still falling at 0.5 °/m could not be extended to 0 (or at all), the
++// clamp lifted P₁ to −10, and appendPiece refused with the document's raw JOINT error. The generator never lays such a tail (every ramp ends flat), a file or a cut can.
++test("EXTEND: the clamp on the ringing leaves the joint's own two points alone (D468): a tail still falling at −10° extends to 0 C1 with it, and one still rising at the cap is refused by name (BAD_EDGE), never with the document's JOINT error", () => {
++  const tail = (e0, slope) => {   // a hand-built file: the edge laid to e0 over 120 m, then its second-last control point moved so the end slope is `slope` °/m
++    const d = extend(extend(start(), { length: 100 }), { length: 120, targets: { e: e0 } }), j = JSON.parse(JSON.stringify(d)), P = j.pieces[j.pieces.length - 1], n = P.channels.e.length, h = P.length - P.knots[P.knots.length - 1];
++    P.channels.e[n - 2] = +(e0 - (slope * h) / 3).toFixed(6); P.channels.er[n - 2] = P.channels.e[n - 2]; return D.checkDoc(j);
++  };
++  const fall = tail(-10, -0.5); assert.ok(Math.abs(D.pieceEnd(last(fall)).e.m + 0.5) < 1e-6, 'control: the tail falls at 0.5 °/m');
++  for (const o of [{ length: 100, targets: { e: 0 } }, { length: 100, targets: { e: -5 } }, { length: 100 }]) {
++    const d = extend(fall, o), P = last(d), h = P.knots[0];
++    assert.ok(Math.abs(P.channels.e[0] + 10) < 1e-9 && Math.abs(P.channels.e[1] - (-10 - (0.5 * h) / 3)) < 1e-5, `${JSON.stringify(o)}: the piece continues the tail's value and slope (e₀ ${P.channels.e[0]}, e₁ ${P.channels.e[1]})`);
++    assert.ok(P.channels.e.slice(2).every((v) => v >= -10 - 1e-9 && v <= 0 + 1e-9), `${JSON.stringify(o)}: the fitted points stay in the asked range [−10, 0]: ${Math.min(...P.channels.e.slice(2))} to ${Math.max(...P.channels.e.slice(2))}`);
++    assert.doesNotThrow(() => D.checkDoc(d));
++  }
++  assert.ok(Math.abs(last(extend(fall, { length: 100, targets: { e: -20 } })).channels.e[1] - (-10 - (0.5 * 20) / 3)) < 1e-5, 'control: a target below the tail continued it before too');
++  const rise = tail(134, 0.5);   // a bowl's cap for e is 150 − 15.5 = 134.5: the tail's own slope carries past it in the first span, which only a refusal by name can say
++  throwsCode(() => extend(rise, { length: 100, targets: { e: 134.5 } }), 'BAD_EDGE', /past/); throwsCode(() => extend(rise, { length: 100 }), 'BAD_EDGE', /past/);
++});
+ test('EXTEND: the transition map takes e, s and t like the others, and the at-start `first` carries them on an empty track', () => {
+   const d = extend(start(), { length: 200, transition: { e: 'start', s: 50 }, targets: { e: 12, s: 0.8 } });
+   assert.ok(Math.abs(D.channelAt(last(d), 'e', 40).v - 12) < 1e-6, 'e reaches its target inside the short ramp and holds it');
+diff --git a/test/core_xsec_mutation.test.js b/test/core_xsec_mutation.test.js
+index aff6d4e..56c11b6 100644
+--- a/test/core_xsec_mutation.test.js
++++ b/test/core_xsec_mutation.test.js
+@@ -30,7 +30,8 @@ const MUTANTS = [
+   { id: 'KE2-4 the floor is not checked (a side may turn down past -30°, a lip)', file: 'core', pattern: 'DOMAIN', edits: [[C + 'document.js', 'if (rim[i] + v < EDGE_FLOOR - EDGE_EPS) throw', 'if (false) throw']] },
+   { id: 'KE2-5 extend does not refuse a target the cap cannot hold', file: 'core', pattern: 'EXTEND: e, s and t targets', edits: [[C + 'extend.js', 'if (given(targets.e) && targets.e > cap(C.e.length - 1) + 1e-6) throw', 'if (false) throw'], [C + 'extend.js', 'if (given(targets.er) && targets.er > cap(C.er.length - 1) + 1e-6) throw', 'if (false) throw']] },
+   // CHANGED D406: the clamp's low end is the least asked value bounded by the floor (0 for a positive edge, as before), and its high end the cap or, for a side asked only at or below 0, the higher asked value, never under the floor (E's review §4, E's short read §3); the anchor follows the line
+-  { id: 'KE2-6 the fit\'s ringing is not clamped (e)', file: 'core', pattern: 'ringing', edits: [[C + 'extend.js', 'C[ch] = C[ch].map((x, i) => Math.min(hi(i), Math.max(Math.max(lo, floor(i)), x)));', 'C[ch] = C[ch];']] },
++  { id: 'KE2-6 the fit\'s ringing is not clamped (e)', file: 'core', pattern: 'ringing', edits: [[C + 'extend.js', 'C[ch] = C[ch].map((x, i) => (held && i < 2 ? x : Math.min(hi(i), Math.max(Math.max(lo, floor(i)), x))));', 'C[ch] = C[ch];']] },   // D468: the line gained the joint's exemption; the mutant still removes the whole clamp
++  { id: 'KE2-8 the clamp moves the joint\'s own two points too (the D406 form)', file: 'core', pattern: 'ringing', edits: [[C + 'extend.js', 'C[ch] = C[ch].map((x, i) => (held && i < 2 ? x : Math.min(hi(i), Math.max(Math.max(lo, floor(i)), x))));', 'C[ch] = C[ch].map((x, i) => Math.min(hi(i), Math.max(Math.max(lo, floor(i)), x)));']] },
+   { id: 'KE2-7 a legacy piece\'s total cap ignores its own edge angle (e alone against 150)', file: 'core', pattern: 'DOMAIN', edits: [[C + 'document.js', 'const mid = legacyEdgeDeg(P.family, Math.max(...P.channels.w), Math.max(...P.channels.r)) + Math.max(...e);', 'const mid = Math.max(...e);']] },
+   // ── E3: the schema and the identity ──
+   { id: 'KE3-3 the schema is still /3', file: 'core', pattern: 'SCHEMA', edits: [[C + 'document.js', "const SCHEMA = 't180b.core/4',", "const SCHEMA = 't180b.core/3',"]] },

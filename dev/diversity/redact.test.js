@@ -230,7 +230,7 @@ test('arm-words.txt: every non-comment line is one entry with its reason after "
 test('CLI: node redact.js <in> writes the redacted text to stdout and uses arm-words.txt beside it', () => {
   const { execFileSync } = require('child_process');
   const os = require('os');
-  const tmp = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'redact-')), 'in.md');
+  const tmp = path.join(require('../../consonance/tools/scratch.js').mkdtemp('redact-'), 'in.md');
   fs.writeFileSync(tmp, 'pane B read §2.7 in the brief\n348026190\n');
   const out = execFileSync(process.execPath, [path.join(__dirname, 'redact.js'), tmp], { encoding: 'utf8', windowsHide: true });
   assert.strictEqual(out, red('pane B read §2.7 in the brief\n348026190\n'));
@@ -240,7 +240,7 @@ test('CLI: node redact.js <in> writes the redacted text to stdout and uses arm-w
 test('CLI: --letters B,E strips bare B and E; --letters A is refused with exit 2', () => {
   const { spawnSync } = require('child_process');
   const os = require('os');
-  const tmp = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'redact-')), 'in.md');
+  const tmp = path.join(require('../../consonance/tools/scratch.js').mkdtemp('redact-'), 'in.md');
   fs.writeFileSync(tmp, '— B, before E build; 190 B\n');
   const run = (...a) => spawnSync(process.execPath, [path.join(__dirname, 'redact.js'), tmp, ...a], { encoding: 'utf8', windowsHide: true });
   const ok = run('--letters', 'B,E');

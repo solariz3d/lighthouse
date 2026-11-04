@@ -147,7 +147,7 @@ test('dedupeRows collapses the board triplicate: a model-tag prefix and a one-se
 
 /* A fixture board holding ONE case whose lever is recorded three times. */
 function fixtureBoard() {
-  const dir = fsx.mkdtempSync(pathx.join(os.tmpdir(), 'defunit-'));
+  const dir = require('./scratch.js').mkdtemp('defunit-');
   const file = pathx.join(dir, 'board.jsonl');
   const at = (s) => new Date(Date.parse('2026-07-04T10:00:00Z') + s * 1000).toISOString();
   const rows = [
@@ -217,7 +217,7 @@ test('every case carries its three stamped rows, because a bare number is not th
 const fsT = require('fs'), osT = require('os'), pathT = require('path');
 const { spawnSync: spawnT } = require('child_process');
 const { boardDefault } = require('./deference-unit.js');
-const tmpT = (tag) => fsT.mkdtempSync(pathT.join(osT.tmpdir(), `rc2-${tag}-`));
+const tmpT = (tag) => require('./scratch.js').mkdtemp(`rc2-${tag}-`);
 const oneRowBoard = (dir) => fsT.writeFileSync(pathT.join(dir, 'board.jsonl'),
   JSON.stringify({ pane: 'P', role: 'assistant', text: 'one row', ts: Date.parse('2026-09-21T00:00:00Z') }) + '\n');
 

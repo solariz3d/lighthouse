@@ -1,0 +1,75 @@
+{
+ "label": "L5-N",
+ "started": "2026-10-19T20:48:10.210Z",
+ "ended": "2026-10-19T21:13:09.637Z",
+ "wall_ms": 1499427,
+ "active_ms": 30000,
+ "others_hold_lock_ms": 1440000,
+ "exit_code": 0,
+ "signal": null,
+ "launcher_killed": false,
+ "kill_reason": null,
+ "args": [
+  "-p",
+  "--model",
+  "claude-opus-5-5",
+  "--output-format",
+  "json",
+  "--safe-mode",
+  "--strict-mcp-config",
+  "--dangerously-skip-permissions",
+  "--add-dir",
+  "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L5-N",
+  "--name",
+  "d411-L5-N"
+ ],
+ "cwd": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L5-N",
+ "prompt_sha256": "bbb433dec1403e3a95a24b64f1b76bc0a9e95042d664ecf8f85b74bd7c493e12",
+ "prompt_bytes": 1273,
+ "session_id": "b021f5e0-1f1a-44aa-99dc-5f87a3c56180",
+ "subtype": "success",
+ "is_error": false,
+ "num_turns": 3,
+ "duration_ms": 32045,
+ "duration_api_ms": 204463,
+ "usage": {
+  "input_tokens": 8,
+  "cache_creation_input_tokens": 3701,
+  "cache_read_input_tokens": 207684,
+  "output_tokens": 2237,
+  "output_tokens_details": {
+   "thinking_tokens": 118
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3701,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 716,
+    "cache_read_input_tokens": 70470,
+    "cache_creation_input_tokens": 1493,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 1493
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "models": [
+  "claude-opus-5-5"
+ ],
+ "stop_reason": "end_turn",
+ "terminal_reason": "completed",
+ "result": "The full suite no longer kills gen-consumer.test.js. It still exits 1 overall, and gen-consumer.test.js itself is still red in this checkout for a separate reason (below). It now shows as **FAIL** after reaching its summary (78 s inside a 300 s limit) instead of a timeout crash. The work is committed as `1dbb1d9` (not pushed), and the hand-back is in `HANDBACK.md` (not committed).\n\n**What changed:** a test file can now set its own time limit with a header line `// JS-SUITE: TIMEOUT-MS=<ms>`. gen-consumer.test.js sets 300000, about twice its slowest measured run. The 120 s default stays for every other file. A real hang still shows up:\n- A file that runs past its own limit is still killed and reported as crashed.\n- Every kill now prints `TIMED OUT after N ms`, so a hang no longer looks like any other crash.\n- Limits are capped at 600 s. A limit above the cap, or one that isn't a whole number, fails the run; it is never quietly lowered to the cap or replaced by the default.\n- A raised limit is printed on the file's row along with how long the file took, so a file getting close to its limit is visible.\n\n**Tests:**\n- **`js-suite.test.js`:** 45 passed, 6 failed at the base commit (the 6 failures are the new rows). After the fix, 51 passed, 0 failed.\n- **`gen-consumer.test.js` alone:** 107 tests, 66 pass, 41 fail, about 140 s. The base commit gives the identical failing set, because this checkout has no `exo_memory/` directory and those tests read it. That's why the file is still red.\n- **Full suite:** 139 files: 94 green, 33 failed, 9 crashed, 1 canary, 2 not-run, 0 class errors. No file timed out. It took 876 s, partly spent waiting behind another session's suite run.\n\n**Not verified:** I didn't run the full suite at the base commit, so I haven't shown that the other 33 failures and 9 crashes are already failing there. They look like the same missing-directory problem, but that's unconfirmed."
+}

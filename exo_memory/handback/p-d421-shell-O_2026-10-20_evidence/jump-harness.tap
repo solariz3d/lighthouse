@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: control: the unmutated copy passes every row of core_jump.test.js
+ok 1 - control: the unmutated copy passes every row of core_jump.test.js
+  ---
+  duration_ms: 5841.3361
+  type: 'test'
+  ...
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 658.4999
+  type: 'test'
+  ...
+# Subtest: mutation J1 a core flight's gap is a hole again (gap-in-road): applied, and caught by row 2
+ok 3 - mutation J1 a core flight's gap is a hole again (gap-in-road): applied, and caught by row 2
+  ---
+  duration_ms: 1684.3693
+  type: 'test'
+  ...
+# Subtest: mutation J2 any core gap followed by road counts as a flight, with no pose on it (a planted hole is exempt): applied, and caught by row 2
+ok 4 - mutation J2 any core gap followed by road counts as a flight, with no pose on it (a planted hole is exempt): applied, and caught by row 2
+  ---
+  duration_ms: 1996.4452
+  type: 'test'
+  ...
+# Subtest: mutation J2b a landing behind its take-off is red again: applied, and caught by row 2
+ok 5 - mutation J2b a landing behind its take-off is red again: applied, and caught by row 2
+  ---
+  duration_ms: 2029.0556
+  type: 'test'
+  ...
+# Subtest: mutation J3 a track with a jump is refused again (NOT_YET): applied, and caught by row 4
+ok 6 - mutation J3 a track with a jump is refused again (NOT_YET): applied, and caught by row 4
+  ---
+  duration_ms: 1470.9726
+  type: 'test'
+  ...
+# Subtest: mutation J4 the landing is linked across the jump (its start not held): applied, and caught by row 4
+ok 7 - mutation J4 the landing is linked across the jump (its start not held): applied, and caught by row 4
+  ---
+  duration_ms: 1569.9109
+  type: 'test'
+  ...
+# Subtest: mutation J5 the close's model skips the flight (no displacement, no heading or pitch reset): applied, and caught by row 4
+ok 8 - mutation J5 the close's model skips the flight (no displacement, no heading or pitch reset): applied, and caught by row 4
+  ---
+  duration_ms: 3197.6071
+  type: 'test'
+  ...
+# Subtest: mutation J6 the net pitch is not counted again from a jump, nor its turn added: applied, and caught by row 4
+ok 9 - mutation J6 the net pitch is not counted again from a jump, nor its turn added: applied, and caught by row 4
+  ---
+  duration_ms: 2028.0101
+  type: 'test'
+  ...
+# Subtest: mutation J7 the landing pitch and the jumps' turns are left out of the net angles: applied, and caught by row 4
+ok 10 - mutation J7 the landing pitch and the jumps' turns are left out of the net angles: applied, and caught by row 4
+  ---
+  duration_ms: 1953.6721
+  type: 'test'
+  ...
+# Subtest: mutation J8 the model's pitch is not cut at the flight: applied, and caught by row 4
+ok 11 - mutation J8 the model's pitch is not cut at the flight: applied, and caught by row 4
+  ---
+  duration_ms: 3180.4282
+  type: 'test'
+  ...
+# Subtest: mutation J8c the model leaves out the landing's sideways offset turning with the take-off: applied, and caught by row 4
+ok 12 - mutation J8c the model leaves out the landing's sideways offset turning with the take-off: applied, and caught by row 4
+  ---
+  duration_ms: 1815.2416
+  type: 'test'
+  ...
+# Subtest: mutation J9 a lap that ends in a jump is not refused by name: applied, and caught by row 4
+ok 13 - mutation J9 a lap that ends in a jump is not refused by name: applied, and caught by row 4
+  ---
+  duration_ms: 2106.2947
+  type: 'test'
+  ...
+# Subtest: mutation J11 two jumps in a row are accepted by the document (land on road first not enforced): applied, and caught by row 1
+ok 14 - mutation J11 two jumps in a row are accepted by the document (land on road first not enforced): applied, and caught by row 1
+  ---
+  duration_ms: 1293.2043
+  type: 'test'
+  ...
+# Subtest: mutation J12 a landing that does not start level at its flight's bank is accepted: applied, and caught by row 1
+ok 15 - mutation J12 a landing that does not start level at its flight's bank is accepted: applied, and caught by row 1
+  ---
+  duration_ms: 1300.4327
+  type: 'test'
+  ...
+# Subtest: mutation J13 a landing pitch past vertical is accepted: applied, and caught by row 1
+ok 16 - mutation J13 a landing pitch past vertical is accepted: applied, and caught by row 1
+  ---
+  duration_ms: 1227.4477
+  type: 'test'
+  ...
+# Subtest: mutation J14 an empty track is not refused by name: applied, and caught by row 1
+ok 17 - mutation J14 an empty track is not refused by name: applied, and caught by row 1
+  ---
+  duration_ms: 1218.1525
+  type: 'test'
+  ...
+# Subtest: mutation J15 a landing that is not the head is moved anyway: applied, and caught by row 1
+ok 18 - mutation J15 a landing that is not the head is moved anyway: applied, and caught by row 1
+  ---
+  duration_ms: 1211.4101
+  type: 'test'
+  ...
+# Subtest: mutation J16 the landing is not where its pose says (a metre further on): applied, and caught by row 1
+ok 19 - mutation J16 the landing is not where its pose says (a metre further on): applied, and caught by row 1
+  ---
+  duration_ms: 1206.374
+  type: 'test'
+  ...
+# Subtest: mutation J17 an old jump opens at its lip, its ramp forgotten (the roads after it move): applied, and caught by row 6
+ok 20 - mutation J17 an old jump opens at its lip, its ramp forgotten (the roads after it move): applied, and caught by row 6
+  ---
+  duration_ms: 1182.49
+  type: 'test'
+  ...
+# Subtest: mutation J18 the mirror of a saved jump does not cross to the other side: applied, and caught by row 6
+ok 21 - mutation J18 the mirror of a saved jump does not cross to the other side: applied, and caught by row 6
+  ---
+  duration_ms: 1169.2388
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 39427.2104

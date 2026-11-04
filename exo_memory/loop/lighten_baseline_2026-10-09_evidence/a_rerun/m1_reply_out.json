@@ -1,0 +1,14 @@
+{
+ "blocks": 34,
+ "nextIsSkipActive": 34,
+ "recovered": 34,
+ "contentSame": 11,
+ "contentChanged": 23,
+ "bySeat": {
+  "librarian": 31,
+  "chair": 3
+ },
+ "gapMedianS": 6.852,
+ "gapP90S": 12.024,
+ "gapSumS": 258.279
+}

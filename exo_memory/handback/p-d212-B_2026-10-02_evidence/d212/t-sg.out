@@ -1,0 +1,43 @@
+[32m✔ DENY CONTRACT: a ring with no SOURCES line is denied with exit 0 and the documented JSON, naming the fix and the format [90m(44.3644ms)[39m[39m
+[32m✔ MISSING: a ring with an empty SOURCES line is denied [90m(41.0511ms)[39m[39m
+[32m✔ UNMATCHED: an item that matches no call of the turn is denied, and the reason names exactly that item and no matched one [90m(38.1475ms)[39m[39m
+[32m✔ ALLOW: a Read path of this turn matches; the hook prints nothing and exits 0 [90m(36.2805ms)[39m[39m
+[32m✔ ALLOW: a relative item matches an absolute Read path by its tail, and the same item matches a Bash command that names it [90m(70.1699ms)[39m[39m
+[32m✔ ALLOW: an absolute item matches a Bash command that opened it by a shorter tail (after a cd), and a relative Read path resolves against the call's cwd [90m(68.1248ms)[39m[39m
+[32m✔ ALLOW: a WebFetch of the item URL counts; a different URL does not [90m(66.3776ms)[39m[39m
+[32m✔ ALLOW: the allow row carries the items, redacted [90m(33.9845ms)[39m[39m
+[32m✔ SCOPE: a tool that is not one of the two hand-back verbs is never gated, even with a text argument and no SOURCES line [90m(88.8051ms)[39m[39m
+[32m✔ TURN: a tool-result message that carries a reminder text block is still a tool result, not a prompt [90m(35.9356ms)[39m[39m
+[32m✔ TURN: a subagent (sidechain) read does not count, and a sidechain or meta user message does not start a new turn [90m(101.0165ms)[39m[39m
+[32m✔ ALLOW: a quoted command item matches the Bash and the PowerShell call that ran it (case and spacing normalised) [90m(71.9726ms)[39m[39m
+[32m✔ ALLOW: "SOURCES: none (no state claims)" is allowed and logged as none [90m(32.8887ms)[39m[39m
+[32m✔ ALLOW: the same ring through call_chair is gated the same way [90m(66.3298ms)[39m[39m
+[32m✔ TURN BOUNDARY: an item read in a PREVIOUS turn is denied; read again in this turn it is allowed [90m(67.3763ms)[39m[39m
+[32m✔ TURN BOUNDARY: a tool result is not a prompt, so a long turn keeps its early reads [90m(35.7616ms)[39m[39m
+[32m✔ TURN BOUNDARY: a boundary further back than the first read window is still found (the tail doubles) [90m(48.2395ms)[39m[39m
+[32m✔ GAMING: a path merely mentioned in a Bash echo does not count as opened; an echo of it before a real read in another segment does not hide the read [90m(103.4934ms)[39m[39m
+[32m✔ GAMING: a comment line in a script does not count as opened [90m(34.3096ms)[39m[39m
+[32m✔ OPENED MEANS COMPLETED: an errored call, and a call with no recorded result, do not count [90m(102.008ms)[39m[39m
+[32m✔ GREP / GLOB: a Grep on the file counts; a Grep over a directory counts only when its result names the item; a Glob counts when its result names it [90m(136.09ms)[39m[39m
+[32m✔ ITEM FORMS: path:line, a trailing (annotation), markdown emphasis and a backticked path all parse to the path [90m(34.8849ms)[39m[39m
+[32m✔ PARSE: continuation lines belong to the slot until a blank line or NEXT:, and a `·` inside backticks does not split [90m(0.477ms)[39m[39m
+[32m✔ LEDGER: a deny writes the seat, the pointer line and the pointer paths BEFORE it denies, and never the message [90m(34.7308ms)[39m[39m
+[32m✔ LEDGER: a key shape in the pointer line or an item is redacted in the row [90m(34.8579ms)[39m[39m
+[32m✔ LEDGER: the secret shapes are the second reader worker's, byte for byte (drift guard) [90m(0.1058ms)[39m[39m
+[32m✔ NEVER LOSE A HAND-BACK: with no data dir, or a ledger that cannot be written, a ring that would be denied is ALLOWED [90m(64.1397ms)[39m[39m
+[32m✔ FAIL OPEN: a malformed transcript, a missing transcript path and a missing file allow, each with an error row [90m(93.4726ms)[39m[39m
+[32m✔ FAIL OPEN: unparseable stdin, a non-ring tool, a ring with no text, and the reentrancy and dream guards all exit 0 with no decision [90m(219.1439ms)[39m[39m
+[32m✔ IN-TURN: a denied ring, then the read, then the re-send in the SAME turn is allowed (the deny came back as an errored tool result) [90m(71.9429ms)[39m[39m
+[32m✔ THE SECOND READER STILL FIRES: both hooks run on the same denied ring in parallel; the gate denies and the second reader still starts its worker and prints nothing [90m(69.9321ms)[39m[39m
+[32m✔ REGISTERED: install.ps1 registers the gate on the SAME matcher as the second reader, after it, and no other hook shares an event with a matcher it does not own [90m(1.0149ms)[39m[39m
+[32m✔ PLAN: the plan the hook cites exists [90m(0.1398ms)[39m[39m
+[32m✔ HOOK SOURCE: it never writes the message text anywhere, never spawns a process, and never calls the network [90m(0.2946ms)[39m[39m
+[34mℹ tests 34[39m
+[34mℹ suites 0[39m
+[34mℹ pass 34[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2041.6031[39m
+exit 0

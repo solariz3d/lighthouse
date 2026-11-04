@@ -1,0 +1,1 @@
+2026-10-25T16:04:59.8686184-06:00 control Shell_TrayWnd=327706 ok | TabProxyWindow top=0 child=0 | explorer pid 25248 handles 5586 start 10/24/2026 07:58:11

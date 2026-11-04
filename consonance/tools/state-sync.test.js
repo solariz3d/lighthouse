@@ -58,7 +58,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e && e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'statesync-'));
+const tmp = require('./scratch.js').mkdtemp('statesync-');
 let seq = 0;
 
 const MIN_MANIFEST = {
@@ -590,7 +590,7 @@ const verifiedD = (w) => M.verifyTree(w.stateD);
  * test by name rather than letting it pass or fail on a race.
  */
 function deleter(target) {
-  const ready = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'deleter-')), 'ready');
+  const ready = path.join(require('./scratch.js').mkdtemp('deleter-'), 'ready');
   // 120 s is a SAFETY bound, not the window: the caller kills the child the moment the install returns. The old 6 s
   // WAS the window, and under load the pull reached its write after it had closed (D083, C's re-run).
   const script = `const fs=require('fs');const p=${JSON.stringify(target)};const end=Date.now()+120000;let told=false;`
@@ -1185,7 +1185,7 @@ function l065Child(home, body, extra) {
   return JSON.parse(out.trim().split('\n').pop());
 }
 function l065Home(fn) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'l065-home-'));
+  const home = require('./scratch.js').mkdtemp('l065-home-');
   try { return fn(home); } finally { fs.rmSync(home, { recursive: true, force: true }); }
 }
 
@@ -1333,7 +1333,7 @@ test('L070 rebuild: a prefix-extension installs the WHOLE set, ledger included',
 test('L070 rebuild: a ledger that GROWS between the scan and its write is refused, never overwritten', () => {
   // The one partial install the rebuild still allows is a genuine race, and it must stop and say so. The app appending
   // to lap.jsonl mid-install is simulated by an arrival transform on an EARLIER file that appends to the local ledger.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'l070-race-'));
+  const dir = require('./scratch.js').mkdtemp('l070-race-');
   const DATA = path.join(dir, 'data'), STATE = path.join(dir, 'state');
   fs.mkdirSync(path.join(STATE, 'data'), { recursive: true }); fs.mkdirSync(DATA, { recursive: true });
   fs.writeFileSync(path.join(STATE, 'data', 'a-first.txt'), 'x');
@@ -1589,7 +1589,7 @@ test('D114 an UNVERIFIED union is never merged, whatever PHASE 2 says (it surviv
 // sync-completion.json stays ONE JSON object whose top level is the latest record, exactly as the launcher
 // (sync_launch.rs read_completion) and trip-check's installRow read it. Each write also APPENDS a compact row to its
 // `trips` list, so a week of launches can be read back.
-const completionDir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'l091-completion-'));
+const completionDir = () => require('./scratch.js').mkdtemp('l091-completion-');
 const readCompletion = (d) => JSON.parse(fs.readFileSync(path.join(d, M.COMPLETION_NAME), 'utf8'));
 
 test('L091 every write appends a trip row: two launches leave two trips, oldest first, and the top level is the latest', () => {
@@ -1771,6 +1771,30 @@ test('D133 the pull line no longer says "in sync" for a machine that is behind',
   assert.strictEqual(r.code, 0, both(r));
   assert.ok(!/^\s*in sync:/m.test(r.out), r.out);
   assert.match(r.out, /NOT in sync: TESTD behind/);
+});
+
+// ═══ D183 — the Leave's own result file is ruled, through the SHIPPED manifest ═══════════════════════════════════════
+// Every Leave writes stick-leave.result.json into the data dir (sync_launch.rs LEAVE_RESULT), and until it was ruled every
+// publish at close was REFUSED_UNPLACED by the Leave's own file (state-sync.push.json, 2026-09-28: paths
+// ["stick-leave.result.json"]). The guard itself is not what changed: a path nobody ruled is still refused.
+
+test('D183: a data dir holding a Leave\'s stick-leave.result.json is not REFUSED_UNPLACED under the shipped manifest', () => {
+  const w = world({ 'board.jsonl': 'row\n', 'stick-leave.result.json': '{"outcome":"DONE"}' }, SHIPPED_MANIFEST());
+  run(w, ['--push', '--no-remote', '--dry-run']);
+  assert.notStrictEqual(receipt(w).outcome, 'REFUSED_UNPLACED', JSON.stringify(receipt(w)));
+});
+
+test('D183: beside the ruled Leave file, a path nobody ruled is still REFUSED_UNPLACED, and only that path is named', () => {
+  const w = world({ 'board.jsonl': 'row\n', 'stick-leave.result.json': '{}', 'a-path-nobody-ruled.json': '{}' }, SHIPPED_MANIFEST());
+  run(w, ['--push', '--no-remote', '--dry-run']);
+  const r = receipt(w);
+  assert.deepStrictEqual([r.outcome, r.paths], ['REFUSED_UNPLACED', ['a-path-nobody-ruled.json']]);
+});
+
+test('D183: the shipped manifest rules stick-leave.result.json STAYS — local bookkeeping, never pushed', () => {
+  const { globToRe } = require(MANIFEST);
+  const rule = SHIPPED_MANIFEST().rules.find((r) => globToRe(r.glob).test('stick-leave.result.json'));
+  assert.strictEqual(rule && rule.class, 'STAYS');
 });
 
 console.log('');

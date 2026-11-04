@@ -71,7 +71,7 @@ test('the tool refuses to print a capacity number it cannot anchor in the binary
   // The failure paths, EXERCISED THROUGH THE REAL FUNCTION rather than through a copy of its regex
   // pasted into the test -- a test that agrees with its own duplicate of the code is the same
   // problem this whole change is about, one level in.
-  const tmp = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'corpus-age-anchor-'));
+  const tmp = require('./scratch.js').mkdtemp('corpus-age-anchor-');
   const stray = path.join(tmp, 'main.rs');
 
   fs.writeFileSync(stray, 'fn main() {}\n// no LIBRARIAN_INTAKE_LIMIT here\n');

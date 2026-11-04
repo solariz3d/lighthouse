@@ -1,0 +1,65 @@
+[32m✔ DENY CONTRACT: a ring with no SOURCES line is denied with exit 0 and the documented JSON, naming the fix and the format [90m(48.6952ms)[39m[39m
+[32m✔ MISSING: a ring with an empty SOURCES line is denied [90m(48.5312ms)[39m[39m
+[32m✔ UNMATCHED: an item that matches no call of the turn is denied, and the reason names exactly that item and no matched one [90m(43.6977ms)[39m[39m
+[32m✔ ALLOW: a Read path of this turn matches; the hook prints nothing and exits 0 [90m(42.5723ms)[39m[39m
+[32m✔ ALLOW: a relative item matches an absolute Read path by its tail, and the same item matches a Bash command that names it [90m(84.7121ms)[39m[39m
+[32m✔ ALLOW: an absolute item matches a Bash command that opened it by a shorter tail (after a cd), and a relative Read path resolves against the call's cwd [90m(84.1089ms)[39m[39m
+[32m✔ ALLOW: a WebFetch of the item URL counts; a different URL does not [90m(79.4532ms)[39m[39m
+[32m✔ ALLOW: the allow row carries the items, redacted [90m(41.0798ms)[39m[39m
+[32m✔ SCOPE: a tool that is not a hand-back verb or the dispatch verb is never gated, even with a text argument and no SOURCES line [90m(107.3226ms)[39m[39m
+[32m✔ TURN: a tool-result message that carries a reminder text block is still a tool result, not a prompt [90m(41.5509ms)[39m[39m
+[32m✔ D214 NOTIFICATION: a task notification between the Read and the ring is NOT a boundary: the read still counts (the live false deny) [90m(38.798ms)[39m[39m
+[32m✔ D214 NOTIFICATION: a KEEPER message between the Read and the ring IS a boundary: the read is stale and the ring is denied [90m(82.8119ms)[39m[39m
+[32m✔ D214 NOTIFICATION: a PANE or CHAIR ring between the Read and the ring IS a boundary, and so is a keep-warm [90m(117.0177ms)[39m[39m
+[32m✔ D214 NOTIFICATION: a message that MIXES a notification with keeper text is the keeper's, a boundary; an unterminated notification is too [90m(245.3716ms)[39m[39m
+[32m✔ D214 NOTIFICATION: a message Claude Code records as typed by a human is a boundary even if it contains only a notification-shaped paste [90m(40.2645ms)[39m[39m
+[32m✔ D214 NOTIFICATION: the recognised machine-only forms are not boundaries: a bare text notification, the reminder-wrapped system form, hook output beside one, and a banner line [90m(188.882ms)[39m[39m
+[32m✔ D214 NOTIFICATION: narrow on purpose: a message with no notification marker (a bare reminder) is still a boundary, while one the harness marks as a task notification and that holds only wrappers is not [90m(76.3032ms)[39m[39m
+[32m✔ D214 NOTIFICATION: a notification does not hide a stale source: read, then a keeper prompt, then a notification, then the ring is denied; read after the prompt and before the notification is allowed [90m(83.2774ms)[39m[39m
+[32m✔ D214 NOTIFICATION: a long notification-only tail does not stop the backward read early (the real prompt is further back than the first window) [90m(54.2241ms)[39m[39m
+[32m✔ TURN: a subagent (sidechain) read does not count, and a sidechain or meta user message does not start a new turn [90m(123.3334ms)[39m[39m
+[32m✔ ALLOW: a quoted command item matches the Bash and the PowerShell call that ran it (case and spacing normalised) [90m(80.2839ms)[39m[39m
+[32m✔ ALLOW: "SOURCES: none (no state claims)" is allowed and logged as none [90m(39.9564ms)[39m[39m
+[32m✔ ALLOW: the same ring through call_chair is gated the same way [90m(81.8715ms)[39m[39m
+[32m✔ TURN BOUNDARY: an item read in a PREVIOUS turn is denied; read again in this turn it is allowed [90m(80.7518ms)[39m[39m
+[32m✔ TURN BOUNDARY: a tool result is not a prompt, so a long turn keeps its early reads [90m(40.397ms)[39m[39m
+[32m✔ TURN BOUNDARY: a boundary further back than the first read window is still found (the tail doubles) [90m(55.1043ms)[39m[39m
+[32m✔ GAMING: a path merely mentioned in a Bash echo does not count as opened; an echo of it before a real read in another segment does not hide the read [90m(125.0354ms)[39m[39m
+[32m✔ D214 METADATA: every metadata-only leader (ls, stat, test, [, file, dir, Get-Item, Test-Path ...) is refused as having opened a path, leader by leader [90m(631.8337ms)[39m[39m
+[32m✔ D214 METADATA: an ls does not hide a real read in another segment, and wc (which reads the bytes) and a plain cat DO open [90m(173.753ms)[39m[39m
+[32m✔ D214 REASON: an unmatched deny names the same-message race, the later-message fix and the read-back after a write [90m(43.6041ms)[39m[39m
+[32m✔ D214 SPELLING: the guidance says ONE thing (repo-relative or C:\ for items, a repo-relative pointer), and a /c/ item still matches a call spelled either way [90m(125.6632ms)[39m[39m
+[32m✔ GAMING: a comment line in a script does not count as opened [90m(44.9132ms)[39m[39m
+[32m✔ OPENED MEANS COMPLETED: an errored call, and a call with no recorded result, do not count [90m(122.4238ms)[39m[39m
+[32m✔ GREP / GLOB: a Grep on the file counts; a Grep over a directory counts only when its result names the item; a Glob counts when its result names it [90m(159.7748ms)[39m[39m
+[32m✔ ITEM FORMS: path:line, a trailing (annotation), markdown emphasis and a backticked path all parse to the path [90m(44.2617ms)[39m[39m
+[32m✔ PARSE: continuation lines belong to the slot until a blank line or NEXT:, and a `·` inside backticks does not split [90m(0.7511ms)[39m[39m
+[32m✔ LEDGER: a deny writes the seat, the pointer line and the pointer paths BEFORE it denies, and never the message [90m(40.7952ms)[39m[39m
+[32m✔ LEDGER: a key shape in the pointer line or an item is redacted in the row [90m(42.6234ms)[39m[39m
+[32m✔ LEDGER: the secret shapes are the second reader worker's, byte for byte (drift guard) [90m(0.1401ms)[39m[39m
+[32m✔ NEVER LOSE A HAND-BACK: with no data dir, or a ledger that cannot be written, a ring that would be denied is ALLOWED [90m(75.407ms)[39m[39m
+[32m✔ FAIL OPEN: a malformed transcript, a missing transcript path and a missing file allow, each with an error row [90m(113.5969ms)[39m[39m
+[32m✔ FAIL OPEN: unparseable stdin, a non-ring tool, a ring with no text, and the reentrancy and dream guards all exit 0 with no decision [90m(247.5164ms)[39m[39m
+[32m✔ IN-TURN: a denied ring, then the read, then the re-send in the SAME turn is allowed (the deny came back as an errored tool result) [90m(78.59ms)[39m[39m
+[32m✔ THE SECOND READER STILL FIRES: both hooks run on the same denied ring in parallel; the gate denies and the second reader still starts its worker and prints nothing [90m(73.5609ms)[39m[39m
+[32m✔ REGISTERED: install.ps1 registers the gate on the two hand-back verbs PLUS chair_inject (D215), the second reader's matcher is UNCHANGED, and the gate registers after it [90m(0.9963ms)[39m[39m
+[32m✔ D215 DISPATCH: chair_inject with no SOURCES line is denied, in-turn, and the reason says it is a DISPATCH that was not delivered [90m(39.056ms)[39m[39m
+[32m✔ D215 DISPATCH: chair_inject with matched items is allowed (a command and a path), and the ring-shaped form to a pane works the same [90m(37.1421ms)[39m[39m
+[32m✔ D215 DISPATCH: a pane's hand-back read in the same turn, then a dispatch citing it, is allowed; an unmatched item is denied naming exactly it [90m(75.8145ms)[39m[39m
+[32m✔ D215 DISPATCH: "SOURCES: none (no state claims)" stays valid for a dispatch that only routes work, and is logged as none [90m(36.5442ms)[39m[39m
+[32m✔ D215 DISPATCH: the dispatch obeys the turn rules: a source read before a KEEPER message is stale, and a notification between is not a boundary [90m(78.3889ms)[39m[39m
+[32m✔ D215 SECOND READER: chair_inject does NOT trigger the second reader (its tool set and its registered matcher are unchanged); a hand-back ring still does [90m(924.6456ms)[39m[39m
+[32m✔ D215 TOKEN: the chair_inject token never appears in sources-gate.jsonl, in the deny reason, on stdout or on stderr: not on a deny, an allow, a none, an empty text or an error, nor when the token is pasted into the text or an item [90m(343.6247ms)[39m[39m
+[32m✔ D215 TOKEN: the ring sha is of the TEXT alone (the token is not in what is hashed), and the hook source never reads tool_input.token into a row [90m(74.3133ms)[39m[39m
+[32m✔ D215 TOKEN: redactToken takes every occurrence out, leaves short or absent tokens alone, and a missing token is a no-op [90m(0.1412ms)[39m[39m
+[32m✔ PLAN: the plan the hook cites exists [90m(0.1359ms)[39m[39m
+[32m✔ HOOK SOURCE: it never writes the message text anywhere, never spawns a process, and never calls the network [90m(0.2588ms)[39m[39m
+[34mℹ tests 56[39m
+[34mℹ suites 0[39m
+[34mℹ pass 56[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 5903.1246[39m
+exit 0

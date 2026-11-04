@@ -1,0 +1,626 @@
+[
+ {
+  "id": "E-legacy-5..0",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-legacy-4..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-legacy-3..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-roll1-5..0",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 3.3e-8, bank seam 1.8e-10 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-roll1-4..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-roll1-3..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-rollp-5..0",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 3.3e-8, bank seam 1.8e-10 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-rollp-4..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-rollp-3..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-cup-5..0",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-cup-4..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-cup-3..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-tube-5..0",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-tube-4..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-tube-3..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 1.1e-7, bank seam 0.0e+0 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-tuberoll-5..0",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 4.2e-8, bank seam 1.8e-10 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-tuberoll-4..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 5.2e-8, bank seam 1.8e-10 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "E-tuberoll-3..1",
+  "what": "rotated lap (6 pieces) closes: end-to-start gap 0.000 m, tangent 5.2e-8, bank seam 1.8e-10 (mod 2pi)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-legacy-5..0",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-legacy-5..0-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-legacy-4..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-legacy-4..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-legacy-2..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-legacy-2..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-roll1-5..0",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-roll1-5..0-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-roll1-4..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-roll1-4..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-roll1-2..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-roll1-2..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-rollp-5..0",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-rollp-5..0-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-rollp-4..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-rollp-4..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-rollp-2..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-rollp-2..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-cup-5..0",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-cup-5..0-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-cup-4..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-cup-4..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-cup-2..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-cup-2..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tube-5..0",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tube-5..0-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tube-4..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tube-4..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tube-2..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tube-2..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tuberoll-5..0",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tuberoll-5..0-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tuberoll-4..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tuberoll-4..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tuberoll-2..1",
+  "what": "the hand-built open track passes checkDoc (every joint C1: an INDEPENDENT proof the winding makes the line smooth)",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "F-tuberoll-2..1-bytes",
+  "what": "wrapped save text === hand-built save text",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-del",
+  "what": "Delete selected on a wrapped run of a closed lap: refused CLOSED, nothing changed",
+  "got": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "expect": [
+   true,
+   true,
+   true,
+   true
+  ],
+  "ok": true,
+  "note": "CLOSED: a closed track has no open end to delete from; Ctrl+Backspace removes th"
+ },
+ {
+  "id": "G-del2",
+  "what": "proposeDelete called directly on it: also refused by name, no preview",
+  "got": [
+   true,
+   true
+  ],
+  "expect": [
+   true,
+   true
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-sculpt",
+  "what": "D244b: Sculpt with a WRAPPED selection offers no piece (it needs ONE)",
+  "got": null,
+  "expect": null,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-sculpt2",
+  "what": "beginSculpt on it: refused, no drag",
+  "got": [
+   null,
+   true
+  ],
+  "expect": [
+   null,
+   true
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-info",
+  "what": "a 4-piece wrapped run: ids in lap order, count 4, length the sum of those four, atEnd false",
+  "got": [
+   [
+    "p5",
+    "p6",
+    "p1",
+    "p2"
+   ],
+   4,
+   925.49,
+   false,
+   true
+  ],
+  "expect": [
+   [
+    "p5",
+    "p6",
+    "p1",
+    "p2"
+   ],
+   4,
+   925.49,
+   false,
+   true
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-open",
+  "what": "an OPEN track never wraps: the run is 0..n-1",
+  "got": [
+   0,
+   5,
+   6
+  ],
+  "expect": [
+   0,
+   5,
+   6
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-same",
+  "what": "shift-click on the same piece: one piece",
+  "got": 1,
+  "expect": 1,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-anchor",
+  "what": "the first piece stays the anchor: p2 then p6 (across the line) then p4 (inside)",
+  "got": [
+   [
+    "p6",
+    "p1",
+    "p2"
+   ],
+   [
+    "p2",
+    "p3",
+    "p4"
+   ]
+  ],
+  "expect": [
+   [
+    "p6",
+    "p1",
+    "p2"
+   ],
+   [
+    "p2",
+    "p3",
+    "p4"
+   ]
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-tie-real",
+  "what": "on the keeper's real ovals (3 read, read only): every exact tie (9) stays inside the lap",
+  "got": 0,
+  "expect": 0,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-rest",
+  "what": "the rest of the lap (4 pieces, p2..p5) selected inside",
+  "got": [
+   4,
+   1,
+   4
+  ],
+  "expect": [
+   1,
+   4,
+   4
+  ],
+  "ok": false,
+  "note": ""
+ },
+ {
+  "id": "G-rot",
+  "what": "the two saved runs put back at an EMPTY head: the rotated lap has all 6 pieces, joined (no refusal)",
+  "got": [
+   6,
+   "ok"
+  ],
+  "expect": [
+   6,
+   "ok"
+  ],
+  "ok": true,
+  "note": "added the piece \"rest\" at the head: 4 pieces (Ctrl+Z takes it back)"
+ },
+ {
+  "id": "G-rot-closed",
+  "what": "marked closed it is a valid closed document",
+  "got": "ok",
+  "expect": "ok",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G-export",
+  "what": "the rotated lap EXPORTS (every check on) like any closed lap",
+  "got": "buildPath: closed loop does not close (position 3.38e+2 m, tangent 1.34e+0)",
+  "expect": "exports",
+  "ok": false,
+  "note": ""
+ }
+]

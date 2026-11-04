@@ -1,0 +1,21 @@
+head laid by {"length":120,"targets":{"e":-20}} ends e [33m-20[39m slope [33m0[39m
+  then e 0 over 100 -> accepted; e pts -20 -20 -20 -14.057 -5.943 0 0 0
+  a continuing piece (no target) ends e [33m-20[39m slope [33m0[39m pts -20 -20 -20 -20 -20 -20
+  then e 0 over 100 -> accepted; e pts -20 -20 -20 -14.057 -5.943 0 0 0
+head laid by {"length":120,"transition":60,"targets":{"e":-20}} ends e [33m-20[39m slope [33m0[39m
+  then e 0 over 100 -> accepted; e pts -20 -20 -20 -14.057 -5.943 0 0 0
+  a continuing piece (no target) ends e [33m-20[39m slope [33m0[39m pts -20 -20 -20 -20 -20 -20
+  then e 0 over 100 -> accepted; e pts -20 -20 -20 -14.057 -5.943 0 0 0
+head laid by {"length":40,"transition":20,"targets":{"e":-20}} ends e [33m-20[39m slope [33m0[39m
+  then e 0 over 100 -> accepted; e pts -20 -20 -20 -14.057 -5.943 0 0 0
+  a continuing piece (no target) ends e [33m-20[39m slope [33m0[39m pts -20 -20 -20 -20 -20 -20
+  then e 0 over 100 -> accepted; e pts -20 -20 -20 -14.057 -5.943 0 0 0
+hand-built tail ends { v: [33m-10[39m, m: [33m-0.49999994999999997[39m }
+  file tail, then e 0 -> REFUSED JOINT JOINT: piece 2 (p3): e starts with slope 0, the previous piece ends with -0.49999994999999997 (every road joint is C1 in
+  file tail, then e -5 -> REFUSED JOINT JOINT: piece 2 (p3): e starts with slope 0, the previous piece ends with -0.49999994999999997 (every road joint is C1 in
+  file tail, then e -20 -> accepted; e pts -10 -13.333 -20 -20 -20 -20 -20 -20
+  file tail, then no target -> REFUSED JOINT JOINT: piece 2 (p3): e starts with slope 0, the previous piece ends with -0.49999994999999997 (every road joint is C1 in
+rising tail at 134 ends { v: [33m134[39m, m: [33m0.4999999500000015[39m }
+  rising tail near cap, then e 134.5 -> REFUSED JOINT JOINT: piece 2 (p3): e starts with slope 0.075, the previous piece ends with 0.4999999500000015 (every road joint is C1 
+  rising tail near cap, then e 100 -> REFUSED JOINT JOINT: piece 2 (p3): e starts with slope 0.075, the previous piece ends with 0.4999999500000015 (every road joint is C1 
+  rising tail near cap, then no target -> REFUSED JOINT JOINT: piece 2 (p3): e starts with slope 0.075, the previous piece ends with 0.4999999500000015 (every road joint is C1 

@@ -1,0 +1,27 @@
+lockrun: holding the lock at 2026-10-27T02:34:11.682Z; starting c483 timing session row7-red
+[31m✖ row 7: a 1,000 m piece with a left edge typed, stretched on an empty track and turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms) [90m(15115.991ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 15564.7673[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\drag-frame.test.js:167:1
+[31m✖ row 7: a 1,000 m piece with a left edge typed, stretched on an empty track and turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms) [90m(15115.991ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: aqua, a 1000 m stretch with a left edge typed, empty drag: p95 9.7 / 10.6 ms (median 1.3 / 1.3), over 6.9 ms, 362.3 / 355.7 work frames a second
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-c483\[39mapp\test\drag-frame.test.js:173:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+lockrun: done at 2026-10-27T02:34:27.281Z, exit 1

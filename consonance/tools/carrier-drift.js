@@ -161,9 +161,21 @@ function isDatedExtract(root, rel) {
   }
 }
 
+// ── EVIDENCE COPIES (D296) ──────────────────────────────────────────────────────────────
+// A directory whose name ends `_evidence` holds what a seat RAN or COPIED to back a hand-back:
+// byte copies of the librarian's intake (which quotes BOOT's amendments), scan outputs, dumps.
+// They are a record of a past run, never read at a wake, and a copy cannot be "corrected" without
+// ceasing to be the evidence. 20 findings on D296 were all in such copies. Same class as js-suite's
+// SKIP_DIRS `_evidence`. Skipped as a TRACE (counted and printed), never silently, and only on the
+// WHOLE final segment suffix: `foo_evidencex/` and a bare `evidence/` stay carriers.
+const TRACE_EVIDENCE_RULE = 'any directory named *_evidence';
+function isEvidenceCopy(rel) {
+  return rel.split('/').slice(0, -1).some((seg) => seg.endsWith('_evidence'));
+}
+
 /** The one trace predicate. Everything that splits carriers from traces goes through here. */
 function isTraceFile(root, rel) {
-  return TRACE_PREFIXES.some((p) => rel.startsWith(p)) || isDatedExtract(root, rel);
+  return TRACE_PREFIXES.some((p) => rel.startsWith(p)) || isEvidenceCopy(rel) || isDatedExtract(root, rel);
 }
 
 // ── CH-4: the instruction-reachable set ──────────────────────────────────────────────────
@@ -747,7 +759,7 @@ function report(res, opts = {}) {
   say('CARRIER DRIFT — registered withdrawals vs the carriers that still assert them');
   say();
   say('  corpus: ' + res.counts.carriers + ' carriers · ' + res.counts.traces +
-      ' traces skipped (' + TRACE_PREFIXES.join(', ') + ', ' + TRACE_EXTRACT_RULE + ')');
+      ' traces skipped (' + TRACE_PREFIXES.join(', ') + ', ' + TRACE_EXTRACT_RULE + ', ' + TRACE_EVIDENCE_RULE + ')');
   if (res.counts.ch4 !== undefined) {
     say('  CH-4:   ' + res.counts.ch4 + ' instruction-reachable from ' + CH4_ROOTS.join(' + ') +
         ' at depth ' + CH4_DEPTH + ' · ' + res.counts.ch4InCorpus + ' of them inside the scanned corpus' +
@@ -865,5 +877,5 @@ if (require.main === module) {
 module.exports = {
   scan, census, collapse, corpus, report, ch4Walk, ch4Targets,
   TRACE_PREFIXES, CH4_ROOTS, CH4_DEPTH, CH4_SEEDED_DIRS, CH4_BRIEF_DIR, REPO, REGISTRY,
-  TRACE_EXTRACT_PATH, TRACE_EXTRACT_DECLARATION, TRACE_EXTRACT_RULE, isDatedExtract, isTraceFile,
+  TRACE_EXTRACT_PATH, TRACE_EXTRACT_DECLARATION, TRACE_EXTRACT_RULE, TRACE_EVIDENCE_RULE, isEvidenceCopy, isDatedExtract, isTraceFile,
 };

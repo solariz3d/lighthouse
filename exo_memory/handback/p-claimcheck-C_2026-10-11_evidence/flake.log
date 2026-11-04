@@ -1,0 +1,9 @@
+== C d305 flake check · asked 2026-10-12T06:05:20.066Z · lock held 2026-10-12T06:05:20.093Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d305-wt && for i in 1 2 3 4 5 6; do node --test --test-reporter=tap consonance/hooks/claim-check.test.js 2>&1 | grep -E '^not ok' -A8 | head -24; echo "run $i done"; done
+run 1 done
+run 2 done
+run 3 done
+run 4 done
+run 5 done
+run 6 done
+== exit 0 · done 2026-10-12T06:05:22.609Z

@@ -1,0 +1,68 @@
+{
+ "exe": "t180-track-builder.exe",
+ "pid": 12564,
+ "started": "2026-10-03T13:40:25.882Z",
+ "errors": [],
+ "console": [],
+ "movedOffscreen": "2",
+ "ready": {
+  "canvas": true,
+  "extend": true,
+  "tauri": true
+ },
+ "before": {
+  "state": {
+   "status": "unsaved",
+   "mode": "core",
+   "words": 0
+  },
+  "canvas": {
+   "x": 320,
+   "y": 44,
+   "width": 1064,
+   "height": 692.8125
+  },
+  "pixels": {
+   "width": 1064,
+   "height": 692,
+   "corner": [
+    8,
+    9,
+    11
+   ],
+   "sampled": 184072,
+   "drawn": 1068,
+   "drawnShare": 0.0058,
+   "distinctColours": 20
+  }
+ },
+ "after": {
+  "state": {
+   "status": "unsaved •",
+   "mode": "core",
+   "words": 0
+  },
+  "pixels": {
+   "width": 1064,
+   "height": 692,
+   "corner": [
+    8,
+    9,
+    11
+   ],
+   "sampled": 184072,
+   "drawn": 69676,
+   "drawnShare": 0.3785,
+   "distinctColours": 74
+  }
+ },
+ "afterProbe": {
+  "cssWidth": 1064,
+  "cssHeight": 693,
+  "placeholder": false,
+  "previewText": null,
+  "errorBanner": []
+ },
+ "autosave": "none",
+ "ended": "2026-10-03T13:40:33.554Z"
+}

@@ -1,0 +1,14 @@
+[32m✔ row 1: bankLapWith over a lap closed by close() is byte for byte D473's (a4bfe52) on four public laps [90m(1097.4099ms)[39m[39m
+[32m✔ row 2: Close's own press (runCloseBest, which banks the lap it closes) is byte for byte D473's (a4bfe52) on the two public laps that close that way [90m(5238.7405ms)[39m[39m
+[34mℹ tests 2[39m
+[34mℹ suites 0[39m
+[34mℹ pass 2[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 6450.1556[39m
+
+# stderr
+
+# exit 0 in 6.5 s

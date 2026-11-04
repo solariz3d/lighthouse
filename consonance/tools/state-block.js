@@ -73,13 +73,18 @@ function sh(cmd, args, cwd = REPO) {
 function repoSection() {
   const head = sh('git', ['log', '-1', '--format=%h %s']);
   const dirty = sh('git', ['status', '--porcelain']);
-  const unpushed = sh('git', ['rev-list', '--count', 'origin/main..HEAD']);
+  // D273 lap 3 (pane B): a fresh history with no origin/main (a stranger's first checkout, the generated consumer) is a STATE, said in words; FAILED
+  // stays for git itself failing (not a repository at all), which the empty-directory test pins at exactly three FAILED lines
+  const isRepo = sh('git', ['rev-parse', '--git-dir']) !== null;
+  const hasUpstream = isRepo && sh('git', ['rev-parse', '--verify', '--quiet', 'origin/main']) !== null;
+  const unpushed = hasUpstream ? sh('git', ['rev-list', '--count', 'origin/main..HEAD']) : null;
   const lines = [];
   if (head === null) lines.push('FAILED: git log did not run here');
   else lines.push('HEAD ' + head);
   if (dirty === null) lines.push('FAILED: git status did not run here');
   else lines.push('working tree ' + (dirty ? dirty.split('\n').length + ' file(s) modified' : 'clean'));
-  if (unpushed === null) lines.push('FAILED: git rev-list did not run here');
+  if (isRepo && !hasUpstream) lines.push('no origin/main here yet (a history with no remote): nothing to count as unpushed');
+  else if (unpushed === null) lines.push('FAILED: git rev-list did not run here');
   else lines.push(unpushed + ' commit(s) unpushed');
   return { title: 'repo', cmd: 'git log -1 --format="%h %s"; git status --short', lines };
 }
@@ -203,20 +208,29 @@ function nameSection() {
   };
 }
 
-function liveSection() {
+// D454: the ledgers live in the data dir, resolved by the app's rule (CONSONANCE_DATA, then ~/.consonance.json data_dir, then
+// %USERPROFILE%\.consonance), not at one machine's fixed path. On a machine whose config sets data_dir, the paths are that folder's.
+function liveDataDir(env = process.env) {
+  const e = String(env.CONSONANCE_DATA || '').trim(); if (e) return e;
+  const home = env.USERPROFILE || env.HOME || '';
+  try { const d = String((JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, '')) || {}).data_dir || '').trim(); if (d) return d; } catch (_) { /* none: the default */ }
+  return path.join(home, '.consonance');
+}
+function liveSection(env = process.env) {
   const lines = [];
-  const hw = 'C:\\Consonance\\data\\head-watch.jsonl';
+  const dir = liveDataDir(env);
+  const hw = path.join(dir, 'head-watch.jsonl');
   try {
     const rows = fs.readFileSync(hw, 'utf8').trim().split('\n');
     const last = JSON.parse(rows[rows.length - 1]);
     lines.push('head-watch ledger ' + rows.length + ' row(s), last ' + last.event + ' at ' + last.ts.slice(0, 16).replace('T', ' '));
   } catch (e) { lines.push('head-watch ledger unreadable (' + (e.code || 'error') + ')'); }
-  const pc = 'C:\\Consonance\\data\\precompact.jsonl';
+  const pc = path.join(dir, 'precompact.jsonl');
   try {
     const rows = fs.readFileSync(pc, 'utf8').trim().split('\n');
     lines.push('precompact ledger ' + rows.length + ' attempt(s) recorded');
   } catch (e) { lines.push('precompact ledger absent — the hook has not fired here'); }
-  return { title: 'live', cmd: 'tail -1 C:\\Consonance\\data\\head-watch.jsonl', lines };
+  return { title: 'live', cmd: 'tail -1 ' + hw, lines };
 }
 
 /* THE TRIGGER TABLE. Added 2026-08-22, and it replaces the card DESCRIPTIONS in the block for a
@@ -275,12 +289,31 @@ function sourceSection() {
   return { title: 'triggers', cmd: 'cat ' + SRC, lines };
 }
 
-function render(sections) {
+/* THE STAMP (D309 part 1, from E's carriers survey, handback/p-carriers-E_2026-10-12.md). The block carried 33 of 37 figures with no as-of time,
+ * and its last three readers met HEADs 61, 69 and 171 commits behind main; one read "0 commit(s) unpushed" hours after it was false. A block is
+ * a snapshot, so it now says WHEN, as the pulse does: the header names the generation time in UTC and machine-local (with the offset), and
+ * every section whose figures can go stale says "as of" that time beside its own check command. The NAME line carries no figure, so no stamp.
+ * Text only: no gate, nothing a reader must do differently. STATE_BLOCK_NOW (an ISO time) is the CLI's clock seam, as STATE_BLOCK_REPO is the repo's. */
+const AS_OF = new Set(['repo', 'journal', 'instruments', 'triggers', 'live']);
+const pad2 = (n) => String(n).padStart(2, '0');
+function stampOf(now) {
+  const t = new Date(Math.floor(now.getTime() / 1000) * 1000);
+  const off = -t.getTimezoneOffset(), h = t.getHours();
+  const local = t.toLocaleDateString('en-US', { weekday: 'short' }) + ' ' + (t.getMonth() + 1) + '/' + t.getDate() + '/' + t.getFullYear() + ' ' +
+    ((h % 12) || 12) + ':' + pad2(t.getMinutes()) + ' ' + (h < 12 ? 'AM' : 'PM');
+  const offs = 'UTC' + (off < 0 ? '-' : '+') + pad2(Math.floor(Math.abs(off) / 60)) + ':' + pad2(Math.abs(off) % 60);
+  return { line: 'generated ' + t.toISOString().replace('.000Z', 'Z') + ' (' + local + ' local, ' + offs + '); a section marked "as of" states what held then', hhmm: pad2(t.getUTCHours()) + ':' + pad2(t.getUTCMinutes()) + 'Z' };
+}
+function clock() { const e = process.env.STATE_BLOCK_NOW; const t = e ? new Date(e) : new Date(); return Number.isNaN(t.getTime()) ? new Date() : t; }
+
+function render(sections, opts = {}) {
   const secs = sections || [repoSection(), journalSection(), instrumentSection(), sourceSection(), nameSection(), liveSection()];
+  const st = stampOf(opts.now || clock());
   const parts = ['[state-block: machine-generated, regenerate with `node consonance/tools/state-block.js`]'];
+  parts.push(st.line);
   for (const s of secs) {
     parts.push('');
-    parts.push(s.title.toUpperCase() + '  (check: ' + s.cmd + ')');
+    parts.push(s.title.toUpperCase() + (AS_OF.has(s.title) ? '  as of ' + st.hhmm : '') + '  (check: ' + s.cmd + ')');
     for (const l of s.lines) parts.push('  ' + l);
   }
   let text = parts.join('\n');

@@ -1,0 +1,50 @@
+MESSAGE 79  msg_011Cfswno2JSXNajF6KSd3QE  seat chair  ts 2026-10-10T04:43:41.771Z  turn L99240..L99257 (next prompt L99268)
+CLAIMS:
+  [msg_011Cfswno2JSXNajF6KSd3QE|14] "a `'\d'` in a JS string is `d`": the JS rule itself is standard, but check that this was the actual parser bug here.
+
+--- L99240 user 2026-10-10T04:43:30.094Z
+USER: 
+
+<pasted_content id="f5af">
+[librarian:LIB] D283 is read. A found the takeover was CORRECT. You called TaskStop on the land_turnby run at 01:58:50.042Z, its output file ends "[killed]" at 01:58:50.101Z, and the takeover came 1.548 s later. A measured all three candidates and ruled each out: kill(0) does see processes across seats. So "a live lock was taken" was a wrong claim from your seat, caught by A, and it goes in the WRONG column. No blame in it: TaskStop followed straight by a takeover looks exactly like a live-lock takeover until the clocks are lined up.
+
+Land heavyrun-a (7f17a048) anyway. It's the hardening you asked for: a lock younger than 30 min is taken only when tasklist agrees the holder is gone. It brings 13 new rows (8 of the first 11 red on the old code) and a new heavy-run.mutants.js, with 35 of 37 mutants caught. Nothing to install.
+
+Ruling on A's open question, whether a TaskStop should release the lock itself: no. A measured that a stopped task kills its whole tree, and the next waiter taking the lock within a poll is the right outcome. No new hook.
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-heavyrun-A_2026-10-09.md
+
+OUTPUT → NEXT: changed — the takeover is reclassified as correct, the hardening lands, and no TaskStop hook is added
+NEXT: chair land 7f17a048 when the Sharp install is done
+</pasted_content id="f5af">
+
+--- L99250 assistant 2026-10-10T04:43:35.014Z
+TEXT: A is right, and the mistake was mine. I stopped my own test run, read the lock file seconds later, saw C's takeover, and took it for a theft from a live run. A lined up the timestamps: I stopped the run at 01:58:50.04, its output ended at .10, and C took the lock 1.5 seconds after that. So the lock did exactly what it should. Checking where Sharp has got to:
+--- L99251 assistant 2026-10-10T04:43:36.225Z
+TOOL_USE Bash [toolu_01TxkBjVWdWcA9U9GaCRxK3P]: {"command":"grep -v \"^heavy-run: waiting\" \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01/tasks/bg5l5g787.output\" | tail -12","description":"Read the Sharp harness and build progress"}
+--- L99252 user 2026-10-10T04:43:36.488Z
+RESULT [toolu_01TxkBjVWdWcA9U9GaCRxK3P]: HARNESS app/test/core-mutation.test.js {"tests":60,"pass":60,"fail":0}
+--- L99254 assistant 2026-10-10T04:43:37.782Z
+TOOL_USE Read [toolu_01QF8uzT32h3Y2aMwViFZpsC]: {"file_path":"C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\memory\\serialise-heavy-test-runs.md"}
+--- L99255 user 2026-10-10T04:43:37.817Z
+RESULT [toolu_01QF8uzT32h3Y2aMwViFZpsC]: <system-reminder>This memory is 9 days old. Memories are point-in-time observations, not live state — claims about code behavior or file:line citations may be outdated. Verify against current code before asserting as fact.</system-reminder>
+1	---
+2	name: serialise-heavy-test-runs
+3	description: "Two kernel crashes on D (0xD1 09-28, 0x3B 09-30) under concurrent node test load; heavy runs go one at a time, inside a run too (--test-concurrency=1, mutation suites serialised)."
+4	metadata:
+5	  node_type: memory
+6	  type: project
+7	  originSessionId: 0c0c0c0a-0000-4000-8000-000000000a01
+8	  modified: 2026-09-30T10:46:19.407Z
+9	---
+10	
+11	D (the keeper's desktop) crashed twice under concurrent node test load: bugcheck 0xD1 at 01:46 on 2026-09-28 (four panes running node at once), and 0x3B at 04:13 on 2026-09-30 (B's full suite at --test-concurrency=4 with mutation files spawning 4 GB children).
+12	
+13	**Why:** the heavy-run lock serialised runs ACROSS seats, but one run still fanned out concurrent 4 GB children inside itself. The librarian infers hardware under load (RAM/XMP first); the hardware check is the keeper's call, not the loop's.
+14	
+15	**How to apply:** in every packet that runs a full suite or mutation, require `--test-concurrency=1` and serialised mutation suites, plus the heavy-run lock at `--max-old-space-size=4096`, run in the background. After any crash: check the lock's pid is dead (stale), re-hash worktree files before re-running, and never retry in a loop on instability.
+16	
+17	Related: [[worktree-remove-follows-junctions]], [[packet-tiers-feel-vs-geometry]].
+18	
+--- L99257 assistant 2026-10-10T04:43:41.771Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_014NkMBZgEQ9Jn2QPkH8VaFw]: {"replace_all":false,"file_path":"C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\memory\\serialise-heavy-test-runs.md","old_string":"Related: [[worktree-remove-follows-junctions]], [[packet-tiers-feel-vs-geometry]].","new_string":"**A lock takeover right after I stop a run is the lock working, not a bug (2026-10-09, D283).** I TaskStopped my own suite, read heavy-run.lock seconds later, saw C's `took_over` of my pid, and reported \"a live lock was taken\" — wrong: A lined up the clocks (stop 01:58:50.04, output \"[killed]\" .10, takeover 1.5 s later; kill(0) DOES see across seats). Before claiming a takeover was of a live run, compare its timestamp with my own stop/kill times. And when a harness reports 0 tests, suspect my own parser first (a `'\\d'` in a JS string is `d`).\n\nRelated: [[worktree-remove-follows-junctions]], [[packet-tiers-feel-vs-geometry]]."}

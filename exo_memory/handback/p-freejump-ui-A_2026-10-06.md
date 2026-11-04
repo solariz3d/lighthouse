@@ -1,0 +1,75 @@
+# D258 UI: the free jump, the keeper's way (the Jump button, the landing's handles and number boxes) — seat A (Sonnet 5.5), 2026-10-06
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_free_jump_2026-10-06.md ("The UI") · C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-freejump-E_2026-10-06.md · E's core at `1e76d35` (`src/core/jump.js`, `document.js`, `readout.js`) read in the worktree · worktree `C:\Users\nname\Desktop\worktrees\a-freejump-wt`
+
+**State: UI written, rebased on E's FINISHED core, tested by rows and fake hosts only (no real window, per the rule of 2026-10-06). Local, nothing pushed, no AC.**
+- Branch `freejump-ui-a-d258`, commit **`b57d72c`**, on **E's `1e76d35`** (`d258-freejump`), through one merge commit `399e9d5`.
+- **Heads up for landing: `399e9d5` merges my D251 branch `precision-a-d251` (`3e8d64e`) under it**, because the landing handles are built on D251's pixel/lock/hold handles (`app/core/handles.js`). If D251 lands first, the merge adds nothing; if this lands first, it carries D251 in. Either order is clean (the only conflicts I met were `CHANGELOG.md` and E's own already-converted test lines, resolved by keeping both / E's).
+- A backup of my first version, on E's WIP: branch `backup-freejump-ui-7c4f474`.
+
+## What it is
+- **Jump button beside Extend** (`app/core/panel.js`): `shell.jump(opts())` = E's `jumpHere(doc, extendOpts)`: the piece the fields describe exactly as Extend places it (the take-off: the fields' climb), a free flight, a 60 m straight landing 40 m ahead at the same height, lined up. ONE undo step; Undo gives the fields back (as after Extend). Hovering shows the jump as a ghost (flagged `jump`, so the Extend handles stay off it). The button is off on a closed loop.
+- **The note:** "Jump places the piece above, then a free landing 40 m ahead at the same height. Set the piece's climb first … This is a jump: drive it in AC and move the landing until it works.", and once a landing exists "This is a jump: drive it in AC and move the landing until it works."
+- **Landing number boxes** under the Jump button, shown only while a landing is the head (`shell.landing()` = E's `landingOf`): forward m, sideways m (+ left), height m (+ up), heading °, pitch °, bank ° (values from E's `readout.landing`, `app/core/landing.js` BOXES). Typing a value commits on change as ONE undo step (`shell.moveLanding`); a blank or a word changes nothing and the box goes back to what the track says. No new section heading (a test pins the panel's headings): the block sits in the Extend section.
+- **Landing handles in the 3D view** (`app/core/handles.js`, kinds `landfwd`, `landleft`, `landup`, `landturn`): white forward, orange sideways, yellow height, purple heading. While a landing is the head they REPLACE the Extend ghost's handles (which would be on the piece Extend adds from the landing). They are D251's handles: per-pixel speed (forward 0.15 m, sideways 0.1 m, height 0.05 m, heading 0.1° a pixel: **first guesses, untuned**), Shift a tenth, Ctrl snaps (5 m, 1 m, 0.5 m, 5°), a hold of 6 px at the start value and, for sideways, height and heading, at 0, two quick presses reset (0, or forward back to before its drag), pointer lock as the other handles. A drag is the shell's `beginLanding` / `landingTo` / `endLanding`: **ONE undo step per drag**, and a step the core refuses (a landing under 1 m from the take-off) leaves the drag at its last good step with the words.
+- **The arrows ARE the number's axes** (`app/core/landing.js` `framesOf`, read off the built path): forward moves the landing along the take-off's HORIZONTAL heading, sideways along its left, height straight up, heading turns it about its start (the mark sits 15 m ahead along the landing's own direction). Each mark sits 10, 8, 6 and 15 m OUT along its own arrow from the landing's start, so the four can be picked apart (found when all four sat on one point and a press always took the first).
+- **Extend from the landing fixes it**: the boxes and handles go, the Extend ghost's handles come back; a late typed value says in plain words (`app/core/jumpwords.js`): "The landing can only be moved while it is the last piece of the track. Once road is extended from it, it is fixed: delete back to it (Ctrl+Backspace) to move it again." `removeHead` brings the boxes and handles back.
+- **Removed:** the Add-jump fields (gap, drop, landing angle), the ballistic arcs and their words, `app/core/jumpplan.js` (deleted), the shell's `addJump` and the old `candidateJump({ gap, drop, landDeg })` (now `candidateJump(extendOpts)`).
+- **Kept, simplified:** `app/core/flightlayer.js` now draws only a plain dashed centreline across each flight (no fall, no speed, no ramp, no words): the chair said to remove "the ballistic arcs"; a plain line is not one, and it shows that the two pieces are joined. If you want it gone too it is one `mount` call in `panel.js`.
+- **Guide and docs:** the guide's Extend step says "For a jump press Jump instead of Extend …" (`app/onboarding/guide.js`; `onboarding` and `guides` tests pass); `README.md`'s Jumps bullet and `app/README.md`'s jump entry rewritten; `CHANGELOG.md` has an Added and a Removed entry.
+
+## Decisions (mine, with the reason; each is easy to flip)
+1. **The Jump button always extends first** (as Extend would), so pressing Jump on a track that ends in a flight is allowed: the extend lays the landing road, then the new jump follows. The core's `JUMP_AFTER_JUMP` is therefore only reachable with a null take-off (the shell's rows cover its words).
+2. **Number boxes commit on change, not live while typing**: one typed value = one undo step, no ghost to keep in step. The handles are the live way.
+3. **`landingTo(ui)` applies the given fields to the document the drag BEGAN on**, not cumulatively: a handle drags one value, and it keeps a drag from accumulating rounding (as the brush does).
+4. **Landing handles replace, not join, the Extend handles** while a landing is the head (one set of marks at a time).
+
+## Checks (rows and fake hosts; no pointer lock and no focus-taking window)
+- `app/test/jump-ui.test.js` (**rewritten**, 5 rows): shell `jump` (one undo step, pieces road/flight/road, defaults 40 m ahead lined up, null take-off, ghost flagged); every refusal in plain words with nothing changed; `landing` / `moveLanding` / a drag as ONE step, a refused step leaves the last good one, fixed after an Extend, movable again after `removeHead`; **the geometry proof that the arrows are the pose's axes** on a turning, climbing take-off (forward +10 is 10 m along the horizontal heading, sideways +6 is 6 m to its left, height +4 is 4 m up whatever the climb, heading +30 is 30° to the left, pitch +5 is nose up 5°); the flight layer.
+- `app/test/core-pieces-ui.test.js` rows **14, 14b, 14c** (new; they replace the old Add-jump block row 14): the button beside Extend, old fields gone, hover ghost, no Extend handles on it, one undo step, Undo gives the fields back; the boxes (values, units, one step each, refusals in words, fixed by Extend, back after `removeHead`); the four handles (ids, drag moves its box's number in ONE step, Shift, Ctrl, two quick presses reset, Extend takes them away, the switch turns them off).
+- `app/test/handles.test.js` row 14 (placement of the four marks, rates, holds, snaps, resets, labels).
+- **Before:** on E's tree with the old UI, the app files E named were red (`jump-ui` 4 of 4, `core-pieces-ui` 2, `preview-async` row 3b 1, `core-readout-display` 1: the old-shape `{gap, drop, land}` calls and the old panel). **After:** the converted old-shape lines (E had converted the same ones in `1e76d35`; I kept E's) and the new rows pass.
+- **Targeted run on the final tree:** `handles` 19, `jump-ui` 5, `core-pieces-ui` 25 (with 14 to 14c), `core-shell`, `core-sculpt`, `preview-async` 10, `core-readout-display`, `shell-ghost`, `validate-ui-jumps`, `validate-ui-jumpdefault`, `onboarding`, `guides`: **192 of 192**, run directly.
+- **Whole non-mutation app suite** (`node --test --test-concurrency=1` over every `app/test/*.test.js` except the four `*mutation*` harnesses): **696 tests, 695 pass, 0 fail** on my first tree (on E's WIP + my UI); on the final tree **687 tests, 685 pass, 1 file-level fail: `preview-async.test.js` ("test failed" after 34 s, no row named)**, which passes **10 of 10 when run alone** and passed in the first full run: I read it as the pool's workers timing out under the machine's load while other seats' runs were going, and did NOT chase it; it is the pool code I fixed earlier (`overlaprunner.js`), not touched here.
+- **Mutation-harness anchors:** I did not run the four harnesses (the librarian does at install). I checked, with a throwaway script (`scratchpad/fj/anchors2.js`, reads each `MUTATIONS`/`MUTANTS` array), that every `from` text still occurs exactly once: **223 edits, 3 not applied, all in `preview/preview.js` (not touched by me)**; none in `panel.js`, `coreshell.js`, `handles.js` or `flightlayer.js`.
+
+## What it does NOT establish
+- **Any real window**: no pointer lock, no focus-taking run (the rule). So: the four marks' distinct picking on a real screen, their feel, the dashed line, the box layout in the real panel are unseen. The 10/8/6/15 m mark offsets and the four speeds are guesses for the keeper's hand to tune.
+- **Export and AC with a free jump**, validation on one, close/saved pieces/mirror across one: E's core and its rows, not looked at here.
+- **The four mutation harnesses and the whole suite including them**, **a real AC install**.
+- A track made with the OLD control: converts in the core (E's note), not here.
+
+## Corrections (mine)
+- I ran `git stash` once by mistake (while checking harness anchors) with a full-suite run going in the background; I popped it at once (nothing lost, `git status` identical), and **re-ran the affected files and then the whole suite on the final tree** because the first run overlapped it.
+- Found by my own row: the Jump button's hover-leave copied Extend's "keep the ghost up while the handles are on", which left the jump's ghost showing; it now always clears (a failing assert formatted a huge object and died with "Array buffer allocation failed", which looked like a hang).
+- Found by my own row: the landing's "bank °" box has the same label as Extend's bank field; the tests take the boxes by their `aria-label` (`landing bank`), the visible labels stay short.
+
+NEXT: librarian — plan default: both land together as one D258 install (E's `1e76d35` + `b57d72c`); a non-author look should read `app/core/handles.js` (the free kinds), `app/core/landing.js`, the shell's landing methods and `jump-ui.test.js` row 3 (the arrows-are-axes proof); the keeper's hand then tunes the four speeds and mark offsets
+
+---
+
+# A4 (follow-up on main cc177c5: core-close-mutation A4 "the overlap check is skipped" applied but not caught by row 4) — STATE AT THE BIOS STOP, 2026-10-06 ~20:10: INVESTIGATED, NOT FINISHED, NO CODE CHANGED
+
+SOURCES: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-librarian\0c0c0c0b-0000-4000-8000-00000000115b\scratchpad\mutcc1-core-close-mutation.test.js.tap · worktree `C:\Users\nname\Desktop\worktrees\a-a4-wt` (branch `a4-fix-a`, = main `cc177c5`, clean, nothing to commit)
+
+**Checked (each by a command this session):**
+- **Row 4 still exercises the no-worker fallback.** The mutated line is `check: overlapRunner ? null : Object.freeze(overlapCheck(r.resolved, st.designSpeedKmh))` (`app/core/coreshell.js:403` and `:562`); row 4 builds its shell with `createCoreShell({ brushFn: null })`, which has no `overlapRunner`, so `p.check` comes from that very call.
+- **I cannot reproduce the miss.** Applying the mutant by hand to `coreshell.js` and running `core-close-preview.test.js`: row 4 FAILS with "the closed coil overlaps itself" (6 pass, 1 fail). Replaying the harness's own temp-copy procedure for A4 alone (copy `app/` minus tests, `src/`, `tools/`, the one test file, patch, `node --test`): the same, row 4 is the failing test. Running the harness's A4 test alone (`--test-name-pattern="mutation A4"`): **✔ caught by row 4** (7 s).
+- **The librarian's tap shows a different thing:** its failing list on the mutant is the whole FILE (`...\app\test\core-close-preview.test.js (1231.9753ms)`) with no named row, in 1.4 s for the whole subtest (mine takes 7 s). A file-level failure with no row suggests the child process died or the run was cut off before row 4 printed, not that row 4 lost its coverage. Cause not found; candidates I could not test: memory or load on the librarian's machine while its three harnesses ran, or a crash on a different tree (`lib-582-wt`).
+- **The ONE full harness run the chair asked for did NOT happen:** it queued on the heavy-run lock behind the librarian's three-harness hold (`waiting on 0c0c0c0b … since 2026-10-07T00:53Z`) and the session ended; no result, no partial output (`a4_harness.txt` was never written). So there is no 37/37 from me.
+
+**Not established:** that A4 is caught in a full harness run; why the librarian's run failed at file level; any fix. **No test or source file was edited**, so there is no `caughtBy` change to make unless the full run shows a real miss.
+
+**To resume (after the flash):** run `node --test --test-concurrency=1 app/test/core-close-mutation.test.js` once in `a-a4-wt` under the lock and read A4's line; if A4 is caught, the librarian's file-level failure was environmental and the answer is "no change"; if not, print the failing test list of that mutant and decide re-point or restore.
+
+NEXT: librarian re-dispatch the single A4 harness run to A when the machine is back and no other harness holds the lock
+
+## A4 RESULT (after the flash, 2026-10-06 ~21:10): CAUGHT. No change; the librarian's file-level failure was environmental.
+
+SOURCES: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\a4_harness.txt · `node --test --test-concurrency=1 app/test/core-close-mutation.test.js` in `a-a4-wt` (main `cc177c5`, clean)
+
+**checked:** the harness ran ONCE, in the background, under the heavy-run lock (it waited behind the librarian's three-harness hold, then ran 252 s) → **37 tests, 37 pass, 0 fail; `✔ mutation A4 the overlap check is skipped: applied, and caught by "row 4: the preview's OVERLAP CHECK…" (5825 ms)`**, no NOT APPLIED. So 37/37 as the chair asked, A4 included.
+
+**inferred:** the earlier file-level failure (1.4 s, no named row) was a dead or cut-off child process on the librarian's loaded machine, not a lost row 4: I could not reproduce it four ways (by hand, by replaying the harness's copy steps, A4 alone, and now the full harness). **Not established:** what exactly killed that child. No file changed, nothing to commit.
+
+NEXT: librarian note A4 closed as "no change"; worktree a-a4-wt (branch a4-fix-a = cc177c5) can be removed

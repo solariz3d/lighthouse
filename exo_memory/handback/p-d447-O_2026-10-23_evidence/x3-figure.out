@@ -1,0 +1,13 @@
+sharp: with the scaling | closed: laid 904 m of new road from the end to the start (3 pieces); nothing already built moved; the bank eases to none where the turn changes direction faster than the road can roll (p6, p7)
+  without        | closed: laid 904 m of new road from the end to the start (3 pieces); nothing already built moved; the bank eases to none where the turn changes direction faster than the road can roll (p6, p7)
+  identical
+ramp40: with the scaling | closed: laid 924 m of new road from the end to the start (3 pieces); nothing already built moved; the bank eases to none where the turn changes direction faster than the road can roll (p7)
+  without        | closed: laid 924 m of new road from the end to the start (3 pieces); nothing already built moved; no curve on the lap was banked: its roll would pass the amber
+  p2: phi 60.71°, mean lean 55.5 → 0.0°
+  p4: phi 60.71°, mean lean 55.5 → 0.0°
+  p6: phi 55.56°, mean lean 39.5 → 0.0°
+  p7: phi 60.25°, mean lean 31.1 → 0.0°
+  p8: phi 30.01°, mean lean 19.4 → 0.0°
+  p11: phi 60.71°, mean lean 55.5 → 0.0°
+  p13: phi 60.71°, mean lean 55.5 → 0.0°
+  p15: phi 4.01°, mean lean 5.3 → 2.7°

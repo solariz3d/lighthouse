@@ -1,0 +1,16 @@
+== app/test/drag-ghost.test.js
+✖ row 6: a kept answer is never the answer to another call: kh null and kh NaN are two fields (NaN refused BAD_TARGET as on a fresh document), and a document frozen at the top only is not kept by (its pieces edited in place give the new answer) (4.4232ms)
+ℹ tests 6
+ℹ pass 5
+ℹ fail 1
+✖ failing tests:
+✖ row 6: a kept answer is never the answer to another call: kh null and kh NaN are two fields (NaN refused BAD_TARGET as on a fresh document), and a document frozen at the top only is not kept by (its pieces edited in place give the new answer) (4.4232ms)
+== test/core_turnby.test.js
+ℹ tests 6
+ℹ pass 6
+ℹ fail 0
+== test/turn_corner.test.js
+ℹ tests 9
+ℹ pass 8
+ℹ fail 0
+== test/climb_corner.test.js

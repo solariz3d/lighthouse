@@ -1,0 +1,21 @@
+﻿=== corpus-age.test.js  [ℹ tests 12 ℹ pass 8 ℹ fail 4]
+  ✖ attic/ is excluded from the carried corpus — law 3, in both places (3.1427ms)
+  ✖ referenced files are never proposed, whatever their age (193.6304ms)
+  ✖ the batched age map returns exactly what the per-file git log returned (52.5445ms)
+  ✖ the by-name exclusions match the ones the shelf actually drops (6.8808ms)
+=== corrections-gate.test.js  [ℹ tests 6 ℹ pass 3 ℹ fail 3]
+  ✖ a marker inherited from an EARLIER commit does not excuse a later one (525.2937ms)
+  ✖ GREEN: a correction that strikes IN PLACE passes, though its diff deletes nothing (494.0587ms)
+  ✖ RED: a correction whose diff removes nothing and marks nothing (612.477ms)
+=== librarian-notes.test.js  [ℹ tests 7 ℹ pass 5 ℹ fail 2]
+  ✖ the notes are actually tracked by git — the whole point of the move (47.4529ms)
+  ✖ the notes directory exists in the repo and is not empty (1.1702ms)
+=== second-vantage.test.js  [ℹ tests 34 ℹ pass 32 ℹ fail 2]
+  ✖ heads differ: claim-time AGREE means WORLD-MOVED, no surface (49.1898ms)
+  ✖ heads differ: DISAGREE in both trees surfaces (50.5462ms)
+=== shelf-recursion.test.js  [ℹ tests 11 ℹ pass 8 ℹ fail 3]
+  ✖ review()'s OWN rel resolves — not just the walk's (163.9284ms)
+  ✖ the corpus total is non-zero and counts more than the flat read did (3.248ms)
+  ✖ the fixture is real — there ARE nested .md files, or this whole suite proves nothing (2.9476ms)
+=== corpus-age.synthetic.test.js  [ℹ tests 6 ℹ pass 6 ℹ fail 0]
+=== second-vantage.history.test.js  [ℹ tests 5 ℹ pass 5 ℹ fail 0]

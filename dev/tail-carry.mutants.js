@@ -459,6 +459,32 @@ const MUTANTS = [
     '    void f;\n  }\n  if (!done.ok) {'],
   ['carry-dir: the flush record does not reach the --json object',
     'carried: res.carried || null, flush: res.flush || null,', 'carried: res.carried || null, flushGone: null,'],
+  // ── D639 (c), the keeper's retention rule ──
+  ['retention: the newest tail of a conversation is no longer kept',
+    "    if (!why && newest.get(sid).name === name) why = 'the newest tail of this conversation — the rule keeps one';",
+    "    if (false && !why && newest.get(sid).name === name) why = 'the newest tail of this conversation — the rule keeps one';"],
+  ['retention: a partial is cleared while the ledger lock names a live holder',
+    "        const why = lockLive ? ",
+    "        const why = false ? "],
+  ['retention: a partial is cleared while its own writer is a live node',
+    "          : holderLive({ pid, image: SELF_IMAGE }, o.imageOf) ? ",
+    "          : false ? "],
+  ['retention: the delete path counts its OWN lock as another writer, so a listed partial refuses the delete',
+    "  const lockLive = lockHeld && lockHeld.pid !== process.pid && ",
+    "  const lockLive = lockHeld && (true || lockHeld.pid !== process.pid) && "],
+  // ── D639: fewer panes here than seats on the stick ──
+  ['no-pane: the export no longer records the seat\'s folder',
+    "    entry.cwdName = path.basename(row.cwd);",
+    "    entry.cwdName = undefined;"],
+  ['no-pane: a seat with no pane here is skipped silently again',
+    "    if (known.has(sid) || !e || !e.pending) continue;",
+    "    if (true || known.has(sid) || !e || !e.pending) continue;"],
+  ['no-pane: a folder name of ".." is joined into the path',
+    "e.cwdName !== '.' && e.cwdName !== '..' ? e.cwdName : null;",
+    "e.cwdName !== '.' ? e.cwdName : null;"],
+  ['no-pane: the row no longer says the seat has no pane here',
+    "    if (r.kind === 'no-pane' && r.reason !== 'NO_PANE_HERE') {",
+    "    if (false && r.kind === 'no-pane' && r.reason !== 'NO_PANE_HERE') {"],
 ];
 
 // --only is checked against the list BEFORE anything runs: an id outside it is a refusal, never a run of zero

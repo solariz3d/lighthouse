@@ -105,7 +105,7 @@ test('the 60-minute session gap is the DEFAULT, not only what a caller passes (m
 test('a model file that is not T1\'s is refused BY HASH, before any library is loaded (mutant #12)', () => {
   const { checkEncoderFile } = require('./order-parameter.js');
   const os = require('node:os'), fsx = require('node:fs'), p = require('node:path');
-  const deps = fsx.mkdtempSync(p.join(os.tmpdir(), 'op-enc-'));
+  const deps = require('./scratch.js').mkdtemp('op-enc-');
   const dir = p.join(deps, 'models', 'Alibaba-NLP', 'gte-base-en-v1.5', 'onnx');
   fsx.mkdirSync(dir, { recursive: true });
   fsx.writeFileSync(p.join(dir, 'model_quantized.onnx'), 'not the frozen model');
@@ -229,7 +229,7 @@ test('L061 · main routes BOTH the printed verdict and the written one through t
 // file read — is printed before loadEncoder runs. No models are needed, so these run on a machine without them.
 const fsR = require('fs'), osR = require('os'), pathR = require('path');
 const { spawnSync: spawnR } = require('child_process');
-const tmpR = (tag) => fsR.mkdtempSync(pathR.join(osR.tmpdir(), 'rc2-order-parameter-' + tag + '-'));
+const tmpR = (tag) => require('./scratch.js').mkdtemp('rc2-order-parameter-' + tag + '-');
 const cliR = (args, env) => spawnR(process.execPath, [pathR.join(__dirname, 'order-parameter.js'), ...args],
   { encoding: 'utf8', env: Object.assign({}, process.env, env) });
 

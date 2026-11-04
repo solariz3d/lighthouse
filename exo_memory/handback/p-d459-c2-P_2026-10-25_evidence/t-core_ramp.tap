@@ -1,0 +1,41 @@
+[32m✔ 1 · a number (or no) transition is unchanged: case 0 serialises exactly as it did at 4ccdd58 [90m(5.7693ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 1 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c) [90m(3.8331ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 2 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c) [90m(4.7221ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 3 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c) [90m(3.5319ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 4 serialises exactly as it did at 4ccdd58 [90m(0.638ms)[39m[39m
+[32m✔ 1 · a number (or no) transition is unchanged: case 5 serialises exactly as it did at 4ccdd58 [90m(0.5844ms)[39m[39m
+[32m✔ 2/3 · w 31 → 12 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31] [90m(10.9887ms)[39m[39m
+[32m✔ 2/3 · w 12 → 31 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31] [90m(6.941ms)[39m[39m
+[32m✔ 2/3 · w 31 → 8 on a 200 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 31] [90m(7.2823ms)[39m[39m
+[32m✔ 2/3 · w 31 → 12 on a 45 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31] [90m(3.0291ms)[39m[39m
+[32m✔ 2/3 · w 20 → 8 on a 60 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 20] [90m(2.1716ms)[39m[39m
+[32m✔ 2/3 · w 31 → 12 on a 30 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31] [90m(0.8892ms)[39m[39m
+[32m✔ 2/3 · w 31 → 31.5 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [31, 31.5] [90m(3.7396ms)[39m[39m
+[32m✔ 2/3 · w 12 → 30 on a 25 m piece with the ramp 'start': it reaches the target by R = 12.5 m and holds exactly, and never leaves [12, 30] [90m(1.3855ms)[39m[39m
+[32m✔ 2 · an explicit number of metres in the map is the ramp: w reaches the target by 30 m and holds [90m(2.0476ms)[39m[39m
+[32m✔ 2/3 · the same holds for the bank (phi) and the cup (c): a short ramp reaches its target and never leaves the range [90m(10.6695ms)[39m[39m
+[32m✔ 3 · a joint that carries a slope on w (0.5 m/m, a target just below the joint value: the ideal ramp rises past the joint's own first two points): C1 at the joint, and no control point outside the range of start, target and those two [90m(4.0109ms)[39m[39m
+[32m✔ 2 · the ramp SHAPE: the curve stays within 15% of the change of the smooth ramp it is built from (Bloss over R/2), measured 11.9% (the price of building from control points, ref 09 §9) [90m(5.4182ms)[39m[39m
+[32m✔ 5 · a ramped piece is stored on the channel quantum (every control point is a multiple of it), so the document round-trips byte for byte [90m(2.7526ms)[39m[39m
+[32m✔ 4 · a channel not in the map keeps the whole-piece blend: phi follows the number-transition document within 1% of its change (0.1% under the cubic, re-pinned at D459) [90m(4.7078ms)[39m[39m
+[32m✔ 4 · a map naming only a channel with no target changes nothing: the document equals the number-transition one [90m(2.6991ms)[39m[39m
+[32m✔ 4 · 'start' on a piece no longer than one span is the whole-piece blend (nothing to ramp inside the piece) [90m(0.35ms)[39m[39m
+[32m✔ 4 · startRampM is the first knot span: 20 m for a long piece, the piece for a short one, and follows knotM [90m(0.7524ms)[39m[39m
+[32m✔ 4 · the extra knots: RAMP_KNOTS subdivisions of the ramp, strictly increasing, inside the piece, and the even knots they would crowd are dropped [90m(0.2075ms)[39m[39m
+[32m✔ 5 · joints are C1 into the ramped piece, out of it (a piece after the hold), and the document validates [90m(0.8456ms)[39m[39m
+[32m✔ 5 · a lap with ramped pieces still closes (the close reads the same control points) [90m(277.8766ms)[39m[39m
+[32m✔ 6 · a map with an unknown channel is refused by name (BAD_TRANSITION) [90m(1.2384ms)[39m[39m
+[32m✔ 6 · a map with zero is refused by name (BAD_TRANSITION) [90m(0.2855ms)[39m[39m
+[32m✔ 6 · a map with negative is refused by name (BAD_TRANSITION) [90m(0.4816ms)[39m[39m
+[32m✔ 6 · a map with longer than the piece is refused by name (BAD_TRANSITION) [90m(0.2968ms)[39m[39m
+[32m✔ 6 · a map with not a number is refused by name (BAD_TRANSITION) [90m(0.4763ms)[39m[39m
+[32m✔ 6 · a map with a string that is not start is refused by name (BAD_TRANSITION) [90m(0.1889ms)[39m[39m
+[32m✔ 6 · a number transition is still checked as before: 0 and a value past the length are refused [90m(0.4902ms)[39m[39m
+[34mℹ tests 33[39m
+[34mℹ suites 0[39m
+[34mℹ pass 33[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 516.5932[39m

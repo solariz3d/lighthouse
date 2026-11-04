@@ -1,0 +1,54 @@
+== D277fix C: mutants on the pointer row · asked 2026-10-10T17:40:20.298Z · lock held 2026-10-10T17:40:20.388Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d277fix/mut.sh
+=== M0 generated: the old floor (>= 10) put back ( 1 file changed, 1 insertion(+))
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... FAILED
+---- intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists stdout ----
+thread 'intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists' (17788) panicked at src\main.rs:8222:9:
+    intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 0.00s
+restored: 1 dirty
+=== M1 source: the shelf lists no directory ( 1 file changed, 1 insertion(+), 1 deletion(-))
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... FAILED
+---- intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists stdout ----
+thread 'intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists' (23080) panicked at src\main.rs:8235:13:
+expected pointer `C:\Users\nname\Desktop\worktrees\c-d277fix-wt\exo_memory` is on neither the shelf nor the memory section, found ["C:\\Users\\nname\\Desktop\\worktrees\\c-d277fix-wt\\exo_memory\\librarian\\LEDGER.md", "C:\\Users\\nname\\.consonance\\resonance\\atoms.jsonl"]
+    intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 0.00s
+restored: 0 dirty
+=== M1 generated: the shelf lists no directory ( 1 file changed, 1 insertion(+), 1 deletion(-))
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... FAILED
+---- intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists stdout ----
+thread 'intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists' (32596) panicked at src\main.rs:8236:13:
+expected pointer `C:\Users\nname\Desktop\worktrees\c-d277fix-gen\exo_memory` is on neither the shelf nor the memory section, found ["C:\\Users\\nname\\.consonance\\resonance\\atoms.jsonl"]
+    intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 0.00s
+restored: 1 dirty
+=== M2 source: a missing directory is listed anyway ( 1 file changed, 1 deletion(-))
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 0.11s
+restored: 0 dirty
+=== M2 generated: a missing directory is listed anyway ( 1 file changed, 1 deletion(-))
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... FAILED
+---- intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists stdout ----
+thread 'intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists' (8820) panicked at src\main.rs:8238:13:
+pointer `C:\Users\nname\Desktop\worktrees\c-d277fix-gen\exo_memory\librarian` names nothing on this machine
+    intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 0.00s
+restored: 1 dirty
+=== M3 source: the atoms pointer is not a path ( 1 file changed, 1 insertion(+), 1 deletion(-))
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... FAILED
+---- intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists stdout ----
+thread 'intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists' (30512) panicked at src\main.rs:8235:13:
+expected pointer `C:\Users\nname\.consonance\resonance\atoms.jsonl` is on neither the shelf nor the memory section, found ["C:\\Users\\nname\\Desktop\\worktrees\\c-d277fix-wt\\exo_memory\\librarian\\LEDGER.md", "C:\\Users\\nname\\Desktop\\worktrees\\c-d277fix-wt\\exo_memory", "C:\\Users\\nname\\Desktop\\worktrees\\c-d277fix-wt\\exo_memory\\record", "C:\\Users\\nname\\Desktop\\worktrees\\c-d277fix-
+    intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 0.11s
+restored: 0 dirty
+=== M3 generated: the atoms pointer is not a path ( 1 file changed, 1 insertion(+), 1 deletion(-))
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... FAILED
+---- intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists stdout ----
+thread 'intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists' (27484) panicked at src\main.rs:8236:13:
+expected pointer `C:\Users\nname\.consonance\resonance\atoms.jsonl` is on neither the shelf nor the memory section, found ["C:\\Users\\nname\\Desktop\\worktrees\\c-d277fix-gen\\exo_memory", "C:\\Users\\nname\\Desktop\\worktrees\\c-d277fix-gen\\exo_memory\\record", "C:\\Users\\nname\\Desktop\\worktrees\\c-d277fix-gen\\exo_memory\\memory", "C:\\Users\\nname\\Desktop\\worktrees\\c-d277fix-gen\\exo_me
+    intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1015 filtered out; finished in 0.00s
+restored: 1 dirty
+== exit 0 · done 2026-10-10T17:41:00.662Z

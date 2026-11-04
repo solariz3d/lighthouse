@@ -1,0 +1,49 @@
+{
+  "form": "strict",
+  "shelf": "G:/consonance-scratch/c-d296/new2/librarian.strict.md",
+  "shelfMtime": "2026-10-11T14:39:53.857Z",
+  "exo": "G:/consonance-scratch/c-d296/snap",
+  "header": "15 file(s) carried in full (47025 of 47477 bytes); 412 indexed by path.",
+  "dropHdr": "464 index-tier entries (43865 bytes) dropped by the index window:",
+  "carriedFiles": 15,
+  "indexedFiles": 412,
+  "indexedMissingOnDisk": [],
+  "carriedMissingOnDisk": [],
+  "corpusRecursiveLines": 342732,
+  "corpusRecursiveFiles": 2105,
+  "inContextLines": 587,
+  "inContextPct": "0.17%",
+  "indexedLines": 109350,
+  "reachablePct": "32.08%",
+  "filesReachableByPath": 428,
+  "droppedFiles": 464,
+  "droppedLines": 73026,
+  "droppedPct": "21.31%",
+  "unpointedPct": "67.92%",
+  "unpointedLinesByTop": {
+    "astra/": 81,
+    "attic/": 1889,
+    "audit/": 265,
+    "handback/": 150269,
+    "loop/": 80164,
+    "review/": 127
+  },
+  "SECOND_UNIT": "not reach.js: also counts a file as reached when the shelf points at its DIRECTORY (strict: `ls exo_memory/<dir>/`; light: the BY DIRECTORY list)",
+  "dirPointers": [
+    "loop",
+    "journal"
+  ],
+  "dirStated": null,
+  "byDirectory_top": {
+    "files": 874,
+    "lines": 182329,
+    "reachablePct": "53.20%",
+    "unpointedPct": "46.80%"
+  },
+  "byDirectory_anyDepth": {
+    "files": 1138,
+    "lines": 190101,
+    "reachablePct": "55.47%",
+    "unpointedPct": "44.53%"
+  }
+}

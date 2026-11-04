@@ -1,0 +1,350 @@
+TAP version 13
+# Subtest: control: the unmutated temp copy passes every test file the mutants use
+ok 1 - control: the unmutated temp copy passes every test file the mutants use
+  ---
+  duration_ms: 256973.1147
+  type: 'test'
+  ...
+# D412 wide: "D242 item 7" on app/test/core-readout-display.test.js runs 2 rows
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 662.906
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 3 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 1082.6894
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+ok 4 - a load throw in a run of one file reads NOT CAUGHT as before, never NOT TESTED (the load-throw stand-in, D354)
+  ---
+  duration_ms: 643.5132
+  type: 'test'
+  ...
+# Subtest: mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 5 - mutation K1 the columns outside the window are not fixed: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 1245.1429
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 6 - mutation K2 the pieces outside the window are recomputed, not kept: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 1248.2508
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…"
+ok 7 - mutation K3 a local close that does not close is handed back, not refused: applied, and caught by "row 3: a window that cannot close the loop…"
+  ---
+  duration_ms: 3183.39
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…"
+ok 8 - mutation K4 the roll-rate bar is not read: applied, and caught by "row 4: a local close may not push the window past the roll-rate bar…"
+  ---
+  duration_ms: 1145.1083
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…"
+ok 9 - mutation K5 the window is not named for a person: applied, and caught by "row 1: a close confined to the LAST piece…"
+  ---
+  duration_ms: 1252.4869
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…"
+ok 10 - mutation K6 the default window ignores the fraction (the last piece only): applied, and caught by "row 2: the default window…"
+  ---
+  duration_ms: 1038.4592
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…"
+ok 11 - mutation K7 an empty window is accepted: applied, and caught by "row 5: a window with no road piece…"
+  ---
+  duration_ms: 1126.4908
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…"
+ok 12 - mutation A6 the refused export keeps the export's own message (ids): applied, and caught by "row 6: a refused export names EVERY red…"
+  ---
+  duration_ms: 2032.0131
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+ok 13 - mutation A9 the press writes no copy from before the close: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+  ---
+  duration_ms: 3053.6993
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+ok 14 - mutation A10 a failed copy still closes: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+  ---
+  duration_ms: 4391.1182
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+ok 15 - mutation A11 an edit while the copy is written is closed over: applied, and caught by "row 7: the press writes the copy from BEFORE the close first…"
+  ---
+  duration_ms: 6683.4394
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…"
+ok 16 - mutation B1 a way that does not prove is picked: applied, and caught by "row 4: when no way proves…"
+  ---
+  duration_ms: 4561.2619
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…"
+ok 17 - mutation B2 a way that adds a red is picked: applied, and caught by "row 4: when no way proves…"
+  ---
+  duration_ms: 4269.3148
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B3 new road is not put last: applied, and caught by "row 8: the order…"
+ok 18 - mutation B3 new road is not put last: applied, and caught by "row 8: the order…"
+  ---
+  duration_ms: 1001.8255
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…"
+ok 19 - mutation B4 the most movement is tried first: applied, and caught by "row 7: the pick is the least-moving way that proves…"
+  ---
+  duration_ms: 4286.9943
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…"
+ok 20 - mutation B5 Finish is tried when the end is already at the start: applied, and caught by "row 1: an end already at the start…"
+  ---
+  duration_ms: 3512.2003
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…"
+ok 21 - mutation B6 a bend may reshape the track (no move cap): applied, and caught by "row 5: a bend that would move the track further…"
+  ---
+  duration_ms: 3549.1886
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…"
+ok 22 - mutation B7 a press that finds no way still applies: applied, and caught by "row 2: when no way of closing proves, nothing changes…"
+  ---
+  duration_ms: 4692.9019
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…"
+ok 23 - mutation B8 the press commits the open track: applied, and caught by "row 1: one press closes a near lap AT ONCE…"
+  ---
+  duration_ms: 2589.5694
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…"
+ok 24 - mutation N1 a laid road Close refuses is never taken as laid (the lone straight is lost to a loop again): applied, and caught by "row 17: an end straight behind the start…"
+  ---
+  duration_ms: 1529.8079
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…"
+ok 25 - mutation N2 a route that is only a straight is not laid under 10 m: applied, and caught by "row 17: an end straight behind the start…"
+  ---
+  duration_ms: 1593.1386
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…"
+ok 26 - mutation F5 the worker's document is not frozen (the residual memo misses): applied, and caught by "row 13: the worker's press on a structuredClone…"
+  ---
+  duration_ms: 8658.1021
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…"
+ok 27 - mutation B9 a tie is not broken by the route order (micro-metres decide): applied, and caught by "row 8: the order…"
+  ---
+  duration_ms: 870.1145
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…"
+ok 28 - mutation F1 the near bend is not checked first (every route runs): applied, and caught by "row 9: when the end is at the start…"
+  ---
+  duration_ms: 2531.2945
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…"
+ok 29 - mutation F2 the given open-track reds are ignored (it is checked again): applied, and caught by "row 11: given the open track…"
+  ---
+  duration_ms: 7091.145
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…"
+ok 30 - mutation F3 the press hands the worker no reds: applied, and caught by "row 7: a press hands the worker the reds…"
+  ---
+  duration_ms: 1305.9541
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…"
+ok 31 - mutation F4 a check made with CSP off is used: applied, and caught by "row 7: a press hands the worker the reds…"
+  ---
+  duration_ms: 1311.8345
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…"
+ok 32 - mutation G1 a ray red on an overlap keeps its own words: applied, and caught by "the overlap is ONE group…"
+  ---
+  duration_ms: 495.4007
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…"
+ok 33 - mutation G2 every ray red is called an overlap: applied, and caught by "a downforce-ray-gap with NO overlap near it…"
+  ---
+  duration_ms: 496.3983
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…"
+ok 34 - mutation G3 the text names only the first place of a group: applied, and caught by "groupsText names one line per PLACE…"
+  ---
+  duration_ms: 513.3541
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+ok 35 - mutation G6 places are never merged: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+  ---
+  duration_ms: 502.5586
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…"
+ok 36 - mutation G7 places merge across pieces: applied, and caught by "D248: TOUCHING reds merge…"
+  ---
+  duration_ms: 507.944
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…"
+ok 37 - mutation G10 places merge only on the same STARTING piece (the rule the real window caught): applied, and caught by "D248: a red inside a place that spans two pieces…"
+  ---
+  duration_ms: 491.6094
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…"
+ok 38 - mutation G8 touching reds do not merge (no tolerance): applied, and caught by "D248: TOUCHING reds merge…"
+  ---
+  duration_ms: 487.4655
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+ok 39 - mutation G9 the count is of reds, not places: applied, and caught by "D248: overlapping reds on one piece are ONE place…"
+  ---
+  duration_ms: 522.7517
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…"
+ok 40 - mutation G4 the piece is read at the range's end: applied, and caught by "where: s in km and the piece…"
+  ---
+  duration_ms: 509.9122
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…"
+ok 41 - mutation G5 s past the lap does not wrap: applied, and caught by "pieceAt wraps…"
+  ---
+  duration_ms: 483.4779
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…"
+ok 42 - mutation L1 every piece is labelled again: applied, and caught by "the labels on the track…"
+  ---
+  duration_ms: 1286.8642
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…"
+ok 43 - mutation L2 the hovered piece is never labelled: applied, and caught by "the labels on the track…"
+  ---
+  duration_ms: 2307.6291
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 44 - mutation L3 a still pointer is not asked again after the track changes: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 1449.826
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…"
+ok 45 - mutation U1 Undo shows the head only (the bug): applied, and caught by "D242 item 7…"
+  ---
+  duration_ms: 1269.009
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…"
+ok 46 - mutation U2 the ticks are not put back: applied, and caught by "D242 item 7…"
+  ---
+  duration_ms: 1251.2692
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 47 - mutation S1 Straight does not tick turn "at start": applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 1344.8695
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 48 - mutation S2 Straight leaves the boxes ticked: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 1397.9999
+  type: 'test'
+  ...
+# D412 path: narrowed
+# Subtest: mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+ok 49 - mutation S3 the straight hint never shows: applied, and caught by "D242: after a 30°/100m turn, Straight…"
+  ---
+  duration_ms: 1346.46
+  type: 'test'
+  ...
+# D412 path: narrowed
+1..49
+# tests 49
+# suites 0
+# pass 49
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 355892.2534

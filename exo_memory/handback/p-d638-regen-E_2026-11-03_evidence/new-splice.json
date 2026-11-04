@@ -1,0 +1,945 @@
+{
+ "tree": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d638\\new",
+ "rows": [
+  {
+   "i": 0,
+   "id": "p1",
+   "length": 1000,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 1,
+   "id": "p2",
+   "length": 1000,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 2,
+   "id": "p3",
+   "length": 1000,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 3,
+   "id": "p4",
+   "length": 250,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 4,
+   "id": "p5",
+   "length": 250,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 5,
+   "id": "p6",
+   "length": 750,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 6,
+   "id": "p7",
+   "length": 750,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 7,
+   "id": "p8",
+   "length": 750,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 8,
+   "id": "p9",
+   "length": 253,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 9,
+   "id": "p10",
+   "length": 100,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 10,
+   "id": "p11",
+   "length": 100,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 11,
+   "id": "p12",
+   "length": 100,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 12,
+   "id": "p13",
+   "length": 150,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 13,
+   "id": "p14",
+   "length": 150,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 14,
+   "id": "p15",
+   "length": 500,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 15,
+   "id": "p16",
+   "length": 1250,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 16,
+   "id": "p17",
+   "length": 250,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 17,
+   "id": "p18",
+   "length": 250,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 18,
+   "id": "p19",
+   "length": 250,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 19,
+   "id": "p20",
+   "length": 250,
+   "typed": {
+    "climb": 12.500033636202962,
+    "turn": 0,
+    "bank": 0
+   },
+   "atStart": {
+    "turn": true
+   },
+   "notes": [
+    "climb as a corner of 12.5000°"
+   ],
+   "transition": {
+    "kh": 122.5
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 17/19",
+     "kv": "n 17/19",
+     "phi": "n 17/19",
+     "w": "n 17/19",
+     "r": "n 17/19",
+     "h": "n 17/19",
+     "l": "n 17/19",
+     "c": "n 17/19",
+     "e": "n 17/19",
+     "s": "n 17/19",
+     "t": "n 17/19",
+     "er": "n 17/19"
+    }
+   },
+   "route": 0.003673979055752068
+  },
+  {
+   "i": 20,
+   "id": "p21",
+   "length": 1000,
+   "typed": {
+    "climb": 27.00000011238745
+   },
+   "atStart": {
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kv": 139
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 50/56",
+     "kv": "n 50/56",
+     "phi": "n 50/56",
+     "w": "n 50/56",
+     "r": "n 50/56",
+     "h": "n 50/56",
+     "l": "n 50/56",
+     "c": "n 50/56",
+     "e": "n 50/56",
+     "s": "n 50/56",
+     "t": "n 50/56",
+     "er": "n 50/56"
+    }
+   },
+   "route": 0.004269961993881913
+  },
+  {
+   "i": 21,
+   "id": "p22",
+   "length": 250,
+   "typed": {
+    "turn": -8.899999803618984,
+    "climb": 30.899997773128028
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 45.9,
+    "kv": 20.1
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 23/19",
+     "kv": "n 23/19",
+     "phi": "n 23/19",
+     "w": "n 23/19",
+     "r": "n 23/19",
+     "h": "n 23/19",
+     "l": "n 23/19",
+     "c": "n 23/19",
+     "e": "n 23/19",
+     "s": "n 23/19",
+     "t": "n 23/19",
+     "er": "n 23/19"
+    }
+   },
+   "route": 0.0007971465819114145
+  },
+  {
+   "i": 22,
+   "id": "p23",
+   "length": 250,
+   "typed": {
+    "turn": 20.59999851541869,
+    "climb": 2.099999181135542,
+    "bank": -57.29999997749704
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 125,
+    "kv": 125
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 17/19",
+     "kv": "n 17/19",
+     "phi": "n 17/19",
+     "w": "n 17/19",
+     "r": "n 17/19",
+     "h": "n 17/19",
+     "l": "n 17/19",
+     "c": "n 17/19",
+     "e": "n 17/19",
+     "s": "n 17/19",
+     "t": "n 17/19",
+     "er": "n 17/19"
+    }
+   },
+   "route": 0.004573351058013732
+  },
+  {
+   "i": 23,
+   "id": "p24",
+   "length": 250,
+   "typed": {
+    "turn": 50.900000615063675,
+    "climb": 13.099998165890067
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 125,
+    "kv": 56.7
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 20/19",
+     "kv": "n 20/19",
+     "phi": "n 20/19",
+     "w": "n 20/19",
+     "r": "n 20/19",
+     "h": "n 20/19",
+     "l": "n 20/19",
+     "c": "n 20/19",
+     "e": "n 20/19",
+     "s": "n 20/19",
+     "t": "n 20/19",
+     "er": "n 20/19"
+    }
+   },
+   "route": 0.004609713130007969
+  },
+  {
+   "i": 24,
+   "id": "p25",
+   "length": 250,
+   "typed": {
+    "turn": 46.1000008497316,
+    "climb": -8.599999102088484,
+    "bank": -66.29999999586093
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 24.8,
+    "kv": 111.7
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 26/19",
+     "kv": "n 26/19",
+     "phi": "n 26/19",
+     "w": "n 26/19",
+     "r": "n 26/19",
+     "h": "n 26/19",
+     "l": "n 26/19",
+     "c": "n 26/19",
+     "e": "n 26/19",
+     "s": "n 26/19",
+     "t": "n 26/19",
+     "er": "n 26/19"
+    }
+   },
+   "route": 0.003243177194744663
+  },
+  {
+   "i": 25,
+   "id": "p26",
+   "length": 250,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 26,
+   "id": "p27",
+   "length": 500,
+   "typed": {
+    "turn": 0,
+    "climb": 0,
+    "bank": 0
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 131.3,
+    "kv": 44.3
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 37/31",
+     "kv": "n 37/31",
+     "phi": "n 37/31",
+     "w": "n 37/31",
+     "r": "n 37/31",
+     "h": "n 37/31",
+     "l": "n 37/31",
+     "c": "n 37/31",
+     "e": "n 37/31",
+     "s": "n 37/31",
+     "t": "n 37/31",
+     "er": "n 37/31"
+    }
+   },
+   "route": 0.003922273186111795
+  },
+  {
+   "i": 27,
+   "id": "p28",
+   "length": 500,
+   "kept": true,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 28,
+   "id": "p29",
+   "length": 5000,
+   "typed": {
+    "turn": 39.60000092877865,
+    "climb": 0.49999734949886415,
+    "bank": -64.69999999768919,
+    "cup": 21.1
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 203.9,
+    "kv": 20
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 261/256",
+     "kv": "n 261/256",
+     "phi": "n 261/256",
+     "w": "n 261/256",
+     "r": "n 261/256",
+     "h": "n 261/256",
+     "l": "n 261/256",
+     "c": "n 261/256",
+     "e": "n 261/256",
+     "s": "n 261/256",
+     "t": "n 261/256",
+     "er": "n 261/256"
+    }
+   },
+   "route": 0.006552690267333333
+  },
+  {
+   "i": 29,
+   "id": "p30",
+   "length": 250,
+   "typed": {
+    "turn": 16.499998477131786,
+    "climb": -40.7999980053227,
+    "bank": -153.59999999637375
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 118.9,
+    "kv": 125
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 21/19",
+     "kv": "n 21/19",
+     "phi": "n 21/19",
+     "w": "n 21/19",
+     "r": "n 21/19",
+     "h": "n 21/19",
+     "l": "n 21/19",
+     "c": "n 21/19",
+     "e": "n 21/19",
+     "s": "n 21/19",
+     "t": "n 21/19",
+     "er": "n 21/19"
+    }
+   },
+   "route": 0.00636063009461231
+  },
+  {
+   "i": 30,
+   "id": "p31",
+   "length": 250,
+   "typed": {
+    "turn": 0,
+    "climb": -3.899997660740585
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 85,
+    "kv": 125
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 17/19",
+     "kv": "n 17/19",
+     "phi": "n 17/19",
+     "w": "n 17/19",
+     "r": "n 17/19",
+     "h": "n 17/19",
+     "l": "n 17/19",
+     "c": "n 17/19",
+     "e": "n 17/19",
+     "s": "n 17/19",
+     "t": "n 17/19",
+     "er": "n 17/19"
+    }
+   },
+   "route": 0.005650655553765891
+  },
+  {
+   "i": 31,
+   "id": "p32",
+   "length": 250,
+   "typed": {
+    "climb": 0
+   },
+   "atStart": {
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kv": 20.1
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0.0000023999948990124464
+  }
+ ],
+ "refused": {
+  "i": 32,
+  "id": "p33",
+  "message": "PASS_CLEARANCE: too close to another pass of the road: the road at 18.78 km (p47) meets the road at 15.19 km (p29); a road over another must keep its underside 3.1 m clear for a car (31 places). Nothing changed."
+ },
+ "closedBefore": false,
+ "openDoc": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d638\\new-splice.open.t180track"
+}

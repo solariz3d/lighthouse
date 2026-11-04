@@ -1,0 +1,11 @@
+src-suite start 05:25:55Z
+src-suite end 05:39:59Z rc 0
+gen-suite start 05:39:59Z
+gen-suite end 05:47:50Z rc 0
+gen-cargo start 05:47:50Z
+gen-cargo end 05:56:00Z rc 0
+src-cargo start 05:56:00Z
+src-cargo end 05:59:05Z rc 0
+sweep start 05:59:05Z
+sweep end 05:59:06Z
+done

@@ -1,0 +1,43 @@
+✔ emits the SessionStart shape — hookSpecificOutput, NOT PreCompact’s root-level field (289.0418ms)
+✔ fires on source=compact — the case the whole plan exists for (228.8485ms)
+✔ the DEFAULT is compact only — spawn sources are skipped until the cost is measured (58.884ms)
+✔ but it CAN serve spawn sources — one file covers both, when widened (472.2948ms)
+✔ stays SILENT on a source it does not serve, and records why (28.2852ms)
+✔ the served set is configurable, so it can be narrowed without editing code (28.5468ms)
+✔ a MISSING generator reports FAILED rather than emitting nothing (57.6094ms)
+✔ a failed generator is recorded as failed in the ledger, not as a clean emit (65.1706ms)
+✔ a malformed payload does not break a session start (28.7974ms)
+✖ the emitted block is ledgered with its size and whether it failed (235.4832ms)
+✔ resolves the generator when installed FLAT, which is how it actually runs (45.588ms)
+✔ a HOME with no .consonance.json degrades to null rather than throwing (41.748ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1640.2105
+
+✖ failing tests:
+
+test at consonance\hooks\sessionstart-state.test.js:111:1
+✖ the emitted block is ledgered with its size and whether it failed (235.4832ms)
+  AssertionError [ERR_ASSERTION]: the live generator must not be reporting FAILED
+  
+  true !== false
+  
+      at TestContext.<anonymous> (G:\consonance-scratch\d454s\clone\consonance\hooks\sessionstart-state.test.js:118:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

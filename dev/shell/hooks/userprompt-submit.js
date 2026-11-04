@@ -44,6 +44,13 @@ const L3_OVERSEER_LOG = path.join(SHELL_DIR, 'l3_overseer.jsonl');
 const STATE_PATH = path.join(SHELL_DIR, 'userprompt_state.json');
 const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
 
+// D245 item 3 (the Third Place's own return, 2026-10-05): the chain line is the BUILD's state (the lap, the holder, the dirty count) and "This seat is not the build". The same cwd
+// test as board-digest.js:302. The Third Place keeps the date, the thread's age and the interval; only the chain line is withheld.
+// The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+// (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(tpNorm(cwd));
+
 // ── The interval, per turn ───────────────────────────────────────────────────
 // Consonance's pulse tells a RESTORED thread how long it was dark. It fires at a
 // wake — warm_resume_brief, spawn_main. Which means it is pointed at the smaller
@@ -219,7 +226,7 @@ function daysBetween(a, b) {
   return Math.floor((midnight(b) - midnight(a)) / 86400000);
 }
 
-function buildBeacon(state) {
+function buildBeacon(state, noChain) {
   try {
     const now = new Date();
     const parts = [`[pulse] ${fmtStamp(now)}`];
@@ -250,7 +257,7 @@ function buildBeacon(state) {
       const cp = require('child_process');
       const os2 = require('os'), path2 = require('path');
       const cfg = JSON.parse(fs.readFileSync(path2.join(os2.homedir(), '.consonance.json'), 'utf8'));
-      if (cfg.room_path) {
+      if (cfg.room_path && !noChain) {
         // room_path is <repo>/exo_memory/BOOT.md; the reader is <repo>/consonance/tools/
         const repo = path2.dirname(path2.dirname(cfg.room_path));
         const reader = path2.join(repo, 'consonance', 'tools', 'chain-status.js');
@@ -309,7 +316,7 @@ function main() {
   // is read inside. A verdict from an arc that ended eleven hours ago reads
   // differently than one from a minute ago, and until now there was no way to
   // tell those apart from in here.
-  const context = [buildBeacon(state), buildGapContext(meta), buildContext(notices)]
+  const context = [buildBeacon(state, isThirdPlaceCwd(meta && meta.cwd)), buildGapContext(meta), buildContext(notices)]
     .filter(Boolean)
     .join('\n');
 

@@ -1,0 +1,11 @@
+map cases 447; channel differing IS the map's short ramp: 108; a channel ramping over the whole piece (fitted): 214; a refusal on one side: 0
+empty bowl L 8 T {"e":"start"} {"e":120} e differs 1.846
+empty bowl L 8 T {"e":"start"} {"e":120,"er":120} e differs 1.846
+empty bowl L 8 T {"er":"start"} {"er":120} er differs 1.846
+empty bowl L 8 T {"er":"start"} {"e":120,"er":120} er differs 1.846
+empty bowl L 12 T {"e":"start"} {"e":120} e differs 1.846
+empty bowl L 12 T {"e":"start"} {"e":120,"er":120} e differs 1.846
+empty bowl L 12 T {"er":"start"} {"er":120} er differs 1.846
+empty bowl L 12 T {"er":"start"} {"e":120,"er":120} er differs 1.846
+plain transitions, differing cases by T/L: {"0.50":842,"0.08":18,"0.33":30,"0.04":44,"0.02":57,"0.10":44,"0.05":57,"0.13":18,"0.20":30,"1.00":292,"0.83":27}
+T/L < 1/3: {"empty bowl L50 T4":18,"empty bowl L12 T4":15,"empty bowl L30 T10":15,"empty bowl L100 T4":18,"empty bowl L200 T4":18,"empty bowl L100 T10":18,"empty bowl L200 T10":18,"empty bowl L30 T4":18,"empty bowl L20 T4":15,"empty bowl L50 T10":15,"live tail e 40 slope -0.5 L100 T4":13,"live tail e 40 slope -0.5 L100 T10":13,"live tail e 40 slope 0.5 L200 T4":13,"live tail e 40 slope 0.5 L200 T10":13,"live tail e 40 slope -0.5 L200 T4":13,"live tail e 40 slope -0.5 L200 T10":13,"live tail e 10 slope 2 L100 T4":13,"live tail e 10 slope 2 L100 T10":13,"live tail e 10 slope 2 L200 T4":13,"live tail e 10 s

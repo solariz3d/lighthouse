@@ -1,0 +1,49 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+
+A 800 H 40 G 200 0.004: window [3] open crosses 232,1736; start crosses 70,232,1736,1962 (near open: false), move 851.8 vs drag 241.7, start straight true; fallback crosses  :: osing it took back 28% of your bend (closed
+
+A 800 H 40 G 200 0.005: window [3] open crosses 302,1714; start crosses 54,302,1714,1960 (near open: false), move 749.9 vs drag 300.5, start straight true; fallback crosses  :: osing it took back 31% of your bend (closed
+
+A 800 H 40 G 200 0.006: window [3] open crosses 340,1702; start crosses 340,1702,2000,2168,2189 (near open: false), move 1059.8 vs drag 358.4, start straight true; fallback crosses  :: osing it took back 34% of your bend (closed
+
+A 800 H 40 G 250 0.004: window [3] open crosses 268,1810; start crosses 96,264,1810,2020 (near open: false), move 811.7 vs drag 256.5, start straight true; fallback crosses  :: osing it took back 29% of your bend (closed
+
+A 800 H 40 G 250 0.005: window [3] open crosses 332,1788; start crosses 94,332,1788,2024 (near open: false), move 812.6 vs drag 318.9, start straight true; fallback crosses  :: osing it took back 32% of your bend (closed
+
+A 800 H 40 G 250 0.006: window [3] open crosses 372,1776; start crosses 372,1776,2066 (near open: false), move 1185.5 vs drag 380.2, start straight true; fallback crosses  :: osing it took back 35% of your bend (closed
+
+A 800 H 45 G 200 0.004: window [3] open crosses 204,1781; start crosses 90,194,1781,1957 (near open: false), move 744.8 vs drag 247.1, start straight true; fallback crosses  :: osing it took back 27% of your bend (closed
+
+A 800 H 45 G 200 0.005: window [3] open crosses 282,1751; start crosses 50,282,1751,1993 (near open: false), move 905.0 vs drag 307.2, start straight true; fallback crosses  :: osing it took back 29% of your bend (closed
+
+A 800 H 45 G 200 0.006: window [3] open crosses 328,1733; start crosses 328,1733,1991,2239 (near open: false), move 838.9 vs drag 366.3, start straight true; fallback crosses  :: osing it took back 32% of your bend (closed
+
+A 800 H 45 G 250 0.004: window [3] open crosses 234,1851; start crosses 118,1851 (near open: false), move 703.6 vs drag 259.0, start straight true; fallback crosses  :: osing it took back 26% of your bend (closed
+
+A 800 H 45 G 250 0.005: window [3] open crosses 308,1823; start crosses 82,308,1823,2061 (near open: false), move 923.1 vs drag 322.1, start straight true; fallback crosses  :: osing it took back 29% of your bend (closed
+
+A 800 H 45 G 250 0.006: window [3] open crosses 356,1805; start crosses 72,356,1805,2045 (near open: false), move 819.8 vs drag 384.1, start straight true; fallback crosses  :: osing it took back 32% of your bend (closed
+
+A 1000 H 40 G 200 0.004: window [3] open crosses 340,2046; start crosses 340,2046,2368 (near open: false), move 928.3 vs drag 287.3, start straight true; fallback crosses  :: osing it took back 30% of your bend (closed
+
+A 1000 H 40 G 200 0.005: window [3] open crosses 404,2022; start crosses 404,2022,2416,2566 (near open: false), move 1141.5 vs drag 357.3, start straight true; fallback crosses  :: osing it took back 33% of your bend (closed
+
+A 1000 H 40 G 200 0.006: open crosses 442,2010; start try refused CLOSE_WINDOW
+
+A 1000 H 40 G 250 0.004: window [3] open crosses 374,2120; start crosses 72,374,2120,2432 (near open: false), move 995.3 vs drag 302.6, start straight true; fallback crosses  :: osing it took back 30% of your bend (closed
+
+A 1000 H 40 G 250 0.005: window [3] open crosses 432,2098; start crosses 432,2098,2486,2640,2668,2703 (near open: false), move 1301.0 vs drag 376.2, start straight true; fallback crosses  :: osing it took back 34% of your bend (closed
+
+A 1000 H 40 G 250 0.006: open crosses 470,2082; start try refused CLOSE_WINDOW
+
+A 1000 H 45 G 200 0.004: window [3] open crosses 328,2061; start crosses 42,328,2061,2387 (near open: false), move 980.0 vs drag 292.1, start straight true; fallback crosses  :: osing it took back 25% of your bend (closed
+
+A 1000 H 45 G 200 0.005: window [3] open crosses 398,2037; start crosses 398,2037,2427,2555,2587,2607 (near open: false), move 1031.8 vs drag 363.2, start straight true; fallback crosses  :: osing it took back 28% of your bend (closed
+
+A 1000 H 45 G 200 0.006: open crosses 442,2021; start try refused CLOSE_WINDOW
+
+A 1000 H 45 G 250 0.004: window [3] open crosses 358,2139; start crosses 82,358,2139,2453 (near open: false), move 987.9 vs drag 304.7, start straight true; fallback crosses  :: osing it took back 26% of your bend (closed
+
+A 1000 H 45 G 250 0.005: window [3] open crosses 424,2115; start crosses 424,2115,2513 (near open: false), move 1317.9 vs drag 378.9, start straight true; fallback crosses  :: osing it took back 29% of your bend (closed
+
+A 1000 H 45 G 250 0.006: window [3] open crosses 466,2097; start crosses 466,2097,2519,2681 (near open: false), move 1206.6 vs drag 451.8, start straight true; fallback crosses  :: osing it took back 31% of your bend (closed

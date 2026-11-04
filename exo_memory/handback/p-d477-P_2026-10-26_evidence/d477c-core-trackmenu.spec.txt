@@ -1,0 +1,23 @@
+[32m✔ the Track menu lists Start & grid…, Pit lane… and Road surface ▸ as panels, in that order, then a separator and its two commands, Smooth ramps and Bank the lap [90m(738.576ms)[39m[39m
+[32m✔ Track ▸ Smooth ramps runs the shell's smoothRamps: on this lap of turns, which has no ramps, it says so and changes nothing [90m(73.484ms)[39m[39m
+[32m✔ Start & grid…: the panel holds the section's controls, and ticking "place by hand" in it puts the start on the track [90m(87.3978ms)[39m[39m
+[32m✔ Pit lane…: the panel holds the section's controls, and ticking "pit lane" in it builds the lane [90m(90.2479ms)[39m[39m
+[32m✔ a panel that is closed leaves nothing in its host, and the shell no longer drives it; opening it again shows the track as it is now [90m(79.4276ms)[39m[39m
+[32m✔ Road surface ▸: the asphalt is announced to the page at once, before the panel is ever opened (the preview and the export need it) [90m(61.2379ms)[39m[39m
+[32m✔ Road surface ▸: opening it shows the same picker, choosing solid colour announces no set, and closing it keeps the choice alive [90m(60.8888ms)[39m[39m
+[32m✔ items() called again for the same shell does not start a second road-surface controller [90m(56.5915ms)[39m[39m
+[32m✔ File ▸ Developer ▸ Open example…: developerItems has the one panel, and it refuses to open an example until both files are picked [90m(59.6983ms)[39m[39m
+[32m✔ Open example…: with both files picked the shell opens the example under the file's name, as the left column's button did [90m(58.3483ms)[39m[39m
+[32m✔ items() with no shell or no page fails loudly and names what is missing [90m(0.3701ms)[39m[39m
+[34mℹ tests 11[39m
+[34mℹ suites 0[39m
+[34mℹ pass 11[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1478.1906[39m
+
+# stderr
+
+# exit 0 in 1.5 s

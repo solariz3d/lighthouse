@@ -1,0 +1,1806 @@
+# Q9 the Close press does not bank (the hook removed)
+# exit 1
+TAP version 13
+# Subtest: row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds
+not ok 1 - row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds
+  ---
+  duration_ms: 4301.2696
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:76:1'
+  failureType: 'testCodeFailure'
+  error: 'the lap: p2 leans into its turn at every curved station (least 0.0° at +78 m)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    leansIn (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:71:12)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:76:117)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.start (node:internal/test_runner/test:1015:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+  ...
+# Subtest: row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank
+ok 2 - row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank
+  ---
+  duration_ms: 11.2525
+  type: 'test'
+  ...
+# Subtest: row 3: a curve laid as two pieces banks as one: the lean holds across their joint
+not ok 3 - row 3: a curve laid as two pieces banks as one: the lean holds across their joint
+  ---
+  duration_ms: 23.2363
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:87:1'
+  failureType: 'testCodeFailure'
+  error: 'within 20 m of the joint the lean into the turn is at least 30° (least 0.0°)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:93:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 4: the near path (an end already at the start) closes banked
+not ok 4 - row 4: the near path (an end already at the start) closes banked
+  ---
+  duration_ms: 992.0892
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:96:1'
+  failureType: 'testCodeFailure'
+  error: 'the near path: p2 leans into its turn at every curved station (least 0.0° at +78 m)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    leansIn (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:71:12)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:101:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 5: the road a pit lane runs beside is not banked
+not ok 5 - row 5: the road a pit lane runs beside is not banked
+  ---
+  duration_ms: 3935.7434
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:104:1'
+  failureType: 'testCodeFailure'
+  error: 'control: a curve away from the lane is banked'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:108:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 7: a loop is not banked, even one that turns; a level curve on the same lap is
+ok 6 - row 7: a loop is not banked, even one that turns; a level curve on the same lap is
+  ---
+  duration_ms: 500.9882
+  type: 'test'
+  ...
+# Subtest: row 8: a tube is not banked; a level curve on the same lap is
+ok 7 - row 8: a tube is not banked; a level curve on the same lap is
+  ---
+  duration_ms: 610.3759
+  type: 'test'
+  ...
+# Subtest: row 9: a straight next to a curve keeps the bank it was laid with
+ok 8 - row 9: a straight next to a curve keeps the bank it was laid with
+  ---
+  duration_ms: 11.3399
+  type: 'test'
+  ...
+# Subtest: row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased
+not ok 9 - row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased
+  ---
+  duration_ms: 10217.7403
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:243:1'
+  failureType: 'testCodeFailure'
+  error: 'the sharp after a turn: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:248:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 11: a turn that flips over extend's 20 m transition: the same
+not ok 10 - row 11: a turn that flips over extend's 20 m transition: the same
+  ---
+  duration_ms: 9486.9771
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:250:1'
+  failureType: 'testCodeFailure'
+  error: 'the 20 m flip: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:257:38)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld
+not ok 11 - row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 8669.245
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'Sharp ramp 40 m: run 0 (178–493 m) exits at 0.0°, 2c13316 32.1°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld
+not ok 12 - row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 5547.8635
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'Sharp ramp 100 m: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 13 - row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 4725.9647
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 40 m transition: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 14 - row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 4343.092
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 50 m transition: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 15 - row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3738.3142
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 60 m transition: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 16 - row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3597.5314
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 70 m transition: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 17 - row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 4948.0569
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 80 m transition: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 18 - row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3193.9929
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 100 m transition: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld
+not ok 19 - row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3196.9357
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: "e60 (Extend's default blend over a 60 m piece): run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld
+not ok 20 - row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3529.332
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'e80 (over an 80 m piece): run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld
+not ok 21 - row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4676.0663
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 40 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld
+not ok 22 - row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4336.3633
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 42 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld
+not ok 23 - row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4414.373
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 44 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld
+not ok 24 - row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4657.9564
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 46 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld
+not ok 25 - row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4524.5235
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 48 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld
+not ok 26 - row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4252.1835
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 50 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld
+not ok 27 - row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4341.6582
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 52 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld
+not ok 28 - row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4830.4246
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 54 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld
+not ok 29 - row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4895.987
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 56 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld
+not ok 30 - row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4496.8999
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 58 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld
+not ok 31 - row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4591.0689
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 60 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld
+not ok 32 - row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4882.6257
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 62 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld
+not ok 33 - row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4127.2221
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 64 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld
+not ok 34 - row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4105.345
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 66 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld
+not ok 35 - row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4432.8091
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 68 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld
+not ok 36 - row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4917.2465
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 70 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld
+not ok 37 - row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4818.161
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 72 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld
+not ok 38 - row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4360.8025
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 74 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld
+not ok 39 - row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5023.119
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 76 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld
+not ok 40 - row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4452.2943
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 78 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld
+not ok 41 - row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4498.0857
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 80 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld
+not ok 42 - row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4302.0387
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 82 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld
+not ok 43 - row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4024.1865
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 84 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld
+not ok 44 - row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4985.5406
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 86 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld
+not ok 45 - row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4355.0042
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 88 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld
+not ok 46 - row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4389.5836
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 90 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld
+not ok 47 - row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4456.7657
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 92 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld
+not ok 48 - row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4761.8535
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 94 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld
+not ok 49 - row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4873.286
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 96 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld
+not ok 50 - row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4296.0281
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 98 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld
+not ok 51 - row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4217.4488
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 100 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld
+not ok 52 - row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4147.6973
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 102 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld
+not ok 53 - row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4891.8157
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 104 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld
+not ok 54 - row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4582.175
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 106 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld
+not ok 55 - row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4352.4973
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 108 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld
+not ok 56 - row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4220.3147
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 110 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld
+not ok 57 - row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4539.8905
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 112 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld
+not ok 58 - row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4087.4361
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 114 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld
+not ok 59 - row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4228.8316
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 116 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld
+not ok 60 - row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4343.6059
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 118 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld
+not ok 61 - row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4206.7899
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:284:39'
+  failureType: 'testCodeFailure'
+  error: 'a 120 m straight: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:285:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld
+not ok 62 - row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4591.382
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:287:38'
+  failureType: 'testCodeFailure'
+  error: 'a link at R 1200: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:288:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld
+not ok 63 - row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4527.8158
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:287:38'
+  failureType: 'testCodeFailure'
+  error: 'a link at R 3000: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:288:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld
+not ok 64 - row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4830.0758
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:287:38'
+  failureType: 'testCodeFailure'
+  error: 'a link at R 10000: run 0 (178–493 m) exits at 0.0°, 2c13316 32.5°'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:172:19
+    Array.forEach (<anonymous>)
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:171:9)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:288:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 15: a 90° curve laid as four short pieces is banked as one curve, by the run
+not ok 65 - row 15: a 90° curve laid as four short pieces is banked as one curve, by the run
+  ---
+  duration_ms: 1907.5358
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:291:1'
+  failureType: 'testCodeFailure'
+  error: 'the curve in four pieces: the curve from 178 to 493 m leans in by 0.0° on average away from a flip'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:177:125)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:296:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 16: a curve unwinding over 250 m into a gentle opposite curve keeps its bank: no flip pin, none leans out
+not ok 66 - row 16: a curve unwinding over 250 m into a gentle opposite curve keeps its bank: no flip pin, none leans out
+  ---
+  duration_ms: 3311.3388
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:300:1'
+  failureType: 'testCodeFailure'
+  error: 'a long run-out: the curve from 178 to 493 m leans in by 0.0° on average away from a flip'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:177:125)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:302:41)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 17: a short curve between two straights is banked, and leaves its turn banked
+not ok 67 - row 17: a short curve between two straights is banked, and leaves its turn banked
+  ---
+  duration_ms: 3359.0095
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:307:1'
+  failureType: 'testCodeFailure'
+  error: 'a short curve: the curve from 178 to 493 m leans in by 0.0° on average away from a flip'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:177:125)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:309:73)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 18: an 80 m straight between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+ok 68 - row 18: an 80 m straight between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+  ---
+  duration_ms: 366.4342
+  type: 'test'
+  ...
+# Subtest: row 18: a link at R 10000 between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+ok 69 - row 18: a link at R 10000 between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+  ---
+  duration_ms: 350.0707
+  type: 'test'
+  ...
+# Subtest: row 19: a banked lap rolls no faster than the amber over his pieces (Sharp ramp 40, whose first try does)
+ok 70 - row 19: a banked lap rolls no faster than the amber over his pieces (Sharp ramp 40, whose first try does)
+  ---
+  duration_ms: 4975.3595
+  type: 'test'
+  ...
+# Subtest: row 6: the bank lands in Close's one undo step
+not ok 71 - row 6: the bank lands in Close's one undo step
+  ---
+  duration_ms: 1977.9451
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o24-d451\\test\\core_close_banks_lap.test.js:341:1'
+  failureType: 'testCodeFailure'
+  error: 'the shell: p2 leans into its turn at every curved station (least 0.0° at +78 m)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    leansIn (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:71:12)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o24-d451\test\core_close_banks_lap.test.js:347:3)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+ok 72 - row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+  ---
+  duration_ms: 1.7643
+  type: 'test'
+  ...
+# Subtest: row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+ok 73 - row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+  ---
+  duration_ms: 0.2252
+  type: 'test'
+  ...
+# Subtest: row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+ok 74 - row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+  ---
+  duration_ms: 1296.7381
+  type: 'test'
+  ...
+# Subtest: row 4: refusals by name: a closed loop, an empty track
+ok 75 - row 4: refusals by name: a closed loop, an empty track
+  ---
+  duration_ms: 853.2573
+  type: 'test'
+  ...
+# Subtest: row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+ok 76 - row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+  ---
+  duration_ms: 4225.8332
+  type: 'test'
+  ...
+# Subtest: row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+ok 77 - row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+  ---
+  duration_ms: 7611.5898
+  type: 'test'
+  ...
+# Subtest: row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+ok 78 - row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+  ---
+  duration_ms: 7481.9351
+  type: 'test'
+  ...
+# Subtest: row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+ok 79 - row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+  ---
+  duration_ms: 10959.6527
+  type: 'test'
+  ...
+# Subtest: row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+ok 80 - row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+  ---
+  duration_ms: 3546.4204
+  type: 'test'
+  ...
+# Subtest: row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+ok 81 - row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+  ---
+  duration_ms: 4872.8179
+  type: 'test'
+  ...
+# Subtest: row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+ok 82 - row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+  ---
+  duration_ms: 2522.0426
+  type: 'test'
+  ...
+# Subtest: row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+ok 83 - row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+  ---
+  duration_ms: 485.9576
+  type: 'test'
+  ...
+# Subtest: row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+ok 84 - row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+  ---
+  duration_ms: 0.746
+  type: 'test'
+  ...
+# Subtest: row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+ok 85 - row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+  ---
+  duration_ms: 717.7594
+  type: 'test'
+  ...
+# Subtest: row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves
+ok 86 - row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.1371
+  type: 'test'
+  ...
+# Subtest: row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+ok 87 - row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+  ---
+  duration_ms: 1628.8885
+  type: 'test'
+  ...
+# Subtest: row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+ok 88 - row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+  ---
+  duration_ms: 10437.6673
+  type: 'test'
+  ...
+# Subtest: row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 89 - row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber # SKIP fixtures-d431/testtrack10-open.t180track is not here (TEST TRACK 10: a private track, kept off the repository)
+  ---
+  duration_ms: 2.9981
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 90 - row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber # SKIP fixtures-d431/test10-open.t180track is not here (TEST 10: a private track, kept off the repository)
+  ---
+  duration_ms: 0.2671
+  type: 'test'
+  ...
+# Subtest: row 3: a closer with only gentle curves is banked by its share and no more
+ok 91 - row 3: a closer with only gentle curves is banked by its share and no more
+  ---
+  duration_ms: 6160.6691
+  type: 'test'
+  ...
+# Subtest: row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way
+ok 92 - row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way
+  ---
+  duration_ms: 5681.8256
+  type: 'test'
+  ...
+# Subtest: row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken
+ok 93 - row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken
+  ---
+  duration_ms: 4848.0241
+  type: 'test'
+  ...
+# Subtest: row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken
+ok 94 - row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken
+  ---
+  duration_ms: 4983.2241
+  type: 'test'
+  ...
+# Subtest: row 9: a lap whose own turn is tight (180° over 400 m): never a closer that leans out
+ok 95 - row 9: a lap whose own turn is tight (180° over 400 m): never a closer that leans out
+  ---
+  duration_ms: 5437.4919
+  type: 'test'
+  ...
+# Subtest: row 10: his two tracks keep the routes D439 gave them
+ok 96 - row 10: his two tracks keep the routes D439 gave them # SKIP fixtures-d431/testtrack10-open.t180track is not here (TEST TRACK 10: a private track, kept off the repository)
+  ---
+  duration_ms: 0.124
+  type: 'test'
+  ...
+# Subtest: row 11: a crest under a bend is not a lean out: P's pitched lap takes its short closer, leaning into its turn
+ok 97 - row 11: a crest under a bend is not a lean out: P's pitched lap takes its short closer, leaning into its turn
+  ---
+  duration_ms: 4172.549
+  type: 'test'
+  ...
+# Subtest: row 12: where every road that closes leans out, Finish refuses by name and says the least of them
+ok 98 - row 12: where every road that closes leans out, Finish refuses by name and says the least of them
+  ---
+  duration_ms: 7697.0261
+  type: 'test'
+  ...
+# Subtest: row 8: an end banked the way the closer turns is closed rolled last, on its own bank and with nothing banked on top
+ok 99 - row 8: an end banked the way the closer turns is closed rolled last, on its own bank and with nothing banked on top
+  ---
+  duration_ms: 1143.999
+  type: 'test'
+  ...
+# Subtest: row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+ok 100 - row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+  ---
+  duration_ms: 544.7816
+  type: 'test'
+  ...
+1..100
+# tests 100
+# suites 0
+# pass 32
+# fail 64
+# cancelled 0
+# skipped 4
+# todo 0
+# duration_ms 289924.8011
+
+# stderr

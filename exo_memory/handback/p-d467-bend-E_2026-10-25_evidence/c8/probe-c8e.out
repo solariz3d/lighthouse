@@ -1,0 +1,18 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+A 700 H 40 G 150: did not close: NOT CLOSED after 30 step(s): 28.4190 m, tangent 1.1e-7 rad
+A 700 H 40 G 250: did not close: NOT CLOSED after 30 step(s): 130.4641 m, tangent 3.1e-4 rad
+A 700 H 45 G 150: did not close: NOT CLOSED after 30 step(s): 0.0188 m, tangent 2.1e-8 rad
+A 700 H 45 G 250: did not close: NOT CLOSED after 30 step(s): 102.9559 m, tangent 1.6e-4 rad
+
+A 700 H 50 G 150 0.003: open crosses 156,1451; start try refused CLOSE_WINDOW
+
+A 700 H 50 G 150 0.004: open crosses 214,1441; start try refused CLOSE_WINDOW
+
+A 700 H 50 G 150 0.005: open crosses 244,1433; start try refused CLOSE_WINDOW
+A 700 H 50 G 250: did not close: NOT CLOSED after 30 step(s): 82.6078 m, tangent 3.2e-6 rad
+A 900 H 40 G 150: did not close: NOT CLOSED after 30 step(s): 39.6091 m, tangent 7.2e-5 rad
+A 900 H 40 G 250: did not close: NOT CLOSED after 30 step(s): 143.6401 m, tangent 1.3e-3 rad
+A 900 H 45 G 150: did not close: NOT CLOSED after 30 step(s): 5.9096 m, tangent 4.2e-8 rad
+A 900 H 45 G 250: did not close: NOT CLOSED after 30 step(s): 114.0138 m, tangent 9.5e-6 rad
+A 900 H 50 G 150: base crosses 926,1251
+A 900 H 50 G 250: did not close: NOT CLOSED after 30 step(s): 93.1989 m, tangent 3.7e-5 rad

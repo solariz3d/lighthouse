@@ -1,0 +1,24 @@
+$ node --test "app/test/sound-samples.test.js"
+(exit 0)
+[32m✔ row 1: the engine plays the synth before it has samples, and a sample for each of the four events once it has them [90m(9.7396ms)[39m[39m
+[32m✔ row 2: the pitch: a tick for note n plays at 2^((n-84)/12), a place's and an undo's notes at 2^((m-60)/12), the loop close at 1 [90m(5.7418ms)[39m[39m
+[32m✔ row 3: width keeps its two copies, each tick chokes the last, and a tick's attack is faded in [90m(5.3993ms)[39m[39m
+[32m✔ row 3b: a tick an octave up plays at twice the rate and sqrt 2 the level, so a shorter, higher tick carries the same energy; place and undo are not evened [90m(4.4991ms)[39m[39m
+[32m✔ row 7: two engines given the same seeded random build the same reverbs and crash; another seed builds others; with none, Math.random as before [90m(85.4395ms)[39m[39m
+[32m✔ row 4: the four files are fetched and decoded once, at the first gesture, from base; the synth plays until they are in [90m(2.8202ms)[39m[39m
+[32m✔ row 5: a failed fetch, a refused file or a failed decode is logged and the synth keeps playing; with no fetch at all, the same [90m(1.0966ms)[39m[39m
+[32m✔ row 6: the four files are the batch-8 WAVs byte for byte, and useSamples refuses a set with one missing [90m(37.8417ms)[39m[39m
+[32m✔ row 8: an engine plays the melody it was given, place forward and undo back, on that melody's own slots, round the 64; an unknown melody is refused [90m(23.0176ms)[39m[39m
+[32m✔ row 9: every melody's place and undo slot resolves to a file that is shipped, with its reference note and gain; the player fetches each file once [90m(0.505ms)[39m[39m
+[32m✔ row 10: each melody plays its own place and undo files, place_<name>.wav and undo_<name>.wav, at the place and undo gains [90m(18.5068ms)[39m[39m
+[32m✔ row 11: a place plays every note at its level lifted by the step's swell, the same lift for all six; an undo plays at its own level at every step [90m(18.1554ms)[39m[39m
+[32m✔ row 12: a launch fetches only its melody's files; a 404 on another melody's file does not keep the samples from playing [90m(6.4747ms)[39m[39m
+[34mℹ tests 13[39m
+[34mℹ suites 0[39m
+[34mℹ pass 13[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 321.1184[39m
+

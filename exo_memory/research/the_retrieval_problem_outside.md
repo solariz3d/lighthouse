@@ -230,6 +230,13 @@ IS the trigger" protocol makes the human the retrieval decision — which is Sel
 reflection token, and exactly what the consumer cannot ship. The Generative Agents formula is a starting
 point; the librarian seat is the natural retriever.
 
+> **Dated pointer, 2026-10-01 (librarian, on D): this paragraph and item 6 below are no longer current.** The retriever was
+> REGISTERED 08-30 (`loop/relevance_retriever_registration_2026-08-30.md`, `2a6cb40`) and CLOSED 08-31 at 13 of ~50 labelled
+> turns (`loop/retriever_closing_2026-08-31.md`; read its §3 before reopening). Most misses were non-corpus objects
+> (`loop/retrieval_collation_2026-09-21.md:441`), and reach turned out to be mostly KNOWN-UNOPENED, 48–53 of 56
+> (`loop/plan_retrieval_next_2026-09-26.md`, D159). The Third Place quoted this paragraph as current on 2026-10-01, because the
+> closing never reached this file. The wording above is kept as a trace.
+
 ---
 
 ## Disanalogy ledger — where the human findings do NOT transfer, so nobody imports them whole
@@ -261,6 +268,7 @@ point; the librarian seat is the natural retriever.
    refactor (primacy) and the shelf's tail (recency) from one measured effect.
 6. **NEW — the missing organ is a live-exchange relevance retriever** (Generative Agents' formula as a
    start; the librarian as the retriever; must CHANGE per turn or it habituates — the ferry's 171).
+   *[2026-10-01: built and CLOSED 08-31. See the dated pointer under "The map onto this room" above.]*
 7. **Reflection is load-bearing** (Park's ablation) — the dream cycle's health on the desktop is a
    retrieval question, not hygiene.
 

@@ -18,6 +18,7 @@ param(
     [string]$InstanceDir,   # default: most recently active instance on this machine
     [switch]$Force,
     [switch]$SyncOnly,      # skip the dreaming; just sync local dreams to the pool
+    [switch]$NoLineage,     # D475: skip the lineage rip this cycle
     [int]$IdleMinutes = 20, # how long with no keyboard/mouse before the machine counts as
                             # unattended. 20 covers a timer wake (hours of idle) without
                             # firing on someone who paused to read. Only consulted when the
@@ -49,7 +50,11 @@ if (-not $Model) {
 # Machine-agnostic: whichever machine wakes to dream, dream as the thread that
 # was most recently alive on it (newest write inside its instance dir).
 if (-not $InstanceDir) {
-    $root = "C:\Consonance\instances"
+    # D273 instances: begin. The instances folder by the app's own rule (main.rs set_dirs / default_instances), as the hooks: ~/.consonance.json's
+    # instances_dir when set (trimmed), else %USERPROFILE%\claude-instances. dev/dream/dream-dirs.test.js runs this block.
+    $root = Join-Path $env:USERPROFILE 'claude-instances'
+    try { $id = (Get-Content (Join-Path $env:USERPROFILE '.consonance.json') -Raw -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop).instances_dir; if (($id -is [string]) -and $id.Trim()) { $root = $id.Trim() } } catch { }
+    # D273 instances: end
     if (-not (Test-Path $root)) { exit 0 }  # no Consonance here; dreamless machine
     # Recency excludes dreams\ itself, else the dreamed instance stays newest
     # forever and one sibling monopolizes the night.
@@ -103,6 +108,25 @@ $battery = Get-CimInstance -ClassName Win32_Battery -ErrorAction SilentlyContinu
 if ($battery -and $battery.BatteryStatus -ne 2) {
     Log "skip: on battery"
     exit 0
+}
+
+# D475: THE LINEAGE RIP, once a cycle (consonance/tools/lineage-rip.js; plan_d475_carrying_both_ways_2026-10-26.md part 1). It appends the
+# keeper's new words from the transcripts to his private store, outside every repo, and it needs nobody to be away from the machine, so it
+# runs BEFORE the presence guard: a night the dream yields is not a night the store falls behind. It never stops the dream: a failure is
+# logged by its exit code and the cycle goes on. Only counts reach the log, never a message. -NoLineage skips it.
+if (-not $NoLineage) {
+    $rip = Join-Path (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)) 'consonance\tools\lineage-rip.js'
+    $node = Get-Command node -ErrorAction SilentlyContinue
+    $node = if ($node) { $node.Source } else { Join-Path $env:ProgramFiles 'nodejs\node.exe' }
+    $prevEap = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'   # node's stderr arrives as error records; under Stop the first would end the cycle
+        $said = & $node $rip 2>&1 | ForEach-Object { "$_" }
+        $ripCode = $LASTEXITCODE
+    } catch {
+        $said = @("could not run: $($_.Exception.Message)"); $ripCode = -1
+    } finally { $ErrorActionPreference = $prevEap }
+    Log ("lineage: exit {0}: {1}" -f $ripCode, (($said -join ' ') -replace '\s+', ' ').Trim())
 }
 
 # Guard 2: yield to a live SESSION - never dream while someone is here.

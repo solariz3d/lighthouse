@@ -1,0 +1,5 @@
+11:06:50Z descendants 11, io set 11, failed 0, free MB 42,121 (min 42,121), windows seen 0
+11:07:53Z descendants 15, io set 19, failed 0, free MB 41,426 (min 41,414), windows seen 0
+11:08:50Z VISIBLE WINDOW owned by a descendant: 1
+11:08:56Z descendants 15, io set 24, failed 0, free MB 41,161 (min 40,835), windows seen 1
+11:09:16Z stop: io set 24, failed 0, min free MB 40,835, windows seen 1

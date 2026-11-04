@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first
+not ok 1 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first
+  ---
+  duration_ms: 16058.3702
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-c485pre\\app\\test\\release-frame.test.js:150:1'
+  failureType: 'testCodeFailure'
+  error: 'a field change, its longest frame: p95 12.3 / 11.4 ms, over 6 (summed: p95 12.3 / 11.4 ms)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-c485pre\app\test\release-frame.test.js:170:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# a field change, its longest frame: p95 12.3 / 11.4 ms (median 9.9 / 9.7); handler and frames summed, not asserted: p95 12.3 / 11.4 ms (median 10.0 / 9.7)
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16521.8485

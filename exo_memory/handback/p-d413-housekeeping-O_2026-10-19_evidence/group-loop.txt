@@ -1,0 +1,7 @@
+exo_memory/loop/plan_lighten_the_load_2026-10-09.md
+exo_memory/loop/plan_t180_handoff_2026-10-15.md
+exo_memory/loop/plan_d411_ponytail_proof_2026-10-19.md
+exo_memory/loop/plan_d412_suite_speed_2026-10-19.md
+exo_memory/loop/plan_d413_lighthouse_housekeeping_2026-10-19.md
+exo_memory/loop/plan_ponytail_2026-10-16.md
+exo_memory/loop/readme_t180_sections_2026-10-17.md

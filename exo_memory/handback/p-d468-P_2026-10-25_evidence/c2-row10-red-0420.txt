@@ -1,0 +1,44 @@
+[31m✖ row 10: through Finish and through bankLap, the added bank is C2: the bank's second derivative steps at no joint from the closer's first to the seam, and at no joint of a banked lap [90m(5501.9279ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 5589.6639[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_joint_c2.test.js:196:1
+[31m✖ row 10: through Finish and through bankLap, the added bank is C2: the bank's second derivative steps at no joint from the closer's first to the seam, and at no joint of a banked lap [90m(5501.9279ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the added bank is C2 at every joint (bar 0.0005 °/m²)
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   "rolled cup p4|p5: phi'' steps by 0.0117 °/m²",
+  [32m+[39m   "rolled cup p7|p1: phi'' steps by 0.0115 °/m²",
+  [32m+[39m   "P 210/300/30 p4|p5: phi'' steps by -0.0119 °/m²",
+  [32m+[39m   "P 210/300/30 p7|p1: phi'' steps by 0.0115 °/m²",
+  [32m+[39m   "the banked lap p1|p2: phi'' steps by -0.0119 °/m²",
+  [32m+[39m   "the banked lap p2|p3: phi'' steps by 0.0115 °/m²",
+  [32m+[39m   "the banked lap p3|p4: phi'' steps by -0.0116 °/m²",
+  [32m+[39m   "the banked lap p4|p5: phi'' steps by -0.0067 °/m²",
+  [32m+[39m   "the banked lap p5|p6: phi'' steps by 0.0115 °/m²",
+  [32m+[39m   "the banked lap p8|p9: phi'' steps by 0.0115 °/m²",
+  [32m+[39m   "the banked lap p9|p1: phi'' steps by 0.0115 °/m²"
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-p468\[39mtest\core_joint_c2.test.js:213:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m"rolled cup p4|p5: phi'' steps by 0.0117 °/m²"[39m, [32m"rolled cup p7|p1: phi'' steps by 0.0115 °/m²"[39m, [32m"P 210/300/30 p4|p5: phi'' steps by -0.0119 °/m²"[39m, [32m"P 210/300/30 p7|p1: phi'' steps by 0.0115 °/m²"[39m, [32m"the banked lap p1|p2: phi'' steps by -0.0119 °/m²"[39m, [32m"the banked lap p2|p3: phi'' steps by 0.0115 °/m²"[39m, [32m"the banked lap p3|p4: phi'' steps by -0.0116 °/m²"[39m, [32m"the banked lap p4|p5: phi'' steps by -0.0067 °/m²"[39m, [32m"the banked lap p5|p6: phi'' steps by 0.0115 °/m²"[39m, [32m"the banked lap p8|p9: phi'' steps by 0.0115 °/m²"[39m, [32m"the banked lap p9|p1: phi'' steps by 0.0115 °/m²"[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

@@ -1,0 +1,25 @@
+keys schema generator name closed start nextId pieces spawns pitLane closed [33mtrue[39m pieces [33m23[39m channels kh kv phi w r h l c e s t er pieceKeys id type length family knots channels cup edge
+  0 p1    len   1000.0 s      0.0 ..   1000.0    
+  1 p2    len    100.0 s   1000.0 ..   1100.0    
+  2 p3    len    200.0 s   1100.0 ..   1300.0    
+  3 p4    len   1000.0 s   1300.0 ..   2300.0    
+  4 p5    len   1000.0 s   2300.0 ..   3300.0    
+  5 p6    len    100.0 s   3300.0 ..   3400.0    
+  6 p7    len    100.0 s   3400.0 ..   3500.0    
+  7 p8    len    100.0 s   3500.0 ..   3600.0    
+  8 p9    len     50.0 s   3600.0 ..   3650.0    
+  9 p10   len     50.0 s   3650.0 ..   3700.0    
+ 10 p11   len     50.0 s   3700.0 ..   3750.0    
+ 11 p12   len    100.0 s   3750.0 ..   3850.0    
+ 12 p13   len     50.0 s   3850.0 ..   3900.0    
+ 13 p14   len    100.0 s   3900.0 ..   4000.0    
+ 14 p15   len     50.0 s   4000.0 ..   4050.0    
+ 15 p16   len    600.0 s   4050.0 ..   4650.0    
+ 16 p17   len    100.0 s   4650.0 ..   4750.0    
+ 17 p18   len   2000.0 s   4750.0 ..   6750.0    
+ 18 p19   len   2000.0 s   6750.0 ..   8750.0    
+ 19 p20   len    150.0 s   8750.0 ..   8900.0    
+ 20 p21   len    919.0 s   8900.0 ..   9819.0    
+ 21 p22   len    746.0 s   9819.0 ..  10565.0    
+ 22 p23   len    919.0 s  10565.0 ..  11484.0    
+total 11484.00

@@ -1,0 +1,14 @@
+=== node --max-old-space-size=4096 C:/Users/nname/Desktop/lighthouse/exo_memory/loop/claimrec/score_base_rate.js C:/Consonance/retrieval/remeasure1003/verify/B/verdicts.json C:/Consonance/retrieval/remeasure1003/verify/B/verdicts.json
+=== cwd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d277v
+=== env {}
+claims B 168 · C 168 · overlap 168 · unique 168 · messages 79
+κ kind 1.000 (agree 100.0%, n 168) · κ verdict 1.000 (agree 100.0%, n 100)
+overlap kind splits: between unchecked kinds 0 (kept pooled only) · involving CHECKED/NOTCLAIM 0 (excluded)
+P(wrong|CHECKED) = 0/39 = 0.000 · CP95 0.000-0.090 · boot95 0.000-0.000 · UNVERIFIABLE 0/39 = 0.000
+P(wrong|STATE) = 3/49 = 0.061 · CP95 0.013-0.169 · boot95 0.000-0.136 · UNVERIFIABLE 1/50 = 0.020
+P(wrong|CONCLUSION) = 0/9 = 0.000 · CP95 0.000-0.336 · boot95 0.000-0.000 · UNVERIFIABLE 2/11 = 0.182
+P(wrong|UNCHECKED) = 3/58 = 0.052 · CP95 0.011-0.144 · boot95 0.000-0.121 · UNVERIFIABLE 3/61 = 0.049
+step conclusion−state -0.061 boot95 -0.140..0.000 not shown · step state−checked 0.061 boot95 0.000..0.135 not shown
+DG1 UNVERIFIABLE share of unchecked 0.049 (>0.50: false) · DG2 verdict-bearing unchecked 58 (<60: true) · DG3 κ verdict 1.000 (<0.40: false) · CHECKED claims 39 (<15 partial: false)
+
+=== exit 0 signal null error  0.1s

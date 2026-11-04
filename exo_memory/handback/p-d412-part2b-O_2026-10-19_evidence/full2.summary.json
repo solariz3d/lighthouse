@@ -1,0 +1,21 @@
+{
+  "started": "2026-10-19T18:26:46.251Z",
+  "ended": "2026-10-19T18:48:00.715Z",
+  "wall_s": 1274.5,
+  "exit_code": 0,
+  "signal": null,
+  "node": "v24.14.1",
+  "head": "5bb6d41dc4eac065d111c0df0092a62082f73864",
+  "busy_cores_avg": 9.38,
+  "busy_cores_peak": 15.023203110081448,
+  "args": [
+    "--test",
+    "--test-concurrency=4",
+    "--test-reporter=spec",
+    "--test-reporter-destination=stdout",
+    "--test-reporter=tap",
+    "--test-reporter-destination=C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d412-part2b-O_2026-10-19_evidence/full2.tap",
+    "test/*.test.js",
+    "app/test/*.test.js"
+  ]
+}

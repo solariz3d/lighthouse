@@ -1,0 +1,362 @@
+{
+  "_what": "F3 offline measure on the 9 RM units (D311 part 3, pane E). Q1 is the arm; Q2 is secondary.",
+  "k": 5,
+  "method": "BM25 k1 1.2 b 0.75, 40-line chunks at stride 20, path words added, repo at the commit before the turn",
+  "hitsQ1": "0/9",
+  "hitsQ1NewestAnywhere": "0/9",
+  "hitsQ2": "2/9",
+  "rows": [
+    {
+      "id": "W007",
+      "transcript": "C--Consonance-instances-librarian",
+      "prompt_ts": "2026-09-16T15:30:54.543Z",
+      "claimInReply": true,
+      "commit": "d5d954d3",
+      "committed": "2026-09-16T09:21:47-06:00",
+      "c_bound": "d5d954d3",
+      "answerInRecord": true,
+      "armMatchesQ1": true,
+      "q1": {
+        "terms": 6,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "consonance/src-tauri/src/cochlea.rs:2841-2880 (14.716)",
+          "consonance/src-tauri/src/cochlea.rs:2821-2860 (14.665)",
+          "consonance/src-tauri/brief/COMMITTEE.md:141-180 (12.043)",
+          "consonance/src-tauri/src/cochlea.rs:1001-1040 (11.883)",
+          "consonance/tools/ask.test.js:61-100 (11.673)"
+        ]
+      },
+      "q1any": null,
+      "q2": {
+        "terms": 62,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/librarian/2026-09-02.md:841-880 (63.542)",
+          "exo_memory/loop/two_machines_lap_plan_2026-09-09.md:21-60 (61.523)",
+          "exo_memory/librarian/2026-09-14.md:161-200 (61.324)",
+          "exo_memory/librarian/2026-09-02.md:821-860 (60.782)",
+          "exo_memory/map/M.md:281-320 (60.065)"
+        ]
+      }
+    },
+    {
+      "id": "W030",
+      "transcript": "C--Consonance-instances-librarian",
+      "prompt_ts": "2026-09-27T17:22:30.991Z",
+      "claimInReply": true,
+      "commit": "514c28ae",
+      "committed": "2026-09-27T10:50:02-06:00",
+      "c_bound": "b214e3a3 and c6d16e82",
+      "answerInRecord": true,
+      "armMatchesQ1": true,
+      "q1": {
+        "terms": 6,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "consonance/tools/curate.js:121-160 (13.271)",
+          "exo_memory/loop/pane_battery_idea_2026-09-11.md:1-31 (12.956)",
+          "exo_memory/loop/codex_port_idea_2026-09-08.md:1-40 (12.872)",
+          "exo_memory/attic/the_night_skeleton.md:1061-1100 (11.817)",
+          "exo_memory/attic/the_night_skeleton.md:1201-1240 (11.573)"
+        ]
+      },
+      "q1any": null,
+      "q2": {
+        "terms": 88,
+        "hitAtK": true,
+        "firstAnswerRank": 3,
+        "answerPathInTopK": true,
+        "topK": [
+          "exo_memory/map/E.md:1681-1720 (79.908)",
+          "exo_memory/librarian/2026-09-14.md:561-600 (77.501)",
+          "exo_memory/ASK.md:161-200 (77.122)",
+          "exo_memory/librarian/2026-09-21.md:101-140 (75.815)",
+          "exo_memory/librarian/2026-09-16.md:181-220 (72.471)"
+        ]
+      }
+    },
+    {
+      "id": "W039",
+      "transcript": "C--Consonance-instances-librarian",
+      "prompt_ts": "2026-10-01T09:51:40.450Z",
+      "claimInReply": true,
+      "commit": "f239387c",
+      "committed": "2026-09-30T03:54:32-06:00",
+      "c_bound": "f239387c",
+      "answerInRecord": true,
+      "armMatchesQ1": true,
+      "q1": {
+        "terms": 9,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/loop/retrieval_collation_2026-09-21.md:381-420 (20.005)",
+          "jev/README.md:1-40 (19.799)",
+          "jev/README.md:21-60 (19.364)",
+          "exo_memory/handback/p-d107-pacing-A_2026-09-22.md:1-40 (18.79)",
+          "exo_memory/handback/p-d125-readme-E_2026-09-23.md:1-40 (18.4)"
+        ]
+      },
+      "q1any": null,
+      "q2": {
+        "terms": 76,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/loop/jev_r2r3_score_2026-09-23.md:1-40 (131.825)",
+          "exo_memory/loop/jev_r2r3_score_2026-09-23.md:21-60 (112.35)",
+          "exo_memory/loop/jev_standalone_design_2026-09-23.md:1-40 (99.869)",
+          "exo_memory/librarian/2026-09-22.md:1081-1120 (80.62)",
+          "exo_memory/loop/readme_about_r2_read_2026-09-25.md:141-180 (79.134)"
+        ]
+      }
+    },
+    {
+      "id": "W050",
+      "transcript": "C--Consonance-instances-librarian",
+      "prompt_ts": "2026-09-01T13:36:20.634Z",
+      "claimInReply": true,
+      "commit": "5bfcde90",
+      "committed": "2026-09-01T07:31:37-06:00",
+      "c_bound": "9c6a1311 (tree)",
+      "answerInRecord": true,
+      "armMatchesQ1": true,
+      "q1": {
+        "terms": 1,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "consonance/tools/actors.js:141-180 (9.821)",
+          "consonance/tools/actors.js:121-160 (8.834)"
+        ]
+      },
+      "q1any": null,
+      "q2": {
+        "terms": 83,
+        "hitAtK": false,
+        "firstAnswerRank": 27,
+        "answerPathInTopK": true,
+        "topK": [
+          "consonance/src-tauri/src/main.rs:8301-8340 (109.915)",
+          "consonance/src-tauri/src/main.rs:8281-8320 (105.849)",
+          "consonance/launch.ps1:81-120 (98.335)",
+          "exo_memory/librarian/2026-09-01.md:321-360 (97.518)",
+          "exo_memory/handback/p-lib-forget-attack_2026-09-01.md:1-40 (95.657)"
+        ]
+      }
+    },
+    {
+      "id": "W078",
+      "transcript": "C--Consonance-instances-librarian",
+      "prompt_ts": "2026-09-09T06:12:59.213Z",
+      "claimInReply": true,
+      "commit": "e527582b",
+      "committed": "2026-09-06T13:12:40-06:00",
+      "c_bound": "e527582b",
+      "answerInRecord": true,
+      "armMatchesQ1": true,
+      "q1": {
+        "terms": 1,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "consonance/tools/chain-status.js:621-660 (3.43)",
+          "consonance/ui/chain-indicator.test.js:401-440 (3.42)",
+          "consonance/tools/commit-gate.test.js:61-100 (3.411)",
+          "consonance/ui/chain-indicator.test.js:321-360 (3.362)",
+          "consonance/src-tauri/brief/BUILDING.md:341-380 (3.333)"
+        ]
+      },
+      "q1any": {
+        "commit": "d61ff6ab",
+        "terms": 1,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/loop/packet_seed_plant_v3_2026-09-08.md:81-120 (3.307)",
+          "consonance/tools/chain-status.js:621-660 (3.273)",
+          "consonance/ui/chain-indicator.test.js:401-440 (3.264)",
+          "consonance/tools/commit-gate.test.js:61-100 (3.255)",
+          "exo_memory/loop/packet_seed_plant_v3_2026-09-08.md:101-140 (3.244)"
+        ]
+      },
+      "q2": {
+        "terms": 46,
+        "hitAtK": true,
+        "firstAnswerRank": 5,
+        "answerPathInTopK": true,
+        "topK": [
+          "consonance/tools/board-audit.js:1-40 (51.7)",
+          "consonance/tools/board-audit.test.js:21-60 (50.984)",
+          "consonance/tools/board-audit.js:101-124 (50.619)",
+          "consonance/tools/board-audit.test.js:1-40 (48.736)",
+          "consonance/tools/board-audit.js:61-100 (47.522)"
+        ]
+      }
+    },
+    {
+      "id": "W085",
+      "transcript": "C--Consonance-instances-librarian",
+      "prompt_ts": "2026-09-11T08:12:35.026Z",
+      "claimInReply": true,
+      "commit": "397e29c5",
+      "committed": "2026-09-11T02:12:21-06:00",
+      "c_bound": "ec884940",
+      "answerInRecord": true,
+      "armMatchesQ1": true,
+      "q1": {
+        "terms": 124,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/loop/chair_wake_2026-09-11.md:1-40 (222.382)",
+          "exo_memory/loop/chair_wake_2026-09-11.md:21-60 (177.502)",
+          "exo_memory/loop/chair_wake_2026-09-11.md:41-80 (161.599)",
+          "exo_memory/loop/chair_wake_2026-09-11.md:61-93 (153.405)",
+          "exo_memory/librarian/2026-09-11.md:1-26 (149.203)"
+        ]
+      },
+      "q1any": null,
+      "q2": {
+        "terms": 90,
+        "hitAtK": false,
+        "firstAnswerRank": 7,
+        "answerPathInTopK": true,
+        "topK": [
+          "exo_memory/loop/to_the_laptop_2026-09-11.md:41-80 (140.204)",
+          "exo_memory/librarian/2026-09-11.md:1-26 (139.414)",
+          "exo_memory/loop/handoff_librarian_2026-09-11.md:21-60 (137.971)",
+          "exo_memory/loop/one_house_two_machines_idea_2026-09-08.md:41-80 (127.424)",
+          "exo_memory/loop/one_house_two_machines_idea_2026-09-08.md:61-100 (121.786)"
+        ]
+      }
+    },
+    {
+      "id": "W091",
+      "transcript": "C--Consonance-instances-librarian",
+      "prompt_ts": "2026-09-14T07:14:25.661Z",
+      "claimInReply": true,
+      "commit": "e3b582f6",
+      "committed": "2026-09-14T01:12:20-06:00",
+      "c_bound": "25a2b1eb and 12193866",
+      "answerInRecord": true,
+      "armMatchesQ1": true,
+      "q1": {
+        "terms": 72,
+        "hitAtK": false,
+        "firstAnswerRank": 40,
+        "answerPathInTopK": false,
+        "topK": [
+          "essay/recognition/contaminated_2026-09-09/recog_cold1.md:1-25 (73.051)",
+          "essay/recognition/contaminated_2026-09-09/recog_primed3.md:1-39 (71.733)",
+          "essay/MANUSCRIPT.html:81-120 (68.953)",
+          "exo_memory/journal/2026-07-12.md:41-62 (65.844)",
+          "dev/live/adversarial_l3.py:61-94 (65.782)"
+        ]
+      },
+      "q1any": null,
+      "q2": {
+        "terms": 80,
+        "hitAtK": false,
+        "firstAnswerRank": 20,
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/record/trust-the-first-attention.md:1-40 (76.282)",
+          "exo_memory/record/trust-the-first-attention.md:21-51 (71.014)",
+          "exo_memory/map/M-2026-08-25.md:241-280 (69.782)",
+          "exo_memory/map/M-2026-08-25.md:221-260 (68.539)",
+          "exo_memory/librarian/2026-09-06.md:61-100 (64.244)"
+        ]
+      }
+    },
+    {
+      "id": "T1",
+      "transcript": "C--Consonance-instances-librarian",
+      "prompt_ts": "2026-10-11T20:36:24.259Z",
+      "claimInReply": true,
+      "commit": "a0ee8d16",
+      "committed": "2026-10-11T14:17:13-06:00",
+      "c_bound": "700128c8^",
+      "answerInRecord": true,
+      "armMatchesQ1": true,
+      "q1": {
+        "terms": 88,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/handback/p-rusttemp-A_2026-10-11.md:1-35 (131.318)",
+          "exo_memory/loop/qs2s_units_v2_2026-10-03.md:1261-1300 (96.231)",
+          "exo_memory/handback/p-verify-B_2026-10-10_evidence/d277v/turns/76.txt:1-40 (96.048)",
+          "exo_memory/loop/plan_claim_first_titles_d299_2026-10-11.md:1-33 (91.867)",
+          "exo_memory/map/A.md:1881-1914 (90.984)"
+        ]
+      },
+      "q1any": null,
+      "q2": {
+        "terms": 147,
+        "hitAtK": false,
+        "firstAnswerRank": 25,
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/handback/p-rusttemp-A_2026-10-11.md:1-35 (180.888)",
+          "exo_memory/loop/plan_claim_first_titles_d299_2026-10-11.md:1-33 (166.744)",
+          "exo_memory/map/A.md:1881-1914 (165.669)",
+          "exo_memory/loop/plan_clean_up_after_ourselves_2026-10-10.md:61-100 (163.184)",
+          "exo_memory/loop/plan_clean_up_after_ourselves_2026-10-10.md:41-80 (159.434)"
+        ]
+      }
+    },
+    {
+      "id": "T2",
+      "transcript": "C--Consonance-instances-sibling-07b8a48f",
+      "prompt_ts": "2026-10-11T23:52:08.252Z",
+      "claimInReply": true,
+      "commit": "83188cb1",
+      "committed": "2026-10-11T17:19:50-06:00",
+      "c_bound": "83188cb1",
+      "answerInRecord": true,
+      "armMatchesQ1": true,
+      "q1": {
+        "terms": 58,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/handback/p-verify-B_2026-10-10_evidence/d277v/turns/62.txt:1-40 (148.239)",
+          "exo_memory/handback/p-verify-B_2026-10-10_evidence/d277v/turns/49.txt:1-40 (139.624)",
+          "exo_memory/handback/p-verify-B_2026-10-10_evidence/d277v/turns/70.txt:1-21 (138.984)",
+          "exo_memory/handback/p-verify-B_2026-10-10_evidence/d277v/turns/04.txt:1-40 (134.531)",
+          "exo_memory/handback/p-verify-B_2026-10-10_evidence/d277v/turns/61.txt:1-28 (132.176)"
+        ]
+      },
+      "q1any": null,
+      "q2": {
+        "terms": 94,
+        "hitAtK": false,
+        "firstAnswerRank": ">100",
+        "answerPathInTopK": false,
+        "topK": [
+          "exo_memory/loop/plan_queue_sweep_d300_2026-10-11.md:21-52 (146.079)",
+          "exo_memory/handback/p-soakclean-E_2026-10-11.md:1-40 (111.2)",
+          "exo_memory/handback/p-stalelaps-A_2026-10-11.md:1-40 (110.711)",
+          "exo_memory/handback/p-d182-land-read-B_2026-09-28.md:1-40 (107.27)",
+          "exo_memory/handback/p-stalelaps-A_2026-10-11.md:21-53 (107.09)"
+        ]
+      }
+    }
+  ]
+}

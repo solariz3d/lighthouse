@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-/* jev-judge.js — Jev AS the judge, inside the runner Consonance already starts on every machine. L071 packet A, pane A.
+/* jev-judge.js — Jev AS the judge, inside the runner Consonance started on every machine until D164 retired it (2026-09-27). L071 packet A, pane A.
  *
  * THE KEEPER, 2026-09-22 02:4x: "it should be system agnostic and just run through consonance itself no matter what
  * hardware its running on ... jev is a requirement for consonance". So this is NOT a hook and NOT an installer choice:
- * it is a mode of consonance/tools/jev-shadow-runner.js, which main.rs start_jev_shadow spawns on every launch, on
+ * it is a mode of consonance/tools/jev-shadow-runner.js, which main.rs start_jev_shadow spawned on every launch (until D164, 2026-09-27), on
  * every machine. There is no machine switch anywhere in it. (The first packet shape — a hook plus a per-machine
  * install.ps1 choice — was withdrawn for tying Jev to each machine's settings.json, which is what left L idle.)
  *

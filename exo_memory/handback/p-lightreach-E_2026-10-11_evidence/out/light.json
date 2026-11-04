@@ -1,0 +1,100 @@
+{
+  "form": "light",
+  "shelf": "G:/consonance-scratch/c-d296/new2/librarian.light.md",
+  "shelfMtime": "2026-10-11T14:39:54.009Z",
+  "exo": "G:/consonance-scratch/c-d296/snap",
+  "header": "14 file(s) carried in full: the 13 cards (the instruments) and 1 of your own notes in the window (today and yesterday, plus README.md and LEDGER.md by the window rule, while they fit 24000 bytes).",
+  "carriedFiles": 14,
+  "indexedFiles": 1,
+  "indexedMissingOnDisk": [],
+  "carriedMissingOnDisk": [],
+  "corpusRecursiveLines": 342732,
+  "corpusRecursiveFiles": 2105,
+  "inContextLines": 583,
+  "inContextPct": "0.17%",
+  "indexedLines": 323,
+  "reachablePct": "0.26%",
+  "filesReachableByPath": 16,
+  "droppedFiles": 731,
+  "droppedLines": 150965,
+  "droppedPct": "44.05%",
+  "unpointedPct": "99.74%",
+  "unpointedLinesByTop": {
+    "(root)": 4794,
+    "astra/": 81,
+    "attic/": 1889,
+    "audit/": 265,
+    "handback/": 157532,
+    "journal/": 8500,
+    "librarian/": 16547,
+    "loop/": 135538,
+    "map/": 14065,
+    "memory/": 273,
+    "record/": 697,
+    "research/": 1252,
+    "review/": 127,
+    "spread/": 266
+  },
+  "SECOND_UNIT": "not reach.js: also counts a file as reached when the shelf points at its DIRECTORY (strict: `ls exo_memory/<dir>/`; light: the BY DIRECTORY list)",
+  "dirPointers": [
+    "",
+    "record",
+    "memory",
+    "librarian",
+    "spread",
+    "research",
+    "map",
+    "journal",
+    "loop"
+  ],
+  "dirStated": [
+    {
+      "rel": "",
+      "stated": 21
+    },
+    {
+      "rel": "record",
+      "stated": 4
+    },
+    {
+      "rel": "memory",
+      "stated": 13
+    },
+    {
+      "rel": "librarian",
+      "stated": 44
+    },
+    {
+      "rel": "spread",
+      "stated": 2
+    },
+    {
+      "rel": "research",
+      "stated": 8
+    },
+    {
+      "rel": "map",
+      "stated": 17
+    },
+    {
+      "rel": "journal",
+      "stated": 36
+    },
+    {
+      "rel": "loop",
+      "stated": 924
+    }
+  ],
+  "byDirectory_top": {
+    "files": 806,
+    "lines": 173644,
+    "reachablePct": "50.66%",
+    "unpointedPct": "49.34%"
+  },
+  "byDirectory_anyDepth": {
+    "files": 1082,
+    "lines": 182838,
+    "reachablePct": "53.35%",
+    "unpointedPct": "46.65%"
+  }
+}

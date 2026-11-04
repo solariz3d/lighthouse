@@ -1,0 +1,4 @@
+caught       M1 the prefix rule back (every placed segment unchanged, or none kept)  (the closed track after Close, built from the open one, is the closed t; Close's rebuild of a 24 km track it closes with new road costs at most)  [tap: M1.tap]
+SURVIVED     M2 the lift key not compared (a lifted segment counted as kept)  [tap: M2.tap]
+SURVIVED     M3 the shorter-track guard dropped  [tap: M3.tap]
+applied 3 / caught 1 / NOT APPLIED 0

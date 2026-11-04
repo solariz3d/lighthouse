@@ -216,7 +216,7 @@ t('shouldEmit survives a corrupt state file', () => {
 
 // ── scanDreams (real filesystem, temp fixture) ──────────────────────────────
 t('scanDreams finds the newest dream and the newest log across beds', () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dreamwatch-'));
+  const root = require('../tools/scratch.js').mkdtemp('dreamwatch-');
   try {
     const a = path.join(root, 'sibling-a', 'dreams');
     const b = path.join(root, 'sibling-b', 'dreams');
@@ -251,7 +251,7 @@ t('scanDreams reports nothing rather than throwing when the instances dir is abs
 });
 
 t('scanDreams ignores a future mtime — clock skew is not evidence of health', () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dreamwatch-'));
+  const root = require('../tools/scratch.js').mkdtemp('dreamwatch-');
   try {
     const d = path.join(root, 'sibling-a', 'dreams');
     fs.mkdirSync(d, { recursive: true });
@@ -329,7 +329,7 @@ function runHook(fx, taskFixture, cwd) {
 }
 
 function withFixture(dreamAgeH, logAgeH, taskText, fn) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dreamwatch-e2e-'));
+  const root = require('../tools/scratch.js').mkdtemp('dreamwatch-e2e-');
   try {
     const fx = bed(root, dreamAgeH, logAgeH);
     let taskFixture = 'MISSING';

@@ -1,0 +1,791 @@
+{
+ "what": "D305 part 3: messages of the 10-10 re-measure with at least one claim called CORRECT and none WRONG (B and C verdict files)",
+ "messages": [
+  {
+   "messageId": "msg_011CffP6XYFiwPmqtVrEwZ2r",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-03T13:27:57.488Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CffYYkHEyCPzQUfEbLMRG",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-03T15:31:51.211Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfgPFoYfuyUmkNASVw1WL",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-04T02:10:31.847Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfgPaMDvoQ2vta6FyNw5a",
+   "seat": "chair",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "ts": "2026-10-04T02:14:42.153Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfh4oUD2KooCCc1RQ9Ycv",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-04T10:49:05.243Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfh4runEZRD1eA8ecvabE",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-04T10:49:56.862Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfh51JfNSJoCxD3mabp1z",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-04T10:51:49.281Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfhReQUUqYfFxfHFtRhZA",
+   "seat": "chair",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "ts": "2026-10-04T15:22:24.939Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfhcduHM1J9VhVSRUuPqU",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-04T17:46:37.945Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfheUidcTisXS8PbRyLVT",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-04T18:10:51.425Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfhkUxLaawcDjGreMM5RE",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-04T19:29:29.400Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfhsmRj7MURKHjpyuRTd5",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-04T21:05:05.625Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "UNVERIFIABLE"
+   ]
+  },
+  {
+   "messageId": "msg_011CfhwD5pNQGE4zB7YVMHgx",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-04T21:50:30.740Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "UNVERIFIABLE"
+   ]
+  },
+  {
+   "messageId": "msg_011CfiS48RkuUCNAXGmA8KMZ",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-05T04:08:24.644Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfiZ36xF5qGii6NK54Qey",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-05T05:40:12.080Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjFzG2dzaVRVXDjaH8Kj",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-05T14:36:59.062Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjKWHSAKRZkqQdggjEk1",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-05T15:23:09.693Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjPoyhmsyuLwK5RTBbF4",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-05T16:19:34.789Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjRFPUpHjMiCpHACxMiG",
+   "seat": "chair",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "ts": "2026-10-05T16:38:24.980Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjcgFxrVuKfKCa5QNUBS",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-05T19:08:16.331Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfjey5KbwgV4TTHAPzyXo",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-05T19:38:21.486Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjjAsPZVBVim2TxwveEd",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-05T20:33:30.032Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjjuMVAfzb3nYQv6Hih9",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-05T20:43:02.993Z",
+   "verdicts": [
+    "CORRECT",
+    "UNVERIFIABLE"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjmvdLfjgdf5pyVsvMJo",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-05T21:09:32.815Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjmwSd2v1DHTSoSsVvnD",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-05T21:09:46.442Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfjn9az9GJLAFu2Xx8xnB",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-05T21:12:27.237Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjoDdHn8hViv8obGk11y",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-05T21:26:42.071Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjpUMo9sSmdSjQCEenia",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-05T21:43:35.492Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjtHdX8JYidt6jHg32v4",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-05T22:33:02.513Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjuohTx7MjWkyh4823TG",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-05T22:52:56.743Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfjxXiW7xM9V3MNovMc2f",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-05T23:28:43.696Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfkbZyQBBSTpi6CUkhkWk",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-06T07:34:23.487Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfkfWeBuSP2nb78jA6kgF",
+   "seat": "chair",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "ts": "2026-10-06T08:26:04.413Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfkv4DfHytDyFdaJbmU7P",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-06T11:36:51.731Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfkxNtA3Kd7hwo1FrwHco",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-06T12:07:19.527Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfky9D9XVrABVxfSEwZGg",
+   "seat": "chair",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "ts": "2026-10-06T12:17:15.665Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmP3K94pcRYNYXRogMyR",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-06T17:30:41.401Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmUDgKQ2QZwbHr5peQsb",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-06T18:38:37.503Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmYpicFqyZSHtqMG5ka4",
+   "seat": "chair",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "ts": "2026-10-06T19:38:55.443Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmZya88jcJUvh9YdGHHs",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-06T19:54:03.738Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmeNrA9rg4Znt8jgU5bf",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-06T20:51:49.662Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmgNGutCbM5WFWFwDuEj",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-06T21:17:52.766Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfmit33Wx8r2G3fJ5tBKB",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-06T21:50:54.647Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "UNVERIFIABLE"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmjFxazubHKz2yeTkCrc",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-06T21:55:53.011Z",
+   "verdicts": [
+    "CORRECT",
+    "UNVERIFIABLE",
+    "UNVERIFIABLE",
+    "UNVERIFIABLE"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmsvZ2fPntJD1rk6qp5F",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-06T23:49:25.833Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmwyDtnki4bnRxmakP7c",
+   "seat": "chair",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "ts": "2026-10-07T00:42:29.884Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfmxKRiFNJh8LyzE7U6Cw",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-07T00:47:08.828Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfnVYMyV78Ap7i49xdmSX",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-07T07:36:38.855Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfnVtWZyaN2mXJQ7MD3eJ",
+   "seat": "chair",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "ts": "2026-10-07T07:41:02.360Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfnWC2uKq6j8XDkd2GgzX",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-07T07:44:59.260Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfnWPr63CyQHtvgVDpJF3",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-07T07:47:46.113Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfnWRXgZLLD67JffXtjh3",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-07T07:48:07.159Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfnaJmtrNQn733H44bbSc",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-07T08:39:09.645Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfoBVyhdqJvVtsN4ZgUFy",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-07T16:20:31.722Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfoBr2AHRfsNLVZfw7dSU",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-07T16:25:08.814Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfoDNsi1hUPw6vc69wmo7",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-07T16:45:05.337Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfoJKEiXyEZs9GmHCx3fq",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-07T17:49:49.123Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfpgWbRbfBEfw3Y44tjyF",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-08T11:21:45.518Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfqHm7gER8vfUwe99tzza",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-08T19:03:46.821Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfqJm7f7dR5xrMeZHw8EQ",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-08T19:16:55.529Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfqL8dSTFGUeZ72Ky7BaM",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-08T19:34:50.957Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfqTe9qg799JVLwyiVxtt",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-08T21:13:26.604Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfqmZm6Rs2xM471FoM5ar",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-09T01:08:36.627Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfrQ9SaqcQ8un3opRScMG",
+   "seat": "C",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "ts": "2026-10-09T09:08:11.513Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfrUFkKLCu9Wd1KxXWgFt",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-09T10:02:02.209Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfrwdkUkVoMrQjBc5zzuW",
+   "seat": "E",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "ts": "2026-10-09T16:01:07.251Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfs42fB793YqoNAULUNWW",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-09T17:25:02.657Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "UNVERIFIABLE"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfs5KBQ7ZWwPkoo7kVqJf",
+   "seat": "B",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "ts": "2026-10-09T17:41:52.603Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfscst1sn5nySSoqF6ngG",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-10T00:35:44.268Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfsdPcGB6UR83yXmUauVM",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-10T00:42:26.201Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011CfssxaRqhbkXg17MS5R2r",
+   "seat": "librarian",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "ts": "2026-10-10T03:53:27.101Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfsv8g9Pm1eFQkDnDXpo3",
+   "seat": "A",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "ts": "2026-10-10T04:22:29.232Z",
+   "verdicts": [
+    "CORRECT",
+    "CORRECT"
+   ]
+  },
+  {
+   "messageId": "msg_011Cfswno2JSXNajF6KSd3QE",
+   "seat": "chair",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "ts": "2026-10-10T04:43:41.771Z",
+   "verdicts": [
+    "CORRECT"
+   ]
+  }
+ ]
+}

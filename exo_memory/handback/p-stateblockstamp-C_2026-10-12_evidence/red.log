@@ -1,0 +1,9 @@
+== C d309 red-first · asked 2026-10-12T07:27:14.873Z · lock held 2026-10-12T07:27:14.906Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d309-wt && git diff --stat -- consonance/tools/state-block.js; node --test --test-reporter=tap consonance/tools/state-block.test.js 2>&1 | grep -E '^not ok|^# (tests|pass|fail)'
+not ok 25 - D309: the header carries its generation time, UTC and machine-local with the offset, and both parse to the same instant
+not ok 26 - D309: a block generated at t says t (the clock is injected), through render and through the CLI
+not ok 27 - D309: every section whose figures can go stale says "as of" the stamp, beside its own check command; the name line does not
+# tests 27
+# pass 24
+# fail 3
+== exit 0 · done 2026-10-12T07:27:21.476Z

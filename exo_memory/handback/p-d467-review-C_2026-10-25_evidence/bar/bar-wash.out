@@ -1,0 +1,11 @@
+FAILED TypeError: Cannot read properties of undefined (reading 'includes')
+wash s0 800 r 100 2e-4 window [1]: drag 13.38 | outside 9.12 | window 9.26 | part3 pass | B3 pass | barMiss: PASS (taken)
+wash s0 800 r 100 1e-4 window [1]: drag 6.69 | outside 4.53 | window 4.60 | part3 pass | B3 pass | barMiss: PASS (taken)
+wash s0 800 r 100 3e-4 window [1]: drag 20.07 | outside 13.76 | window 13.98 | part3 pass | B3 pass | barMiss: PASS (taken)
+wash s0 1400 r 100 2e-4 window [2,3]: at the seam, no start try
+wash s0 1400 r 100 1e-4 window [2,3]: at the seam, no start try
+wash s0 1400 r 100 3e-4 window [2,3]: at the seam, no start try
+## rerun: node bar.js <4f59790> wash 965.4866776461628 100 2e-4 1e-4 3e-4 (the frame row's spot; the first run's FAILED line above was my script's, see §8.7)
+wash s0 965.4866776461628 r 100 2e-4 window [1,2]: drag 11.39 | outside 7.06 | window 7.12 | part3 pass | B3 pass | barMiss: PASS (taken)
+wash s0 965.4866776461628 r 100 1e-4 window [1,2]: drag 5.70 | outside 3.52 | window 3.55 | part3 pass | B3 pass | barMiss: PASS (taken)
+wash s0 965.4866776461628 r 100 3e-4 window [1,2]: drag 17.09 | outside 10.60 | window 10.71 | part3 pass | B3 pass | barMiss: PASS (taken)

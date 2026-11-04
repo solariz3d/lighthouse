@@ -1,0 +1,3 @@
+37e342b Test: an unticked bank from the panel is a smooth S, no slice and no amber (red: it is the rounded ramp)
+113ed0b An unticked bank eases in and out as a smooth S over the whole piece, not a straight cut from the joint
+8b9e3b2 The ramp harness catches a return to the slice; two more tests that pinned the rounded ramp amended by name; changelog and map

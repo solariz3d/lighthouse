@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: row 1: toSegments: segMFor absent or undefined is the same segments; a piece with its own chord length is that many chords of the same length in all
+ok 1 - row 1: toSegments: segMFor absent or undefined is the same segments; a piece with its own chord length is that many chords of the same length in all
+  ---
+  duration_ms: 30.6617
+  type: 'test'
+  ...
+# Subtest: row 2: the coarse ghost: few chords whatever the length, the placed pieces' segments the same objects, the same end of road, and a short piece unchanged
+ok 2 - row 2: the coarse ghost: few chords whatever the length, the placed pieces' segments the same objects, the same end of road, and a short piece unchanged
+  ---
+  duration_ms: 716.5534
+  type: 'test'
+  ...
+# Subtest: row 3: the release is byte for byte what it was: the placed mesh and two full ghosts hash to what c2d7cb5 (0.4.7) made
+ok 3 - row 3: the release is byte for byte what it was: the placed mesh and two full ghosts hash to what c2d7cb5 (0.4.7) made
+  ---
+  duration_ms: 96.8074
+  type: 'test'
+  ...
+# Subtest: row 4: the cheap ghost: at most 64 stations on its new piece, the same end, the placed path and mesh untouched, a full ghost after it the full ghost, the handles where the full ghost's are
+ok 4 - row 4: the cheap ghost: at most 64 stations on its new piece, the same end, the placed path and mesh untouched, a full ghost after it the full ghost, the handles where the full ghost's are
+  ---
+  duration_ms: 244.0755
+  type: 'test'
+  ...
+# Subtest: row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object
+ok 5 - row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object
+  ---
+  duration_ms: 316.6788
+  type: 'test'
+  ...
+# Subtest: row 6 (E's review §0): a kept answer is never handed back across a non-finite number: kh null kept, then kh NaN, Infinity or -Infinity refused by name, as on a fresh document
+ok 6 - row 6 (E's review §0): a kept answer is never handed back across a non-finite number: kh null kept, then kh NaN, Infinity or -Infinity refused by name, as on a fresh document
+  ---
+  duration_ms: 8.7069
+  type: 'test'
+  ...
+# Subtest: row 7 (E's review §1b): a document frozen at the top only, its pieces array open, keeps no answer, so an edit in place is answered afresh
+ok 7 - row 7 (E's review §1b): a document frozen at the top only, its pieces array open, keeps no answer, so an edit in place is answered afresh
+  ---
+  duration_ms: 2.078
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1519.8662

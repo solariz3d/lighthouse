@@ -1,0 +1,25 @@
+== placed turn drag, plain
+NAMED flush: 420 ms 13.3%  flush core/handles.js:372
+NAMED ghostSteps: 254 ms 8.0%  ghostSteps preview/trackmodel.js:336
+NAMED reuseMesh: 144 ms 4.5%  reuseMesh geom/mesh.js:406
+NAMED meshPiece: 115 ms 3.6%  meshPiece geom/mesh.js:169
+NAMED handleKey: 47 ms 1.5%  handleKey geom/mesh.js:117
+NAMED candidate: 46 ms 1.4%  candidate core/coreshell.js:625
+NAMED toSegments: 43 ms 1.4%  toSegments core/adapter.js:314
+NAMED normalize: 8 ms 0.3%  normalize geom/profile.js:18
+NAMED deepFreeze: 1 ms 0.0%  deepFreeze core/adapter.js:277
+NAMED batchesOf: 4 ms 0.1%  batchesOf preview/batches.js:24
+== placed turn drag, edge
+NAMED flush: 1300 ms 42.1%  flush core/handles.js:372
+NAMED ghostSteps: 919 ms 29.8%  ghostSteps preview/trackmodel.js:336
+NAMED reuseMesh: 638 ms 20.7%  reuseMesh geom/mesh.js:406
+NAMED meshPiece: 622 ms 20.2%  meshPiece geom/mesh.js:169
+NAMED handleKey: 364 ms 11.8%  handleKey geom/mesh.js:117
+NAMED candidate: 248 ms 8.0%  candidate core/coreshell.js:625
+NAMED toSegments: 246 ms 8.0%  toSegments core/adapter.js:314
+NAMED numKey: 76 ms 2.5%  numKey geom/profile.js:126
+NAMED normalize: 88 ms 2.9%  normalize geom/profile.js:18
+NAMED edgeProfile: 89 ms 2.9%  edgeProfile core/adapter.js:106
+NAMED deepFreeze: 1 ms 0.0%  deepFreeze core/document.js:70
+NAMED deepFreeze: 43 ms 1.4%  deepFreeze core/adapter.js:277
+NAMED batchesOf: 1 ms 0.0%  batchesOf preview/batches.js:24

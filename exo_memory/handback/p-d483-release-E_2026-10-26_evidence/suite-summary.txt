@@ -1,0 +1,15 @@
+# suite483 summary (E, D483). The full TAP stays in the session scratchpad (scratchpad/d483/suite483.tap); test names there carry terms off the private list, so only these lines are filed.
+head b915a03 changed=[0] SWEEP_SEEDS=60 03:04:44Z
+suite exit 1, 1474 s: ℹ tests 3975 ℹ pass 3939 ℹ fail 2 ℹ cancelled 0 ℹ skipped 27 ℹ todo 7  03:29:18Z
+suite non-TODO not ok rows: 2
+not ok 648 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+not ok 1137 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frames together
+EXPO (3221225477) lines in TAP: 2
+mutant rows: applied-and-caught 669, not ok mutant rows 0, NOT APPLIED mentions 0
+after suite: changed=[0] 03:29:19Z
+
+# the killed first attempt (suite483-killed.log), for the record:
+head b915a03 changed=[0] SWEEP_SEEDS=60 02:32:20Z
+suite exit 1, 48 s: ℹ tests 434 ℹ pass 163 ℹ fail 270 ℹ cancelled 0 ℹ skipped 0 ℹ todo 1  02:33:08Z
+suite non-TODO not ok rows: 270
+exitCode of every failed file in it:  270 exitCode: 3221225794

@@ -1,0 +1,69 @@
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(2949.6491ms)[39m[39m
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(144.1889ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3135.011ms)[39m[39m
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(144.5397ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(2994.098ms)[39m[39m
+[31m✖ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(148.3403ms)[39m[39m
+[32m✔ row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2718.563ms)[39m[39m
+[32m✔ row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2751.9124ms)[39m[39m
+[32m✔ row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2689.1836ms)[39m[39m
+[32m✔ row 4 (iii): a start straight cupped to 150° is refused by NAME at the grid (too narrow for a two-column grid), not by a crash [90m(151.4293ms)[39m[39m
+[32m✔ row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it [90m(0.4819ms)[39m[39m
+[34mℹ tests 11[39m
+[34mℹ suites 0[39m
+[34mℹ pass 8[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 17932.1879[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(144.1889ms)[39m[39m
+  Error: the start straight's floor is 4.45 m wide, too narrow for a two-column grid
+      at err [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:149:36[90m)[39m
+      at Object.defaultLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:152:47[90m)[39m
+      at startLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39mapp\core\coreshell.js:250:18[90m)[39m
+      at exportDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:28:101[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:32:17[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m {
+    code: [32m'NO_START_STRAIGHT'[39m
+  }
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(144.5397ms)[39m[39m
+  Error: the start straight's floor is 4.30 m wide, too narrow for a two-column grid
+      at err [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:149:36[90m)[39m
+      at Object.defaultLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:152:47[90m)[39m
+      at startLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39mapp\core\coreshell.js:250:18[90m)[39m
+      at exportDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:28:101[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:32:17[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m {
+    code: [32m'NO_START_STRAIGHT'[39m
+  }
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(148.3403ms)[39m[39m
+  Error: the start straight's floor is 4.82 m wide, too narrow for a two-column grid
+      at err [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:149:36[90m)[39m
+      at Object.defaultLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:152:47[90m)[39m
+      at startLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39mapp\core\coreshell.js:250:18[90m)[39m
+      at exportDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:28:101[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:32:17[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m {
+    code: [32m'NO_START_STRAIGHT'[39m
+  }

@@ -1,0 +1,20 @@
+touched: head f217110 files 96 15:23:21Z
+touched exit 1: # tests 1367 # pass 1355 # fail 6 # skipped 6 # todo 0  15:37:04Z
+not ok 353 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 354 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+not ok 355 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+not ok 694 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+not ok 697 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frame
+not ok 852 - the fixture kit is the seal's: fixtures.js and manifest.json carry the sha256 the seal registered (and the D196 amendment record is the o
+full: head f217110 changed=[0] 15:37:05Z
+suite exit 1, 2507 s: ℹ tests 3579 ℹ pass 3543 ℹ fail 7 ℹ cancelled 0 ℹ skipped 22 ℹ todo 7  16:18:52Z
+suite non-TODO not ok rows: 7
+not ok 609 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 610 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+not ok 611 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+not ok 809 - row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside 
+not ok 1095 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+not ok 1098 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and fram
+not ok 1796 - the fixture kit is the seal's: fixtures.js and manifest.json carry the sha256 the seal registered (and the D196 amendment record is the 
+EXPO (3221225477) lines in TAP: 2
+after suite: changed=[0] 16:18:52Z

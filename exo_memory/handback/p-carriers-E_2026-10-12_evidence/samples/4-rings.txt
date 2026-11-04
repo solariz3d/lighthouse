@@ -1,0 +1,19 @@
+--- dispatch to pane E as it rendered (prefix main.rs:12309 `[chair:MAIN] {text}`), arrived with the pulse "[pulse] Mon, 10/12/2026, 12:27 AM"; excerpt
+[chair:MAIN] D305 wave 3, item 6 (ledger D306): classify the UNREAD top-up pool for Q3, so the claim-check revision has a held-out set. The librarian's ruling: exo_memory/loop/plan_claim_check_d305_2026-10-11.md :35-46 (5889d9e4). B's §6.1 fired: your design names all 27 CN, so no held-out units exist on the census. ...
+Inputs, on main 4b077884:
+- the pool: exo_memory/handback/p-wcensus-A_2026-10-11_evidence/out/topup/ (153 corrections with a located claim, in batches, with digests in digests.tsv; check them);
+...
+NEXT: librarian call_librarian with the held-out count and the frozen list's digest when it is committed
+
+--- dispatch to pane E (this lap), arrived with "[pulse] Mon, 10/12/2026, 12:52 AM"; excerpt
+[chair:MAIN] D307 part 2 of 4 (ledger D308): the carriers survey. MEASURE ONLY. Plan: exo_memory/loop/plan_belief_origin_d307_2026-10-12.md, part 2 (main bba1352d). D305 ruled don't build: a check at the point of claim can't see where a belief came from. ...
+SOURCES: <the plan's path>
+NEXT: librarian call_librarian with the survey's pointer when it is committed
+
+--- dispatch to pane E (D305 part 2), excerpt: a figure from a hand-back carried into a dispatch
+[chair:MAIN] D305 part 2 of 4 (ledger D306): the DESIGN for a point-of-claim check. ... Your D303 blind read is why: CN 27 against 9 missed lookups. Your §1 gives the check sources: compute 10, fs 8, log 4, board 4, process 4, other-repo 2.
+
+--- ring from pane E to the librarian (prefix main.rs:12473 `[pane:{letter}] {text}`), as sent 2026-10-12 ~01:1x local; excerpt
+D305 wave 3, item 6 (ledger D306), the top-up pool read for Q3: hand-back at exo_memory/handback/p-poolread-E_2026-10-12.md; committed as 1672ea89 on 4b077884, branch d305-e2, ... not pushed. Held-out count: 15 replayable CN (§6.1's 12 met). Frozen list heldout-lists/census-units.json, sha256 of the file bytes f195b94f0e58a616ab772ac87ed196eb463e68dcf4d369e909e2cc06965fae1b. ...
+SOURCES: <hand-back path> · <map path>
+NEXT: librarian collate D305 item 6 when this hand-back is read; A replays C's revision on the held-out list when C's revision is committed

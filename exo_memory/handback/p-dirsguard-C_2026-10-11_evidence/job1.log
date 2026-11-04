@@ -1,0 +1,43 @@
+== C d300 job1 dose+fix+full · asked 2026-10-11T20:47:40.076Z · lock held 2026-10-11T20:47:40.136Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d300/job1.sh
+## build fix (clean), dose-old (a0e + dose), dose-fix (wt + dose)
+built (no mutant) -> G:/consonance-scratch/c-d300/tfix.exe
+source 2439797baba72791 restored true
+built (no mutant) +dose -> G:/consonance-scratch/c-d300/tdose-old.exe
+source 4e5f34cf361a02e8 restored true
+built (no mutant) +dose -> G:/consonance-scratch/c-d300/tdose-fix.exe
+source 2439797baba72791 restored true
+4623946faa6ffa63797360f0ebd8fc1bb9a63f2186b81bf711121718987fa1dd *G:/consonance-scratch/c-d300/t613.exe
+6d09938fb2c0f6d0668f752fd4545af5d9314fda9938dbb68641ef87419d8278 *G:/consonance-scratch/c-d300/ta0e.exe
+6c91aa0b10c0bc2c72f9578ef47ca2496460a7709b9e6d1cb8688e70c3919f41 *G:/consonance-scratch/c-d300/tdose-fix.exe
+949e293fca95d75a6132b9ea7c8cc45e518525dcc3b21e55c3f09f2b116938f6 *G:/consonance-scratch/c-d300/tdose-old.exe
+d31d56e4bc43bca026220bf2c72d3de5ce1b3ee3c7a94ee7780e324a2fe4cc15 *G:/consonance-scratch/c-d300/tfix.exe
+## dosed, module x200
+TALLY module exe=G:/consonance-scratch/c-d300/tdose-old.exe args=["dirs_guard_tests"] runs 200: row ok 18 / red 182 / missing 0; sibling red 18; other reds {}; 22 s
+TALLY module exe=G:/consonance-scratch/c-d300/tdose-fix.exe args=["dirs_guard_tests"] runs 200: row ok 200 / red 0 / missing 0; sibling red 0; other reds {}; 19 s
+## fix, natural, module x2000
+TALLY module exe=G:/consonance-scratch/c-d300/tfix.exe args=["dirs_guard_tests"] runs 2000: row ok 2000 / red 0 / missing 0; sibling red 0; other reds {}; 190 s
+## full parallel binary x5 per tree
+run 1: row ok sib ok exit 0 103636 ms | test result: ok. 1027 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 103.57s
+run 2: row ok sib ok exit 0 103673 ms | test result: ok. 1027 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 103.61s
+run 3: row ok sib ok exit 0 102672 ms | test result: ok. 1027 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 102.61s
+run 4: row ok sib ok exit 0 102783 ms | test result: ok. 1027 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 102.71s
+run 5: row ok sib ok exit 0 78932 ms | test result: ok. 1027 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 78.88s
+TALLY full exe=G:/consonance-scratch/c-d300/t613.exe args=[] runs 5: row ok 5 / red 0 / missing 0; sibling red 0; other reds {}; 492 s
+run 1: row ok sib ok exit 0 83551 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 83.50s
+run 2: row ok sib ok exit 0 82389 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 82.33s
+run 3: row ok sib ok exit 0 77064 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 77.01s
+run 4: row ok sib ok exit 0 79467 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 79.42s
+run 5: row ok sib ok exit 0 81039 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 80.99s
+TALLY full exe=G:/consonance-scratch/c-d300/ta0e.exe args=[] runs 5: row ok 5 / red 0 / missing 0; sibling red 0; other reds {}; 404 s
+run 1: row ok sib ok exit 0 85589 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 85.53s
+run 2: row ok sib ok exit 0 82063 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 82.01s
+run 3: row ok sib ok exit 0 83839 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 83.78s
+run 4: row ok sib ok exit 0 81753 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 81.70s
+run 5: row ok sib ok exit 0 80455 ms | test result: ok. 1035 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 80.40s
+TALLY full exe=G:/consonance-scratch/c-d300/tfix.exe args=[] runs 5: row ok 5 / red 0 / missing 0; sibling red 0; other reds {}; 414 s
+left 125
+c-d300-613: 
+c-d300-a0e: 
+c-d300-wt:  M consonance/src-tauri/src/main.rs 
+== exit 0 · done 2026-10-11T21:14:00.202Z

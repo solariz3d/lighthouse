@@ -1,0 +1,6 @@
+== D273 relabel test · asked 2026-10-08T19:17:18.449Z · lock held 2026-10-08T19:17:18.454Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-consumer-fork-wt && node --test --test-concurrency=1 consonance/tools/consumer-relabel.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail)|✖|rror|expected' | head -30
+[34mℹ tests 9[39m
+[34mℹ pass 9[39m
+[34mℹ fail 0[39m
+== exit 0 · done 2026-10-08T19:17:18.588Z

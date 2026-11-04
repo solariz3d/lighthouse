@@ -38,7 +38,7 @@ const path = require('path');
 const os = require('os');
 
 // A fixture letters map, so these assertions do not depend on whichever panes exist today.
-const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-'));
+const dir = require('./scratch.js').mkdtemp('actors-');
 fs.writeFileSync(path.join(dir, 'letters.json'), JSON.stringify({
   '0c0c0c0a-0000-4000-8000-000000000a01': 'C',
   '1582ff09-1500-4c10-8af7-f75c524d9613': 'A',
@@ -125,7 +125,7 @@ test('census publishes what it could not resolve — the whole point', () => {
 test('an absent letters map resolves nothing and claims nothing', () => {
   // Fail toward not-knowing. A resolver that invents identities when its map is missing is
   // worse than one that returns everything unresolved and says so.
-  const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-empty-'));
+  const empty = require('./scratch.js').mkdtemp('actors-empty-');
   const r = require('child_process').execFileSync(process.execPath, ['-e', `
     process.env.CONSONANCE_DATA = ${JSON.stringify(empty)};
     const { canonical } = require(${JSON.stringify(path.join(__dirname, 'actors.js'))});
@@ -174,7 +174,7 @@ test('a RETROACTIVE BACKFILL wins: given a letter, an id stops being pre-letter'
   // The one edit that would make this class a lie is someone writing a letter for one of these
   // ids. `canonical` consults the map first, so the table simply stops firing — asserted here in
   // a child process because the module caches its map on first read.
-  const dir2 = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-backfill-'));
+  const dir2 = require('./scratch.js').mkdtemp('actors-backfill-');
   fs.writeFileSync(path.join(dir2, 'letters.json'),
     JSON.stringify({ '061bc00e-5932-4e5a-854f-f34dd6c09c10': 'Z' }));
   const out = require('child_process').execFileSync(process.execPath, ['-e', `
@@ -204,7 +204,7 @@ function inChild({ home, env: extra, code }) {
   return require('child_process').execFileSync(process.execPath, ['-e', code], { env, encoding: 'utf8' });
 }
 function configuredHome(dataDir) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-home-'));
+  const home = require('./scratch.js').mkdtemp('actors-home-');
   if (dataDir) {
     fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ data_dir: dataDir }));
   }
@@ -217,7 +217,7 @@ test('THE BAR: a configured machine with NO env var reads its own letters.json',
   // unread, because the resolver went CONSONANCE_DATA -> literal and never consulted the config.
   // It is a SILENT WRONG ANSWER, not a crash — `letters()` swallows the failed read and returns
   // {}, so every id on every machine but one came back a stranger.
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-data-'));
+  const data = require('./scratch.js').mkdtemp('actors-data-');
   fs.writeFileSync(path.join(data, 'letters.json'),
     JSON.stringify({ '11111111-1111-4111-8111-111111111111': 'Z' }));
   const home = configuredHome(data);
@@ -238,8 +238,8 @@ test('no machine path survives: with no env and no config, LETTERS is null, not 
 });
 
 test('the env var still outranks the config', () => {
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-env-'));
-  const other = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-cfg-'));
+  const data = require('./scratch.js').mkdtemp('actors-env-');
+  const other = require('./scratch.js').mkdtemp('actors-cfg-');
   const home = configuredHome(other);
   const out = JSON.parse(inChild({ home, env: { CONSONANCE_DATA: data }, code:
     `const a=require(${ACTORS});console.log(JSON.stringify({D:a.DATA_DIR,T:a.DATA_TIER}))` }));
@@ -251,7 +251,7 @@ test('"no data dir" and "no letters.json" are DIFFERENT states, not one empty ma
   // The old code returned {} for both and said "absent map is not an error". That is true of a
   // missing FILE and false of a missing DIR: one means the map is empty, the other means nobody
   // ever looked, and the census's unresolved list means something different in each.
-  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-nofile-'));   // dir exists, no letters.json
+  const data = require('./scratch.js').mkdtemp('actors-nofile-');   // dir exists, no letters.json
   const bothOut = JSON.parse(inChild({ home: configuredHome(data), code:
     `const a=require(${ACTORS});console.log(JSON.stringify(a.lettersStatus()))` }));
   const noneOut = JSON.parse(inChild({ home: configuredHome(null), code:

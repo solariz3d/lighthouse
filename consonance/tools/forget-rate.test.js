@@ -44,7 +44,7 @@ function test(name, fn) {
 }
 
 const TOOL = path.join(__dirname, 'forget-rate.js');
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'forget-rate-'));
+const tmp = require('./scratch.js').mkdtemp('forget-rate-');
 
 function git(repo, args) {
   return execFileSync('git', args, { cwd: repo, encoding: 'utf8' });

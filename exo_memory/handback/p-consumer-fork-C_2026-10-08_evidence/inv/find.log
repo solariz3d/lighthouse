@@ -1,0 +1,5 @@
+== D273 lap4 find leak · asked 2026-10-09T00:14:04.872Z · lock held 2026-10-09T00:16:15.576Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/find.js C:/Users/nname/Desktop/worktrees/c-lap4-wt
+LEAK consonance/src-tauri/brief/LIBRARIAN.md [{"cls":"DANGLING","why":"a specific map entry from this record","rel":"consonance/src-tauri/brief/LIBRARIAN.md","line":3,"text":"> **FIRST, BEFORE ANY TASK: start your own map, `exo_memory/map/M.md`. That file is yours.","n":1}]
+PRONOUN exo_memory/cards/verify-before-claiming.md:10 he | During a game-engine stair-collision marathon (2026-06-20) I shipped fix after fix that still failed in-game; the keeper eventually said **"makes me think you d
+== exit 0 · done 2026-10-09T00:16:15.733Z

@@ -1,0 +1,44 @@
+{
+ "label": "L4-R",
+ "base": "7933cc2",
+ "dir": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L4-R",
+ "commits": "1510e93 The player loads only its melody's four samples; another melody's missing file costs nothing (D411)",
+ "status": "?? HANDBACK.md",
+ "stat": "app/sound.js                   | 15 +++++++++------\n app/test/sound-samples.test.js | 33 ++++++++++++++++++++++++++-------\n 2 files changed, 35 insertions(+), 13 deletions(-)",
+ "numstat": "9\t6\tapp/sound.js\n26\t7\tapp/test/sound-samples.test.js",
+ "files": [
+  "app/sound.js",
+  "app/test/sound-samples.test.js"
+ ],
+ "added": 35,
+ "removed": 13,
+ "changed_lines": 48,
+ "test_files": [
+  "app/test/sound-samples.test.js"
+ ],
+ "source_files": [
+  "app/sound.js"
+ ],
+ "rows": {
+  "app/test/sound-samples.test.js": {
+   "added": [
+    "row 12: a launch fetches only its melody\\"
+   ],
+   "deleted": [],
+   "rewritten": []
+  }
+ },
+ "rows_added": 1,
+ "rows_deleted": 0,
+ "rows_rewritten": 0,
+ "test_runs": [
+  {
+   "file": "app/test/sound-samples.test.js",
+   "cmd": "node --test \"app/test/sound-samples.test.js\"",
+   "exit": 0,
+   "counts": "pass 13 / fail 0",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  }
+ ],
+ "harness_runs": []
+}

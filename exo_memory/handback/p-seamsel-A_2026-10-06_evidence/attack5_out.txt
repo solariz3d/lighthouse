@@ -1,0 +1,16 @@
+jump lap closes: [33mtrue[39m closed in 5 step(s): 0.089 mm, tangent 4.5e-8 rad
+   pieces: r300 f15 r300 r282.7433 r282.7433 r282.7433 r282.7433 r60
+ok   J-7..0 run across the line (rr): "KEPT"
+ok   J-7..0-insert put at an empty head: "ok"
+ok   J-7..1 run across the line (rrf): "KEPT"
+ok   J-7..1-insert put at an empty head: "ok"
+ok   J-7..2 run across the line (rrfr): "KEPT"
+ok   J-7..2-insert put at an empty head: "ok"
+ok   J-6..2 run across the line (rrrfr): "KEPT"
+ok   J-6..2-insert put at an empty head: "ok"
+ok   J-2..1 run across the line (rrrrrrrf): "KEPT"
+ok   J-2..1-insert put at an empty head: "ok"
+ok   J-sel the short way across the line, the flight included: [["p8","p1","p2","p3"],4,null]
+DIFF J-highlight the highlight draws every selected piece that has road (the flight has none), in lap order: ["p8","p1","p2","p3"]  (expected ["p8","p1","p3"])
+ok   J-highlight-first the first line is the last piece of the lap (the run starts before the line): "p8"
+summary: J-highlight

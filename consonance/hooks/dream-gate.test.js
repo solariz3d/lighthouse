@@ -73,6 +73,7 @@ function manifestHooks() {
   while ((m = re.exec(src)) !== null) {
     const line = m[0];
     const rel = m[1];
+    if (/^\s*#/.test(line)) continue;          // a COMMENTED entry: retired and kept verbatim (jev-flags.js, :148), installed by nothing (D273 lap 5)
     if (/\\lib\\/i.test(rel)) continue;        // path-declared library (dev\shell\lib\ambient.js)
     if (/\bLib\s*=\s*\$true\b/i.test(line)) continue; // field-declared library (blind.js)
     out.push(rel);
@@ -81,19 +82,45 @@ function manifestHooks() {
 }
 
 function pythonExe() {
-  // Same resolution as install.ps1: never the Microsoft Store stub, which is not an interpreter.
+  // Same resolution as install.ps1 (its "$py" block): never the Microsoft Store stub, which is not an interpreter.
+  // 1. the first python.exe on PATH that is not under \WindowsApps\ (install.ps1's Get-Command python.exe -All);
+  // D454: this step was missing, so a Python installed for all users and on PATH was never found here.
+  for (const dir of String(process.env.PATH || '').split(path.delimiter)) {
+    if (!dir || /\\WindowsApps(\\|$)/i.test(dir)) continue;
+    const p = path.join(dir, 'python.exe');
+    if (fs.existsSync(p)) return p;
+  }
+  // 2. else the newest %LOCALAPPDATA%\Programs\Python\Python3<digits>\python.exe, by version (install.ps1's fallback).
   const globbed = path.join(
     process.env.LOCALAPPDATA || '',
     'Programs', 'Python'
   );
   try {
-    for (const d of fs.readdirSync(globbed)) {
+    const ver = (d) => { const m = /^Python3(\d*)$/i.exec(d); return m ? (m[1] ? Number(m[1]) : 0) : -1; };
+    for (const d of fs.readdirSync(globbed).filter((x) => ver(x) >= 0).sort((a, b) => ver(b) - ver(a))) {
       const p = path.join(globbed, d, 'python.exe');
       if (fs.existsSync(p)) return p;
     }
   } catch (_) {}
   return null;
 }
+
+// D454 (B, from E's stranger run, p-d454-install-E_2026-10-24.md §6): pythonExe() said "same resolution as install.ps1" and did only its second
+// half (the %LOCALAPPDATA% glob), so a Python installed for all users, on PATH, made this suite throw where install.ps1 finds it.
+t('D454: pythonExe() resolves as install.ps1 does: a python.exe on PATH outside \\WindowsApps\\ first, the Store stub never', () => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'dreamgate-py-'));
+  const stub = path.join(d, 'WindowsApps'), real = path.join(d, 'Python312');
+  for (const x of [stub, real]) { fs.mkdirSync(x, { recursive: true }); fs.writeFileSync(path.join(x, 'python.exe'), ''); }
+  const saved = { PATH: process.env.PATH, LOCALAPPDATA: process.env.LOCALAPPDATA };
+  try {
+    process.env.LOCALAPPDATA = path.join(d, 'no-local-python');
+    process.env.PATH = [stub, real].join(path.delimiter);
+    const got = pythonExe();
+    if (got !== path.join(real, 'python.exe')) throw new Error('a python.exe on PATH outside WindowsApps was not found: ' + got);
+    process.env.PATH = stub;
+    if (pythonExe() !== null) throw new Error('the Store stub was taken for an interpreter');
+  } finally { process.env.PATH = saved.PATH; process.env.LOCALAPPDATA = saved.LOCALAPPDATA; fs.rmSync(d, { recursive: true, force: true }); }
+});
 
 const HOOKS = manifestHooks();
 
@@ -107,6 +134,16 @@ t('the manifest yields the hooks, and enough of them to be a real check', () => 
       throw new Error(`${known} not discovered — a silent miss reopens the hole this closes`);
     }
   }
+});
+
+// Added 2026-10-09 (D273 lap 5, pane B). install.ps1 keeps a retired entry as a COMMENT, verbatim (jev-flags.js at :148, ruling 5), and the
+// line regex read it as a live hook. In the dev tree the file is still there, so this suite ran a hook nothing installs; in the consumer
+// tree, where it does not ship, the suite crashed (B's parity run at 5d087a64).
+t('a commented-out manifest line (a retired entry kept verbatim) is not a hook', () => {
+  const commented = [...fs.readFileSync(INSTALL, 'utf8').matchAll(/^\s*#.*From\s*=\s*'([^']+)'/gm)].map((c) => c[1]);
+  if (!commented.length) throw new Error('no commented manifest line found: this row checks nothing (jev-flags.js was one at :148)');
+  const live = commented.filter((rel) => HOOKS.includes(rel));
+  if (live.length) throw new Error(`discovered from a commented line, though nothing installs it: ${live.join(', ')}`);
 });
 
 // The entry call each hook's guard must precede — the point where work actually begins.
@@ -138,6 +175,25 @@ const ENTRY = {
   // miniature: the roster is discovered and this table is hand-kept, so the suite would have
   // gone red on a hook that was fine. Call site, not definition, per this table's header.
   'carrier-drift-watch.js': 'try { main(); }',
+  // Added 2026-10-01 (D203) with second-reader.js, in the same change as its install.ps1 entry: the roster is discovered, this table is hand-kept.
+  // Call site, not definition, per this table's header.
+  'second-reader.js': 'try { main(); }',
+  // Added 2026-11-03 (D631) with second-reader-note.js, in the same change as its install.ps1 entry. Call site, not definition, per this table's header.
+  'second-reader-note.js': 'main().then(',
+  // Added 2026-10-02 (D212) with sources-gate.js, in the same change as its install.ps1 entry. Call site, not definition, per this table's header.
+  'sources-gate.js': 'try { main(); }',
+  // Added 2026-10-08 (D273) for push-gate.js, delete-gate.js and ask-ending.js: all three were registered in install.ps1 with no row here, and this suite
+  // refused them by name ("add one rather than skipping"): the roster is discovered and this table is hand-kept, the seam its header describes. Each hook
+  // already has the CONSONANCE_DREAM guard at the top of the file (push-gate.js:25, delete-gate.js:24, ask-ending.js:18), above `function main()` and above
+  // the call site, which is the entry marker; `try { main(); }` is on one line in each, under require.main. Call site, not definition, per this table's header.
+  'push-gate.js': 'try { main(); }',
+  'delete-gate.js': 'try { main(); }',
+  'ask-ending.js': 'try { main(); }',
+  // Added 2026-10-09 (D281) with release-chime.js, in the same change as its install.ps1 entry: the CONSONANCE_DREAM guard is at the top of the file, above `function main()` and above the
+  // call site, which is the entry marker (`try { main(); }` on one line under require.main). Call site, not definition, per this table's header.
+  'release-chime.js': 'try { main(); }',
+  // Added 2026-10-03 (D218) with reply-slot.js, in the same change as its install.ps1 entry. Call site, not definition, per this table's header.
+  'reply-slot.js': 'try { main(); }',
   // Added 2026-09-06 with the ready stamp's two hooks (P-READY-SIGNAL), in the same change as
   // their install.ps1 manifest entries — this suite refused them by name on the first run, which
   // is the roster-discovered/table-hand-kept seam working exactly as its header describes. Both
@@ -229,10 +285,10 @@ function seedBed(dataDir) {
 
 function runHook(abs, withGate) {
   const exe = abs.endsWith('.py') ? pythonExe() : process.execPath;
-  if (!exe) throw new Error('no python.exe found outside the Store stub; cannot verify the pulse gate');
+  if (!exe) throw new Error('no python.exe found outside the Store stub (neither on PATH nor under %LOCALAPPDATA%\\Programs\\Python); Python is a prerequisite (consonance/GUIDE.md), so install it, then this suite can verify the pulse gate');
   const cwd = path.join(TMP_INSTANCES, 'sibling-gate-test');
   fs.mkdirSync(cwd, { recursive: true });
-  const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'dreamgate-data-'));
+  const dataDir = require('../tools/scratch.js').mkdtemp('dreamgate-data-');
   tmpDirs.push(dataDir);
   seedBed(dataDir);
   const env = {

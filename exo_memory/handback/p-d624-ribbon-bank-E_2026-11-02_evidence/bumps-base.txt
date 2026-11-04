@@ -1,0 +1,409 @@
+frames on s 5050..6050: 704; joints there: 5300, 5550, 5800
+2816	s 5050.5	bank -7.0	off 5.55 m	v 119.3 m/s	felt along U 9.3	across -4.7 m/s²  <- joint
+2817	s 5052.0	bank -7.0	off 5.46 m	v 119.7 m/s	felt along U 6.6	across -4.0 m/s²  <- joint
+2820	s 5057.5	bank -8.0	off 5.18 m	v 120.7 m/s	felt along U -21.7	across -0.1 m/s²
+2824	s 5064.5	bank -10.2	off 4.80 m	v 121.8 m/s	felt along U -33.3	across 1.2 m/s²
+2828	s 5072.0	bank -12.9	off 4.43 m	v 123.4 m/s	felt along U 7.9	across -0.3 m/s²
+2832	s 5079.5	bank -15.5	off 4.10 m	v 124.8 m/s	felt along U 55.5	across -4.4 m/s²
+2836	s 5087.0	bank -18.1	off 3.78 m	v 126.2 m/s	felt along U 44.7	across -1.4 m/s²
+2840	s 5094.5	bank -20.6	off 3.47 m	v 127.5 m/s	felt along U 9.2	across 0.0 m/s²
+2844	s 5102.5	bank -23.4	off 3.17 m	v 128.8 m/s	felt along U -2.2	across -0.7 m/s²
+2848	s 5110.0	bank -26.0	off 2.89 m	v 130.0 m/s	felt along U 5.9	across -0.9 m/s²
+2852	s 5118.0	bank -28.8	off 2.63 m	v 130.4 m/s	felt along U 18.2	across -2.0 m/s²
+2856	s 5125.5	bank -31.4	off 2.40 m	v 130.7 m/s	felt along U 25.1	across -1.8 m/s²
+2860	s 5133.5	bank -34.2	off 2.18 m	v 130.9 m/s	felt along U 19.5	across -2.1 m/s²
+2864	s 5141.5	bank -37.0	off 1.98 m	v 131.2 m/s	felt along U 11.0	across -1.8 m/s²
+2868	s 5149.5	bank -39.7	off 1.79 m	v 131.3 m/s	felt along U 6.2	across -1.8 m/s²
+2872	s 5157.0	bank -42.3	off 1.63 m	v 131.5 m/s	felt along U 9.6	across -2.6 m/s²
+2876	s 5165.0	bank -45.0	off 1.48 m	v 131.7 m/s	felt along U 12.4	across -3.0 m/s²
+2880	s 5173.0	bank -47.8	off 1.35 m	v 131.8 m/s	felt along U 11.1	across -3.2 m/s²
+2884	s 5181.0	bank -50.6	off 1.24 m	v 132.6 m/s	felt along U 10.0	across -3.2 m/s²
+2888	s 5189.0	bank -53.3	off 1.14 m	v 133.8 m/s	felt along U 7.8	across -3.6 m/s²
+2892	s 5197.0	bank -56.1	off 1.07 m	v 135.1 m/s	felt along U 5.2	across -4.0 m/s²
+2896	s 5205.0	bank -58.9	off 1.00 m	v 136.3 m/s	felt along U 5.2	across -4.4 m/s²
+2900	s 5213.5	bank -61.9	off 0.96 m	v 137.5 m/s	felt along U 5.7	across -4.6 m/s²
+2904	s 5221.5	bank -64.6	off 0.93 m	v 138.7 m/s	felt along U 5.1	across -4.7 m/s²
+2908	s 5230.0	bank -67.5	off 0.91 m	v 139.9 m/s	felt along U 3.9	across -4.8 m/s²
+2912	s 5238.5	bank -70.4	off 0.92 m	v 141.1 m/s	felt along U 2.3	across -5.0 m/s²
+2916	s 5247.0	bank -73.4	off 0.94 m	v 142.3 m/s	felt along U 1.4	across -5.1 m/s²
+2920	s 5255.5	bank -76.4	off 0.97 m	v 143.5 m/s	felt along U 0.4	across -5.3 m/s²
+2924	s 5264.0	bank -79.3	off 1.03 m	v 144.7 m/s	felt along U -0.5	across -5.9 m/s²
+2928	s 5273.0	bank -82.4	off 1.10 m	v 145.9 m/s	felt along U -1.3	across -6.5 m/s²
+2932	s 5281.5	bank -85.4	off 1.18 m	v 147.1 m/s	felt along U -2.4	across -7.1 m/s²
+2936	s 5290.5	bank -88.4	off 1.27 m	v 148.3 m/s	felt along U -2.8	across -7.5 m/s²
+2940	s 5299.5	bank -90.0	off 1.39 m	v 149.5 m/s	felt along U 11.8	across -8.9 m/s²  <- joint
+2941	s 5301.5	bank -90.0	off 1.42 m	v 149.8 m/s	felt along U 14.8	across -9.0 m/s²  <- joint
+2944	s 5308.5	bank -91.3	off 1.51 m	v 150.6 m/s	felt along U 0.3	across -10.0 m/s²
+2948	s 5317.5	bank -94.8	off 1.62 m	v 151.8 m/s	felt along U -24.5	across -6.8 m/s²
+2952	s 5326.5	bank -98.0	off 1.74 m	v 152.9 m/s	felt along U -19.3	across -8.5 m/s²
+2956	s 5336.0	bank -101.6	off 1.86 m	v 154.1 m/s	felt along U -3.5	across -12.9 m/s²
+2960	s 5345.0	bank -105.0	off 1.98 m	v 155.2 m/s	felt along U 1.3	across -14.9 m/s²
+2964	s 5354.5	bank -108.5	off 2.10 m	v 156.3 m/s	felt along U -4.6	across -15.8 m/s²
+2968	s 5364.0	bank -112.1	off 2.19 m	v 157.4 m/s	felt along U -9.0	across -16.4 m/s²
+2972	s 5373.5	bank -115.8	off 2.26 m	v 158.5 m/s	felt along U -10.3	across -17.3 m/s²
+2976	s 5383.0	bank -119.2	off 2.32 m	v 159.6 m/s	felt along U -8.3	across -18.7 m/s²
+2980	s 5392.5	bank -122.7	off 2.34 m	v 160.6 m/s	felt along U -6.1	across -18.7 m/s²
+2984	s 5402.0	bank -126.4	off 2.34 m	v 161.7 m/s	felt along U -5.4	across -17.7 m/s²
+2988	s 5412.0	bank -130.1	off 2.31 m	v 162.7 m/s	felt along U -5.4	across -16.7 m/s²
+2992	s 5421.5	bank -133.8	off 2.25 m	v 163.7 m/s	felt along U -5.4	across -15.3 m/s²
+2996	s 5431.5	bank -137.5	off 2.18 m	v 164.8 m/s	felt along U -5.1	across -14.2 m/s²
+3000	s 5441.5	bank -141.3	off 2.08 m	v 165.8 m/s	felt along U -4.6	across -12.9 m/s²
+3004	s 5451.5	bank -145.0	off 1.97 m	v 166.8 m/s	felt along U -4.7	across -11.0 m/s²
+3008	s 5461.5	bank -148.8	off 1.85 m	v 167.6 m/s	felt along U -5.1	across -8.7 m/s²
+3012	s 5471.5	bank -152.5	off 1.73 m	v 167.7 m/s	felt along U -5.5	across -4.2 m/s²
+3016	s 5481.5	bank -156.3	off 1.62 m	v 167.8 m/s	felt along U -3.7	across 0.6 m/s²
+3020	s 5491.5	bank -160.0	off 1.53 m	v 167.9 m/s	felt along U -4.7	across 4.5 m/s²
+3024	s 5501.5	bank -163.8	off 1.47 m	v 168.2 m/s	felt along U -7.2	across 5.8 m/s²
+3028	s 5512.0	bank -167.6	off 1.45 m	v 169.2 m/s	felt along U -8.5	across 6.2 m/s²
+3032	s 5522.0	bank -171.4	off 1.46 m	v 170.2 m/s	felt along U -12.7	across 5.9 m/s²
+3036	s 5532.5	bank -175.2	off 1.50 m	v 171.2 m/s	felt along U -15.0	across 5.6 m/s²
+3040	s 5542.5	bank -179.0	off 1.57 m	v 172.2 m/s	felt along U -11.9	across 5.3 m/s²
+3042	s 5548.0	bank -180.0	off 1.63 m	v 172.7 m/s	felt along U 1.9	across 5.6 m/s²  <- joint
+3043	s 5550.5	bank -180.0	off 1.66 m	v 173.0 m/s	felt along U 10.0	across 5.4 m/s²  <- joint
+3044	s 5553.0	bank -180.1	off 1.69 m	v 173.2 m/s	felt along U 13.3	across 5.0 m/s²
+3048	s 5563.5	bank -183.3	off 1.82 m	v 174.2 m/s	felt along U -20.3	across 0.7 m/s²
+3052	s 5574.0	bank -187.1	off 1.93 m	v 175.2 m/s	felt along U -37.2	across -1.9 m/s²
+3056	s 5584.5	bank -191.0	off 2.04 m	v 176.2 m/s	felt along U -26.4	across -8.0 m/s²
+3060	s 5595.0	bank -195.0	off 2.12 m	v 177.2 m/s	felt along U -12.7	across -13.9 m/s²
+3064	s 5605.5	bank -199.0	off 2.16 m	v 178.2 m/s	felt along U -3.9	across -15.9 m/s²
+3068	s 5616.5	bank -203.0	off 2.15 m	v 179.1 m/s	felt along U -1.8	across -17.3 m/s²
+3072	s 5627.0	bank -207.0	off 2.07 m	v 180.0 m/s	felt along U -5.3	across -18.3 m/s²
+3076	s 5638.0	bank -211.1	off 1.92 m	v 180.9 m/s	felt along U -5.8	across -18.7 m/s²
+3080	s 5649.0	bank -215.3	off 1.70 m	v 181.9 m/s	felt along U -1.0	across -17.8 m/s²
+3084	s 5660.0	bank -219.4	off 1.40 m	v 182.8 m/s	felt along U 5.2	across -15.5 m/s²
+3088	s 5671.0	bank -223.5	off 1.04 m	v 183.7 m/s	felt along U 9.2	across -12.5 m/s²
+3092	s 5682.0	bank -227.6	off 0.61 m	v 184.5 m/s	felt along U 12.2	across -8.6 m/s²
+3096	s 5693.0	bank -231.7	off 0.14 m	v 185.4 m/s	felt along U 14.7	across -4.2 m/s²
+3100	s 5704.0	bank -235.9	off -0.38 m	v 186.3 m/s	felt along U 16.9	across 1.4 m/s²
+3104	s 5715.0	bank -240.0	off -0.92 m	v 187.0 m/s	felt along U 19.3	across 14.1 m/s²
+3108	s 5726.5	bank -244.2	off -1.44 m	v 187.5 m/s	felt along U 19.9	across 30.5 m/s²
+3112	s 5737.5	bank -248.5	off -1.90 m	v 188.0 m/s	felt along U 14.0	across 38.0 m/s²
+3116	s 5749.0	bank -252.8	off -2.27 m	v 188.5 m/s	felt along U 7.7	across 37.8 m/s²
+3120	s 5760.5	bank -257.0	off -2.56 m	v 189.0 m/s	felt along U 5.5	across 34.8 m/s²
+3124	s 5771.5	bank -261.3	off -2.77 m	v 189.4 m/s	felt along U 4.9	across 28.5 m/s²
+3128	s 5783.0	bank -265.5	off -2.92 m	v 189.9 m/s	felt along U 4.0	across 21.9 m/s²
+3132	s 5794.5	bank -269.5	off -3.05 m	v 190.4 m/s	felt along U -6.0	across 17.5 m/s²
+3133	s 5797.5	bank -270.0	off -3.08 m	v 190.6 m/s	felt along U -21.4	across 15.5 m/s²  <- joint
+3134	s 5800.0	bank -270.0	off -3.10 m	v 190.7 m/s	felt along U -35.5	across 13.2 m/s²  <- joint
+3136	s 5806.0	bank -270.5	off -3.14 m	v 191.0 m/s	felt along U -35.7	across 12.6 m/s²
+3140	s 5817.5	bank -274.8	off -3.25 m	v 191.5 m/s	felt along U 22.9	across 14.8 m/s²
+3144	s 5829.0	bank -279.0	off -3.34 m	v 191.9 m/s	felt along U 47.3	across 7.1 m/s²
+3148	s 5840.5	bank -283.2	off -3.46 m	v 192.3 m/s	felt along U 19.5	across -2.9 m/s²
+3152	s 5852.0	bank -287.6	off -3.65 m	v 192.8 m/s	felt along U -1.1	across -5.6 m/s²
+3156	s 5863.5	bank -292.0	off -3.92 m	v 192.7 m/s	felt along U 0.1	across -1.3 m/s²
+3160	s 5875.0	bank -296.2	off -4.25 m	v 193.2 m/s	felt along U 15.8	across 6.3 m/s²
+3164	s 5886.5	bank -300.5	off -4.61 m	v 193.4 m/s	felt along U 27.3	across 16.4 m/s²
+3168	s 5898.5	bank -305.0	off -4.97 m	v 193.3 m/s	felt along U 29.3	across 24.1 m/s²
+3172	s 5910.0	bank -309.4	off -5.30 m	v 193.2 m/s	felt along U 20.7	across 22.8 m/s²
+3176	s 5921.5	bank -313.8	off -5.62 m	v 193.3 m/s	felt along U 15.6	across 16.2 m/s²
+3180	s 5933.0	bank -318.0	off -5.94 m	v 193.2 m/s	felt along U 18.3	across 10.4 m/s²
+3184	s 5944.5	bank -322.2	off -6.29 m	v 193.1 m/s	felt along U 22.8	across 10.5 m/s²
+3188	s 5956.0	bank -326.6	off -6.66 m	v 193.3 m/s	felt along U 27.3	across 13.6 m/s²
+3192	s 5967.5	bank -331.0	off -7.05 m	v 191.8 m/s	felt along U 20.1	across 16.5 m/s²
+3196	s 5979.0	bank -335.2	off -7.44 m	v 189.0 m/s	felt along U 21.1	across 19.5 m/s²
+3200	s 5990.5	bank -339.5	off -7.82 m	v 186.1 m/s	felt along U 27.8	across 21.7 m/s²
+3204	s 6001.5	bank -343.8	off -8.19 m	v 183.3 m/s	felt along U 22.7	across 20.2 m/s²
+3208	s 6012.5	bank -347.7	off -8.54 m	v 180.6 m/s	felt along U 16.0	across 20.7 m/s²
+3212	s 6023.0	bank -351.7	off -8.88 m	v 177.9 m/s	felt along U 15.5	across 23.5 m/s²
+3216	s 6033.5	bank -355.8	off -9.20 m	v 175.2 m/s	felt along U 16.8	across 27.1 m/s²
+3220	s 6044.0	bank -359.5	off -9.46 m	v 172.7 m/s	felt along U -6.6	across 17.6 m/s²
+3222	s 6049.0	bank -360.0	off -9.55 m	v 172.1 m/s	felt along U -72.2	across -14.4 m/s²  <- joint
+3223	s 6050.0	bank -360.0	off -9.60 m	v 172.1 m/s	felt along U -77.6	across -18.1 m/s²  <- joint
+3224	s 6050.0	bank -360.0	off -9.64 m	v 172.0 m/s	felt along U -60.3	across -14.8 m/s²  <- joint
+3225	s 6050.0	bank -360.0	off -9.69 m	v 172.0 m/s	felt along U -45.2	across -11.7 m/s²  <- joint
+3226	s 6050.0	bank -360.0	off -9.75 m	v 172.0 m/s	felt along U -43.5	across -11.3 m/s²  <- joint
+3227	s 6050.0	bank -360.0	off -9.80 m	v 172.0 m/s	felt along U -45.1	across -12.1 m/s²  <- joint
+3228	s 6050.0	bank -360.0	off -9.86 m	v 171.9 m/s	felt along U -46.5	across -12.6 m/s²  <- joint
+3229	s 6050.0	bank -360.0	off -9.93 m	v 171.9 m/s	felt along U -47.3	across -13.2 m/s²  <- joint
+3230	s 6050.0	bank -360.0	off -9.99 m	v 171.9 m/s	felt along U -48.1	across -13.4 m/s²  <- joint
+3231	s 6050.0	bank -360.0	off -10.06 m	v 171.9 m/s	felt along U -49.4	across -13.8 m/s²  <- joint
+3232	s 6050.0	bank -360.0	off -10.13 m	v 171.8 m/s	felt along U -50.4	across -14.4 m/s²  <- joint
+3233	s 6050.0	bank -360.0	off -10.20 m	v 171.8 m/s	felt along U -50.8	across -14.4 m/s²  <- joint
+3234	s 6050.0	bank -360.0	off -10.28 m	v 171.8 m/s	felt along U -51.3	across -14.7 m/s²  <- joint
+3235	s 6050.0	bank -360.0	off -10.36 m	v 171.8 m/s	felt along U -51.3	across -14.8 m/s²  <- joint
+3236	s 6050.0	bank -360.0	off -10.45 m	v 171.7 m/s	felt along U -51.4	across -14.7 m/s²  <- joint
+3237	s 6050.0	bank -360.0	off -10.53 m	v 171.7 m/s	felt along U -53.8	across -15.5 m/s²  <- joint
+3238	s 6050.0	bank -360.0	off -10.63 m	v 171.6 m/s	felt along U -60.0	across -17.4 m/s²  <- joint
+3239	s 6050.0	bank -360.0	off -10.72 m	v 171.3 m/s	felt along U -50.4	across -14.9 m/s²  <- joint
+3240	s 6050.0	bank -360.0	off -10.82 m	v 170.6 m/s	felt along U -32.2	across -8.8 m/s²  <- joint
+3241	s 6050.0	bank -360.0	off -10.92 m	v 169.8 m/s	felt along U -18.9	across -4.5 m/s²  <- joint
+3242	s 6050.0	bank -360.0	off -11.02 m	v 168.5 m/s	felt along U 15.8	across 7.2 m/s²  <- joint
+3243	s 6050.0	bank -360.0	off -11.12 m	v 166.5 m/s	felt along U 103.0	across 33.4 m/s²  <- joint
+3244	s 6050.0	bank -360.0	off -11.21 m	v 164.1 m/s	felt along U 180.4	across 57.3 m/s²  <- joint
+3245	s 6050.0	bank -360.0	off -11.29 m	v 161.3 m/s	felt along U 308.8	across 106.1 m/s²  <- joint
+3246	s 6050.0	bank -360.0	off -11.35 m	v 158.5 m/s	felt along U 155.8	across 77.2 m/s²  <- joint
+3247	s 6050.0	bank -360.0	off -11.38 m	v 156.8 m/s	felt along U 74.2	across 61.5 m/s²  <- joint
+3248	s 6050.0	bank -360.0	off -11.41 m	v 155.9 m/s	felt along U 55.9	across 55.2 m/s²  <- joint
+3249	s 6050.0	bank -360.0	off -11.42 m	v 155.2 m/s	felt along U 27.4	across 40.8 m/s²  <- joint
+3250	s 6050.0	bank -360.0	off -11.42 m	v 154.6 m/s	felt along U -3.4	across 22.8 m/s²  <- joint
+3251	s 6050.0	bank -360.0	off -11.42 m	v 154.0 m/s	felt along U -27.7	across 15.1 m/s²  <- joint
+3252	s 6050.0	bank -360.0	off -11.41 m	v 153.4 m/s	felt along U -44.1	across 2.2 m/s²  <- joint
+3253	s 6050.0	bank -360.0	off -11.41 m	v 153.0 m/s	felt along U -55.0	across -3.1 m/s²  <- joint
+3254	s 6050.0	bank -360.0	off -11.40 m	v 152.7 m/s	felt along U -56.4	across -7.6 m/s²  <- joint
+3255	s 6050.0	bank -360.0	off -11.40 m	v 152.4 m/s	felt along U -53.6	across -9.8 m/s²  <- joint
+3256	s 6050.0	bank -360.0	off -11.40 m	v 152.2 m/s	felt along U -50.7	across -10.7 m/s²  <- joint
+3257	s 6050.0	bank -360.0	off -11.40 m	v 152.0 m/s	felt along U -45.6	across -10.9 m/s²  <- joint
+3258	s 6050.0	bank -360.0	off -11.40 m	v 151.7 m/s	felt along U -39.1	across -9.1 m/s²  <- joint
+3259	s 6050.0	bank -360.0	off -11.40 m	v 151.2 m/s	felt along U -27.6	across -6.1 m/s²  <- joint
+3260	s 6050.0	bank -360.0	off -11.41 m	v 150.5 m/s	felt along U -18.7	across -3.5 m/s²  <- joint
+3261	s 6050.0	bank -360.0	off -11.42 m	v 149.6 m/s	felt along U -9.5	across 2.4 m/s²  <- joint
+3262	s 6050.0	bank -360.0	off -11.42 m	v 148.6 m/s	felt along U 3.0	across 9.5 m/s²  <- joint
+3263	s 6050.0	bank -360.0	off -11.43 m	v 147.5 m/s	felt along U 14.4	across 19.5 m/s²  <- joint
+3264	s 6050.0	bank -360.0	off -11.43 m	v 146.4 m/s	felt along U 31.1	across 30.1 m/s²  <- joint
+3265	s 6050.0	bank -360.0	off -11.42 m	v 145.5 m/s	felt along U 42.8	across 35.5 m/s²  <- joint
+3266	s 6050.0	bank -360.0	off -11.41 m	v 144.7 m/s	felt along U 49.9	across 40.6 m/s²  <- joint
+3267	s 6050.0	bank -360.0	off -11.38 m	v 143.9 m/s	felt along U 57.1	across 38.9 m/s²  <- joint
+3268	s 6050.0	bank -360.0	off -11.35 m	v 143.1 m/s	felt along U 51.3	across 39.5 m/s²  <- joint
+3269	s 6050.0	bank -360.0	off -11.31 m	v 142.3 m/s	felt along U 51.0	across 37.7 m/s²  <- joint
+3270	s 6050.0	bank -360.0	off -11.26 m	v 141.6 m/s	felt along U 36.3	across 33.8 m/s²  <- joint
+3271	s 6050.0	bank -360.0	off -11.20 m	v 140.9 m/s	felt along U 20.7	across 28.9 m/s²  <- joint
+3272	s 6050.0	bank -360.0	off -11.14 m	v 140.3 m/s	felt along U 8.0	across 23.1 m/s²  <- joint
+3273	s 6050.0	bank -360.0	off -11.07 m	v 139.7 m/s	felt along U -2.3	across 19.7 m/s²  <- joint
+3274	s 6050.0	bank -360.0	off -11.00 m	v 139.2 m/s	felt along U -11.1	across 14.2 m/s²  <- joint
+3275	s 6050.0	bank -360.0	off -10.92 m	v 138.6 m/s	felt along U -18.6	across 9.9 m/s²  <- joint
+3276	s 6050.0	bank -360.0	off -10.84 m	v 138.1 m/s	felt along U -23.9	across 7.5 m/s²  <- joint
+3277	s 6050.0	bank -360.0	off -10.76 m	v 137.6 m/s	felt along U -26.6	across 5.4 m/s²  <- joint
+3278	s 6050.0	bank -360.0	off -10.68 m	v 137.1 m/s	felt along U -26.6	across 6.2 m/s²  <- joint
+3279	s 6050.0	bank -360.0	off -10.59 m	v 136.7 m/s	felt along U -23.1	across 8.1 m/s²  <- joint
+3280	s 6050.0	bank -360.0	off -10.51 m	v 136.1 m/s	felt along U -17.9	across 10.8 m/s²  <- joint
+3281	s 6050.0	bank -360.0	off -10.42 m	v 135.5 m/s	felt along U -11.2	across 14.0 m/s²  <- joint
+3282	s 6050.0	bank -360.0	off -10.33 m	v 134.9 m/s	felt along U -4.6	across 18.4 m/s²  <- joint
+3283	s 6050.0	bank -360.0	off -10.24 m	v 134.2 m/s	felt along U 2.2	across 23.7 m/s²  <- joint
+3284	s 6050.0	bank -360.0	off -10.14 m	v 133.6 m/s	felt along U 8.1	across 32.0 m/s²  <- joint
+3285	s 6050.0	bank -360.0	off -10.03 m	v 132.9 m/s	felt along U 14.5	across 33.6 m/s²  <- joint
+3286	s 6050.0	bank -360.0	off -9.91 m	v 132.3 m/s	felt along U 19.6	across 36.8 m/s²  <- joint
+3287	s 6050.0	bank -360.0	off -9.79 m	v 131.7 m/s	felt along U 24.9	across 36.9 m/s²  <- joint
+3288	s 6050.0	bank -360.0	off -9.66 m	v 131.1 m/s	felt along U 29.0	across 37.3 m/s²  <- joint
+3289	s 6050.0	bank -360.0	off -9.52 m	v 130.4 m/s	felt along U 28.9	across 38.3 m/s²  <- joint
+3290	s 6050.0	bank -360.0	off -9.37 m	v 129.8 m/s	felt along U 26.2	across 35.1 m/s²  <- joint
+3291	s 6050.0	bank -360.0	off -9.21 m	v 129.2 m/s	felt along U 19.7	across 34.0 m/s²  <- joint
+3292	s 6050.0	bank -360.0	off -9.05 m	v 128.8 m/s	felt along U 14.6	across 34.9 m/s²  <- joint
+3293	s 6050.0	bank -360.0	off -8.88 m	v 128.5 m/s	felt along U 9.0	across 30.2 m/s²  <- joint
+3294	s 6050.0	bank -360.0	off -8.70 m	v 128.0 m/s	felt along U 6.0	across 25.4 m/s²  <- joint
+3295	s 6050.0	bank -360.0	off -8.51 m	v 127.5 m/s	felt along U 3.1	across 21.6 m/s²  <- joint
+3296	s 6050.0	bank -360.0	off -8.32 m	v 126.9 m/s	felt along U 1.1	across 19.9 m/s²  <- joint
+3297	s 6050.0	bank -360.0	off -8.13 m	v 126.4 m/s	felt along U -0.1	across 18.0 m/s²  <- joint
+3298	s 6050.0	bank -360.0	off -7.93 m	v 125.8 m/s	felt along U -0.0	across 16.4 m/s²  <- joint
+3299	s 6050.0	bank -360.0	off -7.73 m	v 125.2 m/s	felt along U 0.9	across 16.1 m/s²  <- joint
+3300	s 6050.0	bank -360.0	off -7.53 m	v 124.6 m/s	felt along U 2.9	across 15.3 m/s²  <- joint
+3301	s 6050.0	bank -360.0	off -7.32 m	v 124.1 m/s	felt along U 5.6	across 15.6 m/s²  <- joint
+3302	s 6050.0	bank -360.0	off -7.10 m	v 123.5 m/s	felt along U 8.5	across 15.5 m/s²  <- joint
+3303	s 6050.0	bank -360.0	off -6.89 m	v 122.9 m/s	felt along U 11.7	across 14.7 m/s²  <- joint
+3304	s 6050.0	bank -360.0	off -6.67 m	v 122.3 m/s	felt along U 14.5	across 14.2 m/s²  <- joint
+3305	s 6050.0	bank -360.0	off -6.45 m	v 121.7 m/s	felt along U 17.3	across 12.3 m/s²  <- joint
+3306	s 6050.0	bank -360.0	off -6.22 m	v 121.1 m/s	felt along U 19.7	across 11.4 m/s²  <- joint
+3307	s 6050.0	bank -360.0	off -6.00 m	v 120.5 m/s	felt along U 21.5	across 9.2 m/s²  <- joint
+3308	s 6050.0	bank -360.0	off -5.77 m	v 119.9 m/s	felt along U 22.8	across 7.1 m/s²  <- joint
+3309	s 6050.0	bank -360.0	off -5.53 m	v 119.4 m/s	felt along U 23.3	across 5.2 m/s²  <- joint
+3310	s 6050.0	bank -360.0	off -5.30 m	v 118.8 m/s	felt along U 23.0	across 2.4 m/s²  <- joint
+3311	s 6050.0	bank -360.0	off -5.07 m	v 118.2 m/s	felt along U 22.0	across 0.4 m/s²  <- joint
+3312	s 6050.0	bank -360.0	off -4.84 m	v 117.6 m/s	felt along U 20.7	across -2.3 m/s²  <- joint
+3313	s 6050.0	bank -360.0	off -4.60 m	v 117.1 m/s	felt along U 19.4	across -4.9 m/s²  <- joint
+3314	s 6050.0	bank -360.0	off -4.37 m	v 116.5 m/s	felt along U 17.9	across -7.2 m/s²  <- joint
+3315	s 6050.0	bank -360.0	off -4.14 m	v 115.9 m/s	felt along U 16.5	across -10.0 m/s²  <- joint
+3316	s 6050.0	bank -360.0	off -3.92 m	v 115.4 m/s	felt along U 15.2	across -12.1 m/s²  <- joint
+3317	s 6050.0	bank -360.0	off -3.69 m	v 114.8 m/s	felt along U 13.9	across -14.6 m/s²  <- joint
+3318	s 6050.0	bank -360.0	off -3.47 m	v 114.2 m/s	felt along U 13.1	across -16.3 m/s²  <- joint
+3319	s 6050.0	bank -360.0	off -3.25 m	v 113.7 m/s	felt along U 12.2	across -18.3 m/s²  <- joint
+3320	s 6050.0	bank -360.0	off -3.04 m	v 113.1 m/s	felt along U 11.7	across -19.4 m/s²  <- joint
+3321	s 6050.0	bank -360.0	off -2.83 m	v 112.5 m/s	felt along U 11.3	across -20.2 m/s²  <- joint
+3322	s 6050.0	bank -360.0	off -2.62 m	v 112.0 m/s	felt along U 11.1	across -21.0 m/s²  <- joint
+3323	s 6050.0	bank -360.0	off -2.42 m	v 111.4 m/s	felt along U 11.1	across -21.8 m/s²  <- joint
+3324	s 6050.0	bank -360.0	off -2.23 m	v 110.9 m/s	felt along U 10.9	across -21.8 m/s²  <- joint
+3325	s 6050.0	bank -360.0	off -2.04 m	v 110.3 m/s	felt along U 11.3	across -22.5 m/s²  <- joint
+3326	s 6050.0	bank -360.0	off -1.85 m	v 109.7 m/s	felt along U 11.5	across -22.4 m/s²  <- joint
+3327	s 6050.0	bank -360.0	off -1.67 m	v 109.2 m/s	felt along U 11.5	across -22.4 m/s²  <- joint
+3328	s 6050.0	bank -360.0	off -1.50 m	v 108.6 m/s	felt along U 11.9	across -22.1 m/s²  <- joint
+3329	s 6050.0	bank -360.0	off -1.33 m	v 108.0 m/s	felt along U 12.2	across -22.0 m/s²  <- joint
+3330	s 6050.0	bank -360.0	off -1.16 m	v 107.5 m/s	felt along U 12.0	across -21.2 m/s²  <- joint
+3331	s 6050.0	bank -360.0	off -1.00 m	v 106.9 m/s	felt along U 12.1	across -20.9 m/s²  <- joint
+3332	s 6050.0	bank -360.0	off -0.85 m	v 106.4 m/s	felt along U 12.3	across -20.2 m/s²  <- joint
+3333	s 6050.0	bank -360.0	off -0.70 m	v 105.8 m/s	felt along U 11.9	across -19.9 m/s²  <- joint
+3334	s 6050.0	bank -360.0	off -0.55 m	v 105.2 m/s	felt along U 11.4	across -19.3 m/s²  <- joint
+3335	s 6050.0	bank -360.0	off -0.41 m	v 104.7 m/s	felt along U 11.4	across -18.3 m/s²  <- joint
+3336	s 6050.0	bank -360.0	off -0.27 m	v 104.1 m/s	felt along U 11.3	across -18.2 m/s²  <- joint
+3337	s 6050.0	bank -360.0	off -0.13 m	v 103.6 m/s	felt along U 10.8	across -17.4 m/s²  <- joint
+3338	s 6050.0	bank -360.0	off -0.00 m	v 103.0 m/s	felt along U 10.4	across -16.5 m/s²  <- joint
+3339	s 6050.0	bank -360.0	off 0.12 m	v 102.6 m/s	felt along U 11.4	across -15.3 m/s²  <- joint
+3340	s 6050.0	bank -360.0	off 0.25 m	v 102.3 m/s	felt along U 11.6	across -15.5 m/s²  <- joint
+3341	s 6050.0	bank -360.0	off 0.37 m	v 102.0 m/s	felt along U 10.8	across -15.6 m/s²  <- joint
+3342	s 6050.0	bank -360.0	off 0.48 m	v 101.5 m/s	felt along U 9.9	across -14.6 m/s²  <- joint
+3343	s 6050.0	bank -360.0	off 0.59 m	v 70.1 m/s	felt along U -156.0	across -284.9 m/s²  <- joint
+3344	s 6050.0	bank -360.0	off 0.64 m	v 18.5 m/s	felt along U -63.9	across -182.7 m/s²  <- joint
+3345	s 6050.0	bank -360.0	off 0.65 m	v 3.8 m/s	felt along U 78.7	across 6.1 m/s²  <- joint
+3346	s 6050.0	bank -360.0	off 0.66 m	v 3.0 m/s	felt along U 99.0	across 6.0 m/s²  <- joint
+3347	s 6050.0	bank -360.0	off 0.67 m	v 2.4 m/s	felt along U 105.7	across -2.8 m/s²  <- joint
+3348	s 6050.0	bank -360.0	off 0.68 m	v 2.7 m/s	felt along U 91.4	across -21.3 m/s²  <- joint
+3349	s 6050.0	bank -360.0	off 0.68 m	v 3.5 m/s	felt along U 69.1	across -18.4 m/s²  <- joint
+3350	s 6050.0	bank -360.0	off 0.68 m	v 4.1 m/s	felt along U 40.4	across -4.9 m/s²  <- joint
+3351	s 6050.0	bank -360.0	off 0.68 m	v 4.4 m/s	felt along U 18.5	across -8.9 m/s²  <- joint
+3352	s 6050.0	bank -360.0	off 0.68 m	v 4.4 m/s	felt along U 6.3	across -5.4 m/s²  <- joint
+3353	s 6050.0	bank -360.0	off 0.68 m	v 4.2 m/s	felt along U -0.4	across -0.9 m/s²  <- joint
+3354	s 6050.0	bank -360.0	off 0.67 m	v 4.1 m/s	felt along U -2.9	across -0.0 m/s²  <- joint
+3355	s 6050.0	bank -360.0	off 0.67 m	v 3.9 m/s	felt along U -3.7	across 0.1 m/s²  <- joint
+3356	s 6050.0	bank -360.0	off 0.67 m	v 3.8 m/s	felt along U -1.8	across -0.1 m/s²  <- joint
+3357	s 6050.0	bank -360.0	off 0.66 m	v 3.8 m/s	felt along U -0.7	across -0.0 m/s²  <- joint
+3358	s 6050.0	bank -360.0	off 0.66 m	v 3.7 m/s	felt along U -0.6	across 0.1 m/s²  <- joint
+3359	s 6050.0	bank -360.0	off 0.66 m	v 3.6 m/s	felt along U -0.6	across -0.1 m/s²  <- joint
+3360	s 6050.0	bank -360.0	off 0.65 m	v 3.6 m/s	felt along U -0.5	across 0.1 m/s²  <- joint
+3361	s 6050.0	bank -360.0	off 0.65 m	v 3.5 m/s	felt along U -0.5	across -0.1 m/s²  <- joint
+3362	s 6050.0	bank -360.0	off 0.64 m	v 3.5 m/s	felt along U -0.4	across 0.1 m/s²  <- joint
+3363	s 6050.0	bank -360.0	off 0.64 m	v 3.4 m/s	felt along U -0.4	across -0.0 m/s²  <- joint
+3364	s 6050.0	bank -360.0	off 0.64 m	v 3.4 m/s	felt along U -0.4	across -0.1 m/s²  <- joint
+3365	s 6050.0	bank -360.0	off 0.63 m	v 3.3 m/s	felt along U -0.4	across 0.1 m/s²  <- joint
+3366	s 6050.0	bank -360.0	off 0.63 m	v 3.3 m/s	felt along U -0.3	across -0.0 m/s²  <- joint
+3367	s 6050.0	bank -360.0	off 0.62 m	v 3.3 m/s	felt along U -0.3	across -0.0 m/s²  <- joint
+3368	s 6050.0	bank -360.0	off 0.62 m	v 3.3 m/s	felt along U -0.4	across -0.0 m/s²  <- joint
+3369	s 6050.0	bank -360.0	off 0.62 m	v 3.3 m/s	felt along U -0.3	across -0.0 m/s²  <- joint
+3370	s 6050.0	bank -360.0	off 0.61 m	v 3.3 m/s	felt along U -0.4	across -0.1 m/s²  <- joint
+3371	s 6050.0	bank -360.0	off 0.61 m	v 3.3 m/s	felt along U -0.2	across 0.1 m/s²  <- joint
+3372	s 6050.0	bank -360.0	off 0.61 m	v 3.3 m/s	felt along U -0.4	across 0.1 m/s²  <- joint
+3373	s 6050.0	bank -360.0	off 0.60 m	v 3.4 m/s	felt along U -0.4	across -0.1 m/s²  <- joint
+3374	s 6050.0	bank -360.0	off 0.60 m	v 3.4 m/s	felt along U -0.3	across -0.0 m/s²  <- joint
+3375	s 6050.0	bank -360.0	off 0.59 m	v 3.4 m/s	felt along U -0.4	across -0.0 m/s²  <- joint
+3376	s 6050.0	bank -360.0	off 0.59 m	v 3.5 m/s	felt along U -0.4	across -0.0 m/s²  <- joint
+3377	s 6050.0	bank -360.0	off 0.59 m	v 3.5 m/s	felt along U -0.4	across -0.0 m/s²  <- joint
+3378	s 6050.0	bank -360.0	off 0.58 m	v 3.6 m/s	felt along U -0.4	across 0.1 m/s²  <- joint
+3379	s 6050.0	bank -360.0	off 0.58 m	v 3.7 m/s	felt along U -0.5	across -0.1 m/s²  <- joint
+3380	s 6050.0	bank -360.0	off 0.58 m	v 3.7 m/s	felt along U -0.5	across -0.0 m/s²  <- joint
+3381	s 6050.0	bank -360.0	off 0.57 m	v 3.8 m/s	felt along U -0.5	across 0.1 m/s²  <- joint
+3382	s 6050.0	bank -360.0	off 0.57 m	v 3.9 m/s	felt along U -0.5	across -0.0 m/s²  <- joint
+3383	s 6050.0	bank -360.0	off 0.56 m	v 3.8 m/s	felt along U 4.3	across 1.0 m/s²  <- joint
+3384	s 6050.0	bank -360.0	off 0.56 m	v 3.6 m/s	felt along U 11.9	across 0.7 m/s²  <- joint
+3385	s 6050.0	bank -360.0	off 0.56 m	v 3.4 m/s	felt along U 13.3	across 1.0 m/s²  <- joint
+3386	s 6050.0	bank -360.0	off 0.55 m	v 3.2 m/s	felt along U 13.6	across 0.7 m/s²  <- joint
+3387	s 6050.0	bank -360.0	off 0.55 m	v 2.9 m/s	felt along U 12.1	across 0.7 m/s²  <- joint
+3388	s 6050.0	bank -360.0	off 0.55 m	v 2.8 m/s	felt along U 9.4	across 0.4 m/s²  <- joint
+3389	s 6050.0	bank -360.0	off 0.54 m	v 2.7 m/s	felt along U 6.1	across 0.4 m/s²  <- joint
+3390	s 6050.0	bank -360.0	off 0.54 m	v 2.7 m/s	felt along U 2.9	across 0.3 m/s²  <- joint
+3391	s 6050.0	bank -360.0	off 0.54 m	v 2.7 m/s	felt along U -0.2	across -0.1 m/s²  <- joint
+3392	s 6050.0	bank -360.0	off 0.54 m	v 2.8 m/s	felt along U -1.7	across 0.4 m/s²  <- joint
+3393	s 6050.0	bank -360.0	off 0.53 m	v 2.9 m/s	felt along U 7.5	across 6.1 m/s²  <- joint
+3394	s 6050.0	bank -360.0	off 0.53 m	v 2.7 m/s	felt along U 28.5	across 6.1 m/s²  <- joint
+3395	s 6050.0	bank -360.0	off 0.53 m	v 2.4 m/s	felt along U 41.2	across -4.6 m/s²  <- joint
+3396	s 6050.0	bank -360.0	off 0.53 m	v 2.1 m/s	felt along U 45.6	across -4.5 m/s²  <- joint
+3397	s 6050.0	bank -360.0	off 0.53 m	v 1.8 m/s	felt along U 45.7	across 5.0 m/s²  <- joint
+3398	s 6050.0	bank -360.0	off 0.53 m	v 1.5 m/s	felt along U 39.9	across 5.3 m/s²  <- joint
+3399	s 6050.0	bank -360.0	off 0.53 m	v 1.3 m/s	felt along U 34.4	across -0.3 m/s²  <- joint
+3400	s 6050.0	bank -360.0	off 0.53 m	v 1.1 m/s	felt along U 27.5	across 0.4 m/s²  <- joint
+3401	s 6050.0	bank -360.0	off 0.53 m	v 1.1 m/s	felt along U 21.9	across -2.8 m/s²  <- joint
+3402	s 6050.0	bank -360.0	off 0.53 m	v 1.1 m/s	felt along U 15.4	across -1.9 m/s²  <- joint
+3403	s 6050.0	bank -360.0	off 0.53 m	v 1.1 m/s	felt along U 10.0	across 0.8 m/s²  <- joint
+3404	s 6050.0	bank -360.0	off 0.53 m	v 1.1 m/s	felt along U 6.3	across 0.5 m/s²  <- joint
+3405	s 6050.0	bank -360.0	off 0.53 m	v 1.0 m/s	felt along U 2.5	across -1.4 m/s²  <- joint
+3406	s 6050.0	bank -360.0	off 0.53 m	v 0.9 m/s	felt along U -0.8	across -0.1 m/s²  <- joint
+3407	s 6050.0	bank -360.0	off 0.53 m	v 0.7 m/s	felt along U -2.0	across -0.0 m/s²  <- joint
+3408	s 6050.0	bank -360.0	off 0.53 m	v 0.6 m/s	felt along U -0.7	across -0.0 m/s²  <- joint
+3409	s 6050.0	bank -360.0	off 0.53 m	v 0.4 m/s	felt along U -0.0	across 0.1 m/s²  <- joint
+3410	s 6050.0	bank -360.0	off 0.53 m	v 0.3 m/s	felt along U -0.0	across -0.1 m/s²  <- joint
+3411	s 6050.0	bank -360.0	off 0.53 m	v 0.2 m/s	felt along U 0.0	across 0.0 m/s²  <- joint
+3412	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U -0.0	across -0.0 m/s²  <- joint
+3413	s 6050.0	bank -360.0	off 0.52 m	v 0.2 m/s	felt along U -0.0	across -0.0 m/s²  <- joint
+3414	s 6050.0	bank -360.0	off 0.52 m	v 0.4 m/s	felt along U 0.1	across 0.1 m/s²  <- joint
+3415	s 6050.0	bank -360.0	off 0.52 m	v 0.5 m/s	felt along U 3.3	across 1.5 m/s²  <- joint
+3416	s 6050.0	bank -360.0	off 0.52 m	v 0.5 m/s	felt along U 6.5	across -0.8 m/s²  <- joint
+3417	s 6050.0	bank -360.0	off 0.52 m	v 0.6 m/s	felt along U 8.1	across 0.7 m/s²  <- joint
+3418	s 6050.0	bank -360.0	off 0.52 m	v 0.6 m/s	felt along U 8.9	across 0.0 m/s²  <- joint
+3419	s 6050.0	bank -360.0	off 0.52 m	v 0.6 m/s	felt along U 9.1	across 0.1 m/s²  <- joint
+3420	s 6050.0	bank -360.0	off 0.52 m	v 0.6 m/s	felt along U 8.2	across 0.3 m/s²  <- joint
+3421	s 6050.0	bank -360.0	off 0.52 m	v 0.6 m/s	felt along U 6.8	across 0.1 m/s²  <- joint
+3422	s 6050.0	bank -360.0	off 0.52 m	v 0.6 m/s	felt along U 7.6	across 1.8 m/s²  <- joint
+3423	s 6050.0	bank -360.0	off 0.52 m	v 0.6 m/s	felt along U 13.8	across -0.1 m/s²  <- joint
+3424	s 6050.0	bank -360.0	off 0.52 m	v 0.6 m/s	felt along U 17.1	across 1.0 m/s²  <- joint
+3425	s 6050.0	bank -360.0	off 0.52 m	v 0.6 m/s	felt along U 18.8	across -0.3 m/s²  <- joint
+3426	s 6050.0	bank -360.0	off 0.52 m	v 0.5 m/s	felt along U 19.8	across -0.8 m/s²  <- joint
+3427	s 6050.0	bank -360.0	off 0.52 m	v 0.3 m/s	felt along U 19.7	across -0.1 m/s²  <- joint
+3428	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 18.3	across -0.4 m/s²  <- joint
+3429	s 6050.0	bank -360.0	off 0.52 m	v 0.2 m/s	felt along U 16.8	across -1.4 m/s²  <- joint
+3430	s 6050.0	bank -360.0	off 0.52 m	v 0.3 m/s	felt along U 15.2	across 1.5 m/s²  <- joint
+3431	s 6050.0	bank -360.0	off 0.52 m	v 0.4 m/s	felt along U 13.8	across -0.4 m/s²  <- joint
+3432	s 6050.0	bank -360.0	off 0.52 m	v 0.4 m/s	felt along U 12.2	across 0.4 m/s²  <- joint
+3433	s 6050.0	bank -360.0	off 0.52 m	v 0.4 m/s	felt along U 10.3	across 0.4 m/s²  <- joint
+3434	s 6050.0	bank -360.0	off 0.52 m	v 0.4 m/s	felt along U 8.3	across -0.5 m/s²  <- joint
+3435	s 6050.0	bank -360.0	off 0.52 m	v 0.4 m/s	felt along U 6.3	across -0.8 m/s²  <- joint
+3436	s 6050.0	bank -360.0	off 0.52 m	v 0.3 m/s	felt along U 5.0	across 0.1 m/s²  <- joint
+3437	s 6050.0	bank -360.0	off 0.52 m	v 0.2 m/s	felt along U 4.1	across 0.1 m/s²  <- joint
+3438	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 4.1	across 0.0 m/s²  <- joint
+3439	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 4.5	across -0.7 m/s²  <- joint
+3440	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 5.4	across 0.4 m/s²  <- joint
+3441	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 6.4	across 0.4 m/s²  <- joint
+3442	s 6050.0	bank -360.0	off 0.52 m	v 0.2 m/s	felt along U 7.4	across -0.1 m/s²  <- joint
+3443	s 6050.0	bank -360.0	off 0.52 m	v 0.2 m/s	felt along U 8.5	across 0.3 m/s²  <- joint
+3444	s 6050.0	bank -360.0	off 0.52 m	v 0.2 m/s	felt along U 9.5	across 0.1 m/s²  <- joint
+3445	s 6050.0	bank -360.0	off 0.52 m	v 0.2 m/s	felt along U 10.4	across 0.1 m/s²  <- joint
+3446	s 6050.0	bank -360.0	off 0.52 m	v 0.2 m/s	felt along U 11.3	across 0.3 m/s²  <- joint
+3447	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 11.8	across -0.1 m/s²  <- joint
+3448	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 12.0	across 0.1 m/s²  <- joint
+3449	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 11.9	across -0.1 m/s²  <- joint
+3450	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 11.6	across -0.3 m/s²  <- joint
+3451	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 11.3	across 0.0 m/s²  <- joint
+3452	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 11.0	across -0.1 m/s²  <- joint
+3453	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 10.7	across 0.0 m/s²  <- joint
+3454	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 10.3	across 0.0 m/s²  <- joint
+3455	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 9.9	across 0.0 m/s²  <- joint
+3456	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 9.6	across -0.1 m/s²  <- joint
+3457	s 6050.0	bank -360.0	off 0.52 m	v 0.1 m/s	felt along U 9.3	across 0.1 m/s²  <- joint
+3458	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.1	across 0.0 m/s²  <- joint
+3459	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.0	across 0.1 m/s²  <- joint
+3460	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.0	across 0.0 m/s²  <- joint
+3461	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.0	across 0.0 m/s²  <- joint
+3462	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.0	across 0.0 m/s²  <- joint
+3463	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.1	across 0.0 m/s²  <- joint
+3464	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.3	across 0.0 m/s²  <- joint
+3465	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.4	across 0.0 m/s²  <- joint
+3466	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.6	across 0.0 m/s²  <- joint
+3467	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3468	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.8	across 0.0 m/s²  <- joint
+3469	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.9	across 0.0 m/s²  <- joint
+3470	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 10.0	across 0.0 m/s²  <- joint
+3471	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.9	across -0.1 m/s²  <- joint
+3472	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 10.0	across 0.1 m/s²  <- joint
+3473	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.9	across 0.0 m/s²  <- joint
+3474	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.9	across 0.0 m/s²  <- joint
+3475	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.8	across -0.1 m/s²  <- joint
+3476	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.8	across 0.1 m/s²  <- joint
+3477	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.8	across 0.0 m/s²  <- joint
+3478	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3479	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3480	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across -0.1 m/s²  <- joint
+3481	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.6	across 0.1 m/s²  <- joint
+3482	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.6	across 0.0 m/s²  <- joint
+3483	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.5	across 0.0 m/s²  <- joint
+3484	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.6	across 0.0 m/s²  <- joint
+3485	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.6	across -0.1 m/s²  <- joint
+3486	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.6	across 0.1 m/s²  <- joint
+3487	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.6	across 0.0 m/s²  <- joint
+3488	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3489	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3490	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across -0.1 m/s²  <- joint
+3491	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.1 m/s²  <- joint
+3492	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3493	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3494	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3495	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.8	across 0.0 m/s²  <- joint
+3496	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3497	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3498	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3499	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3500	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across -0.1 m/s²  <- joint
+3501	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.1 m/s²  <- joint
+3502	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3503	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3504	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3505	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3506	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3507	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.6	across 0.0 m/s²  <- joint
+3508	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3509	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across -0.1 m/s²  <- joint
+3510	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.1 m/s²  <- joint
+3511	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3512	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3513	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.6	across 0.0 m/s²  <- joint
+3514	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3515	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across -0.1 m/s²  <- joint
+3516	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.1 m/s²  <- joint
+3517	s 6050.0	bank -360.0	off 0.52 m	v 0.0 m/s	felt along U 9.7	across 0.0 m/s²  <- joint
+3518	s 6050.0	bank -360.0	off 0.52 m	v 24613.4 m/s	felt along U 588998.9	across 1668354.8 m/s²  <- joint
+joint 5300: felt-along-U swing within 30 m 40.7 m/s² (mid-piece 7.7); median offset 1.39 m, speed 149.5 m/s
+joint 5550: felt-along-U swing within 30 m 50.4 m/s² (mid-piece 1.1); median offset 1.66 m, speed 173.0 m/s
+joint 5800: felt-along-U swing within 30 m 89.4 m/s² (mid-piece 19.6); median offset -3.10 m, speed 190.7 m/s

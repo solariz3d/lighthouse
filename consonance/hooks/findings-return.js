@@ -78,10 +78,20 @@ if (process.env.CONSONANCE_DREAM) process.exit(0);
 // reads the same name through the same env vars, and consonance/tools/attached.test.js goes red
 // if either side drifts. No FINDINGS_LEDGER fallback — a tolerant reader is how this joint
 // stayed green while detached.
-const DATA = process.env.VANTAGE_DATA || 'C:\\Consonance\\data';
+// D273 dirs: begin. The Consonance data and instances folders by THE APP'S OWN RULE (consonance/src-tauri/src/main.rs set_dirs and default_data /
+// default_instances): ~/.consonance.json's data_dir / instances_dir when set, else %USERPROFILE%\.consonance and %USERPROFILE%\claude-instances.
+// Never a hard-coded C:\Consonance: on a stranger's machine that wrote where the app never reads. One text in the five hooks that need it
+// (session-start, sessionstart-state, findings-return, sourced-stop, precompact-preserve); consonance/hooks/dirs.test.js holds them to it.
+function consonanceDir(key, under) {
+  const home = process.env.USERPROFILE || '.';
+  try { const v = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''))[key]; if (typeof v === 'string' && v.trim()) return v.trim(); } catch (e) { /* no config, or not JSON: the default, as the app */ }
+  return `${home}\\${under}`;
+}
+// D273 dirs: end
+const DATA = process.env.VANTAGE_DATA || consonanceDir('data_dir', '.consonance');
 const FINDINGS = process.env.VANTAGE_FINDINGS || path.join(DATA, 'vantage_findings.jsonl');
-const RETURNS = process.env.RETURN_LEDGER || 'C:\\Consonance\\data\\return_ledger.jsonl';
-const STATEDIR = process.env.RETURN_STATE_DIR || 'C:\\Consonance\\data\\return_state';
+const RETURNS = process.env.RETURN_LEDGER || path.join(consonanceDir('data_dir', '.consonance'), 'return_ledger.jsonl');   // not under VANTAGE_DATA, as before
+const STATEDIR = process.env.RETURN_STATE_DIR || path.join(consonanceDir('data_dir', '.consonance'), 'return_state');
 const MAX_PER_TURN = 5;          // overflow rides the next turn — first surfacing, not re-send
 const CLAIM_CAP = 300;           // the row outranks the rendering; truncation says so
 const TAIL_BYTES = 1024 * 1024;

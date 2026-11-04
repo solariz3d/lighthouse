@@ -1,0 +1,89 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+TAP version 13
+# Subtest: row 1: a closed lap with a flat closer is banked as one undo step, and the route does not move (kh and kv byte-equal)
+ok 1 - row 1: a closed lap with a flat closer is banked as one undo step, and the route does not move (kh and kv byte-equal)
+  ---
+  duration_ms: 195.053
+  type: 'test'
+  ...
+# Subtest: row 2: a loop held back by the level rule is named in the status line, and a level curve on the same lap is banked
+ok 2 - row 2: a loop held back by the level rule is named in the status line, and a level curve on the same lap is banked
+  ---
+  duration_ms: 253.6194
+  type: 'test'
+  ...
+# Subtest: the Track menu lists Start & grid…, Pit lane… and Road surface ▸ as panels, in that order, then a separator and its two commands, Smooth ramps and Bank the lap
+ok 3 - the Track menu lists Start & grid…, Pit lane… and Road surface ▸ as panels, in that order, then a separator and its two commands, Smooth ramps and Bank the lap
+  ---
+  duration_ms: 741.2004
+  type: 'test'
+  ...
+# Subtest: Track ▸ Smooth ramps runs the shell's smoothRamps: on this lap of turns, which has no ramps, it says so and changes nothing
+ok 4 - Track ▸ Smooth ramps runs the shell's smoothRamps: on this lap of turns, which has no ramps, it says so and changes nothing
+  ---
+  duration_ms: 74.7406
+  type: 'test'
+  ...
+# Subtest: Start & grid…: the panel holds the section's controls, and ticking "place by hand" in it puts the start on the track
+ok 5 - Start & grid…: the panel holds the section's controls, and ticking "place by hand" in it puts the start on the track
+  ---
+  duration_ms: 83.8502
+  type: 'test'
+  ...
+# Subtest: Pit lane…: the panel holds the section's controls, and ticking "pit lane" in it builds the lane
+ok 6 - Pit lane…: the panel holds the section's controls, and ticking "pit lane" in it builds the lane
+  ---
+  duration_ms: 84.8588
+  type: 'test'
+  ...
+# Subtest: a panel that is closed leaves nothing in its host, and the shell no longer drives it; opening it again shows the track as it is now
+ok 7 - a panel that is closed leaves nothing in its host, and the shell no longer drives it; opening it again shows the track as it is now
+  ---
+  duration_ms: 72.7173
+  type: 'test'
+  ...
+# Subtest: Road surface ▸: the asphalt is announced to the page at once, before the panel is ever opened (the preview and the export need it)
+ok 8 - Road surface ▸: the asphalt is announced to the page at once, before the panel is ever opened (the preview and the export need it)
+  ---
+  duration_ms: 66.4536
+  type: 'test'
+  ...
+# Subtest: Road surface ▸: opening it shows the same picker, choosing solid colour announces no set, and closing it keeps the choice alive
+ok 9 - Road surface ▸: opening it shows the same picker, choosing solid colour announces no set, and closing it keeps the choice alive
+  ---
+  duration_ms: 59.0715
+  type: 'test'
+  ...
+# Subtest: items() called again for the same shell does not start a second road-surface controller
+ok 10 - items() called again for the same shell does not start a second road-surface controller
+  ---
+  duration_ms: 56.3639
+  type: 'test'
+  ...
+# Subtest: File ▸ Developer ▸ Open example…: developerItems has the one panel, and it refuses to open an example until both files are picked
+ok 11 - File ▸ Developer ▸ Open example…: developerItems has the one panel, and it refuses to open an example until both files are picked
+  ---
+  duration_ms: 57.8035
+  type: 'test'
+  ...
+# Subtest: Open example…: with both files picked the shell opens the example under the file's name, as the left column's button did
+ok 12 - Open example…: with both files picked the shell opens the example under the file's name, as the left column's button did
+  ---
+  duration_ms: 58.677
+  type: 'test'
+  ...
+# Subtest: items() with no shell or no page fails loudly and names what is missing
+ok 13 - items() with no shell or no page fails loudly and names what is missing
+  ---
+  duration_ms: 0.4307
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1470.4497

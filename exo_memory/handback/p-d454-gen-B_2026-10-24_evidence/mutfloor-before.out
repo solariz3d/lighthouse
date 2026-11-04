@@ -1,0 +1,7 @@
+lockrun: holding the lock at 2026-10-25T07:27:48.075Z; starting B D454 floor-row mutants BEFORE the assertion (expected to survive; BelowNormal, very low I/O; not a timing run)
+lowio: class BelowNormal, io-priority set to 0 rc 0
+control      R0 control: unmutated: exit 0, fork note 3885 B
+NOT CAUGHT   F1 the floor-row fork span inflated (only the floor row reads it) (fork note 3885 B)
+NOT CAUGHT   F2 the floor-row fork span is the whole floor rest (fork note 3885 B)
+applied 2 / caught 0 / NOT APPLIED 0; restored sha256 equal
+lockrun: done at 2026-10-25T07:28:08.486Z, exit 0

@@ -1,0 +1,30 @@
+﻿handles: the cursor could not be put back at the handle: denied
+handles: the cursor could not be put back at the handle: denied
+[32m✔ row 1: every kind is placed where the keeper marked it, and every kind with a side is on BOTH sides, mirrored about the centreline [90m(0.9862ms)[39m[39m
+[32m✔ row 1b: the road's width at the handle sets how far out an edge handle sits, and an unknown or absent kind places nothing [90m(0.247ms)[39m[39m
+[32m✔ row 2: a positive drag runs outward (width, cup), left on both sides (turn), up on the left edge and down on the right (bank), away from the piece (length: its near end stays put), up (climb) [90m(0.2039ms)[39m[39m
+[32m✔ row 3: the two mirrored handles change the SAME value: the same outward motion from either side gives the same field value [90m(0.3153ms)[39m[39m
+[32m✔ row 4: a value from a drag in PIXELS: the rates per pixel (today's speeds at the default camera; length five times), the clamps, the rounding, Shift (a tenth) and Ctrl (snap) [90m(0.3598ms)[39m[39m
+[32m✔ row 5: the screen: where a handle is, one metre along its axis in px, behind the camera, an axis seen end-on [90m(0.1388ms)[39m[39m
+[32m✔ row 6: the hit test takes the nearest handle inside the radius, none outside, and skips a handle behind the camera [90m(0.1183ms)[39m[39m
+[32m✔ row 7: the overlay: a press ON a handle opens the drag and nothing else sees it; a press elsewhere is left alone; one apply a frame; the release applies the last position and ends [90m(0.9519ms)[39m[39m
+[32m✔ row 7b: no model, no pose or a refused press: no handles are drawn and a press is not taken; a right-button press is never a handle [90m(0.5804ms)[39m[39m
+[32m✔ row 8: the speed is per PIXEL: 20 px of drag changes a field by the same amount zoomed in and zoomed out [90m(0.9643ms)[39m[39m
+[32m✔ row 9: the detents: a drag holds 6 px at the value it started from and, for bank, turn and climb, at 0; Ctrl snaps instead; past the hold it moves again [90m(0.6565ms)[39m[39m
+[32m✔ row 10: the value is rounded to the step with Shift too: a fine drag lands on 0.0, not 0.03 [90m(0.1755ms)[39m[39m
+[32m✔ row 11: a double-click on a handle resets it: 0 for bank, turn, climb; the value before the last drag for length, width, cup; and it is the handle's, not the camera's [90m(0.28ms)[39m[39m
+[32m✔ row 12: the label shows the exact value the drag sets, and what a double-click would set [90m(0.7762ms)[39m[39m
+[32m✔ row 13: no pointer lock (D270): a grab never asks for one and registers no lock listener, so Chromium has no notice to show; the pointer is captured, the cursor is hidden for the drag and the value follows the pointer past the stage at the same pixel speed [90m(0.4087ms)[39m[39m
+[32m✔ row 13b: the cursor goes back at the handle through the native window when there is one; with none (a browser, a test host) or a refusal the release still ends cleanly [90m(0.5371ms)[39m[39m
+[32m✔ row 13c: Esc ends the drag where it is, as a release does, and gives the cursor back; Esc with no drag, or another key, does nothing; unmount takes the key listener off [90m(0.2431ms)[39m[39m
+[32m✔ row 11b: the double-click is two presses within 400 ms on one handle that changed nothing (no dblclick need come); a drag between them, or a pause, is not one [90m(0.4103ms)[39m[39m
+[32m✔ row 14: the landing's kinds (D258): four free marks at the landing, each out along its own arrow, the arrows ARE the take-off's heading frame; their speeds, holds, snaps, resets and labels [90m(0.331ms)[39m[39m
+[34mℹ tests 19[39m
+[34mℹ suites 0[39m
+[34mℹ pass 19[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 60.1133[39m
+

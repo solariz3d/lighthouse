@@ -1,0 +1,91 @@
+{
+  "started": "2026-10-31T08:48:06.356Z",
+  "exe": "C:/Users/nname/Desktop/worktrees/t180-land-582/src-tauri/target/release/t180-track-builder.exe",
+  "steps": [
+    {
+      "name": "launch (reloaded under the instruments)",
+      "ok": true,
+      "ms": 832,
+      "result": "menus ready; http://tauri.localhost/app/index.html"
+    },
+    {
+      "name": "one Extend (1000 m straight)",
+      "ok": true,
+      "ms": 3469,
+      "result": "0 pieces · 0 m · loop open -> 1 piece · 1,000 m · loop open"
+    },
+    {
+      "name": "seven more Extends, a square lap (File ▸ Export refuses an open loop)",
+      "ok": true,
+      "ms": 5894,
+      "result": "8 pieces · 2,150 m · loop open"
+    },
+    {
+      "name": "Build ▸ Close the loop",
+      "ok": true,
+      "ms": 2231,
+      "result": "11 pieces · 4,695 m · closed loop"
+    },
+    {
+      "name": "File ▸ Export… to the temp folder",
+      "ok": false,
+      "error": "Error: Untitled • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | not exported: the road overlaps itself (2 places): at 0.68–0.82 km (p1), at 2.09–2.23 km (p8–p9) | end heading 0.00°, on the 90° grid | the road overlaps itself (2 places)"
+    }
+  ],
+  "csp": [],
+  "cspControl": [],
+  "pageErrors": [],
+  "targets": [
+    "worker http://tauri.localhost/app/core/overlapworker.js",
+    "worker http://tauri.localhost/app/core/closeworker.js",
+    "worker http://tauri.localhost/app/core/overlapworker.js",
+    "worker http://tauri.localhost/app/core/overlapworker.js",
+    "worker http://tauri.localhost/app/core/overlapworker.js",
+    "worker http://tauri.localhost/app/core/closeworker.js",
+    "worker http://tauri.localhost/app/validate-ui/checkworker.js",
+    "iframe about:srcdoc",
+    "worker blob:null/f3dbd276-2b7e-42b6-ac11-6d7f692c0e21"
+  ],
+  "pid": 55236,
+  "pageUrl": "http://tauri.localhost/app/index.html",
+  "console": [
+    "page log error network: Failed to load resource: the server responded with a status of 500 (Internal Server Error) <http://tauri.localhost/favicon.ico>",
+    "page log error network: Failed to load resource: the server responded with a status of 500 (Internal Server Error) <http://tauri.localhost/tools/fourier.cjs>",
+    "page log error network: Failed to load resource: the server responded with a status of 500 (Internal Server Error) <http://tauri.localhost/app/lib/%E2%80%A6>",
+    "page log error network: Failed to load resource: the server responded with a status of 500 (Internal Server Error) <http://tauri.localhost/favicon.ico>",
+    "page log error network: Failed to load resource: the server responded with a status of 500 (Internal Server Error) <http://tauri.localhost/tools/fourier.cjs>",
+    "page log error network: Failed to load resource: the server responded with a status of 500 (Internal Server Error) <http://tauri.localhost/app/lib/%E2%80%A6>",
+    "page log error network: Failed to load resource: the server responded with a status of 500 (Internal Server Error) <http://tauri.localhost/tools/fourier.cjs>",
+    "page log error network: Failed to load resource: the server responded with a status of 500 (Internal Server Error) <http://tauri.localhost/tools/fourier.cjs>"
+  ],
+  "exportPre": {
+    "disabled": false,
+    "title": "Write an Assetto Corsa track folder into a folder you pick. Nothing is installed or launched.",
+    "seam": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d582\\wv4\\export",
+    "red": ""
+  },
+  "exportSamples": [
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / exporting… / end heading 0.00°, on the 90° grid",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / not exported: the road overlaps itself (2 places): at 0.68–0.82 km (p1), at 2.09 / end heading 0.00°, on the 90° grid / the road overlaps itself (2 places)",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / not exported: the road overlaps itself (2 places): at 0.68–0.82 km (p1), at 2.09 / end heading 0.00°, on the 90° grid / the road overlaps itself (2 places)",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / not exported: the road overlaps itself (2 places): at 0.68–0.82 km (p1), at 2.09 / end heading 0.00°, on the 90° grid / the road overlaps itself (2 places)",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / not exported: the road overlaps itself (2 places): at 0.68–0.82 km (p1), at 2.09 / end heading 0.00°, on the 90° grid / the road overlaps itself (2 places)",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / not exported: the road overlaps itself (2 places): at 0.68–0.82 km (p1), at 2.09 / end heading 0.00°, on the 90° grid / the road overlaps itself (2 places)",
+    "Untitled • · closed loop || iframes 1 || No saved pieces yet: select pieces on the track and press Save as piece. /  /  /  /  /  / not exported: the road overlaps itself (2 places): at 0.68–0.82 km (p1), at 2.09 / end heading 0.00°, on the 90° grid / the road overlaps itself (2 places)"
+  ],
+  "fatal": "Error: Untitled • · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | not exported: the road overlaps itself (2 places): at 0.68–0.82 km (p1), at 2.09–2.23 km (p8–p9) | end heading 0.00°, on the 90° grid | the road overlaps itself (2 places)",
+  "leftRunning": 0
+}

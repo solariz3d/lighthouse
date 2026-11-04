@@ -1,0 +1,24 @@
+[32m✔ TWO RUNS STARTED TOGETHER: the second WAITS, names the first's seat, pid and command, and runs only after it [90m(1257.0711ms)[39m[39m
+[32m✔ A STALE LOCK (its pid is dead) is taken over, and the takeover is logged with the holder and its age [90m(4.4657ms)[39m[39m
+[32m✔ a LIVE holder is never taken over: after the max wait the second FAILS LOUDLY with the holder's details and does not run [90m(6.2074ms)[39m[39m
+[32m✔ RELEASE ON A THROWN ERROR: a runner that throws leaves no lock behind [90m(32.9858ms)[39m[39m
+[32m✔ RELEASE ON SIGINT: the handler hold() installs releases and exits 130 (the handler, run by emitting the signal in-process) [90m(31.2651ms)[39m[39m
+[32m✔ RELEASE ON NORMAL EXIT, and release removes only its OWN lock [90m(31.7342ms)[39m[39m
+[32m✔ a NESTED run under the holder (its token in the environment) is the same run: it does not wait and does not release [90m(1.882ms)[39m[39m
+[32m✔ a token that is NOT the current holder's (a child of some earlier run) is no pass: it waits like anyone else [90m(2.7854ms)[39m[39m
+[32m✔ no data dir is a REFUSAL, never a run without the lock [90m(0.1168ms)[39m[39m
+[32m✔ the lock holds {pid, seat, cmd, started} (and the token) [90m(1.5316ms)[39m[39m
+[32m✔ pidAlive: this process is alive; a pid that does not exist is not [90m(0.1639ms)[39m[39m
+[32m✔ WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper [90m(1.1441ms)[39m[39m
+[34mℹ tests 12[39m
+[34mℹ suites 0[39m
+[34mℹ pass 12[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1420.5813[39m
+
+--- stderr ---
+
+--- exit 0

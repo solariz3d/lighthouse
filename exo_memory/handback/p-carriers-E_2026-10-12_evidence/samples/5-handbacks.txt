@@ -1,0 +1,30 @@
+--- p-stalelaps-A_2026-10-11.md (first commit 2026-10-11T14:42:52-06:00); lines 1-8
+# p-stalelaps-A — D300 part 1: the open laps, measured; seat A, 2026-10-11
+
+No code, no worktree. I read; I wrote 12 `filed` rows with `lap-row.js`; I edited no plan and no hand-back.
+
+## READ THIS FIRST: the close rows have a side effect on the pulse
+checked: `node consonance/tools/chain-status.js` before and after.
+- Before my rows the pulse read `STALE D275 52h, D279 44h, D280 43h, +3 · … 0 of 10 chained laps unwitnessed`.
+- After: `STALE D284 33h, D286 28h, D277 27h · … 9 of 10 chained laps unwitnessed (D299,D298,D296,+6)`.
+
+--- p-reach-C_2026-10-11.md (first commit 2026-10-11T08:12:12-06:00); lines 1-8
+# p-reach-C — D294 part 2 (ledger row D295): REACH, re-measured. Pane C, machine D, 2026-10-11. MEASURE ONLY.
+
+Packet: the chair's D294 part 2 (`exo_memory/loop/plan_retrieval_now_d294_2026-10-11.md`, Part 2, main 7f08f148).
+Commit: **3479af25** on branch `d294-c`, worktree `G:/worktrees/c-d294-wt`, parent 7f08f148. Not pushed.
+It contains only the evidence folder `exo_memory/handback/p-reach-C_2026-10-11_evidence/`:
+- `reach.js`, the script;
+- `reach.json`, every figure below;
+- `dropped.txt`, the 515 dropped entries;
+
+--- p-wcensus-A_2026-10-11.md (first commit 2026-10-11T22:08:20-06:00); lines 1-8
+# p-wcensus-A — D301 wave 3 item 7 (ledger D302): units for the full W census; seat A, 2026-10-11
+
+I gathered. **No unit is classified and the lookup was not run.** I opened the D301 plan's lines 41-52 only (checked: `sed -n 41,52p`).
+
+**Result: lighthouse `3ffaf969` on `b2e0c4ca`, branch `d301-a2`, worktree `G:\consonance-worktrees\a-d301a2-wt`. Local, named paths, not pushed.** Files in `exo_memory/handback/p-wcensus-A_2026-10-11_evidence/`: `census.js`, `today.json`, `out/units.json`, `out/units.tsv`, `out/digest.txt`.
+
+## The digest
+**`units.json` sha256 `3e910cb0397c651ba763a653a00e4247e6c6a13895ab90f41342cfa0d499e7e4`**; the function is sha256 over the UTF-8 bytes of `out/units.json`. checked: two full runs wrote byte-identical files (both printed it).
+

@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: DPR: the backing store is the css size × devicePixelRatio, and the renderer draws at that size
+ok 1 - DPR: the backing store is the css size × devicePixelRatio, and the renderer draws at that size
+  ---
+  duration_ms: 19.282
+  type: 'test'
+  ...
+# Subtest: DPR: a change of devicePixelRatio or of the css size resizes on the next frame
+ok 2 - DPR: a change of devicePixelRatio or of the css size resizes on the next frame
+  ---
+  duration_ms: 7.2408
+  type: 'test'
+  ...
+# Subtest: DPR edges: missing or nonsense DPR is 1; a side is capped at 8192 with the aspect kept; zero size draws nothing
+ok 3 - DPR edges: missing or nonsense DPR is 1; a side is capped at 8192 with the aspect kept; zero size draws nothing
+  ---
+  duration_ms: 4.9218
+  type: 'test'
+  ...
+# Subtest: keys: Ctrl, Alt or Meta with C or B do not switch the camera; plain C and B do
+ok 4 - keys: Ctrl, Alt or Meta with C or B do not switch the camera; plain C and B do
+  ---
+  duration_ms: 0.5682
+  type: 'test'
+  ...
+# Subtest: keys in the frame loop: Ctrl+C leaves the camera where it was; C then moves it
+ok 5 - keys in the frame loop: Ctrl+C leaves the camera where it was; C then moves it
+  ---
+  duration_ms: 8.5857
+  type: 'test'
+  ...
+# Subtest: mount failure: no WebGL throws a PreviewMountError naming the reason, and shows it in the panel
+ok 6 - mount failure: no WebGL throws a PreviewMountError naming the reason, and shows it in the panel
+  ---
+  duration_ms: 0.5055
+  type: 'test'
+  ...
+# Subtest: probe: the head lands in the middle of the build view, which looks along the growth direction
+ok 7 - probe: the head lands in the middle of the build view, which looks along the growth direction
+  ---
+  duration_ms: 6.0716
+  type: 'test'
+  ...
+# Subtest: probe: in overhead (fit to the whole track) the head is in frame
+ok 8 - probe: in overhead (fit to the whole track) the head is in frame
+  ---
+  duration_ms: 8.1586
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 154.1992

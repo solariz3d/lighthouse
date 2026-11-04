@@ -1,0 +1,11 @@
+== D273 lap5b C verify · asked 2026-10-09T10:37:07.171Z · lock held 2026-10-09T10:37:07.176Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-lap5b-wt && node --test --test-concurrency=1 consonance/tools/consumer-relabel.test.js consonance/tools/consumer-fork-wiring.test.js consonance/tools/identity-diff.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail|skipped)|✖ [a-zA-Z]|Error' | head -8; rm -rf C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l5b && mkdir -p C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l5b && node -e "const r=require('./consonance/tools/gen-consumer.js').build(process.argv[1],{allowDirty:true});console.log('build refused:',r.refused||'no','staged',r.staged,'forked',r.forked,'leaks',r.leaks.length)" C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l5b && node consonance/tools/identity-diff.js --gen C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l5b > C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/l5b-id.txt 2>&1; echo identity-diff exit $?; grep -n 'hand-maintained' C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l5b/consonance/src-tauri/brief/BUILDING.md; grep -n 'This copy does not carry the loop' C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l5b/exo_memory/SOURCE.md
+[34mℹ tests 35[39m
+[34mℹ pass 35[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 0[39m
+build refused: no staged [33m390[39m forked [33m82[39m leaks [33m0[39m
+identity-diff exit 0
+848:**SOURCE** is this repository: hand-maintained, and PUBLIC (`gh repo view … --json isPrivate` →
+66:  large to carry and with no trigger index. This copy does not carry the loop; it carries the keeper's journals,
+== exit 0 · done 2026-10-09T10:38:02.553Z

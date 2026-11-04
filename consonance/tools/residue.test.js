@@ -184,7 +184,7 @@ test('binary files are skipped rather than counted as zero-change text', () => {
 /* ---------------- assignment intervals ---------------- */
 
 test('assignment intervals and withdrawals are read from the chair audit line', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'residue-board-'));
+  const dir = require('./scratch.js').mkdtemp('residue-board-');
   const p = path.join(dir, 'board.jsonl');
   const t0 = Date.parse('2026-07-27T21:07:00Z');
   fs.writeFileSync(p, [
@@ -202,7 +202,7 @@ test('assignment intervals and withdrawals are read from the chair audit line', 
 });
 
 test('a second assignment that is not a withdrawal is not counted as one', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'residue-board2-'));
+  const dir = require('./scratch.js').mkdtemp('residue-board2-');
   const p = path.join(dir, 'board.jsonl');
   const t0 = Date.parse('2026-07-27T20:00:00Z');
   fs.writeFileSync(p, [
@@ -218,7 +218,7 @@ test('a second assignment that is not a withdrawal is not counted as one', () =>
 test('the unparsed denominator survives JSON — the safeguard is observable in every output mode', () => {
   // The defect: `out.unparsed` was an expando on an Array, dropped by JSON.stringify (so --json
   // never showed it) and never read by render(). It must be a real, serializable field.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'residue-unparsed-'));
+  const dir = require('./scratch.js').mkdtemp('residue-unparsed-');
   const p = path.join(dir, 'board.jsonl');
   const t0 = Date.parse('2026-07-27T20:00:00Z');
   fs.writeFileSync(p, [
@@ -246,7 +246,7 @@ test('file stats attach to their own commit, not the next one', () => {
    * subject. Nothing threw. Only a real repo catches it, because the bug is in how git lays
    * the two outputs out, and a hand-written fixture would have been laid out the way I
    * imagined it rather than the way git prints it. */
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'residue-git-'));
+  const dir = require('./scratch.js').mkdtemp('residue-git-');
   const g = (...args) => execFileSync('git', ['-C', dir, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
   g('init', '-q');
   g('config', 'user.email', 't@t');

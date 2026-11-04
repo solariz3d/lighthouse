@@ -1,0 +1,131 @@
+[31m✖ row 1: a bank reached over 100 m is C2 at the ramp's start and end (the roll's curvature along s does not step) [90m(4.9906ms)[39m[39m
+[31m✖ row 2: a 15° cup brought home to 0 over 40 m is C2 at both ends of the fade [90m(1.1325ms)[39m[39m
+[31m✖ row 3: a 30° edge brought to 0 over 50 m is C2 at both ends [90m(1.8072ms)[39m[39m
+[31m✖ row 4: a 35° right edge reached over 50 m is C2 at both ends [90m(1.4677ms)[39m[39m
+[32m✔ row 5 (control): at every one of those joints the channel's value and slope are continuous (the C1 that holds today stays) [90m(2.1353ms)[39m[39m
+[31m✖ row 6: through Close, the closer brings the cup home C2: at its first joint, its own joints and the seam the cup's second derivative does not step [90m(2998.2499ms)[39m[39m
+[31m✖ row 7: through Close, Finish's roll straight is C2 where it meets the user's last piece [90m(2988.6251ms)[39m[39m
+[34mℹ tests 7[39m
+[34mℹ suites 0[39m
+[34mℹ pass 1[39m
+[34mℹ fail 6[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 6118.7686[39m
+
+[31m✖ failing tests:[39m
+
+test at ..\..\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:58:1
+[31m✖ row 1: a bank reached over 100 m is C2 at the ramp's start and end (the roll's curvature along s does not step) [90m(4.9906ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: at the ramp's start the roll's second derivative steps by 0.0180 deg/m² (15.12 deg/100 m under a wheel 8.4 m out); the bar is 0.001
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:62:10)
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at ..\..\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:66:1
+[31m✖ row 2: a 15° cup brought home to 0 over 40 m is C2 at both ends of the fade [90m(1.1325ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: at the fade's start the cup's second derivative steps by 0.0562 deg/m²; the bar is 0.001
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:71:10)
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at ..\..\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:75:1
+[31m✖ row 3: a 30° edge brought to 0 over 50 m is C2 at both ends [90m(1.8072ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: at the ramp's start the edge angle's second derivative steps by 0.0720 deg/m²; the bar is 0.001
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:80:10)
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at ..\..\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:84:1
+[31m✖ row 4: a 35° right edge reached over 50 m is C2 at both ends [90m(1.4677ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: at the ramp's start the right edge's second derivative steps by 0.0840 deg/m²; the bar is 0.001
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:87:10)
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at ..\..\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:109:1
+[31m✖ row 6: through Close, the closer brings the cup home C2: at its first joint, its own joints and the seam the cup's second derivative does not step [90m(2998.2499ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: every closer joint and the seam: the cup is C2 (and C1)
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   "p3|p4: c'' steps by 0.00075 deg/m² (bar 0.0002), slope by 0.00000 deg/m",
+  [32m+[39m   "p7|p1: c'' steps by 0.00092 deg/m² (bar 0.0002), slope by 0.00000 deg/m"
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:119:10)
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m"p3|p4: c'' steps by 0.00075 deg/m² (bar 0.0002), slope by 0.00000 deg/m"[39m, [32m"p7|p1: c'' steps by 0.00092 deg/m² (bar 0.0002), slope by 0.00000 deg/m"[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at ..\..\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:121:1
+[31m✖ row 7: through Close, Finish's roll straight is C2 where it meets the user's last piece [90m(2988.6251ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: p3|p4: the roll's second derivative steps by 0.0049 deg/m²; the bar is 0.001
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\core_joint_c2.test.js:127:10)
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

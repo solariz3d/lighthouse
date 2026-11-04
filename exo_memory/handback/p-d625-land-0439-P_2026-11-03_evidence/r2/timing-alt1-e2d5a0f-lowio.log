@@ -1,0 +1,4 @@
+11:04:15Z descendants 11, io set 11, failed 0, free MB 42,042 (min 42,042), windows seen 0
+11:05:18Z descendants 15, io set 19, failed 0, free MB 41,358 (min 41,358), windows seen 0
+11:06:21Z descendants 15, io set 24, failed 0, free MB 41,389 (min 40,904), windows seen 0
+11:06:41Z stop: io set 24, failed 0, min free MB 40,904, windows seen 0

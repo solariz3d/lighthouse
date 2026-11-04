@@ -1,0 +1,94 @@
+2026-10-05T21:38:03.593Z ev (() => ({ extend: [...document.querySelectorAll('button')].some((b) => b.textContent.trim() === 'Ext
+2026-10-05T21:38:04.402Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:04.403Z CHECK start {"status":"unsaved","info":"0 pieces · 0 m · open","msg":"No saved pieces yet: select pieces on the track and press Save as piece."}
+2026-10-05T21:38:04.404Z ev (async () => { const t = document.querySelector('#share textarea'); t.value = "t180e1.q-ZSUFAqTs5IzU
+2026-10-05T21:38:04.919Z CHECK paste "opened \"window pieces\" from its code (Ctrl+Z goes back)"
+2026-10-05T21:38:06.423Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:06.425Z CHECK afterPaste {"status":"unsaved •","info":"5 pieces · 780 m · open · last paste 0 ms","msg":"No saved pieces yet: select pieces on the track and press Save as piece."}
+2026-10-05T21:38:06.425Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))
+2026-10-05T21:38:07.928Z ev (() => { const st = document.getElementById('preview'), r = st.getBoundingClientRect(); let track = 
+2026-10-05T21:38:08.137Z CHECK where {"rect":{"left":320,"top":44,"w":1064,"h":645.015625},"pick":{"p5":{"x":1188,"y":216,"n":16},"p4":{"x":1188,"y":296,"n":25},"p3":{"x":1172,"y":424,"n":38},"p1":{"x":468,"y":528,"n":74},"p2":{"x":1044,"y":576,"n":37}}}
+2026-10-05T21:38:08.138Z WHERE {"p5":{"x":1188,"y":216,"n":16},"p4":{"x":1188,"y":296,"n":25},"p3":{"x":1172,"y":424,"n":38},"p1":{"x":468,"y":528,"n":74},"p2":{"x":1044,"y":576,"n":37}}
+2026-10-05T21:38:08.705Z ev (() => { const e = document.querySelector('[aria-label="selection"]'); return e ? e.textContent : nu
+2026-10-05T21:38:08.707Z CHECK selectP2 "Selected: p2 · 150 m"
+2026-10-05T21:38:09.270Z ev (() => { const e = document.querySelector('[aria-label="selection"]'); return e ? e.textContent : nu
+2026-10-05T21:38:09.271Z CHECK selectP2toP4 "Selected: p2 to p4 (3 pieces) · 400 m"
+2026-10-05T21:38:09.322Z ev (() => { const i = document.querySelector('[aria-label="piece name"]'); i.value = 'window run'; retu
+2026-10-05T21:38:09.323Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Sa
+2026-10-05T21:38:09.325Z CHECK saveClick "clicked"
+2026-10-05T21:38:10.537Z CHECK saved {"file":true,"equalsCore":true,"parses":true}
+2026-10-05T21:38:10.537Z ev (() => [...document.querySelectorAll('[data-piece]')].map((r) => r.textContent))()
+2026-10-05T21:38:10.539Z CHECK rows ["window run3 pieces · 400 m · turn +95.6° · climb 0.0° · plainAdd at headRenameDelete"]
+2026-10-05T21:38:10.539Z ev document.querySelector('[aria-label="saved pieces"]').scrollIntoView({ block: 'center' })
+2026-10-05T21:38:11.212Z ev (async () => { const i = document.querySelector('[aria-label="piece name"]'); i.value = 'window run'
+2026-10-05T21:38:12.115Z CHECK saveAgain "the piece was not saved: a piece named \"window run\" already exists; delete it first or use another name"
+2026-10-05T21:38:12.115Z CHECK saveAgainFileSame true
+2026-10-05T21:38:12.115Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:12.116Z CHECK before "5 pieces · 780 m · open · last paste 0 ms"
+2026-10-05T21:38:12.116Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ad
+2026-10-05T21:38:12.119Z CHECK addClick "clicked"
+2026-10-05T21:38:13.621Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:13.622Z CHECK afterAdd "8 pieces · 1,180 m · open · last insertPiece 3 ms"
+2026-10-05T21:38:13.622Z ev (() => { const c = document.querySelector('[aria-label="mirror on insert"]'); c.checked = true; retu
+2026-10-05T21:38:13.623Z CHECK mirrorOn true
+2026-10-05T21:38:13.623Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ad
+2026-10-05T21:38:13.624Z CHECK addMirrorClick "clicked"
+2026-10-05T21:38:15.131Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:15.133Z CHECK afterMirror "11 pieces · 1,580 m · open · last insertPiece 3 ms"
+2026-10-05T21:38:15.133Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:15.135Z CHECK addMsg "added the piece \"window run\" mirrored at the head: 3 pieces (Ctrl+Z takes it back)"
+2026-10-05T21:38:15.188Z ev (() => { const b = [...document.querySelectorAll("#palette button")].find((x) => x.textContent.trim(
+2026-10-05T21:38:16.160Z ev (() => { const b = [...document.querySelectorAll("#palette button")].find((x) => x.textContent.trim(
+2026-10-05T21:38:17.111Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:17.113Z CHECK afterUndo "5 pieces · 780 m · open · last insertPiece 3 ms"
+2026-10-05T21:38:17.113Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))
+2026-10-05T21:38:18.324Z ev (() => { const st = document.getElementById('preview'), r = st.getBoundingClientRect(); let track = 
+2026-10-05T21:38:19.024Z ev (() => { const e = document.querySelector('[aria-label="selection"]'); return e ? e.textContent : nu
+2026-10-05T21:38:19.026Z CHECK selectP3 "Selected: p3 · 150 m"
+2026-10-05T21:38:19.026Z CHECK backupsBefore []
+2026-10-05T21:38:19.026Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "De
+2026-10-05T21:38:19.416Z CHECK deleteClick "clicked"
+2026-10-05T21:38:21.930Z ev (() => { const e = document.querySelector('[aria-label="delete preview"]'); return e ? e.textContent
+2026-10-05T21:38:21.933Z CHECK preview "Preview: 1 piece (p3) would be taken out of the middle of the track. The two sides are joined again at the gap, which changes the start of p4 (up to 156.6 m), and everything after the gap moves along with it. The see-through track on the preview is the result.Moves: p5 up to 188.9 m, p4 up to 156.6 m; 0 pieces after the gap keep their place; everything before the gap is exactly as it was.No overlap and no red on the track after the delete."
+2026-10-05T21:38:21.933Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:21.934Z CHECK previewInfo "5 pieces · 780 m · open · last insertPiece 3 ms"
+2026-10-05T21:38:21.934Z CHECK backupsDuringPreview []
+2026-10-05T21:38:21.935Z ev document.querySelector('[aria-label="delete preview"]').scrollIntoView({ block: 'center' })
+2026-10-05T21:38:22.587Z ev document.getElementById('palette').scrollTo(0, 0); true
+2026-10-05T21:38:23.044Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ap
+2026-10-05T21:38:23.046Z CHECK applyClick "clicked"
+2026-10-05T21:38:25.561Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:25.563Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:25.564Z CHECK afterApply {"info":"4 pieces · 630 m · open · last deletePieces 2 ms","msg":"deleted 1 piece from the middle of the track (Ctrl+Z puts it back)","backups":["eq-unsaved.2026-10-05_153823.t180track"]}
+2026-10-05T21:38:25.565Z CHECK backupIsTheTrackBefore true
+2026-10-05T21:38:25.641Z ev (() => { const b = [...document.querySelectorAll("#palette button")].find((x) => x.textContent.trim(
+2026-10-05T21:38:26.678Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:26.679Z CHECK afterDeleteUndo "5 pieces · 780 m · open · last deletePieces 2 ms"
+2026-10-05T21:38:26.679Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))
+2026-10-05T21:38:27.880Z ev (() => { const st = document.getElementById('preview'), r = st.getBoundingClientRect(); let track = 
+2026-10-05T21:38:28.579Z ev (() => { const e = document.querySelector('[aria-label="selection"]'); return e ? e.textContent : nu
+2026-10-05T21:38:28.579Z CHECK selectP5 "Selected: p5 · 80 m · at the end of the track"
+2026-10-05T21:38:28.580Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "De
+2026-10-05T21:38:28.616Z CHECK endDelete "clicked"
+2026-10-05T21:38:30.116Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:30.118Z ev (() => { const e = document.querySelector('[aria-label="delete preview"]'); return e ? e.textContent
+2026-10-05T21:38:30.119Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:30.119Z CHECK afterEndDelete {"info":"4 pieces · 700 m · open · last deletePieces 2 ms","preview":"","msg":"deleted 1 piece at the end of the track (Ctrl+Z puts it back)"}
+2026-10-05T21:38:30.119Z ev (() => { const b = [...document.querySelectorAll("#palette button")].find((x) => x.textContent.trim(
+2026-10-05T21:38:31.037Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T21:38:31.038Z CHECK afterEndUndo "5 pieces · 780 m · open · last deletePieces 2 ms"
+2026-10-05T21:38:31.038Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Re
+2026-10-05T21:38:31.039Z CHECK renameClick "clicked"
+2026-10-05T21:38:31.550Z ev (() => { const i = document.querySelector('[aria-label="new name"]'); i.value = 'renamed run'; retur
+2026-10-05T21:38:31.551Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "OK
+2026-10-05T21:38:31.552Z CHECK okClick "clicked"
+2026-10-05T21:38:32.764Z ev (() => [...document.querySelectorAll('[data-piece]')].map((r) => r.textContent))()
+2026-10-05T21:38:32.765Z CHECK afterRename {"files":["renamed run.t180piece"],"rows":["renamed run3 pieces · 400 m · turn +95.6° · climb 0.0° · plainAdd at headRenameDelete"]}
+2026-10-05T21:38:32.766Z ev (() => { const b = document.querySelector('[aria-label="delete the saved piece renamed run"]'); b.cl
+2026-10-05T21:38:32.766Z CHECK delClick "clicked"
+2026-10-05T21:38:33.168Z ev [...document.querySelectorAll('button')].some((b) => b.textContent === 'Yes, delete')
+2026-10-05T21:38:33.169Z CHECK confirmShown true
+2026-10-05T21:38:33.169Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ye
+2026-10-05T21:38:33.171Z CHECK yesClick "clicked"
+2026-10-05T21:38:34.385Z ev (() => [...document.querySelectorAll('[data-piece]')].map((r) => r.textContent))()
+2026-10-05T21:38:34.386Z CHECK afterDelete {"files":[],"rows":[]}

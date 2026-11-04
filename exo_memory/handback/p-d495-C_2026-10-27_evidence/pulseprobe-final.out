@@ -1,0 +1,16 @@
+as it is                 worst 1 s change 12.5%  at t0 col 504 (az 130) row 79->79 Y 0.1685->0.1954, top 0.2151
+pulse still              worst 1 s change 12.5%  at t0 col 504 (az 130) row 79->79 Y 0.1685->0.1954, top 0.2151
+span still               worst 1 s change 12.5%  at t0 col 504 (az 130) row 79->79 Y 0.1685->0.1954, top 0.2151
+hem still                worst 1 s change 12.5%  at t0 col 504 (az 130) row 79->79 Y 0.1685->0.1954, top 0.2151
+stars out                worst 1 s change 12.5%  at t0 col 504 (az 130) row 79->79 Y 0.1685->0.1954, top 0.2150
+the flat fallback        worst 1 s change 11.4%  at t0 col 1214 (az 312) row 153->153 Y 0.2757->0.3036, top 0.2441
+only the running shimmer moves worst 1 s change 5.3%  at t500 col 553 (az 142) row 20->20 Y 0.2699->0.2815, top 0.2180
+only the fine rays move  worst 1 s change 3.9%  at t0 col 556 (az 143) row 12->12 Y 0.2894->0.2979, top 0.2151
+only the ray groups move worst 1 s change 7.1%  at t0 col 1236 (az 318) row 127->127 Y 0.2567->0.2424, top 0.2018
+only the pulse moves     worst 1 s change 4.6%  at t500 col 604 (az 155) row 227->227 Y 0.4386->0.4489, top 0.2216
+only the span moves      worst 1 s change 2.9%  at t0 col 1226 (az 315) row 45->45 Y 0.6764->0.6703, top 0.2090
+only the big folds move  worst 1 s change 5.8%  at t500 col 499 (az 128) row 112->112 Y 0.1360->0.1489, top 0.2216
+only the curl warp moves worst 1 s change 0.0%  at 
+only the curls move      worst 1 s change 6.6%  at t500 col 443 (az 114) row 240->242 Y 0.1360->0.1215, top 0.2210
+only the hem moves       worst 1 s change 2.4%  at t500 col 558 (az 143) row 26->26 Y 0.6110->0.6057, top 0.2216
+all time still           worst 1 s change 0.0%  at 

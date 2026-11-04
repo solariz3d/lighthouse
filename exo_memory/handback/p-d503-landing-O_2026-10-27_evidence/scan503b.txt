@@ -1,0 +1,38 @@
+PRIV_PATTERN alternatives: 13 (2 from priv.txt, 11 from the term list)
+range 7dc5917..d503-o: 9 commits, 151 added lines
+pattern 1: added 0, messages 0
+pattern 2: added 0, messages 0
+pattern 3: added 0, messages 0
+pattern 4: added 0, messages 0
+pattern 5: added 0, messages 0
+pattern 6: added 0, messages 0
+pattern 7: added 0, messages 0
+pattern 8: added 0, messages 0
+pattern 9: added 0, messages 0
+pattern 10: added 0, messages 0
+pattern 11: added 0, messages 0
+pattern 12: added 0, messages 0
+pattern 13: added 0, messages 0
+pattern 14: added 0, messages 0
+pattern 15: added 0, messages 0
+pattern 16: added 0, messages 0
+pattern 17: added 0, messages 0
+pattern 18: added 0, messages 0
+pattern 19: added 0, messages 0
+pattern 20: added 0, messages 0
+pattern 21: added 0, messages 0
+pattern 22: added 0, messages 0
+pattern 23: added 0, messages 0
+pattern 24: added 0, messages 0
+total 0
+per commit aabd23a: 1 commits, 15 added lines, total 0
+per commit 837e16d: 1 commits, 38 added lines, total 0
+per commit 89c2924: 1 commits, 31 added lines, total 0
+per commit d3624fd: 1 commits, 25 added lines, total 0
+per commit a5271fa: 1 commits, 8 added lines, total 0
+per commit f07b4a4: 1 commits, 6 added lines, total 0
+per commit 2564e38: 1 commits, 23 added lines, total 0
+per commit 6819a55: 1 commits, 3 added lines, total 0
+per commit e905420: 1 commits, 2 added lines, total 0
+commits with any hit: 0 of 9
+

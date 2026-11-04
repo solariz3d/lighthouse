@@ -1,0 +1,40 @@
+ok   G3-a a matched ending: no block, no output: status 0, stdout "", stderr ""
+ok   G3-a2 the row: matched, promptKind user, the line kept: true user true
+ok   G3-b an unmatched ending: logged without text: false false
+ok   G3-c a keep-warm turn is promptKind relay: relay
+ok   G3-d AskUserQuestion is recorded (auq true) and the matched line kept: true true
+ok   G3-n1 never blocks, never prints: empty file: status 0, stdout "", stderr ""
+ok   G3-n2 never blocks, never prints: only newlines: status 0, stdout "", stderr ""
+ok   G3-n3 never blocks, never prints: garbage text: status 0, stdout "", stderr ""
+ok   G3-n4 never blocks, never prints: binary garbage: status 0, stdout "", stderr ""
+ok   G3-n5 never blocks, never prints: partial last line: status 0, stdout "", stderr ""
+ok   G3-n6 never blocks, never prints: assistant content is a string: status 0, stdout "", stderr ""
+ok   G3-n7 never blocks, never prints: content null: status 0, stdout "", stderr ""
+ok   G3-n8 never blocks, never prints: message null: status 0, stdout "", stderr ""
+ok   G3-n9 never blocks, never prints: blocks with nulls: status 0, stdout "", stderr ""
+ok   G3-n10 never blocks, never prints: entries that are not objects: status 0, stdout "", stderr ""
+ok   G3-n11 never blocks, never prints: user content array with tool_result: status 0, stdout "", stderr ""
+ok   G3-n12 never blocks, never prints: no user entry at all: status 0, stdout "", stderr ""
+ok   G3-n13 never blocks, never prints: reply ends in ?** markdown: status 0, stdout "", stderr ""
+ok   G3-n14 never blocks, never prints: a 3 MB single line: status 0, stdout "", stderr ""
+ok   G3-n15 never blocks, never prints: a very long matched line: status 0, stdout "", stderr ""
+ok   G3-n16 never blocks, never prints: CRLF: status 0, stdout "", stderr ""
+ok   G3-n17 never blocks, never prints: unicode: status 0, stdout "", stderr ""
+ok   G3-p1 transcript_path missing from the payload: status 0, stdout "", stderr ""
+ok   G3-p2 transcript file does not exist: status 0, stdout "", stderr ""
+ok   G3-p3 transcript_path is a directory: status 0, stdout "", stderr ""
+ok   G3-p4 transcript_path is a number: status 0, stdout "", stderr ""
+ok   G3-p5 payload is not json: status 0, stdout "", stderr ""
+ok   G3-p6 empty stdin: status 0, stdout "", stderr ""
+ok   G3-p7 no data dir configured at all: status 0, stdout "", stderr ""
+ok   G3-p8 the ledger dir cannot be written: status 0, stdout "", stderr ""
+ok   G3-big a 58 MB transcript: silent and fast: status 0, stdout "", stderr "" fast  | 52 ms
+ok   G3-big2 and it read the LAST turn: true user
+ok   G3-dream CONSONANCE_DREAM set: nothing at all: status 0, stdout "", stderr ""
+ok   G3-sec-a secret shapes the hook scrubs: vck_ gateway | anthropic | sk- (openai style) | github ghp_ | aws AKIA | bearer | TOKEN=value | password: value
+   scrubbed: [33m8[39m  NOT scrubbed (the text reaches the ledger): ["stripe sk_live_","slack xoxb-","google AIza","jwt","npm_ token","gitlab glpat-","a bare 40-hex","url with credentials"]
+DIFF G3-sec-b every secret shape is scrubbed: 8  (expected 0)  | NOT scrubbed: stripe sk_live_, slack xoxb-, google AIza, jwt, npm_ token, gitlab glpat-, a bare 40-hex, url with credentials
+ok   G3-sec-c an UNMATCHED ending that holds a key: its text is not logged at all: false
+   ledger fields seen: t, seat, session, project, mode, promptKind, auq, matched, line, decision, error
+
+DIFFS: G3-sec-b

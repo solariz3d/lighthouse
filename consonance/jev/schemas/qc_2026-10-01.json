@@ -1,0 +1,15 @@
+{
+ "what": "D199, QC to Jev (phase 4, only if the readers are USABLE). Plan exo_memory/loop/plan_jev_correction_d199_2026-10-01.md (7774a3b). Instructions = the plan's QC blockquote, \"> \" stripped, lines joined by LF. Criteria = the three options. Written by pane E in phase 1, before any call; only `questions` is sent.",
+ "state": "The unit's text from its \"**Seat's reply:**\" line through the closing fence of its keeper's message, exactly as in exo_memory/loop/qc_units_2026-10-01.md.",
+ "questions": {
+  "qc": {
+   "type": "choice",
+   "instructions": "**QC.** Below is a seat's reply and the keeper's next message. **In this message, is the keeper correcting something the seat said\nor did?** Correcting means: telling the seat a claim was wrong, or overriding or reversing a choice, action or framing the seat\nmade. A new request, a question, approval, or a change of topic is NOT a correction by itself.\nAnswer: **YES** · **NO** · **CAN'T TELL**",
+   "criteria": {
+    "YES": "YES",
+    "NO": "NO",
+    "CANT_TELL": "CAN'T TELL"
+   }
+  }
+ }
+}

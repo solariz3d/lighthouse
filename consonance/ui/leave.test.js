@@ -4,6 +4,7 @@
 // stub event bus that delivers the payloads Rust's `leave_run` emits. It pins what the keeper sees: nothing until the
 // save starts; "don't unplug" while it runs, with no way out; DONE says the stick can come out and names the folder;
 // NOT DONE names every reason; and the Close button exists only when Rust says the result is written.
+// D317 part 2: the question the window's X asks when seats are working (the `close-confirm` event), in the same panel.
 
 const assert = require('assert');
 const fs = require('fs');
@@ -34,13 +35,18 @@ function load(answers) {
     querySelector(sel) {
       const id = sel.startsWith('#') ? sel.slice(1) : null;
       if (!id || !new RegExp(`id="${id}"`).test(this._html)) return null;
-      if (!els.has(sel)) els.set(sel, { onclick: null, innerHTML: '' });
+      if (!els.has(sel)) els.set(sel, { onclick: null, innerHTML: '', disabled: false, focused: false, focus() { this.focused = true; } });
       return els.get(sel);
     },
   };
   const root = { hidden: true, querySelector: () => body };
+  const keys = new Set();   // the document's keydown listeners, as the browser holds them
   const ctx = {
-    document: { getElementById: (id) => (id === 'leave' ? root : null) },
+    document: {
+      getElementById: (id) => (id === 'leave' ? root : null),
+      addEventListener: (t, fn) => { if (t === 'keydown') keys.add(fn); },
+      removeEventListener: (t, fn) => { if (t === 'keydown') keys.delete(fn); },
+    },
     window: { __TAURI__: { event: { listen: (name, fn) => { handlers[name] = fn; } } } },
   };
   ctx.inv = async (cmd, args) => {
@@ -53,8 +59,10 @@ function load(answers) {
   vm.runInContext(escapeSrc, ctx);
   vm.runInContext(SRC, ctx);
   const emit = (payload) => handlers.leave({ payload });
+  const ask = (payload) => handlers['close-confirm']({ payload });
+  const key = (k) => { const ev = { key: k, prevented: false, preventDefault() { this.prevented = true; } }; [...keys].forEach((fn) => fn(ev)); return ev; };
   const text = () => body.innerHTML + [...els.values()].map((e) => e.innerHTML).join('');
-  return { root, body, calls, emit, els, text, listening: () => typeof handlers.leave === 'function' };
+  return { root, body, calls, emit, ask, key, keys, els, text, listening: () => typeof handlers.leave === 'function', asking: () => typeof handlers['close-confirm'] === 'function' };
 }
 
 const FOLDER = 'D:\\consonance-L-20260911';
@@ -212,6 +220,158 @@ test('while publishing: the stick result stays, the publish is said to be runnin
 test('publish text is escaped, never markup', () => {
   const t = publishedAt({ outcome: 'REFUSED', code: 1, text: '<img src=x onerror=alert(1)>' });
   assert.ok(!/<img/.test(t), t);
+});
+
+// ---- D317 part 2: the window's X asks before ending working seats (plan: exo_memory/loop/plan_close_confirm_2026-10-13.md) ----
+// Contract: event `close-confirm` { working: [{ label, gate }] }; command `leave_confirmed` (B's Rust). [Keep working] is the
+// default and what Escape does: it hides the question and invokes nothing.
+const WORKING = { working: [{ label: 'pane E', gate: 'Working' }, { label: 'the librarian', gate: 'Unstamped' }] };
+
+test('the X question is listened for', () => {
+  assert.ok(load().asking(), 'leave.js does not listen for close-confirm');
+});
+
+test('the question shows, counts the working seats and names each one', () => {
+  const r = load();
+  r.ask(WORKING);
+  const t = r.text();
+  assert.deepStrictEqual([r.root.hidden, /2 seats are working/.test(t), t.includes('pane E'), t.includes('the librarian'), /Close Consonance and end them\?/.test(t)],
+    [false, true, true, true, true], t);
+});
+
+test('one working seat reads as one seat', () => {
+  const r = load();
+  r.ask({ working: [{ label: 'pane B', gate: 'Working' }] });
+  assert.ok(/1 seat is working: pane B/.test(r.text()), r.text());
+});
+
+test('[Keep working] is focused when the question shows', () => {
+  const r = load();
+  r.ask(WORKING);
+  assert.strictEqual(r.body.querySelector('#closeconfirm-keep').focused, true);
+});
+
+test('[Keep working] hides the question and invokes nothing', async () => {
+  const r = load();
+  r.ask(WORKING);
+  await r.body.querySelector('#closeconfirm-keep').onclick();
+  assert.deepStrictEqual([r.root.hidden, r.calls, r.keys.size], [true, [], 0]);
+});
+
+test('Escape hides the question and invokes nothing', () => {
+  const r = load();
+  r.ask(WORKING);
+  const ev = r.key('Escape');
+  assert.deepStrictEqual([r.root.hidden, r.calls, ev.prevented, r.keys.size], [true, [], true, 0]);
+});
+
+test('any other key does nothing to the question', () => {
+  const r = load();
+  r.ask(WORKING);
+  r.key('Enter');
+  assert.deepStrictEqual([r.root.hidden, r.calls], [false, []]);
+});
+
+test('[Close] invokes leave_confirmed exactly once', async () => {
+  const r = load();
+  r.ask(WORKING);
+  await r.body.querySelector('#closeconfirm-close').onclick();
+  assert.deepStrictEqual(r.calls, [{ cmd: 'leave_confirmed', args: undefined }]);
+});
+
+test('a double-click on [Close] invokes leave_confirmed once', async () => {
+  const r = load();
+  r.ask(WORKING);
+  const b = r.body.querySelector('#closeconfirm-close');
+  await Promise.all([b.onclick(), b.onclick()]);
+  assert.deepStrictEqual(r.calls.map((c) => c.cmd), ['leave_confirmed']);
+});
+
+test('after [Close], Escape no longer hides anything: the Leave has started', async () => {
+  const r = load();
+  r.ask(WORKING);
+  await r.body.querySelector('#closeconfirm-close').onclick();
+  r.key('Escape');
+  assert.deepStrictEqual([r.root.hidden, r.keys.size], [false, 0]);
+});
+
+test('a refused leave_confirmed says why and lets [Close] be pressed again', async () => {
+  const r = load({ leave_confirmed: new Error('the leave is already running') });
+  r.ask(WORKING);
+  const b = r.body.querySelector('#closeconfirm-close');
+  await b.onclick();
+  await b.onclick();
+  assert.deepStrictEqual([/already running/.test(r.text()), r.calls.length], [true, 2], r.text());
+});
+
+test('the Leave screens take over the panel from the question', async () => {
+  const r = load();
+  r.ask(WORKING);
+  await r.body.querySelector('#closeconfirm-close').onclick();
+  r.emit({ phase: 'saving', folder: FOLDER });
+  assert.ok(/don't unplug/.test(r.text()) && !/seats are working/.test(r.body.innerHTML), r.body.innerHTML);
+});
+
+test('a Leave screen that arrives while the question is up cannot be taken away by Escape', () => {
+  const r = load();
+  r.ask(WORKING);
+  r.emit({ phase: 'saving', folder: FOLDER });
+  r.key('Escape');
+  assert.deepStrictEqual([r.root.hidden, /don't unplug/.test(r.text()), r.keys.size], [false, true, 0]);
+});
+
+test('a question while a Leave screen shows is ignored', () => {
+  const r = load();
+  r.emit({ phase: 'saving', folder: FOLDER });
+  r.ask(WORKING);
+  assert.ok(/don't unplug/.test(r.text()) && !/seats are working/.test(r.text()), r.text());
+});
+
+// D317 amendment (the chair, 14:21; B's hand-back :33-41): the contract has no dismiss signal, so B's guard holds a repeat X
+// for 2 s only and a later X sends close-confirm again. Was: a second question was ignored, and its list could go stale.
+// Now it refreshes the one question in place. (This test replaces 'a second question while the first is up shows one
+// question, with one Escape listener', whose rule changed.)
+test('a second question while the first is up refreshes it in place: the second list, one question, one Escape listener', () => {
+  const r = load();
+  r.ask(WORKING);
+  r.ask({ working: [{ label: 'pane B', gate: 'Working' }] });
+  const t = r.text();
+  assert.deepStrictEqual([/1 seat is working: pane B/.test(t), t.includes('pane E'), t.includes('the librarian'), (t.match(/working:/g) || []).length, r.keys.size],
+    [true, false, false, 1, 1], t);
+  const ev = r.key('Escape');
+  assert.deepStrictEqual([r.root.hidden, r.calls, ev.prevented, r.keys.size], [true, [], true, 0]);
+});
+
+test('a refresh keeps the focus on [Keep working]', () => {
+  const r = load();
+  r.ask(WORKING);
+  const keep = r.body.querySelector('#closeconfirm-keep');
+  keep.focused = false;
+  r.ask({ working: [{ label: 'pane B', gate: 'Working' }] });
+  assert.strictEqual(r.body.querySelector('#closeconfirm-keep').focused, true);
+});
+
+test('a refresh does not reset a [Close] already in flight', () => {
+  const r = load({ leave_confirmed: new Promise(() => {}) });   // the Leave is starting and has not answered yet
+  r.ask(WORKING);
+  r.body.querySelector('#closeconfirm-close').onclick();
+  r.ask({ working: [{ label: 'pane B', gate: 'Working' }] });
+  r.body.querySelector('#closeconfirm-close').onclick();
+  assert.deepStrictEqual([r.calls.map((c) => c.cmd), /Ending the seats/.test(r.text())], [['leave_confirmed'], true], r.text());
+});
+
+test('an empty or malformed list still asks, and never closes by itself', () => {
+  for (const p of [{ working: [] }, {}, null, { working: 'x' }]) {
+    const r = load();
+    r.ask(p);
+    assert.deepStrictEqual([r.root.hidden, /Close Consonance/.test(r.text()), r.calls], [false, true, []], JSON.stringify(p));
+  }
+});
+
+test('seat labels are escaped, never markup', () => {
+  const r = load();
+  r.ask({ working: [{ label: '<img src=x onerror=alert(1)>', gate: '<b>x</b>' }] });
+  assert.ok(!/<img|<b>x/.test(r.text()), r.text());   // r.text(): the question is written into its own elements (the refresh)
 });
 
 Promise.all(pending).then(() => {

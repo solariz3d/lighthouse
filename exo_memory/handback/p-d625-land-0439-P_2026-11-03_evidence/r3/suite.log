@@ -1,0 +1,8 @@
+19:24:38Z clear: acs.exe not running, no timing session held by another seat
+19:24:38Z holding slot 1 (C:\Consonance\data\heavy-run.lock)
+19:24:38Z second slot held: one slot, no second holder (r3)
+19:24:38Z head 8c921e7 tree 3144e3a; status lines 0
+19:25:33Z build.out: exit 0, 55 s
+20:11:36Z full.tap: exit 1, 2763 s
+20:11:55Z cargo.out: exit 0, 19 s
+20:12:03Z done

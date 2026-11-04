@@ -20,7 +20,7 @@ const PANE = '6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f', THIRD = '3d000000-0000-4000
 const TP = '3d000000-0000-4000-8000-000000003d00';   // the shape of main.rs THIRD_PLACE_SID
 
 function world() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-judge-'));
+  const root = require('./scratch.js').mkdtemp('jev-judge-');
   const repo = path.join(root, 'repo'), data = path.join(root, 'data'), projects = path.join(root, 'projects');
   const store = path.join(root, 'store'), shell = path.join(root, 'shell');
   fs.mkdirSync(path.join(repo, 'dev', 'shell', 'hooks'), { recursive: true });
@@ -367,14 +367,14 @@ test('PACING: a pass spaces its calls, waits out a 429\'s Retry-After, skips tha
 // and judge the roster alone: Main, the librarian and the Third Place dropped out with no line anywhere — L089's
 // jev-flags bug, in its sibling.
 function installedCopy() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-judge-inst-'));
+  const dir = require('./scratch.js').mkdtemp('jev-judge-inst-');
   const tools = path.join(dir, 'somewhere', 'tools');
   fs.mkdirSync(tools, { recursive: true });
   for (const f of ['jev-judge.js', 'jev-ask.js', 'jev-shadow.js', 'jev-room.js']) fs.copyFileSync(path.join(__dirname, f), path.join(tools, f));
   return require(path.join(tools, 'jev-judge.js'));
 }
 function homeWith(cfg) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-judge-home-'));
+  const home = require('./scratch.js').mkdtemp('jev-judge-home-');
   if (cfg !== undefined) fs.writeFileSync(path.join(home, '.consonance.json'), typeof cfg === 'string' ? cfg : JSON.stringify(cfg));
   return home;
 }

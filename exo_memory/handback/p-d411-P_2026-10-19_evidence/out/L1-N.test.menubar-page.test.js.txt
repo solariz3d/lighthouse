@@ -1,0 +1,52 @@
+$ node --test "app/test/menubar-page.test.js"
+(exit 0)
+[32m✔ row 1: the bar reads File, Edit, Build, Track, Pieces, View, Settings, then Export to Assetto Corsa; the ⋯ menu is gone and every control keeps its id [90m(2235.3731ms)[39m[39m
+[32m✔ row 2: one menu open at a time; Esc, a press outside it and a command each close it [90m(1643.021ms)[39m[39m
+[32m✔ row 3: the moved controls work from their new place [90m(1886.4401ms)[39m[39m
+[32m✔ row 4: a choice in Settings and a tick in View survive a reload, saved as t180.settings.<key> [90m(2366.3111ms)[39m[39m
+[32m✔ row 5: with localStorage refused, the page starts, the menus open, and a setting holds for the session [90m(944.1841ms)[39m[39m
+[32m✔ row 6: Reset the guide forgets that the guide was finished [90m(1114.3838ms)[39m[39m
+[32m✔ row 7: Build and Track open and say something, never an error [90m(1099.6561ms)[39m[39m
+[32m✔ row 8: the bar fits at 1400 px: the seven menus and Export to Assetto Corsa each on one line and inside the window, the status and install note giving way [90m(1031.0163ms)[39m[39m
+[32m✔ row 9: Settings ▸ Wall raycasting and the checker's CSP box follow each other both ways, and the choice survives a reload [90m(2336.5184ms)[39m[39m
+[32m✔ row 10: with the Track part, the road surface has one controller, alive before the Track menu is opened [90m(1116.2889ms)[39m[39m
+[32m✔ row 11: with the Build part, Build ▸ Brush shows the brush strip under the bar, keeps it there across an edit, and hides it again [90m(1943.7159ms)[39m[39m
+[32m✔ row 12: with the Track part, a menu panel gives its controls back when the menu closes [90m(1469.4202ms)[39m[39m
+[32m✔ row 13: a part that fails to load says why in its menu, and the other menus still work [90m(1306.7201ms)[39m[39m
+[32m✔ row 14: File holds Export layouts…, its modules load on the page, and off the app it says it needs the native side instead of doing nothing [90m(1084.5534ms)[39m[39m
+[32m✔ row 15: Settings ▸ Sound: the volume slider shows 45 on a fresh start, and a saved volume shows as saved [90m(1592.6946ms)[39m[39m
+[32m✔ row 16 (D394): Settings ▸ Theme: a fixed theme sets the look at once and fetches its own melody's two files; it survives a reload as that look and melody; SIGIL says its melody stays random [90m(2449.7209ms)[39m[39m
+[32m✔ row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sides of each fold: no overflow, the window buttons wholly inside the window, a grab strip of at least 24 px, every menu and Export on one line left of them; at 125% scaling too, where a window can be a fraction of a pixel wide [90m(18872.9438ms)[39m[39m
+[32m✔ row 18 (D401): Settings ▸ Theme starts with Random, not Music, and it is the default; choosing it picks another look at once and that look's melody follows; a saved music loads as Random [90m(3653.096ms)[39m[39m
+[34mℹ tests 18[39m
+[34mℹ suites 0[39m
+[34mℹ pass 18[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 48651.7249[39m
+
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and a2122153 pid 25408 (t180 t180 E D414 merge 5 (D410+D417+D419) check-it tests, build, install, since 2026-10-19T23:49:07.284Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and a2122153 pid 25408 (t180 t180 E D414 merge 5 (D410+D417+D419) check-it tests, build, install, since 2026-10-19T23:49:07.284Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and a2122153 pid 25408 (t180 t180 E D414 merge 5 (D410+D417+D419) check-it tests, build, install, since 2026-10-19T23:49:07.284Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and a2122153 pid 25408 (t180 t180 E D414 merge 5 (D410+D417+D419) check-it tests, build, install, since 2026-10-19T23:49:07.284Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and a2122153 pid 25408 (t180 t180 E D414 merge 5 (D410+D417+D419) check-it tests, build, install, since 2026-10-19T23:49:07.284Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 40192 (sources-gate.mutants, since 2026-10-19T23:54:47.884Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 40192 (sources-gate.mutants, since 2026-10-19T23:54:47.884Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 40192 (sources-gate.mutants, since 2026-10-19T23:54:47.884Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 40192 (sources-gate.mutants, since 2026-10-19T23:54:47.884Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 40192 (sources-gate.mutants, since 2026-10-19T23:54:47.884Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 40192 (sources-gate.mutants, since 2026-10-19T23:54:47.884Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 40192 (sources-gate.mutants, since 2026-10-19T23:54:47.884Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 40192 (sources-gate.mutants, since 2026-10-19T23:54:47.884Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 10976 (sources-gate.mutants, since 2026-10-20T00:04:07.798Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 10976 (sources-gate.mutants, since 2026-10-20T00:04:07.798Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 10976 (sources-gate.mutants, since 2026-10-20T00:04:07.798Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 10976 (sources-gate.mutants, since 2026-10-20T00:04:07.798Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 10976 (sources-gate.mutants, since 2026-10-20T00:04:07.798Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 10976 (sources-gate.mutants, since 2026-10-20T00:04:07.798Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 10976 (sources-gate.mutants, since 2026-10-20T00:04:07.798Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 10976 (sources-gate.mutants, since 2026-10-20T00:04:07.798Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 40532 (t180 A D407b readout-display + two harnesses, since 2026-10-19T23:50:36.025Z) and 0c0c0c0b pid 10976 (sources-gate.mutants, since 2026-10-20T00:04:07.798Z) — one heavy run at a time

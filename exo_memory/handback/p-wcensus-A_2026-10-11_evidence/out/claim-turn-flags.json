@@ -1,0 +1,537 @@
+{
+ "about": "derived from units.json; units.json is unchanged",
+ "summary_all": {
+  "no-claim-located": 57,
+  "correction-turn-unlocated": 17,
+  "later-than-correction-write": 1,
+  "same-turn-as-correction-write": 17,
+  "earlier-turn-than-correction-write": 12
+ },
+ "summary_where_t_err_is_a_located_claim": {
+  "correction-turn-unlocated": 12,
+  "earlier-turn-than-correction-write": 12,
+  "same-turn-as-correction-write": 11
+ },
+ "units": [
+  {
+   "id": "W001",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W002",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W003",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W004",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W005",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W006",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W007",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W008",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W009",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W010",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W011",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W012",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W013",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W014",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W015",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W016",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W017",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "later-than-correction-write"
+  },
+  {
+   "id": "W018",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W019",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W020",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W021",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W022",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W023",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W024",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W025",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W026",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W027",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W028",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W029",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W030",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W031",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W032",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W033",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W034",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W035",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W036",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W037",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W038",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W039",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W040",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W041",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W042",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W043",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W044",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W045",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W046",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W047",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W048",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W049",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W050",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W051",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W052",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W053",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W054",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W055",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W056",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W057",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W058",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W059",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W060",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W061",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W062",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W063",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W064",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W065",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W066",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W067",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W068",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W069",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W070",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W071",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W072",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W073",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W074",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W075",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W076",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W077",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W078",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W079",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W080",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W081",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W082",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W083",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W084",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W085",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W086",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "W087",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W088",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W089",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W090",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W091",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W092",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W093",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W094",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W095",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W096",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W097",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "W098",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W099",
+   "t_err_basis": "day-start",
+   "claim_turn_vs_correction_turn": "no-claim-located"
+  },
+  {
+   "id": "W100",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "correction-turn-unlocated"
+  },
+  {
+   "id": "W101",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  },
+  {
+   "id": "T1",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "T2",
+   "t_err_basis": "claim located in a transcript",
+   "claim_turn_vs_correction_turn": "earlier-turn-than-correction-write"
+  },
+  {
+   "id": "S29",
+   "t_err_basis": "given by the chair",
+   "claim_turn_vs_correction_turn": "same-turn-as-correction-write"
+  }
+ ]
+}

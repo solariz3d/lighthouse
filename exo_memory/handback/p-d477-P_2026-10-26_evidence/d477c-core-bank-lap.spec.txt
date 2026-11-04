@@ -1,0 +1,19 @@
+[32m✔ row 1: a closed lap with a flat closer is banked as one undo step, and the route does not move (kh and kv byte-equal) [90m(196.9957ms)[39m[39m
+[32m✔ row 2: a loop held back by the level rule is named in the status line, and a level curve on the same lap is banked [90m(229.9496ms)[39m[39m
+[32m✔ row 3: on a lap shaped like TEST 10, a second press changes nothing (no undo step, every bank channel as the first press left it, and the status line says so) [90m(486.2855ms)[39m[39m
+[32m✔ row 4: a loop whose stored turn is under 1/600 is named in the status line when the level rule holds it back [90m(391.9571ms)[39m[39m
+[32m✔ row 5: the press copies the track to its backups first, as it was; a press that changes nothing writes no copy [90m(108.4819ms)[39m[39m
+[32m✔ row 6: a copy that cannot be written refuses by name, and nothing changes [90m(95.6391ms)[39m[39m
+[32m✔ row 7: a bank he laid on purpose under 5° is kept: a straight at 3° is unchanged but for the roll-off tail into the curve, a gentle curve at 3° is never taken below 3° [90m(352.804ms)[39m[39m
+[34mℹ tests 7[39m
+[34mℹ suites 0[39m
+[34mℹ pass 7[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1962.5312[39m
+
+# stderr
+
+# exit 0 in 2.0 s

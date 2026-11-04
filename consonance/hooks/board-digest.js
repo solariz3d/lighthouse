@@ -299,7 +299,10 @@ function main(input) {
   //
   // Matched on CWD, not on the SID: the SID is a main.rs constant this file cannot import, and a
   // copied literal is one more carrier to drift. The seat's directory is its address here.
-  if (/[\\/]third-place[\\/]?$/i.test(cwd.replace(/[\\/]+$/, ''))) emit(null);
+  // The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+  // (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+  const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+  if (/[\\/]third-place[\\/]?$/i.test(tpNorm(cwd))) emit(null);
 
   const boardPath = path.join(dataDir, 'board.jsonl');
   if (!fs.existsSync(boardPath)) emit(null);

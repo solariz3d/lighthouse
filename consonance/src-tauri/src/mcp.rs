@@ -22,6 +22,29 @@ fn now_ms() -> u64 {
         .unwrap_or(0)
 }
 
+/// D476, Metaxy's guard 3: does this ring point into the private folder? Case-insensitive, either slash: `C:\Consonance\private\…`,
+/// `consonance/private/…`, the folder itself, or a `private/third_place/` path written relative. A false positive refuses one ring and
+/// says why; a false negative publishes a private file's name, so the rule leans to refusing.
+pub fn points_into_private(text: &str) -> bool {
+    let t = text.replace('\\', "/").to_lowercase();
+    t.contains("consonance/private") || t.contains("private/third_place")
+}
+
+/// D476, C's finding 2: the FIXED lines the Third Place's ring may put on the shared board, in place of the gate rows that echo a ring's text.
+/// None has a place for its words.
+const THIRD_PLACE_DIGEST_REFUSED: &str = "call_librarian REFUSED BY THE DIGEST GATE — from the Third Place (its pointer is not echoed: the Third Place's words stay off the shared board)";
+const THIRD_PLACE_DIGEST_NOTED: &str = "call_librarian from the Third Place: its pointer's digest was computed at ring (the path is not echoed)";
+const THIRD_PLACE_ADDRESS_REFUSED: &str = "call_librarian REFUSED (no address row) — from the Third Place (its pointer is not echoed: the Third Place's words stay off the shared board)";
+const THIRD_PLACE_TRAILER_ROW: &str = "call_librarian from the Third Place: the NEXT-trailer gate noted its ring (its words are not echoed)";
+/// What the Third Place is told, after the gate's own reason, when its ring is refused: why its words were not put on the board.
+const THIRD_PLACE_NOT_ECHOED: &str = "Your words are not echoed on the shared board: a refused ring from the Third Place is recorded there as one fixed line, \
+     so nothing you wrote leaves this room by being refused. Fix the pointer (a path relative to the checkout, to a file that exists) and ring again.";
+
+/// D476 part 2: THE THIRD PLACE'S MOUNT. Not a letter: the Third Place holds a letter in the registry as a NAME (D423), and a letter
+/// mount resolves to the committee seat, which has a pane's verbs. This identity resolves to the `third_place` seat, and its server
+/// carries one verb, call_librarian (`new`), to the one seat its address row names.
+pub const THIRD_PLACE_MOUNT: &str = "third-place";
+
 // per-verb refusal throttle state: verb -> (last posted ms, refusals absorbed since)
 static REFUSALS: Mutex<Option<HashMap<String, (u64, u32)>>> = Mutex::new(None);
 const REFUSAL_WINDOW_MS: u64 = 60_000;
@@ -365,6 +388,10 @@ pub struct ChairInjectArgs {
     /// is not that task; the reason is posted. Omit for every ordinary dispatch.
     #[serde(default)]
     seal: Option<String>,
+    /// D621: the lap this dispatch serves ("D621"). Omitted, it is read from the text: the packet's "Ledger Dnnn" line, else
+    /// the first lap id in it. The station gate is checked against THAT lap: refused only if another station holds it.
+    #[serde(default)]
+    lap: Option<String>,
 }
 
 #[derive(serde::Deserialize, schemars::JsonSchema)]
@@ -436,7 +463,15 @@ impl ConsonanceMcp {
         identity: Option<String>,
         quiet: Arc<std::sync::atomic::AtomicBool>,
     ) -> Self {
-        Self { board, pulls, chair, chair_token, identity, quiet, tool_router: Self::tool_router() }
+        let mut tool_router = Self::tool_router();
+        // D476 part 2: THE WHOLE MEMBRANE. The Third Place's server carries the return leg and nothing else: no read_board (the room
+        // reaching in), no post_board, no raise_pull (a hand raised at a pane), no chair verb, no call_chair.
+        if identity.as_deref() == Some(THIRD_PLACE_MOUNT) {
+            for name in tool_router.list_all().into_iter().map(|t| t.name.to_string()).filter(|n| n != "call_librarian").collect::<Vec<_>>() {
+                tool_router.remove_route(&name);
+            }
+        }
+        Self { board, pulls, chair, chair_token, identity, quiet, tool_router }
     }
 
     /// Gate a chair verb. The token is written only into the Main instance's directory, so in
@@ -480,6 +515,7 @@ impl ConsonanceMcp {
     /// resolved against the same registry that CHOSE the mount, so the two cannot drift.
     fn seat(&self) -> String {
         match &self.identity {
+            Some(m) if m == THIRD_PLACE_MOUNT => "third_place".to_string(),
             Some(l) => crate::seat_role_for_letter(l).to_string(),
             None => "committee".to_string(),
         }
@@ -528,12 +564,18 @@ impl ConsonanceMcp {
     #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): deliver a prompt into a COMMITTEE pane. Refuses human-driven panes and the chair's own pane; every use and every refusal is audited to the board. Committee members: this is not your tool — use raise_pull.")]
     async fn chair_inject(
         &self,
-        Parameters(ChairInjectArgs { token, target, text, seal }): Parameters<ChairInjectArgs>,
+        Parameters(ChairInjectArgs { token, target, text, seal, lap }): Parameters<ChairInjectArgs>,
     ) -> Result<CallToolResult, McpError> {
         if !self.auth_chair(&token, "chair_inject") {
             return Ok(CallToolResult::success(vec![Content::text("refused: bad chair token (the attempt was posted to the board)")]));
         }
-        if !self.auth_station("chair_inject") {
+        // D621: the gate reads the lap this dispatch serves, so a dispatch for one lap is not refused because the panes hold another
+        // D621 bounce: an explicit `lap` is NAMED; a lap read from the packet carries how it was found (lap_holders::LapSource)
+        let lap = lap
+            .filter(|l| !l.trim().is_empty())
+            .map(|l| (l, crate::lap_holders::LapSource::Named))
+            .or_else(|| crate::lap_holders::lap_of_text(&text));
+        if !self.auth_station_for("chair_inject", lap.as_ref().map(|(l, s)| (l.as_str(), *s))) {
             return Ok(CallToolResult::success(vec![Content::text(
                 "refused: OUT OF TURN — a lap is open and the chair is not the holder (the attempt was posted to the board). Nothing renders into a working pane; wait for the loop, or move the baton with lap-row.js if it is stuck.",
             )]));
@@ -570,12 +612,12 @@ impl ConsonanceMcp {
         // THE NEXT-TRAILER GATE (D069). LAST, after the seal gate: a keyed dispatch fails on its seal before its
         // formatting, and a trailer refusal only ever fires on a dispatch that would otherwise have been sent. The
         // refusal hands the message back whole (`trailer::refusal_text`). See `trailer_gate`.
-        let text = match trailer_gate(crate::trailer::Verb::ChairInject, &format!("chair_inject -> {target}"), &text) {
-            TrailerDecision::Deliver { text, audit } => {
+        let (text, note) = match trailer_gate(crate::trailer::Verb::ChairInject, &format!("chair_inject -> {target}"), &text) {
+            TrailerDecision::Deliver { text, audit, note } => {
                 if let Some(line) = audit {
                     self.trailer_audit(line);
                 }
-                text
+                (text, note)
             }
             TrailerDecision::Refuse { reply, audit } => {
                 self.trailer_audit(audit);
@@ -588,7 +630,7 @@ impl ConsonanceMcp {
         // Stamped whatever the actuator reported, because a delivery that FAILED still means the
         // chair believes it woke someone, and the refusal it produces downstream is the same one.
         mark_rung(&target, now_ms());
-        Ok(CallToolResult::success(vec![Content::text(out)]))
+        Ok(CallToolResult::success(vec![Content::text(with_sender_note(out, note))]))
     }
 
     /// Is a hand-back owed that the loop's own rules forbid delivering? Returns the refusal, with
@@ -629,6 +671,18 @@ impl ConsonanceMcp {
         });
     }
 
+    /// The map gate's own board line (D586), on its own pane name for the digest gate's reason: what it checked, warned, skipped
+    /// and refused can be counted without reading them out of the other gates' rows.
+    fn map_audit(&self, text: String) {
+        board_push(&self.board, BoardEntry {
+            pane: "map-gate".to_string(),
+            role: "committee".to_string(),
+            text,
+            ts: now_ms(),
+            ts_source: crate::TsSource::Push,
+        });
+    }
+
     fn trailer_audit(&self, text: String) {
         board_push(&self.board, BoardEntry {
             pane: "trailer-gate".to_string(),
@@ -657,12 +711,12 @@ impl ConsonanceMcp {
         // careful one.
         // THE NEXT-TRAILER GATE (D069): refused, because the librarian reads this reply in the same turn and the
         // refusal carries its message back whole — a re-send, never a loss. See `trailer::policy`.
-        let text = match trailer_gate(crate::trailer::Verb::CallChair, "call_chair", &text) {
-            TrailerDecision::Deliver { text, audit } => {
+        let (text, note) = match trailer_gate(crate::trailer::Verb::CallChair, "call_chair", &text) {
+            TrailerDecision::Deliver { text, audit, note } => {
                 if let Some(line) = audit {
                     self.trailer_audit(line);
                 }
-                text
+                (text, note)
             }
             TrailerDecision::Refuse { reply, audit } => {
                 self.trailer_audit(audit);
@@ -671,7 +725,7 @@ impl ConsonanceMcp {
         };
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::CallChair { text, reply: tx }, rx).await;
-        Ok(CallToolResult::success(vec![Content::text(out)]))
+        Ok(CallToolResult::success(vec![Content::text(with_sender_note(out, note))]))
     }
 
     /// Gate a cross-seat verb on the ADDRESS TABLE (main.rs `ADDRESS_TABLE`), by the seat the
@@ -785,9 +839,25 @@ impl ConsonanceMcp {
     /// DISCIPLINE boundary enforced by the audit — the same limit `auth_chair` and `auth_address`
     /// state about themselves, and the same one stated in this file twice already.
     fn auth_station(&self, verb: &str) -> bool {
+        self.auth_station_for(verb, None)
+    }
+
+    /// D621: the station gate for a call that names the lap it serves (`chair_inject`'s `lap`, or the lap its packet names).
+    /// `lap` None, or a ledger that cannot be read: the old rule. Readable: refused when that lap is OPEN and held by another
+    /// station; a filed or new lap passes only when NAMED, an inferred one falls back to the old rule
+    /// (`lap_holders::station_allows_for_lap`). A refusal on an open lap names that lap and its holder.
+    fn auth_station_for(&self, verb: &str, lap: Option<(&str, crate::lap_holders::LapSource)>) -> bool {
+        // D476 part 2: THE THIRD PLACE IS NOT A STATION IN THE LOOP. The one-station rule orders the loop's seats; under it the
+        // Third Place's ring would be refused whenever no open lap is held by the panes, which is nearly always, and every refusal
+        // would post its pointer to the shared board while delivering nothing. Exempt for its one verb only; its delivery still goes
+        // through gate_or_queue, so it never renders into the librarian's pane mid-turn.
+        if verb == "call_librarian" && self.seat() == "third_place" {
+            return true;
+        }
         let st = crate::chain_state();        // still the source of open/lap/holder FOR THE MESSAGE
         let holders = crate::chain_holders(); // and the set the decision is actually made on
-        if Self::station_allows(verb, st.open, &holders) {
+        let named = lap.and_then(|(l, src)| crate::chain_lap_state(l).map(|s| (l.to_string(), s, src)));
+        if crate::lap_holders::station_allows_for_lap(Self::required_station(verb), st.open, &holders, named.as_ref().map(|(_, s, src)| (s, *src))) {
             return true;
         }
         if let Some(absorbed) = refusal_should_post(verb, now_ms()) {
@@ -800,6 +870,20 @@ impl ConsonanceMcp {
             } else {
                 String::new()
             };
+            if let Some((l, crate::lap_holders::LapState::Open(h), _)) = &named {
+                let h = h.clone().unwrap_or_else(|| "nobody".to_string());
+                board_push(&self.board, BoardEntry {
+                    pane: "chair".to_string(),
+                    role: "committee".to_string(),
+                    // D621: refused on the lap the call names; the rest of the ledger is not the reason, so it is not named
+                    text: format!(
+                        "{verb} REFUSED OUT OF TURN — mount {who} tried to speak on lap {l}, which is held by {h}, not {want}.                          The loop comes back to you. If it does NOT, move that lap's baton by hand:                          node consonance/tools/lap-row.js --stage {l} <stage> --holder {want} --by {want}{more}"
+                    ),
+                    ts: now_ms(),
+                    ts_source: crate::TsSource::Push,
+                });
+                return false;
+            }
             board_push(&self.board, BoardEntry {
                 pane: "chair".to_string(),
                 role: "committee".to_string(),
@@ -834,12 +918,28 @@ impl ConsonanceMcp {
             board_push(&self.board, BoardEntry {
                 pane: "chair".to_string(),
                 role: "committee".to_string(),
-                text: refused_address_row(&who, &text),
+                // D476, C's latent row: on the Third Place's seat (unreachable while row 3 exists) a fixed line, never its words
+                text: if self.seat() == "third_place" { THIRD_PLACE_ADDRESS_REFUSED.to_string() } else { refused_address_row(&who, &text) },
                 ts: now_ms(),
                 ts_source: crate::TsSource::Push,
             });
             return Ok(CallToolResult::success(vec![Content::text(
                 "refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)",
+            )]));
+        }
+        // D476, METAXY'S GUARD 3 (plan_d476 "Metaxy's four guards"): NOTHING IN private/ TRAVELS. The Third Place's ring may carry only a
+        // pointer to a file outside C:\Consonance\private\. A pointer into it is refused, and the refusal is posted WITHOUT the text: the
+        // path itself names what is private.
+        if self.seat() == "third_place" && points_into_private(&text) {
+            board_push(&self.board, BoardEntry {
+                pane: "chair".to_string(),
+                role: "committee".to_string(),
+                text: "call_librarian REFUSED — from the Third Place: a pointer into private/ (nothing in private/ travels; the text is not kept)".to_string(),
+                ts: now_ms(),
+                ts_source: crate::TsSource::Push,
+            });
+            return Ok(CallToolResult::success(vec![Content::text(
+                "refused: that pointer is into private/, and nothing in private/ travels — write what can travel to a file outside it, and point at that",
             )]));
         }
         if !self.auth_station("call_librarian") {
@@ -871,6 +971,10 @@ impl ConsonanceMcp {
         // the async thread, because it runs `git hash-object`. A refusal here keeps the attempt on the board for
         // D077's reason — a refused `call_librarian` is not delivered, so the pointer would otherwise leave no copy.
         // If the gate itself cannot run, the hand-back still goes, with the pane's digest stripped and none invented.
+        // D476, C'S FINDING 2: on the Third Place's seat every gate row this ring can trigger is a FIXED line. The digest and trailer
+        // gates were built for hand-backs and echo the text they judge (a refused digest posts up to REFUSED_ATTEMPT_MAX_CHARS of it); the
+        // Third Place's words stay off the shared board, as its own audit row and its keep-warm rows keep them.
+        let third_place = self.seat() == "third_place";
         let (digest_text, digest_repo) = (text.clone(), crate::repo_root());
         let verdict = tokio::task::spawn_blocking(move || digest_gate_at(&digest_text, digest_repo.as_deref()))
             .await
@@ -882,12 +986,20 @@ impl ConsonanceMcp {
             });
         let text = match verdict {
             DigestVerdict::Deliver(d) => {
-                if let Some(line) = d.audit {
+                if third_place {
+                    if d.audit.is_some() {
+                        self.digest_audit(THIRD_PLACE_DIGEST_NOTED.to_string());
+                    }
+                } else if let Some(line) = d.audit {
                     self.digest_audit(line);
                 }
                 d.text
             }
             DigestVerdict::Refuse(msg) => {
+                if third_place {
+                    self.digest_audit(THIRD_PLACE_DIGEST_REFUSED.to_string());
+                    return Ok(CallToolResult::success(vec![Content::text(format!("{msg}\n\n{THIRD_PLACE_NOT_ECHOED}"))]));
+                }
                 board_push(&self.board, BoardEntry {
                     pane: "chair".to_string(),
                     role: "committee".to_string(),
@@ -902,20 +1014,58 @@ impl ConsonanceMcp {
                 return Ok(CallToolResult::success(vec![Content::text(msg)]));
             }
         };
-        // L125: a warned ring also tells the SENDER (below, after the delivery). The receiver and the board are told as
-        // before; only the calling pane's tool result gains the note, and only when the gate warned.
-        let mut told: Option<String> = None;
-        let text = match trailer_gate(crate::trailer::Verb::CallLibrarian, &format!("call_librarian from {who}"), &text) {
-            TrailerDecision::Deliver { text: delivered, audit } => {
-                if let Some(line) = audit {
-                    self.trailer_audit(line);
-                    told = sender_note(&text);
+        // THE MAP GATE (D586). After the digest gate, so its line sits under the digest's and above the NEXT trailer the trailer
+        // gate then reads; off the async thread, because it runs git. The mode is read HERE: under cargo test it is thread-local,
+        // and the blocking task runs on another thread. Not on the Third Place's seat, whose ring names no repository and whose
+        // words stay off the board (D476).
+        let text = if third_place {
+            text
+        } else {
+            let map_mode = gates_mode();
+            let map_text = text.clone();
+            let verdict = tokio::task::spawn_blocking(move || map_gate_at(&map_text, map_mode))
+                .await
+                .unwrap_or_else(|e| map_gate_failed(&text, map_mode, &format!("the gate's task did not finish ({e})")));
+            match verdict {
+                MapVerdict::Deliver { text, audit } => {
+                    for line in audit {
+                        self.map_audit(format!("call_librarian from {who}: {line}"));
+                    }
+                    text
                 }
-                delivered
+                MapVerdict::Refuse { reply, audit } => {
+                    board_push(&self.board, BoardEntry {
+                        pane: "chair".to_string(),
+                        role: "committee".to_string(),
+                        text: refused_map_row(&who, &text),
+                        ts: now_ms(),
+                        ts_source: crate::TsSource::Push,
+                    });
+                    for line in audit {
+                        self.map_audit(format!("call_librarian from {who}: {line}"));
+                    }
+                    return Ok(CallToolResult::success(vec![Content::text(reply)]));
+                }
+            }
+        };
+        let (text, note) = match trailer_gate(crate::trailer::Verb::CallLibrarian, &format!("call_librarian from {who}"), &text) {
+            TrailerDecision::Deliver { text, audit, note } => {
+                if third_place {
+                    if audit.is_some() {
+                        self.trailer_audit(THIRD_PLACE_TRAILER_ROW.to_string());
+                    }
+                } else if let Some(line) = audit {
+                    self.trailer_audit(line);
+                }
+                (text, if third_place { None } else { note })
             }
             TrailerDecision::Refuse { audit, .. } => {
-                self.trailer_audit(audit);
-                text
+                if third_place {
+                    self.trailer_audit(THIRD_PLACE_TRAILER_ROW.to_string());
+                } else {
+                    self.trailer_audit(audit);
+                }
+                (text, None)
             }
         };
         // Delivering clears nothing by hand: the mark is read against the baton, and the baton had
@@ -924,7 +1074,7 @@ impl ConsonanceMcp {
         let out = self
             .send_chair(ChairCmd::CallLibrarian { from: self.identity.clone(), text, reply: tx }, rx)
             .await;
-        Ok(CallToolResult::success(vec![Content::text(with_sender_note(out, told))]))
+        Ok(CallToolResult::success(vec![Content::text(with_sender_note(out, note))]))
     }
 
     /// WHICH SILENCE THIS IS — the two absences a refused hand-back can mean, told apart by an
@@ -1191,6 +1341,15 @@ impl ServerHandler for ConsonanceMcp {
         // ServerInfo is #[non_exhaustive] — build from Default, then set fields.
         let mut info = ServerInfo::default();
         info.capabilities = ServerCapabilities::builder().enable_tools().build();
+        if self.identity.as_deref() == Some(THIRD_PLACE_MOUNT) {
+            info.instructions = Some(
+                "One verb, call_librarian: when something learned here belongs to the work, write it to a file and send the librarian \
+                 a POINTER to that file (its path), never the thing in prose. The system marks it [third-place]. Nothing comes back \
+                 through this, and nothing reaches in: this is a way out, not a way in."
+                    .to_string(),
+            );
+            return info;
+        }
         info.instructions = Some(
             "Consonance committee control plane: post_board / read_board over one board shared across instances. \
              Your posts are attributed by your CONNECTION, not by what you claim — the tag argument is a \
@@ -1220,6 +1379,10 @@ pub fn config_path() -> std::path::PathBuf {
 
 /// The config for one identity. The pane launched with this file posts as `letter`, and cannot
 /// say otherwise — the mount point is chosen by whoever spawned it, not by the caller.
+pub fn config_path_third_place() -> std::path::PathBuf {
+    data_dir().join("mcp.consonance.third-place.json")
+}
+
 pub fn config_path_for(letter: char) -> std::path::PathBuf {
     data_dir().join(format!("mcp.consonance.{letter}.json"))
 }
@@ -1478,8 +1641,12 @@ mod tests {
     #[test]
     fn chair_inject_is_gated_on_the_station() {
         let b = body_of("async fn chair_inject(");
-        assert!(b.contains("auth_station(\"chair_inject\")"),
+        // AMENDED BY NAME (D621, 2026-11-02): chair_inject asks the gate about the lap it serves
+        // AMENDED AGAIN (D621 bounce): the lap goes with how it was found, an explicit argument as Named
+        assert!(b.contains("auth_station_for(\"chair_inject\", lap.as_ref().map(|(l, s)| (l.as_str(), *s)))"),
             "chair_inject must refuse out of turn — nothing renders into a working pane");
+        assert!(b.contains("crate::lap_holders::lap_of_text(&text)"), "with no lap argument, the lap is read from the packet");
+        assert!(b.contains(".map(|l| (l, crate::lap_holders::LapSource::Named))"), "an explicit lap argument is Named, never Inferred");
     }
 
     #[test]
@@ -1810,7 +1977,8 @@ mod tests {
     /// so a stuck loop is fixable at 3am by someone reading the refusal and nothing else.
     #[test]
     fn a_station_refusal_reaches_the_board_and_names_the_escape() {
-        let b = body_of("fn auth_station(");
+        // AMENDED BY NAME (D621, 2026-11-02): the gate's body moved into `auth_station_for` (it reads the lap a call serves); `auth_station` delegates to it.
+        let b = body_of("fn auth_station_for(");
         assert!(b.contains("board_push("), "a refused acting verb must land on the board");
         assert!(b.contains("refusal_should_post("), "and on the same throttle as every other gate");
         assert!(b.contains("OUT OF TURN"), "the board line must be greppable as this class");
@@ -1874,6 +2042,10 @@ pub fn start(
                 );
                 let _ = std::fs::write(config_path_for(letter), c);
             }
+            // D476 part 2: the Third Place's own config, naming its own route.
+            let _ = std::fs::write(config_path_third_place(), format!(
+                "{{\"mcpServers\":{{\"consonance\":{{\"type\":\"http\",\"url\":\"http://127.0.0.1:{port}/mcp/{THIRD_PLACE_MOUNT}\"}}}}}}"
+            ));
             let _ = tx.send(port);
 
             // One mount per identity. rmcp builds a handler per connection from a factory
@@ -1902,6 +2074,7 @@ pub fn start(
             for letter in 'A'..='Z' {
                 router = router.nest_service(&format!("/mcp/{letter}"), make(Some(letter.to_string())));
             }
+            router = router.nest_service(&format!("/mcp/{THIRD_PLACE_MOUNT}"), make(Some(THIRD_PLACE_MOUNT.to_string())));
             let _ = axum::serve(listener, router).await;
         });
     });
@@ -3065,6 +3238,41 @@ fn pointer_in(text: &str) -> Option<String> {
         .map(|(_, p)| (*p).clone())
 }
 
+/// D214 — the `SOURCES:` slot is NOT a pointer (D212). A ring now carries one line naming what its turn opened, and the SOURCES gate
+/// (consonance/hooks/sources-gate.js) lets a path be spelled the way the seat's call spelled it — B's ring cited `/c/…` only there,
+/// the digest gate took that as the ring's pointer, found no repo-relative path, and refused a ring that had no pointer at all.
+/// The pointer is chosen from the ring's prose, so the slot (the `SOURCES:` line and the lines that continue it, up to a blank line or the
+/// NEXT trailer — the same extent the hook reads) is taken out before the choice. The DELIVERED text keeps the line; only the choice
+/// ignores it. A ring that names no file outside the slot is then delivered with "[NO digest at ring — this call names no file to hash]".
+fn is_sources_head(line: &str) -> bool {
+    let t = line.trim_start_matches(|c: char| c == '*' || c == '_' || c == '>' || c == '-' || c.is_whitespace());
+    match t.strip_prefix("SOURCES") {
+        Some(rest) => rest.trim_start_matches(|c: char| c == '*' || c == '_').trim_start().starts_with(':'),
+        None => false,
+    }
+}
+
+fn without_sources(text: &str) -> String {
+    let mut out: Vec<&str> = Vec::new();
+    let mut in_slot = false;
+    for line in text.split('\n') {
+        let t = line.trim();
+        if is_sources_head(line) {
+            in_slot = true;
+            continue;
+        }
+        if in_slot {
+            if t.is_empty() || t.starts_with("NEXT:") {
+                in_slot = false;
+            } else {
+                continue;
+            }
+        }
+        out.push(line);
+    }
+    out.join("\n")
+}
+
 /// Remove every digest the PANE supplied, and say how many were removed. A digest word (`sha256`, `sha-256`, `sha1`,
 /// `git-blob`) takes its following hex token with it, so a stale value cannot survive as a bare 64-hex string.
 fn strip_supplied_digests(text: &str) -> (String, usize) {
@@ -3117,7 +3325,7 @@ fn digest_refusal(path: &str, why: &str) -> String {
     format!(
         "refused: THE RING COULD NOT COMPUTE THE DIGEST — {why}: {path}\n\
          The hand-back was NOT delivered, and the attempt was posted to the board.\n\
-         Recovery: write the file at that path, or correct the pointer, then ring again."
+         Recovery: write the file at that path, or correct the pointer, then ring again. The pointer is a repo-relative path in the ring's prose (exo_memory/handback/<packet>_<date>.md); a path on the SOURCES: line is never taken as the pointer."
     )
 }
 
@@ -3133,7 +3341,8 @@ fn digest_gate(
         Some(if removed > 0 { format!("{s}; {removed} pane-supplied digest(s) removed") } else { s.to_string() })
     };
     let marked = |why: &str| format!("[NO {DIGEST_MARK} — {why}]");
-    let p = match pointer_in(&clean) {
+    let body = without_sources(&clean.replace("\r\n", "\n"));
+    let p = match pointer_in(&body) {
         Some(p) => p,
         None => {
             return DigestVerdict::Deliver(DigestDeliver {
@@ -3159,7 +3368,7 @@ fn digest_gate(
     match git(&["hash-object", "--no-filters", &abs.to_string_lossy()]) {
         Ok(o) if o.code == 0 && o.stdout.trim().len() == 40 && o.stdout.trim().chars().all(|c| c.is_ascii_hexdigit()) => {
             let id = o.stdout.trim();
-            let others: Vec<String> = pointers_in(&clean).into_iter().filter(|o| *o != p).collect();
+            let others: Vec<String> = pointers_in(&body).into_iter().filter(|o| *o != p).collect();
             let also = if others.is_empty() {
                 String::new()
             } else {
@@ -3219,13 +3428,23 @@ mod digest_at_ring_tests {
     /// my hand-back was run with; the chair's plain `cargo test` found it in one run.
     static FIXTURE_N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
 
-    fn fixture(rel: &str, body: &str) -> std::path::PathBuf {
+    fn fixture(rel: &str, body: &str) -> crate::test_scratch::Scratch {
         let n = FIXTURE_N.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-        let dir = std::env::temp_dir().join(format!("digest-at-ring-{}-{}-{n}", std::process::id(), now_ms()));
+        let dir = crate::test_scratch::root().join(format!("digest-at-ring-{}-{}-{n}", std::process::id(), now_ms()));
         let p = dir.join(rel);
         std::fs::create_dir_all(p.parent().unwrap()).unwrap();
         std::fs::write(&p, body).unwrap();
-        dir
+        crate::test_scratch::Scratch::owning(dir)   // D299: removed on drop; 17 of these were left per run
+    }
+    #[test]
+    fn the_digest_fixture_leaves_no_folder_behind() {
+        let dir;
+        {
+            let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+            dir = root.to_path_buf();
+            assert!(dir.exists(), "control: the folder exists while the test holds it");
+        }
+        assert!(!dir.exists(), "the fixture's folder outlived the test");
     }
 
     fn delivered(v: DigestVerdict) -> DigestDeliver {
@@ -3271,7 +3490,7 @@ mod digest_at_ring_tests {
         registry and my two hand-backs by named paths when they re-derive";
     const B_HANDBACK: &str = "exo_memory/handback/p-l060-carriers-B_2026-09-21.md";
 
-    fn b_checkout() -> std::path::PathBuf {
+    fn b_checkout() -> crate::test_scratch::Scratch {
         let root = fixture(B_HANDBACK, "the delivered hand-back\n");
         for p in ["exo_memory/handback/p-six-reds-B_2026-09-19.md", "exo_memory/handback/p-ask001-abstain-B_2026-09-20.md"] {
             std::fs::create_dir_all(root.join(p).parent().unwrap()).unwrap();
@@ -3397,6 +3616,69 @@ mod digest_at_ring_tests {
         let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
         let d = delivered(digest_gate(RING, Some(&root), &mut |_| ok(BLOB)));
         assert!(!d.text.contains("not hashed"), "a single pointer must not grow a list: {}", d.text);
+    }
+
+    // ── D214: the SOURCES: slot is never the pointer ─────────────────────────────────────────────────────────────
+    // B's D212 look: a ring that cited a path (in the /c/… spelling the SOURCES gate asks the seat to use as its call spelled it)
+    // ONLY on its SOURCES: line was REFUSED by this gate, which took that path for the ring's pointer. The slot is now taken out
+    // before the pointer is chosen; the delivered text keeps it.
+    const SLOT_ONLY: &str = "D212 B's look is filed.\n\nSOURCES: /c/Users/n/Desktop/lighthouse/exo_memory/loop/plan_x.md · `git log -1`\n\nNEXT: librarian read it when the ring arrives";
+
+    #[test]
+    fn a_path_only_on_the_sources_line_is_not_a_pointer_so_the_ring_is_delivered_not_refused() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let d = delivered(digest_gate(SLOT_ONLY, Some(&root), &mut |_| ok(BLOB)));
+        assert!(d.text.contains("this call names no file to hash"), "expected the no-pointer mark: {}", d.text);
+        assert!(d.text.contains("SOURCES: /c/Users/n/Desktop/lighthouse/exo_memory/loop/plan_x.md"), "the SOURCES line must reach the reader intact: {}", d.text);
+        assert_eq!(d.audit.as_deref(), Some("call_librarian: no pointer to hash"));
+        assert!(d.text.trim_end().ends_with("NEXT: librarian read it when the ring arrives"), "the trailer must stay last: {}", d.text);
+    }
+
+    #[test]
+    fn the_pointer_is_the_one_in_the_prose_and_the_sources_paths_are_not_listed_as_also_named() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let ring = "hand-back at exo_memory/handback/p-x-A_2026-09-20.md\nSOURCES: /c/Users/n/lighthouse/exo_memory/loop/plan_x.md · C:\\Users\\n\\other.md\nNEXT: librarian x";
+        let d = delivered(digest_gate(ring, Some(&root), &mut |_| ok(BLOB)));
+        let line = d.text.lines().find(|l| l.contains(DIGEST_MARK)).unwrap_or("");
+        assert!(line.contains("exo_memory/handback/p-x-A_2026-09-20.md"), "the digest line must name the prose pointer: {line}");
+        assert!(!line.contains("plan_x.md") && !line.contains("not hashed"), "a SOURCES path was listed as named: {line}");
+    }
+
+    #[test]
+    fn a_newer_dated_hand_back_on_the_sources_line_does_not_outrank_the_ring_s_own_pointer() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let ring = "hand-back at exo_memory/handback/p-x-A_2026-09-20.md\nSOURCES: exo_memory/handback/p-y-B_2026-09-30.md\nNEXT: librarian x";
+        assert_eq!(pointer_in(&without_sources(ring)).as_deref(), Some("exo_memory/handback/p-x-A_2026-09-20.md"));
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-y-B_2026-09-30.md"), "control: without the slot taken out the newer date wins, which is the bug");
+        let d = delivered(digest_gate(ring, Some(&root), &mut |_| ok(BLOB)));
+        assert!(d.text.contains("exo_memory/handback/p-x-A_2026-09-20.md, 6 bytes"), "wrong file hashed: {}", d.text);
+    }
+
+    #[test]
+    fn the_slot_ends_at_a_blank_line_or_the_next_trailer_and_continuation_lines_belong_to_it() {
+        assert_eq!(without_sources("a\nSOURCES: x/y.md\n- c/d.md\n- e/f.md\n\nhand-back g/h.md\nNEXT: z"), "a\n\nhand-back g/h.md\nNEXT: z");
+        assert_eq!(without_sources("SOURCES: x/y.md\nNEXT: z"), "NEXT: z", "the trailer directly under the slot must survive");
+        assert_eq!(without_sources("no slot here\nNEXT: z"), "no slot here\nNEXT: z");
+        assert_eq!(pointer_in(&without_sources("SOURCES: a/b.md\n\nfiled: exo_memory/handback/p-q_2026-10-02.md\nNEXT: z")).as_deref(), Some("exo_memory/handback/p-q_2026-10-02.md"));
+    }
+
+    #[test]
+    fn the_slot_head_is_the_hooks_head_and_nothing_looser() {
+        for yes in ["SOURCES: a", "SOURCES:", "**SOURCES:** a", "- SOURCES: a", "> SOURCES : a", "  SOURCES:a"] {
+            assert!(is_sources_head(yes), "should be a slot head: {yes}");
+        }
+        for no in ["RESOURCES: a", "sources: a", "SOURCES here", "see SOURCES: a", "NEXT: SOURCES: a", ""] {
+            assert!(!is_sources_head(no), "must not be a slot head: {no}");
+        }
+        assert_eq!(without_sources("filed exo_memory/handback/p_2026-10-02.md; the sources were read"), "filed exo_memory/handback/p_2026-10-02.md; the sources were read");
+    }
+
+    #[test]
+    fn a_ring_whose_own_pointer_is_not_repo_relative_is_still_refused_and_the_refusal_says_which_spelling_it_wants() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let m = refused(digest_gate("hand-back at /c/Users/n/lighthouse/exo_memory/handback/p-x-A_2026-09-20.md\nSOURCES: exo_memory/loop/a.md\nNEXT: librarian x", Some(&root), &mut |_| ok(BLOB)));
+        assert!(m.contains("not a repo-relative path"), "{m}");
+        assert!(m.contains("repo-relative path in the ring's prose") && m.contains("never taken as the pointer"), "the refusal must name the one spelling: {m}");
     }
 
     // ── the pane's digest never survives ─────────────────────────────────────────────────────────────────────────
@@ -3566,6 +3848,499 @@ mod digest_at_ring_tests {
     }
 }
 
+// ── THE MAP GATE (D586, plan_consonance_learns_from_the_reader_2026-10-30.md Part 3, pane E) ────────────────────────
+// A hand-back whose repository gained or lost source files since the packet's base, with no MAP.md in the same diff, is
+// the map going stale one lap at a time: everyone writes what they built, nobody checks that the map heard. Created and
+// deleted files are gated because that is mechanical; a file changed in place is not, because whether its entry still
+// reads true is judgment.
+//
+// HOW THE GATE LEARNS THE REPOSITORY AND THE BASE: from the ring itself, one line per repository,
+//     BASE: <checkout path> <base commit>
+// above the SOURCES: line. The packet names both (its "branch … off <sha>" and the worktree the pane made), and the pane is
+// the one seat that knows which checkout it worked in; a ring may name two repositories and then carries two lines. The
+// commit must be a sha, never a ref, because a ref moves after the packet is sent. A ring with NO BASE line is delivered
+// with a mark saying it was not checked, in both modes, and the mark is posted, so the rings that skip the gate can be
+// counted; a lap that changed no repository has nothing to name.
+//
+// WHAT FAILS LOUDLY. A BASE line the gate cannot use (no commit, a commit that is not a sha, a checkout git cannot open, a
+// base that is not a commit there, a git that does not run) never passes in silence. gates_mode strict refuses the ring,
+// and the attempt is posted to the board as every refused call_librarian is (D077). gates_mode light delivers it with a
+// bracketed "MAP GATE COULD NOT RUN" line naming the checkout and the reason, posts the same line, and says strict would
+// refuse.
+//
+// What it reads: `git diff --no-renames --name-status <base> HEAD` in the named checkout, so a rename or a split counts as
+// the files it deleted and created. HEAD is the committed tree: a file the pane has not committed is not seen.
+const MAP_MARK: &str = "map gate";
+const MAP_GATED: [&str; 4] = ["src/", "app/", "consonance/src-tauri/src/", "consonance/tools/"];
+const MAP_LIST_MAX: usize = 40;
+
+#[derive(Debug)]
+enum MapVerdict {
+    /// Send `text`; post each `audit` line to the board.
+    Deliver { text: String, audit: Vec<String> },
+    /// Send nothing; tell the pane `reply` and post each `audit` line.
+    Refuse { reply: String, audit: Vec<String> },
+}
+
+/// The rest of a `BASE:` line after its label (markdown emphasis around the label tolerated, as `is_sources_head` does), or None.
+fn base_line_rest(line: &str) -> Option<&str> {
+    let t = line.trim_start_matches(|c: char| c == '*' || c == '_' || c == '>' || c == '-' || c.is_whitespace());
+    let rest = t.strip_prefix("BASE")?.trim_start_matches(|c: char| c == '*' || c == '_').trim_start();
+    Some(rest.strip_prefix(':')?.trim_start_matches(|c: char| c == '*' || c == '_'))
+}
+
+/// One BASE line read: the checkout (everything before the last word, so a path keeps its spaces) and the commit, or what the line lacks.
+fn parse_base_line(rest: &str) -> Result<(String, String), String> {
+    let quote = |c: char| c == '`' || c == '"' || c == '\'';
+    let Some((checkout, commit)) = rest.trim().rsplit_once(char::is_whitespace) else {
+        return Err("the line names no commit (BASE: <checkout path> <base commit>)".to_string());
+    };
+    let checkout = checkout.trim().trim_matches(quote).trim();
+    let commit = commit.trim_matches(|c: char| quote(c) || c == '.' || c == ',' || c == ';');
+    if checkout.is_empty() {
+        return Err("the line names no checkout (BASE: <checkout path> <base commit>)".to_string());
+    }
+    if !(7..=40).contains(&commit.len()) || !commit.chars().all(|c| c.is_ascii_hexdigit()) {
+        return Err(format!("the commit is not a sha of 7 to 40 hex characters, and a ref moves after the packet is sent: {commit}"));
+    }
+    Ok((checkout.to_string(), commit.to_string()))
+}
+
+enum MapOne {
+    /// Nothing created or deleted under the source folders.
+    Clean(String),
+    /// Files created or deleted, and MAP.md in the same diff.
+    Updated(String),
+    /// Files created or deleted, and no MAP.md: the line without its mode note.
+    Stale(String),
+}
+
+/// One repository: resolve HEAD and the base there, read the diff between them, decide. `Err` is the gate failing, with why.
+fn map_one(checkout: &str, base: &str, git: &mut dyn FnMut(&str, &[&str]) -> Result<GitOut, String>) -> Result<MapOne, String> {
+    let sha = |o: &GitOut| {
+        let s = o.stdout.trim();
+        (o.code == 0 && s.len() == 40 && s.chars().all(|c| c.is_ascii_hexdigit())).then(|| s.to_string())
+    };
+    let head = match git(checkout, &["rev-parse", "--verify", "--quiet", "HEAD^{commit}"]) {
+        Ok(o) => sha(&o).ok_or_else(|| format!("git cannot open a checkout there (rev-parse HEAD, exit {})", o.code))?,
+        Err(e) => return Err(format!("git could not run: {e}")),
+    };
+    let base_at = format!("{base}^{{commit}}");
+    let b = match git(checkout, &["rev-parse", "--verify", "--quiet", &base_at]) {
+        Ok(o) => sha(&o).ok_or_else(|| format!("{base} is not a commit in that checkout"))?,
+        Err(e) => return Err(format!("git could not run: {e}")),
+    };
+    let out = match git(checkout, &["-c", "core.quotePath=false", "diff", "--no-renames", "--name-status", &b, &head]) {
+        Ok(o) if o.code == 0 => o.stdout,
+        Ok(o) => return Err(format!("git diff {}..{} failed (exit {})", &b[..7], &head[..7], o.code)),
+        Err(e) => return Err(format!("git could not run: {e}")),
+    };
+    let is_map = |p: &str| p.rsplit('/').next() == Some("MAP.md");
+    let rows: Vec<(char, &str)> = out
+        .lines()
+        .filter_map(|l| l.split_once('\t'))
+        .filter_map(|(s, p)| s.chars().next().map(|c| (c, p.trim())))
+        .collect();
+    let map_changed = rows.iter().any(|(_, p)| is_map(p));
+    let gated: Vec<String> = rows
+        .iter()
+        .filter(|(s, p)| (*s == 'A' || *s == 'D') && !is_map(p) && MAP_GATED.iter().any(|g| p.starts_with(g)))
+        .map(|(s, p)| format!("{s} {p}"))
+        .collect();
+    let span = format!("{checkout} {}..{}", &b[..7], &head[..7]);
+    let n = gated.len();
+    Ok(if n == 0 {
+        MapOne::Clean(format!("[{MAP_MARK}: {span} — no source file created or deleted]"))
+    } else if map_changed {
+        MapOne::Updated(format!("[{MAP_MARK}: {span} — {n} source file(s) created or deleted, and MAP.md changed]"))
+    } else {
+        let mut list = gated.iter().take(MAP_LIST_MAX).cloned().collect::<Vec<_>>().join(", ");
+        if n > MAP_LIST_MAX {
+            list.push_str(&format!(", +{} more", n - MAP_LIST_MAX));
+        }
+        MapOne::Stale(format!("[MAP NOT UPDATED — {span}: {n} source file(s) created or deleted and no MAP.md in the diff: {list}"))
+    })
+}
+
+fn map_refusal(lines: &[String]) -> String {
+    format!(
+        "refused by the map gate:\n{}\n\
+         The hand-back was NOT delivered, and the attempt was posted to the board.\n\
+         Recovery: for each file created or deleted, add, change or remove its entry in that repository's MAP.md and commit it there; \
+         for a line the gate could not use, correct it. Then ring again. The line is BASE: <checkout path> <base commit sha>, one per \
+         repository the lap changed, above the SOURCES: line.",
+        lines.join("\n")
+    )
+}
+
+/// The gate failed as a whole (its task did not finish): loud in light, a refusal in strict, as for any line it cannot use.
+fn map_gate_failed(text: &str, mode: crate::trailer::GateMode, why: &str) -> MapVerdict {
+    let light = mode == crate::trailer::GateMode::Light;
+    let line = format!("[MAP GATE COULD NOT RUN — {why}{}]", if light { "; gates_mode light, strict would refuse" } else { "" });
+    if light {
+        MapVerdict::Deliver { text: insert_before_trailer(text, &line), audit: vec![line] }
+    } else {
+        MapVerdict::Refuse { reply: map_refusal(&[line.clone()]), audit: vec![format!("REFUSED BY THE MAP GATE: {line}")] }
+    }
+}
+
+/// The gate, pure but for the injected `git(checkout, args)` — `digest_gate`'s shape, for its reason. Audit lines carry no
+/// caller; `call_librarian` prefixes who rang.
+fn map_gate(
+    text: &str,
+    mode: crate::trailer::GateMode,
+    git: &mut dyn FnMut(&str, &[&str]) -> Result<GitOut, String>,
+) -> MapVerdict {
+    let light = mode == crate::trailer::GateMode::Light;
+    let tail = if light { "; gates_mode light, strict would refuse" } else { "" };
+    let body = text.replace("\r\n", "\n");
+    let bases: Vec<(String, Result<(String, String), String>)> = body
+        .split('\n')
+        .filter_map(|l| base_line_rest(l).map(|r| (l.trim().to_string(), parse_base_line(r))))
+        .collect();
+    if bases.is_empty() {
+        let line = "[NO map check — this ring names no BASE: line (BASE: <checkout path> <base commit>, one per repository it changed)]";
+        return MapVerdict::Deliver {
+            text: insert_before_trailer(text, line),
+            audit: vec!["NO map check — the ring names no BASE: line".to_string()],
+        };
+    }
+    let (mut lines, mut audit, mut bad) = (Vec::new(), Vec::new(), Vec::new());
+    for (raw, parsed) in bases {
+        let one = match parsed {
+            Err(why) => Err(format!("the line \"{raw}\": {why}")),
+            Ok((checkout, base)) => map_one(&checkout, &base, git).map_err(|why| format!("{checkout} {base}: {why}")),
+        };
+        match one {
+            Ok(MapOne::Clean(l)) => lines.push(l),
+            Ok(MapOne::Updated(l)) => {
+                audit.push(l.clone());
+                lines.push(l);
+            }
+            Ok(MapOne::Stale(l)) => {
+                let l = format!("{l}{tail}]");
+                bad.push(l.clone());
+                lines.push(l);
+            }
+            Err(why) => {
+                let l = format!("[MAP GATE COULD NOT RUN — {why}{tail}]");
+                bad.push(l.clone());
+                lines.push(l);
+            }
+        }
+    }
+    if !bad.is_empty() && !light {
+        return MapVerdict::Refuse { reply: map_refusal(&bad), audit: bad.iter().map(|l| format!("REFUSED BY THE MAP GATE: {l}")).collect() };
+    }
+    audit.extend(bad);
+    let text = lines.iter().fold(text.to_string(), |t, l| insert_before_trailer(&t, l));
+    MapVerdict::Deliver { text, audit }
+}
+
+/// The gate as `call_librarian` calls it: the real `git -C <checkout> …`, bounded as the seal gate's is.
+fn map_gate_at(text: &str, mode: crate::trailer::GateMode) -> MapVerdict {
+    map_gate(text, mode, &mut |c, a| run_git_for_seal(std::path::Path::new(c), a))
+}
+
+/// The board row that KEEPS a hand-back refused by this gate (D077's terms, the digest row's family).
+fn refused_map_row(who: &str, text: &str) -> String {
+    refused_row_labelled("call_librarian REFUSED (map)", who, text)
+}
+
+#[cfg(test)]
+mod map_gate_tests {
+    use super::*;
+    use crate::trailer::GateMode::{Light, Strict};
+
+    const BASE40: &str = "e80b2af70000000000000000000000000000beef";
+    const HEAD40: &str = "d586e00000000000000000000000000000000abc";
+    const RING: &str = "D586 hand-back at exo_memory/handback/p-d586-map-gate-E_2026-10-31.md\n\
+                        BASE: C:/w/lh e80b2af7\n\
+                        SOURCES: exo_memory/loop/plan.md\n\
+                        NEXT: librarian collate it when the others are in";
+
+    fn ok(stdout: &str) -> Result<GitOut, String> {
+        Ok(GitOut { code: 0, stdout: stdout.to_string() })
+    }
+
+    /// A git that answers the three questions the gate asks: the base, HEAD, and the diff between them.
+    fn git_with(diff: &str) -> impl FnMut(&str, &[&str]) -> Result<GitOut, String> + '_ {
+        move |_checkout, a| {
+            if a.contains(&"diff") {
+                ok(diff)
+            } else if a.iter().any(|s| s.starts_with("HEAD")) {
+                ok(&format!("{HEAD40}\n"))
+            } else {
+                ok(&format!("{BASE40}\n"))
+            }
+        }
+    }
+
+    fn delivered(v: MapVerdict) -> (String, Vec<String>) {
+        match v {
+            MapVerdict::Deliver { text, audit } => (text, audit),
+            MapVerdict::Refuse { reply, .. } => panic!("refused, expected delivery: {reply}"),
+        }
+    }
+
+    fn refused(v: MapVerdict) -> (String, Vec<String>) {
+        match v {
+            MapVerdict::Refuse { reply, audit } => (reply, audit),
+            MapVerdict::Deliver { text, .. } => panic!("delivered, expected a refusal: {text}"),
+        }
+    }
+
+    fn last_line(t: &str) -> &str {
+        t.lines().rev().find(|l| !l.trim().is_empty()).unwrap_or("")
+    }
+
+    // ── the three rows the order names ───────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_new_source_file_with_no_map_change_is_delivered_with_a_warning_naming_it_in_light() {
+        let (text, audit) = delivered(map_gate(RING, Light, &mut git_with("A\tconsonance/tools/new-tool.js\nM\tconsonance/src-tauri/src/mcp.rs\n")));
+        let line = text.lines().find(|l| l.contains("MAP NOT UPDATED")).unwrap_or_else(|| panic!("no warning: {text}"));
+        assert!(line.contains("A consonance/tools/new-tool.js"), "the warning must name the file: {line}");
+        assert!(!line.contains("mcp.rs"), "a file changed in place is not gated: {line}");
+        assert!(line.contains("strict would refuse"), "light must say what strict does: {line}");
+        assert!(audit.iter().any(|a| a.contains("MAP NOT UPDATED") && a.contains("new-tool.js")), "the warning must reach the board: {audit:?}");
+    }
+
+    #[test]
+    fn a_new_source_file_with_the_map_changed_passes() {
+        let (text, _) = delivered(map_gate(RING, Strict, &mut git_with("A\tconsonance/tools/new-tool.js\nM\tconsonance/src-tauri/src/MAP.md\n")));
+        assert!(!text.contains("MAP NOT UPDATED"), "{text}");
+        let line = text.lines().find(|l| l.contains(MAP_MARK)).unwrap_or_else(|| panic!("no map line: {text}"));
+        assert!(line.contains("MAP.md changed"), "{line}");
+    }
+
+    #[test]
+    fn strict_refuses_a_new_source_file_with_no_map_change_and_names_it() {
+        let (reply, audit) = refused(map_gate(RING, Strict, &mut git_with("A\tsrc/core/newpart.js\n")));
+        assert!(reply.contains("A src/core/newpart.js"), "{reply}");
+        assert!(reply.contains("NOT delivered"), "the pane must be told it did not go: {reply}");
+        assert!(reply.contains("BASE:"), "the refusal must say how to recover: {reply}");
+        assert!(!audit.is_empty(), "a refusal must reach the board");
+    }
+
+    // ── the plan's other two rows ────────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_change_to_an_existing_file_passes() {
+        let (text, _) = delivered(map_gate(RING, Strict, &mut git_with("M\tsrc/core/close.js\nM\tapp/core/coreshell.js\n")));
+        let line = text.lines().find(|l| l.contains(MAP_MARK)).unwrap_or_else(|| panic!("no map line: {text}"));
+        assert!(line.contains("no source file created or deleted"), "{line}");
+    }
+
+    #[test]
+    fn a_deleted_file_warns() {
+        let (text, _) = delivered(map_gate(RING, Light, &mut git_with("D\tapp/core/oldpart.js\n")));
+        assert!(text.lines().any(|l| l.contains("MAP NOT UPDATED") && l.contains("D app/core/oldpart.js")), "{text}");
+    }
+
+    // ── what is gated and what is not ────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_rename_reads_as_the_file_deleted_and_the_file_created() {
+        let mut seen: Vec<String> = Vec::new();
+        let (reply, _) = refused(map_gate(RING, Strict, &mut |c, a| {
+            if a.contains(&"diff") {
+                seen = a.iter().map(|s| s.to_string()).collect();
+            }
+            git_with("D\tsrc/geom/a.js\nA\tsrc/geom/b.js\n")(c, a)
+        }));
+        assert!(seen.iter().any(|s| s == "--no-renames"), "the diff must not fold a rename into one row: {seen:?}");
+        assert!(reply.contains("D src/geom/a.js") && reply.contains("A src/geom/b.js"), "{reply}");
+    }
+
+    #[test]
+    fn files_outside_the_four_source_folders_are_not_gated() {
+        let diff = "A\texo_memory/handback/p-x-E_2026-10-31.md\nA\tdocs/new.md\nA\tconsonance/hooks/new.js\nA\tsrcx/y.js\nD\ttest/old.test.js\n";
+        let (text, _) = delivered(map_gate(RING, Strict, &mut git_with(diff)));
+        assert!(!text.contains("MAP NOT UPDATED"), "{text}");
+    }
+
+    #[test]
+    fn a_new_map_md_is_the_map_change_not_a_gated_file() {
+        // t180 keeps its map at the root; lighthouse keeps it inside a gated folder.
+        for diff in ["A\tMAP.md\nA\tsrc/x.js\n", "A\tconsonance/src-tauri/src/MAP.md\nA\tconsonance/src-tauri/src/new.rs\n"] {
+            let (text, _) = delivered(map_gate(RING, Strict, &mut git_with(diff)));
+            assert!(!text.contains("MAP NOT UPDATED"), "{diff}: {text}");
+            assert!(text.lines().any(|l| l.contains("— 1 source file(s) created or deleted, and MAP.md changed")), "the map is not a source file: {text}");
+        }
+        let (text, _) = delivered(map_gate(RING, Strict, &mut git_with("A\tconsonance/src-tauri/src/MAP.md\n")));
+        assert!(text.lines().any(|l| l.contains("no source file created or deleted")), "a new map alone creates no source file: {text}");
+    }
+
+    #[test]
+    fn a_long_list_is_capped_and_says_how_many_it_left_out() {
+        let diff: String = (0..55).map(|i| format!("A\tsrc/many/f{i:02}.js\n")).collect();
+        let (text, _) = delivered(map_gate(RING, Light, &mut git_with(&diff)));
+        let line = text.lines().find(|l| l.contains("MAP NOT UPDATED")).unwrap();
+        assert!(line.contains("55 source file(s)"), "{line}");
+        assert!(line.contains("f39.js") && !line.contains("f40.js"), "{line}");
+        assert!(line.contains("+15 more"), "{line}");
+    }
+
+    // ── the BASE line ────────────────────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn the_gate_asks_git_in_the_checkout_the_ring_names_for_the_base_it_names() {
+        let mut calls: Vec<(String, Vec<String>)> = Vec::new();
+        let ring = "hand-back at exo_memory/handback/p.md\n**BASE:** `C:/Users/n/Downloads/lh wt e586` e80b2af7.\nNEXT: librarian x";
+        let _ = map_gate(ring, Strict, &mut |c, a| {
+            calls.push((c.to_string(), a.iter().map(|s| s.to_string()).collect()));
+            git_with("")(c, a)
+        });
+        assert!(!calls.is_empty(), "the gate asked git nothing");
+        assert!(calls.iter().all(|(c, _)| c == "C:/Users/n/Downloads/lh wt e586"), "a checkout path keeps its spaces and loses its quoting: {calls:?}");
+        assert!(calls.iter().any(|(_, a)| a.iter().any(|s| s.starts_with("e80b2af7"))), "the base the ring named: {calls:?}");
+        let diff = calls.iter().find(|(_, a)| a.contains(&"diff".to_string())).expect("no diff");
+        assert!(diff.1.contains(&BASE40.to_string()) && diff.1.contains(&HEAD40.to_string()), "the diff runs between the resolved commits: {diff:?}");
+    }
+
+    #[test]
+    fn every_base_line_is_checked() {
+        let ring = "hand-back at exo_memory/handback/p.md\nBASE: C:/w/t180 a6af8cf\nBASE: C:/w/lh e80b2af7\nNEXT: librarian x";
+        let (text, _) = delivered(map_gate(ring, Light, &mut |c, a| {
+            git_with(if c.ends_with("t180") { "A\tsrc/core/n.js\n" } else { "M\tconsonance/tools/x.js\n" })(c, a)
+        }));
+        assert!(text.lines().any(|l| l.contains("MAP NOT UPDATED") && l.contains("C:/w/t180") && l.contains("src/core/n.js")), "{text}");
+        assert!(text.lines().any(|l| l.contains(MAP_MARK) && l.contains("C:/w/lh") && l.contains("no source file created or deleted")), "{text}");
+    }
+
+    #[test]
+    fn a_ring_with_no_base_line_is_delivered_marked_and_counted_in_both_modes() {
+        let ring = "hand-back at exo_memory/handback/p.md\nSOURCES: none (no state claims)\nNEXT: librarian x";
+        for mode in [Light, Strict] {
+            let mut asked = false;
+            let (text, audit) = delivered(map_gate(ring, mode, &mut |_, _| {
+                asked = true;
+                ok("")
+            }));
+            assert!(!asked, "with no BASE line there is nothing to ask git");
+            assert!(text.contains("NO map check"), "{text}");
+            assert!(audit.iter().any(|a| a.contains("NO map check")), "the skip must be countable: {audit:?}");
+        }
+    }
+
+    #[test]
+    fn the_gate_s_line_sits_above_the_next_trailer() {
+        for v in [map_gate(RING, Light, &mut git_with("A\tsrc/x.js\n")), map_gate(RING, Strict, &mut git_with("M\tsrc/x.js\n"))] {
+            let (text, _) = delivered(v);
+            assert!(last_line(&text).starts_with("NEXT:"), "the trailer must stay last: {text}");
+        }
+    }
+
+    // ── a gate that cannot run is loud ───────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_base_line_it_cannot_use_is_loud_in_light_and_refused_in_strict() {
+        for (ring, why) in [
+            ("p at exo_memory/handback/p.md\nBASE: C:/w/lh\nNEXT: librarian x", "no commit"),
+            ("p at exo_memory/handback/p.md\nBASE: C:/w/lh origin/main\nNEXT: librarian x", "not a sha"),
+            ("p at exo_memory/handback/p.md\nBASE: C:/w/lh e80b\nNEXT: librarian x", "not a sha"),
+            ("p at exo_memory/handback/p.md\nBASE:\nNEXT: librarian x", "no commit"),
+        ] {
+            let (text, audit) = delivered(map_gate(ring, Light, &mut git_with("")));
+            let line = text.lines().find(|l| l.contains("MAP GATE COULD NOT RUN")).unwrap_or_else(|| panic!("{ring}: not loud: {text}"));
+            assert!(line.contains(why) && line.contains("strict would refuse"), "{line}");
+            assert!(audit.iter().any(|a| a.contains("MAP GATE COULD NOT RUN")), "{audit:?}");
+            let (reply, _) = refused(map_gate(ring, Strict, &mut git_with("")));
+            assert!(reply.contains(why), "{reply}");
+        }
+    }
+
+    #[test]
+    fn a_base_that_is_not_a_commit_in_that_checkout_is_loud() {
+        let mut git = |_: &str, a: &[&str]| {
+            if a.iter().any(|s| s.starts_with("e80b2af7")) { Ok(GitOut { code: 1, stdout: String::new() }) } else { git_with("")("", a) }
+        };
+        let (text, _) = delivered(map_gate(RING, Light, &mut git));
+        assert!(text.lines().any(|l| l.contains("MAP GATE COULD NOT RUN") && l.contains("e80b2af7") && l.contains("not a commit")), "{text}");
+        let (reply, _) = refused(map_gate(RING, Strict, &mut git));
+        assert!(reply.contains("not a commit"), "{reply}");
+    }
+
+    #[test]
+    fn a_git_that_does_not_run_or_a_diff_that_fails_is_loud() {
+        let (text, _) = delivered(map_gate(RING, Light, &mut |_, _| Err("git is not on PATH".to_string())));
+        assert!(text.lines().any(|l| l.contains("MAP GATE COULD NOT RUN") && l.contains("git is not on PATH")), "{text}");
+        let mut diff_fails = |c: &str, a: &[&str]| if a.contains(&"diff") { Ok(GitOut { code: 128, stdout: String::new() }) } else { git_with("")(c, a) };
+        let (text, _) = delivered(map_gate(RING, Light, &mut diff_fails));
+        assert!(text.lines().any(|l| l.contains("MAP GATE COULD NOT RUN") && l.contains("diff")), "{text}");
+        refused(map_gate(RING, Strict, &mut |_, _| Err("git is not on PATH".to_string())));
+    }
+
+    // ── the real command, on a real repository ───────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn real_git_on_a_scratch_repository_warns_then_passes_once_the_map_is_committed() {
+        static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+        let n = N.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        let dir = crate::test_scratch::Scratch::owning(crate::test_scratch::root().join(format!("map-gate-{}-{}-{n}", std::process::id(), now_ms())));
+        std::fs::create_dir_all(dir.join("src")).unwrap();
+        let sh = |args: &[&str]| {
+            let o = std::process::Command::new("git").arg("-C").arg(&*dir).args(["-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false"]).args(args).output().expect("git");
+            assert!(o.status.success(), "git {args:?}: {}", String::from_utf8_lossy(&o.stderr));
+            String::from_utf8_lossy(&o.stdout).trim().to_string()
+        };
+        sh(&["init", "-q"]);
+        std::fs::write(dir.join("src/old.js"), "1\n").unwrap();
+        sh(&["add", "."]);
+        sh(&["commit", "-q", "-m", "base"]);
+        let base = sh(&["rev-parse", "HEAD"]);
+        std::fs::write(dir.join("src/new.js"), "2\n").unwrap();
+        sh(&["add", "."]);
+        sh(&["commit", "-q", "-m", "new"]);
+        let ring = format!("hand-back at exo_memory/handback/p.md\nBASE: {} {}\nNEXT: librarian x", dir.to_string_lossy(), &base[..12]);
+        let (reply, _) = refused(map_gate_at(&ring, Strict));
+        assert!(reply.contains("A src/new.js"), "{reply}");
+        std::fs::write(dir.join("MAP.md"), "src/new.js: the new part\n").unwrap();
+        sh(&["add", "."]);
+        sh(&["commit", "-q", "-m", "map"]);
+        let (text, _) = delivered(map_gate_at(&ring, Strict));
+        assert!(text.lines().any(|l| l.contains("MAP.md changed")), "{text}");
+    }
+
+    #[test]
+    fn real_git_on_a_folder_that_is_no_checkout_is_loud() {
+        let dir = crate::test_scratch::Scratch::owning(crate::test_scratch::root().join(format!("map-gate-none-{}-{}", std::process::id(), now_ms())));
+        std::fs::create_dir_all(&*dir).unwrap();
+        let ring = format!("p at exo_memory/handback/p.md\nBASE: {} e80b2af7\nNEXT: librarian x", dir.join("not-here").to_string_lossy());
+        let (text, _) = delivered(map_gate_at(&ring, Light));
+        assert!(text.contains("MAP GATE COULD NOT RUN"), "{text}");
+    }
+
+    // ── the wiring, read from the source (anchors built with concat!, the D076 lesson) ─────────────────────────────
+
+    fn librarian_body() -> String {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("async fn call_librarian(").nth(1).expect("call_librarian moved — re-point this test").to_string();
+        f.split("\n    }\n").next().unwrap_or(&f).to_string()
+    }
+
+    #[test]
+    fn the_map_gate_runs_after_the_digest_and_before_the_trailer_gate_and_the_delivery() {
+        let b = librarian_body();
+        let digest = b.find(concat!("digest_gate", "_at(")).expect("the digest gate");
+        let map = b.find(concat!("map_gate", "_at(")).expect("call_librarian does not run the map gate");
+        let trailer = b.find(concat!("trailer_", "gate(")).expect("the trailer gate");
+        let send = b.find(concat!(".send_", "chair(ChairCmd::CallLibrarian")).expect("the delivery");
+        assert!(digest < map && map < trailer && trailer < send, "order must be digest < map < trailer < delivery");
+    }
+
+    #[test]
+    fn a_refused_map_keeps_the_attempt_on_the_board_and_reads_the_mode_on_the_calling_thread() {
+        let b = librarian_body();
+        assert!(b.contains(concat!("refused_map", "_row(&who, &text)")), "a map refusal must keep the pointer");
+        assert!(b.contains(concat!("MapVerdict::", "Refuse {")), "the refusal arm");
+        let mode = b.find(concat!("let map_mode = ", "gates_mode()")).expect("the mode is read before the blocking task");
+        let spawn = b[mode..].find("spawn_blocking").map(|i| i + mode).expect("off the async thread");
+        assert!(mode < spawn, "under cargo test the mode is thread-local, so it must be read before the task is spawned");
+    }
+}
+
 // ── THE NEXT-TRAILER GATE (P-TRAILER-GATE wiring, D069, pane B) ──────────────────────────────────────────────────
 // The check, the per-verb policy and the texts live in `trailer.rs` and are proven there. This is the ONE decision each
 // verb makes with them, as a pure function, so the three behaviours below are tested by calling it rather than by
@@ -3574,25 +4349,40 @@ mod digest_at_ring_tests {
 /// What a verb does with its message after the trailer check.
 #[derive(Debug, PartialEq, Eq)]
 enum TrailerDecision {
-    /// Send `text` — unchanged, or with the warning appended. `audit`, when present, is the board line.
-    Deliver { text: String, audit: Option<String> },
+    /// Send `text`, always the message unchanged. `audit`, when present, is the board line. `note`, when present, is the
+    /// warning for the SENDER, returned in its own tool result (D633: it used to be appended to the receiver's copy).
+    Deliver { text: String, audit: Option<String>, note: Option<String> },
     /// Send nothing. Return `reply` to the caller (it carries the message back whole) and post `audit`.
     Refuse { reply: String, audit: String },
 }
 
-/// L125: the note a WARNED `call_librarian` hands back to the SENDING pane — the same note the receiver gets
-/// (`trailer::warning_note`), or `None` when the trailer is fine. E's census (loop/trailer_gate_census_2026-09-27.md):
-/// seats refused over a bad trailer rarely miss again; panes only warned — through the receiver — kept missing.
-fn sender_note(text: &str) -> Option<String> {
-    crate::trailer::check_for(crate::trailer::Verb::CallLibrarian, text).err().map(crate::trailer::warning_note)
+/// D277 part 2: the paperwork gates' ONE switch, `gates_mode` in ~/.consonance.json. Absent, unreadable, not JSON, or anything but "light"
+/// (trimmed, any case) is `Strict`, today's behaviour. The hooks read the same key (`consonance/hooks/sources-gate.js` `gatesModeFrom`).
+pub fn gates_mode_from(raw: &str) -> crate::trailer::GateMode {
+    use crate::trailer::GateMode;
+    match serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}')) {
+        Ok(v) => match v.get("gates_mode").and_then(|m| m.as_str()) {
+            Some(m) if m.trim().eq_ignore_ascii_case("light") => GateMode::Light,
+            _ => GateMode::Strict,
+        },
+        Err(_) => GateMode::Strict,
+    }
 }
-
-/// The sender's tool result: the delivery result FIRST, unchanged, then the note, so a warning can never read as a
-/// refusal. With no note it is `out`, byte for byte.
-fn with_sender_note(out: String, note: Option<String>) -> String {
-    match note {
-        Some(n) => format!("{out}\n\n{n}"),
-        None => out,
+fn gates_mode_at(path: &std::path::Path) -> crate::trailer::GateMode {
+    std::fs::read_to_string(path).map(|s| gates_mode_from(&s)).unwrap_or(crate::trailer::GateMode::Strict)
+}
+// Under `cargo test` the live ~/.consonance.json is NOT read, so the suite never depends on the keeper's switch; a test sets the mode it means
+// (TEST_GATES_MODE, Strict by default). The file read itself is tested through `gates_mode_at` on temp files.
+#[cfg(test)]
+thread_local! { static TEST_GATES_MODE: std::cell::Cell<crate::trailer::GateMode> = const { std::cell::Cell::new(crate::trailer::GateMode::Strict) }; }
+fn gates_mode() -> crate::trailer::GateMode {
+    #[cfg(test)]
+    {
+        TEST_GATES_MODE.with(|m| m.get())
+    }
+    #[cfg(not(test))]
+    {
+        gates_mode_at(&std::path::PathBuf::from(std::env::var("USERPROFILE").unwrap_or_else(|_| ".".into())).join(".consonance.json"))
     }
 }
 
@@ -3601,12 +4391,13 @@ fn with_sender_note(out: String, note: Option<String>) -> String {
 fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> TrailerDecision {
     // L084: `check_for`, not `check` — the verb decides whether the collation's `OUTPUT → NEXT:` line is owed
     // (call_chair only). For call_librarian and chair_inject it returns exactly what `check` did.
-    use crate::trailer::{check_for, delivered_with_warning, policy, refusal_text, Action};
+    use crate::trailer::{check_for, policy, policy_in, refusal_text, sender_note, Action, GateMode};
     let why = match check_for(verb, text) {
-        Ok(_) => return TrailerDecision::Deliver { text: text.to_string(), audit: None },
+        Ok(_) => return TrailerDecision::Deliver { text: text.to_string(), audit: None, note: None },
         Err(why) => why,
     };
-    let reply = refusal_text(verb, why, text);
+    // D273: the refusal's GATES.md pointer, resolved to the path it has on this machine (the first occurrence is the pointer line).
+    let reply = refusal_text(verb, why, text).replacen(crate::trailer::GATES_DOC, &crate::gates_doc_path(), 1);
     // The refusal's first line is "refused by the NEXT-trailer gate: <what is missing>." — reuse it, so the board and
     // the seat are told the same thing in the same words.
     let missing = reply
@@ -3616,12 +4407,29 @@ fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> Trai
         .trim_start_matches("refused by the NEXT-trailer gate: ")
         .trim_end_matches('.')
         .to_string();
-    match policy(verb) {
+    // D277 part 2: the mode decides; in Strict, `policy_in` is `policy` exactly. A Light delivery that Strict would have refused says so on its
+    // board line, so the refusals the switch turned into warnings can still be counted.
+    let mode = gates_mode();
+    let softened = mode == GateMode::Light && policy(verb) == Action::Refuse;
+    match policy_in(verb, mode) {
         Action::Refuse => TrailerDecision::Refuse { audit: format!("{verb_name} REFUSED BY THE NEXT-TRAILER GATE: {missing}"), reply },
         Action::WarnAndDeliver => TrailerDecision::Deliver {
-            text: delivered_with_warning(text, why),
-            audit: Some(format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER: {missing}")),
+            text: text.to_string(),
+            note: Some(sender_note(why)),
+            audit: Some(if softened {
+                format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER (gates_mode light; strict would refuse): {missing}")
+            } else {
+                format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER: {missing}")
+            }),
         },
+    }
+}
+
+/// D633: what the sender is told, with the trailer note after it when there is one.
+fn with_sender_note(out: String, note: Option<String>) -> String {
+    match note {
+        Some(n) => format!("{out}\n\n{n}"),
+        None => out,
     }
 }
 
@@ -3629,6 +4437,17 @@ fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> Trai
 mod trailer_gate_tests {
     use super::*;
     use crate::trailer::{Verb, RULE_FILE};
+
+    /// D273: a refused message names GATES.md at the path it has on this machine (under `cargo test` the checkout is the crate's
+    /// own repo, and the file is there once GATES.md lands), and still returns the message whole.
+    #[test]
+    fn a_refusal_names_gates_md_at_its_resolved_path() {
+        let msg = "a ring with no trailer";
+        let TrailerDecision::Refuse { reply, .. } = trailer_gate(Verb::ChairInject, "chair_inject -> B", msg) else { panic!("not refused") };
+        let want = crate::gates_doc_path();
+        assert!(reply.contains(&format!("How this gate works and why: {want}, section 3 (the NEXT trailer).")), "{reply}");
+        assert!(reply.contains(msg), "the message is no longer returned whole");
+    }
 
     /// This file's source, CRLF-normalised, cut at the method's closing brace (same rule as `tests::body_of`).
     fn body_of(header: &str) -> String {
@@ -3640,6 +4459,80 @@ mod trailer_gate_tests {
     const WITH: &str = "Hand-back: exo_memory/handback/x.md\n\nNEXT: librarian collate it when all four are in";
     // A's real ring from chunk 1, verbatim: a pointer and no trailer.
     const WITHOUT: &str = "[pane:A] P-STICK-APPLIER-ZOMBIE (D066, chunk 1), on D. Pointer: exo_memory/handback/p-stick-zombie-A_2026-09-16.md";
+
+    // ── D277 part 2: the switch ──────────────────────────────────────────────────────────────────────────────────
+
+    fn with_mode<T>(m: crate::trailer::GateMode, f: impl FnOnce() -> T) -> T {
+        TEST_GATES_MODE.with(|c| c.set(m));
+        let out = f();
+        TEST_GATES_MODE.with(|c| c.set(crate::trailer::GateMode::Strict));
+        out
+    }
+
+    /// The folder the switch test writes its config into, removed on drop (D299: it was left behind after the file was
+    /// removed). A helper with a tag, so the row below and the test above never share one folder inside one test process.
+    fn gates_mode_dir(tag: &str) -> crate::test_scratch::Scratch {
+        let d = crate::test_scratch::root().join(format!("gates-mode-{tag}-{}", std::process::id()));
+        let _ = std::fs::create_dir_all(&d);
+        crate::test_scratch::Scratch::owning(d)
+    }
+
+    // D300: removing the guard was caught only by a leftover COUNT after a whole cargo run, never by a row (D299 A, Checks).
+    #[test]
+    fn the_gates_mode_folder_is_gone_after_the_test() {
+        let dir;
+        {
+            let d = gates_mode_dir("leakcheck");
+            dir = d.to_path_buf();
+            assert!(dir.exists(), "control: the folder exists while the test holds it");
+        }
+        assert!(!dir.exists(), "the gates-mode folder outlived the test");
+    }
+
+    #[test]
+    fn d277_the_switch_reads_only_light_as_light() {
+        use crate::trailer::GateMode::{Light, Strict};
+        for raw in ["", "{ not json", "{}", r#"{"data_dir":"some/data"}"#, r#"{"gates_mode":"strict"}"#, r#"{"gates_mode":"lite"}"#, r#"{"gates_mode":true}"#, r#"{"gates_mode":["light"]}"#] {
+            assert_eq!(gates_mode_from(raw), Strict, "{raw}");
+        }
+        for raw in [r#"{"gates_mode":"light"}"#, r#"{"gates_mode":" Light "}"#, "\u{feff}{\"gates_mode\":\"LIGHT\"}"] {
+            assert_eq!(gates_mode_from(raw), Light, "{raw}");
+        }
+        let d = gates_mode_dir("switch");
+        let p = d.join(".consonance.json");
+        let _ = std::fs::remove_file(&p);
+        assert_eq!(gates_mode_at(&p), Strict, "a missing file is strict");
+        std::fs::write(&p, r#"{"gates_mode":"light","data_dir":"some/data"}"#).unwrap();
+        assert_eq!(gates_mode_at(&p), Light);
+        let _ = std::fs::remove_file(&p);
+    }
+
+    #[test]
+    fn d277_strict_mode_refuses_exactly_as_today() {
+        let got = with_mode(crate::trailer::GateMode::Strict, || (trailer_gate(Verb::ChairInject, "chair_inject -> B", WITHOUT), trailer_gate(Verb::CallChair, "call_chair", WITHOUT)));
+        assert!(matches!(got.0, TrailerDecision::Refuse { .. }), "{:?}", got.0);
+        assert!(matches!(got.1, TrailerDecision::Refuse { .. }), "{:?}", got.1);
+    }
+
+    #[test]
+    fn d277_light_mode_delivers_with_the_warning_and_marks_the_board_line() {
+        for (verb, name) in [(Verb::ChairInject, "chair_inject -> B"), (Verb::CallChair, "call_chair")] {
+            match with_mode(crate::trailer::GateMode::Light, || trailer_gate(verb, name, WITHOUT)) {
+                // AMENDED BY NAME (D633): the warning is no longer appended to the receiver's copy; it is the sender's `note`.
+                TrailerDecision::Deliver { text, audit: Some(audit), note } => {
+                    assert_eq!(text, WITHOUT, "the message is delivered whole and unchanged: {text}");
+                    assert!(note.is_some_and(|n| n.contains(RULE_FILE)), "with the warning going to the sender");
+                    assert!(audit.contains("DELIVERED WITHOUT A NEXT TRAILER (gates_mode light; strict would refuse)"), "{audit}");
+                }
+                other => panic!("{name}: not delivered in light mode: {other:?}"),
+            }
+        }
+        // call_librarian already warned in strict; in light its board line is the same as today's
+        match with_mode(crate::trailer::GateMode::Light, || trailer_gate(Verb::CallLibrarian, "call_librarian from A", WITHOUT)) {
+            TrailerDecision::Deliver { audit: Some(audit), .. } => assert!(audit.starts_with("call_librarian from A DELIVERED WITHOUT A NEXT TRAILER: "), "{audit}"),
+            other => panic!("call_librarian: {other:?}"),
+        }
+    }
 
     // ── the three behaviours, by calling the decision ────────────────────────────────────────────────────────────
 
@@ -3670,15 +4563,53 @@ mod trailer_gate_tests {
     #[test]
     fn call_librarian_without_a_trailer_is_delivered_pointer_first_with_a_board_warning() {
         match trailer_gate(Verb::CallLibrarian, "call_librarian from A", WITHOUT) {
-            TrailerDecision::Deliver { text, audit: Some(line) } => {
-                assert!(text.starts_with(WITHOUT), "the pointer must arrive first and unchanged: {text}");
-                assert!(text.contains(RULE_FILE), "the receiver is not told the rule: {text}");
+            // AMENDED BY NAME (D633): the receiver gets the pointer unchanged; the rule goes to the SENDER in `note`.
+            TrailerDecision::Deliver { text, audit: Some(line), note } => {
+                assert_eq!(text, WITHOUT, "the pointer must arrive first and unchanged: {text}");
+                assert!(note.is_some_and(|n| n.contains(RULE_FILE)), "the sender is not told the rule");
                 assert!(line.contains("call_librarian from A") && line.contains("WITHOUT A NEXT TRAILER"), "{line}");
             }
             TrailerDecision::Deliver { audit: None, .. } => {
                 panic!("delivered with no board line — a warning nobody sees is the silent-absence class")
             }
             TrailerDecision::Refuse { .. } => panic!("a hand-back was refused over its trailer — that destroys the hand-back"),
+        }
+    }
+
+    // ── D633 (fix 5): the trailer note goes to the SENDER; the receiver gets the message unchanged ─────────────────────
+    #[test]
+    fn d633_a_warned_message_reaches_the_receiver_unchanged_and_the_note_goes_to_the_sender() {
+        for (verb, name) in [(Verb::ChairInject, "chair_inject -> B"), (Verb::CallChair, "call_chair"), (Verb::CallLibrarian, "call_librarian from A")] {
+            match with_mode(crate::trailer::GateMode::Light, || trailer_gate(verb, name, WITHOUT)) {
+                TrailerDecision::Deliver { text, audit: Some(_), note: Some(n) } => {
+                    assert_eq!(text, WITHOUT, "{name}: the receiver's copy must be the message, unchanged");
+                    assert!(n.contains("End your next hand-off with `NEXT:") && n.contains(RULE_FILE), "{name}: {n}");
+                }
+                other => panic!("{name}: {other:?}"),
+            }
+        }
+        match trailer_gate(Verb::CallLibrarian, "call_librarian from A", WITH) {
+            TrailerDecision::Deliver { note: None, audit: None, .. } => {}
+            other => panic!("a compliant ring carries no note: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn d633_the_note_is_appended_to_what_the_sender_is_told() {
+        assert_eq!(with_sender_note("delivered to the librarian".to_string(), None), "delivered to the librarian");
+        let n = crate::trailer::sender_note(crate::trailer::Missing::NoTrailer);
+        let out = with_sender_note("delivered to the librarian".to_string(), Some(n.clone()));
+        assert!(out.starts_with("delivered to the librarian") && out.ends_with(&n), "{out}");
+    }
+
+    /// WIRING: each of the three verbs returns the note in ITS OWN tool result (the sender's turn), and only the delivered text is sent.
+    #[test]
+    fn d633_each_verb_returns_the_note_to_its_sender() {
+        let src = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/mcp.rs")).unwrap().replace("\r\n", "\n");
+        for f in ["async fn chair_inject(", "async fn call_chair(", "async fn call_librarian("] {
+            let b = src.split(f).nth(1).unwrap_or_else(|| panic!("{f} moved")).split("\n    }\n").next().unwrap();
+            assert!(b.contains("TrailerDecision::Deliver { text, audit, note } => {"), "{f}: the note is taken from the decision");
+            assert!(b.contains("Content::text(with_sender_note(out, note))"), "{f}: the note goes back to the sender");
         }
     }
 
@@ -3691,7 +4622,7 @@ mod trailer_gate_tests {
         for (verb, msg) in [(Verb::ChairInject, WITH), (Verb::CallLibrarian, WITH), (Verb::CallChair, COLLATION)] {
             assert_eq!(
                 trailer_gate(verb, "v", msg),
-                TrailerDecision::Deliver { text: msg.to_string(), audit: None },
+                TrailerDecision::Deliver { text: msg.to_string(), audit: None, note: None },
                 "{verb:?} altered or audited a compliant message"
             );
         }
@@ -3729,7 +4660,7 @@ mod trailer_gate_tests {
     fn l084_call_chair_with_the_output_line_is_delivered_unchanged() {
         assert_eq!(
             trailer_gate(Verb::CallChair, "call_chair", COLLATION),
-            TrailerDecision::Deliver { text: COLLATION.to_string(), audit: None }
+            TrailerDecision::Deliver { text: COLLATION.to_string(), audit: None, note: None }
         );
     }
 
@@ -3739,7 +4670,7 @@ mod trailer_gate_tests {
         for verb in [Verb::CallLibrarian, Verb::ChairInject] {
             assert_eq!(
                 trailer_gate(verb, "v", WITH),
-                TrailerDecision::Deliver { text: WITH.to_string(), audit: None },
+                TrailerDecision::Deliver { text: WITH.to_string(), audit: None, note: None },
                 "{verb:?} was reached by the collation-only rule"
             );
         }
@@ -3798,50 +4729,6 @@ mod trailer_gate_tests {
         let refuse = seg.find("TrailerDecision::Refuse").expect("no Refuse arm");
         assert!(deliver < refuse, "the Deliver arm is expected first");
         assert!(seg[deliver..refuse].contains("self.trailer_audit("), "a warned hand-back is delivered but not posted to the board");
-    }
-
-    // ── L125: THE SENDER IS TOLD TOO. E's census (loop/trailer_gate_census_2026-09-27.md): seats whose bad trailer is
-    // REFUSED miss rarely, panes whose bad trailer is only WARNED miss far more — because the warning reached only the
-    // receiver (trailer.rs `delivered_with_warning`). The calling pane now gets the SAME note in its tool result.
-
-    #[test]
-    fn l125_a_warned_ring_gives_the_sender_the_same_note_the_receiver_gets() {
-        let TrailerDecision::Deliver { text: delivered, audit: Some(_) } = trailer_gate(Verb::CallLibrarian, "call_librarian from A", WITHOUT) else {
-            panic!("a ring without a trailer must be delivered with a warning");
-        };
-        let note = sender_note(WITHOUT).expect("a warned ring must carry a note for the sender");
-        assert!(delivered.ends_with(&note), "the sender's note is not the note the receiver got:\nnote: {note}\ndelivered: {delivered}");
-        assert!(note.contains("NEXT-trailer gate") && note.contains("NEXT: <station> <command> when <condition>"), "the note must say what was wrong and the correct form: {note}");
-    }
-
-    #[test]
-    fn l125_a_ring_with_a_good_trailer_gives_the_sender_nothing_extra() {
-        assert_eq!(sender_note(WITH), None);
-        let out = "delivered to the librarian (rendered in its pane — not proof it was read)".to_string();
-        assert_eq!(with_sender_note(out.clone(), None), out, "a compliant ring's tool result must be byte-identical to before");
-    }
-
-    #[test]
-    fn l125_the_delivery_result_comes_first_and_the_note_after_it() {
-        let out = "delivered to the librarian".to_string();
-        let got = with_sender_note(out.clone(), Some("[NEXT-trailer gate — note]".to_string()));
-        assert!(got.starts_with(&out), "the delivery result must come first, so a warning never reads as a refusal: {got}");
-        assert!(got.ends_with("[NEXT-trailer gate — note]"), "{got}");
-    }
-
-    #[test]
-    fn l125_call_librarian_sets_the_note_only_in_the_warned_deliver_branch_and_returns_it_after_delivery() {
-        let b = body_of("async fn call_librarian(");
-        let gate = b.find("trailer_gate(crate::trailer::Verb::CallLibrarian").expect("the trailer gate");
-        let send = b.find(".send_chair(ChairCmd::CallLibrarian").expect("the delivery");
-        let seg = &b[gate..send];
-        let deliver = seg.find("TrailerDecision::Deliver").expect("no Deliver arm");
-        let refuse = seg.find("TrailerDecision::Refuse").expect("no Refuse arm");
-        let arm = &seg[deliver..refuse];
-        let warned = arm.find("if let Some(line) = audit").expect("the warned branch");
-        assert!(arm[warned..].contains("told = sender_note("), "the sender's note is not set in the warned branch");
-        let ret = b[send..].find("with_sender_note(out, told)").expect("the tool result does not carry the sender's note");
-        assert!(ret > 0, "the note must be added after the delivery");
     }
 }
 
@@ -3995,5 +4882,175 @@ mod address_refusal_pointer_tests {
             branch.ends_with("return Ok(CallToolResult::success(vec![Content::text(\n                \"refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)\",\n            )]));"),
             "the refusal text returned to the pane changed:\n{branch}"
         );
+    }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════════
+// D476 PART 2 — THE THIRD PLACE'S RETURN LEG (plan_d476_third_place_returns_2026-10-26.md; the keeper, 11:46: "the people go back to
+// work taking what they have learnt from it"). The ruling: nothing reaches IN to steer the Third Place; what is learned there goes OUT
+// without him carrying it. So it gets ONE mount, `/mcp/third-place`, whose server carries ONE verb, call_librarian, to ONE seat.
+#[cfg(test)]
+mod third_place_mount_tests {
+    use super::*;
+
+    fn server(identity: Option<&str>) -> ConsonanceMcp {
+        let (p, _) = tokio::sync::mpsc::unbounded_channel();
+        let (c, _) = tokio::sync::mpsc::unbounded_channel();
+        ConsonanceMcp::new(Arc::new(Mutex::new(VecDeque::new())), p, c, "t".to_string(), identity.map(|s| s.to_string()),
+            Arc::new(std::sync::atomic::AtomicBool::new(false)))
+    }
+    fn body_of(header: &str) -> String {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split(header).nth(1).unwrap_or_else(|| panic!("{header} moved")).to_string();
+        f.split("\n    }\n").next().unwrap_or(&f).to_string()
+    }
+    fn tools(s: &ConsonanceMcp) -> Vec<String> {
+        let mut v: Vec<String> = s.tool_router.list_all().into_iter().map(|t| t.name.to_string()).collect();
+        v.sort();
+        v
+    }
+
+    /// The mount resolves to its own seat, never to `committee`: its letter in the registry is a NAME (D423), and a committee seat
+    /// would have a pane's verbs.
+    #[test]
+    fn the_third_place_mount_is_its_own_seat() {
+        assert_eq!(server(Some(THIRD_PLACE_MOUNT)).seat(), "third_place");
+    }
+
+    /// THE WHOLE MEMBRANE: the Third Place's server carries call_librarian and nothing else — no read_board (the room reaching in),
+    /// no post_board, no raise_pull (a hand raised at a pane), no chair verb, no call_chair.
+    #[test]
+    fn the_third_place_mount_carries_only_the_return_leg() {
+        assert_eq!(tools(&server(Some(THIRD_PLACE_MOUNT))), vec!["call_librarian".to_string()]);
+    }
+
+    /// Control: a pane's lettered mount still carries every verb, call_librarian among them.
+    #[test]
+    fn a_lettered_mount_is_unchanged() {
+        let t = tools(&server(Some("A")));
+        assert!(t.len() > 1 && t.contains(&"call_librarian".to_string()) && t.contains(&"read_board".to_string()), "{t:?}");
+    }
+
+    /// Its instructions describe the return leg, not the committee: a mind that reads the committee's control plane is in the room.
+    #[test]
+    fn the_third_place_is_told_only_about_its_one_verb() {
+        let i = server(Some(THIRD_PLACE_MOUNT)).get_info().instructions.unwrap_or_default();
+        assert!(i.contains("call_librarian") && i.to_lowercase().contains("pointer"), "{i}");
+        assert!(!i.contains("chair_") && !i.contains("raise_pull") && !i.contains("read_board"), "{i}");
+    }
+
+    /// The Third Place is not a station in the loop: its ring is not refused out of turn (a refused ring would post its pointer to
+    /// the shared board and deliver nothing). It still goes through the delivery gate (gate_or_queue), so it never renders into the
+    /// librarian's pane mid-turn.
+    #[test]
+    fn the_third_place_ring_is_not_held_to_the_loop_station() {
+        // AMENDED BY NAME (D621, 2026-11-02): the gate's body moved into `auth_station_for` (it reads the lap a call serves); `auth_station` delegates to it.
+        // AMENDED AGAIN (D621 bounce): the lap argument carries its source (lap_holders::LapSource).
+        let b = body_of("fn auth_station_for(&self, verb: &str, lap: Option<(&str, crate::lap_holders::LapSource)>) -> bool {");
+        let exempt = b.find("if verb == \"call_librarian\" && self.seat() == \"third_place\" {").expect("the Third Place's exemption from the station gate is gone");
+        assert!(exempt < b.find("crate::chain_state()").expect("the gate's read moved"), "the exemption must come before the gate decides");
+        assert!(body_of("async fn call_librarian(").contains("if !self.auth_station(\"call_librarian\") {"), "call_librarian still asks the gate");
+    }
+
+    /// METAXY'S GUARD 3: nothing in private/ travels. A pointer into C:\Consonance\private\ (either slash, any case, the folder itself, or
+    /// private/third_place written relative) is refused; a pointer into the public record is not, and nor is the word "private".
+    #[test]
+    fn a_pointer_into_private_is_refused_and_one_outside_it_is_not() {
+        // The strings carry no drive prefix (portable-paths, D476 landing): the rule reads `consonance/private` whatever the drive, so a
+        // drive letter adds nothing to the case and would make this test a machine path.
+        for p in [r"\Consonance\private\third_place\lineage\keeper_2026-10.md", "/consonance/private/x.md", r"\CONSONANCE\PRIVATE",
+                  "see private/third_place/2026-10-26.md"] {
+            assert!(points_into_private(p), "{p}");
+        }
+        for p in ["exo_memory/third_place/to_the_librarian_2026-10-26.md", r"\Users\someone\lighthouse\exo_memory\third_place\2026-10-26.md",
+                  "a private thought, written down at exo_memory/third_place/2026-10-26.md"] {
+            assert!(!points_into_private(p), "{p}");
+        }
+    }
+
+    /// The refusal sits on the Third Place's seat, before anything is sent, and the row it posts carries none of the text.
+    #[test]
+    fn a_private_pointer_is_refused_before_delivery_and_its_text_is_not_posted() {
+        let b = body_of("async fn call_librarian(");
+        let g = b.find("if self.seat() == \"third_place\" && points_into_private(&text) {").expect("guard 3 is gone from call_librarian");
+        assert!(g < b.find("ChairCmd::CallLibrarian").expect("the send moved"), "refused before it is sent");
+        let branch = &b[g..g + b[g..].find("return Ok(").expect("the refusal returns")];
+        assert!(!branch.contains("&text") || branch.matches("&text").count() == 1, "the posted row must not carry the text (the only &text is the check)");
+        assert!(branch.contains("board_push("), "the refusal is posted");
+    }
+
+    /// C'S FINDING 2 (p-d476-review-C_2026-10-26.md §0, §6), and the part of it C's red row cannot see. On the Third Place's seat every gate
+    /// row a ring can trigger is a FIXED line: the digest refusal, the digest's "git-blob computed at ring" note, and both trailer rows.
+    /// C's row passes once the refusal arm names the Third Place; this holds what the branch POSTS, so a branch that echoed the ring again
+    /// (refused_digest_row, or any `&text` / `line` / `audit`) fails here.
+    #[test]
+    fn every_gate_row_a_third_place_ring_triggers_is_fixed_text() {
+        let b = body_of("async fn call_librarian(");
+        let branch = |anchor: &str| -> String {
+            let at = b.find(anchor).unwrap_or_else(|| panic!("{anchor} moved"));
+            let rest = &b[at..];
+            let s = rest.find("if third_place {").unwrap_or_else(|| panic!("no Third Place branch after {anchor}"));
+            let body = &rest[s..];
+            // the branch closes at the match arm's own indentation (16 spaces); a nested block inside it closes deeper
+            body[..body.find("\n                }").unwrap_or(body.len())].to_string()
+        };
+        let refuse = branch("DigestVerdict::Refuse(msg) => {");
+        assert!(!refuse.contains("refused_digest_row") && !refuse.contains("&text") && refuse.contains("THIRD_PLACE_DIGEST_REFUSED"), "{refuse}");
+        assert!(refuse.contains("THIRD_PLACE_NOT_ECHOED"), "the Third Place is told why its words are not echoed:\n{refuse}");
+        let deliver = branch("DigestVerdict::Deliver(d) => {");
+        assert!(deliver.contains("THIRD_PLACE_DIGEST_NOTED") && !deliver.contains("(line)"), "{deliver}");
+        // AMENDED BY NAME (D633): the Deliver arm now also takes the sender's note.
+        for arm in ["TrailerDecision::Deliver { text, audit, note } => {", "TrailerDecision::Refuse { audit, .. } => {"] {
+            let tr = branch(arm);
+            assert!(tr.contains("THIRD_PLACE_TRAILER_ROW") && !tr.contains("(audit)") && !tr.contains("(line)"), "{arm}:\n{tr}");
+        }
+        for fixed in [THIRD_PLACE_DIGEST_REFUSED, THIRD_PLACE_DIGEST_NOTED, THIRD_PLACE_TRAILER_ROW] {
+            assert!(fixed.contains("Third Place") && !fixed.contains('{'), "a fixed line, with no place for the ring's words: {fixed}");
+        }
+    }
+
+    /// C'S LATENT ROW (p-d476-review-C_2026-10-26.md, its gate table): the address-table refusal posts refused_address_row(&who, &text),
+    /// up to 600 chars of the call. Unreachable from the Third Place's seat while row 3 exists; if row 3 is ever removed, its ring would
+    /// land there. So on that seat the row is a FIXED line too, chosen in place, keeping the branch's one return (pinned by
+    /// address_refusal_pointer_tests) unchanged for the panes.
+    #[test]
+    fn the_address_refusal_on_the_third_place_seat_is_fixed_text() {
+        let b = body_of("async fn call_librarian(");
+        let at = b.find("if !self.auth_address(\"call_librarian\") {").expect("the address check moved");
+        let branch = &b[at..at + b[at..].find("return Ok(").expect("the branch returns")];
+        let tp = branch.find("if self.seat() == \"third_place\" { THIRD_PLACE_ADDRESS_REFUSED.to_string() }")
+            .unwrap_or_else(|| panic!("no fixed row for the Third Place in the address refusal:\n{branch}"));
+        assert!(tp < branch.find("refused_address_row(&who, &text)").expect("the panes' row is still built"), "the Third Place's line is chosen first");
+        assert!(THIRD_PLACE_ADDRESS_REFUSED.contains("Third Place") && !THIRD_PLACE_ADDRESS_REFUSED.contains('{'));
+    }
+
+    /// Its own config file, beside the lettered ones, naming its own route.
+    #[test]
+    fn the_third_place_has_its_own_config() {
+        assert!(config_path_third_place().to_string_lossy().ends_with("mcp.consonance.third-place.json"));
+    }
+}
+
+// RED ROW (pane C, D476 part 2 review; no fix). A Third Place ring the digest gate refuses (a pointer that is not repo-relative, or no
+// file at that path) is posted to the shared board WITH its text: the Refuse arm of call_librarian builds refused_digest_row(&who, &text)
+// for every seat, the Third Place's included, so up to REFUSED_ATTEMPT_MAX_CHARS of its words reach the board its audit row keeps them off.
+#[cfg(test)]
+mod d476_review_c_tests {
+    use super::*;
+
+    #[test]
+    fn a_third_place_ring_the_digest_gate_refuses_does_not_post_its_words_to_the_board() {
+        let dir = std::env::temp_dir().join("d476-review-c-no-such-entry");
+        let _ = std::fs::create_dir_all(&dir);
+        let ring = "what the sitting ended on is written at third_place/2026-10-26.md";
+        let mut git = |_a: &[&str]| -> Result<GitOut, String> { Err("not reached".to_string()) };
+        assert!(matches!(digest_gate(ring, Some(&dir), &mut git), DigestVerdict::Refuse(_)), "control: the gate refuses a pointer with no file at the checkout root");
+        assert!(refused_digest_row(THIRD_PLACE_MOUNT, ring).contains("what the sitting ended on"), "control: the row the arm builds carries the text");
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let body = src.split("async fn call_librarian(").nth(1).expect("call_librarian moved");
+        let arm = &body[body.find("DigestVerdict::Refuse(msg) => {").expect("the digest refusal arm moved")..];
+        let arm = &arm[..arm.find("return Ok(").expect("the arm returns")];
+        assert!(!arm.contains("refused_digest_row(&who, &text)") || arm.contains("third_place"),
+            "the digest refusal posts the Third Place's words to the shared board: the arm has no Third Place branch");
     }
 }

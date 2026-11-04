@@ -254,7 +254,7 @@ test('TURN WINDOW: a small window still yields the same full turn, and a parentU
   const fs = require('fs'), os = require('os');
   const padding = Array.from({ length: 400 }, (_, i) => JSON.stringify({ uuid: `pad${i}`, message: { role: 'assistant', content: [{ type: 'text', text: 'x'.repeat(200) }] } })).join('\n');
   const tail = transcript().trimEnd().split('\n').map((l) => { const o = JSON.parse(l); if (o.uuid === 'after') o.parentUuid = 'end'; return JSON.stringify(o); }).join('\n');
-  const f = require('path').join(fs.mkdtempSync(require('path').join(os.tmpdir(), 'jv-win-')), 't.jsonl');
+  const f = require('path').join(require('./scratch.js').mkdtemp('jv-win-'), 't.jsonl');
   fs.writeFileSync(f, padding + '\n' + tail + '\n');
   const w = V.turnWindow(f, 'end', [3000, 1 << 20]);
   // BYTES against bytes: the fixture's em dashes make a string's length smaller than its file size, so a whole-file
@@ -264,7 +264,7 @@ test('TURN WINDOW: a small window still yields the same full turn, and a parentU
 
 test('TURN WINDOW of a uuid that is not in the file is null', () => {
   const fs = require('fs'), os = require('os'), p = require('path');
-  const f = p.join(fs.mkdtempSync(p.join(os.tmpdir(), 'jv-win-')), 't.jsonl');
+  const f = p.join(require('./scratch.js').mkdtemp('jv-win-'), 't.jsonl');
   fs.writeFileSync(f, transcript());
   assert.strictEqual(V.turnWindow(f, 'nope'), null);
 });

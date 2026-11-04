@@ -1,0 +1,17 @@
+# tests 4304
+# pass 4274
+# fail 8
+# cancelled 0
+# skipped 21
+# todo 1
+# duration_ms 2762284.0086
+
+red rows (bar the TODO):
+4320:not ok 682 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+4340:not ok 683 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+4358:not ok 684 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+4404:not ok 689 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+4629:not ok 722 - row 2: through the runner (every message structured-cloned) the textured lap and the open TEST export are the same bytes
+9670:not ok 1535 - row 5: at display scales 1.25 and 1.5, each fine tile is drawn one tile pixel per device pixel (its size times the pixel ratio is its own size)
+23192:not ok 3737 - mutant S5 the search measures a gate at the road again, not at its dummies: applied, and caught by markers_sectors.test.js
+23215:not ok 3738 - mutant S6 the sector search takes no height (its dummies at the road): applied, and caught by markers_sectors.test.js

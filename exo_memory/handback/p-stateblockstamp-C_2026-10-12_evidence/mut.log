@@ -1,0 +1,18 @@
+== C d309 green + mutants · asked 2026-10-12T07:28:45.808Z · lock held 2026-10-12T07:28:45.842Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d309-wt && node --test --test-reporter=tap consonance/tools/state-block.test.js consonance/hooks/sessionstart-state.test.js dev/shell/hooks/third-place-gate.test.js 2>&1 | grep -E '^not ok|^# (tests|pass|fail)'; cd G:/worktrees/c-d309-base && node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d309/mut.js
+# tests 46
+# pass 46
+# fail 0
+C0 control: SURVIVED
+M1 the stamp line is not in the header: caught by rows 25,26
+M2 the UTC time ignores the injected clock: caught by rows 25,26
+M3 AM and PM swapped in the local time: caught by rows 25
+M4 the offset sign flipped: caught by rows 25
+M5 no section says as of: caught by rows 27
+M6 the section time is local, not UTC: caught by rows 27
+M7 render ignores opts.now: caught by rows 25,26,27
+M8 the CLI ignores STATE_BLOCK_NOW: caught by rows 26
+M9 the name line is stamped too: caught by rows 27
+M10 the LIVE section is not stamped: caught by rows 27
+applied 10 / caught 10 / NOT APPLIED 0; base dirty after: 0
+== exit 0 · done 2026-10-12T07:30:13.908Z

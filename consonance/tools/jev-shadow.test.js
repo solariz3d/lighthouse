@@ -19,7 +19,7 @@ const METHOD = '# METHOD (fixture)\nthe discipline text for L0\n';
 const WELFARE = '# WELFARE (fixture)\nthe discipline text for L3\n';
 
 function fixture() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-'));
+  const root = require('./scratch.js').mkdtemp('jev-shadow-');
   const shell = path.join(root, 'shell');
   const disc = path.join(root, 'lighthouse');
   const store = path.join(root, 'store');
@@ -403,16 +403,16 @@ test('CLI: shadow without --store exits 2; without a key exits 2', () => {
 
 // ── L105: the discipline dir comes through config (jev-room.js), not `__dirname/../..` ────────────────────────────────
 function installedShadow() {
-  const tools = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-inst-')), 'somewhere', 'tools');
+  const tools = path.join(require('./scratch.js').mkdtemp('jev-shadow-inst-'), 'somewhere', 'tools');
   fs.mkdirSync(tools, { recursive: true });
   for (const n of ['jev-shadow.js', 'jev-ask.js', 'jev-room.js']) fs.copyFileSync(path.join(__dirname, n), path.join(tools, n));
   return require(path.join(tools, 'jev-shadow.js'));
 }
 function roomHome() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-room-'));
+  const root = require('./scratch.js').mkdtemp('jev-shadow-room-');
   fs.mkdirSync(path.join(root, 'consonance', 'src-tauri', 'src'), { recursive: true });
   fs.writeFileSync(path.join(root, 'consonance', 'src-tauri', 'src', 'main.rs'), '// fixture\n');
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-home-'));
+  const home = require('./scratch.js').mkdtemp('jev-shadow-home-');
   fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ room_path: path.join(root, 'exo_memory', 'BOOT.md') }));
   return { root, home };
 }
@@ -429,7 +429,7 @@ test('L105: --discipline still wins over the resolved room', () => {
 
 test('L105: no room → capture REFUSES naming why and the fix, instead of reading METHOD.md from nowhere', () => {
   const S2 = installedShadow();
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-nohome-'));
+  const home = require('./scratch.js').mkdtemp('jev-shadow-nohome-');
   const f = fixture();
   l2Job(f, 'j1');
   const a = S2.parseArgs(['capture', '--store', f.store, '--shell', f.opts.shellDir], {}, home);
@@ -441,7 +441,7 @@ test('L105: no room → capture REFUSES naming why and the fix, instead of readi
 // for the life of the process — so a worker changed between two loads in one runner ran the OLD builder under the NEW
 // worker_sha256 (A's D130 hand-back §4; the loadJudgeInputs defect, one file over). The sha must describe what runs.
 test('D130 loadBuilder l2: a worker changed between two loads in one process builds with the NEW code under the NEW sha', () => {
-  const shell = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-d130-'));
+  const shell = require('./scratch.js').mkdtemp('jev-shadow-d130-');
   fs.mkdirSync(path.join(shell, 'hooks'));
   const worker = path.join(shell, 'hooks', 'l2-overseer-worker.js');
   const write = (tag) => fs.writeFileSync(worker, `'use strict';\nfunction buildOverseerPrompt(view, discipline) {\n  return '${tag}:' + discipline;\n}\nmodule.exports = { buildOverseerPrompt };\n`);

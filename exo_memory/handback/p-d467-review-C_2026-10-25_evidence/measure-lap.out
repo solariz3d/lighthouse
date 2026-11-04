@@ -1,0 +1,42 @@
+## node measure.js t180-wt-e467 lap 450 80 3e-4
+tree t180-wt-e467 | lap bend s0 450 r 80 delta 0.0003 (0.0172 °/m) | window [1] ids p2 | first 0 (p1, 300.0 m) last 5 (p6, 60.0 m)
+message: the lap is closed again: to keep your bend, the start of the lap moved (closed in 2 step(s): 0.145 mm, tangent 0.0e+0 rad)
+  window piece 1 (p2): the drag added max 0.01668 °/m at 149.9 m; after the close max 0.05066 °/m at 0.0 m; own max rate 0.5578 °/m
+  pieces the close changed: [0,1,5] p1,p2,p6
+  close vs drag, piece 0 (p1): max added -0.13187 °/m at 82.5 m; lateral -47.183 m (from its start); piece's own max 0.0045 °/m
+  close vs drag, piece 5 (p6): max added 0.21194 °/m at 33.5 m; lateral 5.564 m (from its end); piece's own max 0.3183 °/m
+  close vs drag, piece 1 (p2): max added 0.05066 °/m at 0.0 m; lateral 3.367 m (from its start); piece's own max 0.5578 °/m
+  during the drag (open) moved: p1 0.00 m | p2 2.76 m | p3 7.79 m | p4 12.28 m | p5 12.89 m | p6 10.70 m
+  centreline moved (samples 749 → 749): p1 47.13 m | p2 72.91 m | p3 72.29 m | p4 52.97 m | p5 36.55 m | p6 5.46 m
+## node measure.js t180-wt-e467 lap 450 80 1e-4
+tree t180-wt-e467 | lap bend s0 450 r 80 delta 0.0001 (0.0057 °/m) | window [1] ids p2 | first 0 (p1, 300.0 m) last 5 (p6, 60.0 m)
+message: the lap is closed again: to keep your bend, the start of the lap moved (closed in 4 step(s): 0.334 mm, tangent 0.0e+0 rad)
+  window piece 1 (p2): the drag added max 0.00556 °/m at 149.9 m; after the close max 0.02294 °/m at 0.0 m; own max rate 0.5578 °/m
+  pieces the close changed: [0,1,5] p1,p2,p6
+  close vs drag, piece 0 (p1): max added -0.10615 °/m at 52.5 m; lateral -35.069 m (from its start); piece's own max 0.0045 °/m
+  close vs drag, piece 5 (p6): max added 0.15768 °/m at 32.5 m; lateral 3.890 m (from its end); piece's own max 0.3183 °/m
+  close vs drag, piece 1 (p2): max added 0.02294 °/m at 0.0 m; lateral 1.519 m (from its start); piece's own max 0.5578 °/m
+  during the drag (open) moved: p1 0.00 m | p2 0.92 m | p3 2.60 m | p4 4.09 m | p5 4.30 m | p6 3.57 m
+  centreline moved (samples 749 → 749): p1 34.91 m | p2 52.27 m | p3 51.83 m | p4 37.97 m | p5 26.14 m | p6 3.82 m
+## node measure.js old lap 450 80 3e-4
+tree old | lap bend s0 450 r 80 delta 0.0003 (0.0172 °/m) | window [1] ids p2 | first 0 (p1, 300.0 m) last 5 (p6, 60.0 m)
+message: the lap is closed again: closing it took back 45% of your bend (closed in 2 step(s): 0.066 mm, tangent 4.2e-8 rad)
+  window piece 1 (p2): the drag added max 0.01668 °/m at 149.9 m; after the close max 0.01012 °/m at 151.9 m; own max rate 0.5578 °/m
+  pieces the close changed: [1,2,5] p2,p3,p6
+  close vs drag, piece 0 (p1): max added 0.00000 °/m at 0.0 m; lateral 0.000 m (from its start); piece's own max 0.0045 °/m
+  close vs drag, piece 5 (p6): max added 0.00164 °/m at 29.5 m; lateral 0.028 m (from its end); piece's own max 0.3183 °/m
+  close vs drag, piece 1 (p2): max added -0.00682 °/m at 123.4 m; lateral -3.316 m (from its start); piece's own max 0.5578 °/m
+  close vs drag, piece 2 (p3): max added -0.00117 °/m at 0.0 m; lateral -0.069 m (from its start); piece's own max 0.3379 °/m
+  during the drag (open) moved: p1 0.00 m | p2 2.76 m | p3 7.79 m | p4 12.28 m | p5 12.89 m | p6 10.70 m
+  centreline moved (samples 749 → 749): p1 0.00 m | p2 0.53 m | p3 0.43 m | p4 0.32 m | p5 0.21 m | p6 0.03 m
+## node measure.js old lap 450 80 1e-4
+tree old | lap bend s0 450 r 80 delta 0.0001 (0.0057 °/m) | window [1] ids p2 | first 0 (p1, 300.0 m) last 5 (p6, 60.0 m)
+message: the lap is closed again: closing it took back 45% of your bend (closed in 2 step(s): 0.001 mm, tangent 1.5e-8 rad)
+  window piece 1 (p2): the drag added max 0.00556 °/m at 149.9 m; after the close max 0.00338 °/m at 151.9 m; own max rate 0.5578 °/m
+  pieces the close changed: [1,2,5] p2,p3,p6
+  close vs drag, piece 0 (p1): max added 0.00000 °/m at 0.0 m; lateral 0.000 m (from its start); piece's own max 0.0045 °/m
+  close vs drag, piece 5 (p6): max added 0.00055 °/m at 29.5 m; lateral 0.009 m (from its end); piece's own max 0.3183 °/m
+  close vs drag, piece 1 (p2): max added -0.00227 °/m at 122.9 m; lateral -1.105 m (from its start); piece's own max 0.5578 °/m
+  close vs drag, piece 2 (p3): max added -0.00040 °/m at 0.0 m; lateral -0.023 m (from its start); piece's own max 0.3379 °/m
+  during the drag (open) moved: p1 0.00 m | p2 0.92 m | p3 2.60 m | p4 4.09 m | p5 4.30 m | p6 3.57 m
+  centreline moved (samples 749 → 749): p1 0.00 m | p2 0.18 m | p3 0.14 m | p4 0.10 m | p5 0.07 m | p6 0.01 m

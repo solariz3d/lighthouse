@@ -1,0 +1,24 @@
+# D547: the first set of fixes from the slop audit. Librarian, 2026-10-29 19:5x
+
+The user, 19:54, "lets try it", on my recommended set from D546's eight (`exo_memory/handback/p-d546-slop-audit-C_2026-10-29.md` §5; the survey `exo_memory/research/ai_slop_ui_survey_2026-10-29.md`): items 3, 2, 5, 1, then 6, then the three-size scale from 7. Not 8 (it cuts against D536), not the rest of 7 (fashion). Aurora's breathing sky is his call at the install, not the pane's.
+
+## Part 1 (pane A, CHECK IT; one branch, one install): 3, 2, 5, 1
+
+- **3. Warning colours that pass contrast, in every look.** Per-look red and amber TEXT tokens (and the pit-lane note's), re-measured so the checker's lines, the reds list, the amber/red counts and the pit-lane note read at 4.5:1 or better in all six looks (today skyline amber 1.0, aqua red 1.46, glass pit-lane note 2.28). The hue stays red and amber; the value moves. texture-page's probe is extended to the checker list, the reds list and the Track menu panels, so it would have caught this; its row count rises and it stays green.
+- **2. An opinionated default look.** A new install (no saved theme) opens in SIGIL; Settings ▸ Theme keeps Random as a choice, listed after the named looks, not first. The boot's `Math.random()` branch becomes the sigil branch; a saved choice is honoured as today. The user's own machine keeps whatever he has saved. Open to him at the install: whether sigil's violet accent and lavender road read as the purple tell; if so, the default's accent is the next change, not this one.
+- **5. Dead status chrome.** Drop "Grip 100%" under the grip field when it reads 100 (show the note only when the grip is not 100, as its own text already distinguishes "untested"); the always-on keys line at the foot moves into the guide and behind a small "?" at the foot (the line shows on hover or press of the ?); the pit-lane note takes the plain text colour unless it reports a problem.
+- **1. The road's numbers as the one big thing.** The values band: the number in Bahnschrift at 24 px weight 700, its unit and label at 11 px weight 300 beside it, one line; the NEXT line as it is. The label box on the road (the head's "5000.00 m · turn +2250°" and the station labels): number 18 px 600, the rest 12 px 300. Everything else keeps its size. The band stays within one slim strip (height measured: it may grow from 48 to about 60 px; it must not run under the guide button at 1400, so the max-width rule holds).
+
+Order inside the branch: 3, 2, 5, 1 as separate plain commits, co-author line allowed, no lap ids in new comments. Tests: the touched files once (texture-page with its extended probe, menubar-page, core-pieces-ui, core-readout-display, sculpt-cues, theme, onboarding); renders in all six looks at 1920×1080 in the checker and ghost states, before and after, for the user's page; CHANGELOG [Unreleased] one line per item in a player's words ("warnings read in every look"; "a new install opens in one look, Random is still a choice"; "the road's numbers are the biggest thing on screen"; "a note that said nothing is gone"). Branch from origin/main 82db6c3 + d541-a (98e3d81) line, i.e. the 0.4.31 batch base; it rides 0.4.31 if green before C builds it, else the next.
+
+## Part 2 (pane A, CHECK IT; after Part 1 is read): 6, the glow and blur budget
+
+Per look: blurred box-shadows only on the focused or primary control (the Export button, the active tool, a hovered row), never on static chrome: skyline and skyline-night from 95 to under 10 at once, aqua 33 to under 10, aurora 13 to under 6; the column's 10 px backdrop blur stays in every look (it earns its place over the 3D view); glass drops its blur on menus, cards and the guide card (keeps it on the column and the band); text glows kept only on the accent. Aurora's breathing sky: NOT touched in this lap; the user says at the install whether it stays. Counts before and after per look (the D546 rig), the contrast probe green, renders for the page. Every look keeps its palette, radii and identity.
+
+## Part 3 (pane A, CHECK IT; after Part 2): the three-size scale from 7
+
+Body 12, heading 16, display per item 1; the 10, 10.5, 11, 13, 14, 15 px uses mapped to the nearest of the three (11 px small-caps labels may stay as the one exception, A says). Middle dots, mono labels and eyebrows stay as they are.
+
+Falsifier for the lap: after Part 1, the D546 rig re-run must mark tells 7 (contrast) and 15's "Grip 100%" ABSENT and the Random tell gone; if the number of PRESENT tells has not fallen by at least three, the set did not do what the audit said it would, and Part 2 waits for a look at why.
+
+surfaced: p-d546 §2-§5 (the counts and the eight), the survey §3-§4, app/index.html boot script, settings.js CHOICES.theme, texture-page.test.js's probe, valuesoverlay.js (the band's type), labels.js (the road labels).

@@ -1,0 +1,1 @@
+{"files":["app/test/core-close-mutation.test.js","app/test/core-mutation.test.js"],"exit":0,"wall_s":231.8,"started":"2026-10-23T09:51:31.041Z"}

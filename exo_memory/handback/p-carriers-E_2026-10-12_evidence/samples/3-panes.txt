@@ -1,0 +1,19 @@
+--- 2026-09-29T13:50:49.264Z
+[panes] MIKE     63 exch today · last 23s
+                 ↳ asked: <text>
+                 ↳ mike: <text>
+        BRAVO    22 exch today · last 35s
+                 ↳ asked: <text>
+                 ↳ bravo: <text>
+                 ↳ hands: <text>
+        ALPHA    17 exch today · last 4m
+                 ↳ asked: <text>
+                 ↳ alpha: <text>
+                 ↳ hands: <text>
+        ECHO     11 exch today · idle 15m
+                 ↳ asked: <text>
+                 ↳ echo: <text>
+                 ↳ hands: <text>
+        CHARLIE  24 exch today · idle 18m
+                 ↳ asked: <text>
+                 ↳ charlie: <text>

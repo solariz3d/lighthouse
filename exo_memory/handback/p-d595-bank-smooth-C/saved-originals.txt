@@ -1,0 +1,1 @@
+his 19 .t180track files: sha256 of every original before and after the read-only copy: identical (cmp), and the copies equal the originals (sha256 list compared)

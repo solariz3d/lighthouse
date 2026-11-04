@@ -1,0 +1,2871 @@
+TAP version 13
+# Subtest: mapping: ksAmbient, ksDiffuse, ksSpecular, ksSpecularEXP, ksEmissive and ksAlphaRef become the uniforms, value for value
+ok 1 - mapping: ksAmbient, ksDiffuse, ksSpecular, ksSpecularEXP, ksEmissive and ksAlphaRef become the uniforms, value for value
+  ---
+  duration_ms: 1.5679
+  type: 'test'
+  ...
+# Subtest: mapping: a property the material lacks reads 0, as actools GetPropertyValue*ByName does
+ok 2 - mapping: a property the material lacks reads 0, as actools GetPropertyValue*ByName does
+  ---
+  duration_ms: 0.1606
+  type: 'test'
+  ...
+# Subtest: mapping: txDiffuse is the texture the material's sampler names
+ok 3 - mapping: txDiffuse is the texture the material's sampler names
+  ---
+  duration_ms: 0.1567
+  type: 'test'
+  ...
+# Subtest: mapping: ksPerPixelNM takes txNormal and nmObjectSpace
+ok 4 - mapping: ksPerPixelNM takes txNormal and nmObjectSpace
+  ---
+  duration_ms: 0.1245
+  type: 'test'
+  ...
+# Subtest: mapping: ksMultilayer takes the mask, the four detail textures and their scales, and magicMult
+ok 5 - mapping: ksMultilayer takes the mask, the four detail textures and their scales, and magicMult
+  ---
+  duration_ms: 0.2258
+  type: 'test'
+  ...
+# Subtest: mapping: the shader picks the program the way actools MaterialsProviderDark does
+ok 6 - mapping: the shader picks the program the way actools MaterialsProviderDark does
+  ---
+  duration_ms: 0.1457
+  type: 'test'
+  ...
+# Subtest: mapping: a material without a shader is refused
+ok 7 - mapping: a material without a shader is refused
+  ---
+  duration_ms: 0.3665
+  type: 'test'
+  ...
+# Subtest: light: one sun, stated: 14:00, 42° up, and toSun is a unit vector at that elevation
+ok 8 - light: one sun, stated: 14:00, 42° up, and toSun is a unit vector at that elevation
+  ---
+  duration_ms: 0.1747
+  type: 'test'
+  ...
+# Subtest: shade: a white surface facing the sun, seen from the sun, is tx·(Ambient·ambient + Diffuse·sun) + Specular·sun
+ok 9 - shade: a white surface facing the sun, seen from the sun, is tx·(Ambient·ambient + Diffuse·sun) + Specular·sun
+  ---
+  duration_ms: 0.2898
+  type: 'test'
+  ...
+# Subtest: shade: a surface facing away from the sun gets ambient only (no diffuse, no specular)
+ok 10 - shade: a surface facing away from the sun gets ambient only (no diffuse, no specular)
+  ---
+  duration_ms: 0.2011
+  type: 'test'
+  ...
+# Subtest: shaders: every uniform the renderer sets is declared in each program it sets it for
+ok 11 - shaders: every uniform the renderer sets is declared in each program it sets it for
+  ---
+  duration_ms: 0.7522
+  type: 'test'
+  ...
+# Subtest: shaders: the three programs are the three the packet names, and each fragment shader has a precision
+ok 12 - shaders: the three programs are the three the packet names, and each fragment shader has a precision
+  ---
+  duration_ms: 0.2611
+  type: 'test'
+  ...
+# Subtest: shaders: the ported file carries the Ms-PL notice, and the licence text sits beside it
+ok 13 - shaders: the ported file carries the Ms-PL notice, and the licence text sits beside it
+  ---
+  duration_ms: 76.2332
+  type: 'test'
+  ...
+# Subtest: renderer: an AC material's properties reach the shader as the mapped uniforms
+ok 14 - renderer: an AC material's properties reach the shader as the mapped uniforms
+  ---
+  duration_ms: 10.8343
+  type: 'test'
+  ...
+# Subtest: renderer: the multilayer scales and magicMult reach the shader
+ok 15 - renderer: the multilayer scales and magicMult reach the shader
+  ---
+  duration_ms: 0.6366
+  type: 'test'
+  ...
+# Subtest: renderer: a named texture is uploaded at its size and bound to its sampler; an absent one gets a 1×1 white texel
+ok 16 - renderer: a named texture is uploaded at its size and bound to its sampler; an absent one gets a 1×1 white texel
+  ---
+  duration_ms: 0.8037
+  type: 'test'
+  ...
+# Subtest: renderer: a texture no longer drawn is deleted after the frame, like a buffer
+ok 17 - renderer: a texture no longer drawn is deleted after the frame, like a buffer
+  ---
+  duration_ms: 0.3973
+  type: 'test'
+  ...
+# Subtest: renderer: look "words" draws the per-word colours even when materials are given
+ok 18 - renderer: look "words" draws the per-word colours even when materials are given
+  ---
+  duration_ms: 0.3179
+  type: 'test'
+  ...
+# Subtest: renderer: an unknown look is refused
+ok 19 - renderer: an unknown look is refused
+  ---
+  duration_ms: 0.162
+  type: 'test'
+  ...
+# Subtest: renderer: a batch with no material is refused, not drawn in some default
+ok 20 - renderer: a batch with no material is refused, not drawn in some default
+  ---
+  duration_ms: 0.1996
+  type: 'test'
+  ...
+# Subtest: list: every mesh the preview draws is in the kn5, under the same name, with the same material
+ok 21 - list: every mesh the preview draws is in the kn5, under the same name, with the same material
+  ---
+  duration_ms: 38562.3363
+  type: 'test'
+  ...
+# Subtest: list: each material the preview draws equals the kn5's, property for property at float32, sampler for sampler
+ok 22 - list: each material the preview draws equals the kn5's, property for property at float32, sampler for sampler
+  ---
+  duration_ms: 0.4783
+  type: 'test'
+  ...
+# Subtest: list: the textures the preview draws equal the kn5's (an untextured track: the export's solid diffuse, src/export/acready.js)
+ok 23 - list: the textures the preview draws equal the kn5's (an untextured track: the export's solid diffuse, src/export/acready.js)
+  ---
+  duration_ms: 0.1575
+  type: 'test'
+  ...
+# Subtest: list: the preview's material and texture list EQUALS the kn5's
+not ok 24 - list: the preview's material and texture list EQUALS the kn5's # TODO the preview does not draw the start and grid paint (t180b_paint, PAINT_* meshes) or the closing seam the export builds (D177 §3)
+  ---
+  duration_ms: 1.3536
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\app\\test\\aclook.test.js:219:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    [32m+ actual[39m [31m- expected[39m
+    ... Skipped lines
+    
+    [39m  [
+    [39m    [
+    [31m-[39m     't180b_paint',
+    [39m      't180b_road'
+    [39m    ],
+    [39m    [
+    [39m      '1ROAD_w1_body_0',
+    [39m      '1ROAD_w1_in_0',
+    [34m...[39m
+    [39m      '1ROAD_w8_out_0',
+    [32m+[39m     'PAINT_GRID_0',
+    [32m+[39m     'PAINT_GRID_1',
+    [32m+[39m     'PAINT_GRID_2',
+    [32m+[39m     'PAINT_GRID_3',
+    [32m+[39m     'PAINT_PIT_0',
+    [32m+[39m     'PAINT_PIT_1',
+    [32m+[39m     'PAINT_START_LINE'
+    [39m    ]
+    [39m  ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      0: 't180b_paint'
+      1: 't180b_road'
+    1:
+      0: '1ROAD_w1_body_0'
+      1: '1ROAD_w1_in_0'
+      2: '1ROAD_w1_out_0'
+      3: '1ROAD_w2_body_0'
+      4: '1ROAD_w2_in_0'
+      5: '1ROAD_w2_out_0'
+      6: '1ROAD_w3_body_0'
+      7: '1ROAD_w3_in_0'
+      8: '1ROAD_w3_out_0'
+      9: '1ROAD_w4_body_0'
+      10: '1ROAD_w4_in_0'
+      11: '1ROAD_w4_out_0'
+      12: '1ROAD_w5_body_0'
+      13: '1ROAD_w5_in_0'
+      14: '1ROAD_w5_out_0'
+      15: '1ROAD_w6_body_0'
+      16: '1ROAD_w6_in_0'
+      17: '1ROAD_w6_out_0'
+      18: '1ROAD_w7_body_0'
+      19: '1ROAD_w7_in_0'
+      20: '1ROAD_w7_out_0'
+      21: '1ROAD_w8_body_0'
+      22: '1ROAD_w8_in_0'
+      23: '1ROAD_w8_out_0'
+  actual:
+    0:
+      0: 't180b_road'
+    1:
+      0: '1ROAD_w1_body_0'
+      1: '1ROAD_w1_in_0'
+      2: '1ROAD_w1_out_0'
+      3: '1ROAD_w2_body_0'
+      4: '1ROAD_w2_in_0'
+      5: '1ROAD_w2_out_0'
+      6: '1ROAD_w3_body_0'
+      7: '1ROAD_w3_in_0'
+      8: '1ROAD_w3_out_0'
+      9: '1ROAD_w4_body_0'
+      10: '1ROAD_w4_in_0'
+      11: '1ROAD_w4_out_0'
+      12: '1ROAD_w5_body_0'
+      13: '1ROAD_w5_in_0'
+      14: '1ROAD_w5_out_0'
+      15: '1ROAD_w6_body_0'
+      16: '1ROAD_w6_in_0'
+      17: '1ROAD_w6_out_0'
+      18: '1ROAD_w7_body_0'
+      19: '1ROAD_w7_in_0'
+      20: '1ROAD_w7_out_0'
+      21: '1ROAD_w8_body_0'
+      22: '1ROAD_w8_in_0'
+      23: '1ROAD_w8_out_0'
+      24: 'PAINT_GRID_0'
+      25: 'PAINT_GRID_1'
+      26: 'PAINT_GRID_2'
+      27: 'PAINT_GRID_3'
+      28: 'PAINT_PIT_0'
+      29: 'PAINT_PIT_1'
+      30: 'PAINT_START_LINE'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\app\test\aclook.test.js:221:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: textured: a word whose floor names a made texture is drawn with the set's material; the others keep the scene's
+ok 25 - textured: a word whose floor names a made texture is drawn with the set's material; the others keep the scene's
+  ---
+  duration_ms: 92.9057
+  type: 'test'
+  ...
+# Subtest: textured: the textured material the preview draws equals the one the set writes into the kn5
+ok 26 - textured: the textured material the preview draws equals the one the set writes into the kn5
+  ---
+  duration_ms: 3.6673
+  type: 'test'
+  ...
+# Subtest: textured: the preview's texels are the kn5's DDS level 0, byte for byte
+ok 27 - textured: the preview's texels are the kn5's DDS level 0, byte for byte
+  ---
+  duration_ms: 4.4693
+  type: 'test'
+  ...
+# Subtest: textured: an untextured floor in a set still draws the scene's material, not the set's untextured one the export does not write
+ok 28 - textured: an untextured floor in a set still draws the scene's material, not the set's untextured one the export does not write
+  ---
+  duration_ms: 2.3668
+  type: 'test'
+  ...
+# Subtest: preview: the AC look is the default: every placed batch is drawn with its exported material
+ok 29 - preview: the AC look is the default: every placed batch is drawn with its exported material
+  ---
+  duration_ms: 8.9227
+  type: 'test'
+  ...
+# Subtest: preview: a texture set with a made floor texture is uploaded at its size and drawn
+ok 30 - preview: a texture set with a made floor texture is uploaded at its size and drawn
+  ---
+  duration_ms: 2.724
+  type: 'test'
+  ...
+# Subtest: preview: L toggles the look between the AC shaders and the colour per word (ARCHITECTURE §4 feedback layer), and the HUD says which
+ok 31 - preview: L toggles the look between the AC shaders and the colour per word (ARCHITECTURE §4 feedback layer), and the HUD says which
+  ---
+  duration_ms: 3.7074
+  type: 'test'
+  ...
+# Subtest: renderer: the ties fade out between TIE_FADE's distances, with blending; the edges do not fade
+ok 32 - renderer: the ties fade out between TIE_FADE's distances, with blending; the edges do not fade
+  ---
+  duration_ms: 0.9311
+  type: 'test'
+  ...
+# Subtest: renderer: the canvas is cleared to CLEAR, darker than the fog colour (the fog colour is the look and is unchanged)
+ok 33 - renderer: the canvas is cleared to CLEAR, darker than the fog colour (the fog colour is the look and is unchanged)
+  ---
+  duration_ms: 0.3018
+  type: 'test'
+  ...
+# Subtest: WEBVIEW: aclook.js loads through the app's loader with no Buffer and no node, and resolves the look of an extended track
+ok 34 - WEBVIEW: aclook.js loads through the app's loader with no Buffer and no node, and resolves the look of an extended track
+  ---
+  duration_ms: 38.7234
+  type: 'test'
+  ...
+# Subtest: WEBVIEW: the look resolved without node is value for value the look resolved under node (same materials, same texture pixels)
+ok 35 - WEBVIEW: the look resolved without node is value for value the look resolved under node (same materials, same texture pixels)
+  ---
+  duration_ms: 18.5692
+  type: 'test'
+  ...
+# Subtest: WEBVIEW: the whole preview module graph loads with no Buffer (the module the app mounts, app/preview/index.js)
+ok 36 - WEBVIEW: the whole preview module graph loads with no Buffer (the module the app mounts, app/preview/index.js)
+  ---
+  duration_ms: 70.922
+  type: 'test'
+  ...
+# Subtest: build view (default): the geometry's own head camera, 15 m behind along T and 6 m up along U, looking along T
+ok 37 - build view (default): the geometry's own head camera, 15 m behind along T and 6 m up along U, looking along T
+  ---
+  duration_ms: 12.8816
+  type: 'test'
+  ...
+# Subtest: overhead: 80 m straight up, the growth direction up the screen
+ok 38 - overhead: 80 m straight up, the growth direction up the screen
+  ---
+  duration_ms: 2.1301
+  type: 'test'
+  ...
+# Subtest: overhead: inside a loop (T vertical) the screen-up stays the loop's heading, level
+ok 39 - overhead: inside a loop (T vertical) the screen-up stays the loop's heading, level
+  ---
+  duration_ms: 5.5432
+  type: 'test'
+  ...
+# Subtest: side: level with the head, 40 m off its right side, 6 m up, looking at the head
+ok 40 - side: level with the head, 40 m off its right side, 6 m up, looking at the head
+  ---
+  duration_ms: 1.8182
+  type: 'test'
+  ...
+# Subtest: chase: 25 m behind the head on the road, 3 m along the road's up, looking toward the head
+ok 41 - chase: 25 m behind the head on the road, 3 m along the road's up, looking toward the head
+  ---
+  duration_ms: 2.5727
+  type: 'test'
+  ...
+# Subtest: chase through a loop-the-loop: the eye stays on the drivable side of the road the whole way round
+ok 42 - chase through a loop-the-loop: the eye stays on the drivable side of the road the whole way round
+  ---
+  duration_ms: 8.6529
+  type: 'test'
+  ...
+# Subtest: chase on a track shorter than its lag: clamped to the start of the road, still a valid pose
+ok 43 - chase on a track shorter than its lag: clamped to the start of the road, still a valid pose
+  ---
+  duration_ms: 0.3721
+  type: 'test'
+  ...
+# Subtest: the switch key walks build → overhead → side → chase → free → build
+ok 44 - the switch key walks build → overhead → side → chase → free → build
+  ---
+  duration_ms: 2.2919
+  type: 'test'
+  ...
+# Subtest: the build view is ONE key away from every mode
+ok 45 - the build view is ONE key away from every mode
+  ---
+  duration_ms: 0.9048
+  type: 'test'
+  ...
+# Subtest: other keys change nothing
+ok 46 - other keys change nothing
+  ---
+  duration_ms: 0.3626
+  type: 'test'
+  ...
+# Subtest: after an append every follow mode follows the new head; free does not move
+ok 47 - after an append every follow mode follows the new head; free does not move
+  ---
+  duration_ms: 14.7436
+  type: 'test'
+  ...
+# Subtest: entering free keeps the view; it flies and turns only in free mode; pitch stays within ±89°
+ok 48 - entering free keeps the view; it flies and turns only in free mode; pitch stays within ±89°
+  ---
+  duration_ms: 3.3513
+  type: 'test'
+  ...
+# Subtest: the shown pose eases toward the exact pose: no snap on a switch, and it converges
+ok 49 - the shown pose eases toward the exact pose: no snap on a switch, and it converges
+  ---
+  duration_ms: 1.3109
+  type: 'test'
+  ...
+# Subtest: edges: a missing head, an unknown mode and a rig without the build view are refused
+ok 50 - edges: a missing head, an unknown mode and a rig without the build view are refused
+  ---
+  duration_ms: 1.5933
+  type: 'test'
+  ...
+# Subtest: build view frames a 67 m road: every cross-section point at the head is in view at 16:9, 1:1 and 9:16
+ok 51 - build view frames a 67 m road: every cross-section point at the head is in view at 16:9, 1:1 and 9:16
+  ---
+  duration_ms: 2.739
+  type: 'test'
+  ...
+# Subtest: build view: without the road's width, 15 m behind does NOT frame a 67 m road (what the framing fixes)
+ok 52 - build view: without the road's width, 15 m behind does NOT frame a 67 m road (what the framing fixes)
+  ---
+  duration_ms: 3.0968
+  type: 'test'
+  ...
+# Subtest: build view: a road narrow enough keeps exactly 15 m behind and 6 m up; the backed-off view keeps the same angle
+ok 53 - build view: a road narrow enough keeps exactly 15 m behind and 6 m up; the backed-off view keeps the same angle
+  ---
+  duration_ms: 4.6393
+  type: 'test'
+  ...
+# Subtest: the preview gives the build view the LAST road piece's span (a jump after it has no profile), and null with no road
+ok 54 - the preview gives the build view the LAST road piece's span (a jump after it has no profile), and null with no road
+  ---
+  duration_ms: 133.8072
+  type: 'test'
+  ...
+# Subtest: the head span of a frozen segment is the same as reading it, and an unfrozen segment changed in place is read again
+ok 55 - the head span of a frozen segment is the same as reading it, and an unfrozen segment changed in place is read again
+  ---
+  duration_ms: 1.1553
+  type: 'test'
+  ...
+# Subtest: the ghost (the first word before anything is placed) carries its segments, so the build view frames it too
+ok 56 - the ghost (the first word before anything is placed) carries its segments, so the build view frames it too
+  ---
+  duration_ms: 24.9101
+  type: 'test'
+  ...
+# Subtest: free look: a + yaw turns the view right on screen (what was straight ahead slides to the left)
+ok 57 - free look: a + yaw turns the view right on screen (what was straight ahead slides to the left)
+  ---
+  duration_ms: 2.3873
+  type: 'test'
+  ...
+# Subtest: zoom: every follow view comes nearer on + and backs off on −, per view, within its limits
+ok 58 - zoom: every follow view comes nearer on + and backs off on −, per view, within its limits
+  ---
+  duration_ms: 1.1491
+  type: 'test'
+  ...
+# Subtest: zoom in free mode flies along the view instead
+ok 59 - zoom in free mode flies along the view instead
+  ---
+  duration_ms: 1.2019
+  type: 'test'
+  ...
+# Subtest: overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on a 300 m straight (the head at the edge of the box: the slide must reach it)
+ok 60 - overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on a 300 m straight (the head at the edge of the box: the slide must reach it)
+  ---
+  duration_ms: 15.0696
+  type: 'test'
+  ...
+# Subtest: overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on a 400 m arc (box centre off the road)
+ok 61 - overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on a 400 m arc (box centre off the road)
+  ---
+  duration_ms: 7.873
+  type: 'test'
+  ...
+# Subtest: overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on the closed stadium (box centre in the infield)
+ok 62 - overhead zoomed in (0.05 to 50): the head and the road near it stay in view, on the closed stadium (box centre in the infield)
+  ---
+  duration_ms: 165.5389
+  type: 'test'
+  ...
+# Subtest: overhead at zoom 1 and out is unchanged by the head-following: the box centre, the whole track (the D170 fit)
+ok 63 - overhead at zoom 1 and out is unchanged by the head-following: the box centre, the whole track (the D170 fit)
+  ---
+  duration_ms: 7.343
+  type: 'test'
+  ...
+# Subtest: the lens: a notch in narrows the field of view by 1.15, out widens it, clamped to 10°–100°, and the reset returns the default
+ok 64 - the lens: a notch in narrows the field of view by 1.15, out widens it, clamped to 10°–100°, and the reset returns the default
+  ---
+  duration_ms: 0.2216
+  type: 'test'
+  ...
+# Subtest: the lens changes the pose's fov and nothing else, in every view (the eye, the target and up do not move)
+ok 65 - the lens changes the pose's fov and nothing else, in every view (the eye, the target and up do not move)
+  ---
+  duration_ms: 0.6926
+  type: 'test'
+  ...
+# Subtest: free.move moves EXACTLY hypot(fwd, right, up) metres, along d·fwd + r·right + U·up, at every pitch and for every combination of axes
+ok 66 - free.move moves EXACTLY hypot(fwd, right, up) metres, along d·fwd + r·right + U·up, at every pitch and for every combination of axes
+  ---
+  duration_ms: 643.8168
+  type: 'test'
+  ...
+# Subtest: W+E looking almost straight down (−89°, where forward and up nearly cancel) does not stop: it goes 1.0× along the part that does not cancel, the heading
+ok 67 - W+E looking almost straight down (−89°, where forward and up nearly cancel) does not stop: it goes 1.0× along the part that does not cancel, the heading
+  ---
+  duration_ms: 0.3755
+  type: 'test'
+  ...
+# Subtest: scaleOf(fwd, right, up) is the factor move() applies: on a pitched view the eye moves exactly (d·fwd + up·UP)·scaleOf
+ok 68 - scaleOf(fwd, right, up) is the factor move() applies: on a pitched view the eye moves exactly (d·fwd + up·UP)·scaleOf
+  ---
+  duration_ms: 0.3809
+  type: 'test'
+  ...
+# Subtest: a single-axis move is unchanged (backward is along −d), and a zero move is a no-op (no NaN)
+ok 69 - a single-axis move is unchanged (backward is along −d), and a zero move is a no-op (no NaN)
+  ---
+  duration_ms: 0.3366
+  type: 'test'
+  ...
+# Subtest: row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+ok 70 - row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+  ---
+  duration_ms: 4158.4471
+  type: 'test'
+  ...
+# Subtest: row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+ok 71 - row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+  ---
+  duration_ms: 98.2754
+  type: 'test'
+  ...
+# Subtest: row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+ok 72 - row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+  ---
+  duration_ms: 2435.0756
+  type: 'test'
+  ...
+# Subtest: row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+ok 73 - row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+  ---
+  duration_ms: 338.6319
+  type: 'test'
+  ...
+# Subtest: row 5: an empty run and a run of one segment are coarsened as before
+ok 74 - row 5: an empty run and a run of one segment are coarsened as before
+  ---
+  duration_ms: 7.0335
+  type: 'test'
+  ...
+# Subtest: row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+ok 75 - row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+  ---
+  duration_ms: 1520.7415
+  type: 'test'
+  ...
+# Subtest: row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+ok 76 - row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+  ---
+  duration_ms: 11.4563
+  type: 'test'
+  ...
+# Subtest: the strings: two decimals (2026-10-15: "everything to 0.00"), the unit written, a sign on angles, 0.00° bare, half away from zero, no wrap
+ok 77 - the strings: two decimals (2026-10-15: "everything to 0.00"), the unit written, a sign on angles, 0.00° bare, half away from zero, no wrap
+  ---
+  duration_ms: 2.5484
+  type: 'test'
+  ...
+# Subtest: the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled
+ok 78 - the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled
+  ---
+  duration_ms: 1.6342
+  type: 'test'
+  ...
+# Subtest: the layout: a label anchored on a large head keep-out is placed clear of it, not culled
+ok 79 - the layout: a label anchored on a large head keep-out is placed clear of it, not culled
+  ---
+  duration_ms: 0.1876
+  type: 'test'
+  ...
+# Subtest: the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head
+ok 80 - the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head
+  ---
+  duration_ms: 0.8105
+  type: 'test'
+  ...
+# Subtest: the layout: no label is placed under a panel over the view, the head's own label included
+ok 81 - the layout: no label is placed under a panel over the view, the head's own label included
+  ---
+  duration_ms: 0.3179
+  type: 'test'
+  ...
+# Subtest: a piece whose middle is behind the camera is labelled, when hovered, on the part of it that is in view
+ok 82 - a piece whose middle is behind the camera is labelled, when hovered, on the part of it that is in view
+  ---
+  duration_ms: 345.7785
+  type: 'test'
+  ...
+# Subtest: the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head)
+ok 83 - the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head)
+  ---
+  duration_ms: 78.5846
+  type: 'test'
+  ...
+# Subtest: the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1
+ok 84 - the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1
+  ---
+  duration_ms: 18.2411
+  type: 'test'
+  ...
+# Subtest: a skin change recolours the label boxes already made, and their background stays opaque
+ok 85 - a skin change recolours the label boxes already made, and their background stays opaque
+  ---
+  duration_ms: 44.338
+  type: 'test'
+  ...
+# Subtest: the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings
+ok 86 - the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings
+  ---
+  duration_ms: 7.1768
+  type: 'test'
+  ...
+# Subtest: the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame)
+ok 87 - the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame)
+  ---
+  duration_ms: 60.1226
+  type: 'test'
+  ...
+# Subtest: the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece
+ok 88 - the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece
+  ---
+  duration_ms: 21.5004
+  type: 'test'
+  ...
+# Subtest: the labels on the track: the head's own piece always, any other only when hovered; the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing
+ok 89 - the labels on the track: the head's own piece always, any other only when hovered; the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing
+  ---
+  duration_ms: 124.5094
+  type: 'test'
+  ...
+# Subtest: the head's own piece is labelled in the build view, where its middle is behind the camera
+ok 90 - the head's own piece is labelled in the build view, where its middle is behind the camera
+  ---
+  duration_ms: 79.5662
+  type: 'test'
+  ...
+# Subtest: the labels follow a path the preview extends IN PLACE (a hovered later piece is labelled), and survive the preview clearing \#preview after they mounted
+ok 91 - the labels follow a path the preview extends IN PLACE (a hovered later piece is labelled), and survive the preview clearing \#preview after they mounted
+  ---
+  duration_ms: 333.669
+  type: 'test'
+  ...
+# Subtest: extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here)
+ok 92 - extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here)
+  ---
+  duration_ms: 0.3848
+  type: 'test'
+  ...
+# Subtest: the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c
+ok 93 - the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c
+  ---
+  duration_ms: 47.625
+  type: 'test'
+  ...
+# Subtest: the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's
+ok 94 - the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's
+  ---
+  duration_ms: 13.0685
+  type: 'test'
+  ...
+# Subtest: the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why
+ok 95 - the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why
+  ---
+  duration_ms: 5.2488
+  type: 'test'
+  ...
+# Subtest: the brush's channel list gains cup (channel c), with a drag rate in degrees
+ok 96 - the brush's channel list gains cup (channel c), with a drag rate in degrees
+  ---
+  duration_ms: 1.3345
+  type: 'test'
+  ...
+# Subtest: the brush's channel list offers the cross-section channels e, s and t (D225), each with a drag rate
+ok 97 - the brush's channel list offers the cross-section channels e, s and t (D225), each with a drag rate
+  ---
+  duration_ms: 1.9551
+  type: 'test'
+  ...
+# Subtest: on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks
+ok 98 - on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks
+  ---
+  duration_ms: 2.8188
+  type: 'test'
+  ...
+# Subtest: after Extend and Redo the fields show the head's END state in their own units (°/100m, °, m); after Undo, the undone piece's own values (D242 item 7)
+ok 99 - after Extend and Redo the fields show the head's END state in their own units (°/100m, °, m); after Undo, the undone piece's own values (D242 item 7)
+  ---
+  duration_ms: 26.7529
+  type: 'test'
+  ...
+# Subtest: on OPENING a saved track the fields show its head
+ok 100 - on OPENING a saved track the fields show its head
+  ---
+  duration_ms: 7.6212
+  type: 'test'
+  ...
+# Subtest: a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again
+ok 101 - a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again
+  ---
+  duration_ms: 16.0024
+  type: 'test'
+  ...
+# Subtest: a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not
+ok 102 - a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not
+  ---
+  duration_ms: 12.1783
+  type: 'test'
+  ...
+# Subtest: the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start
+ok 103 - the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start
+  ---
+  duration_ms: 5.6229
+  type: 'test'
+  ...
+# Subtest: the first piece is the typed BANK, TURN and CLIMB from s = 0
+ok 104 - the first piece is the typed BANK, TURN and CLIMB from s = 0
+  ---
+  duration_ms: 7.3732
+  type: 'test'
+  ...
+# Subtest: a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1)
+ok 105 - a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1)
+  ---
+  duration_ms: 15.0347
+  type: 'test'
+  ...
+# Subtest: the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before
+ok 106 - the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before
+  ---
+  duration_ms: 26.6947
+  type: 'test'
+  ...
+# Subtest: a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on)
+ok 107 - a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on)
+  ---
+  duration_ms: 4490.1915
+  type: 'test'
+  ...
+# Subtest: extendOptions "at start": a ticked field WITH a target goes in transition as { channel: 20 m }; unticked or untouched fields do not
+ok 108 - extendOptions "at start": a ticked field WITH a target goes in transition as { channel: 20 m }; unticked or untouched fields do not
+  ---
+  duration_ms: 0.3736
+  type: 'test'
+  ...
+# Subtest: the panel: an "at start" box beside each field, OFF by default; ticking one redraws the ghost and readout inside its handler, and Extend sends it
+ok 109 - the panel: an "at start" box beside each field, OFF by default; ticking one redraws the ghost and readout inside its handler, and Extend sends it
+  ---
+  duration_ms: 9.2929
+  type: 'test'
+  ...
+# Subtest: "at start" on a field left as shown sends nothing (no target, D193); the box stays ticked for the next piece
+ok 110 - "at start" on a field left as shown sends nothing (no target, D193); the box stays ticked for the next piece
+  ---
+  duration_ms: 26.6592
+  type: 'test'
+  ...
+# Subtest: no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water
+ok 111 - no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water
+  ---
+  duration_ms: 1269.349
+  type: 'test'
+  ...
+# Subtest: Close the loop writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes, in one press
+ok 112 - Close the loop writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes, in one press
+  ---
+  duration_ms: 5893.5754
+  type: 'test'
+  ...
+# Subtest: Close says it is working at once, and a refusal shows in the Close box, in red
+ok 113 - Close says it is working at once, and a refusal shows in the Close box, in red
+  ---
+  duration_ms: 15758.005
+  type: 'test'
+  ...
+# Subtest: if that copy cannot be written, the press changes nothing and says why
+ok 114 - if that copy cannot be written, the press changes nothing and says why
+  ---
+  duration_ms: 4659.7546
+  type: 'test'
+  ...
+# Subtest: D271: Level ends the piece straight and level; To floor too short says the length that works, which then works; each is one undo step
+ok 115 - D271: Level ends the piece straight and level; To floor too short says the length that works, which then works; each is one undo step
+  ---
+  duration_ms: 1220.9364
+  type: 'test'
+  ...
+# Subtest: D280: Turn by places a piece that turns exactly the typed angle and ends straight; a Straight after it turns 0.0°; one undo step; too short names the length
+ok 116 - D280: Turn by places a piece that turns exactly the typed angle and ends straight; a Straight after it turns 0.0°; one undo step; too short names the length
+  ---
+  duration_ms: 32.2833
+  type: 'test'
+  ...
+# Subtest: Turn to grid: the line under the buttons says how far the end is off the grid, and the button turns onto it (90 by default, 45 when picked)
+ok 117 - Turn to grid: the line under the buttons says how far the end is off the grid, and the button turns onto it (90 by default, 45 when picked)
+  ---
+  duration_ms: 59.6733
+  type: 'test'
+  ...
+# Subtest: D282: Sharp places a corner of the typed angle at the typed radius as ONE undo step; too tight a radius names the tightest at this width and places nothing
+ok 118 - D282: Sharp places a corner of the typed angle at the typed radius as ONE undo step; too tight a radius names the tightest at this width and places nothing
+  ---
+  duration_ms: 3549.2481
+  type: 'test'
+  ...
+# Subtest: D242: after a 30°/100m turn, Straight extends a piece whose turn and climb are 0 from 20 m on, and puts the "at start" boxes back; turn 0 without "at start" shows the hint
+ok 119 - D242: after a 30°/100m turn, Straight extends a piece whose turn and climb are 0 from 20 m on, and puts the "at start" boxes back; turn 0 without "at start" shows the hint
+  ---
+  duration_ms: 14.659
+  type: 'test'
+  ...
+# Subtest: D242 item 7: Undo gives back the undone piece's values: the fields read what it was extended with, and Extend again rebuilds it byte-identical; Redo shows the head as before
+ok 120 - D242 item 7: Undo gives back the undone piece's values: the fields read what it was extended with, and Extend again rebuilds it byte-identical; Redo shows the head as before
+  ---
+  duration_ms: 17.0956
+  type: 'test'
+  ...
+# Subtest: the piece labels equal a fresh read after a placement, an undo, a redo, a bend in the middle and a moved start
+ok 121 - the piece labels equal a fresh read after a placement, an undo, a redo, a bend in the middle and a moved start
+  ---
+  duration_ms: 41.9466
+  type: 'test'
+  ...
+# Subtest: the panel shows the corner (its turn, "ends turning at …", what turn 0 at start would add) and the gravity bank, for the piece Extend would add
+ok 122 - the panel shows the corner (its turn, "ends turning at …", what turn 0 at start would add) and the gravity bank, for the piece Extend would add
+  ---
+  duration_ms: 7.685
+  type: 'test'
+  ...
+# Subtest: D331 B: by default the turn field is a corner: it shows nothing at the head, a typed 90 is the ghost's and the placed piece's exact 90.00°, ending straight
+ok 123 - D331 B: by default the turn field is a corner: it shows nothing at the head, a typed 90 is the ghost's and the placed piece's exact 90.00°, ending straight
+  ---
+  duration_ms: 6.9497
+  type: 'test'
+  ...
+# Subtest: D331 B: "turn as" rate is the old field (°/100 m, the head's rate shown); switching back puts the field back; Level, To floor and Jump refuse a corner by name and place nothing
+ok 124 - D331 B: "turn as" rate is the old field (°/100 m, the head's rate shown); switching back puts the field back; Level, To floor and Jump refuse a corner by name and place nothing
+  ---
+  duration_ms: 2.5385
+  type: 'test'
+  ...
+# Subtest: D331 climb: by default the climb field is a corner: blank at the head, a typed 10 is the ghost's and the placed piece's exact 10.00°, at a steady pitch after; the climb corner cell reads it
+ok 125 - D331 climb: by default the climb field is a corner: blank at the head, a typed 10 is the ghost's and the placed piece's exact 10.00°, at a steady pitch after; the climb corner cell reads it
+  ---
+  duration_ms: 15.5438
+  type: 'test'
+  ...
+# Subtest: the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim
+ok 126 - the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim
+  ---
+  duration_ms: 321.0171
+  type: 'test'
+  ...
+# Subtest: extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly
+ok 127 - extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly
+  ---
+  duration_ms: 53.3843
+  type: 'test'
+  ...
+# Subtest: the ghost of an extension is exactly what the click then builds
+ok 128 - the ghost of an extension is exactly what the click then builds
+  ---
+  duration_ms: 66.7823
+  type: 'test'
+  ...
+# Subtest: extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres
+ok 129 - extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres
+  ---
+  duration_ms: 0.2581
+  type: 'test'
+  ...
+# Subtest: a failed extend changes nothing and says why
+ok 130 - a failed extend changes nothing and says why
+  ---
+  duration_ms: 51.6074
+  type: 'test'
+  ...
+# Subtest: the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly
+ok 131 - the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly
+  ---
+  duration_ms: 69.1847
+  type: 'test'
+  ...
+# Subtest: the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is
+ok 132 - the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is
+  ---
+  duration_ms: 6.3468
+  type: 'test'
+  ...
+# Subtest: with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode
+ok 133 - with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode
+  ---
+  duration_ms: 4.2413
+  type: 'test'
+  ...
+# Subtest: a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown)
+ok 134 - a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown)
+  ---
+  duration_ms: 50.6736
+  type: 'test'
+  ...
+# Subtest: the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default)
+ok 135 - the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default)
+  ---
+  duration_ms: 59.8261
+  type: 'test'
+  ...
+# Subtest: E's refusal (a hill with no offset channel yet) is the message, and nothing changes
+ok 136 - E's refusal (a hill with no offset channel yet) is the message, and nothing changes
+  ---
+  duration_ms: 2.2749
+  type: 'test'
+  ...
+# Subtest: close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it
+ok 137 - close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it
+  ---
+  duration_ms: 630.7352
+  type: 'test'
+  ...
+# Subtest: export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written
+ok 138 - export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written
+  ---
+  duration_ms: 4840.3823
+  type: 'test'
+  ...
+# Subtest: save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here
+ok 139 - save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here
+  ---
+  duration_ms: 2.7154
+  type: 'test'
+  ...
+# Subtest: openExample refuses files that are not a fit and a read, and changes nothing
+ok 140 - openExample refuses files that are not a fit and a read, and changes nothing
+  ---
+  duration_ms: 1.1778
+  type: 'test'
+  ...
+# Subtest: the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend
+ok 141 - the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend
+  ---
+  duration_ms: 586.0818
+  type: 'test'
+  ...
+# Subtest: the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5
+ok 142 - the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5
+  ---
+  duration_ms: 4625.7948
+  type: 'test'
+  ...
+# Subtest: landed core: a 1 m hill brushed in the app is in the preview's path and the export's
+ok 143 - landed core: a 1 m hill brushed in the app is in the preview's path and the export's
+  ---
+  duration_ms: 661.3347
+  type: 'test'
+  ...
+# Subtest: landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed)
+ok 144 - landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed)
+  ---
+  duration_ms: 38.4661
+  type: 'test'
+  ...
+# Subtest: a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports
+ok 145 - a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports
+  ---
+  duration_ms: 3568.2994
+  type: 'test'
+  ...
+# Subtest: the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track
+ok 146 - the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track
+  ---
+  duration_ms: 6.6349
+  type: 'test'
+  ...
+# Subtest: D226 export (core): an EMPTY folder made directly in content\\tracks exports to content\\tracks and is removed; a folder with anything in it is refused and kept
+ok 147 - D226 export (core): an EMPTY folder made directly in content\\tracks exports to content\\tracks and is removed; a folder with anything in it is refused and kept
+  ---
+  duration_ms: 3110.4391
+  type: 'test'
+  ...
+# Subtest: D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE
+ok 148 - D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE
+  ---
+  duration_ms: 105.222
+  type: 'test'
+  ...
+# Subtest: D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone
+ok 149 - D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone
+  ---
+  duration_ms: 1255.3821
+  type: 'test'
+  ...
+# Subtest: D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written
+ok 150 - D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written
+  ---
+  duration_ms: 1485.4617
+  type: 'test'
+  ...
+# Subtest: D234 a successful export is unchanged: written to content\\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder
+ok 151 - D234 a successful export is unchanged: written to content\\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder
+  ---
+  duration_ms: 7013.4068
+  type: 'test'
+  ...
+# Subtest: D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused
+ok 152 - D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused
+  ---
+  duration_ms: 3134.7209
+  type: 'test'
+  ...
+# Subtest: D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam)
+ok 153 - D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam)
+  ---
+  duration_ms: 4289.747
+  type: 'test'
+  ...
+# Subtest: row 1: toSegments: segMFor absent or undefined is the same segments; a piece with its own chord length is that many chords of the same length in all
+ok 154 - row 1: toSegments: segMFor absent or undefined is the same segments; a piece with its own chord length is that many chords of the same length in all
+  ---
+  duration_ms: 86.5103
+  type: 'test'
+  ...
+# Subtest: row 2: the coarse ghost: few chords whatever the length, the placed pieces' segments the same objects, the same end of road, and a short piece unchanged
+ok 155 - row 2: the coarse ghost: few chords whatever the length, the placed pieces' segments the same objects, the same end of road, and a short piece unchanged
+  ---
+  duration_ms: 3471.8502
+  type: 'test'
+  ...
+# Subtest: row 3: the release is byte for byte what it was: the placed mesh and two full ghosts hash to what c2d7cb5 (0.4.7) made
+ok 156 - row 3: the release is byte for byte what it was: the placed mesh and two full ghosts hash to what c2d7cb5 (0.4.7) made
+  ---
+  duration_ms: 327.4027
+  type: 'test'
+  ...
+# Subtest: row 4: the cheap ghost: at most 64 stations on its new piece, the same end, the placed path and mesh untouched, a full ghost after it the full ghost, the handles where the full ghost's are
+ok 157 - row 4: the cheap ghost: at most 64 stations on its new piece, the same end, the placed path and mesh untouched, a full ghost after it the full ghost, the handles where the full ghost's are
+  ---
+  duration_ms: 1340.3131
+  type: 'test'
+  ...
+# Subtest: row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object
+ok 158 - row 5: the documents are byte for byte what they were: pieces placed and corners solved, hashed (taken at c2d7cb5), and basisN is basis, channelValue is channelAt(...).v, and extendCorner answers the same fields with the same object
+  ---
+  duration_ms: 58.3686
+  type: 'test'
+  ...
+# Subtest: row 6 (E's review §0): a kept answer is never handed back across a non-finite number: kh null kept, then kh NaN, Infinity or -Infinity refused by name, as on a fresh document
+ok 159 - row 6 (E's review §0): a kept answer is never handed back across a non-finite number: kh null kept, then kh NaN, Infinity or -Infinity refused by name, as on a fresh document
+  ---
+  duration_ms: 22.638
+  type: 'test'
+  ...
+# Subtest: row 7 (E's review §1b): a document frozen at the top only, its pieces array open, keeps no answer, so an edit in place is answered afresh
+ok 160 - row 7 (E's review §1b): a document frozen at the top only, its pieces array open, keeps no answer, so an edit in place is answered afresh
+  ---
+  duration_ms: 4.3155
+  type: 'test'
+  ...
+# Subtest: row 1: a flat track draws the ground grid only: no lattice, no levels, no labels, no drop lines
+ok 161 - row 1: a flat track draws the ground grid only: no lattice, no levels, no labels, no drop lines
+  ---
+  duration_ms: 3.7441
+  type: 'test'
+  ...
+# Subtest: row 2: a track with height draws the lattice, and it spans the track's lowest to its highest point, with level labels, verticals, rings and drop lines
+ok 162 - row 2: a track with height draws the lattice, and it spans the track's lowest to its highest point, with level labels, verticals, rings and drop lines
+  ---
+  duration_ms: 1.5264
+  type: 'test'
+  ...
+# Subtest: row 3: the line count stays bounded however long the track is (a 14 km one is about a thousand pairs, the grid itself well under)
+ok 163 - row 3: the line count stays bounded however long the track is (a 14 km one is about a thousand pairs, the grid itself well under)
+  ---
+  duration_ms: 283.1612
+  type: 'test'
+  ...
+# Subtest: row 4: the modes force what they say; off draws nothing; the guides can run without the grid; a bad mode is refused
+ok 164 - row 4: the modes force what they say; off draws nothing; the guides can run without the grid; a bad mode is refused
+  ---
+  duration_ms: 5.3776
+  type: 'test'
+  ...
+# Subtest: row 5: the centre is the box's middle unless set; the two axes and the vertical pass through it, three strokes each
+ok 165 - row 5: the centre is the box's middle unless set; the two axes and the vertical pass through it, three strokes each
+  ---
+  duration_ms: 1.4282
+  type: 'test'
+  ...
+# Subtest: row 6: the gap reads a KNOWN offset: a straight at x = 10 mirrored about x = 0 is 20 m away everywhere; a line at z = 60 mirrored about z = 50 is 20 m
+ok 166 - row 6: the gap reads a KNOWN offset: a straight at x = 10 mirrored about x = 0 is 20 m away everywhere; a line at z = 60 mirrored about z = 50 is 20 m
+  ---
+  duration_ms: 2.4137
+  type: 'test'
+  ...
+# Subtest: row 7: an oval's mirror gap is about 0 about its own centre, for left/right, front/back and both
+ok 167 - row 7: an oval's mirror gap is about 0 about its own centre, for left/right, front/back and both
+  ---
+  duration_ms: 1249.942
+  type: 'test'
+  ...
+# Subtest: row 8: the mirror modes flip what they say: x flips x, z flips z, both is the half turn, and height never changes
+ok 168 - row 8: the mirror modes flip what they say: x flips x, z flips z, both is the half turn, and height never changes
+  ---
+  duration_ms: 1.6776
+  type: 'test'
+  ...
+# Subtest: row 9: the dashes alternate on and off along the line, never stall on a boundary, and cover about half of it
+ok 169 - row 9: the dashes alternate on and off along the line, never stall on a boundary, and cover about half of it
+  ---
+  duration_ms: 0.5503
+  type: 'test'
+  ...
+# Subtest: row 10: a point projects and the pointer ray through it lands back on it on the base plane (the centre handle's drag)
+ok 170 - row 10: a point projects and the pointer ray through it lands back on it on the base plane (the centre handle's drag)
+  ---
+  duration_ms: 0.5923
+  type: 'test'
+  ...
+# Subtest: row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once
+ok 171 - row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once
+  ---
+  duration_ms: 503.9674
+  type: 'test'
+  ...
+# Subtest: row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame's plan and is disposed with the preview
+ok 172 - row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame's plan and is disposed with the preview
+  ---
+  duration_ms: 116.6186
+  type: 'test'
+  ...
+# Subtest: row 12: with no gridMode and no ground the preview draws no grid, as before; ground: true is the old grid at y = 0
+ok 173 - row 12: with no gridMode and no ground the preview draws no grid, as before; ground: true is the old grid at y = 0
+  ---
+  duration_ms: 357.079
+  type: 'test'
+  ...
+# Subtest: row 13: the layer puts a label at each level in view and the handle at the centre, and dragging the handle moves the centre to the point under the pointer
+ok 174 - row 13: the layer puts a label at each level in view and the handle at the centre, and dragging the handle moves the centre to the point under the pointer
+  ---
+  duration_ms: 3.8277
+  type: 'test'
+  ...
+# Subtest: row 14: the camera panel's buttons send the events the preview takes, follow its state, and say the numbers in words
+ok 175 - row 14: the camera panel's buttons send the events the preview takes, follow its state, and say the numbers in words
+  ---
+  duration_ms: 0.9708
+  type: 'test'
+  ...
+# Subtest: row 15: the whole lap is the preview's: nothing in src/, the export or the document changed (the diff against the base), and the sealed fixtures are untouched
+ok 176 - row 15: the whole lap is the preview's: nothing in src/, the export or the document changed (the diff against the base), and the sealed fixtures are untouched
+  ---
+  duration_ms: 131.2177
+  type: 'test'
+  ...
+# Subtest: row 16: the gap search is EXACT: the same largest, mean and count as measuring every mirrored point against every segment, on asymmetric, open, closed, lifted, far-centre and long tracks
+ok 177 - row 16: the gap search is EXACT: the same largest, mean and count as measuring every mirrored point against every segment, on asymmetric, open, closed, lifted, far-centre and long tracks
+  ---
+  duration_ms: 30288.02
+  type: 'test'
+  ...
+# Subtest: row 17: the search is CHEAP and does not depend on how far the mirror lies: a few dozen segment tests per point, not every segment (B: 95 to 230 ms a rebuild)
+ok 178 - row 17: the search is CHEAP and does not depend on how far the mirror lies: a few dozen segment tests per point, not every segment (B: 95 to 230 ms a rebuild)
+  ---
+  duration_ms: 110.5743
+  type: 'test'
+  ...
+# Subtest: row 18: the segment tree is built once per path: a centre drag or a change of mirror reuses it; a new path builds its own, and the answer is the same either way
+ok 179 - row 18: the segment tree is built once per path: a centre drag or a change of mirror reuses it; a new path builds its own, and the answer is the same either way
+  ---
+  duration_ms: 129.7998
+  type: 'test'
+  ...
+# Subtest: row 19: the mirror ghost's line count is BOUNDED however long the track is (B: 3,249 lines on 14 km coiled into a 300 m box, 8,316 on 40 km), and a short track keeps its short dashes
+ok 180 - row 19: the mirror ghost's line count is BOUNDED however long the track is (B: 3,249 lines on 14 km coiled into a 300 m box, 8,316 on 40 km), and a short track keeps its short dashes
+  ---
+  duration_ms: 1861.7487
+  type: 'test'
+  ...
+# Subtest: row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place
+ok 181 - row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place
+  ---
+  duration_ms: 418.0224
+  type: 'test'
+  ...
+# Subtest: row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush
+ok 182 - row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush
+  ---
+  duration_ms: 250.1524
+  type: 'test'
+  ...
+# Subtest: row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree
+ok 183 - row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree
+  ---
+  duration_ms: 76.8905
+  type: 'test'
+  ...
+# Subtest: light: the floor gets exactly ambient + key·key.y + fill·fill.y
+ok 184 - light: the floor gets exactly ambient + key·key.y + fill·fill.y
+  ---
+  duration_ms: 1.5538
+  type: 'test'
+  ...
+# Subtest: light: a floor and a vertical wall, and a bank toward and away from the key, differ by at least 0.15
+ok 185 - light: a floor and a vertical wall, and a bank toward and away from the key, differ by at least 0.15
+  ---
+  duration_ms: 0.2143
+  type: 'test'
+  ...
+# Subtest: light: two-sided (an overhang facing down is lit like the floor facing up), and never below ambient or above 1
+ok 186 - light: two-sided (an overhang facing down is lit like the floor facing up), and never below ambient or above 1
+  ---
+  duration_ms: 1.3497
+  type: 'test'
+  ...
+# Subtest: light: the fragment shader carries look.js's own constants (the test of shade() is a test of the shader)
+ok 187 - light: the fragment shader carries look.js's own constants (the test of shade() is a test of the shader)
+  ---
+  duration_ms: 0.1743
+  type: 'test'
+  ...
+# Subtest: edge lines: through the two edge vertices and the centre vertex, lifted 3 cm, on the geometry's own surface
+ok 188 - edge lines: through the two edge vertices and the centre vertex, lifted 3 cm, on the geometry's own surface
+  ---
+  duration_ms: 113.0175
+  type: 'test'
+  ...
+# Subtest: edge lines: a tie across the road at least every 10 m of the cell, and none on seams
+ok 189 - edge lines: a tie across the road at least every 10 m of the cell, and none on seams
+  ---
+  duration_ms: 147.5616
+  type: 'test'
+  ...
+# Subtest: overhead fit (aspect 1.7): every vertex of the whole track projects inside the view, and the head is in frame
+ok 190 - overhead fit (aspect 1.7): every vertex of the whole track projects inside the view, and the head is in frame
+  ---
+  duration_ms: 567.7598
+  type: 'test'
+  ...
+# Subtest: overhead fit (aspect 0.6): every vertex of the whole track projects inside the view, and the head is in frame
+ok 191 - overhead fit (aspect 0.6): every vertex of the whole track projects inside the view, and the head is in frame
+  ---
+  duration_ms: 374.2738
+  type: 'test'
+  ...
+# Subtest: ghost: the ghost of a segment tail equals what placing it builds, and the placed track is untouched by the ghost
+ok 192 - ghost: the ghost of a segment tail equals what placing it builds, and the placed track is untouched by the ghost
+  ---
+  duration_ms: 80.401
+  type: 'test'
+  ...
+# Subtest: ghost: a candidate that does not extend the placed track is refused; on an empty track the ghost stands alone
+ok 193 - ghost: a candidate that does not extend the placed track is refused; on an empty track the ghost stands alone
+  ---
+  duration_ms: 12.0481
+  type: 'test'
+  ...
+# Subtest: ghost through A's real shell: the candidate for a word equals what shell.place() then builds
+ok 194 - ghost through A's real shell: the candidate for a word equals what shell.place() then builds
+  ---
+  duration_ms: 139.0124
+  type: 'test'
+  ...
+# Subtest: preview: showGhost draws the ghost, clearGhost removes it, and placing the word retires it
+ok 195 - preview: showGhost draws the ghost, clearGhost removes it, and placing the word retires it
+  ---
+  duration_ms: 156.6788
+  type: 'test'
+  ...
+# Subtest: preview: a frame draws the grid and the head marker as lines (the grid only with ground: true)
+ok 196 - preview: a frame draws the grid and the head marker as lines (the grid only with ground: true)
+  ---
+  duration_ms: 18.3673
+  type: 'test'
+  ...
+# Subtest: preview: by default there is no ground grid, only the track and the head marker
+ok 197 - preview: by default there is no ground grid, only the track and the head marker
+  ---
+  duration_ms: 24.587
+  type: 'test'
+  ...
+# Subtest: grid: every vertex at y = 0, covering the track's box, and the spacing widens so a long track stays a few hundred lines
+ok 198 - grid: every vertex at y = 0, covering the track's box, and the spacing widens so a long track stays a few hundred lines
+  ---
+  duration_ms: 132.1799
+  type: 'test'
+  ...
+# Subtest: head marker: it grows with the camera distance (2%, never under 3 m), and its ring surrounds the head in the road plane
+ok 199 - head marker: it grows with the camera distance (2%, never under 3 m), and its ring surrounds the head in the road plane
+  ---
+  duration_ms: 0.7463
+  type: 'test'
+  ...
+# Subtest: head marker: a 10 m mast from the head along the road's up
+ok 200 - head marker: a 10 m mast from the head along the road's up
+  ---
+  duration_ms: 0.5429
+  type: 'test'
+  ...
+# Subtest: the closed track after Close, built from the open one, is the closed track a full build draws
+ok 201 - the closed track after Close, built from the open one, is the closed track a full build draws
+  ---
+  duration_ms: 8373.7198
+  type: 'test'
+  ...
+# Subtest: Close's rebuild of a 24 km track it closes with new road costs at most half a full build: the placed straights are kept
+ok 202 - Close's rebuild of a 24 km track it closes with new road costs at most half a full build: the placed straights are kept
+  ---
+  duration_ms: 48382.0407
+  type: 'test'
+  ...
+# Subtest: row 1: coarsen thins the row grid, keeps the road's two edges, keeps shared grids shared and unchanged segments the same objects; detail 1 is the same array
+ok 203 - row 1: coarsen thins the row grid, keeps the road's two edges, keeps shared grids shared and unchanged segments the same objects; detail 1 is the same array
+  ---
+  duration_ms: 1.5629
+  type: 'test'
+  ...
+# Subtest: row 2: the model meshes far fewer vertices at a coarse detail, comes back to EXACTLY a fresh full build, returns the real segments, builds nothing for the same document
+ok 204 - row 2: the model meshes far fewer vertices at a coarse detail, comes back to EXACTLY a fresh full build, returns the real segments, builds nothing for the same document
+  ---
+  duration_ms: 1627.6542
+  type: 'test'
+  ...
+# Subtest: row 2b: a change of detail on an OPEN track is a full rebuild, not an incremental one; and a closed loop's same-document update is the same build (it used to rebuild in full every time)
+ok 205 - row 2b: a change of detail on an OPEN track is a full rebuild, not an incremental one; and a closed loop's same-document update is the same build (it used to rebuild in full every time)
+  ---
+  duration_ms: 1519.3264
+  type: 'test'
+  ...
+# Subtest: row 3: batchesOf(mesh, from) is the batches of the pieces from there on, equal to the full list filtered; the ghost builds only the new pieces
+ok 206 - row 3: batchesOf(mesh, from) is the batches of the pieces from there on, equal to the full list filtered; the ghost builds only the new pieces
+  ---
+  duration_ms: 836.3021
+  type: 'test'
+  ...
+# Subtest: row 4: a brush drag keeps full detail and draws the drag's frame (nothing placed rebuilt); the release's exact build runs in the next animation frame, once, and is the full build
+ok 207 - row 4: a brush drag keeps full detail and draws the drag's frame (nothing placed rebuilt); the release's exact build runs in the next animation frame, once, and is the full build
+  ---
+  duration_ms: 1692.571
+  type: 'test'
+  ...
+# Subtest: row 5: the panel coalesces pointer moves to ONE brushTo per animation frame with the LATEST position, and the release applies the last position still waiting
+ok 208 - row 5: the panel coalesces pointer moves to ONE brushTo per animation frame with the LATEST position, and the release applies the last position still waiting
+  ---
+  duration_ms: 197.583
+  type: 'test'
+  ...
+# Subtest: row 6: the fast change key is the JSON key's equality, hashed: equal content equal keys, any one-bit change differs, and on real segments it finds exactly the segments JSON finds
+ok 209 - row 6: the fast change key is the JSON key's equality, hashed: equal content equal keys, any one-bit change differs, and on real segments it finds exactly the segments JSON finds
+  ---
+  duration_ms: 346.2691
+  type: 'test'
+  ...
+# Subtest: row 7: a cup or plain segment gets a coarse row grid too (shared across a held cross-section, the road's two edges kept) and the coarse mesh is a fraction of the vertices
+ok 210 - row 7: a cup or plain segment gets a coarse row grid too (shared across a held cross-section, the road's two edges kept) and the coarse mesh is a fraction of the vertices
+  ---
+  duration_ms: 1638.9063
+  type: 'test'
+  ...
+# Subtest: row 8: a closed loop rebuilt from the pieces that changed EQUALS a full rebuild: every coarse drag step, the release, an undo; and it meshes only what the brush reached
+ok 211 - row 8: a closed loop rebuilt from the pieces that changed EQUALS a full rebuild: every coarse drag step, the release, an undo; and it meshes only what the brush reached
+  ---
+  duration_ms: 20600.1626
+  type: 'test'
+  ...
+# Subtest: row 8b: a brush across the loop's own joint (the last piece to the first), a hill (a lifted path) and a heading brush that re-closes the whole loop: all equal a full rebuild
+ok 212 - row 8b: a brush across the loop's own joint (the last piece to the first), a hill (a lifted path) and a heading brush that re-closes the whole loop: all equal a full rebuild
+  ---
+  duration_ms: 4029.1121
+  type: 'test'
+  ...
+# Subtest: row 9: reuseMesh does not change the mesh it was given, refuses a different number of segments, and an unflagged piece is remeshed
+ok 213 - row 9: reuseMesh does not change the mesh it was given, refuses a different number of segments, and an unflagged piece is remeshed
+  ---
+  duration_ms: 805.0985
+  type: 'test'
+  ...
+# Subtest: row 9b: a piece that takes its font from the piece before it (a word segment, no blend of its own) is remeshed when that one changes
+ok 214 - row 9b: a piece that takes its font from the piece before it (a word segment, no blend of its own) is remeshed when that one changes
+  ---
+  duration_ms: 1327.1038
+  type: 'test'
+  ...
+# Subtest: row 9c: reuseMesh checks a piece's start pitch and bank itself: a flag that says "same" for a piece whose start changed does not keep a stale shape
+ok 215 - row 9c: reuseMesh checks a piece's start pitch and bank itself: a flag that says "same" for a piece whose start changed does not keep a stale shape
+  ---
+  duration_ms: 1150.7398
+  type: 'test'
+  ...
+# Subtest: row 9d: a seam between two pieces that only MOVED moves with them (a step in the font with no ramp makes a real seam)
+ok 216 - row 9d: a seam between two pieces that only MOVED moves with them (a step in the font with no ramp makes a real seam)
+  ---
+  duration_ms: 673.6299
+  type: 'test'
+  ...
+# Subtest: row 9e: a closed loop whose number of segments changed is built in full, not reused (the model checks the count before it trusts a slot)
+ok 217 - row 9e: a closed loop whose number of segments changed is built in full, not reused (the model checks the count before it trusts a slot)
+  ---
+  duration_ms: 1280.6458
+  type: 'test'
+  ...
+# Subtest: row 1: place then undo restores the track without meshing it, equal to a fresh full build, and placing again from it equals a fresh build
+ok 218 - row 1: place then undo restores the track without meshing it, equal to a fresh full build, and placing again from it equals a fresh build
+  ---
+  duration_ms: 1565.8283
+  type: 'test'
+  ...
+# Subtest: row 2: with a hill on the track (the lift), place then undo is restored and equal to a fresh full build
+ok 219 - row 2: with a hill on the track (the lift), place then undo is restored and equal to a fresh full build
+  ---
+  duration_ms: 1043.713
+  type: 'test'
+  ...
+# Subtest: row 3: a brush between the placement and the undo drops the copy: the undo rebuilds, and equals a fresh full build
+ok 220 - row 3: a brush between the placement and the undo drops the copy: the undo rebuilds, and equals a fresh full build
+  ---
+  duration_ms: 616.7764
+  type: 'test'
+  ...
+# Subtest: row 5: a SCULPT of the restored track (it re-places the path's blocks in place) still equals a fresh full build: the restored samples read the blocks the path holds
+ok 221 - row 5: a SCULPT of the restored track (it re-places the path's blocks in place) still equals a fresh full build: the restored samples read the blocks the path holds
+  ---
+  duration_ms: 554.8993
+  type: 'test'
+  ...
+# Subtest: row 4: two placements undone in a row: the first is restored, the second rebuilt, both equal a fresh full build
+ok 222 - row 4: two placements undone in a row: the first is restored, the second rebuilt, both equal a fresh full build
+  ---
+  duration_ms: 1151.5597
+  type: 'test'
+  ...
+# Subtest: batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface
+ok 223 - batches: the node matrix read column-major (as GL reads it) puts every vertex on the geometry's surface
+  ---
+  duration_ms: 126.1528
+  type: 'test'
+  ...
+# Subtest: batches: one colour per placed word, alternating along the track; a seam is darker than its piece
+ok 224 - batches: one colour per placed word, alternating along the track; a seam is darker than its piece
+  ---
+  duration_ms: 76.6839
+  type: 'test'
+  ...
+# Subtest: track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build
+ok 225 - track model: append → extend, a word edit → sculpt, a removal → full, no change → same; each equals a full build
+  ---
+  duration_ms: 431.3231
+  type: 'test'
+  ...
+# Subtest: track model: a document that does not resolve keeps the last good track and marks it stale
+ok 226 - track model: a document that does not resolve keeps the last good track and marks it stale
+  ---
+  duration_ms: 38.6183
+  type: 'test'
+  ...
+# Subtest: track model through A's shell: placing words grows the preview by extend, and it equals a full build
+ok 227 - track model through A's shell: placing words grows the preview by extend, and it equals a full build
+  ---
+  duration_ms: 226.658
+  type: 'test'
+  ...
+# Subtest: renderer: every array is uploaded once; drawing the same batches again uploads nothing
+ok 228 - renderer: every array is uploaded once; drawing the same batches again uploads nothing
+  ---
+  duration_ms: 61.3257
+  type: 'test'
+  ...
+# Subtest: renderer: after a sculpt, the chunks before the edited piece upload nothing; stale buffers are deleted
+ok 229 - renderer: after a sculpt, the chunks before the edited piece upload nothing; stale buffers are deleted
+  ---
+  duration_ms: 94.7442
+  type: 'test'
+  ...
+# Subtest: renderer: merged chunks draw the triangles of the cells, in order, where the cells put them in world space, in a handful of draws
+ok 230 - renderer: merged chunks draw the triangles of the cells, in order, where the cells put them in world space, in a handful of draws
+  ---
+  duration_ms: 777.4428
+  type: 'test'
+  ...
+# Subtest: renderer: after a sculpt that moves later pieces, the drawn road equals a fresh renderer drawing of it (no chunk kept at its old place, even with the same cells)
+ok 231 - renderer: after a sculpt that moves later pieces, the drawn road equals a fresh renderer drawing of it (no chunk kept at its old place, even with the same cells)
+  ---
+  duration_ms: 509.9465
+  type: 'test'
+  ...
+# Subtest: renderer: a chunk limit outside 1..65535 is refused
+ok 232 - renderer: a chunk limit outside 1..65535 is refused
+  ---
+  duration_ms: 0.6265
+  type: 'test'
+  ...
+# Subtest: renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused
+ok 233 - renderer: a shader that does not compile throws with the compiler's log; a canvas without size is refused
+  ---
+  duration_ms: 0.3627
+  type: 'test'
+  ...
+# Subtest: keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing
+ok 234 - keys: C switches, B is the build view, WASD/QE fly, arrows turn, anything else does nothing
+  ---
+  duration_ms: 0.3408
+  type: 'test'
+  ...
+# Subtest: the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler
+ok 235 - the preview shader sources carry no environment (v1 is the track only): no sky, texture or sampler
+  ---
+  duration_ms: 0.178
+  type: 'test'
+  ...
+# Subtest: keys: a key held when the window loses focus is let go, so the camera stops (the drift)
+ok 236 - keys: a key held when the window loses focus is let go, so the camera stops (the drift)
+  ---
+  duration_ms: 77.1754
+  type: 'test'
+  ...
+# Subtest: keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD)
+ok 237 - keys: already in free, a key held when the window loses focus is let go, so the camera stops (V11 of B: 4.5 m of drift at HEAD)
+  ---
+  duration_ms: 2.2342
+  type: 'test'
+  ...
+# Subtest: keys: Shift sprints (×4 the distance per frame)
+ok 238 - keys: Shift sprints (×4 the distance per frame)
+  ---
+  duration_ms: 3.6139
+  type: 'test'
+  ...
+# Subtest: mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time
+ok 239 - mouse: a right drag looks from the build view (taking it over), a drag right turns right, and keys move at the same time
+  ---
+  duration_ms: 4.4763
+  type: 'test'
+  ...
+# Subtest: mouse: the scroll wheel zooms the build view
+ok 240 - mouse: the scroll wheel zooms the build view
+  ---
+  duration_ms: 1.5433
+  type: 'test'
+  ...
+# Subtest: keys: W then D goes diagonally: both axes at once, the same 3 m a frame as a straight line (1.0×, not √2)
+ok 241 - keys: W then D goes diagonally: both axes at once, the same 3 m a frame as a straight line (1.0×, not √2)
+  ---
+  duration_ms: 71.9724
+  type: 'test'
+  ...
+# Subtest: keys: D then W is the same diagonal (the order across axes does not matter)
+ok 242 - keys: D then W is the same diagonal (the order across axes does not matter)
+  ---
+  duration_ms: 14.7361
+  type: 'test'
+  ...
+# Subtest: keys: three axes at once (W, D and E) move along the sum W + D + up at 1.0× in METRES (D189: the world displacement is normalised, not the input)
+ok 243 - keys: three axes at once (W, D and E) move along the sum W + D + up at 1.0× in METRES (D189: the world displacement is normalised, not the input)
+  ---
+  duration_ms: 12.7323
+  type: 'test'
+  ...
+# Subtest: keys: D and E (right and up are perpendicular) go at 1.0× too: (D + up) / √2, 3 m a frame
+ok 244 - keys: D and E (right and up are perpendicular) go at 1.0× too: (D + up) / √2, 3 m a frame
+  ---
+  duration_ms: 3.6831
+  type: 'test'
+  ...
+# Subtest: keys: releasing one key of a diagonal leaves a straight line on the other, and releasing both stops
+ok 245 - keys: releasing one key of a diagonal leaves a straight line on the other, and releasing both stops
+  ---
+  duration_ms: 5.1225
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (w then s), and on its release the w takes over
+ok 246 - keys: on one axis the NEWER key wins (w then s), and on its release the w takes over
+  ---
+  duration_ms: 9.9065
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (s then w), and on its release the s takes over
+ok 247 - keys: on one axis the NEWER key wins (s then w), and on its release the s takes over
+  ---
+  duration_ms: 11.162
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (d then a), and on its release the d takes over
+ok 248 - keys: on one axis the NEWER key wins (d then a), and on its release the d takes over
+  ---
+  duration_ms: 4.256
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (a then d), and on its release the a takes over
+ok 249 - keys: on one axis the NEWER key wins (a then d), and on its release the a takes over
+  ---
+  duration_ms: 7.2773
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (e then q), and on its release the e takes over
+ok 250 - keys: on one axis the NEWER key wins (e then q), and on its release the e takes over
+  ---
+  duration_ms: 13.004
+  type: 'test'
+  ...
+# Subtest: keys: on one axis the NEWER key wins (q then e), and on its release the q takes over
+ok 251 - keys: on one axis the NEWER key wins (q then e), and on its release the q takes over
+  ---
+  duration_ms: 3.6291
+  type: 'test'
+  ...
+# Subtest: keys: releasing the OLDER key of an axis leaves the newer moving
+ok 252 - keys: releasing the OLDER key of an axis leaves the newer moving
+  ---
+  duration_ms: 2.0918
+  type: 'test'
+  ...
+# Subtest: keys: an axis with both keys held still combines with another axis: W, S (newer) and D go along (D − W) / √2, and on S released (W + D) / √2
+ok 253 - keys: an axis with both keys held still combines with another axis: W, S (newer) and D go along (D − W) / √2, and on S released (W + D) / √2
+  ---
+  duration_ms: 2.9604
+  type: 'test'
+  ...
+# Subtest: keys: a held key that repeats (auto-repeat key-down) keeps its place: with W, S (newer) held a repeat of W does not make W the newer
+ok 254 - keys: a held key that repeats (auto-repeat key-down) keeps its place: with W, S (newer) held a repeat of W does not make W the newer
+  ---
+  duration_ms: 2.214
+  type: 'test'
+  ...
+# Subtest: keys: Shift multiplies the diagonal as it does a straight line: ×4 at the press, so 12 m a frame, not 12·√2
+ok 255 - keys: Shift multiplies the diagonal as it does a straight line: ×4 at the press, so 12 m a frame, not 12·√2
+  ---
+  duration_ms: 1.2557
+  type: 'test'
+  ...
+# Subtest: keys: a blur lets go of a diagonal (both keys), so the camera stops
+ok 256 - keys: a blur lets go of a diagonal (both keys), so the camera stops
+  ---
+  duration_ms: 1.1298
+  type: 'test'
+  ...
+# Subtest: keys: the arrow (look) keys are not movement keys: they turn while the movement keys fly
+ok 257 - keys: the arrow (look) keys are not movement keys: they turn while the movement keys fly
+  ---
+  duration_ms: 1.5015
+  type: 'test'
+  ...
+# Subtest: P3: C or B pressed while a movement key is held leaves free mode and stays out of it
+ok 258 - P3: C or B pressed while a movement key is held leaves free mode and stays out of it
+  ---
+  duration_ms: 2.2962
+  type: 'test'
+  ...
+# Subtest: P3: a NEW movement key-down after C takes the view over again
+ok 259 - P3: a NEW movement key-down after C takes the view over again
+  ---
+  duration_ms: 8.0429
+  type: 'test'
+  ...
+# Subtest: P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY
+ok 260 - P5: Shift+wheel is ×4 when the device reports the scroll as deltaX (deltaY 0), not only as deltaY
+  ---
+  duration_ms: 19.4566
+  type: 'test'
+  ...
+# Subtest: P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code
+ok 261 - P2: a key that flies by its label but sits on another physical key (another layout) flies, and lets go by its own code
+  ---
+  duration_ms: 1.6234
+  type: 'test'
+  ...
+# Subtest: the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4))
+ok 262 - the sprint curve: ×4 at 0 s, ×20 from 2.5 s, smooth and rising between (1 s is 4 + 16·S(0.4))
+  ---
+  duration_ms: 0.208
+  type: 'test'
+  ...
+# Subtest: keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame)
+ok 263 - keys: Shift held ramps the speed: ×4 at the press, then along the curve, ×20 at 2.5 s (measured per frame)
+  ---
+  duration_ms: 5.1209
+  type: 'test'
+  ...
+# Subtest: keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again
+ok 264 - keys: releasing Shift returns to ×1, and pressing it again starts at ×4 again
+  ---
+  duration_ms: 58.4419
+  type: 'test'
+  ...
+# Subtest: keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4
+ok 265 - keys: a blur resets the ramp (the key-up never comes), and the next press starts at ×4
+  ---
+  duration_ms: 32.4302
+  type: 'test'
+  ...
+# Subtest: focus: Enter in a text field or a number field lets go of it (and does not touch the camera)
+ok 266 - focus: Enter in a text field or a number field lets go of it (and does not touch the camera)
+  ---
+  duration_ms: 13.3434
+  type: 'test'
+  ...
+# Subtest: focus: Esc in a field lets go of it, in every kind of field
+ok 267 - focus: Esc in a field lets go of it, in every kind of field
+  ---
+  duration_ms: 9.4061
+  type: 'test'
+  ...
+# Subtest: focus: Enter in a text AREA is a new line, and is left alone
+ok 268 - focus: Enter in a text AREA is a new line, and is left alone
+  ---
+  duration_ms: 5.241
+  type: 'test'
+  ...
+# Subtest: focus: Enter or Esc on the page (no field) does nothing to the camera
+ok 269 - focus: Enter or Esc on the page (no field) does nothing to the camera
+  ---
+  duration_ms: 1.3701
+  type: 'test'
+  ...
+# Subtest: focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field
+ok 270 - focus: a mouse-down on the canvas (either button, or the middle) takes focus off the active field
+  ---
+  duration_ms: 30.3857
+  type: 'test'
+  ...
+# Subtest: focus: a mouse-down with nothing focused (the page body, or none) is fine
+ok 271 - focus: a mouse-down with nothing focused (the page body, or none) is fine
+  ---
+  duration_ms: 1.794
+  type: 'test'
+  ...
+# Subtest: focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn
+ok 272 - focus: a NUMBER field lets the camera keys through: W A S D Q E fly, the arrows turn
+  ---
+  duration_ms: 9.3673
+  type: 'test'
+  ...
+# Subtest: focus: Shift sprints while a number field has focus
+ok 273 - focus: Shift sprints while a number field has focus
+  ---
+  duration_ms: 2.4243
+  type: 'test'
+  ...
+# Subtest: focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped)
+ok 274 - focus: a number field still gets its digits (a digit is not the camera's key, and is not stopped)
+  ---
+  duration_ms: 0.7924
+  type: 'test'
+  ...
+# Subtest: focus: a TEXT field swallows every camera key: typing a name never moves the camera
+ok 275 - focus: a TEXT field swallows every camera key: typing a name never moves the camera
+  ---
+  duration_ms: 4.7433
+  type: 'test'
+  ...
+# Subtest: the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays
+ok 276 - the plain wheel is unchanged: a follow view changes distance, free mode dollies 4 m a notch, and the lens stays
+  ---
+  duration_ms: 0.8768
+  type: 'test'
+  ...
+# Subtest: Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°)
+ok 277 - Ctrl+wheel is the LENS, in every view: the fov changes and the eye does not (in and out, stepwise, clamped to 10°–100°)
+  ---
+  duration_ms: 16.6083
+  type: 'test'
+  ...
+# Subtest: Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too
+ok 278 - Ctrl+wheel: Shift makes it 4 notches, and a device that reports deltaX works too
+  ---
+  duration_ms: 2.4282
+  type: 'test'
+  ...
+# Subtest: a middle click resets the lens to 60° (and does not start a drag or change the view)
+ok 279 - a middle click resets the lens to 60° (and does not start a drag or change the view)
+  ---
+  duration_ms: 0.8869
+  type: 'test'
+  ...
+# Subtest: the HUD shows the fov once the lens has moved off 60°, and drops it on the reset
+ok 280 - the HUD shows the fov once the lens has moved off 60°, and drops it on the reset
+  ---
+  duration_ms: 1.7373
+  type: 'test'
+  ...
+# Subtest: the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all)
+ok 281 - the pick still hits the station under the cursor after the lens changes (the pick reads the drawn pose, fov and all)
+  ---
+  duration_ms: 2.8503
+  type: 'test'
+  ...
+# Subtest: W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free
+ok 282 - W1: W held and REPEATING, C pressed: W's next auto-repeats do not take the view back into free
+  ---
+  duration_ms: 1.9722
+  type: 'test'
+  ...
+# Subtest: W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free
+ok 283 - W1: W held and REPEATING, B pressed: W's next auto-repeats do not take the view back into free
+  ---
+  duration_ms: 0.8776
+  type: 'test'
+  ...
+# Subtest: W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom
+ok 284 - W2: a trackpad swipe SIDEWAYS (deltaX only, no Shift: 20 events of 2 px) does not zoom
+  ---
+  duration_ms: 0.9338
+  type: 'test'
+  ...
+# Subtest: W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line)
+ok 285 - W2: the same sideways swipe with Ctrl held does not move the LENS either (the lens shares the wheel line)
+  ---
+  duration_ms: 0.8464
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed and no ghost, a frame draws, looking at where the first piece will start
+ok 286 - D195: with nothing placed and no ghost, a frame draws, looking at where the first piece will start
+  ---
+  duration_ms: 0.9117
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed, the wheel zooms on the next frame (not later, when a ghost appears)
+ok 287 - D195: with nothing placed, the wheel zooms on the next frame (not later, when a ghost appears)
+  ---
+  duration_ms: 20.8156
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed, W takes the view over and flies on the next frame
+ok 288 - D195: with nothing placed, W takes the view over and flies on the next frame
+  ---
+  duration_ms: 0.6003
+  type: 'test'
+  ...
+# Subtest: D195: with nothing placed, every camera mode draws (chase included, on the start alone)
+ok 289 - D195: with nothing placed, every camera mode draws (chase included, on the start alone)
+  ---
+  duration_ms: 0.4862
+  type: 'test'
+  ...
+# Subtest: D195: with no start in the document (the piece builder), the empty view looks from the origin along +z, level
+ok 290 - D195: with no start in the document (the piece builder), the empty view looks from the origin along +z, level
+  ---
+  duration_ms: 0.2778
+  type: 'test'
+  ...
+# Subtest: D195: the empty track's head is the frame the first piece starts with (src/geom buildPath's first sample, no roll)
+ok 291 - D195: the empty track's head is the frame the first piece starts with (src/geom buildPath's first sample, no roll)
+  ---
+  duration_ms: 1.047
+  type: 'test'
+  ...
+# Subtest: D195: once a ghost shows on the empty track, the camera follows the ghost's head, as before
+ok 292 - D195: once a ghost shows on the empty track, the camera follows the ghost's head, as before
+  ---
+  duration_ms: 12.9759
+  type: 'test'
+  ...
+# Subtest: D252: Space held flies UP like E (3 m a frame, world up), and its release stops it
+ok 293 - D252: Space held flies UP like E (3 m a frame, world up), and its release stops it
+  ---
+  duration_ms: 5.9806
+  type: 'test'
+  ...
+# Subtest: D252: Left Ctrl ALONE flies DOWN like Q; Right Ctrl does not fly
+ok 294 - D252: Left Ctrl ALONE flies DOWN like Q; Right Ctrl does not fly
+  ---
+  duration_ms: 26.4839
+  type: 'test'
+  ...
+# Subtest: D252: Ctrl+Z never moves the camera: the descent before Z is undone, in free mode and from the build view (the view is kept too)
+ok 295 - D252: Ctrl+Z never moves the camera: the descent before Z is undone, in free mode and from the build view (the view is kept too)
+  ---
+  duration_ms: 26.9659
+  type: 'test'
+  ...
+# Subtest: D257: a SHORTCUT key held BEFORE Ctrl (Z) means Ctrl never flies on that press; Shift or W held first does not stop it, and Ctrl+Shift+Z still leaves the camera put
+ok 296 - D257: a SHORTCUT key held BEFORE Ctrl (Z) means Ctrl never flies on that press; Shift or W held first does not stop it, and Ctrl+Shift+Z still leaves the camera put
+  ---
+  duration_ms: 5.4762
+  type: 'test'
+  ...
+# Subtest: D252: Ctrl+wheel is still the LENS and the camera does not move; a mouse button down (a handle drag, Ctrl to snap) means no descent
+ok 297 - D252: Ctrl+wheel is still the LENS and the camera does not move; a mouse button down (a handle drag, Ctrl to snap) means no descent
+  ---
+  duration_ms: 2.101
+  type: 'test'
+  ...
+# Subtest: D252: Space is TAKEN (preventDefault, down and up) so a focused button is never clicked; in a text field it types and the camera stays
+ok 298 - D252: Space is TAKEN (preventDefault, down and up) so a focused button is never clicked; in a text field it types and the camera stays
+  ---
+  duration_ms: 2.1943
+  type: 'test'
+  ...
+# Subtest: D255: Left Ctrl descends on the FIRST frame, like Space; Ctrl+Z still puts the camera back where Ctrl found it, and the view it found
+ok 299 - D255: Left Ctrl descends on the FIRST frame, like Space; Ctrl+Z still puts the camera back where Ctrl found it, and the view it found
+  ---
+  duration_ms: 2.4364
+  type: 'test'
+  ...
+# Subtest: D255: a LEFT drag never turns the camera, in free mode either; a RIGHT drag still looks
+ok 300 - D255: a LEFT drag never turns the camera, in free mode either; a RIGHT drag still looks
+  ---
+  duration_ms: 1.5217
+  type: 'test'
+  ...
+# Subtest: a move key from the OVERHEAD view enters free with no frame throwing: pitch held at -89 degrees, facing where the overhead view had up the screen
+ok 301 - a move key from the OVERHEAD view enters free with no frame throwing: pitch held at -89 degrees, facing where the overhead view had up the screen
+  ---
+  duration_ms: 7.0738
+  type: 'test'
+  ...
+# Subtest: a handle drag (pointerdown only, its mousedown suppressed) with Ctrl held past 200 ms to snap: the camera does not move; a press joining Ctrl undoes it
+ok 302 - a handle drag (pointerdown only, its mousedown suppressed) with Ctrl held past 200 ms to snap: the camera does not move; a press joining Ctrl undoes it
+  ---
+  duration_ms: 1.8231
+  type: 'test'
+  ...
+# Subtest: D257: Left Ctrl with W flies down AND forward, whichever went down first (the same move as W with Q)
+ok 303 - D257: Left Ctrl with W flies down AND forward, whichever went down first (the same move as W with Q)
+  ---
+  duration_ms: 2.4067
+  type: 'test'
+  ...
+# Subtest: D257: Left Ctrl with a RIGHT-button look drag flies down and looks
+ok 304 - D257: Left Ctrl with a RIGHT-button look drag flies down and looks
+  ---
+  duration_ms: 0.843
+  type: 'test'
+  ...
+# Subtest: D257: Left Ctrl with Space nets ZERO on the up axis, whichever went down first
+ok 305 - D257: Left Ctrl with Space nets ZERO on the up axis, whichever went down first
+  ---
+  duration_ms: 1.5936
+  type: 'test'
+  ...
+# Subtest: D257: Ctrl+Z still leaves the camera where it started (and still undoes): flying with W, the descent is undone and the forward travel kept
+ok 306 - D257: Ctrl+Z still leaves the camera where it started (and still undoes): flying with W, the descent is undone and the forward travel kept
+  ---
+  duration_ms: 1.4468
+  type: 'test'
+  ...
+# Subtest: the surface: asphalt or solid draws the sigil surface, an image draws the set, and no kind keeps the set
+ok 307 - the surface: asphalt or solid draws the sigil surface, an image draws the set, and no kind keeps the set
+  ---
+  duration_ms: 5.6316
+  type: 'test'
+  ...
+# Subtest: D409: the camera HUD names the plain surface as the road's, never "sigil", for asphalt and solid alike
+ok 308 - D409: the camera HUD names the plain surface as the road's, never "sigil", for asphalt and solid alike
+  ---
+  duration_ms: 1.113
+  type: 'test'
+  ...
+# Subtest: row 1: the mesh is byte for byte what v0.4.8 made: placed, placed after four more pieces, and the full ghosts
+ok 309 - row 1: the mesh is byte for byte what v0.4.8 made: placed, placed after four more pieces, and the full ghosts
+  ---
+  duration_ms: 4659.8396
+  type: 'test'
+  ...
+# Subtest: row 2: samplesAcrossFor is samplesAcross exactly, and a frozen profile is worked out once
+ok 310 - row 2: samplesAcrossFor is samplesAcross exactly, and a frozen profile is worked out once
+  ---
+  duration_ms: 103.6159
+  type: 'test'
+  ...
+# Subtest: row 3: the answer follows the numbers; the array handed back is the caller own
+ok 311 - row 3: the answer follows the numbers; the array handed back is the caller own
+  ---
+  duration_ms: 11.443
+  type: 'test'
+  ...
+# Subtest: row 4: a full ghost of 1,000 m walks the cross-section a handful of times, and the cache is bounded
+ok 312 - row 4: a full ghost of 1,000 m walks the cross-section a handful of times, and the cache is bounded
+  ---
+  duration_ms: 505.5264
+  type: 'test'
+  ...
+# Subtest: row 5: the exact ghost in slices is ghostFor to the byte, and yields at least once a chord
+ok 313 - row 5: the exact ghost in slices is ghostFor to the byte, and yields at least once a chord
+  ---
+  duration_ms: 572.8865
+  type: 'test'
+  ...
+# Subtest: row 6: the road's edge lines and ties are byte for byte what v0.4.8 made, and the centre line is D433b's
+ok 314 - row 6: the road's edge lines and ties are byte for byte what v0.4.8 made, and the centre line is D433b's
+  ---
+  duration_ms: 1367.5641
+  type: 'test'
+  ...
+# Subtest: row 7: profileAt keeps one frozen profile per family, width and rate, and refuses bad input every time
+ok 315 - row 7: profileAt keeps one frozen profile per family, width and rate, and refuses bad input every time
+  ---
+  duration_ms: 3.002
+  type: 'test'
+  ...
+# Subtest: row 8: placing the ghost on show takes its work, and the track is the same to the byte; undo and a second placement too; a cheap or stale ghost is never taken
+ok 316 - row 8: placing the ghost on show takes its work, and the track is the same to the byte; undo and a second placement too; a cheap or stale ghost is never taken
+  ---
+  duration_ms: 6276.123
+  type: 'test'
+  ...
+# Subtest: row 9: spawnsInfo on a growing track is what it is built afresh, and an answer given is never changed by a growth
+ok 317 - row 9: spawnsInfo on a growing track is what it is built afresh, and an answer given is never changed by a growth
+  ---
+  duration_ms: 460.4753
+  type: 'test'
+  ...
+# Subtest: row 1: mergeChords makes a piece's 2 m chords a few long ones, within the heading cap, never across two pieces or a gap; one chord is the very same object
+ok 318 - row 1: mergeChords makes a piece's 2 m chords a few long ones, within the heading cap, never across two pieces or a gap; one chord is the very same object
+  ---
+  duration_ms: 209.0755
+  type: 'test'
+  ...
+# Subtest: row 2: a drag step builds nothing placed: how "drag", the placed path and mesh the very ones, every other batch the placed one, the window a few dozen chords; the release equals a fresh build
+ok 319 - row 2: a drag step builds nothing placed: how "drag", the placed path and mesh the very ones, every other batch the placed one, the window a few dozen chords; the release equals a fresh build
+  ---
+  duration_ms: 537.0424
+  type: 'test'
+  ...
+# Subtest: row 3: a route step on an OPEN track moves the road after the window as one piece, the placed vertex arrays within 2 cm of an exact build
+ok 320 - row 3: a route step on an OPEN track moves the road after the window as one piece, the placed vertex arrays within 2 cm of an exact build
+  ---
+  duration_ms: 354.1412
+  type: 'test'
+  ...
+# Subtest: row 4: a route step on a CLOSED lap leaves it open while the drag lasts: the joint's seam hidden, the gap a line from the moved end to the start
+ok 321 - row 4: a route step on a CLOSED lap leaves it open while the drag lasts: the joint's seam hidden, the gap a line from the moved end to the start
+  ---
+  duration_ms: 887.4179
+  type: 'test'
+  ...
+# Subtest: row 5: a hill (Grab, the lift): the window is the brush's span, and the ghost stands on the hill
+ok 322 - row 5: a hill (Grab, the lift): the window is the brush's span, and the ghost stands on the hill
+  ---
+  duration_ms: 534.6691
+  type: 'test'
+  ...
+# Subtest: row 6: coarsen keeps a frozen segment frozen (A's D421 §1.3), so the track model keys its coarse copy once; an unfrozen segment stays unfrozen
+ok 323 - row 6: coarsen keeps a frozen segment frozen (A's D421 §1.3), so the track model keys its coarse copy once; an unfrozen segment stays unfrozen
+  ---
+  duration_ms: 10.0885
+  type: 'test'
+  ...
+# Subtest: row 7: the renderer draws a moved batch (xform) from its baked chunk under the move: a new move uploads nothing, and the picture is the one the moved matrices give
+ok 324 - row 7: the renderer draws a moved batch (xform) from its baked chunk under the move: a new move uploads nothing, and the picture is the one the moved matrices give
+  ---
+  duration_ms: 360.5733
+  type: 'test'
+  ...
+# Subtest: row 1: reuseMeshSteps run to the end is reuseMesh to the byte, on a closed lap with some pieces kept and some meshed again, and on an open track grown closed
+ok 325 - row 1: reuseMeshSteps run to the end is reuseMesh to the byte, on a closed lap with some pieces kept and some meshed again, and on an open track grown closed
+  ---
+  duration_ms: 1580.4371
+  type: 'test'
+  ...
+# Subtest: row 2: updateSteps run to the end is update() to the byte on a closed lap's full rebuild; it yields there, and the model is as it was until its end
+ok 326 - row 2: updateSteps run to the end is update() to the byte on a closed lap's full rebuild; it yields there, and the model is as it was until its end
+  ---
+  duration_ms: 2537.3356
+  type: 'test'
+  ...
+# Subtest: row 3: the preview builds the release over several frames with the drag's last frame on show, and it is what a plain update builds; a new drag first finishes it
+ok 327 - row 3: the preview builds the release over several frames with the drag's last frame on show, and it is what a plain update builds; a new drag first finishes it
+  ---
+  duration_ms: 27282.3724
+  type: 'test'
+  ...
+# Subtest: row 4: a ramp's blended cross-section is kept for frozen inputs and is the very mesh unfrozen inputs give; a changed from-profile is never served a kept shape
+ok 328 - row 4: a ramp's blended cross-section is kept for frozen inputs and is the very mesh unfrozen inputs give; a changed from-profile is never served a kept shape
+  ---
+  duration_ms: 3049.2071
+  type: 'test'
+  ...
+# Subtest: row 5: a state change during the sliced build (an undo just after a release) gets a sliced build of its own, and the state it replaced never reaches the readers
+ok 329 - row 5: a state change during the sliced build (an undo just after a release) gets a sliced build of its own, and the state it replaced never reaches the readers
+  ---
+  duration_ms: 1372.3028
+  type: 'test'
+  ...
+# Subtest: row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+ok 330 - row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+  ---
+  duration_ms: 768.9105
+  type: 'test'
+  ...
+# Subtest: row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+ok 331 - row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+  ---
+  duration_ms: 287.6713
+  type: 'test'
+  ...
+# Subtest: row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+ok 332 - row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+  ---
+  duration_ms: 280.5075
+  type: 'test'
+  ...
+# Subtest: row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+ok 333 - row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+  ---
+  duration_ms: 604.3627
+  type: 'test'
+  ...
+# Subtest: shared path: the track model's path is at the export's step (the stations the kn5 is meshed from)
+ok 334 - shared path: the track model's path is at the export's step (the stations the kn5 is meshed from)
+  ---
+  duration_ms: 37368.104
+  type: 'test'
+  ...
+# Subtest: shared path: an append reports how "extend", the first new segment, and the OLD end as fromS
+ok 335 - shared path: an append reports how "extend", the first new segment, and the OLD end as fromS
+  ---
+  duration_ms: 8.962
+  type: 'test'
+  ...
+# Subtest: shared path: a sculpt reports how "sculpt", the edited word's first segment, and where it starts
+ok 336 - shared path: a sculpt reports how "sculpt", the edited word's first segment, and where it starts
+  ---
+  duration_ms: 7.6827
+  type: 'test'
+  ...
+# Subtest: shared path: validating the shared path gives what validation gets from its own path at the same step
+ok 337 - shared path: validating the shared path gives what validation gets from its own path at the same step
+  ---
+  duration_ms: 22.5301
+  type: 'test'
+  ...
+# Subtest: shared path: incremental validation from fromS on the re-placed path equals a full validation of it
+ok 338 - shared path: incremental validation from fromS on the re-placed path equals a full validation of it
+  ---
+  duration_ms: 25.0398
+  type: 'test'
+  ...
+# Subtest: shared path: the preview hands on its OWN path object after every change that moved the track
+ok 339 - shared path: the preview hands on its OWN path object after every change that moved the track
+  ---
+  duration_ms: 9.4493
+  type: 'test'
+  ...
+# Subtest: shared path: a change that did not move the track is not handed on again
+ok 340 - shared path: a change that did not move the track is not handed on again
+  ---
+  duration_ms: 4.2967
+  type: 'test'
+  ...
+# Subtest: row 1: a commit or a drag that leaves the document as it was adds no undo step
+ok 341 - row 1: a commit or a drag that leaves the document as it was adds no undo step
+  ---
+  duration_ms: 68.0469
+  type: 'test'
+  ...
+# Subtest: row 2: a reopened history shares unchanged pieces between its steps, as a history made in this session does
+ok 342 - row 2: a reopened history shares unchanged pieces between its steps, as a history made in this session does
+  ---
+  duration_ms: 121.7853
+  type: 'test'
+  ...
+# Subtest: row 3: undo and redo say what they changed, and say so when there is nothing
+ok 343 - row 3: undo and redo say what they changed, and say so when there is nothing
+  ---
+  duration_ms: 22.2495
+  type: 'test'
+  ...
+# Subtest: row 4: the checker keeps its result when only the start moved, and re-checks when the road changed
+ok 344 - row 4: the checker keeps its result when only the start moved, and re-checks when the road changed
+  ---
+  duration_ms: 2342.8201
+  type: 'test'
+  ...
+# Subtest: row 5: removing pieces from the end without an undo copy builds no full mesh, and equals a fresh full build
+ok 345 - row 5: removing pieces from the end without an undo copy builds no full mesh, and equals a fresh full build
+  ---
+  duration_ms: 661.5674
+  type: 'test'
+  ...
+# Subtest: property (the preview's SHARED path): after every random edit the result equals a full validate exactly
+ok 346 - property (the preview's SHARED path): after every random edit the result equals a full validate exactly
+  ---
+  duration_ms: 4308.1261
+  type: 'test'
+  ...
+# Subtest: property (the controller's own path): after every random edit the result equals a full validate exactly
+ok 347 - property (the controller's own path): after every random edit the result equals a full validate exactly
+  ---
+  duration_ms: 3745.6929
+  type: 'test'
+  ...
+# Subtest: undo of a placement and removing the head are a TRIM (shared path), each exactly a full validate
+ok 348 - undo of a placement and removing the head are a TRIM (shared path), each exactly a full validate
+  ---
+  duration_ms: 84.5312
+  type: 'test'
+  ...
+# Subtest: undo of a placement and removing the head are a TRIM (own path), each exactly a full validate
+ok 349 - undo of a placement and removing the head are a TRIM (own path), each exactly a full validate
+  ---
+  duration_ms: 34.5524
+  type: 'test'
+  ...
+# Subtest: the property test reaches STACKED road: the edits lay road over road, and it still equals a full validate
+ok 350 - the property test reaches STACKED road: the edits lay road over road, and it still equals a full validate
+  ---
+  duration_ms: 6592.9564
+  type: 'test'
+  ...
+# Subtest: a STALE shared path (built for another document) is not used: the controller grows its own, and stays exact
+ok 351 - a STALE shared path (built for another document) is not used: the controller grows its own, and stays exact
+  ---
+  duration_ms: 25.3157
+  type: 'test'
+  ...
+# Subtest: a shared path the preview REBUILT (a new object) is viewed afresh, never spliced onto the old view
+ok 352 - a shared path the preview REBUILT (a new object) is viewed afresh, never spliced onto the old view
+  ---
+  duration_ms: 21.9713
+  type: 'test'
+  ...
+# Subtest: a drag held OPEN on a mid-track word: every tick is windowed and exact where settled, and ending it equals a full validate
+ok 353 - a drag held OPEN on a mid-track word: every tick is windowed and exact where settled, and ending it equals a full validate
+  ---
+  duration_ms: 917.0176
+  type: 'test'
+  ...
+# Subtest: never a stale "clean": a settled station clipping road that the drag moved shows RED during the drag, and the moved road shows PENDING
+ok 354 - never a stale "clean": a settled station clipping road that the drag moved shows RED during the drag, and the moved road shows PENDING
+  ---
+  duration_ms: 4066.6965
+  type: 'test'
+  ...
+# Subtest: a windowed result revalidated from BEYOND its pending start still finishes the whole track exactly
+ok 355 - a windowed result revalidated from BEYOND its pending start still finishes the whole track exactly
+  ---
+  duration_ms: 59.0795
+  type: 'test'
+  ...
+# Subtest: the panel says what is pending: the load graph shades it to the track end, the summary counts no deferred jump as waiting
+ok 356 - the panel says what is pending: the load graph shades it to the track end, the summary counts no deferred jump as waiting
+  ---
+  duration_ms: 37.9885
+  type: 'test'
+  ...
+# Subtest: the window ends at the second word after the dragged one; none when that is past the end
+ok 357 - the window ends at the second word after the dragged one; none when that is past the end
+  ---
+  duration_ms: 0.6243
+  type: 'test'
+  ...
+# Subtest: the preview's 0.5 m path viewed at 2 m IS buildPath at 2 m, value for value; grown in place, the view follows it exactly
+ok 358 - the preview's 0.5 m path viewed at 2 m IS buildPath at 2 m, value for value; grown in place, the view follows it exactly
+  ---
+  duration_ms: 83.7162
+  type: 'test'
+  ...
+# Subtest: a path that cannot be viewed exactly is refused (null), so the controller grows its own
+ok 359 - a path that cannot be viewed exactly is refused (null), so the controller grows its own
+  ---
+  duration_ms: 24.4132
+  type: 'test'
+  ...
+# Subtest: the station-pair stacking check finds exactly what measuring every surface point finds, on tracks that stack
+ok 360 - the station-pair stacking check finds exactly what measuring every surface point finds, on tracks that stack
+  ---
+  duration_ms: 3223.579
+  type: 'test'
+  ...
+# Subtest: the stacking check on a CLOSED loop: the start and end are one pass (s wraps), exactly as measuring every point
+ok 361 - the stacking check on a CLOSED loop: the start and end are one pass (s wraps), exactly as measuring every point
+  ---
+  duration_ms: 35938.8286
+  type: 'test'
+  ...
+# Subtest: on a level straight at a constant speed only gravity acts: each line reads fN = cos ψ and fLat = sign(u)·sin ψ
+ok 362 - on a level straight at a constant speed only gravity acts: each line reads fN = cos ψ and fLat = sign(u)·sin ψ
+  ---
+  duration_ms: 1.776
+  type: 'test'
+  ...
+# Subtest: a closed loop: every drag tick defers the lap, and ending the drag proves it, equal to a full validate's lap
+ok 363 - a closed loop: every drag tick defers the lap, and ending the drag proves it, equal to a full validate's lap
+  ---
+  duration_ms: 28076.6
+  type: 'test'
+  ...
+# Subtest: lapOf proves a deferred lap exactly as an undeferred validate does, and returns any other lap unchanged
+ok 364 - lapOf proves a deferred lap exactly as an undeferred validate does, and returns any other lap unchanged
+  ---
+  duration_ms: 27460.2731
+  type: 'test'
+  ...
+# Subtest: rangeLevels gives every station the level rangeLevel gives it, ranges touching, nested and out of order
+ok 365 - rangeLevels gives every station the level rangeLevel gives it, ranges touching, nested and out of order
+  ---
+  duration_ms: 2.1626
+  type: 'test'
+  ...
+# Subtest: row 1: the job's answer equals the page controller's after a place, an undo, a redo, a hill brush, a brush stroke held open and the CSP switch
+ok 366 - row 1: the job's answer equals the page controller's after a place, an undo, a redo, a hill brush, a brush stroke held open and the CSP switch
+  ---
+  duration_ms: 1352.2974
+  type: 'test'
+  ...
+# Subtest: row 2: the runner drops an answer older than the one shown, says what is pending, and passes on failures
+ok 367 - row 2: the runner drops an answer older than the one shown, says what is pending, and passes on failures
+  ---
+  duration_ms: 0.9171
+  type: 'test'
+  ...
+# Subtest: row 3: the worker script checks only the newest document of those that arrive while it is busy, with one job throughout
+ok 368 - row 3: the worker script checks only the newest document of those that arrive while it is busy, with one job throughout
+  ---
+  duration_ms: 130.4022
+  type: 'test'
+  ...
+# Subtest: row 4: the panel with a worker says "checking…" until the answer comes, then the verdict; a document the worker cannot take is checked on the page
+ok 369 - row 4: the panel with a worker says "checking…" until the answer comes, then the verdict; a document the worker cannot take is checked on the page
+  ---
+  duration_ms: 530.5823
+  type: 'test'
+  ...
+# Subtest: row 5: a Close press is handed the reds of a finished answer for the document it checked, and none from a drag, a check put off, or an older document
+ok 370 - row 5: a Close press is handed the reds of a finished answer for the document it checked, and none from a drag, a check put off, or an older document
+  ---
+  duration_ms: 225.3151
+  type: 'test'
+  ...
+# Subtest: row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds
+ok 371 - row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds
+  ---
+  duration_ms: 6180.071
+  type: 'test'
+  ...
+# Subtest: row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank
+ok 372 - row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank
+  ---
+  duration_ms: 12.0706
+  type: 'test'
+  ...
+# Subtest: row 3: a curve laid as two pieces banks as one: the lean holds across their joint
+ok 373 - row 3: a curve laid as two pieces banks as one: the lean holds across their joint
+  ---
+  duration_ms: 39.9365
+  type: 'test'
+  ...
+# Subtest: row 4: the near path (an end already at the start) closes banked
+ok 374 - row 4: the near path (an end already at the start) closes banked
+  ---
+  duration_ms: 1466.6595
+  type: 'test'
+  ...
+# Subtest: row 5: the road a pit lane runs beside is not banked
+ok 375 - row 5: the road a pit lane runs beside is not banked
+  ---
+  duration_ms: 4870.1399
+  type: 'test'
+  ...
+# Subtest: row 7: a loop is not banked, even one that turns; a level curve on the same lap is
+ok 376 - row 7: a loop is not banked, even one that turns; a level curve on the same lap is
+  ---
+  duration_ms: 637.7624
+  type: 'test'
+  ...
+# Subtest: row 8: a tube is not banked; a level curve on the same lap is
+ok 377 - row 8: a tube is not banked; a level curve on the same lap is
+  ---
+  duration_ms: 827.115
+  type: 'test'
+  ...
+# Subtest: row 9: a straight next to a curve keeps the bank it was laid with
+ok 378 - row 9: a straight next to a curve keeps the bank it was laid with
+  ---
+  duration_ms: 4.2847
+  type: 'test'
+  ...
+# Subtest: row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased
+ok 379 - row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased
+  ---
+  duration_ms: 13251.2457
+  type: 'test'
+  ...
+# Subtest: row 11: a turn that flips over extend's 20 m transition: the same
+ok 380 - row 11: a turn that flips over extend's 20 m transition: the same
+  ---
+  duration_ms: 9025.6969
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld
+ok 381 - row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 6184.7501
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld
+ok 382 - row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 5998.4588
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld
+ok 383 - row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 4589.1223
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld
+ok 384 - row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3757.1778
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld
+ok 385 - row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3074.5726
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld
+ok 386 - row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3659.7216
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld
+ok 387 - row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 5255.7168
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld
+ok 388 - row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3344.166
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld
+ok 389 - row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3412.0573
+  type: 'test'
+  ...
+# Subtest: row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld
+ok 390 - row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3820.7924
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld
+ok 391 - row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4996.9356
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld
+ok 392 - row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4668.5516
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld
+ok 393 - row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4669.0858
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld
+ok 394 - row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4839.9258
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld
+ok 395 - row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4661.9972
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld
+ok 396 - row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4342.6136
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld
+ok 397 - row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4307.6332
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld
+ok 398 - row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4319.7973
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld
+ok 399 - row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4385.7612
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld
+ok 400 - row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4215.0626
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld
+ok 401 - row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4058.4618
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld
+ok 402 - row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4189.7557
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld
+ok 403 - row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3829.5504
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld
+ok 404 - row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3941.0764
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld
+ok 405 - row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3999.7082
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld
+ok 406 - row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4472.3021
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld
+ok 407 - row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4191.9505
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld
+ok 408 - row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4239.4
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld
+ok 409 - row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4706.2539
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld
+ok 410 - row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3878.891
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld
+ok 411 - row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4378.8255
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld
+ok 412 - row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4016.048
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld
+ok 413 - row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3605.2126
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld
+ok 414 - row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4293.2403
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld
+ok 415 - row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3880.9778
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld
+ok 416 - row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4005.1446
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld
+ok 417 - row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4182.8403
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld
+ok 418 - row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4192.4706
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld
+ok 419 - row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3972.0171
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld
+ok 420 - row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3553.9363
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld
+ok 421 - row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3452.6495
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld
+ok 422 - row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3563.4081
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld
+ok 423 - row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3787.1221
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld
+ok 424 - row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3546.7126
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld
+ok 425 - row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3666.456
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld
+ok 426 - row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3935.7426
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld
+ok 427 - row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3647.5909
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld
+ok 428 - row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3645.3964
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld
+ok 429 - row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3772.0939
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld
+ok 430 - row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3894.206
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld
+ok 431 - row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3872.6902
+  type: 'test'
+  ...
+# Subtest: row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld
+ok 432 - row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4239.6934
+  type: 'test'
+  ...
+# Subtest: row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld
+ok 433 - row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4195.8772
+  type: 'test'
+  ...
+# Subtest: row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld
+ok 434 - row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4370.0689
+  type: 'test'
+  ...
+# Subtest: row 15: a 90° curve laid as four short pieces is banked as one curve, by the run
+ok 435 - row 15: a 90° curve laid as four short pieces is banked as one curve, by the run
+  ---
+  duration_ms: 1773.8569
+  type: 'test'
+  ...
+# Subtest: row 16: a curve unwinding over 250 m into a gentle opposite curve keeps its bank: no flip pin, none leans out
+ok 436 - row 16: a curve unwinding over 250 m into a gentle opposite curve keeps its bank: no flip pin, none leans out
+  ---
+  duration_ms: 2804.1273
+  type: 'test'
+  ...
+# Subtest: row 17: a short curve between two straights is banked, and leaves its turn banked
+ok 437 - row 17: a short curve between two straights is banked, and leaves its turn banked
+  ---
+  duration_ms: 3041.4623
+  type: 'test'
+  ...
+# Subtest: row 18: an 80 m straight between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+ok 438 - row 18: an 80 m straight between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+  ---
+  duration_ms: 323.9648
+  type: 'test'
+  ...
+# Subtest: row 18: a link at R 10000 between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+ok 439 - row 18: a link at R 10000 between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+  ---
+  duration_ms: 311.1432
+  type: 'test'
+  ...
+# Subtest: row 19: a banked lap rolls no faster than the amber over his pieces (Sharp ramp 40, whose first try does)
+ok 440 - row 19: a banked lap rolls no faster than the amber over his pieces (Sharp ramp 40, whose first try does)
+  ---
+  duration_ms: 4720.2454
+  type: 'test'
+  ...
+# Subtest: row 6: the bank lands in Close's one undo step
+ok 441 - row 6: the bank lands in Close's one undo step
+  ---
+  duration_ms: 1789.7246
+  type: 'test'
+  ...
+# Subtest: row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried
+ok 442 - row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried
+  ---
+  duration_ms: 6939.3272
+  type: 'test'
+  ...
+# Subtest: row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop
+ok 443 - row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop
+  ---
+  duration_ms: 23845.5867
+  type: 'test'
+  ...
+# Subtest: row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it
+ok 444 - row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it
+  ---
+  duration_ms: 5527.2281
+  type: 'test'
+  ...
+# Subtest: row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason
+ok 445 - row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason
+  ---
+  duration_ms: 6815.4023
+  type: 'test'
+  ...
+# Subtest: row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead
+ok 446 - row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead
+  ---
+  duration_ms: 2523.6432
+  type: 'test'
+  ...
+# Subtest: row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red
+ok 447 - row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red
+  ---
+  duration_ms: 10698.0069
+  type: 'test'
+  ...
+# Subtest: row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order
+ok 448 - row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order
+  ---
+  duration_ms: 2.1433
+  type: 'test'
+  ...
+# Subtest: row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.4 m, with no new road, and the lap proves
+ok 449 - row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.4 m, with no new road, and the lap proves
+  ---
+  duration_ms: 31619.8314
+  type: 'test'
+  ...
+# Subtest: row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run
+ok 450 - row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run
+  ---
+  duration_ms: 2710.2115
+  type: 'test'
+  ...
+# Subtest: row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track
+ok 451 - row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track
+  ---
+  duration_ms: 42375.74
+  type: 'test'
+  ...
+# Subtest: row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them
+ok 452 - row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them
+  ---
+  duration_ms: 11065.4311
+  type: 'test'
+  ...
+# Subtest: row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does
+ok 453 - row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does
+  ---
+  duration_ms: 72739.0083
+  type: 'test'
+  ...
+# main thread 25484 ms CPU, process 33484 ms CPU, 26544 ms wall; routes 8361, checks 17434
+# Subtest: row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document
+ok 454 - row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document
+  ---
+  duration_ms: 4493.2551
+  type: 'test'
+  ...
+# Subtest: row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen
+ok 455 - row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen
+  ---
+  duration_ms: 69936.9386
+  type: 'test'
+  ...
+# main thread: clone 23671 ms, parsed 25437 ms; residual on an unfrozen document 0 of 4; closed sha256 5fc2e6fdd25a
+# \# length sculpt of w4: 3 of 24 cells rebuilt: 1ROAD_w4_in_0, 1ROAD_w4_body_0, 1ROAD_w4_out_0
+# \# font edit of w4: rebuilt 1ROAD_w4_in_0, 1ROAD_seam_w4_in, 1ROAD_w4_body_0, 1ROAD_w4_out_0, 1ROAD_seam_w4_out, 1ROAD_w5_in_0, 1ROAD_seam_w5_in, 1ROAD_seam_w5_body
+# Subtest: per-cell rebuild: a length sculpt of one word rebuilds only that word's cells and the seams on its sides
+ok 456 - per-cell rebuild: a length sculpt of one word rebuilds only that word's cells and the seams on its sides
+  ---
+  duration_ms: 196.0613
+  type: 'test'
+  ...
+# Subtest: per-cell rebuild: a font edit also rebuilds the next word's entry ramp, and nothing else
+ok 457 - per-cell rebuild: a font edit also rebuilds the next word's entry ramp, and nothing else
+  ---
+  duration_ms: 130.6151
+  type: 'test'
+  ...
+# \# a 10-step drag: 10 native calls (saveAutosave), 28022 characters, all text
+# Subtest: no mesh over IPC during a drag: every native call is text, none a typed array; no export; autosave fires as text
+ok 458 - no mesh over IPC during a drag: every native call is text, none a typed array; no export; autosave fires as text
+  ---
+  duration_ms: 291.3835
+  type: 'test'
+  ...
+# Subtest: no mesh over IPC: app/preview and app/camera never call the native side at all
+ok 459 - no mesh over IPC: app/preview and app/camera never call the native side at all
+  ---
+  duration_ms: 10.1326
+  type: 'test'
+  ...
+1..459
+# tests 459
+# suites 0
+# pass 458
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 1
+# duration_ms 297789.8655

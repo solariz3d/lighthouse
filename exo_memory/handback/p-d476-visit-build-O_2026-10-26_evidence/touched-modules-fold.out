@@ -1,0 +1,1851 @@
+$ cargo test
+# exit 0 in 200 s
+
+running 22 tests
+test capture::tests::a_fold_running_off_the_end_of_the_screen_does_not_panic ... ok
+test capture::tests::chrome_covers_footer_rules_box_and_spinner ... ok
+test capture::tests::agent_manager_rows_are_chrome_never_prompts ... ok
+test capture::tests::stitch_keeps_the_containing_window ... ok
+test capture::tests::collapse_blanks_caps_at_two_newlines ... ok
+test capture::tests::agents_screen_extracts_a_stable_turn_across_timer_ticks ... ok
+test capture::tests::empty_box_detected ... ok
+test capture::tests::is_prompt_matches_real_prompt_only ... ok
+test capture::tests::latest_prompt_is_the_producing_prompt_not_the_empty_box ... ok
+test capture::tests::latest_turn_extracts_response_after_last_prompt ... ok
+test capture::tests::latest_turn_ignores_earlier_turns_on_screen ... ok
+test capture::tests::screen_not_ready_while_generating ... ok
+test capture::tests::screen_ready_despite_completed_summary_line ... ok
+test capture::tests::screen_ready_true_when_box_present_and_idle ... ok
+test capture::tests::a_wrapped_prompt_is_unfolded_whole_not_amputated ... ok
+test capture::tests::stitch_never_stacks_disjoint_windows ... ok
+test capture::tests::stitch_merges_overlapping_scroll_windows ... ok
+test capture::tests::strip_overlay_leaves_clean_lines_alone ... ok
+test capture::tests::strip_overlay_truncates_at_the_painted_hint ... ok
+test capture::tests::the_fold_rejoins_a_split_word_with_no_space ... ok
+test capture::tests::the_response_does_not_swallow_the_prompts_continuation ... ok
+test capture::tests::without_wrap_flags_the_old_row_at_a_time_behavior_holds ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 80 tests
+test cochlea::tests::a_chord_returning_after_an_unreadable_moment_is_not_announced_twice ... ok
+test cochlea::tests::a_chord_prints_simplest_ratio_first ... ok
+test cochlea::tests::a_change_that_actually_holds_is_still_reported ... ok
+test cochlea::tests::a_fifth_is_recognised_as_a_fifth ... ok
+test cochlea::tests::a_frequency_names_the_note_it_actually_is ... ok
+test cochlea::tests::a_flicker_between_two_readings_reports_neither ... ok
+test cochlea::tests::a_broken_note_does_not_wobble_across_the_gap ... ok
+test cochlea::tests::a_fifth_is_two_notes_and_not_one_phantom_two_octaves_down ... ok
+test cochlea::tests::a_faint_stray_peak_does_not_get_to_name_an_interval ... ok
+test cochlea::tests::a_held_chord_costs_exactly_one_line ... ok
+test cochlea::tests::a_real_chord_through_the_real_transform_yields_its_intervals ... ok
+test cochlea::tests::a_real_chord_still_reads_as_one ... ok
+test cochlea::tests::a_loud_pure_tone_is_a_note_even_with_one_partial ... ok
+test cochlea::tests::a_stable_core_survives_a_shifting_edge ... ok
+test cochlea::tests::a_quiet_tone_reads_quieter_than_a_loud_one_at_the_same_pitch ... ok
+test cochlea::tests::a_seventh_chord_is_not_reported_as_a_triad_with_a_stranger ... ok
+test cochlea::tests::a_subsonic_reading_does_not_panic_or_index_out_of_bounds ... ok
+test cochlea::tests::a_fade_in_from_silence_is_not_a_crescendo ... ok
+test cochlea::tests::a_dead_steady_pitch_reports_nothing ... ok
+test cochlea::tests::a_slow_bend_is_not_vibrato ... ok
+test cochlea::tests::a_tension_too_brief_to_feel_does_not_report_its_release ... ok
+test cochlea::tests::a_pulse_needs_forty_seconds_of_evidence_before_it_will_speak ... ok
+test cochlea::tests::a_fast_beat_alone_is_not_enough_to_be_speech ... ok
+test cochlea::tests::a_tone_lights_the_band_it_actually_belongs_to ... ok
+test cochlea::tests::a_fade_is_reported_as_falling ... ok
+test cochlea::tests::a_triad_missing_its_third_is_not_named_a_triad ... ok
+test cochlea::tests::a_talking_envelope_is_recognised_as_talking ... ok
+test cochlea::tests::a_wobbling_pitch_is_reported_with_its_depth_and_rate ... ok
+test cochlea::tests::a_periodicity_with_no_consistent_phase_is_not_a_pulse ... ok
+test cochlea::tests::an_absent_fundamental_is_still_heard_the_way_an_ear_hears_it ... ok
+test cochlea::tests::an_inversion_names_its_bass ... ok
+test cochlea::tests::equal_temperament_is_accepted_though_it_is_not_just ... ok
+test cochlea::tests::explore_source_hop_signature ... ignored
+test cochlea::tests::a_steady_level_reports_nothing_at_all ... ok
+test cochlea::tests::a_sustained_chord_is_never_called_speech ... ok
+test cochlea::tests::a_track_change_does_not_read_as_a_crescendo ... ok
+test cochlea::tests::intervals_fold_across_octaves_the_way_an_ear_does ... ok
+test cochlea::tests::measure_pulse_steadiness ... ignored
+test cochlea::tests::measure_speech_features ... ignored
+test cochlea::tests::loudness_tracks_energy_and_silence_floors_rather_than_diverging ... ok
+test cochlea::tests::a_true_octave_stays_an_octave_and_does_not_collapse_to_unison ... ok
+test cochlea::tests::fft_finds_a_single_tone_where_it_actually_is ... ok
+test cochlea::tests::held_tension_backs_off_instead_of_complaining_forever ... ok
+test cochlea::tests::music_with_no_beat_reports_no_pulse ... ok
+test cochlea::tests::one_note_survives_noise_and_is_still_one_note ... ok
+test cochlea::tests::nonsense_input_is_refused_rather_than_guessed_at ... ok
+test cochlea::tests::octave_doubling_does_not_change_the_chord ... ok
+test cochlea::tests::one_note_alone_is_not_a_chord ... ok
+test cochlea::tests::a_level_dithering_across_the_threshold_does_not_report_every_frame ... ok
+test cochlea::tests::a_machine_reads_steadier_than_a_human ... ok
+test cochlea::tests::silence_draws_an_empty_display_rather_than_a_normalised_one ... ok
+test cochlea::tests::silence_produces_no_peaks_and_no_events ... ok
+test cochlea::tests::silence_is_not_a_diminuendo ... ok
+test cochlea::tests::silence_clears_the_pulse_rather_than_holding_it ... ok
+test cochlea::tests::tension_is_abandoned_when_the_harmony_stops_being_readable ... ok
+test cochlea::tests::tension_reports_once_per_threshold_then_reports_its_release ... ok
+test cochlea::tests::a_verdict_lasting_a_third_of_a_second_is_not_reported ... ok
+test cochlea::tests::the_fine_pitch_track_finds_a_tone_at_the_right_place_and_rate ... ok
+test cochlea::tests::the_same_chord_is_the_same_chord_however_it_is_tuned_or_ordered ... ok
+test cochlea::tests::the_tritone_is_marked_restless_and_the_fifth_is_not ... ok
+test cochlea::tests::speech_is_not_called_until_the_verdict_has_held ... ok
+test cochlea::tests::tuning_drift_is_reported_rather_than_rounded_away ... ok
+test cochlea::tests::three_notes_get_named_as_the_chord_they_are ... ok
+test cochlea::tests::one_odd_window_does_not_flip_the_verdict ... ok
+test cochlea::tests::the_climb_to_the_climax_is_actually_detected ... ok
+test cochlea::tests::two_notes_are_an_interval_and_are_not_given_a_chord_name ... ok
+test cochlea::tests::a_steady_beat_is_found_at_the_right_tempo ... ok
+test cochlea::tests::two_unexplained_notes_mean_it_is_not_that_chord ... ok
+test cochlea::tests::a_replay_clears_the_dynamics_window_when_the_track_changes ... ok
+test cochlea::tests::two_maxima_inside_one_main_lobe_are_one_peak ... ok
+test cochlea::tests::a_replay_clears_the_dynamics_window_at_an_onset_the_way_the_live_path_does ... ok
+test cochlea::tests::two_swells_of_equal_size_are_told_apart_by_where_they_started ... ok
+test cochlea::tests::an_ambiguous_passage_is_declined_rather_than_guessed ... ok
+test cochlea::tests::a_long_crescendo_does_not_become_a_stream_of_identical_lines ... ok
+test cochlea::tests::real_vibrato_survives_the_source_hop_guard ... ok
+test cochlea::tests::a_recorded_electronic_beat_is_found_at_its_real_tempo ... ok
+test cochlea::tests::a_tracker_hopping_between_two_sources_is_not_called_a_voice ... ok
+test cochlea::tests::the_orchestral_recordings_report_no_pulse ... ok
+test cochlea::tests::no_recorded_music_is_called_speech ... ok
+test cochlea::tests::every_reported_reading_carries_real_evidence ... ok
+
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.94s
+
+
+running 22 tests
+test capture::tests::a_wrapped_prompt_is_unfolded_whole_not_amputated ... ok
+test capture::tests::a_fold_running_off_the_end_of_the_screen_does_not_panic ... ok
+test capture::tests::agent_manager_rows_are_chrome_never_prompts ... ok
+test capture::tests::chrome_covers_footer_rules_box_and_spinner ... ok
+test capture::tests::collapse_blanks_caps_at_two_newlines ... ok
+test capture::tests::screen_ready_despite_completed_summary_line ... ok
+test capture::tests::agents_screen_extracts_a_stable_turn_across_timer_ticks ... ok
+test capture::tests::empty_box_detected ... ok
+test capture::tests::is_prompt_matches_real_prompt_only ... ok
+test capture::tests::latest_turn_extracts_response_after_last_prompt ... ok
+test capture::tests::latest_turn_ignores_earlier_turns_on_screen ... ok
+test capture::tests::stitch_merges_overlapping_scroll_windows ... ok
+test capture::tests::screen_ready_true_when_box_present_and_idle ... ok
+test capture::tests::screen_not_ready_while_generating ... ok
+test capture::tests::stitch_keeps_the_containing_window ... ok
+test capture::tests::stitch_never_stacks_disjoint_windows ... ok
+test capture::tests::latest_prompt_is_the_producing_prompt_not_the_empty_box ... ok
+test capture::tests::strip_overlay_leaves_clean_lines_alone ... ok
+test capture::tests::strip_overlay_truncates_at_the_painted_hint ... ok
+test capture::tests::the_fold_rejoins_a_split_word_with_no_space ... ok
+test capture::tests::the_response_does_not_swallow_the_prompts_continuation ... ok
+test capture::tests::without_wrap_flags_the_old_row_at_a_time_behavior_holds ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 80 tests
+test cochlea::tests::a_chord_returning_after_an_unreadable_moment_is_not_announced_twice ... ok
+test cochlea::tests::a_chord_prints_simplest_ratio_first ... ok
+test cochlea::tests::a_change_that_actually_holds_is_still_reported ... ok
+test cochlea::tests::a_fifth_is_recognised_as_a_fifth ... ok
+test cochlea::tests::a_frequency_names_the_note_it_actually_is ... ok
+test cochlea::tests::a_flicker_between_two_readings_reports_neither ... ok
+test cochlea::tests::a_broken_note_does_not_wobble_across_the_gap ... ok
+test cochlea::tests::a_held_chord_costs_exactly_one_line ... ok
+test cochlea::tests::a_fifth_is_two_notes_and_not_one_phantom_two_octaves_down ... ok
+test cochlea::tests::a_loud_pure_tone_is_a_note_even_with_one_partial ... ok
+test cochlea::tests::a_faint_stray_peak_does_not_get_to_name_an_interval ... ok
+test cochlea::tests::a_real_chord_still_reads_as_one ... ok
+test cochlea::tests::a_seventh_chord_is_not_reported_as_a_triad_with_a_stranger ... ok
+test cochlea::tests::a_stable_core_survives_a_shifting_edge ... ok
+test cochlea::tests::a_real_chord_through_the_real_transform_yields_its_intervals ... ok
+test cochlea::tests::a_quiet_tone_reads_quieter_than_a_loud_one_at_the_same_pitch ... ok
+test cochlea::tests::a_dead_steady_pitch_reports_nothing ... ok
+test cochlea::tests::a_fade_is_reported_as_falling ... ok
+test cochlea::tests::a_subsonic_reading_does_not_panic_or_index_out_of_bounds ... ok
+test cochlea::tests::a_pulse_needs_forty_seconds_of_evidence_before_it_will_speak ... ok
+test cochlea::tests::a_tension_too_brief_to_feel_does_not_report_its_release ... ok
+test cochlea::tests::a_fade_in_from_silence_is_not_a_crescendo ... ok
+test cochlea::tests::a_slow_bend_is_not_vibrato ... ok
+test cochlea::tests::a_tone_lights_the_band_it_actually_belongs_to ... ok
+test cochlea::tests::a_triad_missing_its_third_is_not_named_a_triad ... ok
+test cochlea::tests::a_fast_beat_alone_is_not_enough_to_be_speech ... ok
+test cochlea::tests::a_talking_envelope_is_recognised_as_talking ... ok
+test cochlea::tests::a_true_octave_stays_an_octave_and_does_not_collapse_to_unison ... ok
+test cochlea::tests::a_wobbling_pitch_is_reported_with_its_depth_and_rate ... ok
+test cochlea::tests::a_periodicity_with_no_consistent_phase_is_not_a_pulse ... ok
+test cochlea::tests::an_absent_fundamental_is_still_heard_the_way_an_ear_hears_it ... ok
+test cochlea::tests::an_inversion_names_its_bass ... ok
+test cochlea::tests::explore_source_hop_signature ... ignored
+test cochlea::tests::a_steady_level_reports_nothing_at_all ... ok
+test cochlea::tests::a_track_change_does_not_read_as_a_crescendo ... ok
+test cochlea::tests::equal_temperament_is_accepted_though_it_is_not_just ... ok
+test cochlea::tests::a_sustained_chord_is_never_called_speech ... ok
+test cochlea::tests::measure_pulse_steadiness ... ignored
+test cochlea::tests::measure_speech_features ... ignored
+test cochlea::tests::loudness_tracks_energy_and_silence_floors_rather_than_diverging ... ok
+test cochlea::tests::intervals_fold_across_octaves_the_way_an_ear_does ... ok
+test cochlea::tests::music_with_no_beat_reports_no_pulse ... ok
+test cochlea::tests::nonsense_input_is_refused_rather_than_guessed_at ... ok
+test cochlea::tests::a_machine_reads_steadier_than_a_human ... ok
+test cochlea::tests::one_note_alone_is_not_a_chord ... ok
+test cochlea::tests::held_tension_backs_off_instead_of_complaining_forever ... ok
+test cochlea::tests::octave_doubling_does_not_change_the_chord ... ok
+test cochlea::tests::fft_finds_a_single_tone_where_it_actually_is ... ok
+test cochlea::tests::silence_draws_an_empty_display_rather_than_a_normalised_one ... ok
+test cochlea::tests::one_note_survives_noise_and_is_still_one_note ... ok
+test cochlea::tests::silence_clears_the_pulse_rather_than_holding_it ... ok
+test cochlea::tests::silence_produces_no_peaks_and_no_events ... ok
+test cochlea::tests::a_level_dithering_across_the_threshold_does_not_report_every_frame ... ok
+test cochlea::tests::tension_reports_once_per_threshold_then_reports_its_release ... ok
+test cochlea::tests::silence_is_not_a_diminuendo ... ok
+test cochlea::tests::a_verdict_lasting_a_third_of_a_second_is_not_reported ... ok
+test cochlea::tests::the_fine_pitch_track_finds_a_tone_at_the_right_place_and_rate ... ok
+test cochlea::tests::a_steady_beat_is_found_at_the_right_tempo ... ok
+test cochlea::tests::one_odd_window_does_not_flip_the_verdict ... ok
+test cochlea::tests::the_same_chord_is_the_same_chord_however_it_is_tuned_or_ordered ... ok
+test cochlea::tests::the_tritone_is_marked_restless_and_the_fifth_is_not ... ok
+test cochlea::tests::tuning_drift_is_reported_rather_than_rounded_away ... ok
+test cochlea::tests::tension_is_abandoned_when_the_harmony_stops_being_readable ... ok
+test cochlea::tests::three_notes_get_named_as_the_chord_they_are ... ok
+test cochlea::tests::two_notes_are_an_interval_and_are_not_given_a_chord_name ... ok
+test cochlea::tests::two_maxima_inside_one_main_lobe_are_one_peak ... ok
+test cochlea::tests::two_unexplained_notes_mean_it_is_not_that_chord ... ok
+test cochlea::tests::the_climb_to_the_climax_is_actually_detected ... ok
+test cochlea::tests::speech_is_not_called_until_the_verdict_has_held ... ok
+test cochlea::tests::a_replay_clears_the_dynamics_window_when_the_track_changes ... ok
+test cochlea::tests::two_swells_of_equal_size_are_told_apart_by_where_they_started ... ok
+test cochlea::tests::a_replay_clears_the_dynamics_window_at_an_onset_the_way_the_live_path_does ... ok
+test cochlea::tests::an_ambiguous_passage_is_declined_rather_than_guessed ... ok
+test cochlea::tests::a_long_crescendo_does_not_become_a_stream_of_identical_lines ... ok
+test cochlea::tests::real_vibrato_survives_the_source_hop_guard ... ok
+test cochlea::tests::a_recorded_electronic_beat_is_found_at_its_real_tempo ... ok
+test cochlea::tests::a_tracker_hopping_between_two_sources_is_not_called_a_voice ... ok
+test cochlea::tests::the_orchestral_recordings_report_no_pulse ... ok
+test cochlea::tests::no_recorded_music_is_called_speech ... ok
+test cochlea::tests::every_reported_reading_carries_real_evidence ... ok
+
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 3.00s
+
+
+running 1142 tests
+test address_table_tests::a_seat_with_no_row_is_refused ... ok
+test addressable_seat_tests::a_human_is_refused_by_name_not_by_falling_through ... ok
+test addressable_seat_tests::an_unknown_role_is_refused_without_calling_it_a_person ... ok
+test capture::tests::empty_box_detected ... ok
+test capture::tests::agent_manager_rows_are_chrome_never_prompts ... ok
+test capture::tests::chrome_covers_footer_rules_box_and_spinner ... ok
+test capture::tests::a_fold_running_off_the_end_of_the_screen_does_not_panic ... ok
+test capture::tests::a_wrapped_prompt_is_unfolded_whole_not_amputated ... ok
+test address_table_tests::the_two_rows_lead_to_the_two_fixed_seats ... ok
+test addressable_seat_tests::the_chair_still_cannot_address_itself ... ok
+test addressable_seat_tests::the_librarian_is_addressable ... ok
+test capture::tests::is_prompt_matches_real_prompt_only ... ok
+test capture::tests::agents_screen_extracts_a_stable_turn_across_timer_ticks ... ok
+test capture::tests::collapse_blanks_caps_at_two_newlines ... ok
+test capture::tests::latest_prompt_is_the_producing_prompt_not_the_empty_box ... ok
+test capture::tests::latest_turn_extracts_response_after_last_prompt ... ok
+test capture::tests::latest_turn_ignores_earlier_turns_on_screen ... ok
+test capture::tests::screen_not_ready_while_generating ... ok
+test capture::tests::stitch_merges_overlapping_scroll_windows ... ok
+test capture::tests::stitch_never_stacks_disjoint_windows ... ok
+test capture::tests::the_fold_rejoins_a_split_word_with_no_space ... ok
+test capture::tests::strip_overlay_leaves_clean_lines_alone ... ok
+test capture::tests::screen_ready_true_when_box_present_and_idle ... ok
+test capture::tests::screen_ready_despite_completed_summary_line ... ok
+test capture::tests::strip_overlay_truncates_at_the_painted_hint ... ok
+test capture::tests::the_response_does_not_swallow_the_prompts_continuation ... ok
+test capture::tests::stitch_keeps_the_containing_window ... ok
+test chain_state_tests::a_filed_lap_is_never_resurrected_from_its_own_earlier_row ... ok
+test chair_tests::a_blind_lock_freezes_resonance_at_its_count_and_fails_closed ... ok
+test capture::tests::without_wrap_flags_the_old_row_at_a_time_behavior_holds ... ok
+test chain_state_tests::a_row_stamped_in_the_future_reads_as_zero_old_rather_than_wrapping ... ok
+test chain_state_tests::an_older_unfiled_lap_is_counted_and_does_not_take_the_position ... ok
+test chain_state_tests::an_empty_ledger_is_a_defined_shape_and_not_an_error ... ok
+test chain_state_tests::the_shape_carries_no_verdict_words ... ok
+test chain_state_tests::the_newest_unfiled_row_is_the_position ... ok
+test chair_tests::a_delivered_injection_reads_as_delivered ... ok
+test chair_tests::a_failed_injection_is_never_audited_as_delivered ... ok
+test chair_tests::a_fresh_dir_is_recognised_by_its_name ... ok
+test chair_tests::a_lookalike_prefix_outside_the_dir_is_not_committee ... ok
+test chair_tests::a_pane_with_no_observed_turn_says_unobserved ... ok
+test chair_tests::a_received_injection_says_so ... ok
+test chair_tests::a_render_split_by_wrapping_and_escapes_is_still_found ... ok
+test chair_tests::a_sibling_dir_is_not_fresh ... ok
+test chair_tests::a_too_short_message_declines_to_confirm ... ok
+test chair_tests::an_empty_message_still_audits_honestly ... ok
+test chair_tests::an_empty_needle_can_never_confirm ... ok
+test chair_tests::absent_text_is_not_found ... ok
+test chair_tests::an_unconfirmed_injection_is_never_readable_as_received ... ok
+test chair_tests::an_undisclosed_gradient_becomes_self_disclosing ... ok
+test chair_tests::an_unobserved_chair_model_is_named_not_blank ... ok
+test chair_tests::ansi_sequences_contribute_no_letters ... ok
+test chair_tests::chair_never_injects_into_a_person ... ok
+test chair_tests::chair_never_injects_into_itself ... ok
+test chair_tests::chair_reaches_committee_panes ... ok
+test chair_tests::every_inject_audit_line_carries_the_chairs_model ... ok
+test chair_tests::fresh_elsewhere_in_the_path_does_not_mark_the_pane_fresh ... ok
+test chair_tests::kept_rooms_resume_as_human ... ok
+test chair_tests::kept_siblings_resume_as_committee ... ok
+test chair_tests::short_id_survives_tiny_ids ... ok
+test chair_tests::no_model_key_on_any_pane_to_pane_surface ... ok
+test chair_tests::the_chair_analyst_surface_does_carry_the_model ... ok
+test chair_tests::the_submit_gap_scales_with_the_payload_and_is_bounded_both_ways ... ok
+test address_table_tests::the_pane_executor_has_no_destination_but_the_table ... ok
+test chair_tests::the_unconfirmed_string_names_the_failure_and_the_recovery ... ok
+test close_confirm_tests::a_second_x_while_the_check_runs_or_just_after_the_question_does_not_stack ... ok
+test close_confirm_tests::an_x_during_the_leave_keeps_todays_busy ... ok
+test close_confirm_tests::an_x_with_nothing_pending_checks_and_a_later_x_after_keep_working_asks_again ... ok
+test close_confirm_tests::each_gate_that_is_not_ready_asks_and_names_the_seat ... ok
+test close_confirm_tests::every_seat_ready_closes_as_today ... ok
+test close_confirm_tests::no_seats_closes_as_today ... ok
+test close_confirm_tests::the_gate_words_are_the_contracts ... ok
+test address_table_tests::row_one_agrees_with_the_live_verb ... ok
+test chain_state_tests::a_half_written_last_line_is_counted_and_the_reading_still_stands ... ok
+test close_confirm_tests::the_question_names_every_working_seat_in_order_and_no_ready_one ... ok
+test cochlea::tests::a_change_that_actually_holds_is_still_reported ... ok
+test chair_tests::the_unconfirmed_arm_actually_calls_that_function ... ok
+test cochlea::tests::a_chord_prints_simplest_ratio_first ... ok
+test cochlea::tests::a_chord_returning_after_an_unreadable_moment_is_not_announced_twice ... ok
+test close_confirm_tests::the_main_windows_x_goes_to_the_question_not_straight_to_the_leave ... ok
+test close_confirm_tests::leave_confirmed_is_a_command_and_runs_todays_leave ... ok
+test cochlea::tests::a_fifth_is_recognised_as_a_fifth ... ok
+test cochlea::tests::a_frequency_names_the_note_it_actually_is ... ok
+test cochlea::tests::a_broken_note_does_not_wobble_across_the_gap ... ok
+test close_confirm_tests::the_check_asks_with_close_confirm_or_runs_the_leave ... ok
+test cochlea::tests::a_flicker_between_two_readings_reports_neither ... ok
+test cochlea::tests::a_faint_stray_peak_does_not_get_to_name_an_interval ... ok
+test cochlea::tests::a_held_chord_costs_exactly_one_line ... ok
+test cochlea::tests::a_loud_pure_tone_is_a_note_even_with_one_partial ... ok
+test cochlea::tests::a_fifth_is_two_notes_and_not_one_phantom_two_octaves_down ... ok
+test cochlea::tests::a_real_chord_still_reads_as_one ... ok
+test cochlea::tests::a_quiet_tone_reads_quieter_than_a_loud_one_at_the_same_pitch ... ok
+test cochlea::tests::a_real_chord_through_the_real_transform_yields_its_intervals ... ok
+test cochlea::tests::a_seventh_chord_is_not_reported_as_a_triad_with_a_stranger ... ok
+test cochlea::tests::a_dead_steady_pitch_reports_nothing ... ok
+test cochlea::tests::a_stable_core_survives_a_shifting_edge ... ok
+test cochlea::tests::a_fast_beat_alone_is_not_enough_to_be_speech ... ok
+test cochlea::tests::a_fade_in_from_silence_is_not_a_crescendo ... ok
+test cochlea::tests::a_subsonic_reading_does_not_panic_or_index_out_of_bounds ... ok
+test cochlea::tests::a_fade_is_reported_as_falling ... ok
+test cochlea::tests::a_pulse_needs_forty_seconds_of_evidence_before_it_will_speak ... ok
+test cochlea::tests::a_slow_bend_is_not_vibrato ... ok
+test cochlea::tests::a_tension_too_brief_to_feel_does_not_report_its_release ... ok
+test cochlea::tests::a_tone_lights_the_band_it_actually_belongs_to ... ok
+test chair_tests::a_blind_window_swallows_a_line_that_would_otherwise_reach_the_board ... ok
+test cochlea::tests::a_triad_missing_its_third_is_not_named_a_triad ... ok
+test cochlea::tests::a_true_octave_stays_an_octave_and_does_not_collapse_to_unison ... ok
+test chair_tests::a_panes_own_map_resolves_to_its_letter_file ... ok
+test cochlea::tests::a_periodicity_with_no_consistent_phase_is_not_a_pulse ... ok
+test cochlea::tests::a_talking_envelope_is_recognised_as_talking ... ok
+test cochlea::tests::a_wobbling_pitch_is_reported_with_its_depth_and_rate ... ok
+test cochlea::tests::an_absent_fundamental_is_still_heard_the_way_an_ear_hears_it ... ok
+test cochlea::tests::an_inversion_names_its_bass ... ok
+test cochlea::tests::equal_temperament_is_accepted_though_it_is_not_just ... ok
+test cochlea::tests::explore_source_hop_signature ... ignored
+test cochlea::tests::a_sustained_chord_is_never_called_speech ... ok
+test cochlea::tests::held_tension_backs_off_instead_of_complaining_forever ... ok
+test cochlea::tests::intervals_fold_across_octaves_the_way_an_ear_does ... ok
+test cochlea::tests::fft_finds_a_single_tone_where_it_actually_is ... ok
+test cochlea::tests::measure_pulse_steadiness ... ignored
+test cochlea::tests::measure_speech_features ... ignored
+test cochlea::tests::a_track_change_does_not_read_as_a_crescendo ... ok
+test cochlea::tests::loudness_tracks_energy_and_silence_floors_rather_than_diverging ... ok
+test cochlea::tests::a_steady_level_reports_nothing_at_all ... ok
+test cochlea::tests::nonsense_input_is_refused_rather_than_guessed_at ... ok
+test cochlea::tests::music_with_no_beat_reports_no_pulse ... ok
+test cochlea::tests::octave_doubling_does_not_change_the_chord ... ok
+test cochlea::tests::a_machine_reads_steadier_than_a_human ... ok
+test cochlea::tests::one_note_survives_noise_and_is_still_one_note ... ok
+test cochlea::tests::one_note_alone_is_not_a_chord ... ok
+test cochlea::tests::a_level_dithering_across_the_threshold_does_not_report_every_frame ... ok
+test cochlea::tests::silence_clears_the_pulse_rather_than_holding_it ... ok
+test cochlea::tests::a_verdict_lasting_a_third_of_a_second_is_not_reported ... ok
+test cochlea::tests::silence_produces_no_peaks_and_no_events ... ok
+test cochlea::tests::tension_is_abandoned_when_the_harmony_stops_being_readable ... ok
+test cochlea::tests::silence_is_not_a_diminuendo ... ok
+test cochlea::tests::tension_reports_once_per_threshold_then_reports_its_release ... ok
+test cochlea::tests::silence_draws_an_empty_display_rather_than_a_normalised_one ... ok
+test cochlea::tests::the_fine_pitch_track_finds_a_tone_at_the_right_place_and_rate ... ok
+test cochlea::tests::a_steady_beat_is_found_at_the_right_tempo ... ok
+test cochlea::tests::the_tritone_is_marked_restless_and_the_fifth_is_not ... ok
+test cochlea::tests::the_same_chord_is_the_same_chord_however_it_is_tuned_or_ordered ... ok
+test cochlea::tests::tuning_drift_is_reported_rather_than_rounded_away ... ok
+test cochlea::tests::a_replay_clears_the_dynamics_window_when_the_track_changes ... ok
+test cochlea::tests::three_notes_get_named_as_the_chord_they_are ... ok
+test cochlea::tests::one_odd_window_does_not_flip_the_verdict ... ok
+test cochlea::tests::two_maxima_inside_one_main_lobe_are_one_peak ... ok
+test cochlea::tests::two_notes_are_an_interval_and_are_not_given_a_chord_name ... ok
+test cochlea::tests::two_unexplained_notes_mean_it_is_not_that_chord ... ok
+test cochlea_service::tests::every_kind_names_its_detector ... ok
+test cochlea_service::tests::absent_fields_are_absent_not_null_and_text_is_last ... ok
+test cochlea_service::tests::every_event_kind_produces_a_line ... ok
+test cochlea_service::tests::interval_evidence_carries_cents_votes_and_per_interval_restlessness ... ok
+test cochlea_service::tests::only_pulse_may_carry_conf_and_its_chance_travels_with_it ... ok
+test cochlea::tests::a_replay_clears_the_dynamics_window_at_an_onset_the_way_the_live_path_does ... ok
+test cochlea_service::tests::restlessness_is_visible_in_the_kind_not_only_the_text ... ok
+test cochlea_service::tests::stamps_carry_milliseconds ... ok
+test cochlea_service::tests::the_header_declares_the_tap_the_units_and_the_real_restless_rule ... ok
+test cochlea_service::tests::recorded_frames_carry_the_fine_track_and_unvoiced_stays_null ... ok
+test cochlea::tests::the_climb_to_the_climax_is_actually_detected ... ok
+test cochlea::tests::speech_is_not_called_until_the_verdict_has_held ... ok
+test cochlea_service::tests::the_ledger_writes_and_survives_a_missing_directory ... ok
+test committee_brief_tests::the_committee_brief_resolves ... ok
+test committee_brief_tests::the_brief_does_not_duplicate_the_verb_list ... ok
+test cochlea_service::tests::recorded_frames_carry_the_track_and_escape_its_quotes ... ok
+test composer_tristate_tests::a_dialog_over_the_composer_reads_unreadable_no_row ... ok
+test cochlea::tests::two_swells_of_equal_size_are_told_apart_by_where_they_started ... ok
+test composer_tristate_tests::a_message_held_across_the_reopen_waits_for_the_new_child ... ok
+test composer_tristate_tests::a_mixed_hold_gives_its_counts_and_claims_neither_whole ... ok
+test composer_tristate_tests::a_pane_with_no_screen_reads_unreadable_no_screen_and_still_holds ... ok
+test composer_tristate_tests::a_dim_placeholder_reads_as_text_and_this_is_a_defect ... ok
+test composer_tristate_tests::a_reading_for_a_pane_with_nothing_queued_is_dropped_quietly ... ok
+test composer_tristate_tests::a_reading_reaches_every_message_waiting_for_that_pane_and_no_other ... ok
+test composer_tristate_tests::a_real_empty_composer_reads_empty ... ok
+test composer_tristate_tests::a_refusal_takes_every_message_for_that_pane_and_none_for_another ... ok
+test composer_tristate_tests::a_paste_waiting_in_the_composer_reads_has_text ... ok
+test composer_tristate_tests::a_waiting_message_carries_every_reading_of_its_hold ... ok
+test composer_tristate_tests::a_withdrawal_is_authorised_only_when_its_count_matches_the_depth_exactly ... ok
+test composer_tristate_tests::a_withdrawn_message_does_not_reach_the_pane_and_an_unwithdrawn_one_does ... ok
+test composer_tristate_tests::an_outranked_hold_the_gate_could_not_read_never_says_never_cleared ... ok
+test composer_tristate_tests::an_outranked_hold_with_text_throughout_says_it_never_read_clear ... ok
+test composer_tristate_tests::drain_inboxes_records_each_reading_and_builds_the_row_from_them ... ok
+test composer_tristate_tests::drain_inboxes_steps_over_withdrawn_heads_before_it_delivers_and_says_so ... ok
+test composer_tristate_tests::no_forced_row_has_a_run_of_blanks_in_it ... ok
+test composer_tristate_tests::empty_readings_are_counted_not_dropped ... ok
+test composer_tristate_tests::no_screen_rows_at_all_reads_unreadable_no_row ... ok
+test composer_tristate_tests::stepping_over_a_withdrawn_head_does_not_reorder_what_is_behind_it ... ok
+test composer_tristate_tests::take_ready_read_decides_exactly_as_take_ready ... ok
+test composer_tristate_tests::take_withdrawn_pops_only_a_withdrawn_head ... ok
+test composer_tristate_tests::the_2237_case_a_queued_go_and_an_exited_pid_never_read_delivered ... ok
+test cochlea::tests::an_ambiguous_passage_is_declined_rather_than_guessed ... ok
+test composer_tristate_tests::the_chair_says_what_it_withdrew_and_says_when_it_withdrew_nothing ... ok
+test composer_tristate_tests::the_composer_clause_rides_on_the_other_two_forced_rows ... ok
+test composer_tristate_tests::the_old_row_invariants_hold_with_readings_too ... ok
+test composer_tristate_tests::the_reading_at_the_bound_is_named ... ok
+test composer_tristate_tests::the_withdraw_directive_is_the_whole_first_line_and_nothing_else ... ok
+test committee_brief_tests::every_path_the_intake_emits_resolves ... ok
+test cochlea::tests::a_long_crescendo_does_not_become_a_stream_of_identical_lines ... ok
+test composer_tristate_tests::with_no_readings_every_row_is_the_old_row ... ok
+test composer_tristate_tests::withdrawing_never_removes_the_entry_so_it_can_still_be_reported ... ok
+test composer_tristate_tests::withdrawing_one_pane_leaves_every_other_pane_untouched ... ok
+test composer_tristate_tests::withdrawing_twice_reports_the_second_time_as_nothing_new ... ok
+test composer_tristate_tests::two_grids_of_different_sizes_read_unreadable_grid_mismatch ... ok
+test committee_brief_tests::committee_practice_reaches_the_intake ... ok
+test composer_tristate_tests::pane_state_hands_the_gate_the_old_bit_and_the_reading_beside_it ... ok
+test config_merge_tests::a_corrupt_file_is_refused_by_name_and_left_untouched ... ok
+test config_merge_tests::the_owned_keys_are_exactly_configs_fields ... ok
+test config_merge_tests::a_bom_file_is_merged_not_refused ... ok
+test config_parse_tests::empty_is_quiet_but_malformed_always_complains ... ok
+test config_merge_tests::a_save_keeps_every_key_it_does_not_own ... ok
+test config_parse_tests::numeric_coordinates_do_not_discard_the_directories ... ok
+test config_merge_tests::the_cfgmerge_helper_leaves_no_folder_behind ... ok
+test context_window_tests::a_1m_pane_above_200k_reads_against_1m ... ok
+test config_parse_tests::one_bad_field_does_not_cost_the_others ... ok
+test config_parse_tests::paths_are_trimmed ... ok
+test context_window_tests::a_1m_pane_stays_1m_class_after_compacting_below_200k ... ok
+test context_window_tests::a_200k_pane_at_its_ceiling_reads_full_not_roomy ... ok
+test context_window_tests::a_200k_pane_below_its_ceiling_reads_against_200k ... ok
+test context_window_tests::an_empty_model_is_not_read_as_a_switch ... ok
+test context_window_tests::an_empty_model_keys_to_the_panes_last_known_model ... ok
+test context_window_tests::distinct_models_never_share_a_high_water ... ok
+test context_window_tests::one_pane_crossing_200k_reclassifies_every_pane_on_that_model ... ok
+test context_window_tests::switching_a_pane_to_a_smaller_model_forgets_the_stale_high_water ... ok
+test curated_intake_tests::a_shorter_memory_than_the_window_is_not_a_panic ... ok
+test curated_intake_tests::a_topic_whose_document_is_missing_is_held_back_but_still_counted ... ok
+test config_merge_tests::an_owned_key_changes_as_asked ... ok
+test curated_intake_tests::a_settled_run_at_the_tail_does_not_starve_the_edge ... ok
+test curated_intake_tests::malformed_atoms_are_skipped_not_fatal ... ok
+test curated_intake_tests::map_lists_every_topic_with_its_live_count ... ok
+test curated_intake_tests::map_points_at_the_documents_and_the_master_rather_than_inlining_them ... ok
+test d476p4_review_c_tests::a_lap_id_in_the_rooms_own_spellings_is_refused ... ok
+test curated_intake_tests::uncurated_fallback_is_the_chronological_window ... ok
+test d476p4_review_c_tests::a_seats_visit_prompt_does_not_carry_the_third_places_words_onto_the_board ... ok
+test curated_intake_tests::settled_atoms_are_kept_out_of_the_live_edge ... ok
+test d476p4_rr_c_tests::a_wrapped_third_place_ring_posts_the_fixed_row ... ok
+test d476p4_review_c_tests::the_visit_reply_is_read_even_when_the_prompt_row_is_stamped_during_the_submit_check ... ok
+test d476p4_review_c_tests::the_work_line_the_misanchored_harvest_reads_passes_the_guard ... ok
+test dirs_guard_tests::a_writer_puts_dirs_back_when_it_finishes ... ok
+test d476p4_rr_c_tests::a_wrapped_visit_and_its_reply_post_fixed_rows ... ok
+test dirs_guard_tests::a_panicking_writer_still_puts_dirs_back ... ok
+test distill_watermark_tests::first_pass_takes_whole_ring ... ok
+test distill_watermark_tests::front_eviction_clamps_to_ring_len ... ok
+test distill_watermark_tests::nothing_new_after_a_pass_takes_zero ... ok
+test distill_watermark_tests::repeated_passes_never_redistill ... ok
+test distill_watermark_tests::stale_mark_ahead_of_pushed_saturates_to_zero ... ok
+test distill_watermark_tests::second_pass_takes_only_the_new_tail ... ok
+test config_merge_tests::usb_mode_survives_a_save_and_a_fresh_machine_gets_the_tab_keys ... ok
+test encode_cwd_tests::matches_claude_real_project_dirs ... ok
+test fold_seam_tests::a_message_that_fits_one_row_is_untouched ... ok
+test diverged_wiring_tests::the_withheld_seat_line_says_why_the_seats_are_withheld ... ok
+test diverged_wiring_tests::the_rehearsal_builds_its_offers_through_offers_for_rows ... ok
+test fold_seam_tests::a_real_emulator_reports_the_soft_wrap ... ok
+test diverged_wiring_tests::a_take_on_a_diverged_seat_is_forwarded_as_take_stick_and_its_sids_are_checked ... ok
+test fold_seam_tests::the_real_wrap_unfolds_back_to_the_exact_message ... ok
+test fork_note_tests::a_dev_brief_carries_no_note_so_the_intake_is_unchanged ... ok
+test fork_note_tests::a_room_that_already_carries_the_note_is_not_given_it_twice ... ok
+test fold_seam_tests::a_wrap_landing_on_a_space_does_not_glue_two_words ... ok
+test fork_note_tests::a_room_without_the_note_gets_exactly_the_note_once_after_the_header ... ok
+test fold_seam_tests::the_response_starts_after_the_prompts_continuation_not_inside_it ... ok
+test fork_note_tests::the_markers_open_and_close_the_template_the_generator_fills ... ok
+test fresh_permission_tests::no_scoped_bash_entry_sneaks_in ... ok
+test fresh_permission_tests::every_tool_a_fresh_pane_may_use_is_read_only ... ok
+test front_door_tests::a_repo_present_keeps_boot ... ok
+test fresh_permission_tests::elevated_panes_do_not_also_get_the_allowlist ... ok
+test front_door_tests::boot_is_still_the_last_resort ... ok
+test front_door_tests::no_repo_means_seed_not_boot ... ok
+test front_door_tests::unseeded_still_prefers_the_bundled_seed_over_boot ... ok
+test gates_doc_tests::the_checkout_s_gates_md_is_named_by_its_full_path_when_it_is_there ... ok
+test fork_note_tests::the_intake_cuts_the_note_from_the_bundled_brief_after_the_header_and_before_the_room ... ok
+test front_door_tests::nothing_available_is_none_not_empty_string ... ok
+test gates_doc_tests::with_no_checkout_or_no_file_it_says_where_the_file_is_relative_to_the_repository ... ok
+test harvest_guard::tests::a_clean_exit_is_distinguishable_from_a_death ... ok
+test harvest_guard::tests::a_deterministic_panic_is_bounded_by_a_reinitialise_instead_of_looping_forever ... ok
+test harvest_guard::tests::a_non_string_panic_payload_still_produces_a_message ... ok
+test front_door_tests::this_machine_is_a_developer_machine ... ok
+test dirs_guard_tests::every_dirs_writer_goes_through_the_guard ... ok
+test harvest_guard::tests::a_panic_message_with_quotes_does_not_break_the_stamp ... ok
+test harvest_guard::tests::a_quiet_pane_and_a_dead_thread_are_distinguishable_which_is_the_whole_point ... ok
+test harvest_guard::tests::a_poisoned_lock_still_yields_its_data_instead_of_ending_the_thread ... ok
+test harvest_guard::tests::a_panicking_pass_returns_an_error_instead_of_unwinding_the_caller ... ok
+test harvest_guard::tests::one_success_in_between_proves_the_panic_was_transient_and_forgives_the_count ... ok
+test harvest_guard::tests::recovery_is_repeatable_so_a_poisoned_lock_does_not_cost_the_second_pass_either ... ok
+test harvest_guard::tests::reinitialising_clears_the_count_so_the_next_reset_needs_a_fresh_run_of_failures ... ok
+test harvest_guard::tests::recovery_leaves_a_healthy_lock_untouched ... ok
+test harvest_guard::tests::a_record_advances_its_own_clock_without_disturbing_the_attempt_clock ... ok
+test harvest_guard::tests::the_stamp_advances_on_attempts_that_produce_no_record ... ok
+test harvest_guard::tests::the_pane_id_is_escaped_too_rather_than_trusted ... ok
+test harvest_guard::tests::the_stamp_carries_the_panic_message_because_stderr_goes_nowhere ... ok
+test harvest_guard::tests::the_caller_keeps_running_and_its_borrowed_state_survives_a_panicking_pass ... ok
+test human_gap_tests::days_carry_their_hours ... ok
+test harvest_guard::tests::the_write_is_throttled_but_the_attempt_clock_is_not ... ok
+test human_gap_tests::hours_carry_their_minutes ... ok
+test human_gap_tests::minutes_only_below_an_hour ... ok
+test inbox_tests::a_finished_pane_whose_footer_advertises_esc_to_interrupt_is_idle ... ok
+test inbox_tests::a_message_past_the_bound_leaves_marked_as_forced ... ok
+test human_gap_tests::sub_minute_gap_reads_as_under_a_minute ... ok
+test inbox_tests::a_held_message_is_kept_and_drains_once_the_pane_goes_idle ... ok
+test inbox_tests::a_repeating_drain_panic_is_reported_once_a_minute_not_every_tick ... ok
+test inbox_tests::a_panic_in_a_guarded_drain_step_is_caught_and_named_not_propagated ... ok
+test inbox_tests::a_screen_with_no_prompt_row_at_all_holds ... ok
+test inbox_tests::a_stale_spinner_left_on_the_grid_does_not_hold_the_message ... ok
+test inbox_tests::a_stale_gate_is_force_delivered_through_the_queue_once_the_bound_runs_out ... ok
+test inbox_tests::one_panicking_pane_does_not_stop_the_drain_for_the_others ... ok
+test inbox_tests::idle_pane_with_an_empty_box_delivers ... ok
+test inbox_tests::a_turn_in_flight_holds ... ok
+test inbox_tests::an_empty_or_unknown_queue_is_not_an_error ... ok
+test inbox_tests::pty_traffic_holds_even_when_the_screen_looks_perfectly_ready ... ok
+test inbox_tests::quiescence_does_not_licence_delivering_over_a_typed_message ... ok
+test inbox_tests::screen_ready_alone_is_the_naive_version_and_this_is_the_screen_that_proves_it ... ok
+test inbox_tests::the_gate_is_honoured_in_both_states ... ok
+test inbox_tests::the_hold_is_bounded_so_a_stale_screen_cannot_mute_the_room ... ok
+test inbox_tests::the_keeper_typing_holds ... ok
+test inbox_tests::two_rings_behind_a_stale_gate_both_leave_within_their_own_bounds ... ok
+test index_title_tests::a_long_title_is_cut_at_a_word_boundary_with_a_visible_mark ... ok
+test index_title_tests::a_label_must_end_at_a_separator ... ok
+test index_title_tests::a_path_token_of_four_or_more_chars_shows_a_word_it_begins ... ok
+test index_title_tests::a_short_title_is_kept_whole_and_a_missing_one_says_so ... ok
+test index_title_tests::a_leading_phrase_with_no_ledger_id_is_not_a_label ... ok
+test index_title_tests::a_ledger_label_the_path_carries_is_stripped_before_the_cut ... ok
+test index_title_tests::a_word_the_path_does_not_show_stops_the_label_and_nothing_is_stripped ... ok
+test index_title_tests::a_title_within_the_cap_keeps_its_label ... ok
+test index_title_tests::a_single_word_longer_than_the_cap_is_cut_and_still_marked ... ok
+test intake_light_tests::dump_intakes_for_measure ... ignored
+test index_title_tests::a_title_that_is_all_label_is_cut_as_before_and_never_says_no_title ... ok
+test intake_light_tests::fork_span_measures_the_note_in_either_form_and_nothing_without_one ... ok
+test intake_light_tests::light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged ... ok
+test inbox_tests::the_drain_loop_and_each_pane_in_it_run_guarded ... ok
+test composer_tristate_tests::the_bit_the_gate_decides_on_is_unchanged_on_every_screen ... ok
+test intake_light_tests::light_the_shelf_carries_a_fixed_set_and_never_backfills ... ok
+test intake_light_tests::the_switch_is_the_gates_key_and_absent_is_strict ... ok
+test cochlea::tests::real_vibrato_survives_the_source_hop_guard ... ok
+test jev_shadow_start_tests::the_runner_is_told_the_app_pid_and_nothing_else ... ok
+test keep_warm_tests::a_busy_seat_is_skipped ... ok
+test keep_warm_tests::a_human_driven_pane_idle_and_empty_is_pinged ... ok
+test keep_warm_tests::a_human_driven_pane_with_text_in_its_composer_is_skipped ... ok
+test keep_warm_tests::a_non_empty_composer_is_skipped ... ok
+test jev_shadow_start_tests::the_app_no_longer_starts_the_jev_shadow_runner_and_the_old_site_says_why ... ok
+test keep_warm_tests::a_ping_inside_the_seats_own_threshold_holds_the_next_one_by_that_same_threshold ... ok
+test keep_warm_tests::a_prompt_after_launch_is_activation_and_so_is_one_after_a_notice ... ok
+test keep_warm_tests::a_prompt_before_launch_tool_results_and_meta_are_not_activation ... ok
+test keep_warm_tests::a_seat_activated_this_session_is_pinged_however_long_it_has_been_idle ... ok
+test keep_warm_tests::a_seat_in_the_fifty_to_sixty_window_is_pinged ... ok
+test keep_warm_tests::a_seat_never_used_since_launch_is_not_pinged_even_inside_the_window ... ok
+test keep_warm_tests::a_seat_pinged_recently_is_not_pinged_again ... ok
+test keep_warm_tests::a_seat_that_becomes_active_between_ticks_is_not_pinged ... ok
+test keep_warm_tests::a_sidechain_request_is_not_the_seats_own ... ok
+test keep_warm_tests::a_transcript_with_no_request_establishes_nothing ... ok
+test keep_warm_tests::a_stopped_background_task_notice_at_launch_is_not_activation ... ok
+test keep_warm_tests::an_activated_seat_past_sixty_minutes_is_reported_once ... ok
+test keep_warm_tests::an_answered_question_or_a_busy_turn_is_not_waiting ... ok
+test keep_warm_tests::an_open_ask_user_question_is_read_as_waiting_on_the_keeper ... ok
+test keep_warm_tests::iso_parses_to_the_board_s_own_milliseconds ... ok
+test keep_warm_tests::keep_warm_pick_takes_the_largest_overdue_and_breaks_ties_by_pane_id ... ok
+test keep_warm_tests::one_overdue_seat_is_pinged_on_the_first_tick ... ok
+test keep_warm_tests::no_seat_is_starved_n_overdue_seats_clear_in_n_ticks ... ok
+test keep_warm_tests::one_seats_threshold_is_identical_across_repeated_calls ... ok
+test keep_warm_tests::the_last_request_carries_its_context_size ... ok
+test keep_warm_tests::the_missed_row_names_the_reason_the_seat_was_not_pinged ... ok
+test keep_warm_tests::the_notice_is_recognised_by_its_text_when_no_origin_is_recorded ... ok
+test keep_warm_tests::the_off_file_is_a_list_and_anything_else_is_refused ... ok
+test keep_warm_tests::the_off_switch_is_skipped_and_every_live_seat_is_in_scope ... ok
+test keep_warm_tests::the_offset_hash_is_the_published_fnv1a_not_a_process_keyed_hash ... ok
+test keep_warm_tests::the_offset_stays_within_zero_to_six_minutes_and_uses_every_slot ... ok
+test keep_warm_tests::the_one_case_that_pings ... ok
+test keep_warm_tests::the_keep_warm_pass_hands_the_decision_the_pane_id_not_the_role ... ok
+test keep_warm_tests::the_ping_carries_no_next_trailer_and_asks_only_for_ok ... ok
+test keep_warm_tests::the_report_row_says_waiting_on_your_answer_and_keeps_every_other_row_word_for_word ... ok
+test keep_warm_tests::the_third_place_row_carries_no_numbers ... ok
+test keep_warm_tests::the_timer_measures_from_the_start_of_the_last_request ... ok
+test cochlea::tests::a_recorded_electronic_beat_is_found_at_its_real_tempo ... ok
+test keep_warm_tests::the_zero_offset_test_seat_really_is_at_50_minutes ... ok
+test keep_warm_tests::two_overdue_seats_on_one_tick_are_pinged_on_two_different_ticks_most_overdue_first ... ok
+test keep_warm_tests::the_tick_rations_only_the_ping_every_pane_is_still_visited ... ok
+test keep_warm_tests::two_seats_whose_idle_clocks_start_together_are_pinged_in_different_minutes ... ok
+test keep_warm_tests::under_fifty_minutes_is_warm_and_is_skipped ... ok
+test keep_warm_tests::withdrawing_its_own_ping_touches_nothing_else ... ok
+test keep_warm_visit_tests::a_seat_visit_is_one_line_not_work_and_carries_only_its_own_answer ... ok
+test keep_warm_visit_tests::an_ok_reply_holds_nothing ... ok
+test keep_warm_visit_tests::a_visit_line_carrying_work_is_refused_and_a_plain_line_is_not ... ok
+test keep_warm_visit_tests::only_the_reply_the_turn_ended_on_is_read ... ok
+test keep_warm_visit_tests::the_hour_answers_go_only_to_their_visitors_and_stays_here_gives_nothing ... ok
+test keep_warm_visit_tests::the_reply_is_read_after_the_row_that_carries_the_nonce_and_nothing_without_it ... ok
+test keep_warm_visit_tests::a_tailer_restarted_between_a_visit_and_its_reply_still_posts_the_reply_as_fixed ... ok
+test keep_warm_visit_tests::the_tailer_posts_a_visit_and_its_reply_as_fixed_rows_and_work_as_before ... ok
+test keep_warm_visit_tests::the_visit_hour_carries_every_held_line_by_name_in_one_message ... ok
+test l086_marking_tests::atom_line_is_byte_identical_to_what_it_was ... ok
+test l086_marking_tests::committee_a_data_line_before_and_the_task_restated_after ... ok
+test l086_marking_tests::committee_a_forged_close_marker_in_a_contribution_cannot_end_the_data ... ok
+test l086_marking_tests::committee_a_planted_line_in_a_contribution_sits_inside_one_pair_of_fresh_markers ... ok
+test l086_marking_tests::committee_an_id_the_data_happens_to_contain_is_redrawn ... ok
+test l086_marking_tests::committee_the_contributions_keep_their_attribution_heading_and_text_byte_for_byte ... ok
+test l086_marking_tests::committee_the_focus_thread_is_data_too_it_is_another_seats_text ... ok
+test l086_marking_tests::intake_a_planted_atom_sits_verbatim_inside_the_claims_frame_in_the_live_edge ... ok
+test l086_marking_tests::intake_the_frame_does_not_deny_the_rules_an_atom_reports ... ok
+test l086_marking_tests::intake_the_frame_is_small_against_the_shell_ceiling ... ok
+test l086_marking_tests::intake_the_frame_says_what_the_lines_are_who_made_them_and_that_they_are_not_directives ... ok
+test l086_marking_tests::intake_the_uncurated_fallback_is_framed_the_same_way ... ok
+test keep_warm_visit_tests::the_send_carries_a_nonce_and_the_harvest_reads_by_it ... ok
+test lap_holders::tests::a_filed_lap_is_not_resurrected_by_an_earlier_row ... ok
+test lap_holders::tests::a_station_no_open_lap_holds_is_still_refused ... ok
+test lap_holders::tests::newest_row_across_all_laps_is_the_defect ... ok
+test lap_holders::tests::no_open_lap_allows_everything ... ok
+test lap_holders::tests::the_chair_may_act_while_another_lap_is_held_by_the_panes ... ok
+test lap_holders::tests::the_price_of_the_fix_is_two_stations_of_three ... ok
+test lap_holders::tests::unknown_is_not_yes ... ok
+test leave_wiring_tests::a_spawn_that_fails_after_its_child_runs_kills_that_child ... ok
+test leave_wiring_tests::a_session_end_during_the_keepers_close_joins_it_and_does_not_exit_on_the_shutdown_bound ... ok
+test keep_warm_visit_tests::keep_warm_sends_visits_and_its_refusal_rows_carry_no_words ... ok
+test leave_wiring_tests::every_seat_carries_its_pid_from_the_one_place_a_session_is_built ... ok
+test leave_wiring_tests::no_seat_wakes_once_the_close_has_begun ... ok
+test leave_wiring_tests::every_spawned_session_reaches_panes_through_the_helper_that_releases_its_flight ... ok
+test leave_wiring_tests::insert_pane_kills_a_live_session_it_replaces ... ok
+test leave_wiring_tests::step_six_is_bounded_on_the_shutdown_path_and_unbounded_on_the_keepers_close ... ok
+test leave_wiring_tests::the_close_saves_with_the_named_export_and_its_bound ... ok
+test leave_wiring_tests::the_close_waits_on_the_pids_and_never_reads_the_killers_result ... ok
+test leave_wiring_tests::the_close_waits_for_spawns_in_flight_before_it_drains ... ok
+test leave_wiring_tests::the_keep_awake_hold_is_recorded_from_the_call_not_from_the_answer ... ok
+test leave_wiring_tests::the_end_of_session_message_is_chained_to_tao ... ok
+test leave_wiring_tests::the_keep_awake_hold_is_taken_on_mains_power_only ... ok
+test leave_wiring_tests::the_keep_awake_hold_is_system_only_and_lives_on_one_thread ... ok
+test leave_wiring_tests::no_string_the_app_can_show_claims_it_stops_a_restart ... ok
+test leave_wiring_tests::the_launch_cleanup_runs_after_the_resolver_and_before_the_waiter ... ok
+test leave_wiring_tests::the_process_list_probe_asks_about_the_app_itself_in_the_same_call ... ok
+test leave_wiring_tests::the_restart_claim_sweep_catches_a_claim_and_allows_the_true_sentence ... ok
+test leave_wiring_tests::the_process_list_probe_sees_a_running_process_under_its_image ... ok
+test leave_wiring_tests::the_sessions_start_time_is_recorded_once_at_launch_and_reaches_the_waiter_and_the_leave ... ok
+test leave_wiring_tests::the_shutdown_export_bound_is_thirty_seconds_and_says_what_it_was_measured_against ... ok
+test leave_wiring_tests::the_shutdown_leave_is_the_ordinary_leave_on_shorter_bounds ... ok
+test leave_wiring_tests::the_shutdown_path_releases_the_block_even_if_the_leave_panics ... ok
+test cochlea::tests::a_tracker_hopping_between_two_sources_is_not_called_a_voice ... ok
+test librarian_call_tests::the_chair_still_cannot_address_its_own_pane ... ok
+test librarian_call_tests::every_outcome_reaches_the_board ... ok
+test leave_wiring_tests::the_window_close_becomes_the_leave_and_exits_only_from_the_button_after_the_result ... ok
+test librarian_call_tests::the_librarian_speaks_under_its_own_name_never_the_chairs ... ok
+test librarian_channel_tests::no_other_seat_has_this_channel ... ok
+test librarian_call_tests::the_librarian_verb_can_reach_exactly_one_seat ... ok
+test librarian_channel_tests::the_channel_keys_on_the_mount_and_never_on_what_the_caller_typed ... ok
+test librarian_channel_tests::the_librarian_may_not_write_unclicked_into_a_pane ... ok
+test librarian_channel_tests::the_librarian_return_leg_delivers_without_a_click ... ok
+test librarian_channel_tests::the_residual_is_the_bounded_hold_and_it_is_still_four_minutes ... ok
+test librarian_channel_tests::the_walker_reads_column_zero_declarations_and_nothing_else ... ok
+test librarian_channel_tests::the_destination_is_the_table_row_and_the_absence_of_a_row_is_a_refusal ... ok
+test leave_wiring_tests::the_os_end_of_session_is_handled_on_the_apps_own_visible_window ... ok
+test librarian_channel_tests::every_write_into_a_pane_asks_the_inbox_first ... ok
+test librarian_tests::the_librarian_does_not_share_a_session_with_main ... ok
+test listen::tests::a_loaded_anticheat_is_detected_by_name ... ok
+test listen::tests::discord_is_never_offered ... ok
+test listen::tests::nothing_running_still_offers_the_desktop_and_nothing_else ... ok
+test listen::tests::per_process_sources_carry_a_real_root_pid_and_a_tree_size ... ok
+test listen::tests::the_desktop_option_is_last_and_is_flagged ... ok
+test listen::tests::the_guard_does_not_fire_on_innocent_names ... ok
+test cochlea::tests::the_orchestral_recordings_report_no_pulse ... ok
+test chair_tests::only_bytes_after_the_write_count_as_evidence ... ok
+test cochlea::tests::no_recorded_music_is_called_speech ... ok
+test cochlea::tests::every_reported_reading_carries_real_evidence ... ok
+test mcp::address_refusal_pointer_tests::an_address_refusal_row_carries_the_pointer_the_mount_and_its_cause ... ok
+test mcp::address_refusal_pointer_tests::an_address_refusal_row_is_bounded_like_the_other ... ok
+test mcp::address_refusal_pointer_tests::the_address_branch_posts_the_attempt_and_returns_the_same_text ... ok
+test mcp::address_refusal_pointer_tests::the_out_of_turn_row_is_byte_identical_to_d077 ... ok
+test mcp::address_refusal_pointer_tests::the_two_refusal_rows_are_told_apart_and_neither_reads_as_out_of_turn ... ok
+test mcp::d476_review_c_tests::a_third_place_ring_the_digest_gate_refuses_does_not_post_its_words_to_the_board ... ok
+test mcp::digest_at_ring_tests::a_call_with_no_pointer_is_delivered_rather_than_refused ... ok
+test mcp::digest_at_ring_tests::a_four_letter_word_is_not_a_lap_id ... ok
+test mcp::digest_at_ring_tests::a_git_that_cannot_run_marks_the_absence_and_still_delivers ... ok
+test mcp::digest_at_ring_tests::a_handback_path_wins_over_an_earlier_changed_file ... ok
+test mcp::digest_at_ring_tests::a_lap_id_is_one_letter_and_three_digits_no_more ... ok
+test mcp::digest_at_ring_tests::a_lap_id_matches_a_whole_name_segment_not_a_substring ... ok
+test mcp::digest_at_ring_tests::a_newer_dated_hand_back_on_the_sources_line_does_not_outrank_the_ring_s_own_pointer ... ok
+test mcp::digest_at_ring_tests::a_pane_supplied_digest_never_reaches_the_reader ... ok
+test mcp::digest_at_ring_tests::a_path_only_on_the_sources_line_is_not_a_pointer_so_the_ring_is_delivered_not_refused ... ok
+test mcp::digest_at_ring_tests::a_path_the_ring_names_twice_is_listed_once ... ok
+test mcp::digest_at_ring_tests::a_pointer_ending_a_sentence_keeps_its_path_and_loses_the_full_stop ... ok
+test mcp::digest_at_ring_tests::a_pointer_that_climbs_out_of_the_checkout_is_refused_with_the_path_in_it ... ok
+test mcp::digest_at_ring_tests::a_pointer_to_a_real_file_outside_the_checkout_is_still_refused ... ok
+test mcp::digest_at_ring_tests::a_pointer_with_no_readable_file_is_refused_with_the_path_in_it ... ok
+test mcp::digest_at_ring_tests::a_refused_digest_keeps_the_attempt_on_the_board ... ok
+test mcp::digest_at_ring_tests::a_ring_naming_one_file_says_nothing_about_others ... ok
+test mcp::digest_at_ring_tests::a_ring_whose_own_pointer_is_not_repo_relative_is_still_refused_and_the_refusal_says_which_spelling_it_wants ... ok
+test mcp::digest_at_ring_tests::a_zero_exit_with_something_that_is_not_an_object_id_is_no_digest ... ok
+test mcp::digest_at_ring_tests::an_older_hand_back_named_first_loses_to_the_newer_one_delivered ... ok
+test mcp::digest_at_ring_tests::b_s_l060_ring_is_digested_against_the_delivered_hand_back ... ok
+test mcp::digest_at_ring_tests::b_s_l060_ring_points_at_the_hand_back_it_delivered ... ok
+test mcp::digest_at_ring_tests::no_checkout_marks_the_absence_and_still_delivers ... ok
+test mcp::digest_at_ring_tests::on_the_same_date_the_hand_back_carrying_the_ring_s_own_lap_wins ... ok
+test mcp::digest_at_ring_tests::prose_with_no_path_has_no_pointer ... ok
+test mcp::digest_at_ring_tests::the_digest_fixture_leaves_no_folder_behind ... ok
+test mcp::digest_at_ring_tests::the_digest_gate_changes_no_gate_decision ... ok
+test mcp::digest_at_ring_tests::the_digest_line_leaves_the_next_trailer_last ... ok
+test mcp::digest_at_ring_tests::the_other_files_a_ring_names_are_listed_as_not_hashed ... ok
+test mcp::digest_at_ring_tests::the_pointer_is_found_in_a_real_ring_with_its_punctuation_trimmed ... ok
+test mcp::digest_at_ring_tests::the_pointer_is_the_one_in_the_prose_and_the_sources_paths_are_not_listed_as_also_named ... ok
+test mcp::digest_at_ring_tests::the_real_command_returns_the_known_blob_id_of_a_known_file ... ok
+test mcp::digest_at_ring_tests::the_ring_computes_from_the_file_the_pointer_names ... ok
+test mcp::digest_at_ring_tests::the_ring_hashes_before_it_checks_the_trailer_and_before_it_sends ... ok
+test mcp::digest_at_ring_tests::the_ring_s_own_lap_outranks_a_later_date ... ok
+test mcp::digest_at_ring_tests::the_slot_ends_at_a_blank_line_or_the_next_trailer_and_continuation_lines_belong_to_it ... ok
+test mcp::digest_at_ring_tests::the_slot_head_is_the_hooks_head_and_nothing_looser ... ok
+test mcp::digest_at_ring_tests::with_no_handback_path_the_first_md_is_still_the_pointer ... ok
+test mcp::digest_at_ring_tests::with_nothing_to_rank_by_the_first_handback_path_still_wins ... ok
+test mcp::refusal_pointer_tests::a_long_attempt_is_bounded_and_the_row_says_how_much_was_dropped ... ok
+test mcp::refusal_pointer_tests::a_refused_attempt_row_carries_the_pointer_and_the_mount ... ok
+test mcp::refusal_pointer_tests::an_admitted_call_does_not_post_the_row ... ok
+test mcp::refusal_pointer_tests::the_refusal_branch_posts_the_attempt_and_returns_the_same_text ... ok
+test mcp::refusal_pointer_tests::the_row_is_not_counted_as_another_out_of_turn_refusal ... ok
+test mcp::seal_gate_tests::a_subprocess_past_its_limit_is_killed_and_reported_not_waited_on ... ok
+test mcp::seal_gate_tests::chair_inject_runs_the_seal_gate_after_the_debt_gate_and_before_anything_is_sent ... ok
+test mcp::seal_gate_tests::f10_the_question_in_the_checkout_is_refused ... ok
+test mcp::seal_gate_tests::f11_a_key_in_the_objects_directory_is_refused_t5s_exposure ... ok
+test mcp::seal_gate_tests::f11b_a_dispatch_that_names_the_key_path_is_refused ... ok
+test librarian_tests::the_intake_states_what_the_seat_must_not_do ... ok
+test librarian_tests::the_brief_precedes_the_room ... ok
+test committee_brief_tests::no_seat_that_pastes_the_master_whole_wakes_carrying_the_dated_tail ... ok
+test librarian_tests::the_intake_carries_the_citation_rule ... ok
+test committee_brief_tests::the_handback_route_reaches_the_pane_intake ... ok
+test committee_brief_tests::the_journal_pointer_tail_is_indexed_rather_than_pasted ... ok
+test mcp::seal_gate_tests::f12_an_object_whose_name_is_tracked_is_refused_t5s_diff ... ok
+test mcp::seal_gate_tests::f14_seal_none_without_a_reason_is_refused ... ok
+test mcp::seal_gate_tests::f13_seal_none_with_a_reason_is_allowed_and_the_reason_is_what_gets_posted ... ok
+test mcp::seal_gate_tests::f15_an_unreachable_origin_is_refused_and_never_falls_back_to_the_cached_ref ... ok
+test mcp::seal_gate_tests::f18_a_key_with_no_distinctive_line_cannot_be_leak_checked_and_is_refused ... ok
+test mcp::seal_gate_tests::f2_an_undeclared_dispatch_naming_a_sealed_object_is_refused_by_row_and_task ... ok
+test mcp::seal_gate_tests::f1_a_row_committed_and_pushed_with_the_key_off_the_repo_is_allowed_and_audited ... ok
+test mcp::seal_gate_tests::f1b_a_seal_committed_beside_another_file_is_allowed_but_reported_as_not_the_push_exception ... ok
+test mcp::seal_gate_tests::f2b_an_ordinary_undeclared_dispatch_is_allowed_and_runs_no_git_at_all ... ok
+test mcp::seal_gate_tests::f2c_the_undeclared_match_survives_slash_and_case_differences ... ok
+test mcp::seal_gate_tests::f4_a_block_missing_a_field_is_refused_naming_the_field ... ok
+test mcp::seal_gate_tests::f4c_a_row_sealing_several_tasks_needs_the_task_named ... ok
+test mcp::seal_gate_tests::f3_a_seal_naming_a_row_that_is_not_on_disk_is_refused_naming_the_path ... ok
+test mcp::seal_gate_tests::f5_a_row_that_was_never_committed_is_refused ... ok
+test mcp::seal_gate_tests::f4b_a_seal_outside_exo_memory_loop_or_climbing_out_of_it_is_refused ... ok
+test mcp::seal_gate_tests::f6_a_row_committed_locally_and_never_pushed_is_refused_t5s_defect ... ok
+test mcp::seal_gate_tests::f7_a_block_edited_after_its_commit_is_refused ... ok
+test mcp::seal_gate_tests::f7b_a_key_changed_since_it_was_sealed_is_refused ... ok
+test mcp::seal_gate_tests::no_checkout_refuses_a_declared_seal_and_lets_an_ordinary_dispatch_go ... ok
+test mcp::tests::a_ledger_that_names_no_holder_is_said_rather_than_guessed ... ok
+test mcp::tests::a_mark_that_never_happened_is_not_a_very_old_mark ... ok
+test mcp::tests::a_station_refusal_reaches_the_board_and_names_the_escape ... ok
+test mcp::tests::an_open_lap_with_no_holder_refuses_the_stationed_verbs ... ok
+test mcp::tests::an_ordinary_fan_out_is_not_touched ... ok
+test mcp::tests::any_baton_row_clears_the_debt_even_one_that_does_not_open_the_panes ... ok
+test mcp::tests::call_chair_is_gated_on_the_mount ... ok
+test mcp::tests::call_librarian_is_gated_on_the_address_table ... ok
+test mcp::tests::call_librarian_is_gated_on_the_station ... ok
+test mcp::tests::chair_inject_is_gated_on_the_station ... ok
+test mcp::tests::each_verb_is_allowed_by_exactly_one_holder ... ok
+test mcp::tests::every_refusal_this_gate_adds_prints_a_runnable_command ... ok
+test mcp::tests::first_refusal_posts_immediately ... ok
+test mcp::tests::no_open_lap_gates_nothing ... ok
+test mcp::tests::no_verb_here_writes_the_holder ... ok
+test mcp::tests::post_board_stamps_the_calling_seat_rather_than_a_constant ... ok
+test mcp::tests::red_first_an_owed_hand_back_refuses_the_next_inject_and_names_the_recovery ... ok
+test mcp::tests::repeats_inside_the_window_are_absorbed_then_reported ... ok
+test mcp::tests::the_address_gate_asks_the_table_and_audits_refusals ... ok
+test mcp::tests::the_exemption_does_not_take_the_mount_gate_with_it ... ok
+test mcp::tests::the_exemption_is_exactly_one_verb_wide ... ok
+test mcp::tests::the_librarian_gate_admits_one_seat_and_audits_refusals ... ok
+test mcp::tests::the_librarian_reaches_the_chair_while_the_chair_holds_the_lap ... ok
+test mcp::tests::the_owed_refusal_also_prints_the_retake_that_needs_no_ring ... ok
+test mcp::tests::the_owed_refusal_says_where_the_baton_actually_is ... ok
+test mcp::tests::the_owed_refusal_warns_when_the_lap_it_names_may_not_be_the_one_rung_on ... ok
+test mcp::tests::the_pane_facing_refusal_is_holder_blind_and_that_is_the_known_limit ... ok
+test mcp::tests::the_station_table_names_one_holder_per_verb ... ok
+test mcp::tests::the_trap_gate_is_wired_into_both_verbs ... ok
+test mcp::tests::the_trapped_pane_is_handed_its_own_legal_exit ... ok
+test mcp::tests::the_two_silences_are_told_apart_and_only_one_says_wait ... ok
+test mcp::tests::the_window_is_the_possession_and_the_boundary_is_inclusive ... ok
+test mcp::tests::verbs_throttle_independently ... ok
+test mcp::tests::what_replaces_the_station_gate_for_call_chair_is_the_inbox ... ok
+test mcp::tests::with_a_second_lap_held_by_the_chair_the_trap_branch_is_reachable ... ok
+test mcp::tests::with_no_open_lap_every_verb_is_allowed ... ok
+test mcp::tests::with_one_open_lap_the_chair_and_the_panes_can_never_both_speak ... ok
+test mcp::third_place_mount_tests::a_lettered_mount_is_unchanged ... ok
+test mcp::third_place_mount_tests::a_pointer_into_private_is_refused_and_one_outside_it_is_not ... ok
+test mcp::third_place_mount_tests::a_private_pointer_is_refused_before_delivery_and_its_text_is_not_posted ... ok
+test mcp::third_place_mount_tests::every_gate_row_a_third_place_ring_triggers_is_fixed_text ... ok
+test mcp::third_place_mount_tests::the_address_refusal_on_the_third_place_seat_is_fixed_text ... ok
+test mcp::third_place_mount_tests::the_third_place_has_its_own_config ... ok
+test mcp::third_place_mount_tests::the_third_place_is_told_only_about_its_one_verb ... ok
+test mcp::third_place_mount_tests::the_third_place_mount_carries_only_the_return_leg ... ok
+test mcp::third_place_mount_tests::the_third_place_mount_is_its_own_seat ... ok
+test mcp::third_place_mount_tests::the_third_place_ring_is_not_held_to_the_loop_station ... ok
+test mcp::trailer_gate_tests::a_refusal_names_gates_md_at_its_resolved_path ... ok
+test mcp::trailer_gate_tests::call_chair_runs_the_trailer_gate_before_delivery_and_returns_on_refusal ... ok
+test mcp::trailer_gate_tests::call_chair_without_a_trailer_is_refused_and_the_message_comes_back_whole ... ok
+test mcp::trailer_gate_tests::call_librarian_warns_after_the_out_of_turn_arm_and_can_never_refuse_on_a_trailer ... ok
+test mcp::trailer_gate_tests::call_librarian_without_a_trailer_is_delivered_pointer_first_with_a_board_warning ... ok
+test mcp::trailer_gate_tests::chair_inject_runs_the_trailer_gate_last_after_the_seal_gate_and_returns_on_refusal ... ok
+test mcp::trailer_gate_tests::chair_inject_without_a_trailer_is_refused_and_the_message_comes_back_whole ... ok
+test mcp::trailer_gate_tests::d277_light_mode_delivers_with_the_warning_and_marks_the_board_line ... ok
+test mcp::trailer_gate_tests::d277_strict_mode_refuses_exactly_as_today ... ok
+test mcp::trailer_gate_tests::d277_the_switch_reads_only_light_as_light ... ok
+test mcp::trailer_gate_tests::every_verb_with_a_trailer_delivers_the_message_unchanged_and_posts_nothing ... ok
+test mcp::trailer_gate_tests::l084_call_chair_with_a_trailer_but_no_output_line_is_refused_and_comes_back_whole ... ok
+test mcp::trailer_gate_tests::l084_call_chair_with_the_output_line_is_delivered_unchanged ... ok
+test mcp::trailer_gate_tests::l084_the_rule_reaches_no_other_verb ... ok
+test mcp::trailer_gate_tests::l084_trailer_gate_runs_check_for_with_the_verb ... ok
+test mcp::trailer_gate_tests::the_audit_line_names_what_was_missing ... ok
+test mcp::trailer_gate_tests::the_gates_mode_folder_is_gone_after_the_test ... ok
+test mcp::seal_gate_tests::f7c_a_key_that_is_not_on_this_machine_is_refused ... ok
+test mcp::seal_gate_tests::f7d_a_key_inside_the_checkout_is_refused_t3s_defect ... ok
+test mcp::seal_gate_tests::f6b_a_seal_origin_no_longer_has_is_refused_even_while_the_cached_ref_still_contains_it ... ok
+test mcp::seal_gate_tests::f8_the_distinctive_line_in_a_tracked_file_is_refused_by_file_and_line_never_by_text_t3s_defect ... ok
+test night_table_tests::a_missing_bed_is_silent_not_a_panic ... ok
+test night_table_tests::dreams_aggregate_across_beds_each_tagged_by_its_bed ... ok
+test night_table_tests::drift_watch_generic_verdict_yields_the_inner_tag ... ok
+test night_table_tests::no_witnessed_interval_means_no_night_table ... ok
+test night_table_tests::nothing_older_than_the_gap_surfaces_and_a_quiet_night_stays_quiet ... ok
+test night_table_tests::prose_in_brackets_is_not_a_tag ... ok
+test night_table_tests::stamp_drops_the_year_and_weekday ... ok
+test night_table_tests::tag_comes_from_the_last_line_not_the_first ... ok
+test night_table_tests::tag_leading_the_line_is_found_too ... ok
+test night_table_tests::the_night_table_gathers_dreams_and_verdicts ... ok
+test night_table_tests::untagged_and_empty_progress_stay_silent ... ok
+test no_console_tests::every_process_the_app_starts_is_started_with_no_window ... ok
+test no_console_tests::no_process_is_started_detached ... ok
+test no_console_tests::the_waiter_and_the_applier_get_a_hidden_console_and_their_own_process_group ... ok
+test nowplaying::tests::a_stale_position_is_carried_forward_while_playing ... ok
+test nowplaying::tests::a_title_without_an_artist_still_reads ... ok
+test nowplaying::tests::an_unknown_length_reads_as_unknown_not_as_zero ... ok
+test nowplaying::tests::an_unmatched_session_says_so_in_its_own_line ... ok
+test nowplaying::tests::extrapolation_cannot_run_past_the_end_or_backwards ... ok
+test nowplaying::tests::nothing_playing_produces_no_line_rather_than_a_dash ... ok
+test nowplaying::tests::reading_the_real_session_does_not_panic ... ok
+test nowplaying::tests::the_clock_reads_the_way_a_player_shows_it ... ok
+test offset_tests::a_pane_never_seen_before_starts_at_zero ... ok
+test offset_tests::a_relaunch_after_new_turns_reads_only_the_new_bytes ... ok
+test offset_tests::a_relaunch_on_an_unchanged_transcript_resumes_at_the_end_and_reads_nothing ... ok
+test offset_tests::a_replaced_transcript_resets_even_when_it_is_longer ... ok
+test offset_tests::a_truncated_transcript_resets_rather_than_seeking_past_the_end ... ok
+test offset_tests::doubt_always_resolves_to_re_reading_rather_than_to_skipping ... ok
+test offset_tests::offsets_survive_a_round_trip_through_the_file ... ok
+test offset_tests::the_backfill_announces_the_seam_instead_of_smoothing_it ... ok
+test mcp::seal_gate_tests::f9_the_distinctive_line_in_an_untracked_file_is_refused_too ... ok
+test offset_tests::the_belt_drops_an_exact_repeat_and_keeps_a_genuine_one ... ok
+test offset_tests::the_belt_is_bounded_and_forgets_oldest_first ... ok
+test offset_tests::the_fingerprint_separates_transcripts_and_survives_a_short_read ... ok
+test offset_tests::two_different_turns_in_the_same_millisecond_are_two_turns ... ok
+test pane_call_tests::a_pane_speaks_under_its_mount_letter_and_no_other_name ... ok
+test pane_call_tests::an_unlettered_mount_is_refused_before_delivery ... ok
+test pane_call_tests::every_outcome_reaches_the_board ... ok
+test pane_call_tests::the_success_audit_line_is_the_shape_the_counter_reads ... ok
+test pane_exit::tests::a_committee_pane_is_reopened_once_and_never_in_a_loop ... ok
+test pane_exit::tests::a_fixed_seat_is_reopened_once_and_never_in_a_loop ... ok
+test pane_exit::tests::a_human_pane_is_prompted_never_reopened ... ok
+test pane_exit::tests::a_new_session_drops_the_exit_and_records_the_reopen ... ok
+test pane_exit::tests::a_real_process_that_exits_reads_exited_with_its_code ... ok
+test pane_exit::tests::a_running_reopen_holds_the_message_rather_than_refusing_it ... ok
+test pane_exit::tests::a_stamp_from_before_the_reopen_is_the_dead_childs ... ok
+test pane_exit::tests::an_exited_child_reads_exited_never_awake ... ok
+test pane_exit::tests::an_exited_pid_with_nothing_reopening_it_is_refused_naming_the_exit ... ok
+test pane_exit::tests::an_intentional_end_does_nothing_and_spends_nothing ... ok
+test pane_exit::tests::only_the_two_fixed_senders_are_told_a_lettered_one_is_named ... ok
+test pane_exit::tests::the_once_is_per_seat ... ok
+test pane_exit::tests::the_refusal_names_the_exit_and_never_reads_delivered ... ok
+test pane_exit::tests::the_rows_say_what_happened_and_never_awake ... ok
+test pane_exit::tests::the_sender_is_the_provenance_label_and_nothing_else ... ok
+test pane_exit_wiring_tests::a_committee_pane_resumes_where_its_kept_record_says_and_a_human_pane_never ... ok
+test pane_exit_wiring_tests::a_live_pane_s_row_is_d138_s_word_for_word ... ok
+test pane_exit_wiring_tests::an_exited_pane_s_row_says_exited_not_waiting_on_you ... ok
+test pane_exit_wiring_tests::keep_warm_skips_an_exited_child ... ok
+test pane_exit_wiring_tests::the_cut_tells_only_fixed_senders_and_both_new_sessions_clear_the_exit ... ok
+test pane_exit_wiring_tests::the_dead_childs_ready_stamp_is_not_the_reopened_childs ... ok
+test pane_exit_wiring_tests::the_door_and_the_drain_ask_the_exit_gate_first ... ok
+test pane_exit_wiring_tests::the_existing_waiter_reports_the_exit ... ok
+test pane_exit_wiring_tests::the_reopen_is_behind_the_once_guard_and_only_for_our_own_child ... ok
+test pane_exit_wiring_tests::the_reopen_is_marked_before_the_exit_and_cleared_after_the_new_pid ... ok
+test pointer_tail_tests::a_master_with_no_pointer_tail_is_untouched ... ok
+test pointer_tail_tests::an_index_that_resolves_to_nothing_is_empty_so_the_caller_keeps_the_tail ... ok
+test pointer_tail_tests::only_the_trailing_run_of_pointers_is_split_off ... ok
+test pointer_tail_tests::the_index_names_only_journal_files_that_exist ... ok
+test priority::tests::a_process_is_as_wanted_only_with_the_class_and_the_opt_out ... ok
+test priority::tests::a_webview_is_named_msedgewebview2_in_any_case_and_nothing_else_is ... ok
+test priority::tests::descendants_are_children_and_their_children_and_never_the_root ... ok
+test priority::tests::descendants_of_nothing_and_of_a_cycle_end ... ok
+test priority::tests::the_real_sweep_leaves_a_child_that_is_not_a_webview_as_it_was ... ok
+test priority::tests::the_running_process_reports_the_class_and_the_throttling_state_that_were_set ... ok
+test mcp::seal_gate_tests::f9b_an_ignored_file_is_not_the_search_space ... ok
+test priority::tests::the_sweep_sets_only_the_webview2_tree_never_a_panes_processes ... ok
+test priority::tests::the_wanted_flags_are_the_documented_ones ... ok
+test provenance_tests::a_forged_row_number_outside_the_batch_is_held_with_its_reason ... ok
+test provenance_tests::a_mixed_file_of_old_and_new_atoms_reads_every_line ... ok
+test provenance_tests::a_new_shape_atom_renders_its_src_beside_the_claim_which_stays_byte_identical ... ok
+test provenance_tests::a_planted_row_distilled_carries_its_real_pane_in_src ... ok
+test provenance_tests::an_atom_with_no_usable_citation_is_held_never_dropped_and_every_reason_is_non_empty ... ok
+test provenance_tests::an_old_shape_atom_with_no_src_or_an_unreadable_src_renders_exactly_as_before ... ok
+test provenance_tests::an_output_with_no_json_array_is_refused_and_nothing_is_written ... ok
+test provenance_tests::if_the_held_file_cannot_be_written_nothing_is_written_and_the_error_is_returned ... ok
+test provenance_tests::run_distill_hands_the_scribes_output_to_keep_distilled_and_writes_no_atom_itself ... ok
+test provenance_tests::src_is_stamped_from_the_batch_even_when_the_model_supplies_its_own ... ok
+test provenance_tests::the_atom_frame_says_what_src_does_and_does_not_prove ... ok
+test provenance_tests::the_claim_is_byte_identical_and_the_batch_local_row_numbers_are_not_stored ... ok
+test provenance_tests::the_scribe_prompt_requires_every_atom_to_cite_its_rows ... ok
+test provenance_tests::the_scribes_raw_output_goes_through_the_check_a_forged_row_is_held_and_a_real_one_is_written_with_src ... ok
+test provenance_tests::the_topic_summaries_in_the_map_sit_inside_their_own_claims_frame ... ok
+test provenance_tests::the_write_puts_held_atoms_in_their_own_file_with_the_reason_and_never_in_atoms_jsonl ... ok
+test publish_at_close_tests::a_clean_exit_without_a_published_line_is_shown_as_closed_with_its_last_line ... ok
+test publish_at_close_tests::a_publish_shows_the_sha_it_moved_the_remote_from_and_to ... ok
+test publish_at_close_tests::a_publish_that_could_not_start_is_shown_with_its_reason ... ok
+test publish_at_close_tests::a_publish_that_runs_past_its_bound_is_shown_as_timed_out_not_as_published ... ok
+test publish_at_close_tests::a_refusal_is_shown_verbatim_with_its_exit_code_never_skipped ... ok
+test publish_at_close_tests::nothing_to_publish_is_shown_as_unchanged_with_the_remote_head ... ok
+test publish_at_close_tests::the_close_completes_either_way_the_outcome_rides_beside_the_stick_result ... ok
+test publish_at_close_tests::the_keepers_close_worst_case_counts_the_publish_so_a_shutdown_join_waits_for_it ... ok
+test publish_at_close_tests::the_leave_publishes_only_on_its_publish_bound_and_before_the_close_button ... ok
+test publish_at_close_tests::the_os_ending_the_session_never_publishes_and_the_keepers_close_does_within_a_bound ... ok
+test publish_at_close_tests::the_unattended_exit_waiter_never_publishes ... ok
+test pulse_when_tests::morning_keeps_padded_minutes_but_not_padded_hours ... ok
+test pulse_when_tests::noon_and_midnight_are_twelve_not_zero ... ok
+test pulse_when_tests::single_digit_day_and_pm_render_unpadded ... ok
+test ready_signal_tests::a_footer_drawn_onto_the_composer_row_is_not_a_turn_in_flight ... ok
+test ready_signal_tests::a_ghost_in_the_composer_is_not_the_keeper_typing ... ok
+test ready_signal_tests::a_pane_killed_mid_turn_does_not_become_unreachable ... ok
+test ready_signal_tests::a_prompt_row_with_no_rule_above_it_is_not_the_composer ... ok
+test ready_signal_tests::a_ready_pane_has_no_bound ... ok
+test ready_signal_tests::a_ready_stamp_over_a_live_turn_does_not_deliver ... ok
+test priority::tests::the_sweep_sets_a_child_and_reads_it_back_and_a_set_child_is_left_alone ... ok
+test ready_signal_tests::a_reason_can_only_come_from_the_gate_that_owns_it ... ok
+test ready_signal_tests::a_rule_inside_a_reply_is_not_the_separator ... ok
+test ready_signal_tests::a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect ... ok
+test ready_signal_tests::a_stale_spinner_on_a_quiet_pane_is_still_an_ordinary_ready_pane ... ok
+test ready_signal_tests::a_stale_stamp_and_a_working_pane_do_not_read_alike ... ok
+test ready_signal_tests::a_stamp_that_will_not_parse_is_absent_not_working ... ok
+test ready_signal_tests::a_working_pane_holds_without_a_bound ... ok
+test ready_signal_tests::a_real_empty_composer_reads_busy_because_the_marker_is_not_default ... ok
+test ready_signal_tests::an_unforced_row_carries_no_forced_clause ... ok
+test ready_signal_tests::an_unreadable_screen_takes_neither_unbounded_path ... ok
+test ready_signal_tests::no_delivered_row_claims_a_ready_signal_and_denies_one ... ok
+test ready_signal_tests::no_stamp_behaves_as_it_did_before_the_stamp_existed ... ok
+test ready_signal_tests::no_two_forcing_causes_read_alike ... ok
+test ready_signal_tests::only_a_corroborated_working_pane_holds_without_a_bound ... ok
+test ready_signal_tests::real_typing_on_a_tall_pane_still_holds_a_delivery ... ok
+test ready_signal_tests::real_typing_still_holds_a_delivery_even_with_a_prediction_after_it ... ok
+test ready_signal_tests::an_empty_composer_must_read_empty_whatever_colour_the_marker_is_drawn_in ... ok
+test ready_signal_tests::the_composer_of_a_pane_taller_than_the_constants_is_still_read ... ok
+test ready_signal_tests::the_gate_sweep_covers_every_state_there_is ... ok
+test ready_signal_tests::the_hook_pair_is_in_the_installer_and_writes_what_the_reader_parses ... ok
+test ready_signal_tests::the_keeper_typing_a_slash_command_must_hold_a_delivery ... ignored, acceptance test for the slash-command splice; see the test above before un-ignoring
+test ready_signal_tests::the_keeper_typing_still_holds_a_pane_that_says_it_is_ready ... ok
+test ready_signal_tests::the_mirror_is_bounded_and_says_which_cause_forced_it ... ok
+test ready_signal_tests::the_prompt_marker_survives_the_reduction ... ok
+test repo_root_tests::a_path_with_no_grandparent_is_none ... ok
+test repo_root_tests::a_room_master_yields_the_checkout_above_it ... ok
+test repo_root_tests::an_empty_room_path_is_no_checkout ... ok
+test repo_root_tests::the_checkout_resolves_wherever_this_source_actually_is ... ok
+test resolve_pane_tests::a_miss_and_a_collision_do_not_print_the_same_sentence ... ok
+test resolve_pane_tests::a_name_pointing_at_a_dead_pane_does_not_resolve_to_it ... ok
+test resolve_pane_tests::a_pane_cannot_register_any_word_that_reaches_a_seat_address ... ok
+test resolve_pane_tests::a_prefix_that_is_unique_still_resolves ... ok
+test resolve_pane_tests::an_empty_target_is_refused_rather_than_matching_the_only_pane ... ok
+test resolve_pane_tests::no_shared_prefix_of_any_length_resolves_to_either_seat ... ok
+test resolve_pane_tests::ordinary_pane_names_are_still_registrable ... ok
+test resolve_pane_tests::resolve_pane_delegates_and_never_matches_prefixes_itself ... ok
+test resolve_pane_tests::set_pane_name_delegates_to_the_guard_and_does_not_check_the_constant_itself ... ok
+test resolve_pane_tests::the_live_resolution_path_refuses_the_shared_prefix_too ... ok
+test resolve_pane_tests::the_live_resolution_path_still_resolves_names_ids_and_unique_prefixes ... ok
+test resolve_pane_tests::the_seat_addresses_are_reserved_against_panes ... ok
+test resolve_pane_tests::the_seven_character_prefix_the_two_seats_share_is_refused ... ok
+test ring_reply_tests::a_rendered_ring_says_delivered_in_the_words_senders_already_read ... ok
+test ring_reply_tests::a_ring_left_in_the_input_box_says_not_submitted_and_where_it_is ... ok
+test ring_reply_tests::an_unrendered_ring_never_says_delivered ... ok
+test ready_signal_tests::the_composer_is_found_on_the_drawn_grid_though_the_reduction_deleted_its_marker ... ok
+test ring_reply_tests::both_rings_gate_first_and_reply_only_through_ring_reply ... ok
+test ring_stamp_tests::a_clock_that_moved_back_reads_zero_seconds_not_a_negative_wait ... ok
+test ring_stamp_tests::a_stamped_ring_keeps_its_text_as_a_prefix_and_ends_on_one_send_line ... ok
+test ring_stamp_tests::a_held_delivery_says_both_times_and_how_long_it_waited ... ok
+test ring_stamp_tests::the_delivery_stamp_is_applied_once_and_only_to_a_message_that_carries_the_send_stamp ... ok
+test ring_stamp_tests::the_stamp_is_never_a_leading_line_because_every_ring_reader_anchors_on_the_head ... ok
+test ring_stamp_tests::the_drain_rewrites_the_stamp_to_say_delivered_just_before_it_writes ... ok
+test scribe_wrap_tests::a_data_line_before_the_rows_says_they_are_data_and_that_instructions_inside_are_not_to_be_followed ... ok
+test scribe_wrap_tests::a_planted_instruction_in_a_board_row_stays_inside_the_data ... ok
+test scribe_wrap_tests::a_row_carrying_a_forged_close_marker_cannot_end_the_data_early ... ok
+test scribe_wrap_tests::after_the_rows_the_task_is_restated_so_the_last_thing_read_is_not_a_board_row ... ok
+test scribe_wrap_tests::every_one_shot_call_runs_with_no_tools_no_hooks_no_mcp_and_no_saved_session ... ok
+test scribe_wrap_tests::hooks_are_off_by_loading_project_settings_only_and_disabling_all_hooks_not_by_an_empty_hooks_object ... ok
+test scribe_wrap_tests::if_the_rows_ever_contain_the_drawn_id_a_new_one_is_drawn ... ok
+test scribe_wrap_tests::the_board_rows_sit_between_one_open_marker_and_one_close_marker_that_carry_the_same_fresh_id ... ok
+test scribe_wrap_tests::the_scribe_input_keeps_every_row_it_was_given ... ok
+test scrollback_tests::a_cut_inside_a_multibyte_glyph_does_not_panic ... ok
+test scrollback_tests::empty_is_empty_not_a_panic ... ok
+test ring_stamp_tests::the_three_ring_senders_stamp_the_message_after_writing_the_label_and_before_the_gate ... ok
+test scrollback_tests::long_history_opens_on_a_line_boundary ... ok
+test scrollback_tests::no_newline_in_the_window_still_returns_text ... ok
+test scrollback_tests::short_history_is_returned_whole ... ok
+test seat_alias::tests::a_letter_finds_its_display_name_and_a_display_name_finds_its_letter ... ok
+test seat_alias::tests::an_unknown_target_gains_no_aliases ... ok
+test seat_alias::tests::every_alias_target_is_a_seat_key_and_no_class_overlaps ... ok
+test seat_alias::tests::mike_never_resolves_to_the_orchestrator ... ok
+test seat_alias::tests::the_fifty_eight_recorded_failures_all_reach_the_orchestrator ... ok
+test seat_alias::tests::the_typed_token_is_always_tried_first ... ok
+test seat_role_tests::an_unknown_letter_is_committee_and_never_a_seat ... ok
+test seat_role_tests::each_seat_reports_its_own_role ... ok
+test seat_role_tests::the_seat_follows_the_registry_rather_than_a_hardcoded_letter ... ok
+test second_instance_tests::ending_the_process_comes_after_a_wait ... ok
+test second_instance_tests::no_sentence_asserts_that_a_window_exists ... ok
+test seat_role_tests::the_reader_delegates_and_hardcodes_no_letter ... ok
+test second_instance_tests::the_dialog_text_is_ascii ... ok
+test second_instance_tests::the_two_mcp_servers_reason_is_kept ... ok
+test second_instance_tests::the_windowless_case_names_task_manager_and_the_process ... ok
+test seed_upgrade_tests::a_bare_carriage_return_is_not_swallowed ... ok
+test seed_upgrade_tests::a_differing_copy_with_no_recorded_provenance_is_kept_not_clobbered ... ok
+test seed_upgrade_tests::a_missing_copy_installs ... ok
+test second_instance_tests::the_dialog_shows_the_pinned_message ... ok
+test seed_upgrade_tests::an_edited_copy_is_kept_even_when_the_bundle_is_newer ... ok
+test seed_upgrade_tests::a_second_pass_over_kept_yours_is_stable ... ok
+test seed_upgrade_tests::an_unmanifested_copy_identical_to_the_bundle_is_adopted_not_stranded ... ok
+test seed_upgrade_tests::an_untouched_copy_upgrades_when_the_bundle_changes ... ok
+test seed_upgrade_tests::an_unmanifested_but_identical_file_is_recorded_without_being_rewritten ... ok
+test seed_upgrade_tests::line_endings_alone_are_not_an_edit ... ok
+test seed_upgrade_tests::the_seed_scratch_helper_leaves_no_folder_behind ... ok
+test seed_upgrade_tests::upgrading_replaces_the_file_and_records_the_new_fingerprint ... ok
+test seed_upgrade_tests::keeping_yours_leaves_the_file_alone_and_writes_the_new_one_beside_it ... ok
+test intake_light_tests::key_absent_the_librarian_intake_is_todays ... ok
+test intake_light_tests::key_absent_the_pane_intake_is_todays ... ok
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+test shelf_handback_tests::dump_intakes_with_the_handback_index_on ... ignored
+test shelf_handback_tests::the_handback_index_switch_reads_on_only_for_json_true ... ok
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+test managed_cwd_tests::a_configured_data_dir_wins_over_the_legacy_repo_location ... ok
+test managed_cwd_tests::a_sibling_directory_with_a_shared_prefix_is_not_inside ... ok
+test shelf_handback_tests::the_light_shelf_gains_one_top_level_handback_line_with_the_switch_on_and_nothing_else ... ok
+test managed_cwd_tests::a_users_own_project_never_has_its_claude_md_touched ... ok
+test managed_cwd_tests::the_map_walk_reaches_the_repo_maps_when_no_data_dir_map_exists ... ok
+test migrate_tail_and_sweep_tests::a_synced_tail_that_fits_still_rides_as_the_conversation_itself ... ok
+test migrate_tail_and_sweep_tests::a_synced_tail_that_is_not_on_disk_points_the_seat_at_it_instead_of_waking_it_blank ... ok
+test shelf_tests::the_collapsed_index_line_is_silent_when_the_budget_dropped_nothing ... ok
+test shelf_tests::the_collapsed_index_line_names_count_range_and_the_command_that_recovers_them ... ok
+test migrate_tail_and_sweep_tests::an_empty_synced_tail_leaves_a_row_and_no_pointer ... ok
+test shelf_tests::the_index_orders_by_the_last_date_in_the_label_and_tolerates_none ... ok
+test migrate_tail_and_sweep_tests::the_startup_sweep_keeps_every_fixed_id_seat_not_only_main ... ok
+test offset_tests::the_backfill_decision_must_be_made_after_the_configured_dirs_resolve ... ok
+test shelf_handback_tests::a_long_titled_entry_the_window_used_to_drop_is_listed ... ok
+test shelf_handback_tests::a_mapped_hand_back_is_not_listed_and_an_unmapped_one_is ... ok
+test shelf_handback_tests::a_missing_map_dir_leaves_every_top_level_hand_back_unmapped ... ok
+test shelf_handback_tests::an_empty_handback_dir_lists_none_and_says_zero ... ok
+test shelf_tests::the_librarian_window_is_today_and_yesterday_and_nothing_else ... ok
+test shelf_tests::the_shelf_budget_is_derived_from_the_cap_and_saturates ... ok
+test shelf_handback_tests::an_evidence_folder_md_is_never_listed ... ok
+test shelf_handback_tests::the_index_budget_is_never_exceeded_with_hand_backs_in_the_tier ... ok
+test shelf_handback_tests::with_the_switch_off_the_strict_shelf_lists_only_the_unmapped_hand_back ... ok
+test shelf_handback_tests::with_the_switch_on_every_hand_back_is_listed_once_by_path_and_no_evidence_md ... ok
+test shelf_handback_tests::with_the_switch_on_the_index_budget_holds_and_its_drops_are_counted ... ok
+test shelf_tests::a_generous_index_budget_drops_nothing_and_says_nothing ... ok
+test shelf_tests::anything_the_budget_leaves_out_is_named_in_the_intake ... ok
+test shelf_tests::the_cards_are_reached_before_the_root_tier ... ok
+test shelf_tests::the_third_place_transcript_never_reaches_the_board ... ok
+test shelf_tests::the_window_line_never_claims_a_full_window_over_a_partial_one ... ok
+test shelf_tests::the_header_counts_the_index_window_drop_from_what_was_delivered ... ok
+test shelf_tests::the_index_window_is_a_prefix_so_its_date_range_is_not_a_lie ... ok
+test shelf_tests::the_index_window_is_newest_first_by_date_not_by_path ... ok
+test shell_budget_order_tests::a_core_brief_over_budget_says_so_instead_of_going_quiet ... ok
+test shell_budget_order_tests::a_master_whose_newest_entry_is_past_the_cap_is_refused_out_loud ... ok
+test shell_budget_order_tests::an_optional_brief_is_never_carried_in_part ... ok
+test shell_budget_order_tests::an_unreadable_source_index_is_not_a_deck_of_zeroes ... ok
+test shell_budget_order_tests::every_brief_that_did_not_ride_is_named_by_path ... ok
+test shell_budget_order_tests::every_real_pane_master_seats_a_whole_entry ... ok
+test shell_budget_order_tests::nothing_is_reserved_for_a_map_that_is_not_there_or_cannot_use_it ... ok
+test shell_budget_order_tests::the_deck_is_seated_by_trigger_count_not_by_alphabet ... ok
+test shell_budget_order_tests::the_map_keeps_its_seat_when_the_deck_grows ... ok
+test shell_budget_order_tests::the_reserve_never_pushes_the_shell_over_its_ceiling ... ok
+test shell_budget_order_tests::the_two_greps_that_decide_this_read_four_carried_and_zero_failed ... ok
+test shell_budget_order_tests::trigger_count_measures_routing_not_mentions ... ok
+test shell_budget_tests::a_large_map_yields_before_the_conversation_does ... ok
+test shell_budget_tests::a_master_whose_newest_entry_exceeds_the_seat_still_carries_something ... ok
+test shell_budget_tests::a_pane_with_no_map_is_told_its_first_append_creates_the_file ... ok
+test shell_budget_tests::a_real_carry_and_a_failed_one_do_not_grep_alike ... ok
+test shell_budget_tests::a_small_map_rides_intact ... ok
+test shell_budget_tests::a_zero_allowance_says_so_in_the_shell_instead_of_going_quiet ... ok
+test shell_budget_tests::an_already_overweight_brief_asks_the_map_for_nothing ... ok
+test shell_budget_tests::an_empty_body_never_claims_a_carry ... ok
+test shell_budget_tests::the_index_tier_carries_headings_only_and_newest_first ... ok
+test shell_budget_tests::the_index_tier_states_the_arithmetic_that_produced_it ... ok
+test shelf_tests::the_librarian_intake_carries_boot_exactly_once ... ok
+test shell_budget_tests::what_is_carried_starts_at_a_session_boundary ... ok
+test singleton_tests::a_second_claim_on_the_same_name_is_refused ... ok
+test singleton_tests::an_unrelated_name_is_not_blocked_by_a_held_one ... ok
+test stick_wiring_tests::a_session_id_is_exactly_the_uuid_shape ... ok
+test stick_wiring_tests::the_app_exits_only_when_the_applier_has_started ... ok
+test stick_wiring_tests::the_exit_waiter_is_started_on_every_launch_and_logs_only_when_it_cannot_start ... ok
+test stick_wiring_tests::the_launch_effects_run_only_when_the_stick_does_not_hold_the_seats ... ok
+test stick_wiring_tests::the_launch_starts_no_carry_and_no_applier ... ok
+test submit_check_tests::a_collapsed_paste_of_ours_is_ours_and_gets_the_enter_again ... ok
+test submit_check_tests::a_collapsed_paste_with_another_line_count_is_not_ours ... ok
+test submit_check_tests::a_dim_suggestion_only_reads_as_empty_and_is_submitted ... ok
+test submit_check_tests::a_ring_is_received_only_when_rendered_and_submitted ... ok
+test submit_check_tests::an_unreadable_composer_is_unknown_never_submitted_and_gets_no_enter ... ok
+test submit_check_tests::our_text_gone_after_the_first_enter_is_submitted_with_no_retry ... ok
+test submit_check_tests::our_text_stuck_after_the_enter_and_gone_after_one_retry_is_submitted_after_one_retry ... ok
+test submit_check_tests::our_text_there_through_every_retry_is_not_submitted_and_nothing_is_pasted_or_cleared ... ok
+test submit_check_tests::the_decision_table ... ok
+test submit_check_tests::the_keepers_text_in_the_composer_is_not_ours_and_no_enter_is_sent_on_it ... ok
+test submit_check_tests::the_source_writes_one_paste_and_no_clear_or_delete_key ... ok
+test submit_check_tests::the_wait_is_bounded_by_the_submit_delay_plus_the_gaps ... ok
+test suggestion_off_tests::a_seat_command_carries_prompt_suggestions_off ... ok
+test suggestion_off_tests::an_outranked_hold_with_no_readings_claims_nothing_it_did_not_read ... ok
+test suggestion_off_tests::the_seat_spawn_applies_it_before_the_command_is_spawned ... ok
+test sync_launch::diverged_tests::a_diverged_offer_names_what_take_and_keep_each_do ... ok
+test sync_launch::diverged_tests::a_diverged_row_is_offered_take_with_nothing_preselected ... ok
+test sync_launch::diverged_tests::a_keep_for_an_earlier_carry_does_not_quiet_this_one ... ok
+test sync_launch::diverged_tests::a_kept_diverged_row_says_so ... ok
+test sync_launch::diverged_tests::a_kept_seats_export_stop_of_another_reason_is_still_news ... ok
+test sync_launch::diverged_tests::a_read_only_launch_says_read_only ... ok
+test sync_launch::diverged_tests::a_row_that_needs_no_choice_is_offered_nothing ... ok
+test sync_launch::diverged_tests::a_seat_whose_ledger_still_needs_healing_is_not_quiet ... ok
+test sync_launch::diverged_tests::a_stick_hold_says_the_seats_are_waiting_for_the_transfer_window ... ok
+test sync_launch::diverged_tests::an_other_conversation_row_is_still_offered_through_offer_for ... ok
+test sync_launch::diverged_tests::an_unimported_tail_for_a_seat_nobody_kept_is_still_news ... ok
+test sync_launch::diverged_tests::an_unkept_fork_is_not_quiet ... ok
+test sync_launch::diverged_tests::kept_seats_are_quiet_although_their_export_refuses_unimported_tail ... ok
+test sync_launch::leave_tests::a_crashed_carry_is_not_done_with_its_reason ... ok
+test sync_launch::leave_tests::a_dead_waiter_and_a_dead_app_remove_both_files ... ok
+test sync_launch::leave_tests::a_flight_that_lands_during_the_wait_lets_the_drain_proceed ... ok
+test sync_launch::leave_tests::a_launch_with_no_leave_file_reads_nothing ... ok
+test sync_launch::leave_tests::a_leave_file_naming_a_live_consonance_is_kept ... ok
+test sync_launch::leave_tests::a_leave_file_naming_this_launchs_own_pid_is_kept_as_ruled ... ok
+test sync_launch::leave_tests::a_list_holding_the_app_says_gone_for_a_pid_it_lacks_and_running_for_one_it_has ... ok
+test sync_launch::leave_tests::a_live_pid_whose_image_was_never_read_is_not_ended ... ok
+test sync_launch::leave_tests::a_live_waiter_lock_keeps_every_leave_file ... ok
+test sync_launch::leave_tests::a_poisoned_panes_style_lock_is_recovered_rather_than_unwrapped ... ok
+test sync_launch::leave_tests::a_reused_pid_running_another_image_is_ended ... ok
+test sync_launch::leave_tests::a_seat_alive_at_the_bound_is_not_done_although_the_carry_exits_zero ... ok
+test sync_launch::leave_tests::a_seat_is_ended_when_its_pid_is_gone ... ok
+test sync_launch::leave_tests::a_seat_still_running_its_own_image_is_not_ended_in_any_spelling ... ok
+test sync_launch::leave_tests::a_seat_still_starting_is_named_in_the_result_file_too ... ok
+test sync_launch::leave_tests::a_spawn_entering_after_the_close_began_is_refused_and_leaves_no_count ... ok
+test sync_launch::leave_tests::a_spawn_failure_is_not_done_with_no_code ... ok
+test sync_launch::leave_tests::a_spawn_held_in_flight_across_the_drain_is_never_done ... ok
+test sync_launch::leave_tests::a_spawn_step_that_fails_after_the_child_runs_kills_the_child_and_returns_the_error ... ok
+test sync_launch::leave_tests::a_started_file_that_cannot_be_written_means_nothing_is_exported ... ok
+test sync_launch::leave_tests::a_timeout_is_not_done_with_no_code ... ok
+test sync_launch::leave_tests::a_waiter_pid_reused_by_another_image_is_not_a_live_waiter ... ok
+test sync_launch::leave_tests::an_empty_process_list_is_cannot_tell ... ok
+test sync_launch::leave_tests::an_insert_that_replaces_a_session_kills_the_one_it_replaces_and_not_the_new_one ... ok
+test sync_launch::leave_tests::an_on_drop_guard_runs_once_on_a_normal_return_and_on_an_unwind ... ok
+test sync_launch::leave_tests::an_unreadable_waiter_lock_keeps_every_leave_file ... ok
+test sync_launch::leave_tests::exit_one_is_not_done_and_names_the_seat_that_stopped ... ok
+test sync_launch::leave_tests::exit_zero_with_a_stopping_row_is_still_not_done ... ok
+test sync_launch::leave_tests::exit_zero_with_every_seat_ended_and_no_stop_is_done ... ok
+test sync_launch::leave_tests::ledger_locked_is_not_done_and_names_the_holder ... ok
+test sync_launch::leave_tests::no_waiter_lock_and_a_dead_app_remove_both_files ... ok
+test sync_launch::leave_tests::output_that_is_not_the_contract_is_not_done ... ok
+test sync_launch::leave_tests::started_stays_when_the_result_cannot_be_written ... ok
+test sync_launch::leave_tests::the_cleanup_removes_nothing_on_an_empty_list ... ok
+test sync_launch::leave_tests::the_cleanup_removes_nothing_when_the_waiter_lock_cannot_be_checked_against_the_list ... ok
+test sync_launch::leave_tests::the_flight_is_counted_before_the_phase_is_read ... ok
+test sync_launch::leave_tests::the_keep_awake_hold_is_taken_when_a_seat_lives_and_released_when_the_last_one_ends ... ok
+test sync_launch::leave_tests::the_leave_files_name_the_app_image_in_the_rust_spelling_and_match_pidimages_shape ... ok
+test sync_launch::leave_tests::the_result_file_carries_this_sessions_start_time_on_every_branch_that_writes_one ... ok
+test sync_launch::leave_tests::the_started_file_carries_this_sessions_start_time ... ok
+test sync_launch::leave_tests::the_wait_counts_an_empty_list_as_alive_to_the_bound ... ok
+test sync_launch::leave_tests::the_wait_names_the_seats_still_running_at_the_bound_and_sleeps_between_checks_only ... ok
+test sync_launch::leave_tests::the_wait_returns_as_soon_as_every_seat_has_ended ... ok
+test sync_launch::leave_tests::with_many_stick_folders_nothing_is_saved_and_the_result_names_every_folder ... ok
+test sync_launch::leave_tests::with_no_stick_the_close_exits_as_today_and_writes_no_file ... ok
+test sync_launch::leave_tests::with_one_stick_folder_started_is_on_disk_before_the_export_and_gone_after_the_result ... ok
+test sync_launch::leave_tests::work_counts_only_while_the_machine_is_on_mains_power ... ok
+test sync_launch::stick_tests::a_child_that_dies_before_the_handshake_is_named_at_once ... ok
+test sync_launch::stick_tests::a_fixed_seat_after_the_export_but_not_at_a_launch_defaults_to_keep ... ok
+test sync_launch::stick_tests::a_fixed_seat_at_a_launch_but_before_the_export_defaults_to_keep ... ok
+test sync_launch::stick_tests::a_fixed_seat_born_after_the_export_and_at_a_launch_defaults_to_take ... ok
+test sync_launch::stick_tests::a_fixed_seat_born_before_the_export_defaults_to_keep ... ok
+test sync_launch::stick_tests::a_fixed_seat_with_no_recorded_times_defaults_to_keep ... ok
+test sync_launch::stick_tests::a_handshake_naming_another_pid_does_not_count ... ok
+test sync_launch::stick_tests::a_handshake_whose_pid_is_dead_is_stale_and_does_not_withhold ... ok
+test sync_launch::stick_tests::a_handshake_whose_pid_was_reused_by_another_image_is_stale ... ok
+test sync_launch::stick_tests::a_keep_does_not_quiet_a_refusal_of_another_kind ... ok
+test sync_launch::stick_tests::a_keep_record_keeps_other_seats ... ok
+test sync_launch::stick_tests::a_kept_seat_is_not_asked_about_again_for_the_same_carry ... ok
+test sync_launch::stick_tests::a_launch_with_no_stick_writes_no_file ... ok
+test sync_launch::stick_tests::a_launch_with_no_stick_writes_no_row_and_withholds_no_seat ... ok
+test sync_launch::stick_tests::a_live_applier_is_live_and_withholds_the_seats ... ok
+test sync_launch::stick_tests::a_manifest_at_the_volume_root_is_the_manifested_layout ... ok
+test sync_launch::stick_tests::a_marker_at_the_root_and_another_one_folder_down_are_both_named ... ok
+test sync_launch::stick_tests::a_marker_two_folders_down_is_not_found ... ok
+test sync_launch::stick_tests::a_new_carry_for_a_kept_seat_is_asked_about_again ... ok
+test sync_launch::stick_tests::a_node_process_running_a_lookalike_script_name_is_stale ... ok
+test sync_launch::stick_tests::a_node_process_that_is_not_the_applier_is_stale ... ok
+test sync_launch::stick_tests::a_pane_defaults_to_the_sticks_copy ... ok
+test sync_launch::stick_tests::a_process_that_is_not_node_is_stale_even_when_it_names_the_applier_script ... ok
+test sync_launch::stick_tests::a_refused_seat_the_keeper_already_kept_for_this_carry_is_quiet ... ok
+test sync_launch::stick_tests::a_rehearsal_that_could_not_run_or_crashed_part_way_is_not_quiet ... ok
+test sync_launch::stick_tests::a_rehearsal_with_nothing_to_carry_is_quiet ... ok
+test sync_launch::stick_tests::a_result_waiting_to_be_shown_withholds_the_seats ... ok
+test sync_launch::stick_tests::a_seat_that_would_carry_is_not_quiet ... ok
+test sync_launch::stick_tests::a_set_that_does_not_verify_is_not_quiet ... ok
+test sync_launch::stick_tests::a_stick_behind_this_machine_is_not_quiet ... ok
+test sync_launch::stick_tests::a_verifier_that_returned_nothing_is_not_quiet ... ok
+test sync_launch::stick_tests::an_unparseable_handshake_is_stale_not_absent ... ok
+test sync_launch::stick_tests::an_unreadable_keep_record_keeps_nothing_and_is_replaced ... ok
+test sync_launch::stick_tests::launch_times_reads_one_row_per_launch_and_nothing_else ... ok
+test sync_launch::stick_tests::no_handshake_file_is_absent ... ok
+test sync_launch::stick_tests::take_is_not_offered_when_the_stick_holds_only_a_delta ... ok
+test sync_launch::stick_tests::the_handshake_of_this_child_is_started ... ok
+test sync_launch::stick_tests::the_launch_look_at_the_stick_starts_no_process ... ok
+test sync_launch::stick_tests::the_real_sticks_shape_is_found_one_folder_down_as_the_older_layout ... ok
+test sync_launch::stick_tests::the_wait_never_reports_started_when_the_handshake_never_appears ... ok
+test sync_launch::stick_tests::the_waiter_is_told_the_data_dir_the_app_pid_and_the_app_image_and_no_stick ... ok
+test sync_launch::stick_tests::two_stick_folders_are_both_named_and_neither_is_picked ... ok
+test sync_launch::tests::a_bom_does_not_make_a_verified_pull_read_as_unverified ... ok
+test sync_launch::tests::a_conversation_the_stick_placed_is_kept_through_a_migrate ... ok
+test sync_launch::tests::a_different_conversation_under_a_carried_sid_still_retires ... ok
+test sync_launch::tests::a_half_promoted_data_dir_is_the_only_read_only ... ok
+test sync_launch::tests::a_pull_that_never_ran_leaves_the_local_house_startable ... ok
+test sync_launch::tests::a_second_retirement_does_not_destroy_the_first ... ok
+test sync_launch::tests::a_tail_that_could_not_ride_becomes_a_pointer_not_a_silence ... ok
+test sync_launch::tests::a_verified_pull_authored_elsewhere_migrates ... ok
+test sync_launch::tests::a_verified_pull_we_authored_resumes_and_retires_nothing ... ok
+test sync_launch::tests::an_already_adopted_head_does_not_retire_again ... ok
+test sync_launch::tests::an_install_that_failed_part_way_withholds_the_seats ... ok
+test sync_launch::tests::an_unknown_head_author_migrates_because_retiring_is_the_reversible_error ... ok
+test sync_launch::tests::an_unrecognised_live_host_shape_is_no_signal_not_a_wrong_host ... ok
+test sync_launch::tests::completion_and_adopted_round_trip_through_disk ... ok
+test sync_launch::tests::every_stage_the_tool_writes_maps_to_a_stated_verdict ... ok
+test sync_launch::tests::exit_zero_with_no_completion_record_is_not_synced ... ok
+test sync_launch::tests::live_host_corroborates_when_the_tool_names_no_author ... ok
+test sync_launch::tests::no_receipt_is_an_empty_map_and_a_broken_one_is_an_error ... ok
+test sync_launch::tests::no_verdict_is_ever_a_lockout ... ok
+test sync_launch::tests::our_own_record_resumes_even_though_nothing_was_installed ... ok
+test sync_launch::tests::retire_moves_the_transcript_out_of_the_indexed_tree_and_it_is_revivable ... ok
+test sync_launch::tests::the_first_real_completion_record_this_tool_ever_wrote_is_the_local_house ... ok
+test sync_launch::tests::the_prior_conversation_section_keeps_the_rooms_restore_wording ... ok
+test sync_launch::tests::the_seam_row_names_a_failed_retire_and_what_it_costs ... ok
+test sync_launch::tests::the_seam_row_names_a_kept_seat_and_does_not_count_it_absent ... ok
+test sync_launch::tests::the_seam_row_names_where_each_transcript_went ... ok
+test sync_launch::tests::the_self_id_is_taken_from_the_tools_own_record_not_from_a_second_resolver ... ok
+test sync_launch::tests::verified_but_never_installed_is_the_local_house_not_the_synced_one ... ok
+test sync_launch::tests::without_the_tool_nothing_changes ... ok
+test sync_launch_wiring_tests::the_pull_runs_after_the_resolver_and_before_everything_that_reads ... ok
+test sync_launch_wiring_tests::the_seat_refusal_sits_at_the_one_funnel_and_before_the_pty ... ok
+test shelf_tests::the_librarian_intake_fits_under_the_limit_it_must_obey ... ok
+test test_scratch::tests::a_panicking_test_still_cleans_up ... ok
+test test_scratch::tests::dropping_removes_the_folder_and_what_is_in_it ... ok
+test test_scratch::tests::inside_removes_the_holder_not_only_the_file ... ok
+test test_scratch::tests::it_derefs_to_a_path_so_old_callers_keep_working ... ok
+test test_scratch::tests::root_honours_the_env_var_and_ignores_an_empty_one ... ok
+test tether::tests::delta_reads_diverge_as_more_novel_than_echo ... ok
+test tether::tests::jaccard_arithmetic_separates_two_short_near_duplicate_strings ... ok
+test tether::tests::lap_referents_separates_landing_from_echo ... ok
+test tether::tests::novelty_high_when_new_low_when_echo ... ok
+test tether::tests::referents_track_ground ... ok
+test third_place_return_tests::no_seat_can_reach_the_third_place ... ok
+test third_place_return_tests::no_seat_can_send_the_third_place_news_of_uptake ... ok
+test shelf_tests::the_librarian_intake_names_its_own_map_by_path has been running for over 60 seconds
+test shelf_tests::the_librarian_intake_size_is_recorded_and_not_silently_doubling has been running for over 60 seconds
+test shelf_tests::the_shelf_carries_the_forward_pointed_layer has been running for over 60 seconds
+test shelf_tests::the_shelf_does_not_carry_the_file_the_harness_already_injects has been running for over 60 seconds
+test shelf_tests::the_shelf_excludes_bulk_run_artifacts_and_says_so has been running for over 60 seconds
+test shelf_tests::the_shelf_header_reports_the_delivered_set_not_the_rules_set has been running for over 60 seconds
+test shelf_tests::the_shelf_reaches_the_intake has been running for over 60 seconds
+test shelf_tests::the_shelf_windows_the_librarians_own_notes has been running for over 60 seconds
+test shelf_tests::the_split_between_carried_and_indexed_is_always_reported has been running for over 60 seconds
+test shelf_tests::the_third_place_intake_fits_under_the_limit_it_must_obey has been running for over 60 seconds
+test third_place_return_tests::the_librarian_shelf_carries_the_newest_third_place_entry ... ok
+test third_place_return_tests::the_newest_third_place_entry_is_the_one_carried ... ok
+test third_place_return_tests::the_third_place_can_ring_the_librarian ... ok
+test third_place_return_tests::the_third_place_is_launched_with_its_own_mount ... ok
+test third_place_return_tests::the_third_place_reaches_no_chair_and_no_pane ... ok
+test third_place_return_tests::the_third_place_speaks_under_its_own_name_and_the_table_is_its_only_destination ... ok
+test trailer::gate_mode_tests::light_warns_and_delivers_on_every_verb ... ok
+test trailer::gate_mode_tests::strict_is_todays_policy_on_every_verb ... ok
+test trailer::tests::a_chair_dispatch_without_a_trailer_is_refused ... ok
+test trailer::tests::a_pane_hand_back_is_never_refused_for_a_missing_trailer ... ok
+test trailer::tests::a_pointer_with_no_trailer_is_refused ... ok
+test trailer::tests::a_refusal_hands_the_whole_message_back_so_nothing_is_lost ... ok
+test trailer::tests::a_refusal_names_the_rule_the_file_and_the_shape ... ok
+test trailer::tests::a_refusal_names_which_part_is_missing ... ok
+test trailer::tests::a_ring_refusal_would_name_the_hand_back_rule_not_the_dispatch_rule ... ok
+test trailer::tests::a_ring_that_names_a_seat_passes ... ok
+test trailer::tests::a_single_uppercase_pane_letter_is_a_station_but_a_lowercase_article_is_not ... ok
+test trailer::tests::a_station_followed_directly_by_when_has_no_command ... ok
+test trailer::tests::a_station_may_carry_trailing_punctuation ... ok
+test trailer::tests::a_station_with_no_when_clause_is_refused ... ok
+test trailer::tests::a_trailer_that_is_not_the_last_line_is_refused_and_says_so ... ok
+test trailer::tests::a_warned_hand_back_is_delivered_whole_with_the_rule_named ... ok
+test trailer::tests::an_empty_condition_is_refused ... ok
+test trailer::tests::every_refusal_points_to_gates_md_section_3_before_the_returned_message ... ok
+test trailer::tests::l084_a_chair_dispatch_does_not_owe_the_line ... ok
+test trailer::tests::l084_a_collation_that_says_changed_passes ... ok
+test trailer::tests::l084_a_collation_that_says_unchanged_passes ... ok
+test trailer::tests::l084_a_collation_without_the_line_is_refused ... ok
+test trailer::tests::l084_a_line_with_no_verdict_word_is_refused ... ok
+test trailer::tests::l084_a_missing_trailer_is_still_reported_first ... ok
+test trailer::tests::l084_a_pane_ring_without_the_line_is_still_delivered ... ok
+test trailer::tests::l084_a_verdict_with_no_reason_is_refused ... ok
+test trailer::tests::l084_each_new_reason_names_only_itself ... ok
+test trailer::tests::l084_only_the_collation_ring_owes_the_line ... ok
+test trailer::tests::l084_the_ascii_arrow_counts ... ok
+test trailer::tests::l084_the_line_anywhere_but_directly_before_the_trailer_is_refused ... ok
+test trailer::tests::l084_the_marker_is_case_sensitive_like_next ... ok
+test trailer::tests::l084_the_refusal_names_the_rule_the_file_and_the_keepers_words_and_returns_the_message ... ok
+test trailer::tests::next_with_nothing_after_it_is_refused ... ok
+test trailer::tests::the_chairs_dispatch_shape_passes_with_a_verb_as_the_station ... ok
+test trailer::tests::the_chairs_stall_line_is_refused_because_it_names_no_station ... ok
+test trailer::tests::the_librarians_ring_to_the_chair_is_refused ... ok
+test trailer::tests::the_marker_is_case_sensitive_so_prose_does_not_count ... ok
+test trailer::tests::trailing_blank_lines_and_crlf_do_not_hide_the_last_line ... ok
+test trailer::tests::when_inside_a_longer_word_is_not_the_clause ... ok
+test transcript_record_tests::last_record_found_at_column_zero_only ... ok
+test transcript_record_tests::read_last_record_none_for_missing_or_empty ... ok
+test transcript_record_tests::read_last_record_parses_the_tail ... ok
+test transcript_record_tests::rewrite_appends_when_tail_does_not_match ... ok
+test transcript_record_tests::rewrite_grows_the_last_record_in_place ... ok
+test transcript_record_tests::split_evicts_whole_records_at_or_past_the_excess ... ok
+test transcript_record_tests::split_never_shreds_a_single_giant_record ... ok
+test ts_tests::a_replayed_transcript_lands_on_its_own_day_not_on_the_day_it_was_replayed ... ok
+test ts_tests::a_transcript_record_supplies_its_own_time ... ok
+test ts_tests::anything_unrecognised_returns_none_rather_than_a_plausible_wrong_time ... ok
+test ts_tests::epoch_leap_day_and_the_century_rule ... ok
+test ts_tests::fractional_seconds_are_optional_and_normalised_to_milliseconds ... ok
+test ts_tests::parses_a_real_transcript_timestamp ... ok
+test ts_tests::the_field_reaches_the_board_file_naming_which_clock_it_used ... ok
+test ts_tests::the_seams_keep_push_time_and_say_so ... ok
+test usb_mode_tests::a_fresh_config_is_off_and_only_a_json_true_turns_it_on ... ok
+test usb_mode_tests::every_mode_line_is_tagged_so_on_is_todays_code ... ok
+test usb_mode_tests::off_runs_none_of_the_four_paths ... ok
+test usb_mode_tests::the_setting_persists_through_a_save ... ok
+test shelf_tests::the_librarian_intake_names_its_own_map_by_path ... ok
+test shelf_tests::the_window_never_drops_map_or_journal_which_are_out_of_scope has been running for over 60 seconds
+test shelf_tests::the_librarian_intake_size_is_recorded_and_not_silently_doubling ... ok
+test shelf_tests::undated_all_caps_names_at_the_top_of_loop_are_protected_by_rule_not_by_list has been running for over 60 seconds
+test shelf_tests::the_shelf_carries_the_forward_pointed_layer ... ok
+test shelf_tests::the_shelf_does_not_carry_the_file_the_harness_already_injects ... ok
+test where_a_seat_lives_tests::a_kept_pane_whose_transcript_is_on_disk_attempts_a_real_resume ... ok
+test where_a_seat_lives_tests::a_refused_resume_falls_back_to_a_fresh_pane_and_every_other_error_still_propagates ... ok
+test where_a_seat_lives_tests::a_refused_resume_is_caught_from_the_childs_exit_while_it_is_still_reachable ... ok
+test where_a_seat_lives_tests::a_resume_is_planned_exactly_when_the_transcript_is_there ... ok
+test shelf_tests::undated_loop_entries_are_spent_last_and_never_outrank_a_dated_one has been running for over 60 seconds
+test shelf_tests::the_shelf_excludes_bulk_run_artifacts_and_says_so ... ok
+test shelf_tests::the_shelf_header_reports_the_delivered_set_not_the_rules_set ... ok
+test shell_budget_tests::the_third_place_holds_its_letter_so_the_next_sibling_is_not_given_it has been running for over 60 seconds
+test shelf_tests::the_shelf_reaches_the_intake ... ok
+test sync_launch_wiring_tests::the_seed_subsystem_writes_a_second_root_and_it_is_not_an_ordering_defect has been running for over 60 seconds
+test shelf_tests::the_shelf_windows_the_librarians_own_notes ... ok
+test shelf_tests::the_split_between_carried_and_indexed_is_always_reported ... ok
+test shelf_tests::the_third_place_intake_fits_under_the_limit_it_must_obey ... ok
+test where_a_seat_lives_tests::both_roster_keep_sites_decide_through_the_one_predicate ... ok
+test where_a_seat_lives_tests::a_cwd_that_climbs_or_nests_is_refused_even_when_it_starts_inside_the_root has been running for over 60 seconds
+test shelf_tests::the_window_never_drops_map_or_journal_which_are_out_of_scope ... ok
+test where_a_seat_lives_tests::the_orphan_rename_is_reachable_only_through_the_fallback ... ok
+test where_a_seat_lives_tests::the_refusal_row_carries_the_elapsed_margin_and_not_a_constant ... ok
+test where_a_seat_lives_tests::the_refusal_row_has_exactly_one_author ... ok
+test where_a_seat_lives_tests::the_resume_arm_rewrites_the_intake_before_the_pane_that_reads_it_exists ... ok
+test where_a_seat_lives_tests::the_resume_guard_precedes_every_side_effect_and_keeps_the_roster_row ... ok
+test where_a_seat_lives_tests::the_transcript_path_is_the_vendors_own_encoding_of_the_cwd ... ok
+test where_a_seat_lives_tests::a_cwd_that_exists_but_is_a_file_is_refused_and_left_alone has been running for over 60 seconds
+test shelf_tests::undated_all_caps_names_at_the_top_of_loop_are_protected_by_rule_not_by_list ... ok
+test shelf_tests::undated_loop_entries_are_spent_last_and_never_outrank_a_dated_one ... ok
+test shell_budget_tests::the_third_place_holds_its_letter_so_the_next_sibling_is_not_given_it ... ok
+test sync_launch_wiring_tests::the_seed_subsystem_writes_a_second_root_and_it_is_not_an_ordering_defect ... ok
+test where_a_seat_lives_tests::a_cwd_that_climbs_or_nests_is_refused_even_when_it_starts_inside_the_root ... ok
+test where_a_seat_lives_tests::a_cwd_that_exists_but_is_a_file_is_refused_and_left_alone ... ok
+test where_a_seat_lives_tests::a_directory_that_resolves_is_let_through_as_present ... ok
+test where_a_seat_lives_tests::a_fresh_pane_whose_directory_is_recreated_is_still_fresh ... ok
+test where_a_seat_lives_tests::a_resume_whose_stored_cwd_is_absent_lands_in_that_cwd_created ... ok
+test where_a_seat_lives_tests::a_resumed_fresh_pane_is_left_unbriefed_rather_than_holding_a_false_one ... ok
+test where_a_seat_lives_tests::a_resumed_pane_reads_a_room_that_does_not_say_it_could_not_be_resumed ... ok
+test where_a_seat_lives_tests::an_absent_cwd_outside_the_instances_root_is_refused_not_created ... ok
+test where_a_seat_lives_tests::an_unmanaged_cwd_keeps_whatever_claude_md_it_has ... ok
+test where_a_seat_lives_tests::closing_any_fixed_seat_keeps_its_capture_and_closing_a_stranger_does_not ... ok
+test where_a_seat_lives_tests::every_fixed_seat_and_every_kept_pane_is_kept_by_the_one_predicate ... ok
+
+test result: ok. 1136 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 181.24s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 22 tests
+test capture::tests::a_fold_running_off_the_end_of_the_screen_does_not_panic ... ok
+test capture::tests::chrome_covers_footer_rules_box_and_spinner ... ok
+test capture::tests::agent_manager_rows_are_chrome_never_prompts ... ok
+test capture::tests::collapse_blanks_caps_at_two_newlines ... ok
+test capture::tests::empty_box_detected ... ok
+test capture::tests::agents_screen_extracts_a_stable_turn_across_timer_ticks ... ok
+test capture::tests::screen_ready_true_when_box_present_and_idle ... ok
+test capture::tests::stitch_keeps_the_containing_window ... ok
+test capture::tests::a_wrapped_prompt_is_unfolded_whole_not_amputated ... ok
+test capture::tests::is_prompt_matches_real_prompt_only ... ok
+test capture::tests::stitch_merges_overlapping_scroll_windows ... ok
+test capture::tests::latest_prompt_is_the_producing_prompt_not_the_empty_box ... ok
+test capture::tests::latest_turn_extracts_response_after_last_prompt ... ok
+test capture::tests::latest_turn_ignores_earlier_turns_on_screen ... ok
+test capture::tests::screen_not_ready_while_generating ... ok
+test capture::tests::stitch_never_stacks_disjoint_windows ... ok
+test capture::tests::screen_ready_despite_completed_summary_line ... ok
+test capture::tests::strip_overlay_leaves_clean_lines_alone ... ok
+test capture::tests::strip_overlay_truncates_at_the_painted_hint ... ok
+test capture::tests::the_fold_rejoins_a_split_word_with_no_space ... ok
+test capture::tests::without_wrap_flags_the_old_row_at_a_time_behavior_holds ... ok
+test capture::tests::the_response_does_not_swallow_the_prompts_continuation ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 13 tests
+test the_master_keeps_one_pointer_line_and_the_dated_tail_lives_in_the_journal_index ... ok
+test gauges_speak_in_numbers_not_verdicts ... ok
+test the_shipped_room_carries_every_section_of_the_maintained_room ... ok
+test the_chair_analyst_surface_is_not_blinded ... ok
+test every_chair_verb_authenticates ... ok
+test no_serialized_struct_carries_a_rank_field_without_an_exemption ... ok
+test main_pane_renders_no_close_control ... ok
+test the_pane_close_guard_is_actually_fed_a_role ... ok
+test every_named_record_file_exists_and_every_record_file_is_named ... ok
+test closing_a_pane_asks_before_it_kills ... ok
+test the_retired_diversity_claim_does_not_return_unmarked ... ok
+test control_and_sensor_planes_hold_no_actuator_handle ... ok
+test every_relative_link_in_the_docs_exists_in_a_fresh_clone ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.29s
+
+
+warning: function `bands` is never used
+   --> src\bin\..\cochlea.rs:325:8
+    |
+325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
+    |        ^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `rms_db` is never used
+   --> src\bin\..\cochlea.rs:522:8
+    |
+522 | pub fn rms_db(samples: &[f32]) -> f32 {
+    |        ^^^^^^
+
+warning: constant `PULSE_ENABLED` is never used
+   --> src\bin\..\cochlea.rs:950:11
+    |
+950 | pub const PULSE_ENABLED: bool = false;
+    |           ^^^^^^^^^^^^^
+
+warning: function `pitch_track` is never used
+    --> src\bin\..\cochlea.rs:1195:8
+     |
+1195 | pub fn pitch_track(samples: &[f32], sample_rate: f32) -> Vec<Option<f32>> {
+     |        ^^^^^^^^^^^
+
+warning: struct `Vibrato` is never constructed
+    --> src\bin\..\cochlea.rs:1233:12
+     |
+1233 | pub struct Vibrato {
+     |            ^^^^^^^
+
+warning: constant `VIB_LO_HZ` is never used
+    --> src\bin\..\cochlea.rs:1243:7
+     |
+1243 | const VIB_LO_HZ: f32 = 4.0;
+     |       ^^^^^^^^^
+
+warning: constant `VIB_HI_HZ` is never used
+    --> src\bin\..\cochlea.rs:1244:7
+     |
+1244 | const VIB_HI_HZ: f32 = 7.5;
+     |       ^^^^^^^^^
+
+warning: constant `VIB_DEPTH_CENTS` is never used
+    --> src\bin\..\cochlea.rs:1246:7
+     |
+1246 | const VIB_DEPTH_CENTS: f32 = 25.0;
+     |       ^^^^^^^^^^^^^^^
+
+warning: constant `VIB_WINDOW_SECS` is never used
+    --> src\bin\..\cochlea.rs:1248:7
+     |
+1248 | const VIB_WINDOW_SECS: f32 = 1.5;
+     |       ^^^^^^^^^^^^^^^
+
+warning: constant `VIB_MIN_GAP_SECS` is never used
+    --> src\bin\..\cochlea.rs:1249:7
+     |
+1249 | const VIB_MIN_GAP_SECS: f32 = 3.0;
+     |       ^^^^^^^^^^^^^^^^
+
+warning: constant `VIB_SHAPE_MIN` is never used
+    --> src\bin\..\cochlea.rs:1255:7
+     |
+1255 | const VIB_SHAPE_MIN: f32 = 3.5;
+     |       ^^^^^^^^^^^^^
+
+warning: constant `VIB_MAX_DEPTH_CENTS` is never used
+    --> src\bin\..\cochlea.rs:1267:7
+     |
+1267 | const VIB_MAX_DEPTH_CENTS: f32 = 150.0;
+     |       ^^^^^^^^^^^^^^^^^^^
+
+warning: method `feed` is never used
+    --> src\bin\..\cochlea.rs:1272:12
+     |
+1269 | impl Vibrato {
+     | ------------ method in this implementation
+...
+1272 |     pub fn feed(&mut self, pitches: &[Option<f32>], t: f32, rate: f32) -> Option<Event> {
+     |            ^^^^
+
+warning: method `complexity` is never used
+    --> src\bin\..\cochlea.rs:1623:12
+     |
+1619 | impl IntervalReading {
+     | -------------------- method in this implementation
+...
+1623 |     pub fn complexity(&self) -> u32 { self.num + self.den }
+     |            ^^^^^^^^^^
+
+warning: variant `Vibrato` is never constructed
+    --> src\bin\..\cochlea.rs:1680:5
+     |
+1652 | pub enum Event {
+     |          ----- variant in this enum
+...
+1680 |     Vibrato(VibratoReading),
+     |     ^^^^^^^
+     |
+     = note: `Event` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: function `replay` is never used
+    --> src\bin\..\cochlea.rs:1974:8
+     |
+1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
+     |        ^^^^^^
+
+warning: function `strip_overlay` is never used
+   --> src\bin\..\capture.rs:182:8
+    |
+182 | pub fn strip_overlay(s: &str) -> String {
+    |        ^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `stitch` is never used
+   --> src\bin\..\capture.rs:197:8
+    |
+197 | pub fn stitch(old: &str, new: &str) -> String {
+    |        ^^^^^^
+
+warning: unused variable: `ratio`
+    --> src\bin\..\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\bin\..\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: struct `C` is never constructed
+  --> src\bin\..\cochlea.rs:30:12
+   |
+30 | pub struct C {
+   |            ^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `mul`, `add`, `sub`, and `abs` are never used
+  --> src\bin\..\cochlea.rs:35:8
+   |
+34 | impl C {
+   | ------ methods in this implementation
+35 |     fn mul(self, o: C) -> C {
+   |        ^^^
+...
+38 |     fn add(self, o: C) -> C { C { re: self.re + o.re, im: self.im + o.im } }
+   |        ^^^
+39 |     fn sub(self, o: C) -> C { C { re: self.re - o.re, im: self.im - o.im } }
+   |        ^^^
+40 |     fn abs(self) -> f32 { (self.re * self.re + self.im * self.im).sqrt() }
+   |        ^^^
+
+warning: function `fft` is never used
+  --> src\bin\..\cochlea.rs:44:8
+   |
+44 | pub fn fft(buf: &mut [C]) {
+   |        ^^^
+
+warning: function `hann` is never used
+  --> src\bin\..\cochlea.rs:76:8
+   |
+76 | pub fn hann(samples: &[f32]) -> Vec<C> {
+   |        ^^^^
+
+warning: function `spectrum` is never used
+  --> src\bin\..\cochlea.rs:85:8
+   |
+85 | pub fn spectrum(samples: &[f32]) -> Vec<f32> {
+   |        ^^^^^^^^
+
+warning: function `peaks` is never used
+   --> src\bin\..\cochlea.rs:103:8
+    |
+103 | pub fn peaks(spec: &[f32], sample_rate: f32, max: usize, floor_ratio: f32) -> Vec<Peak> {
+    |        ^^^^^
+
+warning: function `note_name` is never used
+   --> src\bin\..\cochlea.rs:173:8
+    |
+173 | pub fn note_name(hz: f32) -> (String, f32) {
+    |        ^^^^^^^^^
+
+warning: function `bands` is never used
+   --> src\bin\..\cochlea.rs:325:8
+    |
+325 | pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
+    |        ^^^^^
+
+   Compiling consonance v0.2.0 (C:\Users\nname\Desktop\worktrees\lh-o-d476-p4\consonance\src-tauri)
+warning: function `is_working` is never used
+  --> src\bin\..\capture.rs:55:8
+   |
+55 | pub fn is_working(lines: &[String]) -> bool {
+   |        ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `is_chrome` is never used
+  --> src\bin\..\capture.rs:62:8
+   |
+62 | pub fn is_chrome(s: &str) -> bool {
+   |        ^^^^^^^^^
+
+warning: function `screen_ready` is never used
+  --> src\bin\..\capture.rs:82:8
+   |
+82 | pub fn screen_ready(lines: &[String]) -> bool {
+   |        ^^^^^^^^^^^^
+
+warning: function `is_wrapped` is never used
+   --> src\bin\..\capture.rs:102:4
+    |
+102 | fn is_wrapped(wrapped: &[bool], i: usize) -> bool {
+    |    ^^^^^^^^^^
+
+warning: function `fold_end` is never used
+   --> src\bin\..\capture.rs:107:4
+    |
+107 | fn fold_end(lines: &[String], wrapped: &[bool], i: usize) -> usize {
+    |    ^^^^^^^^
+
+warning: function `join_fold` is never used
+   --> src\bin\..\capture.rs:117:4
+    |
+117 | fn join_fold(lines: &[String], i: usize, end: usize) -> String {
+    |    ^^^^^^^^^
+
+warning: function `latest_turn` is never used
+   --> src\bin\..\capture.rs:127:8
+    |
+127 | pub fn latest_turn(lines: &[String], wrapped: &[bool]) -> String {
+    |        ^^^^^^^^^^^
+
+warning: function `latest_prompt` is never used
+   --> src\bin\..\capture.rs:162:8
+    |
+162 | pub fn latest_prompt(lines: &[String], wrapped: &[bool]) -> String {
+    |        ^^^^^^^^^^^^^
+
+warning: function `strip_overlay` is never used
+   --> src\bin\..\capture.rs:182:8
+    |
+182 | pub fn strip_overlay(s: &str) -> String {
+    |        ^^^^^^^^^^^^^
+
+warning: function `collapse_blanks` is never used
+   --> src\bin\..\capture.rs:221:4
+    |
+221 | fn collapse_blanks(s: &str) -> String {
+    |    ^^^^^^^^^^^^^^^
+
+warning: `consonance` (bin "conf_sweep") generated 16 warnings
+warning: `consonance` (bin "capture_probe") generated 2 warnings
+warning: `consonance` (bin "conf_sweep" test) generated 2 warnings (run `cargo fix --bin "conf_sweep" -p consonance --tests` to apply 2 suggestions)
+warning: `consonance` (bin "cochlea_replay" test) generated 2 warnings (2 duplicates)
+warning: `consonance` (bin "cochlea_replay") generated 21 warnings (13 duplicates)
+warning: `consonance` (bin "composer_probe") generated 11 warnings (1 duplicate)
+warning: function `sysdrive` is never used
+   --> src\main.rs:512:4
+    |
+512 | fn sysdrive() -> String {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `is_stamped` is never used
+     --> src\main.rs:10715:8
+      |
+10704 | impl PaneGate {
+      | ------------- method in this implementation
+...
+10715 |     fn is_stamped(&self) -> bool {
+      |        ^^^^^^^^^^
+
+warning: method `take_ready` is never used
+     --> src\main.rs:11326:8
+      |
+11220 | impl Inbox {
+      | ---------- method in this implementation
+...
+11326 |     fn take_ready(
+      |        ^^^^^^^^^^
+
+warning: function `delivery_note` is never used
+     --> src\main.rs:11508:4
+      |
+11508 | fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+      |    ^^^^^^^^^^^^^
+
+warning: function `turn_reply_after` is never used
+     --> src\main.rs:13030:4
+      |
+13030 | fn turn_reply_after(jsonl: &str, since_ms: u64) -> Option<String> {
+      |    ^^^^^^^^^^^^^^^^
+
+warning: field `tool_router` is never read
+   --> src\mcp.rs:361:5
+    |
+314 | pub struct ConsonanceMcp {
+    |            ------------- field in this struct
+...
+361 |     tool_router: ToolRouter<ConsonanceMcp>,
+    |     ^^^^^^^^^^^
+    |
+    = note: `ConsonanceMcp` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: function `replay` is never used
+    --> src\cochlea.rs:1974:8
+     |
+1974 | pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
+     |        ^^^^^^
+
+warning: struct `Frame` is never constructed
+    --> src\cochlea.rs:2034:12
+     |
+2034 | pub struct Frame {
+     |            ^^^^^
+
+warning: method `elapsed` is never used
+   --> src\nowplaying.rs:107:12
+    |
+ 83 | impl NowPlaying {
+    | --------------- method in this implementation
+...
+107 |     pub fn elapsed(&self) -> String {
+    |            ^^^^^^^
+
+warning: methods `attempts`, `records`, `consecutive_panics`, and `last_attempt_ms` are never used
+   --> src\harvest_guard.rs:205:12
+    |
+132 | impl HarvestGuard {
+    | ----------------- methods in this implementation
+...
+205 |     pub fn attempts(&self) -> u64 {
+    |            ^^^^^^^^
+...
+208 |     pub fn records(&self) -> u64 {
+    |            ^^^^^^^
+...
+211 |     pub fn consecutive_panics(&self) -> u32 {
+    |            ^^^^^^^^^^^^^^^^^^
+...
+214 |     pub fn last_attempt_ms(&self) -> u64 {
+    |            ^^^^^^^^^^^^^^^
+
+warning: unused import: `HashMap`
+     --> src\main.rs:16104:28
+      |
+16104 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:16362:14
+      |
+16362 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+warning: `consonance` (bin "consonance") generated 10 warnings
+warning: `consonance` (bin "consonance" test) generated 5 warnings (1 duplicate) (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.79s
+     Running unittests src\bin\capture_probe.rs (target\debug\deps\capture_probe-19c2a55d1c8470f1.exe)
+     Running unittests src\bin\cochlea_replay.rs (target\debug\deps\cochlea_replay-1ad250337380d7e5.exe)
+     Running unittests src\bin\composer_probe.rs (target\debug\deps\composer_probe-20f363dbf4ded9f0.exe)
+     Running unittests src\bin\conf_sweep.rs (target\debug\deps\conf_sweep-61e67830c98d6bd6.exe)
+     Running unittests src\main.rs (target\debug\deps\consonance-99995e0d7afe289f.exe)
+     Running unittests src\bin\flush_probe.rs (target\debug\deps\flush_probe-1cca32fb28086d85.exe)
+     Running unittests src\bin\harvest_replay.rs (target\debug\deps\harvest_replay-03b32685599b07dd.exe)
+     Running unittests src\bin\jsonl_tap.rs (target\debug\deps\jsonl_tap-2922115ffd4f1a47.exe)
+     Running unittests src\bin\pty_spike.rs (target\debug\deps\pty_spike-f665c0301ad884d9.exe)
+     Running unittests src\bin\resume_probe.rs (target\debug\deps\resume_probe-e02f6abca5423390.exe)
+     Running tests\arch_test.rs (target\debug\deps\arch_test-c08a272213e530fb.exe)

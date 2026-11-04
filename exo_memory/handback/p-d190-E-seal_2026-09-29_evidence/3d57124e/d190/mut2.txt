@@ -1,0 +1,111 @@
+[32m✔ CONTROL: the whole of core_cup.test.js passes on an unmutated copy of src/ and tools/ [90m(1344.0557ms)[39m[39m
+[32m✔ mutant M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): applied, and caught by "row 1a" [90m(271.1927ms)[39m[39m
+[34mℹ M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies): 1 of 2 run tests failed[39m
+[32m✔ mutant M2 (K1a-2) only the left edge is cupped: applied, and caught by "row 1a" [90m(262.3856ms)[39m[39m
+[34mℹ M2 (K1a-2) only the left edge is cupped: 2 of 2 run tests failed[39m
+[32m✔ mutant M3 (K1a-3) c is taken as radians: applied, and caught by "row 1a" [90m(266.949ms)[39m[39m
+[34mℹ M3 (K1a-3) c is taken as radians: 2 of 2 run tests failed[39m
+[32m✔ mutant M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: applied, and caught by "row 1a" [90m(304.9443ms)[39m[39m
+[34mℹ M4 (K2-3) a non-cumulative shape: each quarter's own rise, not the running total: 2 of 2 run tests failed[39m
+[32m✔ mutant M5 (K2-1) MAX raised to 165: applied, and caught by "row 2" [90m(318.9538ms)[39m[39m
+[34mℹ M5 (K2-1) MAX raised to 165: 4 of 7 run tests failed[39m
+[31m✖ mutant M6 (K2-2) no guard on the document: applied, and caught by "row 2" [90m(64.5034ms)[39m[39m
+[31m✖ mutant M7 the fit's ringing is not clamped after the Extend fit: applied, and caught by "row 2" [90m(48.7546ms)[39m[39m
+[32m✔ mutant M8 Extend does not refuse a typed cup past 150: applied, and caught by "row 2 \(iii\)" [90m(469.5351ms)[39m[39m
+[34mℹ M8 Extend does not refuse a typed cup past 150: 1 of 3 run tests failed[39m
+[32m✔ mutant M9 Extend does not refuse a first-piece cup past 150: applied, and caught by "row 2 PLANTED" [90m(271.2436ms)[39m[39m
+[34mℹ M9 Extend does not refuse a first-piece cup past 150: 1 of 1 run tests failed[39m
+[32m✔ mutant M10 the brush has no cup channel: applied, and caught by "row 2 \(iii\)" [90m(448.885ms)[39m[39m
+[34mℹ M10 the brush has no cup channel: 1 of 3 run tests failed[39m
+[32m✔ mutant M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): applied, and caught by "ends flat" [90m(256.7283ms)[39m[39m
+[34mℹ M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it): 1 of 1 run tests failed[39m
+[32m✔ mutant M10c the document guard has no tolerance for a solver's float noise at the limit: applied, and caught by "ends flat" [90m(266.4649ms)[39m[39m
+[34mℹ M10c the document guard has no tolerance for a solver's float noise at the limit: 1 of 1 run tests failed[39m
+[32m✔ mutant M11 (K3-1) c is left out of the joint test between two cup pieces: applied, and caught by "row 3" [90m(454.2187ms)[39m[39m
+[34mℹ M11 (K3-1) c is left out of the joint test between two cup pieces: 1 of 4 run tests failed[39m
+[32m✔ mutant M12 (K3-2) c is reset after a flight, like the heading rate: applied, and caught by "row 3" [90m(447.7828ms)[39m[39m
+[34mℹ M12 (K3-2) c is reset after a flight, like the heading rate: 1 of 4 run tests failed[39m
+[32m✔ mutant M13 (K3-3) c is left out of the closure rows: applied, and caught by "row 3 \(iii\)" [90m(449.8084ms)[39m[39m
+[34mℹ M13 (K3-3) c is left out of the closure rows: 1 of 1 run tests failed[39m
+[32m✔ mutant M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: applied, and caught by "row 3|row 7" [90m(461.458ms)[39m[39m
+[34mℹ M14 (K3-4) a legacy piece hands over the family's nominal edge, not the one it renders: 1 of 6 run tests failed[39m
+[32m✔ mutant M15 the legacy ↔ cup joint is not checked: applied, and caught by "row 3 \(iv\)" [90m(266.8746ms)[39m[39m
+[34mℹ M15 the legacy ↔ cup joint is not checked: 1 of 1 run tests failed[39m
+[32m✔ mutant M16 a piece extended after a cup piece is a legacy piece: applied, and caught by "row 3" [90m(452.4194ms)[39m[39m
+[34mℹ M16 a piece extended after a cup piece is a legacy piece: 2 of 4 run tests failed[39m
+[32m✔ mutant M17 (K1b-1) the blend is dropped: each segment steps to its own profile: applied, and caught by "row 1b" [90m(773.9071ms)[39m[39m
+[34mℹ M17 (K1b-1) the blend is dropped: each segment steps to its own profile: 7 of 8 run tests failed[39m
+[32m✔ mutant M18 the weight inversion is wrong (z = y, no Newton polish): applied, and caught by "row 1b" [90m(891.6709ms)[39m[39m
+[34mℹ M18 the weight inversion is wrong (z = y, no Newton polish): 6 of 8 run tests failed[39m
+[32m✔ mutant M19 a segment where c falls does not swap the pair: applied, and caught by "row 1b" [90m(1022.4716ms)[39m[39m
+[34mℹ M19 a segment where c falls does not swap the pair: 6 of 8 run tests failed[39m
+[32m✔ mutant M20 a width change is not a chord: the run keeps the start width: applied, and caught by "row 1b" [90m(924.3941ms)[39m[39m
+[34mℹ M20 a width change is not a chord: the run keeps the start width: 1 of 8 run tests failed[39m
+[32m✔ mutant M21 a legacy piece is rendered as a cup piece at c = 0: applied, and caught by "row 5" [90m(300.4048ms)[39m[39m
+[34mℹ M21 a legacy piece is rendered as a cup piece at c = 0: 1 of 4 run tests failed[39m
+[32m✔ mutant M22 a /2 piece is read as a cup piece: applied, and caught by "row 5" [90m(295.8367ms)[39m[39m
+[34mℹ M22 a /2 piece is read as a cup piece: 2 of 4 run tests failed[39m
+[32m✔ mutant M23 a legacy piece's text carries a c array: applied, and caught by "row 5" [90m(284.2115ms)[39m[39m
+[34mℹ M23 a legacy piece's text carries a c array: 2 of 4 run tests failed[39m
+[32m✔ mutant M24 (K5-2) the schema is still core/2: applied, and caught by "row 5" [90m(315.1444ms)[39m[39m
+[34mℹ M24 (K5-2) the schema is still core/2: 1 of 4 run tests failed[39m
+[32m✔ mutant M25 a cup brush is allowed to reach a legacy piece: applied, and caught by "row 5e" [90m(280.7388ms)[39m[39m
+[34mℹ M25 a cup brush is allowed to reach a legacy piece: 1 of 1 run tests failed[39m
+[32m✔ mutant M26 (K6-3) the cup feeds the roll: applied, and caught by "row 6" [90m(646.316ms)[39m[39m
+[34mℹ M26 (K6-3) the cup feeds the roll: 2 of 2 run tests failed[39m
+[32m✔ mutant M27 (K7-1) cupToDeg reads the wrong station of the document: applied, and caught by "row 7" [90m(293.4339ms)[39m[39m
+[34mℹ M27 (K7-1) cupToDeg reads the wrong station of the document: 2 of 2 run tests failed[39m
+[32m✔ mutant M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): applied, and caught by "row 7" [90m(271.3387ms)[39m[39m
+[34mℹ M28 (K7-2) a legacy piece reads the nominal edge (w and r ignored): 1 of 2 run tests failed[39m
+[34mℹ tests 31[39m
+[34mℹ suites 0[39m
+[34mℹ pass 29[39m
+[34mℹ fail 2[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 13477.0101[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup_mutation.test.js:73:3
+[31m✖ mutant M6 (K2-2) no guard on the document: applied, and caught by "row 2" [90m(64.5034ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: the string occurs 0 times in src/core/document.js: if (P.cup && P.channels.c.some((v) => v < 0 || v > CUP_MAX))
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_mutation.test.js:78:16[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_mutation.test.js:73:3
+[31m✖ mutant M7 the fit's ringing is not clamped after the Extend fit: applied, and caught by "row 2" [90m(48.7546ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: the string occurs 0 times in src/core/extend.js: if (cup) piece.channels.c = piece.channels.c.map(
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_mutation.test.js:78:16[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m0[39m,
+    expected: [33m1[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

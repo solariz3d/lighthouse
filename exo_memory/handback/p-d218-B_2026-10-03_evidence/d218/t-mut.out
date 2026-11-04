@@ -1,0 +1,47 @@
+control (unmutated copy)                              pass 27 fail 0
+ 1 guard: the dream gate removed                                                                 pass 26 fail 1  CAUGHT
+ 2 shadow: the SHADOW constant is false (the slot is live)                                       pass 24 fail 3  CAUGHT
+ 3 shadow: a would-block produces its block output even when live is false                       pass 24 fail 3  CAUGHT
+ 4 loop guard: stop_hook_active is ignored in the verdict                                        pass 24 fail 3  CAUGHT
+ 5 loop guard: the transcript is read even when stop_hook_active is true                         pass 26 fail 1  CAUGHT
+ 6 live: the block is never built                                                                pass 26 fail 1  CAUGHT
+ 7 live: the decision is not "block"                                                             pass 26 fail 1  CAUGHT
+ 8 who: no seat gate (every session is evaluated)                                                pass 26 fail 1  CAUGHT
+ 9 who: the chair's pane id is not recognised                                                    pass 26 fail 1  CAUGHT
+10 who: the librarian's pane id is not recognised                                                pass 11 fail 16  CAUGHT
+11 who: a committee pane id falls through to the cwd rule                                        pass 26 fail 1  CAUGHT
+12 who: the cwd rule accepts a subdirectory                                                      pass 26 fail 1  CAUGHT
+13 who: the chair's fixed id is wrong                                                            pass 25 fail 2  CAUGHT
+14 tokens: the path kind is not detected                                                         pass 23 fail 4  CAUGHT
+15 tokens: the sha kind is not detected                                                          pass 26 fail 1  CAUGHT
+16 tokens: the commit kind is not detected                                                       pass 26 fail 1  CAUGHT
+17 tokens: the count kind is not detected                                                        pass 21 fail 6  CAUGHT
+18 tokens: the percentage kind is not detected                                                   pass 26 fail 1  CAUGHT
+19 tokens: the version kind is not detected                                                      pass 26 fail 1  CAUGHT
+20 tokens: no cap at 12                                                                          pass 26 fail 1  CAUGHT
+21 tokens: no de-duplication                                                                     pass 26 fail 1  CAUGHT
+22 tokens: a flagged token is not redacted                                                       pass 26 fail 1  CAUGHT
+23 tokens: a sentence-final full stop stays in the token                                         pass 26 fail 1  CAUGHT
+24 turn: the bare "ok" reply is evaluated                                                        pass 26 fail 1  CAUGHT
+25 turn: a keep-warm prompt is not recognised                                                    pass 26 fail 1  CAUGHT
+26 turn: a chair or pane ring is read as the keeper                                              pass 26 fail 1  CAUGHT
+27 turn: a slash command or machine form is read as the keeper                                   pass 26 fail 1  CAUGHT
+28 turn: a turn a notification started while idle is read as the keeper                          pass 26 fail 1  CAUGHT
+29 turn: a notification that arrives mid-work (after a tool call) is read as starting the turn   pass 26 fail 1  CAUGHT
+30 turn: every turn is evaluated, whoever prompted it                                            pass 26 fail 1  CAUGHT
+31 slot: the Sources line need not be the FINAL block (it is found across a blank line)          pass 26 fail 1  CAUGHT
+32 slot: "sources:" is case-sensitive                                                            pass 21 fail 6  CAUGHT
+33 slot: the head is not normalised to the form the gate reads                                   pass 21 fail 6  CAUGHT
+34 verdict: "Sources: none" is not recognised                                                    pass 26 fail 1  CAUGHT
+35 verdict: an empty Sources line is not recognised                                              pass 26 fail 1  CAUGHT
+36 verdict: an unmatched item still passes                                                       pass 24 fail 3  CAUGHT
+37 verdict: wouldBlock is never set                                                              pass 24 fail 3  CAUGHT
+38 ledger: the reply text is written into the row                                                pass 25 fail 2  CAUGHT
+39 ledger: an unmatched item is not redacted                                                     pass 26 fail 1  CAUGHT
+40 fail-open: a missing last_assistant_message is not logged                                     pass 26 fail 1  CAUGHT
+41 fail-open: a missing sources-gate is not handled                                              pass 26 fail 1  CAUGHT
+42 install: the reply slot registers on Stop with a matcher                                      pass 26 fail 1  CAUGHT
+43 install: sources-gate.js installs to a different directory than reply-slot.js                 pass 26 fail 1  CAUGHT
+
+43 applied · 43 caught · 0 survived · 0 NOT APPLIED
+exit 0

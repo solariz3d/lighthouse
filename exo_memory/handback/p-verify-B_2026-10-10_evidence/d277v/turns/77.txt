@@ -1,0 +1,12 @@
+MESSAGE 77  msg_011CfssxaRqhbkXg17MS5R2r  seat librarian  ts 2026-10-10T03:53:27.101Z  turn L88389..L88400 (next prompt L88405)
+CLAIMS:
+  [msg_011CfssxaRqhbkXg17MS5R2r|1] **"Nothing new in the last few minutes."** This is a claim about current state. Check the activity log or the status of the running job.
+  [msg_011CfssxaRqhbkXg17MS5R2r|2] **"B is still checking the Sharp turn"** This says agent/process B is running and is on that specific check. Verify against B's live status or output.
+  [msg_011CfssxaRqhbkXg17MS5R2r|5] **"if you want to try a 90° that comes out straight."** This implies Turn by gives a straight result at 90°. That is a behavior claim, so confirm it with a test result or a manual run.
+
+--- L88389 user 2026-10-10T03:53:22.819Z
+USER: suh
+--- L88400 assistant 2026-10-10T03:53:27.656Z  <<< THE CLAIM'S MESSAGE
+TEXT: Suh. Nothing new in the last few minutes. B is still checking the Sharp turn; when that passes, the full test run starts, then the install. Turn by is on your shortcut now, if you want to try a 90° that comes out straight.
+
+Sources: none

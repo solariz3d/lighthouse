@@ -1,0 +1,7 @@
+{"label":"cup-then-roll bowl (bank 30, cup 60)","bankG_deg":30,"left_edge_deg":90,"centre_deg":30,"right_edge_deg":30}
+{"label":"cup-then-roll half-pipe (bank 30, cup 60)","bankG_deg":30,"left_edge_deg":90,"centre_deg":30,"right_edge_deg":30}
+{"label":"cup-then-roll flat (bank 30, cup 60)","bankG_deg":30,"left_edge_deg":90,"centre_deg":30,"right_edge_deg":30}
+{"label":"bank 0, cup 60 (control: symmetric)","bankG_deg":0,"left_edge_deg":60,"centre_deg":0,"right_edge_deg":60}
+{"label":"bank 30, cup 0 (control: the roll alone)","bankG_deg":30,"left_edge_deg":30,"centre_deg":30,"right_edge_deg":30}
+{"label":"PLANTED roll-then-cup: psi in the world frame (left c-phi, right c+phi)","bankG_deg":30,"left_edge_deg":60,"centre_deg":30,"right_edge_deg":60}
+{"label":"PLANTED cup ignores bank (roll not applied)","bankG_deg":0,"left_edge_deg":60,"centre_deg":0,"right_edge_deg":60}

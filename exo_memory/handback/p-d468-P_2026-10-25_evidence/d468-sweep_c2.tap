@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: seed 1: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+ok 1 - seed 1: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+  ---
+  duration_ms: 10.5235
+  type: 'test'
+  ...
+# Subtest: seed 1: C2 at the seam and at the joints Close moved
+ok 2 - seed 1: C2 at the seam and at the joints Close moved
+  ---
+  duration_ms: 4.2585
+  type: 'test'
+  ...
+# Subtest: seed 2: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+ok 3 - seed 2: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+  ---
+  duration_ms: 331.3675
+  type: 'test'
+  ...
+# Subtest: seed 2: C2 at the seam and at the joints Close moved
+ok 4 - seed 2: C2 at the seam and at the joints Close moved
+  ---
+  duration_ms: 201.4671
+  type: 'test'
+  ...
+# Subtest: seed 3: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+ok 5 - seed 3: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+  ---
+  duration_ms: 4.9268
+  type: 'test'
+  ...
+# Subtest: seed 3: C2 at the seam and at the joints Close moved
+ok 6 - seed 3: C2 at the seam and at the joints Close moved
+  ---
+  duration_ms: 2.7695
+  type: 'test'
+  ...
+# Subtest: seed 4: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+ok 7 - seed 4: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+  ---
+  duration_ms: 246.9547
+  type: 'test'
+  ...
+# Subtest: seed 4: C2 at the seam and at the joints Close moved
+ok 8 - seed 4: C2 at the seam and at the joints Close moved
+  ---
+  duration_ms: 194.9524
+  type: 'test'
+  ...
+# Subtest: seed 5: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+ok 9 - seed 5: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+  ---
+  duration_ms: 2.4945
+  type: 'test'
+  ...
+# Subtest: seed 5: C2 at the seam and at the joints Close moved
+ok 10 - seed 5: C2 at the seam and at the joints Close moved
+  ---
+  duration_ms: 2.1018
+  type: 'test'
+  ...
+# Subtest: seed 6: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+ok 11 - seed 6: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint)
+  ---
+  duration_ms: 251.6261
+  type: 'test'
+  ...
+# Subtest: seed 6: C2 at the seam and at the joints Close moved
+ok 12 - seed 6: C2 at the seam and at the joints Close moved
+  ---
+  duration_ms: 223.918
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1553.3444

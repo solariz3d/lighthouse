@@ -1,0 +1,39 @@
+meshes [33m61[39m materials t180b_road t180b_paint t180b_floor_made-993b5297d4ad20a5-1024 t180b_underskin t180b_catch
+1ROAD_p1_chunk_0          10348 verts   9950 tris  s      0.0 ..  11484.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p1_chunk_1          10348 verts   9950 tris  s    398.0 ..    796.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p1_chunk_2          17958 verts  17532 tris  s    796.0 ..   1222.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p3_chunk_3          26334 verts  25872 tris  s   1222.0 ..   3530.5 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p4_chunk_4          32718 verts  32144 tris  s   1684.0 ..   2258.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p4_chunk_5          32640 verts  32168 tris  s   2258.0 ..   2951.5 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p5_chunk_6          32712 verts  32336 tris  s   2584.8 ..   3022.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p5_chunk_7          32712 verts  32336 tris  s   3022.0 ..   3398.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p6_chunk_8          32658 verts  32256 tris  s   3398.0 ..   4194.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p12_chunk_9         32752 verts  32396 tris  s   3768.0 ..   4124.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p16_chunk_10        32752 verts  32396 tris  s   3558.3 ..   4480.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p16_chunk_11        32070 verts  31638 tris  s   4480.0 ..   4876.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p18_chunk_12        23028 verts  22624 tris  s   4876.0 ..   5280.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p18_chunk_13        26904 verts  26432 tris  s   5280.0 ..   5752.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p18_chunk_14        26790 verts  26320 tris  s   5752.0 ..   6222.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p18_chunk_15        23028 verts  22624 tris  s   6222.0 ..   6626.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p18_chunk_16        22686 verts  22288 tris  s   6626.0 ..   7024.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p19_chunk_17        23940 verts  23520 tris  s   7024.0 ..   7444.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p19_chunk_18        28044 verts  27552 tris  s   7444.0 ..   7936.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p19_chunk_19        24624 verts  24192 tris  s   7936.0 ..   8368.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p19_chunk_20        22686 verts  22288 tris  s   8368.0 ..   8766.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p20_chunk_21        22572 verts  22176 tris  s   8766.0 ..   9161.7 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p21_chunk_22        26334 verts  25872 tris  s   9161.7 ..   9623.2 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p21_chunk_23        22344 verts  21952 tris  s   9623.2 ..  10015.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p22_chunk_24        22458 verts  22064 tris  s  10015.0 ..  10409.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p22_chunk_25        22230 verts  21840 tris  s  10409.0 ..  10798.7 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p23_chunk_26        27132 verts  26656 tris  s  10798.7 ..  11274.2 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_p23_chunk_27        11970 verts  11760 tris  s      0.0 ..  11484.0 t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_CATCH_p4_chunk_0    17922 verts  17304 tris  s   1502.0 ..   2120.0 t180b_catch
+1ROAD_CATCH_p5_chunk_1    17760 verts  17168 tris  s   2480.0 ..   3072.0 t180b_catch
+rows within 6 m of s=3300 (mesh, station, vertex count):
+   1ROAD_p5_chunk_7 s=3294.000 [33m84[39m
+   1ROAD_p5_chunk_7 s=3296.000 [33m174[39m
+   1ROAD_p5_chunk_7 s=3298.000 [33m174[39m
+   1ROAD_p5_chunk_7 s=3300.000 [33m174[39m
+   1ROAD_p5_chunk_7 s=3302.000 [33m174[39m
+   1ROAD_p5_chunk_7 s=3304.000 [33m174[39m
+   1ROAD_p5_chunk_7 s=3306.000 [33m79[39m

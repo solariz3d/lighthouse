@@ -1,0 +1,4 @@
+processes in the tree: 8
+windows on the user's desktop: 0 (visible 0)
+windows on t180-measure: 21 (visible 4)
+main window titles on the session: 8; with T-180: 0

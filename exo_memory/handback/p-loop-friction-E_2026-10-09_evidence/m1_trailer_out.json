@@ -1,0 +1,22 @@
+{
+ "warnedDeliveredCallLibrarian": 86,
+ "by": {
+  "chair_inject": {
+   "refused": 20,
+   "recovered": 20,
+   "contentSame": 14,
+   "contentChanged": 6
+  },
+  "call_chair": {
+   "refused": 23,
+   "recovered": 23,
+   "contentSame": 14,
+   "contentChanged": 9
+  }
+ },
+ "first": "2026-09-16T19:14:27.511Z",
+ "last": "2026-10-09T16:53:29.567Z",
+ "gapMedianS": 8.751,
+ "gapP90S": 15.881,
+ "gapSumS": 446.834
+}

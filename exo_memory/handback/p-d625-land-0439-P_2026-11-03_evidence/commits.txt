@@ -1,0 +1,16 @@
+* b4e8336 df542d7 | Version 0.4.39
+*   df542d7 3a3f365 d3cf1ee | Merge the pass clearance checks
+|\  
+| * d3cf1ee 9dac829 | Export: warn where another pass comes within a car's room, and where a drawn underside shows through another pass's road
+| * 9dac829 72fff66 | Tests: lay the tracks that come back over their own road with the core's pieces, as the builder now refuses them
+| * 72fff66 a005e1d | Builder: refuse a road laid too close over another for its underside and a car; the checker draws its reds on the road
+*   3a3f365 1145831 4e6398c | Merge the ribbon bank carry fix
+|\  
+| * 4e6398c 3e7b7cd | The sculpt locality test records why the carried roll may move outside a brush's window
+| * 3e7b7cd 51f3a82 | A roll that runs on through a joint is built through it, not stopped at it
+| * 51f3a82 a005e1d | A bank typed as exactly one turn is a full turn of roll, not none
+* 1145831 a005e1d f835410 | Merge the sky banding fix
+* f835410 519aefa | The vignette darkens the sky inside the sky pass, before its dither, so the real page shows no steps under it
+* 519aefa b497c5d | The 3D view's vignette is drawn by the renderer with the sky's dither, so it no longer bands into rings
+
+ 72 files changed, 1618 insertions(+), 169 deletions(-)

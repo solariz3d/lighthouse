@@ -1,0 +1,54 @@
+worktree-sweep --apply --only · C:\Users\nname\Desktop\lighthouse · 17 worktrees
+classes: REMOVE 17
+REMOVE     C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\cfgmerge\base-red-wt  [rescue/cfgmerge-base-red-wt-2026-10-13]  0.07 GB  — 1 unlanded commit(s), all kept by branch rescue/cfgmerge-base-red-wt-2026-10-13; clean; its commits stay on the branch above
+             unlanded: ab083d8312 Rescue: cfgmerge-base-red-wt's uncommitted files, kept before its worktree is removed (D319 part 1b)
+REMOVE     C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\install\base-wt  [rescue/install-base-wt-2026-10-13]  0.07 GB  — 1 unlanded commit(s), all kept by branch rescue/install-base-wt-2026-10-13; clean; its commits stay on the branch above
+             unlanded: 4679942711 Rescue: install-base-wt's uncommitted files, kept before its worktree is removed (D319 part 1b)
+REMOVE     C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\lap3\base-wt  [rescue/lap3-base-wt-2026-10-13]  0.07 GB  — 1 unlanded commit(s), all kept by branch rescue/lap3-base-wt-2026-10-13; clean; its commits stay on the branch above
+             unlanded: d99ee37a81 Rescue: lap3-base-wt's uncommitted files, kept before its worktree is removed (D319 part 1b)
+REMOVE     C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\usb\base-red-wt  [rescue/usb-base-red-wt-2026-10-13]  0.07 GB  — 1 unlanded commit(s), all kept by branch rescue/usb-base-red-wt-2026-10-13; clean; its commits stay on the branch above
+             unlanded: 88e672ed7d Rescue: usb-base-red-wt's uncommitted files, kept before its worktree is removed (D319 part 1b)
+REMOVE     C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\usb\base-wt  [rescue/usb-base-wt-2026-10-13]  0.07 GB  — 1 unlanded commit(s), all kept by branch rescue/usb-base-wt-2026-10-13; clean; its commits stay on the branch above
+             unlanded: edff4eb08e Rescue: usb-base-wt's uncommitted files, kept before its worktree is removed (D319 part 1b)
+REMOVE     C:\Users\nname\Desktop\b-d317-wt  [d317-b]  0.13 GB  — 1 unlanded commit(s), all kept by branch d317-b; clean; its commits stay on the branch above
+             unlanded: 7bc8950208 D317 part 1: the window's X asks before ending working seats (main.rs)
+REMOVE     C:\Users\nname\Desktop\c-assembly-wt  [assembly-c]  0.08 GB  — 1 unlanded commit(s), all kept by branch assembly-c; clean; its commits stay on the branch above
+             unlanded: db2d7b0474 D277 part 6 (C), DRAFT only: what the seat-file assembly adds, per section, and what stays indexed
+REMOVE     C:\Users\nname\Desktop\worktrees\a-cw-wt  [rescue/a-cw-wt-2026-10-13]  0.07 GB  — 1 unlanded commit(s), all kept by branch rescue/a-cw-wt-2026-10-13; clean; its commits stay on the branch above
+             unlanded: a0d2ce7c01 Rescue: a-cw-wt's uncommitted files, kept before its worktree is removed (D319 part 1b)
+REMOVE     C:\Users\nname\Desktop\worktrees\a-sd-wt  [startdigest-a]  0.07 GB  — 1 unlanded commit(s), all kept by branch startdigest-a; clean; its commits stay on the branch above
+             unlanded: 0794577d18 D277 part 5 (A): the session-start digest behind the gates_mode switch: 13.4 KB becomes 1.4 KB in light mode, today's output byte-identical with the key absent
+REMOVE     C:\Users\nname\Desktop\worktrees\c-d277margin-wt  [d277margin-c]  0.08 GB  — 2 unlanded commit(s), all kept by branch d277margin-c; clean; its commits stay on the branch above
+             unlanded: c4f1c5c56a D277 margin fix: the light intakes' size margins are measured against what strict drops in this room
+             unlanded: b59f01d6da D277 margin fix: the light pointer's span stops at a strict memory heading
+REMOVE     G:\b-d311b4-wt  [d311-b4]  0.13 GB  — 5 unlanded commit(s), all kept by branch d311-b4; clean; its commits stay on the branch above
+             unlanded: 8d59fb1c1f D311 last bench fix: context fidelity
+             unlanded: 92152b897a D311: neutral paths in the context-fidelity test rows (portable-paths)
+             unlanded: 6443e97125 D311: the context-fidelity baseline, 22 dev units x 5 = 110, and B's 40-reply sample
+             unlanded: 53e525d2f2 D311 context-fidelity run: A's hand-back section and map line
+             unlanded: 7f3fc7dc5e D311 context-fidelity second judge: B's blind REPEATS / not-REPEATS on A's 40 baseline3 replies
+REMOVE     G:\consonance-worktrees\a-d294-wt  [d294-a]  0.12 GB  — 1 unlanded commit(s), all kept by branch d294-a; clean; its commits stay on the branch above
+             unlanded: 1b4cb7c014 D295: the trailing-reminder SHADOW in the Node pulse hook (logs only, never changes the output)
+REMOVE     G:\consonance-worktrees\a-d296-wt  [d296-a]  0.12 GB  — 1 unlanded commit(s), all kept by branch d296-a; clean; its commits stay on the branch above
+             unlanded: 873d8239ef D296 hand-back: carrier-drift evidence skip (seat A)
+REMOVE     G:\consonance-worktrees\a-d311a3-wt  [d311-a3]  0.13 GB  — 1 unlanded commit(s), all kept by branch d311-a3; clean; its commits stay on the branch above
+             unlanded: 2233be7f27 D311: the 40 R-ids for B's second-judge sample on the re-run
+REMOVE     G:\consonance-worktrees\a-d311a5-wt  [d311-a5]  0.13 GB  — 3 unlanded commit(s), all kept by branch d311-a5; clean; its commits stay on the branch above
+             unlanded: d655966fca D311 last bench fix: context fidelity
+             unlanded: 41c8e10f1b D311: neutral paths in the context-fidelity test rows (portable-paths)
+             unlanded: 63303245ab D311: the context-fidelity baseline, 22 dev units x 5 = 110, and B's 40-reply sample
+REMOVE     G:\worktrees\c-d311-wt3  [d311-c3]  0.13 GB  — 5 unlanded commit(s), all kept by branch d311-c3; clean; its commits stay on the branch above
+             unlanded: 8d59fb1c1f D311 last bench fix: context fidelity
+             unlanded: 92152b897a D311: neutral paths in the context-fidelity test rows (portable-paths)
+             unlanded: 6443e97125 D311: the context-fidelity baseline, 22 dev units x 5 = 110, and B's 40-reply sample
+             unlanded: 53e525d2f2 D311 context-fidelity run: A's hand-back section and map line
+             unlanded: 144003fee9 D311 context-fidelity run: C's blind verdicts on the 110 replies, before any unseal
+REMOVE     G:\worktrees\e-d288base  [rescue/e-d288base-2026-10-13]  0.12 GB  — 1 unlanded commit(s), all kept by branch rescue/e-d288base-2026-10-13; clean; its commits stay on the branch above
+             unlanded: bc568aacc7 Rescue: e-d288base's uncommitted files, kept before its worktree is removed (D319 part 1b)
+removed 17, 1.67 GB freed (bytes of the removed worktrees, measured before removal)
+git worktree prune: ok
+
+real	0m39.038s
+user	0m0.031s
+sys	0m0.015s
+exit 0
