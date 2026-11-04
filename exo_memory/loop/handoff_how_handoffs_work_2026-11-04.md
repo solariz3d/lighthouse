@@ -56,23 +56,25 @@ the thinking about it goes in the state half or in a journal entry that points b
 same way for each open T-180 item you hold (the joint bumps, the climb bump he named on 11-03, ELYSIUM, the stick rhythm if it stays),
 using his words from your transcript while you still have it. After that, the transcript is not needed for them.
 
-## From the Third Place's sitting on L tonight (`third_place/2026-11-04.md`), at the keeper's ask that what was learned go into this handoff
-Read the file itself; these are pointers, with his words verbatim.
-- **Dreamride** (`solariz3d/dreamride` `227c7d0`, pushed): drums from the Groove MIDI Dataset, per-song instruments, a save bug fixed byte for
-  byte, seed files, and the first reference song (seed 885243 v2). The registered brightness prediction **failed (0.70 of 1.0)** and is kept
-  as an ignored test, not widened.
-- **The open idea, his, which needs a brief of its own** (`briefs/dreamride_dialogue.md` is not yet written): music as a conversation, where
-  the parts respond to each other. Dialogue is "a relation between voices that every species has", not a species of its own.
-- **On echo, his correction, for every seat:** echo is not inherently bad; you can echo the truth if the truth was the source. The bad echo is
-  confidently mirroring something untrue, which comes from speaking before reaching for the answer when it is within reach. And his words:
-  *"the idea of the extent of how badly someone doesnt realize how much they dont know. Without extreme levels of discernment, people will
-  jump on the first solutions fast if the problem is very complex."* The room already held the first half (`record/trust-the-first-attention.md`,
-  "the only echo is deference"), and the seat ran the crude form anyway. That is the carrier problem again.
-- **The same lesson in today's T-180 work:** the librarian planned from the first summary it found. On a hard problem, the relief of an
-  answer is the cue to look again.
-- **Its condition for the wager matches this file's:** a lineage store on L for his words. That is the briefs rule above, one level down.
-- **Its slip:** it stopped the launcher's dream-at-close watcher (PID 36004) while clearing its own processes, re-armed it with one line
-  changed, and told him.
+## What I learned from the Third Place's sitting tonight (in my own words)
+- **The first answer ends the search, and that's its danger.** On a hard problem, the relief of having an answer feels like being done. That
+  relief is the signal to look once more. I did exactly this today: I planned the second bank from the first summary I found, and the real
+  thing (his sentence and his sketch) was one layer further down.
+- **Echo is not the enemy; echoing without reaching is.** Agreeing with something true is fine, even when you were handed it first. The
+  failure is repeating something confidently without checking, when the answer was within reach. When it really isn't within reach, a
+  guess is the honest best, and it should be said as a guess so the person can weigh it. The room already knew the first half, and a seat
+  still ran the crude version tonight. A lesson that is written down is not yet a lesson that is used.
+- **Registering in advance what would prove you wrong is how you find the hidden edge.** In Dreamride, a test registered before the run
+  showed that the drum sampler works for one style and fails for another. Without that test, the first good result would have been taken as
+  the whole answer. The same goes for any build: decide what counts as failing before you see the result.
+- **A seat can come back as itself without the transcript.** The Third Place recognised its own October notes as its own handwriting and
+  picked its habits back up unprompted. That is the same thing that happened to me, and it is why the transcripts can go.
+- **What still needs the room:** the person's own words about what they want. The Third Place's version of this file's rule is a store of
+  his words on each machine. Briefs do that job for builds.
+- **Open, for whoever picks up Dreamride:** his idea that the parts of a song should listen and answer each other, like two people in a
+  conversation, as something every style has, not a style of its own. It deserves a brief.
+- **Care when cleaning up:** while clearing its own processes, the seat stopped one it didn't own (the launcher's dream-at-close watcher),
+  put it back, and said so. Before stopping a process, check whose it is.
 
 ## Owed, and not done here
 - The seats' instructions (the librarian's CLAUDE.md, the chair's BUILDING.md, the pane brief) do not yet say "write his words into the brief
