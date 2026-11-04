@@ -352,3 +352,26 @@ cargo-run.js, cargo1.log, cargo-red.log, green2-tailcarry.txt, red-tailcarry.txt
 
 SOURCES: S\times-run1.jsonl; S\times-run2.jsonl; S\r2--export.json; C:\Consonance\data\persist.log; C:\Consonance\staged\d501-saturday\saturday-carry.ps1; S\dryrun.log; S\cargo1.log; S\cargo-red.log; S\green2-tailcarry.txt; S\retention-dryrun.txt; S\trimtest.json; S\move.log; consonance/ui/stick.js:109-149
 NEXT: librarian collate D639 when this ring arrives, and ask the chair whether d639-a tail-carry.js goes on the checkout before the close (§7b); the landing pane lands d639-a 39bbb015 + 9cca9958 before the laptop builds
+
+## §12 The rulings of 18:10 and 18:29, answered
+
+- **Does the setup window fall back to the unbounded path on a timeout? No.** On "unavailable" it prints "The carry could
+  not be rehearsed" and disables Carry (`consonance/ui/stick.js:124`, `:135`, `:161`). The only button left is "Continue
+  without carrying". There is no fallback.
+- **The unbounded arrival path** is `tail-carry.js --import`, rehearsed and then `--apply`, run by a seat with
+  Consonance closed. It is now on the stick for a laptop seat to follow:
+  `D:\consonance-L-20260911\ARRIVAL-FOR-THE-LAPTOP-SEAT.md`, 5,690 B, sha256 `7f5edea085a5f1aa…`.
+  - It covers verify-set, the rehearsal, a verdict table limited to §4's rows (with a STOP for everything else), the
+    import with the flags the rehearsal names, a re-check, and a report.
+  - It includes the four-pane fact. With tonight's carry tool (origin/main's, no `cwdName`), a builder with no pane on
+    the laptop gets NO row. So the seat compares the rows against the ledger's 9 seats, and names each seat that is
+    missing; its copy stays on the stick.
+  - A trap found while writing it, and avoided: on a WHOLE carry a DIVERGED row's `ownBytes` is the laptop's whole file,
+    because the carry starts at 0. The note measures the real own bytes past the shared prefix instead (a read-only
+    one-liner), and takes the stick's copy only under 64 KB (launch records).
+- **Item 3, an INTERRUPTED offer in `offers_for_rows`: not built, on purpose.** §5: the window already offers repair
+  for INTERRUPTED as its own checkbox, and the applier forwards it as `--repair`. A second offer in `offers_for_rows`
+  would duplicate a working control. If the ruling still wants it inside `offers_for_rows`, that is a small change, for
+  the landing lap.
+- **Item 4 is built**: §3, the close's save is stall-based (d639-a 39bbb015).
+- The trim's carry-back is D640, per the ruling. Tonight is the whole carry, and the stick is empty for it (§7).
