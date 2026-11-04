@@ -27,4 +27,35 @@
   late rows only gain a `late` report. Asked at 06:4x; he handed it to D instead of answering.
 - The librarian's two WRONGs in the plan are recorded in `librarian/2026-11-04.md` 06:4x.
 
+## What L learned today: read this before picking either lap up
+1. **His original words and images are in the transcripts, not the summaries.** D's 11-02 note said "second bank, mirror and early apply,
+   last ~15%". L planned from that and asked him questions his own message already answered. The message and his screenshot were whole in
+   D's librarian tail on the stick: `consonance-tails/0c0c0c0b…800308795.tail`, user turn at 2026-11-03T00:43Z. The image is base64 in the
+   jsonl and can be decoded straight to a png. **Open the master before planning from a summary of it**, especially for a feature that is his
+   idea.
+2. **What the second bank is, in his words:** "a second banking function that in one piece can bank a turn either even more or back to
+   level … the normal banking but then an extra function that bends the banking again towards the end of it". On 11-04: "instead of having
+   to place it, then flatten it with the next piece". The point is one piece instead of a flattening piece.
+3. **The panel's "early" box is keyed by FIELD name** (`atStart: { bank, cup }`), not by channel (`phi`, `c`). Passing channel names drops
+   "early" silently and builds a different piece. L did exactly that once while drawing his piece.
+4. **The bump fix (bankPlan, from his 11-03 ribbon report) is why a fast bank arrives late.** Each roll corner over BANK_BAR (3 g at a wheel
+   10 m out at 170 m/s) is re-rounded over a window centred on the corner, and no window crosses a piece joint. Every Extend ramp starts at
+   a joint, so a ramp shorter than its floor, 2·√(Δ/BANK_BAR) (~117 m for 20°, ~143 m for 30°, ~203 m for 60°), arrives late on the built
+   road. The panel's numbers stay right. This is on main since 0.4.39.
+   - The same floor governs the second ramp. Its minimum (15·√Δ, ~82 m for 30°) keeps the built road within 0.5° of its hold, but it is
+     still shorter than the floor (~143 m for 30°). So a second ramp near the minimum arrives on time but peaks over the bar at the
+     piece-end joint. His sketch does: 2.1× at 726 m.
+   - If he feels a bump at the end of a second bank, that is the cause. A later `from` makes it worse; an earlier one (~610 m on his 750 m)
+     clears it.
+5. **The design call under L136 is his, and it is about joints.** On-time banks need the window to reach back across the start joint into
+   the previous piece's hold (Bar X). Keeping joints pinned (Bar J) only lets the builder REPORT the lateness.
+6. **Showing him the track:** draw the road itself in 3D, as the builder shows it, with his own piece. Charts of bank against distance
+   confused him. The page L made: https://claude.ai/artifact/TJaHLRLFTbBPF2BafvYM7v (v2).
+7. **Loop mechanics that cost time today:**
+   - a pane's re-ring was refused and the loop sat idle for ~30 min. The hand-back file's mtime showed it was done; read the file, not
+     the ring.
+   - a pane rang GREEN before its section was on disk (a shell-quoting append failure). Check the section exists before collating.
+   - an install order said "launch it", and the builder opened under him unannounced. Install, and leave it for him to open.
+   - `call_chair` refuses a collation without the `OUTPUT → NEXT:` line, even on a new-lap dispatch.
+
 NEXT: chair holds L136 (no B build) and reports the L135 branch to the keeper for his push word, when this file is read
