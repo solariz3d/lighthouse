@@ -2824,3 +2824,18 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - The shipped builder (d10eacf) refuses it: driving shell.extend with the save's own typed values and only the 20 early pieces re-laid, Extend refuses his p33 (PASS_CLEARANCE, p33 through p29, 31 places); laid past that without the gate, Close refuses (12 new reds, 3,236 m of new road). No closed save exists; nothing faked. Control: the same splice with the old rule moves his road 1.5 m.
 - A full regenerate is not faithful at all: today's Turn by lays his 90° corners in another shape (up to 1.41e-2 rad/m), and Extend then refuses p26 even with the old rule.
 - **Carry:** a replay through today's writer first proves itself with the old rule on the same save; whatever moves in that control is not the change being measured.
+
+## 2026-11-04 ~05:4x (L) · L135, the non-author review of the second bank (t180 038e21e) → `exo_memory/handback/p-l135-E_2026-11-04.md`
+- **NOT GREEN on B's row 6 only:** a `from` within ~0.5 m of the end is accepted, and the document drops its 30° hold ~60 m early (the second ramp gets 0 knots past the `k < L − 0.5` filter). Seen by exact channelAt reads; 0.75 m was fine.
+- **Green:** C2 at `from` and at the end exact to ≤6e-7 (8 cases, including 100 m and −30°→+20°); W3's per-ramp floor is right (the same quintic rule as whole pieces); targeted tests 170/170.
+- **For the drive:** ramps shorter than ~10 m are re-rounded by the adapter's bankPlan, so the built road rolls well before `from` and the checker reads it clear.
+- **Carry:** settle a C2 claim with the spline's own d1/d2 at s∓ε. A finite-difference window can't resolve a cubic's knot-to-knot change.
+- 2026-11-04 ~06:0x (L) · L135 re-check 380d44c: **GREEN** → `exo_memory/handback/p-l135-E_2026-11-04.md` (re-check section).
+  - **15·√Δ refuses** 0.5 m and min − 0.1 m; at the exact min the second ramp leaks ≤0.30° into the hold as built.
+  - **B's 20 m-hold 8.3° is the adapter's first-ramp lag:** a plain 60°/120 m ramp is built at 23.4° at its end, on main d10eacf too. So no hold rule.
+  - **Carry:** near a ramp, compare built against built-without, not against the document. And check the file landed before ringing.
+
+## 2026-11-04 ~12:5xZ (L) · L136 registration, the bar for "the built bank arrives on time" → `exo_memory/loop/l136_registration_2026-11-04.md` (97989bcf)
+- On t180 0df08db, 11 of 18 settle-table rows are late, and in 10 of them T < floor 2√(Δ/BANK_BAR). Every Extend ramp starts at a pinned joint, so rule 2 cannot fit them unless the window crosses the start joint; that is the keeper's call (Bar X), and Bar J is the default.
+- His sketch's second ramp is on time and over BANK_BAR (0.01244 °/m² at 726 m); the plan said "under". ELYSIUM, the close-banks lap and the sketch exceed the bar today, so the bar is amended to max(BAR, today's peak).
+- **Carry:** before registering a rule that moves a window, check whether the window's needed length (the floor) fits between the pinned joints. Here it did not, on the rule's own headline case.
