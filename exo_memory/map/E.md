@@ -1815,3 +1815,9 @@ NEXT: librarian call_librarian with the pointer when the census is written — p
 - **Proposed fix:** 3 lines, proven on a copy (154/155; N6's search string must move).
 - **Zoom ≥ 1 identity NOT RUN** (close-out). Full suite on the copy: 1,616 tests, 0 fail.
 - **Carry:** a fake event harness sends ONE key-down, but a real held key repeats. Probe with `repeat: true` before trusting a key fix.
+
+## 2026-11-04 ~01:2x (L) · L134 L-CONVERGE, the non-author review of B's merge 880f237f → `exo_memory/handback/p-lconverge-E_2026-11-04.md`
+- **GREEN.** All 6 rows re-derived from the parents (L 14f9495d, origin 1809ab39, base fab63d57); every 09-29 file (16/16) and every L-added map line survive.
+- **Tests:** heavy-run 61/61 (54/7 on origin's code); label-watch 27/27; cargo check 0; cargo trailer/l129/shell_budget/intake 134/1.
+- **The 1 fail (light intake) is ALSO red on pure origin with origin's data,** so it predates the merge. Route it to D.
+- **Carry:** a substring check of an appended block fails when the merger inserts a heading inside it. Compare line ranges with cmp.

@@ -120,3 +120,12 @@ Checked:
   - **M5 FAIL** (the head label is missing in 6/15 states; contrast below 4.5:1 over bright road).
   - M6 NOT RUN (partial: 0 page exceptions; the empty doc draws 0 labels; the full suite and mutation not run).
   - **So the "re-arm K1/K2" step above is DONE.** What remains before main: E's camera fix, C's M5 fix, M6, one full suite, land.
+
+## SUPERSEDED 2026-11-04 01:0x — the keeper's decision on the one-shot generator
+His words: "we didnt want to use straight up generated tracks to keep the importance on still making it, and i think we did a good
+job".
+- The "TWO systems, both kept" block above, and its line "do not let a future plan merge these or replace either", are RETIRED.
+  The generator was deliberately not built; the making stays with the person.
+- The month's work went into the making instead: joints that flow (11-02/11-03), the road as a solid hull, tubes and inversions,
+  export self-checks. t180 main d10eacf, v0.4.39.
+- The block stays as a trace. Read it against this paragraph.
