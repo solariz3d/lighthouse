@@ -375,3 +375,38 @@ NEXT: librarian collate D639 when this ring arrives, and ask the chair whether d
   the landing lap.
 - **Item 4 is built**: §3, the close's save is stall-based (d639-a 39bbb015).
 - The trim's carry-back is D640, per the ruling. Tonight is the whole carry, and the stick is empty for it (§7).
+
+## §13 Lesson: a stick backup must never sit one level under a volume root (the 20:55 close)
+
+The keeper's 20:55 close saved nothing: `LEAVE NOT_DONE`, "more than one stick folder" (persist.log:4015, via the
+librarian's notes b7c60cbf). **The cause was my move in §7.** I kept the `consonance-tails` folder inside the destination,
+so the backup's ledger sat at `Z:\stick-tails-2026-11-03\consonance-tails\ledger.json`. That is exactly the stick marker:
+`find_stick` looks at each volume root and one folder level down, and a folder holding `consonance-tails\ledger.json`
+(older layout) or `consonance-transfer\MANIFEST.json` is a stick (`consonance/src-tauri/src/sync_launch.rs` `STICK_LEDGER`,
+`layout_at`, `find_stick`; "§3: the volume root AND one folder level down"). Two stick folders made `find_stick` return
+`Many`, and the Leave refused to pick one. The order named the folder `Z:\stick-tails-2026-11-03`; keeping the
+`consonance-tails` level inside it was my choice, and no check of mine ran the finder's rule against Z:.
+
+**The rule: never put a stick backup one level under a volume root.** Put it two or more levels down (the librarian's
+`Z:\stick-backups\stick-tails-2026-11-03`), or copy the folder's contents without the `consonance-tails` /
+`consonance-transfer` level. After any copy of stick files to another volume, run the finder's rule by hand before the
+next close: no folder `<root>\*\consonance-tails\ledger.json` or `<root>\*\consonance-transfer\MANIFEST.json` may exist
+except the stick's own.
+
+    checked: every <volume>\*\ on C:, D:, G:, Z:, for both markers (stat only), 20:59 local
+             → one hit, D:\consonance-L-20260911\consonance-transfer\MANIFEST.json; Z: has none
+    checked: ls Z:\stick-backups\stick-tails-2026-11-03\consonance-tails → 254 entries
+    checked: wednesday-carry.log tail → 20:57:33 "Consonance was running again after the settle; back to waiting";
+             tasklist → pid 12160 powershell.exe alive (untouched)
+
+**Did any D639 note tell someone to make a backup in that shape?** No. Searched the hand-back (backup, archive, attic,
+copy) and the arrival note: neither asks anyone to make a backup. Two places NAME the old location:
+- §7's line "Z: `Z:\stick-tails-2026-11-03\consonance-tails\`" is a dated record of what was done and keeps its wording;
+  this section supersedes it. The backup is now at `Z:\stick-backups\stick-tails-2026-11-03\consonance-tails\`.
+- The arrival note on the stick (§2, the four-pane fact) told the laptop seat a pane-less seat's copy is "in
+  `Z:\stick-tails-2026-11-03`". Corrected to `Z:\stick-backups\stick-tails-2026-11-03`, the only change:
+  `D:\consonance-L-20260911\ARRIVAL-FOR-THE-LAPTOP-SEAT.md` sha256 7f5edea0… (5,690 B) → sha256 c112be8c… (5,704 B),
+  checked by diff (one line, 57).
+- My scratch `move.js` hard-codes the old destination; it is a one-off and will not be run again.
+
+No other action taken.
