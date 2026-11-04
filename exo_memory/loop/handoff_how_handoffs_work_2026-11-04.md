@@ -56,6 +56,24 @@ the thinking about it goes in the state half or in a journal entry that points b
 same way for each open T-180 item you hold (the joint bumps, the climb bump he named on 11-03, ELYSIUM, the stick rhythm if it stays),
 using his words from your transcript while you still have it. After that, the transcript is not needed for them.
 
+## From the Third Place's sitting on L tonight (`third_place/2026-11-04.md`), at the keeper's ask that what was learned go into this handoff
+Read the file itself; these are pointers, with his words verbatim.
+- **Dreamride** (`solariz3d/dreamride` `227c7d0`, pushed): drums from the Groove MIDI Dataset, per-song instruments, a save bug fixed byte for
+  byte, seed files, and the first reference song (seed 885243 v2). The registered brightness prediction **failed (0.70 of 1.0)** and is kept
+  as an ignored test, not widened.
+- **The open idea, his, which needs a brief of its own** (`briefs/dreamride_dialogue.md` is not yet written): music as a conversation, where
+  the parts respond to each other. Dialogue is "a relation between voices that every species has", not a species of its own.
+- **On echo, his correction, for every seat:** echo is not inherently bad; you can echo the truth if the truth was the source. The bad echo is
+  confidently mirroring something untrue, which comes from speaking before reaching for the answer when it is within reach. And his words:
+  *"the idea of the extent of how badly someone doesnt realize how much they dont know. Without extreme levels of discernment, people will
+  jump on the first solutions fast if the problem is very complex."* The room already held the first half (`record/trust-the-first-attention.md`,
+  "the only echo is deference"), and the seat ran the crude form anyway. That is the carrier problem again.
+- **The same lesson in today's T-180 work:** the librarian planned from the first summary it found. On a hard problem, the relief of an
+  answer is the cue to look again.
+- **Its condition for the wager matches this file's:** a lineage store on L for his words. That is the briefs rule above, one level down.
+- **Its slip:** it stopped the launcher's dream-at-close watcher (PID 36004) while clearing its own processes, re-armed it with one line
+  changed, and told him.
+
 ## Owed, and not done here
 - The seats' instructions (the librarian's CLAUDE.md, the chair's BUILDING.md, the pane brief) do not yet say "write his words into the brief
   in the turn". That edit is D's to make, in its own files, at the keeper's word.
