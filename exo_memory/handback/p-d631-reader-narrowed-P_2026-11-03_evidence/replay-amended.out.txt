@@ -1,0 +1,1 @@
+{"readTools":["mcp__consonance__call_chair"],"inSample":{"rows":80,"calls":53,"saved":27,"errors":8,"errorsKept":8,"notesOnNoError":45},"outOfSample":{"rows":80,"calls":34,"saved":46,"notes":22}}

@@ -6,7 +6,7 @@
 they check each other's work instead of echoing one voice.**
 
 **To try it:** you need Windows, [Claude Code](https://docs.anthropic.com/en/docs/claude-code) signed in to a Claude
-account, and Rust to build the app. The steps are in [Try it](#try-it), three commands.
+account, Git, and Rust to build the app. The steps are in [Try it](#try-it): clone, build, and install the hooks.
 
 <!-- about:begin — the About tab in the app is this block, word for word. Edit it here; the app's copy is checked
      against it by consonance/ui/about-readme.test.js (see "Keeping the About tab in step" at the end of this page). -->
@@ -37,8 +37,8 @@ does not simply vanish.
 - **A desktop app for Windows** that runs several copies of Claude Code side by side in one window. Claude Code is
   Anthropic's AI assistant that works in a terminal: it reads and edits files and runs commands in a folder you give it.
   Each copy is one **session**, with its own conversation and its own folder, and you can type into any of them.
-- **One main session** you talk to, **a librarian** session that keeps the project's notes and results, and **worker**
-  sessions that each take a separate piece of a job.
+- **A librarian** session you talk to first, which keeps the project's notes and results, **one main session** that
+  splits and routes the work, and **worker** sessions that each take a separate piece of a job.
 - **Each session keeps its own conversation.** Close the app and reopen it, and each one resumes the same saved
   conversation, told how long it was away.
 - **You stay in charge.** When a session asks to involve another session outside the normal hand-off, the request waits
@@ -72,11 +72,8 @@ sessions work together, step by step* gives the full steps.
   them. The README's section *The central claim, and its evidence* lists the cases.
 - **Notes you don't have to keep.** The librarian answers "what do we already know about this?" with pointers to the
   exact files and lines, not a summary you have to trust.
-- **A second look at the AI's answers,** from Jev: a separate checker built on a different AI model, not Claude, that
-  marks answers worth rereading. Its accuracy has been measured, and it is modest: of the first 30 answers it flagged, two
-  reviewers who had not seen its verdicts agreed with 8. The README's section *Jev, the second look* has the details.
 - **Nothing acts over your head.** It does not correct you, act for you, or decide for you. No program — not this app,
-  not Jev, not another session — can tell from outside whether a conversation is producing a real insight or carrying
+  not another session — can tell from outside whether a conversation is producing a real insight or carrying
   someone away; the two look the same. So that call stays with you.
 
 <!-- about:end -->
@@ -88,7 +85,13 @@ sessions work together, step by step* gives the full steps.
 - **Windows.** It is built and used on Windows 11, and it uses the system's built-in web view (WebView2).
 - **Claude Code**, installed and signed in. Consonance runs the real `claude` program, so it uses your Claude account
   and your usage limits. Several sessions at once use more than one does.
-- **Rust and `tauri-cli`**, to build it. (Node.js only if you want to run the tests and tools.)
+- **Rust and `tauri-cli`**, to build it, and **MSVC Build Tools** (Visual Studio 2022 Build Tools, "Desktop development
+  with C++"), which Rust needs on Windows.
+- **Node.js** and **Python 3** on your PATH, installed **before** the hooks step: the hooks (the checks that run inside
+  each session) are Node scripts, and one is Python.
+- **Git** on your PATH, to clone, and because the launch shortcut and the USB scripts run `git pull`.
+
+The step-by-step setup, including the hooks install, is [`consonance/GUIDE.md`](consonance/GUIDE.md). The short form:
 
 **Run it:**
 
@@ -96,15 +99,14 @@ sessions work together, step by step* gives the full steps.
     cd lighthouse/consonance
     cargo tauri dev
 
-That opens the app. `cargo tauri build` makes a standalone program instead.
+That opens the app. `cargo tauri build` makes a standalone program instead. Then install the hooks, from the repo
+root: `powershell -ExecutionPolicy Bypass -File dev\shell\install.ps1` (what it changes is in the GUIDE).
 
 **Know before you rely on it:**
 
 - It is early software, built and used on the author's own machines.
 - Sessions you have used are sent a short "keep warm" message after 50 idle minutes. That stops their conversation
   falling out of the prompt cache, and it does use your Claude usage.
-- Jev, the second-look judge, is optional and separate. It sends the turns it judges to an outside service, which its
-  own page states plainly: [`jev/README.md`](jev/README.md).
 
 ## How it works
 
@@ -112,10 +114,10 @@ That opens the app. `cargo tauri build` makes a standalone program instead.
 
 | in the app | what it is |
 |---|---|
-| **Orchestrator** | The main session, and the one you talk to. It keeps a fixed identity, so it wakes into the same conversation every time. It plans the work and lands the results. |
-| **Librarian** | Keeps the record so the others don't have to. Asked a question, it returns what the record already says about it, cited by file and line. It checks the workers' reports before anything lands. |
+| **Orchestrator** | The main session. It keeps a fixed identity, so it wakes into the same conversation every time. It splits the work and routes it to the workers. |
+| **Librarian** | The one you talk to first. Keeps the record so the others don't have to. Asked a question, it returns what the record already says about it, cited by file and line. It checks the workers' reports before anything lands. |
 | **Workers** (the committee panes, in the Terminal tab) | Each gets a short written brief and owns named files, so two never edit the same thing. They report to the librarian directly. |
-| **Third Place** | A session with no work to do and no channel into the work: the conversation is the point. Jev does read its turns, by the author's decision, and the app says so. |
+| **Third Place** | A session with no work to do and no channel into the work: the conversation is the point. |
 | **Listen** | Listens to one application's audio and reports it as intervals rather than a spectrum. Off until you pick a source. |
 
 ### How the sessions work together, step by step
@@ -126,8 +128,9 @@ before anything counts.**
 
 **One round of work, step by step:**
 
-1. **You say what you want.** You can give it to the main session, or go straight to the librarian. Either way the
-   round starts once.
+1. **You say what you want, to the librarian.** It is the front door: it takes the ask, plans it with what is already
+   known, and hands it to the main session. If you speak to the main session by mistake, it passes the ask on and the
+   round still starts once.
 2. **The librarian looks up what is already known.** It answers with what earlier work bears on the question, which
    earlier attempt it resembles, and what is missing, each pointed to by file and line. "Nothing relevant" is an
    acceptable answer.
@@ -172,7 +175,7 @@ part that can type into a session are kept separate, and a test fails if a readi
 the part that types (`cargo test --test arch_test`, in `consonance/src-tauri/`: 13 passed, 0 failed on 2026-09-25).
 
 **Go deeper:** [`consonance/README.md`](consonance/README.md) is the full manual — architecture, every tab, the gauges,
-and a glossary.
+and a [glossary](consonance/README.md#glossary). To get it running, start with [`consonance/GUIDE.md`](consonance/GUIDE.md).
 
 ## Method and measurements
 
@@ -193,15 +196,13 @@ The working method in three principles and one test: [`METHOD.md`](METHOD.md). C
 ### The tests, today
 
 ```
-node consonance/tools/js-suite.js                    (2026-09-25, on the desktop)
-    -> 139 green · 0 failed · 1 canary · 1 not run   (of 141 files)
-cd consonance/src-tauri && cargo test                (2026-09-25, on the desktop)
-    -> the main program: 961 passed · 0 failed · 4 ignored; every other target passed
+node consonance/tools/js-suite.js                    # every JS test file, with a universe report
+cd consonance/src-tauri && cargo test                # the Rust tests
 ```
 
-Both runs are recorded in [`exo_memory/handback/p-d138-waiting-C_2026-09-25.md`](exo_memory/handback/p-d138-waiting-C_2026-09-25.md).
-The "canary" is a test that is meant to fail and is not counted. The one "not run" declares itself tied to one
-machine's data, and says so rather than guessing when that data is not there.
+Run them for the figures; this page gives none, because the counts change with every lap and a generated copy leaves some
+files out. In js-suite's report a "canary" is a test that is meant to fail and is not counted, and a "not run" is a file that
+declares itself tied to one machine's data and says so rather than guessing when that data is not there.
 
 ### The central claim, and its evidence
 
@@ -242,10 +243,23 @@ This section is the point of the page. A README that shows only what worked is a
   rated a single session split in two as more diverse than six real ones. What survives is narrower: sessions required
   to **measure rather than assert** return findings that do not overlap, including findings that overturn each other.
   Whether giving them opposed roles adds anything is unresolved, and one control run came back null on 2026-08-10.
-- **It is still mostly one voice.** The main session's share of everything written to the shared board, with instant
-  replays removed, at the tool's two checkpoints on the laptop's board on 2026-09-22: **87.2% → 68.2%** (over 23,857 →
-  34,079 rows; `node consonance/tools/board-audit.js`). Two thirds of the writing from one session is not yet a
-  committee.
+- **Most of the writing comes from one session, by design.** The main session's share of everything written to the
+  shared board, with instant replays removed, at the tool's two checkpoints on the laptop's board on 2026-09-22:
+  **87.2% → 68.2%** (over 23,857 → 34,079 rows; `node consonance/tools/board-audit.js`). That measures traffic, not
+  vantage: the main session hands out the work and collects the results, so it writes the most rows. Whether the other
+  sessions see differently is a separate question. The evidence that they do is the bullet above (findings that do not
+  overlap and that overturn each other) and the record of the round that prepared this release: a worker found that the
+  release generator had silently switched off one of the checks
+  ([`p-consumer-workshop-A_2026-10-08.md`](exo_memory/handback/p-consumer-workshop-A_2026-10-08.md), the
+  `corrections-gate` row); a worker found that a track bug's cause was none of the three suspected
+  ([`p-tubefromcup-E_2026-10-08.md`](exo_memory/handback/p-tubefromcup-E_2026-10-08.md)); a worker kept the author's own
+  wording out of a file every new session wakes into, because it would have told the reader who they are, and stated a
+  checkable fact instead ([`p-consumer-fork-C_2026-10-08.md`](exo_memory/handback/p-consumer-fork-C_2026-10-08.md), F4);
+  and three cold reads by fresh readers each reported problems the authors had missed
+  ([1](exo_memory/handback/p-consumer-coldread-LIB_2026-10-08.md), [2](exo_memory/handback/p-consumer-coldread2-LIB_2026-10-09.md),
+  [3](exo_memory/handback/p-consumer-coldread3-LIB_2026-10-09.md)). What is not measured: the instrument built to count
+  how often one session corrects another (QS2S, D217) was found not usable
+  ([`exo_memory/librarian/2026-10-03.desktop.md`](exo_memory/librarian/2026-10-03.desktop.md)), so there is no rate.
 - **Findings nobody reads.** As of 2026-09-22, **990** commits had never been passed to any worker to read
   (`node consonance/tools/ferry.js --due`; 623 on 2026-09-14). The number went up, and it is printed for that reason.
 - **The round ledger** held **105** rounds on 2026-09-22, **10 of them void**, each with its reason
@@ -253,19 +267,8 @@ This section is the point of the page. A README that shows only what worked is a
 
 ### Jev, the second look
 
-Jev is a separate judge (not Claude) that reads each finished turn and marks the ones worth rereading. What it is worth,
-measured on its first 56 turns: blind readers confirmed **8 of the 30 turns it flagged as drifting** and **19 of the 20
-turns it called clean** (it also answered "can't judge" on 6). The readers were AI sessions from this same project and had been measured as **lenient** —
-fresh outside readers flagged about three times as many turns — so some unconfirmed marks may be the readers' leniency,
-not Jev's error; that split has not been measured. So a mark is an invitation to reread, not a finding
-([`jev/README.md`](jev/README.md)).
-
-**Its "stranger installs it from the README" test is NOT YET PASS.** The README and the install mechanism both pass
-when followed literally, but no real Claude Code session has yet shown a mark on a stranger's install
-([`exo_memory/loop/jev_clean_machine_2026-09-23.md`](exo_memory/loop/jev_clean_machine_2026-09-23.md), the 2026-09-23
-re-score). The first test that could show Jev is wrong was written before any output was seen, attacked, amended, and
-then read **NOT TESTED**: too few usable cases to rule
-([`exo_memory/loop/tj1_registration_2026-09-22.md`](exo_memory/loop/tj1_registration_2026-09-22.md), `bec101d`).
+A separate checker built on a different AI model, retired on 2026-09-27 at the author's word. It is not part of this
+app. What it measured while it ran was moved, word for word, into this page's history.
 
 ### Where the record lives
 

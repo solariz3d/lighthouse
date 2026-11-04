@@ -144,7 +144,8 @@ $files = @(
   # entry gave was wrong until L089 — an installed copy could not find main.rs from ~/.claude/shell/hooks/ and was
   # silent forever. It now resolves the room through ~/.consonance.json room_path and says so loudly when it cannot.
   # Reaches D on D's next install (the plan: "D gets the same on its next day").
-  @{ From = 'consonance\hooks\jev-flags.js';              To = 'hooks\jev-flags.js' }
+  # RETIRED 2026-10-08 (D273 ruling 5, Jev off since D164): no longer copied; its registration is Excluded below. The entry was:
+  #   @{ From = 'consonance\hooks\jev-flags.js';              To = 'hooks\jev-flags.js' }
   # Added 2026-08-18 with the hook itself, deliberately in the same commit. Nine hooks existed
   # ONLY as installed copies until 58b94f9 because each was registered by hand and the manifest
   # was updated later or never; a file that runs on this machine and exists nowhere else is the
@@ -164,6 +165,35 @@ $files = @(
   # chain the record describes as "residue fired from checkpoint" has never run on this machine.
   # Copying that wiring would have shipped a trigger that is a no-op here. See the hook's header.
   @{ From = 'consonance\hooks\carrier-drift-watch.js';    To = 'carrier-drift-watch.js' }
+  # Added 2026-10-01 (D203, the keeper's approval 09:34) with its registration below, same commit, same reason as the entries above. THE SECOND READER,
+  # in SHADOW: a PreToolUse hook on the two hand-back verbs that returns ALLOW at once and hands the message to a detached worker (Lib: it receives the job
+  # on a pipe, not from the host). Plan: exo_memory/loop/plan_second_reader_d203_2026-10-01.md. Install it with -Only second-reader.js,second-reader-worker.js.
+  @{ From = 'consonance\hooks\second-reader.js';           To = 'hooks\second-reader.js' }
+  @{ From = 'consonance\hooks\second-reader-worker.js';    To = 'hooks\second-reader-worker.js'; Lib = $true }
+  # Added 2026-11-03 (D631 (b)) with its registration below, same commit. The second reader's SAME-TURN NOTE: a PostToolUse hook on call_chair that shows
+  # the ringing seat the flags on the ring it just sent (the ring is already delivered: a note, never a block). Install with -Only second-reader.js,second-reader-worker.js,second-reader-note.js.
+  @{ From = 'consonance\hooks\second-reader-note.js';      To = 'hooks\second-reader-note.js' }
+  # Added 2026-10-02 (D212, the keeper's approval 13:42) with its registration below, same commit, same reason as the entries above. THE SOURCES GATE: a PreToolUse hook
+  # on the same two hand-back verbs that DENIES a ring with no SOURCES: line or an item no call of this turn backs, fails open, logs every decision. Plan:
+  # exo_memory/loop/plan_sources_gate_d212_2026-10-02.md. Install it with -Only sources-gate.js.
+  @{ From = 'consonance\hooks\sources-gate.js';            To = 'hooks\sources-gate.js' }
+  # Added 2026-10-03 (D218, the keeper: "lets finish it all") with its registration below, same commit, same reason as the entries above. THE REPLY SLOT, LIVE since D220 (built in SHADOW at D218; SHADOW = false in
+  # reply-slot.js): a Stop hook for the librarian and chair sessions only that BLOCKS the stop, once per turn, on a reply to the keeper that names a path/sha/count/percentage/version and does
+  # not end with a Sources: line the turn backs; it fails open on any error. It requires ./sources-gate.js, so it installs into the SAME directory. Plan: exo_memory/loop/plan_finish_retrieval_2026-10-03.md. Install with -Only reply-slot.js.
+  @{ From = 'consonance\hooks\reply-slot.js';              To = 'hooks\reply-slot.js' }
+  # Added 2026-10-06 (D248; C's CLAUDE.md audit, p-claudemd-C_2026-10-06.md "GATES"; the keeper delegated, the librarian ruled) with their registrations below, same
+  # commit. GLOBAL gates, every seat and every project: G1 PUSH-GATE denies a `git push` whose diff ADDS a credential-shaped line (file and line named, never the
+  # secret); G2 DELETE-GATE denies a recursive delete or `git worktree remove` of a tree holding a junction or symlink (memory worktree-remove-follows-junctions);
+  # G3 ASK-ENDING logs, in SHADOW ONLY, a reply whose last line is a "want me to…?" (C's M1 pattern) and never blocks. All three fail open. Install with
+  # -Only push-gate.js,delete-gate.js,ask-ending.js.
+  @{ From = 'consonance\hooks\push-gate.js';               To = 'hooks\push-gate.js' }
+  @{ From = 'consonance\hooks\delete-gate.js';             To = 'hooks\delete-gate.js' }
+  @{ From = 'consonance\hooks\ask-ending.js';              To = 'hooks\ask-ending.js' }
+  # Added 2026-10-09 (D281; the keeper: "you ding when the laps are complete, not like one if a new one opens, but when the final product is pushed, you ding through desktop audio even if
+  # minimized something pleasant") with its registration below, same commit. RELEASE-CHIME: a PostToolUse hook on the two shell tools that plays a built-in Windows sound when a
+  # `gh release create` or a `git push` that updated main on t180, consonance or lighthouse SUCCEEDED; one chime per 2 minutes; "chime": false in ~/.consonance.json silences it. It prints
+  # nothing, never blocks and fails silent. A NEW registration (the keeper asked for it). Install with -Only release-chime.js.
+  @{ From = 'consonance\hooks\release-chime.js';           To = 'hooks\release-chime.js' }
 )
 
 # What this script REGISTERS. Only these are ever touched in settings.json; anything else found
@@ -193,7 +223,12 @@ $register = @(
   @{ Event = 'UserPromptSubmit'; Rel = 'userprompt_pulse.py';         Runner = 'py';
      Conflicts = @('userprompt-submit.js') }
   @{ Event = 'UserPromptSubmit'; Rel = 'findings-return.js';          Runner = 'node' }
-  @{ Event = 'UserPromptSubmit'; Rel = 'hooks\jev-flags.js';          Runner = 'node' }   # L089, see its $files entry
+  # RETIRED, 2026-10-08 (D273 ruling 5: "drop the jev-flags.js registration from install.ps1 (Jev is retired in dev too)"; Jev off since D164).
+  # Excluded, not deleted, by the D105 precedent below: no write path registers it, and -Check reports EXCLUDED BUT LIVE on any machine where an older
+  # run left it registered (this script never unregisters). Its file is no longer copied. The entry as it stood, verbatim:
+  #   @{ Event = 'UserPromptSubmit'; Rel = 'hooks\jev-flags.js';          Runner = 'node' }   # L089, see its $files entry
+  @{ Event = 'UserPromptSubmit'; Rel = 'hooks\jev-flags.js';          Runner = 'node';
+     Excluded = 'Jev retired (D164); D273 ruling 5, 2026-10-08: the registration is dropped from install.ps1' }
   # EXCLUDED BY A KEEPER RULING, 2026-09-06 06:55 (exo_memory/librarian/2026-09-06.md:603):
   # "READY PAIR ONLY -- the three passengers stay unregistered". The entries STAY HERE rather than
   # being deleted, because deleting them loses the ruling: a seat reading a manifest with no
@@ -262,6 +297,30 @@ $register = @(
   # it is working reads exactly like a hook that was never installed, which is what the dispatch
   # gate's first probe cost to learn.
   @{ Event = 'Stop';             Rel = 'carrier-drift-watch.js';      Runner = 'node' }
+  # The second reader (D203). Matcher-scoped to the two hand-back verbs, in the docs' exact-name syntax (code.claude.com/docs/en/hooks: letters, digits, _, -, |
+  # are exact names). It allows at once and writes nothing to stdout; it must never fire on any other tool call.
+  @{ Event = 'PreToolUse';       Rel = 'hooks\second-reader.js';      Runner = 'node';
+     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }
+  # The reply slot (D218; LIVE since D220): a Stop hook, no matcher. It ignores every session that is not the librarian or the chair; for those it blocks a stop, once per turn, on an unbacked reply (see its entry above).
+  @{ Event = 'Stop';             Rel = 'hooks\reply-slot.js';        Runner = 'node' }
+  # The SOURCES gate (D212; D215 added chair_inject, the chair's DISPATCHES). It was on the second reader's matcher and so in its group; it now has its OWN matcher (the two hand-back
+  # verbs plus chair_inject) and so its own group, and the second reader's matcher is UNCHANGED. Hooks run in parallel; this is the only one that can deny.
+  @{ Event = 'PreToolUse';       Rel = 'hooks\sources-gate.js';       Runner = 'node';
+     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }
+  # G1 and G2 (D248): the two shell tools, exact names. Each reads the command and exits at once unless it is a push (G1) or a recursive delete (G2).
+  @{ Event = 'PreToolUse';       Rel = 'hooks\push-gate.js';          Runner = 'node';
+     Matcher = 'Bash|PowerShell' }
+  @{ Event = 'PreToolUse';       Rel = 'hooks\delete-gate.js';        Runner = 'node';
+     Matcher = 'Bash|PowerShell' }
+  # G3 (D248), SHADOW ONLY: a Stop hook, no matcher. Silent on every path (no output, exit 0); it only writes ask-ending.jsonl.
+  @{ Event = 'Stop';             Rel = 'hooks\ask-ending.js';         Runner = 'node' }
+  # RELEASE-CHIME (D281): after a Bash or PowerShell call. Reads the command and what came back, and exits at once unless a release or a push to main really shipped.
+  @{ Event = 'PostToolUse';      Rel = 'hooks\release-chime.js';      Runner = 'node';
+     Matcher = 'Bash|PowerShell' }
+  # The second reader's same-turn note (D631 (b)), on call_chair only: the one ring the narrowed reader reads (D631, amended). It waits, bounded at 25 s, for
+  # the worker's row (7.1 s median, 10.3 s p90), so it carries its own Timeout; every entry without one is registered at 10 s as before.
+  @{ Event = 'PostToolUse';      Rel = 'hooks\second-reader-note.js'; Runner = 'node';
+     Matcher = 'mcp__consonance__call_chair'; Timeout = 30 }
 )
 
 # DELIBERATELY UNMANAGED -- the THIRD STATE, named. A file in a manifest source directory that is
@@ -297,6 +356,10 @@ $unmanaged = @(
      Why  = 'Stop hook that BLOCKS to wake the outgoing seat. sourced-stop.js refused a gate on this same event in writing; a blocking hook is the keeper call this one has not had. No ruling yet. PRECONDITION, measured 2026-09-08: NO CONSONANCE_DREAM guard either (grep -c -> 0). A blocking hook the dream runner cannot switch off is the worst member of that class.' }
   @{ Src = 'consonance\hooks\live-mirror-stop.js';
      Why  = 'Stop hook of the per-seat live mirror (L052, pane E). It reaches a NETWORK REMOTE every turn and moves the lease that decides which machine may drive a seat, so registering it is a keeper decision twice over: it publishes outward on its own (journal 2026-07-28 -- committing is not publishing, a human stays awake saying yes), and its measured state round trip is 4760ms against the keeper''s 5000ms bound at a ZERO poll interval, so wiring it does not yet deliver what it is for (consonance/tools/live-host.js roundTrip). The lease half alone is sound and proved end-to-end against the real remote; the state half is default-OFF behind CONSONANCE_MIRROR_STATE=1. It DOES carry a CONSONANCE_DREAM guard, unlike the two above. No ruling yet -- see exo_memory/handback/p-live-mirror_2026-09-09.md.' }
+  @{ Src = 'consonance\hooks\claim-check.js';
+     Why  = 'The point-of-claim check (D305; design exo_memory/loop/claim_check_design_2026-10-11.md, bar exo_memory/loop/claim_check_registration_2026-10-11.md). Built and OFF: it acts only when ~/.consonance.json sets claim_check to true (or "shadow"), and the librarian ruled it stays OFF at the 10-17 decision; wiring it (PreToolUse on the ring verbs, Write/Edit and Bash, and Stop) is the keeper''s call after the held-out replay. It needs ./units.js (exo_memory/loop/claimrec/units.js) beside it once installed, or it fails open. It DOES carry a CONSONANCE_DREAM guard. No ruling yet -- see exo_memory/handback/p-claimcheck2-C_2026-10-12.md.' }
+  @{ Src = 'consonance\hooks\jev-flags.js';
+     Why  = 'RETIRED, not unruled: Jev is off since D164, and D273 ruling 5 (2026-10-08) dropped its registration and its copy from this installer (the Excluded entry in $register). The file stays in the source repository as the record of what ran (a generated copy does not carry it); nothing installs it.' }
 )
 
 # MUTANT-ANCHOR: THE FILTER. -Only narrows what this run ACTS on and nothing else. The universe and
@@ -768,10 +831,14 @@ if ($NoRegister) {
 }
 
 $settingsPath = Join-Path $env:USERPROFILE '.claude\settings.json'
+# D273 (a stranger's first install): a fresh home has no settings.json yet, and refusing there stopped every new user at this line. An EMPTY file
+# is the one thing it can create without inventing the user's settings: `{}` (no BOM, as below), said out loud, and then merged into like any other.
+# A settings.json that exists is never replaced; one that does not parse still stops the script (next block).
 if (-not (Test-Path $settingsPath)) {
-  Write-Host "`nNO settings.json at $settingsPath — refusing to create one." -ForegroundColor Red
-  Write-Host "This script merges into a file the user owns; it does not invent that file." -ForegroundColor Red
-  exit 1
+  $settingsDir = Split-Path -Parent $settingsPath
+  if (-not (Test-Path $settingsDir)) { New-Item -ItemType Directory -Force -Path $settingsDir | Out-Null }
+  [IO.File]::WriteAllText($settingsPath, '{}', [Text.UTF8Encoding]::new($false))
+  Write-Host "`nNO settings.json at $settingsPath -- created an empty one ({}) to register the hooks into. Nothing else in it was invented." -ForegroundColor Yellow
 }
 
 # Parse before touching anything. A settings.json that does not parse must not be backed up over
@@ -804,7 +871,9 @@ foreach ($e in $regEntries) {
   # a single group deserialised as a bare object does not read as zero groups — that exact
   # serialisation bug cost a day on the pane list (9e74004).
   $groups = @($settings.hooks.$ev)
-  if ($groups.Count -eq 0) {
+  # D205 (B's finding, p-d203-B_2026-10-01 section 3): the empty placeholder group exists for an UNMATCHED entry to land in. It used to be seeded for EVERY new event
+  # array, so the first-ever entry on an event that carried a Matcher (PreToolUse, the second reader) left a stray { "hooks": [] } behind that nothing used.
+  if ($groups.Count -eq 0 -and -not $e.Matcher) {
     $groups = @([pscustomobject]@{ hooks = @() })
   }
 
@@ -826,8 +895,21 @@ foreach ($e in $regEntries) {
   $found = $false
   foreach ($g in $groups) {
     if (-not $g.hooks) { continue }
+    $inSlot = ($slot -and [object]::ReferenceEquals($g, $slot))
+    $keep = @()
     foreach ($h in @($g.hooks)) {
       if ($h.command -and (Test-SameHook $h.command $e)) {
+        if ($e.Matcher -and -not $inSlot) {
+          # D215: the SAME hook registered under ANOTHER matcher (or none). It used to read as "already correct" and stay there, so a matcher the manifest
+          # WIDENED (the SOURCES gate gained chair_inject) never reached it. It is MOVED, not duplicated: dropped from the old group, added to the group of its matcher below.
+          # This re-scopes a hook this script already owns; it never removes a hook the script does not manage (Test-SameHook is the same test as ever).
+          $was = if ($g.PSObject.Properties['matcher']) { [string]$g.matcher } else { '(no matcher)' }
+          $changes += ("  REMATCH  {0,-17} {1}" -f $ev, (Split-Path -Leaf $e.Rel))
+          $changes += ("           was matcher: {0}" -f $was)
+          $changes += ("           now matcher: {0}" -f $e.Matcher)
+          $repointed++
+          continue
+        }
         $found = $true
         if ($h.command -ne $want) {
           $changes += ("  REPOINT  {0,-17} {1}" -f $ev, (Split-Path -Leaf $e.Rel))
@@ -837,7 +919,9 @@ foreach ($e in $regEntries) {
           $repointed++
         } else { $already++ }
       }
+      $keep += $h
     }
+    if ($keep.Count -ne @($g.hooks).Count) { $g.hooks = @($keep) }
   }
 
   # THE CONFLICT GUARD (2026-08-31). Before adding an entry, look for a live registration of any
@@ -861,11 +945,19 @@ foreach ($e in $regEntries) {
   }
 
   if (-not $found) {
-    if ($slot) { $target = $slot } else { $target = $groups[$groups.Count - 1] }
+    if ($slot) { $target = $slot }
+    else {
+      # D205: an UNMATCHED entry belongs in a group with NO matcher. It used to go to the LAST group, which on PreToolUse is the second reader's
+      # call_librarian|call_chair group: a future unmatched PreToolUse hook would have been silently scoped to those two tools. The LAST matcher-less group
+      # is taken (the old behaviour wherever every group is matcher-less); if there is none, a new one is made.
+      $target = $null
+      foreach ($g in $groups) { if (-not $g.PSObject.Properties['matcher'] -or -not $g.matcher) { $target = $g } }
+      if (-not $target) { $target = [pscustomobject]@{ hooks = @() }; $groups = @($groups) + @($target) }
+    }
     if (-not $target.PSObject.Properties['hooks']) {
       $target | Add-Member -NotePropertyName hooks -NotePropertyValue @() -Force
     }
-    $target.hooks = @($target.hooks) + @([pscustomobject]@{ type = 'command'; command = $want; timeout = 10 })
+    $target.hooks = @($target.hooks) + @([pscustomobject]@{ type = 'command'; command = $want; timeout = $(if ($e.Timeout) { [int]$e.Timeout } else { 10 }) })
     $changes += ("  ADD      {0,-17} {1}" -f $ev, (Split-Path -Leaf $e.Rel))
     $added++
   }
@@ -873,7 +965,21 @@ foreach ($e in $regEntries) {
   $settings.hooks.$ev = $groups
 }
 
-if ($added -eq 0 -and $repointed -eq 0) {
+# D205: a group with NO hooks in it runs nothing and is only residue (the stray one the old placeholder left). Pruned on the events THIS run registered for (never an event it did
+# not touch, never a group that holds a hook, whoever installed it), and counted as a change so the run writes the file even when it added nothing.
+$pruned = 0
+foreach ($pev in @($regEntries | Where-Object { -not $_.Excluded } | ForEach-Object { $_.Event } | Select-Object -Unique)) {
+  if (-not $settings.hooks.PSObject.Properties[$pev]) { continue }
+  $all = @($settings.hooks.$pev)
+  $keep = @($all | Where-Object { $_.hooks -and @($_.hooks).Count -gt 0 })
+  if ($keep.Count -lt $all.Count) {
+    $changes += ("  PRUNE    {0,-17} {1} empty group(s) removed (no hooks in them)" -f $pev, ($all.Count - $keep.Count))
+    $pruned += ($all.Count - $keep.Count)
+    $settings.hooks.$pev = @($keep)
+  }
+}
+
+if ($added -eq 0 -and $repointed -eq 0 -and $pruned -eq 0) {
   if ($refused -gt 0) { Write-Host "`nregistration: nothing changed; $already hook(s) verified, $refused REFUSED above (a conflicting implementation is live). Not 'correct' until the refusal is resolved by hand." -ForegroundColor Magenta }
   else { Write-Host "`nregistration: already correct ($already hook(s) verified, $skipped excluded by ruling, nothing changed)." -ForegroundColor Green }
 } else {
@@ -910,7 +1016,7 @@ if ($added -eq 0 -and $repointed -eq 0) {
 
   Write-Host "`nregistration:" -ForegroundColor Green
   $changes | ForEach-Object { Write-Host $_ -ForegroundColor Green }
-  Write-Host ("  {0} added, {1} re-pointed, {2} already correct, {3} EXCLUDED by ruling" -f $added, $repointed, $already, $skipped) -ForegroundColor Green
+  Write-Host ("  {0} added, {1} re-pointed, {2} empty group(s) pruned, {3} already correct, {4} EXCLUDED by ruling" -f $added, $repointed, $pruned, $already, $skipped) -ForegroundColor Green
   Write-Host ("  backup: {0}" -f $bak) -ForegroundColor DarkGray
 }
 

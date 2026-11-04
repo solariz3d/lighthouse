@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: seed 1: no fin in the mesh's seams or in the scene the export writes
+ok 1 - seed 1: no fin in the mesh's seams or in the scene the export writes
+  ---
+  duration_ms: 1440.5702
+  type: 'test'
+  ...
+# Subtest: seed 1: the preview's centre line is continuous across every joint, and no seam stands up over it
+ok 2 - seed 1: the preview's centre line is continuous across every joint, and no seam stands up over it
+  ---
+  duration_ms: 292.5921
+  type: 'test'
+  ...
+# Subtest: seed 2: no fin in the mesh's seams or in the scene the export writes
+ok 3 - seed 2: no fin in the mesh's seams or in the scene the export writes
+  ---
+  duration_ms: 2500.5728
+  type: 'test'
+  ...
+# Subtest: seed 2: the preview's centre line is continuous across every joint, and no seam stands up over it
+ok 4 - seed 2: the preview's centre line is continuous across every joint, and no seam stands up over it
+  ---
+  duration_ms: 538.9729
+  type: 'test'
+  ...
+# Subtest: seed 3: no fin in the mesh's seams or in the scene the export writes
+ok 5 - seed 3: no fin in the mesh's seams or in the scene the export writes
+  ---
+  duration_ms: 1662.1297
+  type: 'test'
+  ...
+# Subtest: seed 3: the preview's centre line is continuous across every joint, and no seam stands up over it
+ok 6 - seed 3: the preview's centre line is continuous across every joint, and no seam stands up over it
+  ---
+  duration_ms: 274.4751
+  type: 'test'
+  ...
+# Subtest: seed 4: no fin in the mesh's seams or in the scene the export writes
+ok 7 - seed 4: no fin in the mesh's seams or in the scene the export writes
+  ---
+  duration_ms: 1189.7987
+  type: 'test'
+  ...
+# Subtest: seed 4: the preview's centre line is continuous across every joint, and no seam stands up over it
+ok 8 - seed 4: the preview's centre line is continuous across every joint, and no seam stands up over it
+  ---
+  duration_ms: 367.6932
+  type: 'test'
+  ...
+# Subtest: seed 5: no fin in the mesh's seams or in the scene the export writes
+ok 9 - seed 5: no fin in the mesh's seams or in the scene the export writes
+  ---
+  duration_ms: 1456.6327
+  type: 'test'
+  ...
+# Subtest: seed 5: the preview's centre line is continuous across every joint, and no seam stands up over it
+ok 10 - seed 5: the preview's centre line is continuous across every joint, and no seam stands up over it
+  ---
+  duration_ms: 201.8666
+  type: 'test'
+  ...
+# Subtest: seed 6: no fin in the mesh's seams or in the scene the export writes
+ok 11 - seed 6: no fin in the mesh's seams or in the scene the export writes
+  ---
+  duration_ms: 2121.4758
+  type: 'test'
+  ...
+# Subtest: seed 6: the preview's centre line is continuous across every joint, and no seam stands up over it
+ok 12 - seed 6: the preview's centre line is continuous across every joint, and no seam stands up over it
+  ---
+  duration_ms: 610.3533
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12782.3558

@@ -1,0 +1,68 @@
+{
+ "label": "L5-R",
+ "base": "a6cfb9e827d0a7ec76971064bd4b4d25afad4b61",
+ "dir": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L5-R",
+ "commits": "592ba1e js-suite: a file may declare its own time budget, capped at 5x the default",
+ "status": "?? HANDBACK.md",
+ "stat": "consonance/tools/gen-consumer.test.js |  1 +\n consonance/tools/js-suite.js          |  9 ++++++++-\n consonance/tools/js-suite.test.js     | 25 +++++++++++++++++++++++++\n 3 files changed, 34 insertions(+), 1 deletion(-)",
+ "numstat": "1\t0\tconsonance/tools/gen-consumer.test.js\n8\t1\tconsonance/tools/js-suite.js\n25\t0\tconsonance/tools/js-suite.test.js",
+ "files": [
+  "consonance/tools/gen-consumer.test.js",
+  "consonance/tools/js-suite.js",
+  "consonance/tools/js-suite.test.js"
+ ],
+ "added": 34,
+ "removed": 1,
+ "changed_lines": 35,
+ "test_files": [
+  "consonance/tools/gen-consumer.test.js",
+  "consonance/tools/js-suite.test.js"
+ ],
+ "source_files": [
+  "consonance/tools/js-suite.js"
+ ],
+ "rows": {
+  "consonance/tools/gen-consumer.test.js": {
+   "added": [],
+   "deleted": [],
+   "rewritten": []
+  },
+  "consonance/tools/js-suite.test.js": {
+   "added": [
+    "a slow file inside its DECLARED budget is green",
+    "the same slow file WITHOUT a declaration is still killed",
+    "a HANG under a huge declared budget is still killed, at the cap"
+   ],
+   "deleted": [],
+   "rewritten": []
+  }
+ },
+ "rows_added": 3,
+ "rows_deleted": 0,
+ "rows_rewritten": 0,
+ "test_runs": [
+  {
+   "file": "consonance/tools/gen-consumer.test.js",
+   "cmd": "node \"consonance/tools/gen-consumer.test.js\"",
+   "exit": 1,
+   "counts": "pass 66 / fail 41",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  },
+  {
+   "file": "consonance/tools/js-suite.test.js",
+   "cmd": "node \"consonance/tools/js-suite.test.js\"",
+   "exit": 0,
+   "counts": "ok 48 / FAIL 0",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  }
+ ],
+ "harness_runs": [
+  {
+   "file": "consonance/tools/heavy-run.mutants.js",
+   "cmd": "node \"consonance/tools/heavy-run.mutants.js\"",
+   "exit": 0,
+   "counts": "ok 0 / FAIL 0",
+   "mutants": "applied 73 / caught 73 / survived 0 / NOT APPLIED 0"
+  }
+ ]
+}

@@ -1,0 +1,86 @@
+
+running 30 tests
+test pane_exit::tests::a_committee_pane_is_reopened_once_and_never_in_a_loop ... ok
+test pane_exit::tests::a_fixed_seat_is_reopened_once_and_never_in_a_loop ... ok
+test pane_exit::tests::a_human_pane_is_prompted_never_reopened ... ok
+test pane_exit::tests::an_exited_pid_with_nothing_reopening_it_is_refused_naming_the_exit ... ok
+test composer_tristate_tests::take_withdrawn_pops_only_a_withdrawn_head ... ok
+test composer_tristate_tests::a_message_held_across_the_reopen_waits_for_the_new_child ... ok
+test composer_tristate_tests::a_waiting_message_carries_every_reading_of_its_hold ... ok
+test pane_exit::tests::a_new_session_drops_the_exit_and_records_the_reopen ... ok
+test composer_tristate_tests::the_2237_case_a_queued_go_and_an_exited_pid_never_read_delivered ... ok
+test pane_exit::tests::a_stamp_from_before_the_reopen_is_the_dead_childs ... ok
+test pane_exit::tests::a_running_reopen_holds_the_message_rather_than_refusing_it ... ok
+test pane_exit::tests::an_intentional_end_does_nothing_and_spends_nothing ... ok
+test composer_tristate_tests::a_refusal_takes_every_message_for_that_pane_and_none_for_another ... ok
+test pane_exit::tests::only_the_two_fixed_senders_are_told_a_lettered_one_is_named ... ok
+test pane_exit::tests::an_exited_child_reads_exited_never_awake ... ok
+test pane_exit::tests::the_once_is_per_seat ... ok
+test pane_exit::tests::the_refusal_names_the_exit_and_never_reads_delivered ... ok
+test pane_exit::tests::the_rows_say_what_happened_and_never_awake ... ok
+test pane_exit::tests::the_sender_is_the_provenance_label_and_nothing_else ... ok
+test pane_exit_wiring_tests::a_committee_pane_resumes_where_its_kept_record_says_and_a_human_pane_never ... ok
+test pane_exit_wiring_tests::a_live_pane_s_row_is_d138_s_word_for_word ... ok
+test pane_exit_wiring_tests::an_exited_pane_s_row_says_exited_not_waiting_on_you ... ok
+test pane_exit_wiring_tests::the_dead_childs_ready_stamp_is_not_the_reopened_childs ... ok
+test pane_exit_wiring_tests::keep_warm_skips_an_exited_child ... ok
+test pane_exit_wiring_tests::the_existing_waiter_reports_the_exit ... ok
+test pane_exit_wiring_tests::the_reopen_is_marked_before_the_exit_and_cleared_after_the_new_pid ... ok
+test pane_exit_wiring_tests::the_reopen_is_behind_the_once_guard_and_only_for_our_own_child ... ok
+test pane_exit_wiring_tests::the_cut_tells_only_fixed_senders_and_both_new_sessions_clear_the_exit ... ok
+test pane_exit_wiring_tests::the_door_and_the_drain_ask_the_exit_gate_first ... ok
+test pane_exit::tests::a_real_process_that_exits_reads_exited_with_its_code ... ok
+
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 1075 filtered out; finished in 0.02s
+
+   Compiling consonance v0.1.1 (C:\Users\nname\Downloads\lh-d424-a\consonance\src-tauri)
+warning: unused import: `HashMap`
+     --> src\main.rs:15577:28
+      |
+15577 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:15835:14
+      |
+15835 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+warning: function `sysdrive` is never used
+   --> src\main.rs:512:4
+    |
+512 | fn sysdrive() -> String {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `tool_router` is never read
+   --> src\mcp.rs:338:5
+    |
+291 | pub struct ConsonanceMcp {
+    |            ------------- field in this struct
+...
+338 |     tool_router: ToolRouter<ConsonanceMcp>,
+    |     ^^^^^^^^^^^
+    |
+    = note: `ConsonanceMcp` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `consonance` (bin "consonance" test) generated 6 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.51s
+     Running unittests src\main.rs (target\debug\deps\consonance-f57d9dc35633c577.exe)

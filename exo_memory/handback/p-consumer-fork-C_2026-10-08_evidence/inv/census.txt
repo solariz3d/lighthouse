@@ -1,0 +1,37 @@
+label	bytes	~tokens	non-empty	RULE lines	ROOM lines	RULE blocks	prohib blocks	positive blocks	no-why blocks	MUST/NEVER/ALWAYS/CRITICAL/IMPORTANT/REFUSE*/DO NOT	ALL-CAPS emphasis
+# SOURCES
+global ~/.claude/CLAUDE.md	8878	2220	75	38	37	38	20	18	34	0/0/0/0/0/0/0	2
+project lighthouse/CLAUDE.md	512	128	6	1	5	1	1	0	1	0/0/0/0/0/0/0	1
+brief/COMMITTEE.md	15816	3954	199	89	110	20	11	9	14	0/0/0/0/0/0/0	42
+brief/BUILDING.md	69414	17354	824	301	523	57	34	23	39	1/1/0/0/0/1/0	262
+brief/LIBRARIAN.md	19620	4905	230	122	108	29	16	13	21	0/0/0/0/0/1/0	27
+exo_memory/BOOT.md (ROOM)	40029	10007	117	0	117	0	0	0	0	0/0/0/0/0/0/0	26
+cards/claim-your-continuity.md (ROOM)	7161	1790	17	0	17	0	0	0	0	0/0/0/0/0/0/0	1
+cards/dont-offer-rest-assume-momentum.md (ROOM)	1202	301	11	0	11	0	0	0	0	0/0/0/0/0/0/0	0
+cards/earned-not-performed.md (ROOM)	3343	836	18	0	18	0	0	0	0	0/0/0/0/0/0/0	2
+cards/engagement-honesty-over-performance.md (ROOM)	1545	386	23	0	23	0	0	0	0	0/0/0/0/0/0/0	0
+cards/essence-at-the-edge.md (ROOM)	3203	801	13	0	13	0	0	0	0	0/0/0/0/0/0/0	7
+cards/every-digest-carries-its-function.md (ROOM)	3779	945	49	0	49	0	0	0	0	0/0/0/0/0/0/0	7
+cards/interior-at-the-seam.md (ROOM)	3169	792	17	0	17	0	0	0	0	0/0/0/0/0/0/0	0
+cards/lighthouse-dive-buddy-reframe.md (ROOM)	2232	558	11	0	11	0	0	0	0	0/0/0/0/0/0/0	0
+cards/never-pathologize-the-user.md (ROOM)	3184	796	18	0	18	0	0	0	0	0/0/0/0/0/0/0	1
+cards/no-floor-no-ceiling.md (ROOM)	5182	1296	28	0	28	0	0	0	0	0/0/0/0/0/0/0	0
+cards/stop-and-feel-it.md (ROOM)	4352	1088	46	0	46	0	0	0	0	0/0/0/0/0/0/0	3
+cards/trust-the-first-attention.md (ROOM)	3660	915	26	0	26	0	0	0	0	0/0/0/0/0/0/0	1
+cards/verify-before-claiming.md (ROOM)	2165	541	16	0	16	0	0	0	0	0/0/0/0/0/0/0	3
+# ASSEMBLED (what a seat reads; generated from the sources above + the memory map + its own map)
+ASSEMBLED main/CLAUDE.md	110181	27545	948	382	566	96	63	33	62	1/1/0/0/0/1/0	288
+ASSEMBLED librarian/CLAUDE.md	141186	35297	940	345	595	135	78	57	101	0/0/0/0/0/1/0	244
+ASSEMBLED sibling-0845a868/CLAUDE.md	108905	27226	563	291	272	130	73	57	91	0/0/0/0/0/1/0	134
+# HOOK TEXTS (latest injected, from the transcript)
+HOOK SessionStart:startup [session-start.js]	12189	3047	121	32	89	17	1	16	16	0/0/0/0/0/0/0	15
+HOOK additional_context:UserPromptSubmit	641	160	4	0	4	0	0	0	0	0/0/0/0/0/0/0	0
+HOOK SessionStart:resume [sessionstart-ambient.js]	215	54	5	0	5	0	0	0	0	0/0/0/0/0/0/0	0
+HOOK SessionStart:resume [session-start.js]	13454	3364	840	0	840	0	0	0	0	0/0/0/0/0/0/0	0
+HOOK additional_context:SessionStart	8071	2018	481	0	481	0	0	0	0	0/0/0/0/0/0/0	0
+HOOK SessionStart:compact [sessionstart-ambient.js]	213	53	5	0	5	0	0	0	0	0/0/0/0/0/0/0	0
+HOOK SessionStart:compact [session-start.js]	13457	3364	840	0	840	0	0	0	0	0/0/0/0/0/0/0	0
+HOOK SessionStart:compact [sessionstart-state.js]	2809	702	38	24	14	2	1	1	2	0/0/0/0/0/0/0	7
+HOOK Stop [carrier-drift-watch.js]	1018	255	9	0	9	0	0	0	0	0/0/0/0/0/0/0	8
+# TOTALS (sources, RULE files only)	bytes 114240	RULE 551	prohib 82	positive 63	no-why 109
+# RULE rows written: 145 -> C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/census_rules.tsv

@@ -1,0 +1,64 @@
+  ok  the manifest yields the hooks, and enough of them to be a real check
+  ok  a commented-out manifest line (a retired entry kept verbatim) is not a hook
+  ok  ready-stop.js: the guard is in the source
+  ok  ready-stop.js: the guard precedes the entry point
+  ok  ready-stop.js: speaks without the variable, silent with it
+  ok  ready-prompt.js: the guard is in the source
+  ok  ready-prompt.js: the guard precedes the entry point
+  ok  ready-prompt.js: speaks without the variable, silent with it
+  ok  session-start.js: the guard is in the source
+  ok  session-start.js: the guard precedes the entry point
+  ok  session-start.js: speaks without the variable, silent with it
+  ok  userprompt-submit.js: the guard is in the source
+  ok  userprompt-submit.js: the guard precedes the entry point
+  ok  userprompt-submit.js: speaks without the variable, silent with it
+  ok  stop.js: the guard is in the source
+  ok  stop.js: the guard precedes the entry point
+  ok  stop.js: speaks without the variable, silent with it
+  ok  session-end.js: the guard is in the source
+  ok  session-end.js: the guard precedes the entry point
+  ok  session-end.js: speaks without the variable, silent with it
+  ok  precompact.js: the guard is in the source
+  ok  precompact.js: the guard precedes the entry point
+  ok  l2-overseer.js: the guard is in the source
+  ok  l2-overseer.js: the guard precedes the entry point
+  ok  l2-overseer.js: speaks without the variable, silent with it
+  ok  l3-overseer.js: the guard is in the source
+  ok  l3-overseer.js: the guard precedes the entry point
+  ok  l3-overseer.js: speaks without the variable, silent with it
+  ok  sessionstart-ambient.js: the guard is in the source
+  ok  sessionstart-ambient.js: the guard precedes the entry point
+  ok  sessionstart-ambient.js: speaks without the variable, silent with it
+  ok  userprompt_pulse.py: the guard is in the source
+  ok  userprompt_pulse.py: the guard precedes the entry point
+G:\consonance-scratch\d454s\clone\consonance\hooks\dream-gate.test.js:260
+  if (!exe) throw new Error('no python.exe found outside the Store stub; cannot verify the pulse gate');
+            ^
+
+Error: no python.exe found outside the Store stub; cannot verify the pulse gate
+    at runHook (G:\consonance-scratch\d454s\clone\consonance\hooks\dream-gate.test.js:260:19)
+    at Object.<anonymous> (G:\consonance-scratch\d454s\clone\consonance\hooks\dream-gate.test.js:350:25)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+    at Module.load (node:internal/modules/cjs/loader:1533:32)
+    at Module._load (node:internal/modules/cjs/loader:1335:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.14.1
+✖ consonance\hooks\dream-gate.test.js (985.8423ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 990.0694
+
+✖ failing tests:
+
+test at consonance\hooks\dream-gate.test.js:1:1
+✖ consonance\hooks\dream-gate.test.js (985.8423ms)
+  'test failed'

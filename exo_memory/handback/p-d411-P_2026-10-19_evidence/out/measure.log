@@ -1,0 +1,10 @@
+[L1-R]  4 files changed, 31 insertions(+), 9 deletions(-) | rows +0 -0 ~0 | tests menubar-page.test.js (no node --test summary) | harnesses none anchor
+[L1-N]  4 files changed, 39 insertions(+), 15 deletions(-) | rows +0 -0 ~0 | tests menubar-page.test.js (no node --test summary) | harnesses none anchor
+[L2-R]  2 files changed, 33 insertions(+), 6 deletions(-) | rows +1 -0 ~0 | tests core_turnby.test.js (no node --test summary) | harnesses none anchor
+[L2-N]  2 files changed, 46 insertions(+), 5 deletions(-) | rows +1 -0 ~0 | tests core_turnby.test.js (no node --test summary) | harnesses none anchor
+[L3-R]  2 files changed, 17 insertions(+), 2 deletions(-) | rows +2 -0 ~0 | tests core_edgeneg.test.js (no node --test summary) | harnesses none anchor
+[L3-N]  2 files changed, 21 insertions(+), 4 deletions(-) | rows +2 -0 ~0 | tests core_edgeneg.test.js (no node --test summary) | harnesses none anchor
+[L4-R]  2 files changed, 35 insertions(+), 13 deletions(-) | rows +1 -0 ~0 | tests sound-samples.test.js (no node --test summary) | harnesses none anchor
+[L4-N]  2 files changed, 39 insertions(+), 9 deletions(-) | rows +1 -0 ~0 | tests sound-samples.test.js (no node --test summary) | harnesses none anchor
+[L5-R]  3 files changed, 34 insertions(+), 1 deletion(-) | rows +3 -0 ~0 | tests gen-consumer.test.js ok 0 / FAIL 0, js-suite.test.js ok 48 / FAIL 0 | harnesses none anchor
+[L5-N]  3 files changed, 116 insertions(+), 7 deletions(-) | rows +6 -0 ~0 | tests gen-consumer.test.js ok 0 / FAIL 0, js-suite.test.js ok 51 / FAIL 0 | harnesses none anchor

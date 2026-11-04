@@ -1,0 +1,12 @@
+✔ row 1: one press closes a near lap AT ONCE: one undo step, the line says what it did, and Undo gives the open lap back (1564.1563ms)
+✔ row 2: when no way of closing proves, nothing changes: the same document, a line that says why, and no copy written (5334.8236ms)
+✔ row 6: a refused export names EVERY red in plain words, grouped, with where (not the export's first id) (147.8225ms)
+✔ row 7: the press writes the copy from BEFORE the close first (backupNow('pre-close'), the D239 amendment); a copy that fails refuses it by name; an edit while the copy is written is never closed over (5724.73ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12901.0139

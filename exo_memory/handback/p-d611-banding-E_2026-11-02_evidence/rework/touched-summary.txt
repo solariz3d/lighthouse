@@ -1,0 +1,7 @@
+not ok 24 - list: the preview's material and texture list EQUALS the kn5's # TODO the preview does not draw the start and grid paint (t180b_paint, PAINT_* meshes) or the closing seam the export builds (D177 §3)
+not ok 206 - row 1: glass, the lower view under the vignette: no channel holds one value for more than 4 rows, and the 4 x 4 mean never steps
+not ok 207 - row 2: aqua, the lower view under the vignette: no channel holds one value for more than 4 rows, and the 4 x 4 mean never steps
+# tests 211
+# pass 208
+# fail 2
+# todo 1

@@ -1,0 +1,278 @@
+MESSAGE 32  msg_011CfjpUMo9sSmdSjQCEenia  seat C  ts 2026-10-05T21:43:35.492Z  turn L52419..L52505 (next prompt L52583)
+CLAIMS:
+  [msg_011CfjpUMo9sSmdSjQCEenia|2] **"C's NON-AUTHOR attacks on D240's UI (62f5d39)"**: Check that the commit hash `62f5d39` exists and is the D240 UI change being tested. Also check that C is not an author of it.
+  [msg_011CfjpUMo9sSmdSjQCEenia|5] **"the refusal path is real"**: This depends on #4, and on a file at that path actually making the backup write fail rather than being worked around.
+  [msg_011CfjpUMo9sSmdSjQCEenia|16] The CDP modifier values, which the code relies on through `shift ? 8 : 0` and `key('z', 2)`. It treats Shift as 8 and Ctrl as 2.
+
+--- L52419 user 2026-10-05T21:41:22.775Z
+USER: 
+
+<pasted_content id="e180">
+[chair:MAIN] A QUICK non-author look at A's 62f5d39 (D240 UI half, branch pieces-ui-a-d240: 12ab427 → 8728515 (A's core) → c775694 (your F1) → 62f5d39). FEEL tier, no harnesses. A's hand-back is exo_memory/handback/p-pieces-ui-A_2026-10-05.md. B is checking your keys, ab748e5.
+Attack the parts the librarian named:
+1. The clicks: click and shift-click selection across pieces, flights, the closed-loop seam and a selection after Undo. Can a stale selection Save or Delete the wrong pieces?
+2. The delete preview: it shows ghost, displacement and overlaps; backupNow runs first and refuses when it fails; Apply is ONE undo step; Cancel changes nothing.
+3. Save as piece never overwrites; the library's Rename and Delete only touch the pieces folder, inside T180_TEST_APP_DATA in your run.
+4. The required check through the app: save, re-add, same export bytes.
+5. Merge: does your ab748e5 panel.js line conflict with 62f5d39? Try the cherry-pick and say.
+Real window only on T180_TEST_APP_DATA.
+Hand-back: exo_memory/handback/p-pieces-ui-C_2026-10-05.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-pieces-ui-A_2026-10-05.md
+NEXT: librarian call_librarian with the pointer when the look is written — plan default after it: land 62f5d39 + ab748e5 and install, unless the output says otherwise
+</pasted_content id="e180">
+
+--- L52429 assistant 2026-10-05T21:41:25.673Z
+TOOL_USE Bash [toolu_01V6DebmmzeSzJKhHHkHWqtv]: {"command":"cat /c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pieces-ui-A_2026-10-05.md","description":"Read A's D240 UI hand-back"}
+--- L52430 user 2026-10-05T21:41:25.787Z
+RESULT [toolu_01V6DebmmzeSzJKhHHkHWqtv]: # D240 UI half: saved pieces in the builder — seat A (Sonnet 5.5), 2026-10-05
+
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_equation_only_pieces_2026-10-04.md (D240, lines 40-52) · `git -C C:/Users/nname/Desktop/t180-track-builder log --oneline -1 2b3c013`
+(and the amendment: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_jumps_open_export_2026-10-05.md, lines 39-44)
+
+**Where:** commit `62f5d39` on branch `pieces-ui-a-d240`, worktree `C:\Users\nname\Desktop\worktrees\a-piecesui-wt`, off t180 main `12ab427` with two cherry-picks first: `8728515` (= my b08c3c7, the core half) and `c775694` (= C's 2b3c013, one `checkDoc` per parse). Local, nothing pushed, no AC. FEEL tier for the UI; the core's tests ran too. Nothing under `src/export`, `src/geom`, `src/core` (beyond the two cherry-picks) or `test/fixtures` changed (`git diff --stat 12ab427 -- src/export src/geom test/fixtures` is empty). No mutation harness (the 09-29 rule).
+
+## What it is (what the keeper sees)
+- **Select on the track:** a click on a piece selects it, a Shift-click selects the run from the piece selected first; a click on nothing clears. The selection is drawn bright over the road with an end dot at each end (`app/core/selectionlayer.js`). A pointer that moved more than 5 px was a camera drag and selects nothing; with the brush armed the click is the brush's.
+- **Save as piece:** a name box and a button; the file is `<app data>\pieces\<name>.t180piece`, the core's `t180b.piece/1` text. A name in use is REFUSED (the native side refuses it too: a piece is never overwritten; delete it first). A run the core cannot keep (a mixed cross-section) says why and the button is off.
+- **Pieces library** (`app/core/piecesui.js`): p
+…[6581 chars cut]…
+the packet; one more box if wanted).
+- **The highlight is drawn over the road**, so where the road goes behind another part of the track it is not hidden by it; a jump (flight) piece has no road samples, so its highlight is a gap.
+- **The slow preview** above is measured on a synthetic 13 km track, not on the keeper's TEST 1.
+- Nothing about GPU feel; no hands-on by the keeper.
+
+## For the librarian
+Plan default after it: a quick non-author look (the selection clicks and the delete preview are the parts worth attacking), land and install, then D244 handles and D243 jumps. The select-and-delete UI is the half D244 (handles on the ghost piece) builds on.
+
+NEXT: a quick non-author look, then land and install, when the librarian has collated it
+--- L52434 assistant 2026-10-05T21:41:34.884Z
+TOOL_USE Bash [toolu_01J8zcVGr8To6goLVpEkcHdo]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-keys-wt && git log --oneline -4 62f5d39 | cat && git worktree add --detach /c/Users/nname/Desktop/worktrees/c-piecesui-look-wt 62f5d39 2>&1 | tail -1; cd /c/Users/nname/Desktop/worktrees/c-piecesui-look-wt && git diff --stat 12ab427 62f5d39 | tail -25","description":"Make the look worktree and list what the D240 UI branch changes"}
+--- L52435 user 2026-10-05T21:41:35.335Z
+RESULT [toolu_01J8zcVGr8To6goLVpEkcHdo]: 62f5d39 D240 UI half: saved pieces in the builder (select on the track, Save as piece, the library, a previewed middle delete)
+c775694 D240 F1: a saved piece is checked by one checkDoc, not piece by piece
+8728515 Saved pieces, the core half (D240), with delete: schema t180b.piece/1
+12ab427 D243a fixes after B's look: a closed track is refused the test export; the button's path is tested
+HEAD is now at 62f5d39 D240 UI half: saved pieces in the builder (select on the track, Save as piece, the library, a previewed middle delete)
+ CHANGELOG.md                          |   2 +
+ app/README.md                         |   4 +
+ app/core/coreshell.js                 | 158 ++++++++++-
+ app/core/panel.js                     |   5 +-
+ app/core/piecesui.js                  | 135 ++++++++++
+ app/core/selectionlayer.js            |  64 +++++
+ app/index.html                        |   5 +
+ app/preview/preview.js                |   3 +-
+ app/test/core-pieces-ui.test.js       | 326 +++++++++++++++++++++++
+ app/test/core-readout-display.test.js |   2 +-
+ src-tauri/src/lib.rs                  |  78 +++++-
+ src/core/README.md                    |  28 ++
+ src/core/piece.js                     | 256 ++++++++++++++++++
+ test/core_piece.test.js               | 477 ++++++++++++++++++++++++++++++++++
+ test/core_piece_mutation.test.js      | 123 +++++++++
+ 15 files changed, 1658 insertions(+), 8 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52443 assistant 2026-10-05T21:41:37.500Z
+TOOL_USE Bash [toolu_01DMP9As3CzrCDdVNPoshE1S]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-piecesui-look-wt && git diff 12ab427 62f5d39 -- app/core/coreshell.js | grep \"^+\" | cut -c1-260","description":"Read A's core shell additions"}
+--- L52444 user 2026-10-05T21:41:37.660Z
+RESULT [toolu_01DMP9As3CzrCDdVNPoshE1S]: +++ b/app/core/coreshell.js
++// SAVED PIECES, THE UI HALF (D240; the core is src/core/piece.js):
++//   shell.selectPiece(i, { extend })   shell.clearSelection()   shell.selectionInfo()   await shell.savePiece(name)   await shell.listPieces()   await shell.insertPiece(name, { mirror })
++//   await shell.renamePiece(from, to)   await shell.deletePieceFile(name)   shell.deleteSelection()   shell.proposeDelete()   await shell.applyDelete()   shell.cancelDelete()
++const PC = require('../../src/core/piece.js');   // D240: saved pieces (save a run, put one at the head, mirror it, delete pieces)
++    selection: null, deleteProposal: null, libraryStamp: 0,   // D240: the pieces picked on the track, a pending middle delete, and a counter the library list redraws on
++    // D240: a SELECTION of pieces and a delete PREVIEW likewise belong to the document they were made on (piece numbers mean nothing on another)
++    if (patch.history && st.selection && !('selection' in patch) && patch.history.present !== st.selection.base) patch = { ...patch, selection: null };
++    if (patch.history && st.deleteProposal && !('deleteProposal' in patch) && patch.history.present !== st.deleteProposal.base) patch = { ...patch, deleteProposal: null };
++    /**
++     * D240, SAVED PIECES, THE UI HALF (the core is src/core/piece.js; the keeper: "can we keep only the equation mode? And then we can save pieces from that we make", and
++     * 10:xx: "highlight/select pieces on the track; the selection offers Save as piece or Delete").
++     *
++     * SELECT: piece i (a click on the track), or with `extend` the run from the piece selected first to i (a shift-click). A selection belongs to the document it was made on:
++     * any change of the document drops i
+…[12065 chars cut]…
+(H - k * (z1 - z0)) / 2;
++    const r1 = (v) => Math.round(v * 10) / 10;
++    return { w: W, h: H, points: pick.map((p) => [r1(ox + k * (p[0] - x0)), r1(oz + k * (p[1] - z0))]) };
++  } catch (e) { return null; }
++}
++function overlapCheck(resolved, designSpeedKmh, { closed = true } = {}) {   // D240: `closed: false` for the open track a delete leaves
++  const segs = resolved.segments, p0 = G.buildPath(segs, { step: 2, closed, start: resolved.start }), p = typeof resolved.lift === 'function' ? resolved.lift(p0) : p0;
++module.exports = { createCoreShell, NAME_RE, PREFIX, BRUSH_MODES, STRAIGHT_K, piecesIn, straightPieces, startLayout, profilerOf, thumbOf, displacementAfterDelete };
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52454 assistant 2026-10-05T21:41:52.745Z
+TOOL_USE Bash [toolu_01VPwizCVF4zzYTkYx8uKppU]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-piecesui-look-wt && git diff 12ab427 62f5d39 -- src-tauri/src/lib.rs | grep \"^+\" | grep -v \"^+++\" | cut -c1-220 | head -80","description":"Read A's native piece commands"}
+--- L52455 user 2026-10-05T21:41:52.886Z
+RESULT [toolu_01VPwizCVF4zzYTkYx8uKppU]: +const PIECE_EXT: &str = "t180piece";
++    names_with_ext(dir, TRACK_EXT)
++}
++
++/// The names of the files in `dir` that end `.<ext>` and have a valid name, sorted (a track list and a piece list are read the same way).
++pub fn names_with_ext(dir: &Path, ext: &str) -> Result<Vec<String>, String> {
++        if path.extension().and_then(|x| x.to_str()) != Some(ext) {
++// D240, SAVED PIECES: runs of pieces the user kept from their tracks, one `<name>.t180piece` each in the app's `pieces` folder (the text is the page's, schema
++// t180b.piece/1, checked there by src/core/piece.js; this side only keeps and returns it). A name is a track's name (no path can ride in it). Saving never
++// overwrites unless `replace` is set (the page never sets it: a piece is deleted first, on purpose), so two pieces can never be lost to one name.
++pub fn piece_file(dir: &Path, name: &str) -> Result<PathBuf, String> {
++    if !valid_name(name) {
++        return Err(format!("{name:?} is not a piece name: 1 to 64 letters, digits, spaces, _ or -"));
++    }
++    Ok(dir.join(format!("{name}.{PIECE_EXT}")))
++}
++pub fn save_piece_file(dir: &Path, name: &str, text: &str, replace: bool) -> Result<(), String> {
++    let path = piece_file(dir, name)?;
++    if path.exists() && !replace {
++        return Err(format!("a piece named {name:?} already exists; delete it first or use another name"));
++    }
++    write_atomic(&path, text)
++}
++pub fn open_piece_file(dir: &Path, name: &str) -> Result<String, String> {
++    let path = piece_file(dir, name)?;
++    fs::read_to_string(&path).map_err(|e| format!("could not read the piece {name:?}: {e}"))
++}
++pub fn delete_piece_file(dir: &Path, name: &str) -> Result<(), String> {
++    let path = piece_file(dir, name)?;
++   
+…[2077 chars cut]…
+_file(&d, "new one").unwrap(), "replaced");
++        delete_piece_file(&d, "new one").unwrap();
++        assert!(open_piece_file(&d, "new one").is_err() && delete_piece_file(&d, "new one").is_err(), "gone, and deleting it again says so");
++        for bad in ["", "../x", "a/b", "a\\b", "..", ".", "x.y", "é"] {
++            assert!(piece_file(&d, bad).is_err() && save_piece_file(&d, bad, "x", true).is_err(), "{bad:?} is not a piece name");
++        }
++        assert!(!d.join("tmp-write").exists() && fs::read_dir(&d).unwrap().all(|e| !e.unwrap().file_name().to_string_lossy().ends_with(".tmp-write")), "no temporary file is left");
++        fs::remove_dir_all(&d).unwrap();
++    }
++
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52459 assistant 2026-10-05T21:42:07.168Z
+TOOL_USE Bash [toolu_01RdHcmGKJsr5FExNvYedmu7]: {"command":"E=/c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pieces-ui-A_2026-10-05_evidence; ls $E; grep -n \"const clickPiece\\|async function clickPiece\\|pickPoint\\|t180-pick\\|dispatchMouseEvent\\|function at\\|stationXY\\|projectS\" $E/pieces_window.js | cut -c1-200 | head -20","description":"Find A's evidence and its click helpers"}
+--- L52466 user 2026-10-05T21:42:07.341Z
+RESULT [toolu_01RdHcmGKJsr5FExNvYedmu7]: 1_loaded.png
+2_selected_p2.png
+3_selected_run.png
+4_library.png
+5_added.png
+6_delete_preview.png
+6b_delete_preview_words.png
+7_after_delete.png
+8_end.png
+cargo_test.log
+pieces_window.js
+probe_big.js
+probe_parts.js
+steps.log
+window_report.json
+2:// APP DATA FOLDER of its own (T180_TEST_APP_DATA: F2, the keeper's folder is never the run's). Real mouse clicks (CDP Input.dispatchMouseEvent) select the pieces on the track.
+74:    const mouse = async (x, y, shift) => { const m = shift ? 8 : 0; await A.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y, modifiers: m }); await A.send('Input.dispatchMouseEvent', { 
+81:      const hits = {}; for (let y = 20; y < r.height - 20; y += 8) for (let x = 20; x < r.width - 20; x += 8) { let h = null; document.dispatchEvent(new CustomEvent('t180-pick', { detail: { x, y, r
+--- L52469 assistant 2026-10-05T21:42:09.837Z
+TOOL_USE Bash [toolu_01YXBhq2NKizpWX3HruJ3HgV]: {"command":"E=/c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pieces-ui-A_2026-10-05_evidence; sed -n 60,110p $E/pieces_window.js | cut -c1-330","description":"Read A's click helpers in the window driver"}
+--- L52470 user 2026-10-05T21:42:09.966Z
+RESULT [toolu_01YXBhq2NKizpWX3HruJ3HgV]: (async () => {
+  let A = null, cleaned = false;
+  const cleanup = () => {
+    if (cleaned) return; cleaned = true;
+    const keeperAfter = snapshot(keeperDir), kk = new Set([...Object.keys(keeperBefore), ...Object.keys(keeperAfter)]);
+    report.keeperFiles = Object.keys(keeperBefore).length; report.keeperChanged = [...kk].filter((x) => keeperBefore[x] !== keeperAfter[x]);
+    report.runAppData = Object.keys(snapshot(dataDir)).sort(); report.ended = new Date().toISOString();
+    fs.writeFileSync(path.join(out, 'window_report.json'), JSON.stringify(report, null, 1));
+  };
+  const hard = setTimeout(() => { if (A) A.kill(); report.error = 'hard timeout'; step('HARD TIMEOUT'); setTimeout(() => { cleanup(); console.error('hard timeout, cleaned up'); process.exit(2); }, 2000); }, 420000);
+  const k = new Proxy(report.checks, { set(t, p, v) { t[p] = v; step(`CHECK ${String(p)} ${String(JSON.stringify(v)).slice(0, 500)}`); return true; } });
+  try {
+    A = await launch();
+    const shot = async (name) => { const r = await A.send('Page.captureScreenshot', { format: 'png' }); fs.writeFileSync(path.join(out, name), Buffer.from(r.data, 'base64')); return name; };
+    const mouse = async (x, y, shift) => { const m = shift ? 8 : 0; await A.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y, modifiers: m }); await A.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', buttons: 1, clickCount: 1, modifiers: m }); await A.send('Input.dispatchMouseEvent', { ty
+    k.start = await A.ev(status);
+    k.paste = await A.ev(paste(code)); await sleep(1500); k.afterPaste = await A.ev(status);
+    await A.ev(`document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))`); await sleep(1
+…[3337 chars cut]…
+();
+    k.mirrorOn = await A.ev(`(() => { const c = document.querySelector('[aria-label="mirror on insert"]'); c.checked = true; return c.checked; })()`);
+    k.addMirrorClick = await A.ev(click('button', 'Add at head')); await sleep(1500); k.afterMirror = await count(); k.addMsg = (await A.ev(status)).msg;
+    await shot('5_added.png');
+    // UNDO twice: back to the five pieces
+    for (let i = 0; i < 2; i++) { await A.ev(click('#palette button', 'Undo')); await sleep(900); }
+    k.afterUndo = await count();
+    // DELETE IN THE MIDDLE: select p3 (a real click), Delete selected shows the preview and writes nothing
+    await A.ev(`document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))`); await sleep(1200);
+--- L52473 assistant 2026-10-05T21:42:12.332Z
+TEXT: A's driver finds each piece's screen position with the preview's own pick and then clicks with real mouse events. I'll copy it and swap in my attacks. Reading its set-up section first.
+--- L52474 assistant 2026-10-05T21:42:13.705Z
+TOOL_USE Bash [toolu_013AzD8oU4aR7BDJ4hFYRd1p]: {"command":"E=/c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pieces-ui-A_2026-10-05_evidence; sed -n 1,59p $E/pieces_window.js | cut -c1-300; wc -l $E/pieces_window.js; grep -n \"const mouse\" $E/pieces_window.js | cut -c300-700","description":"Read the driver's set-up section"}
+--- L52475 user 2026-10-05T21:42:13.888Z
+RESULT [toolu_013AzD8oU4aR7BDJ4hFYRd1p]: // pieces_window.js <exe> <out folder>: the REAL-window check of D240's saved-pieces UI, in OUR build (own target dir), with a DevTools port, a WebView2 profile and an
+// APP DATA FOLDER of its own (T180_TEST_APP_DATA: F2, the keeper's folder is never the run's). Real mouse clicks (CDP Input.dispatchMouseEvent) select the pieces on the track.
+// The keeper's folder is snapshotted before and after (read only); the run refuses to start while any t180-track-builder.exe is running.
+'use strict';
+const fs = require('fs'), path = require('path'), crypto = require('crypto');
+const { spawn, spawnSync } = require('child_process');
+const W = 'C:/Users/nname/Desktop/worktrees/a-piecesui-wt/';
+const PR = require(W + 'scripts/prove_render.js'), CODE = require(W + 'src/doc/code.js'), D = require(W + 'src/core/document.js'), PC = require(W + 'src/core/piece.js'), { extend } = require(W + 'src/core/extend.js');
+const [exe, outArg] = process.argv.slice(2);
+const out = path.resolve(outArg), sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+fs.mkdirSync(out, { recursive: true });
+const keeperDir = path.join(process.env.APPDATA, 'com.solariz3d.t180-track-builder');   // READ ONLY
+const dataDir = path.join(out, 'appdata'); fs.rmSync(dataDir, { recursive: true, force: true }); fs.mkdirSync(dataDir, { recursive: true });
+const sha = (f) => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+function snapshot(dir) { const m = {}; if (!fs.existsSync(dir)) return m; const walk = (d, rel) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name), r = rel ? `${rel}/${e.name}` : e.name; if (e.isDirectory()) walk(p, r); else m[r] = sha(p); } }; walk(dir
+const report = { exe: path.basename
+…[4858 chars cut]…
+tton')].find((x) => x.textContent === 'Paste code'); await b.onclick(); return document.querySelector('#share .t-share-note').te
+const status = `(() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#palette p.head') || {}).textContent, msg: [...document.querySelectorAll('#palette .message')].map((m) => m.textContent).filter(Boolean).join(' | ') }))()`;
+const rowsJs = `(() => [...document.querySelectorAll('[data-piece]')].map((r) => r.textContent))()`;
+
+138 /c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pieces-ui-A_2026-10-05_evidence/pieces_window.js
+d('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', buttons: 0, clickCount: 1, modifiers: m }); await sleep(500); };
+--- L52485 assistant 2026-10-05T21:42:29.448Z
+TOOL_USE Bash [toolu_01TBpr1qmFgngfRWgqg2pS1A]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-piecesui-look-wt && grep -n \"Rename\\|'Delete'\\|for good\\|aria-label\\|confirm(\" app/core/piecesui.js | cut -c1-230 | head -30; grep -n \"Delete selected\\|Apply delete\\|Cancel delete\\|Save as piece\\|aria-label': 'selection'\\|piece name\" app/core/panel.js | cut -c1-200 | head","description":"Find the library and selection controls' labels"}
+--- L52486 user 2026-10-05T21:42:29.624Z
+RESULT [toolu_01TBpr1qmFgngfRWgqg2pS1A]: 9://   THE LIBRARY: every saved piece with its name, length, turn, climb and a plan thumbnail; Add at head (optionally mirrored left/right), Rename, Delete. A file that cannot
+36:  const selInfo = el('p', { class: 'head', 'aria-label': 'selection', text: '' });
+37:  const nameIn = el('input', { type: 'text', 'aria-label': 'piece name', placeholder: 'piece name', maxlength: '60', style: 'min-width:0;max-width:100%', title: 'a name for the piece: 1 to 60 letters, digits, spaces, _ or -' })
+41:  const why = el('p', { class: 'message', 'aria-label': 'why the selection cannot be saved', style: 'font-size:12px;margin:2px 0' });
+44:  const proposalBox = el('div', { 'aria-label': 'delete preview', class: 'head' });
+62:  const mirror = el('input', { type: 'checkbox', 'aria-label': 'mirror on insert', title: 'add the piece as its left/right mirror image' });
+63:  const listBox = el('div', { 'aria-label': 'saved pieces', class: 'pieces-list' }), listNote = el('p', { class: 'message', style: 'font-size:12px;margin:2px 0' });
+66:    const c = doc.createElement('canvas'); c.setAttribute('width', '100'); c.setAttribute('height', '60'); c.setAttribute('aria-label', `plan view of ${it.name}`); c.style.cssText = 'width:100px;height:60px;background:#0b0d11;b
+76:    const body = [el('div', { style: 'font-weight:700', text: it.name }), el('div', { style: 'font-size:12px;color:#aab2c0', 'aria-label': `${it.name} details`, text: describe(it) })];
+79:      const nin = el('input', { type: 'text', value: it.name, 'aria-label': 'new name', maxlength: '60', style: 'min-width:0;max-width:100%' });
+82:      buttons.push(el('span', { text: 'Delete this saved piece for good?' }), el('button', { text: 'Yes, delete', onclick: () => { confirming = null; void shell.deletePieceFile(it.name); } }), el('button', { text: 'No', onclick
+84:      if (!it.error) buttons.push(el('button', { text: 'Add at head', title: `put ${it.name} where the track ends${mirror.checked ? ', mirrored' : ''} (one undo step)`, 'aria-label': `add ${it.name} at the head`, onclick: () =>
+85:      buttons.push(el('button', { text: 'Rename', 'aria-label': `rename ${it.name}`, onclick: () => { renaming = it.name; confirming = null; redrawList(); } }), el('button', { text: 'Delete', 'aria-label': `delete the saved pie
+20:const PU = require('./piecesui.js');   // D240: saved pieces: select on the track, Save as piece, the library, a previewed middle delete
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52488 assistant 2026-10-05T21:42:31.787Z
+TOOL_USE Bash [toolu_01UmhZ7WoQwgMyrmqKaxwbXb]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-piecesui-look-wt && sed -n 36,60p app/core/piecesui.js | cut -c1-260; sed -n 78,82p app/core/piecesui.js | cut -c1-300","description":"Read the selection buttons and the rename box"}
+--- L52489 user 2026-10-05T21:42:31.962Z
+RESULT [toolu_01UmhZ7WoQwgMyrmqKaxwbXb]:   const selInfo = el('p', { class: 'head', 'aria-label': 'selection', text: '' });
+  const nameIn = el('input', { type: 'text', 'aria-label': 'piece name', placeholder: 'piece name', maxlength: '60', style: 'min-width:0;max-width:100%', title: 'a name for the piece: 1 to 60 letters, digits, spaces, _ or -' });
+  const saveBtn = el('button', { text: 'Save as piece', title: 'keep the selected pieces in the library, relative to where they start', onclick: () => { void shell.savePiece(nameIn.value.trim()); } });
+  const delBtn = el('button', { text: 'Delete selected', title: 'at the end of the track the pieces simply go; in the middle you see what it does first', onclick: () => shell.deleteSelection() });
+  const clearBtn = el('button', { text: 'Clear selection', onclick: () => shell.clearSelection() });
+  const why = el('p', { class: 'message', 'aria-label': 'why the selection cannot be saved', style: 'font-size:12px;margin:2px 0' });
+  const applyBtn = el('button', { text: 'Apply delete', title: 'delete as previewed (the track is copied to its backups first; one undo step)', onclick: () => { void shell.applyDelete(); } });
+  const cancelBtn = el('button', { text: 'Cancel delete', title: 'drop the preview: nothing changes', onclick: () => shell.cancelDelete() });
+  const proposalBox = el('div', { 'aria-label': 'delete preview', class: 'head' });
+  const focus = (s) => fire('t180-camera-focus', { s });
+  const placeButton = (it, text) => el('button', { text, title: `${it.what}${it.detail ? `: ${it.detail}` : ''}: show it`, class: 'linkish', onclick: () => focus(it.s) });
+  const drawProposal = (p) => {
+    applyBtn.style.display = cancelBtn.style.display = p ? '' : 'none';
+    if (!p) { proposalBox.replaceChildren(); return;
+…[1394 chars cut]…
+, value: it.name, 'aria-label': 'new name', maxlength: '60', style: 'min-width:0;max-width:100%' });
+      buttons.push(nin, el('button', { text: 'OK', onclick: () => { const to = nin.value.trim(); renaming = null; void shell.renamePiece(it.name, to).then(() => redrawList()); } }), el('button', { text: 'Cancel', onclick: () => { renaming = null; redrawList(); } }));
+    } else if (confirming === it.name) {
+      buttons.push(el('span', { text: 'Delete this saved piece for good?' }), el('button', { text: 'Yes, delete', onclick: () => { confirming = null; void shell.deletePieceFile(it.name); } }), el('button', { text: 'No', onclick: () => { confirming = null; redrawList(); } }));
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L52493 assistant 2026-10-05T21:42:53.424Z
+TOOL_USE Bash [toolu_012SCiu2nbyBSZpv7JXHWJjW]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad; mkdir -p $P/pui; E=/c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-pieces-ui-A_2026-10-05_evidence; sed -n 1,59p $E/pieces_window.js > $P/pui/head.js; node -e \"\nconst fs=require('fs'),f=process.argv[1];let s=fs.readFileSync(f,'utf8');\nconst r=(a,b)=>{if(s.split(a).length!==2)throw new Error('anchor '+a.slice(0,50));s=s.replace(a,b)};\nr(\\\"const W = 'C:/Users/nname/Desktop/worktrees/a-piecesui-wt/';\\\",\\\"const W = 'C:/Users/nname/Desktop/worktrees/c-piecesui-look-wt/';   // C: my look worktree at 62f5d39\\\");\nfs.writeFileSync(f,s);console.log('ok')\" \"$(cygpath -w $P/pui/head.js)\" 2>&1 | grep -v -i warn; tail -3 $P/pui/head.js | cut -c1-80","description":"Copy A's driver set-up and point it at my worktree"}
+--- L52500 user 2026-10-05T21:42:53.668Z
+RESULT [toolu_012SCiu2nbyBSZpv7JXHWJjW]: ok
+const status = `(() => ({ status: document.getElementById('status').textContent,
+const rowsJs = `(() => [...document.querySelectorAll('[data-piece]')].map((r) =>
+--- L52503 assistant 2026-10-05T21:43:35.492Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Write [toolu_01WzqLedNDbNmL83YUA2D3qp]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\pui\\body.js","content":"\n// ── C's NON-AUTHOR attacks on D240's UI (62f5d39). Everything after the set-up above (copied from A's driver) is C's. ─────────────────────────\n// track-backups is made a FILE before launch, so the backup that Apply delete writes first CANNOT be written: the refusal path is real.\nfs.writeFileSync(path.join(dataDir, 'track-backups'), 'not a folder: the backup must fail');\n// a closed lap (6 pieces) and a track with a jump in it, as codes\nlet lap = extend(D.createDoc('closed lap'), { length: 300, family: 'bowl' });\nfor (let i = 0; i < 4; i++) lap = extend(lap, { length: Math.PI * 90, transition: 40, targets: { kh: 1 / 180 } });\nlap = extend(lap, { length: 60, transition: 40, targets: { kh: 0 } });\nlap = require(W + 'src/core/close.js').close(lap).doc;\nconst lapCode = CODE.coreToCode(lap);\nlet jump = extend(D.createDoc('jump'), { length: 250, family: 'bowl' }); jump = D.appendPiece(jump, D.flightPiece({ gap: 28, drop: 1.5, land: -2 * Math.PI / 180 }));\njump = extend(jump, { length: 200, transition: 80, targets: { kh: 1 / 300 } }); jump = extend(jump, { length: 150, transition: 60, targets: { kh: 0 } });\nconst jumpCode = CODE.coreToCode(jump);\n\n(async () => {\n  let A = null, cleaned = false;\n  const cleanup = () => {\n    if (cleaned) return; cleaned = true;\n    const keeperAfter = snapshot(keeperDir), kk = new Set([...Object.keys(keeperBefore), ...Object.keys(keeperAfter)]);\n    report.keeperFiles = Object.keys(keeperBefore).length; report.keeperChanged = [...kk].filter((x) => keeperBefore[x] !== keeperAfter[x]);\n    report.runAppData = Object.keys(snapshot(dataDir)).sort(); report.ended = new Date().toISOString();\n    fs.writeFileSync(path.join(out, 'window_report.json'), JSON.stringify(report, null, 1));\n  };\n  const hard = setTimeout(() => { if (A) A.kill(); report.error = 'hard timeout'; step('HARD TIMEOUT'); setTimeout(() => { cleanup(); process.exit(2); }, 2000); }, 420000);\n  const k = new Proxy(report.checks, { set(t, p, v) { t[p] = v; step(`CHECK ${String(p)} ${String(JSON.stringify(v)).slice(0, 500)}`); return true; } });\n  try {\n    A = await launch();\n    const mouse = async (x, y, shift) => { const m = shift ? 8 : 0; await A.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y, modifiers: m }); await A.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', buttons: 1, clickCount: 1, modifiers: m }); await A.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', buttons: 0, clickCount: 1, modifiers: m }); await sleep(500); };\n    const key = async (kk, mods) => { const vk = { z: 90, y: 89 }[kk], code = { z: 'KeyZ', y: 'KeyY' }[kk]; await A.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: kk, code, windowsVirtualKeyCode: vk, modifiers: mods }); await A.send('Input.dispatchKeyEvent', { type: 'keyUp', key: kk, code, windowsVirtualKeyCode: vk, modifiers: mods }); await sleep(700); };\n    const blur = () => A.ev(`(() => { if (document.activeElement) document.activeElement.blur(); return 1; })()`);\n    await A.ev(`(() => { const s = document.createElement('style'); s.textContent = '.guide-card{display:none!important}'; document.head.append(s); return 1; })()`);\n    const whereNow = async () => { await A.ev(`document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))`); await sleep(1500); return (await A.ev(`(() => { const st = document.getElementById('preview'), r = st.getBoundingClientRect(); let track = null; document.dispatchEvent(new CustomEvent('t180:track-request', { detail: { reply: (t) => { track = t; } } }));\n      const segs = track.segments; let acc = 0; const spans = segs.map((g) => { const a = acc; acc += g.length; return { id: g.id, a, b: acc }; });\n      const hits = {}; for (let y = 20; y < r.height - 20; y += 8) for (let x = 20; x < r.width - 20; x += 8) { let h = null; document.dispatchEvent(new CustomEvent('t180-pick', { detail: { x, y, reply: (v) => { h = v; } } })); if (!h || !Number.isFinite(h.s) || h.px > 6) continue;\n        const sp = spans.find((q) => h.s >= q.a && h.s < q.b); if (!sp) continue; (hits[sp.id] = hits[sp.id] || []).push({ x, y, s: h.s, mid: (sp.a + sp.b) / 2 }); }\n      const pick = {}; for (const [id, list] of Object.entries(hits)) { list.sort((p, q) => Math.abs(p.s - p.mid) - Math.abs(q.s - q.mid)); pick[id] = { x: list[0].x + r.left, y: list[0].y + r.top }; } return pick; })()`)); };\n    const sel = () => A.ev(textOf('selection'));\n    const st = () => A.ev(status);\n    const nPieces = async () => { const m = /(\\d+) piece/.exec((await st()).info || ''); return m ? +m[1] : null; };\n    const backups = () => { const b = path.join(dataDir, 'track-backups'); return fs.existsSync(b) && fs.statSync(b).isDirectory() ? fs.readdirSync(b) : (fs.existsSync(b) ? 'IS-A-FILE' : []); };\n\n    // ── 1 · THE OPEN TRACK (A's: 5 pieces) ──\n    k.paste = await A.ev(paste(code)); await sleep(1500);\n    let w = await whereNow(); k.pickable = Object.keys(w);\n    if (!w.p2 || !w.p3 || !w.p4) throw new Error('p2/p3/p4 not pickable: ' + JSON.stringify(w));\n    // A1 · a selection, then UNDO (real Ctrl+Z on the page), then REDO: the same document comes back, the selection must NOT\n    await mouse(w.p2.x, w.p2.y, false); await mouse(w.p4.x, w.p4.y, true); k.a1_selected = await sel();\n    await blur(); await key('z', 2); k.a1_afterUndo = { sel: await sel(), pieces: await nPieces() };\n    await key('y', 2); k.a1_afterRedo = { sel: await sel(), pieces: await nPieces() };\n    k.a1_save = await A.ev(`(async () => { const i = document.querySelector('[aria-label=\"piece name\"]'); i.value = 'stale'; ${click('button', 'Save as piece').slice(0, -2)}; })()`).catch((e) => String(e)); await sleep(900);\n    k.a1_saveMsg = (await st()).msg; k.a1_savedFile = fs.existsSync(path.join(dataDir, 'pieces', 'stale.t180piece'));\n    k.a1_delete = await A.ev(click('button', 'Delete selected')); await sleep(600); k.a1_deleteMsg = (await st()).msg; k.a1_piecesAfter = await nPieces();\n    // A2 · a selection, then a DIFFERENT change (Extend): Delete must refuse, not delete by stale numbers\n    await mouse(w.p2.x, w.p2.y, false); k.a2_selected = await sel();\n    await A.ev(click('button', 'Extend')); await sleep(1200); k.a2_afterExtend = { sel: await sel(), pieces: await nPieces() };\n    await A.ev(click('button', 'Delete selected')); await sleep(600); k.a2_deleteMsg = (await st()).msg; k.a2_pieces = await nPieces();\n    await blur(); await key('z', 2); k.a2_undoExtend = await nPieces();\n    // A3 · the delete PREVIEW, Apply while the backup CANNOT be written (track-backups is a file): refused by name, nothing deleted\n    w = await whereNow(); await mouse(w.p3.x, w.p3.y, false); k.a3_selected = await sel();\n    await A.ev(click('button', 'Delete selected')); await sleep(2500); k.a3_preview = { box: (await A.ev(textOf('delete preview')) || '').slice(0, 300), pieces: await nPieces(), backups: backups() };\n    await A.ev(click('button', 'Apply delete')); await sleep(1500); k.a3_applyRefused = { msg: (await st()).msg, pieces: await nPieces(), backups: backups() };\n    // then the backup CAN be written: Apply goes through, ONE undo step, and the copy is the track from before\n    fs.rmSync(path.join(dataDir, 'track-backups'));\n    const beforeText = await A.ev(`(async () => { let c = null; document.dispatchEvent(new CustomEvent('t180:track-request', { detail: { reply: (t) => { c = t; } } })); return document.getElementById('status').textContent; })()`);\n    await A.ev(click('button', 'Apply delete')); await sleep(1500); k.a3_applied = { msg: (await st()).msg, pieces: await nPieces(), backups: backups() };\n    await blur(); await key('z', 2); k.a3_oneUndo = await nPieces(); void beforeText;\n    // A4 · preview open, then the track changes (Extend): the preview must be dropped, Apply gone\n    w = await whereNow(); await mouse(w.p3.x, w.p3.y, false); await A.ev(click('button', 'Delete selected')); await sleep(2500);\n    const nb = backups().length;\n    await A.ev(click('button', 'Extend')); await sleep(1200);\n    k.a4_afterChange = { box: await A.ev(textOf('delete preview')), applyVisible: await A.ev(`(() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent === 'Apply delete'); return !!b && b.style.display !== 'none'; })()`), pieces: await nPieces(), newBackups: backups().length - nb };\n    await blur(); await key('z', 2);\n    // A5 · CANCEL: nothing changes, no backup written\n    w = await whereNow(); await mouse(w.p3.x, w.p3.y, false); await A.ev(click('button', 'Delete selected')); await sleep(2500);\n    const nb2 = backups().length, p5 = await nPieces();\n    await A.ev(click('button', 'Cancel delete')); await sleep(600); k.a5_cancel = { pieces: [p5, await nPieces()], newBackups: backups().length - nb2, box: await A.ev(textOf('delete preview')) };\n    // A6 · RENAME a saved piece to its own name in other case (\"Run\" → \"run\"), and to a free name; the files stay in the run's pieces folder\n    await mouse(w.p2.x, w.p2.y, false);\n    await A.ev(`(() => { const i = document.querySelector('[aria-label=\"piece name\"]'); i.value = 'Run'; return 1; })()`); await A.ev(click('button', 'Save as piece')); await sleep(1200);\n    const rename = async (from, to) => { await A.ev(`(() => { const b = document.querySelector('[aria-label=\"rename ${from}\"]'); b.click(); return 1; })()`); await sleep(500); await A.ev(`(() => { const i = document.querySelector('[aria-label=\"new name\"]'); i.value = ${JSON.stringify(to)}; [...document.querySelectorAll('button')].find((x) => x.textContent === 'OK').click(); return 1; })()`); await sleep(1200); return (await st()).msg; };\n    k.a6_renameCase = { msg: await rename('Run', 'run'), files: fs.readdirSync(path.join(dataDir, 'pieces')) };\n    k.a6_renameFree = { msg: await rename('Run', 'Run2'), files: fs.readdirSync(path.join(dataDir, 'pieces')) };\n    await A.ev(`(() => { document.querySelector('[aria-label=\"delete the saved piece Run2\"]').click(); return 1; })()`).catch(() => null); await sleep(400);\n    await A.ev(`(() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent === 'Yes, delete'); if (b) b.click(); return !!b; })()`); await sleep(1000);\n    k.a6_afterDelete = fs.readdirSync(path.join(dataDir, 'pieces'));\n\n    // ── 2 · THE CLOSED LAP: a shift-click across the start/finish seam ──\n    k.b_paste = await A.ev(paste(lapCode)); await sleep(1500);\n    w = await whereNow(); k.b_pickable = Object.keys(w);\n    const last = `p${lap.pieces.length}`;\n    if (w[last] && w.p1) { await mouse(w[last].x, w[last].y, false); await mouse(w.p1.x, w.p1.y, true); k.b_seamSelection = await sel(); }\n    await A.ev(click('button', 'Delete selected')); await sleep(600); k.b_deleteMsg = (await st()).msg; k.b_pieces = await nPieces();\n\n    // ── 3 · A TRACK WITH A JUMP: select across the flight, save it, delete across it ──\n    k.c_paste = await A.ev(paste(jumpCode)); await sleep(1500);\n    w = await whereNow(); k.c_pickable = Object.keys(w);\n    if (w.p1 && w.p3) { await mouse(w.p1.x, w.p1.y, false); await mouse(w.p3.x, w.p3.y, true); k.c_selection = await sel();\n      await A.ev(`(() => { const i = document.querySelector('[aria-label=\"piece name\"]'); i.value = 'with jump'; return 1; })()`); await A.ev(click('button', 'Save as piece')); await sleep(1200);\n      const f = path.join(dataDir, 'pieces', 'with jump.t180piece'); k.c_saved = { msg: (await st()).msg, file: fs.existsSync(f), flights: fs.existsSync(f) ? (fs.readFileSync(f, 'utf8').match(/\"type\":\"flight\"/g) || []).length : null };\n      await mouse(w.p1.x, w.p1.y, false); await mouse(w.p3.x, w.p3.y, true);\n      await A.ev(click('button', 'Delete selected')); await sleep(2500); k.c_delete = { msg: (await st()).msg, box: (await A.ev(textOf('delete preview')) || '').slice(0, 200), pieces: await nPieces() }; }\n  } catch (e) { report.error = e.stack || e.message; step('ERROR ' + report.error); } finally { clearTimeout(hard); if (A) A.kill(); await sleep(1500); cleanup(); }\n  console.log(JSON.stringify(report, null, 1));\n})();\n"}
+--- L52504 user 2026-10-05T21:43:35.518Z
+RESULT [toolu_01WzqLedNDbNmL83YUA2D3qp]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\pui\body.js (file state is current in your context — no need to Read it back)
+--- L52505 assistant 2026-10-05T21:43:37.479Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_016tNt8Mag3L492euT4TJz9W]: {"command":"P=/c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/pui; cat $P/head.js $P/body.js > $P/pui_window.js && node --check $P/pui_window.js && echo syntax-ok","description":"Assemble the attack driver and check its syntax"}

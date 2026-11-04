@@ -1,0 +1,146 @@
+// delete-gate.test.js - node --test consonance/hooks/delete-gate.test.js   (D248, G2; under the heavy-run lock, --test-concurrency=1)
+//
+// Real junctions, in temp dirs only (fs.symlinkSync with type 'junction': no admin rights needed on Windows). The hook is run as it is installed. It never
+// deletes anything; every test also checks the junction's TARGET is untouched.
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const HOOK = path.join(__dirname, 'delete-gate.js');
+const G = require('./delete-gate.js');
+// D287: OS_TMP is the machine's REAL temp dir (js-suite hands each file a redirected TEMP and passes the real one as CONSONANCE_OS_TMP), ON PURPOSE (the MSYS /tmp/... row below needs the folder where Git Bash maps /tmp); still removed at exit.
+const OS_TMP = process.env.CONSONANCE_OS_TMP || os.tmpdir();
+const tmp = (p) => require('../tools/scratch.js').mkdtemp(p, OS_TMP);
+// D454 (B, from E's stranger run): ENV-ONLY for the /tmp/... form. Git Bash maps /tmp from the ACCOUNT's profile, not from %TEMP%; in a real account
+// (and under js-suite, which passes the real one as CONSONANCE_OS_TMP) the two agree. A contained run that moves TEMP off the profile separates
+// them, and then the /tmp form names a different folder. Said, not failed; the /c/... form still runs everywhere.
+const GIT_BASH_TMP = (() => { if (process.platform !== 'win32') return null; const r = spawnSync('cygpath', ['-w', '/tmp'], { encoding: 'utf8' }); return r.status === 0 && r.stdout.trim() ? r.stdout.trim() : null; })();
+const TMP_APART = (() => { try { return GIT_BASH_TMP && fs.realpathSync(GIT_BASH_TMP).toLowerCase() !== fs.realpathSync(OS_TMP).toLowerCase() && `needs a set-up account: Git Bash maps /tmp to ${GIT_BASH_TMP}, not to this run's temp dir ${OS_TMP}; they agree in a real account, and a run that moves TEMP off the profile separates them`; } catch (_) { return false; } })();
+/** A tree to delete with a junction inside it, pointing at a precious directory outside it. */
+function tree({ link = true } = {}) {
+  const root = tmp('dg-'), wt = path.join(root, 'worktree'), precious = path.join(root, 'precious');
+  fs.mkdirSync(path.join(wt, 'src'), { recursive: true }); fs.writeFileSync(path.join(wt, 'src', 'a.js'), 'x');
+  fs.mkdirSync(precious); fs.writeFileSync(path.join(precious, 'keep.txt'), 'irreplaceable');
+  if (link) fs.symlinkSync(precious, path.join(wt, 'reads'), 'junction');
+  return { root, wt, precious, link: path.join(wt, 'reads') };
+}
+function runHook(payload, dataDir) {
+  const r = spawnSync(process.execPath, [HOOK], { input: typeof payload === 'string' ? payload : JSON.stringify(payload), encoding: 'utf8', env: { ...process.env, CONSONANCE_DATA: dataDir, CONSONANCE_DREAM: '' } });
+  const out = r.stdout.trim(); let j = null; try { j = out ? JSON.parse(out) : null; } catch (_) { /* not JSON */ }
+  return { code: r.status, out, deny: !!(j && j.hookSpecificOutput && j.hookSpecificOutput.permissionDecision === 'deny'), reason: j && j.hookSpecificOutput && j.hookSpecificOutput.permissionDecisionReason };
+}
+const cmd = (command, cwd, tool = 'Bash') => ({ tool_name: tool, tool_input: { command }, cwd, session_id: 'test' });
+
+test('RED: every packet form of a recursive delete of a tree holding a junction is refused, naming the junction and where it points', () => {
+  const t = tree(), data = tmp('dgd-');
+  for (const [c, tool] of [[`git worktree remove --force "${t.wt}"`, 'Bash'], [`rm -rf "${t.wt}"`, 'Bash'], [`rm -r ${t.wt.replace(/\\/g, '/')}`, 'Bash'],
+    [`Remove-Item -Recurse -Force "${t.wt}"`, 'PowerShell'], [`Remove-Item -LiteralPath "${t.wt}" -Recurse`, 'PowerShell'], [`rm -Recurse "${t.wt}"`, 'PowerShell'], [`ri -rec "${t.wt}"`, 'PowerShell']]) {
+    const r = runHook(cmd(c, t.root, tool), data);
+    assert.equal(r.deny, true, `${c}\n${r.out}`); assert.ok(r.reason.includes(t.link), `names the junction: ${r.reason}`); assert.ok(r.reason.includes('precious'), 'and where it points');
+  }
+  assert.equal(fs.readFileSync(path.join(t.precious, 'keep.txt'), 'utf8'), 'irreplaceable', 'the hook deletes nothing');
+});
+test('RED: a relative target is read from the cwd, and from `git -C <dir>`; a wildcard is checked at its parent', () => {
+  const t = tree(), data = tmp('dgd-');
+  assert.equal(runHook(cmd('rm -rf worktree', t.root), data).deny, true);
+  assert.equal(runHook(cmd(`git -C "${t.root}" worktree remove worktree`, os.tmpdir()), data).deny, true);
+  assert.equal(runHook(cmd(`rm -rf "${t.wt}"/*`, t.root), data).deny, true);
+});
+test('RED: the Bash tool\'s MSYS paths are read as Git Bash means them: /c/Users/... and /tmp/... (the push gate\'s live failure, 2026-10-06)', { skip: process.platform !== 'win32' && 'MSYS paths are a Windows matter' }, (tc) => {
+  const t = tree(), data = tmp('dgd-');
+  const msys = t.wt.replace(/^([A-Za-z]):/, (_, d) => `/${d.toLowerCase()}`).replace(/\\/g, '/');
+  assert.equal(runHook(cmd(`rm -rf ${msys}`, os.homedir()), data).deny, true, 'the /c/... form');
+  if (TMP_APART) return tc.skip(TMP_APART);
+  const viaTmp = '/tmp/' + path.relative(fs.realpathSync(OS_TMP), fs.realpathSync(t.wt)).replace(/\\/g, '/');
+  assert.equal(runHook(cmd(`git worktree remove ${viaTmp}`, os.homedir()), data).deny, true, 'the /tmp/... form');
+});
+test('RED: an environment variable in the target is expanded ($env:NAME, ${NAME}, $NAME) (found live: "$env:TEMP\\x" was read as a literal path)', () => {
+  const t = tree(), data = tmp('dgd-');
+  const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify(cmd(`Remove-Item -Recurse -Force "$env:E_GATE_ROOT\\${path.basename(t.wt)}"`, os.homedir(), 'PowerShell')), encoding: 'utf8', env: { ...process.env, CONSONANCE_DATA: data, E_GATE_ROOT: t.root } });
+  assert.match(r.stdout, /"permissionDecision":"deny"/, r.stdout);
+  process.env.E_GATE_ROOT = t.root;
+  try { for (const form of ['$env:E_GATE_ROOT', '${E_GATE_ROOT}', '$E_GATE_ROOT']) assert.equal(G.expandEnv(`${form}/worktree`), `${t.root}/worktree`, form); }
+  finally { delete process.env.E_GATE_ROOT; }
+  assert.equal(G.expandEnv('$NO_SUCH_VAR_E_GATE/x'), '$NO_SUCH_VAR_E_GATE/x', 'an unknown variable stays as written');
+});
+// ── the fix lap, from A's look (exo_memory/handback/p-gates-A_2026-10-06.md) ──
+test('RED (A F1): a relative target after `cd <dir> &&` is read against the cd, not the session cwd', () => {
+  const t = tree(), data = tmp('dgd-'), elsewhere = tmp('dge-');
+  assert.equal(runHook(cmd(`cd "${t.root}" && rm -rf worktree`, elsewhere), data).deny, true, 'bash cd');
+  assert.equal(runHook(cmd(`Set-Location "${t.root}"; Remove-Item -Recurse worktree`, elsewhere, 'PowerShell'), data).deny, true, 'PowerShell Set-Location');
+  fs.mkdirSync(path.join(elsewhere, 'worktree'));   // the false-positive side: a same-named, link-free dir in the session cwd must not be what is read
+  const clean = tree({ link: false });
+  assert.equal(runHook(cmd(`cd "${clean.root}" && rm -rf worktree`, t.root), data).out, '', 'the cd\'s worktree (clean) is checked, not the session cwd\'s (linked)');
+});
+test('pass (A F2): a wildcard checks the entries it MATCHES, not the whole folder', () => {
+  const t = tree(), data = tmp('dgd-');
+  fs.writeFileSync(path.join(t.wt, 'a.log'), 'x'); fs.writeFileSync(path.join(t.wt, 'b.log'), 'y');
+  assert.equal(runHook(cmd(`rm -rf "${t.wt}"/*.log`, t.root), data).out, '', '*.log matches two files; the junction "reads" is not matched');
+  assert.equal(runHook(cmd(`rm -rf "${t.wt}"/rea*`, t.root), data).deny, true, 'a glob that matches the junction is refused');
+  assert.equal(runHook(cmd(`rm -rf "${t.wt}"/*`, t.root), data).deny, true, '* matches everything, the junction included');
+});
+test('pass (A F3): a heredoc BODY is text being written, not a command', () => {
+  const t = tree(), data = tmp('dgd-');
+  assert.equal(runHook(cmd(`cat > clean.sh <<'EOF'\nrm -rf "${t.wt}"\nEOF\necho done`, t.root), data).out, '', 'bash heredoc');
+  assert.equal(runHook(cmd(`@'\nRemove-Item -Recurse "${t.wt}"\n'@ | Set-Content clean.ps1`, t.root, 'PowerShell'), data).out, '', 'PowerShell here-string');
+  assert.equal(runHook(cmd(`cat > a <<'EOF'\nx\nEOF\nrm -rf "${t.wt}"`, t.root), data).deny, true, 'a delete AFTER the heredoc is still a command');
+});
+test('RED: the target itself being a junction is refused (a recursive delete of the link can empty what it points to)', () => {
+  const t = tree(), data = tmp('dgd-');
+  assert.equal(runHook(cmd(`Remove-Item -Recurse "${t.link}"`, t.root, 'PowerShell'), data).deny, true);
+});
+test('pass: the same deletes of a tree with no junction are allowed, silently', () => {
+  const t = tree({ link: false }), data = tmp('dgd-');
+  for (const c of [`rm -rf "${t.wt}"`, `git worktree remove "${t.wt}"`, `Remove-Item -Recurse -Force "${t.wt}"`]) assert.equal(runHook(cmd(c, t.root), data).out, '', c);
+  assert.match(fs.readFileSync(path.join(data, G.LEDGER), 'utf8'), /"decision":"allow"/);
+});
+test('pass: removing the LINK itself without recursing is what the reason asks for, and is allowed', () => {
+  const t = tree(), data = tmp('dgd-');
+  for (const [c, tool] of [[`Remove-Item "${t.link}"`, 'PowerShell'], [`cmd /c rmdir "${t.link}"`, 'Bash'], [`rm "${t.link}"`, 'Bash']]) assert.equal(runHook(cmd(c, t.root, tool), data).out, '', c);
+});
+test('fails OPEN: a missing target, a malformed payload, another tool, a non-delete command: allowed with no output', () => {
+  const data = tmp('dgd-');
+  assert.equal(runHook(cmd('rm -rf /no/such/dir/anywhere', os.tmpdir()), data).out, '');
+  assert.equal(runHook('{nope', data).out, '');
+  assert.equal(runHook({ tool_name: 'Read', tool_input: { file_path: 'rm -rf x' } }, data).out, '');
+  assert.equal(runHook(cmd('git status', os.tmpdir()), data).out, '');
+});
+test('the parser: recursive deletes are found, non-recursive ones are not', () => {
+  const kinds = (c) => G.deleteTargets(c).map((x) => `${x.how}:${x.target}`);
+  assert.deepEqual(kinds('rm -rf a b'), ['rm -r:a', 'rm -r:b']);
+  assert.deepEqual(kinds('rm a.txt'), []);
+  assert.deepEqual(kinds('Remove-Item x'), []);
+  assert.deepEqual(kinds('Remove-Item -Path a,b -Recurse'), ['Remove-Item -Recurse:a', 'Remove-Item -Recurse:b']);
+  assert.deepEqual(kinds('git worktree remove -f wt'), ['git worktree remove:wt']);
+  assert.deepEqual(kinds('cd x && rm -fr y'), ['rm -r:y']);
+  assert.deepEqual(G.words('rm -rf "C:/a b"/* \'q r\''), ['rm', '-rf', 'C:/a b/*', 'q r'], 'a quoted piece and the glob after it are ONE word');
+});
+
+// D273 devreds: portable-paths.js flagged the two literal `C:/Program Files...` cygpath fallbacks (REVIEW). They are now read from the variables Windows sets.
+test('cygpath is looked for on PATH, then under this machine\'s own Program Files folders, never a drive letter written into the hook', () => {
+  assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'D:\\Prog', 'ProgramFiles(x86)': 'D:\\Prog86' }),
+    ['cygpath', 'D:\\Prog\\Git\\usr\\bin\\cygpath.exe', 'D:\\Prog86\\Git\\usr\\bin\\cygpath.exe'], 'a Program Files on another drive is found');
+  assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'E:\\P', ProgramW6432: 'E:\\P' }), ['cygpath', 'E:\\P\\Git\\usr\\bin\\cygpath.exe'], 'the same folder named twice is looked in once');
+  assert.deepEqual(G.cygpathCandidates({}), ['cygpath'], 'no variable set: PATH only, no invented drive');
+  const here = G.cygpathCandidates();
+  assert.strictEqual(here[0], 'cygpath', 'PATH first');
+  if (process.platform === 'win32' && process.env.ProgramFiles) assert.ok(here.includes(path.win32.join(process.env.ProgramFiles, 'Git', 'usr', 'bin', 'cygpath.exe')), 'and this machine\'s own Program Files after it');
+});
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// A new user who keeps the default Data folder saves data_dir "" and panes get no CONSONANCE_DATA, so this gate denied but kept no ledger: a refusal with no record.
+test('APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty, a delete through a junction is still refused and recorded under USERPROFILE/.consonance', () => {
+  const h = require('../tools/scratch.js').mkdtemp('app-rule-home-'), def = path.join(h, '.consonance'); fs.mkdirSync(def); fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify({ data_dir: '' }));
+  const strangerEnv = (extra = {}) => { const e = { ...process.env, USERPROFILE: h, HOME: h, CONSONANCE_DREAM: '', ...extra }; delete e.CONSONANCE_DATA; return e; };
+  const t = tree();
+  const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify(cmd(`rm -rf "${t.wt}"`, t.root)), encoding: 'utf8', env: strangerEnv() });
+  const j = r.stdout.trim() ? JSON.parse(r.stdout) : null;
+  assert.equal(r.status, 0); assert.equal(j && j.hookSpecificOutput.permissionDecision, 'deny', r.stdout);
+  const lp = path.join(def, G.LEDGER);
+  assert.ok(fs.existsSync(lp) && fs.readFileSync(lp, 'utf8').includes('"decision":"deny"'), 'the deny is recorded under the default data dir');
+  assert.equal(fs.readFileSync(path.join(t.precious, 'keep.txt'), 'utf8'), 'irreplaceable', 'the hook deletes nothing');
+});

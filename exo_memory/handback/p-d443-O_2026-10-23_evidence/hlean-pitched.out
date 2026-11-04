@@ -1,0 +1,17 @@
+kv -0.0003/300/0 | RSL R300 none | 2447 m | out 0/848 | 4.54 g | 0.7 s
+kv -0.0003/300/10 | RSL R300 first | 2489 m | out 0/827 | 4.52 g | 2.2 s
+kv -0.0003/600/0 | LSL R300 none | 989 m | out 0/320 | 4.15 g | 0.5 s
+kv -0.0003/600/10 | LSL R300 first | 1121 m | out 0/321 | 6.19 g | 1.8 s
+kv -0.0006/300/0 | RSL R300 none | 2453 m | out 0/855 | 4.50 g | 0.6 s
+kv -0.0006/300/10 | RSL R300 first | 2495 m | out 0/838 | 4.70 g | 2.3 s
+kv -0.0006/600/0 | LSL R300 none | 999 m | out 0/325 | 4.28 g | 0.5 s
+kv -0.0006/600/10 | LSL R300 first | 1120 m | out 2/328 | 6.02 g | 1.7 s
+kv -0.001/300/0 | RSL R300 none | 2470 m | out 0/870 | 4.75 g | 0.5 s
+kv -0.001/300/10 | RSL R300 first | 2509 m | out 0/854 | 4.98 g | 2.1 s
+kv -0.001/600/0 | LSL R300 none | 995 m | out 9/339 | 4.52 g | 0.4 s
+kv -0.001/600/10 | LSL R300 first | 1119 m | out 11/344 | 5.86 g | 1.7 s
+kv 0.0006/300/0 | RSL R300 none | 2453 m | out 0/855 | 4.94 g | 0.5 s
+kv 0.0006/300/10 | RSL R300 first | 2495 m | out 4/838 | 5.03 g | 1.7 s
+kv 0.0006/600/0 | LSL R300 none | 999 m | out 8/325 | 5.55 g | 0.4 s
+kv 0.0006/600/10 | LSL R300 first | 1120 m | out 0/328 | 4.80 g | 1.5 s
+total 19.2 s over 16 laps

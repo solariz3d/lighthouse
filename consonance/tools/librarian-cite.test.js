@@ -41,7 +41,7 @@ const w = (root, rel, body) => {
 };
 
 function fixture() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'libcite-'));
+  const root = require('./scratch.js').mkdtemp('libcite-');
   sh(root, ['init', '-q']);
   sh(root, ['config', 'user.email', 'fixture@example.invalid']);
   sh(root, ['config', 'user.name', 'fixture']);
@@ -325,7 +325,7 @@ test('no topic is a usage error, not an empty success', () => {
 test('--log writes an uninterpreted row and the tool ships no --report to read it', () => {
   // The seat must not score itself; a channel that scores the seat whose output it carries is the
   // same defect one hop out. This file records the operation and stops.
-  const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'libcite-data-'));
+  const dataDir = require('./scratch.js').mkdtemp('libcite-data-');
   const r = require('node:child_process').spawnSync(
     process.execPath, [TOOL, 'drift', '--log', 'PANE-X'],
     { encoding: 'utf8', env: { ...process.env, LIBRARIAN_CITE_REPO: ROOT, CONSONANCE_DATA: dataDir } });

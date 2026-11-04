@@ -1,0 +1,40 @@
+total sampled 1064 ms; under candidate core/coreshell.js: 956 ms
+DIRECT callees:
+     535 ms  56.0%  segmentsOf core/coreshell.js:363
+     417 ms  43.7%  extendCorner core/turnby.js:156
+       3 ms   0.3%  (self)
+       1 ms   0.1%  startOf core/coreshell.js:374
+INCLUSIVE below, top 18:
+     535 ms  56.0%  toSegments core/adapter.js:315
+     535 ms  56.0%  segmentsOf core/coreshell.js:363
+     514 ms  53.8%  (anon) core/adapter.js:377
+     428 ms  44.8%  piece core/adapter.js:333
+     417 ms  43.7%  extendCorner core/turnby.js:156
+     415 ms  43.4%  cornerOf core/turnby.js:172
+     413 ms  43.2%  extend core/extend.js:181
+     387 ms  40.5%  xsecSegments core/adapter.js:128
+     263 ms  27.5%  fitWithHold core/extend.js:143
+     233 ms  24.4%  commonFractions geom/profile.js:203
+     191 ms  19.9%  samplesOf core/extend.js:134
+     181 ms  19.0%  (anon) core/extend.js:139
+     164 ms  17.1%  basisN tools/piecewise.cjs:197
+     139 ms  14.6%  own core/adapter.js:131
+     139 ms  14.6%  (anon) core/adapter.js:133
+     134 ms  14.0%  edgeProfile core/adapter.js:107
+     111 ms  11.7%  (anon) geom/profile.js:205
+     109 ms  11.4%  fractionsOf geom/profile.js:211
+SELF, top 10:
+     163 ms  17.1%  basisN tools/piecewise.cjs:197
+      88 ms   9.2%  fractionsOf geom/profile.js:211
+      84 ms   8.8%  edgeProfile core/adapter.js:107
+      79 ms   8.3%  keyNum geom/profile.js:202
+      78 ms   8.2%  deepFreeze core/adapter.js:278
+      58 ms   6.1%  fitWithHold core/extend.js:143
+      46 ms   4.8%  (anon) core/extend.js:139
+      39 ms   4.1%  valuesAt core/document.js:104
+      32 ms   3.4%  (anon) geom/profile.js:205
+      31 ms   3.3%  (anon) core/adapter.js:110
+      20 ms   2.1%  psiAt geom/profile.js:27
+      19 ms   2.0%  (anon) core/document.js:190
+      18 ms   1.9%  normalize geom/profile.js:15
+      18 ms   1.8%  piece core/adapter.js:333

@@ -1,0 +1,45 @@
+== D273 lap5 C verify · asked 2026-10-09T09:06:40.455Z · lock held 2026-10-09T09:06:40.459Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/l5run.sh
+=== TESTS
+[31m✖ a file with no registered sites comes back unchanged, and CRLF input keeps CRLF [90m(0.4253ms)[39m[39m
+[34mℹ tests 31[39m
+[34mℹ pass 30[39m
+[34mℹ fail 1[39m
+[34mℹ skipped 0[39m
+[31m✖ failing tests:[39m
+[31m✖ a file with no registered sites comes back unchanged, and CRLF input keeps CRLF [90m(0.4253ms)[39m[39m
+  Error [RelabelError]: consonance/src-tauri/brief/COMMITTEE.md: the role site "> from every seat, on both machines, is authored `the keeper`, and the" occurs 0 time(s), registered 1. The dev text moved: re-judge it (role or provenance) in consumer-relabel.js.
+=== IDENTITY-DIFF (fresh generation)
+build refused: no staged [33m391[39m forked [33m81[39m leaks [33m0[39m
+identity-diff exit 0
+identity-diff: PASS — 73 wake files compared; 0 unregistered difference(s)
+  generated from a19c876d33d810de81b2423ebc6c049c790cdad3; this repo at a19c876d
+  registered, by step:
+    dedangle                       211 line(s) in 34 file(s)
+    deidentify                      13 line(s) in 7 file(s)
+    dewiki                          43 line(s) in 5 file(s)
+    fork (consumer-relabel.js)     235 line(s) in 13 file(s)
+    reindex                          8 line(s) in 1 file(s)
+    reseed                           2 line(s) in 2 file(s)
+  not shipped, with the generator's reason (14):
+  master BOOT -> shipped brief: 17 line(s) out, 30 in, by gen-brief.ps1 (dev side; guarded by gen-brief-gate.test.js); reported, not gated
+=== portable-paths.test.js inside the generated tree (mine)
+[31m✖ the green line says how many baselined sites are FATAL — exempted is not fixed [90m(1437.9676ms)[39m[39m
+[31m✖ the real repo is green against its committed baseline [90m(121.7197ms)[39m[39m
+[34mℹ tests 43[39m
+[34mℹ pass 41[39m
+[34mℹ fail 2[39m
+[31m✖ failing tests:[39m
+[31m✖ the green line says how many baselined sites are FATAL — exempted is not fixed [90m(1437.9676ms)[39m[39m
+[31m✖ the real repo is green against its committed baseline [90m(121.7197ms)[39m[39m
+=== the same inside a generated tree of the BASE a19c876d
+base build refused: no
+[31m✖ the green line says how many baselined sites are FATAL — exempted is not fixed [90m(1680.1838ms)[39m[39m
+[31m✖ the real repo is green against its committed baseline [90m(124.7827ms)[39m[39m
+[34mℹ tests 43[39m
+[34mℹ pass 41[39m
+[34mℹ fail 2[39m
+[31m✖ failing tests:[39m
+[31m✖ the green line says how many baselined sites are FATAL — exempted is not fixed [90m(1680.1838ms)[39m[39m
+[31m✖ the real repo is green against its committed baseline [90m(124.7827ms)[39m[39m
+== exit 0 · done 2026-10-09T09:07:08.686Z

@@ -1,0 +1,4 @@
+﻿{"name":"FIRST TRACK","pieces":12,"trackBytes":18512,"steps":220,"sidecarBytes":3841153,"sidecarMB":3.66,"saveMs":67,"openWithMs":157,"openWithoutMs":31,"restoredPast":200,"autosaveMsAfterSave":8,"editMs":6250}
+{"name":"TEST 1","pieces":46,"trackBytes":56829,"steps":219,"sidecarBytes":11788264,"sidecarMB":11.24,"saveMs":167,"openWithMs":348,"openWithoutMs":33,"restoredPast":200,"autosaveMsAfterSave":23,"editMs":5882}
+{"name":"T-180 OVAL","pieces":6,"trackBytes":10854,"steps":219,"sidecarBytes":2262835,"sidecarMB":2.16,"saveMs":48,"openWithMs":88,"openWithoutMs":11,"restoredPast":200,"autosaveMsAfterSave":3,"editMs":2162}
+

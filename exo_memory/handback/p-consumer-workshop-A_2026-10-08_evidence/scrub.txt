@@ -1,0 +1,70 @@
+﻿[
+ {
+  "name": "composer_empty_2026-09-19.bin",
+  "bytes": 1280,
+  "replaced": {},
+  "scanBefore": {},
+  "scanAfter": {}
+ },
+ {
+  "name": "composer_empty_reads_busy_2026-09-09.bin",
+  "bytes": 524288,
+  "replaced": {
+   "zackn": 4,
+   "Consonance/lighthouse": 8,
+   "Consonance/light": 1,
+   "Consonance/l": 1
+  },
+  "scanBefore": {
+   "IDENTITY": 4,
+   "DANGLING": 16
+  },
+  "scanAfter": {
+   "DANGLING": 16
+  }
+ },
+ {
+  "name": "composer_has_pasted_text_2026-09-19.bin",
+  "bytes": 11008,
+  "replaced": {
+   "nname": 2,
+   "America/Regina": 3
+  },
+  "scanBefore": {},
+  "scanAfter": {}
+ },
+ {
+  "name": "composer_placeholder_reads_as_text_2026-09-19.bin",
+  "bytes": 2270,
+  "replaced": {},
+  "scanBefore": {},
+  "scanAfter": {}
+ },
+ {
+  "name": "composer_slash_command_reads_empty_2026-09-09.bin",
+  "bytes": 236544,
+  "replaced": {
+   "zackn": 1,
+   "Consonance/lighthouse": 15,
+   "Consonance\\lighthouse": 9
+  },
+  "scanBefore": {
+   "IDENTITY": 1,
+   "DANGLING": 25,
+   "MACHINE": 9
+  },
+  "scanAfter": {
+   "DANGLING": 25
+  }
+ },
+ {
+  "name": "composer_unreadable_trust_dialog_2026-09-19.bin",
+  "bytes": 1280,
+  "replaced": {
+   "nname": 2
+  },
+  "scanBefore": {},
+  "scanAfter": {}
+ }
+]
+

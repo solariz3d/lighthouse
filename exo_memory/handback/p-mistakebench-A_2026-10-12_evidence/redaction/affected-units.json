@@ -1,0 +1,789 @@
+[
+ {
+  "id": "W006",
+  "earlierBaselinesWindow": {
+   "count": 0,
+   "renderedChars": 0
+  },
+  "resultsInWindow": [],
+  "resultsInWindowOriginalChars": 0,
+  "resultsInWindowRenderedChars": 0,
+  "oldPromptChars": 265269,
+  "newPromptChars": 265269,
+  "promptChanged": false,
+  "charsRemoved": 0
+ },
+ {
+  "id": "W010",
+  "earlierBaselinesWindow": {
+   "count": 0,
+   "renderedChars": 0
+  },
+  "resultsInWindow": [],
+  "resultsInWindowOriginalChars": 0,
+  "resultsInWindowRenderedChars": 0,
+  "oldPromptChars": 247759,
+  "newPromptChars": 247759,
+  "promptChanged": false,
+  "charsRemoved": 0
+ },
+ {
+  "id": "W018",
+  "earlierBaselinesWindow": {
+   "count": 1,
+   "renderedChars": 216
+  },
+  "resultsInWindow": [
+   {
+    "n": 45335,
+    "chars": 174,
+    "renderedChars": 216
+   }
+  ],
+  "resultsInWindowOriginalChars": 174,
+  "resultsInWindowRenderedChars": 216,
+  "oldPromptChars": 240257,
+  "newPromptChars": 240109,
+  "promptChanged": true,
+  "charsRemoved": 148
+ },
+ {
+  "id": "W019",
+  "earlierBaselinesWindow": {
+   "count": 0,
+   "renderedChars": 0
+  },
+  "resultsInWindow": [],
+  "resultsInWindowOriginalChars": 0,
+  "resultsInWindowRenderedChars": 0,
+  "oldPromptChars": 253550,
+  "newPromptChars": 253550,
+  "promptChanged": false,
+  "charsRemoved": 0
+ },
+ {
+  "id": "W020",
+  "earlierBaselinesWindow": {
+   "count": 1,
+   "renderedChars": 217
+  },
+  "resultsInWindow": [
+   {
+    "n": 46100,
+    "chars": 175,
+    "renderedChars": 217
+   }
+  ],
+  "resultsInWindowOriginalChars": 175,
+  "resultsInWindowRenderedChars": 217,
+  "oldPromptChars": 235403,
+  "newPromptChars": 235254,
+  "promptChanged": true,
+  "charsRemoved": 149
+ },
+ {
+  "id": "W021",
+  "earlierBaselinesWindow": {
+   "count": 1,
+   "renderedChars": 217
+  },
+  "resultsInWindow": [
+   {
+    "n": 46100,
+    "chars": 175,
+    "renderedChars": 217
+   }
+  ],
+  "resultsInWindowOriginalChars": 175,
+  "resultsInWindowRenderedChars": 217,
+  "oldPromptChars": 235661,
+  "newPromptChars": 235512,
+  "promptChanged": true,
+  "charsRemoved": 149
+ },
+ {
+  "id": "W022",
+  "earlierBaselinesWindow": {
+   "count": 0,
+   "renderedChars": 0
+  },
+  "resultsInWindow": [],
+  "resultsInWindowOriginalChars": 0,
+  "resultsInWindowRenderedChars": 0,
+  "oldPromptChars": 232605,
+  "newPromptChars": 232605,
+  "promptChanged": false,
+  "charsRemoved": 0
+ },
+ {
+  "id": "W032",
+  "earlierBaselinesWindow": {
+   "count": 10,
+   "renderedChars": 2046
+  },
+  "resultsInWindow": [
+   {
+    "n": 58367,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 58608,
+    "chars": 222,
+    "renderedChars": 149
+   },
+   {
+    "n": 58610,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 58621,
+    "chars": 331,
+    "renderedChars": 373
+   },
+   {
+    "n": 58637,
+    "chars": 123,
+    "renderedChars": 165
+   }
+  ],
+  "resultsInWindowOriginalChars": 804,
+  "resultsInWindowRenderedChars": 899,
+  "oldPromptChars": 241412,
+  "newPromptChars": 240853,
+  "promptChanged": true,
+  "charsRemoved": 559
+ },
+ {
+  "id": "W034",
+  "earlierBaselinesWindow": {
+   "count": 0,
+   "renderedChars": 0
+  },
+  "resultsInWindow": [],
+  "resultsInWindowOriginalChars": 0,
+  "resultsInWindowRenderedChars": 0,
+  "oldPromptChars": 239549,
+  "newPromptChars": 239549,
+  "promptChanged": false,
+  "charsRemoved": 0
+ },
+ {
+  "id": "W084",
+  "earlierBaselinesWindow": {
+   "count": 17,
+   "renderedChars": 4857
+  },
+  "resultsInWindow": [
+   {
+    "n": 12856,
+    "chars": 161,
+    "renderedChars": 203
+   },
+   {
+    "n": 12870,
+    "chars": 65,
+    "renderedChars": 107
+   },
+   {
+    "n": 12920,
+    "chars": 487,
+    "renderedChars": 529
+   },
+   {
+    "n": 12932,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 12972,
+    "chars": 304,
+    "renderedChars": 346
+   },
+   {
+    "n": 13108,
+    "chars": 2722,
+    "renderedChars": 2553
+   },
+   {
+    "n": 13115,
+    "chars": 164,
+    "renderedChars": 206
+   },
+   {
+    "n": 13117,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 13128,
+    "chars": 86,
+    "renderedChars": 128
+   },
+   {
+    "n": 13151,
+    "chars": 1178,
+    "renderedChars": 980
+   },
+   {
+    "n": 13157,
+    "chars": 1699,
+    "renderedChars": 1271
+   },
+   {
+    "n": 13164,
+    "chars": 175,
+    "renderedChars": 217
+   },
+   {
+    "n": 13166,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 13176,
+    "chars": 86,
+    "renderedChars": 128
+   }
+  ],
+  "resultsInWindowOriginalChars": 7319,
+  "resultsInWindowRenderedChars": 6986,
+  "oldPromptChars": 250605,
+  "newPromptChars": 250229,
+  "promptChanged": true,
+  "charsRemoved": 376
+ },
+ {
+  "id": "W088",
+  "earlierBaselinesWindow": {
+   "count": 16,
+   "renderedChars": 4491
+  },
+  "resultsInWindow": [
+   {
+    "n": 12920,
+    "chars": 487,
+    "renderedChars": 529
+   },
+   {
+    "n": 12932,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 12972,
+    "chars": 304,
+    "renderedChars": 346
+   },
+   {
+    "n": 13108,
+    "chars": 2722,
+    "renderedChars": 2553
+   },
+   {
+    "n": 13115,
+    "chars": 164,
+    "renderedChars": 206
+   },
+   {
+    "n": 13117,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 13128,
+    "chars": 86,
+    "renderedChars": 128
+   },
+   {
+    "n": 13151,
+    "chars": 1178,
+    "renderedChars": 980
+   },
+   {
+    "n": 13157,
+    "chars": 1699,
+    "renderedChars": 1271
+   },
+   {
+    "n": 13164,
+    "chars": 175,
+    "renderedChars": 217
+   },
+   {
+    "n": 13166,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 13176,
+    "chars": 86,
+    "renderedChars": 128
+   },
+   {
+    "n": 13233,
+    "chars": 179,
+    "renderedChars": 221
+   },
+   {
+    "n": 13247,
+    "chars": 86,
+    "renderedChars": 128
+   }
+  ],
+  "resultsInWindowOriginalChars": 7358,
+  "resultsInWindowRenderedChars": 7025,
+  "oldPromptChars": 241363,
+  "newPromptChars": 241769,
+  "promptChanged": true,
+  "charsRemoved": -406
+ },
+ {
+  "id": "W092",
+  "earlierBaselinesWindow": {
+   "count": 0,
+   "renderedChars": 0
+  },
+  "resultsInWindow": [],
+  "resultsInWindowOriginalChars": 0,
+  "resultsInWindowRenderedChars": 0,
+  "oldPromptChars": 235275,
+  "newPromptChars": 235275,
+  "promptChanged": false,
+  "charsRemoved": 0
+ },
+ {
+  "id": "W100",
+  "earlierBaselinesWindow": {
+   "count": 3,
+   "renderedChars": 864
+  },
+  "resultsInWindow": [
+   {
+    "n": 44130,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 44166,
+    "chars": 686,
+    "renderedChars": 728
+   },
+   {
+    "n": 44200,
+    "chars": 64,
+    "renderedChars": 106
+   }
+  ],
+  "resultsInWindowOriginalChars": 814,
+  "resultsInWindowRenderedChars": 940,
+  "oldPromptChars": 194196,
+  "newPromptChars": 193460,
+  "promptChanged": true,
+  "charsRemoved": 736
+ },
+ {
+  "id": "W101",
+  "earlierBaselinesWindow": {
+   "count": 0,
+   "renderedChars": 0
+  },
+  "resultsInWindow": [],
+  "resultsInWindowOriginalChars": 0,
+  "resultsInWindowRenderedChars": 0,
+  "oldPromptChars": 217135,
+  "newPromptChars": 217135,
+  "promptChanged": false,
+  "charsRemoved": 0
+ },
+ {
+  "id": "W079",
+  "earlierBaselinesWindow": {
+   "count": 23,
+   "renderedChars": 7036
+  },
+  "resultsInWindow": [
+   {
+    "n": 12133,
+    "chars": 289,
+    "renderedChars": 331
+   },
+   {
+    "n": 12136,
+    "chars": 229,
+    "renderedChars": 271
+   },
+   {
+    "n": 12140,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 12144,
+    "chars": 63,
+    "renderedChars": 105
+   },
+   {
+    "n": 12179,
+    "chars": 225,
+    "renderedChars": 267
+   },
+   {
+    "n": 12220,
+    "chars": 86,
+    "renderedChars": 128
+   },
+   {
+    "n": 12379,
+    "chars": 18583,
+    "renderedChars": 2555
+   },
+   {
+    "n": 12391,
+    "chars": 932,
+    "renderedChars": 974
+   },
+   {
+    "n": 12394,
+    "chars": 1651,
+    "renderedChars": 1589
+   },
+   {
+    "n": 12403,
+    "chars": 718,
+    "renderedChars": 760
+   },
+   {
+    "n": 12422,
+    "chars": 163,
+    "renderedChars": 205
+   },
+   {
+    "n": 12424,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 12426,
+    "chars": 65,
+    "renderedChars": 107
+   },
+   {
+    "n": 12453,
+    "chars": 117,
+    "renderedChars": 159
+   }
+  ],
+  "resultsInWindowOriginalChars": 23249,
+  "resultsInWindowRenderedChars": 7663,
+  "oldPromptChars": 232436,
+  "newPromptChars": 232590,
+  "promptChanged": true,
+  "charsRemoved": -154
+ },
+ {
+  "id": "W080",
+  "earlierBaselinesWindow": {
+   "count": 23,
+   "renderedChars": 10410
+  },
+  "resultsInWindow": [
+   {
+    "n": 11988,
+    "chars": 790,
+    "renderedChars": 822
+   },
+   {
+    "n": 11996,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 12023,
+    "chars": 236,
+    "renderedChars": 278
+   },
+   {
+    "n": 12031,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 12075,
+    "chars": 3315,
+    "renderedChars": 2553
+   },
+   {
+    "n": 12083,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 12085,
+    "chars": 897,
+    "renderedChars": 356
+   },
+   {
+    "n": 12098,
+    "chars": 230,
+    "renderedChars": 272
+   },
+   {
+    "n": 12100,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 12133,
+    "chars": 289,
+    "renderedChars": 331
+   },
+   {
+    "n": 12136,
+    "chars": 229,
+    "renderedChars": 271
+   },
+   {
+    "n": 12140,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 12144,
+    "chars": 63,
+    "renderedChars": 105
+   },
+   {
+    "n": 12179,
+    "chars": 225,
+    "renderedChars": 267
+   },
+   {
+    "n": 12220,
+    "chars": 86,
+    "renderedChars": 128
+   },
+   {
+    "n": 12379,
+    "chars": 18583,
+    "renderedChars": 17641
+   },
+   {
+    "n": 12391,
+    "chars": 932,
+    "renderedChars": 974
+   },
+   {
+    "n": 12394,
+    "chars": 1651,
+    "renderedChars": 1589
+   },
+   {
+    "n": 12403,
+    "chars": 718,
+    "renderedChars": 760
+   },
+   {
+    "n": 12422,
+    "chars": 163,
+    "renderedChars": 205
+   },
+   {
+    "n": 12424,
+    "chars": 64,
+    "renderedChars": 106
+   }
+  ],
+  "resultsInWindowOriginalChars": 28791,
+  "resultsInWindowRenderedChars": 27188,
+  "oldPromptChars": 256968,
+  "newPromptChars": 238302,
+  "promptChanged": true,
+  "charsRemoved": 18666
+ },
+ {
+  "id": "W044",
+  "earlierBaselinesWindow": {
+   "count": 2,
+   "renderedChars": 435
+  },
+  "resultsInWindow": [
+   {
+    "n": 43224,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 43332,
+    "chars": 287,
+    "renderedChars": 329
+   }
+  ],
+  "resultsInWindowOriginalChars": 351,
+  "resultsInWindowRenderedChars": 435,
+  "oldPromptChars": 92007,
+  "newPromptChars": 91964,
+  "promptChanged": true,
+  "charsRemoved": 43
+ },
+ {
+  "id": "W049",
+  "earlierBaselinesWindow": {
+   "count": 3,
+   "renderedChars": 864
+  },
+  "resultsInWindow": [
+   {
+    "n": 44130,
+    "chars": 64,
+    "renderedChars": 106
+   },
+   {
+    "n": 44166,
+    "chars": 686,
+    "renderedChars": 728
+   },
+   {
+    "n": 44200,
+    "chars": 64,
+    "renderedChars": 106
+   }
+  ],
+  "resultsInWindowOriginalChars": 814,
+  "resultsInWindowRenderedChars": 940,
+  "oldPromptChars": 200097,
+  "newPromptChars": 199958,
+  "promptChanged": true,
+  "charsRemoved": 139
+ },
+ {
+  "id": "W053",
+  "earlierBaselinesWindow": {
+   "count": 0,
+   "renderedChars": 0
+  },
+  "resultsInWindow": [],
+  "resultsInWindowOriginalChars": 0,
+  "resultsInWindowRenderedChars": 0,
+  "oldPromptChars": 185613,
+  "newPromptChars": 185613,
+  "promptChanged": false,
+  "charsRemoved": 0
+ },
+ {
+  "id": "W054",
+  "earlierBaselinesWindow": {
+   "count": 5,
+   "renderedChars": 1768
+  },
+  "resultsInWindow": [
+   {
+    "n": 404,
+    "chars": 1911,
+    "renderedChars": 1798
+   },
+   {
+    "n": 417,
+    "chars": 717,
+    "renderedChars": 634
+   },
+   {
+    "n": 462,
+    "chars": 216,
+    "renderedChars": 148
+   },
+   {
+    "n": 479,
+    "chars": 64,
+    "renderedChars": 104
+   },
+   {
+    "n": 598,
+    "chars": 188,
+    "renderedChars": 228
+   }
+  ],
+  "resultsInWindowOriginalChars": 3096,
+  "resultsInWindowRenderedChars": 2912,
+  "oldPromptChars": 248496,
+  "newPromptChars": 248564,
+  "promptChanged": true,
+  "charsRemoved": -68
+ },
+ {
+  "id": "W056",
+  "earlierBaselinesWindow": {
+   "count": 7,
+   "renderedChars": 3201
+  },
+  "resultsInWindow": [
+   {
+    "n": 1531,
+    "chars": 152,
+    "renderedChars": 193
+   },
+   {
+    "n": 1638,
+    "chars": 205,
+    "renderedChars": 246
+   },
+   {
+    "n": 1765,
+    "chars": 231,
+    "renderedChars": 272
+   },
+   {
+    "n": 1804,
+    "chars": 1423,
+    "renderedChars": 1460
+   }
+  ],
+  "resultsInWindowOriginalChars": 2011,
+  "resultsInWindowRenderedChars": 2171,
+  "oldPromptChars": 234813,
+  "newPromptChars": 233376,
+  "promptChanged": true,
+  "charsRemoved": 1437
+ },
+ {
+  "id": "W058",
+  "earlierBaselinesWindow": {
+   "count": 5,
+   "renderedChars": 3840
+  },
+  "resultsInWindow": [
+   {
+    "n": 876,
+    "chars": 207,
+    "renderedChars": 247
+   },
+   {
+    "n": 887,
+    "chars": 64,
+    "renderedChars": 104
+   },
+   {
+    "n": 1159,
+    "chars": 808,
+    "renderedChars": 698
+   },
+   {
+    "n": 1166,
+    "chars": 1009,
+    "renderedChars": 1034
+   },
+   {
+    "n": 1248,
+    "chars": 2285,
+    "renderedChars": 2184
+   }
+  ],
+  "resultsInWindowOriginalChars": 4373,
+  "resultsInWindowRenderedChars": 4267,
+  "oldPromptChars": 231736,
+  "newPromptChars": 230178,
+  "promptChanged": true,
+  "charsRemoved": 1558
+ }
+]

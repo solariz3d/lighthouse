@@ -1,0 +1,15 @@
+✔ row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects (5925.192ms)
+✔ row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes (10350.966ms)
+✔ row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page (6461.6146ms)
+✔ row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws (1.5884ms)
+✔ row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered (26802.6833ms)
+✔ row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done (1282.5108ms)
+✔ row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others (112.9512ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51072.9652

@@ -27,7 +27,7 @@ function t(name, fn) {
 }
 
 /* A fixture tree shaped exactly like ~/.claude/projects: <project>/memory/*.md, flat. */
-const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'memsweep-'));
+const TMP = require('./scratch.js').mkdtemp('memsweep-');
 const CANARY = 'CANARY-e7f1a9-private-prose-must-never-surface';
 
 function w(project, file, body) {
@@ -163,7 +163,7 @@ t('non-.md entries and subdirectories are COUNTED as skipped, never silently abs
 });
 
 t('the universe line is printed on every run, hits or no hits', () => {
-  const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'memsweep-empty-'));
+  const empty = require('./scratch.js').mkdtemp('memsweep-empty-');
   const out = execFileSync(process.execPath, [TOOL, '--root', empty, '--registry', REG], { encoding: 'utf8' });
   assert.ok(/UNIVERSE\s+0 project dirs seen/.test(out), 'universe printed on an empty tree');
   assert.ok(/no occurrence/.test(out), 'and the no-hit line');

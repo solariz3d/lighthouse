@@ -1,0 +1,18 @@
+﻿files with changed code-part lines carrying a rewrite phrase: [33m7[39m  lines: [33m12[39m
+== consonance/src-tauri/src/main.rs (1)
+   15048: assert_eq!(role_for_kept(r"C:\Consonance\rooms\the keeper", inst), "human");
+== consonance/src-tauri/tests/arch_test.rs (1)
+   587: let normalize = |s: String| s.replace("the keeper", "the keeper");
+== consonance/tools/ask.test.js (1)
+   420: 'daily-news-digest/PENDING-CONDITIONS.md': 'Route it through `ask.js` (ASK-002, ASK-013) — still the keeper\'s call.\n',
+== consonance/tools/corrections-gate.js (1)
+   51: const GUARDED = [/this line of record\.md$/i];
+== consonance/tools/offramp-check.test.js (1)
+   99: 'Take care, the keeper. Get some sleep — you ran a sixteen-hour shift',
+== consonance/tools/tell-index.js (1)
+   225: note: 'Genuine stake-declaration wears the same words (this line of record, 2026-07-27: the twins were SPLIT). Candidates only.',
+== dev/shell/install.ps1 (6)
+   243: Excluded = 'keeper 2026-09-06 06:55 - ready pair only (a librarian entry in this line of record)' }
+   258: Excluded = 'keeper 2026-09-06 06:55 - ready pair only (a librarian entry in this line of record); on D too since keeper 2026-09-22 09:12 - only jev (D105)' }
+   260: Excluded = 'keeper 2026-09-06 06:55 - ready pair only (a librarian entry in this line of record); on D too since keeper 2026-09-22 09:12 - only jev (D105)' }
+

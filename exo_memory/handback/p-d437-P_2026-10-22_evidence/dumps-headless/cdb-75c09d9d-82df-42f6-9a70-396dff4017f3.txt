@@ -1,0 +1,7 @@
+51:ExceptionAddress: 00007ffe43f7408a (KERNELBASE!RaiseException+0x000000000000008a)
+52:   ExceptionCode: e0000008
+54:NumberParameters: 3
+55:   Parameter[0]: 0000000000000000
+56:   Parameter[1]: 0000001efa561000
+57:   Parameter[2]: 0000001211bfa000
+58:Last event: 8814.4658: Unknown exception - code e0000008 (first/second chance not available)

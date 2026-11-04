@@ -1,0 +1,13 @@
+const fs = require('fs'), f = 'C:/Users/nname/Desktop/a-d188-wt/test/core_cup.test.js'; let s = fs.readFileSync(f, 'utf8');
+const lines = s.split('\n'); const idx = (pre) => { const i = lines.findIndex((l) => l.startsWith(pre)); if (i < 0) throw new Error('no line: ' + pre); return i; };
+let i = idx("test('row 1b: the default scheme emits a seam zip");
+lines[i] = "test('cupLocal (the option): a seam zip where c changes and NONE where it is held: the last 100 m of a 400 m piece has none (the default scheme has none anywhere inside the piece)', () => {";
+const j = lines.findIndex((l, k) => k > i && l.includes("const segs = A.toSegments(d), path = A.toPath(d).path, mesh = buildMesh(path, segs), idx"));
+if (j < 0) throw new Error('segs line'); lines[j] = lines[j].replace("A.toSegments(d)", "A.toSegments(d, { cupRuns: false })");
+i = idx("test('the default scheme keeps segment.profile LOCAL");
+lines[i] = "test('the cupLocal option keeps segment.profile LOCAL (its edge is c at the segment\'s end within 0.05°), and the default does NOT (its profile is the run\'s widest, the blend\'s target): the readers evaluate the blend (test/core_cup_readers.test.js)', () => {";
+const k1 = lines.findIndex((l, k) => k > i && l.includes("for (const [opts, local] of [[{}, true], [{ cupRuns: true }, false]]) {")); if (k1 < 0) throw new Error('for line');
+lines[k1] = "  for (const [opts, local] of [[{ cupRuns: false }, true], [{}, false]]) {";
+const k2 = lines.findIndex((l, k) => k > k1 && l.includes("if (local) assert.ok(worst <= 0.05, `default: worst"));  if (k2 < 0) throw new Error('assert line');
+lines[k2] = "    if (local) assert.ok(worst <= 0.05, `cupLocal: worst ${worst}°`); else assert.ok(worst > 1, `default: worst ${worst}° (it should not be local)`);";
+fs.writeFileSync(f, lines.join('\n')); console.log('local tests patched by line');

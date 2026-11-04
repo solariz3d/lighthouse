@@ -1,0 +1,33 @@
+== D273 C base vs mine on 8 failing · asked 2026-10-08T19:32:46.327Z · lock held 2026-10-08T19:33:14.481Z · NODE_OPTIONS=--max-old-space-size=4096
+$ for t in base fork; do cd C:/Users/nname/Desktop/worktrees/c-consumer-$t-wt; echo "== $t"; node --test --test-concurrency=1 --test-reporter=tap consonance/hooks/dream-gate.test.js consonance/tools/carrier-drift.test.js consonance/tools/heavy-run.test.js consonance/tools/portable-paths.test.js consonance/tools/sourced.test.js consonance/tools/targetless-pull.test.js 2>&1 | grep -E '^not ok|^# (pass|fail)' | grep -v '# TODO'; done
+== base
+not ok 1 - consonance\\hooks\\dream-gate.test.js
+not ok 18 - THE BAR, half one: the shipped registry is GREEN against the working tree
+not ok 23 - the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent
+not ok 38 - MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING
+not ok 70 - WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper
+not ok 105 - the green line says how many baselined sites are FATAL — exempted is not fixed
+not ok 106 - the real repo is green against its committed baseline
+not ok 120 - a real transcript produces a non-zero denominator
+not ok 124 - no live PullRequest is constructed with a bare empty target
+not ok 125 - raise_from_forming names its unaddressed pull
+not ok 126 - raise_pull stops collapsing an absent target into a blank one
+not ok 127 - the name lives beside PullRequest, and it is exported
+# pass 115
+# fail 12
+== fork
+not ok 1 - consonance\\hooks\\dream-gate.test.js
+not ok 18 - THE BAR, half one: the shipped registry is GREEN against the working tree
+not ok 23 - the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent
+not ok 38 - MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING
+not ok 70 - WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper
+not ok 105 - the green line says how many baselined sites are FATAL — exempted is not fixed
+not ok 106 - the real repo is green against its committed baseline
+not ok 120 - a real transcript produces a non-zero denominator
+not ok 124 - no live PullRequest is constructed with a bare empty target
+not ok 125 - raise_from_forming names its unaddressed pull
+not ok 126 - raise_pull stops collapsing an absent target into a blank one
+not ok 127 - the name lives beside PullRequest, and it is exported
+# pass 115
+# fail 12
+== exit 0 · done 2026-10-08T19:34:30.703Z

@@ -1,0 +1,87 @@
+heavy-run: WARNING: C:\ has 50.0 GB free, under 50 GB; run node consonance/tools/janitor.js
+TAP version 13
+# Subtest: build: a closed lap gives "<name> for Blender" with <name>.glb and README.txt, and the glb holds exactly the Export button's kn5 meshes
+ok 1 - build: a closed lap gives "<name> for Blender" with <name>.glb and README.txt, and the glb holds exactly the Export button's kn5 meshes
+  ---
+  duration_ms: 5332.2376
+  type: 'test'
+  ...
+# Subtest: build: an OPEN track is built as the test export builds it, so it can be looked at in Blender before it is closed
+ok 2 - build: an OPEN track is built as the test export builds it, so it can be looked at in Blender before it is closed
+  ---
+  duration_ms: 863.6333
+  type: 'test'
+  ...
+# Subtest: build with pieces: only the selected piece's groups, and no AI line (it is the whole lap's)
+ok 3 - build with pieces: only the selected piece's groups, and no AI line (it is the whole lap's)
+  ---
+  duration_ms: 3846.2038
+  type: 'test'
+  ...
+# Subtest: the flow writes the files into the picked folder, and with Blender the .fbx holds every kn5 mesh by name; the status line says so
+ok 4 - the flow writes the files into the picked folder, and with Blender the .fbx holds every kn5 mesh by name; the status line says so
+  ---
+  duration_ms: 5314.6841
+  type: 'test'
+  ...
+# fbx: 19 meshes and 13 markers by name
+# Subtest: the flow: cancelled, or no folder picked, writes nothing and says so; a failed FBX keeps the .glb and says why
+ok 5 - the flow: cancelled, or no folder picked, writes nothing and says so; a failed FBX keeps the .glb and says why
+  ---
+  duration_ms: 1885.3292
+  type: 'test'
+  ...
+# Subtest: the question offers the FBX tick only when Blender was found, and the selected-pieces tick only with a selection
+ok 6 - the question offers the FBX tick only when Blender was found, and the selected-pieces tick only with a selection
+  ---
+  duration_ms: 0.9135
+  type: 'test'
+  ...
+# Subtest: the question: Escape and Cancel answer null
+ok 7 - the question: Escape and Cancel answer null
+  ---
+  duration_ms: 0.1652
+  type: 'test'
+  ...
+# Subtest: row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+ok 8 - row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+  ---
+  duration_ms: 785.0932
+  type: 'test'
+  ...
+# Subtest: row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+ok 9 - row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+  ---
+  duration_ms: 30.3917
+  type: 'test'
+  ...
+# Subtest: row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+ok 10 - row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+  ---
+  duration_ms: 621.8954
+  type: 'test'
+  ...
+# Subtest: row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+ok 11 - row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+  ---
+  duration_ms: 78.0219
+  type: 'test'
+  ...
+# Subtest: row 5: an empty run and a run of one segment are coarsened as before
+ok 12 - row 5: an empty run and a run of one segment are coarsened as before
+  ---
+  duration_ms: 2.5865
+  type: 'test'
+  ...
+# Subtest: row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+ok 13 - row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+  ---
+  duration_ms: 296.2707
+  type: 'test'
+  ...
+# Subtest: row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+ok 14 - row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+  ---
+  duration_ms: 3.7218
+  type: 'test'
+  ...

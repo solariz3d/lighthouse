@@ -1,0 +1,3 @@
+ok 1 - row 3: every test file that starts a browser page itself sets the zz-headless-test title
+# pass 1
+# fail 0

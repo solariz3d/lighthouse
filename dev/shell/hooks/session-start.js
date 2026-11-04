@@ -47,8 +47,26 @@ const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
 const AMBIENT_PATH = path.join(SHELL_DIR, 'lib', 'ambient.js');
 const L3_OVERSEER_LOG = path.join(SHELL_DIR, 'l3_overseer.jsonl');
 const DURATION_DIR = path.join(SHELL_DIR, 'duration');
-const INSTANCES_DIR = path.join('C:', path.sep, 'Consonance', 'instances');
+// D273 dirs: begin. The Consonance data and instances folders by THE APP'S OWN RULE (consonance/src-tauri/src/main.rs set_dirs and default_data /
+// default_instances): ~/.consonance.json's data_dir / instances_dir when set, else %USERPROFILE%\.consonance and %USERPROFILE%\claude-instances.
+// Never a hard-coded C:\Consonance: on a stranger's machine that wrote where the app never reads. One text in the five hooks that need it
+// (session-start, sessionstart-state, findings-return, sourced-stop, precompact-preserve); consonance/hooks/dirs.test.js holds them to it.
+function consonanceDir(key, under) {
+  const home = process.env.USERPROFILE || '.';
+  try { const v = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''))[key]; if (typeof v === 'string' && v.trim()) return v.trim(); } catch (e) { /* no config, or not JSON: the default, as the app */ }
+  return `${home}\\${under}`;
+}
+// D273 dirs: end
+const INSTANCES_DIR = consonanceDir('instances_dir', 'claude-instances');
 const NIGHT_TABLE_MAX_TAG = 48;
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): "This seat is not the build", yet the build's session digests reached it. The same cwd test as
+// board-digest.js:302, matched on the seat's directory (its address), so the digests of every other seat are not injected into the Third Place's wake.
+// It keeps the time (the ambient block), its own recent sessions and the night table.
+// The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+// (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(tpNorm(cwd));
 
 // Surface L3 trajectory notices from the last N hours. L3 verdicts are
 // trajectory observations (cadence, frame-hardening, dependence) per
@@ -223,6 +241,39 @@ function getKnocks(since) {
   return notes;
 }
 
+// D277 part 5 (plan: exo_memory/loop/plan_lighten_the_load_2026-10-09.md): the digests behind ONE switch, `gates_mode` in ~/.consonance.json, the switch of the three paperwork gates.
+// Absent, unreadable, or anything but "light" (trimmed, any case) is "strict": TODAY's output, byte for byte (dev/shell/hooks/session-start-light.test.js pins it by sha256).
+// "light": the digests are what a waking seat has been seen to use. Measured by reading 1,381 session starts of the six committee seats (exo_memory/loop/startdigest_evidence/):
+// not one quoted a digest time or a listed session time back in 1,360 sessions that did anything, and the digest-word hits were other digests (the board's, the pulse's, a sha). So
+// each day keeps its total and, per folder, the session count; the newest day also keeps the last three start times, unless this is a thread that was never dark (resume, compact).
+// gatesModeFrom is the master's text (consonance/hooks/sources-gate.js): keep them the same.
+function gatesModeFrom(raw) {
+  try {
+    const v = (JSON.parse(String(raw == null ? '' : raw).replace(/^\uFEFF/, '')) || {}).gates_mode;
+    return typeof v === 'string' && v.trim().toLowerCase() === 'light' ? 'light' : 'strict';
+  } catch (_) { return 'strict'; }
+}
+function gatesMode() {
+  try { return gatesModeFrom(fs.readFileSync(path.join(process.env.USERPROFILE || os.homedir(), '.consonance.json'), 'utf8')); } catch (_) { return 'strict'; }
+}
+/** The light form of ONE day's digest, or null when it cannot be read (then the caller keeps the digest as it is: a parse failure hides nothing).
+ *  Layout (dev/shell/hooks/session-end.js): "## N turn ends from M sessions" (D292; before it, "## N sessions", which counted turn ends too), then per folder
+ *  "### <cwd>" and one "- HH:MM:SS UTC[ — text]" line per turn end. Both headlines are read; each is said back as it was written. */
+function lightDigest(content, withTimes) {
+  const now = /^## (\d+) turn ends? from (\d+) sessions?\s*$/m.exec(content), old = now ? null : /^## (\d+) sessions\s*$/m.exec(content), groups = [];
+  const total = now || old;
+  for (const line of String(content).split(/\r?\n/)) {
+    const g = /^### (.+?)\s*$/.exec(line);
+    if (g) { groups.push({ cwd: g[1], n: 0, times: [] }); continue; }
+    if (!groups.length || !/^- /.test(line)) continue;
+    const grp = groups[groups.length - 1], t = /^- ([0-9]{2}:[0-9]{2}:[0-9]{2}) UTC\b/.exec(line);   // (the digits are spelled out: the portable-paths guard misreads the short form as a drive path)
+    grp.n++; if (t) grp.times.push(t[1]);
+  }
+  if (!total || !groups.length) return null;
+  const rows = groups.map((g) => `- ${g.cwd}: ${g.n}${withTimes && g.times.length ? ` · last ${g.times.slice(-3).reverse().join(', ')} UTC` : ''}`);
+  return [now ? `${now[1]} turn ends from ${now[2]} sessions` : `${total[1]} sessions`, ...rows].join('\n');
+}
+
 function buildContext(meta) {
   const sections = [];
 
@@ -295,14 +346,18 @@ function buildContext(meta) {
     }
   }
 
-  const digests = getRecentDigests(2);
+  // D292: before the digests are read, any missing or part-day digest of the last 14 local days is rebuilt from the event log (session-end.js catchUp;
+  // the one builder, so the two hooks cannot disagree on a day). Guarded: without session-end.js beside this file, or on any error, the wake goes on as before.
+  if (!isThirdPlaceCwd(meta.cwd)) { try { require(path.join(__dirname, 'session-end.js')).catchUp(); } catch (e) { /* the wake is never blocked by its digests */ } }
+  const digests = isThirdPlaceCwd(meta.cwd) ? [] : getRecentDigests(2);
   if (digests.length > 0) {
     sections.push('## Recent session digests');
-    for (const d of digests) {
+    const light = gatesMode() === 'light';   // D277 part 5: see lightDigest
+    digests.forEach((d, i) => {
       sections.push(`### ${d.date}`);
-      sections.push(d.content);
+      sections.push((light && lightDigest(d.content, i === 0 && !continuing)) || d.content);
       sections.push('');
-    }
+    });
   }
 
   if (meta.cwd) {

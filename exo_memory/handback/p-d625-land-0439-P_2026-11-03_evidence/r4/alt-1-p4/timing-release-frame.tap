@@ -1,0 +1,49 @@
+TAP version 13
+# Subtest: row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+not ok 1 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+  ---
+  duration_ms: 64252.0312
+  type: 'test'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625r2\\app\\test\\release-frame.test.js:121:1'
+  failureType: 'testCodeFailure'
+  error: 'aurora, letting go of a 1,000 m stretch: handler 3.6, worst frame 12.7 / handler 2.9, worst frame 7.0 ms, over 6'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\t180-p625r2\app\test\release-frame.test.js:125:12)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# Subtest: row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+ok 2 - row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+  ---
+  duration_ms: 20183.6121
+  type: 'test'
+  ...
+# 20,000 m: handler 42.5, worst frame 55.9 ms; 10001 stations after 10 s
+# Subtest: row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+ok 3 - row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+  ---
+  duration_ms: 6712.4046
+  type: 'test'
+  ...
+# 2247 frames watched; the exact ghost (1001 stations) after 71 ms; 0 without a ghost
+# Subtest: row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first
+ok 4 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first
+  ---
+  duration_ms: 7995.9485
+  type: 'test'
+  ...
+# a field change, its longest frame: p95 3.9 ms (median 3.0); handler and frames summed, not asserted: p95 6.5 ms (median 4.8)
+1..4
+# tests 4
+# suites 0
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 99656.1686

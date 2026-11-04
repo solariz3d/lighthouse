@@ -1,0 +1,35 @@
+head a93ae51
+build exit 0
+t180-track-builder.exe: 15751680 bytes, no private paths
+T-180 Track Builder_0.4.34_x64-setup.exe: 8055948 bytes, no private paths
+cf29c2c194ce27d7b0da955a65dcff6bfdbbadfa03b86e0742193ff09e4e648f *src-tauri/target/release/t180-track-builder.exe
+a9ca7be9b77d2aa0aeabaa4182efe749f3a08ae2c162b217bd05078f1a1f1afc *src-tauri/target/release/bundle/nsis/T-180 Track Builder_0.4.34_x64-setup.exe
+0f268da11d0dc973e1064af82d3e93d9d1cf403519e056a54e6a730d0d6a350c */c/Users/nname/Desktop/worktrees/t180-c583/src-tauri/target/release/t180-track-builder.exe
+== 0433 13:33
+launched pid 10060; track ELYSIUM
+ok   launch (0.8 s): menus ready
+windows on the user's desktop: 0
+ok   open (33.9 s): loaded: head shown at 1.5 s, still from 13.8 s; peak 1671 MB at 17.1 s (page 889, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 777); settled 1649 MB (page 8
+ok   export (112.2 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_elysium to  | files 10, kn5 218786117 B; peak 3847 MB at 91.2 s (page 1133, worker:overlapw
+crashes 0; page errors 0; samples 148; overall peak 3847 MB at 91.2 s (page 1133, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 748, iframe:about:srcdoc#4 1, worker:03e7f0b6-12c3-4934-a789-bb266b#5 1961)
+killed pid 10060; t180-track-builder.exe left running: 0
+exit 0
+lockrun: done at 2026-10-31T19:36:25.899Z, exit 0
+== 0434 13:36
+launched pid 37756; track ELYSIUM
+ok   launch (0.7 s): menus ready
+windows on the user's desktop: 0
+ok   open (48.0 s): loaded: head shown at 1.5 s, still from 28.0 s; peak 1181 MB at 18.1 s (page 655, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 521); settled 939 MB (page 61
+ok   export (100.1 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_elysium to  | files 10, kn5 218786117 B; peak 1953 MB at 142.9 s (page 538, worker:overlapw
+crashes 0; page errors 0; samples 149; overall peak 1953 MB at 142.9 s (page 538, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 321, iframe:about:srcdoc#4 1, worker:fe96b0ee-eeb9-45d8-ab50-baf59f#5 1089)
+killed pid 37756; t180-track-builder.exe left running: 0
+exit 0
+lockrun: done at 2026-10-31T19:39:04.057Z, exit 0
+10 same, 0 differ
+== wvs-0434  (0.4.32; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.7      16        2            18              0
+open       48.0     655      521          1176              0
+export    100.1     685      321          1006           1095
+  open: loaded: head shown at 1.5 s, still from 28.0 s
+SWEEP-DONE

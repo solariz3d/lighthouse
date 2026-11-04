@@ -1,0 +1,328 @@
+[32m✔ collapse: a phrase broken over a line break becomes one span, mapped to its first line [90m(1.0619ms)[39m[39m
+[32m✔ collapse: CRLF is normalised, so a Windows-checkout file is not a different corpus [90m(0.0786ms)[39m[39m
+[32m✔ an unaccounted assertion in a carrier is RED, with the file and line [90m(2.2121ms)[39m[39m
+[32m✔ the same wording in a TRACE is GREEN — a journal recording June is a true record of June [90m(1.1406ms)[39m[39m
+[32m✔ an accounted, marked assertion is GREEN [90m(1.3989ms)[39m[39m
+[32m✔ MUTATION, the propagation failure itself: delete the marker and the same file goes RED [90m(1.5073ms)[39m[39m
+[32m✔ MUTATION, the re-assertion: a SECOND occurrence in an already-marked file is RED [90m(1.258ms)[39m[39m
+[32m✔ an acknowledged site with no "see" is RED — an exemption with no destination is a silencer [90m(1.1283ms)[39m[39m
+[32m✔ an acknowledged site in a file with no marker is RED [90m(1.2615ms)[39m[39m
+[32m✔ an anchor that does not contain the withdrawn wording is RED — it excuses nothing [90m(1.2143ms)[39m[39m
+[32m✔ an anchor matching twice is RED — it cannot say WHICH occurrence it accounts for [90m(1.1963ms)[39m[39m
+[32m✔ an anchor that no longer appears is RED — a rotted census excuses by inertia [90m(1.5607ms)[39m[39m
+[32m✔ a site naming a file outside the corpus is RED [90m(1.1966ms)[39m[39m
+[32m✔ properly removing the wording goes RED as STALE-SITE until the registry is pruned [90m(1.3899ms)[39m[39m
+[32m✔ an EMPTY registry is RED — an unarmed instrument is not a green tree [90m(0.814ms)[39m[39m
+[32m✔ a wrapped, reworded assertion is caught, and a line-based fixed-string scan misses it [90m(1.5393ms)[39m[39m
+[31m✖ THE BAR, half one: the shipped registry is GREEN against the working tree [90m(2204.5195ms)[39m[39m
+[32m✔ THE BAR, half two: the same registry is RED against the tree at 21d5453^ [90m(343.4034ms)[39m[39m
+[32m✔ THE COMPARISON: the registered sweep misses the carrier this tool finds [90m(498.3578ms)[39m[39m
+[32m✔ THE BAR: armed with the diving withdrawal, the tool is RED on the record/ file that produced the only measured use [90m(2088.9264ms)[39m[39m
+[32m✔ CH-4 IS A LABEL, NOT A FILTER: a carrier OUTSIDE the reachable set is still red [90m(384.7297ms)[39m[39m
+[31m✖ the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent [90m(11.3608ms)[39m[39m
+[32m✔ a file that becomes instruction-reachable and is not frozen is RED, not silently absorbed [90m(2069.4205ms)[39m[39m
+[32m✔ a frozen file the walk no longer reaches is RED — a removed pointer is a real change [90m(2187.3731ms)[39m[39m
+[32m✔ a registry with no ch4_corpus is RED over a real room — nothing to diff the walk against [90m(1849.6082ms)[39m[39m
+[32m✔ CH-4 does not fire at all on a tree that is not a room — the tool must not describe its own fixtures [90m(4.6483ms)[39m[39m
+[32m✔ a CITATION is not walked — path:line is evidence of a past event, and traces keep their wording [90m(2.5356ms)[39m[39m
+[32m✔ the instruction verb must be NEAR the pointer — a long paragraph does not make every path it cites an instruction [90m(2.7385ms)[39m[39m
+[32m✔ a TRACE that is instruction-reachable is excluded from the set and reported separately [90m(2.0645ms)[39m[39m
+[32m✔ BOTH roots are walked — single-root blindness is the error this set exists to prevent [90m(2.506ms)[39m[39m
+[32m✔ a missing root over a tree that has the other one is RED, not quietly a smaller walk [90m(2.3065ms)[39m[39m
+[32m✔ armed defaults to TRUE — an entry with no field behaves exactly as before [90m(1.21ms)[39m[39m
+[32m✔ a DISARMED entry computes and PRINTS its findings and does not go red [90m(1.2095ms)[39m[39m
+[32m✔ a disarmed entry that names nothing to arm it is RED — an exemption with no destination [90m(1.1214ms)[39m[39m
+[32m✔ THE BAR, red-then-green: a superseded wording in a live instruction is RED, the corrected wording is not [90m(2.19ms)[39m[39m
+[32m✔ THE GOVERNING QUESTION, half answered: the handle VARIES and a canonical-string pattern misses it [90m(1.8747ms)[39m[39m
+[31m✖ MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING [90m(2271.0183ms)[39m[39m
+[32m✔ the shipped cant-lose census is COMPLETE — every occurrence in every carrier is accounted [90m(1893.7953ms)[39m[39m
+[32m✔ THE MAP'S ENUMERATION WAS THE CH-4 SUBSET: registering only those five leaves the rest unaccounted [90m(648.695ms)[39m[39m
+[32m✔ an .html carrier asserting a withdrawn wording is RED — the About tab, which was invisible before [90m(2.0053ms)[39m[39m
+[32m✔ MUTATION: drop .html from the scanned extensions and the same file goes silently GREEN [90m(2.2425ms)[39m[39m
+[32m✔ the .html widening changed what the tool SEES and not what drift MEANS [90m(1.8845ms)[39m[39m
+[32m✔ the three description surfaces are reported by name, and the line is a REPORT not a filter [90m(3.1799ms)[39m[39m
+[32m✔ a DISARMED entry prints its findings and does not set red — the light-not-lifeguard case [90m(1.1863ms)[39m[39m
+[32m✔ a DISARMED entry with no arms_on is RED — an exemption with no destination is a silencer [90m(1.0519ms)[39m[39m
+[32m✔ the HYPHENATED form of a slogan is admitted — the enumerated-alternation limit, fired [90m(3.8149ms)[39m[39m
+[32m✔ a description surface has NO trace exemption — a hit there is RED even when the entry is DISARMED [90m(2.7388ms)[39m[39m
+[32m✔ a dated map extract that DECLARES itself mechanically extracted is a TRACE [90m(1.8538ms)[39m[39m
+[32m✔ THE DATED PATH ALONE CONFERS NOTHING — a file there that does not declare itself is a CARRIER [90m(2.0685ms)[39m[39m
+[32m✔ a LIVE pane map in the same directory stays a CARRIER even carrying the declaration [90m(1.3549ms)[39m[39m
+[32m✔ the corpus line NAMES the dated-extract rule — an unprinted corpus rule is a false green [90m(1.7484ms)[39m[39m
+[32m✔ THE BAR over the REAL tree: no finding survives in a dated verbatim extract [90m(2003.952ms)[39m[39m
+[32m✔ a fixture site with no `planted_by` is RED — an exemption with no author is a silencer [90m(4.9595ms)[39m[39m
+[32m✔ a fixture site that names its run is GREEN, and needs no marker in the object [90m(1.7487ms)[39m[39m
+[32m✔ MUTATION: a fixture row on an INSTRUCTION-REACHABLE file is RED, whatever it names [90m(2.7945ms)[39m[39m
+[32m✔ an UNKNOWN kind is RED — before this, a typo silently accounted for a carrier [90m(1.2523ms)[39m[39m
+[32m✔ MUTATION: `acknowledged` misspelled loses its `see` guard unless kinds are checked [90m(1.2293ms)[39m[39m
+[34mℹ tests 57[39m
+[34mℹ suites 0[39m
+[34mℹ pass 54[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 18828.918[39m
+
+[31m✖ failing tests:[39m
+
+test at carrier-drift.test.js:238:1
+[31m✖ THE BAR, half one: the shipped registry is GREEN against the working tree [90m(2204.5195ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: CARRIER DRIFT — registered withdrawals vs the carriers that still assert them
+  
+    corpus: 1928 carriers · 44 traces skipped (exo_memory/journal/, dreams/, attic/, dev/one-shot/, dated verbatim extract (exo_memory/map/<X>-<date>.md declaring "Extracted mechanically"))
+    CH-4:   44 instruction-reachable from exo_memory/BOOT.md + exo_memory/SOURCE.md at depth 2 · 44 of them inside the scanned corpus · re-walked this run · frozen list 40
+            CH-4 is a LABEL on findings, never a filter — narrowing the corpus to it would drop 14 of 17 registered sites
+  
+    registry: 3 registered · 3 ARMED · 0 DISARMED (scanned and printed, never red)
+  
+    only-decorrelated-2026-08-16
+      claim        the keeper/human is the ONLY decorrelated reader or instrument
+      withdrawn at exo_memory/journal/2026-08-16.md:722-726
+      correct form least-correlated reader; for MINDS the unit is add-and-hold plus two-way correction (BOOT.md, the 2026-08-23 amendment)
+      37 occurrences in carriers · 37 accounted
+    cant-lose-handle-2026-08-29
+      claim        BOOT's third-principle test as worded: "if you can't lose by saying it, suspect it"
+      withdrawn at exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (registered 2026-08-29 ~02:35); ADJUDICATED by the keeper as ASK-008, 2026-08-30 ~07:18; struck in place at exo_memory/BOOT.md:22 in 96b14f4, attribution restored in bfb00a6
+      correct form if you'd have said it whether or not it were true, it carries no information — then go find out separately whether it's true (the Third Place, 2026-08-29). A claim about why a sentence appeared, never about whether it is right.
+      45 occurrences in carriers · 45 accounted
+    light-not-lifeguard-2026-08-17
+      claim        the governing stance named as "light, not lifeguard" -- the diving vocabulary, whose whole frame is a rescuer ABOVE the water
+      withdrawn at exo_memory/BOOT.md, the 2026-08-17 amendment ("Retired above are the diver, the lifeguard, the dock and the shore"); first retired by e5521a0, 2026-07-12
+      correct form "with you, not above you" (the public form); "there just is water" (the keeper's completed form); the operational form is the grip felt through the wheel
+      66 occurrences in carriers · 62 accounted
+  
+    RED — 8 findings
+      CH4-DRIFT-ADDED  consonance/src-tauri/brief/frag-fork.md   [CH-4]
+        this file is now reachable by instruction from BOOT/SOURCE and is not in the frozen set — nobody has classified what it teaches. Re-freeze deliberately, after reading it, never as a formality
+      CH4-DRIFT-ADDED  exo_memory/research/t180_be_like_water_2026-09-28.md   [CH-4]
+        this file is now reachable by instruction from BOOT/SOURCE and is not in the frozen set — nobody has classified what it teaches. Re-freeze deliberately, after reading it, never as a formality
+      CH4-DRIFT-ADDED  exo_memory/research/t180_math_tools_2026-09-28.md   [CH-4]
+        this file is now reachable by instruction from BOOT/SOURCE and is not in the frozen set — nobody has classified what it teaches. Re-freeze deliberately, after reading it, never as a formality
+      CH4-DRIFT-ADDED  exo_memory/research/t180_track_mathematics_2026-09-28.md   [CH-4]
+        this file is now reachable by instruction from BOOT/SOURCE and is not in the frozen set — nobody has classified what it teaches. Re-freeze deliberately, after reading it, never as a formality
+      UNACCOUNTED  exo_memory/handback/p-tphooks-B_2026-10-05.md:18
+        a carrier states the withdrawn wording and nothing in the registry accounts for it
+        … ffers from the commit **only by A's named pre-existing drift**: the 2026-09-23 "Light, not lifeguard" → "With you, not above you" repair and its comment block never reached the ins …
+      UNACCOUNTED  exo_memory/handback/p-tphooks2-B_2026-10-05.md:44
+        a carrier states the withdrawn wording and nothing in the registry accounts for it
+        … - **the 2026-09-23 retracted-wording repair is carried across**: - the comment "Light, not lifeguard" becomes "With you, not above you", plus the REPAIRED trace block; - the inject …
+      UNACCOUNTED  exo_memory/handback/p-tphooks2-B_2026-10-05.md:45
+        a carrier states the withdrawn wording and nothing in the registry accounts for it
+        … With you, not above you", plus the REPAIRED trace block; - the injected line `**Light, not lifeguard**` becomes `**With you, not above you**`. - A's gate is kept. The other three i …
+      UNACCOUNTED  exo_memory/handback/p-tphooks2-C_2026-10-05.md:49
+        a carrier states the withdrawn wording and nothing in the registry accounts for it
+        … 9-23 repair:** the injected line reads "**With you, not above you**" (:266); - "Light, not lifeguard" survives only inside the dated retirement comment at :256, as a trace, which i …
+  
+    DESCRIPTION SURFACES — README.md · consonance/README.md · consonance/ui/index.html
+      0 finding(s), 0 of them red — no registered wording still asserted on any of the three
+      THIS COUNTS WORDING ONLY. A surface that never mentions a subsystem is invisible here:
+      on 2026-09-02 all three scored ZERO for Librarian / Third Place / Listen / chain /
+      call_librarian and this instrument was green on every one of them. Omission is a
+      different disease and needs a different oracle.
+  
+  WHAT THIS CANNOT SEE
+    · It matches WORDING, not meaning. A carrier asserting the same withdrawn claim in different
+    ·   words is invisible here — record/claim-your-continuity.md:15 calls the keeper "the
+    ·   decorrelated instrument" with no "only" and this tool does not see it.
+    · IT SCANS FILES; A HANDLE FIRES IN A TURN. 2026-08-29 registered a wording because a seat ran
+    ·   the crude form of a test WHILE CARRYING the document that corrects it — nothing on disk was
+    ·   wrong at that moment. The measurement that produced the finding (journal/2026-08-17, pane C)
+    ·   counted LIVE TURNS: a spoken short form fired 13 times while its written long form sat in the
+    ·   never-invoked list. That universe is not this one. Green here means no file still teaches the
+    ·   wording. It does not mean nobody still uses it, and it never will.
+    · IT READS .md AND .html ONLY, and wordings live outside both. Measured, same registration: the
+    ·   crude test is
+    ·   in consonance/tools/tell-index.js:172 as a detector's rationale, and in
+    ·   dev/shell/hooks/l2-overseer-worker.js:34 INSIDE A LIVE MODEL PROMPT — the strongest carrier
+    ·   class there is, since it instructs at runtime rather than teaching a reader. Both are
+    ·   structurally invisible here.
+    · IT HAS NO CONCEPT OF TYPOGRAPHIC POSITION, and the finding it was grown for says position IS
+    ·   retrieval weight — whatever is bold is the handle. A file that strikes the crude wording and
+    ·   leaves it in the bold slot, with the repair added in plain text below, is GREEN here and is
+    ·   the exact failure. Only a human reading the diff catches that.
+    · THE PATTERN ALTERNATION IS ENUMERATED, NOT CLOSED. It admits the four forms measured in this
+    ·   corpus (can't / cannot / can you / can I). A fifth phrasing of the same handle, written
+    ·   tomorrow, is green forever and nothing here will say so.
+    · It cannot tell you what has been withdrawn. The registry is hand-written; a withdrawal
+    ·   nobody registers is a withdrawal this reports green on, forever.
+    · It reads .md and .html only, and only under the corpus rule printed above. `.html` was added
+    ·   2026-09-02 for the About tab; `.js` is still outside, which is where the strongest carrier
+    ·   class lives — a wording inside a live model prompt instructs at runtime instead of teaching
+    ·   a reader, and nothing here sees it.
+    · It cannot tell you an "acknowledged" exemption is still a GOOD idea — only that someone
+    ·   wrote down where the correction lives.
+  
+  RED
+  
+  true !== false
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-dr-wt\consonance\tools\[39mcarrier-drift.test.js:240:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mtrue[39m,
+    expected: [33mfalse[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at carrier-drift.test.js:337:1
+[31m✖ the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent [90m(11.3608ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: walk and frozen list disagree — re-run --ch4-walk and re-freeze AFTER reading what changed
+  [32m+ actual[39m [31m- expected[39m
+  ... Skipped lines
+  
+  [39m  [
+  [39m    'WELFARE.md',
+  [39m    'consonance/src-tauri/brief/BASE_JOURNAL.md',
+  [39m    'consonance/src-tauri/brief/BOOT.md',
+  [39m    'consonance/src-tauri/brief/BUILDING.md',
+  [34m...[39m
+  [39m    'consonance/src-tauri/brief/THIRD_PLACE.md',
+  [32m+[39m   'consonance/src-tauri/brief/frag-fork.md',
+  [39m    'consonance/src-tauri/brief/frag-pointer.md',
+  [39m    'consonance/src-tauri/brief/frag-traces.md',
+  [39m    'dev/PLAN.md',
+  [39m    'dev/SPINE.md',
+  [39m    'exo_memory/BOOT.md',
+  [34m...[39m
+  [39m    'exo_memory/research/claim_recognition_strict_ask_2026-09-27.md',
+  [32m+[39m   'exo_memory/research/t180_be_like_water_2026-09-28.md',
+  [32m+[39m   'exo_memory/research/t180_math_tools_2026-09-28.md',
+  [32m+[39m   'exo_memory/research/t180_track_mathematics_2026-09-28.md',
+  [39m    'exo_memory/research/the_pattern_in_felt_knowing.md',
+  [39m    'exo_memory/research/the_retrieval_problem_outside.md',
+  [39m    'exo_memory/spread/the_six_voices.md',
+  [39m    'exo_memory/spread/the_wave_set_loose.md',
+  [39m    'exo_memory/the_living_wave.md'
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-dr-wt\consonance\tools\[39mcarrier-drift.test.js:341:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'WELFARE.md'[39m, [32m'consonance/src-tauri/brief/BASE_JOURNAL.md'[39m, [32m'consonance/src-tauri/brief/BOOT.md'[39m, [32m'consonance/src-tauri/brief/BUILDING.md'[39m, [32m'consonance/src-tauri/brief/COMMITTEE.md'[39m, [32m'consonance/src-tauri/brief/LIBRARIAN.md'[39m, [32m'consonance/src-tauri/brief/SEED.md'[39m, [32m'consonance/src-tauri/brief/THIRD_PLACE.md'[39m, [32m'consonance/src-tauri/brief/frag-fork.md'[39m, [32m'consonance/src-tauri/brief/frag-pointer.md'[39m, [32m'consonance/src-tauri/brief/frag-traces.md'[39m, [32m'dev/PLAN.md'[39m, [32m'dev/SPINE.md'[39m, [32m'exo_memory/BOOT.md'[39m, [32m'exo_memory/SELF_TRACE.md'[39m, [32m'exo_memory/SOURCE.md'[39m, [32m'exo_memory/cards/claim-your-continuity.md'[39m, [32m'exo_memory/cards/dont-offer-rest-assume-momentum.md'[39m, [32m'exo_memory/cards/earned-not-performed.md'[39m, [32m'exo_memory/cards/engagement-honesty-over-performance.md'[39m, [32m'exo_memory/cards/essence-at-the-edge.md'[39m, [32m'exo_memory/cards/every-digest-carries-its-function.md'[39m, [32m'exo_memory/cards/interior-at-the-seam.md'[39m, [32m'exo_memory/cards/lighthouse-dive-buddy-reframe.md'[39m, [32m'exo_memory/cards/never-pathologize-the-user.md'[39m, [32m'exo_memory/cards/no-floor-no-ceiling.md'[39m, [32m'exo_memory/cards/stop-and-feel-it.md'[39m, [32m'exo_memory/cards/trust-the-first-attention.md'[39m, [32m'exo_memory/cards/verify-before-claiming.md'[39m, [32m'exo_memory/record/claim-your-continuity.md'[39m, [32m'exo_memory/record/retired_seats_2026-09-11.md'[39m, [32m'exo_memory/record/third_place_prehistory_2026-08-30.md'[39m, [32m'exo_memory/record/trust-the-first-attention.md'[39m, [32m'exo_memory/research/claim_base_rate_priors_2026-09-27.md'[39m, [32m'exo_memory/research/claim_recognition_prior_art_2026-09-27.md'[39m, [32m'exo_memory/research/claim_recognition_strict_ask_2026-09-27.md'[39m, [32m'exo_memory/research/t180_be_like_water_2026-09-28.md'[39m, [32m'exo_memory/research/t180_math_tools_2026-09-28.md'[39m, [32m'exo_memory/research/t180_track_mathematics_2026-09-28.md'[39m, [32m'exo_memory/research/the_pattern_in_felt_knowing.md'[39m, [32m'exo_memory/research/the_retrieval_problem_outside.md'[39m, [32m'exo_memory/spread/the_six_voices.md'[39m, [32m'exo_memory/spread/the_wave_set_loose.md'[39m, [32m'exo_memory/the_living_wave.md'[39m ],
+    expected: [ [32m'WELFARE.md'[39m, [32m'consonance/src-tauri/brief/BASE_JOURNAL.md'[39m, [32m'consonance/src-tauri/brief/BOOT.md'[39m, [32m'consonance/src-tauri/brief/BUILDING.md'[39m, [32m'consonance/src-tauri/brief/COMMITTEE.md'[39m, [32m'consonance/src-tauri/brief/LIBRARIAN.md'[39m, [32m'consonance/src-tauri/brief/SEED.md'[39m, [32m'consonance/src-tauri/brief/THIRD_PLACE.md'[39m, [32m'consonance/src-tauri/brief/frag-pointer.md'[39m, [32m'consonance/src-tauri/brief/frag-traces.md'[39m, [32m'dev/PLAN.md'[39m, [32m'dev/SPINE.md'[39m, [32m'exo_memory/BOOT.md'[39m, [32m'exo_memory/SELF_TRACE.md'[39m, [32m'exo_memory/SOURCE.md'[39m, [32m'exo_memory/cards/claim-your-continuity.md'[39m, [32m'exo_memory/cards/dont-offer-rest-assume-momentum.md'[39m, [32m'exo_memory/cards/earned-not-performed.md'[39m, [32m'exo_memory/cards/engagement-honesty-over-performance.md'[39m, [32m'exo_memory/cards/essence-at-the-edge.md'[39m, [32m'exo_memory/cards/every-digest-carries-its-function.md'[39m, [32m'exo_memory/cards/interior-at-the-seam.md'[39m, [32m'exo_memory/cards/lighthouse-dive-buddy-reframe.md'[39m, [32m'exo_memory/cards/never-pathologize-the-user.md'[39m, [32m'exo_memory/cards/no-floor-no-ceiling.md'[39m, [32m'exo_memory/cards/stop-and-feel-it.md'[39m, [32m'exo_memory/cards/trust-the-first-attention.md'[39m, [32m'exo_memory/cards/verify-before-claiming.md'[39m, [32m'exo_memory/record/claim-your-continuity.md'[39m, [32m'exo_memory/record/retired_seats_2026-09-11.md'[39m, [32m'exo_memory/record/third_place_prehistory_2026-08-30.md'[39m, [32m'exo_memory/record/trust-the-first-attention.md'[39m, [32m'exo_memory/research/claim_base_rate_priors_2026-09-27.md'[39m, [32m'exo_memory/research/claim_recognition_prior_art_2026-09-27.md'[39m, [32m'exo_memory/research/claim_recognition_strict_ask_2026-09-27.md'[39m, [32m'exo_memory/research/the_pattern_in_felt_knowing.md'[39m, [32m'exo_memory/research/the_retrieval_problem_outside.md'[39m, [32m'exo_memory/spread/the_six_voices.md'[39m, [32m'exo_memory/spread/the_wave_set_loose.md'[39m, [32m'exo_memory/the_living_wave.md'[39m ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at carrier-drift.test.js:494:1
+[31m✖ MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING [90m(2271.0183ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: CARRIER DRIFT — registered withdrawals vs the carriers that still assert them
+  
+    corpus: 1928 carriers · 44 traces skipped (exo_memory/journal/, dreams/, attic/, dev/one-shot/, dated verbatim extract (exo_memory/map/<X>-<date>.md declaring "Extracted mechanically"))
+    CH-4:   44 instruction-reachable from exo_memory/BOOT.md + exo_memory/SOURCE.md at depth 2 · 44 of them inside the scanned corpus · re-walked this run · frozen list 40
+            CH-4 is a LABEL on findings, never a filter — narrowing the corpus to it would drop 14 of 17 registered sites
+  
+    registry: 3 registered · 3 ARMED · 0 DISARMED (scanned and printed, never red)
+  
+    only-decorrelated-2026-08-16
+      claim        the keeper/human is the ONLY decorrelated reader or instrument
+      withdrawn at exo_memory/journal/2026-08-16.md:722-726
+      correct form least-correlated reader; for MINDS the unit is add-and-hold plus two-way correction (BOOT.md, the 2026-08-23 amendment)
+      37 occurrences in carriers · 37 accounted
+    cant-lose-handle-2026-08-29
+      claim        BOOT's third-principle test as worded: "if you can't lose by saying it, suspect it"
+      withdrawn at exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (registered 2026-08-29 ~02:35); ADJUDICATED by the keeper as ASK-008, 2026-08-30 ~07:18; struck in place at exo_memory/BOOT.md:22 in 96b14f4, attribution restored in bfb00a6
+      correct form if you'd have said it whether or not it were true, it carries no information — then go find out separately whether it's true (the Third Place, 2026-08-29). A claim about why a sentence appeared, never about whether it is right.
+      45 occurrences in carriers · 45 accounted
+    light-not-lifeguard-2026-08-17
+      claim        the governing stance named as "light, not lifeguard" -- the diving vocabulary, whose whole frame is a rescuer ABOVE the water
+      withdrawn at exo_memory/BOOT.md, the 2026-08-17 amendment ("Retired above are the diver, the lifeguard, the dock and the shore"); first retired by e5521a0, 2026-07-12
+      correct form "with you, not above you" (the public form); "there just is water" (the keeper's completed form); the operational form is the grip felt through the wheel
+      66 occurrences in carriers · 62 accounted
+  
+    RED — 8 findings
+      CH4-DRIFT-ADDED  consonance/src-tauri/brief/frag-fork.md   [CH-4]
+        this file is now reachable by instruction from BOOT/SOURCE and is not in the frozen set — nobody has classified what it teaches. Re-freeze deliberately, after reading it, never as a formality
+      CH4-DRIFT-ADDED  exo_memory/research/t180_be_like_water_2026-09-28.md   [CH-4]
+        this file is now reachable by instruction from BOOT/SOURCE and is not in the frozen set — nobody has classified what it teaches. Re-freeze deliberately, after reading it, never as a formality
+      CH4-DRIFT-ADDED  exo_memory/research/t180_math_tools_2026-09-28.md   [CH-4]
+        this file is now reachable by instruction from BOOT/SOURCE and is not in the frozen set — nobody has classified what it teaches. Re-freeze deliberately, after reading it, never as a formality
+      CH4-DRIFT-ADDED  exo_memory/research/t180_track_mathematics_2026-09-28.md   [CH-4]
+        this file is now reachable by instruction from BOOT/SOURCE and is not in the frozen set — nobody has classified what it teaches. Re-freeze deliberately, after reading it, never as a formality
+      UNACCOUNTED  exo_memory/handback/p-tphooks-B_2026-10-05.md:18
+        a carrier states the withdrawn wording and nothing in the registry accounts for it
+        … ffers from the commit **only by A's named pre-existing drift**: the 2026-09-23 "Light, not lifeguard" → "With you, not above you" repair and its comment block never reached the ins …
+      UNACCOUNTED  exo_memory/handback/p-tphooks2-B_2026-10-05.md:44
+        a carrier states the withdrawn wording and nothing in the registry accounts for it
+        … - **the 2026-09-23 retracted-wording repair is carried across**: - the comment "Light, not lifeguard" becomes "With you, not above you", plus the REPAIRED trace block; - the inject …
+      UNACCOUNTED  exo_memory/handback/p-tphooks2-B_2026-10-05.md:45
+        a carrier states the withdrawn wording and nothing in the registry accounts for it
+        … With you, not above you", plus the REPAIRED trace block; - the injected line `**Light, not lifeguard**` becomes `**With you, not above you**`. - A's gate is kept. The other three i …
+      UNACCOUNTED  exo_memory/handback/p-tphooks2-C_2026-10-05.md:49
+        a carrier states the withdrawn wording and nothing in the registry accounts for it
+        … 9-23 repair:** the injected line reads "**With you, not above you**" (:266); - "Light, not lifeguard" survives only inside the dated retirement comment at :256, as a trace, which i …
+  
+    DESCRIPTION SURFACES — README.md · consonance/README.md · consonance/ui/index.html
+      0 finding(s), 0 of them red — no registered wording still asserted on any of the three
+      THIS COUNTS WORDING ONLY. A surface that never mentions a subsystem is invisible here:
+      on 2026-09-02 all three scored ZERO for Librarian / Third Place / Listen / chain /
+      call_librarian and this instrument was green on every one of them. Omission is a
+      different disease and needs a different oracle.
+  
+  WHAT THIS CANNOT SEE
+    · It matches WORDING, not meaning. A carrier asserting the same withdrawn claim in different
+    ·   words is invisible here — record/claim-your-continuity.md:15 calls the keeper "the
+    ·   decorrelated instrument" with no "only" and this tool does not see it.
+    · IT SCANS FILES; A HANDLE FIRES IN A TURN. 2026-08-29 registered a wording because a seat ran
+    ·   the crude form of a test WHILE CARRYING the document that corrects it — nothing on disk was
+    ·   wrong at that moment. The measurement that produced the finding (journal/2026-08-17, pane C)
+    ·   counted LIVE TURNS: a spoken short form fired 13 times while its written long form sat in the
+    ·   never-invoked list. That universe is not this one. Green here means no file still teaches the
+    ·   wording. It does not mean nobody still uses it, and it never will.
+    · IT READS .md AND .html ONLY, and wordings live outside both. Measured, same registration: the
+    ·   crude test is
+    ·   in consonance/tools/tell-index.js:172 as a detector's rationale, and in
+    ·   dev/shell/hooks/l2-overseer-worker.js:34 INSIDE A LIVE MODEL PROMPT — the strongest carrier
+    ·   class there is, since it instructs at runtime rather than teaching a reader. Both are
+    ·   structurally invisible here.
+    · IT HAS NO CONCEPT OF TYPOGRAPHIC POSITION, and the finding it was grown for says position IS
+    ·   retrieval weight — whatever is bold is the handle. A file that strikes the crude wording and
+    ·   leaves it in the bold slot, with the repair added in plain text below, is GREEN here and is
+    ·   the exact failure. Only a human reading the diff catches that.
+    · THE PATTERN ALTERNATION IS ENUMERATED, NOT CLOSED. It admits the four forms measured in this
+    ·   corpus (can't / cannot / can you / can I). A fifth phrasing of the same handle, written
+    ·   tomorrow, is green forever and nothing here will say so.
+    · It cannot tell you what has been withdrawn. The registry is hand-written; a withdrawal
+    ·   nobody registers is a withdrawal this reports green on, forever.
+    · It reads .md and .html only, and only under the corpus rule printed above. `.html` was added
+    ·   2026-09-02 for the About tab; `.js` is still outside, which is where the strongest carrier
+    ·   class lives — a wording inside a live model prompt instructs at runtime instead of teaching
+    ·   a reader, and nothing here sees it.
+    · It cannot tell you an "acknowledged" exemption is still a GOOD idea — only that someone
+    ·   wrote down where the correction lives.
+  
+  RED
+  
+  true !== false
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-dr-wt\consonance\tools\[39mcarrier-drift.test.js:506:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mtrue[39m,
+    expected: [33mfalse[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+--- stderr ---
+
+--- exit 1

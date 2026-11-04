@@ -1,0 +1,26 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+A 600 H 40 G 0: base crosses 142,823,1383,1507,1792,1920
+A 600 H 40 G 200: base crosses 737,1309,1537,1788
+A 600 H 50 G 0: base crosses 138,1846
+A 600 H 50 G 200: base crosses 94,2060
+
+A 600 H 60 G 0 0.001: window [3] open crosses 2912; start crosses  (near open: 0), move 124.6 vs drag 51.0, start straight false; fallback crosses  :: ur bend was undone to close the lap; bend f
+
+A 600 H 60 G 0 0.002: window [3] open crosses 2870; start crosses  (near open: 0), move 197.3 vs drag 101.9, start straight false; fallback crosses  :: ur bend was undone to close the lap; bend f
+
+A 600 H 60 G 0 0.003: window [3] open crosses 2828; start crosses  (near open: 0), move 428.9 vs drag 152.4, start straight false; fallback crosses  :: ur bend was undone to close the lap; bend f
+...
+A 600 H 60 G 200 0.001: window [3] open crosses 3110; start crosses  (near open: 0), move 177.6 vs drag 59.7, start straight false; fallback crosses  :: ur bend was undone to close the lap; bend f
+
+A 600 H 60 G 200 0.002: window [3] open crosses 3068; start crosses  (near open: 0), move 268.4 vs drag 119.2, start straight false; fallback crosses  :: ur bend was undone to close the lap; bend f
+
+A 600 H 60 G 200 0.003: window [3] open crosses 3024; start crosses  (near open: 0), move 311.5 vs drag 178.4, start straight false; fallback crosses  :: ur bend was undone to close the lap; bend f
+...A 900 H 40 G 0: base crosses 120,929,1731,1933,2112
+A 900 H 40 G 200: base crosses 52,713,873,889,897,1311,1337,1351,1845,1933,2030,2102,2344,2554,2760,2948,3513
+A 900 H 50 G 0: base crosses 150,2398
+A 900 H 50 G 200: base crosses 98,2638
+
+A 900 H 60 G 0 0.001: window [3] open crosses 3500; start crosses  (near open: 0), move 763.6 vs drag 60.3, start straight true; fallback crosses  :: ur bend was undone to close the lap; bend f
+.....
+A 900 H 60 G 200 0.001: window [3] open crosses 3696; start crosses  (near open: 0), move 698.5 vs drag 70.3, start straight true; fallback crosses  :: ur bend was undone to close the lap; bend f
+.....

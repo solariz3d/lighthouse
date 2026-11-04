@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried
+ok 1 - row 1: an end already at the start: one press is the near-closed bend, with no new road and nothing moved; Finish is not even tried
+  ---
+  duration_ms: 2128.7077
+  type: 'test'
+  ...
+# Subtest: row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop
+ok 2 - row 2: ends 2, 5 and 10 m past the start, and 5 m short of it, close by a bend: no new road, no loop
+  ---
+  duration_ms: 8284.8275
+  type: 'test'
+  ...
+# Subtest: row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it
+ok 3 - row 3: new road only when no bend proves: a far end gets Finish (every other route refused or failed); a near end does not, though Finish closed it
+  ---
+  duration_ms: 3409.7966
+  type: 'test'
+  ...
+# Subtest: row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason
+ok 4 - row 4: when no way proves, there is no document, and one line says nothing changed and why, with the closest way's reason
+  ---
+  duration_ms: 4406.4126
+  type: 'test'
+  ...
+# Subtest: row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead
+ok 5 - row 5: a bend that would move the track further than its gap and 10 m is not eligible, and new road is laid instead
+  ---
+  duration_ms: 1579.3942
+  type: 'test'
+  ...
+# Subtest: row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red
+ok 6 - row 7: the pick is the least-moving way that proves: every way that would move the track less was refused or failed the lap proof or added a red
+  ---
+  duration_ms: 7802.1614
+  type: 'test'
+  ...
+# Subtest: row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order
+ok 7 - row 8: the order: no new road first (even when the new road moves nothing), then the least movement, and within a millimetre the route order
+  ---
+  duration_ms: 0.6643
+  type: 'test'
+  ...
+# Subtest: row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.4 m, with no new road, and the lap proves
+ok 8 - row 6: the reported near-closed save: one press bends its last 2 pieces by up to 4.4 m, with no new road, and the lap proves # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.0544
+  type: 'test'
+  ...
+# Subtest: row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run
+ok 9 - row 9: when the end is at the start, the near bend is closed and checked first, and once it proves no other route is run
+  ---
+  duration_ms: 1771.1965
+  type: 'test'
+  ...
+# Subtest: row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track
+ok 10 - row 10: the pick is the exhaustive order's on every track: the same route, the same words, the same closed track
+  ---
+  duration_ms: 31375.0833
+  type: 'test'
+  ...
+# Subtest: row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them
+ok 11 - row 11: given the open track's reds, the press does not check the open track, and picks exactly as it does without them
+  ---
+  duration_ms: 8208.6809
+  type: 'test'
+  ...
+# Subtest: row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does
+ok 12 - row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.1453
+  type: 'test'
+  ...
+# Subtest: row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document
+ok 13 - row 13: the worker's press on a structuredClone of the track picks and closes exactly as on the track, and residual never runs on an unfrozen document
+  ---
+  duration_ms: 4412.2102
+  type: 'test'
+  ...
+# Subtest: row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen
+ok 14 - row 14: the reported save: the worker's press on a structuredClone, with the live checker's reds, picks and closes as on the parsed save, residual never unfrozen # SKIP fixtures-d337/pre-close.t180track is not here (a private track, kept off the repository)
+  ---
+  duration_ms: 0.0861
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 3
+# todo 0
+# duration_ms 73498.1153

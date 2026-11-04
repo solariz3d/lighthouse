@@ -288,7 +288,7 @@ t("a numeric subscript is left to the num operator, keeping the families disjoin
 
 t("a live lock stops a second sweep from interleaving two mutation streams in one tree", () => {
   const { takeLock, LOCKNAME } = require("./guard-census.js");
-  const dir = require("fs").mkdtempSync(path.join(require("os").tmpdir(), "gclock-"));
+  const dir = require('./scratch.js').mkdtemp('gclock-');
   const drop = takeLock(dir, "first");
   const rec = JSON.parse(require("fs").readFileSync(path.join(dir, LOCKNAME), "utf8"));
   assert.equal(rec.pid, process.pid);
@@ -306,7 +306,7 @@ t("a live lock stops a second sweep from interleaving two mutation streams in on
 t("a stale lock from a dead pid is cleared, not honoured forever", () => {
   const { takeLock, LOCKNAME } = require("./guard-census.js");
   const fs2 = require("fs");
-  const dir = fs2.mkdtempSync(path.join(require("os").tmpdir(), "gclock-"));
+  const dir = require('./scratch.js').mkdtemp("gclock-");
   fs2.writeFileSync(path.join(dir, LOCKNAME), JSON.stringify({ pid: 999999, what: "ghost" }));
   const drop = takeLock(dir, "live");                       // must not exit
   assert.equal(JSON.parse(fs2.readFileSync(path.join(dir, LOCKNAME), "utf8")).pid, process.pid);
@@ -318,6 +318,77 @@ t("the lock lands where a writer would find it — visible to git status in the 
   const { LOCKNAME } = require("./guard-census.js");
   assert.ok(LOCKNAME.startsWith("."), "expected a dotfile");
   assert.ok(!LOCKNAME.includes("/") && !LOCKNAME.includes("\\"), "must sit in the repo root, not a subdir");
+});
+
+/* ---- D300: the fixed names in the OS temp dir are shared by every run on the machine ---- */
+
+const GC = path.join(__dirname, "guard-census.js");
+const scratchOf = () => require("./guard-census.js").SCRATCH || path.join(require("os").tmpdir(), "guard-census");
+
+t("a second run does not restore a LIVE run's mutation under it (D300: one fixed inflight.json did)", () => {
+  const fs2 = require("fs");
+  const { withRestore } = require("./guard-census.js");
+  const dir = require("./scratch.js").mkdtemp("gcinflight-");
+  const f = path.join(dir, "src.js");
+  fs2.writeFileSync(f, "original");
+  try {
+    withRestore(f, () => {
+      fs2.writeFileSync(f, "mutant");
+      const r = require("child_process").spawnSync(process.execPath, ["-e", `require(${JSON.stringify(GC.replace(/\\/g, "/"))}).restoreInflight()`], { encoding: "utf8" });
+      assert.equal(r.status, 0, r.stderr);
+      assert.equal(fs2.readFileSync(f, "utf8"), "mutant", "a second run put the original back mid-mutation; the mutant would score SURVIVED");
+    });
+    assert.equal(fs2.readFileSync(f, "utf8"), "original", "the live run's own finally still restores");
+  } finally { fs2.rmSync(dir, { recursive: true, force: true }); }
+});
+
+t("a killed run's mutation is restored by the next run, found by its pid (D300)", () => {
+  const fs2 = require("fs");
+  const dir = require("./scratch.js").mkdtemp("gcinflight-");
+  const f = path.join(dir, "src.js");
+  fs2.writeFileSync(f, "mutant");
+  fs2.mkdirSync(scratchOf(), { recursive: true });
+  const rec = path.join(scratchOf(), "inflight-999999.json");         // 999999 is no live pid (Windows pids are multiples of 4)
+  fs2.writeFileSync(rec, JSON.stringify({ pid: 999999, path: f, bytes: Buffer.from("original").toString("base64") }));
+  try {
+    assert.equal(require("./guard-census.js").restoreInflight(), true);
+    assert.equal(fs2.readFileSync(f, "utf8"), "original");
+    assert.ok(!fs2.existsSync(rec), "the record of a restored run must go");
+  } finally { try { fs2.unlinkSync(rec); } catch (e) {} fs2.rmSync(dir, { recursive: true, force: true }); }
+});
+
+t("a record left under the pre-D300 name is still restored, not stranded", () => {
+  const fs2 = require("fs");
+  const dir = require("./scratch.js").mkdtemp("gcinflight-");
+  const f = path.join(dir, "src.js");
+  fs2.writeFileSync(f, "mutant");
+  fs2.mkdirSync(scratchOf(), { recursive: true });
+  const rec = path.join(scratchOf(), "inflight.json");
+  fs2.writeFileSync(rec, JSON.stringify({ path: f, bytes: Buffer.from("original").toString("base64") }));
+  try {
+    assert.equal(require("./guard-census.js").restoreInflight(), true);
+    assert.equal(fs2.readFileSync(f, "utf8"), "original");
+  } finally { try { fs2.unlinkSync(rec); } catch (e) {} fs2.rmSync(dir, { recursive: true, force: true }); }
+});
+
+t("every arm that touches a fixed-name work copy refuses while another run owns the scratch (D300)", () => {
+  const fs2 = require("fs");
+  const { takeLock } = require("./guard-census.js");
+  const arms = [[["canfail"], "work-canfail"], [["selfcheck"], "work-selfcheck"], [["mutation", "--corpus", "blackbox"], "work-blackbox"],
+                [["history"], "wt-blackbox"], [["cleanup"], "work-blackbox"]];
+  for (const [argv, copy] of arms) {
+    const tmp = require("./scratch.js").mkdtemp("gcscratch-");
+    const sc = path.join(tmp, "guard-census"), work = path.join(sc, copy);
+    fs2.mkdirSync(work, { recursive: true });
+    fs2.writeFileSync(path.join(work, "theirs.js"), "another run's copy");
+    const drop = takeLock(sc, "first");
+    try {
+      const r = require("child_process").spawnSync(process.execPath, [GC, ...argv], { encoding: "utf8",
+        env: { ...process.env, TEMP: tmp, TMP: tmp, TMPDIR: tmp, GUARD_CENSUS_BLACKBOX: path.join(tmp, "no-blackbox") } });
+      assert.ok(fs2.existsSync(path.join(work, "theirs.js")), `${argv[0]}: the second run deleted the first run's ${copy}`);
+      assert.equal(r.status, 3, `${argv.join(" ")}: the second run did not refuse:\n${r.stdout}${r.stderr}`);
+    } finally { drop(); fs2.rmSync(tmp, { recursive: true, force: true }); }
+  }
 });
 
 /* ---- the total must read every family, or it omits the arm run to move it ---- */

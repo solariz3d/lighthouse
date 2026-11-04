@@ -1,0 +1,802 @@
+heavy-run: waiting on 6fe15f0a pid 5572 (A D190: --test --test-concurrency=2 test/core_doc.test.js test/core_extend.test.js test/, since 2026-09-29T21:50:30.548Z)
+heavy-run: waiting on 6fe15f0a pid 5572 (A D190: --test --test-concurrency=2 test/core_doc.test.js test/core_extend.test.js test/, since 2026-09-29T21:50:30.548Z)
+heavy-run: waiting on 6fe15f0a pid 5572 (A D190: --test --test-concurrency=2 test/core_doc.test.js test/core_extend.test.js test/, since 2026-09-29T21:50:30.548Z)
+[31m✖ row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward) [90m(0.6738ms)[39m[39m
+[31m✖ row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width [90m(0.0954ms)[39m[39m
+[31m✖ row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge) [90m(2.8313ms)[39m[39m
+[31m✖ row 1b (default): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.8286ms)[39m[39m
+[31m✖ row 1b (default): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.3561ms)[39m[39m
+[31m✖ row 1b (default): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.4454ms)[39m[39m
+[31m✖ row 1b (default): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.4609ms)[39m[39m
+[31m✖ row 1b (cupRuns): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.3499ms)[39m[39m
+[31m✖ row 1b (cupRuns): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.3403ms)[39m[39m
+[31m✖ row 1b (cupRuns): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.5033ms)[39m[39m
+[31m✖ row 1b (cupRuns): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.2047ms)[39m[39m
+[31m✖ row 1b: the default scheme emits a seam zip where c changes and NONE where it is held (measured, and the reason cupRuns exists): the last 100 m of a 400 m piece has none [90m(0.2905ms)[39m[39m
+[31m✖ the default scheme keeps segment.profile LOCAL: its edge is c at the segment's end within 0.05° (what the marker layout, validation, the water and the camera read), and the cupRuns scheme does not (its profile is the run's widest) [90m(0.5499ms)[39m[39m
+[31m✖ row 1b: a bowl cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(0.5854ms)[39m[39m
+[31m✖ row 1b: a half-pipe cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(0.2234ms)[39m[39m
+[31m✖ row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside) [90m(0.2053ms)[39m[39m
+[31m✖ row 1b (default): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(0.3749ms)[39m[39m
+[31m✖ row 1b (cupRuns): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(0.1685ms)[39m[39m
+[31m✖ row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse [90m(0.4135ms)[39m[39m
+[31m✖ row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard) [90m(0.8087ms)[39m[39m
+[31m✖ row 2 (iii): a cup that reaches a limit (150 or 0) ends flat, so the piece after it continues C1 inside [0, 150], and a lap held at 150 closes (a solver's float noise on a control point at the limit is not a violation) [90m(0.3757ms)[39m[39m
+[31m✖ row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots [90m(0.3828ms)[39m[39m
+[31m✖ row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it) [90m(0.1712ms)[39m[39m
+[31m✖ row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works [90m(0.4661ms)[39m[39m
+[31m✖ row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit [90m(0.313ms)[39m[39m
+[31m✖ row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test) [90m(1.132ms)[39m[39m
+[31m✖ row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate) [90m(0.5564ms)[39m[39m
+[31m✖ row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows) [90m(1.2935ms)[39m[39m
+[31m✖ row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4) [90m(0.4399ms)[39m[39m
+[31m✖ row 5: a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), renders through profileAt with no blend and no new key, and saves as /3 [90m(1.04ms)[39m[39m
+[31m✖ row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge [90m(1.7355ms)[39m[39m
+[31m✖ row 5b: a cup document round-trips through /3 text (serialize, parse, serialize) [90m(0.2861ms)[39m[39m
+[31m✖ row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°) [90m(3.278ms)[39m[39m
+[31m✖ row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank) [90m(0.4758ms)[39m[39m
+[31m✖ row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece [90m(0.1353ms)[39m[39m
+[31m✖ row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it [90m(0.2364ms)[39m[39m
+[31m✖ knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel) [90m(0.2407ms)[39m[39m
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4.1419ms)[39m[39m
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(1.1504ms)[39m[39m
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(1.2285ms)[39m[39m
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(1.2382ms)[39m[39m
+[31m✖ row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(0.8572ms)[39m[39m
+[31m✖ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(1.2852ms)[39m[39m
+[31m✖ row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(1.2568ms)[39m[39m
+[31m✖ row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(0.821ms)[39m[39m
+[31m✖ row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(0.688ms)[39m[39m
+[31m✖ row 4 (iii): a start straight cupped to 150° is refused by NAME at the grid (too narrow for a two-column grid), not by a crash [90m(0.8029ms)[39m[39m
+[31m✖ row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it [90m(0.4708ms)[39m[39m
+[32m✔ the fixture kit is the seal's: fixtures.js and manifest.json carry the sha256 the seal registered [90m(0.8979ms)[39m[39m
+[32m✔ row 5a: every /2 fixture renders identically as /3: "0 of 9 differ" [90m(3172.3456ms)[39m[39m
+[31m✖ row 5b: each fixture parsed, saved as /3 text and read again renders to the same digests (the /3 round trip), and its text is /3 [90m(2.3816ms)[39m[39m
+[32m✔ row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed [90m(6270.9168ms)[39m[39m
+[34mℹ tests 52[39m
+[34mℹ suites 0[39m
+[34mℹ pass 3[39m
+[34mℹ fail 49[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 9507.2881[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup.test.js:27:1
+[31m✖ row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward) [90m(0.6738ms)[39m[39m
+  TypeError: A.cupProfile is not a function
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:29:17[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m
+
+test at test\core_cup.test.js:36:1
+[31m✖ row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width [90m(0.0954ms)[39m[39m
+  TypeError: A.cupProfile is not a function
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:38:17[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m
+
+test at test\core_cup.test.js:43:1
+[31m✖ row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge) [90m(2.8313ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m undefined
+  [31m- [39mtrue
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:45:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [90mundefined[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:97:3
+[31m✖ row 1b (default): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.8286ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:99:9[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:97:3
+[31m✖ row 1b (default): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.3561ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:99:9[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:97:3
+[31m✖ row 1b (default): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.4454ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:99:9[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:97:3
+[31m✖ row 1b (default): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.4609ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:99:9[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:97:3
+[31m✖ row 1b (cupRuns): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.3499ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:99:9[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:97:3
+[31m✖ row 1b (cupRuns): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.3403ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:99:9[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:97:3
+[31m✖ row 1b (cupRuns): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.5033ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:99:9[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:97:3
+[31m✖ row 1b (cupRuns): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(0.2047ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:99:9[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:107:1
+[31m✖ row 1b: the default scheme emits a seam zip where c changes and NONE where it is held (measured, and the reason cupRuns exists): the last 100 m of a 400 m piece has none [90m(0.2905ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:108:57[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:113:1
+[31m✖ the default scheme keeps segment.profile LOCAL: its edge is c at the segment's end within 0.05° (what the marker layout, validation, the water and the camera read), and the cupRuns scheme does not (its profile is the run's widest) [90m(0.5499ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:114:57[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:122:3
+[31m✖ row 1b: a bowl cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(0.5854ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:123:67[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:122:3
+[31m✖ row 1b: a half-pipe cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(0.2234ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:123:67[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:127:1
+[31m✖ row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside) [90m(0.2053ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:128:57[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:132:37
+[31m✖ row 1b (default): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(0.3749ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:133:57[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:132:37
+[31m✖ row 1b (cupRuns): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(0.1685ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:133:57[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:141:1
+[31m✖ row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse [90m(0.4135ms)[39m[39m
+  TypeError: Cannot read properties of undefined (reading 'slice')
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:144:38[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup.test.js:151:1
+[31m✖ row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard) [90m(0.8087ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:155:15[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:160:1
+[31m✖ row 2 (iii): a cup that reaches a limit (150 or 0) ends flat, so the piece after it continues C1 inside [0, 150], and a lap held at 150 closes (a solver's float noise on a control point at the limit is not a violation) [90m(0.3757ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:163:9[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:174:1
+[31m✖ row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots [90m(0.3828ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:175:57[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:179:1
+[31m✖ row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it) [90m(0.1712ms)[39m[39m
+  TypeError: A.cupProfile is not a function
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:180:15[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup.test.js:187:1
+[31m✖ row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works [90m(0.4661ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:188:57[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:194:1
+[31m✖ row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit [90m(0.313ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:195:58[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:213:1
+[31m✖ row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test) [90m(1.132ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: extended after a cup piece: a cup piece
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m undefined
+  [31m- [39mtrue
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:215:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [90mundefined[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:220:1
+[31m✖ row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate) [90m(0.5564ms)[39m[39m
+  TypeError: Cannot read properties of undefined (reading 'v')
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:223:51[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup.test.js:227:1
+[31m✖ row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows) [90m(1.2935ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:230:41[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:237:1
+[31m✖ row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4) [90m(0.4399ms)[39m[39m
+  TypeError: D.legacyEdgeDeg is not a function
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:239:18[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup.test.js:249:1
+[31m✖ row 5: a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), renders through profileAt with no blend and no new key, and saves as /3 [90m(1.04ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  [32mactual[39m [31mexpected[39m
+  
+  [39m'[39m[39mt[39m[39m1[39m[39m8[39m[39m0[39m[39mb[39m[39m.[39m[39mc[39m[39mo[39m[39mr[39m[39me[39m[39m/[39m[32m2[39m[31m3[39m[39m'[39m
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:253:37[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m't180b.core/2'[39m,
+    expected: [32m't180b.core/3'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:258:1
+[31m✖ row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge [90m(1.7355ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:262:16[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:265:1
+[31m✖ row 5b: a cup document round-trips through /3 text (serialize, parse, serialize) [90m(0.2861ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:266:59[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:272:1
+[31m✖ row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°) [90m(3.278ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: bowl 1: left 45.50000002301579, right 14.500000023015776, centre 30.000000023015783
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:278:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:282:1
+[31m✖ row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank) [90m(0.4758ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:284:37[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:292:1
+[31m✖ row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece [90m(0.1353ms)[39m[39m
+  TypeError: D.legacyEdgeDeg is not a function
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:294:69[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup.test.js:302:1
+[31m✖ row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it [90m(0.2364ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:303:58[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup.test.js:307:1
+[31m✖ knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel) [90m(0.2407ms)[39m[39m
+  Error [CoreError]: BAD_TARGET: no channel "c" (known: kh, kv, phi, w, r, h, l)
+      at extend [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39msrc\core\extend.js:29:76[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup.test.js:308:57[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'BAD_TARGET'[39m
+  }
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4.1419ms)[39m[39m
+  TypeError: D.legacyEdgeDeg is not a function
+      at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:32:27[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(1.1504ms)[39m[39m
+  TypeError: D.legacyEdgeDeg is not a function
+      at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:32:27[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(1.2285ms)[39m[39m
+  TypeError: D.legacyEdgeDeg is not a function
+      at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:32:27[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(1.2382ms)[39m[39m
+  TypeError: D.legacyEdgeDeg is not a function
+      at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:32:27[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(0.8572ms)[39m[39m
+  TypeError: D.legacyEdgeDeg is not a function
+      at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:32:27[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(1.2852ms)[39m[39m
+  TypeError: D.legacyEdgeDeg is not a function
+      at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:32:27[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup_export.test.js:38:3
+[31m✖ row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(1.2568ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: bowl: csp false
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:39:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: TypeError: D.legacyEdgeDeg is not a function
+        at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+        at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:39:35
+    [90m    at getActual (node:assert:611:5)[39m
+    [90m    at strict.throws (node:assert:759:24)[39m
+        at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:39:12[90m)[39m
+    [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+    [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+    [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_export.test.js:38:3
+[31m✖ row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(0.821ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: half-pipe: csp false
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:39:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: TypeError: D.legacyEdgeDeg is not a function
+        at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+        at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:39:35
+    [90m    at getActual (node:assert:611:5)[39m
+    [90m    at strict.throws (node:assert:759:24)[39m
+        at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:39:12[90m)[39m
+    [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+    [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+    [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_export.test.js:38:3
+[31m✖ row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(0.688ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: flat: csp false
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:39:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: TypeError: D.legacyEdgeDeg is not a function
+        at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+        at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:39:35
+    [90m    at getActual (node:assert:611:5)[39m
+    [90m    at strict.throws (node:assert:759:24)[39m
+        at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:39:12[90m)[39m
+    [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+    [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+    [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_export.test.js:42:1
+[31m✖ row 4 (iii): a start straight cupped to 150° is refused by NAME at the grid (too narrow for a two-column grid), not by a crash [90m(0.8029ms)[39m[39m
+  TypeError: D.legacyEdgeDeg is not a function
+      at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:43:15[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m
+
+test at test\core_cup_export.test.js:46:1
+[31m✖ row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it [90m(0.4708ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  TypeError: D.legacyEdgeDeg is not a function
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:47:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: TypeError: D.legacyEdgeDeg is not a function
+        at cupLap [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:21:18[90m)[39m
+        at [90mC:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:47:23
+    [90m    at getActual (node:assert:611:5)[39m
+    [90m    at strict.throws (node:assert:759:24)[39m
+        at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_export.test.js:47:10[90m)[39m
+    [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+    [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+    [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+    [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m,
+    operator: [32m'throws'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup_fixtures.test.js:26:1
+[31m✖ row 5b: each fixture parsed, saved as /3 text and read again renders to the same digests (the /3 round trip), and its text is /3 [90m(2.3816ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: F1-bowl-default-lap-closed is saved as /3
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\d190\pre\[39mtest\core_cup_fixtures.test.js:32:14[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'{\n  "schema": "t180b.core/2",\n  "generator": "t180-track-builder/core 0.2.0",\n  "name": "F lap bowl",\n  "closed": true,\n  "start": {"pos":[0,0,0],"heading":0,"pitch":0},\n  "nextId": 7,\n  "pieces": [\n    {"id":"p1","type":"road","length":300,"family":"bowl","knots":[20,40,60,80,100,120,140,160,180,200,220,240,260,280],"channels":{"kh":[6e-9,0,3e-9,4e-9,4e-9,4e-9,4e-9,4e-9,4e-9,4e-9,4e-9,4e-9,4e-9,4e-9,4e-9,3e-9,0,5e-9],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p2","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[5e-9,1e-8,0.005262266,0.009639579,0.008680192,0.008993969,0.008661082,0.008607313,0.008352216,0.008154847,0.007880688,0.007606228,0.007295417,0.006972953,0.006631018,0.006152689,0.005772659,0.005885007],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p3","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.005885007,0.005997354,0.005502708,0.005193785,0.004835354,0.004484718,0.004146025,0.003822666,0.003518127,0.003235535,0.002977855,0.002747719,0.002547522,0.002379267,0.002244721,0.003009148,0.005582539,0.000318356],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p4","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.000318356,-0.004945826,0.002928015,0.00206463,0.002110667,0.002192841,0.002310179,0.002461433,0.002644942,0.002858754,0.00310059,0.00336787,0.003657793,0.00396726,0.004293059,0.004810831,0.005344582,0.004902791],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p5","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.004902791,0.004461,0.005442127,0.005688806,0.006042307,0.00639009,0.006728331,0.007053353,0.007361512,0.00764934,0.00791353,0.008150973,0.008358859,0.00853461,0.008676086,0.007962892,0.005316525,0.010888389],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p6","type":"road","length":60,"family":"bowl","knots":[20,40],"channels":{"kh":[0.010888389,0.016800306,0.005268614,0.001646915,1.2e-8,6e-9],"kv":[0,0,0,0,0,0],"phi":[0,0,0,0,0,0],"w":[31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0],"l":[0,0,0,0,0,0]}}\n  ]\n}\n'[39m,
+    expected: [31m/"schema": "t180b\.core\/3"/[39m,
+    operator: [32m'match'[39m,
+    diff: [32m'simple'[39m
+  }

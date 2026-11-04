@@ -1,0 +1,213 @@
+[32m✔ Export shows the CSP-only warning in its message, and the exported surfaces.ini carries the switch [90m(11984.8375ms)[39m[39m
+[32m✔ no handles until exactly one placed word is selected [90m(3.6149ms)[39m[39m
+[32m✔ through the shell: a drag clamps at the bound, and the whole drag is one undo step [90m(71.8358ms)[39m[39m
+[32m✔ pastRed (Alt) goes through the bound and shows red [90m(39.3838ms)[39m[39m
+[32m✔ a value the document refuses is stopped at the last value it accepts, and the reason is the document's own [90m(23.5105ms)[39m[39m
+[32m✔ one drag at a time [90m(52.2134ms)[39m[39m
+[32m✔ cancel through the shell puts the value back (the shell has no cancel, so one no-op undo entry remains: a named seam) [90m(33.4422ms)[39m[39m
+[32m✔ on a word already red there is no bound to stop at, so the document's own refusal stops the drag, through the shell [90m(4.4472ms)[39m[39m
+[32m✔ why no handles show, in words: nothing selected, several words, or a starter phrase (D177 window pass) [90m(1.385ms)[39m[39m
+[32m✔ the sculpt set is the plan's list: length, curvature and ramps, pitch, bank, width, wall height, ψ, font transition [90m(1.4473ms)[39m[39m
+[32m✔ a handle clamps at its bound: dragged far past 50° of bank, it stops exactly at the bound, and names the limit [90m(82.2961ms)[39m[39m
+[32m✔ inside the bound the drag follows the pointer; one quantum past the bound would be red [90m(44.0265ms)[39m[39m
+[32m✔ the bound holds on the low side too [90m(45.3639ms)[39m[39m
+[32m✔ pastRed lets the drag through the bound and shows red, for a user who will fix a neighbour next [90m(39.0909ms)[39m[39m
+[32m✔ amber never blocks: past the amber bound the drag goes on and the handle shows amber [90m(76.9314ms)[39m[39m
+[32m✔ a whole drag is ONE undo entry, and undo returns the document from before the drag [90m(28.3169ms)[39m[39m
+[32m✔ a cancelled drag adds no entry and leaves the document as it was [90m(31.5846ms)[39m[39m
+[32m✔ bank on a middle word is refused by the document (ROLL_STEP): the drag cannot move it, and says why [90m(2.1734ms)[39m[39m
+[32m✔ a word that is already red has no clean range: the drag moves freely and shows red [90m(1.71ms)[39m[39m
+[32m✔ handlesOf gives each handle A's value, unit and range with E's bounds [90m(841.9593ms)[39m[39m
+[32m✔ property (the preview's SHARED path): after every random edit the result equals a full validate exactly [90m(2730.5103ms)[39m[39m
+[32m✔ property (the controller's own path): after every random edit the result equals a full validate exactly [90m(2563.3107ms)[39m[39m
+[32m✔ the property test reaches STACKED road: the edits lay road over road, and it still equals a full validate [90m(797.8351ms)[39m[39m
+[32m✔ a STALE shared path (built for another document) is not used: the controller grows its own, and stays exact [90m(27.5628ms)[39m[39m
+[32m✔ a shared path the preview REBUILT (a new object) is viewed afresh, never spliced onto the old view [90m(34.0043ms)[39m[39m
+[32m✔ a drag held OPEN on a mid-track word: every tick is windowed and exact where settled, and ending it equals a full validate [90m(696.4106ms)[39m[39m
+[32m✔ never a stale "clean": a settled station stacked on road that the drag moved shows RED during the drag, and the moved road shows PENDING [90m(487.2186ms)[39m[39m
+[32m✔ a windowed result revalidated from BEYOND its pending start still finishes the whole track exactly [90m(10.1352ms)[39m[39m
+[32m✔ the panel says what is pending: the load graph shades it to the track end, the summary counts no deferred jump as waiting [90m(53.0896ms)[39m[39m
+[32m✔ the window ends at the second word after the dragged one; none when that is past the end [90m(0.3357ms)[39m[39m
+[32m✔ the preview's 0.5 m path viewed at 2 m IS buildPath at 2 m, value for value; grown in place, the view follows it exactly [90m(57.4918ms)[39m[39m
+[32m✔ a path that cannot be viewed exactly is refused (null), so the controller grows its own [90m(2.785ms)[39m[39m
+[32m✔ the station-pair stacking check finds exactly what measuring every surface point finds, on tracks that stack [90m(1770.8227ms)[39m[39m
+[32m✔ the stacking check on a CLOSED loop: the start and end are one pass (s wraps), exactly as measuring every point [90m(10992.7404ms)[39m[39m
+[32m✔ on a level straight at a constant speed only gravity acts: each line reads fN = cos ψ and fLat = sign(u)·sin ψ [90m(1.5831ms)[39m[39m
+[32m✔ a closed loop: every drag tick defers the lap, and ending the drag proves it, equal to a full validate's lap [90m(10097.1966ms)[39m[39m
+[32m✔ lapOf proves a deferred lap exactly as an undeferred validate does, and returns any other lap unchanged [90m(8442.0049ms)[39m[39m
+[32m✔ rangeLevels gives every station the level rangeLevel gives it, ranges touching, nested and out of order [90m(1.7533ms)[39m[39m
+[32m✔ the default jump at the default design speed (460 km/h, FINDINGS.md:476) is clean: no red, both landings caught [90m(14.8304ms)[39m[39m
+[32m✔ resolve with no speed given sizes the ramp for the same default, so every caller agrees (the export, the connector) [90m(3.021ms)[39m[39m
+[32m✔ the slider swept over its whole range (50–764 km/h, its own step of 5): clean wherever the car clears the gap, and nowhere else [90m(294.9237ms)[39m[39m
+[32m✔ a jump sculpted past what the car can clear is red, and says so: the landings that miss, the heaviest fall [90m(4.2869ms)[39m[39m
+[32m✔ the ramp resize is DERIVED: no undo step, the document unchanged, and the same speed gives the same ramp again [90m(7.7438ms)[39m[39m
+[32m✔ a CLOSED loop keeps its ramps at the default when the slider moves, so it stays closed [90m(17245.6454ms)[39m[39m
+[32m✔ resolve itself refuses a design speed that is not a positive number (a named ResolveError), and takes null as the default [90m(0.7588ms)[39m[39m
+[32m✔ a design speed that is not a positive number is refused with a message, and changes nothing [90m(1.9453ms)[39m[39m
+[32m✔ a document with one jump counts 1 jump, even while the jump is the open head and waits for its landing [90m(36.5907ms)[39m[39m
+[32m✔ a pending jump is still counted: a jump placed first (no take-off road) is 1 jump, 1 waiting [90m(1.4593ms)[39m[39m
+[32m✔ the load graph is hidden (no model) while there is no speed, so no empty grey bar [90m(4.3882ms)[39m[39m
+[32m✔ with a design speed the graph is drawn: one point per station, the hardest line's load, the car's two limits [90m(3.4401ms)[39m[39m
+[32m✔ the graph takes the HARDEST line at every station, wherever across the road it is (a right turn: the left wall) [90m(5.1042ms)[39m[39m
+[32m✔ the graph shades the red and amber stretches behind the curve [90m(8.9607ms)[39m[39m
+[32m✔ through the shell: the head is red exactly when it is the flight of a jump; landing road clears it [90m(3.1531ms)[39m[39m
+[32m✔ jump arcs: a jump whose landing lip is behind its take-off lip draws no arc, and nothing throws [90m(8.5441ms)[39m[39m
+[32m✔ the first word builds and colours the whole track (full), and an empty document shows nothing [90m(10.7806ms)[39m[39m
+[32m✔ placing at the head is an APPEND: extendPath, revalidate, only the new span re-coloured, and equal to a full run [90m(24.1682ms)[39m[39m
+[32m✔ a drag on an earlier word is a SCULPT from that word, and still equals a full run [90m(16.7304ms)[39m[39m
+[32m✔ removing the head, and undo, take the full route and still equal a full run [90m(22.8269ms)[39m[39m
+[32m✔ the CSP switch re-validates for vanilla AC: a 60° wall turns red, and back [90m(10.1253ms)[39m[39m
+[32m✔ a jump placed at the open head is drawn once it has landing road (its own ramp, or the next word) [90m(11.2107ms)[39m[39m
+[32m✔ changes arriving before the scheduled update are coalesced into one update [90m(19.4514ms)[39m[39m
+[32m✔ E's panels load through A's webview loader (app/lib/cjs.js), and each exports mount(root, shell) [90m(15.6119ms)[39m[39m
+[32m✔ the picker starts at the FINDINGS default, 460 km/h (FINDINGS.md:476), read from the car, not typed here [90m(1.3258ms)[39m[39m
+[32m✔ the picker holds to its range: 50 km/h up to the lap sim's 764 km/h cap (FINDINGS.md:484) [90m(0.1435ms)[39m[39m
+[32m✔ off is no design speed; a value that is not a number is refused loudly; onChange fires only on a change [90m(0.2727ms)[39m[39m
+[32m✔ with the picker's default, a track built through the shell HAS loads now (it had none in D168) [90m(13.4813ms)[39m[39m
+[32m✔ with the picker off, an open track built through the shell claims no load at all [90m(4.3515ms)[39m[39m
+[32m✔ a faster design speed turns a tight curve amber (above the proven 90 g), and a slower one takes it away again [90m(10.2456ms)[39m[39m
+[32m✔ with the picker off (no loads anywhere), a geometry red still colours the live map, station by station along the path [90m(6.2583ms)[39m[39m
+[32m✔ load → colour: below the 20 g suspension stop is clear, and exactly 20 g is info [90m(1.0505ms)[39m[39m
+[32m✔ load → colour: exactly the proven 90 g is still info, and anything above it is amber [90m(0.09ms)[39m[39m
+[32m✔ load → colour: a load no matter how high is amber, never red (FINDINGS.md:116-118 withdrew the 60 g red) [90m(0.0445ms)[39m[39m
+[32m✔ load → colour: a negative load (pulled off the surface) is clear here; it is the lap proof's, not a colour [90m(0.0496ms)[39m[39m
+[32m✔ load → colour reads the car it is given, not constants [90m(0.1037ms)[39m[39m
+[32m✔ the palette has one colour per level, red and amber distinct, and pending unlike clear [90m(0.0747ms)[39m[39m
+[32m✔ on a real result, a line is amber by load exactly where validation lists load-above-proven [90m(11.3437ms)[39m[39m
+[32m✔ a red range colours every station inside it, both ends included, none outside, even with NO speed model (no load lines) [90m(4.5051ms)[39m[39m
+[32m✔ an amber range that is not a load (a seam past the proven envelope) colours its stations amber; red still wins over it [90m(0.2852ms)[39m[39m
+[32m✔ levelAt: the last station at or before s, the nearest line in u, the first station before the start [90m(0.3104ms)[39m[39m
+[32m✔ an open track colours: no lap while open, and no red at the open head [90m(6.3766ms)[39m[39m
+[32m✔ an append re-colours only the new span: earlier stations are kept as the same objects, and the map equals a full re-colour [90m(14.3164ms)[39m[39m
+[32m✔ re-colour also rebuilds an OLD station when a new red reaches back over it (e.g. new road stacked on old) [90m(0.9089ms)[39m[39m
+[32m✔ the landing arcs are src/validate/jumps.js flights: every point is flightY from the lip, at validation's speed and θ [90m(10.5138ms)[39m[39m
+[32m✔ each caught arc ends exactly at validation's touchdown x, and the landing zone spans both touchdowns [90m(1.8176ms)[39m[39m
+[32m✔ a landing the flight misses has no touchdown and no zone [90m(1.7411ms)[39m[39m
+[32m✔ with no speed model, each landing is drawn at its own minimum speed, which just clears the landing lip [90m(1.2798ms)[39m[39m
+[32m✔ a jump still waiting for its landing at the open head is not drawn [90m(2.1118ms)[39m[39m
+[32m✔ every red and amber reason has plain words; the list line shows them, and its tooltip keeps the rule and source [90m(0.599ms)[39m[39m
+[32m✔ the lap, a stopped handle and a refusal read as plain words too [90m(0.2951ms)[39m[39m
+[32m✔ the five slots, in §5b's order [90m(1.2446ms)[39m[39m
+[32m✔ a word with no overrides takes its font's defaults for every slot [90m(1.0251ms)[39m[39m
+[32m✔ a word overrides one slot's texture and tiling; the other slots keep the font's [90m(0.4723ms)[39m[39m
+[32m✔ texture overrides are canonical in the text, and round-trip byte-exact [90m(1.8015ms)[39m[39m
+[32m✔ the document is schema 2 or later (textures arrived in 2), and writes the schema it is [90m(0.1373ms)[39m[39m
+[32m✔ a schema-1 document migrates: it loads as the current schema with no overrides, and resolves to the same track [90m(0.7478ms)[39m[39m
+[32m✔ a schema newer than the builder reads is refused as written by a newer builder, and schema 0 as unknown [90m(0.3853ms)[39m[39m
+[32m✔ an unknown slot, an unknown setting, and an out-of-range value are refused by name [90m(0.2285ms)[39m[39m
+[32m✔ a jump has no surface, so it takes no texture overrides (its landing ramp wears the take-off road's) [90m(0.2077ms)[39m[39m
+[32m✔ sculpting a texture is one undo step, and undo is byte-identical [90m(0.3234ms)[39m[39m
+[32m✔ a schema-1 piece library migrates too: its pieces' words get no overrides, and placing one works [90m(1.9303ms)[39m[39m
+[32m✔ a file whose word carries bad textures is refused on load, not only on edit [90m(0.1861ms)[39m[39m
+[32m✔ texture lengths in a file are snapped to the length quantum on load [90m(0.1306ms)[39m[39m
+[32m✔ a textured floor reaches the kn5: its word's road cells wear the set's floor material, and the DDS is embedded [90m(479.5671ms)[39m[39m
+[32m✔ the material the preview draws for a word is the one the kn5 carries for it (the preview's own rule) [90m(409.5452ms)[39m[39m
+[32m✔ an untextured set changes nothing: the kn5 is byte-identical to an export without a set [90m(718.2267ms)[39m[39m
+[32m✔ only the materials a textured cell uses are added: the set's untextured slots do not reach the kn5 [90m(597.0769ms)[39m[39m
+[32m✔ surfaces.ini, T-180 (the default): the block AND one extended-0 surface, on SURFACE_0 keyed PIT [90m(0.8091ms)[39m[39m
+[32m✔ surfaces.ini, "T-180 track" off: neither the block nor the switch [90m(0.1444ms)[39m[39m
+[32m✔ the soft-road control keeps the switch and differs from the T-180 file by the block alone [90m(0.0821ms)[39m[39m
+[32m✔ export with "T-180 track" on (the default): the folder has both, and the CSP-only warning is in the warnings [90m(11641.0185ms)[39m[39m
+[32m✔ export with "T-180 track" off: neither is written, and no CSP-only warning [90m(845.2993ms)[39m[39m
+[32m✔ export both variants: both carry the switch, and only the block differs [90m(881.3854ms)[39m[39m
+[32m✔ the soft-road control is refused with "T-180 track" off (it has nothing to control for) [90m(0.7983ms)[39m[39m
+[32m✔ the platform test's two variants both set the switch, and differ by the block alone [90m(938.4198ms)[39m[39m
+[32m✔ the exported width is non-empty, parses as metres, and is the road's width from the document within 0.5 m [90m(10902.9636ms)[39m[39m
+[32m✔ the width is the MEDIAN by length, not the mean: one short wide stretch does not move it [90m(0.1948ms)[39m[39m
+[32m✔ the platform test writes its fixed width, 26 m (2·WF + 2·LW) [90m(778.8147ms)[39m[39m
+[32m✔ the sample exports: the kn5 reads back through tools/kn5.cjs with every AC_ marker [90m(869.9753ms)[39m[39m
+[32m✔ ui_track.json pitboxes equals the AC_PIT_n count in the written kn5 [90m(5.898ms)[39m[39m
+[32m✔ the folder holds every file of a track, and nothing it did not list [90m(0.4494ms)[39m[39m
+[32m✔ the AI line runs the whole loop: its length is the path length within 0.5% (tolerance stated before the run) [90m(0.6991ms)[39m[39m
+[32m✔ the AI line runs at the design speed when every word has one (200 km/h here) [90m(0.6627ms)[39m[39m
+[32m✔ the markers stand on the start straight, pole nearest the line; the hotlap starts the run-up to the design speed [90m(0.4581ms)[39m[39m
+[32m✔ a red document is refused, the reason named, and nothing written (the 60° bowl walls, for vanilla AC) [90m(633.9476ms)[39m[39m
+[32m✔ a lap the proof fails is refused: a jump taken below the speed its 6.3 g landing needs, each failing point named [90m(12585.3763ms)[39m[39m
+[32m✔ an empty document is refused and nothing written [90m(0.7019ms)[39m[39m
+[32m✔ an open track is refused: an AC lap and the AI line need a closed loop [90m(0.714ms)[39m[39m
+[32m✔ an amber document exports, and the amber is in the warnings with its source (745 km/h through the 50 m tight) [90m(684.2305ms)[39m[39m
+[32m✔ both variants: the same kn5 bytes, the soft-collision block only in the first, and the noblock red said [90m(679.0201ms)[39m[39m
+[32m✔ only block is written by default [90m(0.0979ms)[39m[39m
+[32m✔ a folder this builder did not write is refused, untouched [90m(613.471ms)[39m[39m
+[32m✔ turning the self-check off is said in the warnings [90m(522.235ms)[39m[39m
+[32m✔ the CLI writes the folder from a document file, and refuses an empty one with exit 1 [90m(927.3725ms)[39m[39m
+[32m✔ with the self-check on (the default), the sample exports [90m(693.6326ms)[39m[39m
+[32m✔ the §5c marker checks guard the output: markers 3 m above the road (band 1–2 m) are refused, nothing written [90m(591.0473ms)[39m[39m
+[32m✔ a grid longer than the longest straight is refused with the lengths named [90m(570.5433ms)[39m[39m
+[32m✔ one station per s: the closed loop does not repeat s = 0 at its end [90m(1.2973ms)[39m[39m
+[32m✔ calibration: a car at rest-like speed on a flat straight reads fN = 1 g and nothing else (FINDINGS.md:31-32) [90m(2.9095ms)[39m[39m
+[32m✔ a flat left turn: the floor centre reads 1 g into the road and v²/(R·g) across, toward the inside [90m(0.9719ms)[39m[39m
+[32m✔ each lateral line has its own radius: the inside edge of a turn loads harder than the centre, v²κ/(1−κ·o) [90m(0.8313ms)[39m[39m
+[32m✔ a wall past vertical on the outside of a turn takes the turn's load INTO its surface [90m(0.9604ms)[39m[39m
+[32m✔ a vertical loop: at the top the load is v²/R − g, so below √(gR) the car leaves the surface [90m(3.0307ms)[39m[39m
+[32m✔ load above the proven 90 g is AMBER, with its FINDINGS source; at or below it is not (FINDINGS.md:105, :112-113) [90m(1.4956ms)[39m[39m
+[32m✔ the withdrawn 60 g red line does not come back: 70 g is neither red nor amber (FINDINGS.md:116-118) [90m(0.4063ms)[39m[39m
+[32m✔ the 20 g suspension stop is INFORMATION, from 20 g on, never red or amber (FINDINGS.md:103-104) [90m(0.7201ms)[39m[39m
+[32m✔ the good paths carry NO red at all [90m(1.2736ms)[39m[39m
+[32m✔ fold: a profile wider than the turn radius folds on the inside (1 − κ·q ≤ 0), and is red [90m(0.4739ms)[39m[39m
+[32m✔ folds and self-intersections handed over by buildMesh become red; without them self-intersection is NOT CHECKED [90m(0.7658ms)[39m[39m
+[32m✔ gap-in-road: a gap that is not a jump is red; a jump gap is not; the open head is exempt [90m(1.0264ms)[39m[39m
+[32m✔ gap-in-road: two road stations further apart than their s says (a hole in a road word) are red [90m(0.2722ms)[39m[39m
+[32m✔ missing-soft-collision is red only when the export turns the block off (FINDINGS.md:89) [90m(0.2646ms)[39m[39m
+[32m✔ wall-ride-from-wall-object: a wall-ride whose surface is WALL is red; the same wall-ride as ROAD is not [90m(0.52ms)[39m[39m
+[32m✔ steep-without-raycast: above 50° is red only for a non-CSP export; 49° is quiet; CSP (the default) is quiet [90m(0.3449ms)[39m[39m
+[32m✔ stacked-within-2m: a second pass 1.5 m above the first is red; 2.5 m above is not; one pass is never stacked [90m(6.2525ms)[39m[39m
+[32m✔ seam-past-envelope is AMBER past 5.9° between neighbouring stations (FINDINGS.md:24), quiet at 5° [90m(2.4556ms)[39m[39m
+[32m✔ every red and amber carries a source (INTERFACES §3: "A red or amber with no source is a bug") [90m(0.5541ms)[39m[39m
+[32m✔ lap: an open path has no lap proof yet; a closed one without a speed model says so instead of inventing one [90m(0.9209ms)[39m[39m
+[32m✔ lap sim: full throttle at car.accel, gravity along T, capped at the 764 km/h of FINDINGS.md:484 [90m(6.1223ms)[39m[39m
+[32m✔ lap: a closed loop driven fast enough proves out, with a lap time [90m(0.6128ms)[39m[39m
+[32m✔ MACH6 defaults are the FINDINGS numbers (a changed number must fail here, beside its citation) [90m(0.1001ms)[39m[39m
+[32m✔ the along-track term: accelerating at a on the flat reads fAlong = a/g (the dv/dt·T of the specific force) [90m(2.0482ms)[39m[39m
+[32m✔ fold boundary: an inside edge exactly AT the turn radius (1 − κ·q = 0) is a fold, as ARCHITECTURE.md:57 says "≤ 0" [90m(0.2352ms)[39m[39m
+[32m✔ length (a tight word): the shortest clean length, and one millimetre shorter is red (a fold or seam) [90m(959.9468ms)[39m[39m
+[32m✔ curvature (turn): swinging a tight word past its bound lays the track over itself (stacked), one quantum on [90m(98.8659ms)[39m[39m
+[32m✔ ramps (easeIn): a longer ramp tightens the body of a short tight word until it folds [90m(36.6611ms)[39m[39m
+[32m✔ pitch (climb): a short climbing half-pipe folds its walls when their height passes the vertical radius [90m(121.6371ms)[39m[39m
+[32m✔ bank (roll at the head) for a non-CSP export: exactly 50° either way (ARCHITECTURE.md:87) [90m(37.9784ms)[39m[39m
+[32m✔ bank on a CSP export has no red limit: the bound is the document range, and it says so [90m(25.4284ms)[39m[39m
+[32m✔ width (a wall-ride): widened past its bound, the two sides of the U-turn stack; at the bound it is clean [90m(165.9992ms)[39m[39m
+[32m✔ wall height (a wall-ride): raised past its bound it turns red; at the bound it is clean [90m(263.7179ms)[39m[39m
+[32m✔ ψ for a non-CSP export: a half-pipe wall is clean at 50° and red one thousandth of a degree past it [90m(37.2203ms)[39m[39m
+[32m✔ where no limit binds, the bound is the document range; where the document refuses a value, it says why [90m(56.3324ms)[39m[39m
+[32m✔ a word that is already red has no clean range to report (null bounds, "red-now") [90m(1.2978ms)[39m[39m
+[32m✔ amber is reported inside the red bounds: amberMax ≤ max, and a faster word meets amber before red [90m(46.7658ms)[39m[39m
+[32m✔ A's handleInfo hook takes these bounds as its physics (src/doc/library.js handleInfo(doc, id, boundsFn)) [90m(25.6998ms)[39m[39m
+[32m✔ scope: on a track already red elsewhere, a clean word is still bounded by ITS OWN stretch, not pinned by the other red [90m(19.7497ms)[39m[39m
+[32m✔ minSpeed matches the closed form, worked by hand for a 40 m gap, 7° up, landing 1 m up, at 3.2 g [90m(0.5741ms)[39m[39m
+[32m✔ the harder fall needs the higher speed: minSpeed at 6.3 g = minSpeed at 3.2 g × √(6.3/3.2) [90m(0.0898ms)[39m[39m
+[32m✔ no speed makes a jump whose lip points at or below the landing (D·tanθ ≤ Δh): Infinity [90m(0.073ms)[39m[39m
+[32m✔ minSpeed refuses a gap that is not positive [90m(0.2327ms)[39m[39m
+[32m✔ flightY: the height at the minimum speed is exactly Δh at D (the flight just reaches the lip) [90m(0.0938ms)[39m[39m
+[32m✔ TWO landings, never one: between the two minimum speeds the clean flight lands and the dive falls short [90m(0.5474ms)[39m[39m
+[32m✔ boundary at each landing: just below its minimum speed it is not clear, just above it is [90m(0.6584ms)[39m[39m
+[32m✔ a landing road too short to catch the long flight: clear, but NOT caught [90m(0.111ms)[39m[39m
+[32m✔ the touchdown x is where the flight meets the landing road, interpolated [90m(0.1342ms)[39m[39m
+[32m✔ reach: a drop deeper than dist·tan10° + ½·6.5 g·(dist / 375 km/h)² is unreachable (FINDINGS.md:312-313) [90m(0.1718ms)[39m[39m
+[32m✔ validate: a flat 40 m jump reports both landings, the gap and the climb, from the path itself [90m(3.8702ms)[39m[39m
+[32m✔ validate: a jump taken too slowly is not caught, and a closed lap over it fails with the reason [90m(1.8455ms)[39m[39m
+[32m✔ validate: an open head that ends in the air is a pending jump, and the head in the air is red [90m(0.5998ms)[39m[39m
+[32m✔ validate: a gap of 0 (landing lip straight below the take-off lip) is a named RED with its reason and source, and nothing throws [90m(2.0941ms)[39m[39m
+[32m✔ validate: a NEGATIVE gap (landing lip 5 m behind the take-off lip) is a named RED with its reason and source, and nothing throws [90m(1.8712ms)[39m[39m
+[32m✔ validate: a closed lap over a jump with no forward gap FAILS with that reason, and is not thrown either [90m(5.3555ms)[39m[39m
+[32m✔ validate: a landing on the jump's own ramp more than 150 m past the lip is found (the search covers the ramp) [90m(16.4728ms)[39m[39m
+[32m✔ an unbroken road has no gap: its outer edges and its two ends are not gaps [90m(22.3141ms)[39m[39m
+[32m✔ a 0.3 m slit across the road is a gap, at its s, narrower than the ray's reach [90m(18.6141ms)[39m[39m
+[32m✔ a 0.2 m tear ALONG the road (two pieces side by side) is a gap [90m(16.9853ms)[39m[39m
+[32m✔ an opening wider than the ray reaches (a 5 m flight) is not a ray gap: that is a jump's business [90m(11.6708ms)[39m[39m
+[32m✔ road 0.7 m BELOW the far side of a slit is beyond the ray (0.4 m up, 1 m long: 0.6 m down): not a gap [90m(11.9174ms)[39m[39m
+[32m✔ triangles that face along the road (a seam's zip fan in the cross-section plane) are neither gap edges nor road [90m(9.4403ms)[39m[39m
+[32m✔ validate: a slit in the built road is RED "downforce-ray-gap", in plain words, with its source [90m(12.2875ms)[39m[39m
+[32m✔ validate: without the built road the check is listed as not done, never passed silently [90m(0.7144ms)[39m[39m
+[32m✔ validate: every checked jump notes the downforce step at its lip and its landing [90m(1.5548ms)[39m[39m
+[32m✔ two pieces whose shared row lies 0.2 mm apart ACROSS a 5 mm rounding boundary are welded, not a gap [90m(10.0329ms)[39m[39m
+[34mℹ tests 203[39m
+[34mℹ suites 0[39m
+[34mℹ pass 203[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 46811.0954[39m
+
+[locked.js] exit 0 in 47 s

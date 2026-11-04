@@ -1,0 +1,138 @@
+  ok  D454: pythonExe() resolves as install.ps1 does: a python.exe on PATH outside \WindowsApps\ first, the Store stub never
+  ok  the manifest yields the hooks, and enough of them to be a real check
+  ok  a commented-out manifest line (a retired entry kept verbatim) is not a hook
+  ok  ready-stop.js: the guard is in the source
+  ok  ready-stop.js: the guard precedes the entry point
+  ok  ready-stop.js: speaks without the variable, silent with it
+  ok  ready-prompt.js: the guard is in the source
+  ok  ready-prompt.js: the guard precedes the entry point
+  ok  ready-prompt.js: speaks without the variable, silent with it
+  ok  session-start.js: the guard is in the source
+  ok  session-start.js: the guard precedes the entry point
+  ok  session-start.js: speaks without the variable, silent with it
+  ok  userprompt-submit.js: the guard is in the source
+  ok  userprompt-submit.js: the guard precedes the entry point
+  ok  userprompt-submit.js: speaks without the variable, silent with it
+  ok  stop.js: the guard is in the source
+  ok  stop.js: the guard precedes the entry point
+  ok  stop.js: speaks without the variable, silent with it
+  ok  session-end.js: the guard is in the source
+  ok  session-end.js: the guard precedes the entry point
+  ok  session-end.js: speaks without the variable, silent with it
+  ok  precompact.js: the guard is in the source
+  ok  precompact.js: the guard precedes the entry point
+  ok  precompact.js: speaks without the variable, silent with it
+  ok  l2-overseer.js: the guard is in the source
+  ok  l2-overseer.js: the guard precedes the entry point
+  ok  l2-overseer.js: speaks without the variable, silent with it
+  ok  l3-overseer.js: the guard is in the source
+  ok  l3-overseer.js: the guard precedes the entry point
+  ok  l3-overseer.js: speaks without the variable, silent with it
+  ok  sessionstart-ambient.js: the guard is in the source
+  ok  sessionstart-ambient.js: the guard precedes the entry point
+  ok  sessionstart-ambient.js: speaks without the variable, silent with it
+  ok  userprompt_pulse.py: the guard is in the source
+  ok  userprompt_pulse.py: the guard precedes the entry point
+  ok  userprompt_pulse.py: speaks without the variable, silent with it
+  ok  board-digest.js: the guard is in the source
+  ok  board-digest.js: the guard precedes the entry point
+  ok  board-digest.js: speaks without the variable, silent with it
+  ok  transcript-watch.js: the guard is in the source
+  ok  transcript-watch.js: the guard precedes the entry point
+  ok  transcript-watch.js: speaks without the variable, silent with it
+  ok  dream-watch.js: the guard is in the source
+  ok  dream-watch.js: the guard precedes the entry point
+  ok  ferry-watch.js: the guard is in the source
+  ok  ferry-watch.js: the guard precedes the entry point
+  ok  sourced-stop.js: the guard is in the source
+  ok  sourced-stop.js: the guard precedes the entry point
+  ok  findings-return.js: the guard is in the source
+  ok  findings-return.js: the guard precedes the entry point
+  ok  precompact-preserve.js: the guard is in the source
+  ok  precompact-preserve.js: the guard precedes the entry point
+  ok  precompact-preserve.js: speaks without the variable, silent with it
+  ok  sessionstart-state.js: the guard is in the source
+  ok  sessionstart-state.js: the guard precedes the entry point
+  ok  dispatch-gate.js: the guard is in the source
+  ok  dispatch-gate.js: the guard precedes the entry point
+  ok  carrier-drift-watch.js: the guard is in the source
+  ok  carrier-drift-watch.js: the guard precedes the entry point
+  ok  second-reader.js: the guard is in the source
+  ok  second-reader.js: the guard precedes the entry point
+  ok  second-reader-note.js: the guard is in the source
+  ok  second-reader-note.js: the guard precedes the entry point
+  ok  sources-gate.js: the guard is in the source
+  ok  sources-gate.js: the guard precedes the entry point
+  ok  reply-slot.js: the guard is in the source
+  ok  reply-slot.js: the guard precedes the entry point
+  ok  push-gate.js: the guard is in the source
+  ok  push-gate.js: the guard precedes the entry point
+  ok  delete-gate.js: the guard is in the source
+  ok  delete-gate.js: the guard precedes the entry point
+  ok  ask-ending.js: the guard is in the source
+  ok  ask-ending.js: the guard precedes the entry point
+  ok  release-chime.js: the guard is in the source
+  ok  release-chime.js: the guard precedes the entry point
+  ok  the runner sets the variable it asks the hooks to honour
+
+  NOT BEHAVIOURALLY PROVEN (15/29): dream-watch.js, ferry-watch.js, sourced-stop.js, findings-return.js, sessionstart-state.js, dispatch-gate.js, carrier-drift-watch.js, second-reader.js, second-reader-note.js, sources-gate.js, reply-slot.js, push-gate.js, delete-gate.js, ask-ending.js, release-chime.js
+  These are silent in this fixture with OR without the variable — they need a board.jsonl
+  and a Main capture that this suite has no hermetic seam for, so their emit path is never
+  reached and a green spawn would measure nothing. Covered by lexical + placement only,
+  which is weaker. Give either hook a CONSONANCE_DATA seam (dream-watch.js:256 is the
+  pattern) and it promotes itself here with no edit to this file.
+
+dream-gate: 76 passed, 0 failed
+✔ consonance\hooks\dream-gate.test.js (22741.1004ms)
+✔ NOTE: an ok row with flags for THIS ring gives one PostToolUse additionalContext naming each flagged sentence and its source; never a decision (67.5736ms)
+✔ NOTE: a shown note is a ledger line (status note-shown, the tool_use_id and the count; no quote text) (61.0544ms)
+✔ SILENT: an ok row with no flags, a skipped-class row, a skipped-busy row and an error row each give no output, at once (283.8154ms)
+✔ SAME RING ONLY: flags on another ring's row (another tool_use_id) are never shown (1630.7404ms)
+✔ WAITS FOR THE WORKER: with the worker still running (live lock, no row yet), a row that lands a second later is shown in the same call (1094.7582ms)
+✔ BOUNDED: a worker that never writes its row gives no output by the wait limit, and one note-timeout line (1369.1213ms)
+✔ BOUNDED: no row and no worker running (the reader is not installed, or never started) gives no output within the short grace, and no row (1611.2783ms)
+✔ NEVER BLOCKS: any input gives exit 0 and never a decision; other tools, the reentrancy variable and the dream gate are silent no-ops (2194.7412ms)
+✔ RENDER: the note is plain counts and quotes from the row, at most 5 shown with the rest counted, each quote clipped (0.5401ms)
+✔ REGISTERED: install.ps1 copies the note hook and registers it on PostToolUse with exactly call_chair and a timeout above the wait (0.6933ms)
+✔ CALL_CHAIR ONLY: a call_librarian ring gets no note, at once, even when its row has flags (48.4492ms)
+✔ MATCHER: the registered matcher (install.ps1) is exactly the two hand-back tools, in the docs' exact-name syntax (2.7624ms)
+✔ MATCHER: the hook acts only on the two tools: every other tool name is a silent no-op (no worker, no row, no output) (822.3714ms)
+✔ ALLOW IS IMMEDIATE: a call_chair ring returns in well under 1.5 s with exit 0 and NO output (no deny, no ask) while a slow worker is still running; the worker still runs, once (3645.3432ms)
+✔ NEVER BLOCKS: no input the hook is given makes it print a decision or exit non-zero (540.3375ms)
+✔ FAIL OPEN: an unwritable data dir, an unresolvable one, and a missing worker all still allow, with no output (209.3853ms)
+✔ FAIL OPEN: a worker that dies at once leaves a lock that the NEXT ring finds dead (pid gone) and replaces: a ring is not skipped forever (197.898ms)
+✔ FAIL OPEN: a message with no text writes a skipped-no-text row and nothing else (63.4779ms)
+✔ LOCK: a live lock gives skipped-busy (a row, no worker, no queue) (363.8369ms)
+✔ LOCK: a lock whose pid is dead, or older than 180 s, is stale and is replaced (199.7361ms)
+✔ LOCK: an unreadable lock file is stale (101.1856ms)
+✔ LOCK: two rings at the same instant start exactly ONE worker; the other is skipped-busy (1629.4037ms)
+✔ LOCK: acquire is exclusive, release removes only the holder's own lock (3.7653ms)
+✔ REENTRANCY: the hook exits at once, silently, with no worker and no row, when CONSONANCE_SECOND_READER_RUN=1 (the worker's own environment) (354.1091ms)
+✔ REENTRANCY: the worker the hook starts carries CONSONANCE_SECOND_READER_RUN=1 (92.5793ms)
+✔ REENTRANCY: the model child is started with --safe-mode (no hooks), --strict-mcp-config and no --mcp-config (no MCP servers), --tools "" and the guard variable; never --bare (it ignores the subscription login) (4.8512ms)
+✔ DREAM GATE: with CONSONANCE_DREAM set the hook does nothing at all (355.7207ms)
+✔ QS: the question sent is the plan's registered text, VERBATIM (compared with the plan file) (1.3094ms)
+✔ TURN: only the tool calls and results after the seat's LAST prompt, in order; the ring's own call and earlier turns are left out; a tool-result user message is not a prompt (0.406ms)
+✔ TURN: a user message that carries a tool result AND a text block (a reminder riding with it) is still the harness answering a call, not the seat prompt (0.1325ms)
+✔ TURN: results are clipped and the whole is bounded (calls are always kept, the oldest results are reduced first) (0.4874ms)
+✔ ROW: a good answer writes ONE ok row with the plan's fields, the tokens, the model, and the ring's sha; the message text is NOT in the log (5.3655ms)
+✔ ROW: a flag quote that is not in the message is dropped (counted, not stored), an empty list is a normal answer, and at most 20 flags are kept (8.2623ms)
+✔ ROW: a code-fenced answer and one with prose around the JSON are read; a CLI reply with is_error is an error row (8.695ms)
+✔ ERRORS: no transcript, a non-zero exit, bad JSON, no flags array, a spawn that throws, and a spawn error each give ONE error row (status error) and release the lock (18.986ms)
+✔ ERRORS: a model that never answers is killed at the timeout, gives an error row "timeout", and the lock is released (66.6312ms)
+✔ ERRORS: the REAL worker process, started the way the hook starts it with a job whose transcript is missing, writes the error row, releases the lock and exits 0 (no model call is reached) (113.5205ms)
+✔ SECRET SCAN: scrub removes sk-or-, sk-ant-, vck_ (and the other named shapes) from anything it is given (0.3923ms)
+✔ SECRET SCAN: a key in the message never reaches the model, the stored flags, or an error row (6.1541ms)
+✔ SECRET SCAN: the hook's own rows (skipped-busy) carry the ring's sha and length class only: no text, no key (58.7732ms)
+✔ APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty, a ring is read under USERPROFILE/.consonance: its lock, its worker and its ledger row (154.1307ms)
+✔ D631 AMENDED: a call_librarian ring, even one with a status claim and a relayed figure, writes ONE skipped-class row (seat, tool, sha, tool_use_id; no text) and starts NO worker (569.252ms)
+✔ D631 AMENDED: a call_chair ring is read whatever it says (no figure, no status word), and the worker is handed the tool_use_id (98.3061ms)
+✔ D631 ROW: the worker's ok row carries the ring's tool_use_id, so the same-turn note can find it (3.8046ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40985.7124

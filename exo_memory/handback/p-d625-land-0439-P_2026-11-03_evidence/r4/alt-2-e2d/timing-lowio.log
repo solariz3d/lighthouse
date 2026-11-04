@@ -1,0 +1,5 @@
+22:39:36.386Z descendants 11, io set 0, failed 0, free MB 37,650 (min 37,650), visible windows named 0
+22:40:42.407Z descendants 19, io set 0, failed 0, free MB 36,239 (min 36,063), visible windows named 0
+22:41:45.820Z descendants 15, io set 0, failed 0, free MB 36,738 (min 36,063), visible windows named 0
+22:42:49.109Z descendants 15, io set 0, failed 0, free MB 37,016 (min 36,063), visible windows named 0
+22:43:45.832Z stop: io set 0, failed 0, min free MB 36,063, visible windows named 0

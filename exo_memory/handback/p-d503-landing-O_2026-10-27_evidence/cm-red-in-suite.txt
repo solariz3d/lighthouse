@@ -1,0 +1,23 @@
+not ok 86 - row 3: every test file that starts a browser page itself sets the zz-headless-test title
+  ---
+  duration_ms: 51.8758
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o503\\app\\test\\chrome-mute.test.js:64:1'
+  failureType: 'testCodeFailure'
+  error: 'the scan finds at least the ten known starters (9)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o503\app\test\chrome-mute.test.js:74:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+ok 87 - row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects

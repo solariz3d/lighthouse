@@ -49,14 +49,14 @@ process.env.LAP_MACHINE_TAG = 'L';
  * Unpinned, every fixture here would read the REAL repo's history (L069 and up) and refuse L001 - the
  * same leak the tag pin above closes. An empty git repo is a record of nothing. No assertion changed. */
 process.env.LAP_REPO = (() => {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-emptyrec-'));
+  const d = require('./scratch.js').mkdtemp('lap-emptyrec-');
   execFileSync('git', ['-C', d, 'init', '-q']);
   return d;
 })();
 
 /** A fresh ledger and a fresh module instance bound to it. */
 function fixture() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-'));
+  const dir = require('./scratch.js').mkdtemp('lap-');
   const ledger = path.join(dir, 'lap.jsonl');
   process.env.LAP_LEDGER = ledger;
   delete require.cache[require.resolve('./lap-row.js')];
@@ -397,7 +397,7 @@ test('report: an empty ledger says so plainly instead of printing zeroes as find
 // ---------------------------------------------------------------- cli
 
 test('cli: the three writes and the report round-trip', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-cli-'));
+  const dir = require('./scratch.js').mkdtemp('lap-cli-');
   const ledger = path.join(dir, 'lap.jsonl');
   assert.strictEqual(cli(['--open', '--initiator', 'human', '--entry', 'orch', '--inquiry', 'q', '--guess', 'a.md,b.md', '--blind'], ledger).code, 0);
   assert.strictEqual(cli(['--map', 'L001', '--paths', 'b.md,c.md'], ledger).code, 0);
@@ -409,7 +409,7 @@ test('cli: the three writes and the report round-trip', () => {
 });
 
 test('cli: a refusal exits non-zero and writes nothing', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-cli2-'));
+  const dir = require('./scratch.js').mkdtemp('lap-cli2-');
   const ledger = path.join(dir, 'lap.jsonl');
   cli(['--open', '--initiator', 'chair', '--entry', 'orch', '--inquiry', 'q', '--guess', 'a.md'], ledger);
   cli(['--map', 'L001', '--paths', 'a.md'], ledger);
@@ -421,7 +421,7 @@ test('cli: a refusal exits non-zero and writes nothing', () => {
 });
 
 test('cli: no verb prints usage and exits 2', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-cli3-'));
+  const dir = require('./scratch.js').mkdtemp('lap-cli3-');
   const r = cli([], path.join(dir, 'lap.jsonl'));
   assert.strictEqual(r.code, 2);
   assert.match(r.stderr, /usage:/);
@@ -449,8 +449,8 @@ test('2W-1: two machines minting against their OWN ledgers do not produce the sa
   // machine-local lap.jsonl, so both are at the same count and both mint the same NUMBER. Only the
   // tag separates them. A test that shared one ledger would prove nothing, because the second mint
   // would see the first row and increment past it -- the collision would be hidden by the fixture.
-  const dirA = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1a-'));
-  const dirB = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1b-'));
+  const dirA = require('./scratch.js').mkdtemp('lap-2w1a-');
+  const dirB = require('./scratch.js').mkdtemp('lap-2w1b-');
   const ledA = path.join(dirA, 'lap.jsonl');
   const ledB = path.join(dirB, 'lap.jsonl');
 
@@ -476,8 +476,8 @@ test('2W-1: an unconfigured machine does NOT fall back to a shared constant', ()
   //
   // Fixed by making the machine genuinely unconfigured: HOME and USERPROFILE point at an empty
   // temp dir, so fromConfig finds nothing and the derivation is the only path left.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1c-'));
-  const fakeHome = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-nohome-'));
+  const dir = require('./scratch.js').mkdtemp('lap-2w1c-');
+  const fakeHome = require('./scratch.js').mkdtemp('lap-nohome-');
   const ledger = path.join(dir, 'lap.jsonl');
   const env = { ...process.env, LAP_LEDGER: ledger, HOME: fakeHome, USERPROFILE: fakeHome };
   delete env.LAP_MACHINE_TAG;
@@ -500,7 +500,7 @@ test('2W-1: max+1 still holds when the ledger carries MORE THAN ONE tag', () => 
   // The parse used to strip only /^L/. Left alone it would read a D-row as NaN, drop it from the
   // max, and re-mint an id that already exists -- reintroducing the exact gap-filling merge that
   // mintId's own comment forbids at length.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1d-'));
+  const dir = require('./scratch.js').mkdtemp('lap-2w1d-');
   const ledger = path.join(dir, 'lap.jsonl');
   fs.writeFileSync(ledger,
     JSON.stringify({ lap: 'L001', stage: 'open', initiator: 'chair', inquiry: 'x', guess: ['a.md'], ts: 1 }) + '\n' +
@@ -1026,20 +1026,25 @@ test('HOLDER: the usage names the station vocabulary and the pane list', () => {
 test('carrier: BUILDING.md draws BOTH doors and the ring, not just the prose about them', () => {
   const brief = path.join(__dirname, '..', 'src-tauri', 'brief', 'BUILDING.md');
   const src = fs.readFileSync(brief, 'utf8');
-  const diagram = src.slice(src.indexOf('## THE LOOP'));
+  // the heading is "## The loop" since B's draft (it was "## THE LOOP"); a missing heading must FAIL, not slice from -1 (which read an empty drawing)
+  const at = src.indexOf('## The loop');
+  assert.ok(at >= 0, 'BUILDING.md has no "## The loop" heading (reworded by D277 B\'s rule draft (1cff0c86..fe232323); the rule is kept)');
+  const diagram = src.slice(at);
   const drawing = diagram.slice(diagram.indexOf('```') + 3, diagram.indexOf('```', diagram.indexOf('```') + 3));
 
   assert.match(drawing, /door one/, 'the drawing must name door one');
   assert.match(drawing, /door two/, 'the drawing must name door two - you -> LIBRARIAN, the keeper 2026-09-02');
   assert.match(drawing, /\u251c\u2500+\u2510/, 'and DRAW the branch, not only label it');
-  assert.match(drawing, /THE RING/, 'the cycle repeats on its own: orch -> panes -> lib -> orch');
-  assert.match(drawing, /ENTRY, not a station/, 'the user is the entry, not a station the loop returns to');
+  assert.match(drawing, /The ring \(orch \u2192 panes \u2192 lib \u2192 orch\) repeats on its/, 'the cycle repeats on its own: orch -> panes -> lib -> orch (reworded by D277 B\'s rule draft (1cff0c86..fe232323); the rule is kept)');
+  assert.match(drawing, /the entry, not a station/, 'the user is the entry, not a station the loop returns to (reworded by D277 B\'s rule draft (1cff0c86..fe232323); the rule is kept)');
 });
 
 /** The master drawing, from BUILDING.md. Every copy below is compared against this and nothing else. */
 function loopDiagramMaster() {
   const src = fs.readFileSync(path.join(__dirname, '..', 'src-tauri', 'brief', 'BUILDING.md'), 'utf8');
-  const a = src.indexOf('```', src.indexOf('## THE LOOP')) + 3;
+  const h = src.indexOf('## The loop');
+  if (h < 0) throw new Error('BUILDING.md has no "## The loop" heading: the master drawing cannot be found (it read the file\'s first fence by accident while the heading was missing)');
+  const a = src.indexOf('```', h) + 3;
   return src.slice(a, src.indexOf('```', a)).trim();
 }
 
@@ -1714,7 +1719,7 @@ test('FALSIFIER: this tool\'s own is a ONE-SHOT - one opened row disarms it fore
  * D095 beside L069, the two machines count separately, and a cross-tag max would refuse tonight's
  * own L070. An unreadable record refuses: a guard that cannot see its record must not pass. */
 function recordRepo(subjects) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-rec-'));
+  const dir = require('./scratch.js').mkdtemp('lap-rec-');
   execFileSync('git', ['-C', dir, 'init', '-q']);
   for (const s of subjects) {
     execFileSync('git', ['-C', dir, '-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'commit.gpgsign=false',
@@ -1785,7 +1790,7 @@ test('record: only an id STARTING a subject is a lap - "L077 and L080 are the da
 });
 
 test('record: a record that cannot be read REFUSES rather than passing', () => {
-  withRecord(fs.mkdtempSync(path.join(os.tmpdir(), 'lap-norepo-')), (f) => {
+  withRecord(require('./scratch.js').mkdtemp('lap-norepo-'), (f) => {
     ledgerTo(f, 54);
     assert.throws(() => f.mod.open(OPEN), /record/i);
   });
@@ -2035,4 +2040,103 @@ test('floor: MUTATION - collapse the two causes back into one and tonight\'s sit
       'the collapsed guard refuses and sends the reader to restore rows no copy holds — the defect this repair fixes');
     delete require.cache[require.resolve(mutant)];
   });
+});
+
+// ---------------------------------------------------------------- D293: the `parts` field on a dispatched row
+// H2 (split vs single pane) stays unrun; the free field goes in instead, so split against single can be READ later.
+// Observational only: the writer never uses it to refuse or route anything.
+
+function ledgerRows(ledger) { return fs.readFileSync(ledger, 'utf8').trim().split('\n').map((l) => JSON.parse(l)); }
+function openLap(mod) { mod.open({ initiator: 'chair', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 }); }
+
+test('PARTS: a dispatched row carries how many parts the plan split the work into; absent writes no key at all', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  const a = mod.chain('L001', 'dispatched', 'panes', null, 2, 'A,B,C', undefined, 3);
+  assert.strictEqual(a.parts, 3);
+  const b = mod.chain('L001', 'working', 'panes', null, 3);
+  assert.ok(!('parts' in b), 'a row written without --parts has no parts key, so old and new rows of other stages stay byte-identical');
+  assert.strictEqual(ledgerRows(ledger).filter((r) => 'parts' in r).length, 1);
+  cleanup();
+});
+
+test('PARTS: it is validated - a positive whole number, and only on a dispatched row', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  for (const bad of [0, -1, 1.5, 'x', '3a', '']) {
+    assert.throws(() => mod.chain('L001', 'dispatched', 'panes', null, 2, 'A', undefined, bad), /--parts/, `parts ${JSON.stringify(bad)} must be refused`);
+  }
+  assert.throws(() => mod.chain('L001', 'working', 'panes', null, 2, 'A', undefined, 2), /--parts.*dispatched/);
+  assert.strictEqual(ledgerRows(ledger).filter((r) => r.stage === 'chain').length, 0, 'a refusal writes nothing');
+  assert.strictEqual(mod.chain('L001', 'dispatched', 'panes', null, 2, 'A', undefined, '1').parts, 1, 'the CLI hands it over as a string');
+  cleanup();
+});
+
+test('PARTS: the CLI flag --parts N reaches the ledger, and omitting it still works', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  const r = cli(['--stage', 'L001', 'dispatched', '--holder', 'panes', '--to', 'A,B', '--parts', '2'], ledger);
+  assert.strictEqual(r.code, 0, r.stderr);
+  const r2 = cli(['--stage', 'L001', 'dispatched', '--holder', 'panes', '--to', 'A', '--note', 'follow-up'], ledger);
+  assert.strictEqual(r2.code, 0, r2.stderr);
+  const d = ledgerRows(ledger).filter((x) => x.chain === 'dispatched');
+  assert.deepStrictEqual(d.map((x) => x.parts), [2, undefined]);
+  cleanup();
+});
+
+test('PARTS: several dispatched rows on one lap read per row, and the lap total is known only when every row says', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  mod.chain('L001', 'dispatched', 'panes', null, 2, 'A,B,C,E', undefined, 4);
+  mod.chain('L001', 'dispatched', 'panes', 'follow-up', 3, 'A', undefined, 1);
+  let l = mod.laps().find((x) => x.lap === 'L001');
+  assert.deepStrictEqual(l.dispatches.map((d) => d.parts), [4, 1]);
+  assert.strictEqual(l.partsTotal, 5, 'a follow-up is more parts dispatched on the same lap');
+  fs.appendFileSync(ledger, JSON.stringify({ lap: 'L001', stage: 'chain', at: 4, chain: 'dispatched', holder: 'panes' }) + '\n');   // an old-shape row
+  l = mod.laps().find((x) => x.lap === 'L001');
+  assert.strictEqual(l.partsTotal, null, 'one dispatch with no count makes the lap total UNKNOWN, never a smaller number');
+  assert.strictEqual(l.dispatches.length, 3);
+  cleanup();
+});
+
+test('PARTS: --report on a ledger of old rows still runs, and says how many dispatched laps carry a count', () => {
+  const { mod, ledger, cleanup } = fixture();
+  openLap(mod);
+  fs.appendFileSync(ledger, JSON.stringify({ lap: 'L001', stage: 'chain', at: 4, chain: 'dispatched', holder: 'panes' }) + '\n');
+  const old = cli(['--report'], ledger);
+  assert.strictEqual(old.code, 0, old.stderr);
+  assert.match(old.stdout, /PARTS.*\n.*0 of 1 dispatched lap/);
+  mod.open({ initiator: 'chair', entry: 'ring', inquiry: 'q2', guess: ['b.md'], now: 5 });
+  mod.chain('L002', 'dispatched', 'panes', null, 6, 'A,B', undefined, 2);
+  const now = cli(['--report'], ledger);
+  assert.match(now.stdout, /1 of 2 dispatched lap/);
+  assert.match(now.stdout, /2 parts: 1 lap/);
+  cleanup();
+});
+
+test('PARTS: the other readers of lap.jsonl give the same answer with and without the field', () => {
+  const cs = require('./chain-status.js'), cg = require('./commit-gate.js');
+  const base = [
+    { lap: 'L001', stage: 'open', at: 1, initiator: 'chair', entry: 'ring', inquiry: 'q', guess: ['a.md'] },
+    { lap: 'L001', stage: 'chain', chain: 'dispatched', holder: 'panes', to: ['A', 'B'], at: 2 },
+  ];
+  const withParts = base.map((r) => (r.chain === 'dispatched' ? { ...r, parts: 2 } : r));
+  const write = (rows) => { const d = require('./scratch.js').mkdtemp('parts-rd-'); fs.writeFileSync(path.join(d, 'lap.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n'); return d; };
+  const d1 = write(base), d2 = write(withParts);
+  try {
+    assert.deepStrictEqual(cg.lapState(d2), cg.lapState(d1));
+    // these hand back the raw row, so the one new key is the only allowed difference; everything derived must match
+    const bare = (x) => JSON.parse(JSON.stringify(x, (k, v) => (k === 'parts' ? undefined : v)));
+    assert.deepStrictEqual(bare(cs.openLaps(withParts)), bare(cs.openLaps(base)));
+    assert.deepStrictEqual(bare(cs.chainLaps(withParts)), bare(cs.chainLaps(base)));
+  } finally { fs.rmSync(d1, { recursive: true, force: true }); fs.rmSync(d2, { recursive: true, force: true }); }
+});
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// README tells a new user to run `node consonance/tools/lap-row.js --report`; with no data_dir it read one machine's fixed ledger path instead.
+test('APP RULE (D454): with CONSONANCE_DATA, LAP_LEDGER and data_dir unset, --report reads USERPROFILE/.consonance/lap.jsonl', () => {
+  const h = require('./scratch.js').mkdtemp('lap-home-');
+  const env = { ...process.env, USERPROFILE: h, HOME: h }; delete env.CONSONANCE_DATA; delete env.LAP_LEDGER;
+  let out = ''; try { out = execFileSync(NODE, [TOOL, '--report'], { env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); } catch (e) { out = String(e.stdout || '') + String(e.stderr || ''); }
+  assert.strictEqual(out.split(/\r?\n/)[0], 'lap-row - ' + path.join(h, '.consonance', 'lap.jsonl'), out.slice(0, 300));
 });

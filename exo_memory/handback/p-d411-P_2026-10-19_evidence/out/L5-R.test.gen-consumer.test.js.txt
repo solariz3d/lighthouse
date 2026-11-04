@@ -1,0 +1,993 @@
+$ node "consonance/tools/gen-consumer.test.js"
+(exit 1)
+[32m✔ the manifest is an ALLOW-list — every entry names a file or a matched directory [90m(1.4141ms)[39m[39m
+[32m✔ every EXCLUDE carries a reason [90m(0.128ms)[39m[39m
+[32m✔ every ALLOW carries the classes it exempts, and exempts nothing globally [90m(0.1018ms)[39m[39m
+[31m✖ every resource tauri.conf DECLARES is produced by the manifest [90m(13.2105ms)[39m[39m
+[32m✔ build.rs and Cargo.lock ship — without them the tree cannot compile at all [90m(7.523ms)[39m[39m
+[32m✔ the bundle identifier survives transformation as valid reverse-DNS [90m(0.7064ms)[39m[39m
+[32m✔ the generic prose rules never touch structured config [90m(0.0849ms)[39m[39m
+[32m✔ binary files are never read as text [90m(0.5894ms)[39m[39m
+[32m✔ the scan catches a planted leak in the OUTPUT [90m(0.8376ms)[39m[39m
+[32m✔ a synthetic test fixture is NOT treated as a leak [90m(0.2976ms)[39m[39m
+[32m✔ the synthetic exemption is INERT today, and must fire the moment it is needed [90m(0.2117ms)[39m[39m
+[32m✔ a bare directory reference is not dangling; a dated file is [90m(0.1062ms)[39m[39m
+[32m✔ a dangling citation is RE-POINTED, and one with no destination is still rewritten to prose [90m(0.3742ms)[39m[39m
+[31m✖ a full dry run over the real tree is clean and refuses nothing [90m(4324.358ms)[39m[39m
+[32m✔ the generator does not ship itself [90m(10.2271ms)[39m[39m
+[32m✔ scan() itself refuses a corrupted bundle identifier [90m(0.1675ms)[39m[39m
+[32m✔ scan() does not flag a capability identifier, which is legitimately not reverse-DNS [90m(0.0728ms)[39m[39m
+[32m✔ a test file is classified as a fixture [90m(0.0818ms)[39m[39m
+[32m✔ a fixture keeps its dangling reference — the assertion keys on it [90m(0.0961ms)[39m[39m
+[32m✔ a fixture keeps its path SHAPE — token identity only [90m(0.1059ms)[39m[39m
+[32m✔ the Rust test assertion the generator once broke is left alone [90m(0.038ms)[39m[39m
+[32m✔ coordinates are SUBSTITUTED, not exempted — shape preserved, value gone [90m(0.059ms)[39m[39m
+[32m✔ a fixture is exempt from REFERENCE classes and never from CONTENT classes [90m(0.1294ms)[39m[39m
+[32m✔ unportable fixtures are REPORTED, and the report is not empty [90m(1644.1998ms)[39m[39m
+[32m✔ RE-POINT: the widening reaches the three tools gaps [90m(0.2163ms)[39m[39m
+[32m✔ RE-POINT: the fourth gap is CLOSED -- hooks/README.md ships [90m(8.6171ms)[39m[39m
+[32m✔ RE-POINT: and it ships WITHOUT the machine state that kept it back [90m(0.5831ms)[39m[39m
+[32m✔ RE-POINT: entry 1 is ARMED — the baseline is reachable and withheld [90m(7.8375ms)[39m[39m
+[31m✖ RE-POINT: restoring the UNREACHABLE: prefix REFUSES the build [90m(1475.5189ms)[39m[39m
+[32m✔ RE-POINT: entry 6 names its SUBJECT, not the crash [90m(0.1696ms)[39m[39m
+[31m✖ SEED: the registry ships and the private bytes do not [90m(1329.1304ms)[39m[39m
+[32m✔ SEED: its shape is the one carrier-drift.js actually reads [90m(0.1892ms)[39m[39m
+[31m✖ SEED: a seeded file that is missing on disk still reports missing [90m(1459.3515ms)[39m[39m
+[32m✔ DEBT: the exclusion set is charged for the references it orphans [90m(1547.8859ms)[39m[39m
+[32m✔ DEBT: the pattern is derived from EXCLUDE, so a seventh entry is charged automatically [90m(3220.5668ms)[39m[39m
+[32m✔ RESIDUAL: the private tree's path with the drive TEMPLATED out is caught and rewritten [90m(0.3261ms)[39m[39m
+[32m✔ RESIDUAL: the generated main.rs carries neither half of that sentence's private paths [90m(70.2858ms)[39m[39m
+[32m✔ L038 · HOSTNAME: the class catches a real one, and the OLD literal is gone from the fixture [90m(0.6164ms)[39m[39m
+[32m✔ L038 · HOSTNAME: the rewrite keeps the FIELD and replaces only the VALUE [90m(0.4721ms)[39m[39m
+[32m✔ L038 · a name on the OUTSIDE of a file: the destination path is scanned [90m(0.2153ms)[39m[39m
+[32m✔ L038 · and the rename and the LINK to it land on the same string [90m(10.8524ms)[39m[39m
+[32m✔ L038 · dedangle RE-POINTS a dated citation instead of destroying it [90m(0.2423ms)[39m[39m
+[32m✔ L038 · THE ANTI-LOOSENING GUARD: the re-pointed classes still catch the old form [90m(0.2951ms)[39m[39m
+[32m✔ L038 · the CUTOFF is a pure function of the commit, and a hand-edit is detectable [90m(286.6338ms)[39m[39m
+[31m✖ L038 · every exo_memory/ entry is in exactly one column [90m(0.6761ms)[39m[39m
+[32m✔ L038 · SEED gains ONE sentence, and the transform refuses to be inert [90m(1.1406ms)[39m[39m
+[32m✔ L038 · the status document matches E's contract byte for byte [90m(1267.3137ms)[39m[39m
+[32m✔ L038 · the sync-directory rewrite spares the tool built to detect it [90m(0.1301ms)[39m[39m
+[31m✖ L038 · a citation to an inheritance entry that is not in the tree REFUSES [90m(1554.7889ms)[39m[39m
+[32m✔ L038/A · every rewrite in this file EXPANDS its capture groups [90m(0.2495ms)[39m[39m
+[32m✔ L080 · the sweep catches a rewrite that emits a literal $1, and passes a price the build copied verbatim [90m(10.3205ms)[39m[39m
+[31m✖ L038/A · and the produced tree carries no $<digit> that is not regex source [90m(1377.3219ms)[39m[39m
+[31m✖ L038/A · a dirty tree is REFUSED, because the sha it would stamp is not earned [90m(3187.1658ms)[39m[39m
+[32m✔ L038/A · an overridden stamp is legible as one, in both documents [90m(196.1739ms)[39m[39m
+[31m✖ L038 · memory/ ships exactly the six, and a new card goes RED rather than shipping [90m(10.164ms)[39m[39m
+[32m✔ L038 · ONE MASTER — no card name ships from two directories at once [90m(8.8521ms)[39m[39m
+[32m✔ L038 · a list item that loses its only link loses the ITEM [90m(0.6491ms)[39m[39m
+[32m✔ L038 · the index is FILTERED to what shipped, and cannot dangle [90m(0.2175ms)[39m[39m
+[31m✖ L038 · no [[wiki-link]] in the produced tree points at a card that is not there [90m(1565.1743ms)[39m[39m
+[31m✖ L038 · no transform changes whether a shipped file ends in a newline [90m(1556.9685ms)[39m[39m
+[32m✔ D273: the Jev tool family does not ship (retired, D164): every consonance/tools/jev-* file is EXCLUDED with a reason; the jev-flags hook still ships [90m(16.5024ms)[39m[39m
+[31m✖ D273: consonance/state-manifest.json and the root README.md ship, and the README keeps the About block the app checks [90m(1535.5664ms)[39m[39m
+[31m✖ D273: the output is a FRESH-HISTORY git repository: one commit, a neutral author, a clean tree, no remote, and a push goes nowhere [90m(1398.8904ms)[39m[39m
+[31m✖ D273: generating into a directory that already holds a history is REFUSED before anything is written (fresh history means fresh) [90m(1470.7531ms)[39m[39m
+[31m✖ D273: the FORK hook point sees every text file once with (body, to, kind), never a binary, and the scan reads what it returns [90m(1458.9329ms)[39m[39m
+[31m✖ D273/A: the six composer screens ship SCRUBBED, byte for byte A's acceptance hashes, each the length of its source [90m(1427.2868ms)[39m[39m
+[32m✔ D273/A: a screen is a WHOLE fixture, scrubbed same-length, and what the scrub cannot remove is a leak the scan reports [90m(0.3292ms)[39m[39m
+[32m✔ D273/A: githooks/pre-commit ships, LF, as the shell script commit-gate names [90m(1442.485ms)[39m[39m
+[32m✔ D273/A: contamination and tj1-k-render do not ship, with their tests, each saying why [90m(32.2543ms)[39m[39m
+[31m✖ D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are declared in the OUTPUT, and plain in the SOURCE so the source suite still runs them [90m(1415.4314ms)[39m[39m
+[32m✔ D273/A: a declaration whose anchor is gone is REFUSED, not silently skipped [90m(0.3191ms)[39m[39m
+[32m✔ D273: a markdown LINK whose target is a record path becomes its text and the prose, never a link to prose (the root README carried 13) [90m(0.2566ms)[39m[39m
+[31m✖ D273 lap 3: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOMY.md ship through the scan, and the README links no excluded jev/README.md [90m(1457.5147ms)[39m[39m
+[31m✖ D273 lap 3 (A's catch): the GENERATED corrections-gate.js guards exactly what the source one guards (the muscle_map rule had emptied its regex) [90m(1452.8447ms)[39m[39m
+[32m✔ D273 lap 3 (C): consumer-relabel.js and its two tests do not ship, each with C's reason [90m(23.8701ms)[39m[39m
+[32m✔ D273 lap 3: brief/frag-fork.md ships byte for byte (main.rs include_str!s it in a test, and the generated tree did not compile its tests without it) [90m(1451.0998ms)[39m[39m
+[32m✔ D273 lap 3: dev/shell/install-fresh-home.test.js ships beside the install.ps1 it tests (E, lap 2) [90m(14.9749ms)[39m[39m
+[32m✔ D273 lap 3: decoordinate swaps America/Regina for a zone that keeps the CLOCK (UTC-6, no daylight time), so time-keyed fixtures keep their meaning [90m(12.3541ms)[39m[39m
+[32m✔ D273 lap 3: the OS-user rule does not eat a "\n" escape followed by name = (it broke gen-consumer.build.test.js's control crate), and still takes every real path [90m(0.2723ms)[39m[39m
+[31m✖ D273: consonance/GATES.md ships, and the gate refusals' pointer resolves to it in the generated tree [90m(1449.5169ms)[39m[39m
+[32m✔ D273: identity-diff.js and its test do not ship (they need gen-consumer.js and the dev tree, as consumer-relabel does) [90m(16.9709ms)[39m[39m
+[31m✖ D273: shippedSets() is exported and is what build() uses, so identity-diff can read it instead of copying (C, item 3) [90m(7.6793ms)[39m[39m
+[31m✖ D273 lap 4 (A1, A2): github.com/solariz3d/<repo> URLs survive intact, no generated URL holds a space, and the clone instructions are the consumer's [90m(1552.7885ms)[39m[39m
+[31m✖ D273 lap 4: the app id com.solariz3d.consonance becomes com.consonance.app everywhere it ships, so stick-waiter registers the id tauri.conf carries [90m(1444.4219ms)[39m[39m
+[32m✔ D273 lap 4 (A4): a link whose TEXT is the record path becomes the prose ONCE, never "(a registration…) (a registration…)" [90m(1616.3695ms)[39m[39m
+[31m✖ D273 lap 4 (A13): the USB mode ships, scanned: the stick scripts, launch.ps1 and their tests, finding the repo the way the app does [90m(1477.2905ms)[39m[39m
+[31m✖ D273 lap 4 (A14): the docs that name catch-ledger.js say this copy does not carry it; tools/README names resonance/atoms.jsonl as the data folder's [90m(1450.9553ms)[39m[39m
+[32m✔ D273 lap 4 (A15): CONSUMER-STATUS's GATE line says the gate runs in the source repository, which carries the generator this tree lacks [90m(0.2768ms)[39m[39m
+[31m✖ D273 lap 4 (C, the cold read C3/C4): a new user's memory starts blank: the generated memory/ holds only MEMORY.md, with no entries [90m(1449.7584ms)[39m[39m
+[31m✖ D273 lap 5 (C4): the keeper's two record files ship in inheritance/, not record/, and no shipped text points at their old place [90m(1416.8945ms)[39m[39m
+[31m✖ D273 lap 5 (A2): CONSUMER-STATUS.md ships only MEASURED (parity, identity-diff, cold read), for this commit; unmeasured it does not ship [90m(3044.274ms)[39m[39m
+[31m✖ D273 lap 5 (A3): a record link and a commit sha that are on the PUBLIC lighthouse main become links there; anything not public stays as it was [90m(49.059ms)[39m[39m
+[31m✖ D273 lap 5 (A7): the dead targets resolve or become prose: COMMITTEE's memory/ note, SPINE's dev/PLAN.md, dev/shell/README's dev/dream/, the card's Third Place entry [90m(1446.0646ms)[39m[39m
+[32m✔ D273 lap 5 (B7): hooks/jev-flags.js and its test do not ship (install.ps1 no longer registers it; Jev retired) [90m(16.216ms)[39m[39m
+[32m✔ D273 lap 5 (A9): CUTOFF.md calls the source record PUBLIC (the keeper, 2026-10-08), never private [90m(0.1356ms)[39m[39m
+[31m✖ D273 lap 5 (E): both launch files ship, launch.vbs beside launch.ps1, scanned, and launch.vbs finds launch.ps1 beside itself (no machine path) [90m(1455.8263ms)[39m[39m
+[31m✖ D273 lap 5b: dev/dream/ ships as system (librarian ruling): its four files, scanned with no leak, and the runner sets the variable dream-gate checks [90m(1501.8504ms)[39m[39m
+[31m✖ D273 lap 6 (A3): the PreCompact hook finds its script: exo_memory/loop/checkpoint.py ships (the scan passes it), so the registered hook is not silently dead [90m(1491.6627ms)[39m[39m
+[31m✖ D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generated copy: not "in the repo", and the README hook count matches the tree [90m(1445.4625ms)[39m[39m
+[31m✖ D273 lap 6 (A5): the unshipped names the cold read listed are linked to the public record or say where they live [90m(1431.7208ms)[39m[39m
+[31m✖ D273 lap 6 (LICENSE): the MIT LICENSE ships at the consumer root byte for byte, the copyright holder intact (the keeper's choice) [90m(0.2801ms)[39m[39m
+[32m✔ D273 lap 6 (LICENSE): the exemption is the ONE registered copyright line; any other identity in a verbatim legal file is still a leak [90m(0.6342ms)[39m[39m
+[31m✖ D273 lap 7: the NSIS installer images ship byte for byte, SCANNED (kind image), and the build is not refused [90m(1532.3998ms)[39m[39m
+[31m✖ D273 lap 7 GUARD: every path the GENERATED tauri.conf.json references (frontendDist, resources, icons, nsis images, any other path-valued field) exists in the generated tree [90m(1592.2238ms)[39m[39m
+[31m✖ D273 lap 7 (CRLF): under a global core.autocrlf=true the generated repo's HEAD carries every screen fixture byte for byte [90m(1405.4126ms)[39m[39m
+[32m✔ D273 lap 7 (CRLF) GUARD: verifyCommitted reports a byte-exact file whose HEAD blob differs, as a commit under autocrlf=true makes it [90m(149.8252ms)[39m[39m
+[31m✖ D273 lap 7 (CRLF): the consumer ships its own .gitattributes: eol pinned, the binary list, *.bin and screens/** binary, and none of our two-machine merge rules [90m(1727.0989ms)[39m[39m
+[34mℹ tests 107[39m
+[34mℹ suites 0[39m
+[34mℹ pass 66[39m
+[34mℹ fail 41[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 70968.8285[39m
+
+[31m✖ failing tests:[39m
+
+test at consonance\tools\gen-consumer.test.js:68:1
+[31m✖ every resource tauri.conf DECLARES is produced by the manifest [90m(13.2105ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: tauri.conf declares resources the manifest does not produce — the generated tree will not build:
+    ../../exo_memory/cards/*.md  (glob, nothing produced under exo_memory/cards)
+    ../../exo_memory/spread/*.md  (glob, nothing produced under exo_memory/spread)
+    ../../exo_memory/research/*.md  (glob, nothing produced under exo_memory/research)
+    ../../exo_memory/record/*.md  (glob, nothing produced under exo_memory/record)
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   '../../exo_memory/cards/*.md  (glob, nothing produced under exo_memory/cards)',
+  [32m+[39m   '../../exo_memory/spread/*.md  (glob, nothing produced under exo_memory/spread)',
+  [32m+[39m   '../../exo_memory/research/*.md  (glob, nothing produced under exo_memory/research)',
+  [32m+[39m   '../../exo_memory/record/*.md  (glob, nothing produced under exo_memory/record)'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:84:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [36m[Array][39m,
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:204:1
+[31m✖ a full dry run over the real tree is clean and refuses nothing [90m(4324.358ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the manifest names files that are not on disk
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'exo_memory/SOURCE.md',
+  [32m+[39m   'exo_memory/cards',
+  [32m+[39m   'exo_memory/spread',
+  [32m+[39m   'exo_memory/research',
+  [32m+[39m   'exo_memory/record',
+  [32m+[39m   'exo_memory/record',
+  [32m+[39m   'dev/shell/install.ps1',
+  [32m+[39m   'dev/shell/install-fresh-home.test.js',
+  [32m+[39m   'dev/shell/README.md',
+  [32m+[39m   'dev/shell/lib',
+  [32m+[39m   'dev/shell/hooks',
+  [32m+[39m   'dev/stick-apply.js',
+  [32m+[39m   'dev/stick-waiter.js',
+  [32m+[39m   'dev/tail-carry.js',
+  [32m+[39m   'dev/place-conversations.js',
+  [32m+[39m   'dev/LEAVING.ps1',
+  [32m+[39m   'dev/ARRIVING.ps1',
+  [32m+[39m   'dev/ON-EXIT.ps1',
+  [32m+[39m   'dev/stick-apply.test.js',
+  [32m+[39m   'dev/stick-waiter.test.js',
+  [32m+[39m   'dev/tail-carry.test.js',
+  [32m+[39m   'dev/place-conversations.test.js',
+  [32m+[39m   'exo_memory/loop/checkpoint.py',
+  [32m+[39m   'LICENSE',
+  [32m+[39m   'dev/dream/README.md',
+  [32m+[39m   'dev/dream/dream_cycle.ps1',
+  [32m+[39m   'dev/dream/install_dream.ps1',
+  [32m+[39m   'dev/dream/dream_cycle.test.js',
+  [32m+[39m   'exo_memory/journal',
+  [32m+[39m   'exo_memory/SELF_TRACE.md',
+  [32m+[39m   'exo_memory/the_living_wave.md',
+  [32m+[39m   'exo_memory/TRAINING.md',
+  [32m+[39m   'exo_memory/memory',
+  [32m+[39m   'README.md',
+  [32m+[39m   'METHOD.md',
+  [32m+[39m   'INSTRUMENTS.md',
+  [32m+[39m   'dev/SPINE.md'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:206:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [36m[Array][39m,
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:381:1
+[31m✖ RE-POINT: restoring the UNREACHABLE: prefix REFUSES the build [90m(1475.5189ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the widening armed this entry; a stale UNREACHABLE: on it must refuse
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:390:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'manifest names 37 file(s) that are not on disk'[39m,
+    expected: [31m/drifted/[39m,
+    operator: [32m'match'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:409:1
+[31m✖ SEED: the registry ships and the private bytes do not [90m(1329.1304ms)[39m[39m
+  Error: ENOENT: no such file or directory, open 'C:\Users\nname\AppData\Local\Temp\gc-seed-9512\consonance\tools\carrier-drift.registry.json'
+  [90m    at Object.readFileSync (node:fs:440:20)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:434:24[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    errno: [33m-4058[39m,
+    code: [32m'ENOENT'[39m,
+    syscall: [32m'open'[39m,
+    path: [32m'C:\\Users\\nname\\AppData\\Local\\Temp\\gc-seed-9512\\consonance\\tools\\carrier-drift.registry.json'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:456:1
+[31m✖ SEED: a seeded file that is missing on disk still reports missing [90m(1459.3515ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: and the build must refuse
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:486:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'manifest names 37 file(s) that are not on disk'[39m,
+    expected: [31m/reach nothing/[39m,
+    operator: [32m'match'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:698:1
+[31m✖ L038 · every exo_memory/ entry is in exactly one column [90m(0.6761ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: exo_memory/loop/checkpoint.py is named in SHIPS_FROM_PRIVATE and does not exist
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:704:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:792:1
+[31m✖ L038 · a citation to an inheritance entry that is not in the tree REFUSES [90m(1554.7889ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the real tree cites an inheritance entry it does not carry
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   {
+  [32m+[39m     refs: [
+  [32m+[39m       'exo_memory/inheritance/2026-08-25.md',
+  [32m+[39m       'exo_memory/inheritance/2026-07-28.md'
+  [32m+[39m     ],
+  [32m+[39m     rel: 'consonance/src-tauri/brief/BUILDING.md'
+  [32m+[39m   },
+  [32m+[39m   {
+  [32m+[39m     refs: [
+  [32m+[39m       'exo_memory/inheritance/2026-08-22.md',
+  [32m+[39m       'exo_memory/inheritance/2026-08-23.md',
+  [32m+[39m       'exo_memory/inheritance/2026-08-11.md',
+  [32m+[39m       'exo_memory/inheritance/2026-09-01.md'
+  [32m+[39m     ],
+  [32m+[39m     rel: 'consonance/src-tauri/brief/LIBRARIAN.md'
+  [32m+[39m   },
+  [32m+[39m   {
+  [32m+[39m     refs: [
+  [32m+[39m       'exo_memory/inheritance/2026-08-16.md',
+  [32m+[39m       'exo_memory/inheritance/2026-08-17.md'
+  [32m+[39m     ],
+  [32m+[39m     rel: 'consonance/tools/carrier-drift.js'
+  [32m+[39m   },
+  [32m+[39m   {
+  [32m+[39m     refs: [
+  [32m+[39m       'exo_memory/inheritance/2026-07-28.md'
+  [32m+[39m     ],
+  [32m+[39m     rel: 'consonance/tools/close.js'
+  [32m+[39m   },
+  [32m+[39m   {
+  [32m+[39m     refs: [
+  [32m+[39m       'exo_memory/inheritance/2026-08-24.md'
+  [32m+[39m     ],
+  [32m+[39m     rel: 'consonance/tools/forget-rate.js'
+  [32m+[39m   },
+  [32m+[39m   {
+  [32m+[39m     refs: [
+  [32m+[39m       'exo_memory/inheritance/2026-08-11.md'
+  [32m+[39m     ],
+  [32m+[39m     rel: 'consonance/tools/lap-row.js'
+  [32m+[39m   },
+  [32m+[39m   {
+  [32m+[39m     refs: [
+  [32m+[39m       'exo_memory/inheritance/2026-08-23.md',
+  [32m+[39m       'exo_memory/inheritance/2026-08-22.md'
+  [32m+[39m     ],
+  [32m+[39m     rel: 'consonance/tools/librarian-cite.js'
+  [32m+[39m   },
+  [32m+[39m   {
+  [32m+[39m     refs: [
+  [32m+[39m       'exo_memory/inheritance/2026-08-18.md'
+  [32m+[39m     ],
+  [32m+[39m     rel: 'consonance/tools/state-block.js'
+  [32m+[39m   },
+  [32m+[39m   {
+  [32m+[39m     refs: [
+  [32m+[39m       'exo_memory/inheritance/2026-08-17.md'
+  [32m+[39m     ],
+  [32m+[39m     rel: 'consonance/tools/state-sync.js'
+  [32m+[39m   }
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:802:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [36m[Array][39m,
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:900:1
+[31m✖ L038/A · and the produced tree carries no $<digit> that is not regex source [90m(1377.3219ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the build refused: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:909:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:921:1
+[31m✖ L038/A · a dirty tree is REFUSED, because the sha it would stamp is not earned [90m(3187.1658ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the tree has 1 uncommitted change(s) and the WRITE did not refuse
+  
+  false !== true
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:966:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1029:1
+[31m✖ L038 · memory/ ships exactly the six, and a new card goes RED rather than shipping [90m(10.164ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the memory/ cut has drifted from the keeper's 2026-09-06 decision. If a card was ADDED it ships by default and nobody ruled on it — decide, then put it in this list or in EXCLUDE with a reason.
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m []
+  [31m-[39m [
+  [31m-[39m   'MEMORY.md'
+  [31m-[39m ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1047:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [],
+    expected: [36m[Array][39m,
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1126:1
+[31m✖ L038 · no [[wiki-link]] in the produced tree points at a card that is not there [90m(1565.1743ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the build refused: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1132:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1199:1
+[31m✖ L038 · no transform changes whether a shipped file ends in a newline [90m(1556.9685ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: only 22 files compared — the sweep is not reaching the tree
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1218:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1242:1
+[31m✖ D273: consonance/state-manifest.json and the root README.md ship, and the README keeps the About block the app checks [90m(1535.5664ms)[39m[39m
+  Error: ENOENT: no such file or directory, open 'G:\consonance-scratch\gen-consumer-9aI9Ip\README.md'
+  [90m    at Object.readFileSync (node:fs:440:20)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1247:23[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    errno: [33m-4058[39m,
+    code: [32m'ENOENT'[39m,
+    syscall: [32m'open'[39m,
+    path: [32m'G:\\consonance-scratch\\gen-consumer-9aI9Ip\\README.md'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1253:1
+[31m✖ D273: the output is a FRESH-HISTORY git repository: one commit, a neutral author, a clean tree, no remote, and a push goes nowhere [90m(1398.8904ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: refused: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1257:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1269:1
+[31m✖ D273: generating into a directory that already holds a history is REFUSED before anything is written (fresh history means fresh) [90m(1470.7531ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: not refused: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1274:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'manifest names 37 file(s) that are not on disk'[39m,
+    expected: [31m/history/[39m,
+    operator: [32m'match'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1279:1
+[31m✖ D273: the FORK hook point sees every text file once with (body, to, kind), never a binary, and the scan reads what it returns [90m(1458.9329ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the hook did not see each shipped text file once
+  
+  298 !== 334
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1288:14[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m298[39m,
+    expected: [33m334[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1315:1
+[31m✖ D273/A: the six composer screens ship SCRUBBED, byte for byte A's acceptance hashes, each the length of its source [90m(1427.2868ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1318:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1356:1
+[31m✖ D273/A: the declared JS rows (26 of A + 1 Jev) and 12 Rust tests are declared in the OUTPUT, and plain in the SOURCE so the source suite still runs them [90m(1415.4314ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1359:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1409:1
+[31m✖ D273 lap 3: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOMY.md ship through the scan, and the README links no excluded jev/README.md [90m(1457.5147ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1414:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1423:1
+[31m✖ D273 lap 3 (A's catch): the GENERATED corrections-gate.js guards exactly what the source one guards (the muscle_map rule had emptied its regex) [90m(1452.8447ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1429:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1494:1
+[31m✖ D273: consonance/GATES.md ships, and the gate refusals' pointer resolves to it in the generated tree [90m(1449.5169ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1500:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1519:1
+[31m✖ D273: shippedSets() is exported and is what build() uses, so identity-diff can read it instead of copying (C, item 3) [90m(7.6793ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the card set is empty, so this check proves nothing
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1522:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1537:1
+[31m✖ D273 lap 4 (A1, A2): github.com/solariz3d/<repo> URLs survive intact, no generated URL holds a space, and the clone instructions are the consumer's [90m(1552.7885ms)[39m[39m
+  Error: ENOENT: no such file or directory, open 'G:\consonance-scratch\gen-consumer-obkvuZ\README.md'
+  [90m    at Object.readFileSync (node:fs:440:20)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1553:23[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    errno: [33m-4058[39m,
+    code: [32m'ENOENT'[39m,
+    syscall: [32m'open'[39m,
+    path: [32m'G:\\consonance-scratch\\gen-consumer-obkvuZ\\README.md'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1560:1
+[31m✖ D273 lap 4: the app id com.solariz3d.consonance becomes com.consonance.app everywhere it ships, so stick-waiter registers the id tauri.conf carries [90m(1444.4219ms)[39m[39m
+  Error: ENOENT: no such file or directory, open 'G:\consonance-scratch\gen-consumer-XWU5fH\dev\stick-waiter.js'
+  [90m    at Object.readFileSync (node:fs:440:20)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1565:23[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    errno: [33m-4058[39m,
+    code: [32m'ENOENT'[39m,
+    syscall: [32m'open'[39m,
+    path: [32m'G:\\consonance-scratch\\gen-consumer-XWU5fH\\dev\\stick-waiter.js'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1585:1
+[31m✖ D273 lap 4 (A13): the USB mode ships, scanned: the stick scripts, launch.ps1 and their tests, finding the repo the way the app does [90m(1477.2905ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1591:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1604:1
+[31m✖ D273 lap 4 (A14): the docs that name catch-ledger.js say this copy does not carry it; tools/README names resonance/atoms.jsonl as the data folder's [90m(1450.9553ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1607:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1628:1
+[31m✖ D273 lap 4 (C, the cold read C3/C4): a new user's memory starts blank: the generated memory/ holds only MEMORY.md, with no entries [90m(1449.7584ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1637:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1651:1
+[31m✖ D273 lap 5 (C4): the keeper's two record files ship in inheritance/, not record/, and no shipped text points at their old place [90m(1416.8945ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1654:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1664:1
+[31m✖ D273 lap 5 (A2): CONSUMER-STATUS.md ships only MEASURED (parity, identity-diff, cold read), for this commit; unmeasured it does not ship [90m(3044.274ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1672:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1682:1
+[31m✖ D273 lap 5 (A3): a record link and a commit sha that are on the PUBLIC lighthouse main become links there; anything not public stays as it was [90m(49.059ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Report: a registration in this line of record (`1768ea4`).
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1684:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1698:1
+[31m✖ D273 lap 5 (A7): the dead targets resolve or become prose: COMMITTEE's memory/ note, SPINE's dev/PLAN.md, dev/shell/README's dev/dream/, the card's Third Place entry [90m(1446.0646ms)[39m[39m
+  Error: ENOENT: no such file or directory, open 'G:\consonance-scratch\gen-consumer-N6UMfH\dev\SPINE.md'
+  [90m    at Object.readFileSync (node:fs:440:20)[39m
+      at read [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1701:30[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1706:15[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    errno: [33m-4058[39m,
+    code: [32m'ENOENT'[39m,
+    syscall: [32m'open'[39m,
+    path: [32m'G:\\consonance-scratch\\gen-consumer-N6UMfH\\dev\\SPINE.md'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1730:1
+[31m✖ D273 lap 5 (E): both launch files ship, launch.vbs beside launch.ps1, scanned, and launch.vbs finds launch.ps1 beside itself (no machine path) [90m(1455.8263ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1734:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1745:1
+[31m✖ D273 lap 5b: dev/dream/ ships as system (librarian ruling): its four files, scanned with no leak, and the runner sets the variable dream-gate checks [90m(1501.8504ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1750:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1765:1
+[31m✖ D273 lap 6 (A3): the PreCompact hook finds its script: exo_memory/loop/checkpoint.py ships (the scan passes it), so the registered hook is not silently dead [90m(1491.6627ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1768:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1776:1
+[31m✖ D273 lap 6 (A4): what the docs say about jev-flags.js is true in a generated copy: not "in the repo", and the README hook count matches the tree [90m(1445.4625ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1779:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1790:1
+[31m✖ D273 lap 6 (A5): the unshipped names the cold read listed are linked to the public record or say where they live [90m(1431.7208ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1793:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1806:1
+[31m✖ D273 lap 6 (LICENSE): the MIT LICENSE ships at the consumer root byte for byte, the copyright holder intact (the keeper's choice) [90m(0.2801ms)[39m[39m
+  Error: ENOENT: no such file or directory, open 'C:\Users\nname\Desktop\worktrees\p-d411-L5-R\LICENSE'
+  [90m    at Object.openSync (node:fs:560:18)[39m
+  [90m    at Object.readFileSync (node:fs:444:35)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1807:18[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    errno: [33m-4058[39m,
+    code: [32m'ENOENT'[39m,
+    syscall: [32m'open'[39m,
+    path: [32m'C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L5-R\\LICENSE'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1830:1
+[31m✖ D273 lap 7: the NSIS installer images ship byte for byte, SCANNED (kind image), and the build is not refused [90m(1532.3998ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1833:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1845:1
+[31m✖ D273 lap 7 GUARD: every path the GENERATED tauri.conf.json references (frontendDist, resources, icons, nsis images, any other path-valued field) exists in the generated tree [90m(1592.2238ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1848:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1883:1
+[31m✖ D273 lap 7 (CRLF): under a global core.autocrlf=true the generated repo's HEAD carries every screen fixture byte for byte [90m(1405.4126ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: refused: manifest names 37 file(s) that are not on disk
+      at [90mC:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1888:14
+      at withAutocrlf [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1879:16[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1886:5[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at consonance\tools\gen-consumer.test.js:1914:1
+[31m✖ D273 lap 7 (CRLF): the consumer ships its own .gitattributes: eol pinned, the binary list, *.bin and screens/** binary, and none of our two-machine merge rules [90m(1727.0989ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: manifest names 37 file(s) that are not on disk
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\p-d411-L5-R\[39mconsonance\tools\gen-consumer.test.js:1917:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+

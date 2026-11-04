@@ -1,0 +1,24 @@
+[32m✔ seed 1: no fin in the mesh's seams or in the scene the export writes [90m(1333.7166ms)[39m[39m
+[32m✔ seed 1: the preview's centre line is continuous across every joint, and no seam stands up over it [90m(264.8109ms)[39m[39m
+[32m✔ seed 2: no fin in the mesh's seams or in the scene the export writes [90m(2295.9763ms)[39m[39m
+[32m✔ seed 2: the preview's centre line is continuous across every joint, and no seam stands up over it [90m(545.1461ms)[39m[39m
+[32m✔ seed 3: no fin in the mesh's seams or in the scene the export writes [90m(1928.5531ms)[39m[39m
+[32m✔ seed 3: the preview's centre line is continuous across every joint, and no seam stands up over it [90m(728.1342ms)[39m[39m
+[32m✔ seed 4: no fin in the mesh's seams or in the scene the export writes [90m(1148.8438ms)[39m[39m
+[32m✔ seed 4: the preview's centre line is continuous across every joint, and no seam stands up over it [90m(354.134ms)[39m[39m
+[32m✔ seed 5: no fin in the mesh's seams or in the scene the export writes [90m(1473.9814ms)[39m[39m
+[32m✔ seed 5: the preview's centre line is continuous across every joint, and no seam stands up over it [90m(195.023ms)[39m[39m
+[32m✔ seed 6: no fin in the mesh's seams or in the scene the export writes [90m(2096.2303ms)[39m[39m
+[32m✔ seed 6: the preview's centre line is continuous across every joint, and no seam stands up over it [90m(606.6096ms)[39m[39m
+[34mℹ tests 12[39m
+[34mℹ suites 0[39m
+[34mℹ pass 12[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 13076.8124[39m
+
+# stderr
+
+# exit 0 in 13.1 s

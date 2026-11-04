@@ -1,0 +1,7 @@
+rolled cup: closed true, closer 4 pieces (RSL at R 300 m: turn -307.8°, 313 m straight, turn 127.8°, a); phi joints from the closer's first: 5, over 0.0005: 0; ; roll peak on the closer 0.717 °/m (amber 0.9338)
+P 210/300/30: closed true, closer 4 pieces (LSR at R 300 m: turn 351.4°, 807 m straight, turn -201.4°, a); phi joints from the closer's first: 5, over 0.0005: 0; ; roll peak on the closer 0.839 °/m (amber 0.9338)
+P 180/1200/10: closed true, closer 4 pieces (LSR at R 300 m: turn 102.8°, 419 m straight, turn -282.8°, a); phi joints from the closer's first: 5, over 0.0005: 0; ; roll peak on the closer 0.741 °/m (amber 0.9338)
+P 180/1200/30: closed true, closer 4 pieces (LSR at R 300 m: turn 109.5°, 387 m straight, turn -289.5°, a); phi joints from the closer's first: 5, over 0.0005: 0; ; roll peak on the closer 0.737 °/m (amber 0.9338)
+gentle: closed true, closer 2 pieces (SC at R 1983 m: turn 0°, 1000 m straight, turn 180°; 2 new p); phi joints from the closer's first: 3, over 0.0005: 0; ; roll peak on the closer 0.026 °/m (amber 0.9338)
+TEST 10: closed true, closer 3 pieces (LSR at R 300 m: turn 175.5°, 746 m straight, turn -175.5°; 3); phi joints from the closer's first: 4, over 0.0005: 0; ; roll peak on the closer 0.659 °/m (amber 0.9338)
+TEST TRACK 10: closed true, closer 4 pieces (RSL at R 300 m: turn -238.8°, 812 m straight, turn 328.8°, a); phi joints from the closer's first: 5, over 0.0005: 0; ; roll peak on the closer 0.734 °/m (amber 0.9338)

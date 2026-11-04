@@ -1,0 +1,68 @@
+[
+ {
+  "id": "no roll docs",
+  "what": "the document made from the saved runs has the same pieces as the hand-built one (ids aside)",
+  "got": true,
+  "expect": true,
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "no roll export",
+  "what": "saved-runs lap and hand-built lap export the SAME BYTES",
+  "got": [
+   9,
+   true
+  ],
+  "expect": [
+   9,
+   true
+  ],
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "a whole roll over one piece (fast) docs",
+  "what": "the document made from the saved runs has the same pieces as the hand-built one (ids aside)",
+  "got": false,
+  "expect": true,
+  "ok": false,
+  "note": "first piece start phi: saved -6.283200832 vs hand -6.283200832"
+ },
+ {
+  "id": "a whole roll over one piece (fast) export",
+  "what": "saved-runs lap and hand-built lap give the SAME result (bytes, or the same refusal)",
+  "got": [
+   "not exported: the track has no straight word to put the grid on",
+   "not exported: the track has no straight word to put the grid on"
+  ],
+  "expect": [
+   "not exported: the track has no straight word to put the grid on",
+   "not exported: the track has no straight word to put the grid on"
+  ],
+  "ok": true,
+  "note": "saved: not exported: the track has no straight word to put the grid on | hand: not exported: the track has no straight word to put the grid on"
+ },
+ {
+  "id": "a whole roll slowly (over 2 pieces) docs",
+  "what": "the document made from the saved runs has the same pieces as the hand-built one (ids aside)",
+  "got": false,
+  "expect": true,
+  "ok": false,
+  "note": "first piece start phi: saved -6.283200832 vs hand -6.283200832"
+ },
+ {
+  "id": "a whole roll slowly (over 2 pieces) export",
+  "what": "saved-runs lap and hand-built lap give the SAME result (bytes, or the same refusal)",
+  "got": [
+   "not exported: the track has no straight word to put the grid on",
+   "not exported: the track has no straight word to put the grid on"
+  ],
+  "expect": [
+   "not exported: the track has no straight word to put the grid on",
+   "not exported: the track has no straight word to put the grid on"
+  ],
+  "ok": true,
+  "note": "saved: not exported: the track has no straight word to put the grid on | hand: not exported: the track has no straight word to put the grid on"
+ }
+]

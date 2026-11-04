@@ -1,0 +1,123 @@
+{
+ "exe": "t180-track-builder.exe",
+ "started": "2026-10-05T22:08:00.098Z",
+ "errors": [],
+ "console": [],
+ "checks": {
+  "paste": "opened \"window pieces\" from its code (Ctrl+Z goes back)",
+  "pickable": [
+   "p5",
+   "p4",
+   "p3",
+   "p1",
+   "p2"
+  ],
+  "a1_selected": "Selected: p2 to p4 (3 pieces) · 400 m",
+  "a1_afterUndo": {
+   "sel": "The track has no pieces yet.",
+   "pieces": 0
+  },
+  "a1_afterRedo": {
+   "sel": "Nothing selected: click a piece on the track to select it; Shift-click another to select the run between.",
+   "pieces": 5
+  },
+  "a1_save": "disabled",
+  "a1_saveMsg": "No saved pieces yet: select pieces on the track and press Save as piece.",
+  "a1_savedFile": false,
+  "a1_delete": "disabled",
+  "a1_deleteMsg": "No saved pieces yet: select pieces on the track and press Save as piece.",
+  "a1_piecesAfter": 5,
+  "a2_selected": "Selected: p2 · 150 m",
+  "a2_afterExtend": {
+   "sel": "Nothing selected: click a piece on the track to select it; Shift-click another to select the run between.",
+   "pieces": 6
+  },
+  "a2_deleteMsg": "No saved pieces yet: select pieces on the track and press Save as piece.",
+  "a2_pieces": 6,
+  "a2_undoExtend": 5,
+  "a3_selected": "Selected: p3 · 150 m",
+  "a3_preview": {
+   "box": "Preview: 1 piece (p3) would be taken out of the middle of the track. The two sides are joined again at the gap, which changes the start of p4 (up to 156.6 m), and everything after the gap moves along with it. The see-through track on the preview is the result.Moves: p5 up to 188.9 m, p4 up to 156.6 ",
+   "pieces": 5,
+   "backups": "IS-A-FILE"
+  },
+  "a3_applyRefused": {
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece. | not deleted: the copy from before the delete could not be written (could not create C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\pui\\win\\appdata\\track-backups: Cannot create a file when that file already exists. (os error 183)); nothing changed",
+   "pieces": 5,
+   "backups": "IS-A-FILE"
+  },
+  "a3_applied": {
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece. | deleted 1 piece from the middle of the track (Ctrl+Z puts it back)",
+   "pieces": 4,
+   "backups": [
+    "eq-unsaved.2026-10-05_160820.t180track"
+   ]
+  },
+  "a3_oneUndo": 5,
+  "a4_afterChange": {
+   "box": "",
+   "applyVisible": false,
+   "pieces": 6,
+   "newBackups": 0
+  },
+  "a5_cancel": {
+   "pieces": [
+    5,
+    5
+   ],
+   "newBackups": 0,
+   "box": ""
+  },
+  "a6_renameCase": {
+   "msg": "not renamed: a piece named \"run\" already exists; delete it first or use another name",
+   "files": [
+    "Run.t180piece"
+   ]
+  },
+  "a6_renameFree": {
+   "msg": "renamed the piece \"Run\" to \"Run2\"",
+   "files": [
+    "Run2.t180piece"
+   ]
+  },
+  "a6_afterDelete": [],
+  "b_paste": "opened \"closed lap\" from its code (Ctrl+Z goes back)",
+  "b_pickable": [
+   "p2",
+   "p3",
+   "p1",
+   "p4",
+   "p6",
+   "p5"
+  ],
+  "b_seamSelection": "Selected: p1 to p6 (6 pieces) · 1.49 km",
+  "b_deleteMsg": "No saved pieces yet: select pieces on the track and press Save as piece. | CLOSED: a closed track has no open end to delete from; Ctrl+Backspace removes the last piece and opens the loop (Ctrl+Z puts it back)",
+  "b_pieces": 6,
+  "c_paste": "opened \"jump\" from its code (Ctrl+Z goes back)",
+  "c_pickable": [
+   "p4",
+   "p3",
+   "p2",
+   "p1"
+  ],
+  "c_selection": "Selected: p1 to p3 (3 pieces) · 450 m",
+  "c_saved": {
+   "msg": "saved the piece \"with jump\": 3 pieces from the track (it is in the library below)",
+   "file": true,
+   "flights": 1
+  },
+  "c_delete": {
+   "msg": "delete preview: 3 pieces go; 1 of the 1 piece after the gap move. Apply or cancel",
+   "box": "Preview: 3 pieces (p1 to p3) would be taken out of the middle of the track. The two sides are joined again at the gap, which changes the start of p4 (up to 502.0 m), and everything after the gap moves",
+   "pieces": 4
+  }
+ },
+ "keeperFiles": 9,
+ "keeperChanged": [],
+ "runAppData": [
+  "autosave.t180auto",
+  "pieces/with jump.t180piece",
+  "track-backups/eq-unsaved.2026-10-05_160820.t180track"
+ ],
+ "ended": "2026-10-05T22:08:58.889Z"
+}

@@ -4,13 +4,16 @@ Node scripts that run against the live data directory without a cargo build — 
 for the same reason `hooks/board-digest.js` is Node: a rebuild kills every open pane.
 No dependencies; standard library only.
 
-- **`curate.js`** — the curator. Routes `resonance/atoms.jsonl` into topic documents, closes
+- **`curate.js`** — the curator. Routes `resonance/atoms.jsonl` in the data folder into topic documents, closes
   OPEN questions, never writes the master. See the header of the file.
 - **`tell-index.js`** — the measurement organ for the muscle program. Below.
 - **`swell-head.js`** — what the dynamics channel is measuring when it reports at a track
   start. Refits each swell report's own window with its leading seconds removed, and pins
   ledger reports to the track starts their windows begin at. Its negative control — the
   Bernstein's real crescendo must never be indicted — is a test, not a claim. See the header.
+- **`dupe-scan.js`** — blocks of JavaScript written twice: 8+ code lines in 2+ places, as clusters with paths and line ranges,
+  and the duplicated share per tree, test and non-test apart (`node consonance/tools/dupe-scan.js <label>=<dir> … [--json]`).
+  Reads and prints only. First run: D554, `exo_memory/handback/p-d554-dupes-E_2026-10-30.md`. See the header.
 
 ---
 

@@ -1,0 +1,63 @@
+[32m✔ row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward) [90m(1.3163ms)[39m[39m
+[32m✔ row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width [90m(0.2681ms)[39m[39m
+[32m✔ row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge) [90m(5.9827ms)[39m[39m
+[32m✔ row 1b (default): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(113.4232ms)[39m[39m
+[32m✔ row 1b (default): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(98.1318ms)[39m[39m
+[32m✔ row 1b (default): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(74.9101ms)[39m[39m
+[32m✔ row 1b (default): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(107.2955ms)[39m[39m
+[32m✔ row 1b (cupLocal): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(65.1816ms)[39m[39m
+[32m✔ row 1b (cupLocal): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(82.7938ms)[39m[39m
+[32m✔ row 1b (cupLocal): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(69.0703ms)[39m[39m
+[32m✔ row 1b (cupLocal): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(95.6942ms)[39m[39m
+[32m✔ cupLocal (the option): a seam zip where c changes and NONE where it is held: the last 100 m of a 400 m piece has none (the default scheme has none anywhere inside the piece) [90m(104.3864ms)[39m[39m
+[32m✔ the cupLocal option keeps segment.profile LOCAL (its edge is c at the end of the segment within 0.05 deg), and the default does NOT (its profile is the widest of the run, the target of the blend): the readers evaluate the blend (test/core_cup_readers.test.js) [90m(3.8191ms)[39m[39m
+[32m✔ row 1b: a bowl cup ramp to 90° over 100 m never changes faster than c between rows, and no row is outside c's range [90m(164.4803ms)[39m[39m
+[32m✔ row 1b: a half-pipe cup ramp to 90° over 100 m never changes faster than c between rows, and no row is outside c's range [90m(165.1558ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 90 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(17.1025ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 90 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(73.7849ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 150 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(25.7361ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 150 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(89.0843ms)[39m[39m
+[32m✔ R1 (B score): a half-pipe cup ramp to 150 deg over 40 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(25.2994ms)[39m[39m
+[32m✔ R1 (B score): a half-pipe cup ramp to 150 deg over 40 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(100.3791ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 90 deg over 100 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(34.7935ms)[39m[39m
+[32m✔ R1 (B score): a bowl cup ramp to 90 deg over 100 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(83.2702ms)[39m[39m
+[32m✔ R1 (B score): a half-pipe cup ramp to 150 deg over 100 m lands on c(s) at EVERY row: the edge is within 0.05 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(52.4517ms)[39m[39m
+[32m✔ R1 (B score): a half-pipe cup ramp to 150 deg over 100 m with a held tail lands on c(s) at EVERY row: the edge is within 0.1 deg of c (it was off by up to 0.95 deg on the local scheme) [90m(136.3736ms)[39m[39m
+[32m✔ row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside) [90m(57.5439ms)[39m[39m
+[32m✔ row 1b (default): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(63.402ms)[39m[39m
+[32m✔ row 1b (cupLocal): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(61.3467ms)[39m[39m
+[32m✔ row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse [90m(1.085ms)[39m[39m
+[32m✔ row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard) [90m(1.9024ms)[39m[39m
+[32m✔ row 2 (iii): a cup that reaches a limit (150 or 0) ends flat, so the piece after it continues C1 inside [0, 150], and a lap held at 150 closes (a solver's float noise on a control point at the limit is not a violation) [90m(150.9384ms)[39m[39m
+[32m✔ row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots [90m(2.293ms)[39m[39m
+[32m✔ row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it) [90m(0.2962ms)[39m[39m
+[32m✔ row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works [90m(5.8467ms)[39m[39m
+[32m✔ row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit [90m(9.6734ms)[39m[39m
+[32m✔ row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test) [90m(0.4922ms)[39m[39m
+[32m✔ row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate) [90m(1.7555ms)[39m[39m
+[32m✔ row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows) [90m(136.8237ms)[39m[39m
+[32m✔ row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4) [90m(1.4747ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a bowl road 12 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(42.913ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a half-pipe road 24 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(39.4078ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a bowl road 18 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(33.7547ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a flat road 20 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(30.5661ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a bowl road 31 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(38.0338ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a half-pipe road 31.5 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(43.1135ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a flat road 45 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(36.1236ms)[39m[39m
+[32m✔ R2: past the joint's morph the road is the pure cup shape (ψ at every quarter is c·Fᵢ/F_edge within 0.01°), and the edge stays c through it [90m(1.8327ms)[39m[39m
+[32m✔ row 5: a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), renders through profileAt with no blend and no new key, and saves as /3 [90m(2.9325ms)[39m[39m
+[32m✔ row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge [90m(1.0165ms)[39m[39m
+[32m✔ row 5b: a cup document round-trips through /3 text (serialize, parse, serialize) [90m(3.3996ms)[39m[39m
+[32m✔ row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°) [90m(5.7765ms)[39m[39m
+[32m✔ row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank) [90m(5.7796ms)[39m[39m
+[32m✔ row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece [90m(0.8663ms)[39m[39m
+[32m✔ row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it [90m(1.7388ms)[39m[39m
+[32m✔ knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel) [90m(1.9136ms)[39m[39m
+[34mℹ tests 55[39m
+[34mℹ suites 0[39m
+[34mℹ pass 55[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2653.166[39m

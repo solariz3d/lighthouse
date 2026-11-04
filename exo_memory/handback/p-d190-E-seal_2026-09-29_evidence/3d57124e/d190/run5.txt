@@ -1,0 +1,150 @@
+[32m✔ test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it [90m(47.7156ms)[39m[39m
+[32m✔ test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it [90m(40.9958ms)[39m[39m
+[32m✔ test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it [90m(32.6061ms)[39m[39m
+[32m✔ test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it [90m(32.6879ms)[39m[39m
+[32m✔ test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it [90m(20.9276ms)[39m[39m
+[32m✔ test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it [90m(37.9194ms)[39m[39m
+[32m✔ test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it [90m(26.5163ms)[39m[39m
+[32m✔ test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it [90m(34.4931ms)[39m[39m
+[32m✔ test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it [90m(27.4418ms)[39m[39m
+[32m✔ test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it [90m(20.7698ms)[39m[39m
+[32m✔ test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it [90m(20.6546ms)[39m[39m
+[32m✔ test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it [90m(45.8939ms)[39m[39m
+[32m✔ test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it [90m(26.0735ms)[39m[39m
+[32m✔ test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it [90m(31.352ms)[39m[39m
+[32m✔ test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it [90m(19.2654ms)[39m[39m
+[32m✔ test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it [90m(16.3529ms)[39m[39m
+[32m✔ test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it [90m(23.4013ms)[39m[39m
+[32m✔ test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it [90m(31.2391ms)[39m[39m
+[32m✔ test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it [90m(35.4387ms)[39m[39m
+[32m✔ test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it [90m(20.5752ms)[39m[39m
+[32m✔ close REPORTS a closure it did not reach: one step on the hardest track says NOT CLOSED and leaves closed false [90m(164.6696ms)[39m[39m
+[32m✔ the input document is not changed (it is frozen, and deep-equal afterwards) [90m(454.1792ms)[39m[39m
+[32m✔ a lap that already closes (a full circle, R = 200 m) is left where it is: no steps [90m(79.748ms)[39m[39m
+[32m✔ the position Jacobian predicts the adapter: bumping one interior control point moves the end as J says (relative 5e-4) [90m(254.1334ms)[39m[39m
+[32m✔ the seam is a joint like any other: after the close it passes the document’s own C1 joint check, last piece into first [90m(0.6204ms)[39m[39m
+[32m✔ with no stretch protected (every weight 1) close still closes, seam included [90m(560.8425ms)[39m[39m
+[32m✔ a track with a jump is refused, by name (not built in this version) [90m(3.6591ms)[39m[39m
+[32m✔ row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward) [90m(1.0092ms)[39m[39m
+[32m✔ row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width [90m(0.2899ms)[39m[39m
+[32m✔ row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge) [90m(6.3393ms)[39m[39m
+[32m✔ row 1b: a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(124.8473ms)[39m[39m
+[32m✔ row 1b: a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(99.3872ms)[39m[39m
+[32m✔ row 1b: a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(74.974ms)[39m[39m
+[32m✔ row 1b: a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(114.489ms)[39m[39m
+[32m✔ row 1b: a bowl cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(91.033ms)[39m[39m
+[32m✔ row 1b: a half-pipe cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(91.2041ms)[39m[39m
+[32m✔ row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside) [90m(66.2767ms)[39m[39m
+[32m✔ row 1b: a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(63.018ms)[39m[39m
+[32m✔ row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse [90m(1.3906ms)[39m[39m
+[32m✔ row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard) [90m(2.5607ms)[39m[39m
+[32m✔ row 2 (iii): a cup that reaches a limit (150 or 0) ends flat, so the piece after it continues C1 inside [0, 150], and a lap held at 150 closes (a solver's float noise on a control point at the limit is not a violation) [90m(165.1362ms)[39m[39m
+[32m✔ row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots [90m(2.7917ms)[39m[39m
+[32m✔ row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it) [90m(0.3699ms)[39m[39m
+[32m✔ row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works [90m(6.039ms)[39m[39m
+[32m✔ row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit [90m(10.5032ms)[39m[39m
+[32m✔ row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test) [90m(0.4956ms)[39m[39m
+[32m✔ row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate) [90m(1.8524ms)[39m[39m
+[32m✔ row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows) [90m(152.6161ms)[39m[39m
+[32m✔ row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4) [90m(1.9135ms)[39m[39m
+[32m✔ row 5: a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), renders through profileAt with no blend and no new key, and saves as /3 [90m(2.4175ms)[39m[39m
+[32m✔ row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge [90m(1.0418ms)[39m[39m
+[32m✔ row 5b: a cup document round-trips through /3 text (serialize, parse, serialize) [90m(3.4468ms)[39m[39m
+[32m✔ row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°) [90m(6.4515ms)[39m[39m
+[32m✔ row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank) [90m(5.5728ms)[39m[39m
+[32m✔ row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece [90m(0.9201ms)[39m[39m
+[32m✔ row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it [90m(1.8468ms)[39m[39m
+[32m✔ knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel) [90m(1.857ms)[39m[39m
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3327.5661ms)[39m[39m
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(159.0222ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4491.4685ms)[39m[39m
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(227.8503ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3503.3255ms)[39m[39m
+[31m✖ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(164.114ms)[39m[39m
+[32m✔ row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2900.2605ms)[39m[39m
+[32m✔ row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(3107.2456ms)[39m[39m
+[32m✔ row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(3029.5726ms)[39m[39m
+[32m✔ row 4 (iii): a start straight cupped to 150° is refused by NAME at the grid (too narrow for a two-column grid), not by a crash [90m(179.5131ms)[39m[39m
+[32m✔ row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it [90m(0.9346ms)[39m[39m
+[32m✔ a clamped cubic starts at P0 with slope 3(P1 − P0)/t4 (ref 09 §1), against a finite difference [90m(2.7494ms)[39m[39m
+[32m✔ a piece placed after another starts at its end value AND slope in every channel (C1 joints, so the line is G2) [90m(2.5131ms)[39m[39m
+[32m✔ a joint that is not C1 is refused by name (JOINT) [90m(1.6544ms)[39m[39m
+[32m✔ checkDoc REFUSES a hand-built document with a broken joint, by the name JOINT (a κh step, a bank tear, a slope kink) [90m(0.2642ms)[39m[39m
+[32m✔ a flight must follow road; the road after it starts level (κh = κv = 0), the rest carried [90m(0.8595ms)[39m[39m
+[32m✔ load then save is byte-exact, and a value finer than its quantum is snapped as it enters [90m(2.0563ms)[39m[39m
+[32m✔ the same document serialises to the same bytes whatever order its keys were in [90m(0.6446ms)[39m[39m
+[32m✔ a piece whose keys come in another order (as another module may build it) still serialises canonically [90m(0.3275ms)[39m[39m
+[32m✔ a file of a different schema version is refused, saying a newer file needs a newer builder [90m(0.1122ms)[39m[39m
+[32m✔ undo is the document history: undo and redo are byte-identical, and a whole drag is one entry [90m(0.6498ms)[39m[39m
+[32m✔ a fitted channel holds its start exactly and reproduces a cubic polynomial (ref 03 §2: the cubic lies in the spline space) [90m(0.4172ms)[39m[39m
+[32m✔ a circle's position fit loads as κh = 1/R, κv = 0 and no bank (ref 09 §4) [90m(8.4811ms)[39m[39m
+[32m✔ a helix loads with κv = 0 at its constant pitch, and κh = cos p / R (the heading turns about WORLD up) [90m(5.8239ms)[39m[39m
+[90m﹣ a real track from reads/ opens as a LOCAL example (skipped where reads/ has no position fit) [90m(0.2998ms)[39m # no local position fit of Serpents Spiral in reads/ (other authors' tracks stay local)[39m
+[32m✔ 2a: a 50 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(22.3279ms)[39m[39m
+[32m✔ 2a: a 50 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(10.0741ms)[39m[39m
+[32m✔ 2a: a 200 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(8.0201ms)[39m[39m
+[32m✔ 2a: a 200 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(12.4217ms)[39m[39m
+[32m✔ 2a: a 1000 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(14.4819ms)[39m[39m
+[32m✔ 2a: a 1000 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(10.7148ms)[39m[39m
+[32m✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning left, extended 200 m with no handle, keeps growing at 1/A² [90m(7.3451ms)[39m[39m
+[32m✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning right, extended 200 m with no handle, keeps growing at 1/A² [90m(6.8161ms)[39m[39m
+[32m✔ a handle target is reached at the transition with zero channel slope, and the start still holds value and slope (ref 09 §2) [90m(2.9533ms)[39m[39m
+[32m✔ extend refuses a closed track, a bad length and an unknown channel, by name [90m(2.4259ms)[39m[39m
+[34mℹ tests 92[39m
+[34mℹ suites 0[39m
+[34mℹ pass 88[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 1[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 22378.5007[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(159.0222ms)[39m[39m
+  Error: the start straight's floor is 4.45 m wide, too narrow for a two-column grid
+      at err [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:149:36[90m)[39m
+      at Object.defaultLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:152:47[90m)[39m
+      at startLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39mapp\core\coreshell.js:250:18[90m)[39m
+      at exportDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:28:101[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:32:17[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m {
+    code: [32m'NO_START_STRAIGHT'[39m
+  }
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(227.8503ms)[39m[39m
+  Error: the start straight's floor is 4.30 m wide, too narrow for a two-column grid
+      at err [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:149:36[90m)[39m
+      at Object.defaultLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:152:47[90m)[39m
+      at startLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39mapp\core\coreshell.js:250:18[90m)[39m
+      at exportDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:28:101[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:32:17[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m {
+    code: [32m'NO_START_STRAIGHT'[39m
+  }
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(164.114ms)[39m[39m
+  Error: the start straight's floor is 4.82 m wide, too narrow for a two-column grid
+      at err [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:149:36[90m)[39m
+      at Object.defaultLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\markers\layout.js:152:47[90m)[39m
+      at startLayout [90m(C:\Users\nname\Desktop\a-d188-wt\[39mapp\core\coreshell.js:250:18[90m)[39m
+      at exportDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:28:101[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:32:17[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m {
+    code: [32m'NO_START_STRAIGHT'[39m
+  }

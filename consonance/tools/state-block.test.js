@@ -50,7 +50,7 @@ function renderIn(repo) {
 let poisonedDir = null;
 function poisoned() {
   if (poisonedDir) return poisonedDir;
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-poison-'));
+  const d = require('./scratch.js').mkdtemp('sb-poison-');
   const g = (...a) => cp.execFileSync('git', a, { cwd: d, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
   g('init', '-q');
   g('-c', 'user.name=fixture', '-c', 'user.email=fixture@test', 'commit', '-q', '--allow-empty', '-m', POISON);
@@ -190,7 +190,7 @@ test('a failed command is REPORTED, never omitted', () => {
   // that it returned some lines — it never forced a failure, so it was green over nothing, in the
   // file whose whole subject is that. STATE_BLOCK_REPO exists so the failure path is reachable.
   const { execFileSync } = require('node:child_process');
-  const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-norepo-'));
+  const empty = require('./scratch.js').mkdtemp('sb-norepo-');
   const out = execFileSync(process.execPath, [require.resolve('./state-block.js')], {
     env: { ...process.env, STATE_BLOCK_REPO: empty },
     encoding: 'utf8',
@@ -250,7 +250,7 @@ test('the block declares itself machine-generated and names its own regenerator'
 const { execFileSync } = require('node:child_process');
 
 function withHome(cfg) {
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-home-'));
+  const home = require('./scratch.js').mkdtemp('sb-home-');
   if (cfg !== null) fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify(cfg));
   return execFileSync(process.execPath, [require.resolve('./state-block.js')], {
     env: { ...process.env, USERPROFILE: home },
@@ -280,7 +280,7 @@ test('with NO chair_name it reports the absence and does NOT manufacture one', (
 
 test('an unreadable config is REPORTED, not silently treated as unnamed', () => {
   // Otherwise a corrupt config and a deliberate absence look identical.
-  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-badcfg-'));
+  const home = require('./scratch.js').mkdtemp('sb-badcfg-');
   fs.writeFileSync(path.join(home, '.consonance.json'), '{ this is not json');
   const out = execFileSync(process.execPath, [require.resolve('./state-block.js')], {
     env: { ...process.env, USERPROFILE: home }, encoding: 'utf8',
@@ -391,4 +391,73 @@ test('every rendered trigger is a when -> target pair', () => {
   const rows = sec.lines.filter((l) => l.startsWith('  '));
   assert.ok(rows.length >= 10, 'expected the trigger rows, got ' + rows.length);
   for (const r of rows) assert.match(r, /\S+ -> \S+/, 'row is not a pair: ' + r);
+});
+
+test('D273 lap 3: a fresh history with NO origin/main is said in words, not FAILED (a stranger\'s first checkout is exactly that)', () => {
+  /* Found by the lap-3 consumer parity: the generated tree is a fresh-history repository with no remote, and the REPO section printed
+   * "FAILED: git rev-list did not run here", so sessionstart-state.test.js ("the live generator must not be reporting FAILED") was red only there,
+   * and every session start of a new user would have carried a FAILED line. A real git failure still prints FAILED (the empty-directory row above). */
+  const dir = require('./scratch.js').mkdtemp('sb-fresh-');
+  try {
+    const g = (args) => cp.execFileSync('git', args, { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    g(['init', '-q', '-b', 'main']); fs.writeFileSync(path.join(dir, 'a.txt'), 'a\n'); g(['add', '.']);
+    cp.execFileSync('git', ['commit', '-q', '-m', 'first'], { cwd: dir, env: { ...process.env, GIT_AUTHOR_NAME: 't', GIT_AUTHOR_EMAIL: 't@t', GIT_COMMITTER_NAME: 't', GIT_COMMITTER_EMAIL: 't@t' } });
+    const out = cp.execFileSync(process.execPath, [path.join(__dirname, 'state-block.js')], { env: { ...process.env, STATE_BLOCK_REPO: dir }, encoding: 'utf8' });
+    const repoBlock = out.slice(out.indexOf('REPO'), out.indexOf('JOURNAL'));
+    assert.doesNotMatch(repoBlock, /FAILED/, 'a fresh history reported a failure:\n' + repoBlock);
+    assert.match(repoBlock, /no origin\/main/, 'the missing upstream is not named:\n' + repoBlock);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+/* ── D309 part 1: THE STAMP. The block said "HEAD 029082ec … 0 commit(s) unpushed" hours after both were false, and its last three readers met
+ * HEADs 61, 69 and 171 commits behind main (handback/p-carriers-E_2026-10-12.md). The pulse stamps every figure; this block now says WHEN. ── */
+const T1 = new Date('2026-10-12T07:25:03Z'), T2 = new Date('2026-03-01T23:59:58Z');
+const FAKE = () => [{ title: 'repo', cmd: 'git status --short', lines: ['HEAD abc1234 x'] }, { title: 'name', cmd: 'type cfg', lines: ['no chair_name'] }];
+/** The header's stamp line, parsed independently of the generator: { utc: ms, local: ms rebuilt from the local fields and the offset }. */
+function parseStampLine(text) {
+  const line = text.split('\n')[1] || '';
+  const m = line.match(/^generated (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z) \((\w{3}) (\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}) (AM|PM) local, UTC([+-])(\d{2}):(\d{2})\)/);
+  if (!m) return null;
+  const h12 = Number(m[6]) % 12 + (m[8] === 'PM' ? 12 : 0);
+  const offMin = (m[9] === '-' ? -1 : 1) * (Number(m[10]) * 60 + Number(m[11]));
+  return { utc: Date.parse(m[1]), local: Date.UTC(Number(m[5]), Number(m[3]) - 1, Number(m[4]), h12, Number(m[7])) - offMin * 60000, weekday: m[2] };
+}
+
+test('D309: the header carries its generation time, UTC and machine-local with the offset, and both parse to the same instant', () => {
+  const t = sb.render(FAKE(), { now: T1 }).text;
+  assert.match(t.split('\n')[0], /^\[state-block: machine-generated, regenerate with/, 'the first header line is unchanged');
+  const p = parseStampLine(t);
+  assert.ok(p, 'no parseable stamp on the second header line:\n' + t.split('\n')[1]);
+  assert.strictEqual(p.utc, T1.getTime());
+  assert.strictEqual(p.local, Math.floor(T1.getTime() / 60000) * 60000, 'the local time and its offset name the same minute');
+  assert.strictEqual(p.weekday, T1.toLocaleDateString('en-US', { weekday: 'short' }));
+});
+
+test('D309: a block generated at t says t (the clock is injected), through render and through the CLI', () => {
+  for (const t of [T1, T2]) assert.strictEqual(parseStampLine(sb.render(FAKE(), { now: t }).text).utc, t.getTime());
+  const out = cp.execFileSync(process.execPath, [require.resolve('./state-block.js')], { env: { ...process.env, STATE_BLOCK_NOW: T2.toISOString() }, encoding: 'utf8' });
+  assert.strictEqual(parseStampLine(out).utc, T2.getTime(), 'STATE_BLOCK_NOW did not set the stamp');
+});
+
+test('D309: every section whose figures can go stale says "as of" the stamp, beside its own check command; the name line does not', () => {
+  const t = sb.render(undefined, { now: T1 }).text;
+  for (const title of ['REPO', 'JOURNAL', 'INSTRUMENTS', 'TRIGGERS', 'LIVE']) {
+    assert.match(t, new RegExp('^' + title + '  as of 07:25Z  \\(check: ', 'm'), title + ' does not say as of 07:25Z beside its check');
+  }
+  assert.match(t, /^NAME  \(check: /m, 'the name line carries no figure and no stamp');
+});
+
+// D454 part 3 (pane E): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else %USERPROFILE%\.consonance).
+// A new user who keeps the default Data folder saves data_dir "" (ui/app.js), and the app gives panes no CONSONANCE_DATA, so without the third step
+// the live section read one machine's fixed ledger paths on every machine.
+test('APP RULE (D454): the live ledgers are read from the data dir by the app\'s rule, and the printed check names that path', () => {
+  const h = require('./scratch.js').mkdtemp('sb-home-'), def = path.join(h, '.consonance'); fs.mkdirSync(def);
+  fs.writeFileSync(path.join(def, 'head-watch.jsonl'), JSON.stringify({ ts: '2026-10-25T04:00:00.000Z', event: 'start' }) + '\n');
+  let s = sb.liveSection({ USERPROFILE: h });
+  assert.match(s.lines.join('\n'), /head-watch ledger 1 row\(s\), last start/, s.lines.join(' | ')); assert.ok(s.cmd.includes(path.join(def, 'head-watch.jsonl')), s.cmd);
+  const custom = path.join(h, 'custom'); fs.mkdirSync(custom); fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify({ data_dir: custom }));
+  s = sb.liveSection({ USERPROFILE: h });
+  assert.match(s.lines.join('\n'), /head-watch ledger unreadable \(ENOENT\)/, s.lines.join(' | ')); assert.ok(s.cmd.includes(path.join(custom, 'head-watch.jsonl')), s.cmd);
+  s = sb.liveSection({ USERPROFILE: h, CONSONANCE_DATA: def });
+  assert.match(s.lines.join('\n'), /head-watch ledger 1 row/, 'CONSONANCE_DATA comes first');
 });

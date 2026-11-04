@@ -54,22 +54,50 @@ const VALUE_PATTERNS = [
 // only writes has not verified anything — that distinction is the point of the whole file.
 const READING_TOOLS = new Set(['Bash', 'Read', 'Grep', 'Glob', 'WebSearch', 'WebFetch', 'PowerShell']);
 
-function turns(file) {
+/** Every line of a file, handed to `fn` as text, WITHOUT ever holding the whole file as one string.
+ *
+ *  D273 (devreds): this used to be `fs.readFileSync(file, 'utf8').split(/\r?\n/)`. A session transcript is append-only and the chair's grew past
+ *  V8's maximum string length (0x1fffffe8, 536,870,888 bytes; the live one was 539,727,123), after which the read threw ERR_STRING_TOO_LONG and the
+ *  tool died on exactly the long sessions it exists to measure. Lines are cut on the 0x0A byte BEFORE decoding, so a multi-byte character split across
+ *  two chunks is never decoded in halves; a trailing \r is left to JSON.parse (it is whitespace); a line that cannot be made a string at all is skipped,
+ *  as an unparseable line always was. `chunkBytes` is a parameter only so a test can put every boundary inside a character and inside a line. */
+function eachLine(file, fn, chunkBytes = 8 * 1024 * 1024) {
+  const fd = fs.openSync(file, 'r');
+  try {
+    const buf = Buffer.allocUnsafe(chunkBytes);
+    let carry = [];
+    const emit = (bytes) => { let text; try { text = bytes.toString('utf8'); } catch (_) { return; } fn(text); };
+    for (let n; (n = fs.readSync(fd, buf, 0, chunkBytes, null)) > 0;) {
+      const view = buf.subarray(0, n);
+      let start = 0;
+      for (;;) {
+        const nl = view.indexOf(0x0a, start);
+        if (nl < 0) { if (start < n) carry.push(Buffer.from(view.subarray(start))); break; }
+        carry.push(view.subarray(start, nl));
+        emit(carry.length === 1 ? carry[0] : Buffer.concat(carry)); carry = [];
+        start = nl + 1;
+      }
+    }
+    if (carry.length) emit(Buffer.concat(carry));
+  } finally { fs.closeSync(fd); }
+}
+
+function turns(file, chunkBytes) {
   const out = [];
   let pending = null;
-  for (const line of fs.readFileSync(file, 'utf8').split(/\r?\n/)) {
-    if (!line.trim()) continue;
-    let r; try { r = JSON.parse(line); } catch { continue; }
-    if (r.type === 'user') { if (pending) out.push(pending); pending = null; continue; }
-    if (r.type !== 'assistant') continue;
+  eachLine(file, (line) => {
+    if (!line.trim()) return;
+    let r; try { r = JSON.parse(line); } catch { return; }
+    if (r.type === 'user') { if (pending) out.push(pending); pending = null; return; }
+    if (r.type !== 'assistant') return;
     const c = (r.message || {}).content;
-    if (!Array.isArray(c)) continue;
+    if (!Array.isArray(c)) return;
     if (!pending) pending = { ts: r.timestamp, text: '', tools: [] };
     for (const b of c) {
       if (b.type === 'text') pending.text += '\n' + b.text;
       if (b.type === 'tool_use') pending.tools.push(b.name);
     }
-  }
+  }, chunkBytes);
   if (pending) out.push(pending);
   return out;
 }
@@ -142,6 +170,6 @@ function main(argv) {
   return 0;
 }
 
-module.exports = { scan, turns, VALUE_PATTERNS, READING_TOOLS };
+module.exports = { scan, turns, eachLine, VALUE_PATTERNS, READING_TOOLS };
 
 if (require.main === module) process.exit(main(process.argv.slice(2)));

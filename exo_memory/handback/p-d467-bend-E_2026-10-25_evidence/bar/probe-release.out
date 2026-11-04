@@ -1,0 +1,25 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+tools s0 450 rate 0.0003: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 72.3 m, further than your drag moved it (12.9 m)) | [1] refused(CLOSE_WINDOW) | [1,5] closed
+    -> the lap is closed again: closing it took back 45% of your bend (closed in 2 step(s): 0.066 mm, tangent 4.2e-8 ; keptBend false
+tools s0 450 rate 0.0001: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 51.8 m, further than your drag moved it (4.3 m)) | [1] refused(CLOSE_WINDOW) | [1,5] closed
+    -> the lap is closed again: closing it took back 45% of your bend (closed in 2 step(s): 0.001 mm, tangent 1.5e-8 ; keptBend false
+tools s0 450 rate 0.00003: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 27.7 m, further than your drag moved it (1.3 m)) | [1] refused(CLOSE_WINDOW) | [1,5] closed
+    -> the lap is closed again: closing it took back 45% of your bend (closed in 2 step(s): 0.017 mm, tangent 3.9e-8 ; keptBend false
+tools s0 700 rate 0.0003: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 153 m, further than your drag moved it (11.1 m)) | [2] refused(CLOSE_WINDOW) | [2,5] closed
+    -> the lap is closed again: closing it took back 49% of your bend (closed in 2 step(s): 0.017 mm, tangent 2.1e-8 ; keptBend false
+tools s0 700 rate 0.0001: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 84.4 m, further than your drag moved it (3.7 m)) | [2] refused(CLOSE_WINDOW) | [2,5] closed
+    -> the lap is closed again: closing it took back 49% of your bend (closed in 2 step(s): 0.003 mm, tangent 0.0e+0 ; keptBend false
+tools s0 700 rate 0.00003: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 45.2 m, further than your drag moved it (1.1 m)) | [2] refused(CLOSE_WINDOW) | [2,5] closed
+    -> the lap is closed again: closing it took back 49% of your bend (closed in 1 step(s): 0.957 mm, tangent 1.5e-8 ; keptBend false
+curvedMid s0 450 rate 0.0003: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 31.1 m, further than your drag moved it (17.6 m)) | [1] refused(CLOSE_WINDOW) | [1,6] closed
+    -> the lap is closed again: closing it took back 43% of your bend (closed in 2 step(s): 0.102 mm, tangent 2.1e-8 ; keptBend false
+curvedMid s0 450 rate 0.0001: base start true, after start true; tries: START closed
+    -> the lap is closed again: to keep your bend, the start of the lap moved (closed in 2 step(s): 0.083 mm, tangent; keptBend true
+curvedMid s0 450 rate 0.00003: base start true, after start true; tries: START closed
+    -> the lap is closed again: to keep your bend, the start of the lap moved (closed in 2 step(s): 0.007 mm, tangent; keptBend true
+curvedMid s0 600 rate 0.0003: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 93.6 m, further than your drag moved it (19.0 m)) | [1,2] refused(CLOSE_WINDOW) | [1,2,6] closed
+    -> the lap is closed again: closing it took back 22% of your bend (closed in 2 step(s): 0.065 mm, tangent 1.5e-8 ; keptBend false
+curvedMid s0 600 rate 0.0001: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 17.2 m, further than your drag moved it (6.3 m)) | [1,2] refused(CLOSE_WINDOW) | [1,2,6] closed
+    -> the lap is closed again: closing it took back 21% of your bend (closed in 2 step(s): 0.008 mm, tangent 0.0e+0 ; keptBend false
+curvedMid s0 600 rate 0.00003: base start true, after start true; tries: START refused(CLOSE_BAR: CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 3.0 m, further than your drag moved it (1.9 m)) | [1,2] refused(CLOSE_WINDOW) | [1,2,6] closed
+    -> the lap is closed again: closing it took back 21% of your bend (closed in 2 step(s): 0.012 mm, tangent 4.7e-8 ; keptBend false

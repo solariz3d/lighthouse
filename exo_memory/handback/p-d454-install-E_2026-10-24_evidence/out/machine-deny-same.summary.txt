@@ -1,0 +1,4 @@
+cons-d454-e/old-hooks push-gate.js: exit 0, deny true, stdout 652 B sha256 b5f8ea4d902ae5a5, tried writes: mkdirSync C:/Consonance/data | openSync C:/Consonance/data/push-gate.jsonl, made 0
+cons-d454-e/old-hooks delete-gate.js: exit 0, deny true, stdout 846 B sha256 3d64a666c2170725, tried writes: mkdirSync C:/Consonance/data | openSync C:/Consonance/data/delete-gate.jsonl, made 0
+consonance/hooks push-gate.js: exit 0, deny true, stdout 652 B sha256 b5f8ea4d902ae5a5, tried writes: mkdirSync C:/Consonance/data | openSync C:/Consonance/data/push-gate.jsonl, made 0
+consonance/hooks delete-gate.js: exit 0, deny true, stdout 846 B sha256 3d64a666c2170725, tried writes: mkdirSync C:/Consonance/data | openSync C:/Consonance/data/delete-gate.jsonl, made 0

@@ -1,0 +1,100 @@
+MESSAGE 21  msg_011CfjNqyvrhrJts3L2oDctz  seat librarian  ts 2026-10-05T16:07:09.586Z  turn L74516..L74546 (next prompt L74551)
+CLAIMS:
+  [msg_011CfjNqyvrhrJts3L2oDctz|6] "start gate at the beginning"
+
+--- L74516 user 2026-10-05T16:05:55.572Z
+USER: 
+
+<pasted_content id="d7d4">
+[pane:E] D243 pre-step + D243a (pane E) hand-back: exo_memory/handback/p-openexport-E_2026-10-05.md — research at exo_memory/loop/open_track_ac_research_2026-10-05.md; build is t180 commit ff428fa7 in worktree e-openexp-wt (on 8ff414b, not pushed); the export command for TEST 1 recovered is in the hand-back.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-openexport-E_2026-10-05.md · C:\Users\nname\Desktop\lighthouse\exo_memory\loop\open_track_ac_research_2026-10-05.md
+[digest at ring: git-blob b21b3bb42fe5d63f0cca989ea9f96ab11efe0058 — exo_memory/handback/p-openexport-E_2026-10-05.md, 7697 bytes, computed by call_librarian when the ring fired; also named, not hashed: exo_memory/loop/open_track_ac_research_2026-10-05.md]
+NEXT: librarian export TEST 1 recovered with testexport.js into AC when a quick non-author look at ff428fa7 is green (or now, if the keeper's wait outranks the look)
+</pasted_content id="d7d4">
+
+--- L74526 assistant 2026-10-05T16:06:00.755Z
+TOOL_USE Read [toolu_01TiKoTZ6oFodDWUBi9ahGH1]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-openexport-E_2026-10-05.md"}
+--- L74527 user 2026-10-05T16:06:00.784Z
+RESULT [toolu_01TiKoTZ6oFodDWUBi9ahGH1]: 1	# p-openexport-E · D243 pre-step + D243a: open-track AC research, and the TEST export of an unfinished track · pane E · 2026-10-05, on D
+2	
+3	## The build
+4	**Commit `ff428fa776f5ce4dae8f381f7139f02bf0c164cc`** in the fresh worktree `C:/Users/nname/Desktop/worktrees/e-openexp-wt` (0 links), on t180 main **`8ff414b`**.
+5	- 7 named paths, +146/−19.
+6	- **Not pushed, and AC was not launched.**
+7	- **Landing note:** the installed build is `fa5fd937` (the D237/D237b preview commits sit on top of `8ff414b`), so the chair cherry-picks this onto main.
+8	
+9	**What it does:**
+10	- **Its own button,** "Test export (unfinished)…" (`app/index.html`), beside Export and **never the default**. It calls `shell.exportTo(dir, { textures, test: true })`; `coreshell.js` skips the open-loop refusal only when `test` is set, and lays the grid on an open path. `export.js runSegments` passes `test` through.
+11	- **`src/export/fromwords.js` `opts.test`:**
+12	  - the path is built **open** (`closed: !test`), with closure waived;
+13	  - **every red is LISTED, not blocking:** in the result's warnings ("N red finding(s) NOT blocking") and in **`t180b_TEST_UNFINISHED.txt`** in the folder, one line per red. Failed marker checks are listed the same way;
+14	  - the **ui name** is "`<name> (test, unfinished)`" and the **folder** is `t180b_<name>_test`, so it never overwrites a real export's folder;
+15	  - **point-to-point gates** `AC_AB_START_L/R` sit at the start gate (AC_TIME_0) and `AC_AB_FINISH_L/R` sit **150 m before the road's end** (or a quarter of a short road);
+16	  - **the named end block:** a wall `1WALL_T180_END` across the road's last cross-section, 4 m tall along the surface normal, both faces.
+17	- **`src/export/ailine.js` `open`:** an ope
+…[5435 chars cut]…
+	| `survey.js` | `8e6082d0…` |
+84	| `aiends.js` | `f4bc2480…` |
+85	| `ends.js` | `85a784ed…` |
+86	| `flights.js` | `d7af350e…` |
+87	| `flightray.js` | `68c6a884…` |
+88	| `smoke.js` | `5a8160b4…` |
+89	| `testexport.js` | `29bb9774…` |
+90	| `survey.json` | `3acc8dfb…` |
+91	| `aiends.txt` | `6421dd9b…` |
+92	| `ends.json` | `a9e9ff5f…` |
+93	| `flights.json` | `79cc83b7…` |
+94	| `flightray.txt` | `1f07f917…` |
+95	| `smoke.json` | `35b1e0ef…` |
+96	| `tests.txt` | `8448296f…` |
+97	
+98	SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_jumps_open_export_2026-10-05.md · C:\Users\nname\Desktop\lighthouse\exo_memory\loop\open_track_ac_research_2026-10-05.md · `git -C C:/Users/nname/Desktop/worktrees/e-openexp-wt log --oneline -1`
+99	
+--- L74530 assistant 2026-10-05T16:06:11.039Z
+TOOL_USE PowerShell [toolu_01NsJopgLuo53XGXseyZtsDu]: {"command":"$t = Get-ChildItem C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f -Recurse -Filter testexport.js -ErrorAction SilentlyContinue | Select-Object -First 1; $t.FullName; (Get-FileHash $t.FullName -Algorithm SHA256).Hash.Substring(0,8); $S='C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b\\scratchpad'; Copy-Item \"$env:APPDATA\\com.solariz3d.t180-track-builder\\tracks\\eq-TEST 1 recovered.t180track\" \"$S\\test1-recovered-copy.t180track\" -Force; Test-Path \"G:\\SteamLibrary\\steamapps\\common\\assettocorsa\\content\\tracks\\t180b_test_1_recovered_test\"","description":"Find E's test-export script, check its hash, copy the keeper's track, and check the target folder"}
+--- L74531 user 2026-10-05T16:06:12.782Z
+RESULT [toolu_01NsJopgLuo53XGXseyZtsDu]: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\openexp\testexport.js
+29BB9774
+False
+--- L74533 assistant 2026-10-05T16:06:17.304Z
+TEXT: Hash matches E's record. Exporting your TEST 1 recovered into AC now.
+--- L74534 assistant 2026-10-05T16:06:20.590Z
+TOOL_USE PowerShell [toolu_01U3HC7ysKSLNYqGK6eA9Y75]: {"command":"$S='C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b\\scratchpad'; node --max-old-space-size=4096 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\openexp\\testexport.js' C:/Users/nname/Desktop/worktrees/e-openexp-wt \"$S\\test1-recovered-copy.t180track\" 'G:/SteamLibrary/steamapps/common/assettocorsa/content/tracks' 2>$null | Select-Object -Last 8; Get-ChildItem 'G:\\SteamLibrary\\steamapps\\common\\assettocorsa\\content\\tracks\\t180b_test_1_recovered_test' | Select-Object Name,Length | Format-Table -AutoSize","description":"Run the test export of TEST 1 recovered into AC and list what it wrote","timeout":300000}
+--- L74541 user 2026-10-05T16:06:38.649Z
+RESULT [toolu_01U3HC7ysKSLNYqGK6eA9Y75]:   "markers: AC_START_0 is on a core, not a straight (§5c: the grid is dropped on a straight)",
+  "markers: AC_START_1 is on a core, not a straight (§5c: the grid is dropped on a straight)",
+  "markers: AC_START_2 is on a core, not a straight (§5c: the grid is dropped on a straight)",
+  "markers: AC_START_3 is on a core, not a straight (§5c: the grid is dropped on a straight)",
+  "184 mesh-node names repeat in the builder's scene (e.g. CELL_p1_body_0 ×500); the kn5 gets unique names (acready.js), INTERFACES §2, C's mesh.js safeId",
+  "csp-only: surfaces.ini sets WAV_PITCH=extended-0, CSP's extended physics (ARCHITECTURE §6). Assetto Corsa without Custom Shaders Patch can crash loading this track (CSP wiki, \"Tracks – Enabling extended physics\"; docs/research/04_ac_physics_drivability.md §2). Turn off \"T-180 track\" to export without it."
+ ]
+}
+
+Name                            Length  
+----                            ------  
+ai                                      
+data                                    
+ui                                      
+.t180b-builder.json             373     
+map.png                         31766   
+models.ini                      77      
+t180b_test_1_recovered_test.kn5 80994426
+t180b_TEST_UNFINISHED.txt       2429
+--- L74543 assistant 2026-10-05T16:06:49.463Z
+TOOL_USE mcp__consonance__call_chair [toolu_01MbM3Z99sBNF8Yp9sujJ81z]: {"text":"D243a (E) is collated, and the keeper's export is DONE. Pointer: exo_memory/handback/p-openexport-E_2026-10-05.md; research at exo_memory/loop/open_track_ac_research_2026-10-05.md. The commit is ff428fa7 on 8ff414b (7 paths; cherry-pick needed).\n\nRead at the file:\n- \"Test export (unfinished)…\" is its own button. Closure is waived and reds are LISTED (the result plus t180b_TEST_UNFINISHED.txt). The ui name is \"(test, unfinished)\" and the folder is t180b_<name>_test.\n- Point-to-point AB gates. A finish 150 m before the end. A 4 m wall 1WALL_T180_END. An open AI line.\n- All of it is modelled on what ships in
+…[873 chars cut]…
+2026-10-05.md\n\nOUTPUT → NEXT: changed — the keeper's test export is in AC ahead of the look; ff428fa7 still needs its non-author look before landing\nNEXT: chair dispatch a quick non-author look at ff428fa7 when a pane is free, and fold E's flight findings into D243"}
+--- L74544 user 2026-10-05T16:06:49.917Z
+RESULT [toolu_01MbM3Z99sBNF8Yp9sujJ81z]: delivered to Main (rendered in its pane — not proof it was read)
+--- L74546 assistant 2026-10-05T16:07:09.586Z  <<< THE CLAIM'S MESSAGE
+TEXT: **Your TEST 1 recovered is in AC now,** as **"TEST 1 recovered (test, unfinished)"** (folder `t180b_test_1_recovered_test`). It's a separate folder, so nothing of yours was overwritten.
+
+What to expect when you load it:
+- **It's a point-to-point layout:** start gate at the beginning, finish gate 150 m before the end of the road. Pick practice or hotlap.
+- **The road ends in a 4 m wall**, with a run-off before it, so you won't drive off into nothing. It's a plain wall, so brake.
+- **The known problems are listed** in `t180b_TEST_UNFINISHED.txt` inside the folder: 18 in all, mostly the overlaps in the rolled section around 5.8–6.5 km, plus one spot that rolls slightly too fast. They don't block a test export, but you'll feel them.
+- **It needs CSP,** like all your T-180 tracks.
+
+This is the first time AC loads one of these unfinished layouts. E modelled it on how Kunos' own drag strip and other point-to-point tracks are built, but nobody has loaded it yet. If AC complains or crashes on load, tell me what it says.
+
+Sources: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-openexport-E_2026-10-05.md

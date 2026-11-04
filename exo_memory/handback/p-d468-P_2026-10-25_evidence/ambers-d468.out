@@ -1,0 +1,8 @@
+rolled cup: red 2 {"self-intersection":2}; amber 0 {}
+P 210/300/30: red 9 {"self-intersection":9}; amber 5 {"low-overhead":5}
+P 180/1200/10: red 2 {"self-intersection":2}; amber 0 {}
+P 180/1200/30: red 2 {"self-intersection":2}; amber 0 {}
+gentle: red 0 {}; amber 0 {}
+TEST 10: red 0 {}; amber 13 {"bank-cup-edge":3,"load-above-proven":8,"load-sustained":2}
+TEST TRACK 10: red 0 {}; amber 18 {"bank-cup-edge":12,"load-above-proven":4,"load-sustained":2}
+the banked lap (Close): red 0 {}; amber 0 {}

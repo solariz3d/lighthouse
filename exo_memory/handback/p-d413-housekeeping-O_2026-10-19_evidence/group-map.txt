@@ -1,0 +1,4 @@
+exo_memory/map/A.md
+exo_memory/map/B.md
+exo_memory/map/C.md
+exo_memory/map/E.md

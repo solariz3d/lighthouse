@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: row 1: coarsen thins the row grid, keeps the road's two edges, keeps shared grids shared and unchanged segments the same objects; detail 1 is the same array
+ok 1 - row 1: coarsen thins the row grid, keeps the road's two edges, keeps shared grids shared and unchanged segments the same objects; detail 1 is the same array
+  ---
+  duration_ms: 0.8819
+  type: 'test'
+  ...
+# Subtest: row 2: the model meshes far fewer vertices at a coarse detail, comes back to EXACTLY a fresh full build, returns the real segments, builds nothing for the same document
+ok 2 - row 2: the model meshes far fewer vertices at a coarse detail, comes back to EXACTLY a fresh full build, returns the real segments, builds nothing for the same document
+  ---
+  duration_ms: 326.4853
+  type: 'test'
+  ...
+# Subtest: row 2b: a change of detail on an OPEN track is a full rebuild, not an incremental one; and a closed loop's same-document update is the same build (it used to rebuild in full every time)
+ok 3 - row 2b: a change of detail on an OPEN track is a full rebuild, not an incremental one; and a closed loop's same-document update is the same build (it used to rebuild in full every time)
+  ---
+  duration_ms: 399.2033
+  type: 'test'
+  ...
+# Subtest: row 3: batchesOf(mesh, from) is the batches of the pieces from there on, equal to the full list filtered; the ghost builds only the new pieces
+ok 4 - row 3: batchesOf(mesh, from) is the batches of the pieces from there on, equal to the full list filtered; the ghost builds only the new pieces
+  ---
+  duration_ms: 222.8621
+  type: 'test'
+  ...
+# Subtest: row 4: a brush drag keeps full detail and draws the drag's frame (nothing placed rebuilt); the release's exact build runs in the next animation frame, once, and is the full build
+ok 5 - row 4: a brush drag keeps full detail and draws the drag's frame (nothing placed rebuilt); the release's exact build runs in the next animation frame, once, and is the full build
+  ---
+  duration_ms: 304.5693
+  type: 'test'
+  ...
+# Subtest: row 5: the panel coalesces pointer moves to ONE brushTo per animation frame with the LATEST position, and the release applies the last position still waiting
+ok 6 - row 5: the panel coalesces pointer moves to ONE brushTo per animation frame with the LATEST position, and the release applies the last position still waiting
+  ---
+  duration_ms: 53.9075
+  type: 'test'
+  ...
+# Subtest: row 6: the fast change key is the JSON key's equality, hashed: equal content equal keys, any one-bit change differs, and on real segments it finds exactly the segments JSON finds
+ok 7 - row 6: the fast change key is the JSON key's equality, hashed: equal content equal keys, any one-bit change differs, and on real segments it finds exactly the segments JSON finds
+  ---
+  duration_ms: 211.9249
+  type: 'test'
+  ...
+# Subtest: row 7: a cup or plain segment gets a coarse row grid too (shared across a held cross-section, the road's two edges kept) and the coarse mesh is a fraction of the vertices
+ok 8 - row 7: a cup or plain segment gets a coarse row grid too (shared across a held cross-section, the road's two edges kept) and the coarse mesh is a fraction of the vertices
+  ---
+  duration_ms: 293.9603
+  type: 'test'
+  ...
+# Subtest: row 8: a closed loop rebuilt from the pieces that changed EQUALS a full rebuild: every coarse drag step, the release, an undo; and it meshes only what the brush reached
+ok 9 - row 8: a closed loop rebuilt from the pieces that changed EQUALS a full rebuild: every coarse drag step, the release, an undo; and it meshes only what the brush reached
+  ---
+  duration_ms: 5028.3186
+  type: 'test'
+  ...
+# Subtest: row 8b: a brush across the loop's own joint (the last piece to the first), a hill (a lifted path) and a heading brush that re-closes the whole loop: all equal a full rebuild
+ok 10 - row 8b: a brush across the loop's own joint (the last piece to the first), a hill (a lifted path) and a heading brush that re-closes the whole loop: all equal a full rebuild
+  ---
+  duration_ms: 1413.1159
+  type: 'test'
+  ...
+# Subtest: row 9: reuseMesh does not change the mesh it was given, refuses a different number of segments, and an unflagged piece is remeshed
+ok 11 - row 9: reuseMesh does not change the mesh it was given, refuses a different number of segments, and an unflagged piece is remeshed
+  ---
+  duration_ms: 199.9389
+  type: 'test'
+  ...
+# Subtest: row 9b: a piece that takes its font from the piece before it (a word segment, no blend of its own) is remeshed when that one changes
+ok 12 - row 9b: a piece that takes its font from the piece before it (a word segment, no blend of its own) is remeshed when that one changes
+  ---
+  duration_ms: 221.5334
+  type: 'test'
+  ...
+# Subtest: row 9c: reuseMesh checks a piece's start pitch and bank itself: a flag that says "same" for a piece whose start changed does not keep a stale shape
+ok 13 - row 9c: reuseMesh checks a piece's start pitch and bank itself: a flag that says "same" for a piece whose start changed does not keep a stale shape
+  ---
+  duration_ms: 323.0002
+  type: 'test'
+  ...
+# Subtest: row 9d: a seam between two pieces that only MOVED moves with them (a step in the font with no ramp makes a real seam)
+ok 14 - row 9d: a seam between two pieces that only MOVED moves with them (a step in the font with no ramp makes a real seam)
+  ---
+  duration_ms: 237.5979
+  type: 'test'
+  ...
+# Subtest: row 9e: a closed loop whose number of segments changed is built in full, not reused (the model checks the count before it trusts a slot)
+ok 15 - row 9e: a closed loop whose number of segments changed is built in full, not reused (the model checks the count before it trusts a slot)
+  ---
+  duration_ms: 493.4585
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9934.5562

@@ -1,0 +1,41 @@
+# rangescan.out with its pattern labels made generic (E, D483); the counts are unchanged
+PRIV_PATTERN alternatives: 13 (2 from priv.txt, 11 from the term list)
+range origin/main..b915a03: 11 commits, 1872 added lines
+credential 1: added 0, messages 0
+credential 2: added 0, messages 0
+credential 3: added 0, messages 0
+credential 4: added 0, messages 0
+credential 5: added 0, messages 0
+the public word: added 0, messages 0
+credential 6: added 0, messages 0
+credential 7: added 0, messages 0
+private home path: added 0, messages 0
+private name 1: added 0, messages 0
+email local part: added 0, messages 0
+PRIV_PATTERN alt 1: added 0, messages 0
+PRIV_PATTERN alt 2: added 0, messages 0
+PRIV_PATTERN alt 3: added 0, messages 0
+PRIV_PATTERN alt 4: added 0, messages 0
+PRIV_PATTERN alt 5: added 0, messages 0
+PRIV_PATTERN alt 6: added 0, messages 0
+PRIV_PATTERN alt 7: added 0, messages 0
+PRIV_PATTERN alt 8: added 1, messages 0
+PRIV_PATTERN alt 9: added 0, messages 0
+PRIV_PATTERN alt 10: added 0, messages 0
+PRIV_PATTERN alt 11: added 0, messages 0
+PRIV_PATTERN alt 12: added 0, messages 0
+PRIV_PATTERN alt 13: added 0, messages 0
+total 1
+per commit a4bfe52: 1 commits, 111 added lines, total 0
+per commit 2451dfb: 1 commits, 294 added lines, total 0
+per commit cf03658: 1 commits, 58 added lines, total 0
+per commit 41e7595: 1 commits, 18 added lines, total 0
+per commit 1366dfc: 1 commits, 2 added lines, total 0
+per commit 883c200: 1 commits, 223 added lines, total 0
+per commit 9d7b37e: 1 commits, 111 added lines, total 0
+per commit 67e8754: 1 commits, 349 added lines, total 0
+per commit 1542ec9: 1 commits, 694 added lines, total 0
+per commit 9542ee6: 1 commits, 3 added lines, total 0
+per commit b915a03: 1 commits, 9 added lines, total 1
+PRIV_PATTERN alt 8: added 1, messages 0
+commits with any hit: 1 of 11

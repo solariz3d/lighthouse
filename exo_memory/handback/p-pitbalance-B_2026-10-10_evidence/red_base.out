@@ -1,0 +1,77 @@
+=== node --max-old-space-size=4096 --test --test-concurrency=1 test/markers_pitbalance.test.js
+=== cwd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285/base
+=== env {}
+[31m✖ the row no longer starts at the lane's midpoint: pit 1 (AC_PIT_0) is the first box after the entry, and each next box is further on [90m(59.1765ms)[39m[39m
+[32m✔ 2 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(28.4839ms)[39m[39m
+[31m✖ 6 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(26.0664ms)[39m[39m
+[31m✖ 12 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(24.1268ms)[39m[39m
+[32m✔ the boxes stand on the lane, with the count asked for, and the checks pass [90m(63.7846ms)[39m[39m
+[31m✖ a row longer than the lane's straight is still centred, and an amber says the end boxes stand on the tapers [90m(20.6176ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 2[39m
+[34mℹ fail 4[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 309.8921[39m
+
+[31m✖ failing tests:[39m
+
+test at test\markers_pitbalance.test.js:35:1
+[31m✖ the row no longer starts at the lane's midpoint: pit 1 (AC_PIT_0) is the first box after the entry, and each next box is further on [90m(59.1765ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: AC_PIT_0 at lane s 400.47, the lane's midpoint is 400.47
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-5bf9d657\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\scratchpad\d285\base\[39mtest\markers_pitbalance.test.js:37:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\markers_pitbalance.test.js:42:3
+[31m✖ 6 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(26.0664ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: gap before 318.60 m, after 438.60 m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-5bf9d657\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\scratchpad\d285\base\[39mtest\markers_pitbalance.test.js:46:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\markers_pitbalance.test.js:42:3
+[31m✖ 12 boxes: the gap before the first box equals the gap after the last (within one spacing), and no box stands on a taper [90m(24.1268ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: gap before 318.60 m, after 582.60 m
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-5bf9d657\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\scratchpad\d285\base\[39mtest\markers_pitbalance.test.js:46:12[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\markers_pitbalance.test.js:61:1
+[31m✖ a row longer than the lane's straight is still centred, and an amber says the end boxes stand on the tapers [90m(20.6176ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: before 318.60, after 1014.60
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-5bf9d657\12fb81f6-f4c0-4ef8-aad8-f0cdce091925\scratchpad\d285\base\[39mtest\markers_pitbalance.test.js:64:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+=== exit 1 signal null error  0.4s

@@ -1,0 +1,10 @@
+# Subtest: row 1: over each dark skin's own sky, the darkened view shows no 8-bit steps: the longest run of one colour down a column is at most 12 px
+ok 1 - row 1: over each dark skin's own sky, the darkened view shows no 8-bit steps: the longest run of one colour down a column is at most 12 px
+# longest flat run under the vignette, px: {"glass":0,"glass flat":0,"aqua":0,"aqua flat":0,"aurora":0,"aurora flat":0,"skyline-night":2,"skyline-night flat":0}; the control (a flat field, no vignette): 267
+ok 2 - row 2: the look is kept: over a flat field the darkening is the old gradient's within one 8-bit step, and the middle of the view is untouched
+# mean offset from the old gradient, 8-bit steps per channel: {"glass 40,40":[0.1,0.18,0.55],"glass 700,30":[0.1,0.44,0.28],"glass 1360,40":[0.69,0.2,0.65],"glass 80,300":[0,0,0],"glass 1320,300":[0,0,0],"glass 400,120":[0.56,0.7,0.5],"glass 1000,120":[0.04,0.05,0.05],"glass 700,700":[0,0,0],"aqua 40,40":[0.44,0.42,0.56],"aqua 700,30":[0.44,0.48,0.44],"aqua 1360,40":[0.44,0.37,0.5],"aqua 80,300":[0,0,0],"aqua 1320,300":[0,0,0],"aqua 400,120":[0.44,0.33,0.39],"aqua 1000,120":[0.04,0.05,0.05],"aqua 700,700":[0,0,0],"aurora 40,40":[0.49,0.75,0.61],"aurora 700,30":[0.33,0.44,0.55],"aurora 1360,40":[0.11,0.32,0.32],"aurora 80,300":[0,0,0],"aurora 1320,300":[0,0,0],"aurora 400,120":[0.6,0.61,0.4],"aurora 1000,120":[0.04,0.04,0.05],"aurora 700,700":[0,0,0],"skyline-night 40,40":[0.29,0.34,0.42],"skyline-night 700,30":[0.17,0.37,0.48],"skyline-night 1360,40":[0.57,0.24,0.45],"skyline-night 80,300":[0,0,0],"skyline-night 1320,300":[0,0,0],"skyline-night 400,120":[0.73,0.47,0.43],"skyline-night 1000,120":[0.05,0.05,0.05],"skyline-night 700,700":[0,0,0]}
+ok 3 - row 3: named, the vignette is the frame's last draw, over everything, keeping the canvas opaque; left out, no pass; an unknown word is refused
+ok 4 - row 4: the page draws no gradient on \#preview::after; --vignette names it, on unless a skin says none, and Skyline says none
+# tests 4
+# pass 4
+# fail 0

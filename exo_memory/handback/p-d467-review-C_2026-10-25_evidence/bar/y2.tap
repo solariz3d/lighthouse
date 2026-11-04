@@ -1,0 +1,3203 @@
+TAP version 13
+# Subtest: row 1: every tool resolves to its mode, channel and family; an unknown tool is refused by name and opens nothing
+ok 1 - row 1: every tool resolves to its mode, channel and family; an unknown tool is refused by name and opens nothing
+  ---
+  duration_ms: 17.0819
+  type: 'test'
+  ...
+# Subtest: row 2: the family sets the guard: shape keeps the D244b refusal, local and route are not guarded, and a route tool moves the road after it
+ok 2 - row 2: the family sets the guard: shape keeps the D244b refusal, local and route are not guarded, and a route tool moves the road after it
+  ---
+  duration_ms: 97.9132
+  type: 'test'
+  ...
+# Subtest: row 3: Smooth takes the channel of the tool used last; a channel given wins; with none it is refused by name
+ok 3 - row 3: Smooth takes the channel of the tool used last; a channel given wins; with none it is refused by name
+  ---
+  duration_ms: 22.6544
+  type: 'test'
+  ...
+# Subtest: row 4: a route tool on a CLOSED lap is never closed per step: the lap is open during the drag
+ok 4 - row 4: a route tool on a CLOSED lap is never closed per step: the lap is open during the drag
+  ---
+  duration_ms: 106.8378
+  type: 'test'
+  ...
+# Subtest: row 5: the release only STARTS the job; the job lands the re-closed lap as ONE undo step, every piece outside the window the very same object
+ok 5 - row 5: the release only STARTS the job; the job lands the re-closed lap as ONE undo step, every piece outside the window the very same object
+  ---
+  duration_ms: 221.7666
+  type: 'test'
+  ...
+# Subtest: row 6: the start pieces first, then the window close; refused, the whole-lap close with the window protected; refused again, the drag is dropped whole and named
+ok 6 - row 6: the start pieces first, then the window close; refused, the whole-lap close with the window protected; refused again, the drag is dropped whole and named
+  ---
+  duration_ms: 235.3141
+  type: 'test'
+  ...
+# Subtest: row 7: the window is the selected RUN: sculptInfo gives from/to and the middle piece; beginSculpt brushes the run, and nothing outside it changes
+ok 7 - row 7: the window is the selected RUN: sculptInfo gives from/to and the middle piece; beginSculpt brushes the run, and nothing outside it changes
+  ---
+  duration_ms: 23.568
+  type: 'test'
+  ...
+# Subtest: row 8: a radius change mid-drag takes no step itself, and the next brushTo of the page re-runs from the same base at the new radius, with no accumulation
+ok 8 - row 8: a radius change mid-drag takes no step itself, and the next brushTo of the page re-runs from the same base at the new radius, with no accumulation
+  ---
+  duration_ms: 14.6792
+  type: 'test'
+  ...
+# Subtest: row 9: Esc (cancelBrush) drops an open drag: the very same document, and no undo step
+ok 9 - row 9: Esc (cancelBrush) drops an open drag: the very same document, and no undo step
+  ---
+  duration_ms: 4.9087
+  type: 'test'
+  ...
+# Subtest: row 10: Stretch hands the core ONE factor for the whole run, keepRate when asked; refused by name until the core has stretch
+ok 10 - row 10: Stretch hands the core ONE factor for the whole run, keepRate when asked; refused by name until the core has stretch
+  ---
+  duration_ms: 15.3955
+  type: 'test'
+  ...
+# Subtest: row 11: the close runner hands the worker the window a route tool's release asks for
+ok 11 - row 11: the close runner hands the worker the window a route tool's release asks for
+  ---
+  duration_ms: 1.7384
+  type: 'test'
+  ...
+# Subtest: row 12: runClose closes with the window it is given, not the default trailing one
+ok 12 - row 12: runClose closes with the window it is given, not the default trailing one
+  ---
+  duration_ms: 112.4304
+  type: 'test'
+  ...
+# Subtest: row 13: B's page: beginSculpt({ channel, from, to }) brushes the run with the shape guard on, and with a tool the tool's; a bad run or a steering channel is refused by name
+ok 13 - row 13: B's page: beginSculpt({ channel, from, to }) brushes the run with the shape guard on, and with a tool the tool's; a bad run or a steering channel is refused by name
+  ---
+  duration_ms: 14.2738
+  type: 'test'
+  ...
+# Subtest: row 14: with the real core of C, Stretch lengthens the run by exactly the metres of the drag, the document stays valid, one undo step
+ok 14 - row 14: with the real core of C, Stretch lengthens the run by exactly the metres of the drag, the document stays valid, one undo step
+  ---
+  duration_ms: 10.6278
+  type: 'test'
+  ...
+# Subtest: row 15: with the real core of C, Smooth after a Bend relaxes the turn channel under the window, one undo step
+ok 15 - row 15: with the real core of C, Smooth after a Bend relaxes the turn channel under the window, one undo step
+  ---
+  duration_ms: 12.4185
+  type: 'test'
+  ...
+# Subtest: row 16: Stretch with no piece and no run takes the road piece under s0 (B's strip sends neither)
+ok 16 - row 16: Stretch with no piece and no run takes the road piece under s0 (B's strip sends neither)
+  ---
+  duration_ms: 7.9831
+  type: 'test'
+  ...
+# Subtest: row 17: a re-close that outlives its document leaves no brush open: a new document during the release, and every tool still opens
+ok 17 - row 17: a re-close that outlives its document leaves no brush open: a new document during the release, and every tool still opens
+  ---
+  duration_ms: 168.0051
+  type: 'test'
+  ...
+# Subtest: row 18: a release with no change restores the lap as it was and runs no close
+ok 18 - row 18: a release with no change restores the lap as it was and runs no close
+  ---
+  duration_ms: 122.7476
+  type: 'test'
+  ...
+# Subtest: row 19: a handle on a two- or three-piece run lands the value asked where the handles read it, as exactly as D335 lands one piece (D335 per window)
+ok 19 - row 19: a handle on a two- or three-piece run lands the value asked where the handles read it, as exactly as D335 lands one piece (D335 per window)
+  ---
+  duration_ms: 31.1428
+  type: 'test'
+  ...
+# Subtest: row 20: away from the seam the release tries the start pieces, then the window, then the window with the last road piece, then with the last and the first, then the whole lap with the window protected
+ok 20 - row 20: away from the seam the release tries the start pieces, then the window, then the window with the last road piece, then with the last and the first, then the whole lap with the window protected
+  ---
+  duration_ms: 246.8966
+  type: 'test'
+  ...
+# Subtest: row 21: with the real close, a small Bend away from the seam that passes the bar closes with the start pieces on the first try; the window's values stay as dragged, and only the start pieces and the joints after them change
+not ok 21 - row 21: with the real close, a small Bend away from the seam that passes the bar closes with the start pieces on the first try; the window's values stay as dragged, and only the start pieces and the joints after them change
+  ---
+  duration_ms: 199.1713
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y2\\app\\test\\sculpt-tools.test.js:310:1'
+  failureType: 'testCodeFailure'
+  error: 'asked with the bar'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y2\app\test\sculpt-tools.test.js:317:142)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 22 (D464): a Bend on the seam piece, which the re-close takes back, says plainly that it was undone and what to do
+ok 22 - row 22 (D464): a Bend on the seam piece, which the re-close takes back, says plainly that it was undone and what to do
+  ---
+  duration_ms: 153.8538
+  type: 'test'
+  ...
+# Subtest: row 23 (D464, D467): a later try that partly takes the bend back says how much
+ok 23 - row 23 (D464, D467): a later try that partly takes the bend back says how much
+  ---
+  duration_ms: 155.0132
+  type: 'test'
+  ...
+# Subtest: row 24 (D464, D467): a re-close by the window that keeps the drag says only that the lap is closed again
+ok 24 - row 24 (D464, D467): a re-close by the window that keeps the drag says only that the lap is closed again
+  ---
+  duration_ms: 64.2631
+  type: 'test'
+  ...
+# Subtest: row 25 (D467): a small Bend away from the seam that passes the bar keeps its full value after release
+not ok 25 - row 25 (D467): a small Bend away from the seam that passes the bar keeps its full value after release
+  ---
+  duration_ms: 197.958
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y2\\app\\test\\sculpt-tools.test.js:380:1'
+  failureType: 'testCodeFailure'
+  error: 'CJ.barMiss is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y2\app\test\sculpt-tools.test.js:389:19)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 26 (D467): the start pieces that moved are named for the hatch, and the message says why; an undo ends the hatch
+ok 26 - row 26 (D467): the start pieces that moved are named for the hatch, and the message says why; an undo ends the hatch
+  ---
+  duration_ms: 181.4724
+  type: 'test'
+  ...
+# Subtest: row 27 (D467): at the seam nothing changes: no start-pieces try, the bend is said to be undone, nothing hatched
+ok 27 - row 27 (D467): at the seam nothing changes: no start-pieces try, the bend is said to be undone, nothing hatched
+  ---
+  duration_ms: 175.1336
+  type: 'test'
+  ...
+# Subtest: row 28 (D467 bar): C's lap case, a Bend the start pieces would close by swinging the lap 72 m: it falls through to the window tries, says what they took back, and the start straight stays
+not ok 28 - row 28 (D467 bar): C's lap case, a Bend the start pieces would close by swinging the lap 72 m: it falls through to the window tries, says what they took back, and the start straight stays
+  ---
+  duration_ms: 173.7955
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y2\\app\\test\\sculpt-tools.test.js:427:1'
+  failureType: 'testCodeFailure'
+  error: 'the start pieces were not taken (1 tries)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y2\app\test\sculpt-tools.test.js:433:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 29 (D467 bar): a lap whose two long straights run side by side (a hairpin of 36 m), the case C saw on a smoothed track: it falls through and the road does not cross itself
+not ok 29 - row 29 (D467 bar): a lap whose two long straights run side by side (a hairpin of 36 m), the case C saw on a smoothed track: it falls through and the road does not cross itself
+  ---
+  duration_ms: 392.772
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y2\\app\\test\\sculpt-tools.test.js:442:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the start pieces were not taken: the lap is closed again: to keep your bend, the start of the lap moved (closed in 4 step(s): 0.030 mm, tangent 3.7e-8 rad)
+    [32m+ actual[39m [31m- expected[39m
+    
+    [32m+[39m {
+    [32m+[39m   doc: {
+    [32m+[39m     closed: true,
+    [32m+[39m     generator: 't180-track-builder/core 0.3.0',
+    [32m+[39m     name: 'untitled',
+    [32m+[39m     nextId: 6,
+    [32m+[39m     pieces: [
+    [32m+[39m       {
+    [32m+[39m         channels: {
+    [32m+[39m           c: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           e: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           er: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           h: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           kh: [
+    [32m+[39m             -0.000118859,
+    [32m+[39m             0.002128216,
+    [32m+[39m             0.000454413,
+    [32m+[39m             0.00022487,
+    [32m+[39m             0.000064956,
+    [32m+[39m             -0.00005782,
+    [32m+[39m             -0.000148905,
+    [32m+[39m             -0.000218648,
+    [32m+[39m             -0.00027097,
+    [32m+[39m             -0.00030982,
+    [32m+[39m             -0.000337376,
+    [32m+[39m             -0.000355456,
+    [32m+[39m             -0.000365308,
+    [32m+[39m             -0.00036796,
+    [32m+[39m             -0.000364224,
+    [32m+[39m             -0.000354803,
+    [32m+[39m             -0.000340304,
+    [32m+[39m             -0.000321278,
+    [32m+[39m             -0.000298228,
+    [32m+[39m             -0.000271626,
+    [32m+[39m             -0.000241918,
+    [32m+[39m             -0.000209534,
+    [32m+[39m             -0.000174895,
+    [32m+[39m             -0.000138418,
+    [32m+[39m             -0.000100532,
+    [32m+[39m             -0.000061687,
+    [32m+[39m             -0.000022379,
+    [32m+[39m             0.000016833,
+    [32m+[39m             0.000055258,
+    [32m+[39m             0.000092074,
+    [32m+[39m             0.000126096,
+    [32m+[39m             0.000155966,
+    [32m+[39m             0.00017918,
+    [32m+[39m             0.000193565,
+    [32m+[39m             0.00019268,
+    [32m+[39m             0.000174715,
+    [32m+[39m             0.000137025,
+    [32m+[39m             0.000117646
+    [32m+[39m           ],
+    [32m+[39m           kv: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           l: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           phi: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           r: [
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993
+    [32m+[39m           ],
+    [32m+[39m           s: [
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64
+    [32m+[39m           ],
+    [32m+[39m           t: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           w: [
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31
+    [32m+[39m           ]
+    [32m+[39m         },
+    [32m+[39m         family: 'bowl',
+    [32m+[39m         id: 'p1',
+    [32m+[39m         knots: [
+    [32m+[39m           20,
+    [32m+[39m           40,
+    [32m+[39m           60,
+    [32m+[39m           80,
+    [32m+[39m           100,
+    [32m+[39m           120,
+    [32m+[39m           140,
+    [32m+[39m           160,
+    [32m+[39m           180,
+    [32m+[39m           200,
+    [32m+[39m           220,
+    [32m+[39m           240,
+    [32m+[39m           260,
+    [32m+[39m           280,
+    [32m+[39m           300,
+    [32m+[39m           320,
+    [32m+[39m           340,
+    [32m+[39m           360,
+    [32m+[39m           380,
+    [32m+[39m           400,
+    [32m+[39m           420,
+    [32m+[39m           440,
+    [32m+[39m           460,
+    [32m+[39m           480,
+    [32m+[39m           500,
+    [32m+[39m           520,
+    [32m+[39m           540,
+    [32m+[39m           560,
+    [32m+[39m           580,
+    [32m+[39m           600,
+    [32m+[39m           620,
+    [32m+[39m           640,
+    [32m+[39m           660,
+    [32m+[39m           680
+    [32m+[39m         ],
+    [32m+[39m         length: 700,
+    [32m+[39m         type: 'road'
+    [32m+[39m       },
+    [32m+[39m       {
+    [32m+[39m         channels: {
+    [32m+[39m           c: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           e: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           er: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           h: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           kh: [
+    [32m+[39m             0.000117646,
+    [32m+[39m             0.000099382,
+    [32m+[39m             0.059190607,
+    [32m+[39m             0.043552081,
+    [32m+[39m             0.040375573,
+    [32m+[39m             0.025640574,
+    [32m+[39m             0.023607439,
+    [32m+[39m             0.02735718,
+    [32m+[39m             0.012234572
+    [32m+[39m           ],
+    [32m+[39m           kv: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           l: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           phi: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           r: [
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993
+    [32m+[39m           ],
+    [32m+[39m           s: [
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64
+    [32m+[39m           ],
+    [32m+[39m           t: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           w: [
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31
+    [32m+[39m           ]
+    [32m+[39m         },
+    [32m+[39m         family: 'bowl',
+    [32m+[39m         id: 'p2',
+    [32m+[39m         knots: [
+    [32m+[39m           18.8496,
+    [32m+[39m           37.6991,
+    [32m+[39m           56.5487,
+    [32m+[39m           75.3982,
+    [32m+[39m           94.2477
+    [32m+[39m         ],
+    [32m+[39m         length: 113.0973,
+    [32m+[39m         type: 'road'
+    [32m+[39m       },
+    [32m+[39m       {
+    [32m+[39m         channels: {
+    [32m+[39m           c: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           e: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           er: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           h: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           kh: [
+    [32m+[39m             0.012234572,
+    [32m+[39m             -0.003810976,
+    [32m+[39m             -0.019009558,
+    [32m+[39m             -0.000154494,
+    [32m+[39m             -0.006534745,
+    [32m+[39m             -0.000566365,
+    [32m+[39m             -0.001794273,
+    [32m+[39m             0.000187134,
+    [32m+[39m             -0.000024307,
+    [32m+[39m             0.00057692,
+    [32m+[39m             0.000478728,
+    [32m+[39m             0.000568637,
+    [32m+[39m             0.000434314,
+    [32m+[39m             0.000346083,
+    [32m+[39m             0.000197852,
+    [32m+[39m             0.000075847,
+    [32m+[39m             -0.000044237,
+    [32m+[39m             -0.000133824,
+    [32m+[39m             -0.000197876,
+    [32m+[39m             -0.00022784,
+    [32m+[39m             -0.00022626,
+    [32m+[39m             -0.000193261,
+    [32m+[39m             -0.000133642,
+    [32m+[39m             -0.000053145,
+    [32m+[39m             0.000039274,
+    [32m+[39m             0.000132202,
+    [32m+[39m             0.000210681,
+    [32m+[39m             0.000255907,
+    [32m+[39m             0.000244295,
+    [32m+[39m             0.000146667,
+    [32m+[39m             -0.000072848,
+    [32m+[39m             -0.000457981,
+    [32m+[39m             -0.001061657,
+    [32m+[39m             -0.001947207,
+    [32m+[39m             -0.003182962,
+    [32m+[39m             -0.00332141,
+    [32m+[39m             0.000726679,
+    [32m+[39m             -0.010419645
+    [32m+[39m           ],
+    [32m+[39m           kv: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           l: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           phi: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           r: [
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993
+    [32m+[39m           ],
+    [32m+[39m           s: [
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64
+    [32m+[39m           ],
+    [32m+[39m           t: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           w: [
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31
+    [32m+[39m           ]
+    [32m+[39m         },
+    [32m+[39m         family: 'bowl',
+    [32m+[39m         id: 'p3',
+    [32m+[39m         knots: [
+    [32m+[39m           20,
+    [32m+[39m           40,
+    [32m+[39m           60,
+    [32m+[39m           80,
+    [32m+[39m           100,
+    [32m+[39m           120,
+    [32m+[39m           140,
+    [32m+[39m           160,
+    [32m+[39m           180,
+    [32m+[39m           200,
+    [32m+[39m           220,
+    [32m+[39m           240,
+    [32m+[39m           260,
+    [32m+[39m           280,
+    [32m+[39m           300,
+    [32m+[39m           320,
+    [32m+[39m           340,
+    [32m+[39m           360,
+    [32m+[39m           380,
+    [32m+[39m           400,
+    [32m+[39m           420,
+    [32m+[39m           440,
+    [32m+[39m           460,
+    [32m+[39m           480,
+    [32m+[39m           500,
+    [32m+[39m           520,
+    [32m+[39m           540,
+    [32m+[39m           560,
+    [32m+[39m           580,
+    [32m+[39m           600,
+    [32m+[39m           620,
+    [32m+[39m           640,
+    [32m+[39m           660,
+    [32m+[39m           680
+    [32m+[39m         ],
+    [32m+[39m         length: 700,
+    [32m+[39m         type: 'road'
+    [32m+[39m       },
+    [32m+[39m       {
+    [32m+[39m         channels: {
+    [32m+[39m           c: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           e: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           er: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           h: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           kh: [
+    [32m+[39m             -0.010419645,
+    [32m+[39m             -0.020924831,
+    [32m+[39m             0.033735049,
+    [32m+[39m             0.018653574,
+    [32m+[39m             0.034121955,
+    [32m+[39m             0.041167903,
+    [32m+[39m             0.046852322,
+    [32m+[39m             0.027126053,
+    [32m+[39m             0.027941043
+    [32m+[39m           ],
+    [32m+[39m           kv: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           l: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           phi: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           r: [
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993
+    [32m+[39m           ],
+    [32m+[39m           s: [
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64
+    [32m+[39m           ],
+    [32m+[39m           t: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           w: [
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31
+    [32m+[39m           ]
+    [32m+[39m         },
+    [32m+[39m         family: 'bowl',
+    [32m+[39m         id: 'p4',
+    [32m+[39m         knots: [
+    [32m+[39m           18.8496,
+    [32m+[39m           37.6991,
+    [32m+[39m           56.5487,
+    [32m+[39m           75.3982,
+    [32m+[39m           94.2477
+    [32m+[39m         ],
+    [32m+[39m         length: 113.0973,
+    [32m+[39m         type: 'road'
+    [32m+[39m       },
+    [32m+[39m       {
+    [32m+[39m         channels: {
+    [32m+[39m           c: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           e: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           er: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           h: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           kh: [
+    [32m+[39m             0.027941043,
+    [32m+[39m             0.028805772,
+    [32m+[39m             -0.014067617,
+    [32m+[39m             0.010286745,
+    [32m+[39m             -0.002365934,
+    [32m+[39m             -0.000118859
+    [32m+[39m           ],
+    [32m+[39m           kv: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           l: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           phi: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           r: [
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993,
+    [32m+[39m             2.993
+    [32m+[39m           ],
+    [32m+[39m           s: [
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64,
+    [32m+[39m             0.64
+    [32m+[39m           ],
+    [32m+[39m           t: [
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0,
+    [32m+[39m             0
+    [32m+[39m           ],
+    [32m+[39m           w: [
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31,
+    [32m+[39m             31
+    [32m+[39m           ]
+    [32m+[39m         },
+    [32m+[39m         family: 'bowl',
+    [32m+[39m         id: 'p5',
+    [32m+[39m         knots: [
+    [32m+[39m           20,
+    [32m+[39m           40
+    [32m+[39m         ],
+    [32m+[39m         length: 60,
+    [32m+[39m         type: 'road'
+    [32m+[39m       }
+    [32m+[39m     ],
+    [32m+[39m     schema: 't180b.core/4',
+    [32m+[39m     start: {
+    [32m+[39m       heading: 0,
+    [32m+[39m       pitch: 0,
+    [32m+[39m       pos: [
+    [32m+[39m         0,
+    [32m+[39m         0,
+    [32m+[39m         0
+    [32m+[39m       ]
+    [32m+[39m     }
+    [32m+[39m   },
+    [32m+[39m   pieces: [
+    [32m+[39m     0,
+    [32m+[39m     4
+    [32m+[39m   ]
+    [32m+[39m }
+    [31m-[39m null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  actual:
+    doc:
+      schema: 't180b.core/4'
+      generator: 't180-track-builder/core 0.3.0'
+      name: 'untitled'
+      closed: true
+      start:
+        pos:
+          0: 0
+          1: 0
+          2: 0
+        heading: 0
+        pitch: 0
+      nextId: 6
+      pieces:
+        0:
+          id: 'p1'
+          type: 'road'
+          length: 700
+          family: 'bowl'
+          knots:
+            0: 20
+            1: 40
+            2: 60
+            3: 80
+            4: 100
+            5: 120
+            6: 140
+            7: 160
+            8: 180
+            9: 200
+            10: 220
+            11: 240
+            12: 260
+            13: 280
+            14: 300
+            15: 320
+            16: 340
+            17: 360
+            18: 380
+            19: 400
+            20: 420
+            21: 440
+            22: 460
+            23: 480
+            24: 500
+            25: 520
+            26: 540
+            27: 560
+            28: 580
+            29: 600
+            30: 620
+            31: 640
+            32: 660
+            33: 680
+          channels:
+            kh:
+              0: -0.000118859
+              1: 0.002128216
+              2: 0.000454413
+              3: 0.00022487
+              4: 0.000064956
+              5: -0.00005782
+              6: -0.000148905
+              7: -0.000218648
+              8: -0.00027097
+              9: -0.00030982
+              10: -0.000337376
+              11: -0.000355456
+              12: -0.000365308
+              13: -0.00036796
+              14: -0.000364224
+              15: -0.000354803
+              16: -0.000340304
+              17: -0.000321278
+              18: -0.000298228
+              19: -0.000271626
+              20: -0.000241918
+              21: -0.000209534
+              22: -0.000174895
+              23: -0.000138418
+              24: -0.000100532
+              25: -0.000061687
+              26: -0.000022379
+              27: 0.000016833
+              28: 0.000055258
+              29: 0.000092074
+              30: 0.000126096
+              31: 0.000155966
+              32: 0.00017918
+              33: 0.000193565
+              34: 0.00019268
+              35: 0.000174715
+              36: 0.000137025
+              37: 0.000117646
+            kv:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            phi:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            w:
+              0: 31
+              1: 31
+              2: 31
+              3: 31
+              4: 31
+              5: 31
+              6: 31
+              7: 31
+              8: 31
+              9: 31
+              10: 31
+              11: 31
+              12: 31
+              13: 31
+              14: 31
+              15: 31
+              16: 31
+              17: 31
+              18: 31
+              19: 31
+              20: 31
+              21: 31
+              22: 31
+              23: 31
+              24: 31
+              25: 31
+              26: 31
+              27: 31
+              28: 31
+              29: 31
+              30: 31
+              31: 31
+              32: 31
+              33: 31
+              34: 31
+              35: 31
+              36: 31
+              37: 31
+            r:
+              0: 2.993
+              1: 2.993
+              2: 2.993
+              3: 2.993
+              4: 2.993
+              5: 2.993
+              6: 2.993
+              7: 2.993
+              8: 2.993
+              9: 2.993
+              10: 2.993
+              11: 2.993
+              12: 2.993
+              13: 2.993
+              14: 2.993
+              15: 2.993
+              16: 2.993
+              17: 2.993
+              18: 2.993
+              19: 2.993
+              20: 2.993
+              21: 2.993
+              22: 2.993
+              23: 2.993
+              24: 2.993
+              25: 2.993
+              26: 2.993
+              27: 2.993
+              28: 2.993
+              29: 2.993
+              30: 2.993
+              31: 2.993
+              32: 2.993
+              33: 2.993
+              34: 2.993
+              35: 2.993
+              36: 2.993
+              37: 2.993
+            h:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            l:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            c:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            e:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            s:
+              0: 0.64
+              1: 0.64
+              2: 0.64
+              3: 0.64
+              4: 0.64
+              5: 0.64
+              6: 0.64
+              7: 0.64
+              8: 0.64
+              9: 0.64
+              10: 0.64
+              11: 0.64
+              12: 0.64
+              13: 0.64
+              14: 0.64
+              15: 0.64
+              16: 0.64
+              17: 0.64
+              18: 0.64
+              19: 0.64
+              20: 0.64
+              21: 0.64
+              22: 0.64
+              23: 0.64
+              24: 0.64
+              25: 0.64
+              26: 0.64
+              27: 0.64
+              28: 0.64
+              29: 0.64
+              30: 0.64
+              31: 0.64
+              32: 0.64
+              33: 0.64
+              34: 0.64
+              35: 0.64
+              36: 0.64
+              37: 0.64
+            t:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            er:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+        1:
+          id: 'p2'
+          type: 'road'
+          length: 113.0973
+          family: 'bowl'
+          knots:
+            0: 18.8496
+            1: 37.6991
+            2: 56.5487
+            3: 75.3982
+            4: 94.2477
+          channels:
+            kh:
+              0: 0.000117646
+              1: 0.000099382
+              2: 0.059190607
+              3: 0.043552081
+              4: 0.040375573
+              5: 0.025640574
+              6: 0.023607439
+              7: 0.02735718
+              8: 0.012234572
+            kv:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            phi:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            w:
+              0: 31
+              1: 31
+              2: 31
+              3: 31
+              4: 31
+              5: 31
+              6: 31
+              7: 31
+              8: 31
+            r:
+              0: 2.993
+              1: 2.993
+              2: 2.993
+              3: 2.993
+              4: 2.993
+              5: 2.993
+              6: 2.993
+              7: 2.993
+              8: 2.993
+            h:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            l:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            c:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            e:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            s:
+              0: 0.64
+              1: 0.64
+              2: 0.64
+              3: 0.64
+              4: 0.64
+              5: 0.64
+              6: 0.64
+              7: 0.64
+              8: 0.64
+            t:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            er:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+        2:
+          id: 'p3'
+          type: 'road'
+          length: 700
+          family: 'bowl'
+          knots:
+            0: 20
+            1: 40
+            2: 60
+            3: 80
+            4: 100
+            5: 120
+            6: 140
+            7: 160
+            8: 180
+            9: 200
+            10: 220
+            11: 240
+            12: 260
+            13: 280
+            14: 300
+            15: 320
+            16: 340
+            17: 360
+            18: 380
+            19: 400
+            20: 420
+            21: 440
+            22: 460
+            23: 480
+            24: 500
+            25: 520
+            26: 540
+            27: 560
+            28: 580
+            29: 600
+            30: 620
+            31: 640
+            32: 660
+            33: 680
+          channels:
+            kh:
+              0: 0.012234572
+              1: -0.003810976
+              2: -0.019009558
+              3: -0.000154494
+              4: -0.006534745
+              5: -0.000566365
+              6: -0.001794273
+              7: 0.000187134
+              8: -0.000024307
+              9: 0.00057692
+              10: 0.000478728
+              11: 0.000568637
+              12: 0.000434314
+              13: 0.000346083
+              14: 0.000197852
+              15: 0.000075847
+              16: -0.000044237
+              17: -0.000133824
+              18: -0.000197876
+              19: -0.00022784
+              20: -0.00022626
+              21: -0.000193261
+              22: -0.000133642
+              23: -0.000053145
+              24: 0.000039274
+              25: 0.000132202
+              26: 0.000210681
+              27: 0.000255907
+              28: 0.000244295
+              29: 0.000146667
+              30: -0.000072848
+              31: -0.000457981
+              32: -0.001061657
+              33: -0.001947207
+              34: -0.003182962
+              35: -0.00332141
+              36: 0.000726679
+              37: -0.010419645
+            kv:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            phi:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            w:
+              0: 31
+              1: 31
+              2: 31
+              3: 31
+              4: 31
+              5: 31
+              6: 31
+              7: 31
+              8: 31
+              9: 31
+              10: 31
+              11: 31
+              12: 31
+              13: 31
+              14: 31
+              15: 31
+              16: 31
+              17: 31
+              18: 31
+              19: 31
+              20: 31
+              21: 31
+              22: 31
+              23: 31
+              24: 31
+              25: 31
+              26: 31
+              27: 31
+              28: 31
+              29: 31
+              30: 31
+              31: 31
+              32: 31
+              33: 31
+              34: 31
+              35: 31
+              36: 31
+              37: 31
+            r:
+              0: 2.993
+              1: 2.993
+              2: 2.993
+              3: 2.993
+              4: 2.993
+              5: 2.993
+              6: 2.993
+              7: 2.993
+              8: 2.993
+              9: 2.993
+              10: 2.993
+              11: 2.993
+              12: 2.993
+              13: 2.993
+              14: 2.993
+              15: 2.993
+              16: 2.993
+              17: 2.993
+              18: 2.993
+              19: 2.993
+              20: 2.993
+              21: 2.993
+              22: 2.993
+              23: 2.993
+              24: 2.993
+              25: 2.993
+              26: 2.993
+              27: 2.993
+              28: 2.993
+              29: 2.993
+              30: 2.993
+              31: 2.993
+              32: 2.993
+              33: 2.993
+              34: 2.993
+              35: 2.993
+              36: 2.993
+              37: 2.993
+            h:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            l:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            c:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            e:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            s:
+              0: 0.64
+              1: 0.64
+              2: 0.64
+              3: 0.64
+              4: 0.64
+              5: 0.64
+              6: 0.64
+              7: 0.64
+              8: 0.64
+              9: 0.64
+              10: 0.64
+              11: 0.64
+              12: 0.64
+              13: 0.64
+              14: 0.64
+              15: 0.64
+              16: 0.64
+              17: 0.64
+              18: 0.64
+              19: 0.64
+              20: 0.64
+              21: 0.64
+              22: 0.64
+              23: 0.64
+              24: 0.64
+              25: 0.64
+              26: 0.64
+              27: 0.64
+              28: 0.64
+              29: 0.64
+              30: 0.64
+              31: 0.64
+              32: 0.64
+              33: 0.64
+              34: 0.64
+              35: 0.64
+              36: 0.64
+              37: 0.64
+            t:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+            er:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+              9: 0
+              10: 0
+              11: 0
+              12: 0
+              13: 0
+              14: 0
+              15: 0
+              16: 0
+              17: 0
+              18: 0
+              19: 0
+              20: 0
+              21: 0
+              22: 0
+              23: 0
+              24: 0
+              25: 0
+              26: 0
+              27: 0
+              28: 0
+              29: 0
+              30: 0
+              31: 0
+              32: 0
+              33: 0
+              34: 0
+              35: 0
+              36: 0
+              37: 0
+        3:
+          id: 'p4'
+          type: 'road'
+          length: 113.0973
+          family: 'bowl'
+          knots:
+            0: 18.8496
+            1: 37.6991
+            2: 56.5487
+            3: 75.3982
+            4: 94.2477
+          channels:
+            kh:
+              0: -0.010419645
+              1: -0.020924831
+              2: 0.033735049
+              3: 0.018653574
+              4: 0.034121955
+              5: 0.041167903
+              6: 0.046852322
+              7: 0.027126053
+              8: 0.027941043
+            kv:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            phi:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            w:
+              0: 31
+              1: 31
+              2: 31
+              3: 31
+              4: 31
+              5: 31
+              6: 31
+              7: 31
+              8: 31
+            r:
+              0: 2.993
+              1: 2.993
+              2: 2.993
+              3: 2.993
+              4: 2.993
+              5: 2.993
+              6: 2.993
+              7: 2.993
+              8: 2.993
+            h:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            l:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            c:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            e:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            s:
+              0: 0.64
+              1: 0.64
+              2: 0.64
+              3: 0.64
+              4: 0.64
+              5: 0.64
+              6: 0.64
+              7: 0.64
+              8: 0.64
+            t:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+            er:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+              6: 0
+              7: 0
+              8: 0
+        4:
+          id: 'p5'
+          type: 'road'
+          length: 60
+          family: 'bowl'
+          knots:
+            0: 20
+            1: 40
+          channels:
+            kh:
+              0: 0.027941043
+              1: 0.028805772
+              2: -0.014067617
+              3: 0.010286745
+              4: -0.002365934
+              5: -0.000118859
+            kv:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+            phi:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+            w:
+              0: 31
+              1: 31
+              2: 31
+              3: 31
+              4: 31
+              5: 31
+            r:
+              0: 2.993
+              1: 2.993
+              2: 2.993
+              3: 2.993
+              4: 2.993
+              5: 2.993
+            h:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+            l:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+            c:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+            e:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+            s:
+              0: 0.64
+              1: 0.64
+              2: 0.64
+              3: 0.64
+              4: 0.64
+              5: 0.64
+            t:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+            er:
+              0: 0
+              1: 0
+              2: 0
+              3: 0
+              4: 0
+              5: 0
+    pieces:
+      0: 0
+      1: 4
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y2\app\test\sculpt-tools.test.js:452:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 30 (D467 bar): part 2 alone: a result with no straight long enough for the start misses, when the lap before had one
+not ok 30 - row 30 (D467 bar): part 2 alone: a result with no straight long enough for the start misses, when the lap before had one
+  ---
+  duration_ms: 166.824
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y2\\app\\test\\sculpt-tools.test.js:459:1'
+  failureType: 'testCodeFailure'
+  error: 'CJ.barMiss is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y2\app\test\sculpt-tools.test.js:462:19)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 31 (D467 bar): part 1 alone: a result with reds the open lap did not have misses, and names the first
+not ok 31 - row 31 (D467 bar): part 1 alone: a result with reds the open lap did not have misses, and names the first
+  ---
+  duration_ms: 664.509
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y2\\app\\test\\sculpt-tools.test.js:469:1'
+  failureType: 'testCodeFailure'
+  error: 'CJ.barMiss is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y2\app\test\sculpt-tools.test.js:476:18)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 32 (D467 bar): the close runner hands the worker the bar a start-pieces try asks for, and no bar when none is asked
+not ok 32 - row 32 (D467 bar): the close runner hands the worker the bar a start-pieces try asks for, and no bar when none is asked
+  ---
+  duration_ms: 0.5232
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y2\\app\\test\\sculpt-tools.test.js:487:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the bar rides in the message
+    [32m+ actual[39m [31m- expected[39m
+    
+    [32m+[39m undefined
+    [31m-[39m {
+    [31m-[39m   base: {
+    [31m-[39m     pieces: []
+    [31m-[39m   },
+    [31m-[39m   edited: [
+    [31m-[39m     2
+    [31m-[39m   ]
+    [31m-[39m }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    base:
+      pieces:
+    edited:
+      0: 2
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y2\app\test\sculpt-tools.test.js:494:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+ok 33 - row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+  ---
+  duration_ms: 210.6601
+  type: 'test'
+  ...
+# Subtest: row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+ok 34 - row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+  ---
+  duration_ms: 64.1432
+  type: 'test'
+  ...
+# Subtest: row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+ok 35 - row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+  ---
+  duration_ms: 51.7874
+  type: 'test'
+  ...
+# Subtest: row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+ok 36 - row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+  ---
+  duration_ms: 145.8005
+  type: 'test'
+  ...
+# Subtest: row D467: the start pieces a release moved are hatched with no hover, both at full strength; nothing when they did not move
+ok 37 - row D467: the start pieces a release moved are hatched with no hover, both at full strength; nothing when they did not move
+  ---
+  duration_ms: 111.5005
+  type: 'test'
+  ...
+# Subtest: row D467 frame: the preview draws the start pieces' hatch after such a release, and not after an undo
+ok 38 - row D467 frame: the preview draws the start pieces' hatch after such a release, and not after an undo
+  ---
+  duration_ms: 346.9327
+  type: 'test'
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 31
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4587.1142

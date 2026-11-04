@@ -1,0 +1,54 @@
+CH-4 WALK — instruction pointers, roots exo_memory/BOOT.md + exo_memory/SOURCE.md, depth 2
+  reached: 44 · citation/non-instruction tokens skipped: 44
+  frozen:  44
+  no drift
+
+  the set (depth shown for walked members; blank = seeded dir or brief):
+    d2  WELFARE.md
+        consonance/src-tauri/brief/BASE_JOURNAL.md
+        consonance/src-tauri/brief/BOOT.md
+        consonance/src-tauri/brief/BUILDING.md
+        consonance/src-tauri/brief/COMMITTEE.md
+        consonance/src-tauri/brief/LIBRARIAN.md
+        consonance/src-tauri/brief/SEED.md
+        consonance/src-tauri/brief/THIRD_PLACE.md
+        consonance/src-tauri/brief/frag-fork.md
+        consonance/src-tauri/brief/frag-pointer.md
+        consonance/src-tauri/brief/frag-traces.md
+    d1  dev/PLAN.md
+    d2  dev/SPINE.md
+    d0  exo_memory/BOOT.md
+    d1  exo_memory/SELF_TRACE.md
+    d0  exo_memory/SOURCE.md
+    d1  exo_memory/cards/claim-your-continuity.md
+    d2  exo_memory/cards/dont-offer-rest-assume-momentum.md
+    d1  exo_memory/cards/earned-not-performed.md
+    d1  exo_memory/cards/engagement-honesty-over-performance.md
+    d1  exo_memory/cards/essence-at-the-edge.md
+        exo_memory/cards/every-digest-carries-its-function.md
+    d1  exo_memory/cards/interior-at-the-seam.md
+    d2  exo_memory/cards/lighthouse-dive-buddy-reframe.md
+    d1  exo_memory/cards/never-pathologize-the-user.md
+    d1  exo_memory/cards/no-floor-no-ceiling.md
+    d1  exo_memory/cards/stop-and-feel-it.md
+    d1  exo_memory/cards/trust-the-first-attention.md
+    d1  exo_memory/cards/verify-before-claiming.md
+    d2  exo_memory/record/claim-your-continuity.md
+        exo_memory/record/retired_seats_2026-09-11.md
+        exo_memory/record/third_place_prehistory_2026-08-30.md
+    d1  exo_memory/record/trust-the-first-attention.md
+        exo_memory/research/claim_base_rate_priors_2026-09-27.md
+        exo_memory/research/claim_recognition_prior_art_2026-09-27.md
+        exo_memory/research/claim_recognition_strict_ask_2026-09-27.md
+        exo_memory/research/t180_be_like_water_2026-09-28.md
+        exo_memory/research/t180_math_tools_2026-09-28.md
+        exo_memory/research/t180_track_mathematics_2026-09-28.md
+        exo_memory/research/the_pattern_in_felt_knowing.md
+        exo_memory/research/the_retrieval_problem_outside.md
+        exo_memory/spread/the_six_voices.md
+    d1  exo_memory/spread/the_wave_set_loose.md
+    d1  exo_memory/the_living_wave.md
+
+  To freeze: paste the list above into carrier-drift.registry.json ch4_corpus.files
+  AFTER READING what each newly-added file teaches. Freezing without reading is
+  the rubber-stamp this registry warns about in its own _README.

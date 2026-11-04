@@ -1,0 +1,48 @@
+C:\Users\nname\Desktop\a-d188-wt\test\core_cup.test.js:132
+    assert.ok(got.worstOff <= tol, `the edge is off c(s) by ${got.worstOff} deg at its worst row (the tip by about ${(got.worstOff * Math.PI / 180 * 15.5 * 1000).toFixed(1)} mm)`);
+                                    ^^^
+
+SyntaxError: Unexpected identifier 'the'
+[90m    at wrapSafe (node:internal/modules/cjs/loader:1743:18)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1786:20)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m
+
+Node.js v24.14.1
+[31m✖ test\core_cup.test.js [90m(29.5907ms)[39m[39m
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(2902.6441ms)[39m[39m
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4583.5809ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3267.2171ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4846.3277ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3105.0375ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4659.1607ms)[39m[39m
+[32m✔ row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2698.0399ms)[39m[39m
+[32m✔ row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2953.0815ms)[39m[39m
+[32m✔ row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2842.9181ms)[39m[39m
+[32m✔ row 4 (iii): a start straight cupped to 150° is refused by NAME at the grid (too narrow for a two-column grid), not by a crash [90m(152.0408ms)[39m[39m
+[32m✔ row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it [90m(0.5638ms)[39m[39m
+[32m✔ atSegment: the profile at d = 0 is the blend's `from`, at the segment's end the mix at its end weight, and a segment with no blend is its own profile [90m(15.3952ms)[39m[39m
+[32m✔ atSegment lands on the document's c along the ramp: the edge of the cross-section at a station is c(s) within 0.05° (a reader that took segment.profile would read the run's widest, 90°, at the start) [90m(9.4933ms)[39m[39m
+[32m✔ marker layout: a straight running into a cupped turn keeps the width of the straight (the grid is not refused as "too narrow" by the turn's 150° target) [90m(11.6291ms)[39m[39m
+[32m✔ validation: with csp off the first steep-without-raycast red is where the wall PASSES 50° (c(s) = 50, about 47 m into a 100 m ramp), not at the ramp's start (the run's widest, 90°) [90m(23.7134ms)[39m[39m
+[32m✔ export sections: the section at a station is the road as drawn there (its maxPsi is c(s)), not the run's widest [90m(20.8353ms)[39m[39m
+[32m✔ water: the profile under a sample is the road as drawn there (the edge is c(s)), and a segment without a blend still gives its own profile object [90m(6.8513ms)[39m[39m
+[32m✔ camera: the width at the head is the last segment's cross-section at the head (a cup brushed down at its end reads the lowered c, not the run's widest) [90m(6.4453ms)[39m[39m
+[34mℹ tests 19[39m
+[34mℹ suites 0[39m
+[34mℹ pass 18[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 32126.2729[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup.test.js:1:1
+[31m✖ test\core_cup.test.js [90m(29.5907ms)[39m[39m
+  [32m'test failed'[39m

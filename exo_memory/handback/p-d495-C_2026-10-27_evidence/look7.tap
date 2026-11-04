@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: row 1: the contract: the aurora source breaks neither GLSL rule (D391)
+ok 1 - row 1: the contract: the aurora source breaks neither GLSL rule (D391)
+  ---
+  duration_ms: 3906.8413
+  type: 'test'
+  ...
+# Subtest: row 2: vertical structure: along the hem every 5 degrees of azimuth holds rays, the dimmest column at least 60% below the brightest (median)
+ok 2 - row 2: vertical structure: along the hem every 5 degrees of azimuth holds rays, the dimmest column at least 60% below the brightest (median)
+  ---
+  duration_ms: 124.6553
+  type: 'test'
+  ...
+# rays: median 5-degree contrast 0.693 (windows 73, min 0.012, max 0.969)
+# Subtest: row 3: several curtains: down some column of the sky there are three separate lit stretches (a near curtain, a middle one and a fainter far one)
+ok 3 - row 3: several curtains: down some column of the sky there are three separate lit stretches (a near curtain, a middle one and a fainter far one)
+  ---
+  duration_ms: 118.9656
+  type: 'test'
+  ...
+# most separate lit stretches down one column: 4 (column 541)
+# Subtest: row 4: motion is slow and alive: the hem pattern drifts under 0.0044 rad/s, keeps its shape, and nothing pulses by more than 15% of the curtain brightness in a second
+ok 4 - row 4: motion is slow and alive: the hem pattern drifts under 0.0044 rad/s, keeps its shape, and nothing pulses by more than 15% of the curtain brightness in a second
+  ---
+  duration_ms: 2570.3527
+  type: 'test'
+  ...
+# rms change of the hem over two minutes, against the curtain brightness: 0.188
+# worst drift 0.00000 rad/s, lowest correlation at the best shift 0.994, worst 1 s change 0.1250
+# the ribbon's folds and hem sway move at 0.00000 rad/s at most (t0 0.00000 (252 columns), t100 0.00000 (254 columns), t200 0.00000 (249 columns), t300 0.00000 (248 columns), t400 0.00000 (252 columns), t500 0.00000 (257 columns))
+# Subtest: row 5: a corona: overhead there is a point where rays converge: a fan of at least 6 rays round it, brighter than the sky beside it
+ok 5 - row 5: a corona: overhead there is a point where rays converge: a fan of at least 6 rays round it, brighter than the sky beside it
+  ---
+  duration_ms: 844.8986
+  type: 'test'
+  ...
+# corona at azimuth 224, elevation 71; ring rays 52, ring Y 0.0033..0.0530, peak Y 0.0963
+# Subtest: row 6: the corona's centre is soft: round its point the brightness holds no ray contrast finer than the default view can show (at most 2% rms)
+ok 6 - row 6: the corona's centre is soft: round its point the brightness holds no ray contrast finer than the default view can show (at most 2% rms)
+  ---
+  duration_ms: 605.2986
+  type: 'test'
+  ...
+# ray contrast above the view's Nyquist limit over the 8-bit floor, rms of the ring's mean: t0 0.003: 1.66% (floor 0.72%), t0 0.006: 1.66% (floor 0.72%), t0 0.009: 1.66% (floor 0.72%), t0 0.012: 1.66% (floor 0.72%), t0 0.015: 1.66% (floor 0.72%), t0 0.018: 1.66% (floor 0.72%), t0 0.021: 1.66% (floor 0.72%), t0 0.024: 1.66% (floor 0.72%), t0 0.027: 1.66% (floor 0.72%), t0 0.030: 1.66% (floor 0.72%), t500 0.003: 1.66% (floor 0.72%), t500 0.006: 1.66% (floor 0.72%), t500 0.009: 1.66% (floor 0.72%), t500 0.012: 1.66% (floor 0.72%), t500 0.015: 1.66% (floor 0.72%), t500 0.018: 1.66% (floor 0.72%), t500 0.021: 1.66% (floor 0.72%), t500 0.024: 1.66% (floor 0.72%), t500 0.027: 1.66% (floor 0.72%), t500 0.030: 1.66% (floor 0.72%)
+# Subtest: row 7: the corona is the right way round: round the magnetic zenith the ray bases, 0.30 rad out, are at least 1.5 times as bright as the tops, 0.05 rad out
+ok 7 - row 7: the corona is the right way round: round the magnetic zenith the ray bases, 0.30 rad out, are at least 1.5 times as bright as the tops, 0.05 rad out
+  ---
+  duration_ms: 5.7278
+  type: 'test'
+  ...
+# the corona round the magnetic zenith: t0: bases 0.0066, tops 0.0033, ratio 2.02; t500: bases 0.0099, tops 0.0033, ratio 3.02
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8636.7503

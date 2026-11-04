@@ -109,4 +109,17 @@ const ok = (cond, msg) => { n++; assert.ok(cond, msg); console.log("  ok  - " + 
   ok(strip("a\x00\x01b") === "a b", "raw control bytes become whitespace rather than vanishing");
 }
 
+// D454 part 3 (pane E, P's cold read 1C.4): the data dir by the app's rule (main.rs data_dir: data_dir from ~/.consonance.json when set, else
+// %USERPROFILE%\.consonance; CONSONANCE_DATA first), not one machine's fixed folder.
+{
+  const h = require("./scratch.js").mkdtemp("pe-home-"), env = { ...process.env, USERPROFILE: h, HOME: h }; delete env.CONSONANCE_DATA;
+  const r = require("child_process").spawnSync(process.execPath, [require("path").join(__dirname, "prompt-events.js")], { env, encoding: "utf8" });
+  const want = require("path").join(h, ".consonance", "captures");
+  ok(r.status === 1 && r.stderr.includes("no captures at " + want), "APP RULE (D454): with no data_dir the captures are looked for under USERPROFILE/.consonance (" + r.stderr.trim().slice(0, 160) + ")");
+  require("fs").mkdirSync(require("path").join(h, "custom"));
+  require("fs").writeFileSync(require("path").join(h, ".consonance.json"), JSON.stringify({ data_dir: require("path").join(h, "custom") }));
+  const r2 = require("child_process").spawnSync(process.execPath, [require("path").join(__dirname, "prompt-events.js")], { env, encoding: "utf8" });
+  ok(r2.stderr.includes("no captures at " + require("path").join(h, "custom", "captures")), "APP RULE (D454): with data_dir set the captures are looked for there (" + r2.stderr.trim().slice(0, 160) + ")");
+}
+
 console.log(`\n${n} passed`);

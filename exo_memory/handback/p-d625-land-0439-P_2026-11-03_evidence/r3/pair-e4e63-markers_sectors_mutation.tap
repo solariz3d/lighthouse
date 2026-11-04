@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: CONTROL: the whole of markers_sectors.test.js passes on an unmutated copy of src/, tools/ and app/
+ok 1 - CONTROL: the whole of markers_sectors.test.js passes on an unmutated copy of src/, tools/ and app/
+  ---
+  duration_ms: 2437.3101
+  type: 'test'
+  ...
+# Subtest: mutant S1 the tilt test is dropped (a gate may stand across a bank): applied, and caught by markers_sectors.test.js
+ok 2 - mutant S1 the tilt test is dropped (a gate may stand across a bank): applied, and caught by markers_sectors.test.js
+  ---
+  duration_ms: 2627.1843
+  type: 'test'
+  ...
+# S1 the tilt test is dropped (a gate may stand across a bank): 4 of 7 tests failed
+# Subtest: mutant S2 the search looks one way only (forward from each third): applied, and caught by markers_sectors.test.js
+ok 3 - mutant S2 the search looks one way only (forward from each third): applied, and caught by markers_sectors.test.js
+  ---
+  duration_ms: 2979.9432
+  type: 'test'
+  ...
+# S2 the search looks one way only (forward from each third): 1 of 7 tests failed
+# Subtest: mutant S3 an omitted gate is left out silently (no note): applied, and caught by markers_sectors.test.js
+ok 4 - mutant S3 an omitted gate is left out silently (no note): applied, and caught by markers_sectors.test.js
+  ---
+  duration_ms: 2554.261
+  type: 'test'
+  ...
+# S3 an omitted gate is left out silently (no note): 1 of 7 tests failed
+# Subtest: mutant S5 the search measures a gate at the road again, not at its dummies: applied, and caught by markers_sectors.test.js
+ok 5 - mutant S5 the search measures a gate at the road again, not at its dummies: applied, and caught by markers_sectors.test.js
+  ---
+  duration_ms: 2531.8615
+  type: 'test'
+  ...
+# S5 the search measures a gate at the road again, not at its dummies: 1 of 7 tests failed
+# Subtest: mutant S6 the sector search takes no height (its dummies at the road): applied, and caught by markers_sectors.test.js
+ok 6 - mutant S6 the sector search takes no height (its dummies at the road): applied, and caught by markers_sectors.test.js
+  ---
+  duration_ms: 2509.8705
+  type: 'test'
+  ...
+# S6 the sector search takes no height (its dummies at the road): 1 of 7 tests failed
+# Subtest: mutant S4 the markers check does not read a gate's width seen from above: applied, and caught by markers_sectors.test.js
+ok 7 - mutant S4 the markers check does not read a gate's width seen from above: applied, and caught by markers_sectors.test.js
+  ---
+  duration_ms: 2498.5491
+  type: 'test'
+  ...
+# S4 the markers check does not read a gate's width seen from above: 1 of 7 tests failed
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18217.5201

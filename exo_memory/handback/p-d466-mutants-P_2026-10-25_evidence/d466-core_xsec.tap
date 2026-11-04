@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: SCHEMA: new documents are t180b.core/4; /1, /2 and /3 text still loads; a piece without an edge or a tube carries none of e, s, t in its text
+ok 1 - SCHEMA: new documents are t180b.core/4; /1, /2 and /3 text still loads; a piece without an edge or a tube carries none of e, s, t in its text
+  ---
+  duration_ms: 4.8756
+  type: 'test'
+  ...
+# Subtest: SCHEMA: an edge piece and a tube piece write their channels, read back with their flags, and save to the same text (round trip)
+ok 2 - SCHEMA: an edge piece and a tube piece write their channels, read back with their flags, and save to the same text (round trip)
+  ---
+  duration_ms: 4.884
+  type: 'test'
+  ...
+# Subtest: DOMAIN (E2, V4, T1, T3): a hand-built document with e < 0, s outside [0.5, 0.95], a total past the cap, a closed tube with an edge, or a tube held in the slot is refused by name
+ok 3 - DOMAIN (E2, V4, T1, T3): a hand-built document with e < 0, s outside [0.5, 0.95], a total past the cap, a closed tube with an edge, or a tube held in the slot is refused by name
+  ---
+  duration_ms: 8.5693
+  type: 'test'
+  ...
+# Subtest: A PIECE IS A CUP OR A TUBE: c and t together are refused, in extend and in a hand-built document
+ok 4 - A PIECE IS A CUP OR A TUBE: c and t together are refused, in extend and in a hand-built document
+  ---
+  duration_ms: 0.3636
+  type: 'test'
+  ...
+# Subtest: JOINT (E4 i, KE4-1): e and s join C1 like every channel: a 5° step in e at a joint is refused JOINT; e starts from 0 where the piece before has no edge
+ok 5 - JOINT (E4 i, KE4-1): e and s join C1 like every channel: a 5° step in e at a joint is refused JOINT; e starts from 0 where the piece before has no edge
+  ---
+  duration_ms: 1.6758
+  type: 'test'
+  ...
+# Subtest: ENDSTATE (ruling 2): endState reports the tube sweep t ONLY for a tube head (a non-tube head reads 0, so the shell shows none); a tube started after another kind still starts at twice the edge it renders (the internal tNext)
+ok 6 - ENDSTATE (ruling 2): endState reports the tube sweep t ONLY for a tube head (a non-tube head reads 0, so the shell shows none); a tube started after another kind still starts at twice the edge it renders (the internal tNext)
+  ---
+  duration_ms: 1.1387
+  type: 'test'
+  ...
+# Subtest: A TUBE JOINT: a tube after another kind starts at the edge that piece renders (t = 2·edge); a cup after a tube starts at t/2; tube to tube is C1 in t
+ok 7 - A TUBE JOINT: a tube after another kind starts at the edge that piece renders (t = 2·edge); a cup after a tube starts at t/2; tube to tube is C1 in t
+  ---
+  duration_ms: 0.8744
+  type: 'test'
+  ...
+# Subtest: EXTEND: e, s and t targets are range-checked by name; an e target on a plain track makes an edge piece; the edge continues while active and turns off with e = 0
+ok 8 - EXTEND: e, s and t targets are range-checked by name; an e target on a plain track makes an edge piece; the edge continues while active and turns off with e = 0
+  ---
+  duration_ms: 7.8402
+  type: 'test'
+  ...
+# Subtest: EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2); D466: a 100 m piece with a 50 m ramp to the cap, an empty track with a 4 m ramp and a 50 m ramp down to −30° stay inside their range too (KE2-6)
+ok 9 - EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2); D466: a 100 m piece with a 50 m ramp to the cap, an empty track with a 4 m ramp and a 50 m ramp down to −30° stay inside their range too (KE2-6)
+  ---
+  duration_ms: 3.5958
+  type: 'test'
+  ...
+# Subtest: EXTEND: the transition map takes e, s and t like the others, and the at-start `first` carries them on an empty track
+ok 10 - EXTEND: the transition map takes e, s and t like the others, and the at-start `first` carries them on an empty track
+  ---
+  duration_ms: 0.9996
+  type: 'test'
+  ...
+# Subtest: READOUT (E7): edgeFrom/To, sliceFrom/To, tubeFrom/To come from the document; a plain piece reads 0, 0.64 and 0; candidateReadout equals the placed piece bit for bit (KE7-1)
+ok 11 - READOUT (E7): edgeFrom/To, sliceFrom/To, tubeFrom/To come from the document; a plain piece reads 0, 0.64 and 0; candidateReadout equals the placed piece bit for bit (KE7-1)
+  ---
+  duration_ms: 6.0385
+  type: 'test'
+  ...
+# Subtest: E1 (i): the rendered edge of an edge piece is ψ_mid(edge) + e on BOTH sides, within 0.05°; bank and a closed lap do not change that (E6)
+ok 12 - E1 (i): the rendered edge of an edge piece is ψ_mid(edge) + e on BOTH sides, within 0.05°; bank and a closed lap do not change that (E6)
+  ---
+  duration_ms: 10.0413
+  type: 'test'
+  ...
+# Subtest: E6: edge THEN roll: at φ = +30° the left edge surface is 105° from gravity and the right 45°; a −30° bank mirrors it; e changes no readout and no path sample
+ok 13 - E6: edge THEN roll: at φ = +30° the left edge surface is 105° from gravity and the right 45°; a −30° bank mirrors it; e changes no readout and no path sample
+  ---
+  duration_ms: 22.3854
+  type: 'test'
+  ...
+# Subtest: E4 (ii): e, s and t are CARRIED across a flight like c, and an edge continues after the jump
+ok 14 - E4 (ii): e, s and t are CARRIED across a flight like c, and an edge continues after the jump
+  ---
+  duration_ms: 2.9612
+  type: 'test'
+  ...
+# Subtest: E4 (vi, vii): inside an edge piece every segment is a chord that shares ONE row grid and meets the next on the same profile, so the mesh emits no seam zip; the joint from a plain piece steps ≤ 1 mm
+ok 15 - E4 (vi, vii): inside an edge piece every segment is a chord that shares ONE row grid and meets the next on the same profile, so the mesh emits no seam zip; the joint from a plain piece steps ≤ 1 mm
+  ---
+  duration_ms: 187.2656
+  type: 'test'
+  ...
+# Subtest: E4 (v): along a moving slice (s 0.5 → 0.95 over 40 m, e 15) every row at a segment boundary is within 0.05° of the analytic profile and every row inside a segment within 0.5° (KE4-3)
+ok 16 - E4 (v): along a moving slice (s 0.5 → 0.95 over 40 m, e 15) every row at a segment boundary is within 0.05° of the analytic profile and every row inside a segment within 0.5° (KE4-3)
+  ---
+  duration_ms: 46.9119
+  type: 'test'
+  ...
+# Subtest: E5: a lap with an edge exports end to end: mesh, markers and kn5 write and read back, with no NaN in any buffer (the F1-style lap, edge 15 on the turns)
+ok 17 - E5: a lap with an edge exports end to end: mesh, markers and kn5 write and read back, with no NaN in any buffer (the F1-style lap, edge 15 on the turns)
+  ---
+  duration_ms: 783.9539
+  type: 'test'
+  ...
+# Subtest: T1 (ii, iii): a closed tube meshes with its two edge rows within 1 mm; the tube profile is the circle; a transition cup → tube has no seam zip and every row X_tip >= 0 (T2)
+ok 18 - T1 (ii, iii): a closed tube meshes with its two edge rows within 1 mm; the tube profile is the circle; a transition cup → tube has no seam zip and every row X_tip >= 0 (T2)
+  ---
+  duration_ms: 317.5458
+  type: 'test'
+  ...
+# Subtest: CLOSE (E4 iii, T2): a lap whose seam would join a tube to a different cross-section is refused TUBE_SEAM; an edge still active at only one end is refused EDGE_SEAM
+ok 19 - CLOSE (E4 iii, T2): a lap whose seam would join a tube to a different cross-section is refused TUBE_SEAM; an edge still active at only one end is refused EDGE_SEAM
+  ---
+  duration_ms: 4.5357
+  type: 'test'
+  ...
+# Subtest: CLOSE: a lap whose edge ends at 0.004° (under the 0.01° seam tolerance) at a plain start closes, and the close leaves every edge array exactly as built (no row reaches e where only one end has it)
+ok 20 - CLOSE: a lap whose edge ends at 0.004° (under the 0.01° seam tolerance) at a plain start closes, and the close leaves every edge array exactly as built (no row reaches e where only one end has it)
+  ---
+  duration_ms: 366.8896
+  type: 'test'
+  ...
+# Subtest: BRUSH (E2 iii): a brush on e, s or t reaching a piece without them is refused by name; one that takes e outside its range is refused BAD_EDGE
+ok 21 - BRUSH (E2 iii): a brush on e, s or t reaching a piece without them is refused by name; one that takes e outside its range is refused BAD_EDGE
+  ---
+  duration_ms: 37.851
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1899.3789

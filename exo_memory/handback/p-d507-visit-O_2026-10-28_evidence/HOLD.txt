@@ -1,0 +1,9 @@
+D507 (pane O), 2026-10-28: lighthouse branch d507-o 1785df01 (on main 5b9145dd), built with cargo tauri build --no-bundle in O's worktree.
+The visit names its 400-character limit; a seat whose last line was refused is told so at its next visit (the rule's name only).
+NOT LANDED, NOT PUSHED: this lands with the next lighthouse landing.
+NO SWAP AND NO RESTART until the librarian relays the keeper's word. A restart stops every seat.
+The swap waits for the heavy-run lock (A's D501 stick run holds it for hours): with -Apply it waits until no heavy-run job is alive.
+The swap, at that time: powershell -ExecutionPolicy Bypass -File C:\Consonance\staged\d507-1785df01\swap.ps1 -Apply  (Consonance closed first).
+Dry run first: the same line without -Apply changes nothing.
+Note: launch.ps1 rebuilds from the main checkout when its sources are newer than the exe; until d507-o lands there, a rebuild
+from the shortcut would build main WITHOUT D507.

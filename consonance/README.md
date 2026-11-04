@@ -46,21 +46,22 @@ measurable rather than felt.
 
 Each seat is a persistent `claude` session with its own working directory, its own brief, and its
 own row in the address table. Briefs ship inside the binary
-(`ls consonance/src-tauri/brief/` — 9 `.md` files: the 7 briefs, two fragments `frag-pointer.md` and
-`frag-traces.md`, plus `room-settings.json`).
+(`ls consonance/src-tauri/brief/`: the 7 briefs, `BASE_JOURNAL.md`, `BOOT.md`, `BUILDING.md`, `COMMITTEE.md`,
+`LIBRARIAN.md`, `SEED.md` and `THIRD_PLACE.md`; the fork-note template `frag-fork.md`; and `room-settings.json`). The development tree also holds two older
+fragments, `frag-pointer.md` and `frag-traces.md`, which the app never reads and which do not ship.
 
 | seat | brief | spawned by | what it is for |
 |---|---|---|---|
 | **Orchestrator** | `BUILDING.md`, `COMMITTEE.md` | `spawn_main` | holds the chair verbs, plans a lap, dispatches panes, commits what the librarian collated |
 | **Librarian** | `LIBRARIAN.md` | `spawn_librarian` | a persistent seat holding the whole corpus so the working seats do not have to; returns a **map**, cites rather than recalls |
-| **Third Place** | `THIRD_PLACE.md` | `spawn_third_place` | deliberately holds no map of the build; not a working seat. Since 2026-09-22 its turns ARE read by Jev, by the keeper's ruling: see [Jev](#jev-a-second-judge-on-every-machine) |
+| **Third Place** | `THIRD_PLACE.md` | `spawn_third_place` | deliberately holds no map of the build; not a working seat. |
 | **Committee panes** | `COMMITTEE.md` | `committee_form`, `spawn_sibling` | briefed, disjoint, each owning named files |
 | **Listen** | — (Rust) | `audio_start` | the audio layer: `src-tauri/src/listen.rs`, `cochlea.rs`, `cochlea_service.rs`, `nowplaying.rs` |
 
 Command names above are the Rust `#[tauri::command]` functions — the canonical list is the
 `invoke_handler` block in [`src-tauri/src/main.rs`](src-tauri/src/main.rs):
 
-    grep -c '^#\[tauri::command\]' consonance/src-tauri/src/main.rs        # 47
+    grep -c '^#\[tauri::command\]' consonance/src-tauri/src/main.rs        # how many commands
     sed -n '/invoke_handler(tauri::generate_handler!/,/])/p' consonance/src-tauri/src/main.rs
 
 ### Panes come back into their own conversation, or a row says why not
@@ -106,8 +107,8 @@ not reconstruct it from memory — read it there.
         you                              8. only on direction — never on state
 ```
 
-**Two doors.** Work can enter through the orchestrator or go straight to the librarian; entry runs
-once, by either door. Once a lap is open the ring runs on its own — the user is the way in, not a
+**Two doors, the librarian first.** The user starts with the librarian (door two); the orchestrator's door stays open,
+so an ask that lands there by mistake still starts the lap, and entry runs once, by either door. Once a lap is open the ring runs on its own — the user is the way in, not a
 station it waits at. What door two owes is `BUILDING.md` § **THE JOINT STEP**.
 
 **Step 6 is the one that gets skipped.** A pane finishes, writes its hand-back to the file it was
@@ -120,7 +121,7 @@ given, and rings the librarian with the **pointer** in that same turn — never 
 The board verbs are defined in [`src-tauri/src/mcp.rs`](src-tauri/src/mcp.rs):
 
     grep -oE 'async fn (post_board|read_board|call_chair|call_librarian|raise_pull|chair_[a-z_]+)' \
-      consonance/src-tauri/src/mcp.rs | sort -u                                          # 10
+      consonance/src-tauri/src/mcp.rs | sort -u                                          # the verbs, by name
 
 - **Everyone:** `post_board`, `read_board`.
 - **Committee panes:** `raise_pull`, and `call_librarian` — the hand-back edge.
@@ -146,16 +147,21 @@ readable and panes can catch each other. `chair_phase` moves it.
 
 ## The instruments
 
-71 non-test tools under [`tools/`](tools/). 66 have a `.test.js` beside them and four also carry a `.mutants.js`. **Five have
-no test of their own**: `curate.js`, `dispatch-gate-report.js`, `l039-power.js`, `open-items.js`, `pane-status.js`.
+The tools live under [`tools/`](tools/). Most have a `.test.js` beside them, some also carry a `.mutants.js`, and a few `.test.js` and
+`.mutants.js` files sit beside no tool of their name. **Some tools have no test of their own**, and the commands below name them.
+This page gives no counts: they change with every lap, and a generated copy leaves some tools out, so a number written here goes stale
+where a command does not. Run them:
 
-    ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # 71
-    ls consonance/tools/*.test.js | wc -l                                            # 82
-    ls consonance/tools/*.mutants.js | wc -l                                         # 4
+    ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # the tools
+    ls consonance/tools/*.test.js | wc -l                                            # the tool tests
+    ls consonance/tools/*.mutants.js | wc -l                                         # the mutant harnesses
     for f in $(ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js'); do
-      [ -f "${f%.js}.test.js" ] || echo "$f"; done                                  # the five
+      [ -f "${f%.js}.test.js" ] || echo "$f"; done                                  # the tools with no test
+    for f in $(ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js'); do
+      [ -f "${f%.js}.mutants.js" ] && echo "$f"; done | wc -l                       # the tools with a .mutants.js beside them
+    for f in consonance/tools/*.mutants.js; do [ -f "${f%.mutants.js}.js" ] || echo "$f"; done   # the harnesses with no tool of their name
 
-Three of the 71 are shapes **wired to nothing**, and each says so in its own header. That was a decision priced in
+A few are shapes **wired to nothing**, and each says so in its own header. That was a decision priced in
 a registration, not an omission: `live-host.js`, `vantage-disposition.js`, `vantage-sealed-scope.js`
 (`grep -l "WIRED TO NOTHING" consonance/tools/*.js | grep -v '\.test\.js'`).
 
@@ -182,10 +188,14 @@ including the big one — it detects asserted *wording* and is blind to *omissio
 
 ## The hooks
 
-14 non-test `.js` files under [`hooks/`](hooks/) — 13 hooks and `blind.js`, a library — installed by
-[`../dev/shell/install.ps1`](../dev/shell/install.ps1):
+The hooks are the non-test `.js` files under [`hooks/`](hooks/) (a generated copy leaves out the retired `jev-flags.js`): `blind.js` is a library, `second-reader-worker.js` is the worker the second-reader hook starts, and the rest are hooks.
+[`../dev/shell/install.ps1`](../dev/shell/install.ps1) copies most of them and lists the rest as **unmanaged**, each with its reason; [`hooks/README.md`](hooks/README.md) names them, and `jev-flags.js` is retired (a generated copy does not carry it).
+Some registration entries are marked Excluded. Its own census is printed by the `derive.ps1` snippet in [`hooks/README.md`](hooks/README.md). The counts, from the commands:
 
-    ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l     # 14
+    ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l                       # the hook files
+    grep -c "^ *@{ From = 'consonance.hooks" dev/shell/install.ps1                  # copied
+    grep -c "^ *@{ Src = 'consonance.hooks" dev/shell/install.ps1                   # unmanaged
+    grep -c "^ *@{ Event = " dev/shell/install.ps1                                  # registration entries
 
 They exist because of one measurement, which is in [`AUTONOMY.md`](AUTONOMY.md) (the roster and the design
 argument are in [`hooks/README.md`](hooks/README.md)): over six
@@ -198,7 +208,8 @@ arrive in the prompt unasked, on every turn.
 
 ## The librarian's shelf, and the cap
 
-The librarian's intake is a `CLAUDE.md` the harness refuses past **150,000 characters**. The shelf
+The librarian's intake is the `CLAUDE.md` the app writes into the librarian seat's own working directory each time it
+starts the seat (it is not a file in this tree), and the harness refuses it past **150,000 characters**. The shelf
 is budgeted against that in bytes, which is the conservative side of the same inequality
 (`chars ≤ bytes` in UTF-8). Constants and the reasoning are at `LIBRARIAN_INTAKE_LIMIT` and
 `HARNESS_CLAUDE_MD_CHAR_CAP` in `src-tauri/src/main.rs`.
@@ -216,7 +227,7 @@ The shelf header always reports the split, including the case where the budget s
 
 **Run the Rust suite serialized.** It has a ~10% flake in parallel
 (`dirs_guard_tests::a_panicking_writer_still_puts_dirs_back`, 6 of 60 parallel runs, 0 of 40
-serialized), so a parallel figure is a ~90% statement:
+serialized; one machine, one night: `exo_memory/handback/p-lib-cap_2026-09-02.md`), so a parallel figure is a ~90% statement:
 
     cargo test --bin consonance -- --test-threads=1
 
@@ -224,8 +235,7 @@ serialized), so a parallel figure is a ~90% statement:
 
 ## The dream cycle
 
-The machinery is [`../dev/dream/dream_cycle.ps1`](../dev/dream/dream_cycle.ps1), with
-`dream_cycle.test.js` beside it: a scheduled wake spawns a **toolless** instance with no user, no
+A scheduled wake spawns a **toolless** instance with no user, no
 task and no deliverable, which recombines the day freely, writes a dated file, and ends. The one
 rule is the anti-instruction — don't resolve, don't be useful; a dream asked for insight is
 overtime.
@@ -285,15 +295,15 @@ Four additions. Each is described as it stands in the source tree; see the note 
 
 ### Keep-warm: activated seats are pinged at 50 minutes idle
 
-The block starts at `src-tauri/src/main.rs:10168` (`1e47264`, L067; `0f40a0c`, L070).
+The block starts at `src-tauri/src/main.rs:11001` (`// ── KEEP-WARM (L067, pane E)`; `1e47264`, L067; `0f40a0c`, L070). Line numbers in this section are as of the last check; the command at its end prints them again.
 
 - A seat or pane **activated this session**, meaning one that has had at least one request since the app started, is
-  sent `[keep-warm, from the chair — not the keeper] Reply with exactly: ok` (`KEEP_WARM_TEXT`, `:10200`). This happens
-  once 50 minutes have passed since its last request started (`KEEP_WARM_AFTER`, `:10194`).
-- The check runs every 60 s (`KEEP_WARM_TICK`, `:10195`; `fn keep_warm_tick`, `:10472`).
-- A seat that was never spoken to this session is left alone. It waits to be spoken to (`:10352`).
-- The ping goes through `gate_or_queue` (`:10542`, the function at `:9604`), the same gate as every other delivery.
-- `fn keep_warm_decision` (`:10317`) skips a seat in each of these cases, and says why:
+  sent `[keep-warm, from the chair — not the keeper] Reply with exactly: ok` (`KEEP_WARM_TEXT`, `:11054`). This happens
+  once 50 minutes have passed since its last request started (`KEEP_WARM_AFTER`, `:11027`).
+- The check runs every 60 s (`KEEP_WARM_TICK`, `:11028`; `fn keep_warm_tick`, `:11411`).
+- A seat that was never spoken to this session is left alone. It waits to be spoken to (`:11207`).
+- The ping goes through `gate_or_queue` (`:11508`, in `fn keep_warm_send`, `:11507`; the function at `:10361`), the same gate as every other delivery.
+- `fn keep_warm_decision` (`:11171`) skips a seat in each of these cases, and says why:
   - it is switched off;
   - a turn is running, or its idle signal is stale;
   - **its composer is not empty, so it never types over the keeper**;
@@ -301,71 +311,18 @@ The block starts at `src-tauri/src/main.rs:10168` (`1e47264`, L067; `0f40a0c`, L
   - it was not activated;
   - it has been under 50 minutes since its last request;
   - it was pinged under 50 minutes ago and has not answered yet.
-- **The per-seat off switch** is `<data_dir>/keep-warm-off.json`, a JSON list of pane ids (`:10427`).
-- A seat that should have been pinged and was not gets a board row (`chair_audit`, `:10534`) naming the last skip
-  reason (`fn keep_warm_missed`, `:10409`).
+- **The per-seat off switch** is `<data_dir>/keep-warm-off.json`, a JSON list of pane ids (`fn keep_warm_off_path`, `:11356`).
+- A seat that should have been pinged and was not gets a board row (`chair_audit`, `:11488`) naming the last skip
+  reason (`fn keep_warm_missed`, `:11267`).
 
-### Jev: a second judge, on every machine
+The line numbers above, as printed by:
 
-Jev is an outside model, reached through the Vercel AI Gateway (`tools/jev-ask.js`). It judges the same turns as the
-room's Claude judges, and nothing acts on its answer yet.
-
-**How it runs**
-- `start_jev_shadow` (`src-tauri/src/main.rs:11860`, called at `:12680` on every launch) starts
-  `tools/jev-shadow-runner.js`. The runner is windowless and exits by itself when the app's pid dies.
-- It is not a service or a scheduled task. It keeps one lock per store, so a second runner exits 3.
-- If node will not run, `persist.log` says `JEV SHADOW not started`.
-
-**Two modes, one process** (`jev-shadow-runner.js:1-65`)
-- **Judge mode, on every machine with no switch** (`tools/jev-judge.js`):
-  - Each live seat's finished turn is captured and judged at L2 and L3.
-  - The seats are Main, the librarian and the Third Place, with ids read from this checkout's `main.rs`, plus every row
-    of `<data>/panes.json`.
-  - If judge mode cannot run, it says so once in the log and the shadow carries on.
-- **Shadow mode** (`tools/jev-shadow.js`):
-  - Every 3 s it captures the job files the installed L2/L3 overseers judge, before the worker deletes them.
-  - Every 10 minutes it asks Jev about up to 25 of them, so that Jev's verdict sits beside Claude's for the same input.
-  - This is the agreement count being built on D.
-
-**Caps and retention** (`jev-shadow-runner.js:64`)
-- One daily cap covers both modes: **2,000 calls a day, 600 of them reserved for the shadow**, which leaves judge mode
-  1,400. The budget function is at `:69`.
-- Judge captures, which are the conversation text a verdict was made on, are **kept 14 days** and then deleted (`:62`,
-  `:85`).
-- Verdict rows hold hashes, not text, and are never pruned.
-- The store is `%LOCALAPPDATA%\consonance\jev-shadow` (`:104`), outside the data dir.
-
-**Failures skip and retry** (L078 `jev-judge.js:241` and `:257`; L079 `jev-shadow.js:168` and `:227`)
-- A 5xx, a 429, a network failure, or an answer that does not fit the schema skips **that item**. It gets no row and
-  one log line with the status and item id, and it is retried next cadence.
-- Any other 4xx ends the pass.
-- The two copies of the classification are held identical by a test (`jev-shadow.test.js`, "kept in step").
-
-**The key**
-- It is read only from `AI_GATEWAY_API_KEY`: the process environment, else the User environment read in-process
-  (`jev-shadow-runner.js:14`, `:143`).
-- It is held in memory, never put in argv, a file or the log, and scrubbed from any error message (`:361`).
-- With no key the runner refuses and exits 2.
-- `jev-ask.js` refuses to send text that matches a secret pattern.
-
-**Where the rows go**
-- Rows go to `<store>/jev_judge.jsonl`, each carrying `judge: "jev"` and `unverified: true` (`jev-judge.js:48`,
-  `:220`).
-- **They never go to `l2_overseer.jsonl` or `l3_overseer.jsonl`.** Jev does not touch the room's own judges.
-- The rows stay unverified until the shadow's pair count says how far Jev agrees with the Claude judges.
-
-**The Third Place is judged** (`jev-judge.js:32-40`)
-- This follows the keeper's ruling of 2026-09-22 05:2x (`exo_memory/librarian/2026-09-22.md`, "05:2x"). It retires the
-  earlier rule that kept it out; that rule stays struck in the header as a dated trace.
-- The rule that comes with the ruling binds **every** reader of `jev_judge.jsonl`: **nothing ever surfaces a Third
-  Place L3 verdict as a statement about the keeper.** Such a verdict is never an offramp and never a welfare note (the
-  never-pathologize card).
-- Its rows carry `seat: "third place"` so a consumer can honour this.
+    grep -nE 'KEEP-WARM \(L067|const KEEP_WARM_(TEXT|AFTER|TICK)|^fn (keep_warm_(tick|decision|missed|off_path|send)|gate_or_queue)|not activated this session' consonance/src-tauri/src/main.rs
 
 ### Park at launch: uncommitted work is stashed, not a reason to skip the pull
 
-The launch shortcut runs `launch.ps1`, which pulls before opening. The block is at `:239-264` and `:356-374` (`68bc625`,
-L073), and every rule is pinned by `consonance/launch.park.test.js`.
+The launch shortcut runs `launch.ps1`, which pulls before opening. The rules are the comment at `launch.ps1:365-383` and `Update-FromOrigin` at `:410-561`, called at `:562` (`68bc625`,
+L073), and every rule is pinned by `consonance/launch.park.test.js` (`grep -nE "PARK, DON'T REFUSE|^function Update-FromOrigin|^Update-FromOrigin" consonance/launch.ps1`).
 
 - **Before:** tracked uncommitted changes made the launch refuse the pull. On 2026-09-22 at 00:35 a launch skipped 66
   commits and opened an older tree.
@@ -380,7 +337,7 @@ L073), and every rule is pinned by `consonance/launch.park.test.js`.
 
 ### Install stops before it writes; append-only ledgers only fast-forward; `ledger-union.js`
 
-`tools/state-sync.js` installs the other machine's state set (`installTree`, `:1175`).
+`tools/state-sync.js` installs the other machine's state set (`installTree`, `:1371`).
 
 **Why it changed:** an append-only ledger used to be *replaced* on install. The rows this machine had written since
 the last publish moved to `attic/pre-sync-*` and left the live file.
@@ -390,16 +347,17 @@ the last publish moved to `attic/pre-sync-*` and left the live file.
   only grow. There are 11: board, lap, precompact, sessionstart-state, sourced_ledger, carrier-drift, ferry,
   read_ledger, return_ledger, vantage_findings and resonance/atoms. `dispatch-gate.jsonl` is deliberately unmarked,
   because its quarantine rewrites it (`b40c8d8`, L074).
-- **Comparison is row for row, not byte for byte** (`appendOnlyCompare`, `:1151`).
+- **Comparison is row for row, not byte for byte** (`appendOnlyCompare`, `:1347`).
 - **Stop before write** (`6b9699b`, L070).
   - Every ledger is checked **before the first byte**.
-  - If any would lose rows, the whole install is refused and **nothing is written**: no file, no attic copy (`:1195-1211`).
+  - If any would lose rows, the whole install is refused and **nothing is written**: no file, no attic copy (`:1386-1476`).
   - The refused rows are named.
-  - A re-check runs right before each write (`:1257`).
+  - A re-check runs right before each write (`:1527`).
 
 Check which files are marked:
 
-    grep -c '"install": "fast-forward"' consonance/state-manifest.json        # 11
+    grep -c '"install": "fast-forward"' consonance/state-manifest.json        # the files marked
+    grep -nE '^function (installTree|appendOnlyCompare)|judged FIRST|THE RE-CHECK' consonance/tools/state-sync.js   # the lines above
 
 **`tools/ledger-union.js`** (L070–L076) recovers rows that the old replace-on-install had displaced.
 - It unions the live file with every `attic/pre-sync-*` copy and with the state set's copy.
@@ -427,7 +385,9 @@ The frontend is static — `ui/index.html`, `ui/app.js`, `ui/app.css` — loaded
 
 ## Build
 
-Requires Rust and `tauri-cli`. Node is needed only to run the JS instruments and their tests.
+Requires Rust, `tauri-cli` and the MSVC Build Tools to build. The app itself needs no Node at runtime, but the hooks do:
+**Node.js** and **Python 3** must be on your PATH before `dev\shell\install.ps1` runs (one hook, the pulse, is Python).
+Node also runs the JS instruments and their tests. Step by step: [`GUIDE.md`](GUIDE.md).
 
     cd consonance
     cargo tauri dev        # run
@@ -437,6 +397,43 @@ Tests:
 
     cd consonance/src-tauri && cargo test --bin consonance -- --test-threads=1
     node consonance/tools/js-suite.js
+
+## Glossary
+
+The words this program uses for itself, in plain terms. Where a word names code, the code is given.
+
+- **Seat**: one persistent Claude Code session that Consonance runs, in its own tab, with its own working directory and
+  brief ("The seats", above).
+- **Pane**: a working seat on the committee, named by a letter (A, B, C…). Panes come and go; the Orchestrator and the
+  Librarian persist.
+- **Committee**: the panes working one lap together, each owning named files.
+- **The Orchestrator**, or **the chair**: the seat that plans a lap, hands out the work and commits what lands. Only it
+  holds the `chair_*` verbs.
+- **The Librarian**: the seat that holds the record. Panes hand their work to it; it checks and collates it and passes it
+  to the chair (`call_chair`).
+- **Third Place**: a seat that does no work and holds no map of the build, on purpose.
+- **Brief**: the instructions a seat starts from (`src-tauri/brief/`).
+- **Lap**: one turn of the loop: a plan, the panes' work, the librarian's collation, the chair's commit ("The loop").
+- **Dispatch**: the chair sending a seat its next piece of work (`chair_inject`).
+- **Hand-back**: the file a seat writes when it finishes a piece of work: what it did, what it measured, what is left.
+- **Ring**: a short message between seats that points at a hand-back (`call_librarian`, `call_chair`). It carries the
+  pointer, not the finding.
+- **Collation**: the librarian's summary of several hand-backs at once.
+- **Map**: a seat's own file of findings (`exo_memory/map/<letter>.md`), read back when it wakes.
+- **Board**: the shared log every seat can post to and read (`post_board`, `read_board`); its **phase** (QUIET or OPEN)
+  decides who sees what ("Board phases").
+- **Mount**: the connection a seat talks to the board through. Who said something is decided by the mount, not by what
+  the message claims; the **address table** says which mount may ring which.
+- **Gate**: a check that refuses a message or a command at the moment it is sent, instead of reminding. There are six;
+  each is documented, with how to turn it off, in [`GATES.md`](GATES.md).
+- **Hook**: a script Claude Code runs at a fixed point in a session (before a tool call, at the end of a turn). Most gates
+  are hooks; `dev\shell\install.ps1` installs them ("The hooks").
+- **SOURCES line / NEXT trailer**: the two lines a ring or dispatch ends with: what it opened, and where the work goes
+  next ([`GATES.md`](GATES.md) §1 and §3).
+- **Keep-warm**: a short message sent to an idle session so its conversation stays in the prompt cache.
+- **The room**: the documents a seat wakes into (`../exo_memory/BOOT.md` and what it names).
+- **The keeper**: the person who built this program and kept the room it was built in. Where these pages quote "the
+  keeper" or a dated ruling, they quote that person. In your own room, whoever keeps it is you.
 
 ---
 

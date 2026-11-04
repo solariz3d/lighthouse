@@ -1,0 +1,24 @@
+2026-10-05T23:05:53.014Z ev (() => ({ extend: [...document.querySelectorAll('button')].some((b) => b.textContent.trim() === 'Ext
+2026-10-05T23:05:53.820Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T23:05:53.821Z CHECK start {"status":"unsaved","info":"0 pieces · 0 m · open","msg":"No saved pieces yet: select pieces on the track and press Save as piece."}
+2026-10-05T23:05:53.821Z ev (async () => { const o = document.getElementById('open'); o.replaceChildren(new Option('x', ''), new
+2026-10-05T23:05:57.438Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T23:05:57.450Z CHECK big46 {"status":"big46","info":"46 pieces · 13,050 m · open","msg":"No saved pieces yet: select pieces on the track and press Save as piece."}
+2026-10-05T23:05:57.450Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))
+2026-10-05T23:05:59.992Z ev (() => { const st = document.getElementById('preview'), r = st.getBoundingClientRect(); let track = 
+2026-10-05T23:06:06.478Z CHECK picked {"id":"p43","at":{"x":936,"y":120,"px":1.6389236145311095,"s":11950}}
+2026-10-05T23:06:07.193Z ev (document.querySelector('[aria-label="selection"]') || {}).textContent
+2026-10-05T23:06:07.215Z CHECK selected "Selected: p43 · 250 m"
+2026-10-05T23:06:07.216Z ev (async () => { const q = (aria) => document.querySelector('[aria-label=' + JSON.stringify(aria) + 
+2026-10-05T23:06:20.257Z CHECK delete {"label":"middle delete, 46 pieces, 13.1 km","samples":[],"tPreview":959,"tApplyOn":13010,"tCheckLine":959,"maxFrameGap":903,"maxTickGap":959,"seenSeconds":[0,1,2,3,4,5,6,7,8,9,10,11,12],"click":"clicked","finalLine":"No overlap and no red on the track after the delete.","applyDisplay":"","total":13010}
+2026-10-05T23:06:20.394Z ev (() => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim() === "Ca
+2026-10-05T23:06:20.919Z ev (async () => { const t0 = performance.now(); const b = [...document.querySelectorAll('button')].find
+2026-10-05T23:06:37.299Z CHECK deleteCancelMid {"mid":{"previewShown":true,"line":"Checking the track for overlaps… 1 s. Apply is off until this finishes; Cancel stops it.","applyDisabled":true},"after":{"previewText":"","applyDisplay":"none","msg":"No saved pieces yet: select pieces on the track and press Save as piece."},"ms":16353}
+2026-10-05T23:06:37.299Z ev (async () => { const o = document.getElementById('open'); o.replaceChildren(new Option('x', ''), new
+2026-10-05T23:06:40.726Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T23:06:40.736Z CHECK biglap {"status":"biglap","info":"8 pieces · 14,283 m · open","msg":"No saved pieces yet: select pieces on the track and press Save as piece."}
+2026-10-05T23:06:40.736Z ev document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhead' } }))
+2026-10-05T23:06:43.288Z ev (async () => { const q = (aria) => document.querySelector('[aria-label=' + JSON.stringify(aria) + 
+2026-10-05T23:06:59.689Z CHECK close {"label":"Close, 8 pieces, 14.3 km","samples":[],"tPreview":2065,"tApplyOn":16389,"tCheckLine":2065,"maxFrameGap":1970,"maxTickGap":2065,"seenSeconds":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"click":"clicked","finalLine":"No overlap and no red on the closed track.","applyDisplay":"","total":16389}
+2026-10-05T23:06:59.899Z ev (() => ({ status: document.getElementById('status').textContent, info: (document.querySelector('#pal
+2026-10-05T23:06:59.910Z CHECK afterClose {"status":"biglap","info":"8 pieces · 14,283 m · open","msg":"No saved pieces yet: select pieces on the track and press Save as piece. | close preview: closed in 3 step(s): 0.144 mm, tangent 0.0e+0 rad; 3 of 8 pieces move. Apply or cancel"}

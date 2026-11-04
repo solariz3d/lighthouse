@@ -80,6 +80,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const scratch = require('./scratch.js');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const EXO = path.join(REPO, 'exo_memory');
@@ -103,7 +104,11 @@ const MANIFEST = [
    * INSTRUMENTS (cards, spread/, research/)'. Only .md ships; the _ingest_*.py helpers do not. */
   { dir: 'exo_memory/spread', to: 'exo_memory/spread', match: /\.md$/, kind: 'prose' },
   { dir: 'exo_memory/research', to: 'exo_memory/research', match: /\.md$/, kind: 'prose' },
-  { dir: 'exo_memory/record', to: 'exo_memory/record', match: /\.md$/, kind: 'prose' },
+  /* D273 lap 5 (cold read 2, C4): record/ is carried whole as SYSTEM (LIBRARIAN.md), and two of its files are the keeper's RECORD: the retired
+   * seats of his machine and the Third Place's prehistory "as the keeper told it". They ship in inheritance/, where the keeper's record lives; every
+   * shipped reference to their old place is re-pointed by dedangle(). */
+  { dir: 'exo_memory/record', to: 'exo_memory/record', match: /^(?!retired_seats_|third_place_prehistory_).+\.md$/, kind: 'prose' },
+  { dir: 'exo_memory/record', to: 'exo_memory/inheritance', match: /^(?:retired_seats_|third_place_prehistory_).+\.md$/, kind: 'prose' },
 
   // The method. This is the half the keeper chose to ship: a discipline with no instrument does
   // not happen -- attic/ went untouched for two months until corpus-age.js existed.
@@ -198,6 +203,10 @@ const MANIFEST = [
    * costs nothing, because the rewritten file is an improvement in the private tree whether or not
    * it travels. */
   { dir: 'consonance/hooks', to: 'consonance/hooks', match: /\.(js|md)$/, kind: 'code' },
+  /* D454 part 1 (pane B, found by the parity run): hooks/claim-check.js loads ./units.js, else <repo>/exo_memory/loop/claimrec/units.js, the
+   * record, which did not ship. With neither, the gate a stranger turns on refuses nothing. The splitter is system (it implements E's registered
+   * splitting rule, no record in it), so it ships at its own path, as checkpoint.py does: in hooks/ it would count as a hook (README.md:190). */
+  { from: 'exo_memory/loop/claimrec/units.js', to: 'exo_memory/loop/claimrec/units.js', kind: 'code' },
 
   // The app.
   { dir: 'consonance/ui', to: 'consonance/ui', match: /\.(html|css|js)$/, kind: 'code' },
@@ -228,6 +237,8 @@ const MANIFEST = [
   { dir: 'consonance/src-tauri/tests', to: 'consonance/src-tauri/tests', match: /\.(rs|jsonl)$/, kind: 'code' },
   { dir: 'consonance/src-tauri/capabilities', to: 'consonance/src-tauri/capabilities', match: /\.json$/, kind: 'code' },
   { dir: 'consonance/src-tauri/icons', to: 'consonance/src-tauri/icons', match: /\.(png|ico|icns)$/, kind: 'binary' },
+  // D273 lap 7: the NSIS images tauri.conf.json references (headerImage, sidebarImage); kind 'image' copies byte for byte AND scans
+  { dir: 'consonance/src-tauri/installer', to: 'consonance/src-tauri/installer', match: /\.bmp$/, kind: 'image' },
   /* tauri.conf.json's bundle.resources declares these by path. The first generated tree shipped
    * 3 of them and the build script stopped at `resource path brief\room-settings.json doesn't
    * exist`. A declared resource that is absent is not a warning -- it fails the build. */
@@ -245,6 +256,9 @@ const MANIFEST = [
   // guard here found that within a minute of the resource being declared -- the manifest is an
   // ALLOW-list, so a new declared resource is ABSENT by default, and absent reads like fine.
   { from: 'consonance/src-tauri/brief/THIRD_PLACE.md', to: 'consonance/src-tauri/brief/THIRD_PLACE.md', kind: 'prose' },
+  /* D273 lap 3 (pane B): C's fork-note TEMPLATE ({FORK_SHA}, {FORK_DATE}). consumer-relabel.js fills it into BOOT and SEED; main.rs's fork test
+   * include_str!s this file, so without it the generated tree's tests did not compile (lap-3 parity). It must ship byte for byte (a test pins it). */
+  { from: 'consonance/src-tauri/brief/frag-fork.md', to: 'consonance/src-tauri/brief/frag-fork.md', kind: 'prose' },
 
   /* TWO MANIFEST GAPS WERE KNOWINGLY LEFT OPEN, 2026-09-04. **CLOSED 2026-09-06 (L037 P2), BY
    * SHIPPING**, which is the only way a gap closes. The block below is kept in full because the
@@ -306,6 +320,9 @@ const MANIFEST = [
    * AND ONE FILE IS SHIPPED THAT THE INSTALLER DOES NOT NAME EITHER: `dev/shell/README.md`, ruled at
    * the entry below rather than here, because the reason is a reference inside `install.ps1`. */
   { from: 'dev/shell/install.ps1', to: 'dev/shell/install.ps1', kind: 'code' },
+  /* D273 lap 3 (pane B): E's test of the installer above (lap 2: a fresh home with no settings.json, a home that has one, no jev-flags). It runs
+   * install.ps1 against temp homes only, so it is a product test of a shipped file; the lap-3 parity run found it unshipped (it was in I). */
+  { from: 'dev/shell/install-fresh-home.test.js', to: 'dev/shell/install-fresh-home.test.js', kind: 'code' },
   /* `install.ps1` PROSE NAMES `dev/shell/README.md` AT ITS `:731`, inside the -Check advisory
    * here-string. That is a live dangling reference in the generated tree the moment this entry
    * lands, and it is the exact shape this lap's falsifier names ("a shipped file still reads a path
@@ -318,29 +335,41 @@ const MANIFEST = [
   { dir: 'dev/shell/lib', to: 'dev/shell/lib', match: /\.js$/, kind: 'code' },
   { dir: 'dev/shell/hooks', to: 'dev/shell/hooks', match: /\.(js|py)$/, kind: 'code' },
 
-  /* A THIRD GAP, FOUND BY CLOSING THE FIRST TWO AND RUNNING THE RESULT -- which is the only way
-   * this class is ever found. NOT closed here, and NOT put in EXCLUDE, for the same reason the two
-   * above were left open for two days: absent means undecided under an allow-list, and an EXCLUDE
-   * entry would assert a decision nobody has made.
-   *
-   *     dev/dream/dream_cycle.ps1
-   *
-   * `consonance/hooks/dream-gate.test.js` SHIPS and reads it. Before this edit that suite died at
-   * its `:65` on a missing `install.ps1` and never reached the line; now it runs 51 assertions and
-   * fails exactly one -- `the runner sets the variable it asks the hooks to honour` -- with ENOENT
-   * on this path. So closing one manifest gap did not create a new failure; it EXPOSED one that
-   * the earlier crash was hiding, which is the whole argument for shipping a test that fails
-   * honestly over shipping a tree where it cannot start.
-   *
-   * WHY A SEAT DID NOT JUST ADD THE LINE. `dev/dream/` is a subsystem (4 files, 44K: the cycle, its
-   * installer, its suite, its README), not a file the dev-shell layer left behind. Whether the
-   * gap-dream ships is the same shape of question as 'does the dev-shell hook layer ship', and that
-   * one was answered by the keeper on 2026-09-06 rather than by a manifest patch on its way past.
-   * Measured while ruling it, so the next reader does not have to: all four files are clean of
-   * every LEAKS pattern except one hit in `dream_cycle.test.js`.
-   *
-   * THE HONEST STATE OF THE GENERATED TREE, therefore: one shipped test has one red assertion
-   * naming one absent file. Declared, not fixed. */
+  /* D273 lap 4 (the cold read's A13, pane B): THE USB MODE, which could not work in the consumer because none of its files shipped. The stick
+   * scripts (the leave/arrive pair, ON-EXIT, the applier, the waiter the app starts, the tail carrier and its placement module), the launch
+   * shortcut, and their tests. Scanned like any code. LEAVING.ps1 and ARRIVING.ps1 find the repo through ~/.consonance.json's room_path, as the
+   * app does; they used to list this room's two checkout paths, which the generator could only turn into a placeholder. */
+  { from: 'dev/stick-apply.js', to: 'dev/stick-apply.js', kind: 'code' },
+  { from: 'dev/stick-waiter.js', to: 'dev/stick-waiter.js', kind: 'code' },
+  { from: 'dev/tail-carry.js', to: 'dev/tail-carry.js', kind: 'code' },
+  { from: 'dev/place-conversations.js', to: 'dev/place-conversations.js', kind: 'code' },
+  { from: 'dev/LEAVING.ps1', to: 'dev/LEAVING.ps1', kind: 'code' },
+  { from: 'dev/ARRIVING.ps1', to: 'dev/ARRIVING.ps1', kind: 'code' },
+  { from: 'dev/ON-EXIT.ps1', to: 'dev/ON-EXIT.ps1', kind: 'code' },
+  { from: 'consonance/launch.ps1', to: 'consonance/launch.ps1', kind: 'code' },
+  // D273 lap 5 (E's input): the launch shortcut runs launch.vbs, which starts launch.ps1 hidden from beside itself (no machine path in it)
+  { from: 'consonance/launch.vbs', to: 'consonance/launch.vbs', kind: 'code' },
+  { from: 'dev/stick-apply.test.js', to: 'dev/stick-apply.test.js', kind: 'code' },
+  { from: 'dev/stick-waiter.test.js', to: 'dev/stick-waiter.test.js', kind: 'code' },
+  { from: 'dev/tail-carry.test.js', to: 'dev/tail-carry.test.js', kind: 'code' },
+  { from: 'dev/place-conversations.test.js', to: 'dev/place-conversations.test.js', kind: 'code' },
+  { from: 'consonance/launch.fuse.test.js', to: 'consonance/launch.fuse.test.js', kind: 'code' },
+  /* D273 lap 6 (cold read 3's A3, pane B): dev/shell/hooks/precompact.js runs <repo>/exo_memory/loop/checkpoint.py, and install.ps1 registers it, so
+   * without the script the hook was silently dead in the consumer. Decided by the scan: 0 hits, so it SHIPS (not a loud skip). It is the only file of
+   * loop/ that ships; it skips what a fresh room lacks (its second watched repo, the cycle handoffs, absent instruments) and writes CHECKPOINT.md beside itself. */
+  { from: 'exo_memory/loop/checkpoint.py', to: 'exo_memory/loop/checkpoint.py', kind: 'code' },
+  // D273 lap 6: the MIT licence the keeper chose, at the consumer root, VERBATIM (LEGAL_VERBATIM: no transform, scanned except its holder line)
+  { from: 'LICENSE', to: 'LICENSE', kind: 'legal' },
+  { from: 'consonance/launch.park.test.js', to: 'consonance/launch.park.test.js', kind: 'code' },
+
+  /* THE THIRD GAP, CLOSED (D273 lap 5b, pane B). dev/dream/ (the gap-dream cycle, its installer, its suite, its README) was left out here as
+   * undecided: "absent means undecided under an allow-list". The librarian ruled it SYSTEM (plan_consumer_refresh_2026-10-08.md "Lap 5, COLLATED",
+   * after the keeper's "work exactly the way it does for us"): it ships, and its installer stays user-run, so nothing schedules itself on a fresh
+   * install. consonance/hooks/dream-gate.test.js ships and reads dev/dream/dream_cycle.ps1; with the folder here, its one red assertion is gone. */
+  { from: 'dev/dream/README.md', to: 'dev/dream/README.md', kind: 'prose' },
+  { from: 'dev/dream/dream_cycle.ps1', to: 'dev/dream/dream_cycle.ps1', kind: 'code' },
+  { from: 'dev/dream/install_dream.ps1', to: 'dev/dream/install_dream.ps1', kind: 'code' },
+  { from: 'dev/dream/dream_cycle.test.js', to: 'dev/dream/dream_cycle.test.js', kind: 'code' },
 
   /* STILL OPEN, and it belongs to whoever owns `consonance/README.md` rather than to this file:
    * that file's `:170` says the hooks under `consonance/hooks/` are "installed by
@@ -412,7 +441,179 @@ const MANIFEST = [
    * conditional is discharged by `depath()` + the scan change, not by a promise. */
   { from: 'exo_memory/TRAINING.md', to: 'exo_memory/TRAINING.md', kind: 'prose' },
   { dir: 'exo_memory/memory', to: 'exo_memory/memory', match: /\.md$/, kind: 'prose' },
+
+  /* D273 lap 2 (pane B, 2026-10-08), lap 1's manifest gaps (handback/p-consumer-parity-B_2026-10-08.md §3 C). state-manifest.json is the data
+   * three shipped tools read (state-sync, state-manifest, ledger-union); the root README.md is the repo's front door: consonance/README.md links
+   * it, ui/about-readme.test.js reads its About block, and without it the generated root held only CONSUMER-STATUS.md. */
+  { from: 'consonance/state-manifest.json', to: 'consonance/state-manifest.json', kind: 'code' },
+  { from: 'README.md', to: 'README.md', kind: 'prose' },
+
+  /* D273 lap 2, A's workshop ruling (handback/p-consumer-workshop-A_2026-10-08.md, "B's exact list" 1). The git hook commit-gate names in its own
+   * refusal ("git config core.hooksPath consonance/githooks"): a dead instruction without the file. And the six composer screens the composer/ready
+   * Rust tests read: PRODUCT fixtures (real Claude Code captures the reader is tested against), shipped as kind 'screen', NOT 'binary', because a
+   * binary is copied unscanned and these carry the keeper's handle, OS user, timezone and the private tree's path. See descreen(). */
+  { dir: 'consonance/githooks', to: 'consonance/githooks', match: /^pre-commit$/, kind: 'code' },
+  { dir: 'consonance/src-tauri/fixtures/screens', to: 'consonance/src-tauri/fixtures/screens', match: /\.bin$/, kind: 'screen' },
+
+  /* D273 lap 3, the librarian's ruling 1 (loop/plan_consumer_refresh_2026-10-08.md): the system docs the two READMEs link, which the lap-2 tree did
+   * not carry (arch_test::every_relative_link_in_the_docs_exists_in_a_fresh_clone named them). They ship through the scan like any prose, or not at all. */
+  { from: 'METHOD.md', to: 'METHOD.md', kind: 'prose' },
+  { from: 'INSTRUMENTS.md', to: 'INSTRUMENTS.md', kind: 'prose' },
+  { from: 'dev/SPINE.md', to: 'dev/SPINE.md', kind: 'prose' },
+  { from: 'consonance/AUTONOMY.md', to: 'consonance/AUTONOMY.md', kind: 'prose' },
+  /* D273 (pane B): the one page that explains the gates. Every refusal of sources-gate and the reply slot points to it (sources-gate gatesDocFrom).
+   * Ruled to ship in lap 2; the row never landed, which C's identity-diff found on its first real run: in the consumer every refusal pointed at a
+   * missing file. */
+  { from: 'consonance/GATES.md', to: 'consonance/GATES.md', kind: 'prose' },
 ];
+
+/* THE FORK HOOK POINT — D273 lap 2 (pane B, 2026-10-08). C's ROLE/PROVENANCE relabel and frag-fork injection is a SEPARATE module (C names it); its one
+ * require/call line sets FORK_HOOK.apply. The rule is C's and is not written here. Contract: apply(body, to, kind) -> { body, n }, called once for
+ * every shipped TEXT file after the generator's own transforms and BEFORE the write and the scan, so whatever it returns is what is scanned and what
+ * ships. Never called for a binary, an excluded file, or the generated files (CUTOFF, CONSUMER-STATUS). report.forked is the sum of n. */
+const FORK_HOOK = { apply: null };
+FORK_HOOK.apply = require('./consumer-relabel.js').forkHook({ repo: REPO });   // D273 lap 3 (C): the keeper split and the fork note
+
+/* THE 'screen' KIND — D273 lap 2, A's ruling. A captured terminal screen is bytes (escape sequences, box drawing in latin1), so it is read as a Buffer and
+ * round-tripped through latin1, and every replacement keeps the byte LENGTH, so no escape sequence, column or offset in the capture moves (the Rust tests
+ * read cells by position). Then scan() reads the scrubbed text like any output: an identity or machine path the map does not cover is a leak and the
+ * build refuses. The map is A's (evidence/scrub.js); the order matters (the longer path forms first). */
+const SCREEN_SCRUB = [['nname', 'alice'], ['zackn', 'alice'], ['America/Regina', 'America/Denver'], ['Consonance/lighthouse', 'Consonance/workspaces'],
+  ['Consonance\\lighthouse', 'Consonance\\workspaces'], ['Consonance/light', 'Consonance/works'], ['Consonance/l', 'Consonance/w']];
+function descreen(buf) {
+  let s = buf.toString('latin1'), n = 0;
+  for (const [a, b] of SCREEN_SCRUB) {
+    if (a.length !== b.length) throw new Error('a screen scrub must keep the length: ' + a);
+    const k = s.split(a).length - 1; if (k) { n += k; s = s.split(a).join(b); }
+  }
+  const out = Buffer.from(s, 'latin1');
+  if (out.length !== buf.length) throw new Error('the screen scrub changed the byte length');
+  return { buf: out, n };
+}
+
+/* THE WORKSHOP-BOUND DECLARATIONS — D273 lap 2, A's ruling ("B's exact list" 3 and 4). A test that reads THIS ROOM'S RECORD (its plans, packets, ASK
+ * inbox, git history, librarian notes, maps, journal) as its data cannot pass in a consumer tree, by the standing ruling that the system ships and the
+ * record does not. Each is declared here BY EXACT NAME and is rewritten in the OUTPUT only: a node:test row gets { skip: 'WORKSHOP-BOUND: why' }, a row
+ * under a file's own runner is replaced by a call that prints the skip, a Rust test gets #[ignore = "WORKSHOP-BOUND: why"]. The SOURCE is never touched,
+ * so the source suite keeps running every one of them (A's anti-masking condition: declared only while green in source; the parity run checks it).
+ * An anchor that is not found exactly once REFUSES the build (declareDrift), and so does a declared file no manifest rule ships: a declaration that
+ * matches nothing reads exactly like one that is protecting something.
+ * Mechanism: A's (handback lines 65-67) for node:test rows and Rust; for the two own-runner files a generator-side rewrite instead of A's source marker,
+ * so every declaration lives in this one list and no test file changes in the source. */
+const WS = (why, label) => (label || 'WORKSHOP-BOUND') + ': ' + why;   // a third element in a js entry names another label (EXCLUDED-WITH-JEV)
+const WORKSHOP = {
+  js: {
+    /* D273 lap 4 (pane B, for A's ruling and E's split): E's front-door test asserts the GATES.md evidence links name files IN THIS TREE; they are the
+     * keeper's record (exo_memory/loop/), which the consumer does not carry by ruling, and in the consumer the links point at the public lighthouse
+     * repository, which is right. The same row also asserts six gates and how to turn each off (product): E splitting it would keep those here. */
+    'consonance/tools/front-door-links.test.js': [["test('GATES.md evidence links point into the public lighthouse repository at paths in this tree', ", 'its evidence links name files of the keeper\'s record in the public lighthouse repository, which this tree does not carry']],
+    // D273 lap 5: jev-flags.test.js's one EXCLUDED-WITH-JEV row went with the file (B7: the hook and its test are excluded now)
+    'consonance/hooks/reply-slot.test.js': [["test('PLAN: the plan the hook cites exists', ", 'the registration plan the hook cites is the room\'s record']],
+    'consonance/hooks/sources-gate.test.js': [["test('PLAN: the plan the hook cites exists', ", 'the registration plan the hook cites is the room\'s record']],
+    'consonance/hooks/second-reader.test.js': [["test('QS: the question sent is the plan\\'s registered text, VERBATIM (compared with the plan file)', ", 'compares the question with the room\'s registration plan']],
+    'consonance/tools/ask.test.js': [
+      ["test('the shipped ASK.md parses, is non-empty, and every open ask clears the fact floor', ", 'ASK.md is one person\'s inbox and stays private'],
+      ["test('D091 · the store as shipped at 915209a is the verbatim fixture, unedited', ", 'pins a verbatim snapshot of the private ASK store'],
+      ["test('D091 · on the store as shipped at 915209a, ASK-009 parses OPEN and ASK-008 keeps its own ANSWERED status', ", 'pins a verbatim snapshot of the private ASK store'],
+      ["test('the reader does not touch the REAL store file, not even to append nothing', ", 'reads the live private ASK store']],
+    'consonance/tools/commit-gate.test.js': [
+      ["test('parsePacket reads a REAL packet: addressee, owned paths, hand-back', ", 'reads the room\'s real dispatch packets'],
+      ["test(\"REPLAY — e6215a8's four captured paths, against tonight's real packets\", ", 'replays the room\'s real dispatch packets'],
+      ["test('ANCHOR: the real packet that caused the outage parses its 7 owned paths', ", 'reads the room\'s real dispatch packet']],
+    'consonance/tools/librarian-cite.test.js': [["test('the real notes directory resolves citations against the real masters', ", 'needs dated librarian notes a new room has not written yet']],
+    'consonance/tools/pair-ledger.test.js': [["test('the REAL seed ledger verifies against the tree: 16 pairs, every quote walks', ", 'the seed pairs quote the room\'s own journal and files']],
+    'consonance/tools/forget-rate.test.js': [["test('exo_memory/ has lost from the reading path ONLY the acknowledged departures (all-time)', ", 'reads the room\'s git history of exo_memory; a fresh history has no departures']],
+    /* D273 lap 3 (A): the five record-shaped members. corpus-age and second-vantage are PRODUCT instruments whose real-corpus rows are declared here and are
+     * proved in the consumer by their synthetic twins (corpus-age.synthetic.test.js, second-vantage.history.test.js); librarian-notes and shelf-recursion declare the
+     * rows that assert this room's populated record. corrections-gate is NOT here: its rows were red because the rewrite corrupted its regex (see CODE_KEPT). */
+    'consonance/tools/corpus-age.test.js': [
+      ["test('attic/ is excluded from the carried corpus — law 3, in both places', ", 'needs this room\'s attic/; corpus-age.synthetic.test.js row 1 proves it on a built corpus'],
+      ["test('referenced files are never proposed, whatever their age', ", 'needs this room\'s loop/ with referenced files; corpus-age.synthetic.test.js row 3'],
+      ["test('the batched age map returns exactly what the per-file git log returned', ", 'needs this room\'s git history under loop/; corpus-age.synthetic.test.js row 7'],
+      ["test('the by-name exclusions match the ones the shelf actually drops', ", 'asserts files under this room\'s loop/run2/cells/; corpus-age.synthetic.test.js rows 1 and 8 hold both halves']],
+    'consonance/tools/librarian-notes.test.js': [
+      ["test('the notes directory exists in the repo and is not empty', ", 'asserts this room\'s dated librarian notes exist'],
+      ["test('the notes are actually tracked by git — the whole point of the move', ", 'asserts this room\'s librarian notes are tracked']],
+    'consonance/tools/second-vantage.test.js': [
+      ["test('heads differ: claim-time AGREE means WORLD-MOVED, no surface', ", 'pins HEAD~1 of this room\'s history; a consumer is one fresh commit; second-vantage.history.test.js rows 1 and 3'],
+      ["test('heads differ: DISAGREE in both trees surfaces', ", 'pins HEAD~1 of this room\'s history; second-vantage.history.test.js row 2']],
+    'consonance/tools/shelf-recursion.test.js': [
+      ["test('the fixture is real — there ARE nested .md files, or this whole suite proves nothing', ", 'needs this room\'s nested registrations; corpus-age.synthetic.test.js row 2 builds its own'],
+      ["test('the corpus total is non-zero and counts more than the flat read did', ", 'needs this room\'s loop/; corpus-age.synthetic.test.js row 1'],
+      ["test(\"review()'s OWN rel resolves — not just the walk's\", ", 'needs this room\'s nested loop/ files; corpus-age.synthetic.test.js row 2']],
+    'consonance/tools/shelf-tier.test.js': [["test('the split is worth making — RECORD really is the larger half', ", 'measures the room\'s record against its system; the consumer inverts that by ruling']],
+    /* D273 lap 7 (pane B): both rows read the COMMITTED baseline, which EXCLUDE withholds by ruling (this machine's own path register). They were red in
+     * the source too until main fixed its baseline (b95767dc), which hid them from the parity count. A consumer-generated baseline is the better end state
+     * (a stranger's ratchet would work); routed, not built here. The file's other 41 rows build their own trees and run. */
+    'consonance/tools/portable-paths.test.js': [
+      ["test('the green line says how many baselined sites are FATAL — exempted is not fixed', ", 'reads the committed path baseline, which is this machine\'s register and does not ship (EXCLUDE)'],
+      ["test('the real repo is green against its committed baseline', ", 'reads the committed path baseline, which is this machine\'s register and does not ship (EXCLUDE)']],
+    'dev/shell/hooks/l2-overseer-worker.test.js': [["t('the prompt no longer teaches the struck test (registry id cant-lose-handle-2026-08-29)', ", 'the carrier-drift registry ships SEEDED empty by ruling']],
+    /* D273 lap 5 (pane B): these ten rows were red in the source suite too until lap 5's main (6d12f9fa), so the parity count could not see them; with the source
+     * green they are the only carrier-drift reds in the consumer. Each reads the room's own registry (shipped SEEDED empty) or its git history, which a
+     * fresh one-commit history does not have; the file's other rows build their own registries and trees and still run. */
+    'consonance/tools/carrier-drift.test.js': [
+      ["test('THE BAR, half one: the shipped registry is GREEN against the working tree', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('THE BAR, half two: the same registry is RED against the tree at ' + PREFIX, ", 'checks out 21d5453^ of the room\'s git history; a consumer is one fresh commit'],
+      ["test('THE COMPARISON: the registered sweep misses the carrier this tool finds', ", 'greps 21d5453^ of the room\'s git history; a consumer is one fresh commit'],
+      ["test('CH-4 IS A LABEL, NOT A FILTER: a carrier OUTSIDE the reachable set is still red', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('a file that becomes instruction-reachable and is not frozen is RED, not silently absorbed', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('a frozen file the walk no longer reaches is RED — a removed pointer is a real change', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test('the shipped cant-lose census is COMPLETE — every occurrence in every carrier is accounted', ", 'the carrier-drift registry ships SEEDED empty by ruling'],
+      ["test(\"THE MAP'S ENUMERATION WAS THE CH-4 SUBSET: registering only those five leaves the rest unaccounted\", ", 'reads the registry at 325fb03^ of the room\'s git history; a consumer is one fresh commit']],
+    /* D454 part 1 (pane B, found by the parity run): janitor and scratch are product and their tests ship, but these four cases run or read
+     * gen-consumer.js, which never ships (EXCLUDE). Declared per case; every other case in both files stays live in the consumer. */
+    'consonance/tools/janitor.test.js': [["test('the prefixes are read from this repository\\'s own source: mkdtemp literals and the Rust format! heads', ", 'one of the prefixes it reads is gen-consumer.js\'s, and the generator does not ship']],
+    'consonance/tools/scratch.test.js': [
+      ["test('gen-consumer: a REFUSED real run (output already holds a history) leaves no staging folder', ", 'runs gen-consumer.js, which does not ship'],
+      ["test('gen-consumer --keep-staging keeps the folder on a refusal, and says where', ", 'runs gen-consumer.js, which does not ship'],
+      ["test('gen-consumer build(): a THROW after staging was made removes the staging folder', ", 'requires gen-consumer.js, which does not ship']],
+  },
+  rust: {
+    'consonance/src-tauri/src/main.rs': [
+      ['the_index_window_is_a_prefix_so_its_date_range_is_not_a_lie', 'the shelf is built from the room record'],
+      ['the_index_window_is_newest_first_by_date_not_by_path', 'the shelf is built from the room record'],
+      ['the_librarian_intake_names_its_own_map_by_path', 'reads the librarian map file of this room'],
+      ['the_shelf_excludes_bulk_run_artifacts_and_says_so', 'needs the run artifacts of this room'],
+      ['the_shelf_windows_the_librarians_own_notes', 'needs dated librarian notes of this room'],
+      ['the_split_between_carried_and_indexed_is_always_reported', 'needs the journal of this room'],
+      ['the_window_never_drops_map_or_journal_which_are_out_of_scope', 'needs the map entries of this room'],
+      ['undated_all_caps_names_at_the_top_of_loop_are_protected_by_rule_not_by_list', 'needs loop/PROTOCOL.md of this room'],
+      ['undated_loop_entries_are_spent_last_and_never_outrank_a_dated_one', 'needs dated and undated loop files of this room'],
+      ['the_map_walk_reaches_the_repo_maps_when_no_data_dir_map_exists', 'asserts the committed seat maps of this room'],
+      ['the_unattended_exit_waiter_never_publishes', 'greps dev/stick-waiter.js, the two-machine stick layer, which does not ship'],
+    ],
+    'consonance/src-tauri/tests/arch_test.rs': [
+      ['the_master_keeps_one_pointer_line_and_the_dated_tail_lives_in_the_journal_index', 'needs journal/POINTERS.md of this room'],
+    ],
+  },
+};
+/** Apply the declarations for one output file. Returns { body, n, missing: [anchor...] }. */
+function declareWorkshop(body, rel) {
+  let n = 0; const missing = [];
+  if (WORKSHOP.js[rel]) {
+    const nodeTest = /require\(['"]node:test['"]\)/.test(body);
+    for (const [call, why, label] of WORKSHOP.js[rel]) {
+      if (body.split(call).length - 1 !== 1) { missing.push(call); continue; }
+      const open = call.indexOf('('), fn = call.slice(0, open), rest = call.slice(open + 1);
+      const rep = nodeTest && fn === 'test'
+        ? call + '{ skip: ' + JSON.stringify(WS(why, label)) + ' }, '
+        : '((name) => console.log(\'  skip \' + name + ' + JSON.stringify(' — ' + WS(why, label)) + '))(' + rest;
+      body = body.replace(call, () => rep); n++;
+    }
+  }
+  if (WORKSHOP.rust[rel]) {
+    for (const [name, why] of WORKSHOP.rust[rel]) {
+      const re = new RegExp('^([ \\t]*)fn ' + name + '\\(\\)', 'gm');
+      const hits = body.match(re) || [];
+      if (hits.length !== 1) { missing.push('fn ' + name + '()'); continue; }
+      body = body.replace(re, (m, ind) => ind + '#[ignore = "' + WS(why) + '"]\n' + m); n++;
+    }
+  }
+  return { body, n, missing };
+}
 
 /* Named exclusions -- files that MATCH a manifest rule but must not ship, each with its reason.
  * Kept as data rather than as a filter buried in code, so the list is readable and arguable. */
@@ -421,6 +622,8 @@ const MANIFEST = [
  * The declaration is checked in both directions (see build()): an undeclared dead entry refuses,
  * and so does a declared entry that has become reachable. Without that, a dead exclusion reads as
  * coverage -- the same shape as the demachine() pattern that could not match, found the same day. */
+const RUN2_EXCLUDED = 're-scores the run2 battery; requires exo_memory/loop/run2/rig/*, which is the room\'s record (A, D273 lap 2)';
+const JEV_EXCLUDED = "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship";
 const EXCLUDE = {
   /* ARMED 2026-09-04 (D009 P3). The `UNREACHABLE:` prefix is DROPPED here, and that is the whole
    * point of the entry rather than a bookkeeping tidy-up.
@@ -516,6 +719,12 @@ const EXCLUDE = {
     'RETIRED VOCABULARY — retired 2026-07-12, re-retired 2026-08-17. Cut from memory/ at 03:13 while cards/ went on shipping it; this is the carrier, and cutting the copy without the carrier is the failure the room already measured at five weeks',
   'exo_memory/memory/claim-your-continuity.md':
     'DUPLICATE — cards/ is the master (keeper, 03:56). And DIVERGENT rather than merely duplicated: 2,068 B here against 5,125 in cards/, two different documents under one name. The master ships; the two are reconciled by an APPEND to cards/ in the private tree, not by this line choosing a winner',
+  'exo_memory/memory/split-the-work-with-the-panes.md':
+    'STATE of one pair: the keeper\'s correction to one seat, written as this seat\'s own memory ("he has corrected this at least three times"). A new user\'s memory starts blank (D273 lap 4, the cold read C3)',
+  'exo_memory/memory/frozen-is-not-dead.md':
+    'the keeper\'s own insight (2026-07-25) written as this seat\'s memory. A new user\'s memory starts blank (D273 lap 4, the cold read C3); the insight stays in the keeper\'s record',
+  'exo_memory/cards/dont-offer-rest-assume-momentum.md':
+    'one person\'s temperament as a rule about the reader ("He calls rest when he needs it"); its general form, cards/never-pathologize-the-user.md, ships (D273 lap 4, the cold read C4)',
   'exo_memory/memory/verify-before-claiming.md':
     'DUPLICATE — cards/ is the master. Also divergent (2,207 here, 2,145 in cards/); same append, same reason as above',
   'exo_memory/memory/engagement-honesty-over-performance.md':
@@ -543,6 +752,85 @@ const EXCLUDE = {
    * sanitising a trace INSIDE a shipped card (interior-at-the-seam), never about which files ship. */
   'exo_memory/memory/signal-and-606-night.md':
     'STATE by the keeper\'s own rule — a build log of one night on one project, carrying the old machine\'s paths. UNNAMED in the 03:13 cut; classified here rather than shipped by default, and flagged for overturning',
+  /* ============================================================ THE JEV FAMILY — D273 lap 2 (pane B, 2026-10-08)
+   * Ruling (2) of loop/plan_consumer_refresh_2026-10-08.md: "jev/ is EXCLUDED with its tests (Jev is off since D164)". jev/ itself is reached by no
+   * manifest rule; these are the tools under consonance/tools that ARE the Jev client and its tests. hooks/jev-flags.js still ships: install.ps1
+   * registers it, and withholding it would make every install report the file ABSENT FROM REPO (E owns install.ps1). */
+  /* D273 lap 5 (cold read 2, B7): the Jev hook too. E's lap 3 (c0748da9) stopped install.ps1 registering and copying it, so nothing runs it. */
+  'consonance/hooks/jev-flags.js': JEV_EXCLUDED,
+  'consonance/hooks/jev-flags.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-ask.js': JEV_EXCLUDED,
+  'consonance/tools/jev-ask.mutants.js': JEV_EXCLUDED,
+  'consonance/tools/jev-ask.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-judge.js': JEV_EXCLUDED,
+  'consonance/tools/jev-judge.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-module.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-room.js': JEV_EXCLUDED,
+  'consonance/tools/jev-room.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow-runner.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow-runner.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow.mutants.js': JEV_EXCLUDED,
+  'consonance/tools/jev-shadow.test.js': JEV_EXCLUDED,
+  'consonance/tools/jev-variants.js': JEV_EXCLUDED,
+  'consonance/tools/jev-variants.test.js': JEV_EXCLUDED,
+  /* D273 lap 2, A's workshop ruling (rows 6 and 7): the tool AND its test, because the tool itself requires the run2 rig at load and crashes for a
+   * stranger too (contamination.js:42-43); nothing shipped references either. */
+  'consonance/tools/contamination.js': RUN2_EXCLUDED,
+  'consonance/tools/contamination.test.js': RUN2_EXCLUDED,
+  'consonance/tools/tj1-k-render.js': RUN2_EXCLUDED,
+  'consonance/tools/tj1-k-render.test.js': RUN2_EXCLUDED,
+  /* D273 lap 3, C's three rows (handback/p-consumer-fork-C_2026-10-08.md, "Owed to B"), with C's reasons: consumer-relabel.js is a dev-side generator
+   * module, as gen-consumer.js is (its rule reaches the output through FORK_HOOK.apply); in a generated tree its test's anchors are already relabelled
+   * away and the wiring test cannot find the generator. */
+  'consonance/tools/consumer-relabel.js':
+    'the keeper split and the fork note are a property of the generator, as gen-consumer.js is; the consumer receives their output, not the rule',
+  'consonance/tools/consumer-relabel.test.js':
+    'tests the rule against the dev briefs, which a consumer tree only has already relabelled',
+  'consonance/tools/consumer-fork-wiring.test.js':
+    'generates a tree with gen-consumer.js, which does not ship',
+  /* D273 (C's identity-diff, "Owed to B"): the same reason as consumer-relabel. */
+  'consonance/tools/identity-diff.js':
+    'replays gen-consumer.js against the dev tree to compare the shipped wake files with their sources; neither the generator nor the dev tree ships',
+  'consonance/tools/identity-diff.test.js':
+    'tests identity-diff, which needs gen-consumer.js and the dev tree, neither of which ships',
+  /* D454 part 1 (pane B): the system files added since v0.1.1 (caa62c1a) that are WORKSHOP, each needing this room's record or this machine. The
+   * product files added beside them ship; the classification of all 33 is handback/p-d454-gen-B_2026-10-24.md §3. */
+  'consonance/tools/d423-letters-swap.js':
+    'a one-time correction of this machine\'s letters.json at the keeper\'s seat swap (D423); a fresh install never has the mislabelled letters',
+  'consonance/tools/d423-letters-swap.test.js':
+    'tests the one-time letters correction, which does not ship',
+  'consonance/tools/mistake-bench.js':
+    'the replay bench loads the 27 census units from this record\'s hand-back evidence (digest-pinned), which does not exist for anyone else',
+  'consonance/tools/mistake-bench.test.js':
+    'tests the replay bench, which needs this record\'s census and does not ship',
+  'consonance/tools/mistake-bench-toolstub.js':
+    'the replay bench\'s stub MCP server; it serves only mistake-bench.js, which does not ship',
+  'consonance/tools/claim-replay.js':
+    'the claim-check replay harness freezes its census group from this record\'s hand-back evidence (E\'s classification.json); the gate it measured, hooks/claim-check.js, ships',
+  'consonance/tools/claim-replay.test.js':
+    'tests the replay harness, which needs this record\'s census and does not ship',
+  'consonance/tools/claim-check-adapter.js':
+    'the adapter between the replay harness and the claim check; it serves only claim-replay.js, which does not ship',
+  'consonance/tools/claim-check-adapter.test.js':
+    'tests the replay adapter, which does not ship',
+  'consonance/tools/shelf-reach-score.js':
+    'scores this room\'s shelf-budget experiment against a registration in exo_memory/loop/ and the librarian\'s own transcripts, which do not ship',
+  'consonance/tools/shelf-reach-score.test.js':
+    'tests the shelf-budget scorer, which does not ship',
+  'consonance/tools/worktree-sweep.js':
+    'the one-time sweep of this machine\'s 2026-10-13 worktree backlog at the keeper\'s yes (D319); the standing rule is janitor.js class (e), which ships',
+  'consonance/tools/worktree-sweep.test.js':
+    'tests the one-time sweep, which does not ship',
+  /* D454 (the librarian's routing of C's part 2): the product laps stay out of the consumer, and these are research for the track builder. */
+  'exo_memory/research/t180_be_like_water_2026-09-28.md':
+    'research for the track builder, a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'exo_memory/research/t180_math_tools_2026-09-28.md':
+    'research for the track builder, a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'exo_memory/research/t180_track_mathematics_2026-09-28.md':
+    'research for the track builder, a product of the first keeper\'s, not for the room; the product laps stay out of the consumer',
+  'consonance/tools/janitor-task.ps1':
+    'UNREACHABLE: no rule reaches .ps1 under tools/, and it stays out by decision: it registers an unattended daily deleter, a fresh install schedules nothing by itself (the D273 dream-installer rule), and janitor.js ships for a hand run',
 };
 
 /* ------------------------------------------------------------------ seeded files
@@ -625,6 +913,13 @@ const SEEDED = {
  * still ships, carrying the gen-brief-transformed brief instead. Source and destination are
  * different objects and this list is about SOURCES.
  */
+/* ONE FILE OUT OF A PRIVATE COLUMN (D273 lap 6, cold read 3's A3, pane B). loop/ stays private as a column; checkpoint.py in it is SYSTEM (the
+ * registered PreCompact hook runs it from there) and passes the scan. Named by full path, so the column check accepts exactly these files reaching a
+ * STAYS_PRIVATE entry and still refuses any other rule that does. */
+const SHIPS_FROM_PRIVATE = {
+  'exo_memory/loop/checkpoint.py': 'dev/shell/hooks/precompact.js runs <repo>/exo_memory/loop/checkpoint.py, and install.ps1 registers that hook',
+  'exo_memory/loop/claimrec/units.js': 'consonance/hooks/claim-check.js loads <repo>/exo_memory/loop/claimrec/units.js (D454); without it the gate refuses nothing',
+};
 const STAYS_PRIVATE = {
   'ASK.md': 'its own header: the questions the automations put to the keeper — one person\'s inbox',
   'BOOT.md': 'THE MASTER, which fails this scan and would OUTRANK the sanitised brief via pick_default_room. The PATH ships; this FILE does not. See the manifest entry that puts the transformed brief there',
@@ -660,7 +955,7 @@ const STAYS_PRIVATE = {
   'provenance_corrections.jsonl': 'a SECOND RECORD ABOUT THIS REPO\'S OWN HISTORY — rows that correct the seat a commit body names, each one verified against a blob frozen at a sha in THIS tree. It withholds for two independent reasons. It names this room\'s seats (chair, librarian) beside the commits they landed, which is this committee\'s internal attribution and no part of the method. And it is INERT ELSEWHERE BY CONSTRUCTION: a consumer\'s history contains none of those shas, so essay-provenance would refuse every row as NO-SUCH-COMMIT — shipping it would ship four claims nobody can check and nobody needs. The MECHANISM ships with the tool; this room\'s corrections do not',
   'handback': 'per-packet working papers of this committee',
   'librarian': 'per-seat, per-machine, by its own README',
-  'loop': 'this record\'s registrations and rulings',
+  'loop': 'this record\'s registrations and rulings (one named file ships: SHIPS_FROM_PRIVATE above)',
   'map': 'per-seat, per-machine, by its own README',
   'third_place': 'already gitignored',
   'muscle_map.md': 'this collaboration\'s catalogue of its own catches',
@@ -742,7 +1037,7 @@ function renderCutoff(sha, commitIso, dirty) {
       '> tree unless it is run with `--allow-dirty`, and that flag is what put this block here.',
     ]
     : [
-      'Generated from the private record at commit `' + sha + '`, dated ' + commitIso + '.',
+      'Generated from the keeper\'s public record at commit `' + sha + '` (github.com/solariz3d/lighthouse), dated ' + commitIso + '.',
     ];
   return ['# CUTOFF', ''].concat(head, [
     '',
@@ -754,8 +1049,8 @@ function renderCutoff(sha, commitIso, dirty) {
     '',
     'This file is written by the generator on every run, never by hand, and its whole body is a pure',
     'function of the commit named above -- so a hand-edit is detectable by re-rendering it from that',
-    'commit and comparing byte for byte. The tree this was generated from holds the command that',
-    'does it.',
+    'commit and comparing byte for byte. The command that does it is `consonance/tools/gen-consumer.js`',
+    'in the public source repository (github.com/solariz3d/lighthouse); this copy does not carry it.',
     '',
   ]).join('\n');
 }
@@ -784,6 +1079,15 @@ function renderCutoff(sha, commitIso, dirty) {
  * the obvious encoding is the one that breaks the contract. A separate `PROVENANCE:` line is
  * tolerated by the checker, is louder than a suffix, and leaves the CLEAN render byte-identical to
  * E's copy, which is what `gen-consumer.test.js`'s drift guard compares. */
+/* D273 lap 4 (the cold read's A15): the gate drives gen-consumer.js, which this tree does not carry, so the line says where it runs. */
+const GATE_LINE = 'GATE: in the source repository this tree was generated from: node consonance/tools/gen-consumer.build.test.js --gate'
+  + ' (this tree does not carry the generator it drives)\n';
+/* D273 lap 5 (A2): the measured state a reader can check, when it is given; kept identical to the build test's renderer (the drift guard renders both). */
+const MEASURED_LINES = (o) => (o.parity ? 'PARITY: (P, M, B) = (' + o.parity.P + ', ' + o.parity.M + ', ' + o.parity.B + ')\n' : '')
+  + (o.rustBreaks != null ? 'RUST: ' + o.rustBreaks + ' parity break(s)\n' : '')
+  + (o.identity ? 'IDENTITY-DIFF: ' + o.identity + '\n' : '')
+  + (o.coldRead ? 'COLD READ: ' + o.coldRead + '\n' : '')
+  + (o.parity || o.rustBreaks != null || o.identity || o.coldRead ? '\n' : '');
 function renderStatusDoc(o) {
   const prov = o.dirty
     ? 'PROVENANCE: UNEARNED — generated from a working tree with ' + o.changes + ' uncommitted\n'
@@ -793,14 +1097,15 @@ function renderStatusDoc(o) {
     + (members.length ? members.map((m) => '- ' + m).join('\n') : '(none)') + '\n';
   if (!o.measured) {
     return '# CONSUMER-STATUS\n\nSTATE: UNMEASURED\nGENERATED-FROM: ' + o.sha + '\n'
-      + 'GATE: node consonance/tools/gen-consumer.build.test.js --gate\n' + prov + '\n'
+      + GATE_LINE + prov + '\n'
       + 'This tree was generated but never gated. Nothing here has been run, so nothing here is\n'
-      + 'known to work. Run the GATE line above to replace this file with a measured one.\n';
+      + 'known to work. The gate above, run in the source repository, replaces this file with a measured one.\n';
   }
   return '# CONSUMER-STATUS\n\nSTATE: MEASURED\nGENERATED-FROM: ' + o.sha + '\n'
-    + 'GATE: node consonance/tools/gen-consumer.build.test.js --gate\n'
+    + GATE_LINE
     + 'MEASURED-AT: ' + o.at + '\n' + prov + '\n'
-    + 'This repository is generated from a private working tree and IS INCOMPLETE ON PURPOSE.\n'
+    + MEASURED_LINES(o)
+    + 'This repository is generated from the keeper\'s public working tree and IS INCOMPLETE ON PURPOSE.\n'
     + 'Everything below fails in THIS tree and is named so you can see what you have got, rather\n'
     + 'than discovering it one file at a time.\n\n'
     + sec('JS tests that fail in this tree', o.js || [])
@@ -842,20 +1147,101 @@ function commitIdentity() {
 }
 
 /** path -> body. Built per run, because two of the three need the commit. */
-function generatedFiles(id) {
-  return {
+/* D273 lap 5 (cold read 2, A2): CONSUMER-STATUS.md said "UNMEASURED … nothing here is known to work" and named a gate the consumer cannot run, so
+ * it now ships ONLY with a measurement of this very commit: { sha, at, parity: { P, M, B }, rust, identity, coldRead } (gen-consumer.js --measured
+ * <file.json>, or opts.measured). build() refuses a measurement of another commit. With none, the file is not written. */
+/* THE CONSUMER'S OWN .gitattributes (D273 lap 7, pane B, the chair's add). The published consumer c298a5b shipped none, and its first commit ran
+ * under a global core.autocrlf=true, which took the raw .bin screen captures for text and stripped their CRs (composer_empty: 1,280 B -> 1,252);
+ * any stranger with autocrlf=true breaks the composer/ready Rust tests the same way on checkout. This is lighthouse's eol pin, binary list and two
+ * screen rules, with the WHY cut to what a stranger needs; lighthouse's merge=union section (our two machines' shared notes) is left out. */
+const CONSUMER_GITATTRIBUTES = [
+  '# Line endings, pinned, so the bytes on disk do not depend on your git settings.',
+  '#',
+  '# Without this, core.autocrlf=true (a common Windows default) converts text files on checkout and can strip the',
+  '# carriage returns out of raw terminal captures on commit. Every tool here (node, PowerShell, Rust, Python) reads LF.',
+  '',
+  '* text=auto eol=lf',
+  '',
+  '# Binary: never line-ending-converted, never diffed as text. Listed, not left to git\'s guess.',
+  '*.png binary',
+  '*.bmp binary',
+  '*.ico binary',
+  '*.exe binary',
+  '*.dll binary',
+  '*.pdf binary',
+  '*.zip binary',
+  '*.woff binary',
+  '*.woff2 binary',
+  '*.ttf binary',
+  '',
+  '# Raw terminal captures (the composer/ready test fixtures). They contain no NUL byte, so git\'s heuristic calls',
+  '# them text and would strip their CRs; the tests compare them byte for byte. Two rules, because the next capture',
+  '# format must not depend on its extension.',
+  '*.bin binary',
+  'consonance/src-tauri/fixtures/screens/** binary',
+  '',
+].join('\n');
+
+/* THE CONSUMER'S OWN .gitignore (D454, pane B, from E's §7). The consumer shipped none, so after the README's own `cargo tauri build` a stranger's
+ * `git status` listed consonance/src-tauri/target/ (several GB) and consonance/src-tauri/gen/ untracked. These are lighthouse's consonance/.gitignore
+ * build rules, written from the repository root. Nothing shipped may match a rule here: the fresh commit runs `git add -A`, which would drop a
+ * matching file without a word (gen-consumer.test.js checks every staged path with `git check-ignore`). */
+const CONSUMER_GITIGNORE = [
+  '# What a build and a run leave in this tree, kept out of git.',
+  '',
+  '# `cargo tauri build` and `cargo test` (several GB) and the generated Tauri schemas',
+  'consonance/src-tauri/target/',
+  'consonance/src-tauri/gen/',
+  '',
+].join('\n');
+
+function generatedFiles(id, measured) {
+  const out = {
     'exo_memory/CUTOFF.md': renderCutoff(id.sha, id.at, id.dirty),
     'exo_memory/journal/README.md': JOURNAL_SEED,
-    'CONSUMER-STATUS.md': renderStatusDoc({ measured: false, sha: id.sha, dirty: id.dirty, changes: id.changes }),
+    '.gitattributes': CONSUMER_GITATTRIBUTES,
+    '.gitignore': CONSUMER_GITIGNORE,
   };
+  if (measured) out['CONSUMER-STATUS.md'] = renderStatusDoc({ measured: true, sha: id.sha, at: measured.at, dirty: id.dirty, changes: id.changes,
+    js: measured.js || [], rust: measured.rustList || [], parity: measured.parity, rustBreaks: measured.rust, identity: measured.identity, coldRead: measured.coldRead });
+  return out;
 }
 
 /* ------------------------------------------------------------------ leak classes
  *
  * These run over the OUTPUT. Anything that survives here stops the build.
  */
+/* THE OS USER, but not a "\n" escape followed by a TOML/INI key "name =" (D273 lap 3, pane B). /\bnname\b/ read '[package]\nname = "x"' as the
+ * user name ("\n" + "name"), so gen-consumer.build.test.js's control crate became '\other = "x"' in the consumer and cargo refused it. Skipped only
+ * when BOTH a backslash precedes it and "=" follows it: a real path written with single backslashes in prose (C:\Users\nname\...) is still taken
+ * and still scanned. One regex for the scan and the three rewrites, so they cannot disagree. */
+/* THE PUBLIC REPOSITORY URLS, AND THE CONSUMER'S OWN NAMES (D273 lap 4, the cold read's A1/A2, pane B).
+ * ROOT CAUSE of A1 (E's front-door hand-back): the handle rule rewrote the handle INSIDE github.com/solariz3d/<repo> URLs, giving
+ * "github.com/the keeper/lighthouse", a link and a git clone with a space in them. A public repository URL is a reference, not a leak: HANDLE_RE,
+ * used by the scan and both identity rewrites, skips the handle exactly where it sits in "github.com/solariz3d/<repo>", so
+ * github.com/solariz3d/lighthouse (where the evidence GATES.md cites lives) and github.com/solariz3d/consonance survive intact; every other use
+ * of the handle is still taken and still scanned. REGISTERED: it is this constant, exported, so identity-diff's replay of deidentify() counts it.
+ * consumerNames() then makes the README's OWN clone instructions the consumer's (A2): `git clone …/solariz3d/lighthouse.git` becomes
+ * `…/solariz3d/consonance.git` and `cd lighthouse/consonance` becomes `cd consonance/consonance` (the clone folder, then the app's folder).
+ * And the app id: tauri.conf's "com.solariz3d.consonance" was already "com.consonance.app" (destructure), but stick-waiter.js's single-quoted
+ * copy became 'com.the keeper.consonance'; every spelling now becomes com.consonance.app, so the notices register the id the bundle carries. */
+/* D454 1C.1 (P's cold read, pane B): the BARE owner/repo form of the project's own repositories is a reference too. BUILDING.md:392's
+ * `solariz3d/consonance` shipped as `the keeper/consonance`, a name nobody can clone. So the handle is kept where it is followed by
+ * /consonance or /lighthouse as a whole name (with or without github.com/ before it); after github.com/ it is kept before any repo name, as
+ * before; everywhere else (the person, the profile URL github.com/solariz3d, any other repo) it is taken and scanned exactly as it was. */
+const HANDLE_RE = /(?<!github\.com\/)solariz3d(?!\/(?:consonance|lighthouse)(?![A-Za-z0-9_-]))|(?<=github\.com\/)solariz3d(?!\/[A-Za-z0-9_.-])/gi;
+function consumerNames(body) {
+  let n = 0;
+  const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
+  rep(/\bgit clone https:\/\/github\.com\/solariz3d\/lighthouse\.git\b/g, 'git clone https://github.com/solariz3d/consonance.git');
+  rep(/\bcd lighthouse\/consonance\b/g, 'cd consonance/consonance');
+  rep(/\bcom\.solariz3d\.consonance\b/g, 'com.consonance.app');
+  return { body, n };
+}
+
+const NNAME_RE = /(?<!\\)\bnname\b|\bnname\b(?!\s*=)/g;
 const LEAKS = [
-  { cls: 'IDENTITY', pat: /solariz3d/gi, why: 'the keeper\'s public handle' },
+  { cls: 'IDENTITY', pat: HANDLE_RE, why: 'the keeper\'s public handle (the consumer repo, solariz3d/consonance, is its own name)' },
   { cls: 'IDENTITY', pat: /trynabemlgzn/gi, why: 'the keeper\'s email' },
   { cls: 'IDENTITY', pat: /zackn/gi, why: 'this machine\'s OS user name' },
   /* THE KEEPER'S GIVEN NAME, ADDED 2026-09-06 (L037 P2). Every IDENTITY pattern above this line is
@@ -882,7 +1268,7 @@ const LEAKS = [
    * sentence and every path shape around it stay. The one fixture site is a detector's corpus line
    * whose assertion keys on 'Get some sleep', not on the name; checked before adding the rule. */
   { cls: 'IDENTITY', pat: /\bzach\b/gi, why: 'the keeper\'s given name -- prose, so no handle or path pattern reaches it' },
-  { cls: 'IDENTITY', pat: /\bnname\b/g, why: 'the desktop machine\'s OS user name' },
+  { cls: 'IDENTITY', pat: NNAME_RE, why: 'the desktop machine\'s OS user name' },
   { cls: 'RECORD', pat: /\bChrysos\b/g, why: "a name from this record; to a stranger it reads as the product's name" },
   /* The keeper's coordinates and city. 2026-08-22 measured this class at 16 files and found 5
    * real after false positives -- the survey matched audio fixture frequencies. Anchored on the
@@ -1002,6 +1388,8 @@ const ALLOW = {
   'consonance/tools/corrections-gate.js': ['RECORD'],
   'consonance/tools/tell-index.js': ['RECORD'],
   'consonance/tools/residue.js': ['RECORD'],
+  // D273 lap 6 (pane B): checkpoint.py reads muscle_map.md by name when it exists (the CODE_KEPT line), as residue.js and corrections-gate.js do
+  'exo_memory/loop/checkpoint.py': ['RECORD'],
 };
 
 /* Lines that are allowed to contain what looks like a leak, because they are deliberate
@@ -1014,9 +1402,76 @@ const SYNTHETIC = [/C:[\\/]{1,4}notes/i, /C:[\\/]{1,4}x[\\/]/i, /Users[\\/]{1,4}
 /** Rewrite a dangling citation so the PROSE survives and the dead pointer does not.
  *  `exo_memory/journal/2026-08-17.md:1209` -> `the record, 2026-08-17`
  *  The comment explaining why code is the way it is is worth keeping; the path is not. */
+/* PUBLIC LINKS (D273 lap 5, cold read 2's A3 and A7, pane B). The keeper ruled the source repository PUBLIC (2026-10-08), so a citation of a record
+ * file or a commit the consumer does not carry can point THERE instead of becoming a placeholder: a markdown link into exo_memory/(loop|map|handback|
+ * librarian|memory)/, a backticked commit sha, a backticked excluded memory/ entry, and the two dev/ targets the cold read named. ONLY what is on the
+ * public main (git cat-file against origin/main in this repository; nothing else counts), and ONLY in prose (.md): a backtick inserted into code
+ * could end a template literal. Anything not public is left to dedangle() as before. A link whose text is the path itself gets the file name as its
+ * text, so dedangle's path rules do not rewrite the text of a working link. */
+const PUBLIC_REPO = 'https://github.com/solariz3d/lighthouse';
+const PUBLIC_DEV = ['dev/PLAN.md'];   // D273 lap 5b: dev/dream/ ships now (the librarian's ruling), so it is a local target, not a public link
+const publicCache = new Map();
+function onPublic(spec) {
+  if (publicCache.has(spec)) return publicCache.get(spec);
+  let t = null;
+  try { t = require('child_process').execFileSync('git', ['-C', REPO, 'cat-file', '-t', spec], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch (_) { t = null; }
+  publicCache.set(spec, t); return t;
+}
+const commitCache = new Map();   // one git call per distinct sha, per process: a whole generation cites hundreds of them
+const publicCommit = (sha) => {
+  if (commitCache.has(sha)) return commitCache.get(sha);
+  let ok = false;
+  try { if (onPublic(sha) === 'commit') { require('child_process').execFileSync('git', ['-C', REPO, 'merge-base', '--is-ancestor', sha, 'origin/main'], { stdio: 'ignore' }); ok = true; } } catch (_) { ok = false; }
+  commitCache.set(sha, ok); return ok;
+};
+function publicLinks(body) {
+  let n = 0;
+  body = body.replace(/\[([^\]\n]+)\]\((?:\.\.\/)*(?:exo_memory\/)?(loop|map|handback|librarian|memory)\/([A-Za-z0-9_.-]+\.md)(?::[\d-]+)?\)/g, (m, text, dir, file) => {
+    const rel = 'exo_memory/' + dir + '/' + file;
+    if (dir === 'memory' && file === 'MEMORY.md') return m;
+    if (onPublic('origin/main:' + rel) !== 'blob') return m;
+    n++;
+    const isPath = /^`?(?:\.\.\/)*(?:exo_memory\/)?(?:loop|map|handback|librarian|memory)\/[A-Za-z0-9_.-]+\.md(?::[\d-]+)?`?$/.test(text.trim());
+    return '[' + (isPath ? '`' + file + '`' : text) + '](' + PUBLIC_REPO + '/blob/main/' + rel + ')';
+  });
+  body = body.replace(/(^|[^\[\w])`([0-9a-f]{7,12})`(?!\])/g, (m, pre, sha) => {
+    if (!publicCommit(sha)) return m;
+    n++; return pre + '[`' + sha + '`](' + PUBLIC_REPO + '/commit/' + sha + ')';
+  });
+  body = body.replace(/(^|[^\[\w])`((?:exo_memory\/)?memory\/(?!MEMORY\.md)[A-Za-z0-9_.-]+\.md)`/g, (m, pre, p) => {
+    const rel = p.startsWith('exo_memory/') ? p : 'exo_memory/' + p;
+    if (!EXCLUDE[rel] || onPublic('origin/main:' + rel) !== 'blob') return m;
+    n++; return pre + '[`' + p + '`](' + PUBLIC_REPO + '/blob/main/' + rel + ')';
+  });
+  for (const p of PUBLIC_DEV) {
+    const dir = p.endsWith('/'), spec = 'origin/main:' + p.replace(/\/$/, '');
+    body = body.replace(new RegExp('(^|[^\\[\\w])`' + p.replace(/[.\/]/g, '\\$&') + '`', 'g'), (m, pre) => {
+      if (onPublic(spec) !== (dir ? 'tree' : 'blob')) return m;
+      n++; return pre + '[`' + p + '`](' + PUBLIC_REPO + (dir ? '/tree/main/' : '/blob/main/') + p.replace(/\/$/, '') + ')';
+    });
+  }
+  return { body, n };
+}
+
 function dedangle(body) {
   let n = 0;
   const bump = () => { n++; };
+  /* D273 lap 5 (cold read 2): C4's two keeper-record files ship in inheritance/ now, so a reference to their old place is re-pointed; and a Third
+   * Place entry (never in this tree, and never linked) becomes prose (A7). */
+  body = body.replace(/(?:exo_memory\/)?record\/((?:retired_seats_|third_place_prehistory_)[A-Za-z0-9_.-]*\.md)/g, (m, f) => { bump(); return 'exo_memory/inheritance/' + f; });
+  body = body.replace(/`?(?:exo_memory\/)?third_place\/[A-Za-z0-9_.-]+\.md(?::[\d-]+)?`?/g, () => { bump(); return 'a Third Place entry in the keeper\'s record'; });
+  /* D273 lap 2 (pane B, 2026-10-08): a markdown LINK whose target is a record path that never ships becomes its text followed by the prose, so the
+   * output never links to a sentence. Without this pass the rules below rewrote only the TARGET, leaving [text](a registration in this line of record):
+   * the root README carried 13 of them, found by arch_test::every_relative_link_in_the_docs_exists_in_a_fresh_clone. */
+  const LINKED = { loop: 'a registration', map: 'a map entry', handback: 'a hand-back', librarian: 'a librarian entry' };
+  body = body.replace(/\[([^\]\n]+)\]\((?:\.\.\/)*(?:exo_memory\/)?(loop|map|handback|librarian)\/[A-Za-z0-9_.-]+\.md(?::[\d-]+)?\)/g,
+    (m, text, dir) => {
+      bump();
+      // D273 lap 4 (the cold read's A4): when the link TEXT is the record path itself, the text would be rewritten too, and the README read
+      // "a registration in this line of record (a registration in this line of record)" 13 times. The prose stands alone then.
+      if (/^`?(?:\.\.\/)*(?:exo_memory\/)?(?:loop|map|handback|librarian)\/[A-Za-z0-9_.-]+\.md(?::[\d-]+)?`?$/.test(text.trim())) return LINKED[dir] + ' in this line of record';
+      return text + ' (' + LINKED[dir] + ' in this line of record)';
+    });
   let out = body
     /* RE-POINT, NOT PROSE -- 2026-09-06 (L038). Both of these used to rewrite a dated journal
      * citation into the words `the record, <date>`, which was correct while the journals stayed
@@ -1120,7 +1575,7 @@ function depath(rel) {
     .replace(/solariz3d/gi, 'the-keeper')
     .replace(/trynabemlgzn/gi, 'the-keeper')
     .replace(/\bzackn\b/gi, 'user')
-    .replace(/\bnname\b/g, 'other');
+    .replace(NNAME_RE, 'other');
 }
 
 /** The other half of `depath()`: a REFERENCE to a renamed file, inside a shipped document.
@@ -1166,13 +1621,14 @@ function deidentify(body) {
    * dot-extension, and no path separator is in that class, so `C:\Users\zackn\x.md` cannot match
    * and still reaches the `%USERPROFILE%` rules below intact. */
   { const r = repath(body); body = r.body; n += r.n; }
-  rep(/solariz3d/gi, 'the keeper');
+  { const cn = consumerNames(body); body = cn.body; n += cn.n; }   // D273 lap 4: the consumer's own repo URL, folder and app id first
+  rep(HANDLE_RE, 'the keeper');
   rep(/trynabemlgzn@gmail\.com/gi, 'the keeper');
   rep(/C:\\{1,4}Users\\{1,4}zackn/gi, '%USERPROFILE%');
   rep(/C:\/Users\/zackn/gi, '%USERPROFILE%');
   rep(/\bzackn\b/gi, 'user');
   rep(/\bzach\b/gi, 'the keeper');
-  rep(/\bnname\b/g, 'other');
+  rep(NNAME_RE, 'other');
   rep(/C:\\{1,4}Consonance\\{1,4}lighthouse/gi, '%CONSONANCE_HOME%');
   rep(/C:\/Consonance\/lighthouse/gi, '%CONSONANCE_HOME%');
   return { body, n };
@@ -1310,6 +1766,7 @@ function isFixture(rel) {
  * those breaks its assertion, which is the 2026-08-23 damage returning by a different door. */
 function fixtureKind(rel) {
   if (/\.test\.js$/.test(rel) || /(^|\/)tests?\//.test(rel)) return 'whole';
+  if (/(^|\/)fixtures\/screens\//.test(rel)) return 'whole';   // D273 lap 2 (A): a captured screen is assertion data end to end
   if (/\.rs$/.test(rel)) return 'rust';
   return null;
 }
@@ -1320,12 +1777,13 @@ function deidentifyTokens(body) {
   let n = 0;
   const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
   { const r = repath(body); body = r.body; n += r.n; }   // filenames first — see deidentify()
-  rep(/solariz3d/gi, 'the keeper');
+  { const cn = consumerNames(body); body = cn.body; n += cn.n; }   // D273 lap 4: the consumer's own repo URL, folder and app id first
+  rep(HANDLE_RE, 'the keeper');
   rep(/trynabemlgzn@gmail\.com/gi, 'the keeper');
   rep(/\bzackn\b/gi, 'user');
   /* nname is the desktop machine's OS user and appears in 9 shipped files as a foreign-path
    * fixture. Same treatment: the token goes, the path shape stays. */
-  rep(/\bnname\b/g, 'other');
+  rep(NNAME_RE, 'other');
   rep(/\bzach\b/gi, 'the keeper');
   return { body, n };
 }
@@ -1340,7 +1798,10 @@ function decoordinate(body) {
   rep(/-104\.6189/g, '-65.4321');
   rep(/104\.6189/g, '65.4321');
   rep(/Regina,\s*Saskatchewan/g, 'Example City');
-  rep(/America\/Regina/g, 'America/New_York');
+  /* D273 lap 3 (pane B): a zone that keeps the CLOCK. America/Regina is UTC-6 with no daylight time all year, and so is America/Costa_Rica; it was
+   * America/New_York (UTC-5, with daylight time), which silently changed what time-keyed fixtures assert: usage.test.js ("UTC-6, no daylight time,
+   * so every boundary below is exact") and third-place-gate.test.js (the pulse's "11:00 AM") were red only in the consumer. The location still goes. */
+  rep(/America\/Regina/g, 'America/Costa_Rica');
   /* THE HOSTNAME, SUBSTITUTED RATHER THAN EXEMPTED, and placed in this function because it is the
    * one transform that runs on prose AND fixtures both. A hostname is a VALUE, like a latitude:
    * swapping a value for a value changes nothing structural, and the fixture that needs it parses
@@ -1385,6 +1846,7 @@ function transform(body, kind) {
     const d = demachine(c.body);
     return { body: d.body, dangling: 0, identity: b.n + c.n, machine: d.n, fixture: true };
   }
+  if (kind === 'prose') { const pl = publicLinks(body); body = pl.body; }   // D273 lap 5: A3/A7, before dedangle
   const a = dedangle(body);
   const b = deidentify(a.body);
   const c = demachine(b.body);
@@ -1413,6 +1875,121 @@ function transform(body, kind) {
 const SEED_ANCHOR = 'right now the record is nearly empty — that is not a deficit, it is a beginning.';
 const SEED_SENTENCE = ' Your journal is empty; the keeper\'s is in `exo_memory/inheritance/`, kept under that name '
   + 'because it is someone else\'s nights and not your memory.';
+
+/* CODE_KEPT (D273 lap 3, A): a code line whose token IS the code, which dedangle() rewrote as if it were prose. consonance/tools/corrections-gate.js:51 is
+ * `const GUARDED = [/muscle_map\.md$/i];`; the bare-token rule turned it into `/this line of record\.md$/i`, a regex that matches nothing, and the gate
+ * guarded nothing (3 of its 6 self-built-repo rows red in the consumer, green once the line is restored). ANCHORED, like reseed(): the rewritten line must be
+ * found exactly once or the build says so. */
+const CODE_KEPT = {
+  'consonance/tools/corrections-gate.js': {
+    from: 'const GUARDED = [/this line of record\\.md$/i];',
+    to: 'const GUARDED = [/muscle_map\\.md$/i];',
+  },
+  // D273 lap 6 (pane B): checkpoint.py reads muscle_map.md if it exists (a fresh room has none, so that section is skipped); dedangle turned the path
+  // into a sentence. Its one message line under that branch (:482) is prose inside an f-string, printed only when the file exists, and is left as rewritten.
+  'exo_memory/loop/checkpoint.py': {
+    from: '    mp = REPO / "exo_memory" / "a master in this line of record"',
+    to: '    mp = REPO / "exo_memory" / "muscle_map.md"',
+  },
+};
+/* NOT IN THIS COPY (D273 lap 4, the cold read's A14, pane B): docs that name a tool EXCLUDE withholds say so where they name it, so a stranger is
+ * not sent looking for it. catch-ledger.js scores the original room's own catches and stays in the source repository. ANCHORED: each anchor must
+ * be found exactly once in the transformed file, or the build says so (anchorDrift). */
+const NOT_SHIPPED_NOTE = ' (in the original room\'s repository; this copy does not carry it)';
+const NOT_SHIPPED = {
+  'consonance/tools/README.md': ['`catch-ledger.js` is the room\'s only computation of it.', '**`catch-ledger.js` is the room\'s only maturity computation now.**'],
+  // exo_memory/TRAINING.md was here and came out: it is WAKE material, and identity-diff counted the note as UNREGISTERED (no registered step makes
+  // it). Its catch-ledger lines are for C's relabel table (consumer-relabel.js), the registered way wake text changes.
+};
+function noteNotShipped(body, rel) {
+  const anchors = NOT_SHIPPED[rel]; if (!anchors) return { body, n: 0, missing: [] };
+  const missing = []; let n = 0;
+  for (const a of anchors) {
+    if (body.split(a).length - 1 !== 1) { missing.push(a); continue; }
+    body = body.replace(a, () => a.replace(/(`catch-ledger\.js`(\*\*)?)/, '$1' + NOT_SHIPPED_NOTE)); n++;
+  }
+  return { body, n, missing };
+}
+
+/* D273 lap 7 (the release build found a gap): an image the bundler embeds is scanned before it ships, the way the screens are. */
+const scanImage = (buf, rel) => scan(buf.toString('latin1'), rel);
+
+/* WHAT tauri.conf.json MAKES THE BUNDLER RESOLVE (D273 lap 7, pane B). The published consumer compiled and then failed `cargo tauri build` at the
+ * NSIS step: installer/header.bmp was referenced and never shipped, and no check here bundles. So the generated config is READ, not listed:
+ * build.frontendDist; bundle.resources (array entries, or an object's KEYS, which are sources; its values are destinations inside the bundle);
+ * bundle.icon; and ANY other string under bundle that looks like a path (a slash, or a file extension), so a field nobody listed yet (an nsis
+ * license, a template, a sidecar) cannot slip past. Paths resolve from consonance/src-tauri/; a glob's last segment must match at least one file. */
+const TAURI_DIR = 'consonance/src-tauri';
+const PATHISH = /[\/\\]|\.(ico|icns|bmp|png|jpe?g|svg|gif|rtf|txt|md|json|html?|js|css|nsh|nsi|wxs|xml|pem|cer|exe|dll|ttf|otf|woff2?)$/i;
+function tauriRefs(conf) {
+  const out = [], isUrl = (s) => /^[a-z][a-z0-9+.-]*:\/\//i.test(s);
+  const fd = conf && conf.build && conf.build.frontendDist;
+  if (typeof fd === 'string' && !isUrl(fd)) out.push({ field: 'build.frontendDist', path: fd });
+  const b = (conf && conf.bundle) || {};
+  if (Array.isArray(b.resources)) b.resources.forEach((p, i) => typeof p === 'string' && out.push({ field: 'bundle.resources[' + i + ']', path: p }));
+  else if (b.resources && typeof b.resources === 'object') for (const k of Object.keys(b.resources)) out.push({ field: 'bundle.resources', path: k });
+  const walk = (v, at) => {
+    if (typeof v === 'string') { if (PATHISH.test(v) && !isUrl(v)) out.push({ field: at, path: v }); return; }
+    if (Array.isArray(v)) { v.forEach((x, i) => walk(x, at + '[' + i + ']')); return; }
+    if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) if (!(at === 'bundle' && k === 'resources')) walk(x, at + '.' + k);
+  };
+  walk(b, 'bundle');
+  return out;
+}
+function tauriMissing(root) {
+  const confPath = path.join(root, TAURI_DIR, 'tauri.conf.json');
+  if (!fs.existsSync(confPath)) return [{ field: 'tauri.conf.json', path: TAURI_DIR + '/tauri.conf.json' }];
+  const base = path.join(root, TAURI_DIR), missing = [];
+  for (const ref of tauriRefs(JSON.parse(fs.readFileSync(confPath, 'utf8')))) {
+    const abs = path.resolve(base, ref.path);
+    if (/[*?]/.test(path.basename(abs))) {
+      const re = new RegExp('^' + path.basename(abs).replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.') + '$');
+      let hit = false; try { hit = fs.readdirSync(path.dirname(abs)).some((n) => re.test(n)); } catch (_) { hit = false; }
+      if (!hit) missing.push(ref);
+    } else if (!fs.existsSync(abs)) missing.push(ref);
+  }
+  return missing;
+}
+
+/* LEGAL TEXTS, VERBATIM (D273 lap 6, the keeper's MIT choice, via the librarian). A licence must ship exactly as written: the handle rewrite
+ * (deidentify) would turn its copyright line into "Copyright (c) 2026 the keeper", which names no legal person. So a file here is copied byte for
+ * byte, and the scan still runs over every line EXCEPT the one registered holder line, which must appear exactly once (else anchorDrift). Any other
+ * identity, path or record hit in it is a leak as anywhere else: the exemption is one line, not a file. */
+const LEGAL_VERBATIM = {
+  LICENSE: { line: 'Copyright (c) 2026 solariz3d', why: 'the MIT copyright holder; the keeper chose the licence and the name it carries' },
+};
+function scanLegal(body, rel, from = rel) {
+  const reg = LEGAL_VERBATIM[from]; if (!reg) return { leaks: scan(body, rel), missing: false };
+  const lines = body.split('\n'), hits = lines.filter((l) => l.replace(/\r$/, '') === reg.line).length;
+  const rest = lines.map((l) => (l.replace(/\r$/, '') === reg.line ? '' : l)).join('\n');   // same line numbers for every other hit
+  return { leaks: scan(rest, rel), missing: hits !== 1 };
+}
+
+/* NAMED PUBLIC LINKS (D273 lap 6, cold read 3's A5, pane B): a doc that names a source-repository file by its BARE name (`PROGRESS.md` beside
+ * consonance/AUTONOMY.md) is out of publicLinks()'s reach, which matches whole paths. Per file, by exact token and expected count: each backticked
+ * mention becomes a link to the file on the public main. ANCHORED: a count that differs, or a target not on origin/main, is anchorDrift, never silent. */
+const PUBLIC_NAMED = {
+  'consonance/AUTONOMY.md': [['PROGRESS.md', 'consonance/PROGRESS.md', 2], ['RECONCEPTION.md', 'consonance/RECONCEPTION.md', 1]],
+  'dev/SPINE.md': [['WELFARE.md', 'WELFARE.md', 1]],
+};
+function linkNamed(body, rel) {
+  const list = PUBLIC_NAMED[rel]; if (!list) return { body, n: 0, missing: [] };
+  const missing = []; let n = 0;
+  for (const [tok, target, count] of list) {
+    const re = new RegExp('(^|[^\\[\\w])`' + tok.replace(/[.]/g, '\\.') + '`', 'g');
+    const found = (body.match(re) || []).length;
+    if (found !== count || onPublic('origin/main:' + target) !== 'blob') { missing.push(tok + ' (expected ' + count + ', found ' + found + ', target ' + target + ')'); continue; }
+    body = body.replace(re, (m, pre) => pre + '[`' + tok + '`](' + PUBLIC_REPO + '/blob/main/' + target + ')'); n += found;
+  }
+  return { body, n, missing };
+}
+
+function keepCode(body, rel) {
+  const k = CODE_KEPT[rel];
+  if (!k) return { body, n: 0, missing: false };
+  if (body.split(k.from).length - 1 !== 1) return { body, n: 0, missing: true };
+  return { body: body.replace(k.from, () => k.to), n: 1, missing: false };
+}
 
 function reseed(body, rel) {
   if (!/(^|\/)SEED\.md$/.test(rel)) return { body, n: 0, missing: false };
@@ -1697,7 +2274,27 @@ function scan(body, rel) {
     if (m) found.push({ cls, why: why + ' — IN THE DESTINATION PATH, not in the file', rel,
       line: 0, text: rel, n: m.length });
   }
+
+  /* PRIVATE (D454, pane B; the librarian's routing of C's part 2): the private project's name and the given name. The pattern is read from
+   * PRIV_PATTERN, outside this public file, the way pushscan.js reads it, so this file never holds the names it guards. No fixture, ALLOW or
+   * SYNTHETIC exemption. A hit NEVER carries the matched text: the report is read and pasted, and the line itself is what must not travel. */
+  const priv = privPattern();
+  if (priv) {
+    const why = 'names what PRIV_PATTERN guards (the private project or the given name)';
+    for (let i = 0; i < lines.length; i++) {
+      if (priv.test(lines[i])) found.push({ cls: 'PRIVATE', why, rel, line: i + 1, text: '(withheld: the line names what PRIV_PATTERN guards)', n: 1 });
+    }
+    if (priv.test(rel)) found.push({ cls: 'PRIVATE', why: why + ' — IN THE DESTINATION PATH, not in the file', rel: '(withheld)', line: 0, text: '(withheld)', n: 1 });
+  }
   return found;
+}
+
+/** The PRIVATE class's pattern, from PRIV_PATTERN (case-insensitive), or null when unset. An invalid pattern throws: a guard that cannot be read
+ *  must not read as a guard that found nothing. */
+function privPattern() {
+  const v = process.env.PRIV_PATTERN;
+  if (v == null || v === '') return null;
+  return new RegExp(v, 'i');
 }
 
 /* ------------------------------------------------------------------ collection */
@@ -1751,12 +2348,23 @@ function collect() {
 
 /* ------------------------------------------------------------------ build */
 
+/* D287 part 1: the staging folder is removed when build() THROWS. It used to be left in %TEMP% on any throw (and, from the CLI, on every
+ * run: 3,837 trees, ~21 GB, since 09-03). The report still carries `staging` for callers that read it; the CLI removes it (below). */
 function build(outDir, opts) {
+  let made = null;
+  try { return buildStaged(outDir, opts, (d) => { made = d; return d; }); }
+  catch (e) { if (made) { try { scratch.rm(made); } catch (_) { /* the janitor takes what is left */ } } throw e; }
+}
+
+function buildStaged(outDir, opts, track) {
   const files = collect();
   const id = commitIdentity();
-  const gen = generatedFiles(id);
-  const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
-  const report = { staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
+  if (opts.measured && opts.measured.sha !== id.sha) {
+    return { refused: 'the measured state is of commit ' + opts.measured.sha + ', not of the commit this generation is from, ' + id.sha + '; measure this commit, then generate', staging: null, commit: id };
+  }
+  const gen = generatedFiles(id, opts.measured || null);
+  const staging = track(scratch.mkdtemp('gen-consumer-'));
+  const report = { exact: [], bytesDrift: [], forked: 0, git: null, screens: 0, declared: { js: 0, rust: 0 }, declareDrift: [], staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], generated: [], genDrift: [], unresolved: [], unclassified: [], anchorDrift: [], reseeded: 0, reindexed: 0, dewikied: 0, columns: null, commit: id, staging };
 
   /* THE EXCLUDE LIST IS CHECKED AGAINST THE MANIFEST, IN BOTH DIRECTIONS. An exclusion no rule can
    * reach withholds nothing while reading as though it does; a `UNREACHABLE:` declaration that has
@@ -1799,17 +2407,20 @@ function build(outDir, opts) {
     }
   }
 
+  /* D273 lap 2: a WORKSHOP declaration for a file no manifest rule ships (or one EXCLUDE withholds) protects nothing, so it is drift. */
+  {
+    const shipped = new Set(files.filter((x) => !EXCLUDE[x.from]).map((x) => x.to));
+    for (const rel of [...Object.keys(WORKSHOP.js), ...Object.keys(WORKSHOP.rust)]) {
+      if (!shipped.has(rel)) report.declareDrift.push({ rel, why: 'a WORKSHOP-BOUND declaration names a file that does not ship, so it declares nothing' });
+    }
+  }
+
   /* What `memory/` actually ships, by BASENAME, because that is how its index links. Computed from
    * the same two structures the loop below obeys, so the index and the tree cannot disagree. */
-  const shippedMemory = new Set(files
-    .filter((f) => f.to.startsWith('exo_memory/memory/') && !EXCLUDE[f.from])
-    .map((f) => f.to.slice('exo_memory/memory/'.length)));
-
   /* Card NAMES (no extension), across both directories the deck cross-references — `cards/` and
-   * `memory/` link into each other, so a set built from one of them alone would drop live links. */
-  const shippedCards = new Set(files
-    .filter((f) => /^exo_memory\/(cards|memory)\/.+\.md$/.test(f.to) && !EXCLUDE[f.from])
-    .map((f) => path.basename(f.to, '.md')));
+   * `memory/` link into each other, so a set built from one of them alone would drop live links.
+   * D273: computed by shippedSets(), exported, so identity-diff reads the same sets instead of copying the expressions. */
+  const { shippedMemory, shippedCards } = shippedSets(files);
   /* On the report so it can be asserted DIRECTLY. Narrowing this set to cards/ alone is an
    * EQUIVALENT mutant on today's data — no shipped card currently links to a memory-only card, so
    * the output is byte-identical either way and no output-level test can tell them apart. The set
@@ -1828,7 +2439,44 @@ function build(outDir, opts) {
       const destB = path.join(staging, f.to);
       fs.mkdirSync(path.dirname(destB), { recursive: true });
       fs.copyFileSync(src, destB);
-      report.staged++;
+      report.staged++; report.exact.push(f.to);
+      continue;
+    }
+
+    /* D273 lap 6 (the keeper chose MIT): a LEGAL text ships VERBATIM, no transform (the handle rewrite would make the copyright "the keeper"),
+     * and is SCANNED like everything else except its one registered holder line (LEGAL_VERBATIM), which must be found exactly once. */
+    if (LEGAL_VERBATIM[f.from]) {
+      if (!fs.existsSync(src)) { report.missing.push(f.from); continue; }
+      const buf = fs.readFileSync(src), destL = path.join(staging, f.to);
+      fs.mkdirSync(path.dirname(destL), { recursive: true });
+      fs.writeFileSync(destL, buf);
+      report.staged++; report.exact.push(f.to);
+      const lg = scanLegal(buf.toString('utf8'), f.to, f.from);
+      if (lg.missing) report.anchorDrift.push({ rel: f.to, why: 'the registered LEGAL_VERBATIM holder line was not found exactly once: ' + LEGAL_VERBATIM[f.from].line });
+      report.leaks.push(...lg.leaks);
+      continue;
+    }
+
+    /* D273 lap 7: an IMAGE is copied byte for byte like a binary, but SCANNED (latin1, as the screens are); a hit refuses, nothing is scrubbed. */
+    if (f.kind === 'image') {
+      if (!fs.existsSync(src)) { report.missing.push(f.from); continue; }
+      const buf = fs.readFileSync(src), destI = path.join(staging, f.to);
+      fs.mkdirSync(path.dirname(destI), { recursive: true });
+      fs.writeFileSync(destI, buf);
+      report.staged++; report.exact.push(f.to);
+      report.leaks.push(...scanImage(buf, f.to));
+      continue;
+    }
+
+    /* D273 lap 2 (A): a captured screen, scrubbed same-length and SCANNED, never copied blind like a binary. */
+    if (f.kind === 'screen') {
+      if (!fs.existsSync(src)) { report.missing.push(f.from); continue; }
+      const sc = descreen(fs.readFileSync(src));
+      const destS = path.join(staging, f.to);
+      fs.mkdirSync(path.dirname(destS), { recursive: true });
+      fs.writeFileSync(destS, sc.buf);
+      report.staged++; report.exact.push(f.to); report.screens++; report.identity += sc.n;
+      report.leaks.push(...scan(sc.buf.toString('latin1'), f.to));
       continue;
     }
 
@@ -1858,6 +2506,13 @@ function build(outDir, opts) {
     { const rs = reseed(t.body, f.to);
       if (rs.missing) report.anchorDrift.push({ rel: f.to, why: 'SEED.md no longer contains the sentence this generator anchors its one added sentence to. The transform did not fire, and a transform that quietly does nothing is the inert guard this file has found twice. Re-anchor it or drop it — do not leave it unable to fire.' });
       t.body = rs.body; report.reseeded += rs.n; }
+    { const dw = declareWorkshop(t.body, f.to); t.body = dw.body;
+      for (const a of dw.missing) report.declareDrift.push({ rel: f.to, why: 'a WORKSHOP-BOUND declaration found its anchor ' + (dw.body.split(a).length - 1) + ' times, not once: ' + a });
+      if (WORKSHOP.js[f.to]) report.declared.js += dw.n; else if (WORKSHOP.rust[f.to]) report.declared.rust += dw.n; }
+    { const ns = noteNotShipped(t.body, f.to); for (const a of ns.missing) report.anchorDrift.push({ rel: f.to, why: 'a NOT_SHIPPED anchor was not found exactly once: ' + a }); t.body = ns.body; }
+    { const ln = linkNamed(t.body, f.to); for (const a of ln.missing) report.anchorDrift.push({ rel: f.to, why: 'a PUBLIC_NAMED link did not match: ' + a }); t.body = ln.body; }
+    { const kc = keepCode(t.body, f.to); if (kc.missing) report.anchorDrift.push({ rel: f.to, why: 'a CODE_KEPT line was not found exactly once' }); t.body = kc.body; }
+    if (FORK_HOOK.apply) { const fk = FORK_HOOK.apply(t.body, f.to, kind) || {}; if (typeof fk.body !== 'string') throw new Error('FORK_HOOK.apply returned no body for ' + f.to); t.body = fk.body; report.forked += fk.n || 0; }
     if (t.fixture) report.fixtures++;
     report.dangling += t.dangling;
     report.identity += t.identity;
@@ -1867,6 +2522,7 @@ function build(outDir, opts) {
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.writeFileSync(dest, t.body);
     report.staged++;
+    if (/(^|\/)fixtures\//.test(f.to)) report.exact.push(f.to);   // D273 lap 7: a fixture is compared byte for byte after the commit
 
     /* Scanning the OUTPUT is the whole point: a rule that failed to fire is invisible from the
      * input side, and the input is what a person reasons about when they write the rule. */
@@ -1975,7 +2631,7 @@ function build(outDir, opts) {
     const reached = new Set();
     for (const f of files) {
       const m = /^exo_memory\/([^/]+)/.exec(f.from);
-      if (m) reached.add(m[1]);
+      if (m && !SHIPS_FROM_PRIVATE[f.from]) reached.add(m[1]);   // a named file out of a private column does not reclassify the column
     }
     for (const t of tops) {
       const isReached = reached.has(t);
@@ -2070,6 +2726,10 @@ function build(outDir, opts) {
       + 'CUTOFF.md and CONSUMER-STATUS.md.';
     return report;
   }
+  if (report.declareDrift.length) {
+    report.refused = report.declareDrift.length + ' WORKSHOP-BOUND declaration(s) did not match exactly once';
+    return report;
+  }
   if (report.anchorDrift.length) {
     report.refused = report.anchorDrift.length + ' anchored transform(s) could not find their anchor';
     return report;
@@ -2090,7 +2750,28 @@ function build(outDir, opts) {
     report.refused = report.leaks.length + ' leak(s) survived the transformations';
     return report;
   }
+  /* D273 lap 7: what the bundler will resolve, read from the GENERATED tauri.conf.json, must exist in the generated tree (cargo test never bundles). */
+  report.tauriMissing = tauriMissing(staging);
+  if (report.tauriMissing.length) {
+    report.refused = 'tauri.conf.json references ' + report.tauriMissing.length + ' path(s) the generated tree does not have: '
+      + report.tauriMissing.map((m) => m.field + ' ' + m.path).join(', ') + ' (`cargo tauri build` would fail)';
+    return report;
+  }
+  /* D454 PRIVATE: a run that requires the guard (the command line always does) refuses without it, and neither reports a dry tree as clean nor
+   * writes one. Twice, so that the history refusal below keeps its place for a real run into a used directory. */
+  const PRIV_UNSET = 'PRIV_PATTERN is unset, so the PRIVATE class (the private project\'s name and the given name) cannot be scanned; set it the way '
+    + 'pushscan.js reads it, outside this public repository, then generate';
+  if (opts.dry && opts.requirePriv && !privPattern()) { report.refused = PRIV_UNSET; return report; }
   if (opts.dry) { report.wrote = null; return report; }
+
+  /* D273 lap 2 (pane B, 2026-10-08): THE OUTPUT IS A FRESH-HISTORY GIT REPOSITORY (the plan's ruling; journal/2026-09-03.md §2: fresh history, no history
+   * surgery). A directory that already holds a history is REFUSED before anything is written: committing a new generation on top of an old one is a
+   * history, and fresh means fresh. `noGit` writes the tree alone (a scratch look). */
+  if (!opts.noGit && fs.existsSync(path.join(outDir, '.git'))) {
+    report.refused = outDir + ' already holds a git history; the output is a FRESH-history repository, so generate into an empty directory';
+    return report;
+  }
+  if (opts.requirePriv && !privPattern()) { report.refused = PRIV_UNSET; return report; }
 
   /* Atomic-ish: the destination is only touched once staging is clean. */
   fs.mkdirSync(outDir, { recursive: true });
@@ -2103,7 +2784,57 @@ function build(outDir, opts) {
   };
   copyTree(staging, outDir);
   report.wrote = outDir;
+  if (!opts.noGit) {
+    report.git = commitFresh(outDir, report.commit);
+    /* D273 lap 7: what was COMMITTED must be what was written, for every byte-exact file (binary, screen, image, legal, and anything under a fixtures/
+     * folder). A converted blob reads clean in `git status`, which compares normalised bytes; only cat-file sees it. The tree is already written, so
+     * the refusal says so: do not push it. */
+    report.bytesDrift = verifyCommitted(outDir, report.exact);
+    if (report.bytesDrift.length)
+      report.refused = report.bytesDrift.length + ' byte-exact file(s) differ between the working tree and the committed HEAD ('
+        + report.bytesDrift.map((m) => m.rel + ' ' + m.disk + ' B -> ' + m.blob + ' B').join(', ') + '); the repository at ' + outDir + ' is WRONG: do not push it';
+  }
   return report;
+}
+
+/** D273 lap 7: each rel's blob at HEAD against its bytes on disk. Returns [{ rel, disk, blob }] for every one that differs (blob -1 = not committed). */
+function verifyCommitted(dir, rels) {
+  const { execFileSync } = require('child_process'), out = [];
+  for (const rel of rels || []) {
+    const disk = fs.readFileSync(path.join(dir, rel));
+    let blob = null;
+    try { blob = execFileSync('git', ['-C', dir, 'cat-file', 'blob', 'HEAD:' + rel], { maxBuffer: 1 << 28, stdio: ['ignore', 'pipe', 'ignore'] }); } catch (_) { blob = null; }
+    if (!blob || !blob.equals(disk)) out.push({ rel, disk: disk.length, blob: blob ? blob.length : -1 });
+  }
+  return out;
+}
+
+/* One commit, a neutral author (never a person's name or address: the history is what gets pushed), dated to the source commit so two generations
+ * of one commit are the same commit. NO REMOTE, and remote.pushDefault = no_push, so a bare `git push` goes nowhere until someone adds a remote on
+ * purpose (the plan: any consumer checkout's push stays no_push). */
+/* THE TWO SHIPPED SETS, from collect()'s files and EXCLUDE (D273: exported for identity-diff, C's item 3, so its replay reads these instead of a copy).
+ * shippedMemory: what memory/ ships, by BASENAME, because that is how its index links. shippedCards: card NAMES across cards/ and memory/. */
+function shippedSets(files) {
+  const shippedMemory = new Set(files
+    .filter((f) => f.to.startsWith('exo_memory/memory/') && !EXCLUDE[f.from])
+    .map((f) => f.to.slice('exo_memory/memory/'.length)));
+  const shippedCards = new Set(files
+    .filter((f) => /^exo_memory\/(cards|memory)\/.+\.md$/.test(f.to) && !EXCLUDE[f.from])
+    .map((f) => path.basename(f.to, '.md')));
+  return { shippedMemory, shippedCards };
+}
+
+function commitFresh(dir, commit) {
+  const { execFileSync } = require('child_process');
+  // D273 lap 7: core.autocrlf OFF for every call, per command and never global; the published c298a5b was committed under a global autocrlf=true
+  const g = (args, env) => execFileSync('git', ['-c', 'core.autocrlf=false', ...args], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ...env } }).trim();
+  const who = { GIT_AUTHOR_NAME: 'consonance-generator', GIT_AUTHOR_EMAIL: 'generator@consonance.invalid', GIT_COMMITTER_NAME: 'consonance-generator', GIT_COMMITTER_EMAIL: 'generator@consonance.invalid' };
+  const when = commit && commit.at ? { GIT_AUTHOR_DATE: commit.at, GIT_COMMITTER_DATE: commit.at } : {};
+  g(['init', '-q', '-b', 'main']);
+  g(['config', 'remote.pushDefault', 'no_push']);
+  g(['add', '-A']);
+  g(['commit', '-q', '-m', 'Consonance' + (commit && commit.sha ? ' (generated from ' + commit.sha.slice(0, 12) + ')' : '')], { ...who, ...when });
+  return { sha: g(['rev-parse', 'HEAD']), files: g(['ls-files']).split(/\r?\n/).filter(Boolean).length };
 }
 
 /** `--verify-cutoff <consumer-checkout>` — C's §5 check (b), the strong half.
@@ -2175,7 +2906,13 @@ function main() {
     process.exit(2);
   }
 
-  const r = build(outDir || '', { dry, allowDirty });
+  const measuredFile = arg('--measured');
+  let measured = null;
+  if (measuredFile) { try { measured = JSON.parse(fs.readFileSync(measuredFile, 'utf8')); } catch (e) { console.error('gen-consumer: --measured ' + measuredFile + ': ' + e.message); process.exit(2); } }
+  const r = build(outDir || '', { dry, allowDirty, measured, requirePriv: true });   // D454: a run from the command line always requires the PRIVATE guard
+  /* D287 part 1: the staging tree is a scratch copy, removed as soon as the build is done (it is also removed at process exit). --keep-staging keeps it. */
+  const keepStaging = argv.includes('--keep-staging');
+  if (r.staging) { if (keepStaging) scratch.keep(r.staging); else scratch.rm(r.staging); }
 
   if (json) { console.log(JSON.stringify(r, null, 2)); process.exit(r.refused ? 1 : 0); }
 
@@ -2290,8 +3027,8 @@ function main() {
   }
   if (r.refused) {
     console.log('  REFUSED: ' + r.refused);
-    console.log('  Nothing was written to the destination. Staging kept for inspection:');
-    console.log('    ' + r.staging);
+    console.log('  Nothing was written to the destination. ' + (keepStaging ? 'Staging kept for inspection (--keep-staging):' : 'Staging removed; --keep-staging keeps it.'));
+    if (keepStaging) console.log('    ' + r.staging);
     console.log('');
     process.exit(1);
   }
@@ -2310,4 +3047,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };
+module.exports = { verifyCommitted, CONSUMER_GITATTRIBUTES, tauriRefs, tauriMissing, scanImage, LEGAL_VERBATIM, scanLegal, SHIPS_FROM_PRIVATE, HANDLE_RE, FORK_HOOK, commitFresh, shippedSets, descreen, SCREEN_SCRUB, WORKSHOP, declareWorkshop, fixtureKind, MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, STAYS_PRIVATE, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, depath, repath, desync, reseed, reindex, dewiki, SEED_ANCHOR, SEED_SENTENCE, JOURNAL_SEED, renderCutoff, verifyCutoff, renderStatusDoc, generatedFiles, commitIdentity, build };

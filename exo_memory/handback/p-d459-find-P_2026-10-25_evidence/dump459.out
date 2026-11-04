@@ -1,0 +1,40 @@
+distinct keys [33m30[39m batches [33m5750[39m
+1ROAD_p1_body_0          n [33m500[39m seam [33mfalse[39m rows/batch 2
+1ROAD_seam_p1_body       n [33m1[39m seam [33mtrue[39m rows/batch -1
+1ROAD_p2_body_0          n [33m50[39m seam [33mfalse[39m rows/batch 2
+1ROAD_seam_p2_body       n [33m1[39m seam [33mtrue[39m rows/batch -1
+1ROAD_p3_body_0          n [33m100[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p4_body_0          n [33m500[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p5_body_0          n [33m500[39m seam [33mfalse[39m rows/batch 2
+1ROAD_seam_p5_body       n [33m1[39m seam [33mtrue[39m rows/batch -1
+1ROAD_p6_body_0          n [33m50[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p7_body_0          n [33m50[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p8_body_0          n [33m50[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p9_body_0          n [33m25[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p10_body_0         n [33m25[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p11_body_0         n [33m25[39m seam [33mfalse[39m rows/batch 2
+1ROAD_seam_p11_body      n [33m1[39m seam [33mtrue[39m rows/batch -1
+1ROAD_p12_body_0         n [33m50[39m seam [33mfalse[39m rows/batch 2
+1ROAD_seam_p12_body      n [33m1[39m seam [33mtrue[39m rows/batch -1
+1ROAD_p13_body_0         n [33m25[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p14_body_0         n [33m50[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p15_body_0         n [33m25[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p16_body_0         n [33m300[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p17_body_0         n [33m50[39m seam [33mfalse[39m rows/batch 2
+1ROAD_seam_p17_body      n [33m1[39m seam [33mtrue[39m rows/batch -1
+1ROAD_p18_body_0         n [33m1000[39m seam [33mfalse[39m rows/batch 2
+1ROAD_seam_p18_body      n [33m1[39m seam [33mtrue[39m rows/batch -1
+1ROAD_p19_body_0         n [33m1000[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p20_body_0         n [33m75[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p21_body_0         n [33m460[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p22_body_0         n [33m373[39m seam [33mfalse[39m rows/batch 2
+1ROAD_p23_body_0         n [33m460[39m seam [33mfalse[39m rows/batch 2
+p19 batches [33m1000[39m
+1ROAD_p19_body_0 seam [33mfalse[39m K [33m57[39m rowS [8748,8750] rows in positions [33m2[39m model[12..14] -404.0,-45.1,275.0
+1ROAD_p19_body_0 seam [33mfalse[39m K [33m57[39m rowS [8748,8750] rows in positions [33m2[39m model[12..14] -406.0,-45.4,275.0
+1ROAD_p19_body_0 seam [33mfalse[39m K [33m57[39m rowS [8748,8750] rows in positions [33m2[39m model[12..14] -408.0,-45.7,275.0
+1ROAD_p19_body_0 seam [33mfalse[39m K [33m57[39m rowS [8748,8750] rows in positions [33m2[39m model[12..14] -849.3,-236.6,572.4
+1ROAD_p19_body_0 seam [33mfalse[39m K [33m57[39m rowS [8748,8750] rows in positions [33m2[39m model[12..14] -849.3,-237.2,574.3
+1ROAD_p19_body_0 seam [33mfalse[39m K [33m57[39m rowS [8748,8750] rows in positions [33m2[39m model[12..14] -849.3,-237.8,576.2
+ERR TypeError: Cannot read properties of undefined (reading 'rowS')
+    at C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d459\dump459.js:15:272

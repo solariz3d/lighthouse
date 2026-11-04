@@ -1,0 +1,24 @@
+lockrun: holding the lock at 2026-10-27T14:34:03.760Z; starting D495 timing session theme-mutation P5
+TAP version 13
+# Subtest: control: the unmutated copy passes sky-crisp.test.js (D410, D416)
+ok 1 - control: the unmutated copy passes sky-crisp.test.js (D410, D416)
+  ---
+  duration_ms: 27176.8093
+  type: 'test'
+  ...
+# Subtest: mutation P5 an aurora star is a cell-sized gaussian again: applied, and caught by "row 1 (aurora)…"
+ok 2 - mutation P5 an aurora star is a cell-sized gaussian again: applied, and caught by "row 1 (aurora)…"
+  ---
+  duration_ms: 23691.5732
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 50924.5133
+lockrun: done at 2026-10-27T14:34:54.724Z, exit 0

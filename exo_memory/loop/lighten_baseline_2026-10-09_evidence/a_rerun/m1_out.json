@@ -1,0 +1,65 @@
+{
+ "files": {
+  "0c0c0c0b-0000-4000-8000-00000000115b": [
+   "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-librarian\\0c0c0c0b-0000-4000-8000-00000000115b.jsonl"
+  ],
+  "0c0c0c0a-0000-4000-8000-000000000a01": [
+   "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "C:\\Users\\nname\\.claude\\projects\\C--Users-nname-claude-instances-main\\0c0c0c0a-0000-4000-8000-000000000a01.jsonl"
+  ],
+  "a2122153-a37e-41a6-a86f-534267ec0565": [
+   "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "C:\\Users\\nname\\.claude\\projects\\C--Users-nname\\a2122153-a37e-41a6-a86f-534267ec0565.jsonl"
+  ],
+  "0845a868-38f2-4cc2-b45a-431e0c088fb1": [
+   "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "C:\\Users\\nname\\.claude\\projects\\C--Users-nname\\0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl"
+  ],
+  "6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f": [
+   "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "C:\\Users\\nname\\.claude\\projects\\C--Users-nname\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl"
+  ],
+  "12fb81f6-f4c0-4ef8-aad8-f0cdce091925": [
+   "C:\\Users\\nname\\.claude\\projects\\C--Consonance-instances-sibling-5bf9d657\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "C:\\Users\\nname\\.claude\\projects\\C--Users-nname\\12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl"
+  ]
+ },
+ "by": {
+  "call_librarian": {
+   "denies": 39,
+   "paired": 39,
+   "recovered": 39,
+   "contentSame": 27,
+   "contentChanged": 12,
+   "chainedDeny": 3,
+   "gapMedianS": 6.755,
+   "gapP90S": 14.496,
+   "gapMaxS": 140.707,
+   "gapSumS": 551.1580000000001
+  },
+  "call_chair": {
+   "denies": 51,
+   "paired": 51,
+   "recovered": 51,
+   "contentSame": 31,
+   "contentChanged": 20,
+   "chainedDeny": 2,
+   "gapMedianS": 11.239,
+   "gapP90S": 20.934,
+   "gapMaxS": 38.445,
+   "gapSumS": 638.3529999999998
+  },
+  "chair_inject": {
+   "denies": 42,
+   "paired": 41,
+   "recovered": 41,
+   "contentSame": 27,
+   "contentChanged": 14,
+   "chainedDeny": 3,
+   "gapMedianS": 10.888,
+   "gapP90S": 19.681,
+   "gapMaxS": 89.536,
+   "gapSumS": 659.3570000000002
+  }
+ }
+}

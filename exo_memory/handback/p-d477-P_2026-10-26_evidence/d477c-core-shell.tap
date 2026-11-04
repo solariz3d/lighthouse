@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim
+ok 1 - the core loads through the WEBVIEW's loader with the node shim, builds the same track as node's, and is refused without the shim
+  ---
+  duration_ms: 44.7565
+  type: 'test'
+  ...
+# Subtest: extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly
+ok 2 - extend: a piece is added at the head, the segments are the adapter's, and undo / redo walk it back and forth exactly
+  ---
+  duration_ms: 4.5329
+  type: 'test'
+  ...
+# Subtest: the ghost of an extension is exactly what the click then builds
+ok 3 - the ghost of an extension is exactly what the click then builds
+  ---
+  duration_ms: 3.819
+  type: 'test'
+  ...
+# Subtest: extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres
+ok 4 - extendOptions: empty fields continue; turn and climb are degrees per 100 m, bank degrees, width metres
+  ---
+  duration_ms: 0.1218
+  type: 'test'
+  ...
+# Subtest: a failed extend changes nothing and says why
+ok 5 - a failed extend changes nothing and says why
+  ---
+  duration_ms: 0.7802
+  type: 'test'
+  ...
+# Subtest: the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly
+ok 6 - the rate brush: one drag is one undo step, every frame applies the WHOLE delta to the drag's base, and undo restores the track exactly
+  ---
+  duration_ms: 9.652
+  type: 'test'
+  ...
+# Subtest: the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is
+ok 7 - the local (height / sideways) brush: refused by name while E's brush is not in the build; E's hill and swerve when it is
+  ---
+  duration_ms: 2.5749
+  type: 'test'
+  ...
+# Subtest: with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode
+ok 8 - with E's brush, the rate brush goes through it: kh and kv as its rate mode, bank, width and rise as its value mode
+  ---
+  duration_ms: 1.2777
+  type: 'test'
+  ...
+# Subtest: a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown)
+ok 9 - a brush E widened says so, with the radius it really used (the chair's ruling 2: always shown)
+  ---
+  duration_ms: 1.7334
+  type: 'test'
+  ...
+# Subtest: the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default)
+ok 10 - the sharp opt-in reaches E's brush only when asked; the default is off (the chair's ruling 2: widen by default)
+  ---
+  duration_ms: 1.0682
+  type: 'test'
+  ...
+# Subtest: E's refusal (a hill with no offset channel yet) is the message, and nothing changes
+ok 11 - E's refusal (a hill with no offset channel yet) is the message, and nothing changes
+  ---
+  duration_ms: 1.1118
+  type: 'test'
+  ...
+# Subtest: close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it
+ok 12 - close: one click closes the lap; extending a closed loop is refused; the rate brush on heading refuses to open it
+  ---
+  duration_ms: 97.2147
+  type: 'test'
+  ...
+# Subtest: export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written
+ok 13 - export: an open track is refused before anything runs; a closed lap goes through the SAME exporter and its files are written
+  ---
+  duration_ms: 1017.427
+  type: 'test'
+  ...
+# Subtest: save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here
+ok 14 - save and open use their own prefix, so the piece builder's tracks are neither listed nor opened here
+  ---
+  duration_ms: 1.6252
+  type: 'test'
+  ...
+# Subtest: openExample refuses files that are not a fit and a read, and changes nothing
+ok 15 - openExample refuses files that are not a fit and a read, and changes nothing
+  ---
+  duration_ms: 0.6172
+  type: 'test'
+  ...
+# Subtest: the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend
+ok 16 - the track model draws the LIFTED road, re-meshes a lift-only change to exactly a full build, and keeps the lift through an extend
+  ---
+  duration_ms: 88.963
+  type: 'test'
+  ...
+# Subtest: the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5
+ok 17 - the export lifts the path before it meshes it (meta.liftPath), so an exported hill is in the kn5
+  ---
+  duration_ms: 1181.7381
+  type: 'test'
+  ...
+# Subtest: landed core: a 1 m hill brushed in the app is in the preview's path and the export's
+ok 18 - landed core: a 1 m hill brushed in the app is in the preview's path and the export's
+  ---
+  duration_ms: 114.6905
+  type: 'test'
+  ...
+# Subtest: landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed)
+ok 19 - landed core: a narrow brush that E widened says so, with the radius it used (E reports radiusUsed)
+  ---
+  duration_ms: 4.1828
+  type: 'test'
+  ...
+# Subtest: a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports
+ok 20 - a lap that starts pitched, turned and off the origin: the preview starts and ends where the adapter does, and it closes and exports
+  ---
+  duration_ms: 1326.0377
+  type: 'test'
+  ...
+# Subtest: the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track
+ok 21 - the pick: the station under a canvas point, as the renderer projects it; nothing when the point is off the track
+  ---
+  duration_ms: 2.37
+  type: 'test'
+  ...
+# Subtest: D226 export (core): an EMPTY folder made directly in content\\tracks exports to content\\tracks and is removed; a folder with anything in it is refused and kept
+ok 22 - D226 export (core): an EMPTY folder made directly in content\\tracks exports to content\\tracks and is removed; a folder with anything in it is refused and kept
+  ---
+  duration_ms: 1267.3974
+  type: 'test'
+  ...
+# Subtest: D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE
+ok 23 - D234 an OPEN loop exported into an EMPTY picked folder is refused, the message and the refusal are shown, and the folder is GONE
+  ---
+  duration_ms: 15.7222
+  type: 'test'
+  ...
+# Subtest: D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone
+ok 24 - D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone
+  ---
+  duration_ms: 432.8523
+  type: 'test'
+  ...
+# Subtest: D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written
+ok 25 - D234 a NON-EMPTY foreign folder is untouched in every case (open loop, refused grid, red): the target is refused first, nothing is removed or written
+  ---
+  duration_ms: 519.992
+  type: 'test'
+  ...
+# Subtest: D234 a successful export is unchanged: written to content\\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder
+ok 26 - D234 a successful export is unchanged: written to content\\tracks, the empty folder removed once, no refusal left; and a failed WRITE still removes the empty folder
+  ---
+  duration_ms: 2580.4143
+  type: 'test'
+  ...
+# Subtest: D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused
+ok 27 - D243a the TEST export of an OPEN lap goes through the shell and the exporter: written open as a test folder, its reds listed, the loop not refused
+  ---
+  duration_ms: 1312.6925
+  type: 'test'
+  ...
+# Subtest: D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam)
+ok 28 - D243a the TEST export of a CLOSED lap is refused by name, and nothing is written (the lap would be built open with its end wall at the seam)
+  ---
+  duration_ms: 1299.9353
+  type: 'test'
+  ...
+# Subtest: D464: Export shows its warnings in the user's words: the CSP need, and none of the builders' references
+ok 29 - D464: Export shows its warnings in the user's words: the CSP need, and none of the builders' references
+  ---
+  duration_ms: 1290.2681
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12775.4538

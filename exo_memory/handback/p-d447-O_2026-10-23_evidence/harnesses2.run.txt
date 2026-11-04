@@ -1,0 +1,2 @@
+heavy-run: waiting on 6fe15f0a pid 34884 (t180 A A D448 release-frame row 4 land416 #1, since 2026-10-23T20:06:21.753Z) and c88002b1 pid 19216 (t180 O D421 part 2 core-close-mutation.test.js core-mutation.test.js, since 2026-10-23T20:06:21.791Z) — all 2 slots are held
+{"files":["app/test/core-close-mutation.test.js","app/test/core-mutation.test.js"],"exit":0,"wall_s":404.8,"started":"2026-10-23T20:06:39.933Z"}

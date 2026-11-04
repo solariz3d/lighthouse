@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 1 - row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+  ---
+  duration_ms: 22924.5882
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 2 - row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+  ---
+  duration_ms: 2982.3946
+  type: 'test'
+  ...
+# Subtest: row 3: a closer with only gentle curves is banked by its share and no more
+ok 3 - row 3: a closer with only gentle curves is banked by its share and no more
+  ---
+  duration_ms: 3102.1558
+  type: 'test'
+  ...
+# Subtest: row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+ok 4 - row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+  ---
+  duration_ms: 475.4209
+  type: 'test'
+  ...
+# Subtest: row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+ok 5 - row 1: TEST TRACK 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+  ---
+  duration_ms: 21915.0792
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+ok 6 - row 2: TEST 10: every closer joint and the seam step no more than his own joints' 90th percentile under the outer wheels
+  ---
+  duration_ms: 2666.2741
+  type: 'test'
+  ...
+# Subtest: row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it
+ok 7 - row 3: TEST TRACK 10: the closer brings the cup home over its length, no faster than his own road changes it
+  ---
+  duration_ms: 18534.6729
+  type: 'test'
+  ...
+# Subtest: row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it
+ok 8 - row 4: TEST 10: the closer brings the cup home over its length, no faster than his own road changes it
+  ---
+  duration_ms: 2034.4191
+  type: 'test'
+  ...
+# Subtest: row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly
+ok 9 - row 5: a track built here: its closer rolls upright, steps no more than the bar at every joint and the seam, and brings the cup home slowly
+  ---
+  duration_ms: 6969.3142
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 52280.5575

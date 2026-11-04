@@ -1,0 +1,17 @@
+{
+  "tool": "t180-track-builder",
+  "module": "src/export/fromwords.js",
+  "written": "2026-10-23T01:55:19.787Z",
+  "geometry": "sha256:7a3dd2b46eb38323976b86016a981f7f670875f9c076ace3b9c5d2113178c444",
+  "files": [
+    "t180b_elysium.kn5",
+    "data/surfaces.ini",
+    "models.ini",
+    "ui/ui_track.json",
+    "ui/preview.png",
+    "ui/outline.png",
+    "map.png",
+    "data/map.ini",
+    "ai/fast_lane.ai"
+  ]
+}

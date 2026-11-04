@@ -1,0 +1,15 @@
+﻿UNMUTATED: exit 0 (GREEN)
+M1 flat read: never recurse into named dirs: exit 1 CAUGHT by rows 1,2,3
+M2 attic is not skipped by name: exit 1 CAUGHT by rows 1
+M3 propose on either condition: exit 1 CAUGHT by rows 3
+M4 review rebuilds rel as dir+name: exit 1 CAUGHT by rows 2,3
+M5 excluded prefixes are counted: exit 1 CAUGHT by rows 1
+M6 apply overwrites a name taken in attic: exit 1 CAUGHT by rows 6
+M7 apply writes no manifest: exit 1 CAUGHT by rows 6
+M8 intakeCap falls back to a made-up number: exit 1 CAUGHT by rows 4
+M9 apply deletes instead of moving: exit 1 CAUGHT by rows 6
+M10 age map is empty (git age lost): exit 1 CAUGHT by rows 2,3,7
+M11 the batched age is off by one day: exit 1 CAUGHT by rows 7
+M12 the tool excludes a prefix the shelf does not: exit 1 CAUGHT by rows 1,8
+all mutants caught
+

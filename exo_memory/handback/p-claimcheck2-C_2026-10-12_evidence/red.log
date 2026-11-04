@@ -1,0 +1,10 @@
+== C d305r red-first (first build's claim-check.js) · asked 2026-10-12T06:29:50.589Z · lock held 2026-10-12T06:29:50.626Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d305b-wt && git diff --stat -- consonance/hooks/claim-check.js; node --test --test-reporter=tap consonance/hooks/claim-check.test.js 2>&1 | grep -E '^not ok|^# (tests|pass|fail)'
+not ok 8 - revision: a bare single-digit count and a label number are not figures; zero, multi-digit counts, decimals and figures with a unit still are
+not ok 9 - revision: a seat's state is backed when the turn's prompt is that seat's own ring; another seat's ring does not back it
+not ok 10 - revision: a run state is backed by a run in the turn that names the thing; not by an unrelated call, and not with no call
+not ok 11 - revision: a state word inside a condition (if, when, once, after, until, unless) is not a state claim
+# tests 27
+# pass 23
+# fail 4
+== exit 0 · done 2026-10-12T06:29:51.119Z

@@ -1,0 +1,80 @@
+2026-10-28T00:59:29.624Z no timing session in any slot; taking the lock
+TAP version 13
+# Subtest: row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 37195.1168
+  type: 'test'
+  ...
+# p95 ms by look: {"aqua":[3.3],"skyline":[3],"glass":[3.8],"aurora":[3.4],"sigil":[2.9]}
+# Subtest: row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 37917.6135
+  type: 'test'
+  ...
+# p95 ms by look: {"aqua":[3.4],"skyline":[3.3],"glass":[3.4],"aurora":[3.3],"sigil":[3.4]}
+# Subtest: row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 14905.4532
+  type: 'test'
+  ...
+# p95 ms by length: {"1000":[3.3],"2000":[4]}
+# Subtest: row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+  ---
+  duration_ms: 11166.139
+  type: 'test'
+  ...
+# 20,000 m: p95 10 ms, 33.7 rebuilds a second
+# Subtest: row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+  ---
+  duration_ms: 7581.8469
+  type: 'test'
+  ...
+# ghost stations during the drag 97, after the release 1001
+# Subtest: row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+  ---
+  duration_ms: 7553.8787
+  type: 'test'
+  ...
+# p95 8.1 ms, 59.7 rebuilds a second
+# Subtest: row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+ok 7 - row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+  ---
+  duration_ms: 10299.9439
+  type: 'test'
+  ...
+# p95 4.4 ms (median 3.5), 64.7 work frames a second
+# Subtest: row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+not ok 8 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+  ---
+  duration_ms: 14871.0656
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o503\\app\\test\\drag-frame.test.js:192:1'
+  failureType: 'testCodeFailure'
+  error: 'aqua, a 1000 m stretch with a left edge typed on an empty track drag: p95 7.4 / 7.0 ms (median 4.5 / 4.6), over 6.9 ms, 57.0 / 59.0 work frames a second (at most 120)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    edgeRow (C:\Users\nname\Downloads\t180-wt-o503\app\test\drag-frame.test.js:180:10)
+    async TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o503\app\test\drag-frame.test.js:193:3)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# p95 7.4 / 7.0 ms (median 4.5 / 4.6), 57.0 / 59.0 work frames a second
+1..8
+# tests 8
+# suites 0
+# pass 7
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 142023.4666

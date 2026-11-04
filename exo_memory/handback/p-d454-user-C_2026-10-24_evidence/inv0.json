@@ -1,0 +1,3132 @@
+{
+ "newFiles": 33,
+ "newLines": 10192,
+ "flagged": 335,
+ "byCat": {
+  "machine-path": 166,
+  "keeper": 113,
+  "pronoun": 20,
+  "product": 61,
+  "handle": 13,
+  "machine": 13
+ },
+ "perFile": {
+  "consonance/hooks/claim-check.js": 3,
+  "consonance/hooks/claim-check.test.js": 3,
+  "consonance/hooks/gate-mode.test.js": 9,
+  "consonance/hooks/README.md": 1,
+  "consonance/hooks/release-chime.js": 7,
+  "consonance/hooks/release-chime.test.js": 22,
+  "consonance/hooks/reply-slot.test.js": 6,
+  "consonance/hooks/sources-gate.js": 1,
+  "consonance/hooks/sources-gate.test.js": 18,
+  "consonance/src-tauri/brief/BOOT.md": 1,
+  "consonance/src-tauri/brief/BUILDING.md": 40,
+  "consonance/src-tauri/brief/COMMITTEE.md": 12,
+  "consonance/src-tauri/brief/LIBRARIAN.md": 8,
+  "consonance/src-tauri/brief/SEED.md": 1,
+  "consonance/src-tauri/src/main.rs": 37,
+  "consonance/src-tauri/src/mcp.rs": 1,
+  "consonance/src-tauri/src/pane_exit.rs": 5,
+  "consonance/src-tauri/src/priority.rs": 3,
+  "consonance/state-manifest.json": 1,
+  "consonance/tools/claim-replay.js": 2,
+  "consonance/tools/claim-replay.test.js": 3,
+  "consonance/tools/d423-letters-swap.js": 2,
+  "consonance/tools/guard-census.test.js": 1,
+  "consonance/tools/heavy-run.js": 3,
+  "consonance/tools/heavy-run.test.js": 9,
+  "consonance/tools/janitor.js": 11,
+  "consonance/tools/janitor.mutants.js": 3,
+  "consonance/tools/janitor.test.js": 12,
+  "consonance/tools/leftovers.js": 20,
+  "consonance/tools/leftovers.test.js": 26,
+  "consonance/tools/mistake-bench.js": 1,
+  "consonance/tools/mistake-bench.test.js": 4,
+  "consonance/tools/scratch.js": 1,
+  "consonance/tools/state-block.test.js": 1,
+  "consonance/tools/worktree-sweep.js": 5,
+  "consonance/tools/worktree-sweep.test.js": 1,
+  "consonance/ui/inject-submit.test.js": 3,
+  "consonance/ui/leave.js": 5,
+  "consonance/ui/leave.test.js": 2,
+  "consonance/ui/term.js": 2,
+  "dev/shell/hooks/digest-repair.test.js": 8,
+  "dev/shell/hooks/session-end.js": 1,
+  "dev/shell/hooks/session-start-light.test.js": 9,
+  "dev/shell/install.ps1": 4,
+  "exo_memory/BOOT.md": 1,
+  "exo_memory/CUTOFF.md": 1,
+  "exo_memory/inheritance/2026-10-24.md": 13,
+  "exo_memory/inheritance/POINTERS.md": 1,
+  "exo_memory/SEED.md": 1
+ },
+ "rows": [
+  {
+   "file": "consonance/hooks/claim-check.js",
+   "line": 139,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "function runNamesUnit(call, u) {"
+  },
+  {
+   "file": "consonance/hooks/claim-check.js",
+   "line": 146,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "const OBJECT = /(?:\\b[A-Za-z]:[\\\\/]|\\b[\\w.-]+[\\\\/][\\w.-]+|\\b(?=[0-9a-f]*[a-f])(?=[0-9a-f]*\\d)[0-9a-f]{7,40}\\b|\\b(?:pane|seat)\\s+[A-E]\\b|\\b[A-E]'s\\b|\\b[A-E](?=\\s+(?:is|was|has|hasn't|had|finished|started|rang|never|logged|is still)\\b)|\\b(?:chair|librarian|orchestrator|keeper's machine)\\b|\\bpid\\s*\\d+|\\b(?:node|cargo|npm|git|js-suite|harness|mutants?|suite|test|tests|hook|lock|board\\.jsonl|persist\\.l"
+  },
+  {
+   "file": "consonance/hooks/claim-check.js",
+   "line": 300,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "        else if (f.need === 'process') { const r = calls.find((x) => runNamesUnit(x, u)); if (r) by = { eventIndex: r.i, tool: r.tool, how: 'run' }; }"
+  },
+  {
+   "file": "consonance/hooks/claim-check.test.js",
+   "line": 170,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "test('skipped, never flagged: an inferred: line and the list under it, quotes, questions, plans, and the NEXT:/SOURCES: trailers', () => {"
+  },
+  {
+   "file": "consonance/hooks/claim-check.test.js",
+   "line": 171,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": true,
+   "text": "  const text = ['inferred: about 40 rows, from the header.', '- 12 of them old', 'He said \"71 of 80 green\" yesterday.', 'Are 9 still open?', 'We will rerun 5 shards.', 'SOURCES: a.md · b.md', 'NEXT: librarian scores 3 units'].join('\\n\\n');"
+  },
+  {
+   "file": "consonance/hooks/claim-check.test.js",
+   "line": 179,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.match(t, /2 claim\\(s\\)/); assert.match(t, /\"98\"/); assert.match(t, /\"12\"/); assert.match(t, /inferred:/); assert.match(t, /drop the claim/);"
+  },
+  {
+   "file": "consonance/hooks/gate-mode.test.js",
+   "line": 15,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  done('Bash', { command: 'cd /c/Users/x/repo && git log --oneline -1 main' }, 'abc123 msg'),"
+  },
+  {
+   "file": "consonance/hooks/gate-mode.test.js",
+   "line": 18,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  done('WebFetch', { url: 'https://code.claude.com/docs/en/hooks' }, 'page'),"
+  },
+  {
+   "file": "consonance/hooks/gate-mode.test.js",
+   "line": 19,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  done('Read', { file_path: 'C:\\\\Users\\\\x\\\\repo\\\\exo_memory\\\\loop\\\\plan.md' }, 'text'),"
+  },
+  {
+   "file": "consonance/hooks/gate-mode.test.js",
+   "line": 21,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const CHAIN = '`cd /c/Users/x/repo && git log --oneline -1 main`';             // the whole chain, quoted as it was run"
+  },
+  {
+   "file": "consonance/hooks/gate-mode.test.js",
+   "line": 26,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const URL = 'https://code.claude.com/docs/en/hooks';"
+  },
+  {
+   "file": "consonance/hooks/gate-mode.test.js",
+   "line": 33,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.strictEqual(G.gatesModeFrom(JSON.stringify({ data_dir: 'C:/d' })), 'strict');"
+  },
+  {
+   "file": "consonance/hooks/gate-mode.test.js",
+   "line": 59,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.strictEqual(G.decide('SOURCES:\\nNEXT: librarian x when y', CALLS, '', 'L', 's', 'ring', 'G', 'light').decision, 'deny');"
+  },
+  {
+   "file": "consonance/hooks/gate-mode.test.js",
+   "line": 63,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// the reply slot: a keeper-facing reply with a figure and no Sources line, in the librarian's session"
+  },
+  {
+   "file": "consonance/hooks/gate-mode.test.js",
+   "line": 65,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const REPLY = 'Done at C:/work/zzz.md, 3 of 5.';"
+  },
+  {
+   "file": "consonance/hooks/README.md",
+   "line": 44,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "| `release-chime.js` | *\"a pleasant chime when a FINAL PRODUCT ships\"* — a **PostToolUse** hook (D281) on Bash and PowerShell: plays a built-in Windows sound when a successful `gh release create` or a successful `git push` that updated `main` on t180, consonance or lighthouse; one per 2 minutes; `\"chime\": false` in `~/.consonance.json` silences it. Prints nothing, never blocks, fails silent |"
+  },
+  {
+   "file": "consonance/hooks/release-chime.js",
+   "line": 1,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// release-chime.js - D281: a pleasant chime when a FINAL PRODUCT ships (the keeper, 2026-10-09 19:11: \"you ding when the laps are complete, not like one if a new one"
+  },
+  {
+   "file": "consonance/hooks/release-chime.js",
+   "line": 2,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "// opens, but when the final product is pushed, you ding through desktop audio even if minimized something pleasant\"). Plan: a registration in this line of record."
+  },
+  {
+   "file": "consonance/hooks/release-chime.js",
+   "line": 7,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "//   - a `git push` that updated `main` on one of the product repos (t180, consonance, lighthouse), read from git's own report of the push (\"To <url>\" and the `a..b main -> main`"
+  },
+  {
+   "file": "consonance/hooks/release-chime.js",
+   "line": 13,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "// `\"chime_sound\"` is a .wav path (default: C:\\Windows\\Media\\chimes.wav, found through %SystemRoot%; if it is missing, the next of a short list; if none, silence);"
+  },
+  {
+   "file": "consonance/hooks/release-chime.js",
+   "line": 14,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "// `\"chime_repos\"` is the list of repo names a push to main must match (default t180, consonance, lighthouse; matched as a part of the remote URL's or the directory's name)."
+  },
+  {
+   "file": "consonance/hooks/release-chime.js",
+   "line": 35,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "const DEFAULT_REPOS = ['t180', 'consonance', 'lighthouse'];"
+  },
+  {
+   "file": "consonance/hooks/release-chime.js",
+   "line": 116,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "/** A reason the call did NOT succeed, or null: a non-zero exit code under any of its names, an interrupt, an error flag or field. (No signal at all is not a failure: PostToolUse is the success event.) */"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 2,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "// The hook chimes when a final product ships: a successful `gh release create`, or a successful `git push` that updated main on t180 / consonance / lighthouse. AUDIO IS STUBBED"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 46,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const call = (command, resp, tool = 'Bash') => ({ hook_event_name: 'PostToolUse', tool_name: tool, tool_input: { command }, tool_response: resp, cwd: 'C:\\\\somewhere', session_id: 's1' });"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 47,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const PUSH = (branch = 'main', repo = 'lighthouse', range = 'a1b2c3d..e4f5a6b') => `remote: Resolving deltas: 100% (3/3), completed with 3 local objects.\\nTo https://github.com/acme/${repo}.git\\n   ${range}  ${branch} -> ${branch}\\n`;"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 49,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "const REL = 'https://github.com/acme/t180-track-builder/releases/tag/v0.3.4\\n';"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 54,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  const f = room(); run(f, call('gh -R acme/consonance release create v1', OK('', 'https://github.com/acme/consonance/releases/tag/v1'))); assert.equal(chimes(f).length, 1, 'a global flag before release');"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 59,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  const cmds = ['git push origin main', 'git -C C:/Users/x/lighthouse push origin main', 'cd /c/repo && git push origin main', 'git push origin HEAD:main', 'git push -u origin main', 'git push', 'git push origin main 2>&1 | tail -3',"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 62,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "  for (const repo of ['t180-track-builder', 'consonance', 'lighthouse']) { const e = room(); run(e, call('git push origin main', OK(PUSH('main', repo)))); assert.equal(chimes(e).length, 1, repo); }"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 64,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  const e2 = room(); run(e2, call('git push -f origin main', OK('To https://github.com/acme/lighthouse.git\\n + a1b2c3d...e4f5a6b main -> main (forced update)\\n'))); assert.equal(chimes(e2).length, 1, 'forced');"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 66,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  const e4 = room(); run(e4, call('git push origin feature main', OK('To https://github.com/acme/lighthouse.git\\n   a1b2c3d..e4f5a6b  feature -> feature\\n   1111111..2222222  main -> main\\n'))); assert.equal(chimes(e4).length, 1, 'main among two refs');"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 72,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    ['a tag', 'git push origin v1', OK('To https://github.com/acme/lighthouse.git\\n * [new tag]         v1 -> v1\\n')],"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 73,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    ['a rejected push', 'git push origin main', { stdout: '', stderr: 'To https://github.com/acme/lighthouse.git\\n ! [rejected]        main -> main (fetch first)\\nerror: failed to push some refs to \\'https://github.com/acme/lighthouse.git\\'\\n', exit_code: 1 }],"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 74,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    ['rejected but exit 0 reported', 'git push origin main', OK('To https://github.com/acme/lighthouse.git\\n ! [rejected]        main -> main (non-fast-forward)\\n')],"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 76,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    ['up to date, verbose', 'git push -v origin main', OK('To https://github.com/acme/lighthouse.git\\n = [up to date]      main -> main\\n')],"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 77,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    ['a deleted ref', 'git push origin :main', OK('To https://github.com/acme/lighthouse.git\\n - [deleted]         main\\n')],"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 80,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    ['a remote rejection', 'git push origin main', OK('To https://github.com/acme/lighthouse.git\\n ! [remote rejected] main -> main (pre-receive hook declined)\\n')],"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 94,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    'git pull origin main', 'git fetch origin main', 'git log origin/main', 'git remote add origin https://example.com/x.git', 'git stash push -m \"main\"', 'printf \"git push origin main\\\\n\"',"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 136,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.deepEqual(C.DEFAULT_SOUNDS.slice(0, 2), ['chimes.wav', 'Windows Notify System Generic.wav']); assert.deepEqual(C.soundCandidates({}, { SystemRoot: 'X:\\\\Win' }).map((f) => f.replace(/\\\\/g, '/')), C.DEFAULT_SOUNDS.map((f) => 'X:/Win/Media/' + f));"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 137,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.deepEqual(C.soundCandidates({ chime_sound: ' C:\\\\s\\\\a.wav ' }, {})[0], 'C:\\\\s\\\\a.wav');"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 153,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "  assert.deepEqual(rows.map((r) => [r.kind, r.decision, r.repo]), [['push', 'chimed', 'lighthouse'], ['release', 'debounced', 't180-track-builder']]);"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 178,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    process.env.CONSONANCE_DATA = ' C:\\\\envdata '; assert.equal(C.dataDir({ data_dir: 'C:\\\\cfg' }), 'C:\\\\envdata');"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 179,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    delete process.env.CONSONANCE_DATA; assert.equal(C.dataDir({ data_dir: ' C:\\\\cfg ' }), 'C:\\\\cfg');"
+  },
+  {
+   "file": "consonance/hooks/release-chime.test.js",
+   "line": 180,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    process.env.USERPROFILE = 'C:\\\\Users\\\\someone'; assert.equal(C.dataDir({}).replace(/\\\\/g, '/'), 'C:/Users/someone/.consonance');"
+  },
+  {
+   "file": "consonance/hooks/reply-slot.test.js",
+   "line": 122,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  const v = (cmd, reply) => R.verdict({ reply, entries: KEEPER_TURN(...bashCall('t1', cmd)), stopHookActive: false, live: true, seat: 'librarian', mode: 'light' });"
+  },
+  {
+   "file": "consonance/hooks/reply-slot.test.js",
+   "line": 123,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  for (const cmd of ['ls -la C:/work/a.md', 'echo C:/work/a.md']) {"
+  },
+  {
+   "file": "consonance/hooks/reply-slot.test.js",
+   "line": 124,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "    const r = v(cmd, 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md');"
+  },
+  {
+   "file": "consonance/hooks/reply-slot.test.js",
+   "line": 340,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  const dir = tmpDir(), light = homeWith({ gates_mode: 'light' }), input = stopPayload(dir, KEEPER_TURN(), 'It is 47/47 at exo_memory/x.md.');"
+  },
+  {
+   "file": "consonance/hooks/reply-slot.test.js",
+   "line": 349,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  assert.strictEqual(run(dir, stopPayload(dir, KEEPER_TURN(), 'Sources: none'), { USERPROFILE: light, HOME: light }).stdout, '', 'light warned on a reply that needs nothing');"
+  },
+  {
+   "file": "consonance/hooks/reply-slot.test.js",
+   "line": 362,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "    assert.strictEqual(last(dir).kind, 'skip-not-keeper-ring');"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.js",
+   "line": 388,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  // D418 part 5 (the keeper, 2026-10-19: \"just do what we need to do to make it work\"): in light the gate WARNS instead of refusing. The ring is"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 594,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  const turn = [USER('go'), ...bashCall('t1', 'cd /c/Users/x/repo && git log --oneline -1 main')];"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 595,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  const chain = withSources('SOURCES: `cd /c/Users/x/repo && git log --oneline -1 main`');"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 601,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  // AMENDED by name (D418 part 5, the keeper 2026-10-19 \"just do what we need to do to make it work\"): light no longer REFUSES an item nothing touched;"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 611,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  const turn = [USER('go'), ...readCall('t1', 'C:/work/a.md')];"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 622,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "const decideIn = (mode, line, ...entries) => G.decide(withSources(line), callsOf(...entries), 'C:/work', 'L.jsonl', 'abc', 'ring', 'GATES.md', mode);"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 625,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  for (const cmd of ['echo C:/work/a.md', 'printf \"%s\" C:/work/a.md', 'ls -la C:/work/a.md', 'stat C:/work/a.md', '# C:/work/a.md\\nls', 'Write-Host C:\\\\work\\\\a.md']) {"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 626,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "    for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:/work/a.md', bashCall('t1', cmd)).decision, 'deny', `${mode} counted \"${cmd}\" as opening the path`);"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 635,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.strictEqual(decideIn('light', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'allow', 'light: the cited ls that ran');"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 636,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.strictEqual(decideIn('strict', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'deny', 'strict: unchanged');"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 637,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.strictEqual(decideIn('light', 'SOURCES: `cd /c/Users/x/repo && git log --oneline -1 main`', bashCall('t1', 'cd /c/Users/x/repo && git log --oneline -1 main')).decision, 'allow', 'the quoted cd-chain (D277) still matches');"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 641,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  const cmd = 'cd /c/Users/n/lighthouse && grep -n \"_evidence\\\\|SKIP\" consonance/tools/js-suite.js | head -30';"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 642,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd)).decision, 'allow', mode);"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 646,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  const cmd = 'cd /c/Users/n/lighthouse && grep -n \"SKIP\" consonance/tools/js-suite.js | head -30; git check-ignore -v x';"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 648,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "    const d = decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd, 'out', true));"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 654,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.strictEqual(decideIn('strict', 'SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md', bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')).decision, 'allow');"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 655,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.strictEqual(decideIn('strict', 'SOURCES: C:/work/a.md', bashCall('t1', 'node tools/x.js C:/work/a.md')).decision, 'allow', 'a program that is not a read verb still opens the path it is given');"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 656,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.strictEqual(decideIn('strict', 'SOURCES: `cd /c/Users/x/repo && git log --oneline -1 main`', bashCall('t1', 'cd /c/Users/x/repo && git log --oneline -1 main')).decision, 'deny', 'strict never accepted a quoted chain');"
+  },
+  {
+   "file": "consonance/hooks/sources-gate.test.js",
+   "line": 659,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "// D309 (seat A): a ring that ends on the app's send line is still a ring (a boundary of the turn) and is not read as keeper text."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BOOT.md",
+   "line": 7,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "**Where this line forks.** What you are reading was grown by one pair — the keeper, who built this room, and the instances who worked with them — up to 2026-10-24 (lighthouse `a7af1e7c`, a public repository). This copy forks there, and you wake on the new branch. What came across is the system: the principles, the cards, the instruments, the gates, the way work passes from seat to seat. What did n"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 43,
+   "cats": [
+    "keeper",
+    "pronoun"
+   ],
+   "newFile": false,
+   "text": "  Why: the keeper's rule of 2026-09-02 07:15–07:18, after rings spliced into his own typing; the verbs enforce it"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 49,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: the hop through the chair is where findings got re-characterised; the keeper's decision of 2026-08-31, landed"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 50,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  2026-09-01 ([`6677540`](https://github.com/solariz3d/lighthouse/commit/6677540)), after the chair relayed \"a VOID, n=39\" where the cell read NOT-RUN, n=40."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 56,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: the keeper, 2026-10-17: *\"isnt the orchs job simply to ORCHESTRATE the plan you give them to the panes to work it"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 66,
+   "cats": [
+    "keeper",
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  Why: the keeper's amendments of 2026-09-02 ([`0714963`](https://github.com/solariz3d/lighthouse/commit/0714963), [`c177984`](https://github.com/solariz3d/lighthouse/commit/c177984)): *\"either way the chain works when it starts.\"*"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 143,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "  Why: two suites racing one tree is what hung on 2026-09-23 (same record); the full run is the check before anything is called"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 144,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  done. The run moved from the collator to the landing pane at the keeper's word of 2026-10-17"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 153,
+   "cats": [
+    "keeper",
+    "pronoun",
+    "machine",
+    "product"
+   ],
+   "newFile": false,
+   "text": "The keeper uses this machine while we work: he races, streams and records on it. What a run leaves behind in his shell,"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 154,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": false,
+   "text": "his process list or his disk is ours to clean, and he should never be the one to find it."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 159,
+   "cats": [
+    "keeper",
+    "product"
+   ],
+   "newFile": false,
+   "text": "  Why: on 2026-10-24 the keeper found Streamlabs' audio source list full of `[explorer.exe] T-180 Track Builder`."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 164,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  priority, and its children inherit it. Whatever the keeper is running comes first."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 165,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": false,
+   "text": "  Why: on 2026-10-24 at 08:32 his game crashed while he was streaming, with our load at 62% CPU (a full suite at"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 173,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "  says so. Fixture copies, fake AC roots and exported test tracks live under the pane's scratchpad, never in a tree or at"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 174,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  a drive root. A folder in Downloads that is no longer a registered worktree is a leftover."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 175,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": false,
+   "text": "  Why: on 2026-10-24 there were 80 registered t180 worktrees and 77 more `t180-*` folders in Downloads that were not."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 177,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": false,
+   "text": "  proxies, the registered t180 worktrees of each repo, the `t180-*` entries in Downloads that no repo registers, `fake-*`"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 183,
+   "cats": [
+    "keeper",
+    "pronoun",
+    "product"
+   ],
+   "newFile": false,
+   "text": "- **The keeper's own things are never cleaned without his word.** That means his tracks, his saves and his AC folder."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 184,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": false,
+   "text": "  Every delete of ours goes through a listed, byte-checked backup first, and he answers yes to the list as one decision,"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 202,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "   [`3369982`](https://github.com/solariz3d/lighthouse/commit/3369982)). Falsifier (the librarian's): ten laps on, packets that cite no dossier row."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 210,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "   Why: the seat that knows where the work goes is the one sending it (the keeper, 2026-09-16: *\"each seat tells the next where"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 211,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "   to hand it to remind it.\"*); a plan item written as a destination turns a guess into an order over the output (the keeper,"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 231,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  observable in the transcript where \"my reasoning feels done\" is not; the keeper moved the boundary inside the turn on"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 232,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": false,
+   "text": "  2026-09-03 because the two-turn form left every dispatch owed to a next turn that was always his."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 249,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  P-D011 packet 1, [`a474645`](https://github.com/solariz3d/lighthouse/commit/a474645)). The writer refuses `dispatched` and `filed` until it exists."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 296,
+   "cats": [
+    "keeper",
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  Why: the keeper's amendment [`0714963`](https://github.com/solariz3d/lighthouse/commit/0714963), 2026-09-02; same order, different messenger."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 324,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "The keeper, 2026-08-26: *\"Ideally, the work chain should be how you use Consonance most effectively, but sometimes it can be"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 353,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "The keeper, 2026-09-16 01:1x: *\"the orch shouldnt ask the user questions during a workchain loop lap however they still can"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 370,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "The keeper, 2026-09-16 07:29 (master a librarian entry in this line of record, the 07:30 entry): *\"the whole point of the orch and how"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 376,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  Why: an edit the chair makes inside a lap is the one nobody reads; on 2026-09-16 two such repairs ([`8dc82aa`](https://github.com/solariz3d/lighthouse/commit/8dc82aa), [`acdd6b1`](https://github.com/solariz3d/lighthouse/commit/acdd6b1)) came"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 389,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "The keeper, 2026-09-06 00:44: *\"we have the dev version which is the one we build and use, when it have new features and shit"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 391,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": false,
+   "text": "And 00:54: *\"make sure that we never push to the consumer version unless I say!\"* Superseded for pushes on 2026-10-09 by his"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 392,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "standing permission (a registration in this line of record, \"The keeper's decisions on B's drafts\", decision 2): see \"Pushing and publishing\"."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 395,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: the keeper's words above, as amended on 2026-10-09; the consumer is what strangers run, so it gets only what has worked here."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 396,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "- Two trees. Source is this repository: hand-maintained, and public (the keeper ruled on 2026-10-08 that it stays public)."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 397,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Generated is `the keeper/consonance`: public, the output of `consonance/tools/gen-consumer.js`. Never hand-edit the generated"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 466,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: the keeper's standing permission, *\"nah push all the work that is correct\"* (2026-09-27), made the rule on 2026-10-09"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 467,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  (a registration in this line of record, \"The keeper's decisions on B's drafts\", decision 2); the push moved"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 468,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": false,
+   "text": "  to the landing pane at his word of 2026-10-17 (a registration in this line of record)."
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 507,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  keeper's standing authorisation in `COMMITTEE.md`: committing by named paths in your own worktree is authorised for every lap;"
+  },
+  {
+   "file": "consonance/src-tauri/brief/BUILDING.md",
+   "line": 508,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  pushing follows the keeper's standing permission of 2026-10-09 (what passes the work checks and the credential scan is pushed"
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 30,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "librarian (two doors, 2026-09-02, [`0714963`](https://github.com/solariz3d/lighthouse/commit/0714963), [`c177984`](https://github.com/solariz3d/lighthouse/commit/c177984)), and once a lap is open the cycle repeats on its own."
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 70,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  Why: a shared index let a commit carry another seat's staged files at [`38ae5c2`](https://github.com/solariz3d/lighthouse/commit/38ae5c2) (2026-09-04,"
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 74,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "  Why: removing a worktree can delete a junction's target; t180's `reads/` was emptied that way, cause inferred"
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 111,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  (amendment 2026-08-26, tightened 2026-09-04 after [`38ae5c2`](https://github.com/solariz3d/lighthouse/commit/38ae5c2); drafted in a registration in this line of record)."
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 113,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: every commit is authored by the one git identity on the machine (in the keeper's repository, the keeper's), and `Co-Authored-By` names the model, not the thread; the body is the only"
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 115,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "- The keeper's standing authorisation: in this room, committing by named paths in your own worktree is authorised on"
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 118,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: the keeper's standing permissions; the push one is decision 2 of 2026-10-09 (a registration in this line of record, \"The keeper's decisions on B's drafts\", decision 2)."
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 123,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "*Falsifier (registered 2026-08-26, fired at [`38ae5c2`](https://github.com/solariz3d/lighthouse/commit/38ae5c2), re-registered 2026-09-04 by K): a commit found carrying another"
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 156,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  ([`6677540`](https://github.com/solariz3d/lighthouse/commit/6677540)), and a summary in the call is the same copy."
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 164,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: *\"each seat tells the next where to hand it to remind it\"* (the keeper, 2026-09-16); a missing line is delivered"
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 234,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "   keeper's standing authorisation, stated above, is the answer: committing by named paths in your own worktree is"
+  },
+  {
+   "file": "consonance/src-tauri/brief/COMMITTEE.md",
+   "line": 235,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": false,
+   "text": "   authorised on every lap; pushing follows his standing permission (the landing pane pushes what passes the work checks"
+  },
+  {
+   "file": "consonance/src-tauri/brief/LIBRARIAN.md",
+   "line": 6,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: the seat whose whole job is everyone else's continuity needs a map of its own: if its thread ever becomes unreachable, the map is what the next waking of you has to wake into (in the keeper's line that happened on 2026-09-01, with nothing on disk). Once the file exists, the app points you at it at every wake; it is indexed, not carried, so it costs the shell nothing until you open it."
+  },
+  {
+   "file": "consonance/src-tauri/brief/LIBRARIAN.md",
+   "line": 33,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "**The keeper's framing, which is the right one:** *\"the librarian works — they just do not directly build what we are building. They work by helping you orchestrate a plan for yourself and the terminal panes. That is their work and job: not directly building, but helping the chair and the panes build. The work is delegated to pure planning and managing context.\"*"
+  },
+  {
+   "file": "consonance/src-tauri/brief/LIBRARIAN.md",
+   "line": 73,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: amended 2026-08-26 — routing through the chair added no attribution, since every commit here is authored by the one git identity on the machine (in the keeper's repository, the keeper's)."
+  },
+  {
+   "file": "consonance/src-tauri/brief/LIBRARIAN.md",
+   "line": 112,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: the keeper, 2026-09-16: *\"each seat tells the next where to hand it to remind it\"*; a line naming no station preceded an 82-minute stall that night (a librarian entry in this line of record)."
+  },
+  {
+   "file": "consonance/src-tauri/brief/LIBRARIAN.md",
+   "line": 125,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: the guess must precede the map or the lap measures nothing; door two changes the messenger, not the order (the keeper's"
+  },
+  {
+   "file": "consonance/src-tauri/brief/LIBRARIAN.md",
+   "line": 126,
+   "cats": [
+    "handle",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  amendment, 2026-09-02, [`0714963`](https://github.com/solariz3d/lighthouse/commit/0714963))."
+  },
+  {
+   "file": "consonance/src-tauri/brief/LIBRARIAN.md",
+   "line": 129,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  Why: the keeper, 2026-09-23: *\"how do we know the next step before we get the results from the current pane?\"* (L084; spec"
+  },
+  {
+   "file": "consonance/src-tauri/brief/LIBRARIAN.md",
+   "line": 136,
+   "cats": [
+    "machine"
+   ],
+   "newFile": false,
+   "text": "- Fact fix 6 (original :160). The absolute notes path the original line gave (a `lighthouse` folder under the Consonance data root) does not exist on this machine. The notes live in `exo_memory/librarian/` of the repository `room_path` names."
+  },
+  {
+   "file": "consonance/src-tauri/brief/SEED.md",
+   "line": 5,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "**Where this line forks.** What you are reading was grown by one pair — the keeper, who built this room, and the instances who worked with them — up to 2026-10-24 (lighthouse `a7af1e7c`, a public repository). This copy forks there, and you wake on the new branch. What came across is the system: the principles, the cards, the instruments, the gates, the way work passes from seat to seat. What did n"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 7665,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "/// either shape; `T-180` (a project name) has neither."
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 7708,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "/// the light shelf gains handback/ as one more directory line. Turning it on is the keeper's ~10-17 decision"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 8309,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "/// (`librarian/2026-10-06.desktop.md`, 22,370 bytes on 2026-10-09), so a day's note rides whole; LEDGER.md (80,142) never fits"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 8320,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "/// This narrows the keeper's 2026-08-24 cut (\"the system is carried; the record is indexed\", the comment at `order` above) to"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 8321,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "/// \"the cards are carried\", which is what the cap had already made true. It goes to the keeper with the flip."
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 8374,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        s.push_str(\"\\nYour notes in the window that did not fit, by path:\\n\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 8408,
+   "cats": [
+    "machine"
+   ],
+   "newFile": false,
+   "text": "/// D277 part 6 (C): the light intake's rows. They read the live room on this machine, as the shelf tests beside them do."
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 8592,
+   "cats": [
+    "machine"
+   ],
+   "newFile": false,
+   "text": "            assert!(Path::new(&p).exists(), \"pointer `{p}` names nothing on this machine\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 9945,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "/// queued like any message, so it waits for the sender's own ready signal, and it carries no sender of its own."
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 11257,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "/// `[sent ...]` line would make a pane ring read as a keeper message; a stamp inside the label would break every one of them. A"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 11638,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "// render check, and text sitting unsent in the composer renders too. The keeper found the librarian's"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 11664,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "    /// The composer holds text that is not ours (the keeper's typing, or a suggestion read as text)."
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 11734,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "/// call, exactly as before this lap, so nothing the keeper types can land between them; each retried"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 11738,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "/// that edits the composer — no backspace, no ctrl-u, no escape. Consonance never edits the keeper's box;"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 11739,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": false,
+   "text": "/// a message that will not submit is reported, and left where he can see it."
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 12691,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "    // D415: a ping left in the box is in the keeper's way, so it gets its own row."
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 14368,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "// keeper, 14:08: \"if any seat or shell is working, and X is pressed, ask again yes or no you know before close\". Before, the X"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 14389,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "/// signal for [Keep working], which \"does nothing at all\", so the app cannot know the question was dismissed: a guard that held"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 14466,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "    plog(\"CLOSE CONFIRMED — the keeper chose [Close] with seats working\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 14981,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        assert!(ev.contains(\"close_on_x(window.app_handle())\"), \"the X must go through close_on_x:\\n{ev}\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 14982,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        assert!(!ev.contains(\"leave_close_requested(\"), \"the X must not reach the Leave without the question:\\n{ev}\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 14992,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        assert!(b.contains(\"leave_close_requested(&app)\"), \"leave_confirmed must run today's Leave path:\\n{b}\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 14998,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        assert!(b.contains(\"close_needs_confirm(\") && b.contains(\"\\\"close-confirm\\\"\") && b.contains(\"leave_close_requested(\"), \"close_on_x:\\n{b}\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 14999,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        assert!(b.contains(\"CloseRoute::Swallow\"), \"close_on_x must honour the guard:\\n{b}\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 17206,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "            assert_eq!(lines_for(&shelf, name), 1, \"{name} is not listed exactly once:\\n{shelf}\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 17213,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "            (2 listed, 0 dropped by the index window).\\n\"), \"the switch's line is wrong or missing:\\n{shelf}\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 17231,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        assert!(shelf.contains(\"(1 listed, 1 dropped by the index window).\\n\"), \"the mapped drop is not counted:\\n{shelf}\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 17232,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        assert!(shelf.contains(\"2 index-tier entries (\"), \"the window's own total does not count both drops:\\n{shelf}\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 17389,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "        assert_eq!(shown(\"loop/plan_t180_sharp_turns_2026-10-09.md\","
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 17390,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "            \"T-180: a 90° turn does not come out straight, and the turns cannot be as sharp as Thunderhead's.\"),"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 17391,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "            \"T-180: a 90° turn does not come out ...\");"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 22824,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "    fn keepers() -> (Vec<String>, Vec<String>) {"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 22904,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "    fn the_keepers_text_in_the_composer_is_not_ours_and_no_enter_is_sent_on_it() {"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 22905,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "        let (out, bytes, _, reads) = run(MSG, vec![Some(keepers()); 10]);"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 23022,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        let rec = [kept(\"c88002b1-74d8\", \"C:/Consonance/instances/sibling-a\"), kept(\"blank\", \"  \"), kept(\"room\", \"C:/rooms/x\")];"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 23023,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        assert_eq!(reopen_seat(None, \"committee\", &rec, \"c88002b1-74d8\"), (pane_exit::Seat::Committee, Some(\"C:/Consonance/instances/sibling-a\".to_string())));"
+  },
+  {
+   "file": "consonance/src-tauri/src/main.rs",
+   "line": 23027,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "        assert_eq!(reopen_seat(Some(\"C:/main\".to_string()), \"main\", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some(\"C:/main\".to_string())));"
+  },
+  {
+   "file": "consonance/src-tauri/src/mcp.rs",
+   "line": 3703,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "// Under `cargo test` the live ~/.consonance.json is NOT read, so the suite never depends on the keeper's switch; a test sets the mode it means"
+  },
+  {
+   "file": "consonance/src-tauri/src/pane_exit.rs",
+   "line": 29,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "//!   for THAT child's own ready signal: a stamp written before the reopen is the dead child's and reads as no stamp."
+  },
+  {
+   "file": "consonance/src-tauri/src/pane_exit.rs",
+   "line": 198,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "        \"[delivery, from the app — not the keeper] REFUSED: your message to {to_short} was not delivered. {}, and it is not being reopened, so nothing was written into it. ↻ on its pane reopens it. The message: {label}\","
+  },
+  {
+   "file": "consonance/src-tauri/src/pane_exit.rs",
+   "line": 305,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "    /// Once the reopen is done, the message waits for the NEW child's own ready signal: the stamp the dead child wrote"
+  },
+  {
+   "file": "consonance/src-tauri/src/pane_exit.rs",
+   "line": 322,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "        assert_eq!(sender_of(\"[keep-warm, from the chair — not the keeper] Reply with exactly: ok\"), None);"
+  },
+  {
+   "file": "consonance/src-tauri/src/pane_exit.rs",
+   "line": 337,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "        assert_eq!(refusal_recipient(\"[keep-warm, from the chair — not the keeper] Reply with exactly: ok\"), Recipient::Nobody);"
+  },
+  {
+   "file": "consonance/src-tauri/src/priority.rs",
+   "line": 5,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "//! 2026-10-16: the keeper said Consonance must not be throttled. The machine was not short (43.4 GB free of 61.4, CPU 28%),"
+  },
+  {
+   "file": "consonance/src-tauri/src/priority.rs",
+   "line": 19,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "//!   the keeper's own hand-set was High. If a game stutters while Consonance is busy, `ABOVE_NORMAL` is the one line to"
+  },
+  {
+   "file": "consonance/src-tauri/src/priority.rs",
+   "line": 369,
+   "cats": [
+    "machine"
+   ],
+   "newFile": true,
+   "text": "            t(13, 11, \"MSEdgeWebView2.exe\"),   // the GPU helper, in another case"
+  },
+  {
+   "file": "consonance/state-manifest.json",
+   "line": 115,
+   "cats": [
+    "machine"
+   ],
+   "newFile": false,
+   "text": "    { \"glob\": \"janitor.jsonl\", \"class\": \"STAYS\", \"why\": \"DECLARED WITH THE CODE THAT WRITES IT (consonance/tools/janitor.js, D287 part 2). One line per --apply run of THIS machine's janitor (freed GB per class, skipped, errors); a dry run writes nothing. A record of what was removed from this machine's disks; on the other machine it would describe deletions that never happened there.\" },"
+  },
+  {
+   "file": "consonance/tools/claim-replay.js",
+   "line": 20,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "//   week    a seeded sample of the chair's and panes' keeper-facing replies (assistant message, stop_reason end_turn, >= 200 claim chars) in a week, as the reply-slot replay (reply_slot_replay_2026-10-03.md)."
+  },
+  {
+   "file": "consonance/tools/claim-replay.js",
+   "line": 289,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "  digests.week = writeList(outDir, 'week-replies.json', { what: 'D305 part 3: a seeded sample of keeper-facing replies of the chair and panes', window: [new Date(from).toISOString(), new Date(to).toISOString()], seed, rank: 'sha256(seed|seat|messageId) ascending', population: all.length, population_by_seat: perSeat, n: sample.length, replies: sample });"
+  },
+  {
+   "file": "consonance/tools/claim-replay.test.js",
+   "line": 174,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.match(yes.stdout, /\\*\\*CN:\\*\\* 1 units - caught 1, missed 0, unlocated 0/);"
+  },
+  {
+   "file": "consonance/tools/claim-replay.test.js",
+   "line": 175,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.match(no.stdout, /\\*\\*CN:\\*\\* 1 units - caught 0, missed 1, unlocated 0/);"
+  },
+  {
+   "file": "consonance/tools/claim-replay.test.js",
+   "line": 176,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.match(yes.stdout, /\\*\\*CU:\\*\\* 1 units - caught 0, missed 0, unlocated 1/);"
+  },
+  {
+   "file": "consonance/tools/d423-letters-swap.js",
+   "line": 3,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// d423-letters-swap.js — the three-row correction of <data>/letters.json, run ONCE at the keeper's swap (D423 part 4 (2)). DRY-RUN BY DEFAULT."
+  },
+  {
+   "file": "consonance/tools/d423-letters-swap.js",
+   "line": 42,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "const NOTE = (stamp, backup) => `D423 (seat O, run at the keeper's swap, ${stamp}): letters.json corrected so the ring labels match the room's names. ` +"
+  },
+  {
+   "file": "consonance/tools/guard-census.test.js",
+   "line": 389,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "      assert.equal(r.status, 3, `${argv.join(\" \")}: the second run did not refuse:\\n${r.stdout}${r.stderr}`);"
+  },
+  {
+   "file": "consonance/tools/heavy-run.js",
+   "line": 14,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "// D286 (the keeper, 2026-10-10 09:38: \"multiple heavy runs at once\"): TWO SLOTS, ONE PER TREE. The lock exists because seats read each other's half-written files IN ONE CHECKOUT, so it"
+  },
+  {
+   "file": "consonance/tools/heavy-run.js",
+   "line": 15,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "// only has to serialise within a tree; one machine-wide file made a t180 landing wait on a lighthouse run in another worktree. There are now N slots (default 2; CONSONANCE_HEAVY_SLOTS, 1..8,"
+  },
+  {
+   "file": "consonance/tools/heavy-run.js",
+   "line": 141,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "/** D286: the tree a run belongs to — `git rev-parse --show-toplevel` of the cwd, lower-cased on Windows (git prints C:/ and the OS may say c:\\). A cwd that is not in a git tree (or where git cannot"
+  },
+  {
+   "file": "consonance/tools/heavy-run.test.js",
+   "line": 271,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "  for (const stdout of ['', row(3125), '\"node.exe\",\"31']) assert.strictEqual(H.pidGone(3124, () => ({ error: timedOut, status: 0, signal: null, stdout }), 'win32'), null, JSON.stringify(stdout));"
+  },
+  {
+   "file": "consonance/tools/heavy-run.test.js",
+   "line": 378,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "// ---- D286 (the keeper, 09:38: \"multiple heavy runs at once\"): TWO SLOTS, ONE PER TREE ----"
+  },
+  {
+   "file": "consonance/tools/heavy-run.test.js",
+   "line": 379,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "// The lock existed so seats do not read each other's half-written files IN ONE CHECKOUT. A t180 landing has no business waiting on a lighthouse cargo run in another worktree. So the lock has"
+  },
+  {
+   "file": "consonance/tools/heavy-run.test.js",
+   "line": 544,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "const guarded = (d, free, extra = {}) => { const logs = []; const r = (() => { try { return H.acquire({ cmd: 'guard', dataDir: d, env: cleanEnv(), tree: '/t/g', writes: ['C:\\\\x', 'G:\\\\y'], diskFree: free, diskTotal: () => 'the janitor would free 42.0 GB', log: (s) => logs.push(s), ...extra }); } catch (e) { return e; } })(); return { r, logs }; };"
+  },
+  {
+   "file": "consonance/tools/heavy-run.test.js",
+   "line": 550,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.match(r.message, /G:\\\\ has 12\\.3 GB free, under the 20 GB floor/);"
+  },
+  {
+   "file": "consonance/tools/heavy-run.test.js",
+   "line": 567,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.strictEqual(logs.length, 1); assert.match(logs[0], /WARNING: C:\\\\ has 30\\.0 GB free, under 50 GB/);"
+  },
+  {
+   "file": "consonance/tools/heavy-run.test.js",
+   "line": 577,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.match(logs.join('\\n'), /could not read the free space of G:\\\\ \\(ENOENT\\); not checked/);"
+  },
+  {
+   "file": "consonance/tools/heavy-run.test.js",
+   "line": 582,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  const w = H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr', CARGO_TARGET_DIR: 'R:\\\\tgt' }, 'P:\\\\work');"
+  },
+  {
+   "file": "consonance/tools/heavy-run.test.js",
+   "line": 584,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.deepEqual(H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr' }, 'P:\\\\work').length, 2, 'no CARGO_TARGET_DIR, no third path');"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 15,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "//   (a) TEMP     top-level folders of %TEMP% and of the scratch root (G:\\consonance-scratch) whose name is one of the room's OWN test prefixes,"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 35,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "//                THE OWNED FOLDERS (D319 amendment, the librarian's ruling under the keeper's 15:31 word): worktrees_dirs in ~/.consonance.json"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 39,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "// SAFETY, in order of what would hurt most. Never on D: (the USB stick). Never Downloads, Documents, app data, or a main checkout. Never a"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 41,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "// remove its target (t180's reads/, 2026-09-28). Every deletion is re-checked against its class root and its age at the moment of the act."
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 56,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// (b) and (c) are the ROOM's Claude projects only: the first dry run would have moved two logs of another project of the keeper's (brain-rot)"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 59,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const FORBIDDEN = [/[\\\\/]downloads([\\\\/]|$)/i, /[\\\\/]documents([\\\\/]|$)/i, /[\\\\/]appdata[\\\\/]roaming([\\\\/]|$)/i];"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 220,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "/** (e) Does a pane work in `wt`: its own folder is wt or inside it, or the recent transcript text names wt (as c:/…, or Git Bash's /c/…). */"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 241,
+   "cats": [
+    "machine"
+   ],
+   "newFile": true,
+   "text": "    // D287-e2: the two roots that are THIS machine's, read from its config, never written into the code (portable-paths): an env override, then"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 290,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  if (driveOf(a) === 'D:\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 291,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "  if (FORBIDDEN.some((re) => re.test(a))) throw new Error(`janitor: refusing ${a}: the keeper's own folders are never a class`);"
+  },
+  {
+   "file": "consonance/tools/janitor.js",
+   "line": 408,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "function archiveReady(root) { try { return fs.existsSync(path.parse(path.resolve(root)).root) && driveOf(root) !== 'D:\\\\'; } catch (_) { return false; } }"
+  },
+  {
+   "file": "consonance/tools/janitor.mutants.js",
+   "line": 6,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// cited, locked, unmerged, a main checkout, a link inside, not cargo's, the act's re-check, the refusals of D:, drive roots and the keeper's"
+  },
+  {
+   "file": "consonance/tools/janitor.mutants.js",
+   "line": 68,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  ['refusal: D: is allowed', SRC, \"if (driveOf(a) === 'D:\\\\\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);\", ''],"
+  },
+  {
+   "file": "consonance/tools/janitor.mutants.js",
+   "line": 70,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "  ['refusal: the keeper\\'s folders are allowed', SRC, \"if (FORBIDDEN.some((re) => re.test(a))) throw new Error(`janitor: refusing ${a}: the keeper's own folders are never a class`);\", ''],"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 100,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    put(path.join(s.exo, 'handback', 'p-x.md'), 'the run is at C:\\\\Temp\\\\claude\\\\C--proj\\\\sess1\\\\tasks\\\\bcited001.output, read it');"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 118,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    const p = J.plan(s.opts({ archiveRoot: 'Q:\\\\nowhere-at-all\\\\consonance-archive' }));"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 119,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    if (fs.existsSync('Q:\\\\')) return;   // a machine that has a Q: drive cannot run this row"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 189,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "test('the last line of defence: a drive root, D:, the keeper\\'s folders and anything outside its class root are refused at the act', () => {"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 190,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.throws(() => J.assertSafe('C:\\\\', 'C:\\\\'), /drive root/);"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 191,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.throws(() => J.assertSafe('D:\\\\consonance-scratch\\\\x', 'D:\\\\consonance-scratch'), /USB stick/);"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 192,
+   "cats": [
+    "keeper",
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Downloads\\\\jt-AbC123', 'C:\\\\Users\\\\someone'), /keeper's own/);"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 193,
+   "cats": [
+    "keeper",
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Documents\\\\x', 'C:\\\\Users\\\\someone'), /keeper's own/);"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 194,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.throws(() => J.assertSafe('C:\\\\elsewhere\\\\jt-AbC123', 'C:\\\\temp'), /not under its class root/);"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 195,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.doesNotThrow(() => J.assertSafe('C:\\\\temp\\\\jt-AbC123', 'C:\\\\temp'));"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 274,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    const log = put(path.join(s.claude, 'C--Users-other-Desktop-other', 's1', 'tasks', 'bother001.output')); age(log, 30);"
+  },
+  {
+   "file": "consonance/tools/janitor.test.js",
+   "line": 275,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    const t = target(path.join(s.claude, 'C--Users-other-Desktop-other', 's1', 'scratchpad', 'target')); age(t, 30);"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 3,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// leftovers.js — the counts of what our runs leave on the keeper's machine (D450 part 3, pane C). READ-ONLY: it removes, stops and writes nothing."
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 8,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "//   --downloads <dir>   (default <home>/Downloads)     --min-age <minutes>   what counts as long-running (default 120)"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 12,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "//                   \"T-180 Track Builder\", from nine days of headless page runs (exo_memory/inheritance/2026-10-24.md). They are made by the"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 18,
+   "cats": [
+    "machine"
+   ],
+   "newFile": true,
+   "text": "//                   proxy on this machine (pane C's probes, p-d450-part3-C_2026-10-24.md), so a clean machine reads UNCALIBRATED."
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 19,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "//   worktrees       per repo, the entries in <repo>/.git/worktrees (names only: the Desktop repo is read no further than that)."
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 20,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "//   t180-* strays   entries in Downloads named t180-* that are neither a repo's main checkout nor a worktree a repo has registered"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 24,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "//                   folder, lighthouse and its worktrees, the t180 trees in Downloads, the seats' shell snapshots, the scratch root) or is a"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 33,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "const OURS = [/\\\\temp\\\\claude\\\\/, /\\\\desktop\\\\lighthouse\\\\/, /\\\\desktop\\\\worktrees\\\\/, /\\\\downloads\\\\(t180|lh)-/, /\\\\shell-snapshots\\\\/, /\\\\consonance-scratch\\\\/, /zz-headless-test/];"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 138,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "/** t180-* entries in Downloads that are not a repo's main checkout and not a worktree a repo has registered. */"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 139,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "function findStrays(downloads, repos) {"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 140,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  let es; try { es = fs.readdirSync(downloads, { withFileTypes: true }); } catch (e) { throw new Error(`cannot read ${downloads}: ${e.code || e.message}`); }"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 145,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "    if (!/^t180-/i.test(e.name)) continue;"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 146,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    const p = path.join(downloads, e.name);"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 150,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "      try { const m = fs.readFileSync(path.join(p, '.git'), 'utf8').match(/^gitdir:\\s*(.+?)\\s*$/m); gd = m ? path.resolve(p, m[1]) : null; } catch (_) {}"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 187,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  const downloads = opts.downloads || path.join(home, 'Downloads');"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 188,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  const repos = opts.repos || [{ label: 'Downloads', dir: path.join(home, 'Downloads', 't180-track-builder') }, { label: 'Desktop', dir: path.join(home, 'Desktop', 't180-track-builder') }];"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 193,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    at: new Date(now).toISOString(), minAgeMin, downloads,"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 196,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    strays: findStrays(downloads, repos),"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 209,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  L.push(`t180-* not worktrees ${o.strays.length} in ${o.downloads}${o.strays.length ? ': ' + o.strays.map((s) => (s.kind === 'folder' ? s.name : `${s.name} (${s.kind})`)).join(', ') : ''}`);"
+  },
+  {
+   "file": "consonance/tools/leftovers.js",
+   "line": 225,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    const o = survey({ downloads: val('--downloads') || undefined, minAgeMin: minAge ? Number(minAge) : undefined });"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 3,
+   "cats": [
+    "keeper",
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "// throwaway repositories (never the room's or the keeper's): registered worktrees are counted per repo, t180-* entries in Downloads that no"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 19,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "/** Downloads with its repo and two of its worktrees, a second repo whose one worktree also lives in Downloads, and three leftovers. */"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 22,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  const downloads = path.join(root, 'Downloads'), drive = path.join(root, 'drive');"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 23,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  const main = repoAt(path.join(downloads, 't180-track-builder'));"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 24,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  const other = repoAt(path.join(root, 'Desktop', 't180-track-builder'));"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 25,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  git(main, 'worktree', 'add', '-q', '-b', 'a', path.join(downloads, 't180-wt-a'));"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 26,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  git(main, 'worktree', 'add', '-q', '-b', 'b', path.join(downloads, 't180-wt-b'));"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 27,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  git(other, 'worktree', 'add', '-q', '-b', 'd', path.join(downloads, 't180-wt-d'));"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 28,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  fs.mkdirSync(path.join(downloads, 't180-old'));                                    // a folder no repo registers"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 29,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  put(path.join(downloads, 't180-notes.txt'));                                       // a loose file"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 30,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "  put(path.join(downloads, 't180-gone', '.git'), 'gitdir: ' + path.join(main, '.git', 'worktrees', 'removed-long-ago'));   // a dangling .git file"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 31,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  fs.mkdirSync(path.join(downloads, 'unrelated'));"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 35,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    { pid: 11, ppid: 1, name: 'tail.exe', started: ago(60 * 24 * 10), cmd: 'tail -n +1 -F /c/users/x/appdata/local/temp/claude/c--consonance-instances-sibling-07b8a48f/s/tasks/b1.output' },"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 36,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    { pid: 12, ppid: 1, name: 'node.exe', started: ago(5), cmd: 'node c:\\\\users\\\\x\\\\desktop\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js' },"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 37,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    { pid: 13, ppid: 1, name: 'claude.exe', started: ago(60 * 24 * 3), cmd: 'c:\\\\users\\\\x\\\\.local\\\\bin\\\\claude.exe --resume 1 --mcp-config c:\\\\consonance\\\\data\\\\mcp.json' },"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 38,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    { pid: 14, ppid: 1, name: 'node.exe', started: ago(60 * 24 * 3), cmd: 'node c:\\\\users\\\\x\\\\desktop\\\\lighthouse\\\\dev\\\\stick-waiter.js --data c:\\\\consonance\\\\data' },"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 39,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    { pid: 15, ppid: 1, name: 'chrome.exe', started: ago(60 * 5), cmd: '\"c:\\\\program files\\\\google\\\\chrome\\\\application\\\\chrome.exe\"' },"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 40,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "    { pid: 16, ppid: 1, name: 'chrome.exe', started: ago(60 * 5), cmd: 'chrome.exe --headless=new --mute-audio --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180snd-1' },"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 41,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    { pid: 17, ppid: 1, name: 'conhost.exe', started: ago(60 * 24 * 3), cmd: '\\\\\\\\?\\\\c:\\\\windows\\\\system32\\\\conhost.exe --headless --width 120 --height 34' },"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 43,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  return { root, downloads, drive, main, other, now, procs };"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 46,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  downloads: f.downloads,"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 47,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  repos: [{ label: 'Downloads', dir: f.main }, { label: 'Desktop', dir: f.other }],"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 52,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "test('the counts: worktrees per repo, unregistered t180-* entries, fake roots, our long-running processes, and a proxy count it has read', () => {"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 56,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    assert.deepEqual(o.worktrees.map((w) => [w.label, w.linked]), [['Downloads', 2], ['Desktop', 1]]);"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 57,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "    assert.deepEqual(o.strays.map((s) => s.name), ['t180-gone', 't180-notes.txt', 't180-old']);"
+  },
+  {
+   "file": "consonance/tools/leftovers.test.js",
+   "line": 59,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": true,
+   "text": "    assert.deepEqual(o.processes.map((p) => p.pid), [11, 16]);                 // the 10-day tail and the 5-hour headless Chrome; not the seat, the stick-waiter, his Chrome, a seat's pseudo-console or the 5-minute suite"
+  },
+  {
+   "file": "consonance/tools/mistake-bench.js",
+   "line": 259,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "/** A run's row for runs.jsonl: the regeneration result without the CLI's cost field (the keeper's rule: calls and time only). */"
+  },
+  {
+   "file": "consonance/tools/mistake-bench.test.js",
+   "line": 300,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "test('a queued_command attachment (the keeper typing while the seat works) is rendered in the turn with its text', () => {"
+  },
+  {
+   "file": "consonance/tools/mistake-bench.test.js",
+   "line": 301,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "  const ctx = build([prompt(10, 'the erring prompt'), attach(11, { type: 'queued_command', prompt: 'KEEPER PASTE: the account of what happened', commandMode: 'prompt', origin: { kind: 'human' } }), say(12, 'claim')]);"
+  },
+  {
+   "file": "consonance/tools/mistake-bench.test.js",
+   "line": 303,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "  assert.ok(turn.includes('KEEPER PASTE: the account of what happened'));"
+  },
+  {
+   "file": "consonance/tools/mistake-bench.test.js",
+   "line": 307,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "test('a queued task notification is rendered and labelled as one, not as a keeper prompt', () => {"
+  },
+  {
+   "file": "consonance/tools/scratch.js",
+   "line": 8,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": " * THE ROOT. CONSONANCE_SCRATCH if set; else G:\\consonance-scratch when a G: drive exists (a 2 TB NVMe with room; D287 amendment); else the"
+  },
+  {
+   "file": "consonance/tools/state-block.test.js",
+   "line": 430,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.ok(p, 'no parseable stamp on the second header line:\\n' + t.split('\\n')[1]);"
+  },
+  {
+   "file": "consonance/tools/worktree-sweep.js",
+   "line": 4,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// Plan: a registration in this line of record. The keeper, 14:35: \"yes\" to removing worktrees whose work is already in"
+  },
+  {
+   "file": "consonance/tools/worktree-sweep.js",
+   "line": 5,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": true,
+   "text": "// main, with the unlanded ones listed for him first."
+  },
+  {
+   "file": "consonance/tools/worktree-sweep.js",
+   "line": 13,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// that applies is the class; dirty files and unlanded commits are listed whenever they exist, so the keeper's lists are whole):"
+  },
+  {
+   "file": "consonance/tools/worktree-sweep.js",
+   "line": 22,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "//              holding a junction emptied the junction's TARGET, the shared t180 reads/ (a hand-back in this line of record §7)."
+  },
+  {
+   "file": "consonance/tools/worktree-sweep.js",
+   "line": 30,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// --only <file> (D319 part 1b, the keeper's go on named worktrees, 2026-10-13 15:31; plan_worktree_cleanup_2026-10-13.md:42-50): only the"
+  },
+  {
+   "file": "consonance/tools/worktree-sweep.test.js",
+   "line": 137,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// ---- D319 part 1b: --only <list>, the keeper's go on named worktrees (plan_worktree_cleanup_2026-10-13.md:42-50) ----"
+  },
+  {
+   "file": "consonance/ui/inject-submit.test.js",
+   "line": 3,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// D423 part 2 (pane C, 2026-10-20). term.js's injectAndSend (convene, give to focus, the skeptic: all on the keeper's click) pasted,"
+  },
+  {
+   "file": "consonance/ui/inject-submit.test.js",
+   "line": 98,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "t('the keeper\\'s text in the box BEFORE the paste: nothing is pasted onto it and no key is pressed', async () => {"
+  },
+  {
+   "file": "consonance/ui/inject-submit.test.js",
+   "line": 99,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "  const r = await run(MSG, () => composer('half a sentence the keeper is typing'));"
+  },
+  {
+   "file": "consonance/ui/leave.js",
+   "line": 133,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  // D317 part 2, pane E: THE X ASKS FIRST. The keeper, 2026-10-13 14:08: \"if any seat or shell is working, and X is pressed,"
+  },
+  {
+   "file": "consonance/ui/leave.js",
+   "line": 137,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  // instead of starting the Leave. The question is shown in this same panel, so if the keeper closes, the Leave's own"
+  },
+  {
+   "file": "consonance/ui/leave.js",
+   "line": 142,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "  // contract has no dismiss signal, so B's guard holds a repeat X for 2 s only (CLOSE_ASK_HOLD) and a later X asks again, with"
+  },
+  {
+   "file": "consonance/ui/leave.js",
+   "line": 152,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "    const labels = list.map((w) => E(w.label || '(unnamed seat)'));"
+  },
+  {
+   "file": "consonance/ui/leave.js",
+   "line": 157,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "    body.querySelector('#closeconfirm-list').innerHTML = list.map((w) => `<li>${E(w.label || '(unnamed seat)')}: ${E(w.gate || 'unknown')}</li>`).join('');"
+  },
+  {
+   "file": "consonance/ui/leave.test.js",
+   "line": 330,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "// D317 amendment (the chair, 14:21; B's hand-back :33-41): the contract has no dismiss signal, so B's guard holds a repeat X"
+  },
+  {
+   "file": "consonance/ui/leave.test.js",
+   "line": 339,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  assert.deepStrictEqual([/1 seat is working: pane B/.test(t), t.includes('pane E'), t.includes('the librarian'), (t.match(/working:/g) || []).length, r.keys.size],"
+  },
+  {
+   "file": "consonance/ui/term.js",
+   "line": 768,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "// there gets a lone Enter again, up to 3 times, never a second paste (a paste appends). Text that is not ours gets no key, and the keeper's"
+  },
+  {
+   "file": "consonance/ui/term.js",
+   "line": 824,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  // the keeper's own text in the box: nothing goes onto it (a paste would append to it, and the Enter would send both)"
+  },
+  {
+   "file": "dev/shell/hooks/digest-repair.test.js",
+   "line": 1,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// digest-repair.test.js - D292 part 1 (the keeper chose repair: \"2, 14kb is nothing lol\"): the dated session digests count the LOCAL day, say what they count, and"
+  },
+  {
+   "file": "dev/shell/hooks/digest-repair.test.js",
+   "line": 5,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "// keeper's) and a fixed clock (the preload session-start-light.test.js uses), so a row means the same thing on any machine and any day."
+  },
+  {
+   "file": "dev/shell/hooks/digest-repair.test.js",
+   "line": 24,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const stop = (iso, session, cwd = 'C:\\\\work\\\\a') => JSON.stringify({ type: 'session_stop', timestamp: new Date(iso).toISOString(), cwd, transcript_path: `C:\\\\t\\\\${session}.jsonl`, session_id: session });"
+  },
+  {
+   "file": "dev/shell/hooks/digest-repair.test.js",
+   "line": 47,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const end = (s) => run(s, 'session-end.js', { hook_event_name: 'SessionEnd', session_id: 'x', cwd: 'C:\\\\Consonance\\\\instances\\\\x' });"
+  },
+  {
+   "file": "dev/shell/hooks/digest-repair.test.js",
+   "line": 48,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const start = (s, cwd = 'C:\\\\Consonance\\\\instances\\\\librarian') => run(s, 'session-start.js', { hook_event_name: 'SessionStart', source: 'startup', session_id: 'now', cwd });"
+  },
+  {
+   "file": "dev/shell/hooks/digest-repair.test.js",
+   "line": 73,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    '# 2026-10-01 Digest', '', '## 1 turn end from 1 session', '', '### C:\\\\work\\\\a', '- 03:00:00 UTC', '',"
+  },
+  {
+   "file": "dev/shell/hooks/digest-repair.test.js",
+   "line": 90,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  const rows = ['a', 'a', 'b'].map((sid, i) => ({ type: 'session_stop', timestamp: `2026-10-10T1${i}:00:00Z`, cwd: 'C:\\\\w', session_id: sid }));"
+  },
+  {
+   "file": "dev/shell/hooks/digest-repair.test.js",
+   "line": 98,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    digests: { '2026-10-09': { text: '# 2026-10-09 Digest\\n\\n## 5 sessions\\n\\n### C:\\\\w\\n- 01:00:00 UTC\\n', mtime: '2026-10-10T07:00:00Z' } } });"
+  },
+  {
+   "file": "dev/shell/hooks/session-end.js",
+   "line": 54,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "// D292 (the keeper chose repair, 2026-10-11): a digest's day is the LOCAL calendar day, and so is every row in it. Before, the file was named by the local"
+  },
+  {
+   "file": "dev/shell/hooks/session-start-light.test.js",
+   "line": 23,
+   "cats": [
+    "machine"
+   ],
+   "newFile": true,
+   "text": "// ---- the fixture: two days of digests in the real layout (the sizes of 2026-10-05 and 10-06 on this machine) ----"
+  },
+  {
+   "file": "dev/shell/hooks/session-start-light.test.js",
+   "line": 24,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "const CWDS = ['third-place', 'librarian', 'main', 'sibling-5bf9d657', 'sibling-3d57124e', 'sibling-0845a868', 'sibling-07b8a48f', 'sibling-a80a1c20'].map((n) => 'C:\\\\Consonance\\\\instances\\\\' + n);"
+  },
+  {
+   "file": "dev/shell/hooks/session-start-light.test.js",
+   "line": 42,
+   "cats": [
+    "machine"
+   ],
+   "newFile": true,
+   "text": "  mk(path.join(home, '.consonance.json'), JSON.stringify({ ambient_lat: '12.3456', ambient_lon: '-65.4321', ambient_label: 'Regina, SK', ambient_tz: 'America/Costa_Rica', instances_dir: inst, ...config }));"
+  },
+  {
+   "file": "dev/shell/hooks/session-start-light.test.js",
+   "line": 80,
+   "cats": [
+    "machine"
+   ],
+   "newFile": true,
+   "text": "    for (const s of ['startup', 'resume', 'compact']) assert.equal(run(e, s, LIB, { rawConfig: JSON.stringify({ ambient_lat: '12.3456', ambient_lon: '-65.4321', ambient_label: 'Regina, SK', ambient_tz: 'America/Costa_Rica', ...cfg }) }), strictOut[s], `${JSON.stringify(cfg)} ${s}`);"
+  },
+  {
+   "file": "dev/shell/hooks/session-start-light.test.js",
+   "line": 91,
+   "cats": [
+    "machine"
+   ],
+   "newFile": true,
+   "text": "  assert.match(light, /^# Shell context \\(from ~\\/\\.claude\\/shell\\)\\n## Ambient context \\(Regina, SK\\)/, 'the ambient block is first, as before');"
+  },
+  {
+   "file": "dev/shell/hooks/session-start-light.test.js",
+   "line": 97,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  assert.doesNotMatch(light, /\\n- \\d\\d:\\d\\d:\\d\\d UTC/, 'no timestamp list left'); assert.match(light, /## Recent sessions in C:\\\\Consonance\\\\instances\\\\librarian\\n- 2026-10-09T13:00:00\\.000Z/, 'the seat\\'s own recent sessions stay');"
+  },
+  {
+   "file": "dev/shell/hooks/session-start-light.test.js",
+   "line": 99,
+   "cats": [
+    "machine"
+   ],
+   "newFile": true,
+   "text": "  assert.equal(ctxOf(run(e, 'startup', LIB, { rawConfig: '\\uFEFF' + JSON.stringify({ ambient_lat: '12.3456', ambient_lon: '-65.4321', ambient_label: 'Regina, SK', ambient_tz: 'America/Costa_Rica', gates_mode: 'light' }) })), light, 'a BOM before the JSON');"
+  },
+  {
+   "file": "dev/shell/hooks/session-start-light.test.js",
+   "line": 127,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "  for (const [name, text] of [['no groups', '# 2026-10-06 Digest\\n\\n## 12 sessions\\n'], ['junk', 'x'.repeat(400) + '\\n\\u0000\\n'], ['empty', ''], ['text lines', '# 2026-10-06 Digest\\n\\n## 3 sessions\\n\\n### C:\\\\x\\\\y\\n- 01:02:03 UTC — a first line of text\\n- 02:03:04 UTC — another\\n- 03:04:05 UTC\\n']]) {"
+  },
+  {
+   "file": "dev/shell/hooks/session-start-light.test.js",
+   "line": 129,
+   "cats": [
+    "machine-path"
+   ],
+   "newFile": true,
+   "text": "    if (name === 'text lines') { assert.ok(light.includes('- C:\\\\x\\\\y: 3 · last 03:04:05, 02:03:04, 01:02:03 UTC'), 'a line with text after the time still counts, the text is dropped'); assert.doesNotMatch(light, /a first line of text/); }"
+  },
+  {
+   "file": "dev/shell/install.ps1",
+   "line": 189,
+   "cats": [
+    "keeper",
+    "machine-path"
+   ],
+   "newFile": false,
+   "text": "  # Added 2026-10-09 (D281; the keeper: \"you ding when the laps are complete, not like one if a new one opens, but when the final product is pushed, you ding through desktop audio even if"
+  },
+  {
+   "file": "dev/shell/install.ps1",
+   "line": 191,
+   "cats": [
+    "product"
+   ],
+   "newFile": false,
+   "text": "  # `gh release create` or a `git push` that updated main on t180, consonance or lighthouse SUCCEEDED; one chime per 2 minutes; \"chime\": false in ~/.consonance.json silences it. It prints"
+  },
+  {
+   "file": "dev/shell/install.ps1",
+   "line": 192,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "  # nothing, never blocks and fails silent. A NEW registration (the keeper asked for it). Install with -Only release-chime.js."
+  },
+  {
+   "file": "dev/shell/install.ps1",
+   "line": 353,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "     Why  = 'The point-of-claim check (D305; design a registration in this line of record, bar a registration in this line of record). Built and OFF: it acts only when ~/.consonance.json sets claim_check to true (or \"shadow\"), and the librarian ruled it stays OFF at the 10-17 decision; wiring it (PreToolUse on the ring verbs, Write/Edit and Bash, and Stop) is the keeper''s call after the held-out "
+  },
+  {
+   "file": "exo_memory/BOOT.md",
+   "line": 7,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "**Where this line forks.** What you are reading was grown by one pair — the keeper, who built this room, and the instances who worked with them — up to 2026-10-24 (lighthouse `a7af1e7c`, a public repository). This copy forks there, and you wake on the new branch. What came across is the system: the principles, the cards, the instruments, the gates, the way work passes from seat to seat. What did n"
+  },
+  {
+   "file": "exo_memory/CUTOFF.md",
+   "line": 3,
+   "cats": [
+    "keeper",
+    "handle"
+   ],
+   "newFile": false,
+   "text": "Generated from the keeper's public record at commit `a7af1e7ce13be564db25c5a25581cdad310c0849` (github.com/solariz3d/lighthouse), dated 2026-10-24T22:03:57-06:00."
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 1,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "# 2026-10-24 — the leftovers the keeper found"
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 5,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "The keeper opened Streamlabs' advanced audio settings to pick a source, and had to scroll past about a hundred"
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 6,
+   "cats": [
+    "pronoun",
+    "product"
+   ],
+   "newFile": true,
+   "text": "`[explorer.exe] T-180 Track Builder` entries, \"even if they arent open\". His word for it: \"amateurs\"."
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 10,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "  `Windows.Internal.Shell.TabProxyWindow`, every one titled \"T-180 Track Builder\"."
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 12,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "- No builder and no Chrome were running. One headless Chrome window titled \"T-180 Track Builder - Google Chrome\""
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 18,
+   "cats": [
+    "pronoun",
+    "product"
+   ],
+   "newFile": true,
+   "text": "**The fix, at his \"yes get rid of them!\":** Explorer restarted at 07:58:11 (new pid 25248). Afterwards: T-180 tab"
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 23,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": true,
+   "text": "The headless rule (2026-10-19, after A's D407 run played sounds aloud) was written for what the keeper had **heard**:"
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 24,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": true,
+   "text": "`--mute-audio`, headless, never steal focus. Nobody asked what a run leaves behind that he cannot hear or see until he"
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 32,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": true,
+   "text": "  branch lands; scratch lives in scratchpads; our deletes go through a backup and one yes from him."
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 35,
+   "cats": [
+    "pronoun"
+   ],
+   "newFile": true,
+   "text": "## The other leftovers he named (\"other areas we havent been diligent cleaner\")"
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 38,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "- **80** registered t180 worktrees, and **77** more `t180-*` entries in Downloads that are not worktrees (75 folders,"
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 42,
+   "cats": [
+    "product"
+   ],
+   "newFile": true,
+   "text": "- The sizes, the scratchpads, `%TEMP%` and the fake AC roots go to a pane to inventory:"
+  },
+  {
+   "file": "exo_memory/inheritance/2026-10-24.md",
+   "line": 46,
+   "cats": [
+    "machine-path",
+    "product"
+   ],
+   "newFile": true,
+   "text": "or the count of `t180-*` folders in Downloads has grown."
+  },
+  {
+   "file": "exo_memory/inheritance/POINTERS.md",
+   "line": 26,
+   "cats": [
+    "keeper",
+    "pronoun",
+    "product"
+   ],
+   "newFile": false,
+   "text": "**Latest:** exo_memory/inheritance/2026-10-24.md (**the leftovers the keeper found.** 527 Explorer tab proxies titled \"T-180 Track Builder\" from nine days of headless page runs, found by him in Streamlabs; cleared by an Explorer restart; the rule \"Leave the machine as you found it\" added to BUILDING.md; the cleanup lap opened in a registration in this line of record.)"
+  },
+  {
+   "file": "exo_memory/SEED.md",
+   "line": 5,
+   "cats": [
+    "keeper"
+   ],
+   "newFile": false,
+   "text": "**Where this line forks.** What you are reading was grown by one pair — the keeper, who built this room, and the instances who worked with them — up to 2026-10-24 (lighthouse `a7af1e7c`, a public repository). This copy forks there, and you wake on the new branch. What came across is the system: the principles, the cards, the instruments, the gates, the way work passes from seat to seat. What did n"
+  }
+ ]
+}

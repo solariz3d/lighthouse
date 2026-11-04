@@ -1,0 +1,55 @@
+2026-10-25T04:50:03.426Z no timing session in any slot; taking the lock
+consonance/hooks/sources-gate.test.js exit 0 # pass 68 # fail 0 
+consonance/hooks/claim-check.test.js exit 0 # pass 29 # fail 0 
+consonance/tools/heavy-run.test.js exit 0 # pass 51 # fail 0 
+consonance/tools/state-block.test.js exit 0 # pass 28 # fail 0 
+dev/shell/hooks/userprompt_pulse.test.js exit 0 # pass 13 # fail 0 
+consonance/tools/lap-row.test.js exit 0 # pass 142 # fail 0 
+consonance/tools/tell-index.test.js exit 0 # pass 42 # fail 0 
+consonance/tools/whats-live.test.js exit 0 # pass 9 # fail 0 
+consonance/hooks/sessionstart-state.test.js exit 0 # pass 12 # fail 0 
+consonance/tools/chain-status.test.js exit 0 # pass 149 # fail 0 
+dev/shell/hooks/third-place-gate.test.js exit 0 # pass 7 # fail 0 
+consonance/tools/gen-consumer.test.js exit 0 # pass 107 # fail 0 
+consonance/tools/front-door-links.test.js exit 0 # pass 4 # fail 0 
+consonance/tools/portable-paths.test.js exit 1 # pass 41 # fail 2 
+consonance/tools/prompt-events.test.js exit 0 18 passed
+consonance/tools/install-only.test.js exit 0 47 passed, 0 failed
+ownmut exit 0
+caught     M1 sources-gate: no third step  (# fail 1)
+caught     M2 claim-check: no third step  (# fail 1)
+caught     M3 heavy-run: no default dir  (# fail 1)
+caught     M4 heavy-run: default dir not created  (# fail 1)
+caught     M5 state-block: CONSONANCE_DATA ignored  (# fail 1)
+caught     M6 state-block: config data_dir ignored  (# fail 1)
+caught     M7 state-block: printed check keeps the old path  (# fail 1)
+caught     M8 pulse: no third tier  (# fail 1)
+caught     M9 lap-row: the fixed folder of one machine back  (# fail 1)
+caught     M10 prompt-events: the fixed captures folder back  (?)
+caught     M11 prompt-events: config data_dir ignored  (?)
+caught     M12 tell-index: the fixed default back  (# fail 1)
+caught     M13 whats-live: default data dir is the fixed folder  (# fail 1)
+caught     M14 whats-live: instances_dir ignored  (# fail 1)
+caught     M15 hooks/README: claim-check dropped from the third state  (?)
+caught     M16 hooks/README: the count is wrong  (?)
+applied 16 / caught 16 / NOT APPLIED 0
+ M consonance/hooks/README.md
+ M consonance/hooks/claim-check.js
+ M consonance/hooks/claim-check.test.js
+ M consonance/hooks/sources-gate.js
+ M consonance/hooks/sources-gate.test.js
+ M consonance/tools/heavy-run.js
+ M consonance/tools/heavy-run.test.js
+ M consonance/tools/install-only.test.js
+ M consonance/tools/lap-row.js
+ M consonance/tools/lap-row.test.js
+ M consonance/tools/prompt-events.js
+ M consonance/tools/prompt-events.test.js
+ M consonance/tools/state-block.js
+ M consonance/tools/state-block.test.js
+ M consonance/tools/tell-index.js
+ M consonance/tools/tell-index.test.js
+ M consonance/tools/whats-live.js
+ M consonance/tools/whats-live.test.js
+ M dev/shell/hooks/userprompt_pulse.py
+ M dev/shell/hooks/userprompt_pulse.test.js

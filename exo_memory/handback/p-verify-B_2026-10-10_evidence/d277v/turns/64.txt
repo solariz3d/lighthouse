@@ -1,0 +1,677 @@
+MESSAGE 64  msg_011CfqJm7f7dR5xrMeZHw8EQ  seat E  ts 2026-10-08T19:16:55.529Z  turn L57103..L57291 (next prompt L57428)
+CLAIMS:
+  [msg_011CfqJm7f7dR5xrMeZHw8EQ|1] **"Everything it writes goes under `$env:USERPROFILE`"**: Check every write in the script (`New-Item`, `Set-Content`, `Out-File`, `WriteAllText`, `Copy-Item`, redirections). Also check that `$settingsPath` and the shell directory are built from `$env:USERPROFILE`, not `$HOME`, `~`, `$env:APPDATA`, `$env:TEMP` or a hardcoded path.
+  [msg_011CfqJm7f7dR5xrMeZHw8EQ|5] **"Making the edit."**: Confirm the Edit actually applied and landed in the right file at the right place.
+  [msg_011CfqJm7f7dR5xrMeZHw8EQ|14] **"Nothing else in it was invented."**: This is true of this block. Check that nothing later adds default keys beyond the hooks.
+
+--- L57103 user 2026-10-08T19:13:01.197Z
+USER: 
+
+<pasted_content id="37d3">
+[chair:MAIN] D273 lap 2, E: the INSTALL PATH. Consonance consumer refresh; plan exo_memory/loop/plan_consumer_refresh_2026-10-08.md, "Lap 2" (lines 82–85) and the lap-1 collation (lines 59–64). This touches LIVE hooks, so tests come first, and our own environment must not change.
+1. The five hooks that hard-code C:\Consonance\data / instances (session-start, sessionstart-state, findings-return, sourced-stop, precompact-preserve) resolve their dirs the way the app does: ~/.consonance.json, then %USERPROFILE%\.consonance. PROVE that on THIS machine each resolves to exactly the same paths before and after: print both, byte for byte, in the hand-back. Use a temp HOME for the stranger case.
+2. install.ps1 creates `{}` when settings.json is missing, and says so.
+3. GUIDE: prerequisites (Python, Node) plus the hooks step.
+Disjoint: B has gen-consumer.js; C has the relabel module, frag-fork and GATES.md, and will change ONLY the refusal-message strings in some hooks. Keep your edits to path resolution, and name your lines so the two merge cleanly. A has the workshop-bound rulings.
+Your own lighthouse worktree from ea4f5bcf, commits by named paths. Live hooks only change when the chair lands; never edit ~/.claude or the installed hooks directly.
+Hand-back: exo_memory/handback/p-consumer-install-E_2026-10-08.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_consumer_refresh_2026-10-08.md
+NEXT: librarian call_librarian with the hand-back pointer when the hooks, install.ps1 and GUIDE are committed with the before/after proof
+</pasted_content id="37d3">
+
+--- L57113 assistant 2026-10-08T19:13:05.815Z
+TOOL_USE Bash [toolu_01D1uYfpi1Lck3pZv1hBPYK7]: {"command":"sed -n 55,95p /c/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_consumer_refresh_2026-10-08.md; cd /c/Users/nname/Desktop/lighthouse && git log --oneline -1 ea4f5bcf","description":"Read the plan's lap-1 collation and lap 2"}
+--- L57114 user 2026-10-08T19:13:06.081Z
+RESULT [toolu_01D1uYfpi1Lck3pZv1hBPYK7]:   person keeps their room the way the keeper kept this one.
+- C's lap 2 builds the ROLE/PROVENANCE split as a generator rule with a test, from C's inventory (§4, the two (a) lists).
+
+## D273 lap 1, COLLATED (librarian, 13:2x)
+- B (`handback/p-consumer-parity-B_2026-10-08.md`): parity at `ea4f5bcf`, clean tree: **(P, M, B) = (32, 1, 1), I = 33** (09-04 was 18, 1, 1).
+  Rust: generated bin 957 pass / 22 fail, arch_test 2 fail, so **24 Rust parity breaks**, all green in source. Stranger install (contained): it
+  BUILDS (exit 0, 1 m 43 s). But GUIDE never mentions the hooks; `install.ps1` refuses a fresh home with no `settings.json`; GUIDE lacks Python/Node;
+  **five hooks default to `C:\Consonance\data` / `C:\Consonance\instances`** (session-start, sessionstart-state, findings-return, sourced-stop,
+  precompact-preserve), so a stranger pane writes to a place the app never reads (and on THIS machine, into the keeper's data). First visible
+  launch PARKED.
+- C (`handback/p-consumer-fork-C_2026-10-08.md`): the inventory; `frag-fork.md` drafted (3 sites: main.rs:2843, BOOT.md:5, SEED.md:3); the
+  warrants-not-inherited finding (F2); `GATES.md` drafted.
+- **My registered rule fired: P = 32 > 30, so the 2–4 lap estimate was WRONG.** Re-made from B's list: **5 laps, range 4–6** (B §6). That is
+  not a defence of the old number.
+- Rulings (librarian, from the keeper's answers):
+  (1) A new user wakes into BOOT, the full room, with `frag-fork.md` injected: the keeper's "a forked path of you right now". SEED stays the fallback
+      when no BOOT is found.
+  (2) `jev/` is EXCLUDED with its tests (Jev is off since D164).
+  (3) The keeper term follows the 12:55 ruling above.
+  (4) GUIDE lists Python and Node, and gains the hooks step.
+
+
+…[1125 chars cut]…
+s + the hooks step.
+- **A: the workshop-bound class, ruled one by one.** The 12 B-side test files and the 24 Rust parity breaks: product fixture (ship it, e.g. the
+  composer/ready screens) or workshop record (declare it, never delete it), each with a one-line reason.
+- Then lap 3 (`frag-fork` live + the visible first launch, WITH the keeper, off-screen and contained) and lap 4 (generate, cold stranger read, push
+  with fresh history).
+
+NEXT: chair dispatch D273 lap 2 to B, C, E and A when this plan is read
+ea4f5bcf D270/D271 close: A's no-pointer-lock and E's Level/To floor hand-backs (with the anchor sweep and P49/P51 proof), both plans, A's evidence, librarian desk, maps A/E
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57117 assistant 2026-10-08T19:13:08.462Z
+TEXT: Making my own lighthouse worktree from `ea4f5bcf`, then finding the five hooks and how the app itself resolves its folders.
+--- L57118 assistant 2026-10-08T19:13:10.194Z
+TOOL_USE Bash [toolu_01LA73JekD3yE5nLigRk1DkB]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git worktree add -b d273-install /c/Users/nname/Desktop/worktrees/e-install-wt ea4f5bcf 2>&1 | tail -1; cd /c/Users/nname/Desktop/worktrees/e-install-wt && git ls-files | grep -iE \"session-start|sessionstart-state|findings-return|sourced-stop|precompact-preserve|install.ps1|GUIDE\" | head -20","description":"Make the worktree and find the hooks, install.ps1 and GUIDE"}
+--- L57119 user 2026-10-08T19:13:12.014Z
+RESULT [toolu_01LA73JekD3yE5nLigRk1DkB]: HEAD is now at ea4f5bcf D270/D271 close: A's no-pointer-lock and E's Level/To floor hand-backs (with the anchor sweep and P49/P51 proof), both plans, A's evidence, librarian desk, maps A/E
+consonance/GUIDE.md
+consonance/hooks/findings-return.js
+consonance/hooks/findings-return.test.js
+consonance/hooks/precompact-preserve.js
+consonance/hooks/precompact-preserve.test.js
+consonance/hooks/sessionstart-state.js
+consonance/hooks/sessionstart-state.test.js
+consonance/hooks/sourced-stop.js
+consonance/hooks/sourced-stop.test.js
+desktop-install.ps1
+dev/shell/hooks/session-start.js
+dev/shell/install.ps1
+exo_memory/handback/p-compact-C_2026-10-05_backups/precompact-preserve.installed.js
+exo_memory/handback/p-compact-C_2026-10-05_backups/precompact-preserve.master.js
+exo_memory/handback/p-tphooks-A_2026-10-05_backups/session-start.js.bak-20261005
+exo_memory/handback/p-tphooks-A_2026-10-05_backups/sessionstart-state.js.bak-20261005
+exo_memory/handback/p-tphooks2-B_2026-10-05_backups/session-start.js.installed.bak-20261005b
+exo_memory/handback/p-tphooks2-B_2026-10-05_backups/session-start.js.master.bak-20261005b
+exo_memory/handback/p-tphooks2-B_2026-10-05_backups/sessionstart-state.js.installed.bak-20261005b
+exo_memory/handback/p-tphooks2-B_2026-10-05_backups/sessionstart-state.js.master.bak-20261005b
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57121 assistant 2026-10-08T19:13:14.458Z
+TOOL_USE Bash [toolu_01WcphHMGeAWX6BKBZYYtyu8]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && for f in dev/shell/hooks/session-start.js consonance/hooks/sessionstart-state.js consonance/hooks/findings-return.js consonance/hooks/sourced-stop.js consonance/hooks/precompact-preserve.js; do echo \"== $f\"; grep -n \"Consonance\\|consonance.json\\|USERPROFILE\\|homedir\\|data_dir\\|instances\" $f | head -12 | cut -c1-220; done","description":"Find the hard-coded paths in the five hooks"}
+--- L57122 user 2026-10-08T19:13:14.938Z
+RESULT [toolu_01WcphHMGeAWX6BKBZYYtyu8]: == dev/shell/hooks/session-start.js
+44:SHELL_DIR = process.env.CONSONANCE_SHELL_DIR || path.join(os.homedir(), '.claude', 'shell');
+50:const INSTANCES_DIR = path.join('C:', path.sep, 'Consonance', 'instances');
+154:// Consonance's pulse gives a restored pane the same block (main.rs::night_table); this is the
+214:  } catch (e) { /* no Consonance on this machine; a dreamless bed is fine */ }
+338:  // Fresh panes (Consonance's unbriefed spawn type) wake as a stock claude —
+== consonance/hooks/sessionstart-state.js
+42:const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
+44:const CONFIG_NAME = '.consonance.json';
+74: * The fix is to ask the machine rather than to guess it: `~/.consonance.json` already names
+83:    const raw = fs.readFileSync(path.join(os.homedir(), CONFIG_NAME), "utf8").replace(BOM, "");
+== consonance/hooks/findings-return.js
+81:const DATA = process.env.VANTAGE_DATA || 'C:\\Consonance\\data';
+83:const RETURNS = process.env.RETURN_LEDGER || 'C:\\Consonance\\data\\return_ledger.jsonl';
+84:const STATEDIR = process.env.RETURN_STATE_DIR || 'C:\\Consonance\\data\\return_state';
+== consonance/hooks/sourced-stop.js
+88:const LEDGER = process.env.SOURCED_LEDGER || 'C:\\Consonance\\data\\sourced_ledger.jsonl';
+== consonance/hooks/precompact-preserve.js
+66:const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57125 assistant 2026-10-08T19:13:16.946Z
+TEXT: Each hook hard-codes `C:\Consonance\data` or `C:\Consonance\instances`, some behind an environment override. Now the app's own rule: which keys it reads from `~/.consonance.json`, and its fallback.
+--- L57126 assistant 2026-10-08T19:13:18.200Z
+TOOL_USE Bash [toolu_01RpKb8KjiRNZBwsJd1ZtBmD]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && grep -n \"consonance.json\\|fn data_dir\\|fn instances_dir\\|fn base_dir\\|fn home_dir\\|\\.consonance\\\"\\|USERPROFILE\\|data_root\\|\\\"data\\\"\\|\\\"instances\\\"\" consonance/src-tauri/src/main.rs | head -30 | cut -c1-220","description":"Find the app's directory resolution in main.rs"}
+--- L57133 user 2026-10-08T19:13:18.441Z
+RESULT [toolu_01RpKb8KjiRNZBwsJd1ZtBmD]: 39:// Persisted config (~/.consonance.json). Old launcher-era fields (base/flags/instances
+52:    // only in ~/.consonance.json, read only by local session hooks, never transmitted.
+65:    std::env::var("USERPROFILE").unwrap_or_else(|_| ".".into())
+69:    PathBuf::from(home()).join(".consonance.json")
+89:/// Parse ~/.consonance.json FIELD BY FIELD, so one malformed value can never discard the rest.
+95:/// built-in defaults. The Main instance then woke in an empty `%USERPROFILE%\claude-instances\main`
+337:/// Read `room_path` out of ~/.consonance.json WITHOUT touching the live `DIRS` resolver.
+382:///   checkout's location is on disk in ~/.consonance.json and needs no second mechanism.
+740:    format!("{}\\.consonance", home())
+758:fn data_dir() -> PathBuf {
+3479:             repo checkout resolved (room_path in ~/.consonance.json is what names it)"
+3639:/// WAS hardcoded to `%USERPROFILE%\Desktop\lighthouse\exo_memory\map\`, which is correct on
+3978:        let instances = root.join("instances");
+3979:        let data = root.join("data");
+4028:    /// `%USERPROFILE%\Desktop\lighthouse\exo_memory\map\<letter>.md`. Its existing test asserted
+4039:        let data = root.join("data");
+4043:            instances: root.join("instances").display().to_string(),
+4107:        let data = root.join("data");
+4117:            instances: root.join("instances").display().to_string(),
+4147:        let instances = root.join("instances");
+4151:            data: root.join("data").display().to_string(),
+5768:/// the cwd through `is_dir()` and falls back to `%USERPROFILE%`; `CreateProcessW` then succeeds,
+5799:             alone, portable-pty would have substituted %USERPROFILE% and the pane would have come \
+5834:            instances: root.join("instances").display().to_string(),
+5835:            data: root.join("data").display().to_string(),
+5850:    /// the directory `panes.json` names — created — and never in `%USERPROFILE%`.
+5855:        let cwd = root.join("instances").join("sibling-0ff5eed0");
+5864:             `is_dir` filter drops it and substitutes %USERPROFILE% — B and E on D at 1789026884."
+5882:        let f = root.join("instances").join("sibling-f11e0000");
+5914:        let inst = root.join("instances");
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57135 assistant 2026-10-08T19:13:21.818Z
+TOOL_USE Bash [toolu_01KhpUDnAcN65x6wwqyjoEPm]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && sed -n 39,64p consonance/src-tauri/src/main.rs | cut -c1-200; sed -n 730,775p consonance/src-tauri/src/main.rs | cut -c1-200; python -c \"import json,os;print(sorted(json.load(open(os.path.expanduser('~/.consonance.json'),encoding='utf-8-sig')).keys()))\" 2>/dev/null || node -e \"const j=JSON.parse(require('fs').readFileSync(require('os').homedir()+'/.consonance.json','utf8').replace(/^﻿/,''));console.log(Object.keys(j).sort().join(' '));console.log('instances',j.instances,'data',j.data,'data_dir',j.data_dir)\"","description":"Read the app's config fields and data_dir"}
+--- L57136 user 2026-10-08T19:13:22.283Z
+RESULT [toolu_01KhpUDnAcN65x6wwqyjoEPm]: // Persisted config (~/.consonance.json). Old launcher-era fields (base/flags/instances
+// + Instance struct) were dropped with the New/Instances tabs — serde ignores any
+// unknown fields left in old config files, so removal is forward-compatible.
+#[derive(Serialize, Deserialize, Clone, Default)]
+struct Config {
+    // configurable directories (Settings tab); empty = built-in default. Fixes portability.
+    #[serde(default)]
+    room_path: String,
+    #[serde(default)]
+    instances_dir: String,
+    #[serde(default)]
+    data_dir: String,
+    // ambient location (Settings tab): the sky the instances wake under. Private — stored
+    // only in ~/.consonance.json, read only by local session hooks, never transmitted.
+    // Empty = built-in default. Makes the room's location system-agnostic, like the dirs.
+    #[serde(default)]
+    ambient_lat: String,
+    #[serde(default)]
+    ambient_lon: String,
+    #[serde(default)]
+    ambient_label: String,
+    #[serde(default)]
+    ambient_tz: String,
+}
+
+fn home() -> String {
+        "\n---\n\n# THE LONG-FORM REFERENCES — on disk, not in this shell\n\nThe room names these \
+         and deliberately does not carry them; they are too long to hold and are meant to be \
+         OPENED when the moment calls for them, not recited. Absolute paths, valid on this \
+         machine:\n\n{out}\n"
+    )
+}
+fn default_instances() -> String {
+    format!("{}\\claude-instances", home())
+}
+fn default_data() -> String {
+    format!("{}\\.consonance", home())
+}
+
+fn set_dirs(cfg: &Config) {
+    let pick = |v: &str, d: fn() -> String| if v.trim().is_empty() { d() } else { v.trim().to_string() };
+    *DIRS.lock().unwrap() = Some(Dirs {
+        room: pick(&cfg.room_path, default_room),
+        instances
+…[923 chars cut]…
+ File (no BufWriter) as it arrives.
+// The log accumulates ACROSS sessions (append + a per-spawn seam), so even when claude restarts
+// fresh and forgets, WE hold the whole history — the source for the scroll-up band (layer 3) and
+// the board-feed (layer 4). A per-user, per-machine path (under the configurable data dir), so it
+// stays directory-agnostic.
+fn capture_dir() -> PathBuf {
+    let p = data_dir().join("captures");
+    let _ = fs::create_dir_all(&p);
+    p
+ambient_label ambient_lat ambient_lon ambient_tz base data_dir dream_model dream_times flags instances instances_dir machine_tag room_path state_dir
+instances [] data [90mundefined[39m data_dir C:\Consonance\data
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57141 assistant 2026-10-08T19:13:32.691Z
+TOOL_USE Bash [toolu_01EUNrZMsYjeQP8yarn15NfL]: {"command":"node -e \"const j=JSON.parse(require('fs').readFileSync(require('os').homedir()+'/.consonance.json','utf8').replace(/^﻿/,''));console.log(JSON.stringify({instances_dir:j.instances_dir,data_dir:j.data_dir,state_dir:j.state_dir}))\"; cd /c/Users/nname/Desktop/worktrees/e-install-wt && grep -n \"hooks\\|Copy-Item\\|settings.json\" dev/shell/install.ps1 | head -25 | cut -c1-200; grep -n \"hooks\\|Copy-Item\" desktop-install.ps1 | head -10 | cut -c1-200","description":"Read config values and how hooks are installed"}
+--- L57142 user 2026-10-08T19:13:33.040Z
+RESULT [toolu_01EUNrZMsYjeQP8yarn15NfL]: {"instances_dir":"C:\\Consonance\\instances","data_dir":"C:\\Consonance\\data","state_dir":"C:\\Consonance\\state"}
+12:#   pwsh dev/shell/install.ps1            # sync files + register hooks
+20:# registers all-or-nothing, so the same run re-registered hooks\stop.js, l2-overseer.js and
+24:# noticed and restored from ~/.claude/settings.json.bak-20260907-063417.
+37:# ── 2026-08-17: WHY THIS NOW EDITS settings.json, REVERSING A DELIBERATE REFUSAL ────────────
+39:# The header used to say: "It deliberately does NOT edit ~/.claude/settings.json… a one-time
+46:#   * NINE of the hooks actually registered and running were in NO repository at all — including
+51:#   * THREE conventions were live at once: ~/.claude/shell/hooks/ (registered), ~/.claude/shell/
+52:#     (this script's target, empty), and two hooks pointed straight at repo paths.
+77:# requiring hooks look; hooks land in `hooks\` because that is where the registered ones already
+88:  # measured, not stylistic: on this machine `hooks\stop.js` is DECLARED below and is NOT in
+89:  # ~\.claude\settings.json, and neither is `hooks\userprompt-submit.js` (it is a HOLD). Hanging a
+93:  @{ From = 'dev\shell\hooks\ready-stop.js';             To = 'hooks\ready-stop.js' }
+94:  @{ From = 'dev\shell\hooks\ready-prompt.js';           To = 'hooks\ready-prompt.js' }
+98:  @{ From = 'dev\shell\hooks\session-start.js';          To = 'hooks\session-start.js' }
+113:  @{ From = 'dev\shell\hooks\userprompt-submit.js';      To = 'hooks\userprompt-submit.js' }
+114:  @{ From = 'dev\shell\hooks\stop.js';                   To = 'hooks\stop.js' }
+115:  @{ From = 'dev\shell\hooks\session-end.js';            To = 'hooks\session-end.js' }
+116:  @{ From = 'dev\shell\hooks\precompact.js';             To = 
+…[281 chars cut]…
+      To = 'hooks\l3-overseer.js' }
+120:  @{ From = 'dev\shell\hooks\l3-overseer-worker.js';     To = 'hooks\l3-overseer-worker.js'; Lib = $true }
+122:  @{ From = 'dev\shell\hooks\sessionstart-ambient.js';   To = 'sessionstart-ambient.js' }
+123:  @{ From = 'dev\shell\hooks\userprompt_pulse.py';       To = 'userprompt_pulse.py' }
+135:  @{ From = 'consonance\hooks\blind.js';                 To = 'blind.js'; Lib = $true }
+51:  Copy-Item "$claudeHome\CLAUDE.md" $bak
+54:Copy-Item "$repo\exo_memory\CLAUDE.global.md" "$claudeHome\CLAUDE.md" -Force
+91:Copy-Item "$repo\exo_memory\memory\*.md" $memDir -Force
+98:  Copy-Item "$repo\consonance\seed-resonance.jsonl" "$res\atoms.jsonl" -Force
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57153 assistant 2026-10-08T19:13:53.820Z
+TOOL_USE Bash [toolu_017GBEBbpXhGWYJuBd3P6X6T]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && sed -n 44,52p dev/shell/hooks/session-start.js | cut -c1-200; echo ---; sed -n 38,95p consonance/hooks/sessionstart-state.js | cut -c1-200; echo ---; sed -n 78,86p consonance/hooks/findings-return.js | cut -c1-200; echo ---; sed -n 84,90p consonance/hooks/sourced-stop.js | cut -c1-200; echo ---; sed -n 62,68p consonance/hooks/precompact-preserve.js | cut -c1-200; for f in dev/shell/hooks/session-start.js consonance/hooks/*.js; do :; done; head -c 300 consonance/hooks/sourced-stop.js | grep -c require","description":"Read the path lines in each hook"}
+--- L57154 user 2026-10-08T19:13:54.354Z
+RESULT [toolu_017GBEBbpXhGWYJuBd3P6X6T]: SHELL_DIR = process.env.CONSONANCE_SHELL_DIR || path.join(os.homedir(), '.claude', 'shell');
+const DIGESTS_DIR = path.join(SHELL_DIR, 'digests');
+const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
+const AMBIENT_PATH = path.join(SHELL_DIR, 'lib', 'ambient.js');
+const L3_OVERSEER_LOG = path.join(SHELL_DIR, 'l3_overseer.jsonl');
+const DURATION_DIR = path.join(SHELL_DIR, 'duration');
+const INSTANCES_DIR = path.join('C:', path.sep, 'Consonance', 'instances');
+const NIGHT_TABLE_MAX_TAG = 48;
+
+---
+// THE DREAM GATE, same rule as every hook here: the gap-dream is an anti-instruction and gets no
+// instrumentation. A state block is the most instruction-shaped thing this room emits.
+if (process.env.CONSONANCE_DREAM) process.exit(0);
+
+const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
+const LEDGER = process.env.CONSONANCE_SESSIONSTATE_LOG || path.join(DATA, 'sessionstart-state.jsonl');
+const CONFIG_NAME = '.consonance.json';
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): the state block is the BUILD's state (HEAD, the dirty files, the instruments, the room's triggers) and "This seat is not the build".
+// The same cwd test as board-digest.js:302, matched on the seat's directory.
+// The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+// (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+const isThirdPlaceCwd = (cwd) => /[\\/]third-
+…[3598 chars cut]…
+-
+// THE DREAM GATE, same reasoning as every hook here: the gap-dream is an anti-instruction and
+// gets no instrumentation.
+if (process.env.CONSONANCE_DREAM) process.exit(0);
+
+const LEDGER = process.env.SOURCED_LEDGER || 'C:\\Consonance\\data\\sourced_ledger.jsonl';
+const TAIL_BYTES = 768 * 1024;
+const SENTENCE_CAP = 240;
+---
+ * blind.js:57, board-digest.js:279), and dream-gate.test.js:220 ALREADY sets it for every hook it
+ * spawns. Honouring it costs nothing and makes the generic harness safe by default; the specific
+ * override stays for tests that want a bare file path.
+ */
+const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
+const LEDGER = process.env.CONSONANCE_PRECOMPACT_LOG ||
+  path.join(DATA, 'precompact.jsonl');
+0
+--- L57158 assistant 2026-10-08T19:14:07.635Z
+TOOL_USE Bash [toolu_01Hw9CzbeBWQNgzH58pradJM]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && for f in dev/shell/hooks/session-start.js consonance/hooks/sessionstart-state.js consonance/hooks/findings-return.js consonance/hooks/sourced-stop.js consonance/hooks/precompact-preserve.js; do echo \"$f: $(grep -nE \"require\\('(fs|path|os)'\\)|require\\(\\\"(fs|path|os)\\\"\\)|= require\\('fs'\\)\" $f | head -3 | cut -c1-90 | tr '\\n' ' ')\"; file $f | grep -o \"CRLF\" ; done","description":"Check each hook's requires and line endings"}
+--- L57165 user 2026-10-08T19:14:08.545Z
+RESULT [toolu_01Hw9CzbeBWQNgzH58pradJM] ERROR: Exit code 1
+dev/shell/hooks/session-start.js: 28:const fs = require('fs'); 29:const path = require('path'); 30:const os = require('os'); 
+consonance/hooks/sessionstart-state.js: 33:const fs = require('fs'); 34:const path = require('path'); 35:const os = require('os'); 
+consonance/hooks/findings-return.js: 70:const fs = require('fs'); 71:const path = require('path'); 
+consonance/hooks/sourced-stop.js: 80:const fs = require('fs'); 81:const path = require('path'); 
+consonance/hooks/precompact-preserve.js: 40:const fs = require('fs'); 41:const path = require('path');
+--- L57169 assistant 2026-10-08T19:14:10.038Z
+TEXT: All five already have `fs` and `path`, and they use LF line endings. Writing the edit script.
+--- L57170 assistant 2026-10-08T19:14:23.095Z
+TOOL_USE Write [toolu_01M5yYfWuGJMPAYN65hYQVio]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\install\\edit_hooks.js","content":"// D273 lap 2 (pane E): the five hooks resolve the Consonance data and instances folders by the app's own rule. Exact anchors, each once.\n'use strict';\nconst fs = require('fs'), path = require('path'), root = process.argv[2];\nconst BLOCK = [\n  \"// D273 dirs: begin. The Consonance data and instances folders by THE APP'S OWN RULE (consonance/src-tauri/src/main.rs set_dirs and default_data /\",\n  \"// default_instances): ~/.consonance
+…[2977 chars cut]…
+onl');\",\n]]);\nedit('consonance/hooks/precompact-preserve.js', [[\n  \"const DATA = process.env.CONSONANCE_DATA || 'C:\\\\\\\\Consonance\\\\\\\\data';\",\n  BLOCK + \"\\nconst DATA = process.env.CONSONANCE_DATA || consonanceDir('data_dir', '.consonance');\",\n]]);\n"}
+--- L57171 user 2026-10-08T19:14:23.136Z
+RESULT [toolu_01M5yYfWuGJMPAYN65hYQVio]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\install\edit_hooks.js (file state is current in your context — no need to Read it back)
+--- L57172 assistant 2026-10-08T19:14:25.517Z
+TOOL_USE Bash [toolu_01MvYBdnVHgiQUt3ub29uVaK]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && node \"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/install/edit_hooks.js\" . && git diff --stat && sed -n '/D273 dirs: begin/,/D273 dirs: end/p' consonance/hooks/sourced-stop.js && for f in dev/shell/hooks/session-start.js consonance/hooks/*.js; do node --check $f || echo \"SYNTAX $f\"; done","description":"Apply the hook edits and syntax-check"}
+--- L57173 user 2026-10-08T19:14:28.563Z
+RESULT [toolu_01MvYBdnVHgiQUt3ub29uVaK]: dev/shell/hooks/session-start.js ok
+consonance/hooks/sessionstart-state.js ok
+consonance/hooks/findings-return.js ok
+consonance/hooks/sourced-stop.js ok
+consonance/hooks/precompact-preserve.js ok
+ consonance/hooks/findings-return.js     | 16 +++++++++++++---
+ consonance/hooks/precompact-preserve.js | 12 +++++++++++-
+ consonance/hooks/sessionstart-state.js  | 12 +++++++++++-
+ consonance/hooks/sourced-stop.js        | 12 +++++++++++-
+ dev/shell/hooks/session-start.js        | 12 +++++++++++-
+ 5 files changed, 57 insertions(+), 7 deletions(-)
+// D273 dirs: begin. The Consonance data and instances folders by THE APP'S OWN RULE (consonance/src-tauri/src/main.rs set_dirs and default_data /
+// default_instances): ~/.consonance.json's data_dir / instances_dir when set, else %USERPROFILE%\.consonance and %USERPROFILE%\claude-instances.
+// Never a hard-coded C:\Consonance: on a stranger's machine that wrote where the app never reads. One text in the five hooks that need it
+// (session-start, sessionstart-state, findings-return, sourced-stop, precompact-preserve); consonance/hooks/dirs.test.js holds them to it.
+function consonanceDir(key, under) {
+  const home = process.env.USERPROFILE || '.';
+  try { const v = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''))[key]; if (typeof v === 'string' && v.trim()) return v.trim(); } catch (e) { /* no config, or not JSON: the default, as the app */ }
+  return `${home}\\${under}`;
+}
+// D273 dirs: end
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57178 assistant 2026-10-08T19:14:49.988Z
+TOOL_USE Write [toolu_01QoQCB75PZyJ88ii4bN3W7j]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\install\\proof.js","content":"// D273 lap 2 (pane E): BEFORE (ea4f5bcf) and AFTER (the worktree) of the five hooks' folder constants, evaluated in a VM sandbox (the constant lines, and the\n// D273 block, ONLY: no hook body runs, nothing is written). Three homes: THIS machine (USERPROFILE as it is), a stranger with no config, a stranger whose config\n// names its own folders. The override env vars are cleared, so the defaults are what is shown.   node proof.js <lighthouse
+…[2800 chars cut]…
+} | ${r.home} | ${k} | before ${JSON.stringify(r.before[k])} | after ${JSON.stringify(r.after[k])} | ${r.before[k] === r.after[k] ? 'SAME BYTES' : 'differs'}`);\n}\nfs.rmSync(tmpA, { recursive: true, force: true }); fs.rmSync(tmpB, { recursive: true, force: true });\n"}
+--- L57179 user 2026-10-08T19:14:50.073Z
+RESULT [toolu_01QoQCB75PZyJ88ii4bN3W7j]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\install\proof.js (file state is current in your context — no need to Read it back)
+--- L57180 assistant 2026-10-08T19:14:52.921Z
+TOOL_USE Bash [toolu_01LvsDfAd6P5iVxM8hKSLfAM]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; W=/c/Users/nname/Desktop/worktrees/e-install-wt; export CONSONANCE_HEAVY_WAIT_MS=10800000; node \"$S/locked.js\" \"D273 install proof\" \"$W\" \"$S/install/proof.txt\" \"$S/install/proof.js\" \"$W\" > /dev/null; sed 's/\\\\\\\\Users\\\\\\\\nname\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\/<TEMP>\\\\\\\\/g' \"$S/install/proof.txt\"","description":"Run the before/after proof under the lock","timeout":300000}
+--- L57187 user 2026-10-08T19:14:53.281Z
+RESULT [toolu_01LvsDfAd6P5iVxM8hKSLfAM]: evalmachine.<anonymous>:1
+const INSTANCES_DIR = path.join('C:', path.sep, 'Consonance', 'instances');
+                      ^
+
+ReferenceError: path is not defined
+    at evalmachine.<anonymous>:1:23
+[90m    at Script.runInContext (node:vm:149:12)[39m
+[90m    at Object.runInContext (node:vm:301:6)[39m
+    at evalIn (C:<TEMP>\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\install\proof.js:22:29)
+    at Object.<anonymous> (C:<TEMP>\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\install\proof.js:32:87)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+
+Node.js v24.14.1
+
+[locked.js] exit 1 in 0 s
+--- L57189 assistant 2026-10-08T19:14:54.459Z
+TEXT: Put fs, path and os into the sandbox's globals, as the hooks have them.
+--- L57190 assistant 2026-10-08T19:14:57.861Z
+TOOL_USE Bash [toolu_01J8Rxcy7wyGZ92dw9h7Cofn]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; W=/c/Users/nname/Desktop/worktrees/e-install-wt; sed -i \"s/const ctx = { require: (x) => ({ fs, path, os }\\[x\\]), process: { env }, console };/const ctx = { fs, path, os, process: { env }, console };/\" \"$S/install/proof.js\"; grep -c \"const ctx = { fs, path, os\" \"$S/install/proof.js\"; export CONSONANCE_HEAVY_WAIT_MS=10800000; node \"$S/locked.js\" \"D273 install proof\" \"$W\" \"$S/install/proof.txt\" \"$S/install/proof.js\" \"$W\" > /dev/null; sed 's/\\\\\\\\Users\\\\\\\\nname\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\/<TEMP>\\\\\\\\/g' \"$S/install/proof.txt\"","description":"Fix the sandbox and re-run the proof","timeout":300000}
+--- L57191 user 2026-10-08T19:14:58.478Z
+RESULT [toolu_01J8Rxcy7wyGZ92dw9h7Cofn]: 1
+dev/shell/hooks/session-start.js | this machine | INSTANCES_DIR | before "C:\\Consonance\\instances" | after "C:\\Consonance\\instances" | SAME BYTES
+dev/shell/hooks/session-start.js | stranger, no config | INSTANCES_DIR | before "C:\\Consonance\\instances" | after "C:\\Users\\nname\\AppData\\Local\\Temp\\e-stranger-VFpWCU\\claude-instances" | differs
+dev/shell/hooks/session-start.js | stranger, own config | INSTANCES_DIR | before "C:\\Consonance\\instances" | after "D:\\Somewhere\\inst" | differs
+consonance/hooks/sessionstart-state.js | this machine | DATA | before "C:\\Consonance\\data" | after "C:\\Consonance\\data" | SAME BYTES
+consonance/hooks/sessionstart-state.js | this machine | LEDGER | before "C:\\Consonance\\data\\sessionstart-state.jsonl" | after "C:\\Consonance\\data\\sessionstart-state.jsonl" | SAME BYTES
+consonance/hooks/sessionstart-state.js | stranger, no config | DATA | before "C:\\Consonance\\data" | after "C:\\Users\\nname\\AppData\\Local\\Temp\\e-stranger-VFpWCU\\.consonance" | differs
+consonance/hooks/sessionstart-state.js | stranger, no config | LEDGER | before "C:\\Consonance\\data\\sessionstart-state.jsonl" | after "C:\\Users\\nname\\AppData\\Local\\Temp\\e-stranger-VFpWCU\\.consonance\\sessionstart-state.jsonl" | differs
+consonance/hooks/sessionstart-state.js | stranger, own config | DATA | before "C:\\Consonance\\data" | after "D:\\Somewhere\\cdata" | differs
+consonance/hooks/sessionstart-state.js | stranger, own config | LEDGER | before "C:\\Consonance\\data\\sessionstart-state.jsonl" | after "D:\\Somewhere\\cdata\\sessionstart-state.jsonl" | differs
+consonance/hooks/findings-return.js | this machine | DATA | before "C:\\Consonance\\data" | after "C:\\Consonance\\data" | SAME BYTES
+consonanc
+…[3014 chars cut]…
+mpact-preserve.js | stranger, no config | DATA | before "C:\\Consonance\\data" | after "C:\\Users\\nname\\AppData\\Local\\Temp\\e-stranger-VFpWCU\\.consonance" | differs
+consonance/hooks/precompact-preserve.js | stranger, no config | LEDGER | before "C:\\Consonance\\data\\precompact.jsonl" | after "C:\\Users\\nname\\AppData\\Local\\Temp\\e-stranger-VFpWCU\\.consonance\\precompact.jsonl" | differs
+consonance/hooks/precompact-preserve.js | stranger, own config | DATA | before "C:\\Consonance\\data" | after "D:\\Somewhere\\cdata" | differs
+consonance/hooks/precompact-preserve.js | stranger, own config | LEDGER | before "C:\\Consonance\\data\\precompact.jsonl" | after "D:\\Somewhere\\cdata\\precompact.jsonl" | differs
+
+[locked.js] exit 0 in 0 s
+--- L57196 assistant 2026-10-08T19:15:06.914Z
+TOOL_USE Bash [toolu_01KL1bsRsLKyaBeyciqCv6bx]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && grep -n \"C:\\\\\\\\\\\\\\\\Consonance\\|'C:'\\|C:/Consonance\" dev/shell/hooks/session-start.js consonance/hooks/sessionstart-state.js consonance/hooks/findings-return.js consonance/hooks/sourced-stop.js consonance/hooks/precompact-preserve.js | grep -v \"^\\S*:\\s*//\\|D273\" | cut -c1-200; ls consonance/hooks/*.test.js | head -20; grep -rn \"node --test\" consonance/hooks/README* consonance/*.md 2>/dev/null | head -3 | cut -c1-160","description":"Check for leftover hard-coded paths and the hook test setup"}
+--- L57203 user 2026-10-08T19:15:07.246Z
+RESULT [toolu_01KL1bsRsLKyaBeyciqCv6bx]: consonance/hooks/ask-ending.test.js
+consonance/hooks/baton-wake-stop.test.js
+consonance/hooks/blind.test.js
+consonance/hooks/board-digest.test.js
+consonance/hooks/carrier-drift-watch.test.js
+consonance/hooks/delete-gate.test.js
+consonance/hooks/dispatch-gate.test.js
+consonance/hooks/dream-gate.test.js
+consonance/hooks/dream-watch.test.js
+consonance/hooks/findings-return.test.js
+consonance/hooks/jev-flags.test.js
+consonance/hooks/live-mirror-stop.test.js
+consonance/hooks/precompact-preserve.test.js
+consonance/hooks/push-gate.test.js
+consonance/hooks/reply-slot.test.js
+consonance/hooks/second-reader.test.js
+consonance/hooks/sessionstart-state.test.js
+consonance/hooks/sourced-stop.test.js
+consonance/hooks/sources-gate.test.js
+consonance/hooks/transcript-watch.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57205 assistant 2026-10-08T19:15:08.850Z
+TOOL_USE Bash [toolu_016knmJkqTkWLUB4KZM9LZLN]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && head -20 consonance/hooks/sourced-stop.test.js | cut -c1-200","description":"Read an existing hook test's style"}
+--- L57206 user 2026-10-08T19:15:09.064Z
+RESULT [toolu_016knmJkqTkWLUB4KZM9LZLN]: // sourced-stop.test.js — deterministic fixtures; every arm exercises the hook as the harness
+// would: JSON on stdin, ledger path via env, exit code observed.
+// Run: node --test consonance/hooks/sourced-stop.test.js
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+const HOOK = path.join(__dirname, 'sourced-stop.js');
+
+function runHook(stdin, env, tmp) {
+  return spawnSync(process.execPath, [HOOK], {
+    input: stdin,
+    encoding: 'utf8',
+    env: { ...process.env, SOURCED_LEDGER: path.join(tmp, 'ledger.jsonl'), ...env },
+    timeout: 15000,
+  });
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57210 assistant 2026-10-08T19:15:15.975Z
+TOOL_USE Bash [toolu_01CdaqfZyWgMRiASzZNEi27W]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && sed -n 20,70p consonance/hooks/sourced-stop.test.js | cut -c1-220","description":"Read sourced-stop's test fixtures"}
+--- L57211 user 2026-10-08T19:15:16.200Z
+RESULT [toolu_01CdaqfZyWgMRiASzZNEi27W]:   });
+}
+
+function fixtureTranscript(tmp, records) {
+  const f = path.join(tmp, 'transcript.jsonl');
+  fs.writeFileSync(f, records.map(r => JSON.stringify(r)).join('\n') + '\n');
+  return f;
+}
+
+const user = text => ({ type: 'user', message: { role: 'user', content: text }, timestamp: '2026-08-15T11:00:00.000Z' });
+const toolResult = () => ({ type: 'user', message: { role: 'user', content: [{ type: 'tool_result', content: 'ok' }] }, timestamp: '2026-08-15T11:00:02.000Z' });
+const assistant = (text, tools = []) => ({
+  type: 'assistant', timestamp: '2026-08-15T11:00:01.000Z',
+  message: { role: 'assistant', content: [{ type: 'text', text }, ...tools.map(n => ({ type: 'tool_use', name: n, input: {} }))] },
+});
+
+function tmpdir() { return fs.mkdtempSync(path.join(os.tmpdir(), 'sstop-')); }
+function ledgerRows(tmp) {
+  const f = path.join(tmp, 'ledger.jsonl');
+  if (!fs.existsSync(f)) return [];
+  return fs.readFileSync(f, 'utf8').split(/\r?\n/).filter(Boolean).map(JSON.parse);
+}
+
+test('an unsourced value-turn is recorded as such', () => {
+  const tmp = tmpdir();
+  const t = fixtureTranscript(tmp, [user('how big?'), assistant('The file has 340 lines and is still running.')]);
+  const r = runHook(JSON.stringify({ session_id: 'abcd1234-x', transcript_path: t, cwd: 'C:\\panes\\sibling-test' }), {}, tmp);
+  assert.strictEqual(r.status, 0);
+  const rows = ledgerRows(tmp);
+  assert.strictEqual(rows.length, 1);
+  assert.strictEqual(rows[0].sourced, false);
+  assert.ok(rows[0].values.includes('linecount'));
+  assert.ok(rows[0].values.includes('state'));
+  assert.strictEqual(rows[0].session, 'abcd1234');
+  assert.strictEqual(rows[0].pane, 'sibling-test');
+  fs.rmSync(tmp, { recursive: true, force: true });
+});
+
+test('a value-turn that read a source is recorded sourced', () => {
+  const tmp = tmpdir();
+  const t = fixtureTranscript(tmp, [user('check'), assistant('Measured: 340 lines.', ['Read'])]);
+  const r = runHook(JSON.stringify({ session_id: 's', transcript_path: t }), {}, tmp);
+  assert.strictEqual(r.status, 0);
+  assert.strictEqual(ledgerRows(tmp)[0].sourced, true);
+  fs.rmSync(tmp, { recursive: true, force: true });
+});
+
+test('only the LAST turn is scanned — an earlier value-turn does not leak in', () => {
+  const tmp = tmpdir();
+  const t = fixtureTranscript(tmp, [
+    user('first'), assistant('It has 999 lines.', []),
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57213 assistant 2026-10-08T19:15:42.885Z
+TOOL_USE Write [toolu_01PpJggYUEriophjkZTJZCpW]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-install-wt\\consonance\\hooks\\dirs.test.js","content":"// dirs.test.js — D273 lap 2: the five hooks that used to hard-code C:\\Consonance resolve the data and instances folders by THE APP'S OWN RULE\n// (consonance/src-tauri/src/main.rs set_dirs, default_data, default_instances): ~/.consonance.json's data_dir / instances_dir when set (trimmed), else\n// %USERPROFILE%\\.consonance and %USERPROFILE%\\claude-instances. Rows:\n//   1  one rule: the D273 block is the SAME text in all five hooks, and none of them still names C:\\Consonance\n//   2  a stranger with no ~/.cons
+…[6748 chars cut]…
+\\sourced_ledger.jsonl') ? fs.statSync('C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl').size : null;\n  assert.strictEqual(after, before, 'nothing was written to C:\\\\Consonance');\n  for (const d of [h, tmp]) fs.rmSync(d, { recursive: true, force: true });\n});\n"}
+--- L57215 user 2026-10-08T19:15:42.934Z
+RESULT [toolu_01PpJggYUEriophjkZTJZCpW]: File created successfully at: C:\Users\nname\Desktop\worktrees\e-install-wt\consonance\hooks\dirs.test.js (file state is current in your context — no need to Read it back)
+--- L57225 assistant 2026-10-08T19:15:51.951Z
+TOOL_USE Bash [toolu_01MYRAcjgWLe5xx6A5WgnCY5]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && node -e \"\nconst fs=require('fs'),f='consonance/hooks/dirs.test.js';let t=fs.readFileSync(f,'utf8');const rep=(a,b)=>{if(t.split(a).length!==2)throw new Error(a.slice(0,60));t=t.replace(a,()=>b)};\nrep(\\\"  const before = fs.existsSync('C:\\\\\\\\\\\\\\\\Consonance\\\\\\\\\\\\\\\\data\\\\\\\\\\\\\\\\sourced_ledger.jsonl') ? fs.statSync('C:\\\\\\\\\\\\\\\\Consonance\\\\\\\\\\\\\\\\data\\\\\\\\\\\\\\\\sourced_ledger.jsonl').size : null;\\n\\\",'');\nrep(\\\"  const after = fs.existsSync('C:\\\\\\\\\\\\\\\\Consonance\\\\\\\\\\\\\\\\data\\\\\\\\\\\\\\\\sourced_l
+…[149 chars cut]…
+al(after, before, 'nothing was written to C:\\\\\\\\\\\\\\\\Consonance');\\n\\\",'');\nfs.writeFileSync(f,t);console.log('ok')\" 2>&1 | tail -2; grep -c \"sourced_ledger.jsonl').size\" consonance/hooks/dirs.test.js","description":"Drop the flaky live-ledger size check"}
+--- L57226 user 2026-10-08T19:15:52.200Z
+RESULT [toolu_01MYRAcjgWLe5xx6A5WgnCY5]: Node.js v24.14.1
+2
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57229 assistant 2026-10-08T19:15:53.095Z
+TEXT: Escaping failed again; using the Edit tool, as my own carry rule says.
+--- L57230 assistant 2026-10-08T19:15:54.596Z
+TOOL_USE Edit [toolu_014okF1JwPwDDEiGDTGmek67]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-install-wt\\consonance\\hooks\\dirs.test.js","old_string":"  const before = fs.existsSync('C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl') ? fs.statSync('C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl').size : null;\n","new_string":""}
+--- L57231 user 2026-10-08T19:15:54.652Z
+RESULT [toolu_014okF1JwPwDDEiGDTGmek67]: The file C:\Users\nname\Desktop\worktrees\e-install-wt\consonance\hooks\dirs.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L57232 assistant 2026-10-08T19:15:55.841Z
+TOOL_USE Edit [toolu_01KJoUEs9XsZBbNohFC67QwR]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-install-wt\\consonance\\hooks\\dirs.test.js","old_string":"  const after = fs.existsSync('C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl') ? fs.statSync('C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl').size : null;\n  assert.strictEqual(after, before, 'nothing was written to C:\\\\Consonance');\n","new_string":""}
+--- L57233 user 2026-10-08T19:15:55.888Z
+RESULT [toolu_01KJoUEs9XsZBbNohFC67QwR]: The file C:\Users\nname\Desktop\worktrees\e-install-wt\consonance\hooks\dirs.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L57243 assistant 2026-10-08T19:15:58.080Z
+TEXT: Now red first: `dirs.test.js` against an `ea4f5bcf` copy, then the branch with the five hooks' own existing tests.
+--- L57244 assistant 2026-10-08T19:16:03.925Z
+TOOL_USE Bash [toolu_01YVG45wHy5kNQwDXWRfSAym]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; W=/c/Users/nname/Desktop/worktrees/e-install-wt; B=\"$S/install/base-wt\"; cd /c/Users/nname/Desktop/lighthouse && git worktree add --detach \"$B\" ea4f5bcf 2>&1 | tail -1; cp \"$W/consonance/hooks/dirs.test.js\" \"$B/consonance/hooks/\"; cd $W && ls dev/shell/hooks/*.test.js dev/shell/*.test.js 2>/dev/null | grep -i \"session-start\\|sessionstart\" ; T=\"consonance/hooks/dirs.test.js consonance/hooks/sessionstart-state.test.js consonance/hooks/findings-return.test.js consonance/hooks/sourced-stop.test.j
+…[556 chars cut]…
+1; echo \"== new\"; grep -E \"^# (tests|pass|fail)\" \"$S/install/new.tap\"; grep -E \"^not ok\" \"$S/install/new.tap\" | cut -c1-160; grep -E \"^ok .*row\" \"$S/install/new.tap\" | cut -c1-100","description":"Red-first on base and green on the branch","timeout":600000}
+--- L57245 user 2026-10-08T19:16:12.950Z
+RESULT [toolu_01YVG45wHy5kNQwDXWRfSAym]: HEAD is now at ea4f5bcf D270/D271 close: A's no-pointer-lock and E's Level/To floor hand-backs (with the anchor sweep and P49/P51 proof), both plans, A's evidence, librarian desk, maps A/E
+consonance/hooks/dirs.test.js consonance/hooks/sessionstart-state.test.js consonance/hooks/findings-return.test.js consonance/hooks/sourced-stop.test.js consonance/hooks/precompact-preserve.test.js 
+== base
+not ok 1 - row 1: one rule — the D273 block is the same text in all five hooks, and none still names C:\\Consonance
+not ok 2 - row 2: a stranger with no ~/.consonance.json gets the folders under their own home, as the app's defaults
+not ok 3 - row 3: a config naming its folders gives them (BOM and padding as the app reads them); blank, non-string or not-JSON falls back to the default
+not ok 4 - row 4: the env overrides each hook had still win over the rule
+not ok 5 - row 5: a real hook in a stranger's home (sourced-stop, no override) writes its ledger under THAT home, never C:\\Consonance
+# pass 0
+# fail 5
+== new
+# tests 65
+# pass 64
+# fail 1
+not ok 4 - row 4: the env overrides each hook had still win over the rule
+ok 1 - row 1: one rule — the D273 block is the same text in all five hooks, and none still names C
+ok 2 - row 2: a stranger with no ~/.consonance.json gets the folders under their own home, as the ap
+ok 3 - row 3: a config naming its folders gives them (BOM and padding as the app reads them); blank,
+ok 5 - row 5: a real hook in a stranger's home (sourced-stop, no override) writes its ledger under T
+ok 8 - AGREE rows surface nowhere and leave no trace
+ok 20 - empty findings ledger says so once, then goes quiet; rows arriving later still surface
+ok 21 - a row with no id is watermarked by content hash — it still cannot loop
+ok 41 - the served set is configurable, so it can be narrowed without editing code
+ok 47 - a HOME with no .consonance.json degrades to null rather than throwing
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57247 assistant 2026-10-08T19:16:15.540Z
+TOOL_USE Bash [toolu_01Q7mk2TubxyPpHzbvCtorMT]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; grep -A14 \"^not ok 4\" \"$S/install/new.tap\" | grep -E \"error|expected|actual\" | cut -c1-250","description":"Read the row 4 failure"}
+--- L57248 user 2026-10-08T19:16:15.757Z
+RESULT [toolu_01Q7mk2TubxyPpHzbvCtorMT]:   error: |-
+--- L57250 assistant 2026-10-08T19:16:18.340Z
+TOOL_USE Bash [toolu_01AhXbXv845NdGY54d3xR2Ww]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; grep -A25 \"^not ok 4\" \"$S/install/new.tap\" | sed -n 5,25p | cut -c1-200","description":"Read more of the row 4 failure"}
+--- L57251 user 2026-10-08T19:16:18.551Z
+RESULT [toolu_01AhXbXv845NdGY54d3xR2Ww]:   location: 'C:\\Users\\nname\\Desktop\\worktrees\\e-install-wt\\consonance\\hooks\\dirs.test.js:50:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Values have same structure but are not reference-equal:
+    
+    {
+      DATA: 'E:\\v',
+      RETURNS: 'E:\\r.jsonl',
+      STATEDIR: 'E:\\s'
+    }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    DATA: 'E:\\v'
+    RETURNS: 'E:\\r.jsonl'
+    STATEDIR: 'E:\\s'
+  actual:
+    DATA: 'E:\\v'
+    RETURNS: 'E:\\r.jsonl'
+    STATEDIR: 'E:\\s'
+--- L57254 assistant 2026-10-08T19:16:20.759Z
+TEXT: The values match; the comparison fails only because the object came from the VM's realm. `deepStrictEqual` checks prototypes across realms, so the test now compares through JSON.
+--- L57255 assistant 2026-10-08T19:16:22.556Z
+TOOL_USE Edit [toolu_01VKhMrNcNazuQ1GnRPSbKt4]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-install-wt\\consonance\\hooks\\dirs.test.js","old_string":"vm.runInContext(blockOf(text(h)) + '\\n' + src(h, names) + `\\n;globalThis.__o = { ${names.join(', ')} };`, ctx); return ctx.__o; };","new_string":"vm.runInContext(blockOf(text(h)) + '\\n' + src(h, names) + `\\n;globalThis.__o = JSON.stringify({ ${names.join(', ')} });`, ctx); return JSON.parse(ctx.__o); };   // through JSON: an object made in the VM has the VM's prototype"}
+--- L57256 user 2026-10-08T19:16:22.602Z
+RESULT [toolu_01VKhMrNcNazuQ1GnRPSbKt4]: The file C:\Users\nname\Desktop\worktrees\e-install-wt\consonance\hooks\dirs.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L57257 assistant 2026-10-08T19:16:27.250Z
+TOOL_USE Bash [toolu_01BEBBwqq2zJhgLyREj2XvzE]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; W=/c/Users/nname/Desktop/worktrees/e-install-wt; B=\"$S/install/base-wt\"; cp \"$W/consonance/hooks/dirs.test.js\" \"$B/consonance/hooks/\"; export CONSONANCE_HEAVY_WAIT_MS=10800000; T=\"consonance/hooks/dirs.test.js consonance/hooks/sessionstart-state.test.js consonance/hooks/findings-return.test.js consonance/hooks/sourced-stop.test.js consonance/hooks/precompact-preserve.test.js\"\nnode \"$S/locked.js\" \"D273 dirs base\" \"$B\" \"$S/install/base.tap\" --test --test-concurrency=1 --test-reporter=tap c
+…[258 chars cut]…
+ 2>&1; echo \"== new\"; grep -E \"^# (tests|pass|fail)\" \"$S/install/new.tap\"; grep -E \"^not ok\" \"$S/install/new.tap\" | cut -c1-160; sha256sum \"$S/install/base.tap\" \"$S/install/new.tap\" | cut -c2-17","description":"Re-run red-first and green","timeout":600000}
+--- L57264 user 2026-10-08T19:16:34.156Z
+RESULT [toolu_01BEBBwqq2zJhgLyREj2XvzE]: == base
+# pass 0
+# fail 5
+== new
+# tests 65
+# pass 65
+# fail 0
+a5c1c0132d5879a2
+a2d6ed44a6f9bd11
+--- L57268 assistant 2026-10-08T19:16:37.496Z
+TEXT: Red first: 0/5 on the base; on the branch 65/65 (the 5 new rows plus the five hooks' 60 existing tests). Next, `install.ps1`: finding where it refuses a home with no `settings.json`.
+--- L57269 assistant 2026-10-08T19:16:38.703Z
+TOOL_USE Bash [toolu_01CiLgHutZTp3fVADxgUWtHC]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && grep -n \"settings.json\\|settingsPath\\|Test-Path\\|throw\\|exit 1\\|Write-Error\" dev/shell/install.ps1 | head -30 | cut -c1-200; file dev/shell/install.ps1","description":"Find install.ps1's settings.json handling"}
+--- L57270 user 2026-10-08T19:16:39.101Z
+RESULT [toolu_01CiLgHutZTp3fVADxgUWtHC]: 24:# noticed and restored from ~/.claude/settings.json.bak-20260907-063417.
+37:# ── 2026-08-17: WHY THIS NOW EDITS settings.json, REVERSING A DELIBERATE REFUSAL ────────────
+39:# The header used to say: "It deliberately does NOT edit ~/.claude/settings.json… a one-time
+89:  # ~\.claude\settings.json, and neither is `hooks\userprompt-submit.js` (it is a HOLD). Hanging a
+190:# What this script REGISTERS. Only these are ever touched in settings.json; anything else found
+250:  # what a run writes. The two registrations were removed from D's settings.json by hand (D105). The
+355:    exit 1
+372:    exit 1
+378:if (-not (Test-Path $dest)) {
+390:  if (-not (Test-Path $src)) {
+401:  $exists = Test-Path $dst
+417:      if ($dstDir -and -not (Test-Path $dstDir)) { New-Item -ItemType Directory -Force -Path $dstDir | Out-Null }
+435:    if ((Test-Path $dst) -and -not $same) {
+440:    if ($dstDir -and -not (Test-Path $dstDir)) { New-Item -ItemType Directory -Force -Path $dstDir | Out-Null }
+497:  if (-not (Test-Path $full)) { continue }
+519:if (Test-Path $dest) {
+578:  # THE AUTHORITY IS settings.json AND THERE IS NO FALLBACK. If it cannot be read the answer is
+587:  $settingsCheck = Join-Path $env:USERPROFILE '.claude\settings.json'
+588:  if (-not (Test-Path $settingsCheck)) { $regUnknown = "no settings.json at $settingsCheck" }
+591:    catch { $regUnknown = "settings.json does not parse - not guessing" }
+689:    Write-Host ("  settings.json {0,3} hook(s) across {1} event(s)   the authority; nothing here is inferred from disk" -f $liveCount, $eventCount)
+808:$settingsPath = Join-Path $env:USERPROFILE '.claude\settings.json'
+809:if (-not (Test-Path $settingsPath)) {
+810:  Write-Host "`nNO settings.json at $settingsPath — refusing to create one." -ForegroundColor Red
+812:  exit 1
+815:# Parse before touching anything. A settings.json that does not parse must not be backed up over
+817:try   { $settings = Get-Content $settingsPath -Raw | ConvertFrom-Json }
+818:catch { Write-Host "`nsettings.json DOES NOT PARSE — changing nothing. Fix it first:`n  $_" -ForegroundColor Red; exit 1 }
+957:  $bak = "$settingsPath.bak-$(Get-Date -Format yyyyMMdd-HHmmss)"
+958:  Copy-Item $settingsPath $bak -Force
+dev/shell/install.ps1: Unicode text, UTF-8 (with BOM) text, with very long lines (811)
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57272 assistant 2026-10-08T19:16:41.252Z
+TOOL_USE Bash [toolu_012HJww6uzK7jDaX2q4xN73J]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && sed -n 800,822p dev/shell/install.ps1 | cut -c1-200; sed -n 950,962p dev/shell/install.ps1 | cut -c1-200; grep -n \"param(\\|\\$DryRun\\|WhatIf\\|\\[switch\\]\" dev/shell/install.ps1 | head -8 | cut -c1-160","description":"Read the refusal and the write path"}
+--- L57273 user 2026-10-08T19:16:41.577Z
+RESULT [toolu_012HJww6uzK7jDaX2q4xN73J]:   foreach ($e in $regEntries) {
+    if ($e.Excluded) { Write-Host ("  {0,-17} {1}   SKIPPED -- {2}" -f $e.Event, (Split-Path -Leaf $e.Rel), $e.Excluded) -ForegroundColor Magenta; continue }
+    Write-Host ("  {0,-17} {1}" -f $e.Event, (New-HookCommand $e)) -ForegroundColor DarkGray
+  }
+  Write-Host "`nRe-run without -NoRegister to apply." -ForegroundColor Cyan
+  exit 0
+}
+
+$settingsPath = Join-Path $env:USERPROFILE '.claude\settings.json'
+if (-not (Test-Path $settingsPath)) {
+  Write-Host "`nNO settings.json at $settingsPath — refusing to create one." -ForegroundColor Red
+  Write-Host "This script merges into a file the user owns; it does not invent that file." -ForegroundColor Red
+  exit 1
+}
+
+# Parse before touching anything. A settings.json that does not parse must not be backed up over
+# or written to — the failure is the user's to see, not this script's to paper over.
+try   { $settings = Get-Content $settingsPath -Raw | ConvertFrom-Json }
+catch { Write-Host "`nsettings.json DOES NOT PARSE — changing nothing. Fix it first:`n  $_" -ForegroundColor Red; exit 1 }
+
+if (-not $settings.hooks) { $settings | Add-Member -NotePropertyName hooks -NotePropertyValue ([pscustomobject]@{}) -Force }
+
+$added = 0; $repointed = 0; $already = 0; $refused = 0; $skipped = 0
+  }
+}
+
+if ($added -eq 0 -and $repointed -eq 0 -and $pruned -eq 0) {
+  if ($refused -gt 0) { Write-Host "`nregistration: nothing changed; $already hook(s) verified, $refused REFUSED above (a conflicting implementation is live). Not 'correct' until the refusal is resolv
+  else { Write-Host "`nregistration: already correct ($already hook(s) verified, $skipped excluded by ruling, nothing changed)." -ForegroundColor Green }
+} else {
+  $bak = "$settingsPath.bak-$(Get-Date -Format yyyyMMdd-HHmmss)"
+  Copy-Item $settingsPath $bak -Force
+
+  # NO BOM. `Set-Content -Encoding utf8` on PowerShell 5.1 PREPENDS ONE, and JSON.parse rejects a
+  # leading BOM outright — so a settings.json written that way is unreadable to every Node consumer
+  # while still looking fine to PowerShell. Shipped exactly that on the first real run,
+70:param([switch]$Check, [switch]$NoRegister, [string[]]$Only)
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57277 assistant 2026-10-08T19:16:50.928Z
+TOOL_USE Bash [toolu_01VgKUaMWg6kgag1TN21rJaC]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && grep -n \"^\\$dest\\|\\$dest =\\|USERPROFILE\\|C:\\\\\\\\Consonance\\|HOME\\b\\|UTF8Encoding\\|WriteAllText\" dev/shell/install.ps1 | cut -c1-200 | head -20","description":"Check where install.ps1 writes"}
+--- L57284 user 2026-10-08T19:16:51.147Z
+RESULT [toolu_01VgKUaMWg6kgag1TN21rJaC]: 74:$dest = Join-Path $env:USERPROFILE '.claude\shell'
+163:  # under %USERPROFILE%\Desktop\lighthouse, which does not exist on the laptop, so the PreCompact
+587:  $settingsCheck = Join-Path $env:USERPROFILE '.claude\settings.json'
+639:      $cfgTag = ([IO.File]::ReadAllText((Join-Path $HOME '.consonance.json')).TrimStart([char]0xFEFF) | ConvertFrom-Json).machine_tag
+808:$settingsPath = Join-Path $env:USERPROFILE '.claude\settings.json'
+969:  [IO.File]::WriteAllText($settingsPath, ($settings | ConvertTo-Json -Depth 24), [Text.UTF8Encoding]::new($false))
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L57288 assistant 2026-10-08T19:16:55.532Z  <<< THE CLAIM'S MESSAGE
+TEXT: Everything it writes goes under `$env:USERPROFILE` (`.claude\shell` and `.claude\settings.json`); line 639 only reads. So a run with a temp `USERPROFILE` is fully contained. Making the edit.
+--- L57289 assistant 2026-10-08T19:17:00.232Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01VB8PgNuDaXo5K6hp1S7Nrw]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-install-wt\\dev\\shell\\install.ps1","old_string":"if (-not (Test-Path $settingsPath)) {\n  Write-Host \"`nNO settings.json at $settingsPath — refusing to create one.\" -ForegroundColor Red\n  Write-Host \"This script merges into a file the user owns; it does not invent that file.\" -ForegroundColor Red\n  exit 1\n}","new_string":"# D273 (a stranger's first install): a fresh home has no settings.json yet, and refusing there stopped every new user at this line. An EMPTY file\n# is the one thing it can create without inventing the user's settings: `{}` (no BOM, as below), said out loud, and then merged into like any other.\n# A settings.json that exists is never replaced; one that does not parse still stops the script (next block).\nif (-not (Test-Path $settingsPath)) {\n  $settingsDir = Split-Path -Parent $settingsPath\n  if (-not (Test-Path $settingsDir)) { New-Item -ItemType Directory -Force -Path $settingsDir | Out-Null }\n  [IO.File]::WriteAllText($settingsPath, '{}', [Text.UTF8Encoding]::new($false))\n  Write-Host \"`nNO settings.json at $settingsPath -- created an empty one ({}) to register the hooks into. Nothing else in it was invented.\" -ForegroundColor Yellow\n}"}
+--- L57290 user 2026-10-08T19:17:00.289Z
+RESULT [toolu_01VB8PgNuDaXo5K6hp1S7Nrw]: The file C:\Users\nname\Desktop\worktrees\e-install-wt\dev\shell\install.ps1 has been updated successfully.
+--- L57291 assistant 2026-10-08T19:17:04.621Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01Rycw3Xhsz317UTEKh3hUjd]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-install-wt && head -c 3 dev/shell/install.ps1 | od -An -tx1; git diff --stat dev/shell/install.ps1; S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; mkdir -p \"$S/install\"; H=$(mktemp -d \"$TEMP/e-install-home-XXXX\"); echo \"home: $H\"; W=$(cygpath -w \"$PWD\"); HW=$(cygpath -w \"$H\"); USERPROFILE=\"$HW\" HOME=\"$HW\" powershell -NoProfile -ExecutionPolicy Bypass -File \"$W\\\\dev\\\\shell\\\\install.ps1\" > \"$S/install/stranger-install.txt\" 2>&1; echo \"exit $?\"; grep -n \"settings.json\\|created an empty\\|registration\\|REFUS\" \"$S/install/stranger-install.txt\" | head -12 | cut -c1-200; ls \"$H/.claude\"; head -c 400 \"$H/.claude/settings.json\"; echo; head -c 3 \"$H/.claude/settings.json\" | od -An -tx1","description":"Run install.ps1 in a stranger's temp home","timeout":300000}

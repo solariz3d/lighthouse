@@ -1,0 +1,8 @@
+at 2026-10-24T21:27:17Z
+worktrees Downloads repo: 81
+worktrees Desktop repo: 90
+t180-* in Downloads: 160
+TEMP entries: 2261
+C:/build: present
+branches Downloads repo: 61
+C:             999057330176 905738817536 93318512640  91% /c

@@ -1,0 +1,12 @@
+'use strict';
+const os = require('os'); os.setPriority(os.constants.priority.PRIORITY_BELOW_NORMAL);
+const path = require('path'), fs = require('fs');
+const OLD = 'C:/Users/nname/Downloads/t180-wt-p477', NEW = 'C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-372c8abc/fbf98f8e-29da-4fb2-8610-c038d6372249/scratchpad/d477/tree-r3', r = (T, f) => require(path.join(T, f));
+const D = r(NEW, 'src/core/document.js'), { close } = r(NEW, 'src/core/close.js'), DEG = Math.PI / 180;
+const open = D.parse(fs.readFileSync(path.join(NEW, 'fixtures-d431', process.argv[2] || 'test10-open.t180track'), 'utf8'));
+const lap = close(open, { edited: [open.pieces.length - 1] }).doc, up = D.valuesAt(lap.pieces[0], 0).phi;
+console.log('lap pieces: ' + lap.pieces.map((P) => `${P.id}${P.type !== 'road' ? '(' + P.type + ')' : ''} n${(P.channels.phi || []).length} bank${P.type === 'road' ? (Math.max(...P.channels.phi.map((x) => Math.abs(x - up))) / DEG).toFixed(1) : '-'}`).join(', '));
+const o = r(OLD, 'src/core/finish.js').bankLapWith(lap), n = r(NEW, 'src/core/finish.js').bankLapWith(lap);
+console.log('OLD banked: ' + o.doc.pieces.filter((P, i) => P !== lap.pieces[i]).map((P) => P.id).join(' '));
+console.log('NEW banked: ' + n.doc.pieces.filter((P, i) => P !== lap.pieces[i]).map((P) => P.id).join(' '));
+console.log('DIFF OLD vs NEW: ' + n.doc.pieces.map((P, i) => [P.id, Math.max(...P.channels.phi.map((x, j) => Math.abs(x - o.doc.pieces[i].channels.phi[j]))) / DEG]).filter(([, m]) => m > 1e-9).map(([id, m]) => `${id} ${m.toFixed(3)}°`).join(' '));

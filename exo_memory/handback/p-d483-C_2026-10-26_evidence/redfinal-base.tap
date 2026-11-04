@@ -1,0 +1,46 @@
+lockrun: holding the lock at 2026-10-27T03:34:55.497Z; starting c483 timing session red-on-base rows 7-8
+[31m✖ row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms) [90m(20662.8567ms)[39m[39m
+[34mℹ p95 8.8 / 8.9 ms (median 6.7 / 6.7), 65.7 / 65.0 work frames a second[39m
+[31m✖ row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within the proposed bar (10.0 ms; the 6.9 ms standard is not reached here) [90m(14777.0822ms)[39m[39m
+[34mℹ p95 9.6 / 9.8 ms (median 1.2 / 1.2), 377.3 / 379.0 work frames a second[39m
+[34mℹ tests 2[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 2[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 35900.3235[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\drag-frame.test.js:177:1
+[31m✖ row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms) [90m(20662.8567ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: aqua, a 1000 m turn with a left edge typed after a placed piece drag: p95 8.8 / 8.9 ms (median 6.7 / 6.7), over 6.9 ms, 65.7 / 65.0 work frames a second
+      at edgeRow [90m(C:\Users\nname\Downloads\t180-wt-c483-base\[39mapp\test\drag-frame.test.js:174:10[90m)[39m
+      at async TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-c483-base\[39mapp\test\drag-frame.test.js:178:3[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\drag-frame.test.js:186:1
+[31m✖ row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within the proposed bar (10.0 ms; the 6.9 ms standard is not reached here) [90m(14777.0822ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: aqua, a 1000 m stretch with a left edge typed on an empty track drag: p95 9.6 / 9.8 ms (median 1.2 / 1.2), over 10 ms, 377.3 / 379.0 work frames a second (at most 120)
+      at edgeRow [90m(C:\Users\nname\Downloads\t180-wt-c483-base\[39mapp\test\drag-frame.test.js:174:10[90m)[39m
+      at async TestContext.<anonymous> [90m(C:\Users\nname\Downloads\t180-wt-c483-base\[39mapp\test\drag-frame.test.js:187:3[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+lockrun: done at 2026-10-27T03:35:31.432Z, exit 1

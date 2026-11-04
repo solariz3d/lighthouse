@@ -1,0 +1,16 @@
+ed8373f Test: the track checker's worker builds no mesh (red: it meshes the whole track)
+686509e The track checker's worker no longer meshes the whole track
+bcb363d Test: an export's files reach the native side as bytes, under a fixed heap budget (red: index.html sends base64 in JSON)
+322cddb An export's files go to the native side as bytes, not base64 text in JSON
+49fb5f9 Version 0.4.33
+acaa2a0 Changelog: long tracks export and install, and open with less memory
+30c725e Mutation harness for the bytes hand-off and the checker's no-mesh geometry; neutral sample paths in the hand-off tests
+67e5762 Rename a native-side test
+b6fa925 Validator: keep the per-segment memos packed, halving the heap a check keeps
+1e6bd81 A long track's preview mesh keeps a short key per piece and bounded shape memos, so its memory stays small
+82c629e The preview draws the road coarser far from the camera; the export, the checker and the readouts still read the full road
+ac649b1 Test: a long track's files go to the native side in pieces no larger than one message (red: one 566 MB call killed the page)
+b2e43b9 A long track's files go to the native side in pieces of at most 32 MiB, staged and then written whole
+931e580 Mutation harness covers the pieces and the staged id; the page passes the staged id on
+84dabab Merge: the validator keeps its per-segment memos packed, halving the heap a check keeps
+49943d5 Merge: a long track's preview draws the road coarser far from the camera and keeps its mesh memory small

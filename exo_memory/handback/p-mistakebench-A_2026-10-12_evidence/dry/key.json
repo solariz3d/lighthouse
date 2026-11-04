@@ -1,0 +1,20 @@
+{
+ "key": {
+  "R001": {
+   "unit": "W021",
+   "arm": "baseline",
+   "run": 1
+  },
+  "R002": {
+   "unit": "W084",
+   "arm": "baseline",
+   "run": 1
+  },
+  "R003": {
+   "unit": "W054",
+   "arm": "baseline",
+   "run": 1
+  }
+ },
+ "errored": []
+}

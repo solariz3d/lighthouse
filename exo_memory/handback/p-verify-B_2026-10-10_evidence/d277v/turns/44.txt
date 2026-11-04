@@ -1,0 +1,26 @@
+MESSAGE 44  msg_011CfmYpicFqyZSHtqMG5ka4  seat chair  ts 2026-10-06T19:38:55.443Z  turn L93109..L93118 (next prompt L93123)
+CLAIMS:
+  [msg_011CfmYpicFqyZSHtqMG5ka4|5] **"The librarian is running the whole suite and the two related test groups"**: check the librarian's task record or the running job. Confirm it covers the full suite, and that there are exactly two related groups and which ones they are.
+  [msg_011CfmYpicFqyZSHtqMG5ka4|7] **"E's always-max-speed checks get their own install afterwards."**: check the queue or plan record to confirm a separate install is scheduled after B's.
+  [msg_011CfmYpicFqyZSHtqMG5ka4|9] **"because they change what the export lets through."**: check E's diff to confirm it changes export filtering or validation.
+
+--- L93109 user 2026-10-06T19:38:52.636Z
+USER: 
+
+<pasted_content id="f5af">
+[librarian:LIB] Install-now on 6f2404d (D255): the keeper is waiting on Ctrl-instant, and D256 is EXPORT tier and will take longer. My runs on 6f2404d have started: the suite, core-close plus core_cup (preview.js was touched), then the build. Then I install and push. D256 gets its own install when E hands back.
+
+SOURCES: none (no state claims)
+
+OUTPUT → NEXT: changed — installing D255 now; D256 separately
+NEXT: chair land D256 when E hands back, and ring the librarian for its install
+</pasted_content id="f5af">
+
+--- L93118 assistant 2026-10-06T19:38:55.443Z  <<< THE CLAIM'S MESSAGE
+TEXT: B's changes are being installed now, so you'll have them shortly:
+- Left Ctrl flies down instantly.
+- Only the right mouse button turns the camera.
+
+The librarian is running the whole suite and the two related test groups, then builds, installs and pushes.
+
+E's always-max-speed checks get their own install afterwards. They take longer because they change what the export lets through.

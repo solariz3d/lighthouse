@@ -1,0 +1,21 @@
+heavy-run: waiting on 12fb81f6 pid 8996 (B D242 D248 rerun 4, since 2026-10-06T08:19:39.885Z)
+heavy-run: waiting on 12fb81f6 pid 8996 (B D242 D248 rerun 4, since 2026-10-06T08:19:39.885Z)
+heavy-run: waiting on 12fb81f6 pid 8996 (B D242 D248 rerun 4, since 2026-10-06T08:19:39.885Z)
+heavy-run: waiting on 12fb81f6 pid 8996 (B D242 D248 rerun 4, since 2026-10-06T08:19:39.885Z)
+heavy-run: waiting on 12fb81f6 pid 8996 (B D242 D248 rerun 4, since 2026-10-06T08:19:39.885Z)
+exit 1 tests 123 pass 121 fail 2
+✖ mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…" (25067.992ms)
+✖ mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…" (24518.256ms)
+✖ failing tests:
+test at app\test\core-mutation.test.js:130:3
+✖ mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…" (25067.992ms)
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "bank: 'phi', width: 'w'" occurs 2 times in app/core/panel.js
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-mutation.test.js:132:12)
+    actual: false,
+    expected: true,
+test at app\test\core-mutation.test.js:130:3
+✖ mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…" (24518.256ms)
+  AssertionError [ERR_ASSERTION]: NOT APPLIED: "history: D.endDrag(st.history), brush: null" occurs 0 times in app/core/coreshell.js
+      at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-mutation.test.js:132:12)
+    actual: false,
+    expected: true,

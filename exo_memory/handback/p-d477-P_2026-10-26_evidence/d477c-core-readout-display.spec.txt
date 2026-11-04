@@ -1,0 +1,61 @@
+[32m✔ the strings: two decimals (2026-10-15: "everything to 0.00"), the unit written, a sign on angles, 0.00° bare, half away from zero, no wrap [90m(1.0773ms)[39m[39m
+[32m✔ the layout: never over the head's keep-out, never two labels overlapping, the priority one placed first, a crowded one culled [90m(0.764ms)[39m[39m
+[32m✔ the layout: a label anchored on a large head keep-out is placed clear of it, not culled [90m(0.1051ms)[39m[39m
+[32m✔ the layout: the head's own label is never culled, even where no ring around its anchor fits; it stays clear of the head [90m(0.5344ms)[39m[39m
+[32m✔ the layout: no label is placed under a panel over the view, the head's own label included [90m(0.194ms)[39m[39m
+[32m✔ a piece whose middle is behind the camera is labelled, when hovered, on the part of it that is in view [90m(47.4983ms)[39m[39m
+[32m✔ the head's own piece is labelled even when none of it is on screen (the camera looks ahead, past the head) [90m(13.1625ms)[39m[39m
+[32m✔ the label box holds only an opaque background and its text: no border, square corners, contrast ≥ 4.5 : 1 [90m(4.7936ms)[39m[39m
+[32m✔ a skin change recolours the label boxes already made, and their background stays opaque [90m(6.0789ms)[39m[39m
+[32m✔ the shell's readouts are A's, once per document; the ghost's strings are the placed piece's strings [90m(5.3544ms)[39m[39m
+[32m✔ the panel shows the ghost's four numbers, and they follow every field inside its input handler (no timer, no frame) [90m(19.9043ms)[39m[39m
+[32m✔ the panel: a field set extend refuses shows — (and says why in the title); a closed loop shows —; after Extend the ghost is the NEXT piece [90m(2.3499ms)[39m[39m
+[32m✔ the labels on the track: the head's own piece always, any other only when hovered; the text A's numbers, clear of the head; a flight and an empty track draw none and throw nothing [90m(25.505ms)[39m[39m
+[32m✔ the head's own piece is labelled in the build view, where its middle is behind the camera [90m(11.8107ms)[39m[39m
+[32m✔ the labels follow a path the preview extends IN PLACE (a hovered later piece is labelled), and survive the preview clearing #preview after they mounted [90m(67.2878ms)[39m[39m
+[32m✔ extendOptions: the cup field is the target c, in DEGREES, typed as it is (0 is a target; empty continues; never clamped here) [90m(0.147ms)[39m[39m
+[32m✔ the Extend panel has a "cup °" field beside bank, 0 to 150, and Extend hands its value to the core as c [90m(2.9796ms)[39m[39m
+[32m✔ the readout shows cup from → to: the DOCUMENT's values with the bank cell's rounding, never the typed target, never bank's [90m(4.6546ms)[39m[39m
+[32m✔ the cup cell follows the cup field inside its input handler, and a cup the core refuses shows — and says why [90m(1.8692ms)[39m[39m
+[32m✔ the brush's channel list gains cup (channel c), with a drag rate in degrees [90m(0.467ms)[39m[39m
+[32m✔ the brush's channel list offers the cross-section channels e, s and t (D225), each with a drag rate [90m(0.5065ms)[39m[39m
+[32m✔ on an EMPTY track the fields show the first piece's start (level, straight, the bowl's 31 m and the edge it renders), not blanks [90m(1.0373ms)[39m[39m
+[32m✔ after Extend and Redo the fields show the head's END state in their own units (°/100m, °, m); after Undo, the undone piece's own values (D242 item 7) [90m(11.6781ms)[39m[39m
+[32m✔ on OPENING a saved track the fields show its head [90m(3.4888ms)[39m[39m
+[32m✔ a CHANGED value is a target in the core's units; a value typed back to exactly what was shown is untouched again [90m(18.0866ms)[39m[39m
+[32m✔ a field left as shown builds the SAME piece, ghost and readout as a blank, even where turn and bank are still changing at the head; a literal target would not [90m(8.8557ms)[39m[39m
+[32m✔ the first piece is the typed WIDTH along its whole length, from s = 0 (no bottleneck); untyped channels keep their default start [90m(2.862ms)[39m[39m
+[32m✔ the first piece is the typed BANK, TURN and CLIMB from s = 0 [90m(9.8389ms)[39m[39m
+[32m✔ a typed CUP makes the first piece a cup piece from its start, and the rendered edge equals c on both sides from s = 0 (seal row 1) [90m(4.3148ms)[39m[39m
+[32m✔ the SECOND piece is unchanged: it starts where the first ends and ramps to its target, exactly as before [90m(4.8603ms)[39m[39m
+[32m✔ a lap whose first piece was typed (width 40, cup 30) closes, and exports through the app's route with no red (csp on) [90m(1047.8667ms)[39m[39m
+[32m✔ extendOptions "at start": a ticked field WITH a target goes in transition as { channel: 20 m }; unticked or untouched fields do not [90m(0.2488ms)[39m[39m
+[32m✔ the panel: an "at start" box beside each field, OFF by default; ticking one redraws the ghost and readout inside its handler, and Extend sends it [90m(4.5199ms)[39m[39m
+[32m✔ "at start" on a field left as shown sends nothing (no target, D193); the box stays ticked for the next piece [90m(3.6442ms)[39m[39m
+[32m✔ no water: the panel has no Water section, the shell no pour and no water state, an edit pours and draws nothing, and no file of the app names the water [90m(14.6049ms)[39m[39m
+[32m✔ Close the loop writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes, in one press [90m(1844.1948ms)[39m[39m
+[32m✔ Close says it is working at once, and a refusal shows in the Close box, in red [90m(5813.5751ms)[39m[39m
+[32m✔ if that copy cannot be written, the press changes nothing and says why [90m(1981.1369ms)[39m[39m
+[32m✔ D271: Level ends the piece straight and level; To floor too short says the length that works, which then works; each is one undo step [90m(202.8434ms)[39m[39m
+[32m✔ D280: Turn by places a piece that turns exactly the typed angle and ends straight; a Straight after it turns 0.0°; one undo step; too short names the length [90m(14.5301ms)[39m[39m
+[32m✔ Turn to grid: the line under the buttons says how far the end is off the grid, and the button turns onto it (90 by default, 45 when picked) [90m(13.6638ms)[39m[39m
+[32m✔ D282: Sharp places a corner of the typed angle at the typed radius as ONE undo step; too tight a radius names the tightest at this width and places nothing [90m(1874.5088ms)[39m[39m
+[32m✔ D242: after a 30°/100m turn, Straight extends a piece whose turn and climb are 0 from 20 m on, and puts the "at start" boxes back; turn 0 without "at start" shows the hint [90m(8.9267ms)[39m[39m
+[32m✔ D242 item 7: Undo gives back the undone piece's values: the fields read what it was extended with, and Extend again rebuilds it byte-identical; Redo shows the head as before [90m(15.8663ms)[39m[39m
+[32m✔ the piece labels equal a fresh read after a placement, an undo, a redo, a bend in the middle and a moved start [90m(23.0678ms)[39m[39m
+[32m✔ the panel shows the corner (its turn, "ends turning at …", what turn 0 at start would add) and the gravity bank, for the piece Extend would add [90m(8.6349ms)[39m[39m
+[32m✔ D331 B: by default the turn field is a corner: it shows nothing at the head, a typed 90 is the ghost's and the placed piece's exact 90.00°, ending straight [90m(5.7475ms)[39m[39m
+[32m✔ D331 B: "turn as" rate is the old field (°/100 m, the head's rate shown); switching back puts the field back; Level, To floor and Jump refuse a corner by name and place nothing [90m(2.4644ms)[39m[39m
+[32m✔ D331 climb: by default the climb field is a corner: blank at the head, a typed 10 is the ghost's and the placed piece's exact 10.00°, at a steady pitch after; the climb corner cell reads it [90m(6.8818ms)[39m[39m
+[34mℹ tests 49[39m
+[34mℹ suites 0[39m
+[34mℹ pass 49[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 13298.0537[39m
+
+# stderr
+
+# exit 0 in 13.4 s

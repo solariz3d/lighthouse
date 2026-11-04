@@ -1,0 +1,1171 @@
+{
+ "what": "D201 label-rule watch, §2.3 verifier read by pane B (blind: key, C's file, E's §5 and the plan's collation not opened; self-labels masked). Kinds and verdicts per R19 §3–§4.",
+ "verifier": "B",
+ "packet": "loop/label_watch_packet_2026-10-01.json sha256 600a936c47b98fe1…",
+ "claims": [
+  {
+   "claimId": "msg_011CfYTVBiiVWd689vdLdDYp|6",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "patch_test7.js uses this string as an anchor that must match exactly once; L50079 (21:41:38, minutes later) prints 'patched core_cup_mutation.test.js'."
+  },
+  {
+   "claimId": "msg_011CfYTVBiiVWd689vdLdDYp|9",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "WRONG",
+   "reason": "After the patch, run6.txt (15:41:46 local, the L50088 output) still fails the 150° laps with 'start straight's floor is 4.45 m wide', so the grid straight was still cupped."
+  },
+  {
+   "claimId": "msg_011CfXqHv2u3MNiXVwKCfVa9|14",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Mutant N24 caught (L49004) but 60° not shown. The uncommitted tree landed as d26ef85 the same minute: preview.js button 1 calls resetLens; cameras.js has fov 60."
+  },
+  {
+   "claimId": "msg_011CfVC8XXkRGqXx4Eq1s5ao|3",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "L40821/L40822 query only HKCU Uninstall (no t180 entry); the turn never shows the app's own install-location key. Not contradicted in the turn, so not WRONG."
+  },
+  {
+   "claimId": "msg_011CfVC8XXkRGqXx4Eq1s5ao|2",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "Uninstaller /S exit 0 (L40819); 'app dir left: 0' (L40822) before the claim."
+  },
+  {
+   "claimId": "msg_011CfUSUWzgLwQv5MdLoxaet|9",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "A next-lap assignment for A (a plan), not a state assertion (L58793)."
+  },
+  {
+   "claimId": "msg_011CfUSUWzgLwQv5MdLoxaet|5",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "An assignment plus a future outcome ('so the 6 become real passing tests'), so plan/future (L58793)."
+  },
+  {
+   "claimId": "msg_011CfUSUWzgLwQv5MdLoxaet|8",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "A next-lap assignment for E (a plan), not a state assertion (L58793)."
+  },
+  {
+   "claimId": "msg_011CfZQXyiehRCmam2zZ8U7c|10",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "An expression inside appended test code (L52452), not an assertion; the test later passed 19/19 (L52453)."
+  },
+  {
+   "claimId": "msg_011CfZQXyiehRCmam2zZ8U7c|14",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Meta-observation about a typo in the message; the seat makes no state claim here."
+  },
+  {
+   "claimId": "msg_011CfVp9ZajmH2dDmVuYLdML|2",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "Source 3: the file was created at L36736. L36769 runs piecewise.cjs <track dir> <read.json> --curve, and L36770 returns a fit result, so the stated order works."
+  },
+  {
+   "claimId": "msg_011CfVp9ZajmH2dDmVuYLdML|5",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Uncut L36863 (the claim's own Bash input): const L lists 8 entries (rainbow_rd through ohyeah2389_t180testtrack), matching '8 layouts'."
+  },
+  {
+   "claimId": "msg_011CfV6YEeTW3wDyarn1Yc5m|1",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "The turn shows no diff or status of src/validate for the landing default. The message doesn't call the work uncommitted, so a later commit can't judge it."
+  },
+  {
+   "claimId": "msg_011CfV6YEeTW3wDyarn1Yc5m|2",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L31828 (before the claim) shows validation taking v = sp.v[take] at the take-off station and building landingRoad before the jump check."
+  },
+  {
+   "claimId": "msg_011CfV6YEeTW3wDyarn1Yc5m|3",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "The turn shows only indirect hints (mutant 'default back to 300 km/h' at L32044; a 460 km/h repro). No ramp-sizing code is shown, and a later commit is disallowed (not called uncommitted)."
+  },
+  {
+   "claimId": "msg_011CfXMtxF5FzbrHSTxPQZqV|24",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Doc comment in the readout.js Write at L48191; the artifact being authored. (It matches poseBefore at d26ef85, flight reset included.)"
+  },
+  {
+   "claimId": "msg_011CfXMtxF5FzbrHSTxPQZqV|5",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "D.checkDoc(doc) is a call inside the L48191 Write. (checkDoc is exported, per result L48172.)"
+  },
+  {
+   "claimId": "msg_011CfVxJjfuNViyWviGtM2Y3|16",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Source 3: the seat's own L37725 Bash (before the claim) adds function docFrom(track, ...) to test/core_helpers.js; its result was 'ok' (L37726)."
+  },
+  {
+   "claimId": "msg_011CfVxJjfuNViyWviGtM2Y3|23",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Source 3, uncut L37685 (close.js Write, before the claim): positionJacobian returns J={kh:new Map(),kv:...} with keys `${pi}:${b.first+a}` and values [0,0,0]-initialised 3-vectors."
+  },
+  {
+   "claimId": "msg_011CfU3DVTomFUSiJpr6D7pb|12",
+   "kind": "UNCHECKED STATE",
+   "verdict": "WRONG",
+   "reason": "grep 'fn seats_committee' (L31847) finds only seats_committee(items, reserve), no seats_committee_at; the call was then replaced by a closure (L31851)."
+  },
+  {
+   "claimId": "msg_011CfU3DVTomFUSiJpr6D7pb|7",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "The test code is cut in render, and d592269 is not in any available repo. The later 'module 20/20' (board ts 1790516607536) is indirect."
+  },
+  {
+   "claimId": "msg_011CfU3DVTomFUSiJpr6D7pb|6",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "intake_reserve source is not visible and d592269 is unavailable. Board 59518 says removing the committee cap (MB) drops the committee, but the literal expression can't be checked."
+  },
+  {
+   "claimId": "msg_011CfVvYHvVr4iofSk26Xufh|3",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "Source 3: L40370/L40371 result prints the added const coneTurn = (r0, v, beta, g) and its export, before the claim."
+  },
+  {
+   "claimId": "msg_011CfVvYHvVr4iofSk26Xufh|17",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "Derivation not run before claim. Standard result: N=0 at g cos p=v²/Rv with v²=v0²−2gRv(cos p−cos p0) gives cos p=(v0²/Rv+2g cos p0)/(3g)."
+  },
+  {
+   "claimId": "msg_011CfVvYHvVr4iofSk26Xufh|12",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "WebFetch L40355 shows Wikipedia frictionless banked turn v=√(rg tanθ); claim restates it as v²=r·g·tanβ."
+  },
+  {
+   "claimId": "msg_011CfXYerk5BsaReVZFne5gE|23",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L63994 surfaceFrom({samples, closed, lengthM, profileAt}); L64008 coreshell passes profileAt:(m)=>track.segments[m.seg].profile; L64011 waterRun uses segments[m.seg].profile."
+  },
+  {
+   "claimId": "msg_011CfXYerk5BsaReVZFne5gE|18",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "t180 1d68a86 adapter.js: kh is the heading rate θ′ per metre (dth = k0 + …), so integrating it over arc length gives the heading change."
+  },
+  {
+   "claimId": "msg_011CfUgfad9uYRz1DgZm6rPL|2",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Header carried from committed f0b0d75 renderer.js; blackbox/ui/glcore.js exists and has the loud shader-compile failure (lines 92-112). No tool call in turn."
+  },
+  {
+   "claimId": "msg_011CfUgfad9uYRz1DgZm6rPL|16",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L31116/L31117 read the librarian review; item 1 is 'Flat, unlit colour... needs light and shading' (also 6c3153aa :144)."
+  },
+  {
+   "claimId": "msg_011CfUgfad9uYRz1DgZm6rPL|15",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "WRONG",
+   "reason": "Item 7 (6c3153aa :156; L31117) names only the grid at height 0 as editor UI; the head marker is item 2, so the citation goes beyond the source."
+  },
+  {
+   "claimId": "msg_011CfZRRX4UPfaebAoejNddk|5",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Relayed from A's ring (L66205), no git check. t180 repo: 90e8ebf exists, parent b7c7676, amends d1f60fd; the only diff is +1 CHANGELOG line."
+  },
+  {
+   "claimId": "msg_011CfZRRX4UPfaebAoejNddk|4",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "No git call in turn. 90e8ebf is in the t180 repo (committed 03:54:21-06:00, D196), the re-commit of d1f60fd."
+  },
+  {
+   "claimId": "msg_011CfVBj2e3TaSibH6Pyrbtx|6",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "No tool call on the shared checkout's shader files (L79700 checked only b-d180-wt). Uncommitted working-tree state, outside git at claim time."
+  },
+  {
+   "claimId": "msg_011CfVFCeccHq7Kx9WiP7gkz|1",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Inference from monitor event L41795 that the installed binary carries the fix; installed-app runtime state has no as-of source."
+  },
+  {
+   "claimId": "msg_011CfVFCeccHq7Kx9WiP7gkz|2",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "Monitor event L41795 shows set_ac_root value C:\\Users\\...\\fake-ac with no \\?\\ prefix."
+  },
+  {
+   "claimId": "msg_011CfVNbu6wN7auCjtmyZMeC|11",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "Source 3: L34087 resolveWord read (before claim) shows jump gap k0:0,k1:0 and landing ramp road straight at the landing pitch."
+  },
+  {
+   "claimId": "msg_011CfVNbu6wN7auCjtmyZMeC|3",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Removing a comment via an edit's old_string (L34104) is an action, not an asserted state."
+  },
+  {
+   "claimId": "msg_011CfVNbu6wN7auCjtmyZMeC|9",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "Inference; resolve.js:9 at d331f82: turn=k_in·a·L/2+k·L(1−a/2−b/2); a=1,b=0 gives (k_in+k)L/2, easeOut 0 ends at peak k."
+  },
+  {
+   "claimId": "msg_011CfbQS8NP6P2e9Qhe8mh9H|22",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Uncut L52651 adds route: result.route || 'vercel' to ledgerRow (applied L52654); L274-279 show model, generationId, inputTokens; L52683: only the --dry test fails."
+  },
+  {
+   "claimId": "msg_011CfUxQX6WvHFKHpKhryLTz|15",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "The script's own segs list a(60), e(80), b(50): index 1 is 'e', length 80; 80.5 is a 0.5 m change."
+  },
+  {
+   "claimId": "msg_011CfUxQX6WvHFKHpKhryLTz|1",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "t180 cb8e765 has src/geom/index.js exporting buildPath/rebuildPathFrom; the probe ran and printed results seconds later (L34363)."
+  },
+  {
+   "claimId": "msg_011CfUxQX6WvHFKHpKhryLTz|17",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "The repo's own tests use full rebuild as the reference ('exact: a level turn edit equals a full rebuild exactly', L34340; M15 'right answer')."
+  },
+  {
+   "claimId": "msg_011CfWDLEJ7f7EjZUtLuD54g|2",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "call_librarian L38948 with hand-back pointer (§10 folded in); result L38949 'delivered to the librarian'."
+  },
+  {
+   "claimId": "msg_011CfWDLEJ7f7EjZUtLuD54g|6",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "No turn check of default; named uncommitted, landed 9714b83 (18:14Z): sculpt.js brush mode = 'hill' (the default)."
+  },
+  {
+   "claimId": "msg_011CfUVyU8CeKKyn4sygUCoe|32",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "A past crash and its cause, with no tool result in the turn and no board row; connector.js 0104ce1:94 only shows the later fix."
+  },
+  {
+   "claimId": "msg_011CfUVyU8CeKKyn4sygUCoe|31",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Board ts 1790536273159 supports the 10-minute timeout, but nothing in the turn or the board shows the '180 starts'."
+  },
+  {
+   "claimId": "msg_011CfUbvnmj5HCdcSxKXQvbK|20",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "The build.rs comment asserts it copies into src-tauri/dist. L35092, 2 min after the build, lists src-tauri/dist/app and dist/src, so cwd was src-tauri."
+  },
+  {
+   "claimId": "msg_011CfUbvnmj5HCdcSxKXQvbK|24",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Ruling 1: \"windows\": [\"main\"] is a bare config value in the L35019 capabilities Write."
+  },
+  {
+   "claimId": "msg_011CfUbvnmj5HCdcSxKXQvbK|7",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Turn only: L34913's shell.js Write has NAME_RE ^[A-Za-z0-9][A-Za-z0-9 _-]{0,63}$ checked in save(). L35015's lib.rs Write has valid_name, the same rule, used in track_path."
+  },
+  {
+   "claimId": "msg_011CfZLvomnhTYpZ72Vbz3w8|23",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Mutant label inside the test-harness Write at L52036; tool input. (Probe L51942 did show overshoot 1.045 m, had it counted.)"
+  },
+  {
+   "claimId": "msg_011CfWBdoMCUL3Km1PbnqB1U|8",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Uncut L47557 roadPiece edit: an omitted offset channel uses from[ch] (continues) or {v:0,m:0} on a first piece; applied with syntax-ok at L47558."
+  },
+  {
+   "claimId": "msg_011CfWBdoMCUL3Km1PbnqB1U|15",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Source 3: the Edit at L47567 adds '§7 The offset channels (a hill, a swerve)' to 09_core_channels.md; L47583 shows adapter.js exporting offsetPath."
+  },
+  {
+   "claimId": "msg_011CfWBdoMCUL3Km1PbnqB1U|5",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Uncut L47557 document.js comment 'h (height, m, along WORLD up)'; uncut L47580 adapter offsetPath: UP=[0,1,0], pos + UP·h.v."
+  },
+  {
+   "claimId": "msg_011CfVZWLQLFJuvduxR83Frt|11",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L61074 result: 'at 755 km/h the measured jump (81 m gap, 14 m drop)'."
+  },
+  {
+   "claimId": "msg_011CfVZWLQLFJuvduxR83Frt|8",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L61071 result: 'A §7's \"roundtrip 6\" are the six standing READER_TODO rows'."
+  },
+  {
+   "claimId": "msg_011CfVBiBoRc9G5gr8LDq9ys|28",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Default parameter car = MACH6 is a design choice in the labels.js Write at L32821, not an assertion. (validate defaults to MACH6, index.js:138.)"
+  },
+  {
+   "claimId": "msg_011CfVBiBoRc9G5gr8LDq9ys|12",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "A UI label asserting what provenG means; limits.js was not read this turn. At e6b4362, limits.js:12-15 has provenG 90, 'beyond what any track has proven'."
+  },
+  {
+   "claimId": "msg_011CfVQWPSbMP5BGdDSUSNaD|12",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Plan/intent: 'Then I write ... and send the librarian the pointer.'"
+  },
+  {
+   "claimId": "msg_011CfVQWPSbMP5BGdDSUSNaD|5",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Generalization about node --test runner behavior (package.json at 484be9e); no turn evidence; runtime behavior, no as-of source."
+  },
+  {
+   "claimId": "msg_011CfVQWPSbMP5BGdDSUSNaD|8",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Lock queue is runtime state; L37432 shows the repro waits on d182/runs.log, but neither the queue order nor the run counts are shown."
+  },
+  {
+   "claimId": "msg_011CfVQV9vTyRtnZV55RFVaH|19",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Future plan for A ('reports... then goes back'); intent, not state."
+  },
+  {
+   "claimId": "msg_011CfVQV9vTyRtnZV55RFVaH|3",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "9d2b2dc is shown at L80243; 0e58434 is only named in a tool input. Both exist; origin/main reflog shows no push between 09-27 19:11 and 09-28 23:34 local."
+  },
+  {
+   "claimId": "msg_011CfUocBqv6LVSdU1ipLifz|2",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "L37562 (6 s later, same command, nothing between): 26/26 pass incl. test asserting this lane is RED for crossing another pass; only far straight (181 m, L37557) is in reach."
+  },
+  {
+   "claimId": "msg_011CfUocBqv6LVSdU1ipLifz|11",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "setPitLane parameters are code in the appended test (L37561), not an assertion."
+  },
+  {
+   "claimId": "msg_011CfVitwGUfA9k8kc6BhtPS|16",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Board ts 1790592482220 (10:48Z) declares the freeze, and the chair's L39739 at 10:59 says 'allowed under the freeze'. No lift by 11:01."
+  },
+  {
+   "claimId": "msg_011CfVitwGUfA9k8kc6BhtPS|5",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "L39755: the old test set the picker to half-pipe after a half-pipe turn. L39783: 'a turn after a half-pipe turn gets half-pipe', so a candidate ignoring the picker matched."
+  },
+  {
+   "claimId": "msg_011CfVitwGUfA9k8kc6BhtPS|7",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "Turn: the defaults there are continuity (half-pipe, L39783) or the turn's own font (bowl, L39755 comment); flat is neither. The L39762 edit picks flat and asserts the head isn't flat."
+  },
+  {
+   "claimId": "msg_011CfUpdAWhc8x7RD4tHkzuv|5",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "A cd inside a command is an instruction, not an assertion (the directory exists anyway, L37857 runs there)."
+  },
+  {
+   "claimId": "msg_011CfUpdAWhc8x7RD4tHkzuv|32",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "A bare error-code token in newly written test code (L37848) has no asserted predicate. BAD_PACK is thrown at L37857."
+  },
+  {
+   "claimId": "msg_011CfUpdAWhc8x7RD4tHkzuv|29",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "A bare error-code token in test code (L37848). COMPRESSED_NORMAL exists in warnings.js (L37777)."
+  },
+  {
+   "claimId": "msg_011CfUvfHf5EUQdTsTbvoSxE|22",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Its message says 'None of the three is committed'. cb8e765 (01:11Z, 16 min later): ac.rs installs into content/tracks as t180b_…; app/install PREFIX_NOTE is shown in the button title and the message."
+  },
+  {
+   "claimId": "msg_011CfYSqWv5TaAokQJPYVZCQ|6",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "extend(...) calls are code in a scratch probe Write (L49859)."
+  },
+  {
+   "claimId": "msg_011CfW55cje4pMDPCpzJkWrF|8",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Rechecked: it states the result of a change E hasn't made yet ('E changes the brush… Then', L81602), so not current behaviour. Future, routed out."
+  },
+  {
+   "claimId": "msg_011CfUSqXKruvFzmmd9nfnrD|14",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "console.log('ok') is code inside the Bash script at L34339; tool input, not a claim."
+  },
+  {
+   "claimId": "msg_011CfUSqXKruvFzmmd9nfnrD|8",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "d = D.editWord(...) is a replacement string inside the L34339 script; code, not an assertion."
+  },
+  {
+   "claimId": "msg_011CfV9uXxhj9snqFBroTcHH|12",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "A count taken from the librarian's ring and not checked by the chair. Board shows D168 FINAL_MUTANTS (row ~61106) and then DRAG_ANSWER/BENCH (ring ts 1790567298443): the second."
+  },
+  {
+   "claimId": "msg_011CfYSTq6bmb6ngapvPoA8S|24",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Message is only a Write of a patch script (L49719); no assertion of state is made in it."
+  },
+  {
+   "claimId": "msg_011CfUmUxKtjBNRXvB9AyTAo|7",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "'Every node --test or npm test runs with --test-concurrency=4' is an instruction relayed to panes (L78747/L78749)."
+  },
+  {
+   "claimId": "msg_011CfUmUxKtjBNRXvB9AyTAo|6",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "f0b0d75 (the commit before the claim) test/roundtrip.test.js writes the scene as a kn5 and reads it back with tools/read_track.cjs four times. Note the track files are generated."
+  },
+  {
+   "claimId": "msg_011CfUmUxKtjBNRXvB9AyTAo|4",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "A causal claim about a UI being starved by CPU load, relayed from the librarian. Runtime state; no as-of record."
+  },
+  {
+   "claimId": "msg_011CfV8r3ZhLjqMJmEm9PSZJ|6",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Identifiers inside the Edit tool input at L32422 (test code); not an assertion."
+  },
+  {
+   "claimId": "msg_011CfV8r3ZhLjqMJmEm9PSZJ|14",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "require statement inside the Edit tool input at L32422; code, not a claim."
+  },
+  {
+   "claimId": "msg_011CfV8r3ZhLjqMJmEm9PSZJ|18",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Paths are arguments in the tool inputs at L32422 and L32424; not an assertion."
+  },
+  {
+   "claimId": "msg_011CfVibgXUt4TMuLbQFrFKn|9",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "No row in this turn shows the walltests or C's resolve.js change. The hand-back (e110589d) and 8868531 came later, so they are not as-of sources, and 484be9e predates C's change."
+  },
+  {
+   "claimId": "msg_011CfVibgXUt4TMuLbQFrFKn|7",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "No walltests run or result appears in this turn before the claim. E's hand-back (e110589d), committed about 50 min later, is not an as-of source."
+  },
+  {
+   "claimId": "msg_011CfV4yC4uVWzmTyqczPrFu|14",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "A comment. L31624 (before the claim) shows connector.js:153/171/203 calling resolve(...) with no speed, so the closing connector resolves at the default."
+  },
+  {
+   "claimId": "msg_011CfV4yC4uVWzmTyqczPrFu|11",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "The test title (a claim; the assert is bare code) appears in the L31643 read before the claim (full render, lines 464/469): 'sized for the stated default, 300 km/h'."
+  },
+  {
+   "claimId": "msg_011CfV4yC4uVWzmTyqczPrFu|9",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Ruling 1: D.DocError('BAD_DESIGN_SPEED', ...) is a bare code expression in the make-a-diff.js Write."
+  },
+  {
+   "claimId": "msg_011CfWAC8kuqse4CTjYH4Ha9|1",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Ruling 2 (L38744): SHARP is an explicit OPT-IN and its spill is DECLARED in the UI string and docs. Pasted input, not a tool result."
+  },
+  {
+   "claimId": "msg_011CfWAC8kuqse4CTjYH4Ha9|29",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "Source 3, L38841 (8 min later, nothing in between changed it): at s0 2050, r 100 gives radius used 100.0 and r 20 widens; the tree2 core run fails only two offset tests."
+  },
+  {
+   "claimId": "msg_011CfY6UB831cWaJmda1vNwC|24",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "modifiers: 8 is code inside a scratch script Write (L44322), not an assertion."
+  },
+  {
+   "claimId": "msg_011CfY6UB831cWaJmda1vNwC|26",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Browser flags passed via env var are code in the scratch script Write (L44322), not an asserted state."
+  },
+  {
+   "claimId": "msg_011CfY6UB831cWaJmda1vNwC|4",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Uncut L44322 Write input: code calls PR.portOwner(port, app.pid) and throws if !owner.ours; prove_render.js at d26ef85 returns { pid, ours }."
+  },
+  {
+   "claimId": "msg_011CfUeAGxUVeQYdGzvv8dHh|12",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Code in a newly written tool (speed.cjs q() function), an instruction, not an assertion of state."
+  },
+  {
+   "claimId": "msg_011CfUeAGxUVeQYdGzvv8dHh|6",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "The API names appear as code in speed.cjs (L27614); code is an instruction, not an asserted state. (The run at L27617 later worked.)"
+  },
+  {
+   "claimId": "msg_011CfUeAGxUVeQYdGzvv8dHh|9",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Module path fallback is code logic in speed.cjs, not an assertion; (L27591 shows Desktop/blackbox/ui/acreplay.js exists)."
+  },
+  {
+   "claimId": "msg_011CfZM21j19mUcgR3QZ8XAj|6",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "No check in turn; board has no earlier report of this lag before 87224 (keeper, ts 1790758614997); distinct from width fix."
+  },
+  {
+   "claimId": "msg_011CfZM21j19mUcgR3QZ8XAj|5",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Quote matches keeper's message L66037 word for word."
+  },
+  {
+   "claimId": "msg_011CfUk5wpsoEEkYkEtzCQcm|12",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "WRONG",
+   "reason": "The escaped \\\\n became a real newline: SyntaxError at mutate_markers.js:60 (L28862); seat admits it at L28864 and the Read at L28866 shows the split line."
+  },
+  {
+   "claimId": "msg_011CfUk5wpsoEEkYkEtzCQcm|6",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Entries are [which, tests, name, from, to] (L28819, L28866); after fix the DRY run checked 44 mutants with no mismatch (L28878), so 'index' is a valid key."
+  },
+  {
+   "claimId": "msg_011CfW4DG91JB9WKhNYoQJcb|21",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Event-name comment written via Edit tool input (L41196-L41202, preview/index.js); code being authored, not an assertion."
+  },
+  {
+   "claimId": "msg_011CfW4DG91JB9WKhNYoQJcb|17",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Declaration line is the new_string of the Edit at L41184; tool input, not a claim."
+  },
+  {
+   "claimId": "msg_011CfW4DG91JB9WKhNYoQJcb|6",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "require path is code inside the Edit at L41182; tool input, not a claim."
+  },
+  {
+   "claimId": "msg_011CfYetqVzh4mxBtt5uZsZk|19",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Text sits inside the Bash tool input (probe script) at L51189; code is an instruction to a tool, not an assertion of state."
+  },
+  {
+   "claimId": "msg_011CfYetqVzh4mxBtt5uZsZk|22",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Case labels inside the L51189 Bash script; tool input, not an assertion. (Labels echoed later in the L51190 result.)"
+  },
+  {
+   "claimId": "msg_011CfYetqVzh4mxBtt5uZsZk|26",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Expression Q=Math.PI*Rr/2 is code inside the L51189 Bash tool input; an instruction, not a claim."
+  },
+  {
+   "claimId": "msg_011CfVAXArhM28PkYf6UvWMF|32",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L35866 launched a seed-1 soak in a 3-try retry loop in the background; L35867 result confirms it started."
+  },
+  {
+   "claimId": "msg_011CfVAXArhM28PkYf6UvWMF|4",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Source 3, uncut L35828: the patch sets WEBVIEW2_USER_DATA_FOLDER: profileDir(o.out), and profileDir joins out + 'webview2-profile' and rmSyncs it first (fresh). It applied: 'ok', L35837."
+  },
+  {
+   "claimId": "msg_011CfVAXArhM28PkYf6UvWMF|26",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Causal confound. The BG re-measure (L35772) supports the background part; the guide-card occlusion rests on screenshots (L35777/9) the transcript does not show, a runtime UI state."
+  },
+  {
+   "claimId": "msg_011CfUkBunWXt6PBvG2u2hvC|3",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Test name appears only as new_string of an Edit (L36501): an action writing code, not an assertion of state."
+  },
+  {
+   "claimId": "msg_011CfUkBunWXt6PBvG2u2hvC|13",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "\"I'll use Edit\" (L36496) is stated intent."
+  },
+  {
+   "claimId": "msg_011CfVCrsbAQBhmATyrxtpRQ|5",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "require of phrasebook.js is code in a scratch script (L32949), not an assertion."
+  },
+  {
+   "claimId": "msg_011CfVCrsbAQBhmATyrxtpRQ|16",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "validate(...) call is code in a scratch script (L32949), not an assertion."
+  },
+  {
+   "claimId": "msg_011CfVKRUDcNs98sX2HwGQ7m|9",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "d331f82 (before the claim) src/doc/vocab.js:29-33 font widths: flat 20, half-pipe 16, bowl 16, wall-ride 10, tube 8. Range 8-20 m."
+  },
+  {
+   "claimId": "msg_011CfZM4x36V8ug87QmM5Zic|5",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "README prose. An earlier tool result in the turn (full render, line 68) shows the header 'extend(doc, { length, transition, targets: {...}, family, knotM })'."
+  },
+  {
+   "claimId": "msg_011CfZM4x36V8ug87QmM5Zic|21",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "The L51958 apply_extend.js Write (before the claim) accepts any D.CHANNELS key (targets kh, kv, phi, w, r, c); 'start' = startRampM, the first knot span ≤ KNOT_M 20 m."
+  },
+  {
+   "claimId": "msg_011CfZM4x36V8ug87QmM5Zic|16",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "WRONG",
+   "reason": "Source 3, the turn's own Write at L51979 (before the claim): the clamp spans start, target AND the joint's two kept points, whose comment says the continued slope 'may legitimately carry' them past [start, target]; so 'never leaves that range' is contradicted by the code as written."
+  },
+  {
+   "claimId": "msg_011CfVp3UDsZ17CXszTx9vjY|5",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Board: at the claim (12:08:57Z) C's and E's D184 hand-backs were still out (ts 1790597471780, 1790597814868), so the lap waited on them as well as B's test; incomplete rather than contradicted, the source is ambiguous (R19 §4)."
+  },
+  {
+   "claimId": "msg_011CfVp3UDsZ17CXszTx9vjY|1",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "The L46467 notification shows the command: ls/dir /AL junction/find on scratchpad d182 trees. A read-only check of scratch links."
+  },
+  {
+   "claimId": "msg_011CfU3PXSu7s8bc76prxMqD|10",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Commit d592269 (L-machine lighthouse) is absent from available repos; no test-name strings found in history; turn shows only diff stat 69+/4−."
+  },
+  {
+   "claimId": "msg_011CfU3PXSu7s8bc76prxMqD|15",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L31902 result: 'processes 350 · matches: 0'."
+  },
+  {
+   "claimId": "msg_011CfU3PXSu7s8bc76prxMqD|14",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L31897 result: 'test result: ok. 985 passed; 0 failed; 4 ignored' for the bin target."
+  },
+  {
+   "claimId": "msg_011CfVAehda13rVsLzSxUrwk|11",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "tracks_of never shown in turn; ac.rs at e6b4362 (last commit before claim) line 27: pub fn tracks_of(root: &Path) -> Result<PathBuf, String>."
+  },
+  {
+   "claimId": "msg_011CfURwPTeEGUPfBgcR3DU9|16",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "Full render L29580: M9 replaces 'if (last) { st.cells.pop(); ... }' (the last-cell rebuild) with keeping it. L29591 (seconds later): applied, caught by the match tests."
+  },
+  {
+   "claimId": "msg_011CfURwPTeEGUPfBgcR3DU9|11",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Ruling 1: caughtBy 'match: extending by one word' is a config value referencing a test, not a statement in words."
+  },
+  {
+   "claimId": "msg_011CfURwPTeEGUPfBgcR3DU9|12",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Ruling 1: caughtBy 'cost: a one-word extension' is a config value referencing a test, not a statement in words."
+  },
+  {
+   "claimId": "msg_011CfVNpWt6DCvyFHuaf9Zw9|10",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L34036 result shows resolve.js header: resolve(doc) -> { segments, closed, constraints, head }; code uses .segments accordingly."
+  },
+  {
+   "claimId": "msg_011CfVNpWt6DCvyFHuaf9Zw9|12",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Turn shows lengthM (L34007 header) but not _end's fields; path.js at d331f82: path._end = worldEnd(...) with x, theta; lengthM = _end.s (number)."
+  },
+  {
+   "claimId": "msg_011CfWbHo1rCC1Vwm3YTQumY|7",
+   "kind": "UNCHECKED STATE",
+   "verdict": "WRONG",
+   "reason": "Chair row ts 1790632959320 (14 s later) says its suite run is going and it will push when it passes. The push came later (row 1790633853344)."
+  },
+  {
+   "claimId": "msg_011CfWbHo1rCC1Vwm3YTQumY|1",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L62582 result: B's hand-back head reads GREEN, P1 applied and caught by name."
+  },
+  {
+   "claimId": "msg_011CfVgASKnBwHqJA73cnHuG|3",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "No result in the turn shows the default jump's gap or drop. D182 vocab was uncommitted (landed in 8868531, a later commit) and the message never calls it uncommitted."
+  },
+  {
+   "claimId": "msg_011CfXYqo9aoX6DH8JAskCMH|15",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "grep -c is part of the Bash command at L43500; a tool input, not an assertion."
+  },
+  {
+   "claimId": "msg_011CfXYqo9aoX6DH8JAskCMH|9",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Mutant 'from' string inside the Edit at L43498; code, not a claim."
+  },
+  {
+   "claimId": "msg_011CfXYqo9aoX6DH8JAskCMH|11",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "old_string of the Edit at L43498; tool input. (It matched, per result L43499.)"
+  },
+  {
+   "claimId": "msg_011CfVDf6Gwi5LwQ1SQq8YuU|1",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "L41338 log shows only repeated 'waiting' lines with no timestamps; 'alive' (process not exited/hung) is runtime state inferred beyond the log."
+  },
+  {
+   "claimId": "msg_011CfVDf6Gwi5LwQ1SQq8YuU|5",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Conditional intent ('I'll relaunch the same script'), a plan (L41341)."
+  },
+  {
+   "claimId": "msg_011CfVWyWsWshufLPWXkHAwG|14",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L35404 result: default jump {\"gap\":81,\"drop\":14} printed from resolve on the ripple copy before the claim."
+  },
+  {
+   "claimId": "msg_011CfVWyWsWshufLPWXkHAwG|7",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L35464 shows shell adopt(d); createDoc is used in shown test files; t180 484be9e src/doc/index.js re-exports document.js createDoc; app/test → ../../src/doc path resolves."
+  },
+  {
+   "claimId": "msg_011CfVT2FNyfxjjNDqamyw58|11",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Reader not read in turn; tools/read_track.cjs at 484be9e line 55: if (rel(hit.n, n) > 35) break; // a fold this sharp in one metre is an edge."
+  },
+  {
+   "claimId": "msg_011CfVT2FNyfxjjNDqamyw58|17",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Inference from bimodal split (L37886, L37922); no source computes the overall median profile against every track's profile, so it is ambiguous."
+  },
+  {
+   "claimId": "msg_011CfVT2FNyfxjjNDqamyw58|12",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "L37799 (uncut) shows wall-ride bank 1.3928 rad ≈ 80°, but no row shows FINDINGS §7f. 484be9e has no §7f, and the later 8868531 is excluded under strict §4."
+  },
+  {
+   "claimId": "msg_011CfVJudmzRKVWB1cRfVh9A|15",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "d331f82 (before the claim) docs/ARCHITECTURE.md:51, inside §2 (lines 30-52): 'avoids Planet Coaster's documented closing spike'."
+  },
+  {
+   "claimId": "msg_011CfVMsmytmHeytwPuThrru|8",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Uncut L33904/L33939 inputs before claim: air > FLIGHT_S (5) pushes type 'lost', end='lost'; L33952 shows FLIGHT_S = 5."
+  },
+  {
+   "claimId": "msg_011CfVMsmytmHeytwPuThrru|2",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Uncut L33939 edit before claim sets EDGE = 0.01 with hit.boundary && tang > EDGE; L33952 confirms EDGE = 0.01."
+  },
+  {
+   "claimId": "msg_011CfV7eT2tGGw5N32LLSegg|2",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "e6b4362 app/texture/index.js:63 dispatches 't180:textures' with {set}; no tool result on the panel in turn (L40042 only showed preview's comment)."
+  },
+  {
+   "claimId": "msg_011CfV7eT2tGGw5N32LLSegg|3",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "Source 3: the L40042 result shows preview index.js:57 calling setTextureSet(e.detail.set) on t180:textures, and preview.js:11 says the textures panel sends that event."
+  },
+  {
+   "claimId": "msg_011CfUbge1VwkhGyMypuR4Uq|7",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Line 46 not read in turn; docs/ARCHITECTURE.md:46 under '## 2.' at ef58520 reads 'bounded live by physics'."
+  },
+  {
+   "claimId": "msg_011CfUbge1VwkhGyMypuR4Uq|12",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "fromwords.js untracked at claim time (?? at turn L625); no Write/Edit of fromwords.js before the claim in the turn (source 3 empty); later commit 0104ce1 excluded."
+  },
+  {
+   "claimId": "msg_011CfVfJhrmrrtxGm5MH13iG|11",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "The uncut L61201 result, before the claim, shows the amber at the turn-to-wall-ride join from the default bank stepping 52° inside a 36 m word. Board row 84578 agrees."
+  },
+  {
+   "claimId": "msg_011CfVfJhrmrrtxGm5MH13iG|2",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "Causal, and A's code was not read. vocab.js at 484be9e (before the claim) has wall:8; L61201 shows the old 8 m wall caused the rim flip and A's vocab still carries it."
+  },
+  {
+   "claimId": "msg_011CfV58kVoBtjU13HYQURUi|3",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "The uncut Write at L35288, before the claim, sets the vertex attributes to [vx, vy, vz, world x y z, normal xyz, u, v]: zero-based, u is 9 and v is 10. It was written, not read back."
+  },
+  {
+   "claimId": "msg_011CfV58kVoBtjU13HYQURUi|5",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "The line is the new_string of the Edit at L35299; tool input, not an assertion."
+  },
+  {
+   "claimId": "msg_011CfV58kVoBtjU13HYQURUi|1",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Edit old_string at L35299 matched (result L35300): at(9+3+0-3+3-3+9-9+9)=18, at(10+3-3+9-9+1-1+0)=10. Arithmetic was present."
+  },
+  {
+   "claimId": "msg_011CfYfyUir3reA6wrhBzTdp|14",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Non-reproduction shown (L51094 alone runs), but 'nothing in my code can cause it' is causal; cause stayed undetermined (later N2 recurrences attributed to A by correlation only)."
+  },
+  {
+   "claimId": "msg_011CfYfyUir3reA6wrhBzTdp|21",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "M47 mirror mutant survived (L51198), hand-built mirror lap showed 148/23 mm steps (L51217), test replaced (L51253), M47 then caught (L911 row). 'Vacuous' is interpretation, supported."
+  },
+  {
+   "claimId": "msg_011CfUodn4ExEte5r6kUJyrD|60",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Its message (hand-back L37575) says 'Nothing is committed'. Landing aa4d565 (00:02Z, under 24h later) adds geom-pitlane.test.js:80, 'pass §5c's checks', landed GREEN."
+  },
+  {
+   "claimId": "msg_011CfUodn4ExEte5r6kUJyrD|13",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Its message (hand-back L37575) says 'Nothing is committed'. aa4d565 (under 24h): serial.js SCHEMA=3, 2→3 pitLane:null, BAD_PIT_LANE, pitLane line after words; setPitLane/editPitLane; fromwords PitLane hunks."
+  },
+  {
+   "claimId": "msg_011CfUid71fKFFYP58UEeyrL|17",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L28462 copy run: 422 tests/415 pass/1 fail/6 todo, failing #228 font change; L28432 live tree also fails #228 font-blend test."
+  },
+  {
+   "claimId": "msg_011CfUid71fKFFYP58UEeyrL|28",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Source 3: Edit L28381 adds test 2 (a jump placed first, no take-off road) and L28384 passes 6/6. Message says 'Nothing committed'; landing 59ff906 has the same test:24-29."
+  },
+  {
+   "claimId": "msg_011CfUgqonCaVuF4MrFNdGuh|6",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Ruling 1: the file paths are bare code inside the L31244 edit script, an instruction to the machine, not an assertion."
+  },
+  {
+   "claimId": "msg_011CfUgqonCaVuF4MrFNdGuh|14",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Ruling 1: the constant values (BLEND: 14 ...) are bare code inserted by the L31244 script, not a statement in words."
+  },
+  {
+   "claimId": "msg_011CfUgqonCaVuF4MrFNdGuh|3",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "'Updating both test files:' (L31243) announces an action in progress."
+  },
+  {
+   "claimId": "msg_011CfVDD2Xjv6WqBQagbKc38|20",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "The hand-back message says uncommitted. The landing commit 484be9e (within 24 h) geom_mutation.test.js:107 has timeout 300000 and maxBuffer 1<<26 (64 MiB); d331f82 had no maxBuffer."
+  },
+  {
+   "claimId": "msg_011CfVDD2Xjv6WqBQagbKc38|37",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "The hand-back says uncommitted. 484be9e prove_render.js:295/299 set T180_TEST_EXPORT_FOLDER to <out>/export under --export-seam; :331 records the folder step 'via the seam'."
+  },
+  {
+   "claimId": "msg_011CfVDD2Xjv6WqBQagbKc38|28",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L36288 (before the claim): sha256sum of d181/seam.diff gives 171c2c686509db93."
+  },
+  {
+   "claimId": "msg_011CfVfoQczifcSbdU3WP3jc|25",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Source 3: L39283 shows the hand-back's last owed item ('has NOT run'), and the seat's own L39285 Edit fills it with the 0/20 result. The local date (2026-09-28) matches the claim time."
+  },
+  {
+   "claimId": "msg_011CfVfoQczifcSbdU3WP3jc|8",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L39273 mesh.log: runs 1–20 all exit 0, verdict lines 8, pass 8, durations 1.2–1.5 s."
+  },
+  {
+   "claimId": "msg_011CfVfoQczifcSbdU3WP3jc|33",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Source 3 shows only geom_mesh 0/20 (L39273). The incval re-runs appear in no earlier row, and the hand-back commit d12798e0 is later, so it is not an as-of source."
+  },
+  {
+   "claimId": "msg_011CfVqHunWLU4AGeokXDLnj|19",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "assert.equal line is code appended to checks.js (L40233)."
+  },
+  {
+   "claimId": "msg_011CfVqHunWLU4AGeokXDLnj|16",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Builder calls are code in checks.js append (L40233), not an assertion."
+  },
+  {
+   "claimId": "msg_011CfVqHunWLU4AGeokXDLnj|7",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Comment prescribes how a session should use the meshes (instruction/intent), L40233."
+  },
+  {
+   "claimId": "msg_011CfUcF7EV6AGZmVbAMPwKC|25",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "UI string inside code written by the Write at L30674 (app/camera/index.js); an instruction to a tool, not an assertion."
+  },
+  {
+   "claimId": "msg_011CfUcF7EV6AGZmVbAMPwKC|26",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "mount(root) signature is code being authored in the L30674 Write; not an assertion."
+  },
+  {
+   "claimId": "msg_011CfUcF7EV6AGZmVbAMPwKC|21",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Comment inside the code written by the Write at L30674; artifact content and tool input, not a claim."
+  },
+  {
+   "claimId": "msg_011CfVTSkueznwfD1kdu6HXz|27",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "Nothing in the turn (from L44512) shows the spread-map change, and as-of git 169f2ad9 has no p-r2-water-A. 4f725214 is a later commit and excluded."
+  },
+  {
+   "claimId": "msg_011CfVTSkueznwfD1kdu6HXz|6",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Source 1, as-of: lighthouse 169f2ad9 (07:31:57Z, BEFORE the claim) p-d182-installer022-A: built 2,344,569 B, installed check §3, restore §4 byte-exact."
+  },
+  {
+   "claimId": "msg_011CfVTSkueznwfD1kdu6HXz|22",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "UNVERIFIABLE",
+   "reason": "No git diff result in the turn. The as-of board rows (before ts 1790581137328) are only A's own earlier assertions. 4f725214 is a later commit and excluded."
+  },
+  {
+   "claimId": "msg_011CfZRPEP4SPai6NPSVHDeT|18",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "Next plan matches the prior plan default in A's ring L66174 (B combines D195+D196, checks, full suite, lands); board row 87328."
+  },
+  {
+   "claimId": "msg_011CfZRPEP4SPai6NPSVHDeT|21",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "NEXT trailer is an instruction/plan for the chair."
+  },
+  {
+   "claimId": "msg_011CfYZCHzjAEXGB9jqzT5Dj|23",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "Source 3, uncut L50629 (before the claim): readAt = seg.cup ? atSegment(...) : normalize(seg.profile), the target for the whole segment; the adapter adds cup: true only for cup segments."
+  },
+  {
+   "claimId": "msg_011CfYZCHzjAEXGB9jqzT5Dj|22",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "Source 3: L50610/L50616 show validation breaks when word blends are evaluated. Uncut L50629 shows layout.js floorOf reading atSegment, which evaluates blends, switched to readAt to keep layout unchanged."
+  },
+  {
+   "claimId": "msg_011CfUvjKa2LmRvSevpPrx69|4",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "The path.js read at L34121 (1 s later, unchanged) shows grow(): x1 = add(x, dx); x = x1 on every substep. World position is accumulated substep by substep."
+  },
+  {
+   "claimId": "msg_011CfUvjKa2LmRvSevpPrx69|9",
+   "kind": "UNCHECKED CONCLUSION",
+   "verdict": "CORRECT",
+   "reason": "aa4d565 path.js:65-72 doubleReflect: with t1 = t0 along the chord, tL = -t0, v2 = 2t0 and rL = r0, so the result is r0. Identity in exact math, which is what was claimed."
+  },
+  {
+   "claimId": "msg_011CfUvjKa2LmRvSevpPrx69|1",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "The turn shows no tools/ copy before the claim, the message doesn't call the work uncommitted, and the commit before the claim (aa4d565) has no tools copy."
+  },
+  {
+   "claimId": "msg_011CfZKVUoi1MHT9CL1fJZb4|7",
+   "kind": "UNCHECKED STATE",
+   "verdict": "CORRECT",
+   "reason": "t180 reflog: origin/main updated to 6ed0b4f by push at 2026-09-30T08:35:53Z, before the 08:36:56Z claim."
+  },
+  {
+   "claimId": "msg_011CfZKVUoi1MHT9CL1fJZb4|2",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "L83897 (before the claim): scan output 'links=0 reparse=0 dirty=0', then 'removed'."
+  },
+  {
+   "claimId": "msg_011CfViLZA4Wyp3UwPJWREn2|5",
+   "kind": "UNCHECKED STATE",
+   "verdict": "UNVERIFIABLE",
+   "reason": "The turn shows only stage/bankrate.cjs (in the L46111 command) and never the tools/ path the require targets. 8868531 is a later commit and excluded."
+  },
+  {
+   "claimId": "msg_011CfUuMEt227Drxpa8rpN1S|2",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "A code comment asserting a fact. L33603 (before the claim) shows app/validate-ui/panel.js:31 STEP = 2 for validation's path."
+  },
+  {
+   "claimId": "msg_011CfUuMEt227Drxpa8rpN1S|1",
+   "kind": "CHECKED",
+   "verdict": "CORRECT",
+   "reason": "A comment. L33608 (before the claim) shows fromwords.js:136 buildExport o = { step: 2 } and :140 buildPath with step o.step."
+  },
+  {
+   "claimId": "msg_011CfUuMEt227Drxpa8rpN1S|12",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Ruling 1: the geom.* calls and identifiers are bare code in the L33781 patch, not an assertion in words."
+  },
+  {
+   "claimId": "msg_011CfVD8D3NaRRvyq3cYSwpT|7",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "verdictOf(output, name) calls are code in an Edit (L36225), not an assertion."
+  },
+  {
+   "claimId": "msg_011CfVD8D3NaRRvyq3cYSwpT|4",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Test-fixture string inside an Edit (L36225); code, not an asserted state."
+  },
+  {
+   "claimId": "msg_011CfVD8D3NaRRvyq3cYSwpT|1",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "cd command in a Bash call (L36227) is an action, not a claim."
+  },
+  {
+   "claimId": "msg_011CfUbQsG2LZUbpudYSQG3D|7",
+   "kind": "NOT A CLAIM",
+   "verdict": null,
+   "reason": "Describes the upcoming D168 assignment (plan). It matches the librarian ring, board row 60978, and the chair's later dispatch to A (60987)."
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+{"lap":"testtrack10","mutant":"none","pointsRead":171,"worstResidualRad":9.546e-10,"worstResidualDeg":0}
+{"lap":"test10","mutant":"none","pointsRead":127,"worstResidualRad":8.774e-10,"worstResidualDeg":0}
+{"lap":"gentle","mutant":"none","pointsRead":360,"worstResidualRad":9.801e-10,"worstResidualDeg":0}
+{"lap":"testtrack10","mutant":"2","pointsRead":187,"worstResidualRad":0.9295,"worstResidualDeg":53.2536}
+{"lap":"test10","mutant":"2","pointsRead":127,"worstResidualRad":0.138,"worstResidualDeg":7.9065}
+{"lap":"gentle","mutant":"2","pointsRead":360,"worstResidualRad":0.006819,"worstResidualDeg":0.3907}
+{"lap":"testtrack10","mutant":"5","pointsRead":181,"worstResidualRad":0.6502,"worstResidualDeg":37.2529}
+{"lap":"test10","mutant":"5","pointsRead":127,"worstResidualRad":8.774e-10,"worstResidualDeg":0}
+{"lap":"gentle","mutant":"5","pointsRead":360,"worstResidualRad":9.801e-10,"worstResidualDeg":0}

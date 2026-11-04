@@ -1,0 +1,14 @@
+rebuilt samples [33m2201[39m total 1100.0 m; roll at end -359.990
+  joint at s 100.0: slowest roll within 60 m 0.0000 deg/m at s 40.5 (bank 0.00); mid-piece rate ?
+  joint at s 350.0: slowest roll within 60 m -0.0062 deg/m at s 348.5 (bank -89.98); mid-piece rate -0.5156
+  joint at s 600.0: slowest roll within 60 m -0.0062 deg/m at s 598.5 (bank -179.98); mid-piece rate -0.5156
+  joint at s 850.0: slowest roll within 60 m -0.0062 deg/m at s 850.5 (bank -270.00); mid-piece rate -0.5156
+  piece 9: knots 16 vs his 16; phi max diff 7.000000 deg
+  piece 10: knots 16 vs his 16; phi max diff 0.000000 deg
+  piece 11: knots 16 vs his 16; phi max diff 0.000000 deg
+  piece 12: knots 16 vs his 16; phi max diff 0.000000 deg
+his save samples [33m12101[39m total 6050.0 m; roll at end -359.990
+  joint at s 5050.0: slowest roll within 60 m 0.0000 deg/m at s 4990.5 (bank -7.00); mid-piece rate 0.0000
+  joint at s 5300.0: slowest roll within 60 m -0.0057 deg/m at s 5298.5 (bank -89.98); mid-piece rate -0.4755
+  joint at s 5550.0: slowest roll within 60 m -0.0062 deg/m at s 5548.5 (bank -179.98); mid-piece rate -0.5156
+  joint at s 5800.0: slowest roll within 60 m -0.0062 deg/m at s 5800.5 (bank -270.00); mid-piece rate -0.5156

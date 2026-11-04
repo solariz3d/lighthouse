@@ -1,0 +1,4 @@
+none p32|p33 at s 18353; U jerk 134 g/s at 5 m, mid-piece 3 (47.3×); L jerk 81 g/s at 5 m, mid-piece 5 (17.1×)
+none p33|p34 at s 19103; U jerk 290 g/s at 5 m, mid-piece 3 (102.7×); L jerk 233 g/s at 5 m, mid-piece 5 (49.0×)
+heading60 p32|p33 at s 18353; U jerk 121 g/s at 13 m, mid-piece 71 (1.7×); L jerk 69 g/s at 11 m, mid-piece 41 (1.7×)
+heading60 p33|p34 at s 19103; U jerk 257 g/s at 13 m, mid-piece 152 (1.7×); L jerk 207 g/s at 13 m, mid-piece 124 (1.7×)

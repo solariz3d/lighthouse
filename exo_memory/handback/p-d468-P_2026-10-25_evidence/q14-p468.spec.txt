@@ -1,0 +1,27 @@
+✖ row 7: the seam's cup curvature rows respect c ≥ 0 (D469): where they would take p1's flat cup below 0 they are left out, the cup stays C1 at the seam like cupHome's straight fade, the close succeeds and says so, and the other channels stay C2 there (428.6138ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 586.9823
+
+✖ failing tests:
+
+test at test\core_close_local.test.js:96:1
+✖ row 7: the seam's cup curvature rows respect c ≥ 0 (D469): where they would take p1's flat cup below 0 they are left out, the cup stays C1 at the seam like cupHome's straight fade, the close succeeds and says so, and the other channels stay C2 there (428.6138ms)
+  Error [CoreError]: BAD_CUP: piece 0 (p1): the cup must stay within 0 to 150°, but a control point is -1.993276277664781 to 1.5201711703167402° (the walls of a 150°+ bowl touch)
+      at C:\Users\nname\AppData\Local\Temp\t180-p466-3ar6Y5\src\core\document.js:483:89
+      at Array.forEach (<anonymous>)
+      at Object.checkDoc (C:\Users\nname\AppData\Local\Temp\t180-p466-3ar6Y5\src\core\document.js:457:14)
+      at toSegments (C:\Users\nname\AppData\Local\Temp\t180-p466-3ar6Y5\src\core\adapter.js:316:5)
+      at toPath (C:\Users\nname\AppData\Local\Temp\t180-p466-3ar6Y5\src\core\adapter.js:399:20)
+      at residualOf (C:\Users\nname\AppData\Local\Temp\t180-p466-3ar6Y5\src\core\close.js:270:13)
+      at residual (C:\Users\nname\AppData\Local\Temp\t180-p466-3ar6Y5\src\core\close.js:263:37)
+      at closeOnce (C:\Users\nname\AppData\Local\Temp\t180-p466-3ar6Y5\src\core\close.js:385:142)
+      at Object.close (C:\Users\nname\AppData\Local\Temp\t180-p466-3ar6Y5\src\core\close.js:312:18)
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\t180-p466-3ar6Y5\test\core_close_local.test.js:98:15) {
+    code: 'BAD_CUP'
+  }

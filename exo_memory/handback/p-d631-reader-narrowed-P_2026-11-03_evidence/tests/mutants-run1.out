@@ -1,0 +1,61 @@
+control (unmutated copy)                              pass 46 fail 0   (second-reader.test.js 36/0, second-reader-note.test.js 10/0)
+ 1 hook: reentrancy guard removed                                      pass 35 fail 1  CAUGHT
+ 2 hook: the worker is started WITHOUT the guard variable              pass 35 fail 1  CAUGHT
+ 3 hook: the dream gate removed                                        pass 35 fail 1  CAUGHT
+ 4 hook: a tool that is not a ring tool is acted on                    pass 35 fail 1  CAUGHT
+ 5 hook: a third tool joins the ring set                               pass 34 fail 2  CAUGHT
+ 6 hook: a ring with no text is read anyway                            pass 34 fail 2  CAUGHT
+ 7 hook: a busy lock is ignored (a second worker starts)               pass 33 fail 3  CAUGHT
+ 8 hook: the lock is not exclusive                                     pass 32 fail 4  CAUGHT
+ 9 hook: a lock held by a DEAD pid still counts as live                pass 34 fail 2  CAUGHT
+10 hook: a lock older than 180 s still counts as live                  pass 35 fail 1  CAUGHT
+11 hook: prints a deny decision                                        pass 32 fail 4  CAUGHT
+12 hook: the message text is written into the busy row                 pass 35 fail 1  CAUGHT
+13 hook: the lock is released only by the worker's own token           pass 35 fail 1  CAUGHT
+14 worker: --safe-mode dropped (the child loads every hook)            pass 35 fail 1  CAUGHT
+15 worker: --strict-mcp-config dropped (the child starts MCP servers)  pass 35 fail 1  CAUGHT
+16 worker: --tools "" dropped (the child has tools)                    pass 35 fail 1  CAUGHT
+17 worker: --bare added (it ignores the subscription login)            pass 35 fail 1  CAUGHT
+18 worker: the guard variable is not set on the model child            pass 35 fail 1  CAUGHT
+19 worker: the model is not Sonnet 5.5                                 pass 35 fail 1  CAUGHT
+20 worker: the timeout is ten times too long                           pass 35 fail 1  CAUGHT
+21 worker: a timed-out child is not killed                             pass 35 fail 1  CAUGHT
+22 worker: the lock is never released                                  pass 33 fail 3  CAUGHT
+23 worker: a non-zero exit is read as an answer                        pass 35 fail 1  CAUGHT
+24 worker: the question is altered                                     pass 35 fail 1  CAUGHT
+25 worker: the turn includes the ring's own call                       pass 35 fail 1  CAUGHT
+26 worker: the turn starts at the beginning, not after the last prompt pass 35 fail 1  CAUGHT
+27 worker: a tool-result message counts as a prompt                    pass 35 fail 1  CAUGHT
+28 worker: a flag quote that is not in the message is stored           pass 35 fail 1  CAUGHT
+29 worker: more than 20 flags are stored                               pass 35 fail 1  CAUGHT
+30 worker: the message text is written into the ok row                 pass 34 fail 2  CAUGHT
+31 worker: the tokens are not recorded                                 pass 35 fail 1  CAUGHT
+32 worker: the model is not recorded                                   pass 35 fail 1  CAUGHT
+33 secrets: scrub does nothing                                         pass 34 fail 2  CAUGHT
+34 secrets: the vck_ shape is not scrubbed                             pass 34 fail 2  CAUGHT
+35 secrets: the message is sent to the model unscrubbed                pass 35 fail 1  CAUGHT
+36 secrets: the turn is sent to the model unscrubbed                   pass 35 fail 1  CAUGHT
+37 secrets: a stored flag quote is not scrubbed                        pass 35 fail 1  CAUGHT
+38 D631: an out-of-class ring is sent to the model anyway              pass 35 fail 1  CAUGHT
+39 D631: the skipped-class row carries the message text                pass 35 fail 1  CAUGHT
+40 D631: status claims are not in the class                            pass 27 fail 9  CAUGHT
+41 D631: an inferred: line counts                                      pass 35 fail 1  CAUGHT
+42 D631: numbers inside paths, shas, dates and ids count as figures    pass 36 fail 0  SURVIVED
+43 D631: any figure counts as relayed (no attribution needed)          pass 35 fail 1  CAUGHT
+44 D631: a call_chair figure needs an attribution too                  pass 35 fail 1  CAUGHT
+45 D631: the worker row loses the tool_use_id                          pass 36 fail 1  CAUGHT
+46 note: the dream gate removed                                        pass 9 fail 1  CAUGHT
+47 note: reentrancy guard removed                                      pass 9 fail 1  CAUGHT
+48 note: a tool that is not a ring tool is acted on                    pass 9 fail 1  CAUGHT
+49 note: another ring's row is shown                                   pass 10 fail 0  SURVIVED
+50 note: an ok row with no flags prints a note                         pass 9 fail 1  CAUGHT
+51 note: it prints a block decision                                    pass 9 fail 1  CAUGHT
+52 note: a shown note is not a ledger line                             pass 9 fail 1  CAUGHT
+53 note: the quotes are copied into the note-shown row                 pass 9 fail 1  CAUGHT
+54 note: the wait is unbounded                                         pass 9 fail 1  CAUGHT
+55 note: no grace exit when no worker is running                       pass 9 fail 1  CAUGHT
+56 note: the note does not say it is not a block                       pass 9 fail 1  CAUGHT
+57 note: more than five flags are listed                               pass 9 fail 1  CAUGHT
+58 secrets: an error row is not scrubbed                               pass 36 fail 1  CAUGHT
+
+58 applied · 56 caught · 2 survived · 0 NOT APPLIED

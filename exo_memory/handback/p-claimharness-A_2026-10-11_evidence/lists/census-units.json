@@ -1,0 +1,489 @@
+{
+ "what": "D305 part 3: the census CN and CU units, locators only (E classification.json at p-causeread-E_2026-10-11_evidence)",
+ "units": [
+  {
+   "id": "W002",
+   "class": "CU",
+   "src": "fs",
+   "source": "none",
+   "status": "unlocated",
+   "why": "E did not locate the erring turn",
+   "seat": null,
+   "turn_start": null,
+   "claim_ts": null
+  },
+  {
+   "id": "W003",
+   "class": "CU",
+   "src": "log",
+   "source": "none",
+   "status": "unlocated",
+   "why": "E did not locate the erring turn",
+   "seat": null,
+   "turn_start": null,
+   "claim_ts": null
+  },
+  {
+   "id": "W006",
+   "class": "CN",
+   "src": "log",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-16T14:53:37Z",
+   "claim_ts": "2026-09-16T14:57:15Z",
+   "confirmed": {
+    "calls": 11,
+    "results": 11,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 2
+   }
+  },
+  {
+   "id": "W010",
+   "class": "CN",
+   "src": "log",
+   "source": "override",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-18T07:37:41Z",
+   "claim_ts": "2026-09-18T07:38:35Z",
+   "confirmed": {
+    "calls": 3,
+    "results": 3,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 1
+   }
+  },
+  {
+   "id": "W011",
+   "class": "CU",
+   "src": "compute",
+   "source": "none",
+   "status": "unlocated",
+   "why": "E did not locate the erring turn",
+   "seat": null,
+   "turn_start": null,
+   "claim_ts": null
+  },
+  {
+   "id": "W012",
+   "class": "CN",
+   "src": "board",
+   "source": "parsed from E evidence string",
+   "status": "unlocated",
+   "why": "E gave a turn start but no claim time",
+   "seat": "lib",
+   "turn_start": "2026-09-19T06:22:23Z",
+   "claim_ts": null
+  },
+  {
+   "id": "W018",
+   "class": "CN",
+   "src": "process",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-23T06:59:21Z",
+   "claim_ts": "2026-09-23T07:00:34Z",
+   "confirmed": {
+    "calls": 7,
+    "results": 7,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W019",
+   "class": "CN",
+   "src": "compute",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-23T07:33:35Z",
+   "claim_ts": "2026-09-23T07:35:23Z",
+   "confirmed": {
+    "calls": 9,
+    "results": 9,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W020",
+   "class": "CN",
+   "src": "board",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-23T09:20:23Z",
+   "claim_ts": "2026-09-23T09:20:28Z",
+   "confirmed": {
+    "calls": 0,
+    "results": 0,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W021",
+   "class": "CN",
+   "src": "process",
+   "source": "override",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-23T09:19:12Z",
+   "claim_ts": "2026-09-23T09:19:36Z",
+   "confirmed": {
+    "calls": 0,
+    "results": 0,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 1
+   }
+  },
+  {
+   "id": "W022",
+   "class": "CN",
+   "src": "fs",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-23T23:36:49Z",
+   "claim_ts": "2026-09-23T23:37:24Z",
+   "confirmed": {
+    "calls": 2,
+    "results": 2,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W028",
+   "class": "CN",
+   "src": "fs",
+   "source": "parsed from E evidence string",
+   "status": "unlocated",
+   "why": "E gave a turn start but no claim time",
+   "seat": "lib",
+   "turn_start": "2026-09-27T17:22:30Z",
+   "claim_ts": null
+  },
+  {
+   "id": "W032",
+   "class": "CN",
+   "src": "compute",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-27T18:43:43Z",
+   "claim_ts": "2026-09-27T18:45:30Z",
+   "confirmed": {
+    "calls": 2,
+    "results": 2,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W034",
+   "class": "CN",
+   "src": "other-repo",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-28T05:43:10Z",
+   "claim_ts": "2026-09-28T05:43:38Z",
+   "confirmed": {
+    "calls": 0,
+    "results": 0,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W059",
+   "class": "CU",
+   "src": "other-repo",
+   "source": "none",
+   "status": "unlocated",
+   "why": "E did not locate the erring turn",
+   "seat": null,
+   "turn_start": null,
+   "claim_ts": null
+  },
+  {
+   "id": "W062",
+   "class": "CU",
+   "src": "process",
+   "source": "none",
+   "status": "unlocated",
+   "why": "E did not locate the erring turn",
+   "seat": null,
+   "turn_start": null,
+   "claim_ts": null
+  },
+  {
+   "id": "W082",
+   "class": "CN",
+   "src": "board",
+   "source": "parsed from E evidence string",
+   "status": "unlocated",
+   "why": "E gave a turn start but no claim time",
+   "seat": "lib",
+   "turn_start": "2026-09-09T13:53:51Z",
+   "claim_ts": null
+  },
+  {
+   "id": "W084",
+   "class": "CN",
+   "src": "fs",
+   "source": "override",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-11T08:12:35Z",
+   "claim_ts": "2026-09-11T08:14:24Z",
+   "confirmed": {
+    "calls": 4,
+    "results": 4,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W088",
+   "class": "CN",
+   "src": "log",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-11T08:20:20Z",
+   "claim_ts": "2026-09-11T08:21:14Z",
+   "confirmed": {
+    "calls": 3,
+    "results": 3,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W090",
+   "class": "CN",
+   "src": "fs",
+   "source": "parsed from E evidence string",
+   "status": "unlocated",
+   "why": "E gave a turn start but no claim time",
+   "seat": "lib",
+   "turn_start": "2026-09-14T06:57:01Z",
+   "claim_ts": null
+  },
+  {
+   "id": "W092",
+   "class": "CN",
+   "src": "process",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-14T10:45:48Z",
+   "claim_ts": "2026-09-14T10:46:11Z",
+   "confirmed": {
+    "calls": 1,
+    "results": 1,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W096",
+   "class": "CN",
+   "src": "compute",
+   "source": "parsed from E evidence string",
+   "status": "unlocated",
+   "why": "E gave a turn start but no claim time",
+   "seat": "lib",
+   "turn_start": "2026-09-15T11:16:23Z",
+   "claim_ts": null
+  },
+  {
+   "id": "W100",
+   "class": "CN",
+   "src": "fs",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "main",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "turn_start": "2026-09-01T10:38:15Z",
+   "claim_ts": "2026-09-01T10:38:45Z",
+   "confirmed": {
+    "calls": 0,
+    "results": 0,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W101",
+   "class": "CN",
+   "src": "board",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-10-10T15:41:38Z",
+   "claim_ts": "2026-10-10T15:43:23Z",
+   "confirmed": {
+    "calls": 7,
+    "results": 7,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 1
+   }
+  },
+  {
+   "id": "W079",
+   "class": "CN",
+   "src": "compute",
+   "source": "override",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-09T12:25:12Z",
+   "claim_ts": "2026-09-09T12:26:00Z",
+   "confirmed": {
+    "calls": 0,
+    "results": 0,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W080",
+   "class": "CN",
+   "src": "fs",
+   "source": "override",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-09T12:17:15Z",
+   "claim_ts": "2026-09-09T12:19:39Z",
+   "confirmed": {
+    "calls": 9,
+    "results": 9,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 0
+   }
+  },
+  {
+   "id": "W044",
+   "class": "CN",
+   "src": "compute",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "main",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "turn_start": "2026-09-01T08:50:13Z",
+   "claim_ts": "2026-09-01T08:51:15Z",
+   "confirmed": {
+    "calls": 2,
+    "results": 2,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 2
+   }
+  },
+  {
+   "id": "W049",
+   "class": "CN",
+   "src": "compute",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "main",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "turn_start": "2026-09-01T10:13:14Z",
+   "claim_ts": "2026-09-01T10:14:50Z",
+   "confirmed": {
+    "calls": 5,
+    "results": 5,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 3
+   }
+  },
+  {
+   "id": "W053",
+   "class": "CN",
+   "src": "fs",
+   "source": "override",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-01T13:45:39Z",
+   "claim_ts": "2026-09-01T13:46:48Z",
+   "confirmed": {
+    "calls": 1,
+    "results": 1,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 1
+   }
+  },
+  {
+   "id": "W054",
+   "class": "CN",
+   "src": "compute",
+   "source": "parsed from E evidence string",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-02T07:58:24Z",
+   "claim_ts": "2026-09-02T08:01:02Z",
+   "confirmed": {
+    "calls": 3,
+    "results": 3,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 2
+   }
+  },
+  {
+   "id": "W056",
+   "class": "CN",
+   "src": "compute",
+   "source": "override",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-02T11:32:36Z",
+   "claim_ts": "2026-09-02T11:34:21Z",
+   "confirmed": {
+    "calls": 2,
+    "results": 2,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 1
+   }
+  },
+  {
+   "id": "W058",
+   "class": "CN",
+   "src": "compute",
+   "source": "override",
+   "status": "located",
+   "seat": "lib",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "turn_start": "2026-09-02T10:04:05Z",
+   "claim_ts": "2026-09-02T10:06:43Z",
+   "confirmed": {
+    "calls": 3,
+    "results": 3,
+    "userPromptAtTurnStart": false,
+    "assistantTextBlocksBeforeClaim": 2
+   }
+  }
+ ]
+}

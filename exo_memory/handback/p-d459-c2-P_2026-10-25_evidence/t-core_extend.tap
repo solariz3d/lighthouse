@@ -1,0 +1,18 @@
+[32m✔ 2a: a 50 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(28.0294ms)[39m[39m
+[32m✔ 2a: a 50 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(14.5956ms)[39m[39m
+[32m✔ 2a: a 200 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(10.7465ms)[39m[39m
+[32m✔ 2a: a 200 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(8.3666ms)[39m[39m
+[32m✔ 2a: a 1000 m circle turning left, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(19.4292ms)[39m[39m
+[32m✔ 2a: a 1000 m circle turning right, extended 500 m with no handle, stays that circle (both κ within 1%, R̂ within 1%, level, heading continuous) [90m(10.2408ms)[39m[39m
+[32m✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning left, extended 200 m with no handle, keeps growing at 1/A² [90m(7.0139ms)[39m[39m
+[32m✔ 2b: a clothoid (κ = s/A², A² = 80,000 m², to 1/200) turning right, extended 200 m with no handle, keeps growing at 1/A² [90m(6.8013ms)[39m[39m
+[32m✔ a handle target is reached at the transition with zero channel slope, and the start still holds value and slope (ref 09 §2) [90m(5.6541ms)[39m[39m
+[32m✔ extend refuses a closed track, a bad length and an unknown channel, by name [90m(1.1126ms)[39m[39m
+[34mℹ tests 10[39m
+[34mℹ suites 0[39m
+[34mℹ pass 10[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 217.414[39m

@@ -1,0 +1,57 @@
+t180-e624-base ribbon.t180track
+1000	p1|p2	BUMP
+	centre U: ok jerk 2.31e-7 (mid 2.60e-5), step 3.29e-7 (mid 5.20e-5)
+	centre L: ok jerk 7.74e-6 (mid 4.45e-5), step 1.45e-5 (mid 8.90e-5)
+	wheel 10 m U: BUMP jerk 4.83e-3 (mid 6.20e-4), step 9.67e-3 (mid 1.24e-3)
+	fields' rate: {}
+1750	p2|p3	BUMP
+	centre U: ok jerk 4.19e-6 (mid 2.60e-5), step 8.78e-6 (mid 5.20e-5)
+	centre L: ok jerk 8.16e-6 (mid 4.45e-5), step 1.71e-5 (mid 8.90e-5)
+	wheel 10 m U: BUMP jerk 6.87e-3 (mid 8.53e-4), step 1.37e-2 (mid 1.71e-3)
+	fields' rate: {"c":"0.0e+0 at the joint, 2.5e-3 mid-piece"}
+2500	p3|p4	BUMP
+	centre U: ok jerk 3.26e-7 (mid 5.28e-6), step 6.66e-7 (mid 1.06e-5)
+	centre L: ok jerk 1.50e-6 (mid 8.13e-6), step 3.13e-6 (mid 1.63e-5)
+	wheel 10 m U: BUMP jerk 2.37e-3 (mid 8.53e-4), step 4.75e-3 (mid 1.71e-3)
+	fields' rate: {"phi":"0.0e+0 at the joint, 1.0e-3 mid-piece","c":"0.0e+0 at the joint, 2.5e-3 mid-piece"}
+3250	p4|p5	BUMP
+	centre U: ok jerk 4.58e-5 (mid 1.24e-4), step 8.71e-5 (mid 2.47e-4)
+	centre L: ok jerk 3.21e-5 (mid 8.65e-5), step 6.10e-5 (mid 1.73e-4)
+	wheel 10 m U: BUMP jerk 2.37e-3 (mid 1.24e-4), step 4.75e-3 (mid 2.47e-4)
+	fields' rate: {"phi":"0.0e+0 at the joint, 1.0e-3 mid-piece"}
+3600	p5|p6	reads like mid-piece
+	centre U: ok jerk 4.58e-5 (mid 1.24e-4), step 9.56e-5 (mid 2.47e-4)
+	centre L: ok jerk 3.21e-5 (mid 8.65e-5), step 6.69e-5 (mid 1.73e-4)
+	wheel 10 m U: ok jerk 4.58e-5 (mid 1.24e-4), step 9.56e-5 (mid 2.47e-4)
+	fields' rate: {}
+3950	p6|p7	BUMP
+	centre U: ok jerk 4.63e-5 (mid 1.24e-4), step 9.56e-5 (mid 2.47e-4)
+	centre L: ok jerk 3.21e-5 (mid 1.42e-4), step 6.69e-5 (mid 2.83e-4)
+	wheel 10 m U: BUMP jerk 6.64e-3 (mid 1.24e-4), step 1.33e-2 (mid 2.47e-4)
+	fields' rate: {"phi":"0.0e+0 at the joint, 2.8e-3 mid-piece"}
+4300	p7|p8	BUMP
+	centre U: ok jerk 1.90e-5 (mid 9.02e-5), step 3.79e-5 (mid 1.80e-4)
+	centre L: ok jerk 5.28e-5 (mid 1.42e-4), step 1.11e-4 (mid 2.83e-4)
+	wheel 10 m U: BUMP jerk 6.63e-3 (mid 1.58e-4), step 1.33e-2 (mid 3.16e-4)
+	fields' rate: {"phi":"0.0e+0 at the joint, 2.8e-3 mid-piece"}
+5050	p8|p9	BUMP
+	centre U: ok jerk 2.16e-6 (mid 1.32e-5), step 4.51e-6 (mid 2.64e-5)
+	centre L: ok jerk 1.50e-5 (mid 8.27e-5), step 3.15e-5 (mid 1.65e-4)
+	wheel 10 m U: BUMP jerk 1.41e-2 (mid 1.58e-4), step 2.83e-2 (mid 3.16e-4)
+	fields' rate: {"phi":"0.0e+0 at the joint, 6.0e-3 mid-piece"}
+5300	p9|p10	BUMP
+	centre U: ok jerk 0.00e+0 (mid 1.00e-6), step 0.00e+0 (mid 1.00e-7)
+	centre L: ok jerk 0.00e+0 (mid 1.00e-6), step 0.00e+0 (mid 1.00e-7)
+	wheel 10 m U: BUMP jerk 1.53e-2 (mid 1.26e-5), step 3.07e-2 (mid 2.25e-5)
+	fields' rate: {"phi":"0.0e+0 at the joint, 6.5e-3 mid-piece"}
+5550	p10|p11	BUMP
+	centre U: ok jerk 0.00e+0 (mid 1.00e-6), step 0.00e+0 (mid 1.00e-7)
+	centre L: ok jerk 0.00e+0 (mid 1.00e-6), step 0.00e+0 (mid 1.00e-7)
+	wheel 10 m U: BUMP jerk 1.53e-2 (mid 1.26e-5), step 3.07e-2 (mid 2.25e-5)
+	fields' rate: {"phi":"0.0e+0 at the joint, 6.5e-3 mid-piece"}
+5800	p11|p12	BUMP
+	centre U: ok jerk 0.00e+0 (mid 1.00e-6), step 0.00e+0 (mid 1.00e-7)
+	centre L: ok jerk 0.00e+0 (mid 1.00e-6), step 0.00e+0 (mid 1.00e-7)
+	wheel 10 m U: BUMP jerk 1.53e-2 (mid 1.26e-5), step 3.07e-2 (mid 2.25e-5)
+	fields' rate: {"phi":"0.0e+0 at the joint, 6.5e-3 mid-piece"}
+joints: 11, reading like mid-piece: 1

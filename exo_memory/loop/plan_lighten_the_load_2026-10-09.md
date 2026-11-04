@@ -1,0 +1,111 @@
+# Lighten the load: fewer, plainer rules and checks on the WORK, not the paperwork, measured before and after. Dev first. Librarian, on D, 2026-10-09 11:2x. Lap D277.
+
+The keeper, 11:21: "this could be all connected to what we are trying to fix"; 11:24: "lets get to the bottom of this for our dev version, then we make it consumer".
+
+## Why: the converging evidence (each line opened this session)
+- **D276 (measured today):** after a paperwork-gate refusal, 38.3% of re-sends changed content, but only **4.0% fixed a claim** while **10.0% blurred or
+  removed a specific** (`loop/loop_friction_measure_2026-10-09.md`, E). Refusals cost ~7–11 s each, so the cost is in the WRITING, not the time.
+  Defensive text did not grow (5.6% → 5.0% of hand-back lines; `loop/loop_friction_C_2026-10-09.md`). Round time did not move at the gates
+  (−2.5 min, 95% [−6.5, +3.6]); H2 is undecided (`loop/loop_friction_A_2026-10-09.md`).
+- **The record's oldest open problem:** composition, a rule fetched then lost while writing, **60 of 75**; "every cue-based fix failed"
+  (`loop/big_list_2026-09-21.md:15`).
+- **Anthropic's guidance for current models:** they "may now overtrigger. The fix is to dial back any aggressive language"; give the why; say what to
+  do, not what not to do (platform.claude.com, Prompting best practices). Reported (no primary post found): Claude Code's own system prompt was cut
+  by over 80% with no eval loss.
+- **Joined:** we answered "rules get lost" with MORE and LOUDER rules and gates, which is the input the guidance says makes rules get followed less.
+
+## Registered BEFORE any change
+**H3:** a lighter rule layer (fewer rules, plain, positive, each with its why, no shouting) plus checks on the work instead of the paperwork makes seats
+at least as accurate and less defensive.
+**Measured before vs after, on the same instruments:**
+(a) paperwork re-sends that blur a specific (now 10.0%);
+(b) the unchecked-claim error rate (the 10-03 re-measure's harness; the pre-gate base rate is 8/163 = 4.9%);
+(c) round time (`lap.jsonl`, A's method);
+(d) composition misses, where an instrument exists, else named as unmeasured.
+**H3 is FALSE, and the change is REVERTED, if** (b) after the change is worse than the pre-gate 4.9% by more than its 95% interval, i.e. the room
+gets measurably MORE wrong. A slower lap alone is not a revert; more wrong is.
+**Abuse condition:** "the room feels faster" is not evidence. Only (a)–(d).
+
+## The parts (independent ones run in parallel; the librarian merges)
+1. **C: the instruction-load census** (C ran the D210 rule census). Every text a seat wakes into: global CLAUDE.md, each seat's CLAUDE.md/brief
+   (LIBRARIAN, COMMITTEE, BUILDING, the chair's), BOOT, the cards, and the hooks' injected texts. For each: size (bytes/approx tokens), the count of
+   MUST / NEVER / ALWAYS / CRITICAL / REFUSED / ALL-CAPS imperatives, prohibitions vs positive instructions, rules without a why, and CONTRADICTIONS
+   between files. Classify every line as RULE (an instruction) or ROOM (principle, trace, card: identity material, not pruned here).
+2. **E: the gates, reworked behind a switch** (E built them). SOURCES matches what was actually run or fetched (a WebFetch URL counts), not the
+   wording; the reply slot and the NEXT trailer move to WARN (logged, not blocking), each with its ledger kept so (a) can be re-measured. Our live
+   behaviour does not change until the keeper flips it. Rows red first.
+3. **B: the rule-layer rewrite DRAFT** (after C's census lands; B depends on 1). A new version of the RULE lines only, in separate draft files
+   beside the originals, never over them: deduplicated, plain, positive, each with a one-line why, no capitals for emphasis, contradictions resolved and
+   named. The ROOM lines (BOOT's principles, the cards, the traces) are untouched. A diff summary: lines before → after, imperatives before → after.
+4. **A: the baseline, frozen** (independent). Re-run (a) and (c) today on the current state with A's and E's scripts, and stage (b)'s harness so
+   the 10-03 re-measure (from 10-10 05:55) doubles as the "before" number. One file, each number with its command.
+5. **B's D276 item 5** (the work checks vs the paperwork gates) is still owed and feeds the merge.
+- **The keeper approves the drafts (part 3) and the gate switch (part 2) before anything goes live.** Then a week live, then re-measure (a)–(d),
+  then score H3, and only after that does the consumer get regenerated from it.
+
+NEXT: chair dispatch D277 parts 1, 2 and 4 now (C, E, A) and part 3 to B when C's census is in, when this plan is read
+
+## Amendment, registered BEFORE any switch flips (librarian, 11:4x), from A's baseline (`loop/lighten_baseline_2026-10-09.md`)
+- **(a) gets a measure that works under WARN.** With no refusal there is no refusal → re-send pair, so E's method has no "after". Replaced, both sides
+  measured the same way: **(a′) specificity density**, meaning per hand-off message (rings, dispatches, replies to the keeper), the count of specifics
+  (figures with a unit, `path:line`, shas, digests, quoted commands) per 1,000 characters, before vs after. Plus **(a″)**, under WARN, the share of
+  warned messages that the seat revised, and of those, blur vs fix, by E's labels. H3 predicts (a′) does not fall.
+- **(b) is armed.** E rebuilds the sample draw script, which is not in the repo, and fixes `frame.js`, which reads the chair's 549 MB transcript as zero
+  (the V8 string limit, the same failure A chunked in `sourced` and `session-end`). That is done and committed BEFORE 2026-10-10T11:55Z, when the
+  window closes. Then E builds the frame and B + C verify blind, as the 10-03 registration says, and the librarian scores. That is the "before" number
+  for H3.
+- **(d) is UNMEASURED**, named as such: there is no instrument that counts composition misses. H3 is scored on (a′), (a″), (b) and (c) only.
+
+## The keeper's decisions on B's drafts (2026-10-09 11:5x)
+B's drafts: branch b-rule-draft 1cff0c86, `exo_memory/loop/rule_draft_2026-10-09/` (lines 1,334 → 768; bytes 114,232 → 73,431; no-why 109 → 20;
+ALL-CAPS 334 → 21; prohibition/positive 82/63 → 36/88; MUST-type 4 → 0; six contradictions resolved).
+1. **GO LIVE**, with E's gate switch when it is ready. A week live, then re-measure (a′), (a″), (b), (c) against A's frozen baseline; REVERT if (b) is worse
+   than the pre-gate 4.9% beyond its interval.
+2. **PUSHES: standing permission.** Work that passes the work checks and the credential scan is pushed without asking each time (the keeper's 09-27
+   "push all the work that is correct", now the rule). The draft's stricter push rule is replaced with this.
+3. **The global CLAUDE.md keeps a why on every rule** (+38% bytes). It applies to every project, and the keeper chose it explicitly.
+**The landing (chair):** swap each draft over its live source (BUILDING/COMMITTEE/LIBRARIAN in `consonance/src-tauri/brief/`, the project CLAUDE.md,
+`exo_memory/CLAUDE.global.md` → `~/.claude/CLAUDE.md`), with B's push-rule line amended per decision 2, the identity diff and the touched tests green.
+Only together with E's gate switch, so no seat reads a softer rule than the one still enforced.
+
+## Timing ruling (librarian, 11:5x): D277 does NOT land before the "before" window closes
+A's measure (b) is armed (remeasure-b-a 6f51fc67 + ab85508e; the chunked frame reproduces all 60 registration cells; the rebuilt draw reproduces L119
+exactly). The re-measure window is 2026-10-03T11:55Z → **2026-10-10T11:55Z**. Landing the lighter rules or the gate switch before then would put
+post-change messages into the "before" sample. So **the D277 landing waits until after 2026-10-10T11:55Z**, then the frame is drawn, then the landing.
+A one-shot timer in the librarian's session fires at 06:03 local on 10-10 to start both. If the session is gone by then, whoever wakes reads this line.
+A's finding: the CLI's default reader is now claude-sonnet-5-5 where L119 used claude-opus-5-5, so the runbook pins CLAIMREC_MODEL.
+
+## The 10-10 step, corrected by the chair (12:1x), checked by the librarian
+The app reads BUILDING/COMMITTEE/LIBRARIAN from the copies bundled beside the exe (`main.rs` `room_brief_at`: the editable copy in
+`default_data()` first, then the bundled resource, then the repo). So an exe built today would ship today's rules. **At the timer, in order:**
+(1) land B's drafts; (2) build into a staging target; (3) restart with the extended restart script that copies the exe AND the bundled brief .md files;
+(4) set "gates_mode": "light". **Checked, no shadowing copy:** `default_data()` is `%USERPROFILE%\.consonance` (`main.rs:804-805`), and it holds no
+BUILDING/COMMITTEE/LIBRARIAN; `C:\Consonance\data` holds none either. Gate switch landed: main 1f38da03 (gate tests 204/204, cargo 1003/0), hooks
+synced, the key still unset.
+
+## Gaps the keeper's "did we do everything" exposed (librarian, 18:3x): two more parts, landing WITH the 10-10 change
+The census (`loop/instruction_load_census_2026-10-09.md` §2) measured two loads that B's drafts did not touch, because they are not rule files:
+- **Part 5 (E, who wrote the dirs work in the hooks): the session-start digest.** `session-start.js` injects 12.2–13.5 KB (~3.0–3.4k tokens) per
+  session start; its resume/compact variants are 840 non-empty lines, almost all past-session timestamps, with 0 rules. Trim it to what a waking seat
+  uses (e.g. the last few sessions per seat plus a count), as a draft behind the same switch or landing with it. Measure the bytes before and after.
+- **Part 6 (C, who ran the census): the ASSEMBLED seat files.** `main/CLAUDE.md` ~27.5k tokens, `librarian/CLAUDE.md` ~35.3k, holding 96 / 135 RULE blocks
+  beyond their briefs, because the maps and live-edge claims add imperative-shaped lines. Report what the assembly adds and propose (draft only) what
+  stays indexed rather than carried. The ROOM stays.
+- Both land at the 10-10 timer WITH the rest (never before 2026-10-10T11:55Z, the baseline window), so the "after" measures the whole lighter load.
+- **H2 (split vs single-pane) gets its own lap**, a controlled test: the same kind of multi-part task run both ways, timed end to end including the merge.
+- **Part 5 IN (A, not E: the chair's routing):** startdigest-a 0794577d from main 9b5f40ba, behind the gates_mode switch; held for the 10-10 timer.
+  Startup 13,446 → 1,403 bytes (~3,362 → ~351 tokens); resume/compact 13,446 → 1,116; 840 lines → 31. Key absent: identical output in 12/12. Judged
+  on 1,381 session starts, where no seat ever quoted a digest time back. 24/24 mutants caught. **Noticed:** the newest digest on disk is 2026-10-06, so
+  every start since carries 3-day-old digests. The digest WRITER is stale: a separate follow-up, after 10-10.
+- **Part 6 IN (C):** `loop/assembly_draft_2026-10-09.md` on assembly-c db2d7b04. C corrected its own census inference: main and the librarian carry
+  no maps or live edges. **Structural finding: the librarian and pane intakes are FILLED TO A BUDGET** (librarian 142,000 B via
+  `LIBRARIAN_INTAKE_LIMIT − INTAKE_HEADROOM`; pane 110,000 B via `optional_budget`), so indexing a section alone just lets the next tier backfill.
+  The draft: main indexes nothing (~72.3 KB with B's BUILDING draft); librarian L1+L2 (the path index 40.9 KB → ~1.5 KB, the carried tiers = cards
+  + windowed notes) → ~102 KB; pane P1+P2+P3 (pointers for the topic-map and live-edge text, plus a NEW cap for optional briefs) → ~92.9 KB.
+  **Next (librarian ruling):** C implements L1+L2 and P1–P3 in main.rs, BEHIND `gates_mode: light` (inert while the key is absent, as E's switch
+  is), committed before the 10-10 timer, so it lands and flips with the rest. Red first, cargo test green.
+
+## The keeper on E's OPEN push-frame call (2026-10-10 11:19)
+"no no i meant push to the lighthouse repo, once it is all established, then we go to translating the work to the consumer version".
+- The standing permission to push is for OUR lighthouse repo. It is not a rule for anyone's copy.
+- E's OPEN call (`handback/p-d277repair-E_2026-10-10.md:131–138`) is deferred to the consumer translation lap, after H3. When that lap is planned, the translation keeps the consumer's push gate. The standing-permission lines read as the original room's, which is E's option (a), in line with the keeper's intent.

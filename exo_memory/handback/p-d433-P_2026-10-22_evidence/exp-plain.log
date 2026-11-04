@@ -1,0 +1,7 @@
+textures: asphalt budget 5.3 MiB
+REFUSED RED RED: validation is red, nothing written: downforce-ray-gap at s 2574.0–2574.0 m (FINDINGS.md:110 (gaps in the road mesh are RED); docs/research/04_ac_physics_drivability.md §4 (the Mach 6's downforce is one ray to the road, 1 m ahead of the car: a gap under it takes ALL the downforce)); downforce-ra
+  downforce-ray-gap [33m2574[39m [33m2574[39m
+  downforce-ray-gap [33m2928[39m [33m2928[39m
+  stacked-within-2m [33m2572[39m [33m2578[39m
+  stacked-within-2m [33m2928[39m [33m2932[39m
+exit 3

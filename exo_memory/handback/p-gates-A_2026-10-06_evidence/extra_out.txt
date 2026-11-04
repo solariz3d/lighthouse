@@ -1,0 +1,21 @@
+ok   x1 rm -fr <work>/deep: deny
+ok   x2 rm -R <work>/deep: deny
+ok   x3 rm --recursive --force <work>/deep: deny
+ok   x4 rm -r -f -- <work>/deep: deny
+ok   x5 rm -rf a-clean-missing <work>/scratch <work>/deep: deny
+ok   x6 Remove-Item -Recurse -LiteralPath "<work>/deep": deny
+ok   x7 Remove-Item -Path "<work>/scratch","<work>/deep" -Recurse -Force: deny
+ok   x8 ri -Recurse "<work>/deep": deny
+ok   x9 Get-ChildItem x | Remove-Item -Recurse: allow  | a pipeline of Get-ChildItem into Remove-Item is not seen
+ok   x10 rd -Recurse "<work>/deep": deny
+ok   x11 rm -Recurse -Force "<work>/deep": deny
+ok   x12 del -Recurse "<work>/deep": deny
+ok   x13 a NUL in the path: allow
+ok   x14 a 1 MB command: allow
+ok   x15 rm -rf with no target: allow
+ok   x16 rm -rf ~: allow
+DIFF stdin-delete-gate delete-gate: stdin never closed (the watchdog is 5 to 8 s): STILL RUNNING after 13019 ms  (expected exited after ~8000 ms)  | the settings timeout is 10 s
+DIFF stdin-push-gate push-gate: stdin never closed (the watchdog is 5 to 8 s): STILL RUNNING after 13015 ms  (expected exited after ~8000 ms)  | the settings timeout is 10 s
+DIFF stdin-ask-ending ask-ending: stdin never closed (the watchdog is 5 to 8 s): STILL RUNNING after 13017 ms  (expected exited after ~8000 ms)  | the settings timeout is 10 s
+
+DIFFS: stdin-delete-gate, stdin-push-gate, stdin-ask-ending

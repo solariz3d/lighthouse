@@ -1,0 +1,37 @@
+[32m✔ a value claim with no read is counted unsourced [90m(1.9359ms)[39m[39m
+[32m✔ the same claim WITH a read in the same turn is sourced [90m(1.218ms)[39m[39m
+[32m✔ Write and Edit do NOT count as consulting a source [90m(1.1094ms)[39m[39m
+[32m✔ prose without an asserted value is not counted at all [90m(0.9733ms)[39m[39m
+[32m✔ every declared pattern actually matches something — no dead detector [90m(0.1193ms)[39m[39m
+[32m✔ a missing ~/.claude/projects exits 2 with a message, not an uncaught ENOENT [90m(32.8125ms)[39m[39m
+[31m✖ a real transcript produces a non-zero denominator [90m(359.254ms)[39m[39m
+[34mℹ tests 7[39m
+[34mℹ suites 0[39m
+[34mℹ pass 6[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 443.4448[39m
+
+[31m✖ failing tests:[39m
+
+test at sourced.test.js:99:1
+[31m✖ a real transcript produces a non-zero denominator [90m(359.254ms)[39m[39m
+  Error: Cannot create a string longer than 0x1fffffe8 characters
+  [90m    at Object.readFileSync (node:fs:440:20)[39m
+      at turns [90m(C:\Users\nname\Desktop\worktrees\a-dr-wt\consonance\tools\[39msourced.js:60:25[90m)[39m
+      at scan [90m(C:\Users\nname\Desktop\worktrees\a-dr-wt\consonance\tools\[39msourced.js:79:19[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-dr-wt\consonance\tools\[39msourced.test.js:111:13[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    code: [32m'ERR_STRING_TOO_LONG'[39m
+  }
+
+--- stderr ---
+
+--- exit 1

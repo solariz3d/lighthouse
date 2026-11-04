@@ -1,0 +1,8 @@
+lockrun: holding the lock at 2026-10-25T07:28:58.532Z; starting B D454 cargo on gen6 + source, and the five intake mutants (BelowNormal, very low I/O; not a timing run)
+gen-cargo start 07:28:58Z
+gen-cargo end 07:29:27Z rc 0
+src-cargo start 07:29:28Z
+src-cargo end 07:31:32Z rc 0
+mutmain start 07:31:32Z
+mutmain end 07:32:05Z rc 0
+lockrun: done at 2026-10-25T07:32:05.423Z, exit 0

@@ -1,0 +1,6 @@
+range origin/main..HEAD: 101 commits, fdec4a77..06ee3ac1
+patch: 12381503 chars, 137921 lines
+1a push-gate findKeys on added lines: 0
+1b loose prefix lines (all lines): 2
+2 private-name lines in git log -p (context and messages included): 0
+3 new blobs: 858; over 5 MB: 0; .kn5/.tar/.dds: 0; largest: 1.59 MB exo_memory/handback/p-d437-P_2026-10-22_evidence/chrome-run3/p437-6261a22-renderer-mem.log | 1.58 MB exo_memory/handback/p-d437-P_2026-10-22_evidence/chrome-run3/p437-b6969da-renderer-mem.log | 0.60 MB exo_memory/handback/p-d433-P_2026-10-22_evidence/shot/preview-s3320.png

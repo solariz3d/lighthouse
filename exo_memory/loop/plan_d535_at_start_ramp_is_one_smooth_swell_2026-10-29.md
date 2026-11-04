@@ -1,0 +1,25 @@
+# D535: the "at start" bank ramp is one smooth swell, not a plateau with rounded ends. Librarian, 2026-10-29 12:3x
+
+The user, 12:28, two screenshots on the D534 build (`C:\Users\nname\Pictures\Screenshots\still too big of a kink or bump isnt a smooth gradient, it should start where it does but not as sharp gradient still.png`; `...\without the at start clicked for the banking its a smooth gradient but it doesnt start banking until much later the banking should be sooner but also smoother when at start is checked.png`). Piece 1: a 1,000 m straight piece after a flat one, bank −41.38° with "at start" ticked, cup 15.5, width 31: a visible shoulder where the ramp ends. Piece 2: the same with the box off, bank −78.94°: smooth, but the bank hardly moves for the first stretch. His words: "it should start where it does but not as sharp gradient"; "the banking should be sooner but also smoother when at start is checked".
+
+## What the ramp is today (checked in d534-land 1148c28 = D532 + D521)
+
+- D532 (panel.js extendOptions): a ticked bank lays its ramp over `min(max(20, 2.2·|Δ|/0.9338), cap)`: −41.38° → 97.5 m.
+- D521 (`src/core/extend.js:48-57`): the bank's shape is ROUNDED-LINEAR: the roll RATE rises from 0 to a plateau over `roundOf(Lt) = min(10 m, Lt/4)`, holds, and falls to 0 over the same. On a 97.5 m ramp the rounding is 10 m: the rate goes 0 → 0.47 °/m in 10 m (a rate acceleration of about 0.047 °/m²), holds for 77 m, stops in 10 m. That stop is the shoulder in picture 1. The start is right: the roll begins at the joint.
+- With the box off, the quintic `smoother` over the whole 1,000 m: S′(0) = S″(0) = 0, so the first fifth is nearly flat (D521's own complaint), which is picture 2.
+
+## The change (pane E, PROVE IT: the bytes Extend lays for an at-start bank)
+
+The at-start bank ramp becomes ONE SWELL: the roll rate rises smoothly from 0 at the joint to its peak at the ramp's middle and falls smoothly to 0 at the ramp's end, with no plateau. In extend.js's terms this is roundedLinear with the rounding equal to half the ramp (a = ½: two Bloss roundings and no linear part), so the rate is a Bloss bump, the bank is C2 at both ends, and the roll begins at the joint with a nonzero slope (the bank is visibly moving within the first metres, unlike the quintic). Its peak rate is 2·|Δ|/Lt, so the length that keeps it under the checker's bar is `Lt = K·|Δ|/0.9338` with K about 2.0 to 2.2: E measures K as in D532 (the laid, quantised, checker-read roll at 20 m chord over banks 8° to 180°, all under 0.9338) and keeps the 20 m floor and D532's cap. The rate acceleration at the ends falls from about 0.047 °/m² (10 m rounding on his piece) to about 0.026 (a 49 m rounding) at the same length: that halving is what his eye should read as "not as sharp".
+
+- Only the at-start bank ramp (the ticked box, shape 'rounded'). The whole-piece ease (box off) keeps the quintic exactly: its bytes do not move. Close, Finish and every other extend caller keep their bytes (the nine fixtures 0 of 9 differ). Cup and edge at start keep D532's length and the quintic for now; if his eye wants them in the same swell, the same `a = ½` applies and is a one-line follow-up.
+- Where: E's call, with the smallest change: `channelFn` takes the rounding share from the caller (panel passes a = ½ for an at-start bank) or extend.js's `roundOf` grows to Lt/2 when the ramp is an at-start one; `roundedLinear(u, a)` already takes `a` and needs no new maths (at a = ½ its middle branch is empty).
+- The tooltip stays as D532 wrote it. CHANGELOG [Unreleased]: the D532 Changed line amended to say the roll swells and fades smoothly, no second line.
+
+**Tests first, red before green:** on his piece 1 (a 1,000 m flat piece, then 1,000 m with bank −41.38 at start): the roll rate read by the checker rises monotonically from the joint to one peak and falls monotonically to 0 (today it has a plateau: that row is the red); the peak under 0.9338; the bank reaches −41.38° within 0.01° at the ramp's end and holds; the bank is visibly moving by 5 m (|φ(5 m)| > 0.1°: the quintic would fail this); the rate's largest change over any 2 m (the kink metric) at most half of today's on the same piece (E records today's figure first); the box-off piece byte-identical to today; 20 m floor and the cap as D532's rows; harness `test/core_ramp_mutation.test.js` whole with one new mutant (the plateau back: a = ¼). Full suite at landing.
+
+Falsifier: his piece 1 rebuilt and installed must show no shoulder to his eye while the bank is clearly leaning within the first 20 m. If the shoulder is still there with the rate a single smooth bump, the eye is reading something else (the cup, the mesh's row spacing, the lines), and the next look is at the preview, not the ramp.
+
+Branch from d534-land 1148c28 (it carries D532), in a worktree; plain commit message, co-author line allowed; no lap ids in new comments. It lands on d534-land before the release.
+
+surfaced: extend.js:48-57 (roundedLinear, roundOf), extend.js channelFn, panel.js extendOptions (D532's at-start length), validate/index.js:31-35, D532's probe (K), core_ramp_mutation.test.js.

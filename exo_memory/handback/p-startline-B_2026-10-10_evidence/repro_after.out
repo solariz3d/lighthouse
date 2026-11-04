@@ -1,0 +1,41 @@
+=== node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d284/repro.js C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d284/tracks
+=== cwd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d284
+=== env {"T180_ROOT":"C:/Users/nname/Desktop/worktrees/b-startline-wt"}
+== (a) automatic + pit lane
+{"step":"start","pieces":1,"shown":{"mid":[0,3.105,385],"word":"p1","along":385},"auto":{"word":"p1","along":385}}
+{"step":"Straight","pieces":2,"shown":{"mid":[0,3.105,385],"word":"p1","along":385},"auto":{"word":"p1","along":385}}
+{"step":"broad turn","pieces":3,"shown":{"mid":[0,3.105,385],"word":"p1","along":385},"auto":{"word":"p1","along":385}}
+{"step":"Turn by","pieces":4,"shown":{"mid":[0,3.105,385],"word":"p1","along":385},"auto":{"word":"p1","along":385}}
+{"step":"Sharp","pieces":6,"shown":{"mid":[0,3.105,385],"word":"p1","along":385},"auto":{"word":"p1","along":385}}
+== (a') automatic, no pit lane (export only)
+{"step":"start","pieces":1,"shown":null,"auto":{"word":"p1","along":385}}
+{"step":"Straight","pieces":2,"shown":null,"auto":{"word":"p1","along":385}}
+{"step":"broad turn","pieces":3,"shown":null,"auto":{"word":"p1","along":385}}
+{"step":"Turn by","pieces":4,"shown":null,"auto":{"word":"p1","along":385}}
+{"step":"Sharp","pieces":6,"shown":null,"auto":{"word":"p1","along":385}}
+== (b) hand-placed along 100
+{"step":"start","pieces":1,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+{"step":"Straight","pieces":2,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+{"step":"broad turn","pieces":3,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+{"step":"Turn by","pieces":4,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+{"step":"Sharp","pieces":6,"shown":{"mid":[0,3.105,100],"word":"p1","along":100}}
+== autosave-doc.t180track spawns=false pitLane=true
+{"step":"before","pieces":3,"shown":{"mid":[0,3.853,985],"word":"p1","along":985},"auto":{"word":"p1","along":985}}
+{"step":"+Straight","pieces":4,"shown":{"mid":[0,3.853,985],"word":"p1","along":985},"auto":{"word":"p1","along":985}}
+== eq-FINAL TEST.t180track spawns=false pitLane=false
+{"step":"before","pieces":6,"shown":null,"auto":{"word":"p3","along":985}}
+{"step":"+Straight","pieces":7,"shown":null,"auto":{"word":"p3","along":985}}
+== eq-FIRST TRACK.t180track spawns=false pitLane=false
+{"step":"before","pieces":23,"shown":null,"auto":{"word":"p12","along":985}}
+{"step":"+Straight","pieces":24,"shown":null,"auto":{"word":"p12","along":985}}
+== eq-HUMP BUG.t180track spawns=false pitLane=false
+{"step":"before","pieces":3,"shown":null,"auto":{"word":"p1","along":985}}
+{"step":"+Straight","pieces":4,"shown":null,"auto":{"word":"p1","along":985}}
+== eq-TEST TRACK 3.t180track spawns=false pitLane=false
+{"step":"before","pieces":7,"shown":null,"auto":{"word":"p1","along":1485}}
+{"step":"+Straight","pieces":8,"shown":null,"auto":{"word":"p1","along":1485}}
+== eq-TRACK 2.t180track spawns=true pitLane=true
+{"step":"before","pieces":24,"shown":{"mid":[0,3.628,858],"word":"p1","along":858}}
+{"step":"+Straight","pieces":25,"shown":{"mid":[0,3.628,858],"word":"p1","along":858}}
+
+=== exit 0 signal null error  1.5s

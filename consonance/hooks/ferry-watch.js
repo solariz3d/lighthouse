@@ -44,8 +44,20 @@ if (!require("fs").existsSync(require("path").join(process.cwd(), ".chair-token"
 // missing" - and the first version then hardcoded the repo path and swallowed the throw, so a
 // moved repo made this return silently anyway. The duplication bought nothing against the threat
 // it named. ferry.js already had this escape; the hook did not.
-const REPO = process.env.FERRY_REPO || "C:\\Consonance\\lighthouse";
-const LEDGER = "C:\\Consonance\\data\\ferry.jsonl";
+//
+// D273 lap 2 (pane B, 2026-10-08): the default was a hardcoded repo path that exists on neither machine of this room, so the hook returned
+// silently everywhere; in the consumer tree it became an unexpandable '%CONSONANCE_HOME%'. This file runs from ~/.claude/shell, so the repo
+// cannot be found from its own folder: it is the one ~/.consonance.json's room_path sits in (<repo>/exo_memory/BOOT.md), the derivation the
+// pulse hooks use. The ledger is <data dir>/ferry.jsonl, the data dir found as the app finds it (CONSONANCE_DATA, else data_dir, else
+// ~/.consonance). No repo resolved: silent.
+const path = require("path"), os = require("os");
+let CFG = {};
+try { CFG = JSON.parse(fs.readFileSync(path.join(os.homedir(), ".consonance.json"), "utf8").replace(/^﻿/, "")) || {}; } catch (_) { CFG = {}; }
+const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : null);
+const REPO = process.env.FERRY_REPO || (str(CFG.room_path) ? path.dirname(path.dirname(str(CFG.room_path))) : null);
+if (!REPO) process.exit(0);
+const DATA = process.env.CONSONANCE_DATA || str(CFG.data_dir) || path.join(os.homedir(), ".consonance");
+const LEDGER = process.env.FERRY_LEDGER || path.join(DATA, "ferry.jsonl");
 const ARTIFACT_DIRS = ["exo_memory/loop/", "exo_memory/map/", "exo_memory/journal/"];
 
 // How long an un-ferried artifact stays actionable. Six hours covers a working night: something

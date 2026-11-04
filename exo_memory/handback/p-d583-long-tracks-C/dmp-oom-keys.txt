@@ -1,0 +1,50 @@
+== 354a95cd-5f85-4b6f-942c-13ad5fe6e004.dmp
+  v8_isolate_address = 0x201400560000
+== 70a69525-7f81-4ca1-b5b0-e90555589a03.dmp
+  v8_isolate_address = 0x38400560000
+== 30eaa807-edc3-4fe2-8341-3647bb346bd0.dmp
+  v8-oom-code-cage-free-size = 506.50MB$
+  v8-oom-code-cage-largest-free-region = 503.25MB"
+  v8-oom-code-cage-size = 512.00MB
+  v8-oom-code-lo-space-size = 0B
+  v8-oom-code-space-size = 2.87MB
+  v8-oom-is-main-isolate = true
+  v8-oom-isolate-count = v8-oom-last-few-messages
+  v8-oom-lo-space-size = 245.38MB
+  v8-oom-main-cage-free-size = 226.50MB$
+  v8-oom-main-cage-largest-free-region = 62.00MB"
+  v8-oom-main-cage-size = 4096.00MB
+  v8-oom-map-space-size = 0B 
+  v8-oom-memory-allocator-size = 2534.62MB
+  v8-oom-new-space-size = 0B
+  v8-oom-old-space-capacity = 2283.86MB
+  v8-oom-old-space-size = 2282.21MB"
+  v8-oom-ro-space-size = 1.97MB
+  v8-oom-stack< = add in src/geom/bvh.js
+  v8-oom-trusted-cage-free-size = 1004.25MB'
+  v8-oom-trusted-cage-largest-free-region = 1001.75MB%
+  v8-oom-trusted-cage-size = 1024.00MB
+  v8_isolate_address = 0x1b0400568000
+== e882db08-34c3-4d10-934b-be3def1d57ca.dmp
+  v8-oom-code-cage-free-size = 504.50MB$
+  v8-oom-code-cage-largest-free-region = 502.50MB"
+  v8-oom-code-cage-size = 512.00MB
+  v8-oom-code-lo-space-size = 0B
+  v8-oom-code-space-size = 2.73MB
+  v8-oom-is-main-isolate = true
+  v8-oom-isolate-count = v8-oom-last-few-messages
+  v8-oom-lo-space-size = 9.94MB
+  v8-oom-main-cage-free-size = 561.25MB$
+  v8-oom-main-cage-largest-free-region = 37.00MB"
+  v8-oom-main-cage-size = 4096.00MB
+  v8-oom-map-space-size = 0B 
+  v8-oom-memory-allocator-size = 826.69MB
+  v8-oom-new-space-size = 0B
+  v8-oom-old-space-capacity = 811.70MB
+  v8-oom-old-space-size = 804.26MB"
+  v8-oom-ro-space-size = 2.09MB
+  v8-oom-stack = stringify
+  v8-oom-trusted-cage-free-size = 1003.25MB'
+  v8-oom-trusted-cage-largest-free-region = 1001.50MB%
+  v8-oom-trusted-cage-size = 1024.00MB
+  v8_isolate_address = 0x725c0057c000

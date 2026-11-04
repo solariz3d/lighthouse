@@ -1,0 +1,31 @@
+[31m✖ row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does [90m(55563.5768ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 55733.5288[39m
+
+[31m✖ failing tests:[39m
+
+test at best-6261a22.test.js:158:1
+[31m✖ row 12: the reported save: one press, with the reds the live checker found, closes in under 30 s, and picks as a press without them does [90m(55563.5768ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  [32mactual[39m [31mexpected[39m
+  
+  [39m'[39m[39mc[39m[39ml[39m[39mo[39m[39ms[39m[39me[39m[39md[39m[39m:[39m[39m [39m[39mb[39m[39me[39m[39mn[39m[39mt[39m[39m [39m[39mt[39m[39mh[39m[39me[39m[39m [39m[39ml[39m[39ma[39m[39ms[39m[39mt[39m[39m [39m[39m2[39m[39m [39m[39mp[39m[39mi[39m[39me[39m[39mc[39m[39me[39m[39ms[39m[39m [39m[39m([39m[39m5[39m[39m0[39m[39m8[39m[39m [39m[39mm[39m[39m)[39m[39m [39m[39mb[39m[39my[39m[39m [39m[39mu[39m[39mp[39m[39m [39m[39mt[39m[39mo[39m[39m [39m[39m4[39m[39m.[39m[39m0[39m[31m4[39m[39m [39m[39mm[39m[39m'[39m
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d431\[39mbest-6261a22.test.js:168:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.start (node:internal/test_runner/test:1015:17)[39m
+  [90m    at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'closed: bent the last 2 pieces (508 m) by up to 4.0 m'[39m,
+    expected: [32m'closed: bent the last 2 pieces (508 m) by up to 4.04 m'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

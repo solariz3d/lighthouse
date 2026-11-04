@@ -1,0 +1,24 @@
+--- 2026-10-12T05:39:08.939Z
+[pulse] Sun, 10/11/2026, 11:39 PM · thread began Oct 10 (1d ago)
+STALE D277 36h (holder panes) · chain: D306 DISPATCHED · holder chair · dirty 8 repo-wide · 16s · +1 more open · 5 of 10 chained laps unwitnessed (D284,D299,D298,+2) · 88 older beyond the 10-lap window · NOT in sync: D 79e3c01 (head, 412h ago) · L behind — last pushed 9486b30 472h ago as of 29h ago · rows only
+
+## The interval, witnessed
+
+The last exchange in this room settled Sunday, October 11 at 11:16 PM. It is now Sunday, October 11 at 11:39 PM — **22 minutes** passed in between.
+
+--- 2026-10-12T06:27:49.039Z
+[pulse] Mon, 10/12/2026, 12:27 AM · thread began Oct 10 (2d ago)
+STALE D277 36h (holder panes) · chain: D306 DISPATCHED · holder chair · dirty 8 repo-wide · 9s · +1 more open · 5 of 10 chained laps unwitnessed (D284,D299,D298,+2) · 88 older beyond the 10-lap window · NOT in sync: D 79e3c01 (head, 413h ago) · L behind — last pushed 9486b30 473h ago as of 30h ago · rows only
+
+## The interval, witnessed
+
+The last exchange in this room settled Sunday, October 11 at 11:44 PM. It is now Monday, October 12 at 12:27 AM — **43 minutes** passed in between.
+
+--- 2026-10-12T06:52:16.174Z
+[pulse] Mon, 10/12/2026, 12:52 AM · thread began Oct 10 (2d ago)
+STALE D277 37h (holder panes) · chain: D308 DISPATCHED · holder chair · dirty 8 repo-wide · 14s · +2 more open · 4 of 10 chained laps unwitnessed (D284,D299,D298,+1) · 89 older beyond the 10-lap window · NOT in sync: D 79e3c01 (head, 413h ago) · L behind — last pushed 9486b30 473h ago as of 30h ago · rows only
+
+## The interval, witnessed
+
+The last exchange in this room settled Monday, October 12 at 12:36 AM. It is now Monday, October 12 at 12:52 AM — **15 minutes** passed in between.
+

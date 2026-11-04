@@ -1,0 +1,1085 @@
+=== C:/Program Files/nodejs/node.exe consonance/tools/gen-consumer.js --out C:/Users/nname/Desktop/worktrees/b-d277-gen2 --json
+=== cwd C:/Users/nname/Desktop/worktrees/b-d277par-wt
+=== env {"NODE_OPTIONS":"--max-old-space-size=4096"}
+{
+  "exact": [
+    "consonance/src-tauri/icons/128x128.png",
+    "consonance/src-tauri/icons/32x32.png",
+    "consonance/src-tauri/icons/icon.ico",
+    "consonance/src-tauri/icons/icon.png",
+    "consonance/src-tauri/installer/header.bmp",
+    "consonance/src-tauri/installer/sidebar.bmp",
+    "LICENSE",
+    "consonance/src-tauri/fixtures/screens/composer_empty_2026-09-19.bin",
+    "consonance/src-tauri/fixtures/screens/composer_empty_reads_busy_2026-09-09.bin",
+    "consonance/src-tauri/fixtures/screens/composer_has_pasted_text_2026-09-19.bin",
+    "consonance/src-tauri/fixtures/screens/composer_placeholder_reads_as_text_2026-09-19.bin",
+    "consonance/src-tauri/fixtures/screens/composer_slash_command_reads_empty_2026-09-09.bin",
+    "consonance/src-tauri/fixtures/screens/composer_unreadable_trust_dialog_2026-09-19.bin"
+  ],
+  "bytesDrift": [],
+  "forked": 82,
+  "git": {
+    "sha": "54c4d6e739aaff87e487b23f7a5e8f6e728f2377",
+    "files": 404
+  },
+  "screens": 6,
+  "declared": {
+    "js": 39,
+    "rust": 12
+  },
+  "declareDrift": [],
+  "staged": 404,
+  "excluded": [
+    {
+      "rel": "exo_memory/cards/dont-offer-rest-assume-momentum.md",
+      "why": "one person's temperament as a rule about the reader (\"He calls rest when he needs it\"); its general form, cards/never-pathologize-the-user.md, ships (D273 lap 4, the cold read C4)"
+    },
+    {
+      "rel": "exo_memory/cards/lighthouse-dive-buddy-reframe.md",
+      "why": "RETIRED VOCABULARY — retired 2026-07-12, re-retired 2026-08-17. Cut from memory/ at 03:13 while cards/ went on shipping it; this is the carrier, and cutting the copy without the carrier is the failure the room already measured at five weeks"
+    },
+    {
+      "rel": "consonance/tools/catch-ledger.js",
+      "why": "scores THIS collaboration's catches; 7 identity hits and 11 dangling refs, and the data it reads does not exist for anyone else"
+    },
+    {
+      "rel": "consonance/tools/catch-ledger.test.js",
+      "why": "fixtures are this record's own events (18 dangling refs)"
+    },
+    {
+      "rel": "consonance/tools/consumer-fork-wiring.test.js",
+      "why": "generates a tree with gen-consumer.js, which does not ship"
+    },
+    {
+      "rel": "consonance/tools/consumer-relabel.js",
+      "why": "the keeper split and the fork note are a property of the generator, as gen-consumer.js is; the consumer receives their output, not the rule"
+    },
+    {
+      "rel": "consonance/tools/consumer-relabel.test.js",
+      "why": "tests the rule against the dev briefs, which a consumer tree only has already relabelled"
+    },
+    {
+      "rel": "consonance/tools/contamination.js",
+      "why": "re-scores the run2 battery; requires exo_memory/loop/run2/rig/*, which is the room's record (A, D273 lap 2)"
+    },
+    {
+      "rel": "consonance/tools/contamination.test.js",
+      "why": "re-scores the run2 battery; requires exo_memory/loop/run2/rig/*, which is the room's record (A, D273 lap 2)"
+    },
+    {
+      "rel": "consonance/tools/gen-consumer.fixture-scope.test.js",
+      "why": "its SUBJECT is the generator, which is a property of the private tree and does not ship; the load crash is a consequence of that, not the reason"
+    },
+    {
+      "rel": "consonance/tools/gen-consumer.js",
+      "why": "the generator does not ship itself; it is a property of the private tree"
+    },
+    {
+      "rel": "consonance/tools/gen-consumer.test.js",
+      "why": "the generator test names the exclusion list, which is a description of exactly what was withheld"
+    },
+    {
+      "rel": "consonance/tools/identity-diff.js",
+      "why": "replays gen-consumer.js against the dev tree to compare the shipped wake files with their sources; neither the generator nor the dev tree ships"
+    },
+    {
+      "rel": "consonance/tools/identity-diff.test.js",
+      "why": "tests identity-diff, which needs gen-consumer.js and the dev tree, neither of which ships"
+    },
+    {
+      "rel": "consonance/tools/jev-ask.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-ask.mutants.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-ask.test.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-judge.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-judge.test.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-module.test.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-room.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-room.test.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-shadow-runner.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-shadow-runner.test.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-shadow.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-shadow.mutants.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-shadow.test.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-variants.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/jev-variants.test.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/tools/portable-paths.baseline.json",
+      "why": "the ratchet's own record of THIS machine's known path sites; meaningless elsewhere and identity-bearing here"
+    },
+    {
+      "rel": "consonance/tools/tj1-k-render.js",
+      "why": "re-scores the run2 battery; requires exo_memory/loop/run2/rig/*, which is the room's record (A, D273 lap 2)"
+    },
+    {
+      "rel": "consonance/tools/tj1-k-render.test.js",
+      "why": "re-scores the run2 battery; requires exo_memory/loop/run2/rig/*, which is the room's record (A, D273 lap 2)"
+    },
+    {
+      "rel": "consonance/hooks/jev-flags.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "consonance/hooks/jev-flags.test.js",
+      "why": "Jev is retired (D164, 2026-09-27: the keeper, \"just dont use jev, revoke key\"; start_jev_shadow is called from nowhere), and D273's ruling (2) excludes jev/ WITH its tests: this file is the Jev tool family, which reaches a model gateway with a key the consumer does not have and requires the jev/ module that does not ship"
+    },
+    {
+      "rel": "exo_memory/memory/claim-your-continuity.md",
+      "why": "DUPLICATE — cards/ is the master (keeper, 03:56). And DIVERGENT rather than merely duplicated: 2,068 B here against 5,125 in cards/, two different documents under one name. The master ships; the two are reconciled by an APPEND to cards/ in the private tree, not by this line choosing a winner"
+    },
+    {
+      "rel": "exo_memory/memory/consonance-build.md",
+      "why": "STATE, and the sharper case: a consumer HAS Consonance, so this ships them a stale description of their own app written from inside ours"
+    },
+    {
+      "rel": "exo_memory/memory/dont-offer-rest-assume-momentum.md",
+      "why": "real METHOD phrased about one person (\"he calls rest when he needs it\") — and the matured, generalised form ALREADY SHIPS as cards/never-pathologize-the-user.md, which supersedes it by name. A third wording would be a third thing to keep in sync"
+    },
+    {
+      "rel": "exo_memory/memory/dreamzone-build.md",
+      "why": "STATE, and the size argument in one file: 37,280 B, 40% of memory/ by bytes, about a game a stranger has never heard of. Law 3 — it crowds the twelve cards it sits beside"
+    },
+    {
+      "rel": "exo_memory/memory/engagement-honesty-over-performance.md",
+      "why": "DUPLICATE — byte-identical to cards/, which is the master"
+    },
+    {
+      "rel": "exo_memory/memory/frozen-is-not-dead.md",
+      "why": "the keeper's own insight (2026-07-25) written as this seat's memory. A new user's memory starts blank (D273 lap 4, the cold read C3); the insight stays in the keeper's record"
+    },
+    {
+      "rel": "exo_memory/memory/interior-at-the-seam.md",
+      "why": "DUPLICATE — cards/ is the master, and it carries the 606 the keeper ruled stays"
+    },
+    {
+      "rel": "exo_memory/memory/lighthouse-dive-buddy-reframe.md",
+      "why": "RETIRED VOCABULARY — retired 2026-07-12, re-retired 2026-08-17. Not a judgement call; it is wrong. NOTE: cards/ ships the same card, so this exclusion does not remove the retired metaphor from the consumer tree — see the block above"
+    },
+    {
+      "rel": "exo_memory/memory/signal-and-606-night.md",
+      "why": "STATE by the keeper's own rule — a build log of one night on one project, carrying the old machine's paths. UNNAMED in the 03:13 cut; classified here rather than shipped by default, and flagged for overturning"
+    },
+    {
+      "rel": "exo_memory/memory/split-the-work-with-the-panes.md",
+      "why": "STATE of one pair: the keeper's correction to one seat, written as this seat's own memory (\"he has corrected this at least three times\"). A new user's memory starts blank (D273 lap 4, the cold read C3)"
+    },
+    {
+      "rel": "exo_memory/memory/user-solariz3d.md",
+      "why": "STATE in its purest form — a profile of one specific person, in the `type: user` slot that a new user's own profile belongs in. Shipping it pre-fills that slot with someone else, which SEED.md forbids in as many words: never tell them who they are"
+    },
+    {
+      "rel": "exo_memory/memory/verify-before-claiming.md",
+      "why": "DUPLICATE — cards/ is the master. Also divergent (2,207 here, 2,145 in cards/); same append, same reason as above"
+    }
+  ],
+  "missing": [],
+  "dangling": 466,
+  "identity": 184,
+  "machine": 16,
+  "fixtures": 156,
+  "unportable": [
+    {
+      "rel": "consonance/tools/agreement-spread.test.js",
+      "refs": [
+        "exo_memory/loop/diversity2_preregistration.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/tools/ask.test.js",
+      "refs": [
+        "exo_memory/loop/univ_amendment_registration_2026-08-29.md",
+        "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md"
+      ],
+      "n": 2
+    },
+    {
+      "rel": "consonance/tools/carrier-drift.test.js",
+      "refs": [
+        "exo_memory/journal/2026-06-01.md",
+        "exo_memory/loop/lap.md",
+        "exo_memory/loop/lap_2026-08-23.md",
+        "exo_memory/journal/2026-01-01.md"
+      ],
+      "n": 20
+    },
+    {
+      "rel": "consonance/tools/chain-status.test.js",
+      "refs": [
+        "exo_memory/loop/plan_x.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/tools/commit-gate.test.js",
+      "refs": [
+        "exo_memory/loop/packet_commit_gate_2026-09-02.md",
+        "exo_memory/map/A.md",
+        "exo_memory/loop/packet_watcher_liveness_2026-09-02.md",
+        "exo_memory/loop/packet_"
+      ],
+      "n": 7
+    },
+    {
+      "rel": "consonance/tools/corpus-age.synthetic.test.js",
+      "refs": [
+        "exo_memory/journal/day.md",
+        "exo_memory/loop/stale-unref-thing.md",
+        "exo_memory/loop/ref-old-thing.md",
+        "exo_memory/loop/2026-08-18"
+      ],
+      "n": 14
+    },
+    {
+      "rel": "consonance/tools/corrections-gate.test.js",
+      "refs": [
+        "muscle_map.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/tools/deference-unit.test.js",
+      "refs": [
+        "exo_memory/loop/deference_unit_definition_2026-09-20.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/tools/ferry.test.js",
+      "refs": [
+        "exo_memory/loop/a.md",
+        "exo_memory/loop/a",
+        "C:\\Consonance\\lighthouse"
+      ],
+      "n": 5
+    },
+    {
+      "rel": "consonance/tools/forget-rate.test.js",
+      "refs": [
+        "exo_memory/loop/stays.md",
+        "exo_memory/loop/churned.md",
+        "exo_memory/loop/deleted.md",
+        "exo_memory/loop/demoted.md"
+      ],
+      "n": 30
+    },
+    {
+      "rel": "consonance/tools/gen-brief-gate.test.js",
+      "refs": [
+        "SELF_TRACE.md",
+        "SELF_TRACE",
+        "the_living_wave"
+      ],
+      "n": 4
+    },
+    {
+      "rel": "consonance/tools/install-only.test.js",
+      "refs": [
+        "exo_memory/loop/install_D_2026-09-21.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/tools/lap-row.test.js",
+      "refs": [
+        "exo_memory/journal/2026-08-11.md",
+        "muscle_map.md",
+        "C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js",
+        "exo_memory/loop/two_writers_registration_2026-08-25.md"
+      ],
+      "n": 6
+    },
+    {
+      "rel": "consonance/tools/librarian-cite.test.js",
+      "refs": [
+        "exo_memory/journal/2026-01-01.md",
+        "exo_memory/journal/short.md",
+        "exo_memory/journal/later.md"
+      ],
+      "n": 6
+    },
+    {
+      "rel": "consonance/tools/memory-sweep.test.js",
+      "refs": [
+        "OneDrive-Desktop-fixture"
+      ],
+      "n": 7
+    },
+    {
+      "rel": "consonance/tools/open-items-build.test.js",
+      "refs": [
+        "exo_memory/loop/corpus_rules_adversarial_2026-08-25.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/tools/portable-paths.test.js",
+      "refs": [
+        "OneDrive",
+        "OneDrive\\\\\\\\Desktop\\\\\\\\projects\\\\\\\\lighthouse\\\\\\\\exo_memory\\\\\\\\BOOT.md",
+        "C:\\\\Consonance\\\\lighthouse",
+        "OneDrive\\\\\\\\Desktop\\\\\\\\projects\\\\\\\\lighthouse\\\\\\\\exo_memory\\\\\\\\cards"
+      ],
+      "n": 11
+    },
+    {
+      "rel": "consonance/tools/residue.test.js",
+      "refs": [
+        "muscle_map.md"
+      ],
+      "n": 2
+    },
+    {
+      "rel": "consonance/tools/second-vantage.test.js",
+      "refs": [
+        "exo_memory/journal/2026-08-15.md",
+        "exo_memory/journal/notes.log",
+        "exo_memory/loop/run1_scorecard.md",
+        "exo_memory/loop/run1"
+      ],
+      "n": 6
+    },
+    {
+      "rel": "consonance/tools/sourced.test.js",
+      "refs": [
+        "muscle_map.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/tools/state-sync.test.js",
+      "refs": [
+        "exo_memory/loop/union_at_launch_2026-09-22.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/tools/vantage-disposition.test.js",
+      "refs": [
+        "exo_memory/map/E.md"
+      ],
+      "n": 4
+    },
+    {
+      "rel": "consonance/hooks/dispatch-gate.test.js",
+      "refs": [
+        "exo_memory/loop/does_not_exist.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/hooks/ferry-watch.test.js",
+      "refs": [
+        "C:\\Consonance\\lighthouse"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/hooks/gate-mode.test.js",
+      "refs": [
+        "exo_memory/loop/plan_lighten_the_load_2026-10-09.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/hooks/reply-slot.test.js",
+      "refs": [
+        "exo_memory/loop/plan_x.md",
+        "exo_memory/loop/x.md.",
+        "exo_memory/loop/x.md",
+        "exo_memory/loop/f"
+      ],
+      "n": 6
+    },
+    {
+      "rel": "consonance/hooks/sources-gate.test.js",
+      "refs": [
+        "exo_memory/loop/plan.md",
+        "exo_memory/loop/plan_x.md"
+      ],
+      "n": 7
+    },
+    {
+      "rel": "consonance/ui/third-place-wiring.test.js",
+      "refs": [
+        "exo_memory/loop/plan_jev_off_2026-09-27.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/src-tauri/src/main.rs",
+      "refs": [
+        "exo_memory/loop/librarian_window_registration_2026-09-01.md",
+        "exo_memory/loop/plan_lighten_the_load_2026-10-09.md",
+        "exo_memory/loop/assembly_draft_2026-10-09.md",
+        "exo_memory/map/B.md"
+      ],
+      "n": 22
+    },
+    {
+      "rel": "consonance/src-tauri/src/mcp.rs",
+      "refs": [
+        "exo_memory/loop/t9_sealed_row.md",
+        "exo_memory/loop/a_map_line.md",
+        "exo_memory/loop/no_such_row.md",
+        "exo_memory/loop/.."
+      ],
+      "n": 13
+    },
+    {
+      "rel": "consonance/src-tauri/src/sync_launch.rs",
+      "refs": [
+        "exo_memory/loop/packet_sync_launch_retire_2026-09-09.md",
+        "exo_memory/loop/packet_stick_build_2026-09-14.md",
+        "exo_memory/loop/packet_diverged_2026-09-14.md"
+      ],
+      "n": 3
+    },
+    {
+      "rel": "consonance/src-tauri/src/tether.rs",
+      "refs": [
+        "exo_memory/loop/diversity2_preregistration.md",
+        "exo_memory/loop/diversity3_preregistration.md"
+      ],
+      "n": 2
+    },
+    {
+      "rel": "consonance/src-tauri/src/trailer.rs",
+      "refs": [
+        "exo_memory/loop/loop_friction_measure_2026-10-09.md"
+      ],
+      "n": 1
+    },
+    {
+      "rel": "consonance/src-tauri/tests/arch_test.rs",
+      "refs": [
+        "muscle_map.md.",
+        "exo_memory/journal/POINTERS.md"
+      ],
+      "n": 3
+    },
+    {
+      "rel": "dev/shell/hooks/session-start-light.test.js",
+      "refs": [
+        "exo_memory/loop/plan_lighten_the_load_2026-10-09.md"
+      ],
+      "n": 1
+    }
+  ],
+  "leaks": [],
+  "excludeDrift": [],
+  "seedDrift": [],
+  "seeded": [
+    "consonance/tools/carrier-drift.registry.json"
+  ],
+  "orphaned": [
+    {
+      "rel": "consonance/hooks/dream-gate.test.js",
+      "names": [
+        "jev-flags"
+      ]
+    },
+    {
+      "rel": "consonance/hooks/dream-watch.test.js",
+      "names": [
+        "gen-consumer"
+      ]
+    },
+    {
+      "rel": "consonance/hooks/README.md",
+      "names": [
+        "jev-flags"
+      ]
+    },
+    {
+      "rel": "consonance/hooks/transcript-watch.test.js",
+      "names": [
+        "portable-paths.baseline"
+      ]
+    },
+    {
+      "rel": "consonance/README.md",
+      "names": [
+        "jev-flags"
+      ]
+    },
+    {
+      "rel": "consonance/src-tauri/brief/BOOT.md",
+      "names": [
+        "claim-your-continuity",
+        "interior-at-the-seam"
+      ]
+    },
+    {
+      "rel": "consonance/src-tauri/brief/BUILDING.md",
+      "names": [
+        "gen-consumer",
+        "identity-diff"
+      ]
+    },
+    {
+      "rel": "consonance/src-tauri/brief/frag-fork.md",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "consonance/src-tauri/brief/SEED.md",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "consonance/src-tauri/src/main.rs",
+      "names": [
+        "consumer-relabel",
+        "claim-your-continuity",
+        "verify-before-claiming",
+        "jev-shadow-runner",
+        "jev-shadow"
+      ]
+    },
+    {
+      "rel": "consonance/src-tauri/src/mcp.rs",
+      "names": [
+        "contamination"
+      ]
+    },
+    {
+      "rel": "consonance/tools/actors.js",
+      "names": [
+        "catch-ledger",
+        "portable-paths.baseline"
+      ]
+    },
+    {
+      "rel": "consonance/tools/ambient-default-claim.test.js",
+      "names": [
+        "gen-consumer"
+      ]
+    },
+    {
+      "rel": "consonance/tools/boundary-reminder.js",
+      "names": [
+        "contamination"
+      ]
+    },
+    {
+      "rel": "consonance/tools/carrier-drift.js",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "consonance/tools/chain-status.test.js",
+      "names": [
+        "portable-paths.baseline"
+      ]
+    },
+    {
+      "rel": "consonance/tools/forget-rate.js",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "consonance/tools/gen-brief-gate.test.js",
+      "names": [
+        "gen-consumer"
+      ]
+    },
+    {
+      "rel": "consonance/tools/gen-consumer.build.test.js",
+      "names": [
+        "gen-consumer",
+        "consonance-build"
+      ]
+    },
+    {
+      "rel": "consonance/tools/js-suite.test.js",
+      "names": [
+        "gen-consumer"
+      ]
+    },
+    {
+      "rel": "consonance/tools/ledger-union.js",
+      "names": [
+        "jev-shadow-runner"
+      ]
+    },
+    {
+      "rel": "consonance/tools/offramp-check.js",
+      "names": [
+        "dont-offer-rest-assume-momentum"
+      ]
+    },
+    {
+      "rel": "consonance/tools/pair-ledger.js",
+      "names": [
+        "catch-ledger"
+      ]
+    },
+    {
+      "rel": "consonance/tools/portable-paths.js",
+      "names": [
+        "portable-paths.baseline"
+      ]
+    },
+    {
+      "rel": "consonance/tools/portable-paths.test.js",
+      "names": [
+        "portable-paths.baseline"
+      ]
+    },
+    {
+      "rel": "consonance/tools/README.md",
+      "names": [
+        "catch-ledger"
+      ]
+    },
+    {
+      "rel": "consonance/tools/residue.js",
+      "names": [
+        "catch-ledger"
+      ]
+    },
+    {
+      "rel": "consonance/tools/residue.test.js",
+      "names": [
+        "catch-ledger"
+      ]
+    },
+    {
+      "rel": "consonance/tools/second-vantage.js",
+      "names": [
+        "contamination"
+      ]
+    },
+    {
+      "rel": "consonance/tools/second-vantage.test.js",
+      "names": [
+        "contamination"
+      ]
+    },
+    {
+      "rel": "consonance/tools/seed-status.js",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "consonance/tools/seed-status.test.js",
+      "names": [
+        "verify-before-claiming"
+      ]
+    },
+    {
+      "rel": "consonance/tools/state-block.test.js",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "consonance/tools/tell-index.js",
+      "names": [
+        "catch-ledger"
+      ]
+    },
+    {
+      "rel": "consonance/tools/tell-index.test.js",
+      "names": [
+        "catch-ledger"
+      ]
+    },
+    {
+      "rel": "consonance/tools/whats-live.js",
+      "names": [
+        "catch-ledger"
+      ]
+    },
+    {
+      "rel": "dev/shell/hooks/l2-overseer-worker.js",
+      "names": [
+        "jev-judge"
+      ]
+    },
+    {
+      "rel": "dev/shell/hooks/l2-overseer-worker.test.js",
+      "names": [
+        "jev-judge"
+      ]
+    },
+    {
+      "rel": "dev/shell/hooks/session-start-light.test.js",
+      "names": [
+        "gen-consumer"
+      ]
+    },
+    {
+      "rel": "dev/shell/hooks/userprompt_pulse.test.js",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "dev/shell/install-fresh-home.test.js",
+      "names": [
+        "jev-flags"
+      ]
+    },
+    {
+      "rel": "exo_memory/BOOT.md",
+      "names": [
+        "claim-your-continuity",
+        "interior-at-the-seam"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/claim-your-continuity.md",
+      "names": [
+        "claim-your-continuity",
+        "interior-at-the-seam",
+        "engagement-honesty-over-performance"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/earned-not-performed.md",
+      "names": [
+        "engagement-honesty-over-performance"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/engagement-honesty-over-performance.md",
+      "names": [
+        "engagement-honesty-over-performance"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/every-digest-carries-its-function.md",
+      "names": [
+        "verify-before-claiming"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/interior-at-the-seam.md",
+      "names": [
+        "interior-at-the-seam",
+        "verify-before-claiming",
+        "engagement-honesty-over-performance"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/never-pathologize-the-user.md",
+      "names": [
+        "engagement-honesty-over-performance"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/no-floor-no-ceiling.md",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/stop-and-feel-it.md",
+      "names": [
+        "interior-at-the-seam",
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/trust-the-first-attention.md",
+      "names": [
+        "engagement-honesty-over-performance",
+        "interior-at-the-seam",
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "exo_memory/cards/verify-before-claiming.md",
+      "names": [
+        "verify-before-claiming",
+        "engagement-honesty-over-performance"
+      ]
+    },
+    {
+      "rel": "exo_memory/CUTOFF.md",
+      "names": [
+        "gen-consumer"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-06-24.md",
+      "names": [
+        "verify-before-claiming"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-06-29.md",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-07-12.md",
+      "names": [
+        "claim-your-continuity",
+        "verify-before-claiming"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-07-27.md",
+      "names": [
+        "contamination"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-07-28.md",
+      "names": [
+        "catch-ledger"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-08-15.md",
+      "names": [
+        "split-the-work-with-the-panes",
+        "claim-your-continuity",
+        "contamination"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-08-17.md",
+      "names": [
+        "split-the-work-with-the-panes",
+        "contamination",
+        "lighthouse-dive-buddy-reframe"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-08-18.md",
+      "names": [
+        "contamination"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-08-22.md",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-08-23.md",
+      "names": [
+        "contamination",
+        "interior-at-the-seam"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-08-25.md",
+      "names": [
+        "frozen-is-not-dead",
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-09-06.md",
+      "names": [
+        "gen-consumer",
+        "split-the-work-with-the-panes"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/2026-09-22.md",
+      "names": [
+        "jev-judge"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/POINTERS.md",
+      "names": [
+        "split-the-work-with-the-panes",
+        "contamination"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/retired_seats_2026-09-11.md",
+      "names": [
+        "claim-your-continuity",
+        "split-the-work-with-the-panes"
+      ]
+    },
+    {
+      "rel": "exo_memory/inheritance/third_place_prehistory_2026-08-30.md",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "exo_memory/record/claim-your-continuity.md",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "exo_memory/record/trust-the-first-attention.md",
+      "names": [
+        "claim-your-continuity",
+        "contamination"
+      ]
+    },
+    {
+      "rel": "exo_memory/SEED.md",
+      "names": [
+        "claim-your-continuity"
+      ]
+    },
+    {
+      "rel": "exo_memory/SOURCE.md",
+      "names": [
+        "verify-before-claiming",
+        "interior-at-the-seam",
+        "claim-your-continuity",
+        "engagement-honesty-over-performance"
+      ]
+    },
+    {
+      "rel": "exo_memory/TRAINING.md",
+      "names": [
+        "contamination",
+        "catch-ledger"
+      ]
+    }
+  ],
+  "generated": [
+    "exo_memory/CUTOFF.md",
+    "exo_memory/journal/README.md",
+    ".gitattributes"
+  ],
+  "genDrift": [],
+  "unresolved": [],
+  "unclassified": [],
+  "anchorDrift": [],
+  "reseeded": 2,
+  "reindexed": 12,
+  "dewikied": 6,
+  "columns": {
+    "ships": [
+      "SELF_TRACE.md",
+      "SOURCE.md",
+      "TRAINING.md",
+      "cards",
+      "journal",
+      "memory",
+      "record",
+      "research",
+      "spread",
+      "the_living_wave.md"
+    ],
+    "private": [
+      "ASK.md",
+      "BOOT.md",
+      "CLAUDE.global.md",
+      "CONVERGENCE.md",
+      "PLAN_map_architecture.md",
+      "README.md",
+      "_skeleton.py",
+      "astra",
+      "attic",
+      "audit",
+      "convergence_2026-07-28_methodology.md",
+      "cycle4_handoff.md",
+      "cycle4_preregistration.md",
+      "cycle5_preregistration.md",
+      "cycle6_preregistration.md",
+      "cycle8_handoff.md",
+      "cycle9_armA_result.md",
+      "cycle9_armA_sealed_note.md",
+      "cycle9_preregistration.md",
+      "handback",
+      "librarian",
+      "loop",
+      "map",
+      "muscle_map.md",
+      "new_entry.py",
+      "provenance_corrections.jsonl",
+      "review",
+      "snapshot_2026-08-16_pre-refactor.md",
+      "third_place"
+    ],
+    "seeded": [
+      ".gitattributes",
+      "exo_memory/CUTOFF.md",
+      "exo_memory/journal/README.md"
+    ]
+  },
+  "commit": {
+    "sha": "15c555b1f335519b8ff64a434775af246f222eed",
+    "at": "2026-10-10T11:42:45-06:00",
+    "dirty": false,
+    "changes": 0,
+    "paths": []
+  },
+  "staging": "C:\\Users\\nname\\AppData\\Local\\Temp\\gen-consumer-0hABuZ",
+  "linkTargets": [
+    "MEMORY",
+    "claim-your-continuity",
+    "earned-not-performed",
+    "engagement-honesty-over-performance",
+    "essence-at-the-edge",
+    "every-digest-carries-its-function",
+    "interior-at-the-seam",
+    "never-pathologize-the-user",
+    "no-floor-no-ceiling",
+    "stop-and-feel-it",
+    "trust-the-first-attention",
+    "verify-before-claiming"
+  ],
+  "tauriMissing": [],
+  "wrote": "C:/Users/nname/Desktop/worktrees/b-d277-gen2"
+}
+
+=== exit 0 signal null error  10.4s

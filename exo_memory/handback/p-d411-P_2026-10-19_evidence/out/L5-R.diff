@@ -1,0 +1,78 @@
+diff --git a/consonance/tools/gen-consumer.test.js b/consonance/tools/gen-consumer.test.js
+index 65a0625..20b3fd9 100644
+--- a/consonance/tools/gen-consumer.test.js
++++ b/consonance/tools/gen-consumer.test.js
+@@ -19,6 +19,7 @@
+  *
+  * Run: node consonance/tools/gen-consumer.test.js
+  */
++// JS-SUITE: TIMEOUT-MS 300000 — measured 123-157 s alone (2026-10-19); js-suite's 120 s default killed it every run.
+ 'use strict';
+ const assert = require('node:assert');
+ const test = require('node:test');
+diff --git a/consonance/tools/js-suite.js b/consonance/tools/js-suite.js
+index e5213cc..d638c18 100644
+--- a/consonance/tools/js-suite.js
++++ b/consonance/tools/js-suite.js
+@@ -150,6 +150,12 @@ const scratch = require('./scratch.js');
+ const ROOT = process.env.JS_SUITE_ROOT || path.resolve(__dirname, '..', '..');
+ const SKIP_DIRS = new Set(['node_modules', '.git', 'target', 'gen', '__pycache__', 'attic']);
+ const TIMEOUT_MS = Number(process.env.JS_SUITE_TIMEOUT_MS || 120000);
++// A file whose honest run is longer than TIMEOUT_MS declares its own budget on a header line of its own,
++// `// JS-SUITE: TIMEOUT-MS <n>` (same anchoring and window as the markers below). gen-consumer.test.js took
++// 123-157 s alone and was killed at 120 s on every full run (2026-10-19). CAPPED at TIMEOUT_CAP x the default,
++// so a declaration buys a slow file time and never buys a hang an unbounded life: a hang still dies, as CRASHED.
++const TIMEOUT_CAP = 5;
++const TIMEOUT_DECL = /^\s*(?:\/\/|#)\s*JS-SUITE:\s*TIMEOUT-MS\s+(\d+)/m;
+ 
+ // A directory named *_evidence holds a hand-back's COPIES of old scratchpad files (D287 part 3). They are
+ // records of what was run then, not tests of this tree, and some fail here by design. Skip the directory,
+@@ -313,10 +319,11 @@ const UNIVERSE_LINE = /^[ \t]*JS-SUITE:[ \t]*UNIVERSE\b[ \t]*(?:[-–—:]+[ \t]
+ // its exit hook removes) are ALSO inside the folder this runner removes: a child killed by the timeout never runs its exit hook, and would leak otherwise.
+ function runFile(f, extraEnv) {
+   let code = 0, out = '', err = '';
++  const budget = Math.min(Number((TIMEOUT_DECL.exec(header(f)) || [])[1]) || TIMEOUT_MS, TIMEOUT_MS * TIMEOUT_CAP);
+   const tmp = scratch.mkdtemp('js-suite-tmp-');
+   try {
+     out = execFileSync(process.execPath, [f], {
+-      cwd: path.dirname(f), encoding: 'utf8', timeout: TIMEOUT_MS,
++      cwd: path.dirname(f), encoding: 'utf8', timeout: budget,
+       stdio: ['ignore', 'pipe', 'pipe'],
+       env: { ...process.env, CONSONANCE_OS_TMP: process.env.CONSONANCE_OS_TMP || os.tmpdir(), ...scratch.tempEnv(tmp), CONSONANCE_SCRATCH: tmp, ...(extraEnv || {}) },
+     });
+diff --git a/consonance/tools/js-suite.test.js b/consonance/tools/js-suite.test.js
+index 7134372..7bd28d5 100644
+--- a/consonance/tools/js-suite.test.js
++++ b/consonance/tools/js-suite.test.js
+@@ -246,6 +246,31 @@ test('all three real summary shapes count as completed', () => {
+   assert.ok(/0 silent/.test(r.out), 'none of these tests nothing — a SILENT here is the regex being wrong');
+ });
+ 
++// ── A DECLARED TIME BUDGET (2026-10-19) ──────────────────────────────────────────────────────
++// gen-consumer.test.js takes 123-157 s alone against a 120 s kill, so it CRASHED every full run.
++// A file may declare a longer budget in its header, capped at TIMEOUT_CAP x the default so the
++// declaration cannot buy a hang an unbounded life. Fixtures run with a 1 s default.
++const TMK = '// JS-SUITE:' + ' TIMEOUT-MS ';
++const SLOW = 'setTimeout(()=>{' + GREEN + '},2000);';
++const HANG = 'setInterval(()=>{},1000);';
++test('a slow file inside its DECLARED budget is green', () => {
++  const r = runWith(tree({ 'a.test.js': TMK + '3000\n' + SLOW }), { JS_SUITE_TIMEOUT_MS: '1000' });
++  assert.strictEqual(r.code, 0, r.out + r.err);
++  assert.ok(/1 green/.test(r.out), r.out);
++});
++test('the same slow file WITHOUT a declaration is still killed', () => {
++  const r = runWith(tree({ 'a.test.js': SLOW }), { JS_SUITE_TIMEOUT_MS: '1000' });
++  assert.strictEqual(r.code, 1, r.out);
++  assert.ok(/1 crashed/.test(r.out), r.out);
++});
++test('a HANG under a huge declared budget is still killed, at the cap', () => {
++  const t = Date.now();
++  const r = runWith(tree({ 'a.test.js': TMK + '999999999\n' + HANG }), { JS_SUITE_TIMEOUT_MS: '1000' });
++  assert.strictEqual(r.code, 1, r.out);
++  assert.ok(/1 crashed/.test(r.out), r.out);
++  assert.ok(Date.now() - t < 30000, `the cap did not bound the hang: ${Date.now() - t} ms`);
++});
++
+ // ── THE MACHINE-BOUND CLASS ──────────────────────────────────────────────────────────────────
+ // Added 2026-08-25 with the class. The canary's history is the reason every one of these exists:
+ // v1 of that bucket routed every declared file into it, so a canary that CRASHED read identically

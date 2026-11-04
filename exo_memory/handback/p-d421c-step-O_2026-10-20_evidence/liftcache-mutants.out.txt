@@ -1,0 +1,6 @@
+caught       L1 kh counted as a lift channel
+caught       L2 the by-id path skips the inputs check
+caught       L3 a field outside the channels is not compared
+caught       L4 no reuse by id at all
+SURVIVED     L5 the channel set is not compared (a channel added or removed)
+applied 5 / caught 4 / NOT APPLIED 0

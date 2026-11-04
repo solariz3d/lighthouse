@@ -1,0 +1,14 @@
+[32m✔ row 1: bank, cup and an edge on the raised side stacked in a turn: amber over the piece, never red, with its source, at the raised rim [90m(291.9689ms)[39m[39m
+[32m✔ row 2: the same turn with any one of the three removed is silent [90m(1013.8058ms)[39m[39m
+[32m✔ row 3: a flat level road is silent; an empty track is refused before any check, as before [90m(24.485ms)[39m[39m
+[32m✔ row 4: an edge on one side only warns on the side the bank raises, mirrored, and is silent on the side it lowers [90m(878.782ms)[39m[39m
+[32m✔ row 5: the bar: a 10° edge on the turn stays under 8° across the car and is silent; 20° passes it [90m(990.1321ms)[39m[39m
+[32m✔ row 6: the panel line is in the user's terms with the id and source in its hover title; revalidate gives the same warning [90m(623.6906ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 6[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 4015.2624[39m

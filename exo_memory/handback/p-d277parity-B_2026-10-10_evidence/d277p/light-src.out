@@ -1,0 +1,19 @@
+=== C:/Program Files/nodejs/node.exe --max-old-space-size=4096 --test --test-concurrency=1 dev/shell/hooks/session-start-light.test.js
+=== cwd C:/Users/nname/Desktop/worktrees/b-d277par-wt
+=== env {}
+[32m✔ row 1: the key absent, "strict", a word that is not light, a non-string, unreadable or not JSON: the output is BYTE-FOR-BYTE the hook as it was (startup, resume, compact) [90m(1427.0636ms)[39m[39m
+[32m✔ row 2: light, at startup: the digests are counts plus the last three of the newest day, the whole injection under the budget, the counts right [90m(384.9006ms)[39m[39m
+[32m✔ row 3: light, on resume and compact (a thread that was never dark): counts only, under a smaller budget [90m(242.1796ms)[39m[39m
+[32m✔ row 4: light changes ONLY the digests: the ambient block, the seat's own recent sessions, the L3 notices and the night table are the same text as strict [90m(145.9495ms)[39m[39m
+[32m✔ row 5: the Third Place's wake is the same in both modes (no digests either way; its own recent sessions and the ambient block) [90m(132.6031ms)[39m[39m
+[32m✔ row 6: a digest light cannot read is left as it is (nothing is hidden by a parse failure), and the hook never throws [90m(592.3266ms)[39m[39m
+[34mℹ tests 6[39m
+[34mℹ suites 0[39m
+[34mℹ pass 6[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2993.6061[39m
+
+=== exit 0 signal null error  3.0s

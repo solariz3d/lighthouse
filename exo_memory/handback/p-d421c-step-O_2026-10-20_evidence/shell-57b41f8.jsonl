@@ -1,0 +1,4 @@
+{"row":"2","track":"open10","tool":"grab","pieces":50,"closed":false,"steps":40,"p50":2.36,"p95":2.67,"max":14.12,"docsSha256":"125368592cce6e9e","liftedSha256":"010aad562e1689e0"}
+{"row":"3","track":"closed10","tool":"bend","pieces":50,"closed":true,"steps":12,"p50":2.35,"p95":5,"max":5,"docsSha256":"7dfc49d6d37ea673","liftedSha256":"d59f9b0a332d0652"}
+{"row":"4a","track":"tube360","tool":"grab","pieces":6,"closed":true,"steps":20,"p50":1.83,"p95":4.85,"max":4.85,"docsSha256":"c4984a22c409a9a0","liftedSha256":"6dd19af64c6318fb"}
+{"row":"4b","track":"tube280","tool":"twist","pieces":6,"closed":true,"steps":20,"p50":1.47,"p95":6.25,"max":6.25,"docsSha256":"c71ea8e308591615","liftedSha256":"bcc1c6dba89cf0da"}

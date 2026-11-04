@@ -1,0 +1,6 @@
+ℹ tests 66
+ℹ pass 66
+ℹ fail 0
+ℹ skipped 0
+fixtures: ok 3 - row 5a : against the D196 baseline every fixture renders identically: "0 of 9 differ"
+geom_mutation: applied-and-caught 46, NOT APPLIED mentions 0

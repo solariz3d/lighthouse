@@ -1,0 +1,4 @@
+node mutants.js C:/Users/nname/Desktop/worktrees/lh-d630-e U2   (after row 6, the stat-error row, was added; pattern "cannot be stat")
+CONTROL: tests 8, pass 8, fail 0
+U2 a stat error is skipped: caught (1 of 1 failed, pattern "cannot be stat")
+applied 1 / caught 1 / NOT APPLIED 0

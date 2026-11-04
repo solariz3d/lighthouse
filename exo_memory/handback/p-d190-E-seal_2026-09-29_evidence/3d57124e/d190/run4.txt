@@ -1,0 +1,85 @@
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3019.5458ms)[39m[39m
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(2.979ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3383.3925ms)[39m[39m
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3.4699ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3418.0536ms)[39m[39m
+[31m✖ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3.5155ms)[39m[39m
+[32m✔ row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2888.4371ms)[39m[39m
+[32m✔ row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2859.2746ms)[39m[39m
+[32m✔ row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2743.684ms)[39m[39m
+[31m✖ row 4 (iii): a start straight cupped to 150° is refused by NAME at the grid (too narrow for a two-column grid), not by a crash [90m(2.2215ms)[39m[39m
+[32m✔ row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it [90m(0.6485ms)[39m[39m
+[34mℹ tests 11[39m
+[34mℹ suites 0[39m
+[34mℹ pass 7[39m
+[34mℹ fail 4[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 18433.5393[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(2.979ms)[39m[39m
+  Error [CoreError]: JOINT: piece 2 (p3): c starts with slope 0, the previous piece ends with 0.0009359880315743649 (every road joint is C1 in every channel, ref 09 §1)
+      at [90mC:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:206:65
+      at Array.forEach (<anonymous>)
+      at checkDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:187:14[90m)[39m
+      at Object.appendPiece [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:155:21[90m)[39m
+      at extend [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\extend.js:50:12[90m)[39m
+      at cupLap [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:22:35[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:32:27[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m {
+    code: [32m'JOINT'[39m
+  }
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3.4699ms)[39m[39m
+  Error [CoreError]: JOINT: piece 2 (p3): c starts with slope 0, the previous piece ends with 0.0008307868601999703 (every road joint is C1 in every channel, ref 09 §1)
+      at [90mC:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:206:65
+      at Array.forEach (<anonymous>)
+      at checkDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:187:14[90m)[39m
+      at Object.appendPiece [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:155:21[90m)[39m
+      at extend [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\extend.js:50:12[90m)[39m
+      at cupLap [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:22:35[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:32:27[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m {
+    code: [32m'JOINT'[39m
+  }
+
+test at test\core_cup_export.test.js:31:3
+[31m✖ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3.5155ms)[39m[39m
+  Error [CoreError]: JOINT: piece 2 (p3): c starts with slope 0, the previous piece ends with 0.0010228864272985416 (every road joint is C1 in every channel, ref 09 §1)
+      at [90mC:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:206:65
+      at Array.forEach (<anonymous>)
+      at checkDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:187:14[90m)[39m
+      at Object.appendPiece [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:155:21[90m)[39m
+      at extend [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\extend.js:50:12[90m)[39m
+      at cupLap [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:22:35[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:32:27[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m {
+    code: [32m'JOINT'[39m
+  }
+
+test at test\core_cup_export.test.js:42:1
+[31m✖ row 4 (iii): a start straight cupped to 150° is refused by NAME at the grid (too narrow for a two-column grid), not by a crash [90m(2.2215ms)[39m[39m
+  Error [CoreError]: BAD_CUP: piece 1 (p2): the cup must stay within 0 to 150°, but a control point is 150 to 150.00000000000003° (the walls of a 150°+ bowl touch)
+      at [90mC:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:203:72
+      at Array.forEach (<anonymous>)
+      at Object.checkDoc [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\document.js:187:14[90m)[39m
+      at toSegments [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\adapter.js:117:5[90m)[39m
+      at toPath [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\adapter.js:147:20[90m)[39m
+      at residual [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\close.js:122:13[90m)[39m
+      at close [90m(C:\Users\nname\Desktop\a-d188-wt\[39msrc\core\close.js:164:48[90m)[39m
+      at cupLap [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:24:13[90m)[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup_export.test.js:43:15[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m {
+    code: [32m'BAD_CUP'[39m
+  }

@@ -1,0 +1,18 @@
+meshes: his 296, ours 245
+main road physics (1ROAD_p*): same 89, differ 0, only his 0, only ours 0
+pit lane (1ROAD_PIT*): same 5, differ 3, only his 0, only ours 0
+  differ: 1ROAD_PIT_fill_0, 1ROAD_PIT_in_0, 1ROAD_PIT_out_0
+apron (1ROAD_APRON*, APRONSIDE*): same 57, differ 0, only his 57, only ours 2
+  onlyHis: APRONSIDE_p15_chunk_16, APRONSIDE_p15_chunk_17, APRONSIDE_p16_chunk_18, APRONSIDE_p16_chunk_19, APRONSIDE_p16_chunk_20, APRONSIDE_p19_chunk_21, APRONSIDE_p1_chunk_0, APRONSIDE_p1_chunk_1, APRONSIDE_p1_chunk_2, APRONSIDE_p21_chunk_22, APRONSIDE_p21_chunk_23, APRONSIDE_p22_chunk_24 …
+  onlyOurs: 1ROAD_APRON_PIT_R, APRONSIDE_PIT_R
+catch (1ROAD_CATCH*): same 3, differ 0, only his 0, only ours 0
+paint (PAINT*): same 25, differ 0, only his 0, only ours 0
+underskin (UNDERSKIN*): same 0, differ 51, only his 6, only ours 10
+  differ: UNDERSKIN_p15_chunk_16, UNDERSKIN_p15_chunk_17, UNDERSKIN_p16_chunk_18, UNDERSKIN_p16_chunk_19, UNDERSKIN_p16_chunk_20, UNDERSKIN_p19_chunk_21, UNDERSKIN_p1_chunk_0, UNDERSKIN_p1_chunk_1, UNDERSKIN_p1_chunk_2, UNDERSKIN_p21_chunk_22, UNDERSKIN_p21_chunk_23, UNDERSKIN_p23_chunk_25 …
+  onlyHis: UNDERSKIN_p22_chunk_24, UNDERSKIN_p27_chunk_26, UNDERSKIN_p30_chunk_39, UNDERSKIN_p32_chunk_40, UNDERSKIN_p41_chunk_54, UNDERSKIN_p44_chunk_55
+  onlyOurs: UNDERSKIN_PIT_chunk_57, UNDERSKIN_PIT_chunk_58, UNDERSKIN_PIT_fill_0, UNDERSKIN_PIT_out_0, UNDERSKIN_p21_chunk_24, UNDERSKIN_p26_chunk_26, UNDERSKIN_p29_chunk_39, UNDERSKIN_p31_chunk_40, UNDERSKIN_p40_chunk_54, UNDERSKIN_p43_chunk_55
+anything else: same 0, differ 0, only his 0, only ours 0
+1ROAD_p38_chunk_75: his c546e1d62502a0c2 ours c546e1d62502a0c2 SAME (geometry same)
+1ROAD_p38_chunk_76: his f79d0c3527a11362 ours f79d0c3527a11362 SAME (geometry same)
+1ROAD_p38_chunk_77: his b270d15bfcc4c84e ours b270d15bfcc4c84e SAME (geometry same)
+35c39685eeb6d10d16f8742c58d5c6446705764d808cc58e37cfa6cfe336234c *C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/d606/hidden/steam/steamapps/common/assettocorsa/content/tracks/t180b_elysium/t180b_elysium.kn5

@@ -1,0 +1,10 @@
+✔ row 1: the mesh is the same to the byte (scene arrays, matrices, cells, folds) for zipper seams, a closed lap's joint, a tube, a reuse with stale rows, and a lean build (4051.3304ms)
+✔ row 2: a piece's boundary rows are packed: a Float64Array of 6·K numbers (p, n), equal to vertex(); rowVertices reads them back (125.9941ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4327.9154

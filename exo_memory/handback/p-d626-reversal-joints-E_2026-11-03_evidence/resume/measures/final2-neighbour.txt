@@ -1,0 +1,9 @@
+eq-ELYSIUM NEW.t180track	edit p12 +1°: p13 moved over s 6303-6439 (136 m) by at most 0.1028°
+eq-ELYSIUM NEW.t180track	edit p26 +1°: p27 moved over s 11603-11853 (250 m) by at most 2.9979°
+eq-ELYSIUM NEW.t180track	largest move of another piece: 2.9979°
+eq-TEST 10.t180track	edit p7 +1°: p8 moved over s 3500-3600 (100 m) by at most 0.0018°
+eq-TEST 10.t180track	edit p10 +1°: p11 moved over s 3700-3750 (50 m) by at most 0.2164°
+eq-TEST 10.t180track	largest move of another piece: 0.2164°
+ely-fixture.t180track	edit p12 +1°: p13 moved over s 6303-6439 (136 m) by at most 0.1028°
+ely-fixture.t180track	edit p26 +1°: p27 moved over s 11603-11853 (250 m) by at most 2.9979°
+ely-fixture.t180track	largest move of another piece: 2.9979°

@@ -60,7 +60,7 @@ const MUTANTS = [
 const SUITES = { 'state-sync.js': 'state-sync.test.js', 'ledger-union.js': 'ledger-union.test.js' };
 
 function score(file, text, suiteOverride) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ual-mut-'));
+  const root = require('./scratch.js').mkdtemp('ual-mut-');
   try {
     const tools = path.join(root, 'consonance', 'tools');
     fs.mkdirSync(tools, { recursive: true });

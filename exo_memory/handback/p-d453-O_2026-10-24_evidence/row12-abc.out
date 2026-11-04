@@ -1,0 +1,5 @@
+t180-wt-o26-ff88d85: ok 1 - row 12: the reported save: one press, with the :: main thread 25890 ms CPU, process 33999 ms CPU, 27137 ms wall; routes 7965, checks 18313
+t180-wt-o26-7717b81: ok 1 - row 12: the reported save: one press, with the :: main thread 25906 ms CPU, process 34515 ms CPU, 27340 ms wall; routes 8189, checks 18410
+t180-wt-o25-d453: ok 1 - row 12: the reported save: one press, with the :: main thread 26843 ms CPU, process 35437 ms CPU, 28230 ms wall; routes 8201, checks 19115
+t180-wt-o26-7717b81: ok 1 - row 12: the reported save: one press, with the :: main thread 25844 ms CPU, process 33157 ms CPU, 27687 ms wall; routes 8328, checks 18481
+t180-wt-o26-ff88d85: ok 1 - row 12: the reported save: one press, with the :: main thread 26046 ms CPU, process 33579 ms CPU, 27664 ms wall; routes 8238, checks 18662

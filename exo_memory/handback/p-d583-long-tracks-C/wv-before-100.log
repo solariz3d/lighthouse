@@ -1,0 +1,26 @@
+heavy-run: WARNING: C:\ has 22.8 GB free, under 50 GB; run node consonance/tools/janitor.js
+lockrun: holding the lock at 2026-10-31T17:09:22.985Z; starting d583-webview2-before-100 (the built app on a long track; not a timing session)
+launched pid 22540; track STADIUM 100
+ok   launch (0.9 s): menus ready
+  10.7 s open: 1091 MB (page 437, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 649)
+  [open loop 9] headAt 5.8 still 5 prev 1103 last sample 14.8 1092 closed false
+  20.9 s open: 1117 MB (page 462, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 649)
+  [open loop 19] headAt 5.8 still 15 prev 1104 last sample 24.9 1116 closed false
+ok   open (24.4 s): loaded: head shown at 1.1 s, still from 4.4 s; peak 1117 MB at 20.9 s (page 462, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 649); settled 1115 MB (page 46
+  31.0 s export: 1400 MB (page 586, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 649, srcdoc#4 14, 2c227154-1a14-4d88-83cf-ecbe84#5 146)
+  41.0 s export: 1656 MB (page 606, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 14, 2c227154-1a14-4d88-83cf-ecbe84#5 457)
+  51.1 s export: 1540 MB (page 600, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 14, 2c227154-1a14-4d88-83cf-ecbe84#5 346)
+  61.3 s export: 1960 MB (page 592, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 1, 2c227154-1a14-4d88-83cf-ecbe84#5 787)
+  71.4 s export: 1743 MB (page 608, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 1, 2c227154-1a14-4d88-83cf-ecbe84#5 554)
+  81.5 s export: 1946 MB (page 599, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 1, 2c227154-1a14-4d88-83cf-ecbe84#5 766)
+  91.6 s export: 1986 MB (page 615, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 1, 2c227154-1a14-4d88-83cf-ecbe84#5 790)
+  101.7 s export: 1926 MB (page 606, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 1, 2c227154-1a14-4d88-83cf-ecbe84#5 739)
+  111.8 s export: 2284 MB (page 621, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 1, 2c227154-1a14-4d88-83cf-ecbe84#5 1082)
+  121.9 s export: 1802 MB (page 439, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 1, 2c227154-1a14-4d88-83cf-ecbe84#5 782)
+  131.9 s export: 1460 MB (page 439, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 575, srcdoc#4 1, 2c227154-1a14-4d88-83cf-ecbe84#5 440)
+FAIL export: Error: export failed: Invalid string length | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exporting… | end heading 360.00°, on the 90° grid | ; peak 2666 MB at 110.8 s (page 610, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworke
+FATAL Error: export failed: Invalid string length | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exporting… | end heading 360.00°, on the 90° grid | ; peak 2666 MB at 110.8 s (page 610, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 575, iframe:about:srcdoc#4 1, worker:2c227154-1a14-4d88-83cf-ecbe84#5 1476)
+SOCKET CLOSED {"t":"138.8","what":"the CDP socket closed: code 1006 reason  clean false; app pid GONE; webview/t180 processes 20","mark":"export"}
+killed pid 22540; t180-track-builder.exe left running: 0
+exit 1
+lockrun: done at 2026-10-31T17:11:46.525Z, exit 1

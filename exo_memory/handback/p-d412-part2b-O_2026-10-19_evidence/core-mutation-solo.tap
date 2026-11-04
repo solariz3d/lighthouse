@@ -1,0 +1,505 @@
+TAP version 13
+# Subtest: control: the unmutated temp copy passes every core-shell test
+ok 1 - control: the unmutated temp copy passes every core-shell test
+  ---
+  duration_ms: 53958.0863
+  type: 'test'
+  ...
+# D412 wide: "the layout" runs 3 rows
+# D412 wide: "the rate brush" runs 3 rows
+# D412 wide: "extendOptions" runs 3 rows
+# Subtest: a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+ok 2 - a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352)
+  ---
+  duration_ms: 500.8818
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+ok 3 - a crash after an unrelated failing row reads NOT TESTED, never NOT CAUGHT (the second stand-in, D353)
+  ---
+  duration_ms: 1037.3814
+  type: 'test'
+  ...
+# Subtest: a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+ok 4 - a load throw in a run of several files reads NOT TESTED and names the files (the load-throw stand-in, D354)
+  ---
+  duration_ms: 506.7575
+  type: 'test'
+  ...
+# Subtest: a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354)
+ok 5 - a load throw in one file does not hide a crash after a failing row in another: NOT TESTED (F1, D354)
+  ---
+  duration_ms: 992.1717
+  type: 'test'
+  ...
+# Subtest: mutation R1 the sign of an angle flipped: applied, and caught by "the strings…"
+ok 6 - mutation R1 the sign of an angle flipped: applied, and caught by "the strings…"
+  ---
+  duration_ms: 686.1245
+  type: 'test'
+  ...
+# Subtest: mutation R2 zero is signed: applied, and caught by "the strings…"
+ok 7 - mutation R2 zero is signed: applied, and caught by "the strings…"
+  ---
+  duration_ms: 676.2418
+  type: 'test'
+  ...
+# Subtest: mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…"
+ok 8 - mutation R3 bank shown as its end value, not the change: applied, and caught by "the strings…"
+  ---
+  duration_ms: 685.3172
+  type: 'test'
+  ...
+# Subtest: mutation R4 rounding without the binary guard: applied, and caught by "the strings…"
+ok 9 - mutation R4 rounding without the binary guard: applied, and caught by "the strings…"
+  ---
+  duration_ms: 692.2586
+  type: 'test'
+  ...
+# Subtest: mutation R5 the head keep-out ignored: applied, and caught by "the layout…"
+ok 10 - mutation R5 the head keep-out ignored: applied, and caught by "the layout…"
+  ---
+  duration_ms: 680.1873
+  type: 'test'
+  ...
+# Subtest: mutation R6 labels may overlap: applied, and caught by "the layout…"
+ok 11 - mutation R6 labels may overlap: applied, and caught by "the layout…"
+  ---
+  duration_ms: 684.3597
+  type: 'test'
+  ...
+# Subtest: mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 12 - mutation R7 anchors cached by the path object: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 726.3161
+  type: 'test'
+  ...
+# Subtest: mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+ok 13 - mutation R8 the layer is not put back in the page: applied, and caught by "the labels follow a path the preview extends IN PLACE…"
+  ---
+  duration_ms: 717.8609
+  type: 'test'
+  ...
+# Subtest: mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…"
+ok 14 - mutation R11 a label never slides off its piece's middle: applied, and caught by "a piece whose middle is behind the camera…"
+  ---
+  duration_ms: 687.6782
+  type: 'test'
+  ...
+# Subtest: mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…"
+ok 15 - mutation R13 the head's label may be culled: applied, and caught by "the layout: the head's own label is never culled…"
+  ---
+  duration_ms: 678.5545
+  type: 'test'
+  ...
+# Subtest: mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…"
+ok 16 - mutation R14 a head piece with nothing on screen has no label: applied, and caught by "the head's own piece is labelled even when none of it is on screen…"
+  ---
+  duration_ms: 697.5239
+  type: 'test'
+  ...
+# Subtest: mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…"
+ok 17 - mutation R15 the road bleeds through the label: applied, and caught by "the label box holds only…"
+  ---
+  duration_ms: 792.3983
+  type: 'test'
+  ...
+# Subtest: mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…"
+ok 18 - mutation R16 the label box has a border and round corners again: applied, and caught by "the label box holds only…"
+  ---
+  duration_ms: 814.6664
+  type: 'test'
+  ...
+# Subtest: mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…"
+ok 19 - mutation R17 the head's fallback place may cover the head: applied, and caught by "the layout: the head's own label is never culled…"
+  ---
+  duration_ms: 809.6261
+  type: 'test'
+  ...
+# Subtest: mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…"
+ok 20 - mutation R12 no ring clears a large head keep-out: applied, and caught by "the layout: a label anchored on a large head keep-out…"
+  ---
+  duration_ms: 794.7593
+  type: 'test'
+  ...
+# Subtest: mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…"
+ok 21 - mutation R9 the panel readout waits for the next state change: applied, and caught by "the panel shows the ghost…"
+  ---
+  duration_ms: 703.2634
+  type: 'test'
+  ...
+# Subtest: mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…"
+ok 22 - mutation R10 the ghost readout is the LAST placed piece, not the candidate: applied, and caught by "the panel shows the ghost…"
+  ---
+  duration_ms: 679.061
+  type: 'test'
+  ...
+# Subtest: mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 23 - mutation U1 the cup field is not sent to the core: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 681.5663
+  type: 'test'
+  ...
+# Subtest: mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 24 - mutation U2 the cup is sent in radians: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 678.4372
+  type: 'test'
+  ...
+# Subtest: mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…"
+ok 25 - mutation U3 the panel clamps the cup, hiding the core guard: applied, and caught by "extendOptions: the cup field is the target c…"
+  ---
+  duration_ms: 676.3305
+  type: 'test'
+  ...
+# Subtest: mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…"
+ok 26 - mutation U4 the cup cell shows the typed target, not the document: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 688.8975
+  type: 'test'
+  ...
+# Subtest: mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…"
+ok 27 - mutation U5 (K7-4) the cup cell wired to the bank values: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 682.6276
+  type: 'test'
+  ...
+# Subtest: mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…"
+ok 28 - mutation U6 (K7-3) the cup shown in radians: applied, and caught by "the readout shows cup from → to…"
+  ---
+  duration_ms: 692.8572
+  type: 'test'
+  ...
+# Subtest: mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…"
+ok 29 - mutation U7 the cup field does not redraw the readout: applied, and caught by "the cup cell follows the cup field…"
+  ---
+  duration_ms: 682.0906
+  type: 'test'
+  ...
+# Subtest: mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…"
+ok 30 - mutation U8 the brush has no cup channel: applied, and caught by "the brush's channel list gains cup…"
+  ---
+  duration_ms: 677.1981
+  type: 'test'
+  ...
+# Subtest: mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…"
+ok 31 - mutation U9 the cup field is not on the panel: applied, and caught by "the Extend panel has a "cup °" field…"
+  ---
+  duration_ms: 679.3731
+  type: 'test'
+  ...
+# Subtest: mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…"
+ok 32 - mutation V1 the at-start boxes are ignored: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 704.906
+  type: 'test'
+  ...
+# Subtest: mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…"
+ok 33 - mutation V2 an untouched field is sent at start: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 678.2558
+  type: 'test'
+  ...
+# Subtest: mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…"
+ok 34 - mutation V3 the span is not held to the piece: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 684.575
+  type: 'test'
+  ...
+# Subtest: mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…"
+ok 35 - mutation V4 transition sent as one number for all channels: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 696.006
+  type: 'test'
+  ...
+# Subtest: mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…"
+ok 36 - mutation V5 a field sent on the wrong channel: applied, and caught by "extendOptions "at start"…"
+  ---
+  duration_ms: 682.7245
+  type: 'test'
+  ...
+# Subtest: mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…"
+ok 37 - mutation V6 the panel never passes the boxes: applied, and caught by "the panel: an "at start" box…"
+  ---
+  duration_ms: 674.7387
+  type: 'test'
+  ...
+# Subtest: mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…"
+ok 38 - mutation V7 ticking a box does not redraw: applied, and caught by "the panel: an "at start" box…"
+  ---
+  duration_ms: 694.7101
+  type: 'test'
+  ...
+# Subtest: mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…"
+ok 39 - mutation C1 a brush frame builds on the last frame, not the drag's base: applied, and caught by "the rate brush…"
+  ---
+  duration_ms: 815.5407
+  type: 'test'
+  ...
+# Subtest: mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…"
+ok 40 - mutation C2 the drag never ends in the history: applied, and caught by "the rate brush…"
+  ---
+  duration_ms: 891.1899
+  type: 'test'
+  ...
+# Subtest: mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…"
+ok 41 - mutation C3 the local brush is not the default: applied, and caught by "the local (height / sideways) brush…"
+  ---
+  duration_ms: 692.4136
+  type: 'test'
+  ...
+# Subtest: mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…"
+ok 42 - mutation C20 sideways is sent as a hill: applied, and caught by "the local (height / sideways) brush…"
+  ---
+  duration_ms: 692.2803
+  type: 'test'
+  ...
+# Subtest: mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…"
+ok 43 - mutation C21 with E's brush, every channel is sent as rate: applied, and caught by "with E's brush, the rate brush goes through it…"
+  ---
+  duration_ms: 731.6967
+  type: 'test'
+  ...
+# Subtest: mutation C4 a second close runs again: applied, and caught by "close: one click…"
+ok 44 - mutation C4 a second close runs again: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 875.319
+  type: 'test'
+  ...
+# Subtest: mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…"
+ok 45 - mutation C5 the heading brush may open a closed loop: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 815.6124
+  type: 'test'
+  ...
+# Subtest: mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…"
+ok 46 - mutation C7 export runs on an open track: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 845.1699
+  type: 'test'
+  ...
+# Subtest: mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…"
+ok 47 - mutation C8 the list shows the piece builder's tracks too: applied, and caught by "save and open use their own prefix…"
+  ---
+  duration_ms: 678.6811
+  type: 'test'
+  ...
+# Subtest: mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…"
+ok 48 - mutation C12 turn is degrees per metre, not per 100 m: applied, and caught by "extendOptions…"
+  ---
+  duration_ms: 672.9705
+  type: 'test'
+  ...
+# Subtest: mutation C14 the pick takes the farthest station: applied, and caught by "the pick…"
+ok 49 - mutation C14 the pick takes the farthest station: applied, and caught by "the pick…"
+  ---
+  duration_ms: 702.4972
+  type: 'test'
+  ...
+# Subtest: mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…"
+ok 50 - mutation C15 the pick sees through the back of the camera: applied, and caught by "the pick…"
+  ---
+  duration_ms: 691.2418
+  type: 'test'
+  ...
+# Subtest: mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…"
+ok 51 - mutation C16 the ghost is not what extend builds: applied, and caught by "the ghost of an extension…"
+  ---
+  duration_ms: 734.4447
+  type: 'test'
+  ...
+# Subtest: mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…"
+ok 52 - mutation C17 export goes to the word exporter: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 920.9547
+  type: 'test'
+  ...
+# Subtest: mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…"
+ok 53 - mutation C18 the close does not go round the user's straights: applied, and caught by "close: one click…"
+  ---
+  duration_ms: 838.9126
+  type: 'test'
+  ...
+# Subtest: mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…"
+ok 54 - mutation C19 the export is handed no start layout: applied, and caught by "export: an open track is refused…"
+  ---
+  duration_ms: 1387.9555
+  type: 'test'
+  ...
+# Subtest: mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…"
+ok 55 - mutation C22 the widened radius is not shown: applied, and caught by "a brush E widened says so…"
+  ---
+  duration_ms: 735.6309
+  type: 'test'
+  ...
+# Subtest: mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…"
+ok 56 - mutation L1 the track model ignores the lift: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 994.8822
+  type: 'test'
+  ...
+# Subtest: mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…"
+ok 57 - mutation L2 a lift-only change is taken as the same track: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 890.5738
+  type: 'test'
+  ...
+# Subtest: mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…"
+ok 58 - mutation L3 the mesh is not keyed by the lift: applied, and caught by "the track model draws the LIFTED road…"
+  ---
+  duration_ms: 983.8881
+  type: 'test'
+  ...
+# Subtest: mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…"
+ok 59 - mutation L4 the export does not lift the path: applied, and caught by "the export lifts the path…"
+  ---
+  duration_ms: 2798.7419
+  type: 'test'
+  ...
+# Subtest: mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…"
+ok 60 - mutation C23 the radiusUsed E reports is not read: applied, and caught by "landed core: a narrow brush…"
+  ---
+  duration_ms: 1982.4799
+  type: 'test'
+  ...
+# Subtest: mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…"
+ok 61 - mutation C24 sharp is never passed to E: applied, and caught by "the sharp opt-in…"
+  ---
+  duration_ms: 853.5591
+  type: 'test'
+  ...
+# Subtest: mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…"
+ok 62 - mutation P1 the export starts at the origin: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 1269.1004
+  type: 'test'
+  ...
+# Subtest: mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…"
+ok 63 - mutation P2 the preview starts at the origin: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 1077.2948
+  type: 'test'
+  ...
+# Subtest: mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…"
+ok 64 - mutation P3 the shell does not hand on the start: applied, and caught by "a lap that starts pitched…"
+  ---
+  duration_ms: 1059.8981
+  type: 'test'
+  ...
+# Subtest: a test file that dies natively is a crash, with its code, and reads NOT TESTED; spec alone shows only its ✖ line
+ok 65 - a test file that dies natively is a crash, with its code, and reads NOT TESTED; spec alone shows only its ✖ line
+  ---
+  duration_ms: 114.7886
+  type: 'test'
+  ...
+# Subtest: a crash after a passing row is still a crash: no failing test of its own
+ok 66 - a crash after a passing row is still a crash: no failing test of its own
+  ---
+  duration_ms: 106.351
+  type: 'test'
+  ...
+# Subtest: a failing row, a module that throws on load, and a passing file are not crashes (exit 1 is a verdict, as before)
+ok 67 - a failing row, a module that throws on load, and a passing file are not crashes (exit 1 is a verdict, as before)
+  ---
+  duration_ms: 206.1569
+  type: 'test'
+  ...
+# Subtest: in a run of several files only the dead one is named; the others still report
+ok 68 - in a run of several files only the dead one is named; the others still report
+  ---
+  duration_ms: 200.07
+  type: 'test'
+  ...
+# Subtest: boundaries: empty TAP has no crash; a missing TAP copy, a non-string and an empty list throw
+ok 69 - boundaries: empty TAP has no crash; a missing TAP copy, a non-string and an empty list throw
+  ---
+  duration_ms: 0.6835
+  type: 'test'
+  ...
+# Subtest: the code is read from TAP as node writes it: exitCode 3221225477 or a fault signal is native; exitCode 1 and a SIGTERM kill are not
+ok 70 - the code is read from TAP as node writes it: exitCode 3221225477 or a fault signal is native; exitCode 1 and a SIGTERM kill are not
+  ---
+  duration_ms: 0.215
+  type: 'test'
+  ...
+# Subtest: a file that reported a failing test of its own before it died was tested: it is not a crash to report
+ok 71 - a file that reported a failing test of its own before it died was tested: it is not a crash to report
+  ---
+  duration_ms: 0.1024
+  type: 'test'
+  ...
+# Subtest: a crash after an unrelated failing row: the named row never reports, and no exit of the file is left to read
+ok 72 - a crash after an unrelated failing row: the named row never reports, and no exit of the file is left to read
+  ---
+  duration_ms: 428.9267
+  type: 'test'
+  ...
+# Subtest: a module that throws on load leaves its file's own exit (exitCode 1), which is a verdict as before; a passing file leaves none
+ok 73 - a module that throws on load leaves its file's own exit (exitCode 1), which is a verdict as before; a passing file leaves none
+  ---
+  duration_ms: 174.5753
+  type: 'test'
+  ...
+# Subtest: reported: a top-level ✔ or ✖ line naming the test; an indented subtest line, another name or no output is not
+ok 74 - reported: a top-level ✔ or ✖ line naming the test; an indented subtest line, another name or no output is not
+  ---
+  duration_ms: 0.3096
+  type: 'test'
+  ...
+# Subtest: F1's shape: one file throws on load, another fails a row and dies; only the first leaves an exit, and the message names it
+ok 75 - F1's shape: one file throws on load, another fails a row and dies; only the first leaves an exit, and the message names it
+  ---
+  duration_ms: 489.859
+  type: 'test'
+  ...
+# Subtest: neverReported names every file that ended on its own and the file count, beside any crash; with none it reads as before (D354)
+ok 76 - neverReported names every file that ended on its own and the file count, beside any crash; with none it reads as before (D354)
+  ---
+  duration_ms: 0.3497
+  type: 'test'
+  ...
+# Subtest: narrowArgs runs only the test whose name holds caughtBy, read literally: regex characters in the name are escaped (D412)
+ok 77 - narrowArgs runs only the test whose name holds caughtBy, read literally: regex characters in the name are escaped (D412)
+  ---
+  duration_ms: 662.4575
+  type: 'test'
+  ...
+# Subtest: ran counts the top-level rows that ran: not a file's own row, not the failing-tests recap; no summary reads suites null (D412)
+ok 78 - ran counts the top-level rows that ran: not a file's own row, not the failing-tests recap; no summary reads suites null (D412)
+  ---
+  duration_ms: 0.1277
+  type: 'test'
+  ...
+# Subtest: narrowedFirst: a narrowed catch stands, and the whole run is never started (D412)
+ok 79 - narrowedFirst: a narrowed catch stands, and the whole run is never started (D412)
+  ---
+  duration_ms: 0.1967
+  type: 'test'
+  ...
+# Subtest: narrowedFirst: a narrowed miss is re-run whole, and the whole run's verdict stands, caught or not (D412)
+ok 80 - narrowedFirst: a narrowed miss is re-run whole, and the whole run's verdict stands, caught or not (D412)
+  ---
+  duration_ms: 0.172
+  type: 'test'
+  ...
+# Subtest: narrowedFirst: a narrowed run that throws (NOT TESTED) is no verdict; the whole run decides, and its throw still throws (D412)
+ok 81 - narrowedFirst: a narrowed run that throws (NOT TESTED) is no verdict; the whole run decides, and its throw still throws (D412)
+  ---
+  duration_ms: 0.1953
+  type: 'test'
+  ...
+# Subtest: narrowedFirst runs whole only: a pattern whose narrowed control failed, a control, and a mutant NOT APPLIED narrowed (D412)
+ok 82 - narrowedFirst runs whole only: a pattern whose narrowed control failed, a control, and a mutant NOT APPLIED narrowed (D412)
+  ---
+  duration_ms: 0.2053
+  type: 'test'
+  ...
+1..82
+# tests 82
+# suites 0
+# pass 82
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 105861.2517

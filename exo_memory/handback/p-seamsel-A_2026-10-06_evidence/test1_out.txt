@@ -1,0 +1,3 @@
+TEST 1: 46 pieces, 1035 shift-click pairs; the short way is across the line for 310 of them
+saveable before (the inside run): 795; saveable now (the short way): 604; SAVEABLE BEFORE AND NOT NOW: 191 {"MIXED_RUN":191}; saveable now and not before: 0
+the kinds of the pieces either side of the line: [{"id":"p46","kind":"cup","edge":false},{"id":"p1","kind":"legacy","edge":false}]

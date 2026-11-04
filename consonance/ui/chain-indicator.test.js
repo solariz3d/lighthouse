@@ -451,13 +451,35 @@ t('DEFECT 2 — an unresolved pane id is still named when nothing has returned',
 
 t("ADDRESS_TABLE still has exactly 2 rows — `call_chair` has no actor in its audit line", () => {
   // The one place the receipt shapes can disagree with the real routing table. `call_chair -> Main`
-  // names no actor, so it is correct only while the librarian is the sole holder of that verb. When
-  // the Third Place gains the row, a Third Place ring is byte-identical and this chip would draw
-  // "LIB -> orch" for a hop the librarian never made. A count, not a list — so pinning it here is
-  // not a second copy of the verb list, and main.rs already asserts the same constant.
+  // names no actor, so it is correct only while the librarian is the sole holder of that verb.
+  // AMENDED BY NAME (D476, O; the rule changed, the guard is not weakened): the table has a THIRD row now, the Third Place's,
+  // and it is not a call_chair row: it is call_librarian, audited `call_librarian [third-place] -> LIB`, which this chip reads
+  // with its actor (readActor) and never as a hop. What RE_RING needs is unchanged and is now pinned exactly: call_chair has ONE
+  // holder in the table. A second call_chair row still turns this red, which is the mislabelling the pin was written for.
   const rs = fs.readFileSync(MAIN_RS, 'utf8');
-  assert.match(rs, /assert_eq!\(ADDRESS_TABLE\.len\(\),\s*2/,
-    'ADDRESS_TABLE gained a row: RE_RING is actor-blind and would mislabel the new holder as LIB');
+  assert.match(rs, /assert_eq!\(ADDRESS_TABLE\.iter\(\)\.filter\(\|r\| r\.verb == "call_chair"\)\.count\(\),\s*1/,
+    'call_chair gained a holder: RE_RING is actor-blind and would mislabel the new holder as LIB');
+});
+
+// D476 (O; B's landing stop, item 4): THE CHIP LEARNS THE RING'S ACTOR. The Third Place rings the librarian (ADDRESS_TABLE row 3),
+// and it is not a loop station (the ruling of D476 part 2 §3), so its ring is read with its actor and is NEVER a hop: it moves no
+// arrow and opens no dwell.
+t('a Third Place ring is read with its actor, and is not a hop', () => {
+  const tp = { pane: 'chair', text: 'call_librarian [third-place] -> LIB [Received]', ts: 3000 };
+  const hb = { pane: 'chair', text: 'call_librarian A -> LIB [Received]: "p-x.md"', ts: 2000 };
+  const ring = { pane: 'chair', text: 'call_chair -> Main [Received]', ts: 1000 };
+  assert.strictEqual(C.readActor(tp), 'third-place');
+  assert.strictEqual(C.readActor(hb), 'A');
+  assert.strictEqual(C.readActor(ring), 'LIB');
+  assert.strictEqual(C.readActor({ pane: 'mcp', text: tp.text }), null, 'the spoof guard holds for the actor too');
+  assert.strictEqual(C.readHop(tp), null, 'a Third Place ring is no hop');
+  const last = C.latestHop([ring, hb, tp]);
+  assert.strictEqual(last.hop.kind, 'handback', 'the newest HOP is the pane hand-back before it, not the Third Place ring');
+});
+
+t('main.rs still emits the Third Place ring in the shape this chip reads its actor from', () => {
+  const rs = fs.readFileSync(MAIN_RS, 'utf8');
+  assert.ok(rs.includes('"call_librarian [third-place] -> LIB [{receipt:?}]"'), 'the Third Place ring audit format changed in main.rs');
 });
 
 // ---- 9c. chain_state — THE POSITION SOURCE THAT SURVIVES A RELAUNCH ---------------------------

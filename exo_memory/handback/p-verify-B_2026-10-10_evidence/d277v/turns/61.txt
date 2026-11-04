@@ -1,0 +1,28 @@
+MESSAGE 61  msg_011CfoJKEiXyEZs9GmHCx3fq  seat E  ts 2026-10-07T17:49:49.123Z  turn L56067..L56074 (next prompt L56094)
+CLAIMS:
+  [msg_011CfoJKEiXyEZs9GmHCx3fq|1] "60/60"
+  [msg_011CfoJKEiXyEZs9GmHCx3fq|19] "S2 (vii): an open tube at 270 deg rolled 90 deg stays on the drawn curve within 1 mm": check the angles and the tolerance.
+
+--- L56067 user 2026-10-07T17:49:42.747Z
+USER: <task-notification>
+<task-id>bx2u0ogu3</task-id>
+<tool-use-id>toolu_01AhQhGeHZ7Dtt7TAbF8DxZK</tool-use-id>
+<output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\tasks\bx2u0ogu3.output</output-file>
+<status>completed</status>
+<summary>Background command "Run the xsec mutation harness once under the lock" completed (exit code 0)</summary>
+</task-notification>
+--- L56069 assistant 2026-10-07T17:49:47.319Z
+TOOL_USE Bash [toolu_01MjSBJbk1TzSteuAoBTCary]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; grep -E \"^# (tests|pass|fail)|locked.js\" \"$S/tubeopen/xsecmut.tap\"; grep -E \"^not ok\" \"$S/tubeopen/xsecmut.tap\" | cut -c1-200; grep -E \"^ok .*(KS2-2|KS2-4|KE4-2|control)\" \"$S/tubeopen/xsecmut.tap\" | cut -c1-200; sha256sum \"$S/tubeopen/xsecmut.tap\" | cut -c2-17","description":"Read the harness result"}
+--- L56070 user 2026-10-07T17:49:47.706Z
+RESULT [toolu_01MjSBJbk1TzSteuAoBTCary]: # tests 60
+# pass 60
+# fail 0
+[locked.js] exit 0 in 306 s
+ok 19 - mutant KE4-2 e is reset after a flight, like the heading rate: applied, and caught by "E4 \\(ii\\)"
+ok 42 - mutant KS2-2 the heartline is a constant per segment (a step between segments): applied, and caught by "S2 \\(i, ii\\)|S2 \\(vi\\)"
+ok 44 - mutant KS2-4 the heartline ramp starts at 180 (a step where a tube hands over to a cup): applied, and caught by "X1 and T2|S2 \\(vii\\)"
+da5d4b4d23f45a28
+--- L56073 assistant 2026-10-07T17:49:49.127Z  <<< THE CLAIM'S MESSAGE
+TEXT: 60/60, with the control passing and all three named mutants applied and caught. Committing the test-only change on `ed97512`.
+--- L56074 assistant 2026-10-07T17:49:55.206Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01L21gzQ8b9ifMNPSRUonisE]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-xsecmut-wt && git status --short && git add test/core_xsec_mutation.test.js test/validate_xsec.test.js && git commit -q -F - <<'EOF'\nD268 landing hold: the xsec harness reaches the heartline again (60/60); KE4-2 re-anchored\n\nD268 keeps an UNROLLED tube's road centre on the drawn curve whatever its heartline (path.js x + hl*(U0 - U)), so the\ntubes of S2 (i, ii) and X1 (which close unrolled) no longer show how the heartline eases, and KS2-2 (heartline constant\nper segment) and KS2-4 (HEARTLINE_FROM 180) survived. Neither is equivalent in general: a ROLLED tube still turns about\nits axis, so the easing shows there. Two rows hold it, and the two mutants select them besides their old rows:\n- S2 (vi): a tube that closes while banked 60 deg: the road centre steps at most 1 mm at every segment joint (KS2-2);\n- S2 (vii): an open tube at 270 deg rolled 90 deg stays on the drawn curve within 1 mm: no axis of its own below 300 (KS2-4).\nKE4-2 was NOT APPLIED since D258 (1e76d35) moved the state after a flight into document.js afterFlight; re-anchored\nthere with the same meaning (e reset after a flight, like the heading rate), still judged by E4 (ii).\nNo row weakened. test/core_xsec_mutation: 60/60 (was 57/60 on ed97512).\n\nCo-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01BrUMzLkygy9dKY2kzBfeC6\nEOF\ngit log --oneline -2","description":"Commit the test-only change by named paths"}

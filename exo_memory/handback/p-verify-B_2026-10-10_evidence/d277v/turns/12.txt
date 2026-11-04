@@ -1,0 +1,175 @@
+MESSAGE 12  msg_011CfhcduHM1J9VhVSRUuPqU  seat E  ts 2026-10-04T17:46:37.945Z  turn L45745..L45801 (next prompt L45830)
+CLAIMS:
+  [msg_011CfhcduHM1J9VhVSRUuPqU|1] **"[written through Bash]"**: check the tool-call record to confirm the edit actually ran through Bash, and that `node -e`/`node` ran it from the directory containing `speedprobe3.js`.
+  [msg_011CfhcduHM1J9VhVSRUuPqU|6] **"A's reuseMesh counted as mesh too"**: this assumes variant A exposes a `reuseMesh` function, and that `G0` is A. Check A's exports.
+  [msg_011CfhcduHM1J9VhVSRUuPqU|13] **"speedprobe3 = speedprobe2 + reuseMesh in the mesh stage + memory after release"**: this claims those are the only differences. Diff `speedprobe3.js` against `speedprobe2.js` after the write.
+
+--- L45745 user 2026-10-04T17:43:53.451Z
+USER: 
+
+<pasted_content id="37d3">
+[chair:MAIN] D236: RE-MEASURE against the registered bar, instrument tier, read-only. Measure A's 510510e9 (on t180 main cb14f5b9). A's hand-back is exo_memory/handback/p-speed2-A_2026-10-04.md; the bar is in exo_memory/loop/plan_t180_edit_speed2_2026-10-04.md.
+THE BAR (same-session base cb14f5b9 vs 510510e9, median of 5, YOUR speedprobe2, not A's):
+(1) the cup oval's (T-180 OVAL's) drag step at least 2×;
+(2) the tube oval's release-to-full-detail at least 1.5×;
+(3) fixtures 0 of 9, AND each of the four probe tracks exported byte-identical to main's. Say how you treat the timestamp in .t180b-builder.json: A excluded it, so name the field and show nothing else differs.
+KEEP needs (1) AND (3). The items behind (2) stand or fall on (2). Report each bar separately, and the tube drag step and the keystroke ghost besides. Note any memory growth you can see (A keeps two meshes).
+Use a fresh worktree, with no junctions. Heavy-run lock on every run, --max-old-space-size=4096. Don't push, don't launch AC. You may answer "not met" or "can't be measured as registered".
+Hand-back: exo_memory/handback/p-speed2-remeasure-E_2026-10-04.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-speed2-A_2026-10-04.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: B's look at 510510e9 (eq_probe.js and the three EXPORT-tier files) if KEEP, unless the output says otherwise
+</pasted_content id="37d3">
+
+--- L45755 assistant 2026-10-04T17:43:57.652Z
+TOOL_USE Bash [toolu_01CEERNCQqJ7tcyPsabDkzRj]: {"command":"cd /c/Users/nname/Desktop/lighthouse && cat exo_memory/loop/plan_t180_edit_speed2_2026-10-04.md; echo ======; cat exo_memory/handback/p-speed2-A_2026-10-04.md","description":"Read plan 2 and A's hand-back"}
+--- L45756 user 2026-10-04T17:43:57.815Z
+RESULT [toolu_01CEERNCQqJ7tcyPsabDkzRj]: # T-180 edit speed, part 2: the cup oval's drag and the release rebuild. Librarian, on D, 2026-10-04 09:2x. Lap D236.
+
+Follows D235 (KEPT: the tube oval's drag step was 2.93× faster, `handback/p-speed-remeasure-E_2026-10-04.md`). Left untouched, as A and E both said:
+- **the cup oval's (T-180 OVAL's) drag step:** 755 → 788 ms. Cup segments carry no `fractions` grid, so the coarse mode can't thin them.
+- **the full-detail rebuild after release:** the tube oval takes 2,767.8 ms (1.04×).
+- **unchanged in every step:** resolve (toSegments of the whole document, about 250 ms on the tube) and validation, run FULL on a closed
+  loop (about 320 ms).
+- **B's P6:** the change key's high-word assertion (`p-speed-B_2026-10-04.md`).
+
+## THE BAR, registered before any code (E re-measures; same-session base vs. the candidate, median of 5, E's speedprobe2)
+- **(1) The cup oval's drag step at least 2× faster** than the same-session base, AND
+- **(2) the tube oval's release-to-full-detail at least 1.5× faster** than the same-session base, AND
+- **(3) the fixtures read 0 of 9 differ, and an export of each of the four probe tracks is byte-identical to main's** (the edits must stay
+  preview-side or change nothing in the export).
+- KEEP if (1) AND (3) hold. (2) is reported either way and its own items are kept only if (2) holds. DROP any change that misses its bar,
+  reported by name.
+
+## The work (A, FEEL tier for the preview; anything that touches `src/` is EXPORT tier: targeted tests + those files' mutants + the fixtures)
+1. **A coarse grid for cup and plain segments while dragging,** the same idea as `app/preview/coarse.js` for tubes: thin the across
+   samples, and the along rows if needed, while a brush is open. Full on release. Previe
+…[9909 chars cut]…
+hecks pitch and bank itself (tested), but a wrong flag for a piece whose handles changed would keep a stale piece; the only caller is the track model, which flags by the hashed segment key plus the lift key.
+- Machine L; AC.
+
+## Evidence (scratchpad, not committed)
+`...\scratchpad\sp2\` (`run.js`, `speedprobe2.js`, `eq_probe.js`, `exp_cmp.js`, `cmp_seg.js`, `rm/*.json`) and `...\scratchpad\` (`sp_mut2.js`, `sp_mut2_out.txt`, `sp_harn.js`, `sp_harn_out.txt`, `sp_full_cand.txt`).
+
+NEXT: E re-measures against the D236 bar (cup oval drag step, tube oval release; fixtures; exports byte-identical), then B's look with the equality probe (`eq_probe.js`) and the three EXPORT-tier files.
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L45759 assistant 2026-10-04T17:44:07.665Z
+TEXT: The plan is clear. Next I'm reading how the app exports (`exportTo`), so my byte comparison goes through the same route.
+--- L45760 assistant 2026-10-04T17:44:10.047Z
+TOOL_USE Bash [toolu_01MTqh3z9wxXJgeHiLvc95Ni]: {"command":"cd /c/Users/nname/Desktop/t180-track-builder && git worktree add --detach /c/Users/nname/Desktop/worktrees/e-speed3-wt 510510e9 2>&1 | tail -1; git -C /c/Users/nname/Desktop/worktrees/e-speed2-wt status --porcelain | wc -l; git -C /c/Users/nname/Desktop/worktrees/e-speed2-wt log --oneline -1; find /c/Users/nname/Desktop/worktrees/e-speed3-wt -type l | wc -l; cd /c/Users/nname/Desktop/worktrees/e-speed3-wt && git diff --stat cb14f5b9 510510e9 | tail -12; grep -n \"exportTo\" app/core/coreshell.js | head -3","description":"Fresh candidate worktree; check base; diff stat"}
+--- L45761 user 2026-10-04T17:44:10.631Z
+RESULT [toolu_01MTqh3z9wxXJgeHiLvc95Ni]: HEAD is now at 510510e D236: cup-oval drag and closed-loop release rebuild (preview; two read-only core changes)
+0
+cb14f5b D235 part 2: faster edits on a closed tube (preview only, export untouched)
+0
+ CHANGELOG.md                   |   1 +
+ app/preview/coarse.js          |  30 +++++++++-
+ app/preview/trackmodel.js      |  17 ++++--
+ app/test/preview-speed.test.js | 125 +++++++++++++++++++++++++++++++++++++++++
+ src/core/adapter.js            |   4 +-
+ src/core/document.js           |  17 +++++-
+ src/geom/index.js              |   4 +-
+ src/geom/mesh.js               |  34 ++++++++++-
+ test/core_valuesat.test.js     |  46 +++++++++++++++
+ 9 files changed, 265 insertions(+), 13 deletions(-)
+9://   await shell.exportTo(dir)   shell.openExample(fitText, readText, name)   await shell.save(name)   await shell.open(name)
+212:    async exportTo(dir, opts = {}) {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L45769 assistant 2026-10-04T17:44:12.821Z
+TOOL_USE Bash [toolu_01RgoWjbjc2r715i6gqS3ezB]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-speed3-wt && sed -n 208,252p app/core/coreshell.js | cut -c1-250; grep -n \"exporter\\b\\|exporter =\" app/core/coreshell.js | head -5","description":"Read shell exportTo and exporter injection"}
+--- L45770 user 2026-10-04T17:44:12.989Z
+RESULT [toolu_01RgoWjbjc2r715i6gqS3ezB]:       });
+    },
+
+    /** EXPORT through the existing exporter (src/export/fromwords.js exportSegments, app/export/export.js), into `dir`. */
+    async exportTo(dir, opts = {}) {
+      if (!exporter) return set({ message: 'export is not available here' });
+      // D234 (the keeper: "when ever I export by myself, the track is errored in content manager before starting"): the target is resolved FIRST, then the track is refused or
+      // exported, and the EMPTY folder the user made in the picker is removed WHATEVER the outcome (an open loop, a red, a narrow grid, a failure, a success): it was made for an
+      // export, and Content Manager lists an empty track folder as damaged. A folder with anything in it is refused by resolveTarget and never touched. `stop` is every way out
+      // that is not a success: it removes the folder, says so in the message, and keeps the message as exportRefusal so the page can show it where it cannot be missed.
+      const t = await exporter.resolveTarget(dir, storage);   // D226: an EMPTY folder directly in content\tracks exports to content\tracks and is then removed
+      if (t.refused) return set({ message: t.refused.reason, exportReds: null, exportRefusal: t.refused.reason });
+      dir = t.dir;
+      let tidied = null; const tidy = async () => (tidied === null ? (tidied = await exporter.removeEmptyNote(storage, t)) : tidied);
+      const stop = async (patch) => { const message = patch.message + await tidy(); return set({ ...patch, message, exportRefusal: message }); };
+      try {
+      if (!doc().closed) return stop({ message: 'the loop is not closed: close it first (one click), then export', exportReds: null });
+      let out;
+      let markers;
+      try { markers = startLayout(st
+…[2304 chars cut]…
+stDocs()).filter((n) => n.startsWith(PREFIX)).map((n) => n.slice(PREFIX.length)); },
+5://   const shell = await createCoreShell({ storage, exporter })
+50:async function createCoreShell({ storage = null, exporter = null, brushFn = typeof SC.brush === 'function' ? SC.brush : null, now = () => Date.now() } = {}) {
+211:    /** EXPORT through the existing exporter (src/export/fromwords.js exportSegments, app/export/export.js), into `dir`. */
+213:      if (!exporter) return set({ message: 'export is not available here' });
+218:      const t = await exporter.resolveTarget(dir, storage);   // D226: an EMPTY folder directly in content\tracks exports to content\tracks and is then removed
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L45773 assistant 2026-10-04T17:44:17.986Z
+TOOL_USE Bash [toolu_01KRzwpE1h87gUXJMrFeHskr]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-speed3-wt && sed -n 225p app/core/coreshell.js; grep -rn \"createCoreShell(\" app --include=*.js | grep -v test | cut -c1-220; grep -n \"runSegments\\|module.exports\" app/export/export.js | head","description":"See exportTo args and exporter wiring"}
+--- L45774 user 2026-10-04T17:44:18.854Z
+RESULT [toolu_01KRzwpE1h87gUXJMrFeHskr]:       let out;
+app/core/coreshell.js:5://   const shell = await createCoreShell({ storage, exporter })
+app/core/coreshell.js:50:async function createCoreShell({ storage = null, exporter = null, brushFn = typeof SC.brush === 'function' ? SC.brush : null, now = () => Date.now() } = {}) {
+8://   exporter.runSegments(segments, { name, description?, via? }, { variant })   the same, for the equation core (D186)
+100:    runSegments(segments, meta, { variant = 'block', textures = null, markers } = {}) {
+108:module.exports = { checkTarget, makeExporter };
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L45776 assistant 2026-10-04T17:44:21.470Z
+TOOL_USE Bash [toolu_018q9fehL5auGPpYpkMHcdiT]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-speed3-wt && grep -n \"exporter.runSegments\" app/core/coreshell.js | cut -c1-80; awk 'NR==228' app/core/coreshell.js | cut -c150-500; sed -n 80,107p app/export/export.js | cut -c1-220; grep -rn \"makeExporter(\" app --include=*.js | grep -v test | cut -c1-200","description":"Read runSegments and exporter construction"}
+--- L45777 user 2026-10-04T17:44:21.721Z
+RESULT [toolu_018q9fehL5auGPpYpkMHcdiT]: 228:      try { out = exporter.runSegments(st.resolved.segments, { name: st.name
+', via: 'src/core/adapter.js toSegments', liftPath: st.resolved.lift, start: st.resolved.start }, { ...opts, markers }); } catch (e) {
+}
+
+/** Load the exporter into this realm with the node shim, the way the webview runs it. `get` fetches source text. */
+async function makeExporter(get) {
+  const shim = createShim();
+  const fromwords = await loadCjs('src/export/fromwords.js', get, { builtins: shim.builtins, globals: { Buffer: shim.Buffer } });
+  return {
+    checkTarget,
+    resolveTarget,
+    removeEmptyNote,
+    ExportError: fromwords.ExportError,
+    // textures: the texture set the textures panel announces (the one the preview draws), or null
+    run(doc, { variant = 'block', textures = null } = {}) {
+      shim.reset();
+      const result = fromwords.exportTrack(doc, { outDir: OUT, variant, textures });   // no selfCheck: the check is always on
+      return { result, folders: result.folders.map((f) => ({ folder: f.folder, files: shim.files(`${OUT}/${f.folder}`) })) };
+    },
+    // the equation core's track (D186): src/geom segments from src/core/adapter.js, through the SAME exporter
+    // (fromwords.js exportSegments: the same validation, self-check, markers, read-back and AI line); the check stays on
+    // markers: the grid layout (app/core/coreshell.js startLayout), or undefined for the export's default
+    runSegments(segments, meta, { variant = 'block', textures = null, markers } = {}) {
+      shim.reset();
+      const result = fromwords.exportSegments(segments, meta, { outDir: OUT, variant, textures, markers });
+      return { result, folders: result.folders.map((f) => ({ folder: f.folder, files: shim.files(`${OUT}/${f.folder}`) })) };
+    },
+  };
+}
+
+app/export/export.js:5://   const exporter = await makeExporter(get);            // get(path) -> text, as app/lib/cjs.js takes it
+app/export/export.js:83:async function makeExporter(get) {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L45782 assistant 2026-10-04T17:44:49.189Z
+TOOL_USE Write [toolu_01T6qy7qauiZqeR42rx62GiD]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\speed\\expcmp.js","content":"// D236 bar (3) (pane E): is an EXPORT of each probe track byte-identical between two trees?  node expcmp.js <treeA> <treeB> <outdir>\n// The export runs as app/core/coreshell.js exportTo runs it: src/core/adapter.js toSegments of the document, its lift and start, the grid from\n// coreshell's startLayout, through src/export/fromwords.js exportSegments (the function app/export/export.js runSegments calls), with the texture\n// set the page ann
+…[4241 chars cut]…
+)}`);\n  }\n  report[name] = r; console.log(name, JSON.stringify({ seg: r.segTextIdentical, exported: r.exported, files: r.files, identical: r.identicalCount, differ: r.differ }));\n}\nfs.writeFileSync(path.join(OUT, 'expcmp.json'), JSON.stringify(report, null, 1));\n"}
+--- L45783 user 2026-10-04T17:44:49.216Z
+RESULT [toolu_01T6qy7qauiZqeR42rx62GiD]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\speed\expcmp.js (file state is current in your context — no need to Read it back)
+--- L45792 assistant 2026-10-04T17:44:55.321Z
+TOOL_USE Bash [toolu_01919jHQ6qLKqtdWYDgKdfyF]: {"command":"cd /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/speed && node --max-old-space-size=4096 -e \"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'D236 export compare (E)'}); process.argv=['node','expcmp.js','C:/Users/nname/Desktop/worktrees/e-speed2-wt','C:/Users/nname/Desktop/worktrees/e-speed3-wt','C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/speed/exp']; require('./expcmp.js')\" 2>&1 | grep -v -i \"no_color\\|trace-warn\" | cut -c1-900","description":"Run export byte comparison base vs candidate","timeout":900000}
+--- L45793 user 2026-10-04T17:46:24.292Z
+RESULT [toolu_01919jHQ6qLKqtdWYDgKdfyF]: short {"seg":true,"exported":false}
+oval {"seg":true,"exported":true,"files":10,"identical":9,"differ":[{"file":"t180b_untitled/.t180b-builder.json","sizeA":327,"sizeB":327,"fieldsThatDiffer":["written"],"valuesA":{"written":"2026-10-04T17:45:05.850Z"},"valuesB":{"written":"2026-10-04T17:45:16.119Z"}}]}
+tube {"seg":true,"exported":true,"files":10,"identical":9,"differ":[{"file":"t180b_untitled/.t180b-builder.json","sizeA":327,"sizeB":327,"fieldsThatDiffer":["written"],"valuesA":{"written":"2026-10-04T17:45:49.905Z"},"valuesB":{"written":"2026-10-04T17:46:23.427Z"}}]}
+tubeopen {"seg":true,"exported":false}
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L45798 assistant 2026-10-04T17:46:30.206Z
+TOOL_USE Bash [toolu_01HjDzy33sehajmzNCSirig2]: {"command":"cd /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/speed && cp speedprobe2.js speedprobe3.js && grep -n \"sculptMesh: wrap\" speedprobe3.js | cut -c1-80; grep -n \"summary.release = release\" speedprobe3.js | cut -c1-60","description":"Copy probe; locate wrap and summary lines"}
+--- L45799 user 2026-10-04T17:46:30.430Z
+RESULT [toolu_01HjDzy33sehajmzNCSirig2]: 38:const G = { ...G0, buildPath: wrap(G0.buildPath, 'p'), extendPath: wrap(G0.ex
+113:  summary.release = release ? { detail: release.detail,
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L45801 assistant 2026-10-04T17:46:37.945Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01DEDqkQ99W7nAxCEyjFaR7u]: {"command":"cd /c/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/speed && node - <<'EOF'\nconst fs=require('fs');let s=fs.readFileSync('speedprobe3.js','utf8');\nconst a=\"sculptMesh: wrap(G0.sculptMesh, 'm') };\";\nif(!s.includes(a)) throw 'wrap';\ns=s.replace(a,\"sculptMesh: wrap(G0.sculptMesh, 'm'), ...(G0.reuseMesh ? { reuseMesh: wrap(G0.reuseMesh, 'm') } : {}) };   // speedprobe3 (D236): A's reuseMesh counted as mesh too\");\nconst b=\"  summary.release = release ?\";\nif(!s.includes(b)) throw 'sum';\ns=s.replace(b,\"  // speedprobe3 (D236): memory after the release, after a forced GC when node runs with --expose-gc (A keeps two meshes for a closed loop)\\n  if (global.gc) { global.gc(); global.gc(); } const mu = process.memoryUsage(); summary.memoryMB = { gc: !!global.gc, heapUsed: +(mu.heapUsed / 2 ** 20).toFixed(1), arrayBuffers: +(mu.arrayBuffers / 2 ** 20).toFixed(1), rss: +(mu.rss / 2 ** 20).toFixed(1) };\\n\"+b);\ns=s.replace(\"// RE-MEASURE (D235, speedprobe2):\",\"// speedprobe3 = speedprobe2 + reuseMesh in the mesh stage + memory after release. RE-MEASURE (D235, speedprobe2):\");\nfs.writeFileSync('speedprobe3.js',s);\nEOF\nnode --check speedprobe3.js && sha256sum speedprobe3.js && grep -n \"reuseMesh\\b\" /c/Users/nname/Desktop/worktrees/e-speed3-wt/src/geom/index.js | head -2","description":"Build speedprobe3 with reuseMesh and memory"}

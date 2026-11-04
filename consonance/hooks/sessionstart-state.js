@@ -39,9 +39,26 @@ const { execFileSync } = require('child_process');
 // instrumentation. A state block is the most instruction-shaped thing this room emits.
 if (process.env.CONSONANCE_DREAM) process.exit(0);
 
-const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
+// D273 dirs: begin. The Consonance data and instances folders by THE APP'S OWN RULE (consonance/src-tauri/src/main.rs set_dirs and default_data /
+// default_instances): ~/.consonance.json's data_dir / instances_dir when set, else %USERPROFILE%\.consonance and %USERPROFILE%\claude-instances.
+// Never a hard-coded C:\Consonance: on a stranger's machine that wrote where the app never reads. One text in the five hooks that need it
+// (session-start, sessionstart-state, findings-return, sourced-stop, precompact-preserve); consonance/hooks/dirs.test.js holds them to it.
+function consonanceDir(key, under) {
+  const home = process.env.USERPROFILE || '.';
+  try { const v = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''))[key]; if (typeof v === 'string' && v.trim()) return v.trim(); } catch (e) { /* no config, or not JSON: the default, as the app */ }
+  return `${home}\\${under}`;
+}
+// D273 dirs: end
+const DATA = process.env.CONSONANCE_DATA || consonanceDir('data_dir', '.consonance');
 const LEDGER = process.env.CONSONANCE_SESSIONSTATE_LOG || path.join(DATA, 'sessionstart-state.jsonl');
 const CONFIG_NAME = '.consonance.json';
+
+// D245 item 3 (the Third Place's own return, 2026-10-05): the state block is the BUILD's state (HEAD, the dirty files, the instruments, the room's triggers) and "This seat is not the build".
+// The same cwd test as board-digest.js:302, matched on the seat's directory.
+// The cwd is NORMALISED first (D245 item 3 follow-up, B, 2026-10-05): an ABSOLUTE spelling of the seat's directory with "\." or "\..\" in it
+// (C:\...\third-place\., C:/.../third-place/./) is the seat too. A RELATIVE cwd is left as it is: resolving it would make the answer depend on this process's cwd.
+const tpNorm = (cwd) => { let c = String(cwd || ''); if (c && path.isAbsolute(c)) c = path.resolve(c); return c.replace(/(?:[\\/]+\.)+[\\/]*$/, '').replace(/[\\/]+$/, ''); };
+const isThirdPlaceCwd = (cwd) => /[\\/]third-place[\\/]?$/i.test(tpNorm(cwd));
 const BOM = /^﻿/;
 
 /* Which sources get the block. `compact` is the one the plan exists for; `startup` and `resume`
@@ -121,6 +138,15 @@ function main() {
   let payload = {};
   try { payload = JSON.parse(readStdin() || '{}'); } catch (_) { /* a bad payload must not break a session start */ }
   const source = typeof payload.source === 'string' ? payload.source : '';
+
+  if (isThirdPlaceCwd(payload.cwd)) {
+    // Silent and successful, like a source not served: the Third Place is told nothing about the build. The skip is a ledger row, so it reads as a decision and not as a dead hook.
+    try {
+      fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
+      fs.appendFileSync(LEDGER, JSON.stringify({ ts: new Date().toISOString(), event: 'skipped', source: source || null, reason: 'third-place cwd' }) + '\n');
+    } catch (_) {}
+    return;
+  }
 
   if (!SOURCES.includes(source)) {
     // Silent and successful: this is a source we deliberately do not serve, not a failure.

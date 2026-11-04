@@ -1,0 +1,39 @@
+{
+  "started": "2026-10-31T08:41:33.885Z",
+  "exe": "C:/Users/nname/Desktop/worktrees/t180-land-582/src-tauri/target/release/t180-track-builder.exe",
+  "steps": [
+    {
+      "name": "launch (reloaded under the instruments)",
+      "ok": true,
+      "ms": 853,
+      "result": "menus ready; http://tauri.localhost/app/index.html"
+    },
+    {
+      "name": "one Extend (1000 m straight)",
+      "ok": true,
+      "ms": 3466,
+      "result": "0 pieces · 0 m · loop open -> 1 piece · 1,000 m · loop open"
+    },
+    {
+      "name": "File ▸ Export… to the temp folder",
+      "ok": false,
+      "error": "Error: no export within 120 s; files 0; status Untitled •"
+    }
+  ],
+  "csp": [],
+  "cspControl": [],
+  "pageErrors": [],
+  "targets": [
+    "worker http://tauri.localhost/app/core/overlapworker.js",
+    "worker http://tauri.localhost/app/core/closeworker.js",
+    "worker http://tauri.localhost/app/core/overlapworker.js",
+    "worker http://tauri.localhost/app/core/overlapworker.js",
+    "worker http://tauri.localhost/app/core/overlapworker.js",
+    "worker http://tauri.localhost/app/core/closeworker.js",
+    "worker http://tauri.localhost/app/validate-ui/checkworker.js"
+  ],
+  "pid": 2932,
+  "pageUrl": "http://tauri.localhost/app/index.html",
+  "fatal": "Error: no export within 120 s; files 0; status Untitled •",
+  "leftRunning": 0
+}

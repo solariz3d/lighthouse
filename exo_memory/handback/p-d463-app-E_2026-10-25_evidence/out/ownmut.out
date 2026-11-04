@@ -1,0 +1,15 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+caught     M1 coreshell: undone threshold never fires  (# fail 1)
+caught     M2 coreshell: partial take-back never said  (# fail 1)
+caught     M3 coreshell: the release ignores the share  (# fail 2)
+caught     M4 coreshell: the share always reads 1  (# fail 2)
+caught     M5 exportwords: CSP shown raw  (# fail 1)
+caught     M6 exportwords: mesh note kept  (# fail 2)
+caught     M7 exportwords: references not stripped  (# fail 1)
+caught     M8 coreshell: export shows the raw warnings  (# fail 1)
+caught     M9 shell: export shows the raw warnings  (# fail 1)
+caught     M10 install: no result bar  (# fail 1)
+caught     M11 install: the bar has no close  (# fail 1)
+caught     M12 panel: the hint is plain message again  (# fail 1)
+caught     M13 page: the hint rule paints red  (# fail 1)
+applied 13 / caught 13 / NOT APPLIED 0

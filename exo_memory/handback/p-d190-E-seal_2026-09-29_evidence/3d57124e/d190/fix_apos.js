@@ -1,0 +1,5 @@
+const fs = require('fs'), f = 'C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/d190/patch_cupmark_tests.js'; let s = fs.readFileSync(f, 'utf8');
+const rep = (a, b) => { if (s.split(a).length !== 2) throw new Error('anchor: ' + a.slice(0, 60)); s = s.replace(a, () => b); };
+rep("the readers evaluate a word document\\'s font-transition blend too (its validation and layout change)", "the readers evaluate the font-transition blend of a word document too (its validation and layout change)");
+rep("a word document\\'s font-transition blend is NOT evaluated by the readers, only a cup\\'s: readAt gives the own profile for a blended segment without the cup mark (the paused piece builder\\'s validation, layout and export read as before)", "the font-transition blend of a word document is NOT evaluated by the readers, only a cup blend: readAt gives the own profile for a blended segment without the cup mark (the paused piece builder validation, layout and export read as before)");
+fs.writeFileSync(f, s); console.log('apostrophes removed');

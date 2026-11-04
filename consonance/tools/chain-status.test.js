@@ -22,7 +22,7 @@ const WRITER = path.join(__dirname, 'lap-row.js');
 const NODE = process.execPath;
 
 function fixture(rows) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-'));
+  const dir = require('./scratch.js').mkdtemp('chain-');
   const ledger = path.join(dir, 'lap.jsonl');
   if (rows) fs.writeFileSync(ledger, rows.map(r => (typeof r === 'string' ? r : JSON.stringify(r))).join('\n') + '\n');
   return { dir, ledger, cleanup: () => fs.rmSync(dir, { recursive: true, force: true }) };
@@ -43,7 +43,7 @@ const mod = () => { delete require.cache[require.resolve('./chain-status.js')]; 
 // D138: clause 6 reads seats' transcripts from ~/.claude/projects. No test may read the REAL one (a live seat waiting on
 // the keeper would leak into every line here), so the whole file, and every CLI it spawns, points at an empty temp dir.
 // Tests that need transcripts build their own and pass it as `projectsDir`.
-process.env.CONSONANCE_PROJECTS_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-projects-empty-'));
+process.env.CONSONANCE_PROJECTS_DIR = require('./scratch.js').mkdtemp('chain-projects-empty-');
 
 // ---------------------------------------------------------------- reader: with and without
 
@@ -59,14 +59,18 @@ test('reader: with a ledger it prints one line naming lap, stage and holder', ()
   fx.cleanup();
 });
 
-test('reader: WITHOUT a ledger it prints nothing, writes no stderr, and exits 0', () => {
+// D273 lap 2 AMENDED THIS ROW BY NAME (pane B, 2026-10-08). It was "reader: WITHOUT a ledger it prints nothing, writes no stderr, and exits 0". The parity
+// cold sweep scores a README tool that exits 0 with zero bytes as MUTE (lap 1: handback/p-consumer-parity-B_2026-10-08.md §4), and the lap's ruling is that
+// the MUTE is fixed. The pulse's contract is unchanged: both callers (userprompt_pulse.py, userprompt-submit.js) read STDOUT only, so the reason goes to stderr.
+test('reader: WITHOUT a ledger it prints nothing on stdout, exits 0, and says why on stderr (never MUTE)', () => {
   // Called from the pulse on every prompt in every seat. A reader that can fail takes the pulse
   // with it, and a hook that errors every turn is uninstalled within a day.
   const fx = fixture(null);
   const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
   assert.strictEqual(r.code, 0, 'absent ledger must exit 0, got ' + r.code + ' / ' + r.stderr);
-  assert.strictEqual(r.stdout, '', 'absent ledger must print NOTHING, got ' + JSON.stringify(r.stdout));
-  assert.strictEqual(r.stderr, '', 'and must not complain either');
+  assert.strictEqual(r.stdout, '', 'absent ledger must print NOTHING on stdout, got ' + JSON.stringify(r.stdout));
+  assert.match(r.stderr, /silent — no ledger/, 'a person running it must learn why it said nothing: ' + JSON.stringify(r.stderr));
+  assert.strictEqual(r.stderr.trim().split('\n').length, 1, 'one line, not a report');
   fx.cleanup();
 });
 
@@ -393,7 +397,9 @@ test("E-3.1: ONE healthy lap filing after the deaths must not mute the alarm on 
 
 test('E-3.1: and it reaches STDOUT through the cli, which is the only channel the pulse reads', () => {
   const fx = fixture([...DEAD('L010', 1000), ...ALIVE('L011', 2000)]);
-  const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
+  // AMENDED BY NAME (D633, fix 5): the pulse no longer prints unwitnessed; it reaches the CLI's stdout under --full only
+  // (the trimmed default is pinned by the D633 rows). The one-line contract below still holds for --full.
+  const r = run(READER, ['--ledger', fx.ledger, '--full'], fx.ledger);
   assert.strictEqual(r.code, 0, 'exit ' + r.code + ' / ' + r.stderr);
   assert.match(r.stdout, /unwitnessed \(L010\)/, 'stdout: ' + JSON.stringify(r.stdout));
   assert.strictEqual(r.stdout.trim().split('\n').length, 1,
@@ -495,18 +501,21 @@ test('more unwitnessed laps than the list cap: ids truncate with +N and the COUN
   fx.cleanup();
 });
 
-test('a ledger with chain rows and NOTHING unwitnessed still exits 0 in silence', () => {
+// D273 lap 2 AMENDED THIS ROW BY NAME (pane B, 2026-10-08), the same rule change as the no-ledger row above: it was "a ledger with chain rows and NOTHING
+// unwitnessed still exits 0 in silence", with an empty stderr. Stdout (what the pulse reads) is still empty; the reason for the silence now goes to stderr.
+test('a ledger with chain rows and NOTHING unwitnessed still exits 0 with stdout silent, and stderr says why', () => {
   const fx = fixture(ALIVE('L008', 1000));
   const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
   assert.strictEqual(r.code, 0, 'exit ' + r.code + ' / ' + r.stderr);
   assert.strictEqual(r.stdout, '', 'printed on a clean chain: ' + JSON.stringify(r.stdout));
-  assert.strictEqual(r.stderr, '');
+  assert.match(r.stderr, /^chain-status: silent — /, 'the silence must be attributable: ' + JSON.stringify(r.stderr));
   fx.cleanup();
 });
 
 test('the dead lap reaches the ACTUAL cli, not only line() - the hook reads stdout', () => {
   const fx = fixture(DEAD('L010', 1000));
-  const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
+  // AMENDED BY NAME (D633, fix 5): the chain tail (WORK LEG UNWITNESSED with it) is dropped from the pulse; --full still prints it.
+  const r = run(READER, ['--ledger', fx.ledger, '--full'], fx.ledger);
   assert.strictEqual(r.code, 0, 'exit ' + r.code + ' / ' + r.stderr);
   assert.match(r.stdout, /WORK LEG UNWITNESSED/, 'stdout: ' + JSON.stringify(r.stdout));
   fx.cleanup();
@@ -528,7 +537,7 @@ const WORKING = (at) => ([
 
 /** lap.jsonl + board.jsonl + letters.json in one temp dir. `board:null` omits the board entirely. */
 function store(lapRows, boardRows, opts = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-store-'));
+  const dir = require('./scratch.js').mkdtemp('chain-store-');
   fs.writeFileSync(path.join(dir, 'lap.jsonl'), lapRows.map((r) => JSON.stringify(r)).join('\n') + '\n');
   if (boardRows !== null) {
     fs.writeFileSync(path.join(dir, 'board.jsonl'),
@@ -991,7 +1000,7 @@ test('tree() names an UNTRACKED hand-back and not a committed one', () => {
   // Against a real repository, because the property is about what git considers untracked and a
   // mock of git would only prove the mock.
   const { execFileSync } = require('node:child_process');
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-tree-'));
+  const dir = require('./scratch.js').mkdtemp('chain-tree-');
   const git = (...a) => execFileSync('git', a, { cwd: dir, encoding: 'utf8' });
   git('init', '-q');
   git('config', 'user.email', 'test@example.invalid');
@@ -1017,7 +1026,7 @@ test('tree() names an UNTRACKED hand-back and not a committed one', () => {
 });
 
 test('tree() on a non-repo is dirty null and hand-backs EMPTY, never a claim', () => {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-nonrepo-'));
+  const d = require('./scratch.js').mkdtemp('chain-nonrepo-');
   const t = mod().tree(path.join(d, 'not-a-repo-at-all'));
   assert.strictEqual(t.dirty, null);
   assert.deepStrictEqual(t.handbacks, []);
@@ -1260,7 +1269,8 @@ test('STALE, NEVER THROWS on a damaged ledger, and still names the stale lap it 
 
 test('STALE reaches STDOUT through the actual CLI — the only channel the pulse reads', () => {
   const fx = fixture([{ lap: 'L070', stage: 'chain', at: Date.now() - 30 * H, chain: 'working', holder: 'chair' }]);
-  const r = run(READER, [], fx.ledger);
+  // AMENDED BY NAME (D633, fix 5): STALE is dropped from the pulse (D627 part 3: 4,577 fires, 1 indirect use); --full still prints it.
+  const r = run(READER, ['--full'], fx.ledger);
   assert.strictEqual(r.code, 0, r.stderr);
   assert.strictEqual(r.stderr, '');
   assert.strictEqual(r.stdout.trim().split('\n').length, 1, r.stdout);
@@ -1345,6 +1355,17 @@ const FROW = (ts, sid, label) => ({ pane: 'chair', role: 'committee', ts,
     + ' — the gate never got a usable ready signal; composer: read as text on 3 of 3 readings): ' + label });
 test('QUEUED — a ring FORCE-delivered (the post-D074 row, with "; composer: …") is not printed as waiting', () => {
   const t = qline([QROW(T0, A, 'stamp=STALE (says working, screen says otherwise)', RING), FROW(T0 + 4 * MIN, A, RING)], T0 + 99 * MIN);
+  assert.ok(!/QUEUED/.test(t), t);
+});
+
+// D424: a ring queued for a pane whose child then exited is REFUSED in the queue. The row is main.rs's own
+// (`pane_exit::refused_row`, the 22:37 case: O exited with code 3 and was not reopened). Unpaired, the refused ring read
+// as "waiting" for ever, which is the six silent hours over again.
+const RROW = (ts, sid, label) => ({ pane: 'chair', role: 'committee', ts,
+  text: 'REFUSED NOT DELIVERED -> ' + sid.slice(0, 8) + ' (queued 14s ago; its claude process exited by itself (exit code 3) at 04:24:58Z'
+    + ' and is not being reopened, so nothing was written into it — ↻ on its pane reopens it): ' + label });
+test('QUEUED — a ring REFUSED because its pane exited is not printed as waiting', () => {
+  const t = qline([QROW(T0, A, 'stamp=ready', RING), RROW(T0 + 1 * MIN, A, RING)], T0 + 99 * MIN);
   assert.ok(!/QUEUED/.test(t), t);
 });
 
@@ -1584,7 +1605,7 @@ const SEAT_ROW = (ts, sid) => ({ pane: sid, role: 'assistant', ts, ts_source: 't
 
 /** A projects dir holding `{ <dir>: { <sid>: [rows] } }`, a store whose board makes the listed sids live, and the line. */
 function wline(transcripts, boardRows, now, opts = {}) {
-  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-projects-'));
+  const proj = require('./scratch.js').mkdtemp('chain-projects-');
   for (const [dir, bySid] of Object.entries(transcripts)) {
     fs.mkdirSync(path.join(proj, dir), { recursive: true });
     for (const [sid, rows] of Object.entries(bySid)) {
@@ -1701,4 +1722,173 @@ test('WAITING — the chair is "chair" even where letters.json gives its session
     { lettersMap: Object.assign({ [MAIN_T]: 'D' }, LET_WITH_LIB) });
   assert.match(t, /chair waiting on YOUR answer/, t);
   assert.doesNotMatch(t, /\bD waiting on YOUR answer/, t);
+});
+
+// D309 (seat A): the receiver's row now ends on the app's send line. The pairing reads the tag plus the first 60 characters, so a
+// trailing line must not unpair a ring from its receipt.
+test('UNRECEIVED — a receipt row that ends on the send line (sent, or sent and held) still pays for its ring (D309)', () => {
+  for (const stamp of ['\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]',
+    '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local · HELD 312 s · delivered 2026-10-12T07:31:03Z · Oct 12, 1:31 AM local]']) {
+    const row = RECV(T0 + 2 * MIN, RING2); row.text += stamp;
+    const t = qline([SEND(T0, 'Unconfirmed', RING2), row], T0 + 15 * MIN);
+    assert.doesNotMatch(t, /UNRECEIVED/, t);
+  }
+  const row = RECV(T0 + 2 * MIN, RING2, 'B'); row.text += '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]';
+  assert.doesNotMatch(qline([SEND(T0, 'Unconfirmed', RING2, 'B'), row], T0 + 15 * MIN), /UNRECEIVED/, 'a pane ring too');
+});
+
+// ── D628: the owed visit reads the pulse's own collation (O, 2026-11-03) ─────────────────────────────
+// The keep-warm actuator (main.rs keep_warm_send) asks `chain-status.js --owed-json` whether the seat it
+// is about to visit is OWED an action. The answer must be the SAME verdict the pulse line prints, from
+// the same code, so these rows drive owedVisit and line() over one fixture and compare.
+const CALL_LIB_AT = (ts, letter, p) => ({ pane: 'chair', role: 'committee', ts,
+  text: 'call_librarian ' + letter + ' -> LIB [Received]: "D900 part 1: ' + p + ' (lighthouse 1234abcd)…"' });
+
+test('D628 owedVisit: holder panes, B still owing, names the lap and exactly the pulse\'s owing letters', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, B), CALL_LIB_AT(1300, 'A', 'exo_memory/handback/p-d900-a-A_2026-11-03.md')]);
+  const v = mod().owedVisit({ ledger: s.ledger, now: 9e6 });
+  assert.strictEqual(v.state, 'owing');
+  assert.strictEqual(v.lap, 'L900');
+  assert.deepStrictEqual(v.owing, ['B']);
+  assert.match(mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 }).text, /handbacks 1 of 2 \(owing B\)/, 'the pulse and the visit disagree');
+  s.cleanup();
+});
+
+test('D628 owedVisit: all in, the round with each letter\'s newest hand-back pointer', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, B),
+    CALL_LIB_AT(1300, 'A', 'exo_memory/handback/p-d900-old-A_2026-11-03.md'),
+    CALL_LIB_AT(1350, 'A', 'exo_memory/handback/p-d900-a-A_2026-11-03.md'),
+    HANDBACK(1400, 'B')]);
+  const v = mod().owedVisit({ ledger: s.ledger, now: 1400 + 65 * 60000 });
+  assert.strictEqual(v.state, 'all-in');
+  assert.deepStrictEqual(v.round, ['A', 'B']);
+  assert.deepStrictEqual(v.pointers, { A: 'exo_memory/handback/p-d900-a-A_2026-11-03.md' }, 'newest pointer per letter; a bare post carries none');
+  assert.match(mod().line({ ledger: s.ledger, now: 1400 + 65 * 60000, dirty: 0 }).text, /HANDBACKS IN, NOT COLLATED — 2 of 2 \(A,B\)/);
+  s.cleanup();
+});
+
+test('D628 owedVisit: the panes are not the holder, so nobody is owed a visit (the pulse prints no hand-back count either)', () => {
+  const lap = [WORKING(1000)[0], { lap: 'L900', stage: 'chain', at: 1000, chain: 'dispatched', holder: 'chair' }];
+  const s = store(lap, [DISPATCH(1100, A)]);
+  const v = mod().owedVisit({ ledger: s.ledger, now: 9e6 });
+  assert.strictEqual(v.state, 'n/a');
+  assert.ok(!v.owing && !v.round, JSON.stringify(v));
+  assert.ok(!/HANDBACKS IN|handbacks /.test(mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 }).text));
+  s.cleanup();
+});
+
+test('D628 owedVisit: an unreadable board is unknown, never an owed or all-in claim', () => {
+  const s = store(WORKING(1000), [], { rawBoard: '{not json' });
+  const v = mod().owedVisit({ ledger: s.ledger, now: 9e6 });
+  assert.strictEqual(v.state, 'unknown', JSON.stringify(v));
+  s.cleanup();
+});
+
+test('D628 --owed-json prints owedVisit\'s object on stdout, and nothing else', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, B), CALL_LIB_AT(1300, 'A', 'exo_memory/handback/p-d900-a-A_2026-11-03.md')]);
+  const r = spawnSync(NODE, [READER, '--owed-json', '--ledger', s.ledger], { encoding: 'utf8', env: Object.assign({}, process.env) });
+  assert.strictEqual(r.status, 0, r.stderr);
+  const v = JSON.parse(r.stdout);
+  assert.strictEqual(v.state, 'owing');
+  assert.deepStrictEqual(v.owing, ['B']);
+  s.cleanup();
+});
+
+test('D628 owedVisit: a pointer rung before the anchor (an earlier, filed lap) is not this round\'s hand-back path', () => {
+  const lap = [
+    { lap: 'L899', stage: 'open', at: 500, initiator: 'human', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+    { lap: 'L899', stage: 'chain', at: 900, chain: 'filed', holder: 'chair' },
+    ...WORKING(1000),
+  ];
+  const s = store(lap, [CALL_LIB_AT(800, 'A', 'exo_memory/handback/p-d899-old-A_2026-11-02.md'), DISPATCH(1100, A), HANDBACK(1300, 'A')]);
+  const v = mod().owedVisit({ ledger: s.ledger, now: 1300 + 5 * 60000 });
+  assert.strictEqual(v.state, 'all-in', JSON.stringify(v));
+  assert.deepStrictEqual(v.pointers, {}, 'the last lap\'s pointer was offered as this round\'s');
+  s.cleanup();
+});
+
+// ── D633: the pulse TRIMMED (O, 2026-11-03; fix 5, plan_room_fixes_2_5 part D633; D627 part 3 measured each item) ───
+// KEEP: QUEUED, the hand-back counts, HANDBACKS IN (and what the plan names neither way). DROP: STALE, dirty, the sync
+// segment, the chain/holder/age/+N/unwitnessed/older/rows-only tail, "fused" and UNRECEIVED. Every drop row carries an
+// untrimmed control proving the fixture DOES produce the item, so a drop can never pass on a fixture that lacks it.
+const T633 = Date.parse('2026-11-03T14:00:00Z');
+const Q633 = { list: [{ seat: 'E', age: 24 * 60000, waiting: 2, since: T633 - 24 * 60000 }],
+  unreceived: [{ from: 'O', to: 'librarian', age: 45 * 60000, since: T633 - 45 * 60000, receipt: 'Unconfirmed' }], waiting: [], why: null };
+const STALE633 = () => [{ lap: 'D501', age: 139 * 3600000, holder: 'chair' }];
+const both633 = (s, extra = {}) => {
+  const o = { ledger: s.ledger, now: T633, dirty: 33, handbacks: ['p-d433-P_2026-10-22.md'], queued: Q633, staleLaps: STALE633, ...extra };
+  return { full: mod().line(o).text, trim: mod().line({ ...o, trim: true }).text };
+};
+// a second, OLDER open lap, so the head stays L900 (holder panes) and the line also carries '+1 more open'
+const LAP633 = [{ lap: 'L899', stage: 'open', at: 500, initiator: 'human', inquiry: 'y', guess: ['a/b.js'], blind: true, head: null },
+  { lap: 'L899', stage: 'chain', at: 600, chain: 'dispatched', holder: 'chair' }, ...WORKING(1000)];
+
+test('D633 the trimmed pulse KEEPS the hand-back count and QUEUED', () => {
+  const s = store(LAP633, [DISPATCH(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A')]);
+  const { trim } = both633(s);
+  assert.match(trim, /handbacks 1 of 2 \(owing B\)/, trim);
+  assert.match(trim, /QUEUED E 24m, 2 waiting \(receiver busy since \d\d:\d\d\)/, trim);
+  s.cleanup();
+});
+
+test('D633 the trimmed pulse KEEPS HANDBACKS IN, NOT COLLATED', () => {
+  const s = store(LAP633, [DISPATCH(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A'), HANDBACK(1400, 'B')]);
+  assert.match(both633(s).trim, /HANDBACKS IN, NOT COLLATED — 2 of 2 \(A,B\)/);
+  s.cleanup();
+});
+
+test('D633 the trimmed pulse DROPS STALE, dirty, the sync segment, the chain tail and UNRECEIVED (each present untrimmed)', () => {
+  const s = store(LAP633, [DISPATCH(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A')]);
+  const { full, trim } = both633(s);
+  for (const [name, re] of [['STALE', /STALE D501/], ['dirty', /dirty 33 repo-wide/], ['sync', /this machine only|in sync|NOT in sync/],
+    ['chain', /chain: L900/], ['holder', /holder panes/], ['+N more open', /\+1 more open/], ['UNRECEIVED', /UNRECEIVED O→librarian/]]) {
+    assert.match(full, re, 'control: the untrimmed line has ' + name + ': ' + full);
+    assert.doesNotMatch(trim, re, name + ' was not dropped: ' + trim);
+  }
+  const bareAge = (l) => l.split(' · ').some((p) => /^\d+[smh]$/.test(p));
+  assert.ok(bareAge(full), 'control: the untrimmed line has the bare age: ' + full);
+  assert.ok(!bareAge(trim), 'the bare age was not dropped: ' + trim);
+  s.cleanup();
+});
+
+test('D633 the trimmed pulse DROPS fused', () => {
+  const raw = JSON.stringify(DISPATCH(1100, A)) + '\n' + FUSE(HANDBACK(1300, 'A'), { pane: 'x', role: 'user', text: 'replayed', ts: 900 });
+  const s = store(WORKING(1000), [], { rawBoard: raw });
+  const { full, trim } = both633(s);
+  assert.match(full, /board line\(s\) fused/, 'control: ' + full);
+  assert.doesNotMatch(trim, /fused/, trim);
+  assert.match(trim, /HANDBACKS IN, NOT COLLATED — 1 of 1 \(A\)/, 'the fused line is still READ, only not printed: ' + trim);
+  s.cleanup();
+});
+
+test('D633 the trimmed pulse DROPS unwitnessed, older and rows only, and says nothing when nothing is kept', () => {
+  const fx = fixture([...DEAD('L010', 1000), ...ALIVE('L011', 2000)]);
+  const full = mod().line({ ledger: fx.ledger, now: 9e6, dirty: 0, queued: { list: [], why: null } });
+  const trim = mod().line({ ledger: fx.ledger, now: 9e6, dirty: 0, queued: { list: [], why: null }, trim: true });
+  assert.match(full.text, /unwitnessed \(L010\)/, 'control: ' + full.text);
+  assert.match(full.text, /rows only/, 'control: ' + full.text);
+  assert.strictEqual(trim.text, null, 'nothing kept, so nothing printed: ' + trim.text);
+  assert.ok(trim.why, 'and the silence says why');
+  fx.cleanup();
+});
+
+test('D633 the CLI (the channel the pulse reads) prints the TRIMMED line; --full prints the whole one', () => {
+  const s = store(LAP633, [DISPATCH(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A')]);
+  const plain = run(READER, ['--ledger', s.ledger], s.ledger), full = run(READER, ['--ledger', s.ledger, '--full'], s.ledger);
+  assert.strictEqual(plain.code, 0, plain.stderr);
+  assert.match(plain.stdout, /handbacks 1 of 2 \(owing B\)/, plain.stdout);
+  assert.doesNotMatch(plain.stdout, /chain: |holder |dirty |in sync|this machine only/, plain.stdout);
+  assert.match(full.stdout, /chain: L900 WORKING · holder panes/, full.stdout);
+  s.cleanup();
+});
+
+test('D633 (the chair, 08:48) the trimmed pulse DROPS delivery-unconfirmed; it stays computed and in --full', () => {
+  const UNCONF = (ts, id) => ({ pane: 'chair', role: 'committee', ts,
+    text: 'chair injected (chair: claude-opus-5) -> ' + id.slice(0, 8) + ' [WRITTEN BUT UNCONFIRMED — no render in the pane\'s capture within 1800ms]: go' });
+  const s = store(LAP633, [UNCONF(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A')]);
+  const { full, trim } = both633(s);
+  assert.match(full, /1 dispatch\(es\) delivery-unconfirmed/, 'control: the untrimmed line has it: ' + full);
+  assert.doesNotMatch(trim, /delivery-unconfirmed/, 'not dropped: ' + trim);
+  assert.match(trim, /handbacks 1 of 2 \(owing B\)/, 'the count beside it is still printed: ' + trim);
+  s.cleanup();
 });

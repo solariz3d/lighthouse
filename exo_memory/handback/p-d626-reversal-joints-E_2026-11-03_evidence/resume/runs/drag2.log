@@ -1,0 +1,71 @@
+start 19:05:31Z
+== t180-e624 19:07:56Z
+ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one fra
+ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms
+ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one
+ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn'
+ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is he
+ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handl
+ok 7 - row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 wit
+not ok 8 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the
+# pass 7
+# fail 1
+# Subtest: row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+# p95 ms by look: {"aqua":[2.8],"skyline":[2.8],"glass":[3.3],"aurora":[3.8],"sigil":[2.6]}
+# Subtest: row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+# p95 ms by look: {"aqua":[3.4],"skyline":[3.6],"glass":[3.3],"aurora":[3.9],"sigil":[3]}
+# Subtest: row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+# p95 ms by length: {"1000":[3.4],"2000":[4.6]}
+# Subtest: row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+# 20,000 m: p95 8 ms, 32.0 rebuilds a second
+# Subtest: row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+# p95 9.7 ms, 54.0 rebuilds a second
+# Subtest: row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+# p95 5.6 ms (median 3.8), 64.7 work frames a second
+== t180-e624-base 19:10:14Z
+ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one fra
+ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms
+ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one
+ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn'
+ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is he
+ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handl
+ok 7 - row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 wit
+ok 8 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the pag
+# pass 8
+# fail 0
+# Subtest: row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+# p95 ms by look: {"aqua":[3.3],"skyline":[3.2],"glass":[3.4],"aurora":[4.1],"sigil":[2.8]}
+# Subtest: row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+# p95 ms by look: {"aqua":[3.3],"skyline":[3.5],"glass":[3.1],"aurora":[4.5],"sigil":[3.9]}
+# Subtest: row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+# p95 ms by length: {"1000":[3],"2000":[4.1]}
+# Subtest: row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+# 20,000 m: p95 8 ms, 36.0 rebuilds a second
+# Subtest: row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+# p95 9.0 ms, 54.0 rebuilds a second
+# Subtest: row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+# p95 4.5 ms (median 3.2), 65.0 work frames a second
+== t180-e624 19:12:07Z
+not ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one
+ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms
+ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one
+ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn'
+ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is he
+ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handl
+ok 7 - row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 wit
+not ok 8 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the
+# pass 6
+# fail 2
+# Subtest: row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+# Subtest: row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+# p95 ms by look: {"aqua":[3.5],"skyline":[3.2],"glass":[3.2],"aurora":[4],"sigil":[3.4]}
+# Subtest: row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+# p95 ms by length: {"1000":[3.1],"2000":[3.9]}
+# Subtest: row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+# 20,000 m: p95 8 ms, 32.7 rebuilds a second
+# Subtest: row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+# p95 9.0 ms, 58.0 rebuilds a second
+# Subtest: row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+# p95 4.4 ms (median 3.3), 64.3 work frames a second
+# Subtest: row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+DRAG-END

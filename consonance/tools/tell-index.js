@@ -160,7 +160,7 @@ function dataDir() {
   } catch (_) {
     // Missing or unparsable config is not an error here — it just means the default.
   }
-  return 'C:\\Consonance\\data';
+  return path.join(os.homedir(), '.consonance');   // D454: the app's third step (main.rs default_data), not one machine's folder
 }
 
 // ------------------------------------------------------------------- the tells --

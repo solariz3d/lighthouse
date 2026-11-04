@@ -1,0 +1,54 @@
+{
+ "label": "L1-R",
+ "base": "73de24d",
+ "dir": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L1-R",
+ "commits": "5618100 Every click on Settings ▸ Theme ▸ Random picks another look, even when it is already chosen (D411)",
+ "status": "?? HANDBACK.md",
+ "stat": "CHANGELOG.md                  |  3 +++\n app/index.html                |  8 +++++---\n app/menubar/items.js          |  8 +++++---\n app/test/menubar-page.test.js | 21 ++++++++++++++++++---\n 4 files changed, 31 insertions(+), 9 deletions(-)",
+ "numstat": "3\t0\tCHANGELOG.md\n5\t3\tapp/index.html\n5\t3\tapp/menubar/items.js\n18\t3\tapp/test/menubar-page.test.js",
+ "files": [
+  "CHANGELOG.md",
+  "app/index.html",
+  "app/menubar/items.js",
+  "app/test/menubar-page.test.js"
+ ],
+ "added": 31,
+ "removed": 9,
+ "changed_lines": 40,
+ "test_files": [
+  "app/test/menubar-page.test.js"
+ ],
+ "source_files": [
+  "CHANGELOG.md",
+  "app/index.html",
+  "app/menubar/items.js"
+ ],
+ "rows": {
+  "app/test/menubar-page.test.js": {
+   "added": [],
+   "deleted": [],
+   "rewritten": []
+  }
+ },
+ "rows_added": 0,
+ "rows_deleted": 0,
+ "rows_rewritten": 0,
+ "test_runs": [
+  {
+   "file": "app/test/menubar-page.test.js",
+   "cmd": "node --test \"app/test/menubar-page.test.js\"",
+   "exit": 0,
+   "counts": "pass 18 / fail 0",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  }
+ ],
+ "harness_runs": [
+  {
+   "file": "app/test/theme-mutation.test.js",
+   "cmd": "node --test \"app/test/theme-mutation.test.js\"",
+   "exit": 0,
+   "counts": "pass 34 / fail 0",
+   "mutants": null
+  }
+ ]
+}

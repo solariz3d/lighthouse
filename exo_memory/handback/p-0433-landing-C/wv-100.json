@@ -1,0 +1,117 @@
+{
+  "started": "2026-10-31T18:33:18.679Z",
+  "exe": "C:/Users/nname/Desktop/worktrees/t180-land-0433/src-tauri/target/release/t180-track-builder.exe",
+  "track": "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d583/doc/eq-STADIUM 100.t180track",
+  "steps": [
+    {
+      "name": "launch",
+      "ok": true,
+      "s": 0.828,
+      "result": "menus ready"
+    },
+    {
+      "name": "open",
+      "ok": true,
+      "s": 25.343,
+      "result": "loaded: head shown at 1.1 s, still from 5.3 s; peak 719 MB at 10.1 s (page 430, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 284); settled 694 MB (page 405, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 284)"
+    },
+    {
+      "name": "export",
+      "ok": true,
+      "s": 112.56,
+      "result": "STADIUM 100 · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_stadium | files 10, kn5 517445948 B; peak 2208 MB at 106.9 s (page 411, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 267, iframe:about:srcdoc#4 1, worker:e422e26d-e619-4f97-8f8f-11e1bd#5 1525)"
+    }
+  ],
+  "marks": [
+    {
+      "t": "0.7",
+      "mark": "begin launch"
+    },
+    {
+      "t": "1.6",
+      "mark": "end launch"
+    },
+    {
+      "t": "5.0",
+      "mark": "begin open"
+    },
+    {
+      "t": "30.3",
+      "mark": "end open"
+    },
+    {
+      "t": "30.3",
+      "mark": "begin export"
+    },
+    {
+      "t": "142.9",
+      "mark": "end export"
+    }
+  ],
+  "crashes": [
+    {
+      "t": "145.2",
+      "what": "the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20",
+      "mark": "export"
+    }
+  ],
+  "pageErrors": [],
+  "targets": {
+    "worker:overlapworker.js#0": "1.0",
+    "worker:overlapworker.js#1": "1.0",
+    "worker:closeworker.js#2": "1.0",
+    "worker:checkworker.js#3": "1.3",
+    "iframe:about:srcdoc#4": "30.6",
+    "worker:e422e26d-e619-4f97-8f8f-11e1bd#5": "31.1"
+  },
+  "pid": 55444,
+  "userDesktop": "0",
+  "files": {
+    "export": [
+      [
+        "t180b_stadium_100\\.t180b-builder.json",
+        419
+      ],
+      [
+        "t180b_stadium_100\\ai\\fast_lane.ai",
+        1534400
+      ],
+      [
+        "t180b_stadium_100\\data\\map.ini",
+        114
+      ],
+      [
+        "t180b_stadium_100\\data\\surfaces.ini",
+        772
+      ],
+      [
+        "t180b_stadium_100\\map.png",
+        680713457
+      ],
+      [
+        "t180b_stadium_100\\models.ini",
+        67
+      ],
+      [
+        "t180b_stadium_100\\t180b_stadium_100.kn5",
+        517445948
+      ],
+      [
+        "t180b_stadium_100\\ui\\outline.png",
+        280600
+      ],
+      [
+        "t180b_stadium_100\\ui\\preview.png",
+        284288
+      ],
+      [
+        "t180b_stadium_100\\ui\\ui_track.json",
+        384
+      ]
+    ],
+    "ac": []
+  },
+  "leftRunning": 0,
+  "exitCode": 0,
+  "nSamples": 140
+}

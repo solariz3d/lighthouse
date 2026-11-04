@@ -1,0 +1,4 @@
+STOP src/validate/index.js: 'landing-misses-zone': 'ARCHITECTURE.md:75-78 (the landing ramp should catch both landings); a WARNING since D250: the keeper tunes jumps by
+STOP test/core_tube_open.test.js: function keeperTrack() {
+STOP test/core_tube_open.test.js: const D0 = keeperTrack(), B0 = built(D0), S1 = D0.pieces[0].length, S3 = S1 + D0.pieces[1].length + D0.pieces[2].length;
+files 199; lines reworded 532; stopped 3; with no rule 0

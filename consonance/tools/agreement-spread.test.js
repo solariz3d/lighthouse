@@ -99,7 +99,7 @@ test('spearman handles ties and perfect ordering', () => {
 });
 
 test('score() reports laps excluded by the floor instead of dropping them silently', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'agspread-'));
+  const dir = require('./scratch.js').mkdtemp('agspread-');
   const f = path.join(dir, 'board.jsonl');
   const t = 1700000000000;
   const thin = [

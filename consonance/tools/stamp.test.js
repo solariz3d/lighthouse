@@ -24,7 +24,7 @@ const { hhmm, compose, typedStamp, append } = require('./stamp.js');
 const TOOL = path.join(__dirname, 'stamp.js');
 const at = (h, m) => new Date(2026, 8, 11, h, m, 11);
 const tmpfile = (body) => {
-  const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'stamp-')), '2026-09-11.md');
+  const f = path.join(require('./scratch.js').mkdtemp('stamp-'), '2026-09-11.md');
   fs.writeFileSync(f, body);
   return f;
 };
@@ -64,7 +64,7 @@ test('a typed leading stamp is REFUSED and nothing is written', () => {
 });
 
 test('a missing file is refused rather than created — a master is never born by accident', () => {
-  const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'stamp-')), 'absent.md');
+  const f = path.join(require('./scratch.js').mkdtemp('stamp-'), 'absent.md');
   assert.throws(() => append(f, 'master', 'x', at(2, 21)), /does not exist/);
   assert.strictEqual(fs.existsSync(f), false);
 });

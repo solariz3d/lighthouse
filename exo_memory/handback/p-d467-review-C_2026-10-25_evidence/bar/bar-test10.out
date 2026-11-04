@@ -1,0 +1,7 @@
+test10-smoothed.t180track s0 3000 r 80 3e-4 window [4]: drag 32.89 | outside 19.81 | window 13.42 | part3 pass | B3 pass | barMiss: PASS (taken)
+test10-smoothed.t180track s0 3000 r 80 1e-4 window [4]: drag 10.96 | outside 6.68 | window 4.54 | part3 pass | B3 pass | barMiss: PASS (taken)
+test10-smoothed.t180track s0 1700 r 80 3e-4 window [3]: drag 31.30 | outside 10.04 | window 9.98 | part3 pass | B3 pass | barMiss: PASS (taken)
+test10-smoothed.t180track s0 1700 r 80 1e-4 window [3]: drag 10.43 | outside 3.27 | window 3.39 | part3 pass | B3 pass | barMiss: PASS (taken)
+test10-smoothed.t180track s0 6000 r 80 3e-4 window [17]: drag 24.39 | outside 15.48 | window 5.62 | part3 pass | B3 pass | barMiss: PASS (taken)
+test10-smoothed.t180track s0 6000 r 80 1e-4 window [17]: drag 8.13 | outside 5.10 | window 1.88 | part3 pass | B3 pass | barMiss: PASS (taken)
+test10.t180track s0 3000 r 80 3e-4 window [4]: raw start close refused BAD_CUP

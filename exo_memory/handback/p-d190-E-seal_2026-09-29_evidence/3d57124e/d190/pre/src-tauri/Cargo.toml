@@ -1,0 +1,22 @@
+[package]
+name = "t180-track-builder"
+version = "0.2.2"
+description = "T-180 Track Builder: write an Assetto Corsa track in words, fonts and tempo"
+authors = ["solariz3d"]
+edition = "2021"
+
+[lib]
+name = "t180_track_builder_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# The crates blackbox builds on (blackbox/src-tauri/Cargo.toml), plus the dialog plugin, so Export picks its folder in
+# the native dialog rather than a typed path. The native side only reads and writes named files, and writes an
+# exported track into the folder the user picked.
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

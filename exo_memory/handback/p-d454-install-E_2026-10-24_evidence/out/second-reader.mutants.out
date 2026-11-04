@@ -1,0 +1,41 @@
+control (unmutated copy)                              pass 30 fail 0
+ 1 hook: reentrancy guard removed                                      pass 29 fail 1  CAUGHT
+ 2 hook: the worker is started WITHOUT the guard variable              pass 29 fail 1  CAUGHT
+ 3 hook: the dream gate removed                                        pass 29 fail 1  CAUGHT
+ 4 hook: a tool that is not a ring tool is acted on                    pass 29 fail 1  CAUGHT
+ 5 hook: a third tool joins the ring set                               pass 28 fail 2  CAUGHT
+ 6 hook: a ring with no text is read anyway                            pass 28 fail 2  CAUGHT
+ 7 hook: a busy lock is ignored (a second worker starts)               pass 27 fail 3  CAUGHT
+ 8 hook: the lock is not exclusive                                     pass 26 fail 4  CAUGHT
+ 9 hook: a lock held by a DEAD pid still counts as live                pass 28 fail 2  CAUGHT
+10 hook: a lock older than 180 s still counts as live                  pass 29 fail 1  CAUGHT
+11 hook: prints a deny decision                                        pass 27 fail 3  CAUGHT
+12 hook: the message text is written into the busy row                 pass 29 fail 1  CAUGHT
+13 hook: the lock is released only by the worker's own token           pass 29 fail 1  CAUGHT
+14 worker: --safe-mode dropped (the child loads every hook)            pass 29 fail 1  CAUGHT
+15 worker: --strict-mcp-config dropped (the child starts MCP servers)  pass 29 fail 1  CAUGHT
+16 worker: --tools "" dropped (the child has tools)                    pass 29 fail 1  CAUGHT
+17 worker: --bare added (it ignores the subscription login)            pass 29 fail 1  CAUGHT
+18 worker: the guard variable is not set on the model child            pass 29 fail 1  CAUGHT
+19 worker: the model is not Sonnet 5.5                                 pass 29 fail 1  CAUGHT
+20 worker: the timeout is ten times too long                           pass 29 fail 1  CAUGHT
+21 worker: a timed-out child is not killed                             pass 29 fail 1  CAUGHT
+22 worker: the lock is never released                                  pass 27 fail 3  CAUGHT
+23 worker: a non-zero exit is read as an answer                        pass 29 fail 1  CAUGHT
+24 worker: the question is altered                                     pass 29 fail 1  CAUGHT
+25 worker: the turn includes the ring's own call                       pass 29 fail 1  CAUGHT
+26 worker: the turn starts at the beginning, not after the last prompt pass 29 fail 1  CAUGHT
+27 worker: a tool-result message counts as a prompt                    pass 29 fail 1  CAUGHT
+28 worker: a flag quote that is not in the message is stored           pass 29 fail 1  CAUGHT
+29 worker: more than 20 flags are stored                               pass 29 fail 1  CAUGHT
+30 worker: the message text is written into the ok row                 pass 28 fail 2  CAUGHT
+31 worker: the tokens are not recorded                                 pass 29 fail 1  CAUGHT
+32 worker: the model is not recorded                                   pass 29 fail 1  CAUGHT
+33 secrets: scrub does nothing                                         pass 28 fail 2  CAUGHT
+34 secrets: the <key-prefix redacted> shape is not scrubbed                             pass 28 fail 2  CAUGHT
+35 secrets: the message is sent to the model unscrubbed                pass 29 fail 1  CAUGHT
+36 secrets: the turn is sent to the model unscrubbed                   pass 29 fail 1  CAUGHT
+37 secrets: a stored flag quote is not scrubbed                        pass 29 fail 1  CAUGHT
+38 secrets: an error row is not scrubbed                               pass 29 fail 1  CAUGHT
+
+38 applied · 38 caught · 0 survived · 0 NOT APPLIED

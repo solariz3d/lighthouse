@@ -1,0 +1,818 @@
+# R1 the press says nothing of the bank held back
+# exit 1
+TAP version 13
+# Subtest: row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds
+ok 1 - row 1: Close banks every upright curve of the closed lap into its turn, not only the road Finish adds
+  ---
+  duration_ms: 3525.2182
+  type: 'test'
+  ...
+# Subtest: row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank
+ok 2 - row 2: a curve he banked himself keeps its bank byte for byte, and the joints into it meet his bank
+  ---
+  duration_ms: 3.9839
+  type: 'test'
+  ...
+# Subtest: row 3: a curve laid as two pieces banks as one: the lean holds across their joint
+ok 3 - row 3: a curve laid as two pieces banks as one: the lean holds across their joint
+  ---
+  duration_ms: 32.3426
+  type: 'test'
+  ...
+# Subtest: row 4: the near path (an end already at the start) closes banked
+ok 4 - row 4: the near path (an end already at the start) closes banked
+  ---
+  duration_ms: 729.5146
+  type: 'test'
+  ...
+# Subtest: row 5: the road a pit lane runs beside is not banked
+ok 5 - row 5: the road a pit lane runs beside is not banked
+  ---
+  duration_ms: 3289.1731
+  type: 'test'
+  ...
+# Subtest: row 7: a loop is not banked, even one that turns; a level curve on the same lap is
+ok 6 - row 7: a loop is not banked, even one that turns; a level curve on the same lap is
+  ---
+  duration_ms: 379.7422
+  type: 'test'
+  ...
+# Subtest: row 8: a tube is not banked; a level curve on the same lap is
+ok 7 - row 8: a tube is not banked; a level curve on the same lap is
+  ---
+  duration_ms: 540.7057
+  type: 'test'
+  ...
+# Subtest: row 9: a straight next to a curve keeps the bank it was laid with
+ok 8 - row 9: a straight next to a curve keeps the bank it was laid with
+  ---
+  duration_ms: 5.3848
+  type: 'test'
+  ...
+# Subtest: row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased
+not ok 9 - row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased
+  ---
+  duration_ms: 8282.1511
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:243:1'
+  failureType: 'testCodeFailure'
+  error: 'the sharp after a turn: the report says where the bank was eased or withheld: closed: laid 904 m of new road from the end to the start (3 pieces); nothing already built moved'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: laid 904 m of new road from the end to the start (3 pieces); nothing already built moved'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:248:3)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 11: a turn that flips over extend's 20 m transition: the same
+not ok 10 - row 11: a turn that flips over extend's 20 m transition: the same
+  ---
+  duration_ms: 6438.7345
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:250:1'
+  failureType: 'testCodeFailure'
+  error: 'the 20 m flip: the report says where the bank was eased or withheld: closed: bent the last 4 pieces (1702 m) by up to 82.6 m'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: bent the last 4 pieces (1702 m) by up to 82.6 m'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:257:38)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld
+not ok 11 - row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 6498.4238
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'Sharp ramp 40 m: the report says where the bank was eased or withheld: closed: laid 924 m of new road from the end to the start (3 pieces); nothing already built moved'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: laid 924 m of new road from the end to the start (3 pieces); nothing already built moved'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld
+not ok 12 - row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 6304.789
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'Sharp ramp 100 m: the report says where the bank was eased or withheld: closed: laid 957 m of new road from the end to the start (3 pieces); nothing already built moved'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: laid 957 m of new road from the end to the start (3 pieces); nothing already built moved'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 13 - row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 4741.2572
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 40 m transition: the report says where the bank was eased or withheld: closed: bent the last 4 pieces (1702 m) by up to 41.5 m'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: bent the last 4 pieces (1702 m) by up to 41.5 m'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 14 - row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 4095.4432
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 50 m transition: the report says where the bank was eased or withheld: closed: bent the last 2 pieces (1131 m) by up to 14.0 m'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: bent the last 2 pieces (1131 m) by up to 14.0 m'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 15 - row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3971.4479
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 60 m transition: the report says where the bank was eased or withheld: closed: bent the last 2 pieces (1131 m) by up to 27.2 m'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: bent the last 2 pieces (1131 m) by up to 27.2 m'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 16 - row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3945.7117
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 70 m transition: the report says where the bank was eased or withheld: closed: bent the last 2 pieces (1131 m) by up to 52.3 m'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: bent the last 2 pieces (1131 m) by up to 52.3 m'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 17 - row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 5136.8908
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 80 m transition: the report says where the bank was eased or withheld: closed: bent the last 4 pieces (1702 m) by up to 75.3 m'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: bent the last 4 pieces (1702 m) by up to 75.3 m'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 18 - row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3547.1912
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'a 100 m transition: the report says where the bank was eased or withheld: closed: bent the last 4 pieces (1702 m) by up to 124 m'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: bent the last 4 pieces (1702 m) by up to 124 m'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld
+not ok 19 - row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3621.9384
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: "e60 (Extend's default blend over a 60 m piece): the report says where the bank was eased or withheld: closed: bent the last 2 pieces (1131 m) by up to 27.1 m"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: bent the last 2 pieces (1131 m) by up to 27.1 m'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld
+not ok 20 - row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld
+  ---
+  duration_ms: 3750.1842
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-o25-d453\\test\\core_close_banks_lap.test.js:273:33'
+  failureType: 'testCodeFailure'
+  error: 'e80 (over an 80 m piece): the report says where the bank was eased or withheld: closed: bent the last 4 pieces (1702 m) by up to 75.3 m'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'closed: bent the last 4 pieces (1702 m) by up to 75.3 m'
+  operator: 'match'
+  stack: |-
+    flipLap (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:178:20)
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-o25-d453\test\core_close_banks_lap.test.js:274:13)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld
+ok 21 - row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5260.0545
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld
+ok 22 - row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5379.3422
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld
+ok 23 - row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5047.31
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld
+ok 24 - row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5060.3032
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld
+ok 25 - row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5461.4588
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld
+ok 26 - row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4872.6313
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld
+ok 27 - row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5171.2828
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld
+ok 28 - row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5333.2972
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld
+ok 29 - row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5557.6655
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld
+ok 30 - row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5460.8392
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld
+ok 31 - row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 5203.9728
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld
+ok 32 - row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4208.8643
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld
+ok 33 - row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3750.9747
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld
+ok 34 - row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3836.9472
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld
+ok 35 - row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4272.2597
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld
+ok 36 - row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4531.6534
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld
+ok 37 - row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4294.8361
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld
+ok 38 - row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4257.4738
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld
+ok 39 - row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4844.8528
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld
+ok 40 - row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4103.9756
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld
+ok 41 - row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4931.2408
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld
+ok 42 - row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4515.0407
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld
+ok 43 - row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3801.5056
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld
+ok 44 - row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4618.8919
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld
+ok 45 - row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4063.4231
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld
+ok 46 - row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4391.707
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld
+ok 47 - row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4469.5325
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld
+ok 48 - row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4482.0197
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld
+ok 49 - row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4609.5564
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld
+ok 50 - row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4163.8415
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld
+ok 51 - row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4355.7586
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld
+ok 52 - row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4766.2121
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld
+ok 53 - row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4831.3661
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld
+ok 54 - row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3988.4461
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld
+ok 55 - row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4104.7
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld
+ok 56 - row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4183.633
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld
+ok 57 - row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 3969.8745
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld
+ok 58 - row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4002.09
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld
+ok 59 - row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4024.4854
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld
+ok 60 - row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4358.6625
+  type: 'test'
+  ...
+# Subtest: row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld
+ok 61 - row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4146.363
+  type: 'test'
+  ...
+# Subtest: row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld
+ok 62 - row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4444.4341
+  type: 'test'
+  ...
+# Subtest: row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld
+ok 63 - row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4355.1462
+  type: 'test'
+  ...
+# Subtest: row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld
+ok 64 - row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld
+  ---
+  duration_ms: 4528.111
+  type: 'test'
+  ...
+# Subtest: row 15: a 90° curve laid as four short pieces is banked as one curve, by the run
+ok 65 - row 15: a 90° curve laid as four short pieces is banked as one curve, by the run
+  ---
+  duration_ms: 1844.2161
+  type: 'test'
+  ...
+# Subtest: row 16: a curve unwinding over 250 m into a gentle opposite curve keeps its bank: no flip pin, none leans out
+ok 66 - row 16: a curve unwinding over 250 m into a gentle opposite curve keeps its bank: no flip pin, none leans out
+  ---
+  duration_ms: 3236.8011
+  type: 'test'
+  ...
+# Subtest: row 17: a short curve between two straights is banked, and leaves its turn banked
+ok 67 - row 17: a short curve between two straights is banked, and leaves its turn banked
+  ---
+  duration_ms: 3284.6294
+  type: 'test'
+  ...
+# Subtest: row 18: an 80 m straight between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+ok 68 - row 18: an 80 m straight between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+  ---
+  duration_ms: 362.0042
+  type: 'test'
+  ...
+# Subtest: row 18: a link at R 10000 between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+ok 69 - row 18: a link at R 10000 between opposite corners, closed by close() and banked: nothing withheld, nothing leans out
+  ---
+  duration_ms: 373.1329
+  type: 'test'
+  ...
+# Subtest: row 19: a banked lap rolls no faster than the amber over his pieces (Sharp ramp 40, whose first try does)
+ok 70 - row 19: a banked lap rolls no faster than the amber over his pieces (Sharp ramp 40, whose first try does)
+  ---
+  duration_ms: 4959.386
+  type: 'test'
+  ...
+# Subtest: row 6: the bank lands in Close's one undo step
+ok 71 - row 6: the bank lands in Close's one undo step
+  ---
+  duration_ms: 1967.4447
+  type: 'test'
+  ...
+# Subtest: row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+ok 72 - row 1: every route the solver gives, laid out arc, straight, arc, ends on the start pose
+  ---
+  duration_ms: 2.458
+  type: 'test'
+  ...
+# Subtest: row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+ok 73 - row 2: an end behind the start and pointing at it is one straight of the gap, with no turn
+  ---
+  duration_ms: 0.1356
+  type: 'test'
+  ...
+# Subtest: row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+ok 74 - row 3: a track is finished with new pieces only, closed, and the new road ends on the start
+  ---
+  duration_ms: 968.4088
+  type: 'test'
+  ...
+# Subtest: row 4: refusals by name: a closed loop, an empty track
+ok 75 - row 4: refusals by name: a closed loop, an empty track
+  ---
+  duration_ms: 690.411
+  type: 'test'
+  ...
+# Subtest: row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+ok 76 - row 5: an end upside down rolls back upright on a straight of its own (last onto the start, or first when that keeps the car on the road), never in a turn, and the lap closes with the bank of the start
+  ---
+  duration_ms: 3654.0125
+  type: 'test'
+  ...
+# Subtest: row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+ok 77 - row 8: the roll Finish lays, read as the checker reads it, is under the amber bar everywhere on the new road (54° and 180°)
+  ---
+  duration_ms: 6073.5321
+  type: 'test'
+  ...
+# Subtest: row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+ok 78 - row 9: a roll whose first guess is too short (factor 1, and the old 1.1) is measured and lengthened until it is under the amber bar
+  ---
+  duration_ms: 5651.2096
+  type: 'test'
+  ...
+# Subtest: row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+ok 79 - row 10: a banked end: the road Finish lays keeps the car on it (the lap proof of the checker passes), at 54° and at 126°
+  ---
+  duration_ms: 7858.7401
+  type: 'test'
+  ...
+# Subtest: row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+ok 80 - row 11: F.roadHold is the own test of the lap proof: the same place on the road the old Finish laid at a banked end, and nothing on the new road
+  ---
+  duration_ms: 2663.3672
+  type: 'test'
+  ...
+# Subtest: row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+ok 81 - row 13: an end Finish cannot close onto a road the car stays on is refused by name, with where the car leaves the road and what to change
+  ---
+  duration_ms: 4330.0231
+  type: 'test'
+  ...
+# Subtest: row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+ok 82 - row 12: re-aimed by where it really ends, the compact road with the roll last is kept at a banked end that turns the way it is banked (and its mirror)
+  ---
+  duration_ms: 2435.5082
+  type: 'test'
+  ...
+# Subtest: row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+ok 83 - row 6: an end a quarter turn short of the lap is finished with one turn and one straight, not a detour
+  ---
+  duration_ms: 537.9293
+  type: 'test'
+  ...
+# Subtest: row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+ok 84 - row 7: the one-turn routes, laid out, end on the start pose; none tighter than the floor
+  ---
+  duration_ms: 0.9467
+  type: 'test'
+  ...
+# Subtest: row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+ok 85 - row 14: an end already at the start is closed by bending its last pieces, with no new road and no loop
+  ---
+  duration_ms: 741.5046
+  type: 'test'
+  ...
+# Subtest: row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves
+ok 86 - row 15: the reported near-closed save closes by bending its last pieces: no new road, nothing else moves, the lap proves
+  ---
+  duration_ms: 77425.5542
+  type: 'test'
+  ...
+# Subtest: row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+ok 87 - row 16: an end at the start whose every bend leaves the road is refused by name (FINISH_NEAR), never given new road
+  ---
+  duration_ms: 1816.2516
+  type: 'test'
+  ...
+# Subtest: row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+ok 88 - row 17: an end straight behind the start, on its line and pointing the same way, is finished with that straight (8, 20 and 40 m), not a loop
+  ---
+  duration_ms: 10987.7059
+  type: 'test'
+  ...
+# Subtest: row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 89 - row 1: TEST TRACK 10's closer leans into its curves, carries less side load, closes, and rolls under the amber # SKIP fixtures-d431/testtrack10-open.t180track is not here (TEST TRACK 10: a private track, kept off the repository)
+  ---
+  duration_ms: 0.7057
+  type: 'test'
+  ...
+# Subtest: row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber
+ok 90 - row 2: TEST 10's closer leans into its curves, carries less side load, closes, and rolls under the amber # SKIP fixtures-d431/test10-open.t180track is not here (TEST 10: a private track, kept off the repository)
+  ---
+  duration_ms: 0.088
+  type: 'test'
+  ...
+# Subtest: row 3: a closer with only gentle curves is banked by its share and no more
+ok 91 - row 3: a closer with only gentle curves is banked by its share and no more
+  ---
+  duration_ms: 5079.9289
+  type: 'test'
+  ...
+# Subtest: row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way
+ok 92 - row 5: P's turn 210, tail 300, roll 30: the roll straight laid first is not bent into a lean the wrong way
+  ---
+  duration_ms: 4994.5523
+  type: 'test'
+  ...
+# Subtest: row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken
+ok 93 - row 6: P's turn 180, tail 1,200, roll 10: the closer that banks its turns is the one taken
+  ---
+  duration_ms: 4427.7269
+  type: 'test'
+  ...
+# Subtest: row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken
+ok 94 - row 7: P's turn 180, tail 1,200, roll 30: the closer that banks its turns is the one taken
+  ---
+  duration_ms: 4413.6516
+  type: 'test'
+  ...
+# Subtest: row 9: a lap whose own turn is tight (180° over 400 m): never a closer that leans out
+ok 95 - row 9: a lap whose own turn is tight (180° over 400 m): never a closer that leans out
+  ---
+  duration_ms: 4823.1182
+  type: 'test'
+  ...
+# Subtest: row 10: his two tracks keep the routes D439 gave them
+ok 96 - row 10: his two tracks keep the routes D439 gave them # SKIP fixtures-d431/testtrack10-open.t180track is not here (TEST TRACK 10: a private track, kept off the repository)
+  ---
+  duration_ms: 1.5824
+  type: 'test'
+  ...
+# Subtest: row 11: a crest under a bend is not a lean out: P's pitched lap takes its short closer, leaning into its turn
+ok 97 - row 11: a crest under a bend is not a lean out: P's pitched lap takes its short closer, leaning into its turn
+  ---
+  duration_ms: 3757.1156
+  type: 'test'
+  ...
+# Subtest: row 12: where every road that closes leans out, Finish refuses by name and says the least of them
+ok 98 - row 12: where every road that closes leans out, Finish refuses by name and says the least of them
+  ---
+  duration_ms: 7778.3382
+  type: 'test'
+  ...
+# Subtest: row 8: an end banked the way the closer turns is closed rolled last, on its own bank and with nothing banked on top
+ok 99 - row 8: an end banked the way the closer turns is closed rolled last, on its own bank and with nothing banked on top
+  ---
+  duration_ms: 1307.3114
+  type: 'test'
+  ...
+# Subtest: row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+ok 100 - row 4: a straight gets none: a finish that is only a straight keeps the laid bank
+  ---
+  duration_ms: 735.5706
+  type: 'test'
+  ...
+1..100
+# tests 100
+# suites 0
+# pass 85
+# fail 12
+# cancelled 0
+# skipped 3
+# todo 0
+# duration_ms 285089.3117
+
+# stderr

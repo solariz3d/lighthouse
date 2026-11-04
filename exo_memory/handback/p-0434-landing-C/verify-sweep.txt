@@ -1,0 +1,8 @@
+EQUAL    src/validate/index.js  code b3c48ff506aaea59  comments 240 -> 240
+   control: code change DIFFERS (seen); comment change EQUAL
+src/validate: 1 changed .js file(s): EQUAL 1, DIFFERS 0; controls failing 0
+   control: code change DIFFERS (seen); comment change EQUAL
+EQUAL    test/validate_heap.test.js  code e962845c8a4620f9  comments 15 -> 15
+   control: code change DIFFERS (seen); comment change EQUAL
+test: 2 changed .js file(s): EQUAL 1, DIFFERS 1; controls failing 0
+ids renamed in code: 4; code equal with them mapped back: EQUAL; code equal as is: DIFFERS

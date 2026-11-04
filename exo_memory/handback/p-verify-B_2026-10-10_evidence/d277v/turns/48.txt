@@ -1,0 +1,19 @@
+MESSAGE 48  msg_011CfmjFxazubHKz2yeTkCrc  seat librarian  ts 2026-10-06T21:55:53.011Z  turn L79359..L79370 (next prompt L79376)
+CLAIMS:
+  [msg_011CfmjFxazubHKz2yeTkCrc|5] "Our test crashes happen while the PC is running only our tests": check the test run logs and timestamps. The next clause admits we don't know what else was running, so this may be overstated.
+  [msg_011CfmjFxazubHKz2yeTkCrc|8] "League runs Riot Vanguard": confirm Vanguard (`vgk` driver, `vgc` service) is actually installed on this machine.
+
+--- L79359 user 2026-10-06T21:55:43.363Z
+USER: its just new tft causing the crash I know it, i want the fastest ram speed.
+--- L79370 assistant 2026-10-06T21:55:56.764Z  <<< THE CLAIM'S MESSAGE
+TEXT: Fair enough. It's your machine, and EXPO stays on. Your theory isn't far-fetched, either. League runs Riot Vanguard, which is a kernel-level anti-cheat driver, and drivers like that really can cause blue screens and crashes system-wide. The League client and Vanguard both show up in the crash log.
+
+Two things that don't quite fit, just so you have the full picture:
+- **Some of the crashes came before the new TFT,** like Windows Defender's scanner crashing twice on 9/27, and blue screens on 9/18.
+- **Our test crashes happen while the PC is running only our tests,** though I can't tell whether League or Vanguard was running in the background at the time.
+
+**A way to test your theory without slowing your RAM:** next time the PC crashes, note whether League had been open that session. Or for a couple of days when you're not playing, quit Vanguard from the tray. Vanguard keeps running in the background even with League closed. If the crashes stop while it's off, you've found it, and you keep 6000 MT/s.
+
+Either way, a crash during a test won't hurt your work. It gets re-run and reported.
+
+Sources: none

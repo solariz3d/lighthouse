@@ -1,0 +1,98 @@
+{
+ "eq-FINAL TEST.t180track": {
+  "bf0f333": "5c2fac368923efffa900070aeccddbbf29314289cdcf7a367653a57628b9b55c",
+  "e8639987": "5c2fac368923efffa900070aeccddbbf29314289cdcf7a367653a57628b9b55c",
+  "stations": [
+   3001,
+   3001
+  ]
+ },
+ "eq-FIRST TRACK.t180track": {
+  "bf0f333": "b781bb301df7959a07f4108548ab260a15490af98769d38abc670220bdd45989",
+  "e8639987": "b781bb301df7959a07f4108548ab260a15490af98769d38abc670220bdd45989",
+  "stations": [
+   7214,
+   7214
+  ]
+ },
+ "eq-HUMP BUG.t180track": {
+  "bf0f333": "08f82f1e721f6d0c21f7761380d37cb3ccb9bec3d9931df52fcd8fe5204ea5ab",
+  "e8639987": "08f82f1e721f6d0c21f7761380d37cb3ccb9bec3d9931df52fcd8fe5204ea5ab",
+  "stations": [
+   1151,
+   1151
+  ]
+ },
+ "eq-T-180 OVAL.t180track": {
+  "bf0f333": "29fa361a7c2475ade851b2b5c348cce51abcf6a45728435ff06693276a6d4f0e",
+  "e8639987": "29fa361a7c2475ade851b2b5c348cce51abcf6a45728435ff06693276a6d4f0e",
+  "stations": [
+   3001,
+   3001
+  ]
+ },
+ "eq-T-180 TUBE OVAL.t180track": {
+  "bf0f333": "01fc23aa29c622d9596707e4b983794d1805b55cb481c344c1f6c2a79aa22279",
+  "e8639987": "01fc23aa29c622d9596707e4b983794d1805b55cb481c344c1f6c2a79aa22279",
+  "stations": [
+   3001,
+   3001
+  ]
+ },
+ "eq-T180 TUBE V2.t180track": {
+  "bf0f333": "5c2fac368923efffa900070aeccddbbf29314289cdcf7a367653a57628b9b55c",
+  "e8639987": "5c2fac368923efffa900070aeccddbbf29314289cdcf7a367653a57628b9b55c",
+  "stations": [
+   3001,
+   3001
+  ]
+ },
+ "eq-TEST 1 recovered.t180track": {
+  "bf0f333": "417b6083129d5e103ba2cc19d94eb5d328fdc91ed557679fce74bf9177fe2d37",
+  "e8639987": "417b6083129d5e103ba2cc19d94eb5d328fdc91ed557679fce74bf9177fe2d37",
+  "stations": [
+   7631,
+   7631
+  ]
+ },
+ "eq-TEST 1.t180track": {
+  "bf0f333": "92a0819143923e0b450c9d1ade7a8f77a0895597e21780697b64bec144e1bb35",
+  "e8639987": "92a0819143923e0b450c9d1ade7a8f77a0895597e21780697b64bec144e1bb35",
+  "stations": [
+   7631,
+   7631
+  ]
+ },
+ "eq-TEST OVAL.t180track": {
+  "bf0f333": "5fed7a87e46da03b763f60e511b0affac27d5212feac20284e7e301d48a51cec",
+  "e8639987": "5fed7a87e46da03b763f60e511b0affac27d5212feac20284e7e301d48a51cec",
+  "stations": [
+   3001,
+   3001
+  ]
+ },
+ "eq-TEST TRACK 3.t180track": {
+  "bf0f333": "7dab6deb0dd59f3ed873e54a8d06141853a72118fc3bcd9e8cf97fc156ebbb03",
+  "e8639987": "7dab6deb0dd59f3ed873e54a8d06141853a72118fc3bcd9e8cf97fc156ebbb03",
+  "stations": [
+   2751,
+   2751
+  ]
+ },
+ "eq-TEST.t180track": {
+  "bf0f333": "d089ec67fb81066bd5699cf2268886f1bc59a2253d9d3467d0c1aaf33b314c57",
+  "e8639987": "d089ec67fb81066bd5699cf2268886f1bc59a2253d9d3467d0c1aaf33b314c57",
+  "stations": [
+   1136,
+   1136
+  ]
+ },
+ "eq-TRACK 2.t180track": {
+  "bf0f333": "906e5876701a729572f4d9b9fa65748edfda9ad114a595607c5ca8d0f9b312c2",
+  "e8639987": "906e5876701a729572f4d9b9fa65748edfda9ad114a595607c5ca8d0f9b312c2",
+  "stations": [
+   5282,
+   5282
+  ]
+ }
+}

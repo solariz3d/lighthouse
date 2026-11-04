@@ -1,0 +1,50 @@
+$ node "consonance/tools/js-suite.test.js"
+(exit 0)
+  ok   a tree with NO test files is refused, not reported green
+  ok   a passing file is green and the run exits 0
+  ok   a file that reaches its summary and fails is FAILED, not crashed
+  ok   a file that prints assertions then DIES is CRASHED, not failed
+  ok   exit 0 with no summary is SILENT — indistinguishable from testing nothing
+  ok   a declared EXPECTED-RED file that is red does not fail the run
+  ok   a declared EXPECTED-RED file that goes GREEN fails the run
+  ok   a file that only QUOTES the marker mid-line does not declare itself
+  ok   the marker below the header window does not declare the file
+  ok   a declared canary that CRASHES is reported as crashed, not excused
+  ok   a summary counting ZERO passes is SILENT, not green
+  ok   the middle-dot summary with passes is GREEN, not silent (L058 R2)
+  ok   the middle-dot summary with a failure is FAILED, not crashed
+  ok   the middle-dot summary with ZERO passes but a failure is FAILED, not silent
+  ok   the middle-dot summary counting ZERO of everything is still SILENT
+  ok   the same words with an UNMEASURED separator are not a summary — still SILENT
+  ok   a SILENT file fails the run — rule 2 holds per file, not just per tree
+  ok   node_modules is not walked
+  ok   a *_evidence directory is not walked, and a near-miss name still is
+  ok   the run prints how many evidence files it skipped, and a failing one does not fail the run
+  ok   all three real summary shapes count as completed
+  ok   a MACHINE-BOUND file whose universe is present runs and is an ordinary green
+  ok   a MACHINE-BOUND file whose universe is absent is NOT-RUN and does not fail the run
+  ok   the run prints how many files ran, how many were NOT-RUN, and the rule that decided
+  ok   a file that CRASHED is not counted among the files that ran
+  ok   every discovered file appears in exactly one bucket on the counting line
+  ok   a MACHINE-BOUND file that RUNS and fails is FAILED, not excused
+  ok   a MACHINE-BOUND file that CRASHES is CRASHED, not excused
+  ok   a MACHINE-BOUND file with no gate at all fails as GATE INERT
+  ok   a gate that only honours the runner's flag, and reads no corpus, fails as GATE INERT
+  ok   a NOT-RUN whose assertions PASS under force fails as GATE TOO STRICT
+  ok   a NOT-RUN whose forced run is RED is still NOT-RUN, and the forced result is printed
+  ok   a NOT-RUN on the machine the file calls home is a class error
+  ok   the same file away from home is an ordinary NOT-RUN
+  ok   a MACHINE-BOUND declaration missing root= or home= is a class error
+  ok   a MACHINE-BOUND file that prints no UNIVERSE line is a class error
+  ok   a NOT-RUN with an empty reason is a class error
+  ok   claiming NOT-RUN while ALSO completing a run is a class error
+  ok   declaring BOTH classes is refused rather than resolved by precedence
+  ok   a file that only QUOTES the MACHINE-BOUND marker does not declare itself
+  ok   the MACHINE-BOUND marker below the header window does not declare the file
+  ok   a NOT-RUN mentioned mid-line in output is prose, not a declaration
+  ok   an UNDECLARED file printing NOT-RUN gets no exemption from it
+  ok   CARRIER: the header describes the marker rule the code actually enforces
+  ok   CARRIER: the two narrowings the paragraph names are the two the runner applies
+
+js-suite-self: 45 passed, 0 failed
+

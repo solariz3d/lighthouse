@@ -1,0 +1,36 @@
+✖ WIRE: producer and both consumers resolve the SAME findings path by default (84.2009ms)
+✔ WIRE: one env var moves all three together (VANTAGE_FINDINGS), and VANTAGE_DATA rebases all defaults (187.9116ms)
+✔ B→A: fromV2 maps claims/paths/heads to sentences/wrote/read/head (0.5083ms)
+✔ B→A: a v1 row (no claims[]) passes through unmapped and fails the C2 gate LOUDLY (0.8894ms)
+✔ KNOWN GAP pinned: schema v2 carries no excerpt, so a claimless floor row is UNLAUNCHABLE (visible), not silent (0.169ms)
+✔ A→K: a SURFACE finding written under the producer's constants is rendered by the consumer hook (98.4427ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 439.1007
+
+✖ failing tests:
+
+test at consonance\tools\attached.test.js:60:1
+✖ WIRE: producer and both consumers resolve the SAME findings path by default (84.2009ms)
+  AssertionError [ERR_ASSERTION]: findings-return.js reads a different default path than second-vantage.js writes — the 2026-08-15 split, again
+  actual expected
+  
+  'GC:\\cConsonance-scratch\\d454s\\home\\.consonanceta\\vantage_findings.jsonl'
+  
+      at TestContext.<anonymous> (G:\consonance-scratch\d454s\clone\consonance\tools\attached.test.js:62:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'G:\\consonance-scratch\\d454s\\home\\.consonance\\vantage_findings.jsonl',
+    expected: 'C:\\Consonance\\data\\vantage_findings.jsonl',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

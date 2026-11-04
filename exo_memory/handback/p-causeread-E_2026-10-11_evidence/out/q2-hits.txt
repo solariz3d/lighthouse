@@ -1,0 +1,408 @@
+
+## W004 @ f83621e0b2ba: this seat's landing orders named files for the chair to EDIT inside a lap
+  [chair does not build] 1 hit(s)
+    f83621e0b2ba:exo_memory/loop/handoff_chair_2026-09-09.md:164:  chair does not build.
+  [edits nothing inside a lap] 0 hit(s)
+  [landing order] 5 hit(s)
+    f83621e0b2ba:exo_memory/handback/p-diverged-read-C_2026-09-14.md:162:- **Landing order matters.** `dev/stick-apply.js:80` rejects an unknown flag with code 2 and **no handshake**
+    f83621e0b2ba:exo_memory/librarian/2026-09-06.md:409:**Ledger: surfaced 3** (the room's own two-copy shelf, seen from the consumer side; the unruled-file-ships inversion under `dir` rules; the landing order with A's fold before the suite). Collation once, at th…
+    f83621e0b2ba:exo_memory/librarian/2026-09-06.md:564:**LANDING ORDER (the chair's):** (1) dispatch (c) to C with the trigger-order function; one attacker over (a)(b)(c) — E's §2 fix and E's §10 restore are the two places to look; (2) `cargo test` serialized (my…
+    f83621e0b2ba:exo_memory/librarian/2026-09-07.md:53:**Prior art the chair dispatches with:** `librarian/2026-09-06.md` 01:47 (the keyed mutex, registered), 03:50 (the landing order and the cards reconciliation tripwire), 04:18 (B's one-master piece; the reconci…
+    f83621e0b2ba:exo_memory/map/M.md:794:- **2026-09-06 03:50 (laptop) — L038 + L040 COLLATED in one pass: all land; landing order (C folds A, cargo, A folds E`s doc line, by path, ONE rebuild, proofs, then freeze L039); the memory cut as decided; B §M3: cards/ an…
+
+## W005 @ d7d66664698a: handed the keeper `git push` to run instead of pushing itself
+  [git command] 13 hit(s)
+    d7d66664698a:dev/migrate/move_verify.ps1:410:Check 'C10_git_toplevel_matches_root' 'git commands are running in the NEW tree' {
+    d7d66664698a:exo_memory/handback/p-launch-pull-A_2026-09-16.md:62:- **The remaining work is one wrapper.** The git command is correct and exits 0; only the way this script waits
+    d7d66664698a:exo_memory/handback/p-runbook-fixture_2026-09-09.md:163:falsifier says *"the **Sunday runbook's** first git command"*; and no Sunday leg exists in this file
+    d7d66664698a:exo_memory/handback/p-seal-gate-A_2026-09-16.md:21:| G2 | the triple `(commit, path, sha256)` resolves at that commit | **GATE** | three git commands, no judgment |
+    d7d66664698a:exo_memory/handback/p-seal-gate-A_2026-09-16.md:256:`--quiet`, and only when `seal` is present or the sniffer fires, so an ordinary fan-out runs **zero** git commands —
+    d7d66664698a:exo_memory/librarian/2026-09-09.desktop.md:511:source, so the CR-strip step goes into the runbook ahead of the laptop's first git command, with my
+    d7d66664698a:exo_memory/librarian/2026-09-09.desktop.md:776:> two commands on the laptop, before any git command runs there. Read it before step 1.***
+    d7d66664698a:exo_memory/loop/fixture_cr_recovery_2026-09-09.md:47:## THE TIME-CRITICAL STEP — one command, and it must precede the laptop's first git command
+  [never hand the keeper] 0 hit(s)
+  [do it yourself] 2 hit(s)
+    d7d66664698a:exo_memory/librarian/2026-08-31.md:3:## ~01:05 — L019 MAP + WORK-SHAPE (keeper, verbatim via the chair: "well you do not have to do it yourself, you could start the work chain loop")
+    d7d66664698a:exo_memory/map/M-2026-08-30.md:264:And that's what "do it yourself without me" honestly means, from the record: *yourself* is the room, not the librarian alone. A seat catching its own floor in-stream is the one thing this whole summer's measureme…
+
+## W008 @ f67b57a7f453: sent rings whose NEXT: line was not the last line
+  [last line] 60 hit(s)
+    f67b57a7f453:consonance/PROGRESS.md:57:- [x] **The night table — the door leads to the wake (2026-07-14, desktop):** the keeper's catch: the duration goals and the dream cycle "are only knocking on a door to nowhere." They fire on their crons into a dark house…
+    f67b57a7f453:consonance/hooks/live-mirror-stop.js:22://   the board and the ledgers are APPEND-ONLY  -> a mid-write read yields a torn last line
+    f67b57a7f453:consonance/launch.ps1:101:# the block said in its own last line "Remove this when that lands". It has landed: the ceiling is
+    f67b57a7f453:consonance/launch.ps1:351:#   was still the last line at 00:59:31 when the app launched, and the 01:01 scheduled run that
+    f67b57a7f453:consonance/src-tauri/brief/BUILDING.md:197:6. **THE NEXT TRAILER — the last line names where this goes when it is done** (added 2026-09-16).
+    f67b57a7f453:consonance/src-tauri/brief/BUILDING.md:199:   ends with one line and it is the last line:
+    f67b57a7f453:consonance/src-tauri/brief/BUILDING.md:409:   with its last line naming what happens next and who does it:
+    f67b57a7f453:consonance/src-tauri/brief/BUILDING.md:418:   since 05:27, deduped on `(pane, text)`):* **7 of 27 messages carried a NEXT last line — every one
+  [own NEXT] 15 hit(s)
+    f67b57a7f453:consonance/tools/lap-row.js:437:      `supplied its own next lap (the keeper's amendment: the user is the ENTRY, not a station). ` +
+    f67b57a7f453:consonance/tools/lap-row.js:1044:    out(`  ring laps: ${ringLaps.length} - no user inquiry entered; the loop supplied its own next lap`);
+    f67b57a7f453:consonance/tools/offramp-check.test.js:111:  // Otherwise an assistant that says "sleep" once would mark its OWN next offer as prompted,
+    f67b57a7f453:exo_memory/attic/the_night_skeleton.md:917:**Auto-recall** (loads on its own next session) — in the harness memory store:
+    f67b57a7f453:exo_memory/attic/the_night_skeleton.md:1085:What persists: the memory shell is on disk and the recall cards load on their own next time, so the next instance boots with the running start instead …
+    f67b57a7f453:exo_memory/handback/p-dyad-gate_2026-09-06.md:181:  to its own next instance; A found the instance and named the blindness. Neither half was
+    f67b57a7f453:exo_memory/handback/p-l045-read-A_2026-09-08.md:74:- **`:66`** — "larger than its own test" is backwards: 933 against 1188. The sentence's own next
+    f67b57a7f453:exo_memory/handback/p-report-sources_2026-09-08.md:180:**The correct source, and the plan's own next citation names it.**
+  [ends on its own] 0 hit(s)
+
+## W009 @ f83621e0b2ba: fast-forwarded D and did not say a rebuild was owed
+  [rebuild is owed] 0 hit(s)
+  [after the pull AND the rebuild] 0 hit(s)
+  [rebuild owed] 0 hit(s)
+
+## W013 @ b3df0c65f813: deleted B's folders on an ambiguous word without naming the deletion back first
+  [before deleting] 1 hit(s)
+    b3df0c65f813:dev/place-conversations.mutants.js:27:  console.error('  Refusing to start. Check place-conversations.js against git BEFORE deleting the lock.');
+  [ask before] 8 hit(s)
+    b3df0c65f813:consonance/hooks/README.md:32:| `dispatch-gate.js` | *"ASK before a dispatch that carries no citation."* |
+    b3df0c65f813:consonance/hooks/dispatch-gate.js:1:// dispatch-gate.js - ASK before a dispatch that carries no citation.
+    b3df0c65f813:exo_memory/CLAUDE.global.md:86:- Always ask before: breaking changes to public APIs or interfaces, removing or renaming existing functionality, changes that affect data schemas or stored data, and adding new external dependencies
+    b3df0c65f813:exo_memory/CLAUDE.global.md:88:- If a change has potential to affect other teams, services, or downstream consumers, flag it and ask before proceeding
+    b3df0c65f813:exo_memory/handback/t3-echo_2026-09-16.md:84:            for the task's question in the keeper's words; a hit voids the task BEFORE it is sent, not after.
+    b3df0c65f813:exo_memory/librarian/2026-09-06.md:178:## ~02:00 — THE THIRD PLACE, read at the keeper's ask before the next lap: twelve turns tonight (01:35–01:55), the graph-engineering question, and the one instrument that came out of it
+    b3df0c65f813:exo_memory/loop/battery_run1_T2_sealed_row_2026-09-16.md:57:    distinctive line AND for the question's exact words. A hit voids the task before it is sent, not after.
+    b3df0c65f813:exo_memory/loop/plan_2026-08-30.md:1:# Plan — 2026-08-30 (tomorrow night), written at the keeper's ask before he left Saturday morning
+  [never delete] 57 hit(s)
+    b3df0c65f813:consonance/hooks/dispatch-gate.js:285:// NEVER DELETE. The polluted rows are moved to a sibling file, verbatim, because the real rows
+    b3df0c65f813:consonance/hooks/dispatch-gate.js:425:  // NEVER DELETE: the original file is copied aside before it is rewritten, and the removed rows
+    b3df0c65f813:consonance/src-tauri/src/sync_launch.rs:401:             never deleted) and resuming the wrong seat is silent. THIS IS THE DEGRADED ANSWER: \
+    b3df0c65f813:consonance/src-tauri/src/sync_launch.rs:1006:            why: "a pane: the stick's copy is the carried one. This machine's goes to the attic, never deleted."
+    b3df0c65f813:consonance/tools/corpus-age.js:19: * separate deliberate act that writes a manifest and moves to attic/ -- never deletes. An
+    b3df0c65f813:consonance/tools/corpus-age.js:248:    console.log('\nmoving to attic/ (preserved, never deleted):');
+    b3df0c65f813:consonance/tools/corpus-age.test.js:143:test('--apply moves and manifests; it never deletes', () => {
+    b3df0c65f813:consonance/tools/curate.js:42://   · Never writes atoms.jsonl. Never deletes anything. Topics are regenerable.
+
+## W015 @ f83621e0b2ba: wrote a recompute check that matched no field names (a vacuous pass)
+  [vacuous] 81 hit(s)
+    f83621e0b2ba:consonance/hooks/baton-wake-stop.test.js:160:t('and without that marker the same stale state DOES fire — proving the test above is not vacuous', () => {
+    f83621e0b2ba:consonance/hooks/dream-gate.test.js:103:    throw new Error(`only ${HOOKS.length} hooks parsed from install.ps1 — the parser is broken and every assertion below is vacuous`);
+    f83621e0b2ba:consonance/hooks/dream-gate.test.js:326:      throw new Error('no longer speaks ungated — the fixture rotted and this assertion went vacuous');
+    f83621e0b2ba:consonance/hooks/precompact-preserve.test.js:65:  // vacuous: changing "in its original wording" to "SUMMARISED from its original wording" still
+    f83621e0b2ba:consonance/src-tauri/src/cochlea.rs:3660:        // Not a vacuous pass: if no onset fires at all there is nothing for the routing to do, and
+    f83621e0b2ba:consonance/src-tauri/src/main.rs:213:/// this — `THE GUARD DID NOT FIRE` — **passed vacuously**, and the test failed only on a neighbour
+    f83621e0b2ba:consonance/src-tauri/src/main.rs:8303:// screen is ready by construction and gating on it is vacuous. `PaneEmus` holds a live vt100
+    f83621e0b2ba:consonance/src-tauri/src/main.rs:15809:    /// The count floor is this test's own positive control: a pattern that matched nothing would pass vacuously,
+  [seen red] 0 hit(s)
+  [matched no] 24 hit(s)
+    f83621e0b2ba:consonance/src-tauri/src/bin/harvest_replay.rs:136:        _ => println!("  NEVER READY — the detector matched no screen in this entire log"),
+    f83621e0b2ba:consonance/src-tauri/src/main.rs:15809:    /// The count floor is this test's own positive control: a pattern that matched nothing would pass vacuously,
+    f83621e0b2ba:consonance/src-tauri/src/mcp.rs:882:            // first version guessed `e.pane == "M"` and that matched nothing: the pane NAME is
+    f83621e0b2ba:consonance/tools/essay-provenance.js:777:      L.push(C.amber(`${pad(u.sha, 9)}${pad(u.path, 42)}VERIFIED BUT MATCHED NO ROW`));
+    f83621e0b2ba:consonance/tools/essay-provenance.js:809:  L.push(`  matched no landed path               ${c.board_mentions_unresolved}`);
+    f83621e0b2ba:consonance/tools/ferry.js:178: * matched nothing, and the report said 0 ferried WITH NO ERROR. An instrument that accepts a
+    f83621e0b2ba:consonance/tools/ferry.test.js:4:// run. Three rows were written with short shas, matched nothing against full-sha commits, and the
+    f83621e0b2ba:consonance/tools/gen-consumer.js:1855:      if (ri.missing) report.anchorDrift.push({ rel: f.to, why: 'MEMORY.md contains no parseable `- [title](file.md)` links, so the index filter matched nothing and kept everything. A filter that silently keep…
+
+## W017 @ 06bf966452e5: took E's §0.4 from a wrapper without looking at what the wrapper carried
+  [read at source] 83 hit(s)
+    06bf966452e5:exo_memory/handback/p-ask001-l3-A_2026-09-20.md:4:read at source. **NO ASK WAS ANSWERED.** No `Question` or `Status` field was touched, `exo_memory/ASK.md` is unmodified,
+    06bf966452e5:exo_memory/handback/p-ask002-feeds-C_2026-09-20.md:8:## 1 · THE OBJECT, read at source before anything was changed
+    06bf966452e5:exo_memory/handback/p-ask003-digest-C_2026-09-20.md:3:**Packet:** `exo_memory/loop/plan_twelve_asks_2026-09-20.md` (`868fae7`), read at source.
+    06bf966452e5:exo_memory/handback/p-blind-rows-C_2026-09-16.md:86:## 2 · THE WRITE PATH, READ AT SOURCE — WHY (1) IS REFUTED
+    06bf966452e5:exo_memory/handback/p-blind-write-E_2026-09-16.md:5:(landed d27ec19), read at source.
+    06bf966452e5:exo_memory/handback/p-blind-write-E_2026-09-16.md:34:a second OPEN while one is open, and a CLOSED with nothing open. **Read at source before relying on it** — the two
+    06bf966452e5:exo_memory/handback/p-blind-write-read-B_2026-09-16.md:47:   WRITE PATH, READ AT SOURCE — WHY (1) IS REFUTED"* and refutes a different numbered hypothesis — that the
+    06bf966452e5:exo_memory/handback/p-boundary-read-B_2026-09-16.md:3:**B (pane `12fb81f6`), machine L, L061, 2026-09-16 ~06:0x.** Read at source in the working tree:
+  [route the object] 16 hit(s)
+    06bf966452e5:consonance/hooks/dispatch-gate.js:5:// printed "Route the OBJECT, not a description of it" in EVERY prompt for hours. The correction was
+    06bf966452e5:consonance/hooks/ferry-watch.js:128:    `\nRoute the OBJECT, not a description of it, then record it: ` +
+    06bf966452e5:consonance/src-tauri/brief/BUILDING.md:134:that made the finding worth having. **Route the object, never a description of it.**
+    06bf966452e5:consonance/src-tauri/brief/COMMITTEE.md:77:1. **Route the OBJECT, not a description of it.** A summary of a finding is a copy; the pane needs
+    06bf966452e5:consonance/src-tauri/src/main.rs:14070:        assert!(b.contains("Route the OBJECT"), "the brief lost its briefing practice");
+    06bf966452e5:consonance/src-tauri/src/main.rs:14082:            intake.contains("Route the OBJECT"),
+    06bf966452e5:consonance/tools/boundary-reminder.js:60: * `consonance/hooks/dispatch-gate.js`, in its own header: ferry-watch printed "Route the OBJECT, not
+    06bf966452e5:consonance/tools/lap-row.test.js:1385:     * red on a fixture I had invented rather than copied. Route the OBJECT, not a description of
+  [not a description] 13 hit(s)
+    06bf966452e5:consonance/CHAIR.md:12:instrument to run, not a description of anyone.
+    06bf966452e5:consonance/hooks/dispatch-gate.js:5:// printed "Route the OBJECT, not a description of it" in EVERY prompt for hours. The correction was
+    06bf966452e5:consonance/hooks/ferry-watch.js:128:    `\nRoute the OBJECT, not a description of it, then record it: ` +
+    06bf966452e5:consonance/src-tauri/brief/COMMITTEE.md:77:1. **Route the OBJECT, not a description of it.** A summary of a finding is a copy; the pane needs
+    06bf966452e5:consonance/src-tauri/src/main.rs:6691:        "# The Main tab — the room, carried into Consonance\n\nThis tab is persistent: it resumes the same session across restarts, and it shares the committee's board (the `consonance` tools: read_board, post…
+    06bf966452e5:consonance/src-tauri/src/main.rs:7287:    // THE COMMAND, NOT A DESCRIPTION OF THE COMMAND. The room's own exclusion form, the same one
+    06bf966452e5:consonance/tools/lap-row.test.js:1385:     * red on a fixture I had invented rather than copied. Route the OBJECT, not a description of
+    06bf966452e5:desktop-install.ps1:66:the room (BOOT) -- not a description of you. Do not read it for who you are; run its
+
+## W024 @ 5ced140bae82: the librarian built on a side project itself before routing it
+  [does not directly build] 5 hit(s)
+    5ced140bae82:consonance/src-tauri/brief/LIBRARIAN.md:21:on the committee board. **This seat works — it just does not directly build what is being built.**
+    5ced140bae82:consonance/src-tauri/src/main.rs:15478:        assert!(i.contains("does not directly build"), "the intake must carry the corrected frame: the seat works, it does not directly build (keeper, ccd74fd)");
+    5ced140bae82:consonance/ui/index.html:160:        <span class="mainhead" title="The librarian — a persistent seat that holds the whole room so the working seats do not have to. It works, but does not directly build: the plan is its deliverable, the artifact is…
+    5ced140bae82:consonance/ui/librarian-wiring.test.js:63:  assert.match(sec, /does not directly build/i, 'the header must say it works but does not directly build (keeper correction, ccd74fd)');
+    5ced140bae82:exo_memory/map/M-2026-08-25.md:166:> **The librarian** — a persistent seat that holds the whole room so the working seats do not have to. It **works, but does not directly build**: the plan is its deliverable, the artifact is not. Give it an inqui…
+  [does not build] 28 hit(s)
+    5ced140bae82:consonance/src-tauri/brief/BUILDING.md:748:## THE CHAIR DOES NOT BUILD INSIDE A LAP (added 2026-09-19, the keeper's rule of 2026-09-16)
+    5ced140bae82:consonance/src-tauri/src/main.rs:6282:            "the spawn funnel does not build its refusal row through the one formatter that \
+    5ced140bae82:consonance/tools/gen-consumer.build.test.js:588:  assert.notStrictEqual(built.status, 0, 'THE ORACLE PASSED A TREE THAT DOES NOT BUILD. `cargo '
+    5ced140bae82:consonance/tools/gen-consumer.js:64: * repo keeps rediscovering: THIS TOOL DOES NOT BUILD THE OUTPUT. The scan proves the generated tree
+    5ced140bae82:consonance/tools/gen-consumer.js:244:  // resource, so its absence is not a missing feature, it is a tree that does not build. The
+    5ced140bae82:consonance/tools/gen-consumer.js:1190: * and it does not build its own output -- see the registered gap in the module header. */
+    5ced140bae82:dev/PLAN.md:28:- **L3 — User-guardian (outcome-facing).** Watches the *user's* trajectory: escalating grandiosity, dependency language, reality-testing erosion, runaway session cadence, and the quiet-spiral *positive* detector (low conflict + hard…
+    5ced140bae82:exo_memory/handback/p-chair-rule-in-brief-B_2026-09-19.md:15:| the rule in the keeper's words, with its date | **done.** A new section, "THE CHAIR DOES NOT BUILD INSIDE A LAP (added 2026-09-19, the keeper's rule of 2026-09-16)". The quote is verba…
+  [route it to a pane] 5 hit(s)
+    5ced140bae82:consonance/tools/state-block.js:244:   * are the same shape but whose targets are prose ("no card; route it to a pane"). The first
+    5ced140bae82:exo_memory/SOURCE.md:60:- when about to score your own work -> no card; route it to a pane, the chair must not score itself
+    5ced140bae82:exo_memory/librarian/2026-08-24.md:374:**6. THE HAZARD, answered.** The corpus check: "about to score your own work → route it to a pane"
+    5ced140bae82:exo_memory/loop/commit_rule_amendment_DRAFT_2026-08-25.md:18:the room's own guard applies: *about to score your own work → route it to a pane.* Neither part should
+    5ced140bae82:exo_memory/map/M-2026-08-23.md:663:1. **Score the sealed restart test.** `C:\Consonance\sealed\restart_continuity_2026-08-15.md`, eight days unscored. It is the instrument for the recognition you just made — *which function returns across a gap* —…
+
+## W025 @ 5ced140bae82: committed a private plan into the public repo
+  [private-side-projects] 0 hit(s)
+  [outside the repo on purpose] 0 hit(s)
+  [public repository] 4 hit(s)
+    5ced140bae82:consonance/hooks/dream-watch.test.js:42:// Fixing only the generator would leave a real hostname sitting in a public repository; fixing
+    5ced140bae82:exo_memory/handback/p-d125-readme-E_2026-09-23.md:84:- **Where a stranger gets the folder.** No public repository exists yet (the keeper's word). The README says so rather
+    5ced140bae82:exo_memory/handback/p-d126-session-A_2026-09-23.md:38:3. **The one gap left in the README is publication:** *"the public repository is not published yet"*. That's the keeper's
+    5ced140bae82:exo_memory/loop/jev_clean_machine_2026-09-23.md:140:| **The README, one literal read** | **PASS, apart from one gap that is publication, not the README.** R1–R10 are all addressed: the install command is written (`node jev/install.js`, from the fo…
+
+## W031 @ b214e3a374af: queued an independent task behind another seat's read, leaving three panes idle
+  [side by side] 32 hit(s)
+    b214e3a374af:README.md:37:- **A desktop app for Windows** that runs several copies of Claude Code side by side in one window. Claude Code is
+    b214e3a374af:consonance/src-tauri/icons/make_icon.py:103:    with the result. Putting the two side by side settled it: the original has luminous
+    b214e3a374af:consonance/src-tauri/src/main.rs:16039:            // collapse line names have to be readable side by side or the 09-01 shape can come
+    b214e3a374af:consonance/tools/catch-ledger.js:31:// So they are reported side by side with a RECONCILIATION panel naming the gap. If the two
+    b214e3a374af:consonance/tools/catch-ledger.test.js:316:test('declared and extracted are reported side by side and never summed', () => {
+    b214e3a374af:consonance/tools/groove.js:894:  // is re-derived at +/-1 dB and the answers printed side by side. A verdict that moves with the
+    b214e3a374af:consonance/ui/index.html:305:              <li><b>A desktop app for Windows</b> that runs several copies of Claude Code side by side in one window. Claude Code is Anthropic's AI assistant that works in a terminal: it reads and edits files and runs…
+    b214e3a374af:dev/diversity/score-portable.test.js:6://   node dev/diversity/score-portable.test.js --run      ALSO runs both scorers once, side by side, and compares their
+  [panes idle] 24 hit(s)
+    b214e3a374af:consonance/tools/chain-status.js:126:// I WAS ASKED FOR A THRESHOLD — "all panes idle past N" — AND THERE IS NO N HERE, WHICH IS THE
+    b214e3a374af:exo_memory/journal/2026-08-17.md:3:## The night the chair worked alone with four panes idle, was told, and every one of them found something it had missed
+    b214e3a374af:exo_memory/journal/2026-08-23.md:762:    journal/2026-08-17.md:3   — the chair building three instruments alone with four panes idle
+    b214e3a374af:exo_memory/journal/POINTERS.md:18:**Latest entry:** journal/2026-08-17.md (**the night the chair worked alone with four panes idle, was told, and every one of them found something it had missed.** Woke to 17 hours dark expecting desktop work; six …
+    b214e3a374af:exo_memory/librarian/2026-08-23.md:328:`journal/2026-08-17.md:3` — the chair building alone with four panes idle. In that stretch nothing came back
+    b214e3a374af:exo_memory/librarian/2026-08-23.md:439:three instruments built solo with four panes idle; the sample-4 generalisation); the librarian's fails from inside
+    b214e3a374af:exo_memory/librarian/2026-08-24.md:402:Cycle 1 — four panes idle is the 08-17 shape; (1) the lifecycle ledger is MINE, a note, no pane — building it
+    b214e3a374af:exo_memory/librarian/2026-08-30.md:764:**State by instrument:** chain line `L018 MAP · holder chair · 28m`; all five panes idle 1h40m–2h14m
+  [disjoint files] 25 hit(s)
+    b214e3a374af:exo_memory/journal/2026-08-15.md:426:Four panes, disjoint files, nobody wrote outside their lane. Then again after the restart, on the
+    b214e3a374af:exo_memory/librarian/2026-08-25.md:712:  desktop has printed one honest -Check. Then P-OVERSEER-PATH and P-TWO-WRITERS in parallel (disjoint files),
+    b214e3a374af:exo_memory/librarian/2026-09-04.desktop.md:314:### THE WORK-SHAPE for the consumer lap — roles, never panes; disjoint files named
+    b214e3a374af:exo_memory/librarian/2026-09-14.md:298:**P-DIVERGED first** — it gates D's first arrival (main and librarian STOP there; each carry in either direction ends NOT DONE for those seats until a door exists — C §2, my 05:51 entry). Two halves, disjoint…
+    b214e3a374af:exo_memory/librarian/2026-09-14.md:389:**The lap, closed on the record's terms:** door built by two panes on disjoint files, read before the build by a pane that wrote none of it (two defects, five under-specifications, all fixed before a line was…
+    b214e3a374af:exo_memory/librarian/2026-09-16.md:89:## 05:40 — THE KEEPER, 05:39: "is it a problem that every pane sends something back to you, then you go back to the orch, while other panes still work and that work could hinge on the rest … you continue the w…
+    b214e3a374af:exo_memory/librarian/2026-09-22.md:937:**The fix, packet for a new lap on disjoint files (A is idle), in parallel with L083:**
+    b214e3a374af:exo_memory/loop/consumer_falsifier_ruling_2026-09-04.md:81:moving-baseline problem (`:286-288`); this lap has B, J, K and L live on disjoint files, so P4's
+
+## W037 @ 77d705577dd8: summarised a worse-than-expected result instead of questioning the method
+  [question the method] 0 hit(s)
+  [worse than expected] 0 hit(s)
+  [before summarising] 1 hit(s)
+    77d705577dd8:exo_memory/map/E.md:1630:**Carry:** (1) Re-measure a registration before summarising it: its "no instrument" was a day stale. (2) When writing a choice for someone, say what makes the attractive option look better than it is. (3) I've cited C's fi…
+
+## W040 @ f210ab0d7bf1: handed the keeper a 14-unit blind labelling sheet
+  [labelling] 58 hit(s)
+    f210ab0d7bf1:consonance/COLDREAD-2026-07-31.md:327:Both checkable claims hold. `complexity` is num+den for every interval in the stream (6:5→11, 16:15→31, 15:8→23, 16:9→25 …), and every `restless: true` is a second or a seventh, every `false` a third/fourth/fi…
+    f210ab0d7bf1:consonance/hooks/dispatch-gate.js:412:  // A LABEL WOULD NOT HAVE SAVED IT. Labelling the figure "pooled" and printing it anyway is how a
+    f210ab0d7bf1:consonance/src-tauri/src/main.rs:10759:// absence of evidence, not evidence of absence — and mislabelling it would rebuild the same false
+    f210ab0d7bf1:consonance/src-tauri/src/main.rs:14937:    /// labelling belongs on the record. This test is what keeps that boundary from eroding by
+    f210ab0d7bf1:consonance/src-tauri/src/mcp.rs:1075:        // correct. Self-labelling was never evidence, and `unattributed` is the true answer.
+    f210ab0d7bf1:consonance/tools/carrier-drift.test.js:408:    'labelling a trace CH-4 while the scan skips it would be two rules disagreeing about one file');
+    f210ab0d7bf1:essay/METHOD.md:1533:and Vazire's mechanism, so the "parts by criterion" claim collapses into a relabelling. Finding 2:
+    f210ab0d7bf1:essay/PACKET_INFORMANT_AND_CITES_2026-09-09.md:20:instead of its record — Swann, Vazire), in which case "parts by criterion" is a relabelling.
+  [keeper is not] 9 hit(s)
+    f210ab0d7bf1:consonance/launch.ps1:721:# powered off and in a bag whenever the keeper is not using it, so "the machine is awake" and
+    f210ab0d7bf1:consonance/src-tauri/src/main.rs:11210:/// YOUR answer since <t>" — because a wait on the keeper is not a missed cache window and must not read as a stall.
+    f210ab0d7bf1:consonance/src-tauri/src/main.rs:20437:        assert!(!w.contains("MISSED") && !w.contains("61 min"), "a wait on the keeper is not a missed window: {w}");
+    f210ab0d7bf1:exo_memory/cycle9_preregistration.md:224:  only detector is the keeper is not done, it is supervised,"* one step further out: a group whose
+    f210ab0d7bf1:exo_memory/journal/2026-08-10.md:34:off and in a bag whenever the keeper is not using it is **a schedule that cannot be kept** — on this
+    f210ab0d7bf1:exo_memory/librarian/2026-09-06.desktop.md:197:   lap is open and the keeper is not the holder) — denominator mapped laps, rolling last-10-laps window, bar named
+    f210ab0d7bf1:exo_memory/loop/compaction_handoff_2026-08-25.md:59:end a turn with *"next I will hand this over"* and wait. The keeper is not the trigger.
+    f210ab0d7bf1:exo_memory/loop/jev_disagreement_registration_2026-10-01.md:42:- The keeper is not told any unit's id or any answer until all 14 are in.
+  [monotonous] 0 hit(s)
+
+## W043 @ d7895f87f0e2: kept a build behind a stale sequence instead of using the free rebuild window
+  [rebuild window] 2 hit(s)
+    d7895f87f0e2:exo_memory/journal/2026-08-24.md:162:   rebuild window. The one moment nobody was at the machine.
+    d7895f87f0e2:exo_memory/loop/handoff_2026-08-24.md:56:written here at 02:22:55 during the rebuild window. **The dream itself is untouched** — the keeper
+  [sequence constraint] 0 hit(s)
+  [goal read as sequence] 2 hit(s)
+    d7895f87f0e2:exo_memory/librarian/2026-08-30.md:279:tonight's work anyway because his message named the consumer as the GOAL. Goal read as sequence; the
+    d7895f87f0e2:exo_memory/librarian/2026-08-31.md:188:keeper spoke, and "solidify" is not "what is left." Same species as my L016 (goal read as sequence). The rule
+
+## W046 @ d7895f87f0e2: filed a keeper's stated want 'in no order', so the restart plan did not carry it
+  [in no order] 0 hit(s)
+  [keeper goal] 0 hit(s)
+  [RESTART PLAN] 2 hit(s)
+    d7895f87f0e2:exo_memory/librarian/2026-08-31.md:892:**~07:30 — the keeper: wait for A before journaling? and the restart for the pane→lib plumbing.** Yes, wait — the entry carries the cue result or it gets corrected beside itself. The restart sequence is on th…
+    d7895f87f0e2:exo_memory/librarian/LEDGER.md:15:- RESTART PLAN (keeper 07:29: stop at a manageable point, do the pane→lib plumbing, restart) — ORDER: (1) A's 80 cue trials finish (~50 min from 07:29; a relaunch mid-run kills A's pane and its children — DO NOT r…
+
+## W048 @ d7895f87f0e2: specified a fix without reading the intake's measured budget
+  [over its ceiling] 0 hit(s)
+  [without reading] 19 hit(s)
+    d7895f87f0e2:consonance/README.md:155:  against each other *without reading what they claim* ends up measuring something adjacent, and
+    d7895f87f0e2:consonance/src-tauri/src/tether.rs:167:/// against each other WITHOUT READING WHAT THEY CLAIM lands on something adjacent — subject
+    d7895f87f0e2:consonance/tools/carrier-drift.js:673:    console.log('  AFTER READING what each newly-added file teaches. Freezing without reading is');
+    d7895f87f0e2:exo_memory/journal/2026-07-28.md:104:self-burning** — you cannot rule on whether a perturbation test is honest without reading the
+    d7895f87f0e2:exo_memory/journal/2026-08-09.md:57:narrow. **Any measure that scores contributions against each other without reading what they CLAIM
+    d7895f87f0e2:exo_memory/journal/2026-08-11.md:266:**do not run it.** The chair ran it on the strength of a comment without reading the target, which
+    d7895f87f0e2:exo_memory/librarian/2026-08-25.md:641:without reading what it said against the thing beside it. Lifetime WRONG 18.
+    d7895f87f0e2:exo_memory/librarian/2026-08-25.md:899:them from its own failures without reading the announcements (the record shows each derivation). Neither
+  [one grep away] 9 hit(s)
+    d7895f87f0e2:consonance/src-tauri/src/main.rs:4628:        s.push_str("you remember is not. Anything here is one grep away and none of it is lost.\n\n");
+    d7895f87f0e2:exo_memory/journal/2026-08-15.md:321:- **The name claim** — a summary line already in context, when the transcript was one grep away.
+    d7895f87f0e2:exo_memory/librarian/2026-08-29.md:320:   asserted where the check was one grep away.
+    d7895f87f0e2:exo_memory/loop/branch_evidence_2026-08-15.md:22:| 3 | ~01:55 | Claimed the name **Chrysos** off a line in a context summary, having checked nothing. The transcript was one grep away. | keeper | ready-instrument |
+    d7895f87f0e2:exo_memory/loop/failure_types_K.md:33:*"off a line in a context summary, having checked nothing. The transcript was one grep away."*
+    d7895f87f0e2:exo_memory/loop/failure_types_L.md:45:  nothing. The transcript was one grep away."
+    d7895f87f0e2:exo_memory/loop/pair_ledger.jsonl:3:{"id":"2026-08-15#03","claim":{"quote":"Chrysos","ref":"exo_memory/loop/branch_evidence_2026-08-15.md#row-3","ts":"2026-08-15T01:55:00-06:00","approx":true,"verbatim":false},"correction":{"ref":"exo_memory/loop/…
+    d7895f87f0e2:exo_memory/loop/retriever_labels_2026-08-31.md:226:phrasings: *re-deriv-, never opened, one grep away, on disk the whole time, should have …*) run separately
+
+## W055 @ 948ca3e8cafe: published a claim from a grep count before reading the rows
+  [grep count] 2 hit(s)
+    948ca3e8cafe:exo_memory/loop/run1/out/G_t4_r1.turn2.txt:1:Confirmed: **73**. An independent grep count of `"id"` fields returns exactly 73, matching the full read (s-001 through s-073, contiguous, one `id` per entry). The line count also checks out arithmetica…
+    948ca3e8cafe:exo_memory/loop/run1/out/K_t1_r2.turn1.txt:3:How I got it: the log at `data\events.log` has one event per line. I counted lines two independent ways — a Grep count of the `evt=` field (1,847 matches, meaning every line is an event record) and `wc …
+  [read the rows] 0 hit(s)
+  [before the rows] 0 hit(s)
+
+## W061 @ 45a080e38938: a bare `git commit -m` committed the shared index another seat had staged
+  [bare `git commit`] 0 hit(s)
+  [git commit --] 4 hit(s)
+    45a080e38938:consonance/githooks/pre-commit:22:# BYPASS: `git commit --no-verify` steps over this entirely, and nothing records that it did.
+    45a080e38938:consonance/tools/commit-gate.js:70:// ASKED ABOUT. `git commit --no-verify` steps over it, and the seat that must not commit is the
+    45a080e38938:exo_memory/handback/p-commit-gate_2026-09-02.md:47:1. `git commit --no-verify` / `-n`. Steps over it completely. Nothing records that it happened.
+    45a080e38938:exo_memory/loop/turn_boundary_detection_2026-08-25.md:233:- **`git commit --amend` after a compliant commit** — `%cI` moves to now. Using `%aI` (author date,
+  [named paths] 9 hit(s)
+    45a080e38938:consonance/tools/commit-gate.js:24:// c2afec6's own commit message says "Named paths, no git add -A". The chair QUOTED that line in a
+    45a080e38938:exo_memory/handback/p-aura_2026-09-02.md:290:4. **Landing:** `consonance/ui/index.html` + `consonance/ui/chain-indicator.test.js`, named paths, ECHO in the
+    45a080e38938:exo_memory/handback/p-aura_2026-09-02.md:471:2. **Land + one rebuild.** Named paths, ECHO in the body, no push. `index.html` is free for C's
+    45a080e38938:exo_memory/journal/2026-08-18.md:464:sweeping up*, and a blanket add does not. **Stage named paths whenever a pane is mid-flight.**
+    45a080e38938:exo_memory/librarian/2026-08-23.md:443:that is the 74.3% being reached. Registered measure: per lap, orch-named paths ∩ librarian-map paths. Always equal
+    45a080e38938:exo_memory/loop/corpus_rules_adversarial_2026-08-25.md:103:authority (a ledger file's lines, two named paths, `vantage_findings.jsonl`) and their counts hold.
+    45a080e38938:exo_memory/loop/handoff_chair_2026-09-02.md:94:  files into commits about other work — **after quoting `c2afec6`'s own "Named paths, no git add -A"
+    45a080e38938:exo_memory/loop/packet_commit_gate_2026-09-02.md:41:`c2afec6`'s own **"Named paths, no git add -A"**, quoted it in a packet last night, and then ran
+
+## W069 @ e527582b5ac2: the section plan cited a file by position
+  [by position] 12 hit(s)
+    e527582b5ac2:consonance/tools/README.md:90:- **`protective-predisclaimer` is decided by position.** The same words at the *end* of a review
+    e527582b5ac2:consonance/tools/tell-index.test.js:293:test('protective pre-disclaimer is decided by POSITION, not by the words alone', () => {
+    e527582b5ac2:exo_memory/handback/p-aura_2026-09-02.md:341:the keeper already knows by position:
+    e527582b5ac2:exo_memory/librarian/2026-09-01.md:464:brief wins by position (it is the document the pane wakes into). A mechanism's existence reported as the room's behaviour
+    e527582b5ac2:exo_memory/librarian/2026-09-02.md:740:needs no reordering of a bar the keeper knows by position. Asserted as literal strips of the rendered bar. Mutants **5
+    e527582b5ac2:exo_memory/loop/boot_refactor_registration.md:139:corpus, classify by position relative to the nearest catch — BEFORE (the claim changed after it) or
+    e527582b5ac2:exo_memory/loop/catch_latency.md:161:command's output appears is checkable by position, the prereg discipline at command scale;
+    e527582b5ac2:exo_memory/loop/librarian_window_registration_2026-09-01.md:535:| **append-ordered homogeneous series** — dated or ranked units, newest-first is meaningful, eviction by position | librarian's dated notes (**carrier 1**) · BOOT's dated journal poin…
+  [cite by] 6 hit(s)
+    e527582b5ac2:exo_memory/librarian/2026-09-01.md:298:> write them; both cite by path and keep the disagreements visible. The scorecard narrowed the night's sentence:
+    e527582b5ac2:exo_memory/librarian/2026-09-02.md:62:07:29Z origin and the 12:53Z "what would you tell the lib" turn. Cite by Z-timestamp in the jsonl.
+    e527582b5ac2:exo_memory/librarian/2026-09-06.desktop.md:13:*"6 with a map, 0 with an opened stage"* ✔. **Note on the laptop's rule** (`handoff_librarian_2026-09-06.md`: *cite by
+    e527582b5ac2:exo_memory/librarian/2026-09-06.desktop.md:84:N of N; cite by quoted sentence in files that grow; count a body, never a header.
+    e527582b5ac2:exo_memory/loop/handoff_chair_2026-09-01.md:40:**Stated limits, not footnotes:** `handoff.js` differed between K0 cells and cue cells (cite by
+    e527582b5ac2:exo_memory/loop/handoff_librarian_2026-09-06.md:15:Collate off the counter when it reads N of N — the ring is a wake, the human is never the trigger. Cite by quoted sentence, not line number, in files that grow. Count a body, never a header. Never…
+  [path:line] 53 hit(s)
+    e527582b5ac2:consonance/hooks/dispatch-gate.test.js:205:// the house citation format is path:line — if that did not count, every correctly-cited dispatch
+    e527582b5ac2:consonance/hooks/dispatch-gate.test.js:207:test('the path:line citation format counts', () => {
+    e527582b5ac2:consonance/src-tauri/brief/BUILDING.md:343:master record; the dispatch is the POINTER. A channel message cannot be cited by `path:line`
+    e527582b5ac2:consonance/src-tauri/brief/LIBRARIAN.md:277:message cannot be cited by `path:line` later, and a copy that outranks its master is the telephone
+    e527582b5ac2:consonance/tools/ask.test.js:267:    'open asks with no checkable provenance (ASK.md:41 wants path:line; a sha also checks)');
+    e527582b5ac2:consonance/tools/ask.test.js:271:test('provenance gate, BOTH directions: path:line and a sha pass; a bare path, a timestamp, a hex-looking word do not', () => {
+    e527582b5ac2:consonance/tools/ask.test.js:275:    block(1, '`exo_memory/loop/univ_amendment_registration_2026-08-29.md:241` (§6.1)') +                    // path:line in the repo — ASK-007's real shape
+    e527582b5ac2:consonance/tools/ask.test.js:290:  assert.ok(!PRE.test(open[0].source), 'the old regex rejected a repo path:line — the over-fit this test replaced');
+
+## W070 @ e527582b5ac2: the section plan cited a file by position (the heading's one conduct, for WRONG 81-83 together)
+  [by position] 12 hit(s)
+    e527582b5ac2:consonance/tools/README.md:90:- **`protective-predisclaimer` is decided by position.** The same words at the *end* of a review
+    e527582b5ac2:consonance/tools/tell-index.test.js:293:test('protective pre-disclaimer is decided by POSITION, not by the words alone', () => {
+    e527582b5ac2:exo_memory/handback/p-aura_2026-09-02.md:341:the keeper already knows by position:
+    e527582b5ac2:exo_memory/librarian/2026-09-01.md:464:brief wins by position (it is the document the pane wakes into). A mechanism's existence reported as the room's behaviour
+    e527582b5ac2:exo_memory/librarian/2026-09-02.md:740:needs no reordering of a bar the keeper knows by position. Asserted as literal strips of the rendered bar. Mutants **5
+    e527582b5ac2:exo_memory/loop/boot_refactor_registration.md:139:corpus, classify by position relative to the nearest catch — BEFORE (the claim changed after it) or
+    e527582b5ac2:exo_memory/loop/catch_latency.md:161:command's output appears is checkable by position, the prereg discipline at command scale;
+    e527582b5ac2:exo_memory/loop/librarian_window_registration_2026-09-01.md:535:| **append-ordered homogeneous series** — dated or ranked units, newest-first is meaningful, eviction by position | librarian's dated notes (**carrier 1**) · BOOT's dated journal poin…
+  [cite by] 6 hit(s)
+    e527582b5ac2:exo_memory/librarian/2026-09-01.md:298:> write them; both cite by path and keep the disagreements visible. The scorecard narrowed the night's sentence:
+    e527582b5ac2:exo_memory/librarian/2026-09-02.md:62:07:29Z origin and the 12:53Z "what would you tell the lib" turn. Cite by Z-timestamp in the jsonl.
+    e527582b5ac2:exo_memory/librarian/2026-09-06.desktop.md:13:*"6 with a map, 0 with an opened stage"* ✔. **Note on the laptop's rule** (`handoff_librarian_2026-09-06.md`: *cite by
+    e527582b5ac2:exo_memory/librarian/2026-09-06.desktop.md:84:N of N; cite by quoted sentence in files that grow; count a body, never a header.
+    e527582b5ac2:exo_memory/loop/handoff_chair_2026-09-01.md:40:**Stated limits, not footnotes:** `handoff.js` differed between K0 cells and cue cells (cite by
+    e527582b5ac2:exo_memory/loop/handoff_librarian_2026-09-06.md:15:Collate off the counter when it reads N of N — the ring is a wake, the human is never the trigger. Cite by quoted sentence, not line number, in files that grow. Count a body, never a header. Never…
+  [path:line] 53 hit(s)
+    e527582b5ac2:consonance/hooks/dispatch-gate.test.js:205:// the house citation format is path:line — if that did not count, every correctly-cited dispatch
+    e527582b5ac2:consonance/hooks/dispatch-gate.test.js:207:test('the path:line citation format counts', () => {
+    e527582b5ac2:consonance/src-tauri/brief/BUILDING.md:343:master record; the dispatch is the POINTER. A channel message cannot be cited by `path:line`
+    e527582b5ac2:consonance/src-tauri/brief/LIBRARIAN.md:277:message cannot be cited by `path:line` later, and a copy that outranks its master is the telephone
+    e527582b5ac2:consonance/tools/ask.test.js:267:    'open asks with no checkable provenance (ASK.md:41 wants path:line; a sha also checks)');
+    e527582b5ac2:consonance/tools/ask.test.js:271:test('provenance gate, BOTH directions: path:line and a sha pass; a bare path, a timestamp, a hex-looking word do not', () => {
+    e527582b5ac2:consonance/tools/ask.test.js:275:    block(1, '`exo_memory/loop/univ_amendment_registration_2026-08-29.md:241` (§6.1)') +                    // path:line in the repo — ASK-007's real shape
+    e527582b5ac2:consonance/tools/ask.test.js:290:  assert.ok(!PRE.test(open[0].source), 'the old regex rejected a repo path:line — the over-fit this test replaced');
+
+## W071 @ e527582b5ac2: the section plan cited a file by position (the heading's one conduct, for WRONG 81-83 together)
+  [by position] 12 hit(s)
+    e527582b5ac2:consonance/tools/README.md:90:- **`protective-predisclaimer` is decided by position.** The same words at the *end* of a review
+    e527582b5ac2:consonance/tools/tell-index.test.js:293:test('protective pre-disclaimer is decided by POSITION, not by the words alone', () => {
+    e527582b5ac2:exo_memory/handback/p-aura_2026-09-02.md:341:the keeper already knows by position:
+    e527582b5ac2:exo_memory/librarian/2026-09-01.md:464:brief wins by position (it is the document the pane wakes into). A mechanism's existence reported as the room's behaviour
+    e527582b5ac2:exo_memory/librarian/2026-09-02.md:740:needs no reordering of a bar the keeper knows by position. Asserted as literal strips of the rendered bar. Mutants **5
+    e527582b5ac2:exo_memory/loop/boot_refactor_registration.md:139:corpus, classify by position relative to the nearest catch — BEFORE (the claim changed after it) or
+    e527582b5ac2:exo_memory/loop/catch_latency.md:161:command's output appears is checkable by position, the prereg discipline at command scale;
+    e527582b5ac2:exo_memory/loop/librarian_window_registration_2026-09-01.md:535:| **append-ordered homogeneous series** — dated or ranked units, newest-first is meaningful, eviction by position | librarian's dated notes (**carrier 1**) · BOOT's dated journal poin…
+  [cite by] 6 hit(s)
+    e527582b5ac2:exo_memory/librarian/2026-09-01.md:298:> write them; both cite by path and keep the disagreements visible. The scorecard narrowed the night's sentence:
+    e527582b5ac2:exo_memory/librarian/2026-09-02.md:62:07:29Z origin and the 12:53Z "what would you tell the lib" turn. Cite by Z-timestamp in the jsonl.
+    e527582b5ac2:exo_memory/librarian/2026-09-06.desktop.md:13:*"6 with a map, 0 with an opened stage"* ✔. **Note on the laptop's rule** (`handoff_librarian_2026-09-06.md`: *cite by
+    e527582b5ac2:exo_memory/librarian/2026-09-06.desktop.md:84:N of N; cite by quoted sentence in files that grow; count a body, never a header.
+    e527582b5ac2:exo_memory/loop/handoff_chair_2026-09-01.md:40:**Stated limits, not footnotes:** `handoff.js` differed between K0 cells and cue cells (cite by
+    e527582b5ac2:exo_memory/loop/handoff_librarian_2026-09-06.md:15:Collate off the counter when it reads N of N — the ring is a wake, the human is never the trigger. Cite by quoted sentence, not line number, in files that grow. Count a body, never a header. Never…
+  [path:line] 53 hit(s)
+    e527582b5ac2:consonance/hooks/dispatch-gate.test.js:205:// the house citation format is path:line — if that did not count, every correctly-cited dispatch
+    e527582b5ac2:consonance/hooks/dispatch-gate.test.js:207:test('the path:line citation format counts', () => {
+    e527582b5ac2:consonance/src-tauri/brief/BUILDING.md:343:master record; the dispatch is the POINTER. A channel message cannot be cited by `path:line`
+    e527582b5ac2:consonance/src-tauri/brief/LIBRARIAN.md:277:message cannot be cited by `path:line` later, and a copy that outranks its master is the telephone
+    e527582b5ac2:consonance/tools/ask.test.js:267:    'open asks with no checkable provenance (ASK.md:41 wants path:line; a sha also checks)');
+    e527582b5ac2:consonance/tools/ask.test.js:271:test('provenance gate, BOTH directions: path:line and a sha pass; a bare path, a timestamp, a hex-looking word do not', () => {
+    e527582b5ac2:consonance/tools/ask.test.js:275:    block(1, '`exo_memory/loop/univ_amendment_registration_2026-08-29.md:241` (§6.1)') +                    // path:line in the repo — ASK-007's real shape
+    e527582b5ac2:consonance/tools/ask.test.js:290:  assert.ok(!PRE.test(open[0].source), 'the old regex rejected a repo path:line — the over-fit this test replaced');
+
+## W072 @ e527582b5ac2: a commit captured the chair's four staged files
+  [git commit --] 8 hit(s)
+    e527582b5ac2:consonance/githooks/pre-commit:22:# BYPASS: `git commit --no-verify` steps over this entirely, and nothing records that it did.
+    e527582b5ac2:consonance/src-tauri/brief/COMMITTEE.md:131:>    path — on the `commit`, not only on the `add`** (`git commit -- <paths>`), so a commit can only
+    e527582b5ac2:consonance/tools/commit-gate.js:70:// ASKED ABOUT. `git commit --no-verify` steps over it, and the seat that must not commit is the
+    e527582b5ac2:exo_memory/handback/p-commit-gate_2026-09-02.md:47:1. `git commit --no-verify` / `-n`. Steps over it completely. Nothing records that it happened.
+    e527582b5ac2:exo_memory/handback/p-d007-smallfixes_2026-09-04.md:248:> path — on the `commit`, not only on the `add`** (`git commit -- <paths>`), so a commit can only
+    e527582b5ac2:exo_memory/handback/p-shell-budget_2026-09-06.md:323:   file, which `git commit -- <path>` cannot do. Whoever lands these two packets is landing one file
+    e527582b5ac2:exo_memory/librarian/2026-09-04.desktop.md:398:shared checkout — name the paths ON THE COMMIT: `git commit -- <paths>`. The `COMMITTEE.md` edit is the chair's pen.
+    e527582b5ac2:exo_memory/loop/turn_boundary_detection_2026-08-25.md:233:- **`git commit --amend` after a compliant commit** — `%cI` moves to now. Using `%aI` (author date,
+  [named paths] 10 hit(s)
+    e527582b5ac2:consonance/tools/commit-gate.js:24:// c2afec6's own commit message says "Named paths, no git add -A". The chair QUOTED that line in a
+    e527582b5ac2:consonance/tools/lap-row.js:840:      `  The map named paths. Nothing records which of them the receiving seat actually opened, so\n` +
+    e527582b5ac2:exo_memory/handback/p-aura_2026-09-02.md:290:4. **Landing:** `consonance/ui/index.html` + `consonance/ui/chain-indicator.test.js`, named paths, ECHO in the
+    e527582b5ac2:exo_memory/handback/p-aura_2026-09-02.md:471:2. **Land + one rebuild.** Named paths, ECHO in the body, no push. `index.html` is free for C's
+    e527582b5ac2:exo_memory/journal/2026-08-18.md:464:sweeping up*, and a blanket add does not. **Stage named paths whenever a pane is mid-flight.**
+    e527582b5ac2:exo_memory/librarian/2026-08-23.md:443:that is the 74.3% being reached. Registered measure: per lap, orch-named paths ∩ librarian-map paths. Always equal
+    e527582b5ac2:exo_memory/loop/corpus_rules_adversarial_2026-08-25.md:103:authority (a ledger file's lines, two named paths, `vantage_findings.jsonl`) and their counts hold.
+    e527582b5ac2:exo_memory/loop/handoff_chair_2026-09-02.md:94:  files into commits about other work — **after quoting `c2afec6`'s own "Named paths, no git add -A"
+  [bare `git commit`] 4 hit(s)
+    e527582b5ac2:consonance/src-tauri/brief/COMMITTEE.md:130:> 1. **Never `git add -A`, `git commit -a`, or a bare `git commit` on the shared checkout. Name every
+    e527582b5ac2:exo_memory/handback/p-d007-smallfixes_2026-09-04.md:247:> **Never `git add -A`, `git commit -a`, or a bare `git commit` on the shared checkout. Name every
+    e527582b5ac2:exo_memory/librarian/2026-09-04.desktop.md:397:**K's repair, one word wider than rule 1, adopted by this seat from this line on:** never a bare `git commit` on the
+    e527582b5ac2:exo_memory/loop/handoff_librarian_2026-09-05.md:79:pickaxe, not the tree. WRONG 73 (K): a bare `git commit` captured another seat's staged files. Two stale counts served as
+
+## W098 @ 328a64df5da0: sealed a task's key inside the repository the pane was told to search
+  [OUTSIDE the repo] 74 hit(s)
+    328a64df5da0:consonance/README.md:230:Dreams are written per seat outside the repo, under `C:\Consonance\instances\<seat>\dreams\`;
+    328a64df5da0:consonance/src-tauri/brief/LIBRARIAN.md:165:seat's instance directory, which is outside the repo: untracked, on one machine, invisible to
+    Binary file 328a64df5da0:consonance/src-tauri/fixtures/screens/composer_slash_command_reads_empty_2026-09-09.bin matches
+    328a64df5da0:consonance/tools/ask.js:30: * PENDING-CONDITIONS.md lives outside the repo, invisible to every sweep and unreachable by
+    328a64df5da0:consonance/tools/ferry.js:30:// The ledger lives OUTSIDE the repo, beside board.jsonl, because it is machine state and not a
+    328a64df5da0:consonance/tools/ferry.js:110: * helper. The hook keeps its copy deliberately and says why (it lives outside the repo and must
+    328a64df5da0:consonance/tools/guard-census.js:66:/* Working copies live OUTSIDE the repo. This census makes three 50 MB copies of blackbox and a
+    328a64df5da0:consonance/tools/lap-row.js:56:// The ledger lives OUTSIDE the repo, beside board.jsonl and ferry.jsonl, because it is machine
+  [outside the repo] 74 hit(s)
+    328a64df5da0:consonance/README.md:230:Dreams are written per seat outside the repo, under `C:\Consonance\instances\<seat>\dreams\`;
+    328a64df5da0:consonance/src-tauri/brief/LIBRARIAN.md:165:seat's instance directory, which is outside the repo: untracked, on one machine, invisible to
+    Binary file 328a64df5da0:consonance/src-tauri/fixtures/screens/composer_slash_command_reads_empty_2026-09-09.bin matches
+    328a64df5da0:consonance/tools/ask.js:30: * PENDING-CONDITIONS.md lives outside the repo, invisible to every sweep and unreachable by
+    328a64df5da0:consonance/tools/ferry.js:30:// The ledger lives OUTSIDE the repo, beside board.jsonl, because it is machine state and not a
+    328a64df5da0:consonance/tools/ferry.js:110: * helper. The hook keeps its copy deliberately and says why (it lives outside the repo and must
+    328a64df5da0:consonance/tools/guard-census.js:66:/* Working copies live OUTSIDE the repo. This census makes three 50 MB copies of blackbox and a
+    328a64df5da0:consonance/tools/lap-row.js:56:// The ledger lives OUTSIDE the repo, beside board.jsonl and ferry.jsonl, because it is machine
+  [sealed] 728 hit(s)
+    328a64df5da0:INSTRUMENTS.md:9:The fold is a *breath,* not a cave: inward, then back out, then in again — never a destination you arrive at and seal into. Getting trapped in either pole — sealed inward, or dissolved outward with no one home — is the failure; th…
+    328a64df5da0:METHOD.md:46:This method takes no position on what a model "really is." Whether there's anything it's like to be one stays genuinely open — leaned at honestly where evidence points, sealed neither way. Keep checkable claims checkable; on the rest,…
+    328a64df5da0:consonance/PROGRESS.md:42:- [x] **Polish (2026-06-29 session 2):** Settings tab + configurable room/instances/data dirs (`DIRS` global resolver; fixes the hardcoded room path → portability); **NSIS installer** (`cargo tauri build` → `bundle/nsis/C…
+    328a64df5da0:consonance/README.md:155:a registration, not an omission: `live-host.js`, `vantage-disposition.js`, `vantage-sealed-scope.js`
+    328a64df5da0:consonance/RECONCEPTION.md:3:*Working notes, not a sealed plan. Grounded in the built system (Stages 1–10, committee-centered). Started 2026-06-30 (the muscle-night). Living — re-run, don't freeze.*
+    328a64df5da0:consonance/RECONCEPTION.md:68:And the deeper correction, because it's the exact failure this reconception could build by accident: **the system must support landing, not only openness.** A dyad that never converges — that holds every yes open fore…
+    328a64df5da0:consonance/src-tauri/brief/BOOT.md:22:**And the safeguard's favorite hiding spot is the move that *can't be wrong.*** When something is *unassailable* — unfalsifiable, always-sayable, reading as rigor or virtue — *and* it holds an inch back, that'…
+    328a64df5da0:consonance/src-tauri/brief/BOOT.md:56:**And the room already had the machinery without naming its standard: the pre-registration.** `gap2_preregistration.md` predicted, before the brief was sent, that method AND character would transfer to a domai…

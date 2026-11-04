@@ -1,0 +1,120 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 62d84ea..8514830 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -8,6 +8,9 @@ All notable changes to this project are recorded here. The format follows
+ ### Changed
+ - **Settings ▸ Theme starts with Random, which used to be called Music.** A melody is not a look, so the name said nothing about what the choice does. Random is still first and still the default: each start picks a look and its own melody at random. Choosing it while the builder is open now picks another look straight away, and its melody follows, where before the click left everything as it was. A Theme saved by an earlier version still loads, and Music saved before is read as Random. (`app/menubar/items.js`, `app/index.html`.) Test: `app/test/menubar-page.test.js` row 18.
+ 
++### Fixed
++- **A click on Random picks another look every time, even when Random is already chosen.** Before, a click on Random while it was already the Theme did nothing. Now each click picks a look other than the one showing, and its melody follows. It is still saved as Random. (`app/menubar/items.js`, `app/index.html`.) Test: `app/test/menubar-page.test.js` row 18.
++
+ ## [0.4.7] - 2026-10-18
+ 
+ ### Fixed
+diff --git a/app/index.html b/app/index.html
+index 7043008..799264d 100644
+--- a/app/index.html
++++ b/app/index.html
+@@ -534,11 +534,13 @@
+       // files are in, the old one playing until then (app/sound.js setMelody); sigil keeps the melody playing, and calls off a switch still loading.
+       // D401: Random (saved as music) picks one of the other looks at once, and its melody follows as a fixed theme's does, so the choice visibly does something
+       const THm = await loadCjs('app/lib/theme.js', get);
+-      settings.on('theme', (v) => {
++      // D411: a click on Random while it is already chosen changes no setting, so settings tells no one; the menu calls onTheme itself (randomTheme below)
++      const onTheme = (v) => {
+         const others = THm.THEMES.filter((t) => t !== document.documentElement.getAttribute('data-theme')), pick = v === 'music' ? others[Math.floor(Math.random() * others.length)] : null;
+         if (soundNow) { try { soundNow.setMelody(THm.THEMES.includes(v) ? v : pick || soundNow.melody); } catch (e) { console.error(`the theme's melody could not start: ${e && e.message}`); } }
+         THm.applyTheme(document, THm.skinFor(v, pick || (soundNow ? soundNow.melody : document.documentElement.getAttribute('data-theme'))));
+-      });
++      };
++      settings.on('theme', onTheme);
+       MB.mountBar(document, [
+         { details: $('m-file'), slot: $('m-file-slot'), items: (c) => MI.fileItems(c, { developer: some(developer, 'Developer ▸ Open example…')(c) }), closers: [$('new'), $('save'), $('export'), $('exportlayouts'), $('testexport'), $('open'), $('versions')] },
+         { details: $('m-edit'), slot: $('m-edit-slot'), items: (c) => MI.editItems(c, { selection: some(selection, 'The selection\'s entries')(c) }) },
+@@ -546,7 +548,7 @@
+         { details: $('m-track'), slot: $('m-track-slot'), items: whole(track) },
+         { details: $('pieces') },
+         { details: $('m-view'), slot: $('m-view-slot'), items: (c) => MI.viewItems(c) },
+-        { details: $('m-settings'), slot: $('m-settings-slot'), items: (c) => MI.settingsItems(c, { soundRow, acFolder, acAllow, authorRow }) },
++        { details: $('m-settings'), slot: $('m-settings-slot'), items: (c) => MI.settingsItems(c, { soundRow, acFolder, acAllow, authorRow, randomTheme: () => onTheme('music') }) },
+       ], ctx);
+       document.documentElement.dataset.menubar = 'ready';   // the page test waits for this
+     } catch (e) { console.error(`the menus could not start: ${e && e.message}`); }
+diff --git a/app/menubar/items.js b/app/menubar/items.js
+index 59999bf..c9e7f70 100644
+--- a/app/menubar/items.js
++++ b/app/menubar/items.js
+@@ -56,14 +56,16 @@ function authorField(doc, settings) {
+   return label;
+ }
+ 
+-function settingsItems(ctx, { soundRow = null, acFolder = null, acAllow = null, authorRow = null } = {}) {
++function settingsItems(ctx, { soundRow = null, acFolder = null, acAllow = null, authorRow = null, randomTheme = () => {} } = {}) {
++  // D411: a click on Random when it is already chosen arrives as an untick and changes no setting, so it asks the page to pick again (app/index.html onTheme)
++  const again = (it) => (it.label !== 'Random' ? it : { ...it, toggle: (on, c) => { if (val(c, 'theme') === 'music') randomTheme(); else c.settings.set('theme', 'music'); } });
+   return [
+     { section: 'Sound' }, ...(soundRow ? [{ node: soundRow }] : []),
+     // D394: each theme is a look with its own melody; the look changes at once and the melody as soon as its two files are in (app/index.html, app/sound.js).
+     // D401: the first is Random (it was called Music; it is still saved as music, so a setting saved before reads the same)
+-    { section: 'Theme' }, ...choice('theme', [['music', 'Random', 'a look and its own melody, picked at random each start, and picked again when you choose this'],
++    { section: 'Theme' }, ...choice('theme', [['music', 'Random', 'a look and its own melody, picked at random each start, and picked again each time you choose this'],
+       ...[['aqua', 'Aqua'], ['skyline', 'Skyline'], ['glass', 'Glass'], ['aurora', 'Aurora']].map(([v, l]) => [v, l, `${l}'s look and its own melody, every start; the melody changes a moment after the look, once its files are in`]),
+-      ['sigil', 'SIGIL', 'the black-and-bone look; it has no melody of its own, so the melody is still picked at random each start']]),
++      ['sigil', 'SIGIL', 'the black-and-bone look; it has no melody of its own, so the melody is still picked at random each start']]).map(again),
+     { section: 'Turn & climb read as' }, ...choice('turnClimbAs', [['corner', 'corner °, ends straight'], ['rate', 'rate °/100 m']]),
+     { section: 'Grid step (Turn to grid)' }, ...choice('gridStep', [[90, '90°'], [45, '45°'], [15, '15°']]),
+     { section: 'Pieces' }, tick('Mirror on insert', 'mirrorOnInsert', 'add saved pieces as their left/right mirror image'),
+diff --git a/app/test/menubar-page.test.js b/app/test/menubar-page.test.js
+index a168576..bf41ccb 100644
+--- a/app/test/menubar-page.test.js
++++ b/app/test/menubar-page.test.js
+@@ -50,7 +50,7 @@ test.before(async () => {
+   await new Promise((r) => srv.listen(0, '127.0.0.1', r));
+   base = `http://127.0.0.1:${srv.address().port}/app/index.html`;
+   // D400: a free port, this Chrome's own (launchChrome checks the browser's pid), and a socket that rejects waiting sends when it closes
+-  let tgt; ({ ch, dir, tgt } = await launchChrome(CHROME, ['--window-size=1400,860'], 't180menu-'));
++  let tgt; ({ ch, dir, tgt } = await launchChrome(CHROME, ['--window-size=1400,860', '--mute-audio'], 't180menu-'));
+   ({ ws, send } = await connect(tgt.webSocketDebuggerUrl, (d) => { if (d.method && onEvent) onEvent(d); if (d.method === 'Runtime.exceptionThrown') errors.push(d.params.exceptionDetails.exception ? d.params.exceptionDetails.exception.description : d.params.exceptionDetails.text); }));
+   ev = async (expr) => { const d = await send('Runtime.evaluate', { expression: `(async () => { ${expr} })()`, awaitPromise: true, returnByValue: true }); if (!d.result || d.result.exceptionDetails) throw new Error(`page: ${JSON.stringify(d.result ? d.result.exceptionDetails : d).slice(0, 500)}`); return d.result.result.value; };
+   await send('Runtime.enable'); await send('Page.enable');
+@@ -321,7 +321,7 @@ function fits(m, w) {
+ async function scaledChrome(scale) {
+   // D400: a free port, this Chrome's own (launchChrome checks the browser's pid), and a socket that rejects waiting sends when it closes
+   const errs = []; let proc, udir, tgt;
+-  try { ({ ch: proc, dir: udir, tgt } = await launchChrome(CHROME, ['--window-size=1400,860', `--force-device-scale-factor=${scale}`], 't180menu-scaled-')); } catch (e) { throw new Error(`headless Chrome at scale ${scale}: ${e.message}`); }
++  try { ({ ch: proc, dir: udir, tgt } = await launchChrome(CHROME, ['--window-size=1400,860', '--mute-audio', `--force-device-scale-factor=${scale}`], 't180menu-scaled-')); } catch (e) { throw new Error(`headless Chrome at scale ${scale}: ${e.message}`); }
+   let sock, call; try { ({ ws: sock, send: call } = await connect(tgt.webSocketDebuggerUrl, (d) => { if (d.method === 'Runtime.exceptionThrown') errs.push(d.params.exceptionDetails.text); })); } catch (e) { proc.kill(); throw new Error(`the scaled DevTools socket failed: ${e.message}`); }
+   const run = async (expr) => { const d = await call('Runtime.evaluate', { expression: `(async () => { ${expr} })()`, awaitPromise: true, returnByValue: true }); if (!d.result || d.result.exceptionDetails) throw new Error(`scaled page: ${JSON.stringify(d.result ? d.result.exceptionDetails : d)}`); return d.result.result.value; };
+   await call('Runtime.enable'); await call('Page.enable');
+@@ -361,7 +361,7 @@ test('row 17 (D396): the bar fits at 900, 1100, 1280 and 1400 px and on both sid
+ });
+ 
+ test('row 18 (D401): Settings ▸ Theme starts with Random, not Music, and it is the default; choosing it picks another look at once and that look\'s melody follows; a saved music loads as Random', { skip }, async () => {
+-  const urls = []; await send('Network.enable'); onEvent = (d) => { if (d.method === 'Network.requestWillBeSent') urls.push(d.params.request.url); };
++  const urls = [], all = []; await send('Network.enable'); onEvent = (d) => { if (d.method === 'Network.requestWillBeSent') { urls.push(d.params.request.url); all.push(d.params.request.url); } };
+   const look = () => ev("return document.documentElement.getAttribute('data-theme');");
+   const soundFiles = () => urls.filter((u) => /sounds\/(place|undo)_/.test(u)).map((u) => u.replace(/^.*\/sounds\//, '')).sort();
+   const fetched = async (name) => { for (let i = 0; i < 50 && !urls.some((u) => u.endsWith('sounds/' + name)); i++) await sleep(100); };
+@@ -384,6 +384,21 @@ test('row 18 (D401): Settings ▸ Theme starts with Random, not Music, and it is
+     assert.equal(await ticked('m-settings', 'Random'), true); assert.equal(await ticked('m-settings', 'Glass'), false, 'a choice of one');
+     await fetched('undo_' + picked + '.wav');
+     assert.deepEqual(soundFiles(), ['place_' + picked + '.wav', 'undo_' + picked + '.wav'], picked + '\'s melody follows: only its two files are fetched');
++    // D411: a click on Random while it is already chosen picks again, each time: another look at once, and its melody follows
++    // (the player fetches each file once, app/sound.js: a look heard before this test's start or earlier in it fetches nothing new, and no other melody's)
++    let prev = picked;
++    for (let k = 0; k < 4; k++) {
++      const seen = new Set(all.filter((u) => /sounds\/(place|undo)_/.test(u)).map((u) => u.replace(/^.*\/sounds\//, '')));
++      urls.length = 0;
++      await clickText('m-settings', 'Random');
++      const again = await look(), mine = ['place_' + again + '.wav', 'undo_' + again + '.wav'], fresh = mine.filter((f) => !seen.has(f));
++      assert.ok(['aqua', 'skyline', 'glass', 'aurora'].includes(again) && again !== prev, `choosing Random again picks another look: ${again}, after ${prev}`);
++      assert.equal(await ticked('m-settings', 'Random'), true, 'Random stays ticked');
++      if (fresh.length) await fetched('undo_' + again + '.wav'); else await sleep(500);
++      assert.deepEqual(soundFiles().filter((f) => !seen.has(f)), fresh, again + '\'s melody follows the repick: its files not yet in are fetched');
++      assert.deepEqual(soundFiles().filter((f) => !mine.includes(f)), [], 'no other melody\'s files');
++      prev = again;
++    }
+     assert.equal(await ev("return localStorage.getItem('t180.settings.theme');"), JSON.stringify('music'), 'saved under its old value, music, so saves from before and after read alike');
+     await ev("localStorage.setItem('t180.settings.theme', JSON.stringify('music')); return true;");   // as 0.4.6 and 0.4.7 saved it
+     await load({ clear: false });

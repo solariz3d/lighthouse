@@ -1,0 +1,9 @@
+== C d305 tests+mutants after the path fix · asked 2026-10-12T06:13:24.286Z · lock held 2026-10-12T06:13:24.319Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d305-wt && node --test --test-reporter=tap consonance/hooks/claim-check.test.js consonance/tools/claim-check-adapter.test.js consonance/tools/claim-replay.test.js 2>&1 | grep -E '^not ok|^# (tests|pass|fail)'; cd G:/worktrees/c-d305-base && node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d305/mut.js | grep -E 'C0|SURVIVED|NOT APPLIED|applied'; cd G:/worktrees/c-d305-wt && node consonance/tools/portable-paths.js 2>&1 | head -1
+# tests 47
+# pass 47
+# fail 0
+C0 control: SURVIVED
+applied 25 / caught 25 / NOT APPLIED 0; base dirty after: 0
+portable-paths: green — 389 files in scope, 455 known sites, 0 new
+== exit 0 · done 2026-10-12T06:13:34.894Z

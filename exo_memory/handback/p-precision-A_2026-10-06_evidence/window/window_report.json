@@ -1,0 +1,128 @@
+{
+ "exe": "t180-track-builder.exe",
+ "started": "2026-10-06T17:40:54.872Z",
+ "errors": [],
+ "console": [],
+ "checks": {
+  "start": {
+   "status": "unsaved",
+   "info": "0 pieces · 0 m · open",
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece."
+  },
+  "infoBefore": "2 pieces · 200 m · open · last extend 1 ms",
+  "turnTo0": {
+   "noShift_40px": {
+    "before": "2",
+    "after": "0",
+    "px": -40,
+    "pxPerM": 6.07
+   },
+   "noShift_37px": {
+    "before": "2",
+    "after": "0",
+    "px": -37,
+    "pxPerM": 6.07
+   },
+   "noShift_43px": {
+    "before": "2",
+    "after": "0",
+    "px": -43,
+    "pxPerM": 6.07
+   },
+   "noShift_30px_not_held": {
+    "before": "2",
+    "after": "0.5",
+    "px": -30,
+    "pxPerM": 6.07
+   },
+   "shift_400px_one_drag": {
+    "before": "2",
+    "after": "0",
+    "parts": [
+     -400
+    ],
+    "pxPerM": 6.07
+   },
+   "shift_397px_one_drag": {
+    "before": "2",
+    "after": "0",
+    "parts": [
+     -397
+    ],
+    "pxPerM": 6.07
+   },
+   "shift_2x200px": {
+    "before": "2",
+    "after": "0",
+    "parts": [
+     -200,
+     -200
+    ],
+    "pxPerM": 6.07
+   },
+   "shift_103_7px_not_held": {
+    "before": "2",
+    "after": "1.5",
+    "parts": [
+     -103.7
+    ],
+    "pxPerM": 6.07
+   }
+  },
+  "zoom": {
+   "build": {
+    "turn": "1",
+    "width": "29",
+    "length": "110",
+    "pxPerMeter": {
+     "turn": 6.05,
+     "width": 29.65,
+     "length": 11.82
+    }
+   },
+   "zoomedOut": {
+    "turn": "1",
+    "width": "29",
+    "length": "110",
+    "pxPerMeter": {
+     "turn": 4.52,
+     "width": 11.15,
+     "length": 4.29
+    }
+   }
+  },
+  "reset": {
+   "turn": {
+    "from": 2,
+    "to": "0"
+   },
+   "bank": {
+    "from": 6,
+    "to": "0"
+   },
+   "length": {
+    "before": 100,
+    "dragged": "120",
+    "afterDoubleClick": "100"
+   },
+   "width": {
+    "before": 31,
+    "dragged": "26",
+    "afterDoubleClick": "31"
+   },
+   "cup": {
+    "before": 8,
+    "dragged": "16",
+    "afterDoubleClick": "8"
+   }
+  },
+  "noDocumentEdit": true,
+  "fieldWhileDragging": "0"
+ },
+ "keeperFiles": 10,
+ "keeperChanged": [],
+ "runAppData": [
+  "autosave.t180auto"
+ ],
+ "ended": "2026-10-06T17:41:44.234Z"
+}

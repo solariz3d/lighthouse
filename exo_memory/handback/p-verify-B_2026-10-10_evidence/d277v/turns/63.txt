@@ -1,0 +1,24 @@
+MESSAGE 63  msg_011CfqHm7gER8vfUwe99tzza  seat librarian  ts 2026-10-08T19:03:46.821Z  turn L83992..L84005 (next prompt L84010)
+CLAIMS:
+  [msg_011CfqHm7gER8vfUwe99tzza|5] **"the handle fix, Level and To floor, undo across restarts, the test fixes, and the version bump"**: check this list against the actual commit subjects. It names five items but claims seven commits, so the reader can't map them. Either some items span multiple commits or something is missing from the list.
+
+--- L83992 user 2026-10-08T19:03:40.996Z
+USER: is it pushed
+--- L84002 assistant 2026-10-08T19:03:43.439Z
+TOOL_USE Bash [toolu_011snGg8VDK2KBrXUhDQ3G9F]: {"command":"cd C:/Users/nname/Desktop/worktrees/lib-582-wt && git fetch -q origin && git rev-parse --short origin/main && git log --oneline origin/main..4acbf4d | cut -c1-90","description":"Check what is pushed vs local 0.3.3"}
+--- L84003 user 2026-10-08T19:03:44.347Z
+RESULT [toolu_011snGg8VDK2KBrXUhDQ3G9F]: 0014555
+4acbf4d D272 landing: the undo entry goes under [0.3.3] (librarian)
+3a92c33 D272: undo survives Save, closing the program and reopening (undo sidecar)
+85fafff core_piece P49 and P51: shown EQUIVALENT (not inferred), with row 6c; core_piece_m
+a6cee64 Mutation anchors: M12 (core_cup) and P29 (core_piece) re-anchored after D258; a NO
+6a799cb Version 0.3.3: Level and To floor, and no pointer-lock notice on a handle grab
+1235ab2 D271: "Level" and "To floor" beside Straight (the climb solved so a piece ends str
+b8d6a47 D270: no pointer lock on a handle grab (no Chromium 'press ESC' notice)
+Shell cwd was reset to C:\Consonance\instances\librarian
+--- L84005 assistant 2026-10-08T19:03:46.821Z  <<< THE CLAIM'S MESSAGE
+TEXT: No. GitHub is at 0.3.2 (`0014555`). The 7 commits that make up 0.3.3 are local only: the handle fix, Level and To floor, undo across restarts, the test fixes, and the version bump.
+
+I held the push until you'd tried the handle grab and the undo-after-restart, since neither has been seen in the real window yet. If you'd rather push now and test after, say so and it's up in a minute.
+
+Sources: `git log --oneline origin/main..4acbf4d`

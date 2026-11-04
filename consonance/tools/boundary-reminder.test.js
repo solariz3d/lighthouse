@@ -31,7 +31,7 @@ function test(name, fn) {
   try { fn(); console.log(`  ok   ${name}`); pass++; }
   catch (e) { console.log(`  FAIL ${name}\n       ${e.message}`); fail++; }
 }
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'boundary-reminder-'));
+const tmp = require('./scratch.js').mkdtemp('boundary-reminder-');
 
 // ── fixtures ────────────────────────────────────────────────────────────────────────────────────
 

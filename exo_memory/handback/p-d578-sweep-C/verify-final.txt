@@ -1,0 +1,47 @@
+EQUAL    src/validate/bounds.js  code 11875ce5f68fef5c  comments 34 -> 34
+EQUAL    src/validate/index.js  code 35bb523b77ca90f6  comments 235 -> 235
+EQUAL    src/validate/jumps.js  code 61c6aa65dcc3153f  comments 20 -> 20
+EQUAL    src/validate/limits.js  code 9658e8a2e80f7b56  comments 63 -> 63
+EQUAL    src/validate/raygap.js  code 2ba29fd11585542f  comments 70 -> 70
+src/validate: 5 changed .js file(s): EQUAL 5, DIFFERS 0
+src/validate: 5 changed .js file(s): EQUAL 5, DIFFERS 0; controls failing 0
+EQUAL    src/markers/index.js  code 7f4ed51558e57c4c  comments 23 -> 23
+EQUAL    src/markers/layout.js  code e20f1ab791a2cdbe  comments 74 -> 74
+EQUAL    src/markers/paint.js  code af2dd8a875a54222  comments 26 -> 26
+src/markers: 3 changed .js file(s): EQUAL 3, DIFFERS 0
+src/markers: 3 changed .js file(s): EQUAL 3, DIFFERS 0; controls failing 0
+EQUAL    app/core/buildmenu.js  code ebb15876b86eb536  comments 13 -> 13
+EQUAL    app/core/centreline.js  code 9ac8de7c9dac4941  comments 16 -> 16
+EQUAL    app/core/closejob.js  code ece8c6d63b6658dd  comments 62 -> 62
+EQUAL    app/core/closerunner.js  code 0d06411666b3aed5  comments 16 -> 16
+EQUAL    app/core/closeworker.js  code 220279599e105525  comments 10 -> 10
+EQUAL    app/core/coreshell.js  code 7329ba8cf0ef156e  comments 350 -> 350
+EQUAL    app/core/exportwords.js  code 456f24768d580d52  comments 9 -> 9
+EQUAL    app/core/flightlayer.js  code 16508be46e0b6029  comments 12 -> 12
+EQUAL    app/core/griplayer.js  code e7102e1d59dcc993  comments 13 -> 13
+EQUAL    app/core/griplike.js  code 596a68b579d9bd89  comments 12 -> 12
+EQUAL    app/core/gripvals.js  code f0d061fcc49b5bd5  comments 5 -> 5
+EQUAL    app/core/handles.js  code b7948ed19a506d0c  comments 152 -> 152
+EQUAL    app/core/inputlog.js  code 5399d3ed2456f61c  comments 10 -> 10
+EQUAL    app/core/jumpwords.js  code d7c1921163bd1bfe  comments 2 -> 2
+EQUAL    app/core/keys.js  code dea72b37f29a03b2  comments 13 -> 12
+EQUAL    app/core/labels.js  code bf25da82fd472b6b  comments 75 -> 75
+EQUAL    app/core/landing.js  code d5faabf590f6ad79  comments 13 -> 13
+EQUAL    app/core/overlapjob.js  code 2a314d74e08a6646  comments 22 -> 22
+EQUAL    app/core/overlapmerge.js  code 7ad221aa0c6b1ff3  comments 9 -> 9
+EQUAL    app/core/overlaprunner.js  code d2138c903f819f1c  comments 22 -> 22
+EQUAL    app/core/overlapworker.js  code ab9868318c45eedb  comments 9 -> 9
+EQUAL    app/core/panel.js  code 8a8396df41caea4a  comments 373 -> 373
+EQUAL    app/core/piecesui.js  code 58c55c07b66788a8  comments 35 -> 35
+EQUAL    app/core/selectionlayer.js  code c5c0ad7717f70efb  comments 31 -> 31
+EQUAL    app/core/spawndrag.js  code 6583b777c42b12fe  comments 40 -> 40
+EQUAL    app/core/spawnslayer.js  code e7ae464fdf82baf1  comments 19 -> 19
+EQUAL    app/core/startlayout.js  code e3b8f90f1fa368d2  comments 6 -> 6
+EQUAL    app/core/textures.js  code 5d34f904a337939a  comments 36 -> 36
+EQUAL    app/core/trackmenu.js  code 533772cd3a1305ae  comments 23 -> 23
+EQUAL    app/core/valuesoverlay.js  code 1c228bcd102d3f5d  comments 20 -> 20
+EQUAL    app/core/widthlike.js  code 7a595f370c9bbb8d  comments 16 -> 16
+EQUAL    app/core/xsec.js  code ebe99b4bea6ec8cb  comments 12 -> 12
+EQUAL    app/core/zonegrab.js  code 60f159a82370c5b4  comments 39 -> 39
+app/core: 33 changed .js file(s): EQUAL 33, DIFFERS 0
+app/core: 33 changed .js file(s): EQUAL 33, DIFFERS 0; controls failing 0

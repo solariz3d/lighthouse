@@ -1,0 +1,22 @@
+x58              p8 46.0 / 0.3 | flips (close() lap) 1854m/52m
+x60              p8 46.0 / 0.3 | flips (close() lap) 1856m/54m
+x62              p8 45.7 / 0.2 | flips (close() lap) 1858m/12m
+x66              p8 45.7 / 0.2 | flips (close() lap) 1862m/14m
+x70              p8 45.7 / 0.2 | flips (close() lap) 1864m/62m
+x72              p8 45.7 / 0.2 | flips (close() lap) 1866m/64m
+x80              p6 47.5 / 0.8   p7 54.7 / 52.6   p8 50.7 / -4.8 | flips (close() lap) none
+x100             p6 47.5 / 0.8   p7 54.4 / 52.2   p8 53.8 / 8.5 | flips (close() lap) none
+x120             p6 47.5 / 0.8   p7 54.3 / 52.2   p8 54.0 / 10.4   p13 59.1 / 31.0 | flips (close() lap) none
+g1200-100w300    p8 46.1 / 0.8   p9 53.3 / 50.9 | flips (close() lap) 1956m/8m
+g3000-100w300    p8 46.1 / 0.8   p9 53.3 / 50.9 | flips (close() lap) 1956m/10m
+g10000-100w300   p6 47.5 / 0.8   p7 54.6 / 52.5   p8 52.4 / 2.1 | flips (close() lap) none
+sharp            p6 29.2 / 0.0   p7 32.0 / 0.0 | flips (close() lap) 2144m/2m 2305m/4m
+ramp40           p6 39.5 / 1.7   p7 31.1 / 0.0 | flips (close() lap) 2154m/6m 2338m/4m
+s5               p8 53.3 / 50.9 | flips (close() lap) 1798m/6m
+t50w             p8 53.3 / 50.9 | flips (close() lap) 1836m/10m
+t100             p8 53.3 / 50.9 | flips (close() lap) 1850m/20m
+e60              p9 53.3 / 50.9 | flips (close() lap) 1824m/14m
+short60          p7 7.2 / 0.8   p8 18.8 / 17.3 | flips (close() lap) none
+short100         p7 17.7 / 0.9   p8 38.9 / 38.1 | flips (close() lap) none
+short140         p7 29.0 / 0.9   p8 52.2 / 51.2 | flips (close() lap) none
+short200         p7 40.9 / 0.8   p8 54.2 / 51.9 | flips (close() lap) none

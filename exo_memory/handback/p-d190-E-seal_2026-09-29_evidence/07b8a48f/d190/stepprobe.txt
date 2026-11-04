@@ -1,0 +1,6 @@
+{"fam":"bowl","from":15.5,"to":90,"transition_m":100,"max_dc_ds_deg_per_m":1.117,"edge_step_deg":2.235,"tip_jump_m":0.327}
+{"fam":"bowl","from":15.5,"to":90,"transition_m":40,"max_dc_ds_deg_per_m":2.794,"edge_step_deg":5.588,"tip_jump_m":0.817}
+{"fam":"bowl","from":15.5,"to":150,"transition_m":40,"max_dc_ds_deg_per_m":5.044,"edge_step_deg":10.088,"tip_jump_m":1.412}
+{"fam":"half-pipe","from":15.5,"to":90,"transition_m":100,"max_dc_ds_deg_per_m":1.117,"edge_step_deg":2.235,"tip_jump_m":0.22}
+{"fam":"half-pipe","from":15.5,"to":90,"transition_m":40,"max_dc_ds_deg_per_m":2.794,"edge_step_deg":5.588,"tip_jump_m":0.55}
+{"fam":"half-pipe","from":15.5,"to":150,"transition_m":40,"max_dc_ds_deg_per_m":5.044,"edge_step_deg":10.088,"tip_jump_m":0.954}

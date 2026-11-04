@@ -1,5 +1,7 @@
 # Jev for Claude Code
 
+**RETIRED 2026-09-27**, at the author's word: Consonance no longer starts or uses Jev. This page is kept as the record of what Jev was and what it sent.
+
 Jev reads each finished turn of your Claude Code sessions and marks the ones worth a second look. A marked turn shows
 up at the start of your next prompt as one line:
 

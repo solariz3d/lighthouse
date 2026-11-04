@@ -103,7 +103,7 @@ const os = require('os');
 const path = require('path');
 
 t('a stale, unrecorded file is reported STUCK', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'seedstat-'));
+  const dir = require('./scratch.js').mkdtemp('seedstat-');
   fs.mkdirSync(path.join(dir, 'cards'), { recursive: true });
   const repoCard = path.resolve(__dirname, '..', '..', 'exo_memory', 'cards', 'verify-before-claiming.md');
   // Content that is NOT the bundle, with no manifest entry: exactly the absorbing state.
@@ -124,7 +124,7 @@ t('a stale, unrecorded file is reported STUCK', () => {
 });
 
 t('a file matching the bundle is NOT stuck — the exit exists', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'seedstat2-'));
+  const dir = require('./scratch.js').mkdtemp('seedstat2-');
   fs.mkdirSync(path.join(dir, 'cards'), { recursive: true });
   const src = path.resolve(__dirname, '..', '..', 'exo_memory', 'cards', 'verify-before-claiming.md');
   fs.copyFileSync(src, path.join(dir, 'cards', 'verify-before-claiming.md'));

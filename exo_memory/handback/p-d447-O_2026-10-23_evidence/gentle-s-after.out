@@ -1,0 +1,9 @@
+[s1] closed: 13 pieces, 4627 m
+  bankLap returned the same object (nothing banked): false; phi changed: p1 6.1°, p2 65.8°, p3 12.4°, p4 66.3°, p5 6.1°, p6 60.3°, p7 60.8°, p8 59.8°, p9 3.7°, p10 65.5°, p11 6.1°, p12 65.0
+  after:  curved 909, out 0, worst 26.5° at p4 s 1673, mean 58.7°
+[s2] closed: 12 pieces, 4627 m
+  bankLap returned the same object (nothing banked): false; phi changed: p1 5.3°, p2 66.0°, p3 4.6°, p4 65.8°, p5 2.9°, p6 65.6°, p7 65.9°, p8 2.3°, p9 65.8°, p10 1.7°, p11 65.9°
+  after:  curved 958, out 0, worst 31.0° at p7 s 2709, mean 59.1°
+[s4] closed: 12 pieces, 5699 m
+  bankLap returned the same object (nothing banked): false; phi changed: p1 6.1°, p2 66.0°, p3 5.6°, p4 65.8°, p5 3.5°, p6 65.6°, p7 59.9°, p8 2.5°, p9 65.8°, p10 2.0°, p11 65.9°
+  after:  curved 1034, out 0, worst 31.0° at p2 s 495, mean 58.7°

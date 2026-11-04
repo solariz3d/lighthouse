@@ -21,15 +21,15 @@ const path = require('path');
 // this line, the round-trip test below passed a lockPath and no boardPath, and every suite run wrote
 // an OPEN and a CLOSED row to the real data/board.jsonl — 90 phantom windows by 2026-09-24 06:20Z
 // (`handback/p-d130-blind-E_2026-09-24.md` §1), each one a span boundary-check reads as real.
-process.env.CONSONANCE_DATA = fs.mkdtempSync(path.join(os.tmpdir(), 'blind-data-'));
+process.env.CONSONANCE_DATA = require('../tools/scratch.js').mkdtemp('blind-data-');
 const { blindState, declareLine, setBlind, clearBlind, BOARD, isSealedDispatch, sealedGate, SEALED } = require('./blind.js');
 
 test('no test in this file can write the live board: the default board is a temp file', () => {
-  assert.ok(path.resolve(BOARD).startsWith(path.resolve(os.tmpdir())), `BOARD is ${BOARD}`);
-  assert.ok(path.resolve(SEALED).startsWith(path.resolve(os.tmpdir())), `SEALED is ${SEALED}`);
+  assert.ok(path.resolve(BOARD).startsWith(path.resolve(require('../tools/scratch.js').scratchRoot())), `BOARD is ${BOARD}`);
+  assert.ok(path.resolve(SEALED).startsWith(path.resolve(require('../tools/scratch.js').scratchRoot())), `SEALED is ${SEALED}`);
 });
 
-const tmp = () => path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'blind-')), 'blind.lock');
+const tmp = () => path.join(require('../tools/scratch.js').mkdtemp('blind-'), 'blind.lock');
 
 test('no lock: open, and says why', () => {
   const p = tmp();
@@ -137,7 +137,7 @@ test('the gate is actually wired into the pane broadcast', () => {
 // the code that toggles the lock.
 
 const rig = () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'blindboard-'));
+  const dir = require('../tools/scratch.js').mkdtemp('blindboard-');
   return { lock: path.join(dir, 'blind.lock'), board: path.join(dir, 'board.jsonl'), dir };
 };
 const rows = (p) => {
@@ -250,10 +250,18 @@ test('SEALED GATE: a seat with no session id is never muted', () => {
 });
 
 test('SEALED GATE: a window whose expiry is unusable fails CLOSED, not open', () => {
-  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'sealed-')), 'sealed.json');
+  const file = path.join(require('../tools/scratch.js').mkdtemp('sealed-'), 'sealed.json');
   const sid = 'aaaaaaaa-1111-4000-8000-000000000009';
   fs.writeFileSync(file, JSON.stringify({ windows: { [sid]: { letter: 'R', opened: 1 } } }));
   const g = sealedGate({ sessionId: sid, prompt: 'ok', file, boardPath: path.join(path.dirname(file), 'b.jsonl') });
   assert.strictEqual(g.mute, true);
   assert.match(g.line, /no usable expiry, so this failed CLOSED/);
+});
+
+// D309 (seat A): the app ends a ring on a send-time line. The sealed detector reads the head, so it must not move.
+test('SEALED DETECTOR: a packet that ends on the send line is still detected, and a chair packet with no sealed read is still not (D309)', () => {
+  const SENT = '\n[sent 2026-10-12T07:25:51Z · Oct 12, 1:25 AM local]';
+  assert.ok(isSealedDispatch('\n\n<pasted_content id="465e">\n[chair:MAIN] B — L113, on L: you are one of TWO SEALED READERS again.' + SENT));
+  assert.ok(isSealedDispatch('[chair:MAIN] D117 packet B — the second blind read, and it is your kind of question.' + SENT));
+  assert.ok(!isSealedDispatch('[chair:MAIN] E — D125, on D: FIX THE README the stranger couldn\'t follow.' + SENT));
 });

@@ -1,0 +1,1099 @@
+MESSAGE 30  msg_011CfjoDdHn8hViv8obGk11y  seat E  ts 2026-10-05T21:26:42.071Z  turn L48431..L48803 (next prompt L48831)
+CLAIMS:
+  [msg_011CfjoDdHn8hViv8obGk11y|9] "The flight is solved and its landing ramp sized as the adapter builds them." (does it share the adapter's logic?)
+  [msg_011CfjoDdHn8hViv8obGk11y|12] "A core flight (the adapter's gap followed by its own landing ramp) is now an intended gap."
+
+--- L48431 user 2026-10-05T21:00:58.077Z
+USER: 
+
+<pasted_content id="37d3">
+[chair:MAIN] D243 jumps, CORE HALF (no UI; A is in the panel for D240). EXPORT tier: the touched src files' mutants plus fixtures 0 of 9. Base: t180 main 12ab427. Use a fresh worktree, with no junctions.
+The plan: exo_memory/loop/plan_t180_jumps_open_export_2026-10-05.md, D243 item 1. Your own finding (exo_memory/handback/p-openexport-E_2026-10-05.md:59-63):
+- every core flight is RED gap-in-road, because validate exempts only the word 'jump' while the core writes 'core' (src/validate/index.js:280, src/core/adapter.js:274);
+- close() refuses any jump track (NOT_YET).
+Build:
+1. The validator treats a core flight's gap as INTENDED: no gap-in-road red inside its span. Holes OUTSIDE a flight stay red. If the landing road is missing or too short, that's a red (you found a flightPiece always carries its landing ramp, so define "too short" and say why).
+2. close() on a track with jumps: close across them if the core can (the flight pieces carry the road's state); otherwise keep the refusal but NAMED and explained. Your call, with reasons. B's local-window Close (95ee245) must keep working.
+3. A core helper the UI will call to append a jump at the head (gap, drop, landing angle), returning the doc, plus a round-trip test (append → serialize → reopen).
+Tests: no red in a flight; a red on a real hole outside it; the jump round-trips; a normal export of a closed jump track works and of an open one still refuses; fixtures 0 of 9.
+Heavy-run lock, one at a time. No push, no AC. You may answer "this is wrong".
+Hand-back: exo_memory/handback/p-jumps-core-E_2026-10-05.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_jumps_open_export_2026-10-05.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: a non-author look, then A's jump control after the D240 UI, unless the output says otherwise
+</pasted_content id="37d3">
+
+--- L48441 assistant 2026-10-05T21:01:03.016Z
+TOOL_USE Bash [toolu_017Xdk8CUmLy5dav6JdZwJfo]: {"command":"cd C:/Users/nname/Desktop/lighthouse && grep -n \"D243\" -A40 exo_memory/loop/plan_t180_jumps_open_export_2026-10-05.md | head -90","description":"Read the D243 plan"}
+--- L48442 user 2026-10-05T21:01:03.135Z
+RESULT [toolu_017Xdk8CUmLy5dav6JdZwJfo]: 1:# T-180: jumps you can build, and a TEST export of an unfinished track. Plus piece select / save / delete. Librarian, on D, 2026-10-05 09:0x. Lap D243 (and an amendment to D240).
+2-
+3-The keeper, 08:55: "how many labels there are with how big the track is, remember that change where it only shows the label you are hovering
+4-your mouse over … then can even highlight pieces, save them, even delete. We also have to think of how jumps will work, to test and make
+5-jumps, i still have to drive it by hand, but it also means that the track needs to end and then pick up again you know? Ramp to landing,
+6-but it also means the loop isnt closed until the jumps and rest of the track is completed. meaning it should allow to export even without
+7-it being completed".
+8-
+9-## Checked (main 8ff414b; the installed build is fa5fd937, worktree `lib-mirror-build`)
+10-- **The core already has jumps:** `src/core/document.js` exports `flightPiece` (`{ type: 'flight', gap, drop, land }`), and the shell
+11-  and sculpt already carry flights (`app/core/coreshell.js:107`, "a flight carries the road's state"; `app/core/labels.js:171`, "a flight
+12-  has no label"). **No control on the Equation page adds one** (no jump control in `app/core/panel.js`).
+13-- **Export refuses an open track:** `src/export/fromwords.js:144`, `OPEN_TRACK`, "an AC lap needs a closed loop, and the AI line must
+14-  close".
+15-- **Labels:** hover-only is already D242 item 5 (with B).
+16-- `eq-TEST 1 recovered.t180track` is unchanged since the librarian wrote it (23:45).
+17-
+18:## D243 (A after D240, or C; EXPORT tier, since it changes what can be exported)
+19-1. **A Jump control at the head:**
+20-   - the ramp is the last road piece's end (its climb/pitch at the lip, set
+…[2815 chars cut]…
+ can't be exported today:**
+50-`buildFromSegments` requires a closed loop (`src/export/fromwords.js:153`, "segments must close a loop (buildPath closed)"), and TEST 1's
+51-rolled section carries overlap reds (`loop/test1_raygap_diagnosis_2026-10-04.md`).
+52:- **D243a, now, to the first free pane:** the TEST export of an open track (item 2 above). Changed from item 2: in TEST mode the reds are
+53-  **listed as warnings, not blocking** (the folder is the keeper's own test drive, marked "test, unfinished" in its ui name, and never a
+54-  normal export). Closure is waived. The road ends in a named end block.
+55-- Then the librarian exports `TEST 1 recovered` with it for the keeper.
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48445 assistant 2026-10-05T21:01:10.940Z
+TOOL_USE Bash [toolu_01LQZMVicNdjJCkKt3sZYCjK]: {"command":"cd /c/Users/nname/Desktop/t180-track-builder && git log --oneline -1 main; git worktree add -q -b d243-jumps-core C:/Users/nname/Desktop/worktrees/e-jumps-wt 12ab427 && cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && git log --oneline -1 && find . -maxdepth 2 -type l | head; grep -rn \"flight\" src --include=*.js | grep -v \"^src/.*test\" | cut -c1-220 | head -60","description":"Fresh worktree off 12ab427; find flight code"}
+--- L48446 user 2026-10-05T21:01:11.436Z
+RESULT [toolu_01LQZMVicNdjJCkKt3sZYCjK]: 12ab427 D243a fixes after B's look: a closed track is refused the test export; the button's path is tested
+12ab427 D243a fixes after B's look: a closed track is refused the test export; the button's path is tested
+src/core/adapter.js:272:    if (P.type === 'flight') {
+src/core/close.js:205:  if (doc.pieces.some((P) => P.type === 'flight')) throw new D.CoreError('NOT_YET', 'close: a track with a jump is not closed by this version (the flight fixes a displacement the close would have to
+src/core/document.js:4:// construction. A flight piece is a jump, solved as the old jump word is (src/doc/resolve.js solveJump).
+src/core/document.js:8://   flightPiece({ gap, drop, land })
+src/core/document.js:128:/** The state a new road piece must start from: the last road piece's end; after a flight, level (κh = κv = 0) with the rest carried. */
+src/core/document.js:130:  let flightAfter = false;
+src/core/document.js:133:    if (P.type === 'flight') { flightAfter = true; continue; }
+src/core/document.js:135:    return flightAfter ? { ...e, kh: { v: 0, m: 0 }, kv: { v: 0, m: 0 }, h: { v: 0, m: 0 }, l: { v: 0, m: 0 } } : e;
+src/core/document.js:194:function flightPiece({ id, gap, drop, land }) {
+src/core/document.js:195:  return { id: id || null, type: 'flight', gap: q(gap, DEC.m), drop: q(drop, DEC.m), land: q(land, DEC.rad) };
+src/core/document.js:268:    if (P.type === 'flight') {
+src/core/document.js:270:      if (!(P.gap > 0) || !Number.isFinite(P.drop) || !Number.isFinite(P.land)) bad(`${at}: a flight needs gap > 0, drop and land`);
+src/core/document.js:271:      if (!prev) bad(`${at}: a flight must follow a road piece`);
+src/core/document.js:274:    if (P.type !== 'road') bad(`${at}: type must be road or flight, got ${P.type}`);
+sr
+…[5703 chars cut]…
+et i = 0; i < n; i++) if (v[i] == null) v[i] = i ? v[i - 1] : own(road[0]);   // flight carries its speed
+src/validate/index.js:119:  // the flight over a gap keeps its speed. A closed loop runs three laps so the start speed is the carried one.
+src/validate/index.js:171://   · jumps                 recomputed whole: a jump's landing depends on road up to its landing search after its flight
+src/validate/index.js:320:    // gives it to the segment it starts, so there it is the flight's first station, S[first]; a path sampled the other
+src/validate/index.js:341:    // A landing lip NOT AHEAD of the take-off lip (a measured gap ≤ 0: the flight would go straight up or backwards) has
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48454 assistant 2026-10-05T21:01:17.392Z
+TOOL_USE Bash [toolu_01PQRRMBRH8UFtsCRHG73pJg]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 255,300p src/core/adapter.js; echo =====; sed -n 265,360p src/validate/index.js","description":"Read the adapter's flight code and the validator's gap check"}
+--- L48455 user 2026-10-05T21:01:17.547Z
+RESULT [toolu_01PQRRMBRH8UFtsCRHG73pJg]: }
+
+function toSegments(doc, { segM = 2, designKmh = MACH6.designSpeedKmh, cupRuns = true } = {}) {
+  D.checkDoc(doc);
+  if (!doc.pieces.length) throw new D.CoreError('EMPTY', 'an empty track has no path');
+  if (!(segM > 0)) throw new D.CoreError('BAD_STEP', `segM must be positive, got ${segM}`);
+  const segs = []; let pitch = doc.start.pitch, roll = 0, lastProfile = null, lastLegacy = false, lastKind = null, lastPlain = null;   // lastPlain: the last row without an edge (what a cup entering from a legacy piece fades from)
+  // A CLOSED lap whose two ends are not the same kind (D190 R3): the cup end fades into the legacy end's rendered profile (tailZone; or, when the
+  // cup is the START, the first metres fade out of the legacy END's last profile: morphZone), so the zip at s = 0 has no step
+  const roadIdx = doc.pieces.map((P, i) => (P.type === 'road' ? i : -1)).filter((i) => i >= 0), firstRoad = roadIdx[0], lastRoad = roadIdx[roadIdx.length - 1];
+  const seam = doc.closed && roadIdx.length > 1 && !!doc.pieces[firstRoad].cup !== !!doc.pieces[lastRoad].cup && cupRuns;
+  const chan = (P, s) => D.valuesAt(P, s);
+  const nOf = (P) => Math.max(1, Math.ceil(P.length / segM - 1e-9));
+  const legacyAt = (P, j) => { const n = nOf(P), s0 = (P.length * j) / n, s1 = (P.length * (j + 1)) / n; return legacySeg(P.family, chan(P, s0), chan(P, s1), chan(P, (s0 + s1) / 2), s1 - s0); };
+  const legacyFirst = (P) => legacyAt(P, 0).start;   // the first row of the piece's first segment
+  const legacyLast = (P) => legacyAt(P, nOf(P) - 1).end;   // and the last row of its last
+  doc.pieces.forEach((P, pi) => {
+    if (P.type === 'flight') {
+      const J = solveJump(pitch, P.gap, P.drop, P.land, P.id);
+      segs.push({ id: P.id, word: 'core'
+…[11134 chars cut]…
+, ...r, downforceStep: DOWNFORCE_STEP(car) });
+  });
+
+  // ── the open end and the landings (D170, the librarian's item 3, 2026-09-27) ──
+  // An OPEN end must sit on road. A head that is a jump's flight is over nothing: a hole at the head (ARCHITECTURE.md:82).
+  // The open-head exemption above is for a gap word that is still being placed; a jump's flight never ends on road by
+  // itself, so it is red until a landing is there (the jump word's own landing ramp, or the next word).
+  if (end === n && !path.closed && n && segments[lastSeg].kind === 'gap') {
+    const first = firstOf[lastSeg];
+    red.push({ s: S[first].s, s1: S[n - 1].s, u: null, reason: 'head-in-the-air' });
+  }
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48459 assistant 2026-10-05T21:01:33.757Z
+TOOL_USE Bash [toolu_013rFZRhssG1HmccGah8b4xU]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && grep -n \"jumps\\b\\|jump-\\|checkJump\\|reachable\\|'no-landing\\|landing\" src/validate/index.js | sed -n 1,80p | cut -c1-200; echo ====; grep -rn \"kind: 'gap'\" src --include=*.js | cut -c1-220","description":"Find the jump reds and every gap segment maker"}
+--- L48466 user 2026-10-05T21:01:33.921Z
+RESULT [toolu_013rFZRhssG1HmccGah8b4xU]: 3://   validate(path, segments, opts) -> { speed, lines, red, amber, info, jumps, lap, notChecked }
+20:const { checkJump } = require('./jumps.js');
+77:  'landing-misses-zone': 'ARCHITECTURE.md:75-78 (the landing ramp must catch both landings)',
+83:  'jump-gap-not-forward': 'ARCHITECTURE.md:72 (a jump check needs a gap: here the landing lip is not ahead of the take-off lip, so there is no flight to check)',
+87:// the moment the ray passes the take-off lip, and comes back IN ONE STEP when the ray finds the landing, not gradually.
+88:// The landing should expect that step, not only the fall. Its size is not given: the research's figure (about 2.4 g at
+90:const DOWNFORCE_STEP = (car) => ({ aheadM: car.downforceRay.aheadM, note: `the downforce drops to zero as the car's downforce ray, ${car.downforceRay.aheadM} m ahead, passes the lip, and returns in
+171://   · jumps                 recomputed whole: a jump's landing depends on road up to its landing search after its flight
+172://                           (150 m, or the jump's own landing ramp when that is longer), so a word placed within that of
+173://                           an earlier jump can change it; jumps are few, and each costs at most its landing search
+312:  // ── jumps (ARCHITECTURE.md:72-80) ──
+313:  const jumps = [];
+317:    if (first >= end) { jumps.push({ s: S[first].s, id: g.id, pending: true, deferred: true, reason: 'not checked until the drag ends' }); return; }
+329:    if (first === 0 || land >= n) { jumps.push({ s: S[first].s, id: g.id, pending: true, reason: land >= n ? 'no landing yet (open head)' : 'no take-off road' }); return; }
+332:    // THE LANDING SEARCH: 150 m of road past the landing lip (opts.landingSearchM), and never less than the jump's 
+…[2458 chars cut]…
+nreachable' });
+411: * jumps are the ones the proof reads, so this equals the lap an undeferred validate gives (tested). Any other lap is
+412: * returned as it is. O(stations + lines + jumps): no load or stack is recomputed.
+417:  return proveLap(S, isRoad, result.speed.map((x) => x.v), result.lines, result.jumps);
+====
+src/core/adapter.js:274:      segs.push({ id: P.id, word: 'core', part: 'gap', kind: 'gap', length: J.L, k0: 0, k1: 0, kp0: J.kp0, kp1: J.kp1, roll0: roll, roll1: roll, heartline: 0, profile: null, blend: null, speed: nu
+src/doc/resolve.js:120:    segments.push({ id: w.id, word: 'jump', part: 'gap', kind: 'gap', length: J.L, k0: 0, k1: 0, kp0: J.kp0, kp1: J.kp1,
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48468 assistant 2026-10-05T21:01:45.503Z
+TOOL_USE Bash [toolu_01Hdh8popKfsKf3qBbfnox15]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 355,375p src/validate/index.js; echo ====; sed -n 100,135p src/doc/resolve.js; echo ===; grep -n \"landingRamp\" -A25 src/doc/resolve.js src/geom/*.js src/doc/*.js 2>/dev/null | grep -n \"function landingRamp\" ; grep -rn \"landingRamp\" src --include=*.js | cut -c1-160 | head","description":"Read the landing reds and the word builder's jump"}
+--- L48469 user 2026-10-05T21:01:45.742Z
+RESULT [toolu_01Hdh8popKfsKf3qBbfnox15]:   // The open-head exemption above is for a gap word that is still being placed; a jump's flight never ends on road by
+  // itself, so it is red until a landing is there (the jump word's own landing ramp, or the next word).
+  if (end === n && !path.closed && n && segments[lastSeg].kind === 'gap') {
+    const first = firstOf[lastSeg];
+    red.push({ s: S[first].s, s1: S[n - 1].s, u: null, reason: 'head-in-the-air' });
+  }
+  // With a known take-off speed, the landing road must catch BOTH landings (ARCHITECTURE.md:75-78; jumps.js). A missed
+  // one is red on an open track too, not only in the closed lap's proof; `worst` is the heaviest fall that misses.
+  for (const jp of jumps) {
+    if (jp.pending || !Number.isFinite(jp.speed)) continue;
+    const missed = jp.landings.filter((L) => !L.caught);
+    if (missed.length) red.push({ s: jp.s, s1: jp.s + jp.gap, u: null, reason: 'landing-misses-zone', worst: Math.max(...missed.map((L) => L.g)) });
+  }
+
+  // ── the lap (ARCHITECTURE.md:88-89) ──
+  // opts.lap === false DEFERS the proof (D177: "the lap proof runs on demand or debounced, NEVER on every drag tick"):
+  // the result says so, and lapOf() gives the proof from the result afterwards, the same as it would have been
+  let lap;
+  if (!path.closed) lap = { ok: null, reason: 'open' };
+  else if (end < n) lap = { ok: null, reason: 'deferred' };
+  else if (!sp.v) lap = { ok: null, reason: 'no-speed-model' };
+====
+ */
+function landingRamp(lipPitch, h, speed, designKmh) {
+  const own = Number.isFinite(speed) && speed > 0, given = Number.isFinite(designKmh) && designKmh > 0;
+  const v = own ? speed : (given ? designKmh : LANDING.DEFAULT_KMH) / 3.6, speedFrom = own ? 'word' : given ? 'design' : 'default';
+  const r = jumps.landing
+…[3686 chars cut]…
+p, dh: -h.drop, thetaRad: lipPitch, landRad: h.land, v });
+src/doc/resolve.js:124:    const rampProfile = prof || flatProfile(), R = landingRamp(pitch, h, w.speed, designKmh);
+src/doc/vocab.js:143:// and the next piece starts on the landing"). Its length is validation's: src/validate/jumps.js landingRamp() solves
+src/validate/index.js:333:    // landing ramp, the road resolve sized to catch both measured falls at the design speed (resolve.js landingRamp). A
+src/validate/jumps.js:77:function landingRamp({ D, dh, thetaRad, landRad, v, jumpG = MACH6.jumpG, marginM = 10 }) {
+src/validate/jumps.js:78:  if (!(D > 0)) throw new Error(`landingRamp: the gap must be positive, got ${D}`);
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48473 assistant 2026-10-05T21:02:03.113Z
+TEXT: I've found how the validator handles jumps today. Next I'm reading `close.js`, to decide whether Close can work across a jump.
+--- L48474 assistant 2026-10-05T21:02:04.234Z
+TOOL_USE Bash [toolu_01N4Trtm6RshGc3iyYgc7usZ]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 1,80p src/core/close.js","description":"Read close.js header and design"}
+--- L48475 user 2026-10-05T21:02:04.360Z
+RESULT [toolu_01N4Trtm6RshGc3iyYgc7usZ]: // close.js: CLOSE THE LOOP in one click (D185, pane E; the spec's GO §4). A weighted least-norm correction to the channels'
+// control points, iterated Gauss–Newton on the closure residual (ref 10 §3; the step is ref 04 §3,
+// δ = −W⁻¹Jᵀ(JW⁻¹Jᵀ)⁻¹r, VMLS §16.1.1).
+//
+// The residual (ref 10 §3): the end meets the start in position (3 rows), measured on the ADAPTER's own path (src/core/adapter.js
+// toPath), so the lap closes in the geometry the app draws and exports; the net heading is 2πk and the net pitch 0, on the
+// adapter's segment rule, so the tangent closes (ref 02 §2); the bank ends where it began, mod 2π, so the frame closes (a closed
+// curve's frame need not close by itself, ref 04 §4, WANG08); and every channel's value and slope continue round the seam, so
+// the seam is a joint like any other: C1 in every channel (src/core/README.md), G2 in the line.
+//
+// The weight: control points of the stretch edited last get wEdit ≫ 1, so the correction goes round them (the user's work is not
+// moved). A joint's two coefficients on the next piece are not free: the first IS the previous piece's last, and the second is
+// set by its end slope (README), so they follow the parameters they depend on.
+//
+// Reused from D184 (tools/piecewise.cjs): `basis` (ref 03 §1) and `denseSolve`. NOT reused: its constrained fitter
+// `fitSystem`, which minimises distance to DATA under joint rows; the close has no data, only a dense Jacobian of the lap's
+// integral, and its step is the least-norm one (ref 04 §3), which `fitSystem` does not compute.
+'use strict';
+const { basis, denseSolve } = require('../../tools/piecewise.cjs');
+const D = require('./document.js');
+const { toPath, toSegments } = require('./adapter.js');
+const { jointSte
+…[4294 chars cut]…
+.e[0], (3 * (F.channels.e[1] - F.channels.e[0])) / Fh] : [D.pieceEnd(L).e.v, D.pieceEnd(L).e.m];   // the flagged end of the seam: its e and slope there
+    if (Math.abs(E[0]) > EDGE_SEAM_TOL || Math.abs(E[1]) > EDGE_SEAM_TOL) throw new D.CoreError('EDGE_SEAM', `close: the lap would join an edge (e ${E[0]}°, slope ${E[1]}) to a piece with none at the seam; bring the edge back to 0 before the end of the lap, or give both ends an edge`);
+  }
+}
+function parameters(doc, edited, free = null) {
+  const cols = [], expand = {}, fixedOf = (p) => !!free && !free.has(p);   // D242: a LOCAL close's columns outside its window are fixed (never moved)
+  for (const ch of activeChannels(doc)) {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48483 assistant 2026-10-05T21:02:08.717Z
+TOOL_USE Bash [toolu_018ZYnyiW4ioDKzZMgm7ERwM]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 80,316p src/core/close.js","description":"Read the rest of close.js"}
+--- L48484 user 2026-10-05T21:02:08.816Z
+RESULT [toolu_018ZYnyiW4ioDKzZMgm7ERwM]:   for (const ch of activeChannels(doc)) {
+    expand[ch] = doc.pieces.map(() => null);
+    let prev = -1;
+    doc.pieces.forEach((P, p) => {
+      if (P.type !== 'road') return;
+      const n = P.channels[ch].length, e = new Array(n);
+      for (let i = 0; i < n; i++) {
+        if (prev >= 0 && i < 2 && linkable(ch, doc.pieces[prev], P)) {   // the cup joins only cup to cup (a legacy piece's c is a placeholder); e, s and t the same
+          const A = expand[ch][prev], na = A.length, rho = hStart(P) / hEnd(doc.pieces[prev]);
+          e[i] = i === 0 ? A[na - 1] : [...A[na - 1].map(([c, k]) => [c, k * (1 + rho)]), ...A[na - 2].map(([c, k]) => [c, -k * rho])];
+          if (edited.has(p)) for (const [c] of e[i]) cols[c].edited = true;
+          continue;
+        }
+        e[i] = [[cols.length, 1]]; cols.push({ ch, p, i, edited: edited.has(p), fixed: fixedOf(p) });
+      }
+      expand[ch][p] = e; prev = p;
+    });
+  }
+  return { cols, expand };
+}
+/** The document with every channel rebuilt from the parameter vector x (joints follow; nothing quantised). `keep` (D242, a local close): pieces returned
+ *  AS THEY ARE, the very same objects, because no free column reaches them, so they stay bit-identical rather than recomputed from their own values. */
+function apply(doc, expand, x, quantise, keep = null) {
+  return { ...doc, pieces: doc.pieces.map((P, p) => {
+    if (P.type !== 'road' || (keep && keep.has(p))) return P;
+    const channels = { ...P.channels };
+    for (const ch of Object.keys(expand)) channels[ch] = expand[ch][p].map((terms) => { const v = terms.reduce((s, [c, k]) => s + k * x[c], 0); return quantise ? q(v, D.DEC[ch]) : v; });
+    return { ...P, channels };
+  }) };
+}
+
+/**
+ * The model's rows (ref 10 §3): the en
+…[16435 chars cut]…
+ keeper asks for it). Returns piece indices.
+ */
+function closeWindow(doc, { fraction = 0.2, last = false } = {}) {
+  const road = doc.pieces.map((P, i) => (P.type === 'road' ? i : -1)).filter((i) => i >= 0);
+  if (!road.length) return [];
+  if (last) return [road[road.length - 1]];
+  const total = road.reduce((a, i) => a + doc.pieces[i].length, 0), want = Math.max(0, Math.min(1, fraction)) * total, out = [];
+  let got = 0; for (let k = road.length - 1; k >= 0 && (got < want - 1e-9 || !out.length); k--) { out.unshift(road[k]); got += doc.pieces[road[k]].length; }
+  return out;
+}
+
+module.exports = { close, residual, parameters, positionJacobian, netRows, closeWindow, windowOf };
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48494 assistant 2026-10-05T21:02:58.561Z
+TOOL_USE Bash [toolu_01FmzjaQfak1pYmsL52Re1Vv]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 120,140p src/core/document.js; sed -n 240,296p src/core/document.js; sed -n 85,110p src/core/sculpt.js | cut -c1-260","description":"Read endState and checkDoc's joint rules around flights"}
+--- L48495 user 2026-10-05T21:02:58.748Z
+RESULT [toolu_01FmzjaQfak1pYmsL52Re1Vv]: /** The document with every legacy road piece that was built without a c array given zeros for it (the same object when none was). */
+function fillCup(doc) {
+  const missing = (P) => P.type === 'road' && P.channels && Object.keys(OPTIONAL).some((ch) => P.channels[ch] === undefined && !P[OPTIONAL[ch]]);
+  if (!doc.pieces.some(missing)) return doc;
+  return { ...doc, pieces: doc.pieces.map((P) => (missing(P) ? { ...P, channels: { ...P.channels, ...Object.fromEntries(Object.keys(OPTIONAL).filter((ch) => P.channels[ch] === undefined && !P[OPTIONAL[ch]]).map((ch) => [ch, new Array(P.knots.length + 4).fill(OPT_DEFAULT[ch])])) } } : P)) };
+}
+/** True when the last road piece is a cup piece (a piece extended after it is one too). */
+function endIsCup(doc) { for (let i = doc.pieces.length - 1; i >= 0; i--) if (doc.pieces[i].type === 'road') return !!doc.pieces[i].cup; return false; }
+/** The state a new road piece must start from: the last road piece's end; after a flight, level (κh = κv = 0) with the rest carried. */
+function endState(doc) {
+  let flightAfter = false;
+  for (let i = doc.pieces.length - 1; i >= 0; i--) {
+    const P = doc.pieces[i];
+    if (P.type === 'flight') { flightAfter = true; continue; }
+    const e = pieceEnd(P);
+    return flightAfter ? { ...e, kh: { v: 0, m: 0 }, kv: { v: 0, m: 0 }, h: { v: 0, m: 0 }, l: { v: 0, m: 0 } } : e;
+  }
+  return null;   // an empty track: the first piece starts where its channels say
+}
+
+/**
+ */
+function checkEdge(P, at) {
+  const e = P.channels.e, s = P.channels.s;
+  if (e.some((v) => v < -EDGE_EPS)) throw new CoreError('BAD_EDGE', `${at}: the edge angle e must be 0 or more, but a control point is ${Math.min(...e)}° (an outer zone that flattens, a lip, is not in this version)`
+…[7444 chars cut]…
+                                            // the joint moves as the document builds it: value, then slope
+      const h = Pa.length - (Pa.knots.length ? Pa.knots[Pa.knots.length - 1] : 0), hb = Pb.knots.length ? Pb.knots[0] : Pb.length;
+      const v = q(ra.ctrl[n - 1], D.DEC[channel]), m = (3 * (v - q(ra.ctrl[n - 2], D.DEC[channel]))) / h;
+      rb.ctrl[0] = v; rb.ctrl[1] = v + (m * hb) / 3;
+    } else {                                                   // the window covers the joint only in part: leave all four alone
+      if (ra) { ra.ctrl[n - 1] = Pa.channels[channel][n - 1]; ra.ctrl[n - 2] = Pa.channels[channel][n - 2]; ra.changed = ra.changed.filter((i) => i < n - 2); }
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48505 assistant 2026-10-05T21:03:56.687Z
+TOOL_USE Bash [toolu_01YRdF6yLRhSQQHozE3LLvqG]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && grep -n \"^function appendPiece\" -A14 src/core/document.js; sed -n 1,30p src/core/adapter.js | grep -n \"require\\|MACH6\"; grep -n \"^function solveJump\" -A12 src/doc/resolve.js | head -20; ls src/core; grep -n \"flight\" test/*.js app/test/*.js | cut -c1-140 | head -30","description":"Read appendPiece, solveJump, and existing flight tests"}
+--- L48506 user 2026-10-05T21:03:56.986Z
+RESULT [toolu_01YRdF6yLRhSQQHozE3LLvqG]: 203:function appendPiece(doc, piece) {
+204-  if (doc.closed) throw new CoreError('CLOSED', 'a closed track has no open end; open it first');
+205-  const P = { ...piece, id: `p${doc.nextId}` };
+206-  return deepFreeze(checkDoc({ ...doc, nextId: doc.nextId + 1, pieces: [...doc.pieces, P] }));
+207-}
+208-
+209-// ── the checks ─────────────────────────────────────────────────────────────────────────────────────────────────────
+210-/** A joint is C1 when value and slope agree to within what quantisation can move them (ref 09 §1). */
+211-function jointProblem(prevEnd, P, prevKind = 'legacy') {
+212-  const h = P.knots.length ? P.knots[0] : P.length, kind = kindOf(P);
+213-  for (const ch of CHANNELS) {
+214-    if (ch === 'c') {   // cup ↔ cup: C1 like the others; two different kinds (legacy, cup, tube): the RENDERED edge must be continuous (0.05°); two legacy or two tube pieces: nothing here (t is checked below)
+215-      if (prevKind === 'cup' && kind === 'cup') { /* falls through to the general test */ }
+216-      else if (prevKind !== kind) {
+217-        const here = kind === 'tube' ? P.channels.t[0] / 2 : kind === 'cup' ? P.channels.c[0] : legacyEdgeDeg(P.family, P.channels.w[0], P.channels.r[0]);
+29:const D = require('./document.js');
+30:const { buildPath } = require('../geom/path.js');
+62:function solveJump(p0, gap, drop, land, id) {
+63-  const V = Math.PI / 2, deg = (x) => `${(x * 180 / Math.PI).toFixed(1)}°`;
+64-  if (!(Math.abs(p0) < V)) throw new ResolveError('JUMP_PAST_VERTICAL', `${id}: the road before the jump is pitched ${deg(p0)}, at or past vertical; a jump takes off with its pitch inside (−90°, 90°)`);
+65-  // the flight's pitch p(s) = p0 + kp0·s + (kp1 − kp0)s²/2L is quadratic: its extremes are at the two ends o
+…[4244 chars cut]…
+t.js:162:  assert.ok(p.edge, 'the piece after the jump continues the edge'); assert.ok(Math.abs(D.channelAt(p, 'e', 0).v -
+test/core_xsec.test.js:164:  const t = extend(extend(start(), { length: 100, targets: { t: 200 }, transition: 100 }), { length: 60 }), tf = 
+test/core_xsec.test.js:165:  assert.ok(last(tf).tube && Math.abs(D.channelAt(last(tf), 't', 0).v - D.pieceEnd(t.pieces[2]).t.v) < 1e-6, 't i
+test/core_xsec_mutation.test.js:38:  { id: 'KE4-2 e is reset after a flight, like the heading rate', file: 'core', pattern: 'E4 \\(ii\\)', e
+test/doc-jump.test.js:4:// resolve() emits the flight (kind 'gap') and then a road segment (part 'land') straight at the landing pitch, long
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48515 assistant 2026-10-05T21:04:07.906Z
+TEXT: `test/core_close.test.js:86` probably pins today's NOT_YET refusal. I'll read it before changing that behaviour.
+--- L48516 assistant 2026-10-05T21:04:08.857Z
+TOOL_USE Bash [toolu_016s7eNMQ1MiMZzhLTsZuoNW]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 78,95p test/core_close.test.js | cut -c1-260; grep -rn \"NOT_YET\" test app/test src app/core | cut -c1-200","description":"Read the close test that covers jumps"}
+--- L48517 user 2026-10-05T21:04:09.067Z
+RESULT [toolu_016s7eNMQ1MiMZzhLTsZuoNW]: });
+test('with no stretch protected (every weight 1) close still closes, seam included', () => {
+  const res = C.close(results[3].doc, { edited: [] });
+  assert.ok(res.converged, res.report);
+  const P = res.doc.pieces; D.checkDoc({ ...res.doc, closed: false, nextId: res.doc.nextId + 1, pieces: [...P, { ...P[0], id: `p${res.doc.nextId}` }] });
+});
+test('a track with a jump is refused, by name (not built in this version)', () => {
+  let d = extend(D.createDoc('j'), { length: 300 });
+  d = D.appendPiece(d, D.flightPiece({ gap: 40, drop: 0, land: 0 }));
+  d = extend(d, { length: 300 });
+  assert.throws(() => C.close(d), /NOT_YET/);
+});
+test/core_close.test.js:88:  assert.throws(() => C.close(d), /NOT_YET/);
+test/core_sculpt_modes.test.js:23:  assert.throws(() => S.brush(OPEN, { s0: 2000, r: 100, delta: 5 }), /NOT_YET.*"h"/);
+test/core_sculpt_modes.test.js:24:  assert.throws(() => S.brush(OPEN, { mode: 'swerve', s0: 2000, r: 100, delta: 3 }), /NOT_YET.*"l"/);
+app/test/core-shell.test.js:131:  const refuse = () => { throw new D.CoreError('NOT_YET', 'the document has no h channel'); };
+app/test/core-shell.test.js:134:  assert.match(s.getState().message, /NOT_YET: the document has no h channel/); s.endBrush(); assert.equal(text(s), before);
+src/core/close.js:205:  if (doc.pieces.some((P) => P.type === 'flight')) throw new D.CoreError('NOT_YET', 'close: a track with a jump is not closed by this version (the flight fixes a displacement the
+src/core/sculpt.js:159:    if (typeof D.refineKnots !== 'function') throw new D.CoreError('NOT_YET', 'brush: a sharp brush needs document.js refineKnots (A)');
+src/core/sculpt.js:166:  if (!D.CHANNELS.includes(ch)) throw new D.CoreError('NOT_YET', `brush: the document has no "${ch}" channel yet (${M.what}); a ${mode} brush needs it (src/core/README.md, A)`);
+app/core/coreshell.js:65:// offset channels h and l (A's, pending the chair's decision), and until then E's brush refuses them by name (NOT_YET), which the
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48521 assistant 2026-10-05T21:04:24.874Z
+TOOL_USE Bash [toolu_01BgeJcMWeWMP49e3wvJdoBz]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 20,45p src/core/adapter.js | cut -c1-200; grep -n \"module.exports\" src/core/adapter.js src/core/document.js src/core/extend.js | cut -c1-300; sed -n 1,40p src/core/extend.js | cut -c1-200","description":"Read the adapter imports and the extend module head"}
+--- L48522 user 2026-10-05T21:04:25.062Z
+RESULT [toolu_01BgeJcMWeWMP49e3wvJdoBz]: // The price: segment.profile is then the TARGET of the blend (the run's widest), so every reader of it that is not the mesh evaluates the blend at
+// its station with src/geom/profile.js atSegment (the marker layout's floor, validation, the water, the camera's span, the export's sections).
+// Where a cup follows a LEGACY piece the first MORPH_M metres also fade out the legacy shape's difference from the cup shape (morphZone), so the
+// joint has no step inside the road either. cupRuns: false is the other scheme (each segment's profile the local end profile, a seam zip wherever
+// c changes, the edge up to 0.95° off c inside a segment): kept for comparison; see README "the cup".
+// A FLIGHT piece becomes the old jump's two segments, by the same two functions the paused resolver used: the gap solved by
+// src/doc/resolve.js solveJump, and the landing ramp sized by src/validate/jumps.js landingRamp at the design speed.
+'use strict';
+
+const D = require('./document.js');
+const { buildPath } = require('../geom/path.js');
+const { normalize, psiAt, blend, commonFractions } = require('../geom/profile.js');
+const { FLOORS, AT } = require('../geom/fonts.js');
+const { solveJump } = require('../doc/resolve.js');
+const jumps = require('../validate/jumps.js');
+const { MACH6 } = require('../validate/limits.js');
+
+const DEG = Math.PI / 180;
+
+/** The cross-section at width w (m) and rise rate r (°/m): the family's measured floor, each quarter's rise capped at r·w/8 (ref 09 §3). */
+function profileAt(family, w, r) {
+  if (!Object.prototype.hasOwnProperty.call(FLOORS, family)) throw new D.CoreError('BAD_FAMILY', `family "${family}"`);
+  if (!(w > 0)) throw new D.CoreError('BAD_WIDTH', `the road's width must be positive, got ${w} m`);
+  con
+…[3608 chars cut]…
+ 1 : u * u * (3 - 2 * u));   // ref 02 §4, IFC-BLOSS
+
+/** A channel's function over the new piece: the continuation, blended to the target if there is one (ref 09 §2). */
+function channelFn({ v, m }, target, Lt) {
+  const cont = (s) => v + m * s;
+  if (target === undefined || target === null) return cont;
+  if (!Number.isFinite(target)) throw new D.CoreError('BAD_TARGET', `a target must be a finite number, got ${target}`);
+  return (s) => { const u = s / Lt, S = bloss(u); return u >= 1 ? target : (1 - S) * cont(s) + S * target; };
+}
+
+/** The ramp 'start' means: the first knot span of a piece of this length, at most KNOT_M (20 m); the whole piece when it is shorter than that. */
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48531 assistant 2026-10-05T21:04:47.414Z
+TOOL_USE Bash [toolu_01Mn875VqchXMKVgd5gaJ3JR]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && grep -n \"^const CHANNELS\\|^const OPTIONAL\\|^const OFFSETS\\|CHANNELS =\\|OFFSETS =\\|OPTIONAL =\" src/core/document.js | cut -c1-250","description":"Look up the channel lists"}
+--- L48532 user 2026-10-05T21:04:47.520Z
+RESULT [toolu_01Mn875VqchXMKVgd5gaJ3JR]: 30:const CHANNELS = Object.freeze(['kh', 'kv', 'phi', 'w', 'r', 'h', 'l', 'c', 'e', 's', 't']);
+32:const OPTIONAL = Object.freeze({ c: 'cup', e: 'edge', s: 'edge', t: 'tube' });
+39:const OFFSETS = Object.freeze(['h', 'l']);
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48535 assistant 2026-10-05T21:04:50.675Z
+TEXT: Now the close changes, starting with the joint across a flight in `parameters()`:
+--- L48536 assistant 2026-10-05T21:05:01.322Z
+TOOL_USE Edit [toolu_016XJRJA7H85CY4x16iLehQm]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"function parameters(doc, edited, free = null) {\n  const cols = [], expand = {}, fixedOf = (p) => !!free && !free.has(p);   // D242: a LOCAL close's columns outside its window are fixed (never moved)\n  for (const ch of activeChannels(doc)) {\n    expand[ch] = doc.pieces.map(() => null);\n    let prev = -1;\n    doc.pieces.forEach((P, p) => {\n      if (P.type !== 'road') return;\n      const n = P.channels[ch].length, e = new Array(n);\n      for (let i = 0; i < n; i++) {\n        if (prev >= 0 && i < 2 &
+…[1431 chars cut]…
+ { e[i] = [[cols.length, 1]]; cols.push({ ch, p, i, edited: edited.has(p), fixed: true }); continue; }\n        if (prev >= 0 && i < 2 && linkable(ch, doc.pieces[prev], P)) {   // the cup joins only cup to cup (a legacy piece's c is a placeholder); e, s and t the same"}
+--- L48537 user 2026-10-05T21:05:01.364Z
+RESULT [toolu_016XJRJA7H85CY4x16iLehQm]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48538 assistant 2026-10-05T21:05:03.674Z
+TOOL_USE Edit [toolu_013wJ5N28mN48iZfRzYQnycf]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"        e[i] = [[cols.length, 1]]; cols.push({ ch, p, i, edited: edited.has(p), fixed: fixedOf(p) });\n      }\n      expand[ch][p] = e; prev = p;\n    });","new_string":"        e[i] = [[cols.length, 1]]; cols.push({ ch, p, i, edited: edited.has(p), fixed: fixedOf(p) });\n      }\n      expand[ch][p] = e; prev = p; flightSince = false;\n    });"}
+--- L48539 user 2026-10-05T21:05:03.702Z
+RESULT [toolu_013wJ5N28mN48iZfRzYQnycf]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48540 assistant 2026-10-05T21:05:06.321Z
+TOOL_USE Edit [toolu_01XEZKQuNQUbJXeaDUJAMQny]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"const D = require('./document.js');\nconst { toPath, toSegments } = require('./adapter.js');\nconst { jointSteps } = require('../geom/profile.js');","new_string":"const D = require('./document.js');\nconst { toPath, toSegments } = require('./adapter.js');\nconst { jointSteps } = require('../geom/profile.js');\nconst jumps = require('../validate/jumps.js');\nconst { MACH6 } = require('../validate/limits.js');\n\n// D243: the channels the road after a jump starts LEVEL in (checkDoc's afterFlight joint, document.js endState): 0 in value and slope\nconst AFTER_FLIGHT_LEVEL = Object.freeze(['kh', 'kv', 'h', 'l']);"}
+--- L48541 user 2026-10-05T21:05:06.348Z
+RESULT [toolu_01XEZKQuNQUbJXeaDUJAMQny]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48551 assistant 2026-10-05T21:05:23.508Z
+TOOL_USE Bash [toolu_01RqdGE3Wnx9jKP3G7JhFfkU]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 474,486p src/core/document.js | tr ',' '\\n' | grep -n \"OFFSETS\\|CHANNELS\\|OPTIONAL\\|CoreError\" ","description":"Check document.js exports OFFSETS"}
+--- L48552 user 2026-10-05T21:05:26.119Z
+RESULT [toolu_01RqdGE3Wnx9jKP3G7JhFfkU]: 11: CHANNELS
+12: OFFSETS
+21: CoreError
+23:  OPTIONAL
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48554 assistant 2026-10-05T21:05:34.516Z
+TEXT: Next, the model's Jacobian: it must carry each flight's displacement and reset the pitch to the landing angle.
+--- L48555 assistant 2026-10-05T21:05:41.507Z
+TOOL_USE Edit [toolu_01KVjD7EQthmDAAP8uLGRkAe]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"function positionJacobian(doc, step = 1) {\n  let th = doc.start.heading, p = doc.start.pitch; const G = [];\n  doc.pieces.forEach((P, pi) => {\n    if (P.type !== 'road') return;","new_string":"function positionJacobian(doc, step = 1) {\n  let th = doc.start.heading, p = doc.start.pitch; const G = [];\n  doc.pieces.forEach((P, pi) => {\n    // D243: A JUMP (src/core/adapter.js toSegments): the flight covers `gap` along the heading and its landing ramp a horizontal r.length more,\n    // neither turning; t
+…[452 chars cut]…
+ P.gap + jumps.landingRamp({ D: P.gap, dh: -P.drop, thetaRad: p, landRad: P.land, v: MACH6.designSpeedKmh / 3.6 }).length;\n      G.push({ flight: true, Tt: dTdTh(th, 0).map((v) => v * H) });\n      p = P.land;\n      return;\n    }\n    if (P.type !== 'road') return;"}
+--- L48556 user 2026-10-05T21:05:41.539Z
+RESULT [toolu_01KVjD7EQthmDAAP8uLGRkAe]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48557 assistant 2026-10-05T21:05:44.222Z
+TOOL_USE Edit [toolu_01SaHT7MbVcn4QHzDi4kct47]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"  for (let i = G.length - 1; i >= 0; i--) {\n    const g = G[i];\n    add('kh', g.pi, g.kh0, g.Tt.map((v) => 0.5 * g.h * v));","new_string":"  for (let i = G.length - 1; i >= 0; i--) {\n    const g = G[i];\n    if (g.flight) { sT = sT.map((v, k) => v + g.Tt[k]); sP = [0, 0, 0]; continue; }   // D243: the jump turns nothing and resets the pitch\n    add('kh', g.pi, g.kh0, g.Tt.map((v) => 0.5 * g.h * v));"}
+--- L48558 user 2026-10-05T21:05:44.255Z
+RESULT [toolu_01SaHT7MbVcn4QHzDi4kct47]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48562 assistant 2026-10-05T21:05:56.998Z
+TEXT: Next, the pitch-closure row: after a jump the pitch is the landing angle, so the row counts from the last flight.
+--- L48563 assistant 2026-10-05T21:06:01.732Z
+TOOL_USE Edit [toolu_01MSkuk81F9WFNvHnULoyu7Y]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"  const out = { kh: new Map(), kv: new Map() };\n  const segs = toSegments(doc), byId = new Map(doc.pieces.map((P, p) => [P.id, p]));\n  let s = new Map();\n  for (const g of segs) {\n    if (g.part !== 'body') continue;","new_string":"  const out = { kh: new Map(), kv: new Map(), kvBase: 0 };\n  const segs = toSegments(doc), byId = new Map(doc.pieces.map((P, p) => [P.id, p]));\n  let s = new Map();\n  for (const g of segs) {\n    // D243: A JUMP sets the pitch to its landing pitch (adapter.js), so the net
+…[110 chars cut]…
+ after it, and no kv before that jump reaches it. A flight turns nothing, so the net heading is unchanged\n    if (g.part === 'gap') { out.kv = new Map(); out.kvBase = doc.pieces[byId.get(g.id)].land - doc.start.pitch; continue; }\n    if (g.part !== 'body') continue;"}
+--- L48564 user 2026-10-05T21:06:01.757Z
+RESULT [toolu_01MSkuk81F9WFNvHnULoyu7Y]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48565 assistant 2026-10-05T21:06:04.082Z
+TOOL_USE Edit [toolu_01EvebsHhDv7PnKfv1ccLakA]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"  const net = { kh: 0, kv: 0 }; const rows = netRows(doc);","new_string":"  const rows = netRows(doc), net = { kh: 0, kv: rows.kvBase };   // kvBase: a jump's landing pitch, when the lap has one (D243)"}
+--- L48566 user 2026-10-05T21:06:04.109Z
+RESULT [toolu_01EvebsHhDv7PnKfv1ccLakA]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48567 assistant 2026-10-05T21:06:07.607Z
+TOOL_USE Edit [toolu_011GUxxBvJ7ETEV3WAh2mryU]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\close.js","old_string":"  if (doc.pieces.some((P) => P.type === 'flight')) throw new D.CoreError('NOT_YET', 'close: a track with a jump is not closed by this version (the flight fixes a displacement the close would have to carry; not built)');","new_string":"  // D243: a track WITH JUMPS closes like any other (the flight carries the road's state; see parameters, positionJacobian and netRows). The one\n  // shape refused is a lap that ENDS in a jump: its seam would join the landing ramp, which no channel describes, to the lap's start\n  if (doc.pieces.length && doc.pieces[doc.pieces.length - 1].type === 'flight') throw new D.CoreError('FLIGHT_AT_END', 'close: the track ends in a jump, so the lap would join its landing ramp to the start; extend road after the landing, then close');"}
+--- L48568 user 2026-10-05T21:06:07.640Z
+RESULT [toolu_011GUxxBvJ7ETEV3WAh2mryU]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\close.js has been updated successfully.
+--- L48579 assistant 2026-10-05T21:06:14.504Z
+TEXT: Next, the validator: a core flight's gap is intended, and any other gap is still a hole.
+--- L48580 assistant 2026-10-05T21:06:19.403Z
+TOOL_USE Edit [toolu_01U3QrxbmB7uDTUquNVejTyv]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\validate\\index.js","old_string":"    // a gap that is not a jump is a hole; the open head is exempt (INTERFACES §4: \"no 'gap in road' red at the head\")\n    if (g.kind === 'gap' && g.word !== 'jump' && !(!path.closed && j === lastSeg)) raw.segReds.push({ j, s: s0, s1, u: null, reason: 'gap-in-road' });","new_string":"    // a gap that is not a jump is a hole; the open head is exempt (INTERFACES §4: \"no 'gap in road' red at the head\"). A jump is the word 'jump',\n    // or (D243) the equation core's FLIGHT: a gap the adapter writes
+…[89 chars cut]…
+ toSegments). Its gap is intended; any other gap, the core's included, is still a hole\n    if (g.kind === 'gap' && g.word !== 'jump' && !isCoreFlight(segments, j) && !(!path.closed && j === lastSeg)) raw.segReds.push({ j, s: s0, s1, u: null, reason: 'gap-in-road' });"}
+--- L48581 user 2026-10-05T21:06:19.444Z
+RESULT [toolu_01U3QrxbmB7uDTUquNVejTyv]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\validate\index.js has been updated successfully.
+--- L48582 assistant 2026-10-05T21:06:20.794Z
+TOOL_USE Bash [toolu_01X3VVUZTrojqKMju2eDAbT4]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && grep -n \"^function \\|^const ROLL_RED\\|^module.exports\" src/validate/index.js | head -20","description":"Find where to add the helper in validate"}
+--- L48583 user 2026-10-05T21:06:20.912Z
+RESULT [toolu_01X3VVUZTrojqKMju2eDAbT4]: 35:const ROLL_RED_DEG_M = 1.2144, ROLL_AMBER_DEG_M = 0.9338, ROLL_CHORD_M = 20;
+41:function rollRates(S, isRoad, closed, L) {
+92:function segProfiles(segments) {
+106:function speedProfile(path, segments, car, opts) {
+140:function ranges(list, step) {
+183:function core(path, segments, opts, from, carried, upto) {
+393:function proveLap(S, isRoad, v, lines, jumps) {
+416:function lapOf(path, segments, result) {
+429:function validate(path, segments, opts = {}) { return core(path, segments, opts, 0, null, uptoOf(path.samples, opts)); }
+444:function revalidate(prev, path, segments, fromS, opts = {}) {
+481:function stacked(S, isRoad, profiles, path, car, opts, from, out, rederive = new Set(), end = S.length) {
+558:module.exports = { validate, revalidate, lapOf, speedProfile, SRC, ROLL_RED_DEG_M, ROLL_AMBER_DEG_M, ROLL_CHORD_M, TUBE_MIN_W, _internal: { ranges, rollRates } };
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48586 assistant 2026-10-05T21:06:26.597Z
+TOOL_USE Read [toolu_01CE2urGYtKuW3zdRKPbeDHU]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\validate\\index.js","offset":88,"limit":5}
+--- L48587 user 2026-10-05T21:06:26.619Z
+RESULT [toolu_01CE2urGYtKuW3zdRKPbeDHU]: 88	// The landing should expect that step, not only the fall. Its size is not given: the research's figure (about 2.4 g at
+89	// 100 m/s) rests on UNVERIFIED arithmetic (the script's speed unit), so only the fact and its source are carried.
+90	const DOWNFORCE_STEP = (car) => ({ aheadM: car.downforceRay.aheadM, note: `the downforce drops to zero as the car's downforce ray, ${car.downforceRay.aheadM} m ahead, passes the lip, and returns in one step when it finds the landing (docs/research/04_ac_physics_drivability.md §4)` });
+91	
+92	function segProfiles(segments) {
+--- L48589 assistant 2026-10-05T21:06:34.715Z
+TOOL_USE Edit [toolu_013Q4eqNkcUV3LP1bb3jPUJm]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\validate\\index.js","old_string":"const DOWNFORCE_STEP = (car) => ({ aheadM: car.downforceRay.aheadM, note: `the downforce drops to zero as the car's downforce ray, ${car.downforceRay.aheadM} m ahead, passes the lip, and returns in one step when it finds the landing (docs/research/04_ac_physics_drivability.md §4)` });\n","new_string":"const DOWNFORCE_STEP = (car) => ({ aheadM: car.downforceRay.aheadM, note: `the downforce drops to zero as the car's downforce ray, ${car.downforceRay.aheadM} m ahead, passes the lip, and returns in one st
+…[178 chars cut]…
+', followed by its own landing ramp (part 'land', the same id). */\nconst isCoreFlight = (segments, j) => { const g = segments[j], n = segments[j + 1]; return g.word === 'core' && g.part === 'gap' && !!n && n.part === 'land' && n.id === g.id && n.kind === 'road'; };\n"}
+--- L48590 user 2026-10-05T21:06:34.750Z
+RESULT [toolu_013Q4eqNkcUV3LP1bb3jPUJm]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\validate\index.js has been updated successfully.
+--- L48595 assistant 2026-10-05T21:07:00.047Z
+TOOL_USE Bash [toolu_01JMxpUrqNS9pMsJV1hNFoRK]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 100,149p src/core/extend.js | cut -c1-220; grep -n \"class ResolveError\\|ResolveError('\" src/doc/resolve.js | cut -c1-140 | head","description":"Read the end of extend.js and resolve's error codes"}
+--- L48602 user 2026-10-05T21:07:00.212Z
+RESULT [toolu_01JMxpUrqNS9pMsJV1hNFoRK]:   } else {
+    const Lt = transition === undefined ? length : transition;
+    if (!(Lt > 0 && Lt <= length)) throw new D.CoreError('BAD_TRANSITION', `the transition must be in (0, length], got ${Lt}`);
+  }
+  const Lof = (ch) => (perChannel ? (ramp[ch] === undefined ? length : ramp[ch]) : transition === undefined ? length : transition);
+  const shortRamps = Object.keys(ramp).filter((ch) => ramp[ch] < length - 1e-9 && targets[ch] !== undefined && targets[ch] !== null);
+  const last = [...doc.pieces].reverse().find((P) => P.type === 'road');
+  const fam = family || (last ? last.family : 'bowl');
+  let from = D.endState(doc), held = true; const from0 = from;   // from0: null on an empty track (the at-start `first` applies)
+  const f0 = first || {}, kind = given(targets.c) ? 'cup' : given(targets.t) ? 'tube' : !from && given(f0.c) ? 'cup' : !from && given(f0.t) ? 'tube' : D.endKind(doc), cup = kind === 'cup', tube = kind === 'tube';
+  if (cup && from && from.c.v > D.CUP_MAX + 1e-6) throw new D.CoreError('BAD_CUP', `a cup cannot start where the tube before it ends: its edge is ${from.c.v.toFixed(2)}° (t/2), past the cup's ${D.CUP_MAX}°; open the tu
+  const lastE = last && last.edge ? D.pieceEnd(last).e : null;
+  const edge = given(targets.e) || given(targets.s) || (!from && (given(f0.e) || given(f0.s))) || !!(lastE && (Math.abs(lastE.v) > 1e-9 || Math.abs(lastE.m) > 1e-9));
+  if (!from) {   // an empty track: the start state, and nothing held
+    const f = { kh: 0, kv: 0, phi: 0, w: WIDTHS[fam], r: RATES[fam], h: 0, l: 0, ...(first || {}) };
+    if (f.c === undefined) f.c = D.legacyEdgeDeg(fam, f.w, f.r);   // a cup asked for on an empty track starts at the edge the family renders
+    if (f.e === undefined) f.e = 0;
+    if (f.
+…[3506 chars cut]…
+solveError('JUMP_UNSOLVABLE', `${id}: no pitch clothoid flies ${gap} m across and ${drop} m down, arriving at ${land} rad`)
+129:  if (!first && Math.abs(h.roll0 - roll) > TOL_ROLL) throw new ResolveError('ROLL_STEP', `${w.id} starts at roll ${h.roll0} rad but ${pr
+130:  if (!first && Math.abs(h.heartline - heart) > TOL_HEART) throw new ResolveError('HEARTLINE_STEP', `${w.id}'s heartline ${h.heartline} 
+166:  if (doc.closed) throw new ResolveError('CLOSE_NOT_BUILT', 'the document is closed, and the closing connector (ARCHITECTURE §2 "Closin
+176:  if (!(Number.isFinite(k) && k > 0)) throw new ResolveError('BAD_DESIGN_SPEED', `the design speed must be a positive number of km/h, go
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48605 assistant 2026-10-05T21:07:06.719Z
+TEXT: I'll put the helper in a new module, `src/core/jump.js`, so `extend.js` doesn't take on the adapter as a dependency.
+--- L48606 assistant 2026-10-05T21:07:20.499Z
+TOOL_USE Write [toolu_017AEr4UHbos1PLqbMfer5UJ]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\src\\core\\jump.js","content":"// jump.js: ADD A JUMP at the open end of an equation track (D243, pane E). The UI's \"Add jump\" calls this; the next Extend starts the landing road.\n//\n//   jump(doc, { gap, drop, land })  -> a new document, one flight piece longer\n//\n// gap (m, > 0): how far the flight goes along the ground, measured from the take-off lip; drop (m, + = down): how far the landing lip is below the\n// take-off lip; land (rad, + = nosing up, so a landing slope is negative): the pitch of the landing ramp. The take-off is the last road piece's 
+…[2086 chars cut]…
+ fly is refused now, by its own name\n  try { toSegments(out); } catch (e) {\n    if (e && (e.code === 'JUMP_PAST_VERTICAL' || e.code === 'JUMP_UNSOLVABLE')) throw new D.CoreError(e.code, e.message);\n    throw e;\n  }\n  return out;\n}\n\nmodule.exports = { jump };\n"}
+--- L48608 user 2026-10-05T21:07:20.527Z
+RESULT [toolu_017AEr4UHbos1PLqbMfer5UJ]: File created successfully at: C:\Users\nname\Desktop\worktrees\e-jumps-wt\src\core\jump.js (file state is current in your context — no need to Read it back)
+--- L48613 assistant 2026-10-05T21:07:54.337Z
+TOOL_USE Write [toolu_01J29x3eGC676q5qDy6ekyyg]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\jumps\\probe.js","content":"// D243 core half (pane E): does a lap with a jump close (whole lap, and B's local window), what does validation say inside the flight and at a real\n// hole, does the closed jump lap export. Read only; nothing written outside scratch.   node probe.js <tree>\n'use strict';\nconst path = require('path'), T = path.resolve(process.argv[2]) + '/', req = (m) => require(T + m);\nconst D = req('src/core/document.js'), C = req('src/core/close.js'), { e
+…[2274 chars cut]…
+ta: d.start.heading, p: d.start.pitch } });\n  out.hole = V.validate(p, segs, {}).red.filter((x) => x.reason === 'gap-in-road').map((x) => `${x.reason}@${Math.round(x.s)}-${Math.round(x.s1)}`); }\nout.ms = Date.now() - t0;\nconsole.log(JSON.stringify(out, null, 1));\n"}
+--- L48614 user 2026-10-05T21:07:54.364Z
+RESULT [toolu_01J29x3eGC676q5qDy6ekyyg]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\jumps\probe.js (file state is current in your context — no need to Read it back)
+--- L48623 assistant 2026-10-05T21:08:02.201Z
+TOOL_USE Bash [toolu_014vdQqPPbZqFfKnggsE6shE]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumps\" && CONSONANCE_HEAVY_WAIT_MS=3600000 node --max-old-space-size=4096 -e \"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'t180 E: D243 jumps probe'}); process.argv[2]='C:/Users/nname/Desktop/worktrees/e-jumps-wt'; require('./probe.js')\" 2>&1 | grep -v \"waiting on\" | head -120","description":"Run the jump-lap probe under the lock","timeout_ms":"600000"}
+--- L48624 user 2026-10-05T21:08:13.606Z
+RESULT [toolu_014vdQqPPbZqFfKnggsE6shE]: {
+ "open": {
+  "pieces": [
+   "road",
+   "flight",
+   "road",
+   "road",
+   "road",
+   "road",
+   "road",
+   "road"
+  ],
+  "red": [],
+  "jumps": [
+   {
+    "s": 300,
+    "pending": false,
+    "speedKmh": null,
+    "landings": [
+     "3.2g:MISSED",
+     "6.3g:MISSED"
+    ]
+   }
+  ],
+  "lap": {
+   "ok": null,
+   "reason": "open"
+  }
+ },
+ "whole": {
+  "converged": true,
+  "iterations": 6,
+  "report": "closed in 6 step(s): 0.016 mm, tangent 3.0e-8 rad",
+  "window": null,
+  "red": [],
+  "jumps": [
+   {
+    "s": 300,
+    "pending": false,
+    "speedKmh": 970,
+    "landings": [
+     "3.2g:caught",
+     "6.3g:caught"
+    ]
+   }
+  ],
+  "lap": {
+   "ok": false,
+   "timeS": 6.484438501312734,
+   "minV": 269.44444444444446,
+   "where": [
+    {
+     "s": 1402.46147952036,
+     "reason": "leaves-surface",
+     "fN_g": -0.1140597689420418
+    },
+    {
+     "s": 1403.46147952036,
+     "reason": "leaves-surface",
+     "fN_g": -0.33608469740572433
+    },
+    {
+     "s": 1404.45262952036,
+     "reason": "leaves-surface",
+     "fN_g": -0.5561436195165731
+    },
+    {
+     "s": 1405.45262952036,
+     "reason": "leaves-surface",
+     "fN_g": -0.7654094045109398
+    },
+    {
+     "s": 1406.44377952036,
+     "reason": "leaves-surface",
+     "fN_g": -0.9728222013888116
+    },
+    {
+     "s": 1407.44377952036,
+     "reason": "leaves-surface",
+     "fN_g": -1.101205781738976
+    },
+    {
+     "s": 1408.4349295203601,
+     "reason": "leaves-surface",
+     "fN_g": -1.2284526164979066
+    },
+    {
+     "s": 1409.4349295203601,
+     "reason": "leaves-surface",
+     "fN_g": -1.288031214881173
+    },
+    {
+     "s": 1410.4260795203602,
+     "reason": "leaves-surface",
+     "fN_g": -1.3470823490214539
+    },
+    {
+     "s": 1411.4260795203602,
+     "reason": "leaves-surface",
+     "fN_g": -1.3499330306096924
+    },
+    {
+     "s": 1412.4172295203603,
+     "reason": "leaves-surface",
+     "fN_g": -1.3527585694539925
+    },
+    {
+     "s": 1413.4172295203603,
+     "reason": "leaves-surface",
+     "fN_g": -1.3109582438596938
+    },
+    {
+     "s": 1414.4083795203603,
+     "reason": "leaves-surface",
+     "fN_g": -1.2695281421375597
+    },
+    {
+     "s": 1415.4083795203603,
+     "reason": "leaves-surface",
+     "fN_g": -1.1951535718271507
+--- L48628 assistant 2026-10-05T21:08:28.373Z
+TOOL_USE Bash [toolu_01FRrHWvuNDUj94wYZVV5fEG]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumps\" && CONSONANCE_HEAVY_WAIT_MS=3600000 node --max-old-space-size=4096 -e \"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'t180 E: D243 jumps probe'}); process.argv[2]='C:/Users/nname/Desktop/worktrees/e-jumps-wt'; require('./probe.js')\" 2>&1 | grep -v \"waiting on\" > probe.json; node -e \"const o=JSON.parse(require('fs').readFileSync('probe.json','utf8'));for(const k of Object.keys(o)){const v=o[k];if(v&&v.lap&&v.lap.where)v.lap.where=v.lap.where.length+' where, first '+JSON.stringify(v.lap.where[0]);}console.log(JSON.stringify(o,null,1))\" | sed -n '/\"whole edited 0\"/,$p'","description":"Re-run the probe and show the rest, compacted","timeout_ms":"600000"}
+--- L48629 user 2026-10-05T21:08:33.468Z
+RESULT [toolu_01FRrHWvuNDUj94wYZVV5fEG]:  "whole edited 0": {
+  "converged": true,
+  "iterations": 5,
+  "report": "closed in 5 step(s): 0.066 mm, tangent 1.2e-7 rad",
+  "window": null,
+  "red": [
+   "landing-misses-zone@NaN"
+  ],
+  "jumps": [
+   {
+    "s": 300,
+    "pending": false,
+    "speedKmh": 970,
+    "landings": [
+     "3.2g:MISSED",
+     "6.3g:caught"
+    ]
+   }
+  ],
+  "lap": {
+   "ok": false,
+   "timeS": 6.495379174539231,
+   "minV": 269.44444444444446,
+   "where": "26 where, first {\"s\":1406.4093831397215,\"reason\":\"leaves-surface\",\"fN_g\":-0.14788152637865007}"
+  },
+  "rt": true
+ },
+ "local default": {
+  "refused": "CLOSE_WINDOW: CLOSE_WINDOW: close: can't close using only the last 343 m (p7–p8): it gets no closer than 268.024 m (tangent 6.0e-8 rad) in 30 step(s). Widen the window or reshape the end"
+ },
+ "endsInJump": "FLIGHT_AT_END: FLIGHT_AT_END: close: the track ends in a jump, so the lap would join its landing ramp to the start; extend road after t",
+ "hole": [
+  "gap-in-road@NaN-843"
+ ],
+ "ms": 2873
+}
+--- L48633 assistant 2026-10-05T21:09:02.825Z
+TOOL_USE Bash [toolu_01TAu17yY7VGTfp9EWAtYGYb]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n 1,60p test/core_cup_export.test.js | cut -c1-220","description":"Read how core_cup_export exports a core lap"}
+--- L48640 user 2026-10-05T21:09:02.954Z
+RESULT [toolu_01TAu17yY7VGTfp9EWAtYGYb]: // core_cup_export.test.js: node --test test/core_cup_export.test.js   (under the heavy-run lock, --max-old-space-size=4096; about a minute)
+// D190 seal, row 4: a closed lap whose turns carry a cup of 90° and of 150° (the start straight left uncupped, the last turn's first 40 m
+// returning the cup to the edge the start renders) goes through the app's export route (src/export/fromwords.js buildFromSegments, csp on, the
+// default) with no red for every family at w = 31 m; with csp off validation reds steep-without-raycast, which is the right refusal; and a
+// start straight that is itself cupped to 150° exports with a single-column grid (D226; it was refused at the grid before). A cup of 150° on a bowl narrower than the
+// downforce ray's 1 m gap is refused at the DOCUMENT (BAD_CUP), never reaching the export's incidental red (D190 seal, row 2).
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const D = require('../src/core/document.js');
+const { extend } = require('../src/core/extend.js');
+const { close } = require('../src/core/close.js');
+const A = require('../src/core/adapter.js');
+const FW = require('../src/export/fromwords.js');
+const { startLayout } = require('../app/core/coreshell.js');
+
+const Rr = 180, Q = (Math.PI * Rr) / 2, FAMILIES = ['bowl', 'half-pipe', 'flat'];
+/** The seal's lap: an uncupped start straight, four turns at cup c (the last turn's first 40 m return the cup to the edge the start renders, so the grid's straight is uncupped), a closing straight. */
+function cupLap(family, c, { cupStart = false } = {}) {
+  let d = extend(D.createDoc('cup lap'), { length: 300, family, ...(cupStart ? { first: { c } } : {}) });
+  const edge = D.legacyEdgeDeg(family, D.ch
+…[2292 chars cut]…
+lumn grid and says so, not a crash', () => {
+  const doc = cupLap('bowl', 150, { cupStart: true }), out = exportDoc(doc);
+  assert.equal(out.markers.layout.grid.pattern, '1-column'); assert.ok(out.markers.check.checks.every((c) => c.ok), JSON.stringify(out.markers.check.checks.filter((c) => !c.ok)));
+  assert.ok(out.warnings.some((w) => /single column on the centreline/.test(w)), 'the warning names it'); assert.ok(out.kn5.length > 1000);
+});
+test('row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export\'s incidental raygap red is never what stops it', () => {
+  assert.throws(() => cupLap('bowl', 165), (e) => e.code === 'BAD_CUP');
+});
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48645 assistant 2026-10-05T21:09:30.371Z
+TOOL_USE Write [toolu_0124qyiPeYWEVX1UFjFE2rjz]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\jumps\\exp.js","content":"// D243 (pane E): which jump laps export (the test's choice of lap), through the export route test/core_cup_export.test.js uses. Writes nothing.\n'use strict';\nconst path = require('path'), T = path.resolve(process.argv[2]) + '/', req = (m) => require(T + m);\nconst D = req('src/core/document.js'), C = req('src/core/close.js'), { extend } = req('src/core/extend.js'), { jump } = req('src/core/jump.js');\nconst A = req('src/core/adapter.js'), FW =
+…[1526 chars cut]…
+de: e.code, reds: (e.red || []).map((x) => `${x.reason}@${Math.round(x.s0 != null ? x.s0 : x.s)}`).slice(0, 12), msg: String(e.message).slice(0, 160) }; }\n  } catch (e) { row.error = `${e.code}: ${e.message.slice(0, 160)}`; }\n  console.log(JSON.stringify(row));\n}\n"}
+--- L48646 user 2026-10-05T21:09:30.397Z
+RESULT [toolu_0124qyiPeYWEVX1UFjFE2rjz]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\jumps\exp.js (file state is current in your context — no need to Read it back)
+--- L48647 assistant 2026-10-05T21:09:33.422Z
+TOOL_USE Bash [toolu_01W2gGCtsA2watt2GXrKjUY6]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumps\" && CONSONANCE_HEAVY_WAIT_MS=3600000 node --max-old-space-size=4096 -e \"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'t180 E: D243 jump export probe'}); process.argv[2]='C:/Users/nname/Desktop/worktrees/e-jumps-wt'; require('./exp.js')\" 2>&1 | grep -v \"waiting on\"","description":"Probe which jump laps export","timeout_ms":"900000"}
+--- L48648 user 2026-10-05T21:17:58.031Z
+RESULT [toolu_01W2gGCtsA2watt2GXrKjUY6]: {"jump":{"gap":40,"drop":0,"land":0},"before":300,"after":200,"openExport":"undefined: buildPath: closed loop does not close (position 6.10e+2 m, tangent 2.14e-4)","close":"closed in 5 step(s): 0.008 mm, tangent 4.9e-8 rad","closedExport":{"code":"RED","reds":["landing-misses-zone@300","lap-proof@300"],"msg":"RED: validation is red, nothing written: landing-misses-zone at s 300.0–340.0 m (ARCHITECTURE.md:75-78 (the landing ramp must catch both landings)); lap-proof ["}}
+{"jump":{"gap":20,"drop":0,"land":0},"before":300,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 6.90e+2 m, tangent 2.14e-4)","close":"closed in 5 step(s): 0.040 mm, tangent 3.0e-8 rad","closedExport":{"code":"RED","reds":["landing-misses-zone@300","lap-proof@300"],"msg":"RED: validation is red, nothing written: landing-misses-zone at s 300.0–320.0 m (ARCHITECTURE.md:75-78 (the landing ramp must catch both landings)); lap-proof ["}}
+{"jump":{"gap":40,"drop":2,"land":-0.03490658503988659},"before":300,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 7.21e+2 m, tangent 3.49e-2)","close":"closed in 5 step(s): 0.109 mm, tangent 9.5e-8 rad","closedExport":{"code":"RED","reds":["landing-misses-zone@300","lap-proof@300"],"msg":"RED: validation is red, nothing written: landing-misses-zone at s 300.0–340.0 m (ARCHITECTURE.md:75-78 (the landing ramp must catch both landings)); lap-proof ["}}
+{"jump":{"gap":30,"drop":1,"land":-0.017453292519943295},"before":400,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 8.04e+2 m, tangent 1.75e-2)","close":"closed in 6 step(s): 0.014 mm, tangent 3.0e-8 rad","closedExport":{"code":"RED","reds":["lap-proof@1593"],"msg":"RED: validation is red, nothing written: lap-proof [leaves-surface at s 1593.4 m, leaves-surface at s 1595.4 m, leaves-surface at s 1597.3 m, leaves-surface at "}}
+--- L48659 assistant 2026-10-05T21:18:30.390Z
+TOOL_USE Bash [toolu_01NMcK7T7mLpKwxjzdDn3rTv]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && grep -n \"designSpeedKmh\\|jumpG\\|topKmh\\|vMax\" src/validate/limits.js | head; sed -n 60,110p src/validate/jumps.js | cut -c1-200","description":"Read the design speed and the landing ramp sizing"}
+--- L48660 user 2026-10-05T21:18:30.593Z
+RESULT [toolu_01NMcK7T7mLpKwxjzdDn3rTv]: 18:  jumpG: Object.freeze([3.2, 6.3]),
+44:  designSpeedKmh: 460,
+    minSpeed: Math.max(...landings.map((l) => l.minSpeed)),   // the harder landing binds (ARCHITECTURE.md:75-78)
+    landings,
+    // FINDINGS.md:312-313: a drop deeper than the bound is a road the car cannot reach (ARCHITECTURE.md:79-80)
+    reachable: drop <= reachDrop(D, reach),
+  };
+}
+
+/**
+ * The landing ramp a jump needs so that BOTH landings touch down on road (ARCHITECTURE.md:75-78; the librarian's item 3,
+ * 2026-09-27: "a jump word should carry its landing ramp"). The ramp starts at the landing lip, D ahead and dh above the
+ * take-off lip, and runs straight at pitch landRad. On a straight ramp the touchdown is exact: the flight
+ * y = x·tanθ − k·x² (k = g_eff·G / (2v²cos²θ), flightY above) meets y = dh + (x − D)·tan(land) at the larger root of
+ *   k·x² − (tanθ − tan land)·x + (dh − D·tan land) = 0.
+ * Returns { length, touchdowns: [{ g, clear, x }], v }. `length` runs from the landing lip to the FARTHEST touchdown (the
+ * lighter fall, 3.2 g, carries farthest) plus marginM. A landing no speed ≤ v clears has x null and adds nothing: the
+ * ramp cannot fix a gap the car does not cross, which checkJump reports. marginM 10: inferred, about two car lengths.
+ */
+function landingRamp({ D, dh, thetaRad, landRad, v, jumpG = MACH6.jumpG, marginM = 10 }) {
+  if (!(D > 0)) throw new Error(`landingRamp: the gap must be positive, got ${D}`);
+  if (!(v > 0)) throw new Error(`landingRamp: a take-off speed is needed, got ${v}`);
+  const c = Math.cos(thetaRad), tl = Math.tan(landRad), b = Math.tan(thetaRad) - tl;
+  const touchdowns = jumpG.map((g) => {
+    const clear = v >= minSpeed(D, dh, thetaRad, g);
+    if (!clear) return { g, clear, x: null };
+    const k = g * G / (2 * v * v * c * c), disc = b * b - 4 * k * (dh - D * tl);
+    return { g, clear, x: Math.max(D, (b + Math.sqrt(Math.max(0, disc))) / (2 * k)) };
+  });
+  const far = touchdowns.filter((t) => t.x != null).reduce((m, t) => Math.max(m, t.x), D);
+  return { length: far - D + marginM, touchdowns, v };
+}
+
+module.exports = { flightY, minSpeed, checkJump, landingRamp };
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48664 assistant 2026-10-05T21:18:53.292Z
+TOOL_USE Bash [toolu_01EDuVLXKx1YxdkCFMND5caW]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumps\" && cat > land.js <<'EOF'\n'use strict';\nconst path = require('path'), T = path.resolve(process.argv[2]) + '/', req = (m) => require(T + m);\nconst D = req('src/core/document.js'), C = req('src/core/close.js'), { extend } = req('src/core/extend.js'), { jump } = req('src/core/jump.js');\nconst A = req('src/core/adapter.js'), V = req('src/validate/index.js'), { buildPath } = req('src/geom/index.js');\nconst R = 180, Q = Math.PI * R / 2, DEG = Math.PI / 180;\nlet d = extend
+…[914 chars cut]…
+ls/heavy-run.js').hold({cmd:'t180 E: D243 landing probe'}); process.argv[2]='C:/Users/nname/Desktop/worktrees/e-jumps-wt'; require('./land.js')\" 2>&1 | grep -v \"waiting on\" | head -80","description":"Print the closed jump lap's landing details","timeout_ms":"600000"}
+--- L48671 user 2026-10-05T21:19:23.979Z
+RESULT [toolu_01EDuVLXKx1YxdkCFMND5caW]: {
+ "segsNear": [
+  {
+   "part": "body",
+   "kind": "road",
+   "len": 2,
+   "kp0": 0,
+   "kp1": 0
+  },
+  {
+   "part": "body",
+   "kind": "road",
+   "len": 2,
+   "kp0": 0,
+   "kp1": 0
+  },
+  {
+   "part": "body",
+   "kind": "road",
+   "len": 2,
+   "kp0": 0,
+   "kp1": 0
+  },
+  {
+   "part": "body",
+   "kind": "road",
+   "len": 2,
+   "kp0": 0,
+   "kp1": 0
+  }
+ ],
+ "jumps": [
+  {
+   "s": 300,
+   "id": "p2",
+   "speed": 269.44444444444446,
+   "gap": 40.00000000000004,
+   "climb": -1.9999999999999984,
+   "rampDeg": 0,
+   "minSpeed": 157.2297681738419,
+   "landings": [
+    {
+     "g": 3.2,
+     "minSpeed": 112.05712828731619,
+     "clear": true,
+     "x": null,
+     "caught": false
+    },
+    {
+     "g": 6.3,
+     "minSpeed": 157.2297681738419,
+     "clear": true,
+     "x": 97.84861547991402,
+     "caught": true
+    }
+   ],
+   "reachable": true,
+   "speedKmh": 970.0000000000001
+  }
+ ]
+}
+--- L48675 assistant 2026-10-05T21:19:58.627Z
+TOOL_USE Bash [toolu_0163KtdrzuCYLU2yzUs7V5oD]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumps\" && node -e \"\nconst fs=require('fs');let t=fs.readFileSync('exp.js','utf8');\nt=t.replace(/for \\(const \\[j, before, after\\] of \\[.*?\\]\\) \\{/s, 'for (const [j, before, after] of [[{ gap: 10, drop: 0.3, land: 0 }, 300, 300], [{ gap: 15, drop: 0.5, land: 0 }, 300, 300], [{ gap: 10, drop: 0.5, land: -0.5 * DEG }, 300, 300], [{ gap: 20, drop: 1, land: -1 * DEG }, 300, 300]]) {');\nt=t.replace(\\\"C.close(d, { edited: [0] })\\\",\\\"C.close(d, process.env.EDITED ? { ed
+…[274 chars cut]…
+be 2'}); process.argv[2]='C:/Users/nname/Desktop/worktrees/e-jumps-wt'; require('./exp2.js')\" 2>&1 | grep -v \"waiting on\" | sed \"s/^/[edited:${E:-none}] /\" | cut -c1-420; done","description":"Probe smaller jumps for an exportable closed lap","timeout_ms":"1200000"}
+--- L48676 user 2026-10-05T21:20:39.134Z
+RESULT [toolu_0163KtdrzuCYLU2yzUs7V5oD]: [edited:1] {"jump":{"gap":10,"drop":0.3,"land":0},"before":300,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 6.88e+2 m, tangent 2.14e-4)","close":"closed in 5 step(s): 0.037 mm, tangent 3.7e-8 rad","closedExport":{"kn5":8702801,"ai":true,"warnings":5}}
+[edited:1] {"jump":{"gap":15,"drop":0.5,"land":0},"before":300,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 6.93e+2 m, tangent 2.14e-4)","close":"closed in 5 step(s): 0.064 mm, tangent 7.0e-8 rad","closedExport":{"kn5":8702801,"ai":true,"warnings":5}}
+[edited:1] {"jump":{"gap":10,"drop":0.5,"land":-0.008726646259971648},"before":300,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 6.96e+2 m, tangent 8.73e-3)","close":"closed in 5 step(s): 0.069 mm, tangent 7.1e-8 rad","closedExport":{"kn5":8713393,"ai":true,"warnings":5}}
+[edited:1] {"jump":{"gap":20,"drop":1,"land":-0.017453292519943295},"before":300,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 7.07e+2 m, tangent 1.75e-2)","close":"closed in 5 step(s): 0.110 mm, tangent 7.5e-8 rad","closedExport":{"code":"RED","reds":["lap-proof@1499"],"msg":"RED: validation is red, nothing written: lap-proof [leaves-surface at s 1498.9 m, leaves-surface at s 1
+[edited:none] {"jump":{"gap":10,"drop":0.3,"land":0},"before":300,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 6.88e+2 m, tangent 2.14e-4)","close":"closed in 5 step(s): 0.014 mm, tangent 6.0e-8 rad","closedExport":{"code":"NO_START_STRAIGHT","reds":[],"msg":"the longest straight is 45.8 m; a grid of 4 and 2 pit boxes need 67.4 m"}}
+[edited:none] {"jump":{"gap":15,"drop":0.5,"land":0},"befo
+…[354 chars cut]…
+":0.5,"land":-0.008726646259971648},"before":300,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 6.96e+2 m, tangent 8.73e-3)","close":"closed in 5 step(s): 0.016 mm, tangent 6.7e-8 rad","closedExport":{"code":"NO_START_STRAIGHT","reds":[],"msg":"the longest straight is 37.8 m; a grid of 4 and 2 pit boxes need 67.4 m"}}
+[edited:none] {"jump":{"gap":20,"drop":1,"land":-0.017453292519943295},"before":300,"after":300,"openExport":"undefined: buildPath: closed loop does not close (position 7.07e+2 m, tangent 1.75e-2)","close":"closed in 5 step(s): 0.213 mm, tangent 3.0e-8 rad","closedExport":{"code":"NO_START_STRAIGHT","reds":[],"msg":"the longest straight is 31.9 m; a grid of 4 and 2 pit boxes need 67.4 m"}}
+--- L48680 assistant 2026-10-05T21:21:09.683Z
+TOOL_USE Bash [toolu_01XeHYkExxwGnoiZhAVKnb99]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && grep -ln \"src/core/close.js\\|close.js'\\|validate/index.js\\|'index.js'\" test/*mutation*.js app/test/*mutation*.js 2>/dev/null; for f in $(ls test/*mutation*.js app/test/*mutation*.js); do n=$(grep -c \"validate/index\\|core/close\" $f); [ \"$n\" != 0 ] && echo \"$f $n\"; done; sed -n 1,30p test/core_cup_mutation.test.js | cut -c1-200","description":"Find mutation harnesses touching close.js and validate"}
+--- L48687 user 2026-10-05T21:21:10.145Z
+RESULT [toolu_01XeHYkExxwGnoiZhAVKnb99]: test/core_cup_mutation.test.js
+test/core_xsec_mutation.test.js
+app/test/core-close-mutation.test.js
+app/test/core-close-mutation.test.js 8
+test/core_cup_mutation.test.js 2
+// core_cup_mutation.test.js: node --test test/core_cup_mutation.test.js   (under the heavy-run lock, --max-old-space-size=4096; a few minutes)
+// D190: each mutant changes the core in ONE way (one or two exact string replacements, in a temporary copy of src/ and tools/), and the
+// rows of test/core_cup.test.js that should notice run against the copy. "Applied" means every replaced string occurs EXACTLY once;
+// "caught" means at least one of those tests FAILED on the mutant. The CONTROL runs the whole file on an unmutated copy, so a copy that
+// is missing a file cannot make every mutant look caught. The mutants are the D190 seal's planted controls (K1a-1 ... K7-2) where the
+// code has a place to plant them, and the rest of the rules this build added.
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('fs'), os = require('os'), path = require('path');
+const { spawnSync } = require('child_process');
+const ROOT = path.join(__dirname, '..');
+const C = 'core/';
+
+const R = '';   // src/ files outside core/ are given relative to src/
+const MUTANTS = [
+  // row 1a: the edge is c
+  { id: 'M1 (K1a-1) a cup piece renders the legacy profile (the r cap applies)', pattern: 'row 1a', edits: [[C + 'adapter.js', 'profile = cup ? cup[j].profile : L.profile;', 'profile = profileAt(P.fam
+  { id: 'M2 (K1a-2) only the left edge is cupped', pattern: 'row 1a', edits: [[C + 'adapter.js', "    psi: [...side.slice().reverse().map(([, p]) => p), 0, ...side.map(([, p]) => p)],\n    material: '
+  { id: 'M3 (K1a-3) c
+…[1179 chars cut]…
+pattern: 'row 2 PLANTED', edits: [[C + 'extend.js', 'first.c >= 0 && first.c <= D.CUP_MAX)) throw', 'first.c >= 0 && first.c <= 1e9)) th
+  { id: 'M10 the brush has no cup channel', pattern: 'row 2 \\(iii\\)', edits: [[C + 'sculpt.js', "'l', 'c', 'e', 's', 't'], what:", "'l', 'e', 's', 't'], what:"]] },
+  { id: 'M10b a cup that ends at a limit is not made flat (the next piece would need a control point past it)', pattern: 'ends flat', edits: [[C + 'extend.js', 'if (c[n - 1] <= 1e-3 || c[n - 1] >= D.C
+  { id: 'M10c the document guard has no tolerance for a solver\'s float noise at the limit', pattern: 'ends flat', edits: [[C + 'document.js', 'CUP_EPS = 1e-9;', 'CUP_EPS = 0;']] },
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48692 assistant 2026-10-05T21:22:38.223Z
+TOOL_USE Write [toolu_011Lf4CpMAVTAc41yyySqduU]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump.test.js","content":"// core_jump.test.js: node --test test/core_jump.test.js   (under the heavy-run lock, --max-old-space-size=4096; about a minute)\n// D243, the core half of jumps you can build (pane E). A flight piece (src/core/document.js flightPiece) is a jump: the adapter builds its gap and\n// its landing ramp (src/core/adapter.js toSegments). Rows:\n//   1  jump(): one flight at the head, the next Extend starts level, and it ROUND-TRIPS (append, serialize, reopen); refusals by name\n//   2  validation: a core flight's gap is INTENDED (n
+…[10820 chars cut]…
+ding, p: shut.doc.start.pitch };\n  const fw = FW.buildFromSegments(segs, { name: 'jump', via: 'test', liftPath: lift, start }, { markers: startLayout(segs, lift, start) });\n  assert.ok(fw.kn5.length > 1000 && fw.ai, 'buildFromSegments: a kn5 and an AI line');\n});\n"}
+--- L48693 user 2026-10-05T21:22:38.250Z
+RESULT [toolu_011Lf4CpMAVTAc41yyySqduU]: File created successfully at: C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_jump.test.js (file state is current in your context — no need to Read it back)
+--- L48705 assistant 2026-10-05T21:22:52.802Z
+TOOL_USE Edit [toolu_01CdXxZZX7bV6vBDGQHVDdpH]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_close.test.js","old_string":"test('a track with a jump is refused, by name (not built in this version)', () => {\n  let d = extend(D.createDoc('j'), { length: 300 });\n  d = D.appendPiece(d, D.flightPiece({ gap: 40, drop: 0, land: 0 }));\n  d = extend(d, { length: 300 });\n  assert.throws(() => C.close(d), /NOT_YET/);\n});","new_string":"// D243 changed this row: a track with a jump was refused as not built (NOT_YET). Jumps now close (test/core_jump.test.js row 4), so this track,\n// two straights and a jump with no turn, meets t
+…[205 chars cut]…
+{\n  let d = extend(D.createDoc('j'), { length: 300 });\n  d = D.appendPiece(d, D.flightPiece({ gap: 40, drop: 0, land: 0 }));\n  d = extend(d, { length: 300 });\n  assert.throws(() => C.close(d), (e) => e.code === 'CLOSE_SINGULAR' && !/NOT_YET/.test(e.message));\n});"}
+--- L48706 user 2026-10-05T21:22:52.833Z
+RESULT [toolu_01CdXxZZX7bV6vBDGQHVDdpH]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_close.test.js has been updated successfully.
+--- L48707 assistant 2026-10-05T21:22:54.877Z
+TOOL_USE Bash [toolu_01Xdv4BoV9DvJAQjoW2XqtLo]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && node -e \"for (const f of ['src/core/jump.js','test/core_jump.test.js']) { const fs=require('fs'); fs.writeFileSync(f, fs.readFileSync(f,'utf8').replace(/\\r?\\n/g,'\\r\\n')); }\"; for f in src/core/jump.js test/core_jump.test.js src/core/close.js src/validate/index.js test/core_close.test.js; do c=$(grep -c $'\\r$' $f); l=$(wc -l < $f); echo \"$f $c/$l\"; node --check $f || echo BAD; done; git status --short","description":"CRLF the new files; check syntax and line endings"}
+--- L48708 user 2026-10-05T21:22:55.512Z
+RESULT [toolu_01Xdv4BoV9DvJAQjoW2XqtLo]: src/core/jump.js 39/39
+test/core_jump.test.js 134/134
+src/core/close.js 344/344
+src/validate/index.js 560/560
+test/core_close.test.js 91/91
+ M src/core/close.js
+ M src/validate/index.js
+ M test/core_close.test.js
+?? src/core/jump.js
+?? test/core_jump.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48712 assistant 2026-10-05T21:22:59.587Z
+TEXT: Next I'll run the new tests and the close and validate files under the lock.
+--- L48713 assistant 2026-10-05T21:23:05.937Z
+TOOL_USE Bash [toolu_019GmFjwo8uSHRsWKxQvgKNP]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && SHIM=$(cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/suite\" && pwd -W)/serial-shim.js; NODE_OPTIONS=\"--require $SHIM\" CONSONANCE_HEAVY_WAIT_MS=3600000 node -e \"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'t180 E: D243 core_jump + close tests'}); const r=require('child_process').spawnSync(process.execPath,['--max-old-space-size=4096','--test','--test-concurrency=1','--test-reporter=tap','test/core_jump.test.js','test/core_close.tes
+…[193 chars cut]…
+ss|fail)/.test(l)).join('\\n')); const bad=L.findIndex(l=>/^not ok/.test(l)); if(bad>=0) console.log(r.stdout.slice(r.stdout.indexOf('not ok')).slice(0,3000));\" 2>&1 | grep -v \"waiting on\"","description":"Run the new jump tests and close tests","timeout_ms":"900000"}
+--- L48720 user 2026-10-05T21:23:19.380Z
+RESULT [toolu_019GmFjwo8uSHRsWKxQvgKNP]: ok 1 - test 4, track 0 (11 pieces, 4100 m, ε 0.00570491696708): one call closes it
+ok 2 - test 4, track 1 (10 pieces, 3685 m, ε -0.0841972072609): one call closes it
+ok 3 - test 4, track 2 (9 pieces, 3270 m, ε -0.0402413592674): one call closes it
+ok 4 - test 4, track 3 (7 pieces, 3042 m, ε -0.0690124160144): one call closes it
+ok 5 - test 4, track 4 (6 pieces, 2419 m, ε -0.00323135023937): one call closes it
+ok 6 - test 4, track 5 (12 pieces, 4723 m, ε -0.065869737044): one call closes it
+ok 7 - test 4, track 6 (9 pieces, 2773 m, ε 0.075068023568): one call closes it
+ok 8 - test 4, track 7 (9 pieces, 3916 m, ε -0.0348630782217): one call closes it
+ok 9 - test 4, track 8 (8 pieces, 2717 m, ε 0.0987024823669): one call closes it
+ok 10 - test 4, track 9 (7 pieces, 2519 m, ε -0.0799730329309): one call closes it
+ok 11 - test 4, track 10 (6 pieces, 2235 m, ε -0.025086999312): one call closes it
+ok 12 - test 4, track 11 (10 pieces, 3974 m, ε -0.00568767194636): one call closes it
+ok 13 - test 4, track 12 (6 pieces, 2264 m, ε -0.055765911378): one call closes it
+ok 14 - test 4, track 13 (8 pieces, 3594 m, ε 0.0442057050765): one call closes it
+ok 15 - test 4, track 14 (6 pieces, 1914 m, ε 0.0142437375616): one call closes it
+ok 16 - test 4, track 15 (9 pieces, 2362 m, ε -0.0745127643459): one call closes it
+ok 17 - test 4, track 16 (7 pieces, 2498 m, ε 0.0869582034647): one call closes it
+ok 18 - test 4, track 17 (8 pieces, 3177 m, ε -0.00734682576731): one call closes it
+ok 19 - test 4, track 18 (9 pieces, 3486 m, ε -0.0384539657272): one call closes it
+ok 20 - test 4, track 19 (7 pieces, 2735 m, ε -0.0382748652715): one call closes it
+ok 21 - close REPORTS a closure it did not reach: one step on the hardest track says NOT CL
+…[5291 chars cut]…
+test: row 4: a lap that ENDS in a jump is refused by name (its seam would join the landing ramp to the start)
+ok 46 - row 4: a lap that ENDS in a jump is refused by name (its seam would join the landing ramp to the start)
+  ---
+  duration_ms: 5.8447
+  type: 'test'
+  ...
+# Subtest: row 5: a CLOSED jump lap exports through the app's route (kn5, AI line, no red); an OPEN one is still refused, by name
+ok 47 - row 5: a CLOSED jump lap exports through the app's route (kn5, AI line, no red); an OPEN one is still refused, by name
+  ---
+  duration_ms: 3133.1987
+  type: 'test'
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 46
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13265.3079
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48723 assistant 2026-10-05T21:23:26.277Z
+TEXT: 46 of 47 pass. The one failure is my test reading the wrong field: `validate()` groups reds into ranges, and a range has no `s`. I'll check which fields it does have.
+--- L48724 assistant 2026-10-05T21:23:26.944Z
+TOOL_USE Bash [toolu_01SU5BjydteQEASeUWt7hkDj]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && sed -n \"$(grep -n '^function ranges' src/validate/index.js | cut -d: -f1),+14p\" src/validate/index.js | cut -c1-200","description":"Read the shape ranges() returns"}
+--- L48725 user 2026-10-05T21:23:27.079Z
+RESULT [toolu_01SU5BjydteQEASeUWt7hkDj]: function ranges(list, step) {
+  const out = [];
+  // a total order (reason, s, u), so the ranges do not depend on the order findings were produced in
+  const uu = (x) => (x.u == null ? -Infinity : x.u);
+  for (const f of list.slice().sort((a, b) => (a.reason < b.reason ? -1 : a.reason > b.reason ? 1 : a.s - b.s || uu(a) - uu(b)))) {
+    const last = out[out.length - 1];
+    const s1 = f.s1 == null ? f.s : f.s1;
+    if (last && last.reason === f.reason && f.s - last.s1 <= step * 1.5 + 1e-9) { last.s1 = Math.max(last.s1, s1); if (f.worst != null && (last.worst == null || f.worst > last.worst)) { last.worst = f
+    else out.push({ s0: f.s, s1, u: f.u == null ? null : f.u, reason: f.reason, source: SRC[f.reason], worst: f.worst == null ? null : f.worst });
+  }
+  return out;
+}
+
+// ── the core: raw findings from station `from` on, merged with what is carried ──────────────────────────────────────
+// Every station-level finding is tagged with its station index, every segment-level red with its segment, and every
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48728 assistant 2026-10-05T21:23:38.673Z
+TEXT: Ranges carry `s0` and `s1`. That also means my row-2 check "nothing red inside the flight's span" read `x.s` too. It passed vacuously and proved nothing. I'll fix both.
+--- L48729 assistant 2026-10-05T21:23:41.874Z
+TOOL_USE Edit [toolu_01PmPN2P9hTzb44s9LX6EpNK]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump.test.js","old_string":"  assert.deepEqual(r.red.filter((x) => (x.s1 == null ? x.s : x.s1) >= s0 && x.s <= s1), [], 'nothing red over the flight');","new_string":"  assert.ok(r.red.every((x) => Number.isFinite(x.s0) && Number.isFinite(x.s1)), 'control: validate\\'s reds are ranges (s0, s1), so the span test below reads real numbers');\n  assert.deepEqual(r.red.filter((x) => x.s1 >= s0 && x.s0 <= s1), [], 'nothing red over the flight');"}
+--- L48730 user 2026-10-05T21:23:41.911Z
+RESULT [toolu_01PmPN2P9hTzb44s9LX6EpNK]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_jump.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L48731 assistant 2026-10-05T21:23:43.511Z
+TOOL_USE Edit [toolu_01SR852XG45f9aXNXvmfT8B9]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump.test.js","old_string":"  assert.equal(holes.length, 1, JSON.stringify(r.red)); assert.ok(Math.abs(holes[0].s - s0) < 2, `at ${holes[0].s}, the hole is at ${s0}`);","new_string":"  assert.equal(holes.length, 1, JSON.stringify(r.red)); assert.ok(Math.abs(holes[0].s0 - s0) < 2, `at ${holes[0].s0}, the hole is at ${s0}`);"}
+--- L48732 user 2026-10-05T21:23:43.546Z
+RESULT [toolu_01SR852XG45f9aXNXvmfT8B9]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_jump.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L48742 assistant 2026-10-05T21:23:56.483Z
+TEXT: The open jump lap may have no reds at all, and then the span check passes no matter what. To show the check can fire, I'll make the no-landing test assert that its red falls inside the flight's span.
+--- L48743 assistant 2026-10-05T21:23:59.681Z
+TOOL_USE Edit [toolu_01DDPuw3zbyrR5qiEMHhLMpn]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump.test.js","old_string":"  const r = V.validate(pathOf(d, false, cut), cut, {});\n  assert.ok(reasons(r).includes('gap-in-road'), JSON.stringify(r.red));\n});","new_string":"  const r = V.validate(pathOf(d, false, cut), cut, {}), s0 = segs.slice(0, j).reduce((a, g) => a + g.length, 0), s1 = s0 + segs[j].length;\n  assert.ok(reasons(r).includes('gap-in-road'), JSON.stringify(r.red));\n  assert.ok(r.red.some((x) => x.reason === 'gap-in-road' && x.s1 >= s0 && x.s0 <= s1), 'the red is over the flight: the span test of the row above can see one');\n});"}
+--- L48744 user 2026-10-05T21:23:59.710Z
+RESULT [toolu_01DDPuw3zbyrR5qiEMHhLMpn]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_jump.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L48745 assistant 2026-10-05T21:24:06.998Z
+TOOL_USE Bash [toolu_0127ghCvQajnksPhgUuAwKxV]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && node -e \"const fs=require('fs'),f='test/core_jump.test.js';fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace(/\\r?\\n/g,'\\r\\n'))\" && node --check test/core_jump.test.js && SHIM=$(cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/suite\" && pwd -W)/serial-shim.js; NODE_OPTIONS=\"--require $SHIM\" CONSONANCE_HEAVY_WAIT_MS=3600000 node -e \"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'t180 E: D243 core_jump'}); const r=require('child_
+…[241 chars cut]…
+/^(not )?ok |^# (tests|pass|fail)/.test(l)).join('\\n')); if(L.some(l=>/^not ok/.test(l))) console.log(r.stdout.slice(r.stdout.indexOf('not ok')).slice(0,2000));\" 2>&1 | grep -v \"waiting on\"","description":"Re-run core_jump after the field fix","timeout_ms":"600000"}
+--- L48746 user 2026-10-05T21:24:11.626Z
+RESULT [toolu_0127ghCvQajnksPhgUuAwKxV]: ok 1 - row 1: jump() appends ONE flight at the head with the gap, drop and landing pitch given; the next Extend starts level, the rest carried
+ok 2 - row 1: a jump ROUND-TRIPS: append, serialize, reopen gives the same text and the same track, and the reopened one extends the same
+ok 3 - row 1: jump() refuses by name: no road to take off from, a closed track, a jump straight after a jump, a bad number, a flight no clothoid can fly
+ok 4 - row 2: a core flight's gap is INTENDED: the open jump lap has no gap-in-road red, and no red at all inside the flight's span
+ok 5 - row 2: a real HOLE outside a flight is still red: a stretch of the landing road made into a gap
+ok 6 - row 2: a flight with NO landing is red: the core's gap without its landing ramp after it is a hole
+ok 7 - row 3: a landing road too short for the lap's speed is red (landing-misses-zone); a jump both falls land on is not
+ok 8 - row 4: a lap with a jump CLOSES (whole lap): the flight is the very same piece, the road after it still starts level, and it is stored closed
+ok 9 - row 4: a jump lap closes through B's LOCAL window too: only the window moves, every piece before it is the same object
+ok 10 - row 4: a lap that ENDS in a jump is refused by name (its seam would join the landing ramp to the start)
+ok 11 - row 5: a CLOSED jump lap exports through the app's route (kn5, AI line, no red); an OPEN one is still refused, by name
+# tests 11
+# pass 11
+# fail 0
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48751 assistant 2026-10-05T21:24:48.917Z
+TOOL_USE Edit [toolu_018bP4bfR27EaW1TPbEKMYU1]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump.test.js","old_string":"test('row 4: a lap that ENDS in a jump is refused by name (its seam would join the landing ramp to the start)', () => {","new_string":"test('row 4: a jump that LANDS ON A SLOPE (−2°, 2 m down) closes in pitch too: the measured tangent at the seam closes, not only the position', () => {\n  const r = close(jumpLap(LONG_JUMP));\n  assert.equal(r.converged, true, r.report); assert.ok(r.gapM < 1e-3, `${r.gapM} m`);\n  assert.ok(r.tangentRad < 1e-6, `the tangent at the seam is ${r.tangentRad} rad (measured on the adapter's path)`);\n});\ntest('row 4: a lap that ENDS in a jump is refused by name (its seam would join the landing ramp to the start)', () => {"}
+--- L48752 user 2026-10-05T21:24:48.944Z
+RESULT [toolu_018bP4bfR27EaW1TPbEKMYU1]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_jump.test.js has been updated successfully. (file state is current in your context — no need to Read it back)
+--- L48762 assistant 2026-10-05T21:24:54.834Z
+TEXT: Now the mutation harness, in the repo's `core_cup_mutation` style:
+--- L48763 assistant 2026-10-05T21:25:24.069Z
+TOOL_USE Write [toolu_01XjH3dxAgvXSkErwsNTxT6y]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\test\\core_jump_mutation.test.js","content":"// core_jump_mutation.test.js: node --test test/core_jump_mutation.test.js   (under the heavy-run lock, --max-old-space-size=4096; a few minutes)\n// D243 (pane E): each mutant changes the jump code in ONE way (an exact string replacement, in a temporary copy of src/, tools/ and app/), and the\n// rows of test/core_jump.test.js that should notice run against the copy. \"Applied\" means the replaced string occurs EXACTLY once; \"caught\" means\n// at least one of those tests FAILED on the mutant. The CONTROL runs the
+…[5855 chars cut]…
+.from}\" occurs ${r.n} times in ${m.file}`);\n    assert.ok(r.tests > 0, `the pattern ${m.pattern} ran no test`);\n    assert.ok(r.fail > 0, `NOT CAUGHT: ${r.tests} test(s) of ${m.pattern} all pass on the mutant`);\n  });\n}\nmodule.exports = { MUTANTS, runMutant };\n"}
+--- L48764 user 2026-10-05T21:25:24.096Z
+RESULT [toolu_01XjH3dxAgvXSkErwsNTxT6y]: File created successfully at: C:\Users\nname\Desktop\worktrees\e-jumps-wt\test\core_jump_mutation.test.js (file state is current in your context — no need to Read it back)
+--- L48767 assistant 2026-10-05T21:25:34.853Z
+TEXT: Next I'll run everything for this lap in one locked job: the targeted files, the fixtures, my jump harness, and the existing harnesses that mutate `close.js` or the validator.
+--- L48768 assistant 2026-10-05T21:25:37.026Z
+TOOL_USE Bash [toolu_01VpEQrPgweKT5yDAXeBYiAm]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && node -e \"const fs=require('fs');for(const f of ['test/core_jump_mutation.test.js','test/core_jump.test.js'])fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace(/\\r?\\n/g,'\\r\\n'))\" && node --check test/core_jump_mutation.test.js && ls test/validate*.test.js test/doc-jump.test.js test/core_adapter.test.js test/core_doc.test.js test/core_xsec_mutation.test.js 2>&1 | tr '\\n' ' '; grep -c \"validate/index\" test/core_xsec_mutation.test.js","description":"Normalise, check, and list the test files to run"}
+--- L48775 user 2026-10-05T21:25:37.328Z
+RESULT [toolu_01VpEQrPgweKT5yDAXeBYiAm]: test/core_adapter.test.js test/core_doc.test.js test/core_xsec_mutation.test.js test/doc-jump.test.js test/validate.test.js test/validate_bounds.test.js test/validate_head.test.js test/validate_incremental.test.js test/validate_jumps.test.js test/validate_raygap.test.js test/validate_speed.test.js test/validate_xsec.test.js 0
+--- L48778 assistant 2026-10-05T21:26:04.289Z
+TOOL_USE Write [toolu_01KyKKSVSszZbEwhJDtmtKtV]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\jumps\\run.js","content":"// D243 core half (pane E): EXPORT tier on e-jumps-wt. Targeted files, fixtures 0 of 9, then the mutants of the touched src files (mine, plus the existing\n// harnesses that mutate src/core/close.js). ONE job; the caller holds the heavy-run lock; --test-concurrency=1 and the serial shim on every child.\n// Each result is written with an fsync as it lands (a crash zero-fills unflushed files).\n'use strict';\nconst cp = require('child_process'), pa
+…[2274 chars cut]…
+', 'app/test/core-close-preview.test.js']);\nrun('mut-jump', ['test/core_jump_mutation.test.js']);\nrun('mut-cup', ['test/core_cup_mutation.test.js']);\nrun('mut-close', ['app/test/core-close-mutation.test.js']);\nlog({ label: 'end', at: new Date().toISOString() });\n"}
+--- L48779 user 2026-10-05T21:26:04.316Z
+RESULT [toolu_01KyKKSVSszZbEwhJDtmtKtV]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\jumps\run.js (file state is current in your context — no need to Read it back)
+--- L48780 assistant 2026-10-05T21:26:07.923Z
+TOOL_USE Bash [toolu_014f6wis5kq7iiYxRVbBa4E8]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumps\" && rm -f run.jsonl && CONSONANCE_HEAVY_WAIT_MS=7200000 node -e \"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'t180 E: D243 jumps core: targeted + fixtures + mutants'}); require('./run.js')\" > run.out 2>&1; echo exit $?","description":"Run the D243 export-tier checks under the lock","run_in_background":true}
+--- L48781 user 2026-10-05T21:26:07.950Z
+RESULT [toolu_014f6wis5kq7iiYxRVbBa4E8]: Command running in background with ID: b7ut3w2he. Output is being written to: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\tasks\b7ut3w2he.output. You will be notified when it completes. To check interim output, use Read on that file path.
+Session cwd remains C:\Consonance\instances\sibling-07b8a48f; directory changes made by the backgrounded command do not apply to subsequent commands.
+--- L48783 assistant 2026-10-05T21:26:13.667Z
+TOOL_USE Monitor [toolu_015vDLNz6zyfkjDamfoDNXYW]: {"command":"sleep 3; tail -n +1 -f \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumps/run.out\" | grep -E --line-buffered '\"label\"|took over|gave up|Error'","description":"D243 jumps checks: each result as it lands","timeout_ms":1800000}
+--- L48784 user 2026-10-05T21:26:13.693Z
+RESULT [toolu_015vDLNz6zyfkjDamfoDNXYW]: Monitor started (task bhdn1m5l4, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+--- L48787 assistant 2026-10-05T21:26:19.379Z
+TEXT: While that runs, the CHANGELOG entry:
+--- L48788 assistant 2026-10-05T21:26:20.369Z
+TOOL_USE Bash [toolu_01FXVD87bxXoJVWu2UwST5uK]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && grep -n \"^## \\|^### \" CHANGELOG.md | head -8; sed -n 9,10p CHANGELOG.md | cut -c1-120","description":"Locate the Unreleased sections in the CHANGELOG"}
+--- L48789 user 2026-10-05T21:26:20.504Z
+RESULT [toolu_01FXVD87bxXoJVWu2UwST5uK]: 6:## [Unreleased]
+8:### Added
+19:### Removed
+22:### Changed
+30:### Fixed
+48:### Removed
+51:### Added
+107:### Changed
+- **The keyboard shortcuts work on the equation page, Ctrl+Backspace included (D239 note, from the keeper's undo request
+- **Saving keeps the version it replaces, and Close the loop keeps the track from before it (D239 amendment; the keeper
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L48797 assistant 2026-10-05T21:26:27.143Z
+TOOL_USE Read [toolu_01QQNuUYbwSi8MmEDtS921KW]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\CHANGELOG.md","offset":17,"limit":3}
+--- L48798 user 2026-10-05T21:26:27.164Z
+RESULT [toolu_01QQNuUYbwSi8MmEDtS921KW]: 17	- **A "Test export (unfinished)" button: an OPEN, unfinished track can be exported to drive it by hand (D243a, the keeper: "it should allow to export even without it being completed").** Its own button beside Export, never the default; `src/export/fromwords.js` `opts.test`. The path is built open, every red is LISTED as a warning (in the message and in `t180b_TEST_UNFINISHED.txt` in the folder) instead of refusing, the AI line is written open (`ailine.js` `open`), the folder is `t180b_<name>_test` and the ui name says "(test, unfinished)", point-to-point gates `AC_AB_START/FINISH_L/R` are placed (the start at the start gate, the finish 150 m before the road's end), and the road ends in a named wall `1WALL_T180_END`. Why these, measured on the local AC install (read only): every point-to-point layout ships an OPEN fast_lane.ai (Kunos' ks_drag included), carries the AB gates, and runs 58–226 m of road past its finish gate with walls at the end. A normal Export of an open track still refuses, unchanged. **A closed track is refused the test export by name** ("this track is closed: use Export", `TEST_CLOSED`): it would be built open, with the end wall across the lap at its seam, about 990 m from the grid. Not yet checked in AC itself.
+18	
+19	### Removed
+--- L48801 assistant 2026-10-05T21:26:42.071Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01AchpKbde4dsi7VaE4LXxyp]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumps-wt\\CHANGELOG.md","old_string":" about 990 m from the grid. Not yet checked in AC itself.\n","new_string":" about 990 m from the grid. Not yet checked in AC itself.\n- **Jumps, the core half: an equation track can take a jump, close round it and export it (D243 item 1; the keeper: \"ramp to landing, but it also means the loop isnt closed until the jumps and rest of the track is completed\").** There is no button yet: the UI's \"Add jump\" is next. What changed underneath, and why:\n  - **The jump itself.** `src/core/jump.js` `jump(doc, { gap, drop, land })` appends a flight at the open end. The take-off is the last road piece's end; the next Extend starts the landing road, level. The flight is solved and its landing ramp sized as the adapter builds them. A jump it cannot build is refused by name at the click: no road to take off from, a jump straight after a jump, a bad number, a flight through vertical.\n  - **Validation no longer calls a jump a hole.** Every core flight was red `gap-in-road`, because only the old word `jump` was exempt. A core flight (the adapter's gap followed by its own landing ramp) is now an intended gap. Any other gap is still a hole, including a flight whose landing ramp is missing.\n  - **\"Too short\" is measured, not a length.** A landing is long enough when both measured falls (3.2 g and 6.3 g) touch down on road at the speed validation computes for the lap. Otherwise it is red, `landing-misses-zone`. The ramp is sized at the design speed, 460 km/h, so a jump taken much faster, as on a long straight, can fly past it and is red until the landing road is longer.\n  - **Close the loop works with jumps** (it refused any jump track, `NOT_YET`). A jump carries the road's state across, and the road after it starts level, which the close now holds. Its model carries each jump's distance and the reset of pitch at the landing. Both the whole-lap close and the local-window Close work across a jump. A lap that ENDS in a jump is refused by name (`FLIGHT_AT_END`): extend road after the landing first.\n  - A normal Export of an open jump track still refuses; a closed one exports.\n"}
+--- L48802 user 2026-10-05T21:26:42.109Z
+RESULT [toolu_01AchpKbde4dsi7VaE4LXxyp]: The file C:\Users\nname\Desktop\worktrees\e-jumps-wt\CHANGELOG.md has been updated successfully.
+--- L48803 assistant 2026-10-05T21:26:44.318Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01MZSvHRxqne7QudpcmAuMqs]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumps-wt && node -e \"const fs=require('fs'),f='CHANGELOG.md';fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace(/\\r?\\n/g,'\\r\\n'))\" && c=$(grep -c $'\\r$' CHANGELOG.md); l=$(wc -l < CHANGELOG.md); echo \"$c/$l\"; grep -n \"flight\\|jump\" src/core/README.md | head -12 | cut -c1-200","description":"CRLF the CHANGELOG; check the core README's jump notes"}

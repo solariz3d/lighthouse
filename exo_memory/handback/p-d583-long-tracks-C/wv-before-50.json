@@ -1,0 +1,72 @@
+{
+  "started": "2026-10-31T15:26:41.467Z",
+  "exe": "C:/Users/nname/Desktop/worktrees/t180-land-582/src-tauri/target/release/t180-track-builder.exe",
+  "track": "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/d583/doc/eq-STADIUM 50.t180track",
+  "steps": [
+    {
+      "name": "launch",
+      "ok": true,
+      "s": 1.24,
+      "result": "menus ready"
+    },
+    {
+      "name": "open",
+      "ok": true,
+      "s": 25.545,
+      "result": "loaded: head shown at 1.3 s, still from 5.6 s; peak 598 MB at 27.4 s (page 251, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 342); settled 595 MB (page 249, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 342)"
+    },
+    {
+      "name": "export",
+      "ok": false,
+      "s": 86.671,
+      "error": "Error: export failed: Invalid string length | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exporting… | end heading 0.00°, on the 90° grid | ; peak 1327 MB at 98.7 s (page 346, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 289, iframe:about:srcdoc#4 1, worker:ad0ca11a-340a-4929-9881-1d6cef#5"
+    }
+  ],
+  "marks": [
+    {
+      "t": "0.9",
+      "mark": "begin launch"
+    },
+    {
+      "t": "2.1",
+      "mark": "end launch"
+    },
+    {
+      "t": "5.1",
+      "mark": "begin open"
+    },
+    {
+      "t": "30.7",
+      "mark": "end open"
+    },
+    {
+      "t": "30.7",
+      "mark": "begin export"
+    },
+    {
+      "t": "117.3",
+      "mark": "end export"
+    }
+  ],
+  "crashes": [
+    {
+      "t": "119.1",
+      "what": "the CDP socket closed: code 1006 reason  clean false; app pid GONE; webview/t180 processes 20",
+      "mark": "export"
+    }
+  ],
+  "pageErrors": [],
+  "targets": {
+    "worker:overlapworker.js#0": "1.2",
+    "worker:overlapworker.js#1": "1.2",
+    "worker:closeworker.js#2": "1.2",
+    "worker:checkworker.js#3": "1.7",
+    "iframe:about:srcdoc#4": "30.9",
+    "worker:ad0ca11a-340a-4929-9881-1d6cef#5": "31.2"
+  },
+  "pid": 24132,
+  "fatal": "Error: export failed: Invalid string length | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exporting… | end heading 0.00°, on the 90° grid | ; peak 1327 MB at 98.7 s (page 346, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 289, iframe:about:srcdoc#4 1, worker:ad0ca11a-340a-4929-9881-1d6cef#5 686)",
+  "leftRunning": 0,
+  "exitCode": 1,
+  "nSamples": 111
+}

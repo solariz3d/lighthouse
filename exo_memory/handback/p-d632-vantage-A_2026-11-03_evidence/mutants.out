@@ -1,0 +1,30 @@
+pre-flight (unmutated copy): green 43/0
+  killed    #1 M1 live skip removed   (D632_a_claim_whose_every_sentence_is_about_live_state_is_SKI)
+  killed    #2 M2 skip on ANY live sentence   (D632_a_claim_with_one_checkable_sentence_beside_a_live_one_s)
+  killed    #3 M3 reader stays in this repo   (D632_a_commit_the_claim_names_that_only_another_repo_holds_s, D632_an_absolute_path_the_claim_names_under_another_repo_sen, D632_the_world_check_runs_in_the_resolved_repo_at_that_repo_)
+  killed    #4 M4 world check keeps this repo's head   (D632_the_world_check_runs_in_the_resolved_repo_at_that_repo_)
+  killed    #5 M5 claim paths ignored   (D632_an_absolute_path_the_claim_names_under_another_repo_sen)
+  killed    #6 M6 named commits ignored   (D632_a_commit_the_claim_names_that_only_another_repo_holds_s, D632_the_world_check_runs_in_the_resolved_repo_at_that_repo_)
+  killed    #7 M7 hasCommit inverted   (D632_a_commit_the_claim_names_that_only_another_repo_holds_s, D632_the_world_check_runs_in_the_resolved_repo_at_that_repo_)
+  killed    #8 M8 brief drops the claim time   (D632_the_brief_states_the_claim_s_time_and_head_and_says_liv)
+  killed    #9 M9 brief drops the claim head   (D632_the_brief_states_the_claim_s_time_and_head_and_says_liv)
+  killed    #10 M10 VANTAGE_REPOS ignored   (D632_the_other_repos_come_from_VANTAGE_REPOS_else_the_config)
+  killed    #11 M11 config key ignored   (D632_the_other_repos_come_from_VANTAGE_REPOS_else_the_config)
+  killed    #12 M running   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+  killed    #13 M lock   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+  killed    #14 M armed   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+  killed    #15 M install   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+  killed    #16 M version   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p, D632_a_claim_whose_every_sentence_is_about_live_state_is_SKI)
+  killed    #17 M disk   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+  killed    #18 M now   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+  killed    #19 M tree clean   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+  killed    #20 M clean tree   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+  killed    #21 M hardware   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+  killed    #22 M doctor   (D632_the_live_state_test_knows_the_plan_s_classes_versions_p)
+
+d632-vantage mutants: 22 listed · 22 killed · 0 survived · 0 no result · 0 not applied
+live consonance/tools/second-vantage.js unchanged: true
+heavy-run: WARNING: C:\ has 44.8 GB free, under 50 GB; run node consonance/tools/janitor.js
+heavy-run: waiting on 0845a868 pid 48516 (t180 C D629 C staging release build (BelowNormal), since 2026-11-03T14:43:28.952Z) and c88002b1 pid 38848 (d476 O cargo test --bin consonance (BelowNormal), since 2026-11-03T14:41:11.417Z) — all 2 slots are held
+
+exit 0

@@ -2,23 +2,149 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 145,
-    "REVIEW": 17,
-    "DISGUISED": 14,
-    "BENIGN-MESSAGE": 5,
+    "BENIGN-TEST": 426,
+    "BENIGN-FIXTURE": 12,
+    "REVIEW": 8,
+    "DISGUISED": 15,
+    "BENIGN-MESSAGE": 4,
     "FATAL-USER": 7,
-    "BENIGN-FIXTURE": 7,
+    "FATAL-DEFAULT": 8,
     "FATAL-TEST-READ": 2,
-    "FATAL-SHIPPED-INSTRUCTION": 2
+    "FATAL-SHIPPED-INSTRUCTION": 1
   },
   "sites": [
     {
-      "file": "consonance/hooks/blind.js",
+      "file": "consonance/hooks/ask-ending.test.js",
       "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/hooks/blind.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "const missing = run([], { raw: JSON.stringify({ transcript_path: 'C:/no/such/file.jsonl' }) }); assert.equal(missing.code, 0); assert.equal(missing.out, '');",
+      "key": "consonance/hooks/ask-ending.test.js\u0000const missing = run([], { raw: JSON.stringify({ transcript_path: 'C:/no/such/file.jsonl' }) }); assert.equal(missing.code, 0); assert.equal(missing.out, '');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/ask-ending.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const payload = raw !== null ? raw : JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false });",
+      "key": "consonance/hooks/ask-ending.test.js\u0000const payload = raw !== null ? raw : JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/ask-ending.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false }), encoding: 'utf8', env: strangerEnv() });",
+      "key": "consonance/hooks/ask-ending.test.js\u0000const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify({ session_id: 's', transcript_path: tr, cwd: 'C:/x/myproject', hook_event_name: 'Stop', stop_hook_active: false }), encoding: 'utf8', env: strangerEnv() });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/delete-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "['cygpath', 'D:\\\\Prog\\\\Git\\\\usr\\\\bin\\\\cygpath.exe', 'D:\\\\Prog86\\\\Git\\\\usr\\\\bin\\\\cygpath.exe'], 'a Program Files on another drive is found');",
+      "key": "consonance/hooks/delete-gate.test.js\u0000['cygpath', 'D:\\\\Prog\\\\Git\\\\usr\\\\bin\\\\cygpath.exe', 'D:\\\\Prog86\\\\Git\\\\usr\\\\bin\\\\cygpath.exe'], 'a Program Files on another drive is found');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/delete-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'D:\\\\Prog', 'ProgramFiles(x86)': 'D:\\\\Prog86' }),",
+      "key": "consonance/hooks/delete-gate.test.js\u0000assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'D:\\\\Prog', 'ProgramFiles(x86)': 'D:\\\\Prog86' }),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/delete-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'E:\\\\P', ProgramW6432: 'E:\\\\P' }), ['cygpath', 'E:\\\\P\\\\Git\\\\usr\\\\bin\\\\cygpath.exe'], 'the same folder named twice is looked in once');",
+      "key": "consonance/hooks/delete-gate.test.js\u0000assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'E:\\\\P', ProgramW6432: 'E:\\\\P' }), ['cygpath', 'E:\\\\P\\\\Git\\\\usr\\\\bin\\\\cygpath.exe'], 'the same folder named twice is looked in once');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/delete-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(G.words('rm -rf \"C:/a b\"/* \\'q r\\''), ['rm', '-rf', 'C:/a b/*', 'q r'], 'a quoted piece and the glob after it are ONE word');",
+      "key": "consonance/hooks/delete-gate.test.js\u0000assert.deepEqual(G.words('rm -rf \"C:/a b\"/* \\'q r\\''), ['rm', '-rf', 'C:/a b/*', 'q r'], 'a quoted piece and the glob after it are ONE word');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(run(HOOKS[2], ['DATA', 'RETURNS', 'STATEDIR'], { USERPROFILE: h, VANTAGE_DATA: 'E:\\\\v', RETURN_LEDGER: 'E:\\\\r.jsonl', RETURN_STATE_DIR: 'E:\\\\s' }), { DATA: 'E:\\\\v', RETURNS: 'E:\\\\r.jsonl', STATEDIR: 'E:\\\\s' });",
+      "key": "consonance/hooks/dirs.test.js\u0000assert.deepStrictEqual(run(HOOKS[2], ['DATA', 'RETURNS', 'STATEDIR'], { USERPROFILE: h, VANTAGE_DATA: 'E:\\\\v', RETURN_LEDGER: 'E:\\\\r.jsonl', RETURN_STATE_DIR: 'E:\\\\s' }), { DATA: 'E:\\\\v', RETURNS: 'E:\\\\r.jsonl', STATEDIR: 'E:\\\\s' });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(run(HOOKS[1], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');",
+      "key": "consonance/hooks/dirs.test.js\u0000assert.strictEqual(run(HOOKS[1], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(run(HOOKS[2], ['DATA', 'RETURNS'], { USERPROFILE: h, VANTAGE_DATA: 'E:\\\\v' }).RETURNS, `${h}\\\\.consonance\\\\return_ledger.jsonl`);",
+      "key": "consonance/hooks/dirs.test.js\u0000assert.strictEqual(run(HOOKS[2], ['DATA', 'RETURNS'], { USERPROFILE: h, VANTAGE_DATA: 'E:\\\\v' }).RETURNS, `${h}\\\\.consonance\\\\return_ledger.jsonl`);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(run(HOOKS[3], ['LEDGER'], { USERPROFILE: h, SOURCED_LEDGER: 'E:\\\\l.jsonl' }).LEDGER, 'E:\\\\l.jsonl');",
+      "key": "consonance/hooks/dirs.test.js\u0000assert.strictEqual(run(HOOKS[3], ['LEDGER'], { USERPROFILE: h, SOURCED_LEDGER: 'E:\\\\l.jsonl' }).LEDGER, 'E:\\\\l.jsonl');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(run(HOOKS[4], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');",
+      "key": "consonance/hooks/dirs.test.js\u0000assert.strictEqual(run(HOOKS[4], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h }).DATA, `${h}\\\\.consonance`, 'blind.js without the override: the app\\'s default, never C:\\\\Consonance');",
+      "key": "consonance/hooks/dirs.test.js\u0000assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h }).DATA, `${h}\\\\.consonance`, 'blind.js without the override: the app\\'s default, never C:\\\\Consonance');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');",
+      "key": "consonance/hooks/dirs.test.js\u0000assert.strictEqual(run(HOOKS[5], ['DATA'], { USERPROFILE: h, CONSONANCE_DATA: 'E:\\\\ov' }).DATA, 'E:\\\\ov');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const named = home({ '.consonance.json': '\\uFEFF' + JSON.stringify({ data_dir: ' D:\\\\X\\\\data ', instances_dir: 'D:\\\\X\\\\inst' }) });",
+      "key": "consonance/hooks/dirs.test.js\u0000const named = home({ '.consonance.json': '\\uFEFF' + JSON.stringify({ data_dir: ' D:\\\\X\\\\data ', instances_dir: 'D:\\\\X\\\\inst' }) });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const h of HOOKS) { const f = resolver(h, { USERPROFILE: named }); assert.strictEqual(f('data_dir', '.consonance'), 'D:\\\\X\\\\data', h); assert.strictEqual(f('instances_dir', 'claude-instances'), 'D:\\\\X\\\\inst', h); }",
+      "key": "consonance/hooks/dirs.test.js\u0000for (const h of HOOKS) { const f = resolver(h, { USERPROFILE: named }); assert.strictEqual(f('data_dir', '.consonance'), 'D:\\\\X\\\\data', h); assert.strictEqual(f('instances_dir', 'claude-instances'), 'D:\\\\X\\\\inst', h); }\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const h of HOOKS) assert.ok(!/['\"]C:(\\\\\\\\|\\/)Consonance|path\\.join\\('C:'/.test(text(h).replace(/^\\s*(\\/\\/|\\*).*$/gm, '')), `${h} names no C:\\\\Consonance path in its code`);",
+      "key": "consonance/hooks/dirs.test.js\u0000for (const h of HOOKS) assert.ok(!/['\"]C:(\\\\\\\\|\\/)Consonance|path\\.join\\('C:'/.test(text(h).replace(/^\\s*(\\/\\/|\\*).*$/gm, '')), `${h} names no C:\\\\Consonance path in its code`);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "test('row 1: one rule — the D273 block is the same text in all five hooks, and none still names C:\\\\Consonance', () => {",
+      "key": "consonance/hooks/dirs.test.js\u0000test('row 1: one rule — the D273 block is the same text in all five hooks, and none still names C:\\\\Consonance', () => {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "test('row 5: a real hook in a stranger\\'s home (sourced-stop, no override) writes its ledger under THAT home, never C:\\\\Consonance', () => {",
+      "key": "consonance/hooks/dirs.test.js\u0000test('row 5: a real hook in a stranger\\'s home (sourced-stop, no override) writes its ledger under THAT home, never C:\\\\Consonance', () => {\u0000#1"
     },
     {
       "file": "consonance/hooks/dream-watch.test.js",
@@ -49,41 +175,6 @@
       "key": "consonance/hooks/dream-watch.test.js\u0000assert.strictEqual(W.underDir('C:\\\\Users\\\\zackn\\\\code', 'C:\\\\Consonance\\\\instances'), false);\u0000#1"
     },
     {
-      "file": "consonance/hooks/ferry-watch.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const LEDGER = \"C:\\\\Consonance\\\\data\\\\ferry.jsonl\";",
-      "key": "consonance/hooks/ferry-watch.js\u0000const LEDGER = \"C:\\\\Consonance\\\\data\\\\ferry.jsonl\";\u0000#1"
-    },
-    {
-      "file": "consonance/hooks/ferry-watch.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const REPO = process.env.FERRY_REPO || \"C:\\\\Consonance\\\\lighthouse\";",
-      "key": "consonance/hooks/ferry-watch.js\u0000const REPO = process.env.FERRY_REPO || \"C:\\\\Consonance\\\\lighthouse\";\u0000#1"
-    },
-    {
-      "file": "consonance/hooks/findings-return.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/hooks/findings-return.js\u0000const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
-    },
-    {
-      "file": "consonance/hooks/findings-return.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const RETURNS = process.env.RETURN_LEDGER || 'C:\\\\Consonance\\\\data\\\\return_ledger.jsonl';",
-      "key": "consonance/hooks/findings-return.js\u0000const RETURNS = process.env.RETURN_LEDGER || 'C:\\\\Consonance\\\\data\\\\return_ledger.jsonl';\u0000#1"
-    },
-    {
-      "file": "consonance/hooks/findings-return.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const STATEDIR = process.env.RETURN_STATE_DIR || 'C:\\\\Consonance\\\\data\\\\return_state';",
-      "key": "consonance/hooks/findings-return.js\u0000const STATEDIR = process.env.RETURN_STATE_DIR || 'C:\\\\Consonance\\\\data\\\\return_state';\u0000#1"
-    },
-    {
       "file": "consonance/hooks/findings-return.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
@@ -91,11 +182,32 @@
       "key": "consonance/hooks/findings-return.test.js\u0000const PANE_CWD = 'C:\\\\panes\\\\sibling-test';\u0000#1"
     },
     {
-      "file": "consonance/hooks/precompact-preserve.js",
+      "file": "consonance/hooks/gate-mode.test.js",
       "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/hooks/precompact-preserve.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(G.gatesModeFrom(JSON.stringify({ data_dir: 'C:/d' })), 'strict');",
+      "key": "consonance/hooks/gate-mode.test.js\u0000assert.strictEqual(G.gatesModeFrom(JSON.stringify({ data_dir: 'C:/d' })), 'strict');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/gate-mode.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const REPLY = 'Done at C:/work/zzz.md, 3 of 5.';",
+      "key": "consonance/hooks/gate-mode.test.js\u0000const REPLY = 'Done at C:/work/zzz.md, 3 of 5.';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/gate-mode.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "done('Read', { file_path: 'C:\\\\Users\\\\x\\\\repo\\\\exo_memory\\\\loop\\\\plan.md' }, 'text'),",
+      "key": "consonance/hooks/gate-mode.test.js\u0000done('Read', { file_path: 'C:\\\\Users\\\\x\\\\repo\\\\exo_memory\\\\loop\\\\plan.md' }, 'text'),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/precompact-preserve.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "'c:/consonance/instances/third-place/', String.raw`C:\\Consonance\\instances\\third-place\\.`];",
+      "key": "consonance/hooks/precompact-preserve.test.js\u0000'c:/consonance/instances/third-place/', String.raw`C:\\Consonance\\instances\\third-place\\.`];\u0000#1"
     },
     {
       "file": "consonance/hooks/precompact-preserve.test.js",
@@ -105,18 +217,466 @@
       "key": "consonance/hooks/precompact-preserve.test.js\u0000const bad = process.platform === 'win32' ? 'Z:\\\\nope\\\\precompact.jsonl' : '/proc/nope/x.jsonl';\u0000#1"
     },
     {
-      "file": "consonance/hooks/sessionstart-state.js",
+      "file": "consonance/hooks/precompact-preserve.test.js",
       "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/hooks/sessionstart-state.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "const BUILD = [String.raw`C:\\Consonance\\instances\\main`, String.raw`C:\\Consonance\\instances\\librarian`, String.raw`C:\\Consonance\\instances\\sibling-0845a868`,",
+      "key": "consonance/hooks/precompact-preserve.test.js\u0000const BUILD = [String.raw`C:\\Consonance\\instances\\main`, String.raw`C:\\Consonance\\instances\\librarian`, String.raw`C:\\Consonance\\instances\\sibling-0845a868`,\u0000#1"
     },
     {
-      "file": "consonance/hooks/sourced-stop.js",
+      "file": "consonance/hooks/precompact-preserve.test.js",
       "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const LEDGER = process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl';",
-      "key": "consonance/hooks/sourced-stop.js\u0000const LEDGER = process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl';\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "const TP = [String.raw`C:\\Consonance\\instances\\third-place`, 'C:\\\\Consonance\\\\instances\\\\third-place\\\\', 'C:/Consonance/instances/third-place',",
+      "key": "consonance/hooks/precompact-preserve.test.js\u0000const TP = [String.raw`C:\\Consonance\\instances\\third-place`, 'C:\\\\Consonance\\\\instances\\\\third-place\\\\', 'C:/Consonance/instances/third-place',\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/precompact-preserve.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "String.raw`C:\\Consonance\\instances\\third-placement`, String.raw`C:\\Consonance\\instances\\third_place`, String.raw`C:\\x\\my third-place`, 'third-place', undefined];",
+      "key": "consonance/hooks/precompact-preserve.test.js\u0000String.raw`C:\\Consonance\\instances\\third-placement`, String.raw`C:\\Consonance\\instances\\third_place`, String.raw`C:\\x\\my third-place`, 'third-place', undefined];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/push-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "['cygpath', 'D:\\\\Prog\\\\Git\\\\usr\\\\bin\\\\cygpath.exe', 'D:\\\\Prog86\\\\Git\\\\usr\\\\bin\\\\cygpath.exe'], 'a Program Files on another drive is found');",
+      "key": "consonance/hooks/push-gate.test.js\u0000['cygpath', 'D:\\\\Prog\\\\Git\\\\usr\\\\bin\\\\cygpath.exe', 'D:\\\\Prog86\\\\Git\\\\usr\\\\bin\\\\cygpath.exe'], 'a Program Files on another drive is found');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/push-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'D:\\\\Prog', 'ProgramFiles(x86)': 'D:\\\\Prog86' }),",
+      "key": "consonance/hooks/push-gate.test.js\u0000assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'D:\\\\Prog', 'ProgramFiles(x86)': 'D:\\\\Prog86' }),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/push-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'E:\\\\P', ProgramW6432: 'E:\\\\P' }), ['cygpath', 'E:\\\\P\\\\Git\\\\usr\\\\bin\\\\cygpath.exe'], 'the same folder named twice is looked in once');",
+      "key": "consonance/hooks/push-gate.test.js\u0000assert.deepEqual(G.cygpathCandidates({ ProgramFiles: 'E:\\\\P', ProgramW6432: 'E:\\\\P' }), ['cygpath', 'E:\\\\P\\\\Git\\\\usr\\\\bin\\\\cygpath.exe'], 'the same folder named twice is looked in once');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/push-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(G.pushTargets('echo done; git -c core.x=1 push', 'C:/x'), [{ dir: path.resolve('C:/x'), remote: null, src: null, deleting: false }]);",
+      "key": "consonance/hooks/push-gate.test.js\u0000assert.deepEqual(G.pushTargets('echo done; git -c core.x=1 push', 'C:/x'), [{ dir: path.resolve('C:/x'), remote: null, src: null, deleting: false }]);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/push-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(G.pushTargets('git -C \"C:/a b\" push origin main', 'C:/x'), [{ dir: path.resolve('C:/a b'), remote: 'origin', src: 'main', deleting: false }]);",
+      "key": "consonance/hooks/push-gate.test.js\u0000assert.deepEqual(G.pushTargets('git -C \"C:/a b\" push origin main', 'C:/x'), [{ dir: path.resolve('C:/a b'), remote: 'origin', src: 'main', deleting: false }]);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/push-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(G.pushTargets('git push backup +topic:main', 'C:/x').map((t) => [t.remote, t.src]), [['backup', 'topic']]);",
+      "key": "consonance/hooks/push-gate.test.js\u0000assert.deepEqual(G.pushTargets('git push backup +topic:main', 'C:/x').map((t) => [t.remote, t.src]), [['backup', 'topic']]);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/push-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.equal(G.nativePath('C:/already/native'), 'C:/already/native');",
+      "key": "consonance/hooks/push-gate.test.js\u0000assert.equal(G.nativePath('C:/already/native'), 'C:/already/native');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/push-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.equal(G.pushTargets('git push origin :old', 'C:/x')[0].deleting, true, 'a delete of a remote ref sends nothing of ours');",
+      "key": "consonance/hooks/push-gate.test.js\u0000assert.equal(G.pushTargets('git push origin :old', 'C:/x')[0].deleting, true, 'a delete of a remote ref sends nothing of ours');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(C.DEFAULT_SOUNDS.slice(0, 2), ['chimes.wav', 'Windows Notify System Generic.wav']); assert.deepEqual(C.soundCandidates({}, { SystemRoot: 'X:\\\\Win' }).map((f) => f.replace(/\\\\/g, '/')), C.DEFAULT_SOUNDS.map((f) => 'X:/Win/Media/' + f));",
+      "key": "consonance/hooks/release-chime.test.js\u0000assert.deepEqual(C.DEFAULT_SOUNDS.slice(0, 2), ['chimes.wav', 'Windows Notify System Generic.wav']); assert.deepEqual(C.soundCandidates({}, { SystemRoot: 'X:\\\\Win' }).map((f) => f.replace(/\\\\/g, '/')), C.DEFAULT_SOUNDS.map((f) => 'X:/Win/Media/' + f));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(C.soundCandidates({ chime_sound: ' C:\\\\s\\\\a.wav ' }, {})[0], 'C:\\\\s\\\\a.wav');",
+      "key": "consonance/hooks/release-chime.test.js\u0000assert.deepEqual(C.soundCandidates({ chime_sound: ' C:\\\\s\\\\a.wav ' }, {})[0], 'C:\\\\s\\\\a.wav');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const call = (command, resp, tool = 'Bash') => ({ hook_event_name: 'PostToolUse', tool_name: tool, tool_input: { command }, tool_response: resp, cwd: 'C:\\\\somewhere', session_id: 's1' });",
+      "key": "consonance/hooks/release-chime.test.js\u0000const call = (command, resp, tool = 'Bash') => ({ hook_event_name: 'PostToolUse', tool_name: tool, tool_input: { command }, tool_response: resp, cwd: 'C:\\\\somewhere', session_id: 's1' });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const cmds = ['git push origin main', 'git -C C:/Users/x/lighthouse push origin main', 'cd /c/repo && git push origin main', 'git push origin HEAD:main', 'git push -u origin main', 'git push', 'git push origin main 2>&1 | tail -3',",
+      "key": "consonance/hooks/release-chime.test.js\u0000const cmds = ['git push origin main', 'git -C C:/Users/x/lighthouse push origin main', 'cd /c/repo && git push origin main', 'git push origin HEAD:main', 'git push -u origin main', 'git push', 'git push origin main 2>&1 | tail -3',\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "delete process.env.CONSONANCE_DATA; assert.equal(C.dataDir({ data_dir: ' C:\\\\cfg ' }), 'C:\\\\cfg');",
+      "key": "consonance/hooks/release-chime.test.js\u0000delete process.env.CONSONANCE_DATA; assert.equal(C.dataDir({ data_dir: ' C:\\\\cfg ' }), 'C:\\\\cfg');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "process.env.CONSONANCE_DATA = ' C:\\\\envdata '; assert.equal(C.dataDir({ data_dir: 'C:\\\\cfg' }), 'C:\\\\envdata');",
+      "key": "consonance/hooks/release-chime.test.js\u0000process.env.CONSONANCE_DATA = ' C:\\\\envdata '; assert.equal(C.dataDir({ data_dir: 'C:\\\\cfg' }), 'C:\\\\envdata');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/release-chime.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "process.env.USERPROFILE = 'C:\\\\Users\\\\someone'; assert.equal(C.dataDir({}).replace(/\\\\/g, '/'), 'C:/Users/someone/.consonance');",
+      "key": "consonance/hooks/release-chime.test.js\u0000process.env.USERPROFILE = 'C:\\\\Users\\\\someone'; assert.equal(C.dataDir({}).replace(/\\\\/g, '/'), 'C:/Users/someone/.consonance');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + shown + ' and ' + why + ' whose items you opened or ran in THIS turn (a figure carried from the prompt or an earlier turn counts as unbacked).' + named + ' Fix it now, in this turn, in one of two ways: (1) OPEN the source first (Read / Grep, or run the command), then send the reply again ending with a final line `Sources: <path> · \\`<command>\\`` that lists only what you opened or ran this turn (repo-relative or C:\\\\... paths); or (2) drop the claim from the reply, or end with `Sources: none` if it states nothing checkable. This hook blocks once per turn: your next reply ends the turn. How this works and why: ' + gates + ', section 2 (the reply slot).' };",
+      "key": "consonance/hooks/reply-slot.js\u0000r.output = { decision: 'block', reason: 'REPLY SLOT: this reply names ' + shown + ' and ' + why + ' whose items you opened or ran in THIS turn (a figure carried from the prompt or an earlier turn counts as unbacked).' + named + ' Fix it now, in this turn, in one of two ways: (1) OPEN the source first (Read / Grep, or run the command), then send the reply again ending with a final line `Sources: <path> · \\`<command>\\`` that lists only what you opened or ran this turn (repo-relative or C:\\\\... paths); or (2) drop the claim from the reply, or end with `Sources: none` if it states nothing checkable. This hook blocks once per turn: your next reply ends the turn. How this works and why: ' + gates + ', section 2 (the reply slot).' };\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(/C:\\/work\\/zzz\\.md/.test(why) && /did not open or run/.test(why), 'the unmatched item is not named'); assert.ok(/OPEN the source first/.test(why) && /Sources: <path>/.test(why) && /LAST|final line/i.test(why), 'the fix is not spelled out');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000assert.ok(/C:\\/work\\/zzz\\.md/.test(why) && /did not open or run/.test(why), 'the unmatched item is not named'); assert.ok(/OPEN the source first/.test(why) && /Sources: <path>/.test(why) && /LAST|final line/i.test(why), 'the fix is not spelled out');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(/path C:\\/work\\/zzz\\.md/.test(why) && /count 3 of 5/.test(why) && /percentage 94%/.test(why), 'the tokens are not named: ' + why);",
+      "key": "consonance/hooks/reply-slot.test.js\u0000assert.ok(/path C:\\/work\\/zzz\\.md/.test(why) && /count 3 of 5/.test(why) && /percentage 94%/.test(why), 'the tokens are not named: ' + why);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(given.output && given.output.reason.endsWith('How this works and why: C:/repo/consonance/GATES.md, section 2 (the reply slot).'), given.output && given.output.reason);",
+      "key": "consonance/hooks/reply-slot.test.js\u0000assert.ok(given.output && given.output.reason.endsWith('How this works and why: C:/repo/consonance/GATES.md, section 2 (the reply slot).'), given.output && given.output.reason);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(v.output && v.output.decision === 'block', JSON.stringify(v.output)); assert.ok(/path/.test(v.output.reason) && /count/.test(v.output.reason) && /C:\\/work\\/zzz\\.md/.test(v.output.reason), v.output.reason);",
+      "key": "consonance/hooks/reply-slot.test.js\u0000assert.ok(v.output && v.output.decision === 'block', JSON.stringify(v.output)); assert.ok(/path/.test(v.output.reason) && /count/.test(v.output.reason) && /C:\\/work\\/zzz\\.md/.test(v.output.reason), v.output.reason);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const again = run(dir, stopPayload(dir, KEEPER_TURN(), 'Still at C:/work/zzz.md, 47/47.', { stop_hook_active: true })); assert.strictEqual(again.status, 0); assert.strictEqual(again.stdout, '', 'THE LOOP GUARD: a second Stop in the turn blocked'); assert.strictEqual(last(dir).kind, 'skip-active');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const again = run(dir, stopPayload(dir, KEEPER_TURN(), 'Still at C:/work/zzz.md, 47/47.', { stop_hook_active: true })); assert.strictEqual(again.status, 0); assert.strictEqual(again.stdout, '', 'THE LOOP GUARD: a second Stop in the turn blocked'); assert.strictEqual(last(dir).kind, 'skip-active');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dflt = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5.', entries: t, stopHookActive: false, live: true, seat: 'librarian' });",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dflt = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5.', entries: t, stopHookActive: false, live: true, seat: 'librarian' });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), first = run(dir, stopPayload(dir, KEEPER_TURN(), 'Done at C:/work/zzz.md.')); assert.strictEqual(JSON.parse(first.stdout).decision, 'block');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), first = run(dir, stopPayload(dir, KEEPER_TURN(), 'Done at C:/work/zzz.md.')); assert.strictEqual(JSON.parse(first.stdout).decision, 'block');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), REPLY_OK));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), r = run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), REPLY_OK));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), reply = 'An unmistakable sentence that must not be stored anywhere. It is 47/47 at C:/work/q.md.\\n\\nSources: C:/work/q.md';",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), reply = 'An unmistakable sentence that must not be stored anywhere. It is 47/47 at C:/work/q.md.\\n\\nSources: C:/work/q.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), reply = 'Done: C:/work/a.md and C:/work/b.md, 4 of 5.\\n\\nSources: C:/work/a.md · C:/work/b.md';",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), reply = 'Done: C:/work/a.md and C:/work/b.md, 4 of 5.\\n\\nSources: C:/work/a.md · C:/work/b.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));\u0000#2"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));\u0000#3"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = PANE_RING_TURN(...readCall('t1', 'C:/work/a.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const dir = tmpDir(), t = PANE_RING_TURN(...readCall('t1', 'C:/work/a.md'));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const entries = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), reply = 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md';",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const entries = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), reply = 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const fixed = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\\n\\nSources: C:/work/zzz.md')); assert.strictEqual(fixed.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-matched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const fixed = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\\n\\nSources: C:/work/zzz.md')); assert.strictEqual(fixed.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-matched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const given = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5.', entries: t, stopHookActive: false, live: true, seat: 'librarian', gates: 'C:/repo/consonance/GATES.md' });",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const given = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5.', entries: t, stopHookActive: false, live: true, seat: 'librarian', gates: 'C:/repo/consonance/GATES.md' });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const nokey = R.verdict({ reply: 'see ' + OR_TOKEN + ' at C:/work/q.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }).output.reason; assert.ok(!nokey.includes(OR_TOKEN), 'a key shape reached the block reason');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const nokey = R.verdict({ reply: 'see ' + OR_TOKEN + ' at C:/work/q.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }).output.reason; assert.ok(!nokey.includes(OR_TOKEN), 'a key shape reached the block reason');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const none = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\\n\\nSources: none')); assert.strictEqual(none.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-none');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const none = run(dir, stopPayload(dir, turn, 'Done at C:/work/zzz.md.\\n\\nSources: none')); assert.strictEqual(none.stdout, ''); assert.strictEqual(last(dir).kind, 'pass-none');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = run(dir, JSON.stringify({ session_id: 's', cwd: 'C:/Consonance/instances/librarian', stop_hook_active: false })); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const r = run(dir, JSON.stringify({ session_id: 's', cwd: 'C:/Consonance/instances/librarian', stop_hook_active: false })); assert.strictEqual(r.status, 0); assert.strictEqual(r.stdout, '');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = v(cmd, 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const r = v(cmd, 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const REPLY_OK = 'The plan is at C:/work/a.md and 3 of 5 are done.\\n\\nSources: C:/work/a.md';",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const REPLY_OK = 'The plan is at C:/work/a.md and 3 of 5 are done.\\n\\nSources: C:/work/a.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const row = last(dir); assert.strictEqual(row.kind, 'would-block-unmatched'); assert.strictEqual(row.wouldBlock, true); assert.deepStrictEqual(row.unmatched, ['C:/work/b.md']);",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const row = last(dir); assert.strictEqual(row.kind, 'would-block-unmatched'); assert.strictEqual(row.wouldBlock, true); assert.deepStrictEqual(row.unmatched, ['C:/work/b.md']);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), v = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5, 94%.\\n\\nSources: C:/work/zzz.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }), why = v.output.reason;",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), v = R.verdict({ reply: 'Done at C:/work/zzz.md, 3 of 5, 94%.\\n\\nSources: C:/work/zzz.md', entries: t, stopHookActive: false, live: true, seat: 'librarian' }), why = v.output.reason;\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const t = KEEPER_TURN(...readCall('t1', 'C:/work/a.md'));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const turn = KEEPER_TURN(ASSIST({ type: 'text', text: 'Done at C:/work/zzz.md.' }), ...readCall('t2', 'C:/work/zzz.md'));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000const turn = KEEPER_TURN(ASSIST({ type: 'text', text: 'Done at C:/work/zzz.md.' }), ...readCall('t2', 'C:/work/zzz.md'));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const [pane, cwd] of [[PANE_ID, 'C:/Consonance/instances/sibling-3d57124e'], [PANE_ID, 'C:/Consonance/instances/librarian'], ['', 'C:/Consonance/instances/sibling-3d57124e'], ['', 'C:/Consonance/instances/main/sub'], ['', 'C:/work']]) {",
+      "key": "consonance/hooks/reply-slot.test.js\u0000for (const [pane, cwd] of [[PANE_ID, 'C:/Consonance/instances/sibling-3d57124e'], [PANE_ID, 'C:/Consonance/instances/librarian'], ['', 'C:/Consonance/instances/sibling-3d57124e'], ['', 'C:/Consonance/instances/main/sub'], ['', 'C:/work']]) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const cmd of ['ls -la C:/work/a.md', 'echo C:/work/a.md']) {",
+      "key": "consonance/hooks/reply-slot.test.js\u0000for (const cmd of ['ls -la C:/work/a.md', 'echo C:/work/a.md']) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md', 'Total 47/47.\\n\\nSources:']) {",
+      "key": "consonance/hooks/reply-slot.test.js\u0000for (const reply of ['It is 47/47 green.', 'Done at C:/work/zzz.md, 3 of 5.\\n\\nSources: C:/work/zzz.md', 'Total 47/47.\\n\\nSources:']) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "path: ['The plan is at exo_memory/loop/plan_x.md now.', 'See C:\\\\Users\\\\n\\\\notes.txt for it.', 'in consonance/hooks/reply-slot.js'],",
+      "key": "consonance/hooks/reply-slot.test.js\u0000path: ['The plan is at exo_memory/loop/plan_x.md now.', 'See C:\\\\Users\\\\n\\\\notes.txt for it.', 'in consonance/hooks/reply-slot.js'],\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = run(dir, JSON.stringify({ session_id: 's', transcript_path: bad, cwd: 'C:/x', stop_hook_active: false, last_assistant_message: reply })); assert.strictEqual(r.stdout, ''); assert.strictEqual(last(dir).kind, 'error');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000r = run(dir, JSON.stringify({ session_id: 's', transcript_path: bad, cwd: 'C:/x', stop_hook_active: false, last_assistant_message: reply })); assert.strictEqual(r.stdout, ''); assert.strictEqual(last(dir).kind, 'error');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "return JSON.stringify({ session_id: 'abcdef012345', transcript_path: entries ? writeTranscript(dir, entries) : null, cwd: 'C:/Consonance/instances/librarian', hook_event_name: 'Stop', stop_hook_active: false, last_assistant_message: reply, ...extra });",
+      "key": "consonance/hooks/reply-slot.test.js\u0000return JSON.stringify({ session_id: 'abcdef012345', transcript_path: entries ? writeTranscript(dir, entries) : null, cwd: 'C:/Consonance/instances/librarian', hook_event_name: 'Stop', stop_hook_active: false, last_assistant_message: reply, ...extra });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(d2, stopPayload(d2, [USER('x'), HUMAN('keeper words'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' })), NOTIF(), RESULT('t1')], '47/47 at exo_memory/x.md')); assert.strictEqual(last(d2).kind, 'would-block-missing');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(d2, stopPayload(d2, [USER('x'), HUMAN('keeper words'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' })), NOTIF(), RESULT('t1')], '47/47 at exo_memory/x.md')); assert.strictEqual(last(d2).kind, 'would-block-missing');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, input('C:/anywhere'), { CONSONANCE_PANE: LIB_ID.toUpperCase() }); assert.strictEqual(last(dir).seat, 'librarian');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, input('C:/anywhere'), { CONSONANCE_PANE: LIB_ID.toUpperCase() }); assert.strictEqual(last(dir).seat, 'librarian');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, input('C:/anywhere'), { CONSONANCE_PANE: MAIN_ID }); assert.strictEqual(last(dir).seat, 'chair');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, input('C:/anywhere'), { CONSONANCE_PANE: MAIN_ID }); assert.strictEqual(last(dir).seat, 'chair');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, input('C:/Consonance/instances/librarian/'), { CONSONANCE_PANE: '' }); assert.strictEqual(last(dir).seat, 'librarian');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, input('C:/Consonance/instances/librarian/'), { CONSONANCE_PANE: '' }); assert.strictEqual(last(dir).seat, 'librarian');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, input('C:\\\\Consonance\\\\instances\\\\main'), { CONSONANCE_PANE: '' }); assert.strictEqual(last(dir).seat, 'chair');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, input('C:\\\\Consonance\\\\instances\\\\main'), { CONSONANCE_PANE: '' }); assert.strictEqual(last(dir).seat, 'chair');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, [USER('x'), ...readCall('t1', 'C:/work/a.md'), HUMAN('a keeper message')], REPLY_OK)); assert.strictEqual(last(dir).kind, 'would-block-unmatched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, [USER('x'), ...readCall('t1', 'C:/work/a.md'), HUMAN('a keeper message')], REPLY_OK)); assert.strictEqual(last(dir).kind, 'would-block-unmatched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, [USER('x'), HUMAN('[pane:B] hand-back'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], '47/47 at C:/work/a.md.')); assert.strictEqual(last(dir).kind, 'would-block-missing', 'a notification that arrived mid-work must not hide a pane-ring turn');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, [USER('x'), HUMAN('[pane:B] hand-back'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], '47/47 at C:/work/a.md.')); assert.strictEqual(last(dir).kind, 'would-block-missing', 'a notification that arrived mid-work must not hide a pane-ring turn');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, [USER('x'), HUMAN('keeper words'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'would-block-missing', 'a notification that arrived MID-WORK must not turn the keeper\\'s turn into a machine one');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, [USER('x'), HUMAN('keeper words'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], '47/47 at exo_memory/x.md')); assert.strictEqual(last(dir).kind, 'would-block-missing', 'a notification that arrived MID-WORK must not turn the keeper\\'s turn into a machine one');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, KEEPER_TURN(...bashCall('t1', 'ls -la C:/work/a.md')), 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md')); assert.strictEqual(last(dir).kind, 'would-block-unmatched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, KEEPER_TURN(...bashCall('t1', 'ls -la C:/work/a.md')), 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md')); assert.strictEqual(last(dir).kind, 'would-block-unmatched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md'), NOTIF()), REPLY_OK)); assert.strictEqual(last(dir).kind, 'pass-matched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md'), NOTIF()), REPLY_OK)); assert.strictEqual(last(dir).kind, 'pass-matched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), reply));",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, KEEPER_TURN(...readCall('t1', 'C:/work/a.md')), reply));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, t, 'At C:/work/a.md and C:/work/b.md, 3 of 5.\\n\\nSources: C:/work/a.md · C:/work/b.md')); assert.strictEqual(last(dir).kind, 'would-block-unmatched'); assert.deepStrictEqual(last(dir).unmatched, ['C:/work/b.md']);",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, t, 'At C:/work/a.md and C:/work/b.md, 3 of 5.\\n\\nSources: C:/work/a.md · C:/work/b.md')); assert.strictEqual(last(dir).kind, 'would-block-unmatched'); assert.deepStrictEqual(last(dir).unmatched, ['C:/work/b.md']);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, t, 'At C:/work/a.md, 3 of 5.\\n\\n**sources:** C:/work/a.md')); assert.strictEqual(last(dir).kind, 'pass-matched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, t, 'At C:/work/a.md, 3 of 5.\\n\\n**sources:** C:/work/a.md')); assert.strictEqual(last(dir).kind, 'pass-matched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, t, 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md')); assert.strictEqual(last(dir).kind, 'pass-matched');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, t, 'At C:/work/a.md, 3 of 5.\\n\\nSources: C:/work/a.md')); assert.strictEqual(last(dir).kind, 'pass-matched');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/reply-slot.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "run(dir, stopPayload(dir, t, 'It is 47/47 green.\\n\\nSources: C:/work/a.md\\n\\nAnd one more paragraph of prose.')); assert.strictEqual(last(dir).kind, 'would-block-missing');",
+      "key": "consonance/hooks/reply-slot.test.js\u0000run(dir, stopPayload(dir, t, 'It is 47/47 green.\\n\\nSources: C:/work/a.md\\n\\nAnd one more paragraph of prose.')); assert.strictEqual(last(dir).kind, 'would-block-missing');\u0000#1"
     },
     {
       "file": "consonance/hooks/sourced-stop.test.js",
@@ -189,6 +749,692 @@
       "key": "consonance/hooks/sourced-stop.test.js\u0000toolUse('Write', { file_path: 'C:\\\\repo\\\\notes\\\\report.md', content: 'Suite green.\\nThe suite has 267 tests passing.\\n' }),\u0000#1"
     },
     {
+      "file": "consonance/hooks/sources-gate.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ${what}, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '\"' + clip(u, 160) + '\"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,",
+      "key": "consonance/hooks/sources-gate.js\u0000reason: `SOURCES gate: ${unmatched.length} of ${s.items.length} listed item(s) match nothing you opened or ran in THIS turn (a call from an earlier turn, a failed call, a metadata-only command such as ls or stat, or an echo that only names a path does not count; NOR does a call made in the SAME message as this ${what}, because it had not finished yet: send the ring in a LATER message, after its sources have returned; and a file you only WROTE this turn needs a read-back, Read or cat, in an earlier message): ${unmatched.map((u) => '\"' + clip(u, 160) + '\"').join(' ; ')}. Open each now (Read / Grep / Glob, or run the command), or drop it from the message. Write each item repo-relative or as a C:\\\\... path, not /c/... (a /c/ spelling still matches here, but the running digest gate has refused it); the hand-back POINTER in the ring's prose is repo-relative (exo_memory/handback/<packet>_<date>.md), the form the digest gate hashes.` + tail,\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ text: DISPATCH_OK('SOURCES: `cat C:/work/k.md ' + TOKEN + '`') }, // allow: an item that carries the token (the call really ran with it)",
+      "key": "consonance/hooks/sources-gate.test.js\u0000{ text: DISPATCH_OK('SOURCES: `cat C:/work/k.md ' + TOKEN + '`') }, // allow: an item that carries the token (the call really ran with it)\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ text: DISPATCH_OK('SOURCES: C:/work/a.md') }, // allow: matched",
+      "key": "consonance/hooks/sources-gate.test.js\u0000{ text: DISPATCH_OK('SOURCES: C:/work/a.md') }, // allow: matched\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ text: DISPATCH_OK('SOURCES: C:/work/never-opened.md') }, // deny: unmatched",
+      "key": "consonance/hooks/sources-gate.test.js\u0000{ text: DISPATCH_OK('SOURCES: C:/work/never-opened.md') }, // deny: unmatched\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(/repo-relative or as a C:\\\\.* path, not \\/c\\//.test(why), why); assert.ok(/POINTER in the ring's prose is repo-relative/.test(why), why);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(/repo-relative or as a C:\\\\.* path, not \\/c\\//.test(why), why); assert.ok(/POINTER in the ring's prose is repo-relative/.test(why), why);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(G.decide('no sources line here', [], 'C:/work').reason.includes(G.GATES_REL), 'the default names the repo-relative file');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(G.decide('no sources line here', [], 'C:/work').reason.includes(G.GATES_REL), 'the default names the repo-relative file');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), HUMAN('a keeper message')], { text }))));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), HUMAN('a keeper message')], { text }))));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), bare], { text: SRC_A }))), 'a bare reminder was read as a notification');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), bare], { text: SRC_A }))), 'a bare reminder was read as a notification');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), pasted], { text: SRC_A }))));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), pasted], { text: SRC_A }))));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, payloadOf(dir, grepDirMiss, { text: withSources('SOURCES: C:/work/a.md') }))));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, payloadOf(dir, grepDirMiss, { text: withSources('SOURCES: C:/work/a.md') }))));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(isDeny(runGate(dir, payloadOf(dir, sc, { text: withSources('SOURCES: C:/work/a.md') }))), 'a sidechain read counted');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(isDeny(runGate(dir, payloadOf(dir, sc, { text: withSources('SOURCES: C:/work/a.md') }))), 'a sidechain read counted');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(why.includes('never-opened.md'), why); assert.ok(!why.includes('\"C:/work/a.md\"'), 'a matched item was named as unmatched: ' + why);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.ok(why.includes('never-opened.md'), why); assert.ok(!why.includes('\"C:/work/a.md\"'), 'a matched item was named as unmatched: ' + why);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(decideIn('light', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'allow', 'light: the cited ls that ran');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(decideIn('light', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'allow', 'light: the cited ls that ran');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(decideIn('strict', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'deny', 'strict: unchanged');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(decideIn('strict', 'SOURCES: `ls -la C:/work/dir`', bashCall('t1', 'ls -la C:/work/dir')).decision, 'deny', 'strict: unchanged');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(decideIn('strict', 'SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md', bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')).decision, 'allow');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(decideIn('strict', 'SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md', bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')).decision, 'allow');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(decideIn('strict', 'SOURCES: C:/work/a.md', bashCall('t1', 'node tools/x.js C:/work/a.md')).decision, 'allow', 'a program that is not a read verb still opens the path it is given');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(decideIn('strict', 'SOURCES: C:/work/a.md', bashCall('t1', 'node tools/x.js C:/work/a.md')).decision, 'allow', 'a program that is not a read verb still opens the path it is given');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(G.decide('x\\nSOURCES: none (no state claims)', [], 'C:/work', 'L', 'a', 'ring', p).reason, '');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(G.decide('x\\nSOURCES: none (no state claims)', [], 'C:/work', 'L', 'a', 'ring', p).reason, '');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, [USER('first'), HUMAN('second'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text: SRC_A })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, [USER('first'), HUMAN('second'), ...readCall('t1', 'C:/work/a.md'), NOTIF()], { text: SRC_A })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat /c/Users/n/x.md')], { text: withSources('SOURCES: C:\\\\Users\\\\n\\\\x.md') })).out, null, 'a C:\\\\ item no longer matches a /c/ command');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat /c/Users/n/x.md')], { text: withSources('SOURCES: C:\\\\Users\\\\n\\\\x.md') })).out, null, 'a C:\\\\ item no longer matches a /c/ command');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), marked], { text: SRC_A })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), marked], { text: SRC_A })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:\\\\Users\\\\n\\\\x.md')], { text: withSources('SOURCES: /c/Users/n/x.md') })).out, null, 'a /c/ item no longer matches a C:\\\\ Read');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:\\\\Users\\\\n\\\\x.md')], { text: withSources('SOURCES: /c/Users/n/x.md') })).out, null, 'a /c/ item no longer matches a C:\\\\ Read');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, glob, { text: withSources('SOURCES: C:/work/a.md') })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, glob, { text: withSources('SOURCES: C:/work/a.md') })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, grepDirHit, { text: withSources('SOURCES: C:/work/a.md') })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, grepDirHit, { text: withSources('SOURCES: C:/work/a.md') })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, grepFile, { text: withSources('SOURCES: C:/work/a.md') })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, grepFile, { text: withSources('SOURCES: C:/work/a.md') })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a result carrying a reminder cut the turn');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a result carrying a reminder cut the turn');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, t1, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a sidechain prompt cut the turn');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, t1, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a sidechain prompt cut the turn');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(runGate(dir, payloadOf(dir, t2, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a meta message cut the turn');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000assert.strictEqual(runGate(dir, payloadOf(dir, t2, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') })).out, null, 'a meta message cut the turn');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const again = runGate(dir, payloadOf(dir, [...t, ...readCall('t2', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const again = runGate(dir, payloadOf(dir, [...t, ...readCall('t2', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const bad = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, null, { text: DISPATCH_OK('SOURCES: C:/work/a.md') }), env: envFor(dir), encoding: 'utf8', timeout: 20000 }); // no transcript: an error row",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const bad = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, null, { text: DISPATCH_OK('SOURCES: C:/work/a.md') }), env: envFor(dir), encoding: 'utf8', timeout: 20000 }); // no transcript: an error row\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const cmd = lead === '[' ? '[ -f C:/work/a.md ]' : lead === '[[' ? '[[ -f C:/work/a.md ]]' : lead + ' C:/work/a.md';",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const cmd = lead === '[' ? '[ -f C:/work/a.md ]' : lead === '[[' ? '[[ -f C:/work/a.md ]]' : lead + ' C:/work/a.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const d = decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd, 'out', true));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const d = decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd, 'out', true));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const d = G.decide(text, [], 'C:/work', 'L.jsonl', 'abc', 'ring', p);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const d = G.decide(text, [], 'C:/work', 'L.jsonl', 'abc', 'ring', p);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const decideIn = (mode, line, ...entries) => G.decide(withSources(line), callsOf(...entries), 'C:/work', 'L.jsonl', 'abc', 'ring', 'GATES.md', mode);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const decideIn = (mode, line, ...entries) => G.decide(withSources(line), callsOf(...entries), 'C:/work', 'L.jsonl', 'abc', 'ring', 'GATES.md', mode);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), cmd = 'cat C:/work/k.md ' + OR_TOKEN;",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), cmd = 'cat C:/work/k.md ' + OR_TOKEN;\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), hb = 'C:/Users/n/lighthouse/exo_memory/handback/p-d210-B_2026-10-02.md';",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), hb = 'C:/Users/n/lighthouse/exo_memory/handback/p-d210-B_2026-10-02.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: 'Do the thing. NEXT: A reports' }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: 'Do the thing. NEXT: A reports' }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', '# C:/work/a.md\\nls')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', '# C:/work/a.md\\nls')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: 'Pointer: exo_memory/handback/p-x_2026-10-02.md\\n\\nNEXT: librarian collate' }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: 'Pointer: exo_memory/handback/p-x_2026-10-02.md\\n\\nNEXT: librarian collate' }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:\\\\work\\\\a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:\\\\work\\\\a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' }), USE(RING_ID, LIB, { text: 'x' }))], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' }), USE(RING_ID, LIB, { text: 'x' }))], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('first prompt'), ...readCall('t1', 'C:/work/a.md'), ASSIST({ type: 'text', text: 'done' }), USER('second prompt')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('first prompt'), ...readCall('t1', 'C:/work/a.md'), ASSIST({ type: 'text', text: 'done' }), USER('second prompt')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('first'), ...readCall('t1', 'C:/work/a.md'), HUMAN('second'), NOTIF()];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('first'), ...readCall('t1', 'C:/work/a.md'), HUMAN('second'), NOTIF()];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'ls'), ...bashCall('t3', 'pwd'), ...readCall('t4', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'ls'), ...bashCall('t3', 'pwd'), ...readCall('t4', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...readCall('t2', 'C:/work/b.md'), ...readCall('t3', 'C:/work/c.md'), ...readCall('t4', 'C:/work/d.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...readCall('t2', 'C:/work/b.md'), ...readCall('t3', 'C:/work/c.md'), ...readCall('t4', 'C:/work/d.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), NOTIF()];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), NOTIF()];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/plan_x.md'), ...bashCall('t2', 'git log -1 --format=%h')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), t = [USER('go'), ...readCall('t1', 'C:/work/plan_x.md'), ...bashCall('t2', 'git log -1 --format=%h')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), text = DISPATCH_OK('SOURCES: C:/work/a.md');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), text = DISPATCH_OK('SOURCES: C:/work/a.md');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const dir = tmpDir(), text = withSources('SOURCES: C:/work/a.md');\u0000#2"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const glob = [USER('go'), ASSIST(USE('t1', 'Glob', { pattern: '**/*.md', path: 'C:/work' })), RESULT('t1', 'C:/work/a.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const glob = [USER('go'), ASSIST(USE('t1', 'Glob', { pattern: '**/*.md', path: 'C:/work' })), RESULT('t1', 'C:/work/a.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const grepDirHit = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work' })), RESULT('t1', 'C:/work/a.md\\nC:/work/z.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const grepDirHit = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work' })), RESULT('t1', 'C:/work/a.md\\nC:/work/z.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const grepDirMiss = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work' })), RESULT('t1', 'C:/work/z.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const grepDirMiss = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work' })), RESULT('t1', 'C:/work/z.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const grepFile = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work/a.md' })), RESULT('t1', 'match')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const grepFile = [USER('go'), ASSIST(USE('t1', 'Grep', { pattern: 'x', path: 'C:/work/a.md' })), RESULT('t1', 'match')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const p = 'C:/repo/consonance/GATES.md';",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const p = 'C:/repo/consonance/GATES.md';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const ps = [USER('go'), ASSIST(USE('t2', 'PowerShell', { command: 'Get-Content C:\\\\work\\\\a.md | Select -First 3' })), RESULT('t2')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const ps = [USER('go'), ASSIST(USE('t2', 'PowerShell', { command: 'Get-Content C:\\\\work\\\\a.md | Select -First 3' })), RESULT('t2')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, dispatchPayload(dir, t, { text: DISPATCH_OK('SOURCES: C:/work/plan_x.md · `git log -1 --format=%h`') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, dispatchPayload(dir, t, { text: DISPATCH_OK('SOURCES: C:/work/plan_x.md · `git log -1 --format=%h`') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', cmd)], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', cmd)], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), f], { text: SRC_A }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), f], { text: SRC_A }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), mixed], { text: SRC_A }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), mixed], { text: SRC_A }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), HUMAN(text)], { text: SRC_A }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), HUMAN(text)], { text: SRC_A }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), mk()], { text: SRC_A }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), NOTIF(), mk()], { text: SRC_A }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md · C:/work/never-opened.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md · C:/work/never-opened.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, t, { text: withSources('**SOURCES:** C:/work/a.md:12-40 · C:/work/b.md (the plan) · `C:/work/c.md` · C:/work/d.md#L10') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, t, { text: withSources('**SOURCES:** C:/work/a.md:12-40 · C:/work/b.md (the plan) · `C:/work/c.md` · C:/work/d.md#L10') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md · C:/work/b.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = runGate(dir, payloadOf(dir, t, { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'cat C:/work/k.md ' + TOKEN)], c), env: envFor(dir), encoding: 'utf8', timeout: 20000 });",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const r = spawnSync(process.execPath, [HOOK], { input: dispatchPayload(dir, [USER('go'), ...readCall('t1', 'C:/work/a.md'), ...bashCall('t2', 'cat C:/work/k.md ' + TOKEN)], c), env: envFor(dir), encoding: 'utf8', timeout: 20000 });\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const sc = [USER('go'), ...readCall('t1', 'C:/work/a.md').map(side)];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const sc = [USER('go'), ...readCall('t1', 'C:/work/a.md').map(side)];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const second = [...first, RESULT('r1', 'SOURCES gate: ...', true), ...readCall('t2', 'C:/work/a.md'), ASSIST(USE('r2', LIB, { text }))];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const second = [...first, RESULT('r1', 'SOURCES gate: ...', true), ...readCall('t2', 'C:/work/a.md'), ASSIST(USE('r2', LIB, { text }))];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const SRC_A = withSources('SOURCES: C:/work/a.md');",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const SRC_A = withSources('SOURCES: C:/work/a.md');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), ...readCall('t3', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), ...readCall('t3', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), NOTIF(), NOTIF()];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'cat huge' })), RESULT('t2', big), NOTIF(), NOTIF()];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'ls' })), rem, ...readCall('t3', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t = [USER('go'), ...readCall('t1', 'C:/work/a.md'), ASSIST(USE('t2', 'Bash', { command: 'ls' })), rem, ...readCall('t3', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t1 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), side(USER('subagent prompt')), ...readCall('t2', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t1 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), side(USER('subagent prompt')), ...readCall('t2', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const t2 = [USER('go'), ...readCall('t1', 'C:/work/a.md'), { ...USER('caveat text'), isMeta: true }, ...readCall('t2', 'C:/work/b.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const turn = [USER('go'), ...readCall('t1', 'C:/work/a.md')];",
+      "key": "consonance/hooks/sources-gate.test.js\u0000const turn = [USER('go'), ...readCall('t1', 'C:/work/a.md')];\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const cmd of ['echo C:/work/a.md', 'printf \"%s\" C:/work/a.md', 'ls -la C:/work/a.md', 'stat C:/work/a.md', '# C:/work/a.md\\nls', 'Write-Host C:\\\\work\\\\a.md']) {",
+      "key": "consonance/hooks/sources-gate.test.js\u0000for (const cmd of ['echo C:/work/a.md', 'printf \"%s\" C:/work/a.md', 'ls -la C:/work/a.md', 'stat C:/work/a.md', '# C:/work/a.md\\nls', 'Write-Host C:\\\\work\\\\a.md']) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:/work/a.md', bashCall('t1', cmd)).decision, 'deny', `${mode} counted \"${cmd}\" as opening the path`);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:/work/a.md', bashCall('t1', cmd)).decision, 'deny', `${mode} counted \"${cmd}\" as opening the path`);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd)).decision, 'allow', mode);",
+      "key": "consonance/hooks/sources-gate.test.js\u0000for (const mode of ['strict', 'light']) assert.strictEqual(decideIn(mode, 'SOURCES: C:\\\\Users\\\\n\\\\lighthouse\\\\consonance\\\\tools\\\\js-suite.js', bashCall('t1', cmd)).decision, 'allow', mode);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const text of ['no sources line here', 'x\\nSOURCES:\\nNEXT: librarian x when y', 'x\\nSOURCES: C:/never/opened.md\\nNEXT: librarian x when y']) {",
+      "key": "consonance/hooks/sources-gate.test.js\u0000for (const text of ['no sources line here', 'x\\nSOURCES:\\nNEXT: librarian x when y', 'x\\nSOURCES: C:/never/opened.md\\nNEXT: librarian x when y']) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "function dispatchPayload(dir, entries, { text, token = TOKEN, target = 'A', cwd = 'C:/work' } = {}) {",
+      "key": "consonance/hooks/sources-gate.test.js\u0000function dispatchPayload(dir, entries, { text, token = TOKEN, target = 'A', cwd = 'C:/work' } = {}) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "function payloadOf(dir, entries, { tool = LIB, text, cwd = 'C:/work', extra = {} } = {}) {",
+      "key": "consonance/hooks/sources-gate.test.js\u0000function payloadOf(dir, entries, { tool = LIB, text, cwd = 'C:/work', extra = {} } = {}) {\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')], { text: withSources('SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cd /c/Users/n/lighthouse/exo_memory && cat loop/plan.md')], { text: withSources('SOURCES: C:/Users/n/lighthouse/exo_memory/loop/plan.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'echo C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'echo C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md && cat C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md && cat C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/Users/n/lighthouse/exo_memory/loop/plan.md')], { text: withSources('SOURCES: exo_memory/loop/plan.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'C:/Users/n/lighthouse/exo_memory/loop/plan.md')], { text: withSources('SOURCES: exo_memory/loop/plan.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' })), RESULT('t1', 'File does not exist', true)], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000let r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' })), RESULT('t1', 'File does not exist', true)], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat C:/work/a.md', 'cat: no such file', true)], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'cat C:/work/a.md', 'cat: no such file', true)], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'echo start && cat C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'echo start && cat C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md | head -3')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'ls -la C:/work/a.md | head -3')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'printf \"%s\" C:/work/a.md; Write-Host C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'printf \"%s\" C:/work/a.md; Write-Host C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'wc -l C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...bashCall('t1', 'wc -l C:/work/a.md')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'a.md')], { cwd: 'C:/work', text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ...readCall('t1', 'a.md')], { cwd: 'C:/work', text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'PowerShell', { command: 'Get-Item C:\\\\work\\\\a.md; Test-Path C:\\\\work\\\\a.md' })), RESULT('t1')], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'PowerShell', { command: 'Get-Item C:\\\\work\\\\a.md; Test-Path C:\\\\work\\\\a.md' })), RESULT('t1')], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' }), USE(RING_ID, LIB, { text: 'x' }))], { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, [USER('go'), ASSIST(USE('t1', 'Read', { file_path: 'C:/work/a.md' }), USE(RING_ID, LIB, { text: 'x' }))], { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "r = runGate(dir, payloadOf(dir, ps, { text: withSources('SOURCES: C:/work/a.md') }));",
+      "key": "consonance/hooks/sources-gate.test.js\u0000r = runGate(dir, payloadOf(dir, ps, { text: withSources('SOURCES: C:/work/a.md') }));\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sources-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "test('D214 SPELLING: the guidance says ONE thing (repo-relative or C:\\\\ for items, a repo-relative pointer), and a /c/ item still matches a call spelled either way', () => {",
+      "key": "consonance/hooks/sources-gate.test.js\u0000test('D214 SPELLING: the guidance says ONE thing (repo-relative or C:\\\\ for items, a repo-relative pointer), and a /c/ item still matches a call spelled either way', () => {\u0000#1"
+    },
+    {
       "file": "consonance/import-instance.ps1",
       "detector": "DRIVE",
       "verdict": "REVIEW",
@@ -215,13 +1461,6 @@
       "verdict": "BENIGN-MESSAGE",
       "text": "Write-Host ' Main should resume its real thread at C:\\Consonance\\instances\\main' -ForegroundColor DarkGray",
       "key": "consonance/restore-main.ps1\u0000Write-Host ' Main should resume its real thread at C:\\Consonance\\instances\\main' -ForegroundColor DarkGray\u0000#1"
-    },
-    {
-      "file": "consonance/src-tauri/brief/LIBRARIAN.md",
-      "detector": "DRIVE",
-      "verdict": "FATAL-SHIPPED-INSTRUCTION",
-      "text": "`C:/Consonance/lighthouse/exo_memory/librarian/` as dated `YYYY-MM-DD.md` append-only entries, in the",
-      "key": "consonance/src-tauri/brief/LIBRARIAN.md\u0000`C:/Consonance/lighthouse/exo_memory/librarian/` as dated `YYYY-MM-DD.md` append-only entries, in the\u0000#1"
     },
     {
       "file": "consonance/src-tauri/gen-deck.ps1",
@@ -283,8 +1522,29 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "\"base\": \"C:/Users/someone/claude-instances\",",
+      "key": "consonance/src-tauri/src/main.rs\u0000\"base\": \"C:/Users/someone/claude-instances\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "\"data_dir\": \"C:/Consonance/data\",",
+      "key": "consonance/src-tauri/src/main.rs\u0000\"data_dir\": \"C:/Consonance/data\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "\"data_dir\": \"C:\\\\Consonance\\\\data\",",
       "key": "consonance/src-tauri/src/main.rs\u0000\"data_dir\": \"C:\\\\Consonance\\\\data\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "\"instances_dir\": \"C:/Consonance/instances\",",
+      "key": "consonance/src-tauri/src/main.rs\u0000\"instances_dir\": \"C:/Consonance/instances\",\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -297,8 +1557,36 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "\"room_path\": \"C:/room/BOOT.md\",",
+      "key": "consonance/src-tauri/src/main.rs\u0000\"room_path\": \"C:/room/BOOT.md\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "\"room_path\": \"C:\\\\room\\\\BOOT.md\",",
       "key": "consonance/src-tauri/src/main.rs\u0000\"room_path\": \"C:\\\\room\\\\BOOT.md\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "\"state_dir\": \"C:/Consonance/state\",",
+      "key": "consonance/src-tauri/src/main.rs\u0000\"state_dir\": \"C:/Consonance/state\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(after[\"data_dir\"], \"E:/elsewhere/data\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(after[\"data_dir\"], \"E:/elsewhere/data\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(after[\"instances_dir\"], \"C:/Consonance/instances\", \"an owned key the tab did not change moved\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(after[\"instances_dir\"], \"C:/Consonance/instances\", \"an owned key the tab did not change moved\");\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -360,6 +1648,20 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(gates_doc_from(Some(Path::new(\"C:/r\")), |_: &Path| false), fallback, \"a missing file is not named as if it were there\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(gates_doc_from(Some(Path::new(\"C:/r\")), |_: &Path| false), fallback, \"a missing file is not named as if it were there\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(p, vec![PathBuf::from(\"C:\\\\Users\\\\u\\\\Downloads\\\\t180-wt-o581\"), PathBuf::from(\"C:/Users/u/Desktop/lighthouse/MAP.md\"), PathBuf::from(\"C:/Users/u/x/y\")]);",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(p, vec![PathBuf::from(\"C:\\\\Users\\\\u\\\\Downloads\\\\t180-wt-o581\"), PathBuf::from(\"C:/Users/u/Desktop/lighthouse/MAP.md\"), PathBuf::from(\"C:/Users/u/x/y\")]);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "assert_eq!(read_head(std::path::Path::new(\"C:\\\\definitely\\\\not\\\\here.jsonl\")), 0);",
       "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(read_head(std::path::Path::new(\"C:\\\\definitely\\\\not\\\\here.jsonl\")), 0);\u0000#1"
     },
@@ -369,6 +1671,20 @@
       "verdict": "BENIGN-TEST",
       "text": "assert_eq!(read_last_record(std::path::Path::new(\"Z:\\\\does\\\\not\\\\exist.txt\")), None);",
       "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(read_last_record(std::path::Path::new(\"Z:\\\\does\\\\not\\\\exist.txt\")), None);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(reopen_seat(None, \"committee\", &rec, \"c88002b1-74d8\"), (pane_exit::Seat::Committee, Some(\"C:/Consonance/instances/sibling-a\".to_string())));",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(reopen_seat(None, \"committee\", &rec, \"c88002b1-74d8\"), (pane_exit::Seat::Committee, Some(\"C:/Consonance/instances/sibling-a\".to_string())));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(reopen_seat(Some(\"C:/main\".to_string()), \"main\", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some(\"C:/main\".to_string())));",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(reopen_seat(Some(\"C:/main\".to_string()), \"main\", &[], MAIN_SID), (pane_exit::Seat::Fixed, Some(\"C:/main\".to_string())));\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -416,6 +1732,13 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert!(back.usb_mode && bad.is_empty() && back.data_dir == r\"C:\\d\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert!(back.usb_mode && bad.is_empty() && back.data_dir == r\"C:\\d\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "assert!(is_fresh_dir_name(r\"C:\\Consonance\\instances\\fresh-0845a868\"));",
       "key": "consonance/src-tauri/src/main.rs\u0000assert!(is_fresh_dir_name(r\"C:\\Consonance\\instances\\fresh-0845a868\"));\u0000#1"
     },
@@ -423,8 +1746,43 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert!(s.contains(\"# The map of what you are about to change\") && s.contains(\"## t180 — `C:/x/t180/MAP.md`\") && s.contains(\"WHOLE-BODY\"));",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert!(s.contains(\"# The map of what you are about to change\") && s.contains(\"## t180 — `C:/x/t180/MAP.md`\") && s.contains(\"WHOLE-BODY\"));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(small.contains(\"- `C:/x/t180/MAP.md` (\") && small.contains(\"the t180 map did not fit this shell\"), \"{small}\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert!(small.contains(\"- `C:/x/t180/MAP.md` (\") && small.contains(\"the t180 map did not fit this shell\"), \"{small}\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "cfg.data_dir = \"E:/elsewhere/data\".into();",
+      "key": "consonance/src-tauri/src/main.rs\u0000cfg.data_dir = \"E:/elsewhere/data\".into();\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let (c, bad) = parse_config(r#\"{\"data_dir\":\"C:/d\"}\"#);",
+      "key": "consonance/src-tauri/src/main.rs\u0000let (c, bad) = parse_config(r#\"{\"data_dir\":\"C:/d\"}\"#);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);",
       "key": "consonance/src-tauri/src/main.rs\u0000let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let cap = \"❯ [chair:MAIN] the first packet\\n[sent 2026-10-30]\\n\\ndone\\n\\n❯ [chair:MAIN] the second packet, on t180\\nSOURCES: x\\n[sent 2026-10-31]\\n\\nI read it and wrote C:\\\\a\\\\b\\n\\n❯ [keep-warm visit — not work] reply ok\\n\\nok\\n\\n\";",
+      "key": "consonance/src-tauri/src/main.rs\u0000let cap = \"❯ [chair:MAIN] the first packet\\n[sent 2026-10-30]\\n\\ndone\\n\\n❯ [chair:MAIN] the second packet, on t180\\nSOURCES: x\\n[sent 2026-10-31]\\n\\nI read it and wrote C:\\\\a\\\\b\\n\\n❯ [keep-warm visit — not work] reply ok\\n\\nok\\n\\n\";\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -472,8 +1830,50 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "let m = RepoMap { label: \"lighthouse\", map: PathBuf::from(\"C:/x/lh/consonance/src-tauri/src/MAP.md\"), text: \"# Map\\nD585-MAP-IN-THE-WAKE\\n\".to_string() };",
+      "key": "consonance/src-tauri/src/main.rs\u0000let m = RepoMap { label: \"lighthouse\", map: PathBuf::from(\"C:/x/lh/consonance/src-tauri/src/MAP.md\"), text: \"# Map\\nD585-MAP-IN-THE-WAKE\\n\".to_string() };\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let m = RepoMap { label: \"t180\", map: PathBuf::from(\"C:/x/t180/MAP.md\"), text: \"# Map — t180\\nWHOLE-BODY\\n\".to_string() };",
+      "key": "consonance/src-tauri/src/main.rs\u0000let m = RepoMap { label: \"t180\", map: PathBuf::from(\"C:/x/t180/MAP.md\"), text: \"# Map — t180\\nWHOLE-BODY\\n\".to_string() };\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let on = Config { usb_mode: true, data_dir: r\"C:\\d\".into(), ..Config::default() };",
+      "key": "consonance/src-tauri/src/main.rs\u0000let on = Config { usb_mode: true, data_dir: r\"C:\\d\".into(), ..Config::default() };\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "let out = \"consonance close · D · C:\\\\data -> C:\\\\state\\n published: main 1a2b3c4 -> origin (was 9486b30)\\n remote confirms: refs/heads/main = 1a2b3c4 (asked the remote, not the push)\\n\";",
       "key": "consonance/src-tauri/src/main.rs\u0000let out = \"consonance close · D · C:\\\\data -> C:\\\\state\\n published: main 1a2b3c4 -> origin (was 9486b30)\\n remote confirms: refs/heads/main = 1a2b3c4 (asked the remote, not the push)\\n\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let p = packet_paths(\"Work in C:\\\\Users\\\\u\\\\Downloads\\\\t180-wt-o581, and see `C:/Users/u/Desktop/lighthouse/MAP.md`. Bash: /c/Users/u/x/y.\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000let p = packet_paths(\"Work in C:\\\\Users\\\\u\\\\Downloads\\\\t180-wt-o581, and see `C:/Users/u/Desktop/lighthouse/MAP.md`. Bash: /c/Users/u/x/y.\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let rec = [kept(\"c88002b1-74d8\", \"C:/Consonance/instances/sibling-a\"), kept(\"blank\", \" \"), kept(\"room\", \"C:/rooms/x\")];",
+      "key": "consonance/src-tauri/src/main.rs\u0000let rec = [kept(\"c88002b1-74d8\", \"C:/Consonance/instances/sibling-a\"), kept(\"blank\", \" \"), kept(\"room\", \"C:/rooms/x\")];\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let repo = PathBuf::from(\"C:/r\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000let repo = PathBuf::from(\"C:/r\");\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -488,6 +1888,76 @@
       "verdict": "BENIGN-TEST",
       "text": "Some(PathBuf::from(r\"D:\\somewhere\\else\\checkout\"))",
       "key": "consonance/src-tauri/src/main.rs\u0000Some(PathBuf::from(r\"D:\\somewhere\\else\\checkout\"))\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh e80b\\nNEXT: librarian x\", \"not a sha\"),",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh e80b\\nNEXT: librarian x\", \"not a sha\"),\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh origin/main\\nNEXT: librarian x\", \"not a sha\"),",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh origin/main\\nNEXT: librarian x\", \"not a sha\"),\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh\\nNEXT: librarian x\", \"no commit\"),",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000(\"p at exo_memory/handback/p.md\\nBASE: C:/w/lh\\nNEXT: librarian x\", \"no commit\"),\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(calls.iter().all(|(c, _)| c == \"C:/Users/n/Downloads/lh wt e586\"), \"a checkout path keeps its spaces and loses its quoting: {calls:?}\");",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000assert!(calls.iter().all(|(c, _)| c == \"C:/Users/n/Downloads/lh wt e586\"), \"a checkout path keeps its spaces and loses its quoting: {calls:?}\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(text.lines().any(|l| l.contains(\"MAP NOT UPDATED\") && l.contains(\"C:/w/t180\") && l.contains(\"src/core/n.js\")), \"{text}\");",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000assert!(text.lines().any(|l| l.contains(\"MAP NOT UPDATED\") && l.contains(\"C:/w/t180\") && l.contains(\"src/core/n.js\")), \"{text}\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(text.lines().any(|l| l.contains(MAP_MARK) && l.contains(\"C:/w/lh\") && l.contains(\"no source file created or deleted\")), \"{text}\");",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000assert!(text.lines().any(|l| l.contains(MAP_MARK) && l.contains(\"C:/w/lh\") && l.contains(\"no source file created or deleted\")), \"{text}\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "BASE: C:/w/lh e80b2af7\\n\\",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000BASE: C:/w/lh e80b2af7\\n\\\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let ring = \"hand-back at exo_memory/handback/p-x-A_2026-09-20.md\\nSOURCES: /c/Users/n/lighthouse/exo_memory/loop/plan_x.md · C:\\\\Users\\\\n\\\\other.md\\nNEXT: librarian x\";",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000let ring = \"hand-back at exo_memory/handback/p-x-A_2026-09-20.md\\nSOURCES: /c/Users/n/lighthouse/exo_memory/loop/plan_x.md · C:\\\\Users\\\\n\\\\other.md\\nNEXT: librarian x\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let ring = \"hand-back at exo_memory/handback/p.md\\n**BASE:** `C:/Users/n/Downloads/lh wt e586` e80b2af7.\\nNEXT: librarian x\";",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000let ring = \"hand-back at exo_memory/handback/p.md\\n**BASE:** `C:/Users/n/Downloads/lh wt e586` e80b2af7.\\nNEXT: librarian x\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/mcp.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let ring = \"hand-back at exo_memory/handback/p.md\\nBASE: C:/w/t180 a6af8cf\\nBASE: C:/w/lh e80b2af7\\nNEXT: librarian x\";",
+      "key": "consonance/src-tauri/src/mcp.rs\u0000let ring = \"hand-back at exo_memory/handback/p.md\\nBASE: C:/w/t180 a6af8cf\\nBASE: C:/w/lh e80b2af7\\nNEXT: librarian x\";\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/sync_launch.rs",
@@ -672,18 +2142,18 @@
       "key": "consonance/tools/balance-check.js\u0000const file = argv.includes('--board') ? argv[argv.indexOf('--board') + 1] : 'C:/Consonance/data/board.jsonl';\u0000#1"
     },
     {
-      "file": "consonance/tools/board-audit.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const BOARD = process.env.CONSONANCE_BOARD || 'C:\\\\Consonance\\\\data\\\\board.jsonl';",
-      "key": "consonance/tools/board-audit.js\u0000const BOARD = process.env.CONSONANCE_BOARD || 'C:\\\\Consonance\\\\data\\\\board.jsonl';\u0000#1"
-    },
-    {
       "file": "consonance/tools/chain-status.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
       "text": "'a temp-dir fixture must not see C:\\Consonance\\data: ' + r.text);",
       "key": "consonance/tools/chain-status.test.js\u0000'a temp-dir fixture must not see C:\\Consonance\\data: ' + r.text);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/chain-status.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(trim, /QUEUED E 24m, 2 waiting \\(receiver busy since \\d\\d:\\d\\d\\)/, trim);",
+      "key": "consonance/tools/chain-status.test.js\u0000assert.match(trim, /QUEUED E 24m, 2 waiting \\(receiver busy since \\d\\d:\\d\\d\\)/, trim);\u0000#1"
     },
     {
       "file": "consonance/tools/cite-check.js",
@@ -705,20 +2175,6 @@
       "verdict": "FATAL-DEFAULT",
       "text": "const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';",
       "key": "consonance/tools/curate.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
-    },
-    {
-      "file": "consonance/tools/ferry.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const LEDGER = process.env.FERRY_LEDGER || 'C:\\\\Consonance\\\\data\\\\ferry.jsonl';",
-      "key": "consonance/tools/ferry.js\u0000const LEDGER = process.env.FERRY_LEDGER || 'C:\\\\Consonance\\\\data\\\\ferry.jsonl';\u0000#1"
-    },
-    {
-      "file": "consonance/tools/ferry.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "return process.env.FERRY_REPO || 'C:\\\\Consonance\\\\lighthouse';",
-      "key": "consonance/tools/ferry.js\u0000return process.env.FERRY_REPO || 'C:\\\\Consonance\\\\lighthouse';\u0000#1"
     },
     {
       "file": "consonance/tools/gen-consumer.fixture-scope.test.js",
@@ -808,6 +2264,13 @@
       "file": "consonance/tools/gen-consumer.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(s.buf.toString('latin1'), 'cwd C:\\\\Consonance\\\\workspaces user alice tz America/Denver');",
+      "key": "consonance/tools/gen-consumer.test.js\u0000assert.strictEqual(s.buf.toString('latin1'), 'cwd C:\\\\Consonance\\\\workspaces user alice tz America/Denver');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const fixtures = ['C:/notes/note.md', 'C:/x/test_a.js', 'C:/Users/nname/Desktop/x.md'];",
       "key": "consonance/tools/gen-consumer.test.js\u0000const fixtures = ['C:/notes/note.md', 'C:/x/test_a.js', 'C:/Users/nname/Desktop/x.md'];\u0000#1"
     },
@@ -822,8 +2285,22 @@
       "file": "consonance/tools/gen-consumer.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const raw = Buffer.from('cwd C:\\\\Consonance\\\\lighthouse user zackn tz America/Regina', 'latin1');",
+      "key": "consonance/tools/gen-consumer.test.js\u0000const raw = Buffer.from('cwd C:\\\\Consonance\\\\lighthouse user zackn tz America/Regina', 'latin1');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const src = \"assert.deepStrictEqual(G.scan(' * C:\\\\Users\\\\zackn\\\\Desktop\\\\lighthouse'), []);\\n\";",
       "key": "consonance/tools/gen-consumer.test.js\u0000const src = \"assert.deepStrictEqual(G.scan(' * C:\\\\Users\\\\zackn\\\\Desktop\\\\lighthouse'), []);\\n\";\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const leak of ['C:\\\\\\\\Users\\\\\\\\nname\\\\\\\\Desktop', 'C:\\\\Users\\\\nname\\\\Desktop', 'C:/Users/nname/x', 'user nname here', 'home\\\\nname']) {",
+      "key": "consonance/tools/gen-consumer.test.js\u0000for (const leak of ['C:\\\\\\\\Users\\\\\\\\nname\\\\\\\\Desktop', 'C:\\\\Users\\\\nname\\\\Desktop', 'C:/Users/nname/x', 'user nname here', 'home\\\\nname']) {\u0000#1"
     },
     {
       "file": "consonance/tools/guard-census.js",
@@ -875,6 +2352,48 @@
       "key": "consonance/tools/head-watch.js\u0000os.homedir(), '.claude', 'projects', 'C--Consonance-instances-main', `${MAIN_SID}.jsonl`);\u0000#1"
     },
     {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepEqual(H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr' }, 'P:\\\\work').length, 2, 'no CARGO_TARGET_DIR, no third path');",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.deepEqual(H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr' }, 'P:\\\\work').length, 2, 'no CARGO_TARGET_DIR, no third path');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(logs.join('\\n'), /could not read the free space of G:\\\\ \\(ENOENT\\); not checked/);",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.match(logs.join('\\n'), /could not read the free space of G:\\\\ \\(ENOENT\\); not checked/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(r.message, /G:\\\\ has 12\\.3 GB free, under the 20 GB floor/);",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.match(r.message, /G:\\\\ has 12\\.3 GB free, under the 20 GB floor/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(logs.length, 1); assert.match(logs[0], /WARNING: C:\\\\ has 30\\.0 GB free, under 50 GB/);",
+      "key": "consonance/tools/heavy-run.test.js\u0000assert.strictEqual(logs.length, 1); assert.match(logs[0], /WARNING: C:\\\\ has 30\\.0 GB free, under 50 GB/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const guarded = (d, free, extra = {}) => { const logs = []; const r = (() => { try { return H.acquire({ cmd: 'guard', dataDir: d, env: cleanEnv(), tree: '/t/g', writes: ['C:\\\\x', 'G:\\\\y'], diskFree: free, diskTotal: () => 'the janitor would free 42.0 GB', log: (s) => logs.push(s), ...extra }); } catch (e) { return e; } })(); return { r, logs }; };",
+      "key": "consonance/tools/heavy-run.test.js\u0000const guarded = (d, free, extra = {}) => { const logs = []; const r = (() => { try { return H.acquire({ cmd: 'guard', dataDir: d, env: cleanEnv(), tree: '/t/g', writes: ['C:\\\\x', 'G:\\\\y'], diskFree: free, diskTotal: () => 'the janitor would free 42.0 GB', log: (s) => logs.push(s), ...extra }); } catch (e) { return e; } })(); return { r, logs }; };\u0000#1"
+    },
+    {
+      "file": "consonance/tools/heavy-run.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const w = H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr', CARGO_TARGET_DIR: 'R:\\\\tgt' }, 'P:\\\\work');",
+      "key": "consonance/tools/heavy-run.test.js\u0000const w = H.writePaths({ CONSONANCE_SCRATCH: 'Q:\\\\scr', CARGO_TARGET_DIR: 'R:\\\\tgt' }, 'P:\\\\work');\u0000#1"
+    },
+    {
       "file": "consonance/tools/install-only.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
@@ -896,11 +2415,88 @@
       "key": "consonance/tools/install-only.test.js\u0000const stray = commands(home).filter((c) => /X:\\\\old/.test(c));\u0000#1"
     },
     {
-      "file": "consonance/tools/lap-row.js",
+      "file": "consonance/tools/janitor.js",
       "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/tools/lap-row.js\u0000const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || 'C:\\\\Consonance\\\\data';\u0000#1"
+      "verdict": "BENIGN-FIXTURE",
+      "text": "function archiveReady(root) { try { return fs.existsSync(path.parse(path.resolve(root)).root) && driveOf(root) !== 'D:\\\\'; } catch (_) { return false; } }",
+      "key": "consonance/tools/janitor.js\u0000function archiveReady(root) { try { return fs.existsSync(path.parse(path.resolve(root)).root) && driveOf(root) !== 'D:\\\\'; } catch (_) { return false; } }\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "if (driveOf(a) === 'D:\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);",
+      "key": "consonance/tools/janitor.js\u0000if (driveOf(a) === 'D:\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.mutants.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "['refusal: D: is allowed', SRC, \"if (driveOf(a) === 'D:\\\\\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);\", ''],",
+      "key": "consonance/tools/janitor.mutants.js\u0000['refusal: D: is allowed', SRC, \"if (driveOf(a) === 'D:\\\\\\\\') throw new Error(`janitor: refusing ${a}: D: is the USB stick`);\", ''],\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.doesNotThrow(() => J.assertSafe('C:\\\\temp\\\\jt-AbC123', 'C:\\\\temp'));",
+      "key": "consonance/tools/janitor.test.js\u0000assert.doesNotThrow(() => J.assertSafe('C:\\\\temp\\\\jt-AbC123', 'C:\\\\temp'));\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('C:\\\\', 'C:\\\\'), /drive root/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('C:\\\\', 'C:\\\\'), /drive root/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('C:\\\\elsewhere\\\\jt-AbC123', 'C:\\\\temp'), /not under its class root/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('C:\\\\elsewhere\\\\jt-AbC123', 'C:\\\\temp'), /not under its class root/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Documents\\\\x', 'C:\\\\Users\\\\someone'), /keeper's own/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Documents\\\\x', 'C:\\\\Users\\\\someone'), /keeper's own/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Downloads\\\\jt-AbC123', 'C:\\\\Users\\\\someone'), /keeper's own/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('C:\\\\Users\\\\someone\\\\Downloads\\\\jt-AbC123', 'C:\\\\Users\\\\someone'), /keeper's own/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.throws(() => J.assertSafe('D:\\\\consonance-scratch\\\\x', 'D:\\\\consonance-scratch'), /USB stick/);",
+      "key": "consonance/tools/janitor.test.js\u0000assert.throws(() => J.assertSafe('D:\\\\consonance-scratch\\\\x', 'D:\\\\consonance-scratch'), /USB stick/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const p = J.plan(s.opts({ archiveRoot: 'Q:\\\\nowhere-at-all\\\\consonance-archive' }));",
+      "key": "consonance/tools/janitor.test.js\u0000const p = J.plan(s.opts({ archiveRoot: 'Q:\\\\nowhere-at-all\\\\consonance-archive' }));\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "if (fs.existsSync('Q:\\\\')) return; // a machine that has a Q: drive cannot run this row",
+      "key": "consonance/tools/janitor.test.js\u0000if (fs.existsSync('Q:\\\\')) return; // a machine that has a Q: drive cannot run this row\u0000#1"
+    },
+    {
+      "file": "consonance/tools/janitor.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "put(path.join(s.exo, 'handback', 'p-x.md'), 'the run is at C:\\\\Temp\\\\claude\\\\C--proj\\\\sess1\\\\tasks\\\\bcited001.output, read it');",
+      "key": "consonance/tools/janitor.test.js\u0000put(path.join(s.exo, 'handback', 'p-x.md'), 'the run is at C:\\\\Temp\\\\claude\\\\C--proj\\\\sess1\\\\tasks\\\\bcited001.output, read it');\u0000#1"
     },
     {
       "file": "consonance/tools/lap-row.test.js",
@@ -908,6 +2504,48 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');",
       "key": "consonance/tools/lap-row.test.js\u0000assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 101, ppid: 100, name: 'chrome.exe', started: 2, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=5 --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180menu-aB3dE9 --no-first-run about:blank' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 101, ppid: 100, name: 'chrome.exe', started: 2, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=5 --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180menu-aB3dE9 --no-first-run about:blank' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 102, ppid: 999, name: 'chrome.exe', started: 3, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=6 --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Zz9yX1 --no-first-run about:blank' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 102, ppid: 999, name: 'chrome.exe', started: 3, cmd: 'chrome.exe --headless=new --mute-audio --remote-debugging-port=6 --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Zz9yX1 --no-first-run about:blank' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 103, ppid: 102, name: 'chrome.exe', started: 4, cmd: 'chrome.exe --type=renderer --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Zz9yX1' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 103, ppid: 102, name: 'chrome.exe', started: 4, cmd: 'chrome.exe --type=renderer --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Zz9yX1' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 104, ppid: 998, name: 'chrome.exe', started: 5, cmd: 'chrome.exe --headless=new --user-data-dir=\"c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Qq1wE2\" about:blank' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 104, ppid: 998, name: 'chrome.exe', started: 5, cmd: 'chrome.exe --headless=new --user-data-dir=\"c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180drag-Qq1wE2\" about:blank' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 105, ppid: 997, name: 'chrome.exe', started: 6, cmd: 'chrome.exe --headless=new --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\appsnd-1 about:blank' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 105, ppid: 997, name: 'chrome.exe', started: 6, cmd: 'chrome.exe --headless=new --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\appsnd-1 about:blank' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/leftovers.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pid: 106, ppid: 996, name: 'chrome.exe', started: 7, cmd: '\"c:\\\\program files\\\\google\\\\chrome\\\\application\\\\chrome.exe\" --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180menu-Ab1234' },",
+      "key": "consonance/tools/leftovers.test.js\u0000{ pid: 106, ppid: 996, name: 'chrome.exe', started: 7, cmd: '\"c:\\\\program files\\\\google\\\\chrome\\\\application\\\\chrome.exe\" --user-data-dir=c:\\\\users\\\\x\\\\appdata\\\\local\\\\temp\\\\t180menu-Ab1234' },\u0000#1"
     },
     {
       "file": "consonance/tools/live-follow.test.js",
@@ -964,20 +2602,6 @@
       "verdict": "FATAL-DEFAULT",
       "text": "const data = process.env.VANTAGE_DATA || 'C:/Consonance/data';",
       "key": "consonance/tools/open-items.js\u0000const data = process.env.VANTAGE_DATA || 'C:/Consonance/data';\u0000#2"
-    },
-    {
-      "file": "consonance/tools/pair-ledger.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "path.join(process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data', 'vantage_findings.jsonl'),",
-      "key": "consonance/tools/pair-ledger.js\u0000path.join(process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data', 'vantage_findings.jsonl'),\u0000#1"
-    },
-    {
-      "file": "consonance/tools/pair-ledger.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "sourced: process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl',",
-      "key": "consonance/tools/pair-ledger.js\u0000sourced: process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl',\u0000#1"
     },
     {
       "file": "consonance/tools/pane-status.js",
@@ -1212,18 +2836,67 @@
       "key": "consonance/tools/prompt-events.js\u0000const AFFORD = /y:\\s*Yes\\s*n:\\s*No/; // whitespace varies with terminal width\u0000#1"
     },
     {
-      "file": "consonance/tools/prompt-events.js",
+      "file": "consonance/tools/read-before-edit.test.js",
       "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const CAPTURES = \"C:/Consonance/data/captures\";",
-      "key": "consonance/tools/prompt-events.js\u0000const CAPTURES = \"C:/Consonance/data/captures\";\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "...call('2026-10-30T00:37:00Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);",
+      "key": "consonance/tools/read-before-edit.test.js\u0000...call('2026-10-30T00:37:00Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);\u0000#1"
     },
     {
-      "file": "consonance/tools/prompt-events.js",
+      "file": "consonance/tools/read-before-edit.test.js",
       "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const reg = JSON.parse(fs.readFileSync(\"C:/Consonance/data/panes.json\", \"utf8\"));",
-      "key": "consonance/tools/prompt-events.js\u0000const reg = JSON.parse(fs.readFileSync(\"C:/Consonance/data/panes.json\", \"utf8\"));\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "...call('2026-10-30T10:00:40Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);",
+      "key": "consonance/tools/read-before-edit.test.js\u0000...call('2026-10-30T10:00:40Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "...call('2026-10-30T10:01:00Z', 'Write', { file_path: 'C:/repo/exo_memory/handback/h.md' }, 50), // a hand-back is not the change",
+      "key": "consonance/tools/read-before-edit.test.js\u0000...call('2026-10-30T10:01:00Z', 'Write', { file_path: 'C:/repo/exo_memory/handback/h.md' }, 50), // a hand-back is not the change\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.equal(R.encodeCwd('C:\\\\Users\\\\nname\\\\Desktop\\\\brain rot'), 'C--Users-nname-Desktop-brain-rot', 'main.rs encode_cwd\\'s own pinned case');",
+      "key": "consonance/tools/read-before-edit.test.js\u0000assert.equal(R.encodeCwd('C:\\\\Users\\\\nname\\\\Desktop\\\\brain rot'), 'C--Users-nname-Desktop-brain-rot', 'main.rs encode_cwd\\'s own pinned case');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "jsonl(file, [...call('2026-10-30T09:59:00Z', 'Read', { file_path: 'C:/boot/BOOT.md' }, 9000),",
+      "key": "consonance/tools/read-before-edit.test.js\u0000jsonl(file, [...call('2026-10-30T09:59:00Z', 'Read', { file_path: 'C:/boot/BOOT.md' }, 9000),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "jsonl(file, [packet('2026-10-30T00:36:25Z', '[chair:MAIN] D544: go. (D525 waits; D515 as before)'), ...call('2026-10-30T00:36:40Z', 'Read', { file_path: 'C:/repo/a.js' }, 70),",
+      "key": "consonance/tools/read-before-edit.test.js\u0000jsonl(file, [packet('2026-10-30T00:36:25Z', '[chair:MAIN] D544: go. (D525 waits; D515 as before)'), ...call('2026-10-30T00:36:40Z', 'Read', { file_path: 'C:/repo/a.js' }, 70),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "jsonl(file, [packet('2026-10-30T10:00:00Z', '[chair:MAIN] D900: read and report'), ...call('2026-10-30T10:00:10Z', 'Read', { file_path: 'C:/repo/a.js' }, 500),",
+      "key": "consonance/tools/read-before-edit.test.js\u0000jsonl(file, [packet('2026-10-30T10:00:00Z', '[chair:MAIN] D900: read and report'), ...call('2026-10-30T10:00:10Z', 'Read', { file_path: 'C:/repo/a.js' }, 500),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "jsonl(file, [packet('2026-10-30T10:00:00Z', 'a keeper message naming nothing'), ...call('2026-10-30T10:00:05Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);",
+      "key": "consonance/tools/read-before-edit.test.js\u0000jsonl(file, [packet('2026-10-30T10:00:00Z', 'a keeper message naming nothing'), ...call('2026-10-30T10:00:05Z', 'Edit', { file_path: 'C:/repo/a.js' }, 10)]);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-before-edit.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "packet('2026-10-30T11:00:00Z', '[chair:MAIN] D901: build it'), ...call('2026-10-30T11:00:10Z', 'Edit', { file_path: 'C:/repo/b.js' }, 50)]);",
+      "key": "consonance/tools/read-before-edit.test.js\u0000packet('2026-10-30T11:00:00Z', '[chair:MAIN] D901: build it'), ...call('2026-10-30T11:00:10Z', 'Edit', { file_path: 'C:/repo/b.js' }, 50)]);\u0000#1"
     },
     {
       "file": "consonance/tools/read-ledger.js",
@@ -1233,18 +2906,18 @@
       "key": "consonance/tools/read-ledger.js\u0000const LEDGER = process.env.READ_LEDGER || 'C:\\\\Consonance\\\\data\\\\read_ledger.jsonl';\u0000#1"
     },
     {
+      "file": "consonance/tools/reply-slot-replay.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "const TRANSCRIPT = path.join(os.homedir(), '.claude', 'projects', 'C--Consonance-instances-librarian', '0c0c0c0b-0000-4000-8000-00000000115b.jsonl');",
+      "key": "consonance/tools/reply-slot-replay.js\u0000const TRANSCRIPT = path.join(os.homedir(), '.claude', 'projects', 'C--Consonance-instances-librarian', '0c0c0c0b-0000-4000-8000-00000000115b.jsonl');\u0000#1"
+    },
+    {
       "file": "consonance/tools/residue.js",
       "detector": "DRIVE",
       "verdict": "FATAL-DEFAULT",
       "text": "const board = a.board || path.join(process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data', 'board.jsonl');",
       "key": "consonance/tools/residue.js\u0000const board = a.board || path.join(process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data', 'board.jsonl');\u0000#1"
-    },
-    {
-      "file": "consonance/tools/second-vantage.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/tools/second-vantage.js\u0000const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
     },
     {
       "file": "consonance/tools/second-vantage.js",
@@ -1259,6 +2932,27 @@
       "verdict": "BENIGN-TEST",
       "text": "['wc -l \"C:/x/lighthouse/exo_memory/loop/run1/items/t1/data/events.log\" → 1847'],",
       "key": "consonance/tools/second-vantage.test.js\u0000['wc -l \"C:/x/lighthouse/exo_memory/loop/run1/items/t1/data/events.log\" → 1847'],\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir }), ['X:/a', 'X:/b']);",
+      "key": "consonance/tools/second-vantage.test.js\u0000assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir }), ['X:/a', 'X:/b']);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir, VANTAGE_REPOS: 'Y:/c;Y:/d' }), ['Y:/c', 'Y:/d']);",
+      "key": "consonance/tools/second-vantage.test.js\u0000assert.deepStrictEqual(sv.configuredRepos({ USERPROFILE: dir, VANTAGE_REPOS: 'Y:/c;Y:/d' }), ['Y:/c', 'Y:/d']);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "D632_FS.writeFileSync(D632_PATH.join(dir, '.consonance.json'), JSON.stringify({ vantage_repos: ['X:/a', 'X:/b'] }));",
+      "key": "consonance/tools/second-vantage.test.js\u0000D632_FS.writeFileSync(D632_PATH.join(dir, '.consonance.json'), JSON.stringify({ vantage_repos: ['X:/a', 'X:/b'] }));\u0000#1"
     },
     {
       "file": "consonance/tools/second-vantage.test.js",
@@ -1296,27 +2990,6 @@
       "key": "consonance/tools/stamp.test.js\u0000const m = fs.readFileSync(f, 'utf8').match(/^## (\\d\\d:\\d\\d) — from the cli$/m);\u0000#1"
     },
     {
-      "file": "consonance/tools/state-block.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const hw = 'C:\\\\Consonance\\\\data\\\\head-watch.jsonl';",
-      "key": "consonance/tools/state-block.js\u0000const hw = 'C:\\\\Consonance\\\\data\\\\head-watch.jsonl';\u0000#1"
-    },
-    {
-      "file": "consonance/tools/state-block.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const pc = 'C:\\\\Consonance\\\\data\\\\precompact.jsonl';",
-      "key": "consonance/tools/state-block.js\u0000const pc = 'C:\\\\Consonance\\\\data\\\\precompact.jsonl';\u0000#1"
-    },
-    {
-      "file": "consonance/tools/state-block.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "return { title: 'live', cmd: 'tail -1 C:\\\\Consonance\\\\data\\\\head-watch.jsonl', lines };",
-      "key": "consonance/tools/state-block.js\u0000return { title: 'live', cmd: 'tail -1 C:\\\\Consonance\\\\data\\\\head-watch.jsonl', lines };\u0000#1"
-    },
-    {
       "file": "consonance/tools/state-sync.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
@@ -1352,13 +3025,6 @@
       "key": "consonance/tools/swell-head.test.js\u0000const p = 'C:/Consonance/data/heard.jsonl';\u0000#1"
     },
     {
-      "file": "consonance/tools/tell-index.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "return 'C:\\\\Consonance\\\\data';",
-      "key": "consonance/tools/tell-index.js\u0000return 'C:\\\\Consonance\\\\data';\u0000#1"
-    },
-    {
       "file": "consonance/tools/tell-index.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
@@ -1371,20 +3037,6 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(stringish({ data_dir: ' C:\\\\x ' }, 'data_dir'), 'C:\\\\x');",
       "key": "consonance/tools/tell-index.test.js\u0000assert.strictEqual(stringish({ data_dir: ' C:\\\\x ' }, 'data_dir'), 'C:\\\\x');\u0000#1"
-    },
-    {
-      "file": "consonance/tools/whats-live.js",
-      "detector": "DRIVE",
-      "verdict": "FATAL-DEFAULT",
-      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:/Consonance/data';",
-      "key": "consonance/tools/whats-live.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:/Consonance/data';\u0000#1"
-    },
-    {
-      "file": "consonance/tools/whats-live.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "const INSTANCES = 'C:/Consonance/instances';",
-      "key": "consonance/tools/whats-live.js\u0000const INSTANCES = 'C:/Consonance/instances';\u0000#1"
     },
     {
       "file": "consonance/ui/leave.test.js",
@@ -1429,18 +3081,39 @@
       "key": "desktop-install.ps1\u0000if (-not (Test-Path \"$repo\\exo_memory\\BOOT.md\")) { $repo = \"$env:USERPROFILE\\OneDrive\\Desktop\\projects\\lighthouse\" }\u0000#1"
     },
     {
-      "file": "dev/dream/dream_cycle.ps1",
+      "file": "dev/dream/dream-dirs.test.js",
       "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "$root = \"C:\\Consonance\\instances\"",
-      "key": "dev/dream/dream_cycle.ps1\u0000$root = \"C:\\Consonance\\instances\"\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(!/C:\\\\Consonance/i.test(t.split('\\n').filter((l) => !/^\\s*#/.test(l)).join('\\n')), 'no C:\\\\Consonance outside comments');",
+      "key": "dev/dream/dream-dirs.test.js\u0000assert.ok(!/C:\\\\Consonance/i.test(t.split('\\n').filter((l) => !/^\\s*#/.test(l)).join('\\n')), 'no C:\\\\Consonance outside comments');\u0000#1"
     },
     {
-      "file": "dev/dream/install_dream.ps1",
+      "file": "dev/dream/dream-dirs.test.js",
       "detector": "DRIVE",
-      "verdict": "BENIGN-MESSAGE",
-      "text": "Write-Host \"Dreams land in: C:\\Consonance\\instances\\<most-recent>\\dreams\\\"",
-      "key": "dev/dream/install_dream.ps1\u0000Write-Host \"Dreams land in: C:\\Consonance\\instances\\<most-recent>\\dreams\\\"\u0000#1"
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(resolve(named), 'D:\\\\X\\\\inst');",
+      "key": "dev/dream/dream-dirs.test.js\u0000assert.strictEqual(resolve(named), 'D:\\\\X\\\\inst');\u0000#1"
+    },
+    {
+      "file": "dev/dream/dream-dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const named = home('\\uFEFF' + JSON.stringify({ instances_dir: ' D:\\\\X\\\\inst ', dream_model: 'm' }));",
+      "key": "dev/dream/dream-dirs.test.js\u0000const named = home('\\uFEFF' + JSON.stringify({ instances_dir: ' D:\\\\X\\\\inst ', dream_model: 'm' }));\u0000#1"
+    },
+    {
+      "file": "dev/dream/dream-dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const PS = path.join(process.env.SystemRoot || 'C:\\\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe');",
+      "key": "dev/dream/dream-dirs.test.js\u0000const PS = path.join(process.env.SystemRoot || 'C:\\\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe');\u0000#1"
+    },
+    {
+      "file": "dev/dream/dream-dirs.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "test('row 1: the D273 instances block is in dream_cycle.ps1, and its code names no C:\\\\Consonance path', () => {",
+      "key": "dev/dream/dream-dirs.test.js\u0000test('row 1: the D273 instances block is in dream_cycle.ps1, and its code names no C:\\\\Consonance path', () => {\u0000#1"
     },
     {
       "file": "dev/headwatch/install_headwatch.ps1",
@@ -1457,6 +3130,48 @@
       "key": "dev/headwatch/install_headwatch.ps1\u0000Write-Host \"Ledger: C:\\Consonance\\data\\head-watch.jsonl\"\u0000#1"
     },
     {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "'# 2026-10-01 Digest', '', '## 1 turn end from 1 session', '', '### C:\\\\work\\\\a', '- 03:00:00 UTC', '',",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000'# 2026-10-01 Digest', '', '## 1 turn end from 1 session', '', '### C:\\\\work\\\\a', '- 03:00:00 UTC', '',\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const end = (s) => run(s, 'session-end.js', { hook_event_name: 'SessionEnd', session_id: 'x', cwd: 'C:\\\\Consonance\\\\instances\\\\x' });",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000const end = (s) => run(s, 'session-end.js', { hook_event_name: 'SessionEnd', session_id: 'x', cwd: 'C:\\\\Consonance\\\\instances\\\\x' });\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const rows = ['a', 'a', 'b'].map((sid, i) => ({ type: 'session_stop', timestamp: `2026-10-10T1${i}:00:00Z`, cwd: 'C:\\\\w', session_id: sid }));",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000const rows = ['a', 'a', 'b'].map((sid, i) => ({ type: 'session_stop', timestamp: `2026-10-10T1${i}:00:00Z`, cwd: 'C:\\\\w', session_id: sid }));\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const start = (s, cwd = 'C:\\\\Consonance\\\\instances\\\\librarian') => run(s, 'session-start.js', { hook_event_name: 'SessionStart', source: 'startup', session_id: 'now', cwd });",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000const start = (s, cwd = 'C:\\\\Consonance\\\\instances\\\\librarian') => run(s, 'session-start.js', { hook_event_name: 'SessionStart', source: 'startup', session_id: 'now', cwd });\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const stop = (iso, session, cwd = 'C:\\\\work\\\\a') => JSON.stringify({ type: 'session_stop', timestamp: new Date(iso).toISOString(), cwd, transcript_path: `C:\\\\t\\\\${session}.jsonl`, session_id: session });",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000const stop = (iso, session, cwd = 'C:\\\\work\\\\a') => JSON.stringify({ type: 'session_stop', timestamp: new Date(iso).toISOString(), cwd, transcript_path: `C:\\\\t\\\\${session}.jsonl`, session_id: session });\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/digest-repair.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "digests: { '2026-10-09': { text: '# 2026-10-09 Digest\\n\\n## 5 sessions\\n\\n### C:\\\\w\\n- 01:00:00 UTC\\n', mtime: '2026-10-10T07:00:00Z' } } });",
+      "key": "dev/shell/hooks/digest-repair.test.js\u0000digests: { '2026-10-09': { text: '# 2026-10-09 Digest\\n\\n## 5 sessions\\n\\n### C:\\\\w\\n- 01:00:00 UTC\\n', mtime: '2026-10-10T07:00:00Z' } } });\u0000#1"
+    },
+    {
       "file": "dev/shell/hooks/l2-overseer-worker.js",
       "detector": "DISGUISED",
       "verdict": "DISGUISED",
@@ -1469,6 +3184,112 @@
       "verdict": "DISGUISED",
       "text": "const LIGHTHOUSE_WELFARE = path.join(os.homedir(), 'Desktop', 'lighthouse', 'WELFARE.md');",
       "key": "dev/shell/hooks/l3-overseer-worker.js\u0000const LIGHTHOUSE_WELFARE = path.join(os.homedir(), 'Desktop', 'lighthouse', 'WELFARE.md');\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/precompact-repo.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "input: JSON.stringify({ hook_event_name: 'PreCompact', trigger: 'manual', cwd: 'C:\\\\somewhere\\\\main' }), encoding: 'utf8', timeout: 20000, cwd: w.root,",
+      "key": "dev/shell/hooks/precompact-repo.test.js\u0000input: JSON.stringify({ hook_event_name: 'PreCompact', trigger: 'manual', cwd: 'C:\\\\somewhere\\\\main' }), encoding: 'utf8', timeout: 20000, cwd: w.root,\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/session-start-light.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.doesNotMatch(light, /\\n- \\d\\d:\\d\\d:\\d\\d UTC/, 'no timestamp list left'); assert.match(light, /## Recent sessions in C:\\\\Consonance\\\\instances\\\\librarian\\n- 2026-10-09T13:00:00\\.000Z/, 'the seat\\'s own recent sessions stay');",
+      "key": "dev/shell/hooks/session-start-light.test.js\u0000assert.doesNotMatch(light, /\\n- \\d\\d:\\d\\d:\\d\\d UTC/, 'no timestamp list left'); assert.match(light, /## Recent sessions in C:\\\\Consonance\\\\instances\\\\librarian\\n- 2026-10-09T13:00:00\\.000Z/, 'the seat\\'s own recent sessions stay');\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/session-start-light.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const CWDS = ['third-place', 'librarian', 'main', 'sibling-5bf9d657', 'sibling-3d57124e', 'sibling-0845a868', 'sibling-07b8a48f', 'sibling-a80a1c20'].map((n) => 'C:\\\\Consonance\\\\instances\\\\' + n);",
+      "key": "dev/shell/hooks/session-start-light.test.js\u0000const CWDS = ['third-place', 'librarian', 'main', 'sibling-5bf9d657', 'sibling-3d57124e', 'sibling-0845a868', 'sibling-07b8a48f', 'sibling-a80a1c20'].map((n) => 'C:\\\\Consonance\\\\instances\\\\' + n);\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/session-start-light.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for (const [name, text] of [['no groups', '# 2026-10-06 Digest\\n\\n## 12 sessions\\n'], ['junk', 'x'.repeat(400) + '\\n\\u0000\\n'], ['empty', ''], ['text lines', '# 2026-10-06 Digest\\n\\n## 3 sessions\\n\\n### C:\\\\x\\\\y\\n- 01:02:03 UTC — a first line of text\\n- 02:03:04 UTC — another\\n- 03:04:05 UTC\\n']]) {",
+      "key": "dev/shell/hooks/session-start-light.test.js\u0000for (const [name, text] of [['no groups', '# 2026-10-06 Digest\\n\\n## 12 sessions\\n'], ['junk', 'x'.repeat(400) + '\\n\\u0000\\n'], ['empty', ''], ['text lines', '# 2026-10-06 Digest\\n\\n## 3 sessions\\n\\n### C:\\\\x\\\\y\\n- 01:02:03 UTC — a first line of text\\n- 02:03:04 UTC — another\\n- 03:04:05 UTC\\n']]) {\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/session-start-light.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "if (name === 'text lines') { assert.ok(light.includes('- C:\\\\x\\\\y: 3 · last 03:04:05, 02:03:04, 01:02:03 UTC'), 'a line with text after the time still counts, the text is dropped'); assert.doesNotMatch(light, /a first line of text/); }",
+      "key": "dev/shell/hooks/session-start-light.test.js\u0000if (name === 'text lines') { assert.ok(light.includes('- C:\\\\x\\\\y: 3 · last 03:04:05, 02:03:04, 01:02:03 UTC'), 'a line with text after the time still counts, the text is dropped'); assert.doesNotMatch(light, /a first line of text/); }\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(s, /## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n/, `${k}: the digests`);",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000assert.match(s, /## Recent session digests\\n### 2026-10-04\\n# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n\\n### 2026-10-03\\n# 2026-10-03 Digest\\n\\n## 9 sessions\\n/, `${k}: the digests`);\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "lkBak: 'C:\\\\Consonance\\\\instances\\\\third-place.bak', lkTwo: 'C:\\\\Consonance\\\\instances\\\\third-place2', lkSpace: 'C:\\\\Consonance\\\\instances\\\\my third-place',",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000lkBak: 'C:\\\\Consonance\\\\instances\\\\third-place.bak', lkTwo: 'C:\\\\Consonance\\\\instances\\\\third-place2', lkSpace: 'C:\\\\Consonance\\\\instances\\\\my third-place',\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "lkDashPrefix: 'C:\\\\Consonance\\\\instances\\\\x-third-place', lkDotDotOut: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\..\\\\main', lkRelative: 'third-place',",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000lkDashPrefix: 'C:\\\\Consonance\\\\instances\\\\x-third-place', lkDotDotOut: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\..\\\\main', lkRelative: 'third-place',\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "lkPlacement: 'C:\\\\Consonance\\\\instances\\\\third-placement', lkOldUnder: 'C:\\\\x\\\\third_place_old', lkUnderscore: 'C:\\\\Consonance\\\\instances\\\\third_place',",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000lkPlacement: 'C:\\\\Consonance\\\\instances\\\\third-placement', lkOldUnder: 'C:\\\\x\\\\third_place_old', lkUnderscore: 'C:\\\\Consonance\\\\instances\\\\third_place',\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "main: 'C:\\\\Consonance\\\\instances\\\\main', librarian: 'C:\\\\Consonance\\\\instances\\\\librarian', pane: 'C:\\\\Consonance\\\\instances\\\\sibling-0845a868',",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000main: 'C:\\\\Consonance\\\\instances\\\\main', librarian: 'C:\\\\Consonance\\\\instances\\\\librarian', pane: 'C:\\\\Consonance\\\\instances\\\\sibling-0845a868',\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "mk(path.join(shell, 'digests', '2026-10-04.md'), '# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n');",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000mk(path.join(shell, 'digests', '2026-10-04.md'), '# 2026-10-04 Digest\\n\\n## 12 sessions\\n\\n### C:\\\\Consonance\\\\instances\\\\main\\n- 01:00:00 UTC\\n');\u0000#1",
+      "note": "hand-corrected D273 (devreds): the classifier saw path.join + a C:\\Consonance path on one line and read it as a path being read. path.join only builds the temp digest file under the test's own temp dir; C:\\Consonance\\instances\\main is TEXT inside the digest fixture the gate parses, and is never opened"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "tp: 'C:\\\\Consonance\\\\instances\\\\third-place', tpSlash: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\', tpSlash2: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\\\\\', tpUpper: 'C:\\\\Consonance\\\\instances\\\\THIRD-PLACE', tpFwd: 'C:/Consonance/instances/third-place',",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000tp: 'C:\\\\Consonance\\\\instances\\\\third-place', tpSlash: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\', tpSlash2: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\\\\\', tpUpper: 'C:\\\\Consonance\\\\instances\\\\THIRD-PLACE', tpFwd: 'C:/Consonance/instances/third-place',\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "tpDot: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\.', tpDotFwd: 'C:/Consonance/instances/third-place/./', tpDotDot: 'C:\\\\Consonance\\\\instances\\\\main\\\\..\\\\third-place',",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000tpDot: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\.', tpDotFwd: 'C:/Consonance/instances/third-place/./', tpDotDot: 'C:\\\\Consonance\\\\instances\\\\main\\\\..\\\\third-place',\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "tpPrefix: 'C:\\\\Consonance\\\\instances\\\\third-place-x', tpGlued: 'C:\\\\Consonance\\\\instances\\\\notthird-place', tpSub: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\sub', tpMid: 'C:\\\\x\\\\third-place\\\\y', none: null,",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000tpPrefix: 'C:\\\\Consonance\\\\instances\\\\third-place-x', tpGlued: 'C:\\\\Consonance\\\\instances\\\\notthird-place', tpSub: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\sub', tpMid: 'C:\\\\x\\\\third-place\\\\y', none: null,\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/third-place-gate.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "tpSubUp: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\sub\\\\..',",
+      "key": "dev/shell/hooks/third-place-gate.test.js\u0000tpSubUp: 'C:\\\\Consonance\\\\instances\\\\third-place\\\\sub\\\\..',\u0000#1"
     },
     {
       "file": "dev/shell/lib/ready.test.js",

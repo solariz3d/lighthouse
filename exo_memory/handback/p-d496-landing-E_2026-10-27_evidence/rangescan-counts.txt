@@ -1,0 +1,195 @@
+# rangescan.out with its pattern labels made generic (E, D483); the counts are unchanged
+PRIV_PATTERN alternatives: 13 (2 from priv.txt, 11 from the term list)
+range origin/main..f84864f7: 74 commits, 163081 added lines
+credential 1: added 0, messages 0
+credential 2: added 0, messages 0
+credential 3: added 0, messages 0
+credential 4: added 0, messages 0
+credential 5: added 0, messages 0
+the public word: added 770, messages 8
+credential 6: added 0, messages 0
+credential 7: added 3, messages 0
+private home path: added 610, messages 0
+private name 1: added 0, messages 0
+email local part: added 0, messages 0
+PRIV_PATTERN alt 1: added 0, messages 0
+PRIV_PATTERN alt 2: added 0, messages 0
+PRIV_PATTERN alt 3: added 0, messages 0
+PRIV_PATTERN alt 4: added 0, messages 0
+PRIV_PATTERN alt 5: added 0, messages 0
+PRIV_PATTERN alt 6: added 0, messages 0
+PRIV_PATTERN alt 7: added 0, messages 0
+PRIV_PATTERN alt 8: added 71, messages 1
+PRIV_PATTERN alt 9: added 201, messages 0
+PRIV_PATTERN alt 10: added 0, messages 0
+PRIV_PATTERN alt 11: added 0, messages 0
+PRIV_PATTERN alt 12: added 0, messages 0
+PRIV_PATTERN alt 13: added 0, messages 0
+total 1664
+per commit 449c617: 1 commits, 1 added lines, total 0
+per commit 2d3d59b: 1 commits, 2 added lines, total 3
+the public word: added 2, messages 1
+per commit 475c291: 1 commits, 2 added lines, total 1
+the public word: added 1, messages 0
+per commit 53202e3: 1 commits, 6 added lines, total 0
+per commit 1e3fcf4: 1 commits, 10 added lines, total 4
+the public word: added 4, messages 0
+per commit c569b26: 1 commits, 2638 added lines, total 22
+the public word: added 3, messages 0
+private home path: added 19, messages 0
+per commit 13c6959: 1 commits, 385 added lines, total 8
+the public word: added 6, messages 2
+per commit c89ab70: 1 commits, 2 added lines, total 1
+the public word: added 1, messages 0
+per commit 9b64299: 1 commits, 16393 added lines, total 57
+the public word: added 18, messages 0
+private home path: added 39, messages 0
+per commit bcc6fa9: 1 commits, 26 added lines, total 3
+the public word: added 3, messages 0
+per commit dfbef91: 1 commits, 17 added lines, total 1
+the public word: added 1, messages 0
+per commit 2cd8ee2: 1 commits, 185 added lines, total 2
+the public word: added 2, messages 0
+per commit 4e15c5c: 1 commits, 9752 added lines, total 49
+the public word: added 16, messages 0
+private home path: added 33, messages 0
+per commit 3b7265e: 1 commits, 99 added lines, total 1
+the public word: added 1, messages 0
+per commit 952c78b: 1 commits, 11140 added lines, total 68
+the public word: added 29, messages 0
+private home path: added 39, messages 0
+per commit 6f1f281: 1 commits, 6 added lines, total 0
+per commit 44dbfb6: 1 commits, 12 added lines, total 1
+the public word: added 1, messages 0
+per commit e2c4123: 1 commits, 24 added lines, total 0
+per commit f5b351e: 1 commits, 7303 added lines, total 52
+the public word: added 15, messages 0
+private home path: added 37, messages 0
+per commit 02e3a06: 1 commits, 4 added lines, total 2
+the public word: added 2, messages 0
+per commit 1be86b9: 1 commits, 133 added lines, total 0
+per commit fa2fa54: 1 commits, 25 added lines, total 1
+the public word: added 1, messages 0
+per commit ae8d979: 1 commits, 2 added lines, total 0
+per commit 001069f: 1 commits, 131 added lines, total 3
+the public word: added 2, messages 0
+private home path: added 1, messages 0
+per commit 7caa231: 1 commits, 40 added lines, total 2
+the public word: added 2, messages 0
+per commit 527dc1e: 1 commits, 2 added lines, total 0
+per commit 1e5d4bd: 1 commits, 899 added lines, total 27
+the public word: added 1, messages 0
+credential 7: added 1, messages 0
+private home path: added 25, messages 0
+per commit 722e155: 1 commits, 40 added lines, total 0
+per commit c5e6ed5: 1 commits, 34 added lines, total 1
+private home path: added 1, messages 0
+per commit 74e5b76: 1 commits, 2 added lines, total 0
+per commit c39114b: 1 commits, 126 added lines, total 3
+the public word: added 1, messages 0
+private home path: added 2, messages 0
+per commit 59bb523: 1 commits, 41 added lines, total 1
+the public word: added 1, messages 0
+per commit ae57830: 1 commits, 9 added lines, total 0
+per commit f8f71b8: 1 commits, 852 added lines, total 30
+private home path: added 30, messages 0
+per commit f6bcaaf: 1 commits, 16 added lines, total 0
+per commit 6365f36: 1 commits, 16 added lines, total 2
+the public word: added 2, messages 0
+per commit 31693d1: 1 commits, 49 added lines, total 2
+the public word: added 1, messages 0
+private home path: added 1, messages 0
+per commit 5270b78: 1 commits, 9 added lines, total 0
+per commit 15367a9: 1 commits, 20 added lines, total 4
+the public word: added 3, messages 0
+PRIV_PATTERN alt 9: added 1, messages 0
+per commit 246442e: 1 commits, 12 added lines, total 2
+the public word: added 2, messages 0
+per commit 3d3182c: 1 commits, 47 added lines, total 6
+the public word: added 2, messages 0
+private home path: added 1, messages 0
+PRIV_PATTERN alt 9: added 3, messages 0
+per commit 1e89750: 1 commits, 8 added lines, total 2
+the public word: added 2, messages 0
+per commit 47f2f0e: 1 commits, 16 added lines, total 3
+the public word: added 1, messages 0
+PRIV_PATTERN alt 9: added 2, messages 0
+per commit 54b5664: 1 commits, 8 added lines, total 2
+the public word: added 2, messages 0
+per commit 13a54a8: 1 commits, 10 added lines, total 3
+the public word: added 3, messages 0
+per commit 1040c92: 1 commits, 31 added lines, total 5
+the public word: added 4, messages 0
+private home path: added 1, messages 0
+per commit 8fffce8: 1 commits, 7 added lines, total 2
+the public word: added 1, messages 1
+per commit e0f804e: 1 commits, 43 added lines, total 2
+the public word: added 1, messages 0
+private home path: added 1, messages 0
+per commit 2453ae8: 1 commits, 8 added lines, total 0
+per commit 8891eab: 1 commits, 5 added lines, total 0
+per commit ef8f98f: 1 commits, 4 added lines, total 0
+per commit f8248c8: 1 commits, 188 added lines, total 3
+the public word: added 2, messages 0
+private home path: added 1, messages 0
+per commit c287bd0: 1 commits, 45 added lines, total 3
+the public word: added 3, messages 0
+per commit 2eaa1d6: 1 commits, 27 added lines, total 4
+the public word: added 3, messages 1
+per commit 6bf1835: 1 commits, 18 added lines, total 5
+the public word: added 5, messages 0
+per commit c4aaecc: 1 commits, 13 added lines, total 2
+the public word: added 2, messages 0
+per commit feff598: 1 commits, 24 added lines, total 4
+the public word: added 3, messages 0
+PRIV_PATTERN alt 8: added 1, messages 0
+per commit a7c1e1e: 1 commits, 45 added lines, total 4
+the public word: added 1, messages 0
+private home path: added 1, messages 0
+PRIV_PATTERN alt 9: added 2, messages 0
+per commit 509f8ad: 1 commits, 6 added lines, total 0
+per commit 67a48fb: 1 commits, 34 added lines, total 7
+the public word: added 5, messages 0
+PRIV_PATTERN alt 8: added 1, messages 0
+PRIV_PATTERN alt 9: added 1, messages 0
+per commit 6b5256b: 1 commits, 12 added lines, total 4
+the public word: added 3, messages 1
+per commit 7a0c504: 1 commits, 9 added lines, total 3
+the public word: added 3, messages 0
+per commit 7b47ed0: 1 commits, 207 added lines, total 33
+the public word: added 2, messages 0
+private home path: added 3, messages 0
+PRIV_PATTERN alt 9: added 28, messages 0
+per commit e21e3ea: 1 commits, 2 added lines, total 1
+the public word: added 1, messages 0
+per commit 4a546ff: 1 commits, 181 added lines, total 51
+the public word: added 1, messages 0
+PRIV_PATTERN alt 8: added 21, messages 1
+PRIV_PATTERN alt 9: added 28, messages 0
+per commit 23a7d14: 1 commits, 2 added lines, total 1
+the public word: added 1, messages 0
+per commit 384f486: 1 commits, 2 added lines, total 2
+the public word: added 1, messages 1
+per commit c246bbf: 1 commits, 15 added lines, total 4
+the public word: added 4, messages 0
+per commit 695b63b: 1 commits, 2 added lines, total 2
+the public word: added 1, messages 1
+per commit 8bca877: 1 commits, 6 added lines, total 1
+the public word: added 1, messages 0
+per commit f0fd140: 1 commits, 2 added lines, total 3
+the public word: added 3, messages 0
+per commit 1c47c6f: 1 commits, 16 added lines, total 3
+the public word: added 3, messages 0
+per commit 960f2e9: 1 commits, 40246 added lines, total 419
+the public word: added 183, messages 0
+credential 7: added 1, messages 0
+private home path: added 147, messages 0
+PRIV_PATTERN alt 8: added 23, messages 0
+PRIV_PATTERN alt 9: added 65, messages 0
+per commit f84864f: 1 commits, 71327 added lines, total 727
+the public word: added 402, messages 0
+credential 7: added 1, messages 0
+private home path: added 228, messages 0
+PRIV_PATTERN alt 8: added 25, messages 0
+PRIV_PATTERN alt 9: added 71, messages 0
+commits with any hit: 58 of 74

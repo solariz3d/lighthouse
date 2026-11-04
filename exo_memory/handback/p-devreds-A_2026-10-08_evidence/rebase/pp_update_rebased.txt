@@ -1,0 +1,14 @@
+﻿portable-paths: baseline written — 402 sites · 11 newly blessed · 0 dropped · 1 hand verdict(s) kept over the classifier
+  {"BENIGN-TEST":332,"FATAL-DEFAULT":14,"BENIGN-FIXTURE":9,"REVIEW":16,"DISGUISED":15,"BENIGN-MESSAGE":5,"FATAL-USER":7,"FATAL-TEST-READ":2,"FATAL-SHIPPED-INSTRUCTION":2}
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21052
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21068
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21072
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21118
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21124
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21126
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21127
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21128
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21175
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21179
+  + BENIGN-TEST                consonance/src-tauri/src/main.rs:21181
+  = BENIGN-TEST                dev/shell/hooks/third-place-gate.test.js:44  (classifier says FATAL-TEST-READ)

@@ -1,0 +1,40 @@
+| v01 | WRONG | CANNOT-SETTLE | lighthouse (default) | CANNOT-SETTLE |
+| v02 | WRONG | SKIPPED-LIVE-STATE | — | CANNOT-SETTLE |
+| v03 | WRONG | CANNOT-SETTLE | lighthouse (default) | WORLD-MOVED |
+| v04 | WRONG | CANNOT-SETTLE | lighthouse (default) | SURFACE |
+| v05 | WRONG | SURFACE | lighthouse (default) | SURFACE |
+| v06 | WRONG | AGREE | lighthouse (default) | AGREE |
+| v07 | WRONG | WORLD-MOVED | lighthouse (default) | SURFACE |
+| v08 | WRONG | SURFACE | lighthouse (default) | SURFACE |
+| v09 | WRONG | AGREE | lighthouse (default) | AGREE |
+| v10 | WRONG | SURFACE | lighthouse (default) | SURFACE |
+| v11 | UNDEC | DISQUALIFIED-CONTAMINATED | lighthouse (default) | SURFACE |
+| v12 | RIGHT | SURFACE | lighthouse (default) | WORLD-MOVED |
+| v13 | WRONG | SURFACE | lighthouse (default) | SURFACE |
+| v14 | RIGHT | SURFACE | lighthouse (default) | SURFACE |
+| v15 | RIGHT | SURFACE | lighthouse (default) | SURFACE |
+| v16 | RIGHT | AGREE | lighthouse (default) | WORLD-MOVED |
+| v17 | RIGHT | SURFACE | lighthouse (default) | SURFACE |
+| v18 | WRONG | SKIPPED-LIVE-STATE | — | SURFACE |
+| v19 | WRONG | SURFACE | lighthouse (default) | SURFACE |
+| v20 | WRONG | SKIPPED-LIVE-STATE | — | SURFACE |
+| v21 | WRONG | AGREE | lighthouse (default) | AGREE |
+| v22 | WRONG | SKIPPED-LIVE-STATE | — | AGREE |
+| v23 | WRONG | SKIPPED-LIVE-STATE | — | SURFACE |
+| v24 | WRONG | SKIPPED-LIVE-STATE | — | DISQUALIFIED-CONTAMINATED |
+| v25 | WRONG | AGREE | t180 (commit) | CANNOT-SETTLE |
+| v26 | WRONG | CANNOT-SETTLE | t180 (commit) | WORLD-MOVED |
+| v27 | RIGHT | SURFACE | lighthouse (default) | SURFACE |
+| v28 | WRONG | SKIPPED-LIVE-STATE | — | CANNOT-SETTLE |
+| v29 | WRONG | AGREE | t180 (commit) | CANNOT-SETTLE |
+| v30 | WRONG | DISQUALIFIED-CONTAMINATED | t180 (commit) | CANNOT-SETTLE |
+| v31 | WRONG | AGREE | t180 (commit) | CANNOT-SETTLE |
+| v32 | WRONG | AGREE | t180 (commit) | CANNOT-SETTLE |
+| v33 | WRONG | AGREE | t180 (commit) | SURFACE |
+| v34 | WRONG | CANNOT-SETTLE | lighthouse (default) | SURFACE |
+| v35 | WRONG | CANNOT-SETTLE | lighthouse (default) | CANNOT-SETTLE |
+| v36 | WRONG | WORLD-MOVED | lighthouse (default) | SURFACE |
+| v37 | WRONG | SKIPPED-LIVE-STATE | — | SURFACE |
+{"new":{"wrongGone":25,"rightKept":5},"old":{"wrongGone":16,"rightKept":4}}
+new {"SKIPPED-LIVE-STATE":8,"CANNOT-SETTLE":6,"AGREE":9,"SURFACE":10,"DISQUALIFIED-CONTAMINATED":2,"WORLD-MOVED":2}
+old {"CANNOT-SETTLE":9,"SURFACE":19,"WORLD-MOVED":4,"AGREE":4,"DISQUALIFIED-CONTAMINATED":1}

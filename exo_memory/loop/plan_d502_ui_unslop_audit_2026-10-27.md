@@ -1,0 +1,35 @@
+# D502: the track builder's UI read against the Third Place's reference. Librarian, 2026-10-27 17:3x
+
+The Third Place rang at 17:24 with `exo_memory/research/ui_unslop_guide_2026-10-27.md` (git-blob 0cf8113e, filed 3acd1f46): eight passes read frame by frame from a 10-second before/after of a dashboard, "the keeper asked for it as a reference for the librarian". The reference is a record and travels as one; nothing about its uptake goes back to the Third Place (its guard 4).
+
+The builder's UI today, checked: base styles are the one inline `<style>` in `app/index.html` (585 lines; the frameless title bar `#winctl` at :288, `#status` at :262); five themes in `app/themes/` (aqua, aurora, glass, skyline, skyline-night); the menubar in `app/menubar/` (menubar.js, items.js, layoutsdialog.js, layoutsexport.js). Nobody has measured its spacing, icon edges or copy against a scale.
+
+## Part 1, pane C (just do it: a note and screenshots, no code change)
+
+Read the guide whole first. Then, on the installed 0.4.25 (headless, `--mute-audio`, BelowNormal, never a visible window), at 2560×1440 in each of the five themes:
+1. **Spacing.** Screenshot the main screen, the Sculpt panel, the menubar with one menu open, the Layouts dialog, and the status line. Overlay the vertical and horizontal gaps as the guide's pass 1 does (measured from the DOM, `getBoundingClientRect`, not by eye) and list which values repeat and which are one-offs. Propose one scale (the guide's lands on 16/18/24/32/36; ours may differ) and show the same screenshots with the gaps snapped to it (a CSS override injected for the render only; nothing committed).
+2. **Edges and icons.** Guide lines down the left edge of every icon+label row in the menubar, panels and dialogs: which rows start text at a different x, and why (emoji, mixed icon widths, inset differences). Count emoji and mixed-set icons in the UI strings (`app/menubar/items.js` and index.html) and name a single line-icon set that already exists in the repo if one does.
+3. **Colour.** Per theme: where colour is decoration (gradients, glows, coloured pills, gradient text) and where it carries data (mode, selection, warnings, the sculpt band's cyan). Show each theme with decoration-colour removed and data-colour kept, as the guide's pass 3.
+4. **Copy.** Every label, badge, delta and heading the user reads: all-caps tracked labels, exclamation marks, emoji, greetings, counts in pills. Propose the sentence-case form beside each, and for every number say what it is compared with.
+5. **The note.** `exo_memory/handback/p-d502-C_<date>.md`: the measurements, the proposals in the guide's order (spacing first, then colour, then content), each with a before/after render path, and a one-line cost (which file, roughly how many lines). Renders to `C:\Users\nname\Downloads\t180-d502-renders\` as PNG, named `<theme>-<region>-<before|after>.png`. The librarian publishes them as one artifact page for the keeper to pick from (visuals as artifacts), so name every file and say in the note what each shows.
+
+No code is committed in Part 1. No change to how the builder looks ships from it.
+
+## Part 2 (check it), after the keeper picks
+The picked changes as one branch, installed on his machine with the usual backup and sha256 compare, NO release until he has judged it in the app (looks ship to the keeper first). Then it rides the next batch.
+
+Kept out: the previewer's 3D view and the sky (D489's line); fonts (the guide could not identify them either). Tier: Part 1 just do it; Part 2 check it. surfaced: the guide (research/), index.html:262/:288, app/themes/, app/menubar/.
+
+## Part 1 in, 18:3x (C e3295b56, lighthouse branch d502-c b2d1d345; read whole; published)
+
+Artifact for the keeper: https://claude.ai/artifact/NCccGt5kjXW4GGyPtjQwUt (432 renders in two publishes of 216 files, 50 MB + 55 MB; page source `scratchpad\d502\index.html`, renders copied to `scratchpad\d502\r\<pass>\`). A look picker, per-pass region tabs, a wipe slider per pair, the colour pass shown as strip against controls side by side, pick buttons that compose one line.
+
+C's findings that change the plan's assumptions, all measured: six looks, not five (SIGIL uses the base); the spacing is identical across looks (the theme files declare none); the UI has 0 emoji, no icon set, 0 exclamation marks and no pills, so the guide's icon and copy-tone passes do not apply; 58 of 144 strings are all-caps by CSS only; border width is already 1 px everywhere while corner radius varies 3–4 ways per look; SIGIL already is the guide's colour result; the spacing scale alone moves rendered gaps only 32 → 30 because the gaps come from line and control heights. C's order: borders, edges, copy, colour (controls variant, not the strip), spacing only with a row-height scale.
+
+Part 2 waits on the keeper's picks from the page. On his line, the landing pane makes one branch of the picked passes, installs it with backup and sha256 compare, no release until he judges in the app, then it rides the batch with D503.
+
+## Part 2, 18:45, at the keeper's word: "after looking at the changes works for me" — pane C (check it; install, no release)
+
+The picks, as recommended: **borders** (one card radius per look: aqua 18, skyline / skyline-night / aurora 16, glass 0, sigil 8; the guide card gets its 1 px border; controls untouched), **edges** (menu buttons left-aligned with the shared padding so every File and Settings item starts on one x; the odd tick rows take the shared tick style), **copy** (the five CSS rules: section headings, camera bar, HUD labels, dialog titles and head row, wordmark keeps light tracking; the four strings: "Untitled •", the palette head without "last extend", the checker summary without the loop line, Theme menu "Sigil"; labels muted, numbers bright; C's HUD caption "piece N of M" is in), **colour, controls variant** (no gradient pills or glows on buttons, summaries and inputs; control text in the look's body text colour unless in a state or disabled; panels keep their skin; state and warning colours kept). **Out:** the spacing scale and the full colour strip.
+
+C builds it as one branch in its own t180 worktree, from main once D503 has pushed (if O has not pushed when C starts, from 7dc5917 and rebase before the install). Tier check it: the touched files' tests, which here includes every test that pins a changed string (C's counts: "SIGIL" in 13 files, "unsaved" in 11, "last extend" in 2, "TRACK BUILDER" in 1; check each before changing it, change only the ones that pin the shown string) and the contrast rows (theme.test.js, texture-page.test.js). Render the six looks' main screen headless at 2560×1440 after, as Part 1 did, so the keeper's page can show the real result beside the mock. Then install on his machine with the builder closed, a `.before-<tag>` backup and a sha256 compare; **no push of a tag, no release**. Hand back the branch sha, the test counts, the installed sha256 and the six renders' paths. The keeper judges in the app; on his yes it rides the next batch with D503 as 0.4.26.

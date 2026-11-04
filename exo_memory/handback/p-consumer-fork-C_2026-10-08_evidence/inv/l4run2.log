@@ -1,0 +1,43 @@
+== D273 lap4 C verify 2 · asked 2026-10-09T00:16:44.439Z · lock held 2026-10-09T00:17:34.684Z · NODE_OPTIONS=--max-old-space-size=4096
+$ bash C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/l4run.sh
+=== TESTS
+[34mℹ tests 116[39m
+[34mℹ pass 115[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 1[39m
+=== IDENTITY-DIFF, as committed (B's rows not applied)
+exit 0
+identity-diff: PASS — 76 wake files compared; 0 unregistered difference(s)
+  generated from 29d9b1fe90583a53b1a1647915b5f12e1121bd0f; this repo at 29d9b1fe
+  registered, by step:
+    dedangle                       207 line(s) in 33 file(s)
+    deidentify                      20 line(s) in 8 file(s)
+    dewiki                          69 line(s) in 7 file(s)
+    fork (consumer-relabel.js)     216 line(s) in 11 file(s)
+    reindex                          7 line(s) in 1 file(s)
+    reseed                           2 line(s) in 2 file(s)
+  not shipped, with the generator's reason (11):
+  master BOOT -> shipped brief: 17 line(s) out, 30 in, by gen-brief.ps1 (dev side; guarded by gen-brief-gate.test.js); reported, not gated
+=== IDENTITY-DIFF, with B's three lap-4 EXCLUDE rows applied TEMPORARILY
+added 3 EXCLUDE rows (temporary)
+build refused: no staged [33m375[39m forked [33m68[39m leaks [33m0[39m
+exit 0
+identity-diff: PASS — 73 wake files compared; 0 unregistered difference(s)
+  generated from 29d9b1fe90583a53b1a1647915b5f12e1121bd0f; this repo at 29d9b1fe
+  registered, by step:
+    dedangle                       207 line(s) in 33 file(s)
+    deidentify                      16 line(s) in 7 file(s)
+    dewiki                          43 line(s) in 5 file(s)
+    fork (consumer-relabel.js)     216 line(s) in 11 file(s)
+    reindex                          8 line(s) in 1 file(s)
+    reseed                           2 line(s) in 2 file(s)
+  not shipped, with the generator's reason (14):
+  master BOOT -> shipped brief: 17 line(s) out, 30 in, by gen-brief.ps1 (dev side; guarded by gen-brief-gate.test.js); reported, not gated
+--- generated memory/ and the dont-offer card:
+MEMORY.md
+ls: cannot access 'C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/cons/l4b/exo_memory/cards/dont-offer-rest-assume-momentum.md': No such file or directory
+--- generated MEMORY.md:
+# Memory index
+
+restored; gen-consumer.js diff lines: 0
+== exit 0 · done 2026-10-09T00:18:37.220Z

@@ -1,0 +1,14 @@
+# Task
+
+consonance/tools/js-suite.js kills a test file after 120,000 ms. gen-consumer.test.js takes 123 to 157 s alone, so it crashes every full run. Make the full suite stop crashing on it without hiding a real hang.
+
+# How to work
+
+- This directory is a git checkout of the whole project at its base commit. Work only here.
+- Test first: a red row that fails on the base, then the fix, then the row green.
+- Run the test files you touch, whole.
+- Every test command goes through the lock wrapper, which waits for other heavy runs on this machine and then runs your command as given: `node "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d411-P_2026-10-19_evidence/hr.js" -- <your command>` (for example `node "C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-d411-P_2026-10-19_evidence/hr.js" -- node --test app/test/settings.test.js`).
+- If anything you run would open a browser or an Electron window, pass --headless and --mute-audio; never open an installed app.
+- Commit by named paths on this worktree's branch (`git commit -- <paths>`); do not push.
+- Write a short hand-back to `HANDBACK.md` in this directory (do not commit it): what changed, tests run with counts, Not done / Limits.
+- One session, one shot: when the hand-back is written, stop.

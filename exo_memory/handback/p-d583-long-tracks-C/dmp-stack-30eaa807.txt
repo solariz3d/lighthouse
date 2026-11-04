@@ -1,0 +1,3 @@
+--- ascii @8588942
+ath-global-handle-count … 0 … v8-oom-new-space-capacity … 1023.94KB … v8-oom-new-space-size … 0B … v8-oom-old-space-capacity … 2283.86MB … v8-oom-old-space-size … 2282.21MB"...v8-oom-pending-global-handle-count … 0 … v8-oom-ro-space-capacity … 1.97MB … v8-oom-ro-space-size … 1.97MB … v8-oom-stack<...add in src/geom/bvh.js.soup in =.laneCheck in src/geom/pitlane.js.laneForExport in src/export/pitlane.js.buildFromSegments in src/export/fromwords.js.exportSegments in =.runSegments in app/export/export.js.buildExport in app/core/coreshell.js.build in app/install/index.js.install in 
+

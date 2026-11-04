@@ -15,6 +15,10 @@
 /// Where a refused seat reads the rule. Named in every refusal and warning, so the rule travels with the refusal.
 pub const RULE_FILE: &str = "consonance/src-tauri/brief/BUILDING.md";
 
+/// D273: the one page that explains every gate (what it does, why, how to answer a refusal). Named repo-relative here, since
+/// this file stays standalone; `mcp.rs` `trailer_gate` swaps in the path it has on this machine (`gates_doc_path`).
+pub const GATES_DOC: &str = "consonance/GATES.md";
+
 /// A parsed trailer. `station` is the first word after `NEXT:` — a seat, or the verb that reaches one.
 #[derive(Debug, PartialEq, Eq)]
 pub struct Trailer<'a> {
@@ -207,6 +211,23 @@ pub fn policy(verb: Verb) -> Action {
     }
 }
 
+/// D277 part 2: the paperwork gates' ONE switch, `gates_mode` in ~/.consonance.json (read in `mcp.rs`, since this file stays standalone).
+/// `Strict` is today's behaviour; `Light` makes this gate warn and deliver on every verb. Why: D276
+/// (`exo_memory/loop/loop_friction_measure_2026-10-09.md`) measured 40 trailer refusals, of which 2 re-sends changed a claim and none fixed one.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+pub enum GateMode {
+    Strict,
+    Light,
+}
+
+/// The action under a mode. `Strict` is `policy` exactly, so a strict room behaves as it did before the switch existed.
+pub fn policy_in(verb: Verb, mode: GateMode) -> Action {
+    match mode {
+        GateMode::Strict => policy(verb),
+        GateMode::Light => Action::WarnAndDeliver,
+    }
+}
+
 fn section(verb: Verb) -> &'static str {
     match verb {
         Verb::ChairInject => "WHAT A DISPATCH OWES",
@@ -238,11 +259,13 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
              The keeper: \"how do we know the next step before we get the results from the current pane or seat that works on their chunk of the loop?\"\n\
              A collation's line directly before its NEXT trailer must be:\n    OUTPUT → NEXT: changed|unchanged — <why, from the output>\n\
              e.g. OUTPUT → NEXT: unchanged — both hand-backs green and inside their packets\n\
+             How this gate works and why: {gates}, section 3 (the NEXT trailer).\n\
              Nothing was delivered. Your message, returned whole — add the line and send it again:\n\
              -----\n{message}\n-----",
             missing = what_is_missing(why),
             file = RULE_FILE,
             section = section(verb),
+            gates = GATES_DOC,
             message = message,
         );
     }
@@ -251,28 +274,25 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
          The rule: {file}, {section} item 6. The keeper, 2026-09-16: \"each seat tells the next where to hand it to remind it.\"\n\
          The last non-empty line must be:\n    NEXT: <station> <command> when <condition>\n\
          e.g. NEXT: librarian collate the chunk when all four hand-backs are in\n\
+         How this gate works and why: {gates}, section 3 (the NEXT trailer).\n\
          Nothing was delivered. Your message, returned whole — add the trailer as its last line and send it again:\n\
          -----\n{message}\n-----",
         missing = what_is_missing(why),
         file = RULE_FILE,
         section = section(verb),
+        gates = GATES_DOC,
         message = message,
     )
 }
 
-/// The text actually delivered on a return leg with no usable trailer: the message FIRST and unchanged, then a note
-/// the receiver can act on.
-pub fn delivered_with_warning(message: &str, why: Missing) -> String {
-    format!("{message}\n\n{note}", message = message, note = warning_note(why))
-}
-
-/// The gate's note on a return leg with no usable trailer: what was missing and the correct form. The receiver gets it
-/// appended to the message (`delivered_with_warning`); since L125 the SENDING pane gets the same note in its tool result
-/// (`mcp.rs` `sender_note`), because E's census showed that panes warned only through the receiver kept missing.
-pub fn warning_note(why: Missing) -> String {
+/// D633 (fix 5): the note for a message delivered with no usable trailer goes to the SENDER, in its own tool result, the
+/// turn it sends. The message itself is delivered UNCHANGED. D627 part 3 measured the old route, where the note was
+/// appended to the receiver's copy: 935 notes received, 0 rings changed, and the chair's `when` compliance fell from 45%
+/// to 3% while it fired, because the one seat that could fix the trailer never saw it.
+pub fn sender_note(why: Missing) -> String {
     format!(
-        "[NEXT-trailer gate — delivered anyway: {missing}. The rule: {file}, WHAT A HAND-BACK OWES item 6. \
-         The receiver decides the next station; the sender should end with `NEXT: <station> <command> when <condition>`.]",
+        "[NEXT-trailer gate — your message was delivered, unchanged, but {missing}. The rule: {file}, WHAT A HAND-BACK OWES item 6. \
+         End your next hand-off with `NEXT: <station> <command> when <condition>`.]",
         missing = what_is_missing(why),
         file = RULE_FILE,
     )
@@ -440,12 +460,15 @@ mod tests {
         }
     }
 
+    // AMENDED BY NAME (D633, fix 5): the note no longer rides the receiver's copy (the message is delivered unchanged, pinned in
+    // mcp.rs); it is the SENDER's, and this row now reads the sender's note for the rule.
     #[test]
     fn a_warned_hand_back_is_delivered_whole_with_the_rule_named() {
-        let d = delivered_with_warning(A_RING, Missing::NoTrailer);
-        assert!(d.starts_with(A_RING), "the pointer must arrive first and unchanged: {d}");
-        assert!(d.len() > A_RING.len(), "no warning was added");
-        assert!(d.contains("WHAT A HAND-BACK OWES") && d.contains("item 6") && d.contains(RULE_FILE), "{d}");
+        let n = sender_note(Missing::NoTrailer);
+        assert!(n.contains("delivered, unchanged"), "the sender is told its message still went: {n}");
+        assert!(n.contains("WHAT A HAND-BACK OWES") && n.contains("item 6") && n.contains(RULE_FILE), "{n}");
+        assert!(n.contains("End your next hand-off with `NEXT:"), "addressed to the sender, who can fix it: {n}");
+        assert!(!n.contains(A_RING), "the note carries no copy of the message: {n}");
     }
 
     // ── L084 · THE OUTPUT → NEXT LINE — the keeper, 2026-09-23: the next step comes from the OUTPUT, not the plan ──
@@ -567,5 +590,38 @@ mod tests {
         // decision to refuse the return leg reads the right item.
         let r = refusal_text(Verb::CallLibrarian, Missing::NoTrailer, A_RING);
         assert!(r.contains("WHAT A HAND-BACK OWES"), "{r}");
+    }
+
+    /// D273: both refusal forms point to the page that explains the gates, before the returned message, never inside it.
+    #[test]
+    fn every_refusal_points_to_gates_md_section_3_before_the_returned_message() {
+        for (verb, why) in [(Verb::ChairInject, Missing::NoTrailer), (Verb::CallChair, Missing::NoOutputNext), (Verb::ChairInject, Missing::NoCondition)] {
+            let r = refusal_text(verb, why, "a message");
+            let at = r.find(&format!("How this gate works and why: {GATES_DOC}, section 3 (the NEXT trailer).")).unwrap_or_else(|| panic!("no pointer: {r}"));
+            assert!(at < r.find("Nothing was delivered").unwrap(), "the pointer must come before the returned message: {r}");
+            assert_eq!(r.matches(GATES_DOC).count(), 1, "{r}");
+        }
+    }
+}
+
+/// D277 part 2: the switch's two modes. Strict is `policy` exactly, verb by verb; Light delivers with a warning on every verb.
+#[cfg(test)]
+mod gate_mode_tests {
+    use super::*;
+
+    #[test]
+    fn strict_is_todays_policy_on_every_verb() {
+        for v in [Verb::ChairInject, Verb::CallChair, Verb::CallLibrarian] {
+            assert_eq!(policy_in(v, GateMode::Strict), policy(v), "{v:?}");
+        }
+        assert_eq!(policy_in(Verb::ChairInject, GateMode::Strict), Action::Refuse);
+        assert_eq!(policy_in(Verb::CallChair, GateMode::Strict), Action::Refuse);
+    }
+
+    #[test]
+    fn light_warns_and_delivers_on_every_verb() {
+        for v in [Verb::ChairInject, Verb::CallChair, Verb::CallLibrarian] {
+            assert_eq!(policy_in(v, GateMode::Light), Action::WarnAndDeliver, "{v:?}");
+        }
     }
 }

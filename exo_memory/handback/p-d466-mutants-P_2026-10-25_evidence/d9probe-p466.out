@@ -1,0 +1,4 @@
+piece1 end c { v: [33m40[39m, m: [33m0[39m } piece2 end c { v: [33m40[39m, m: [33m0[39m } piece2 c pts 40 40 40 40 40 40 40
+piece3 t[0..2] 80 80 201.047493 knots 20 40 60
+first attempt (no joint edit): ACCEPTED
+deleteRun t[0] 80 80 same object as before? [33mtrue[39m

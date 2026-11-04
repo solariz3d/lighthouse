@@ -1,0 +1,78 @@
+TAP version 13
+# node:internal/modules/cjs/loader:1459
+#   throw err;
+#   ^
+# Error: Cannot find module 'C:\\Users\\nname\\Downloads\\t180-wt-c495base\\app\\preview\\sky\\budget.js'
+# Require stack:
+# - C:\\Users\\nname\\Downloads\\t180-wt-c495base\\app\\test\\sky-budget.test.js
+# [90m    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)[39m
+# [90m    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)[39m
+# [90m    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)[39m
+# [90m    at Module._load (node:internal/modules/cjs/loader:1242:25)[39m
+# [90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+# [90m    at Module.require (node:internal/modules/cjs/loader:1556:12)[39m
+# [90m    at require (node:internal/modules/helpers:152:16)[39m
+#     at Object.<anonymous> [90m(C:\\Users\\nname\\Downloads\\t180-wt-c495base\\[39mapp\\test\\sky-budget.test.js:20:16[90m)[39m
+# [90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+# [90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m {
+#   code: [32m'MODULE_NOT_FOUND'[39m,
+#   requireStack: [
+#     [32m'C:\\\\Users\\\\nname\\\\Downloads\\\\t180-wt-c495base\\\\app\\\\test\\\\sky-budget.test.js'[39m
+#   ]
+# }
+# Node.js v24.14.1
+# Subtest: app\\test\\sky-budget.test.js
+not ok 1 - app\\test\\sky-budget.test.js
+  ---
+  duration_ms: 152.8307
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-c495base\\app\\test\\sky-budget.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/cjs/loader:1459
+#   throw err;
+#   ^
+# Error: Cannot find module 'C:\\Users\\nname\\Downloads\\t180-wt-c495base\\app\\preview\\sky\\budget.js'
+# Require stack:
+# - C:\\Users\\nname\\Downloads\\t180-wt-c495base\\app\\test\\sky-gpu.test.js
+# [90m    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)[39m
+# [90m    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)[39m
+# [90m    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)[39m
+# [90m    at Module._load (node:internal/modules/cjs/loader:1242:25)[39m
+# [90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+# [90m    at Module.require (node:internal/modules/cjs/loader:1556:12)[39m
+# [90m    at require (node:internal/modules/helpers:152:16)[39m
+#     at Object.<anonymous> [90m(C:\\Users\\nname\\Downloads\\t180-wt-c495base\\[39mapp\\test\\sky-gpu.test.js:24:16[90m)[39m
+# [90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+# [90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m {
+#   code: [32m'MODULE_NOT_FOUND'[39m,
+#   requireStack: [
+#     [32m'C:\\\\Users\\\\nname\\\\Downloads\\\\t180-wt-c495base\\\\app\\\\test\\\\sky-gpu.test.js'[39m
+#   ]
+# }
+# Node.js v24.14.1
+# Subtest: app\\test\\sky-gpu.test.js
+not ok 2 - app\\test\\sky-gpu.test.js
+  ---
+  duration_ms: 147.4041
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-c495base\\app\\test\\sky-gpu.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 158.0663

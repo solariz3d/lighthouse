@@ -1,0 +1,6 @@
+drop kv -0.0002 over 600 open end height -211.9 m; plan: SC at R 284 m: turn 0°, 1706 m straight, turn 180°; 2 new pieces, 2598 m; closed in 4 step(
+drop kv -0.0002 over 1000 ERR FINISH_LEAVES_ROAD FINISH_LEAVES_ROAD: no finish keeps the car on the road from here: the closest ones close the loop, b
+drop kv -0.0004 over 600 ERR FINISH_LEAVES_ROAD FINISH_LEAVES_ROAD: no finish keeps the car on the road from here: the closest ones close the loop, bu
+drop kv -0.0004 over 1000 ERR FINISH_LEAVES_ROAD FINISH_LEAVES_ROAD: no finish keeps the car on the road from here: the closest ones close the loop, b
+drop kv -0.0006 over 600 ERR FINISH_LEAVES_ROAD FINISH_LEAVES_ROAD: no finish keeps the car on the road from here: the closest ones close the loop, bu
+drop kv -0.0006 over 1000 ERR FINISH_LEAVES_ROAD FINISH_LEAVES_ROAD: no finish keeps the car on the road from here: the closest ones close the loop, b

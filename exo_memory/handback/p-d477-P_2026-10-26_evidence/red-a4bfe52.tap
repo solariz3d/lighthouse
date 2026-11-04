@@ -1,0 +1,133 @@
+[32m✔ row 1: bankLapWith over a lap closed by close() is byte for byte D473's (a4bfe52) on four public laps [90m(1064.7712ms)[39m[39m
+[32m✔ row 2: Close's own press (runCloseBest, which banks the lap it closes) is byte for byte D473's (a4bfe52) on the two public laps that close that way [90m(4396.1481ms)[39m[39m
+[31m✖ Bank the lap pressed again on a lap it has just banked changes nothing (no second undo step, every bank channel as the first press left it) [90m(425.1147ms)[39m[39m
+[32m✔ row 1: a closed lap with a flat closer is banked as one undo step, and the route does not move (kh and kv byte-equal) [90m(227.0813ms)[39m[39m
+[32m✔ row 2: a loop held back by the level rule is named in the status line, and a level curve on the same lap is banked [90m(265.1964ms)[39m[39m
+[31m✖ row 3: on a lap shaped like TEST 10, a second press changes nothing (no undo step, every bank channel as the first press left it, and the status line says so) [90m(363.2433ms)[39m[39m
+[31m✖ row 4: a loop whose stored turn is under 1/600 is named in the status line when the level rule holds it back [90m(270.9203ms)[39m[39m
+[31m✖ row 5: the press copies the track to its backups first, as it was; a press that changes nothing writes no copy [90m(102.6831ms)[39m[39m
+[31m✖ row 6: a copy that cannot be written refuses by name, and nothing changes [90m(110.2796ms)[39m[39m
+[34mℹ tests 9[39m
+[34mℹ suites 0[39m
+[34mℹ pass 4[39m
+[34mℹ fail 5[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 5587.9277[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-bank-lap-twice.test.js:22:1
+[31m✖ Bank the lap pressed again on a lap it has just banked changes nothing (no second undo step, every bank channel as the first press left it) [90m(425.1147ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the second press re-banked p3: banked the lap: 1 piece (p3), up to 1.9° into its turn; the route did not move (Ctrl+Z takes the bank back); no bank on p4: it climbs or dives too steeply to bank (a loop or a steep ramp)
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'p3'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d477\tree-a4bf\[39mapp\test\core-bank-lap-twice.test.js:30:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'p3'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-bank-lap.test.js:94:1
+[31m✖ row 3: on a lap shaped like TEST 10, a second press changes nothing (no undo step, every bank channel as the first press left it, and the status line says so) [90m(363.2433ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the second press re-banked p6, p10: banked the lap: 2 pieces (p6, p10), up to 4.9° into their turns; the route did not move (Ctrl+Z takes the bank back); no bank on p5: it climbs or dives too steeply to bank (a loop or a steep ramp)
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m [
+  [32m+[39m   'p6',
+  [32m+[39m   'p10'
+  [32m+[39m ]
+  [31m-[39m []
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d477\tree-a4bf\[39mapp\test\core-bank-lap.test.js:103:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [32m'p6'[39m, [32m'p10'[39m ],
+    expected: [],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-bank-lap.test.js:109:1
+[31m✖ row 4: a loop whose stored turn is under 1/600 is named in the status line when the level rule holds it back [90m(270.9203ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: banked the lap: 7 pieces (p1, p6, p7, p8, p9, p10, p11), up to 64.2° into their turns; the route did not move (Ctrl+Z takes the bank back); the bank eases to none where the turn changes direction faster than the road can roll (p7, p8, p9)
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d477\tree-a4bf\[39mapp\test\core-bank-lap.test.js:117:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-bank-lap.test.js:121:1
+[31m✖ row 5: the press copies the track to its backups first, as it was; a press that changes nothing writes no copy [90m(102.6831ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: one copy, of the track as it was
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m []
+  [31m-[39m [
+  [31m-[39m   [
+  [31m-[39m     'eq-unsaved',
+  [31m-[39m     '{\n' +
+  [31m-[39m       '  "schema": "t180b.core/4",\n' +
+  [31m-[39m       '  "generator": "t180-track-builder/core 0.3.0",\n' +
+  [31m-[39m       '  "name": "flat closer",\n' +
+  [31m-[39m       '  "closed": true,\n' +
+  [31m-[39m       '  "start": {"pos":[0,0,0],"heading":0,"pitch":0},\n' +
+  [31m-[39m       '  "nextId": 7,\n' +
+  [31m-[39m       '  "pieces": [\n' +
+  [31m-[39m       '    {"id":"p1","type":"road","length":300,"family":"bowl","knots":[20,40,60,80,100,120,140,160,180,200,220,240,260,280],"channels":{"kh":[-0.000081813,-0.000557683,0.001295758,0.001740925,0.001756925,0.001772226,0.001786861,0.001800882,0.001814352,0.001827345,0.001839944,0.001852247,0.001864362,0.001876409,0.001888517,0.001423732,0.000100067,0.002686609],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n' +
+  [31m-[39m       '    {"id":"p2","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.002686609,0.005124373,0.00402565,0.008002505,0.007067046,0.007416923,0.007132514,0.0071394,0.006956645,0.006842527,0.006661481,0.006488716,0.006286702,0.00607852,0.00585462,0.005642323,0.005700812,0.005152457],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n' +
+  [31m-[39m       '    {"id":"p3","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.005152457,0.004604101,0.00520726,0.004891986,0.004644769,0.004399467,0.004159071,0.003925981,0.00370288,0.003492283,0.003296718,0.003118562,0.002960117,0.002823452,0.002710522,0.003366578,0.005583805,0.001037123],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n' +
+  [31m-[39m       '    {"id":"p4","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.001037123,-0.00350956,0.00328243,0.002525709,0.002551487,0.002606927,0.002691865,0.002805869,0.002948105,0.003117437,0.003312379,0.003531109,0.003771529,0.004031187,0.004307419,0.004792157,0.005373079,0.004750245],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n' +
+  [31m-[39m       '    {"id":"p5","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.004750245,0.004127411,0.005338487,0.005515558,0.005826872,0.00613452,0.006434783,0.006724055,0.006998779,0.007255602,0.007491389,0.007703284,0.007888813,0.008045844,0.008172772,0.007579052,0.005555556,0.005555561],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n' +
+  [31m-[39m       '    {"id":"p6","type":"road","length":60,"family":"bowl","knots":[20,40],"channels":{"kh":[0.005555561,0.005555565,0.002616021,-0.001010635,0.000394057,-0.000081813],"kv":[0,0,0,0,0,0],"phi":[0,0,0,0,0,0],"w":[31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0],"l":[0,0,0,0,0,0]}}\n' +
+  [31m-[39m       '  ]\n' +
+  [31m-[39m       '}\n'
+  [31m-[39m   ]
+  [31m-[39m ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d477\tree-a4bf\[39mapp\test\core-bank-lap.test.js:125:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [],
+    expected: [ [ [32m'eq-unsaved'[39m, [32m'{\n  "schema": "t180b.core/4",\n  "generator": "t180-track-builder/core 0.3.0",\n  "name": "flat closer",\n  "closed": true,\n  "start": {"pos":[0,0,0],"heading":0,"pitch":0},\n  "nextId": 7,\n  "pieces": [\n    {"id":"p1","type":"road","length":300,"family":"bowl","knots":[20,40,60,80,100,120,140,160,180,200,220,240,260,280],"channels":{"kh":[-0.000081813,-0.000557683,0.001295758,0.001740925,0.001756925,0.001772226,0.001786861,0.001800882,0.001814352,0.001827345,0.001839944,0.001852247,0.001864362,0.001876409,0.001888517,0.001423732,0.000100067,0.002686609],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p2","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.002686609,0.005124373,0.00402565,0.008002505,0.007067046,0.007416923,0.007132514,0.0071394,0.006956645,0.006842527,0.006661481,0.006488716,0.006286702,0.00607852,0.00585462,0.005642323,0.005700812,0.005152457],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p3","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.005152457,0.004604101,0.00520726,0.004891986,0.004644769,0.004399467,0.004159071,0.003925981,0.00370288,0.003492283,0.003296718,0.003118562,0.002960117,0.002823452,0.002710522,0.003366578,0.005583805,0.001037123],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p4","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.001037123,-0.00350956,0.00328243,0.002525709,0.002551487,0.002606927,0.002691865,0.002805869,0.002948105,0.003117437,0.003312379,0.003531109,0.003771529,0.004031187,0.004307419,0.004792157,0.005373079,0.004750245],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p5","type":"road","length":282.7433,"family":"bowl","knots":[18.8496,37.6991,56.5487,75.3982,94.2478,113.0973,131.9469,150.7964,169.646,188.4955,207.3451,226.1946,245.0442,263.8937],"channels":{"kh":[0.004750245,0.004127411,0.005338487,0.005515558,0.005826872,0.00613452,0.006434783,0.006724055,0.006998779,0.007255602,0.007491389,0.007703284,0.007888813,0.008045844,0.008172772,0.007579052,0.005555556,0.005555561],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}},\n    {"id":"p6","type":"road","length":60,"family":"bowl","knots":[20,40],"channels":{"kh":[0.005555561,0.005555565,0.002616021,-0.001010635,0.000394057,-0.000081813],"kv":[0,0,0,0,0,0],"phi":[0,0,0,0,0,0],"w":[31,31,31,31,31,31],"r":[2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0],"l":[0,0,0,0,0,0]}}\n  ]\n}\n'[39m ] ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-bank-lap.test.js:132:1
+[31m✖ row 6: a copy that cannot be written refuses by name, and nothing changes [90m(110.2796ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  [32mactual[39m [31mexpected[39m
+  
+  [39m'[39m[31mn[39m[31mo[39m[31mt[39m[31m [39m[39mb[39m[39ma[39m[39mn[39m[39mk[39m[39me[39m[39md[39m[31m:[39m[39m [39m[39mt[39m[39mh[39m[39me[39m[39m [39m[32ml[39m[32ma[39m[32mp[39m[32m:[39m[32m [39m[32m6[39m[32m [39m[32mp[39m[32mi[39m[32me[39m[39mc[39m[32me[39m[32ms[39m[32m [39m[32m([39m[31mo[39m[39mp[39m[32m1[39m[32m,[39m[31my[39m[39m [39m[32mp[39m[32m2[39m[32m,[39m[32m [39m[32mp[39m[32m3[39m[32m,[39m[32m [39m[32mp[39m[32m4[39m[32m,[39m[32m [39m[32mp[39m[32m5[39m[32m,[39m[32m [39m[32mp[39m[32m6[39m[32m)[39m[32m,[39m[32m [39m[32mu[39m[32mp[39m[32m [39m[32mt[39m[31mf[39m[31mr[39m[39mo[39m[31mm[39m[39m [39m[32m6[39m[32m4[39m[32m.[39m[32m0[39m[32m°[39m[32m [39m[32mi[39m[32mn[39m[32mt[39m[32mo[39m[32m [39m[32mt[39m[32mh[39m[31mb[39m[39me[39m[32mi[39m[31mf[39m[31mo[39m[39mr[39m[32m [39m[32mt[39m[32mu[39m[32mr[39m[32mn[39m[32ms[39m[32m;[39m[32m [39m[32mt[39m[32mh[39m[39me[39m[39m [39m[32mr[39m[31mc[39m[39mo[39m[39mu[39m[32mt[39m[32me[39m[32m [39m[31ml[39m[39md[39m[32mi[39m[32md[39m[39m [39m[39mn[39m[39mo[39m[39mt[39m[39m [39m[32mm[39m[32mo[39m[32mv[39m[31mb[39m[39me[39m[39m [39m[32m([39m[32mC[39m[32mt[39m[31mw[39m[39mr[39m[32ml[39m[32m+[39m[32mZ[39m[32m [39m[31mi[39m[39mt[39m[32ma[39m[32mk[39m[32me[39m[32ms[39m[32m [39m[39mt[39m[32mh[39m[39me[39m[32m [39m[32mb[39m[32ma[39m[39mn[39m[32mk[39m[39m [39m[32mb[39m[32ma[39m[32mc[39m[32mk[39m[32m)[39m[32m;[39m[32m [39m[31m([39m[39mt[39m[39mh[39m[39me[39m[39m [39m[32mb[39m[32ma[39m[32mn[39m[31md[39m[31mi[39m[31ms[39m[39mk[39m[39m [39m[32mo[39m[32mn[39m[32m [39m[32mt[39m[32mh[39m[32me[39m[32m [39m[32ml[39m[32ma[39m[32mp[39m[32m [39m[31mi[39m[39ms[39m[32mt[39m[32mo[39m[32mp[39m[32mp[39m[32me[39m[32md[39m[39m [39m[32ma[39m[32mb[39m[32mo[39m[31mf[39m[39mu[39m[32mt[39m[31ml[39m[31ml[39m[31m)[39m[31m;[39m[39m [39m[32mu[39m[39mn[39m[32md[39m[32me[39m[32mr[39m[32m [39m[32m1[39m[32m%[39m[32m [39m[32mp[39m[32ma[39m[32ms[39m[32mt[39m[32m [39m[32mi[39m[32mt[39m[32ms[39m[32m [39m[32ms[39m[32mm[39m[39mo[39m[32mo[39m[39mt[39m[39mh[39m[31mi[39m[39mn[39m[32me[39m[32ms[39m[32ms[39m[31mg[39m[39m [39m[32ml[39m[32mi[39m[32mm[39m[32mi[39m[32mt[39m[32m [39m[31mc[39m[31mh[39m[39ma[39m[32mt[39m[32m [39m[32mo[39m[39mn[39m[31mg[39m[39me[39m[32m [39m[32mp[39m[32mo[39m[32mi[39m[32mn[39m[32mt[39m[32m [39m[32m([39m[32mp[39m[32m5[39m[32m)[39m[31md[39m[39m'[39m
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-372c8abc\fbf98f8e-29da-4fb2-8610-c038d6372249\scratchpad\d477\tree-a4bf\[39mapp\test\core-bank-lap.test.js:135:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'banked the lap: 6 pieces (p1, p2, p3, p4, p5, p6), up to 64.0° into their turns; the route did not move (Ctrl+Z takes the bank back); the bank on the lap stopped about under 1% past its smoothness limit at one point (p5)'[39m,
+    expected: [32m'not banked: the copy from before could not be written (the disk is full); nothing changed'[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }

@@ -1,0 +1,6 @@
+r.acreplay: 7095 frames, box below the road (rigid tyres) in 420 (5.92%), 4 separate episodes
+  deepest 14.6 cm at t=94.35 s; longest episode 417 frames (6.25 s)
+  t 91.75-97.99 s   417 frames   max 14.6 cm
+  t 98.02-98.02 s   1 frames   max 0.6 cm
+  t 98.05-98.05 s   1 frames   max 0.5 cm
+  t 98.08-98.08 s   1 frames   max 0.3 cm

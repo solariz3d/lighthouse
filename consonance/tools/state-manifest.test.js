@@ -29,7 +29,7 @@ function test(name, fn) {
   catch (e) { console.log(`  FAIL ${name}\n       ${e.message}`); fail++; }
 }
 
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'statemanifest-'));
+const tmp = require('./scratch.js').mkdtemp('statemanifest-');
 let seq = 0;
 
 /** A fixture data dir + a fixture manifest. `files` maps relative path -> contents. */

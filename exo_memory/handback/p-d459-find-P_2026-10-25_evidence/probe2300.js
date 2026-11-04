@@ -1,0 +1,20 @@
+// probe2300.js (D459, P): a ray down the station's up vector through the kn5's ROAD triangles at fine s around a joint, at a few x: the height above the core's
+// surface point, the mesh hit, and the along-s spread of the hit triangle's vertices (0 = a degenerate zipper strip lying in the station plane).
+//   node probe2300.js <tree> <save> <kn5> <sJoint> <xCSV> [half=0.2] [ds=0.01]
+'use strict';
+const fs = require('fs'), path = require('path'); const [T, F, K, SJ, XS, HALF, DSS] = process.argv.slice(2); const sJ = +SJ, half = HALF ? +HALF : 0.2, ds = DSS ? +DSS : 0.01;
+const D = require(path.join(T, 'src/core/document.js')), AD = require(path.join(T, 'src/core/adapter.js')), Prof = require(path.join(T, 'src/geom/profile.js')), { readKn5 } = require(path.join(T, 'tools/kn5.cjs'));
+const doc = D.parse(fs.readFileSync(F, 'utf8')); const { segments, path: p } = AD.toPath(doc, { step: 2 }); const S = p.samples, LAP = doc.pieces.reduce((a, q) => a + q.length, 0);
+const segS0 = []; { let a = S[0].s; for (const g of segments) { segS0.push(a); a += g.length; } }
+const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]], sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], mul = (a, k) => [a[0] * k, a[1] * k, a[2] * k], dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2], cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const frameAt = (s) => { let ss = ((s % LAP) + LAP) % LAP; let i = Math.min(S.length - 2, Math.max(0, Math.floor((ss - S[0].s) / 2))); const a = S[i], b = S[i + 1], t = (ss - a.s) / (b.s - a.s); const lerp = (x, y) => [x[0] + (y[0] - x[0]) * t, x[1] + (y[1] - x[1]) * t, x[2] + (y[2] - x[2]) * t]; const seg = ss < segS0[a.seg] + segments[a.seg].length ? a.seg : b.seg; return { s: ss, pos: lerp(a.pos, b.pos), T: a.T, L: lerp(a.L, b.L), U: lerp(a.U, b.U), seg }; };
+const core = (fr, x) => { const seg = segments[fr.seg], P = Prof.readAt(seg, Math.max(0, Math.min(seg.length, fr.s - segS0[fr.seg]))); let a = P.u[0], b = P.u[P.u.length - 1]; for (let i = 0; i < 50; i++) { const m = (a + b) / 2; if (Prof.offsetAt(P, m)[0] < x) a = m; else b = m; } const [X, Y] = Prof.offsetAt(P, (a + b) / 2); return add(fr.pos, add(mul(fr.L, X), mul(fr.U, Y))); };
+const kn = readKn5(K); const f0 = frameAt(sJ); const road = kn.meshes.filter((m) => /^1ROAD(?!_PIT|_CATCH)/.test(m.name));
+const tris = []; for (const m of road) for (let k = 0; k < m.idx.length; k += 3) { const v = [m.idx[k], m.idx[k + 1], m.idx[k + 2]].map((i) => [m.pos[i * 3], m.pos[i * 3 + 1], m.pos[i * 3 + 2]]); if (Math.hypot(v[0][0] - f0.pos[0], v[0][1] - f0.pos[1], v[0][2] - f0.pos[2]) > 40) continue; tris.push({ v, name: m.name }); }
+console.log('triangles within 40 m of s', sJ, ':', tris.length);
+const sOf = (q) => { const d = sub(q, f0.pos); return sJ + dot(d, f0.T); };
+const hit = (o, dir) => { let best = null; for (const t of tris) { const [a, b, c] = t.v, e1 = sub(b, a), e2 = sub(c, a), h = cross(dir, e2), det = dot(e1, h); if (Math.abs(det) < 1e-12) continue; const f = 1 / det, s = sub(o, a), u = f * dot(s, h); if (u < -1e-9 || u > 1 + 1e-9) continue; const q = cross(s, e1), v = f * dot(dir, q); if (v < -1e-9 || u + v > 1 + 1e-9) continue; const tt = f * dot(e2, q); if (tt > 0 && (!best || tt < best.t)) best = { t: tt, tri: t, det }; } return best; };
+for (const x of XS.split(',').map(Number)) {
+  console.log(`\nx ${x}: s, height above the core (mm), mesh, hit triangle's vertex s values (spread), |det|`);
+  for (let s = sJ - half; s <= sJ + half + 1e-9; s += ds) { const fr = frameAt(s), c = core(fr, x); const o = add(c, mul(fr.U, 5)); const h = hit(o, mul(fr.U, -1)); if (!h) { console.log(s.toFixed(3).padStart(10), '   no hit'); continue; } const hp = add(o, mul(fr.U, -h.t)); const hgt = dot(sub(hp, c), fr.U); const sv = h.tri.v.map(sOf); console.log(s.toFixed(3).padStart(10), (hgt * 1000).toFixed(1).padStart(8), h.tri.name.padEnd(22), sv.map((q) => q.toFixed(3)).join(' '), ' spread', (Math.max(...sv) - Math.min(...sv)).toFixed(4), ' det', Math.abs(h.det).toExponential(1)); }
+}

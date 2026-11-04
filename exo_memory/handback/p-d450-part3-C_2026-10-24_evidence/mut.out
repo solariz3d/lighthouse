@@ -1,0 +1,14 @@
+caught       a zero read is printed as a count
+caught       the control rise is not required
+caught       the tray sanity check is dropped
+caught       registered worktrees count as strays
+caught       a dangling .git counts as registered
+caught       the main checkout counts as a stray
+caught       infrastructure is listed
+caught       young processes are listed
+caught       processes not ours are listed
+caught       any --headless process counts as ours
+caught       a headless browser is not ours
+caught       fake- match is loosened
+caught       worktrees are not counted
+applied 13 / caught 13 / NOT APPLIED 0; unmutated copy green

@@ -1,0 +1,47 @@
+head de43a6f
+build exit 0
+t180-track-builder.exe: 15752192 bytes, no private paths
+T-180 Track Builder_0.4.33_x64-setup.exe: 8055353 bytes, no private paths
+f2e85faba0304d2345c784661054d4d93a8ab94ab661864c15dc0cdf9de533ab *src-tauri/target/release/t180-track-builder.exe
+567b4b9c07481279810949cb1e74bd8fe4b279b88d5325550a45d7d31fbb316f *src-tauri/target/release/bundle/nsis/T-180 Track Builder_0.4.33_x64-setup.exe
+== elysium 13:10
+launched pid 53484; track ELYSIUM
+ok   launch (0.4 s): menus ready
+windows on the user's desktop: 0
+ok   open (48.0 s): loaded: head shown at 1.5 s, still from 28.0 s; peak 1183 MB at 18.4 s (page 669, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 509); settled 921 MB (page 59
+ok   export (99.2 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_elysium to  | files 10, kn5 218786117 B; peak 2084 MB at 94.4 s (page 497, worker:overlapwo
+ok   install (104.2 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_elysium to C:\Users\nname\AppDa | files 10, kn5 218786117 B; peak 2044 MB at 188.3 s (page 
+crashes 0; page errors 0; samples 252; overall peak 2084 MB at 94.4 s (page 497, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 321, iframe:about:srcdoc#4 1, worker:3d50477d-4b39-40c9-8e81-c3dfed#5 1261)
+SOCKET CLOSED {"t":"258.9","what":"the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20","mark":"install"}
+killed pid 53484; t180-track-builder.exe left running: 0
+exit 0
+lockrun: done at 2026-10-31T19:15:11.533Z, exit 0
+== 50 13:15
+launched pid 45092; track STADIUM 50
+ok   launch (0.8 s): menus ready
+windows on the user's desktop: 0
+ok   open (23.4 s): loaded: head shown at 1.2 s, still from 3.4 s; peak 380 MB at 24.3 s (page 231, worker:overlapworker.js#0 2, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 144); settled 358 MB (page 209,
+ok   export (55.7 s): STADIUM 50 · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_stadium_ | files 10, kn5 261725896 B; peak 875 MB at 66.7 s (page 209, worker:overlapwor
+ok   install (55.3 s): STADIUM 50 · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_stadium_50 to C:\Users\nname | files 10, kn5 261725896 B; peak 861 MB at 121.5 s (page 2
+crashes 0; page errors 0; samples 137; overall peak 875 MB at 66.7 s (page 209, worker:overlapworker.js#0 2, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 136, iframe:about:srcdoc#4 1, worker:88e9c65b-f0ac-45b7-8663-34b54b#5 524)
+SOCKET CLOSED {"t":"141.6","what":"the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20","mark":"install"}
+killed pid 45092; t180-track-builder.exe left running: 0
+exit 0
+lockrun: done at 2026-10-31T19:17:36.174Z, exit 0
+== wvf-elysium  (0.4.32; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.4      15        2            17              0
+open       48.0     669      509          1178              0
+export     99.2     694      321          1015           1261
+install   104.2     583      321           904           1147
+  open: loaded: head shown at 1.5 s, still from 28.0 s
+== wvf-50  (0.4.32; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.8      16        2            18              0
+open       23.4     231      144           375              0
+export     55.7     284      144           428            524
+install    55.3     291      136           427            508
+  open: loaded: head shown at 1.2 s, still from 3.4 s
+ELYSIUM export IDENTICAL to d08feea
+ALL 356ba69a56319f0d
+FINAL-DONE

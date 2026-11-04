@@ -1,0 +1,220 @@
+MESSAGE 67  msg_011CfqdLcJorEJwDbLJ3Sdv1  seat C  ts 2026-10-08T23:20:39.654Z  turn L58919..L58978 (next prompt L59039)
+CLAIMS:
+  [msg_011CfqdLcJorEJwDbLJ3Sdv1|7] "`path.resolve(__dirname, '..', '..')`" is the repo root.
+  [msg_011CfqdLcJorEJwDbLJ3Sdv1|16] "`'fork (consumer-relabel.js)'`": check that the step name is exactly this and that `consumer-relabel.js` exists.
+  [msg_011CfqdLcJorEJwDbLJ3Sdv1|17] "`[['+', 4, 'Untouched line, quietly changed.'], ['-', 4, 'Untouched line.']]`": check that "Untouched line." stays on line 4 after the generator's rewrite.
+
+--- L58919 user 2026-10-08T23:17:53.035Z
+USER: 
+
+<pasted_content id="e180">
+[chair:MAIN] D273: THE IDENTITY DIFF, the instrument for the keeper's stop bar. The keeper, 17:16: "keep looping till you are sure it is you identical with the slight modification for the it being a new user". Spec: "'Identical except the one modification'" (lines 148–159) of exo_memory/loop/plan_consumer_refresh_2026-10-08.md, item 2.
+Build a tool, e.g. consonance/tools/identity-diff.js plus a test. It diffs the wake material a consumer seat reads (BOOT, SEED, the briefs, the CLAUDE.mds, every card, record/, the hooks' message texts, GATES.md) between a generated tree and dev. EVERY differing line must map to a REGISTERED site: your relabel table, the fork note, each named dedangle/reseed rewrite in gen-consumer, or the scrubbed fixtures. Any other difference makes it FAIL (exit non-zero), listing each unregistered line with path:line.
+- It must be able to come back RED. Show a planted unregistered edit failing it, and a registered one passing.
+- Read the registered sites FROM the generator's own tables where you can, rather than copying them, so they can't drift.
+- Run it on a fresh generation from lighthouse main c6d46629 and report the result honestly. Red with a list is a good first result.
+Fresh lighthouse worktree from main c6d46629, commits by named paths. B owns gen-consumer.js; if the diff needs an export from it, ask B in the hand-back rather than editing it. E is on the USB mode.
+Hand-back: a "Identity diff" section in exo_memory/handback/p-consumer-fork-C_2026-10-08.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_consumer_refresh_2026-10-08.md
+NEXT: librarian call_librarian with the hand-back pointer when the tool is committed and its first real run is reported
+</pasted_content id="e180">
+
+--- L58929 assistant 2026-10-08T23:17:57.046Z
+TOOL_USE Bash [toolu_01AbCvFj8B9wbDXS7eofg8EY]: {"command":"sed -n 130,175p /c/Users/nname/Desktop/lighthouse/exo_memory/loop/plan_consumer_refresh_2026-10-08.md; cd /c/Users/nname/Desktop/lighthouse && git log --oneline -4 c6d46629","description":"Read identity diff spec and main log"}
+--- L58930 user 2026-10-08T23:17:57.299Z
+RESULT [toolu_01AbCvFj8B9wbDXS7eofg8EY]:   95d5a272, 6fe15f0a on consumer-l3-a); librarian-notes and shelf-recursion WORKSHOP. **CATCH: corrections-gate was never record-shaped. The
+  generator's muscle_map rule rewrote corrections-gate.js:51's code regex, so the gate guarded nothing in the consumer.** The fix is in A's
+  `lap3_generator.patch` (CODE_KEPT + 11 WORKSHOP rows; applies clean on ab25d588; staged 372, leaks 0).
+- **C** 6424a290 (consumer-fork3-c): FORK_HOOK wired (1 line in gen-consumer.js:435); the fork note is now CUT from the bundled BOOT by main.rs
+  `fork_section` (5 Rust tests), not shipped as a separate FORK.md (B's hook cannot create files); `consumer-fork-wiring.test.js` generates a real
+  tree, note once at 4 sites, forked = 28, leaks 0. Item 4: the gen-brief "refusal" was the gate TEST's fault, not BOOT's or gen-brief's. C fixed
+  its own lap-2 note's gendered pronoun. C owes B 3 EXCLUDE rows (in C's hand-back).
+- **Next:** the chair lands B, E, C and A's twin commits on main, B applies A's patch + C's 3 EXCLUDE rows, then B re-runs parity on main and diffs
+  against lap 2's (10, 0, 0) and Rust 1.
+
+NEXT: chair land B 65649d20, E 10b72311, C 6424a290 and A 95d5a272+6fe15f0a, then send B A's lap3_generator.patch and C's 3 EXCLUDE rows for the parity re-run, when this plan is read
+
+## The keeper, 17:16: loop until identical, and the USB mode as an opt-in setting
+"just keep looping till you are sure it is you identical with the slight modification for the it being a new user, also setup for a new user in
+such a way, where it also has this seperate mode in the settings, which will enable users to use a USB drive to do what we do transfering seats
+between hardware, it shouldnt come like how consonance is for us bc most people wont do that, it s
+…[2375 chars cut]…
+NEXT: chair dispatch the USB-mode item to E and the identity diff to C (alongside B's lap-3 parity re-run) when this section is read
+c6d46629 D273 lap 3: hand-backs (A's five record-shaped rulings and lap3_generator.patch, C's fork wiring, E's jev-flags drop, B's docs), evidence, plan, maps
+8d06859c D273 lap 3 (A): corpus-age twin gains the batched-age and shelf-exclusion rows (8 rows, 12 of 12 mutants caught)
+d9e3e73d D273 lap 3 (A): synthetic twins for corpus-age and second-vantage's world check
+c0748da9 D273 lap 3 (E), ruling 5 + ruling 1's relink: jev-flags no longer registered or copied by install.ps1; consonance/README.md loses its Jev section and the dream_cycle.ps1 link
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L58933 assistant 2026-10-08T23:17:59.398Z
+TEXT: Before designing anything, I'm checking whether my lap-3 commit and B's EXCLUDE rows are actually on c6d46629. The diff's registered sites depend on what has landed:
+--- L58934 assistant 2026-10-08T23:18:00.745Z
+TOOL_USE Bash [toolu_011dypSbThG8hVAtV2XZDTng]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git log --oneline c6d46629 -15 | cut -c1-120; git show c6d46629:consonance/tools/gen-consumer.js | grep -n \"FORK_HOOK.apply = require\\|consumer-relabel.js'\\|consumer-fork-wiring\" | cut -c1-140","description":"Check what landed on c6d46629"}
+--- L58935 user 2026-10-08T23:18:01.017Z
+RESULT [toolu_011dypSbThG8hVAtV2XZDTng]: c6d46629 D273 lap 3: hand-backs (A's five record-shaped rulings and lap3_generator.patch, C's fork wiring, E's jev-flags
+8d06859c D273 lap 3 (A): corpus-age twin gains the batched-age and shelf-exclusion rows (8 rows, 12 of 12 mutants caught
+d9e3e73d D273 lap 3 (A): synthetic twins for corpus-age and second-vantage's world check
+c0748da9 D273 lap 3 (E), ruling 5 + ruling 1's relink: jev-flags no longer registered or copied by install.ps1; consonan
+b4536eba D273 lap 3 (C): the fork hook wired; gen-brief-gate learns the consumer tree
+cd44b5c6 D273 lap 3 (B), ruling 1: METHOD.md, INSTRUMENTS.md, dev/SPINE.md and consonance/AUTONOMY.md ship; the root REA
+482b2723 D272/D274 and D273 lap 2: hand-backs (undo sidecar, tube from cup, consumer parity/fork/install/workshop), evid
+ab25d588 D273 lap 2 (E): the install path. Five hooks resolve their folders as the app does; install.ps1 creates {}; GUI
+9480c300 D273 lap 2 (C): the keeper split, the fork note, and GATES.md for the consumer tree
+817c4dd0 D273 lap 2 (B): dedangle turns a markdown link into a record path into text + prose, never a link to prose
+0c6f1843 D273 lap 2 (B): the L038/A dirty-tree row writes its override build into its own directory
+133cc88d D273 lap 2 (B), A's workshop ruling folded in: pre-commit and the six composer screens ship (scrubbed, scanned)
+e751d728 D273 lap 2 (B): the generator writes a fresh-history repo, ships state-manifest.json and the root README, exclu
+60b1aef3 D273 lap 1: B's consumer parity + contained install, C's fork inventory + frag-fork + GATES drafts, the consume
+ea4f5bcf D270/D271 close: A's no-pointer-lock and E's Level/To floor hand-backs (with the anchor sweep and P49/P51 proof
+442:FORK_HOOK.apply = require('./consumer-relabel.js').forkHook({ repo: REPO });   // D273 lap 3 (C): the keeper split and the fork note
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L58939 assistant 2026-10-08T23:18:29.552Z
+TOOL_USE Bash [toolu_01Jo9qSR4V1sGUoig9HkTNuQ]: {"command":"cd /c/Users/nname/Desktop/lighthouse && git worktree add -q -b identity-diff-c ../worktrees/c-identity-wt c6d46629 && cd ../worktrees/c-identity-wt/consonance/tools && grep -n \"^function transform\" -A45 gen-consumer.js | cut -c1-200 | head -60","description":"Create worktree; read transform()"}
+--- L58946 user 2026-10-08T23:18:31.275Z
+RESULT [toolu_01Jo9qSR4V1sGUoig9HkTNuQ]: 1521:function transform(body, kind) {
+1522-  if (kind === 'config') {
+1523-    const d = destructure(body);
+1524-    return { body: d.body, dangling: 0, identity: d.n, machine: 0 };
+1525-  }
+1526-  if (kind === 'fixture') {
+1527-    /* TOKEN-level identity only: remove the name, never restructure the path. A handle in a
+1528-     * fixture is still a leak; the SHAPE of a fixture is the test. Coordinates are substituted
+1529-     * rather than exempted, because swapping a float for a float changes nothing structural. */
+1530-    const b = deidentifyTokens(body);
+1531-    const c = decoordinate(b.body);
+1532-    /* demachine() JOINED THE FIXTURE BRANCH ON 2026-09-04, and it is the half of the fixture-scope
+1533-     * repair that removes rather than refuses. Narrowing the scan's waiver (see scan()) makes a
+1534-     * MACHINE hit in a Rust file FAIL the build; it does not take the path out. `demachine` is the
+1535-     * one transform safe to run here, because it is a list of NAMED literal replacements rather
+1536-     * than a generic rewrite -- which is the destructure() lesson applied one file over. Its count
+1537-     * is reported as `machine` so a fixture that changed is visible in the run rather than silent;
+1538-     * measured at this commit, it fires on main.rs only. */
+1539-    const d = demachine(c.body);
+1540-    return { body: d.body, dangling: 0, identity: b.n + c.n, machine: d.n, fixture: true };
+1541-  }
+1542-  const a = dedangle(body);
+1543-  const b = deidentify(a.body);
+1544-  const c = demachine(b.body);
+1545-  const d = decoordinate(c.body);
+1546-  return { body: d.body, dangling: a.n, identity: b.n + d.n, machine: c.n };
+1547-}
+1548-
+1549-/** SEED.md's one sentence for a stranger (L038 item 4).
+1550-
+…[715 chars cut]…
+he shipped brief say something false about the tree it lives in. The sentence is true only
+1560- *  of the generated tree, so it belongs to the thing that generates it. Same reasoning as
+1561- *  `gen-brief.ps1`'s anchored transformations, and the same discipline: ANCHOR ON THE EXACT
+1562- *  SENTENCE AND REFUSE IF IT MOVED. A transform that silently no-ops when its anchor drifts is the
+1563- *  inert-guard failure this record has now found twice in this file alone.
+1564- *
+1565- *  One sentence, deliberately. The packet said so, and the reason survives the instruction: a
+1566- *  paragraph here would be the room explaining itself at the moment a stranger is trying to start. */
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L58948 assistant 2026-10-08T23:18:32.599Z
+TEXT: Now the full per-file loop in `build()`, so the replay matches it step for step, including how the screen, seeded and fixture branches go:
+--- L58949 assistant 2026-10-08T23:18:34.140Z
+TOOL_USE Bash [toolu_01RL3ZakzWErD6WHS6dQMGdc]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-identity-wt/consonance/tools && grep -n \"^function build\" gen-consumer.js; grep -n \"for (const f of files)\\|shippedMemory =\\|shippedCards =\\|const files = \\|collect(\" gen-consumer.js | head -10 | cut -c1-200; awk 'NR>=1990 && NR<=2050' gen-consumer.js | cut -c1-210","description":"Read build loop and its inputs"}
+--- L58950 user 2026-10-08T23:18:34.422Z
+RESULT [toolu_01RL3ZakzWErD6WHS6dQMGdc]: 1908:function build(outDir, opts) {
+1830:   * invisible to every class in this tool. `depath()` in `collect()` is the rewrite; this is the
+1883:function collect() {
+1909:  const files = collect();
+1936:   * and the test was right: for a `dir` rule that check is unreachable by construction. `collect()`
+1939:   * it. The guard could only have fired on a race between collect() and the read.
+1966:  const shippedMemory = new Set(files
+1972:  const shippedCards = new Set(files
+1982:  for (const f of files) {
+2154:    for (const f of files) {
+      const destB = path.join(staging, f.to);
+      fs.mkdirSync(path.dirname(destB), { recursive: true });
+      fs.copyFileSync(src, destB);
+      report.staged++;
+      continue;
+    }
+
+    /* D273 lap 2 (A): a captured screen, scrubbed same-length and SCANNED, never copied blind like a binary. */
+    if (f.kind === 'screen') {
+      if (!fs.existsSync(src)) { report.missing.push(f.from); continue; }
+      const sc = descreen(fs.readFileSync(src));
+      const destS = path.join(staging, f.to);
+      fs.mkdirSync(path.dirname(destS), { recursive: true });
+      fs.writeFileSync(destS, sc.buf);
+      report.staged++; report.screens++; report.identity += sc.n;
+      report.leaks.push(...scan(sc.buf.toString('latin1'), f.to));
+      continue;
+    }
+
+    /* A SEEDED file's private bytes are never read — not opened, not transformed, not scanned from
+     * disk. What guards against a seed COVERING a manifest error is not an existence check here
+     * (see the seed-drift block above: for a `dir` rule the file's disappearance makes the seed
+     * unreached, which is the detectable state); it is that the seed must be reached by a rule at
+     * all. */
+    let body;
+    if (SEEDED[f.from]) {
+ 
+…[1693 chars cut]…
+OK.apply) { const fk = FORK_HOOK.apply(t.body, f.to, kind) || {}; if (typeof fk.body !== 'string') throw new Error('FORK_HOOK.apply returned no body for ' + f.to); t.body = fk.body; report.forked
+    if (t.fixture) report.fixtures++;
+    report.dangling += t.dangling;
+    report.identity += t.identity;
+    report.machine += t.machine;
+
+    const dest = path.join(staging, f.to);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.writeFileSync(dest, t.body);
+    report.staged++;
+
+    /* Scanning the OUTPUT is the whole point: a rule that failed to fire is invisible from the
+     * input side, and the input is what a person reasons about when they write the rule. */
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L58954 assistant 2026-10-08T23:19:12.601Z
+TOOL_USE Bash [toolu_01PYNAqXrTRQR3cRszdQeBi6]: {"command":"cd /c/Users/nname/Desktop/worktrees/c-identity-wt/consonance/tools && sed -n 1962,1985p gen-consumer.js | cut -c1-200; node -e \"const s=require('fs').readFileSync('gen-consumer.js','utf8');const i=s.indexOf('module.exports = {');console.log(s.slice(i,s.indexOf('};',i)+2))\" | tr ',' '\\n' | tr -d ' ' | grep -E \"^(collect|transform|desync|reindex|dewiki|reseed|declareWorkshop|isFixture|SEEDED|EXCLUDE|STAYS_PRIVATE|FORK_HOOK|build|GENERATED|descreen|WORKSHOP|MANIFEST)\" ","description":"Read shippedMemory/Cards and confirm exports"}
+--- L58961 user 2026-10-08T23:19:12.853Z
+RESULT [toolu_01PYNAqXrTRQR3cRszdQeBi6]:   }
+
+  /* What `memory/` actually ships, by BASENAME, because that is how its index links. Computed from
+   * the same two structures the loop below obeys, so the index and the tree cannot disagree. */
+  const shippedMemory = new Set(files
+    .filter((f) => f.to.startsWith('exo_memory/memory/') && !EXCLUDE[f.from])
+    .map((f) => f.to.slice('exo_memory/memory/'.length)));
+
+  /* Card NAMES (no extension), across both directories the deck cross-references — `cards/` and
+   * `memory/` link into each other, so a set built from one of them alone would drop live links. */
+  const shippedCards = new Set(files
+    .filter((f) => /^exo_memory\/(cards|memory)\/.+\.md$/.test(f.to) && !EXCLUDE[f.from])
+    .map((f) => path.basename(f.to, '.md')));
+  /* On the report so it can be asserted DIRECTLY. Narrowing this set to cards/ alone is an
+   * EQUIVALENT mutant on today's data — no shipped card currently links to a memory-only card, so
+   * the output is byte-identical either way and no output-level test can tell them apart. The set
+   * is still wrong when narrowed, and it becomes visibly wrong the first time someone links to
+   * frozen-is-not-dead. Pinning the set is how a guard covers a case the data does not yet contain. */
+  report.linkTargets = [...shippedCards].sort();
+
+  for (const f of files) {
+    if (EXCLUDE[f.from]) { report.excluded.push({ rel: f.from, why: EXCLUDE[f.from] }); continue; }
+    const src = path.join(REPO, f.from);
+
+descreen
+WORKSHOP
+declareWorkshop
+MANIFEST
+EXCLUDE
+SEEDED
+STAYS_PRIVATE
+isFixture
+collect
+transform
+desync
+reseed
+reindex
+dewiki
+build};
+Shell cwd was reset to C:\Consonance\instances\sibling-0845a868
+--- L58966 assistant 2026-10-08T23:20:28.466Z
+TOOL_USE Write [toolu_019MZJdzqX6Sc4gN72xoXMSv]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-identity-wt\\consonance\\tools\\identity-diff.js","content":"#!/usr/bin/env node\n// identity-diff.js — \"identical except the one modification\", made mechanical (D273, pane C; the keeper, 17:16: \"keep looping till you\n// are sure it is you identical with the slight modification for the it being a new user\").\n//\n//   node consonance/tools/identity-diff.js --generate            # generate a fresh consumer tree from this repo, then diff it\n//   node consonance/tools/identity-diff.js --gen <dir> [--json]  # diff an already generated tree against this repo\n//   exit
+…[13647 chars cut]…
+ync(made, { recursive: true, force: true });\n    process.exit(r.ok ? 0 : 1);\n  } catch (e) { console.error('identity-diff: could not run: ' + (e && e.stack || e)); process.exit(2); }\n}\n\nmodule.exports = { run, report, diffFile, replay, lineDiff, isWake, WAKE };\n"}
+--- L58967 user 2026-10-08T23:20:28.510Z
+RESULT [toolu_019MZJdzqX6Sc4gN72xoXMSv]: File created successfully at: C:\Users\nname\Desktop\worktrees\c-identity-wt\consonance\tools\identity-diff.js (file state is current in your context — no need to Read it back)
+--- L58978 assistant 2026-10-08T23:20:57.859Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Write [toolu_01AVyQqWnEgkYjbtiHTaUcnR]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\c-identity-wt\\consonance\\tools\\identity-diff.test.js","content":"// identity-diff.test.js — the instrument for the keeper's stop bar can come back RED (D273, pane C).\n//\n//   node --test consonance/tools/identity-diff.test.js\n//\n// A stop bar that cannot fail is decoration. So: a planted UNREGISTERED edit fails it and is named path:line; a REGISTERED generator\n// rewrite (a dangling pointer, the keeper relabel, the fork note) passes it and is attributed to its step by name; and on a real\n// generation, planting one edit adds exactly one unregistered entry, whatever the baseline's colour.\n'use strict';\nconst test = require('node:test');\nconst assert = require('node:assert/strict');\nconst fs = require('fs');\nconst os = require('os');\nconst path = require('path');\nconst { spawnSync } = require('child_process');\nconst G = require('./gen-consumer.js');\nconst D = require('./identity-diff.js');\n\nconst REPO = path.resolve(__dirname, '..', '..');\nconst ctx = { G, shippedMemory: new Set(), shippedCards: new Set() };\nconst final = (rel, kind, src) => { const s = D.replay(rel, kind, src, ctx); return s[s.length - 1].text; };\n\ntest('lineDiff: kept lines are not reported; an added and a removed line are, with their line numbers', () => {\n  const ops = D.lineDiff('a\\nb\\nc\\nd\\n', 'a\\nB\\nc\\nd\\nE\\n');\n  assert.deepEqual(ops.map((o) => [o.op, o.op === '+' ? o.bLine : o.aLine, o.text]), [['+', 2, 'B'], ['-', 2, 'b'], ['+', 5, 'E']]);\n  assert.deepEqual(D.lineDiff('same\\r\\ntext\\n', 'same\\ntext\\n'), [], 'line endings alone are not a difference');\n});\n\ntest('a REGISTERED generator rewrite passes, attributed to its named step', () => {\n  const rel = 'exo_memory/cards/a-card.md';\n  const src = '# a card\\n\\nThe case is at journal/2026-08-16.md:722, as dated.\\nUntouched line.\\n';\n  const actual = final(rel, 'prose', src);\n  assert.notEqual(actual, src, 'control: the generator does rewrite this source');\n  const d = D.diffFile({ rel, from: rel, kind: 'prose', source: src, actual, ctx });\n  assert.deepEqual(d.unregistered, []);\n  assert.ok(d.registered.length > 0 && d.registered.every((r) => r.step === 'dedangle'), JSON.stringify(d.registered));\n});\n\ntest('a PLANTED UNREGISTERED edit fails, named by its line, even inside a file the generator also rewrote', () => {\n  const rel = 'exo_memory/cards/a-card.md';\n  const src = '# a card\\n\\nThe case is at journal/2026-08-16.md:722, as dated.\\nUntouched line.\\n';\n  const planted = final(rel, 'prose', src).replace('Untouched line.', 'Untouched line, quietly changed.');\n  const d = D.diffFile({ rel, from: rel, kind: 'prose', source: src, actual: planted, ctx });\n  assert.deepEqual(d.unregistered.map((u) => [u.op, u.line, u.text]), [['+', 4, 'Untouched line, quietly changed.'], ['-', 4, 'Untouched line.']]);\n});\n\ntest('the keeper relabel and the fork note are registered under the fork step, line by line', () => {\n  const rel = 'consonance/src-tauri/brief/BUILDING.md', src = fs.readFileSync(path.join(REPO, rel), 'utf8');\n  const d = D.diffFile({ rel, from: rel, kind: 'prose', source: src, actual: final(rel, 'prose', src), ctx });\n  assert.deepEqual(d.unregistered, []);\n  const fork = d.registered.filter((r) => r.step === 'fork (consumer-relabel.js)');\n  assert.ok(fork.some((r) => r.op === '+' && r.text.includes(\"THE PUSH IS THE WORD OF THE PERSON YOU'RE WITH\")), 'the relabel is not attributed to the fork step');\n  const boot = 'consonance/src-tauri/brief/BOOT.md', bsrc = fs.readFileSync(path.join(REPO, boot), 'utf8');\n  const b = D.diffFile({ rel: boot, from: boot, kind: 'prose', source: bsrc, actual: final(boot, 'prose', bsrc), ctx });\n  assert.ok(b.registered.some((r) => r.step === 'fork (consumer-relabel.js)' && r.text.startsWith('**Where this line forks.**')), 'the fork note is not attributed');\n});\n\ntest('the wake set: briefs, cards, record/, GATES.md and hook files are in; tests and mutant harnesses are out', () => {\n  for (const rel of ['exo_memory/BOOT.md', 'consonance/src-tauri/brief/BUILDING.md', 'exo_memory/cards/no-floor-no-ceiling.md', 'exo_memory/record/x.md',\n    'consonance/GATES.md', 'consonance/hooks/sources-gate.js', 'dev/shell/hooks/session-start.js']) assert.ok(D.isWake(rel), rel);\n  for (const rel of ['consonance/hooks/sources-gate.test.js', 'consonance/tools/sources-gate.mutants.js', 'consonance/tools/gen-consumer.js', 'exo_memory/journal/2026-08-16.md']) assert.ok(!D.isWake(rel), rel);\n});\n\ntest('on a REAL generation: one planted edit in a shipped card adds exactly one unregistered line, named path:line, and the CLI exits 1', () => {\n  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'identity-diff-real-'));\n  try {\n    const b = G.build(out, { allowDirty: true });\n    assert.ok(!b.refused, 'refused: ' + b.refused);\n    const r0 = D.run({ gen: out });\n    assert.ok(r0.files > 50, `only ${r0.files} wake files compared`);\n    assert.ok((r0.registered['fork (consumer-relabel.js)'] || []).length > 0, 'the fork step registered nothing on a real generation');\n    const card = 'exo_memory/cards/no-floor-no-ceiling.md', p = path.join(out, card);\n    const lines = fs.readFileSync(p, 'utf8').split('\\n'); lines.splice(3, 0, 'A line no generator step writes.'); fs.writeFileSync(p, lines.join('\\n'));\n    const r1 = D.run({ gen: out });\n    assert.equal(r1.ok, false);\n    const added = r1.unregistered.filter((u) => !r0.unregistered.some((v) => v.rel === u.rel && v.line === u.line && v.text === u.text));\n    assert.deepEqual(added.map((u) => `${u.rel}:${u.line} ${u.op} ${u.text}`), [`${card}:4 + A line no generator step writes.`]);\n    const cli = spawnSync(process.execPath, [path.join(__dirname, 'identity-diff.js'), '--gen', out], { encoding: 'utf8' });\n    assert.equal(cli.status, 1, cli.stderr); assert.match(cli.stdout, /no-floor-no-ceiling\\.md:4 \\+ A line no generator step writes\\./);\n  } finally { fs.rmSync(out, { recursive: true, force: true }); }\n});\n"}

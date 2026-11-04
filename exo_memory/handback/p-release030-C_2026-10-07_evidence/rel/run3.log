@@ -1,0 +1,9 @@
+== D265 0.3.0 targeted on 2b929c2 · asked 2026-10-07T07:46:42.484Z · lock held 2026-10-07T07:46:42.488Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-release030-wt && set -o pipefail && node --test --test-concurrency=1 test/release.test.js app/test/guides.test.js app/test/shell-dist.test.js app/test/closer.test.js app/test/core-eqonly.test.js app/test/export.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail|todo|skipped)|^✖|not ok'; cd src-tauri && /c/Users/nname/.cargo/bin/cargo.exe metadata --locked --offline --format-version 1 --no-deps > C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/rel/meta.json && node -e "const p=require('C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/rel/meta.json').packages[0];console.log('cargo-locked-ok',p.name,p.version)"
+[34mℹ tests 111[39m
+[34mℹ pass 111[39m
+[34mℹ fail 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+cargo-locked-ok t180-track-builder 0.3.0
+== exit 0 · done 2026-10-07T07:47:35.872Z

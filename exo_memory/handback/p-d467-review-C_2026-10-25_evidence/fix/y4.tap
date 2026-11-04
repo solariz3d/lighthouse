@@ -1,0 +1,302 @@
+TAP version 13
+# Subtest: row 1: every tool resolves to its mode, channel and family; an unknown tool is refused by name and opens nothing
+ok 1 - row 1: every tool resolves to its mode, channel and family; an unknown tool is refused by name and opens nothing
+  ---
+  duration_ms: 17.4271
+  type: 'test'
+  ...
+# Subtest: row 2: the family sets the guard: shape keeps the D244b refusal, local and route are not guarded, and a route tool moves the road after it
+ok 2 - row 2: the family sets the guard: shape keeps the D244b refusal, local and route are not guarded, and a route tool moves the road after it
+  ---
+  duration_ms: 84.89
+  type: 'test'
+  ...
+# Subtest: row 3: Smooth takes the channel of the tool used last; a channel given wins; with none it is refused by name
+ok 3 - row 3: Smooth takes the channel of the tool used last; a channel given wins; with none it is refused by name
+  ---
+  duration_ms: 16.943
+  type: 'test'
+  ...
+# Subtest: row 4: a route tool on a CLOSED lap is never closed per step: the lap is open during the drag
+ok 4 - row 4: a route tool on a CLOSED lap is never closed per step: the lap is open during the drag
+  ---
+  duration_ms: 90.5656
+  type: 'test'
+  ...
+# Subtest: row 5: the release only STARTS the job; the job lands the re-closed lap as ONE undo step, every piece outside the window the very same object
+ok 5 - row 5: the release only STARTS the job; the job lands the re-closed lap as ONE undo step, every piece outside the window the very same object
+  ---
+  duration_ms: 208.6862
+  type: 'test'
+  ...
+# Subtest: row 6: the start pieces first, then the window close; refused, the whole-lap close with the window protected; refused again, the drag is dropped whole and named
+ok 6 - row 6: the start pieces first, then the window close; refused, the whole-lap close with the window protected; refused again, the drag is dropped whole and named
+  ---
+  duration_ms: 196.614
+  type: 'test'
+  ...
+# Subtest: row 7: the window is the selected RUN: sculptInfo gives from/to and the middle piece; beginSculpt brushes the run, and nothing outside it changes
+ok 7 - row 7: the window is the selected RUN: sculptInfo gives from/to and the middle piece; beginSculpt brushes the run, and nothing outside it changes
+  ---
+  duration_ms: 17.1361
+  type: 'test'
+  ...
+# Subtest: row 8: a radius change mid-drag takes no step itself, and the next brushTo of the page re-runs from the same base at the new radius, with no accumulation
+ok 8 - row 8: a radius change mid-drag takes no step itself, and the next brushTo of the page re-runs from the same base at the new radius, with no accumulation
+  ---
+  duration_ms: 13.0401
+  type: 'test'
+  ...
+# Subtest: row 9: Esc (cancelBrush) drops an open drag: the very same document, and no undo step
+ok 9 - row 9: Esc (cancelBrush) drops an open drag: the very same document, and no undo step
+  ---
+  duration_ms: 4.7625
+  type: 'test'
+  ...
+# Subtest: row 10: Stretch hands the core ONE factor for the whole run, keepRate when asked; refused by name until the core has stretch
+ok 10 - row 10: Stretch hands the core ONE factor for the whole run, keepRate when asked; refused by name until the core has stretch
+  ---
+  duration_ms: 12.4156
+  type: 'test'
+  ...
+# Subtest: row 11: the close runner hands the worker the window a route tool's release asks for
+ok 11 - row 11: the close runner hands the worker the window a route tool's release asks for
+  ---
+  duration_ms: 1.6016
+  type: 'test'
+  ...
+# Subtest: row 12: runClose closes with the window it is given, not the default trailing one
+ok 12 - row 12: runClose closes with the window it is given, not the default trailing one
+  ---
+  duration_ms: 99.6669
+  type: 'test'
+  ...
+# Subtest: row 13: B's page: beginSculpt({ channel, from, to }) brushes the run with the shape guard on, and with a tool the tool's; a bad run or a steering channel is refused by name
+ok 13 - row 13: B's page: beginSculpt({ channel, from, to }) brushes the run with the shape guard on, and with a tool the tool's; a bad run or a steering channel is refused by name
+  ---
+  duration_ms: 14.1385
+  type: 'test'
+  ...
+# Subtest: row 14: with the real core of C, Stretch lengthens the run by exactly the metres of the drag, the document stays valid, one undo step
+ok 14 - row 14: with the real core of C, Stretch lengthens the run by exactly the metres of the drag, the document stays valid, one undo step
+  ---
+  duration_ms: 10.2512
+  type: 'test'
+  ...
+# Subtest: row 15: with the real core of C, Smooth after a Bend relaxes the turn channel under the window, one undo step
+ok 15 - row 15: with the real core of C, Smooth after a Bend relaxes the turn channel under the window, one undo step
+  ---
+  duration_ms: 10.1092
+  type: 'test'
+  ...
+# Subtest: row 16: Stretch with no piece and no run takes the road piece under s0 (B's strip sends neither)
+ok 16 - row 16: Stretch with no piece and no run takes the road piece under s0 (B's strip sends neither)
+  ---
+  duration_ms: 7.4719
+  type: 'test'
+  ...
+# Subtest: row 17: a re-close that outlives its document leaves no brush open: a new document during the release, and every tool still opens
+ok 17 - row 17: a re-close that outlives its document leaves no brush open: a new document during the release, and every tool still opens
+  ---
+  duration_ms: 188.1601
+  type: 'test'
+  ...
+# Subtest: row 18: a release with no change restores the lap as it was and runs no close
+ok 18 - row 18: a release with no change restores the lap as it was and runs no close
+  ---
+  duration_ms: 120.2922
+  type: 'test'
+  ...
+# Subtest: row 19: a handle on a two- or three-piece run lands the value asked where the handles read it, as exactly as D335 lands one piece (D335 per window)
+ok 19 - row 19: a handle on a two- or three-piece run lands the value asked where the handles read it, as exactly as D335 lands one piece (D335 per window)
+  ---
+  duration_ms: 34.54
+  type: 'test'
+  ...
+# Subtest: row 20: away from the seam the release tries the start pieces, then the window, then the window with the last road piece, then with the last and the first, then the whole lap with the window protected
+ok 20 - row 20: away from the seam the release tries the start pieces, then the window, then the window with the last road piece, then with the last and the first, then the whole lap with the window protected
+  ---
+  duration_ms: 251.0229
+  type: 'test'
+  ...
+# Subtest: row 21: with the real close, a small Bend away from the seam that passes the bar closes with the start pieces on the first try; the window's values stay as dragged, and only the start pieces and the joints after them change
+ok 21 - row 21: with the real close, a small Bend away from the seam that passes the bar closes with the start pieces on the first try; the window's values stay as dragged, and only the start pieces and the joints after them change
+  ---
+  duration_ms: 424.4719
+  type: 'test'
+  ...
+# Subtest: row 22 (D464): a Bend on the seam piece, which the re-close takes back, says plainly that it was undone and what to do
+ok 22 - row 22 (D464): a Bend on the seam piece, which the re-close takes back, says plainly that it was undone and what to do
+  ---
+  duration_ms: 143.6869
+  type: 'test'
+  ...
+# Subtest: row 23 (D464, D467): a later try that partly takes the bend back says how much
+ok 23 - row 23 (D464, D467): a later try that partly takes the bend back says how much
+  ---
+  duration_ms: 140.2996
+  type: 'test'
+  ...
+# Subtest: row 24 (D464, D467): a re-close by the window that keeps the drag says only that the lap is closed again
+ok 24 - row 24 (D464, D467): a re-close by the window that keeps the drag says only that the lap is closed again
+  ---
+  duration_ms: 57.5868
+  type: 'test'
+  ...
+# Subtest: row 25 (D467): a small Bend away from the seam that passes the bar keeps its full value after release
+ok 25 - row 25 (D467): a small Bend away from the seam that passes the bar keeps its full value after release
+  ---
+  duration_ms: 574.8297
+  type: 'test'
+  ...
+# Subtest: row 26 (D467): the start pieces that moved are named for the hatch, and the message says why; an undo ends the hatch
+ok 26 - row 26 (D467): the start pieces that moved are named for the hatch, and the message says why; an undo ends the hatch
+  ---
+  duration_ms: 398.0411
+  type: 'test'
+  ...
+# Subtest: row 27 (D467): at the seam nothing changes: no start-pieces try, the bend is said to be undone, nothing hatched
+ok 27 - row 27 (D467): at the seam nothing changes: no start-pieces try, the bend is said to be undone, nothing hatched
+  ---
+  duration_ms: 162.9154
+  type: 'test'
+  ...
+# Subtest: row 28 (D467 bar): C's lap case, a Bend the start pieces would close by swinging the lap 72 m: it falls through to the window tries, says what they took back, and the start straight stays
+not ok 28 - row 28 (D467 bar): C's lap case, a Bend the start pieces would close by swinging the lap 72 m: it falls through to the window tries, says what they took back, and the start straight stays
+  ---
+  duration_ms: 332.0337
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y4\\app\\test\\sculpt-tools.test.js:429:1'
+  failureType: 'testCodeFailure'
+  error: 'CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 72.3 m, further than your drag moved it (12.9 m)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'CLOSE_BAR: close: closing with the start of the lap would move road you did not touch up to 72.3 m, further than your drag moved it (12.9 m)'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y4\app\test\sculpt-tools.test.js:437:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 29 (D467 bar): a lap whose two long straights run side by side (a hairpin of 36 m), the case C saw on a smoothed track: it falls through and the road does not cross itself
+ok 29 - row 29 (D467 bar): a lap whose two long straights run side by side (a hairpin of 36 m), the case C saw on a smoothed track: it falls through and the road does not cross itself
+  ---
+  duration_ms: 804.6449
+  type: 'test'
+  ...
+# Subtest: row 30 (D467 bar): part 2 alone: a result with no straight long enough for the start misses, when the lap before had one
+ok 30 - row 30 (D467 bar): part 2 alone: a result with no straight long enough for the start misses, when the lap before had one
+  ---
+  duration_ms: 582.6938
+  type: 'test'
+  ...
+# Subtest: row 31 (D467 bar): part 1 alone: a red the lap before the drag already had is not new, and the result passes
+ok 31 - row 31 (D467 bar): part 1 alone: a red the lap before the drag already had is not new, and the result passes
+  ---
+  duration_ms: 1012.9222
+  type: 'test'
+  ...
+# Subtest: row 32 (D467 bar): the close runner hands the worker the bar a start-pieces try asks for, and no bar when none is asked
+ok 32 - row 32 (D467 bar): the close runner hands the worker the bar a start-pieces try asks for, and no bar when none is asked
+  ---
+  duration_ms: 0.3717
+  type: 'test'
+  ...
+# Subtest: row 33 (D467 bar): part 1 counts a red as new when the lap before the drag did not have it, even when the open lap already did
+not ok 33 - row 33 (D467 bar): part 1 counts a red as new when the lap before the drag did not have it, even when the open lap already did
+  ---
+  duration_ms: 1286.3105
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y4\\app\\test\\sculpt-tools.test.js:506:1'
+  failureType: 'testCodeFailure'
+  error: "the result's reds are new against the lap before the drag: null"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y4\app\test\sculpt-tools.test.js:515:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 34 (D467 bar): a Bend that makes the open lap cross itself, which the window close clears: the start pieces miss and the closed lap does not cross
+ok 34 - row 34 (D467 bar): a Bend that makes the open lap cross itself, which the window close clears: the start pieces miss and the closed lap does not cross
+  ---
+  duration_ms: 1046.2344
+  type: 'test'
+  ...
+# Subtest: row 35 (D467 bar): part 3 counts the window's pieces too: a result that moves only the window further than the drag moved the track misses
+not ok 35 - row 35 (D467 bar): part 3 counts the window's pieces too: a result that moves only the window further than the drag moved the track misses
+  ---
+  duration_ms: 358.9627
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y4\\app\\test\\sculpt-tools.test.js:537:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /^move the track up to /. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y4\app\test\sculpt-tools.test.js:542:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+ok 36 - row 1: a route step tints exactly the moved batches in the tool's colour with the placed arrays; a shape step tints nothing
+  ---
+  duration_ms: 189.8533
+  type: 'test'
+  ...
+# Subtest: row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+ok 37 - row 2: the renderer draws each tinted chunk's edge lines in its tint and every other line as before, with no draw and no upload added
+  ---
+  duration_ms: 62.0905
+  type: 'test'
+  ...
+# Subtest: row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+ok 38 - row 3: hover: a route tool's wash is a line across the road at every station past the window's end; a shape or local tool has none; the same hover builds nothing again
+  ---
+  duration_ms: 50.4559
+  type: 'test'
+  ...
+# Subtest: row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+ok 39 - row 4: a closed lap: the hover hatches the last and first road pieces; a drag that opened the lap draws the last piece's hatch under its move
+  ---
+  duration_ms: 133.4336
+  type: 'test'
+  ...
+# Subtest: row D467: the start pieces a release moved are hatched with no hover, both at full strength; nothing when they did not move
+ok 40 - row D467: the start pieces a release moved are hatched with no hover, both at full strength; nothing when they did not move
+  ---
+  duration_ms: 102.9558
+  type: 'test'
+  ...
+# Subtest: row D467 frame: the preview draws the start pieces' hatch after such a release, and not after an undo
+ok 41 - row D467 frame: the preview draws the start pieces' hatch after such a release, and not after an undo
+  ---
+  duration_ms: 568.275
+  type: 'test'
+  ...
+# Subtest: row D467 frame (straight start): the preview draws the start pieces' hatch after such a release, and not after an undo
+ok 42 - row D467 frame (straight start): the preview draws the start pieces' hatch after such a release, and not after an undo
+  ---
+  duration_ms: 473.8222
+  type: 'test'
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 39
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9356.5643

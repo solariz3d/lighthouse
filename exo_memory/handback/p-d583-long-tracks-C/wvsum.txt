@@ -1,0 +1,20 @@
+== wv-before-elysium  (0.4.32; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.9      16        2            18              0
+open       64.1     921     1546          2454              0
+export    149.5    1318     1398          2716           2627
+install   143.5    1415     1398          2813           2496
+  open: loaded: head shown at 1.5 s, still from 44.1 s
+== wv-after-elysium  (0.4.33; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.8      14        2            16              0
+open       48.2     913     1072          1908              0
+export    152.5     926      748          1674           2018
+install   152.4     883      748          1631           2231
+  open: loaded: head shown at 1.7 s, still from 28.2 s
+== wv-before-50  (0.4.32; crashes 1)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      1.2      16        2            18              0
+open       25.5     251      342           593              0
+export     86.7     347      342           659            686  FAILED Error: export failed: Invalid string length | No saved pieces yet: select pieces
+  open: loaded: head shown at 1.3 s, still from 5.6 s

@@ -1,0 +1,28 @@
+heavy-run: WARNING: C:\ has 22.8 GB free, under 50 GB; run node consonance/tools/janitor.js
+lockrun: holding the lock at 2026-10-31T17:13:02.082Z; starting d583-webview2-after-100 (the built app on a long track; not a timing session)
+launched pid 52352; track STADIUM 100
+ok   launch (0.8 s): menus ready
+  10.7 s open: 896 MB (page 447, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 443)
+  [open loop 9] headAt 5.7 still 5 prev 901 last sample 14.7 890 closed false
+  20.8 s open: 889 MB (page 441, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 443)
+  [open loop 19] headAt 5.7 still 15 prev 901 last sample 24.8 888 closed false
+ok   open (24.4 s): loaded: head shown at 1.1 s, still from 4.3 s; peak 912 MB at 26.9 s (page 464, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 443); settled 912 MB (page 463,
+  30.9 s export: 1178 MB (page 591, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 443, srcdoc#4 12, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 127)
+  41.0 s export: 1490 MB (page 587, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 12, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 479)
+  51.1 s export: 1375 MB (page 605, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 12, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 346)
+  61.2 s export: 1354 MB (page 596, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 345)
+  71.3 s export: 1711 MB (page 612, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 686)
+  81.6 s export: 1616 MB (page 604, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 600)
+  91.5 s export: 1799 MB (page 619, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 767)
+  101.6 s export: 1830 MB (page 610, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 807)
+  111.9 s export: 1776 MB (page 626, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 738)
+  121.8 s export: 1587 MB (page 436, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 739)
+  131.9 s export: 1919 MB (page 440, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 1066)
+  142.0 s export: 1296 MB (page 444, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 440)
+  153.3 s export: 851 MB (page 432, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 407, srcdoc#4 1, 7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 6)
+SOCKET CLOSED {"t":"156.8","what":"the CDP socket closed: code 1006 reason  clean false; app pid alive; webview/t180 processes 23","mark":"export"}
+FAIL export: Error: the page went away; crashes [{"t":"156.8","what":"the CDP socket closed: code 1006 reason  clean false; app pid alive; webview/t180 processes 23","mark":"export"}]; peak 2487 MB at 129.9 s (page 439, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:c
+FATAL Error: the page went away; crashes [{"t":"156.8","what":"the CDP socket closed: code 1006 reason  clean false; app pid alive; webview/t180 processes 23","mark":"export"}]; peak 2487 MB at 129.9 s (page 439, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 407, iframe:about:srcdoc#4 1, worker:7fdfd1cc-0f4f-4f31-85d7-9fdd49#5 1636)
+killed pid 52352; t180-track-builder.exe left running: 0
+exit 1
+lockrun: done at 2026-10-31T17:15:49.316Z, exit 1

@@ -101,7 +101,13 @@ t('the tab says what the seat CANNOT reach — the guarantee is the feature', ()
   const sec = html.slice(html.indexOf('<section id="thirdplace"'));
   // Contract changed by the keeper's 2026-09-22 05:2x ruling (Jev reads the Third Place): the isolation that holds is from the WORK.
   assert.match(sec, /no channel to the work/i, 'the header must state the isolation that holds (no board, no seat)');
-  assert.match(sec, /Jev reads/i, 'and what does leave it: Jev reads it, by the keeper\'s ruling');
+  // Contract changed again 2026-09-27 (D164, exo_memory/loop/plan_jev_off_2026-09-27.md): the keeper retired Jev,
+  // so the header must say it no longer reads this seat. Matched on the VISIBLE header text only, because the
+  // section's historical comments still say "Jev reads", and a pin that passes on its own retraction pins nothing.
+  const head = sec.slice(sec.indexOf('<span class="mainhead"'));
+  const visible = head.slice(head.indexOf('">') + 2, head.indexOf('</span>'));
+  assert.match(visible, /Jev no longer reads it/i, 'what used to leave it: Jev, retired 2026-09-27, must be stated as retired');
+  assert.doesNotMatch(visible, /Jev reads it/i, 'the retired contract must not be stated as live');
   assert.match(sec, /none of the working record/i, 'the header must state what it deliberately lacks');
 });
 

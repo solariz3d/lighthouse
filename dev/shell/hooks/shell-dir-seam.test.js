@@ -29,7 +29,7 @@ const EIGHT = ['session-end', 'session-start', 'stop', 'userprompt-submit',
 const ROOM_CWD = path.join('C:', path.sep, 'Consonance', 'instances', 'sibling-d098-test');
 
 /** A data dir that is what the app's data dir is to these hooks: somewhere with no lib/ and no hooks/. */
-const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
+const tmp = (p) => require('../../../consonance/tools/scratch.js').mkdtemp(p);
 
 function collisionEnv(extra) {
   const env = { ...process.env, CONSONANCE_DATA: tmp('seam-data-'), CONSONANCE_SHELL_DIR: SHELL_SRC, ...extra };

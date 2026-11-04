@@ -1,0 +1,140 @@
+MESSAGE 14  msg_011CfhsmRj7MURKHjpyuRTd5  seat A  ts 2026-10-04T21:05:05.625Z  turn L62305..L62353 (next prompt L62388)
+CLAIMS:
+  [msg_011CfhsmRj7MURKHjpyuRTd5|30] "An exact stadium ...: left/right and front/back largest 0.0015 m (the 2 m chord error), both 0.0000 m; about a centre 12 m off: largest 24.0004 m, mean 18.7 m"
+  [msg_011CfhsmRj7MURKHjpyuRTd5|59] "`createPreview` itself still starts with none (that default is pinned by `look.test.js`, untouched); the mount asks for Auto in `app/preview/index.js`"
+
+--- L62305 user 2026-10-04T21:03:22.026Z
+USER: <task-notification>
+<task-id>bub9hkjv6</task-id>
+<tool-use-id>toolu_013eULfPVEmP72u7hb7aryR1</tool-use-id>
+<output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\tasks\bub9hkjv6.output</output-file>
+<status>completed</status>
+<summary>Background command "cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad &amp;&amp; cat &gt; sp_g15.txt &lt;&lt;'EOF'
+@@FILE C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/test/mutation.test.js
+@@OLD
+    from: 'for (let x = x0; x &lt;= x1 + 1e-9; x += sp) p.push(x, 0, z0, x, 0, z1);', to: 'for (let x = x0; x &lt;= x1 + 1e-9; x += sp) p.push(x, 0.5, z0, x, 0.5, z1);', caughtBy: 'grid: every vertex at y = 0' },
+@@NEW
+    from: 'for (let x = x0; x &lt;= x1 + 1e-9; x += sp) p.push(x, y, z0, x, y, z1);', to: 'for (let x = x0; x &lt;= x1 + 1e-9; x += sp) p.push(x, y + 0.5, z0, x, y + 0.5, z1);', caughtBy: 'grid: every vertex at y = 0' },   // D237: re-pointed, gridLines takes a height `y` (default 0); the mutant and the test that catches it are unchanged
+@@END
+EOF
+node blockpatch.js sp_g15.txt 2&gt;&amp;1 | grep -av "Warn\|trace" | cut -c1-200; cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt &amp;&amp; node -e "
+require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'A D237 mutation.test'});
+const r=require('child_process').spawnSync(process.execPath,['--max-old-space-size=4096','--test','--test-concurrency=1','app/test/mutation.test.js'],{encoding:'utf8',maxBuffer:1&lt;&lt;28,env:{...process.env,FORCE_COLOR:'0'}});
+const t=r.stdout+r.stderr;console.log('exit',r.status,'NOT APPLIED',(t.match(/NOT APPLIED/g)||[]).length);console.log(t.split('\n').filter(l=&gt;/^ℹ (tests|pass|fail)|^✖/.test(l)).join('\n').slice(0,1500));" 2&gt;&amp;1 | grep -av Warn" completed (exit code 0)</summary>
+</task-notification>
+--- L62307 assistant 2026-10-04T21:03:27.246Z
+TOOL_USE Read [toolu_01XGk17My44XLpQ5qLGMLBFM]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\tasks\\bub9hkjv6.output"}
+--- L62308 user 2026-10-04T21:03:27.316Z
+RESULT [toolu_01XGk17My44XLpQ5qLGMLBFM]: 1	C:/Users/nname/Desktop/worktrees/a-grid3d-wt/app/test/mutation.test.js [33m1[39m edits
+2	exit [33m0[39m NOT APPLIED [33m0[39m
+3	ℹ tests 99
+4	ℹ pass 99
+5	ℹ fail 0
+6	(Use `node --trace-warnings ...` to show where the warning was created)
+7	
+8	[exited with code 0]
+9	
+--- L62311 assistant 2026-10-04T21:03:33.583Z
+TEXT: `mutation.test.js` is back to 99 of 99, 0 NOT APPLIED. One last quick check of the guides tests and the fixtures row on the final tree, then commit by named paths.
+--- L62312 assistant 2026-10-04T21:03:35.482Z
+TOOL_USE Bash [toolu_01BkfbECbEcUqCRXvSTFuowo]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && node -e \"\nrequire('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'A D237 final targeted'});\nconst r=require('child_process').spawnSync(process.execPath,['--max-old-space-size=4096','--test','--test-concurrency=1','app/test/guides.test.js','app/test/render_proof.test.js','app/test/look.test.js','app/test/camera.test.js','test/core_cup_fixtures.test.js'],{encoding:'utf8',maxBuffer:1<<27,env:{...process.env,FORCE_COLOR:'0'}});\nconst t=r.stdout+r.stderr;console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail|skipped|todo)|^✖|0 of 9 differ/.test(l)).join('\\n'));\" 2>&1 | grep -av Warn; git diff --stat -- src app/export test/fixtures src-tauri | tail -2; git status --short","timeout":900000}
+--- L62319 user 2026-10-04T21:04:07.215Z
+RESULT [toolu_01BkfbECbEcUqCRXvSTFuowo]: exit [33m0[39m
+✔ row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ" (5599.8023ms)
+ℹ tests 80
+ℹ pass 80
+ℹ fail 0
+ℹ skipped 0
+ℹ todo 0
+(Use `node --trace-warnings ...` to show where the warning was created)
+ M CHANGELOG.md
+ M app/README.md
+ M app/camera/index.js
+ M app/preview/index.js
+ M app/preview/look.js
+ M app/preview/preview.js
+ M app/preview/renderer.js
+ M app/test/mutation.test.js
+?? app/preview/guides.js
+?? app/preview/guideslayer.js
+?? app/test/guides.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62322 assistant 2026-10-04T21:04:10.690Z
+TEXT: 80 of 80, the fixtures read 0 of 9 differ, and the diff against `src/`, `app/export`, the fixtures and `src-tauri` is empty. Committing.
+--- L62323 assistant 2026-10-04T21:04:17.992Z
+TOOL_USE Bash [toolu_01PjYy6sASC2DJQRnTMb8srY]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-grid3d-wt && git add CHANGELOG.md app/README.md app/camera/index.js app/preview/index.js app/preview/look.js app/preview/preview.js app/preview/renderer.js app/preview/guides.js app/preview/guideslayer.js app/test/guides.test.js app/test/mutation.test.js && cat > C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/sp_msg3.txt <<'EOF'\nD237: a grid that goes 3D with the track, and symmetry guides (preview only)\n\nWritten by seat A (Sonnet 5.5), pane A. Grid modes auto/ground/3d/off in the\ncamera 
+…[897 chars cut]…
+sktop/lighthouse/exo_memory/handback/p-grid3d-A_2026-10-04_evidence; mkdir -p $EV && cp C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/shots2/* $EV/ && ls -la $EV | awk '{print $5, $9}'"}
+--- L62324 user 2026-10-04T21:04:19.149Z
+RESULT [toolu_01PjYy6sASC2DJQRnTMb8srY]: warning: in the working copy of 'app/preview/guides.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/preview/guideslayer.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/test/guides.test.js', LF will be replaced by CRLF the next time Git touches it
+802451ab14b36db408bc22532e5e75983e7bdb45 D237: a grid that goes 3D with the track, and symmetry guides (preview only)
+ CHANGELOG.md               |   1 +
+ app/README.md              |   6 ++
+ app/camera/index.js        |  38 +++++++-
+ app/preview/guides.js      | 196 +++++++++++++++++++++++++++++++++++++
+ app/preview/guideslayer.js |  56 +++++++++++
+ app/preview/index.js       |  23 ++++-
+ app/preview/look.js        |  17 ++--
+ app/preview/preview.js     |  43 ++++++++-
+ app/preview/renderer.js    |   6 ++
+ app/test/guides.test.js    | 235 +++++++++++++++++++++++++++++++++++++++++++++
+ app/test/mutation.test.js  |   2 +-
+ 11 files changed, 603 insertions(+), 20 deletions(-)
+ 
+0 .
+0 ..
+535624 flat_build_auto.png
+102841 flat_overhead_auto.png
+542393 hilly_build_auto.png
+364536 hilly_overhead_auto.png
+384329 hilly_overhead_mirror_both.png
+382021 hilly_overhead_mirror_x.png
+104535 hilly_overhead_off.png
+238099 hilly_side_auto.png
+1987 report.json
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62329 assistant 2026-10-04T21:04:36.950Z
+TOOL_USE Write [toolu_01YQEbEWDkXxfwRWLGsETnB3]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp2\\g_nums.js","content":"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'A D237 gap numbers' });\nconst T = 'C:/Users/nname/Desktop/worktrees/a-grid3d-wt/';\nconst G = require(T + 'app/preview/guides.js'), GE = require(T + 'src/geom/index.js'), F = require(T + 'test/geom_fixtures.js'), { createCoreShell } = require(T + 'app/core/coreshell.js'), { createTrackModel } = require(T + 'app/preview/trackmodel.js');\nconst boxOf = (p) => 
+…[2271 chars cut]…
+, 50 * Math.sin(i / 50), Math.sin(i / 7000 * 6.2832) * 2200] })) }; const pl = G.guidePlan({ bounds: boxOf(huge), path: huge, mode: '3d', mirror: 'both' }); console.log('14 km, 7000 samples: lines', pl.lines, 'ms', Number(process.hrtime.bigint() - t0) / 1e6);\n})();\n"}
+--- L62330 user 2026-10-04T21:04:37.005Z
+RESULT [toolu_01YQEbEWDkXxfwRWLGsETnB3]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp2\g_nums.js (file state is current in your context — no need to Read it back)
+--- L62331 assistant 2026-10-04T21:04:38.295Z
+TOOL_USE Bash [toolu_01Q6kFSB7am62rfpZuVQTJp1]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp2/g_nums.js 2>&1 | grep -av \"Warn\\|trace\"","timeout":200000}
+--- L62338 user 2026-10-04T21:04:39.197Z
+RESULT [toolu_01Q6kFSB7am62rfpZuVQTJp1]: exact stadium x largest 0.0015 m, mean 0.0009 m, n 517
+exact stadium z largest 0.0015 m, mean 0.0009 m, n 517
+exact stadium both largest 0.0000 m, mean 0.0000 m, n 517
+exact stadium x, centre 12 m off largest 24.0004 m, mean 18.6782 m, n 517
+the shell's own oval x largest 15.1665 m, mean 6.6033 m, n 517
+the shell's own oval z largest 6.4111 m, mean 2.4014 m, n 517
+the shell's own oval both largest 14.4414 m, mean 6.2599 m, n 517
+the asymmetric lap, both largest 44.3665 m, mean 20.3827 m, n 749
+14 km, 7000 samples: lines [33m1419[39m ms [33m22.2942[39m
+--- L62343 assistant 2026-10-04T21:04:49.695Z
+TOOL_USE Write [toolu_01SVp6CsS1weEAYKwPG8iTJj]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp2\\g_keeper.js","content":"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'A D237 keeper tracks gap' });\nconst fs = require('fs'), T = 'C:/Users/nname/Desktop/worktrees/a-grid3d-wt/';\nconst D = require(T + 'src/core/document.js'), G = require(T + 'app/preview/guides.js'), { createCoreShell } = require(T + 'app/core/coreshell.js'), { createTrackModel } = require(T + 'app/preview/trackmodel.js');\n(async () => {\n  for (const name
+…[669 chars cut]…
+({ bounds: t.bounds, path: t.path, mode: 'auto', mirror: m }), ms = Number(process.hrtime.bigint() - s1) / 1e6; console.log('  mirror', m, 'largest', p.gap.max.toFixed(3), 'm, mean', p.gap.mean.toFixed(3), 'm,', p.lines, 'lines,', ms.toFixed(0), 'ms'); }\n  }\n})();\n"}
+--- L62344 user 2026-10-04T21:04:49.740Z
+RESULT [toolu_01SVp6CsS1weEAYKwPG8iTJj]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp2\g_keeper.js (file state is current in your context — no need to Read it back)
+--- L62345 assistant 2026-10-04T21:04:51.191Z
+TOOL_USE Bash [toolu_01MNea2iSdExnUJqYQxRQpp7]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp2/g_keeper.js 2>&1 | grep -av \"Warn\\|trace\"","timeout":300000}
+--- L62346 user 2026-10-04T21:04:55.302Z
+RESULT [toolu_01MNea2iSdExnUJqYQxRQpp7]: OVAL closed [33mtrue[39m samples [33m3001[39m mode ground range 0.00 lines [33m78[39m levels [33m0[39m
+  mirror x largest 0.000 m, mean 0.000 m, [33m615[39m lines, 12 ms
+  mirror z largest 0.000 m, mean 0.000 m, [33m615[39m lines, 10 ms
+  mirror both largest 0.000 m, mean 0.000 m, [33m615[39m lines, 6 ms
+TUBE OVAL closed [33mtrue[39m samples [33m3001[39m mode ground range 0.00 lines [33m77[39m levels [33m0[39m
+  mirror x largest 0.000 m, mean 0.000 m, [33m614[39m lines, 10 ms
+  mirror z largest 0.000 m, mean 0.000 m, [33m614[39m lines, 7 ms
+  mirror both largest 0.000 m, mean 0.000 m, [33m614[39m lines, 7 ms
+--- L62350 assistant 2026-10-04T21:05:05.637Z  <<< THE CLAIM'S MESSAGE
+TEXT: The keeper's saved T-180 OVAL and TUBE OVAL both read a mirror gap of exactly 0.000 m in all three modes. They're flat, so Auto draws the ground grid. Writing the hand-back and the map line.
+--- L62351 assistant 2026-10-04T21:05:34.849Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Write [toolu_01YTk5pNE97s5edzUcaMUTis]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-grid3d-A_2026-10-04.md","content":"# p-grid3d-A — D237: a 3D grid and symmetry guides (seat A, Sonnet 5.5)\n\nSOURCES: C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_grid3d_symmetry_2026-10-04.md\n\nCommit `802451ab14b36db408bc22532e5e75983e7bdb45`, branch `grid3d-a-d237` in worktree `C:\\Users\\nname\\Desktop\\worktrees\\a-grid3d-wt`, on main `510510e9` (fresh worktree, no junctions). Local only, nothing pushed, no AC. 11 files, +603/−20. **FEEL tier, preview only: `git diff --stat 510510e9 -- src app/export test/fixtures src-tauri` prints nothing** (a test, row 15, asserts that), the fixtures read **0 of 9 differ**, and nothing reads or writes the document.\n\n## What the keeper gets\n- **Grid row in the camera panel, Auto | Ground | 3D | Off, Auto by default.** Auto draws the ground grid while the centreline spans under 0.5 m of height (`FLAT_M`) and the lattice once it does not. The ground grid now sits at the track's lowest point (it was fixed at y = 0), so a flat track 7 m up has its grid under it.\n- **The lattice** (`app/preview/guides.js`), over the track's box: the ground grid; a vertical at every lattice corner rising to the top level; a faint rectangle at every height level (1-2-5 m spacing, at most 12 levels); labels at up to 6 levels (`+20 m`, `−10 m`, `0 m`: WORLD height, not relative to the start); drop lines from the centreline to the base (only where it is more than 0.5 m off it, at most 150). **Bounded:** the lattice spacing is the ground spacing × 1, 2, 5, 10 ... until at most 400 corners, so its lines lie on the ground grid's. **Measured:** a 14 km, 7,000-sample loop with the lattice and a mirror is **1,419 line pairs** (the grid alone 725), built in 22 ms; the test caps the grid at 1,100 and with guides at 2,500.\n- **Mirror row: Off | Left/right | Front/back | Both, and Reset centre.** Left/right flips x about the centre, front/back flips z, both is a half turn; height never changes. The centre is the box's middle unless you drag its ring (a DOM handle on the base plane; the pointer ray is intersected with the plane at the base height) or set it. Drawn: the two centre axes on the base plane as three strokes each (bold) and the vertical through the crossing, and a **dashed mirror ghost** of the centreline (dash = box/150 m, 2 to 40 m). **The readout** under the buttons: `mirror gap: largest X m · average Y m · centre (x, z) m`. The gap is, for each point of the mirrored centreline, the distance in **3D** to the nearest point of the real centreline (its segments, not only samples; closed loops include the closing edge); every k-th point when there are more than 4,000.\n- **Not a mirror editor.** The ghost is a picture; nothing is rebuilt (that is export tier, the next step if wanted).\n\n## Numbers (`sp2/g_nums.js`, `sp2/g_keeper.js`; light node runs under the heavy-run lock)\n- **The keeper's saved T-180 OVAL and T-180 TUBE OVAL (E's read-only copies, 3,001 samples, flat → Auto draws the ground grid): mirror gap largest 0.000 m, mean 0.000 m for left/right, front/back and both**; the guides add 615 line pairs, 6–12 ms.\n- An exact stadium (two straights, two half circles, built from segments): left/right and front/back largest 0.0015 m (the 2 m chord error), both 0.0000 m; about a centre 12 m off: largest 24.0004 m, mean 18.7 m.\n- **The shell's own ovals are NOT symmetric:** extend + half turns with curvature transitions gives left/right largest 15.2 m, front/back 6.4 m, both 14.4 m (mean 6.6 / 2.4 / 6.3). The 04 asymmetric lap (300 m + four quarters + 60 m, closed) reads largest 44.4 m, mean 20.4 m, both. That is the gauge working, not a bug, but it is why the committed \"oval ≈ 0\" test uses an exact stadium, not the shell's.\n- Known offsets, exact: a straight at x = 10 about x = 0 reads 20 m; a line at z = 60 about z = 50 reads 20 m; an L whose far point is 10 m off reads largest 10, mean 10/3 (the far point first and last); a closed triangle's closing edge makes it 70.71 m where open it reads 100 m; a 9 m step in height reads at least 8.9 m.\n\n## Real window (Chrome headed, off-screen, 1818 × 1000 css px, preview canvas 1498 × 824; `sp2/cdp.js`, `sp2/g_shots.js`; WebGL by SwiftShader, so no GPU time)\nEvidence in `exo_memory/handback/p-grid3d-A_2026-10-04_evidence/` (8 PNGs, `report.json`, 0 page errors): `flat_overhead_auto`, `flat_build_auto` (5 straight pieces, Auto → ground grid, 86 line pairs), `hilly_side_auto`, `hilly_overhead_auto`, `hilly_build_auto` (8 pieces, 1,200 m, 150.5 m of height, Auto → 3D lattice, 558 pairs, 8 levels), `hilly_overhead_mirror_both` / `_x` (946 pairs; gap 342 / 344 m largest about the box's middle: an asymmetric track), `hilly_overhead_off` (0 lines). What the pictures show: the ground grid under the flat track; the lattice with verticals, rings and labels (`+160 m`, `+120 m` ...) in the side view; the bold gold axes, the centre ring and the faint dashed pink ghost in the mirror views.\n\n## Tests and mutants (every run under the lock, `--test-concurrency=1`)\n- **New `app/test/guides.test.js`, 16 tests:** flat → ground only (0.49 m flat, 0.6 m not); lattice spans lowest to highest, labels, verticals on their x/z, drop lines; bounded on a 14 km track; modes forced, off draws nothing, guides without grid, bad modes refused; centre and axes; known offsets; an exact stadium ≈ 0 and 12 m off; mirror modes; dashes; projection and the pointer-ray round trip; through the real shell and a drawing context (flat vs hilly, announcements once, the plan follows a track change, the layer is given every frame and disposed, an overlay beside the ghost); the layer's labels and the handle drag; the panel's buttons and words; the lap touches nothing under `src/`.\n- **Full non-mutation suite** (135 files, serial): **1,753 tests, 1,738 pass, 1 FAIL, 7 skipped, 7 todo.** The 1 fail was real and mine: `render_proof` \"mount failure: no WebGL throws a PreviewMountError naming the reason\" (a bare-bones fake DOM): my guides layer was created before the preview and broke on it before the WebGL reason could surface. **Fixed in the code, the test untouched:** `app/preview/index.js` makes the layer after the preview starts, behind a handle, and disposes the preview if the layer cannot be made. After the fix: every `app/test` file **578 tests, 576 pass, 0 fail, 1 skipped, 1 todo**, and guides + render_proof + look + camera + core_cup_fixtures **80/80** (row 5a \"0 of 9 differ\"). I did not re-run the whole 135 files after that fix; the `test/` half does not load `app/preview/index.js` and was green in the run before it.\n- **Anchored harnesses:** `app/test/mutation.test.js` 99/99, core-mutation 65/65, core-xsec-mutation 31/31, `test/lookmatch_mutation` 16/16, all exit 0. **One anchor re-pointed, by name:** B13 \"the grid floats above y = 0\" anchored the exact line `p.push(x, 0, z0, x, 0, z1)`, which now takes a height `y`; first run 98/99 and 1 NOT APPLIED; the anchor and its mutant text now follow the new line (`p.push(x, y, ...)` → `y + 0.5`), the test that catches it unchanged; rerun 99/99, 0 NOT APPLIED.\n- **My own mutants: 40 applied, 40 caught, 0 NOT APPLIED, each run after an unmutated control that was GREEN** (the D236 lesson: a \"caught\" means nothing over a red control). 37 on the first pass; **G16** (the mean gap is a running largest: my L put the far point last, so it read the same), **G17** (a closed loop with no closing edge) and **L4** (labels off the side of the view) survived and were real test gaps (L4's \"off the side\" pose had put the labels behind the camera, not beside it); tests fixed, then caught. **Not covered:** the closing dash of a closed loop's ghost (`ghost.push(ghost[0])`) and the renderer's `depthMask(false)` (a fake drawing context cannot see either).\n\n## What this does NOT establish, and what the keeper should decide\n- **A reversal of a keeper decision, flagged:** since 2026-09-29 the preview started with NO grid (\"there shouldnt be a ground net its just the track for now\"). The app's preview now starts on **Auto**, as the dispatch said, so a flat track shows the ground grid at once. `createPreview` itself still starts with none (that default is pinned by `look.test.js`, untouched); the mount asks for Auto in `app/preview/index.js` (one word to revert), and Off is one click in the panel.\n- **Feel and look are the keeper's:** the lines are faint on purpose and 1 px (the mirror ghost especially: it reads as a dotted thread in the screenshots); the level labels sit beside the on-track piece labels and in the side view some are partly covered by them (`+8…` in `hilly_side_auto`). Not tuned.\n- **The centre handle was driven only with synthetic pointer events** (a headless DOM, `pointerdown` / `pointermove` / `pointerup`), not with a real mouse in the window; the real-window run proved the page, the buttons' state and the drawing, not the drag.\n- **No performance run in the window.** The plan is rebuilt only when the track, mode, mirror or centre changes (22 ms for 7,000 samples with a mirror), which during a brush drag is every step.\n- **The \"flat\" line is the centreline's 0.5 m**, not the mesh's box (a cup's walls alone would make every track \"hilly\"). **The gap is 3D**, so a height asymmetry counts; a plan-only reading is not offered. **Labels are world height**, not height above the start.\n- Machine L; AC.\n\n## Evidence\n`...\\scratchpad\\sp2\\` (`cdp.js`, `g_shots.js`, `g_nums.js`, `g_keeper.js`), `...\\scratchpad\\` (`sp_mut3.js`, `sp_mut3_out.txt`, `sp_full_grid.txt`, `sp_harn2_out.txt`, `shots2\\`).\n\nNEXT: B's quick look (the three new files, the five edited, the screenshots), then the keeper's hands on the buttons and the centre ring; E is not needed (no timing claim).\n"}
+--- L62352 user 2026-10-04T21:05:34.909Z
+RESULT [toolu_01YTk5pNE97s5edzUcaMUTis]: File created successfully at: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-grid3d-A_2026-10-04.md (file state is current in your context — no need to Read it back)
+--- L62353 assistant 2026-10-04T21:05:40.843Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_018bxsZV5eDFBpS9Jy44WP59]: {"command":"cd C:/Users/nname/Desktop/lighthouse && printf '%s\\n' '' '## 2026-10-04 (on D, Sonnet 5.5) — D237 A: a 3D grid and symmetry guides, commit 802451ab on branch grid3d-a-d237 at worktrees/a-grid3d-wt (on main 510510e9; local, nothing pushed, no AC; FEEL tier, preview only: nothing under src/, the export or the document; fixtures 0 of 9 differ). Grid Auto/Ground/3D/Off in the camera panel (flat centreline under 0.5 m draws the ground grid, now at the track-s lowest point; with height a bounded lattice: verticals, 1-2-5 level rings, up to 6 labels, drop lines; a 14 km loop is 1,419 line pairs with the guides, 22 ms) and Mirror Off/Left-right/Front-back/Both with a draggable centre, bold axes, a dashed ghost and the largest and average 3D gap in metres. The keeper-s saved OVAL and TUBE OVAL read 0.000 m in all three modes; an exact stadium 0.0015 m and 24.0 m about a centre 12 m off; the shell-s own ovals are NOT symmetric (15.2 m left/right). Real window at 1818 px: flat and hilly screenshots, 8 PNGs in p-grid3d-A_2026-10-04_evidence. 16 new tests; full suite 1,753 with 1 real fail (render_proof no-WebGL: my layer was made before the preview) fixed in the code, then app/test 578 pass 0 fail; harnesses green after re-pointing B13; my 40 mutants 40 caught over green controls (3 first survived). Flagged: the app preview now starts on Auto where the keeper said no ground net on 2026-09-29. NOT verified: the handle drag with a real mouse, WebGL on a GPU, the look and label overlap' '`exo_memory/handback/p-grid3d-A_2026-10-04.md`. Lesson: an existing test with a bare fake DOM is a contract about ORDER (fail with the real reason first); build optional decoration after the thing that can fail, and read the control before believing a caught mutant.' >> exo_memory/map/A.md; tail -c 200 exo_memory/map/A.md"}

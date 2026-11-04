@@ -1,0 +1,11 @@
+{
+ "warnings": [
+  "TEST EXPORT (unfinished): 0 red finding(s) NOT blocking, listed in t180b_TEST_UNFINISHED.txt",
+  "lap proof not run: open",
+  "markers: the hotlap run-up to 460 km/h needs 352 m and the track has 185 m before the line, so the car arrives at 344 km/h",
+  "16 mesh-node names repeat in the builder's scene (e.g. CELL_p1_body_0 ×100); the kn5 gets unique names (acready.js), INTERFACES §2, C's mesh.js safeId",
+  "csp-only: surfaces.ini sets WAV_PITCH=extended-0, CSP's extended physics (ARCHITECTURE §6). Assetto Corsa without Custom Shaders Patch can crash loading this track (CSP wiki, \"Tracks – Enabling extended physics\"; docs/research/04_ac_physics_drivability.md §2). Turn off \"T-180 track\" to export without it."
+ ],
+ "redKeys": "folders,kn5Sha,kn5Bytes,aiSha,aiLine,readback,lengthM,resolvedVia,markers,paint,layout,warnings",
+ "red": []
+}

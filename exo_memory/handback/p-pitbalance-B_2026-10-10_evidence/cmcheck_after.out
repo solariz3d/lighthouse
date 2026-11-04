@@ -1,0 +1,6 @@
+=== node --max-old-space-size=8192 C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285/cmcheck.js C:/Users/nname/Desktop/worktrees/b-pitbal-wt C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285/autosave-doc.t180track C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285/cmout
+=== cwd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d285
+=== env {}
+{"file":"autosave-doc.t180track","folder":"t180b_untitled_test","closed":false,"test":true,"msExport":1680,"kn5MB":10.6,"meshes":34,"tris":99368,"maxV":29054,"pits":12,"starts":8,"uiPitboxes":"12","surfaceKeys":["ROAD"],"warnings":4,"BAD":[],"note":["1 physics-named meshes match no surfaces.ini key, e.g. 1WALL_T180_END"]}
+
+=== exit 0 signal null error  1.8s

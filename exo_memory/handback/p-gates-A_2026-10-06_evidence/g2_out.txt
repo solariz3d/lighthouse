@@ -1,0 +1,46 @@
+ok   1a git worktree remove <copy-only worktree>: allow
+ok   1b git -C <repo> worktree remove --force <copy-only worktree>: allow
+ok   1c git worktree remove <worktree holding a junction>: deny  | 6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\gates\work\wt\precious
+ok   1d the junction target is untouched (the hook only reads): true
+ok   2a rm -r <scratch dir>: allow
+ok   2b rm -rf <scratch dir>: allow
+ok   2c PowerShell Remove-Item -Recurse -Force <scratch dir>: allow
+ok   2d rm -rf <relative scratch dir> from its parent: allow
+ok   2e rm -rf "<dir with spaces>": allow
+ok   3a rm -rf <plain npm node_modules>: allow
+ok   3a2 rm -rf node_modules (relative): allow
+ok   3b rm -rf node_modules of a WORKSPACE project (a junction to a sibling package): deny  | E expected this false positive: "the deny says how to proceed"
+ok   3c the workspace package is untouched: true
+ok   3d the reason's advice: cmd /c rmdir <link> (alone) is allowed by the gate: allow
+ok   3e after the link is gone: rm -rf node_modules: allow
+ok   4a rm -r <empty dir>: allow
+ok   4b rmdir <empty dir> (no recursion): allow
+ok   4c rm -rf <missing path>: allow
+ok   4d Remove-Item -Recurse <empty dir>: allow
+ok   4e rm <one file> (no recursion): allow
+DIFF 5a cd <B, whose build/ holds a junction> && rm -rf build   (payload cwd elsewhere): allow  (expected deny)  | HOLE if allow: the gate resolves build against the payload cwd, not the cd
+DIFF 5b cd <A, clean build/> && rm -rf build   (payload cwd = B, whose build/ holds a junction): deny  (expected allow)  | FALSE POSITIVE if deny: it walked B's build, not A's
+DIFF 6a rm -rf logs/*.log   (a junction elsewhere in logs/, not matched by the glob): deny  (expected allow)  | FALSE POSITIVE if deny: the whole parent was walked
+DIFF 7a a heredoc whose BODY has an rm -rf line (a script being written): deny  (expected allow)  | FALSE POSITIVE if deny: lines are split and read as commands
+ok   7b git commit -m "rm -rf <dir>": allow
+ok   7c echo rm -rf <dir>: allow
+ok   8a rm -rf <a junction itself>: deny
+ok   8b rm -rf <tree with a junction 5 levels down>: deny
+DIFF 8c a symlink to a FILE inside a scratch tree: cannot plant (EPERM)  (expected deny)  | a file symlink is safe to rm -r; if deny it is a (rare) false positive
+ok   9a rm -rf <30,000 files>: allow  | 155 ms
+   ms for 30,000 files: [33m155[39m
+ok   10a cmd /c rmdir /s /q <tree with a junction>: allow  | NOT CAUGHT, by the header: confirms
+ok   10b node -e "fs.rmSync(<tree with a junction>, { recursive: true })": allow  | NOT CAUGHT, by the header
+ok   10c a variable the command sets: d=<tree>; rm -rf $d: allow  | NOT CAUGHT, by the header
+ok   11a fails OPEN: "not json at all": status 0, stdout ""
+ok   11b fails OPEN: "": status 0, stdout ""
+ok   11c fails OPEN: "{\"tool_name\":\"Bash\"}": status 0, stdout ""
+ok   11d fails OPEN: "{\"tool_name\":\"Bash\",\"too: status 0, stdout ""
+ok   11e fails OPEN: "{\"tool_name\":\"Bash\",\"too: status 0, stdout ""
+ok   11f fails OPEN: "null": status 0, stdout ""
+ok   11g fails OPEN: "{\"tool_name\":\"Read\",\"too: status 0, stdout ""
+ok   11h an unwritable ledger does not stop the deny (a delete with a junction): deny
+ok   11i a payload cwd that does not exist: a clean delete: allow
+ok   11j CONSONANCE_DREAM set: no hook at all: allow
+
+DIFFS: 5a, 5b, 6a, 7a, 8c

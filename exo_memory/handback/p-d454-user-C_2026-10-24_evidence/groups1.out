@@ -1,0 +1,7 @@
+﻿flagged 326 of 10395 new non-blank lines in 33 new + changed files
+   148  tests and mutant harnesses: machine-path 111, pronoun 2, keeper 25, product 25, machine 5
+    60  relabelled briefs/cards: keeper 44, pronoun 5, handle 12, machine-path 12, product 1, machine 1
+    52  hooks/tools code (non-test): machine-path 17, keeper 23, product 10, machine 2, pronoun 1
+    46  rust source (non-test lines and #[test]s): product 8, keeper 20, machine-path 14, machine 3, pronoun 1
+    14  inheritance (the keeper's record, labelled): keeper 4, pronoun 6, product 8, machine-path 2
+     6  other shipped text: keeper 4, product 1, machine 1

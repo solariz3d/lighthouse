@@ -1,0 +1,5 @@
+units.json sha256 07b840c05eb21d34595c47227d4fc40b96eba101efe7bebed8e2944e4738ed65
+function: sha256 over the UTF-8 bytes of out/units.json
+seed: d301-2026-10-11
+strata: keeper: drew 12 of 17 · instrument: drew 12 of 82 · unattributed: drew 5 of 5 · seat: drew 31 of 991
+units: 62 (60 drawn + 2 today)

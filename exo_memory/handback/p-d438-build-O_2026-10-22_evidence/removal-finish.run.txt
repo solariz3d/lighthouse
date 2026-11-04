@@ -1,0 +1,5 @@
+heavy-run: waiting on 12fb81f6 pid 37880 (t180 B B D437b touched-file tests, since 2026-10-23T05:07:23.287Z) and c88002b1 pid 5836 (t180 O D421 part 2 core_finish_joints.test.js core_finish_bank.test.js, since 2026-10-23T05:10:13.444Z) — all 2 slots are held
+heavy-run: waiting on 12fb81f6 pid 37880 (t180 B B D437b touched-file tests, since 2026-10-23T05:07:23.287Z) and c88002b1 pid 5836 (t180 O D421 part 2 core_finish_joints.test.js core_finish_bank.test.js, since 2026-10-23T05:10:13.444Z) — all 2 slots are held
+heavy-run: waiting on 12fb81f6 pid 37880 (t180 B B D437b touched-file tests, since 2026-10-23T05:07:23.287Z) and c88002b1 pid 5836 (t180 O D421 part 2 core_finish_joints.test.js core_finish_bank.test.js, since 2026-10-23T05:10:13.444Z) — all 2 slots are held
+heavy-run: waiting on 12fb81f6 pid 37880 (t180 B B D437b touched-file tests, since 2026-10-23T05:07:23.287Z) and c88002b1 pid 5836 (t180 O D421 part 2 core_finish_joints.test.js core_finish_bank.test.js, since 2026-10-23T05:10:13.444Z) — all 2 slots are held
+{"files":["test/core_finish_joints.test.js","test/core_finish_bank.test.js"],"exit":0,"wall_s":52.4,"started":"2026-10-23T05:13:20.484Z"}

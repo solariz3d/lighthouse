@@ -1,0 +1,7 @@
+== t180-wt-a29 4becdd56c55613422a5713352b8bba9d15c62745
+== t180-wt-b049 409d3f834b3364f0391d1e2d9bf9be3ceb5e2b90
+== t180-wt-c27 52558e3bba23258baff4fb6dd80628d7fe9a13bc
+ M CHANGELOG.md
+ M src/core/sculpt.js
+ M test/core_sculpt_modes.test.js
+== t180-wt-e23 58abf771ca5d21dcda6aa4adc0cb939a8d9db79f

@@ -126,3 +126,44 @@ the sum. Take the union.
 - **Diversity collapse, read from outside.** A review of Chen et al. (ACL 2026 Findings) was read against the record and queued as a registration behind the stick work ([`exo_memory/loop/third_place_diversity_hold_2026-09-14.md`](exo_memory/loop/third_place_diversity_hold_2026-09-14.md)): a three-arm test on `agreement-spread` with its falsifier written first. The librarian's read is that the test's instrument is one of the abandoned gauges above and the unit has to be blind distinct arrivals. Nothing has run.
 - **The WRONG ledger passed 105.** Every entry names whose the error was and how it was caught ([`exo_memory/librarian/`](exo_memory/librarian/)).
 
+---
+
+**Moved 2026-10-08 (D273 lap 4, pane E, from pane A's B6 list):** Jev was retired on 2026-09-27, and a stranger
+reading the public page met it in six places. The record of what it measured leaves the reader's way and lands here,
+verbatim, by exact line range from `git show 29d9b1fe:README.md`.
+
+## `README.md` lines 75–78 at `29d9b1fe` — the About block's Jev bullet (its twin in `consonance/ui/index.html` went with it)
+
+- **A second look at the AI's answers** came from Jev, a separate checker built on a different AI model, not Claude.
+  **Jev was retired on 2026-09-27** at the author's word, and the app no longer uses it. While it ran, its accuracy was
+  measured and was modest: of the first 30 answers it flagged, two reviewers who had not seen its verdicts agreed with 8.
+  The README's section *Jev, the second look* keeps the record.
+
+## `README.md` lines 107–110 at `29d9b1fe` — the Jev bullet under "Know before you rely on it"
+
+- Jev, the second-look judge, was retired on 2026-09-27 at the author's word, and the app no longer starts it from the
+  next rebuild on. While it ran, it sent the turns it judged to an outside service, which its own page states plainly
+  (`jev/README.md`, in the development tree; the consumer copy does not carry Jev). Why it was retired:
+  [`exo_memory/loop/plan_jev_off_2026-09-27.md`](exo_memory/loop/plan_jev_off_2026-09-27.md).
+
+## `README.md` lines 257–275 at `29d9b1fe` — the section "Jev, the second look"
+
+### Jev, the second look
+
+**Retired on 2026-09-27, at the author's word** ([`exo_memory/loop/plan_jev_off_2026-09-27.md`](exo_memory/loop/plan_jev_off_2026-09-27.md)).
+The key was removed and the app stops starting it from the next rebuild on. What follows is the record of what it
+measured while it ran, kept as it was.
+
+Jev was a separate judge (not Claude) that read each finished turn and marked the ones worth rereading. What it was worth,
+measured on its first 56 turns: blind readers confirmed **8 of the 30 turns it flagged as drifting** and **19 of the 20
+turns it called clean** (it also answered "can't judge" on 6). The readers were AI sessions from this same project and had been measured as **lenient** —
+fresh outside readers flagged about three times as many turns — so some unconfirmed marks may be the readers' leniency,
+not Jev's error; that split has not been measured. So a mark is an invitation to reread, not a finding
+(`jev/README.md`, in the development tree).
+
+**Its "stranger installs it from the README" test is NOT YET PASS.** The README and the install mechanism both pass
+when followed literally, but no real Claude Code session has yet shown a mark on a stranger's install
+([`exo_memory/loop/jev_clean_machine_2026-09-23.md`](exo_memory/loop/jev_clean_machine_2026-09-23.md), the 2026-09-23
+re-score). The first test that could show Jev is wrong was written before any output was seen, attacked, amended, and
+then read **NOT TESTED**: too few usable cases to rule
+([`exo_memory/loop/tj1_registration_2026-09-22.md`](exo_memory/loop/tj1_registration_2026-09-22.md), `bec101d`).

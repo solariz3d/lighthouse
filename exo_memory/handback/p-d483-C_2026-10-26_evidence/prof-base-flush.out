@@ -1,0 +1,48 @@
+total sampled 3126 ms; under flush core/handles.js: 1090 ms
+DIRECT callees:
+    1090 ms 100.0%  apply core/handles.js:365
+INCLUSIVE below, top 18:
+    1090 ms 100.0%  apply core/handles.js:365
+    1079 ms  99.0%  apply core/panel.js:601
+    1078 ms  98.9%  ghost core/panel.js:299
+    1078 ms  98.9%  f.oninput.f.onchange core/panel.js:326
+     516 ms  47.4%  dispatchEvent :0
+     507 ms  46.5%  send core/panel.js:144
+     507 ms  46.5%  showGhost preview/preview.js:436
+     507 ms  46.5%  showGhost preview/index.js:80
+     506 ms  46.4%  ghostFor preview/trackmodel.js:331
+     505 ms  46.3%  ghostSteps preview/trackmodel.js:336
+     329 ms  30.2%  candidate core/coreshell.js:669
+     318 ms  29.1%  meshNew preview/trackmodel.js:350
+     316 ms  29.0%  extendCorner core/turnby.js:159
+     315 ms  28.9%  cornerOf core/turnby.js:175
+     314 ms  28.8%  extend core/extend.js:184
+     311 ms  28.6%  buildMeshSteps geom/mesh.js:311
+     303 ms  27.8%  meshRange geom/mesh.js:285
+     297 ms  27.3%  meshPiece geom/mesh.js:169
+SELF, top 10:
+     183 ms  16.8%  handleKey geom/mesh.js:117
+      93 ms   8.5%  basisN tools/piecewise.cjs:200
+      73 ms   6.7%  (anon) core/extend.js:142
+      53 ms   4.9%  psiAt geom/profile.js:30
+      48 ms   4.4%  mix :13
+      46 ms   4.3%  feed preview/segkey.js:15
+      39 ms   3.6%  normalize geom/profile.js:18
+      37 ms   3.4%  sealedNormal geom/profile.js:77
+      37 ms   3.4%  fitWithHold core/extend.js:146
+      27 ms   2.5%  mix preview/segkey.js:13
+      24 ms   2.2%  deepFreeze core/adapter.js:281
+      23 ms   2.2%  fitChannel core/document.js:207
+      19 ms   1.7%  hashRounded preview/coarse.js:86
+      18 ms   1.6%  fractionsOf geom/profile.js:206
+      17 ms   1.6%  keyNum geom/profile.js:197
+      17 ms   1.5%  edgeProfile core/adapter.js:110
+      16 ms   1.5%  (anon) core/adapter.js:113
+      11 ms   1.0%  valuesAt core/document.js:107
+      10 ms   0.9%  meshPiece geom/mesh.js:169
+       9 ms   0.8%  tangent geom/path.js:80
+       9 ms   0.8%  (anon) geom/mesh.js:117
+       8 ms   0.7%  (anon) :51
+       8 ms   0.7%  q :69
+       8 ms   0.7%  uAt geom/profile.js:151
+       7 ms   0.6%  cont core/extend.js:47

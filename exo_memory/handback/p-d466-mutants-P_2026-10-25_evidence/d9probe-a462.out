@@ -1,0 +1,5 @@
+piece1 end c { v: [33m39.723319[39m, m: [33m-0.21303045000000012[39m } piece2 end c { v: [33m39.918195[39m, m: [33m-0.06307380000000044[39m } piece2 c pts 39.723319 38.303116 36.606513 41.030561 39.342745 40.338687 39.918195
+piece3 t[0..2] 79.83639 79.83639 200.973903 knots 20 40 60
+end differs c { v: [33m39.723319[39m, m: [33m-0.21303045000000012[39m } { v: [33m39.918195[39m, m: [33m-0.06307380000000044[39m }
+first attempt refused: JOINT JOINT: piece 2 (p4): the tube starts at an edge of 39.918195°, the previous piece ends at 39.723319° (a piece of another kind hands over the edge it renders; a tube's is t/2) (every road joint is C1 i
+deleteRun t[0] 79.446638 79.446638 same object as before? [33mfalse[39m

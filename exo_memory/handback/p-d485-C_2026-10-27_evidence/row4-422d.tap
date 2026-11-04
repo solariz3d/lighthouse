@@ -1,0 +1,17 @@
+TAP version 13
+# Subtest: row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first
+ok 1 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first
+  ---
+  duration_ms: 7837.7324
+  type: 'test'
+  ...
+# a field change, its longest frame: p95 3.9 ms (median 3.1); handler and frames summed, not asserted: p95 5.8 ms (median 4.4)
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8286.7566

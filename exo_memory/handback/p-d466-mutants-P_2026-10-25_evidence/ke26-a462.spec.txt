@@ -1,0 +1,27 @@
+✖ EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2) (3.0071ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.6844
+
+✖ failing tests:
+
+test at test\core_xsec.test.js:112:1
+✖ EXTEND: the fit never leaves the range (D190 V5 ringing): a 30 m piece, a 10 m ramp to e = 150 − c on a cup, stays inside [0, cap] and the document is accepted (E2 iii, KE2-2) (3.0071ms)
+  Error [CoreError]: BAD_EDGE: piece 2 (p3): the cup's edge angle c plus e is 215.550609° at a control point, past 150° (the walls of a 150°+ bowl touch)
+      at C:\Users\nname\AppData\Local\Temp\t180-p466-7oU91X\src\core\document.js:435:79
+      at Array.forEach (<anonymous>)
+      at checkEdge (C:\Users\nname\AppData\Local\Temp\t180-p466-7oU91X\src\core\document.js:435:18)
+      at C:\Users\nname\AppData\Local\Temp\t180-p466-7oU91X\src\core\document.js:481:17
+      at Array.forEach (<anonymous>)
+      at checkDoc (C:\Users\nname\AppData\Local\Temp\t180-p466-7oU91X\src\core\document.js:457:14)
+      at Object.appendPiece (C:\Users\nname\AppData\Local\Temp\t180-p466-7oU91X\src\core\document.js:384:21)
+      at extend (C:\Users\nname\AppData\Local\Temp\t180-p466-7oU91X\src\core\extend.js:176:12)
+      at TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\t180-p466-7oU91X\test\core_xsec.test.js:113:21)
+      at Test.runInAsyncScope (node:async_hooks:228:14) {
+    code: 'BAD_EDGE'
+  }

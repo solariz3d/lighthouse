@@ -125,7 +125,7 @@ it('a malformed row is refused before the source is judged', () => {
 
 // ── the CLI, gates only ────────────────────────────────────────────────────────────────────────
 
-const ROOT = fs.mkdtempSync(path.join(os.tmpdir(), 'mutant-harness-'));
+const ROOT = require('./scratch.js').mkdtemp('mutant-harness-');
 const cli = (src, rows) => {
   fs.writeFileSync(path.join(ROOT, 'src.rs'), src);
   const cfg = path.join(ROOT, 'rows.js');

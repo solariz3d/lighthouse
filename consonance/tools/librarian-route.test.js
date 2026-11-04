@@ -241,7 +241,7 @@ test('cli: --staged refuses rather than falling back to .git/COMMIT_EDITMSG', ()
 });
 
 test('cli: --staged reads a message file and reports its figures', () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lr-'));
+  const tmp = require('./scratch.js').mkdtemp('lr-');
   const f = path.join(tmp, 'msg.txt');
   fs.writeFileSync(f, 'subject here\n\nthere are 24 preregistrations in loop/\n');
   const r = run(['--staged', '--message', f]);
@@ -256,7 +256,7 @@ test('cli: an unknown sha is an error, never an empty clean report', () => {
 });
 
 test('cli integration: a real commit with an uncited figure exits 0 and quotes it', () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lr-repo-'));
+  const tmp = require('./scratch.js').mkdtemp('lr-repo-');
   const g = a => execFileSync('git', ['-C', tmp, '-c', 'user.email=t@t', '-c', 'user.name=t', ...a], { encoding: 'utf8' });
   g(['init', '-q']);
   fs.writeFileSync(path.join(tmp, 'f.txt'), 'x');
@@ -269,7 +269,7 @@ test('cli integration: a real commit with an uncited figure exits 0 and quotes i
 });
 
 test('cli integration: a commit with nothing to ask prints NOTHING to stdout and exits 3', () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lr-repo2-'));
+  const tmp = require('./scratch.js').mkdtemp('lr-repo2-');
   const g = a => execFileSync('git', ['-C', tmp, '-c', 'user.email=t@t', '-c', 'user.name=t', ...a], { encoding: 'utf8' });
   g(['init', '-q']);
   fs.writeFileSync(path.join(tmp, 'f.txt'), 'x');

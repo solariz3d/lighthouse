@@ -1,0 +1,290 @@
+[
+ {
+  "id": "G3-a",
+  "what": "a matched ending: no block, no output",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-a2",
+  "what": "the row: matched, promptKind user, the line kept",
+  "got": "true user true",
+  "expect": "true user true",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-b",
+  "what": "an unmatched ending: logged without text",
+  "got": "false false",
+  "expect": "false false",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-c",
+  "what": "a keep-warm turn is promptKind relay",
+  "got": "relay",
+  "expect": "relay",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-d",
+  "what": "AskUserQuestion is recorded (auq true) and the matched line kept",
+  "got": "true true",
+  "expect": "true true",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n1",
+  "what": "never blocks, never prints: empty file",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n2",
+  "what": "never blocks, never prints: only newlines",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n3",
+  "what": "never blocks, never prints: garbage text",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n4",
+  "what": "never blocks, never prints: binary garbage",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n5",
+  "what": "never blocks, never prints: partial last line",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n6",
+  "what": "never blocks, never prints: assistant content is a string",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n7",
+  "what": "never blocks, never prints: content null",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n8",
+  "what": "never blocks, never prints: message null",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n9",
+  "what": "never blocks, never prints: blocks with nulls",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n10",
+  "what": "never blocks, never prints: entries that are not objects",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n11",
+  "what": "never blocks, never prints: user content array with tool_result",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n12",
+  "what": "never blocks, never prints: no user entry at all",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n13",
+  "what": "never blocks, never prints: reply ends in ?** markdown",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n14",
+  "what": "never blocks, never prints: a 3 MB single line",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n15",
+  "what": "never blocks, never prints: a very long matched line",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n16",
+  "what": "never blocks, never prints: CRLF",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-n17",
+  "what": "never blocks, never prints: unicode",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-p1",
+  "what": "transcript_path missing from the payload",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-p2",
+  "what": "transcript file does not exist",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-p3",
+  "what": "transcript_path is a directory",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-p4",
+  "what": "transcript_path is a number",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-p5",
+  "what": "payload is not json",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-p6",
+  "what": "empty stdin",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-p7",
+  "what": "no data dir configured at all",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-p8",
+  "what": "the ledger dir cannot be written",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-big",
+  "what": "a 58 MB transcript: silent and fast",
+  "got": "status 0, stdout \"\", stderr \"\" fast",
+  "expect": "status 0, stdout \"\", stderr \"\" fast",
+  "ok": true,
+  "note": "52 ms"
+ },
+ {
+  "id": "G3-big2",
+  "what": "and it read the LAST turn",
+  "got": "true user",
+  "expect": "true user",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-dream",
+  "what": "CONSONANCE_DREAM set: nothing at all",
+  "got": "status 0, stdout \"\", stderr \"\"",
+  "expect": "status 0, stdout \"\", stderr \"\"",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-sec-a",
+  "what": "secret shapes the hook scrubs",
+  "got": "vck_ gateway | anthropic | sk- (openai style) | github ghp_ | aws AKIA | bearer | TOKEN=value | password: value",
+  "expect": "vck_ gateway | anthropic | sk- (openai style) | github ghp_ | aws AKIA | bearer | TOKEN=value | password: value",
+  "ok": true,
+  "note": ""
+ },
+ {
+  "id": "G3-sec-b",
+  "what": "every secret shape is scrubbed",
+  "got": 8,
+  "expect": 0,
+  "ok": false,
+  "note": "NOT scrubbed: stripe sk_live_, slack xoxb-, google AIza, jwt, npm_ token, gitlab glpat-, a bare 40-hex, url with credentials"
+ },
+ {
+  "id": "G3-sec-c",
+  "what": "an UNMATCHED ending that holds a key: its text is not logged at all",
+  "got": false,
+  "expect": false,
+  "ok": true,
+  "note": ""
+ }
+]

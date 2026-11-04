@@ -1,0 +1,17 @@
+testtrack10-open: RSL at R 300 m: turn -238.8°, 812 m straight, turn 328.8°, after 206 m rolling 54° upright first; 4 new pieces, 3990 m; closed in 1 step(s): 0.083 mm, tangent 4.5e-8 rad
+  pieces: p41 206 m, p42 1250 m, p43 812 m, p44 1722 m
+  p40|p41          u +8.4   6.2  u -8.4   6.4  u 0   0.0  °/100 m
+  p41|p42          u +8.4   2.7  u -8.4   2.7  u 0   0.2  °/100 m
+  p42|p43          u +8.4   0.3  u -8.4   0.4  u 0   0.0  °/100 m
+  p43|p44          u +8.4   0.4  u -8.4   0.4  u 0   0.0  °/100 m
+  p44|p1 (seam)    u +8.4   9.3  u -8.4   9.7  u 0   0.2  °/100 m
+  cup: fastest 0.0069 °/m at p44 +17 m; end 10.000 → p1 10.000
+  D434 bars: mean lean 57.8° over 1198 curved stations, 0 out; peak side load 4.51 g; roll peak 0.748 °/m (amber 0.9338); gap 0.083 mm
+test10-open: LSR at R 300 m: turn 175.5°, 746 m straight, turn -175.5°; 3 new pieces, 2584 m; closed in 1 step(s): 0.104 mm, tangent 3.0e-8 rad
+  pieces: p21 919 m, p22 746 m, p23 919 m
+  p20|p21          u +8.4   9.9  u -8.4   9.0  u 0   1.7  °/100 m
+  p21|p22          u +8.4   9.8  u -8.4   9.9  u 0   0.0  °/100 m
+  p22|p23          u +8.4  10.3  u -8.4  10.3  u 0   0.0  °/100 m
+  p23|p1 (seam)    u +8.4   9.4  u -8.4   9.4  u 0   0.2  °/100 m
+  cup: fastest 0.0058 °/m at p22 +1 m; end 0.000 → p1 0.000
+  D434 bars: mean lean 61.0° over 624 curved stations, 0 out; peak side load 4.23 g; roll peak 0.683 °/m (amber 0.9338); gap 0.104 mm

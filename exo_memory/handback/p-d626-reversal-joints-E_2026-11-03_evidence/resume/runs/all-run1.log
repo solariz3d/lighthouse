@@ -1,0 +1,99 @@
+start 17:05:41Z 7e5de8e dirty 0
+main exit 1 17:35:50Z
+# tests 2050
+# pass 1954
+# fail 83
+# cancelled 0
+# skipped 13
+# todo 0
+not ok 64 - control: the unmutated temp copy passes every test file the mutants use
+not ok 551 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 552 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+not ok 553 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+not ok 554 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+not ok 558 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+not ok 707 - row 2: a drag step builds nothing placed: how "drag", the placed path and mesh the very ones, every other batch the placed one, the window a few dozen chords; the release equals a fresh build
+not ok 840 - row 14m (D522, decision 2): a 30 m grab on 20 m knots is sharp: the road changes by more than 0.1 mm only within the 30 m asked, and outside it by under 0.1 mm (Sharp's declared spill)
+not ok 854 - ELYSIUM's AI line (a loop through vertical that AC loads) is byte-identical to before
+not ok 868 - the samples' roll is within the smoothstep bound of the φ channel (ref 09 §5), and 2 m chords move the line under 1 cm over 530 m against 0.25 m chords (the stated deviation, measured)
+not ok 933 - 1 · constant width and r (or an r that does not bind the cap): case 0 draws exactly the segments it drew at b7c7676, byte for byte
+not ok 934 - 1 · constant width and r (or an r that does not bind the cap): case 1 draws exactly the segments it drew at b7c7676, byte for byte
+not ok 935 - 1 · constant width and r (or an r that does not bind the cap): case 2 draws exactly the segments it drew at b7c7676, byte for byte
+not ok 936 - 1 · constant width and r (or an r that does not bind the cap): case 3 draws exactly the segments it drew at b7c7676, byte for byte
+not ok 952 - CONTROL: the whole of core_chord.test.js passes on an unmutated copy of src/, tools/ and app/
+not ok 1004 - row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased
+not ok 1005 - row 11: a turn that flips over extend's 20 m transition: the same
+not ok 1006 - row 12: a flip swept: Sharp ramp 40 m: the curves stay banked, none leans out, no piece withheld
+not ok 1007 - row 12: a flip swept: Sharp ramp 100 m: the curves stay banked, none leans out, no piece withheld
+not ok 1008 - row 12: a flip swept: a 40 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 1009 - row 12: a flip swept: a 50 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 1010 - row 12: a flip swept: a 60 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 1011 - row 12: a flip swept: a 70 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 1012 - row 12: a flip swept: a 80 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 1013 - row 12: a flip swept: a 100 m transition: the curves stay banked, none leans out, no piece withheld
+not ok 1014 - row 12: a flip swept: e60 (Extend's default blend over a 60 m piece): the curves stay banked, none leans out, no piece withheld
+not ok 1015 - row 12: a flip swept: e80 (over an 80 m piece): the curves stay banked, none leans out, no piece withheld
+not ok 1016 - row 13: a straight of 40 m between opposite corners: none leans out, no corner withheld
+not ok 1017 - row 13: a straight of 42 m between opposite corners: none leans out, no corner withheld
+not ok 1018 - row 13: a straight of 44 m between opposite corners: none leans out, no corner withheld
+not ok 1019 - row 13: a straight of 46 m between opposite corners: none leans out, no corner withheld
+not ok 1020 - row 13: a straight of 48 m between opposite corners: none leans out, no corner withheld
+not ok 1021 - row 13: a straight of 50 m between opposite corners: none leans out, no corner withheld
+not ok 1022 - row 13: a straight of 52 m between opposite corners: none leans out, no corner withheld
+not ok 1023 - row 13: a straight of 54 m between opposite corners: none leans out, no corner withheld
+not ok 1024 - row 13: a straight of 56 m between opposite corners: none leans out, no corner withheld
+not ok 1025 - row 13: a straight of 58 m between opposite corners: none leans out, no corner withheld
+not ok 1026 - row 13: a straight of 60 m between opposite corners: none leans out, no corner withheld
+not ok 1027 - row 13: a straight of 62 m between opposite corners: none leans out, no corner withheld
+not ok 1028 - row 13: a straight of 64 m between opposite corners: none leans out, no corner withheld
+not ok 1029 - row 13: a straight of 66 m between opposite corners: none leans out, no corner withheld
+not ok 1030 - row 13: a straight of 68 m between opposite corners: none leans out, no corner withheld
+not ok 1031 - row 13: a straight of 70 m between opposite corners: none leans out, no corner withheld
+not ok 1032 - row 13: a straight of 72 m between opposite corners: none leans out, no corner withheld
+not ok 1033 - row 13: a straight of 74 m between opposite corners: none leans out, no corner withheld
+not ok 1034 - row 13: a straight of 76 m between opposite corners: none leans out, no corner withheld
+not ok 1035 - row 13: a straight of 78 m between opposite corners: none leans out, no corner withheld
+not ok 1036 - row 13: a straight of 80 m between opposite corners: none leans out, no corner withheld
+not ok 1037 - row 13: a straight of 82 m between opposite corners: none leans out, no corner withheld
+not ok 1038 - row 13: a straight of 84 m between opposite corners: none leans out, no corner withheld
+not ok 1039 - row 13: a straight of 86 m between opposite corners: none leans out, no corner withheld
+not ok 1040 - row 13: a straight of 88 m between opposite corners: none leans out, no corner withheld
+not ok 1041 - row 13: a straight of 90 m between opposite corners: none leans out, no corner withheld
+not ok 1042 - row 13: a straight of 92 m between opposite corners: none leans out, no corner withheld
+not ok 1043 - row 13: a straight of 94 m between opposite corners: none leans out, no corner withheld
+not ok 1044 - row 13: a straight of 96 m between opposite corners: none leans out, no corner withheld
+not ok 1045 - row 13: a straight of 98 m between opposite corners: none leans out, no corner withheld
+not ok 1046 - row 13: a straight of 100 m between opposite corners: none leans out, no corner withheld
+not ok 1047 - row 13: a straight of 102 m between opposite corners: none leans out, no corner withheld
+not ok 1048 - row 13: a straight of 104 m between opposite corners: none leans out, no corner withheld
+not ok 1049 - row 13: a straight of 106 m between opposite corners: none leans out, no corner withheld
+not ok 1050 - row 13: a straight of 108 m between opposite corners: none leans out, no corner withheld
+not ok 1051 - row 13: a straight of 110 m between opposite corners: none leans out, no corner withheld
+not ok 1052 - row 13: a straight of 112 m between opposite corners: none leans out, no corner withheld
+not ok 1053 - row 13: a straight of 114 m between opposite corners: none leans out, no corner withheld
+not ok 1054 - row 13: a straight of 116 m between opposite corners: none leans out, no corner withheld
+not ok 1055 - row 13: a straight of 118 m between opposite corners: none leans out, no corner withheld
+not ok 1056 - row 13: a straight of 120 m between opposite corners: none leans out, no corner withheld
+not ok 1057 - row 14: a 100 m link at R 1200 between opposite corners: none leans out, no corner withheld
+not ok 1058 - row 14: a 100 m link at R 3000 between opposite corners: none leans out, no corner withheld
+not ok 1059 - row 14: a 100 m link at R 10000 between opposite corners: none leans out, no corner withheld
+not ok 1126 - row 5 (amended D196): a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), a constant segment renders through profileAt with no blend and no new key, a changing one is a chord, and it saves as /3
+not ok 1146 - row 5a (amended D196, D222, D258): against the SEAL's manifest (c964c2d) F4, F6, F8 differ in segs and mesh only, F1, F2 in kn5 only, F7 in segs, path and mesh, and the three others are identical
+not ok 1147 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+not ok 1148 - row 5b (D225, /4): each fixture parsed, saved as /4 text and read again renders to the same digests (the round trip), its text is /4 and carries no edge or tube channel (seal E3c)
+not ok 1149 - row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed
+not ok 1163 - CONTROL: the whole of core_cup.test.js and core_cup_readers.test.js pass on an unmutated copy of src/, tools/ and app/
+not ok 1210 - mutant M26 (K6-3) the cup feeds the roll: applied, and caught by "row 6"
+not ok 1349 - row 8: a jump from a lip with NO offset is BYTE-IDENTICAL to before (segments, path, saved text), on a climbing take-off, by the button and posed
+not ok 1353 - control: the unmutated copy passes every row of core_jump.test.js
+not ok 1560 - mutant R9 the cache keeps a piece built before its next one carried it: applied, and caught by "row 5"
+not ok 1597 - a value brush (bank) leaves every sample past W⁺ bit for bit, and calls no close
+not ok 1761 - mutant KE6-2 e is fed into the roll: applied, and caught by "E6"
+timing exit 0 17:38:00Z
+# tests 27
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 5
+# todo 0
+ALL-END

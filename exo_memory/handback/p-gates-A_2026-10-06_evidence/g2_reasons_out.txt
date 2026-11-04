@@ -1,0 +1,15 @@
+5b  cd <clean A> && rm -rf build   (session cwd = B)
+   decision: deny
+   reason line 1: delete refused (G2, junctions before a delete): the tree being removed holds 1 junction(s) or symlink(s). A recursive delete or `git worktree remove` can follow...
+   link named: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\gates\work\cdtest\B\build\lnk  ->  C:\Users\nname\AppData\Local\Temp\c
+
+6a  rm -rf logs/*.log
+   decision: deny
+   reason line 1: delete refused (G2, junctions before a delete): the tree being removed holds 1 junction(s) or symlink(s). A recursive delete or `git worktree remove` can follow...
+   link named: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\gates\work\globtest\logs\unrelated  ->  C:\Users\nname\AppData\Local\T
+
+7a  heredoc body
+   decision: deny
+   reason line 1: delete refused (G2, junctions before a delete): the tree being removed holds 1 junction(s) or symlink(s). A recursive delete or `git worktree remove` can follow...
+   link named: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\gates\work\cdtest\B\build\lnk  ->  C:\Users\nname\AppData\Local\Temp\c
+

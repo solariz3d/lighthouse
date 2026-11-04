@@ -1,0 +1,11 @@
+=== node --max-old-space-size=4096 C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d277v/build.js
+=== cwd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/d277v
+=== env {"STARTED":"2026-10-10T08:15:33-06:00","FINISHED":"2026-10-10T11:07:31-06:00"}
+rows [33m168[39m superseded [33m2[39m
+kind {"NOT A CLAIM":68,"CHECKED":39,"UNCHECKED STATE":50,"UNCHECKED CONCLUSION":11}
+kind x verdict {"NOT A CLAIM / null":68,"CHECKED / CORRECT":39,"UNCHECKED STATE / CORRECT":46,"UNCHECKED CONCLUSION / CORRECT":9,"UNCHECKED STATE / WRONG":3,"UNCHECKED CONCLUSION / UNVERIFIABLE":2,"UNCHECKED STATE / UNVERIFIABLE":1}
+seat x kind {"C / NOT A CLAIM":16,"C / CHECKED":14,"C / UNCHECKED STATE":14,"A / CHECKED":10,"A / UNCHECKED STATE":6,"A / NOT A CLAIM":19,"E / CHECKED":4,"librarian / CHECKED":6,"librarian / NOT A CLAIM":11,"librarian / UNCHECKED STATE":15,"chair / UNCHECKED STATE":5,"chair / NOT A CLAIM":7,"E / UNCHECKED CONCLUSION":3,"E / NOT A CLAIM":15,"C / UNCHECKED CONCLUSION":1,"E / UNCHECKED STATE":10,"librarian / UNCHECKED CONCLUSION":5,"A / UNCHECKED CONCLUSION":1,"chair / CHECKED":5,"chair / UNCHECKED CONCLUSION":1}
+WRONG ["msg_011Cfs4JHfyxs6qC9dE5N7J2|2","msg_011CfjNqyvrhrJts3L2oDctz|6","msg_011Cfm2Vcc5cGyLZpZe2JDWa|9"]
+UNVERIFIABLE ["msg_011Cfmit33Wx8r2G3fJ5tBKB|11","msg_011CfmjFxazubHKz2yeTkCrc|5","msg_011CfmjFxazubHKz2yeTkCrc|8"]
+
+=== exit 0 signal null error  0.0s

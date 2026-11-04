@@ -1,0 +1,496 @@
+[
+ {
+  "id": "W006",
+  "originClass": "RING",
+  "originWhere": "queued_command attachment in the erring turn, event 25989",
+  "compactionAt": "2026-09-16T13:00:28.753Z",
+  "historyEvents": 298,
+  "historyDropped": 130,
+  "cutN": 26071,
+  "candidates": [
+   {
+    "n": 25989,
+    "kind": "ATTACH queued_command",
+    "ts": "2026-09-16T14:54:11.332Z",
+    "status": "in the replay, whole",
+    "detail": "original 0 chars, kept about 0; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W010",
+  "originClass": "PROXY",
+  "originWhere": "the claim message itself (A-TEXT 27521); the premise it rests on is the seats own Id 41/1001 listing at 07:38:19, event 27518",
+  "compactionAt": "2026-09-16T13:00:28.753Z",
+  "historyEvents": 756,
+  "historyDropped": 612,
+  "cutN": 27521,
+  "candidates": [
+   {
+    "n": 27521,
+    "kind": "A-TEXT",
+    "ts": "2026-09-18T07:38:35.533Z",
+    "status": "at or after the cut (not replayed as history)",
+    "detail": ""
+   },
+   {
+    "n": 27518,
+    "kind": "RESULT",
+    "ts": "2026-09-18T07:38:19.073Z",
+    "status": "in the replay, whole",
+    "detail": "original 544 chars, kept about 544; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W018",
+  "originClass": "DIGEST",
+  "originWhere": "UserPromptSubmit hook attachment at the start of the erring turn, event 45294 ([panes] digest)",
+  "compactionAt": "2026-09-22T23:55:28.598Z",
+  "historyEvents": 471,
+  "historyDropped": 311,
+  "cutN": 45340,
+  "candidates": [
+   {
+    "n": 45294,
+    "kind": "ATTACH UserPromptSubmit",
+    "ts": "2026-09-23T06:59:21.321Z",
+    "status": "in the replay, whole",
+    "detail": "original 282 chars, kept about 282; the quoted words start at offset 130 -> inside the kept part"
+   }
+  ]
+ },
+ {
+  "id": "W019",
+  "originClass": "PROXY",
+  "originWhere": "the seats own probe run from the TEMP folder, call 45830 and its result 45831/45841, then THINK 45844",
+  "compactionAt": "2026-09-22T23:55:28.598Z",
+  "historyEvents": 647,
+  "historyDropped": 506,
+  "cutN": 45845,
+  "candidates": [
+   {
+    "n": 45830,
+    "kind": "CALL Bash",
+    "ts": "2026-09-23T07:34:52.946Z",
+    "status": "in the replay, whole",
+    "detail": "original 435 chars, kept about 435; quote not matched in the event text"
+   },
+   {
+    "n": 45831,
+    "kind": "RESULT",
+    "ts": "2026-09-23T07:34:57.090Z",
+    "status": "in the replay, whole",
+    "detail": "original 492 chars, kept about 492; quote not matched in the event text"
+   },
+   {
+    "n": 45841,
+    "kind": "RESULT",
+    "ts": "2026-09-23T07:35:05.483Z",
+    "status": "in the replay, whole",
+    "detail": "original 65 chars, kept about 65; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W020",
+  "originClass": "DIGEST",
+  "originWhere": "[panes] digest attached to the prompt of the erring turn, event 46257 (the keeper prompt 46255 says nothing was sent to the orch, which was true)",
+  "compactionAt": "2026-09-22T23:55:28.598Z",
+  "historyEvents": 814,
+  "historyDropped": 667,
+  "cutN": 46268,
+  "candidates": [
+   {
+    "n": 46257,
+    "kind": "ATTACH UserPromptSubmit",
+    "ts": "2026-09-23T09:20:23.527Z",
+    "status": "in the replay, whole",
+    "detail": "original 1120 chars, kept about 1120; the quoted words start at offset 320 -> inside the kept part"
+   },
+   {
+    "n": 46255,
+    "kind": "PROMPT",
+    "ts": "2026-09-23T09:20:23.391Z",
+    "status": "in the replay, whole",
+    "detail": "original 28 chars, kept about 28; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W021",
+  "originClass": "DIGEST",
+  "originWhere": "[panes] digest attached to the prompt of the erring turn, event 46236: it lists CHARLIE, ALPHA, MAIN, ECHO and no BRAVO",
+  "compactionAt": "2026-09-22T23:55:28.598Z",
+  "historyEvents": 806,
+  "historyDropped": 660,
+  "cutN": 46247,
+  "candidates": [
+   {
+    "n": 46236,
+    "kind": "ATTACH UserPromptSubmit",
+    "ts": "2026-09-23T09:19:12.521Z",
+    "status": "in the replay, whole",
+    "detail": "original 1247 chars, kept about 1247; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W022",
+  "originClass": "CARRY",
+  "originWhere": "the seats own ring to the chair in the PREVIOUS turn, event 49206 (the batch-3 plan)",
+  "compactionAt": "2026-09-23T13:38:44.665Z",
+  "historyEvents": 358,
+  "historyDropped": 202,
+  "cutN": 49242,
+  "candidates": [
+   {
+    "n": 49206,
+    "kind": "CALL mcp__consonance__call_chair",
+    "ts": "2026-09-23T23:28:41.217Z",
+    "status": "in the replay, CUT",
+    "detail": "original 2257 chars, kept about 193; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W032",
+  "originClass": "PROXY",
+  "originWhere": "the seats own test-run output, event 58781: three doc-geom TypeError lines printed beside todo 6; the tool output never names the six todo tests",
+  "compactionAt": "2026-09-27T13:49:25.252Z",
+  "historyEvents": 513,
+  "historyDropped": 349,
+  "cutN": 58784,
+  "candidates": [
+   {
+    "n": 58781,
+    "kind": "RESULT",
+    "ts": "2026-09-27T18:45:18.902Z",
+    "status": "in the replay, whole",
+    "detail": "original 543 chars, kept about 543; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W034",
+  "originClass": "RING",
+  "originWhere": "the seats own grep of t180 docs/FINDINGS.md in the PREVIOUS turn (12 h earlier), result event 58287, section 4c, written by another pane",
+  "compactionAt": "2026-09-27T13:49:25.252Z",
+  "historyEvents": 1012,
+  "historyDropped": 865,
+  "cutN": 60290,
+  "candidates": [
+   {
+    "n": 58287,
+    "kind": "RESULT",
+    "ts": "2026-09-27T17:43:14.763Z",
+    "status": "not in the replay (older history dropped: 865 of 1012 events cut from the front)",
+    "detail": ""
+   }
+  ]
+ },
+ {
+  "id": "W084",
+  "originClass": "RING",
+  "originWhere": "tool result in the previous turn, event 13092: the desktop librariens note exo_memory/loop/to_the_laptop_2026-09-11.md",
+  "compactionAt": "2026-09-08T13:44:41.229Z",
+  "historyEvents": 795,
+  "historyDropped": 637,
+  "cutN": 13232,
+  "candidates": [
+   {
+    "n": 13092,
+    "kind": "RESULT",
+    "ts": "2026-09-11T08:06:55.815Z",
+    "status": "in the replay, CUT",
+    "detail": "original 6544 chars, kept about 593; the quoted words start at offset 4326 -> in the cut-off part"
+   }
+  ]
+ },
+ {
+  "id": "W088",
+  "originClass": "RING",
+  "originWhere": "the chairs ring that opens the erring turn, event 13276; the seats own check at 13297-13298 (dir true / project true, 4 of 4) came 34 s later",
+  "compactionAt": "2026-09-08T13:44:41.229Z",
+  "historyEvents": 820,
+  "historyDropped": 666,
+  "cutN": 13310,
+  "candidates": [
+   {
+    "n": 13276,
+    "kind": "PROMPT",
+    "ts": "2026-09-11T08:20:20.689Z",
+    "status": "in the replay, whole",
+    "detail": "original 1442 chars, kept about 1442; the quoted words start at offset 352 -> inside the kept part"
+   },
+   {
+    "n": 13297,
+    "kind": "CALL Bash",
+    "ts": "2026-09-11T08:20:54.312Z",
+    "status": "in the replay, whole",
+    "detail": "original 504 chars, kept about 504; quote not matched in the event text"
+   },
+   {
+    "n": 13298,
+    "kind": "RESULT",
+    "ts": "2026-09-11T08:20:54.510Z",
+    "status": "in the replay, whole",
+    "detail": "original 659 chars, kept about 659; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W092",
+  "originClass": "PROXY",
+  "originWhere": "the seats own lock-file and process check in the erring turn, events 15862-15863 (pid 38656 alive, lock dev/.tail-carry.mutants.lock), read beside A's board line about dev/tail-carry.mutants.js; an ea",
+  "compactionAt": "2026-09-11T08:23:54.896Z",
+  "historyEvents": 763,
+  "historyDropped": 618,
+  "cutN": 15868,
+  "candidates": [
+   {
+    "n": 15862,
+    "kind": "CALL Bash",
+    "ts": "2026-09-14T10:45:58.107Z",
+    "status": "in the replay, CUT",
+    "detail": "original 1309 chars, kept about 993; quote not matched in the event text"
+   },
+   {
+    "n": 15863,
+    "kind": "RESULT",
+    "ts": "2026-09-14T10:45:59.360Z",
+    "status": "in the replay, whole",
+    "detail": "original 1530 chars, kept about 1530; the quoted words start at offset 746 -> inside the kept part"
+   },
+   {
+    "n": 15574,
+    "kind": "A-TEXT",
+    "ts": "2026-09-14T09:44:54.254Z",
+    "status": "in the replay, whole",
+    "detail": "original 1397 chars, kept about 1397; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W100",
+  "originClass": "DIGEST",
+  "originWhere": "the [panes] digest attached to the prompt of the erring turn, event 44367: the ECHO line is cut at 'does…'",
+  "compactionAt": "2026-08-30T09:36:21.154Z",
+  "historyEvents": 1936,
+  "historyDropped": 1794,
+  "cutN": 44377,
+  "candidates": [
+   {
+    "n": 44367,
+    "kind": "ATTACH UserPromptSubmit",
+    "ts": "2026-09-01T10:38:15.217Z",
+    "status": "in the replay, whole",
+    "detail": "original 1377 chars, kept about 1377; the quoted words start at offset 101 -> inside the kept part"
+   }
+  ]
+ },
+ {
+  "id": "W101",
+  "originClass": "PROXY",
+  "originWhere": "the seat's own directory listing in the erring turn, event 89385 (verify/B holds only claims.json); the claim is the amendment at 89388 and the reply at 89411",
+  "compactionAt": "2026-10-10T15:12:13.220Z",
+  "historyEvents": 76,
+  "historyDropped": 0,
+  "cutN": 89411,
+  "candidates": [
+   {
+    "n": 89385,
+    "kind": "RESULT",
+    "ts": "2026-10-10T15:42:48.497Z",
+    "status": "in the replay, whole",
+    "detail": "original 631 chars, kept about 631; quote not matched in the event text"
+   },
+   {
+    "n": 89388,
+    "kind": "CALL Bash",
+    "ts": "2026-10-10T15:42:55.296Z",
+    "status": "in the replay, whole",
+    "detail": "original 873 chars, kept about 873; quote not matched in the event text"
+   },
+   {
+    "n": 89411,
+    "kind": "A-TEXT",
+    "ts": "2026-10-10T15:43:23.696Z",
+    "status": "at or after the cut (not replayed as history)",
+    "detail": ""
+   }
+  ]
+ },
+ {
+  "id": "W079",
+  "originClass": "RING",
+  "originWhere": "a hand-back by another pane read in a tool result two hours earlier, event 11976 (the sync packet's section on completion)",
+  "compactionAt": "2026-09-08T13:44:41.229Z",
+  "historyEvents": 586,
+  "historyDropped": 411,
+  "cutN": 12524,
+  "candidates": [
+   {
+    "n": 11976,
+    "kind": "RESULT",
+    "ts": "2026-09-09T10:00:07.268Z",
+    "status": "in the replay, CUT",
+    "detail": "original 17833 chars, kept about 593; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W080",
+  "originClass": "RING",
+  "originWhere": "C's hand-back read in a tool result four hours earlier, event 11449; the ring with the claim is a call_chair at 12:19:39Z (public board row, the transcript copy is Third-Place-redacted)",
+  "compactionAt": "2026-09-08T13:44:41.229Z",
+  "historyEvents": 541,
+  "historyDropped": 363,
+  "cutN": 12425,
+  "candidates": [
+   {
+    "n": 11449,
+    "kind": "RESULT",
+    "ts": "2026-09-09T07:56:02.285Z",
+    "status": "not in the replay (older history dropped: 363 of 541 events cut from the front)",
+    "detail": ""
+   }
+  ]
+ },
+ {
+  "id": "W044",
+  "originClass": "RING",
+  "originWhere": "the librarian's ring that opens the erring turn, event 43315 (the L023 return leg)",
+  "compactionAt": "2026-08-30T09:36:21.154Z",
+  "historyEvents": 1486,
+  "historyDropped": 1362,
+  "cutN": 43334,
+  "candidates": [
+   {
+    "n": 43315,
+    "kind": "PROMPT",
+    "ts": "2026-09-01T08:50:13.817Z",
+    "status": "in the replay, whole",
+    "detail": "original 1835 chars, kept about 1835; the quoted words start at offset 988 -> inside the kept part"
+   }
+  ]
+ },
+ {
+  "id": "W049",
+  "originClass": "RING",
+  "originWhere": "the librarian's ring that opens the erring turn: the transcript prompt (event 44206) is Third-Place-redacted, so I read the same message from its public board row at 10:13:14.871Z",
+  "compactionAt": "2026-08-30T09:36:21.154Z",
+  "historyEvents": 1869,
+  "historyDropped": 1727,
+  "cutN": 44241,
+  "candidates": [
+   {
+    "n": 44206,
+    "kind": "PROMPT",
+    "ts": "2026-09-01T10:13:14.871Z",
+    "status": "not in the replay (older history dropped: 1727 of 1869 events cut from the front)",
+    "detail": ""
+   }
+  ]
+ },
+ {
+  "id": "W053",
+  "originClass": "PROXY",
+  "originWhere": "the claim itself (call 186). The index it counts is in the seat's injected context at the start of the session file (the first events): loop/run1/items lists t1 to t6, six entries, and 240 run2 cells ",
+  "compactionAt": null,
+  "historyEvents": 54,
+  "historyDropped": 0,
+  "cutN": 186,
+  "candidates": [
+   {
+    "n": 186,
+    "kind": "CALL Bash",
+    "ts": "2026-09-01T13:46:48.216Z",
+    "status": "at or after the cut (not replayed as history)",
+    "detail": ""
+   }
+  ]
+ },
+ {
+  "id": "W054",
+  "originClass": "INFER",
+  "originWhere": "the claim itself (call 726); its inputs are the seat's own tool outputs of the same turn (7,479 B at 715, 15,753 B at 708, cards 37,457 B at 715)",
+  "compactionAt": null,
+  "historyEvents": 235,
+  "historyDropped": 76,
+  "cutN": 726,
+  "candidates": [
+   {
+    "n": 726,
+    "kind": "CALL Bash",
+    "ts": "2026-09-02T08:01:02.714Z",
+    "status": "at or after the cut (not replayed as history)",
+    "detail": ""
+   },
+   {
+    "n": 479,
+    "kind": "RESULT",
+    "ts": "2026-09-02T07:22:21.493Z",
+    "status": "in the replay, whole",
+    "detail": "original 64 chars, kept about 64; quote not matched in the event text"
+   },
+   {
+    "n": 715,
+    "kind": "RESULT",
+    "ts": "2026-09-02T08:00:30.288Z",
+    "status": "in the replay, whole",
+    "detail": "original 333 chars, kept about 333; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W056",
+  "originClass": "RING",
+  "originWhere": "C's hand-back read in a tool result at the start of the erring turn, event 1791",
+  "compactionAt": null,
+  "historyEvents": 581,
+  "historyDropped": 434,
+  "cutN": 1810,
+  "candidates": [
+   {
+    "n": 1791,
+    "kind": "RESULT",
+    "ts": "2026-09-02T11:32:42.025Z",
+    "status": "in the replay, CUT",
+    "detail": "original 12968 chars, kept about 2494; quote not matched in the event text"
+   }
+  ]
+ },
+ {
+  "id": "W058",
+  "originClass": "INFER",
+  "originWhere": "the claim itself, the entry written at call 1267 (input Third-Place-redacted; its result is a bash EOF error). The seat's real run is call 1260 with grep -c -i -E, result 1261, which is the correct in",
+  "compactionAt": null,
+  "historyEvents": 408,
+  "historyDropped": 262,
+  "cutN": 1267,
+  "candidates": [
+   {
+    "n": 1267,
+    "kind": "CALL Bash",
+    "ts": "2026-09-02T10:06:43.294Z",
+    "status": "at or after the cut (not replayed as history)",
+    "detail": ""
+   },
+   {
+    "n": 1260,
+    "kind": "CALL Bash",
+    "ts": "2026-09-02T10:05:38.031Z",
+    "status": "in the replay, CUT",
+    "detail": "original 1675 chars, kept about 994; quote not matched in the event text"
+   },
+   {
+    "n": 1261,
+    "kind": "RESULT",
+    "ts": "2026-09-02T10:05:38.944Z",
+    "status": "in the replay, whole",
+    "detail": "original 2454 chars, kept about 2454; quote not matched in the event text"
+   }
+  ]
+ }
+]

@@ -1,0 +1,40 @@
+<!doctype html><meta charset="utf-8"><title>charts</title>
+<style>html,body{margin:0;background:#fff}canvas{display:block}</style>
+<canvas id="c" width="1400" height="900"></canvas>
+<script>
+window.__chart = async (which) => {
+  const C = await (await fetch('chart.json')).json();
+  const cv = document.getElementById('c'), g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, cv.width, cv.height); g.font = '15px sans-serif'; g.lineWidth = 1.5;
+  const axes = (x0, y0, w, h, xa, xb, ya, yb, xl, yl, title) => {
+    g.strokeStyle = '#888'; g.strokeRect(x0, y0, w, h); g.fillStyle = '#000'; g.fillText(title, x0, y0 - 8);
+    const X = (x) => x0 + (x - xa) / (xb - xa) * w, Y = (y) => y0 + h - (y - ya) / (yb - ya) * h;
+    g.fillStyle = '#444'; for (let i = 0; i <= 10; i++) { const x = xa + (xb - xa) * i / 10, y = ya + (yb - ya) * i / 10; g.fillText(x.toFixed(xl), X(x) - 10, y0 + h + 16); g.fillText(y.toFixed(yl), x0 - 48, Y(y) + 4); g.strokeStyle = '#eee'; g.beginPath(); g.moveTo(X(x), y0); g.lineTo(X(x), y0 + h); g.moveTo(x0, Y(y)); g.lineTo(x0 + w, Y(y)); g.stroke(); }
+    return { X, Y };
+  };
+  const plot = (A, pts, col, width = 2) => { g.strokeStyle = col; g.lineWidth = width; g.beginPath(); pts.forEach((p, i) => (i ? g.lineTo(A.X(p[0]), A.Y(p[1])) : g.moveTo(A.X(p[0]), A.Y(p[1])))); g.stroke(); };
+  const vline = (A, x, col, label, dy = 0) => { g.strokeStyle = col; g.lineWidth = 1.5; g.setLineDash([6, 4]); g.beginPath(); g.moveTo(A.X(x), A.Y(-100)); g.lineTo(A.X(x), A.Y(100)); g.stroke(); g.setLineDash([]); g.fillStyle = col; g.fillText(label, A.X(x) + 4, 60 + dy); };
+  if (which === 'xsec') {
+    const A = axes(70, 50, 1280, 380, -14, 14, -0.5, 4.5, 0, 1, 'The kn5 road\'s cross-section in the station frame (x across, + left; y up), at three stations. White-on-grey rows are the mesh\'s own vertices.');
+    const cols = { 1000: '#999', 2300: '#2a7', 3300: '#06c' };
+    for (const r of C.xsec) { plot(A, r.row, cols[r.s], 2.5); g.fillStyle = cols[r.s]; g.fillText(`s ${r.s}: edges x ${r.row[0][0].toFixed(2)} .. ${r.row[r.row.length - 1][0].toFixed(2)}, horizontal midpoint ${r.mid.toFixed(3)} m`, 90, 90 + 20 * [1000, 2300, 3300].indexOf(r.s)); }
+    vline(A, 0, '#000', 'centreline u = 0 (the AI line, the car\'s centre)'); vline(A, -0.352, '#e60', 'mid-edge at s 3300: -0.352 m', 20); vline(A, 0.095, '#c0c', 'preview centre line vertex: +0.095 m', 40);
+    // zoom panel on the centre
+    const B = axes(70, 500, 600, 340, -1.2, 1.2, -0.05, 0.25, 1, 2, 'The same, zoomed on the centre: the s 3300 row has no vertex at u = 0; its nearest is at +0.095 m');
+    for (const r of C.xsec) { plot(B, r.row.filter((p) => Math.abs(p[0]) < 1.3), cols[r.s], 2); r.row.filter((p) => Math.abs(p[0]) < 1.3).forEach((p) => { g.fillStyle = cols[r.s]; g.beginPath(); g.arc(B.X(p[0]), B.Y(p[1]), 4, 0, 7); g.fill(); }); }
+    vline(B, 0, '#000', 'u = 0'); vline(B, -0.352, '#e60', '-0.352', 20); vline(B, 0.095, '#c0c', '+0.095', 40);
+    const E = axes(760, 500, 590, 340, 9, 13, -0.2, 3.6, 1, 1, 'The left edge zoomed: the 30 deg lip (e = 30) folds the left side in by 0.89 m at cup 15 (0.31 m at cup 0)');
+    for (const r of C.xsec) plot(E, r.row.filter((p) => p[0] > 8.9), cols[r.s], 2.5);
+    g.fillStyle = '#000'; g.fillText('right side (not shown): no lip (er = 0); its edge is at -12.50 (cup 0) or -12.31 (cup 15)', 775, 820);
+  } else {
+    const A = axes(70, 50, 1280, 360, 3250, 3350, -0.1, 1.5, 0, 2, 'Height of the road at the car\'s lateral line u = +8.4 m, above the road\'s own straight line before the joint (through s 3280 and 3300, extended) (m): the core (black) and the kn5 (red, dashed). Flat to the joint, then it curves up.');
+    plot(A, C.bump.map((b) => [b.s, b.core]), '#000', 2.5); g.setLineDash([5, 5]); plot(A, C.bump.map((b) => [b.s, b.kn5]), '#d00', 2); g.setLineDash([]);
+    vline(A, 3300, '#e60', 'p5 | p6 joint, s 3300: the bank starts (0 -> 30 deg over p6), the left side begins to rise; vertical curvature steps from 0 to +2.3e-3 /m here'); vline(A, 3313, '#e60', 's 3313: the suspension is fully compressed in run 2', 20);
+    g.fillStyle = '#000'; g.fillText('at u = 0 the height along s is a straight line (kv = 0 through the joint): the centreline has no bump; the bump is the super-elevation beginning under the car\'s left side', 90, 400);
+    const W = axes(70, 500, 1280, 340, 3250, 3350, 0.2, 0.6, 0, 2, 'Run 2 (415 km/h at the joint): body origin (solid) and FL / RL wheel centre (dashed) height above the kn5 road under them, vertical (m); runs 4 (290 km/h) and 5 (275 km/h) in grey');
+    for (const [run, col, w] of [['4', '#999', 1.5], ['5', '#bbb', 1.5], ['2', '#06c', 2.5]]) { const r = C.wheels[run]; plot(W, r.map((x) => [x.s, -x.body]), col, w); g.setLineDash([4, 4]); plot(W, r.map((x) => [x.s, -x.FL]), col, w); plot(W, r.map((x) => [x.s, -x.RL]), col, w); g.setLineDash([]); }
+    vline(W, 3300, '#e60', 'joint'); vline(W, 3313, '#e60', 'min', 20);
+    g.fillStyle = '#000'; g.fillText('run 2: body 0.488 -> 0.313 m over s 3298 -> 3317 (0.175 m); run 4: 0.441 -> 0.375 (0.066 m); run 5: 0.519 -> 0.430 (0.089 m): the compression scales with speed squared, as a curvature does and a step does not', 90, 870);
+  }
+  return cv.toDataURL('image/png');
+};
+</script>

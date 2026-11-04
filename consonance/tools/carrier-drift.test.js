@@ -28,7 +28,7 @@ const PREFIX = '21d5453^';   // the commit before the TRAINING/BOOT/lap marking 
 // ── fixture plumbing ─────────────────────────────────────────────────────────────────────
 const dirs = [];
 function tmpTree(files) {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'carrier-drift-'));
+  const d = require('./scratch.js').mkdtemp('carrier-drift-');
   dirs.push(d);
   for (const [rel, body] of Object.entries(files)) {
     const p = path.join(d, rel);
@@ -862,4 +862,31 @@ test('MUTATION: `acknowledged` misspelled loses its `see` guard unless kinds are
     { file: 'exo_memory/CARD.md', anchor: 'the only decorrelated reader', kind: 'acknowleged', why: 'no see, no marker' },
   ]) });
   assert.strictEqual(res.red, true, 'the typo must not slip past BAD-ACK and UNMARKED-CARRIER both');
+});
+
+// ── evidence copies (D296): a directory ending `_evidence` holds byte copies of what a seat ran ──
+test('EVIDENCE: a withdrawn wording inside foo_evidence/ is a TRACE, not a finding', () => {
+  const root = tmpTree({ 'exo_memory/handback/p-x_evidence/dumps/new/librarian.md': 'the human remains the only decorrelated instrument.\n' });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.strictEqual(res.red, false, JSON.stringify(kinds(res)));
+  assert.strictEqual(res.counts.traces, 1);
+  assert.strictEqual(res.counts.carriers, 0);
+});
+
+test('EVIDENCE: foo_evidencex/ and evidence/ are NOT skipped, and a sibling carrier beside foo_evidence/ is still red', () => {
+  const line = 'the human remains the only decorrelated instrument.\n';
+  for (const dir of ['exo_memory/handback/p-x_evidencex', 'exo_memory/handback/evidence', 'exo_memory/handback/p-x_evidence_old']) {
+    const res = CD.scan({ root: tmpTree({ [dir + '/a.md']: line }), registry: reg([]) });
+    assert.strictEqual(res.red, true, dir + ' must still be a carrier');
+  }
+  const both = CD.scan({ root: tmpTree({ 'exo_memory/handback/p-x_evidence/a.md': line, 'exo_memory/handback/p-x.md': line }), registry: reg([]) });
+  assert.strictEqual(both.red, true);
+  assert.deepStrictEqual(both.findings.filter((f) => f.kind === 'UNACCOUNTED').map((f) => f.file), ['exo_memory/handback/p-x.md']);
+});
+
+test('EVIDENCE: the corpus line names the rule, and the skipped copies are counted in it', () => {
+  const root = tmpTree({ 'a_evidence/x.md': 'hello\n', 'b_evidence/y.md': 'hello\n' });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.strictEqual(res.counts.traces, 2);
+  assert.match(CD.report(res), /_evidence/);
 });

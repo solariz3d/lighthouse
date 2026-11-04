@@ -270,7 +270,7 @@ test('scope includes what ships and what runs, and excludes what is a dated reco
 // The fixture carries BOTH scope classes, because the guard now refuses to run without an
 // authority for the second one. `brief/CLEAN.md` is the stand-in for a bundled instruction.
 function fixtureRepo() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'portable-paths-'));
+  const dir = require('./scratch.js').mkdtemp('portable-paths-');
   const tools = path.join(dir, 'consonance', 'tools');
   const brief = path.join(dir, 'consonance', 'src-tauri', 'brief');
   fs.mkdirSync(tools, { recursive: true });
@@ -535,7 +535,7 @@ test('the real repo is green against its committed baseline', () => {
  * Its own fixture rather than fixtureRepo(), on purpose: adding a .py to the shared fixture would
  * put a second file in scope and silently defuse the zero-files-is-a-refusal test above. */
 function pyFixtureRepo() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'portable-paths-py-'));
+  const dir = require('./scratch.js').mkdtemp('portable-paths-py-');
   const tools = path.join(dir, 'consonance', 'tools');
   const brief = path.join(dir, 'consonance', 'src-tauri', 'brief');
   const hooks = path.join(dir, 'dev', 'shell', 'hooks');

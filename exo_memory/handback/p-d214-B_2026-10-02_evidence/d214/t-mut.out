@@ -1,0 +1,70 @@
+control (unmutated copy)                              pass 47 fail 0
+ 1 guard: the dream gate removed                                                         pass 46 fail 1  CAUGHT
+ 2 guard: the reentrancy guard removed                                                   pass 46 fail 1  CAUGHT
+ 3 guard: a tool that is not a ring tool is gated                                        pass 46 fail 1  CAUGHT
+ 4 decide: a missing SOURCES line is allowed                                             pass 42 fail 5  CAUGHT
+ 5 decide: an empty SOURCES line is allowed                                              pass 46 fail 1  CAUGHT
+ 6 decide: "none" is denied                                                              pass 45 fail 2  CAUGHT
+ 7 decide: an unmatched item is allowed                                                  pass 28 fail 19  CAUGHT
+ 8 decide: the reason names ALL items, matched or not                                    pass 46 fail 1  CAUGHT
+ 9 turn: calls of a PREVIOUS turn count (no boundary)                                    pass 40 fail 7  CAUGHT
+10 turn: a tool result counts as a prompt (the turn is cut at every call)                pass 46 fail 1  CAUGHT
+11 turn: a meta user message starts a new turn                                           pass 46 fail 1  CAUGHT
+12 turn: subagent (sidechain) entries count                                              pass 46 fail 1  CAUGHT
+13 turn: an errored call counts as opened                                                pass 46 fail 1  CAUGHT
+14 turn: a call with no recorded result counts as opened                                 pass 45 fail 2  CAUGHT
+15 transcript: the tail does not grow past the first window                              pass 45 fail 2  CAUGHT
+16 transcript: a transcript that cannot be parsed is read as an empty turn (denies)      pass 46 fail 1  CAUGHT
+17 transcript: a missing transcript is read as an empty turn (denies)                    pass 46 fail 1  CAUGHT
+18 notification: a machine-only notification IS a boundary again (the branch removed)    pass 42 fail 5  CAUGHT
+19 notification: a message MIXING a notification with keeper text is read as machine-only pass 46 fail 1  CAUGHT
+20 notification: a message recorded as typed by a human can be machine-only              pass 46 fail 1  CAUGHT
+21 notification: no marker is required (a bare reminder counts as a notification)        pass 46 fail 1  CAUGHT
+22 notification: the origin.kind task-notification marker is ignored                     pass 46 fail 1  CAUGHT
+23 notification: the <task-notification text marker is ignored                           pass 46 fail 1  CAUGHT
+24 notification: the [SYSTEM NOTIFICATION text marker is ignored                         pass 46 fail 1  CAUGHT
+25 notification: <system-reminder> blocks are not taken out before the test              pass 45 fail 2  CAUGHT
+26 notification: hook-output blocks are not taken out before the test                    pass 46 fail 1  CAUGHT
+27 notification: <task-notification> blocks are not taken out before the test            pass 43 fail 4  CAUGHT
+28 notification: the [SYSTEM NOTIFICATION ...] banner is not taken out before the test   pass 46 fail 1  CAUGHT
+29 notification: the backward read stops at ANY entry, not at a real prompt              pass 45 fail 2  CAUGHT
+30 match: an echo / printf / Write-Host counts as opened                                 pass 46 fail 1  CAUGHT
+31 match: NO metadata-only leader is excluded (ls, stat ... count as opened)             pass 45 fail 2  CAUGHT
+32 match: `ls` counts as opened                                                          pass 45 fail 2  CAUGHT
+33 match: `stat` counts as opened                                                        pass 46 fail 1  CAUGHT
+34 match: `test` counts as opened                                                        pass 46 fail 1  CAUGHT
+35 match: `[` counts as opened                                                           pass 46 fail 1  CAUGHT
+36 match: `Get-Item` counts as opened                                                    pass 45 fail 2  CAUGHT
+37 match: `Test-Path` counts as opened                                                   pass 45 fail 2  CAUGHT
+38 match: the PowerShell dir/gci aliases count as opened                                 pass 46 fail 1  CAUGHT
+39 reason: the same-message race is not named                                            pass 46 fail 1  CAUGHT
+40 reason: the read-back after a write is not named                                      pass 46 fail 1  CAUGHT
+41 reason: the metadata-only exclusion is not named                                      pass 46 fail 1  CAUGHT
+42 reason: the spelling guidance is dropped                                              pass 46 fail 1  CAUGHT
+43 match: a comment line counts as opened                                                pass 46 fail 1  CAUGHT
+44 match: a command is not split into segments (an echo hides a real read)               pass 45 fail 2  CAUGHT
+45 match: a Bash command matches only the whole item, never a shorter tail               pass 46 fail 1  CAUGHT
+46 match: a relative item no longer matches an absolute Read path by its tail            pass 46 fail 1  CAUGHT
+47 match: a Read of the exact path no longer counts                                      pass 31 fail 16  CAUGHT
+48 match: a relative call path is not resolved against cwd                               pass 46 fail 1  CAUGHT
+49 match: a Grep over a directory counts whether or not its result names the item        pass 46 fail 1  CAUGHT
+50 match: a WebFetch of any URL counts                                                   pass 46 fail 1  CAUGHT
+51 parse: continuation lines are not read                                                pass 46 fail 1  CAUGHT
+52 parse: the NEXT trailer does not end the slot                                         pass 46 fail 1  CAUGHT
+53 parse: a dot inside backticks splits an item                                          pass 46 fail 1  CAUGHT
+54 parse: a trailing (annotation) is kept                                                pass 46 fail 1  CAUGHT
+55 parse: a #L10 suffix is kept                                                          pass 46 fail 1  CAUGHT
+56 parse: a path:line suffix is kept                                                     pass 46 fail 1  CAUGHT
+57 parse: markdown emphasis around SOURCES: is not tolerated                             pass 46 fail 1  CAUGHT
+58 loss: a deny is emitted even when its ledger row could not be written                 pass 46 fail 1  CAUGHT
+59 contract: the decision is "allow", not "deny"                                         pass 23 fail 24  CAUGHT
+60 contract: a deny exits 2                                                              pass 45 fail 2  CAUGHT
+61 ledger: the message text is written into the row                                      pass 44 fail 3  CAUGHT
+62 ledger: the pointer line is not scrubbed                                              pass 46 fail 1  CAUGHT
+63 ledger: the unmatched items are not scrubbed                                          pass 46 fail 1  CAUGHT
+64 ledger: the allowed items are not scrubbed                                            pass 46 fail 1  CAUGHT
+65 ledger: the sk-or- shape is not scrubbed                                              pass 46 fail 1  CAUGHT
+66 install: the gate registers on every tool (no matcher scope)                          pass 46 fail 1  CAUGHT
+
+66 applied · 66 caught · 0 survived · 0 NOT APPLIED
+exit 0

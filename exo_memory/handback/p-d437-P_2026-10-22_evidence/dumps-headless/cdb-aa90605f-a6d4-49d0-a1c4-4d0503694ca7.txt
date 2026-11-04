@@ -1,0 +1,4 @@
+   ExceptionCode: e0000008
+   Parameter[0]: 0000000000000000
+   Parameter[1]: 0000001efa561000
+   Parameter[2]: 0000001643b7b000

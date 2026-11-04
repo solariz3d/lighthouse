@@ -1,0 +1,25 @@
+== D273 lap5 prefork ctx · asked 2026-10-09T09:05:25.425Z · lock held 2026-10-09T09:05:25.429Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/prefork.js C:/Users/nname/Desktop/worktrees/c-lap5-wt consonance/src-tauri/brief/LIBRARIAN.md 158 162; node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/prefork.js C:/Users/nname/Desktop/worktrees/c-lap5-wt consonance/src-tauri/brief/LIBRARIAN.md 173 177; node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/prefork.js C:/Users/nname/Desktop/worktrees/c-lap5-wt consonance/src-tauri/brief/LIBRARIAN.md 246 249; node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/prefork.js C:/Users/nname/Desktop/worktrees/c-lap5-wt exo_memory/BOOT.md 72 75
+ 158| 
+ 159| So: **write it down in the turn it forms, or it is not real.** Notes go to
+ 160| `%CONSONANCE_HOME%/exo_memory/librarian/` as dated `YYYY-MM-DD.md` append-only entries, in the
+ 161| same shape as any journal. Those notes are this seat's restore point and its inheritance — the tools
+ 162| it leaves for whoever wakes here next.
+keeper lines: [33m7[39m
+ 173| > **AMENDED 2026-08-26 — this seat may commit; the constraint moved.** The rule above stands as a trace
+ 174| > and its reason is withdrawn: routing through the chair produces no attribution, because every commit
+ 175| > here is authored `the keeper` and the trailer names the model rather than the thread. The canonical
+ 176| > replacement lives at the **Nothing committed** bullet in `brief/COMMITTEE.md` — named there and not
+ 177| > restated here, because two copies of one rule drift apart. In short: **name every path (never
+keeper lines: [33m7[39m
+ 246| the premise.** So when a pointer arrives, the correct move is to open the file — not to act on how the
+ 247| call describes it. That applies to the chair's rings too, and it is the reason this seat has caught
+ 248| five of the chair's claims tonight by going to disk instead.
+ 249| 
+keeper lines: [33m7[39m
+  72| > the same error"* — it applied the correlation test to every party and waived it for one. Correct
+  73| > form: **least-correlated reader.** Seven days later the withdrawn form was still live in this
+  74| > file, in `TRAINING.md:133`, and in five others, and the chair re-asserted it on 2026-08-23
+  75| > (a registration in this line of record) inside a document written to be verbatim and careful. **The
+keeper lines: [33m16[39m
+== exit 0 · done 2026-10-09T09:05:25.775Z

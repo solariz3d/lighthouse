@@ -1,0 +1,36 @@
+[32m✔ TOKENS: a reply naming a path, a sha, a commit, a count N/M, "N of M", a percentage or a version is flagged, each by its kind [90m(2.1558ms)[39m[39m
+[32m✔ TOKENS: plain prose, a bare number, a decimal, a word of hex-like letters, a lap id and a URL are not flagged [90m(0.4204ms)[39m[39m
+[32m✔ TOKENS: a sentence-final full stop, comma or closing bracket is not part of the token [90m(0.1535ms)[39m[39m
+[32m✔ TOKENS: a flagged token is clipped, redacted of key shapes, deduplicated and capped at 12; no surrounding text is kept [90m(0.1816ms)[39m[39m
+[32m✔ VERDICT: a Sources line whose items match calls of the turn is pass-matched [90m(46.4247ms)[39m[39m
+[32m✔ VERDICT: an unmatched Sources item is would-block-unmatched and the row names exactly that item [90m(44.2087ms)[39m[39m
+[32m✔ VERDICT: a reply with a token and NO Sources line is would-block-missing; a Sources line that is not the FINAL line (a blank line and prose after it) is too [90m(87.6051ms)[39m[39m
+[32m✔ VERDICT: "Sources: none" passes but is recorded as none; an empty Sources line is would-block-empty; "sources:" in any case and markdown emphasis count [90m(131.3239ms)[39m[39m
+[32m✔ VERDICT: the matcher is the SOURCES gate's: a command item matches a Bash call, an ls does not open, a read before the keeper's message is stale, a notification between is not a boundary [90m(190.0683ms)[39m[39m
+[32m✔ PASSES: no token is pass-notoken; the keep-warm "ok" and a keep-warm turn are skipped; a reply to a ring or a notification is not a reply to the keeper [90m(331.7924ms)[39m[39m
+[32m✔ PASSES: a bare "ok" reply, whatever the prompt, and an empty reply are skipped [90m(166.0708ms)[39m[39m
+[32m✔ WHO: the librarian and the chair are identified by pane id, or by instance directory when there is no pane id; a committee pane and any other session are ignored with NO row [90m(347.8986ms)[39m[39m
+[32m✔ WHO: the two fixed ids are the ones main.rs declares [90m(2.5636ms)[39m[39m
+[32m✔ SHADOW: it NEVER blocks: every verdict, would-block ones included, prints nothing and exits 0 [90m(203.323ms)[39m[39m
+[32m✔ LIVE (built, not on): with live true a would-block returns the Stop block JSON naming the kinds and the unmatched items; stop_hook_active true returns nothing [90m(1.5239ms)[39m[39m
+[32m✔ GUARD: stop_hook_active true is skip-active even with NO readable transcript (the transcript is not even read), and a notification issued between a tool call and its result is still the keeper's turn [90m(89.364ms)[39m[39m
+[32m✔ GUARD: stop_hook_active true in a real run logs skip-active, evaluates nothing, prints nothing [90m(43.4323ms)[39m[39m
+[32m✔ LEDGER: a row carries a sha of the reply, its length and the flagged tokens, and NOT the reply text; the shadow flag and the session prefix are there [90m(46.0677ms)[39m[39m
+[32m✔ LEDGER: a key shape in an unmatched Sources item is redacted [90m(41.6867ms)[39m[39m
+[32m✔ FAIL OPEN: garbage or empty stdin, a non-object payload, and a missing last_assistant_message exit 0 with nothing printed [90m(188.5679ms)[39m[39m
+[32m✔ FAIL OPEN: a missing or unparseable transcript logs an error row and never blocks, even for a reply that would block [90m(78.5618ms)[39m[39m
+[32m✔ FAIL OPEN: with no data dir, or a ledger that cannot be written, it still prints nothing and exits 0 [90m(80.3827ms)[39m[39m
+[32m✔ FAIL OPEN: alone in a directory (sources-gate.js not beside it) it logs an error row and exits 0 [90m(51.694ms)[39m[39m
+[32m✔ GUARDS: the dream gate and the second-reader environment do not get a row [90m(78.7649ms)[39m[39m
+[32m✔ REGISTERED: install.ps1 copies reply-slot.js beside sources-gate.js and registers it on Stop with no matcher; every other Stop entry is still there [90m(0.9539ms)[39m[39m
+[32m✔ PLAN: the plan the hook cites exists [90m(0.2196ms)[39m[39m
+[32m✔ HOOK SOURCE: no process is spawned, no network is called, and nothing but the ledger is written [90m(0.4485ms)[39m[39m
+[34mℹ tests 27[39m
+[34mℹ suites 0[39m
+[34mℹ pass 27[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2356.6748[39m
+exit 0

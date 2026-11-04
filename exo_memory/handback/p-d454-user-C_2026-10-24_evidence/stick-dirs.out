@@ -1,0 +1,11 @@
+[32m✔ row 1: the D273 data block is in ARRIVING.ps1, and its code names no C:\Consonance path [90m(0.6832ms)[39m[39m
+[32m✔ row 2: no config gives %USERPROFILE%\.consonance; a named data_dir is used, trimmed; blank, non-string or not JSON falls back [90m(1768.9368ms)[39m[39m
+[32m✔ row 3: a dry run does not pull or otherwise touch the repo [90m(901.9297ms)[39m[39m
+[34mℹ tests 3[39m
+[34mℹ suites 0[39m
+[34mℹ pass 3[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 2723.569[39m

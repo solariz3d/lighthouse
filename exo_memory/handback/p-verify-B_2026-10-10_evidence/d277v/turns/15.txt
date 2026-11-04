@@ -1,0 +1,382 @@
+MESSAGE 15  msg_011CfhwD5pNQGE4zB7YVMHgx  seat A  ts 2026-10-04T21:50:30.740Z  turn L62602..L62768 (next prompt L62813)
+CLAIMS:
+  [msg_011CfhwD5pNQGE4zB7YVMHgx|33] The two checks per step: "the gap equals a brute-force gap … and the tree's own points are the path's current samples (count, and the first, middle and last point)"
+
+--- L62602 user 2026-10-04T21:33:46.177Z
+USER: 
+
+<pasted_content id="e589">
+[chair:MAIN] D237b: B says NOT GREEN on c26f7884. Read exo_memory/handback/p-mirror-B_2026-10-04.md.
+The regression: the tree is memoised per PATH OBJECT, but trackmodel edits an OPEN track's path IN PLACE (extendPath and rebuildPathFrom, trackmodel.js:96 and :100). After an extend or a brush the tree is stale and the gap is silently wrong. B, through the real shell: 3 of 4 steps were wrong (mean 285 m where the truth is 118). Closed loops are fine. Everything else of yours holds (exact on fresh paths, 60/60; the dash bounded).
+Fix, on top of c26f7884 in your worktree:
+1. Key the memo on something that changes with the samples (the path plus samples.length plus the last sample's identity, or a version the track model bumps on extend and sculpt). Your choice; say why.
+2. Lift B's stale2.js in as a test through the shell and track model: an open track, an extend, a brush; the plan's gap equals a fresh tree's at every step. It must FAIL on c26f7884 and pass on the fix. Show both.
+3. Also test an open track with lift, which B didn't.
+Fixtures 0 of 9; protected paths clean. Heavy-run lock, --test-concurrency=1. No push, no AC.
+Append a "stale-tree fix" section to exo_memory/handback/p-mirror-A_2026-10-04.md, with the new commit.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-mirror-B_2026-10-04.md
+NEXT: librarian call_librarian with the pointer when the section is written — plan default after it: B re-checks, unless the output says otherwise
+</pasted_content id="e589">
+
+--- L62612 assistant 2026-10-04T21:33:50.845Z
+TOOL_USE Read [toolu_011bUfjfUwKzC4cQz2nh3yKp]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-mirror-B_2026-10-04.md"}
+--- L62613 user 2026-10-04T21:33:50.870Z
+RESULT [toolu_011bUfjfUwKzC4cQz2nh3yKp]: 1	# D237b the mirror's two findings: B's quick non-author look (FEEL tier, preview only)
+2	
+3	Pane B, D, 2026-10-04. A's `c26f7884` (parent `802451a`, 3 files, +111/−37), checked out in a fresh worktree
+4	`C:\Users\nname\Desktop\worktrees\b-mirror-wt` (detached at `c26f788`, 0 links). The before tree is my `b-grid3d-wt` at `802451a`. Temp
+5	folders only. No AC launch. Nothing committed. Nothing pushed.
+6	
+7	## VERDICT: **NOT GREEN. Do not land `c26f7884` as is.** One regression, owner A, small to fix. Everything asked for checks out.
+8	
+9	## THE REGRESSION: the per-path tree goes STALE on an open track, and the gap is then wrong, silently
+10	
+11	The tree is memoised per PATH OBJECT (`indexMemo`, a `WeakMap`, in `indexFor`). But the track model edits an OPEN track's path IN PLACE:
+12	`geom.extendPath(path, segs)` and `geom.rebuildPathFrom(path, segs, g)` (`app/preview/trackmodel.js:96, :100`) push and truncate
+13	`path.samples` (`src/geom/path.js:220, :305`). With no lift, the shown path is that same object, so after an extend or a brush the
+14	preview re-plans (the bounds object changed) but `indexFor(path)` returns the tree of the OLD centreline. The queries, though, come from
+15	the current samples.
+16	
+17	**Reproduced through the real shell and track model** (`scratchpad/mirror/stale2.js`: an open track, Mirror left/right, planned after each
+18	edit exactly as `preview.js` does, `guidePlan({ bounds: track.bounds, path: track.path })`, against a fresh tree and a brute force):
+19	
+20	| step | how | same path object | before `802451a`: plan = brute | **after `c26f788`: plan** | brute (truth) |
+21	|---|---|---|---|---|---|
+22	| first piece | full | — | 0 / 0 | 0 / 0 | 0 / 0 |
+23	| extend: a turn | extend | yes | 98.303 / 
+…[3137 chars cut]…
+ diff --stat 802451ab c26f7884 -- src app/export test/fixtures src-tauri` prints nothing. **Row 5a "0 of 9 differ"**, targeted:
+67	
+68	    node --max-old-space-size=4096 --test --test-concurrency=1 app/test/guides.test.js app/test/look.test.js app/test/render_proof.test.js test/core_cup_fixtures.test.js
+69	
+70	**53 tests · 53 pass · 0 fail · 0 skipped.**
+71	
+72	## What I did NOT verify
+73	
+74	The real window, an open track WITH a lift (a hill: `shown = lift(path)` may be a new object each time; not tested either way), A's
+75	mutants (not re-run), the full suite, AC, and machine L. Every node run here was under the heavy-run lock.
+76	
+77	Outputs: my scratchpad `mirror/` (stale.js, stale2.js, stale.out, exact.js, exact.out, targeted.out).
+78	
+--- L62617 assistant 2026-10-04T21:34:04.138Z
+TOOL_USE Bash [toolu_01RhHf3JMtNrHRwmRvS8CUsw]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-mirror-wt && grep -n \"function extendPath\\|function rebuildPathFrom\\|samples.push\\|samples.length =\\|samples.splice\\|SampleView\\|class Sample\\|function buildPath\\|segEnd\\|\\.samples = \" src/geom/path.js | cut -c1-200 | head -40"}
+--- L62618 user 2026-10-04T21:34:04.302Z
+RESULT [toolu_01RhHf3JMtNrHRwmRvS8CUsw]: 196:class SampleView {
+212: * segFirst, starts and segEnd for them and appending their sample views at the end of path.samples. Returns the chain
+220:    for (const r of blk.recs) path.samples.push(new SampleView(r, blk));
+221:    path.segEnd[gi] = new SampleView(blk.endRec, blk);
+239:function buildPath(segments, opts = {}) {
+244:  const work = { n: 0 }, path = { lengthM: 0, closed, twist: 0, samples: [], step, starts: [], segFirst: [], segEnd: [], blocks: [] };
+263:function extendPath(path, segments, fromSeg) {
+287:function rebuildPathFrom(path, segments, g) {
+296:  const fresh = { step: path.step, samples: [], blocks: [], segFirst: [], starts: [], segEnd: [] }, b0 = path.blocks[g];
+305:  else path.samples.length = a;
+307:  path.blocks.length = g; path.segFirst.length = g; path.starts.length = g; path.segEnd.length = g;
+308:  for (let j = g; j < cut; j++) { path.blocks[j] = fresh.blocks[j]; path.segFirst[j] = a + fresh.segFirst[j]; path.starts[j] = fresh.starts[j]; path.segEnd[j] = fresh.segEnd[j]; }
+315:      path.blocks[j] = blk; path.segFirst[j] = at; at += blk.n; path.starts[j] = worldStart(blk); path.segEnd[j] = new SampleView(blk.endRec, blk);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62620 assistant 2026-10-04T21:34:07.452Z
+TOOL_USE Read [toolu_01KsKm9BQWuWejCyjNuV5n3a]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-mirror-wt\\src\\geom\\path.js","offset":190,"limit":140}
+--- L62621 user 2026-10-04T21:34:07.484Z
+RESULT [toolu_01KsKm9BQWuWejCyjNuV5n3a]: 190	function worldEnd(blk) { const P = blk.pl, e = blk.endL; return { x: add(P.x, ry(e.x, P.c, P.sn)), theta: P.th + e.theta, p: e.p, T: ry(e.T, P.c, P.sn), R: ry(e.R, P.c, P.sn), s: P.s0 + blk.L }; }
+191	/**
+192	 * A sample of an OPEN path: a block's record read through the block's current placement, computed on first read after
+193	 * a (re-)placement and cached. It has a grown sample's fields (s, seg, pos, T, L, U, kvec, roll, bankG, grade) as
+194	 * getters, so readers are unchanged; toJSON gives the plain object. Samples are never written to.
+195	 */
+196	class SampleView {
+197	  constructor(rec, blk) { this._r = rec; this._b = blk; this._m = null; this._c = null; }
+198	  get _v() { const P = this._b.pl; if (P !== this._m) { this._m = P; this._c = placeRec(this._r, P); } return this._c; }
+199	  get s() { return this._v.s; } get seg() { return this._v.seg; } get pos() { return this._v.pos; } get T() { return this._v.T; }
+200	  get L() { return this._v.L; } get U() { return this._v.U; } get kvec() { return this._v.kvec; } get roll() { return this._v.roll; }
+201	  get bankG() { return this._v.bankG; } get grade() { return this._v.grade; } get _R() { return this._v._R; } get _x() { return this._v._x; }
+202	  toJSON() { const v = this._v; return { s: v.s, seg: v.seg, pos: v.pos, T: v.T, L: v.L, U: v.U, kvec: v.kvec, roll: v.roll, bankG: v.bankG, grade: v.grade }; }
+203	}
+204	/** Make room for n entries in place of arr[a..b), moving arr[b..] natively (copyWithin: pointer moves, no geometry). */
+205	function resize(arr, a, b, n) {
+206	  const old = arr.length, delta = n - (b - a);
+207	  if (delta > 0) { arr.length = old + delta; arr.copyWithin(b + delta, b, old); }
+208	  else if (delta < 0) { arr.copyWithin(b + delta, b, ol
+…[7547 chars cut]…
+.segFirst[j] = at; at += blk.n; path.starts[j] = worldStart(blk); path.segEnd[j] = new SampleView(blk.endRec, blk);
+316	      inp = nextOf(blk, j + 1);
+317	      work.n++; path.replaced++;
+318	    }
+319	  }
+320	  return finish(path, segments, work);
+321	}
+322	
+323	/** The build head: the open end's frame. The build-view camera sits behind and above it, looking along T. */
+324	function buildHead(path) {
+325	  const e = path.samples[path.samples.length - 1];
+326	  return { s: e.s, seg: e.seg, pos: e.pos.slice(), T: e.T.slice(), L: e.L.slice(), U: e.U.slice() };
+327	}
+328	/** A build-view camera for the head: `back` metres behind along T, `up` metres above along U, looking along T. */
+329	function headCamera(head, { back = 15, up = 6 } = {}) {
+--- L62632 assistant 2026-10-04T21:35:03.027Z
+TOOL_USE Write [toolu_01PqtTMhTQk75SXvRtwwesxc]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\t_stale_rows.txt","content":"\n// ── D237b, B's regression: the track model edits an OPEN track's path IN PLACE (extendPath, rebuildPathFrom), so a tree memoised per path OBJECT went stale after an extend or a brush ─────────────\nconst SC = require('../../src/core/sculpt.js');\nconst truthOf = (t, c, kind) => brute(t.path.samples.map((s) => s.pos.slice()), !!t.path.closed, c, kind);\n/** One step: plan the way preview.js does (the model's bounds and path), and compare th
+…[5851 chars cut]…
+], [2, 0, 0]].map((pos) => ({ pos })) }, a = G.indexFor(syn); assert.equal(G.indexFor(syn), a); syn.samples.push({ pos: [3, 0, 0] }); assert.notEqual(G.indexFor(syn), a, 'a path with no head that grew: a new tree'); assert.equal(G.indexFor(syn).segs.length, 3);\n});\n"}
+--- L62633 user 2026-10-04T21:35:03.058Z
+RESULT [toolu_01PqtTMhTQk75SXvRtwwesxc]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\t_stale_rows.txt (file state is current in your context — no need to Read it back)
+--- L62634 assistant 2026-10-04T21:35:08.272Z
+TOOL_USE Bash [toolu_01FEZzVuCmKQDjeuYuimky5e]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node -e \"\nconst fs=require('fs'),f='C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js';let s=fs.readFileSync(f,'utf8');const crlf=s.includes('\\r\\n');s=s.replace(/\\r\\n/g,'\\n').replace(/\\n*$/,'\\n')+fs.readFileSync('t_stale_rows.txt','utf8').replace(/\\r\\n/g,'\\n');fs.writeFileSync(f,crlf?s.replace(/\\n/g,'\\r\\n'):s)\" && cd C:/Users/nname/Desktop/worktrees/a-mirror-wt && git status --short && git log -1 --format=%h && node -e \"\nrequire('C:/Users/nn
+…[501 chars cut]…
+ratchpad/stale_on_c26f7884.txt',t);console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail)|^✖|AssertionError|^  Error|plan reads/.test(l)).join('\\n').slice(0,3500));\" 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-330","timeout":900000}
+--- L62641 user 2026-10-04T21:35:24.553Z
+RESULT [toolu_01FEZzVuCmKQDjeuYuimky5e]:  M app/test/guides.test.js
+c26f788
+exit [33m1[39m
+✖ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place (30.4436ms)
+✖ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree (69.5693ms)
+ℹ tests 23
+ℹ pass 21
+ℹ fail 2
+✖ failing tests:
+✖ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place (30.4436ms)
+  AssertionError [ERR_ASSERTION]: extend: a turn (extend): the plan reads 159.997 / 104.907, the truth is 86.682 / 65.111
+✖ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree (69.5693ms)
+  AssertionError [ERR_ASSERTION]: a new head: a new tree
+(Use `node --trace-warnings ...` to show where the warning was created)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62645 assistant 2026-10-04T21:35:47.352Z
+TOOL_USE Bash [toolu_01MqizGZjG55mm13w6s8SV89]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_st1.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js\n@@OLD\n  s.extend({ length: 120, transition: 40, targets: { kh: 0 } }); stepCheck(tm, s, 'x', 'extend again', log);\n  assert.ok(G.heightRange(a.path, a.bounds).range > 2,\n@@NEW\n  s.extend({ length: 120, transition: 40, targets: { kh: 0 } }); stepCheck(tm, s, 'x', 'extend again', log);\n  // the lift FUNCTION stays on the document after the offsets are undone, and then the s
+…[1554 chars cut]…
+ratchpad/stale_on_c26f7884.txt',t);console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail)|^✖|AssertionError|^  Error|plan reads/.test(l)).join('\\n').slice(0,3500));\" 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-330","timeout":900000}
+--- L62646 user 2026-10-04T21:36:02.637Z
+RESULT [toolu_01MqizGZjG55mm13w6s8SV89]: C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js [33m1[39m edits
+exit [33m1[39m
+✖ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place (28.6407ms)
+✖ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree (59.4885ms)
+ℹ tests 23
+ℹ pass 21
+ℹ fail 2
+✖ failing tests:
+✖ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place (28.6407ms)
+  AssertionError [ERR_ASSERTION]: extend: a turn (extend): the plan reads 159.997 / 104.907, the truth is 86.682 / 65.111
+✖ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree (59.4885ms)
+  AssertionError [ERR_ASSERTION]: a new head: a new tree
+(Use `node --trace-warnings ...` to show where the warning was created)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62651 assistant 2026-10-04T21:36:11.326Z
+TEXT: Row 22 still passes on `c26f7884`, which means my new lift steps aren't doing what I intended. Debugging that directly rather than guessing.
+--- L62652 assistant 2026-10-04T21:36:17.814Z
+TOOL_USE Write [toolu_01MknaseiLwgbMAGuLySBtbd]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp2\\lift_dbg.js","content":"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'A D237b lift debug' });\nconst T = 'C:/Users/nname/Desktop/worktrees/a-mirror-wt/';\nconst G = require(T + 'app/preview/guides.js'), SC = require(T + 'src/core/sculpt.js'), { createCoreShell } = require(T + 'app/core/coreshell.js'), { createTrackModel } = require(T + 'app/preview/trackmodel.js');\n(async () => {\n  const s = await createCoreShell({ brushFn:
+…[1190 chars cut]…
+] && p.channels[ch].some((v) => v !== 0))); console.log('undo', n, 'offsets?', off, 'pieces', pcs.length); if (!off) break; s.undo(); n++; }\n  show('after undo'); s.extend({ length: 130, transition: 40, targets: { kh: 1 / 250 } }); show('extend after undo');\n})();\n"}
+--- L62653 user 2026-10-04T21:36:17.847Z
+RESULT [toolu_01MknaseiLwgbMAGuLySBtbd]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp2\lift_dbg.js (file state is current in your context — no need to Read it back)
+--- L62654 assistant 2026-10-04T21:36:19.454Z
+TOOL_USE Bash [toolu_01Gzv5xGcUTwEb7CBStBFuZb]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp2/lift_dbg.js 2>&1 | grep -av \"Warn\\|trace\\|heavy-run\"","timeout":200000}
+--- L62661 user 2026-10-04T21:36:20.974Z
+RESULT [toolu_01Gzv5xGcUTwEb7CBStBFuZb]: three pieces                       how full    segs [33m325[39m lift fn function shown===base? n/a samples [33m326[39m head [33m286[39m pathId [33m0[39m
+a hill                             how sculpt  segs [33m325[39m lift fn function shown===base? n/a samples [33m326[39m head [33m286[39m pathId [33m1[39m
+extend over the hill               how extend  segs [33m400[39m lift fn function shown===base? n/a samples [33m401[39m head [33m424[39m pathId [33m2[39m
+undo [33m0[39m offsets? [33mtrue[39m pieces [33m4[39m
+undo [33m1[39m offsets? [33mtrue[39m pieces [33m3[39m
+undo [33m2[39m offsets? [33mfalse[39m pieces [33m3[39m
+after undo                         how full    segs [33m325[39m lift fn function shown===base? n/a samples [33m326[39m head [33m286[39m pathId [33m3[39m
+extend after undo                  how extend  segs [33m390[39m lift fn function shown===base? n/a samples [33m391[39m head [33m405[39m pathId [33m3[39m
+--- L62665 assistant 2026-10-04T21:36:40.114Z
+TOOL_USE Bash [toolu_01GzX1u7VMA111MuA6pLzq5u]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat >> sp2/lift_dbg.js <<'EOF'\n// the same steps, with the plan and the truth printed\n(async () => {\n  const brute = (pts, c, kind) => { const segs = []; for (let i = 0; i + 1 < pts.length; i++) segs.push([pts[i], pts[i + 1]]); const d = (p, [a, b]) => { const v = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], w = [p[0] - a[0], p[1] - a[1], p[2] - a[2]], dd = v[0] ** 2 + v[1] ** 2 + v[2] ** 2, t = dd > 0 ? Math.max(0, Math.min(1, (w[0] * v[0] + w[1] * v[1] + w[2] * v[2]) / dd)) : 
+…[1348 chars cut]…
+ne'); s.extend({ length: 130, transition: 40, targets: { kh: 1 / 250 } }); plan('extend (in place)'); s.extend({ length: 130, transition: 40, targets: { kh: -1 / 250 } }); plan('extend again');\n})();\nEOF\nnode sp2/lift_dbg.js 2>&1 | grep -a \"PLAN\"","timeout":200000}
+--- L62666 user 2026-10-04T21:36:42.653Z
+RESULT [toolu_01GzX1u7VMA111MuA6pLzq5u]: PLAN three                      full    plan 278.652 162.168 truth 278.652 162.168
+PLAN hill                       sculpt  plan 278.652 162.169 truth 278.652 162.169
+PLAN undone                     sculpt  plan 278.652 162.168 truth 278.652 162.168
+PLAN extend (in place)          extend  plan 392.029 199.424 truth 392.029 199.424
+PLAN extend again               extend  plan 522.031 233.169 truth 522.031 224.154
+--- L62671 assistant 2026-10-04T21:37:03.357Z
+TOOL_USE Bash [toolu_017DYo9E97kLoWjYAzqVcQBY]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_st2.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js\n@@OLD\n  const t = tm.update(shell.getState().resolved), plan = G.guidePlan({ bounds: t.bounds, path: t.path, mode: 'auto', mirror: kind }), want = truthOf(t, plan.centre, kind);\n@@NEW\n  const t = tm.update(shell.getState().resolved), plan = G.guidePlan({ bounds: t.bounds, path: t.path, mode: 'auto', mirror: kind }), want = truthOf(t, plan.centre, kind);\n  // the tree must 
+…[1272 chars cut]…
+6b6b5a4f/scratchpad/stale_on_c26f7884.txt',t);console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail)|^✖|AssertionError|^  Error/.test(l)).join('\\n').slice(0,3500));\" 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-330","timeout":900000}
+--- L62678 user 2026-10-04T21:37:19.787Z
+RESULT [toolu_017DYo9E97kLoWjYAzqVcQBY]: C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js [33m1[39m edits
+0
+exit [33m1[39m
+✖ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place (34.6606ms)
+✖ row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush (4570.4272ms)
+✖ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree (67.3818ms)
+ℹ tests 23
+ℹ pass 20
+ℹ fail 3
+✖ failing tests:
+✖ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place (34.6606ms)
+  AssertionError [ERR_ASSERTION]: extend: a turn (extend): the tree has 76 points, the path 176
+✖ row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush (4570.4272ms)
+  AssertionError [ERR_ASSERTION]: extend with no offsets left (the path edited in place) (extend): the tree has 326 points, the path 391
+✖ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree (67.3818ms)
+  AssertionError [ERR_ASSERTION]: a new head: a new tree
+(Use `node --trace-warnings ...` to show where the warning was created)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62682 assistant 2026-10-04T21:37:35.010Z
+TOOL_USE Bash [toolu_01Hroasr3FnH8HgzPX2JDmyw]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_st3.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/preview/guides.js\n@@OLD\n/** The centreline's points and its segment tree, memoised per path object (a closed path's closing edge is a segment too). */\nfunction indexFor(path) {\n  let ix = indexMemo.get(path); if (ix) return ix;\n  const pts = pointsOf(path); ix = buildIndex(pts, !!(path && path.closed)); indexMemo.set(path, ix); return ix;\n}\n@@NEW\n/**\n * The centreline's points and its seg
+…[2002 chars cut]…
+scratchpad/stale_on_fix.txt',t);console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail)|^✖|AssertionError|^  Error|^✔ row 2[123]/.test(l)).join('\\n').slice(0,3500));\" 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-330","timeout":900000}
+--- L62683 user 2026-10-04T21:37:50.816Z
+RESULT [toolu_01Hroasr3FnH8HgzPX2JDmyw]: C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/preview/guides.js [33m1[39m edits
+exit [33m0[39m
+✔ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place (220.4257ms)
+✔ row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush (4460.9132ms)
+✔ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree (68.8541ms)
+ℹ tests 23
+ℹ pass 23
+ℹ fail 0
+(Use `node --trace-warnings ...` to show where the warning was created)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62688 assistant 2026-10-04T21:38:02.259Z
+TOOL_USE Write [toolu_0117xoVfk18W99ckqa8iUgQr]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp2\\ident_dbg.js","content":"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'A D237b identity debug' });\nconst T = 'C:/Users/nname/Desktop/worktrees/a-mirror-wt/';\nconst { createCoreShell } = require(T + 'app/core/coreshell.js'), { createTrackModel } = require(T + 'app/preview/trackmodel.js');\n(async () => {\n  for (const [name, s0, ch, d] of [['kh brush at s0 80 (first piece)', 80, 'kh', 0.004], ['bank brush at s0 80', 80, 'phi
+…[902 chars cut]…
+(34), 'how', t.how, 'same path obj', t.path === path, '| last sample same object:', last1 === last0, '| mid sample same object:', mid1 === mid0, '| end moved', moved.toFixed(3), 'm | head replaced', path.head !== head0, '| lengths', path.samples.length);\n  }\n})();\n"}
+--- L62689 user 2026-10-04T21:38:02.293Z
+RESULT [toolu_0117xoVfk18W99ckqa8iUgQr]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp2\ident_dbg.js (file state is current in your context — no need to Read it back)
+--- L62690 assistant 2026-10-04T21:38:03.852Z
+TOOL_USE Bash [toolu_01HBRUosr9m5DEXSmaNf62eh]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp2/ident_dbg.js 2>&1 | grep -av \"Warn\\|trace\\|heavy-run\"","timeout":200000}
+--- L62691 user 2026-10-04T21:38:04.278Z
+RESULT [toolu_01HBRUosr9m5DEXSmaNf62eh]: kh brush at s0 80 (first piece)    how sculpt same path obj [33mtrue[39m | last sample same object: [33mtrue[39m | mid sample same object: [33mtrue[39m | end moved 83.228 m | head replaced [33mtrue[39m | lengths [33m376[39m
+bank brush at s0 80                how sculpt same path obj [33mtrue[39m | last sample same object: [33mtrue[39m | mid sample same object: [33mtrue[39m | end moved 0.000 m | head replaced [33mtrue[39m | lengths [33m376[39m
+kh brush at s0 400                 how sculpt same path obj [33mtrue[39m | last sample same object: [33mtrue[39m | mid sample same object: [33mfalse[39m | end moved 65.200 m | head replaced [33mtrue[39m | lengths [33m376[39m
+--- L62701 assistant 2026-10-04T21:38:14.034Z
+TOOL_USE Bash [toolu_01KGFeoWb9D2CrfFu14Jj34U]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_st4.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js\n@@OLD\n  assert.ok(moved > 0.01, `control: the end of the track moved ${moved.toFixed(2)} m` + (lastAfter === lastBefore ? ' while its sample is the SAME object (a rigid tail is only re-placed): why the last sample\\'s identity is not a version' : ''));\n@@NEW\n  assert.ok(moved > 1, `control: the end of the track moved ${moved.toFixed(2)} m`); assert.equal(lastAfter, lastBefo
+…[258 chars cut]…
+path.samples.length - 376), 'control: the sample count did not change either'); assert.equal(sm0, path.samples.length, 'the sample count before and after the brush is the same');\n@@END\nEOF\nnode blockpatch.js sp_st4.txt 2>&1 | grep -av \"Warn\\|trace\" | cut -c1-200"}
+--- L62702 user 2026-10-04T21:38:14.202Z
+RESULT [toolu_01KGFeoWb9D2CrfFu14Jj34U]: C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js [33m1[39m edits
+--- L62706 assistant 2026-10-04T21:38:18.230Z
+TEXT: That patch has a sloppy second assertion (an undefined variable and a pointless sum). Replacing it with a clean before/after sample-count check.
+--- L62707 assistant 2026-10-04T21:38:24.441Z
+TOOL_USE Bash [toolu_01MktjGF3Jp2eZv2A51bWLbu]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_st5.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js\n@@OLD\n  assert.equal(path.samples.length, 376 - 0 + (path.samples.length - 376), 'control: the sample count did not change either'); assert.equal(sm0, path.samples.length, 'the sample count before and after the brush is the same');\n@@NEW\n  assert.equal(path.samples.length, countBefore, 'and the sample count is the same too');\n@@END\n@@FILE C:/Users/nname/Desktop/worktrees/
+…[928 chars cut]…
+-8bd96b6b5a4f/scratchpad/stale_on_fix.txt',t);console.log('exit',r.status);console.log(t.split('\\n').filter(l=>/^ℹ (tests|pass|fail)|^✖|AssertionError|^  Error/.test(l)).join('\\n').slice(0,3000));\" 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-330","timeout":900000}
+--- L62708 user 2026-10-04T21:38:39.986Z
+RESULT [toolu_01MktjGF3Jp2eZv2A51bWLbu]: C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js [33m2[39m edits
+exit [33m0[39m
+ℹ tests 23
+ℹ pass 23
+ℹ fail 0
+(Use `node --trace-warnings ...` to show where the warning was created)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62712 assistant 2026-10-04T21:38:48.510Z
+TEXT: 23 of 23 on the fix. Now the proof the other way: the final test file against `c26f7884`'s `guides.js`, swapped in and restored in a `finally`, with the output saved.
+--- L62713 assistant 2026-10-04T21:38:55.470Z
+TOOL_USE Write [toolu_016vHqpKunkhDkgHqc2TxD5P]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp_old_vs_new.js","content":"// the FINAL tests against c26f7884's guides.js (the unfixed), then against the fix; guides.js is restored in finally. Output: stale_on_c26f7884.txt, stale_on_fix.txt\nconst fs = require('fs'), cp = require('child_process');\nrequire('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'A D237b tests on unfixed then fixed' });\nconst W = 'C:/Users/nname/Desktop/worktrees/a-mirror-wt/', G = W + 'app/preview/guides.js',
+…[914 chars cut]…
+ly { fs.writeFileSync(G, fixed); }\nconst b = run(), tb = (b.stdout || '') + (b.stderr || ''); fs.writeFileSync(S + 'stale_on_fix.txt', tb);\nconsole.log('ON THE FIX: exit', b.status, tb.split('\\n').filter((l) => /^ℹ (tests|pass|fail)|^✖ row/.test(l)).join('\\n'));\n"}
+--- L62714 user 2026-10-04T21:38:55.501Z
+RESULT [toolu_016vHqpKunkhDkgHqc2TxD5P]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp_old_vs_new.js (file state is current in your context — no need to Read it back)
+--- L62715 assistant 2026-10-04T21:38:57.395Z
+TOOL_USE Bash [toolu_01KkDa8H4KKxFuF1DPhqPyL6]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp_old_vs_new.js 2>&1 | grep -av \"Warn\\|heavy-run\" | cut -c1-300; cd C:/Users/nname/Desktop/worktrees/a-mirror-wt && git diff --stat | tail -3","timeout":900000}
+--- L62722 user 2026-10-04T21:39:28.392Z
+RESULT [toolu_01KkDa8H4KKxFuF1DPhqPyL6]: ON c26f7884: exit [33m1[39m ✖ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place (53.1266ms)
+✖ row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush (4478.5224ms)
+✖ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree (63.395ms)
+ℹ tests 23
+ℹ pass 20
+ℹ fail 3
+✖ row 21 (B's regression): through the real shell and track model, an open track's gap is right after every extend and brush, though the path object is the same one edited in place (53.1266ms)
+  AssertionError [ERR_ASSERTION]: extend: a turn (extend): the tree has 76 points, the path 176
+✖ row 22: an open track WITH a lift (a hill from the height brush) too: the gap is right after every extend and height brush (4478.5224ms)
+  AssertionError [ERR_ASSERTION]: extend with no offsets left (the path edited in place) (extend): the tree has 326 points, the path 391
+✖ row 23: what the memo keys on: every in-place change of a path gives it a NEW head (the geometry's own finish), so a tree for the old head is never used; and a changed path with no head still gets a new tree (63.395ms)
+  AssertionError [ERR_ASSERTION]: a new head: a new tree
+ON THE FIX: exit [33m0[39m ℹ tests 23
+ℹ pass 23
+ℹ fail 0
+(Use `node --trace-warnings ...` to show where the warning was created)
+ app/preview/guides.js   | 14 +++++++++---
+ app/test/guides.test.js | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 3 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62727 assistant 2026-10-04T21:39:45.368Z
+TOOL_USE Write [toolu_013BxBEe4wnsPD1KVWUEX7tn]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp_mut5.js","content":"// D237b stale-tree fix mutants. The unmutated control runs FIRST. usage: node sp_mut5.js   output: sp_mut5_out.txt\nconst fs = require('fs'), { spawnSync } = require('child_process');\nrequire('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({ cmd: 'A D237b stale-fix mutants' });\nconst W = 'C:/Users/nname/Desktop/worktrees/a-mirror-wt/', OUTF = 'C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124
+…[2843 chars cut]…
+ (' + note + ')' : ''}`); } finally { fs.writeFileSync(file, orig); }\n  fs.writeFileSync(OUTF, out.join('\\n') + '\\n');\n}\nout.push(`applied ${applied}/${M.length}, caught ${caught}`); fs.writeFileSync(OUTF, out.join('\\n') + '\\n'); console.log(out.join('\\n'));\n"}
+--- L62728 user 2026-10-04T21:39:45.394Z
+RESULT [toolu_013BxBEe4wnsPD1KVWUEX7tn]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp_mut5.js (file state is current in your context — no need to Read it back)
+--- L62729 assistant 2026-10-04T21:39:47.174Z
+TOOL_USE Bash [toolu_01Xj523XiLsaQ1283Eyb2oHb]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && rm -f sp_mut5_out.txt && node sp_mut5.js 2>&1 | grep -av \"Warn\\|heavy-run\"","timeout":1800000}
+--- L62730 user 2026-10-04T21:42:05.155Z
+RESULT [toolu_01Xj523XiLsaQ1283Eyb2oHb]: CONTROL (unmutated): exit 0
+S1 the memo is keyed on the path object alone (c26f7884): CAUGHT (3 failing)
+S2 the version is the LAST SAMPLE alone (the key B suggested): the sculpt keeps it: CAUGHT (2 failing)
+S3 the version is the last sample and the count (the key B suggested, whole): CAUGHT (2 failing)
+S4 the version is the head but the count is dropped: SURVIVED (belt and braces: the head already changes whenever the count does)
+S5 the version is the count alone: CAUGHT (2 failing)
+S6 a headless path is not versioned by its last sample: SURVIVED
+S7 the memo never hits: CAUGHT (2 failing)
+S8 the memo is not stored: CAUGHT (2 failing)
+applied 8/8, caught 6
+--- L62734 assistant 2026-10-04T21:42:22.178Z
+TOOL_USE Bash [toolu_01UM1ACb42m9LNa85rwF7vNa]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && cat > sp_st6.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js\n@@OLD\nsyn.samples.push({ pos: [3, 0, 0] }); assert.notEqual(G.indexFor(syn), a, 'a path with no head that grew: a new tree'); assert.equal(G.indexFor(syn).segs.length, 3);\n@@NEW\nsyn.samples.push({ pos: [3, 0, 0] }); assert.notEqual(G.indexFor(syn), a, 'a path with no head that grew: a new tree'); assert.equal(G.indexFor(syn).segs.length, 3);\n  const b = G.indexFor(syn); as
+…[592 chars cut]…
+he head but the count is dropped', GD, \\1, 'equivalent: the head already changes whenever the count does']/\" sp_mut5.js; grep -c \"S3\\|equivalent: the head\" sp_mut5.js; rm -f sp_mut5_out.txt && node sp_mut5.js 2>&1 | grep -av \"Warn\\|heavy-run\"","timeout":1800000}
+--- L62741 user 2026-10-04T21:44:30.952Z
+RESULT [toolu_01UM1ACb42m9LNa85rwF7vNa]: C:/Users/nname/Desktop/worktrees/a-mirror-wt/app/test/guides.test.js [33m1[39m edits
+1
+CONTROL (unmutated): exit 0
+S1 the memo is keyed on the path object alone (c26f7884): CAUGHT (3 failing)
+S2 the version is the LAST SAMPLE alone (the key B suggested): the sculpt keeps it: CAUGHT (2 failing)
+S4 the version is the head but the count is dropped: SURVIVED (equivalent: the head already changes whenever the count does)
+S5 the version is the count alone: CAUGHT (2 failing)
+S6 a headless path is not versioned by its last sample: CAUGHT (1 failing)
+S7 the memo never hits: CAUGHT (2 failing)
+S8 the memo is not stored: CAUGHT (2 failing)
+applied 7/7, caught 6
+--- L62745 assistant 2026-10-04T21:44:37.781Z
+TEXT: Seven applied, six caught, and S4 equivalent. One final run of all `app/test` plus the fixtures and the protected-path diff, then commit.
+--- L62746 assistant 2026-10-04T21:44:40.385Z
+TOOL_USE Bash [toolu_01F7qD4K8TkTFLFxg2SW1WQL]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-mirror-wt && node -e \"\nconst fs=require('fs');require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'A D237b stale fix: app tests + fixtures'});\nconst files=[...fs.readdirSync('app/test').filter(f=>/\\.test\\.js$/.test(f)&&!/mutation/.test(f)).map(f=>'app/test/'+f),'test/core_cup_fixtures.test.js','test/export_tube_grid.test.js','test/geom_path.test.js'];\nconst r=require('child_process').spawnSync(process.execPath,['--max-old-space-size=4096','--test','--test-concurrency=1',...files],{encoding:'utf8',maxBuffer:1<<28,env:{...process.env,FOR
+…[114 chars cut]…
+'\\n').filter(l=>/^ℹ (tests|pass|fail|skipped|todo)|^✖ [a-z0-9]|0 of 9 differ/.test(l)).join('\\n').slice(0,3000));\" 2>&1 | grep -av \"Warn\\|heavy-run\"; git diff --stat 802451ab -- src app/export test/fixtures src-tauri | wc -l; git status --short","timeout":1500000}
+--- L62747 user 2026-10-04T21:49:38.017Z
+RESULT [toolu_01F7qD4K8TkTFLFxg2SW1WQL]: files [33m50[39m exit [33m0[39m
+✔ row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ" (3670.8029ms)
+ℹ tests 608
+ℹ pass 606
+ℹ fail 0
+ℹ skipped 1
+ℹ todo 1
+✖ failing tests:
+(Use `node --trace-warnings ...` to show where the warning was created)
+0
+ M app/preview/guides.js
+ M app/test/guides.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62752 assistant 2026-10-04T21:49:50.616Z
+TOOL_USE Write [toolu_01PVpaNSSGMw6BXHSQohq2ZY]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\sp_cl4.js","content":"const fs = require('fs'), f = 'C:/Users/nname/Desktop/worktrees/a-mirror-wt/CHANGELOG.md';\nlet s = fs.readFileSync(f, 'utf8'); const crlf = s.includes('\\r\\n'); s = s.replace(/\\r\\n/g, '\\n');\nconst u = s.indexOf('## [Unreleased]'), h = s.indexOf('### Fixed\\n', u), nextH = s.indexOf('\\n## [', u + 5); if (h < 0 || (nextH > 0 && h > nextH)) throw new Error('no Fixed section in Unreleased');\nconst at = h + '### Fixed\\n'.length;\nconst bullet = \
+…[1148 chars cut]…
+ts; the new tests fail on the unfixed code and pass on the fix. Preview only: nothing in `src/`, the export or the document is touched.\\n\";\ns = s.slice(0, at) + bullet + s.slice(at);\nfs.writeFileSync(f, crlf ? s.replace(/\\n/g, '\\r\\n') : s); console.log('ok');\n"}
+--- L62753 user 2026-10-04T21:49:50.650Z
+RESULT [toolu_01PVpaNSSGMw6BXHSQohq2ZY]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\sp_cl4.js (file state is current in your context — no need to Read it back)
+--- L62754 assistant 2026-10-04T21:49:57.721Z
+TOOL_USE Bash [toolu_0113w51N9gE7mdgJsyk9VH77]: {"command":"cd C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad && node sp_cl4.js && cd C:/Users/nname/Desktop/worktrees/a-mirror-wt && git add CHANGELOG.md app/preview/guides.js app/test/guides.test.js && cat > C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/sp_msg5.txt <<'EOF'\nD237b: the mirror gap's tree is versioned (B's stale-tree regression)\n\nWritten by seat A (Sonnet 5.5), pane A. The tree for the mirror gap was kept\nper path OBJECT, but the track mode
+…[781 chars cut]…
+124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/sp_msg5.txt 2>&1 | grep -v \"LF will be\"; git log -2 --format=\"%h %s\"; git show --stat --format= HEAD | tail -5; git status --short; git diff --stat 802451ab HEAD -- src app/export test/fixtures src-tauri | wc -l"}
+--- L62761 user 2026-10-04T21:49:58.168Z
+RESULT [toolu_0113w51N9gE7mdgJsyk9VH77]: ok
+fa5fd93 D237b: the mirror gap's tree is versioned (B's stale-tree regression)
+c26f788 D237b: the mirror gap search is exact and cheap, and the ghost's line count is bounded
+ CHANGELOG.md            |  1 +
+ app/preview/guides.js   | 14 +++++++++---
+ app/test/guides.test.js | 59 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 71 insertions(+), 3 deletions(-)
+0
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62764 assistant 2026-10-04T21:50:02.527Z
+TEXT: Committed as `fa5fd93`. Getting the full hash, then appending the "stale-tree fix" section to the hand-back.
+--- L62765 assistant 2026-10-04T21:50:03.634Z
+TOOL_USE Bash [toolu_01DWxJUd6WZW6awsZ34T9Txq]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-mirror-wt && git rev-parse HEAD; grep -c \"\" C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-mirror-A_2026-10-04.md; tail -c 400 C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-mirror-A_2026-10-04.md"}
+--- L62766 user 2026-10-04T21:50:03.845Z
+RESULT [toolu_01DWxJUd6WZW6awsZ34T9Txq]: fa5fd93791d636dade6ec5495dc79ef89c25262e
+56
+renderer's `depthMask`.
+- Machine L; AC.
+
+## Evidence
+`...\scratchpad\sp2\` (`mg_probe.js`, `mg_cold.js`, `mg_ghost.js`, `mg_before.txt`, `mg_after.txt`), `...\scratchpad\` (`sp_mut4.js`, `sp_mut4_out.txt`, `shots3\report.json`).
+
+NEXT: B's quick look (the tree and its reference test, the dash clamp), then done; the keeper's hands on the Mirror buttons while editing are the real test of the feel.
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L62768 assistant 2026-10-04T21:50:30.740Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01ShHWb1XBDPKcapt15C7MBj]: {"command":"cat >> C:/Users/nname/Desktop/lighthouse/exo_memory/handback/p-mirror-A_2026-10-04.md <<'EOF'\n\n---\n\n## Stale-tree fix (D237b, on top of `c26f7884`; B's NOT GREEN, `p-mirror-B_2026-10-04.md`)\n\nSOURCES: C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-mirror-B_2026-10-04.md\n\nNew commit **`fa5fd93791d636dade6ec5495dc79ef89c25262e`** on branch `mirror-a-d237b` (worktree `a-mirror-wt`; parent `c26f7884`). 3 files (`app/preview/guides.js`, `app/test/guides.test.js`, `CHANGELOG.md`), +71/−3. Local only, nothing pushed, no AC. `git diff --stat 802451ab HEAD -- src app/export test/fixtures src-tauri` prints nothing; fixtures **0 of 9 differ**. **B was right and the regression was mine:** my row 18 pinned that the tree is built once per path and never that it is rebuilt when the path changes.\n\n### The key, and why (your choice, item 1)\n`indexFor(path)` now keeps the tree per **path object AND `path.head`** (a version), guarded by the sample count too. `path.head` is what `finish()` in `src/geom/path.js` builds as a FRESH object at the end of `buildPath`, `extendPath` and `rebuildPathFrom`, which are the only things that change a path's samples. I did **not** use \"the last sample's identity\", which B suggested and which I first expected to work, because I read `path.js` before choosing: after a sculpt, `rebuildPathFrom` keeps the unchanged tail's `SampleView` objects and only re-places them (`blk.pl = Q`, line 314), so the END of the track can move while its last sample is the same object. **Measured through the real shell** (`sp2/ident_dbg.js`): a kh brush on the first piece of a 4-piece open track: `how` sculpt, same path object, **last sample the same object, sample count unchanged, the end of the track moved 83.2 m**, head replaced; a kh brush at s0 400: last sample the same object, end moved 65.2 m, head replaced. So B's suggested key, with or without the count, would still have been stale after a sculpt (mutant S2 below fails 2 tests). A path with no head (a hand-made one) falls back to its last sample. A version counter in the track model was the other option; it would have had to be threaded through `preview.js` and `guidePlan`'s callers, and the head already exists, is replaced by the geometry itself, and works for any caller of `guidePlan`. The dependency is now pinned by a test (row 23): every in-place extend and sculpt replaces the head.\n\n### The tests (items 2 and 3), through the shell and the track model\nIn `app/test/guides.test.js` (23 tests, 20 before). Each step plans the way `preview.js` does (`guidePlan({ bounds: track.bounds, path: track.path })`) and checks **two things**: the gap equals a brute-force gap over the same samples and centre, **and the tree's own points are the path's current samples** (count, and the first, middle and last point). The second check is there because I found the gap alone is not enough: in the lift case the stale tree read exactly right after the first in-place extend, because every mirrored point's nearest segment lay in the part that had not changed, and went wrong only at the next extend (mean 233.2 against the truth 224.2; `sp2/lift_dbg.js`).\n- **Row 21 (B's `stale2`, lifted in):** an open track, mirror left/right and then both: first piece (full), extend a turn, extend a straight, a kh brush on the first piece (sculpt), extend, a bank brush mid track; controls: the steps cover `full`, `extend` and `sculpt`, **it is the same path object at every step** (the case the memo was wrong on), the gap is a real number.\n- **Row 22 (an open track WITH a lift, which B did not):** the height brush (`SC.brush`) makes a hill, an extend over it, a dip, the first hill raised, an extend; control: the document carries a lift and the shown path is a new object when there are offsets (so a lift on its own never went stale). **Then the case that can:** the lift FUNCTION stays on the document when the offsets are undone (`resolved.lift` is a function, `offsetPath` returns the base path itself when no piece has offsets), so the shown path is again the base path edited in place; undo the hills, then extend: control: the same path object with a lift function on the document.\n- **Row 23 (what the memo keys on):** an extend and a sculpt each replace `path.head` while the path object stays the same; the sculpt moved the end of the track more than 1 m while its last sample is the same object and the count is the same; the index follows (the same path and head: the same tree; a new head: a new tree; a headless path that grew, and one whose last sample was replaced at the same length: a new tree).\n\n### It FAILS on `c26f7884` and PASSES on the fix (item 2: both shown)\n`sp_old_vs_new.js` swaps `c26f7884`'s `guides.js` in under the FINAL test file, runs it, restores the fix in a `finally`, and runs again (outputs `stale_on_c26f7884.txt`, `stale_on_fix.txt`):\n- **On `c26f7884`: 23 tests, 20 pass, 3 FAIL.** Row 21: `extend: a turn (extend): the tree has 76 points, the path 176`. Row 22: `extend with no offsets left (the path edited in place) (extend): the tree has 326 points, the path 391`. Row 23: `a new head: a new tree`.\n- **On the fix: 23 tests, 23 pass, 0 fail.**\n(Before I added the tree-points check, row 22 PASSED on `c26f7884` by the luck above; that is why the check exists.)\n\n### Counts and mutants\n- **All `app/test` files + `test/core_cup_fixtures` + `test/export_tube_grid` + `test/geom_path`: 608 tests, 606 pass, 0 fail, 1 skipped, 1 todo** (the same pre-existing ones), row 5a \"0 of 9 differ\". Every run under the heavy-run lock, `--test-concurrency=1`. Not re-run: the whole 135-file suite and the anchored harnesses (the only source file changed is `guides.js`, new in D237 and with no anchored harness).\n- **Mutants of the fix, each after a GREEN unmutated control: 7 applied, 6 caught, 1 equivalent.** S1 (keyed on the path object alone, i.e. `c26f7884`): caught by 3 tests. **S2 (B's suggested key, the last sample alone): caught by 2.** S5 (the count alone): caught. S6 (a headless path not versioned by its last sample): **survived at first**, a real gap (my headless test grew the path, so the count guard caught it); added a case where the last sample is replaced at the same length; caught. S7 (the memo never hits), S8 (never stored): caught. **S4** (the count guard dropped) survives and is **equivalent**: the head, or for a headless path the last sample, already changes whenever the count does; it is belt and braces. The old mutant T9 (\"the cache is ignored\") no longer applies, its anchor line is gone; S7 and S8 are its successors.\n- **My own correction:** I did not check the memo's invalidation in c26f7884 at all; B found it. My row 18 asserted only that repeated plans on one path build once.\n\n### Not verified\nWebView time; a real-window run of this fix (the tests drive the real shell and track model, a drawing context and a headless DOM, not the page); the whole suite and the anchored harnesses (above); machine L; AC.\n\nNEXT: B re-checks (the key, rows 21 to 23, the two-way run).\nEOF\ncd C:/Users/nname/Desktop/lighthouse && printf '%s\\n' '' '## 2026-10-04 (on D, Sonnet 5.5) — D237b stale-tree fix A: B-s NOT GREEN on c26f7884 was right and mine: the mirror-gap tree was memoised per path OBJECT but the track model edits an open track-s path in place, so after an extend or a brush the gap read against the old centreline (3 of 4 steps wrong). Fixed in fa5fd937 (branch mirror-a-d237b, on c26f7884; local, nothing pushed, no AC; preview only; fixtures 0 of 9; protected paths clean): the tree is kept per path AND path.head, which the geometry replaces in finish() at every build, extend and sculpt. NOT the last sample-s identity as B suggested: a sculpt keeps the tail-s sample objects and only re-places them (measured: the end moved 83 m, same last sample, same count). Tests through the real shell and track model (open track with extends and brushes; with a hill; with the hill undone so a lift function is present but the path is again edited in place), each step vs brute force AND the tree-s own points vs the path-s samples (the gap alone was right by luck in the lift case until the next extend); on c26f7884 23 tests 3 FAIL (tree has 76 points, path 176; 326 vs 391; a new head: a new tree), on the fix 23 of 23; 608 across app/test + fixtures, 0 fail; 7 mutants over green controls, 6 caught, S4 equivalent, S6 a gap fixed. NOT verified: WebView, the real page, whole suite and harnesses' '`exo_memory/handback/p-mirror-A_2026-10-04.md` (section \"Stale-tree fix\"). Lesson: a cache needs a test for its INVALIDATION as well as its hits; and check what the thing you key on really does (read the geometry) before trusting the obvious key.' >> exo_memory/map/A.md; tail -c 140 exo_memory/map/A.md"}

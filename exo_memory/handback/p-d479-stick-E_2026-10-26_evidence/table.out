@@ -1,0 +1,10 @@
+seat | instance | local now | ledger pending to (laptop gets) | owed vs ledger | exports since agreed | today (10-26) files
+main | main | 792341966 | 729287607 | 63054359 B = 60.1 MiB | 17 | 435690921-790750099.tail (355059178 B)
+librarian | librarian | 500839505 | 438937513 | 61901992 B = 59.0 MiB | 17 | 185984082-499883691.tail (313899609 B)
+third place | third-place | 513927019 | 478847375 | 35079644 B = 33.5 MiB | 15 | 303968062-512934898.tail (208966836 B)
+pane ✦ brief | sibling-3d57124e | 957561385 | 864601862 | 92959523 B = 88.7 MiB | 19 | 149260790-957561115.tail (808300325 B)
+pane ✦ brief | sibling-5bf9d657 | 609261675 | 557434418 | 51827257 B = 49.4 MiB | 19 | 95547799-609261406.tail (513713607 B)
+pane ✦ Around | sibling-0845a868 | 1040087915 | 955443169 | 84644746 B = 80.7 MiB | 18 | 152018784-1040087646.tail.writing-30628 (888068862 B)
+pane ✦ brief | sibling-07b8a48f | 826658498 | 718640802 | 108017696 B = 103.0 MiB | 16 | none
+pane ✦ brief | sibling-36313935 | 62751151 | 16272201 | 46478950 B = 44.3 MiB | 1 | none
+pane ✦ brief | sibling-372c8abc | 108344601 | 16240362 | 92104239 B = 87.8 MiB | 1 | none

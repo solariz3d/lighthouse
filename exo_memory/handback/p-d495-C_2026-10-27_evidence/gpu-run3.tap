@@ -1,0 +1,38 @@
+TAP version 13
+# Subtest: row 1: the Aurora sky fits its GPU budget: at most 1.5 ms at the 95th percentile, 2560 x 1440, from every pitch
+ok 1 - row 1: the Aurora sky fits its GPU budget: at most 1.5 ms at the 95th percentile, 2560 x 1440, from every pitch
+  ---
+  duration_ms: 1678.1022
+  type: 'test'
+  ...
+# aurora: pitch 0: p95 0.223 ms; pitch 40: p95 0.721 ms; pitch 85: p95 1.276 ms
+# Subtest: row 2: its flat fallback fits the budget too
+ok 2 - row 2: its flat fallback fits the budget too
+  ---
+  duration_ms: 821.9452
+  type: 'test'
+  ...
+# aurora fallback: pitch 0: p95 0.290 ms; pitch 40: p95 0.396 ms; pitch 85: p95 0.312 ms
+# Subtest: row 3: the aurora it replaced (0.4.23) fits the budget, as it did
+ok 3 - row 3: the aurora it replaced (0.4.23) fits the budget, as it did
+  ---
+  duration_ms: 215.2004
+  type: 'test'
+  ...
+# 0.4.23 aurora: pitch 0: p95 0.125 ms; pitch 40: p95 0.126 ms; pitch 85: p95 0.126 ms
+# Subtest: row 4: the row can fail: a sky deliberately over budget (three 64-step volume curtains, full resolution) is over 1.5 ms
+ok 4 - row 4: the row can fail: a sky deliberately over budget (three 64-step volume curtains, full resolution) is over 1.5 ms
+  ---
+  duration_ms: 4458.8568
+  type: 'test'
+  ...
+# heavy control: pitch 0: p95 2.659 / 2.658 ms; pitch 40: p95 5.341 / 5.364 ms; pitch 85: p95 5.375 / 5.367 ms
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7653.0043

@@ -1,0 +1,208 @@
+TAP version 13
+# Subtest: 1 · a number (or no) transition is unchanged: case 0 serialises exactly as it did at 4ccdd58
+ok 1 - 1 · a number (or no) transition is unchanged: case 0 serialises exactly as it did at 4ccdd58
+  ---
+  duration_ms: 2.8575
+  type: 'test'
+  ...
+# Subtest: 1 · a number (or no) transition is unchanged: case 1 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c)
+ok 2 - 1 · a number (or no) transition is unchanged: case 1 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c)
+  ---
+  duration_ms: 1.569
+  type: 'test'
+  ...
+# Subtest: 1 · a number (or no) transition is unchanged: case 2 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c)
+ok 3 - 1 · a number (or no) transition is unchanged: case 2 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c)
+  ---
+  duration_ms: 1.5506
+  type: 'test'
+  ...
+# Subtest: 1 · a number (or no) transition is unchanged: case 3 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c)
+ok 4 - 1 · a number (or no) transition is unchanged: case 3 serialises exactly as it did at D459 (re-pinned: the quintic for phi and c)
+  ---
+  duration_ms: 1.8402
+  type: 'test'
+  ...
+# Subtest: 1 · a number (or no) transition is unchanged: case 4 serialises exactly as it did at 4ccdd58
+ok 5 - 1 · a number (or no) transition is unchanged: case 4 serialises exactly as it did at 4ccdd58
+  ---
+  duration_ms: 0.379
+  type: 'test'
+  ...
+# Subtest: 1 · a number (or no) transition is unchanged: case 5 serialises exactly as it did at 4ccdd58
+ok 6 - 1 · a number (or no) transition is unchanged: case 5 serialises exactly as it did at 4ccdd58
+  ---
+  duration_ms: 0.6257
+  type: 'test'
+  ...
+# Subtest: 2/3 · w 31 → 12 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31]
+ok 7 - 2/3 · w 31 → 12 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31]
+  ---
+  duration_ms: 4.7556
+  type: 'test'
+  ...
+# Subtest: 2/3 · w 12 → 31 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31]
+ok 8 - 2/3 · w 12 → 31 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [12, 31]
+  ---
+  duration_ms: 3.3736
+  type: 'test'
+  ...
+# Subtest: 2/3 · w 31 → 8 on a 200 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 31]
+ok 9 - 2/3 · w 31 → 8 on a 200 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 31]
+  ---
+  duration_ms: 5.0714
+  type: 'test'
+  ...
+# Subtest: 2/3 · w 31 → 12 on a 45 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31]
+ok 10 - 2/3 · w 31 → 12 on a 45 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31]
+  ---
+  duration_ms: 1.1188
+  type: 'test'
+  ...
+# Subtest: 2/3 · w 20 → 8 on a 60 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 20]
+ok 11 - 2/3 · w 20 → 8 on a 60 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [8, 20]
+  ---
+  duration_ms: 1.8052
+  type: 'test'
+  ...
+# Subtest: 2/3 · w 31 → 12 on a 30 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31]
+ok 12 - 2/3 · w 31 → 12 on a 30 m piece with the ramp 'start': it reaches the target by R = 15 m and holds exactly, and never leaves [12, 31]
+  ---
+  duration_ms: 0.721
+  type: 'test'
+  ...
+# Subtest: 2/3 · w 31 → 31.5 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [31, 31.5]
+ok 13 - 2/3 · w 31 → 31.5 on a 100 m piece with the ramp 'start': it reaches the target by R = 20 m and holds exactly, and never leaves [31, 31.5]
+  ---
+  duration_ms: 2.0293
+  type: 'test'
+  ...
+# Subtest: 2/3 · w 12 → 30 on a 25 m piece with the ramp 'start': it reaches the target by R = 12.5 m and holds exactly, and never leaves [12, 30]
+ok 14 - 2/3 · w 12 → 30 on a 25 m piece with the ramp 'start': it reaches the target by R = 12.5 m and holds exactly, and never leaves [12, 30]
+  ---
+  duration_ms: 0.4838
+  type: 'test'
+  ...
+# Subtest: 2 · an explicit number of metres in the map is the ramp: w reaches the target by 30 m and holds
+ok 15 - 2 · an explicit number of metres in the map is the ramp: w reaches the target by 30 m and holds
+  ---
+  duration_ms: 1.4598
+  type: 'test'
+  ...
+# Subtest: 2/3 · the same holds for the bank (phi) and the cup (c): a short ramp reaches its target and never leaves the range
+ok 16 - 2/3 · the same holds for the bank (phi) and the cup (c): a short ramp reaches its target and never leaves the range
+  ---
+  duration_ms: 3.3017
+  type: 'test'
+  ...
+# Subtest: 3 · a joint that carries a slope on w (0.5 m/m, a target just below the joint value: the ideal ramp rises past the joint's own first two points): C1 at the joint, and no control point outside the range of start, target and those two
+ok 17 - 3 · a joint that carries a slope on w (0.5 m/m, a target just below the joint value: the ideal ramp rises past the joint's own first two points): C1 at the joint, and no control point outside the range of start, target and those two
+  ---
+  duration_ms: 2.6814
+  type: 'test'
+  ...
+# Subtest: 2 · the ramp SHAPE: the curve stays within 15% of the change of the smooth ramp it is built from (Bloss over R/2), measured 11.9% (the price of building from control points, ref 09 §9)
+ok 18 - 2 · the ramp SHAPE: the curve stays within 15% of the change of the smooth ramp it is built from (Bloss over R/2), measured 11.9% (the price of building from control points, ref 09 §9)
+  ---
+  duration_ms: 2.7234
+  type: 'test'
+  ...
+# Subtest: 5 · a ramped piece is stored on the channel quantum (every control point is a multiple of it), so the document round-trips byte for byte
+ok 19 - 5 · a ramped piece is stored on the channel quantum (every control point is a multiple of it), so the document round-trips byte for byte
+  ---
+  duration_ms: 0.8195
+  type: 'test'
+  ...
+# Subtest: 4 · a channel not in the map keeps the whole-piece blend: phi follows the number-transition document within 1% of its change (0.1% under the cubic, re-pinned at D459)
+ok 20 - 4 · a channel not in the map keeps the whole-piece blend: phi follows the number-transition document within 1% of its change (0.1% under the cubic, re-pinned at D459)
+  ---
+  duration_ms: 2.2773
+  type: 'test'
+  ...
+# Subtest: 4 · a map naming only a channel with no target changes nothing: the document equals the number-transition one
+ok 21 - 4 · a map naming only a channel with no target changes nothing: the document equals the number-transition one
+  ---
+  duration_ms: 1.1476
+  type: 'test'
+  ...
+# Subtest: 4 · 'start' on a piece no longer than one span is the whole-piece blend (nothing to ramp inside the piece)
+ok 22 - 4 · 'start' on a piece no longer than one span is the whole-piece blend (nothing to ramp inside the piece)
+  ---
+  duration_ms: 0.4002
+  type: 'test'
+  ...
+# Subtest: 4 · startRampM is the first knot span: 20 m for a long piece, the piece for a short one, and follows knotM
+ok 23 - 4 · startRampM is the first knot span: 20 m for a long piece, the piece for a short one, and follows knotM
+  ---
+  duration_ms: 0.3721
+  type: 'test'
+  ...
+# Subtest: 4 · the extra knots: RAMP_KNOTS subdivisions of the ramp, strictly increasing, inside the piece, and the even knots they would crowd are dropped
+ok 24 - 4 · the extra knots: RAMP_KNOTS subdivisions of the ramp, strictly increasing, inside the piece, and the even knots they would crowd are dropped
+  ---
+  duration_ms: 0.07
+  type: 'test'
+  ...
+# Subtest: 5 · joints are C1 into the ramped piece, out of it (a piece after the hold), and the document validates
+ok 25 - 5 · joints are C1 into the ramped piece, out of it (a piece after the hold), and the document validates
+  ---
+  duration_ms: 0.5379
+  type: 'test'
+  ...
+# Subtest: 5 · a lap with ramped pieces still closes (the close reads the same control points)
+ok 26 - 5 · a lap with ramped pieces still closes (the close reads the same control points)
+  ---
+  duration_ms: 114.1316
+  type: 'test'
+  ...
+# Subtest: 6 · a map with an unknown channel is refused by name (BAD_TRANSITION)
+ok 27 - 6 · a map with an unknown channel is refused by name (BAD_TRANSITION)
+  ---
+  duration_ms: 0.4207
+  type: 'test'
+  ...
+# Subtest: 6 · a map with zero is refused by name (BAD_TRANSITION)
+ok 28 - 6 · a map with zero is refused by name (BAD_TRANSITION)
+  ---
+  duration_ms: 0.1181
+  type: 'test'
+  ...
+# Subtest: 6 · a map with negative is refused by name (BAD_TRANSITION)
+ok 29 - 6 · a map with negative is refused by name (BAD_TRANSITION)
+  ---
+  duration_ms: 0.0812
+  type: 'test'
+  ...
+# Subtest: 6 · a map with longer than the piece is refused by name (BAD_TRANSITION)
+ok 30 - 6 · a map with longer than the piece is refused by name (BAD_TRANSITION)
+  ---
+  duration_ms: 0.0705
+  type: 'test'
+  ...
+# Subtest: 6 · a map with not a number is refused by name (BAD_TRANSITION)
+ok 31 - 6 · a map with not a number is refused by name (BAD_TRANSITION)
+  ---
+  duration_ms: 0.0906
+  type: 'test'
+  ...
+# Subtest: 6 · a map with a string that is not start is refused by name (BAD_TRANSITION)
+ok 32 - 6 · a map with a string that is not start is refused by name (BAD_TRANSITION)
+  ---
+  duration_ms: 0.0915
+  type: 'test'
+  ...
+# Subtest: 6 · a number transition is still checked as before: 0 and a value past the length are refused
+ok 33 - 6 · a number transition is still checked as before: 0 and a value past the length are refused
+  ---
+  duration_ms: 0.2453
+  type: 'test'
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 224.7813

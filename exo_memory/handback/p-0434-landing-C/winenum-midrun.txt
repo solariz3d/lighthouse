@@ -1,0 +1,7 @@
+processes in the tree: 8
+windows on the user's desktop: 0 (visible 0)
+windows on t180-measure: 21 (visible 4)
+  44472 visible=False class=Touch Tooltip Window title=Tooltip
+  44472 visible=True class=UAC_InputIndicatorOverlayWnd title=
+  44472 visible=True class=UAC Input Indicator title=
+main window titles on the session: 8; with T-180: 0

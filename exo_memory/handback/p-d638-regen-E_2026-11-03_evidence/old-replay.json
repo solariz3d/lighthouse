@@ -1,0 +1,834 @@
+{
+ "tree": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d638\\old",
+ "rows": [
+  {
+   "i": 0,
+   "id": "p1",
+   "length": 1000,
+   "typed": {
+    "width": 35,
+    "cup": 10,
+    "edge": 20,
+    "edgeR": 20,
+    "start": 0.7
+   },
+   "atStart": {
+    "width": true,
+    "cup": true,
+    "edge": true,
+    "edgeR": true,
+    "start": true
+   },
+   "notes": [],
+   "transition": {
+    "w": 300,
+    "c": 300,
+    "e": 300,
+    "er": 300,
+    "s": 20
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 74/53",
+     "kv": "n 74/53",
+     "phi": "n 74/53",
+     "w": "n 74/53",
+     "r": "n 74/53",
+     "h": "n 74/53",
+     "l": "n 74/53",
+     "c": "n 74/53",
+     "e": "n 74/53",
+     "s": "n 74/53",
+     "t": "n 74/53",
+     "er": "n 74/53"
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 1,
+   "id": "p2",
+   "length": 1000,
+   "typed": {
+    "turn": -18.00000198478428,
+    "bank": 19.99999997714667
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 57/53",
+     "kv": "n 57/53",
+     "phi": "n 57/53",
+     "w": "n 57/53",
+     "r": "n 57/53",
+     "h": "n 57/53",
+     "l": "n 57/53",
+     "c": "n 57/53",
+     "e": "n 57/53",
+     "s": "n 57/53",
+     "t": "n 57/53",
+     "er": "n 57/53"
+    }
+   },
+   "route": 9.749348954014858e-10
+  },
+  {
+   "i": 2,
+   "id": "p3",
+   "length": 1000,
+   "typed": {
+    "turn": 0
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 3,
+   "id": "p4",
+   "length": 250,
+   "typed": {
+    "turn": -72.00000220955918
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 1.0000000003410059e-9,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 6.666304817187774e-10
+  },
+  {
+   "i": 4,
+   "id": "p5",
+   "length": 250,
+   "typed": {
+    "turn": 0
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 5,
+   "id": "p6",
+   "length": 750,
+   "typed": {
+    "turn": 23.999998826660413,
+    "climb": -0.49999734949886415,
+    "bank": -40.000000011589115
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 45/41",
+     "kv": "n 45/41",
+     "phi": "n 45/41",
+     "w": "n 45/41",
+     "r": "n 45/41",
+     "h": "n 45/41",
+     "l": "n 45/41",
+     "c": "n 45/41",
+     "e": "n 45/41",
+     "s": "n 45/41",
+     "t": "n 45/41",
+     "er": "n 45/41"
+    }
+   },
+   "route": 1.2139788559714475e-9
+  },
+  {
+   "i": 6,
+   "id": "p7",
+   "length": 750,
+   "typed": {
+    "turn": 0
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 7,
+   "id": "p8",
+   "length": 750,
+   "typed": {
+    "climb": 0,
+    "bank": 0
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 45/41",
+     "kv": "n 45/41",
+     "phi": "n 45/41",
+     "w": "n 45/41",
+     "r": "n 45/41",
+     "h": "n 45/41",
+     "l": "n 45/41",
+     "c": "n 45/41",
+     "e": "n 45/41",
+     "s": "n 45/41",
+     "t": "n 45/41",
+     "er": "n 45/41"
+    }
+   },
+   "route": 0.00018359100000000007
+  },
+  {
+   "i": 8,
+   "id": "p9",
+   "length": 253,
+   "typed": {},
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 9,
+   "id": "p10",
+   "length": 100,
+   "typed": {
+    "turn": 90.00000047011777,
+    "bank": -40.000000011589115
+   },
+   "atStart": {},
+   "notes": [
+    "turn as a corner of 90.0000°"
+   ],
+   "transition": null,
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 12/8",
+     "kv": "n 12/8",
+     "phi": "n 12/8",
+     "w": "n 12/8",
+     "r": "n 12/8",
+     "h": "n 12/8",
+     "l": "n 12/8",
+     "c": "n 12/8",
+     "e": "n 12/8",
+     "s": "n 12/8",
+     "t": "n 12/8",
+     "er": "n 12/8"
+    }
+   },
+   "route": 0.012927871733915405
+  },
+  {
+   "i": 10,
+   "id": "p11",
+   "length": 100,
+   "typed": {},
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 11,
+   "id": "p12",
+   "length": 100,
+   "typed": {
+    "turn": 90.00000047011777
+   },
+   "atStart": {},
+   "notes": [
+    "turn as a corner of 90.0000°"
+   ],
+   "transition": null,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0.022641134,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0.013025811784182295
+  },
+  {
+   "i": 12,
+   "id": "p13",
+   "length": 150,
+   "typed": {
+    "turn": 90.0000396461069,
+    "bank": 0
+   },
+   "atStart": {},
+   "notes": [
+    "turn as a corner of 90.0000°"
+   ],
+   "transition": null,
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 15/11",
+     "kv": "n 15/11",
+     "phi": "n 15/11",
+     "w": "n 15/11",
+     "r": "n 15/11",
+     "h": "n 15/11",
+     "l": "n 15/11",
+     "c": "n 15/11",
+     "e": "n 15/11",
+     "s": "n 15/11",
+     "t": "n 15/11",
+     "er": "n 15/11"
+    }
+   },
+   "route": 0.014080257199606927
+  },
+  {
+   "i": 13,
+   "id": "p14",
+   "length": 150,
+   "typed": {
+    "turn": -90.0000396461069,
+    "bank": 40.000000011589115
+   },
+   "atStart": {},
+   "notes": [
+    "turn as a corner of -90.0000°"
+   ],
+   "transition": null,
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 15/11",
+     "kv": "n 15/11",
+     "phi": "n 15/11",
+     "w": "n 15/11",
+     "r": "n 15/11",
+     "h": "n 15/11",
+     "l": "n 15/11",
+     "c": "n 15/11",
+     "e": "n 15/11",
+     "s": "n 15/11",
+     "t": "n 15/11",
+     "er": "n 15/11"
+    }
+   },
+   "route": 0.014080257199606927
+  },
+  {
+   "i": 14,
+   "id": "p15",
+   "length": 500,
+   "typed": {
+    "climb": 2.0000008571513592,
+    "bank": 0
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 32/28",
+     "kv": "n 32/28",
+     "phi": "n 32/28",
+     "w": "n 32/28",
+     "r": "n 32/28",
+     "h": "n 32/28",
+     "l": "n 32/28",
+     "c": "n 32/28",
+     "e": "n 32/28",
+     "s": "n 32/28",
+     "t": "n 32/28",
+     "er": "n 32/28"
+    }
+   },
+   "route": 6.666666666410234e-10
+  },
+  {
+   "i": 15,
+   "id": "p16",
+   "length": 1250,
+   "typed": {
+    "turn": -14.399999295996246,
+    "climb": -4.0000017143027184,
+    "bank": 69.99999997730912
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 70/66",
+     "kv": "n 70/66",
+     "phi": "n 70/66",
+     "w": "n 70/66",
+     "r": "n 70/66",
+     "h": "n 70/66",
+     "l": "n 70/66",
+     "c": "n 70/66",
+     "e": "n 70/66",
+     "s": "n 70/66",
+     "t": "n 70/66",
+     "er": "n 70/66"
+    }
+   },
+   "route": 9.583303633075788e-10
+  },
+  {
+   "i": 16,
+   "id": "p17",
+   "length": 250,
+   "typed": {
+    "turn": -80.20000228613299,
+    "climb": 0
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 9.999999994736442e-10,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 6.666032292129698e-10
+  },
+  {
+   "i": 17,
+   "id": "p18",
+   "length": 250,
+   "typed": {},
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 18,
+   "id": "p19",
+   "length": 250,
+   "typed": {
+    "turn": -23.800002178692043,
+    "bank": 35.49999997375928
+   },
+   "atStart": {},
+   "notes": [],
+   "transition": null,
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 20/16",
+     "kv": "n 20/16",
+     "phi": "n 20/16",
+     "w": "n 20/16",
+     "r": "n 20/16",
+     "h": "n 20/16",
+     "l": "n 20/16",
+     "c": "n 20/16",
+     "e": "n 20/16",
+     "s": "n 20/16",
+     "t": "n 20/16",
+     "er": "n 20/16"
+    }
+   },
+   "route": 6.666509861502634e-10
+  },
+  {
+   "i": 19,
+   "id": "p20",
+   "length": 250,
+   "typed": {
+    "climb": 12.500033636202962,
+    "turn": 0,
+    "bank": 0
+   },
+   "atStart": {
+    "turn": true
+   },
+   "notes": [
+    "climb as a corner of 12.5000°"
+   ],
+   "transition": {
+    "kh": 20
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 21/19",
+     "kv": "n 21/19",
+     "phi": "n 21/19",
+     "w": "n 21/19",
+     "r": "n 21/19",
+     "h": "n 21/19",
+     "l": "n 21/19",
+     "c": "n 21/19",
+     "e": "n 21/19",
+     "s": "n 21/19",
+     "t": "n 21/19",
+     "er": "n 21/19"
+    }
+   },
+   "route": 0.0006759716099748148
+  },
+  {
+   "i": 20,
+   "id": "p21",
+   "length": 1000,
+   "typed": {
+    "climb": 27.00000011238745
+   },
+   "atStart": {
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kv": 20
+   },
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 21,
+   "id": "p22",
+   "length": 250,
+   "typed": {
+    "turn": -8.899999803618984,
+    "climb": 30.899997773128028
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 20,
+    "kv": 20
+   },
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 9.99999999907325e-10,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 5.964166664880477e-10
+  },
+  {
+   "i": 22,
+   "id": "p23",
+   "length": 250,
+   "typed": {
+    "turn": 20.59999851541869,
+    "climb": 2.099999181135542,
+    "bank": -57.29999997749704
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 20,
+    "kv": 20
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 21/19",
+     "kv": "n 21/19",
+     "phi": "n 21/19",
+     "w": "n 21/19",
+     "r": "n 21/19",
+     "h": "n 21/19",
+     "l": "n 21/19",
+     "c": "n 21/19",
+     "e": "n 21/19",
+     "s": "n 21/19",
+     "t": "n 21/19",
+     "er": "n 21/19"
+    }
+   },
+   "route": 1.734723475976807e-18
+  },
+  {
+   "i": 23,
+   "id": "p24",
+   "length": 250,
+   "typed": {
+    "turn": 50.900000615063675,
+    "climb": 13.099998165890067
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 20,
+    "kv": 20
+   },
+   "cmp": {
+    "knots": true,
+    "length": true,
+    "ch": {
+     "kh": 0,
+     "kv": 0,
+     "phi": 0,
+     "w": 0,
+     "r": 0,
+     "h": 0,
+     "l": 0,
+     "c": 0,
+     "e": 0,
+     "s": 0,
+     "t": 0,
+     "er": 0
+    }
+   },
+   "route": 0
+  },
+  {
+   "i": 24,
+   "id": "p25",
+   "length": 250,
+   "typed": {
+    "turn": 46.1000008497316,
+    "climb": -8.599999102088484,
+    "bank": -66.29999999586093
+   },
+   "atStart": {
+    "turn": true,
+    "climb": true
+   },
+   "notes": [],
+   "transition": {
+    "kh": 20,
+    "kv": 20
+   },
+   "cmp": {
+    "knots": false,
+    "length": true,
+    "ch": {
+     "kh": "n 21/19",
+     "kv": "n 21/19",
+     "phi": "n 21/19",
+     "w": "n 21/19",
+     "r": "n 21/19",
+     "h": "n 21/19",
+     "l": "n 21/19",
+     "c": "n 21/19",
+     "e": "n 21/19",
+     "s": "n 21/19",
+     "t": "n 21/19",
+     "er": "n 21/19"
+    }
+   },
+   "route": 3.469446951953614e-18
+  }
+ ],
+ "refused": {
+  "i": 25,
+  "id": "p26",
+  "message": "PASS_CLEARANCE: too close to another pass of the road: the road at 10.71 km (p69) meets the road at 11.46 km (p72); a road over another must keep its underside 3.1 m clear for a car (55 places). Nothing changed."
+ },
+ "closedBefore": false,
+ "openDoc": "C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\d638\\old-replay.open.t180track"
+}

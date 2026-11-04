@@ -1,0 +1,5 @@
+aurora | empty                  | 0 pieces   canvas 2560x1396 | frames 3398 (gpu 3398, not-strip 0, disjoint 0) | GPU sky 0.126 / p95 0.131 | GPU rest 0.022 / 0.764 | GPU frame 0.149 / 0.890 | CPU 0.200 / 1.300 | gap 0.600 / 1.700 | draws 4
+aurora | 12 x 100 m turns       | 12 pieces  canvas 2560x1396 | frames 3151 (gpu 3151, not-strip 0, disjoint 0) | GPU sky 0.133 / p95 0.149 | GPU rest 0.046 / 0.899 | GPU frame 0.181 / 1.039 | CPU 0.200 / 2.000 | gap 0.500 / 2.900 | draws 11
+aurora | 30 x 1,000 m           | 30 pieces  canvas 2560x1396 | frames 2927 (gpu 2927, not-strip 0, disjoint 0) | GPU sky 0.157 / p95 0.163 | GPU rest 0.196 / 1.087 | GPU frame 0.353 / 1.228 | CPU 0.200 / 2.800 | gap 0.500 / 3.100 | draws 92
+CSS token change (5 properties on the root, style + layout forced): median 1.100 ms p95 1.400 max 1.500 | control (no change) median 0.000 p95 0.000
+renderer: ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)

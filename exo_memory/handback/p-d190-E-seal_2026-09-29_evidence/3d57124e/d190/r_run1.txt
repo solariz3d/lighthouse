@@ -1,0 +1,150 @@
+[32m✔ row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward) [90m(1.1824ms)[39m[39m
+[32m✔ row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width [90m(0.5526ms)[39m[39m
+[32m✔ row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge) [90m(6.2425ms)[39m[39m
+[32m✔ row 1b (default): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(115.3361ms)[39m[39m
+[32m✔ row 1b (default): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(105.0832ms)[39m[39m
+[32m✔ row 1b (default): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(73.9076ms)[39m[39m
+[32m✔ row 1b (default): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(109.0308ms)[39m[39m
+[32m✔ row 1b (cupLocal): a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(66.2344ms)[39m[39m
+[32m✔ row 1b (cupLocal): a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(75.1568ms)[39m[39m
+[32m✔ row 1b (cupLocal): a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(75.6573ms)[39m[39m
+[32m✔ row 1b (cupLocal): a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, never faster than c itself moves) [90m(87.5438ms)[39m[39m
+[31m✖ row 1b: the default scheme emits a seam zip where c changes and NONE where it is held (measured, and the reason cupRuns exists): the last 100 m of a 400 m piece has none [90m(116.6435ms)[39m[39m
+[31m✖ the default scheme keeps segment.profile LOCAL: its edge is c at the segment's end within 0.05° (what the marker layout, validation, the water and the camera read), and the cupRuns scheme does not (its profile is the run's widest) [90m(2.517ms)[39m[39m
+[32m✔ row 1b: a bowl cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(152.2317ms)[39m[39m
+[32m✔ row 1b: a half-pipe cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(185.5521ms)[39m[39m
+[32m✔ R1 (B's score): a bowl cup ramp to 90° over 40 m lands on c(s) at EVERY row: the edge is within 0.05° of c (it was off by up to 0.95° on the local scheme), and the seal's literal steps hold where the sampling allows [90m(68.5172ms)[39m[39m
+[31m✖ R1 (B's score): a bowl cup ramp to 150° over 40 m lands on c(s) at EVERY row: the edge is within 0.05° of c (it was off by up to 0.95° on the local scheme), and the seal's literal steps hold where the sampling allows [90m(90.2573ms)[39m[39m
+[31m✖ R1 (B's score): a half-pipe cup ramp to 150° over 40 m lands on c(s) at EVERY row: the edge is within 0.05° of c (it was off by up to 0.95° on the local scheme), and the seal's literal steps hold where the sampling allows [90m(99.9925ms)[39m[39m
+[32m✔ R1 (B's score): a bowl cup ramp to 90° over 100 m lands on c(s) at EVERY row: the edge is within 0.05° of c (it was off by up to 0.95° on the local scheme), and the seal's literal steps hold where the sampling allows [90m(93.906ms)[39m[39m
+[32m✔ R1 (B's score): a half-pipe cup ramp to 150° over 100 m lands on c(s) at EVERY row: the edge is within 0.05° of c (it was off by up to 0.95° on the local scheme), and the seal's literal steps hold where the sampling allows [90m(130.0149ms)[39m[39m
+[32m✔ row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside) [90m(53.268ms)[39m[39m
+[32m✔ row 1b (default): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(63.636ms)[39m[39m
+[32m✔ row 1b (cupLocal): a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(64.3824ms)[39m[39m
+[32m✔ row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse [90m(1.1739ms)[39m[39m
+[32m✔ row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard) [90m(2.0012ms)[39m[39m
+[32m✔ row 2 (iii): a cup that reaches a limit (150 or 0) ends flat, so the piece after it continues C1 inside [0, 150], and a lap held at 150 closes (a solver's float noise on a control point at the limit is not a violation) [90m(157.2158ms)[39m[39m
+[32m✔ row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots [90m(3.0364ms)[39m[39m
+[32m✔ row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it) [90m(0.3251ms)[39m[39m
+[32m✔ row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works [90m(5.6418ms)[39m[39m
+[32m✔ row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit [90m(10.0736ms)[39m[39m
+[32m✔ row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test) [90m(0.494ms)[39m[39m
+[32m✔ row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate) [90m(1.801ms)[39m[39m
+[32m✔ row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows) [90m(144.9201ms)[39m[39m
+[32m✔ row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4) [90m(1.5526ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a bowl road 12 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(46.1608ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a half-pipe road 24 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(39.4962ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a bowl road 18 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(32.4097ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a flat road 20 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(32.5602ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a bowl road 31 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(37.3558ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a half-pipe road 31.5 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(44.0201ms)[39m[39m
+[32m✔ R2 / row 3 (iv): a flat road 45 m wide handing over to a cup piece has no step over 1 mm across the WHOLE curve at the joint (36.0 mm bowl 12 m and 148.2 mm half-pipe 24 m before) [90m(37.6641ms)[39m[39m
+[32m✔ R2: past the joint's morph the road is the pure cup shape (ψ at every quarter is c·Fᵢ/F_edge within 0.01°), and the edge stays c through it [90m(1.8481ms)[39m[39m
+[32m✔ row 5: a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), renders through profileAt with no blend and no new key, and saves as /3 [90m(2.1113ms)[39m[39m
+[32m✔ row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge [90m(1.0434ms)[39m[39m
+[32m✔ row 5b: a cup document round-trips through /3 text (serialize, parse, serialize) [90m(3.3952ms)[39m[39m
+[32m✔ row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°) [90m(5.3997ms)[39m[39m
+[32m✔ row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank) [90m(4.8295ms)[39m[39m
+[32m✔ row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece [90m(0.8962ms)[39m[39m
+[32m✔ row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it [90m(2.3735ms)[39m[39m
+[32m✔ knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel) [90m(1.8229ms)[39m[39m
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3057.2667ms)[39m[39m
+[32m✔ row 4 (i): a closed bowl lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4611.372ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3190.8029ms)[39m[39m
+[32m✔ row 4 (i): a closed half-pipe lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4896.9609ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 90° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(3109.2889ms)[39m[39m
+[32m✔ row 4 (i): a closed flat lap with its four turns at 150° exports with csp on: mesh, markers, kn5 (read back) and AI line, no red [90m(4648.7946ms)[39m[39m
+[32m✔ row 4 (ii): the same bowl lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2685.1399ms)[39m[39m
+[32m✔ row 4 (ii): the same half-pipe lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2904.0677ms)[39m[39m
+[32m✔ row 4 (ii): the same flat lap at 90° with csp OFF is refused, by steep-without-raycast (the walls are past 50°, which vanilla AC tyres ignore) [90m(2775.2717ms)[39m[39m
+[32m✔ row 4 (iii): a start straight cupped to 150° is refused by NAME at the grid (too narrow for a two-column grid), not by a crash [90m(150.2366ms)[39m[39m
+[32m✔ row 4 / row 2: a bowl cup of 165° (walls crossed) is refused at the DOCUMENT by name, so the export's incidental raygap red is never what stops it [90m(0.5423ms)[39m[39m
+[32m✔ atSegment: the profile at d = 0 is the blend's `from`, at the segment's end the mix at its end weight, and a segment with no blend is its own profile [90m(15.5483ms)[39m[39m
+[32m✔ atSegment lands on the document's c along the ramp: the edge of the cross-section at a station is c(s) within 0.05° (a reader that took segment.profile would read the run's widest, 90°, at the start) [90m(9.0574ms)[39m[39m
+[32m✔ marker layout: a straight running into a cupped turn keeps the width of the straight (the grid is not refused as "too narrow" by the turn's 150° target) [90m(11.6228ms)[39m[39m
+[32m✔ validation: with csp off the first steep-without-raycast red is where the wall PASSES 50° (c(s) = 50, about 47 m into a 100 m ramp), not at the ramp's start (the run's widest, 90°) [90m(22.6691ms)[39m[39m
+[32m✔ export sections: the section at a station is the road as drawn there (its maxPsi is c(s)), not the run's widest [90m(19.9469ms)[39m[39m
+[32m✔ water: the profile under a sample is the road as drawn there (the edge is c(s)), and a segment without a blend still gives its own profile object [90m(5.2508ms)[39m[39m
+[32m✔ camera: the width at the head is the last segment's cross-section at the head (a cup brushed down at its end reads the lowered c, not the run's widest) [90m(7.3009ms)[39m[39m
+[34mℹ tests 68[39m
+[34mℹ suites 0[39m
+[34mℹ pass 64[39m
+[34mℹ fail 4[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 32146.994[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup.test.js:108:1
+[31m✖ row 1b: the default scheme emits a seam zip where c changes and NONE where it is held (measured, and the reason cupRuns exists): the last 100 m of a 400 m piece has none [90m(116.6435ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: seams where c changes
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:112:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:114:1
+[31m✖ the default scheme keeps segment.profile LOCAL: its edge is c at the segment's end within 0.05° (what the marker layout, validation, the water and the camera read), and the cupRuns scheme does not (its profile is the run's widest) [90m(2.517ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: default: worst 104.97225335733333°
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:119:23[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:129:3
+[31m✖ R1 (B's score): a bowl cup ramp to 150° over 40 m lands on c(s) at EVERY row: the edge is within 0.05° of c (it was off by up to 0.95° on the local scheme), and the seal's literal steps hold where the sampling allows [90m(90.2573ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the edge is off c(s) by 0.06239588860745471° at its worst row (tip off by about 0.017 m)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:132:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_cup.test.js:129:3
+[31m✖ R1 (B's score): a half-pipe cup ramp to 150° over 40 m lands on c(s) at EVERY row: the edge is within 0.05° of c (it was off by up to 0.95° on the local scheme), and the seal's literal steps hold where the sampling allows [90m(99.9925ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the edge is off c(s) by 0.05539087365795581° at its worst row (tip off by about 0.015 m)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:132:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

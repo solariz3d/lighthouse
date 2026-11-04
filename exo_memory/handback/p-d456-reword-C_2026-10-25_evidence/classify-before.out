@@ -1,0 +1,32 @@
+string  app/test/core-pieces-ui.test.js:656: test('row 14d (D278, the keeper: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the E
+string  app/test/core-startline-creep.test.js:50: test('the automatic line on an open track stays put when a Straight is added to the straight it is on (the keeper\'s case: it followed the head)', async () => {
+string  app/test/export.test.js:216: test('D226 the empty folder the keeper made exports to content\\tracks as the normal t180b_<name> folder and the empty folder is removed, so Content Manager never sees it', async () => {
+string  src/validate/index.js:105: 'landing-misses-zone': 'ARCHITECTURE.md:75-78 (the landing ramp should catch both landings); a WARNING since D250: the keeper tunes jumps by driving them',
+string  test/core_close_local.test.js:54: assert.ok(outside.some((i) => !sameChannels(d.pieces[i], whole.doc.pieces[i])), 'control: the whole-lap close reaches back into the lap (what the keeper saw)');
+code    test/core_tube_open.test.js:23: function keeperTrack() {
+code    test/core_tube_open.test.js:33: const D0 = keeperTrack(), B0 = built(D0), S1 = D0.pieces[0].length, S3 = S1 + D0.pieces[1].length + D0.pieces[2].length;
+string  test/core_tube_open.test.js:64: test('row 2b: the keeper\'s own case (the panel\'s fields, widths 44 and 30): a track that is a closed 45 m tube from its start, still turning, opened in 254.1 m', () => {
+string  test/doc-library.test.js:24: test('every handle the keeper names is sculptable: length, curvature and ramps, pitch, bank, width, wall and ψ', () => {
+string  test/doc-library.test.js:61: let lib = L.savePiece(L.builtinLibrary(), { name: 'my-bend', author: 'keeper', doc: d, ids: ['w2', 'w3'] });
+string  test/doc-library.test.js:72: const lib = L.savePiece(L.builtinLibrary(), { name: 'wide-turn', author: 'keeper', doc: d, ids: ['w2'] });
+string  test/doc-library.test.js:127: const lib = L.savePiece(L.builtinLibrary(), { name: 'my-bend', author: 'keeper', doc: sculpted(), ids: ['w2', 'w3'] });
+string  test/doc-library.test.js:134: const lib = L.savePiece(L.builtinLibrary(), { name: 'my-bend', author: 'keeper', doc: sculpted(), ids: ['w2', 'w3'] });
+string  test/doc-library.test.js:141: const lib = L.savePiece(L.builtinLibrary(), { name: 'my-bend', author: 'keeper', doc: sculpted(), ids: ['w2', 'w3'] });
+string  test/export_merge.test.js:55: test('row 2b: with the default budget no chunk passes 32,768 vertices (AC left the keeper\x27s two chunks near 65,536 undrawn: the road went invisible but drivable)', () => {
+string  test/fixtures/manifest.d230.json:4: "reason": "The keeper, 2026-10-04 02:22: the closed tube \"should be inclosed and pitch black\" (daylight leaked into it); 02:25: \"i guess we need to make it so the bottom side of the track is an obj
+string  test/fixtures/manifest.d258.json:4: "reason": "The keeper, 2026-10-06 15:09: a jump is placed by hand and tuned by driving (exo_memory/loop/plan_t180_free_jump_2026-10-06.md). An OLD flight ({gap, drop, land}: a solved gap plus a landin
+string  test/fixtures/manifest.d260.json:4: "reason": "The keeper, 2026-10-06 18:31: \"i should be getting 400-500 frames in a map with no complex lighting, is the track geometry like too complex\" (exo_memory/loop/plan_t180_export_drawcalls_20
+string  test/fixtures/manifest.d279.json:4: "reason": "The keeper, 2026-10-09, asked which pits should wear the track's texture: \"The painted pit boxes\" (exo_memory/loop/plan_t180_pit_texture_2026-10-09.md, Amendment). Each PAINT_PIT_n now we
+string  test/fixtures/manifest.meshcap.json:4: "reason": "The keeper, 2026-10-12, on TEST TRACK 10: the road went invisible from the 90° turns on while the car still drove on it. Its two largest chunks held 65,088 and 65,472 vertices; the same exp
+string  test/fixtures/manifest.meshcap.json:4: "reason": "The keeper, 2026-10-12, on TEST TRACK 10: the road went invisible from the 90° turns on while the car still drove on it. Its two largest chunks held 65,088 and 65,472 vertices; the same exp
+string  test/grips.test.js:18: test('row 1: one entry per row the tool lists, in the keeper\'s order, and every value is a whole percent the Grip field takes (50 to 150)', () => {
+string  test/prove_render.test.js:87: const f = path.join(d, 'autosave.t180auto'); fs.writeFileSync(f, 'an unsaved track of the keeper');
+string  test/prove_render.test.js:89: assert.deepEqual([restore(), fs.readFileSync(f, 'utf8')], ['restored', 'an unsaved track of the keeper']);
+string  test/readout_corner.test.js:74: test('row 5: the keeper\'s save: p41 corner 90.00°, ends turning at 171°/100 m, +9.64° from p42; p42 corner 99.64°; gravity bank −53.5°', { skip: fs.existsSync(FX) ? false : 'fixtures-d332/eq-ELYSIUM.
+string  test/readout_corner.test.js:74: test('row 5: the keeper\'s save: p41 corner 90.00°, ends turning at 171°/100 m, +9.64° from p42; p42 corner 99.64°; gravity bank −53.5°', { skip: fs.existsSync(FX) ? false : 'fixtures-d332/eq-ELYSIUM.
+string  test/trackfiles.test.js:172: installOne(b, ac); fs.writeFileSync(path.join(t, 'keeper-note.txt'), 'kept');
+string  test/trackfiles.test.js:177: assert.strictEqual(fs.readFileSync(path.join(t, 'keeper-note.txt'), 'utf8'), 'kept');
+string  test/turn_corner.test.js:90: test('row 4: the keeper\'s save opens unchanged: it round-trips byte for byte and builds the identical track (pinned before B and C)', { skip: fs.existsSync(FX) ? false : 'fixtures-d332/eq-ELYSIUM.t18
+string  test/turn_corner.test.js:90: test('row 4: the keeper\'s save opens unchanged: it round-trips byte for byte and builds the identical track (pinned before B and C)', { skip: fs.existsSync(FX) ? false : 'fixtures-d332/eq-ELYSIUM.t18
+string  test/validate_xsec.test.js:34: test('S3: a full 360° of bank is RED over 300 m (the keeper\'s own example, 1.80°/m), AMBER over 450 m (1.20), clear over 600 m (0.90): the bar is 1.2144 red, 0.9338 amber, read over a 20 m chord', ()
+occurrences by kind: {"doc":175,"comment":361,"string":29,"code":2}; files 199

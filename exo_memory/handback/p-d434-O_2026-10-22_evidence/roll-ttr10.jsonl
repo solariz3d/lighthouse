@@ -1,0 +1,4 @@
+{"scale":0,"closed":true,"gapMm":0.261,"worstRollDegPerM":0.917,"amber":0.9338,"red":1.2144,"meanLeanInto":-0.9,"out":453,"maxLatG":10.68,"maxNormalG":2.04}
+{"scale":0.5,"closed":true,"gapMm":0.261,"worstRollDegPerM":0.917,"amber":0.9338,"red":1.2144,"meanLeanInto":35.6,"out":4,"maxLatG":7.86,"maxNormalG":7.24}
+{"scale":0.75,"closed":true,"gapMm":0.261,"worstRollDegPerM":0.917,"amber":0.9338,"red":1.2144,"meanLeanInto":53.8,"out":0,"maxLatG":5.57,"maxNormalG":9.57}
+{"scale":1,"closed":true,"gapMm":0.261,"worstRollDegPerM":0.917,"amber":0.9338,"red":1.2144,"meanLeanInto":71.7,"out":0,"maxLatG":5.32,"maxNormalG":10.64}

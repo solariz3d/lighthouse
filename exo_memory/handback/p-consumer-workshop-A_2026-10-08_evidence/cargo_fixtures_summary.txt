@@ -1,0 +1,76 @@
+﻿test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 80 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 80 filtered out; finished in 0.00s
+test composer_tristate_tests::a_reading_for_a_pane_with_nothing_queued_is_dropped_quietly ... ok
+test composer_tristate_tests::a_pane_with_no_screen_reads_unreadable_no_screen_and_still_holds ... ok
+test composer_tristate_tests::a_withdrawal_is_authorised_only_when_its_count_matches_the_depth_exactly ... ok
+test composer_tristate_tests::a_waiting_message_carries_every_reading_of_its_hold ... ok
+test composer_tristate_tests::a_reading_reaches_every_message_waiting_for_that_pane_and_no_other ... ok
+test composer_tristate_tests::a_withdrawn_message_does_not_reach_the_pane_and_an_unwithdrawn_one_does ... ok
+test composer_tristate_tests::an_outranked_hold_the_gate_could_not_read_never_says_never_cleared ... ok
+test composer_tristate_tests::an_outranked_hold_with_text_throughout_says_it_never_read_clear ... ok
+test composer_tristate_tests::a_mixed_hold_gives_its_counts_and_claims_neither_whole ... ok
+test composer_tristate_tests::empty_readings_are_counted_not_dropped ... ok
+test composer_tristate_tests::no_screen_rows_at_all_reads_unreadable_no_row ... ok
+test composer_tristate_tests::no_forced_row_has_a_run_of_blanks_in_it ... ok
+test composer_tristate_tests::take_withdrawn_pops_only_a_withdrawn_head ... ok
+test composer_tristate_tests::stepping_over_a_withdrawn_head_does_not_reorder_what_is_behind_it ... ok
+test composer_tristate_tests::the_composer_clause_rides_on_the_other_two_forced_rows ... ok
+test composer_tristate_tests::the_reading_at_the_bound_is_named ... ok
+test composer_tristate_tests::the_withdraw_directive_is_the_whole_first_line_and_nothing_else ... ok
+test composer_tristate_tests::with_no_readings_every_row_is_the_old_row ... ok
+test composer_tristate_tests::withdrawing_never_removes_the_entry_so_it_can_still_be_reported ... ok
+test composer_tristate_tests::the_old_row_invariants_hold_with_readings_too ... ok
+test composer_tristate_tests::withdrawing_one_pane_leaves_every_other_pane_untouched ... ok
+test composer_tristate_tests::take_ready_read_decides_exactly_as_take_ready ... ok
+test composer_tristate_tests::withdrawing_twice_reports_the_second_time_as_nothing_new ... ok
+test ready_signal_tests::a_footer_drawn_onto_the_composer_row_is_not_a_turn_in_flight ... ok
+test ready_signal_tests::a_ready_pane_has_no_bound ... ok
+test ready_signal_tests::a_ready_stamp_over_a_live_turn_does_not_deliver ... ok
+test ready_signal_tests::a_prompt_row_with_no_rule_above_it_is_not_the_composer ... ok
+test ready_signal_tests::a_pane_killed_mid_turn_does_not_become_unreachable ... ok
+test ready_signal_tests::a_reason_can_only_come_from_the_gate_that_owns_it ... ok
+test ready_signal_tests::a_rule_inside_a_reply_is_not_the_separator ... ok
+test ready_signal_tests::a_stale_spinner_on_a_quiet_pane_is_still_an_ordinary_ready_pane ... ok
+test ready_signal_tests::a_stale_stamp_and_a_working_pane_do_not_read_alike ... ok
+test ready_signal_tests::a_working_pane_holds_without_a_bound ... ok
+test ready_signal_tests::a_stamp_that_will_not_parse_is_absent_not_working ... ok
+test ready_signal_tests::an_unforced_row_carries_no_forced_clause ... ok
+test ready_signal_tests::an_unreadable_screen_takes_neither_unbounded_path ... ok
+test composer_tristate_tests::the_chair_says_what_it_withdrew_and_says_when_it_withdrew_nothing ... ok
+test composer_tristate_tests::drain_inboxes_steps_over_withdrawn_heads_before_it_delivers_and_says_so ... ok
+test composer_tristate_tests::drain_inboxes_records_each_reading_and_builds_the_row_from_them ... ok
+test ready_signal_tests::no_stamp_behaves_as_it_did_before_the_stamp_existed ... ok
+test ready_signal_tests::no_delivered_row_claims_a_ready_signal_and_denies_one ... ok
+test ready_signal_tests::only_a_corroborated_working_pane_holds_without_a_bound ... ok
+test ready_signal_tests::no_two_forcing_causes_read_alike ... ok
+test ready_signal_tests::the_gate_sweep_covers_every_state_there_is ... ok
+test ready_signal_tests::a_ghost_in_the_composer_is_not_the_keeper_typing ... ok
+test ready_signal_tests::the_keeper_typing_a_slash_command_must_hold_a_delivery ... ignored, acceptance test for the slash-command splice; see the test above before un-ignoring
+test ready_signal_tests::the_keeper_typing_still_holds_a_pane_that_says_it_is_ready ... ok
+test ready_signal_tests::the_mirror_is_bounded_and_says_which_cause_forced_it ... ok
+test ready_signal_tests::real_typing_on_a_tall_pane_still_holds_a_delivery ... ok
+test ready_signal_tests::the_composer_of_a_pane_taller_than_the_constants_is_still_read ... ok
+test ready_signal_tests::the_prompt_marker_survives_the_reduction ... ok
+test composer_tristate_tests::a_real_empty_composer_reads_empty ... ok
+test composer_tristate_tests::a_dialog_over_the_composer_reads_unreadable_no_row ... ok
+test composer_tristate_tests::a_dim_placeholder_reads_as_text_and_this_is_a_defect ... ok
+test composer_tristate_tests::two_grids_of_different_sizes_read_unreadable_grid_mismatch ... ok
+test composer_tristate_tests::a_paste_waiting_in_the_composer_reads_has_text ... ok
+test ready_signal_tests::real_typing_still_holds_a_delivery_even_with_a_prediction_after_it ... ok
+test ready_signal_tests::a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect ... ok
+test composer_tristate_tests::pane_state_hands_the_gate_the_old_bit_and_the_reading_beside_it ... ok
+test ready_signal_tests::the_hook_pair_is_in_the_installer_and_writes_what_the_reader_parses ... ok
+test ready_signal_tests::the_composer_is_found_on_the_drawn_grid_though_the_reduction_deleted_its_marker ... ok
+test ready_signal_tests::an_empty_composer_must_read_empty_whatever_colour_the_marker_is_drawn_in ... ok
+test ready_signal_tests::a_real_empty_composer_reads_busy_because_the_marker_is_not_default ... ok
+test composer_tristate_tests::the_bit_the_gate_decides_on_is_unchanged_on_every_screen ... ok
+test result: ok. 63 passed; 0 failed; 1 ignored; 0 measured; 919 filtered out; finished in 0.05s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.00s
+--- exit 0

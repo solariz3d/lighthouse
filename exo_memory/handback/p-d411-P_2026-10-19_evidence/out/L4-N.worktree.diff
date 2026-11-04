@@ -1,0 +1,117 @@
+diff --git a/app/sound.js b/app/sound.js
+index f0b8a25..a1e2ad6 100644
+--- a/app/sound.js
++++ b/app/sound.js
+@@ -59,6 +59,8 @@ const SAMPLES = Object.freeze({
+   tickFade: 0.004,
+   tickEven: 0.5,
+ });
++// D411: the files one melody plays (the tick, the loop close, its own place and undo); a launch needs these and no others
++const filesOf = (m) => [...new Set(['drag_tick', 'loop_closed', `place_${m}`, `undo_${m}`].map((slot) => SAMPLES.file[slot]))];
+ const rateOf = (file, midi) => (file in SAMPLES.ref ? Math.pow(2, (midi - SAMPLES.ref[file]) / 12) : 1);
+ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+ const mtof = (m) => 440 * Math.pow(2, (m - 69) / 12);
+@@ -336,11 +338,11 @@ function createEngine(ctx, { random = Math.random, melody = MELODY_NAMES[0] } =
+     });
+     ep(88, { t: land + 1.6, vel: 0.45, d: 2.4, wet: 0.6 }); ep(91, { t: land + 2.1, vel: 0.32, d: 2.2, wet: 0.7 });
+   }
+-  /** Hand the engine its decoded sample files, keyed by file (SAMPLES.slots: { drag_tick, place, undo, loop_closed }); from then on they play in place of the synth. A set with one missing is refused. */
++  /** Hand the engine its decoded sample files, keyed by file (SAMPLES.slots); from then on they play in place of the synth. A set missing one this engine's melody plays is refused; D411: another melody's files may be missing. */
+   function useSamples(buffers) {
+     if (!buffers || typeof buffers !== 'object') throw new Error('sound: useSamples needs the samples, got ' + buffers);
+-    const missing = SAMPLES.slots.filter((s) => !buffers[s]); if (missing.length) throw new Error(`sound: the samples are missing ${missing.join(', ')}`);
+-    samples = Object.fromEntries(SAMPLES.slots.map((s) => [s, buffers[s]]));
++    const need = filesOf(melody), missing = need.filter((s) => !buffers[s]); if (missing.length) throw new Error(`sound: the samples are missing ${missing.join(', ')}`);
++    samples = Object.fromEntries(need.map((s) => [s, buffers[s]]));
+   }
+   return { master, dryBus, melody, tick, step, loopClosed, useSamples, setLevel(v) { master.gain.value = v; dryBus.gain.value = v; } };
+ }
+@@ -369,15 +371,17 @@ function createSound(win, { log = (m) => { try { console.warn(m); } catch (e) {
+     loadSamples();
+   };
+   // D349: the four samples, fetched from `base` and decoded once, as audio starts; the engine plays its synth until they are in, and keeps it if they fail
++  // D411: only a file this launch's melody plays can fail the load; one of another melody that fails is left out, unlogged
+   const loadSamples = () => {
+     const c = ctx, e = engine, fail = (why) => log(`sound: the samples did not load (${why}); the synth voices play instead`);
+     const get = typeof win.fetch === 'function' ? win.fetch.bind(win) : null;
+     if (!get) { fail('no fetch in this window'); return; }
++    const need = filesOf(melody);
+     Promise.all(SAMPLES.slots.map((s) => get(`${base}${s}.wav`)
+       .then((r) => { if (!r || !r.ok) throw new Error(`${s}.wav answered ${r ? r.status : 'nothing'}`); return r.arrayBuffer(); })
+       .then((a) => c.decodeAudioData(a))
+-      .then((b) => [s, b])))
+-      .then((pairs) => { if (engine === e) e.useSamples(Object.fromEntries(pairs)); })
++      .then((b) => [s, b], (err) => { if (need.includes(s)) throw err; return null; })))
++      .then((pairs) => { if (engine === e) e.useSamples(Object.fromEntries(pairs.filter(Boolean))); })
+       .catch((err) => fail(err && err.message));
+   };
+   const live = () => !!engine && !muted;
+diff --git a/app/test/sound-samples.test.js b/app/test/sound-samples.test.js
+index 9fccc9c..1a339f5 100644
+--- a/app/test/sound-samples.test.js
++++ b/app/test/sound-samples.test.js
+@@ -10,6 +10,7 @@
+ //   4  the player fetches and decodes the four files once, at the first gesture, from `base`; the synth plays until they are in
+ //   5  a failed fetch, a refused file or a failed decode is logged and the synth keeps playing; no fetch at all is logged the same way
+ //   6  the files are the four batch-8 WAVs, byte for byte (sha256), and useSamples refuses a set with one missing
++//  12  (D411) a file of a melody the launch did not pick that fails costs nothing: the tick, the loop close and the picked melody still play their samples
+ 'use strict';
+ const test = require('node:test');
+ const assert = require('node:assert/strict');
+@@ -122,14 +123,14 @@ test('row 7: two engines given the same seeded random build the same reverbs and
+ });
+ 
+ // the player, with a recording engine and a fake fetch
+-function player({ fetchImpl, decode, noFetch = false } = {}) {
++function player({ fetchImpl, decode, noFetch = false, pick } = {}) {
+   const listeners = {}, calls = [], logs = [], fetched = [];
+   class Ctx { constructor() { this.currentTime = 0; } decodeAudioData(a) { return decode ? decode(a) : Promise.resolve({ decoded: a.name }); } }
+   const win = { AudioContext: Ctx, localStorage: { getItem: () => null, setItem() {} },
+     document: { addEventListener: (t, f) => { (listeners[t] = listeners[t] || []).push(f); }, removeEventListener() {} } };
+   if (!noFetch) win.fetch = (url) => { fetched.push(url); return fetchImpl ? fetchImpl(url) : Promise.resolve({ ok: true, status: 200, arrayBuffer: () => Promise.resolve({ name: url }) }); };
+   const engineFor = () => ({ tick: (p) => calls.push(['tick', p.midi]), step: (i, soft) => calls.push([soft ? 'undo' : 'place', i]), loopClosed: () => calls.push(['loopClosed']), setLevel() {}, useSamples: (b) => calls.push(['useSamples', b]) });
+-  const s = createSound(win, { engineFor, base: 'sounds/', log: (m) => logs.push(m) });
++  const s = createSound(win, { engineFor, base: 'sounds/', log: (m) => logs.push(m), ...(pick ? { pick } : {}) });
+   const fire = (t, detail) => (listeners[t] || []).slice().forEach((f) => f({ type: t, detail }));
+   return { s, calls, logs, fetched, fire };
+ }
+@@ -184,8 +185,9 @@ test('row 6: the four files are the batch-8 WAVs byte for byte, and useSamples r
+   assert.deepEqual(shipped, Object.keys(SHA).sort(), 'every WAV in app/sounds has its hash here');
+   for (const s of shipped) assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname, '..', 'sounds', `${s}.wav`))).digest('hex'), SHA[s], `${s}.wav`);
+   assert.deepEqual([...SAMPLES.slots], SLOTS);
+-  const e = createEngine(fakeCtx()), b = fakeBuffers(); delete b.undo_glass;   // AMENDED (D377): undo_occult is gone; the rule is the same
+-  assert.throws(() => e.useSamples(b), /undo_glass/, 'a set with one missing is refused, naming it');
++  // AMENDED (D411): an engine needs only the files its melody plays (row 12), so this one (aqua, the first) is refused a set missing undo_aqua, not undo_glass
++  const e = createEngine(fakeCtx()), b = fakeBuffers(); delete b.undo_aqua;   // AMENDED (D377): undo_occult is gone; the rule is the same
++  assert.throws(() => e.useSamples(b), /undo_aqua/, 'a set with one missing is refused, naming it');
+   assert.throws(() => e.useSamples(null), /samples/);
+ });
+ 
+@@ -249,3 +251,27 @@ test('row 11: a place plays every note at its level lifted by the step\'s swell,
+     }
+   }
+ });
++
++// D411: all ten files are fetched, but a launch plays one melody; a file of another melody that fails (a 404) must not throw out the samples it does play
++test('row 12: a 404 on a melody the launch did not pick costs nothing: the tick, the loop close and the picked melody play their samples, nothing logged', async () => {
++  const P = player({ pick: () => 0, fetchImpl: (url) => Promise.resolve({ ok: !url.includes('undo_glass'), status: url.includes('undo_glass') ? 404 : 200, arrayBuffer: () => Promise.resolve({ name: url }) }) });
++  assert.equal(P.s.melody, 'aqua');
++  P.fire('pointerdown'); await settle(); await settle(); await settle();
++  assert.deepEqual(P.logs, [], 'nothing to log');
++  const use = P.calls.find((c) => c[0] === 'useSamples');
++  assert.ok(use, 'the engine is handed the samples');
++  for (const f of ['drag_tick', 'loop_closed', 'place_aqua', 'undo_aqua']) assert.equal(use[1][f] && use[1][f].decoded, `sounds/${f}.wav`, `${f} is in the set`);
++  assert.ok(!use[1].undo_glass, 'the missing file is not');
++  // the real engine takes that set: aqua's place and undo, the tick and the loop close play from their samples
++  const ctx = fakeCtx(), e = createEngine(ctx, { melody: 'aqua' }), b = fakeBuffers(); delete b.undo_glass;
++  e.useSamples(b);
++  assert.deepEqual([...new Set(during(ctx, () => e.step(3, false)).sources.map((x) => x.slot))], ['place_aqua']);
++  assert.deepEqual([...new Set(during(ctx, () => e.step(3, true)).sources.map((x) => x.slot))], ['undo_aqua']);
++  assert.ok(during(ctx, () => e.tick({ midi: 84 })).sources.some((x) => x.slot === 'drag_tick'), 'the tick plays its sample');
++  assert.ok(during(ctx, () => e.loopClosed()).sources.some((x) => x.slot === 'loop_closed'), 'the loop close plays its sample');
++  // a file of the picked melody that fails still throws the samples out, as row 5
++  const Q = player({ pick: () => 0, fetchImpl: (url) => Promise.resolve({ ok: !url.includes('undo_aqua'), status: url.includes('undo_aqua') ? 404 : 200, arrayBuffer: () => Promise.resolve({ name: url }) }) });
++  Q.fire('pointerdown'); await settle(); await settle(); await settle();
++  assert.equal(Q.calls.filter((c) => c[0] === 'useSamples').length, 0, 'the picked melody missing a file: the synth plays');
++  assert.match(Q.logs[0] || '', /undo_aqua.wav answered 404/);
++});

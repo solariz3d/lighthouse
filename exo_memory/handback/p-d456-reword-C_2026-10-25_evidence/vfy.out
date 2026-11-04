@@ -1,0 +1,8 @@
+1-4: 131 commits checked; message lines changed 7; blob pairs checked 1488
+5: git diff c965f5e cd92040: 27 files, 46 changed line pairs (1 in .md, 45 in code files)
+   every pair a keeper line reworded: true
+   left after dropping comment and doc lines: 1
+   LEFT app/test/sculpt-frame.test.js
+     - for (const [row, track, tool, why] of [['4a', 'tube360', 'grab', 'Grab on the 360 deg tube oval (Twist is refused there: the keeper\'s call 3)'], ['4b', 'tube280', 'twist', 'Twist on the same oval at a 280 deg sweep']]) {
+     + for (const [row, track, tool, why] of [['4a', 'tube360', 'grab', 'Grab on the 360 deg tube oval (Twist is refused there: the user\'s call 3)'], ['4b', 'tube280', 'twist', 'Twist on the same oval at a 280 deg sweep']]) {
+ALL CHECKS PASS (1-4)

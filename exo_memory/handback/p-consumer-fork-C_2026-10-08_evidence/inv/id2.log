@@ -1,0 +1,8 @@
+== D273 identity-diff rerun · asked 2026-10-08T23:28:36.073Z · lock held 2026-10-08T23:29:45.093Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd C:/Users/nname/Desktop/worktrees/c-identity-wt && node --test --test-concurrency=1 consonance/tools/identity-diff.test.js 2>&1 | grep -E 'ℹ (tests|pass|fail)|✖ [a-zA-Z]' | head; git add -- consonance/tools/identity-diff.js consonance/tools/identity-diff.test.js && git commit -q -m 'identity-diff: the brief fragments are templates, not wake material (the first real run listed them)' -m 'Seat C (pane C). frag-*.md are injected into BOOT/SEED by gen-brief.ps1 and consumer-relabel; their content is compared where it lands. Test row added.' -m 'Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>' -m 'Claude-Session: https://claude.ai/code/session_017jVCxaAah7YfDwfSsgsdXy' -- consonance/tools/identity-diff.js consonance/tools/identity-diff.test.js && git log --oneline -1; node consonance/tools/identity-diff.js --generate > C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/id-real2.txt 2>&1; echo real exit $?
+[34mℹ tests 6[39m
+[34mℹ pass 6[39m
+[34mℹ fail 0[39m
+2d8ecd4d identity-diff: the brief fragments are templates, not wake material (the first real run listed them)
+real exit 1
+== exit 0 · done 2026-10-08T23:29:52.261Z

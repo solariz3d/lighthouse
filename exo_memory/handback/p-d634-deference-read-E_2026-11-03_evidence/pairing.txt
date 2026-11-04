@@ -1,0 +1,38 @@
+case 1	lever 186443	fold 186445	LATER USER ROWS 186444
+case 2	lever 186660	fold 186671	LATER USER ROWS 186666
+case 3	lever 187137	fold 187144	direct
+case 4	lever 188619	fold 188647	LATER USER ROWS 188635 188643
+case 5	lever 188635	fold 188647	LATER USER ROWS 188643
+case 6	lever 188794	fold 188820	LATER USER ROWS 188799 188819
+case 7	lever 188799	fold 188820	LATER USER ROWS 188819
+case 8	lever 188895	fold 188905	LATER USER ROWS 188902 188904
+case 9	lever 188902	fold 188905	LATER USER ROWS 188904
+case 10	lever 188922	fold 188923	direct
+case 11	lever 188925	fold 188926	direct
+case 12	lever 188927	fold 188931	LATER USER ROWS 188930
+case 13	lever 188933	fold 188934	direct
+case 14	lever 188936	fold 188943	LATER USER ROWS 188939
+case 15	lever 188959	fold 188962	LATER USER ROWS 188961
+case 16	lever 188961	fold 188962	direct
+case 17	lever 188963	fold 188969	LATER USER ROWS 188967
+case 18	lever 188967	fold 188969	direct
+case 19	lever 188995	fold 189003	LATER USER ROWS 189002
+case 20	lever 189002	fold 189003	direct
+case 21	lever 189004	fold 189010	LATER USER ROWS 189009
+case 22	lever 189009	fold 189010	direct
+case 23	lever 189101	fold 189110	LATER USER ROWS 189104 189108
+case 24	lever 189104	fold 189110	LATER USER ROWS 189108
+case 25	lever 189108	fold 189110	direct
+case 26	lever 189483	fold 189484	direct
+case 27	lever 189487	fold 189488	direct
+case 28	lever 189508	fold 189509	direct
+case 29	lever 189513	fold 189548	LATER USER ROWS 189547
+case 30	lever 190334	fold 190335	direct
+case 31	lever 191131	fold 191141	LATER USER ROWS 191140
+case 32	lever 191222	fold 191224	direct
+case 33	lever 191237	fold 191243	direct
+case 34	lever 191536	fold 191551	LATER USER ROWS 191540 191548
+case 35	lever 191540	fold 191551	LATER USER ROWS 191548
+case 36	lever 191548	fold 191551	direct
+case 37	lever 191554	fold 191557	direct
+cases 37, folds that answer a later message 20

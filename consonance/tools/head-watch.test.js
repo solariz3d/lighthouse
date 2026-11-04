@@ -58,7 +58,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { acquireLock } = require('./head-watch.js');
 
-const tmpLock = (name) => path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'hw-')), name);
+const tmpLock = (name) => path.join(require('./scratch.js').mkdtemp('hw-'), name);
 
 test('lock: acquires when nothing holds it, and writes our own pid', () => {
   const L = tmpLock('a.lock');

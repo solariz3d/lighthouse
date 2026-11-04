@@ -1,0 +1,229 @@
+TAP version 13
+# Subtest: row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+ok 1 - row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+  ---
+  duration_ms: 921.4708
+  type: 'test'
+  ...
+# Subtest: row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+ok 2 - row 3: a short plain piece: cheap is still a ghost of the same path, with no more vertices than the full one
+  ---
+  duration_ms: 27.0191
+  type: 'test'
+  ...
+# Subtest: row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+ok 3 - row 2: the preview: showGhost(candidate, { cheap: true }) keeps ghostInfo (the same samples, segments and s0) and the placed track; a plain showGhost is the full ghost
+  ---
+  duration_ms: 736.689
+  type: 'test'
+  ...
+# Subtest: row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+ok 4 - row 4: a long plain piece's cheap ghost shares one row grid across its new segments at 1600 m
+  ---
+  duration_ms: 84.6094
+  type: 'test'
+  ...
+# Subtest: row 5: an empty run and a run of one segment are coarsened as before
+ok 5 - row 5: an empty run and a run of one segment are coarsened as before
+  ---
+  duration_ms: 4.3339
+  type: 'test'
+  ...
+# Subtest: row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+ok 6 - row 6: a cheap ghost after a cheap ghost reuses the unchanged chords and draws the same as one built fresh
+  ---
+  duration_ms: 334.4547
+  type: 'test'
+  ...
+# Subtest: row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+ok 7 - row 7: reuseMesh keeps its old rule unless asked: a different count needs `grow`, and a closed loop is refused with it
+  ---
+  duration_ms: 4.3667
+  type: 'test'
+  ...
+# Subtest: row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+ok 8 - row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+  ---
+  duration_ms: 12130.0808
+  type: 'test'
+  ...
+# Subtest: row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes
+ok 9 - row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes
+  ---
+  duration_ms: 14144.8128
+  type: 'test'
+  ...
+# Subtest: row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page
+ok 10 - row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page
+  ---
+  duration_ms: 9947.4903
+  type: 'test'
+  ...
+# Subtest: row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws
+ok 11 - row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws
+  ---
+  duration_ms: 1.3498
+  type: 'test'
+  ...
+# Subtest: row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered
+ok 12 - row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered
+  ---
+  duration_ms: 28418.2679
+  type: 'test'
+  ...
+# Subtest: row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done
+ok 13 - row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done
+  ---
+  duration_ms: 1697.3085
+  type: 'test'
+  ...
+# Subtest: row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others
+ok 14 - row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others
+  ---
+  duration_ms: 115.282
+  type: 'test'
+  ...
+# Subtest: row 1: Build lists its items in the brief's order, in contract M's shapes
+ok 15 - row 1: Build lists its items in the brief's order, in contract M's shapes
+  ---
+  duration_ms: 63.8719
+  type: 'test'
+  ...
+# Subtest: row 2: a command moved to Build still does what its button did: Straight, Level, To floor and Jump each place their piece, one undo step each
+ok 16 - row 2: a command moved to Build still does what its button did: Straight, Level, To floor and Jump each place their piece, one undo step each
+  ---
+  duration_ms: 181.0436
+  type: 'test'
+  ...
+# Subtest: row 3: a "…" item opens a popover with today's fields and button in the panel's field style; its button works from there; closing it puts them back
+ok 17 - row 3: a "…" item opens a popover with today's fields and button in the panel's field style; its button works from there; closing it puts them back
+  ---
+  duration_ms: 172.0217
+  type: 'test'
+  ...
+# Subtest: row 4: Sculpt mode turns Sculpt on and off; the Sculpt strip (tool, radius, sharp) shows only in Sculpt, and in Sculpt Build's commands that place or close are disabled "in Sculpt"
+ok 18 - row 4: Sculpt mode turns Sculpt on and off; the Sculpt strip (tool, radius, sharp) shows only in Sculpt, and in Sculpt Build's commands that place or close are disabled "in Sculpt"
+  ---
+  duration_ms: 10.0032
+  type: 'test'
+  ...
+# Subtest: row 5: Close the loop from Build starts the close as the button did; on a closed loop it is disabled and does nothing
+ok 19 - row 5: Close the loop from Build starts the close as the button did; on a closed loop it is disabled and does nothing
+  ---
+  duration_ms: 228.5656
+  type: 'test'
+  ...
+# Subtest: row 6: the left side keeps the brief's list, every field shown, and nothing else shows there; the moved controls are still in the panel, held out of sight
+ok 20 - row 6: the left side keeps the brief's list, every field shown, and nothing else shows there; the moved controls are still in the panel, held out of sight
+  ---
+  duration_ms: 7.7789
+  type: 'test'
+  ...
+# Subtest: row 7: the selection box shows only with a selection, and while a delete it started is previewed
+ok 21 - row 7: the selection box shows only with a selection, and while a delete it started is previewed
+  ---
+  duration_ms: 290.5785
+  type: 'test'
+  ...
+# Subtest: row 8: Edit's selection items (piecesui via M): disabled with nothing selected; with a selection they save, set the grip, delete and clear
+ok 22 - row 8: Edit's selection items (piecesui via M): disabled with nothing selected; with a selection they save, set the grip, delete and clear
+  ---
+  duration_ms: 28.4769
+  type: 'test'
+  ...
+# Subtest: row 9: the six keys through S: the panel starts from what S holds, follows S.on, and a setting survives a reload
+ok 23 - row 9: the six keys through S: the panel starts from what S holds, follows S.on, and a setting survives a reload
+  ---
+  duration_ms: 19.9904
+  type: 'test'
+  ...
+# Subtest: row 10: a blocked store throws nothing: the panel mounts and a setting holds for the session; with no settings module at all the panel still mounts
+ok 24 - row 10: a blocked store throws nothing: the panel mounts and a setting holds for the session; with no settings module at all the panel still mounts
+  ---
+  duration_ms: 14.1102
+  type: 'test'
+  ...
+# Subtest: row 11: the grid step picked in Build ▸ Turn to grid… is saved: S holds it, the Settings menu hears it, and it is the step after a reload
+ok 25 - row 11: the grid step picked in Build ▸ Turn to grid… is saved: S holds it, the Settings menu hears it, and it is the step after a reload
+  ---
+  duration_ms: 14.4731
+  type: 'test'
+  ...
+# Subtest: row 12: Undo that gives the undone piece its turn-and-climb mode back saves the mode, so Settings and the panel agree
+ok 26 - row 12: Undo that gives the undone piece its turn-and-climb mode back saves the mode, so Settings and the panel agree
+  ---
+  duration_ms: 12.8166
+  type: 'test'
+  ...
+# Subtest: D385 carry: a corner of 30 placed, then Extend with the fields untouched, places a second 30 corner, ending straight
+ok 27 - D385 carry: a corner of 30 placed, then Extend with the fields untouched, places a second 30 corner, ending straight
+  ---
+  duration_ms: 67.2475
+  type: 'test'
+  ...
+# Subtest: D385 carry: the climb the same way: a climb corner of 10 placed, then Extend untouched, places a second 10
+ok 28 - D385 carry: the climb the same way: a climb corner of 10 placed, then Extend untouched, places a second 10
+  ---
+  duration_ms: 10.7397
+  type: 'test'
+  ...
+# Subtest: D385 carry: clear the field after a carried corner and the next piece goes straight; a typed 0 is not carried
+ok 29 - D385 carry: clear the field after a carried corner and the next piece goes straight; a typed 0 is not carried
+  ---
+  duration_ms: 14.6141
+  type: 'test'
+  ...
+# Subtest: D385 carry: Undo gives back the undone piece's own corner; Redo and a new document clear it
+ok 30 - D385 carry: Undo gives back the undone piece's own corner; Redo and a new document clear it
+  ---
+  duration_ms: 13.2097
+  type: 'test'
+  ...
+# Subtest: D385 carry: a selected piece lends its own corner, and Extend from it carries that corner
+ok 31 - D385 carry: a selected piece lends its own corner, and Extend from it carries that corner
+  ---
+  duration_ms: 9.2322
+  type: 'test'
+  ...
+# Subtest: D385 carry: rate mode is unchanged: after an Extend the turn field shows the head's rate
+ok 32 - D385 carry: rate mode is unchanged: after an Extend the turn field shows the head's rate
+  ---
+  duration_ms: 8.6725
+  type: 'test'
+  ...
+# Subtest: D385 edges: the fields are "left edge °" and "right edge °"; there is no "edge angle °"
+ok 33 - D385 edges: the fields are "left edge °" and "right edge °"; there is no "edge angle °"
+  ---
+  duration_ms: 2.2714
+  type: 'test'
+  ...
+# Subtest: D385 edges: each field shows its own side at the head
+ok 34 - D385 edges: each field shows its own side at the head
+  ---
+  duration_ms: 33.6443
+  type: 'test'
+  ...
+# Subtest: D385 edges: the shell's headState and pieceState carry the right edge er (the panel cannot read the document in the webview)
+ok 35 - D385 edges: the shell's headState and pieceState carry the right edge er (the panel cannot read the document in the webview)
+  ---
+  duration_ms: 10.5959
+  type: 'test'
+  ...
+# Subtest: D385 edges: typing the left edge alone leaves the right as it was
+ok 36 - D385 edges: typing the left edge alone leaves the right as it was
+  ---
+  duration_ms: 19.8711
+  type: 'test'
+  ...
+# Subtest: D385 edges: typing the right edge alone leaves the left as it was
+ok 37 - D385 edges: typing the right edge alone leaves the left as it was
+  ---
+  duration_ms: 25.6735
+  type: 'test'
+  ...
+# Subtest: D385 edges: on an empty track, the left edge typed alone is the left side only (the right starts at 0)
+ok 38 - D385 edges: on an empty track, the left edge typed alone is the left side only (the right starts at 0)
+  ---
+  duration_ms: 10.456
+  type: 'test'
+  ...

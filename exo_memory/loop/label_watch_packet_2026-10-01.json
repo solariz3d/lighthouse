@@ -1,0 +1,5685 @@
+{
+ "what": "D201 label-rule watch, §2.3 claims packet for the VERIFIERS (B, C). Self-labels are MASKED as [·]. Kinds and verdicts per R19 §3-§4; turn = the transcript rows from turnStart to nextPrompt. Do not open the key.",
+ "frame": "watch §2.3 + amendments A, A6; draw sha256(\"L121W|\"+message.id), M = 100, K = 3; frame end 2026-10-01T13:52:26Z",
+ "claims": [
+  {
+   "claimId": "msg_011CfYg7F7GKASyft1E7vapA|15",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfYg7F7GKASyft1E7vapA",
+   "ts": "2026-09-30T00:26:45.683Z",
+   "rowLines": [
+    33467,
+    33468,
+    33469,
+    33471
+   ],
+   "turnStart": 33421,
+   "nextPrompt": 33503,
+   "statement": "`const Rr = 180, Q = Math.PI * Rr / 2`: check that these match the radius and quarter-arc length used in A's scripts.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYg7F7GKASyft1E7vapA|18",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfYg7F7GKASyft1E7vapA",
+   "ts": "2026-09-30T00:26:45.683Z",
+   "rowLines": [
+    33467,
+    33468,
+    33469,
+    33471
+   ],
+   "turnStart": 33421,
+   "nextPrompt": 33503,
+   "statement": "`B=C:/Users/nname/Desktop/b-d190r3-wt`: check that this worktree exists and is the round 3 tree.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYg7F7GKASyft1E7vapA|19",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfYg7F7GKASyft1E7vapA",
+   "ts": "2026-09-30T00:26:45.683Z",
+   "rowLines": [
+    33467,
+    33468,
+    33469,
+    33471
+   ],
+   "turnStart": 33421,
+   "nextPrompt": 33503,
+   "statement": "`locked.js bash -c \"...\"`: check that `locked.js` takes a command this way.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYTVBiiVWd689vdLdDYp|8",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYTVBiiVWd689vdLdDYp",
+   "ts": "2026-09-29T21:41:19.552Z",
+   "rowLines": [
+    50056,
+    50057,
+    50058
+   ],
+   "turnStart": 50029,
+   "nextPrompt": 50088,
+   "statement": "\"the last turn's first 40 m return the cup to the edge the start renders\". This depends on `transition: 40` ramping the `c` channel over the first 40 m of a piece.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYTVBiiVWd689vdLdDYp|6",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYTVBiiVWd689vdLdDYp",
+   "ts": "2026-09-29T21:41:19.552Z",
+   "rowLines": [
+    50056,
+    50057,
+    50058
+   ],
+   "turnStart": 50029,
+   "nextPrompt": 50088,
+   "statement": "The mutation entry `\"'if (P.cup && P.channels.c.some((v) => v < 0 || v > CUP_MAX))', 'if (false)'\"` matches the file's current text.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYTVBiiVWd689vdLdDYp|9",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYTVBiiVWd689vdLdDYp",
+   "ts": "2026-09-29T21:41:19.552Z",
+   "rowLines": [
+    50056,
+    50057,
+    50058
+   ],
+   "turnStart": 50029,
+   "nextPrompt": 50088,
+   "statement": "\"so the grid's straight is uncupped\". This depends on the lap's end state matching the start state, and on the grid straight being the start straight.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXqHv2u3MNiXVwKCfVa9|14",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfXqHv2u3MNiXVwKCfVa9",
+   "ts": "2026-09-29T13:46:36.544Z",
+   "rowLines": [
+    49044
+   ],
+   "turnStart": 49000,
+   "nextPrompt": 49051,
+   "statement": "\"a middle click resets it to 60°.\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXqHv2u3MNiXVwKCfVa9|21",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfXqHv2u3MNiXVwKCfVa9",
+   "ts": "2026-09-29T13:46:36.544Z",
+   "rowLines": [
+    49044
+   ],
+   "turnStart": 49000,
+   "nextPrompt": 49051,
+   "statement": "\"I did not fix them under the close-out.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXqHv2u3MNiXVwKCfVa9|15",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfXqHv2u3MNiXVwKCfVa9",
+   "ts": "2026-09-29T13:46:36.544Z",
+   "rowLines": [
+    49044
+   ],
+   "turnStart": 49000,
+   "nextPrompt": 49051,
+   "statement": "\"The plain wheel is unchanged.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVC8XXkRGqXx4Eq1s5ao|3",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVC8XXkRGqXx4Eq1s5ao",
+   "ts": "2026-09-28T04:18:03.637Z",
+   "rowLines": [
+    40894,
+    40895
+   ],
+   "turnStart": 40796,
+   "nextPrompt": 40902,
+   "statement": "\"with no registry entry\". Query the Uninstall keys (HKCU and HKLM, including WOW6432Node) and the app's own keys.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVC8XXkRGqXx4Eq1s5ao|2",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVC8XXkRGqXx4Eq1s5ao",
+   "ts": "2026-09-28T04:18:03.637Z",
+   "rowLines": [
+    40894,
+    40895
+   ],
+   "turnStart": 40796,
+   "nextPrompt": 40902,
+   "statement": "\"The throwaway app is uninstalled\". Check the installed-programs list or the uninstaller's exit status, and that the install directory is gone.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVC8XXkRGqXx4Eq1s5ao|6",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVC8XXkRGqXx4Eq1s5ao",
+   "ts": "2026-09-28T04:18:03.637Z",
+   "rowLines": [
+    40894,
+    40895
+   ],
+   "turnStart": 40796,
+   "nextPrompt": 40902,
+   "statement": "\"1/1 roaming file\". Count the files under the Roaming folder and compare with the baseline.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUSUWzgLwQv5MdLoxaet|9",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfUSUWzgLwQv5MdLoxaet",
+   "ts": "2026-09-27T18:45:36.995Z",
+   "rowLines": [
+    58793
+   ],
+   "turnStart": 58772,
+   "nextPrompt": 58798,
+   "statement": "\"**A:** font blending, plus the connector that closes the loop.\"",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUSUWzgLwQv5MdLoxaet|5",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfUSUWzgLwQv5MdLoxaet",
+   "ts": "2026-09-27T18:45:36.995Z",
+   "rowLines": [
+    58793
+   ],
+   "turnStart": 58772,
+   "nextPrompt": 58798,
+   "statement": "\"**B:** reviews the lap and connects those two, so the 6 become real passing tests.\" Check that B is assigned this, and that connecting the two would actually turn exactly those 6 tests into passes.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUSUWzgLwQv5MdLoxaet|8",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfUSUWzgLwQv5MdLoxaet",
+   "ts": "2026-09-27T18:45:36.995Z",
+   "rowLines": [
+    58793
+   ],
+   "turnStart": 58772,
+   "nextPrompt": 58798,
+   "statement": "\"**E:** export straight from your pieces to a finished AC track folder.\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZQXyiehRCmam2zZ8U7c|9",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfZQXyiehRCmam2zZ8U7c",
+   "ts": "2026-09-30T09:43:04.685Z",
+   "rowLines": [
+    52451,
+    52452
+   ],
+   "turnStart": 52201,
+   "nextPrompt": 52530,
+   "statement": "\"the joint steps more than 1 mm\" and \"the lap seam steps more than 1 mm\". Confirm that the 1 mm threshold matches the tolerance used elsewhere. Confirm that `stepBetween` returns metres, so `* 1000` gives mm.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZQXyiehRCmam2zZ8U7c|10",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfZQXyiehRCmam2zZ8U7c",
+   "ts": "2026-09-30T09:43:04.685Z",
+   "rowLines": [
+    52451,
+    52452
+   ],
+   "turnStart": 52201,
+   "nextPrompt": 52530,
+   "statement": "`segs.findIndex((g) => g.id === 'p2') - 1`. Confirm the extended piece gets id `'p2'` and the legacy piece is the segment just before it.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZQXyiehRCmam2zZ8U7c|14",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfZQXyiehRCmam2zZ8U7c",
+   "ts": "2026-09-30T09:43:04.685Z",
+   "rowLines": [
+    52451,
+    52452
+   ],
+   "turnStart": 52201,
+   "nextPrompt": 52530,
+   "statement": "The reply ends with a stray \"d\". Check whether it's a typo.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVp9ZajmH2dDmVuYLdML|2",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVp9ZajmH2dDmVuYLdML",
+   "ts": "2026-09-28T12:10:23.441Z",
+   "rowLines": [
+    36861,
+    36862,
+    36863,
+    36865
+   ],
+   "turnStart": 36665,
+   "nextPrompt": 36902,
+   "statement": "`'tools/piecewise.cjs'`: check that it exists under `REPO` and that it takes the arguments in this order: track dir, then read JSON, then flags.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVp9ZajmH2dDmVuYLdML|5",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVp9ZajmH2dDmVuYLdML",
+   "ts": "2026-09-28T12:10:23.441Z",
+   "rowLines": [
+    36861,
+    36862,
+    36863,
+    36865
+   ],
+   "turnStart": 36665,
+   "nextPrompt": 36902,
+   "statement": "The `cmd` string `'pane E: D184 piecewise fits, 8 layouts (t180 tools/piecewise.cjs)'`: the \"8 layouts\" count must match the `L` array. I count 8 entries there, but verify.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVp9ZajmH2dDmVuYLdML|7",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVp9ZajmH2dDmVuYLdML",
+   "ts": "2026-09-28T12:10:23.441Z",
+   "rowLines": [
+    36861,
+    36862,
+    36863,
+    36865
+   ],
+   "turnStart": 36665,
+   "nextPrompt": 36902,
+   "statement": "`TR = 'G:/SteamLibrary/steamapps/common/assettocorsa/content/tracks'`: check that this directory exists and that the G: drive is mounted.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV6YEeTW3wDyarn1Yc5m|1",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfV6YEeTW3wDyarn1Yc5m",
+   "ts": "2026-09-28T03:04:45.172Z",
+   "rowLines": [
+    32018,
+    32019,
+    32020,
+    32022
+   ],
+   "turnStart": 31817,
+   "nextPrompt": 32237,
+   "statement": "**\"For the landing default itself, nothing in `src/validate` changed.\"** Check this against the diff for `src/validate`, limited to the landing-default change. It also depends on being able to separate that change from the addendum change in the same directory.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV6YEeTW3wDyarn1Yc5m|2",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfV6YEeTW3wDyarn1Yc5m",
+   "ts": "2026-09-28T03:04:45.172Z",
+   "rowLines": [
+    32018,
+    32019,
+    32020,
+    32022
+   ],
+   "turnStart": 31817,
+   "nextPrompt": 32237,
+   "statement": "**\"Validation already checked each jump at its take-off speed against its landing road\"** Check this in the `src/validate` code. It should compute the check at each jump's take-off speed, not at some other speed, and compare against the landing road.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV6YEeTW3wDyarn1Yc5m|3",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfV6YEeTW3wDyarn1Yc5m",
+   "ts": "2026-09-28T03:04:45.172Z",
+   "rowLines": [
+    32018,
+    32019,
+    32020,
+    32022
+   ],
+   "turnStart": 31817,
+   "nextPrompt": 32237,
+   "statement": "**\"it was the ramp that was built for the wrong speed.\"** Check this in the ramp-construction code. It should show the ramp was sized or shaped for a speed other than the jump's take-off speed. This is a causal claim about the root cause.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbtPiLqE85LWZySJA2u|2",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUbtPiLqE85LWZySJA2u",
+   "ts": "2026-09-27T20:48:58.944Z",
+   "rowLines": [
+    27029,
+    27030,
+    27031
+   ],
+   "turnStart": 26874,
+   "nextPrompt": 27309,
+   "statement": "\"Test 5 has a nonsense line left in it.\" Check that test 5 in `app/test/handles.test.js` really contains that line.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbtPiLqE85LWZySJA2u|10",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUbtPiLqE85LWZySJA2u",
+   "ts": "2026-09-27T20:48:58.944Z",
+   "rowLines": [
+    27029,
+    27030,
+    27031
+   ],
+   "turnStart": 26874,
+   "nextPrompt": 27309,
+   "statement": "The `1e-6` tolerance. A quantisation step of 0.00001° is 1e-5, so rounding error can be up to 5e-6, which exceeds 1e-6. Check the unit the roll is stored in (degrees or radians) and whether the tolerance is large enough. Otherwise the \"fixed\" tests could still fail.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbtPiLqE85LWZySJA2u|9",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUbtPiLqE85LWZySJA2u",
+   "ts": "2026-09-27T20:48:58.944Z",
+   "rowLines": [
+    27029,
+    27030,
+    27031
+   ],
+   "turnStart": 26874,
+   "nextPrompt": 27309,
+   "statement": "`- 0.4) < 1e-6` and \"the last move, quantised by A (serial.js)\" Check that 0.4 is the expected value of the last drag move. Also check that `h1.past.length` should be 1.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXMtxF5FzbrHSTxPQZqV|24",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfXMtxF5FzbrHSTxPQZqV",
+   "ts": "2026-09-29T07:47:17.647Z",
+   "rowLines": [
+    48189,
+    48190,
+    48191
+   ],
+   "turnStart": 48111,
+   "nextPrompt": 48286,
+   "statement": "`pitchFrom = the start pitch plus every earlier road piece's climb`. Confirm that `poseBefore` matches this, including where a flight precedes the piece.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXMtxF5FzbrHSTxPQZqV|21",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfXMtxF5FzbrHSTxPQZqV",
+   "ts": "2026-09-29T07:47:17.647Z",
+   "rowLines": [
+    48189,
+    48190,
+    48191
+   ],
+   "turnStart": 48111,
+   "nextPrompt": 48286,
+   "statement": "`a hill that fades inside the piece changes none of them`. Confirm against ref 09 §7. The code only evaluates the ends, so this should be tested.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXMtxF5FzbrHSTxPQZqV|5",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfXMtxF5FzbrHSTxPQZqV",
+   "ts": "2026-09-29T07:47:17.647Z",
+   "rowLines": [
+    48189,
+    48190,
+    48191
+   ],
+   "turnStart": 48111,
+   "nextPrompt": 48286,
+   "statement": "`D.checkDoc(doc)`. Confirm it exists and throws on an invalid doc.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVxJjfuNViyWviGtM2Y3|17",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVxJjfuNViyWviGtM2Y3",
+   "ts": "2026-09-28T13:57:19.499Z",
+   "rowLines": [
+    37735,
+    37736,
+    37738
+   ],
+   "turnStart": 37307,
+   "nextPrompt": 37984,
+   "statement": "`D.CHANNELS`, `D.serialize`, `D.createDoc`, `D.appendPiece` and `D.flightPiece({ gap, drop, land })`",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVxJjfuNViyWviGtM2Y3|16",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVxJjfuNViyWviGtM2Y3",
+   "ts": "2026-09-28T13:57:19.499Z",
+   "rowLines": [
+    37735,
+    37736,
+    37738
+   ],
+   "turnStart": 37307,
+   "nextPrompt": 37984,
+   "statement": "`H.docFrom(t)`",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVxJjfuNViyWviGtM2Y3|23",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVxJjfuNViyWviGtM2Y3",
+   "ts": "2026-09-28T13:57:19.499Z",
+   "rowLines": [
+    37735,
+    37736,
+    37738
+   ],
+   "turnStart": 37307,
+   "nextPrompt": 37984,
+   "statement": "`C.positionJacobian(doc)` returns `J.kh`, a map keyed `\"p:i\"` with 3-vectors",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfU3DVTomFUSiJpr6D7pb|12",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfU3DVTomFUSiJpr6D7pb",
+   "ts": "2026-09-27T13:40:38.917Z",
+   "rowLines": [
+    31842,
+    31843,
+    31844,
+    31846
+   ],
+   "turnStart": 31829,
+   "nextPrompt": 31870,
+   "statement": "`fn seats_committee`: the test calls `seats_committee_at`, so check that the definition is in `main.rs` and not in a test module or another file. Also check that `real_optional_as_indexed`, `committee_rest` and `intake_reserve` exist where the test expects them.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfU3DVTomFUSiJpr6D7pb|7",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfU3DVTomFUSiJpr6D7pb",
+   "ts": "2026-09-27T13:40:38.917Z",
+   "rowLines": [
+    31842,
+    31843,
+    31844,
+    31846
+   ],
+   "turnStart": 31829,
+   "nextPrompt": 31870,
+   "statement": "\"// committee_fits = 5,000\": check that the `core` formula (`SHELL_SOFT_CEILING - SHELL_TRANSCRIPT_FLOOR - committee - rest - 5_000`) yields exactly 5,000.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfU3DVTomFUSiJpr6D7pb|6",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfU3DVTomFUSiJpr6D7pb",
+   "ts": "2026-09-27T13:40:38.917Z",
+   "rowLines": [
+    31842,
+    31843,
+    31844,
+    31846
+   ],
+   "turnStart": 31829,
+   "nextPrompt": 31870,
+   "statement": "\"`base.min(committee_fits)` is what keeps the committee seated\": check that `intake_reserve` contains this expression and that it is the branch taken here.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVvYHvVr4iofSk26Xufh|3",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVvYHvVr4iofSk26Xufh",
+   "ts": "2026-09-28T13:34:09.821Z",
+   "rowLines": [
+    40373,
+    40374,
+    40375,
+    40377
+   ],
+   "turnStart": 40289,
+   "nextPrompt": 40645,
+   "statement": "`M.coneTurn(r0, vb, beta, g)`: it exists and takes `(r0, v, beta, g)`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVvYHvVr4iofSk26Xufh|17",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVvYHvVr4iofSk26Xufh",
+   "ts": "2026-09-28T13:34:09.821Z",
+   "rowLines": [
+    40373,
+    40374,
+    40375,
+    40377
+   ],
+   "turnStart": 40289,
+   "nextPrompt": 40645,
+   "statement": "\"over a circular crest a particle lifts off where cos p = (v0²/Rv + 2g·cos p0)/(3g)\": the formula is correct.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVvYHvVr4iofSk26Xufh|12",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVvYHvVr4iofSk26Xufh",
+   "ts": "2026-09-28T13:34:09.821Z",
+   "rowLines": [
+    40373,
+    40374,
+    40375,
+    40377
+   ],
+   "turnStart": 40289,
+   "nextPrompt": 40645,
+   "statement": "\"at v² = r·g·tan β the particle holds its radius\": this is the banked-speed condition for a cone, with no friction.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXYerk5BsaReVZFne5gE|23",
+   "seat": "librarian",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfXYerk5BsaReVZFne5gE",
+   "ts": "2026-09-29T10:08:28.477Z",
+   "rowLines": [
+    64013
+   ],
+   "turnStart": 63972,
+   "nextPrompt": 64054,
+   "statement": "`W.surfaceFrom({samples, profileAt})` must take that shape. `profileAt` receives a sample `m`, and `m.seg` must index into `segments`. Each `segments[i]` must have a `.profile`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXYerk5BsaReVZFne5gE|18",
+   "seat": "librarian",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfXYerk5BsaReVZFne5gE",
+   "ts": "2026-09-29T10:08:28.477Z",
+   "rowLines": [
+    64013
+   ],
+   "turnStart": 63972,
+   "nextPrompt": 64054,
+   "statement": "The midpoint-rule integral of `kh` over arc length is assumed to give the total heading change. That holds only if `kh` is curvature per unit length.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXYerk5BsaReVZFne5gE|9",
+   "seat": "librarian",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfXYerk5BsaReVZFne5gE",
+   "ts": "2026-09-29T10:08:28.477Z",
+   "rowLines": [
+    64013
+   ],
+   "turnStart": 63972,
+   "nextPrompt": 64054,
+   "statement": "Channel names `'kh'`, `'phi'` and `'w'` must exist, meaning:",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUgfad9uYRz1DgZm6rPL|2",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUgfad9uYRz1DgZm6rPL",
+   "ts": "2026-09-27T21:51:52.870Z",
+   "rowLines": [
+    31207,
+    31208,
+    31209
+   ],
+   "turnStart": 31106,
+   "nextPrompt": 31660,
+   "statement": "`\"Started from blackbox's renderer (ui/glcore.js)\"`: check that `ui/glcore.js` exists and that the renderer really descends from it.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUgfad9uYRz1DgZm6rPL|16",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUgfad9uYRz1DgZm6rPL",
+   "ts": "2026-09-27T21:51:52.870Z",
+   "rowLines": [
+    31207,
+    31208,
+    31209
+   ],
+   "turnStart": 31106,
+   "nextPrompt": 31660,
+   "statement": "`\"LIGHT (D170 item 1)\"`: check that D170 item 1 is the lighting decision.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUgfad9uYRz1DgZm6rPL|15",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUgfad9uYRz1DgZm6rPL",
+   "ts": "2026-09-27T21:51:52.870Z",
+   "rowLines": [
+    31207,
+    31208,
+    31209
+   ],
+   "turnStart": 31106,
+   "nextPrompt": 31660,
+   "statement": "`\"editor UI (the librarian's D170 item 7)\"`: check that D170 item 7 says the grid and head marker are editor UI.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVEwfuKyAcbsJijytsL9|4",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVEwfuKyAcbsJijytsL9",
+   "ts": "2026-09-28T04:55:08.422Z",
+   "rowLines": [
+    26760
+   ],
+   "turnStart": 26454,
+   "nextPrompt": 26765,
+   "statement": "\"a test calling `plain_path()` before the function existed. So `cargo test --lib` doesn't compile on it (exit 101).\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVEwfuKyAcbsJijytsL9|9",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVEwfuKyAcbsJijytsL9",
+   "ts": "2026-09-28T04:55:08.422Z",
+   "rowLines": [
+    26760
+   ],
+   "turnStart": 26454,
+   "nextPrompt": 26765,
+   "statement": "\"A never applied it (no `setDesignSpeed` in the shell, no test file).\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVEwfuKyAcbsJijytsL9|5",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVEwfuKyAcbsJijytsL9",
+   "ts": "2026-09-28T04:55:08.422Z",
+   "rowLines": [
+    26760
+   ],
+   "turnStart": 26454,
+   "nextPrompt": 26765,
+   "statement": "\"A finished that function at 22:20\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZRRX4UPfaebAoejNddk|5",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfZRRX4UPfaebAoejNddk",
+   "ts": "2026-09-30T09:54:47.528Z",
+   "rowLines": [
+    66215
+   ],
+   "turnStart": 66205,
+   "nextPrompt": 66220,
+   "statement": "Check that this hash exists in the repo where A committed and that it's the re-commit, not a typo or a different commit.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZRRX4UPfaebAoejNddk|4",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfZRRX4UPfaebAoejNddk",
+   "ts": "2026-09-30T09:54:47.528Z",
+   "rowLines": [
+    66215
+   ],
+   "turnStart": 66205,
+   "nextPrompt": 66220,
+   "statement": "**\"The new commit is `90e8ebf`\"**",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZRRX4UPfaebAoejNddk|6",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfZRRX4UPfaebAoejNddk",
+   "ts": "2026-09-30T09:54:47.528Z",
+   "rowLines": [
+    66215
+   ],
+   "turnStart": 66205,
+   "nextPrompt": 66220,
+   "statement": "The working directory here (`C:\\Users\\nname\\AppData\\Local\\Temp\\claimrec-run-6aIZvk`) isn't a git repository, so this can't be checked from here. It needs the repo A used.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVBj2e3TaSibH6Pyrbtx|7",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfVBj2e3TaSibH6Pyrbtx",
+   "ts": "2026-09-28T04:12:44.791Z",
+   "rowLines": [
+    79712
+   ],
+   "turnStart": 79674,
+   "nextPrompt": 79717,
+   "statement": "**\"whose clean copy (`b-d180-wt`) already has 66 files waiting.\"** Check that the directory name is right, that it exists, and that the file count is 66.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVBj2e3TaSibH6Pyrbtx|9",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfVBj2e3TaSibH6Pyrbtx",
+   "ts": "2026-09-28T04:12:44.791Z",
+   "rowLines": [
+    79712
+   ],
+   "turnStart": 79674,
+   "nextPrompt": 79717,
+   "statement": "**\"I've asked B on the board not to delete a clean copy it has handed me until I've pushed it.\"** Check that the message was actually posted on the board, and that it says this.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVBj2e3TaSibH6Pyrbtx|6",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfVBj2e3TaSibH6Pyrbtx",
+   "ts": "2026-09-28T04:12:44.791Z",
+   "rowLines": [
+    79712
+   ],
+   "turnStart": 79674,
+   "nextPrompt": 79717,
+   "statement": "**\"C's shader files are all still in the shared repo copy.\"** Check that every one of C's shader files exists and is intact in that copy.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVFCeccHq7Kx9WiP7gkz|4",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVFCeccHq7Kx9WiP7gkz",
+   "ts": "2026-09-28T04:58:18.610Z",
+   "rowLines": [
+    41797
+   ],
+   "turnStart": 41795,
+   "nextPrompt": 41804,
+   "statement": "**\"since the dialog was never answered\"**: This is a causal claim. Check the app log or UI state to confirm the dialog was left open or unanswered, and that this, rather than an error, is why nothing was written.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVFCeccHq7Kx9WiP7gkz|1",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVFCeccHq7Kx9WiP7gkz",
+   "ts": "2026-09-28T04:58:18.610Z",
+   "rowLines": [
+    41797
+   ],
+   "turnStart": 41795,
+   "nextPrompt": 41804,
+   "statement": "**\"The `\\\\?\\` fix shows in the installed app\"**: Check that the installed binary is the build containing the fix, not an older install or a dev build. Compare the installed version or build hash against the fixed commit or build.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVFCeccHq7Kx9WiP7gkz|2",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVFCeccHq7Kx9WiP7gkz",
+   "ts": "2026-09-28T04:58:18.610Z",
+   "rowLines": [
+    41797
+   ],
+   "turnStart": 41795,
+   "nextPrompt": 41804,
+   "statement": "**\"`set_ac_root` returned the plain path `C:\\Users\\…\\fake-ac`, with no prefix\"**: Check this against the actual log or command output from the run. The `…` elides part of the path, so confirm the full returned string has no `\\\\?\\` prefix and that the directory is the `fake-ac` one.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVNbu6wN7auCjtmyZMeC|11",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVNbu6wN7auCjtmyZMeC",
+   "ts": "2026-09-28T06:35:38.127Z",
+   "rowLines": [
+    34102,
+    34103,
+    34104
+   ],
+   "turnStart": 33979,
+   "nextPrompt": 34311,
+   "statement": "`a jump (which flies straight in plan and lands at its own pitch)`: jumps add no heading change, so `th` stays valid across them, and they land at pitch `land`.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVNbu6wN7auCjtmyZMeC|3",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVNbu6wN7auCjtmyZMeC",
+   "ts": "2026-09-28T06:35:38.127Z",
+   "rowLines": [
+    34102,
+    34103,
+    34104
+   ],
+   "turnStart": 33979,
+   "nextPrompt": 34311,
+   "statement": "`// the road after the ramp opens from the pitch the ramp holds`: this comment sits between the `ji++;` line and `continue;` in the current file. The edit deletes it.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVNbu6wN7auCjtmyZMeC|9",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVNbu6wN7auCjtmyZMeC",
+   "ts": "2026-09-28T06:35:38.127Z",
+   "rowLines": [
+    34102,
+    34103,
+    34104
+   ],
+   "turnStart": 33979,
+   "nextPrompt": 34311,
+   "statement": "`turn = (k_in + k)·len/2 makes the word END at the series' rate k`: the half-pipe word with `easeIn: 1, easeOut: 0` actually ends at rate `k`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfbQS8NP6P2e9Qhe8mh9H|38",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfbQS8NP6P2e9Qhe8mh9H",
+   "ts": "2026-10-01T11:02:57.226Z",
+   "rowLines": [
+    52673,
+    52674,
+    52676
+   ],
+   "turnStart": 52563,
+   "nextPrompt": 52775,
+   "statement": "`/not typesafe\\/jev-1\\.13-\\*/`",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfbQS8NP6P2e9Qhe8mh9H|22",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfbQS8NP6P2e9Qhe8mh9H",
+   "ts": "2026-10-01T11:02:57.226Z",
+   "rowLines": [
+    52673,
+    52674,
+    52676
+   ],
+   "turnStart": 52563,
+   "nextPrompt": 52775,
+   "statement": "The ledger row fields `route`, `model`, `generationId`, `inputTokens`: check them.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfbQS8NP6P2e9Qhe8mh9H|47",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfbQS8NP6P2e9Qhe8mh9H",
+   "ts": "2026-10-01T11:02:57.226Z",
+   "rowLines": [
+    52673,
+    52674,
+    52676
+   ],
+   "turnStart": 52563,
+   "nextPrompt": 52775,
+   "statement": "A refusal prints `REFUSED` on stderr and leaves the key out of stdout and stderr.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUxQX6WvHFKHpKhryLTz|15",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUxQX6WvHFKHpKhryLTz",
+   "ts": "2026-09-28T01:18:20.824Z",
+   "rowLines": [
+    34360,
+    34361,
+    34362
+   ],
+   "turnStart": 34337,
+   "nextPrompt": 34481,
+   "statement": "Index 1 is `e`, length 80, so `{ length: 80.5 }` is a small change.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUxQX6WvHFKHpKhryLTz|1",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUxQX6WvHFKHpKhryLTz",
+   "ts": "2026-09-28T01:18:20.824Z",
+   "rowLines": [
+    34360,
+    34361,
+    34362
+   ],
+   "turnStart": 34337,
+   "nextPrompt": 34481,
+   "statement": "`'C:/Users/nname/Desktop/t180-track-builder/src/geom/index.js'`: this file exists and is requirable.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUxQX6WvHFKHpKhryLTz|17",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUxQX6WvHFKHpKhryLTz",
+   "ts": "2026-09-28T01:18:20.824Z",
+   "rowLines": [
+    34360,
+    34361,
+    34362
+   ],
+   "turnStart": 34337,
+   "nextPrompt": 34481,
+   "statement": "`'diff vs full'`: the full rebuild `G.buildPath(e, opts)` is the correct reference for an incremental `rebuildPathFrom`. This is a premise of the test rather than something to confirm from a file.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWDLEJ7f7EjZUtLuD54g|2",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfWDLEJ7f7EjZUtLuD54g",
+   "ts": "2026-09-28T17:14:31.526Z",
+   "rowLines": [
+    38951
+   ],
+   "turnStart": 38924,
+   "nextPrompt": 38956,
+   "statement": "\"the librarian has the pointer to the hand-back's new §10\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWDLEJ7f7EjZUtLuD54g|6",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfWDLEJ7f7EjZUtLuD54g",
+   "ts": "2026-09-28T17:14:31.526Z",
+   "rowLines": [
+    38951
+   ],
+   "turnStart": 38924,
+   "nextPrompt": 38956,
+   "statement": "\"Hill (the default)\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWDLEJ7f7EjZUtLuD54g|14",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfWDLEJ7f7EjZUtLuD54g",
+   "ts": "2026-09-28T17:14:31.526Z",
+   "rowLines": [
+    38951
+   ],
+   "turnStart": 38924,
+   "nextPrompt": 38956,
+   "statement": "\"All three fold-in tests the chair named pass on sharp brushes.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUVyU8CeKKyn4sygUCoe|32",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUVyU8CeKKyn4sygUCoe",
+   "ts": "2026-09-27T19:31:39.462Z",
+   "rowLines": [
+    34864
+   ],
+   "turnStart": 34771,
+   "nextPrompt": 34875,
+   "statement": "\"it wandered to an impossible climb, which crashed instead of counting as infeasible.\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUVyU8CeKKyn4sygUCoe|31",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUVyU8CeKKyn4sygUCoe",
+   "ts": "2026-09-27T19:31:39.462Z",
+   "rowLines": [
+    34864
+   ],
+   "turnStart": 34771,
+   "nextPrompt": 34875,
+   "statement": "\"180 starts ran the test file past its 10-minute cap.\"",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUVyU8CeKKyn4sygUCoe|33",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUVyU8CeKKyn4sygUCoe",
+   "ts": "2026-09-27T19:31:39.462Z",
+   "rowLines": [
+    34864
+   ],
+   "turnStart": 34771,
+   "nextPrompt": 34875,
+   "statement": "\"three comments said 'the librarian's ruling', which the privacy gate caught. They now read 'the design ruling'.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbvnmj5HCdcSxKXQvbK|20",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUbvnmj5HCdcSxKXQvbK",
+   "ts": "2026-09-27T20:49:38.826Z",
+   "rowLines": [
+    35009,
+    35011,
+    35013,
+    35015,
+    35017,
+    35019,
+    35020
+   ],
+   "turnStart": 34884,
+   "nextPrompt": 35162,
+   "statement": "`copy_dir(&root.join(\"app\"), ...)` with `Path::new(\"..\")` and the comment `into src-tauri/dist`: confirm that the build script's working directory is `src-tauri/`, so `..` is the repo root and `dist` is `src-tauri/dist`. Run `cargo build` to check.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbvnmj5HCdcSxKXQvbK|24",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUbvnmj5HCdcSxKXQvbK",
+   "ts": "2026-09-27T20:49:38.826Z",
+   "rowLines": [
+    35009,
+    35011,
+    35013,
+    35015,
+    35017,
+    35019,
+    35020
+   ],
+   "turnStart": 34884,
+   "nextPrompt": 35162,
+   "statement": "`\"windows\": [\"main\"]`: confirm it matches the window `\"label\": \"main\"`. It does in the text, so this one is a quick read.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbvnmj5HCdcSxKXQvbK|7",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUbvnmj5HCdcSxKXQvbK",
+   "ts": "2026-09-27T20:49:38.826Z",
+   "rowLines": [
+    35009,
+    35011,
+    35013,
+    35015,
+    35017,
+    35019,
+    35020
+   ],
+   "turnStart": 34884,
+   "nextPrompt": 35162,
+   "statement": "`A name is checked here as well as in app/shell.js`: confirm `app/shell.js` validates names with the same rule.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZLvomnhTYpZ72Vbz3w8|15",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfZLvomnhTYpZ72Vbz3w8",
+   "ts": "2026-09-30T08:55:47.042Z",
+   "rowLines": [
+    52034,
+    52035,
+    52036,
+    52038
+   ],
+   "turnStart": 51898,
+   "nextPrompt": 52201,
+   "statement": "\"if (!D.CHANNELS.includes(ch)) throw new D.CoreError('BAD_TRANSITION', `the transition map has no channel\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZLvomnhTYpZ72Vbz3w8|23",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfZLvomnhTYpZ72Vbz3w8",
+   "ts": "2026-09-30T08:55:47.042Z",
+   "rowLines": [
+    52034,
+    52035,
+    52036,
+    52038
+   ],
+   "turnStart": 51898,
+   "nextPrompt": 52201,
+   "statement": "\"(it rings)\" for R5",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZLvomnhTYpZ72Vbz3w8|20",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfZLvomnhTYpZ72Vbz3w8",
+   "ts": "2026-09-30T08:55:47.042Z",
+   "rowLines": [
+    52034,
+    52035,
+    52036,
+    52038
+   ],
+   "turnStart": 51898,
+   "nextPrompt": 52201,
+   "statement": "\"test/core_ramp.test.js runs against the copy\". Check that the test file exists and does not depend on anything outside `src/` and `tools/`, such as other test helpers or fixtures.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWBdoMCUL3Km1PbnqB1U|8",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfWBdoMCUL3Km1PbnqB1U",
+   "ts": "2026-09-28T16:52:09.957Z",
+   "rowLines": [
+    47723,
+    47724,
+    47725,
+    47727
+   ],
+   "turnStart": 47489,
+   "nextPrompt": 47788,
+   "statement": "\"`roadPiece` makes them 0 when left out (or continues the previous piece)\". Check `roadPiece`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWBdoMCUL3Km1PbnqB1U|15",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfWBdoMCUL3Km1PbnqB1U",
+   "ts": "2026-09-28T16:52:09.957Z",
+   "rowLines": [
+    47723,
+    47724,
+    47725,
+    47727
+   ],
+   "turnStart": 47489,
+   "nextPrompt": 47788,
+   "statement": "\"`offsetPath`, ref 09 §7\". Check that the function exists and that ref 09 has a §7 covering it.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWBdoMCUL3Km1PbnqB1U|5",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfWBdoMCUL3Km1PbnqB1U",
+   "ts": "2026-09-28T16:52:09.957Z",
+   "rowLines": [
+    47723,
+    47724,
+    47725,
+    47727
+   ],
+   "turnStart": 47489,
+   "nextPrompt": 47788,
+   "statement": "\"height, m, along WORLD up\". Check the units and the axis in the code.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVZWLQLFJuvduxR83Frt|11",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfVZWLQLFJuvduxR83Frt",
+   "ts": "2026-09-28T08:58:26.557Z",
+   "rowLines": [
+    61076,
+    61077
+   ],
+   "turnStart": 61066,
+   "nextPrompt": 61088,
+   "statement": "\"At a very high design speed (755 km/h)\". Check the speed value.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVZWLQLFJuvduxR83Frt|8",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfVZWLQLFJuvduxR83Frt",
+   "ts": "2026-09-28T08:58:26.557Z",
+   "rowLines": [
+    61076,
+    61077
+   ],
+   "turnStart": 61066,
+   "nextPrompt": 61088,
+   "statement": "The known-unfinished list has exactly 6 rows.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVZWLQLFJuvduxR83Frt|17",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfVZWLQLFJuvduxR83Frt",
+   "ts": "2026-09-28T08:58:26.557Z",
+   "rowLines": [
+    61076,
+    61077
+   ],
+   "turnStart": 61066,
+   "nextPrompt": 61088,
+   "statement": "\"with the reason written down.\" Check that a comment or note with the reason is actually there.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVBiBoRc9G5gr8LDq9ys|28",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVBiBoRc9G5gr8LDq9ys",
+   "ts": "2026-09-28T04:12:46.850Z",
+   "rowLines": [
+    32819,
+    32820,
+    32821
+   ],
+   "turnStart": 32731,
+   "nextPrompt": 32882,
+   "statement": "`car = MACH6`: `MACH6` is the right default car for the panel.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVBiBoRc9G5gr8LDq9ys|12",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVBiBoRc9G5gr8LDq9ys",
+   "ts": "2026-09-28T04:12:46.850Z",
+   "rowLines": [
+    32819,
+    32820,
+    32821
+   ],
+   "turnStart": 32731,
+   "nextPrompt": 32882,
+   "statement": "`'load-above-proven'` with \"more than any track has proven\": `provenG` means that.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVBiBoRc9G5gr8LDq9ys|16",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVBiBoRc9G5gr8LDq9ys",
+   "ts": "2026-09-28T04:12:46.850Z",
+   "rowLines": [
+    32819,
+    32820,
+    32821
+   ],
+   "turnStart": 32731,
+   "nextPrompt": 32882,
+   "statement": "\"the road passes through itself\": this is what `self-intersection` detects.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVQWPSbMP5BGdDSUSNaD|12",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVQWPSbMP5BGdDSUSNaD",
+   "ts": "2026-09-28T07:00:21.989Z",
+   "rowLines": [
+    37435
+   ],
+   "turnStart": 37415,
+   "nextPrompt": 37440,
+   "statement": "\"send the librarian the pointer\": check that the librarian is the right recipient and that this is the established handoff route.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVQWPSbMP5BGdDSUSNaD|5",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVQWPSbMP5BGdDSUSNaD",
+   "ts": "2026-09-28T07:00:21.989Z",
+   "rowLines": [
+    37435
+   ],
+   "turnStart": 37415,
+   "nextPrompt": 37440,
+   "statement": "\"the full suite's runner hides a dying file's exit code\": check this against the runner's behavior or source.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVQWPSbMP5BGdDSUSNaD|8",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVQWPSbMP5BGdDSUSNaD",
+   "ts": "2026-09-28T07:00:21.989Z",
+   "rowLines": [
+    37435
+   ],
+   "turnStart": 37415,
+   "nextPrompt": 37440,
+   "statement": "\"It sits in the lock queue behind my D182 runs (full suite ×2, then the 40 km bench ×2)\": check the queue order, the run counts, and the full-suite-then-bench sequence.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVQV9vTyRtnZV55RFVaH|19",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfVQV9vTyRtnZV55RFVaH",
+   "ts": "2026-09-28T07:00:07.101Z",
+   "rowLines": [
+    80253
+   ],
+   "turnStart": 80216,
+   "nextPrompt": 80258,
+   "statement": "\"A reports where the installer is, then goes back to the pour-water test.\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVQV9vTyRtnZV55RFVaH|3",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfVQV9vTyRtnZV55RFVaH",
+   "ts": "2026-09-28T07:00:07.101Z",
+   "rowLines": [
+    80253
+   ],
+   "turnStart": 80216,
+   "nextPrompt": 80258,
+   "statement": "\"The lighthouse notes are committed locally (`0e58434`, `9d2b2dc`) and not pushed.\"",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVQV9vTyRtnZV55RFVaH|14",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfVQV9vTyRtnZV55RFVaH",
+   "ts": "2026-09-28T07:00:07.101Z",
+   "rowLines": [
+    80253
+   ],
+   "turnStart": 80216,
+   "nextPrompt": 80258,
+   "statement": "\"It looks like the same occasional Node crash C is already investigating\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUocBqv6LVSdU1ipLifz|2",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUocBqv6LVSdU1ipLifz",
+   "ts": "2026-09-27T23:22:43.779Z",
+   "rowLines": [
+    37559,
+    37560,
+    37561
+   ],
+   "turnStart": 37538,
+   "nextPrompt": 37594,
+   "statement": "\"a lane on the inside, 167 m out, lies on the far straight\". Check that `side: 'L'` is the inside and that `offsetM: 167` lands on the far straight, not just near it. Also check that it doesn't get caught by a different check first.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUocBqv6LVSdU1ipLifz|5",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUocBqv6LVSdU1ipLifz",
+   "ts": "2026-09-27T23:22:43.779Z",
+   "rowLines": [
+    37559,
+    37560,
+    37561
+   ],
+   "turnStart": 37538,
+   "nextPrompt": 37594,
+   "statement": "\"a project layout entry with any key but layout and doc is refused\". Check that the parser rejects every extra key, not only `extra`, and that `layout` and `doc` are the only allowed keys.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUocBqv6LVSdU1ipLifz|11",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUocBqv6LVSdU1ipLifz",
+   "ts": "2026-09-27T23:22:43.779Z",
+   "rowLines": [
+    37559,
+    37560,
+    37561
+   ],
+   "turnStart": 37538,
+   "nextPrompt": 37594,
+   "statement": "The pit-lane parameters `side`, `leave`, `rejoin`, `offsetM`, `width`, `divergeM`, and `mergeM` are the real names and units. `leave: { word: 'w1', along: 60 }` and `rejoin: { word: 'w1', along: 540 }` need checking too. Check that the id `'w1'` is the first straight, and that `along` is in metres and fits within a 600 m straight.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVitwGUfA9k8kc6BhtPS|16",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVitwGUfA9k8kc6BhtPS",
+   "ts": "2026-09-28T11:01:30.207Z",
+   "rowLines": [
+    39798
+   ],
+   "turnStart": 39739,
+   "nextPrompt": 39803,
+   "statement": "\"the freeze still holds\": check the freeze's current state.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVitwGUfA9k8kc6BhtPS|5",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVitwGUfA9k8kc6BhtPS",
+   "ts": "2026-09-28T11:01:30.207Z",
+   "rowLines": [
+    39798
+   ],
+   "turnStart": 39739,
+   "nextPrompt": 39803,
+   "statement": "\"So a ghost that ignored the font picker still matched what gets placed\": confirm this was the mechanism by which B12 went uncaught.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVitwGUfA9k8kc6BhtPS|7",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVitwGUfA9k8kc6BhtPS",
+   "ts": "2026-09-28T11:01:30.207Z",
+   "rowLines": [
+    39798
+   ],
+   "turnStart": 39739,
+   "nextPrompt": 39803,
+   "statement": "\"a font no default would give there\": confirm no default produces `flat` in that position.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUpdAWhc8x7RD4tHkzuv|5",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUpdAWhc8x7RD4tHkzuv",
+   "ts": "2026-09-27T23:35:59.401Z",
+   "rowLines": [
+    37847,
+    37848,
+    37850
+   ],
+   "turnStart": 37671,
+   "nextPrompt": 37981,
+   "statement": "`cd /c/Users/nname/Desktop/t180-track-builder`: that the directory exists. The session's working directory is a different path.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUpdAWhc8x7RD4tHkzuv|32",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUpdAWhc8x7RD4tHkzuv",
+   "ts": "2026-09-27T23:35:59.401Z",
+   "rowLines": [
+    37847,
+    37848,
+    37850
+   ],
+   "turnStart": 37671,
+   "nextPrompt": 37981,
+   "statement": "`BAD_PACK`.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUpdAWhc8x7RD4tHkzuv|29",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUpdAWhc8x7RD4tHkzuv",
+   "ts": "2026-09-27T23:35:59.401Z",
+   "rowLines": [
+    37847,
+    37848,
+    37850
+   ],
+   "turnStart": 37671,
+   "nextPrompt": 37981,
+   "statement": "`COMPRESSED_NORMAL`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUvfHf5EUQdTsTbvoSxE|22",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUvfHf5EUQdTsTbvoSxE",
+   "ts": "2026-09-28T00:55:18.215Z",
+   "rowLines": [
+    38588,
+    38589
+   ],
+   "turnStart": 38486,
+   "nextPrompt": 38594,
+   "statement": "\"installs into `content\\tracks` as `t180b_<name>`, and the UI says the prefix is added\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUvfHf5EUQdTsTbvoSxE|47",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUvfHf5EUQdTsTbvoSxE",
+   "ts": "2026-09-28T00:55:18.215Z",
+   "rowLines": [
+    38588,
+    38589
+   ],
+   "turnStart": 38486,
+   "nextPrompt": 38594,
+   "statement": "\"E's `library.js` change for the phrasebook never reached me, so nothing is applied yet.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUvfHf5EUQdTsTbvoSxE|11",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUvfHf5EUQdTsTbvoSxE",
+   "ts": "2026-09-28T00:55:18.215Z",
+   "rowLines": [
+    38588,
+    38589
+   ],
+   "turnStart": 38486,
+   "nextPrompt": 38594,
+   "statement": "\"a sculpted path is 5.4e-12 off a full rebuild\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYSqWv5TaAokQJPYVZCQ|6",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYSqWv5TaAokQJPYVZCQ",
+   "ts": "2026-09-29T21:33:17.038Z",
+   "rowLines": [
+    49857,
+    49858,
+    49859
+   ],
+   "turnStart": 49830,
+   "nextPrompt": 49905,
+   "statement": "`extend(D.createDoc('r'), { length: 60 })` and `extend(d, { length: 200, transition: trans, targets })`: check the argument shapes and the option names `length`, `transition` and `targets`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYSqWv5TaAokQJPYVZCQ|2",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYSqWv5TaAokQJPYVZCQ",
+   "ts": "2026-09-29T21:33:17.038Z",
+   "rowLines": [
+    49857,
+    49858,
+    49859
+   ],
+   "turnStart": 49830,
+   "nextPrompt": 49905,
+   "statement": "Labels `'bowl 90/40'` and `'bowl 90 + w20 /100'`: check that they match the actual parameters, `{ c: 90 }` with transition `40` and `{ c: 90, w: 20 }` with transition `100`.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYSqWv5TaAokQJPYVZCQ|5",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYSqWv5TaAokQJPYVZCQ",
+   "ts": "2026-09-29T21:33:17.038Z",
+   "rowLines": [
+    49857,
+    49858,
+    49859
+   ],
+   "turnStart": 49830,
+   "nextPrompt": 49905,
+   "statement": "`const T = process.argv[2] + '/'`: check that argv[2] is the tree root and that a trailing `/` is correct on Windows.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfW55cje4pMDPCpzJkWrF|7",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfW55cje4pMDPCpzJkWrF",
+   "ts": "2026-09-28T15:26:10.964Z",
+   "rowLines": [
+    81602
+   ],
+   "turnStart": 81585,
+   "nextPrompt": 81607,
+   "statement": "\"E changes the brush to add control points under its own stretch of track first, then apply the brush.\" Check whether E has been assigned this or has already made the change, and whether the order is the one described.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfW55cje4pMDPCpzJkWrF|8",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfW55cje4pMDPCpzJkWrF",
+   "ts": "2026-09-28T15:26:10.964Z",
+   "rowLines": [
+    81602
+   ],
+   "turnStart": 81585,
+   "nextPrompt": 81607,
+   "statement": "\"Then a 20 m brush stays smooth at its edges\". Check by running a 20 m brush, since this is a prediction.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfW55cje4pMDPCpzJkWrF|4",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfW55cje4pMDPCpzJkWrF",
+   "ts": "2026-09-28T15:26:10.964Z",
+   "rowLines": [
+    81602
+   ],
+   "turnStart": 81585,
+   "nextPrompt": 81607,
+   "statement": "\"A also wrote the test that a document refuses a broken join.\" Check that the test exists, that A authored it, and that it passes.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUSqXKruvFzmmd9nfnrD|14",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUSqXKruvFzmmd9nfnrD",
+   "ts": "2026-09-27T18:50:24.914Z",
+   "rowLines": [
+    34337,
+    34338,
+    34339
+   ],
+   "turnStart": 34296,
+   "nextPrompt": 34448,
+   "statement": "`console.log('ok')`: it reports success whether or not the comment replace matched (see item 3). Check the diff or re-read `vocab.js` to confirm.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUSqXKruvFzmmd9nfnrD|8",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUSqXKruvFzmmd9nfnrD",
+   "ts": "2026-09-27T18:50:24.914Z",
+   "rowLines": [
+    34337,
+    34338,
+    34339
+   ],
+   "turnStart": 34296,
+   "nextPrompt": 34448,
+   "statement": "`d = D.editWord(...)`: `d` must be a reassignable `let` or parameter, not a `const`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUSqXKruvFzmmd9nfnrD|9",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUSqXKruvFzmmd9nfnrD",
+   "ts": "2026-09-27T18:50:24.914Z",
+   "rowLines": [
+    34337,
+    34338,
+    34339
+   ],
+   "turnStart": 34296,
+   "nextPrompt": 34448,
+   "statement": "`\"`wall` is a handle, so the wall's height can be sculpted\"`: `wall` must actually be a handle in the vocab definition.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV9uXxhj9snqFBroTcHH|10",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfV9uXxhj9snqFBroTcHH",
+   "ts": "2026-09-28T03:48:55.254Z",
+   "rowLines": [
+    79611
+   ],
+   "turnStart": 79577,
+   "nextPrompt": 79616,
+   "statement": "\"The librarian caught that\": check that the librarian was the one who caught it, not someone else.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV9uXxhj9snqFBroTcHH|12",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfV9uXxhj9snqFBroTcHH",
+   "ts": "2026-09-28T03:48:55.254Z",
+   "rowLines": [
+    79611
+   ],
+   "turnStart": 79577,
+   "nextPrompt": 79616,
+   "statement": "\"It's the second time tonight E has done that\": check the history for exactly two occurrences tonight.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV9uXxhj9snqFBroTcHH|5",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfV9uXxhj9snqFBroTcHH",
+   "ts": "2026-09-28T03:48:55.254Z",
+   "rowLines": [
+    79611
+   ],
+   "turnStart": 79577,
+   "nextPrompt": 79616,
+   "statement": "\"B's run had 55 to 95\": check against B's recorded run.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYSTq6bmb6ngapvPoA8S|13",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYSTq6bmb6ngapvPoA8S",
+   "ts": "2026-09-29T21:28:07.024Z",
+   "rowLines": [
+    49717,
+    49718,
+    49719
+   ],
+   "turnStart": 49304,
+   "nextPrompt": 49830,
+   "statement": "`\"A clamp can leave the curve short of a target at the top of the range\"`",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYSTq6bmb6ngapvPoA8S|24",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYSTq6bmb6ngapvPoA8S",
+   "ts": "2026-09-29T21:28:07.024Z",
+   "rowLines": [
+    49717,
+    49718,
+    49719
+   ],
+   "turnStart": 49304,
+   "nextPrompt": 49830,
+   "statement": "This only reports that the write ran. Confirm by re-reading the file that all three replacements landed as intended.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYSTq6bmb6ngapvPoA8S|1",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYSTq6bmb6ngapvPoA8S",
+   "ts": "2026-09-29T21:28:07.024Z",
+   "rowLines": [
+    49717,
+    49718,
+    49719
+   ],
+   "turnStart": 49304,
+   "nextPrompt": 49830,
+   "statement": "`\"measured on the core's own Extend: a 90° target over 40 m of a 200 m piece gives control points up to 99.130° and a curve that peaks at 92.122° before settling at 89.978°\"`",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUmUxKtjBNRXvB9AyTAo|7",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfUmUxKtjBNRXvB9AyTAo",
+   "ts": "2026-09-27T22:54:51.858Z",
+   "rowLines": [
+    78747,
+    78749,
+    78751,
+    78753,
+    78755
+   ],
+   "turnStart": 78734,
+   "nextPrompt": 78808,
+   "statement": "\"`--test-concurrency=4`\": check that the installed Node version accepts this flag and that it also works through `npm test`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUmUxKtjBNRXvB9AyTAo|6",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfUmUxKtjBNRXvB9AyTAo",
+   "ts": "2026-09-27T22:54:51.858Z",
+   "rowLines": [
+    78747,
+    78749,
+    78751,
+    78753,
+    78755
+   ],
+   "turnStart": 78734,
+   "nextPrompt": 78808,
+   "statement": "\"the round-trip tests read real track files\": check this against the t180 test sources.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUmUxKtjBNRXvB9AyTAo|4",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfUmUxKtjBNRXvB9AyTAo",
+   "ts": "2026-09-27T22:54:51.858Z",
+   "rowLines": [
+    78747,
+    78749,
+    78751,
+    78753,
+    78755
+   ],
+   "turnStart": 78734,
+   "nextPrompt": 78808,
+   "statement": "\"Consonance's window starves\": this is the stated effect of the cause above, so check it against the same measurement.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV8r3ZhLjqMJmEm9PSZJ|6",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfV8r3ZhLjqMJmEm9PSZJ",
+   "ts": "2026-09-28T03:35:00.851Z",
+   "rowLines": [
+    32420,
+    32421,
+    32422,
+    32424
+   ],
+   "turnStart": 32237,
+   "nextPrompt": 32568,
+   "statement": "`rig({ share: true })`, `prng(seed)`, `WORDS`, `shell.setPicker('dir', ...)`, `shell.place`, `shell.beginDrag`, `shell.dragTo(w.id, { handles: { length } })`, `shell.endDrag`, `shell.getState().history.present.words`. Check that each is defined or imported in the test file and has this signature.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV8r3ZhLjqMJmEm9PSZJ|14",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfV8r3ZhLjqMJmEm9PSZJ",
+   "ts": "2026-09-28T03:35:00.851Z",
+   "rowLines": [
+    32420,
+    32421,
+    32422,
+    32424
+   ],
+   "turnStart": 32237,
+   "nextPrompt": 32568,
+   "statement": "`require('../validate-ui/panel.js')` exporting `windowEnd`. Check the relative path from the test's directory and that the export exists.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV8r3ZhLjqMJmEm9PSZJ|18",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfV8r3ZhLjqMJmEm9PSZJ",
+   "ts": "2026-09-28T03:35:00.851Z",
+   "rowLines": [
+    32420,
+    32421,
+    32422,
+    32424
+   ],
+   "turnStart": 32237,
+   "nextPrompt": 32568,
+   "statement": "`C:/Users/nname/Desktop/t180-track-builder` and `app/test/validate-ui-incval.test.js`. Check that both paths exist.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVibgXUt4TMuLbQFrFKn|11",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVibgXUt4TMuLbQFrFKn",
+   "ts": "2026-09-28T10:57:42.748Z",
+   "rowLines": [
+    36436
+   ],
+   "turnStart": 36248,
+   "nextPrompt": 36441,
+   "statement": "\"on today's tree the documents are byte-identical to before.\" Check with a diff or hash comparison.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVibgXUt4TMuLbQFrFKn|9",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVibgXUt4TMuLbQFrFKn",
+   "ts": "2026-09-28T10:57:42.748Z",
+   "rowLines": [
+    36436
+   ],
+   "turnStart": 36248,
+   "nextPrompt": 36441,
+   "statement": "\"Why eight failed: C's change builds bowl, half-pipe and flat from the measured floor whatever handles a word names.\" Check C's change.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVibgXUt4TMuLbQFrFKn|7",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVibgXUt4TMuLbQFrFKn",
+   "ts": "2026-09-28T10:57:42.748Z",
+   "rowLines": [
+    36436
+   ],
+   "turnStart": 36248,
+   "nextPrompt": 36441,
+   "statement": "\"The six files pass 56/56 on A's words plus C's fonts, on A's words alone, and on the shared checkout.\" Check all three runs.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV4yC4uVWzmTyqczPrFu|14",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfV4yC4uVWzmTyqczPrFu",
+   "ts": "2026-09-28T02:44:11.879Z",
+   "rowLines": [
+    31657,
+    31658,
+    31659,
+    31661
+   ],
+   "turnStart": 31526,
+   "nextPrompt": 31817,
+   "statement": "\"the connector closed it with the default (connector.js resolves without a speed)\". Check `connector.js`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV4yC4uVWzmTyqczPrFu|11",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfV4yC4uVWzmTyqczPrFu",
+   "ts": "2026-09-28T02:44:11.879Z",
+   "rowLines": [
+    31657,
+    31658,
+    31659,
+    31661
+   ],
+   "turnStart": 31526,
+   "nextPrompt": 31817,
+   "statement": "\"`assert.ok(Math.abs(L.speed - kmh(300)) < 1e-9);`\" and the test title \"…the stated default, 300 km/h, and says so\". Check that these are in the test file and that no other test or doc still assumes 300.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV4yC4uVWzmTyqczPrFu|9",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfV4yC4uVWzmTyqczPrFu",
+   "ts": "2026-09-28T02:44:11.879Z",
+   "rowLines": [
+    31657,
+    31658,
+    31659,
+    31661
+   ],
+   "turnStart": 31526,
+   "nextPrompt": 31817,
+   "statement": "\"`D.DocError('BAD_DESIGN_SPEED', …)`\". Check that `DocError` is exported on `D` and takes `(code, message)`. The final `grep` in the command is meant to check this.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWAC8kuqse4CTjYH4Ha9|1",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfWAC8kuqse4CTjYH4Ha9",
+   "ts": "2026-09-28T16:33:20.788Z",
+   "rowLines": [
+    38831,
+    38832,
+    38833
+   ],
+   "turnStart": 38744,
+   "nextPrompt": 38924,
+   "statement": "\"THE SHARP BRUSH'S DECLARED SPILL (the chair's D186 ruling 2: opt-in, and its cost stated in the UI and the docs)\". Check that ruling 2 says this.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWAC8kuqse4CTjYH4Ha9|29",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfWAC8kuqse4CTjYH4Ha9",
+   "ts": "2026-09-28T16:33:20.788Z",
+   "rowLines": [
+    38831,
+    38832,
+    38833
+   ],
+   "turnStart": 38744,
+   "nextPrompt": 38924,
+   "statement": "`OPEN` is long enough that `s0: 2050` is inside it. Check that `r: 5` there really widens, and that `r: 100` is not widened (`radiusUsed` equals 100).",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWAC8kuqse4CTjYH4Ha9|28",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfWAC8kuqse4CTjYH4Ha9",
+   "ts": "2026-09-28T16:33:20.788Z",
+   "rowLines": [
+    38831,
+    38832,
+    38833
+   ],
+   "turnStart": 38744,
+   "nextPrompt": 38924,
+   "statement": "W⁺ is `r + 2 * span` on each side of `s0`, as `loP` and `hiP` assume.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfY6UB831cWaJmda1vNwC|24",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfY6UB831cWaJmda1vNwC",
+   "ts": "2026-09-29T17:05:38.461Z",
+   "rowLines": [
+    44320,
+    44321,
+    44322
+   ],
+   "turnStart": 44176,
+   "nextPrompt": 44523,
+   "statement": "`modifiers: 8` (Shift in CDP): confirm the app zooms on Shift+wheel, and that `deltaY -100` means nearer.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfY6UB831cWaJmda1vNwC|26",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfY6UB831cWaJmda1vNwC",
+   "ts": "2026-09-29T17:05:38.461Z",
+   "rowLines": [
+    44320,
+    44321,
+    44322
+   ],
+   "turnStart": 44176,
+   "nextPrompt": 44523,
+   "statement": "The `--disable-features=CalculateNativeWinOcclusion` and related flags actually take effect through `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfY6UB831cWaJmda1vNwC|4",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfY6UB831cWaJmda1vNwC",
+   "ts": "2026-09-29T17:05:38.461Z",
+   "rowLines": [
+    44320,
+    44321,
+    44322
+   ],
+   "turnStart": 44176,
+   "nextPrompt": 44523,
+   "statement": "`\"the port's owner checked\"`: confirm `portOwner(port, pid)` returns `{ ours, pid }`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUeAGxUVeQYdGzvv8dHh|12",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUeAGxUVeQYdGzvv8dHh",
+   "ts": "2026-09-27T21:18:56.418Z",
+   "rowLines": [
+    27612,
+    27613,
+    27614,
+    27616
+   ],
+   "turnStart": 27546,
+   "nextPrompt": 27947,
+   "statement": "The `q()` percentile function. Check it against a known array. `Float64Array.from(arr).sort()` is numeric, but the index rounding (floor) should be checked.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUeAGxUVeQYdGzvv8dHh|6",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUeAGxUVeQYdGzvv8dHh",
+   "ts": "2026-09-27T21:18:56.418Z",
+   "rowLines": [
+    27612,
+    27613,
+    27614,
+    27616
+   ],
+   "turnStart": 27546,
+   "nextPrompt": 27947,
+   "statement": "The API the code relies on: `parseReplay`, `extractCar(rep, 0)`, and the fields `ex.N`, `ex.dt`, `ex.pos`, `ex.wheelsOk` and `ex.car.carId`. Check the names, the `pos` layout (3 floats per frame) and the units of `dt`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUeAGxUVeQYdGzvv8dHh|9",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUeAGxUVeQYdGzvv8dHh",
+   "ts": "2026-09-27T21:18:56.418Z",
+   "rowLines": [
+    27612,
+    27613,
+    27614,
+    27616
+   ],
+   "turnStart": 27546,
+   "nextPrompt": 27947,
+   "statement": "The module path fallback: `~/blackbox` or `~/Desktop/blackbox`, plus `ui/acreplay.js`. Check that one of them exists, or that `BLACKBOX` is set.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZM21j19mUcgR3QZ8XAj|17",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfZM21j19mUcgR3QZ8XAj",
+   "ts": "2026-09-30T08:57:04.292Z",
+   "rowLines": [
+    66041,
+    66042,
+    66043
+   ],
+   "turnStart": 66037,
+   "nextPrompt": 66052,
+   "statement": "\"None of these run once a real piece exists.\" and \"Once a real piece exists, that path stops.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZM21j19mUcgR3QZ8XAj|6",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfZM21j19mUcgR3QZ8XAj",
+   "ts": "2026-09-30T08:57:04.292Z",
+   "rowLines": [
+    66041,
+    66042,
+    66043
+   ],
+   "turnStart": 66037,
+   "nextPrompt": 66052,
+   "statement": "\"**The lag is a new bug**\" (check it isn't a known or already-filed issue)",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZM21j19mUcgR3QZ8XAj|5",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfZM21j19mUcgR3QZ8XAj",
+   "ts": "2026-09-30T08:57:04.292Z",
+   "rowLines": [
+    66041,
+    66042,
+    66043
+   ],
+   "turnStart": 66037,
+   "nextPrompt": 66052,
+   "statement": "\"before pressing extend for the first piece, the preview is very laggy and continues to lag until the first piece is put down\" (verify this is the keeper's exact wording)",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUk5wpsoEEkYkEtzCQcm|12",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUk5wpsoEEkYkEtzCQcm",
+   "ts": "2026-09-27T22:36:29.732Z",
+   "rowLines": [
+    28859,
+    28860,
+    28861
+   ],
+   "turnStart": 28561,
+   "nextPrompt": 29032,
+   "statement": "**`t.replace(a, \"...\")`** and the escaped `\\\\n` in the replacement. Check that the `\\\\n` ends up as `\\n` in the script's own source, which is what the existing entries' strings need. Also check that `$` sequences in the replacement text can't be misread by `String.replace`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUk5wpsoEEkYkEtzCQcm|1",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUk5wpsoEEkYkEtzCQcm",
+   "ts": "2026-09-27T22:36:29.732Z",
+   "rowLines": [
+    28859,
+    28860,
+    28861
+   ],
+   "turnStart": 28561,
+   "nextPrompt": 29032,
+   "statement": "**\"74 of 74.\"** Check against the actual test run output. This is the pass count before the new mutants, and it is unclear whether 74 means mutants or tests.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUk5wpsoEEkYkEtzCQcm|6",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUk5wpsoEEkYkEtzCQcm",
+   "ts": "2026-09-27T22:36:29.732Z",
+   "rowLines": [
+    28859,
+    28860,
+    28861
+   ],
+   "turnStart": 28561,
+   "nextPrompt": 29032,
+   "statement": "**`'index'`**. Check that this is the module key the script's other entries use, and that the entries have the same shape: module, test list, description, original string, replacement string.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVnYHbj5yEDbyZqibD3T|8",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVnYHbj5yEDbyZqibD3T",
+   "ts": "2026-09-28T11:49:18.249Z",
+   "rowLines": [
+    29199,
+    29200,
+    29201,
+    29203
+   ],
+   "turnStart": 29151,
+   "nextPrompt": 29254,
+   "statement": "\"each piece at its own defaults, with only its length, turn and climb set\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVnYHbj5yEDbyZqibD3T|6",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVnYHbj5yEDbyZqibD3T",
+   "ts": "2026-09-28T11:49:18.249Z",
+   "rowLines": [
+    29199,
+    29200,
+    29201,
+    29203
+   ],
+   "turnStart": 29151,
+   "nextPrompt": 29254,
+   "statement": "\"measured from real T-180 tracks\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVnYHbj5yEDbyZqibD3T|7",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVnYHbj5yEDbyZqibD3T",
+   "ts": "2026-09-28T11:49:18.249Z",
+   "rowLines": [
+    29199,
+    29200,
+    29201,
+    29203
+   ],
+   "turnStart": 29151,
+   "nextPrompt": 29254,
+   "statement": "\"the first 3 km of two real tracks, Sakura Speedway and Centrifuge\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfW4DG91JB9WKhNYoQJcb|21",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfW4DG91JB9WKhNYoQJcb",
+   "ts": "2026-09-28T15:14:46.657Z",
+   "rowLines": [
+    41180,
+    41181,
+    41182,
+    41184,
+    41186,
+    41188,
+    41190,
+    41192,
+    41194,
+    41196,
+    41198,
+    41200,
+    41202
+   ],
+   "turnStart": 40873,
+   "nextPrompt": 41385,
+   "statement": "\"`'t180:overlay'        { detail: { lines } }`\" — confirm `panel.js` dispatches this exact name and payload.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfW4DG91JB9WKhNYoQJcb|17",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfW4DG91JB9WKhNYoQJcb",
+   "ts": "2026-09-28T15:14:46.657Z",
+   "rowLines": [
+    41180,
+    41181,
+    41182,
+    41184,
+    41186,
+    41188,
+    41190,
+    41192,
+    41194,
+    41196,
+    41198,
+    41200,
+    41202
+   ],
+   "turnStart": 40873,
+   "nextPrompt": 41385,
+   "statement": "`let ghost = null, grid = null, gridFor = null, overlay = null;` — confirm these are the existing declarations and `overlay` doesn't clash with another variable.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfW4DG91JB9WKhNYoQJcb|6",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfW4DG91JB9WKhNYoQJcb",
+   "ts": "2026-09-28T15:14:46.657Z",
+   "rowLines": [
+    41180,
+    41181,
+    41182,
+    41184,
+    41186,
+    41188,
+    41190,
+    41192,
+    41194,
+    41196,
+    41198,
+    41200,
+    41202
+   ],
+   "turnStart": 40873,
+   "nextPrompt": 41385,
+   "statement": "`require('../camera/math.js')` — confirm the path resolves from the preview file's directory.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYetqVzh4mxBtt5uZsZk|19",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYetqVzh4mxBtt5uZsZk",
+   "ts": "2026-09-30T00:10:49.230Z",
+   "rowLines": [
+    51188,
+    51189
+   ],
+   "turnStart": 50833,
+   "nextPrompt": 51347,
+   "statement": "`extend(d,{length:Q,transition:40,targets:{kh:1/Rr,c:...}})`: `extend` accepts `transition` and `targets` with keys `kh` (curvature) and `c`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYetqVzh4mxBtt5uZsZk|22",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYetqVzh4mxBtt5uZsZk",
+   "ts": "2026-09-30T00:10:49.230Z",
+   "rowLines": [
+    51188,
+    51189
+   ],
+   "turnStart": 50833,
+   "nextPrompt": 51347,
+   "statement": "`'X1 bowl c150 NOT returned'` and `'default bowl 31 (A lap) c150'`: the default bowl width is 31, so passing `null` gives the same width as the \"A lap\" label claims.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYetqVzh4mxBtt5uZsZk|26",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYetqVzh4mxBtt5uZsZk",
+   "ts": "2026-09-30T00:10:49.230Z",
+   "rowLines": [
+    51188,
+    51189
+   ],
+   "turnStart": 50833,
+   "nextPrompt": 51347,
+   "statement": "`Q=Math.PI*Rr/2`: this is a quarter-circle arc length, and `kh=1/Rr` is the matching curvature. The 4 iterations are assumed to make a full 360° lap.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVAXArhM28PkYf6UvWMF|32",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVAXArhM28PkYf6UvWMF",
+   "ts": "2026-09-28T03:57:00.012Z",
+   "rowLines": [
+    35869,
+    35870,
+    35871
+   ],
+   "turnStart": 35764,
+   "nextPrompt": 35892,
+   "statement": "\"re-queued with retries\".",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVAXArhM28PkYf6UvWMF|4",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVAXArhM28PkYf6UvWMF",
+   "ts": "2026-09-28T03:57:00.012Z",
+   "rowLines": [
+    35869,
+    35870,
+    35871
+   ],
+   "turnStart": 35764,
+   "nextPrompt": 35892,
+   "statement": "\"`WEBVIEW2_USER_DATA_FOLDER` = `<out>/webview2-profile`, fresh\".",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVAXArhM28PkYf6UvWMF|26",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVAXArhM28PkYf6UvWMF",
+   "ts": "2026-09-28T03:57:00.012Z",
+   "rowLines": [
+    35869,
+    35870,
+    35871
+   ],
+   "turnStart": 35764,
+   "nextPrompt": 35892,
+   "statement": "The confound: \"the guide card covers part of the preview and the darker background moves the fog-coloured distance into the \"drawn\" set\".",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUkBunWXt6PBvG2u2hvC|3",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUkBunWXt6PBvG2u2hvC",
+   "ts": "2026-09-27T22:37:49.420Z",
+   "rowLines": [
+    36496,
+    36497,
+    36499,
+    36501,
+    36503
+   ],
+   "turnStart": 36362,
+   "nextPrompt": 36914,
+   "statement": "`test('a newer schema is refused as written by a newer builder; one with no migration to it is refused as unknown', …`. Check that a test with this exact name exists, or that this is the intended new name.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUkBunWXt6PBvG2u2hvC|8",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUkBunWXt6PBvG2u2hvC",
+   "ts": "2026-09-27T22:37:49.420Z",
+   "rowLines": [
+    36496,
+    36497,
+    36499,
+    36501,
+    36503
+   ],
+   "turnStart": 36362,
+   "nextPrompt": 36914,
+   "statement": "`D.parse(...)`. Check that it exists and that it throws on a newer schema and on a schema with no migration path.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUkBunWXt6PBvG2u2hvC|13",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUkBunWXt6PBvG2u2hvC",
+   "ts": "2026-09-27T22:37:49.420Z",
+   "rowLines": [
+    36496,
+    36497,
+    36499,
+    36501,
+    36503
+   ],
+   "turnStart": 36362,
+   "nextPrompt": 36914,
+   "statement": "\"I'll use Edit.\" The draft then shows a Bash `sed` command instead. Check which tool is actually used, because the `sed` runs against a file the draft also says has an escaping problem.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVCrsbAQBhmATyrxtpRQ|19",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVCrsbAQBhmATyrxtpRQ",
+   "ts": "2026-09-28T04:27:49.791Z",
+   "rowLines": [
+    32947,
+    32948,
+    32949
+   ],
+   "turnStart": 32932,
+   "nextPrompt": 33094,
+   "statement": "\"validate at the default design speed\": `460 / 3.6` (460 km/h) is the project's default design speed.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVCrsbAQBhmATyrxtpRQ|5",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVCrsbAQBhmATyrxtpRQ",
+   "ts": "2026-09-28T04:27:49.791Z",
+   "rowLines": [
+    32947,
+    32948,
+    32949
+   ],
+   "turnStart": 32932,
+   "nextPrompt": 33094,
+   "statement": "`require(R + '/src/doc/phrasebook.js')`: the file exists and exports `PHRASES`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVCrsbAQBhmATyrxtpRQ|16",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVCrsbAQBhmATyrxtpRQ",
+   "ts": "2026-09-28T04:27:49.791Z",
+   "rowLines": [
+    32947,
+    32948,
+    32949
+   ],
+   "turnStart": 32932,
+   "nextPrompt": 33094,
+   "statement": "`validate(path, segs, { designSpeed: 460 / 3.6 })`: the argument order is `(path, segs, opts)`, and `designSpeed` is in m/s.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVKRUDcNs98sX2HwGQ7m|11",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfVKRUDcNs98sX2HwGQ7m",
+   "ts": "2026-09-28T05:53:43.053Z",
+   "rowLines": [
+    80059
+   ],
+   "turnStart": 80039,
+   "nextPrompt": 80064,
+   "statement": "\"0°\" (banking)",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVKRUDcNs98sX2HwGQ7m|9",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfVKRUDcNs98sX2HwGQ7m",
+   "ts": "2026-09-28T05:53:43.053Z",
+   "rowLines": [
+    80059
+   ],
+   "turnStart": 80039,
+   "nextPrompt": 80064,
+   "statement": "\"8–20 m\" (road width)",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVKRUDcNs98sX2HwGQ7m|3",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfVKRUDcNs98sX2HwGQ7m",
+   "ts": "2026-09-28T05:53:43.053Z",
+   "rowLines": [
+    80059
+   ],
+   "turnStart": 80039,
+   "nextPrompt": 80064,
+   "statement": "\"Both messages are queued until each pane's current turn ends.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZM4x36V8ug87QmM5Zic|5",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfZM4x36V8ug87QmM5Zic",
+   "ts": "2026-09-30T08:57:47.692Z",
+   "rowLines": [
+    52069
+   ],
+   "turnStart": 51898,
+   "nextPrompt": 52201,
+   "statement": "\"`extend(doc, { length, transition, targets, … })`\" is the real signature and option names.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZM4x36V8ug87QmM5Zic|21",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfZM4x36V8ug87QmM5Zic",
+   "ts": "2026-09-30T08:57:47.692Z",
+   "rowLines": [
+    52069
+   ],
+   "turnStart": 51898,
+   "nextPrompt": 52201,
+   "statement": "\"Each field can now be set to ease in over the whole piece (as before) or to reach its target within about one knot span (at most 20 m)\": that the option applies to bank and cup as well as width (\"new width (or bank, or cup)\"), not just `w` and `phi`.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZM4x36V8ug87QmM5Zic|16",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfZM4x36V8ug87QmM5Zic",
+   "ts": "2026-09-30T08:57:47.692Z",
+   "rowLines": [
+    52069
+   ],
+   "turnStart": 51898,
+   "nextPrompt": 52201,
+   "statement": "\"its control points are the ideal ramp at the knot averages, the joint's first two are kept, and the rest are clamped into [start, target], so the curve never leaves that range, is monotone for a monotone ramp, and is exactly the target after the ramp\".",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVp3UDsZ17CXszTx9vjY|5",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVp3UDsZ17CXszTx9vjY",
+   "ts": "2026-09-28T12:08:57.873Z",
+   "rowLines": [
+    46469,
+    46470
+   ],
+   "turnStart": 46467,
+   "nextPrompt": 46475,
+   "statement": "**\"the lap is now waiting on B's fresh-session test\"**",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVp3UDsZ17CXszTx9vjY|1",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVp3UDsZ17CXszTx9vjY",
+   "ts": "2026-09-28T12:08:57.873Z",
+   "rowLines": [
+    46469,
+    46470
+   ],
+   "turnStart": 46467,
+   "nextPrompt": 46475,
+   "statement": "**\"That notification was the leftover read-only check of my scratch links\"**",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVp3UDsZ17CXszTx9vjY|2",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVp3UDsZ17CXszTx9vjY",
+   "ts": "2026-09-28T12:08:57.873Z",
+   "rowLines": [
+    46469,
+    46470
+   ],
+   "turnStart": 46467,
+   "nextPrompt": 46475,
+   "statement": "**\"which I'd already answered another way\"**",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfU3PXSu7s8bc76prxMqD|10",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfU3PXSu7s8bc76prxMqD",
+   "ts": "2026-09-27T13:42:49.065Z",
+   "rowLines": [
+    31944,
+    31945,
+    31946
+   ],
+   "turnStart": 31893,
+   "nextPrompt": 31999,
+   "statement": "\"the band test's tightest-cap assertions replaced by ruling\" Confirm those assertions were replaced in the test file.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfU3PXSu7s8bc76prxMqD|15",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfU3PXSu7s8bc76prxMqD",
+   "ts": "2026-09-27T13:42:49.065Z",
+   "rowLines": [
+    31944,
+    31945,
+    31946
+   ],
+   "turnStart": 31893,
+   "nextPrompt": 31999,
+   "statement": "\"process search 0/350\" Check against the output of that run.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfU3PXSu7s8bc76prxMqD|14",
+   "seat": "A",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfU3PXSu7s8bc76prxMqD",
+   "ts": "2026-09-27T13:42:49.065Z",
+   "rowLines": [
+    31944,
+    31945,
+    31946
+   ],
+   "turnStart": 31893,
+   "nextPrompt": 31999,
+   "statement": "\"cargo bin 985/0/4\" Check against the `cargo test` output for the bin target, including which number is passed, failed and ignored.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVAehda13rVsLzSxUrwk|11",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVAehda13rVsLzSxUrwk",
+   "ts": "2026-09-28T03:58:40.438Z",
+   "rowLines": [
+    40630,
+    40631,
+    40632,
+    40634
+   ],
+   "turnStart": 40486,
+   "nextPrompt": 40796,
+   "statement": "**`abs.is_absolute() && tracks_of(&abs).is_ok()`** Check that `tracks_of` exists, takes `&Path`, and returns a `Result`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVAehda13rVsLzSxUrwk|13",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVAehda13rVsLzSxUrwk",
+   "ts": "2026-09-28T03:58:40.438Z",
+   "rowLines": [
+    40630,
+    40631,
+    40632,
+    40634
+   ],
+   "turnStart": 40486,
+   "nextPrompt": 40796,
+   "statement": "`ROOT_FILE` exists as a constant.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVAehda13rVsLzSxUrwk|3",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVAehda13rVsLzSxUrwk",
+   "ts": "2026-09-28T03:58:40.438Z",
+   "rowLines": [
+    40630,
+    40631,
+    40632,
+    40634
+   ],
+   "turnStart": 40486,
+   "nextPrompt": 40796,
+   "statement": "The verbatim `\\\\?\\` prefix really does appear in the AC folder path on the Rust side. Check by running the new test and reading the output.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfURwPTeEGUPfBgcR3DU9|16",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfURwPTeEGUPfBgcR3DU9",
+   "ts": "2026-09-27T18:38:33.880Z",
+   "rowLines": [
+    29574,
+    29575,
+    29576,
+    29578,
+    29580,
+    29582,
+    29584
+   ],
+   "turnStart": 29491,
+   "nextPrompt": 29648,
+   "statement": "`M9 extendMesh keeps the old last cell instead of rebuilding it`",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfURwPTeEGUPfBgcR3DU9|11",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfURwPTeEGUPfBgcR3DU9",
+   "ts": "2026-09-27T18:38:33.880Z",
+   "rowLines": [
+    29574,
+    29575,
+    29576,
+    29578,
+    29580,
+    29582,
+    29584
+   ],
+   "turnStart": 29491,
+   "nextPrompt": 29648,
+   "statement": "`match: extending by one word` (used by both M8 and M9)",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfURwPTeEGUPfBgcR3DU9|12",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfURwPTeEGUPfBgcR3DU9",
+   "ts": "2026-09-27T18:38:33.880Z",
+   "rowLines": [
+    29574,
+    29575,
+    29576,
+    29578,
+    29580,
+    29582,
+    29584
+   ],
+   "turnStart": 29491,
+   "nextPrompt": 29648,
+   "statement": "`cost: a one-word extension`",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVNpWt6DCvyFHuaf9Zw9|10",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVNpWt6DCvyFHuaf9Zw9",
+   "ts": "2026-09-28T06:38:13.486Z",
+   "rowLines": [
+    34147,
+    34148,
+    34149
+   ],
+   "turnStart": 33979,
+   "nextPrompt": 34311,
+   "statement": "`resolve(d.doc).segments`: confirm `resolve` returns an object with a `segments` property.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVNpWt6DCvyFHuaf9Zw9|12",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVNpWt6DCvyFHuaf9Zw9",
+   "ts": "2026-09-28T06:38:13.486Z",
+   "rowLines": [
+    34147,
+    34148,
+    34149
+   ],
+   "turnStart": 33979,
+   "nextPrompt": 34311,
+   "statement": "`P.lengthM` and `P._end`: confirm the path object has these properties, that `lengthM` is a number, and that `_end` has `x` and `theta`.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVNpWt6DCvyFHuaf9Zw9|11",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVNpWt6DCvyFHuaf9Zw9",
+   "ts": "2026-09-28T06:38:13.486Z",
+   "rowLines": [
+    34147,
+    34148,
+    34149
+   ],
+   "turnStart": 33979,
+   "nextPrompt": 34311,
+   "statement": "`buildPath(..., {step:4})`: confirm the `step` option exists and that 4 is in the right units.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWbHo1rCC1Vwm3YTQumY|7",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfWbHo1rCC1Vwm3YTQumY",
+   "ts": "2026-09-28T22:02:25.139Z",
+   "rowLines": [
+    62587
+   ],
+   "turnStart": 62577,
+   "nextPrompt": 62592,
+   "statement": "**\"The chair is pushing it now\"**: check the push status. Confirm the chair has started the push and that it hasn't already finished or failed.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWbHo1rCC1Vwm3YTQumY|6",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfWbHo1rCC1Vwm3YTQumY",
+   "ts": "2026-09-28T22:02:25.139Z",
+   "rowLines": [
+    62587
+   ],
+   "turnStart": 62577,
+   "nextPrompt": 62592,
+   "statement": "**\"while tracks of a few kilometres respond at normal speed\"**: check that the changelog says short tracks run at normal speed, and that \"a few kilometres\" matches its wording.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfWbHo1rCC1Vwm3YTQumY|1",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfWbHo1rCC1Vwm3YTQumY",
+   "ts": "2026-09-28T22:02:25.139Z",
+   "rowLines": [
+    62587
+   ],
+   "turnStart": 62577,
+   "nextPrompt": 62592,
+   "statement": "**\"B's last check is green\"**: check against the latest check output or run record for B.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVgASKnBwHqJA73cnHuG|3",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVgASKnBwHqJA73cnHuG",
+   "ts": "2026-09-28T10:25:37.492Z",
+   "rowLines": [
+    45661,
+    45662,
+    45664,
+    45666,
+    45668,
+    45670,
+    45672,
+    45674
+   ],
+   "turnStart": 45373,
+   "nextPrompt": 45799,
+   "statement": "\"(81 m, 14 m down)\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVgASKnBwHqJA73cnHuG|2",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVgASKnBwHqJA73cnHuG",
+   "ts": "2026-09-28T10:25:37.492Z",
+   "rowLines": [
+    45661,
+    45662,
+    45664,
+    45666,
+    45668,
+    45670,
+    45672,
+    45674
+   ],
+   "turnStart": 45373,
+   "nextPrompt": 45799,
+   "statement": "\"the library's p10 gap, 81 m, sized to be caught at the 460 km/h design speed\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVgASKnBwHqJA73cnHuG|8",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVgASKnBwHqJA73cnHuG",
+   "ts": "2026-09-28T10:25:37.492Z",
+   "rowLines": [
+    45661,
+    45662,
+    45664,
+    45666,
+    45668,
+    45670,
+    45672,
+    45674
+   ],
+   "turnStart": 45373,
+   "nextPrompt": 45799,
+   "statement": "\"the wall-ride font keeps an outside wall (110° out, 30° in), so it is the one this rule still acts on\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXYqo9aoX6DH8JAskCMH|15",
+   "seat": "C",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfXYqo9aoX6DH8JAskCMH",
+   "ts": "2026-09-29T10:10:50.502Z",
+   "rowLines": [
+    43495,
+    43496,
+    43498,
+    43500
+   ],
+   "turnStart": 43462,
+   "nextPrompt": 43516,
+   "statement": "`grep -c \"shots5\"`: check the count it returns. The command chain stops here if it returns 0.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXYqo9aoX6DH8JAskCMH|9",
+   "seat": "C",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfXYqo9aoX6DH8JAskCMH",
+   "ts": "2026-09-29T10:10:50.502Z",
+   "rowLines": [
+    43495,
+    43496,
+    43498,
+    43500
+   ],
+   "turnStart": 43462,
+   "nextPrompt": 43516,
+   "statement": "`from: 'if (view.head) { const d = Math.hypot(it.x - view.head.x, it.y - view.head.y); gaps.push(view.head.r + d + 12, 2 * view.head.r + d + 12); }'`: check that this string appears verbatim, exactly once, in `core/labels.js`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfXYqo9aoX6DH8JAskCMH|11",
+   "seat": "C",
+   "machine": "L",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfXYqo9aoX6DH8JAskCMH",
+   "ts": "2026-09-29T10:10:50.502Z",
+   "rowLines": [
+    43495,
+    43496,
+    43498,
+    43500
+   ],
+   "turnStart": 43462,
+   "nextPrompt": 43516,
+   "statement": "`'R9 the panel readout waits for the next state change'`: check that R9 exists and is correctly named.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVDf6Gwi5LwQ1SQq8YuU|4",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVDf6Gwi5LwQ1SQq8YuU",
+   "ts": "2026-09-28T04:38:04.390Z",
+   "rowLines": [
+    41340,
+    41341
+   ],
+   "turnStart": 41333,
+   "nextPrompt": 41354,
+   "statement": "**\"My waiter gives up at about 04:57Z.\"** Check the waiter's actual timeout or deadline in the script, its config, or the process arguments.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVDf6Gwi5LwQ1SQq8YuU|1",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVDf6Gwi5LwQ1SQq8YuU",
+   "ts": "2026-09-28T04:38:04.390Z",
+   "rowLines": [
+    41340,
+    41341
+   ],
+   "turnStart": 41333,
+   "nextPrompt": 41354,
+   "statement": "**\"Alive and waiting.\"** Confirm that the waiter process is still running and not exited or hung.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVDf6Gwi5LwQ1SQq8YuU|5",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVDf6Gwi5LwQ1SQq8YuU",
+   "ts": "2026-09-28T04:38:04.390Z",
+   "rowLines": [
+    41340,
+    41341
+   ],
+   "turnStart": 41333,
+   "nextPrompt": 41354,
+   "statement": "**\"If C isn't done by then, I'll relaunch the same script\"** Confirm which script the waiter runs and that it can be relaunched safely. This is a statement of intent, but it depends on the script and relaunch behavior being as described.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUpLEmhmuJ6dxkDgpEMV|14",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfUpLEmhmuJ6dxkDgpEMV",
+   "ts": "2026-09-27T23:32:20.786Z",
+   "rowLines": [
+    59478
+   ],
+   "turnStart": 59471,
+   "nextPrompt": 59489,
+   "statement": "\"Pretty much, but one step removed.\" This answers a question I can't see. Confirm that it matches what the user asked, since it implies the user's question was about whether the Regina data centre is run by or for an AI company.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUpLEmhmuJ6dxkDgpEMV|8",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfUpLEmhmuJ6dxkDgpEMV",
+   "ts": "2026-09-27T23:32:20.786Z",
+   "rowLines": [
+    59478
+   ],
+   "turnStart": 59471,
+   "nextPrompt": 59489,
+   "statement": "\"**Anthropic** doesn't come up in any of the Regina coverage I found.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUpLEmhmuJ6dxkDgpEMV|3",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfUpLEmhmuJ6dxkDgpEMV",
+   "ts": "2026-09-27T23:32:20.786Z",
+   "rowLines": [
+    59478
+   ],
+   "turnStart": 59471,
+   "nextPrompt": 59489,
+   "statement": "\"It builds and owns the buildings, the power and the network, and leases the space out to the companies that fill it with AI chips.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVWyWsWshufLPWXkHAwG|24",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVWyWsWshufLPWXkHAwG",
+   "ts": "2026-09-28T08:25:08.024Z",
+   "rowLines": [
+    35497,
+    35498,
+    35499,
+    35501
+   ],
+   "turnStart": 35331,
+   "nextPrompt": 35570,
+   "statement": "After the run, check that `node --check` printed no \"BAD\" lines before treating \"synced\" as success.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVWyWsWshufLPWXkHAwG|14",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVWyWsWshufLPWXkHAwG",
+   "ts": "2026-09-28T08:25:08.024Z",
+   "rowLines": [
+    35497,
+    35498,
+    35499,
+    35501
+   ],
+   "turnStart": 35331,
+   "nextPrompt": 35570,
+   "statement": "\"The measured default jump is itself 81 m with a 14 m drop\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVWyWsWshufLPWXkHAwG|7",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVWyWsWshufLPWXkHAwG",
+   "ts": "2026-09-28T08:25:08.024Z",
+   "rowLines": [
+    35497,
+    35498,
+    35499,
+    35501
+   ],
+   "turnStart": 35331,
+   "nextPrompt": 35570,
+   "statement": "`../../src/doc/index.js` is the right path, and `D.createDoc('t')` and `shell.adopt(...)` exist.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVT2FNyfxjjNDqamyw58|11",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVT2FNyfxjjNDqamyw58",
+   "ts": "2026-09-28T07:33:24.741Z",
+   "rowLines": [
+    37908,
+    37909,
+    37910
+   ],
+   "turnStart": 37768,
+   "nextPrompt": 38092,
+   "statement": "\"its last point before a fold sharper than 35° in a metre\": the 35°-in-a-metre threshold in the reader.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVT2FNyfxjjNDqamyw58|17",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVT2FNyfxjjNDqamyw58",
+   "ts": "2026-09-28T07:33:24.741Z",
+   "rowLines": [
+    37908,
+    37909,
+    37910
+   ],
+   "turnStart": 37768,
+   "nextPrompt": 38092,
+   "statement": "\"their overall median is a profile no track has\": whether the PIPE_SPLIT output supports this.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVT2FNyfxjjNDqamyw58|12",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVT2FNyfxjjNDqamyw58",
+   "ts": "2026-09-28T07:33:24.741Z",
+   "rowLines": [
+    37908,
+    37909,
+    37910
+   ],
+   "turnStart": 37768,
+   "nextPrompt": 38092,
+   "statement": "\"bank 80° on a wall-ride word, FINDINGS §7f\": the 80° figure and the section.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVJudmzRKVWB1cRfVh9A|15",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfVJudmzRKVWB1cRfVh9A",
+   "ts": "2026-09-28T05:47:00.820Z",
+   "rowLines": [
+    60320,
+    60321,
+    60322
+   ],
+   "turnStart": 60315,
+   "nextPrompt": 60341,
+   "statement": "\"Planet Coaster's documented closing spike (ARCHITECTURE §2)\". Check that ARCHITECTURE §2 documents this.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVJudmzRKVWB1cRfVh9A|10",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfVJudmzRKVWB1cRfVh9A",
+   "ts": "2026-09-28T05:47:00.820Z",
+   "rowLines": [
+    60320,
+    60321,
+    60322
+   ],
+   "turnStart": 60315,
+   "nextPrompt": 60341,
+   "statement": "\"T-180 loads run from about 20 g (Thunderhead, FINDINGS §3c) to about 90 g (Centrifuge)\". Check both figures and the §3c reference.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVJudmzRKVWB1cRfVh9A|18",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfVJudmzRKVWB1cRfVh9A",
+   "ts": "2026-09-28T05:47:00.820Z",
+   "rowLines": [
+    60320,
+    60321,
+    60322
+   ],
+   "turnStart": 60315,
+   "nextPrompt": 60341,
+   "statement": "\"Parts of T-180 tracks are locally hyperbolic surfaces, as the keeper felt\". This is untested until M3 is run.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVMsmytmHeytwPuThrru|11",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVMsmytmHeytwPuThrru",
+   "ts": "2026-09-28T06:25:55.376Z",
+   "rowLines": [
+    33949,
+    33950,
+    33951
+   ],
+   "turnStart": 33771,
+   "nextPrompt": 33979,
+   "statement": "If the file uses CRLF line endings, as is common on Windows, the `\\n` in `a` won't match and the script will throw. Check the line endings.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVMsmytmHeytwPuThrru|8",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVMsmytmHeytwPuThrru",
+   "ts": "2026-09-28T06:25:55.376Z",
+   "rowLines": [
+    33949,
+    33950,
+    33951
+   ],
+   "turnStart": 33771,
+   "nextPrompt": 33979,
+   "statement": "\"A flight that has not landed on road in 5 s is LOST\": check the 5 s limit and the LOST state.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVMsmytmHeytwPuThrru|2",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVMsmytmHeytwPuThrru",
+   "ts": "2026-09-28T06:25:55.376Z",
+   "rowLines": [
+    33949,
+    33950,
+    33951
+   ],
+   "turnStart": 33771,
+   "nextPrompt": 33979,
+   "statement": "\"p lies > 1 cm beyond it\": check that the lip threshold in the code is 1 cm. The old comment said 0.3 m sideways, so confirm the code was changed and the comment isn't just new wording.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV7eT2tGGw5N32LLSegg|2",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfV7eT2tGGw5N32LLSegg",
+   "ts": "2026-09-28T03:19:16.364Z",
+   "rowLines": [
+    40136,
+    40138
+   ],
+   "turnStart": 39999,
+   "nextPrompt": 40267,
+   "statement": "Check that the textures panel is what announces the set.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV7eT2tGGw5N32LLSegg|19",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfV7eT2tGGw5N32LLSegg",
+   "ts": "2026-09-28T03:19:16.364Z",
+   "rowLines": [
+    40136,
+    40138
+   ],
+   "turnStart": 39999,
+   "nextPrompt": 40267,
+   "statement": "`test/texture*.test.js`",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV7eT2tGGw5N32LLSegg|3",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfV7eT2tGGw5N32LLSegg",
+   "ts": "2026-09-28T03:19:16.364Z",
+   "rowLines": [
+    40136,
+    40138
+   ],
+   "turnStart": 39999,
+   "nextPrompt": 40267,
+   "statement": "Check that the preview draws this same set.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbge1VwkhGyMypuR4Uq|7",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUbge1VwkhGyMypuR4Uq",
+   "ts": "2026-09-27T20:46:20.209Z",
+   "rowLines": [
+    26961,
+    26962,
+    26963
+   ],
+   "turnStart": 26874,
+   "nextPrompt": 27309,
+   "statement": "\"§2 :46 \"bounded live by physics\"\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbge1VwkhGyMypuR4Uq|16",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUbge1VwkhGyMypuR4Uq",
+   "ts": "2026-09-27T20:46:20.209Z",
+   "rowLines": [
+    26961,
+    26962,
+    26963
+   ],
+   "turnStart": 26874,
+   "nextPrompt": 27309,
+   "statement": "`cancel()` returns \"the document as it was before the drag, no entry\". This depends on `endDrag(dragTo(h, base))` actually adding no entry.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbge1VwkhGyMypuR4Uq|12",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUbge1VwkhGyMypuR4Uq",
+   "ts": "2026-09-27T20:46:20.209Z",
+   "rowLines": [
+    26961,
+    26962,
+    26963
+   ],
+   "turnStart": 26874,
+   "nextPrompt": 27309,
+   "statement": "\"the export refuses it (src/export/fromwords.js RED)\"",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVfJhrmrrtxGm5MH13iG|8",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfVfJhrmrrtxGm5MH13iG",
+   "ts": "2026-09-28T10:14:29.122Z",
+   "rowLines": [
+    61215
+   ],
+   "turnStart": 61196,
+   "nextPrompt": 61220,
+   "statement": "\"C found a rule in your data: a rim rises at a steady rate, not to a fixed angle\": check C's analysis and that it came from the user's data.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVfJhrmrrtxGm5MH13iG|11",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfVfJhrmrrtxGm5MH13iG",
+   "ts": "2026-09-28T10:14:29.122Z",
+   "rowLines": [
+    61215
+   ],
+   "turnStart": 61196,
+   "nextPrompt": 61220,
+   "statement": "\"the bank jumps 52° inside 36 m, which the checks flag amber\": check the 52° and 36 m figures and the amber flag in the check output.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVfJhrmrrtxGm5MH13iG|2",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfVfJhrmrrtxGm5MH13iG",
+   "ts": "2026-09-28T10:14:29.122Z",
+   "rowLines": [
+    61215
+   ],
+   "turnStart": 61196,
+   "nextPrompt": 61220,
+   "statement": "\"A's palette still attaches the old walls, which would bring the lip back\": check the palette code and that the walls cause the lip.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV58kVoBtjU13HYQURUi|3",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfV58kVoBtjU13HYQURUi",
+   "ts": "2026-09-28T02:46:19.768Z",
+   "rowLines": [
+    35297,
+    35298,
+    35299
+   ],
+   "turnStart": 35106,
+   "nextPrompt": 35436,
+   "statement": "**\"the attribute layout puts the UVs at 9 and 10\"** Check the attribute layout definition. Confirm that u is at 9 and v is at 10, and whether `at()` is zero-based, since that affects what 9 and 10 mean.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV58kVoBtjU13HYQURUi|5",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfV58kVoBtjU13HYQURUi",
+   "ts": "2026-09-28T02:46:19.768Z",
+   "rowLines": [
+    35297,
+    35298,
+    35299
+   ],
+   "turnStart": 35106,
+   "nextPrompt": 35436,
+   "statement": "**`if (tex) tx = sample(tex, at(9), at(10));`** Check that this line matches the file, including that `tex`, `tx`, `sample` and `at` exist with these names and signatures, and that `at(9), at(10)` is the argument form `sample` expects.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfV58kVoBtjU13HYQURUi|1",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfV58kVoBtjU13HYQURUi",
+   "ts": "2026-09-28T02:46:19.768Z",
+   "rowLines": [
+    35297,
+    35298,
+    35299
+   ],
+   "turnStart": 35106,
+   "nextPrompt": 35436,
+   "statement": "**\"I wrote nonsense arithmetic into the UV lookup.\"** Check the UV lookup in the file to confirm it contained arithmetic in its index expressions.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYfyUir3reA6wrhBzTdp|14",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYfyUir3reA6wrhBzTdp",
+   "ts": "2026-09-30T00:25:02.077Z",
+   "rowLines": [
+    51342
+   ],
+   "turnStart": 50833,
+   "nextPrompt": 51347,
+   "statement": "\"I found nothing in my code that can cause it, and it isn't reproduced.\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYfyUir3reA6wrhBzTdp|20",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYfyUir3reA6wrhBzTdp",
+   "ts": "2026-09-30T00:25:02.077Z",
+   "rowLines": [
+    51342
+   ],
+   "turnStart": 50833,
+   "nextPrompt": 51347,
+   "statement": "\"Core mutation is 50 applied and 50 caught, with none NOT APPLIED.\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYfyUir3reA6wrhBzTdp|21",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYfyUir3reA6wrhBzTdp",
+   "ts": "2026-09-30T00:25:02.077Z",
+   "rowLines": [
+    51342
+   ],
+   "turnStart": 50833,
+   "nextPrompt": 51347,
+   "statement": "\"my mirror test was vacuous, so I rebuilt it by hand\"",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVHaXnBk5Mpq4o3JtViM|7",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVHaXnBk5Mpq4o3JtViM",
+   "ts": "2026-09-28T05:29:32.134Z",
+   "rowLines": [
+    26942,
+    26943,
+    26944
+   ],
+   "turnStart": 26765,
+   "nextPrompt": 27174,
+   "statement": "it does all three under a single lock hold, not three separate ones.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVHaXnBk5Mpq4o3JtViM|8",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVHaXnBk5Mpq4o3JtViM",
+   "ts": "2026-09-28T05:29:32.134Z",
+   "rowLines": [
+    26942,
+    26943,
+    26944
+   ],
+   "turnStart": 26765,
+   "nextPrompt": 27174,
+   "statement": "**\"Stop at DONE.\"** along with `if (/DONE/.test(t)) break;`. Confirm that `heavy.js` writes the literal `DONE` to `heavy.txt` only on full success. A `DONE` that is also written on failure, or a different marker, would make the loop stop wrongly or never stop.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVHaXnBk5Mpq4o3JtViM|6",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVHaXnBk5Mpq4o3JtViM",
+   "ts": "2026-09-28T05:29:32.134Z",
+   "rowLines": [
+    26942,
+    26943,
+    26944
+   ],
+   "turnStart": 26765,
+   "nextPrompt": 27174,
+   "statement": "it runs the suite, cargo and bench;",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUodn4ExEte5r6kUJyrD|30",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUodn4ExEte5r6kUJyrD",
+   "ts": "2026-09-27T23:23:01.793Z",
+   "rowLines": [
+    37573,
+    37574,
+    37575
+   ],
+   "turnStart": 37538,
+   "nextPrompt": 37594,
+   "statement": "The refusal codes: \"PIT_ANCHOR_MISSING, PIT_BACKWARDS … PIT_TOO_SHORT, PIT_OVER_GAP, and PIT_JOIN_NOT_FLAT (|ψ| at the joined edge > 1°).\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUodn4ExEte5r6kUJyrD|60",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUodn4ExEte5r6kUJyrD",
+   "ts": "2026-09-27T23:23:01.793Z",
+   "rowLines": [
+    37573,
+    37574,
+    37575
+   ],
+   "turnStart": 37538,
+   "nextPrompt": 37594,
+   "statement": "\"§5c's checks pass.\"",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUodn4ExEte5r6kUJyrD|13",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfUodn4ExEte5r6kUJyrD",
+   "ts": "2026-09-27T23:23:01.793Z",
+   "rowLines": [
+    37573,
+    37574,
+    37575
+   ],
+   "turnStart": 37538,
+   "nextPrompt": 37594,
+   "statement": "The CHANGED bullets for `serial.js`, `document.js`, `library.js` and `fromwords.js`: SCHEMA 3, the 2→3 migration giving `pitLane: null`, BAD_PIT_LANE, the canonical `\"pitLane\": …` line after words, and `setPitLane` / `editPitLane` each being one undo step.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUid71fKFFYP58UEeyrL|17",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUid71fKFFYP58UEeyrL",
+   "ts": "2026-09-27T22:18:17.068Z",
+   "rowLines": [
+    28526
+   ],
+   "turnStart": 28061,
+   "nextPrompt": 28561,
+   "statement": "\"`node --test \"test/*.test.js\"` gives 422 tests, 415 pass, 1 fail, 6 todo\" on the copy, and \"the font-blend test, which fails on the live tree without the diff too\"",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUid71fKFFYP58UEeyrL|32",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUid71fKFFYP58UEeyrL",
+   "ts": "2026-09-27T22:18:17.068Z",
+   "rowLines": [
+    28526
+   ],
+   "turnStart": 28061,
+   "nextPrompt": 28561,
+   "statement": "\"'validation measures a jump from its LIP' failed with `step 1: gap 13.000000000000014`\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUid71fKFFYP58UEeyrL|28",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfUid71fKFFYP58UEeyrL",
+   "ts": "2026-09-27T22:18:17.068Z",
+   "rowLines": [
+    28526
+   ],
+   "turnStart": 28061,
+   "nextPrompt": 28561,
+   "statement": "\"Test 2 places a jump as the FIRST word, which has no take-off road and stays pending\"",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUgqonCaVuF4MrFNdGuh|6",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUgqonCaVuF4MrFNdGuh",
+   "ts": "2026-09-27T21:53:57.881Z",
+   "rowLines": [
+    31242,
+    31243,
+    31244
+   ],
+   "turnStart": 31106,
+   "nextPrompt": 31660,
+   "statement": "Confirm both paths exist relative to the working directory the script runs from.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUgqonCaVuF4MrFNdGuh|14",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUgqonCaVuF4MrFNdGuh",
+   "ts": "2026-09-27T21:53:57.881Z",
+   "rowLines": [
+    31242,
+    31243,
+    31244
+   ],
+   "turnStart": 31106,
+   "nextPrompt": 31660,
+   "statement": "Confirm that these constants aren't already defined in either fake, and that the values 14, 15, 17 and 18 don't collide with existing ones. Value 16 is skipped, so check that this is intentional.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUgqonCaVuF4MrFNdGuh|3",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUgqonCaVuF4MrFNdGuh",
+   "ts": "2026-09-27T21:53:57.881Z",
+   "rowLines": [
+    31242,
+    31243,
+    31244
+   ],
+   "turnStart": 31106,
+   "nextPrompt": 31660,
+   "statement": "\"Updating both test files:\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVDD2Xjv6WqBQagbKc38|20",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVDD2Xjv6WqBQagbKc38",
+   "ts": "2026-09-28T04:32:44.760Z",
+   "rowLines": [
+    36291,
+    36293
+   ],
+   "turnStart": 36248,
+   "nextPrompt": 36310,
+   "statement": "\"`maxBuffer` 64 MB (was the 1 MB default)\" and \"the child's 300 s cap\".",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVDD2Xjv6WqBQagbKc38|37",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVDD2Xjv6WqBQagbKc38",
+   "ts": "2026-09-28T04:32:44.760Z",
+   "rowLines": [
+    36291,
+    36293
+   ],
+   "turnStart": 36248,
+   "nextPrompt": 36310,
+   "statement": "\"`--flow --export-seam` launches the app with `T180_TEST_EXPORT_FOLDER=<out>/export`\" and \"records the folder step as answered by the seam\".",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVDD2Xjv6WqBQagbKc38|28",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVDD2Xjv6WqBQagbKc38",
+   "ts": "2026-09-28T04:32:44.760Z",
+   "rowLines": [
+    36291,
+    36293
+   ],
+   "turnStart": 36248,
+   "nextPrompt": 36310,
+   "statement": "\"scratchpad `d181/seam.diff`, sha256 171c2c686509db93\".",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVfoQczifcSbdU3WP3jc|25",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVfoQczifcSbdU3WP3jc",
+   "ts": "2026-09-28T10:20:59.258Z",
+   "rowLines": [
+    39285,
+    39287
+   ],
+   "turnStart": 39270,
+   "nextPrompt": 39309,
+   "statement": "\"## 2026-09-28 — D181 closed\": the date, and the closed status.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVfoQczifcSbdU3WP3jc|8",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVfoQczifcSbdU3WP3jc",
+   "ts": "2026-09-28T10:20:59.258Z",
+   "rowLines": [
+    39285,
+    39287
+   ],
+   "turnStart": 39270,
+   "nextPrompt": 39309,
+   "statement": "\"Every run exited 0 with its 8 verdict lines and 8 pass, in 1.2–1.5 s\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVfoQczifcSbdU3WP3jc|33",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVfoQczifcSbdU3WP3jc",
+   "ts": "2026-09-28T10:20:59.258Z",
+   "rowLines": [
+    39285,
+    39287
+   ],
+   "turnStart": 39270,
+   "nextPrompt": 39309,
+   "statement": "\"The single-job re-runs never reproduce it.\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVSfw75DsfgXPUn8r1XA|19",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVSfw75DsfgXPUn8r1XA",
+   "ts": "2026-09-28T07:28:47.561Z",
+   "rowLines": [
+    35085
+   ],
+   "turnStart": 34980,
+   "nextPrompt": 35090,
+   "statement": "\"My M4 sweep runs next, and a second full-suite run for R1 follows the sweep\". Check the queue or schedule for this order.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVSfw75DsfgXPUn8r1XA|10",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVSfw75DsfgXPUn8r1XA",
+   "ts": "2026-09-28T07:28:47.561Z",
+   "rowLines": [
+    35085
+   ],
+   "turnStart": 34980,
+   "nextPrompt": 35090,
+   "statement": "\"§4 has a pointer on its existing last line, so no line number moves\". Check that the pointer was added to an existing line and that no line numbers changed (for example by diffing against the pre-edit file).",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVSfw75DsfgXPUn8r1XA|16",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVSfw75DsfgXPUn8r1XA",
+   "ts": "2026-09-28T07:28:47.561Z",
+   "rowLines": [
+    35085
+   ],
+   "turnStart": 34980,
+   "nextPrompt": 35090,
+   "statement": "\"The corrections are in a dated addendum to `p-r1-items-E_2026-09-28.md`\". Check that the file exists, that the addendum is present and dated, and that it covers both corrections.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVqHunWLU4AGeokXDLnj|19",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVqHunWLU4AGeokXDLnj",
+   "ts": "2026-09-28T12:25:29.544Z",
+   "rowLines": [
+    40233
+   ],
+   "turnStart": 40179,
+   "nextPrompt": 40274,
+   "statement": "`assert.equal(c.nV, 2 + (P.nv - 1) * P.nu);` The vertex-count formula must match how `sphere` builds poles and rings.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVqHunWLU4AGeokXDLnj|16",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVqHunWLU4AGeokXDLnj",
+   "ts": "2026-09-28T12:25:29.544Z",
+   "rowLines": [
+    40233
+   ],
+   "turnStart": 40179,
+   "nextPrompt": 40274,
+   "statement": "The builder signatures match the calls: `sphere(R, nu, nv)`, `sweep(radiusFn, h0, h1)` (with `h` as the radius function's argument), `torus(R, r, nu, nv)` and `dishedCorner(Rh, beta, dpsi, W, span, nu, nw)`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVqHunWLU4AGeokXDLnj|7",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVqHunWLU4AGeokXDLnj",
+   "ts": "2026-09-28T12:25:29.544Z",
+   "rowLines": [
+    40233
+   ],
+   "turnStart": 40179,
+   "nextPrompt": 40274,
+   "statement": "`// A session re-running a check uses these, not a copy with its own radius.` Check that the checks use `meshes.*` and `params`, or the same `P`, rather than their own copies.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUcF7EV6AGZmVbAMPwKC|25",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUcF7EV6AGZmVbAMPwKC",
+   "ts": "2026-09-27T20:53:52.215Z",
+   "rowLines": [
+    30668,
+    30669,
+    30670,
+    30672,
+    30674
+   ],
+   "turnStart": 30380,
+   "nextPrompt": 30779,
+   "statement": "`\"${KEYS.cycle.toUpperCase()}: next camera · ${KEYS.build.toUpperCase()}: build view\"`: `KEYS.cycle` really cycles to the next camera, and `KEYS.build` really jumps to build view.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUcF7EV6AGZmVbAMPwKC|26",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUcF7EV6AGZmVbAMPwKC",
+   "ts": "2026-09-27T20:53:52.215Z",
+   "rowLines": [
+    30668,
+    30669,
+    30670,
+    30672,
+    30674
+   ],
+   "turnStart": 30380,
+   "nextPrompt": 30779,
+   "statement": "`mount(root)` takes only `root`: the host calls camera panel mounts without `shell`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUcF7EV6AGZmVbAMPwKC|21",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUcF7EV6AGZmVbAMPwKC",
+   "ts": "2026-09-27T20:53:52.215Z",
+   "rowLines": [
+    30668,
+    30669,
+    30670,
+    30672,
+    30674
+   ],
+   "turnStart": 30380,
+   "nextPrompt": 30779,
+   "statement": "`\"The cameras themselves live in the preview (app/preview/index.js)\"`: the camera logic is in `app/camera/cameras.js` and the rig. The preview only hosts it, so the wording may be wrong.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVTSkueznwfD1kdu6HXz|27",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVTSkueznwfD1kdu6HXz",
+   "ts": "2026-09-28T07:38:57.317Z",
+   "rowLines": [
+    44543,
+    44544
+   ],
+   "turnStart": 44512,
+   "nextPrompt": 44549,
+   "statement": "\"one fix to the spread map (outside the verdict)\" (confirm it's exactly one change and that it doesn't touch the verdict logic)",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVTSkueznwfD1kdu6HXz|6",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVTSkueznwfD1kdu6HXz",
+   "ts": "2026-09-28T07:38:57.317Z",
+   "rowLines": [
+    44543,
+    44544
+   ],
+   "turnStart": 44512,
+   "nextPrompt": 44549,
+   "statement": "\"built, checked in the installed app, restored, and handed back\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVTSkueznwfD1kdu6HXz|22",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfVTSkueznwfD1kdu6HXz",
+   "ts": "2026-09-28T07:38:57.317Z",
+   "rowLines": [
+    44543,
+    44544
+   ],
+   "turnStart": 44512,
+   "nextPrompt": 44549,
+   "statement": "\"stale working copies were silently undoing main's latest landing\" (check against the history or diffs)",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZRPEP4SPai6NPSVHDeT|18",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfZRPEP4SPai6NPSVHDeT",
+   "ts": "2026-09-30T09:54:20.066Z",
+   "rowLines": [
+    66187,
+    66188,
+    66189,
+    66191
+   ],
+   "turnStart": 66174,
+   "nextPrompt": 66205,
+   "statement": "\"OUTPUT → NEXT: unchanged\": check that the plan really is the same as the previous handoff.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZRPEP4SPai6NPSVHDeT|16",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfZRPEP4SPai6NPSVHDeT",
+   "ts": "2026-09-30T09:54:20.066Z",
+   "rowLines": [
+    66187,
+    66188,
+    66189,
+    66191
+   ],
+   "turnStart": 66174,
+   "nextPrompt": 66205,
+   "statement": "\"Legacy segments whose width or binding r changes are drawn as chords; the readers evaluate the blend (readsBlend = cup || chord)\": check against the code, including the `readsBlend` expression.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZRPEP4SPai6NPSVHDeT|21",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfZRPEP4SPai6NPSVHDeT",
+   "ts": "2026-09-30T09:54:20.066Z",
+   "rowLines": [
+    66187,
+    66188,
+    66189,
+    66191
+   ],
+   "turnStart": 66174,
+   "nextPrompt": 66205,
+   "statement": "\"NEXT: chair dispatch the D195+D196 combine to B when the collation is read\": check that this is the intended next step and that B is the right assignee.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYZCHzjAEXGB9jqzT5Dj|23",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYZCHzjAEXGB9jqzT5Dj",
+   "ts": "2026-09-29T22:56:08.911Z",
+   "rowLines": [
+    50633,
+    50634
+   ],
+   "turnStart": 50587,
+   "nextPrompt": 50677,
+   "statement": "\"the adapter does not mark a cup segment (the readers then take its target for the whole segment)\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYZCHzjAEXGB9jqzT5Dj|24",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYZCHzjAEXGB9jqzT5Dj",
+   "ts": "2026-09-29T22:56:08.911Z",
+   "rowLines": [
+    50633,
+    50634
+   ],
+   "turnStart": 50587,
+   "nextPrompt": 50677,
+   "statement": "\"a word document's font-transition blend is NOT evaluated by the readers, only a cup's\"",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYZCHzjAEXGB9jqzT5Dj|22",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfYZCHzjAEXGB9jqzT5Dj",
+   "ts": "2026-09-29T22:56:08.911Z",
+   "rowLines": [
+    50633,
+    50634
+   ],
+   "turnStart": 50587,
+   "nextPrompt": 50677,
+   "statement": "\"the readers evaluate a word document's font-transition blend too (its validation and layout change)\"",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUvjKa2LmRvSevpPrx69|4",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUvjKa2LmRvSevpPrx69",
+   "ts": "2026-09-28T00:56:55.179Z",
+   "rowLines": [
+    34118,
+    34119,
+    34120
+   ],
+   "turnStart": 34108,
+   "nextPrompt": 34281,
+   "statement": "\"a full rebuild accumulates world positions substep by substep\". Confirm the build loop actually does this.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUvjKa2LmRvSevpPrx69|9",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUvjKa2LmRvSevpPrx69",
+   "ts": "2026-09-28T00:56:55.179Z",
+   "rowLines": [
+    34118,
+    34119,
+    34120
+   ],
+   "turnStart": 34108,
+   "nextPrompt": 34281,
+   "statement": "\"the double reflection with T₀ = T₁ is the identity\". This is math, but in floating point it is exact only if the implementation short-circuits or the operations cancel exactly. Check the code, not just the algebra.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUvjKa2LmRvSevpPrx69|1",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUvjKa2LmRvSevpPrx69",
+   "ts": "2026-09-28T00:56:55.179Z",
+   "rowLines": [
+    34118,
+    34119,
+    34120
+   ],
+   "turnStart": 34108,
+   "nextPrompt": 34281,
+   "statement": "\"`tools/` is in the harness copy\". Check the harness copy directory for `tools/`.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUtwBp41sD343Yw5xNMJ|20",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfUtwBp41sD343Yw5xNMJ",
+   "ts": "2026-09-28T00:32:39.091Z",
+   "rowLines": [
+    25487,
+    25489
+   ],
+   "turnStart": 25179,
+   "nextPrompt": 25620,
+   "statement": "\"`scripts/bench.js`, 40 km along the app's own edit path\". Check the script exists, the distance and the code path.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUtwBp41sD343Yw5xNMJ|11",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfUtwBp41sD343Yw5xNMJ",
+   "ts": "2026-09-28T00:32:39.091Z",
+   "rowLines": [
+    25487,
+    25489
+   ],
+   "turnStart": 25179,
+   "nextPrompt": 25620,
+   "statement": "\"Not yet in the palette.\" Check that nothing references it in the palette code.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUtwBp41sD343Yw5xNMJ|32",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfUtwBp41sD343Yw5xNMJ",
+   "ts": "2026-09-28T00:32:39.091Z",
+   "rowLines": [
+    25487,
+    25489
+   ],
+   "turnStart": 25179,
+   "nextPrompt": 25620,
+   "statement": "\"the status is no longer \"planned, not built\"\". Check the README text.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZKVUoi1MHT9CL1fJZb4|5",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfZKVUoi1MHT9CL1fJZb4",
+   "ts": "2026-09-30T08:36:56.216Z",
+   "rowLines": [
+    83899
+   ],
+   "turnStart": 83894,
+   "nextPrompt": 83904,
+   "statement": "**\"No lap is open.\"**: Check whatever records laps (a state file, log, or tracker) for any open or unclosed lap.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZKVUoi1MHT9CL1fJZb4|7",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfZKVUoi1MHT9CL1fJZb4",
+   "ts": "2026-09-30T08:36:56.216Z",
+   "rowLines": [
+    83899
+   ],
+   "turnStart": 83894,
+   "nextPrompt": 83904,
+   "statement": "**\"pushed\"**: Confirm that `main` on the remote is at `6ed0b4f`, and that local and remote match.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfZKVUoi1MHT9CL1fJZb4|2",
+   "seat": "chair",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+   "messageId": "msg_011CfZKVUoi1MHT9CL1fJZb4",
+   "ts": "2026-09-30T08:36:56.216Z",
+   "rowLines": [
+    83899
+   ],
+   "turnStart": 83894,
+   "nextPrompt": 83904,
+   "statement": "**\"It had no links\"**: Check what \"links\" means here (symlinks, junctions, or references from other worktrees or branches). It's past tense, so it can only be checked from a record made before removal, or from the leftover branch and refs.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYBTASADpTqvXN4WUNWZ|5",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfYBTASADpTqvXN4WUNWZ",
+   "ts": "2026-09-29T18:10:55.586Z",
+   "rowLines": [
+    32715,
+    32716,
+    32717
+   ],
+   "turnStart": 32587,
+   "nextPrompt": 32738,
+   "statement": "\"written on L for L130-R and never run there\": check the history for where it was written, what it was for, and that it was never run.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYBTASADpTqvXN4WUNWZ|1",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfYBTASADpTqvXN4WUNWZ",
+   "ts": "2026-09-29T18:10:55.586Z",
+   "rowLines": [
+    32715,
+    32716,
+    32717
+   ],
+   "turnStart": 32587,
+   "nextPrompt": 32738,
+   "statement": "\"The base run is working\": confirm against the actual run output.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYBTASADpTqvXN4WUNWZ|13",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfYBTASADpTqvXN4WUNWZ",
+   "ts": "2026-09-29T18:10:55.586Z",
+   "rowLines": [
+    32715,
+    32716,
+    32717
+   ],
+   "turnStart": 32587,
+   "nextPrompt": 32738,
+   "statement": "`D.createDoc`, `D.appendPiece`, and `D.flightPiece({ gap: 30, drop: 2, land: -0.05 })`",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYJsHCwKPf6QwnxbP9Mz|16",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfYJsHCwKPf6QwnxbP9Mz",
+   "ts": "2026-09-29T19:48:16.904Z",
+   "rowLines": [
+    40192
+   ],
+   "turnStart": 40174,
+   "nextPrompt": 40198,
+   "statement": "\"Every speed is measured from the camera's actual movement per frame, not read from the code.\": check the probe code measures camera displacement.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYJsHCwKPf6QwnxbP9Mz|5",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfYJsHCwKPf6QwnxbP9Mz",
+   "ts": "2026-09-29T19:48:16.904Z",
+   "rowLines": [
+    40192
+   ],
+   "turnStart": 40174,
+   "nextPrompt": 40198,
+   "statement": "\"A's four file hashes matched.\": recompute the four hashes and compare them to the hand-back.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYJsHCwKPf6QwnxbP9Mz|10",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfYJsHCwKPf6QwnxbP9Mz",
+   "ts": "2026-09-29T19:48:16.904Z",
+   "rowLines": [
+    40192
+   ],
+   "turnStart": 40174,
+   "nextPrompt": 40198,
+   "statement": "\"the full suite (the chair's next step)\": check the chair's next step is the full suite.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfViLZA4Wyp3UwPJWREn2|6",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfViLZA4Wyp3UwPJWREn2",
+   "ts": "2026-09-28T10:54:17.346Z",
+   "rowLines": [
+    46085,
+    46086,
+    46087
+   ],
+   "turnStart": 46073,
+   "nextPrompt": 46111,
+   "statement": "`const { ratesOf }`. Check that `bankrate.cjs` exports `ratesOf`.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfViLZA4Wyp3UwPJWREn2|16",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfViLZA4Wyp3UwPJWREn2",
+   "ts": "2026-09-28T10:54:17.346Z",
+   "rowLines": [
+    46085,
+    46086,
+    46087
+   ],
+   "turnStart": 46073,
+   "nextPrompt": 46111,
+   "statement": "`['bowl', 'half-pipe', 'flat']`. Check that these are all valid measured fonts.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfViLZA4Wyp3UwPJWREn2|5",
+   "seat": "A",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f.jsonl",
+   "messageId": "msg_011CfViLZA4Wyp3UwPJWREn2",
+   "ts": "2026-09-28T10:54:17.346Z",
+   "rowLines": [
+    46085,
+    46086,
+    46087
+   ],
+   "turnStart": 46073,
+   "nextPrompt": 46111,
+   "statement": "`require('../tools/bankrate.cjs')`. Check that the file exists at this path relative to the test file.",
+   "assign": [
+    "B",
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVNvVPhovezQ33mHDaFM|31",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVNvVPhovezQ33mHDaFM",
+   "ts": "2026-09-28T06:39:38.119Z",
+   "rowLines": [
+    27127,
+    27128,
+    27129
+   ],
+   "turnStart": 26765,
+   "nextPrompt": 27174,
+   "statement": "\"the background is darker than the fog, so surfaces facing away from the sun no longer merge into it\": this matches the renderer settings.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVNvVPhovezQ33mHDaFM|22",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVNvVPhovezQ33mHDaFM",
+   "ts": "2026-09-28T06:39:38.119Z",
+   "rowLines": [
+    27127,
+    27128,
+    27129
+   ],
+   "turnStart": 26765,
+   "nextPrompt": 27174,
+   "statement": "\"(100 ms, 50 ms, 1 s)\": these match the budgets defined in the repo.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVNvVPhovezQ33mHDaFM|13",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfVNvVPhovezQ33mHDaFM",
+   "ts": "2026-09-28T06:39:38.119Z",
+   "rowLines": [
+    27127,
+    27128,
+    27129
+   ],
+   "turnStart": 26765,
+   "nextPrompt": 27174,
+   "statement": "\"The number stays unmeasured until reference shots from AC exist\": no reference shots exist yet.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUuMEt227Drxpa8rpN1S|2",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUuMEt227Drxpa8rpN1S",
+   "ts": "2026-09-28T00:38:07.509Z",
+   "rowLines": [
+    33779,
+    33780,
+    33781
+   ],
+   "turnStart": 33473,
+   "nextPrompt": 34008,
+   "statement": "`m between path stations: the export's (...) and validation's`. Check that validation's step is also 2.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUuMEt227Drxpa8rpN1S|1",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUuMEt227Drxpa8rpN1S",
+   "ts": "2026-09-28T00:38:07.509Z",
+   "rowLines": [
+    33779,
+    33780,
+    33781
+   ],
+   "turnStart": 33473,
+   "nextPrompt": 34008,
+   "statement": "`src/export/fromwords.js `step: 2`` (also `buildExport `step: 2``). Check that the file exists, that `buildExport` sets `step: 2`, and that the export really uses 2 m.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUuMEt227Drxpa8rpN1S|12",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfUuMEt227Drxpa8rpN1S",
+   "ts": "2026-09-28T00:38:07.509Z",
+   "rowLines": [
+    33779,
+    33780,
+    33781
+   ],
+   "turnStart": 33473,
+   "nextPrompt": 34008,
+   "statement": "The calls `geom.extendPath`, `geom.extendMesh`, `geom.rebuildPathFrom` and `geom.sculptMesh` (the pre-existing branch code). Check that these exist and that the `segs`, `keys`, `nk`, `g`, `batches`, `last` and `worldBounds` identifiers are in scope.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVSSHLM73F97gYdkUPey|2",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVSSHLM73F97gYdkUPey",
+   "ts": "2026-09-28T07:25:47.904Z",
+   "rowLines": [
+    35009,
+    35010,
+    35011,
+    35013
+   ],
+   "turnStart": 34980,
+   "nextPrompt": 35090,
+   "statement": "The first `rep` anchor, `//   · vertices are welded at 5 mm (as tools/envelope.cjs welds), and an edge used by ONE triangle is a boundary edge;`. Check that this exact comment line is in `raygap.js`, including spacing and the `·` character.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVSSHLM73F97gYdkUPey|14",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVSSHLM73F97gYdkUPey",
+   "ts": "2026-09-28T07:25:47.904Z",
+   "rowLines": [
+    35009,
+    35010,
+    35011,
+    35013
+   ],
+   "turnStart": 34980,
+   "nextPrompt": 35090,
+   "statement": "`V` and `P` are in scope in `raygap.js` before `vid` is defined. `V` is assumed to be a `Map` and `P` an array.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVSSHLM73F97gYdkUPey|1",
+   "seat": "E",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565.jsonl",
+   "messageId": "msg_011CfVSSHLM73F97gYdkUPey",
+   "ts": "2026-09-28T07:25:47.904Z",
+   "rowLines": [
+    35009,
+    35010,
+    35011,
+    35013
+   ],
+   "turnStart": 34980,
+   "nextPrompt": 35090,
+   "statement": "`'C:/Users/nname/Desktop/t180-track-builder/src/validate/raygap.js'`: check that this file exists at this path.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYgGGMBg5ozsndK2XoLU|16",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfYgGGMBg5ozsndK2XoLU",
+   "ts": "2026-09-30T00:28:47.853Z",
+   "rowLines": [
+    33495,
+    33496
+   ],
+   "turnStart": 33421,
+   "nextPrompt": 33503,
+   "statement": "**\"if it fails again\"**",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYgGGMBg5ozsndK2XoLU|14",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfYgGGMBg5ozsndK2XoLU",
+   "ts": "2026-09-30T00:28:47.853Z",
+   "rowLines": [
+    33495,
+    33496
+   ],
+   "turnStart": 33421,
+   "nextPrompt": 33503,
+   "statement": "Check that the TAP log actually captures N2's child process exit code or status, and not only the pass/fail result.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfYgGGMBg5ozsndK2XoLU|17",
+   "seat": "B",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925.jsonl",
+   "messageId": "msg_011CfYgGGMBg5ozsndK2XoLU",
+   "ts": "2026-09-30T00:28:47.853Z",
+   "rowLines": [
+    33495,
+    33496
+   ],
+   "turnStart": 33421,
+   "nextPrompt": 33503,
+   "statement": "This implies N2 failed before. Check the earlier run's record to confirm it did fail.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVD8D3NaRRvyq3cYSwpT|7",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVD8D3NaRRvyq3cYSwpT",
+   "ts": "2026-09-28T04:31:06.991Z",
+   "rowLines": [
+    36225,
+    36227
+   ],
+   "turnStart": 36019,
+   "nextPrompt": 36248,
+   "statement": "`verdictOf(output, name)`: this function exists, takes these arguments in this order, and returns a verdict. The reply doesn't show the expected return values for the four cases.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVD8D3NaRRvyq3cYSwpT|4",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVD8D3NaRRvyq3cYSwpT",
+   "ts": "2026-09-28T04:31:06.991Z",
+   "rowLines": [
+    36225,
+    36227
+   ],
+   "turnStart": 36019,
+   "nextPrompt": 36248,
+   "statement": "`'✖ C:\\\\repo\\\\test\\\\geom_sculpt.test.js (6718.3ms)\\n✖ failing tests:\\n'`: a real file-level failure line has this shape, and `geom_sculpt.test.js` is a real file name.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfVD8D3NaRRvyq3cYSwpT|1",
+   "seat": "C",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1.jsonl",
+   "messageId": "msg_011CfVD8D3NaRRvyq3cYSwpT",
+   "ts": "2026-09-28T04:31:06.991Z",
+   "rowLines": [
+    36225,
+    36227
+   ],
+   "turnStart": 36019,
+   "nextPrompt": 36248,
+   "statement": "`cd /c/Users/nname/Desktop/t180-track-builder`: this directory exists.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbQsG2LZUbpudYSQG3D|7",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfUbQsG2LZUbpudYSQG3D",
+   "ts": "2026-09-27T20:42:48.097Z",
+   "rowLines": [
+    58908
+   ],
+   "turnStart": 58900,
+   "nextPrompt": 58913,
+   "statement": "**\"A: the desktop app shell and the build palette.\"**: check A's assignment scope.",
+   "assign": [
+    "B"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbQsG2LZUbpudYSQG3D|2",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfUbQsG2LZUbpudYSQG3D",
+   "ts": "2026-09-27T20:42:48.097Z",
+   "rowLines": [
+    58908
+   ],
+   "turnStart": 58900,
+   "nextPrompt": 58913,
+   "statement": "**\"a finished AC track folder can now come straight out of the track document\"**: confirm the export produces a complete AC track folder from the track document, by running it or checking E's output.",
+   "assign": [
+    "C"
+   ]
+  },
+  {
+   "claimId": "msg_011CfUbQsG2LZUbpudYSQG3D|11",
+   "seat": "librarian",
+   "machine": "D",
+   "transcript": "C--Consonance-instances-librarian/0c0c0c0b-0000-4000-8000-00000000115b.jsonl",
+   "messageId": "msg_011CfUbQsG2LZUbpudYSQG3D",
+   "ts": "2026-09-27T20:42:48.097Z",
+   "rowLines": [
+    58908
+   ],
+   "turnStart": 58900,
+   "nextPrompt": 58913,
+   "statement": "**\"two things now run side by side\"**: check that the landing and the D168 app work are both actually underway at the same time, not just planned.",
+   "assign": [
+    "C"
+   ]
+  }
+ ]
+}

@@ -204,7 +204,7 @@ if (-not $gotMutex) {
 # WHERE THE EXE ACTUALLY IS -- ASKED, NOT ASSUMED.
 # This line used to be `Join-Path $root 'src-tauri\target\release\consonance.exe'`. On
 # 2026-07-28 CARGO_TARGET_DIR was set to C:\build\lighthouse-target to get 19.5 GB of build
-# output out of OneDrive's sync scope, and this script broke SILENTLY AND IMMEDIATELY: cargo
+# output out of a file-sync folder's scope, and this script broke SILENTLY AND IMMEDIATELY: cargo
 # emitted to the new location, $exe still pointed at the old one, the stale exe was still on
 # disk so Test-Path stayed true, and every click rebuilt successfully, printed "Build ready -
 # launching" in green, and then started a BINARY THAT WAS NEVER UPDATED AGAIN. That is the

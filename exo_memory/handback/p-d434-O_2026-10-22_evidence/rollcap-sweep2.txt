@@ -1,0 +1,9 @@
+cap 0.9 {"lap":"testtrack10","shareUsed":0.75,"plan":"RSL at R 300 m: turn -243.1°, 760 m straight, tu","meanLean":58.9,"out":0,"maxLatG":4.66,"worstRoll":0.917,"amber":0.9338}
+cap 0.9 {"lap":"test10","shareUsed":0.75,"plan":"LSR at R 300 m: turn 175.5°, 746 m straight, tur","meanLean":61,"out":0,"maxLatG":4.23,"worstRoll":0.602,"amber":0.9338}
+cap 0.9 {"lap":"gentle","shareUsed":0.75,"plan":"SC at R 1983 m: turn 0°, 1000 m straight, turn 1","meanLean":null,"out":0,"maxLatG":0,"worstRoll":0.026,"amber":0.9338}
+cap 0.7 {"lap":"testtrack10","shareUsed":0.75,"plan":"RSL at R 300 m: turn -243.1°, 760 m straight, tu","meanLean":58.7,"out":0,"maxLatG":4.66,"worstRoll":0.917,"amber":0.9338}
+cap 0.7 {"lap":"test10","shareUsed":0.75,"plan":"LSR at R 300 m: turn 175.5°, 746 m straight, tur","meanLean":61,"out":0,"maxLatG":4.23,"worstRoll":0.602,"amber":0.9338}
+cap 0.7 {"lap":"gentle","shareUsed":0.75,"plan":"SC at R 1983 m: turn 0°, 1000 m straight, turn 1","meanLean":null,"out":0,"maxLatG":0,"worstRoll":0.026,"amber":0.9338}
+cap 0.5 {"lap":"testtrack10","shareUsed":0.75,"plan":"RSL at R 300 m: turn -243.1°, 760 m straight, tu","meanLean":58.2,"out":0,"maxLatG":4.66,"worstRoll":0.917,"amber":0.9338}
+cap 0.5 {"lap":"test10","shareUsed":0.75,"plan":"LSR at R 300 m: turn 175.5°, 746 m straight, tur","meanLean":61,"out":0,"maxLatG":4.23,"worstRoll":0.47,"amber":0.9338}
+cap 0.5 {"lap":"gentle","shareUsed":0.75,"plan":"SC at R 1983 m: turn 0°, 1000 m straight, turn 1","meanLean":null,"out":0,"maxLatG":0,"worstRoll":0.026,"amber":0.9338}

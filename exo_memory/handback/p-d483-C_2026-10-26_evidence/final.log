@@ -1,0 +1,11 @@
+geom_mutation-2 exit 0
+At line:1 char:111
++ ...  | % { [int]\../t180-wt-c483-base/app/test/drag-frame.test.js.CookedV ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unexpected token '\../t180-wt-c483-base/app/test/drag-frame.test.js.CookedValue' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+redfinal-base exit 1
+dragframe-final exit 0
+done

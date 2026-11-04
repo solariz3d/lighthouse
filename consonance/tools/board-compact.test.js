@@ -89,7 +89,7 @@ const FIXTURE = L.join('\n') + '\n';
 const EXPECTED = KEPT_INDEXES.map(i => L[i]).join('\n') + '\n';
 
 function tmpdir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'board-compact-'));
+  return require('./scratch.js').mkdtemp('board-compact-');
 }
 
 // ── the rule ───────────────────────────────────────────────────────────────────────────────────

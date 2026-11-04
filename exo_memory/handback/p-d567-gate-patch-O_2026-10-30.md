@@ -1,0 +1,225 @@
+# D567: ELYSIUM's sector-2 gate moved onto flat road, in a copy of his export (pane O, prove it)
+
+**Brief:** the chair's ring of 2026-10-31T00:27:20Z, Part 2a of `exo_memory/loop/plan_sector_gates_on_flat_road_2026-10-30.md`.
+
+**The answer:** a patched copy is built and verified. It is **ready to install on his word, with the game closed.** Nothing was installed and nothing was written in the game folders. His racing folder was only read: the ui files, `map.png` and `data/map.ini` were copied in background mode; the kn5, AI line and other files were the D560 copies I already held.
+
+**One deviation from the plan, for the brief's own width test:**
+- **The plan's 15° bar puts the gate at s 19,264.1:**
+  - camber 14.8°;
+  - 28.94 m wide top-down;
+  - L–R tilt 9.35°;
+  - both laps cross it 4.6–5.0 m from the gate line.
+- **The delivered gate uses a 2° bar and stands at s 12,958.5:**
+  - 31.73 m wide top-down;
+  - 0.54 m vertical;
+  - both laps cross it 2.2–2.8 m from the line, as they do the start gate and TIME_1, which work.
+- The tool's default stays the plan's 15° (`FLOOR_MAX_DEG`); the CLI takes `--max-tilt`.
+
+`S` = `C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-36313935\c88002b1-74d8-4036-8cc0-f64aefbeabff\scratchpad\d567\`.
+
+## The tool (t180, branch d567-o, `acc9280` on 60c7688)
+
+- **`tools/kn5-move-gate.cjs`**, `moveGate(kn5Buffer, stations, { gate, nearS, closed, maxTiltDeg })`. It walks the kn5's node tree as `tools/kn5.cjs` does, recording each dummy's matrix offset and its parent's world matrix.
+- **The search** runs outward from `nearS` in both directions, up to a quarter of the line. It takes the first AI station where:
+  - the AI normal's camber is ≤ the bar and the climb is ≤ 20°;
+  - the gate, laid edge to edge less `gateInsetM` 0.5, is within the bar of level;
+  - `src/markers/checks.js` (gate-orientation, height-and-heading, slots) passes on the gate's measured height, normal and u.
+- **The gate stands as `place.js` stands a marker:** up is the surface normal, forward is the tangent in the surface, at `DEFAULTS.height` 1.5 m.
+- **The edges** are found by rays down the normal, from 8 m above the road, stepped across.
+- **The write:** it rewrites only the two 64-byte matrices, into a copy of the buffer.
+- **It refuses with a code, and writes nothing,** in each of these cases: `NO_GATE`, `PARENT_NOT_IDENTITY`, `NO_FLAT_STATION`, `NO_ROAD`, `BAD_KN5`, `BAD_INPUT`, and `OUT_EXISTS` (the CLI writes a new folder only).
+- **CLI:** `node tools/kn5-move-gate.cjs <track folder> <new folder> --near <s> [--gate 2] [--max-tilt 15] [--name "..."] [--open]`. It copies every file, writes the patched kn5, and changes `ui_track.json`'s `name` only.
+- **`MAP.md`:** the `tools/` row now names it (3 files). `build.rs` bundles `tools/` whole, so it ships, though nothing requires it.
+
+**Tests:** `test/kn5-move-gate.test.js`, 8/8. checked: `node --test test/kn5-move-gate.test.js` → tests 8, pass 8, fail 0. The scene is a synthetic kn5 (via `writeKn5`) with a road banked 85° for 100 m and then flat.
+- Bytes changed only in the two matrices, with the same length, the same meshes and the other dummies identical. The input buffer is not modified.
+- The gate moves onto the nearest flat station (s 102), is 31.84 m top-down, has L left of R, and is level.
+- `checks.js` passes, with heights between 1 and 2 m.
+- `NO_FLAT_STATION` when there is no flat road.
+- `NO_GATE`.
+- `PARENT_NOT_IDENTITY`.
+- An AI camber of 25° is honoured over a level mesh.
+- A mesh banked 18° under a line that says flat is refused.
+
+**Red first:**
+- The file ran red before the tool existed (the module was missing).
+- The last two tests were added after 2 of 13 mutants survived the first six tests. In those six scenes the camber rule and the level rule each covered the other. Debugging them also found the 4 m ray reach cutting short a banked edge, so the reach became 8 m. Both mutants are caught now.
+
+**Mutation run:** hand mutants, `S\mutants.js` → `S\mutants-final.out`: **applied 13 / caught 13 / NOT APPLIED 0**. The mutants are:
+- only L written;
+- the offset off by one float;
+- the input mutated;
+- the camber test dropped;
+- a one-sided search;
+- farthest first;
+- L and R swapped;
+- the inset ignored;
+- the checks ignored;
+- the level test dropped;
+- the parent check dropped;
+- a silent write when no station passes;
+- the height off the normal.
+
+No harness names this new file.
+
+## The patched copy: `S\t180b_elysium_gates\` (10 files)
+
+checked: `node S\run.js` → `S\run-tilt2.out`; `node S\verify.js` (in `S\run2-tilt2.out`), which is independent of the tool's own report:
+
+- `t180b_elysium.kn5`:
+  - 203,816,893 bytes, the same as the original;
+  - sha256 `21a13bf81a0c4eca…` → `d41a9f41ddce6976…`;
+  - **88 bytes differ, 0 of them outside the two matrices** (AC_TIME_2_L @167,193,890, _R @167,193,978; the bytes before each matrix read the gate's own name);
+  - re-read with `tools/kn5.cjs`: 182 meshes identical (name, vertex and index counts, world-position hash), 5 materials, 31 dummies in the same order, all but AC_TIME_2_L/R identical.
+- **The new AC_TIME_2:**
+  - L (−882.82, −294.19, 7.36), R (−907.11, −293.64, −13.05);
+  - **31.73 m top-down**, 31.73 m in 3D, 0.54 m vertical;
+  - forward (−0.65, 0.04, 0.76);
+  - 1.50 / 1.50 m over the road;
+  - the three gate checks pass.
+  - It was 30.38 m in 3D, 3.45 m top-down and 30.18 m vertical at s 17,680.
+- **The other 8 files are byte-equal to his.** `ui/ui_track.json` changes only `name`: `"ELYSIUM"` → `"ELYSIUM GATES"`.
+- The 15° build is kept aside as `S\superseded-tilt15-t180b_elysium_gates\`; it is not the delivery.
+
+**The sectors become** 984 → 9,335 → 12,958.5 → the line again: 8,351 / 3,624 / 13,065 m. They were 8,351 / 8,345 / 8,343 m. The thirds are gone because the road from s 14,050 to 23,823 has no stretch under 15° longer than 120 m, and none under 5° (`S\survey.js`, over the AI line's 4,175 stations).
+
+| bar | station | camber / climb | top-down | L–R tilt |
+|---|---|---|---|---|
+| 15° (the plan's) | 19,264.1 | 14.8° / 11.2° | 28.94 m | 9.35° |
+| 5° | 13,312.4 | 5.0° / 3.5° | 31.61 m | 3.62° |
+| **2° (delivered)** | **12,958.5** | **2.0° / 1.8°** | **31.73 m** | **0.98°** |
+
+(`S\alt.js`, in memory, nothing written.) The start gate's camber is 0.0° and TIME_1's −0.5°.
+
+## Both raced laps against the new gate (D565's `gates.js` on the patched dummies)
+
+| lap | crossing | top-down | 3D, from the segment |
+|---|---|---|---|
+| reference (recorded 2:25.284) | t 588.479 | inside, tau 0.912 | 2.23 m |
+| C03 (closed at 2:30.216, unrecorded) | t 85.435 | inside, tau 0.805 | 2.75 m |
+
+- For comparison, at the 15° station they crossed 4.99 / 4.55 m from it; at the start gate 2.5–3.2 m and at TIME_1 3.0–3.3 m.
+- **The road passes over the new gate about 8 s later, 64 m up.** That pass is inside the segment top-down (reference t 596.594, C03 t 94.254).
+- The start gate has the same pattern: a pass 57–61 m off, inside its segment top-down (reference t 541.610, C03 t 36.488). The reference lap was recorded with it. inferred: the overhead pass does not void a lap.
+- Could be wrong if AC orders gate passes in a way the start gate's case does not exercise.
+
+## Installing (on his word, with the game closed)
+
+- Copy `S\t180b_elysium_gates\` into the game's `content\tracks\` as a new folder of that name, beside `t180b_elysium`. Nothing in his folder changes.
+- It shows as "ELYSIUM GATES". Its records and ghost start empty, because AC keys them by the folder.
+- **The test** is his lap in any car: sectors 1, 2 and 3 complete, and a time is recorded.
+- **The plan's falsifier:** if a clean lap still does not record with all three sectors shown, the gate was not the cause (or not the only one). The next read is then AC's own lap-validity rules against that lap's replay.
+
+## Corrections
+
+- My first build used the plan's 15° bar and gave 28.94 m against the brief's ~31.9. It was set aside, not delivered.
+- Two of my first six tests did not separate the camber rule from the level rule, and 2 mutants survived; fixed as above.
+
+## §STIFF: a second test folder, "ELYSIUM GATES STIFF" (D568, check it)
+
+**Brief:** the chair's ring of 2026-10-31T00:42:19Z.
+
+**The folders** (both in `S`, as above; **neither is installed**; both wait for his word that the game is closed):
+
+| folder | shows as | tests |
+|---|---|---|
+| `S\t180b_elysium_gates\` | ELYSIUM GATES | lap validity (sector 2 on flat road), any car |
+| `S\t180b_elysium_gates_stiff\` | ELYSIUM GATES STIFF | whether a stiffer soft road holds C07's pass at about 63 g, at the same pace |
+
+**What STIFF changes:**
+- It is a copy of GATES with one value: `SOFT_CFM` 0.0002 → 0.00005. That is D525's variant B (`p-d525-soft-O_2026-10-28.md`:45; CSP's own wording: "the higher it is, the softer is the collision").
+- Nothing else in the soft block changed: `MESHES=1ROAD?`, `SOFT_ERP=0.8`, `BOUNCE=0.1`, `FRICTION=0.05`, `MAX_DEPTH=4`.
+- D525's B file also carried a comment line. I left it out, so the diff is exactly the value.
+
+**Checked** (`diff` and `sha256sum` over every file of both folders):
+- **`data/surfaces.ini`:** the diff is one line, `26c26: SOFT_CFM=0.0002` → `SOFT_CFM=0.00005`.
+  - GATES sha256 `21396ea8580aeefff567318e6c4280d132176ae6e9272c76f6fa48983e2af5b3`.
+  - STIFF sha256 `039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb`.
+- **`ui/ui_track.json`:** the diff is one line, `"name": "ELYSIUM GATES"` → `"ELYSIUM GATES STIFF"`.
+  - GATES `ba978a66cd380d7acb3397a27f4e8d6190f65c0befa008673263ece05fe8eb77`.
+  - STIFF `4e7ad6ecd85317e94948d6335cdad14d15ba53243710871e05174c087692da88`.
+- **`t180b_elysium.kn5`:** sha256 `d41a9f41ddce69767aace05b3609f76bb1017653ed4a053e3b9ece6ae6f60173` in both. **Byte-equal.**
+- **The other 7 files are identical in both folders:** `.t180b-builder.json`, `ai/fast_lane.ai`, `data/map.ini`, `map.png`, `models.ini`, `ui/outline.png`, `ui/preview.png`. Each folder holds 10 files.
+
+**Installing** (on his word, with the game closed):
+- Copy both folders into `content\tracks\`. Nothing of `t180b_elysium` changes.
+- The soft block is CSP's; plain AC ignores it (`surfaces.ini`'s own note).
+- **The STIFF test's falsifier:** C07 driven through the helix at the same pace on STIFF (peak about 63 g, about 780 km/h).
+  - If the box still sinks without settling and goes through, the contact's stiffness is not the lever, at least at a quarter of the CFM.
+  - If it holds, what the car does instead is read from that replay with the same `helixtrace.js`.
+
+## Validity on the GATES layout: the first lap, on STIFF, did not reach the moved gate (the chair's ring of 01:31Z)
+
+**The lap:** C07 on ELYSIUM GATES STIFF, the 19:30 save (sha256 `ff1dfc70990c48c6…`). STIFF carries GATES' kn5 byte for byte, so its gates are the moved ones.
+
+**The sector crossings** (`S\d567\gates.js` against `S\d567\gates.json`, the patched kn5's dummies) → `S\d567\gates-C07s.txt`:
+
+| gate | crossing |
+|---|---|
+| AC_TIME_0 | **t 16.482, inside the segment** (tau 0.110); blackbox's lap clock resets at t 16.500 |
+| AC_TIME_1 (s 9,335) | **t 67.540, inside** (tau 0.233) |
+| AC_TIME_2 (moved, s 12,958.5) | **never crossed.** The car left the road at s 11,662 (t 78.86, p-d563 "STIFF") and never came back to it. |
+
+- The other listed crossings (TIME_0 at t 39.2 and 58.2, TIME_1 at t 73.4) are the path passing 36–132 m over or under the gate line, as in D565.
+
+**What the game recorded:**
+- **`Documents\Assetto Corsa\out\race_out.json`** (written 19:31:03, read from a copy, `S\d560\out-ac-1931\`): track `t180b_elysium_gates_stiff`, the C07 car, a Hotlap session, **`laps: []`, `lapsCount: 0`, best lap 0**. `laps.ini`: `LAPS=0`.
+- **`personalbest.ini`:** last written 2026-10-17 09:45. It has no entry for either GATES folder. Its only ELYSIUM line is the 10-17 Mach 6's 145,284 ms. The game had exited by the time it was read (no `acs` process; Content Manager open).
+
+**So:**
+- **No lap was completed. The gate question is not answered by this run.**
+- The run reached TIME_1, and left the road 1,296 m before the moved TIME_2.
+- What ended it is the edge mechanism (a rear wheel 0.54 m past the right edge, trapped under, then the car thrown up), not the gate.
+- **The test still stands as written:** a complete clean lap on GATES or STIFF, sectors 1–3 shown, and a time in `race_out.json` and `personalbest.ini`.
+
+## Validity, the second STIFF lap: C11 crossed all three gates, the moved TIME_2 inside its segment (the 19:42 save)
+
+`S\d567\gates.js` against the patched dummies, on C11 on STIFF (sha256 `bea03b3c…`):
+
+| gate | crossing |
+|---|---|
+| AC_TIME_0 | **t 13.314, inside** (tau 0.138); blackbox's lap clock resets at t 13.335 |
+| AC_TIME_1 (s 9,335) | **t 63.315, inside** (tau 0.322) |
+| **AC_TIME_2 (moved, s 12,958.5)** | **t 84.704, inside** (tau 0.914), the car 1.7–2.3 m below the gate's line (as at the start gate) |
+
+- The listed TIME_0 at t 35.8 and TIME_2 at t 93.4 are the path passing 49–64 m under or over the gate line. They are not passes.
+- **The first lap through the moved gate: sector 2 was crossed inside its 31.73 m segment.**
+- **It did not complete:** the car left the road at s 17,720 (t ≈ 117.4) before the line.
+- **What the game wrote:** `out\laps.ini` (19:42:47, read from a copy): `LAPS=0`; no `race_out.json` that session. `personalbest.ini` is unchanged since 2026-10-17.
+- **So the HUD's sectors 1 and 2 should have completed on this lap.** The keeper's own eye on the HUD would confirm it; the replay holds no HUD state.
+- **The full test still wants one complete lap:** sector 3 and a recorded time.
+
+## Validity: a complete lap on GATES STIFF, recorded by the game (the Mach 6, the 20:01 save)
+
+**The lap closed and counted.**
+- **`Documents\Assetto Corsa\out\race_out.json`** (20:01:10, read from a copy, `S\d560\out-ac-2001\`):
+  - track `t180b_elysium_gates_stiff`, the Mach 6, Hotlap;
+  - **one lap: time 144,509 ms (2:24.509), sectors 49,132 / 51,093 / 44,284, cuts 0**; best lap 144,509.
+- **`laps.ini`:** `LAPS=1`, `TIME=144509`, `SPLITS=3`, the same three splits.
+- **Blackbox's lap clock** in the replay agrees: it resets at t 157.86 from 144,504 ms.
+
+**The gate crossings** (`S\d567\gates.js` on the patched dummies):
+
+| gate | crossing |
+|---|---|
+| AC_TIME_0 | t 13.337, inside (tau 0.125); and t 157.841, inside (tau 0.134) |
+| AC_TIME_1 (s 9,335) | t 62.465, inside (tau 0.202) |
+| AC_TIME_2 (moved, s 12,958.5) | **t 82.594, inside** (tau 0.888), 2.38 m from the segment in 3D |
+
+**The game's splits do NOT line up with the moved TIME_2.** checked: the crossing times above, against `laps.ini`'s splits:
+- **Split 1** (49,132 ms) matches the start line → TIME_1, 49.128 s, to 4 ms.
+- **Split 2** (51,093 ms) would end at **t ≈ 113.56** (s ≈ 17,512, piece 29). The moved TIME_2 was crossed at t 82.59; that split would be 20.13 s.
+  - It is not the original TIME_2 either. This lap crosses the original gate's plane at t 114.645 (s 17,680), 1.08 s later.
+  - The moved gate's plane, scanned over the whole lap out to 2 km (`gates-far.js`), has no crossing near t 113.56. Its other crossings (t 90.97, 98.08) are the road passing 62 m and 204 m over it.
+- **The installed STIFF folder's kn5 is the patched one:** sha256 `d41a9f41…`, the same as GATES, hashed in background mode, read only. No `data/sections.ini` exists in any ELYSIUM folder.
+- **The AI-spline idea does not fit:** each gate's nearest AI point (`S\d560` one-off) is its own station in 3D (moved TIME_2 → s 12,958, original → s 17,680). None is near s 17,512, in 3D or top-down.
+- **So how the game places sector 2's boundary is not known from these reads.** inferred: not by the moved gate's crossing as `gates.js` models it.
+- **The question that leaves open:** whether moving the gate was what made the lap count.
+
+**What this does and does not answer:**
+- **Answered:** on GATES STIFF a clean lap counts. The time is recorded with all three splits and 0 cuts.
+- **Not answered:** whether the moved gate is why. This car's laps counted on the original ELYSIUM too: the 10-17 reference's 2:25.284 is the personal best there.
+- **The keeper's failing case was another car:** C03, a complete lap the game closed at 2:30.216 and did not record (D565).
+- **The test that answers the gate question:** C03 on GATES or STIFF. A recorded lap where the original ELYSIUM recorded none.
+- **`personalbest.ini`:** still last written 2026-10-17. It has no entry for either GATES folder although this lap was recorded, and the game had exited (no `acs` process) when it was read. When AC writes this file is not established here.

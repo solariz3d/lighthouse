@@ -1,0 +1,2061 @@
+// lap-row.test.js - each test drives a ledger in a temp directory; nothing touches C:\Consonance\data.
+// Run: node --test consonance/tools/lap-row.test.js
+//
+// THE ORDERING TESTS ARE THE POINT. The metric is worthless if a guess can be written or amended
+// after a map exists, so those cases are asserted as REFUSALS in code rather than trusted to a
+// convention. A test suite here that only covered the happy path would bless exactly the ledger the
+// tool exists to prevent.
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { execFileSync } = require('child_process');
+
+const TOOL = path.join(__dirname, 'lap-row.js');
+const NODE = process.execPath;
+
+/* THE PIN, added 2026-08-25 after the desktop ran this suite and 18 of 33 tests went red.
+ *
+ * WHAT HAPPENED. `dcb0d9b` (rule 2W-1) made `mintId` derive its tag per machine --
+ * LAP_MACHINE_TAG -> ~/.consonance.json `machine_tag` -> the hostname's first alphanumeric. That
+ * is the fix working as designed: the desktop mints D001 exactly as specified. This FILE, though,
+ * still names the minted ids as literals (`L001`, `L004`, `L009`) at roughly fifteen sites, so
+ * every test that mints a lap and then addresses it by name was asserting a fact about WHICH
+ * MACHINE WAS RUNNING rather than about the ledger. Verified rather than assumed, both directions:
+ *
+ *     git show dcb0d9b~1:consonance/tools/lap-row.js  -> mintId returned 'L' + n unconditionally
+ *     LAP_MACHINE_TAG=D node --test consonance/tools/lap-row.test.js  -> 18 of 33 fail
+ *
+ * So the suite was portable BEFORE 2W-1 and became machine-dependent AT it. It was green when
+ * committed on exactly one machine and red on every other from that moment -- the same shape as
+ * "verified it existed, never verified it shipped", one axis over: verified it passes HERE.
+ *
+ * WHAT THE PIN DOES, AND WHAT IT MUST NOT DO. Fixing the tag makes the tests below assert LEDGER
+ * LOGIC -- ordering, seals, max+1, the metric -- on any machine. It must not also swallow the
+ * per-machine property, or the pin would have eaten the thing 2W-1 exists to hold. It does not,
+ * and the reason is mechanical rather than a promise: the three `2W-1:` tests at the foot of this
+ * file each set the tag EXPLICITLY in the child env, and the unconfigured-machine test DELETES
+ * this variable and blanks HOME/USERPROFILE so the hostname derivation is the only path left. A
+ * pin at this level cannot reach into a child env that overrides or removes it.
+ *
+ * Checked by mutation on 2026-08-25 WITH the pin in place: a `machineTag` returning a constant,
+ * one falling back to a constant only when unconfigured, and one ignoring the env override all go
+ * RED here. If a later edit makes any of those survive, the pin has begun eating the property and
+ * this comment is where to start. The commands are in the hand-back. */
+process.env.LAP_MACHINE_TAG = 'L';
+/* THE RECORD PIN (L070). open() now refuses to mint below the highest id in LAP_REPO's git subjects.
+ * Unpinned, every fixture here would read the REAL repo's history (L069 and up) and refuse L001 - the
+ * same leak the tag pin above closes. An empty git repo is a record of nothing. No assertion changed. */
+process.env.LAP_REPO = (() => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-emptyrec-'));
+  execFileSync('git', ['-C', d, 'init', '-q']);
+  return d;
+})();
+
+/** A fresh ledger and a fresh module instance bound to it. */
+function fixture() {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-'));
+  const ledger = path.join(dir, 'lap.jsonl');
+  process.env.LAP_LEDGER = ledger;
+  delete require.cache[require.resolve('./lap-row.js')];
+  const mod = require('./lap-row.js');
+  return { dir, ledger, mod, cleanup: () => fs.rmSync(dir, { recursive: true, force: true }) };
+}
+
+function cli(args, ledger) {
+  try {
+    return { code: 0, stdout: execFileSync(NODE, [TOOL, ...args], { encoding: 'utf8', env: { ...process.env, LAP_LEDGER: ledger } }) };
+  } catch (e) {
+    return { code: e.status, stdout: e.stdout || '', stderr: e.stderr || '' };
+  }
+}
+
+// ---------------------------------------------------------------- the pin itself
+
+test('pin: the ledger-logic tests address a PINNED tag, not this machine', () => {
+  // Without this, removing the pin fails eighteen tests with `no such lap: L001` and nothing in
+  // the output says why -- the reader has to know that `mintId` is per-machine to decode it. One
+  // named failure is the whole point of this test; it asserts no ledger behaviour of its own.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.mintId([]), 'L001',
+    'LAP_MACHINE_TAG is not pinned to L for this file, so every literal id below names a machine ' +
+    'rather than a lap. See the pin comment at the head of this file. This is NOT a defect in ' +
+    'mintId: per-machine derivation is rule 2W-1 working, and the three 2W-1 tests below still ' +
+    'assert it independently of this pin.');
+  cleanup();
+});
+
+// ---------------------------------------------------------------- paths
+
+test('path: a map item with a line number matches the same file without one', () => {
+  // BUILDING.md says a map item is "a path and a line and one clause". Without stripping the
+  // suffix the two seats never intersect and the metric reads zero forever while both are naming
+  // the same file.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.normPath('exo_memory/journal/2026-08-11.md:47'), 'exo_memory/journal/2026-08-11.md');
+  assert.strictEqual(mod.normPath('muscle_map.md:321-325'), 'muscle_map.md');
+  cleanup();
+});
+
+test('path: an absolute repo path normalises to the repo-relative one', () => {
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.normPath('C:\\Consonance\\lighthouse\\consonance\\tools\\ferry.js'), 'consonance/tools/ferry.js');
+  cleanup();
+});
+
+test('path: a directory-shaped guess is BROAD; a file is not', () => {
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.isBroad('exo_memory/loop/'), true);
+  assert.strictEqual(mod.isBroad('exo_memory/loop'), true);
+  assert.strictEqual(mod.isBroad('exo_memory/BOOT.md'), false);
+  cleanup();
+});
+
+// ---------------------------------------------------------------- the ordering guarantee
+
+test('ORDERING: --open accepts no lap id, so a guess cannot be attached to an existing lap', () => {
+  // The first mechanism, and the strongest: there is no argument through which to do it.
+  const src = fs.readFileSync(TOOL, 'utf8');
+  const openFn = src.slice(src.indexOf('function open('), src.indexOf('function map('));
+  assert.doesNotMatch(openFn, /at\('--lap'\)|argv\[/, 'open() must not read a caller-supplied id');
+});
+
+test('ORDERING: a lap already carrying a map refuses a second one', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a/b.md'], now: 1 });
+  mod.map('L001', ['a/b.md'], 2);
+  assert.throws(() => mod.map('L001', ['c/d.md'], 3), /already has a map/);
+  assert.strictEqual(fs.readFileSync(ledger, 'utf8').trim().split('\n').length, 2, 'the refused write must not append');
+  cleanup();
+});
+
+test('ORDERING: a map on a lap with no open row is refused', () => {
+  const { mod, ledger, cleanup } = fixture();
+  fs.writeFileSync(ledger, JSON.stringify({ lap: 'L009', stage: 'opened', at: 1, paths: [] }) + '\n');
+  assert.throws(() => mod.map('L009', ['a/b.md'], 2), /no open row/);
+  cleanup();
+});
+
+test('ORDERING: the seal catches a guess edited by hand after the map was written', () => {
+  // The one route the argument surface cannot close: editing the JSONL directly. The lap is
+  // reported TAMPERED and EXCLUDED, never quietly counted.
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a/b.md'], now: 1 });
+  mod.map('L001', ['x/y.md'], 2);
+  const lines = fs.readFileSync(ledger, 'utf8').trim().split('\n').map(JSON.parse);
+  lines[0].guess = ['x/y.md'];                       // revise the prior to match the map
+  fs.writeFileSync(ledger, lines.map(l => JSON.stringify(l)).join('\n') + '\n');
+  const l = mod.laps()[0];
+  assert.strictEqual(l.integrity, 'TAMPERED');
+  cleanup();
+});
+
+test('ORDERING: a map row timestamped before its open row is OUT-OF-ORDER even if the seal matches', () => {
+  // Checked independently of the hash: a map written before its guess is not a lap, whatever the
+  // hashes say.
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a/b.md'], now: 100 });
+  mod.map('L001', ['a/b.md'], 200);
+  const lines = fs.readFileSync(ledger, 'utf8').trim().split('\n').map(JSON.parse);
+  lines[1].at = 50;
+  fs.writeFileSync(ledger, lines.map(l => JSON.stringify(l)).join('\n') + '\n');
+  assert.strictEqual(mod.laps()[0].integrity, 'OUT-OF-ORDER');
+  cleanup();
+});
+
+test('ORDERING: a map with no seal at all is UNSEALED, never a pass', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a/b.md'], now: 1 });
+  mod.map('L001', ['a/b.md'], 2);
+  const lines = fs.readFileSync(ledger, 'utf8').trim().split('\n').map(JSON.parse);
+  delete lines[1].guess_seal;
+  fs.writeFileSync(ledger, lines.map(l => JSON.stringify(l)).join('\n') + '\n');
+  assert.strictEqual(mod.laps()[0].integrity, 'UNSEALED');
+  cleanup();
+});
+
+test('ORDERING: an excluded lap is counted nowhere in the report', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a/b.md'], now: 1 });
+  mod.map('L001', ['x/y.md'], 2);
+  const lines = fs.readFileSync(ledger, 'utf8').trim().split('\n').map(JSON.parse);
+  lines[0].guess = ['x/y.md'];
+  fs.writeFileSync(ledger, lines.map(l => JSON.stringify(l)).join('\n') + '\n');
+  const out = [];
+  const r = mod.report(0, s => out.push(s));
+  assert.strictEqual(r.excluded, 1);
+  assert.strictEqual(r.scored, 0, 'a tampered lap must not reach the metric');
+  assert.match(out.join('\n'), /TAMPERED/);
+  cleanup();
+});
+
+// ---------------------------------------------------------------- id minting
+
+test('id: ids are minted max+1, so a hand-deleted row cannot have its id reused', () => {
+  // Filling a gap would silently MERGE a new lap with the remains of a dead one - a guess from one
+  // inquiry scored against the map of another.
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'a', guess: ['a.md'], now: 1 });
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'b', guess: ['b.md'], now: 2 });
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'c', guess: ['c.md'], now: 3 });
+  const kept = fs.readFileSync(ledger, 'utf8').trim().split('\n').filter(l => !l.includes('"L002"'));
+  fs.writeFileSync(ledger, kept.join('\n') + '\n');
+  assert.strictEqual(mod.mintId(mod.rows()), 'L004', 'must not re-mint the deleted L002');
+  cleanup();
+});
+
+test('id: two open rows on one id are classified DOUBLE-OPEN and excluded from the metric', () => {
+  // HONEST BOUND, stated because the alternative is a test that looks like it covers more than it
+  // does: the post-write `id collision` THROW in open() is reachable only under genuine
+  // concurrency - two writers reading the same ledger before either appends - and this suite does
+  // not produce that race. What is asserted here is the consequence the throw points at, which is
+  // the part that governs the number. The throw itself is UNCOVERED and is named as such in the
+  // hand-back.
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'first', guess: ['a.md'], now: 1 });
+  fs.appendFileSync(ledger, JSON.stringify({ lap: 'L001', stage: 'open', at: 1, initiator: 'pane', inquiry: 'other', guess: ['z.md'] }) + '\n');
+  const l = mod.laps().find(x => x.lap === 'L001');
+  assert.strictEqual(l.integrity, 'DOUBLE-OPEN');
+  const out = [];
+  const r = mod.report(0, s => out.push(s));
+  assert.strictEqual(r.scored, 0, 'a lap with two priors must not reach the metric');
+  cleanup();
+});
+
+// ---------------------------------------------------------------- required fields
+
+test('required: a missing guess is refused rather than scored as a perfect non-overlap', () => {
+  // A forgotten flag would otherwise read as "the orchestrator held no context".
+  const { mod, cleanup } = fixture();
+  assert.throws(() => mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: [], now: 1 }), /--guess is required/);
+  cleanup();
+});
+
+test('required: "none" is an accepted guess and records an empty prior explicitly', () => {
+  const { mod, cleanup } = fixture();
+  const r = mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['none'], now: 1 });
+  assert.deepStrictEqual(r.guess, []);
+  cleanup();
+});
+
+test('required: an unknown initiator is refused - falsifier 2 reads this field', () => {
+  const { mod, cleanup } = fixture();
+  assert.throws(() => mod.open({ initiator: 'keeper', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 }), /--initiator must be one of/);
+  cleanup();
+});
+
+test('required: opened before a map exists is refused', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  assert.throws(() => mod.opened('L001', ['a.md'], 2), /has no map yet/);
+  cleanup();
+});
+
+test('required: "opened none" is recordable - the falsifier firing must be writable', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  const r = mod.opened('L001', ['none'], 3);
+  assert.deepStrictEqual(r.paths, []);
+  cleanup();
+});
+
+// ---------------------------------------------------------------- the metric
+
+test('metric: BOTH, map-only and opened-from-map are computed per lap', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'human', entry: 'orch', inquiry: 'q', guess: ['a.md', 'b.md'], blind: true, now: 1 });
+  mod.map('L001', ['b.md', 'c.md:12'], 2);
+  mod.opened('L001', ['c.md'], 3);
+  const l = mod.laps()[0];
+  assert.deepStrictEqual(l.both, ['b.md']);
+  assert.deepStrictEqual(l.mapOnly, ['c.md']);
+  assert.deepStrictEqual(l.openedFromMap, ['c.md']);
+  assert.deepStrictEqual(l.openedFromMapOnly, ['c.md'], 'a path the guess never named is where the corpus reached the work');
+  cleanup();
+});
+
+test('metric: a broad guess is excluded from the intersection, not counted as a hit', () => {
+  // Counting it either way is the Goodhart. Excluding it makes the attempt visible - guessed
+  // narrow drops to 0 - instead of rewarding it.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['exo_memory/'], now: 1 });
+  mod.map('L001', ['exo_memory/BOOT.md'], 2);
+  const l = mod.laps()[0];
+  assert.strictEqual(l.guessBroad.length, 1);
+  assert.strictEqual(l.guessNarrow.length, 0);
+  assert.deepStrictEqual(l.both, [], 'a directory guess must not intersect the file under it');
+  cleanup();
+});
+
+test('metric: no ratio is printed below the floor - a rate needs an n', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['a.md'], 2);
+  const out = [];
+  mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /below the floor of 5/);
+  assert.doesNotMatch(text, /share of the guess the map confirmed\s+\d/);
+  cleanup();
+});
+
+test('metric: the redundancy reading is refused on laps that were not blind', () => {
+  const { mod, cleanup } = fixture();
+  for (let i = 1; i <= 5; i++) {
+    mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q' + i, guess: ['a' + i + '.md'], now: i * 10 });
+    mod.map('L00' + i, ['a' + i + '.md'], i * 10 + 1);
+  }
+  const out = [];
+  mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /ALWAYS EQUAL/);
+  assert.match(text, /redundancy reading is REFUSED/, 'a map that saw the guess cannot corroborate it');
+  cleanup();
+});
+
+// ---------------------------------------------------------------- the falsifiers
+
+test('falsifier 1: reports a running count while the window is not full, never an answer', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  mod.opened('L001', ['b.md'], 3);
+  const out = [];
+  mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /1 of 1 so far.*not full/s);
+  cleanup();
+});
+
+test("falsifier: this tool's own fires at ten laps with no opened stage", () => {
+  const { mod, cleanup } = fixture();
+  for (let i = 1; i <= 10; i++) {
+    mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q' + i, guess: ['a' + i + '.md'], now: i * 10 });
+    mod.map('L0' + String(i).padStart(2, '0'), ['b' + i + '.md'], i * 10 + 1);
+  }
+  const out = [];
+  mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /FIRES\. 10 laps, 0 with an opened stage/);
+  cleanup();
+});
+
+test("falsifier: this tool's own does NOT fire once an opened stage exists", () => {
+  const { mod, cleanup } = fixture();
+  for (let i = 1; i <= 10; i++) {
+    mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q' + i, guess: ['a' + i + '.md'], now: i * 10 });
+    mod.map('L0' + String(i).padStart(2, '0'), ['b' + i + '.md'], i * 10 + 1);
+  }
+  mod.opened('L001', ['b1.md'], 999);
+  const out = [];
+  mod.report(0, s => out.push(s));
+  assert.doesNotMatch(out.join('\n'), /FIRES\. 10 laps/);
+  cleanup();
+});
+
+test('falsifier 2: the keeper share needs both the initiator and a commit count, and names both', () => {
+  const { mod, cleanup } = fixture();
+  for (let i = 1; i <= 6; i++) {
+    mod.open({ initiator: i <= 4 ? 'human' : 'chair', entry: 'orch', inquiry: 'q' + i, guess: ['a' + i + '.md'], now: i * 10 });
+    mod.map('L00' + i, ['a' + i + '.md'], i * 10 + 1);
+  }
+  const out = [];
+  mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /keeper-initiated 4 of 6 laps = 66\.7%/);
+  assert.match(text, /chair commits since the first row/);
+  assert.match(text, /window still open/);
+  cleanup();
+});
+
+// ---------------------------------------------------------------- the limits are printed
+
+test('report: prints what it cannot distinguish, beside the number rather than in a header', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  const out = [];
+  mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /WHAT THIS CANNOT DISTINGUISH/);
+  assert.match(text, /a good prior from a guess written to score/);
+  assert.match(text, /agreement from anchoring/);
+  assert.match(text, /self-reported by a participant/);
+  cleanup();
+});
+
+test('report: an empty ledger says so plainly instead of printing zeroes as findings', () => {
+  const { mod, cleanup } = fixture();
+  const out = [];
+  const r = mod.report(0, s => out.push(s));
+  assert.strictEqual(r.laps, 0);
+  assert.match(out.join('\n'), /The ledger is empty/);
+  assert.doesNotMatch(out.join('\n'), /0\.0%/);
+  cleanup();
+});
+
+// ---------------------------------------------------------------- cli
+
+test('cli: the three writes and the report round-trip', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-cli-'));
+  const ledger = path.join(dir, 'lap.jsonl');
+  assert.strictEqual(cli(['--open', '--initiator', 'human', '--entry', 'orch', '--inquiry', 'q', '--guess', 'a.md,b.md', '--blind'], ledger).code, 0);
+  assert.strictEqual(cli(['--map', 'L001', '--paths', 'b.md,c.md'], ledger).code, 0);
+  assert.strictEqual(cli(['--opened', 'L001', '--paths', 'c.md'], ledger).code, 0);
+  const r = cli(['--report'], ledger);
+  assert.strictEqual(r.code, 0);
+  assert.match(r.stdout, /L001/);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('cli: a refusal exits non-zero and writes nothing', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-cli2-'));
+  const ledger = path.join(dir, 'lap.jsonl');
+  cli(['--open', '--initiator', 'chair', '--entry', 'orch', '--inquiry', 'q', '--guess', 'a.md'], ledger);
+  cli(['--map', 'L001', '--paths', 'a.md'], ledger);
+  const before = fs.readFileSync(ledger, 'utf8');
+  const r = cli(['--map', 'L001', '--paths', 'z.md'], ledger);
+  assert.strictEqual(r.code, 2);
+  assert.strictEqual(fs.readFileSync(ledger, 'utf8'), before, 'a refused write must leave the ledger byte-identical');
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('cli: no verb prints usage and exits 2', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-cli3-'));
+  const r = cli([], path.join(dir, 'lap.jsonl'));
+  assert.strictEqual(r.code, 2);
+  assert.match(r.stderr, /usage:/);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+// ---------------------------------------------------------------- 2W-1: the mint site
+
+// RULE 2W-1, registered in exo_memory/loop/two_writers_registration_2026-08-25.md and the only fix
+// in that document aimed at a SILENT failure. This ledger is machine-local and ids mint as max+1
+// locally, but the ids land in TRACKED prose. Two machines both minting L009 for different work
+// merge CLEANLY because they write different files -- no conflict, no warning, and every falsifier
+// keyed to that id is ambiguous forever after.
+function cliTagged(args, ledger, tag) {
+  try {
+    return { code: 0, stdout: execFileSync(NODE, [TOOL, ...args], {
+      encoding: 'utf8', env: { ...process.env, LAP_LEDGER: ledger, LAP_MACHINE_TAG: tag } }) };
+  } catch (e) {
+    return { code: e.status, stdout: e.stdout || '', stderr: e.stderr || '' };
+  }
+}
+
+test('2W-1: two machines minting against their OWN ledgers do not produce the same id', () => {
+  // The real scenario, and it is NOT two writers on one ledger: each machine has its own
+  // machine-local lap.jsonl, so both are at the same count and both mint the same NUMBER. Only the
+  // tag separates them. A test that shared one ledger would prove nothing, because the second mint
+  // would see the first row and increment past it -- the collision would be hidden by the fixture.
+  const dirA = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1a-'));
+  const dirB = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1b-'));
+  const ledA = path.join(dirA, 'lap.jsonl');
+  const ledB = path.join(dirB, 'lap.jsonl');
+
+  const a = cliTagged(['--open', '--initiator', 'chair', '--entry', 'orch', '--inquiry', 'q1', '--guess', 'a.md'], ledA, 'L');
+  const b = cliTagged(['--open', '--initiator', 'chair', '--entry', 'orch', '--inquiry', 'q2', '--guess', 'b.md'], ledB, 'D');
+  const idA = (a.stdout.match(/([A-Z][0-9][0-9][0-9])/) || [])[1];
+  const idB = (b.stdout.match(/([A-Z][0-9][0-9][0-9])/) || [])[1];
+
+  assert.ok(idA && idB, `both mints must print an id, got ${JSON.stringify([a.stdout, b.stdout])}`);
+  assert.strictEqual(idA.slice(1), idB.slice(1), 'the NUMBER must match — that is the whole hazard');
+  assert.notStrictEqual(idA, idB, 'the ids must differ, or the silent collision is live');
+
+  fs.rmSync(dirA, { recursive: true, force: true });
+  fs.rmSync(dirB, { recursive: true, force: true });
+});
+
+test('2W-1: an unconfigured machine does NOT fall back to a shared constant', () => {
+  // THE DEFAULT IS THE SAFETY PROPERTY, so this must exercise the UNCONFIGURED path — and the
+  // first version of this test did not. It computed its expectation from ~/.consonance.json, the
+  // same file the tool reads, so it agreed with the tool by construction: with machine_tag=L set
+  // here, a mutant hardcoding 'L' as the fallback passed cleanly. A test that consults the same
+  // source as the thing it checks cannot disagree with it.
+  //
+  // Fixed by making the machine genuinely unconfigured: HOME and USERPROFILE point at an empty
+  // temp dir, so fromConfig finds nothing and the derivation is the only path left.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1c-'));
+  const fakeHome = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-nohome-'));
+  const ledger = path.join(dir, 'lap.jsonl');
+  const env = { ...process.env, LAP_LEDGER: ledger, HOME: fakeHome, USERPROFILE: fakeHome };
+  delete env.LAP_MACHINE_TAG;
+  const out = execFileSync(NODE, [TOOL, '--open', '--initiator', 'chair', '--entry', 'orch', '--inquiry', 'q', '--guess', 'a.md'],
+    { encoding: 'utf8', env });
+  const id = (out.match(/([A-Z][0-9][0-9][0-9])/) || [])[1];
+  assert.ok(id, 'a mint with no config anywhere must still produce an id');
+
+  // os.hostname() does not depend on HOME, so this is a real independent expectation rather than
+  // a second reading of the tool's own input.
+  const derived = (os.hostname().replace(/[^A-Za-z0-9]/g, '')[0] || 'X').toUpperCase();
+  assert.strictEqual(id[0], derived,
+    `with no config the prefix must derive from the HOSTNAME (${derived}), got ${id[0]}`);
+
+  fs.rmSync(dir, { recursive: true, force: true });
+  fs.rmSync(fakeHome, { recursive: true, force: true });
+});
+
+test('2W-1: max+1 still holds when the ledger carries MORE THAN ONE tag', () => {
+  // The parse used to strip only /^L/. Left alone it would read a D-row as NaN, drop it from the
+  // max, and re-mint an id that already exists -- reintroducing the exact gap-filling merge that
+  // mintId's own comment forbids at length.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1d-'));
+  const ledger = path.join(dir, 'lap.jsonl');
+  fs.writeFileSync(ledger,
+    JSON.stringify({ lap: 'L001', stage: 'open', initiator: 'chair', inquiry: 'x', guess: ['a.md'], ts: 1 }) + '\n' +
+    JSON.stringify({ lap: 'D007', stage: 'open', initiator: 'chair', inquiry: 'y', guess: ['b.md'], ts: 2 }) + '\n');
+  const out = cliTagged(['--open', '--initiator', 'chair', '--entry', 'orch', '--inquiry', 'z', '--guess', 'c.md'], ledger, 'L').stdout;
+  const id = (out.match(/([A-Z][0-9][0-9][0-9])/) || [])[1];
+  assert.strictEqual(id, 'L008', `the foreign-tagged row must count toward the max, got ${id}`);
+
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+// ---------------------------------------------------------------- the void (2026-08-31, L020 packet C-2)
+//
+// THE EVENT. The chair found L017's and L020's map rows were chair-authored, appended correction
+// NOTES, and the report kept printing BOTH=3 for both: it subtracts stages, not notes. With no
+// void stage the chair wrote L017's note through `--stage dispatched`, which REOPENED a FILED lap.
+// These tests are built from that: a void must leave every guess/map total, must stay visible,
+// must not touch the chain, and — the bar that matters — removing the subtraction must bring the
+// numbers back, or "they are gone" is an assertion rather than a measurement.
+
+/** Six identical laps, above RATE_FLOOR: each guesses a,b and is mapped a,c -> per lap g=2 m=2 BOTH=1. */
+function sixLaps(mod) {
+  for (let i = 1; i <= 6; i++) {
+    mod.open({ initiator: 'human', entry: 'orch', inquiry: 'q' + i, guess: ['a.md', 'b.md'], now: i * 10 });
+    mod.map('L00' + i, ['a.md', 'c.md'], i * 10 + 5);
+  }
+}
+function totals(text) {
+  const m = /guessed \(narrow\) (\d+) · mapped (\d+) · in both (\d+)/.exec(text);
+  return m ? m.slice(1).map(Number) : null;
+}
+
+test('void: a voided lap leaves every guess/map total, is PRINTED as void with its reason, and the lap count does not move', () => {
+  const { mod, cleanup } = fixture();
+  sixLaps(mod);
+  let out = []; let r = mod.report(0, s => out.push(s));
+  assert.deepStrictEqual(totals(out.join('\n')), [12, 12, 6], 'control: six laps of 2/2/1');
+  assert.strictEqual(r.scored, 6);
+
+  mod.voidLap('L003', 'map row chair-authored; one seat wrote both sides', 'pane-x', 100);
+  out = []; r = mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.deepStrictEqual(totals(text), [10, 10, 5], 'exactly L003\'s 2/2/1 is gone and nothing else moved');
+  assert.strictEqual(r.scored, 5);
+  assert.strictEqual(r.voided, 1);
+  assert.strictEqual(r.laps, 6, 'the lap still EXISTS - a number that quietly disappears is the same failure the other way');
+  assert.match(text, /^laps\s+6\s+\(6 with a map, 0 with an opened stage, 1 VOID\)/m, 'the header says how many are void');
+  assert.match(text, /^VOID\s+1\s+measurement withdrawn/m, 'a VOID section exists');
+  assert.match(text, /L003  by pane-x: map row chair-authored; one seat wrote both sides/, 'reason and seat are printed, not just the id');
+  assert.match(text, /^  L003 .*VOID/m, 'the lap is in the table, marked, in its place');
+  assert.doesNotMatch(text, /^  L003 .*\b2\s+0\s+2\s+1\b/m, 'and its numbers are not printed as if measured');
+  cleanup();
+});
+
+test('void: the chain is untouched - a FILED lap stays filed, where the chair\'s workaround through --stage reopened it', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'human', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['a.md'], 2);
+  // THE OPENED ROW IS PART OF THE FIXTURE AS OF 2026-09-06, and it is a fixture change rather
+  // than a weakened assertion: the opened-row gate refuses `filed` on a MAPPED lap that has no
+  // opened row, so this setup became an illegal sequence. Every assertion below is unchanged.
+  mod.opened('L001', ['a.md'], 2);
+  mod.chain('L001', 'filed', 'chair', 'done', 3);
+  const chainRows = () => fs.readFileSync(ledger, 'utf8').trim().split('\n').map(JSON.parse).filter(r => r.stage === 'chain');
+  const before = chainRows();
+  assert.strictEqual(before[before.length - 1].chain, 'filed');
+
+  mod.voidLap('L001', 'withdrawn', 'pane-x', 4);
+  const after = chainRows();
+  assert.deepStrictEqual(after, before, 'not one chain row added, changed or removed: voiding a measurement is not reopening the work');
+  assert.strictEqual(after[after.length - 1].chain, 'filed', 'chain-status reads the LAST chain row; it still reads filed');
+
+  // THE CONTRAST, which is what actually happened on 2026-08-31 08:10 to L017: a void note written
+  // through the chain vocabulary is a baton, and a baton reopens the lap.
+  mod.chain('L001', 'dispatched', 'chair', 'VOID (written the wrong way)', 5);
+  const wrong = chainRows();
+  assert.strictEqual(wrong[wrong.length - 1].chain, 'dispatched', 'the workaround reopens a filed lap - the defect this stage exists to close');
+  cleanup();
+});
+
+test('void: MUTATION - remove the subtraction and the voided numbers come back', () => {
+  const { mod, ledger, dir, cleanup } = fixture();
+  sixLaps(mod);
+  mod.voidLap('L003', 'withdrawn', 'pane-x', 100);
+  let out = []; mod.report(0, s => out.push(s));
+  assert.deepStrictEqual(totals(out.join('\n')), [10, 10, 5], 'control: the shipped code subtracts');
+
+  // One edit, the one the comment in report() names: `l.hasMap && !l.voided` -> `l.hasMap`.
+  const src = fs.readFileSync(TOOL, 'utf8');
+  const needle = 'const scored = valid.filter(l => l.hasMap && !l.voided);';
+  assert.strictEqual(src.split(needle).length - 1, 1, 'the subtraction line must exist exactly once, or this mutation is not testing it');
+  const mutant = path.join(dir, 'lap-row.mutant.js');
+  fs.writeFileSync(mutant, src.replace(needle, 'const scored = valid.filter(l => l.hasMap);'));
+  process.env.LAP_LEDGER = ledger;                 // the mutant binds to the same fixture ledger at load
+  const M = require(mutant);
+  out = []; const r = M.report(0, s => out.push(s));
+  assert.deepStrictEqual(totals(out.join('\n')), [12, 12, 6], 'without the subtraction L003\'s 2/2/1 is back in every total');
+  assert.strictEqual(r.scored, 6, 'and the voided lap is scored again - which is what the shipped line prevents');
+  delete require.cache[require.resolve(mutant)];
+  cleanup();
+});
+
+test('void: refusals write nothing - no reason, no seat, unknown lap, second void', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'human', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['a.md'], 2);
+  const lines = () => fs.readFileSync(ledger, 'utf8').trim().split('\n').length;
+  const n = lines();
+  assert.throws(() => mod.voidLap('L001', '', 'pane-x', 3), /--reason is required/, 'a void with no reason is a number that disappeared');
+  assert.throws(() => mod.voidLap('L001', 'r', '', 3), /--by is required/);
+  assert.throws(() => mod.voidLap('L999', 'r', 'pane-x', 3), /no such lap/, 'a void cannot mint a lap');
+  assert.strictEqual(lines(), n, 'refusals appended nothing');
+  mod.voidLap('L001', 'r', 'pane-x', 3);
+  assert.throws(() => mod.voidLap('L001', 'again', 'pane-x', 4), /already void/, 'one void is the whole effect');
+  assert.strictEqual(lines(), n + 1);
+  cleanup();
+});
+
+test('void: the cli verb round-trips and a refusal exits non-zero', () => {
+  const { ledger, cleanup } = fixture();
+  cli(['--open', '--initiator', 'human', '--entry', 'orch', '--inquiry', 'q', '--guess', 'a.md'], ledger);
+  cli(['--map', 'L001', '--paths', 'a.md'], ledger);
+  const bad = cli(['--void', 'L001', '--by', 'pane-x'], ledger);
+  assert.strictEqual(bad.code, 2);
+  assert.match(bad.stderr, /--reason is required/);
+  const ok = cli(['--void', 'L001', '--reason', 'chair-authored map', '--by', 'pane-x'], ledger);
+  assert.strictEqual(ok.code, 0, ok.stderr);
+  assert.match(ok.stdout, /L001  VOID — measurement withdrawn by pane-x/);
+  const rep = cli(['--report'], ledger).stdout;
+  assert.match(rep, /VOID\s+1/);
+  assert.match(rep, /L001  by pane-x: chair-authored map/);
+  cleanup();
+});
+
+test('gap: the open->map gap is printed per lap, and maps written under the fresh-map floor are counted and named, never excluded', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'human', entry: 'orch', inquiry: 'fast', guess: ['a.md'], now: 1000 });
+  mod.map('L001', ['a.md'], 1100);                       // 0.1 s - one seat, one command
+  mod.open({ initiator: 'human', entry: 'orch', inquiry: 'slow', guess: ['a.md'], now: 2000 });
+  mod.map('L002', ['a.md'], 2000 + 199 * 1000);          // 199 s - L019's librarian round
+  const out = []; const r = mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /^  L001 .*\?\s+0\.1\s+1\s+0\s+1\s+1/m, 'L001 shows a 0.1 s gap and is STILL SCORED');
+  assert.match(text, /^  L002 .*\?\s+199\s+1\s+0\s+1\s+1/m, 'L002 shows 199 s');
+  assert.match(text, new RegExp(`map row within ${mod.FRESH_MAP_FLOOR_S} s of the guess: 1 of 2 scored laps \\(L001\\)`), 'counted and named');
+  assert.match(text, /the gap is a\n\s+signal, not a verdict/, 'and the line says it does not exclude');
+  assert.strictEqual(r.scored, 2, 'a fast map is a signal; only --void, with a reason, removes a lap');
+  cleanup();
+});
+
+// ---------------------------------------------------------------- the door (2026-09-02, two doors)
+//
+// THE ONE THING THIS SECTION IS FOR. Without `entry`, a lap that entered at the librarian (where no
+// guess is possible until the ring rule fires) and a lap where the chair simply FAILED TO SEAL are
+// the same row: guess column 0, nothing to tell them apart. The second should be visible and the
+// first should not be reported as a failure - the chair mislabelled exactly that on 2026-09-02,
+// writing "no guess was sealed before the map" when nothing had been skipped and the ask had simply
+// entered by door two. A route is not a failure.
+
+test('ENTRY: the door is required, and the refusal names the vocabulary', () => {
+  // Required for the reason --guess is required: a legitimate state must be SAID rather than
+  // arrived at by omitting a flag, or the field becomes decoration on its first busy night.
+  const { mod, cleanup } = fixture();
+  assert.throws(() => mod.open({ initiator: 'chair', inquiry: 'q', guess: ['a.md'], now: 1 }),
+    /--entry must be one of orch\|lib\|ring/);
+  assert.throws(() => mod.open({ initiator: 'chair', entry: 'librarian', inquiry: 'q', guess: ['a.md'], now: 1 }),
+    /--entry must be one of orch\|lib\|ring, got "librarian"/);
+  cleanup();
+});
+
+test('ENTRY: the door is written to the open row and read back', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'human', entry: 'lib', inquiry: 'q', guess: ['a.md'], now: 1 });
+  assert.strictEqual(mod.rows()[0].entry, 'lib');
+  assert.strictEqual(mod.laps()[0].entry, 'lib');
+  cleanup();
+});
+
+test('ENTRY: a row written before the field reads as ABSENT, never as door one', () => {
+  // The packet's own constraint: rows without the field are legitimately absent, not malformed.
+  // Defaulting them to 'orch' would manufacture the very number the field exists to make honest.
+  const { mod, ledger, cleanup } = fixture();
+  fs.appendFileSync(ledger, JSON.stringify(
+    { lap: 'L001', stage: 'open', at: 1, initiator: 'human', inquiry: 'old', guess: ['a.md'] }) + '\n');
+  assert.strictEqual(mod.laps()[0].entry, null);
+  const out = []; mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /door one \(orch\) 0 . door two \(lib\) 0 . ring, no user entry 0 . not recorded 1/);
+  assert.match(text, /counted nowhere in this section rather than\n\s+assumed to be door one/);
+  cleanup();
+});
+
+test('ENTRY: a garbage value on a historical row is absent too, not passed through to the report', () => {
+  const { mod, ledger, cleanup } = fixture();
+  fs.appendFileSync(ledger, JSON.stringify(
+    { lap: 'L001', stage: 'open', at: 1, initiator: 'human', entry: 'sideways', inquiry: 'q', guess: ['a.md'] }) + '\n');
+  assert.strictEqual(mod.laps()[0].entry, null, 'laps() gates on ENTRIES, so a hand-written value cannot invent a door');
+  cleanup();
+});
+
+test('ENTRY: a direct entry with no guess is DISTINGUISHABLE from a chair that failed to seal', () => {
+  // This assertion is the whole reason the field was added. Both laps below have an empty guess and
+  // are identical in every column the ledger carried before today.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'human', entry: 'lib', inquiry: 'direct', guess: ['none'], now: 1 });
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'missed', guess: ['none'], now: 2 });
+  const [a, b] = mod.laps();
+  assert.deepStrictEqual([a.guess, b.guess], [[], []], 'identical on the guess column - that is the premise');
+  assert.notStrictEqual(a.entry, b.entry, 'and separable only by the door');
+  const out = []; mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /direct-entry laps with no guess: 1 of 1 \(L001\)/);
+  assert.match(text, /no guess - direct entry/, 'the amendment asks for this row by name');
+  assert.doesNotMatch(text, /\(L001, L002\)/, 'the door-one lap must NOT be absorbed into the direct-entry count');
+  cleanup();
+});
+
+test('ENTRY: the ring rule falsifier fires on three consecutive direct entries with no guess', () => {
+  // Registered in brief/BUILDING.md before the field existed; this is the instrument that reads it.
+  const { mod, cleanup } = fixture();
+  for (let i = 1; i <= mod.DIRECT_NO_GUESS_RUN; i++) {
+    mod.open({ initiator: 'human', entry: 'lib', inquiry: 'q' + i, guess: ['none'], now: i * 10 });
+  }
+  const out = []; mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /longest such run: 3  -> FIRES/);
+  cleanup();
+});
+
+test('ENTRY: a guess on a direct-entry lap breaks the run - the ring rule being KEPT must not fire it', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'human', entry: 'lib', inquiry: 'a', guess: ['none'], now: 10 });
+  mod.open({ initiator: 'human', entry: 'lib', inquiry: 'b', guess: ['x.md'], now: 20 });  // rung
+  mod.open({ initiator: 'human', entry: 'lib', inquiry: 'c', guess: ['none'], now: 30 });
+  const out = []; mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /longest such run: 1  -> does not fire/);
+  cleanup();
+});
+
+test('ENTRY: a direct-entry map landing inside the fresh-map floor is named - the guess did not precede it', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'human', entry: 'lib', inquiry: 'q', guess: ['a.md'], now: 1000 });
+  mod.map('L001', ['a.md'], 1100);   // 0.1 s: the ring rule did not happen
+  const out = []; mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /direct-entry laps whose map landed within 60 s of the guess: 1 of 1 \(L001\)/);
+  assert.match(text, /the librarian carries the INQUIRY to the chair/);
+  cleanup();
+});
+
+test('ENTRY: the report still runs, unchanged in its other figures, over rows with no door', () => {
+  // Bar 2 of the packet, asserted rather than eyeballed: the field must not break the reader on
+  // history. Every pre-field row is written raw here, the way the real ledger holds them.
+  const { mod, ledger, cleanup } = fixture();
+  for (let i = 1; i <= 6; i++) {
+    fs.appendFileSync(ledger,
+      JSON.stringify({ lap: 'L00' + i, stage: 'open', at: i * 1000, initiator: 'human', inquiry: 'q', guess: ['a' + i + '.md'] }) + '\n' +
+      JSON.stringify({ lap: 'L00' + i, stage: 'map', at: i * 1000 + 200000, paths: ['a' + i + '.md'], guess_seal: mod.sealOf(['a' + i + '.md']) }) + '\n');
+  }
+  const out = []; const r = mod.report(0, s => out.push(s));
+  assert.strictEqual(r.scored, 6, 'no historical lap is excluded by the new field');
+  assert.match(out.join('\n'), /share of the guess the map confirmed   100\.0%/);
+  cleanup();
+});
+
+test('ENTRY: the cli round-trips the door and says which one it recorded', () => {
+  const { ledger, cleanup } = fixture();
+  const a = cli(['--open', '--initiator', 'human', '--entry', 'lib', '--inquiry', 'q', '--guess', 'a.md'], ledger);
+  assert.strictEqual(a.code, 0);
+  assert.match(a.stdout, /door two \(straight to the librarian\)/);
+  const b = cli(['--open', '--initiator', 'human', '--entry', 'orch', '--inquiry', 'q', '--guess', 'a.md'], ledger);
+  assert.match(b.stdout, /door one \(the orchestrator\)/);
+  const bad = cli(['--open', '--initiator', 'human', '--inquiry', 'q', '--guess', 'a.md'], ledger);
+  assert.strictEqual(bad.code, 2, 'a missing door is a refusal, not a silent default');
+  assert.match(bad.stderr, /--entry must be one of orch\|lib\|ring/);
+  assert.match(cli([], ledger).stderr, /--entry <orch\|lib\|ring>/, 'the usage line carries it too');
+  cleanup();
+});
+
+test('ENTRY: limit (e) is printed with the number - the seal does not cover the door', () => {
+  // The limit is real and is named rather than defended: widening guess_seal to cover `entry` would
+  // recompute every historical seal and file the whole existing ledger as TAMPERED.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'human', entry: 'lib', inquiry: 'q', guess: ['a.md'], now: 1 });
+  const out = []; mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /e\. an ENTRY field edited after the fact/);
+  cleanup();
+});
+
+// ---------------------------------------------------------------- THE RING LAP (2026-09-02, L033)
+//
+// THE DEFECT THESE COVER was hit live by the chair while recording L033, not imagined here. Both
+// existing `--entry` values are DOORS - where the USER's inquiry came in - and the keeper's second
+// amendment of the same day says the ring repeats on its own and the user is the ENTRY, not a
+// station. L033 had no user inquiry at any point: the librarian measured something itself, rang the
+// chair, and the chair planned and dispatched. The chair wrote `--entry orch`, which asserts door
+// one was used, and then put a note in the inquiry text saying the row was wrong.
+//
+// The packet's falsifier for this work: if the chair opens a ring lap after this and STILL has to
+// explain the row in the --inquiry text, the shape is an entry shape with a new label. Every test
+// below is aimed at that, not at the enum.
+
+test('RING: a ring lap is openable and its door is not a lie', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'the librarian found the harvester stalled', guess: ['a.md'], now: 1 });
+  assert.strictEqual(mod.rows()[0].entry, 'ring');
+  assert.strictEqual(mod.laps()[0].entry, 'ring', 'laps() gates on ENTRIES; a value it does not know reads as absent');
+  const out = []; mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /door one \(orch\) 0 . door two \(lib\) 0 . ring, no user entry 1 . not recorded 0/,
+    'a ring lap must land in neither door AND not in "not recorded" - both would be the row lying');
+  assert.match(text, /ring laps: 1 - no user inquiry entered/);
+  cleanup();
+});
+
+test('RING: a ring lap with no guess reads INAPPLICABLE, never a missed seal', () => {
+  // The done-vs-never-started distinction, which is the part the packet said to get right. These
+  // two laps are byte-identical on every column the ledger carried before the door field existed.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'ring', guess: ['none'], now: 1 });
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'missed', guess: ['none'], now: 2 });
+  const [a, b] = mod.laps();
+  assert.deepStrictEqual([a.guess, b.guess], [[], []], 'identical on the guess column - that is the premise');
+  const out = []; mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /ring laps with no guess: 1 of 1 \(L001\)/);
+  assert.match(text, /INAPPLICABLE, never zero/);
+  assert.doesNotMatch(text, /\(L001, L002\)/, 'the door-one lap must not be absorbed into the ring count');
+  cleanup();
+});
+
+test('RING: a ring lap MAY carry a real prior - the writer does not force it absent', () => {
+  // The chair's guess for this packet was to record the guess as ABSENT on a ring lap. Refused:
+  // L033 carried four line-numbered paths and they were a genuine prior. A writer that forced
+  // absent would delete a measurement that existed. The inapplicable reading is the READER's job.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'q', guess: ['consonance/ui/chain-indicator.js:294', 'consonance/src-tauri/src/main.rs:3006'], now: 1000 });
+  mod.map('L001', ['consonance/ui/chain-indicator.js', 'x/y.md'], 300000);
+  const l = mod.laps()[0];
+  assert.strictEqual(l.guessNarrow.length, 2, 'a ring lap prior is kept, not zeroed');
+  assert.strictEqual(l.both.length, 1, 'and it still scores against the map');
+  const out = []; mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /ring laps with no guess: 0 of 1/, 'a ring lap WITH a prior is not reported as having none');
+  cleanup();
+});
+
+test('RING: neither door-two falsifier can see a difference - asserted, not claimed', () => {
+  // The packet asked for this impact to be stated explicitly. It is stated by RUNNING it: the same
+  // ledger, once with the interleaved lap as `orch` and once as `ring`, must produce an identical
+  // direct-entry run and an identical door-two membership line. If a ring lap ever RESET the
+  // direct-entry run, this goes red.
+  const build = door => {
+    const { mod, cleanup } = fixture();
+    mod.open({ initiator: 'human', entry: 'lib', inquiry: 'a', guess: ['none'], now: 10 });
+    mod.open({ initiator: 'librarian', entry: door, inquiry: 'interleaved', guess: ['none'], now: 20 });
+    mod.open({ initiator: 'human', entry: 'lib', inquiry: 'b', guess: ['none'], now: 30 });
+    mod.open({ initiator: 'human', entry: 'lib', inquiry: 'c', guess: ['none'], now: 40 });
+    const out = []; mod.report(0, s => out.push(s));
+    cleanup();
+    return out.join('\n');
+  };
+  const asOrch = build('orch'), asRing = build('ring');
+  const run = t => t.match(/longest such run: \d+[^\n]*/)[0];
+  const direct = t => t.match(/direct-entry laps with no guess: [^\n]*/)[0];
+  assert.strictEqual(run(asRing), run(asOrch), 'a ring lap must neither advance nor RESET the direct-entry run');
+  assert.match(run(asRing), /longest such run: 3 {2}-> FIRES/, 'and the falsifier must still be able to fire through one');
+  assert.strictEqual(direct(asRing), direct(asOrch), 'door two membership is untouched by the third value');
+});
+
+test('RING: the new hole the third value opened is PRINTED with the number', () => {
+  // A ring lap can now be used to excuse a missing guess, and the seal does not cover the door.
+  // Named beside the figure rather than defended, which is this report's standing rule.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 });
+  const out = []; mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /so does one relabelled ring, which is\n\s+a NEW hole/);
+  cleanup();
+});
+
+test('RING: the refusal teaches the third value, and the cli says which one it wrote', () => {
+  const { ledger, cleanup } = fixture();
+  const r = cli(['--open', '--initiator', 'librarian', '--entry', 'ring', '--inquiry', 'q', '--guess', 'none'], ledger);
+  assert.strictEqual(r.code, 0);
+  assert.match(r.stdout, /the ring \(no user entry - the loop supplied this lap\)/);
+  const bad = cli(['--open', '--initiator', 'librarian', '--entry', 'loop', '--inquiry', 'q', '--guess', 'none'], ledger);
+  assert.strictEqual(bad.code, 2);
+  assert.match(bad.stderr, /ring = no user inquiry entered at all/,
+    'a refusal that does not say what ring MEANS gets worked around by guessing');
+  cleanup();
+});
+
+// ---------------------------------------------------------------- THE LIBRARIAN AS INITIATOR
+//
+// `--entry lib` existed and `--initiator librarian` did not, so a door-two or ring lap could record
+// the DOOR and not the SEAT. The chair hit it live on L033 and wrote `chair` with a note admitting
+// the value was wrong.
+
+test('INITIATOR: librarian is a seat this ledger can name', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 });
+  assert.strictEqual(mod.laps()[0].initiator, 'librarian');
+  cleanup();
+});
+
+test('INITIATOR: librarian is NOT pane, and the DOOR word is not the SEAT word', () => {
+  const { mod, cleanup } = fixture();
+  assert.ok(mod.INITIATORS.has('librarian') && mod.INITIATORS.has('pane'));
+  assert.throws(() => mod.open({ initiator: 'lib', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 }),
+    /--initiator must be one of/, 'the door word must not be accepted as a seat');
+  cleanup();
+});
+
+test('INITIATOR: falsifier 2 does not move when a mislabelled chair lap becomes a librarian lap', () => {
+  // The impact statement, run rather than asserted in prose. Falsifier 2 counts human laps over all
+  // valid laps; laps the librarian started were already being opened AS chair, so neither side of
+  // the ratio changes. If a later edit routes librarian laps out of `valid`, this goes red.
+  const build = init => {
+    const { mod, cleanup } = fixture();
+    mod.open({ initiator: 'human', entry: 'orch', inquiry: 'a', guess: ['a.md'], now: 10 });
+    mod.open({ initiator: init, entry: 'ring', inquiry: 'b', guess: ['b.md'], now: 20 });
+    const out = []; mod.report(0, s => out.push(s));
+    cleanup();
+    return out.join('\n').match(/keeper-initiated [^\n]*/)[0];
+  };
+  assert.strictEqual(build('librarian'), build('chair'));
+});
+
+// ---------------------------------------------------------------- THE HOLDER IS A STATION
+//
+// Owed since the aura packet and unowned until now. Between 09-01 12:25 and 09-02 four `dispatched`
+// rows were written with a PANE NAME in --holder (charlie, bravo, bravo, echo). Both readers key on
+// the station vocabulary, so those laps went INVISIBLE rather than wrong-looking: no arrow at
+// chain-indicator's holderArrow, skipped at chain-status.js:721 and :804. The repair that was
+// actually made taught a READER to skip non-station holders. This is the other one: refuse at the
+// write and keep the readers narrow, which is what the aura packet asked for in the first place.
+
+test('HOLDER: a pane name is REFUSED, and the refusal says where the pane goes instead', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  const before = fs.readFileSync(ledger, 'utf8');
+  for (const name of ['echo', 'charlie', 'bravo', 'E', 'pane-a']) {
+    assert.throws(() => mod.chain('L001', 'dispatched', name, null, 2),
+      /holder is a station; name the panes in --to/, name + ' was accepted as a station');
+  }
+  assert.strictEqual(fs.readFileSync(ledger, 'utf8'), before, 'a refused write must leave the ledger byte-identical');
+  cleanup();
+});
+
+test('HOLDER: the four ruled stations are accepted and nothing else is', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  assert.deepStrictEqual([...mod.STATIONS], ['chair', 'panes', 'librarian', 'none']);
+  let t = 10;
+  for (const s of mod.STATIONS) assert.ok(mod.chain('L001', 'dispatched', s, null, t++));
+  // `keeper` is deliberately absent: it has never been written to the live ledger and appears only
+  // in chain-status.test.js fixtures, which are raw rows this writer never sees.
+  assert.throws(() => mod.chain('L001', 'filed', 'keeper', null, t++), /holder is a station/);
+  cleanup();
+});
+
+test('HOLDER: --to carries the pane list the gate refused to overload onto the baton', () => {
+  // The gate would be LOSSY without this - "echo" would simply be deleted - and a fix that deletes
+  // information is how the next drift starts.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 });
+  const r = mod.chain('L001', 'dispatched', 'panes', null, 2, 'a, b ,C,E');
+  assert.deepStrictEqual(r.to, ['A', 'B', 'C', 'E'], 'four panes, which one holder word could never have named');
+  assert.strictEqual(mod.chain('L001', 'working', 'panes', null, 3).to, null, '--to is optional and absent is null, not []');
+  cleanup();
+});
+
+test('HOLDER: --to is validated, not a free-text field one column over', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 });
+  assert.throws(() => mod.chain('L001', 'dispatched', 'panes', null, 2, 'echo'), /--to names panes by LETTER/);
+  assert.throws(() => mod.chain('L001', 'dispatched', 'chair', null, 2, 'A,B'),
+    /--to names the panes the baton went to, so it goes with --holder panes/);
+  cleanup();
+});
+
+test('HOLDER: the station gate is the LAST refusal - an unknown lap still says "no such lap"', () => {
+  // ORDERING, and it is load-bearing for a suite this file does not own. chain-status.test.js
+  // proves the chain cannot MINT a lap with `--stage L999 working --holder pane-a`, asserting the
+  // message is `no such lap`. Hoist the station gate above the existence check and that test goes
+  // red on a holder message while its minting assertion silently stops testing minting.
+  const { mod, cleanup } = fixture();
+  assert.throws(() => mod.chain('L999', 'working', 'pane-a', null, 1), /no such lap/);
+  cleanup();
+});
+
+test('HOLDER: APPEND-ONLY - the four drifted rows stay readable and are not edited by the gate', () => {
+  // Bar 3 of the packet. The gate is a WRITE-side refusal and touches no history: a ledger already
+  // carrying `holder: "echo"` must still fold, still report, and still hold that row verbatim.
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  for (const h of ['charlie', 'bravo', 'bravo', 'echo']) {
+    fs.appendFileSync(ledger, JSON.stringify({ lap: 'L001', stage: 'chain', at: 2, chain: 'dispatched', holder: h }) + '\n');
+  }
+  const drifted = mod.rows().filter(r => r.stage === 'chain').map(r => r.holder);
+  assert.deepStrictEqual(drifted, ['charlie', 'bravo', 'bravo', 'echo'], 'history is read back verbatim');
+  const out = []; assert.ok(mod.report(0, s => out.push(s)), '--report must still run over a ledger holding both shapes');
+  cleanup();
+});
+
+test('HOLDER: the usage names the station vocabulary and the pane list', () => {
+  const { ledger, cleanup } = fixture();
+  const u = cli([], ledger).stderr;
+  assert.match(u, /holder: chair \| panes \| librarian \| none {3}a STATION, never a pane name/);
+  assert.match(u, /--to A,B,C,E/);
+  cleanup();
+});
+
+// ---------------------------------------------------------------- the carrier
+//
+// THE DIAGRAM IS THE CARRIER, and this is its only oracle. The 2026-08-17 retirement edited every
+// downstream document, missed the drawing, and the room taught a retired metaphor for five weeks.
+// The prose of brief/BUILDING.md can be edited by anyone; nothing but this test notices if the
+// SECOND ARROW leaves the picture.
+//
+// Filed here rather than in a brief-carrier test file of its own because the ledger's `entry` field
+// and the diagram's second door are one rule with two halves, and this file owns the other half.
+// If the librarian would rather it lived beside the brief, it moves as a block.
+
+test('carrier: BUILDING.md draws BOTH doors and the ring, not just the prose about them', () => {
+  const brief = path.join(__dirname, '..', 'src-tauri', 'brief', 'BUILDING.md');
+  const src = fs.readFileSync(brief, 'utf8');
+  const diagram = src.slice(src.indexOf('## THE LOOP'));
+  const drawing = diagram.slice(diagram.indexOf('```') + 3, diagram.indexOf('```', diagram.indexOf('```') + 3));
+
+  assert.match(drawing, /door one/, 'the drawing must name door one');
+  assert.match(drawing, /door two/, 'the drawing must name door two - you -> LIBRARIAN, the keeper 2026-09-02');
+  assert.match(drawing, /\u251c\u2500+\u2510/, 'and DRAW the branch, not only label it');
+  assert.match(drawing, /THE RING/, 'the cycle repeats on its own: orch -> panes -> lib -> orch');
+  assert.match(drawing, /ENTRY, not a station/, 'the user is the entry, not a station the loop returns to');
+});
+
+/** The master drawing, from BUILDING.md. Every copy below is compared against this and nothing else. */
+function loopDiagramMaster() {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'src-tauri', 'brief', 'BUILDING.md'), 'utf8');
+  const a = src.indexOf('```', src.indexOf('## THE LOOP')) + 3;
+  return src.slice(a, src.indexOf('```', a)).trim();
+}
+
+test('carrier: the COMMITTEE.md copy of the diagram has not drifted from its master', () => {
+  // COMMITTEE.md quotes this drawing and is the brief a PANE reads first. A quoted copy of a master
+  // that changed is the failure this whole section is named for, one file over.
+  const src = fs.readFileSync(path.join(__dirname, '..', 'src-tauri', 'brief', 'COMMITTEE.md'), 'utf8');
+  const a = src.indexOf('```', src.indexOf('## The loop, in one card')) + 3;
+  assert.strictEqual(src.slice(a, src.indexOf('```', a)).trim(), loopDiagramMaster(),
+    'COMMITTEE.md holds a stale copy of the loop diagram. It is quoted from BUILDING.md, the master; ' +
+    're-copy it rather than editing it in place.');
+});
+
+test('carrier: the About tab copy of the diagram has not drifted from its master either', () => {
+  // THE THIRD COPY, found by the C -> A crosswise read on 2026-09-02. A's About prints the drawing
+  // and says it is "extracted from that file rather than redrawn here, so this page cannot drift
+  // against it". It is a STATIC PASTE in index.html: nothing extracts it at build or at runtime, so
+  // the sentence is a claim about the file, not a property of it — exactly what COMMITTEE.md's own
+  // "quoted from the master" line was before this suite started checking it.
+  //
+  // It is byte-identical today. This test is what keeps that true. It READS index.html and never
+  // writes it; the file's owner is whoever holds the ui this lap.
+  const html = fs.readFileSync(path.join(__dirname, '..', 'ui', 'index.html'), 'utf8');
+  const pres = (html.match(/<pre[^>]*>[\s\S]*?<\/pre>/g) || [])
+    .map(b => b.replace(/<[^>]*>/g, '')
+               .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
+               .trim())
+    .filter(b => b.includes('ORCHESTRATOR') && b.includes('LIBRARIAN'));
+  assert.strictEqual(pres.length, 1,
+    'expected exactly one <pre> in index.html holding the loop diagram; found ' + pres.length +
+    '. If the About stopped printing it, delete this test with the paste — do not leave it asserting nothing.');
+  assert.strictEqual(pres[0], loopDiagramMaster(),
+    'the About tab holds a stale copy of the loop diagram. BUILDING.md is the master; re-paste from ' +
+    'it rather than editing index.html in place.');
+});
+
+test('carrier: every document that quotes the --entry vocabulary lists what the writer accepts', () => {
+  /* SHIPPED RED ON 2026-09-02, DELIBERATELY, AND IT IS THE POINT OF THIS TEST.
+   *
+   * `brief/BUILDING.md:391` says `--entry orch|lib`. This lap added a third value, so that sentence
+   * is now stale — a document describing an instrument that has moved. BUILDING.md is UNOWNED this
+   * lap (A holds main.rs, E holds chain-indicator.js, B holds corpus-age.*), so pane C did not edit
+   * it. The one-line replacement is named in the assertion message below and in the hand-back
+   * `exo_memory/handback/p-lap-row_2026-09-02.md`; this goes green the moment it lands.
+   *
+   * WHY A RED TEST RATHER THAN A LINE IN A HAND-BACK. C's own finding on the previous lap (M13):
+   * the entire door-two prose was deletable with the suite green, because the DRAWING was guarded
+   * and the RULE was not. A hand-back is read once. This is the 2026-08-17 lesson exactly — the
+   * documents moved and the carrier did not — and the only difference between that five-week drift
+   * and this one is whether something notices.
+   *
+   * IT SCANS THREE SURFACES, not the one that carries the sentence today, for the reason C's C.md
+   * entry gives: the number of copies grows with how good the original is, and every copy arrives
+   * wearing a sentence about why it cannot drift. A fourth carrier is caught the moment it appears
+   * rather than after someone thinks to look. */
+  const want = [...require('./lap-row.js').ENTRIES].join('|');
+  const surfaces = [
+    ['brief/BUILDING.md', path.join(__dirname, '..', 'src-tauri', 'brief', 'BUILDING.md')],
+    ['brief/COMMITTEE.md', path.join(__dirname, '..', 'src-tauri', 'brief', 'COMMITTEE.md')],
+    ['ui/index.html', path.join(__dirname, '..', 'ui', 'index.html')],
+  ];
+  const found = [];
+  for (const [label, file] of surfaces) {
+    const src = fs.readFileSync(file, 'utf8');
+    for (const m of src.matchAll(/--entry[ `]*([a-z]+(?:\|[a-z]+)+)/g)) {
+      found.push({ label, line: src.slice(0, m.index).split('\n').length, said: m[1] });
+    }
+  }
+  assert.ok(found.length, 'no document quotes the --entry vocabulary at all - the rule has no carrier, ' +
+    'which is worse than a stale one. If the sentence was deliberately removed, delete this test with it.');
+  const stale = found.filter(f => f.said !== want);
+  assert.deepStrictEqual(stale, [],
+    'a document quotes an --entry vocabulary the writer no longer accepts. Replace `--entry ' +
+    (stale[0] ? stale[0].said : '?') + '` with `--entry ' + want + '` at ' +
+    stale.map(f => f.label + ':' + f.line).join(', ') + '. The writer is the master; the prose is the copy.');
+});
+
+// ---------------------------------------------------------------- THE BATON-ORDER GATE (2026-09-04)
+//
+// SEVEN OUT-OF-TURN REFUSALS IN ONE DAY is what this is tested against, not a hypothesis: the
+// librarian at 10:24, then B, K, A, J and L between 10:27 and 10:46, then the CHAIR at 03:35 the
+// next night with the rule quoted in its own context. The failure is that writing `--holder
+// <someone else>` revokes the writer's own standing to announce it (mcp.rs:397), so the tool let a
+// seat disarm itself and said nothing.
+//
+// THE TEST THAT MATTERS MOST IS THE ONE THAT MUST PASS, not the ones that refuse. `baton-wake.js`
+// v1 fired on the single hand-off in the whole record that was done RIGHT, and no test caught it
+// because every test encoded the same misreading. So the real D005 sequence - ring 10:07:43, row
+// 10:07:55, twelve seconds apart - is carried below as a fixture and asserted as an ALLOW.
+
+/** A fixture ledger with a board.jsonl beside it, which is what ARMS the gate. */
+function armed(rows, boardLines) {
+  const fx = fixture();
+  for (const r of rows) fs.appendFileSync(fx.ledger, JSON.stringify(r) + '\n');
+  fs.writeFileSync(path.join(fx.dir, 'board.jsonl'),
+    (boardLines || []).map(b => JSON.stringify(b)).join('\n') + (boardLines && boardLines.length ? '\n' : ''));
+  delete require.cache[require.resolve('./lap-row.js')];
+  process.env.LAP_LEDGER = fx.ledger;
+  return { dir: fx.dir, ledger: fx.ledger, cleanup: fx.cleanup, mod: require('./lap-row.js') };
+}
+
+const OPENED = { lap: 'L001', stage: 'open', at: 1000, initiator: 'chair', entry: 'orch', inquiry: 'x', guess: ['a/b.js'] };
+const INJECT = (ts, id) => ({ pane: 'chair', role: 'committee', ts, text: `chair injected (chair: claude-opus-5) -> ${id} [delivered and received]: hello` });
+const LIBSID = '0c0c0c0b-0000-4000-8000-00000000115b';
+
+// ---- the delivery predicate, read off main.rs rather than off memory
+
+test('gate/delivery: the four success shapes in main.rs each resolve to a station', () => {
+  const { mod, cleanup } = fixture();
+  const d = (t, p) => mod.deliveryStation(t, p);
+  assert.strictEqual(d('call_chair -> Main [Received]: "hi"'), 'chair', 'main.rs:6851');
+  assert.strictEqual(d('call_chair -> Main [Unconfirmed]: "hi"'), 'chair', 'an unconfirmed write still reached the pane');
+  assert.strictEqual(d('call_librarian K -> LIB [Received]: "hi"'), 'librarian', 'main.rs:6917');
+  assert.strictEqual(d(`chair injected (chair: claude-opus-5) -> ${LIBSID.slice(0, 8)} [delivered and received]: hi`),
+    'librarian', 'main.rs:6711, resolved through LIBRARIAN_SID');
+  assert.strictEqual(d('chair injected (chair: claude-opus-5) -> abcd1234 [delivered and received]: hi',
+    // No drive letter: `stationOfPaneCwd` reads only the BASENAME, so the prefix was never
+    // load-bearing and portable-paths is right to call it machine-specific. The backslash stays,
+    // because the separator split IS load-bearing. Same call I made on 2026-09-03 — remove the
+    // literal rather than take a baseline entry, which would preserve an argument forever.
+    [{ pane: 'abcd1234-0000', cwd: 'instances\\sibling-x' }]), 'panes');
+  cleanup();
+});
+
+test('gate/delivery: a REFUSAL or a FAILURE is not a delivery - the clause the whole finding rests on', () => {
+  // Counting a refused ring as a ring would make this gate blind to its own subject: the refused
+  // `call_chair` IS the case where a seat tried to wake a holder and the machinery stopped it.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.deliveryStation('call_chair REFUSED OUT OF TURN - mount M tried to speak'), null);
+  assert.strictEqual(mod.deliveryStation('call_chair -> Main FAILED: pane gone'), null);
+  assert.strictEqual(mod.deliveryStation('call_librarian K -> LIB FAILED: pane gone'), null);
+  assert.strictEqual(mod.deliveryStation('chair_inject (chair: m) -> abcd: DELIVERY FAILED (x) - nothing reached the pane: hi'), null);
+  assert.strictEqual(mod.deliveryStation('just some prose mentioning call_chair in passing'), null);
+  assert.strictEqual(mod.deliveryStation('call_chair -> Main [NotAttempted]: "hi"'), null,
+    'an injection never attempted is not a delivery, and the check is inside the receipt bracket');
+  assert.strictEqual(mod.deliveryStation('call_librarian K -> LIB [NotAttempted]: "hi"'), null,
+    'BOTH halves of the alternation, or a mutant breaking one of them survives — it did, on the first run');
+  cleanup();
+});
+
+test('gate/delivery: a REAL delivery whose PREVIEW quotes a failure still counts', () => {
+  /* THE MUTANT THAT SURVIVED, and it was not a missing test — it was a real defect. The first
+   * draft opened with a keyword guard, `/REFUSED|FAILED|NotAttempted/`. Deleting it changed
+   * nothing, because the anchored shapes already exclude every refusal; so it guarded nothing.
+   * Measured on the live board it did worse than nothing: it DISCARDED 2 of 376 real deliveries
+   * (0.5%), both `[delivered and received]` injections whose preview quoted "THE BUILD RAN AND
+   * FAILED". A discarded delivery makes this gate refuse a correctly-announced hand-off — the one
+   * failure the packet named — from inside the guard meant to prevent it.
+   *
+   * The line below is verbatim from board.jsonl, not a paraphrase of it. */
+  const { mod, cleanup } = fixture();
+  const real = 'chair injected (chair: claude-opus-5) -> 18916fe2 [delivered and received]: [chair] THE BUILD RAN AND FAILED. 9 errors, 8 of them yours';
+  assert.strictEqual(mod.deliveryStation(real, [{ pane: '18916fe2-463d', cwd: 'instances\\sibling-a80a1c20' }]),
+    'panes', 'a keyword anywhere in the message body must not disqualify the delivery that carried it');
+  cleanup();
+});
+
+test('gate/delivery: an id prefix matching BOTH reserved seats is unknown, never the first tested', () => {
+  // MAIN_SID and LIBRARIAN_SID share their first seven characters (main.rs:4551). A shorter board
+  // format would otherwise file every librarian delivery as a chair one, silently, and the
+  // instrument would read cleaner the more wrong it got.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.MAIN_SID.slice(0, 7), mod.LIBRARIAN_SID.slice(0, 7), 'the premise of this test');
+  assert.strictEqual(mod.deliveryStation('chair injected (chair: m) -> 0c0c0c0 [delivered and received]: hi'), 'unknown');
+  assert.strictEqual(mod.deliveryStation('chair injected (chair: m) -> deadbeef [delivered and received]: hi', []), 'unknown');
+  cleanup();
+});
+
+// ---- the pure verdict matrix
+
+test('gate/verdict: a row that does not move the baton is not a hand-off and needs nothing', () => {
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({ prevHolder: 'chair', holder: 'chair', armed: true, windowStart: 0 }).verdict, 'unchanged');
+  cleanup();
+});
+
+test('gate/verdict: a RE-TAKE is always allowed - this is the no-wedge property mcp.rs rests on', () => {
+  // `mcp.rs` argues the room can never wedge because lap-row.js can always move the baton by hand.
+  // A gate that could refuse unconditionally would break that. `--by X --holder X` always passes,
+  // so any seat can pull the baton to itself, ring, and hand off - the documented recovery.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({ prevHolder: 'chair', holder: 'librarian', by: 'librarian', armed: true, windowStart: 0, deliveries: [] }).verdict, 'retake');
+  cleanup();
+});
+
+test('gate/verdict: a hand-off with no audited ring is REFUSED; with one, allowed', () => {
+  const { mod, cleanup } = fixture();
+  const base = { prevHolder: 'chair', holder: 'librarian', by: 'chair', armed: true, windowStart: 100 };
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [] }).verdict, 'refuse');
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [{ ts: 150, station: 'librarian' }] }).verdict, 'rung');
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [{ ts: 150, station: 'panes' }] }).verdict, 'refuse',
+    'a ring to somebody ELSE is not a ring to the incoming holder');
+  cleanup();
+});
+
+test('gate/verdict: THE WINDOW IS THE POSSESSION - a ring from before the baton last moved does not count', () => {
+  const { mod, cleanup } = fixture();
+  const base = { prevHolder: 'chair', holder: 'librarian', by: 'chair', armed: true, windowStart: 100 };
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [{ ts: 99, station: 'librarian' }] }).verdict, 'refuse');
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [{ ts: 100, station: 'librarian' }] }).verdict, 'rung',
+    'the boundary is inclusive: a ring at the instant the baton moved is inside the possession');
+  cleanup();
+});
+
+test('gate/verdict: an UNRESOLVED delivery allows, and that is the opposite of baton-wake by design', () => {
+  // baton-wake REPORTS, so a wrong guess costs a line and `unknown` fires. This REFUSES, so a wrong
+  // guess costs a blocked write. The cost asymmetry points the other way, so the same ambiguity
+  // resolves the other way - and the allow is printed rather than silent.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({
+    prevHolder: 'chair', holder: 'librarian', by: 'chair', armed: true, windowStart: 0,
+    deliveries: [{ ts: 5, station: 'unknown' }],
+  }).verdict, 'rung-unknown');
+  cleanup();
+});
+
+test('gate/verdict: parking the baton at `none` wakes nobody, so no ring is owed', () => {
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({ prevHolder: 'chair', holder: 'none', by: 'chair', armed: true, windowStart: 0, deliveries: [] }).verdict, 'parked');
+  cleanup();
+});
+
+test('gate/verdict: an unarmed gate never refuses - it reports that it did not run', () => {
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({ prevHolder: 'chair', holder: 'librarian', by: 'chair', armed: false, windowStart: 0, deliveries: [] }).verdict, 'unarmed');
+  cleanup();
+});
+
+// ---- armed, through the writer
+
+test('gate: a hand-off with no ring is REFUSED and the ledger is byte-identical', () => {
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'chair', at: 2000 }], []);
+  const before = fs.readFileSync(fx.ledger, 'utf8');
+  assert.throws(() => fx.mod.chain('L001', 'map', 'librarian', null, 3000, null, 'chair'), /RING FIRST, ROW SECOND/);
+  assert.strictEqual(fs.readFileSync(fx.ledger, 'utf8'), before, 'a refused write must leave the ledger byte-identical');
+  fx.cleanup();
+});
+
+test('gate: the refusal names the WRITER verb and the exact re-take command', () => {
+  // A refusal that does not say what would have been accepted is one the next seat works around by
+  // guessing - this file's own rule, applied to the newest gate in it.
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'librarian', at: 2000 }], []);
+  let msg = '';
+  try { fx.mod.chain('L001', 'return-leg', 'chair', null, 3000, null, 'librarian'); } catch (e) { msg = e.message; }
+  assert.match(msg, /call_chair/, 'the verb is keyed on the SENDER, never the holder');
+  assert.match(msg, /needs holder librarian/);
+  assert.match(msg, /--stage L001 return-leg --holder librarian --by librarian/, 'the recovery must be copy-pasteable');
+  assert.match(msg, /relay by hand reads here as silence/, 'the limit rides with the refusal');
+  fx.cleanup();
+});
+
+test('gate: a hand-off PRECEDED by an audited ring is written, and carries gate:rung', () => {
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'chair', at: 2000 }],
+    [INJECT(2500, LIBSID.slice(0, 8))]);
+  const r = fx.mod.chain('L001', 'map', 'librarian', 'rung then rowed', 3000, null, 'chair');
+  assert.strictEqual(r.holder, 'librarian');
+  assert.strictEqual(r.gate, 'rung');
+  assert.strictEqual(r.by, 'chair', 'the row records who moved the baton - the ledger never carried that before');
+  fx.cleanup();
+});
+
+test('gate: a RE-TAKE is written with no ring at all - the room cannot be wedged', () => {
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'panes', at: 2000 }], []);
+  const r = fx.mod.chain('L001', 'working', 'chair', null, 3000, null, 'chair');
+  assert.strictEqual(r.gate, 'retake');
+  fx.cleanup();
+});
+
+test('gate: a row that keeps the holder needs no --by and is untouched by any of this', () => {
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'chair', at: 2000 }], []);
+  const r = fx.mod.chain('L001', 'map', 'chair', null, 3000);
+  assert.strictEqual(r.gate, null, 'a non-hand-off carries no verdict; only baton MOVES are gated');
+  fx.cleanup();
+});
+
+test('gate: the FIRST chain row of a lap is a hand-off too - that is the D006 03:35 case exactly', () => {
+  // The chair opened D006 and wrote `--stage inquiry --holder librarian` as the first chain row.
+  // There is no prior holder, so a rule keyed only on "the holder changed" would have exempted the
+  // one row that cost the room its night. The window falls back to the lap's OPEN row.
+  const fx = armed([OPENED], []);
+  assert.throws(() => fx.mod.chain('L001', 'inquiry', 'librarian', null, 3000, null, 'chair'), /RING FIRST/);
+  fx.cleanup();
+});
+
+test('gate: --by must be a STATION, the same vocabulary as --holder', () => {
+  const fx = armed([OPENED], []);
+  assert.throws(() => fx.mod.chain('L001', 'inquiry', 'librarian', null, 3000, null, 'echo'), /--by is the STATION/);
+  fx.cleanup();
+});
+
+test('gate: a baton move with NO --by is refused, and the refusal teaches both readings', () => {
+  const fx = armed([OPENED], []);
+  let msg = '';
+  try { fx.mod.chain('L001', 'inquiry', 'librarian', null, 3000); } catch (e) { msg = e.message; }
+  assert.match(msg, /MOVES THE BATON/);
+  assert.match(msg, /RE-TAKE/, 'the message must say the re-take reading exists, or a stuck seat cannot find it');
+  fx.cleanup();
+});
+
+// ---- the two ways the gate must DISARM rather than refuse
+
+test('gate: NO BOARD beside the ledger means the gate cannot run - it writes and SAYS SO', () => {
+  // The arming rule is adjacency, and it is why `chain-status.test.js` - a suite this file does not
+  // own - keeps passing by CONSTRUCTION rather than by an exemption: a fixture has no board.
+  const fx = fixture();
+  fs.appendFileSync(fx.ledger, JSON.stringify(OPENED) + '\n');
+  const r = cli(['--stage', 'L001', 'inquiry', '--holder', 'librarian', '--by', 'chair'], fx.ledger);
+  assert.strictEqual(r.code, 0, r.stderr);
+  assert.match(r.stdout, /BATON-ORDER GATE DID NOT RUN/, 'an absent guard and a passing guard must never read the same');
+  assert.match(r.stdout, /written UNCHECKED/);
+  fx.cleanup();
+});
+
+test('gate: a BLIND WINDOW disarms it - board pushes are muted, so a real ring would be invisible', () => {
+  // main.rs:1839: while blind.lock exists, board_push MUTES every entry including a ring's audit
+  // line. Refusing there would refuse correct sequences for the duration of the window.
+  const fx = armed([OPENED], []);
+  fs.writeFileSync(path.join(fx.dir, 'blind.lock'), '0');
+  const r = fx.mod.chain('L001', 'inquiry', 'librarian', null, 3000, null, 'chair');
+  assert.strictEqual(r.gate, 'unarmed', 'a gate that cannot see must not refuse');
+  fx.cleanup();
+});
+
+// ---- ordering, so a fix to this file does not break a suite it does not own
+
+test('gate: it is the LAST refusal - an unknown lap still says `no such lap`', () => {
+  // chain-status.test.js asserts exactly this message, and every refusal placed above it silently
+  // stops that assertion testing what it names. Same reason the station gate is placed where it is.
+  const fx = armed([OPENED], []);
+  assert.throws(() => fx.mod.chain('L999', 'working', 'librarian', null, 3000, null, 'chair'), /no such lap/);
+  assert.throws(() => fx.mod.chain('L001', 'nope', 'librarian', null, 3000, null, 'chair'), /unknown stage/);
+  assert.throws(() => fx.mod.chain('L001', 'working', 'echo', null, 3000, null, 'chair'), /holder is a station/);
+  fx.cleanup();
+});
+
+// ---- THE RETRODICTION. Real rows, real board lines, real timestamps.
+
+test('RETRODICTION: the one hand-off in the record done RIGHT is ALLOWED (D005, ring 12 s before the row)', () => {
+  /* THE TEST THIS WHOLE GATE HAD TO PASS BEFORE IT COULD SHIP. On 2026-09-03 the librarian was
+   * refused for row-then-ring, re-took the baton for 30 s, rang the chair at 10:07:43, and wrote
+   * the hand-off row at 10:07:55. `baton-wake.js` v1 called that an orphaned baton - an instrument
+   * firing on correct behaviour, at the moment a seat did the hard part. The real timestamps are
+   * carried here rather than paraphrased. */
+  const RING = 1788401263000;   // 10:07:43 - call_chair, QUEUED behind a busy chair pane
+  const ROW = 1788401275000;    // 10:07:55 - the hand-off row, twelve seconds later
+  const fx = armed(
+    [{ ...OPENED, at: 1788368850000 }, { lap: 'L001', stage: 'chain', chain: 'map', holder: 'librarian', at: 1788401255000 }],
+    /* THE BOARD LINE IS THE REAL ONE, verbatim from board.jsonl, and the first draft of this test
+     * paraphrased it as `0c0c0c0a0000` — twelve hex characters that match NEITHER reserved sid,
+     * because MAIN_SID is hyphenated. The gate correctly returned `rung-unknown` and the test went
+     * red on a fixture I had invented rather than copied. Route the OBJECT, not a description of
+     * it — including into your own test. */
+    [{ pane: 'chair', role: 'committee', ts: RING, text: 'QUEUED -> 0c0c0c0a (1 waiting, prompt not idle): D005 MAP filed' }],
+  );
+  const r = fx.mod.chain('L001', 'return-leg', 'chair', 'hand-off after the ring', ROW, null, 'librarian');
+  assert.strictEqual(r.gate, 'rung', 'the gate refused the sequence it exists to teach');
+  fx.cleanup();
+});
+
+test('RETRODICTION: the D005 stall and the D006 03:35 inversion are both REFUSED', () => {
+  /* D005: `holder librarian` written 2026-09-03 01:07:30 with no ring; the map sat 8h57m.
+   * D006: the chair wrote `inquiry --holder librarian` at 03:35:35 with the rule in its own
+   * context, and its next `chair_inject` was REFUSED OUT OF TURN. Both are the gate's subject. */
+  const fx = armed([{ ...OPENED, at: 1788368840000 }], []);
+  assert.throws(() => fx.mod.chain('L001', 'inquiry', 'librarian', 'door two', 1788368850000, null, 'chair'),
+    /RING FIRST, ROW SECOND/, 'D005 01:07:30');
+  fx.cleanup();
+
+  const fx2 = armed([{ ...OPENED, at: 1788514470514 }], []);
+  assert.throws(() => fx2.mod.chain('L001', 'inquiry', 'librarian', null, 1788514535322, null, 'chair'),
+    /RING FIRST, ROW SECOND/, 'D006 03:35:35');
+  fx2.cleanup();
+});
+
+test('RETRODICTION: the three recovery rows the seats actually wrote are all ALLOWED as re-takes', () => {
+  /* Of eight holder-moving rows the raw board reading would refuse, FOUR are re-takes evidenced by
+   * their own notes - D002 "chair holds pending return leg", D005 10:07:35 "re-taken for 30s",
+   * D005 11:26 "written BY HAND from the librarian seat", D006 03:36:23 "CORRECTION ... Holder
+   * returned to chair". Every one is allowed once --by names the writer, which is the whole reason
+   * the flag exists rather than the gate inferring identity it cannot see. */
+  for (const [prevHolder, holder] of [['chair', 'librarian'], ['librarian', 'chair'], ['panes', 'chair']]) {
+    const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'map', holder: prevHolder, at: 2000 }], []);
+    const r = fx.mod.chain('L001', 'working', holder, 'recovery', 3000, null, holder);
+    assert.strictEqual(r.gate, 'retake', `${prevHolder} -> ${holder} was refused; the recovery path is broken`);
+    fx.cleanup();
+  }
+});
+
+test('gate: the usage names --by and what it is for', () => {
+  const fx = fixture();
+  const r = cli([], fx.ledger);
+  assert.strictEqual(r.code, 2);
+  assert.match(r.stderr, /--by:/);
+  assert.match(r.stderr, /RING FIRST/);
+  fx.cleanup();
+});
+
+
+// ---------------------------------------------------------------- THE OPENED-ROW GATE (2026-09-06)
+//
+// THE OBJECT: `--opened` was built on 2026-08-27 and called ZERO times across the eleven laps that
+// followed. The column rendered as `0`, the chair read the render, and `from-map = 0` was published
+// to the keeper as a finding about the librarian's maps when it was a fact about a verb nobody ran.
+// The tool's own falsifier had been printing "FIRES. 11 laps, 0 with an opened stage" under the
+// table since D010, unread across at least four runs. A footer is not a call site.
+//
+// THE TEST THAT MATTERS MOST IS AGAIN THE ONE THAT MUST PASS. A gate that refuses a correct
+// sequence teaches seats to route around it — the lesson from `baton-wake.js` v1, which fired on
+// the single hand-off in the record that was done right. So: a lap with no map is NOT gated (no
+// legal move would exist), a recorded `--paths none` SATISFIES it, and D011 — the first lap in the
+// record with an opened row — is asserted as an ALLOW.
+
+test('OPENED-GATE: dispatched on a MAPPED lap with no opened row is REFUSED, and the ledger is byte-identical', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  const before = fs.readFileSync(ledger, 'utf8');
+  assert.throws(() => mod.chain('L001', 'dispatched', 'panes', null, 3), /HAS A MAP and NO OPENED ROW/);
+  assert.strictEqual(fs.readFileSync(ledger, 'utf8'), before, 'a refused write must leave the ledger byte-identical');
+  cleanup();
+});
+
+test('OPENED-GATE: filed is refused too - the terminal stage is the backstop, not an exemption', () => {
+  // An exemption is where the next defect lives (this suite's own rule, from the holder gate).
+  // `filed` is also the ONLY stage that can catch a lap whose dispatch row predates its map row.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  assert.throws(() => mod.chain('L001', 'filed', 'chair', null, 3), /HAS A MAP and NO OPENED ROW/);
+  cleanup();
+});
+
+test('OPENED-GATE: the refusal names the exact command AND says --paths none is legal', () => {
+  // A refusal that does not say what would have been accepted is one the next seat works around by
+  // guessing - and here the guess to fear is "I must have opened something", which would turn a
+  // gate on the RECORD into pressure on the BEHAVIOUR.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  let msg = '';
+  try { mod.chain('L001', 'dispatched', 'panes', null, 3); } catch (e) { msg = e.message; }
+  assert.match(msg, /--opened L001 --paths <p\[,p\.\.\.\]>/, 'the recovery must be copy-pasteable');
+  assert.match(msg, /--opened L001 --paths none/, 'the none case must be copy-pasteable too');
+  assert.match(msg, /that is legal/, 'the none case must be named as LEGAL, not merely possible');
+  assert.match(msg, /NEVER WRITTEN/, 'the refusal carries the reason: never-written is not zero');
+  assert.match(msg, /no map row is not gated at all/, 'the limit rides with the refusal');
+  cleanup();
+});
+
+test('OPENED-GATE: a recorded --paths none SATISFIES it - the falsifier firing is a record, not a failure', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  mod.opened('L001', ['none'], 3);
+  const r = mod.chain('L001', 'dispatched', 'panes', null, 4);
+  assert.strictEqual(r.chain, 'dispatched', 'recording that NOTHING was opened must be enough; the gate is on the record');
+  cleanup();
+});
+
+test('OPENED-GATE: one opened row satisfies every later gated row - a second dispatch needs no second one', () => {
+  // A requirement no seat can satisfy on a lap that opened nothing new is a wedge, so the gate asks
+  // for the row ONCE. Limit 4, asserted rather than left in the header.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  mod.opened('L001', ['b.md'], 3);
+  assert.ok(mod.chain('L001', 'dispatched', 'panes', null, 4));
+  assert.ok(mod.chain('L001', 'dispatched', 'panes', 'second packet', 5));
+  assert.ok(mod.chain('L001', 'filed', 'chair', null, 6));
+  cleanup();
+});
+
+test('OPENED-GATE: a lap with NO MAP is not gated - there would be no legal move (the no-wedge property)', () => {
+  // THE PROPERTY THIS GATE COULD MOST EASILY HAVE BROKEN. `opened()` refuses on a lap with no map
+  // row, so gating one would leave the seat nothing to type - not even --paths none. mcp.rs rests
+  // its no-wedge argument on this file; a refusal with no satisfying command breaks that.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  assert.throws(() => mod.opened('L001', ['none'], 2), /has no map yet/, 'control: there is no legal opened row here');
+  assert.ok(mod.chain('L001', 'dispatched', 'panes', null, 3), 'so the gate must not fire');
+  assert.ok(mod.chain('L001', 'filed', 'chair', null, 4));
+  cleanup();
+});
+
+test('OPENED-GATE: the other five chain stages are untouched', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  let t = 10;
+  for (const st of mod.CHAIN_STAGES.filter(x => !mod.OPENED_GATED_STAGES.has(x))) {
+    assert.ok(mod.chain('L001', st, 'chair', null, t++), st + ' was gated and should not be');
+  }
+  assert.deepStrictEqual([...mod.OPENED_GATED_STAGES], ['dispatched', 'filed'],
+    'widening this set is a decision, not a refactor: every added stage is a new place a seat can be stopped');
+  cleanup();
+});
+
+test('OPENED-GATE: it sits BELOW the lap-existence and station checks, which still win', () => {
+  // chain-status.test.js asserts `no such lap` on L999 and this suite asserts `holder is a station`;
+  // a refusal hoisted above either silently stops those assertions testing what they name.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  assert.throws(() => mod.chain('L999', 'dispatched', 'panes', null, 3), /no such lap/);
+  assert.throws(() => mod.chain('L001', 'dispatched', 'echo', null, 3), /holder is a station/);
+  assert.throws(() => mod.chain('L001', 'nope', 'panes', null, 3), /unknown stage/);
+  assert.throws(() => mod.chain('L001', 'dispatched', '', null, 3), /--holder is required/);
+  cleanup();
+});
+
+test('FOLD: an opened row with --paths none makes hasOpened TRUE - recorded-none and never-written are different states', () => {
+  /* THE CONFLATION WAS INSIDE THE FOLD, one level under the column this lap is about: hasOpened was
+   * `opened.length > 0`, so a lap that deliberately recorded "none of the map's paths were opened"
+   * counted as UNMEASURED - in the very field this tool's own falsifier reads. The verb's refusal
+   * text has said "pass --paths none - that is the falsifier firing, and it should be recorded"
+   * since the day it was built, and the reader could not see the difference. */
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['b.md'], 2);
+  assert.strictEqual(mod.laps()[0].hasOpened, false, 'control: nothing written yet');
+  mod.opened('L001', ['none'], 3);
+  const l = mod.laps()[0];
+  assert.strictEqual(l.hasOpened, true, 'a recorded none IS a measurement');
+  assert.strictEqual(l.openedRows, 1);
+  assert.deepStrictEqual(l.opened, [], 'and it opened nothing, which is the answer it recorded');
+  cleanup();
+});
+
+test('REPORT: a lap with no opened row prints `never`; a recorded none prints 0', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q1', guess: ['a.md'], now: 10 });
+  mod.map('L001', ['b.md'], 11);
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q2', guess: ['a.md'], now: 20 });
+  mod.map('L002', ['b.md'], 21);
+  mod.opened('L002', ['none'], 22);
+  const out = [];
+  mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /^  L001 .*never\s+never$/m, 'never written must not render as a measured zero');
+  assert.match(text, /^  L002 .*\b0\s+0$/m, 'a recorded none is a real zero and must render as one');
+  cleanup();
+});
+
+test('REPORT: falsifier 1 says how many of its own window were NEVER measured', () => {
+  const { mod, cleanup } = fixture();
+  for (let i = 1; i <= 6; i++) {
+    mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q' + i, guess: ['a.md'], now: i * 10 });
+    mod.map('L00' + i, ['b.md'], i * 10 + 1);
+  }
+  mod.opened('L001', ['b.md'], 999);
+  const out = [];
+  mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /5 of those 6 carry NO opened row: NEVER WRITTEN, not zero/);
+  assert.match(text, /laps with a map and no opened row at all: 5 of 6 mapped/);
+  cleanup();
+});
+
+test('REPORT: a gated row that PREDATES its own map row is counted - the gate\'s limit 2, made visible', () => {
+  /* The one sequence the gate structurally cannot refuse at `dispatched`: at that instant the lap
+   * has no map, so no opened row is writable and the check must pass. `filed` catches it later.
+   * Counting it here is what keeps an unrefusable case from being invisible. */
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 10 });
+  mod.chain('L001', 'dispatched', 'panes', 'dispatched before the map landed', 11);
+  mod.map('L001', ['b.md'], 12);
+  assert.throws(() => mod.chain('L001', 'filed', 'chair', null, 13), /HAS A MAP and NO OPENED ROW/,
+    'the backstop is the whole reason the dispatch case is survivable');
+  const out = [];
+  mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /laps whose dispatched\/filed row PREDATES their own map row: 1 \(L001\)/);
+  assert.ok(fs.readFileSync(ledger, 'utf8').length > 0);
+  cleanup();
+});
+
+/* ---- THE RETRODICTION, over the eleven laps that were on the ledger when this shipped.
+ *
+ * Re-derived from C:\Consonance\data\lap.jsonl before a line of the gate was written, and carried
+ * here as SHAPES rather than as a copy of the ledger (the fixture must not depend on live machine
+ * state). Reproduce the source reading with:
+ *
+ *   node -e "const fs=require('fs');const rows=fs.readFileSync('C:/Consonance/data/lap.jsonl','utf8')
+ *     .split(/\r?\n/).filter(Boolean).map(JSON.parse);const m=new Map();for(const r of rows){
+ *     if(!r.lap)continue;(m.get(r.lap)||m.set(r.lap,[]).get(r.lap)).push(r)}
+ *     for(const [l,rs] of m)console.log(l,rs.filter(r=>r.stage==='map').length,
+ *     rs.filter(r=>r.stage==='opened').length,
+ *     rs.filter(r=>r.stage==='chain'&&['dispatched','filed'].includes(r.chain)).map(r=>r.chain).join(','))"
+ *
+ * THE ANSWER IS NOT "ALL OF THEM", AND THE PART THAT PASSES IS THE FINDING. Six of eleven laps
+ * would have been refused, at eight rows. FOUR - D002 and the three ring laps D008/D009/D010 -
+ * have no map row at all and are not gated, so seven of their rows sail through untouched. That is
+ * limit 3 measured rather than asserted: this gate reaches a lap only as far as its map row does. */
+const REAL_LAPS = [
+  ['D001', 1, 0, ['filed']],
+  ['D002', 0, 0, ['filed']],
+  ['D003', 1, 0, ['filed']],
+  ['D004', 1, 0, ['filed']],
+  ['D005', 1, 0, ['filed']],
+  ['D006', 1, 0, ['dispatched', 'filed']],
+  ['D007', 1, 0, ['dispatched', 'filed']],
+  ['D008', 0, 0, ['dispatched', 'filed']],
+  ['D009', 0, 0, ['dispatched', 'filed']],
+  ['D010', 0, 0, ['dispatched', 'filed']],
+  ['D011', 1, 1, ['dispatched']],
+];
+
+test('RETRODICTION: over the eleven real laps, six mapped laps are REFUSED at eight rows and four mapless laps are not gated', () => {
+  const refusedLaps = [], refusedRows = [], allowedRows = [];
+  for (const [lap, hasMap, hasOpened, gated] of REAL_LAPS) {
+    const { mod, ledger, cleanup } = fixture();
+    const raw = [{ lap, stage: 'open', at: 1000, initiator: 'chair', entry: 'orch', inquiry: lap, guess: ['a.md'] }];
+    if (hasMap) raw.push({ lap, stage: 'map', at: 1100, paths: ['b.md'], guess_seal: 'x' });
+    if (hasOpened) raw.push({ lap, stage: 'opened', at: 1200, paths: ['b.md'] });
+    for (const r of raw) fs.appendFileSync(ledger, JSON.stringify(r) + '\n');
+    let refusedHere = false;
+    for (const st of gated) {
+      try {
+        mod.chain(lap, st, st === 'filed' ? 'chair' : 'panes', null, 2000);
+        allowedRows.push(lap + '/' + st);
+      } catch (e) {
+        assert.match(e.message, /HAS A MAP and NO OPENED ROW/, lap + '/' + st + ' was refused for the wrong reason');
+        refusedRows.push(lap + '/' + st);
+        refusedHere = true;
+      }
+    }
+    if (refusedHere) refusedLaps.push(lap);
+    cleanup();
+  }
+  assert.deepStrictEqual(refusedLaps, ['D001', 'D003', 'D004', 'D005', 'D006', 'D007'],
+    'exactly the mapped laps with no opened row; if this list grows to eleven the gate is reaching laps it cannot help');
+  assert.strictEqual(refusedRows.length, 8);
+  assert.deepStrictEqual(allowedRows,
+    ['D002/filed', 'D008/dispatched', 'D008/filed', 'D009/dispatched', 'D009/filed',
+      'D010/dispatched', 'D010/filed', 'D011/dispatched'],
+    'the four mapless laps pass by construction (limit 3) and D011 passes because its opened row exists');
+});
+
+test('RETRODICTION: D011 - the first lap in the record to carry an opened row - is ALLOWED', () => {
+  /* THE ONE THAT MUST PASS. D011's opened row was written by hand at 11:12 on 2026-09-06, five
+   * paths, from-map 3 - the first non-empty cell in that column since the verb was built. A gate
+   * that refused the lap that finally did the thing right is the baton-wake v1 failure again. */
+  const { mod, ledger, cleanup } = fixture();
+  for (const r of [
+    { lap: 'D011', stage: 'open', at: 1757178163945, initiator: 'chair', entry: 'orch', inquiry: 'the opened column', guess: ['a.md'] },
+    { lap: 'D011', stage: 'map', at: 1757178381406, paths: ['b.md'], guess_seal: 'x' },
+    { lap: 'D011', stage: 'opened', at: 1757178721709, paths: ['b.md'] },
+  ]) fs.appendFileSync(ledger, JSON.stringify(r) + '\n');
+  const row = mod.chain('D011', 'dispatched', 'panes', 'rung then rowed', 1757178752830);
+  assert.strictEqual(row.chain, 'dispatched', 'the gate refused the one lap that kept the practice it exists to enforce');
+  cleanup();
+});
+
+test('OPENED-GATE: the usage names it, so a seat meets the rule before the refusal does', () => {
+  const fx = fixture();
+  const r = cli([], fx.ledger);
+  assert.strictEqual(r.code, 2);
+  assert.match(r.stderr, /--paths none is LEGAL/);
+  assert.match(r.stderr, /opened-row gate/);
+  fx.cleanup();
+});
+
+test('FALSIFIER: this tool\'s own is a ONE-SHOT - one opened row disarms it forever, and the windowed reading says so', () => {
+  /* FOUND BY ASKING WHAT WOULD CATCH THE PRACTICE LAPSING AFTER THIS GATE SHIPS. The answer at
+   * HEAD was nothing: the falsifier reads `withOpened === 0` over the WHOLE ledger, so the single
+   * row written by hand on 2026-09-06 silences it for the life of the ledger - eleven laps could
+   * pass with nothing opened and it would still print "does not fire". The registered arithmetic
+   * is left exactly as it was; what this asserts is that the reading which CAN fire twice is
+   * printed beside it and named as not-yet-registered. */
+  const { mod, cleanup } = fixture();
+  for (let i = 1; i <= 11; i++) {
+    mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q' + i, guess: ['a.md'], now: i * 10 });
+    mod.map('L0' + String(i).padStart(2, '0'), ['b.md'], i * 10 + 1);
+  }
+  let out = [];
+  mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /FIRES\. 11 laps, 0 with an opened stage/, 'control: this is the state the chair published from');
+
+  mod.opened('L001', ['b.md'], 999);
+  out = [];
+  mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.doesNotMatch(text, /FIRES\. 11 laps/, 'one row disarms the registered form - that is the defect, not a pass');
+  assert.match(text, /over the LAST 10 lap\(s\), 0 carry an opened stage/,
+    'the windowed reading must still show the lapse the all-time form can no longer see');
+  assert.match(text, /ONE opened row disarms it permanently/, 'and the limit must be printed, not left in the source');
+  cleanup();
+});
+
+// ---------------------------------------------------------------- the record's highest id (L070)
+/* WHY. Every L launch that MIGRATEs installs the state set's lap.jsonl over the live one (L069), and
+ * the ledger then ends at an id the committed record went past days ago. mintId is max+1 over the
+ * LOCAL rows, so it counted from L054 again: L058 exists in five generations, each cited by commits.
+ * THE RECORD is the ledger's rows (mintId already honours them) PLUS every lap id carrying THIS
+ * machine's tag in a git commit subject of the repo (all refs). This machine's tag only: git holds
+ * D095 beside L069, the two machines count separately, and a cross-tag max would refuse tonight's
+ * own L070. An unreadable record refuses: a guard that cannot see its record must not pass. */
+function recordRepo(subjects) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-rec-'));
+  execFileSync('git', ['-C', dir, 'init', '-q']);
+  for (const s of subjects) {
+    execFileSync('git', ['-C', dir, '-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'commit.gpgsign=false',
+      'commit', '-q', '--allow-empty', '-m', s]);
+  }
+  return dir;
+}
+function withRecord(repo, fn) {
+  const was = process.env.LAP_REPO;
+  process.env.LAP_REPO = repo;
+  const f = fixture();
+  try { return fn(f); } finally { f.cleanup(); process.env.LAP_REPO = was; }
+}
+const ledgerTo = (f, n) => fs.writeFileSync(f.ledger, Array.from({ length: n }, (_, i) =>
+  JSON.stringify({ lap: `L${String(i + 1).padStart(3, '0')}`, stage: 'open', at: i + 1 })).join('\n') + '\n');
+const OPEN = { initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a/b.md'], now: 1000 };
+
+/* AMENDED 2026-09-22 (the two-cause repair). This test pinned the SINGLE-cause policy: ledger below the record was
+ * always "the install erased rows", so it always refused. That policy is what tonight proved wrong — with no attic
+ * copy there is no evidence of loss, and the refusal sent the reader to restore rows that never existed. The
+ * property the test was really protecting SURVIVES and is asserted here: an id the record already holds is never
+ * minted. What changed is the outcome for cause (b) — mint above the record instead of refusing. The refusal itself
+ * is still pinned, by the (a) test above, where a copy actually holds the missing rows. */
+test('record: a ledger at L054 under a record at L065, with NO attic copy, mints ABOVE the record and skips the gap', () => {
+  withRecord(recordRepo(['L065 (2026-09-20) C: the id no copy holds']), (f) => {
+    ledgerTo(f, 54);
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L066', 'record+1, so no id the record holds is ever reissued');
+    assert.ok(row.skipped.includes('L065'), 'and the skipped id is recorded in the row');
+  });
+});
+
+test('record: the ledger level with the record mints the next id as before', () => {
+  withRecord(recordRepo(['L054 (2026-09-10) C: last lap']), (f) => {
+    ledgerTo(f, 54);
+    assert.strictEqual(f.mod.open(OPEN).lap, 'L055');
+  });
+});
+
+/* AMENDED 2026-09-22, same repair, same surviving property: NEVER REISSUE. Under the two-cause guard the tool no
+ * longer refuses here — it mints past the taken id — so what this test pins now is that L055 is not handed out
+ * twice, which is the thing the refusal existed to prevent. */
+test('record: an id the record ALREADY HOLDS is never reissued — the mint goes past it', () => {
+  withRecord(recordRepo(['L055 (2026-09-11) A: taken']), (f) => {
+    ledgerTo(f, 54);
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L056', 'L055 is taken in the record, so it must not be minted again');
+    assert.deepStrictEqual(row.skipped, ['L055']);
+    const written = fs.readFileSync(f.ledger, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+    assert.ok(!written.some((r) => r.lap === 'L055' && r.stage === 'open'), 'and no L055 open row was written');
+  });
+});
+
+test('record: another machine\'s tag does not count - D095 in git does not stop L055', () => {
+  withRecord(recordRepo(['D095 (2026-09-20) B: the desktop counts separately']), (f) => {
+    ledgerTo(f, 54);
+    assert.strictEqual(f.mod.open(OPEN).lap, 'L055');
+  });
+});
+
+test('record: only an id STARTING a subject is a lap - "L077 and L080 are the dark and dim values" is not', () => {
+  // the real subject a67e2b1 (2026-09-17): CIELAB lightness, not laps. Read anywhere, it refused L071 on L.
+  withRecord(recordRepo(['L054 (2026-09-10) C: last lap',
+    'LIBRARIAN (on D): L077 and L080 are the author\'s dark and dim values']), (f) => {
+    ledgerTo(f, 54);
+    assert.strictEqual(f.mod.open(OPEN).lap, 'L055');
+  });
+});
+
+test('record: a record that cannot be read REFUSES rather than passing', () => {
+  withRecord(fs.mkdtempSync(path.join(os.tmpdir(), 'lap-norepo-')), (f) => {
+    ledgerTo(f, 54);
+    assert.throws(() => f.mod.open(OPEN), /record/i);
+  });
+});
+
+// ---------------------------------------------------------------- fold by (id, generation) (L071 C2)
+/* THE KEEPER'S CONDITION for accepting the eight DOUBLE-OPEN ids the union left (loop/reissued_lap_ids_2026-09-21.md):
+ * "lap-row.js folds by (id, generation) and prints the generation's date with the id". A GENERATION starts at each
+ * `open` row of an id; every other row belongs to the latest open of that id at or before its own `at`. Two opens
+ * within 60 s are ONE generation — that is the double-mint race `open()` guards, and it must still read DOUBLE-OPEN
+ * (the shortest real reissue gap on L was 4,867 s). No ledger row is ever rewritten to get there. */
+const T0 = Date.UTC(2026, 8, 14, 7, 30);           // 2026-09-14 07:30Z
+const T1 = Date.UTC(2026, 8, 21, 8, 56);           // 2026-09-21 08:56Z
+function twoGenerations(f, extra = []) {
+  const m = f.mod;
+  const rowsIn = [
+    { lap: 'L058', stage: 'open', at: T0, initiator: 'chair', entry: 'orch', inquiry: 'gen one', guess: ['a.md'] },
+    { lap: 'L058', stage: 'map', at: T0 + 60000, paths: ['a.md'], guess_seal: m.sealOf(['a.md']) },
+    { lap: 'L058', stage: 'opened', at: T0 + 120000, paths: ['a.md'] },
+    { lap: 'L057', stage: 'open', at: T0 + 1000, initiator: 'chair', entry: 'orch', inquiry: 'single', guess: ['z.md'] },
+    { lap: 'L058', stage: 'open', at: T1, initiator: 'chair', entry: 'orch', inquiry: 'gen two', guess: ['b.md'] },
+    ...extra,
+  ];
+  fs.writeFileSync(f.ledger, rowsIn.map((r) => JSON.stringify(r)).join('\n') + '\n');
+}
+
+test('generation: one id opened twice folds to TWO laps, each scored against its own guess, neither DOUBLE-OPEN', () => {
+  const f = fixture();
+  twoGenerations(f, [{ lap: 'L058', stage: 'map', at: T1 + 60000, paths: ['b.md'], guess_seal: f.mod.sealOf(['b.md']) }]);
+  const g = f.mod.laps().filter((l) => l.lap === 'L058');
+  assert.deepStrictEqual(g.map((l) => [l.gen, l.gens, l.inquiry, l.integrity]), [[1, 2, 'gen one', 'OK'], [2, 2, 'gen two', 'OK']]);
+  assert.deepStrictEqual(g.map((l) => l.both), [['a.md'], ['b.md']]);
+  f.cleanup();
+});
+
+test('generation: the label carries the generation DATE beside a reissued id; a single-generation id prints bare', () => {
+  const f = fixture();
+  twoGenerations(f);
+  const byLabel = f.mod.laps().map((l) => l.label);
+  assert.ok(byLabel.includes('L058 (2026-09-14 07:30Z, gen 1/2)'), byLabel.join(' | '));
+  assert.ok(byLabel.includes('L058 (2026-09-21 08:56Z, gen 2/2)'), byLabel.join(' | '));
+  assert.ok(byLabel.includes('L057'), 'a single-generation id grew a label it does not need');
+  f.cleanup();
+});
+
+test('generation: --report prints the dated label, so two generations never read as one lap', () => {
+  const f = fixture();
+  // The per-lap table lists MAPPED laps, so both generations carry a map here (the first draft gave gen 2 none and
+  // asked the report for a line it prints for no unmapped lap, reissued or not).
+  twoGenerations(f, [{ lap: 'L058', stage: 'map', at: T1 + 60000, paths: ['b.md'], guess_seal: f.mod.sealOf(['b.md']) }]);
+  const out = [];
+  f.mod.report(0, (s) => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /L058 \(2026-09-14 07:30Z, gen 1\/2\)/);
+  assert.match(text, /L058 \(2026-09-21 08:56Z, gen 2\/2\)/);
+  assert.doesNotMatch(text, /L058\s+DOUBLE-OPEN/, 'a reissue was reported as a double-open');
+  f.cleanup();
+});
+
+test('generation: two opens of one id within 60 s are the double-mint RACE — still one generation, still DOUBLE-OPEN', () => {
+  const f = fixture();
+  twoGenerations(f, [{ lap: 'L058', stage: 'open', at: T1 + 5000, initiator: 'chair', entry: 'orch', inquiry: 'raced', guess: ['c.md'] }]);
+  const g = f.mod.laps().filter((l) => l.lap === 'L058');
+  assert.strictEqual(g.length, 2, 'the race was folded as a third generation');
+  assert.strictEqual(g[1].integrity, 'DOUBLE-OPEN');
+  f.cleanup();
+});
+
+test('generation: map binds to the LATEST generation — its guess is sealed, and the older generation\'s map does not block it', () => {
+  const f = fixture();
+  twoGenerations(f);
+  f.mod.map('L058', ['b.md'], T1 + 60000);
+  const last = f.mod.rows().pop();
+  assert.strictEqual(last.guess_seal, f.mod.sealOf(['b.md']), 'the map was sealed against the FIRST generation\'s guess');
+  assert.throws(() => f.mod.map('L058', ['b.md'], T1 + 90000), /already has a map/);
+  f.cleanup();
+});
+
+test('generation: opened binds to the LATEST generation — it needs THAT generation\'s map, not an older one\'s', () => {
+  const f = fixture();
+  twoGenerations(f);                                  // gen 1 has a map; gen 2 does not
+  assert.throws(() => f.mod.opened('L058', ['b.md'], T1 + 60000), /no map yet/);
+  f.cleanup();
+});
+
+test('generation: the opened-row gate on --stage reads the LATEST generation, not an older one\'s opened row', () => {
+  const f = fixture();
+  // gen 1 is mapped AND opened; gen 2 is mapped and NOT opened. Folded by id, gen 1's opened row satisfies the gate.
+  twoGenerations(f, [{ lap: 'L058', stage: 'map', at: T1 + 60000, paths: ['b.md'], guess_seal: f.mod.sealOf(['b.md']) }]);
+  assert.throws(() => f.mod.chain('L058', 'dispatched', 'panes', 'n', T1 + 120000), /HAS A MAP and NO OPENED ROW/);
+  f.cleanup();
+});
+
+test('generation: numbered by TIME, not file position — a later generation written earlier in the file is still gen 2', () => {
+  const f = fixture();
+  const m = f.mod;
+  fs.writeFileSync(f.ledger, [
+    { lap: 'L058', stage: 'open', at: T1, initiator: 'chair', entry: 'orch', inquiry: 'gen two', guess: ['b.md'] },
+    { lap: 'L058', stage: 'open', at: T0, initiator: 'chair', entry: 'orch', inquiry: 'gen one', guess: ['a.md'] },
+    { lap: 'L058', stage: 'map', at: T0 + 60000, paths: ['a.md'], guess_seal: m.sealOf(['a.md']) },
+  ].map((r) => JSON.stringify(r)).join('\n') + '\n');
+  const g = m.laps().filter((l) => l.lap === 'L058');
+  assert.deepStrictEqual(g.map((l) => [l.gen, l.inquiry, l.hasMap]), [[1, 'gen one', true], [2, 'gen two', false]]);
+  f.cleanup();
+});
+
+test('generation: a void on an OLDER generation does not block voiding the latest one — and a second void of the latest still refuses', () => {
+  const f = fixture();
+  twoGenerations(f, [{ lap: 'L058', stage: 'void', at: T0 + 180000, reason: 'gen one withdrawn', by: 'chair' }]);
+  f.mod.voidLap('L058', 'gen two withdrawn', 'chair', T1 + 60000);
+  assert.throws(() => f.mod.voidLap('L058', 'again', 'chair', T1 + 90000), /already void/);
+  const g = f.mod.laps().filter((l) => l.lap === 'L058');
+  assert.deepStrictEqual(g.map((l) => l.voided && l.voided.reason), ['gen one withdrawn', 'gen two withdrawn']);
+  f.cleanup();
+});
+
+test('generation: folding reads — it never rewrites, renames or reorders a ledger row', () => {
+  const f = fixture();
+  twoGenerations(f);
+  const before = fs.readFileSync(f.ledger);
+  f.mod.laps();
+  f.mod.report(0, () => {});
+  assert.ok(fs.readFileSync(f.ledger).equals(before), 'a read path changed the ledger');
+  f.cleanup();
+});
+
+// ---------------------------------------------------------------- the floor guard's TWO causes
+
+/* THE REPAIR (2026-09-22). The L070 guard refused every --open tonight with one diagnosis: "the ledger was
+ * replaced by an older copy at a sync install; its missing rows are in attic/pre-sync-*". It was RIGHT to refuse
+ * and WRONG about why. The real cause: a commit subject named D118 when no D118 had been minted, so the record
+ * ran ahead of a ledger that had lost nothing. The old message sent the reader to restore rows that do not exist.
+ * A check that names the wrong repair is worse than one that says nothing, so the guard now DISTINGUISHES:
+ *   (a) the ids the record holds and the ledger lacks ARE in an attic copy -> lost rows, refuse, restore.
+ *   (b) no attic copy holds them -> named-but-never-minted (or voided) -> mint record+1 and record the skip.
+ * Both outcomes must NAME THE EVIDENCE: which ids, and which attic copies were searched. */
+
+/** An attic copy beside the ledger, the way a sync install leaves one: <dir>/attic/pre-sync-<stamp>/lap.jsonl */
+function attic(f, stamp, ids) {
+  const d = path.join(f.dir, 'attic', `pre-sync-${stamp}`);
+  fs.mkdirSync(d, { recursive: true });
+  fs.writeFileSync(path.join(d, 'lap.jsonl'),
+    ids.map((i) => JSON.stringify({ lap: i, stage: 'open', at: 1 })).join('\n') + '\n');
+  return path.join(d, 'lap.jsonl');
+}
+
+test('floor (a): the missing ids ARE in an attic copy — refuse, and NAME the ids and the copy that holds them', () => {
+  withRecord(recordRepo(['L065 (2026-09-20) C: the lap the install erased']), (f) => {
+    ledgerTo(f, 54);
+    attic(f, '2026-09-20T10-00-00-000Z', ['L055', 'L065']);
+    const before = fs.readFileSync(f.ledger);
+    assert.throws(() => f.mod.open(OPEN), (e) => {
+      assert.match(e.message, /refusing to mint L055/);
+      assert.match(e.message, /L055/, 'the ids it looked for must be named');
+      assert.match(e.message, /pre-sync-2026-09-20T10-00-00-000Z/, 'the attic copy that HOLDS them must be named');
+      assert.match(e.message, /[Rr]estore/, 'cause (a) still sends the reader to restore');
+      return true;
+    });
+    assert.ok(fs.readFileSync(f.ledger).equals(before), 'a refusal appends nothing');
+  });
+});
+
+test('floor (b): TONIGHT — the record names an id no attic copy holds, so it is MINTED OVER, not restored', () => {
+  // The exact situation of 2026-09-22: the ledger ends at 117 with nothing lost, a commit subject named 118 for
+  // work that minted no row, and the only attic copy stops at 012. The old guard refused every --open here.
+  withRecord(recordRepo(['L118 (2026-09-22) B: the outside reader weakens the shared-prior confound']), (f) => {
+    ledgerTo(f, 117);
+    attic(f, '2026-09-09T14-59-05-515Z', ['L011', 'L012']);
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L119', 'record+1: the named id is skipped, never reissued');
+    assert.deepStrictEqual(row.skipped, ['L118'], 'the row itself records what was skipped');
+    assert.match(String(row.skipped_why), /never minted|no attic copy/i, 'and why, so the ledger carries its own explanation');
+  });
+});
+
+test('floor (b): with NO attic directory at all, the same repair applies — absence of copies is not evidence of loss', () => {
+  withRecord(recordRepo(['L118 (2026-09-22) B: no attic on this machine']), (f) => {
+    ledgerTo(f, 117);
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L119');
+    assert.deepStrictEqual(row.skipped, ['L118']);
+  });
+});
+
+test('floor: the MINT prints the evidence too — which ids were skipped and which copies were searched', () => {
+  withRecord(recordRepo(['L118 (2026-09-22) B: the id that was never minted']), (f) => {
+    const at = attic(f, '2026-09-09T14-59-05-515Z', ['L011']);
+    ledgerTo(f, 117);
+    const said = [];
+    const was = console.error;
+    console.error = (...a) => said.push(a.join(' '));
+    try { f.mod.open(OPEN); } finally { console.error = was; }
+    const all = said.join('\n');
+    assert.match(all, /L118/, 'the skipped id');
+    assert.match(all, /pre-sync-2026-09-09T14-59-05-515Z/, 'the copy that was searched and did NOT hold it');
+    assert.ok(at, 'the fixture wrote a copy to search');
+  });
+});
+
+test('floor: a ledger that is NOT behind the record still mints normally, with no skip recorded', () => {
+  withRecord(recordRepo(['L117 (2026-09-22) C: the record and the ledger agree']), (f) => {
+    ledgerTo(f, 117);
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L118');
+    assert.strictEqual(row.skipped, undefined, 'nothing was skipped, so the row says nothing about skips');
+  });
+});
+
+test('floor: MIXED — one missing id is in an attic copy and another is not: the loss wins, and both are named', () => {
+  // The dangerous middle. If any missing id really is in a copy, rows were lost and minting over them would
+  // bury the very rows the copy still holds — so the refusal must win, and it must say which id is which.
+  withRecord(recordRepo(['L120 (2026-09-22) C: two causes at once']), (f) => {
+    ledgerTo(f, 117);
+    attic(f, '2026-09-20T10-00-00-000Z', ['L118']);      // L118 was lost; L119/L120 were never minted
+    assert.throws(() => f.mod.open(OPEN), (e) => {
+      assert.match(e.message, /L118/, 'the id an attic copy holds must be named');
+      assert.match(e.message, /pre-sync-2026-09-20T10-00-00-000Z/, 'and the copy that holds it — or the reader cannot check the diagnosis');
+      assert.match(e.message, /L119|L120/, 'the ids NO copy holds must be named too, as a different thing');
+      assert.match(e.message, /[Rr]estore/);
+      return true;
+    });
+  });
+});
+
+test('floor: MUTATION - collapse the two causes back into one and tonight\'s situation refuses again', () => {
+  // The single edit that undoes this repair: stop asking whether a copy holds the missing rows, and call every
+  // ledger-below-record a loss — which is what the guard did tonight, when it refused every --open and told the
+  // reader to restore rows that did not exist.
+  const src = fs.readFileSync(TOOL, 'utf8');
+  const needle = "cause: lost.length ? 'lost-rows' : 'never-minted'";
+  assert.strictEqual(src.split(needle).length - 1, 1, 'the two-cause line must exist exactly once, or this mutation tests nothing');
+
+  withRecord(recordRepo(['L118 (2026-09-22) B: the id named but never minted']), (f) => {
+    ledgerTo(f, 117);
+    attic(f, '2026-09-09T14-59-05-515Z', ['L011', 'L012']);   // holds nothing the ledger lacks: no loss
+
+    assert.strictEqual(f.mod.open(OPEN).lap, 'L119', 'control: the shipped code mints past the named id');
+    // AND PUT THE LEDGER BACK. The control just appended L119, which lifts the ledger ABOVE the record — so the
+    // mutant would meet a state where the guard never fires and would pass for the wrong reason. (It did, first run.)
+    ledgerTo(f, 117);
+
+    const mutant = path.join(f.dir, 'lap-row.collapse.js');
+    fs.writeFileSync(mutant, src.replace(needle, "cause: 'lost-rows'"));
+    process.env.LAP_LEDGER = f.ledger;
+    const M = require(mutant);
+    assert.throws(() => M.open({ ...OPEN, now: 2000 }), /[Rr]estore/,
+      'the collapsed guard refuses and sends the reader to restore rows no copy holds — the defect this repair fixes');
+    delete require.cache[require.resolve(mutant)];
+  });
+});

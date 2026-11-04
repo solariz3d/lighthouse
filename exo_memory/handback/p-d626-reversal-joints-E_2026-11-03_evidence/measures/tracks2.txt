@@ -1,0 +1,16 @@
+5550	p10|p11	rolls on	-90.0 -> -180.0 | -> -270.0	peak 0.05854 °/m²	lift 295.3 m/s²
+5800	p11|p12	rolls on	-180.0 -> -270.0 | -> -360.0	peak 0.05854 °/m²	lift 295.3 m/s²
+24538	p44|p45	both hold	-178.9 -> -178.9 | -> -178.9	peak 0 °/m²	lift 0 m/s²
+24895	p45|p46	both hold	-178.9 -> -178.9 | -> -180.0	peak 0.00029 °/m²	lift 1.5 m/s²
+9819	p21|p22	both hold	0.0 -> 0.0 | -> 0.0	peak 0.01146 °/m²	lift 57.8 m/s²
+10565	p22|p23	both hold	0.0 -> 0.0 | -> 0.0	peak 0.01146 °/m²	lift 57.8 m/s²
+14557	p11|p12	both hold	-85.0 -> -85.0 | -> -85.0	peak 0 °/m²	lift 0 m/s²
+14657	p12|p13	both hold	-85.0 -> -85.0 | -> -85.0	peak 0 °/m²	lift 0 m/s²
+5550	p10|p11	rolls on	-90.0 -> -180.0 | -> -270.0	peak 0.00011 °/m²	lift 0.6 m/s²
+5800	p11|p12	rolls on	-180.0 -> -270.0 | -> -360.0	peak 0.0028 °/m²	lift 14.1 m/s²
+24538	p44|p45	both hold	-178.9 -> -178.9 | -> -178.9	peak 0 °/m²	lift 0 m/s²
+24895	p45|p46	both hold	-178.9 -> -178.9 | -> -180.0	peak 0.00029 °/m²	lift 1.5 m/s²
+9819	p21|p22	both hold	0.0 -> 0.0 | -> 0.0	peak 0.00527 °/m²	lift 26.6 m/s²
+10565	p22|p23	both hold	0.0 -> 0.0 | -> 0.0	peak 0.00524 °/m²	lift 26.4 m/s²
+14557	p11|p12	both hold	-85.0 -> -85.0 | -> -85.0	peak 0 °/m²	lift 0 m/s²
+14657	p12|p13	both hold	-85.0 -> -85.0 | -> -85.0	peak 0 °/m²	lift 0 m/s²

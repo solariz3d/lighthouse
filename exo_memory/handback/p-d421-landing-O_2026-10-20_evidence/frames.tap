@@ -1,0 +1,151 @@
+TAP version 13
+# Subtest: row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+ok 1 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 37087.3218
+  type: 'test'
+  ...
+# p95 ms by look: {"aqua":[3.7],"skyline":[4.3],"glass":[3.3],"aurora":[3.9],"sigil":[3.8]}
+# Subtest: row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+ok 2 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 37827.697
+  type: 'test'
+  ...
+# p95 ms by look: {"aqua":[4.3],"skyline":[3.7],"glass":[3.7],"aurora":[4.2],"sigil":[3.9]}
+# Subtest: row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+ok 3 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 14959.3213
+  type: 'test'
+  ...
+# p95 ms by length: {"1000":[3.4],"2000":[4.6]}
+# Subtest: row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+ok 4 - row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn's p95 stays under 40 ms, at 20 or more rebuilds a second
+  ---
+  duration_ms: 11150.5811
+  type: 'test'
+  ...
+# 20,000 m: p95 10 ms, 32.7 rebuilds a second
+# Subtest: row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+ok 5 - row 5: the release is the exact road: a few hundred stations while the handle is held, a station every 2 m the moment it is let go
+  ---
+  duration_ms: 7530.9058
+  type: 'test'
+  ...
+# ghost stations during the drag 97, after the release 1001
+# Subtest: row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+ok 6 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+  ---
+  duration_ms: 67263.7704
+  type: 'test'
+  ...
+# worst ms by case: {"aqua turn":[4.3],"aqua stretch":[4.1],"skyline turn":[4.3],"skyline stretch":[3.1],"glass turn":[3.7],"glass stretch":[3.8],"aurora turn":[3.3],"aurora stretch":[3.5],"sigil turn":[3.6],"sigil stretch":[3.8]}
+# Subtest: row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+ok 7 - row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+  ---
+  duration_ms: 18394.5528
+  type: 'test'
+  ...
+# 20,000 m: handler 46.8, worst frame 47.0 ms; 10001 stations after 10 s
+# Subtest: row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+ok 8 - row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+  ---
+  duration_ms: 6772.4132
+  type: 'test'
+  ...
+# 2411 frames watched; the exact ghost (1001 stations) after 60 ms; 0 without a ghost
+# Subtest: row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frames together
+ok 9 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, handler and frames together
+  ---
+  duration_ms: 7782.3272
+  type: 'test'
+  ...
+# a field change: p95 5.5 ms (median 4.5)
+# Subtest: row 1: Twist on a 1-piece window of a 12-piece track, every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+ok 10 - row 1: Twist on a 1-piece window of a 12-piece track, every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 50528.8651
+  type: 'test'
+  ...
+# p95 ms by look: {"aqua":[4.2],"skyline":[4.2],"glass":[4.1],"aurora":[4.5],"sigil":[4.3]}
+# Subtest: row 2: Grab, r = 200 m across three pieces of a 10 km open lap: p95 within one frame at 165 Hz (6.0 ms)
+not ok 11 - row 2: Grab, r = 200 m across three pieces of a 10 km open lap: p95 within one frame at 165 Hz (6.0 ms)
+  ---
+  duration_ms: 21047.4199
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-land411\\app\\test\\sculpt-frame.test.js:205:1'
+  failureType: 'testCodeFailure'
+  error: 'Grab on a 10 km open lap: p95 12.3 (median 6.5, 348 work frames), release 8.1, longest 148, whole after 150 ms [sculpt mode] / p95 10.5 (median 6.5, 367 work frames), release 5.0, longest 144, whole after 146 ms [sculpt mode], over 6 ms'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-land411\app\test\sculpt-frame.test.js:208:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# 10 km open, Grab r 200: p95 12.3 (median 6.5, 348 work frames), release 8.1, longest 148, whole after 150 ms [sculpt mode] / p95 10.5 (median 6.5, 367 work frames), release 5.0, longest 144, whole after 146 ms [sculpt mode]
+# Subtest: row 3: Bend on a 10 km CLOSED lap: p95 within 6.0 ms during the drag, the release's handler within 6.0 ms, and the re-closed exact road whole within 10 s
+not ok 12 - row 3: Bend on a 10 km CLOSED lap: p95 within 6.0 ms during the drag, the release's handler within 6.0 ms, and the re-closed exact road whole within 10 s
+  ---
+  duration_ms: 38693.3047
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-land411\\app\\test\\sculpt-frame.test.js:211:1'
+  failureType: 'testCodeFailure'
+  error: 'Bend on a 10 km closed lap: p95 10.0 (median 5.8, 349 work frames), release 4.5, longest 428, whole after 104 ms [sculpt mode] / p95 10.5 (median 6.4, 343 work frames), release 4.0, longest 424, whole after 113 ms [sculpt mode] (bars: p95 6, release 6, closed and a station every 2 m within 10000 ms)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-land411\app\test\sculpt-frame.test.js:214:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# 10 km closed, Bend r 200: p95 10.0 (median 5.8, 349 work frames), release 4.5, longest 428, whole after 104 ms [sculpt mode] / p95 10.5 (median 6.4, 343 work frames), release 4.0, longest 424, whole after 113 ms [sculpt mode]; the road at the end {"stations":5001,"gap":2,"closed":true,"pieces":50,"detail":null,"whole":true}
+# Subtest: row 4a: Grab on the 360 deg tube oval (Twist is refused there: the keeper's call 3): p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s
+not ok 13 - row 4a: Grab on the 360 deg tube oval (Twist is refused there: the keeper's call 3): p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s
+  ---
+  duration_ms: 39162.0457
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-land411\\app\\test\\sculpt-frame.test.js:218:3'
+  failureType: 'testCodeFailure'
+  error: "Grab on the 360 deg tube oval (Twist is refused there: the keeper's call 3): p95 8.3 (median 5.5, 368 work frames), release 2.1, longest 107, whole after 108 ms [sculpt mode] / p95 8.5 (median 5.5, 366 work frames), release 2.3, longest 108, whole after 109 ms [sculpt mode] (bars: p95 6, longest 120, closed and a station every 2 m within 10000 ms)"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-land411\app\test\sculpt-frame.test.js:221:12)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# tube360, grab r 60: p95 8.3 (median 5.5, 368 work frames), release 2.1, longest 107, whole after 108 ms [sculpt mode] / p95 8.5 (median 5.5, 366 work frames), release 2.3, longest 108, whole after 109 ms [sculpt mode]
+# Subtest: row 4b: Twist on the same oval at a 280 deg sweep: p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s
+ok 14 - row 4b: Twist on the same oval at a 280 deg sweep: p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s after, and the exact road whole within 10 s
+  ---
+  duration_ms: 19312.6947
+  type: 'test'
+  ...
+# tube280, twist r 60: p95 5.7 (median 3.3, 371 work frames), release 14.7, longest 80, whole after 108 ms [sculpt mode]
+# Subtest: row 5: the release is the exact road: a station every 2 m again, and the document is bit for bit the one the shell's sculptOnce gives for the same brush and delta
+ok 15 - row 5: the release is the exact road: a station every 2 m again, and the document is bit for bit the one the shell's sculptOnce gives for the same brush and delta
+  ---
+  duration_ms: 12225.4608
+  type: 'test'
+  ...
+# s0 5098.00 m, delta 42 px, the brushed text 25738 characters
+1..15
+# tests 15
+# suites 0
+# pass 12
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 391200.7517

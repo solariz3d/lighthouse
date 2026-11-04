@@ -1,0 +1,6 @@
+const fs = require('fs'), f = 'C:/Users/nname/Desktop/a-d188-wt/test/core_cup_readers.test.js'; let s = fs.readFileSync(f, 'utf8');
+const rep = (a, b) => { if (s.split(a).length !== 2) throw new Error('anchor: ' + a.slice(0, 70)); s = s.replace(a, () => b); };
+rep("  assert.ok(lay && lay.colGapM > 0 || true);\n", "  assert.ok(lay && typeof lay === 'object', 'a layout came out');\n");
+rep("  const { secs, dsn } = (() => { const out = FW._internal.aiInput(segments, path); return { secs: out.secs || out.sections || out, dsn: out }; })();\n  const list = Array.isArray(secs) ? secs : dsn.secs;\n  const st = FW._internal.stations(path), i = st.findIndex((m) => m.s >= 60 + 10 - 1e-9);\n  assert.ok(Math.abs(list[i].font[1] - D.channelAt(P, 'c', st[i].s - 60).v) <= 0.05, `${list[i].font[1]}° vs c ${D.channelAt(P, 'c', st[i].s - 60).v}°`);",
+    "  const { secs } = FW._internal.aiInput(segments, path), st = FW._internal.stations(path), i = st.findIndex((m) => m.s >= 60 + 10 - 1e-9);\n  assert.ok(Math.abs(secs[i].font[1] - D.channelAt(P, 'c', st[i].s - 60).v) <= 0.05, `${secs[i].font[1]}° vs c ${D.channelAt(P, 'c', st[i].s - 60).v}°`);");
+fs.writeFileSync(f, s); console.log('readers test tidied');

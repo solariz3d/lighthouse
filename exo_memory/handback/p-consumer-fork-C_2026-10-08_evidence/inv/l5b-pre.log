@@ -1,0 +1,10 @@
+== D273 lap5b prefork SOURCE · asked 2026-10-09T10:36:31.171Z · lock held 2026-10-09T10:36:31.177Z · NODE_OPTIONS=--max-old-space-size=4096
+$ node C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-0845a868/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/inv/prefork.js C:/Users/nname/Desktop/worktrees/c-lap5b-wt exo_memory/SOURCE.md 62 67
+  62| 
+  63| ## WHAT IS NOT REACHABLE FROM HERE
+  64| 
+  65| - `exo_memory/loop/` (11,918 lines) and `exo_memory/journal/` (5,927) are too large to carry and have
+  66|   no trigger index. They need real retrieval keyed on the live exchange. **Open with intent or not
+  67|   at all** — skimming them is the copy-of-a-copy failure with extra steps.
+keeper lines: [33m0[39m
+== exit 0 · done 2026-10-09T10:36:31.381Z

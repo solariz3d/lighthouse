@@ -1,0 +1,13 @@
+[32m✔ Bank the lap pressed again on a lap it has just banked changes nothing (no second undo step, every bank channel as the first press left it) [90m(380.7578ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 1[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 473.4043[39m
+
+# stderr
+
+# exit 0 in 0.5 s

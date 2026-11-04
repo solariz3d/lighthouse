@@ -1,0 +1,1 @@
+PRIVATE-TRACKS: the two private fixtures (TEST 10, TEST TRACK 10) are read from the worktree's untracked fixtures-d431/ and from a scratchpad copy; no track file is in this directory or the repository.

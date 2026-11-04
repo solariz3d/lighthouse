@@ -1,0 +1,6 @@
+[31m✖ row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased [90m(7635.8257ms)[39m[39m
+[31m✖ row 11: a turn that flips over extend's 20 m transition: the same [90m(6557.6596ms)[39m[39m
+[31m✖ row 10: a Sharp corner right after a turn that ends still turning: the curves stay banked, none leans out, and the report says where the bank eased [90m(7635.8257ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the sharp after a turn: p2 away from the flip leans in by 0.0° on average
+[31m✖ row 11: a turn that flips over extend's 20 m transition: the same [90m(6557.6596ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the 20 m flip: p2 away from the flip leans in by 0.0° on average

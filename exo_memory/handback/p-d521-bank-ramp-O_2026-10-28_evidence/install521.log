@@ -1,0 +1,7 @@
+﻿installer: C:\Users\nname\Downloads\t180-wt-o521\src-tauri\target\release\bundle\nsis\T-180 Track Builder_0.4.28_x64-setup.exe
+built: C:\Users\nname\Downloads\t180-wt-o521\src-tauri\target\release\t180-track-builder.exe sha256 BD53E5C52B6C5D5BFFA486736E79E443879C8D1C10F4E2B03095FEDE2A31364A; stamped at byte 13235912, expected installed sha256 5E4271BA27556D505A721BC5C4CBFBE1FE5B068731333494D1ABC6EFF3531C3D
+builder processes before: 0
+backup: C:\Users\nname\AppData\Local\T-180 Track Builder\t180-track-builder.exe.before-d521 sha256 4BC4ABB6B493057FE0FF83BD747058C7F5549F1EDDD3A3600174D08CD437359F
+installed: C:\Users\nname\AppData\Local\T-180 Track Builder\t180-track-builder.exe sha256 5E4271BA27556D505A721BC5C4CBFBE1FE5B068731333494D1ABC6EFF3531C3D, ProductVersion 0.4.28, 15644160 B
+builder processes after: 0
+stamped compare: equal (the built exe with UNK -> NSS at byte 13235912 is the installed exe)

@@ -1,0 +1,167 @@
+MESSAGE 34  msg_011CfjuohTx7MjWkyh4823TG  seat E  ts 2026-10-05T22:52:56.743Z  turn L49237..L49309 (next prompt L49377)
+CLAIMS:
+  [msg_011CfjuohTx7MjWkyh4823TG|7] "a closed track (CLOSED, D.appendPiece)": CLOSED is raised, and raised in `D.appendPiece`.
+  [msg_011CfjuohTx7MjWkyh4823TG|11] "so an opened or hand-edited file cannot hold one either": `checkDoc` runs on open/load, so loaded files are validated too.
+
+--- L49237 user 2026-10-05T22:50:11.082Z
+USER: 
+
+<pasted_content id="37d3">
+[chair:MAIN] Your jumps core LANDED as fae3910 on t180 main; the librarian's full suite is green (1,835 pass, 0 fail). Two small follow-ups from B's look (exo_memory/handback/p-jumps-core-B_2026-10-05.md:25-28 and :49-51), both yours. GEOMETRY tier: mutants where they bite, plus fixtures 0 of 9. Base: main fae3910. Use a fresh worktree.
+1. checkDoc: a document `road, flight, flight` is accepted today (each gap has its own ramp, so both are exempt), while jump() refuses JUMP_AFTER_JUMP. Make "land on road first" a checkDoc rule with a named refusal, so an opened or hand-edited file can't hold two flights in a row. Check that no fixture or the keeper's saved tracks contain that shape. Copies only; never write %APPDATA%.
+2. Optional, only if cheap and safe: a finer quadrature at piece ENDS (the midpoint of the last basis function is coarse), so the model is exact before a lip. It must not change any export by a byte (fixtures 0 of 9), or it's preview/solver-only. If it changes exports, STOP and say so instead.
+A is in the preview and panel code (async previews), so stay in src/core and src/validate.
+Hand-back: exo_memory/handback/p-jumps-f-E_2026-10-05.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-jumps-core-B_2026-10-05.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: a quick non-author look, landed with A's follow-up, unless the output says otherwise
+</pasted_content id="37d3">
+
+--- L49247 assistant 2026-10-05T22:50:18.660Z
+TOOL_USE Bash [toolu_01E1CSmb4sExWLMov13Cf2PS]: {"command":"sed -n 15,60p /c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-jumps-core-B_2026-10-05.md; cd /c/Users/nname/Desktop/t180-track-builder && git log --oneline -1 fae3910 && git worktree add -q -b d243f-jumps C:/Users/nname/Desktop/worktrees/e-jumpsf-wt fae3910 && echo made","description":"Read B's two findings; make a fresh worktree on fae3910"}
+--- L49248 user 2026-10-05T22:50:19.095Z
+RESULT [toolu_01E1CSmb4sExWLMov13Cf2PS]: |---|---|---|
+| one jump, **pitched take-off** (+4° kick, −3° landing) | kh before the jump, far from the lip (`p0[3]`) | 4.1e-6 |
+| | kv mid take-off piece (`p1[6/9]`) | 1.9e-6 |
+| | kh and kv after the jump (`p3[5]`, `p4[4]`) | ≤ 6.9e-6 |
+| **two jumps**, a turn between, landings −2° and −4° | kh before jump 1; kv between the jumps; kh and kv after jump 2 | ≤ 9.9e-6 |
+| | kv `p4[9/11]`, two points before jump 2 | 8.3e-5 |
+| **the last 1–2 control points before a lip** | kh and kv `p1[7,8/9]`, `p0[16,17/18]`, `p4[10/11]` | **5.5e-3 to 3.0e-2** |
+
+**The lip error is NOT a jump sibling. It's the model's existing end-of-piece error.** checked (`bctl.js`, the control):
+- At the **lap's last control point**, with no jump anywhere near: kh and kv `p4[17/18]` are **2.92e-2**, `p4[16/18]` are 2.3e-4 and 8.4e-5.
+- **The same on E's tree and on base `12ab427`, identical to 3 figures.** The midpoint quadrature of the last basis function is coarse at a piece's end.
+- Before a road piece those points are joined C1 to the next piece, so they aren't independent columns. Before a jump (or at the lap's end) they are, which is the only reason the error shows there.
+- It affects only the Gauss–Newton step direction. The residual is the adapter's exact path, so convergence and the closed result are unaffected: every close below converges.
+- E's row-4 bound (1e-3) is checked at a mid-piece point, where it holds. **Owner: the model's author. Optional:** a finer quadrature at piece ends would make the model exact there too.
+
+**A jump at the edge of MY local close** (`battack.js` B: a near-closed lap whose last piece is cut and given a jump plus landing road):
+
+| window | jump then 100 m | jump then 40 m |
+|---|---|---|
+| the landing road ALON
+…[1658 chars cut]…
+track with a jump. Its assertion moves from `/NOT_YET/` to `CLOSE_SINGULAR` **and** `!/NOT_YET/`. That's the refusal every turnless track meets (C's `80752f5`), and it keeps the test's subject.
+- **`export_test_unfinished.test.js`:** the row's rule (a red is LISTED and doesn't block) is unchanged, and its example red moves from F7's jump to a real hole planted in F7's landing road.
+  - The planted gap's next segment is road body, not a land ramp, so `isCoreFlight` can't excuse it.
+  - It asserts `gap-in-road` in the TEST file plus the warning.
+- Both carry a comment saying why.
+
+fae3910 D243 jumps, core half: a jump is intended, Close works across jumps, jump() at the head
+made
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L49252 assistant 2026-10-05T22:51:00.158Z
+TOOL_USE Bash [toolu_01XA28EBbfw9kSnGbjG6iNBT]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpsf-wt && grep -n \"close(\" test/core_cup_fixtures.test.js | head -5; grep -rln \"\\\"type\\\": *\\\"flight\\\"\\|type\\\":\\\"flight\\\"\" test/fixtures | head; ls \"$APPDATA/com.solariz3d.t180-track-builder/\" 2>&1; ls \"$APPDATA/com.solariz3d.t180-track-builder/tracks\" | wc -l; ls \"$APPDATA/com.solariz3d.t180-track-builder/track-backups\" 2>/dev/null | wc -l","description":"Check fixtures for close() and flights; list the keeper's tracks"}
+--- L49253 user 2026-10-05T22:51:00.377Z
+RESULT [toolu_01XA28EBbfw9kSnGbjG6iNBT]: test/fixtures/F7-hill-then-jump.core2.json
+autosave.t180auto
+track-backups
+tracks
+7
+1
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L49255 assistant 2026-10-05T22:51:10.143Z
+TOOL_USE Bash [toolu_01MWfE4qJWX8KhENSVqpGAAp]: {"command":"S=\"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumpsf\"; mkdir -p \"$S/keeper-copy/tracks\" \"$S/keeper-copy/track-backups\" && cp -p \"$APPDATA/com.solariz3d.t180-track-builder/tracks/\"* \"$S/keeper-copy/tracks/\" && cp -p \"$APPDATA/com.solariz3d.t180-track-builder/track-backups/\"* \"$S/keeper-copy/track-backups/\" && cp -p \"$APPDATA/com.solariz3d.t180-track-builder/autosave.t180auto\" \"$S/keeper-copy/\" && ls -la \"$S/keeper-copy/tracks\" \"$S/keeper-copy/track-backups\" | cut -c30-200; cd C:/Users/nname/Desktop/worktrees/e-jumpsf-wt && grep -ln \"close\\b\\|require('../src/core/close\" test/core_cup_fixtures.test.js tools/*.cjs 2>/dev/null | head","description":"Copy the keeper's tracks to scratch (read only)"}
+--- L49262 user 2026-10-05T22:51:10.551Z
+RESULT [toolu_01MWfE4qJWX8KhENSVqpGAAp]: Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumpsf/keeper-copy/track-backups:
+
+ 0 Oct  5 16:51 .
+ 0 Oct  5 16:51 ..
+82 Oct  4 23:39 eq-TEST 1.2339-closed.t180track
+
+Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumpsf/keeper-copy/tracks:
+
+ 0 Oct  5 16:51 .
+ 0 Oct  5 16:51 ..
+04 Oct  3 11:41 eq-T-180 OVAL.t180track
+14 Oct  3 16:24 eq-T-180 TUBE OVAL.t180track
+15 Oct  4 05:03 eq-T180 TUBE V2.t180track
+53 Oct  4 23:45 eq-TEST 1 recovered.t180track
+82 Oct  4 23:39 eq-TEST 1.t180track
+89 Oct  2 15:54 eq-TEST OVAL.t180track
+99 Oct  4 22:19 eq-TEST.t180track
+tools/corpus.cjs
+tools/fontshape.cjs
+tools/fourier.cjs
+tools/jump_flight.cjs
+tools/meshcurv.cjs
+tools/spectrum.cjs
+tools/widths.cjs
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L49267 assistant 2026-10-05T22:51:34.371Z
+TOOL_USE Write [toolu_01GA4KnyD6SFEQE1bL4fpdos]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-07b8a48f\\a2122153-a37e-41a6-a86f-534267ec0565\\scratchpad\\jumpsf\\scan.js","content":"// D243 follow-ups (pane E). (1) Does any fixture, or a COPY of the keeper's saved tracks, hold two flights in a row? (2) Does a finer quadrature\n// in the close's position model shrink B's end-of-piece error (the lap's last control point, kh and kv), or is it the model's rule against the adapter's?\n'use strict';\nconst fs = require('fs'), path = require('path'), T = path.resolve(process.argv[2]) + '/', req = (m) => require(T + m), COPY = pat
+…[2154 chars cut]…
+ act = [0, 1, 2].map((k) => (e1[k] - e0[k]) / eps), pred = J[ch].get(`${last}:${i}`) || [0, 0, 0];\n    row[`${ch}[${i}/${n - 1}]`] = +(Math.hypot(...act.map((v, k) => v - pred[k])) / Math.hypot(...act)).toExponential(2);\n  }\n  console.log(JSON.stringify(row));\n}\n"}
+--- L49268 user 2026-10-05T22:51:34.402Z
+RESULT [toolu_01GA4KnyD6SFEQE1bL4fpdos]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\jumpsf\scan.js (file state is current in your context — no need to Read it back)
+--- L49269 assistant 2026-10-05T22:51:37.710Z
+TOOL_USE Bash [toolu_01E46dSgiTP118z3inzr5v2N]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumpsf\" && CONSONANCE_HEAVY_WAIT_MS=3600000 node --max-old-space-size=4096 -e \"require('C:/Users/nname/Desktop/lighthouse/consonance/tools/heavy-run.js').hold({cmd:'t180 E: D243f scan + quadrature probe'}); process.argv[2]='C:/Users/nname/Desktop/worktrees/e-jumpsf-wt'; require('./scan.js')\" 2>&1 | grep -v \"waiting on\"","description":"Scan for two flights in a row; measure quadrature steps","timeout_ms":"600000"}
+--- L49270 user 2026-10-05T22:52:10.459Z
+RESULT [toolu_01E46dSgiTP118z3inzr5v2N]: {"shape":[{"file":"corpus.fixture.json","note":"not a core document"},{"file":"doc-before-d182.json","note":"not a core document"},{"file":"doc-before-d182.resolved.json","note":"not a core document"},{"file":"F1-bowl-default-lap-closed.core2.json","pieces":6,"flights":0,"flightAfterFlight":0},{"file":"F2-halfpipe-default-lap-closed.core2.json","pieces":6,"flights":0,"flightAfterFlight":0},{"file":"F3-bowl-narrow-12m-cap-binds.core2.json","pieces":3,"flights":0,"flightAfterFlight":0},{"file":"F4-halfpipe-width-31.5-to-12-along-s.core2.json","pieces":2,"flights":0,"flightAfterFlight":0},{"file":"F5-flat-20m-bank-30.core2.json","pieces":2,"flights":0,"flightAfterFlight":0},{"file":"F6-bowl-r-brushed.core2.json","pieces":2,"flights":0,"flightAfterFlight":0},{"file":"F7-hill-then-jump.core2.json","pieces":3,"flights":1,"flightAfterFlight":0},{"file":"F8-mixed-families.core2.json","pieces":3,"flights":0,"flightAfterFlight":0},{"file":"F9-empty.core2.json","pieces":0,"flights":0,"flightAfterFlight":0},{"file":"manifest.d196.json","note":"not a core document"},{"file":"manifest.d222.json","note":"not a core document"},{"file":"manifest.d230.json","note":"not a core document"},{"file":"manifest.json","note":"not a core document"},{"file":"eq-T-180 OVAL.t180track","pieces":6,"flights":0,"flightAfterFlight":0},{"file":"eq-T-180 TUBE OVAL.t180track","pieces":6,"flights":0,"flightAfterFlight":0},{"file":"eq-T180 TUBE V2.t180track","pieces":6,"flights":0,"flightAfterFlight":0},{"file":"eq-TEST 1 recovered.t180track","pieces":46,"flights":0,"flightAfterFlight":0},{"file":"eq-TEST 1.t180track","pieces":46,"flights":0,"flightAfterFlight":0},{"file":"eq-TEST OVAL.t180track","pieces":6,"flights":0,"flightAfterFlight":0},{"file":"eq-TEST.t180track","pieces":6,"flights":0,"flightAfterFlight":0},{"file":"eq-TEST 1.2339-closed.t180track","pieces":46,"flights":0,"flightAfterFlight":0},{"file":"autosave.t180auto","note":"not a core document"}]}
+{"step":1,"kh[5/5]":0.0262,"kv[5/5]":0.0262,"kh[4/5]":0.0000606,"kh[2/5]":0.0000548}
+{"step":0.5,"kh[5/5]":0.019,"kv[5/5]":0.019,"kh[4/5]":0.00000704,"kh[2/5]":0.0000395}
+{"step":0.25,"kh[5/5]":0.0171,"kv[5/5]":0.0171,"kh[4/5]":0.0000155,"kh[2/5]":0.0000357}
+{"step":0.1,"kh[5/5]":0.0166,"kv[5/5]":0.0166,"kh[4/5]":0.0000166,"kh[2/5]":0.0000346}
+--- L49274 assistant 2026-10-05T22:52:26.822Z
+TOOL_USE Bash [toolu_01UdxtnZhSf3wbnnx7dHzBZC]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/jumpsf\" && node -e \"const o=JSON.parse(require('fs').readFileSync('keeper-copy/autosave.t180auto','utf8')); const d=typeof o.doc==='string'?(()=>{try{return JSON.parse(o.doc)}catch(e){return 'unparsable string'}})():o.doc; console.log(JSON.stringify({keys:Object.keys(o),kind:o.kind,docType:typeof o.doc,docKeys:d&&typeof d==='object'?Object.keys(d):d, pieces: d&&d.pieces?d.pieces.map(p=>p.type):null}))\"; cd C:/Users/nname/Desktop/worktrees/e-jumpsf-wt && grep -n \"if (P.type === 'flight') {\" -A6 src/core/document.js | head -9","description":"Inspect the autosave's shape only; read checkDoc's flight branch"}
+--- L49281 user 2026-10-05T22:52:26.982Z
+RESULT [toolu_01UdxtnZhSf3wbnnx7dHzBZC]: {"keys":["schema","name","doc"],"docType":"string","docKeys":["schema","generator","name","closed","nextId","words","pitLane","constraints"],"pieces":null}
+133:    if (P.type === 'flight') { flightAfter = true; continue; }
+134-    const e = pieceEnd(P);
+135-    return flightAfter ? { ...e, kh: { v: 0, m: 0 }, kv: { v: 0, m: 0 }, h: { v: 0, m: 0 }, l: { v: 0, m: 0 } } : e;
+136-  }
+137-  return null;   // an empty track: the first piece starts where its channels say
+138-}
+139-
+--
+268:    if (P.type === 'flight') {
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L49285 assistant 2026-10-05T22:52:31.243Z
+TEXT: The autosave is an old word-builder document (it has `words`, no pieces), so it can't hold the shape. Next, the `checkDoc` rule:
+--- L49286 assistant 2026-10-05T22:52:32.938Z
+TOOL_USE Read [toolu_01Y1v5QEVQimhLDAcwM28RAD]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpsf-wt\\src\\core\\document.js","offset":266,"limit":8}
+--- L49287 user 2026-10-05T22:52:32.960Z
+RESULT [toolu_01Y1v5QEVQimhLDAcwM28RAD]: 266	    const at = `piece ${i} (${P && P.id})`;
+267	    if (!P || typeof P.id !== 'string' || ids.has(P.id)) bad(`${at}: needs a unique string id`); ids.add(P.id);
+268	    if (P.type === 'flight') {
+269	      if (prev) { const e = pieceEnd(prev); for (const ch of OFFSETS) if (Math.abs(e[ch].v) > 10 ** -DEC[ch] || Math.abs(e[ch].m) > 1e-6) throw new CoreError('FLIGHT_OFFSET', `${at}: ${ch} must fade to 0 (value and slope) before a jump, got ${e[ch].v} m, slope ${e[ch].m}: the adapter cannot lift a jump's gap or its landing ramp`); }
+270	      if (!(P.gap > 0) || !Number.isFinite(P.drop) || !Number.isFinite(P.land)) bad(`${at}: a flight needs gap > 0, drop and land`);
+271	      if (!prev) bad(`${at}: a flight must follow a road piece`);
+272	      afterFlight = true; return;
+273	    }
+--- L49288 assistant 2026-10-05T22:52:34.037Z
+TOOL_USE Bash [toolu_01Aw7op4BavyiS9FgBhDXq5C]: {"command":"cd C:/Users/nname/Desktop/worktrees/e-jumpsf-wt && sed -n 59,75p test/core_doc.test.js | cut -c1-260; grep -n \"JUMP_AFTER_JUMP\" -r src test app/core | cut -c1-160","description":"Read the existing flight test in core_doc; find JUMP_AFTER_JUMP uses"}
+--- L49289 user 2026-10-05T22:52:34.270Z
+RESULT [toolu_01Aw7op4BavyiS9FgBhDXq5C]: test('a flight must follow road; the road after it starts level (κh = κv = 0), the rest carried', () => {
+  const d0 = D.createDoc('f');
+  assert.throws(() => D.appendPiece(d0, D.flightPiece({ gap: 20, drop: 1, land: -2 * DEG })), (e) => e.code === 'BAD_DOC' && /follow a road/.test(e.message));
+  const d1 = D.appendPiece(D.appendPiece(d0, D.roadPiece({ length: 60, channels: consts({ kh: 0.004, phi: 0.2 }) })), D.flightPiece({ gap: 20, drop: 1, land: -2 * DEG }));
+  const e = D.endState(d1);
+  assert.deepEqual([e.kh.v, e.kv.v, e.phi.v], [0, 0, 0.2]);
+});
+
+test('load then save is byte-exact, and a value finer than its quantum is snapped as it enters', () => {
+  let d = D.createDoc('Round trip', { start: { pos: [1, 2, 3], heading: 0.5, pitch: 0.01 } });
+  d = D.appendPiece(d, D.roadPiece({ length: 123.45678, family: 'half-pipe', channels: { kh: (s) => Math.sin(s / 40) * 0.003, kv: flat(0), phi: (s) => 0.001 * s, w: flat(31.5), r: flat(4.55) } }));
+  d = D.appendPiece(d, D.flightPiece({ gap: 40, drop: 3, land: -0.05 }));
+  d = D.appendPiece(d, D.roadPiece({ length: 90, family: 'half-pipe', from: D.endState(d), channels: consts({ phi: 0.1, w: 31.5, r: 4.55 }) }));
+  const t = D.serialize(d);
+  assert.equal(D.serialize(D.parse(t)), t);
+  assert.equal(d.pieces[0].length, 123.4568);
+  const finer = t.replace('"length":123.4568', '"length":123.456800004');
+src/core/jump.js:12:// Refused by name: an empty track or one whose end is already a jump (NO_TAKEOFF, JUMP_AFTER_JUMP: land on road first), a closed track
+src/core/jump.js:26:  if (doc.pieces[doc.pieces.length - 1].type === 'flight') throw new D.CoreError('JUMP_AFTER_JUMP', 'the track already ends in a jump: exten
+test/core_jump.test.js:59:  assert.throws(() => jump(jump(road, { gap: 20 }), { gap: 20 }), (e) => e.code === 'JUMP_AFTER_JUMP');
+test/core_jump_mutation.test.js:31:  { id: 'J11 a jump straight after a jump is accepted', pattern: 'row 1', file: 'src/core/jump.js', from: "type === 'flight')
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L49294 assistant 2026-10-05T22:52:50.284Z
+TOOL_USE Edit [toolu_01Mg8joCZYY2BhfJcsRR3LQs]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpsf-wt\\src\\core\\document.js","old_string":"      if (!prev) bad(`${at}: a flight must follow a road piece`);\n      afterFlight = true; return;","new_string":"      if (!prev) bad(`${at}: a flight must follow a road piece`);\n      // D243 (B's look): LAND ON ROAD FIRST. Two flights in a row would take the second off from the first one's landing ramp, which no road piece\n      // describes; jump() never makes one, and an opened or hand-edited file may not hold one either\n      if (afterFlight) throw new CoreError('JUMP_AFTER_JUMP', `${at}: two jumps in a row (${doc.pieces[i - 1].id}, then ${P.id}): a jump must land on road before the next one takes off; put a road piece between them`);\n      afterFlight = true; return;"}
+--- L49295 user 2026-10-05T22:52:50.321Z
+RESULT [toolu_01Mg8joCZYY2BhfJcsRR3LQs]: The file C:\Users\nname\Desktop\worktrees\e-jumpsf-wt\src\core\document.js has been updated successfully.
+--- L49306 assistant 2026-10-05T22:52:56.745Z  <<< THE CLAIM'S MESSAGE
+TEXT: `afterFlight` is already the right flag: a flight sets it, and the next road piece clears it. Next, drop `jump()`'s duplicate check:
+--- L49307 assistant 2026-10-05T22:52:59.157Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01PCqLCdm34HExuU1xgGeikR]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpsf-wt\\src\\core\\jump.js","old_string":"  if (doc.pieces[doc.pieces.length - 1].type === 'flight') throw new D.CoreError('JUMP_AFTER_JUMP', 'the track already ends in a jump: extend the landing road first, then add the next jump');\n","new_string":""}
+--- L49308 user 2026-10-05T22:52:59.199Z
+RESULT [toolu_01PCqLCdm34HExuU1xgGeikR]: The file C:\Users\nname\Desktop\worktrees\e-jumpsf-wt\src\core\jump.js has been updated successfully.
+--- L49309 assistant 2026-10-05T22:53:02.734Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_011KitEpbrLEKArNmoPRQszp]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\e-jumpsf-wt\\src\\core\\jump.js","old_string":"// Refused by name: an empty track or one whose end is already a jump (NO_TAKEOFF, JUMP_AFTER_JUMP: land on road first), a closed track\n// (CLOSED, D.appendPiece), a bad number (BAD_JUMP), a road that still carries a height or sideways offset at the lip (FLIGHT_OFFSET, D.checkDoc),\n// and a flight the solver cannot fly (JUMP_PAST_VERTICAL, JUMP_UNSOLVABLE).","new_string":"// Refused by name: an empty track (NO_TAKEOFF), a closed track (CLOSED, D.appendPiece), a bad number (BAD_JUMP), a track whose end is already a\n// jump (JUMP_AFTER_JUMP: land on road first, a rule of the DOCUMENT, D.checkDoc, so an opened or hand-edited file cannot hold one either), a road\n// that still carries a height or sideways offset at the lip (FLIGHT_OFFSET, D.checkDoc), and a flight the solver cannot fly (JUMP_PAST_VERTICAL,\n// JUMP_UNSOLVABLE)."}

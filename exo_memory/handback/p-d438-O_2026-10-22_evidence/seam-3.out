@@ -1,0 +1,108 @@
+old-saved.t180track: 44 pieces, closed true; flags from p41: p41 cup edge bowl | p42 cup edge bowl | p43 cup edge bowl | p44 cup edge bowl || p1: cup bowl
+  p44 -120   bank   -180.00°  cup   37.30°  width 35.00 m
+  p44 -110   bank   -180.00°  cup   37.30°  width 35.00 m
+  p44 -100   bank   -180.00°  cup   37.30°  width 35.00 m
+  p44 -90    bank   -180.00°  cup   37.30°  width 35.00 m
+  p44 -80    bank   -180.00°  cup   37.30°  width 35.00 m
+  p44 -70    bank   -180.00°  cup   37.30°  width 35.00 m
+  p44 -60    bank   -180.00°  cup   37.30°  width 35.00 m
+  p44 -50    bank   -180.00°  cup   37.30°  width 35.00 m
+  p44 -40    bank   -180.00°  cup   37.30°  width 35.00 m
+  p44 -30    bank   -180.00°  cup   36.52°  width 35.00 m
+  p44 -20    bank   -180.00°  cup   30.66°  width 35.00 m
+  p44 -10    bank   -180.00°  cup   17.80°  width 35.00 m
+  p44 0      bank   -180.00°  cup   10.00°  width 35.00 m
+  p1 +0      bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +10     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +20     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +30     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +40     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +50     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +60     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +70     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +80     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +90     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +100    bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +110    bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +120    bank      0.00°  cup   10.00°  width 35.00 m
+  largest change over 10 m: bank 18.000°/m, cup 1.287°/m; at the seam: bank -180.000° → 0.000°, cup 10.000 → 10.000
+
+morning-banked.t180track: 44 pieces, closed true; flags from p41: p41 cup edge bowl | p42 cup edge bowl | p43 cup edge bowl | p44 cup edge bowl || p1: cup bowl
+  p44 -120   bank   -194.12°  cup   37.30°  width 35.00 m
+  p44 -110   bank   -192.33°  cup   37.30°  width 35.00 m
+  p44 -100   bank   -190.45°  cup   37.30°  width 35.00 m
+  p44 -90    bank   -188.51°  cup   37.30°  width 35.00 m
+  p44 -80    bank   -186.63°  cup   37.30°  width 35.00 m
+  p44 -70    bank   -184.98°  cup   37.30°  width 35.00 m
+  p44 -60    bank   -183.60°  cup   37.30°  width 35.00 m
+  p44 -50    bank   -182.52°  cup   37.30°  width 35.00 m
+  p44 -40    bank   -181.67°  cup   37.30°  width 35.00 m
+  p44 -30    bank   -181.00°  cup   36.52°  width 35.00 m
+  p44 -20    bank   -180.49°  cup   30.66°  width 35.00 m
+  p44 -10    bank   -180.13°  cup   17.80°  width 35.00 m
+  p44 0      bank   -180.00°  cup   10.00°  width 35.00 m
+  p1 +0      bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +10     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +20     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +30     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +40     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +50     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +60     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +70     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +80     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +90     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +100    bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +110    bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +120    bank      0.00°  cup   10.00°  width 35.00 m
+  largest change over 10 m: bank 18.000°/m, cup 1.287°/m; at the seam: bank -180.000° → 0.000°, cup 10.000 → 10.000
+
+node:fs:440
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: ENOENT: no such file or directory, open 'C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-d438-O_2026-10-22_evidence\tracks\build-15e4e81-d432.t180track'
+[90m    at Object.readFileSync (node:fs:440:20)[39m
+    at Object.<anonymous> [90m(C:\Users\nname\Desktop\lighthouse\exo_memory\handback\p-d438-O_2026-10-22_evidence\[39mseam.js:7:24[90m)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m {
+  errno: [33m-4058[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'open'[39m,
+  path: [32m'C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\handback\\p-d438-O_2026-10-22_evidence\\tracks\\build-15e4e81-d432.t180track'[39m
+}
+
+Node.js v24.14.1
+
+build-15e4e81-d432.t180track: 44 pieces, closed true; flags from p41: p41 cup edge bowl | p42 cup edge bowl | p43 cup edge bowl | p44 cup edge bowl || p1: cup bowl
+  p44 -120   bank   -240.56°  cup   34.66°  width 35.00 m
+  p44 -110   bank   -240.44°  cup   34.09°  width 35.00 m
+  p44 -100   bank   -240.28°  cup   33.38°  width 35.00 m
+  p44 -90    bank   -239.81°  cup   32.48°  width 35.00 m
+  p44 -80    bank   -237.57°  cup   31.41°  width 35.00 m
+  p44 -70    bank   -232.18°  cup   30.19°  width 35.00 m
+  p44 -60    bank   -224.64°  cup   28.61°  width 35.00 m
+  p44 -50    bank   -216.44°  cup   26.50°  width 35.00 m
+  p44 -40    bank   -208.06°  cup   24.13°  width 35.00 m
+  p44 -30    bank   -199.66°  cup   21.66°  width 35.00 m
+  p44 -20    bank   -191.26°  cup   18.03°  width 35.00 m
+  p44 -10    bank   -183.53°  cup   12.85°  width 35.00 m
+  p44 0      bank   -180.00°  cup   10.00°  width 35.00 m
+  p1 +0      bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +10     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +20     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +30     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +40     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +50     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +60     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +70     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +80     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +90     bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +100    bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +110    bank      0.00°  cup   10.00°  width 35.00 m
+  p1 +120    bank      0.00°  cup   10.00°  width 35.00 m
+  largest change over 10 m: bank 18.000°/m, cup 0.519°/m; at the seam: bank -180.000° → 0.000°, cup 10.000 → 10.000

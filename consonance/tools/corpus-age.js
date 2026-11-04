@@ -70,7 +70,9 @@ function intakeCap(srcPath = MAIN_RS) {
  * made map/, journal/ and loop/ INDEXED-NEVER-CARRIED, and this tool went on counting all three
  * into a figure it labelled "corpus carried by the librarian" -- the record tiers, which are most
  * of the mass and all of the growth. */
-const CARRY_TIERS = ['cards', '', 'record', 'memory', 'librarian', 'spread', 'research'];
+// D476: `third_place` rides on the shelf right after the librarian's own notes (its newest dated entry carried, the rest indexed);
+// counted whole here, as `librarian` is, though the shelf windows both.
+const CARRY_TIERS = ['cards', '', 'record', 'memory', 'librarian', 'third_place', 'spread', 'research'];
 const INDEX_TIERS = ['map', 'journal', 'loop'];
 
 /* Excluded BY NAME in the binary since c2afec6 -- bulk run artifacts that cost more index than the

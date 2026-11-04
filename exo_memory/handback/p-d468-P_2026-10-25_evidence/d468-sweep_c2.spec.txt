@@ -1,0 +1,24 @@
+[32m✔ seed 1: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(10.5235ms)[39m[39m
+[32m✔ seed 1: C2 at the seam and at the joints Close moved [90m(4.2585ms)[39m[39m
+[32m✔ seed 2: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(331.3675ms)[39m[39m
+[32m✔ seed 2: C2 at the seam and at the joints Close moved [90m(201.4671ms)[39m[39m
+[32m✔ seed 3: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(4.9268ms)[39m[39m
+[32m✔ seed 3: C2 at the seam and at the joints Close moved [90m(2.7695ms)[39m[39m
+[32m✔ seed 4: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(246.9547ms)[39m[39m
+[32m✔ seed 4: C2 at the seam and at the joints Close moved [90m(194.9524ms)[39m[39m
+[32m✔ seed 5: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(2.4945ms)[39m[39m
+[32m✔ seed 5: C2 at the seam and at the joints Close moved [90m(2.1018ms)[39m[39m
+[32m✔ seed 6: C2 at every ramp joint the words laid (the bank, the cup and the edges step their curvature at no joint) [90m(251.6261ms)[39m[39m
+[32m✔ seed 6: C2 at the seam and at the joints Close moved [90m(223.918ms)[39m[39m
+[34mℹ tests 12[39m
+[34mℹ suites 0[39m
+[34mℹ pass 12[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1553.3444[39m
+
+# stderr
+
+# exit 0 in 1.6 s

@@ -1,0 +1,15 @@
+# suite485 summary (E, D485). The full TAP stays in the session scratchpad (scratchpad/d485/suite485.tap); test names there carry terms off the private list, so only these lines are filed.
+head 82afc11 changed=[0] SWEEP_SEEDS=60 10:11:39Z
+suite exit 1, 1475 s: ℹ tests 4014 ℹ pass 3979 ℹ fail 1 ℹ cancelled 0 ℹ skipped 27 ℹ todo 7  10:36:14Z
+suite non-TODO not ok rows: 1
+not ok 655 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+EXPO (3221225477) lines in TAP: 2
+mutant rows: applied-and-caught 689, not ok mutant rows 0, NOT APPLIED mentions 0
+after suite: changed=[0] 10:36:15Z
+
+# the red row's error line:
+  error: 'aqua, a 1000 m stretch with a left edge typed on an empty track drag: p95 7.4 / 7.4 ms (median 4.3 / 4.1), over 6.9 ms, 57.3 / 58.0 work frames a second (at most 120)'
+
+# the launch that never ran a test (belownormal.js missing), for the record:
+head 82afc11 changed=[0] SWEEP_SEEDS=60 10:11:07Z
+suite exit 1, 0 s:  10:11:07Z

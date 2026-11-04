@@ -11,7 +11,7 @@ const os = require('node:os');
 const path = require('node:path');
 
 // DATA is read at load, so the temp dir must be set before the require. Nothing here touches the live data dir.
-const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'curate-test-'));
+const TMP = require('./scratch.js').mkdtemp('curate-test-');
 process.env.CONSONANCE_DATA = TMP;
 // Every line the require prints is caught: the CLI's first act on an empty data dir is to print, not to write, so a
 // "no state file" check alone could not see main() run (mutant C12 survived it).

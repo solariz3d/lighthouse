@@ -1,0 +1,6 @@
+== C d296 full cargo test · asked 2026-10-11T14:44:18.969Z · lock held 2026-10-11T14:44:19.002Z · NODE_OPTIONS=--max-old-space-size=4096
+$ cd G:/worktrees/c-d296-wt/consonance/src-tauri && git log -1 --format=%h && git status --short | wc -l && CARGO_TARGET_DIR=G:/ctarget/c-d296-new ~/.cargo/bin/cargo.exe test --bin consonance 2>&1 | grep -E '^test result|FAILED|panicked' | head -40
+bf784f68
+1
+test result: ok. 1020 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 83.79s
+== exit 0 · done 2026-10-11T14:45:48.072Z

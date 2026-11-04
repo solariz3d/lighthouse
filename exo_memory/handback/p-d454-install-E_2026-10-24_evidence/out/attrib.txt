@@ -1,0 +1,54 @@
+2026-10-25T05:34:48.855Z waiting on heavy-run.lock: P d454 review of B: scratch clone + gen-consumer from d454-b + gen-consumer.test + portable-paths (BelowNormal; not a timing session) (pid 41096)
+2026-10-25T05:38:19.956Z no timing session in any slot; taking the lock
+consonance/hooks/claim-check.test.js
+   clone(HEAD): exit 1 — AssertionError [ERR_ASSERTION]: The input did not match the regular expression /"permissionDecision":"deny"/. 
+   clone2(d454-e): exit 1 — AssertionError [ERR_ASSERTION]: The input did not match the regular expression /"permissionDecision":"deny"/. 
+   worktree(this machine env): exit 0
+consonance/hooks/delete-gate.test.js
+   clone(HEAD): exit 1 — AssertionError [ERR_ASSERTION]: the /tmp/... form
+   clone2(d454-e): exit 1 — AssertionError [ERR_ASSERTION]: the /tmp/... form
+   worktree(this machine env): exit 0
+consonance/hooks/dispatch-gate.test.js
+   clone(HEAD): exit 1 — AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+   clone2(d454-e): exit 1 — AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+   worktree(this machine env): exit 0
+consonance/hooks/dream-gate.test.js
+   clone(HEAD): exit 1 — if (!exe) throw new Error('no python.exe found outside the Store stub; cannot verify the pulse gate');
+   clone2(d454-e): exit 1 — if (!exe) throw new Error('no python.exe found outside the Store stub; cannot verify the pulse gate');
+   worktree(this machine env): exit 0
+consonance/hooks/push-gate.test.js
+   clone(HEAD): exit 1 — AssertionError [ERR_ASSERTION]: cygpath maps /tmp/pg-avmaJ8/work
+   clone2(d454-e): exit 1 — AssertionError [ERR_ASSERTION]: cygpath maps /tmp/pg-LRERYN/work
+   worktree(this machine env): exit 0
+consonance/hooks/sessionstart-state.test.js
+   clone(HEAD): exit 1 — AssertionError [ERR_ASSERTION]: the live generator must not be reporting FAILED
+   clone2(d454-e): exit 1 — AssertionError [ERR_ASSERTION]: the live generator must not be reporting FAILED
+   worktree(this machine env): exit 0
+consonance/tools/attached.test.js
+   clone(HEAD): exit 1 — AssertionError [ERR_ASSERTION]: findings-return.js reads a different default path than second-vantage.js write
+   clone2(d454-e): exit 1 — AssertionError [ERR_ASSERTION]: findings-return.js reads a different default path than second-vantage.js write
+   worktree(this machine env): exit 0
+consonance/tools/claim-check-adapter.test.js
+   clone(HEAD): exit 1 — Error: Cannot find module 'C:\Users\nname\Downloads\cons-d454-e\clone\consonance\exo_memory\loop\claimrec\fram
+   clone2(d454-e): exit 1 — Error: Cannot find module 'C:\Users\nname\Downloads\cons-d454-e\clone2\consonance\exo_memory\loop\claimrec\fra
+   worktree(this machine env): exit 0
+consonance/tools/claim-replay.test.js
+   clone(HEAD): exit 1 — Error: Cannot find module 'C:\Users\nname\Downloads\cons-d454-e\clone\consonance\exo_memory\loop\claimrec\fram
+   clone2(d454-e): exit 1 — Error: Cannot find module 'C:\Users\nname\Downloads\cons-d454-e\clone2\consonance\exo_memory\loop\claimrec\fra
+   worktree(this machine env): exit 0
+consonance/tools/janitor.test.js
+   clone(HEAD): exit 1 — AssertionError [ERR_ASSERTION]: gen-consumer.js makes gen-consumer-XXXXXX
+   clone2(d454-e): exit 1 — AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+   worktree(this machine env): exit 0
+consonance/tools/mistake-bench.test.js
+   clone(HEAD): exit 1 — Error: Cannot find module 'C:\Users\nname\Downloads\cons-d454-e\clone\consonance\exo_memory\loop\claimrec\fram
+   clone2(d454-e): exit 1 — Error: Cannot find module 'C:\Users\nname\Downloads\cons-d454-e\clone2\consonance\exo_memory\loop\claimrec\fra
+   worktree(this machine env): exit 0
+consonance/tools/pulse-degrade.test.js
+   clone(HEAD): exit 0
+   clone2(d454-e): exit 1 — FAIL THE BAR — ARM B: no env and no data_dir in the config, so the detector SAYS it is off
+   worktree(this machine env): exit 0
+consonance/tools/scratch.test.js
+   clone(HEAD): exit 1 — AssertionError [ERR_ASSERTION]: The input did not match the regular expression /already holds a git history/. 
+   clone2(d454-e): exit 1 — AssertionError [ERR_ASSERTION]: The input did not match the regular expression /already holds a git history/. 
+   worktree(this machine env): exit 0

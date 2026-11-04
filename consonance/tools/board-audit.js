@@ -29,8 +29,21 @@
  */
 'use strict';
 const fs = require('fs');
+const os = require('os');
+const path = require('path');
 
-const BOARD = process.env.CONSONANCE_BOARD || 'C:\\Consonance\\data\\board.jsonl';
+/* D273 lap 2 (pane B, 2026-10-08): run in the consumer tree with CONSONANCE_DATA pointed at an EMPTY directory, this read the keeper's own board from a
+ * hardcoded path (FALSE-COLD, handback/p-consumer-parity-B_2026-10-08.md §4). The board is found the way the app finds its data dir (main.rs
+ * default_data): CONSONANCE_BOARD, else <CONSONANCE_DATA>, else <data_dir in ~/.consonance.json>, else ~/.consonance; then board.jsonl. */
+function dataDir() {
+  if (process.env.CONSONANCE_DATA) return process.env.CONSONANCE_DATA;
+  try {
+    const v = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, ''));
+    if (v && typeof v.data_dir === 'string' && v.data_dir.trim()) return v.data_dir.trim();
+  } catch (_) { /* no config: the app's own default below */ }
+  return path.join(os.homedir(), '.consonance');
+}
+const BOARD = process.env.CONSONANCE_BOARD || path.join(dataDir(), 'board.jsonl');
 const MAIN_SID = '0c0c0c0a-0000-4000-8000-000000000a01';
 /* A repeat only counts against the corpus when it lands within this window of a previous copy.
  * Replays carry original timestamps, so they land at 0ms; a genuine later repeat (the keeper
@@ -91,6 +104,8 @@ function shareSnapshots(rows, isRepeat, pane, atLines) {
 module.exports = { parseBoard, markRepeats, markBackward, shareSnapshots, BOARD, MAIN_SID, REPEAT_WINDOW_MS };
 
 if (require.main === module) {
+  // D273 lap 2: a missing board is said in words, with a non-zero exit; a stack trace says the tool broke, which it did not
+  if (!fs.existsSync(BOARD)) { console.error(`board-audit: no board at ${BOARD} (CONSONANCE_BOARD, CONSONANCE_DATA, data_dir in ~/.consonance.json, then ~/.consonance)`); process.exit(1); }
   const lines = fs.readFileSync(BOARD, 'utf8').split('\n').filter(Boolean);
   const rows = parseBoard(lines);
   const isRepeat = markRepeats(rows, REPEAT_WINDOW_MS);

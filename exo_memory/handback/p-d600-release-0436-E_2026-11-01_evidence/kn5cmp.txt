@@ -1,0 +1,16 @@
+meshes: his 296, ours 302
+main road physics (1ROAD_p*): same 89, differ 0, only his 0, only ours 0
+pit lane (1ROAD_PIT*): same 5, differ 3, only his 0, only ours 0
+  differ: 1ROAD_PIT_fill_0, 1ROAD_PIT_in_0, 1ROAD_PIT_out_0
+apron (1ROAD_APRON*, APRONSIDE*): same 114, differ 0, only his 0, only ours 2
+  onlyOurs: 1ROAD_APRON_PIT_R, APRONSIDE_PIT_R
+catch (1ROAD_CATCH*): same 3, differ 0, only his 0, only ours 0
+paint (PAINT*): same 25, differ 0, only his 0, only ours 0
+underskin (UNDERSKIN*): same 54, differ 3, only his 0, only ours 4
+  differ: UNDERSKIN_p1_chunk_0, UNDERSKIN_p1_chunk_1, UNDERSKIN_p1_chunk_2
+  onlyOurs: UNDERSKIN_PIT_chunk_57, UNDERSKIN_PIT_chunk_58, UNDERSKIN_PIT_fill_0, UNDERSKIN_PIT_out_0
+anything else: same 0, differ 0, only his 0, only ours 0
+1ROAD_p38_chunk_75: his c546e1d62502a0c2 ours c546e1d62502a0c2 SAME (geometry same)
+1ROAD_p38_chunk_76: his f79d0c3527a11362 ours f79d0c3527a11362 SAME (geometry same)
+1ROAD_p38_chunk_77: his b270d15bfcc4c84e ours b270d15bfcc4c84e SAME (geometry same)
+3efd4a2f624295d5d6acfea5bcbe724b409cb000d89fe63efd50a66eee2bbf5c *C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/d600/hidden/steam/steamapps/common/assettocorsa/content/tracks/t180b_elysium/t180b_elysium.kn5

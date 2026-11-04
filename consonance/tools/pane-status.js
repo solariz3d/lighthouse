@@ -92,18 +92,21 @@ function transcriptFor(id) {
   return best;
 }
 
+// Read FORWARD, one line at a time (sourced.js eachLine): a transcript past V8's string limit (536,870,888 bytes) made the old
+// whole-file read throw ERR_STRING_TOO_LONG, and six of eight seats' transcripts are past it (D630). The newest assistant record with
+// text wins; a tool_use in it or in any assistant record after it means the turn is still going, as the backward scan read it.
 function lastTurn(file) {
-  const lines = fs.readFileSync(file, 'utf8').split('\n').filter(Boolean);
   let text = null, toolAfterText = false;
-  for (let i = lines.length - 1; i >= 0; i--) {
-    let o; try { o = JSON.parse(lines[i]); } catch { continue; }
-    if (o.type !== 'assistant') continue;
+  require('./sourced.js').eachLine(file, (line) => {
+    if (!line || line.indexOf('"assistant"') < 0) return;
+    let o; try { o = JSON.parse(line); } catch { return; }
+    if (o.type !== 'assistant') return;
     const c = o.message && o.message.content;
-    if (!Array.isArray(c)) continue;
-    if (!text && c.some((x) => x.type === 'tool_use')) toolAfterText = true;
+    if (!Array.isArray(c)) return;
+    const tool = c.some((x) => x.type === 'tool_use');
     const t = c.filter((x) => x.type === 'text').map((x) => x.text).join('');
-    if (t.trim()) { text = t.trim(); break; }
-  }
+    if (t.trim()) { text = t.trim(); toolAfterText = tool; } else if (tool) toolAfterText = true;
+  });
   return { text, toolAfterText };
 }
 

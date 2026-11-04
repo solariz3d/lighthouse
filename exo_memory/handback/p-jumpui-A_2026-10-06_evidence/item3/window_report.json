@@ -1,0 +1,259 @@
+{
+ "exe": "t180-track-builder.exe",
+ "started": "2026-10-06T12:03:52.128Z",
+ "errors": [],
+ "console": [],
+ "checks": {
+  "start": {
+   "status": "unsaved",
+   "info": "0 pieces · 0 m · open",
+   "msg": "No saved pieces yet: select pieces on the track and press Save as piece."
+  },
+  "initialHandles": [
+   "length:0",
+   "width:1",
+   "width:-1",
+   "bank:1",
+   "bank:-1",
+   "cup:1",
+   "cup:-1",
+   "turn:1",
+   "turn:-1",
+   "climb:0"
+  ],
+  "handlesAfterTwoPieces": [
+   "length:0",
+   "width:1",
+   "width:-1",
+   "bank:1",
+   "bank:-1",
+   "cup:1",
+   "cup:-1",
+   "turn:1",
+   "turn:-1",
+   "climb:0"
+  ],
+  "nearEnd": {
+   "length:0": {
+    "x": 532,
+    "y": 426
+   },
+   "width:1": {
+    "x": 73,
+    "y": 426
+   },
+   "width:-1": {
+    "x": 991,
+    "y": 426
+   },
+   "bank:1": {
+    "x": 404,
+    "y": 270
+   },
+   "bank:-1": {
+    "x": 660,
+    "y": 270
+   },
+   "cup:1": {
+    "x": 494,
+    "y": 270
+   },
+   "cup:-1": {
+    "x": 570,
+    "y": 270
+   },
+   "turn:1": {
+    "x": 438,
+    "y": 255
+   },
+   "turn:-1": {
+    "x": 626,
+    "y": 255
+   },
+   "climb:0": {
+    "x": 532,
+    "y": 255
+   }
+  },
+  "nearEndCheck": {
+   "lengthBelowTurn": true,
+   "widthBelowTurn": true,
+   "widthLevelWithLength": true,
+   "bankBetween": true
+  },
+  "infoBefore": "2 pieces · 200 m · open · last extend 0 ms",
+  "fieldsBefore": {
+   "length m": "100",
+   "turn °/100m": "0",
+   "climb °/100m": "0",
+   "bank °": "0",
+   "cup °": "15.5",
+   "width m": "31",
+   "edge angle °": "0",
+   "edge start": "0.64",
+   "tube sweep °": "0",
+   "jump gap m": "20",
+   "drop m (+ down)": "1",
+   "landing °": "-2",
+   "radius m": "60"
+  },
+  "drags": {
+   "length:0": {
+    "field": "length m",
+    "before": "100",
+    "after": "120",
+    "m": 20,
+    "pxPerM": 11.8
+   },
+   "width:1": {
+    "field": "width m",
+    "before": "31",
+    "after": "33",
+    "m": 1,
+    "pxPerM": 29.65
+   },
+   "width:-1": {
+    "field": "width m",
+    "before": "33",
+    "after": "35",
+    "m": 1,
+    "pxPerM": 29.65
+   },
+   "bank:1": {
+    "field": "bank °",
+    "before": "0",
+    "after": "6.9",
+    "m": 2,
+    "pxPerM": 7.23
+   },
+   "bank:-1": {
+    "field": "bank °",
+    "before": "6.9",
+    "after": "13.8",
+    "m": 2,
+    "pxPerM": 7.17
+   },
+   "cup:1": {
+    "field": "cup °",
+    "before": "15.5",
+    "after": "21.5",
+    "m": 3,
+    "pxPerM": 7.22
+   },
+   "turn:1": {
+    "field": "turn °/100m",
+    "before": "0",
+    "after": "2",
+    "m": 4,
+    "pxPerM": 5.29
+   },
+   "turn:-1": {
+    "field": "turn °/100m",
+    "before": "2",
+    "after": "4",
+    "m": 4,
+    "pxPerM": 5.14
+   },
+   "climb:0": {
+    "field": "climb °/100m",
+    "before": "0",
+    "after": "2",
+    "m": 4,
+    "pxPerM": 5.26
+   }
+  },
+  "infoAfterDrags": "2 pieces · 200 m · open · last extend 0 ms",
+  "noDocumentEdit": true,
+  "shiftFine": {
+   "from": 100,
+   "m": 20,
+   "to": "102",
+   "expect": "102 (a tenth of 20)"
+  },
+  "ctrlSnap": {
+   "from": 100,
+   "m": 23,
+   "to": "120",
+   "expect": "a multiple of 10"
+  },
+  "cursorOnHandle": "ns-resize",
+  "cursorOff": "",
+  "cameraRightDrag": {
+   "moved": true
+  },
+  "handleDragLeavesCamera": true,
+  "extendClick": "clicked",
+  "infoAfterExtend": "3 pieces · 360 m · open · last extend 1 ms",
+  "infoTrack": "6 pieces · 840 m · open · last extend 1 ms",
+  "ghostAfterExtend": 10,
+  "armedPressOnHandle": {
+   "lengthBefore": "160",
+   "lengthAfter": "170",
+   "brushRan": false
+  },
+  "sculptOn": true,
+  "sculptChannels": [
+   "phi",
+   "c",
+   "w",
+   "e",
+   "s",
+   "r",
+   "t"
+  ],
+  "sculptModeDisabled": true,
+  "noHandlesUntilSelected": 0,
+  "sculptHint": "Select ONE piece: click it on the track. Only its shape (bank, cup, width, edge, wall rise, tube sweep) can change; turn and climb are not offered, and the centreline is checked on every step.",
+  "where": {
+   "x": 778,
+   "y": 526,
+   "s": 188,
+   "mid": 188
+  },
+  "selection": "Selected: p2 · 100 m",
+  "sculptHintSelected": "Sculpting p2: drag its handles (bank, width) or use the brush; one drag is one undo step. The route never moves.",
+  "sculptHandles": [
+   "bank:1",
+   "bank:-1",
+   "width:1",
+   "width:-1"
+  ],
+  "undoBefore": "6 pieces · 840 m · open · last extend 1 ms",
+  "sculptDrag": {
+   "samples": [
+    421,
+    421
+   ],
+   "centrelineMaxDiffM": 0,
+   "rollChangedInsideP2": 0.183105711,
+   "rollChangedOutside": 0,
+   "info": "6 pieces · 840 m · open · last brush:rate 2 ms",
+   "msg": "Sculpting p2: drag its handles (bank, width) or use the brush; one drag is one undo step. The route never moves. | No saved pieces yet: select pieces on the track and press Save as piece."
+  },
+  "afterUndoOnce": {
+   "rollMaxDiffFromBefore": 0,
+   "posMaxDiff": 0,
+   "pieces": true
+  },
+  "sculptOff": {
+   "channels": [
+    "kv",
+    "kh",
+    "phi",
+    "w",
+    "r",
+    "c",
+    "e",
+    "s",
+    "t"
+   ],
+   "handles": 10
+  }
+ },
+ "keeperFiles": 9,
+ "keeperChanged": [],
+ "runAppData": [
+  "autosave.t180auto"
+ ],
+ "ended": "2026-10-06T12:04:44.325Z"
+}

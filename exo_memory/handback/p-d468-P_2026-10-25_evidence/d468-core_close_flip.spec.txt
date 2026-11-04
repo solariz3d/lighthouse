@@ -1,0 +1,16 @@
+[32m✔ a lap end in the flipped frame that faces the start exactly has no heading, pitch or bank left to close [90m(45.2654ms)[39m[39m
+[32m✔ the whole-lap close of a flipped-frame lap converges and the seam meets in position and frame [90m(119.5186ms)[39m[39m
+[32m✔ Finish to start from a flipped-frame end lays no roll (the end is already upright) and closes the lap [90m(600.9703ms)[39m[39m
+[32m✔ Level on a flipped-frame end with a slope ends level (pitch 0), as it does on an upright track [90m(225.1083ms)[39m[39m
+[34mℹ tests 4[39m
+[34mℹ suites 0[39m
+[34mℹ pass 4[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1081.3273[39m
+
+# stderr
+
+# exit 0 in 1.1 s

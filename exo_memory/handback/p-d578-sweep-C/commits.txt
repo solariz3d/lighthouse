@@ -1,0 +1,8 @@
+0c84052 Comments in app/core: keys.js's header reads as a sentence (code unchanged)
+c660c2d Comments in src/validate: "ruling" reads "design" (code unchanged)
+4a3f09c Comments in app/core: the last seat letters and "ruling" notes dropped (code unchanged)
+06e199b Comments in src/markers: a quoted plan phrase reworded (code unchanged)
+2195e35 Comments in src/validate: one more pointer to a hand-back dropped (code unchanged)
+2e2e333 Comments in app/core stand alone: no decision numbers, room paths or seat names (code unchanged)
+a2b7a0f Comments in src/markers stand alone: no decision numbers or seat names (code unchanged)
+0edd89d Comments in src/validate stand alone: no decision numbers, room paths or seat names (code unchanged)

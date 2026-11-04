@@ -1,0 +1,71 @@
+[32m✔ row 1a: a cup profile has edge ψ = c on both sides, every family, width and c, and never less than the wall before it (ψ non-decreasing outward) [90m(1.0083ms)[39m[39m
+[32m✔ row 2 (i): the walls do not meet at c = 150: each tip stays off the centreline by at least 5% of the half-width, on every family and width [90m(0.2829ms)[39m[39m
+[32m✔ row 1a: a cup piece's road carries the cup profile at its c: the r cap does NOT apply (bowl 12 m at c = 90 is 90°, not the capped edge) [90m(6.122ms)[39m[39m
+[32m✔ row 1b: a bowl cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(115.3538ms)[39m[39m
+[32m✔ row 1b: a bowl cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(96.8974ms)[39m[39m
+[32m✔ row 1b: a half-pipe cup ramp to 90° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(74.1377ms)[39m[39m
+[32m✔ row 1b: a half-pipe cup ramp to 150° over 40 m: the wall follows c on the road (within c's range over ±2 m, steps ≤ 1°, no seam zip inside the piece) [90m(103.8966ms)[39m[39m
+[32m✔ row 1b: a bowl cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(86.4352ms)[39m[39m
+[32m✔ row 1b: a half-pipe cup ramp to 90° over 100 m has steps of at most 1.0° between rows (the seal's literal bound, where the path's 0.5 m spacing allows it) [90m(87.9253ms)[39m[39m
+[32m✔ row 1b PLANTED K1b-1: today's adapter (one profile per 2 m, no blend) on the bowl ramp to 90° over 40 m is CAUGHT by the same check (a step of about 5.6°, seams inside) [90m(57.121ms)[39m[39m
+[31m✖ row 1b: a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(74.1952ms)[39m[39m
+[32m✔ row 2 (ii): a document with a cup control point outside [0, 150] is refused by name, in checkDoc and in parse [90m(1.0851ms)[39m[39m
+[32m✔ row 2 (iii): extend refuses a typed cup outside [0, 150] by name, and the fit's ringing never leaves the document past 150 (30 m piece, 10 m transition: 174.65° before the guard) [90m(1.9392ms)[39m[39m
+[32m✔ row 2 (iv): a channel curve stays within the range of its control points (the convex hull, ref 03 §1b), for a cup piece with knots [90m(2.0071ms)[39m[39m
+[32m✔ row 2 PLANTED K2-1: a cup of 165° on a bowl would have its walls cross: its tip is past the centreline, and the document guard refuses 165 (so the guard, not the export, is what stops it) [90m(0.2974ms)[39m[39m
+[32m✔ row 2 (iii): a cup brush that would push c past 150 (or below 0) is refused by name, and one inside the range works [90m(5.825ms)[39m[39m
+[32m✔ row 5e: a cup brush that reaches a LEGACY piece is refused by name; on a cup piece it leaves the road far from the window bit for bit [90m(9.8099ms)[39m[39m
+[32m✔ row 3 (i): c is a joint channel: a cup step of 5° (or a kink of the slope) between two cup pieces is refused JOINT (planted K3-1: c left out of the joint test) [90m(0.4637ms)[39m[39m
+[32m✔ row 3 (ii): c is CARRIED through a flight, like bank, width and rise (planted K3-2: reset like the heading rate) [90m(1.8875ms)[39m[39m
+[32m✔ row 3 (iii): a closed lap of cup pieces closes with c(L) = c(0) and c'(L) = c'(0) (planted K3-3: c left out of the seam rows) [90m(169.3598ms)[39m[39m
+[32m✔ row 3 (iv): legacy → cup: a cup that follows a legacy piece starts at the edge that piece RENDERS (11.679° on a 12 m bowl, not the nominal 15.5°); a cup that starts at the nominal edge is refused JOINT (planted K3-4) [90m(1.8715ms)[39m[39m
+[32m✔ row 5: a /2 file loads as LEGACY pieces (no cup flag, no c in the canonical text), renders through profileAt with no blend and no new key, and saves as /3 [90m(2.614ms)[39m[39m
+[32m✔ row 5c / 5d: extending a legacy piece with NO cup typed makes a legacy piece (nothing changes for a user who never types one); with a cup target it starts at the rendered edge [90m(1.1782ms)[39m[39m
+[32m✔ row 5b: a cup document round-trips through /3 text (serialize, parse, serialize) [90m(3.8367ms)[39m[39m
+[32m✔ row 6: bank 30° + cup 60° at a level straight station: the left edge's surface is at 90° to gravity, the right at 30°, the centre at 30°, bankG 30° (and the mirror for −30°) [90m(6.1585ms)[39m[39m
+[32m✔ row 6: typing a cup changes none of turn, climb, bank or pitch in the readout, and not one number of the centreline (planted K6-3: a cup that feeds the bank) [90m(5.9406ms)[39m[39m
+[32m✔ row 7: cupFromDeg / cupToDeg are c(0) and c(L) of a cup piece, the rendered edge of a legacy piece (profileAt at each end), and carried through a flight; the ghost equals the placed piece [90m(1.0321ms)[39m[39m
+[32m✔ row 7 PLANTED K7-1: cupToDeg is the DOCUMENT's c, not the typed target: a brush near the piece's end moves it [90m(1.9621ms)[39m[39m
+[32m✔ knot insertion keeps a cup piece's c curve and its cup flag (Boehm on the c channel) [90m(2.0135ms)[39m[39m
+[32m✔ a clamped cubic starts at P0 with slope 3(P1 − P0)/t4 (ref 09 §1), against a finite difference [90m(2.3179ms)[39m[39m
+[32m✔ a piece placed after another starts at its end value AND slope in every channel (C1 joints, so the line is G2) [90m(2.2899ms)[39m[39m
+[32m✔ a joint that is not C1 is refused by name (JOINT) [90m(1.2862ms)[39m[39m
+[32m✔ checkDoc REFUSES a hand-built document with a broken joint, by the name JOINT (a κh step, a bank tear, a slope kink) [90m(0.2431ms)[39m[39m
+[32m✔ a flight must follow road; the road after it starts level (κh = κv = 0), the rest carried [90m(0.7675ms)[39m[39m
+[32m✔ load then save is byte-exact, and a value finer than its quantum is snapped as it enters [90m(1.935ms)[39m[39m
+[32m✔ the same document serialises to the same bytes whatever order its keys were in [90m(0.5213ms)[39m[39m
+[32m✔ a piece whose keys come in another order (as another module may build it) still serialises canonically [90m(0.3106ms)[39m[39m
+[32m✔ a file of a different schema version is refused, saying a newer file needs a newer builder [90m(0.1193ms)[39m[39m
+[32m✔ undo is the document history: undo and redo are byte-identical, and a whole drag is one entry [90m(0.6396ms)[39m[39m
+[32m✔ a fitted channel holds its start exactly and reproduces a cubic polynomial (ref 03 §2: the cubic lies in the spline space) [90m(0.4264ms)[39m[39m
+[32m✔ a circle's position fit loads as κh = 1/R, κv = 0 and no bank (ref 09 §4) [90m(8.031ms)[39m[39m
+[32m✔ a helix loads with κv = 0 at its constant pitch, and κh = cos p / R (the heading turns about WORLD up) [90m(5.6595ms)[39m[39m
+[90m﹣ a real track from reads/ opens as a LOCAL example (skipped where reads/ has no position fit) [90m(0.2602ms)[39m # no local position fit of Serpents Spiral in reads/ (other authors' tracks stay local)[39m
+[34mℹ tests 43[39m
+[34mℹ suites 0[39m
+[34mℹ pass 41[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 1[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 991.4523[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_cup.test.js:115:1
+[31m✖ row 1b: a cup that also changes width (a chord per segment) still follows c and the width along the road (a seam zip per segment is the stated cost) [90m(74.1952ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: over c's slope 0.19438176873887691°, outside 0
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\a-d188-wt\[39mtest\core_cup.test.js:118:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

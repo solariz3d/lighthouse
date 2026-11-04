@@ -1,0 +1,44 @@
+{
+ "label": "L2-N",
+ "base": "fd6db07",
+ "dir": "C:\\Users\\nname\\Desktop\\worktrees\\p-d411-L2-N",
+ "commits": "bacd8be D411: turnby's kept answers are keyed only by fields JSON prints faithfully (NaN is not null), and kept only for a document frozen all the way down",
+ "status": "?? HANDBACK.md",
+ "stat": "src/core/turnby.js       | 32 +++++++++++++++++++++++++++-----\n test/core_turnby.test.js | 19 +++++++++++++++++++\n 2 files changed, 46 insertions(+), 5 deletions(-)",
+ "numstat": "27\t5\tsrc/core/turnby.js\n19\t0\ttest/core_turnby.test.js",
+ "files": [
+  "src/core/turnby.js",
+  "test/core_turnby.test.js"
+ ],
+ "added": 46,
+ "removed": 5,
+ "changed_lines": 51,
+ "test_files": [
+  "test/core_turnby.test.js"
+ ],
+ "source_files": [
+  "src/core/turnby.js"
+ ],
+ "rows": {
+  "test/core_turnby.test.js": {
+   "added": [
+    "row 7 (D411): a kept answer is never served to fields that only print alike (NaN, null), nor to a document frozen only at the top whose pieces then change"
+   ],
+   "deleted": [],
+   "rewritten": []
+  }
+ },
+ "rows_added": 1,
+ "rows_deleted": 0,
+ "rows_rewritten": 0,
+ "test_runs": [
+  {
+   "file": "test/core_turnby.test.js",
+   "cmd": "node --test \"test/core_turnby.test.js\"",
+   "exit": 0,
+   "counts": "pass 7 / fail 0",
+   "counts_from": "saved output of the first measure pass, re-parsed"
+  }
+ ],
+ "harness_runs": []
+}

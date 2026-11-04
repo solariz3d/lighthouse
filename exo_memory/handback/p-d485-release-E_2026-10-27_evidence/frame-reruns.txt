@@ -1,0 +1,20 @@
+run 1 10:39:47Z: # pass 12 # fail 0 
+# p95 ms by look: {"aqua":[2.9],"skyline":[3],"glass":[2.9],"aurora":[3.3],"sigil":[2.9]}
+# p95 ms by look: {"aqua":[3],"skyline":[3.1],"glass":[3.1],"aurora":[4.3],"sigil":[3.4]}
+# p95 ms by length: {"1000":[3],"2000":[4]}
+ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+# p95 7.1 ms, 57.3 rebuilds a second
+ok 7 - row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+# p95 3.7 ms (median 2.8), 65.3 work frames a second
+ok 8 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a 
+# p95 6.5 ms (median 3.8), 56.7 work frames a second
+run 2 10:42:01Z: # pass 12 # fail 0 
+# p95 ms by look: {"aqua":[3.9],"skyline":[3.3],"glass":[2.9],"aurora":[3.2],"sigil":[3]}
+# p95 ms by look: {"aqua":[2.9],"skyline":[3.2],"glass":[3.1],"aurora":[3.4],"sigil":[3.3]}
+# p95 ms by length: {"1000":[3.3],"2000":[4]}
+ok 6 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+# p95 7.3 ms, 57.3 rebuilds a second
+ok 7 - row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+# p95 3.7 ms (median 2.8), 64.3 work frames a second
+ok 8 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a 
+# p95 6.1 ms (median 3.6), 59.3 work frames a second

@@ -1,0 +1,12 @@
+start 21:23:41Z 3b73343 dirty 1
+sectors-mut exit 0 21:23:56Z
+# tests 7
+# pass 7
+# fail 0
+rest exit 0 21:37:02Z
+# tests 348
+# pass 345
+# fail 0
+# cancelled 0
+# skipped 3
+ALL-END

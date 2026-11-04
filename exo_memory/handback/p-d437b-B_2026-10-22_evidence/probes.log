@@ -1,0 +1,56 @@
+Chrome: 155.0.8059.85  Edge: 155.0.4283.62
+=== 08:22:15Z oomprobe2.js C:/Users/nname/Downloads/t180-wt-b437 objects
+mode objects; renderers before: 21336,31260,11120,25924,40740,21084,22700; page: started
+renderers while it runs: 21336,31260,11120,25924,40740,21084,22700
+15 s: last log (no answer)
+renderers after: 21336,31260,21084,22700
+events: Target.targetDestroyed {"targetId":"65A081AB9086A5CCD63F1BB7C871BAC3"} | Target.targetDestroyed {"targetId":"0399E2556827D2782F0A8DD606238071"} | Target.targetDestroyed {"targetId":"312C0281AB270EB715E74167CB862581"}
+page answers after: (no answer)
+=== 08:22:39Z oomprobe2.js C:/Users/nname/Downloads/t180-wt-b437 buffers
+mode buffers; renderers before: 2228,20852,16152,40028,23132,20092,5496; page: started
+1 s: last log ["msg {\"mb\":14912}","msg {\"mb\":15424}","msg {\"caught\":\"RangeError: Array buffer allocation failed\",\"mb\":15872}"]
+renderers after: 2228,20852,16152,40028,23132,20092,5496
+events: none
+page answers after: title oom, page objects 2000000, canvas pixel 255,0,0,255
+=== 08:22:46Z oomprobe2.js C:/Users/nname/Downloads/t180-wt-b437 objects --iframe
+mode objects in a cross-origin iframe; renderers before: 36236,26200,21800,33880,24564,33720,36472; page: started
+renderers while it runs: 36236,26200,21800,33880,24564,33720,36472
+14 s: last log (no answer)
+renderers after: 26200,21800,33720,36472
+events: Target.targetDestroyed {"targetId":"A5CE40957EEA771D8E51E69998B80F28"} | Target.targetDestroyed {"targetId":"41FCD78544739C3ACB19C54F1C9B70FA"} | Target.targetDestroyed {"targetId":"B0A5CC13A732F99500EF0D38083B1C81"}
+page answers after: (no answer)
+(the next run: page on tauri.localhost, frame on exp.localhost, two sites)
+=== 08:23:09Z oomprobe2.js C:/Users/nname/Downloads/t180-wt-b437 objects --iframe
+mode objects in a cross-origin iframe; renderers before: 4844,16008,30488,39012,27656,30176,38324; page: started
+renderers while it runs: 4844,16008,30488,39012,27656,22048,30176,38324
+12 s: last log ["msg {\"n\":20000000}","msg {\"n\":30000000}","msg {\"n\":40000000}"]
+renderers after: 4844,16008,39012,27656,22048,30176,38324
+events: Target.targetDestroyed {"targetId":"D93B916443E74C84FF02453CE6CCCD25"}
+page answers after: title oom, page objects 2000000, canvas pixel 255,0,0,255
+=== 08:23:28Z oomprobe3.js C:/Users/nname/Downloads/t180-wt-b437 main
+sandboxed iframe, fill on its main; renderers before: 31652,3720,36800,27988,13828,32764,23132; page: started
+renderers while it runs: 31652,3720,36800,27988,13828,28488,32764,23132 | page answers: ["{\"stage\":\"building\"}"]
+12 s: last log ["{\"stage\":\"building\"}"]
+renderers after: 31652,36800,13828,28488,32764,23132 | events: Target.targetDestroyed
+page answers after: objects 2000000, pixel 255,0,0,255, frames 1
+=== 08:23:46Z oomprobe3.js C:/Users/nname/Downloads/t180-wt-b437 worker
+sandboxed iframe, fill on its worker; renderers before: 40412,15820,3724,27016,14812,27320,32820; page: started
+renderers while it runs: 40412,15820,3724,27016,14812,4972,27320,32820 | page answers: ["{\"n\":20000000}","{\"n\":30000000}"]
+12 s: last log ["{\"n\":30000000}","{\"n\":40000000}"]
+renderers after: 40412,15820,27016,14812,4972,27320,32820 | events: Target.targetDestroyed
+page answers after: objects 2000000, pixel 255,0,0,255, frames 1
+(Edge 155 from here: CHROME_PATH=msedge.exe, --headless=new through the probes)
+=== 08:24:04Z oomprobe2.js C:/Users/nname/Downloads/t180-wt-b437 objects
+mode objects; renderers before: 27252,37876,21076,24844,39584,20044,28500,24104,22464; page: started
+renderers while it runs: 37876,21076,24844,39584,20044,28500,34320,24104,22464
+11 s: last log (no answer)
+renderers after: 37876,21076,34320
+events: Target.targetDestroyed {"targetId":"E3BB775F10AF1D92BD265ED7CFBDD4C8"} | Target.targetDestroyed {"targetId":"BB3D5FEE62D14F03600B8D450BE1CC89"} | Target.targetDestroyed {"targetId":"13AAC4F80245B7F5A4CEB0FD45C448CE"} | Target.targetDestroyed {"targetId":"70626C93BE4880197EDA8809D859954F"} | Target.targetDestroyed {"targetId":"4930EF1D68163C3219078380A7E3B1C7"} | Target.targetDestroyed {"targetId":"A8115273E8EE5AAA73CB6CDBEFF01C94"}
+page answers after: (no answer)
+=== 08:24:24Z oomprobe3.js C:/Users/nname/Downloads/t180-wt-b437 worker
+sandboxed iframe, fill on its worker; renderers before: 22556,12980,14780,8760,40812,18380,30536,28824,39440; page: started
+renderers while it runs: 22556,36652,12980,14780,8760,40812,18380,30536,28824,39440 | page answers: ["{\"n\":20000000}","{\"n\":30000000}"]
+12 s: last log ["{\"n\":30000000}","{\"n\":40000000}"]
+renderers after: 36652,12980,14780,39440 | events: Target.targetDestroyed Target.targetDestroyed Target.targetDestroyed Target.targetDestroyed Target.targetDestroyed Target.targetDestroyed
+page answers after: objects 2000000, pixel 255,0,0,255, frames 1
+=== done 08:24:42Z

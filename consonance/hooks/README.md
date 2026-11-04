@@ -38,6 +38,10 @@ description cannot drift from the code without someone editing the code:
 | `sessionstart-state.js` | *"put the room's current state in front of an instance that just lost it."* |
 | `sourced-stop.js` | *"a Stop-hook SENSOR: one ledger row per turn, no gate, no output."* |
 | `transcript-watch.js` | *"UserPromptSubmit hook, Main session only."* |
+| `push-gate.js` | *"G1, CREDENTIALS BEFORE A PUSH"* — a **gate** (D248): it DENIES a `git push` whose diff adds a credential-shaped line. Global, fails open |
+| `delete-gate.js` | *"G2, JUNCTIONS BEFORE A DELETE"* — a **gate** (D248): it DENIES a recursive delete or `git worktree remove` of a tree holding a junction or symlink. Global, fails open |
+| `ask-ending.js` | *"G3, THE "WANT ME TO…?" ENDING, in SHADOW"* — a Stop-hook sensor (D248): it only logs, never blocks |
+| `release-chime.js` | *"a pleasant chime when a FINAL PRODUCT ships"* — a **PostToolUse** hook (D281) on Bash and PowerShell: plays a built-in Windows sound when a successful `gh release create` or a successful `git push` that updated `main` on t180, consonance or lighthouse; one per 2 minutes; `"chime": false` in `~/.consonance.json` silences it. Prints nothing, never blocks, fails silent |
 
 Every one also has a `.test.js` beside it or is covered by `dream-gate.test.js`; run them with
 `node <file>.test.js`.
@@ -96,8 +100,8 @@ $reg | ForEach-Object { "  {0,-16} {1}" -f $_.Event, $_.Rel }
 Against the script as it stands, that prints:
 
 ```
-files          24   (dev\shell 13, consonance\hooks 11, declared libraries 5, held 1)
-registrations  13   events: SessionStart, UserPromptSubmit, Stop, SessionEnd, PreCompact, PreToolUse
+files          35   (dev\shell 16, consonance\hooks 19, declared libraries 7, held 0)
+registrations  23   events: SessionStart, UserPromptSubmit, Stop, SessionEnd, PreCompact, PreToolUse, PostToolUse
 ```
 
 **If it disagrees with those numbers, the command is right and this paragraph is stale.** It parses
@@ -112,7 +116,7 @@ Three states a file in this directory can be in, and all three are normal:
 | copied, **not** registered | the installer places it; something else fires it, or nobody has wired it yet |
 | **not in the installer's list** | present here, installed by nothing — a hook you must wire yourself, or one that is not finished |
 
-As the script stands, `ask-surface.js` and `baton-wake-stop.js` are in the third state, and
+As the script stands, its `$unmanaged` list has five files in the third state: `ask-surface.js`, `baton-wake-stop.js`, `live-mirror-stop.js`, `claim-check.js` (built and off: it acts only when `~/.consonance.json` sets `claim_check`), and `jev-flags.js`, retired (its registration and copy were dropped on 2026-10-08). And
 `blind.js` is a library — copied because another hook requires it, never registered. Do not trust
 that sentence either: the `$files` and `$reg` lists the command above prints are what decide it, and
 `install.ps1 -Check` reports the state of every managed file on the machine you run it on.

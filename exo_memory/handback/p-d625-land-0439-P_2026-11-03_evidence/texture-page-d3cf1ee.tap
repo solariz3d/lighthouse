@@ -1,0 +1,97 @@
+TAP version 13
+# Subtest: row 1: each look's tile is the top background layer of the header, the left panel and an open menu, and it loads; the 3D view carries none
+ok 1 - row 1: each look's tile is the top background layer of the header, the left panel and an open menu, and it loads; the 3D view carries none
+  ---
+  duration_ms: 23048.7988
+  type: 'test'
+  ...
+# Subtest: row 2: the texture pushes no text under 4.5:1 in any look, in the builder and with the File menu open
+ok 2 - row 2: the texture pushes no text under 4.5:1 in any look, in the builder and with the File menu open
+  ---
+  duration_ms: 56419.7631
+  type: 'test'
+  ...
+# sigil builder: 72 texts compared, 0 pushed under; sigil file: 82 texts compared, 0 pushed under; aqua builder: 72 texts compared, 0 pushed under; aqua file: 82 texts compared, 0 pushed under; skyline builder: 72 texts compared, 0 pushed under; skyline file: 82 texts compared, 0 pushed under; glass builder: 72 texts compared, 0 pushed under; glass file: 82 texts compared, 0 pushed under; aurora builder: 72 texts compared, 0 pushed under; aurora file: 82 texts compared, 0 pushed under; skyline-night builder: 72 texts compared, 0 pushed under; skyline-night file: 82 texts compared, 0 pushed under
+# Subtest: row 3 (D409): with no pieces, in every look, the empty builder shows no picture over the 3D view: no \#empty-art and no <pre> in \#stage
+ok 3 - row 3 (D409): with no pieces, in every look, the empty builder shows no picture over the 3D view: no \#empty-art and no <pre> in \#stage
+  ---
+  duration_ms: 15372.9411
+  type: 'test'
+  ...
+# Subtest: row 5: at display scales 1.25 and 1.5, each fine tile is drawn one tile pixel per device pixel (its size times the pixel ratio is its own size)
+ok 4 - row 5: at display scales 1.25 and 1.5, each fine tile is drawn one tile pixel per device pixel (its size times the pixel ratio is its own size)
+  ---
+  duration_ms: 27367.4674
+  type: 'test'
+  ...
+# 1.25 sigil: {"dpr":1.25,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.25 skyline: {"dpr":1.25,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.25 glass: {"dpr":1.25,"header":[8,300],"left":[8,300],"menu":[8,300]}; 1.25 aurora: {"dpr":1.25,"header":[3,3],"left":[3,3],"menu":[3,3]}; 1.25 skyline-night: {"dpr":1.25,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.5 sigil: {"dpr":1.5,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.5 skyline: {"dpr":1.5,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.5 glass: {"dpr":1.5,"header":[8,300],"left":[8,300],"menu":[8,300]}; 1.5 aurora: {"dpr":1.5,"header":[3,3],"left":[3,3],"menu":[3,3]}; 1.5 skyline-night: {"dpr":1.5,"header":[128,128],"left":[128,128],"menu":[128,128]}
+# Subtest: row 8 (D405): Skyline Night: every enabled text is 4.5:1 or more on its own pixels, in the builder and with the File menu open
+ok 5 - row 8 (D405): Skyline Night: every enabled text is 4.5:1 or more on its own pixels, in the builder and with the File menu open
+  ---
+  duration_ms: 15338.4841
+  type: 'test'
+  ...
+# skyline-night builder: 72 texts, 0 under 4.5:1; skyline-night file: 77 texts, 0 under 4.5:1, left out as partly under the menu: edge start, Build view · plain road (L), +30.00, m, +30.00°; skyline builder: 72 texts, 1 under 4.5:1 (100.00 m 1.16); skyline file: 77 texts, 1 under 4.5:1 (100.00 m 1.16), left out as partly under the menu: edge start, Build view · plain road (L), +30.00, m, +30.00°
+# Subtest: row 6 (D409): no label in the 3D view sits under the top readout or the camera and grid bars, in every look, at 1400 x 860 and 2560 x 1440
+ok 6 - row 6 (D409): no label in the 3D view sits under the top readout or the camera and grid bars, in every look, at 1400 x 860 and 2560 x 1440
+  ---
+  duration_ms: 78184.1686
+  type: 'test'
+  ...
+# 1400 sigil: clear; 1400 aqua: clear; 1400 skyline: clear; 1400 glass: clear; 1400 aurora: clear; 1400 skyline-night: clear; 2560 sigil: clear; 2560 aqua: clear; 2560 skyline: clear; 2560 glass: clear; 2560 aurora: clear; 2560 skyline-night: clear
+# Subtest: row 7 (D417): the first actions row is Extend, Straight, Undo, Redo, and Extend sits above "Extend at the head", in every look
+ok 7 - row 7 (D417): the first actions row is Extend, Straight, Undo, Redo, and Extend sits above "Extend at the head", in every look
+  ---
+  duration_ms: 15362.3292
+  type: 'test'
+  ...
+# Subtest: row 9: the warning texts (the checker's red, amber and lap lines, and Track ▸ Pit lane…) read 4.5:1 or more on their own pixels in every look
+not ok 8 - row 9: the warning texts (the checker's red, amber and lap lines, and Track ▸ Pit lane…) read 4.5:1 or more on their own pixels in every look
+  ---
+  duration_ms: 18242.2428
+  type: 'test'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625-d617\\app\\test\\texture-page.test.js:266:1'
+  failureType: 'testCodeFailure'
+  error: 'sigil: the checker lists a red and an amber ()'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\t180-p625-d617\app\test\texture-page.test.js:276:12)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 10 (D575): every dialog the page draws reads 4.5:1 or more on its own pixels in every look, its buttons (main, plain and quiet) first among them
+ok 9 - row 10 (D575): every dialog the page draws reads 4.5:1 or more on its own pixels in every look, its buttons (main, plain and quiet) first among them
+  ---
+  duration_ms: 39233.9528
+  type: 'test'
+  ...
+# sigil save before closing: 5 texts, buttons Don't save 5.46, Cancel 16.29, Save 9.75 · 0 under 4.5:1; sigil export layouts: 20 texts, buttons Cancel 16.29, Export… 9.75 · 0 under 4.5:1; sigil export for blender: 6 texts, buttons Cancel 16.29, Export… 9.75 · 0 under 4.5:1; aqua save before closing: 5 texts, buttons Don't save 11.52, Cancel 8.34, Save 8.34 · 0 under 4.5:1; aqua export layouts: 20 texts, buttons Cancel 8.34, Export… 8.33 · 0 under 4.5:1; aqua export for blender: 6 texts, buttons Cancel 8.34, Export… 8.33 · 0 under 4.5:1; skyline save before closing: 5 texts, buttons Don't save 6.52, Cancel 11.76, Save 5.43 · 0 under 4.5:1; skyline export layouts: 20 texts, buttons Cancel 11.76, Export… 5.43 · 0 under 4.5:1; skyline export for blender: 6 texts, buttons Cancel 11.76, Export… 5.43 · 0 under 4.5:1; glass save before closing: 5 texts, buttons Don't save 8.56, Cancel 14.13, Save 10.71 · 0 under 4.5:1; glass export layouts: 20 texts, buttons Cancel 14.13, Export… 10.71 · 0 under 4.5:1; glass export for blender: 6 texts, buttons Cancel 14.10, Export… 10.67 · 0 under 4.5:1; aurora save before closing: 5 texts, buttons Don't save 9.83, Cancel 15.66, Save 12.69 · 0 under 4.5:1; aurora export layouts: 20 texts, buttons Cancel 15.84, Export… 12.86 · 0 under 4.5:1; aurora export for blender: 6 texts, buttons Cancel 15.79, Export… 12.71 · 0 under 4.5:1; skyline-night save before closing: 5 texts, buttons Don't save 5.44, Cancel 8.69, Save 5.41 · 0 under 4.5:1; skyline-night export layouts: 20 texts, buttons Cancel 8.82, Export… 5.50 · 0 under 4.5:1; skyline-night export for blender: 6 texts, buttons Cancel 8.69, Export… 5.34 · 0 under 4.5:1
+# Subtest: row 11 (D581): the hover card reads 4.5:1 or more on its own pixels in every look
+ok 10 - row 11 (D581): the hover card reads 4.5:1 or more on its own pixels in every look
+  ---
+  duration_ms: 24644.938
+  type: 'test'
+  ...
+# the card's text, worst on its own pixels: sigil 14.15; aqua 6.00; skyline 12.68; glass 10.45; aurora 13.04; skyline-night 12.12
+# Subtest: row 12: the export banner reads 4.5:1 or more on its own pixels in every look, running, done and failed
+ok 11 - row 12: the export banner reads 4.5:1 or more on its own pixels in every look, running, done and failed
+  ---
+  duration_ms: 32214.6985
+  type: 'test'
+  ...
+# the banner's texts on their own pixels: sigil failed 7.09; sigil failed 14.15; sigil running 14.15; sigil running 14.15; sigil done 8.47; sigil done 14.15; aqua failed 5.15; aqua failed 11.26; aqua running 7.75; aqua running 11.27; aqua done 5.28; aqua done 11.29; skyline failed 7.70; skyline failed 12.48; skyline running 12.87; skyline running 12.49; skyline done 5.94; skyline done 12.48; glass failed 5.80; glass failed 11.52; glass running 10.44; glass running 11.67; glass done 7.91; glass done 11.83; aurora failed 6.04; aurora failed 13.72; aurora running 12.87; aurora running 13.55; aurora done 10.43; aurora done 13.55; skyline-night failed 6.83; skyline-night failed 12.79; skyline-night running 12.25; skyline-night running 12.81; skyline-night done 7.56; skyline-night done 12.79
+1..11
+# tests 11
+# suites 0
+# pass 10
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 345943.5763
+
+# bn: exit 1 in 346 s

@@ -1,0 +1,299 @@
+TAP version 13
+# Subtest: row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+ok 1 - row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+  ---
+  duration_ms: 5514.785
+  type: 'test'
+  ...
+# Subtest: row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes
+ok 2 - row 2: when no way of closing proves, the worker says the same words as the page, and nothing changes
+  ---
+  duration_ms: 10853.6361
+  type: 'test'
+  ...
+# Subtest: row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page
+ok 3 - row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page
+  ---
+  duration_ms: 6620.0388
+  type: 'test'
+  ...
+# Subtest: row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws
+ok 4 - row 4: the runner: one warm worker; a reply that is not the current job's is ignored; a refusal resolves; cancel and a failure make a fresh worker; no Worker throws
+  ---
+  duration_ms: 1.2586
+  type: 'test'
+  ...
+# Subtest: row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered
+ok 5 - row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered
+  ---
+  duration_ms: 27644.6726
+  type: 'test'
+  ...
+# Subtest: row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done
+ok 6 - row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done
+  ---
+  duration_ms: 1326.4787
+  type: 'test'
+  ...
+# Subtest: row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others
+ok 7 - row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others
+  ---
+  duration_ms: 107.7665
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close in core (a fresh start) closes
+ok 8 - REPRODUCER (the page as it was): close in core (a fresh start) closes
+  ---
+  duration_ms: 0.6506
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close in core (a fresh start)
+ok 9 - the window closes, destroyed exactly once: close in core (a fresh start)
+  ---
+  duration_ms: 0.2564
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close in pieces closes
+ok 10 - REPRODUCER (the page as it was): close in pieces closes
+  ---
+  duration_ms: 0.0722
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close in pieces
+ok 11 - the window closes, destroyed exactly once: close in pieces
+  ---
+  duration_ms: 0.1361
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close after switching pieces -> core is TRAPPED: the X does nothing
+ok 12 - REPRODUCER (the page as it was): close after switching pieces -> core is TRAPPED: the X does nothing
+  ---
+  duration_ms: 0.0668
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close after switching pieces -> core
+ok 13 - the window closes, destroyed exactly once: close after switching pieces -> core
+  ---
+  duration_ms: 0.5461
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close after switching core -> pieces closes
+ok 14 - REPRODUCER (the page as it was): close after switching core -> pieces closes
+  ---
+  duration_ms: 0.0775
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close after switching core -> pieces
+ok 15 - the window closes, destroyed exactly once: close after switching core -> pieces
+  ---
+  duration_ms: 0.1162
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close after core -> pieces -> core -> pieces -> core is TRAPPED: the X does nothing
+ok 16 - REPRODUCER (the page as it was): close after core -> pieces -> core -> pieces -> core is TRAPPED: the X does nothing
+  ---
+  duration_ms: 0.125
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close after core -> pieces -> core -> pieces -> core
+ok 17 - the window closes, destroyed exactly once: close after core -> pieces -> core -> pieces -> core
+  ---
+  duration_ms: 0.1239
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close in pieces with a failing autosave is TRAPPED: the X does nothing
+ok 18 - REPRODUCER (the page as it was): close in pieces with a failing autosave is TRAPPED: the X does nothing
+  ---
+  duration_ms: 0.1095
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close in pieces with a failing autosave
+ok 19 - the window closes, destroyed exactly once: close in pieces with a failing autosave
+  ---
+  duration_ms: 0.0643
+  type: 'test'
+  ...
+# Subtest: REPRODUCER (the page as it was): close in core after a pieces page whose autosave fails is TRAPPED: the X does nothing
+ok 20 - REPRODUCER (the page as it was): close in core after a pieces page whose autosave fails is TRAPPED: the X does nothing
+  ---
+  duration_ms: 0.0597
+  type: 'test'
+  ...
+# Subtest: the window closes, destroyed exactly once: close in core after a pieces page whose autosave fails
+ok 21 - the window closes, destroyed exactly once: close in core after a pieces page whose autosave fails
+  ---
+  duration_ms: 0.0363
+  type: 'test'
+  ...
+# Subtest: the pieces cleanup RUNS on close, before the window is destroyed (the autosave is flushed or cleared first)
+ok 22 - the pieces cleanup RUNS on close, before the window is destroyed (the autosave is flushed or cleared first)
+  ---
+  duration_ms: 0.4083
+  type: 'test'
+  ...
+# Subtest: core has nothing to clean up: the handler destroys straight away
+ok 23 - core has nothing to clean up: the handler destroys straight away
+  ---
+  duration_ms: 0.0735
+  type: 'test'
+  ...
+# Subtest: a cleanup that throws is logged and the window still closes
+ok 24 - a cleanup that throws is logged and the window still closes
+  ---
+  duration_ms: 0.1534
+  type: 'test'
+  ...
+# Subtest: a cleanup that HANGS cannot hold the window: it closes after the timeout
+ok 25 - a cleanup that HANGS cannot hold the window: it closes after the timeout
+  ---
+  duration_ms: 50.0104
+  type: 'test'
+  ...
+# Subtest: a destroy() that fails is logged, never thrown out of the handler
+ok 26 - a destroy() that fails is logged, never thrown out of the handler
+  ---
+  duration_ms: 0.3366
+  type: 'test'
+  ...
+# Subtest: the handler prevents the wrapper's own destroy (it destroys once, itself), and tolerates an event with no preventDefault
+ok 27 - the handler prevents the wrapper's own destroy (it destroys once, itself), and tolerates an event with no preventDefault
+  ---
+  duration_ms: 0.1836
+  type: 'test'
+  ...
+# Subtest: installCloseHandler off Tauri (no window, or no onCloseRequested) registers nothing and does not throw
+ok 28 - installCloseHandler off Tauri (no window, or no onCloseRequested) registers nothing and does not throw
+  ---
+  duration_ms: 0.0465
+  type: 'test'
+  ...
+# Subtest: the cleanup is read at CLOSE time: a mode that sets it after registration is honoured, and a mode that clears it is too
+ok 29 - the cleanup is read at CLOSE time: a mode that sets it after registration is honoured, and a mode that clears it is too
+  ---
+  duration_ms: 0.0869
+  type: 'test'
+  ...
+# Subtest: app/index.html registers the close handler BEFORE the builder starts, so a builder that fails to start still has it
+ok 30 - app/index.html registers the close handler BEFORE the builder starts, so a builder that fails to start still has it
+  ---
+  duration_ms: 0.056
+  type: 'test'
+  ...
+# Subtest: app/index.html has ONE close registration path (the closer, and a bare destroy-only fallback): the old pieces-only listener is gone
+ok 31 - app/index.html has ONE close registration path (the closer, and a bare destroy-only fallback): the old pieces-only listener is gone
+  ---
+  duration_ms: 0.0681
+  type: 'test'
+  ...
+# Subtest: nothing unsaved (ask returns null): the X closes at once, with no save
+ok 32 - nothing unsaved (ask returns null): the X closes at once, with no save
+  ---
+  duration_ms: 0.0867
+  type: 'test'
+  ...
+# Subtest: Cancel: the window stays open and nothing is saved
+ok 33 - Cancel: the window stays open and nothing is saved
+  ---
+  duration_ms: 0.0508
+  type: 'test'
+  ...
+# Subtest: Don't save: the window closes without saving
+ok 34 - Don't save: the window closes without saving
+  ---
+  duration_ms: 0.037
+  type: 'test'
+  ...
+# Subtest: Save: it saves, then the window closes
+ok 35 - Save: it saves, then the window closes
+  ---
+  duration_ms: 0.0578
+  type: 'test'
+  ...
+# Subtest: Save that does not save (no name yet): the window stays open, so the work is not lost
+ok 36 - Save that does not save (no name yet): the window stays open, so the work is not lost
+  ---
+  duration_ms: 0.0442
+  type: 'test'
+  ...
+# Subtest: Save that THROWS: the window stays open; the next X asks again, and Don't save then closes
+ok 37 - Save that THROWS: the window stays open; the next X asks again, and Don't save then closes
+  ---
+  duration_ms: 0.0819
+  type: 'test'
+  ...
+# Subtest: a prompt that THROWS (no dialog, a refused permission): the window closes as before, it is never trapped
+ok 38 - a prompt that THROWS (no dialog, a refused permission): the window closes as before, it is never trapped
+  ---
+  duration_ms: 0.0643
+  type: 'test'
+  ...
+# Subtest: a second X while the prompt is open is ignored: one prompt, one close
+ok 39 - a second X while the prompt is open is ignored: one prompt, one close
+  ---
+  duration_ms: 0.0699
+  type: 'test'
+  ...
+# Subtest: app/index.html gives the closer the prompt, and the builder says whether there is unsaved work
+ok 40 - app/index.html gives the closer the prompt, and the builder says whether there is unsaved work
+  ---
+  duration_ms: 0.1852
+  type: 'test'
+  ...
+# Subtest: the window may show the prompt: dialog:allow-message is in its capability
+not ok 41 - the window may show the prompt: dialog:allow-message is in its capability
+  ---
+  duration_ms: 0.2366
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y3\\app\\test\\closer.test.js:158:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, scandir 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d467r\\y3\\src-tauri\\capabilities'"
+  code: 'ENOENT'
+  stack: |-
+    Object.readdirSync (node:fs:1569:26)
+    TestContext.<anonymous> (C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\d467r\y3\app\test\closer.test.js:159:18)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: closing the loop appends the safest connector as one undo step, and the track is closed
+ok 42 - closing the loop appends the safest connector as one undo step, and the track is closed
+  ---
+  duration_ms: 15805.4802
+  type: 'test'
+  ...
+# Subtest: the connector the shell appends is the connector's FIRST-ranked candidate, the safest by its worst load
+ok 43 - the connector the shell appends is the connector's FIRST-ranked candidate, the safest by its worst load
+  ---
+  duration_ms: 16230.5375
+  type: 'test'
+  ...
+# Subtest: the closed track still resolves for the panels, marked closed, with no resolve error
+ok 44 - the closed track still resolves for the panels, marked closed, with no resolve error
+  ---
+  duration_ms: 0.1935
+  type: 'test'
+  ...
+# Subtest: undo reopens the loop: the open track comes back byte for byte
+ok 45 - undo reopens the loop: the open track comes back byte for byte
+  ---
+  duration_ms: 16162.2646
+  type: 'test'
+  ...
+# Subtest: closing an empty track says why and changes nothing
+ok 46 - closing an empty track says why and changes nothing
+  ---
+  duration_ms: 0.4286
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 45
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 52208.7923

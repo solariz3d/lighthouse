@@ -1,0 +1,22 @@
+[32m✔ length (a tight word): the shortest clean length, and one millimetre shorter is red (a fold or seam) [90m(661.5293ms)[39m[39m
+[32m✔ curvature (turn): swinging a tight word past its bound lays the track over itself (stacked), one quantum on [90m(75.1697ms)[39m[39m
+[32m✔ ramps (easeIn): a longer ramp tightens the body of a short tight word until it folds [90m(26.9767ms)[39m[39m
+[32m✔ pitch (climb): a short climbing half-pipe folds its walls when their height passes the vertical radius [90m(105.8393ms)[39m[39m
+[32m✔ bank (roll at the head) for a non-CSP export: exactly 50° either way (ARCHITECTURE.md:87) [90m(30.9328ms)[39m[39m
+[32m✔ bank on a CSP export has no red limit: the bound is the document range, and it says so [90m(22.8973ms)[39m[39m
+[32m✔ width (a wall-ride): widened past its bound, the two sides of the U-turn stack; at the bound it is clean [90m(147.5036ms)[39m[39m
+[32m✔ wall height (a wall-ride): raised past its bound it turns red; at the bound it is clean [90m(183.7736ms)[39m[39m
+[32m✔ ψ for a non-CSP export: a half-pipe wall is clean at 50° and red one thousandth of a degree past it [90m(22.757ms)[39m[39m
+[32m✔ where no limit binds, the bound is the document range; where the document refuses a value, it says why [90m(38.2199ms)[39m[39m
+[32m✔ a word that is already red has no clean range to report (null bounds, "red-now") [90m(0.9554ms)[39m[39m
+[32m✔ amber is reported inside the red bounds: amberMax ≤ max, and a faster word meets amber before red [90m(33.7321ms)[39m[39m
+[32m✔ A's handleInfo hook takes these bounds as its physics (src/doc/library.js handleInfo(doc, id, boundsFn)) [90m(38.8816ms)[39m[39m
+[32m✔ scope: on a track already red elsewhere, a clean word is still bounded by ITS OWN stretch, not pinned by the other red [90m(13.732ms)[39m[39m
+[34mℹ tests 14[39m
+[34mℹ suites 0[39m
+[34mℹ pass 14[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 1497.5683[39m

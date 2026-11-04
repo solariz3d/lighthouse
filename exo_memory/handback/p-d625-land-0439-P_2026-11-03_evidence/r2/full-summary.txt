@@ -1,0 +1,33 @@
+1..4272
+# tests 4274
+# suites 0
+# pass 4250
+# fail 2
+# cancelled 0
+# skipped 21
+# todo 1
+# duration_ms 2147664.9332
+
+red rows (bar the TODO):
+4320:not ok 682 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+4382:not ok 689 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625r2\\app\\test\\aclook.test.js:219:1'
+  error: |-
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625r2\\app\\test\\drag-frame.test.js:126:1'
+  error: 'aqua: the turn handle is on the overlay'
+  location: 'C:\\Users\\nname\\Desktop\\worktrees\\t180-p625r2\\app\\test\\drag-frame.test.js:192:1'
+  error: 'aqua, a 1000 m stretch with a left edge typed on an empty track drag: p95 7.6 / 7.9 ms (median 5.0 / 4.7), over 6.9 ms, 56.3 / 54.0 work frames a second (at most 120)'
+
+r1's reds, by title, in this run:
+ok 917 - control: the unmutated temp copy passes every test the mutants are run against
+ok 935 - mutation A15 the backing store ignores devicePixelRatio: applied, and caught by "DPR: the backing store is the css size…"
+ok 938 - mutation A18 the frame loop passes no modifiers (Ctrl+C cycles the camera): applied, and caught by "keys in the frame loop…"
+ok 940 - mutation A20 the probe skips the perspective divide: applied, and caught by "probe: the head lands in the middle…"
+ok 1258 - DPR: the backing store is the css size × devicePixelRatio, and the renderer draws at that size
+ok 1259 - DPR: a change of devicePixelRatio or of the css size resizes on the next frame
+ok 1260 - DPR edges: missing or nonsense DPR is 1; a side is capped at 8192 with the aspect kept; zero size draws nothing
+ok 1262 - keys in the frame loop: Ctrl+C leaves the camera where it was; C then moves it
+ok 1264 - probe: the head lands in the middle of the build view, which looks along the growth direction
+ok 1265 - probe: in overhead (fit to the whole track) the head is in frame
+ok 1539 - row 9: the warning texts (the checker's red, amber and lap lines, and Track ▸ Pit lane…) read 4.5:1 or more on their own pixels in every look
+ok 1588 - mutation S16 the sky pass does not dither (D398): applied, and caught by "D398: the shared sky pass dithers…"

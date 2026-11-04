@@ -28,7 +28,7 @@ Update-FromOrigin $repo
 `;
 
 function world() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'launch-park-'));
+  const root = require('./tools/scratch.js').mkdtemp('launch-park-');
   const origin = path.join(root, 'origin.git'), l = path.join(root, 'L'), d = path.join(root, 'D');
   execFileSync('git', ['init', '--bare', '-q', '-b', 'main', origin]);
   execFileSync('git', ['-c', 'core.autocrlf=false', 'clone', '-q', origin, d], { stdio: 'ignore' });

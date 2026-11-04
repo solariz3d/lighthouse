@@ -1,0 +1,7 @@
+v19-empty plain {"calls":168,"msPerSec":109.1,"p95":3.2,"max":6.2}
+v19-empty bank {"calls":169,"msPerSec":115.5,"p95":3.3,"max":6.9}
+v19-empty cup {"calls":169,"msPerSec":117.1,"p95":3.4,"max":5.1}
+v19-empty edge {"calls":168,"msPerSec":300.6,"p95":10.7,"max":17.6}
+v19-empty stack {"calls":167,"msPerSec":301.9,"p95":10.4,"max":18.5}
+v19-turn-placed plain {"calls":193,"msPerSec":152.7,"p95":3.2,"max":8.1}
+v19-turn-placed edge {"calls":191,"msPerSec":505.2,"p95":9.8,"max":33.4}

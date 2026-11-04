@@ -1,0 +1,174 @@
+{
+ "arith": {
+  "bowl": {
+   "legacy_edge_deg_exact": 15.5,
+   "legacy_equals_F": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "c*F/E bit-equal per quarter": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "c*(F/E) bit-equal per quarter": [
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  "half-pipe": {
+   "legacy_edge_deg_exact": 30.600000000000005,
+   "legacy_equals_F": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "c*F/E bit-equal per quarter": [
+    false,
+    false,
+    false,
+    true
+   ],
+   "c*(F/E) bit-equal per quarter": [
+    false,
+    false,
+    false,
+    true
+   ]
+  },
+  "flat": {
+   "legacy_edge_deg_exact": 3,
+   "legacy_equals_F": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "c*F/E bit-equal per quarter": [
+    false,
+    true,
+    true,
+    true
+   ],
+   "c*(F/E) bit-equal per quarter": [
+    true,
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ "constantChannel": {
+  "cps": [
+   15.5,
+   15.5,
+   15.5
+  ],
+  "stations": 1374,
+  "not_bit_equal": 764,
+  "worst_abs": 7.105427357601002e-15
+ },
+ "capBinds": [
+  {
+   "fam": "bowl",
+   "w": 12,
+   "r": 2.993,
+   "legacy_deg": [
+    2.7,
+    7.1895,
+    11.679,
+    11.679
+   ],
+   "proportional_deg": [
+    2.0344,
+    6.48,
+    11.679,
+    11.679
+   ],
+   "worst_diff_deg": 0.7095
+  },
+  {
+   "fam": "bowl",
+   "w": 18,
+   "r": 2.993,
+   "legacy_deg": [
+    2.7,
+    8.6,
+    15.3342,
+    15.3342
+   ],
+   "proportional_deg": [
+    2.6711,
+    8.508,
+    15.3342,
+    15.3342
+   ],
+   "worst_diff_deg": 0.092
+  },
+  {
+   "fam": "half-pipe",
+   "w": 24,
+   "r": 4.55,
+   "legacy_deg": [
+    5.6,
+    10.8,
+    14.1,
+    27.75
+   ],
+   "proportional_deg": [
+    5.0784,
+    9.7941,
+    12.7868,
+    27.75
+   ],
+   "worst_diff_deg": 1.3132
+  },
+  {
+   "fam": "half-pipe",
+   "w": 12,
+   "r": 4.55,
+   "legacy_deg": [
+    5.6,
+    10.8,
+    14.1,
+    20.925
+   ],
+   "proportional_deg": [
+    3.8294,
+    7.3853,
+    9.6419,
+    20.925
+   ],
+   "worst_diff_deg": 4.4581
+  },
+  {
+   "fam": "flat",
+   "w": 20,
+   "r": 0.2,
+   "legacy_deg": [
+    0.5,
+    1,
+    1.5,
+    2
+   ],
+   "proportional_deg": [
+    0.4667,
+    1,
+    1.5333,
+    2
+   ],
+   "worst_diff_deg": 0.0333
+  }
+ ],
+ "bindBelowWidthM": {
+  "bowl": 18.443,
+  "half-pipe": 29.011,
+  "flat": 32
+ }
+}

@@ -1,0 +1,8 @@
+no timing lock; head 4c536d2 changed=[0] SWEEP_SEEDS=60 17:52:58Z
+suite exit 1, 1516 s: ℹ tests 4275 ℹ pass 4252 ℹ fail 1 ℹ cancelled 0 ℹ skipped 21 ℹ todo 1  18:18:14Z
+suite non-TODO not ok rows: 1
+not ok 1222 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+fixtures: ok 2040 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+mutant rows: applied-and-caught 786, not ok mutant rows 0, NOT APPLIED mentions 0
+after suite: changed=[0] 18:18:19Z
+DONE

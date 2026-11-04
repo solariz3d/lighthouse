@@ -1,0 +1,5 @@
+{"ms":11788,"report":"Finish to start: the end is already 0.105 m from the start (heading -0.1°, pitch -2.7° off): the last 2 pieces, p45 to p46 (508 m), bent onto it, with no new road; closed in 2 step(s): 0.023 mm, tangent 1.5e-8 rad","window":[44,45],"moves":[{"piece":44,"maxM":3.99},{"piece":45,"maxM":3.99}]}
+p45|p46 kh spike   0.077 wiggle no   -42.14 -26.19 -12.73 -3.44 -0.01 0.08 0.15 0.02 -0.00 -0.04 -0.05
+p45|p46 kv spike   1.958 wiggle YES  -0.76 -0.92 -1.08 -0.90 0.02 -2.04 -4.00 -0.55 0.21 1.31 1.73
+p46|p1 kh spike   0.028 wiggle no   -0.05 -0.02 0.05 0.07 0.00 0.00 0.00 0.00 0.00 0.00 0.00
+p46|p1 kv spike   0.786 wiggle no   1.73 1.02 -0.36 -1.15 0.00 0.00 0.00 0.00 0.00 0.00 0.00

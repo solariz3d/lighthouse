@@ -1,0 +1,48 @@
+--- window @126976
+RSDS5<D | LLD PDB. | msedgewebview2.exe.pdb | RSDS[ | ntdll.pdb | RSDS | kernel32.pdb | RSDS' | kernelbase.pdb | RSDS | 6LLD PDB. | msedge_elf.dll.pdb | RSDS | J8" | j1d | combase.pdb | RSDS | eDR | ucrtbase.pdb | RSDSp | _0~ | rpcrt4.pdb | RSDS | .3?N | bcryptprimitives.pdb | RSDS | 4cK | advapi32.pdb | RSDS | msvcrt.pdb | RSDS | sechost.pdb | RSDS | 6LLD PDB. | msedge.dll.pdb | RSDS` | ws2_32.pdb | RSDS | !zA | crypt32.pdb | RSDS~ | winmm.pdb | RSDS; | version.pdb | RSDS | DWrite.pdb | RSDS | msvcp_win.pdb | RSDS | dpapi.pdb | RSDS | LLD PDB. | ffmpeg.dll.pdb | _oK | ~LO | ~PO | ~TO | q!P | 90P | qiP | ArP | AvP | IzP | I~P | x]a | 3Hf | PlC
+--- window @4128768
+Renderer | Mh/
+--- window @4169728
+renderer
+--- window @4272128
+about_page | app.urls | automation | display_in_launcher | background.page | background.persistent | background.scripts | background.type | app.background.page | app.background.scripts | bluetooth | commands | content_capabilities | content_scripts | edge_panel | event_rules | default_locale | description | devtools_page | externally_connectable | page_action | browser_action | action | file_handlers | homepage_url | icons | icon_variants | incognito | kiosk | kiosk_enabled | kiosk_only | kiosk_secondary_apps | message_serialization | mime_types | mime_types_handler | oauth2 | offline_enabled | options_page | options_ui | protocol_handlers | replacement_web_app | requirements | sandbox.pages | import | export | sockets | trial_tokens | tts_engine | update_url | chrome_url_overrides | usb_printers | version_name | webview | app.launch.local_path | app.launch.web_url | app.launch.container | app.launch.height | app.launch.width | minimum_chrome_version | natively_connectable | omnibox | side_panel | storage.managed_schema | theme | url_handlers
+--- window @4358144
+@4) | @m\ | renderer/* | VUUU
+--- window @4374528
+renderer/global | renderer/amsc
+--- window @5251072
+raysEY | 9]n | Jf\ | X:E | NC@ | Uho | [$o | BAD_FAMILY | family "U | BAD_WIDTH | the road's width must be positive, got  | the cup must be a number of degrees from 0, got U | >}pC | ROAD | P7& | O=O | 2np | @+t | rolM | dler | blink.mojom.CodeCacheHost [primary] PipeControlMessageHandler | blink.mo | @+t | blink.mojom.DedicatedWorkerHostMessageHeaderValidator | @+t | Worker  | ,"  | DedicatedWorker threadH | G,@
+--- window @5271552
+@+t | !al | blink.mojom.DevToolsAgent [primary] PipeControlMessageHandler | PH0 | ER?dows-sku | ]0c | EOo
+--- window @5316608
+browser | enable-quarantine | ommit | edBrowser.WebView.OOM.ProcessOOM.CommitUsagePct | t1I | IB9 | H;=Q | []_^A\A]Ap | vlg | (/J | SAD | JJn8 | f+E | wH4 | -)0 | vlg | (/J | SAD | JJn8 | SCh | -DT | -DT | -DT | -DT | @cb | -DT
+--- window @5488640
+@Gt | blink.mojom.DiskAllocatorMessageHeaderValidator | `Pa |  r5 | htm | )uE | %uE | %uE | @)uE | @WqE | d!uE
+--- window @5513216
+@an | @+t | cc.mojom.RenderFrameMetadataObserverMessageHeaderValidator | blink.mojom.LCPCriticalPathPredictorHostMessageHeaderValidator | n#` | @+t | U<L | _k[v | }9i | D-4
+--- window @5517312
+%Eo | 4AF | ~-] | 0m7Y | @+t | nr  | @+t | alid | Worker  | blink.mojom.ServiceWorkerWorkerClientMessageHeaderValidator | nyP | @+t | Pon | blink.mojom.ServiceWorkerWorkerClientMessageHeaderValidator |  ~n |  ~n
+--- window @6115328
+org.chromium.memory_instrumentation | i@` | `Pa | P1t | `NS | Ra! | `Qa! | Dl, | D6# | CAv |  r5 | blink_gc/workers/worker_0x2014000FF310 | isolate-0x201400eec000-24628-v8.log
+--- window @6262784
+0*M | 1U!S | ,*M | 1U!S | GL_KHR_blend_equation_advanced GL_KHR_blend_equation_advanced_coherent | 1U!S  | ndings\core\v8\v8_initializer.cc:983] V8 OOM Memory Stats: Available Physical Memory: 35280MB, Total Physical Memory: 62885MB, Memory Pressure: 44%, Is Low Memory: No | )@Y? | ""B$ | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | I""""""" | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | """D | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | $""""""" | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | IB$ | D @ | PST | PDT
+--- window @6283264
+.?AV?$codecvt@_SDU_Mbstatet@@@__Cr@std@@ | .?AV?$codecvt@_UDU_Mbstatet@@@__Cr@std@@ | .?AV?$codecvt@_S_QU_Mbstatet@@@__Cr@std@@ | .?AV?$codecvt@_U_QU_Mbstatet@@@__Cr@std@@ | .?AV__imp@locale@__Cr@std@@ | .?AV?$ctype@D@__Cr@std@@ | .?AVctype_base@__Cr@std@@ | .?AV?$ctype@_W@__Cr@std@@ | .?AV?$numpunct@D@__Cr@std@@ | .?AV?$numpunct@_W@__Cr@std@@ | .?AVinvalid_argument@std@@ | .?AV__generic_error_category@__Cr@std@@ | renderer | 24628 | x86_64 | .?AU?$__bind_front_t@V?$function@$$A6A_J_NPEAX_K@Z@__Cr@std@@_N@__Cr@std@@ | .?AU?$__bind_front_t@P6A_JPEAX_N0_K@ZPEAX@__Cr@std@@ | .?AU?$__bind_front_t@P6A_JPEAX_N0_K@ZPEAX_N@__Cr@std@@ | .?AVUObject@icu_78@@ | .?AVUMemory@icu_78@@ | .?AVNormalizer2@icu_78@@ | .?AVNormalizer2WithImpl@icu_78@@ | .?AVNoopNormalizer2@icu_78@@ | .?AVComposeNormalizer2@icu_78@@ | .?AVDecomposeNormalizer2@icu_78@@ | .?AVFCDNormalizer2@icu_78@@ | .?AVNormalizer2Impl@icu_78@@ | .?AVLoadedNormalizer2Impl@icu_78@@
+--- window @6541312
+Accept | */* | na! | <t! | renderer/*
+--- window @6746112
+RendererMain | enabled-  | A@t | renderer | `-ny | ]S# | `-ny | renderer | H-ny | 4ny | 8.ny | type | H-ny | H-ny | G2!I | Vwy | Vwy | 4ny | renderer
+--- window @6815744
+daPC8 | na3 | t+E& | |#) | -^= | !3E@a | 3?L | fff | xyL | ,%A | renderer | handle | embedded-browser-webview-dpi-awareness | video-capture-use-gpu-memory-buffer | enable-main-frame-before-activation | track-uuid | U~! | U~! | @U~!
+--- window @6901760
+WebAssembly.Suspending | YS  | EKn | %T  | )>n | ]Tn | 1>  | Uw  | }A  | %v  | ]Qn | Qe  | UY  | Iq  | I]  | 1Fn | Renderer | Foreground
+--- window @6905856
+Renderer.Foreground | Background | Renderer.Background |  bx | QAQ | `Y8 | QAQH | QASH | RAS3
+--- window @7208960
+qY  | qY  | qY  | qY  | qY  | qY  | qY  | qY  | qY  | ERo | ERo | 9]n | @`o |  r5 | blink_gc/workers/worker_0x201400107880 | isolate-0x201400fa8000-24628-v8.log | !a`` | !a` | !al | !a\` | !aX | !ac | !ae | !a`  | !aN | !aI@ | !au` | !aT` | !aX@ | !a` | !ap  | !a\ | Ya! | @E)! | `Za!
+--- window @7229440
+]wy | [wy | XWwy | xXwy | Xwy | Wwy | Ywy | [wy | Ywy | B@m | 5eU | I]n | -on | 9]n | normU | out | partU | dirOf | resolveFrom | REQ | require\(\s*['"]([^'"]+)['"]\s*\) | fetchText | gNames | gValu | `F1 | `F1 | `F1 | blink.mojom.DedicatedWorkerHostFactoryClient [primary] PipeControlMessageHandler | `8y | `F1 | `8y
+--- window @7274496
+US# | c)gy | seb | GL1 | KiSF+A/ | KiSF+A/ | UniqueFontSelector | MemoryCache | SkiaGraphics | BlinkIsolates | Resource
+--- window @8482816
+IsOfficialBuild | LocaleDataPakExists-found_attrs | LocaleDataPakExists-found_pathX | C:\Program Files (x86)\Microsoft\EdgeWebView\Application\155.0.4283.45\Locales\en-US.pak | t180-track-builder.exe | WV_V | 0.3.6 | chrome-trace-id | 6309303796304189720 | chromium-version | 155.0.8059.40 | commandline-disabled-feature-1 | msPdfOOUI | commandline-disabled-feature-2 | commandline-disabled-feature-3 | msWebOOUI | devtools_present | true | exception_code | 0xe0000008 | exception_module_path" | C:\WINDOWS\System32\KERNELBASE.dll | exception_module_version | 10.0.26100.9711 | exeY | C:\Program Files (x86)\Microsoft\EdgeWebView\Application\155.0.4283.45\msedgewebview2.exe | gpu-devid | 0x2c02 | gpu-driver | 32.0.16.1742 | gpu-generation-intel | gpu-psver | 5.0 | gpu-rev | 161 | gpu-subid | 0x41771458 | gpu-venid | 0x10de | gpu-vsver | 5.0 | gpu_count | guid$ | 9fa8fe2f-860d-4ff1-a69a-c256e3623eba | loaded-origin-0 | http://tauri.localhost | metrics_client_id_hash | 776124133586532927 | metrics_session_id | 130 | module_offset | 802954 | num-experiments | num-switches | 27  | num-variations-runtime-overrides | oom-mem$ | SL:43|CA:35281|PW:5424|PC:5433|CP:27 | osarch | x86_64 | pid | 24628 | plat | Win64 | process_id | 24628 | prod | Edge WebView2 | ptype | renderer | reentry_guard_tls_slot | unused | renderer_foreground | true | runtime_variations_seed_etag. | "LHSz7nY44OeeJ2tj5pIC/DAlqXQQvKf88ZZ3So9VMXA=" | switch-1 | --noerrdialogs | switch-10 | --js-flags | switch-11 | --device-scale-factor=1 | switch-12 | --num-raster-threads=4 | switch-13% | --enable-main-frame-before-activation | switch-14 | --renderer-client-id=5 | switch-15! | --js-flags=--ms-user-locale=en_CA | switch-16 | --ssd-no-pressure-read-main-dll | switch-17  | --launch-time-ticks=116200258485 | switch-18M | --metrics-shmem-handle=3664,i,4775732124622419770,9167916717699972878,1048576 | switch-19K | --field-trial-handle=1872,i,8546260936547695781,12340908924319167610,262144 | switch-2W | --user-data-dir=C:\Users\nname\AppData\Local\com.solariz3d.t180-track-builder\EBWebView | switch-20 | --variations-seed-version | switch-21P | --pseudonymization-salt-handle=1944,i,13301107789388148757,9612504602758078929,4 | switch-22. | --trace-process-track-uuid=3190708990997080739 | switch-23# | --mojo-platform-channel-handle=3676 | switch-245 | /pfhostedapp:34834e05616cb44a4e30e46c60257fa480f55a32 | switch-3) | --webview-exe-name=t180-track-builder.exe | switch-4 | --webview-exe-version=0.3.6 | switch-5 | --embedded-browser-webview=1 | switch-6* | --embedded-browser-webview-dpi-awareness=2 | switch-7* | --autoplay-policy=no-user-gesture-required | switch-8% | --video-capture-use-gpu-memory-buffer | switch-9 | --lang=en-US | v8-oom-location3 | MarkCompactCollector: young object promotion failed | v8_isolate_address | 0x201400560000 | v8_ro_space_firstpage_address | 0x24f00000000 | variations | 82ec3250-ca7d8d80,b3ce4b37-ca7d8d80,32bc5dae-ca7d8d80,49a1a14a-ca7d8d80,be96dba2-ca7d8d80,4ea303a6-ca7d8d80

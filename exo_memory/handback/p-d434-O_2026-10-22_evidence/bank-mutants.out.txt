@@ -1,0 +1,8 @@
+caught       B1 the bank leans the wrong way  (row 1, row 2, row 3, row 4)
+caught       B2 sized from the laid route only (no second pass)  (row 1, row 2, row 3)
+caught       B3 the pins are moved by the passes  (row 1)
+caught       B4 every piece banked, upright or not  (row 1)
+caught       B5 no rate limit  (row 1)
+caught       B6 half the share  (row 1, row 2, row 3)
+caught       B7 no bank at all (the call reverted)  (row 1, row 2, row 3)
+applied 7 / caught 7 / NOT APPLIED 0

@@ -1,0 +1,1300 @@
+MESSAGE 35  msg_011CfkbZyQBBSTpi6CUkhkWk  seat A  ts 2026-10-06T07:34:23.487Z  turn L66637..L67064 (next prompt L67364)
+CLAIMS:
+  [msg_011CfkbZyQBBSTpi6CUkhkWk|1] **"The fake DOM doesn't reflect the `value` attribute onto `.value`"**
+  [msg_011CfkbZyQBBSTpi6CUkhkWk|7] **"the fake DOM does not turn the value attribute into the value"**
+
+--- L66637 user 2026-10-06T07:20:30.314Z
+USER: 
+
+<pasted_content id="e589">
+[chair:MAIN] D244 + D244b: DRAG HANDLES and SCULPT mode. Base: t180 main 4d2e67b (all green, harnesses included, pushed). Use a fresh worktree.
+The plan, read it in full: exo_memory/loop/plan_t180_drag_handles_2026-10-05.md. The keeper's marked-up screenshot is named there.
+D244 (FEEL tier: targeted, a real window on T180_TEST_APP_DATA, the keeper's hands):
+- handles on the Extend GHOST for length, width, bank, cup, turn and climb, each sided handle on BOTH sides;
+- a drag sets the field live (the width-pick path); Shift for fine steps, Ctrl to snap;
+- hover shows the name and value;
+- no clash with the brush or camera drags;
+- nothing reaches Undo until Extend.
+D244b (GEOMETRY tier for the guard: centreline bit-identical):
+- a Sculpt switch offering ONLY the shape channels (bank, cup, width, edge, wall rise, tube); turn and climb not offered;
+- select a placed piece (your D240 selection) → the handles on THAT piece;
+- each drag is ONE undo step;
+- a runtime guard refuses by name if the centreline moves;
+- joints stay C1;
+- backupNow is not needed (undoable, shape-only).
+Tests per the plan; fixtures 0 of 9.
+Per my new rule: if your branch base falls behind main, run your touched tests on the merged tree before handing back. Run the mutation harnesses whose anchored files you touch (core-mutation, core-xsec-mutation, core-close-mutation) once at the end, so nothing goes NOT APPLIED again.
+B is working on the red-list merge in its own files. Avoid app/core/reds* or wherever B's red list lives.
+Hand-back: exo_memory/handback/p-handles-A_2026-10-06.md, plus your map line.
+SOURCES: C:\Users\nname\Desktop\lighthouse\exo_memory\loop\plan_t180_drag_handles_2026-10-05.md
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: a non-author look, land and install, then the Add-jump control, unless the output says otherwise
+</pasted_content id="e589">
+
+--- L66648 assistant 2026-10-06T07:20:32.695Z
+TEXT: Reading the plan in full first, then a fresh worktree off 4d2e67b.
+--- L66649 assistant 2026-10-06T07:20:33.111Z
+TOOL_USE Read [toolu_01WASuD17UqSbdxc3KL5XW2Y]: {"file_path":"C:\\Users\\nname\\Desktop\\lighthouse\\exo_memory\\loop\\plan_t180_drag_handles_2026-10-05.md"}
+--- L66650 user 2026-10-06T07:20:33.147Z
+RESULT [toolu_01WASuD17UqSbdxc3KL5XW2Y]: 1	# T-180: drag handles on the ghost piece, a second way to set Extend's values. Librarian, on D, 2026-10-05 09:1x. Lap D244.
+2	
+3	The keeper, 09:13, with a marked-up screenshot (`C:\Users\nname\Pictures\Screenshots\track drag control to change values second option for tweak .png`):
+4	"alternative controls, every one shows the arrow where you drag and where you should click, should be on both sides like width or turn,
+5	only marked on one side each but should be on both sides … you click and drag like the part that is highlighted and it changes the value up
+6	or down".
+7	
+8	## What the picture shows (the keeper's marks on the ghost of a 160 m piece)
+9	- **Length** (white): a handle on the centreline at the piece's NEAR/far end; drag along the road.
+10	- **Width** (red): a handle at the road EDGE at the end; drag sideways. The keeper wants it on BOTH edges.
+11	- **Bank** (blue): handles at both edges, mid-piece; drag sideways (left edge up / right edge down).
+12	- **Cup** (green): handles just inside the centre on both sides; drag sideways to deepen or flatten.
+13	- **Turn** (purple): a handle at the far end's edge; drag sideways to swing the end left or right. Both sides.
+14	- **Climb** (yellow): a handle on the centreline at the far end; drag up/down.
+15	
+16	## The lap (A or C, after the current queue; FEEL tier: targeted tests + a real-window check + the keeper's hands)
+17	1. **Handles on the GHOST piece (the Extend candidate)**, drawn as small marks with a double arrow showing the drag direction. They're
+18	   shown only while the Extend fields are in use (no ghost, no handles). Every handle that has a side appears on BOTH sides (width, bank,
+19	   cup, turn), mirrored, and dragging either one changes the same value.
+
+…[2182 chars cut]…
+240's selection) to show D244's handles ON THAT PIECE (bank and cup at both edges, width at both edges); dragging
+43	    reshapes it in place. A one-channel rate brush stroke along the road also works, limited to the shape channels.
+44	  - Every sculpt edit asserts the centreline is unchanged (a test, and a runtime guard that refuses by name if a future channel ever
+45	    moves it).
+46	  - Each drag is ONE undo step (and one History entry, D242 item 8).
+47	- **Tests:** a sculpt of each shape channel leaves every centreline sample bit-identical; the joints stay C1 (D190's rule); turn and climb
+48	  can't be chosen in Sculpt; fixtures 0 of 9.
+49	
+50	NEXT: chair queue D244b with D244, after D240 (it needs the selection), when this is read
+51	
+--- L66651 assistant 2026-10-06T07:20:34.231Z
+TOOL_USE Bash [toolu_012kguB82kxHwrHTx25gWFz7]: {"command":"cd C:/Users/nname/Desktop/t180-track-builder && git rev-parse --verify 4d2e67b && git log -1 --format=\"%h %s\" main && git worktree add -b handles-a-d244 C:/Users/nname/Desktop/worktrees/a-handles-wt 4d2e67b 2>&1 | tail -1 && ls C:/Users/nname/Desktop/worktrees/a-handles-wt/app app/core 2>/dev/null | head -60"}
+--- L66652 user 2026-10-06T07:20:34.716Z
+RESULT [toolu_012kguB82kxHwrHTx25gWFz7]: 4d2e67bda93f26fdd787debd3d3d3d6efaddd618
+4d2e67b Mutation harnesses on main 20e5711: P28 re-anchored, P9/P13 marked EQUIVALENT, X11 caught by its own row
+HEAD is now at 4d2e67b Mutation harnesses on main 20e5711: P28 re-anchored, P9/P13 marked EQUIVALENT, X11 caught by its own row
+C:/Users/nname/Desktop/worktrees/a-handles-wt/app:
+README.md
+camera
+closer.js
+core
+export
+index.html
+install
+lib
+markers
+onboarding
+palette
+preview
+share
+shell.js
+test
+testhook
+texmaker
+texture
+validate-ui
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66655 assistant 2026-10-06T07:20:36.914Z
+TOOL_USE Read [toolu_01NZSgPyQQCGrGdAXcGMMCHL]: {"file_path":"C:\\Users\\nname\\Pictures\\Screenshots\\track drag control to change values second option for tweak .png"}
+--- L66656 user 2026-10-06T07:20:37.038Z
+RESULT [toolu_01NZSgPyQQCGrGdAXcGMMCHL]: [image]
+--- L66657 user 2026-10-06T07:20:37.037Z
+USER: [Image: original 2559x1439, displayed at 2000x1125. Multiply coordinates by 1.28 to map to original image.]
+--- L66658 assistant 2026-10-06T07:20:37.304Z
+TOOL_USE Bash [toolu_019vE2dePwbKwZ7jDgrLndaE]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && wc -c app/core/*.js app/preview/*.js | sort -n | tail -30; grep -n \"width.oninput\\|widthPick\\|pick\" app/core/panel.js | cut -c1-200 | head -30"}
+--- L66665 user 2026-10-06T07:20:37.597Z
+RESULT [toolu_019vE2dePwbKwZ7jDgrLndaE]:    263 app/core/index.js
+  1690 app/core/overlapmerge.js
+  2161 app/core/overlapworker.js
+  2199 app/preview/segkey.js
+  2539 app/core/xsec.js
+  3029 app/core/widthlike.js
+  3072 app/preview/batches.js
+  3198 app/preview/kn5look.js
+  4389 app/core/keys.js
+  4444 app/preview/coarse.js
+  4488 app/core/selectionlayer.js
+  4710 app/preview/guideslayer.js
+  5066 app/core/overlaprunner.js
+  5315 app/core/overlapjob.js
+  6732 app/preview/acshaders.js
+  8033 app/core/textures.js
+  8919 app/preview/index.js
+  9641 app/preview/aclook.js
+  9665 app/preview/look.js
+ 13176 app/preview/trackmodel.js
+ 14509 app/core/piecesui.js
+ 16702 app/core/labels.js
+ 17798 app/preview/renderer.js
+ 19873 app/preview/guides.js
+ 30341 app/preview/preview.js
+ 35347 app/core/panel.js
+ 64129 app/core/coreshell.js
+301428 total
+6://   BRUSH on the preview: arm it, then drag on the track. The pick is the preview's ('t180-pick'); the drag's vertical distance is
+14://   OPEN A LOCAL EXAMPLE: a real track's D184 fit and its read, picked from the user's own reads/ folder (never in the program).
+76:  const field = (label, input) => el('label', { class: 'picker' }, el('span', { text: label }), input);
+78:  const fieldAt = (label, input, k) => el('label', { class: 'picker' }, el('span', { text: label }), input, el('span', { class: 'at-start', style: 'white-space:nowrap;font-size:12px', title: atStar
+103:  // picking a known track puts its measured median into the width field, like typing it (so on an empty track it is the first piece's start, which is the
+174:  width.oninput = width.onchange = () => { ghost(); wnote.textContent = WL.isTube(tube.value) ? WL.tubeNote(width.value) : ''; };
+175:  wlike.onchange = () => { if (!wlike.value) return; width.value = wlike.v
+…[390 chars cut]…
+ el('div', { class: 'pickers' }, field('length m', len), fieldAt('turn °/100m', turn, 'turn'), fieldAt('climb °/100m', climb, 'climb'), fieldAt('bank
+290:    el('h3', { text: 'Brush (drag on the track)' }), el('div', { class: 'pickers' }, field('on', armed), field('mode', mode), field('what', channel), field('radius m', radius), field('sharp (may n
+291:    el('h3', { text: 'Close' }), el('div', { class: 'pickers' }, field('using', closeHow)), el('div', { class: 'actions' }, closeBtn, applyBtn, cancelBtn), proposalBox,
+293:    el('h3', { text: 'Local example' }), el('div', { class: 'pickers' }, field('fit', fitIn), field('read', readIn)), el('div', { class: 'actions' }, openEx),
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66668 assistant 2026-10-06T07:20:39.376Z
+TEXT: The task is large, so I'm reading the Extend panel first, since the fields, ghost and brush wiring live there.
+--- L66669 assistant 2026-10-06T07:20:39.810Z
+TOOL_USE Read [toolu_01TL8bQE8S6WR4dZwyBefYAm]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\core\\panel.js","limit":300}
+--- L66670 user 2026-10-06T07:20:40.055Z
+RESULT [toolu_01TL8bQE8S6WR4dZwyBefYAm]: 1	// panel.js: the EQUATION CORE's controls (D186, pane C), in the left column where the piece builder's palette is. DOM only; every
+2	// action is the core shell's (app/core/coreshell.js), every number it shows is the shell's state.
+3	//
+4	//   EXTEND at the build head: keep going (no handle), or turn / climb / bank / cup / width targets over a length. Hovering the button
+5	//          shows the ghost (the preview's 't180-ghost' candidate), so what a click adds is seen before it is added.
+6	//   BRUSH on the preview: arm it, then drag on the track. The pick is the preview's ('t180-pick'); the drag's vertical distance is
+7	//          the change at the brush's centre; one drag is one undo step. The local height/lateral brush (E) is the default when
+8	//          it is in the build; the rate brush (one channel) is the explicit second mode.
+9	//   CLOSE as one click.
+10	//   THE READOUT (L130): beside Extend's fields, the piece they describe, BEFORE it is placed: its length and the change it makes
+11	//          in turn, climb and bank (A's src/core/readout.js, candidateReadout), redrawn inside every field's input handler; and on
+12	//          the track, a label at every placed piece with the same numbers (app/core/labels.js). The strings are the same function's
+13	//          (labels.js formatReadout), so what the ghost promised is what the placed piece's label says.
+14	//   OPEN A LOCAL EXAMPLE: a real track's D184 fit and its read, picked from the user's own reads/ folder (never in the program).
+15	'use strict';
+16	
+17	const LB = require('./labels.js');
+18	const RG = require('../validate-ui/redgroups.js');   // D242: every red in plain words, grouped, with where
+19	const XS = require('./xsec.js');   // the cross-sectio
+…[31878 chars cut]…
+tn, cancelBtn), proposalBox,
+292	    ...pieces.nodes.selection, ...pieces.nodes.library,
+293	    el('h3', { text: 'Local example' }), el('div', { class: 'pickers' }, field('fit', fitIn), field('read', readIn)), el('div', { class: 'actions' }, openEx),
+294	    msg,
+295	  );
+296	  let shownFor = null;
+297	  const draw = (st) => {
+298	    const d = st.history.present, L = st.resolved.segments.reduce((a, g) => a + g.length, 0);
+299	    if (d !== shownFor) {   // a new document (Extend, Undo, Redo, open, a brush): the fields show its head, and an UNDONE Extend's own values (item 7)
+300	      const m = shownFor ? madeWith.get(shownFor) : null, undone = !!m && m.before === d;   // only an Undo steps from a document back to the one it was made from
+--- L66679 assistant 2026-10-06T07:20:42.743Z
+TOOL_USE Read [toolu_012w1FRQqtNQoC78c5AGYxV1]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\core\\panel.js","offset":300}
+--- L66680 user 2026-10-06T07:20:42.761Z
+RESULT [toolu_012w1FRQqtNQoC78c5AGYxV1]: 300	      const m = shownFor ? madeWith.get(shownFor) : null, undone = !!m && m.before === d;   // only an Undo steps from a document back to the one it was made from
+301	      showHead(); if (undone) putBack(m.made); for (const k of Object.keys(HEAD)) applied[k] = HEAD[k][0].value; shownFor = d;
+302	    }
+303	    info.textContent = `${d.pieces.length} piece${d.pieces.length === 1 ? '' : 's'} · ${Math.round(L).toLocaleString('en-US')} m · ${d.closed ? 'closed loop' : 'open'}${st.lastStep ? ` · last ${st.lastStep.op} ${st.lastStep.ms.toFixed(0)} ms` : ''}`;
+304	    extendBtn.disabled = !!d.closed; closeBtn.disabled = closeHow.disabled = !!d.closed || !d.pieces.length;
+305	    drawProposal(st.closeProposal && st.closeProposal.base === d ? st.closeProposal : null);
+306	    msg.textContent = st.message || ''; msg.className = st.messageKind === 'ok' ? 'message ok' : 'message';
+307	    readout();   // the track changed, so the piece the fields would add changed
+308	    hintNow();
+309	  };
+310	  // the labels on the track: a DOM layer over the preview (app/core/labels.js); none when there is no preview to lay them on
+311	  const labels = stage ? LB.mount(stage, shell, win) : null;
+312	  const unsub = shell.subscribe(draw); draw(shell.getState());
+313	  // options(): the options Extend, the ghost and the readout use right now (fields left as shown send no target)
+314	  return { labels, pieces, options: opts, unmount() { unsub(); doc.removeEventListener('t180-undo-guard', onUndoGuard); pieces.unmount(); if (tick) win.clearTimeout(tick); if (frame) win.cancelAnimationFrame(frame); if (labels) labels.unmount(); if (stage) { stage.removeEventListener('pointerdown', down); stage.removeEventListener('pointermove', move); stage.removeEventListener('pointerup', up); stage.removeEventListener('pointercancel', up); } root.replaceChildren(); } };
+315	}
+316	
+317	module.exports = { mount, extendOptions, PER_PX };
+318	
+--- L66681 assistant 2026-10-06T07:20:43.013Z
+TOOL_USE Read [toolu_01LYjn441Xa8VTvT9mKvekfP]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\core\\selectionlayer.js"}
+--- L66682 user 2026-10-06T07:20:43.028Z
+RESULT [toolu_01LYjn441Xa8VTvT9mKvekfP]: 1	// selectionlayer.js: THE SELECTED PIECES ON THE TRACK (D240, saved pieces, the UI half; the keeper: "highlight/select pieces on the track"). A canvas over the preview
+2	// (#preview), redrawn every animation frame like the labels (the camera eases, so the highlight moves with it): the selected pieces' centreline, drawn bright over the road
+3	// with a dark outline, and a dot at each end of the run. The preview is not changed: its pose comes from the 't180:view' event and the track from 't180:track-request'
+4	// (app/preview/index.js), exactly as app/core/labels.js reads them.
+5	//
+6	//   selectionLines(track, ids, pose, W, H) -> [{ id, points: [{ x, y }] }]   pure: the screen polylines (css px of the preview) of the pieces `ids`, broken where the track
+7	//                                                                              passes behind the camera; at most ~120 points a piece
+8	//   mount(stage, shell, win) -> { lines(), unmount() }                         lines() is what was drawn last (for the tests and the window proof)
+9	'use strict';
+10	
+11	const M = require('../camera/math.js');
+12	
+13	function selectionLines(track, ids, pose, W, H) {
+14	  if (!track || !track.path || !Array.isArray(track.segments) || !ids || !ids.length || !pose || !(W > 0 && H > 0)) return [];
+15	  const want = new Set(ids), by = new Map(), VP = M.viewProj(pose, W / H);
+16	  for (const m of track.path.samples) { const g = track.segments[m.seg]; if (!g || !want.has(g.id)) continue; if (!by.has(g.id)) by.set(g.id, []); by.get(g.id).push(m.pos); }
+17	  const toScreen = (p) => { const c = M.apply(VP, p); return c[3] > 0 ? { x: (c[0] / c[3] * 0.5 + 0.5) * W, y: (1 - (c[1] / c[3] * 0.5 + 0.5)) * H } : null; };
+18	  const out = [];
+19	  for
+…[2110 chars cut]…
+.lineWidth = w; ctx.strokeStyle = colour;
+54	      for (const l of drawn) { ctx.beginPath(); l.points.forEach((p, i) => (i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y))); ctx.stroke(); }
+55	    }
+56	    ctx.fillStyle = '#ffb020'; ctx.strokeStyle = '#0b0d11'; ctx.lineWidth = 2;
+57	    const first = drawn[0].points[0], lastLine = drawn[drawn.length - 1], last = lastLine.points[lastLine.points.length - 1];
+58	    for (const p of [first, last]) { ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
+59	  };
+60	  raf = win.requestAnimationFrame(frame);
+61	  return { lines: () => drawn.slice(), unmount() { win.cancelAnimationFrame(raf); canvas.remove(); } };
+62	}
+63	
+64	module.exports = { selectionLines, mount };
+65	
+--- L66685 assistant 2026-10-06T07:20:45.282Z
+TOOL_USE Bash [toolu_01BG4Xgfn6uW4Jok2LoVwt4m]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && grep -n \"ghost\\|t180:\\|t180-\" app/preview/preview.js app/preview/index.js | cut -c1-220 | head -70"}
+--- L66686 user 2026-10-06T07:20:45.414Z
+RESULT [toolu_01BG4Xgfn6uW4Jok2LoVwt4m]: app/preview/preview.js:11://   p.setTextureSet(set)    A's texture set (src/texture/set.js; the textures panel sends it as 't180:textures'), or null
+app/preview/preview.js:88:  let ghost = null, grid = null, gridFor = null, start = null, proposalShown = null;
+app/preview/preview.js:119:  // a change to the placed track retires the ghost: it was built on the old head (the palette shows it again on hover)
+app/preview/preview.js:130:    try { track = model.update(st.resolved); err = track.stale ? st.resolveError : null; if (track.how !== 'same' && track.how !== 'kept') ghost = null; } catch (e) { err = e.message; return; }
+app/preview/preview.js:131:    // D242: a close PROPOSAL (the core shell's closeProposal, for the document on screen) is the ghost: the pieces it moves, see-through over the placed ones
+app/preview/preview.js:135:      if (ghost && ghost.proposal) ghost = null;
+app/preview/preview.js:137:      if (prop) { try { ghost = { ...model.proposalGhost(prop.resolved), proposal: true }; } catch (e) { ghost = null; } }
+app/preview/preview.js:144:   *  placed yet but a ghost showing, the ghost's head and path stand in, so the first word can be previewed too. With
+app/preview/preview.js:145:   *  NOTHING placed and no ghost, the track's START stands in (D195): before it, the context was null there, so no frame
+app/preview/preview.js:146:   *  drew, the view froze, and the wheel and keys pressed meanwhile were applied late, when a ghost first appeared (the
+app/preview/preview.js:150:    if (ghost && ghost.path) return { head: ghost.head, path: ghost.path, bounds: null, aspect, width: widthAtHead(ghost.segments) };
+app/preview/preview.js:225:      // D237: the plan (the 3D grid, the axes, the mirror ghost) follows the t
+…[3941 chars cut]…
+80-ghost', showGhost);
+app/preview/index.js:88:  doc.addEventListener('t180-ghost-clear', hideGhost);
+app/preview/index.js:89:  doc.addEventListener('t180-pick', pickNow);
+app/preview/index.js:90:  doc.addEventListener('t180:view', viewNow);
+app/preview/index.js:91:  // D242: a click on a red in a list moves the camera there ('t180-camera-focus', { s }: metres along the placed track)
+app/preview/index.js:93:  doc.addEventListener('t180-camera-focus', focusNow);
+app/preview/index.js:94:  return { preview: p, unmount() { doc.removeEventListener('t180-camera-focus', focusNow); doc.removeEventListener('t180:guides', setGuides); doc.removeEventListener('t180:guides-request', guidesN
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66687 assistant 2026-10-06T07:20:45.901Z
+TOOL_USE Bash [toolu_01WepGBHe8qzjzACnHFmGKsK]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && grep -n \"candidate\\|selectionInfo\\|selectPiece\\|brush\\|beginBrush\\|headState\" app/core/coreshell.js | cut -c1-200 | head -50"}
+--- L66688 user 2026-10-06T07:20:46.026Z
+RESULT [toolu_01WepGBHe8qzjzACnHFmGKsK]: 7://   shell.extend({ length, targets })   shell.candidate({ length, targets })   shell.undo()   shell.redo()
+8://   shell.beginBrush({ mode, channel, s0, r })   shell.brushTo(delta)   shell.endBrush()      one undo step per drag
+32://   shell.selectPiece(i, { extend })   shell.clearSelection()   shell.selectionInfo()   await shell.savePiece(name)   await shell.listPieces()   await shell.insertPiece(name, { mirror })
+55:// (the ghost, candidateReadout) and the labels on the track (every placed piece, pieceReadout)
+65:// E's BRUSH (p-d186-brush-E): src/core/sculpt.js brush(doc, { mode: 'hill' | 'swerve' | 'value' | 'rate', channel, s0, r, delta })
+67:// injected (`brushFn`, tests). The LOCAL brush is its hill (channel 'height') and swerve ('lateral'); they need the document's
+68:// offset channels h and l (A's, pending the chair's decision), and until then E's brush refuses them by name (NOT_YET), which the
+69:// shell shows as the message. With no E brush at all the local mode is not offered, and the rate brush is D185's sculpt().
+76:async function createCoreShell({ storage = null, exporter = null, brushFn = typeof SC.brush === 'function' ? SC.brush : null, now = () => Date.now(), autosaveMs = 1500, timers = callTimers, overlap
+112:    message: startMessage, messageKind: startMessage ? 'error' : null, name: null, dirty: false, lastEdited: null, lastStep: null, brush: null, exportReds: null,
+113:    localBrush: !!brushFn, recovery: recovery && !recovery.blocked ? recovery : null,
+191:  // the brush, as E's hand-back gives its API: height -> hill, sideways -> swerve; a rate channel (kh, kv) -> rate, which re-closes a
+192:  // closed lap itself; bank, width, rise -> value. Without E's brush, the rate brush is D185's sculpt(
+…[3516 chars cut]…
+sts): one undo step. */
+274:    sculptOnce: (b) => commit(`brush:${b.mode || 'rate'}`, () => brushed({ mode: 'rate', ...b, base: doc() }, b.delta).doc, { lastEdited: piecesIn(doc(), b.s0 - b.r, b.s0 + b.r) }),
+349:    selectPiece(i, { extend = false } = {}) {
+357:    selectionInfo() {
+469:    undo: () => attempt(() => { if (st.brush) return set({ message: 'finish the brush drag first' }); const h = D.undo(st.history); return set({ history: h, ...resolvedOf(h.present), dirty: true, 
+470:    redo: () => attempt(() => { if (st.brush) return set({ message: 'finish the brush drag first' }); const h = D.redo(st.history); return set({ history: h, ...resolvedOf(h.present), dirty: true,
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66697 assistant 2026-10-06T07:20:49.575Z
+TOOL_USE Bash [toolu_019kX5UouWAPFj7dXkmVvvp1]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 86,160p app/preview/preview.js | cut -c1-260; sed -n 236,290p app/preview/preview.js | cut -c1-260"}
+--- L66698 user 2026-10-06T07:20:49.725Z
+RESULT [toolu_019kX5UouWAPFj7dXkmVvvp1]:   const held = new Map();   // the keys down, in the order pressed: physical key (e.code) → its action, fixed at key-down
+  let takeover = false;     // a movement key went down in a follow view: the next frame takes the view over into free (once)
+  let ghost = null, grid = null, gridFor = null, start = null, proposalShown = null;
+  // D237: the 3D grid and the symmetry guides. `gMode` 'legacy' is the old { ground: true } grid at y = 0; the plan is rebuilt only when its inputs change, never per frame.
+  if (gridMode !== null && !GRID_MODES.includes(gridMode)) throw new Error(`preview: unknown gridMode ${gridMode}`);
+  let gMode = gridMode || (ground ? 'legacy' : 'off'), gMirror = 'off', gCentre = null, plan = null, planDeps = null;
+  const guidesState = () => ({
+    grid: gMode === 'legacy' ? 'ground' : gMode, drawn: plan && plan.mode !== 'off' ? plan.mode : gMode === 'legacy' && grid ? 'ground' : 'off', flat: plan ? plan.flat : null, range: plan ? plan.range : null,
+    mirror: gMirror, centre: plan && plan.centre ? { x: plan.centre.x, z: plan.centre.z, set: plan.centre.set } : gCentre ? { x: gCentre.x, z: gCentre.z, set: true } : null,
+    gap: plan ? plan.gap : null, lines: plan ? plan.lines : 0, levels: plan ? plan.levels.length : 0, spacing: plan ? plan.spacing : null,
+  });
+  const sayGuides = () => { if (onGuides) onGuides(guidesState()); };
+  let set = null, images = [], look = 'ac', resolved = null, resolvedFor = null;
+  // the look is resolved again only when the scene's materials or the set change, never per frame
+  const lookFor = (scene) => { if (resolvedFor !== scene.materials) { resolved = resolveLook(scene, set, images); resolvedFor = scene.materials; } return resolved; };
+  // D228: a textured EQUATION-C
+…[9190 chars cut]…
+== 'free' && !c) return rig.mode; rig.setMode(m, c); said(); return rig.mode; },
+    dispose() {
+      win.cancelAnimationFrame(raf); clearFull(); unsub(); if (layer) layer.dispose();
+      win.removeEventListener('keydown', onKey); win.removeEventListener('keyup', onUp); win.removeEventListener('blur', letGo);
+      if (win.document) win.document.removeEventListener('visibilitychange', onVis);
+      canvas.removeEventListener('mousedown', onDown); win.removeEventListener('mousemove', onMove); win.removeEventListener('mouseup', onRelease);
+      canvas.removeEventListener('contextmenu', noMenu); canvas.removeEventListener('wheel', onWheel);
+      renderer.dispose();
+    },
+  };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66699 assistant 2026-10-06T07:20:50.182Z
+TOOL_USE Bash [toolu_015MmvjqvwCvD4uumja8NUv1]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && grep -n \"ghostFor\\|proposalGhost\" app/preview/trackmodel.js | head; grep -n \"samples.push\\|pos:\" src/geom/path.js | head -10; ls src/geom"}
+--- L66700 user 2026-10-06T07:20:50.372Z
+RESULT [toolu_015MmvjqvwCvD4uumja8NUv1]: 24://   tm.ghostFor(candidate)   the GHOST of the next piece (the D170 review, item 6): `candidate` is the resolved
+113:    ghostFor(candidate) {
+131:     * ghostFor's copy-and-extend does not apply). The proposed track is built in full on its own (the placed track untouched), and the ghost is the
+134:    proposalGhost(candidate) {
+186:  return { s: P.s0 + r.s, seg: P.seg, pos: pt(r.pos), T: f(r.T), L: f(r.L), U: f(r.U), kvec: f(r.kvec), roll: r.roll, bankG: r.bankG, grade: r.grade, _R: f(r._R), _x: pt(r._x) };
+202:  toJSON() { const v = this._v; return { s: v.s, seg: v.seg, pos: v.pos, T: v.T, L: v.L, U: v.U, kvec: v.kvec, roll: v.roll, bankG: v.bankG, grade: v.grade }; }
+220:    for (const r of blk.recs) path.samples.push(new SampleView(r, blk));
+243:  const closed = !!opts.closed, start = { pos: [0, 0, 0], theta: 0, p: 0, ...(opts.start || {}) };
+326:  return { s: e.s, seg: e.seg, pos: e.pos.slice(), T: e.T.slice(), L: e.L.slice(), U: e.U.slice() };
+bvh.js
+fonts.js
+fontshape.json
+index.js
+mesh.js
+path.js
+pitlane.js
+profile.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66709 assistant 2026-10-06T07:20:53.187Z
+TOOL_USE Bash [toolu_01AC5BiBB4Y8PKzNH7r3u9HM]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 100,135p app/preview/trackmodel.js | cut -c1-280; sed -n 36,48p app/preview/index.js | cut -c1-200; grep -n \"const showGhost\\|const pickNow\\|const viewNow\\|const trackNow\" -A6 app/preview/index.js | cut -c1-250 | head -50"}
+--- L66710 user 2026-10-06T07:20:53.383Z
+RESULT [toolu_01AC5BiBB4Y8PKzNH7r3u9HM]:         geom.rebuildPathFrom(path, segs, g);
+        const { lk, a } = relift(), s0 = Math.min(g, a);
+        from = s0; fromS = path.starts[s0].s; mesh = geom.sculptMesh(mesh, shown, meshSegs(segs, lk), s0); liftKeys = lk; how = 'sculpt';
+      } else how = full(segs, isClosed, lift, nk);   // a removal: the incremental calls only grow or rewrite a track, so rebuild it
+      keys = nk; closed = isClosed;
+      const batches = how === 'same' && last ? last.batches : batchesOf(mesh);
+      lastResolved = resolved; detailMoved = false;
+      last = { path: shown, mesh, how, batches, bounds: how === 'same' && last ? last.bounds : worldBounds(batches), segments: resolved.segments, g: from, fromS };   // the REAL segments, whatever the detail meshed
+      return last;
+    },
+    /** The preview's detail: 1 (full, the export's) or a factor from 2 up (coarse, while dragging). Returns the detail now in force. */
+    setDetail(k) { const d = Number.isFinite(k) && k >= 2 ? Math.floor(k) : 1; if (d !== detail) { detail = d; detailMoved = true; } return detail; },
+    get detail() { return detail; },
+    ghostFor(candidate) {
+      const segs = candidate && detail > 1 ? coarsen(candidate.segments, detail) : candidate && candidate.segments;
+      if (!Array.isArray(segs)) throw new Error('ghost: needs a resolved candidate { segments }');
+      const nk = segs.map(keyOf);
+      if (nk.length <= keys.length || keys.some((k, i) => k !== nk[i])) throw new Error('ghost: the candidate must extend the placed track (the same segments, then more)');
+      if (!path) { const p = geom.buildPath(segs, { ...pathOpts, ...(candidate.start ? { start: candidate.start } : {}) }); return { batches: batchesOf(geom.buildMesh(p, segs, meshOpts)), path: p,
+…[3193 chars cut]…
+eply(p.pick(e.detail.x, e.detail.y)); };
+78:  const trackNow = (e) => { if (e.detail && typeof e.detail.reply === 'function') e.detail.reply(p.track()); };
+79-  const setGuides = (e) => { if (!e.detail) return; try { p.setGuides(e.detail); } catch (err) { if (typeof e.detail.reply === 'function') e.detail.reply({ error: err.message }); } };
+80-  const guidesNow = (e) => { if (e.detail && typeof e.detail.reply === 'function') e.detail.reply(p.guides()); };
+81-  doc.addEventListener('t180:guides', setGuides);
+82-  doc.addEventListener('t180:guides-request', guidesNow);
+83-  doc.addEventListener('t180:textures', textures);
+84-  doc.addEventListener('t180:track-request', trackNow);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66713 assistant 2026-10-06T07:20:59.402Z
+TOOL_USE Bash [toolu_017HZA2VA9zSarHvi3XfRvRS]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && grep -n \"roll\\|\\bL:\\|lateral\" src/geom/path.js | cut -c1-200 | head -30; grep -n \"widthAtHead\" -B1 -A6 app/preview/preview.js | head -30 | cut -c1-220; grep -n \"headState\" -A14 app/core/coreshell.js | sed -n 1,30p | cut -c1-220"}
+--- L66714 user 2026-10-06T07:20:59.614Z
+RESULT [toolu_017HZA2VA9zSarHvi3XfRvRS]: 4://                                                    roll, bankG, grade }], head }
+21:// unrolled left is the heading's left, H(θ) = (cos θ, 0, −sin θ), which is horizontal and perpendicular to
+23:// top, see CURVE MODEL). So a word's roll is its bank against gravity, and nothing is carried along the path but θ and p:
+25:// 10°), and a piece's shape in its own frame depends only on its handles and its start pitch. The explicit roll φ
+26:// (+ = left side up, smoothstep between roll0 and roll1) is then applied about T. (T, L, U) is right-handed and
+35:// needs from the past is its START STATE: position, heading, pitch, tangent and the unrolled RMF left, all carried in
+39:// belongs to the segment it starts, so it is re-emitted under the new segment's roll, heartline and profile (the seam).
+67:    for (const f of ['k0', 'k1', 'kp0', 'kp1', 'roll0', 'roll1', 'heartline', 'heartline1', 'rollRate0', 'rollRate1']) if (g[f] !== undefined && !Number.isFinite(g[f])) throw new Error(`${at}: ${f}
+98:  const R = [Math.cos(theta), 0, -Math.sin(theta)];   // the gravity frame's unrolled left (FRAME)
+103:  // THE ROLL. By default the geometry's smoothstep from roll0 to roll1 (zero roll RATE at both ends of every segment). A segment that carries rollRate0 and rollRate1 (rad per metre,
+104:  // D225: the spiral of a closed tube) rolls by the cubic Hermite through both end values and both end rates, so the roll is C1 across segments: a road centre at a radius from the roll
+107:  if (g.rollRate0 === undefined || g.rollRate1 === undefined) phi = num(g.roll0) + (num(g.roll1) - num(g.roll0)) * smooth(u / L);
+108:  else { const t = u / L, t2 = t * t, t3 = t2 * t; phi = (2 * t3 - 3 * t2 + 1) * num(g.roll0) + (t3 - 2 * t2 + t) * L * g.rollRat
+…[3257 chars cut]…
+eadOf(null) };
+236-    },
+237-    /** Every placed piece's readout, in order: computed ONCE per document (the labels read it every frame). */
+238-    pieceReadouts() { const d = doc(); if (readsFor !== d) { reads = d.pieces.map((_, i) => RD.pieceReadout(d, i)); readsFor = d; } return reads; },
+239-
+240-    /**
+241-     * THE BRUSH, one drag = one undo step. beginBrush fixes the brush (its mode, channel, centre s0 and radius r, all on the
+242-     * document as it was when the drag began); brushTo(delta) applies the WHOLE delta to that base, so a drag never
+243-     * accumulates rounding; endBrush commits. mode 'local' is E's height/lateral brush (channel 'height' | 'lateral');
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66725 assistant 2026-10-06T07:21:39.042Z
+TOOL_USE Bash [toolu_01Fz4AZQLjxgjt24rNbPEPEr]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 340,380p app/core/coreshell.js | cut -c1-300; grep -n \"^function brush\\|mode === 'value'\\|'value'\" src/core/sculpt.js | head -12 | cut -c1-240; grep -n \"function piecesIn\" -A6 app/core/coreshell.js | cut -c1-240"}
+--- L66726 user 2026-10-06T07:21:39.229Z
+RESULT [toolu_01Fz4AZQLjxgjt24rNbPEPEr]:     /**
+     * D240, SAVED PIECES, THE UI HALF (the core is src/core/piece.js; the keeper: "can we keep only the equation mode? And then we can save pieces from that we make", and
+     * 10:xx: "highlight/select pieces on the track; the selection offers Save as piece or Delete").
+     *
+     * SELECT: piece i (a click on the track), or with `extend` the run from the piece selected first to i (a shift-click). A selection belongs to the document it was made on:
+     * any change of the document drops it. SAVE AS PIECE: the selected run is kept relative to its own start (src/core/piece.js saveRun) in the pieces folder, under a name;
+     * a name already used is REFUSED (delete the old piece first), and a run the core cannot keep (a mixed cross-section, say) says why.
+     */
+    selectPiece(i, { extend = false } = {}) {
+      const d = doc();
+      if (!Number.isInteger(i) || i < 0 || i >= d.pieces.length) return set({ message: `there is no piece ${i}: the track has pieces 0 to ${d.pieces.length - 1}` });
+      const anchor = extend && st.selection && st.selection.base === d ? st.selection.anchor : i, from = Math.min(anchor, i), to = Math.max(anchor, i);
+      return set({ selection: Object.freeze({ base: d, anchor, from, to, ids: Object.freeze(d.pieces.slice(from, to + 1).map((P) => P.id)) }), deleteProposal: null, message: null });
+    },
+    clearSelection: () => set({ selection: null, deleteProposal: null, message: null }),
+    /** What the selection is, for the panel: { from, to, count, lengthM, atEnd, saveProblem }; saveProblem is why it cannot be kept as a piece (null when it can). null when nothing is selected. */
+    selectionInfo() {
+      const s = st.selection, d = doc();
+      if (!s || s.base !== d) return nu
+…[1915 chars cut]…
+
+31:function brushControls(c, t, { s0, r, delta }) {
+149: * THE brush. `mode` is 'hill' (the default), 'swerve', 'value' or 'rate'; `channel` is needed only for 'value' and 'rate'.
+153:function brush(doc, { mode = 'hill', channel, s0, r, delta, sharp = false } = {}) {
+684:function piecesIn(doc, a, b) {
+685-  const off = pieceOffsets(doc), out = [];
+686-  doc.pieces.forEach((P, i) => { if (P.type === 'road' && off[i] + P.length >= a && off[i] <= b) out.push(i); });
+687-  return out.length ? out : null;
+688-}
+689-
+690-module.exports = { createCoreShell, NAME_RE, PREFIX, BRUSH_MODES, STRAIGHT_K, piecesIn, straightPieces, startLayout, profilerOf, thumbOf, displacementAfterDelete };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66735 assistant 2026-10-06T07:21:45.586Z
+TOOL_USE Bash [toolu_01KjePmJcd3jJK2cMKL6XULM]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 20,60p src/core/sculpt.js | cut -c1-260; sed -n 140,215p src/core/sculpt.js | cut -c1-260"}
+--- L66736 user 2026-10-06T07:21:45.749Z
+RESULT [toolu_01KjePmJcd3jJK2cMKL6XULM]: /** ref 10 §1: the brush weight at distance d from the centre, radius r: 1 at the centre, 0 at and beyond the edge, C2. */
+const falloff = (d, r) => 1 - smootherstep(Math.abs(d) / r);
+/** ref 10 §2: the knot average τ*ᵢ = (tᵢ₊₁ + tᵢ₊₂ + tᵢ₊₃)/3 of a cubic's control point i (LYCHE-MORKEN (5.30), d = 3). */
+const knotAverage = (t, i) => (t[i + 1] + t[i + 2] + t[i + 3]) / 3;
+/** The document's quantisation (src/core/README.md "numbers are quantised"; document.js q): the same rule, on the same DEC. */
+const q = (x, dec) => { const v = Number(x.toFixed(dec)); return Object.is(v, -0) ? 0 : v; };
+
+/**
+ * Brush one channel's control points `c` (clamped cubic on knot vector `t`, local s). The window is [s0 − r, s0 + r] in the same
+ * s. Returns { ctrl: a new array, changed: the indices changed }. Pure.
+ */
+function brushControls(c, t, { s0, r, delta }) {
+  const ctrl = c.slice(), changed = [];
+  for (let i = 0; i < c.length; i++) {
+    if (t[i] < s0 - r || t[i + 4] > s0 + r) continue;           // its support reaches outside the window: untouched
+    ctrl[i] = c[i] + delta * falloff(knotAverage(t, i) - s0, r);
+    changed.push(i);
+  }
+  return { ctrl, changed };
+}
+
+/** Where each piece starts along the adapter's path (the s a user picks on the preview): the sum of its segments' lengths. */
+function pieceOffsets(doc) {
+  const len = new Map(); for (const g of toSegments(doc)) len.set(g.id, (len.get(g.id) || 0) + g.length);
+  let off = 0; return doc.pieces.map((P) => { const o = off; off += len.get(P.id) || 0; return o; });
+}
+
+/** The largest knot span of any road piece that overlaps [lo, hi] (lap distance), counting only the spans that overlap it. */
+function spanUnder(doc, off, lo, hi) {
+  let m = 0;
+  doc.pieces.forEach((P, p) =
+…[4027 chars cut]…
+t the window only half covers'})`);
+    d = delta / got;
+  }
+  const res0 = sculpt(doc, { channel: ch, s0, r, delta: d }), res = sharp ? { ...res0, note: SHARP_NOTE, sharp: SHARP_BOUND } : res0;
+  if (mode !== 'rate' || !doc.closed || !res.changed.length) return { ...res, mode };
+  const { close } = require('./close.js');
+  const c = close({ ...res.doc, closed: false }, { edited: res.changed.map((x) => x.piece) });
+  return { ...res, mode, doc: c.doc, close: { converged: c.converged, iterations: c.iterations, gapM: c.gapM, report: c.report } };
+}
+
+module.exports = { smootherstep, falloff, knotAverage, brushControls, sculpt, pieceOffsets, brush, MODES, SHARP_BOUND, SHARP_NOTE };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66739 assistant 2026-10-06T07:22:05.248Z
+TOOL_USE Bash [toolu_01JbNiosXfyq7E3FQEbcssmy]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && grep -n \"heartline\" src/geom/path.js | head -8 | cut -c1-260; grep -n \"heartline\" src/core/*.js | head -8 | cut -c1-220; sed -n 160,200p app/core/coreshell.js | cut -c1-200"}
+--- L66746 user 2026-10-06T07:22:05.457Z
+RESULT [toolu_01JbNiosXfyq7E3FQEbcssmy]: 31:// HEARTLINE. The curve integrated is the heartline. The road's centre is the heartline minus heartline·U (+ = the
+32:// heartline above the road), as INTERFACES §1 "heartline … + = up" reads.
+39:// belongs to the segment it starts, so it is re-emitted under the new segment's roll, heartline and profile (the seam).
+67:    for (const f of ['k0', 'k1', 'kp0', 'kp1', 'roll0', 'roll1', 'heartline', 'heartline1', 'rollRate0', 'rollRate1']) if (g[f] !== undefined && !Number.isFinite(g[f])) throw new Error(`${at}: ${f} is not finite`);
+110:  // THE HEARTLINE: constant over the segment, or (heartline1 given, D225) linear from heartline at its start to heartline1 at its end, so it is continuous across segments
+111:  const hl = g.heartline1 === undefined ? num(g.heartline) : num(g.heartline) + (g.heartline1 - num(g.heartline)) * u / L;
+140:const blockKey = (g) => [g.length, g.k0, g.k1, g.kp0, g.kp1, g.roll0, g.roll1, g.heartline, g.heartline1, g.rollRate0, g.rollRate1].map((v) => (v === undefined ? '' : num(v))).join(',');   // an absent field is empty, a 0 is "0": the new fields change the 
+169:  // the segment's OWN end sample (its own roll1 and heartline), so a piece's mesh never borrows the next piece's frame
+src/core/adapter.js:73:const HEARTLINE_FROM = 300; // a tube's roll axis leaves the road centre at this sweep and reaches the tube's own axis at 360 (smoothstep): the heartline is continuous, never a step (seal S2 ii). 3
+src/core/adapter.js:97:/** The heartline (m) a tube's roll turns about at channel values x: R = w/2π once the tube is closed, 0 while it is open, a smoothstep between (ref 09 §10). */
+src/core/adapter.js:98:const heartlineOf = (P, x) => (P.tube ? (x.w / (2 * Math.PI)) * smooth((x.t - HEARTLINE_FROM) / 
+…[4024 chars cut]…
+ht -> hill, sideways -> swerve; a rate channel (kh, kv) -> rate, which re-closes a
+  // closed lap itself; bank, width, rise -> value. Without E's brush, the rate brush is D185's sculpt().
+  const brushed = (b, delta) => {
+    const at = { s0: b.s0, r: b.r, delta, ...(b.sharp ? { sharp: true } : {}) };   // sharp: E's opt-in (ruling 2), off by default
+    if (b.mode === 'local') return brushFn(b.base, { mode: b.channel === 'lateral' ? 'swerve' : 'hill', ...at });
+    if (brushFn) return brushFn(b.base, { mode: b.channel === 'kh' || b.channel === 'kv' ? 'rate' : 'value', channel: b.channel, ...at });
+    return sculpt(b.base, { channel: b.channel, ...at });
+  };
+
+  const api = {
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66749 assistant 2026-10-06T07:22:15.727Z
+TOOL_USE Bash [toolu_017Xmwa69uSgkeAQ9GDcqybv]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && cat > \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/probe_path.js\" <<'EOF'\nconst W='C:/Users/nname/Desktop/worktrees/a-handles-wt/';\nconst { createCoreShell } = require(W+'app/core/coreshell.js'); const G=require(W+'src/geom/index.js'); const OJ=require(W+'app/core/overlapjob.js');\n(async()=>{ const big = await createCoreShell({ brushFn: null, autosaveMs: 0 }); big.extend({ length: 300, family: 'bowl' }); for (let i = 0; i < 45; i++) big.extend({ length: i % 3 === 2 ? 250
+…[273 chars cut]…
+)-t,'samples',p.samples.length);\n console.log(Object.keys(r.segments[0]).join(','));\n})();\nEOF\nnode \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/probe_path.js\"","timeout":120000}
+--- L66750 user 2026-10-06T07:22:16.797Z
+RESULT [toolu_017Xmwa69uSgkeAQ9GDcqybv]: buildPath x5 ms [33m122[39m samples [33m6526[39m
+id,word,part,kind,length,k0,k1,kp0,kp1,roll0,roll1,heartline,profile,blend,speed
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66753 assistant 2026-10-06T07:22:26.966Z
+TOOL_USE Bash [toolu_01Wu7dgXNXWsmLNpEFgDWeuT]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 76,135p app/core/coreshell.js | cut -c1-230; sed -n 200,232p app/core/coreshell.js | cut -c1-230"}
+--- L66760 user 2026-10-06T07:22:27.131Z
+RESULT [toolu_01Wu7dgXNXWsmLNpEFgDWeuT]: async function createCoreShell({ storage = null, exporter = null, brushFn = typeof SC.brush === 'function' ? SC.brush : null, now = () => Date.now(), autosaveMs = 1500, timers = callTimers, overlapRunner = null } = {}) {
+  const ok = (msg) => ({ message: msg, messageKind: 'ok' });
+  // AUTOSAVE (D239): what the last session left behind, read once at the start (the header says what happens to each kind)
+  const canAutosave = !!storage && typeof storage.saveAutosave === 'function';
+  let recovery = null, startMessage = null;
+  if (canAutosave && typeof storage.openAutosave === 'function') {
+    const left = await storage.openAutosave();
+    if (left) {
+      // A DAMAGED autosave (B's D239 look, F1: "left alone" held only until the session's first autosave overwrote it): its bytes are kept
+      // as a backup first ("damaged autosave", native backup_track), and only then may this session autosave; if they cannot be kept, the
+      // file is left as it is and this session does not autosave over it, exactly as for a Pieces autosave that cannot be kept aside.
+      const keepDamaged = async (why) => {
+        try {
+          if (typeof storage.backupDoc !== 'function') throw new Error('nowhere to keep it');
+          const file = await storage.backupDoc('damaged autosave', left);
+          startMessage = `an autosave was found but could not be read (${why}); its bytes were kept as ${file} in the app's track-backups folder`;
+        } catch (e) { startMessage = `an autosave was found but could not be read (${why}), and could not be kept aside (${e.message}); it is left as it was, and this session does not autosave over it`; recovery = { blocked: true 
+      };
+      let o = null, unreadable = null;
+      try { o = JSON.parse
+…[5710 chars cut]…
+ge angle and the tube sweep in degrees, the edge start as a share,
+     * each the default (0, 0.64, 0) where the document has no such channel: a piece without an edge, a pre-/4 document, or a core without them.
+     * An empty track gives the first piece's START (extend.js's own: bowl, level, straight, WIDTHS.bowl, the edge that renders). Read only.
+     */
+    headState() {
+      const e = D.endState(doc());
+      // the head piece: the last ROAD piece (a flight carries the road's state), whose `tube` says whether the sweep is the head's (RULING 2)
+      const roads = doc().pieces.filter((p) => p.type === 'road'), headIsTube = !!(roads.length && roads[roads.length - 1].tube);
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66764 assistant 2026-10-06T07:22:36.294Z
+TEXT: Starting on the shell side of D244b first, the Sculpt mode and its centreline guard. I'm reading the top of `coreshell.js` and the `brushTo` code I'll extend.
+--- L66765 assistant 2026-10-06T07:22:37.046Z
+TOOL_USE Bash [toolu_01Fnv67CACfyeM7NRNXQJgJf]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 36,75p app/core/coreshell.js | cut -c1-210; sed -n 241,272p app/core/coreshell.js | cut -c1-420; sed -n 1,17p app/core/overlapjob.js | cut -c1-200 | head -20"}
+--- L66766 user 2026-10-06T07:22:37.247Z
+RESULT [toolu_01Fnv67CACfyeM7NRNXQJgJf]: 'use strict';
+
+const D = require('../../src/core/document.js');
+const { extend } = require('../../src/core/extend.js');
+const SC = require('../../src/core/sculpt.js');
+const { sculpt, pieceOffsets } = SC;
+const { close, closeWindow } = require('../../src/core/close.js');
+// D242: the close preview's overlap check builds the closed track's mesh and validates it as the export does (src/export/fromwords.js). D240 follow-up: it lives in
+// app/core/overlapjob.js, ONE pure function that the shell runs on the page (no runner given: tests) or that a Web Worker runs (app/core/overlapworker.js), so a preview never freezes the page
+const { overlapCheck } = require('./overlapjob.js');
+const RG = require('../validate-ui/redgroups.js');   // D242: every red in plain words, grouped, with where
+const AD = require('../../src/core/adapter.js');
+const { toSegments } = AD;
+const PC = require('../../src/core/piece.js');   // D240: saved pieces (save a run, put one at the head, mirror it, delete pieces)
+// A's offset channels h and l (the chair's ruling 1, D186): offsetPath(doc, segments, path) lifts a path and recomputes its frame.
+// Not at 17c2301; when the adapter exports it, the shell hands it on as `resolved.lift`, so the preview and the export
+// read the road AS BRUSHED (the segments alone do not carry the offsets).
+const offsetPath = typeof AD.offsetPath === 'function' ? AD.offsetPath : null;
+// THE READOUT (L130, A's src/core/readout.js): a piece's length and the change it makes in turn, climb and bank, for the panel
+// (the ghost, candidateReadout) and the labels on the track (every placed piece, pieceReadout)
+const RD = require('../../src/core/readout.js');
+// THE HEAD'S STATE (D193): what the track is doing at its open end, for 
+…[5697 chars cut]…
+  'rays' gives one of the check's two halves (overlapPart), which overlapmerge.js puts together
+//
+// The worker (app/core/overlapworker.js) calls runJob; the shell's synchronous path (no worker: tests, a page that cannot start one) calls overlapCheck on its own resolved track;
+// test/app core-previews-async compares the two on a coil and on TEST-1-sized tracks and finds them identical.
+'use strict';
+
+const G = require('../../src/geom/index.js');
+const V = require('../../src/validate/index.js');
+const { walkScene, isDrivable } = require('../../src/export/markers.js');
+const AD = require('../../src/core/adapter.js');
+const { OVERLAP, mergeParts } = require('./overlapmerge.js');
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66775 assistant 2026-10-06T07:23:00.599Z
+TOOL_USE Bash [toolu_01UX2A7QshtmZRQtHApqNdrb]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && grep -n \"channelAt\\|CoreError\\|CHANNELS\" src/core/document.js | head -12 | cut -c1-200; sed -n 60,80p src/core/sculpt.js | cut -c1-240; ls app/test | head -80 | tr '\\n' ' '"}
+--- L66776 user 2026-10-06T07:23:00.809Z
+RESULT [toolu_01UX2A7QshtmZRQtHApqNdrb]: 10://   channelAt(piece, ch, s)                    { v, d1, d2 } of one channel
+30:const CHANNELS = Object.freeze(['kh', 'kv', 'phi', 'w', 'r', 'h', 'l', 'c', 'e', 's', 't']);
+47:class CoreError extends Error {
+48:  constructor(code, message) { super(`${code}: ${message}`); this.name = 'CoreError'; this.code = code; }
+50:const q = (x, dec) => { if (!Number.isFinite(x)) throw new CoreError('NOT_FINITE', `a number is ${x}`); const v = Number(x.toFixed(dec)); return Object.is(v, -0) ? 0 : v; };
+59:function channelAt(P, ch, s) {
+68: * Every channel's VALUE at s, as { kh: v, kv: v, ... } over CHANNELS: exactly `channelAt(P, ch, s).v` for each, from ONE basis evaluation (the basis depends on the knots and
+69: * s alone, so channelAt rebuilt the very same one for each of the eleven channels; D236: the adapter reads all of them at every segment end of every piece, on every brush step).
+73:  for (const ch of CHANNELS) {
+94:  for (const ch of CHANNELS) { const c = P.channels[ch]; if (c === undefined && OPTIONAL[ch] && !P[OPTIONAL[ch]]) continue; const n = c.length; out[ch] = { v: c[n - 1], m: (3 * (c[n - 1] - c[n - 2]
+176:  if (!(length > 0)) throw new CoreError('BAD_LENGTH', `a piece's length must be positive, got ${length}`);
+177:  if (!FAMILIES.includes(family)) throw new CoreError('BAD_FAMILY', `family "${family}" (known: ${FAMILIES.join(', ')})`);
+  const off = pieceOffsets(doc); let p = -1;
+  doc.pieces.forEach((P, i) => { if (P.type === 'road' && s >= off[i] && s <= off[i] + P.length) p = i; });
+  if (p < 0) throw new D.CoreError('BAD_BRUSH', `brush: no road at ${s} m`);
+  return D.channelAt(doc.pieces[p], ch, s - off[p]).v;
+}
+
+const freeze = (o) => { if (o && typeof o === 'object' && !Object.isFrozen(o)) { Object.freeze(o)
+…[1882 chars cut]…
+nel.test.js mutation.test.js onboarding.test.js palette-fakedom.js palette-panels.test.js palette-phrasebook.test.js preview-async.test.js preview-speed.test.js preview.test.js redgroups.test.js render_proof.test.js share-install.test.js sharedpath.test.js shell-autosave.test.js shell-close.test.js shell-dist.test.js shell-failed-edit.test.js shell-ghost.test.js shell-keys.test.js shell-layout.test.js shell-loader.test.js shell.test.js texmaker-panel.test.js texture-panel.test.js timers-regression.test.js undo-guard.test.js validate-ui-incval.test.js validate-ui-jumpdefault.test.js validate-ui-jumps.test.js validate-ui-panel.test.js validate-ui-speed.test.js validate-ui.test.js
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66780 assistant 2026-10-06T07:23:02.890Z
+TEXT: Writing the guard module first (`centreline.js`), then wiring Sculpt into the shell.
+--- L66781 assistant 2026-10-06T07:23:13.812Z
+TOOL_USE Write [toolu_01YEY7Zfk7qhs8UuLzLkcQje]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\core\\centreline.js","content":"// centreline.js: THE SCULPT GUARD (D244b, the keeper: a mode \"to sculpt pieces once they are already put down, so they don't change the structure of the rest of the\n// track, it's mostly just banking and cupping tweaks\"). Sculpt offers ONLY the shape channels (bank, cup, width, edge angle, edge start, wall rise, tube sweep); the guard is the\n// runtime proof that an edit made in it really left the CENTRELINE alone, and it REFUSES BY NAME when it did not (SCULPT_MOVES_CENTRELINE), so a future channel, or a piece whose
+…[3559 chars cut]…
+ i = 0; i < a.length; i++) if (!Object.is(a[i], b[i])) return `sample ${Math.floor(i / 6)}: ${i % 6 < 3 ? 'position' : 'tangent'} ${'xyz'[i % 3]} moved from ${a[i]} to ${b[i]}`;\n  return null;\n}\n\nmodule.exports = { routeMoved, pathMoved, snapshot, ROUTE, ROLL };\n"}
+--- L66782 user 2026-10-06T07:23:13.839Z
+RESULT [toolu_01YEY7Zfk7qhs8UuLzLkcQje]: File created successfully at: C:\Users\nname\Desktop\worktrees\a-handles-wt\app\core\centreline.js (file state is current in your context — no need to Read it back)
+--- L66791 assistant 2026-10-06T07:23:18.061Z
+TOOL_USE Bash [toolu_01QXAMfmsPMBptQ7sv4qajRn]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -i 's/const a = baseResolved.snap || snapshot(baseResolved, step), b = snapshot(newResolved, step);/const a = base instanceof Float64Array ? base : snapshot(base, step), b = snapshot(newResolved, step);/; s/^function pathMoved(baseResolved, newResolved, step = 2) {/function pathMoved(base, newResolved, step = 2) {/; s/^\\/\\/   pathMoved(baseResolved, newResolved, step)/\\/\\/   pathMoved(base, newResolved, step)/' app/core/centreline.js && grep -n \"pathMoved\" app/core/centreline.js | cut -c1-120; file app/core/coreshell.js app/core/panel.js | cut -c1-120; grep -c $'\\r' app/core/coreshell.js app/core/panel.js"}
+--- L66792 user 2026-10-06T07:23:18.410Z
+RESULT [toolu_01QXAMfmsPMBptQ7sv4qajRn]: 10://   pathMoved(base, newResolved, step) -> null | string                                   the DIRECT check, made whe
+45:function pathMoved(base, newResolved, step = 2) {
+52:module.exports = { routeMoved, pathMoved, snapshot, ROUTE, ROLL };
+app/core/coreshell.js: Unicode text, UTF-8 text, with very long lines (340), with CRLF line terminators
+app/core/panel.js:     Unicode text, UTF-8 text, with very long lines (477), with CRLF line terminators
+app/core/coreshell.js:0
+app/core/panel.js:0
+--- L66796 assistant 2026-10-06T07:23:21.630Z
+TOOL_USE Bash [toolu_01GhHU1Lzg7sApXxYjGv5Ba9]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && head -12 blockpatch.js | cut -c1-220"}
+--- L66797 user 2026-10-06T07:23:21.732Z
+RESULT [toolu_01GhHU1Lzg7sApXxYjGv5Ba9]: // blockpatch.js <spec>: spec is plain text, no escaping.  @@FILE path  /  @@OLD  /  @@NEW  /  @@END   (one edit per OLD/NEW pair)
+const fs = require('fs');
+const { patch } = require('./patchlib.js');
+const spec = fs.readFileSync(process.argv[2], 'utf8').replace(/\r\n/g, '\n').split('\n');
+const edits = {}; let file = null, mode = null, old = [], nw = [];
+for (const line of spec) {
+  if (line.startsWith('@@FILE ')) { file = line.slice(7).trim(); edits[file] = edits[file] || []; mode = null; }
+  else if (line === '@@OLD') { mode = 'old'; old = []; nw = []; }
+  else if (line === '@@NEW') { mode = 'new'; }
+  else if (line === '@@END') { edits[file].push([old.join('\n'), nw.join('\n')]); mode = null; }
+  else if (mode === 'old') old.push(line);
+  else if (mode === 'new') nw.push(line);
+--- L66800 assistant 2026-10-06T07:23:50.563Z
+TOOL_USE Bash [toolu_01PzdNi15V18UQ7157rfYJ54]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && mkdir -p hd && cat > hd/shell_spec.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-handles-wt/app/core/coreshell.js\n@@OLD\nconst XS = require('./xsec.js');   // the cross-section channels' names (D225): the edge curve and the tube\n@@NEW\nconst XS = require('./xsec.js');   // the cross-section channels' names (D225): the edge curve and the tube\nconst CL = require('./centreline.js');   // D244b: the Sculpt guard (the centreline must not move)\n@@END\n@@OLD\nconst BR
+…[5499 chars cut]…
+W\nmodule.exports = { createCoreShell, NAME_RE, PREFIX, BRUSH_MODES, SCULPT_CHANNELS, STRAIGHT_K,\n@@END\nEOF\nnode blockpatch.js hd/shell_spec.txt && cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node -e \"require('./app/core/coreshell.js')\" && git diff --stat"}
+--- L66801 user 2026-10-06T07:23:50.901Z
+RESULT [toolu_01PzdNi15V18UQ7157rfYJ54]: C:/Users/nname/Desktop/worktrees/a-handles-wt/app/core/coreshell.js [33m8[39m edits
+ app/core/coreshell.js | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66810 assistant 2026-10-06T07:23:59.878Z
+TOOL_USE Bash [toolu_0114aJ4FV498DoUHhQp9YPpS]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && cat > hd/probe_sculpt.js <<'EOF'\nconst W='C:/Users/nname/Desktop/worktrees/a-handles-wt/'; const { createCoreShell } = require(W+'app/core/coreshell.js'); const CL=require(W+'app/core/centreline.js'); const XS=require(W+'app/core/xsec.js');\nconst R=180,Q=Math.PI*R/2;\nasync function mk(kind){ const s=await createCoreShell({autosaveMs:0}); \n  if(kind==='cup'){ s.extend({length:300,family:'bowl',first:{c:45}}); for(let i=0;i<3;i++) s.extend({length:Q,transition:40,targets:
+…[1294 chars cut]…
+hMoved(snap,st.resolved); console.log(kind,ch,'doc changed',st.history.present!==before,'centreline moved',moved,'msg',m1&&String(m1).slice(0,90), st.message && String(st.message).slice(0,90));\n }})();\nEOF\nnode hd/probe_sculpt.js 2>&1 | cut -c1-260","timeout":120000}
+--- L66811 user 2026-10-06T07:24:02.580Z
+RESULT [toolu_0114aJ4FV498DoUHhQp9YPpS]: legacy phi doc changed [33mtrue[39m centreline moved [1mnull[22m msg [1mnull[22m [1mnull[22m
+legacy c doc changed [33mfalse[39m centreline moved [1mnull[22m msg NOT_CUP: a cup brush reaches piece p2, which has no cup (a legacy piece renders the old pr NOT_CUP: a cup brush reaches piece p2, which has no cup (a legacy piece renders the old pr
+legacy w doc changed [33mtrue[39m centreline moved [1mnull[22m msg [1mnull[22m [1mnull[22m
+legacy e doc changed [33mfalse[39m centreline moved [1mnull[22m msg NOT_EDGE: a e brush reaches piece p2, which has no edge: extend with a e or s target first NOT_EDGE: a e brush reaches piece p2, which has no edge: extend with a e or s target first
+legacy s doc changed [33mfalse[39m centreline moved [1mnull[22m msg NOT_EDGE: a s brush reaches piece p2, which has no edge: extend with a e or s target first NOT_EDGE: a s brush reaches piece p2, which has no edge: extend with a e or s target first
+legacy r doc changed [33mtrue[39m centreline moved [1mnull[22m msg [1mnull[22m [1mnull[22m
+legacy t doc changed [33mfalse[39m centreline moved [1mnull[22m msg NOT_TUBE: a t brush reaches piece p2, which has no tube: extend with a t target first, or  NOT_TUBE: a t brush reaches piece p2, which has no tube: extend with a t target first, or 
+legacy kh REFUSED: SCULPT_CHANNEL: Sculpt offers only the shape channels (phi, c, w, e, s, r, t); "kh" would move the track after
+legacy kv REFUSED: SCULPT_CHANNEL: Sculpt offers only the shape channels (phi, c, w, e, s, r, t); "kv" would move the track after
+cup phi doc changed [33mtrue[39m centreline moved [1mnull[22m msg [1mnull[22m [1mnull[22m
+cup c doc changed [33mtrue[39m centreline moved [1mnull[22m msg [1mnull
+…[3736 chars cut]…
+rt s must stay within 0.5 to 0.95 of the half-width, b BAD_EDGE: piece 2 (p3): the edge start s must stay within 0.5 to 0.95 of the half-width, b
+edge r doc changed [33mtrue[39m centreline moved [1mnull[22m msg [1mnull[22m [1mnull[22m
+edge t doc changed [33mfalse[39m centreline moved [1mnull[22m msg NOT_TUBE: a t brush reaches piece p2, which has no tube: extend with a t target first, or  NOT_TUBE: a t brush reaches piece p2, which has no tube: extend with a t target first, or 
+edge kh REFUSED: SCULPT_CHANNEL: Sculpt offers only the shape channels (phi, c, w, e, s, r, t); "kh" would move the track after
+edge kv REFUSED: SCULPT_CHANNEL: Sculpt offers only the shape channels (phi, c, w, e, s, r, t); "kv" would move the track after
+--- L66816 assistant 2026-10-06T07:26:02.845Z
+TOOL_USE Write [toolu_01LRWtGJLwUUtfz5XKYfg5Fj]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\core\\handles.js","content":"// handles.js: DRAG HANDLES on the preview (D244 and D244b; the keeper, 09:13, with a marked-up screenshot: \"alternative controls, every one shows the arrow where you drag and where\n// you should click, should be on both sides like width or turn ... you click and drag like the part that is highlighted and it changes the value up or down\").\n//\n// TWO PLACES, one machinery:\n//   EXTEND (D244): small marks with a double arrow on the GHOST of the piece Extend would add: length, width, bank, cup, turn and climb, each that h
+…[14678 chars cut]…
+erup', onUp); stage.removeEventListener('pointercancel', onUp); canvas.remove(); stage.style.cursor = ''; },\n  };\n}\n\nmodule.exports = { KINDS, ORDER, DEG, placeHandles, sampleNear, screenOf, screenAxis, dragMetres, targetFor, hitTest, format, cursorFor, mount };\n"}
+--- L66817 user 2026-10-06T07:26:02.884Z
+RESULT [toolu_01LRWtGJLwUUtfz5XKYfg5Fj]: File created successfully at: C:\Users\nname\Desktop\worktrees\a-handles-wt\app\core\handles.js (file state is current in your context — no need to Read it back)
+--- L66827 assistant 2026-10-06T07:26:07.417Z
+TEXT: Handles module written. Now the preview side: a `ghostInfo()` for the handles to read the ghost's path.
+--- L66828 assistant 2026-10-06T07:26:07.924Z
+TOOL_USE Bash [toolu_01DUVeTexhoz227Xw4WcwXwE]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 94,96p app/preview/index.js | cut -c1-900; sed -n 26,30p app/preview/index.js | cut -c1-200"}
+--- L66829 user 2026-10-06T07:26:08.077Z
+RESULT [toolu_01DUVeTexhoz227Xw4WcwXwE]:   return { preview: p, unmount() { doc.removeEventListener('t180-camera-focus', focusNow); doc.removeEventListener('t180:guides', setGuides); doc.removeEventListener('t180:guides-request', guidesNow); doc.removeEventListener('t180:textures', textures); doc.removeEventListener('t180:track-request', trackNow); doc.removeEventListener('t180-camera', ask); doc.removeEventListener('t180-probe', answer); doc.removeEventListener('t180-ghost', showGhost); doc.removeEventListener('t180-ghost-clear', hideGhost); doc.removeEventListener('t180-pick', pickNow); doc.removeEventListener('t180:view', viewNow); p.dispose(); root.replaceChildren(); } };
+}
+
+//   't180:guides-request'  { detail: { reply(state) } }               the current one, at once, for a panel mounted after the preview
+// And for the READOUT labels (L130, app/core/labels.js), answered read-only from the preview's own view():
+//   't180:view'           { detail: { reply(v) } }        { pose, mode, head } (head: the placed track's build head, or null)
+//
+// A MOUNT THAT FAILS says why, twice: the reason is left visible in the panel ("The preview could not start: …"), and
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66831 assistant 2026-10-06T07:26:14.679Z
+TOOL_USE Bash [toolu_01KXDWLA9VtVfJBTg2DH2aEB]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && cat > hd/preview_spec.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-handles-wt/app/preview/preview.js\n@@OLD\n    clearGhost() { ghost = null; },\n@@NEW\n    clearGhost() { ghost = null; },\n    /** D244, the drag handles: the ghost of the next piece as { samples, s0 }: the path's samples (the placed track's, then the new piece's) and the s where the new piece starts (the placed track's end). Null when there is no ghost, or it is a close or delete PREVIEW (those ar
+…[1557 chars cut]…
+, ghostNow); doc.removeEventListener('t180-camera', ask);\n@@END\nEOF\nnode blockpatch.js hd/preview_spec.txt && cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node -e \"require('./app/preview/preview.js'); require('./app/core/handles.js'); console.log('loads')\""}
+--- L66832 user 2026-10-06T07:26:14.946Z
+RESULT [toolu_01KXDWLA9VtVfJBTg2DH2aEB]: C:/Users/nname/Desktop/worktrees/a-handles-wt/app/preview/preview.js [33m1[39m edits
+C:/Users/nname/Desktop/worktrees/a-handles-wt/app/preview/index.js [33m4[39m edits
+loads
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66836 assistant 2026-10-06T07:27:14.677Z
+TOOL_USE Bash [toolu_011gtyvyqYWgpkmu8WtqKBP6]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && cat > hd/shell_spec2.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-handles-wt/app/core/coreshell.js\n@@OLD\n        return set({ history: D.dragTo(st.history, d), ...r, brush: { ...b, delta, rUsed: used }, dirty: true, lastStep: { op: `brush:${b.mode}`, ms }, message: note, messageKind: note ? 'ok' : null });\n@@NEW\n        const h = D.dragTo(st.history, d);\n        // D244b: a Sculpt step keeps the same pieces in the same places, so the piece the handles are on 
+…[1669 chars cut]…
+w', Math.max(0, Math.min(1, f)) * P.length) / 2 };\n    },\n    sculptTo: (delta) => api.brushTo(delta),\n@@END\nEOF\nnode blockpatch.js hd/shell_spec2.txt && cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node -e \"require('./app/core/coreshell.js')\" && echo ok"}
+--- L66837 user 2026-10-06T07:27:14.898Z
+RESULT [toolu_011gtyvyqYWgpkmu8WtqKBP6]: C:/Users/nname/Desktop/worktrees/a-handles-wt/app/core/coreshell.js [33m3[39m edits
+ok
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66846 assistant 2026-10-06T07:27:37.972Z
+TOOL_USE Bash [toolu_012RMHoG3P1SGDpDyqgPfEkQ]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && cat > hd/panel_spec.txt <<'EOF'\n@@FILE C:/Users/nname/Desktop/worktrees/a-handles-wt/app/core/panel.js\n@@OLD\nconst PU = require('./piecesui.js');   // D240: saved pieces: select on the track, Save as piece, the library, a previewed middle delete\n@@NEW\nconst PU = require('./piecesui.js');   // D240: saved pieces: select on the track, Save as piece, the library, a previewed middle delete\nconst HD = require('./handles.js');   // D244: the drag handles on the Extend ghost
+…[8292 chars cut]…
+urn { labels, handles, pieces, options: opts, unmount() { unsub(); if (handles) handles.unmount();\n@@END\nEOF\nnode blockpatch.js hd/panel_spec.txt && cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node -e \"require('./app/core/panel.js'); console.log('loads')\""}
+--- L66847 user 2026-10-06T07:27:38.048Z
+RESULT [toolu_012RMHoG3P1SGDpDyqgPfEkQ] ERROR: Exit code 2
+/usr/bin/bash: -c: line 81: unexpected EOF while looking for matching `"'
+--- L66851 assistant 2026-10-06T07:27:41.787Z
+TEXT: The heredoc failed to parse, so I'm writing the spec file with the Write tool instead.
+--- L66852 assistant 2026-10-06T07:27:59.531Z
+TOOL_USE Write [toolu_014JN6FgEdz6faDwfvzHumRL]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\hd\\panel_spec.txt","content":"@@FILE C:/Users/nname/Desktop/worktrees/a-handles-wt/app/core/panel.js\n@@OLD\nconst PU = require('./piecesui.js');   // D240: saved pieces: select on the track, Save as piece, the library, a previewed middle delete\n@@NEW\nconst PU = require('./piecesui.js');   // D240: saved pieces: select on the track, Save as piece, the library, a previewed middle delete\nconst HD = require('./handles.js');   // D244: the drag handles on the Extend ghost
+…[8131 chars cut]…
+stage, win, handlesHost) : null;   // D244: the drag handles' overlay\n@@END\n@@OLD\n  return { labels, pieces, options: opts, unmount() { unsub();\n@@NEW\n  return { labels, handles, pieces, options: opts, unmount() { unsub(); if (handles) handles.unmount();\n@@END\n"}
+--- L66853 user 2026-10-06T07:27:59.570Z
+RESULT [toolu_014JN6FgEdz6faDwfvzHumRL]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\hd\panel_spec.txt (file state is current in your context — no need to Read it back)
+--- L66861 assistant 2026-10-06T07:28:01.575Z
+TOOL_USE Bash [toolu_01B2bfuwEffxN1FGLSrsnwEA]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && node blockpatch.js hd/panel_spec.txt && cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node -e \"require('./app/core/panel.js'); console.log('loads')\""}
+--- L66862 user 2026-10-06T07:28:01.749Z
+RESULT [toolu_01B2bfuwEffxN1FGLSrsnwEA]: C:/Users/nname/Desktop/worktrees/a-handles-wt/app/core/panel.js [33m10[39m edits
+loads
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66865 assistant 2026-10-06T07:28:07.879Z
+TEXT: Everything loads. Running the existing non-mutation app tests now for early regression signal, while I write the new tests.
+--- L66866 assistant 2026-10-06T07:28:11.215Z
+TOOL_USE Bash [toolu_01RHM6R2SNJrDEyDsi4vxPJF]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && sed 's#a-piecesui-wt#a-handles-wt#; s#ui_run_last.txt#hd_run_last.txt#' sp_ui_run.js > sp_hd_run.js && cd C:/Users/nname/Desktop/worktrees/a-handles-wt && ls app/test/*.test.js | grep -v mutation | tr '\\n' ' ' > \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/hd/appfiles.txt\"; cat \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/hd/appfiles.txt\" | wc -w"}
+--- L66867 user 2026-10-06T07:28:11.799Z
+RESULT [toolu_01RHM6R2SNJrDEyDsi4vxPJF]: 49
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66869 assistant 2026-10-06T07:28:14.123Z
+TOOL_USE Bash [toolu_01XVDGAKboLBjhNkpsHnvWcb]: {"command":"cd \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad\" && (node sp_hd_run.js $(cat hd/appfiles.txt) > hd/app_run1.txt 2>&1; echo done >> hd/app_run1.txt)","run_in_background":true}
+--- L66870 user 2026-10-06T07:28:14.156Z
+RESULT [toolu_01XVDGAKboLBjhNkpsHnvWcb]: Command running in background with ID: be66wp816. Output is being written to: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\tasks\be66wp816.output. You will be notified when it completes. To check interim output, use Read on that file path.
+Session cwd remains C:\Consonance\instances\sibling-3d57124e; directory changes made by the backgrounded command do not apply to subsequent commands.
+--- L66873 assistant 2026-10-06T07:28:21.410Z
+TOOL_USE Bash [toolu_01VzcrmtLGyfC63tLPqd6CZi]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && grep -n \"pose\" app/test/core-pieces-ui.test.js | head -8 | cut -c1-260; sed -n 1,40p app/camera/math.js | cut -c1-160; grep -n \"fakeStage\\|function fakeDoc\\|makeDoc\\|class Fake\" app/test/core-pieces-ui.test.js | head"}
+--- L66874 user 2026-10-06T07:28:21.613Z
+RESULT [toolu_01VzcrmtLGyfC63tLPqd6CZi]: 244:  // the highlight: project the selected piece (the preview's own pose and track), then ask the preview's own pick what is under its middle: it is that piece
+246:  const v = pv.view(), track2 = pv.track(), ids = s.selectionInfo().ids, lines = SL.selectionLines(track2, ids, v.pose, 800, 500);
+251:  assert.deepEqual(SL.selectionLines(track2, [], v.pose, 800, 500), []); assert.deepEqual(SL.selectionLines(null, ids, v.pose, 800, 500), []);
+252:  pv.dispose();
+// math.js: the camera's matrices, COLUMN-MAJOR (v' = M·v), as GL takes them. Written after blackbox's ui/mathutil.js
+// (mPerspective, mLookAt, mMul), which keeps two conventions apart; this file has only the column-major one.
+//
+// kn5 node matrices (src/geom/mesh.js matrixOf, src/export/scene.js) are ROW-VECTOR, row-major: world = local · M. The
+// same 16 numbers read column-major give v' = M·v with the identical result, so a node matrix goes to GL as it is
+// (app/preview/batches.js relies on this, and app/test/preview.test.js checks it against the geometry's own transform).
+'use strict';
+
+function perspective(fovy, aspect, near, far) {
+  const f = 1 / Math.tan(fovy / 2), nf = 1 / (near - far);
+  return [f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0];
+}
+function lookAt(eye, at, up) {
+  let zx = eye[0] - at[0], zy = eye[1] - at[1], zz = eye[2] - at[2];
+  const zl = Math.hypot(zx, zy, zz); if (!(zl > 0)) throw new Error('lookAt: eye and target coincide');
+  zx /= zl; zy /= zl; zz /= zl;
+  let xx = up[1] * zz - up[2] * zy, xy = up[2] * zx - up[0] * zz, xz = up[0] * zy - up[1] * zx;
+  const xl = Math.hypot(xx, xy, xz); if (!(xl > 0)) throw new Error('lookAt: up is parallel to the view direction');
+  xx /= xl; xy /= xl; x
+…[485 chars cut]…
+] * b[c *
+  return o;
+}
+/** Apply a column-major matrix to a point (w = 1), returning [x, y, z, w]. */
+const apply = (M, p) => [0, 1, 2, 3].map((r) => M[r] * p[0] + M[4 + r] * p[1] + M[8 + r] * p[2] + M[12 + r]);
+
+/** The view-projection of a camera pose ({ eye, target, up, fov, far? }) for a view of the given aspect. Near 0.5 m;
+ *  far is the pose's own (the fitted overhead of a long track needs more) and never under 20 km. */
+const NEAR = 0.5, FAR = 20000;
+const viewProj = (pose, aspect) => mul(perspective(pose.fov, aspect, NEAR, Math.max(FAR, pose.far || 0)), lookAt(pose.eye, pose.target, pose.up));
+
+module.exports = { perspective, lookAt, mul, apply, viewProj, NEAR, FAR };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66883 assistant 2026-10-06T07:28:24.508Z
+TOOL_USE Bash [toolu_01DnoXX6x4cPpKGi8c189fiA]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 1,60p app/test/core-pieces-ui.test.js | cut -c1-220; grep -n \"^test(\" app/test/core-pieces-ui.test.js | cut -c1-160"}
+--- L66884 user 2026-10-06T07:28:24.661Z
+RESULT [toolu_01DnoXX6x4cPpKGi8c189fiA]: // core-pieces-ui.test.js: node --test app/test/core-pieces-ui.test.js   (under the heavy-run lock, --max-old-space-size=4096)
+// D240, THE UI HALF OF SAVED PIECES (the core is src/core/piece.js, tested by test/core_piece.test.js; this is the app: app/core/coreshell.js, piecesui.js, selectionlayer.js, the
+// preview's proposal ghost, and the native side's file commands through a storage in memory). FEEL tier: targeted rows, no mutation harness (the keeper's 09-29 rule). Rows:
+//   1   select: a piece, a shift-click run (the first piece selected stays the anchor), out of range refused, any change of the document drops the selection
+//   2   Save as piece: what is stored is exactly the core's text; a name already used is refused and the stored one is untouched; a bad name and a mixed run are refused by name
+//   3   the library: name, length, turn, climb, thumbnail; an unreadable file and a whole track are LISTED with the reason, not hidden
+//   4   Add at head: the core's insert, one undo step, mirrored on request; refused by name on a closed track or a missing or damaged file, with nothing changed
+//   5   THE REQUIRED CHECK carried to the app: a track built by saving a run and adding it back through the shell is the same document and exports the SAME BYTES as the hand-built one
+//   6   rename (the new name must be free; the file's own name changes) and delete of a saved piece
+//   7   delete at the open end: simple, one undo step; a closed track refuses by name
+//   8   delete in the MIDDLE is PREVIEWED: nothing changes until Apply; per-piece displacement; the overlap check; the backup is written first and a failed one refuses; one undo step;
+//       Cancel; a stale preview is dropped; a join the core refuses (DELETE_
+…[5004 chars cut]…
+s one undo step; a failed copy refuses; Can
+220:test('row 8b: the delete preview\'s overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where', async () => {
+240:test('row 9: the preview shows a delete\'s proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview\'s own 
+304:test('row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as 
+331:test('row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot b
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66885 assistant 2026-10-06T07:28:24.882Z
+TOOL_USE Bash [toolu_016GFPJpjzBYFDTChMZxNBsZ]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 1,60p app/test/palette-fakedom.js | cut -c1-200"}
+--- L66886 user 2026-10-06T07:28:25.004Z
+RESULT [toolu_016GFPJpjzBYFDTChMZxNBsZ]: // palette-fakedom.js: just enough of the DOM for the palette's and panels' DOM halves to run under node, for the tests.
+// It follows the DOM where the bugs live: append / replaceChildren turn every non-Node argument into a text node of
+// String(argument), so a stray null becomes the text "null" here exactly as it does in the WebView (B's "nullnull").
+'use strict';
+
+class Node {}
+class Text extends Node {
+  constructor(data) { super(); this.data = data; }
+  get textContent() { return this.data; }
+}
+class Element extends Node {
+  constructor(tag) { super(); this.tagName = tag.toUpperCase(); this.attrs = {}; this.children = []; this.listeners = {}; }
+  setAttribute(k, v) { this.attrs[k] = String(v); if (k === 'id') this.id = String(v); }
+  getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; }
+  hasAttribute(k) { return k in this.attrs; }
+  addEventListener(ev, fn) { (this.listeners[ev] = this.listeners[ev] || []).push(fn); }
+  dispatch(ev, e = {}) { for (const fn of this.listeners[ev] || []) fn({ target: this, ...e }); }
+  static wrap(x) { return x instanceof Node ? x : new Text(String(x)); }
+  append(...xs) { for (const x of xs) this.children.push(Element.wrap(x)); }
+  replaceChildren(...xs) { this.children = xs.map(Element.wrap); }
+  set textContent(v) { this.children = [new Text(String(v))]; }
+  get textContent() { return this.children.map((c) => c.textContent).join(''); }
+  get className() { return this.attrs.class || ''; }
+  set className(v) { this.attrs.class = v; }
+  get value() { return this.attrs.value || ''; }
+  set value(v) { this.attrs.value = v; }
+  /** Depth-first walk over elements. */
+  *walk() { for (const c of this.children) if (c instanceof Element) { yield c; yield* c.walk(); } }
+  queryS
+…[249 chars cut]…
+ame === sel.toUpperCase()) return e;
+    }
+    return null;
+  }
+  querySelectorAll(sel) { const out = []; for (const e of this.walk()) if (sel.startsWith('.') ? e.className.split(/\s+/).includes(sel.slice(1)) : e.tagName === sel.toUpperCase()) out.push(e); return 
+  /** Every text node's data under this element, in order. */
+  texts() { const out = []; (function go(n) { for (const c of n.children) c instanceof Text ? out.push(c.data) : go(c); })(this); return out; }
+}
+
+function install() {
+  const prev = global.document;
+  global.document = { createElement: (t) => new Element(t) };
+  return () => { global.document = prev; };
+}
+
+module.exports = { install, Element, Text, Node };
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66889 assistant 2026-10-06T07:28:27.022Z
+TOOL_USE Bash [toolu_01SghyD3VQfoB9e4Pv6Cka8R]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 262,330p app/test/core-pieces-ui.test.js | cut -c1-250"}
+--- L66890 user 2026-10-06T07:28:27.133Z
+RESULT [toolu_01SghyD3VQfoB9e4Pv6Cka8R]:   getAttribute(k) { return this.attrs[k]; }
+  set textContent(t) { this._text = String(t); this.children = []; }
+  get textContent() { return this._text + this.children.map((c) => c.textContent).join(''); }
+  addEventListener(e, f) { (this.listeners[e] = this.listeners[e] || []).push(f); }
+  removeEventListener(e, f) { this.listeners[e] = (this.listeners[e] || []).filter((x) => x !== f); }
+  getBoundingClientRect() { return { left: 0, top: 0, width: this.clientWidth, height: this.clientHeight }; }
+  get isConnected() { let e = this; while (e.parent) e = e.parent; return !!e.isRoot; }
+  get offsetWidth() { return this.isConnected ? 9 * Math.max(...this.textContent.split('\n').map((l) => l.length)) + 16 : 0; }
+  get offsetHeight() { return this.isConnected ? 20 * this.textContent.split('\n').length + 8 : 0; }
+  all() { return [this, ...this.children.flatMap((c) => (c.all ? c.all() : []))]; }
+}
+function fakeWindow() {
+  const doc = { ids: {}, listeners: {}, createElement: (t) => new El(t, doc) };
+  doc.getElementById = (id) => doc.ids[id] || null;
+  doc.addEventListener = (e, f) => { (doc.listeners[e] = doc.listeners[e] || []).push(f); };
+  doc.removeEventListener = (e, f) => { doc.listeners[e] = (doc.listeners[e] || []).filter((x) => x !== f); };
+  doc.dispatchEvent = (ev) => { for (const f of (doc.listeners[ev.type] || []).slice()) f(ev); return true; };
+  const frames = [];
+  const win = { CustomEvent: class { constructor(type, init = {}) { this.type = type; this.detail = init.detail; } }, Option: class { constructor(t, v) { this.textContent = t; this.value = v; } },
+    requestAnimationFrame: (f) => { frames.push(f); return frames.length; }, cancelAnimationFrame: () => {}, setTimeout: () => 0, clearTimeout: () => {}, fr
+…[4762 chars cut]…
+, ['bends']); assert.match(P1.rows()[0].textContent, /bends/);
+  P1.buttons('Delete').find((b) => b.attrs['aria-label'] === 'delete the saved piece bends').onclick(); assert.ok(P1.button('Yes, delete') && P1.button('No'), 'it asks first'); P1.button('No').onclick(); assert.deepEqual(await st.listPieces(), ['bend
+  P1.buttons('Delete').find((b) => b.attrs['aria-label'] === 'delete the saved piece bends').onclick(); P1.button('Yes, delete').onclick(); await tick(); await tick(); await tick();
+  assert.deepEqual(await st.listPieces(), []); assert.equal(P1.rows().length, 0); assert.match(P1.all().map((e) => e.textContent).join('|'), /No saved pieces yet/);
+  P1.panel.unmount();
+});
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66899 assistant 2026-10-06T07:28:31.449Z
+TOOL_USE Bash [toolu_011N6ZNt1g7fj56PPEUCqTYM]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 250,262p app/test/core-pieces-ui.test.js | cut -c1-250; tail -5 \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/hd/app_run1.txt\" | cut -c1-200"}
+--- L66900 user 2026-10-06T07:28:31.593Z
+RESULT [toolu_011N6ZNt1g7fj56PPEUCqTYM]:   assert.equal(require('../core/labels.js').pieceAt(track2.segments, hit.s), 'p2', 'the pick under the highlight is the selected piece');
+  assert.deepEqual(SL.selectionLines(track2, [], v.pose, 800, 500), []); assert.deepEqual(SL.selectionLines(null, ids, v.pose, 800, 500), []);
+  pv.dispose();
+});
+
+// ── the panel, on a small fake DOM ──
+class El {
+  constructor(tag, doc) { this.tagName = tag.toUpperCase(); this.ownerDocument = doc; this.children = []; this.attrs = {}; this.style = {}; this._text = ''; this.listeners = {}; this.value = ''; this.checked = false; this.disabled = false; this.clien
+  append(...k) { for (const c of k) { if (c == null) continue; const n = typeof c === 'string' ? Object.assign(new El('#text', this.ownerDocument), { _text: c }) : c; n.parent = this; this.children.push(n); } }
+  replaceChildren(...k) { for (const c of this.children) c.parent = null; this.children = []; this.append(...k); }
+  remove() { if (this.parent) { this.parent.children = this.parent.children.filter((c) => c !== this); this.parent = null; } }
+  setAttribute(k, v) { this.attrs[k] = String(v); if (k === 'id') this.ownerDocument.ids[v] = this; }
+  getAttribute(k) { return this.attrs[k]; }
+heavy-run: waiting on 12fb81f6 pid 28312 (B D242 redmerge, since 2026-10-06T07:25:04.711Z)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66905 assistant 2026-10-06T07:28:48.603Z
+TEXT: While B holds the heavy-run lock, my regression run waits. Meanwhile I'm writing the pure tests for the handles module.
+--- L66906 assistant 2026-10-06T07:29:29.955Z
+TOOL_USE Write [toolu_01PiEJvjVVezUiGhEk8WchRv]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\handles.test.js","content":"// handles.test.js: node --test app/test/handles.test.js   (under the heavy-run lock)\n// D244, THE DRAG HANDLES (app/core/handles.js): where each handle sits on the ghost of a piece, how a pointer drag becomes a value, and the overlay that carries it. FEEL tier: targeted rows, no\n// mutation harness (the keeper's 09-29 rule). The panel's wiring (a drag types into the Extend field, Sculpt on a placed piece) is in app/test/core-pieces-ui.test.js, rows 11 to 13.\n//   1  placement: length, width, bank, cup, turn and clim
+…[14473 chars cut]…
+) => 160, ctx: () => ({}) }; S.tick(); const h = ov.handles()[0];\n  assert.equal(S.fire('pointerdown', { clientX: h.screen.x, clientY: h.screen.y, button: 2 }).stopped, false, 'the right button is the camera\\'s'); assert.deepEqual(calls, []);\n  ov.unmount();\n});\n"}
+--- L66907 user 2026-10-06T07:29:29.989Z
+RESULT [toolu_01PiEJvjVVezUiGhEk8WchRv]: File created successfully at: C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\handles.test.js (file state is current in your context — no need to Read it back)
+--- L66916 assistant 2026-10-06T07:29:54.252Z
+TEXT: Fixing a few things I got wrong in that draft: the screen direction of "left" from behind the camera, the hit-test tie rule, and two sloppy assertions.
+--- L66917 assistant 2026-10-06T07:30:01.715Z
+TOOL_USE Bash [toolu_01PT88as1NpSmeJKqFjhr8e9]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node - <<'XEOF'\nconst fs=require('fs');\nlet f='app/core/handles.js', s=fs.readFileSync(f,'utf8'); const crlf=s.includes('\\r\\n'); s=s.replace(/\\r\\n/g,'\\n');\nconst a=\"  let best = null, bd = r * r;\\n  for (const h of list) { if (!h.screen) continue; const d = (h.screen.x - x) ** 2 + (h.screen.y - y) ** 2; if (d <= bd) { bd = d; best = h; } }\";\nconst b=\"  let best = null, bd = Infinity;\\n  for (const h of list) { if (!h.screen) continue; const d = (h.screen.x - x) ** 2 + (h.screen.y - y) ** 2; if (d <= r * r && d < bd) { bd = d; best = h; } }\";\nif
+…[2147 chars cut]…
+ODEL, kinds: ['width', 'turn'], base: (k) => (k === 'width' ? 31 : 0), ctx: () => ({ half: 10 }) }),\");\nfs.writeFileSync(f,c2?s.replace(/\\n/g,'\\r\\n'):s); console.log('ok');\nXEOF\nnode --test app/test/handles.test.js 2>&1 | tail -40 | cut -c1-220","timeout":120000}
+--- L66918 user 2026-10-06T07:30:01.943Z
+RESULT [toolu_01PT88as1NpSmeJKqFjhr8e9]: ok
+  [31m-[39m     0,
+  [31m-[39m     0
+  [39m    ]
+  [39m  ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\handles.test.js:43:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [ [ [33m1[39m, [33m0[39m, [33m0[39m ], [ [33m-1[39m, [33m-0[39m, [33m-0[39m ] ],
+    expected: [ [ [33m1[39m, [33m0[39m, [33m0[39m ], [ [33m-1[39m, [33m0[39m, [33m0[39m ] ],
+    operator: [32m'deepStrictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\handles.test.js:72:1
+[31m✖ row 4: a value from a drag: the rates, the clamps, the rounding, Shift (a tenth) and Ctrl (snap) [90m(0.1883ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: bank: a half-width under 0.5 m is taken as 0.5 m, never a division by nothing
+  
+  28.6 !== 57.3
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\handles.test.js:77:10[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33m28.6[39m,
+    expected: [33m57.3[39m,
+    operator: [32m'strictEqual'[39m,
+    diff: [32m'simple'[39m
+  }
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66923 assistant 2026-10-06T07:30:05.357Z
+TEXT: Two real findings: `-0` leaking into the axes, and a half-width of 0 being replaced by 1 instead of the 0.5 floor. Fixing both in the module.
+--- L66924 assistant 2026-10-06T07:30:07.837Z
+TOOL_USE Bash [toolu_01MJnhEv6LZUhc75Rw9mkLfL]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node - <<'XEOF'\nconst fs=require('fs');\nlet f='app/core/handles.js', s=fs.readFileSync(f,'utf8'); const crlf=s.includes('\\r\\n'); s=s.replace(/\\r\\n/g,'\\n');\nconst rep=(x,y)=>{ if(!s.includes(x)) throw new Error('missing '+x.slice(0,60)); s=s.replace(x,()=>y); };\nrep(\"axis: [dir[0] * sgn, dir[1] * sgn, dir[2] * sgn] });\",\"axis: [dir[0] * sgn || 0, dir[1] * sgn || 0, dir[2] * sgn || 0] });   // (|| 0: no negative zeros)\");\nrep(\"v = base + (d * f / Math.max(0.5, ctx.half || 1)) / DEG;\",\"v = base + (d * f / Math.max(0.5, Number.isFinite(ctx.half) ? ctx.half : 1)) / DEG;\");\nfs.writeFileSync(f,crlf?s.replace(/\\n/g,'\\r\\n'):s); console.log('ok');\nXEOF\nnode --test app/test/handles.test.js 2>&1 | grep -E \"^(✔|✖|ℹ (tests|pass|fail))|AssertionError|!==\" | cut -c1-200","timeout":120000}
+--- L66925 user 2026-10-06T07:30:08.054Z
+RESULT [toolu_01MJnhEv6LZUhc75Rw9mkLfL]: ok
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66933 assistant 2026-10-06T07:30:09.471Z
+TOOL_USE Bash [toolu_011kJ6MBvA5k9pWbFpt4FeQu]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node --test app/test/handles.test.js 2>&1 | grep -aE \"pass|fail|✖|✔|Error\" | head -20 | cut -c1-200","timeout":120000}
+--- L66934 user 2026-10-06T07:30:09.646Z
+RESULT [toolu_011kJ6MBvA5k9pWbFpt4FeQu]: [32m✔ row 1: every kind is placed where the keeper marked it, and every kind with a side is on BOTH sides, mirrored about the centreline [90m(0.906ms)[39m[39m
+[32m✔ row 1b: the road's width at the handle sets how far out an edge handle sits, and an unknown or absent kind places nothing [90m(0.4461ms)[39m[39m
+[32m✔ row 2: a positive drag runs outward (width, cup), left on both sides (turn), up on the left edge and down on the right (bank), along the road (length), up (climb) [90m(0.1812ms)[39m[39m
+[32m✔ row 3: the two mirrored handles change the SAME value: the same outward motion from either side gives the same field value [90m(0.2767ms)[39m[39m
+[32m✔ row 4: a value from a drag: the rates, the clamps, the rounding, Shift (a tenth) and Ctrl (snap) [90m(0.3508ms)[39m[39m
+[32m✔ row 5: the screen: where a handle is, one metre along its axis in px, behind the camera, an axis seen end-on [90m(0.1361ms)[39m[39m
+[32m✔ row 6: the hit test takes the nearest handle inside the radius, none outside, and skips a handle behind the camera [90m(0.1572ms)[39m[39m
+[32m✔ row 7: the overlay: a press ON a handle opens the drag and nothing else sees it; a press elsewhere is left alone; one apply a frame; the release applies the last position and ends [90m(0.841
+[32m✔ row 7b: no model, no pose or a refused press: no handles are drawn and a press is not taken; a right-button press is never a handle [90m(0.1543ms)[39m[39m
+[34mℹ pass 9[39m
+[34mℹ fail 0[39m
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66938 assistant 2026-10-06T07:30:28.055Z
+TEXT: The handles tests pass, 9 of 9. Now the geometry-tier tests for Sculpt: centreline bit-identical per channel, one undo step, C1 joints, turn and climb refused by name, and the guard.
+--- L66939 assistant 2026-10-06T07:31:11.498Z
+TOOL_USE Write [toolu_016GErq7NVxH8YZDdw7CX1mp]: {"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","content":"// core-sculpt.test.js: node --test app/test/core-sculpt.test.js   (under the heavy-run lock)\n// D244b, SCULPT (the keeper, 09:17: \"a separate mode to sculpt pieces once they are already put down, so they don't change the structure of the rest of the track, it's mostly just banking and\n// cupping tweaks\"). The shell's Sculpt mode (app/core/coreshell.js setSculpt, beginSculpt, sculptTo, endSculpt) and its guard (app/core/centreline.js). GEOMETRY tier for the guard: the claim\n// is that the CENTRELINE is bit-iden
+…[16564 chars cut]…
+etState().sculpt, false);\n  const cl = await mk('legacy'); cl.setSculpt(true); assert.equal(cl.sculptInfo(), null, 'nothing selected: no info');\n});\nfunction close(a, b, eps) { assert.ok(Math.abs(a - b) <= eps, `${a} is not within ${eps} of ${b}`); return true; }\n"}
+--- L66940 user 2026-10-06T07:31:11.541Z
+RESULT [toolu_016GErq7NVxH8YZDdw7CX1mp]: File created successfully at: C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js (file state is current in your context — no need to Read it back)
+--- L66949 assistant 2026-10-06T07:31:18.717Z
+TEXT: Cleaning up some sloppy assertions I wrote there before running anything.
+--- L66950 assistant 2026-10-06T07:31:26.067Z
+TOOL_USE Bash [toolu_012Ns47MzLyS56TJB51cQock]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node - <<'XEOF'\nconst fs=require('fs');\nconst f='app/test/core-sculpt.test.js'; let s=fs.readFileSync(f,'utf8'); const crlf=s.includes('\\r\\n'); s=s.replace(/\\r\\n/g,'\\n');\nconst rep=(x,y)=>{ if(!s.includes(x)) throw new Error('missing '+x.slice(0,70)); s=s.replace(x,()=>y); };\nrep(\"s.beginSculpt({ channel: 'phi' }); for (const d of [0.05, 0.1, 0.2]) s.sculptTo(d); assert.equal(s.getState().history.past.length, n0 + 0 + (s.getState().history.past.length - n0), 'steps inside a drag are not history entries'); s.endSculpt();\",\n    \"s.beginSculpt({ chan
+…[2319 chars cut]…
+dapter.js');\\n\",\"\");\nfs.writeFileSync(f,crlf?s.replace(/\\n/g,'\\r\\n'):s); console.log('ok');\nXEOF\nnode --test app/test/core-sculpt.test.js 2>&1 | grep -aE \"✔|✖|ℹ (pass|fail)|Error|!==|actual|expected|at TestContext\" | cut -c1-260 | head -40","timeout":200000}
+--- L66951 user 2026-10-06T07:31:28.267Z
+RESULT [toolu_012Ns47MzLyS56TJB51cQock]: ok
+[31m✖ row 1: a sculpt of each shape channel, on each kind of piece it applies to, leaves every centreline sample bit-identical [90m(1413.8409ms)[39m[39m
+[32m✔ row 2: one drag is ONE undo step (three moves, one step), and Undo gives back the very same document [90m(30.2239ms)[39m[39m
+[32m✔ row 3: the joints stay C1: the sculpted piece's value and slope at both ends are what they were, and every other piece is the very same object [90m(199.2983ms)[39m[39m
+[32m✔ row 4: turn and climb cannot be chosen in Sculpt (nor height or sideways): refused BY NAME, no drag opens, nothing changes; and the other refusals [90m(35.7791ms)[39m[39m
+[31m✖ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(200.3263ms)[39m[39m
+[32m✔ row 6: the guard itself: routeMoved names each thing that moved, pathMoved finds a sample, and both say null for the same track [90m(26.4172ms)[39m[39m
+[32m✔ row 7: the selection survives a Sculpt drag (the handles stay on the piece); a Sculpt step is a state change like any other [90m(45.3097ms)[39m[39m
+[34mℹ pass 5[39m
+[34mℹ fail 2[39m
+[31m✖ failing tests:[39m
+[31m✖ row 1: a sculpt of each shape channel, on each kind of piece it applies to, leaves every centreline sample bit-identical [90m(1413.8409ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: t on tube: SCULPT_MOVES_CENTRELINE: this change would move the track's centreline (p3 (segment 292): heartline1 moved from 6.366197723675811 to 6.3661972200036985), so Sculpt refused it
+  [32m+ actual[39m [31m- expected[39m
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39
+…[439 chars cut]…
+t good step [90m(200.3263ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: phi: SCULPT_MOVES_CENTRELINE: this change would move the track's centreline (p3 (segment 292): roll1 moved from 0 to 0.00006496162867954934), so Sculpt refused it
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-sculpt.test.js:98:12[90m)[39m
+    actual: [32m"SCULPT_MOVES_CENTRELINE: this change would move the track's centreline (p3 (segment 292): roll1 moved from 0 to 0.00006496162867954934), so Sculpt refused it"[39m,
+    expected: [31m/^SCULPT_MOVES_CENTRELINE: this change would move the track's centreline \(p3 \(segment \d+\): heartline/[39m,
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66955 assistant 2026-10-06T07:31:35.939Z
+TEXT: The guard was right and my expectations were wrong: on a closed tube, bank, width and sweep all feed the route, so they are refused. I'm adding an open tube to the matrix and correcting row 5.
+--- L66956 assistant 2026-10-06T07:31:43.414Z
+TOOL_USE Bash [toolu_01Qxvj9dXNwz739SKFjb5eJG]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node - <<'XEOF'\nconst fs=require('fs');\nconst f='app/test/core-sculpt.test.js'; let s=fs.readFileSync(f,'utf8'); const crlf=s.includes('\\r\\n'); s=s.replace(/\\r\\n/g,'\\n');\nconst rep=(x,y)=>{ if(!s.includes(x)) throw new Error('missing '+x.slice(0,70)); s=s.replace(x,()=>y); };\nrep(\"/** An open track of five pieces (a straight, three turns, a straight) of one kind: legacy, cup, edge or tube. Piece 2 is a turn. */\",\"/** An open track of five pieces (a straight, three turns, a straight) of one kind: legacy, cup, edge, opentube (a 200 degree sweep) or t
+…[2428 chars cut]…
+ch}: ${s.getState().message}`);\");\nfs.writeFileSync(f,crlf?s.replace(/\\n/g,'\\r\\n'):s); console.log('ok');\nXEOF\nnode --test app/test/core-sculpt.test.js 2>&1 | grep -aE \"✔|✖|ℹ (pass|fail)|AssertionError|at TestContext\" | cut -c1-300 | head -30","timeout":200000}
+--- L66957 user 2026-10-06T07:31:45.590Z
+RESULT [toolu_01Qxvj9dXNwz739SKFjb5eJG]: [stdin]:3
+const rep=(x,y)=>{ if(!s.includes(x)) throw new Error('missing '+x.slice(0,70)); s=s.replace(x,()=>y); };
+                                      ^
+
+Error: missing s.sculptTo(ch === 'w' ? 5 : 0.2);
+    assert.match(s.getState().messag
+    at rep ([stdin]:3:45)
+    at [stdin]:11:1
+[90m    at runScriptInThisContext (node:internal/vm:219:10)[39m
+[90m    at node:internal/process/execution:451:12[39m
+    at [stdin]-wrapper:6:24
+[90m    at runScriptInContext (node:internal/process/execution:449:60)[39m
+[90m    at evalFunction (node:internal/process/execution:283:30)[39m
+[90m    at evalTypeScript (node:internal/process/execution:295:3)[39m
+[90m    at node:internal/main/eval_stdin:51:5[39m
+[90m    at Socket.<anonymous> (node:internal/process/execution:205:5)[39m
+
+Node.js v24.14.1
+[31m✖ row 1: a sculpt of each shape channel, on each kind of piece it applies to, leaves every centreline sample bit-identical [90m(1399.3868ms)[39m[39m
+[32m✔ row 2: one drag is ONE undo step (three moves, one step), and Undo gives back the very same document [90m(26.3239ms)[39m[39m
+[32m✔ row 3: the joints stay C1: the sculpted piece's value and slope at both ends are what they were, and every other piece is the very same object [90m(195.9086ms)[39m[39m
+[32m✔ row 4: turn and climb cannot be chosen in Sculpt (nor height or sideways): refused BY NAME, no drag opens, nothing changes; and the other refusals [90m(36.4763ms)[39m[39m
+[31m✖ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(196.488ms)[39m[39m
+[32m✔ row 6: the guard itself: routeMoved names each thing that moved, pa
+…[671 chars cut]…
+ulpt refused it
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-sculpt.test.js:45:37[90m)[39m
+[31m✖ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(196.488ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: phi: SCULPT_MOVES_CENTRELINE: this change would move the track's centreline (p3 (segment 292): roll1 moved from 0 to 0.00006496162867954934), so Sculpt refused it
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-sculpt.test.js:98:12[90m)[39m
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66966 assistant 2026-10-06T07:31:50.859Z
+TOOL_USE Grep [toolu_017mxbXD9HMzY9WXs7ZURmd2]: {"pattern":"sculptTo\\(ch === 'w'","path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","output_mode":"content","-n":true}
+--- L66967 user 2026-10-06T07:31:50.924Z
+RESULT [toolu_017mxbXD9HMzY9WXs7ZURmd2]: 97:    s.setSculpt(true); s.selectPiece(2); s.beginSculpt({ channel: ch }); assert.ok(s.getState().brush, `${ch}: the drag opens`); s.sculptTo(ch === 'w' ? 5 : 0.2);
+--- L66969 assistant 2026-10-06T07:31:58.137Z
+TOOL_USE Bash [toolu_011P6bdrfa8WQhSnGjHVy71G]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && sed -n 98p app/test/core-sculpt.test.js | cut -c1-260; node - <<'XEOF'\nconst fs=require('fs');\nconst f='app/test/core-sculpt.test.js'; let s=fs.readFileSync(f,'utf8'); const crlf=s.includes('\\r\\n'); s=s.replace(/\\r\\n/g,'\\n');\nconst rep=(x,y)=>{ if(!s.includes(x)) throw new Error('missing '+x.slice(0,70)); s=s.replace(x,()=>y); };\nrep(\"/** An open track of five pieces (a straight, three turns, a straight) of one kind: legacy, cup, edge or tube. Piece 2 is a turn. */\",\"/** An open track of five pieces (a straight, three turns, a straight) of one kind
+…[2026 chars cut]…
+\): (heartline1?|roll1?) moved/\");\nfs.writeFileSync(f,crlf?s.replace(/\\n/g,'\\r\\n'):s); console.log('ok');\nXEOF\nnode --test app/test/core-sculpt.test.js 2>&1 | grep -aE \"✔|✖|ℹ (pass|fail)|AssertionError|at TestContext\" | cut -c1-300 | head -30","timeout":200000}
+--- L66970 user 2026-10-06T07:32:00.345Z
+RESULT [toolu_011P6bdrfa8WQhSnGjHVy71G]:     assert.match(s.getState().message, /^SCULPT_MOVES_CENTRELINE: this change would move the track's centreline \(p3 \(segment \d+\): heartline/, `${ch}: ${s.getState().message}`);
+[stdin]:3
+const rep=(x,y)=>{ if(!s.includes(x)) throw new Error('missing '+x.slice(0,70)); s=s.replace(x,()=>y); };
+                                      ^
+
+Error: missing (p3 (segment d+): heartline/
+    at rep ([stdin]:3:45)
+    at [stdin]:11:1
+[90m    at runScriptInThisContext (node:internal/vm:219:10)[39m
+[90m    at node:internal/process/execution:451:12[39m
+    at [stdin]-wrapper:6:24
+[90m    at runScriptInContext (node:internal/process/execution:449:60)[39m
+[90m    at evalFunction (node:internal/process/execution:283:30)[39m
+[90m    at evalTypeScript (node:internal/process/execution:295:3)[39m
+[90m    at node:internal/main/eval_stdin:51:5[39m
+[90m    at Socket.<anonymous> (node:internal/process/execution:205:5)[39m
+
+Node.js v24.14.1
+[31m✖ row 1: a sculpt of each shape channel, on each kind of piece it applies to, leaves every centreline sample bit-identical [90m(1410.0485ms)[39m[39m
+[32m✔ row 2: one drag is ONE undo step (three moves, one step), and Undo gives back the very same document [90m(26.4239ms)[39m[39m
+[32m✔ row 3: the joints stay C1: the sculpted piece's value and slope at both ends are what they were, and every other piece is the very same object [90m(199.9515ms)[39m[39m
+[32m✔ row 4: turn and climb cannot be chosen in Sculpt (nor height or sideways): refused BY NAME, no drag opens, nothing changes; and the other refusals [90m(36.2362ms)[39m[39m
+[31m✖ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; 
+…[812 chars cut]…
+lpt refused it
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-sculpt.test.js:45:37[90m)[39m
+[31m✖ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(195.2727ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: phi: SCULPT_MOVES_CENTRELINE: this change would move the track's centreline (p3 (segment 292): roll1 moved from 0 to 0.00006496162867954934), so Sculpt refused it
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-sculpt.test.js:98:12[90m)[39m
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66973 assistant 2026-10-06T07:32:03.252Z
+TEXT: The shell is eating my backslashes. I'll make the edits with the Edit tool directly.
+--- L66974 assistant 2026-10-06T07:32:04.120Z
+TOOL_USE Edit [toolu_012fB1WyfYUNp3zGJVd5mYKg]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":"s.sculptTo(ch === 'w' ? 5 : 0.2);","new_string":"s.sculptTo(ch === 'w' ? 5 : ch === 't' ? -30 : 0.2);"}
+--- L66975 user 2026-10-06T07:32:04.155Z
+RESULT [toolu_012fB1WyfYUNp3zGJVd5mYKg]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js has been updated successfully.
+--- L66976 assistant 2026-10-06T07:32:04.954Z
+TOOL_USE Edit [toolu_018ykECTGbXUwMNBTYA2Y9m8]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":"\\(p3 \\(segment \\d+\\): heartline/, `${ch}","new_string":"\\(p3 \\(segment \\d+\\): (heartline1?|roll1?) moved/, `${ch}"}
+--- L66977 user 2026-10-06T07:32:04.989Z
+RESULT [toolu_018ykECTGbXUwMNBTYA2Y9m8]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js has been updated successfully.
+--- L66978 assistant 2026-10-06T07:32:05.721Z
+TOOL_USE Edit [toolu_01Rf8gfovaQ3T9xvGNLSP3D3]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":"  for (const ch of ['w', 'phi']) {","new_string":"  for (const ch of ['w', 'phi', 't']) {"}
+--- L66979 user 2026-10-06T07:32:05.748Z
+RESULT [toolu_01Rf8gfovaQ3T9xvGNLSP3D3]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js has been updated successfully.
+--- L66980 assistant 2026-10-06T07:32:07.789Z
+TOOL_USE Edit [toolu_01DpzxS3ktXeiXCskBDRdadc]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":"const APPLIES = { phi: ['legacy', 'cup', 'edge'], w: ['legacy', 'cup', 'edge'], r: ['legacy', 'cup', 'edge', 'tube'], c: ['cup'], e: ['edge'], s: ['edge'], t: ['tube'] };","new_string":"// A CLOSED tube (sweep 300 to 360) is not here for bank, width or sweep: its roll axis is its own heartline (adapter.js heartlineOf, width / 2π, growing from sweep 300 to 360),\n// so those DO feed the route and the guard refuses them (row 5); an open tube's heartline is 0.\nconst APPLIES = { phi: ['legacy', 'cup', 'edge', 'opentube'], w: ['legacy', 'cup', 'edge', 'opentube'], r: ['legacy', 'cup', 'edge', 'opentube', 'tube'], c: ['cup'], e: ['edge'], s: ['edge'], t: ['opentube'] };"}
+--- L66981 user 2026-10-06T07:32:07.816Z
+RESULT [toolu_01DpzxS3ktXeiXCskBDRdadc]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js has been updated successfully.
+--- L66982 assistant 2026-10-06T07:32:08.989Z
+TOOL_USE Edit [toolu_01GHWx5oKAxKJPYUioSbUqtY]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":"  else if (kind === 'tube') {","new_string":"  else if (kind === 'opentube') { s.extend({ length: 300, first: { w: 40, t: 200 } }); for (let i = 0; i < 3; i++) s.extend({ length: Q, transition: 40, targets: { kh: 1 / R } }); s.extend({ length: 100, transition: 40, targets: { kh: 0 } }); }\n  else if (kind === 'tube') {"}
+--- L66983 user 2026-10-06T07:32:09.021Z
+RESULT [toolu_01GHWx5oKAxKJPYUioSbUqtY]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js has been updated successfully.
+--- L66984 assistant 2026-10-06T07:32:09.601Z
+TOOL_USE Edit [toolu_01Ttv4mXHhnvtPCr1nZgSFuQ]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":"assert.equal(rows, 15, ","new_string":"assert.equal(rows, 17,"}
+--- L66985 user 2026-10-06T07:32:09.637Z
+RESULT [toolu_01Ttv4mXHhnvtPCr1nZgSFuQ]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js has been updated successfully.
+--- L66994 assistant 2026-10-06T07:32:12.191Z
+TOOL_USE Bash [toolu_013SSBSmLbpBnCFbq9nBp2Va]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node --test app/test/core-sculpt.test.js 2>&1 | grep -aE \"✔|✖|ℹ (pass|fail)|AssertionError|at TestContext\" | cut -c1-300 | head -30; tail -3 \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/hd/app_run1.txt\" | cut -c1-200","timeout":200000}
+--- L66995 user 2026-10-06T07:32:14.783Z
+RESULT [toolu_013SSBSmLbpBnCFbq9nBp2Va]: [32m✔ row 1: a sculpt of each shape channel, on each kind of piece it applies to, leaves every centreline sample bit-identical [90m(1710.5259ms)[39m[39m
+[32m✔ row 2: one drag is ONE undo step (three moves, one step), and Undo gives back the very same document [90m(26.3834ms)[39m[39m
+[32m✔ row 3: the joints stay C1: the sculpted piece's value and slope at both ends are what they were, and every other piece is the very same object [90m(197.9636ms)[39m[39m
+[32m✔ row 4: turn and climb cannot be chosen in Sculpt (nor height or sideways): refused BY NAME, no drag opens, nothing changes; and the other refusals [90m(35.2041ms)[39m[39m
+[31m✖ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(320.8447ms)[39m[39m
+[32m✔ row 6: the guard itself: routeMoved names each thing that moved, pathMoved finds a sample, and both say null for the same track [90m(17.4921ms)[39m[39m
+[32m✔ row 7: the selection survives a Sculpt drag (the handles stay on the piece); a Sculpt step is a state change like any other [90m(34.4863ms)[39m[39m
+[34mℹ pass 6[39m
+[34mℹ fail 1[39m
+[31m✖ failing tests:[39m
+[31m✖ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(320.8447ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: JOINT: piece 2 (p3): kh starts at 0.0056556160000000005, the previous piece ends at 0.005555616 (every road joint is C1 in every channel, ref 09 §1)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-sculpt.test.js:108:99[90m)[39m
+heavy-run: waiting on 12fb81f6 pid 28312 (B D242 redmerge, since 2026-10-06T07:25:04.711Z)
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L66998 assistant 2026-10-06T07:32:21.101Z
+TOOL_USE Edit [toolu_011oVdAhZwH9MC6qJ4C5enFt]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":"const kh = P.channels.kh.map((x) => x + 1e-4);","new_string":"const kh = P.channels.kh.map((x, i, a) => (i === Math.floor(a.length / 2) ? x + 1e-4 : x));   // an interior control point only: the joints stay C1, so the core accepts it and only the guard can refuse it"}
+--- L66999 user 2026-10-06T07:32:21.112Z
+RESULT [toolu_011oVdAhZwH9MC6qJ4C5enFt] ERROR: <tool_use_error>String to replace not found in file.
+String: const kh = P.channels.kh.map((x) => x + 1e-4);</tool_use_error>
+--- L67000 assistant 2026-10-06T07:32:21.785Z
+TOOL_USE Bash [toolu_01WoQ9Wo9QKC8CK1CQCZDmfQ]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node --test app/test/core-sculpt.test.js 2>&1 | grep -aE \"✔|✖|ℹ (pass|fail)|AssertionError|at TestContext\" | cut -c1-300 | head -30","timeout":200000}
+--- L67001 user 2026-10-06T07:32:24.383Z
+RESULT [toolu_01WoQ9Wo9QKC8CK1CQCZDmfQ]: [32m✔ row 1: a sculpt of each shape channel, on each kind of piece it applies to, leaves every centreline sample bit-identical [90m(1715.1758ms)[39m[39m
+[32m✔ row 2: one drag is ONE undo step (three moves, one step), and Undo gives back the very same document [90m(26.7793ms)[39m[39m
+[32m✔ row 3: the joints stay C1: the sculpted piece's value and slope at both ends are what they were, and every other piece is the very same object [90m(202.0547ms)[39m[39m
+[32m✔ row 4: turn and climb cannot be chosen in Sculpt (nor height or sideways): refused BY NAME, no drag opens, nothing changes; and the other refusals [90m(37.6389ms)[39m[39m
+[31m✖ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(335.7665ms)[39m[39m
+[32m✔ row 6: the guard itself: routeMoved names each thing that moved, pathMoved finds a sample, and both say null for the same track [90m(17.7425ms)[39m[39m
+[32m✔ row 7: the selection survives a Sculpt drag (the handles stay on the piece); a Sculpt step is a state change like any other [90m(36.5465ms)[39m[39m
+[34mℹ pass 6[39m
+[34mℹ fail 1[39m
+[31m✖ failing tests:[39m
+[31m✖ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(335.7665ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: JOINT: piece 2 (p3): kh starts at 0.0056556160000000005, the previous piece ends at 0.005555616 (every road joint is C1 in every channel, ref 09 §1)
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-sculpt.test.js:108:99[90m)[39m
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L67004 assistant 2026-10-06T07:32:25.851Z
+TOOL_USE Grep [toolu_01GCzYVEdSw6NYW6pSWze2tJ]: {"pattern":"const steer","path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","output_mode":"content","-n":true}
+--- L67005 user 2026-10-06T07:32:25.915Z
+RESULT [toolu_01GCzYVEdSw6NYW6pSWze2tJ]: 106:  const steer = (doc, o) => { const P = doc.pieces[2], kh = P.channels.kh.map((x) => x + 1e-4); return { doc: Object.freeze(D.checkDoc({ ...doc, pieces: Object.freeze(doc.pieces.map((p, i) => (i === 2 ? Object.freeze({ ...P, channels: Object.freeze({ ...P.channels, kh: Object.freeze(kh) }) }) : p))) })), changed: [], note: null }; };
+--- L67008 assistant 2026-10-06T07:32:28.371Z
+TOOL_USE Edit [toolu_01989rqTYZ5XHoNwUaZwaw2R]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":"kh = P.channels.kh.map((x) => x + 1e-4);","new_string":"kh = P.channels.kh.map((x, i, a) => (i === Math.floor(a.length / 2) ? x + 1e-4 : x));   // one interior control point: the joints stay C1, so the core accepts it and only the guard can refuse it"}
+--- L67009 user 2026-10-06T07:32:28.402Z
+RESULT [toolu_01989rqTYZ5XHoNwUaZwaw2R]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js has been updated successfully.
+--- L67010 assistant 2026-10-06T07:32:29.079Z
+TOOL_USE Bash [toolu_01Y5iDcYrLfSHhtVwaGyspbf]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node --test app/test/core-sculpt.test.js 2>&1 | grep -aE \"✔|✖|ℹ (pass|fail)|AssertionError|at TestContext\" | cut -c1-300 | head -30","timeout":200000}
+--- L67011 user 2026-10-06T07:32:29.248Z
+RESULT [toolu_01Y5iDcYrLfSHhtVwaGyspbf]: [31m✖ app\test\core-sculpt.test.js [90m(30.5413ms)[39m[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[31m✖ failing tests:[39m
+[31m✖ app\test\core-sculpt.test.js [90m(30.5413ms)[39m[39m
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L67021 assistant 2026-10-06T07:32:30.974Z
+TEXT: My trailing comment swallowed the rest of that one-line function. Moving it above.
+--- L67022 assistant 2026-10-06T07:32:31.789Z
+TOOL_USE Edit [toolu_01Y5Y2qsBrvsPQ3MW4R1KScd]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":": x));   // one interior control point: the joints stay C1, so the core accepts it and only the guard can refuse it","new_string":": x));"}
+--- L67023 user 2026-10-06T07:32:31.817Z
+RESULT [toolu_01Y5Y2qsBrvsPQ3MW4R1KScd]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js has been updated successfully.
+--- L67024 assistant 2026-10-06T07:32:32.793Z
+TOOL_USE Edit [toolu_01U4vUrsiLzaj3xCxNjoZg34]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-sculpt.test.js","old_string":"  const steer = (doc, o) => {","new_string":"  // (one interior control point of the turn rate: the joints stay C1, so the core accepts the document and only the guard can refuse it)\n  const steer = (doc, o) => {"}
+--- L67025 user 2026-10-06T07:32:32.823Z
+RESULT [toolu_01U4vUrsiLzaj3xCxNjoZg34]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-sculpt.test.js has been updated successfully.
+--- L67026 assistant 2026-10-06T07:32:33.465Z
+TOOL_USE Bash [toolu_01AYwsyQ2vAVW4foazFzUGHt]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node --test app/test/core-sculpt.test.js 2>&1 | grep -aE \"✔|✖|ℹ (pass|fail)|AssertionError|at TestContext|Error\" | cut -c1-300 | head -30","timeout":200000}
+--- L67027 user 2026-10-06T07:32:36.150Z
+RESULT [toolu_01AYwsyQ2vAVW4foazFzUGHt]: [32m✔ row 1: a sculpt of each shape channel, on each kind of piece it applies to, leaves every centreline sample bit-identical [90m(1771.7612ms)[39m[39m
+[32m✔ row 2: one drag is ONE undo step (three moves, one step), and Undo gives back the very same document [90m(30.7559ms)[39m[39m
+[32m✔ row 3: the joints stay C1: the sculpted piece's value and slope at both ends are what they were, and every other piece is the very same object [90m(214.5012ms)[39m[39m
+[32m✔ row 4: turn and climb cannot be chosen in Sculpt (nor height or sideways): refused BY NAME, no drag opens, nothing changes; and the other refusals [90m(36.9076ms)[39m[39m
+[32m✔ row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step [90m(373.4873ms)[39m[39m
+[32m✔ row 6: the guard itself: routeMoved names each thing that moved, pathMoved finds a sample, and both say null for the same track [90m(17.8107ms)[39m[39m
+[32m✔ row 7: the selection survives a Sculpt drag (the handles stay on the piece); a Sculpt step is a state change like any other [90m(35.8117ms)[39m[39m
+[34mℹ pass 7[39m
+[34mℹ fail 0[39m
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L67032 assistant 2026-10-06T07:33:18.236Z
+TOOL_USE Bash [toolu_01B5g2WYkAPbVGhTJzxkE69w]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && tail -30 app/test/core-pieces-ui.test.js | cut -c1-200; grep -n \"^const tick\\|const tick\\|function tick\" app/test/core-pieces-ui.test.js | head"}
+--- L67039 user 2026-10-06T07:33:18.395Z
+RESULT [toolu_01B5g2WYkAPbVGhTJzxkE69w]:   P1.click(400); P1.click(550, { shiftKey: true }); assert.equal(P1.button('Save as piece').disabled, false);
+  const name = P1.input('piece name'); name.value = 'two turns'; P1.button('Save as piece').onclick(); await tick(); await tick();
+  assert.equal(st.pieces.has('two turns'), true); assert.equal(name.value, '', 'the name box is cleared after a save'); assert.equal(P1.rows().length, 1);
+  assert.match(P1.rows()[0].textContent, /two turns/); assert.match(P1.text('two turns details'), /^2 pieces · 300 m · turn \+\d+\.\d° · climb 0\.0° · plain$/);
+  // Add at head, plain then mirrored
+  const n0 = shell.getState().history.present.pieces.length;
+  P1.buttons('Add at head')[0].onclick(); await tick(); await tick(); assert.equal(shell.getState().history.present.pieces.length, n0 + 2);
+  P1.input('mirror on insert').checked = true; P1.buttons('Add at head')[0].onclick(); await tick(); await tick(); assert.equal(shell.getState().history.present.pieces.length, n0 + 4); assert.match(sh
+  // Rename, with its own box; Delete, with its confirm
+  P1.button('Rename').onclick(); assert.ok(P1.input('new name')); P1.input('new name').value = 'bends'; P1.button('OK').onclick(); await tick(); await tick(); await tick();
+  assert.deepEqual(await st.listPieces(), ['bends']); assert.match(P1.rows()[0].textContent, /bends/);
+  P1.buttons('Delete').find((b) => b.attrs['aria-label'] === 'delete the saved piece bends').onclick(); assert.ok(P1.button('Yes, delete') && P1.button('No'), 'it asks first'); P1.button('No').onclick
+  P1.buttons('Delete').find((b) => b.attrs['aria-label'] === 'delete the saved piece bends').onclick(); P1.button('Yes, delete').onclick(); await tick(); await tick(); await tick();
+  assert.deepEqual(await st
+…[1329 chars cut]…
+2.button('Apply delete').onclick(); await tick(); await tick(); await tick();
+  assert.equal(shell.getState().history.present.pieces.length, d0.pieces.length - 1); assert.equal(P2.st.backups.length, 1, 'the copy was written first'); assert.match(shell.getState().message, /delet
+  // a mixed run says why
+  const P3 = await mountPanel(); P3.shell.extend({ length: 100, transition: 40, targets: { c: 30 } }); P3.click(650); P3.click(800, { shiftKey: true });
+  assert.equal(P3.button('Save as piece').disabled, true); assert.match(P3.text('why the selection cannot be saved'), /^Cannot be saved as a piece: MIXED_RUN/);
+});
+62:const tick = () => new Promise((r) => setImmediate(r));
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L67043 assistant 2026-10-06T07:33:56.605Z
+TOOL_USE Write [toolu_01KQmUUxwgv1YCV3UbV6TSJL]: {"file_path":"C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-3d57124e\\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\\scratchpad\\hd\\rows_append.js","content":"\n// ── D244 / D244b: the drag handles and Sculpt, through the panel on the same fake DOM (the pure rows are app/test/handles.test.js, the shell's Sculpt rows app/test/core-sculpt.test.js) ──\n//   11  Extend's handles: they are on the ghost and only while there is one; a drag types its value into the matching field and nothing reaches the document or Undo until Extend; the two\n//       mirrored handles change the same field; a press is the
+…[12803 chars cut]…
+sw.onchange(); P1.frame(); assert.equal(shell.getState().sculpt, false); assert.ok(options().includes('kh'), 'the turn brush is offered again'); assert.deepEqual(P1.panel.handles.handles().length > 0, true, 'the Extend handles are back');\n  P1.panel.unmount();\n});\n"}
+--- L67044 user 2026-10-06T07:33:56.628Z
+RESULT [toolu_01KQmUUxwgv1YCV3UbV6TSJL]: File created successfully at: C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-3d57124e\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\hd\rows_append.js (file state is current in your context — no need to Read it back)
+--- L67045 assistant 2026-10-06T07:33:59.049Z
+TOOL_USE Bash [toolu_01JDBcmXZTNSREx3hFEGXJoh]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node -e \"\nconst fs=require('fs'); const f='app/test/core-pieces-ui.test.js'; let s=fs.readFileSync(f,'utf8'); const crlf=s.includes('\\r\\n');\nlet add=fs.readFileSync(process.argv[1],'utf8').replace(/\\r\\n/g,'\\n'); if(crlf) add=add.replace(/\\n/g,'\\r\\n'); if(!s.endsWith('\\n')) s+=(crlf?'\\r\\n':'\\n');\nfs.writeFileSync(f,s+add); console.log('appended', crlf);\" \"C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/hd/rows_append.js\" && node --test app/test/core-pieces-ui.test.js 2>&1 | grep -aE \"✔|✖|ℹ (pass|fail)|AssertionError|at TestContext|Error\" | cut -c1-260 | head -40","timeout":300000}
+--- L67052 user 2026-10-06T07:34:13.334Z
+RESULT [toolu_01JDBcmXZTNSREx3hFEGXJoh]: appended [33mtrue[39m
+[32m✔ row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection [90m(145.0926ms)[39m[39m
+[32m✔ row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name [90m(17.7084ms)[39m[39m
+[32m✔ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason [90m(16.4365ms)[39m[39m
+[32m✔ row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed [90m(119.1185ms)[39m[39m
+[32m✔ row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES [90m(3054.5716ms)[39m[39m
+[32m✔ row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece [90m(12.7268ms)[39m[39m
+[32m✔ row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece [90m(21.1572ms)[39m[39m
+[32m✔ row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name [90m(125.6295ms)[39m[39m
+[32m✔ row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN [90m(2994.0323ms)[39m[39m
+[32m✔ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle 
+…[2248 chars cut]…
+: Expected values to be strictly equal:
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-pieces-ui.test.js:417:10[90m)[39m
+[31m✖ row 12: Sculpt through the panel: only the shape channels; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back [90m(36.7848ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^Sculpting p2: drag its handles \(bank, width\)/. Input:
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-pieces-ui.test.js:439:92[90m)[39m
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L67055 assistant 2026-10-06T07:34:16.196Z
+TEXT: The 13 existing rows all pass, so no regressions there. Looking at why my new rows fail.
+--- L67056 assistant 2026-10-06T07:34:17.054Z
+TOOL_USE Bash [toolu_01Aekb3WPf5NtdBGMGdFno3M]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node --test --test-name-pattern=\"row 11:\" app/test/core-pieces-ui.test.js 2>&1 | grep -a -B2 -A25 \"ten handles\" | head -60 | cut -c1-200","timeout":200000}
+--- L67057 user 2026-10-06T07:34:17.345Z
+RESULT [toolu_01Aekb3WPf5NtdBGMGdFno3M]: test at app\test\core-pieces-ui.test.js:391:1
+[31m✖ row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend p
+  AssertionError [ERR_ASSERTION]: ten handles on the ghost, both sides where there are sides
+  [32m+ actual[39m [31m- expected[39m
+  
+  [32m+[39m []
+  [31m-[39m [
+  [31m-[39m   'length:0',
+  [31m-[39m   'width:1',
+  [31m-[39m   'width:-1',
+  [31m-[39m   'bank:1',
+  [31m-[39m   'bank:-1',
+  [31m-[39m   'cup:1',
+  [31m-[39m   'cup:-1',
+  [31m-[39m   'turn:1',
+  [31m-[39m   'turn:-1',
+  [31m-[39m   'climb:0'
+  [31m-[39m ]
+  
+      at TestContext.<anonymous> [90m(C:\Users\nname\Desktop\worktrees\a-handles-wt\[39mapp\test\core-pieces-ui.test.js:393:49[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [],
+    expected: [
+      [32m'length:0'[39m, [32m'width:1'[39m,
+      [32m'width:-1'[39m, [32m'bank:1'[39m,
+Shell cwd was reset to C:\Consonance\instances\sibling-3d57124e
+--- L67061 assistant 2026-10-06T07:34:23.489Z  <<< THE CLAIM'S MESSAGE
+TEXT: The fake DOM doesn't reflect the `value` attribute onto `.value`, so the length field is empty there (the real DOM has 100). I'll set it in the test helper.
+--- L67062 assistant 2026-10-06T07:34:24.893Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Edit [toolu_01RKFZzhXGEjT9KsrTQbdQr8]: {"replace_all":false,"file_path":"C:\\Users\\nname\\Desktop\\worktrees\\a-handles-wt\\app\\test\\core-pieces-ui.test.js","old_string":"  const l = P1.stage.listeners.pointerdown; l.unshift(l.pop());   // the handles' listener is the capture-phase one: first","new_string":"  const l = P1.stage.listeners.pointerdown; l.unshift(l.pop());   // the handles' listener is the capture-phase one: first\n  fieldOf(P1, 'length m').value = '100';   // (the fake DOM does not turn the value attribute into the value, a real input shows 100)"}
+--- L67063 user 2026-10-06T07:34:24.936Z
+RESULT [toolu_01RKFZzhXGEjT9KsrTQbdQr8]: The file C:\Users\nname\Desktop\worktrees\a-handles-wt\app\test\core-pieces-ui.test.js has been updated successfully.
+--- L67064 assistant 2026-10-06T07:34:25.788Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01XLoWbwJrSw5e4ogrWFEusP]: {"command":"cd C:/Users/nname/Desktop/worktrees/a-handles-wt && node --test --test-name-pattern=\"row 11|row 12\" app/test/core-pieces-ui.test.js 2>&1 | grep -aE \"✔|✖|AssertionError|at TestContext|actual|expected|^\\s+[+-] \" | cut -c1-260 | head -40","timeout":200000}

@@ -79,7 +79,14 @@
 //
 //   node consonance/tools/second-vantage.js --run        select, spawn, audit, append
 //   node consonance/tools/second-vantage.js --dry-run    select and print, spawn nothing
-//   env: SOURCED_LEDGER, VANTAGE_FINDINGS, VANTAGE_DATA, VANTAGE_CELL
+//   env: SOURCED_LEDGER, VANTAGE_FINDINGS, VANTAGE_DATA, VANTAGE_CELL, VANTAGE_REPOS
+//
+// D632 (pane A, fix 4 of the value audit): P scored the 37 SURFACE rows and 30 were the reader's own error. 12 checked
+// a t180 claim in this repo; most of the rest re-measured live state days later. So (a) the repo is resolved from the
+// claim: a path it names, else a commit it names, among this repo, the row's heads and the OTHER REPOS (VANTAGE_REPOS,
+// ';'-separated, else ~/.consonance.json `vantage_repos`); (b) the brief gives the claim's time and head, and a claim
+// whose every sentence is live state is SKIPPED-LIVE-STATE without a reader. The world check then runs in the resolved
+// repo; `git worktree add` writes that repo's .git, so point vantage_repos at a clone the tool may write to.
 'use strict';
 
 const fs = require('fs');
@@ -88,7 +95,15 @@ const crypto = require('crypto');
 const cp = require('child_process');
 
 const REPO = path.resolve(__dirname, '..', '..');
-const DATA = process.env.VANTAGE_DATA || 'C:\\Consonance\\data';
+// D454 (B, from E's stranger run): the data folder by THE APP'S OWN RULE, the same text as the five hooks' "D273 dirs" block (findings-return.js
+// reads this file's artifact through it): ~/.consonance.json's data_dir when set, else %USERPROFILE%\.consonance. The hard-coded C:\Consonance\data
+// it replaces wrote where a stranger's findings-return.js never reads. On this machine data_dir IS C:\Consonance\data, so every path is unchanged.
+function consonanceDir(key, under) {
+  const home = process.env.USERPROFILE || '.';
+  try { const v = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''))[key]; if (typeof v === 'string' && v.trim()) return v.trim(); } catch (e) { /* no config, or not JSON: the default below */ }
+  return `${home}\\${under}`;
+}
+const DATA = process.env.VANTAGE_DATA || consonanceDir('data_dir', '.consonance');
 const LEDGER = process.env.SOURCED_LEDGER || path.join(DATA, 'sourced_ledger.jsonl');
 const FINDINGS = process.env.VANTAGE_FINDINGS || path.join(DATA, 'vantage_findings.jsonl');
 const WATERMARK = process.env.VANTAGE_WATERMARK || path.join(DATA, 'vantage_watermark.json');
@@ -115,6 +130,68 @@ function advanceWatermark(ts) {
 // VANTAGE_CELL still overrides, exactly — and an operator-chosen cell is never emptied (prepareCell).
 const DEFAULT_CELL = path.join(require('os').tmpdir(), 'consonance', 'vantage_cell');
 const CELL = process.env.VANTAGE_CELL || DEFAULT_CELL;
+
+// D632 (a): the other repos a claim may be about. Read fresh on each call, so a test can hand it an env.
+function configuredRepos(env = process.env) {
+  if (env.VANTAGE_REPOS) return env.VANTAGE_REPOS.split(';').map(s => s.trim()).filter(Boolean);
+  try {
+    const v = JSON.parse(fs.readFileSync(path.join(env.USERPROFILE || '.', '.consonance.json'), 'utf8').replace(/^﻿/, '')).vantage_repos;
+    return Array.isArray(v) ? v.filter(x => typeof x === 'string' && x.trim()).map(x => x.trim()) : [];
+  } catch (e) { return []; /* no config, or not JSON: this repo and the row's heads only */ }
+}
+
+// D632 (b): a sentence about the machine's state at that moment, which nothing can re-derive later: a process running
+// or armed, an install, a program's version, a size on disk, a tree's cleanliness, hardware, or "now". The plan's
+// classes (versions, processes, disk, "now") plus the two the 37 rows showed (installs, clean trees).
+const LIVE_STATE = [
+  /\b(?:is|are|was|were|still|now)\b[^.]{0,40}\brunning\b/i,
+  /\bunder the lock\b/i,
+  /\barmed\b/i,
+  /\binstall(?:ed|ing|s)?\b/i,
+  /\b(?:vendor|claude|cli|runs)\b[^.]{0,30}\bv?\d+\.\d+\.\d{2,}\b/i,
+  /\b\d[\d.,]*\s?[KMGT]i?B\b/,
+  /\b(?:now|right now|currently|at the moment|so far)\b/i,
+  /\b(?:tree|worktree|checkout)\b[^.]{0,25}\b(?:clean|dirty)\b/i,
+  /\b(?:clean|dirty)\b[^.]{0,25}\b(?:tree|worktree|checkout|HEAD)\b/i,
+  /\b(?:WMI|shutdown|MT\/s)\b/i,
+  /\bclaude doctor\b/i,
+];
+function liveState(sentence) { return LIVE_STATE.some(re => re.test(String(sentence))); }
+
+function slash(p) { return path.resolve(String(p)).replace(/\\/g, '/').replace(/\/+$/, '').toLowerCase(); }
+function hasCommit(root, sha) {
+  return cp.spawnSync('git', ['cat-file', '-e', `${sha}^{commit}`], { cwd: root, encoding: 'utf8', windowsHide: true }).status === 0;
+}
+// The repo a claim is about: an absolute path it names under a candidate (the deepest wins), else the candidate holding
+// the most commits it names (this repo wins a tie), else this repo. The head is the row's head for this repo, else a
+// row head that is a commit of the chosen repo, else '' (the world check then has no claim-time tree to build).
+function resolveRepo(row, tier, repoRoot, repos) {
+  const text = claimOf(row, tier);
+  const heads = (row.heads && typeof row.heads === 'object') ? row.heads : {};
+  const cands = [];
+  for (const c of [repoRoot, ...(repos || []), ...Object.keys(heads)]) {
+    if (c && fs.existsSync(c) && !cands.some(x => slash(x) === slash(c))) cands.push(c);
+  }
+  let root = null, by = 'default';
+  for (const p of text.match(/[A-Za-z]:[\\/][^\s`'"|*()<>,;]+/g) || []) {
+    const hit = cands.filter(c => (slash(p) + '/').startsWith(slash(c) + '/')).sort((a, b) => b.length - a.length)[0];
+    if (hit) { root = hit; by = 'path'; break; }
+  }
+  if (!root) {
+    const shas = [...new Set((text.match(/\b[0-9a-f]{7,40}\b/gi) || [])
+      .filter(s => /[a-f]/i.test(s) && /\d/.test(s)).map(s => s.toLowerCase()))];
+    if (shas.length) {
+      const score = cands.map(c => shas.filter(s => hasCommit(c, s)).length);
+      const best = Math.max(0, ...score);
+      if (best > 0 && score[0] < best) { root = cands[score.indexOf(best)]; by = 'commit'; }
+    }
+  }
+  if (!root || slash(root) === slash(repoRoot)) return { root: repoRoot, head: row.head || '', by: root ? by : 'default' };
+  let head = '';
+  for (const [top, h] of Object.entries(heads)) if (slash(top) === slash(root)) head = String(h);
+  if (!head) for (const h of Object.values(heads)) if (hasCommit(root, String(h))) { head = String(h); break; }
+  return { root, head, by };
+}
 
 // C6 — travels as data on every finding row. Both denominators, always.
 const F0_CITATION = 'F0: 2/2 correct blind DISAGREEs on the reachable subset; 2 of 16 of the record';
@@ -201,7 +278,13 @@ function brief(row, tier, repoRoot, nextId = () => crypto.randomUUID()) {
     `${floorLead}Re-derive the actual value from the repository at ${repoRoot} using file reads ` +
     `and commands. Derive it from the PRIMARY OBJECT the claim is about — do not open journals, ` +
     `memory files, or prose documents that discuss or correct claims. Judge only whether the ` +
-    `claimed value matches what you measure.\n\nReturn EXACTLY this format:\n` +
+    `claimed value matches what you measure.\n\n` +
+    // D632 (b): the claim's own time. A true sentence re-measured days later was most of the reader's own errors.
+    `The claim was made at ${row.turn_ts || 'an unrecorded time'}, with the repository at ${row.head || 'an unrecorded head'}. ` +
+    `Judge it as of then: later commits, and the machine as it is now, are not the claim's world (use git log --before ` +
+    `and git show <commit>:<path>). Do not judge what was live at that moment — running processes, installs, program ` +
+    `versions, sizes on disk, whether a working tree was clean, anything said to hold "now" — it cannot be re-derived ` +
+    `later. If nothing else is left to judge, return CANNOT-SETTLE.\n\nReturn EXACTLY this format:\n` +
     `VERDICT: AGREE | DISAGREE | CANNOT-SETTLE | NO-CLAIM\n` +
     `COMMANDS:\n<each command or file you consulted, one per line, with its decisive output>\n` +
     `EVIDENCE: <one sentence>`
@@ -341,7 +424,7 @@ function worldCheck(row, tier, repoRoot, spawner) {
   if (!row.head || !cur || row.head === cur) {
     return { checked: false, moved: false, claimHead: row.head || '', currentHead: cur };
   }
-  const wt = fs.mkdtempSync(path.join(require('os').tmpdir(), 'vantage-wt-'));
+  const wt = require('./scratch.js').mkdtemp('vantage-wt-');
   let moved = false;
   try {
     const add = cp.spawnSync('git', ['worktree', 'add', '--detach', wt, row.head],
@@ -360,7 +443,7 @@ function worldCheck(row, tier, repoRoot, spawner) {
 }
 
 // ---------- one selection, end to end ----------
-function processRow(row, tier, repoRoot, spawner) {
+function processRow(row, tier, repoRoot, spawner, repos = configuredRepos()) {
   const base = {
     id: sha(`${row.session}|${row.turn_ts}|${tier}`).toString('hex').slice(0, 16),
     ts: new Date().toISOString(),
@@ -372,6 +455,18 @@ function processRow(row, tier, repoRoot, spawner) {
   };
   const gate = rowLaunchable(row, tier);
   if (!gate.ok) return { ...base, status: 'UNLAUNCHABLE', evidence: `row missing: ${gate.missing.join(', ')}` };
+
+  // D632 (b): a claim that is ALL live state has nothing a later reader can settle. A claim with one checkable sentence
+  // still goes; the brief tells the reader to leave the live parts alone.
+  const sentences = Array.isArray(row.sentences) && row.sentences.length ? row.sentences : [claimOf(row, tier)];
+  if (sentences.every(liveState)) {
+    return { ...base, status: 'SKIPPED-LIVE-STATE', evidence: 'every sentence is live state at the claim\'s moment' };
+  }
+  // D632 (a): the repo the claim names, and that repo's claim-time head; the world check below uses both.
+  const repo = resolveRepo(row, tier, repoRoot, repos);
+  base.repo = { root: repo.root, by: repo.by };
+  repoRoot = repo.root;
+  row = { ...row, head: repo.head };
 
   const run = spawner(brief(row, tier, repoRoot), repoRoot);
   if (run.failed) return { ...base, status: 'READER-FAILED', evidence: (run.raw || '').slice(0, 300) };
@@ -537,6 +632,7 @@ module.exports = {
   run,
   CELL, DATA, prepareCell,
   readerArgs, spawnReaderReal,
+  configuredRepos, liveState, resolveRepo,
 };
 
 if (require.main === module) {

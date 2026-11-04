@@ -1,0 +1,49 @@
+MESSAGE 62  msg_011CfpgWbRbfBEfw3Y44tjyF  seat E  ts 2026-10-08T11:21:45.518Z  turn L56764..L56785 (next prompt L56812)
+CLAIMS:
+  [msg_011CfpgWbRbfBEfw3Y44tjyF|37] "since D258 the document's own `afterFlight` sets a landing's state when the piece is placed" (this is the code fact under the "inferred" label; the inference itself needs a ruling, not a check)
+
+--- L56764 user 2026-10-08T11:20:22.691Z
+USER: <task-notification>
+<task-id>bymo1sfgw</task-id>
+<tool-use-id>toolu_016i5rr8vCwBK52zWBhrcLwY</tool-use-id>
+<output-file>C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-07b8a48f\a2122153-a37e-41a6-a86f-534267ec0565\tasks\bymo1sfgw.output</output-file>
+<status>failed</status>
+<summary>Background command "Run the cup and piece harnesses serially under the lock" failed with exit code 1</summary>
+</task-notification>
+--- L56766 assistant 2026-10-08T11:20:59.301Z
+TOOL_USE Bash [toolu_01451TvLZaHkBNraSTSdEJrz]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; for f in cup piece; do echo \"== $f\"; grep -E \"^# (tests|pass|fail)|locked.js\" \"$S/anchors/$f.tap\"; grep -E \"^not ok\" \"$S/anchors/$f.tap\" | cut -c1-200; done; grep -A12 \"^not ok\" \"$S/anchors/piece.tap\" | grep -E \"error|NOT|failing\" | head -5 | cut -c1-300","description":"Read the two harness results"}
+--- L56767 user 2026-10-08T11:20:59.744Z
+RESULT [toolu_01451TvLZaHkBNraSTSdEJrz]: == cup
+# tests 51
+# pass 51
+# fail 0
+[locked.js] exit 0 in 98 s
+== piece
+# tests 67
+# pass 65
+# fail 2
+[locked.js] exit 1 in 411 s
+not ok 48 - mutant P49 a jump before the road does not zero the turn, climb and offsets: applied, and caught by "row 6"
+not ok 50 - mutant P51 the road after a leading jump is not what carries the head on: applied, and caught by "row 6"
+  error: 'NOT CAUGHT: 2 tests ran under "row 6" on the mutant and all passed'
+  error: 'NOT CAUGHT: 2 tests ran under "row 6" on the mutant and all passed'
+--- L56771 assistant 2026-10-08T11:21:13.471Z
+TOOL_USE Bash [toolu_01WQPdtJ2GHYfffmcTSpRwNn]: {"command":"S=\"$TEMP/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad\"; grep -E \"P29|M12\" \"$S/anchors/piece.tap\" \"$S/anchors/cup.tap\" | grep -E \"^.*(ok|not ok)\" | cut -c1-220; cd /c/Users/nname/Desktop/worktrees/e-anchors-wt && grep -n \"P49\\|P51\" test/core_piece_mutation.test.js | cut -c1-330; sha256sum \"$S/anchors/cup.tap\" \"$S/anchors/piece.tap\" | cut -c2-17","description":"Confirm P29 and M12 caught and read P49/P51"}
+--- L56772 user 2026-10-08T11:21:13.820Z
+RESULT [toolu_01WQPdtJ2GHYfffmcTSpRwNn]: C:\Users\nname\AppData\Local\Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/anchors/piece.tap:ok 28 - mutant P29 a flight with no gap is accepted: applied, and caught
+C:\Users\nname\AppData\Local\Temp/claude/C--Consonance-instances-sibling-07b8a48f/a2122153-a37e-41a6-a86f-534267ec0565/scratchpad/anchors/cup.tap:ok 18 - mutant M12 (K3-2) c is reset after a flight, like the heading rate
+73:  { id: 'P49 a jump before the road does not zero the turn, climb and offsets', pattern: 'row 6', edits: [[X, 'const want = after ? { ...head, kh: { v: 0, m: 0 }, kv: { v: 0, m: 0 }, h: { v: 0, m: 0 }, l: { v: 0, m: 0 } } : head;', 'const want = head;']] },
+75:  { id: 'P51 the road after a leading jump is not what carries the head on', pattern: 'row 6', edits: [[X, 'const i0 = p.pieces.findIndex(isRoad), after = i0 > 0;', 'const i0 = 0, after = false;']] },
+dd7c0bb4236afdc4
+5d47a6683fa7ac80
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L56776 assistant 2026-10-08T11:21:27.807Z
+TOOL_USE Bash [toolu_016YEFvsYzsR3Pz88Yhmn9K6]: {"command":"cd /c/Users/nname/Desktop/worktrees/e-anchors-wt && git add test/core_cup_mutation.test.js test/core_piece_mutation.test.js && git commit -q -F - <<'EOF'\nMutation anchors: M12 (core_cup) and P29 (core_piece) re-anchored after D258; a NOT-APPLIED sweep of every harness\n\nAn apply-only sweep of all 15 *mutation.test.js files on 6a799cb (each harness's mutant list read in a VM sandbox, no\nmutant run; every anchor counted in its target file, CRLF read as LF) found two stale anchors, both left behind by\nD258's free jump (1e76d35):\n- core_cup M12 (K3-2) \"c is reset after a flight, like the heading rate\": the s
+…[656 chars cut]…
+ow 6 (applied, NOT CAUGHT), the same on 6a799cb.\n\nCo-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01BrUMzLkygy9dKY2kzBfeC6\nEOF\ngit log --oneline -2","description":"Commit the test-only re-anchors"}
+--- L56783 user 2026-10-08T11:21:28.253Z
+RESULT [toolu_016YEFvsYzsR3Pz88Yhmn9K6]: a6cee64 Mutation anchors: M12 (core_cup) and P29 (core_piece) re-anchored after D258; a NOT-APPLIED sweep of every harness
+6a799cb Version 0.3.3: Level and To floor, and no pointer-lock notice on a handle grab
+Shell cwd was reset to C:\Consonance\instances\sibling-07b8a48f
+--- L56785 assistant 2026-10-08T11:21:45.518Z  <<< THE CLAIM'S MESSAGE
+TOOL_USE Bash [toolu_01Gnj8Pcfqkyo87qLgxppZGD]: {"command":"cat >> /c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-levelsnap-E_2026-10-08.md <<'EOF'\n\n## M12 + anchor sweep (the chair's 05:0x packet, on 0.3.3 = t180 6a799cb)\n**Commit `a6cee64`** (test-only) on `6a799cb`, branch `anchors-sweep`, worktree `C:/Users/nname/Desktop/worktrees/e-anchors-wt`. 2 files, +6/−2. Not pushed. Meanings unchanged; no row touched.\n\n**`test/core_cup_mutation` ONCE: 51 tests, 51 pass, 0 fail** (M12 \"applied, and caught\"; scratch `anchors/cup.tap` sha256 `dd7c0bb4…`, 98 s).\n\n**The sweep:**\n- **How it ran:** apply-only, no mutant run (scratch `anchors/sweep.js`), over all 15 `*mutation.test.js` files on `6a799cb`.\n  - Each harness's top lines, up to the end of its mutant array, are evaluated in a VM sandbox (real path/fs/os for its ROOT and SRC constants; node:test and child_process stubbed, so no test runs).\n  - Then every anchor is counted in its target file, raw and with CRLF read as LF.\n- **The result (≠ 1 occurrence is a finding):**\n\n| harness | mutant | finding | action |\n|---|---|---|---|\n| test/core_cup_mutation | **M12 (K3-2)** c reset after a flight | 0: the anchor left document.js with D258 (`1e76d35`) | **re-anchored** to `afterFlight` (`…, phi: { v: F.bank, m: 0 } });`, which occurs once), the same meaning, as KE4-2 in `0014555`. Caught by row 3 |\n| test/core_piece_mutation | **P29** a flight with no gap is accepted | 0: `if (!(P.gap > 0)) bad(` left piece.js with D258 (a saved flight is a landing pose since) | **re-anchored** to the check that now refuses a flight that goes nowhere: `document.js` `if (!(d >= FLIGHT_MIN_M)) throw new CoreError('FLIGHT_TOO_SHORT',` (once). Row 8 asks for FLIGHT_TOO_SHORT by name. **Caught** (`anchors/piece.tap`, mutant 28) |\n| app/test/mutation | A11 the renderer never deletes a stale buffer | 2 occurrences | **not stale.** The harness checks `includes` and replaces the FIRST, as it always has (99/99 before). Left alone |\n| app/test/mutation | A21, A22 (prove_render.js) and T2 (texmaker) | my sweep's resolver missed their roots | checked by hand: 1 occurrence each (`scripts/prove_render.js` via `root: 'scripts'`; `app/texmaker/index.js`). Not stale |\n\n- Every other mutant of the 15 harnesses (about 560 anchors) occurs exactly once in its target.\n\n**NOT anchors, found on the way, reported and not changed:**\n- `test/core_piece_mutation` (run once to confirm P29): **65/67**. **P49** (\"a jump before the road does not zero the turn, climb and offsets\") and **P51** (\"the road after a leading jump is not what carries the head on\") are applied but NOT CAUGHT by \"row 6\" (\"2 tests ran … and all passed\").\n- My commit changes only P29's edit, and each mutant runs on its own copy, so they survive on `6a799cb` the same.\n- inferred: since D258 the document's own `afterFlight` sets a landing's state when the piece is placed, so `piece.js`'s own adjustment for a leading jump may now be redundant (equivalent mutants), or row 6 lost its reach. That needs a ruling, or a lap that proves which. It's outside this packet (stale anchors only).\n- `anchors/piece.tap` sha256 `5d47a668…`, 411 s.\nEOF\ncat >> /c/Users/nname/Desktop/lighthouse/exo_memory/map/E.md <<'EOF'\n- 2026-10-08 ~05:2x (D) · M12 + anchor sweep → `exo_memory/handback/p-levelsnap-E_2026-10-08.md` §M12 + anchor sweep. t180 a6cee64 (test-only) on 6a799cb: apply-only sweep of all 15 mutation harnesses (mutant arrays evaluated in a VM sandbox, anchors counted): stale = core_cup M12 (re-anchored to afterFlight) and core_piece P29 (re-anchored to document.js FLIGHT_TOO_SHORT), both D258 leftovers; app A11 occurs twice by design. core_cup_mutation ONCE 51/51; core_piece_mutation 65/67: P49, P51 survive row 6 (not anchors; inferred redundant since D258), reported. Carry: a sweep's own path resolver can invent findings (A21/A22/T2), so hand-check every non-1 count against the harness's own root before calling it stale.\nEOF\ngrep -ciE \"sk-or-|vck_|sk-ant-\" /c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-levelsnap-E_2026-10-08.md; grep -n \"^## M12\" /c/Users/nname/Desktop/lighthouse/exo_memory/handback/p-levelsnap-E_2026-10-08.md; cd /c/Users/nname/Desktop/t180-track-builder && git log --oneline -1 anchors-sweep","description":"Write the hand-back section and the map line"}

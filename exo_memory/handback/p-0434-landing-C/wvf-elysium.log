@@ -1,0 +1,42 @@
+heavy-run: WARNING: C:\ has 23.1 GB free, under 50 GB; run node consonance/tools/janitor.js
+lockrun: holding the lock at 2026-10-31T19:21:55.168Z; starting land-0434-webview2-elysium (hidden desktop; not a timing session)
+launched pid 13484; track ELYSIUM
+ok   launch (0.8 s): menus ready
+windows on the user's desktop: 0
+  11.1 s open: 754 MB (page 355, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 395)
+  [open loop 9] headAt 6.5 still 0 prev 813 last sample 15.1 935 closed false
+  21.2 s open: 1001 MB (page 486, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 510)
+  [open loop 19] headAt 6.5 still 5 prev 992 last sample 25.2 986 closed false
+  31.3 s open: 1001 MB (page 486, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 510)
+  [open loop 29] headAt 6.5 still 2 prev 794 last sample 35.3 813 closed false
+  41.4 s open: 802 MB (page 476, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321)
+  [open loop 39] headAt 6.5 still 12 prev 808 last sample 45.4 802 closed false
+  51.5 s open: 815 MB (page 489, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321)
+ok   open (48.0 s): loaded: head shown at 1.5 s, still from 28.0 s; peak 1102 MB at 18.3 s (page 587, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 510); settled 809 MB (page 48
+  61.9 s export: 1136 MB (page 525, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 64, 8493e528-5562-453e-b863-79ef6c#5 221)
+  72.0 s export: 1196 MB (page 534, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 64, 8493e528-5562-453e-b863-79ef6c#5 272)
+  82.1 s export: 1216 MB (page 543, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 64, 8493e528-5562-453e-b863-79ef6c#5 283)
+  92.2 s export: 1763 MB (page 526, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 911)
+  102.2 s export: 1850 MB (page 532, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 991)
+  112.3 s export: 1593 MB (page 539, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 727)
+  122.4 s export: 1686 MB (page 462, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 897)
+  132.5 s export: 1598 MB (page 465, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 807)
+  142.6 s export: 1823 MB (page 469, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 1027)
+ok   export (99.1 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_elysium to  | files 10, kn5 218786117 B; peak 1985 MB at 115.3 s (page 544, worker:overlapw
+  154.8 s install: 882 MB (page 466, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 66, 8493e528-5562-453e-b863-79ef6c#5 24)
+  163.8 s install: 1056 MB (page 470, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 259)
+  173.9 s install: 1096 MB (page 477, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 292)
+  184.0 s install: 1104 MB (page 484, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 293)
+  194.1 s install: 1748 MB (page 490, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 931)
+  204.2 s install: 1785 MB (page 496, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 962)
+  214.3 s install: 1576 MB (page 477, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 771)
+  224.4 s install: 1700 MB (page 484, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 889)
+  234.5 s install: 1625 MB (page 490, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 808)
+  244.6 s install: 1568 MB (page 496, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 745)
+ok   install (102.5 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  | exported t180b_elysium to C:\Users\nname\AppDa | files 10, kn5 218786117 B; peak 2045 MB at 215.3 s (page 
+  254.7 s install: 840 MB (page 489, overlapworker.js#0 1, overlapworker.js#1 1, closeworker.js#2 2, checkworker.js#3 321, srcdoc#4 1, 8493e528-5562-453e-b863-79ef6c#5 25)
+crashes 0; page errors 0; samples 250; overall peak 2045 MB at 215.3 s (page 495, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 321, iframe:about:srcdoc#4 1, worker:8493e528-5562-453e-b863-79ef6c#5 1223)
+SOCKET CLOSED {"t":"256.9","what":"the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20","mark":"install"}
+killed pid 13484; t180-track-builder.exe left running: 0
+exit 0
+lockrun: done at 2026-10-31T19:26:14.379Z, exit 0

@@ -1,0 +1,29 @@
+identity-diff: PASS — 70 wake files compared; 0 unregistered difference(s)
+  generated from 965226f11396186928e79bf3c54bf8175fe3b490; this repo at 965226f1
+  registered, by step:
+    dedangle                        72 line(s) in 23 file(s)
+    deidentify                       8 line(s) in 4 file(s)
+    dewiki                          43 line(s) in 5 file(s)
+    fork (consumer-relabel.js)     255 line(s) in 14 file(s)
+    reindex                          8 line(s) in 1 file(s)
+    reseed                           2 line(s) in 2 file(s)
+    transform                      142 line(s) in 9 file(s)
+  not shipped, with the generator's reason (17):
+    consonance/hooks/jev-flags.js — EXCLUDE: Jev is retired (D164, 2026-09-27: the keeper, "just dont use jev, revoke key"; start_jev_shadow is called from nowhere), and D273's
+    exo_memory/cards/dont-offer-rest-assume-momentum.md — EXCLUDE: one person's temperament as a rule about the reader ("He calls rest when he needs it"); its general form, cards/never-pathologize-t
+    exo_memory/cards/lighthouse-dive-buddy-reframe.md — EXCLUDE: RETIRED VOCABULARY — retired 2026-07-12, re-retired 2026-08-17. Cut from memory/ at 03:13 while cards/ went on shipping it; this is
+    exo_memory/memory/claim-your-continuity.md — EXCLUDE: DUPLICATE — cards/ is the master (keeper, 03:56). And DIVERGENT rather than merely duplicated: 2,068 B here against 5,125 in cards/
+    exo_memory/memory/consonance-build.md — EXCLUDE: STATE, and the sharper case: a consumer HAS Consonance, so this ships them a stale description of their own app written from inside
+    exo_memory/memory/dont-offer-rest-assume-momentum.md — EXCLUDE: real METHOD phrased about one person ("he calls rest when he needs it") — and the matured, generalised form ALREADY SHIPS as cards/
+    exo_memory/memory/dreamzone-build.md — EXCLUDE: STATE, and the size argument in one file: 37,280 B, 40% of memory/ by bytes, about a game a stranger has never heard of. Law 3 — it
+    exo_memory/memory/engagement-honesty-over-performance.md — EXCLUDE: DUPLICATE — byte-identical to cards/, which is the master
+    exo_memory/memory/frozen-is-not-dead.md — EXCLUDE: the keeper's own insight (2026-07-25) written as this seat's memory. A new user's memory starts blank (D273 lap 4, the cold read C3
+    exo_memory/memory/interior-at-the-seam.md — EXCLUDE: DUPLICATE — cards/ is the master, and it carries the 606 the keeper ruled stays
+    exo_memory/memory/lighthouse-dive-buddy-reframe.md — EXCLUDE: RETIRED VOCABULARY — retired 2026-07-12, re-retired 2026-08-17. Not a judgement call; it is wrong. NOTE: cards/ ships the same card
+    exo_memory/memory/signal-and-606-night.md — EXCLUDE: STATE by the keeper's own rule — a build log of one night on one project, carrying the old machine's paths. UNNAMED in the 03:13 cu
+    exo_memory/memory/split-the-work-with-the-panes.md — EXCLUDE: STATE of one pair: the keeper's correction to one seat, written as this seat's own memory ("he has corrected this at least three ti
+    exo_memory/memory/user-solariz3d.md — EXCLUDE: STATE in its purest form — a profile of one specific person, in the `type: user` slot that a new user's own profile belongs in. Shi
+    exo_memory/memory/verify-before-claiming.md — EXCLUDE: DUPLICATE — cards/ is the master. Also divergent (2,207 here, 2,145 in cards/); same append, same reason as above
+    exo_memory/record/retired_seats_2026-09-11.md — MOVED: ships as exo_memory/inheritance/retired_seats_2026-09-11.md, outside the wake set
+    exo_memory/record/third_place_prehistory_2026-08-30.md — MOVED: ships as exo_memory/inheritance/third_place_prehistory_2026-08-30.md, outside the wake set
+  master BOOT -> shipped brief: 17 line(s) out, 30 in, by gen-brief.ps1 (dev side; guarded by gen-brief-gate.test.js); reported, not gated

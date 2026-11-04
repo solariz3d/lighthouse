@@ -1,0 +1,46 @@
+--- window @126976
+RSDS5<D | LLD PDB. | msedgewebview2.exe.pdb | RSDS[ | ntdll.pdb | RSDS | kernel32.pdb | RSDS' | kernelbase.pdb | RSDS | 6LLD PDB. | msedge_elf.dll.pdb | RSDS | J8" | j1d | combase.pdb | RSDS | eDR | ucrtbase.pdb | RSDSp | _0~ | rpcrt4.pdb | RSDS | .3?N | bcryptprimitives.pdb | RSDS | 4cK | advapi32.pdb | RSDS | msvcrt.pdb | RSDS | sechost.pdb | RSDS | 6LLD PDB. | msedge.dll.pdb | RSDS` | ws2_32.pdb | RSDS | !zA | crypt32.pdb | RSDS~ | winmm.pdb | RSDS; | version.pdb | RSDS | DWrite.pdb | RSDS | msvcp_win.pdb | RSDS | dpapi.pdb | RSDS | LLD PDB. | ffmpeg.dll.pdb | @hc | &EO | >UO | AVO | AZO | A^O | AbO | AfO | U$Z | amO |  M  | U7[ | PlC | plC | @_; | OBQ | 'ZQ | '^Q | >bQ | >fQ
+--- window @4120576
+!1g | Renderer | Mh/
+--- window @4165632
+renderer
+--- window @4268032
+edge_panel | event_rules | default_locale | description | devtools_page | externally_connectable | page_action | browser_action | action | file_handlers | homepage_url | icons | icon_variants | incognito | kiosk | kiosk_enabled | kiosk_only | kiosk_secondary_apps | message_serialization | mime_types | mime_types_handler | oauth2 | offline_enabled | options_page | options_ui | protocol_handlers | replacement_web_app | requirements | sandbox.pages | import | export | sockets | trial_tokens | tts_engine | update_url | chrome_url_overrides | usb_printers | version_name | webview | app.launch.local_path | app.launch.web_url | app.launch.container | app.launch.height | app.launch.width | minimum_chrome_version | natively_connectable | omnibox | side_panel | storage.managed_schema | theme | url_handlers |  Wi |  ui
+--- window @4354048
+renderer/* | `;) | @4I | VUUU |  <i | @4i | gfff |  7I | VUUU | EDDD | `1) | 4333 | wb'v | #""" |  2I | VUUU | `0)
+--- window @4366336
+renderer/global
+--- window @4370432
+renderer/amsc
+--- window @5238784
+Head | blink.mojom.ResourceLoadInfoNotifier [primary] PipeControlMessageHandler | 1U!S | blink.mojom.DedicatedWorkerHost [primary] PipeControlMessageHandler | lMes | blink.mojom.ReportingObserver [primary] PipeControlMessageHandler | hb$
+--- window @5308416
+@`o |  r5 | blink_gc/workers/worker_0x384000FFFC0 | P1t | P1t | P7iG | =D}
+--- window @5595136
+ernaP | ollectGa | age() | ,"$ | ThreadPoolForegroundWorker: | 1U!S0 | dI! | blink.mojom.PermissionService [primary] PipeControlMessageHandler | essa | 1U!S | 1U!S | 1U!S | 1U!S
+--- window @6119424
+renderer | 24504 | x86_64 | .?AU?$__bind_front_t@V?$function@$$A6A_J_NPEAX_K@Z@__Cr@std@@_N@__Cr@std@@ | .?AU?$__bind_front_t@P6A_JPEAX_N0_K@ZPEAX@__Cr@std@@ | .?AU?$__bind_front_t@P6A_JPEAX_N0_K@ZPEAX_N@__Cr@std@@ | .?AVUObject@icu_78@@ | .?AVUMemory@icu_78@@ | .?AVNormalizer2@icu_78@@ | .?AVNormalizer2WithImpl@icu_78@@ | .?AVNoopNormalizer2@icu_78@@ | .?AVComposeNormalizer2@icu_78@@ | .?AVDecomposeNormalizer2@icu_78@@ | .?AVFCDNormalizer2@icu_78@@ | .?AVNormalizer2Impl@icu_78@@ | .?AVLoadedNormalizer2Impl@icu_78@@
+--- window @6262784
+seb | (=o | seb | @`o |  r5 | blink_gc/workers/worker_0x38400104C50
+--- window @6275072
+[wy | XWwy | xXwy | Wwy | HXwy | Ywy | Renderer | Foreground | Pb' | Renderer.Foreground | Renderer.Background |  bx
+--- window @6356992
+ 9M |  9M | N$^ |  9M |  9M | c)gy | WebAssembly.Suspending | YS  | EKv | %T  | )>v | ]Tv | 1>  | Uw  | }A  | %v  | ]Qv | Qe  | UY  | Iq  | I]  | 1Fv | gj* | gj* | KiSF+A/ | KiSF+A/ | UniqueFontSelector | MemoryCache | SkiaGraphics | BlinkIsolates
+--- window @6455296
+@|D | @S( | x|@ | @0& | p0& | `F1 | `F1 | blink.mojom.DedicatedWorkerHostFactoryClient [primary] PipeControlMessageHandler | @[y | `F1 | @[y | AZH
+--- window @6541312
+8^< | 8^< | renderer | handle | embedded-browser-webview-dpi-awareness | video-capture-use-gpu-memory-buffer | enable-main-frame-before-activation | track-uuid | ector::CollectGarbage() | x'p | nD0 | @+t | blink.mojom.DedicatedWorkerHostFactoryMessageHeaderValidator | @+t | idator | blink.mojom.FrameMetadataObserverRegistryMessage | ,loadeddata | Eloadedmetadata | ,3loadend | loadingdone | loadingerror | loadstart | Clocation | eloseinterest | message | messageerror | midimessage | emousedown | mouseenter | mouseleave | vmousemove | 9mouseout | Vvimouseover | *mouseup | mousewheel | move | mskeyadded | B!mskeyerror | mskeymessage | msneedkey | Ymute | Jnavigate | 8)navigateerror | fnavigatesuccess | nomatch | offline | online | !overscrollcancel | E9\$ | uPH | I9}X | }PH | ATQWPH | API | AQH | E9A | AQI | APH | T$ H
+--- window @6602752
+\$P | AWAVAUATVWUSPH | veD | '~n | []_^A\A]A^A_ | Vw'L | nce_man | PerfettoTrace | browser | enable-quarantine | ommit | ?edBrowser.WebView.OOM.ProcessOOM.CommitUsagePct | j 0 | PST | PDT
+--- window @6782976
+>0^ | RendererMain | enabled-  | renderer
+--- window @6787072
+`-ny | Ncb | `-ny | renderer | H-ny | 4ny | 8.ny | type | 7up | 5up | H-ny | H-ny | 6up | Vwy | Vwy | 4ny | renderer | |goy | |goy | W=y | T1up | c)gy | =up
+--- window @6832128
+>IsBl | l&P* | PZb | CELL_p1_body | CELL_p1_body | ytO | CELL_p1_body | ]tO | Uhw | %Q/ | 5Q/ | EQ/ | network_hints.mojom.NetworkHintsHandlerMessageHeaderValidator | Worker  | IPC::mojom::Bootstrap [primary] MessageHeaderValidator | blink.mojom.BrowserInterfaceBrokerMessageHeaderValidator | uK/
+--- window @6836224
+H|! | 8~] | H#V | l5# | L5# | ,5# | )DW | l4# | blink.mojom.ServiceWorkerWorkerClientMessageHeaderValidator | @+t | ntro | andler | 1o` | @+t | @+t | alid | XsT | 8tT | @+t | [g(w
+--- window @8196096
+ aF | IsOfficialBuild | LocaleDataPakExists-found_attrs | LocaleDataPakExists-found_pathX | C:\Program Files (x86)\Microsoft\EdgeWebView\Application\155.0.4283.45\Locales\en-US.pak | t180-track-builder.exe | WV_V | 0.3.6 | chrome-trace-id | 8445068637811194405 | chromium-version | 155.0.8059.40 | commandline-disabled-feature-1 | msPdfOOUI | commandline-disabled-feature-2 | commandline-disabled-feature-3 | msWebOOUI | devtools_present | true | exception_code | 0xe0000008 | exception_module_path" | C:\WINDOWS\System32\KERNELBASE.dll | exception_module_version | 10.0.26100.9711 | exeY | C:\Program Files (x86)\Microsoft\EdgeWebView\Application\155.0.4283.45\msedgewebview2.exe | gpu-devid | 0x2c02 | gpu-driver | 32.0.16.1742 | gpu-generation-intel | gpu-psver | 5.0 | gpu-rev | 161 | gpu-subid | 0x41771458 | gpu-venid | 0x10de | gpu-vsver | 5.0 | gpu_count | guid$ | 9fa8fe2f-860d-4ff1-a69a-c256e3623eba | loaded-origin-0 | http://tauri.localhost | metrics_client_id_hash | 776124133586532927 | metrics_session_id | 131 | module_offset | 802954 | num-experiments | num-switches | 27  | num-variations-runtime-overrides | oom-mem$ | SL:31|CA:43053|PW:5135|PC:5147|CP:25 | osarch | x86_64 | pid | 24504 | plat | Win64 | process_id | 24504 | prod | Edge WebView2 | ptype | renderer | reentry_guard_tls_slot | unused | renderer_foreground | true | runtime_variations_seed_etag. | "LHSz7nY44OeeJ2tj5pIC/DAlqXQQvKf88ZZ3So9VMXA=" | switch-1 | --noerrdialogs | switch-10 | --js-flags | switch-11 | --device-scale-factor=1 | switch-12 | --num-raster-threads=4 | switch-13% | --enable-main-frame-before-activation | switch-14 | --renderer-client-id=5 | switch-15! | --js-flags=--ms-user-locale=en_CA | switch-16 | --ssd-no-pressure-read-main-dll | switch-17  | --launch-time-ticks=124284511572 | switch-18N | --metrics-shmem-handle=3712,i,17912627276715092005,1527958177383814279,1048576 | switch-19J | --field-trial-handle=1928,i,7251097032682387589,7004533481011067556,262144 | switch-2W | --user-data-dir=C:\Users\nname\AppData\Local\com.solariz3d.t180-track-builder\EBWebView | switch-20 | --variations-seed-version | switch-21Q | --pseudonymization-salt-handle=1932,i,11214879877068808913,12120373776315026401,4 | switch-22. | --trace-process-track-uuid=3190708990997080739 | switch-23# | --mojo-platform-channel-handle=3720 | switch-245 | /pfhostedapp:34834e05616cb44a4e30e46c60257fa480f55a32 | switch-3) | --webview-exe-name=t180-track-builder.exe | switch-4 | --webview-exe-version=0.3.6 | switch-5 | --embedded-browser-webview=1
+--- window @8200192
+switch-6* | --embedded-browser-webview-dpi-awareness=2 | switch-7* | --autoplay-policy=no-user-gesture-required | switch-8% | --video-capture-use-gpu-memory-buffer | switch-9 | --lang=en-US | v8-oom-location | CALL_AND_RETRY_LAST | v8_isolate_address | 0x38400560000 | v8_ro_space_firstpage_address | 0x22d00000000 | variations | 82ec3250-ca7d8d80,b3ce4b37-ca7d8d80,32bc5dae-ca7d8d80,49a1a14a-ca7d8d80,be96dba2-ca7d8d80,4ea303a6-ca7d8d80,d01bec90-ca7d8d80,b6f29041-9af5ba90,3ee6367e-ca7d8d80,ae9e478f-ca7d8d80,b357b792-3d47f4f4,f4f00e05-ca7d8d80,a35976f5-f23d1dea,9481ce98-3d47f4f4,4b935545-3d47f4f4,9a38bae3-3d47f4f4,41ad04e1-16e9df14,2d1e43a3-3d47f4f4,370ace14-3f4a17df,386dc267-3d47f4f4,a4406b35-1657e2d6,408da146-1657e2d6,d69d967d-3695c92e,3c8f75a1-a6f840a5, | variations_seed_etag. | "3r69rczQWHSJyNY5iHubgRkTVVVGsm5yTf4OWSiMvCU=" | ver | 155.0.4283.45 | view-count | web-frame-count | 7 } | C } | q } | } } | 4!} | E!} | S!} | Q#} | X#} | i#} | w#} | |#}

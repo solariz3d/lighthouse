@@ -1,0 +1,50 @@
+rows 6530, t 8.38-106.32 s
+distance from the AI line (m): p50 4.48 p90 8.15 p99 18.52 max 18.80
+predicted vs measured load above 600 km/h: 5911 frames, r 0.988, measured − predicted p10 -0.19 p50 0.20 p90 6.84 g
+runs (t, s, peak load, top speed):
+  t 8.38-106.32 s   s 48-19622 m   peak 63.28 g   top 838 km/h
+
+the ten hardest load frames (at least 0.6 s apart):
+  t  93.96  s  17025  p13  720 km/h  load 63.28 g (line asks 54.1)  lat 1.32 g  h -48.7 cm  box -14.2 cm over road (rigid tyres), -26.9 cm over the mesh  | bank 85°  climb -6.6°  R 64 m  κn 13.30/km  κg 1.20/km  cup -/-0°  off -4.7 m  width 80 m
+  t  93.34  s  16905  p13  716 km/h  load 61.97 g (line asks 52.9)  lat 1.18 g  h -41.7 cm  box -7.2 cm over road (rigid tyres), -20.4 cm over the mesh  | bank 85°  climb -5.9°  R 65 m  κn 13.10/km  κg 1.20/km  cup -19/-17°  off -3.8 m  width 68 m
+  t  92.03  s  16635  p13  748 km/h  load 61.72 g (line asks 54.1)  lat -0.03 g  h -39.3 cm  box -4.8 cm over road (rigid tyres), -17.8 cm over the mesh  | bank 85°  climb -4.4°  R 72 m  κn 12.30/km  κg 1.10/km  cup -4/20°  off -4.2 m  width 56 m
+  t  95.56  s  17336  p13  708 km/h  load 61.32 g (line asks 51.9)  lat 2.38 g  h -47.8 cm  box -13.3 cm over road (rigid tyres), -26.9 cm over the mesh  | bank 85°  climb -8.4°  R 64 m  κn 13.10/km  κg 1.10/km  cup 20/20°  off -4.0 m  width 31 m
+  t  94.56  s  17145  p13  707 km/h  load 61.27 g (line asks 52.5)  lat 2.11 g  h -48.5 cm  box -14.0 cm over road (rigid tyres), -27.7 cm over the mesh  | bank 85°  climb -7.3°  R 63 m  κn 13.30/km  κg 1.20/km  cup 20/-4°  off -1.4 m  width 56 m
+  t  96.53  s  17528  p13  730 km/h  load 61.18 g (line asks 53.2)  lat 1.80 g  h -48.1 cm  box -13.6 cm over road (rigid tyres), -27.5 cm over the mesh  | bank 85°  climb -9.5°  R 67 m  κn 12.70/km  κg 1.10/km  cup 20/20°  off -0.8 m  width 31 m
+  t  92.64  s  16761  p13  722 km/h  load 59.82 g (line asks 52.2)  lat 1.66 g  h -40.7 cm  box -6.2 cm over road (rigid tyres), -19.3 cm over the mesh  | bank 85°  climb -5.1°  R 68 m  κn 12.70/km  κg 1.20/km  cup -11/20°  off -3.8 m  width 56 m
+  t  91.41  s  16509  p13  753 km/h  load 58.45 g (line asks 52.2)  lat -0.50 g  h -30.4 cm  box 4.1 cm over road (rigid tyres), -8.3 cm over the mesh  | bank 85°  climb -3.8°  R 76 m  κn 11.70/km  κg 1.10/km  cup 20/20°  off -5.0 m  width 31 m
+  t  97.14  s  17654  p13  725 km/h  load 57.22 g (line asks 50.7)  lat 5.17 g  h -47.8 cm  box -13.3 cm over road (rigid tyres), -27.3 cm over the mesh  | bank 85°  climb -10.1°  R 70 m  κn 12.20/km  κg 1.00/km  cup 20/20°  off -1.0 m  width 31 m
+  t  97.83  s  17798  p13  733 km/h  load 56.24 g (line asks 48.9)  lat -0.74 g  h -36.5 cm  box -2.1 cm over road (rigid tyres), -15.6 cm over the mesh  | bank 85°  climb -10.9°  R 75 m  κn 11.60/km  κg 1.00/km  cup 20/20°  off -0.8 m  width 31 m
+
+the ten closest to clipping (lowest box over the road with rigid tyres, at least 0.6 s apart):
+  t  94.35  s  17103  p13  715 km/h  load 62.31 g (line asks 53.6)  lat 1.69 g  h -49.1 cm  box -14.6 cm over road (rigid tyres), -28.1 cm over the mesh  | bank 85°  climb -7.0°  R 63 m  κn 13.30/km  κg 1.20/km  cup 20/-4°  off -2.4 m  width 56 m
+  t  95.88  s  17402  p13  715 km/h  load 60.94 g (line asks 52.4)  lat 3.06 g  h -49.1 cm  box -14.6 cm over road (rigid tyres), -27.4 cm over the mesh  | bank 85°  climb -8.8°  R 65 m  κn 13.00/km  κg 1.10/km  cup 20/20°  off -4.6 m  width 31 m
+  t  96.57  s  17540  p13  730 km/h  load 60.73 g (line asks 53.1)  lat 2.13 g  h -49.0 cm  box -14.5 cm over road (rigid tyres), -28.0 cm over the mesh  | bank 85°  climb -9.5°  R 67 m  κn 12.60/km  κg 1.10/km  cup 20/20°  off -0.7 m  width 31 m
+  t  95.06  s  17241  p13  695 km/h  load 59.51 g (line asks 50.5)  lat 1.61 g  h -48.6 cm  box -14.1 cm over road (rigid tyres), -27.6 cm over the mesh  | bank 85°  climb -7.8°  R 63 m  κn 13.30/km  κg 1.20/km  cup 20/-12°  off -0.9 m  width 56 m
+  t  97.17  s  17660  p13  725 km/h  load 57.00 g (line asks 50.5)  lat 5.21 g  h -47.9 cm  box -13.4 cm over road (rigid tyres), -27.3 cm over the mesh  | bank 85°  climb -10.2°  R 70 m  κn 12.20/km  κg 1.00/km  cup 20/20°  off -1.0 m  width 31 m
+  t  93.73  s  16977  p13  717 km/h  load 62.26 g (line asks 53.4)  lat 0.32 g  h -46.5 cm  box -12.0 cm over road (rigid tyres), -25.1 cm over the mesh  | bank 85°  climb -6.3°  R 64 m  κn 13.20/km  κg 1.20/km  cup -/-0°  off -5.2 m  width 80 m
+  t  92.28  s  16689  p13  740 km/h  load 61.42 g (line asks 53.8)  lat 1.19 g  h -43.5 cm  box -9.0 cm over road (rigid tyres), -21.9 cm over the mesh  | bank 85°  climb -4.7°  R 70 m  κn 12.50/km  κg 1.10/km  cup -4/20°  off -4.8 m  width 56 m
+  t  92.89  s  16815  p13  718 km/h  load 59.92 g (line asks 52.2)  lat -0.16 g  h -38.6 cm  box -4.1 cm over road (rigid tyres), -17.6 cm over the mesh  | bank 85°  climb -5.4°  R 67 m  κn 12.90/km  κg 1.20/km  cup -11/20°  off -2.6 m  width 56 m
+  t  97.80  s  17792  p13  733 km/h  load 56.01 g (line asks 49.0)  lat -0.93 g  h -37.2 cm  box -2.7 cm over road (rigid tyres), -16.1 cm over the mesh  | bank 85°  climb -10.8°  R 75 m  κn 11.60/km  κg 1.00/km  cup 20/20°  off -0.4 m  width 31 m
+  t  91.67  s  16563  p13  752 km/h  load 59.74 g (line asks 53.2)  lat -0.77 g  h -33.4 cm  box 1.1 cm over road (rigid tyres), -11.8 cm over the mesh  | bank 85°  climb -4.0°  R 74 m  κn 12.00/km  κg 1.10/km  cup 20/20°  off -4.1 m  width 31 m
+
+frames with the box below the road (rigid tyres): 420, t 91.75-98.08 s, s 16581-17846 m, load p10 56.0 p50 60.5 max 63.3 g, pieces 13
+box over the MESH surface along the car's normal: p0.1 -28.0 cm, min -28.1 cm, frames below 0: 601 of 6523
+time at ≥ 20 g: 1281 frames = 19.21 s
+time at ≥ 40 g: 764 frames = 11.46 s
+time at ≥ 50 g: 552 frames = 8.28 s
+time at ≥ 55 g: 476 frames = 7.14 s
+time at ≥ 60 g: 268 frames = 4.02 s
+
+per piece (frames above 600 km/h): frames, load p50 / max, h min, bank / climb / R / κn range, cup
+  p1: 39, 1.0 / 10.3 g, h min -10.0 cm, s 918..1014  bank 0..0°  climb 0.0..0.0°  R 1000000..1000000 m  κn 0.0..0.0/km  cup 0..0/0..0°
+  p2: 45, -1.0 / 10.7 g, h min -11.8 cm, s 1020..1134  bank 0..0°  climb 0.0..0.0°  R 1000000..1000000 m  κn 0.0..0.0/km  cup 27..27/57..57°
+  p3: 46, -4.4 / 23.1 g, h min -5.9 cm, s 1140..1254  bank 0..0°  climb 0.0..0.0°  R 1000000..1000000 m  κn 0.0..0.0/km  cup 36..36/53..53°
+  p4: 321, 2.0 / 13.5 g, h min -10.7 cm, s 1260..2214  bank 0..0°  climb 0.0..0.0°  R 2390..1000000 m  κn 0.0..0.0/km  cup 36..36/53..53°
+  p5: 265, 8.6 / 14.3 g, h min -9.3 cm, s 2220..3054  bank 0..0°  climb 0.0..0.0°  R 319..12627 m  κn 0.0..0.0/km  cup 36..36/53..53°
+  p6: 145, 1.4 / 2.4 g, h min 2.0 cm, s 3060..3534  bank 0..4°  climb 0.0..0.0°  R 704..1000000 m  κn 0.0..0.1/km  cup 5..37/5..53°
+  p8: 303, 2.6 / 5.8 g, h min -4.0 cm, s 3540..4374  bank 4..45°  climb 0.0..0.0°  R 319..1000000 m  κn 0.0..1.4/km  cup 16..16/16..16°
+  p9: 391, 2.7 / 6.3 g, h min -5.0 cm, s 4380..5454  bank 0..45°  climb 0.0..0.0°  R 319..1000000 m  κn 0.0..1.4/km  cup 16..16/16..16°
+  p10: 1501, 6.5 / 14.1 g, h min -9.3 cm, s 5460..10252  bank 0..85°  climb 0.0..2.0°  R 246..1000000 m  κn 0.0..3.1/km  cup -..-/16..16°
+  p11: 1354, 11.0 / 21.6 g, h min -15.3 cm, s 10258..14811  bank 85..85°  climb -5.0..2.0°  R 245..1000000 m  κn 0.0..4.0/km  cup 15..20/-79..20°
+  p13: 1501, 40.8 / 63.3 g, h min -49.1 cm, s 14817..19622  bank 85..85°  climb -14.6..-0.0°  R 63..100232 m  κn 0.0..13.3/km  cup -..-/-17..20°

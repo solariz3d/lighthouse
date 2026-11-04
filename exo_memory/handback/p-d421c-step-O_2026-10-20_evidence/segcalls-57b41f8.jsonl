@@ -1,0 +1,6 @@
+{"row":"2","caller":"pieceOffsets (C:\\Users\\nname\\Downloads\\t180-wt-land411\\src\\c","calls":38,"miss_median":0,"segs":5000,"ms_median":0.308,"all_hits_again_ms":0.314,"checkDoc_ms":0.287}
+{"row":"2","caller":"segmentsOf (C:\\Users\\nname\\Downloads\\t180-wt-land411\\app\\cor","calls":38,"miss_median":3,"segs":5000,"ms_median":1.596,"all_hits_again_ms":0.333,"checkDoc_ms":0.27}
+{"row":"3","caller":"pieceOffsets (C:\\Users\\nname\\Downloads\\t180-wt-land411\\src\\c","calls":10,"miss_median":0,"segs":5000,"ms_median":0.386,"all_hits_again_ms":0.343,"checkDoc_ms":0.275}
+{"row":"3","caller":"segmentsOf (C:\\Users\\nname\\Downloads\\t180-wt-land411\\app\\cor","calls":10,"miss_median":3,"segs":5000,"ms_median":1.462,"all_hits_again_ms":0.326,"checkDoc_ms":0.27}
+{"row":"4a","caller":"pieceOffsets (C:\\Users\\nname\\Downloads\\t180-wt-land411\\src\\c","calls":18,"miss_median":0,"segs":748,"ms_median":0.069,"all_hits_again_ms":0.065,"checkDoc_ms":0.051}
+{"row":"4a","caller":"segmentsOf (C:\\Users\\nname\\Downloads\\t180-wt-land411\\app\\cor","calls":18,"miss_median":1,"segs":748,"ms_median":1.621,"all_hits_again_ms":0.072,"checkDoc_ms":0.05}

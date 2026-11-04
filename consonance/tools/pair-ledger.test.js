@@ -21,7 +21,7 @@ const NOW = Date.parse('2026-09-20T00:00:00Z');
 const SEASON = 30;
 const day = (iso) => iso; // readability marker for fixture dates
 
-function tmp() { return fs.mkdtempSync(path.join(os.tmpdir(), 'pairledger-')); }
+function tmp() { return require('./scratch.js').mkdtemp('pairledger-'); }
 function jsonl(file, rows) { fs.writeFileSync(file, rows.map((r) => JSON.stringify(r)).join('\n') + '\n'); }
 
 const pairRow = (over) => ({

@@ -1,0 +1,6 @@
+== wvs-0434  (0.4.32; crashes 0)
+step      s       page  checker  page+checker  export worker  (MB, peaks)
+launch      0.7      16        2            18              0
+open       48.0     655      521          1176              0
+export    100.1     685      321          1006           1095
+  open: loaded: head shown at 1.5 s, still from 28.0 s

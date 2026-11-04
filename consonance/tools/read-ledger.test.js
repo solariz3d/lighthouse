@@ -22,7 +22,7 @@ function test(name, fn) {
 }
 
 const TOOL = path.join(__dirname, 'read-ledger.js');
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'readledger-'));
+const tmp = require('./scratch.js').mkdtemp('readledger-');
 const LEDGER = path.join(tmp, 'read_ledger.jsonl');
 
 function run(args) {

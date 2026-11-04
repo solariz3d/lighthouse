@@ -143,12 +143,32 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const scratch = require('./scratch.js');
 
 // JS_SUITE_ROOT exists so this runner can be pointed at a fixture tree and tested like anything
 // else. A test runner that is itself untested is the oldest version of the vacuity problem here.
 const ROOT = process.env.JS_SUITE_ROOT || path.resolve(__dirname, '..', '..');
 const SKIP_DIRS = new Set(['node_modules', '.git', 'target', 'gen', '__pycache__', 'attic']);
-const TIMEOUT_MS = Number(process.env.JS_SUITE_TIMEOUT_MS || 120000);
+// D390 (2026-10-18): the default was 120000 until gen-consumer.test.js outgrew it. Alone on an idle machine it took 123,200 ms (at dfe05087)
+// and 124,819 ms (at 13b7d3b4), passing 107/107, so every full run reported it crashed. Most of that is ~45 tests each generating the real
+// tree (~1.9 s a build). 300000 gives it 2.4x room. A file that hangs is still killed and reported crashed, now after 5 minutes rather than 2;
+// splitting gen-consumer.test.js instead would need a new EXCLUDE entry in gen-consumer.js, since a new test file under tools/ ships.
+const TIMEOUT_MS = Number(process.env.JS_SUITE_TIMEOUT_MS || 300000);
+
+// A directory named *_evidence holds a hand-back's COPIES of old scratchpad files (D287 part 3). They are
+// records of what was run then, not tests of this tree, and some fail here by design. Skip the directory,
+// keep the copy untouched, and count the test files inside so the skip is printed, not silent.
+const EVIDENCE_SUFFIX = '_evidence';
+let evidenceSkipped = 0;
+function countTests(dir) {
+  let n = 0, entries;
+  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return 0; }
+  for (const e of entries) {
+    if (e.isDirectory()) n += countTests(path.join(dir, e.name));
+    else if (e.isFile() && e.name.endsWith('.test.js')) n++;
+  }
+  return n;
+}
 
 function discover(dir, out = []) {
   let entries;
@@ -157,6 +177,7 @@ function discover(dir, out = []) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) {
       if (SKIP_DIRS.has(e.name)) continue;
+      if (e.name.endsWith(EVIDENCE_SUFFIX)) { evidenceSkipped += countTests(p); continue; }
       discover(p, out);
     } else if (e.isFile() && e.name.endsWith('.test.js')) {
       out.push(p);
@@ -169,7 +190,7 @@ const files = discover(ROOT).sort();
 
 if (process.argv.includes('--list')) {
   files.forEach((f) => console.log(path.relative(ROOT, f)));
-  console.log(`\n${files.length} test files`);
+  console.log(`\n${files.length} test files (${evidenceSkipped} test files skipped under *${EVIDENCE_SUFFIX})`);
   process.exit(files.length ? 0 : 1);
 }
 
@@ -277,7 +298,7 @@ const THIS_MACHINE = machineTag();
 // A fresh empty directory per probe, so the deny is a real absence rather than a flag the file is
 // trusted to honour.
 function emptyDir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'js-suite-deny-'));
+  return scratch.mkdtemp('js-suite-deny-');
 }
 
 // The two lines a MACHINE-BOUND file speaks to the runner. Matched on OUTPUT, not on source, so
@@ -289,18 +310,26 @@ function emptyDir() {
 const NOT_RUN_LINE = /^[ \t]*JS-SUITE:[ \t]*NOT-RUN\b[ \t]*(?:[-–—:]+[ \t]*)?(.*)$/m;
 const UNIVERSE_LINE = /^[ \t]*JS-SUITE:[ \t]*UNIVERSE\b[ \t]*(?:[-–—:]+[ \t]*)?(.*)$/m;
 
+// D287 part 1: EACH test file gets its own TEMP/TMP/TMPDIR, a fresh folder under the scratch root, removed in a `finally` whether the file passed,
+// failed, crashed or timed out. That one move reaches every creator under the file that uses os.tmpdir(), including the ones nobody has looked at,
+// because the test files cannot be trusted to remove their own folders (they leaked ~260,000 of them). A file killed by TIMEOUT_MS leaves nothing
+// either: the folder belongs to this runner, not to the child. CONSONANCE_SCRATCH points INTO it too, so a child's scratch.mkdtemp folders (which
+// its exit hook removes) are ALSO inside the folder this runner removes: a child killed by the timeout never runs its exit hook, and would leak otherwise.
 function runFile(f, extraEnv) {
   let code = 0, out = '', err = '';
+  const tmp = scratch.mkdtemp('js-suite-tmp-');
   try {
     out = execFileSync(process.execPath, [f], {
       cwd: path.dirname(f), encoding: 'utf8', timeout: TIMEOUT_MS,
       stdio: ['ignore', 'pipe', 'pipe'],
-      env: extraEnv ? { ...process.env, ...extraEnv } : process.env,
+      env: { ...process.env, CONSONANCE_OS_TMP: process.env.CONSONANCE_OS_TMP || os.tmpdir(), ...scratch.tempEnv(tmp), CONSONANCE_SCRATCH: tmp, ...(extraEnv || {}) },
     });
   } catch (e) {
     code = e.status === undefined || e.status === null ? 'timeout/signal' : e.status;
     out = e.stdout || '';
     err = e.stderr || '';
+  } finally {
+    try { scratch.rm(tmp); } catch (_) { /* a folder still held open: the exit hook and the janitor try again */ }
   }
   const clean = stripAnsi(out);
   // node:test prints pass and fail on separate lines, so "nothing ran" there is pass 0 AND fail 0.
@@ -453,6 +482,7 @@ const ranCount = [...green, ...failed, ...canary, ...canarySang, ...classErr, ..
 const neither = files.length - ranCount - notRunFiles.length;
 console.log(`\nuniverse: ${files.length} test files discovered · ${ranCount} ran assertions to a summary · ` +
             `${notRunFiles.length} declared NOT-RUN · ${neither} neither`);
+console.log(`  ${evidenceSkipped} test files skipped under *${EVIDENCE_SUFFIX} directories (copies kept as records, not run).`);
 console.log('  rule: every discovered file runs unconditionally, EXCEPT a file whose header declares');
 console.log('        `JS-SUITE: MACHINE-BOUND` — that file runs only where its own corpus gate says its');
 console.log('        universe is present, and must print NOT-RUN with a reason everywhere else.');

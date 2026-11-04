@@ -1,0 +1,783 @@
+lowio: class BelowNormal, io-priority set to 0 rc 0
+2026-10-26T17:56:42.587Z no timing session in any slot; taking the lock
+heavy-run: waiting on a2122153 pid 39156 (t180 d475-e gen-consumer, since 2026-10-26T17:56:28.012Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 39156 (t180 d475-e gen-consumer, since 2026-10-26T17:56:28.012Z) — it holds this tree
+heavy-run: waiting on a2122153 pid 39156 (t180 d475-e gen-consumer, since 2026-10-26T17:56:28.012Z) — it holds this tree
+TAP version 13
+# Subtest: a clean tree is silent, and still leaves a row saying it ran
+ok 1 - a clean tree is silent, and still leaves a row saying it ran
+  ---
+  duration_ms: 81.6835
+  type: 'test'
+  ...
+# Subtest: a drifted carrier speaks, names the file, and hands over the command
+ok 2 - a drifted carrier speaks, names the file, and hands over the command
+  ---
+  duration_ms: 116.0715
+  type: 'test'
+  ...
+# Subtest: the SAME red does not speak twice — the 27-day nag, designed out
+ok 3 - the SAME red does not speak twice — the 27-day nag, designed out
+  ---
+  duration_ms: 139.6717
+  type: 'test'
+  ...
+# Subtest: a DIFFERENT red speaks immediately, cooldown or not
+ok 4 - a DIFFERENT red speaks immediately, cooldown or not
+  ---
+  duration_ms: 129.6536
+  type: 'test'
+  ...
+# Subtest: returning to green re-arms, so the next red speaks at once
+ok 5 - returning to green re-arms, so the next red speaks at once
+  ---
+  duration_ms: 180.8344
+  type: 'test'
+  ...
+# Subtest: the dream gate holds: CONSONANCE_DREAM silences it and leaves no row
+ok 6 - the dream gate holds: CONSONANCE_DREAM silences it and leaves no row
+  ---
+  duration_ms: 38.4036
+  type: 'test'
+  ...
+# Subtest: with no env and no config, it records UNRESOLVED rather than going quietly missing
+ok 7 - with no env and no config, it records UNRESOLVED rather than going quietly missing
+  ---
+  duration_ms: 55.9322
+  type: 'test'
+  ...
+# Subtest: the repo is derived from room_path when no env override is set
+ok 8 - the repo is derived from room_path when no env override is set
+  ---
+  duration_ms: 79.2167
+  type: 'test'
+  ...
+# Subtest: no repo at the configured path is silent and harmless
+ok 9 - no repo at the configured path is silent and harmless
+  ---
+  duration_ms: 53.0582
+  type: 'test'
+  ...
+#   ok  D454: pythonExe() resolves as install.ps1 does: a python.exe on PATH outside \\WindowsApps\\ first, the Store stub never
+#   ok  the manifest yields the hooks, and enough of them to be a real check
+#   ok  a commented-out manifest line (a retired entry kept verbatim) is not a hook
+#   ok  ready-stop.js: the guard is in the source
+#   ok  ready-stop.js: the guard precedes the entry point
+#   ok  ready-stop.js: speaks without the variable, silent with it
+#   ok  ready-prompt.js: the guard is in the source
+#   ok  ready-prompt.js: the guard precedes the entry point
+#   ok  ready-prompt.js: speaks without the variable, silent with it
+#   ok  session-start.js: the guard is in the source
+#   ok  session-start.js: the guard precedes the entry point
+#   ok  session-start.js: speaks without the variable, silent with it
+#   ok  userprompt-submit.js: the guard is in the source
+#   ok  userprompt-submit.js: the guard precedes the entry point
+#   ok  userprompt-submit.js: speaks without the variable, silent with it
+#   ok  stop.js: the guard is in the source
+#   ok  stop.js: the guard precedes the entry point
+#   ok  stop.js: speaks without the variable, silent with it
+#   ok  session-end.js: the guard is in the source
+#   ok  session-end.js: the guard precedes the entry point
+#   ok  session-end.js: speaks without the variable, silent with it
+#   ok  precompact.js: the guard is in the source
+#   ok  precompact.js: the guard precedes the entry point
+#   ok  precompact.js: speaks without the variable, silent with it
+#   ok  l2-overseer.js: the guard is in the source
+#   ok  l2-overseer.js: the guard precedes the entry point
+#   ok  l2-overseer.js: speaks without the variable, silent with it
+#   ok  l3-overseer.js: the guard is in the source
+#   ok  l3-overseer.js: the guard precedes the entry point
+#   ok  l3-overseer.js: speaks without the variable, silent with it
+#   ok  sessionstart-ambient.js: the guard is in the source
+#   ok  sessionstart-ambient.js: the guard precedes the entry point
+#   ok  sessionstart-ambient.js: speaks without the variable, silent with it
+#   ok  userprompt_pulse.py: the guard is in the source
+#   ok  userprompt_pulse.py: the guard precedes the entry point
+#   ok  userprompt_pulse.py: speaks without the variable, silent with it
+#   ok  board-digest.js: the guard is in the source
+#   ok  board-digest.js: the guard precedes the entry point
+#   ok  board-digest.js: speaks without the variable, silent with it
+#   ok  transcript-watch.js: the guard is in the source
+#   ok  transcript-watch.js: the guard precedes the entry point
+#   ok  transcript-watch.js: speaks without the variable, silent with it
+#   ok  dream-watch.js: the guard is in the source
+#   ok  dream-watch.js: the guard precedes the entry point
+#   ok  ferry-watch.js: the guard is in the source
+#   ok  ferry-watch.js: the guard precedes the entry point
+#   ok  sourced-stop.js: the guard is in the source
+#   ok  sourced-stop.js: the guard precedes the entry point
+#   ok  findings-return.js: the guard is in the source
+#   ok  findings-return.js: the guard precedes the entry point
+#   ok  precompact-preserve.js: the guard is in the source
+#   ok  precompact-preserve.js: the guard precedes the entry point
+#   ok  precompact-preserve.js: speaks without the variable, silent with it
+#   ok  sessionstart-state.js: the guard is in the source
+#   ok  sessionstart-state.js: the guard precedes the entry point
+#   ok  dispatch-gate.js: the guard is in the source
+#   ok  dispatch-gate.js: the guard precedes the entry point
+#   ok  carrier-drift-watch.js: the guard is in the source
+#   ok  carrier-drift-watch.js: the guard precedes the entry point
+#   ok  carrier-drift-watch.js: speaks without the variable, silent with it
+#   ok  second-reader.js: the guard is in the source
+#   ok  second-reader.js: the guard precedes the entry point
+#   ok  sources-gate.js: the guard is in the source
+#   ok  sources-gate.js: the guard precedes the entry point
+#   ok  reply-slot.js: the guard is in the source
+#   ok  reply-slot.js: the guard precedes the entry point
+#   ok  push-gate.js: the guard is in the source
+#   ok  push-gate.js: the guard precedes the entry point
+#   ok  delete-gate.js: the guard is in the source
+#   ok  delete-gate.js: the guard precedes the entry point
+#   ok  ask-ending.js: the guard is in the source
+#   ok  ask-ending.js: the guard precedes the entry point
+#   ok  release-chime.js: the guard is in the source
+#   ok  release-chime.js: the guard precedes the entry point
+#   ok  the runner sets the variable it asks the hooks to honour
+#   NOT BEHAVIOURALLY PROVEN (13/28): dream-watch.js, ferry-watch.js, sourced-stop.js, findings-return.js, sessionstart-state.js, dispatch-gate.js, second-reader.js, sources-gate.js, reply-slot.js, push-gate.js, delete-gate.js, ask-ending.js, release-chime.js
+#   These are silent in this fixture with OR without the variable — they need a board.jsonl
+#   and a Main capture that this suite has no hermetic seam for, so their emit path is never
+#   reached and a green spawn would measure nothing. Covered by lexical + placement only,
+#   which is weaker. Give either hook a CONSONANCE_DATA seam (dream-watch.js:256 is the
+#   pattern) and it promotes itself here with no edit to this file.
+# dream-gate: 75 passed, 0 failed
+# Subtest: consonance\\hooks\\dream-gate.test.js
+ok 2 - consonance\\hooks\\dream-gate.test.js
+  ---
+  duration_ms: 15186.8794
+  type: 'test'
+  ...
+# warning: in the working copy of 'consonance/src-tauri/src/main.rs', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/corpus-age.js', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/ROOT-note.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/attic/old-top-thing.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/attic/taken-name.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/cards/card-one.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/journal/day.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/librarian/seat-note.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/loop/2026-08-18/archaeology/NESTED-prereg-thing.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/loop/attic/deep-hidden-thing.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/loop/ref-old-thing.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/loop/run2/cells/bulk-cell-thing.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/loop/stale-unref-thing.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/loop/taken-name.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'exo_memory/loop/fresh-unref-thing.md', LF will be replaced by CRLF the next time Git touches it
+# Subtest: 1: the capacity split counts carried and indexed tiers, drops the by-name exclusions, and never sees attic/ at any depth
+ok 11 - 1: the capacity split counts carried and indexed tiers, drops the by-name exclusions, and never sees attic/ at any depth
+  ---
+  duration_ms: 4.7639
+  type: 'test'
+  ...
+# Subtest: 2: a nested file is reviewed under a rel that resolves on disk (the walk's rel, not dir+name)
+ok 12 - 2: a nested file is reviewed under a rel that resolves on disk (the walk's rel, not dir+name)
+  ---
+  duration_ms: 96.6758
+  type: 'test'
+  ...
+# Subtest: 3: a proposal needs BOTH conditions, unreferenced and old
+ok 13 - 3: a proposal needs BOTH conditions, unreferenced and old
+  ---
+  duration_ms: 185.9515
+  type: 'test'
+  ...
+# Subtest: 4: the intake cap is read from main.rs, as a number or through a name, and without it the tool refuses to print one
+ok 14 - 4: the intake cap is read from main.rs, as a number or through a name, and without it the tool refuses to print one
+  ---
+  duration_ms: 5.6307
+  type: 'test'
+  ...
+# Subtest: 5: the command line prints the same sizes the module computes
+ok 15 - 5: the command line prints the same sizes the module computes
+  ---
+  duration_ms: 106.8126
+  type: 'test'
+  ...
+# Subtest: 6: --apply moves to attic/ with a manifest, keeps the bytes, deletes nothing, and never overwrites a name taken in attic/
+ok 16 - 6: --apply moves to attic/ with a manifest, keeps the bytes, deletes nothing, and never overwrites a name taken in attic/
+  ---
+  duration_ms: 176.8352
+  type: 'test'
+  ...
+# Subtest: 7: the batched age map agrees with a per-file git log for every committed file
+ok 17 - 7: the batched age map agrees with a per-file git log for every committed file
+  ---
+  duration_ms: 203.143
+  type: 'test'
+  ...
+# Subtest: 8: the tool's by-name exclusions are the ones the real shelf drops (main.rs ships, so this holds in a consumer too)
+ok 18 - 8: the tool's by-name exclusions are the ones the real shelf drops (main.rs ships, so this holds in a consumer too)
+  ---
+  duration_ms: 3.5155
+  type: 'test'
+  ...
+# Subtest: row 1: the seats' user turns are kept verbatim, system reminders cut, and nothing else; the transcripts are left as they were
+ok 19 - row 1: the seats' user turns are kept verbatim, system reminders cut, and nothing else; the transcripts are left as they were
+  ---
+  duration_ms: 29.3293
+  type: 'test'
+  ...
+# Subtest: row 2: a re-run on unchanged transcripts writes 0 bytes; a new turn is appended once, and the old bytes stay a prefix
+ok 20 - row 2: a re-run on unchanged transcripts writes 0 bytes; a new turn is appended once, and the old bytes stay a prefix
+  ---
+  duration_ms: 42.6083
+  type: 'test'
+  ...
+# Subtest: row 3: an output inside a git work tree is refused before anything is read or written
+ok 21 - row 3: an output inside a git work tree is refused before anything is read or written
+  ---
+  duration_ms: 109.8903
+  type: 'test'
+  ...
+# Subtest: row 4: an empty line and a malformed line are skipped and counted, and the run goes on
+ok 22 - row 4: an empty line and a malformed line are skipped and counted, and the run goes on
+  ---
+  duration_ms: 8.9116
+  type: 'test'
+  ...
+# Subtest: row 5: a month file that does not parse to its last byte is refused by name, and nothing is written
+ok 23 - row 5: a month file that does not parse to its last byte is refused by name, and nothing is written
+  ---
+  duration_ms: 15.7093
+  type: 'test'
+  ...
+# Subtest: row 6: --dry-run counts what a run would add and writes nothing, not even the store's folder
+ok 24 - row 6: --dry-run counts what a run would add and writes nothing, not even the store's folder
+  ---
+  duration_ms: 15.8295
+  type: 'test'
+  ...
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: RED — 1 machine-specific path(s) not in the baseline
+#   DRIVE  FATAL-DEFAULT
+#     consonance/tools/clean.js:3
+#     const LEDGER = process.env.NOPE || 'C:\\\\Consonance\\\\data\\\\x.jsonl';
+# For code: resolve it the way the peer hooks already do — env override, then
+# ~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+# See consonance/hooks/transcript-watch.js dataDir() for the shape.
+# If the site is genuinely benign (a fixture, a test constant), run --update and
+# let the baseline diff carry the argument.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: RED — 1 machine-specific path(s) not in the baseline
+#   DISGUISED  DISGUISED
+#     consonance/tools/clean.js:3
+#     const M = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');
+# For code: resolve it the way the peer hooks already do — env override, then
+# ~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+# See consonance/hooks/transcript-watch.js dataDir() for the shape.
+# If the site is genuinely benign (a fixture, a test constant), run --update and
+# let the baseline diff carry the argument.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: RED — 1 machine-specific path(s) not in the baseline
+#   DRIVE  FATAL-DEFAULT
+#     consonance/tools/clean.js:3
+#     const D = process.env.X || 'C:\\\\Consonance\\\\data';
+# For code: resolve it the way the peer hooks already do — env override, then
+# ~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+# See consonance/hooks/transcript-watch.js dataDir() for the shape.
+# If the site is genuinely benign (a fixture, a test constant), run --update and
+# let the baseline diff carry the argument.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'baseline.json', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: code scope matched ZERO files. Refusing to report green over nothing.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: no baseline at G:\\consonance-scratch\\portable-paths-qXHE61\\does-not-exist.json. Run --update once, review the diff, commit it.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: RED — 1 machine-specific path(s) not in the baseline
+#   DRIVE  FATAL-SHIPPED-INSTRUCTION
+#     consonance/src-tauri/brief/CLEAN.md:5
+#     \# Notes go to `C:/Consonance/lighthouse/exo_memory/librarian/` as dated entries
+# A FATAL-SHIPPED-INSTRUCTION is not a code fix. The file is a brief; the reader is a
+# seat, and it will do what the line says on a machine where that path may not exist.
+# Write the location the way a reader can resolve it — repo-relative
+# (`exo_memory/librarian/`) — not as one checkout's absolute path. If the seat needs an
+# absolute path at runtime, that belongs in a tool that can resolve it, not in prose.
+# For code: resolve it the way the peer hooks already do — env override, then
+# ~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+# See consonance/hooks/transcript-watch.js dataDir() for the shape.
+# If the site is genuinely benign (a fixture, a test constant), run --update and
+# let the baseline diff carry the argument.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: cannot read the shipped-resource authority consonance/src-tauri/tauri.conf.json — ENOENT: no such file or directory, open 'G:\\consonance-scratch\\portable-paths-kuIt5O\\consonance\\src-tauri\\tauri.conf.json'
+# Refusing to report on a universe I cannot enumerate. There is no fallback list on purpose.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: shipped-prose scope matched ZERO files via consonance/src-tauri/tauri.conf.json.
+# Refusing to report green over nothing.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: RED — 1 machine-specific path(s) not in the baseline
+#   DRIVE  FATAL-USER
+#     dev/shell/hooks/userprompt_pulse.py:3
+#     STATE = os.environ.get('CONSONANCE_DATA') or 'C:\\Users\\zackn\\Consonance\\data\\pulse.json'
+# For code: resolve it the way the peer hooks already do — env override, then
+# ~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+# See consonance/hooks/transcript-watch.js dataDir() for the shape.
+# If the site is genuinely benign (a fixture, a test constant), run --update and
+# let the baseline diff carry the argument.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+# portable-paths: RED — 1 machine-specific path(s) not in the baseline
+#   DISGUISED  DISGUISED
+#     dev/shell/hooks/userprompt_pulse.py:4
+#     M = os.path.join(os.path.expanduser('~'), 'Desktop', 'lighthouse', 'METHOD.md')
+# For code: resolve it the way the peer hooks already do — env override, then
+# ~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY.
+# See consonance/hooks/transcript-watch.js dataDir() for the shape.
+# If the site is genuinely benign (a fixture, a test constant), run --update and
+# let the baseline diff carry the argument.
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'dev/shell/hooks/userprompt_pulse.py', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/brief/CLEAN.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'consonance/tools/clean.js', LF will be replaced by CRLF the next time Git touches it
+# Subtest: a drive-letter literal is detected
+ok 25 - a drive-letter literal is detected
+  ---
+  duration_ms: 1.2419
+  type: 'test'
+  ...
+# Subtest: a url is not a drive path
+ok 26 - a url is not a drive path
+  ---
+  duration_ms: 0.5997
+  type: 'test'
+  ...
+# Subtest: a portable prefix glued to a machine segment is DISGUISED, and the grep cannot see it
+ok 27 - a portable prefix glued to a machine segment is DISGUISED, and the grep cannot see it
+  ---
+  duration_ms: 0.1518
+  type: 'test'
+  ...
+# Subtest: a portable prefix with a fixed-by-convention segment does NOT fire
+ok 28 - a portable prefix with a fixed-by-convention segment does NOT fire
+  ---
+  duration_ms: 0.1505
+  type: 'test'
+  ...
+# Subtest: .consonance is not Consonance — the case distinction is load-bearing
+ok 29 - .consonance is not Consonance — the case distinction is load-bearing
+  ---
+  duration_ms: 0.7135
+  type: 'test'
+  ...
+# Subtest: comment-only lines are not scanned
+ok 30 - comment-only lines are not scanned
+  ---
+  duration_ms: 0.122
+  type: 'test'
+  ...
+# Subtest: code on a line that merely ENDS a comment is still scanned
+ok 31 - code on a line that merely ENDS a comment is still scanned
+  ---
+  duration_ms: 0.175
+  type: 'test'
+  ...
+# Subtest: the site key ignores indentation and line position
+ok 32 - the site key ignores indentation and line position
+  ---
+  duration_ms: 0.1503
+  type: 'test'
+  ...
+# Subtest: brace-counted cfg(test) regions cover the whole module and stop at its end
+ok 33 - brace-counted cfg(test) regions cover the whole module and stop at its end
+  ---
+  duration_ms: 0.3474
+  type: 'test'
+  ...
+# Subtest: THE LINE: a `}` inside a string literal does not close the test module (main.rs:5784, verbatim)
+ok 34 - THE LINE: a `}` inside a string literal does not close the test module (main.rs:5784, verbatim)
+  ---
+  duration_ms: 0.3413
+  type: 'test'
+  ...
+# Subtest: char literals holding a brace are not braces; a lifetime is not a char literal
+ok 35 - char literals holding a brace are not braces; a lifetime is not a char literal
+  ---
+  duration_ms: 0.2138
+  type: 'test'
+  ...
+# Subtest: raw strings holding a brace or a quote are not braces
+ok 36 - raw strings holding a brace or a quote are not braces
+  ---
+  duration_ms: 0.1635
+  type: 'test'
+  ...
+# Subtest: a string that spans lines keeps its brace to itself
+ok 37 - a string that spans lines keeps its brace to itself
+  ---
+  duration_ms: 0.1117
+  type: 'test'
+  ...
+# Subtest: a quote or apostrophe in a comment opens no string, and a brace in a comment is not code
+ok 38 - a quote or apostrophe in a comment opens no string, and a brace in a comment is not code
+  ---
+  duration_ms: 0.074
+  type: 'test'
+  ...
+# Subtest: main.rs has no drive literal in LIVE code, and this is what proves it
+ok 39 - main.rs has no drive literal in LIVE code, and this is what proves it
+  ---
+  duration_ms: 24.3266
+  type: 'test'
+  ...
+# Subtest: guard-census: the TOOL line that was broken on every machine
+ok 40 - guard-census: the TOOL line that was broken on every machine
+  ---
+  duration_ms: 0.3243
+  type: 'test'
+  ...
+# Subtest: guard-census: the TEST line, which a blanket test exemption would have hidden
+ok 41 - guard-census: the TEST line, which a blanket test exemption would have hidden
+  ---
+  duration_ms: 0.3021
+  type: 'test'
+  ...
+# Subtest: an ordinary fixture string in a test file stays benign
+ok 42 - an ordinary fixture string in a test file stays benign
+  ---
+  duration_ms: 0.0791
+  type: 'test'
+  ...
+# Subtest: main.rs: the OneDrive fallback that a drive-letter grep cannot see
+ok 43 - main.rs: the OneDrive fallback that a drive-letter grep cannot see
+  ---
+  duration_ms: 0.0539
+  type: 'test'
+  ...
+# Subtest: sessionstart-state: the env-override-with-a-one-box-default shape
+ok 44 - sessionstart-state: the env-override-with-a-one-box-default shape
+  ---
+  duration_ms: 0.2761
+  type: 'test'
+  ...
+# Subtest: scope includes what ships and what runs, and excludes what is a dated record
+ok 45 - scope includes what ships and what runs, and excludes what is a dated record
+  ---
+  duration_ms: 0.1497
+  type: 'test'
+  ...
+# Subtest: THE MUTATION PROOF: a new absolute path turns it red, removing it turns it green
+ok 46 - THE MUTATION PROOF: a new absolute path turns it red, removing it turns it green
+  ---
+  duration_ms: 509.7885
+  type: 'test'
+  ...
+# Subtest: the DISGUISED shape also turns it red — the half a grep would miss
+ok 47 - the DISGUISED shape also turns it red — the half a grep would miss
+  ---
+  duration_ms: 274.3596
+  type: 'test'
+  ...
+# Subtest: moving a known site does NOT fire, but a second copy of it does
+ok 48 - moving a known site does NOT fire, but a second copy of it does
+  ---
+  duration_ms: 387.9482
+  type: 'test'
+  ...
+# Subtest: a green run over ZERO files is refused, not reported clean
+ok 49 - a green run over ZERO files is refused, not reported clean
+  ---
+  duration_ms: 249.8671
+  type: 'test'
+  ...
+# Subtest: a missing baseline is a refusal with instructions, not a silent pass
+ok 50 - a missing baseline is a refusal with instructions, not a silent pass
+  ---
+  duration_ms: 167.6458
+  type: 'test'
+  ...
+# Subtest: the shipped-prose universe is READ from the manifest, never recited
+ok 51 - the shipped-prose universe is READ from the manifest, never recited
+  ---
+  duration_ms: 2.8918
+  type: 'test'
+  ...
+# Subtest: THE MOTIVATING SITE: a bundled brief naming one checkout is FATAL-SHIPPED-INSTRUCTION
+ok 52 - THE MOTIVATING SITE: a bundled brief naming one checkout is FATAL-SHIPPED-INSTRUCTION
+  ---
+  duration_ms: 0.0758
+  type: 'test'
+  ...
+# Subtest: a synthetic path in prose is a fixture, not an instruction
+ok 53 - a synthetic path in prose is a fixture, not an instruction
+  ---
+  duration_ms: 0.059
+  type: 'test'
+  ...
+# Subtest: the code comment rule is OFF for prose, or a markdown heading hides a path
+ok 54 - the code comment rule is OFF for prose, or a markdown heading hides a path
+  ---
+  duration_ms: 0.0554
+  type: 'test'
+  ...
+# Subtest: THE BAR: a laptop path planted in a BUNDLED BRIEF turns it red, removing it turns it green
+ok 55 - THE BAR: a laptop path planted in a BUNDLED BRIEF turns it red, removing it turns it green
+  ---
+  duration_ms: 412.8935
+  type: 'test'
+  ...
+# Subtest: an unreadable manifest is a REFUSAL, and there is no fallback list
+ok 56 - an unreadable manifest is a REFUSAL, and there is no fallback list
+  ---
+  duration_ms: 215.6936
+  type: 'test'
+  ...
+# Subtest: a manifest that resolves to zero files is a refusal, not a green
+ok 57 - a manifest that resolves to zero files is a refusal, not a green
+  ---
+  duration_ms: 205.9608
+  type: 'test'
+  ...
+# Subtest: a declared resource missing from disk is SKIPPED and NAMED, never silently dropped
+ok 58 - a declared resource missing from disk is SKIPPED and NAMED, never silently dropped
+  ---
+  duration_ms: 222.8227
+  type: 'test'
+  ...
+# Subtest: the green line says how many baselined sites are FATAL — exempted is not fixed
+ok 59 - the green line says how many baselined sites are FATAL — exempted is not fixed
+  ---
+  duration_ms: 1057.7057
+  type: 'test'
+  ...
+# Subtest: the real repo is green against its committed baseline
+ok 60 - the real repo is green against its committed baseline
+  ---
+  duration_ms: 212.8604
+  type: 'test'
+  ...
+# Subtest: a .py under SCOPE_IN is in the universe at all
+ok 61 - a .py under SCOPE_IN is in the universe at all
+  ---
+  duration_ms: 234.004
+  type: 'test'
+  ...
+# Subtest: THE .py MUTATION PROOF: a machine path in a hook that runs every prompt turns it red
+ok 62 - THE .py MUTATION PROOF: a machine path in a hook that runs every prompt turns it red
+  ---
+  duration_ms: 504.7779
+  type: 'test'
+  ...
+# Subtest: the DISGUISED shape is caught in .py too, not only in .js
+ok 63 - the DISGUISED shape is caught in .py too, not only in .js
+  ---
+  duration_ms: 306.6517
+  type: 'test'
+  ...
+# Subtest: a baselined REVIEW site is ANNOUNCED on a green run — exempted must not read as fixed
+ok 64 - a baselined REVIEW site is ANNOUNCED on a green run — exempted must not read as fixed
+  ---
+  duration_ms: 263.0886
+  type: 'test'
+  ...
+# Subtest: L063: a field the tool does not generate survives --update
+ok 65 - L063: a field the tool does not generate survives --update
+  ---
+  duration_ms: 216.366
+  type: 'test'
+  ...
+# Subtest: L063: a hand-corrected verdict survives --update
+ok 66 - L063: a hand-corrected verdict survives --update
+  ---
+  duration_ms: 202.7906
+  type: 'test'
+  ...
+# Subtest: L063: --update NAMES each site it newly blesses, rather than only counting them
+ok 67 - L063: --update NAMES each site it newly blesses, rather than only counting them
+  ---
+  duration_ms: 179.1182
+  type: 'test'
+  ...
+#   ok   a file matching no rule exits 1 and names the path
+#   ok   an unclassified DIRECTORY is caught, not only files
+#   ok   a fully classified fixture exits 0
+#   ok   an EMPTY data dir exits 0 — nothing present is nothing unplaced
+#   ok   a path created AFTER the manifest was written is still caught
+# state-manifest: CLASS ERROR in the manifest itself — classifying nothing until it is fixed:
+#   a.jsonl: REGENERATES without regenerated_by AND regenerated_when — that is a path being lost, and it must say so in those words
+#   ok   REGENERATES without regenerated_by is a class error
+# state-manifest: CLASS ERROR in the manifest itself — classifying nothing until it is fixed:
+#   a.jsonl: REGENERATES without regenerated_by AND regenerated_when — that is a path being lost, and it must say so in those words
+#   ok   REGENERATES without regenerated_when is a class error
+#   ok   REGENERATES with both a writer and a time passes
+# state-manifest: CLASS ERROR in the manifest itself — classifying nothing until it is fixed:
+#   a.jsonl: UNDECIDED without decided_by — an undecided with no decider is just an omission
+#   ok   UNDECIDED without decided_by is a class error
+# state-manifest: CLASS ERROR in the manifest itself — classifying nothing until it is fixed:
+#   a.jsonl: class 'MAYBE' is not one of TRAVELS, STAYS, REGENERATES, UNDECIDED
+#   ok   an unknown class name is REPORTED, not crashed through
+# state-manifest: CLASS ERROR in the manifest itself — classifying nothing until it is fixed:
+#   a.jsonl: class 'MAYBE' is not one of TRAVELS, STAYS, REGENERATES, UNDECIDED
+#   ok   a broken manifest prints NO totals
+#   ok   TRAVELS is the exact byte sum of the travelling files
+#   ok   UNDECIDED bytes are NOT counted in TRAVELS
+#   ok   a directory contributes paths but no bytes
+#   ok   first match wins when two rules GENUINELY overlap
+#   ok   the ordering also holds for the shipped pattern shape (bak before txt)
+#   ok   a glob is anchored at both ends and cannot widen into a catch-all
+#   ok   * does not cross a directory separator; ** does
+#   ok   a rule matching nothing reports as declared-not-present, and is NOT an error
+#   ok   a forbidden path that is absent leaves the run green
+#   ok   a forbidden path that EXISTS fails the run and says why
+#   ok   a forbidden path is NOT reported as placed even when a rule would match it
+# state-manifest: no corpus declared — CONSONANCE_DATA is unset and ~/.consonance.json has no data_dir.
+#                 Refusing rather than guessing a path: a report about the wrong disk reads exactly like a report about this one.
+#   ok   no corpus declared: refuses with exit 2 rather than guessing a data dir
+# state-manifest: data dir does not exist: G:\\consonance-scratch\\statemanifest-IIWMEj\\not-here
+#   ok   a declared data dir that does not exist is exit 2, not an empty green
+#   ok   the shipped manifest parses and every rule carries a reason
+#   ok   D099: a DIFFERENT scratch directory in the cell is still UNPLACED — the rule names this tree, not the cell
+#   ok   D100: the vantage_cell directory itself is UNPLACED — no rule places the old cell
+#   ok   D100: vantage_cell/mutants-run.log is UNPLACED — the L068 shelf is gone
+#   ok   D100: the empty _verify_refuse tree is UNPLACED — the D099 shelf is gone
+#   ok   any OTHER file left in vantage_cell is still UNPLACED — the rule is named, not a wildcard
+#   ok   L071: the two union backups beside the live ledgers are placed (STAYS)
+#   ok   L071: a pre-union copy of any OTHER file is still UNPLACED — the rule is named, not a wildcard
+#   ok   L076: each of the nine ledgers' union backups is placed (STAYS), resonance/atoms in its subdir
+#   ok   L076: the nine rules are NAMED — a backup of an un-marked file in the resonance subdir is still UNPLACED
+#   ok   L074: precompact.jsonl is TRAVELS and installs as a fast-forward
+#   ok   L074: sessionstart-state.jsonl is TRAVELS and installs as a fast-forward
+#   ok   L074: sourced_ledger.jsonl is TRAVELS and installs as a fast-forward
+#   ok   L074: carrier-drift.jsonl is TRAVELS and installs as a fast-forward
+#   ok   L074: ferry.jsonl is TRAVELS and installs as a fast-forward
+#   ok   L074: read_ledger.jsonl is TRAVELS and installs as a fast-forward
+#   ok   L074: return_ledger.jsonl is TRAVELS and installs as a fast-forward
+#   ok   L074: vantage_findings.jsonl is TRAVELS and installs as a fast-forward
+#   ok   L074: resonance/atoms.jsonl is TRAVELS and installs as a fast-forward
+#   ok   L074: dispatch-gate.jsonl is NOT a fast-forward install, and its reason names the rewriting writer
+#   ok   L074: no rule outside TRAVELS declares an install mode — a file that never arrives has nothing to install
+# 45 passed, 0 failed
+# Subtest: consonance\\tools\\state-manifest.test.js
+ok 6 - consonance\\tools\\state-manifest.test.js
+  ---
+  duration_ms: 1813.5782
+  type: 'test'
+  ...
+# universe-print (P-UNIVERSE bar)
+#   ok   EVERY item declares a universe - seen, skipped, and the rule that decided
+#   ok   THE BAR: a deliberately-corrupted ledger line is COUNTED as skipped, not dropped
+#   ok   POSITIVE CONTROL: the same fixture without the corrupt line reports ZERO skipped
+#   ok   the OUTER denominator is printed, not only the subset the question scores
+#   ok   the instrument states the ONE denominator it cannot walk - its own item list
+#   ok   THE BAR on the real instance: a bundled file absent from the BUILD is COUNTED, with the side named
+#   ok   the AUTHORITY is read, not recited - a different bundle produces a different number
+#   ok   drift is found across the glob-expanded files, not only the named ones
+#   ok   ARMED: a bundle that resolves to nothing is refused, not reported green
+#   ok   NO FALLBACK: an unreadable authority goes UNKNOWN rather than reverting to a built-in list
+#   ok   THE LIVE MANIFEST: the Hold was resolved (b718b91), so the item reads CLOSED and says why
+#   ok   CLAUSE 2 - the RED: the registered copy differs from the repo, and the item says so
+#   ok   CLAUSE 2 - the GREEN it must be able to reach: an identical registered copy CLOSES it
+#   ok   THE TRAP, pinned: a byte-identical copy at an UNREGISTERED path does not buy a green
+#   ok   NOT LIVE HERE is said out loud rather than smuggled in as an absent side
+#   ok   NO FALLBACK on the registration authority either: unreadable settings.json goes UNKNOWN
+# 16 passed, 0 failed
+# Subtest: consonance\\tools\\universe-print.test.js
+ok 7 - consonance\\tools\\universe-print.test.js
+  ---
+  duration_ms: 4316.2784
+  type: 'test'
+  ...
+# Subtest: row 1: the D273 instances block is in dream_cycle.ps1, and its code names no C:\\Consonance path
+ok 70 - row 1: the D273 instances block is in dream_cycle.ps1, and its code names no C:\\Consonance path
+  ---
+  duration_ms: 1.0598
+  type: 'test'
+  ...
+# Subtest: row 2: no config gives %USERPROFILE%\\claude-instances; a named instances_dir is used, trimmed; blank, non-string or not JSON falls back
+ok 71 - row 2: no config gives %USERPROFILE%\\claude-instances; a named instances_dir is used, trimmed; blank, non-string or not JSON falls back
+  ---
+  duration_ms: 2340.9992
+  type: 'test'
+  ...
+# Subtest: the guards are still in the file at all
+ok 72 - the guards are still in the file at all
+  ---
+  duration_ms: 1.0534
+  type: 'test'
+  ...
+# Subtest: presence, not process: an open app alone never decides the skip
+ok 73 - presence, not process: an open app alone never decides the skip
+  ---
+  duration_ms: 0.7685
+  type: 'test'
+  ...
+# Subtest: the idle threshold is a parameter, not a literal in the branch
+ok 74 - the idle threshold is a parameter, not a literal in the branch
+  ---
+  duration_ms: 0.1597
+  type: 'test'
+  ...
+# Subtest: an unknown idle answer fails toward NOT dreaming
+ok 75 - an unknown idle answer fails toward NOT dreaming
+  ---
+  duration_ms: 0.1264
+  type: 'test'
+  ...
+# Subtest: the idle probe returns -1 rather than throwing when the API fails
+ok 76 - the idle probe returns -1 rather than throwing when the API fails
+  ---
+  duration_ms: 0.1669
+  type: 'test'
+  ...
+# Subtest: -Force still bypasses the presence guard, and nothing else does
+ok 77 - -Force still bypasses the presence guard, and nothing else does
+  ---
+  duration_ms: 1.4335
+  type: 'test'
+  ...
+# Subtest: every skip path says WHY, because a silent skip is how this went unnoticed
+ok 78 - every skip path says WHY, because a silent skip is how this went unnoticed
+  ---
+  duration_ms: 0.1831
+  type: 'test'
+  ...
+# Subtest: the lineage rip runs once a cycle, after the battery guard and before the presence guard, and cannot end the cycle
+ok 79 - the lineage rip runs once a cycle, after the battery guard and before the presence guard, and cannot end the cycle
+  ---
+  duration_ms: 0.4846
+  type: 'test'
+  ...
+1..79
+# tests 79
+# suites 0
+# pass 79
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15200.8126

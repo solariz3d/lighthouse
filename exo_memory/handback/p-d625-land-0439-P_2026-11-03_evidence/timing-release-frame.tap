@@ -1,0 +1,38 @@
+TAP version 13
+# Subtest: row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+ok 1 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+  ---
+  duration_ms: 67988.8164
+  type: 'test'
+  ...
+# worst ms by case: {"aqua turn":[3.7],"aqua stretch":[3.4],"skyline turn":[3.7],"skyline stretch":[2.9],"glass turn":[4],"glass stretch":[4.9],"aurora turn":[4.7],"aurora stretch":[4.6],"sigil turn":[3.1],"sigil stretch":[4.1]}
+# Subtest: row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+ok 2 - row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s
+  ---
+  duration_ms: 18449.1993
+  type: 'test'
+  ...
+# 20,000 m: handler 39.5, worst frame 46.0 ms; 10001 stations after 10 s
+# Subtest: row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+ok 3 - row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s
+  ---
+  duration_ms: 6677.1132
+  type: 'test'
+  ...
+# 2514 frames watched; the exact ghost (1001 stations) after 73 ms; 0 without a ghost
+# Subtest: row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first
+ok 4 - row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first
+  ---
+  duration_ms: 7770.3145
+  type: 'test'
+  ...
+# a field change, its longest frame: p95 3.9 ms (median 3.3); handler and frames summed, not asserted: p95 4.6 ms (median 3.8)
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 101375.885

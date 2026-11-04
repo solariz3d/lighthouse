@@ -1,0 +1,20 @@
+v19-empty  plain  placed=false segs=0  idle work/s    0.5  | drag frames/s    2090 work/s   52.7 p95     3.5 med    2.2 held true  | preview frame >0.5ms/s    2.7 ms/s   137.7 p95 0.2
+v19-empty  bank   placed=false segs=0  idle work/s      0  | drag frames/s  2030.3 work/s   53.7 p95     3.5 med    2.3 held true  | preview frame >0.5ms/s    1.7 ms/s   133.1 p95 0.2
+v19-empty  cup    placed=false segs=0  idle work/s      0  | drag frames/s  2002.7 work/s     56 p95     3.7 med    2.4 held true  | preview frame >0.5ms/s    3.3 ms/s   137.9 p95 0.2
+v19-empty  edge   placed=false segs=0  idle work/s    0.5  | drag frames/s   468.3 work/s  394.3 p95     8.1 med    1.2 held true  | preview frame >0.5ms/s    467 ms/s     524 p95 1.5
+v19-empty  stack  placed=false segs=0  idle work/s    0.5  | drag frames/s     465 work/s  404.3 p95     8.2 med    1.3 held true  | preview frame >0.5ms/s    464 ms/s   524.9 p95 1.5
+v19-placed plain  placed=false idle work/s 0  drag: no handle
+v19-placed bank   placed=false idle work/s 0  drag: no handle
+v19-placed cup    placed=false idle work/s 0  drag: no handle
+v19-placed edge   placed=false idle work/s 0  drag: no handle
+v19-placed stack  placed=false idle work/s 0  drag: no handle
+v21-empty  plain  placed=false segs=0  idle work/s      0  | drag frames/s  1954.7 work/s   55.7 p95     3.9 med    2.4 held true  | preview frame >0.5ms/s      1 ms/s   129.1 p95 0.2
+v21-empty  bank   placed=false segs=0  idle work/s    0.5  | drag frames/s    70.7 work/s    7.3 p95   193.8 med  158.6 held true  | preview frame >0.5ms/s      1 ms/s     7.2 p95 0.3
+v21-empty  cup    placed=false segs=0  idle work/s      0  | drag frames/s    83.7 work/s    7.3 p95   198.7 med  159.4 held true  | preview frame >0.5ms/s    0.7 ms/s     8.5 p95 0.4
+v21-empty  edge   placed=false segs=0  idle work/s    0.5  | drag frames/s    26.3 work/s   24.3 p95   345.7 med    1.4 held true  | preview frame >0.5ms/s   25.3 ms/s    32.3 p95 1.6
+v21-empty  stack  placed=false segs=0  idle work/s      0  | drag frames/s    23.3 work/s   22.3 p95   634.6 med    1.4 held true  | preview frame >0.5ms/s   22.3 ms/s    28.1 p95 1.6
+v21-placed plain  placed=false idle work/s 0.5  drag: no handle
+v21-placed bank   placed=false idle work/s 0  drag: no handle
+v21-placed cup    placed=false idle work/s 0.5  drag: no handle
+v21-placed edge   placed=false idle work/s 0  drag: no handle
+v21-placed stack  placed=false idle work/s 0.5  drag: no handle

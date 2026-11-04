@@ -1,0 +1,5 @@
+$ grep -rl "300000\|D390" C:\Users\nname\Desktop\worktrees\p-d411-L5-N --exclude-dir=.git
+C:\Users\nname\Desktop\worktrees\p-d411-L5-N/consonance/src-tauri/tests/fixture-adagio-op11-956.jsonl
+C:\Users\nname\Desktop\worktrees\p-d411-L5-N/consonance/tools/essay-provenance.test.js
+C:\Users\nname\Desktop\worktrees\p-d411-L5-N/consonance/tools/guard-census.js
+C:\Users\nname\Desktop\worktrees\p-d411-L5-N/consonance/tools/lap-row.test.js

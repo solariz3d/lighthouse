@@ -1,0 +1,24 @@
+ok   hooks/session-start.js [SessionStart]                          none:-        empty:-        custom:-        files(custom): 
+ok   shell/sessionstart-state.js [SessionStart]                     none:default  empty:default  custom:custom   files(custom): ~/custom-data <data>/sessionstart-state.jsonl
+GAP  shell/userprompt_pulse.py [UserPromptSubmit]                   none:-        empty:-        custom:custom   files(custom): <data>/head-watch.jsonl
+ok   shell/findings-return.js [UserPromptSubmit]                    none:default  empty:default  custom:custom   files(custom): <data>/return_state/cwd.json <data>/vantage_findings.jsonl <data>/return_state ~/custom-data
+ok   hooks/ready-prompt.js [UserPromptSubmit]                       none:-        empty:-        custom:-        files(custom): 
+ok   shell/sourced-stop.js [Stop]                                   none:default  empty:default  custom:custom   files(custom): ~/custom-data <data>/sourced_ledger.jsonl
+ok   hooks/ready-stop.js [Stop]                                     none:-        empty:-        custom:-        files(custom): 
+ok   shell/carrier-drift-watch.js [Stop]                            none:default  empty:default  custom:custom   files(custom): ~/custom-data <data>/carrier-drift.jsonl
+ok   hooks/reply-slot.js [Stop]                                     none:-        empty:-        custom:-        files(custom): 
+GAP  hooks/ask-ending.js [Stop]                                     none:-        empty:-        custom:custom   files(custom): ~/custom-data <data>/ask-ending.jsonl
+ok   hooks/session-end.js [SessionEnd]                              none:-        empty:-        custom:-        files(custom): 
+ok   hooks/precompact.js [PreCompact]                               none:-        empty:-        custom:-        files(custom): 
+ok   shell/precompact-preserve.js [PreCompact]                      none:default  empty:default  custom:custom   files(custom): ~/custom-data <data>/precompact.jsonl
+ok   shell/dispatch-gate.js mcp__consonance__call_librarian [PreToolUse] none:-        empty:-        custom:-        files(custom): 
+ok   shell/dispatch-gate.js Bash [PreToolUse]                       none:-        empty:-        custom:-        files(custom): 
+GAP  hooks/second-reader.js mcp__consonance__call_librarian [PreToolUse] none:-        empty:-        custom:custom   files(custom): <data>/second-reader.lock <data>/second-reader.jsonl
+ok   hooks/second-reader.js Bash [PreToolUse]                       none:-        empty:-        custom:-        files(custom): 
+GAP  hooks/sources-gate.js mcp__consonance__call_librarian [PreToolUse] none:-        empty:-        custom:custom   files(custom): <data>/sources-gate.jsonl
+ok   hooks/sources-gate.js Bash [PreToolUse]                        none:-        empty:-        custom:-        files(custom): 
+ok   hooks/push-gate.js mcp__consonance__call_librarian [PreToolUse] none:-        empty:-        custom:-        files(custom): 
+GAP  hooks/push-gate.js Bash [PreToolUse]                           none:-        empty:-        custom:custom   files(custom): ~/custom-data <data>/push-gate.jsonl
+ok   hooks/delete-gate.js mcp__consonance__call_librarian [PreToolUse] none:-        empty:-        custom:-        files(custom): 
+GAP  hooks/delete-gate.js Bash [PreToolUse]                         none:-        empty:-        custom:custom   files(custom): ~/custom-data <data>/delete-gate.jsonl
+ok   hooks/release-chime.js Bash [PostToolUse]                      none:-        empty:-        custom:-        files(custom): 
