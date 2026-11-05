@@ -2839,3 +2839,8 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - On t180 0df08db, 11 of 18 settle-table rows are late, and in 10 of them T < floor 2√(Δ/BANK_BAR). Every Extend ramp starts at a pinned joint, so rule 2 cannot fit them unless the window crosses the start joint; that is the keeper's call (Bar X), and Bar J is the default.
 - His sketch's second ramp is on time and over BANK_BAR (0.01244 °/m² at 726 m); the plan said "under". ELYSIUM, the close-banks lap and the sketch exceed the bar today, so the bar is amended to max(BAR, today's peak).
 - **Carry:** before registering a rule that moves a window, check whether the window's needed length (the floor) fits between the pinned joints. Here it did not, on the rule's own headline case.
+
+## 2026-11-05 ~07:0xZ (L) · L139 registration, the second change on every field → `exo_memory/loop/l139_registration_2026-11-05.md`
+- On t180 0df08db (emulated second ramp, control equal to the real bank on 3 cases): turn, climb, width and cup leak ~0.6%/0.04% of the change into the hold at EVERY length 1–300 m, and the built road follows their document; there is no built-road minimum for them, so their minimum is D637's routeStartM rule (turn/climb) and 20 m (width/cup).
+- The bank's 15·√Δ is below the quintic's bar length 31.5·√Δ for every Δ: his 11-05 picture piece peaks 4.1× BANK_BAR (length assumed 750 m). Three marks (70/55/80%) each hold to their own mark in all six orders.
+- **Carry:** before porting a minimum to a new field, ask what produced it for the old one; here it was the adapter's bank re-rounding, which no other field has.
