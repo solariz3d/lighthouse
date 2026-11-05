@@ -42,3 +42,16 @@ Reading, to confirm with him before C builds:
 - Release only at his word.
 
 NEXT: chair dispatch B (Part 1) now; C's Part 2 waits for his confirmation; librarian collates
+
+## REVISED 2026-11-05 05:2x: Part 1 is parked (his 11:10Z words), and Part 2 is dispatched on the reading above, with (a) as the default
+- His "no one is working" (11:20Z): don't wait on his answer. (a) is the librarian's call, and it is reversible: the extra handle slides along the road to set where its change starts, defaulting to where L139 put it (the flow he liked). He corrects it at the drive if it is wrong.
+- Base: t180 `35feaf9` (the shape he drove). NOT e20f865.
+- **C (build):** the "extra" handles per the reading above.
+  - Each sits beside its field's handle, in the same look and colour, labelled "extra turn", "extra bank", ….
+  - It appears once its field has a value and the piece has room.
+  - Dragging it across the road sets the amount and snaps to level (or to the field's start value) on approach. Sliding it along the road moves its start, and a mark shows where.
+  - The panel gets "extra …" rows under each field, in the same style.
+  - The faint rings go.
+  - Rows go red first in a fake DOM.
+- **B (find the glitches first, read-only, in parallel):** on 35feaf9, drive the L139 UI in the fake DOM the way he did (drag turn, then bank, lengthen, drag offers) and list every jump, mis-target, vanishing mark or drag that does nothing, each with a repro. C's rows must cover each one.
+- **E:** review C's tip against B's list and his words; then C installs on L (no launch).
