@@ -1,0 +1,4 @@
+SIDE 1 (axis on screen null): down: from 500 to 229.0 | up: from 500 to -50.3 | right: no bank change | left: no bank change | down-right: from 500 to 207.2 | down-left: no bank change | up-right: no bank change | up-left: from 500 to -34.2
+SIDE -1 (axis on screen null): down: from 500 to -50.8 | up: from 500 to 229.3 | right: no bank change | left: no bank change | down-right: from 500 to -33.4 | down-left: no bank change | up-right: no bank change | up-left: from 500 to 206.7
+CMP side 1: bank down 60px: bank 114.23 | bank up 60px: bank 75.86 | extra:bank:0 down 60px: bank 88.45 extra 114.2 | extra:bank:0 up 60px: bank 88.45 extra 62.7
+CMP side -1: bank down 60px: bank 73.08 | bank up 60px: bank 114.68 | extra:bank:0 down 60px: bank 88.45 extra 62.6 | extra:bank:0 up 60px: bank 88.45 extra 114.3

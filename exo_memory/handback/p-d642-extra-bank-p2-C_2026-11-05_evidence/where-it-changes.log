@@ -1,0 +1,6 @@
+p2 identical in the candidate document: true
+p2 phi at the end: 1.543744 rate 4.136e-5
+adapter toSegments: placed 1000 first differing 971
+linear bank to the end (his): p-last identical true; placed segments 1000, first differing none
+bank, no turn: p-last identical true; placed segments 1000, first differing none
+no bank, -90: p-last identical true; placed segments 1000, first differing none

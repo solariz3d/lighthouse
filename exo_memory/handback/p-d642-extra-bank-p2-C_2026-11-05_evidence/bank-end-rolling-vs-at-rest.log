@@ -1,0 +1,2 @@
+end at rest (rate 2.63e-6 rad/m): ghost OK
+end still rolling (rate 4.32e-3 rad/m): ghost REFUSED: ghost: the candidate must extend the placed track (the same segments, then more)

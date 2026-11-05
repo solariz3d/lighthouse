@@ -1,0 +1,5 @@
+not ok 1 - D642: after his p2 (his p2: a −90 corner, then the extra +180 from 500; bank 88.45, cup 15.5, width 31) is placed, the next piece's ghost is built, so its handles are there to add to # TODO the cause is in the core (bankPlan, the rounded bank end) and the preview, not the panel: B's, handed through the librarian (D642)
+not ok 2 - D642: after his p2 (the same piece with no extra turn; bank 88.45, cup 15.5, width 31) is placed, the next piece's ghost is built, so its handles are there to add to # TODO the cause is in the core (bankPlan, the rounded bank end) and the preview, not the panel: B's, handed through the librarian (D642)
+# pass 0
+# fail 0
+# todo 2
