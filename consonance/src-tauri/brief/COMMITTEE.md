@@ -134,6 +134,8 @@ seat's in-flight file. Checkable from git history.*
   `exo_memory/handback/<packet-name>_<YYYY-MM-DD>.md`, repo-relative.
   Why: the librarian reads that directory; a hand-back written elsewhere is a hand-back never written (two packets named
   no file on 2026-09-01).
+- Keep one brief per thing being built in `exo_memory/briefs/`: his words and pictures go into the brief in the turn they arrive; the state half is updated in the same turn as the work.
+  Why: transcripts no longer travel between machines, so the repo is the handoff, and a summary of the problem is the step that loses it (`exo_memory/loop/handoff_how_handoffs_work_2026-11-04.md`).
 - Re-derive every figure from a command printed beside it, never quoted from the brief.
   Why: a number whose source is gone is a hand-made figure the next reader cannot check.
 - Report mutation runs as `applied N / caught N / NOT APPLIED N`.
