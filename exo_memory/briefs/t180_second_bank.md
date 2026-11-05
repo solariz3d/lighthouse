@@ -18,6 +18,7 @@
 - 2026-11-05 06:37Z (L), a second picture, saved beside this file as `t180_second_bank_red_marks_2026-11-05.png`. His file name is his words: "after using the first banking look where red marks are it unlocks the ability to then say keep banking it or level it all in one piece". The piece in it: turn −90° as a corner (ends straight), bank +66.14°, cup 15.5. The red marks sit across the road near the piece's end, where the second change starts.
 - 2026-11-05 06:41Z (L), on the picture: "but then imagine the same for the turn and climb, even the cupping, etc"
 - 2026-11-05 06:43Z (L), on one mark or one per field: "this is the difficult part design wise, say if you are making a multi banked turn where you also want to change the turn twice even the climb twice, each one needs to carry the same color of the original move, but it has be like around somewhere on the piece that makes sense"
+- 2026-11-05 06:49Z (L): "but see the reason I want the turn and climb is the same reason, what if i want the climb to change more than once per piece, the same with turns? With turns you can create multiple snaking curves with one piece, the same with the climb if you are inverted or upside down."
 
 ## The problem, in one line
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several

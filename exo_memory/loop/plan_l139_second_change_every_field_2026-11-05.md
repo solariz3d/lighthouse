@@ -78,4 +78,29 @@ no AC launches; no push without his word. **Update `briefs/t180_second_bank.md`'
 - C: the tick layer (`app/core/secondtick.js`) draws one mark per field, coloured, and the drag moves that field's from (one undo step, like the handles).
 - E: the registration adds a piece with three second changes at three different marks (bank at 70%, turn at 55%, climb at 80%) and requires each to hold its first value up to its own mark.
 
+## AMENDED AGAIN 2026-11-05 00:5x, at his 06:49Z words (brief): ANY NUMBER of changes per field, not two
+- His words: "what if i want the climb to change more than once per piece, the same with turns? With turns you can create multiple
+  snaking curves with one piece, the same with the climb if you are inverted or upside down."
+- **The contract becomes a list per field:** `changes: { kh: [{ from, target }, …], kv: [...], phi: [...], w: [...], c: [...], e: [...],
+  er: [...] }`.
+  - The marks are in increasing `from`. Each segment runs from its mark to the next mark (or the piece end) and blends from the previous
+    value to its target.
+  - `second: { ch: { from, target } }` (L135) stays accepted as a one-item list, so L135's rows and saves keep working.
+- **Minimums apply per segment.** Each segment, from its mark to the next one, must be at least that field's minimum (E's (A):
+  turn/climb max(20, 3·|Δκ|/ROUTE_BAR); width/cup 20 m; bank K·√Δ, with K the keeper's open call). Each mark must sit after the previous
+  segment's ramp. A refusal names the field, which change, and its minimum.
+- **Corner mode:** a list of corners, `turnDegs: [90, −90, 90]` with their marks. Each corner is exact, and the piece ends straight after
+  the last. A 3-corner S that sums to 0 ends on the start heading.
+- **Panel (C):**
+  - each field's row gets a "+ change" that adds a then/from pair. It can be added any number of times, and pairs are removed one at a
+    time;
+  - each pair draws one mark in the field's colour, draggable;
+  - Undo restores the list;
+  - a new pair's default from sits after the previous mark plus that field's minimum, clamped inside the piece.
+- **E's bar extends:**
+  - a 3-corner snake (+60, −60, +60 over 900 m) ends with heading +60 and straight;
+  - a climb list over an inversion (pitch past ±90) holds each value to its mark;
+  - the M3 three-field piece, with two changes on the turn.
+  - Everything else in fc21dcdd stands.
+
 NEXT: chair dispatch E (L139 registration on 0df08db) now; B and C start when E's registration is filed; librarian collates
