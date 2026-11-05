@@ -46,3 +46,21 @@ S = C:\Users\nname\AppData\Local\Temp\claude\4589df4838997b56\6fe15f0a-634b-4a04
 
 ## Not done, as ordered
 - d639-a 39bbb015 and plan-D640 not landed; the stick's tails and Z:\stick-backups untouched.
+
+## The librarian's two rulings (notes 6006f68d, via the chair 02:24Z)
+
+**Ruling 1, done.** `exo_memory/briefs` is in `STAYS_PRIVATE` in `consonance/tools/gen-consumer.js`, as one line beside `handback`:
+the briefs hold his words verbatim and his screenshots, so they stay out of the consumer copy. Lighthouse itself stays public.
+
+    checked: S\d640\js2.txt (node S\d640\js.js gen-consumer.test.js identity-diff.test.js, heavy-run lock held) → both exit 0
+             (both exit 1 before, above)
+    checked: grep -c briefs dev/mutation/mutate-gen-consumer.js consonance/tools/janitor.mutants.js → 0 and 0; the line is new,
+             no anchor is on it and no existing line moved
+
+**Ruling 2: a KNOWN RED, not loosened.** `intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room`
+asks for the light librarian intake to be 25,000 B or more under strict. It is 24,062 B under at the base ac29ce62 and 23,601 B under
+with this branch (the figures and runs are in "Tests" above). The test is unchanged.
+
+**Follow-up, opened here, not done:** measure what grew in the light librarian shelf since the bar last held (the 2026-10-09 comment
+at the test measured 110,038 B light; it is 117,696 B at the base). Then either trim what grew, or bring the bar to him with the
+measurement. Owner: whoever the chair names for intake.

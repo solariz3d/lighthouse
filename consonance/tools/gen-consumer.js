@@ -953,6 +953,7 @@ const STAYS_PRIVATE = {
    * not exist yet. Columned here rather than left refusing, for the L046 reason: STAYS_PRIVATE
    * changes nothing about what ships and gives the next seat one line to overturn. */
   'provenance_corrections.jsonl': 'a SECOND RECORD ABOUT THIS REPO\'S OWN HISTORY — rows that correct the seat a commit body names, each one verified against a blob frozen at a sha in THIS tree. It withholds for two independent reasons. It names this room\'s seats (chair, librarian) beside the commits they landed, which is this committee\'s internal attribution and no part of the method. And it is INERT ELSEWHERE BY CONSTRUCTION: a consumer\'s history contains none of those shas, so essay-provenance would refuse every row as NO-SUCH-COMMIT — shipping it would ship four claims nobody can check and nobody needs. The MECHANISM ships with the tool; this room\'s corrections do not',
+  'briefs': 'one brief per build, holding his words verbatim and his screenshots; they stay out of the consumer copy (the librarian\'s ruling, D640)',
   'handback': 'per-packet working papers of this committee',
   'librarian': 'per-seat, per-machine, by its own README',
   'loop': 'this record\'s registrations and rulings (one named file ships: SHIPS_FROM_PRIVATE above)',
