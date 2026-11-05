@@ -23,6 +23,7 @@
 - 2026-11-05 07:00Z (L), on whether to raise the bank minimum so a second bank cannot bump: "why is that even a question, we dont want the bumps, we want the transmutations to be smooth all around the board"
 - 2026-11-05 10:06Z (L), after driving the L139 build (35feaf9): "also the test, i swear it is broken and doesnt work in the way i want, it is glitchy and non intuitive here is a screenshot of a turn i tried to make, TEST BANKING". He then said: "there was no screen shot i meant look at the track itself through the save". His save is `AppDataRoamingcom.solariz3d.t180-track-builder	rackseq-TEST BANKING.t180track` (4,688 B, 04:00:39).
 - 2026-11-05 10:15Z (L), on the L139 build's UI: "also the UI design isnt there and is confusing, that is what is the worst part. when you drag turn, it is in the front of the piece, so after the first turn, it adds something called extra turn, and its like the same ui as the first grab turn, just added below it or around it in a way to be intuitive"
+- 2026-11-05 11:10Z (L), on the before/after page (L139 as driven vs L140 Part 1): "thanks for showing me how off you are, the road I drove is better in the way that it flows more how i want, but how it got there was lucky from how unfunctional the UI is."
 
 ## The problem, in one line
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
