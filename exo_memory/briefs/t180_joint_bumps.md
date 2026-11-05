@@ -40,6 +40,7 @@ joints that are smooth, with no extra smoothing layer.
   p29). `handback/p-d638-regen-E_2026-11-03.md`.
 - **0.4.39 = t180 main `d10eacf`**, pushed 2026-11-04, CI green, installed on D. **Not released, no tag.** The laptop's second-bank branch
   `l135-second-bank` (`0df08db`) sits on top of it (`briefs/t180_second_bank.md`).
+- **A regression the joint fix brought, found 2026-11-05 (D642):** after a piece whose rounded bank still rolls at its end, the builder refused to preview ANY next piece ("the candidate must extend the placed track"), because laying the next piece re-lays the last placed piece's bank tail. Red on d10eacf, green on e2d5a0f (checked by the librarian and by B). Fix: t180 `d642-b-ghost` e48a310 on d10eacf, preview only; the adapter and D626's smoothness are untouched (`handback/p-d642-core-B_2026-11-05.md` §2). It must land before 0.4.39 releases. E reviews first.
 - **Open, his calls:**
   - the release, after his drive;
   - his named yes on the Sharp grab trade for the release (his 19:23Z words cover testing only): on a 60-degree road the rims move up to
