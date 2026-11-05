@@ -20,6 +20,7 @@
 - 2026-11-05 06:43Z (L), on one mark or one per field: "this is the difficult part design wise, say if you are making a multi banked turn where you also want to change the turn twice even the climb twice, each one needs to carry the same color of the original move, but it has be like around somewhere on the piece that makes sense"
 - 2026-11-05 06:49Z (L): "but see the reason I want the turn and climb is the same reason, what if i want the climb to change more than once per piece, the same with turns? With turns you can create multiple snaking curves with one piece, the same with the climb if you are inverted or upside down."
 - 2026-11-05 06:53Z (L): "but that would mean you could do more than two movements, maybe they keep getting placed the more you place down, because if you look at what happens to the drag locations when you keep making the piece longer, they get like inflated in between each other, meaning more and more room keeps getting made inbetween, giving room for the next drag icon to show itself to allow the next manipulation"
+- 2026-11-05 07:00Z (L), on whether to raise the bank minimum so a second bank cannot bump: "why is that even a question, we dont want the bumps, we want the transmutations to be smooth all around the board"
 
 ## The problem, in one line
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
