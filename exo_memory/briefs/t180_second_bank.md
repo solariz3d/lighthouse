@@ -14,6 +14,7 @@
   a more fluid set of turns as one piece"
 - 2026-11-04 (L): "so once you do banking once, there is another mark towards the end you can bank again that can let the end of the piece
   bank more in one direction or back to level in one piece, instead of having to place it, then flatten it with the next piece"
+- 2026-11-05 06:34Z (L), asked whether to release 0.4.39 first: "We could just build the second move feature before. Remember its more than just the banking, its the turns, climb, etc."
 
 ## The problem, in one line
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
