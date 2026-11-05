@@ -1,0 +1,84 @@
+ok 1 - L140 G1: with the bank set, a drag on the bank handle changes the bank and makes no change
+ok 2 - L140 G2: with the climb set (as a rate), a drag on the climb handle changes the climb and makes no change
+ok 3 - L140 G3: with the turn set, a drag on the bank handle changes the bank, not the turn
+ok 4 - L140 G4: a drag on the bank handle never moves another field's mark (a turn change starting at the bank handle's station)
+ok 5 - L140 G5: a new extra change starts where it is put, by default halfway along the piece, and the slide moves it
+ok 6 - L140 G6: an extra change dragged toward level and let go 10 px short of it ends level
+ok 7 - L140 G7: on a 300 m piece, a bank change dragged to level is laid (held where it fits), not refused
+ok 8 - L140 G8: shortening a piece never leaves a change short of its minimum: it is moved earlier and still laid
+ok 9 - L140 G9: a mark dragged toward its neighbour stops at the neighbour plus the minimum, and the piece is laid
+ok 10 - L140 G10: a press with no movement on a mark that sits on a handle reaches the handle beneath
+ok 11 - L140 R1: one extra handle per field: once its change is made, no second extra handle appears for that field
+ok 12 - L140 R2: his S: a 1,000 m piece turning -90, its extra turn of +90 starts HALFWAY (500 m), and the core lays it
+ok 13 - L140 R2b: every field's extra change starts halfway by default (the bank, on 1,000 m)
+ok 14 - L140 R3: seen from far off, his 1,000 m piece about 500 px long on screen as in his picture, every extra handle stands more than three hit radii (36 px) from every other handle
+ok 15 - D641 R4 (1.6×): every field set and the camera 1.6× as far as the default (E's cameras), the extra width and cup stand more than 36 px from every other handle too (E's item 1: 26.54 / 16.99 px to the width handle)
+ok 16 - D641 R5 (E's N1): on 300 m with bank 30, a FIRST extra-bank value that cannot fit (-58.2, one call, as a fast flick's first frame) is held where it fits from its own start (150), and the first bank keeps its room
+ok 17 - D641 R6 (E's item 2): on 1,000 m with a -90 corner, the extra turn dragged to within the snap of +90 lands on +90 exactly, so the S ends dead straight (E: -1,100 px gave +90.97)
+ok 18 - D641 R7 (E's item 3, the edges): with the left edge set on 1,000 m, one later change made from its offer leaves no second offer for that edge (E: three changes, from 500, 797.63, 930.7)
+ok 19 - L135 C1: the bank's changes sit right after the bank row; a change is a row in the bank row's style (AMENDED L139: a list, not two fixed fields)
+ok 20 - L135 C2: the bank's change rows are off until the bank field has a target, on while it has one, off again when it is put back (AMENDED L139: rows of a list)
+ok 21 - L135 C3: a change with no from is laid at 85% of the length and follows it until a value is typed; cleared, it follows again (AMENDED L139: a core without secondMinM)
+ok 22 - L135 C4: the Extend options carry the bank's change only with a bank target AND a then; the core call is made with it (AMENDED L139: changes.phi, a list)
+ok 23 - L135 C5: Undo gives back the bank's change as it was for the undone piece (and whether from was typed); a new document clears it (AMENDED L139: a list)
+ok 24 - L135 C6: extendOptions is pure: no change without a bank; from left blank is 85% of the length (no secondMinM); values are sent as typed (AMENDED L139: changes)
+ok 25 - L135 C7: the panel says where the bank's mark stands: from, and the road's half width there; nothing without a change (AMENDED L139: marksAt)
+ok 26 - L135 C8: tickAt: the ghost's station s0 + from, from -half to +half across; null for a jump's ghost, no ghost, or a from off the piece
+ok 27 - L135 C9: the bank's mark is drawn into the view in css px; behind the camera it is not drawn (AMENDED L139: markStroke for tickLine)
+ok 28 - L135 C10: the layer draws the marks from the preview's own answers (ghost, view) and the panel's; nothing without them (AMENDED L139: marks, not one tick)
+ok 29 - L135 C11: with B's core, his case is built: 750 m, bank 30 then 0 from the panel's default, the piece holds about 30° at from and ends level; 637.5 is refused by name
+ok 30 - L135 C12: with B's core, a from past the piece is the core's refusal by name, shown in the panel; Extend adds nothing
+ok 31 - L135 C13: on a 300 m piece, 30° then 0, the default from is clamped to 300 less the core's own minimum; 1 cm past it is refused, naming it; typed, it stays
+ok 32 - L139 S1: every field (turn, climb, bank, width, cup, left and right edge) has its list of changes right after its row; each change is a numbered then/from row with a remove
+ok 33 - L139 S2: a field's rows are off, and not sent, while it has no target; on again with one
+ok 34 - L139 S3: a dragged change keeps its share of the piece (lengthen: the marks spread apart); a typed from stays metres; a cleared one is laid by the rule
+ok 35 - L139 S4: the options carry each field's list in the core's units; as corners, his snake (+60 −60 +60) is turnDeg plus changes.turnDeg
+ok 36 - L139 S5: every minimum is the core's secondMinM, asked per segment with its two targets (no number copied); none exported → 85%; never before an early first ramp ends
+ok 37 - L139 S6: Undo gives back every field's list (count, values, shares, typed froms); a new document clears them all
+ok 38 - L139 S7: one mark per change, in its field's handle colour (handles.js) and place across the road
+ok 39 - L139 S8: a mark is short strokes across the road at its field's place: bank on both edges, climb at the centre, cup at ±0.3, turn outside and width inside the edge
+ok 40 - L139 S9: a mark is dragged along the piece: the press on it is taken from the handles beneath, each move gives that change the nearest station, the release ends it
+ok 41 - L139 S10: in the panel a mark drag sets that change's from (as its share) and nothing else; one Ctrl+Z (the undo guard) puts it back
+ok 42 - L139 O1: a field's offer shows exactly when its free stretch reaches its change's own minimum, where the user drew it within that room; again after each change; never without a target; one per field
+ok 43 - L139 O2: shortening hides the offer at the same length lengthening showed it, with no lingering step
+ok 44 - L139 O3: dragging an offer makes exactly one change, from the offer's place, its then where the drag reached; a press with no movement makes none; one Ctrl+Z removes it; the document is untouched
+ok 45 - L139 O4: on the real core, a bank offer dragged at the place it appears is laid (form (ii): its own default drag is not refused for room)
+ok 46 - L139 O5: on the real core, his snake through the panel (corner +60, then −60, then +60 over 900 m, untyped marks) is one piece ending +60° from where it began, and straight
+ok 47 - L139 K1: his picture's −90° corner with a second corner change (+90°), its mark left to the panel, is laid by the real core on a 500 m piece, not refused
+ok 48 - L139 1 kh: a change of kh from 550 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at -0.0033333333333333335 with slope 0
+ok 49 - L139 1 kv: a change of kv from 800 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 0 with slope 0
+ok 50 - L139 1 phi: a change of phi from 700 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 0 with slope 0 and curvature 0
+ok 51 - L139 1 w: a change of w from 600 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 40 with slope 0
+ok 52 - L139 1 c: a change of c from 600 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 10 with slope 0 and curvature 0
+ok 53 - L139 1 e: a change of e from 500 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 0 with slope 0 and curvature 0
+ok 54 - L139 1 er: a change of er from 500 m holds the first value to its mark (docLeak ≤ 1% of the change), then ends at 25 with slope 0 and curvature 0
+ok 55 - L139 2: two changes on the turn (1/300 → −1/300 from 450, → 0 from 750): the first value holds to mark 1, −1/300 is reached at 750 with slope ~0, and the piece ends straight
+ok 56 - L139 3: the L135 form `second: { phi: { from, target } }` is a one-item list: the same document as `changes: { phi: [{ from, target }] }`
+ok 57 - L139 4 (E §M3): three fields, three marks; each holds to its own mark within 1% of its change, and the six orders of the fields give the same document
+ok 58 - L139 4b (the amendment): M3 with two changes on the turn (→ −1/300 from 450, → 0 from 650) holds every field to every mark
+ok 59 - L139 5a: secondMinM is the core's, one function: bank 31.5·√Δ°, turn and climb max(20, 3·|Δ|/ROUTE_BAR), width ∛(30·Δw/(0.9·BAR)), cup and edges ∛(60·8.4·Δ/BAR), never under 20 m
+ok 60 - L139 5b kh: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 61 - L139 5b kv: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 62 - L139 5b phi: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 63 - L139 5b w: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 64 - L139 5b c: a change shorter than its minimum by 0.1 m is refused by name (BAD_SECOND, the field, the change and the minimum); at the minimum it is laid
+ok 65 - L139 5c: a segment between two marks is held to the minimum as well (a change 10 m after the one before it is refused, naming change 1, the segment it starts)
+ok 66 - L139 6: refusals by name: no first target, marks out of order, a mark before the first ramp ends, a channel with no change, a target out of range
+ok 67 - L139 7: no change asked, the same bytes: `changes` undefined, null, {} and empty lists leave a piece as it was; his sketch with its typed from 637.5 is refused by name (E 711d7d10 item 6)
+ok 68 - L139 8: mirror negates the turn and the bank changes and not the width or the cup; save and open round-trip them
+ok 69 - L139 9 (E §M2, the S; AMENDED D642): a corner +90 with an extra −90 from 350 on a 700 m piece ends on the heading it started on (0.01°), its turn 0 and slope 0
+ok 70 - L139 10 (the amendment; AMENDED D642): a snake, +60 with extras −60 from 300 and +60 from 600 over 900 m, ends at +60 and straight, each extra turning its own angle over its span
+ok 71 - L139 11 (the amendment; AMENDED D642): a climb list over an inversion (+120°, an extra −120° from 500 on 1,000 m) pitches the corner's own to 500 and ends at a steady pitch, 0° in all
+ok 72 - L139 12 (E §M2): a corner after a corner needs the shortest corner from the straight it starts on: 0.1 m under it is refused by name, at it it is laid
+ok 73 - L139 13: corner lists are refused by name when they make no sense: no first corner, a turn rate change on a corner, marks out of order
+ok 74 - L139 14: a corner list with no change is the corner as before (the same bytes as turnDeg alone)
+ok 75 - L139 15 (E addendum X2): a climb RATE list through an inversion (0 → 0.005 /m over 120 m, → −0.005 from 500, → 0 from 800) holds each value to its mark and ends level-rate
+not ok 76 - L139 R2: laid BY THE PANEL, his 11-05 picture (750 m assumed): a −90° corner, bank 66.14° then 0, cup 15.5, the panel's default from: the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+ok 77 - L139 R2: laid BY THE PANEL, the same, bank "early": the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+not ok 78 - L139 R2: laid BY THE PANEL, the same on a straight road (turn as a rate, none typed): the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+ok 79 - L139 R2: laid BY THE PANEL, his sketch (L136): 270° corner, climb −6, bank −28.47 early then 0, width 30, cup 15 early: the built road's roll accelerates under the bar (× 1.05) from 20 m before the change's mark to 20 m into the next piece
+ok 80 - L139 R1 turnDeg 90°: a corner change shorter than max(cornerMinM, 31.5·√Δθ°) by 0.1 m is refused by name; at it, the built road's turn rate is under the bar (× 1.05)
+ok 81 - L139 R1 turnDeg 30°: a corner change shorter than max(cornerMinM, 31.5·√Δθ°) by 0.1 m is refused by name; at it, the built road's turn rate is under the bar (× 1.05)
+ok 82 - L139 R1 climbDeg 40°: a corner change shorter than max(cornerMinM, 31.5·√Δθ°) by 0.1 m is refused by name; at it, the built road's pitch rate is under the bar (× 1.05)
+# pass 80
+# fail 2

@@ -1827,3 +1827,6 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 
 ## 2026-11-05 — D642 part 2: after a piece whose bank eases over its whole length is placed, NO next piece gets a ghost (no handles): the rounded bank ends still rolling and the adapter re-rounds the placed tail; core + preview, handed to B
 - t180 d642-c 91cff59 (red row, todo naming B): his turntest2 p2 refuses every next ghost from segment 971 (last 58 m); a built piece ending at rest keeps it, ending rolling refuses it; the extra bank itself is reachable on p2 (up -50, down +229 = upside down), base and extra handles agree. His save sha256 unchanged. Evidence: exo_memory/handback/p-d642-extra-bank-p2-C_2026-11-05.md
+
+## 2026-11-05 — D642 parts 2b/3: the panel asks every minimum with the first ramp under it (start read as the core reads it, so an empty track has none); 6 of B's 8 panel rows green, R2 x2 is the core's minimum (1.174 x the bar at its own 272.6 m)
+- t180 d642-c3 923e0a3 on d642-b 69f6096: touched 66 files 846/2 (the 2 = R2); his three cases: extra turn 0 byte-identical to alone, checker 0 red 0 amber, real mesh no inversion; case 3 bank rises 44.23 -> 47.18 past the mark and dips to -90.96 before ending -88.45. Evidence: exo_memory/handback/p-d642-passthrough-renders-C_2026-11-05.md

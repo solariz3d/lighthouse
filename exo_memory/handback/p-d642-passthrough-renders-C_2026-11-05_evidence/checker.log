@@ -1,0 +1,4 @@
+1-minus90-alone | keys speed,speedFrom,lines,red,amber,info,jumps,lap,notChecked,pendingFrom | red [] | amber []
+2-minus90-extra-turn-0 | keys speed,speedFrom,lines,red,amber,info,jumps,lap,notChecked,pendingFrom | red [] | amber []
+3-his-p2-extra-turn-plus180-bank-back | keys speed,speedFrom,lines,red,amber,info,jumps,lap,notChecked,pendingFrom | red [] | amber []
+case 3 bank, s: deg 450:39.758 460:40.651 470:41.545 480:42.438 490:43.332 500:44.225 510:45.105 520:45.908 530:46.557 540:46.998 550:47.177 560:47.053 570:46.587 580:45.754 590:44.534 600:42.914 610:40.885 620:38.45
