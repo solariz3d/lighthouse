@@ -422,3 +422,84 @@ threshold, with no hysteresis and no step where it lingers.
 - **No viewport or panel code was read** beyond `handles.js:49-64`.
 - **Whether the handle layer can draw a fainter kind:** not checked.
 - **Amendment D's arithmetic** is from the plan's own words, not from running C's code.
+
+---
+
+## ADDENDUM: smooth all around (pass, not reported) (2026-11-05 ~07:0xZ local 01:0x, pane E, before B's tip)
+
+**Why:** the keeper's ruling, 07:00Z (`briefs/t180_second_bank.md:23`): "why is that even a question, we dont want the bumps, we want
+the transmutations to be smooth all around the board".
+- **The pass bar's item 9 changes, and so does Amendment B's "reported, not a pass condition".** Every change's peak under its field's
+  bar is now a PASS CONDITION, at the end joint and through the change. That applies to bank, turn, climb, width, cup and edges.
+- **B's stated plan** (the chair's 01:00 packet):
+  - bank K raised to 31.5;
+  - turn and climb keep ROUTE_BAR;
+  - cup and edges get a measured cross-section minimum;
+  - width stays at 20 m.
+- **Nothing was run for this addendum.** The width figures below are derived, and marked `inferred:`.
+
+### One bar for every field, because the room already has one
+
+- BANK_BAR (`adapter.js:402`) and ROUTE_BAR (`panel.js:111`) are the same number, 29.4/(10·170²) = 1.0173e-4 per m²: **3 g of load
+  change over 10 m of road at 170 m/s.**
+- So every field is held to the same felt quantity, read on the BUILT road (`A.toPath`, 0.5 m samples, 2 m differences, as
+  `joints()` reads them).
+
+| field | the line read | the quantity | bar |
+|---|---|---|---|
+| bank | the path's roll | roll acceleration | BANK_BAR |
+| turn | the centre line | rate of change of lateral curvature (kvec·L) | ROUTE_BAR |
+| climb | the centre line | rate of change of vertical curvature (kvec·U) | ROUTE_BAR |
+| width | each road edge | rate of change of the edge line's lateral curvature | ROUTE_BAR |
+| cup, edges | the wheel lines at u = ±8.4 m (`core_joint_c2`'s wheel) | rate of change of the surface's vertical curvature | ROUTE_BAR |
+
+### The pass condition (replaces item 9 of the pass bar, and Amendment B's last bullet)
+
+- **9′.** For every change in every field's list, over its ramp and 20 m either side of its end, each line's peak is ≤ its bar × 1.05
+  (`joints()` measure b's tolerance), at the minimum that field refuses below and at every length above it.
+- **Scored on:**
+  - every registered case (M1–M4, X1–X3);
+  - his sketch, and his 11-05 picture's piece at 750 m. With K = 31.5 its 66.14° second bank needs 256.2 m, so that piece's default
+    `from` moves to 493.8;
+  - one minimum-length case per field at Δ ∈ {small, mid, the panel's max}.
+- **Scope, so it cannot be gamed or over-claimed:** this binds the changes in the `changes` lists and their end joints. A FIRST ramp's
+  peak stays bound as L136 (C) bound it: no worse than max(bar, its 0df08db peak). It is not newly made a pass condition here.
+  - Fixing first ramps is L136's open lap. Holding them to this bar here would fail ELYSIUM and the close-banks lap before B writes a
+    line.
+- **And:** the end joint stays clean on `joints()` a–d, using `ramps` for every change, as L135 4b does.
+
+### Width: the plan as stated is likely to fail this bar (inferred, to be measured on B's tip)
+
+- Width is a ROUTE channel. It blends with the Bloss cubic (`extend.js:1-10`), which is C1 only: its second derivative steps by
+  6·Δw/L² at both ends of a ramp.
+- The road edge sits at w/2, so **inferred: the edge line's lateral curvature steps by 3·Δw/L² at the end joint.**
+  - Read over a 2 m difference, that is a rate of about 1.5·Δw/L² per m.
+  - For width 30 → 40 over 20 m: 0.0375 /m², about **370× ROUTE_BAR**.
+  - Holding a cubic's step under the bar needs L ≥ √(1.5·Δw/ROUTE_BAR) ≈ 121·√(Δw in m): 384 m for a 10 m change.
+- With the C2 quintic (as the cross-section channels use), the step is gone. inferred: the bar then needs about
+  L ≥ (30·Δw/ROUTE_BAR)^(1/3) ≈ 66.5·∛Δw: **143 m for a 10 m change, 66.5 m for 1 m.**
+- **So "width at 20 m" will fail 9′ unless measured otherwise.** Whether the edge line is what the car feels on his families'
+  profiles is not checked here. The bar is still the keeper's "smooth all around"; if the measure shows the edge line is not felt, the
+  hand-back must show which line is.
+- **The unwelcome outcome, said now:** a width change that feels smooth may need 70–140 m, not 20 m. If so, the fix is B's (a C2
+  blend, a measured minimum), and 9′ does not bend for it.
+
+### Degenerating (added)
+
+- Any change, on any field, whose peak exceeds its bar × 1.05 at or above its own refused minimum.
+- A minimum raised only in the panel, so the core still lays the bumpy one.
+- A bar loosened, or a line dropped from the table above, to reach green.
+- A first ramp's peak made worse than at 0df08db.
+- **The bank with K = 31.5:** his sketch's second bank (28.47° from 637.5) now needs 168.1 m against its 112.5 m. Its default
+  `from` must move to 581.9 or its piece be refused by name. **His sketch's bytes (pass item 6) were registered with the old
+  default.**
+  - So item 6 now reads: his sketch typed with an explicit `bankFrom` of 637.5 is refused by name, and with the panel's default it lays
+    at the new default.
+  - The old sha256 `a33c039f…` is kept as the 0df08db reference, and is expected to change.
+
+### NOT verified (this addendum)
+
+- **The width derivation:** not run.
+- **Which line a car feels on a bowl or halfpipe profile when the width changes:** not checked.
+- **The cup and edge wheel-line reading:** depends on a built-cup reader. Mine was VOID in M1, so a working one is owed before
+  scoring.
