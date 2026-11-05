@@ -48,7 +48,7 @@ It is rendered and waiting for his look before the install.
     green.
   - Round 2: one extra handle per field, the extra change starting at 0.5 by default (the handle stays where he drew it, and a mark shows
     the start), `clearExtras` keeping every extra handle ≥ 36 px from the others. Rows R1–R3 went red on c42f985, then green (38/38).
-    Committed at the handoff (sha in `loop/handoff_t180_2026-11-05.md`). NOT installed.
+    Committed at the handoff as `d91227f` (its touched test set not re-run yet). NOT installed.
 - Renders shown to him: https://claude.ai/artifact/CgeimWxjovDpXKNnzGeiPR (v3 = round 2, his S as one piece).
 
 **What to do next, in order:**
