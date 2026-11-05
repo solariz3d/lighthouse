@@ -215,3 +215,112 @@ started on; any change to a piece with no `second` (byte-identical); his sketch 
 
 - My first scan run crashed: a climb corner over 45° was evaluated with a NaN aim (my script). Fixed and re-run whole.
 - Two readers in my own scan are wrong: the built cup and the M3 built climb. Both are marked VOID above rather than dropped.
+
+---
+
+## ADDENDUM: any number of changes (2026-11-05 ~07:0xZ, pane E, before B's code)
+
+**Why:** his 06:49Z words (brief): "what if i want the climb to change more than once per piece, the same with turns? With turns you
+can create multiple snaking curves with one piece, the same with the climb if you are inverted or upside down."
+- **The plan:** "AMENDED AGAIN 2026-11-05 00:5x" (`plan_l139_…:81`, c0d4e750). `changes: { ch: [{ from, target }, …] }`, with
+  minimums per segment.
+- **Everything above stands, except bar (4)** (correction A1 below).
+
+**How it was measured:**
+- Read-only on 0df08db: `git worktree add --detach <scratch>/l139-E2 0df08db`, `find -type l` → 0, removed after.
+- `node --max-old-space-size=4096 l139list.js <tree>` → `l139list.txt` (the lock, BelowNormal). The script is committed in
+  `l139_registration_scripts/`.
+- **The list emulator** extends the one above. A field's ideal is its first ramp, a hold to mark 1, then for each change a blend (the
+  channel's own) from the previous target to its target over [its mark, the next mark or the end]. 8 knots are inserted per segment; the
+  channel alone is refitted, holding every point before mark 1.
+- **Control, checked:** a one-item list equals the real `second` bank (`equal: true`, 49 points).
+
+### X1 · The snake as corners
+
+Emulated as one Turn-by piece per corner, as in M2. In B's build it is one piece.
+
+| case | start heading | end heading | off start + Σ | end kh, slope | each corner's minimum |
+|---|---|---|---|---|---|
+| [90, −90, 90] over 900 m | 90.000000° | 0.000000° | 0.000000° | 0, 0 | 21, 21, 21 m |
+| [+60, −60, +60] over 900 m | 90.000000° | 30.000001° | 0.000001° | 0, 0 | 21, 21, 21 m |
+| [90, −90] over 600 m (the S) | 90.000000° | 90.000000° | 0 | 0, 0 | 21, 21 m |
+
+The map heading convention runs opposite to the turn's sign (a +90 turn reads −90). The bar is sign-free.
+
+- **Bar:** B's one piece with `turnDegs: [90, −90, 90]` ends at start + Σ within 0.01°, with kh 0 and slope 0 (|·| ≤ 1e-9). The same
+  holds for [+60, −60, +60] and for the S.
+  - Each corner is refused by name below its own `shortestTurnBy` at the state of its mark (21 m on these).
+  - Each corner is laid when its segment is at that minimum.
+- **Degenerating:** any snake that ends off its expected heading by more than 0.01°, or not straight; a list refused where every
+  segment is at or over its own minimum; or the sum drifting with the number of corners (compare 2-corner against 3-corner).
+
+### X2 · A climb list through an inversion
+
+**The case:**
+- kv 0 → 0.005 rad/m over 120 m, held;
+- at 500 m → −0.005;
+- at 800 m → 0.
+
+Each segment clears its own minimum: 300 m against 3·0.01/ROUTE_BAR = 294.9 m, and 200 m against 147.4 m.
+
+**checked:**
+- The pitch passes 90° at 374.25 m and peaks at 152.91°.
+- **Holds:** the first value holds to mark 1 within 1.62e-5 /m (0.16% of the 0.01 change). Change 1 reaches −0.005 at 800 within
+  8.7e-8, with slope 1.8e-7. Change 2 ends at 0, slope 0.
+- **The built road through the inversion:** the path's curvature along U against the document's kv over the whole piece stays within
+  **1.03e-6 /m**, skipping the 2 m chord around each mark. The worst point is at 1 m, not past 90°.
+  - The sign holds upside down: checked at 300 m, where the pitch is about 70° and still rising.
+  - inferred: the same holds past 90°, from the 1.03e-6 max over the whole piece. The road's U flips with the car, so kvec·U keeps
+    the document's sign.
+
+- **Bar:** each value is held to its mark within 1% of that change's |Δ|. Each change reaches its target at the next mark (or the
+  end) with slope ≤ 1e-6 of |Δ| per m. The built road's curvature follows the document within 1e-5 /m over the whole piece, outside
+  the 2 m chords at the marks.
+- **Degenerating:** a climb list refused or clamped because the road is upside down; the built curvature leaving the document past
+  90° pitch (a sign flip or a step); a hold breaking by more than 1% of |Δ|.
+
+### X3 · M3 with two turn changes
+
+**The piece:** bank 30° → 0 from 700; climb 4°/100 m → 0 from 800; turn 1/300 → −1/300 from 400, then → 0 from 750. The turn's
+segments are 350 m and 250 m, against minimums of 196.7 m and 98.3 m. Three orders of laying were tried.
+
+checked (`l139list.txt` `.m3`):
+
+| field | first value to its mark | each change at the next mark |
+|---|---|---|
+| bank | 3.76e-4 rad (0.07% of 30°) | 0, slope 0 at 1000 |
+| turn | 1.08e-5 /m (0.16% of the 2/300 change) | −1/300 at 750 within 3.1e-9, slope ≤ 1e-8; 0, slope 0 at 1000 |
+| climb | 2.26e-6 /m (0.32%) | 0, slope 0 at 1000 |
+
+- **Bar:** each field within 1% of |Δ| to each of its marks, whatever the order of fields. Each change reaches its target at its next
+  mark with slope ≤ 1e-6 of |Δ| per m.
+- **Degenerating:**
+  - the turn's second change leaking into its first hold beyond 1%;
+  - bank or climb moving beyond 1% of their own |Δ| because the turn's extra knots were inserted;
+  - the turn list's last change failing to end straight.
+
+### A1 · Correction to bar (4) above: my own measurement already broke it as written
+
+- (4) said the orders of laying "give the same document within 1e-5 of each channel's step". The bank's step is 1e-9 rad
+  (`document.js:58` `DEC`).
+- Measured, the orders differ by **2.9e-6 rad on the bank in M3** (fc21dcdd) and **4.47e-5 rad in X3**, which is about 45,000 steps.
+  Other fields: turn 2.6e-8 /m, climb 1.24e-6 /m.
+- So (4) failed on my own emulator before B wrote a line. The cause is the re-quantisation of every other channel around each inserted
+  knot (`extend.js` comment above `secondRamp`), which depends on the order of insertion.
+- **(4) now reads:**
+  - B lays the fields in ONE fixed order, so the same `changes`, written with its keys in any order, gives byte-identical documents;
+  - and any other order of laying stays within 0.1% of each field's |Δ| of that one (measured: 0.009% on the bank, 0.0004% turn,
+    0.18% climb).
+
+### This addendum's falsifier
+
+- If `l139list.js` on 0df08db does not reproduce `control.equal: true` and the X1 headings, its figures are void.
+- If B's one-piece snake differs from the three-piece emulation by more than 0.01° in end heading, the emulation was not
+  representative of corners as one piece, and X1 is re-measured on B's code before scoring.
+
+### NOT verified (addendum)
+
+- **Corner lists as one piece:** emulated as pieces.
+- **A climb list as corners (`climbDegs`) through an inversion:** not run. Only rate mode.
+- **Built bank or cup under a list:** not run (lists of turn and climb only, plus M3's single bank change).
+- **Lists of width, cup or edge:** not run. inferred: they follow the route and C2 recipes measured above.
