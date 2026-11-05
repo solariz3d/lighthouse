@@ -1,0 +1,2 @@
+D641 (f) on 19ef575 (before the commit-time rewrite): typed -654.7, oninput then onchange -> the field reads -654.7 while the options lay phi = -294.7 deg.
+node --test --test-name-pattern="(f)" app/test/core-extra-bank-wind.test.js -> not ok 1, "the field says what is laid (it reads -654.7)"

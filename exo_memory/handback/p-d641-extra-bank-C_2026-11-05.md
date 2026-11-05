@@ -109,5 +109,55 @@ fold.
   - inferred: his picture matches the extra reading better, as his own words say ("the extra banking breaks"). That comes from how it looks, not from proof.
 - **The checker:** E reports no red on his typed state. I did not re-run it.
 
+## Orders 2 and 4 (the chair, 15:12Z and 15:33Z): items (a)–(f) on d641-c
+
+**Branch `d641-c` head `df62d6f`:** `19ef575` (the accepted extra-bank hold), `1b98cc4` ((a)–(d) and (f); it took the hold out while order 3's "HOLD
+any winding bound" stood), and `df62d6f` (the hold back, at order 4: only the BASE bank's winding waits for his ruling). Not installed, not pushed.
+
+**Red first:**
+- checked: on the old source (`19ef575`'s `panel.js` and `handles.js`, stashed for the run) → R4 (1.6×), R5, R6 and R7 not ok
+  (`widened-red-old-source.summary`). The failures are E's own figures: 26.5 / 17.0 px to the width handle, from 4.16 m, and 90.97°
+  (`widened-red-old-source.failures.txt`).
+- checked: (f) not ok before its fix, the field reading −654.7 (`f-red-before.txt`).
+- checked: on `df62d6f` → `core-extra-handles-glitches` + `core-extra-bank-wind`: **21 pass, 0 fail, 0 todo** (`widened-green-df62d6f.summary`).
+- checked: the touched set on `df62d6f` (every app and core test file naming `core/panel` or `core/handles`, the mutation harnesses left out at "check
+  it": 63 files, `touched-set-files.txt`), under the heavy-run lock, BelowNormal, one slot → **63 files, 821 pass, 0 fail** (`touched-set-df62d6f.out`).
+  The tree stayed at `df62d6f` from start to end. An earlier run of the same set passed 821/0 but had the tree changed under it, so it is not counted.
+
+| item | row | the fix (all in the extra-handle code) |
+|---|---|---|
+| (a) width and cup clear 36 px | R4 (1.6×), E's cameras | `handles.js clearExtras`: when no step back clears, it steps forward too. The ones that cleared going back keep their place |
+| (b) the edges | R7 | built: `panel.js offersAt` offers a field with no extra handle (the edges) ONE later change, as the extra handles give the others |
+| (c) N1 | R5 | `panel.js secondExtra`: a change the drag just made falls back on the value it starts from (the offer's base), so an unfit first value is held where it fits from its own start (150, 7.33°), not moved to 4.16 m |
+| (d) the S | R6 | `panel.js` snap list: a corner's extra also snaps to minus the first corner, so the S lands on +90 and ends straight (heading −6.9e−15°, `opts-widened.json`) |
+| (e) the reversal past 180° | none (it does not reproduce) | see below |
+| (f) typed −654.70 | (f) row | `panel.js`: on commit (the field's change event, never while typing) a bank past one turn is rewritten to the value laid, as an emptied field already shows its 0 |
+
+**(a) is met at 1.6× and NOT at 2.4×. Saying so plainly:**
+- At 2.4× the piece is about 304 px on screen. Eight places (three of base handles, five extras) do not fit 36 px apart in the order they stand along
+  the road.
+- Stepping both ways the best is 32.9 px (to the extra climb), below the 34 px where two glyphs touch. A 4× finer step did worse.
+- I wrote no row at a made-up bar. Clearing 2.4× needs a design call: fewer or smaller handles on a piece that small on screen.
+- The plot `renders-widened/handles-1x-1.6x-2.4x.png` shows it: at 2.4× the extra width has stepped far forward to its best spot, which no longer reads as
+  "just ahead of the width handle".
+
+**(e) does not reproduce as a reversal on the real ghost** (checked: `e-long-drag-real-ghost-df62d6f.txt`, `scripts/e-probe.test.js`, one long quick
+drag each way from +65.3 at his HUD's piece):
+- **The base bank handle** moves one way only and STALLS at −124.3 and +235.1. The road's roll turns its axis away, and it never comes back.
+- **The extra bank** moves one way only to ±360 and holds.
+- E's "+1,700 px came back as +111.87" is the wrap: 111.87 + 360 = 471.87, past a turn and wrapped back. That is the fault `19ef575` fixes and R1 pins.
+- The base stalling about 180° from where it starts is the base bank's own winding behaviour, held for his ruling. I changed nothing there.
+
+**Renders** (`renders-widened/`):
+- `S-one-piece-*`: his S as one piece, the −90 corner and the snapped +90 extra, ending straight.
+- `N1-300m-flick-*`: E's flick on 300 m, held at 7.33° from 150. The frame turns at most 0.69° per 2 m.
+- `handles-1x-1.6x-2.4x.png`: the handle plot above.
+- The road renders are drawn from the core's path. The plot is from the real panel and handles.
+
+**Corrections:**
+- **R4's first camera** was R3's farther pose, not E's. I moved it to E's cameras (`drive-full.js :129`) before trusting either result.
+- **One `sed -i`** stripped the CRs from the glitches test file. I restored CRLF on every line and checked that the diff is additions only.
+- **Two inline `node -e` edits** to scratch scripts broke my own no-inline rule. Both applied cleanly.
+
 BASE: C:\Users\nname\Downloads\t180-fresh d91227f
 SOURCES: core-extra-bank-wind.test.js TAP on d91227f and 19ef575; touched-set.out; page-render-before.log and page-render-after.log; ribbon641.js output; opts.json; the probe rows (scripts/opts.test.js)

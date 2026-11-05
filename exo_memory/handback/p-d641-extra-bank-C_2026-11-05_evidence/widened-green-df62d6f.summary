@@ -1,0 +1,24 @@
+ok 1 - D641 R1 (down): at his HUD's piece, a long drag on the extra bank handle holds at one turn: it never winds past ±360° nor jumps back round
+ok 2 - D641 R1 (up): at his HUD's piece, a long drag on the extra bank handle holds at one turn: it never winds past ±360° nor jumps back round
+ok 3 - D641 (f): a bank typed as −654.70 and committed reads −294.70 in the field, the value the road is laid with
+ok 4 - L140 G1: with the bank set, a drag on the bank handle changes the bank and makes no change
+ok 5 - L140 G2: with the climb set (as a rate), a drag on the climb handle changes the climb and makes no change
+ok 6 - L140 G3: with the turn set, a drag on the bank handle changes the bank, not the turn
+ok 7 - L140 G4: a drag on the bank handle never moves another field's mark (a turn change starting at the bank handle's station)
+ok 8 - L140 G5: a new extra change starts where it is put, by default halfway along the piece, and the slide moves it
+ok 9 - L140 G6: an extra change dragged toward level and let go 10 px short of it ends level
+ok 10 - L140 G7: on a 300 m piece, a bank change dragged to level is laid (held where it fits), not refused
+ok 11 - L140 G8: shortening a piece never leaves a change short of its minimum: it is moved earlier and still laid
+ok 12 - L140 G9: a mark dragged toward its neighbour stops at the neighbour plus the minimum, and the piece is laid
+ok 13 - L140 G10: a press with no movement on a mark that sits on a handle reaches the handle beneath
+ok 14 - L140 R1: one extra handle per field: once its change is made, no second extra handle appears for that field
+ok 15 - L140 R2: his S: a 1,000 m piece turning -90, its extra turn of +90 starts HALFWAY (500 m), and the core lays it
+ok 16 - L140 R2b: every field's extra change starts halfway by default (the bank, on 1,000 m)
+ok 17 - L140 R3: seen from far off, his 1,000 m piece about 500 px long on screen as in his picture, every extra handle stands more than three hit radii (36 px) from every other handle
+ok 18 - D641 R4 (1.6×): every field set and the camera 1.6× as far as the default (E's cameras), the extra width and cup stand more than 36 px from every other handle too (E's item 1: 26.54 / 16.99 px to the width handle)
+ok 19 - D641 R5 (E's N1): on 300 m with bank 30, a FIRST extra-bank value that cannot fit (-58.2, one call, as a fast flick's first frame) is held where it fits from its own start (150), and the first bank keeps its room
+ok 20 - D641 R6 (E's item 2): on 1,000 m with a -90 corner, the extra turn dragged to within the snap of +90 lands on +90 exactly, so the S ends dead straight (E: -1,100 px gave +90.97)
+ok 21 - D641 R7 (E's item 3, the edges): with the left edge set on 1,000 m, one later change made from its offer leaves no second offer for that edge (E: three changes, from 500, 797.63, 930.7)
+# pass 21
+# fail 0
+# todo 0

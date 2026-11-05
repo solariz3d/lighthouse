@@ -58,6 +58,15 @@ It is rendered and waiting for his look before the install.
   through −329°, jumped round, and wound on. His −294.70 was a point on that wind. It now holds at one turn (±360°, the base bank's range). The road
   at −294.70 is a smooth twist past a full turn, not a broken mesh (no frame jump, no edge running backward). Hand-back:
   `exo_memory/handback/p-d641-extra-bank-C_2026-11-05.md`.
+  - Widened at the chair's word, from E's review: `d641-c` head `df62d6f`.
+    - The extra width and cup clear the other handles at 1.6×; NOT at 2.4×, a design call (no room on a piece that small on screen).
+    - The edges get one later change each.
+    - A fast flick holds where it fits.
+    - The S snaps exactly straight.
+    - A typed bank past a turn shows what is laid.
+    - E's "reversal past 180°" was the wrap, which the extra hold fixes.
+    - The BASE bank's winding (it stalls about 180° from where it starts in one drag) waits for his ruling.
+    - Touched set 63 files, 821/0. Not installed.
 
 **What to do next, in order:**
 1. His look at round 2's renders. The open question there: should the turn drag move faster? (+90° is about 1,000 px at 0.083°/px.)

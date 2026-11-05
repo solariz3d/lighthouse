@@ -1,0 +1,4 @@
+is 17.0 px from width:1
+is 26.5 px from width:1
+still starts at its own start, not moved earlier to fit (from 4.16)
+undoes the first exactly (90.97)
