@@ -26,6 +26,9 @@ const child = (data, cmd, then, seat) => spawn(process.execPath, ['-e',
 { env: cleanEnv({ CONSONANCE_DATA: data, ...(seat ? { CONSONANCE_PANE: seat } : {}) }), stdio: ['ignore', 'pipe', 'pipe'] });
 const done = (cp) => new Promise((res) => { let out = '', err = ''; cp.stdout.on('data', (b) => { out += b; }); cp.stderr.on('data', (b) => { err += b; }); cp.on('close', (code) => res({ code, out, err })); });
 const until = async (pred, ms = 10000) => { const t0 = Date.now(); while (!pred()) { if (Date.now() - t0 > ms) throw new Error('timed out waiting'); await new Promise((r) => setTimeout(r, 25)); } };
+// The log lines minus the disk guard's low-space WARNING (D287): acquire() reads the real drive, so on a machine under 50 GB free that warning is
+// logs[0] and a row matching the waiting line read it instead (D640 ruling, fix lap 2: rows 3, 32, 34 red at 39.5 GB). The warning has its own rows below.
+const notDisk = (logs) => logs.filter((s) => !/^heavy-run: WARNING: .* GB free, under \d+ GB/.test(s));
 
 test('TWO RUNS STARTED TOGETHER: the second WAITS, names the first\'s seat, pid and command, and runs only after it', async () => {
   const d = tmp();
@@ -71,7 +74,7 @@ test('a LIVE holder is never taken over: after the max wait the second FAILS LOU
     (e) => e.code === 'HEAVY_RUN_TIMEOUT' && /cccc3333 pid 777 \(union-at-launch\.mutants, since 2026-09-23T09:00:00\.000Z\)/.test(e.message) && /not running anyway/i.test(e.message),
   );
   assert.deepStrictEqual(readLock(d), live, 'the live lock is untouched');
-  assert.match(logs[0], /^heavy-run: waiting on cccc3333 pid 777/);
+  assert.match(notDisk(logs)[0], /^heavy-run: waiting on cccc3333 pid 777/);
 });
 
 test('RELEASE ON A THROWN ERROR: a runner that throws leaves no lock behind', async () => {
@@ -407,7 +410,7 @@ test('D286 two runners on the SAME tree: the second waits, though slot 2 is free
   const e = waitFail(d, '/t/a');
   assert.match(e.message, /gave up after .* pid \d+ \(run-\/t\/a, since /); assert.strictEqual(e.holders.length, 1);
   assert.ok(!fs.existsSync(slot2(d)), 'it did not take the free slot');
-  assert.match(e.logs[0], /^heavy-run: waiting on .*run-\/t\/a.* — it holds this tree/);
+  assert.match(notDisk(e.logs)[0], /^heavy-run: waiting on .*run-\/t\/a.* — it holds this tree/);
   a.release();
 });
 
@@ -423,7 +426,7 @@ test('D286 a THIRD runner with both slots held waits and names BOTH holders', ()
   const e = waitFail(d, '/t/c');
   assert.strictEqual(e.holders.length, 2);
   assert.match(e.message, /run-\/t\/a.* and .*run-\/t\/b.* still hold the slots/);
-  assert.match(e.logs[0], /run-\/t\/a.* and .*run-\/t\/b.* — all 2 slots are held/);
+  assert.match(notDisk(e.logs)[0], /run-\/t\/a.* and .*run-\/t\/b.* — all 2 slots are held/);
   assert.ok(fs.existsSync(lockOf(d)) && fs.existsSync(slot2(d)), 'both holders untouched');
   const e2 = waitFail(d, '/t/a');   // the same tree as one of them: it is waiting on THAT one, and says so (not on both)
   assert.strictEqual(e2.holders.length, 1); assert.match(e2.message, /run-\/t\/a/); assert.doesNotMatch(e2.message, /run-\/t\/b/);
