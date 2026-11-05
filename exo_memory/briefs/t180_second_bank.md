@@ -14,12 +14,70 @@
   a more fluid set of turns as one piece"
 - 2026-11-04 (L): "so once you do banking once, there is another mark towards the end you can bank again that can let the end of the piece
   bank more in one direction or back to level in one piece, instead of having to place it, then flatten it with the next piece"
+- 2026-11-05 06:34Z (L), asked whether to release 0.4.39 first: "We could just build the second move feature before. Remember its more than just the banking, its the turns, climb, etc."
+- 2026-11-05 06:37Z (L), a second picture, saved beside this file as `t180_second_bank_red_marks_2026-11-05.png`. His file name is his words: "after using the first banking look where red marks are it unlocks the ability to then say keep banking it or level it all in one piece". The piece in it: turn −90° as a corner (ends straight), bank +66.14°, cup 15.5. The red marks sit across the road near the piece's end, where the second change starts.
+- 2026-11-05 06:41Z (L), on the picture: "but then imagine the same for the turn and climb, even the cupping, etc"
+- 2026-11-05 06:43Z (L), on one mark or one per field: "this is the difficult part design wise, say if you are making a multi banked turn where you also want to change the turn twice even the climb twice, each one needs to carry the same color of the original move, but it has be like around somewhere on the piece that makes sense"
+- 2026-11-05 06:49Z (L): "but see the reason I want the turn and climb is the same reason, what if i want the climb to change more than once per piece, the same with turns? With turns you can create multiple snaking curves with one piece, the same with the climb if you are inverted or upside down."
+- 2026-11-05 06:53Z (L): "but that would mean you could do more than two movements, maybe they keep getting placed the more you place down, because if you look at what happens to the drag locations when you keep making the piece longer, they get like inflated in between each other, meaning more and more room keeps getting made inbetween, giving room for the next drag icon to show itself to allow the next manipulation"
+- 2026-11-05 07:00Z (L), on whether to raise the bank minimum so a second bank cannot bump: "why is that even a question, we dont want the bumps, we want the transmutations to be smooth all around the board"
+- 2026-11-05 10:06Z (L), after driving the L139 build (35feaf9): "also the test, i swear it is broken and doesnt work in the way i want, it is glitchy and non intuitive here is a screenshot of a turn i tried to make, TEST BANKING". He then said: "there was no screen shot i meant look at the track itself through the save". His save is `AppData\Roaming\com.solariz3d.t180-track-builder\tracks\eq-TEST BANKING.t180track` (4,688 B, 04:00:39).
+- 2026-11-05 10:15Z (L), on the L139 build's UI: "also the UI design isnt there and is confusing, that is what is the worst part. when you drag turn, it is in the front of the piece, so after the first turn, it adds something called extra turn, and its like the same ui as the first grab turn, just added below it or around it in a way to be intuitive"
+- 2026-11-05 11:10Z (L), on the before/after page (L139 as driven vs L140 Part 1): "thanks for showing me how off you are, the road I drove is better in the way that it flows more how i want, but how it got there was lucky from how unfunctional the UI is."
+- 2026-11-05 11:43Z (L), drawing on the page's sketch, saved as `t180_extra_handles_where_2026-11-05.png`. His file name: "look for my drawn on lines to indicate the corresponsing color of the type of movement move everything to where i drew". In chat: "look for where my drawing of lines are indicating where I want you to move each drag zone for the second one, you see how i want it". Read from the drawing, with the road from 0 at the start to 1 at the front: every extra handle sits ON the road, on its own field's line, just ahead of its base handle. Extra bank on the edge at ~0.60 (bank 0.50); extra climb on the centre line at ~0.74 (climb 0.50); extra turn on the edge at ~0.89 (turn at the front); extra width on the edge at ~0.11 (width at the start). Not outside the edge.
+- 2026-11-05 12:15Z (L), on round 2 of the extra-handle renders: "the artifact looks good to me, but now its time for me to try it"
+- 2026-11-05 13:29Z (L), trying the L140 build (c42f985), with two pictures saved beside this file: `t180_extra_turn_before_2026-11-05.png` (his file name: "90 degree turn before doing the second turn") and `t180_extra_turn_after_2026-11-05.png` ("adding second turn morphs the turn to sharper 90 degrees, and only changes the second curve up to the second turn where i marked red"). In chat: "i first tried to add a piece that does a simple S turn as one piece, it doesnt work right, and every time you click turn it auto adds another turn too close to the new one added, it needs to auto move to make room so they do not overlap … the second turn only engages for the marked red area and not the rest of the turn which should ease half way through, and every subsequent click adds another one, perhaps we should only do two per action on the piece you know? Until we figure out how to make it work right"
+- 2026-11-05 13:43Z (L): "but yes, i dont have time to extensively test the newest build, so push it all to the repo anyway just no release yet, need to test it more at home after"
 
 ## The problem, in one line
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
 pieces. He wants one piece to change a second time toward its end.
 
-## State (summary; check it against the repo)
+## State (summary; check it against the repo) — updated 2026-11-05 07:4x, the handoff at his word
+**Where it stands, in one paragraph.** The core of "one piece changes again toward its end" works for every field. The second-change SHAPE
+he likes is L139's (`35feaf9`): it flows. What fought him was the UI. L140 replaces the L139 faint rings with **extra handles**: the same
+look as the field's own handle, placed where he drew them (`briefs/t180_extra_handles_where_2026-11-05.png`). Round 1 (`c42f985`) is
+installed on L, and he tried it. Round 2 fixes what he found (two per field, the extra change starting halfway, no overlapping handles).
+It is rendered and waiting for his look before the install.
+
+**The branch chain (t180, none on main, no release):**
+- `l135-second-bank` `0df08db`: the bank only (on origin).
+- `l139-second-change` `35feaf9`: any number of changes on every field, smooth all around. **The shape he likes.** The branch tip is
+  `e20f865`, L140 Part 1, PARKED: its "first change holds, marks toward the end" changed the flow he liked (his 11:10Z words). Don't land it.
+- `l140-extra-handles`, off `35feaf9`:
+  - `c42f985`: round 1, the extra handles plus fixes for B's G1–G10 glitches. **Installed on L** (exe sha256 af3b5a90…). E: G1–G10
+    green.
+  - Round 2: one extra handle per field, the extra change starting at 0.5 by default (the handle stays where he drew it, and a mark shows
+    the start), `clearExtras` keeping every extra handle ≥ 36 px from the others. Rows R1–R3 went red on c42f985, then green (38/38).
+    Committed at the handoff as `d91227f` (its touched test set not re-run yet). NOT installed.
+- Renders shown to him: https://claude.ai/artifact/CgeimWxjovDpXKNnzGeiPR (v3 = round 2, his S as one piece).
+
+**What to do next, in order:**
+1. His look at round 2's renders. The open question there: should the turn drag move faster? (+90° is about 1,000 px at 0.083°/px.)
+2. C runs the full touched set on round 2 and installs on L (back up first, no launch). He tries it.
+3. E reviews round 2 against B's G1–G10 and his three items (brief :29).
+4. At his word: land on main, then release 0.4.39 with it, and point his desktop shortcut back at the rebuilder (the installer reset it to
+   the exe).
+
+**Still open, not this lap:**
+- first ramps (L136: a fast first bank is built late, and the joint design call is his);
+- the cup profile's ¾-knot corner (1.6× the bar when a steep narrow cup widens);
+- the branch's author on l135 (`zackn@localhost`; re-author on landing).
+
+**How we work now (his rules from these two nights):**
+- show him an artifact before a build and renders of the real result before the install;
+- when he names the worst part, fix that part;
+- smooth all around (every change under the 3 g bar);
+- his words and pictures go into this brief in the turn they arrive.
+
+## State at 2026-11-05 03:4x (L139 installed), kept as a trace
+- **Every field, any number of changes: BUILT, reviewed GREEN, installed on L for his drive.** t180 branch `l139-second-change` at `35feaf9` (not pushed, not on main). Installed exe sha256 65eb4636…; not launched; built-head.txt still d10eacf.
+  - Contract: `changes: { kh|kv|phi|w|c|e|er: [{from,target}] }`; corners `changes.turnDeg/climbDeg: [{from,deg}]`. In the panel, the next change is a faint offer in the field's colour that appears once the piece has room (2× the 20 m floor), and dragging it makes the change. Marks are short strokes in the field's colour; they keep their share of the piece when it lengthens.
+  - Smooth all around (his 07:00Z ruling): every change blends by the quintic; minimums: bank 31.5·√Δ°, corners max(21, 31.5·√Δθ°), turn/climb rate max(20, 3|Δκ|/ROUTE_BAR), width ∛-rule, cup/edges a proven bound. His picture and his sketch, laid through the panel, read 0.995× the bar on the built road.
+  - Plan `loop/plan_l139_second_change_every_field_2026-11-05.md`; registration `loop/l139_registration_2026-11-05.md`; hand-backs `handback/p-l139-{B,C,E}_2026-11-05.md`. Backups: `AppData\Local\T-180 Backups\` (the L135 build and 0.4.39).
+- **Open:** his drive; the release of 0.4.39 with it, at his word; an offer may show, then refuse a big bank change (it reveals at 40 m, but a 30° bank needs 172.5 m), for his drive to judge; the cup profile's ¾-knot corner (1.6× when a steep narrow cup widens); first ramps (L136, bank arrives late; the first rounded ramp reads 1.6× built when early); the branch's author (re-author on landing).
+
+## Earlier state (L135, 2026-11-04), kept as a trace
 - **Bank: built.** t180 branch `l135-second-bank` at `0df08db`, on origin and not on main. Installed on L for his drive.
   - Fields: **then bank °** and **from (m)** under bank. The default from is min(85%, length − 15·√Δ°).
   - A second ramp shorter than 15·√Δ° is refused by name.
