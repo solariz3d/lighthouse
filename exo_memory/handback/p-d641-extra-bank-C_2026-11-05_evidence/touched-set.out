@@ -1,0 +1,15 @@
+app/test/core-extra-bank-wind.test.js: pass 2 fail 0 exit 0
+app/test/core-extra-handles-glitches.test.js: pass 14 fail 0 exit 0
+app/test/core-extra-handles.test.js: pass 8 fail 0 exit 0
+app/test/core-pieces-ui.test.js: pass 55 fail 0 exit 0
+app/test/core-sculpt.test.js: pass 15 fail 0 exit 0
+app/test/core-second-change-panel.test.js: pass 16 fail 0 exit 0
+app/test/drag-ghost.test.js: pass 7 fail 0 exit 0
+app/test/handle-step.test.js: pass 6 fail 0 exit 0
+app/test/handles.test.js: pass 44 fail 0 exit 0
+app/test/preview.test.js: pass 86 fail 0 exit 0
+app/test/sculpt-cues.test.js: pass 6 fail 0 exit 0
+app/test/sound.test.js: pass 18 fail 0 exit 0
+app/test/theme.test.js: pass 12 fail 0 exit 0
+app/test/core-second-bank-panel.test.js: pass 13 fail 0 exit 0
+TOTAL files 14 pass 302 fail 0; non-zero exit: none

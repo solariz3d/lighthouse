@@ -53,6 +53,11 @@ It is rendered and waiting for his look before the install.
     the start), `clearExtras` keeping every extra handle ≥ 36 px from the others. Rows R1–R3 went red on c42f985, then green (38/38).
     Committed at the handoff as `d91227f` (its touched test set not re-run yet). NOT installed.
 - Renders shown to him: https://claude.ai/artifact/CgeimWxjovDpXKNnzGeiPR (v3 = round 2, his S as one piece).
+- D641, his 15:09Z "the extra banking breaks" (2026-11-05, C): `d641-c` `19ef575` off `d91227f`, not installed, not pushed. The extra bank's drag
+  had no stop: its handle stands where its own change has hardly rolled the road, so the axis never turned it away the way the base bank's does; it wound
+  through −329°, jumped round, and wound on. His −294.70 was a point on that wind. It now holds at one turn (±360°, the base bank's range). The road
+  at −294.70 is a smooth twist past a full turn, not a broken mesh (no frame jump, no edge running backward). Hand-back:
+  `exo_memory/handback/p-d641-extra-bank-C_2026-11-05.md`.
 
 **What to do next, in order:**
 1. His look at round 2's renders. The open question there: should the turn drag move faster? (+90° is about 1,000 px at 0.083°/px.)

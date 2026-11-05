@@ -1,0 +1,2 @@
+no step of the drag jumps the bank round (the biggest step was 359.7°)
+no step of the drag jumps the bank round (the biggest step was 358.0°)

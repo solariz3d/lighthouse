@@ -1,0 +1,4 @@
+ok 1 - D641 R1 (down): at his HUD's piece, a long drag on the extra bank handle holds at one turn: it never winds past ±360° nor jumps back round
+ok 2 - D641 R1 (up): at his HUD's piece, a long drag on the extra bank handle holds at one turn: it never winds past ±360° nor jumps back round
+# pass 2
+# fail 0

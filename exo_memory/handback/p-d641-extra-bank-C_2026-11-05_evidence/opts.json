@@ -1,0 +1,78 @@
+{
+ "his-hud-minus294.7": {
+  "options": {
+   "length": 2040.48,
+   "targets": {
+    "phi": 1.1397000015522971
+   },
+   "bankShape": "rounded",
+   "turnDeg": 90,
+   "changes": {
+    "phi": [
+     {
+      "from": 1020.24,
+      "target": -5.143485305627289
+     }
+    ]
+   }
+  },
+  "hudBank": -294.70000002135475
+ },
+ "level-0": {
+  "options": {
+   "length": 2040.48,
+   "targets": {
+    "phi": 1.1397000015522971
+   },
+   "bankShape": "rounded",
+   "turnDeg": 90,
+   "changes": {
+    "phi": [
+     {
+      "from": 1020.24,
+      "target": 0
+     }
+    ]
+   }
+  },
+  "hudBank": 0
+ },
+ "more-plus90": {
+  "options": {
+   "length": 2040.48,
+   "targets": {
+    "phi": 1.1397000015522971
+   },
+   "bankShape": "rounded",
+   "turnDeg": 90,
+   "changes": {
+    "phi": [
+     {
+      "from": 1020.24,
+      "target": 1.5707963267948966
+     }
+    ]
+   }
+  },
+  "hudBank": 90.00000001175157
+ },
+ "drag-stop-minus360": {
+  "options": {
+   "length": 2040.48,
+   "targets": {
+    "phi": 1.1397000015522971
+   },
+   "bankShape": "rounded",
+   "turnDeg": 90,
+   "changes": {
+    "phi": [
+     {
+      "from": 1020.24,
+      "target": -6.283185307179586
+     }
+    ]
+   }
+  },
+  "hudBank": -359.9999999897105
+ }
+}
