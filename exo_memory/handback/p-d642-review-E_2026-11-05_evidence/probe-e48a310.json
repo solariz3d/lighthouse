@@ -1,0 +1,354 @@
+{
+ "A": [
+  {
+   "last": "rounded bank 88.45 over 1,000 (his)",
+   "next": "straight 100",
+   "placedSegsChanged": 29,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 971 of 1000"
+  },
+  {
+   "last": "rounded bank 88.45 over 1,000 (his)",
+   "next": "bank -180 over 250",
+   "placedSegsChanged": 337,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 663 of 1000"
+  },
+  {
+   "last": "rounded bank 88.45 over 1,000 (his)",
+   "next": "turn rate -20, bank 0",
+   "placedSegsChanged": 30,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 970 of 1000"
+  },
+  {
+   "last": "rounded bank 88.45 over 1,000 (his)",
+   "next": "corner +90",
+   "error": "no maker"
+  },
+  {
+   "last": "rounded bank 88.45 over 1,000 (his)",
+   "next": "width 20, cup 0",
+   "placedSegsChanged": 29,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 971 of 1000"
+  },
+  {
+   "last": "rounded bank 88.45 over 1,000 (his)",
+   "next": "jump",
+   "placedSegsChanged": 29,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 971 of 1000"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "straight 100",
+   "placedSegsChanged": 125,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate0",
+    "rollRate1",
+    "roll0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 500 of 625"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "bank -180 over 250",
+   "placedSegsChanged": 125,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate0",
+    "rollRate1",
+    "roll0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 500 of 625"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "turn rate -20, bank 0",
+   "placedSegsChanged": 125,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate0",
+    "rollRate1",
+    "roll0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 500 of 625"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "corner +90",
+   "error": "no maker"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "width 20, cup 0",
+   "placedSegsChanged": 125,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate0",
+    "rollRate1",
+    "roll0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 500 of 625"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "jump",
+   "placedSegsChanged": 125,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate0",
+    "rollRate1",
+    "roll0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 500 of 625"
+  },
+  {
+   "last": "turn rate 30°/100m + bank 40 rounded",
+   "next": "straight 100",
+   "placedSegsChanged": 20,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 780 of 800"
+  },
+  {
+   "last": "turn rate 30°/100m + bank 40 rounded",
+   "next": "bank -180 over 250",
+   "placedSegsChanged": 19,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 781 of 800"
+  },
+  {
+   "last": "turn rate 30°/100m + bank 40 rounded",
+   "next": "turn rate -20, bank 0",
+   "placedSegsChanged": 20,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 780 of 800"
+  },
+  {
+   "last": "turn rate 30°/100m + bank 40 rounded",
+   "next": "corner +90",
+   "error": "no maker"
+  },
+  {
+   "last": "turn rate 30°/100m + bank 40 rounded",
+   "next": "width 20, cup 0",
+   "placedSegsChanged": 20,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 780 of 800"
+  },
+  {
+   "last": "turn rate 30°/100m + bank 40 rounded",
+   "next": "jump",
+   "placedSegsChanged": 20,
+   "fieldsChanged": [
+    "roll1",
+    "rollRate1",
+    "roll0",
+    "rollRate0"
+   ],
+   "routeMax": 0,
+   "ghost": "re-laid from 780 of 800"
+  },
+  {
+   "last": "climb 4°/100m + cup 20 + width 40",
+   "next": "straight 100",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  },
+  {
+   "last": "climb 4°/100m + cup 20 + width 40",
+   "next": "bank -180 over 250",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  },
+  {
+   "last": "climb 4°/100m + cup 20 + width 40",
+   "next": "turn rate -20, bank 0",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  },
+  {
+   "last": "climb 4°/100m + cup 20 + width 40",
+   "next": "corner +90",
+   "error": "no maker"
+  },
+  {
+   "last": "climb 4°/100m + cup 20 + width 40",
+   "next": "width 20, cup 0",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  },
+  {
+   "last": "climb 4°/100m + cup 20 + width 40",
+   "next": "jump",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "straight 100",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "bank -180 over 250",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "turn rate -20, bank 0",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "corner +90",
+   "error": "no maker"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "width 20, cup 0",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "jump",
+   "placedSegsChanged": 0,
+   "fieldsChanged": [],
+   "routeMax": 0,
+   "ghost": "copy-and-extend"
+  }
+ ],
+ "B": [
+  {
+   "what": "the true candidate",
+   "result": "ACCEPTED as re-laid from 971"
+  },
+  {
+   "what": "its last placed piece turns 1e-3 rad/m more on one segment (a route change)",
+   "result": "ACCEPTED as re-laid from 971"
+  },
+  {
+   "what": "its last placed piece climbs 1e-3 rad/m more on one segment",
+   "result": "ACCEPTED as re-laid from 971"
+  },
+  {
+   "what": "its last placed piece 10 m longer on one segment",
+   "result": "ACCEPTED as re-laid from 971"
+  },
+  {
+   "what": "its last placed piece rolled 0.5 rad more on one segment",
+   "result": "ACCEPTED as re-laid from 971"
+  }
+ ],
+ "C": [
+  {
+   "last": "rolling (rounded 88.45 over 1,000)",
+   "km": 22,
+   "coarse (a drag)": {
+    "medianMs": 122.6,
+    "maxMs": 168.5,
+    "relaid": 10971
+   },
+   "full": {
+    "medianMs": 123.2,
+    "maxMs": 202.6,
+    "relaid": 10971
+   }
+  },
+  {
+   "last": "at rest (bank 30 over 1,000)",
+   "km": 22,
+   "coarse (a drag)": {
+    "medianMs": 31.1,
+    "maxMs": 35.5
+   },
+   "full": {
+    "medianMs": 29.1,
+    "maxMs": 37
+   }
+  }
+ ]
+}

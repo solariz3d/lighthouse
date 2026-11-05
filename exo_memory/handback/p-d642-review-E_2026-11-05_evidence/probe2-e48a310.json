@@ -1,0 +1,56 @@
+[
+ {
+  "last": "his 88.45 rounded over 1,000",
+  "next": "straight 100",
+  "placedSegsRelaid": 29,
+  "metres": 58,
+  "maxRollChangeDeg": 0.087,
+  "routeFieldsChanged": false,
+  "ghost": "re-laid from 971"
+ },
+ {
+  "last": "his 88.45 rounded over 1,000",
+  "next": "corner +90 over 400 (turnDeg)",
+  "placedSegsRelaid": 29,
+  "metres": 58,
+  "maxRollChangeDeg": 0.087,
+  "routeFieldsChanged": false,
+  "ghost": "re-laid from 971"
+ },
+ {
+  "last": "his 88.45 rounded over 1,000",
+  "next": "corkscrew on, -180 over 250",
+  "placedSegsRelaid": 337,
+  "metres": 674,
+  "maxRollChangeDeg": 8.8107,
+  "routeFieldsChanged": false,
+  "ghost": "re-laid from 663"
+ },
+ {
+  "last": "corkscrew -90 over 250",
+  "next": "straight 100",
+  "placedSegsRelaid": 125,
+  "metres": 250,
+  "maxRollChangeDeg": 0.026,
+  "routeFieldsChanged": false,
+  "ghost": "re-laid from 500"
+ },
+ {
+  "last": "corkscrew -90 over 250",
+  "next": "corner +90 over 400 (turnDeg)",
+  "placedSegsRelaid": 125,
+  "metres": 250,
+  "maxRollChangeDeg": 0.026,
+  "routeFieldsChanged": false,
+  "ghost": "re-laid from 500"
+ },
+ {
+  "last": "corkscrew -90 over 250",
+  "next": "corkscrew on, -180 over 250",
+  "placedSegsRelaid": 125,
+  "metres": 250,
+  "maxRollChangeDeg": 17.7751,
+  "routeFieldsChanged": false,
+  "ghost": "re-laid from 500"
+ }
+]

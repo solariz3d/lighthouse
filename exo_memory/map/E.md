@@ -2861,3 +2861,8 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-05 ~10:1x local (D) · D641 review of C's d641-c df62d6f: GREEN → `exo_memory/handback/p-d641c-review-E_2026-11-05.md`
 - The ±360 extra-bank hold, (b) one edge change, (c) the flick held at 7.33° from 150, (d) the S at +90.00 ending straight, and (f) −654.7 → −294.7 on commit all hold on my drives; C's 63 files 827/821/0/6 skipped. (a) not met at 2.4× (32.91 px, as C says); (e) agreed: my "came back" was the ±720 wrap (my ghost is straight and cannot roll), and the base bank stalls at −124.3/+235.1 on the rolling ghost (C's e-probe, re-run). For his call: the hold is absolute, so from +65.3 the extra can roll 425°.
 - **Carry:** before inferring a mechanism from a harness, check the harness can produce it; a straight ghost cannot roll an axis.
+
+## 2026-11-05 ~15:2x local (D) · D642 review of B's e48a310 (the re-laid-tail ghost): NOT GREEN on one guard → `exo_memory/handback/p-d642-review-E_2026-11-05.md`
+- The bug is fixed (rows red on d10eacf, green here; mutants 106/106 and 65/65), but the guard takes ANY change inside the last placed piece: a candidate with its turn, climb or length changed is accepted as "re-laid" (refused on d10eacf). Every real candidate (25 combos + corner) changes only roll0/roll1/rollRate0/rollRate1, so a field check closes it.
+- After a rolling end the ghost builds the whole path: 123 ms against 30 ms on 22 km, drags included (synchronous). He will see the re-laid 58 m as a half-road violet tint before the joint, likely flickering on the GPU.
+- **Carry:** when a guard is loosened to admit a known difference, tamper each field the guard no longer checks and see which pass; "only inside the last piece" said where, not what.

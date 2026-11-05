@@ -1,0 +1,20 @@
+start 21:06:29Z e48a310
+rows exit 0 21:07:07Z
+# tests 25
+# pass 24
+# fail 0
+# skipped 1
+# todo 0
+mutation exit 0 21:12:24Z
+# tests 110
+# pass 110
+# fail 0
+# skipped 0
+# todo 0
+core-mutation exit 0 21:15:14Z
+# tests 70
+# pass 70
+# fail 0
+# skipped 0
+# todo 0
+ALL-END
