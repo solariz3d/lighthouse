@@ -71,4 +71,11 @@ turn can end level.
 Rules: heavy-run lock at 4096; own CARGO_TARGET_DIR per build; targeted tests in review, one full suite at the merge; commit by named paths;
 no AC launches; no push without his word. **Update `briefs/t180_second_bank.md`'s state half in the same turn as each landing.**
 
+## AMENDED 2026-11-05 00:4x, at his 06:43Z words (brief): one mark PER FIELD, in that field's colour
+- **Supersedes "one shared from" above.** Each field with a second change has its own **from**: . B: no shared-from refusal; each channel is checked against its own minimum.
+- **The marks:** each field's mark is drawn across the road in that field's handle colour (: turn #b968ff, climb #ffd23d, bank #4d86ff, width #ff5a5a, cup #3ddc6e). It sits at that field's handle position across the road (each handle's ), so marks at the same distance do not cover each other. Bank's is at both edges (lat 1), climb's at the centre (lat 0), cup's at 0.3.
+- **"Somewhere on the piece that makes sense":** each mark is a handle you drag along the piece. Its default is after that field's own first change has finished, at min(85%, length − that field's minimum), and never before its first ramp ends. In the panel, each field's row has its own **then** and **from**.
+- C: the tick layer () draws one mark per field, coloured, and the drag moves that field's from (one undo step, like the handles).
+- E: the registration adds a piece with three second changes at three different marks (bank at 70%, turn at 55%, climb at 80%) and requires each to hold its first value up to its own mark.
+
 NEXT: chair dispatch E (L139 registration on 0df08db) now; B and C start when E's registration is filed; librarian collates
