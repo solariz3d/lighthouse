@@ -26,7 +26,14 @@
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
 pieces. He wants one piece to change a second time toward its end.
 
-## State (summary; check it against the repo)
+## State (summary; check it against the repo) — updated 2026-11-05 03:4x, L139 installed on L
+- **Every field, any number of changes: BUILT, reviewed GREEN, installed on L for his drive.** t180 branch `l139-second-change` at `35feaf9` (not pushed, not on main). Installed exe sha256 65eb4636…; not launched; built-head.txt still d10eacf.
+  - Contract: `changes: { kh|kv|phi|w|c|e|er: [{from,target}] }`; corners `changes.turnDeg/climbDeg: [{from,deg}]`. In the panel, the next change is a faint offer in the field's colour that appears once the piece has room (2× the 20 m floor), and dragging it makes the change. Marks are short strokes in the field's colour; they keep their share of the piece when it lengthens.
+  - Smooth all around (his 07:00Z ruling): every change blends by the quintic; minimums: bank 31.5·√Δ°, corners max(21, 31.5·√Δθ°), turn/climb rate max(20, 3|Δκ|/ROUTE_BAR), width ∛-rule, cup/edges a proven bound. His picture and his sketch, laid through the panel, read 0.995× the bar on the built road.
+  - Plan `loop/plan_l139_second_change_every_field_2026-11-05.md`; registration `loop/l139_registration_2026-11-05.md`; hand-backs `handback/p-l139-{B,C,E}_2026-11-05.md`. Backups: `AppDataLocalT-180 Backups` (the L135 build and 0.4.39).
+- **Open:** his drive; the release of 0.4.39 with it, at his word; an offer may show, then refuse a big bank change (it reveals at 40 m, but a 30° bank needs 172.5 m), for his drive to judge; the cup profile's ¾-knot corner (1.6× when a steep narrow cup widens); first ramps (L136, bank arrives late; the first rounded ramp reads 1.6× built when early); the branch's author (re-author on landing).
+
+## Earlier state (L135, 2026-11-04), kept as a trace
 - **Bank: built.** t180 branch `l135-second-bank` at `0df08db`, on origin and not on main. Installed on L for his drive.
   - Fields: **then bank °** and **from (m)** under bank. The default from is min(85%, length − 15·√Δ°).
   - A second ramp shorter than 15·√Δ° is refused by name.
