@@ -284,6 +284,8 @@ his process list or his disk is ours to clean, and he should never be the one to
 ## Hand-backs and collation
 
 - Panes follow `COMMITTEE.md` for what a hand-back holds, where it is written, and how it rings the librarian.
+- Keep one brief per thing being built in `exo_memory/briefs/`: his words and pictures go into the brief in the turn they arrive; the state half is updated in the same turn as the work.
+  Why: transcripts no longer travel between machines, so the repo is the handoff, and a summary of the problem is the step that loses it (`exo_memory/loop/handoff_how_handoffs_work_2026-11-04.md`).
 - The librarian's collation ring to you says whether the output changed the next step; that rule lives in `LIBRARIAN.md`.
 - Your part is the landing order to a pane, quoting the librarian's leg (see "On a hand-back, you route" and "Landings go to
   a pane" above).
