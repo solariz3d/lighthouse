@@ -324,3 +324,101 @@ checked (`l139list.txt` `.m3`):
 - **A climb list as corners (`climbDegs`) through an inversion:** not run. Only rate mode.
 - **Built bank or cup under a list:** not run (lists of turn and climb only, plus M3's single bank change).
 - **Lists of width, cup or edge:** not run. inferred: they follow the route and C2 recipes measured above.
+
+---
+
+## ADDENDUM: offers appear by room (2026-11-05 ~07:2xZ, pane E, before C's code; scored on C's tip)
+
+**Why:** his 06:53Z words (brief): "they keep getting placed the more you place down … more and more room keeps getting made inbetween,
+giving room for the next drag icon to show itself to allow the next manipulation".
+- **The plan:** "AMENDED A THIRD TIME 2026-11-05 00:5x" (`plan_l139_…:106`, 4689dcfa). There is no "+ change" button. A fainter
+  handle, the OFFER, appears once the stretch after a field's last change reaches that field's floor, and dragging it makes the next
+  change.
+- **Nothing was run for this addendum.** It is read against the plan, against `app/core/handles.js:49-64` at 0df08db (each kind's `at`
+  fraction, `lat` and colour), and against the minimums registered above (A, and the first addendum's per-segment rule).
+
+### Terms, so that the rows can be scored
+
+| term | meaning |
+|---|---|
+| floor(field) | the reveal length: 20 m for every field (the plan: the bank reveals at 20 m and refuses on release by K·√Δ) |
+| free stretch R | for a field with only a first target: L − (its first ramp's end). For a field with changes: L − (its last mark + the last change's own minimum), the room the last change must keep |
+| offer position | where the plan puts it: the middle of the free stretch |
+
+### Amendment D: the plan's reveal rule and its position contradict each other at the threshold
+
+- An offer revealed when R = floor and placed at the middle of R leaves its own new change only R/2 = floor/2 to the piece's end. That
+  is under the floor, so **dragging the offer exactly where it appears would be refused.**
+- Two consistent forms. C chooses one and names it in the hand-back:
+  - **(i)** reveal at R ≥ floor, and place the offer at the START of the free stretch (the new change gets R, and the last one keeps
+    its minimum);
+  - **(ii)** reveal at R ≥ 2·floor, and keep it at the middle. His "room keeps getting made inbetween" reads closer to (ii).
+- In the rows below, "the threshold" is the one C's form implies (floor for (i), 2·floor for (ii)).
+
+### Row O1 · An offer appears exactly at the field's minimum, and not before
+
+**Bar.** For each field (turn, climb, bank, width, cup, plus edge where C draws one), on a piece where that field has a first target,
+lengthen the piece in 0.1 m steps (the length field, then the white handle):
+- The offer is absent at threshold − 0.1 m, and present at the threshold within 0.1 m.
+- Then add one change and repeat. The second offer appears at the new threshold, measured from the new last change, the same way.
+- A field with no target shows no offer at any length.
+- **Its look:**
+  - drawn in the field's own colour from `handles.js`, fainter than the used handle;
+  - at the field's `lat`, so offers at one distance do not cover each other;
+  - at most one offer per field at a time.
+
+**Degenerating.**
+- An offer visible below its threshold.
+- An offer absent at threshold + 0.1 m.
+- An offer whose own default drag position is refused by the core (Amendment D).
+- Two offers for one field at once.
+- An offer for a field that has no target.
+
+### Row O2 · It disappears when the piece is shortened below it
+
+**Bar.** From any length where an offer shows, shorten in 0.1 m steps. The offer is gone at threshold − 0.1 m and back at the
+threshold, with no hysteresis and no step where it lingers.
+- **A USED change that no longer fits** (its segment, or the one before it, below its minimum) **refuses the shortening by name.** The
+  refusal names the field, which change, and the length it needs. The document stays byte-identical to before the attempt. Nothing is
+  silently dropped or moved.
+- **When the piece is lengthened, the stored marks either keep their metres or keep their fraction of the piece.** C states which, and
+  a row pins it. inferred: his "inflated in between each other" is the fraction. The handles already do it (`at` fractions), while a
+  typed `from` (L135) is metres. Either way, a lengthen never moves a mark below its field's minimum.
+
+**Degenerating.**
+- An unused offer still drawn below its threshold.
+- A used change deleted, clamped or moved without a refusal when the piece shrinks.
+- A refused shortening that still changes the document.
+
+### Row O3 · A drag makes exactly one change, as one undo step; an undragged offer changes nothing
+
+**Bar.**
+- Dragging an offer by any non-zero amount:
+  - adds exactly one item to that field's `changes` list, with `from` at the offer's position and the target the drag reached;
+  - leaves every other field's list unchanged, byte for byte;
+  - makes exactly one entry on the undo stack (one `commit` per drag, as the handles do today).
+- **One Undo** returns a document whose `D.serialize` sha256 equals the one before the drag. **Redo** returns the dragged one.
+- **An undragged offer changes nothing.** The document with offers drawn is byte-identical to the same edits with the offer layer off:
+  - after a lengthen that reveals an offer;
+  - after a press and release with no movement (which also adds no undo entry);
+  - after a hover.
+- **Save and open** round-trip a dragged change. Offers are never saved.
+
+**Degenerating.**
+- A drag that adds two items, or edits an existing item.
+- A drag spread over several undo steps.
+- Undo not returning the exact bytes.
+- An offer that writes to the document before it is dragged (a default `from` stored as a change).
+- An offer saved into the file.
+
+### The falsifier for these rows
+
+- If C's rows pass while the keeper, lengthening a piece, sees no new handle where his 06:53Z words expect one, the threshold measured
+  the wrong thing.
+- That check is his drive, not a test. It is named here so the drive can score it.
+
+### NOT verified (this addendum)
+
+- **No viewport or panel code was read** beyond `handles.js:49-64`.
+- **Whether the handle layer can draw a fainter kind:** not checked.
+- **Amendment D's arithmetic** is from the plan's own words, not from running C's code.
