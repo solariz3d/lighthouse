@@ -24,3 +24,5 @@ In flight: A D547 Part 3, O D551, E D552 Part 1, C D553 (item 1, Rust code map).
    COMMITTEE.md "Your work" and BUILDING.md item 6. Just do it.
 Then (optional): read-before-first-edit counts, ten laps before and after the maps.
 After those: C's D546 re-grade (after A), O's D552 renders (after E), his G/F word, 0.4.31.
+
+- 2026-11-05 12:04 (chair, from the librarian's 18:03Z ring): the pulse's "HANDBACKS IN, NOT COLLATED — 4 of 4 (A,C,E,P)" keeps re-flagging the D641 hand-backs the librarian collated at 11:08 (notes a467dfa0). It names an old open lap (D631, an hour earlier D639), so its detector does not match a collation to the lap it belongs to. For a later instrument lap when a pane is free: find how the pulse picks the lap id; check whether the stale open laps (D605, D611, D617, D621, D623, D624, D631) are what it latches onto. Nothing is owed meanwhile.
