@@ -1,0 +1,48 @@
+{
+ "field-minus294.7": {
+  "options": {
+   "length": 2040.48,
+   "targets": {
+    "phi": -5.143485305627289
+   },
+   "bankShape": "rounded",
+   "turnDeg": 90
+  },
+  "hud": {
+   "bank": -294.70000002135475,
+   "gravity": [
+    0,
+    65.29999997864527
+   ],
+   "turn": 90.0000044681686,
+   "length": 2040.48
+  }
+ },
+ "field65.3-extra-minus294.7": {
+  "options": {
+   "length": 2040.48,
+   "targets": {
+    "phi": 1.1397000015522971
+   },
+   "bankShape": "rounded",
+   "turnDeg": 90,
+   "changes": {
+    "phi": [
+     {
+      "from": 1020.24,
+      "target": -5.143485305627289
+     }
+    ]
+   }
+  },
+  "hud": {
+   "bank": -294.70000002135475,
+   "gravity": [
+    0,
+    65.29999997864527
+   ],
+   "turn": 90.00000567380926,
+   "length": 2040.48
+  }
+ }
+}

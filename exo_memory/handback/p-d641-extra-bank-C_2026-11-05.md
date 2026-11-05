@@ -83,5 +83,31 @@ exe was not touched.
   replaced by a blur.
 - **The worktree at d91227f** (`Desktop/worktrees/t180-d641-base`, detached, made for the before run) was removed after it.
 
+## Order 3 (the chair, 15:15Z), step 1: his HUD piece rendered from the REAL mesh, and whether the fold is real
+
+**The fold is not real geometry.** It is a 31 m road twisting through more than a full turn, seen nearly edge-on in perspective. No fix is needed for a
+fold.
+
+- **The mesh:** the preview's own ghost mesh (`app/preview/trackmodel.js` `ghostFor` of `shell.candidate`, the cup included), in world space through
+  each batch's model matrix as `renderer.js` `bakePoints` does. It was drawn after the placed 1,000 m straight. Script `scripts/mesh641.js`; the options
+  are the panel's own (`opts-his-hud.json`, `scripts/opts3.test.js`).
+- **Both readings of his HUD were checked**, because the HUD cannot tell them apart:
+  - The HUD's big BANK is `bankToDeg − bankFromDeg`, the piece's whole bank change (`app/core/labels.js:41`), not the bank field.
+  - checked: `opts-his-hud.json` → the field at −294.70, and the field at +65.3 with the extra at −294.70, both read bank −294.70, bank to gravity
+    0.00 → +65.30, turn +90.00.
+  - So E's N2 ("the piece's OWN bank field") is one of two readings, not established by the HUD.
+- **The checks on the mesh, both readings** (checked: `mesh-checks.log`), over 126,604 triangles:
+  - **Turned inside out:** 0 faces against the road's own up.
+  - **Creased back:** 0 neighbouring faces more than 90° apart. The worst neighbour step is 1.1° (field) and 2.0° (extra).
+  - **Crossing itself:** the centreline never comes back near itself. Its nearest approach between stations more than 100 m apart along it is 101.8 m,
+    which is just the arc.
+- **The renders** (`renders-mesh/`): the top is blue and the underside orange.
+  - `*-his-angle.png` is from behind and above the piece's start, as his Free view was.
+  - Field −294.70: one long twist over the whole piece, with one place where the ribbon goes edge-on.
+  - +65.3 then extra −294.70: the full roll is packed into the second half. The ribbon goes edge-on twice near the front, which is the "folds over
+    itself near the front" look.
+  - inferred: his picture matches the extra reading better, as his own words say ("the extra banking breaks"). That comes from how it looks, not from proof.
+- **The checker:** E reports no red on his typed state. I did not re-run it.
+
 BASE: C:\Users\nname\Downloads\t180-fresh d91227f
 SOURCES: core-extra-bank-wind.test.js TAP on d91227f and 19ef575; touched-set.out; page-render-before.log and page-render-after.log; ribbon641.js output; opts.json; the probe rows (scripts/opts.test.js)
