@@ -42,8 +42,9 @@
 //   - a lock YOUNGER than YOUNG_MS (30 min: the longest known full run is 1,570 s) is taken only when pidGone(pid) (tasklist on Windows) ALSO says the holder is gone;
 //     if the two disagree, or the second cannot tell, it waits and says so once. A lock with no readable `started` counts as young (unknown is the safe side). An older
 //     lock is as before: kill(0) alone.
-// A pid the OS has since REUSED reads alive — the waiter then waits and, at the max wait, fails loudly naming it, which
-// is the safe direction. The takeover moves the stale file aside with an atomic rename; if a race moved ANOTHER runner's
+// A pid the OS has since REUSED reads alive. Since L124 (L's 88278a1, ported at the L/D convergence 2026-11-04) a lock records its holder's image and start,
+// and a live pid whose process differs is taken over as stale (see PID REUSE below); an OLD lock without them still waits and, at the max wait, fails loudly
+// naming it, which is the safe direction. The takeover moves the stale file aside with an atomic rename; if a race moved ANOTHER runner's
 // lock instead, it is put back with linkSync, which cannot overwrite, and the waiter keeps waiting; the next poll judges that lock like any other (D289). That includes
 // an unreadable one younger than the grace: a claim whose write has not landed yet (D289 F1).
 //
@@ -125,6 +126,45 @@ function pidGone(pid, run = spawnSync, platform = process.platform) {
   const listed = r.stdout.split(/\r?\n/).some((line) => { const c = line.match(/"[^"]*"/g); return !!c && c.length >= 2 && Number(c[1].slice(1, -1)) === pid; });
   return !listed;
 }
+// PID REUSE (L124, L's 88278a1). A live pid is not a live HOLDER: on 2026-09-27 a stale lock's pid 27836 had been handed by Windows to another program's crash
+// handler five seconds after the holder exited, and kill(0) read it as alive. So a lock records who took it — `image` (this executable's base name) and
+// `holder_start` (this process's start) — and a live pid whose process has a DIFFERENT image, or started more than START_TOLERANCE_MS away from the recorded
+// start, is a different process: the lock is stale (reason 'pid_reused'). D283's second witness is not asked here: the pid IS running, and the identity is
+// the witness that it is not the holder.
+//   * RECORDING needs no spawn: the start is Date.now() - process.uptime(), the image path.parse(process.execPath).name.
+//   * ASKING about another pid is `Get-Process … StartTime` (whats-live.js's query), Windows only. Elsewhere, or if the query fails, the identity is UNKNOWN
+//     (null) and the lock is treated as held. Failing to look is never a reason to take a live lock.
+//   * An OLD lock (no `image`, no `holder_start`) is never asked about and behaves exactly as before.
+//   * The tolerance absorbs the gap between the OS's creation time and node's own start; a pid reused by the SAME image within that window is not caught.
+const START_TOLERANCE_MS = 10 * 1000;
+const IDENTITY_RECHECK_MS = 60 * 1000;   // a waiter asks the OS about the same holder at most this often, not every poll
+function selfIdentity() {
+  return { image: path.parse(process.execPath).name, holder_start: new Date(Date.now() - process.uptime() * 1000).toISOString() };
+}
+/** { image, start } of the process at `pid`, or null when it cannot be told. The pid comes from a lock FILE and is interpolated into PowerShell, so a
+ *  non-integer never reaches the shell. */
+function processIdentity(pid, run = spawnSync, platform = process.platform) {
+  if (!Number.isInteger(pid) || pid <= 0 || platform !== 'win32') return null;
+  let r; try {
+    r = run('powershell', ['-NoProfile', '-NonInteractive', '-Command',
+      `$p = Get-Process -Id ${pid} -ErrorAction SilentlyContinue; if ($p) { $s = ''; try { $s = $p.StartTime.ToUniversalTime().ToString('o') } catch {}; $p.ProcessName + '|' + $s }`],
+    { encoding: 'utf8', timeout: 20000, windowsHide: true });
+  } catch (_) { return null; }
+  if (!r || r.error || r.status !== 0 || typeof r.stdout !== 'string') return null;
+  const out = r.stdout.trim(), i = out.lastIndexOf('|');
+  if (i <= 0) return null;
+  const start = Date.parse(out.slice(i + 1));
+  return { image: out.slice(0, i), start: Number.isFinite(start) ? start : null };
+}
+const hasIdentity = (h) => Boolean(h && (h.image || h.holder_start));
+/** Is the process `id` (from processIdentity) the one that took lock `h`? Unknown (null) counts as the same. */
+function sameHolder(h, id) {
+  if (!id) return true;
+  if (h.image && id.image && String(h.image).toLowerCase() !== String(id.image).toLowerCase()) return false;
+  const recorded = Date.parse(h.holder_start);
+  if (Number.isFinite(recorded) && Number.isFinite(id.start) && Math.abs(id.start - recorded) > START_TOLERANCE_MS) return false;
+  return true;
+}
 const ageOf = (h, t) => { const s = Date.parse(h && h.started); return Number.isFinite(s) ? t - s : null; };
 function seatName(env) { const p = String(env.CONSONANCE_PANE || '').trim(); return p ? p.slice(0, 8) : 'terminal'; }
 function sleepSync(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
@@ -154,7 +194,7 @@ function resolveTree(cwd = process.cwd(), run = spawnSync, platform = process.pl
 function acquire({
   cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim, beforeTake,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
-  alive = pidAlive, confirmGone = pidGone, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
+  alive = pidAlive, confirmGone = pidGone, identify = processIdentity, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
   writes, diskFree = freeBytes, diskTotal = janitorTotal,
 } = {}) {
   let dir = dataDir === undefined ? manifestDataDir() : dataDir;
@@ -177,19 +217,28 @@ function acquire({
   let said = -Infinity;
   let tookOver = null;
   const disagreed = new Set();   // tokens whose liveness disagreement has been said once
+  const probes = new Map();      // L124: token -> { at, id }, the last identity asked of the OS for that holder
+  const self = selfIdentity();
   // Does a lock held by `h` forbid me to run? Always with ONE slot (today's machine-wide lock); else when it is in my tree, or records none (a lock from before D286: unknown is the safe side).
   const blocks = (h) => n === 1 || !h.tree || h.tree === myTree;
 
   // D283's judgement of one lock file, unchanged: true = the lock was STALE and has been taken out of the way (the slot is free now), false = it is live.
   function takeIfStale(file, k, h) {
-    let stale = false;
+    let stale = false, reason = null, nowRunning = null;
     if (h.unreadable) {
       let age = 0;
       try { age = now() - fs.statSync(file).mtimeMs; } catch (_) { return true; }
       stale = age > UNREADABLE_GRACE_MS;
+      reason = 'unreadable';
     } else {
       stale = !alive(h.pid);
-      if (stale) {   // D283: a young lock needs a second witness (see the header)
+      reason = 'dead';
+      if (!stale && hasIdentity(h)) {   // L124: alive, but is it still the holder? (see PID REUSE)
+        const p = probes.get(h.token);
+        if (!p || now() - p.at >= IDENTITY_RECHECK_MS) probes.set(h.token, { at: now(), id: identify(h.pid) });
+        const id = probes.get(h.token).id;
+        if (!sameHolder(h, id)) { stale = true; reason = 'pid_reused'; nowRunning = id; }
+      } else if (stale) {   // D283: a young lock needs a second witness (see the header)
         const age = ageOf(h, now());
         if (age === null || age < YOUNG_MS) {
           const second = confirmGone(h.pid);
@@ -221,8 +270,15 @@ function acquire({
     }
     try { fs.unlinkSync(aside); } catch (_) {}
     const age = h.started ? now() - Date.parse(h.started) : null;
-    tookOver = { holder: { pid: h.pid ?? null, seat: h.seat ?? null, cmd: h.cmd ?? null, started: h.started ?? null }, age_ms: Number.isFinite(age) ? age : null };
-    log(`heavy-run: took over a stale lock — ${h.unreadable ? `an unreadable lock (${h.unreadable})` : describe(h)} is not running; it was ${Number.isFinite(age) ? mins(age) : 'an unknown age'} old (slot ${k})`);
+    tookOver = { holder: { pid: h.pid ?? null, seat: h.seat ?? null, cmd: h.cmd ?? null, started: h.started ?? null }, age_ms: Number.isFinite(age) ? age : null, reason };
+    const ageTxt = `it was ${Number.isFinite(age) ? mins(age) : 'an unknown age'} old (slot ${k})`;
+    if (reason === 'pid_reused') {
+      const at = Number.isFinite(nowRunning.start) ? new Date(nowRunning.start).toISOString() : null;
+      tookOver.now_running = { image: nowRunning.image ?? null, start: at };
+      log(`heavy-run: took over a stale lock — ${describe(h)}: pid ${h.pid} is now ${nowRunning.image || '?'}, started ${at || '?'} — the pid was reused (the lock recorded ${h.image || '?'}, started ${h.holder_start || '?'}); ${ageTxt}`);
+    } else {
+      log(`heavy-run: took over a stale lock — ${h.unreadable ? `an unreadable lock (${h.unreadable})` : describe(h)} is not running; ${ageTxt}`);
+    }
     return true;
   }
 
@@ -238,7 +294,7 @@ function acquire({
     const blockers = live.filter((x) => blocks(x.h));
     if (blockers.length === 0 && free.length) {
       const k = free[0], file = slotFile(dir, k);
-      const rec = { pid: process.pid, seat: seatName(env), cmd, tree: myTree, started: new Date(now()).toISOString(), token };
+      const rec = { pid: process.pid, seat: seatName(env), cmd, tree: myTree, started: new Date(now()).toISOString(), token, image: self.image, holder_start: self.holder_start };
       if (tookOver) rec.took_over = tookOver;
       if (beforeClaim) beforeClaim({ slot: k, file });   // a seam for the tests: the instant between looking and claiming
       let fd;
@@ -308,4 +364,4 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { acquire, hold, pidAlive, pidGone, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+module.exports = { acquire, hold, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };

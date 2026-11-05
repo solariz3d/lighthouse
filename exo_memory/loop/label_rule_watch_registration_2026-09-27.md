@@ -351,3 +351,28 @@ Nothing in §1–§7 is edited. This amendment is appended, dated, and committed
       node control_score_a6.js C:/Users/nname/Desktop/e-d201-wt out    # -> out/control-score-a6.json (sha256 9885cecd…70dc4); script sha256 196af8fa…4ce2
 
 - **Unchanged:** everything A5 lists. No post-rule unit's labelling has been read or scored.
+
+---
+
+## from L, 2026-09-27 — kept at the L/D convergence (2026-11-04, B, L134)
+
+*L wrote the two clarifications below on 2026-09-27, after the common ancestor and before D201; D never carried them. Appended verbatim; nothing above is changed.*
+
+## CLARIFICATION, 2026-09-27 ~13:0xZ (E, L126), written before any post-rule number exists
+
+§2's open choices are fixed as C0–C5 in `loop/label_rule_baseline_2026-09-27.md` §0. They are not restated here; that file is the master.
+
+In brief:
+- **R = `1e7520a`**, which is `8389900` rewritten. This file cited no sha.
+- "On L" means the transcripts as carried on L, with both machines' rows.
+- A lap is a lap-open event, with D laps from D's state-sync ledger.
+- "Per lap" is a ratio over the window.
+- If D is not carried post-rule, D is dropped on both sides.
+
+**The baseline itself:** 3.18 landed WRONGs per lap (1.06–6.01), or 0.038 per verdict-bearing claim. The per-lap figure decides nothing.
+
+**Flagged in the same file, §3:** §1.3's `LABEL_RE` appendix was NOT made in the landing commit. It must be pinned, with its control run, before any post-rule unit is read.
+
+## CLARIFICATION, 2026-09-27 ~12:5xZ (E, L127), at the librarian's ruling on B's read (handback/p-l126-read-B_2026-09-27.md)
+
+The post-rule (a) and §3 are run through the claimrec harness exactly as §1.2 and §3 define them: readers extract the claims, the claims are located, and then the label is checked. consonance/tools/label-watch.js (3d63978, narrowed in L127 by A) is the DELIVERY reporter and a PROXY only. It is never scored against F1 or F3.

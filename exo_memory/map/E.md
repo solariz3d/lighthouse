@@ -1805,6 +1805,53 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 **Carry:** a count of errors FOUND can't show a rule working, because it falls when the looking stops; watch with a sample.
 NEXT: librarian call_librarian with the hand-back pointer when it is written — plan default after it: L122, the rule lands and the watch starts from that commit
 
+## 2026-09-27 ~11:5xZ (L) · L124: trailer-gate census on L's board → `exo_memory/loop/trailer_gate_census_2026-09-27.md`, hand-back `exo_memory/handback/p-l124-census-E_2026-09-27.md`
+- 44 rows ever (from 09-20); 40 in 7 days, C 23 (0.59 of its sends). L115–L123: 14 of 32 pane rings, all on the warn-only edge. Classes 7d: (a) 9, (b) 11 (after 5, before 3, then 3), (c) 1, (d) 19 (C's one-line rings with no NEXT). 4 refusals ever, re-sent in 6–11 s.
+- The row is pane:"trailer-gate" and carries no NEXT line; pair it to the sender's tool_use to classify (44/44).
+**Carry:** a gate row that states the reason but not the input can only be classed by going back to the sender's transcript; say so before counting.
+NEXT: librarian call_librarian with the pointer when the census is written — plan default after it: C recommends a trailer fix citing the census
+
+## 2026-09-27 ~13:1xZ (L) · L126: the label rule's PRE-RULE BASELINE → `exo_memory/loop/label_rule_baseline_2026-09-27.md`, hand-back `exo_memory/handback/p-l126-baseline-E_2026-09-27.md`
+- **3.18 landed WRONGs per lap** (1.06–6.01) = 9 WRONG / 100 sampled messages × 5,023 frame messages ÷ 142 lap-open events (L 80 from L's ledger, D 62 from D's state-sync ledger, sha = manifest). Per claim 0.038.
+- Dated C0–C5: R = 1e7520a (was 8389900; the registration cited no sha); a lap is an open EVENT (ids reused); per lap is a ratio, because spans absorb idle hours.
+- **Flagged:** §1.3's LABEL_RE was never appended at landing.
+**Carry:** D's ledgers ride to L in `C:\Consonance\state\data` (state-sync, manifest-checked). Look there before calling a D-side count unavailable on L.
+NEXT: librarian call_librarian with the pointer when the baseline is written — plan default after it: the watch reads against this baseline once post-rule laps accumulate
+
+## 2026-09-27 ~12:5xZ (L) · L127: one dated line in the watch registration → hand-back `exo_memory/handback/p-l127-watch-E_2026-09-27.md`
+- (a) and §3 run through the claimrec harness (extract, then locate, then label). label-watch.js (3d63978) is the delivery reporter and a PROXY, never scored against F1 or F3. Append-only, +4/−0. LABEL_RE is still unpinned.
+NEXT: librarian call_librarian with the pointer when the line is added — plan default after it: hold for the keeper's rebuild
+
+## 2026-09-27 ~13:2xZ (L) · L128: the panes' intake census → `exo_memory/loop/pane_intake_census_2026-09-27.md`, hand-back `exo_memory/handback/p-l128-census-E_2026-09-27.md`
+- C's CLAUDE.md lacks BOTH the committee (15,823 B) and THE DECK (24,063 B); the other sections match A/B/E by sha, except NOT CARRIED (14 vs 7). Its map is index only.
+- Dated by L's persist.log MAP CARRY allowance gap C−B: 0 (09-14 11:15Z) → 2,818 → 23,452 (09-16) → 38,901 (09-20 06:42Z) → 37,625 now = DECK+COMMITTEE−2,261, exactly.
+- The mechanism the data points to: C's map switched to bold-dated paragraphs on 09-09, so 137,981 chars read as one "newest entry" and the builder evicts briefs to seat it (inferred; the code is A's).
+**Carry:** two panes with the same fixed brief have the same map allowance, so the allowance gap in persist.log is a free size-diff of intakes over time. Use it when no old copy exists.
+NEXT: librarian call_librarian with the pointer when the census is written — plan default after it: B reads the census and A's code finding together
+
+## 2026-09-29 ~01:4x (L) · L130: the readout check REGISTERED before C builds → `exo_memory/loop/readout_check_registration_2026-09-29.md` (sha256 57448e2a…), hand-back `exo_memory/handback/p-l130-readout-reg-E_2026-09-29.md`
+- **G governs, verbatim:** the display fails if the keeper can't tell a piece's degrees while adjusting. Tests are necessary, not sufficient.
+- **The checks:** M1 match to 0.05 on the drawn text; M2 live over 30 seeded edits; M3 ghost equals placed; M4 the head is never hidden; M5 legibility measured in PrintWindow pixels (≥11 px ink, ≥4.5:1); controls K1–K5, or the check is VOID.
+- **Carry:** D-side loop files (d185/) are not on L. Name a fixture by its copy in the repo, and count a fixture from its source before writing the number (I wrote 42 for 43).
+
+## 2026-09-29 ~04:1x (L) · L131-E: the UI refactor inventory and layout check SEALED → `exo_memory/loop/ui_refactor_registration_2026-09-29.md` (sha256 de72c13a…), hand-back `exo_memory/handback/p-l131-ui-E_2026-09-29.md`
+- **37 inventoried rows** (I first wrote 36) placed into header / left tools / right (sections) / status / viewport / removed (water) / pieces-only.
+- **The viewport share, registered:** ≥65% open, ≥85% with N collapsed, ≥90% with both collapsed, at 1400×860. Today's ≈52% is inferred.
+- **T and N are free,** and must respect the typing guard. The readout goes in the right panel, with L130's seal re-run. Legibility in PrintWindow pixels.
+- **Carry:** size a registered threshold from explicit arithmetic and say it is reachable, or the check is set to fail by construction.
+
+## 2026-09-29 ~07:3x (L) · L130-R: non-author review of A's camera repair (A's first Sonnet packet) → `exo_memory/handback/p-l130r-review-E_2026-09-29.md`
+- **NOT GREEN.** 3 wrongs: W1 P3 fails under real key-repeat (every repeat re-arms the takeover); W2 a sideways trackpad swipe zooms ×16 (introduced by the P5 fix); W3 "182 app mutants" is all five mutation files (the app file lists 71).
+- **Right:** the newest-key rule (7 probes), V11, the overhead's cause and fix (4 new tracks), the DPI fix (run: 0→2, 144 dpi).
+- **Proposed fix:** 3 lines, proven on a copy (154/155; N6's search string must move).
+- **Zoom ≥ 1 identity NOT RUN** (close-out). Full suite on the copy: 1,616 tests, 0 fail.
+- **Carry:** a fake event harness sends ONE key-down, but a real held key repeats. Probe with `repeat: true` before trusting a key fix.
+
+## 2026-11-04 ~01:2x (L) · L134 L-CONVERGE, the non-author review of B's merge 880f237f → `exo_memory/handback/p-lconverge-E_2026-11-04.md`
+- **GREEN.** All 6 rows re-derived from the parents (L 14f9495d, origin 1809ab39, base fab63d57); every 09-29 file (16/16) and every L-added map line survive.
+- **Tests:** heavy-run 61/61 (54/7 on origin's code); label-watch 27/27; cargo check 0; cargo trailer/l129/shell_budget/intake 134/1.
+- **The 1 fail (light intake) is ALSO red on pure origin with origin's data,** so it predates the merge. Route it to D.
+- **Carry:** a substring check of an appended block fails when the merger inserts a heading inside it. Compare line ranges with cmp.
 ## 2026-09-27 ~16:5xZ (D) · D161 phase 1: Q3's 40 units built and frozen → `exo_memory/loop/q3_units_2026-09-27.md` (sha256 `a08b46ff…45ec`), hand-back `exo_memory/handback/p-d161-units-E_2026-09-27.md`
 - 2,161 eligible pairs (command outputs only, the immediately next assistant text, the first sentence with a digit, number word or verdict word), window 09-14 → e9cb884. Seed D161-q3-units-2026-09-27; the draw re-runs byte-identical.
 - The seat column is sealed outside the repo, not in the hand-back, because the readers can open the hand-back. A privacy filter took out 41 pairs; its term list is off-repo.
@@ -2777,3 +2824,18 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - The shipped builder (d10eacf) refuses it: driving shell.extend with the save's own typed values and only the 20 early pieces re-laid, Extend refuses his p33 (PASS_CLEARANCE, p33 through p29, 31 places); laid past that without the gate, Close refuses (12 new reds, 3,236 m of new road). No closed save exists; nothing faked. Control: the same splice with the old rule moves his road 1.5 m.
 - A full regenerate is not faithful at all: today's Turn by lays his 90° corners in another shape (up to 1.41e-2 rad/m), and Extend then refuses p26 even with the old rule.
 - **Carry:** a replay through today's writer first proves itself with the old rule on the same save; whatever moves in that control is not the change being measured.
+
+## 2026-11-04 ~05:4x (L) · L135, the non-author review of the second bank (t180 038e21e) → `exo_memory/handback/p-l135-E_2026-11-04.md`
+- **NOT GREEN on B's row 6 only:** a `from` within ~0.5 m of the end is accepted, and the document drops its 30° hold ~60 m early (the second ramp gets 0 knots past the `k < L − 0.5` filter). Seen by exact channelAt reads; 0.75 m was fine.
+- **Green:** C2 at `from` and at the end exact to ≤6e-7 (8 cases, including 100 m and −30°→+20°); W3's per-ramp floor is right (the same quintic rule as whole pieces); targeted tests 170/170.
+- **For the drive:** ramps shorter than ~10 m are re-rounded by the adapter's bankPlan, so the built road rolls well before `from` and the checker reads it clear.
+- **Carry:** settle a C2 claim with the spline's own d1/d2 at s∓ε. A finite-difference window can't resolve a cubic's knot-to-knot change.
+- 2026-11-04 ~06:0x (L) · L135 re-check 380d44c: **GREEN** → `exo_memory/handback/p-l135-E_2026-11-04.md` (re-check section).
+  - **15·√Δ refuses** 0.5 m and min − 0.1 m; at the exact min the second ramp leaks ≤0.30° into the hold as built.
+  - **B's 20 m-hold 8.3° is the adapter's first-ramp lag:** a plain 60°/120 m ramp is built at 23.4° at its end, on main d10eacf too. So no hold rule.
+  - **Carry:** near a ramp, compare built against built-without, not against the document. And check the file landed before ringing.
+
+## 2026-11-04 ~12:5xZ (L) · L136 registration, the bar for "the built bank arrives on time" → `exo_memory/loop/l136_registration_2026-11-04.md` (97989bcf)
+- On t180 0df08db, 11 of 18 settle-table rows are late, and in 10 of them T < floor 2√(Δ/BANK_BAR). Every Extend ramp starts at a pinned joint, so rule 2 cannot fit them unless the window crosses the start joint; that is the keeper's call (Bar X), and Bar J is the default.
+- His sketch's second ramp is on time and over BANK_BAR (0.01244 °/m² at 726 m); the plan said "under". ELYSIUM, the close-banks lap and the sketch exceed the bar today, so the bar is amended to max(BAR, today's peak).
+- **Carry:** before registering a rule that moves a window, check whether the window's needed length (the floor) fits between the pinned joints. Here it did not, on the rule's own headline case.
