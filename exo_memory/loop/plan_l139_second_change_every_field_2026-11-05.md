@@ -103,4 +103,29 @@ no AC launches; no push without his word. **Update `briefs/t180_second_bank.md`'
   - the M3 three-field piece, with two changes on the turn.
   - Everything else in fc21dcdd stands.
 
+## AMENDED A THIRD TIME 2026-11-05 00:5x, at his 06:53Z words (brief): the next handle appears when there is room
+- His words: "maybe they keep getting placed the more you place down, because if you look at what happens to the drag locations when you
+  keep making the piece longer, they get like inflated in between each other, meaning more and more room keeps getting made inbetween,
+  giving room for the next drag icon to show itself to allow the next manipulation"
+- **This replaces the panel's "+ change" button.** Changes are made in the viewport, by dragging. The panel rows mirror them.
+- **The rule:**
+  - For each field that has been set, look at the stretch after its last change. If it is at least that field's minimum long (E's (A);
+    bank K·√Δ is measured for the change being made, so use the field's floor of 20 m for the reveal and refuse by name on release), a
+    new drag handle for that field appears there, in the field's colour.
+  - Dragging it makes the next change, and its mark appears where it starts.
+  - Lengthen the piece (the white length handle) and the handles spread apart, as they do today (`app/core/handles.js` `at` fractions).
+    As room opens up, more handles appear, one at a time per field.
+  - Shorten the piece and an unused handle disappears. A used change that no longer fits is refused by name, never silently dropped.
+- **A handle not yet dragged changes nothing.** It is an offer, drawn fainter than a used handle, so the piece is byte-identical until
+  you drag it.
+- **Where the next handle sits:** at the middle of the free stretch after the field's last change. Where several fields offer one at the
+  same distance, each sits at its own handle position across the road (its `lat`), as the marks do.
+- **C:**
+  - use the handle layer's existing drag;
+  - each drag is one undo step;
+  - the panel shows each field's list of changes (then, from), editable, with a remove per change;
+  - rows red first: an offer handle appears only once its stretch reaches the field's minimum; it disappears when the piece shrinks;
+    dragging it creates exactly one change.
+- **B:** the core contract (the list per field) is unchanged by this. It is a panel and viewport rule.
+
 NEXT: chair dispatch E (L139 registration on 0df08db) now; B and C start when E's registration is filed; librarian collates
