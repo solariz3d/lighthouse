@@ -1,0 +1,269 @@
+{
+ "base": {
+  "bankField": "65.3",
+  "extras": [
+   {
+    "id": "extra:bank:0",
+    "from": 1020.24,
+    "value": 65.3,
+    "unused": true
+   }
+  ],
+  "K": {
+   "min": -720,
+   "max": 720,
+   "perPx": 0.45
+  },
+  "built": {
+   "bankDegAt": {
+    "0": 0,
+    "510": 16.24,
+    "1020": 32.64,
+    "1530": 49.04,
+    "2040": 65.3
+   },
+   "bankRangeDeg": [
+    0,
+    65.3
+   ],
+   "maxRollDegPerM": 0.03,
+   "red": {}
+  }
+ },
+ "extra": [
+  {
+   "px": 200,
+   "bankField": "65.3",
+   "change": {
+    "from": 1020.24,
+    "targetDeg": 110.37
+   },
+   "shown": "extra bank 110.37°",
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": 32.64,
+     "1020": 65.3,
+     "1530": 87.81,
+     "2040": 110.37
+    },
+    "bankRangeDeg": [
+     0,
+     110.37
+    ],
+    "maxRollDegPerM": 0.08,
+    "red": {}
+   }
+  },
+  {
+   "px": 400,
+   "bankField": "65.3",
+   "change": {
+    "from": 1020.24,
+    "targetDeg": 163.7
+   },
+   "shown": "extra bank 163.70°",
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": 32.64,
+     "1020": 65.3,
+     "1530": 114.43,
+     "2040": 163.7
+    },
+    "bankRangeDeg": [
+     0,
+     163.7
+    ],
+    "maxRollDegPerM": 0.18,
+    "red": {}
+   }
+  },
+  {
+   "px": 800,
+   "bankField": "65.3",
+   "change": {
+    "from": 1020.24,
+    "targetDeg": 274.38
+   },
+   "shown": "extra bank 274.38°",
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": 32.64,
+     "1020": 65.3,
+     "1530": 169.7,
+     "2040": 274.38
+    },
+    "bankRangeDeg": [
+     0,
+     274.38
+    ],
+    "maxRollDegPerM": 0.38,
+    "red": {}
+   }
+  },
+  {
+   "px": 1200,
+   "bankField": "65.3",
+   "change": {
+    "from": 1020.24,
+    "targetDeg": 347.57
+   },
+   "shown": "extra bank 347.57°",
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": 32.64,
+     "1020": 65.3,
+     "1530": 206.25,
+     "2040": 347.57
+    },
+    "bankRangeDeg": [
+     0,
+     347.57
+    ],
+    "maxRollDegPerM": 0.52,
+    "red": {}
+   }
+  },
+  {
+   "px": 1700,
+   "bankField": "65.3",
+   "change": {
+    "from": 1020.24,
+    "targetDeg": 111.87
+   },
+   "shown": "extra bank 111.87°",
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": 32.64,
+     "1020": 65.3,
+     "1530": 88.55,
+     "2040": 111.87
+    },
+    "bankRangeDeg": [
+     0,
+     111.87
+    ],
+    "maxRollDegPerM": 0.09,
+    "red": {}
+   }
+  },
+  {
+   "px": -200,
+   "bankField": "65.3",
+   "change": {
+    "from": 1020.24,
+    "targetDeg": 12.8
+   },
+   "shown": "extra bank 12.80°",
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": 32.64,
+     "1020": 65.3,
+     "1530": 39.08,
+     "2040": 12.8
+    },
+    "bankRangeDeg": [
+     0,
+     65.32
+    ],
+    "maxRollDegPerM": 0.1,
+    "red": {}
+   }
+  },
+  {
+   "px": -400,
+   "bankField": "65.3",
+   "change": {
+    "from": 1020.24,
+    "targetDeg": -36.36
+   },
+   "shown": "extra bank -36.36°",
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": 32.64,
+     "1020": 65.3,
+     "1530": 14.54,
+     "2040": -36.36
+    },
+    "bankRangeDeg": [
+     -36.36,
+     65.32
+    ],
+    "maxRollDegPerM": 0.19,
+    "red": {}
+   }
+  },
+  {
+   "px": -800,
+   "bankField": "65.3",
+   "change": {
+    "from": 1020.24,
+    "targetDeg": -134.37
+   },
+   "shown": "extra bank -134.37°",
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": 32.64,
+     "1020": 65.3,
+     "1530": -34.4,
+     "2040": -134.37
+    },
+    "bankRangeDeg": [
+     -134.37,
+     65.32
+    ],
+    "maxRollDegPerM": 0.37,
+    "red": {}
+   }
+  }
+ ],
+ "bankHandle": [
+  {
+   "px": 800,
+   "bankField": "201.65",
+   "changes": {},
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": 50.15,
+     "1020": 100.8,
+     "1530": 151.45,
+     "2040": 201.65
+    },
+    "bankRangeDeg": [
+     0,
+     201.65
+    ],
+    "maxRollDegPerM": 0.1,
+    "red": {}
+   }
+  },
+  {
+   "px": -800,
+   "bankField": "-157.52",
+   "changes": {},
+   "built": {
+    "bankDegAt": {
+     "0": 0,
+     "510": -39.18,
+     "1020": -78.74,
+     "1530": -118.31,
+     "2040": -157.52
+    },
+    "bankRangeDeg": [
+     -157.52,
+     0
+    ],
+    "maxRollDegPerM": 0.08,
+    "red": {}
+   }
+  }
+ ]
+}
