@@ -32,7 +32,44 @@
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
 pieces. He wants one piece to change a second time toward its end.
 
-## State (summary; check it against the repo) — updated 2026-11-05 03:4x, L139 installed on L
+## State (summary; check it against the repo) — updated 2026-11-05 07:4x, the handoff at his word
+**Where it stands, in one paragraph.** The core of "one piece changes again toward its end" works for every field. The second-change SHAPE
+he likes is L139's (`35feaf9`): it flows. What fought him was the UI. L140 replaces the L139 faint rings with **extra handles**: the same
+look as the field's own handle, placed where he drew them (`briefs/t180_extra_handles_where_2026-11-05.png`). Round 1 (`c42f985`) is
+installed on L, and he tried it. Round 2 fixes what he found (two per field, the extra change starting halfway, no overlapping handles).
+It is rendered and waiting for his look before the install.
+
+**The branch chain (t180, none on main, no release):**
+- `l135-second-bank` `0df08db`: the bank only (on origin).
+- `l139-second-change` `35feaf9`: any number of changes on every field, smooth all around. **The shape he likes.** The branch tip is
+  `e20f865`, L140 Part 1, PARKED: its "first change holds, marks toward the end" changed the flow he liked (his 11:10Z words). Don't land it.
+- `l140-extra-handles`, off `35feaf9`:
+  - `c42f985`: round 1, the extra handles plus fixes for B's G1–G10 glitches. **Installed on L** (exe sha256 af3b5a90…). E: G1–G10
+    green.
+  - Round 2: one extra handle per field, the extra change starting at 0.5 by default (the handle stays where he drew it, and a mark shows
+    the start), `clearExtras` keeping every extra handle ≥ 36 px from the others. Rows R1–R3 went red on c42f985, then green (38/38).
+    Committed at the handoff (sha in `loop/handoff_t180_2026-11-05.md`). NOT installed.
+- Renders shown to him: https://claude.ai/artifact/CgeimWxjovDpXKNnzGeiPR (v3 = round 2, his S as one piece).
+
+**What to do next, in order:**
+1. His look at round 2's renders. The open question there: should the turn drag move faster? (+90° is about 1,000 px at 0.083°/px.)
+2. C runs the full touched set on round 2 and installs on L (back up first, no launch). He tries it.
+3. E reviews round 2 against B's G1–G10 and his three items (brief :29).
+4. At his word: land on main, then release 0.4.39 with it, and point his desktop shortcut back at the rebuilder (the installer reset it to
+   the exe).
+
+**Still open, not this lap:**
+- first ramps (L136: a fast first bank is built late, and the joint design call is his);
+- the cup profile's ¾-knot corner (1.6× the bar when a steep narrow cup widens);
+- the branch's author on l135 (`zackn@localhost`; re-author on landing).
+
+**How we work now (his rules from these two nights):**
+- show him an artifact before a build and renders of the real result before the install;
+- when he names the worst part, fix that part;
+- smooth all around (every change under the 3 g bar);
+- his words and pictures go into this brief in the turn they arrive.
+
+## State at 2026-11-05 03:4x (L139 installed), kept as a trace
 - **Every field, any number of changes: BUILT, reviewed GREEN, installed on L for his drive.** t180 branch `l139-second-change` at `35feaf9` (not pushed, not on main). Installed exe sha256 65eb4636…; not launched; built-head.txt still d10eacf.
   - Contract: `changes: { kh|kv|phi|w|c|e|er: [{from,target}] }`; corners `changes.turnDeg/climbDeg: [{from,deg}]`. In the panel, the next change is a faint offer in the field's colour that appears once the piece has room (2× the 20 m floor), and dragging it makes the change. Marks are short strokes in the field's colour; they keep their share of the piece when it lengthens.
   - Smooth all around (his 07:00Z ruling): every change blends by the quintic; minimums: bank 31.5·√Δ°, corners max(21, 31.5·√Δθ°), turn/climb rate max(20, 3|Δκ|/ROUTE_BAR), width ∛-rule, cup/edges a proven bound. His picture and his sketch, laid through the panel, read 0.995× the bar on the built road.
