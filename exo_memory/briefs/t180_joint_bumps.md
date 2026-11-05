@@ -24,6 +24,7 @@
 - 2026-11-03 23:35Z, on re-laying his saved ELYSIUM: "as long as the generation system as it fixed we are good"
 - 2026-11-03 23:47Z: "i believe it works, push and commit it to repo, but no release yet, i want to keep working on it at work later
   tonight"
+- 2026-11-05 06:32Z (L), on the release: "I havent tested 4.39 enough but it should still be better than the current release". Same turn, on the stick: "dont worry about the stick it can stay how it is unactive".
 
 ## The problem, in one line
 Where one piece hands over to the next, the bank or the climb changed too sharply and he felt a bump; he wants the builder itself to lay
