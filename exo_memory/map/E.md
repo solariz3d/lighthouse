@@ -2887,3 +2887,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - The walk never lands where the core refuses (0 of 1,125 moves, 5 cases + G8), but on his picture it keeps 377 m, whose built road reads 1.059 × the bar (rows' bar 1.05): spanHolds takes any span past the closed-form ceiling unprobed, and past it the roll still spikes (66.14/750 → 0 at spans 331 and 373; 66.14 → −88.45 at 572). Older than the walk (a924f1b took 373).
 - The mark slide on his p2: p95 2.06-2.19 × the early slide, 6 of 6 cold pairs just over; worst move 79 ms (11 probe roads, the first jump), about 20 ms within a slide. Rows 28/28, ramp mutants 92/92 with AD17.
 - **Carry:** an "at or past the ceiling it holds" shortcut is a monotone claim; scan past the ceiling before trusting it.
+
+## 2026-11-05 ~21:3x local (D) · D642 correctness re-check of d642-b7 064ecd5: GREEN → `exo_memory/handback/p-d642-b7-review-E_2026-11-05.md`
+- Six cases: 0 refused of 1,116 moves and nothing kept over 1.05; every span the core lays over seven cases is under 1.05 (373 at 1.059 and 572 at 1.012 now refused); span 373 spanHolds false (true on 57cf0a0), 521 false on both; secondMinM over a 28-case grid hashes the same on both trees, so the cheaper probe is the old one to the bit. Rows 29/29; ramp mutants 93/93 with AD7, AD17, AD18.
+- Residue within 1.05: 331 and 419 at 1.003, the 1° grid probing 67° where 66.14 reads higher.
