@@ -45,6 +45,7 @@ pieces. He wants one piece to change a second time toward its end.
 - **Merged tip:** t180 `d642-p` a924f1b, pushed as the one-commit branch `second-change-additive` 5d17a9c (same tree). E's review: GREEN, mutants all caught. Timing: no regression (B §6).
 - **Installed on D:** 923e0a3 (sha256 6f787b5a…), for his feel test. It lays his S bank-back to −88.45 from 500.
 - **Do not install a924f1b yet:** its bank minimum refuses that same bank-back (holds it at −37.53°; E §5). B is making the minimum tight.
+- **19:2x:** B's tight minimum is d642-b3 d87ba99; his p2 bank-back lays again (needs 463 m, has 500). E: the fix is right, but dragging the extra bank costs 106 ms a move (17x the flat drag), because the panel runs about 13 probe searches a move (`handback/p-d642-b3-review-E_2026-11-05.md` §2). B (memo) and C (panel folding) are cutting it to one probe a move. Install waits for that.
 - **His call:** the bank's rise past the mark (44→47°) and overshoot near the end (−91°), page https://claude.ai/artifact/7k2BGKPX45vMBdYy5733zH.
 - Also includes the 0.4.39 preview fix (`briefs/t180_joint_bumps.md`).
 
