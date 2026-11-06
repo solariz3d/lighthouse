@@ -1,0 +1,25 @@
+== L142 order bank,xturn,xbank · asked 2026-11-06T08:35:16.880Z · lock held 2026-11-06T08:35:16.918Z · NODE_OPTIONS=--max-old-space-size=4096
+$ ORDER=bank,xturn,xbank LEN=2500 H=1300 NOTCHES=30 node '/c/Users/zackn/AppData/Local/Temp/claude/2b46c68187c81881/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/l142/render6.js' 'C:/Users/zackn/AppData/Local/Temp/c-l142-wt' '/c/Users/zackn/AppData/Local/Temp/claude/2b46c68187c81881/0845a868-38f2-4cc2-b45a-431e0c088fb1/scratchpad/l142/renders'
+chrome pid 39940
+guide closed ✕
+length true
+turn true
+camera Overhead true
+camera Free true
+handles [["length",0,700,691],["width",1,1087,1096],["width",-1,1087,1088],["bank",1,774,1017],["bank",-1,780,1011],["cup",1,1087,1093],["cup",-1,1087,1091],["turnDeg",1,696,691],["turnDeg",-1,704,691],["climbDeg",0,777,1014],["extra:turnDeg:0",1,696,766],["extra:turnDeg:0",-1,705,766]]
+after drag bank at 774 1017 {"bank":"21.74","turn":"-90","rows":[],"msg":""}
+typed bank true
+after bank {"bank":"40","turn":"-90","rows":[],"msg":""}
+handles [["length",0,700,691],["width",1,1088,1096],["width",-1,1086,1088],["bank",1,775,1017],["bank",-1,779,1011],["cup",1,1087,1093],["cup",-1,1087,1091],["turnDeg",1,697,691],["turnDeg",-1,703,691],["climbDeg",0,777,1014],["extra:turnDeg:0",1,697,766],["extra:turnDeg:0",-1,704,766],["extra:bank:0",1,734,961],["extra:bank:0",-1,740,957]]
+after drag extra:turnDeg:0 at 697 766 {"bank":"40","turn":"-90","rows":[["extra turn","9.96"],["extra turn from","1250"]],"msg":""}
+typed extra:turnDeg:0 true
+after extra:turnDeg:0 {"bank":"40","turn":"-90","rows":[["extra turn","90"],["extra turn from","1250"]],"msg":""}
+handles [["length",0,508,848],["width",1,1088,1096],["width",-1,1086,1088],["bank",1,775,1017],["bank",-1,779,1011],["cup",1,1087,1093],["cup",-1,1087,1091],["turnDeg",1,507,851],["turnDeg",-1,508,844],["climbDeg",0,777,1014],["extra:turnDeg:0",1,582,853],["extra:turnDeg:0",-1,583,846],["extra:bank:0",1,733,962],["extra:bank:0",-1,738,957]]
+after drag extra:bank:0 at 733 962 {"bank":"40","turn":"-90","rows":[["extra turn","90"],["extra turn from","1250"],["extra bank","-31.98"],["extra bank from","1250"]],"msg":""}
+typed extra:bank:0 true
+after extra:bank:0 {"bank":"40","turn":"-90","rows":[["extra turn","90"],["extra turn from","1250"],["extra bank","-40"],["extra bank from","1250"]],"msg":""}
+final {"bank":"40","turn":"-90","rows":[["extra turn","90"],["extra turn from","1250"],["extra bank","-40"],["extra bank from","1250"]],"msg":""}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\2b46c68187c81881\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\l142\renders\l142-order-bank-xturn-xbank.png
+page errors none
+closed chrome 39940
+== exit 0 · done 2026-11-06T08:35:42.258Z
