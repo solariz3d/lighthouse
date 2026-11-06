@@ -65,3 +65,4 @@ Tier: PROVE IT (a local history rewrite). Scratch: S/rewrite.js, S/allterms.js, 
 - No tag, no release.
 - **A gap in my own instrument, found here:** scan-dumps.js and where-terms.js drop "file"-rule terms. Every lighthouse
   push I scanned before tonight ran without them. allterms.js includes them, and is what I use from now on.
+- checked, after finding that gap: the earlier push range 7357ae32..e550f9ba, recounted with all 72 terms over its net added lines and its 35 messages → only #70 ×10 (REVIEW, ruled not a term); 0 others (S/prev-push-allterms.txt). The 01:06 push carried no file-rule term.
