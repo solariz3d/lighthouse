@@ -1,0 +1,6 @@
+ok 1 - D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95)
+# rolling (first drag) p95 6.9 ms a move, early p95 4.3 ms: 1.63 ×; both ended at -12.63°
+ok 2 - D642: his p2's extra bank still reaches −88.45° from 500 (the bank-back he asked for), laid by the core
+# pass 2
+# fail 0
+# todo 0

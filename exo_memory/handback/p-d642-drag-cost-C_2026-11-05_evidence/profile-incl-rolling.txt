@@ -1,0 +1,16 @@
+   647.7 ms  ghost panel.js:532
+   576.6 ms  secondExtra panel.js:1309
+   576.6 ms  apply panel.js:957
+   440.5 ms  segmentsOf coreshell.js:379
+   435.6 ms  candidate coreshell.js:759
+   199.6 ms  readout panel.js:508
+   192.5 ms  candidateReadout readout.js:274
+   192.5 ms  candidateReadout coreshell.js:764
+   148.6 ms  extendCorner turnby.js:156
+   145.5 ms  cornerOf turnby.js:313
+   137.6 ms  solve turnby.js:103
+   137.4 ms  extendBy turnby.js:141
+   133.4 ms  startOf turnby.js:91
+   121.8 ms  extend extend.js:526
+   113.8 ms  easedPiece turnby.js:59
+    65.4 ms  f.oninput.f.onchange panel.js:561

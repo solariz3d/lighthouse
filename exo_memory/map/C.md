@@ -1830,3 +1830,6 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 
 ## 2026-11-05 — D642 parts 2b/3: the panel asks every minimum with the first ramp under it (start read as the core reads it, so an empty track has none); 6 of B's 8 panel rows green, R2 x2 is the core's minimum (1.174 x the bar at its own 272.6 m)
 - t180 d642-c3 923e0a3 on d642-b 69f6096: touched 66 files 846/2 (the 2 = R2); his three cases: extra turn 0 byte-identical to alone, checker 0 red 0 amber, real mesh no inversion; case 3 bank rises 44.23 -> 47.18 past the mark and dips to -90.96 before ending -88.45. Evidence: exo_memory/handback/p-d642-passthrough-renders-C_2026-11-05.md
+
+## 2026-11-05 — D642 drag cost (b): the panel asked the core's full shortest 13 times a drag move; folded to spanHolds and one search step a move, the extra-bank drag is 1.6-1.9 x early (was 19.5 x), still reaching -88.45 from 500
+- t180 d642-c4 212e78d (87792d1 fold, 7e29ccd rename, 1b5d415 row; merged with B 229914c): 160-move drag 1,434 -> 60 probe roads; E's bench 1.04-2.06 x (2.06 its cold first case); the rest is the adapter laying a rolling bank's segments (B's); mutants 91/91/0, additive 27/27, touched 140 files 0 fail. My first row read a warm probe memo and passed the old panel: corrected. Evidence: exo_memory/handback/p-d642-drag-cost-C_2026-11-05.md

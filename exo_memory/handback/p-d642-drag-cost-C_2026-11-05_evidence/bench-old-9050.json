@@ -1,0 +1,135 @@
+{
+ "tree": "C:\\Users\\nname\\Desktop\\worktrees\\t180-d642-c4",
+ "MOVES": 60,
+ "STEP": 8,
+ "cases": {
+  "rolling (extra bank, probe path) dir -1 rep 0": {
+   "moves": 60,
+   "medianMs": 71.37,
+   "p95Ms": 118.37,
+   "maxMs": 135.03,
+   "firstMs": 71.37,
+   "releaseMs": 17.11,
+   "endedAt": [
+    {
+     "from": 500,
+     "targetDeg": -12.63
+    }
+   ]
+  },
+  "rolling (extra bank, probe path) dir 1 rep 0": {
+   "moves": 60,
+   "medianMs": 16.7,
+   "p95Ms": 58.15,
+   "maxMs": 81.89,
+   "firstMs": 17.28,
+   "releaseMs": 16.37,
+   "endedAt": [
+    {
+     "from": 500,
+     "targetDeg": 189.53
+    }
+   ]
+  },
+  "early (extra bank, no probe) dir -1 rep 0": {
+   "moves": 60,
+   "medianMs": 5.57,
+   "p95Ms": 7.77,
+   "maxMs": 9,
+   "firstMs": 5.92,
+   "releaseMs": 10.81,
+   "endedAt": [
+    {
+     "from": 500,
+     "targetDeg": -12.63
+    }
+   ]
+  },
+  "early (extra bank, no probe) dir 1 rep 0": {
+   "moves": 60,
+   "medianMs": 5.63,
+   "p95Ms": 6.81,
+   "maxMs": 7.24,
+   "firstMs": 5.7,
+   "releaseMs": 11.12,
+   "endedAt": [
+    {
+     "from": 500,
+     "targetDeg": 189.53
+    }
+   ]
+  },
+  "length drag on the rolling piece rep 0": {
+   "moves": 60,
+   "medianMs": 9.54,
+   "p95Ms": 12.5,
+   "maxMs": 18.16,
+   "firstMs": 18.16,
+   "releaseMs": 11.74
+  },
+  "rolling (extra bank, probe path) dir -1 rep 1": {
+   "moves": 60,
+   "medianMs": 7.95,
+   "p95Ms": 9.85,
+   "maxMs": 10.67,
+   "firstMs": 7.96,
+   "releaseMs": 13.51,
+   "endedAt": [
+    {
+     "from": 500,
+     "targetDeg": -12.63
+    }
+   ]
+  },
+  "rolling (extra bank, probe path) dir 1 rep 1": {
+   "moves": 60,
+   "medianMs": 8.27,
+   "p95Ms": 9.9,
+   "maxMs": 11.81,
+   "firstMs": 8.32,
+   "releaseMs": 14.33,
+   "endedAt": [
+    {
+     "from": 500,
+     "targetDeg": 189.53
+    }
+   ]
+  },
+  "early (extra bank, no probe) dir -1 rep 1": {
+   "moves": 60,
+   "medianMs": 5.45,
+   "p95Ms": 7.24,
+   "maxMs": 10.28,
+   "firstMs": 7.24,
+   "releaseMs": 10.09,
+   "endedAt": [
+    {
+     "from": 500,
+     "targetDeg": -12.63
+    }
+   ]
+  },
+  "early (extra bank, no probe) dir 1 rep 1": {
+   "moves": 60,
+   "medianMs": 5.33,
+   "p95Ms": 7.17,
+   "maxMs": 8.28,
+   "firstMs": 6.23,
+   "releaseMs": 11.19,
+   "endedAt": [
+    {
+     "from": 500,
+     "targetDeg": 189.53
+    }
+   ]
+  },
+  "length drag on the rolling piece rep 1": {
+   "moves": 60,
+   "medianMs": 8.9,
+   "p95Ms": 11.74,
+   "maxMs": 11.99,
+   "firstMs": 11.1,
+   "releaseMs": 13.73
+  }
+ }
+}

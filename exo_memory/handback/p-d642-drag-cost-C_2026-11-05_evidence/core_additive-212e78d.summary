@@ -1,0 +1,29 @@
+ok 1 - D642 1a: his −90° corner with an extra turn of 0 from 500 is byte-equal to the corner with no extra
+ok 2 - D642 1b: a climb corner of +20° with an extra climb of 0 from 600 is byte-equal to the climb corner alone
+ok 3 - D642 1c kh: a whole-piece kh with an extra that ends where it already is (target 0.00333333 from 500) is byte-equal to the piece with no extra
+ok 4 - D642 1c kv: a whole-piece kv with an extra that ends where it already is (target 0.000698132 from 500) is byte-equal to the piece with no extra
+ok 5 - D642 1c phi: a whole-piece phi with an extra that ends where it already is (target 0.523599 from 500) is byte-equal to the piece with no extra
+ok 6 - D642 1c w: a whole-piece w with an extra that ends where it already is (target 30 from 500) is byte-equal to the piece with no extra
+ok 7 - D642 1c c: a whole-piece c with an extra that ends where it already is (target 40 from 500) is byte-equal to the piece with no extra
+ok 8 - D642 1c e: a whole-piece e with an extra that ends where it already is (target 20 from 500) is byte-equal to the piece with no extra
+ok 9 - D642 2a: his −90° corner with an extra +180° from 500: the heading up to 500 is the corner's own (0.01°), the piece turns +90° in all and ends straight
+ok 10 - D642 2b: a climb corner of +40° with an extra −80° from 500 keeps the corner's own pitch to 500 (0.01°) and pitches −40° in all
+ok 11 - D642 2c: his bank, 88.45° over the whole piece with an extra back the other way (to −30° from 500): the bank up to 500 is the whole-piece ramp's (1% of its change), and it ends at −30°
+ok 12 - D642 2d: a rate field, the width 30 over the whole piece with an extra to 40 from 600: the width to 600 is the whole-piece ramp's (1% of its change), and it ends at 40
+ok 13 - D642 3 his −90° with an extra +180° laid at the extra's shortest: the built heading rate stays under the bar (× 1.05) through the piece and 20 m on
+ok 14 - D642 3 a +90° with an extra +90° the same way laid at the extra's shortest: the built heading rate stays under the bar (× 1.05) through the piece and 20 m on
+ok 15 - D642 3 a climb +40° with an extra −80° laid at the extra's shortest: the built pitch rate stays under the bar (× 1.05) through the piece and 20 m on
+ok 16 - D642 3d: his bank 88.45° over 1,000 m with an extra back to −30° at the extra's shortest: the built roll accelerates under the bar (× 1.05)
+ok 17 - D642 2e phi: every control point whose basis starts before the mark (500 m) is the piece's without the change, byte for byte
+ok 18 - D642 2e w: every control point whose basis starts before the mark (600 m) is the piece's without the change, byte for byte
+ok 19 - D642 2e kh: every control point whose basis starts before the mark (550 m) is the piece's without the change, byte for byte
+ok 20 - D642 2f: 10 m past the mark the bank change's own curvature is the C2 quintic's within 25%
+ok 21 - D642 3e his picture: 66.14° over 750 m, back to 0, the panel's rounded bank, the change at its shortest: the built roll accelerates under the bar (× 1.05)
+ok 22 - D642 3e 88.45° over 1,000 m, back to −30°, the panel's rounded bank, the change at its shortest: the built roll accelerates under the bar (× 1.05)
+ok 23 - D642 3e 30° over 600 m, on to 60°, the panel's rounded bank, the change at its shortest: the built roll accelerates under the bar (× 1.05)
+ok 24 - D642 3f: his p2 (−90, extra +180 from 500, the rounded bank 88.45° back to −88.45° from 500) is laid, and its built roll accelerates under the bar (× 1.05)
+ok 25 - D642 3g: the bank's shortest under a moving first ramp is no longer than the capped share asks, and laid at it the built roll stays under the bar (× 1.05), for his p2 and his picture
+ok 26 - D642 3h: a span the built road cannot carry, past the change's own minimum, is refused by name, and the shortest it names holds
+ok 27 - D642 3i: a drag of the extra bank, 40 moves of 0.5° with 13 asks a move, builds at most 120 probe roads, and a target between grid steps asks what the bigger step asks
+# pass 27
+# fail 0
