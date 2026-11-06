@@ -1,0 +1,30 @@
+start 00:48:53Z a924f1b
+test/core_cup_mutation.test.js exit 0 00:50:23Z
+# tests 50
+# pass 50
+# fail 0
+# skipped 0
+# todo 0
+  mutants ok: 48, NOT APPLIED lines: 0
+test/core_xsec_mutation.test.js exit 0 00:54:54Z
+# tests 69
+# pass 69
+# fail 0
+# skipped 0
+# todo 0
+  mutants ok: 67, NOT APPLIED lines: 0
+app/test/core-mutation.test.js exit 0 01:00:27Z
+# tests 70
+# pass 70
+# fail 0
+# skipped 0
+# todo 0
+  mutants ok: 65, NOT APPLIED lines: 0
+app/test/mutation.test.js exit 0 01:03:53Z
+# tests 114
+# pass 114
+# fail 0
+# skipped 0
+# todo 0
+  mutants ok: 110, NOT APPLIED lines: 0
+ALL-END
