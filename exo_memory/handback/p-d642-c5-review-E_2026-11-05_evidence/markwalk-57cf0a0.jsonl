@@ -1,0 +1,6 @@
+{"case":"a","mode":"rolling","made":{"from":500,"targetDeg":-30.3},"moves":281,"medianMs":8.41,"p95Ms":14.37,"maxMs":20.05,"worst":{"ms":20.05,"asked":582,"kept":583,"plans":2},"plansTotal":105,"plansMax":16,"plansMedian":0}
+{"case":"a","mode":"early","made":{"from":500,"targetDeg":-30.3},"moves":281,"medianMs":6.2,"p95Ms":7.37,"maxMs":10.16,"worst":{"ms":10.16,"asked":586,"kept":586,"plans":0},"plansTotal":0,"plansMax":0,"plansMedian":0}
+{"case":"b","mode":"rolling","made":{"from":375,"targetDeg":0},"moves":161,"medianMs":1.46,"p95Ms":7.9,"maxMs":9.24,"worst":{"ms":9.24,"asked":526,"kept":508,"plans":2},"plansTotal":71,"plansMax":25,"plansMedian":0}
+{"case":"b","mode":"early","made":{"from":375,"targetDeg":0},"moves":161,"medianMs":5.21,"p95Ms":6.59,"maxMs":7.81,"worst":{"ms":7.81,"asked":542,"kept":542,"plans":0},"plansTotal":0,"plansMax":0,"plansMedian":0}
+{"case":"c","mode":"rolling","made":{"from":375,"targetDeg":0},"moves":221,"medianMs":6.8,"p95Ms":11.99,"maxMs":14.89,"worst":{"ms":14.89,"asked":419,"kept":419,"plans":1},"plansTotal":66,"plansMax":17,"plansMedian":0}
+{"case":"c","mode":"early","made":{"from":375,"targetDeg":0},"moves":221,"medianMs":4.77,"p95Ms":5.75,"maxMs":7.76,"worst":{"ms":7.76,"asked":385,"kept":385,"plans":0},"plansTotal":0,"plansMax":0,"plansMedian":0}

@@ -1,0 +1,12 @@
+{"mode":"rolling","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":11.5,"p95Ms":16.2,"maxMs":78.59,"worst":{"ms":78.59,"asked":420,"kept":420,"plans":11},"plansTotal":130,"plansMax":11,"plansMedian":0}
+{"mode":"early","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":6.51,"p95Ms":7.8,"maxMs":10.08,"worst":{"ms":10.08,"asked":486,"kept":486,"plans":0},"plansTotal":0,"plansMax":0,"plansMedian":0}
+{"mode":"rolling","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":10.79,"p95Ms":16.5,"maxMs":77.46,"worst":{"ms":77.46,"asked":420,"kept":420,"plans":11},"plansTotal":130,"plansMax":11,"plansMedian":0}
+{"mode":"early","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":6.4,"p95Ms":7.96,"maxMs":9.61,"worst":{"ms":9.61,"asked":481,"kept":481,"plans":0},"plansTotal":0,"plansMax":0,"plansMedian":0}
+{"mode":"rolling","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":12.21,"p95Ms":16.54,"maxMs":79.36,"worst":{"ms":79.36,"asked":420,"kept":420,"plans":11},"plansTotal":130,"plansMax":11,"plansMedian":0}
+{"mode":"early","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":6.31,"p95Ms":7.54,"maxMs":10.52,"worst":{"ms":10.52,"asked":482,"kept":482,"plans":0},"plansTotal":0,"plansMax":0,"plansMedian":0}
+{"mode":"rolling","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":10.98,"p95Ms":15.81,"maxMs":76.62,"worst":{"ms":76.62,"asked":420,"kept":420,"plans":11},"plansTotal":130,"plansMax":11,"plansMedian":0}
+{"mode":"early","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":6.32,"p95Ms":7.62,"maxMs":11.1,"worst":{"ms":11.1,"asked":486,"kept":486,"plans":0},"plansTotal":0,"plansMax":0,"plansMedian":0}
+{"mode":"rolling","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":11.33,"p95Ms":15.93,"maxMs":76.51,"worst":{"ms":76.51,"asked":420,"kept":420,"plans":11},"plansTotal":130,"plansMax":11,"plansMedian":0}
+{"mode":"early","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":6.46,"p95Ms":7.73,"maxMs":10.27,"worst":{"ms":10.27,"asked":486,"kept":486,"plans":0},"plansTotal":0,"plansMax":0,"plansMedian":0}
+{"mode":"rolling","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":10.84,"p95Ms":15.8,"maxMs":77.98,"worst":{"ms":77.98,"asked":420,"kept":420,"plans":11},"plansTotal":130,"plansMax":11,"plansMedian":0}
+{"mode":"early","made":{"from":500,"targetDeg":-88.45},"moves":241,"medianMs":6.36,"p95Ms":7.55,"maxMs":10.09,"worst":{"ms":10.09,"asked":486,"kept":486,"plans":0},"plansTotal":0,"plansMax":0,"plansMedian":0}
