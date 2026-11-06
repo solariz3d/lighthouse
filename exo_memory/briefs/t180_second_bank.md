@@ -35,6 +35,7 @@
   - Picture 1, `t180_extra_turn_alone_2026-11-05.png` (his file name: "by itself no extra turn"): 1,000 m, turn -90, no extra. He drew a red line: a wide loop that keeps sweeping round past the piece end and back toward the start.
   - Picture 2, `t180_extra_turn_reshapes_2026-11-05.png` ("it makes it more sharp and takes the original shape away"): the same piece with extra turn 0 from 500. The first corner is squeezed into the first half and the second half runs straight.
   - Picture 3, `t180_extra_bank_inverted_2026-11-05.png` ("then besides that bug i wanted to see if the extra banking at least worked it didnt for the turn i wanted and you can see that in the testturn2 save what is wrong with the banking"): the save `eq-turntest2.t180track` (13:53:41 local). p2 is 1,000 m: -90 corner, then an extra +180 from 500 (net +90), bank +88.45 rising linearly over the whole piece. The checker shows red: the car leaves the road at 1550-1960 m.
+- 2026-11-06 07:37Z (L), on the fb5b91c renders (his S with the bank-back): "i think that artifact looks good, continue to finish the rest and then update current build on the shortcut when done"
 
 ## The problem, in one line
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
