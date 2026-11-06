@@ -53,6 +53,7 @@ A piece makes one change per field, so ending a banked turn level (or steeper) t
 pieces. He wants one piece to change a second time toward its end.
 
 ## State — updated 2026-11-05 19:1x (D), tonight's handoff: `loop/handoff_t180_2026-11-05-D.md`
+- **2026-11-06 19:2x (C), D644, his 18:58Z word, renders only, nothing built:** on 0.4.39 the extra turn handle (the grab whose along-drag slides where the extra turn kicks in) stands at 0.89 by the turn handle; the purple from mark is at 500 on the bank/climb handles. Moved onto the mark alone it lands ON the bank handle (0 px); with bank and climb stepping back by the clearExtras rule it clears ≥36.3 px in all 8 views rendered (half piece 220-378 px). Renders + table: `handback/p-d644-from-grab-renders-C_2026-11-06.md`. Waiting on his look.
 - **The model, at his 19:54Z ruling:** the extra change ADDS on top of the piece's own change; extra 0 = no change (byte-equal). Built: B d642-b, panel C d642-c3.
 - **Merged tip:** t180 `d642-p` a924f1b, pushed as the one-commit branch `second-change-additive` 5d17a9c (same tree). E's review: GREEN, mutants all caught. Timing: no regression (B §6).
 - **Installed on D:** 923e0a3 (sha256 6f787b5a…), for his feel test. It lays his S bank-back to −88.45 from 500.
