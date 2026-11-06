@@ -1833,3 +1833,6 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 
 ## 2026-11-05 — D642 drag cost (b): the panel asked the core's full shortest 13 times a drag move; folded to spanHolds and one search step a move, the extra-bank drag is 1.6-1.9 x early (was 19.5 x), still reaching -88.45 from 500
 - t180 d642-c4 212e78d (87792d1 fold, 7e29ccd rename, 1b5d415 row; merged with B 229914c): 160-move drag 1,434 -> 60 probe roads; E's bench 1.04-2.06 x (2.06 its cold first case); the rest is the adapter laying a rolling bank's segments (B's); mutants 91/91/0, additive 27/27, touched 140 files 0 fail. My first row read a warm probe memo and passed the old panel: corrected. Evidence: exo_memory/handback/p-d642-drag-cost-C_2026-11-05.md
+
+## 2026-11-05 — D642 hold edge: the hold now keeps its edge (held moves 4.3 -> 0.2 ms), but a drag into the hold stays 2.8-3.1 x early, set by the ~9 approach moves that each build one probe road (the core's probe cost), not by the hold
+- t180 d642-c5 31bbc64 on 212e78d: into-the-hold row red 2.95 x twice, still 2.81-3.13 x after, filed as a todo naming the core; bank-back row 1.66-1.95 x green; -88.45 from 500 reached; covering rows 120/0. Evidence: exo_memory/handback/p-d642-hold-edge-C_2026-11-05.md
