@@ -1,0 +1,11 @@
+start 17:46:44Z
+waiting (acs.exe or a lock) 17:46:44Z
+running 17:53:45Z
+a rows done 17:53:48Z
+b correctness t180-e643L done 17:54:14Z
+b correctness t180-e643D done 17:54:39Z
+speed run 1 done 17:54:50Z
+speed run 2 done 17:55:00Z
+speed run 3 done 17:55:11Z
+exit 0 17:55:11Z
+ALL-END

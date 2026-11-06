@@ -1,0 +1,74 @@
+[
+ {
+  "case": "66.14°/750 m -> 0°",
+  "ceilingNamed": 313.9,
+  "spansLaid": 431,
+  "over1": 1,
+  "over105": 0,
+  "worst": 1.003,
+  "worstAtSpan": 331,
+  "overAt": [
+   "331:1.003"
+  ]
+ },
+ {
+  "case": "88.45°/1000 m -> -88.45°",
+  "ceilingNamed": 453.1,
+  "spansLaid": 545,
+  "over1": 0,
+  "over105": 0,
+  "worst": 0.997,
+  "worstAtSpan": 920,
+  "overAt": []
+ },
+ {
+  "case": "88.45°/1000 m -> -30.3°",
+  "ceilingNamed": 390.7,
+  "spansLaid": 607,
+  "over1": 0,
+  "over105": 0,
+  "worst": 0.997,
+  "worstAtSpan": 391,
+  "overAt": []
+ },
+ {
+  "case": "88.45°/1000 m -> 0°",
+  "ceilingNamed": 350.2,
+  "spansLaid": 645,
+  "over1": 0,
+  "over105": 0,
+  "worst": 0.997,
+  "worstAtSpan": 727,
+  "overAt": []
+ },
+ {
+  "case": "30°/750 m -> 0°",
+  "ceilingNamed": 172.6,
+  "spansLaid": 527,
+  "over1": 0,
+  "over105": 0,
+  "worst": 0.994,
+  "worstAtSpan": 180,
+  "overAt": []
+ },
+ {
+  "case": "60°/600 m -> -60°",
+  "ceilingNamed": 412.1,
+  "spansLaid": 185,
+  "over1": 0,
+  "over105": 0,
+  "worst": 0.997,
+  "worstAtSpan": 438,
+  "overAt": []
+ },
+ {
+  "case": "66.14°/750 m -> -88.45°",
+  "ceilingNamed": 431.2,
+  "spansLaid": 315,
+  "over1": 0,
+  "over105": 0,
+  "worst": 0.996,
+  "worstAtSpan": 532,
+  "overAt": []
+ }
+]

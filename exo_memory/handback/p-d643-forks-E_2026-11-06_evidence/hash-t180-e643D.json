@@ -1,0 +1,35 @@
+{
+ "tree": "C:\\Users\\nname\\Desktop\\worktrees\\t180-e643D",
+ "tracks": {
+  "fixture 10-22 (test/fixtures)": {
+   "samples": 13799,
+   "segments": 13798,
+   "sha256": "cb999f078b912ade"
+  },
+  "his save testbank2": {
+   "samples": 1751,
+   "segments": 1750,
+   "sha256": "67ce5a0e42f5f151"
+  },
+  "his save testturn1": {
+   "samples": 501,
+   "segments": 500,
+   "sha256": "db34daf1e6f4c5fb"
+  },
+  "his save testturn2": {
+   "samples": 1204,
+   "segments": 1203,
+   "sha256": "0638c486607954a5"
+  },
+  "his p2 piece (rounded, extra turn +180, extra bank −88.45 from 500)": {
+   "samples": 1001,
+   "segments": 1000,
+   "sha256": "5cd3ccb32fc37741"
+  }
+ },
+ "coreAnswers": {
+  "asks": 4248,
+  "spanHoldsTrue": 2667,
+  "sha256": "0e80b0754bffa6dd"
+ }
+}

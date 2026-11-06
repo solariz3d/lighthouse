@@ -1,0 +1,127 @@
+{
+ "speed": [
+  {
+   "drag": "bank-back",
+   "runs": 3,
+   "L_rolling_p95_ms": "14.22 (13.84-14.24)",
+   "D_rolling_p95_ms": "14.28 (13.71-15.22)",
+   "L_x_early": "1.82 (1.81-1.88)",
+   "D_x_early": "1.77 (1.77-1.95)",
+   "D_over_L_rolling": "1.00 (0.96-1.10)",
+   "perRun": [
+    "run 1: L 13.84/7.64 D 15.22/7.82",
+    "run 2: L 14.24/7.83 D 13.71/7.76",
+    "run 3: L 14.22/7.58 D 14.28/8.06"
+   ]
+  },
+  {
+   "drag": "into-the-hold",
+   "runs": 3,
+   "L_rolling_p95_ms": "10.05 (9.51-10.52)",
+   "D_rolling_p95_ms": "9.10 (8.55-9.11)",
+   "L_x_early": "1.96 (1.91-2.41)",
+   "D_x_early": "2.05 (1.93-2.05)",
+   "D_over_L_rolling": "0.90 (0.87-0.91)",
+   "perRun": [
+    "run 1: L 10.52/4.37 D 9.10/4.43",
+    "run 2: L 9.51/4.99 D 8.55/4.44",
+    "run 3: L 10.05/5.12 D 9.11/4.44"
+   ]
+  },
+  {
+   "drag": "mark-slide",
+   "runs": 3,
+   "L_rolling_p95_ms": "9.44 (9.43-9.75)",
+   "D_rolling_p95_ms": "9.44 (9.34-9.88)",
+   "L_x_early": "1.51 (1.50-1.52)",
+   "D_x_early": "1.46 (1.45-1.48)",
+   "D_over_L_rolling": "1.00 (0.99-1.01)",
+   "perRun": [
+    "run 1: L 9.43/6.24 D 9.44/6.48",
+    "run 2: L 9.44/6.21 D 9.34/6.45",
+    "run 3: L 9.75/6.50 D 9.88/6.68"
+   ]
+  }
+ ],
+ "hashes": [
+  {
+   "track": "fixture 10-22 (test/fixtures)",
+   "samples": 13799,
+   "L": "cb999f078b912ade",
+   "D": "cb999f078b912ade",
+   "same": true
+  },
+  {
+   "track": "his save testbank2",
+   "samples": 1751,
+   "L": "67ce5a0e42f5f151",
+   "D": "67ce5a0e42f5f151",
+   "same": true
+  },
+  {
+   "track": "his save testturn1",
+   "samples": 501,
+   "L": "db34daf1e6f4c5fb",
+   "D": "db34daf1e6f4c5fb",
+   "same": true
+  },
+  {
+   "track": "his save testturn2",
+   "samples": 1204,
+   "L": "0638c486607954a5",
+   "D": "0638c486607954a5",
+   "same": true
+  },
+  {
+   "track": "his p2 piece (rounded, extra turn +180, extra bank −88.45 from 500)",
+   "samples": 1001,
+   "L": "5cd3ccb32fc37741",
+   "D": "5cd3ccb32fc37741",
+   "same": true
+  },
+  {
+   "track": "core answers (4248 asks, 2667 hold)",
+   "L": "0e80b0754bffa6dd",
+   "D": "0e80b0754bffa6dd",
+   "same": true
+  }
+ ],
+ "walks": [
+  {
+   "case": "his p2: 1,000 m, bank 88.45, extra -88.45",
+   "L": "refused 0, over 1.05 0, over 1.0 0, worst 0.99, kept 120",
+   "D": "refused 0, over 1.05 0, over 1.0 0, worst 0.99, kept 120",
+   "same": true
+  },
+  {
+   "case": "88.45 / 1,000 m, extra -30.3",
+   "L": "refused 0, over 1.05 0, over 1.0 0, worst 0.998, kept 89",
+   "D": "refused 0, over 1.05 0, over 1.0 0, worst 0.998, kept 89",
+   "same": true
+  },
+  {
+   "case": "his picture: 750 m, bank 66.14, extra 0",
+   "L": "refused 0, over 1.05 0, over 1.0 2, worst 1.003, kept 73",
+   "D": "refused 0, over 1.05 0, over 1.0 2, worst 1.003, kept 73",
+   "same": true
+  },
+  {
+   "case": "30 / 750 m, extra 0",
+   "L": "refused 0, over 1.05 0, over 1.0 0, worst 0.997, kept 21",
+   "D": "refused 0, over 1.05 0, over 1.0 0, worst 0.997, kept 21",
+   "same": true
+  },
+  {
+   "case": "60 / 600 m, extra -60",
+   "L": "refused 0, over 1.05 0, over 1.0 0, worst 0.993, kept 71",
+   "D": "refused 0, over 1.05 0, over 1.0 0, worst 0.993, kept 71",
+   "same": true
+  },
+  {
+   "case": "G8: his p2 shortened 1,000 -> 860",
+   "L": "refused 0, over 1.05 —, over 1.0 1, worst 1.004, kept —",
+   "D": "refused 0, over 1.05 —, over 1.0 1, worst 1.004, kept —",
+   "same": true
+  }
+ ]
+}

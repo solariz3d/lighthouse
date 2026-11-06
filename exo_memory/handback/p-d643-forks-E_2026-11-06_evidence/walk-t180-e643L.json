@@ -1,0 +1,98 @@
+[
+ {
+  "case": "his p2: 1,000 m, bank 88.45, extra -88.45",
+  "made": {
+   "from": 500,
+   "targetDeg": -88.45
+  },
+  "moves": 241,
+  "distinctKept": 120,
+  "refused": 0,
+  "overBar1": 0,
+  "over105": 0,
+  "worstPeak": 0.99,
+  "keptNotWhereAsked": 2,
+  "farthestFromAsked": 1,
+  "refusedAt": [],
+  "overAt": []
+ },
+ {
+  "case": "88.45 / 1,000 m, extra -30.3",
+  "made": {
+   "from": 500,
+   "targetDeg": -30.3
+  },
+  "moves": 281,
+  "distinctKept": 89,
+  "refused": 0,
+  "overBar1": 0,
+  "over105": 0,
+  "worstPeak": 0.998,
+  "keptNotWhereAsked": 105,
+  "farthestFromAsked": 50.700000000000045,
+  "refusedAt": [],
+  "overAt": []
+ },
+ {
+  "case": "his picture: 750 m, bank 66.14, extra 0",
+  "made": {
+   "from": 375,
+   "targetDeg": 0
+  },
+  "moves": 221,
+  "distinctKept": 73,
+  "refused": 0,
+  "overBar1": 2,
+  "over105": 0,
+  "worstPeak": 1.003,
+  "keptNotWhereAsked": 77,
+  "farthestFromAsked": 33.89999999999998,
+  "refusedAt": [],
+  "overAt": [
+   "419:1.003",
+   "419:1.003"
+  ]
+ },
+ {
+  "case": "30 / 750 m, extra 0",
+  "made": {
+   "from": 375,
+   "targetDeg": 0
+  },
+  "moves": 161,
+  "distinctKept": 21,
+  "refused": 0,
+  "overBar1": 0,
+  "over105": 0,
+  "worstPeak": 0.997,
+  "keptNotWhereAsked": 123,
+  "farthestFromAsked": 23,
+  "refusedAt": [],
+  "overAt": []
+ },
+ {
+  "case": "60 / 600 m, extra -60",
+  "made": {
+   "from": 300,
+   "targetDeg": 7
+  },
+  "moves": 141,
+  "distinctKept": 71,
+  "refused": 0,
+  "overBar1": 0,
+  "over105": 0,
+  "worstPeak": 0.993,
+  "keptNotWhereAsked": 0,
+  "farthestFromAsked": 0,
+  "refusedAt": [],
+  "overAt": []
+ },
+ {
+  "case": "G8: his p2 shortened 1,000 -> 860",
+  "moves": 71,
+  "refused": 0,
+  "overBar1": 1,
+  "worstPeak": 1.004,
+  "refusedAt": []
+ }
+]
