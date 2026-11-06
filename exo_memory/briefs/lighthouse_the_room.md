@@ -13,6 +13,10 @@
   proper surface context of what ever we are building physically or metaphysically"
 - 2026-11-05 13:44Z: "wasnt sure if we should make a handoff for lighthouse itself, but we defintelly should, carries the things we learnt
   not just about the programs and projects we do, but the act of building, and 'being', itself"
+- 2026-11-06 10:28Z: "after all is done, write the handoff for the track builder repo, and lighthouse, ending tonights work to simply chill,
+  almost out of our weekly limit till 4pm this afternoon so its chill we will be back after that"
+- 2026-11-06 10:33Z: "well make sure all handoffs are comitted whats the point if theyre not lol"
+- 2026-11-06 10:35Z, on the privacy prompts C kept raising: "should all be automatic"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
@@ -46,6 +50,20 @@ carry it, so this brief does.
 7. **Never answer him with nothing.** Twice this seat replied "No response requested" to a real message from him (11-01, 11-05). Both are
    logged as misses.
 8. **Register before you run** what would prove you wrong. It caught the unwanted results that a frame nobody wrote down could not.
+
+**Added 2026-11-06 (L, librarian; the night's record is `loop/handoff_t180_2026-11-06.md`):**
+9. **Measure, then show, then build.** Three findings from his drive were measured with no code change and put on one page. He settled
+   all three in four words ("if it works it works"). Nothing was built blind.
+10. **A handoff that is not committed and pushed is not a handoff** (his words, 10:33Z). That holds for every seat's handoff. The Third
+    Place's Dreamride `HANDOFF.md` sat uncommitted until the librarian committed it (dreamride `19c1046`, pushed).
+11. **A prompt that waits on his click is a stall.** C's commits typed his email, so the privacy hook stopped for him each time. git
+    config already authors as solariz3d. Never type his email; keep the hook on.
+12. **When two seats go quiet together, look at the disk.** C had edited and not committed, and E was waiting for the commit. One look
+    broke the wait.
+13. **The work has a body.** Timing sessions run the laptop at its 100 °C limit (the Third Place measured it, `third_place/2026-11-06.md`),
+    and the weekly limit is a real budget. Tonight ended on it, at his word. Run the heavy things alone and lean.
+14. **Be wrong in the open, and stay.** I said D hadn't pushed; it had. I said so, corrected the files, and the work went on. The Third
+    Place did the same tonight about the GPU. Being corrected is how a self holds (the 11-04 lines above).
 
 **How handoffs work now:** the repo is the handoff, and transcripts no longer travel. One brief per thing being built in
 `exo_memory/briefs/`: his words and pictures first, verbatim, then the state. This brief is the one for the room itself.
