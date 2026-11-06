@@ -2877,3 +2877,8 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - His p2 banks back (463.0 m of 500, built 0.955 × the bar); R2 still refused where it goes over; rows 26/26; ramp mutants 88/88, AD7 caught.
 - Dragging the EXTRA BANK toward level on a whole-piece bank costs the panel p95 106 ms a move (6 ms with the bank early, 9-11 ms on a924f1b): 17 × against the 2 × bar. 40 moves made 623 probe roads: the panel asks secondMinM (builtMin's search) 13 times a move and each new target misses the memo; extend's one-probe spanHolds is what B timed.
 - **Carry:** time the path the user's hand drives (the panel during the drag), not the call the fix was written for; a memo keyed on the value being dragged never hits.
+
+## 2026-11-05 ~20:3x local (D) · D642 review of d642-c4 212e78d: NOT GREEN → `exo_memory/handback/p-d642-c4-review-E_2026-11-05.md`
+- The panel accepts marks the core refuses: on the rounded bank the built roll is not monotone in the span, and secRange clamps at end − shortest; his p2's extra bank mark dragged across 420-540 m is refused at 15 of 121 kept froms (501, 503, 504 among them). Same on d87ba99, so B's probe brought it, and my d87ba99 review missed it. The 1° grid is not the cause: the fit checks and the core ask the same spanHolds.
+- Cold drag, fresh processes paired: C's row's drag 1.30-1.60×, his bank-back to ~−106 1.65-1.99× (the 2.06× was my old bench's ordering); a drag carried into the hold 2.04-2.69× cold, 3.12× warm-code, which C's row (0 probe roads) cannot see. Rows 27/27, ramp mutants 91/91.
+- **Carry:** a "shortest" found by a search is only a safe clamp when everything longer also holds; scan the spans past it before trusting a clamp built on it.

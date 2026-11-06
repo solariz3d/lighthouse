@@ -1,0 +1,352 @@
+[
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "rounded",
+  "tgt": -88.45,
+  "shortest": 463.1,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "28: 475, 475.5, 476.5, 477, 477.5, 478",
+  "holdsBelowShortest": "2 (from 462.5)"
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "rounded",
+  "tgt": -60,
+  "shortest": 434.6,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "36: 435, 435.5, 436, 436.5, 437, 437.5",
+  "holdsBelowShortest": "2 (from 434)"
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "rounded",
+  "tgt": -30.3,
+  "shortest": 400.7,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "12: 415.5, 416.5, 417, 417.5, 418, 418.5",
+  "holdsBelowShortest": "2 (from 400)"
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "rounded",
+  "tgt": -10,
+  "shortest": 372.5,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "21: 375, 375.5, 376, 376.5, 377, 377.5",
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "rounded",
+  "tgt": 0,
+  "shortest": 360.2,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "18: 375, 375.5, 376, 376.5, 377, 377.5",
+  "holdsBelowShortest": "4 (from 357.5)"
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "rounded",
+  "tgt": 12.7,
+  "shortest": 340.7,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "16: 355, 355.5, 356, 356.5, 357, 357.5",
+  "holdsBelowShortest": "3 (from 336.5)"
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "rounded",
+  "tgt": 45.5,
+  "shortest": 269.6,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "9: 275.5, 276, 276.5, 277, 277.5, 278",
+  "holdsBelowShortest": "2 (from 269)"
+ },
+ {
+  "stepDeg": 66.14,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": -88.45,
+  "shortest": 441.2,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "35: 449, 450, 450.5, 451.5, 452, 452.5",
+  "holdsBelowShortest": "2 (from 440.5)"
+ },
+ {
+  "stepDeg": 66.14,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": -60,
+  "shortest": 415,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "12: 429.5, 430, 430.5, 431.5, 432, 432.5",
+  "holdsBelowShortest": "2 (from 409)"
+ },
+ {
+  "stepDeg": 66.14,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": -30.3,
+  "shortest": 369.3,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "24: 370, 370.5, 371, 371.5, 372, 372.5",
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 66.14,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": -10,
+  "shortest": 338.5,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "15: 350.5, 351, 351.5, 352, 352.5, 353",
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 66.14,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": 0,
+  "shortest": 320.9,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "16: 331, 331.5, 332, 332.5, 333, 333.5",
+  "holdsBelowShortest": "1 (from 320.5)"
+ },
+ {
+  "stepDeg": 66.14,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": 12.7,
+  "shortest": 296.5,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "8: 311, 311.5, 312.5, 313, 314, 314.5",
+  "holdsBelowShortest": "1 (from 294.5)"
+ },
+ {
+  "stepDeg": 66.14,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": 45.5,
+  "shortest": 199.4,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": "1 (from 199)"
+ },
+ {
+  "stepDeg": 30,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": -88.45,
+  "shortest": 387.7,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "15: 391, 392.5, 393, 393.5, 394.5, 409.5",
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 30,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": -60,
+  "shortest": 353.9,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "7: 373.5, 374, 374.5, 390, 390.5, 391",
+  "holdsBelowShortest": "1 (from 353.5)"
+ },
+ {
+  "stepDeg": 30,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": -30.3,
+  "shortest": 313.1,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "4: 331, 332, 333, 335.5",
+  "holdsBelowShortest": "3 (from 310)"
+ },
+ {
+  "stepDeg": 30,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": -10,
+  "shortest": 268.3,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": "2 (from 267.5)"
+ },
+ {
+  "stepDeg": 30,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": 0,
+  "shortest": 183.6,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "110: 187, 187.5, 188, 188.5, 189, 189.5",
+  "holdsBelowShortest": "7 (from 178)"
+ },
+ {
+  "stepDeg": 30,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": 12.7,
+  "shortest": 138.7,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "70: 141, 141.5, 142, 142.5, 143, 153",
+  "holdsBelowShortest": "1 (from 138.5)"
+ },
+ {
+  "stepDeg": 30,
+  "L": 750,
+  "shape": "rounded",
+  "tgt": 45.5,
+  "shortest": 126,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "56: 126.5, 127, 127.5, 128, 142.5, 143",
+  "holdsBelowShortest": "3 (from 124.5)"
+ },
+ {
+  "stepDeg": 60,
+  "L": 600,
+  "shape": "rounded",
+  "tgt": -88.45,
+  "shortest": 460.6,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "15: 478.5, 479, 479.5, 495, 495.5, 496",
+  "holdsBelowShortest": "4 (from 457)"
+ },
+ {
+  "stepDeg": 60,
+  "L": 600,
+  "shape": "rounded",
+  "tgt": -60,
+  "shortest": 421.1,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "4: 437, 437.5, 438, 439.5",
+  "holdsBelowShortest": "1 (from 421)"
+ },
+ {
+  "stepDeg": 60,
+  "L": 600,
+  "shape": "rounded",
+  "tgt": -30.3,
+  "shortest": 380.5,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "10: 395, 395.5, 396, 398.5, 399, 399.5",
+  "holdsBelowShortest": "1 (from 380)"
+ },
+ {
+  "stepDeg": 60,
+  "L": 600,
+  "shape": "rounded",
+  "tgt": -10,
+  "shortest": 341.6,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "4: 355, 358.5, 359, 359.5",
+  "holdsBelowShortest": "1 (from 341.5)"
+ },
+ {
+  "stepDeg": 60,
+  "L": 600,
+  "shape": "rounded",
+  "tgt": 0,
+  "shortest": 321,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "5: 335, 335.5, 338.5, 339, 339.5",
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 60,
+  "L": 600,
+  "shape": "rounded",
+  "tgt": 12.7,
+  "shortest": 293.3,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": "5: 296.5, 297.5, 298, 298.5, 299.5",
+  "holdsBelowShortest": "1 (from 293)"
+ },
+ {
+  "stepDeg": 60,
+  "L": 600,
+  "shape": "rounded",
+  "tgt": 45.5,
+  "shortest": 169.63,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "quintic",
+  "tgt": -88.45,
+  "shortest": 438.65,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": "5 (from 436.5)"
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "quintic",
+  "tgt": -60,
+  "shortest": 401.83,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "quintic",
+  "tgt": -30.3,
+  "shortest": 359.4,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "quintic",
+  "tgt": -10,
+  "shortest": 327.24,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "quintic",
+  "tgt": 0,
+  "shortest": 310.17,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "quintic",
+  "tgt": 12.7,
+  "shortest": 287.04,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": 0
+ },
+ {
+  "stepDeg": 88.45,
+  "L": 1000,
+  "shape": "quintic",
+  "tgt": 45.5,
+  "shortest": 216.14,
+  "spansChecked": 301,
+  "refusedAtOrPastShortest": 0,
+  "holdsBelowShortest": 0
+ }
+]

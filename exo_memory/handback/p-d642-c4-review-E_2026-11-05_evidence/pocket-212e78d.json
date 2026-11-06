@@ -1,0 +1,30 @@
+{
+ "made": {
+  "changes": "{\"phi\":[{\"from\":500,\"target\":-1.5437437233889846}]}",
+  "refusal": null
+ },
+ "markDragRefused": 15,
+ "markDragRows": 121,
+ "markDragRefusedAt": [
+  "asked 441 kept 441 (span 559.00)",
+  "asked 442 kept 442 (span 558.00)",
+  "asked 445 kept 445 (span 555.00)",
+  "asked 462 kept 462 (span 538.00)",
+  "asked 482 kept 482 (span 518.00)",
+  "asked 483 kept 483 (span 517.00)",
+  "asked 484 kept 484 (span 516.00)",
+  "asked 485 kept 485 (span 515.00)",
+  "asked 501 kept 501 (span 499.00)",
+  "asked 503 kept 503 (span 497.00)",
+  "asked 504 kept 504 (span 496.00)",
+  "asked 521 kept 521 (span 479.00)",
+  "asked 522 kept 522 (span 478.00)",
+  "asked 523 kept 523 (span 477.00)",
+  "asked 525 kept 525 (span 475.00)"
+ ],
+ "firstRefusal": "BAD_SECOND: BAD_SECOND: the bank (phi) change 1 (its second bank), from 1.54374 to -1.54374, needs at ",
+ "shortenRefused": 0,
+ "shortenRows": 51,
+ "shortenRefusedAt": [],
+ "shortenFirst": null
+}
