@@ -1836,3 +1836,6 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 
 ## 2026-11-05 — D642 hold edge: the hold now keeps its edge (held moves 4.3 -> 0.2 ms), but a drag into the hold stays 2.8-3.1 x early, set by the ~9 approach moves that each build one probe road (the core's probe cost), not by the hold
 - t180 d642-c5 31bbc64 on 212e78d: into-the-hold row red 2.95 x twice, still 2.81-3.13 x after, filed as a todo naming the core; bank-back row 1.66-1.95 x green; -88.45 from 500 reached; covering rows 120/0. Evidence: exo_memory/handback/p-d642-hold-edge-C_2026-11-05.md
+
+## 2026-11-05 — D642 mark walk: a slid mark walks to the nearest place both its segments hold on the built road, so nothing the panel keeps is refused (his p2 mark across 420-540: 15 refused -> 0)
+- t180 d642-c5 da0bb4f + 21c9731 on 31bbc64: panel-path 3j red with E's 15 then green (103 kept froms, 0 refused); bank-back drag 1.80 x; -88.45 from 500 reached; covering rows 120/0; B's core-only 3j cannot pass from the panel. To re-run on B's bar sha. Evidence: exo_memory/handback/p-d642-mark-walk-C_2026-11-05.md
