@@ -129,9 +129,22 @@ checked: `evidence/p2bar.js` and `r2bar.js`, the core alone, the same piece on b
 B's figures for the held ones (§4-§5): cup 50/50, xsec 69/69, core-mutation 65/65, mutation 110/110. They are B's; I re-run them when the
 librarian says B's timing session is done.
 
+**Appended 2026-11-06 01:0xZ, the hold lifted (the chair, 00:48Z):**
+
+    checked: evidence/mut3.log (a924f1b, holdrun + BelowNormal, hidden, one at a time, each waiting out any timing lock; none held, none at the end)
+      test/core_cup_mutation.test.js:   tests 50,  pass 50  → applied 48 / caught 48 / NOT APPLIED 0 (+2 controls), 00:48:53Z–00:50:23Z
+      test/core_xsec_mutation.test.js:  tests 69,  pass 69  → applied 67 / caught 67 / NOT APPLIED 0 (+2 controls), to 00:54:54Z
+      app/test/core-mutation.test.js:   tests 70,  pass 70  → applied 65 / caught 65 / NOT APPLIED 0 (+5 controls), to 01:00:27Z
+      app/test/mutation.test.js:        tests 114, pass 114 → applied 110 / caught 110 / NOT APPLIED 0 (+4 controls), to 01:03:53Z
+
+- With `core_ramp_mutation`'s 85/85 above, **every core mutation harness is green on a924f1b**. B's figures match: cup 50/50 tests,
+  xsec 69/69, core-mutation 65 mutants, mutation 110 mutants.
+- **The VERDICT is no longer interim.** The four checks hold and the mutants are green. §5 (the tight bank minimum) stays open for B (now on
+  it) and his eye.
+
 ## NOT verified
 
-- **The four held harnesses** (above).
+- ~~The four held harnesses~~ (run since, §6).
 - **Timing:** P's and B's. I ran no timing row.
 - **His real window and GPU:** not run.
 - **C's renders on a924f1b:** not re-made. §5 says what changed under them.
