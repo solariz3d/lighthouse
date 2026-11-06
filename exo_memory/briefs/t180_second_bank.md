@@ -46,6 +46,8 @@
 - 2026-11-06 09:03Z (L), asked "release now with the 2.48x drag-speed row failing and named in the notes, or fix the speed first": "yes its good". Read as: release now, with the row kept red and named as a known issue (not skipped or loosened).
 - 2026-11-06 10:28Z (L): "after all is done, write the handoff for the track builder repo, and lighthouse, ending tonights work to simply chill, almost out of our weekly limit till 4pm this afternoon so its chill we will be back after that"
 
+- 2026-11-06 18:58Z (D), trying 0.4.39 (installed sha256 3d1a971e..., the release asset): "the turn from needs to be placed on the actual purple line and not on the turn part for the extra turn. i mean where you click to drag the length of the extra turn or where it kicks in u know"
+
 ## The problem, in one line
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
 pieces. He wants one piece to change a second time toward its end.
