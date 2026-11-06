@@ -40,6 +40,14 @@
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
 pieces. He wants one piece to change a second time toward its end.
 
+## State — updated 2026-11-05 19:1x (D), tonight's handoff: `loop/handoff_t180_2026-11-05-D.md`
+- **The model, at his 19:54Z ruling:** the extra change ADDS on top of the piece's own change; extra 0 = no change (byte-equal). Built: B d642-b, panel C d642-c3.
+- **Merged tip:** t180 `d642-p` a924f1b, pushed as the one-commit branch `second-change-additive` 5d17a9c (same tree). E's review: GREEN, mutants all caught. Timing: no regression (B §6).
+- **Installed on D:** 923e0a3 (sha256 6f787b5a…), for his feel test. It lays his S bank-back to −88.45 from 500.
+- **Do not install a924f1b yet:** its bank minimum refuses that same bank-back (holds it at −37.53°; E §5). B is making the minimum tight.
+- **His call:** the bank's rise past the mark (44→47°) and overshoot near the end (−91°), page https://claude.ai/artifact/7k2BGKPX45vMBdYy5733zH.
+- Also includes the 0.4.39 preview fix (`briefs/t180_joint_bumps.md`).
+
 ## State (summary; check it against the repo) — updated 2026-11-05 07:4x, the handoff at his word
 **Where it stands, in one paragraph.** The core of "one piece changes again toward its end" works for every field. The second-change SHAPE
 he likes is L139's (`35feaf9`): it flows. What fought him was the UI. L140 replaces the L139 faint rings with **extra handles**: the same
