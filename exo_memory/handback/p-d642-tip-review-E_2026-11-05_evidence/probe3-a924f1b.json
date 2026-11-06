@@ -1,0 +1,217 @@
+{
+ "B2": [
+  {
+   "what": "the true candidate",
+   "result": "accepted, re-laid from 971"
+  },
+  {
+   "what": "last placed piece, segment 997: word changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: part changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: kind changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: length changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: k0 changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: k1 changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: kp0 changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: kp1 changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: roll0 changed",
+   "result": "accepted, re-laid from 971"
+  },
+  {
+   "what": "last placed piece, segment 997: roll1 changed",
+   "result": "accepted, re-laid from 971"
+  },
+  {
+   "what": "last placed piece, segment 997: rollRate0 changed",
+   "result": "accepted, re-laid from 971"
+  },
+  {
+   "what": "last placed piece, segment 997: rollRate1 changed",
+   "result": "accepted, re-laid from 971"
+  },
+  {
+   "what": "last placed piece, segment 997: heartline changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: profile changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "last placed piece, segment 997: roll0, roll1, rollRate0, rollRate1 all changed",
+   "result": "accepted, re-laid from 971"
+  },
+  {
+   "what": "the piece BEFORE the last, its segment 400: roll0 and roll1 changed",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  },
+  {
+   "what": "a segment of the last placed piece removed (one fewer placed segment)",
+   "result": "REFUSED: ghost: the candidate must extend the placed track (the same segments, "
+  }
+ ],
+ "A2": [
+  {
+   "last": "his rounded 88.45 over 1,000",
+   "next": "straight 100",
+   "result": "accepted, re-laid from 971"
+  },
+  {
+   "last": "his rounded 88.45 over 1,000",
+   "next": "bank -180 over 250",
+   "result": "accepted, re-laid from 663"
+  },
+  {
+   "last": "his rounded 88.45 over 1,000",
+   "next": "turn rate -20, bank 0",
+   "result": "accepted, re-laid from 970"
+  },
+  {
+   "last": "his rounded 88.45 over 1,000",
+   "next": "corner +90 (turnDeg)",
+   "result": "accepted, re-laid from 971"
+  },
+  {
+   "last": "his rounded 88.45 over 1,000",
+   "next": "width 20, cup 0",
+   "result": "accepted, re-laid from 971"
+  },
+  {
+   "last": "his rounded 88.45 over 1,000",
+   "next": "jump",
+   "maker": "threw: BAD_LENGTH: extend needs a positive length, got undefined"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "straight 100",
+   "result": "accepted, re-laid from 500"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "bank -180 over 250",
+   "result": "accepted, re-laid from 500"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "turn rate -20, bank 0",
+   "result": "accepted, re-laid from 500"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "corner +90 (turnDeg)",
+   "result": "accepted, re-laid from 500"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "width 20, cup 0",
+   "result": "accepted, re-laid from 500"
+  },
+  {
+   "last": "bank -90 over 250 (corkscrew)",
+   "next": "jump",
+   "maker": "threw: BAD_LENGTH: extend needs a positive length, got undefined"
+  },
+  {
+   "last": "turn rate 30 + bank 40 rounded",
+   "next": "straight 100",
+   "result": "accepted, re-laid from 780"
+  },
+  {
+   "last": "turn rate 30 + bank 40 rounded",
+   "next": "bank -180 over 250",
+   "result": "accepted, re-laid from 781"
+  },
+  {
+   "last": "turn rate 30 + bank 40 rounded",
+   "next": "turn rate -20, bank 0",
+   "result": "accepted, re-laid from 780"
+  },
+  {
+   "last": "turn rate 30 + bank 40 rounded",
+   "next": "corner +90 (turnDeg)",
+   "result": "accepted, re-laid from 780"
+  },
+  {
+   "last": "turn rate 30 + bank 40 rounded",
+   "next": "width 20, cup 0",
+   "result": "accepted, re-laid from 780"
+  },
+  {
+   "last": "turn rate 30 + bank 40 rounded",
+   "next": "jump",
+   "maker": "threw: BAD_LENGTH: extend needs a positive length, got undefined"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "straight 100",
+   "result": "accepted, copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "bank -180 over 250",
+   "result": "accepted, copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "turn rate -20, bank 0",
+   "result": "accepted, copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "corner +90 (turnDeg)",
+   "result": "accepted, copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "width 20, cup 0",
+   "result": "accepted, copy-and-extend"
+  },
+  {
+   "last": "bank 30 at rest",
+   "next": "jump",
+   "maker": "threw: BAD_LENGTH: extend needs a positive length, got undefined"
+  }
+ ],
+ "segmentFields": [
+  "id",
+  "word",
+  "part",
+  "kind",
+  "length",
+  "k0",
+  "k1",
+  "kp0",
+  "kp1",
+  "roll0",
+  "roll1",
+  "rollRate0",
+  "rollRate1",
+  "heartline",
+  "profile",
+  "blend",
+  "speed"
+ ]
+}

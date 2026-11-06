@@ -2866,3 +2866,8 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - The bug is fixed (rows red on d10eacf, green here; mutants 106/106 and 65/65), but the guard takes ANY change inside the last placed piece: a candidate with its turn, climb or length changed is accepted as "re-laid" (refused on d10eacf). Every real candidate (25 combos + corner) changes only roll0/roll1/rollRate0/rollRate1, so a field check closes it.
 - After a rolling end the ghost builds the whole path: 123 ms against 30 ms on 22 km, drags included (synchronous). He will see the re-laid 58 m as a half-road violet tint before the joint, likely flickering on the GPU.
 - **Carry:** when a guard is loosened to admit a known difference, tamper each field the guard no longer checks and see which pass; "only inside the last piece" said where, not what.
+
+## 2026-11-05 ~18:3x local (D) · D642 review of the merged tip a924f1b (INTERIM, 4 mutant harnesses held) → `exo_memory/handback/p-d642-tip-review-E_2026-11-05.md`
+- My e48a310 finding is closed: in the last placed piece every field but roll0/roll1/rollRate0/rollRate1 is refused by name; extra 0 is byte-equal for turn, bank, width, cup and climb through the panel; his −90 keeps its first half (0° over 1,001 stations); every case under the bar (≤ 0.965); core_ramp 85/85.
+- R2's bank minimum is stricter than the bar: his p2's extra bank back to −88.45 from 500 needs 592.5 m on a924f1b (refused; the panel holds it at −37.53°), yet built on 923e0a3 it reads 0.955 × the bar. C's renders of that case show 923e0a3, not the tip.
+- **Carry:** when a rule is tightened to fix one case, lay the user's OTHER named cases under the new rule before calling it done; a safe rule can still take away the thing he asked for.

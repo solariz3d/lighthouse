@@ -1,0 +1,59 @@
+{
+ "his piece, width 31, cup 15.5": {
+  "extras": [
+   "turn (unused)",
+   "bank (unused)"
+  ],
+  "offers": [
+   "turn",
+   "bank"
+  ]
+ },
+ "his piece, width 40, cup 15.5": {
+  "extras": [
+   "turn (unused)",
+   "bank (unused)",
+   "width (unused)"
+  ],
+  "offers": [
+   "turn",
+   "bank",
+   "width"
+  ]
+ },
+ "his piece, width 31, cup 30": {
+  "extras": [
+   "turn (unused)",
+   "bank (unused)",
+   "cup (unused)"
+  ],
+  "offers": [
+   "turn",
+   "bank",
+   "cup"
+  ]
+ },
+ "his piece, width 60, cup 40": {
+  "extras": [
+   "turn (unused)",
+   "bank (unused)",
+   "width (unused)",
+   "cup (unused)"
+  ],
+  "offers": [
+   "turn",
+   "bank",
+   "width",
+   "cup"
+  ]
+ },
+ "width 40 alone": {
+  "extras": [
+   "width"
+  ],
+  "offers": [
+   "width"
+  ]
+ },
+ "the jump after his rolling 88.45": "re-laid from 971"
+}

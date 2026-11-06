@@ -1,0 +1,8 @@
+start 00:15:16Z a924f1b
+test/core_ramp_mutation.test.js exit 0 00:16:32Z
+# tests 87
+# pass 87
+# fail 0
+# skipped 0
+# todo 0
+  mutants ok: 85, NOT APPLIED lines: 0

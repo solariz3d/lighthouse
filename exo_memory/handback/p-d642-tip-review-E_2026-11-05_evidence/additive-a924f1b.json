@@ -1,0 +1,110 @@
+{
+ "X0": [
+  {
+   "field": "turn",
+   "extraValue": 0,
+   "changesSent": "{\"turnDeg\":[{\"from\":500,\"deg\":0}]}",
+   "byteEqualToNoExtra": true,
+   "bytes": [
+    4052,
+    4052
+   ]
+  },
+  {
+   "field": "bank",
+   "extraValue": 88.45,
+   "changesSent": "{\"phi\":[{\"from\":500,\"target\":1.5437437233889846}]}",
+   "byteEqualToNoExtra": true,
+   "bytes": [
+    4052,
+    4052
+   ]
+  },
+  {
+   "field": "width",
+   "result": "no extra handle"
+  },
+  {
+   "field": "cup",
+   "result": "no extra handle"
+  },
+  {
+   "field": "climb (corner +20)",
+   "extraValue": 0,
+   "changesSent": "{\"climbDeg\":[{\"from\":500,\"deg\":0}]}",
+   "byteEqualToNoExtra": true
+  }
+ ],
+ "H": {
+  "changes": "{\"turnDeg\":[{\"from\":500,\"deg\":180}],\"phi\":[{\"from\":500,\"target\":-0.6548475353482724}]}",
+  "mark": 500,
+  "stationsCompared": 1001,
+  "worstHeadingDiffDegBeforeMark": 0,
+  "headingAtMarkNone": -45,
+  "headingAtMarkExtra": -45,
+  "pieceTurnExtraDeg": 90,
+  "pieceTurnNoneDeg": -90
+ },
+ "BAR": [
+  {
+   "case": "his p2 (−90, extra +180; bank 88.45, extra −88.45)",
+   "changes": "{\"turnDeg\":[{\"from\":500,\"deg\":180}],\"phi\":[{\"from\":500,\"target\":-0.6548475353482724}]}",
+   "peaks": {
+    "heading": 0.8091,
+    "headingAt": 1625,
+    "pitch": 0,
+    "pitchAt": 0,
+    "roll": 0.9654,
+    "rollAt": 1989
+   }
+  },
+  {
+   "case": "his S (−90, extra +90)",
+   "changes": "{\"turnDeg\":[{\"from\":500,\"deg\":90}]}",
+   "peaks": {
+    "heading": 0.4395,
+    "headingAt": 1629,
+    "pitch": 0,
+    "pitchAt": 0,
+    "roll": 0.8959,
+    "rollAt": 1014
+   }
+  },
+  {
+   "case": "his 11-05 picture (750 m, −90, bank 66.14 then 0 at the panel's mark)",
+   "changes": "{\"phi\":[{\"from\":375,\"target\":0}]}",
+   "peaks": {
+    "heading": 0.1645,
+    "headingAt": 1563,
+    "pitch": 0,
+    "pitchAt": 0,
+    "roll": 0.9595,
+    "rollAt": 1739.5
+   }
+  },
+  {
+   "case": "his 88.45 alone",
+   "changes": "{}",
+   "peaks": {
+    "heading": 0.0925,
+    "headingAt": 1750.5,
+    "pitch": 0,
+    "pitchAt": 0,
+    "roll": 0.8959,
+    "rollAt": 1014
+   }
+  },
+  {
+   "case": "a climb corner +40, extra −80",
+   "changes": "{\"climbDeg\":[{\"from\":500,\"deg\":-80}]}",
+   "peaks": {
+    "heading": 0,
+    "headingAt": 0,
+    "pitch": 0.3596,
+    "pitchAt": 1625,
+    "roll": 0,
+    "rollAt": 0
+   }
+  }
+ ]
+}
