@@ -1,0 +1,16 @@
+start 01:20:13Z d87ba99
+exit 0 01:21:19Z
+additive:
+# tests 26
+# pass 26
+# fail 0
+# skipped 0
+# todo 0
+ramp:
+# tests 90
+# pass 90
+# fail 0
+# skipped 0
+# todo 0
+ramp mutants ok: 88, NOT APPLIED lines: 0, AD7: ok 84 - mutant AD7 a change's shortest ignores the first ramp still moving under it: applied, and caught by "D642 3[de]"
+ALL-END

@@ -2872,3 +2872,8 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - R2's bank minimum is stricter than the bar: his p2's extra bank back to −88.45 from 500 needs 592.5 m on a924f1b (refused; the panel holds it at −37.53°), yet built on 923e0a3 it reads 0.955 × the bar. C's renders of that case show 923e0a3, not the tip.
 - **Carry:** when a rule is tightened to fix one case, lay the user's OTHER named cases under the new rule before calling it done; a safe rule can still take away the thing he asked for.
 - 2026-11-06 ~01:0xZ (D) · D642 tip review completed (same hand-back §6): the four held core mutation harnesses on a924f1b, cup 48/48, xsec 67/67, core-mutation 65/65, mutation 110/110, 0 NOT APPLIED; with ramp 85/85 every core harness is green, so the verdict is final; §5 open for B and his eye.
+
+## 2026-11-05 ~19:3x local (D) · D642 review of B's §5 fix d87ba99: the fix is right, the drag is NOT → `exo_memory/handback/p-d642-b3-review-E_2026-11-05.md`
+- His p2 banks back (463.0 m of 500, built 0.955 × the bar); R2 still refused where it goes over; rows 26/26; ramp mutants 88/88, AD7 caught.
+- Dragging the EXTRA BANK toward level on a whole-piece bank costs the panel p95 106 ms a move (6 ms with the bank early, 9-11 ms on a924f1b): 17 × against the 2 × bar. 40 moves made 623 probe roads: the panel asks secondMinM (builtMin's search) 13 times a move and each new target misses the memo; extend's one-probe spanHolds is what B timed.
+- **Carry:** time the path the user's hand drives (the panel during the drag), not the call the fix was written for; a memo keyed on the value being dragged never hits.
