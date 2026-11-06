@@ -2877,3 +2877,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - His p2 banks back (463.0 m of 500, built 0.955 × the bar); R2 still refused where it goes over; rows 26/26; ramp mutants 88/88, AD7 caught.
 - Dragging the EXTRA BANK toward level on a whole-piece bank costs the panel p95 106 ms a move (6 ms with the bank early, 9-11 ms on a924f1b): 17 × against the 2 × bar. 40 moves made 623 probe roads: the panel asks secondMinM (builtMin's search) 13 times a move and each new target misses the memo; extend's one-probe spanHolds is what B timed.
 - **Carry:** time the path the user's hand drives (the panel during the drag), not the call the fix was written for; a memo keyed on the value being dragged never hits.
+
+## 2026-11-06 ~01:4x local (L) · L141 score of D's fb5b91c: **NOT GREEN on the drag cost** → `exo_memory/handback/p-l141-E_2026-11-06.md`
+- His p2 lays (0.955×), minimums tight (453.1 m at 0.999×; 313.9 m at 0.99×), mutants 93/93/0; but the first extra-bank drag toward level is 2.67–3.45× the early drag (p95 15.6–18.0 ms) against 1.40–1.67× on 5d17a9c, and D's own row fails here at 2.63×.
+- **Carry:** time a cold-memo drag with the code warm, in fresh processes, several times; one process's rep 0 mixes code warm-up with the probe cost, and rep 1 reads the memo.
