@@ -83,7 +83,7 @@ using his words from your transcript while you still have it. After that, the tr
 
 NEXT: chair pushes lighthouse (this file, briefs/, today's notes) when the keeper's word is read; D writes briefs for its open items when it next wakes
 
-## Added 2026-11-06 01:3x (L), after D's 11-05 handoff left the newest code on D only
+## Added 2026-11-06 01:3x (L). **CORRECTED 01:3x: the premise was WRONG (the librarian's).** D DID push both fixes, squashed as `fb5b91c` on `second-change-additive` at 21:31, after its handoff file was written. I checked the branch list but not the branch tip. The rule below still stands as a guard: the handoff file must name the pushed sha.
 - **A handoff pushes the CODE its brief points to, not only the notes.** On 11-05 D pushed the briefs and one squashed branch, but kept the two
   newest fixes (B's tight minimum d87ba99, C's drag-cost fold 212e78d) local "because their messages carry lap ids". So L, the next
   morning, could not test the very build the brief said to test. The keeper: "stupiid fucking desktop consonance".
