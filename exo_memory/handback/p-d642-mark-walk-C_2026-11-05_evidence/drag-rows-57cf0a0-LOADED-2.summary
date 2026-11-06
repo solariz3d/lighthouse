@@ -1,0 +1,10 @@
+ok 1 - D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95)
+# rolling (first drag) p95 63.1 ms a move, early p95 56.1 ms: 1.13 ×; both ended at -12.63°
+not ok 2 - D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) # TODO the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move
+# rolling (first drag, into the hold) p95 62.9 ms a move, early p95 18.0 ms: 3.50 ×; rolling held at -142.55°, early ended at -163.5°
+ok 3 - D642: his p2's extra bank still reaches −88.45° from 500 (the bank-back he asked for), laid by the core
+ok 4 - D642 3j: his p2's extra bank mark, dragged across 420-540 through the panel, lays at every from the panel keeps
+# kept 120 distinct froms; refused 0
+# pass 3
+# fail 0
+# todo 1
