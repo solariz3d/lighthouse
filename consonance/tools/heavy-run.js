@@ -65,6 +65,12 @@
 // afterwards (test workers, headless Chrome, cargo, and theirs) shares those N CPUs whatever the run's own concurrency. Unset, empty, unusable, N >= the machine's
 // CPUs, or not Windows: no cap, today's behaviour, and a set-but-unusable value is said once. The cap is taken AFTER the lock, so a waiter is never throttled.
 //
+// THE MACHINE PROFILE (L155 amendment: one size does not fit a 32-thread laptop and a 16-thread desktop). `heavy: { cpus, concurrency, slots, timing }` in THIS machine's
+// ~/.consonance.json (never synced; CONSONANCE_CONFIG names another file): cpus = the cap above; slots = the slot count; concurrency = test workers (read by t180's runners);
+// timing = whether frame-timing tests belong on this machine. Each field is overridden for one run by CONSONANCE_HEAVY_CPUS / _CONCURRENCY / _SLOTS / _TIMING. A missing file,
+// key or field, or an invalid value (dropped and named in `ignored`), is today's behaviour. Other tools read it with `node consonance/tools/heavy-run.js --profile [key]`
+// (JSON of every set field, or one value, empty when unset) or `require('./heavy-run.js').profile().values`.
+//
 //   const h = require('./heavy-run.js').hold({ cmd: 'js-suite' });   // waits, or exits 3 loudly; releases on exit
 
 const fs = require('fs');
@@ -118,6 +124,25 @@ function checkDisk({ paths, free = freeBytes, total = janitorTotal, log }) {
   return low;
 }
 
+const PROFILE_FIELDS = {
+  cpus: { env: 'CONSONANCE_HEAVY_CPUS', parse: (v) => (/^[0-9]+$/.test(String(v).trim()) && Number(v) >= 1 ? Number(v) : undefined) },
+  concurrency: { env: 'CONSONANCE_HEAVY_CONCURRENCY', parse: (v) => (/^[0-9]+$/.test(String(v).trim()) && Number(v) >= 1 && Number(v) <= 64 ? Number(v) : undefined) },
+  slots: { env: 'CONSONANCE_HEAVY_SLOTS', parse: (v) => (/^[0-9]+$/.test(String(v).trim()) && Number(v) >= 1 && Number(v) <= MAX_SLOTS ? Number(v) : undefined) },
+  timing: { env: 'CONSONANCE_HEAVY_TIMING', parse: (v) => (v === true || /^(1|true)$/i.test(String(v).trim()) ? true : v === false || /^(0|false)$/i.test(String(v).trim()) ? false : undefined) },
+};
+/** This machine's heavy-run profile: { values, source, ignored }. File first, then each field's env var over it. Never throws; unusable input is an empty profile. */
+function profile({ file, env = process.env } = {}) {
+  const f = file || env.CONSONANCE_CONFIG || path.join(process.env.USERPROFILE || require('os').homedir(), '.consonance.json');
+  let heavy = {};
+  try { const j = JSON.parse(fs.readFileSync(f, 'utf8')); if (j && typeof j.heavy === 'object' && j.heavy !== null && !Array.isArray(j.heavy)) heavy = j.heavy; } catch (_) { /* no file or junk: empty */ }
+  const values = {}, source = {}, ignored = [];
+  for (const [k, { env: ev, parse }] of Object.entries(PROFILE_FIELDS)) {
+    const fromEnv = env[ev] !== undefined && String(env[ev]).trim() !== '' ? parse(env[ev]) : undefined;
+    if (fromEnv !== undefined) { values[k] = fromEnv; source[k] = 'env'; continue; }
+    if (k in heavy) { const v = parse(heavy[k]); if (v === undefined) ignored.push(k); else { values[k] = v; source[k] = 'file'; } }
+  }
+  return { values, source, ignored };
+}
 /** The affinity mask (BigInt) of the N lowest logical CPUs, or null for "no cap": N must be a whole number from 1 to cpus-1, and cpus at most 64 (one processor group). */
 function cpuMask(raw, cpus = require('os').cpus().length) {
   if (raw === undefined || raw === null || raw === '') return null;
@@ -127,8 +152,8 @@ function cpuMask(raw, cpus = require('os').cpus().length) {
   return (1n << BigInt(n)) - 1n;
 }
 /** Apply CONSONANCE_HEAVY_CPUS to process `pid` (default: this one). Returns { applied, cpus?, mask?, reason? }; never throws, never exits: a cap that cannot be set is said and the run goes on uncapped. */
-function applyCap({ env = process.env, pid = process.pid, platform = process.platform, cpus = require('os').cpus().length, run = spawnSync, log = (s) => process.stderr.write(s + '\n') } = {}) {
-  const raw = env.CONSONANCE_HEAVY_CPUS;
+function applyCap({ env = process.env, heavy, pid = process.pid, platform = process.platform, cpus = require('os').cpus().length, run = spawnSync, log = (s) => process.stderr.write(s + '\n') } = {}) {
+  const raw = env.CONSONANCE_HEAVY_CPUS !== undefined && String(env.CONSONANCE_HEAVY_CPUS).trim() !== '' ? env.CONSONANCE_HEAVY_CPUS : (heavy || profile({ env }).values).cpus;
   if (raw === undefined || raw === null || String(raw).trim() === '') return { applied: false, reason: 'unset' };
   const mask = cpuMask(String(raw).trim(), cpus);
   if (mask === null) { log(`heavy-run: CONSONANCE_HEAVY_CPUS=${raw} is not a whole number from 1 to ${cpus - 1} (this machine has ${cpus} logical CPUs, or more than 64); NOT applied, running uncapped`); return { applied: false, reason: 'unusable' }; }
@@ -228,12 +253,12 @@ function acquire({
   cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim, beforeTake,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
   alive = pidAlive, confirmGone = pidGone, identify = processIdentity, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
-  writes, diskFree = freeBytes, diskTotal = janitorTotal,
+  writes, diskFree = freeBytes, diskTotal = janitorTotal, heavy,
 } = {}) {
   let dir = dataDir === undefined ? manifestDataDir() : dataDir;
   if (dataDir === undefined && !dir) { dir = appDefaultDataDir(); fs.mkdirSync(dir, { recursive: true }); }
   if (!dir) throw Object.assign(new Error('heavy-run: no data dir (CONSONANCE_DATA unset and ~/.consonance.json has no data_dir) — refusing to run without the lock'), { code: 'HEAVY_RUN_NO_DATA' });
-  const n = slotCount(slots !== undefined ? slots : process.env.CONSONANCE_HEAVY_SLOTS);
+  const n = slotCount(slots !== undefined ? slots : (heavy || profile({ env: process.env }).values).slots);
 
   // A nested run carries the token of the lock it runs under, in whichever slot that lock is.
   if (env[TOKEN_ENV]) {
@@ -387,7 +412,7 @@ function hold(opts = {}) {
     process.exit(e.code === 'HEAVY_RUN_TIMEOUT' ? 3 : e.code === 'HEAVY_RUN_DISK' ? 4 : 2);
   }
   if (h.reentrant) return h;
-  applyCap({ env: opts.env || process.env });   // L155: after the lock, so a waiter is never throttled
+  applyCap({ env: opts.env || process.env, heavy: opts.heavy });   // L155: after the lock, so a waiter is never throttled
   process.on('exit', () => h.release());
   // On a signal, EXIT, and the 'exit' handler above releases. (A release call here was redundant — process.exit fires
   // 'exit' — and its mutant could not be told apart: L098 H7.) Only when this is the sole listener: a harness with its
@@ -398,4 +423,11 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { acquire, hold, cpuMask, applyCap, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+module.exports = { acquire, hold, cpuMask, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+
+if (require.main === module && process.argv[2] === '--profile') {
+  const { values } = profile();
+  const key = process.argv[3];
+  if (key === undefined) process.stdout.write(JSON.stringify(values) + '\n');
+  else if (key in values) process.stdout.write(String(values[key]) + '\n');
+}

@@ -10,6 +10,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { spawn, spawnSync } = require('node:child_process');
 
+process.env.CONSONANCE_CONFIG = path.join(require('node:os').tmpdir(), 'no-such-consonance-config.json');   // L155: the rows never read this machine's real profile
 const H = require('./heavy-run.js');
 const HELPER = path.join(__dirname, 'heavy-run.js');
 
@@ -791,4 +792,65 @@ test('REAL (this machine): hold() with CONSONANCE_HEAVY_CPUS=2 pins the holder A
   const free = run({ CONSONANCE_HEAVY_CPUS: '' });
   const all = String((1n << BigInt(os.cpus().length)) - 1n);
   assert.deepStrictEqual(free.m, { holder: all, mid: all, grand: all }, free.err);
+});
+
+// ---- L155 amendment: a PER-MACHINE profile, heavy: { cpus, concurrency, slots, timing }, in THIS machine's ~/.consonance.json ----
+const cfgFile = (obj) => { const f = path.join(tmp(), 'consonance.json'); fs.writeFileSync(f, typeof obj === 'string' ? obj : JSON.stringify(obj)); return f; };
+test('PROFILE: absent file, absent key, or junk JSON = an empty profile (today\'s behaviour exactly), never a throw', () => {
+  assert.deepStrictEqual(H.profile({ file: path.join(tmp(), 'nope.json'), env: {} }).values, {});
+  assert.deepStrictEqual(H.profile({ file: cfgFile({ data_dir: 'x' }), env: {} }).values, {});
+  assert.deepStrictEqual(H.profile({ file: cfgFile('{not json'), env: {} }).values, {});
+  assert.deepStrictEqual(H.profile({ file: cfgFile({ heavy: 'fast' }), env: {} }).values, {});
+});
+test('PROFILE: reads cpus, concurrency, slots, timing from the machine\'s own file', () => {
+  const p = H.profile({ file: cfgFile({ heavy: { cpus: 12, concurrency: 2, slots: 1, timing: false } }), env: {} });
+  assert.deepStrictEqual(p.values, { cpus: 12, concurrency: 2, slots: 1, timing: false });
+  assert.strictEqual(p.source.cpus, 'file');
+});
+test('PROFILE: an invalid field is dropped and named in `ignored`; the valid ones stand', () => {
+  const p = H.profile({ file: cfgFile({ heavy: { cpus: 'twelve', concurrency: 0, slots: 9, timing: 'no', extra: 1 } }), env: {} });
+  assert.deepStrictEqual(p.values, {});
+  assert.deepStrictEqual(p.ignored.sort(), ['concurrency', 'cpus', 'slots', 'timing']);
+  const q = H.profile({ file: cfgFile({ heavy: { cpus: 8, concurrency: 2.5 } }), env: {} });
+  assert.deepStrictEqual(q.values, { cpus: 8 });
+});
+test('PROFILE: the env var overrides the file, per field, for one run', () => {
+  const f = cfgFile({ heavy: { cpus: 12, concurrency: 2, slots: 1, timing: false } });
+  const p = H.profile({ file: f, env: { CONSONANCE_HEAVY_CPUS: '8', CONSONANCE_HEAVY_CONCURRENCY: '4', CONSONANCE_HEAVY_SLOTS: '2', CONSONANCE_HEAVY_TIMING: '1' } });
+  assert.deepStrictEqual(p.values, { cpus: 8, concurrency: 4, slots: 2, timing: true });
+  assert.strictEqual(p.source.cpus, 'env');
+  const q = H.profile({ file: f, env: { CONSONANCE_HEAVY_CPUS: '8' } });
+  assert.deepStrictEqual(q.values, { cpus: 8, concurrency: 2, slots: 1, timing: false });
+  assert.strictEqual(q.source.concurrency, 'file');
+});
+test('PROFILE: applyCap takes cpus from the profile when the env var is unset; the env var wins when both are set', () => {
+  const calls = [];
+  const run = (exe, args) => { calls.push(args.join(' ')); return { status: 0, stdout: '4095\n' }; };
+  const r = H.applyCap({ env: {}, heavy: { cpus: 12 }, pid: 7, platform: 'win32', cpus: 32, run, log: () => {} });
+  assert.strictEqual(r.applied, true); assert.strictEqual(r.mask, '4095');
+  const none = H.applyCap({ env: {}, heavy: {}, pid: 7, platform: 'win32', cpus: 32, run: () => { throw new Error('must not ask'); }, log: () => {} });
+  assert.strictEqual(none.applied, false);
+});
+test('PROFILE: the slot count comes from the profile when neither the option nor CONSONANCE_HEAVY_SLOTS is given', () => {
+  const d = tmp();
+  const a = H.acquire({ cmd: 'x', dataDir: d, env: {}, heavy: { slots: 1 }, tree: 't', log: () => {}, diskFree: () => 1e12 });
+  assert.strictEqual(a.slot, 1);
+  // with ONE slot every live lock blocks, even one in another tree (today's one-slot behaviour)
+  fs.unlinkSync(lockOf(d));
+  fs.writeFileSync(lockOf(d), JSON.stringify({ pid: process.pid, seat: 'o', cmd: 'o', tree: 'other', started: new Date().toISOString(), token: 'o', image: path.parse(process.execPath).name, holder_start: new Date(Date.now() - process.uptime() * 1000).toISOString() }));
+  assert.throws(() => H.acquire({ cmd: 'x', dataDir: d, env: {}, heavy: { slots: 1 }, tree: 't', log: () => {}, diskFree: () => 1e12, maxWaitMs: 50, pollMs: 10 }), (e) => e.code === 'HEAVY_RUN_TIMEOUT');
+});
+test('PROFILE CLI: `node heavy-run.js --profile` prints the machine\'s profile as JSON, and `--profile <key>` just the value (the way t180\'s runners read it)', () => {
+  const f = cfgFile({ heavy: { cpus: 12, concurrency: 2, timing: false } });
+  const env = cleanEnv({ CONSONANCE_CONFIG: f });
+  for (const k of ['CONSONANCE_HEAVY_CPUS', 'CONSONANCE_HEAVY_CONCURRENCY', 'CONSONANCE_HEAVY_SLOTS', 'CONSONANCE_HEAVY_TIMING']) delete env[k];
+  const all = spawnSync(process.execPath, [HELPER, '--profile'], { env, encoding: 'utf8' });
+  assert.deepStrictEqual(JSON.parse(all.stdout), { cpus: 12, concurrency: 2, timing: false });
+  const one = spawnSync(process.execPath, [HELPER, '--profile', 'concurrency'], { env, encoding: 'utf8' });
+  assert.strictEqual(one.stdout.trim(), '2');
+  const timing = spawnSync(process.execPath, [HELPER, '--profile', 'timing'], { env, encoding: 'utf8' });
+  assert.strictEqual(timing.stdout.trim(), 'false');
+  const missing = spawnSync(process.execPath, [HELPER, '--profile', 'slots'], { env, encoding: 'utf8' });
+  assert.strictEqual(missing.stdout.trim(), '', 'an unset key prints nothing');
+  assert.strictEqual(missing.status, 0);
 });
