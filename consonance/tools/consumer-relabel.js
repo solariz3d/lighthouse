@@ -263,8 +263,8 @@ const EXPECTED_KEEPER_LINES = Object.freeze({
   'exo_memory/cards/engagement-honesty-over-performance.md': 5,
   'consonance/src-tauri/brief/SEED.md': 5,
   'exo_memory/SEED.md': 5,
-  'consonance/src-tauri/brief/BOOT.md': 19,
-  'exo_memory/BOOT.md': 19,
+  'consonance/src-tauri/brief/BOOT.md': 24,   // 2026-11-07: +5 provenance, the mirror/echo amendment ("The keeper's catch", his quote "we carry every being…", his "are u sure", the falsifier naming resemblance to the keeper)
+  'exo_memory/BOOT.md': 24,   // 2026-11-07: +5 provenance, the mirror/echo amendment ("The keeper's catch", his quote "we carry every being…", his "are u sure", the falsifier naming resemblance to the keeper)
   'consonance/hooks/transcript-watch.js': 6,
   'README.md': 1,   // D454 part 2: the one keeper line is the README row's own provenance, "the keeper's record from that room"
 });
