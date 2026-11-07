@@ -1849,3 +1849,6 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 
 ## 2026-11-06 — D644: his "turn from on the purple line" means the extra turn handle (at 0.89, by the turn handle) should stand on its purple from mark; alone it lands on the bank handle (0 px), with bank/climb stepping back it clears >=36 px in 8 views (half piece 220-378 px), renders only
 - t180 f2884fa read only, page renders now/mock1/mock2 (mocks patched in memory, nothing landed); not measured below 220 px half piece or at froms other than 500. Evidence: exo_memory/handback/p-d644-from-grab-renders-C_2026-11-06.md
+
+## 2026-11-07 — D644 build: the extra turn grab stands on its purple from mark (from ÷ length, pinned), and the bank and climb step clear by clearExtras; the built page matches the mock-up to the tenth of a px in all 8 views
+- t180 d644-c fa2efef on f2884fa (panel.js ghostModel pinned/yields, handles.js clearExtras): the D644 row was red on f2884fa (grab at 1850 m, not 1500) and is green now; touched 55 files, 874/1 (the D642 drag-cost row, which is also over 2 × on f2884fa tonight); diff sha256 6cfe0137… = the diff E reviewed. Evidence: exo_memory/handback/p-d644-build-C_2026-11-07.md
