@@ -1866,3 +1866,6 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 
 ## 2026-11-07 — L154: the upper blue pair he grabbed is the extra bank's handle, whose drag ALONG the road (handles.js LOCK_PX/slide -> panel.js secondSlide -> secondDrag) moves its tick; option C now draws the tinted stretch, arrows and a label at the tick and a hover line on the handle, lit while it is active, for all five extra fields (one shared path)
 - t180 l154-mark-labels 890c2a7 on dabf7bf: rows C1-C8 red 8/8 then green; his good save rebuilt through the panel byte-equal (sha256 eff48ade…2b24); test-fast minus the 5 timing files 3505 tests, 0 fail; no timing run, so the per-frame cost is unmeasured. Evidence: exo_memory/handback/p-l154-C_2026-11-07.md
+
+## 2026-11-07 — L155: the t180 run logs carry no per-file times; matched title by title, a test-fast run's in-test time is ~25% browser pages (11 files), ~75% the rest, and 4 files (sound-bands, core_close_banks_lap, texture-page, pick-cull) are a third of it; in the killed full runs the mutation harnesses were already ~41%; sound-bands alone opens ~15 Chromes (static count)
+- six logs (C L154 fast.log, A/B L152 test-fast and the two killed full runs), parsed by pertest.js/groups.js, no new run; in-test sums, not wall times. Evidence: exo_memory/handback/p-l155-measure-C_2026-11-07.md
