@@ -13,7 +13,12 @@
 - On 10-27, 97 chrome.exe were counted in one touched-test run (`plan_d504_headless_browser_cap_2026-10-27.md`).
 
 ## The shape (the rigor stays; the repeats go)
-- **During a lap:** a pane runs only the test files that load a module it touched, plus their mutation harness if it touched core logic.
+- **AMENDED at his word, 09:05Z:** "code is related to the rest of the base of it … not measuring what is around it as well means we do not understand the related code as much as we could seeing the rest of the base … Even if it is expensive perhaps it is a good thing?"
+  - He is right, and the require graph cannot see coupling through data and behaviour, e.g. the panel asking for something other than what the core lays (D642 R2), or geometry read by the renderer.
+  - So **every hand-back still runs the whole base once**: test-fast is the entire suite less the mutation harnesses and the timing pages. Touched-only is for the pane's runs WHILE it works, not for its hand-back.
+  - What is cut is only (a) the mutation harnesses on every run, (b) two whole-base runs side by side, and (c) four workers on the laptop.
+  - The mutation harnesses test whether the tests catch bugs planted in one module. They do not look at the code around it.
+- **While a pane works:** it runs only the test files that load a module it touched, plus their mutation harness if it touched core logic. **At its hand-back: test-fast once, the whole base.**
 - **At a landing, once, on one tree:**
   - `node scripts/test-fast.cjs`;
   - the three frame-timing files alone, under the lock;
@@ -36,6 +41,7 @@
   - For the last landings with a red (L144 drag-frame row 8 and release-frame row 1; the 5 fails of 4,500; any reds in L152), would the new tiers have run the test that went red?
   - Also, by mutation: take 10 recent real fixes from git log, revert each on a scratch tree, and check that test-touched picks a file that fails.
   - Falsifier: any revert whose failing test the tiers do not run means the tiers are not as diligent, and the plan stops.
+  - **His point, as a number:** for each revert, count how many failing test files are OUTSIDE the touched set, i.e. caught only by the whole base. That count says how often a ripple travels beyond the require graph, which is what he asked about. If it is common, touched-only mid-lap costs rework, and the pane runs test-fast more often.
 - **Librarian:** the room's rule text (`COMMITTEE.md` / `BUILDING.md`, wherever a lap's "full suite" is named), changed in the same landing as B's script, after E's proof.
 
 **Stop rule:** if E's proof misses a revert, the full run stays the landing check, and only the slot, concurrency and timing changes go in.
