@@ -2903,3 +2903,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - Both forks build the same road to the bit: five tracks (the 10-22 fixture, his three 11-06 saves, his p2 piece) and 4,248 core answers hash equal, and the walk's six cases match field for field. Speed: bank-back and mark slide tie (D ÷ L 1.00); into the hold D is 10% faster (0.90, 0.87-0.91, all three runs); into-the-hold sits at the 2 × bar on both.
 - d603090 finished: 3f-3n 31/31, the six cases under 1.05, the probe byte-identical to 064ecd5 (9,810 readings).
 - **Carry:** a "× its own early" ratio compares each fork to a different denominator; between forks, compare the rolling drags directly.
+
+## 2026-11-06 ~23:5x local (D) · D644 review of C's from-grab diff (uncommitted on f2884fa): GREEN → `exo_memory/handback/p-d644-review-E_2026-11-06.md`
+- The build is the mock2 rule. The row is red on f2884fa for both reasons (the grab sits at 850 m, and a press at the mark does not slide the from) and green with C's files (19/19). Only the extra turn's grab, the bank and the climb move, and only on corner pieces. For his eye: before any extra turn exists the grab already stands at 500 and the bank and climb step back, with no purple line drawn beneath.
