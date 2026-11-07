@@ -60,6 +60,11 @@
 // CARGO_TARGET_DIR's when set. The lowest decides. Under 50 GB it WARNS once; under 20 GB it REFUSES (exit 4) with the free figure and what
 // the janitor's dry run would free, so the fix is in the message. A nested run is the same run and is not checked again.
 //
+// THE CPU CAP (L155, the keeper: "use our hardware but not maxing it out"). CONSONANCE_HEAVY_CPUS=N makes hold() pin ITS OWN process to the N lowest logical CPUs
+// (Windows: Get-Process -Id <pid> ProcessorAffinity, read back to confirm). A Windows child is created with its parent's affinity, so everything the runner starts
+// afterwards (test workers, headless Chrome, cargo, and theirs) shares those N CPUs whatever the run's own concurrency. Unset, empty, unusable, N >= the machine's
+// CPUs, or not Windows: no cap, today's behaviour, and a set-but-unusable value is said once. The cap is taken AFTER the lock, so a waiter is never throttled.
+//
 //   const h = require('./heavy-run.js').hold({ cmd: 'js-suite' });   // waits, or exits 3 loudly; releases on exit
 
 const fs = require('fs');
@@ -111,6 +116,34 @@ function checkDisk({ paths, free = freeBytes, total = janitorTotal, log }) {
   if (low.bytes < DISK_REFUSE_BYTES) throw Object.assign(new Error(`heavy-run: refusing to start: ${low.root} has ${gbs} GB free, under the ${DISK_REFUSE_BYTES / 1e9} GB floor; a heavy run that fills the disk fails every seat's writes. ${total()}. How it works: consonance/GATES.md, "The heavy-run lock".`), { code: 'HEAVY_RUN_DISK', free: low });
   if (low.bytes < DISK_WARN_BYTES) log(`heavy-run: WARNING: ${low.root} has ${gbs} GB free, under ${DISK_WARN_BYTES / 1e9} GB; run node consonance/tools/janitor.js`);
   return low;
+}
+
+/** The affinity mask (BigInt) of the N lowest logical CPUs, or null for "no cap": N must be a whole number from 1 to cpus-1, and cpus at most 64 (one processor group). */
+function cpuMask(raw, cpus = require('os').cpus().length) {
+  if (raw === undefined || raw === null || raw === '') return null;
+  if (typeof raw === 'string' && !/^[0-9]+$/.test(raw.trim())) return null;
+  const n = Number(raw);
+  if (!Number.isInteger(n) || n < 1 || !Number.isInteger(cpus) || cpus > 64 || n >= cpus) return null;
+  return (1n << BigInt(n)) - 1n;
+}
+/** Apply CONSONANCE_HEAVY_CPUS to process `pid` (default: this one). Returns { applied, cpus?, mask?, reason? }; never throws, never exits: a cap that cannot be set is said and the run goes on uncapped. */
+function applyCap({ env = process.env, pid = process.pid, platform = process.platform, cpus = require('os').cpus().length, run = spawnSync, log = (s) => process.stderr.write(s + '\n') } = {}) {
+  const raw = env.CONSONANCE_HEAVY_CPUS;
+  if (raw === undefined || raw === null || String(raw).trim() === '') return { applied: false, reason: 'unset' };
+  const mask = cpuMask(String(raw).trim(), cpus);
+  if (mask === null) { log(`heavy-run: CONSONANCE_HEAVY_CPUS=${raw} is not a whole number from 1 to ${cpus - 1} (this machine has ${cpus} logical CPUs, or more than 64); NOT applied, running uncapped`); return { applied: false, reason: 'unusable' }; }
+  if (platform !== 'win32') { log('heavy-run: CONSONANCE_HEAVY_CPUS is the Windows affinity cap; NOT applied on this platform'); return { applied: false, reason: 'platform' }; }
+  if (!Number.isInteger(pid) || pid <= 0) return { applied: false, reason: 'pid' };
+  let r; try {
+    r = run('powershell', ['-NoProfile', '-NonInteractive', '-Command',
+      `$p = Get-Process -Id ${pid} -ErrorAction Stop; $p.ProcessorAffinity = [IntPtr][Int64]${mask}; $p.Refresh(); $p.ProcessorAffinity.ToInt64()`],
+    { encoding: 'utf8', timeout: 20000, windowsHide: true });
+  } catch (_) { r = null; }
+  const ok = Boolean(r) && r.status === 0 && !r.error;
+  const got = ok ? String(r.stdout || '').trim() : '';
+  if (got !== String(mask)) { log(`heavy-run: CONSONANCE_HEAVY_CPUS=${raw}: the affinity was NOT applied (wanted ${mask}, read back ${got || 'nothing'}); running uncapped`); return { applied: false, reason: 'readback' }; }
+  log(`heavy-run: capped to ${raw} of ${cpus} logical CPUs (affinity ${mask}); every child inherits it`);
+  return { applied: true, cpus: Number(raw), mask: String(mask) };
 }
 
 function pidAlive(pid, kill = process.kill.bind(process)) {
@@ -354,6 +387,7 @@ function hold(opts = {}) {
     process.exit(e.code === 'HEAVY_RUN_TIMEOUT' ? 3 : e.code === 'HEAVY_RUN_DISK' ? 4 : 2);
   }
   if (h.reentrant) return h;
+  applyCap({ env: opts.env || process.env });   // L155: after the lock, so a waiter is never throttled
   process.on('exit', () => h.release());
   // On a signal, EXIT, and the 'exit' handler above releases. (A release call here was redundant — process.exit fires
   // 'exit' — and its mutant could not be told apart: L098 H7.) Only when this is the sole listener: a harness with its
@@ -364,4 +398,4 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { acquire, hold, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+module.exports = { acquire, hold, cpuMask, applyCap, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };

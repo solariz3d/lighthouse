@@ -727,3 +727,68 @@ test('REAL (this machine): processIdentity of a pid that does not exist is null 
   assert.strictEqual(H.processIdentity("999999999; Write-Output 'injected|2026-01-01T00:00:00Z' #"), null, 'an injected command never runs');
   assert.strictEqual(H.processIdentity(0), null, 'pid 0 (the idle process) is not a holder');
 });
+
+// ---- L155: CONSONANCE_HEAVY_CPUS caps the holder and everything it starts to N logical CPUs ----
+const WIN = process.platform === 'win32';
+test('CPU CAP mask: N lowest logical CPUs; unset, empty, junk, 0, negative, fractional, or >= the machine = NO cap (null), never a half-applied one', () => {
+  assert.strictEqual(H.cpuMask(12, 32), 0xFFFn);
+  assert.strictEqual(H.cpuMask('12', 32), 0xFFFn);
+  assert.strictEqual(H.cpuMask(1, 32), 1n);
+  assert.strictEqual(H.cpuMask(31, 32), (1n << 31n) - 1n);
+  for (const bad of [undefined, null, '', 'abc', '0', 0, -3, 2.5, '12x', '1e1', '0xC', 32, 64, 99]) assert.strictEqual(H.cpuMask(bad, 32), null, String(bad));
+  assert.strictEqual(H.cpuMask(8, 80), null, 'more than 64 logical CPUs: one processor group only, so no cap');
+});
+test('CPU CAP applyCap: unset env asks the OS NOTHING and says nothing (today\'s behaviour exactly)', () => {
+  let asked = 0;
+  H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '  ' }, pid: 1234, platform: 'win32', cpus: 32, run: () => { asked++; return {}; }, log: () => { asked++; } });
+  const r = H.applyCap({ env: {}, pid: 1234, platform: 'win32', cpus: 32, run: () => { asked++; return {}; }, log: () => { asked++; } });
+  assert.strictEqual(asked, 0);
+  assert.strictEqual(r.applied, false);
+});
+test('CPU CAP applyCap: on Windows it sets THIS pid\'s affinity to the mask, through a PowerShell that carries the integer pid and mask only', () => {
+  const calls = [];
+  const r = H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '12' }, pid: 4321, platform: 'win32', cpus: 32, log: () => {},
+    run: (exe, args) => { calls.push([exe, args.join(' ')]); return { status: 0, stdout: '4095\n' }; } });
+  assert.strictEqual(r.applied, true); assert.strictEqual(r.cpus, 12); assert.strictEqual(r.mask, '4095');
+  assert.strictEqual(calls.length, 1);
+  assert.match(calls[0][1], /Get-Process -Id 4321/);
+  assert.match(calls[0][1], /ProcessorAffinity/);
+  assert.match(calls[0][1], /\b4095\b/);
+});
+test('CPU CAP applyCap: the read-back must equal the mask, else it says NOT applied (a cap that did not take is reported, never assumed)', () => {
+  const logs = [];
+  const r = H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '12' }, pid: 1, platform: 'win32', cpus: 32, log: (s) => logs.push(s), run: () => ({ status: 0, stdout: '4294967295\n' }) });
+  assert.strictEqual(r.applied, false);
+  assert.match(logs.join('\n'), /NOT applied/);
+  const r2 = H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '12' }, pid: 1, platform: 'win32', cpus: 32, log: (s) => logs.push(s), run: () => ({ status: 1, stdout: '' }) });
+  assert.strictEqual(r2.applied, false);
+});
+test('CPU CAP applyCap: a value that is set but unusable is SAID and ignored (the run proceeds uncapped)', () => {
+  const logs = [];
+  const r = H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: 'twelve' }, pid: 1, platform: 'win32', cpus: 32, log: (s) => logs.push(s), run: () => { throw new Error('must not ask'); } });
+  assert.strictEqual(r.applied, false);
+  assert.match(logs.join('\n'), /CONSONANCE_HEAVY_CPUS/);
+});
+test('CPU CAP applyCap: off Windows it is a said no-op', () => {
+  const logs = [];
+  const r = H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '4' }, pid: 1, platform: 'linux', cpus: 32, log: (s) => logs.push(s), run: () => { throw new Error('must not ask'); } });
+  assert.strictEqual(r.applied, false);
+  assert.match(logs.join('\n'), /Windows/);
+});
+test('REAL (this machine): hold() with CONSONANCE_HEAVY_CPUS=2 pins the holder AND a child AND a child of that child to the same 2 CPUs; unset leaves them all on every CPU', { skip: !WIN && 'affinity is the Windows one', timeout: 120000 }, async () => {
+  const aff = (pid) => `(Get-Process -Id ${pid}).ProcessorAffinity.ToInt64()`;
+  // the holder prints its own affinity, then spawns a child (node) that spawns a grandchild (node); each prints its own affinity
+  const grand = `console.log('grand='+require('child_process').execFileSync('powershell',['-NoProfile','-Command','${aff('$PID_')}'.replace('$PID_',process.pid)],{encoding:'utf8'}).trim())`;
+  const mid = `console.log('mid='+require('child_process').execFileSync('powershell',['-NoProfile','-Command','${aff('$PID_')}'.replace('$PID_',process.pid)],{encoding:'utf8'}).trim());` +
+    `process.stdout.write(require('child_process').execFileSync(process.execPath,['-e',${JSON.stringify(grand)}],{encoding:'utf8'}))`;
+  const top = `const H=require(${JSON.stringify(HELPER)});H.hold({cmd:'cap-proof'});` +
+    `console.log('holder='+require('child_process').execFileSync('powershell',['-NoProfile','-Command','${aff('$PID_')}'.replace('$PID_',process.pid)],{encoding:'utf8'}).trim());` +
+    `process.stdout.write(require('child_process').execFileSync(process.execPath,['-e',${JSON.stringify(mid)}],{encoding:'utf8'}))`;
+  const run = (extra) => { const d = tmp(); const r = spawnSync(process.execPath, ['-e', top], { env: cleanEnv({ CONSONANCE_DATA: d, ...extra }), encoding: 'utf8', timeout: 100000 });
+    const m = {}; for (const l of r.stdout.split(/\r?\n/)) { const x = l.match(/^(holder|mid|grand)=(\d+)$/); if (x) m[x[1]] = x[2]; } return { m, err: r.stderr, code: r.status }; };
+  const capped = run({ CONSONANCE_HEAVY_CPUS: '2' });
+  assert.deepStrictEqual(capped.m, { holder: '3', mid: '3', grand: '3' }, capped.err);
+  const free = run({ CONSONANCE_HEAVY_CPUS: '' });
+  const all = String((1n << BigInt(os.cpus().length)) - 1n);
+  assert.deepStrictEqual(free.m, { holder: all, mid: all, grand: all }, free.err);
+});
