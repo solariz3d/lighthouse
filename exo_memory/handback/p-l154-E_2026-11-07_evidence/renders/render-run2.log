@@ -1,0 +1,32 @@
+chrome pid 20472
+patched base/app/preview/index.js
+patched base/app/preview/preview.js
+base S: extra turn made true typed true
+base S: extra bank made true typed true
+base S state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","380"]]}
+look 380 380 35 45 {"s0":1000,"eye":1380,"at":1380}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders\l154-S-base-tick380-run2.png
+base mid-drag state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","478"]]}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders\l154-S-base-middrag.png
+base after-release state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","478"]]}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders\l154-S-base-released.png
+patched lab/app/preview/index.js
+patched lab/app/preview/preview.js
+lab S: extra turn made true typed true
+lab S: extra bank made true typed true
+lab S state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","380"]]}
+look 380 380 35 45 {"s0":1000,"eye":1380,"at":1380}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders\l154-S-lab-tick380-run2.png
+lab mid-drag state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","478"]]}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders\l154-S-lab-middrag.png
+lab after-release state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","478"]]}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders\l154-S-lab-released.png
+lab from back to 380 true
+look 300 470 70 120 {"s0":1000,"eye":1300,"at":1470}
+lab extra bank handles (both pose) [[1,804,466],[-1,862,469]]
+lab mid-slide state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-35.18"],["extra bank from","380"]]}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders\l154-S-lab-midslide.png
+lab after-slide state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-35.18"],["extra bank from","380"]]}
+page errors none
+closed chrome 20472
+profile removed

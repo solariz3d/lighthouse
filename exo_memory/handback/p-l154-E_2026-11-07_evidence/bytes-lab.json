@@ -1,0 +1,65 @@
+{
+ "good": {
+  "options": {
+   "phi": [
+    {
+     "from": 500,
+     "target": 0
+    }
+   ]
+  },
+  "bytes": [
+   4166,
+   4166
+  ],
+  "equal": true,
+  "rebuilt": "eff48ade8d3ed934",
+  "his": "eff48ade8d3ed934"
+ },
+ "marksGood": [
+  {
+   "field": "bank",
+   "index": 0,
+   "from": 500,
+   "to": 1000,
+   "label": "Extra bank · 500.00 m → end · rolls over 500.00 m · drag to start earlier or later",
+   "lit": false
+  }
+ ],
+ "marksSlid420": [
+  {
+   "field": "bank",
+   "index": 0,
+   "from": 420,
+   "to": 1000,
+   "label": "Extra bank · 420.00 m → end · rolls over 580.00 m · drag to start earlier or later",
+   "lit": false
+  }
+ ],
+ "marksLen1200": [
+  {
+   "field": "bank",
+   "index": 0,
+   "from": 504,
+   "to": 1200,
+   "label": "Extra bank · 504.00 m → end · rolls over 696.00 m · drag to start earlier or later",
+   "lit": false
+  }
+ ],
+ "marksS": [
+  {
+   "field": "turn",
+   "index": 0,
+   "from": 500,
+   "to": 1000,
+   "label": "Extra turn · 500.00 m → end · turns over 500.00 m · drag to start earlier or later"
+  },
+  {
+   "field": "bank",
+   "index": 0,
+   "from": 380,
+   "to": 1000,
+   "label": "Extra bank · 380.00 m → end · rolls over 620.00 m · drag to start earlier or later"
+  }
+ ]
+}
