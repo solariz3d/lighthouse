@@ -9,7 +9,7 @@
   - files that open a headless browser 21 → 48;
   - frame-timing files 0 → 11 (git grep `performance.now|per-frame|median.*ms`).
 - **`npm test` includes the mutation harnesses.** `scripts/test-fast.cjs` :9-14 says they "are most of the full run's tens of minutes" and run weekly on CI (`bc74cfa`). Every pane's full run on L runs them too. **His guess was right.**
-- **Two heavy slots since 10-10** (D286, `heavy-run.js:14`). **Done already:** `CONSONANCE_HEAVY_SLOTS=1` was set as a user environment variable on L only (09:00Z). The panes take it when they next start.
+- **Two heavy slots since 10-10** (D286, `heavy-run.js:14`). **Set and then UNDONE:** `CONSONANCE_HEAVY_SLOTS=1` was set on L at 09:00Z and removed at 09:23Z at his word ("the heat is okay as long as i have my fans on max"). Two slots stand. The affinity cap below replaces it.
 - On 10-27, 97 chrome.exe were counted in one touched-test run (`plan_d504_headless_browser_cap_2026-10-27.md`).
 
 ## The shape (the rigor stays; the repeats go)
@@ -32,7 +32,11 @@
 - **The cap that does that: CPU affinity on the heavy run.** heavy-run.js starts its child under an affinity mask (a laptop setting, e.g. `CONSONANCE_HEAVY_CPUS=12` of 32 logical; unset on D = today's behaviour). Every child (test workers, headless Chrome, cargo) inherits it, so a whole run can never take more than that share, whatever its concurrency. Measured, not assumed: one test-fast run on L before and after, CPU % and temperature (or package power, if no temperature is readable) every 10 s, and wall time.
 - Plus what was already here: test concurrency 2 on L, timing files out of test-fast (core-extra-bank-drag-cost, preview-lod-frame), and the tiers.
 
-## Pieces (after L154 is collated; nothing heavy runs alongside another)
+## STARTED 12:15Z at his word, in parallel with L154: "while i test it, lets get to work at making our process not so destructive on our hardware"
+- **A (new piece): the affinity cap in `consonance/tools/heavy-run.js`** (lighthouse, own worktree): `CONSONANCE_HEAVY_CPUS=N` starts the held child under an affinity mask of N logical CPUs (Windows: the child's ProcessorAffinity, or `start /affinity`; elsewhere unset = no-op). Children inherit it. Unset = today's behaviour, so D is unchanged. Tests in heavy-run's own test file (node only, light). Then a sensor: find a readable CPU temperature or package-power source on L (WMI thermal zone, LegionSpace or the like) and say which, or say none.
+  - **The before/after measure waits** until E's L154 renders are done and nothing else runs: test-fast once uncapped, once at N=12, sampled every 10 s.
+
+## Pieces (nothing heavy runs alongside another)
 - **C (measure, no new heavy run):**
   - From the TAP and spec output of tonight's L152 full runs (B's and A's), give each test file's duration, and the totals for: mutation harnesses, frame-timing, browser pages, the rest.
   - If the output lacks per-file times, ONE run of the full suite at concurrency 1 under the lock, at BelowNormal, alone, with nothing else running.
