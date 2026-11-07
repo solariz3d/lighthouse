@@ -73,3 +73,13 @@ carry it, so this brief does.
   11-04 status-line change shows the same shape);
 - his question "writing or sound?" for Dreamride (`Downloads/dreamride/HANDOFF.md`);
 - the room's instructions should point waking seats at `briefs/` first (the desktop added the rule to the seats' files on 11-04, D640).
+
+**Added 2026-11-06 (D, librarian; the night's record is `loop/handoff_t180_2026-11-06-D.md`):**
+15. **The pulse line "HANDBACKS IN, NOT COLLATED" reads the chain ledger, not the collation.** `consonance/tools/chain-status.js`
+    owedVisit (:1196-1215, printed at :1397) shows it while the head lap's holder is `panes`. A collation ring does not change that,
+    so the line came back every hour after D644 was collated. The fix is a chain row from the chair moving the holder (D644 → keeper).
+    Asked of the chair at 19:34 local; whether it landed is open.
+16. **A finished hand-back left uncommitted is lost to the other machine.** On 11-06 the librarian found 17 hand-backs from 11-01 to
+    11-05 (A, B, C, with their evidence) sitting untracked on D and committed them. The one file kept out is a 12 MB geom.json evidence dump.
+
+**Open (added 11-06):** the chair's D644 ledger row (item 15).
