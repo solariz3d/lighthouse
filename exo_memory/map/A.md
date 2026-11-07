@@ -2166,3 +2166,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-11-07 (on L, Sonnet 5.5) — L155 A: CONSONANCE_HEAVY_CPUS=N makes heavy-run hold() pin itself to the N lowest logical CPUs, so every child inherits the mask; proved on a child and a grandchild (mask 3 each, all 32 when unset), 68/68 rows (7 new, red first), mutants 6/6; ff-merged to main 52fa95cf. CPU temperature is not readable on L; RAPL package power (the Energy Meter counter RAPL_Package0_PKG Power) is and moves with load
 `exo_memory/handback/p-l155-cap-A_2026-11-07.md`. Lesson: a cap that cannot be read back is not a cap; the before/after measure is still owed and the harness heavy-run.mutants.js was not run.
+
+## 2026-11-07 (on L, Sonnet 5.5) — L155 A amendment: heavy-run reads a per-machine profile heavy:{cpus,concurrency,slots,timing} from ~/.consonance.json (env overrides per field; absent = today); exposed as profile() and 'node consonance/tools/heavy-run.js --profile [key]'; 75/75 rows (7 new, red first), mutants 7/8 with the survivor equivalent; ff-merged to main 744179fe; the knee measure is still owed
+`exo_memory/handback/p-l155-cap-A_2026-11-07.md` (addendum). Lesson: put a machine's numbers in its own file and measure them there; one number for a 32-thread laptop and a 16-thread desktop fits neither.
