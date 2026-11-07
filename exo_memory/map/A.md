@@ -2169,3 +2169,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-11-07 (on L, Sonnet 5.5) — L155 A amendment: heavy-run reads a per-machine profile heavy:{cpus,concurrency,slots,timing} from ~/.consonance.json (env overrides per field; absent = today); exposed as profile() and 'node consonance/tools/heavy-run.js --profile [key]'; 75/75 rows (7 new, red first), mutants 7/8 with the survivor equivalent; ff-merged to main 744179fe; the knee measure is still owed
 `exo_memory/handback/p-l155-cap-A_2026-11-07.md` (addendum). Lesson: put a machine's numbers in its own file and measure them there; one number for a 32-thread laptop and a 16-thread desktop fits neither.
+
+## 2026-11-07 (on L, Sonnet 5.5) — L155 A follow-up: the heavy-run cap now defaults to a SPREAD mask (one thread per physical core first; siblings read from the OS via GetLogicalProcessorInformationEx, never assumed adjacent; unreadable = lowest-N, said); 83/83 rows (8 new, red first); spread mutants 9/9; ff-merged main 03e5cbd2; the profile read was already in 744179fe; the 16/12/8 measure is NOT started
+`exo_memory/handback/p-l155-cap-A_2026-11-07.md` (addendum 2). Lesson: when a default changes, the rows that hard-coded the old default must change in the open, not quietly.
