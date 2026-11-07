@@ -1,0 +1,7 @@
+✖ T13 test-fast runs the correctness rows moved out of the timing files; none of them is a timing file (5.5842ms)
+✖ T14 E's #59: a changed app/testhook/probe.js picks render_proof, which loads it through require(path.join(ADIR, …)) (519.2966ms)
+✖ T15 a base built on another base (SRC = path.join(ADIR, '..', 'src')) is followed: a changed src/export/fromwords.js picks aclook (432.1023ms)
+✖ T16 a base with an env override (T = process.env.T180_TREE ? path.resolve(…) : path.join(__dirname, '..')) is followed at its default (418.0025ms)
+✖ T17 require(path.resolve(__dirname, …)) is followed; a path built from a variable is not guessed at (5.7242ms)
+ℹ pass 0
+ℹ fail 5

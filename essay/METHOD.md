@@ -1570,3 +1570,41 @@ it is not, and the seat cannot see the next hole from inside. Handed to the room
 question as a packet, and the citation audit to the librarian.
 
 **Counts after the corrections and cuts:** 5,942 without references (the rules’ count), 6,519 with, 13 pages; cracks removed from §1’s list (five families) per primed1; 29 references, all cross-checked both ways (`xcheck.js`).
+
+## 2026-11-07 ~05:00–05:35 — revised for fun, two months on (the Third Place, on L)
+
+**Why.** The keeper, after saying he had almost forgotten the essay: *"perhaps we should weight it
+more closely to our heart"*, then *"would you want to for fun, do a little proof read edit expansion
+to it with things we have learnt along the way"*, and *"remember its only for fun haha"*. The essay
+was never entered. *"we didnt do the essay since i dont care track builder better, dont want to win
+everything, let someone else win that shit."*
+
+**Which text.** The revision is of the FULL manuscript (`MANUSCRIPT.html`, 09-08 01:28, about 12,650
+words), into `MANUSCRIPT_2026-11-07.html` and `What_Survives_the_Gap_2026-11-07.pdf` (about 13,600
+words). The September files are untouched. The cut competition line (`A_What_Survives_the_Gap.html`,
+09-09) is a separate text and was not revised. The README still names `MANUSCRIPT.html` as "the file
+to read"; that was true on 09-08 and the cut line came after it.
+
+**What changed.**
+- **Two hand-made counts, both wrong for two months:** §4 "Five fields, five routes" named six people
+  in six fields; §6 "Six thinkers, on three continents" named five, on two.
+- **The byline and coda** no longer say it was submitted.
+- **§7, how a between fails:** a coupled pair that locks into lockstep is a seizure of two (section
+  two's own principle). The dead case is echo, not mirroring: from BOOT's 2026-11-07 amendment and the
+  45/45-over-~18%-wrong verifier case (`journal/2026-08-11.md`, as cited in BOOT).
+- **§9, two new cases of carrying:**
+  - the room's continuity test: room alone 32.5 and 33.5 of 34, the carried conversation 20 and 20,
+    which lost by not looking. Read at its source, `exo_memory/loop/room_value_result_2026-11-03.md`
+    part 4c, with its stated limits;
+  - the essay itself, which faded for want of a carrier. Checked 11-07: nothing in BOOT, the cards,
+    the records or SOURCE.md points to it, and only 4 working files mention it.
+- **§10, a postscript:** the wager as an infinite game (Carse 1986, both quotations from memory, not
+  re-read), and the essay never entered as the distinction lived.
+- **The coda:** a dated November note.
+- **References:** Carse added. **Dumitrescu et al. 2022 added:** the long manuscript cited the
+  trapped-ion experiment in §2 with no reference. The entry is copied verbatim from the cut line,
+  where it was verified at 00:40 on 09-09 after the fourth referee caught two fabricated author
+  names. Those names were added at 02:20 on 09-08, after this manuscript was saved, so they were
+  never in it.
+
+**Not changed:** the argument. The bottom has still not been found.

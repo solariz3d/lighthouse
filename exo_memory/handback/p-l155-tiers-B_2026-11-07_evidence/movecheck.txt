@@ -1,0 +1,48 @@
+sculpt-release-exact: "row 5: the release is the exact road: a station every 2 m ag" byte-equal in 7f4241b:sculpt-frame: yes (20 lines); still in sculpt-frame: no
+app/test/sculpt-frame.test.js: every line is 7f4241b's, in order: yes
+app/test/sculpt-release-exact.test.js: every line is 7f4241b's, in order: yes
+sculpt-frame: assert lines 7f4241b 11 = kept 5 + moved 6; lost 0; in both 0
+sculpt-frame keeps: 
+    row 1: Twist on a 1-piece window of a 12-piece track, every look: the work frames\' p95 is within one frame at
+    row 2: Grab, r = 200 m across three pieces of a 10 km open lap: p95 within one frame at 165 Hz (6.0 ms)
+    row 3: Bend on a 10 km CLOSED lap: p95 within 6.0 ms during the drag, the release\'s handler within 6.0 ms, an
+    row ${row}: ${why}: p95 within 6.0 ms during the drag, no frame or task over 120 ms during it or for 10 s afte
+drag-release-exact: "row 5: the release is the exact road: a few hundred stations" byte-equal in 7f4241b:drag-frame: yes (6 lines); still in drag-frame: no
+app/test/drag-frame.test.js: every line is 7f4241b's, in order: yes
+app/test/drag-release-exact.test.js: every line is 7f4241b's, in order: yes
+drag-frame: assert lines 7f4241b 11 = kept 9 + moved 2; lost 0; in both 0
+drag-frame keeps: 
+    row 1: a 1,000 m turn dragged in every look: the work frames\' p95 is within one frame at 165 Hz (6.0 ms)
+    row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+    row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+    row 4: past the ordinary range the drag adapts and does not stall: a 20,000 m turn\'s p95 stays under 40 ms, a
+    row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19\'s cos
+    row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.
+    row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at 
+    row 9: after 21 km whose last piece still rolls at its end (his 88.45°), the next piece stretched by its lengt
+release-ghost-arrives: "row 3: the exact ghost arrives and nothing blinks: after let" byte-equal in 7f4241b:release-frame: yes (9 lines); still in release-frame: no
+app/test/release-frame.test.js: every line is 7f4241b's, in order: yes
+app/test/release-ghost-arrives.test.js: every line is 7f4241b's, in order: yes
+release-frame: assert lines 7f4241b 14 = kept 10 + moved 4; lost 0; in both 0
+release-frame keeps: 
+    row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+    row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 m
+    row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th pe
+app/test/preview-lod-frame.test.js: declared added lines (2): // AMENDED (L156): row 3 moved to preview-lod-share.test.js, and it was what put the camer | await ev("document.dispatchEvent(new CustomEvent('t180-camera', { detail: { mode: 'overhea
+preview-lod-share: "row 3: in the opening view the preview draws at most 40% of " byte-equal in 7f4241b:preview-lod-frame: yes (7 lines); still in preview-lod-frame: no
+app/test/preview-lod-frame.test.js: every line is 7f4241b's, in order: yes
+app/test/preview-lod-share.test.js: every line is 7f4241b's, in order: yes
+preview-lod-frame: assert lines 7f4241b 9 = kept 7 + moved 2; lost 0; in both 0
+preview-lod-frame keeps: 
+    row 1: the whole 100 km track in the opening view holds one frame at 144 Hz (p95 <= 6.9 ms, the GPU\'s work in
+    row 2: above the road, 37% of the way along, it holds one frame at 144 Hz too
+    row 4: in the overhead view, with the pointer moving over the track, it holds one frame at 144 Hz (the hover p
+core-extra-bank-laid: "D642: his p2\'s extra bank still reaches −88.45° from 500 (t" byte-equal in 7f4241b:core-extra-bank-drag-cost: yes (7 lines); still in core-extra-bank-drag-cost: no
+core-extra-bank-laid: "D642 3j: his p2\'s extra bank mark, dragged across 420-540 t" byte-equal in 7f4241b:core-extra-bank-drag-cost: yes (13 lines); still in core-extra-bank-drag-cost: no
+app/test/core-extra-bank-drag-cost.test.js: every line is 7f4241b's, in order: yes
+app/test/core-extra-bank-laid.test.js: every line is 7f4241b's, in order: yes
+core-extra-bank-drag-cost: assert lines 7f4241b 10 = kept 4 + moved 6; lost 0; in both 0
+core-extra-bank-drag-cost keeps: 
+    D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move 
+    D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the sa
+ALL CHECKS PASS
