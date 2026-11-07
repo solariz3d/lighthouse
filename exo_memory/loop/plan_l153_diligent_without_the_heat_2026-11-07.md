@@ -27,7 +27,12 @@
 - **On L:** test concurrency 2 (a laptop-only setting, as heavy slots are); one heavy run at a time (done).
 - **Browsers:** the page tests share a few headless Chrome instances instead of one per file, if B's numbers show Chrome is where the cost is.
 
-## Pieces (after L152 is collated; nothing heavy runs alongside another)
+## AMENDED 11:51Z, his words: "c shell doing it again as soon as i turn my fans off 100c lol, once you get the UI work done, we need to fking fix the tests cracking our shit to max, like we can use our hardware but not maxing it out"
+- Runs right after L154. The goal is now stated by him: **use the hardware, never max it.**
+- **The cap that does that: CPU affinity on the heavy run.** heavy-run.js starts its child under an affinity mask (a laptop setting, e.g. `CONSONANCE_HEAVY_CPUS=12` of 32 logical; unset on D = today's behaviour). Every child (test workers, headless Chrome, cargo) inherits it, so a whole run can never take more than that share, whatever its concurrency. Measured, not assumed: one test-fast run on L before and after, CPU % and temperature (or package power, if no temperature is readable) every 10 s, and wall time.
+- Plus what was already here: test concurrency 2 on L, timing files out of test-fast (core-extra-bank-drag-cost, preview-lod-frame), and the tiers.
+
+## Pieces (after L154 is collated; nothing heavy runs alongside another)
 - **C (measure, no new heavy run):**
   - From the TAP and spec output of tonight's L152 full runs (B's and A's), give each test file's duration, and the totals for: mutation harnesses, frame-timing, browser pages, the rest.
   - If the output lacks per-file times, ONE run of the full suite at concurrency 1 under the lock, at BelowNormal, alone, with nothing else running.
