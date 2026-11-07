@@ -60,6 +60,9 @@
 // CARGO_TARGET_DIR's when set. The lowest decides. Under 50 GB it WARNS once; under 20 GB it REFUSES (exit 4) with the free figure and what
 // the janitor's dry run would free, so the fix is in the message. A nested run is the same run and is not checked again.
 //
+// THE SHAPE of the cap (L155 follow-up): "spread" (the default when the machine's cores can be read) takes ONE THREAD PER PHYSICAL CORE first, then the siblings, so N CPUs
+// are N cores' worth of silicon instead of N/2 cores run hot; "lowest" is the lowest N logical CPUs. The siblings are READ from the OS (GetLogicalProcessorInformationEx,
+// RelationProcessorCore, through a PowerShell Add-Type), never assumed adjacent. If the topology cannot be read it falls back to "lowest" and says so.
 // THE CPU CAP (L155, the keeper: "use our hardware but not maxing it out"). CONSONANCE_HEAVY_CPUS=N makes hold() pin ITS OWN process to the N lowest logical CPUs
 // (Windows: Get-Process -Id <pid> ProcessorAffinity, read back to confirm). A Windows child is created with its parent's affinity, so everything the runner starts
 // afterwards (test workers, headless Chrome, cargo, and theirs) shares those N CPUs whatever the run's own concurrency. Unset, empty, unusable, N >= the machine's
@@ -125,6 +128,7 @@ function checkDisk({ paths, free = freeBytes, total = janitorTotal, log }) {
 }
 
 const PROFILE_FIELDS = {
+  shape: { env: 'CONSONANCE_HEAVY_SHAPE', parse: (v) => (/^(spread|lowest)$/.test(String(v).trim()) ? String(v).trim() : undefined) },
   cpus: { env: 'CONSONANCE_HEAVY_CPUS', parse: (v) => (/^[0-9]+$/.test(String(v).trim()) && Number(v) >= 1 ? Number(v) : undefined) },
   concurrency: { env: 'CONSONANCE_HEAVY_CONCURRENCY', parse: (v) => (/^[0-9]+$/.test(String(v).trim()) && Number(v) >= 1 && Number(v) <= 64 ? Number(v) : undefined) },
   slots: { env: 'CONSONANCE_HEAVY_SLOTS', parse: (v) => (/^[0-9]+$/.test(String(v).trim()) && Number(v) >= 1 && Number(v) <= MAX_SLOTS ? Number(v) : undefined) },
@@ -143,6 +147,59 @@ function profile({ file, env = process.env } = {}) {
   }
   return { values, source, ignored };
 }
+const TOPOLOGY_PS = `Add-Type -TypeDefinition @'
+using System; using System.Runtime.InteropServices; using System.Text;
+public static class Topo {
+  [DllImport("kernel32.dll", SetLastError=true)] static extern bool GetLogicalProcessorInformationEx(int rel, IntPtr buf, ref int len);
+  public static string Cores() {
+    int len = 0; GetLogicalProcessorInformationEx(0, IntPtr.Zero, ref len);
+    IntPtr p = Marshal.AllocHGlobal(len);
+    if (!GetLogicalProcessorInformationEx(0, p, ref len)) return "";
+    StringBuilder sb = new StringBuilder(); int off = 0;
+    while (off < len) {
+      int size = Marshal.ReadInt32(p, off + 4); int gc = Marshal.ReadInt16(p, off + 30);
+      for (int g = 0; g < gc; g++) sb.Append(Marshal.ReadInt16(p, off + 32 + g * 16 + 8)).Append(":").Append((ulong)Marshal.ReadInt64(p, off + 32 + g * 16)).Append(";");
+      sb.Append("\\n"); off += size;
+    }
+    return sb.ToString();
+  }
+}
+'@; [Topo]::Cores()`;
+/** The logical-CPU mask (BigInt) of each physical core, from the OS: [mask, ...], or null when it cannot be read, is in more than one processor group, or does not cover exactly the machine's CPUs. */
+function coreMasks({ run = spawnSync, platform = process.platform, cpus = require('os').cpus().length } = {}) {
+  if (platform !== 'win32' || cpus > 64) return null;
+  let r; try { r = run('powershell', ['-NoProfile', '-NonInteractive', '-Command', TOPOLOGY_PS], { encoding: 'utf8', timeout: 30000, windowsHide: true }); } catch (_) { return null; }
+  if (!r || r.error || r.status !== 0 || typeof r.stdout !== 'string') return null;
+  const out = [];
+  for (const line of r.stdout.split(/\r?\n/)) {
+    if (!line.trim()) continue;
+    const m = line.trim().match(/^0:([0-9]+);$/);
+    if (!m) return null;
+    out.push(BigInt(m[1]));
+  }
+  let all = 0n;
+  for (const c of out) { if (c === 0n || (all & c) !== 0n) return null; all |= c; }
+  return out.length && all === (1n << BigInt(cpus)) - 1n ? out : null;
+}
+/** The SPREAD mask of N CPUs over `cores` (from coreMasks): the lowest thread of each core first (cores in order), then each core's next thread, and so on. null = no cap (same rule as cpuMask). */
+function spreadMask(raw, cores) {
+  if (!Array.isArray(cores) || !cores.length) return null;
+  let all = 0n; for (const c of cores) { if (typeof c !== 'bigint' || c === 0n || (all & c) !== 0n) return null; all |= c; }
+  const total = cores.reduce((n, c) => n + c.toString(2).replace(/0/g, '').length, 0);
+  const lowest = cpuMask(raw, total);
+  if (lowest === null) return null;
+  const n = lowest.toString(2).length;
+  const rest = cores.map((c) => c);
+  let mask = 0n, taken = 0;
+  while (taken < n) {
+    for (let i = 0; i < rest.length && taken < n; i++) {
+      if (rest[i] === 0n) continue;
+      const low = rest[i] & -rest[i];
+      mask |= low; rest[i] ^= low; taken++;
+    }
+  }
+  return mask;
+}
 /** The affinity mask (BigInt) of the N lowest logical CPUs, or null for "no cap": N must be a whole number from 1 to cpus-1, and cpus at most 64 (one processor group). */
 function cpuMask(raw, cpus = require('os').cpus().length) {
   if (raw === undefined || raw === null || raw === '') return null;
@@ -152,10 +209,16 @@ function cpuMask(raw, cpus = require('os').cpus().length) {
   return (1n << BigInt(n)) - 1n;
 }
 /** Apply CONSONANCE_HEAVY_CPUS to process `pid` (default: this one). Returns { applied, cpus?, mask?, reason? }; never throws, never exits: a cap that cannot be set is said and the run goes on uncapped. */
-function applyCap({ env = process.env, heavy, pid = process.pid, platform = process.platform, cpus = require('os').cpus().length, run = spawnSync, log = (s) => process.stderr.write(s + '\n') } = {}) {
+function applyCap({ env = process.env, heavy, cores, pid = process.pid, platform = process.platform, cpus = require('os').cpus().length, run = spawnSync, log = (s) => process.stderr.write(s + '\n') } = {}) {
   const raw = env.CONSONANCE_HEAVY_CPUS !== undefined && String(env.CONSONANCE_HEAVY_CPUS).trim() !== '' ? env.CONSONANCE_HEAVY_CPUS : (heavy || profile({ env }).values).cpus;
   if (raw === undefined || raw === null || String(raw).trim() === '') return { applied: false, reason: 'unset' };
-  const mask = cpuMask(String(raw).trim(), cpus);
+  const prof = heavy || profile({ env }).values;
+  const want = env.CONSONANCE_HEAVY_SHAPE !== undefined && PROFILE_FIELDS.shape.parse(env.CONSONANCE_HEAVY_SHAPE) ? env.CONSONANCE_HEAVY_SHAPE.trim() : (prof.shape || 'spread');
+  let shape = 'lowest', mask = cpuMask(String(raw).trim(), cpus);
+  if (mask !== null && want === 'spread' && platform === 'win32') {
+    const sp = spreadMask(String(raw).trim(), cores === undefined ? coreMasks({ run, platform, cpus }) : cores);
+    if (sp !== null) { mask = sp; shape = 'spread'; } else log('heavy-run: the cores could not be read from the OS; using the lowest N logical CPUs');
+  }
   if (mask === null) { log(`heavy-run: CONSONANCE_HEAVY_CPUS=${raw} is not a whole number from 1 to ${cpus - 1} (this machine has ${cpus} logical CPUs, or more than 64); NOT applied, running uncapped`); return { applied: false, reason: 'unusable' }; }
   if (platform !== 'win32') { log('heavy-run: CONSONANCE_HEAVY_CPUS is the Windows affinity cap; NOT applied on this platform'); return { applied: false, reason: 'platform' }; }
   if (!Number.isInteger(pid) || pid <= 0) return { applied: false, reason: 'pid' };
@@ -167,8 +230,8 @@ function applyCap({ env = process.env, heavy, pid = process.pid, platform = proc
   const ok = Boolean(r) && r.status === 0 && !r.error;
   const got = ok ? String(r.stdout || '').trim() : '';
   if (got !== String(mask)) { log(`heavy-run: CONSONANCE_HEAVY_CPUS=${raw}: the affinity was NOT applied (wanted ${mask}, read back ${got || 'nothing'}); running uncapped`); return { applied: false, reason: 'readback' }; }
-  log(`heavy-run: capped to ${raw} of ${cpus} logical CPUs (affinity ${mask}); every child inherits it`);
-  return { applied: true, cpus: Number(raw), mask: String(mask) };
+  log(`heavy-run: capped to ${raw} of ${cpus} logical CPUs, ${shape} (affinity ${mask}); every child inherits it`);
+  return { applied: true, cpus: Number(raw), mask: String(mask), shape };
 }
 
 function pidAlive(pid, kill = process.kill.bind(process)) {
@@ -423,7 +486,7 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { acquire, hold, cpuMask, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+module.exports = { acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
 
 if (require.main === module && process.argv[2] === '--profile') {
   const { values } = profile();

@@ -748,7 +748,7 @@ test('CPU CAP applyCap: unset env asks the OS NOTHING and says nothing (today\'s
 });
 test('CPU CAP applyCap: on Windows it sets THIS pid\'s affinity to the mask, through a PowerShell that carries the integer pid and mask only', () => {
   const calls = [];
-  const r = H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '12' }, pid: 4321, platform: 'win32', cpus: 32, log: () => {},
+  const r = H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '12' }, heavy: { shape: 'lowest' }, pid: 4321, platform: 'win32', cpus: 32, log: () => {},
     run: (exe, args) => { calls.push([exe, args.join(' ')]); return { status: 0, stdout: '4095\n' }; } });
   assert.strictEqual(r.applied, true); assert.strictEqual(r.cpus, 12); assert.strictEqual(r.mask, '4095');
   assert.strictEqual(calls.length, 1);
@@ -787,7 +787,7 @@ test('REAL (this machine): hold() with CONSONANCE_HEAVY_CPUS=2 pins the holder A
     `process.stdout.write(require('child_process').execFileSync(process.execPath,['-e',${JSON.stringify(mid)}],{encoding:'utf8'}))`;
   const run = (extra) => { const d = tmp(); const r = spawnSync(process.execPath, ['-e', top], { env: cleanEnv({ CONSONANCE_DATA: d, ...extra }), encoding: 'utf8', timeout: 100000 });
     const m = {}; for (const l of r.stdout.split(/\r?\n/)) { const x = l.match(/^(holder|mid|grand)=(\d+)$/); if (x) m[x[1]] = x[2]; } return { m, err: r.stderr, code: r.status }; };
-  const capped = run({ CONSONANCE_HEAVY_CPUS: '2' });
+  const capped = run({ CONSONANCE_HEAVY_CPUS: '2', CONSONANCE_HEAVY_SHAPE: 'lowest' });   // the lowest-N shape: mask 0b11 (the spread shape has its own rows)
   assert.deepStrictEqual(capped.m, { holder: '3', mid: '3', grand: '3' }, capped.err);
   const free = run({ CONSONANCE_HEAVY_CPUS: '' });
   const all = String((1n << BigInt(os.cpus().length)) - 1n);
@@ -853,4 +853,78 @@ test('PROFILE CLI: `node heavy-run.js --profile` prints the machine\'s profile a
   const missing = spawnSync(process.execPath, [HELPER, '--profile', 'slots'], { env, encoding: 'utf8' });
   assert.strictEqual(missing.stdout.trim(), '', 'an unset key prints nothing');
   assert.strictEqual(missing.status, 0);
+});
+
+// ---- L155 follow-up: a SPREAD mask (one thread per physical core first), siblings read from the OS, never assumed adjacent ----
+const adj = (n) => Array.from({ length: n }, (_, i) => 3n << BigInt(2 * i));                       // siblings 2i, 2i+1 (how L happens to number them)
+const far = (n) => Array.from({ length: n }, (_, i) => (1n << BigInt(i)) | (1n << BigInt(i + n)));  // siblings i, i+n (another machine may number them so)
+const bits = (m) => { const o = []; for (let i = 0n; m >> i; i++) if ((m >> i) & 1n) o.push(Number(i)); return o; };
+test('SPREAD mask: N distinct cores, one thread each, whichever way the siblings are numbered', () => {
+  const a = H.spreadMask(12, adj(16));
+  assert.deepStrictEqual(bits(a), [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]);
+  const f = H.spreadMask(12, far(16));
+  assert.deepStrictEqual(bits(f), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  for (const [cores, m] of [[adj(16), a], [far(16), f]]) assert.strictEqual(cores.filter((c) => (c & m) !== 0n).length, 12, 'twelve DIFFERENT cores');
+});
+test('SPREAD mask: past one thread per core it adds the siblings, core by core; N at or over the machine, or a bad N, is no cap', () => {
+  assert.deepStrictEqual(bits(H.spreadMask(18, adj(16))), [0, 1, 2, 3, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]);
+  assert.strictEqual(H.spreadMask(32, adj(16)), null);
+  assert.strictEqual(H.spreadMask(0, adj(16)), null);
+  assert.strictEqual(H.spreadMask('x', adj(16)), null);
+});
+test('SPREAD mask: cores that do not tile the machine (a bad read) give null, never a partial mask', () => {
+  assert.strictEqual(H.spreadMask(4, [3n, 3n]), null, 'overlapping cores');
+  assert.strictEqual(H.spreadMask(2, [7n, 14n]), null, 'overlapping cores that together cover the CPUs');
+  assert.strictEqual(H.spreadMask(4, []), null);
+  assert.strictEqual(H.spreadMask(4, null), null);
+});
+test('SPREAD coreMasks parses the OS topology lines (group:mask;), and answers null for anything it cannot read', () => {
+  const ok = H.coreMasks({ platform: 'win32', cpus: 4, run: () => ({ status: 0, stdout: '0:5;\n0:10;\n' }) });
+  assert.deepStrictEqual(ok, [5n, 10n]);
+  assert.strictEqual(H.coreMasks({ platform: 'win32', cpus: 4, run: () => ({ status: 1, stdout: '' }) }), null);
+  assert.strictEqual(H.coreMasks({ platform: 'win32', cpus: 4, run: () => ({ status: 0, stdout: '1:5;\n' }) }), null, 'a second processor group is not handled');
+  assert.strictEqual(H.coreMasks({ platform: 'win32', cpus: 8, run: () => ({ status: 0, stdout: '0:5;\n0:10;\n' }) }), null, 'cores that miss CPUs');
+  assert.strictEqual(H.coreMasks({ platform: 'linux', cpus: 4, run: () => ({ status: 0, stdout: '0:5;\n0:10;\n' }) }), null, 'off Windows it never answers, even if something would');
+  assert.strictEqual(H.coreMasks({ platform: 'win32', cpus: 4, run: () => ({ status: 0, stdout: '0:7;\n0:14;\n' }) }), null, 'overlapping cores that together cover the machine');
+});
+test('SPREAD applyCap: the spread mask is the default when the cores are known; shape "lowest" keeps the lowest-N mask; unknown cores fall back to lowest and say so', () => {
+  const mk = (extra, out) => { const calls = []; const logs = []; const r = H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '2' }, pid: 9, platform: 'win32', cpus: 8, log: (s) => logs.push(s), run: (exe, args) => { calls.push(args.join(' ')); return { status: 0, stdout: out + '\n' }; }, ...extra }); return { r, calls, logs }; };
+  const s = mk({ cores: adj(4) }, '5');            // bits 0 and 2
+  assert.strictEqual(s.r.mask, '5'); assert.strictEqual(s.r.shape, 'spread'); assert.strictEqual(s.calls.length, 1);
+  const l = mk({ cores: adj(4), heavy: { shape: 'lowest' } }, '3');
+  assert.strictEqual(l.r.mask, '3'); assert.strictEqual(l.r.shape, 'lowest');
+  const u = mk({ cores: null }, '3');
+  assert.strictEqual(u.r.mask, '3'); assert.strictEqual(u.r.shape, 'lowest');
+  assert.match(u.logs.join('\n'), /could not be read/);
+  assert.doesNotMatch(s.logs.join('\n'), /could not be read/, 'a clean read says nothing of the kind');
+  const e = H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '2', CONSONANCE_HEAVY_SHAPE: 'lowest' }, heavy: { shape: 'spread' }, cores: adj(4), pid: 9, platform: 'win32', cpus: 8, log: () => {}, run: () => ({ status: 0, stdout: '3\n' }) });
+  assert.strictEqual(e.shape, 'lowest', 'the env var wins over the profile');
+});
+test('SHAPE profile: heavy.shape and CONSONANCE_HEAVY_SHAPE take "spread" or "lowest" only; the env var wins', () => {
+  const f = cfgFile({ heavy: { shape: 'lowest' } });
+  assert.deepStrictEqual(H.profile({ file: f, env: {} }).values, { shape: 'lowest' });
+  assert.deepStrictEqual(H.profile({ file: f, env: { CONSONANCE_HEAVY_SHAPE: 'spread' } }).values, { shape: 'spread' });
+  const bad = H.profile({ file: cfgFile({ heavy: { shape: 'wide' } }), env: {} });
+  assert.deepStrictEqual(bad.values, {}); assert.deepStrictEqual(bad.ignored, ['shape']);
+});
+test('REAL (this machine): the OS topology tiles the machine: every core has a mask, the masks are disjoint, and together they are every logical CPU', { skip: !WIN && 'the topology query is the Windows one', timeout: 60000 }, () => {
+  const cores = H.coreMasks();
+  assert.ok(cores && cores.length > 0, 'the OS answered');
+  let all = 0n; for (const c of cores) { assert.strictEqual(all & c, 0n, 'disjoint'); all |= c; }
+  assert.strictEqual(all, (1n << BigInt(os.cpus().length)) - 1n);
+  assert.ok(cores.every((c) => bits(c).length === bits(cores[0]).length), 'every core has the same thread count here');
+});
+test('REAL (this machine): hold() with CONSONANCE_HEAVY_CPUS=4 pins the holder and a child to FOUR DIFFERENT CORES (spread), and shape lowest to the lowest four CPUs', { skip: !WIN && 'affinity is the Windows one', timeout: 120000 }, () => {
+  const cores = H.coreMasks(); if (!cores || cores.length < 5) return;
+  const top = `const H=require(${JSON.stringify(HELPER)});H.hold({cmd:'spread-proof'});` +
+    `const q=(pid)=>require('child_process').execFileSync('powershell',['-NoProfile','-Command','(Get-Process -Id '+pid+').ProcessorAffinity.ToInt64()'],{encoding:'utf8'}).trim();` +
+    `console.log('holder='+q(process.pid));` +
+    `console.log('child='+require('child_process').execFileSync(process.execPath,['-e',"console.log(require('child_process').execFileSync('powershell',['-NoProfile','-Command','(Get-Process -Id '+process.pid+').ProcessorAffinity.ToInt64()'],{encoding:'utf8'}).trim())"],{encoding:'utf8'}).trim());`;
+  const run = (extra) => { const d = tmp(); const r = spawnSync(process.execPath, ['-e', top], { env: cleanEnv({ CONSONANCE_DATA: d, CONSONANCE_HEAVY_CPUS: '4', ...extra }), encoding: 'utf8', timeout: 100000 }); const m = {}; for (const l of r.stdout.split(/\r?\n/)) { const x = l.match(/^(holder|child)=(\d+)$/); if (x) m[x[1]] = BigInt(x[2]); } return { m, err: r.stderr }; };
+  const sp = run({});
+  assert.strictEqual(sp.m.holder, sp.m.child, sp.err);
+  assert.strictEqual(bits(sp.m.holder).length, 4);
+  assert.strictEqual(cores.filter((c) => (c & sp.m.holder) !== 0n).length, 4, 'four different cores');
+  const lo = run({ CONSONANCE_HEAVY_SHAPE: 'lowest' });
+  assert.deepStrictEqual(lo.m, { holder: 15n, child: 15n }, lo.err);
 });
