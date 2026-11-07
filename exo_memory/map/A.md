@@ -2164,5 +2164,5 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 `exo_memory/handback/p-l151-mirror-A_2026-11-07.md`. Lesson: a refusal that names a span that holds is not naming a bound unless the property is monotone; measure the property before reading the message as the bug.
 
 
-## 2026-11-07 (on L, Sonnet 5.5) — L155 A: CONSONANCE_HEAVY_CPUS=N makes heavy-run hold() pin itself to the N lowest logical CPUs, so every child inherits the mask; proved on a child and a grandchild (mask 3 each, all 32 when unset), 68/68 rows (7 new, red first), mutants 6/6; ff-merged to main 52fa95cf. CPU temperature is not readable on L; RAPL package power (nergy Meter(RAPL_Package0_PKG)\Power) is and moves with load
+## 2026-11-07 (on L, Sonnet 5.5) — L155 A: CONSONANCE_HEAVY_CPUS=N makes heavy-run hold() pin itself to the N lowest logical CPUs, so every child inherits the mask; proved on a child and a grandchild (mask 3 each, all 32 when unset), 68/68 rows (7 new, red first), mutants 6/6; ff-merged to main 52fa95cf. CPU temperature is not readable on L; RAPL package power (the Energy Meter counter RAPL_Package0_PKG Power) is and moves with load
 `exo_memory/handback/p-l155-cap-A_2026-11-07.md`. Lesson: a cap that cannot be read back is not a cap; the before/after measure is still owed and the harness heavy-run.mutants.js was not run.
