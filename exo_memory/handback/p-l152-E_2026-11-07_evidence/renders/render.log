@@ -1,0 +1,32 @@
+chrome pid 40312
+base guide closed
+base length true
+base Extend p1 true
+base turn true
+base bank true
+base camera Free true
+base handles [["length",0,1514,368],["width",1,386,521],["width",-1,1014,524],["cup",1,606,522],["cup",-1,794,523],["turnDeg",1,1496,361],["turnDeg",-1,1533,375],["extra:turnDeg:0",1,871,366],["extra:turnDeg:0",-1,916,375],["extra:bank:0",1,978,364],["extra:bank:0",-1,1013,374],["bank",1,773,369],["bank",-1,834,378],["climbDeg",0,738,380]]
+base extra turn made true typed true
+base extra bank made true typed true
+base state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","500"]],"msg":"end heading 0.00°, on the 90° grid"}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l152\renders\l152-S-base-free.png
+base aim {"x":920.1735561726914,"y":365.806653435836}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l152\renders\l152-S-base-near.png
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l152\renders\l152-S-base-closer.png
+way1 guide 
+way1 length true
+way1 Extend p1 true
+way1 turn true
+way1 bank true
+way1 camera Free true
+way1 handles [["length",0,1514,368],["width",1,386,521],["width",-1,1014,524],["cup",1,606,522],["cup",-1,794,523],["turnDeg",1,1496,361],["turnDeg",-1,1533,375],["extra:turnDeg:0",1,871,366],["extra:turnDeg:0",-1,916,375],["extra:bank:0",1,978,364],["extra:bank:0",-1,1013,374],["bank",1,773,369],["bank",-1,834,378],["climbDeg",0,738,380]]
+way1 extra turn made true typed true
+way1 extra bank made true typed true
+way1 state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","380"]],"msg":"end heading 0.00°, on the 90° grid"}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l152\renders\l152-S-way1-free.png
+way1 aim {"x":919.8702699193489,"y":368.40231506946094}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l152\renders\l152-S-way1-near.png
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l152\renders\l152-S-way1-closer.png
+page errors none
+closed chrome 40312
+profile removed

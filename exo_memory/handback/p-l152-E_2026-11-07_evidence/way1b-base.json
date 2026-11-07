@@ -1,0 +1,79 @@
+{
+ "tree": "base",
+ "S": {
+  "first bank 17.39": {
+   "turnFrom": 500,
+   "bankFrom": 500,
+   "k5": 535,
+   "k50": 625,
+   "phiDoc5": 595,
+   "phiDoc50": 750,
+   "phiBuilt5": 595,
+   "phiBuilt50": 750,
+   "lamDoc": 125,
+   "lamBuilt": 0,
+   "lamOnset": 60,
+   "bankAt579doc": 8.48,
+   "bankAt579built": 8.48,
+   "builtCrossesZeroAt": 672,
+   "docHash": "6a103d0d668da9e5"
+  },
+  "first bank 30": {
+   "turnFrom": 500,
+   "bankFrom": 500,
+   "k5": 535,
+   "k50": 625,
+   "phiDoc5": 595,
+   "phiDoc50": 750,
+   "phiBuilt5": 595,
+   "phiBuilt50": 750,
+   "lamDoc": 125,
+   "lamBuilt": 0,
+   "lamOnset": 60,
+   "bankAt579doc": 15.41,
+   "bankAt579built": 15.41,
+   "builtCrossesZeroAt": 703,
+   "docHash": "05e0faf8d7c6c90d"
+  }
+ },
+ "good": {
+  "bankFrom": 500,
+  "equal": true,
+  "bytes": [
+   4166,
+   4166
+  ],
+  "rebuilt": "eff48ade8d3ed934",
+  "his": "eff48ade8d3ed934"
+ },
+ "orders": {
+  "A": {
+   "order": "turn > bank",
+   "turnFrom": 500,
+   "turnDeg": 180,
+   "bankFrom": 500,
+   "bankTarget": -34.78,
+   "refused": null,
+   "docHash": "6a103d0d668da9e5"
+  },
+  "B": {
+   "order": "bank > turn",
+   "turnFrom": 500,
+   "turnDeg": 180,
+   "bankFrom": 500,
+   "bankTarget": -34.78,
+   "refused": null,
+   "docHash": "6a103d0d668da9e5"
+  },
+  "slidThenTurn": {
+   "order": "bank > turn",
+   "turnFrom": 500,
+   "turnDeg": 180,
+   "bankFrom": 450,
+   "bankTarget": -34.78,
+   "refused": null,
+   "docHash": "824757077562084d"
+  },
+  "equalAB": true
+ }
+}

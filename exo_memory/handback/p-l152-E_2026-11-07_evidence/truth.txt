@@ -1,0 +1,14 @@
+#1 from at least [33m495[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+#115 from at least [33m393[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+#147 from at least [33m315[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+#149 from at least [33m205[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+#240 from at least [33m993[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+#247 from at least [33m1024[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+#273 from at least [33m1021[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+#320 from at least [33m746[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+#340 from at least [33m249[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+his mirrored case from at least [33m553[39m → at X: laid | at X − 1: refused BAD_SECOND TRUE
+his case from [33m552[39m refused BAD_SECOND
+his case from [33m553[39m laid
+his case from [33m554[39m laid
+true [33m10[39m of [33m10[39m
