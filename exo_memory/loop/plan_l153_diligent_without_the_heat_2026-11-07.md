@@ -36,6 +36,16 @@
 - **A (new piece): the affinity cap in `consonance/tools/heavy-run.js`** (lighthouse, own worktree): `CONSONANCE_HEAVY_CPUS=N` starts the held child under an affinity mask of N logical CPUs (Windows: the child's ProcessorAffinity, or `start /affinity`; elsewhere unset = no-op). Children inherit it. Unset = today's behaviour, so D is unchanged. Tests in heavy-run's own test file (node only, light). Then a sensor: find a readable CPU temperature or package-power source on L (WMI thermal zone, LegionSpace or the like) and say which, or say none.
   - **The before/after measure waits** until E's L154 renders are done and nothing else runs: test-fast once uncapped, once at N=12, sampled every 10 s.
 
+## AMENDED 12:16Z at his word: one size does not fit both machines
+- His words: "more nuance, what may work on my desktop, ryzen 7 9850x3d with 5080 ad 64gb of ram might work differently than our laptop".
+- **The two machines:**
+  - **L** (ZachsLEGION, checked): AMD Ryzen 9 9955HX, 16 cores / 32 threads, RTX 5070 Ti Laptop, 31.8 GB, laptop cooling. Hits 100 °C under the suite; its screen froze tonight.
+  - **D** (his words): Ryzen 7 9850X3D, 8 cores / 16 threads, RTX 5080, 64 GB, desktop cooling.
+  - So the laptop has MORE threads and LESS cooling. A fixed count would cap the desktop to nothing it needs and the laptop too little.
+- **So the settings are a per-machine profile**, in each machine's own `~/.consonance.json` (already per machine; never synced): `heavy: { cpus, concurrency, slots, timing }`. Absent = today's behaviour. heavy-run.js and the t180 runners read it; env vars override it for one run.
+- **Each machine's numbers are MEASURED on that machine, not picked:** test-fast at a few caps (e.g. all, 16, 12, 8 threads), wall time and CPU % (plus temperature or package power if readable) every 10 s. Take the knee: the smallest cap whose wall time is within ~15% of uncapped. L is measured tonight once E's renders finish; D when he is home.
+- **Timing tests belong to one machine.** The frame bars (6.0 ms, his 165 Hz) are a statement about the machine he plays on. `timing: false` on L (tonight's freeze), `timing: true` on D after its own measure. A timing red read on the wrong machine says nothing about the code.
+
 ## Pieces (nothing heavy runs alongside another)
 - **C (measure, no new heavy run):**
   - From the TAP and spec output of tonight's L152 full runs (B's and A's), give each test file's duration, and the totals for: mutation harnesses, frame-timing, browser pages, the rest.
