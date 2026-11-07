@@ -2906,3 +2906,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-06 ~23:5x local (D) · D644 review of C's from-grab diff (uncommitted on f2884fa): GREEN → `exo_memory/handback/p-d644-review-E_2026-11-06.md`
 - The build is the mock2 rule. The row is red on f2884fa for both reasons (the grab sits at 850 m, and a press at the mark does not slide the from) and green with C's files (19/19). Only the extra turn's grab, the bank and the climb move, and only on corner pieces. For his eye: before any extra turn exists the grab already stands at 500 and the bank and climb step back, with no purple line drawn beneath.
+
+## 2026-11-07 ~02:4x local (L) · L150 registration and ruling → `exo_memory/loop/l150_registration_2026-11-07.md` (5be555d7), `exo_memory/handback/p-l150-E_2026-11-07.md`
+- O1, the extra bank lags by design: it starts with the extra turn at 500 m but is a monotone quintic against a curvature bell, so it is half done at the turn's peak (λ_doc 125 m; 120 from B's 10 m rows) and still rolling where the turn ends; builder lag 0; the same ramp is on time (−1 m) in his good piece. My pre-registered 125 m and "asked returns to 0" both came true.
+- **Carry:** a felt-size number must hold sharpness fixed; my ΔfLat compared bends 3.5× apart and could not tell lag from size.
