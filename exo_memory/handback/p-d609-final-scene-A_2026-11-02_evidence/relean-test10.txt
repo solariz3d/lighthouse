@@ -1,0 +1,35 @@
+test10: main road physics (drivable, not planks): 6353 byte-equal, 0 differ
+test10: planks 11080: 7330 byte-equal, 3750 moved
+  p2 L: 50 plank(s), s 1000–1098 m, moved up to 262.5 mm, drop below the lateral 18.18°…25.00° -> 23.93°…25.00°
+  p2 R: 50 plank(s), s 1002–1098 m, moved up to 262.5 mm, drop below the lateral 25.00°…31.82° -> 25.00°…25.00°
+  p3 R: 100 plank(s), s 1100–1298 m, moved up to 262.6 mm, drop below the lateral 31.47°…31.82° -> 24.65°…25.00°
+  p3 L: 100 plank(s), s 1100–1298 m, moved up to 262.5 mm, drop below the lateral 18.18°…18.39° -> 25.00°…25.08°
+  p4 R: 500 plank(s), s 1300–4156 m, moved up to 262.6 mm, drop below the lateral 31.82°…50.99° -> 25.00°…44.24°
+  p4 L: 500 plank(s), s 1334–3530 m, moved up to 262.5 mm, drop below the lateral 13.88°…18.39° -> 20.87°…25.08°
+  p8 L: 50 plank(s), s 1352–3598 m, moved up to 331.9 mm, drop below the lateral 16.37°…47.22° -> 25.00°…58.09°
+  p5 R: 500 plank(s), s 2300–3298 m, moved up to 331.9 mm, drop below the lateral 25.04°…64.17° -> 24.87°…62.64°
+  p5 L: 500 plank(s), s 2300–3298 m, moved up to 331.9 mm, drop below the lateral 16.37°…55.11° -> 25.00°…62.13°
+  p6 R: 50 plank(s), s 3300–3398 m, moved up to 332.0 mm, drop below the lateral 29.83°…33.63° -> 21.02°…25.00°
+  p6 L: 50 plank(s), s 3300–3398 m, moved up to 331.9 mm, drop below the lateral 15.25°…16.37° -> 23.89°…25.00°
+  p7 R: 50 plank(s), s 3400–3498 m, moved up to 332.0 mm, drop below the lateral 33.39°…35.35° -> 24.80°…26.84°
+  p7 L: 50 plank(s), s 3400–3498 m, moved up to 331.9 mm, drop below the lateral 16.37°…16.37° -> 25.00°…25.00°
+  p8 R: 50 plank(s), s 3500–4194 m, moved up to 332.0 mm, drop below the lateral 32.98°…89.48° -> 24.35°…88.92°
+  p16 R: 300 plank(s), s 3558–4648 m, moved up to 393.0 mm, drop below the lateral 14.78°…47.05° -> 25.00°…64.16°
+  p16 L: 300 plank(s), s 3586–4648 m, moved up to 393.0 mm, drop below the lateral 35.21°…87.46° -> 25.00°…85.70°
+  p9 R: 25 plank(s), s 3600–3648 m, moved up to 331.9 mm, drop below the lateral 33.63°…33.63° -> 25.00°…25.00°
+  p9 L: 25 plank(s), s 3600–3648 m, moved up to 331.9 mm, drop below the lateral 16.37°…16.37° -> 25.00°…25.00°
+  p10 R: 25 plank(s), s 3650–3698 m, moved up to 331.9 mm, drop below the lateral 33.59°…33.63° -> 25.00°…25.00°
+  p10 L: 25 plank(s), s 3650–3698 m, moved up to 331.9 mm, drop below the lateral 16.37°…16.41° -> 25.00°…25.00°
+  p11 R: 25 plank(s), s 3700–3748 m, moved up to 408.8 mm, drop below the lateral 14.37°…15.35° -> 25.00°…25.00°
+  p11 L: 25 plank(s), s 3700–3748 m, moved up to 408.8 mm, drop below the lateral 34.27°…35.63° -> 24.32°…25.00°
+  p12 R: 50 plank(s), s 3750–3848 m, moved up to 393.0 mm, drop below the lateral 14.78°…14.78° -> 25.00°…25.00°
+  p12 L: 50 plank(s), s 3750–3848 m, moved up to 392.9 mm, drop below the lateral 35.22°…35.22° -> 25.00°…25.00°
+  p13 R: 25 plank(s), s 3850–3898 m, moved up to 393.0 mm, drop below the lateral 14.78°…14.78° -> 25.00°…25.00°
+  p13 L: 25 plank(s), s 3850–3898 m, moved up to 393.0 mm, drop below the lateral 35.22°…35.22° -> 25.00°…25.00°
+  p14 R: 50 plank(s), s 3900–3998 m, moved up to 393.0 mm, drop below the lateral 14.78°…14.78° -> 25.00°…25.00°
+  p14 L: 50 plank(s), s 3900–3998 m, moved up to 393.0 mm, drop below the lateral 35.22°…35.22° -> 25.00°…25.00°
+  p15 R: 25 plank(s), s 4000–4048 m, moved up to 393.0 mm, drop below the lateral 14.78°…14.78° -> 25.00°…25.00°
+  p15 L: 25 plank(s), s 4000–4048 m, moved up to 393.0 mm, drop below the lateral 35.22°…35.22° -> 25.00°…25.00°
+  p17 R: 50 plank(s), s 4650–4748 m, moved up to 408.7 mm, drop below the lateral 14.37°…15.35° -> 25.00°…25.00°
+  p17 L: 50 plank(s), s 4650–4748 m, moved up to 408.7 mm, drop below the lateral 34.65°…35.63° -> 25.00°…25.00°
+test10: worst plank 1ROAD_APRON_p11_body_0_L_24 at s 3746 m, moved 408.8 mm, drop [35.63,35.63] -> [25,25]; views test10-views.json

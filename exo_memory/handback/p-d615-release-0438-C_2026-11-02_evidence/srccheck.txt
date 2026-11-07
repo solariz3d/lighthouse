@@ -1,0 +1,34 @@
+CHANGELOG.md vs 71a8556: +11 -0; not main's own: +2 -0
+   + ## [0.4.38] - 2026-11-02
+   + - **Pieces ▸ mirror on insert is an ordinary tick box beside its words.** It was drawn as a white square on a long bar, far from its label. It now loo
+README.md vs 71a8556: +3 -3; not main's own: +3 -0
+   + **The current installer is 0.4.38** (2026-11-02), `T-180.Track.Builder_0.4.38_x64-setup.exe`, from the
+   + [v0.4.38 release](https://github.com/solariz3d/t180-track-builder/releases/tag/v0.4.38). What changed since 0.2.2 is listed under
+   + `[0.4.38]`, `[0.4.37]`, `[0.4.36]`, `[0.4.30]`, `[0.4.29]`, `[0.4.28]`, `[0.4.27]`, `[0.4.26]`, `[0.4.25]`, `[0.4.24]`, `[0.4.23]`, `[0.4.22]`, `[0.4.
+app/core/piecesui.js vs c2d3880: +1 -1; not main's own: +1 -1
+   + // was drawn as a long track with the box out in the middle of it (the user, 2026-11-02)
+   - // was drawn as a long track with the box out in the middle of it (the keeper, 2026-11-02)
+app/test/export-isolated-page.test.js vs 71a8556: +1 -1; not main's own: +0 -0
+app/test/export-isolated.test.js vs 71a8556: +4 -4; not main's own: +0 -0
+src-tauri/Cargo.lock vs 71a8556: +1 -1; not main's own: +1 -0
+   + version = "0.4.38"
+src-tauri/Cargo.toml vs 71a8556: +1 -1; not main's own: +1 -0
+   + version = "0.4.38"
+src-tauri/tauri.conf.json vs 71a8556: +1 -1; not main's own: +1 -0
+   + "version": "0.4.38",
+src/export/apron.js vs 71a8556: +5 -5; not main's own: +0 -0
+src/export/fromwords.js vs 71a8556: +12 -8; not main's own: +0 -0
+src/export/underskin.js vs 71a8556: +9 -9; not main's own: +1 -1
+   + // quad twists across it and folds along its diagonal, 22Â° to 37Â° on the tube test where the road itself bends at most 12.5Â° (the jag outside an ab
+   - // quad twists across it and folds along its diagonal, 22Â° to 37Â° on C's tube test where the road itself bends at most 12.5Â° (the jag outside an ab
+test/apron_mutation.test.js vs 71a8556: +7 -7; not main's own: +0 -0
+test/core_cup_fixtures.test.js vs 71a8556: +4 -4; not main's own: +1 -1
+   + assert.equal(sha(fs.readFileSync(path.join(FX, 'manifest.d609.json'))), 'c6e784971a5350db056c9cd24e8e05c5a350edad5d7554dedae7576a983e6695');   // D609
+   - assert.equal(sha(fs.readFileSync(path.join(FX, 'manifest.d609.json'))), 'fd14948e996830c7f41d190e22c38a08aa44821027e37ce06ccc5889f3f10ac0');   // D609
+test/export_apron.test.js vs 71a8556: +13 -13; not main's own: +0 -0
+test/fixtures/manifest.d609.json vs 71a8556: +1 -1; not main's own: +1 -1
+   + "made_at": "2026-11-02, D609 (the apron hangs from the road's own centre line, and the underside sweeps evenly from each plank's tip), t180 branch d60
+   - "made_at": "pane A, 2026-11-02, D609 (the apron hangs from the road's own centre line, and the underside sweeps evenly from each plank's tip), t180 br
+test/underskin.test.js vs 71a8556: +17 -17; not main's own: +0 -0
+test/underskin_mutation.test.js vs 71a8556: +5 -5; not main's own: +0 -0
+30 files; 13 identical to their source

@@ -1,0 +1,17 @@
+F1-bowl-default-lap-closed.core2.json AC_TIME_1 p3@201.24 s 783.98 surface 0.000 dummy 0.000
+F1-bowl-default-lap-closed.core2.json AC_TIME_2 p5@132.74 s 1280.97 surface 0.000 dummy 0.000
+F2-halfpipe-default-lap-closed.core2.json AC_TIME_1 p3@201.24 s 783.98 surface 0.000 dummy 0.000
+F2-halfpipe-default-lap-closed.core2.json AC_TIME_2 p5@132.74 s 1280.97 surface 0.000 dummy 0.000
+F3-bowl-narrow-12m-cap-binds.core2.json open
+F4-halfpipe-width-31.5-to-12-along-s.core2.json open
+F5-flat-20m-bank-30.core2.json open
+F6-bowl-r-brushed.core2.json open
+F7-hill-then-jump.core2.json open
+F8-mixed-families.core2.json open
+F9-empty.core2.json open
+elysium-2026-10-22.t180track AC_TIME_1 p22@233.33 s 10586.33 surface 0.000 dummy 0.000
+elysium-2026-10-22.t180track AC_TIME_2 p34@276.67 s 19379.67 surface 10.536 dummy 10.536
+finish-banked-end-leaves-road.core2.json AC_TIME_1 p4@33.00 s 1133.00 surface 13.802 dummy 13.802
+finish-banked-end-leaves-road.core2.json AC_TIME_2 p9@89.00 s 3145.00 surface 14.977 dummy 14.977
+stadium-100km.t180track AC_TIME_1 p155@252.97 s 78619.94 surface 0.000 dummy 0.000
+stadium-100km.t180track AC_TIME_2 p25@9.28 s 11953.27 surface 0.000 dummy 0.000

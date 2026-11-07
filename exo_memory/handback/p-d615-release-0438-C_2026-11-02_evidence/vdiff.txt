@@ -1,0 +1,3 @@
+1ROAD_APRON_p33_chunk_42: vertices 1596, indices same; moved 312, largest 8.21 mm, at vertex 973..1595
+1ROAD_APRON_p41_chunk_54: vertices 1936, indices same; moved 228, largest 8.93 mm, at vertex 1481..1935
+1ROAD_APRON_p34_chunk_43: vertices 1500, indices same; moved 750, largest 10.54 mm, at vertex 1..1499

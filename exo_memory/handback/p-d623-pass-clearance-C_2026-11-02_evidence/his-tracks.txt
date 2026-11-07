@@ -1,0 +1,19 @@
+== elysium
+pieces 46, closed true, length 25046 m, stations 12526, apron default; path 344 ms, rule 1083 ms; findings 10
+  p38 under p41: 2 stations, s 22663..22665; worst at s 22665 u 17.5 (other s 23720): gap -0.61 m, short 3.71, road gap 0.68 (plank), hull 2.58, clip true
+  p41 under p38: 8 stations, s 23720..23734; worst at s 23720 u -17.5 (other s 22665): gap -1.71 m, short 4.81, road gap 0.21 (plank), hull 2.58, clip true
+== crazy
+pieces 13, closed false, length 19657 m, stations 9831, apron default; path 169 ms, rule 511 ms; findings 27
+  p11 under p9: 27 stations, s 14237..14293; worst at s 14243 u -16.0 (other s 4990): gap 1.96 m, short 1.14, road gap 2.49 (plank), hull 0.86, clip false
+== test10
+pieces 23, closed true, length 11484 m, stations 5744, apron default; path 139 ms, rule 383 ms; findings 19
+  p5 under p5: 16 stations, s 2562..2940; worst at s 2576 u -12.5 (other s 2930): gap -1.11 m, short 4.21, road gap 0.16 (road), hull 3.00, clip true
+  p16 under p4: 1 stations, s 4128..4128; worst at s 4128 u -12.5 (other s 1406): gap 2.95 m, short 0.15, road gap 3.40 (plank), hull 0.65, clip false
+  p16 under p8: 2 stations, s 4192..4198; worst at s 4198 u -12.5 (other s 3552): gap 2.94 m, short 0.16, road gap 3.66 (plank), hull 0.82, clip false
+== testtrack10
+pieces 44, closed true, length 27592 m, stations 13799, apron default; path 355 ms, rule 1131 ms; findings 11
+  p38 under p40: 3 stations, s 22663..22667; worst at s 22667 u 17.5 (other s 23720): gap 0.32 m, short 2.78, road gap 1.74 (road), hull 3.00, clip true
+  p40 under p38: 3 stations, s 23722..23726; worst at s 23724 u -17.5 (other s 22667): gap -1.76 m, short 4.86, road gap 0.10 (road), hull 2.63, clip true
+  p41 under p38: 5 stations, s 23728..23736; worst at s 23728 u -17.5 (other s 22669): gap -0.71 m, short 3.81, road gap 0.50 (road), hull 1.72, clip true
+== tubecases
+pieces 16, closed false, length 2060 m, stations 1031, apron default; path 44 ms, rule 54 ms; findings 0

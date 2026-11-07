@@ -1,0 +1,49 @@
+not ok 1 - row 1: through the worker one press closes the track exactly as on the page, near and far, with the same words; new road keeps the user's pieces as the very same objects
+not ok 3 - row 3: while the worker works the close is pending; an edit drops the answer by name; Cancel and a newer press cancel it; no runner or a failed job closes on the page
+not ok 5 - row 5: the worker SCRIPT loads closejob.js through the app's loader and answers as runClose does (a route, and the one press); a refusal and a bad job are answered
+not ok 6 - row 6: the panel has ONE Close button (no "close using" box, no Apply); while the worker works it says so and Cancel stops it; then the line says what was done
+not ok 7 - row 7: a press hands the worker the reds the live checker found for this very track with CSP on, and no others
+not ok 27 - row 5: Close the loop from Build starts the close as the button did; on a closed loop it is disabled and does nothing
+not ok 47 - a lean mesh is the same scene, cells and folds as the full one, and keeps no piece's spare rows
+not ok 48 - the validator with leanLines keeps each station's centreline and hardest-hit line, and judges the track and draws the graph exactly as without
+not ok 49 - the track checker's worker job makes no colour map and lean lines, and answers what the page's own check answers
+not ok 50 - the overlap check (lean) answers exactly what the full mesh and full validator answer
+not ok 51 - the track checker's worker job meshes nothing: no mesh builder of src/geom runs during its checks
+not ok 52 - control: the unmutated temp copy passes every test file the mutants use
+not ok 115 - row 1: one press closes a near lap AT ONCE: one undo step, the line says what it did, and Undo gives the open lap back
+not ok 117 - row 6: a refused export names EVERY red in plain words, grouped, with where (not the export's first id)
+not ok 118 - row 7: the press writes the copy from BEFORE the close first (backupNow('pre-close'), the D239 amendment); a copy that fails refuses it by name; an edit while the copy is written is never closed over
+not ok 119 - row 1: Cut here on a closed lap's middle run previews first; Apply copies the track to its backups, then cuts as one undo step (open, rotated); Undo gives the lap back
+not ok 124 - row 6: Edit ▸ Selection lists Cut here after Delete selected; disabled with nothing selected; it starts the preview; Apply cut and Cancel cut show only while a cut is previewed
+not ok 143 - Previous versions lists the open track's backups newest first, with time, length and closed, and opens one as an unsaved COPY
+not ok 156 - control: the unmutated temp copy passes every core-shell test
+not ok 233 - row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES
+not ok 238 - row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where
+not ok 281 - row 1 (D438): a pit lane off a level straight's steep edge lies EVEN from leave to rejoin: the diverge and the merge at the run's height, no lift at the lane's ends, and no step from the road's edge
+not ok 283 - a pit lane on the left is built beside the start straight, and the export carries its road and its pit boxes on it
+not ok 327 - Close the loop writes a copy of the track as it was BEFORE closing it (shell.backupNow), then closes, in one press
+not ok 329 - if that copy cannot be written, the press changes nothing and says why
+not ok 331 - D280: Turn by places a piece that turns exactly the typed angle and ends straight; a Straight after it turns 0.0°; one undo step; too short names the length
+not ok 333 - D282: Sharp places a corner of the typed angle at the typed radius as ONE undo step; too tight a radius names the tightest at this width and places nothing
+not ok 344 - row 4: a re-close that rewrites every piece reads every piece again; so does a start pitch change
+not ok 393 - D464: Export shows its warnings in the user's words: the CSP need, and none of the builders' references
+not ok 451 - the default road is the asphalt preset: every road piece's floor wears the made asphalt, announced once at the start
+not ok 561 - row 12: runClose closes with the window it is given, not the default trailing one
+not ok 563 - row 14: with the real core of C, Stretch lengthens the run by exactly the metres of the drag, the document stays valid, one undo step
+not ok 578 - row 29 (D467 bar): a lap whose two long straights run side by side (a hairpin of 36 m), the case C saw on a smoothed track: it falls through and the road does not cross itself
+not ok 580 - row 31 (D467 bar): part 1 alone: a red the lap before the drag already had is not new, and the result passes
+not ok 582 - row 33 (D467 bar): part 1 counts a red as new when the lap before the drag did not have it, even when the open lap already did
+not ok 583 - row 34 (D467 bar): a Bend that makes the open lap cross itself, which the window close clears: the start pieces miss and the closed lap does not cross
+not ok 585 - property (the preview's SHARED path): after every random edit the result equals a full validate exactly
+not ok 586 - property (the controller's own path): after every random edit the result equals a full validate exactly
+not ok 587 - undo of a placement and removing the head are a TRIM (shared path), each exactly a full validate
+not ok 588 - undo of a placement and removing the head are a TRIM (own path), each exactly a full validate
+not ok 589 - the property test reaches STACKED road: the edits lay road over road, and it still equals a full validate
+not ok 590 - a STALE shared path (built for another document) is not used: the controller grows its own, and stays exact
+not ok 591 - a shared path the preview REBUILT (a new object) is viewed afresh, never spliced onto the old view
+not ok 592 - a drag held OPEN on a mid-track word: every tick is windowed and exact where settled, and ending it equals a full validate
+not ok 593 - never a stale "clean": a settled station clipping road that the drag moved shows RED during the drag, and the moved road shows PENDING
+not ok 674 - row 8: Close refuses a road that lies on itself through the checker's clip test alone (no mesh of its own), and changes nothing
+# tests 864
+# pass 818
+# fail 46

@@ -1,0 +1,141 @@
+diff --git a/src/export/finalscene.js b/src/export/finalscene.js
+index 8c99abb..064790e 100644
+--- a/src/export/finalscene.js
++++ b/src/export/finalscene.js
+@@ -21,6 +21,10 @@
+ //            pit lane's leave; a hull that deepens evenly, under a rising edge, is a slope, not a step). It is read only on pieces that never curl into a
+ //            wall side or a tube, BOTTOM_CLEAR_M clear of one: the hull there thins and turns by design, and the fold reads it
+ //   sliver   a drawn or driven triangle thinner than acready.js SLIVER, its height over its longest edge (a zipper of zero-width strips)
++//   through  a drawn face (the skin, the hull's side) that passes through the road, the apron or the pit lane of ANOTHER pass (its station more than PASS_M away
++//            along the road, both ways round a closed lap): the hull hung through a pass running under it (ELYSIUM's p38 over p41's apron). Read only in the
++//            4 m cells that hold drivable faces of two passes; a cell that holds the lap's start and its end is one pass, so a crossing right at a closed
++//            lap's start line is not read
+ //
+ // Measured as the tests that first caught each one measure it: test/export_apron.test.js rows 22 and 26, test/tube_cases.test.js rows 2, 3 and 4.
+ // Not read: the catch (a second sheet under the road, open by design), the painted markers (decals laid on the road) and the test route's end wall; nor a
+@@ -37,6 +41,8 @@ const BOTTOM_STEP_M = 0.03;   // the most a metre of the hull's bottom beside an
+ const BOTTOM_IN_M = 0.5;      // the bottom is read this far in from the road's edge (row 26)
+ const BOTTOM_ABOVE_M = 3;     // from this far above the road's own surface there, down its normal
+ const SAME_PASS_M = 10;       // a surface whose own station lies further along the track than this is another pass's, and is not read
++const PASS_M = 25;            // `through`: a drivable face this far along the road from a drawn one is another pass's (src/geom/bvh.js minSeparationM)
++const PASS_CELL_M = 4;        // `through`: the cells the drivable faces are filed in by station
+ const BOTTOM_PSI_MAX = 45 * DEG;   // the bottom is read only on a section this flat: a wall side or a tube has no bottom beside its edge
+ const CURL_PSI = 60 * DEG;    // a piece whose section turns past this anywhere curls into a wall side or a tube
+ const BOTTOM_CLEAR_M = 25;    // and the bottom is read only this far clear of one: its twisted zone, the 4 m pad and the 10 m ease (underskin.js), with margin
+@@ -372,6 +378,54 @@ function checkFinalScene(scene, { path, segments, lane = null, open = false, det
+   }
+   for (const side of [...runs.keys()]) flush(side);
+ 
++  // THROUGH: the drivable faces' stations, least and most, per PASS_CELL_M cell (a typed table, as the triangles'); a cell is read for a drawn face when it holds a
++  // drivable face of another pass (its least or its most station is PASS_M or more from the drawn face's); then each such drawn face against each drivable face of
++  // another pass in its cells
++  const through = [], closedLap = !open, apart = (a, b) => { const d = Math.abs(a - b); return (closedLap ? Math.min(d, sEnd - d) : d) > PASS_M; };
++  const cells = tripleIds(); let sLo = new Float64Array(1 << 12), sHi = new Float64Array(1 << 12);
++  const cellsOf = (v, f) => { const lo = [0, 1, 2].map((k) => Math.floor(Math.min(v[0][k], v[1][k], v[2][k]) / PASS_CELL_M)), hi = [0, 1, 2].map((k) => Math.floor(Math.max(v[0][k], v[1][k], v[2][k]) / PASS_CELL_M));
++    for (let x = lo[0]; x <= hi[0]; x++) for (let y = lo[1]; y <= hi[1]; y++) for (let z = lo[2]; z <= hi[2]; z++) f(x, y, z); };
++  const filed = (x, y, z) => { const before = cells.size, c = cells.id(x, y, z); return c === before ? -1 : c; };   // the cell's number, or -1 when no drivable face is filed there
++  const nFiled = (() => {
++    for (let i = 0; i < N; i++) {
++      if (!tHasN[i] || !DRIVABLE.has(meshes[tMesh[i]].f)) continue;
++      const sq = S[tQ[i]].s;
++      cellsOf(tri(i).v, (x, y, z) => {
++        const before = cells.size, c = cells.id(x, y, z);
++        if (c >= sLo.length) { const a = new Float64Array(2 * sLo.length), b = new Float64Array(2 * sHi.length); a.set(sLo); b.set(sHi); sLo = a; sHi = b; }
++        if (c === before) { sLo[c] = sq; sHi[c] = sq; } else { if (sq < sLo[c]) sLo[c] = sq; if (sq > sHi[c]) sHi[c] = sq; }
++      });
++    }
++    return cells.size;
++  })();
++  const wanted = new Map(), drawnFaces = [];   // a wanted cell -> its drivable faces; the drawn faces that meet one
++  for (let i = 0; i < N; i++) {
++    const f = meshes[tMesh[i]].f; if (!tHasN[i] || DRIVABLE.has(f)) continue;
++    const t = tri(i); if (atEnd(t.q)) continue;
++    let any = false;
++    cellsOf(t.v, (x, y, z) => { const c = filed(x, y, z); if (c >= 0 && c < nFiled && (apart(t.q.s, sLo[c]) || apart(t.q.s, sHi[c]))) { any = true; if (!wanted.has(c)) wanted.set(c, []); } });
++    if (any) drawnFaces.push(i);
++  }
++  if (wanted.size) {
++    for (let i = 0; i < N; i++) {
++      if (!tHasN[i] || !DRIVABLE.has(meshes[tMesh[i]].f)) continue;
++      cellsOf(tri(i).v, (x, y, z) => { const c = filed(x, y, z), l = c >= 0 ? wanted.get(c) : null; if (l) l.push(i); });
++    }
++    const meets = (p, q, t) => { const d = sub(q, p), e1 = sub(t[1], t[0]), e2 = sub(t[2], t[0]), h = cross(d, e2), a = dot(e1, h); if (Math.abs(a) < 1e-12) return false; const u = dot(sub(p, t[0]), h) / a; if (u < 0 || u > 1) return false; const qq = cross(sub(p, t[0]), e1), v = dot(d, qq) / a; if (v < 0 || u + v > 1) return false; const w = dot(e2, qq) / a; return w > 1e-6 && w < 1 - 1e-6; };
++    for (const i of drawnFaces) {
++      const t = tri(i), v = t.v, near = new Set();
++      cellsOf(v, (x, y, z) => { const c = filed(x, y, z), l = c >= 0 ? wanted.get(c) : null; if (l) for (const j of l) near.add(j); });
++      let worst = -1, phys = null, other = null;
++      for (const j of near) {
++        const g = tri(j); if (!apart(t.q.s, g.q.s)) continue;
++        const w = g.v; if (![[0, 1], [1, 2], [2, 0]].some(([a, b]) => meets(v[a], v[b], w) || meets(w[a], w[b], v))) continue;
++        const out = Math.max(...v.map((p) => dot(sub(p, w[0]), g.n)));   // how far the drawn face stands out on the drivable side
++        if (out > worst) { worst = out; phys = g.f; other = detail ? { mesh: t.mesh, with: g.mesh, sWith: g.q.s } : null; }
++      }
++      if (phys) through.push({ kind: 'through', piece: pieceOf(t.q), fam: t.f, phys, s: t.q.s, u: t.u, worst: Math.max(0, worst), at: other });
++    }
++  }
++
+   // the messages
+   const where = (g) => `at ${place(g.s, g.u)}, in piece ${g.piece}`, mm = (x) => `${(x * 1000).toFixed(0)} mm`;
+   refuse.push(...grouped(across, (g) => `${g.count} face(s) of ${NAMES[g.fam]} stand across the road ${where(g)}: a step in the road's edge the car would hit`));
+@@ -379,7 +433,8 @@ function checkFinalScene(scene, { path, segments, lane = null, open = false, det
+   warn.push(...grouped(opens.filter((o) => !o.drivable), (g) => `${g.count} edge(s) of ${NAMES[g.fam]} are open by up to ${g.worst >= 1 ? 'a metre or more' : mm(g.worst)} ${where(g)}: a line of sky through the hull`));
+   warn.push(...grouped(steps, (g) => `the hull's bottom steps ${g.worst.toFixed(3)} m in a metre against the bottom either side ${where(g)} (at most ${BOTTOM_STEP_M} m): a step in its underside`));
+   warn.push(...grouped(thin, (g) => `${g.count} triangle(s) of ${NAMES[g.fam]} thinner than ${(SLIVER * 1000).toFixed(0)} mm ${where(g)}: slivers`));
+-  return detail ? { refuse, warn, detail: { opens, hairline, folds: [...most.values()], steps, across, thin, rays: rays.length, read, compared, depths } } : { refuse, warn };
++  warn.push(...grouped(through, (g) => `${g.count} face(s) of ${NAMES[g.fam]} pass through ${NAMES[g.phys]} of another pass (standing up to ${g.worst >= 1 ? `${g.worst.toFixed(2)} m` : mm(g.worst)} out of it) ${where(g)}: the hull shows through a surface the car drives on`));
++  return detail ? { refuse, warn, detail: { opens, hairline, folds: [...most.values()], steps, across, thin, through, rays: rays.length, read, compared, depths } } : { refuse, warn };
+ }
+ 
+ /** One line for an export message: every finding, LISTED at most, the rest counted. */
+@@ -388,4 +443,4 @@ function sayFindings(list) {
+   return shown.join('; ') + (list.length > LISTED ? `; and ${list.length - LISTED} more` : '');
+ }
+ 
+-module.exports = { checkFinalScene, sayFindings, tripleIds, edgeGroups, ACROSS_DEG, LANE_END_M, FOLD_SLACK_DEG, BOTTOM_STEP_M, COVER, DRIVE_CRACK_M, SKY_CRACK_M, END_M };
++module.exports = { checkFinalScene, sayFindings, tripleIds, edgeGroups, PASS_M, ACROSS_DEG, LANE_END_M, FOLD_SLACK_DEG, BOTTOM_STEP_M, COVER, DRIVE_CRACK_M, SKY_CRACK_M, END_M };
+diff --git a/test/export_finalscene.test.js b/test/export_finalscene.test.js
+index f79a299..7b8b7a1 100644
+--- a/test/export_finalscene.test.js
++++ b/test/export_finalscene.test.js
+@@ -20,6 +20,9 @@
+ //  11  the triangles' tables (the welded vertices, the edges) keep every entry as they grow: one number per vertex and one group per edge, in the order first
+ //      seen. A table that lost entries would file them again as duplicates, which the open-edge check reads as covered (they coincide), so a clean lap
+ //      cannot show it
++//  12  a drawn surface that passes through another pass's road or apron warns, at its piece and station: two passes, one lap's edge apron over the
++//      next lap's hull run (a spiral of a lap and a half)
++//  13  ELYSIUM (the fixture): its p38's hull, hung 2 to 3 m under a rising edge, passes through p40's road and apron, and the check says so in piece p38
+ // Rows 2-4 were red on the commits before their fixes: 8fb6ecc (the notch) and e911792 (the bottom's step and the tubes); see the hand-back.
+ 'use strict';
+ const test = require('node:test');
+@@ -266,3 +269,31 @@ test('row 11: the triangles\' tables keep every vertex and every edge as they gr
+     if (ed.first[g] !== 2 * g || ed.second[g] !== 2 * g + 1 || ed.count[g] !== (g % 7 === 0 ? 3 : 2)) assert.fail(`edge ${g}: first ${ed.first[g]}, second ${ed.second[g]}, count ${ed.count[g]}`);
+   }
+ });
++
++// two passes: a lap at radius 120 m, then 0.6 of a lap 21 m further in, climbing 3.4 m a lap, so the second lap's edge apron comes down by the first lap's inner
++// edge, through the hull's run under that edge's plank
++function twoPasses() {
++  const gap = 3.4, R1 = 120, R2 = R1 - 21, turn = 2 * Math.PI * R1, p = Math.atan(gap / turn);
++  let d = D.createDoc('two passes'); d = { ...d, start: { ...d.start, pitch: p } };
++  d = extend(d, { length: 300, family: 'bowl', first: { w: 20, c: 15.5 } });
++  d = extend(d, { length: 0.75 * turn, transition: 40, targets: { kh: Math.cos(p) / R1 } });
++  return extend(d, { length: 0.6 * 2 * Math.PI * R2, transition: 40, targets: { kh: Math.cos(p) / R2 } });
++}
++
++test("row 12: a drawn surface that passes through another pass's road or apron warns, at its piece and station", () => {
++  const b = exportDoc(twoPasses(), { test: true }), r = checked(b), through = r.warn.filter((f) => f.kind === 'through');
++  assert.deepEqual(b.test.reds, [], 'control: the two passes export as a clean test route');
++  assert.ok(through.length > 0, `the hull's run through the other pass's apron is found: ${r.warn.map((f) => f.message).join('; ')}`);
++  for (const f of through) {
++    assert.match(f.message, /^d+ face(s) of the underside skin pass through the edge apron of another pass (standing up to .* out of it) at .* in piece p[12]: the hull shows through a surface the car drives on$/);
++    assert.ok(f.s > 250 && f.s < 400, `found at s ${f.s}, under the second lap (s 1,000 or more)`);
++  }
++  assert.deepEqual(b.sceneCheck.warn.filter((f) => f.kind === 'through'), through, 'the export passes on the check it ran');
++});
++
++test("row 13: ELYSIUM: its p38's hull passes through p40's road and apron, and the check says so in piece p38", () => {
++  const doc = D.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'elysium-2026-10-22.t180track'), 'utf8')), b = exportDoc(doc);
++  const through = b.sceneCheck.warn.filter((f) => f.kind === 'through');
++  assert.ok(through.some((f) => f.piece === 'p38' && /of the underside skin pass through (the road|the edge apron) of another pass/.test(f.message)), through.map((f) => f.message).join('; ') || 'nothing found');
++  assert.deepEqual(b.sceneCheck.refuse, [], 'drawn only: nothing is refused');
++});

@@ -1,0 +1,13 @@
+[33m296[39m meshes
+[33m89[39m [33m2873530[39m #ROAD_p#_chunk_#
+[33m57[39m [33m675990[39m UNDERSKIN_p#_chunk_#
+[33m57[39m [33m49288[39m #ROAD_APRON_p#_chunk_#
+[33m57[39m [33m49288[39m APRONSIDE_p#_chunk_#
+[33m3[39m [33m29208[39m #ROAD_CATCH_p#_chunk_#
+[33m5[39m [33m2560[39m #ROAD_PIT_body_#
+[33m1[39m [33m612[39m #ROAD_PIT_fill_#
+[33m1[39m [33m432[39m #ROAD_PIT_in_#
+[33m1[39m [33m432[39m #ROAD_PIT_out_#
+[33m12[39m [33m240[39m PAINT_GRID_#
+[33m12[39m [33m240[39m PAINT_PIT_#
+[33m1[39m [33m140[39m PAINT_START_LINE

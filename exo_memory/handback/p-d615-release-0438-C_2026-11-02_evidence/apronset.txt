@@ -1,0 +1,4 @@
+D609 moved pieces: 36; apron plank meshes same 16, differ 41
+differ on a piece D609 did not move: 1ROAD_APRON_p33_chunk_42, 1ROAD_APRON_p41_chunk_54
+same on a piece D609 moved: 0
+same: 1ROAD_APRON_p29_chunk_29, 1ROAD_APRON_p29_chunk_30, 1ROAD_APRON_p29_chunk_31, 1ROAD_APRON_p29_chunk_32, 1ROAD_APRON_p29_chunk_33, 1ROAD_APRON_p29_chunk_34, 1ROAD_APRON_p29_chunk_35, 1ROAD_APRON_p29_chunk_36, 1ROAD_APRON_p29_chunk_37, 1ROAD_APRON_p29_chunk_38, 1ROAD_APRON_p30_chunk_39, 1ROAD_APRON_p31_chunk_40, 1ROAD_APRON_p33_chunk_41, 1ROAD_APRON_p38_chunk_51, 1ROAD_APRON_p38_chunk_52, 1ROAD_APRON_p39_chunk_53

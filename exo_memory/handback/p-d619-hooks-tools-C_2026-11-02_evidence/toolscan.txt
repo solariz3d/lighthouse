@@ -1,0 +1,128 @@
+tool | actors.js | md files 59 | catch-word lines 32 | exo_memory/map/B.md:1820 | commits 6 | used by essay-provenance.js,open-items.js,residue.js,tell-index.js
+tool | agreement-spread.js | md files 13 | catch-word lines 1 | exo_memory/loop/mechanizable_checks.md:70 | commits 2 | used by balance-check.js
+tool | ask.js | md files 60 | catch-word lines 31 | exo_memory/map/A.md:1434 | commits 14 | used by gen-consumer.js,jev-judge.js,jev-shadow.mutants.js,ask-surface.js
+tool | balance-check.js | md files 3 | catch-word lines 0 |  | commits 1 | used by 
+tool | baton-wake.js | md files 17 | catch-word lines 7 | exo_memory/librarian/LEDGER.md:240 | commits 2 | used by lap-row.js,baton-wake-stop.js
+tool | board-audit.js | md files 42 | catch-word lines 7 | exo_memory/map/A.md:585 | commits 6 | used by board-bursts.js,board-compact.js
+tool | board-bursts.js | md files 3 | catch-word lines 0 |  | commits 1 | used by board-audit.js,deference-unit.js
+tool | board-compact.js | md files 22 | catch-word lines 7 | exo_memory/map/C.md:1254 | commits 1 | used by deference-unit.js,ledger-union.js
+tool | boundary-check.js | md files 45 | catch-word lines 28 | exo_memory/map/E.md:1119 | commits 5 | used by text-census.js,blind.js
+tool | boundary-reminder.js | md files 17 | catch-word lines 13 | exo_memory/map/A.md:1904 | commits 1 | used by 
+tool | carrier-drift.js | md files 134 | catch-word lines 77 | exo_memory/map/A.md:1334 | commits 18 | used by chain-status.js,gen-consumer.js,vantage-sealed-scope.js,carrier-drift-watch.js,mcp.rs
+tool | catch-ledger.js | md files 26 | catch-word lines 45 | exo_memory/map/E.md:2207 | commits 6 | used by actors.js,consumer-relabel.js,gen-consumer.js,residue.js,tell-index.js
+tool | chain-status.js | md files 123 | catch-word lines 44 | exo_memory/map/C.md:1329 | commits 17 | used by actors.js,ask.js,baton-wake.js,essay-provenance.js,lap-row.js,replay-check.js,ask-surface.js,main.rs,userprompt-submit.js
+tool | cite-check.js | md files 26 | catch-word lines 8 | exo_memory/map/E.md:470 | commits 4 | used by librarian-route.js
+tool | claim-check-adapter.js | md files 4 | catch-word lines 0 |  | commits 0 | used by gen-consumer.js
+tool | claim-replay.js | md files 24 | catch-word lines 5 | exo_memory/map/A.md:1931 | commits 6 | used by claim-check-adapter.js,gen-consumer.js,mistake-bench.js
+tool | close.js | md files 187 | catch-word lines 117 | exo_memory/map/E.md:1705 | commits 23 | used by jev-ask.js,jev-shadow.js,live-follow.js,second-vantage.js,state-sync.js,live-mirror-stop.js,main.rs,mcp.rs
+tool | close.mutants.js | md files 21 | catch-word lines 12 | exo_memory/map/A.md:1340 | commits 3 | used by heavy-run.js
+tool | commit-gate.js | md files 29 | catch-word lines 15 | exo_memory/map/A.md:588 | commits 4 | used by gen-consumer.js
+tool | consumer-relabel.js | md files 27 | catch-word lines 5 | exo_memory/map/C.md:1580 | commits 16 | used by gen-consumer.js,identity-diff.js,main.rs
+tool | contamination.js | md files 17 | catch-word lines 20 | exo_memory/map/C.md:1243 | commits 4 | used by gen-consumer.js
+tool | corpus-age.js | md files 31 | catch-word lines 13 | exo_memory/map/C.md:1184 | commits 3 | used by forget-rate.js,gen-consumer.js,librarian-route.js
+tool | corrections-gate.js | md files 6 | catch-word lines 2 | exo_memory/handback/p-consumer-workshop-A_2026-10-08.md:116 | commits 5 | used by carrier-drift.js,gen-consumer.js,identity-diff.js
+tool | coupling-test.js | md files 17 | catch-word lines 10 | exo_memory/map/C.md:1194 | commits 3 | used by 
+tool | curate.js | md files 22 | catch-word lines 8 | exo_memory/map/C.md:1312 | commits 5 | used by catch-ledger.js,tell-index.js,usage.js,main.rs
+tool | d423-letters-swap.js | md files 4 | catch-word lines 1 | exo_memory/handback/p-d424-review-P_2026-10-21.md:130 | commits 0 | used by gen-consumer.js
+tool | deference-unit.js | md files 15 | catch-word lines 9 | exo_memory/map/C.md:1218 | commits 1 | used by order-parameter.js,vicsek-phi.js
+tool | dispatch-gate-report.js | md files 12 | catch-word lines 5 | exo_memory/map/B.md:1735 | commits 1 | used by dispatch-gate.js
+tool | dupe-scan.js | md files 4 | catch-word lines 2 | exo_memory/handback/p-d557-lift-test-E_2026-10-30.md:62 | commits 2 | used by 
+tool | essay-provenance.js | md files 24 | catch-word lines 16 | exo_memory/map/C.md:1194 | commits 7 | used by 
+tool | ferry.js | md files 70 | catch-word lines 28 | exo_memory/map/E.md:1102 | commits 14 | used by gen-consumer.js,lap-row.js,ledger-union.js,librarian-cite.js,librarian-route.js,dispatch-gate.js,ferry-watch.js,findings-return.js,mcp.rs
+tool | forget-rate.js | md files 25 | catch-word lines 16 | exo_memory/map/C.md:1232 | commits 4 | used by gen-consumer.js
+tool | gen-consumer.js | md files 133 | catch-word lines 50 | exo_memory/map/E.md:2144 | commits 40 | used by consumer-relabel.js,identity-diff.js,janitor.mutants.js,js-suite.js,scratch.js
+tool | groove.js | md files 5 | catch-word lines 1 | exo_memory/handback/p-l039-read-A_2026-09-07.md:40 | commits 0 | used by guard-census.js
+tool | guard-census.js | md files 20 | catch-word lines 7 | exo_memory/map/A.md:1263 | commits 2 | used by portable-paths.js,carrier-drift-watch.js
+tool | head-watch.js | md files 7 | catch-word lines 0 |  | commits 1 | used by board-bursts.js,heavy-run.js
+tool | heavy-run.js | md files 122 | catch-word lines 26 | exo_memory/map/A.md:1881 | commits 6 | used by close.mutants.js,janitor.mutants.js,jev-ask.mutants.js,jev-shadow.mutants.js,js-suite.js,mistake-bench.js,mutant-harness.js,reply-slot.mutants.js,second-reader.mutants.js,sources-gate.mutants.js,state-sync.mutants.js,trip-check.mutants.js,union-at-launch.mutants.js
+tool | heavy-run.mutants.js | md files 12 | catch-word lines 14 | exo_memory/map/E.md:2179 | commits 8 | used by janitor.mutants.js
+tool | identity-diff.js | md files 12 | catch-word lines 4 | exo_memory/map/C.md:1582 | commits 6 | used by gen-consumer.js
+tool | imprint-measure.js | md files 8 | catch-word lines 1 | exo_memory/librarian/LEDGER.md:92 | commits 0 | used by 
+tool | janitor-task.ps1 | md files 7 | catch-word lines 2 | exo_memory/map/B.md:2100 | commits 5 | used by gen-consumer.js
+tool | janitor.js | md files 15 | catch-word lines 4 | exo_memory/map/E.md:2178 | commits 4 | used by gen-consumer.js,heavy-run.js,janitor-task.ps1,worktree-sweep.js
+tool | janitor.mutants.js | md files 6 | catch-word lines 4 | exo_memory/handback/p-mutantscopy-A_2026-10-10.md:24 | commits 2 | used by janitor.js
+tool | jev-ask.js | md files 44 | catch-word lines 17 | exo_memory/map/C.md:1260 | commits 4 | used by gen-consumer.js,jev-judge.js,jev-shadow-runner.js,jev-shadow.js,jev-shadow.mutants.js,jev-variants.js
+tool | jev-ask.mutants.js | md files 10 | catch-word lines 8 | exo_memory/handback/p-mutantscopy-A_2026-10-10.md:18 | commits 0 | used by gen-consumer.js,jev-shadow.mutants.js
+tool | jev-judge.js | md files 60 | catch-word lines 25 | exo_memory/map/E.md:1664 | commits 10 | used by gen-consumer.js,jev-room.js,jev-shadow-runner.js,jev-shadow.js,jev-shadow.mutants.js,jev-variants.js,jev-flags.js
+tool | jev-room.js | md files 8 | catch-word lines 2 | exo_memory/map/A.md:1449 | commits 3 | used by gen-consumer.js,jev-judge.js,jev-shadow-runner.js,jev-shadow.js,jev-shadow.mutants.js
+tool | jev-shadow-runner.js | md files 46 | catch-word lines 27 | exo_memory/map/E.md:1821 | commits 4 | used by gen-consumer.js,jev-judge.js,jev-room.js,jev-shadow.mutants.js,ledger-union.js,main.rs
+tool | jev-shadow.js | md files 34 | catch-word lines 19 | exo_memory/map/C.md:1264 | commits 4 | used by gen-consumer.js,jev-judge.js,jev-room.js,jev-shadow-runner.js,jev-variants.js
+tool | jev-shadow.mutants.js | md files 10 | catch-word lines 7 | exo_memory/map/C.md:1278 | commits 2 | used by gen-consumer.js
+tool | jev-variants.js | md files 10 | catch-word lines 1 | exo_memory/handback/p-d164-census-E_2026-09-27.md:36 | commits 1 | used by gen-consumer.js
+tool | js-suite.js | md files 274 | catch-word lines 62 | exo_memory/map/C.md:1230 | commits 28 | used by heavy-run.mutants.js,open-items.js
+tool | l039-power.js | md files 4 | catch-word lines 0 |  | commits 1 | used by 
+tool | lap-row.js | md files 180 | catch-word lines 93 | exo_memory/map/E.md:863 | commits 39 | used by actors.js,baton-wake.js,boundary-check.js,chain-status.js,close.mutants.js,js-suite.js,ledger-union.js,live-host.js,replay-check.js,mcp.rs
+tool | ledger-union.js | md files 42 | catch-word lines 18 | exo_memory/map/E.md:1570 | commits 5 | used by heavy-run.js,state-sync.js,trip-check.js,union-at-launch.mutants.js
+tool | leftovers.js | md files 68 | catch-word lines 16 | exo_memory/map/C.md:1714 | commits 13 | used by consumer-relabel.js
+tool | librarian-cite.js | md files 13 | catch-word lines 3 | exo_memory/map/M-2026-08-23.md:327 | commits 3 | used by gen-consumer.js
+tool | librarian-route.js | md files 11 | catch-word lines 4 | exo_memory/map/A.md:608 | commits 1 | used by 
+tool | lineage-rip.js | md files 4 | catch-word lines 1 | exo_memory/loop/plan_d475_carrying_both_ways_2026-10-26.md:56 | commits 3 | used by 
+tool | live-follow.js | md files 17 | catch-word lines 8 | exo_memory/map/E.md:1468 | commits 0 | used by 
+tool | live-host.js | md files 18 | catch-word lines 8 | exo_memory/map/E.md:980 | commits 2 | used by live-follow.js,state-manifest.js,live-mirror-stop.js,main.rs
+tool | memory-sweep.js | md files 6 | catch-word lines 1 | exo_memory/handback/p-inheritance_2026-09-06.md:80 | commits 0 | used by 
+tool | mistake-bench-toolstub.js | md files 3 | catch-word lines 0 |  | commits 2 | used by gen-consumer.js,mistake-bench.js
+tool | mistake-bench.js | md files 5 | catch-word lines 5 | exo_memory/map/A.md:1946 | commits 4 | used by gen-consumer.js
+tool | mutant-harness.js | md files 36 | catch-word lines 15 | exo_memory/map/C.md:1224 | commits 5 | used by heavy-run.js,heavy-run.mutants.js
+tool | offramp-check.js | md files 3 | catch-word lines 0 |  | commits 0 | used by gen-consumer.js
+tool | open-items.js | md files 39 | catch-word lines 9 | exo_memory/map/B.md:1755 | commits 7 | used by gen-consumer.js
+tool | order-parameter.js | md files 15 | catch-word lines 9 | exo_memory/map/E.md:1401 | commits 3 | used by deference-unit.js,vicsek-phi.js
+tool | pair-ledger.js | md files 8 | catch-word lines 1 | exo_memory/handback/p-d454-gen-B_2026-10-24.md:279 | commits 2 | used by gen-consumer.js
+tool | pane-status.js | md files 6 | catch-word lines 0 |  | commits 0 | used by 
+tool | portable-paths.js | md files 169 | catch-word lines 71 | exo_memory/map/C.md:1243 | commits 12 | used by commit-gate.js,gen-consumer.js,lap-row.js,librarian-cite.js,text-census.js,carrier-drift-watch.js,delete-gate.js,push-gate.js,delete-gate.js,push-gate.js
+tool | prompt-events.js | md files 5 | catch-word lines 0 |  | commits 0 | used by 
+tool | read-before-edit.js | md files 6 | catch-word lines 3 | exo_memory/map/C.md:1734 | commits 1 | used by 
+tool | read-ledger.js | md files 5 | catch-word lines 0 |  | commits 1 | used by 
+tool | replay-check.js | md files 14 | catch-word lines 10 | exo_memory/map/C.md:963 | commits 2 | used by 
+tool | reply-slot-replay.js | md files 5 | catch-word lines 1 | exo_memory/handback/p-consumer-coldread2-LIB_2026-10-09.md:23 | commits 2 | used by 
+tool | reply-slot.mutants.js | md files 17 | catch-word lines 13 | exo_memory/handback/p-ringstamp-A_2026-10-12.md:38 | commits 0 | used by 
+tool | residue.js | md files 21 | catch-word lines 9 | exo_memory/loop/CHECKPOINT.md:35 | commits 9 | used by actors.js,ask.js,boundary-check.js,chain-status.js,corrections-gate.js,gen-consumer.js,open-items.js,state-manifest.js,swell-head.js,tell-index.js,whats-live.js,carrier-drift-watch.js,main.rs
+tool | root1-score.js | md files 1 | catch-word lines 0 |  | commits 0 | used by 
+tool | scratch.js | md files 22 | catch-word lines 19 | exo_memory/map/E.md:2179 | commits 8 | used by gen-consumer.js,heavy-run.js,heavy-run.mutants.js,identity-diff.js,janitor.js,janitor.mutants.js,jev-ask.mutants.js,jev-shadow.mutants.js,js-suite.js,leftovers.js,reply-slot.mutants.js,second-reader.mutants.js,second-vantage.js,sources-gate.mutants.js,trip-check.mutants.js,union-at-launch.mutants.js
+tool | second-reader.mutants.js | md files 6 | catch-word lines 7 | exo_memory/handback/p-mutantscopy-A_2026-10-10.md:17 | commits 0 | used by 
+tool | second-vantage.js | md files 46 | catch-word lines 10 | exo_memory/map/A.md:1357 | commits 11 | used by gen-consumer.js,pair-ledger.js,usage.js,vantage-disposition.js,vantage-sealed-scope.js,findings-return.js
+tool | seed-status.js | md files 1 | catch-word lines 0 |  | commits 0 | used by 
+tool | shelf-reach-score.js | md files 4 | catch-word lines 4 | exo_memory/map/A.md:1910 | commits 0 | used by gen-consumer.js
+tool | sourced.js | md files 22 | catch-word lines 4 | exo_memory/handback/p-devreds-A_2026-10-08.md:48 | commits 6 | used by cite-check.js,sourced-stop.js,session-end.js
+tool | sources-gate.mutants.js | md files 18 | catch-word lines 17 | exo_memory/librarian/2026-10-18.md:368 | commits 3 | used by 
+tool | stamp.js | md files 14 | catch-word lines 10 | exo_memory/handback/p-d556-skills-O_2026-10-30.md:15 | commits 1 | used by 
+tool | state-block.js | md files 31 | catch-word lines 4 | exo_memory/handback/p-d454-review-P_2026-10-24.md:31 | commits 9 | used by sessionstart-state.js
+tool | state-manifest.js | md files 40 | catch-word lines 13 | exo_memory/map/C.md:1268 | commits 8 | used by d423-letters-swap.js,heavy-run.js,heavy-run.mutants.js,janitor.js,janitor.mutants.js,read-before-edit.js,state-sync.js,state-sync.mutants.js,worktree-sweep.js
+tool | state-sync.js | md files 121 | catch-word lines 97 | exo_memory/map/E.md:1571 | commits 22 | used by chain-status.js,close.js,close.mutants.js,jev-judge.js,ledger-union.js,live-follow.js,state-manifest.js,trip-check.js,union-at-launch.mutants.js,live-mirror-stop.js,main.rs
+tool | state-sync.mutants.js | md files 25 | catch-word lines 13 | exo_memory/map/A.md:1369 | commits 3 | used by close.mutants.js,jev-ask.mutants.js,jev-shadow.mutants.js
+tool | swell-head.js | md files 2 | catch-word lines 0 |  | commits 0 | used by 
+tool | tell-index.js | md files 20 | catch-word lines 6 | exo_memory/handback/p-l039-read-A_2026-09-07.md:40 | commits 2 | used by actors.js,carrier-drift.js,catch-ledger.js,gen-consumer.js,residue.js,board-digest.js,dream-watch.js
+tool | text-census.js | md files 15 | catch-word lines 7 | exo_memory/map/A.md:1263 | commits 3 | used by 
+tool | tj1-k-render.js | md files 13 | catch-word lines 0 |  | commits 2 | used by gen-consumer.js
+tool | trip-check.js | md files 18 | catch-word lines 13 | exo_memory/map/E.md:1629 | commits 2 | used by 
+tool | trip-check.mutants.js | md files 4 | catch-word lines 4 | exo_memory/handback/p-mutantscopy-A_2026-10-10.md:22 | commits 0 | used by 
+tool | union-at-launch.mutants.js | md files 3 | catch-word lines 1 | exo_memory/handback/p-mutantscopy-A_2026-10-10.md:23 | commits 0 | used by 
+tool | usage.js | md files 13 | catch-word lines 4 | exo_memory/handback/p-censusread-C_2026-10-11_evidence/table.md:43 | commits 1 | used by 
+tool | vantage-disposition.js | md files 5 | catch-word lines 3 | exo_memory/loop/q3_units_2026-09-27.md:565 | commits 1 | used by 
+tool | vantage-sealed-scope.js | md files 4 | catch-word lines 3 | exo_memory/loop/q3_units_2026-09-27.md:566 | commits 0 | used by 
+tool | vicsek-phi.js | md files 8 | catch-word lines 3 | exo_memory/map/B.md:1727 | commits 0 | used by deference-unit.js
+tool | whats-live.js | md files 21 | catch-word lines 10 | exo_memory/map/B.md:551 | commits 4 | used by guard-census.js
+tool | worktree-sweep.js | md files 6 | catch-word lines 3 | exo_memory/map/E.md:2257 | commits 4 | used by gen-consumer.js
+hook | ask-ending.js | md files 6 | catch-word lines 1 | exo_memory/handback/p-devreds-A_2026-10-08.md:11 | commits 3 | used by 
+hook | ask-surface.js | md files 27 | catch-word lines 3 | exo_memory/librarian/2026-09-15.md:116 | commits 3 | used by 
+hook | baton-wake-stop.js | md files 13 | catch-word lines 2 | exo_memory/librarian/2026-09-07.md:170 | commits 2 | used by 
+hook | blind.js | md files 42 | catch-word lines 15 | exo_memory/map/E.md:2145 | commits 11 | used by chain-status.js,board-digest.js,precompact-preserve.js,main.rs
+hook | board-digest.js | md files 68 | catch-word lines 13 | exo_memory/map/E.md:1644 | commits 9 | used by chain-status.js,curate.js,tell-index.js,usage.js,ask-surface.js,blind.js,dream-watch.js,precompact-preserve.js,sessionstart-state.js,transcript-watch.js,main.rs,precompact.js,session-start.js,userprompt-submit.js
+hook | carrier-drift-watch.js | md files 29 | catch-word lines 5 | exo_memory/map/B.md:1749 | commits 3 | used by 
+hook | claim-check.js | md files 14 | catch-word lines 8 | exo_memory/map/C.md:1629 | commits 5 | used by claim-check-adapter.js,gen-consumer.js,main.rs
+hook | delete-gate.js | md files 9 | catch-word lines 4 | exo_memory/handback/p-d454-install-E_2026-10-24.md:284 | commits 3 | used by push-gate.js,push-gate.js
+hook | dispatch-gate.js | md files 60 | catch-word lines 24 | exo_memory/map/A.md:1259 | commits 10 | used by boundary-reminder.js,dispatch-gate-report.js
+hook | dream-watch.js | md files 21 | catch-word lines 2 | exo_memory/librarian/2026-09-06.md:146 | commits 3 | used by gen-consumer.js,board-digest.js,precompact-preserve.js,transcript-watch.js
+hook | ferry-watch.js | md files 31 | catch-word lines 10 | exo_memory/map/B.md:2002 | commits 9 | used by baton-wake.js,chain-status.js,ferry.js,librarian-route.js,carrier-drift-watch.js,dispatch-gate.js
+hook | findings-return.js | md files 23 | catch-word lines 3 | exo_memory/handback/p-d454-gen-B_2026-10-24.md:279 | commits 7 | used by second-vantage.js,ask-surface.js
+hook | jev-flags.js | md files 36 | catch-word lines 14 | exo_memory/map/E.md:2138 | commits 16 | used by gen-consumer.js,jev-judge.js,jev-room.js
+hook | live-mirror-stop.js | md files 20 | catch-word lines 8 | exo_memory/map/E.md:1468 | commits 1 | used by live-follow.js
+hook | precompact-preserve.js | md files 37 | catch-word lines 5 | exo_memory/map/B.md:1725 | commits 9 | used by l2-overseer.js,l3-overseer.js,session-end.js,session-start.js,stop.js,userprompt-submit.js
+hook | push-gate.js | md files 18 | catch-word lines 5 | exo_memory/handback/p-d594-close-E_2026-10-31.md:28 | commits 5 | used by delete-gate.js,release-chime.js,delete-gate.js,release-chime.js
+hook | release-chime.js | md files 8 | catch-word lines 3 | exo_memory/map/A.md:1878 | commits 2 | used by 
+hook | reply-slot.js | md files 31 | catch-word lines 9 | exo_memory/map/A.md:1691 | commits 5 | used by gen-consumer.js,reply-slot-replay.js,claim-check.js,main.rs
+hook | second-reader-worker.js | md files 13 | catch-word lines 2 | exo_memory/map/A.md:1670 | commits 0 | used by second-reader.mutants.js,sources-gate.mutants.js,second-reader.js,second-reader.js
+hook | second-reader.js | md files 21 | catch-word lines 11 | exo_memory/map/A.md:1670 | commits 1 | used by gen-consumer.js,sources-gate.mutants.js,second-reader-worker.js,second-reader-worker.js
+hook | sessionstart-state.js | md files 32 | catch-word lines 4 | exo_memory/handback/p-d454-review-P_2026-10-24.md:31 | commits 7 | used by portable-paths.js
+hook | sourced-stop.js | md files 39 | catch-word lines 13 | exo_memory/loop/trailing_reminder_registration_2026-10-11.md:19 | commits 11 | used by baton-wake.js,boundary-reminder.js,chain-status.js,js-suite.js,open-items.js,second-vantage.js,findings-return.js,main.rs
+hook | sources-gate.js | md files 46 | catch-word lines 21 | exo_memory/map/A.md:1679 | commits 9 | used by gen-consumer.js,reply-slot-replay.js,reply-slot.mutants.js,claim-check.js,reply-slot.js,mcp.rs,reply-slot.js,session-start.js
+hook | transcript-watch.js | md files 37 | catch-word lines 6 | exo_memory/librarian/2026-09-22.md:1090 | commits 9 | used by actors.js,commit-gate.js,consumer-relabel.js,deference-unit.js,gen-consumer.js,janitor.js,lap-row.js,live-follow.js,portable-paths.js,jev-flags.js,live-mirror-stop.js

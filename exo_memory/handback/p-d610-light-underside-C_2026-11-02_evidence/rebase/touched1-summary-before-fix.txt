@@ -1,0 +1,7 @@
+not ok 14 - the export runs in its own process in a real page: b6969da's bytes, and a real heap out-of-memory there leaves the page drawn
+not ok 127 - row 5: each defect made by hand is found where it was made: a hole in the road refuses, in the skin warns, a face across the road refuses, a sliver warns, a sunk skin warns, a wide lane end refuses
+not ok 133 - control: the unmutated copy of finalscene.js passes every row the mutants are judged by
+not ok 134 - control: the unmutated copy of fromwords.js passes every row the mutants are judged by
+# tests 205
+# pass 199
+# fail 6

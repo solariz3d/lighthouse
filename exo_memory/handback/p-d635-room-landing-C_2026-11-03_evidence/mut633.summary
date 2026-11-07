@@ -1,0 +1,16 @@
+# summary of mut633.out: each mutant's name, verdict and exit only (the failing-test names were cut: they carried a private term)
+heavy-run: WARNING: C:\ has 43.8 GB free, under 50 GB; run node consonance/tools/janitor.js
+T1 STALE kept caught exit 1 
+T2 the hand-back counts dropped NOT APPLIED 0
+T3 QUEUED dropped caught exit 1 
+T4 the CLI prints the full line by default caught exit 1 
+T5 the sync segment kept caught exit 1 
+T6 UNRECEIVED kept caught exit 1 
+T7 fused kept caught exit 1 
+T8 dirty kept caught exit 1 
+T9 trim ignored caught exit 1 
+N1 no note made caught exit 101 
+N2 the note not appended for the sender caught exit 101 
+N3 call_chair drops the note caught exit 101 
+N4 the note goes back on the receiver's copy caught exit 101 
+applied 12 / caught 12 / NOT APPLIED 1

@@ -1,0 +1,2 @@
+a7c986def7613643587e9f792240e9c1e84333938f01aad54e124b5537882802 *G:/SteamLibrary/steamapps/common/assettocorsa/content/tracks/t180b_elysium/t180b_elysium.kn5
+384fdb1fe5e773edc2061539a1d225bc9f81e05631e7faf035389fbf8c2987f6 *G:/SteamLibrary/steamapps/common/assettocorsa/content/tracks/t180b_elysium_new/t180b_elysium_new.kn5

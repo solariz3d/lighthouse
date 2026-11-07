@@ -1,0 +1,33 @@
+== stub: exit 0 in 294 s
+launched pid 13492; track ELYSIUM
+ok   launch (1.7 s): menus ready
+windows on the user's desktop: 0
+ok   open (56.3 s): loaded: head shown at 2.7 s, still from 36.3 s; peak 963 MB at 37.0 s (page 460, worker:overlapworker.js#0 1, worker:overlapworker.js#1 2, worker:closeworker.js#2 2, worker:checkworker.js#3 498); settled 774 MB (page 469
+ok   install (223.3 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  |  | end heading 180.00°, on the 90° grid | expo | files 10, kn5 178653991 B; peak 1909 MB at 156.6 s (page 
+crashes 0; page errors 0; samples 277; overall peak 1909 MB at 156.6 s (page 445, worker:overlapworker.js#0 1, worker:overlapworker.js#1 2, worker:closeworker.js#2 2, worker:checkworker.js#3 300, iframe:about:srcdoc#4 1, worker:01f8e73b-3c34-481c-8b6f-c489bf#5 1159)
+SOCKET CLOSED {"t":"289.9","what":"the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20","mark":"install"}
+killed pid 13492; t180-track-builder.exe left running: 0
+exit 0
+
+== new: exit 0 in 248 s
+launched pid 58548; track ELYSIUM
+ok   launch (1.4 s): menus ready
+windows on the user's desktop: 0
+ok   open (47.9 s): loaded: head shown at 2.3 s, still from 27.8 s; peak 956 MB at 28.8 s (page 458, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 494); settled 768 MB (page 463
+ok   install (187.6 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  |  | end heading 180.00°, on the 90° grid | expo | files 10, kn5 178653991 B; peak 1876 MB at 111.6 s (page 
+crashes 0; page errors 0; samples 235; overall peak 1876 MB at 111.6 s (page 549, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 300, iframe:about:srcdoc#4 1, worker:a35b90fa-1647-4299-b03d-2b1f3d#5 1022)
+SOCKET CLOSED {"t":"245.3","what":"the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20","mark":"install"}
+killed pid 58548; t180-track-builder.exe left running: 0
+exit 0
+
+== old: exit 0 in 269 s
+launched pid 48820; track ELYSIUM
+ok   launch (1.7 s): menus ready
+windows on the user's desktop: 0
+ok   open (47.1 s): loaded: head shown at 2.6 s, still from 27.1 s; peak 968 MB at 18.4 s (page 568, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 394); settled 754 MB (page 450
+ok   install (206.8 s): ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  |  | end heading 180.00°, on the 90° grid | expo | files 10, kn5 178653991 B; peak 4188 MB at 215.8 s (page 
+crashes 0; page errors 0; samples 252; overall peak 4188 MB at 215.8 s (page 470, worker:overlapworker.js#0 1, worker:overlapworker.js#1 1, worker:closeworker.js#2 2, worker:checkworker.js#3 300, iframe:about:srcdoc#4 1, worker:2b907cc9-8e66-4a6e-8ebd-6a80c9#5 3413)
+SOCKET CLOSED {"t":"265.7","what":"the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20","mark":"install"}
+killed pid 48820; t180-track-builder.exe left running: 0
+exit 0
+

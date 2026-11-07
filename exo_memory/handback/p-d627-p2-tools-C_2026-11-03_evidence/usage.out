@@ -1,0 +1,53 @@
+USAGE — tokens this tool can SEE in this machine's Claude Code transcripts (each API response counted once)
+  zone America/Regina (~/.consonance.json ambient_tz) · now 2026-11-03 07:02 · 62 transcript file(s) read
+  window: 2026-10-28 00:00 → now, by local day
+  keep-warm = all four fields of the responses to the chair's keep-warm ping
+
+PER SEAT PER DAY
+  seat          day              responses         input        output   cache-write    cache-read      all four     keep-warm
+  LIBRARIAN     2026-10-29               9           258        40,480       174,810       834,477     1,050,025             0
+  LIBRARIAN     2026-10-30              14           148        31,331       296,013     1,001,313     1,328,805             0
+  pane A        2026-10-30             317           656       321,036     1,258,948    39,356,671    40,937,311             0
+  pane A        2026-10-31              19            38        18,733        40,953     2,894,283     2,954,007             0
+  pane O        2026-10-28             432           827       442,606       927,155   218,179,523   219,550,111             0
+  pane O        2026-10-29             245           503       167,608       544,571    88,994,332    89,707,014             0
+  pane O        2026-10-30             435           821       493,979     1,564,340   232,382,303   234,441,443             0
+  pane O        2026-10-31             883         1,741     1,034,922     1,961,809   480,479,484   483,477,956             0
+  pane O        2026-11-01             315           611       353,113       842,891   164,834,244   166,030,859             0
+  pane O        2026-11-02             586         1,215       515,102     1,120,766   282,925,681   284,562,764             0
+  pane O        2026-11-03              40            72        37,113        98,712    13,074,440    13,210,337             0
+  pane P        2026-10-30               5             7           957       138,207       434,979       574,150             0
+  pane P        2026-10-31              26            27           314        14,250     3,544,577     3,559,168             0
+  pane P        2026-11-01              25            26           100        12,614     3,748,133     3,760,873             0
+  pane P        2026-11-02              26            27           104        13,619     4,242,002     4,255,752             0
+  pane P        2026-11-03             387           765       185,322       887,831    57,274,625    58,348,543             0
+  THIRD-PLACE   2026-10-28               1             2           736        65,430        16,825        82,993             0
+  THIRD-PLACE   2026-10-29              21            42        30,017       268,242     1,487,312     1,785,613             0
+  THIRD-PLACE   2026-10-31               1             2           845        65,945        16,825        83,617             0
+  THIRD-PLACE   2026-11-01               1             2           692        65,945        16,825        83,464             0
+  THIRD-PLACE   2026-11-02             967         1,974     1,598,084     4,699,271   233,708,971   240,008,300             0
+  THIRD-PLACE   2026-11-03               1             2           628        66,073        16,825        83,528             0
+
+THE WINDOW, PER SEAT
+  pane O                             2,936         5,790     3,044,443     7,060,244 1,480,870,007 1,490,980,484             0   claude-opus-5-5
+  THIRD-PLACE                          992         2,024     1,631,002     5,230,906   235,263,583   242,127,515             0   claude-opus-5-5
+  pane P                               469           852       186,797     1,066,521    69,244,316    70,498,486             0   claude-opus-5-5
+  pane A                               336           694       339,769     1,299,901    42,250,954    43,891,318             0   claude-opus-5-5
+  LIBRARIAN                             23           406        71,811       470,823     1,835,790     2,378,830             0   claude-fable-5-1, claude-haiku-5-5, claude-opus-5-5
+  TOTAL                              4,756         9,766     5,273,822    15,128,395 1,829,464,650 1,849,876,633             0
+  keep-warm share of all four: 0.00% (0 response(s))
+
+limit: not set
+  set it with --limit N --limit-counts <all|no-cache-read|output>, or usage.weekly_limit + usage.limit_counts in ~/.consonance.json
+
+THE BLIND SPOT — these numbers are what this tool can SEE. They are NOT the account's total usage.
+  - one-shot calls spawned with --no-session-persistence write NO transcript, so their usage is NOT in these numbers:
+      consonance/src-tauri/src/main.rs `claude_oneshot` (the Scribe, committee_form) · consonance/tools/curate.js ·
+      consonance/tools/second-vantage.js · exo_memory/loop/d121_relay/harness.js
+      (find any new one: grep -rn -- "--no-session-persistence" --include=*.js --include=*.rs .)
+  - Jev runs through the Vercel AI gateway on its own key: it is not Claude Code usage at all and is not here.
+  - this reads the transcripts ON THIS MACHINE. A conversation carried between machines by dev/tail-carry.js arrives
+      with its other-machine rows, so those ARE counted (once: the rows keep their message ids). Work done on another
+      machine in a conversation that was not carried here is not.
+  - 22 cost-state row(s) carry a running session modelUsage total; never added (it would count twice).
+  - 51 <synthetic> row(s) skipped: the client's own messages, not API calls.

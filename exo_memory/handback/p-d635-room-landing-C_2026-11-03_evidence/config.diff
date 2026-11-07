@@ -1,0 +1,8 @@
+31c31,35
+<   "scratch_dir": "G:\\consonance-scratch"
+---
+>   "scratch_dir": "G:\\consonance-scratch",
+>   "vantage_repos": [
+>     "G:\\Consonance-tools\\vantage-repos\\t180",
+>     "G:\\Consonance-tools\\vantage-repos\\t180-track-builder-history"
+>   ]

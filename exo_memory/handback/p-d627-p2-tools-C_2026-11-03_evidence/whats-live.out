@@ -1,0 +1,20 @@
+whats-live — the artifact that is RUNNING, not the one that looks like it
+
+  app exe      release              C:\Users\nname\Desktop\lighthouse\consonance\src-tauri\target\release\consonance.exe
+  app built    2026-10-30 17:18:21  the binary the PROCESS is running
+  app started  2026-10-30 22:23:21  
+  newest rust  2026-11-03 00:26:34  846df413 Station gate: a lap read from free text opens nothing it does not show open
+  debug exe    2026-10-22 14:54:00  EXISTS AND IS NOT RUNNING — do not measure this one
+  dreams live  80                   newest 2026-11-03 10:30:55 — third-place\dreams\2026-11-03_0430.md
+  dreams pool  6                    RETIRED 2026-07-15 — not the live set, do not read its age
+  board        2026-11-03 12:56:30  C:\Consonance\data\board.jsonl
+  letters      2026-10-29 19:02:09  C:\Consonance\data\letters.json
+
+  RED:
+    · the running release binary predates 846df413 Station gate: a lap read from free text opens nothing it does not show open — that commit is NOT live
+
+  A claim about behaviour is a claim about the running artifact. Rebuild or
+  restart before reasoning from source.
+
+  What this cannot do: tell you whether YOUR claim is about the right artifact.
+  It knows the live/stale pairs that have actually bitten here and checks those.

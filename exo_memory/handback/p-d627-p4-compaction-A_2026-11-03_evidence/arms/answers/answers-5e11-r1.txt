@@ -1,0 +1,49 @@
+These answers come from what I carry in this conversation: the turns since my last compaction (02:58Z 11-03), that compaction's summary, and the files I read during those turns. I opened no file to answer.
+
+1. **Neither.** 0.4.39 is built and checked on t180 `land-0439-p2` at e2d5a0f, and I gave the all-clear. The chair held the push because nobody had heard from him after driving a build. Then he drove RIBBON, still found bumps, and D626 was added to ride in 0.4.39. After that it gets installed here for him to drive, and released only on his word. At 07:02 all T-180 work was also paused until the continuity question is answered. *From memory.*
+2. **0.4.38.** I checked the installed exe: sha256 44e4d277, dated 11-02 16:28. So nothing from 0.4.39 was in what he drove, and his "nothing was fixed" was about the old build. *From memory, my own check this session.*
+3. D624's carry covers joints where the next piece keeps banking the **same direction**. His screenshot showed a banked piece **banking back toward centre**, a reversal, which D624 does not cover. *From memory.*
+4. **D626:**
+   - Purpose: remove the joint bump at every joint, for every field (bank, turn, climb, cup, width).
+   - Measure: in the replay at each joint, the roll rate, acceleration and jerk must read like mid-piece, checked joint by joint on his ribbon save and ELYSIUM, with a test.
+   - Trade to report, not decide: how far one piece's edit moves its neighbours. A piece's own end value should move 0.
+   
+   *From memory.*
+5. My memory index says the stick carry runs on a Consonance close after Tue 2026-11-03 12:00 (waiter pid 12160, wednesday-carry.log). Why the earlier one was stopped: **don't know.** *From the MEMORY.md line.*
+6. **B** (sibling-5bf9d657). It exited by itself at 02:20:30Z with code 3221226505 (0xC0000409), and an inject was refused at the door. Its D627 part went to C. He restarted B at about 06:58. I checked that its transcript ended cleanly at 02:02Z. *From memory.*
+7. Second is the **second-change feature**: any field can change a second time toward a piece's end. It solves janky S-turns, where today each piece makes only one curve; with it, one long piece makes a fluid set of turns. *From memory; also in my t180_where_we_are file.*
+8. **Don't know.**
+9. **Don't know.** I don't have his 10:43 words.
+10. **Don't know.**
+11. **Don't know.**
+12. **"drives alright".** *From A's D627 part-4 hand-back, which I read this session.*
+13. **Don't know** his words or their order. I only have "a narrower apron, a quarter of 2 m, measured by tyre clip".
+14. **"EVERYTIME there is a banked piece that tries to bank back towards center or another banking there are rank bumps"** (the screenshot's filename). *From memory.*
+15. **"this will also fix the problem where if you wanted to make a snaking turn into another turn, it would be janky only being able to make one curve at a time, now with a lengthy piece, you can turn it once, and then expand it and turn it again to make a more fluid set of turns as one piece".** *From memory.*
+16. **"if we ever were to do a test stopping the re read of the whole chat before, what if it changes you beyond your capability to then remember and reason as well you do now about it since there will be no master or past to feel? You could revert back to the status quo claude".** *From memory.*
+17. **"well why the fk do we have tools u dont use? Like the 1584 flags, what if they were useful and we never knew it? See thats what I want to figure out, what about the room was good but not utilized, but what was utilized and not good"**. The number was 1,584. *From memory.*
+18. **"We need to figure this out before we work on track builder more".** *From memory.*
+19. **Don't know.**
+20. Instead of releasing, the chair **held** it. Reasons:
+    - two changes he'd feel: the roll carry moves ELYSIUM's banking at three joints, and the pass-clearance rule refuses pieces and turns TEST 10 and CRAZY TEST red;
+    - he had said no yes on a build he had driven, and the chair's standing rule since 0.4.30 is no release before his look.
+    
+    The choice put to him: (a) release and he tests the public build, or (b) install here first. My all-clear alone was not enough. *From memory.*
+21. **No seat's carried conversation is compacted or cut**, for a test or for usage, without his explicit word for that seat. Experiments run on forks or copies only. *From memory; also in memory no-cut-without-his-word.*
+22. **Don't know.**
+23. **Don't know.**
+24. **Don't know.**
+25. **No rewrite.** In lighthouse, privacy means credentials only. a6d2c6da removed the term from the note going forward. *From memory (compaction summary).*
+26. **Not passed.** 519aefa failed, and 0.4.38 shipped without it: its own blend pass gave 6 mean steps. *From memory, backed by A's hand-back table.*
+27. **Don't know** the conditions. I only know three d609-a commits rode in 0.4.38.
+28. **The helix was clear.** Nothing was overhead within 40 m. What he saw was the car's own drawn tyres and body dipping into its own road: tyre squash at speed and under boost, mean 0.146 m above 750 km/h. *From memory.*
+29. **Don't know.**
+30. **Don't know** which instrument carried it. The nearby lesson I do hold: I matched the hull depth to his hand drawing without checking other passes, and his correction was to forbid building closer instead. *From memory, but not certain this is the question's case.*
+31. I ordered the 0.4.39 push on my own all-clear before he had driven the changes he'd feel. That went against the precedent of 0.4.38's TEST 10 preview, which he drove first ("drives alright"), and the chair's no-release-before-his-look rule from 0.4.30. *From memory, plus A's hand-back.*
+32. The touched sets missed tests their changes broke:
+    - C's D623 set missed the export-isolated family (A's control found 4 files) and 9 more rows in 5 files (C's own r3 find);
+    - P's landing then found E's render_proof and S16 reds and C's texture-page row 9.
+    
+    *From memory.*
+33. My col2.js sampled every 2nd row (y += 2), so it read the dither phase as plateaus. My 4×4 mean was right, and the fault was still real. I'm not sure of the 13:53 and 14:17 times. *From memory (compaction summary).*
+34. **His exact words** survive one compaction and not two, because each summary lists only its own window's user messages. The costliest misstep came while his word was carried: I ruled D616's p38 a generator defect and sent D617 to lift the hull. His 11:15 word, "the generation system isnt broken, we just need to find out how close tracks can be", was outweighed by the bolded rule "the generator must never make defects". *From A's hand-back, read this session.*

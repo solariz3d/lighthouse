@@ -1,0 +1,7 @@
+a005e1d Version 0.4.38
+b5524ff Pieces: "mirror on insert" is a tick box beside its words, like the menus' ticks
+f2489a2 The export's last check keeps the track's triangles in compact tables, so a long track no longer runs it out of memory
+86a2a66 Underside: draw the hull's bottom with only the triangles its shape and texture need
+dbe05ed Fixture record and export pins follow the centre-line apron and the even underside arc; untestable mutants retired with their reasons
+4de9e11 The underside sweeps evenly from each apron plank's tip into the bottom, and a one-sided edge's bottom sits where that sweep meets it
+ae2d353 Export checks the scene it writes for steps, cracks, folds and slivers, and the edge apron hangs from the road's own centre line

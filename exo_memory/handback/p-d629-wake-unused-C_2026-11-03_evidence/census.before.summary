@@ -1,0 +1,10 @@
+text-census at 82da03fc (d628-o), worktree lh-d629-c: exit 1
+text-census: 305 tracked file(s) carry a raw NUL and read as BINARY to grep —
+by extension:
+     12 gz
+      6 ico
+      1 md
+    286 png
+the one non-image row:
+  exo_memory/map/B.md
+      byte 340388 of 436269  (line 1969, col 1)

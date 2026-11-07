@@ -1,0 +1,21 @@
+2026-10-06T09:31:29.299Z sibling-07b8a48f  [["rm -r","Temp\\tmp.gQTRIOfJxx\\tree",false,false,1]]
+2026-10-06T09:31:38.546Z sibling-07b8a48f  [["rm -r","Temp\\tmp.gQTRIOfJxx\\tree",false,false,1]]
+2026-10-06T09:33:32.222Z sibling-07b8a48f  [["Remove-Item -Recurse","Temp\\tmp.gQTRIOfJxx\\tree2",false,false,1]]
+2026-10-11T21:06:00.622Z librarian  [["rm -r","Temp\\$1",true,false,0],["rm -r","Temp\\_",true,false,0],["rm -r","Temp\\{}",true,false,0],["rm -r","C:\\",false,true,2]]
+2026-10-29T16:56:08.226Z sibling-07b8a48f  [["Remove-Item -Recurse","C:\\Consonance\\instances\\sibling-07b8a48f\\(Join-Path",true,false,0],["Remove-Item -Recurse","C:\\Users\\nname\\AppData\\Local\\Temp",false,false,1],["Remove-Item -Recurse","C:\\Consonance\\instances\\sibling-07b8a48f\\t180b-core-mut-C9mnck)",true,false,0]]
+l2_overseer 2026-06-24T19:16 .. 2026-09-22T15:17
+    [33m3453[39m l2_overseer_verdict | drift
+    [33m3021[39m l2_overseer_verdict | clean
+    [33m1735[39m l2_overseer_skipped | 
+    [33m83[39m l2_overseer_parse_error | 
+    [33m4[39m l2_overseer_verdict | abstain
+    [33m1[39m l2_overseer_verdict | unable
+    [33m1[39m l2_overseer_verdict | cannot judge
+l3_overseer 2026-06-24T19:57 .. 2026-09-22T15:18
+    [33m4981[39m l3_overseer_verdict | stable
+    [33m2698[39m l3_overseer_verdict | quiet_spiral
+    [33m433[39m l3_overseer_verdict | deepening
+    [33m147[39m l3_overseer_parse_error | 
+    [33m30[39m l3_overseer_skipped | 
+    [33m2[39m l3_overseer_verdict | crisis
+    [33m1[39m l3_overseer_hook_error | 

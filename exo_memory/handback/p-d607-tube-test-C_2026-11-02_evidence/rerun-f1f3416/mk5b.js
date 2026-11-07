@@ -1,0 +1,10 @@
+const fs = require('fs'), wt = 'C:/Users/nname/Desktop/worktrees/t180-c607r';
+let s = fs.readFileSync(wt + '/test/tube_cases.test.js', 'utf8').replace(/\r\n/g, '\n').split("require('../").join("require('" + wt + '/').replace("path.join(__dirname, 'fixtures'", "path.join('" + wt + "/test', 'fixtures'");
+const v = (a, b) => { if (!s.includes(a)) throw new Error('NOT APPLIED ' + a); s = s.replace(a, b); };
+v('EPS = 1e-4, C = 4', 'EPS = 0, C = 4');
+v('    return true;\n  };', '    globalThis.M = Math.max(globalThis.M, Math.min(Math.abs(dp), Math.abs(dq), ...[[t.v[0], t.v[1]], [t.v[1], t.v[2]], [t.v[2], t.v[0]]].map(([e0, e1]) => { const inward = cross(t.n, sub(e1, e0)); return dot(sub(x, e0), inward) / Math.hypot(...inward); })));\n    return true;\n  };');
+v('const hit = [[0, 1], [1, 2], [2, 0]].some(', 'globalThis.M = 0; const hit = [[0, 1], [1, 2], [2, 0]].map(');
+v('pierces(A_.v[x], A_.v[y], B) || pierces(B.v[x], B.v[y], A_));', 'pierces(A_.v[x], A_.v[y], B) | pierces(B.v[x], B.v[y], A_)).some(Boolean);');
+v('if (!hit) continue;', 'if (!hit) continue; (globalThis.PAIRS ||= []).push({ m: globalThis.M, k: A_.name + " " + A_.f + "/" + B.f, at: frame(A_.cen, A_.q) });');
+v('  assert.deepEqual([...clips]', '  { const P = (globalThis.PAIRS || []).sort((a, b) => b.m - a.m); console.log("PAIRS", P.length, "over 1e-3:", P.filter((p) => p.m > 1e-3).length, "over 1e-4:", P.filter((p) => p.m > 1e-4).length, "over 1e-5:", P.filter((p) => p.m > 1e-5).length, JSON.stringify(P.slice(0, 5))); }\n  assert.deepEqual([...clips]');
+fs.writeFileSync('t5b.test.js', s);

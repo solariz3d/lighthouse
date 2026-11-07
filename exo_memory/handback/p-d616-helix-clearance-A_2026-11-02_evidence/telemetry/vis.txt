@@ -1,0 +1,8 @@
+== whole lap: 10987 frames
+  tyre into the road: max 0.192 m at f4389 (lap t 49.695 s, 844.5 km/h, gas 1.000, boost 1.849); frames over 0.10 m: 4236, over 0.15 m: 1440
+  drawn underside below the road: frames 5552 with body travel, 5540 rigid to the wheels; lowest -0.267 m at f4390 (lap t 49.710 s, 844.5 km/h, gas 1.000, boost 1.849)
+  mean tyre squash: above 750 km/h 0.100 m (3226 frames), below 500 km/h 0.061 m (3771 frames)
+== p29 helix: 2257 frames
+  tyre into the road: max 0.160 m at f7871 (lap t 101.925 s, 838.6 km/h, gas 1.000, boost 1.848); frames over 0.10 m: 987, over 0.15 m: 540
+  drawn underside below the road: frames 1662 with body travel, 1582 rigid to the wheels; lowest -0.244 m at f7749 (lap t 100.095 s, 737.1 km/h, gas 1.000, boost 1.858)
+  mean tyre squash: above 750 km/h 0.146 m (462 frames), below 500 km/h 0.070 m (660 frames)

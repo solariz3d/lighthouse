@@ -1,0 +1,8 @@
+# tests 3281
+# pass 3226
+# fail 1
+# cancelled 0
+# skipped 53
+# todo 1
+fast	Fast subset	2026-11-02T21:56:41.4887173Z ✖ Close's rebuild of a 24 km track it closes with new road costs at most half a full build: the placed straights are kept (161364.5459ms)
+fast	Fast subset	2026-11-02T21:56:41.4888188Z   AssertionError [ERR_ASSERTION]: Close's rebuild 1268 ms against a full build's 2326 ms (share 0.55, bound 0.5); kept 11040 of 11958

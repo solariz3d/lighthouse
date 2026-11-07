@@ -1,0 +1,38 @@
+heavy-run: WARNING: C:\ has 44.5 GB free, under 50 GB; run node consonance/tools/janitor.js
+heavy-run: waiting on c88002b1 pid 4964 (O D633 mutants (cargo + node, BelowNormal), since 2026-11-03T14:45:58.690Z) and 6fe15f0a pid 39692 (mutant-harness mutants.js, since 2026-11-03T14:45:53.090Z) — all 2 slots are held
+heavy-run: waiting on fbf98f8e pid 47076 (second-reader.mutants, since 2026-11-03T14:47:20.963Z) and 6fe15f0a pid 39692 (mutant-harness mutants.js, since 2026-11-03T14:45:53.090Z) — all 2 slots are held
+heavy-run: waiting on fbf98f8e pid 47076 (second-reader.mutants, since 2026-11-03T14:47:20.963Z) and 6fe15f0a pid 39692 (mutant-harness mutants.js, since 2026-11-03T14:45:53.090Z) — all 2 slots are held
+heavy-run: waiting on fbf98f8e pid 47076 (second-reader.mutants, since 2026-11-03T14:47:20.963Z) and 6fe15f0a pid 39692 (mutant-harness mutants.js, since 2026-11-03T14:45:53.090Z) — all 2 slots are held
+heavy-run: waiting on fbf98f8e pid 47076 (second-reader.mutants, since 2026-11-03T14:47:20.963Z) and 6fe15f0a pid 39692 (mutant-harness mutants.js, since 2026-11-03T14:45:53.090Z) — all 2 slots are held
+heavy-run: waiting on fbf98f8e pid 47076 (second-reader.mutants, since 2026-11-03T14:47:20.963Z) and 6fe15f0a pid 39692 (mutant-harness mutants.js, since 2026-11-03T14:45:53.090Z) — all 2 slots are held
+heavy-run: waiting on fbf98f8e pid 47076 (second-reader.mutants, since 2026-11-03T14:47:20.963Z) and 6fe15f0a pid 39692 (mutant-harness mutants.js, since 2026-11-03T14:45:53.090Z) — all 2 slots are held
+heavy-run: waiting on fbf98f8e pid 47076 (second-reader.mutants, since 2026-11-03T14:47:20.963Z) and 6fe15f0a pid 39692 (mutant-harness mutants.js, since 2026-11-03T14:45:53.090Z) — all 2 slots are held
+heavy-run: waiting on fbf98f8e pid 47076 (second-reader.mutants, since 2026-11-03T14:47:20.963Z) and fbf98f8e pid 45248 (d631 replay extract (P), transcripts read-only, since 2026-11-03T14:54:41.480Z) — all 2 slots are held
+lockrun: holding the lock at 2026-11-03T14:55:05.789Z; starting D629 C order-parameter read-only (BelowNormal)
+THE UNIVERSE FIRST — one machine's board; the figures reach no further.
+  C:\Consonance\data\board.jsonl
+  191677 rows, 530 unparseable/unstamped, 191147 usable, 77627 duplicate rows dropped
+  2026-06-30T05:09:53.919Z -> 2026-11-03T14:54:47.264Z · 119 days with rows
+  GAP 2026-06-30 -> 2026-07-04 (4d)
+  GAP 2026-07-14 -> 2026-07-18 (4d)
+  GAP 2026-07-21 -> 2026-07-23 (2d)
+  GAP 2026-09-12 -> 2026-09-14 (2d)
+
+sessions 873 · with >= 20 contributions 423 · embedding 423 (reverse chronological, as registered)
+Error: ENOENT: no such file or directory, open 'C:\Users\nname\AppData\Local\Temp\claude\C--Consonance-instances-sibling-0845a868\0845a868-38f2-4cc2-b45a-431e0c088fb1\scratchpad\c1\models\Alibaba-NLP\gte-base-en-v1.5\onnx\model_quantized.onnx'
+[90m    at Object.openSync (node:fs:560:18)[39m
+[90m    at Object.readFileSync (node:fs:444:35)[39m
+    at checkEncoderFile [90m(C:\Users\nname\Desktop\lighthouse\[39mconsonance\tools\order-parameter.js:164:64[90m)[39m
+    at loadEncoder [90m(C:\Users\nname\Desktop\lighthouse\[39mconsonance\tools\order-parameter.js:170:15[90m)[39m
+    at main [90m(C:\Users\nname\Desktop\lighthouse\[39mconsonance\tools\order-parameter.js:273:21[90m)[39m
+    at Object.<anonymous> [90m(C:\Users\nname\Desktop\lighthouse\[39mconsonance\tools\order-parameter.js:310:30[90m)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m {
+  errno: [33m-4058[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'open'[39m,
+  path: [32m'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\c1\\models\\Alibaba-NLP\\gte-base-en-v1.5\\onnx\\model_quantized.onnx'[39m
+}
+lockrun: done at 2026-11-03T14:55:08.058Z, exit 3

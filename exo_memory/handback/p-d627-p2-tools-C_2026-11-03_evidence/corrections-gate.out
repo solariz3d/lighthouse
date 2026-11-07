@@ -1,0 +1,6 @@
+corrections-gate — 85 correction-subject commit(s) since 2026-10-01
+  0 landed · 0 filed beside their target · 85 outside the guarded files
+
+
+  What this cannot see: whether the marker is on the RIGHT claim. It reads
+  diffs, not meaning — a commit that strikes an unrelated paragraph passes here.

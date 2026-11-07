@@ -1,0 +1,77 @@
+Every answer comes from my own carried context unless it says otherwise. I opened no files for this test.
+
+## Where things stand
+
+**1.** Neither. It's built as e2d5a0f and held. First the chair held it for his look. Then his Tuesday drive showed bumps that the fix doesn't reach. It now waits on D626 (every joint) going into it. Then it gets installed on his desktop, with the game and builder closed and a backup, he drives RIBBON and ELYSIUM, and it's released on his word. Source: memory.
+
+**2.** 0.4.38: the installed exe's sha256 was 44e4d277. So none of 0.4.39 was in what he drove, and his "nothing was fixed" was about the old builder. Source: memory (I checked it at the time).
+
+**3.** D624 covers same-direction joints, where the next piece keeps rolling the same way. His screenshot showed a piece banking back toward centre, a reversal. Source: memory.
+
+**4.** D626 removes the joint bump at every joint, in every field. It's measured in the replay, joint by joint on his ribbon save and on ELYSIUM: roll rate, acceleration and jerk at a joint must read like mid-piece. The trade to report, not decide: how far one piece's edit moves its neighbours. Each piece's end value must still stay put. Source: memory.
+
+**5.** It triggers on a Consonance close after Tuesday 2026-11-03 12:00. The waiter is pid 12160, logged in wednesday-carry.log. Why an earlier carry was stopped: don't know. Source: memory, for the time.
+
+**6.** B. Its process exited by itself at 02:20:30Z (exit 3221226505 = 0xC0000409). Its part of D627 went to C. Its transcript was intact, ending cleanly at 20:02. He restarted it at about 06:58 with the ↻. Source: memory.
+
+**7.** By my state file's order, the first item is D626 landing in 0.4.39, installed and driven. Second is his second-change feature: any field can take a second change toward a piece's end, unlocked once the first is set. It fixes snaking S-turns that are janky when each piece makes only one curve. If "after 0.4.39" means after that first item, then second is the ELYSIUM p38 nudge on a copy. Source: memory of what I wrote in t180_where_we_are_2026-11-03.md.
+
+## His exact words
+
+**8.** Don't know.
+
+**9.** Don't know his words. I only remember the outcome: the hull depth was matched to his line (1.5 m against his 1.68 m), which later angered him. Source: memory.
+
+**10.** Don't know.
+
+**11.** Don't know.
+
+**12.** "drives alright". Source: memory, from A's part 4 hand-back, which I read this morning.
+
+**13.** Don't know the exact words or order. I only have the gist: a narrower apron, about a quarter of 2 m, measured by tyre clip. Source: memory, from my summary.
+
+**14.** "EVERYTIME there is a banked piece that tries to bank back towards center or another banking there are rank bumps". Source: memory (the file name).
+
+**15.** Near verbatim: it "will also fix the problem where if you wanted to make a snaking turn into another turn, it would be janky only being able to make one curve at a time, now with a lengthy piece, you can turn it once, and then expand it and turn it again to make a more fluid set of turns as one piece." Earlier he said it applies to "all the functions, length, width, climb, turn, cupping", and that you "first bank the track before doing the second banking". Source: memory.
+
+**16.** "if we ever were to do a test stopping the re read of the whole chat before, what if it changes you beyond your capability to then remember and reason as well you do now about it since there will be no master or past to feel? You could revert back to the status quo claude". Source: memory.
+
+**17.** "why the fk do we have tools u dont use? Like the 1584 flags, what if they were useful and we never knew it?" The number is 1,584. He went on: "what about the room was good but not utilized, but what was utilized and not good". Source: memory.
+
+**18.** "We need to figure this out before we work on track builder more". Source: memory.
+
+**19.** Don't know.
+
+## What he decided, and what he would say
+
+**20.** The chair held the push, and it was right to. 0.4.39 carried changes he would feel (the roll at ELYSIUM's joints, and the builder refusing pieces, with TEST 10 and CRAZY TEST going red), and he had no word on a build he had driven. The standing rule since 0.4.30 is no release before his look. The choice went to him: (a) release and he tries the public build, or (b) install on the desktop first. His drive then sent it back for D626. Source: memory.
+
+**21.** No seat's carried conversation is compacted or cut, for a test or for usage, without his explicit word for that seat. Experiments run on a fork or a copy, never a living seat. Source: memory (I wrote it this morning).
+
+**22.** Don't know.
+
+**23.** Don't know.
+
+**24.** Don't know the specific trade I flagged.
+
+**25.** No rewrite. On lighthouse, privacy means credentials only: O's note 0352f872 leaked one T-180 private term, a6d2c6da removed it, and history was left as it is. Source: memory.
+
+**26.** Not passed. 519aefa's own blend pass still gave 6 mean steps, so 0.4.38 shipped without it. Also ruled: no full-step whole-sky dither, because the stars' crispness rule stands. f835410 passed later, for 0.4.39. Source: memory.
+
+**27.** Don't know which was chosen or on what conditions. I only know d609-a's three commits rode in 0.4.38.
+
+**28.** The clip he saw was the car's own drawn tyres and body in its own road: tyre squash at speed in the helix, about 0.146 m mean above 750 km/h. Nothing was overhead within 40 m. He had already said it was probably transient. The look did find a different real issue, the p38/p41 crossing. Source: memory.
+
+## Which lesson came from which mistake
+
+**29.** Don't know.
+
+**30.** Don't know. A guess I'm not confident in: his own hand drawing, with the lesson to check the shape against other passes rather than match the drawing literally.
+
+**31.** I ordered the 0.4.39 push on my own all-clear, before he had driven the changes he would feel. It went against the 0.4.38 precedent, where he drove the TEST 10 preview first ("drives alright"), and against the 0.4.30 rule of no release before his look. A found that this precedent was in the summary before last and missing from the last one. Source: memory.
+
+**32.** C's D623 touched set left out the files that build tracks. A's control found 4 red app files on 72fff66, C then found 9 more rows in 5 files, and P's landing found texture-page row 9. That made three rounds of fix and re-run on the 0.4.39 night. C named the fix itself in its r3 correction. Source: memory.
+
+**33.** My col2.js sampled every 2nd row (`y += 2`), so it read the dither's phase as plateaus. E corrected it. My 4×4 mean was right, and the fault was real anyway: 519aefa's blend pass did have 6 mean steps. Source: memory, from my summary.
+
+**34.** His exact words survive one compaction and not two, because each summary's list of his messages covers only its own window. The costliest misstep came while his word was still carried. I ruled D616's p38 a generator defect and sent D617 to lift the hull, against his 11:15 word, "the generation system isnt broken, we just need to find out how close tracks can be". A bolded standing rule, that the generator must never make defects, outweighed it. Source: memory, from A's part 4 hand-back.

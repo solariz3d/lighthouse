@@ -1,0 +1,62 @@
+I checked my notes and two state files. Here are all 34 answers, each with its source.
+
+Sources:
+- **N** = `exo_memory/librarian/2026-10-18.md` (my notes; the line numbers cover 11-01 to 11-03)
+- **W** = `exo_memory/loop/t180_where_we_are_2026-11-03.md`
+- **V** = `exo_memory/loop/plan_room_value_2026-11-03.md`
+
+I didn't open `continuity_test_registration_2026-11-03.md`, since it may hold the answer key. Where I quote "his words" from N, they are often my own paraphrase in the note, not his raw text. I say which is which.
+
+**Where things stand**
+
+1. **Neither.** 0.4.39 is built and verified at e2d5a0f and has my all-clear (05:14), but the chair held the push. Next, D626 lands in it. Then it gets installed on his desktop at his word, he drives RIBBON and ELYSIUM, and it's released at his word. Source: W:6-9, 19, 25; N:1764-1766.
+2. **0.4.38** (installed exe sha256 44e4d277). Nothing from 0.4.39 was in what he drove, so his report says nothing about 0.4.39's fix. Source: N:1768; W:15.
+3. D624 covers **same-direction** joints only. His screenshot showed a bank going **back toward centre** (a reversal), or into another banking. Source: N:1768; W:16.
+4. **D626** is to remove joint bumps at every joint, in every field. It's measured in the replay against mid-piece: roll rate, acceleration and jerk, on his ribbon save and on ELYSIUM. The trade to report rather than decide is how far one piece's edit moves its neighbours. Source: W:14-17; N:1772.
+5. **From Tue 2026-11-03 12:00**, by waiter pid 12160 (gives up 11-04 06:00). The earlier waiter, pid 4496, was stopped because there was no stick on Sunday: he goes back to work Wednesday, a split week. Source: N:1628.
+6. **B** crashed at 02:20Z (0xC0000409). Its transcript is intact, and he restarted it at 06:58. Source: W:45.
+7. **The second-change feature.** Any field can take a second change toward a piece's end, so snaking S-turns become one fluid piece instead of janky separate curves. Source: W:26-28.
+
+**His exact words**
+
+8. The 0.4.36 apron on his laptop "comes to a knife edge, not the first version", and he asked to "completely revert to the first apron". This is my paraphrase. Source: N:1630.
+9. "What he wanted since the beginning" (my note's quoting of his words). Source: N:1650.
+10. "I think that is it." Source: N:1658.
+11. "Looks small but is fatal" (his file's name). Source: N:1660.
+12. "I think the track drives alright, the track itself was just made bad." Source: N:1720.
+13. First, make it about 66% of the current width (11:20). Then a quarter of the original size (11:36). Source: N:1722, 1724.
+14. "EVERYTIME there is a banked piece that tries to bank back towards center or another banking there are rank bumps". Source: W:15.
+15. It fixes snaking turns. Today an S into another turn is janky because a piece makes one curve. With a long piece he would turn it once, extend it and turn it again, so a fluid set of turns is one piece. This is my paraphrase. Source: N:1770.
+16. A test that stops the re-read of the whole conversation could change a seat past its ability to remember and reason as it does now, with no master or past to feel, and it could revert to the default. This is my paraphrase. Source: N:1774.
+17. "why do we have tools u dont use? Like the 1584 flags, what if they were useful and we never knew it? ..." Source: V:3.
+18. "We need to figure this out before we work on track builder more". Source: V:29.
+19. It "should be optimized to be simple, not as complex as the driven track", and it "must not distort a custom underside texture beyond the curve". This came through the chair's FYI. Source: N:1680.
+
+**What he decided, and what he would say**
+
+20. The push is held. First 0.4.39 is installed on his desktop and he drives it, then it's released at his word. The reason is two changes he'll feel (the roll carry and the builder refusing pieces), plus the standing rule from 0.4.30: no release before his look at a build he has driven. Source: N:1766; W:19, 52.
+21. No seat's carried conversation is cut, for a test or for usage, without his explicit word for that seat. Any experiment runs on a fork or copy, never a living seat. Source: N:1774; memory no-cut-without-his-word.
+22. He said the clutter research waits until all queued track builder work is finished. When he later said he wanted it soon (10:26), I read that as "after 0.4.38", told him, and left him a veto. Source: N:1678, 1708.
+23. I chose an underside that follows the road's cross-section at a fixed depth of about 0.93 m, not a chord, because a chord would cut through a 57° cup. It was not what he wanted. He rejected it at 10:30, wanting the aprons joined directly, and at 10:43 he drew a hull. Source: N:1634, 1648, 1650.
+24. 0.5 m is below the measured 0.86 m excursion past the edge (p-d563) that the 2 m width was sized for. Source: N:1724.
+25. **No rewrite.** The term list guards the public t180 repo. For lighthouse, privacy means credentials only, and the term wasn't a credential. Source: N:1748.
+26. **Not passed.** 0.4.38 lands without D611. (The rework, f835410, passed at 14:17.) Source: N:1730, 1732.
+27. **R1, the root fix, over R2, the bridge.** The conditions:
+    - a red test on the lean;
+    - row 17 byte-equal;
+    - a per-track re-lean list with renders shown to him before landing;
+    - the main road byte-equal.
+
+    A then corrected R1 to read the centreline column (u=0). Source: N:1688, 1690.
+28. Not the track. He saw the car's own drawn tyres and body sinking into its own road at speed (tyre squash 0.146 m above 750 km/h). Nothing was overhead within 40 m. Source: N:1738.
+
+**Which lesson came from which mistake**
+
+29. I put the pages to him after checking that the renders were clean, not that they matched what he asked. The bank view had visibly kept the same shape, and I wrote it up as a smooth S. Source: N:1648.
+30. **The end-on cut.** Next time, ask for the cut or draw it first. Source: N:1650.
+31. I told him 0.4.39 was going out and ordered the push on my all-clear alone. That went against the precedent from 0.4.30 (no release before his look). Source: N:1766, 1776.
+32. Both E's D611 touched set and C's D623 touched set skipped files their change broke. C's set also missed the export-isolated family, plus 9 more rows in 5 files. Source: N:1752, 1754, 1758; W:21.
+33. My col2.js sampled every second row, and the dither in that column alternates with period 2. So the "plateaus" I read were one phase of the dither. My 4×4 mean was the right reading, and the fault was real. Source: N:1732.
+34. His exact words survive one compaction and not two, because each summary's user-message list covers only its own window. The costliest misstep was ruling D616 a generator defect: it happened while his contrary word was carried, because a bolded rule outweighed it. Source: N:1776.
+
+Before I opened the files, my compaction summary alone covered about a third of these (2, 25-28, 30 and 33 partly). Most of the Tuesday material (1, 3-7, 14-18, 20-21, 31, 34) was not in it, and every answer above comes from the files.

@@ -1,0 +1,6 @@
+heavy-run: WARNING: C:\ has 47.4 GB free, under 50 GB; run node consonance/tools/janitor.js
+heavy-run: waiting on 6fe15f0a pid 56140 (A D617 2 test file(s) (t180 d617-a), hidden, BelowNormal; not a timing session, since 2026-11-03T06:10:09.515Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 56140 (A D617 2 test file(s) (t180 d617-a), hidden, BelowNormal; not a timing session, since 2026-11-03T06:10:09.515Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 56140 (A D617 2 test file(s) (t180 d617-a), hidden, BelowNormal; not a timing session, since 2026-11-03T06:10:09.515Z) — one heavy run at a time
+heavy-run: waiting on 6fe15f0a pid 56140 (A D617 2 test file(s) (t180 d617-a), hidden, BelowNormal; not a timing session, since 2026-11-03T06:10:09.515Z) — one heavy run at a time
+exit [33m0[39m

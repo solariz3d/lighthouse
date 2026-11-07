@@ -1,0 +1,73 @@
+lockrun: holding the lock at 2026-11-02T17:59:43.172Z; starting d610-rebase-all
+== mutants
+L1 CAUGHT by "opens no edge" | the tips between two kept rows are not fanned (the strip's tip edge is one chord, T-junctions with the plank) | red rows: the light bottom opens no edge and has no sliver ; vertex for vertex: the light hull has no boundar ; at an open route's two ends the light bottom end ; failing tests: ; the light bottom opens no edge and has no sliver ; vertex for vertex: the light hull has no boundar ; at an open route's two ends the light bottom end
+L2 its bottom c4e56ac4e6ff0ea6 b5737ba2c190e124 EQUIVALENT: byte for byte the unmutated bottom, textured and untextured
+L2 NOT CAUGHT by "no light triangle spans a uv jump" | a jump row is not forced kept | red rows: none
+L3 CAUGHT by "THE IMAGE at random points" | the quad centres are not sampled | red rows: THE IMAGE at random points: a point of the light ; failing tests: ; THE IMAGE at random points: a point of the light
+L4 CAUGHT by "THE IMAGE: every vertex" | the drift tolerance five times wider | red rows: THE IMAGE: every vertex of the full bottom, foun ; THE IMAGE at random points: a point of the light ; failing tests: ; THE IMAGE: every vertex of the full bottom, foun ; THE IMAGE at random points: a point of the light
+L5 CAUGHT by "vertex for vertex" | a stretch's end rows not whole | red rows: vertex for vertex: the light hull has no boundar ; every light piece ends on a whole cell: no trian ; at an open route's two ends the light bottom end ; failing tests: ; vertex for vertex: the light hull has no boundar ; every light piece ends on a whole cell: no trian ; at an open route's two ends the light bottom end
+L6 CAUGHT by "every mesh that is not the bottom" | the road cell's node replaced, not its skin's | red rows: the light bottom has under 40% of the full botto ; every mesh that is not the bottom is the same by ; THE IMAGE: every vertex of the full bottom, foun ; THE IMAGE at random points: a point of the light ; no light triangle spans a uv jump: an untextured ; the light bottom opens no edge and has no sliver ; the light bottom faces where the full one does:  ; vertex for vertex: the light hull has no boundar ; every light piece ends on a whole cell: no trian ; at an open route's two ends the light bottom end ; failing tests: ; the light bottom has under 40% of the full botto ; every mesh that is not the bottom is the same by ; THE IMAGE: every vertex of the full bottom, foun ; THE IMAGE at random points: a point of the light ; no light triangle spans a uv jump: an untextured ; the light bottom opens no edge and has no sliver ; the light bottom faces where the full one does:  ; vertex for vertex: the light hull has no boundar ; every light piece ends on a whole cell: no trian ; at an open route's two ends the light bottom end
+L7 CAUGHT by "faces where the full one does" | no winding by the vertices' normals | red rows: the light bottom faces where the full one does:  ; failing tests: ; the light bottom faces where the full one does: 
+L8 CAUGHT by "under 40%" | a uv made up: the strip ending on a jump row takes the side after's uv (its uv triangles have no area, the drift check refuses every stretch it reaches, and the bottom stays full) | red rows: the light bottom has under 40% of the full botto ; failing tests: ; the light bottom has under 40% of the full botto
+L9 CAUGHT by "every light piece ends on a whole cell" | a strip off a whole end row may run long where the piece keeps every column (the old loophole) | red rows: every light piece ends on a whole cell: no trian ; failing tests: ; every light piece ends on a whole cell: no trian
+applied 9 / caught 8 / NOT APPLIED 0
+== touched
+# tests 207
+# pass 207
+# fail 0
+== batch
+== ely textured
+scene check full refuse 0 warn 0 {}
+scene check light refuse 0 warn 0 {}
+tris full  {"road":2902738,"PAINT":260,"1WALL":96,"underside":1026126,"apron":50100,"total":3979320}
+tris light {"road":2902738,"PAINT":260,"1WALL":96,"underside":477280,"apron":50100,"total":3430474}
+non-underside meshes 157 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 1051176 farthest from the light one 1.99 cm at -618.6,-223.4,133.2 hist <1mm,<1cm,<3cm,<5cm,>=5cm [607659,316833,126684,0,0]
+texel drift: vertices found by uv 1051176 not found 0 max 2.00 cm at -623.1,-229.4,140.5
+== crazy textured
+scene check full refuse 0 warn 2 {"fold":2}
+scene check light refuse 0 warn 2 {"fold":2}
+tris full  {"road":2115774,"PAINT":248,"1WALL":96,"underside":702710,"apron":35068,"APRONSIDE":248,"total":2854144}
+tris light {"road":2115774,"PAINT":248,"1WALL":96,"underside":279176,"apron":35068,"APRONSIDE":248,"total":2430610}
+non-underside meshes 125 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 722370 farthest from the light one 2.01 cm at -1572.7,109.9,2748.7 hist <1mm,<1cm,<3cm,<5cm,>=5cm [388678,170800,162892,0,0]
+texel drift: vertices found by uv 722370 not found 0 max 2.01 cm at -1572.7,109.9,2748.7
+== t10 textured
+scene check full refuse 0 warn 0 {}
+scene check light refuse 0 warn 0 {}
+tris full  {"road":725058,"PAINT":220,"1WALL":96,"underside":484370,"apron":22972,"total":1232716}
+tris light {"road":725058,"PAINT":220,"1WALL":96,"underside":202946,"apron":22972,"total":951292}
+non-underside meshes 62 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 495856 farthest from the light one 2.00 cm at 150.5,260.6,313.0 hist <1mm,<1cm,<3cm,<5cm,>=5cm [271983,168664,55209,0,0]
+texel drift: vertices found by uv 495856 not found 0 max 2.00 cm at -475.4,-196.8,785.7
+== lan textured
+scene check full refuse 0 warn 0 {}
+scene check light refuse 0 warn 0 {}
+tris full  {"road":91336,"PAINT":228,"1WALL":96,"underside":122640,"apron":5840,"total":220140}
+tris light {"road":91336,"PAINT":228,"1WALL":96,"underside":40758,"apron":5840,"total":138258}
+non-underside meshes 23 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 125560 farthest from the light one 1.99 cm at 1786.8,-45.7,229.0 hist <1mm,<1cm,<3cm,<5cm,>=5cm [81392,31764,12404,0,0]
+texel drift: vertices found by uv 125560 not found 0 max 2.00 cm at 569.0,-1.5,457.5
+== tube textured
+scene check full refuse 0 warn 0 {}
+scene check light refuse 0 warn 0 {}
+tris full  {"road":746300,"PAINT":280,"1WALL":96,"underside":97986,"apron":952,"APRONSIDE":720,"total":846334}
+tris light {"road":746300,"PAINT":280,"1WALL":96,"underside":65112,"apron":952,"APRONSIDE":720,"total":813460}
+non-underside meshes 39 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 100046 farthest from the light one 1.94 cm at 16.2,-1.5,436.0 hist <1mm,<1cm,<3cm,<5cm,>=5cm [84890,11130,4026,0,0]
+texel drift: vertices found by uv 100046 not found 0 max 1.95 cm at 884.1,38.7,1014.2
+== ely untextured
+scene check full refuse 0 warn 0 {}
+scene check light refuse 0 warn 0 {}
+tris full  {"road":2902738,"PAINT":260,"1WALL":96,"underside":1026126,"apron":50100,"total":3979320}
+tris light {"road":2902738,"PAINT":260,"1WALL":96,"underside":967318,"apron":50100,"total":3920512}
+non-underside meshes 157 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 1051176 farthest from the light one 0.94 cm at -853.1,-238.4,-49.2 hist <1mm,<1cm,<3cm,<5cm,>=5cm [995578,55598,0,0,0]
+texel drift: vertices found by uv 1051176 not found 0 max 1.00 cm at -648.3,267.0,140.4
+written rb-grid-lan-full.kn5 underside tris 122640 underside texture was t180b_made-993b5297d4ad20a5-1024.dds
+written rb-grid-lan-light.kn5 underside tris 40758 underside texture was t180b_made-993b5297d4ad20a5-1024.dds
+written rb-grid-ely-full.kn5 underside tris 1026126 underside texture was t180b_made-f1c50637f5111ec2-1024.dds
+written rb-grid-ely-light.kn5 underside tris 477280 underside texture was t180b_made-f1c50637f5111ec2-1024.dds
+written rb-grid-t10-full.kn5 underside tris 484370 underside texture was t180b_made-c5e045c72db12fa3-1024.dds
+written rb-grid-t10-light.kn5 underside tris 202946 underside texture was t180b_made-c5e045c72db12fa3-1024.dds
+lockrun: done at 2026-11-02T18:27:09.623Z, exit 0

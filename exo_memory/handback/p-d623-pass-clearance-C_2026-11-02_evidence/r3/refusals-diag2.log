@@ -1,0 +1,2 @@
+extend	at TestContext.<anonymous> (C:\Users\nname\Desktop\worktrees\t180-c623\app\test\undo-reopen.test.js:65:5)	PASS_CLEARANCE: too close to another pass of the road: the road at 1.44 km (p6) meets the road at 0.31 km (p2)
+extend	at C:\Users\nname\Desktop\worktrees\t180-c623\test\core_segcache.test.js:43:28	PASS_CLEARANCE: too close to another pass of the road: the road at 1.31 km (p6) meets the road at 0.90 km (p4)

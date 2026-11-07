@@ -1,0 +1,14 @@
+G:/Consonance-tools/scratch-O-d601/b/t180b_elysium.kn5 total tris 3681960
+   road                     2902738 tris   2928948 verts 92 meshes
+   underskin                 675990 tris    701052 verts 57 meshes
+   apron(1ROAD_APRON)         49288 tris     98576 verts 57 meshes
+   APRONSIDE                  49288 tris     98576 verts 57 meshes
+   pit                         4036 tris      2605 verts 8 meshes
+   PAINT                        620 tris       814 verts 25 meshes
+G:/Consonance-tools/scratch-O-d606/fix4.kn5 total tris 3984610
+   road                     2902738 tris   2928948 verts 92 meshes
+   underskin                1024736 tris   1048366 verts 61 meshes
+   apron(1ROAD_APRON)         49744 tris     99066 verts 58 meshes
+   pit                         4036 tris      2605 verts 8 meshes
+   APRONSIDE                   3096 tris      1816 verts 1 meshes
+   PAINT                        260 tris       310 verts 7 meshes

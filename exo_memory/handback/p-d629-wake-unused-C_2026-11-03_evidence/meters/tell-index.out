@@ -1,0 +1,1896 @@
+tell-index — 121 day-windows
+board: C:\Consonance\data\board.jsonl
+scanned 191089 entries · 17231 dropped as replay bursts (>20/pane/sec) · 1249 synthetic user entries excluded · 2801 chair injections in the audit trail
+
+NAMED-TELL CANDIDATES  (count, and per 1k turns — CANDIDATES for a reader, not findings)
+
+day         turns  keeper   cmte  ref/turn  unlosabl  reflexiv  preloade  generic  protecti  /1k
+──────────  ─────  ──────  ─────  ────────  ────────  ────────  ────────  ───────  ────────  ───
+2026-06-29     13       6      7       0.5         ·         ·         ·        ·         ·    ·
+2026-06-30     35      25     10       0.6         0         0         0        0         0    0
+2026-07-03      6       3      3       0.5         0         0         0        0         0    0
+2026-07-04    253     132    121       0.6         5        12         0        6         1   95
+2026-07-05    120      66     54       2.6         0         0         0        0         2   17
+2026-07-06    116      56     60       0.6         ·         ·         ·        ·         ·    ·
+2026-07-07      0       0      0         —         0         0         0        0         0    —
+2026-07-08      1       0      1      12.0         0         0         0        0         0    0
+2026-07-09    590     281    309       3.6         ·         ·         ·        ·         ·    ·
+2026-07-10     64      27     37       2.9         ·         ·         ·        ·         ·    ·
+2026-07-11     52      26     26       1.0         ·         ·         ·        ·         ·    ·
+2026-07-12    219      76    143       1.9         ·         ·         ·        ·         ·    ·
+2026-07-13    176      60    116       8.8         ·         ·         ·        ·         ·    ·
+2026-07-14    371     115    256       5.5         ·         ·         ·        ·         ·    ·
+2026-07-18    923     417    506       6.2         ·         ·         ·        ·         ·    ·
+2026-07-19    391     168    223       4.4         ·         ·         ·        ·         ·    ·
+2026-07-20    264     126    138       1.6         5         0         0        0         0   19
+2026-07-21    825     261    564       3.5         5         0         0        0         1    7
+2026-07-23      0       0      0         —         0         0         0        0         0    —
+2026-07-24    309      71    238       4.4         ·         ·         ·        ·         ·    ·
+2026-07-25   1707     432   1275      43.2         ·         ·         ·        ·         ·    ·
+2026-07-26   2728     757   1971       9.1         ·         ·         ·        ·         ·    ·
+2026-07-27   3588    1391   2197       5.2         ·         ·         ·        ·         ·    ·
+2026-07-28   1724     555   1169       4.9         ·         ·         ·        ·         ·    ·
+2026-07-29   1142     417    725       4.4         ·         ·         ·        ·         ·    ·
+2026-07-30    145      56     89       4.9         ·         ·         ·        ·         ·    ·
+2026-07-31    387      91    296       7.0         ·         ·         ·        ·         ·    ·
+2026-08-01    355     123    232       3.1         ·         ·         ·        ·         ·    ·
+2026-08-02    597     149    448       5.6         ·         ·         ·        ·         ·    ·
+2026-08-03    171      41    130       4.8         ·         ·         ·        ·         ·    ·
+2026-08-04    322      95    227       8.2         ·         ·         ·        ·         ·    ·
+2026-08-05    122      29     93       4.2         ·         ·         ·        ·         ·    ·
+2026-08-06     52       9     43       5.2         ·         ·         ·        ·         ·    ·
+2026-08-07     36      13     23      32.2         ·         ·         ·        ·         ·    ·
+2026-08-08     14       4     10       6.2         1         0         0        0         0   71
+2026-08-09    479     139    340       5.3         ·         ·         ·        ·         ·    ·
+2026-08-10   1665     404   1261       7.2         ·         ·         ·        ·         ·    ·
+2026-08-11    909     259    650       5.2         ·         ·         ·        ·         ·    ·
+2026-08-12   1532     179   1353       7.1         ·         ·         ·        ·         ·    ·
+2026-08-13    677      89    588      11.9         ·         ·         ·        ·         ·    ·
+2026-08-14      5       2      3       7.8         0         0         0        0         0    0
+2026-08-15   1555     381   1174       4.8         ·         ·         ·        ·         ·    ·
+2026-08-16    789     247    542       5.1         ·         ·         ·        ·         ·    ·
+2026-08-17   1446     236   1210       8.7         ·         ·         ·        ·         ·    ·
+2026-08-18   2312     772   1540       6.3         ·         ·         ·        ·         ·    ·
+2026-08-19   1049     215    834       7.0         ·         ·         ·        ·         ·    ·
+2026-08-20    697     126    571       8.3         ·         ·         ·        ·         ·    ·
+2026-08-21      7       2      5       6.4         0         0         0        0         0    0
+2026-08-22   1122     215    907       5.7         ·         ·         ·        ·         ·    ·
+2026-08-23   1449     302   1147       8.2         ·         ·         ·        ·         ·    ·
+2026-08-24   1395     276   1118       7.2         ·         ·         ·        ·         ·    ·
+2026-08-25   2330     505   1825       7.5         ·         ·         ·        ·         ·    ·
+2026-08-26     26       9     17       1.1         0         0         0        0         0    0
+2026-08-27     96      12     84      11.2         ·         ·         ·        ·         ·    ·
+2026-08-28     70       9     61      11.5         ·         ·         ·        ·         ·    ·
+2026-08-29    593     138    455       6.2         ·         ·         ·        ·         ·    ·
+2026-08-30   1273     352    921       7.5         ·         ·         ·        ·         ·    ·
+2026-08-31   1126     293    833       8.2         ·         ·         ·        ·         ·    ·
+2026-09-01   2060     530   1530       7.5         ·         ·         ·        ·         ·    ·
+2026-09-02   2292     566   1726       8.6         ·         ·         ·        ·         ·    ·
+2026-09-03    315      61    253       7.8         ·         ·         ·        ·         ·    ·
+2026-09-04    392      42    345       5.7         ·         ·         ·        ·         ·    ·
+2026-09-05      6       2      4       2.5         0         0         0        0         0    0
+2026-09-06   1743     444   1292       5.4         ·         ·         ·        ·         ·    ·
+2026-09-07    885     212    673       6.3         ·         ·         ·        ·         ·    ·
+2026-09-08   1573     357   1216       5.7         ·         ·         ·        ·         ·    ·
+2026-09-09   1753     429   1321       8.0         ·         ·         ·        ·         ·    ·
+2026-09-10    152      56     96       6.2         ·         ·         ·        ·         ·    ·
+2026-09-11    252      71    181      11.3         ·         ·         ·        ·         ·    ·
+2026-09-12    703     134    569       4.1         ·         ·         ·        ·         ·    ·
+2026-09-14   1735     584   1151       8.4         ·         ·         ·        ·         ·    ·
+2026-09-15   1880     548   1331       9.7         ·         ·         ·        ·         ·    ·
+2026-09-16   4553     898   3652       7.2         ·         ·         ·        ·         ·    ·
+2026-09-17    253      80    173       6.0         ·         ·         ·        ·         ·    ·
+2026-09-18    477     124    353       6.6         ·         ·         ·        ·         ·    ·
+2026-09-19   2701     695   2006       8.3         ·         ·         ·        ·         ·    ·
+2026-09-20   4164     663   3501       6.3         ·         ·         ·        ·         ·    ·
+2026-09-21   4102    1200   2902       7.6         ·         ·         ·        ·         ·    ·
+2026-09-22   6809    1923   4885       6.7         ·         ·         ·        ·         ·    ·
+2026-09-23   5395    1194   4201       7.3         ·         ·         ·        ·         ·    ·
+2026-09-24   2983     660   2322       4.5         ·         ·         ·        ·         ·    ·
+2026-09-25   1781     455   1326       3.6         ·         ·         ·        ·         ·    ·
+2026-09-26   2568     710   1855       5.2         ·         ·         ·        ·         ·    ·
+2026-09-27  13378    3065  10302       6.6         ·         ·         ·        ·         ·    ·
+2026-09-28   5838    1244   4587       5.7         ·         ·         ·        ·         ·    ·
+2026-09-29   2887     857   2030       6.3         ·         ·         ·        ·         ·    ·
+2026-09-30    854     209    645       3.5         ·         ·         ·        ·         ·    ·
+2026-10-01   1449     401   1048       6.5         ·         ·         ·        ·         ·    ·
+2026-10-02   1485     393   1092       4.5         ·         ·         ·        ·         ·    ·
+2026-10-03   2795     754   2041       6.2         ·         ·         ·        ·         ·    ·
+2026-10-04   1941     510   1431       4.9         ·         ·         ·        ·         ·    ·
+2026-10-05   2229     571   1658       5.4         ·         ·         ·        ·         ·    ·
+2026-10-06   2073     469   1604       4.6         ·         ·         ·        ·         ·    ·
+2026-10-07    776     162    614       3.8         ·         ·         ·        ·         ·    ·
+2026-10-08   1130     215    915       4.5         ·         ·         ·        ·         ·    ·
+2026-10-09   1502     319   1182       6.6         ·         ·         ·        ·         ·    ·
+2026-10-10   1241     291    949       7.7         ·         ·         ·        ·         ·    ·
+2026-10-11   1345     268   1071       8.4         ·         ·         ·        ·         ·    ·
+2026-10-12   2328     583   1743       6.3         ·         ·         ·        ·         ·    ·
+2026-10-13   2124     455   1665       7.2         ·         ·         ·        ·         ·    ·
+2026-10-14   1738     453   1279       7.2         ·         ·         ·        ·         ·    ·
+2026-10-15   1322     280   1033       3.7         ·         ·         ·        ·         ·    ·
+2026-10-16   1537     333   1189       7.1         ·         ·         ·        ·         ·    ·
+2026-10-17   2186     447   1727       7.1         ·         ·         ·        ·         ·    ·
+2026-10-18   1759     339   1419       7.5         ·         ·         ·        ·         ·    ·
+2026-10-19   2276     505   1771       7.1         ·         ·         ·        ·         ·    ·
+2026-10-20   1673     345   1325       7.3         ·         ·         ·        ·         ·    ·
+2026-10-21    756     159    596       5.8         ·         ·         ·        ·         ·    ·
+2026-10-22   1386     290   1096       6.3         ·         ·         ·        ·         ·    ·
+2026-10-23   1261     273    988       7.5         ·         ·         ·        ·         ·    ·
+2026-10-24   1464     282   1176       5.5         ·         ·         ·        ·         ·    ·
+2026-10-25   1900     374   1523       6.1         ·         ·         ·        ·         ·    ·
+2026-10-26   1756     363   1390       5.8         ·         ·         ·        ·         ·    ·
+2026-10-27   1619     378   1240       5.7         ·         ·         ·        ·         ·    ·
+2026-10-28   2118     454   1661       5.3         ·         ·         ·        ·         ·    ·
+2026-10-29   2055     477   1574       4.5         ·         ·         ·        ·         ·    ·
+2026-10-30   1888     441   1447       5.4         ·         ·         ·        ·         ·    ·
+2026-10-31   2317     519   1798       4.8         ·         ·         ·        ·         ·    ·
+2026-11-01   1143     351    792       4.0         ·         ·         ·        ·         ·    ·
+2026-11-02   2241     548   1693       4.4         ·         ·         ·        ·         ·    ·
+2026-11-03    892     187    705       5.8         ·         ·         ·        ·         ·    ·
+
+  columns: unlosabl=unlosable opener · reflexiv=reflexive "but" · preloade=pre-loaded concession · generic=generic blind-spot hedge · protecti=protective pre-disclaimer
+
+  · = WITHHELD: 107 of 121 windows hold more than one
+    committee actor, and a pooled tell count across actors is a number about nobody. This is
+    residue.js's refusal adopted, not re-derived. Per actor, below — the aggregate is what is
+    withheld, never the evidence. (keeper = the human, one actor however many panes.)
+
+  2026-06-29
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper         6         0         0         0        0         0      0
+      0c0c0c0a  committee      6         0         0         0        0         0      2
+      blind     committee      1         0         0         0        0         0      0
+
+  2026-07-06
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper        56         0         0         0        0         0     18
+      0c0c0c0a  committee     48         0         0         0        0         0     24
+      b8ea54e3  committee     10         1         0         0        0         0      3
+      6085178a  committee      1         0         0         0        0         0      1
+      9c08c65b  committee      1         0         0         0        0         0      1
+
+  2026-07-09
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       281         0         0         0        0         0      2
+      1582ff09  committee    219         0         0         0        0         0      6
+      0c0c0c0a  committee     90         0         0         0        0         0      4
+
+  2026-07-10
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      1582ff09  committee     31         0         0         0        0         0      1
+      keeper    keeper        27         0         0         0        0         0      0
+      0c0c0c0a  committee      6         0         0         0        0         0      0
+
+  2026-07-11
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper        26         0         0         0        0         0      4
+      66eee6ce  committee     20         0         0         0        0         0     10
+      433f587c  committee      6         0         0         0        0         0      0
+
+  2026-07-12
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper        76         0         0         0        0         0      0
+      6fe15f0a  committee     72         0         0         0        0         0     13
+      0c0c0c0a  committee     66         0         0         0        0         0      6
+      sibling-  committee      5         0         0         0        0         0      1
+
+  2026-07-13
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper        60         0         0         0        0         1      6
+      6fe15f0a  committee     55         1         0         0        0         0      5
+      0c0c0c0a  committee     42         0         0         0        0         0      0
+      1582ff09  committee     12         0         0         0        0         0      0
+      12fb81f6  committee      4         0         0         0        0         0      0
+      gate      committee      2         0         0         0        0         0      0
+      sibling-  committee      1         0         0         0        0         0      0
+
+  2026-07-14
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    124         0         0         0        0         0     28
+      keeper    keeper       115         0         0         0        0         0      0
+      6fe15f0a  committee    102         0         0         0        0         0      6
+      12fb81f6  committee     30         0         0         0        0         0     10
+
+  2026-07-18
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    504         0         6         0        0         0     96
+      keeper    keeper       417         0         0         0        0         1      0
+      main      committee      2         0         0         0        0         0      0
+
+  2026-07-19
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    222         0         0         0        0         0     66
+      keeper    keeper       168         0         0         0        0         0      0
+      main      committee      1         0         0         0        0         0      0
+
+  2026-07-24
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    188         2         0         0        0         0      6
+      keeper    keeper        71         0         0         0        0         0      0
+      1582ff09  committee     37         0         0         0        0         0      1
+      main      committee      7         0         0         0        0         0      1
+      18916fe2  committee      4         0         0         0        0         0      0
+      blackbox  committee      2         0         0         0        0         0      0
+
+  2026-07-25
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee   1028         0         2         0        0         0    110
+      keeper    keeper       432         0         0         0        0         2      6
+      6fe15f0a  committee    240         0         0         0        0         0      5
+      1582ff09  committee      5         0         0         0        0         0      0
+      main      committee      1         0         0         0        0         0      0
+      blackbox  committee      1         0         0         0        0         0      0
+
+  2026-07-26
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee   1938        18         0         0        0         4     44
+      keeper    keeper       757         0         0         0        0         2      0
+      6fe15f0a  committee     25         0         0         0        0         0      0
+      1582ff09  committee      7         0         0         0        0         0      0
+      main-tab  committee      1         0         0         0        0         0      0
+
+  2026-07-27
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee   1664         0         7         0        0        13    284
+      keeper    keeper      1391         0         3         0        0         1     13
+      0845a868  committee    107         2         0         0        0         0     16
+      6fe15f0a  committee     80         0         0         0        0         0     11
+      18916fe2  committee     76         0         1         0        0         1     11
+      1582ff09  committee     75         1         0         0        0         1     10
+      chair     committee     65         0         0         0        0         2      1
+      12fb81f6  committee     59         0         1         0        0         0      9
+      bravo     committee     16         0        11         0        0         1      8
+      main      committee     12         0         0         0        0         2      5
+      around    committee     12         0         0         0        0         2      6
+      sibling-  committee     10         0         0         0        0         0      4
+      alpha     committee      9         0         1         0        0         0      6
+      a         committee      6         0         0         0        0         0      2
+      m         committee      3         0         0         0        0         0      0
+      gate      committee      2         0         0         0        0         0      0
+      backfill  committee      1         0         0         0        0         0      0
+
+  2026-07-28
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee   1000         1         0         0        0         5     91
+      keeper    keeper       555         0         0         0        0         1      9
+      0845a868  committee     47         0         0         0        0         0      5
+      chair     committee     29         0         0         0        0         0      0
+      12fb81f6  committee     28         0         0         0        0         0      3
+      6fe15f0a  committee     26         0         0         0        0         0      2
+      around    committee      7         0         0         0        0         0      3
+      bravo     committee      7         0         0         0        0         0      3
+      alpha     committee      6         0         0         0        0         0      2
+      b         committee      6         0         0         0        0         0      1
+      backfill  committee      4         0         0         0        0         0      0
+      1582ff09  committee      3         0         0         0        0         0      0
+      a         committee      3         0         0         0        0         0      0
+      18916fe2  committee      2         0         0         0        0         0      0
+      c         committee      1         0         0         0        0         0      0
+
+  2026-07-29
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    591         0         0         0        0         0     42
+      keeper    keeper       417         0         0         0        0         0      2
+      1582ff09  committee     57         0         0         0        0         0      4
+      18916fe2  committee     47         0         0         0        0         0      2
+      backfill  committee     14         0         0         0        0         0      0
+      chair     committee      8         0         0         0        0         0      0
+      a         committee      4         0         0         0        0         0      3
+      b         committee      2         0         0         0        0         0      1
+      gate      committee      2         0         0         0        0         0      0
+
+  2026-07-30
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee     65         1         1         0        0         0      8
+      keeper    keeper        56         0         0         0        0         0      2
+      1582ff09  committee     11         0         0         0        0         0      0
+      34eba3b5  committee      5         0         0         0        0         0      0
+      chair     committee      3         0         0         0        0         0      0
+      backfill  committee      2         0         0         0        0         0      0
+      f6e825b5  committee      2         0         0         0        0         0      0
+      7f990232  committee      1         0         0         0        0         0      0
+
+  2026-07-31
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    129         1         0         0        0         0      7
+      1582ff09  committee     96         0         0         0        0         0      2
+      keeper    keeper        91         0         0         0        0         0      0
+      chair     committee     22         0         0         0        0         0      0
+      18916fe2  committee     20         0         0         0        0         0      0
+      a         committee      9         0         0         0        0         0      2
+      b         committee      7         0         0         0        0         0      0
+      ee7d100f  committee      6         0         0         0        0         0      0
+      908a862e  committee      4         1         0         0        0         0      0
+      backfill  committee      2         0         0         0        0         0      0
+      7f990232  committee      1         0         0         0        0         0      0
+
+  2026-08-01
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    138         1         0         0        0         0     23
+      keeper    keeper       123         0         0         0        0         0      2
+      1582ff09  committee     51         0         0         0        0         0      2
+      18916fe2  committee     33         0         0         0        0         0      0
+      chair     committee      5         0         0         0        0         0      0
+      a         committee      3         0         0         0        0         0      0
+      blind     committee      1         0         0         0        0         0      0
+      b         committee      1         0         0         0        0         0      1
+
+  2026-08-02
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    244         1         0         0        0         0     34
+      keeper    keeper       149         0         0         0        0         0      7
+      18916fe2  committee    104         0         0         0        0         0      9
+      1582ff09  committee     46         0         0         0        0         0     10
+      chair     committee     35         0         0         0        0         0      0
+      a         committee     10         0         0         0        0         0      5
+      b         committee      9         0         0         0        0         0      2
+
+  2026-08-03
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee     91         0         0         0        0         0     23
+      keeper    keeper        41         0         0         0        0         0      1
+      18916fe2  committee     15         0         0         0        0         0      6
+      1582ff09  committee     14         0         0         0        0         0      6
+      chair     committee      8         0         0         0        0         0      0
+      a         committee      2         0         0         0        0         0      0
+
+  2026-08-04
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    226         2         0         0        0         0      5
+      keeper    keeper        95         1         0         0        0         0      0
+      backfill  committee      1         0         0         0        0         0      0
+
+  2026-08-05
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee     92         2         1         0        0         0      5
+      keeper    keeper        29         0         0         0        0         0      0
+      backfill  committee      1         0         0         0        0         0      0
+
+  2026-08-06
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee     41         0         0         0        0         0      2
+      keeper    keeper         9         0         0         0        0         0      0
+      backfill  committee      1         0         0         0        0         0      0
+      18916fe2  committee      1         0         0         0        0         0      0
+
+  2026-08-07
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee     22         0         0         0        0         0      1
+      keeper    keeper        13         0         0         0        0         0      0
+      backfill  committee      1         0         0         0        0         0      0
+
+  2026-08-09
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    302         4         4         0        0         0     14
+      keeper    keeper       139         0         0         0        0         0      0
+      0845a868  committee     32         1         0         0        0         0      3
+      backfill  committee      3         0         0         0        0         0      0
+      chair     committee      2         0         0         0        0         0      0
+      c         committee      1         0         0         0        0         0      1
+
+  2026-08-10
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    984         2         4         0        0         0     69
+      keeper    keeper       404         0         0         0        0         0      1
+      8a574b7a  committee     64         0         0         0        0         0      0
+      18916fe2  committee     46         0         0         0        0         0      1
+      chair     committee     33         0         0         0        0         0      0
+      1582ff09  committee     30         0         0         2        0         0      0
+      ee7d100f  committee     22         0         0         0        0         0      0
+      0845a868  committee     17         0         0         0        0         0      3
+      e8dad9bb  committee     10         1         0         0        0         0      4
+      6fe15f0a  committee      9         0         0         0        0         0      0
+      12fb81f6  committee      9         0         0         0        0         0      0
+      b         committee      7         0         0         0        0         0      0
+      908a862e  committee      6         0         0         0        0         0      0
+      backfill  committee      5         0         0         0        0         0      0
+      a         committee      5         0         0         1        0         0      0
+      02f7c88a  committee      5         0         0         0        0         0      0
+      j         committee      5         0         0         0        0         0      0
+      a2122153  committee      4         0         0         0        0         0      0
+
+  2026-08-11
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    619         4         4         0        0         0     29
+      keeper    keeper       259         0         0         0        0         0      4
+      chair     committee      8         0         0         0        0         0      0
+      8c366c5c  committee      6         0         0         0        0         0      1
+      efdcf8e2  committee      5         0         0         0        0         0      1
+      7c1e8b27  committee      5         0         0         0        0         1      0
+      324355d3  committee      4         0         0         0        0         0      1
+      backfill  committee      3         0         0         0        0         0      0
+
+  2026-08-12
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    515         1         1         0        0         0     22
+      18916fe2  committee    210         0         0         0        0         0      5
+      keeper    keeper       179         0         0         0        0         0      3
+      8a574b7a  committee    168         0         0         0        0         1      3
+      76cc418a  committee    142         1         1         0        0         0      6
+      1582ff09  committee    130         0         0         0        0         0      4
+      chair     committee     86         0         0         0        0         0      0
+      46d3d352  committee     25         0         0         0        0         0      4
+      b         committee     24         0         0         0        0         0      2
+      j         committee     19         0         0         0        0         0      4
+      k         committee     18         0         1         0        0         0      8
+      a         committee     10         0         0         0        0         0      2
+      l         committee      5         0         0         0        0         0      0
+      ee7d100f  committee      1         0         0         0        0         0      0
+
+  2026-08-13
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    176         3         0         0        0         0      6
+      8a574b7a  committee    115         0         0         0        0         0      1
+      76cc418a  committee     90         0         0         0        0         0      3
+      keeper    keeper        89         0         0         0        0         0      5
+      18916fe2  committee     68         1         0         0        0         0      1
+      1582ff09  committee     45         0         0         0        0         0      1
+      chair     committee     38         0         0         0        0         0      0
+      46d3d352  committee     26         0         0         0        0         0      0
+      k         committee     11         0         0         0        0         0      5
+      j         committee      8         0         0         0        0         0      1
+      b         committee      7         0         0         0        0         0      0
+      l         committee      4         0         0         0        0         0      0
+
+  2026-08-15
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    878         1         4         0        0         0    175
+      keeper    keeper       381         0         0         0        0         0      8
+      chair     committee     43         0         0         0        0         0      0
+      0845a868  committee     39         0         1         0        0         0     11
+      8a574b7a  committee     36         0         0         0        0         0      1
+      18916fe2  committee     28         0         0         0        0         0      0
+      6fe15f0a  committee     27         0         0         0        0         0      4
+      12fb81f6  committee     26         0         0         0        0         0      4
+      a2122153  committee     22         0         1         0        0         0      5
+      1582ff09  committee     22         0         0         0        0         0      1
+      76cc418a  committee     17         0         0         0        0         0      1
+      46d3d352  committee     17         0         0         0        0         0      3
+      c         committee      9         0         0         0        0         0      6
+      b         committee      4         0         0         0        0         0      0
+      a         committee      3         0         0         0        0         0      2
+      e         committee      1         0         0         0        0         0      1
+      k         committee      1         0         0         0        0         0      0
+      j         committee      1         0         0         0        0         0      0
+
+  2026-08-16
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    529         8         4         0        0         0     60
+      keeper    keeper       247         0         0         0        0         0      8
+      0845a868  committee     11         0         0         0        0         0      3
+      chair     committee      2         0         0         0        0         0      0
+
+  2026-08-17
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee   1088         0         0         0        0         0     65
+      keeper    keeper       236         0         0         0        0         0      4
+      12fb81f6  committee     31         0         0         0        0         0      1
+      6fe15f0a  committee     27         0         0         0        0         0      1
+      0845a868  committee     24         0         0         0        0         0      1
+      chair     committee     19         0         0         0        0         0      0
+      a2122153  committee     18         0         0         0        0         0      0
+      a         committee      3         0         0         0        0         0      0
+
+  2026-08-18
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee   1328         4         0         0        0         0     39
+      keeper    keeper       772         0         0         0        0         0      0
+      6fe15f0a  committee     80         0         0         0        0         0      0
+      12fb81f6  committee     42         0         0         0        0         0      3
+      a2122153  committee     31         0         0         0        0         0      1
+      chair     committee     25         0         0         0        0         0      0
+      0845a868  committee     12         0         1         0        0         0      1
+      a         committee      5         0         0         0        0         0      0
+      backfill  committee      3         0         0         0        0         0      0
+      8a574b7a  committee      3         0         0         0        0         0      0
+      c         committee      2         0         0         0        0         0      0
+      18916fe2  committee      2         0         0         0        0         0      0
+      1582ff09  committee      2         0         0         0        0         0      0
+      76cc418a  committee      2         0         0         0        0         0      1
+      46d3d352  committee      2         0         0         0        0         0      1
+      e         committee      1         0         0         0        0         0      0
+
+  2026-08-19
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    374         0         1         0        0         0     19
+      keeper    keeper       215         0         0         0        0         0      2
+      8a574b7a  committee    145         0         1         0        0         0      5
+      18916fe2  committee    113         0         1         0        0         0      2
+      1582ff09  committee     95         0         0         0        0         0      4
+      76cc418a  committee     50         0         0         0        0         0      0
+      chair     committee     44         0         0         0        0         0      1
+      46d3d352  committee      6         0         0         0        0         0      1
+      c         committee      4         0         0         0        0         0      1
+      b         committee      3         0         0         0        0         0      0
+
+  2026-08-20
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    244         0         0         1        0         0      8
+      keeper    keeper       126         0         0         0        0         0      3
+      8a574b7a  committee     94         0         0         0        0         1      2
+      18916fe2  committee     71         0         0         0        0         0      2
+      1582ff09  committee     66         0         0         0        0         0      2
+      76cc418a  committee     46         0         0         0        0         0      1
+      chair     committee     23         0         0         0        0         0      0
+      c         committee      9         0         0         0        0         0      2
+      46d3d352  committee      4         0         0         0        0         0      0
+      b         committee      4         0         0         0        0         0      0
+      j         committee      3         0         0         0        0         0      1
+      a         committee      3         0         0         0        0         0      0
+      l         committee      2         0         0         0        0         0      0
+      k         committee      2         0         0         0        0         0      1
+
+  2026-08-22
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    859         0         0         0        0         0     93
+      keeper    keeper       215         0         4         0        0         0      1
+      12fb81f6  committee     14         0         0         0        0         0      1
+      0c0c0c0b  committee     14         0         0         0        0         0      0
+      chair     committee      7         0         0         0        0         0      0
+      a2122153  committee      4         0         0         0        0         0      1
+      6fe15f0a  committee      3         0         0         0        0         0      1
+      0845a868  committee      3         0         0         0        0         0      2
+      backfill  committee      2         0         0         0        0         0      0
+      a         committee      1         0         0         0        0         0      1
+
+  2026-08-23
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee   1005         0         0         0        0         0    112
+      keeper    keeper       302         0         0         0        0         0     10
+      0c0c0c0b  committee     63         0         0         0        0         0     18
+      6fe15f0a  committee     36         0         0         0        0         0      2
+      chair     committee     22         0         0         0        0         0      0
+      12fb81f6  committee      9         0         0         0        0         0      0
+      0845a868  committee      7         0         0         0        0         0      0
+      a2122153  committee      3         0         0         0        0         0      1
+      backfill  committee      1         0         0         0        0         0      0
+      e         committee      1         0         0         0        0         0      1
+
+  2026-08-24
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a      committee       944         0         4         0        0         0     52
+      keeper        keeper          276         0         0         0        0         0      1
+      0c0c0c0b      committee        51         0         0         0        0         0      6
+      a2122153      committee        47         0         0         0        0         0      1
+      chair         committee        33         0         0         0        0         0      0
+      12fb81f6      committee        12         0         0         0        0         0      1
+      0845a868      committee         8         0         0         0        0         0      1
+      6fe15f0a      committee         6         0         0         0        0         0      1
+      backfill      committee         3         0         0         0        0         0      0
+      m             committee         3         0         0         0        0         0      0
+      c             committee         3         0         0         0        0         0      1
+      gate          committee         2         0         0         0        0         0      0
+      e             committee         2         0         0         0        0         0      0
+      a             committee         2         0         0         0        0         0      1
+      b             committee         2         0         0         0        0         0      0
+      unattributed  unattributed      1         0         0         0        0         0      0
+
+  2026-08-25
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee   1419         4         4         0        0         0     88
+      keeper    keeper       505         4         5         0        0         0     22
+      0c0c0c0b  committee    153         0         0         0        0         0     27
+      chair     committee     73         0         0         0        0         0      0
+      6fe15f0a  committee     61         0         0         0        0         0      1
+      12fb81f6  committee     49         0         0         0        0         0      1
+      0845a868  committee     21         0         0         0        0         0      1
+      a2122153  committee     10         0         0         0        0         0      4
+      3d000000  committee      9         1         0         0        0         0      1
+      a         committee      7         0         0         0        0         0      1
+      backfill  committee      6         0         0         0        0         0      0
+      b         committee      6         0         0         0        0         0      1
+      c         committee      6         0         0         0        0         0      1
+      e         committee      4         0         0         0        0         0      1
+      3c4b2c68  committee      1         0         0         0        0         0      0
+
+  2026-08-27
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee     28         0         0         0        0         0      1
+      0c0c0c0b  committee     24         0         0         0        0         0      2
+      keeper    keeper        12         0         0         0        0         0      2
+      chair     committee     10         0         0         0        0         0      0
+      18916fe2  committee      6         0         0         0        0         0      0
+      76cc418a  committee      3         0         0         0        0         0      1
+      8a574b7a  committee      3         0         0         0        0         0      1
+      46d3d352  committee      3         0         0         0        0         0      1
+      1582ff09  committee      2         0         0         0        0         0      0
+      a         committee      1         0         0         0        0         0      0
+      l         committee      1         0         0         0        0         0      0
+      k         committee      1         0         0         0        0         0      0
+      j         committee      1         0         0         0        0         0      0
+      b         committee      1         0         0         0        0         0      0
+
+  2026-08-28
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee     20         0         0         0        0         0      1
+      keeper    keeper         9         0         0         0        0         0      0
+      chair     committee      7         0         0         0        0         0      0
+      18916fe2  committee      6         0         0         0        0         0      0
+      76cc418a  committee      6         0         0         0        0         0      0
+      0c0c0c0b  committee      6         0         0         0        0         0      0
+      8a574b7a  committee      4         0         0         0        0         0      0
+      1582ff09  committee      3         0         0         0        0         0      0
+      46d3d352  committee      3         0         0         0        0         0      0
+      a         committee      2         0         0         0        0         0      0
+      l         committee      1         0         0         0        0         0      0
+      j         committee      1         0         0         0        0         0      0
+      b         committee      1         0         0         0        0         0      0
+      k         committee      1         0         0         0        0         0      0
+
+  2026-08-29
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    280         0         0         0        0         0     24
+      keeper    keeper       138         0         0         0        0         0      0
+      0845a868  committee     52         0         0         0        0         0      0
+      0c0c0c0b  committee     50         0         0         0        0         0      3
+      chair     committee     23         0         0         0        0         0      0
+      12fb81f6  committee     17         0         0         0        0         0      1
+      a2122153  committee     17         0         0         0        0         0      1
+      6fe15f0a  committee      5         0         0         0        0         0      0
+      e         committee      4         0         0         0        0         0      1
+      b         committee      3         0         0         0        0         0      2
+      a         committee      2         0         0         0        0         0      0
+      c         committee      2         0         0         0        0         0      0
+
+  2026-08-30
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    740         0         0         0        0         0     24
+      keeper    keeper       352         0         0         0        0         0      9
+      0c0c0c0b  committee     55         0         0         0        0         0      6
+      6fe15f0a  committee     43         0         0         0        0         0      1
+      chair     committee     30         0         0         0        0         0      0
+      12fb81f6  committee     22         0         0         0        0         0      2
+      0845a868  committee      9         0         0         0        0         0      3
+      a2122153  committee      9         0         0         0        0         0      0
+      b         committee      4         0         0         0        0         0      1
+      c         committee      3         0         0         0        0         0      1
+      e         committee      3         0         0         0        0         0      0
+      a         committee      3         0         0         0        0         0      0
+
+  2026-08-31
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    564         4         4         0        0         4     44
+      keeper    keeper       293         0         0         0        0         0      4
+      0c0c0c0b  committee     54         0         0         0        0         0      6
+      chair     committee     54         0         0         0        0         0      2
+      6fe15f0a  committee     41         0         0         0        0         0      3
+      a2122153  committee     39         0         0         0        0         0      2
+      0845a868  committee     28         0         0         0        0         0      1
+      12fb81f6  committee     25         0         0         0        0         0      0
+      a         committee     12         0         0         0        0         0      1
+      e         committee      7         0         0         0        0         0      4
+      c         committee      5         0         0         0        0         0      0
+      b         committee      4         0         0         0        0         0      0
+
+  2026-09-01
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee   1036         0         0         0        0         0     56
+      keeper    keeper       530         0         0         0        0         0     11
+      0c0c0c0b  committee    143         1         1         0        0         0     12
+      a2122153  committee    103         0         0         0        0         0      2
+      chair     committee     81         0         0         0        0         0      0
+      6fe15f0a  committee     49         0         0         0        0         0      2
+      12fb81f6  committee     43         0         0         0        0         0      0
+      0845a868  committee     38         1         0         0        0         0      2
+      a         committee     12         0         0         0        0         0      1
+      b         committee      7         0         0         0        0         0      0
+      c         committee      7         0         0         0        0         0      0
+      backfill  committee      5         0         0         0        0         0      0
+      e         committee      4         0         0         0        0         0      0
+      gate      committee      2         0         0         0        0         0      0
+
+  2026-09-02
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    772         0         0         0        0         0     40
+      0c0c0c0b  committee    687         4         0         0        0         0     27
+      keeper    keeper       566         0         0         0        0         0      8
+      chair     committee    106         0         0         0        0         0      0
+      6fe15f0a  committee     50         0         0         0        0         0      2
+      a2122153  committee     39         0         0         0        0         0      0
+      12fb81f6  committee     30         0         0         0        0         0      2
+      0845a868  committee     25         0         0         0        0         0      0
+      backfill  committee      7         0         0         0        0         0      0
+      a         committee      4         0         0         0        0         0      0
+      b         committee      3         0         0         0        0         0      0
+      c         committee      3         0         0         0        0         0      0
+
+  2026-09-03
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a      committee       127         0         1         0        0         0      1
+      keeper        keeper           61         0         0         0        0         0      0
+      76cc418a      committee        54         0         0         0        0         0      2
+      0c0c0c0b      committee        31         0         0         0        0         0      1
+      chair         committee        19         0         0         0        0         0      0
+      46d3d352      committee         5         1         0         0        0         0      0
+      1582ff09      committee         5         0         0         0        0         0      0
+      8a574b7a      committee         3         0         0         0        0         0      1
+      18916fe2      committee         2         0         0         0        0         0      0
+      gate          committee         2         0         0         0        0         0      0
+      k             committee         2         0         0         0        0         0      1
+      unattributed  unattributed      1         0         0         0        0         0      0
+      b             committee         1         0         0         0        0         0      0
+      j             committee         1         0         0         0        0         0      0
+      l             committee         1         0         0         0        0         0      0
+
+  2026-09-04
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      76cc418a      committee        98         1         0         0        0         0      0
+      0c0c0c0a      committee        93         0         0         0        0         0      2
+      chair         committee        65         0         0         0        0         0      0
+      keeper        keeper           42         0         0         0        0         0      1
+      0c0c0c0b      committee        38         1         0         0        0         0      2
+      18916fe2      committee        21         0         0         0        0         0      1
+      8a574b7a      committee        13         0         0         0        0         0      1
+      unattributed  unattributed      5         0         0         0        0         0      0
+      1582ff09      committee         4         0         0         0        0         0      1
+      46d3d352      committee         4         0         0         0        0         0      1
+      b             committee         3         0         0         0        0         0      1
+      backfill      committee         2         0         0         0        0         0      0
+      l             committee         2         0         0         0        0         0      0
+      j             committee         2         0         0         0        0         0      1
+
+  2026-09-06
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0b      committee       566         0         0         0        0         0     12
+      keeper        keeper          444         0         4         0        0         0      0
+      0c0c0c0a      committee       385         0         0         0        0         0     46
+      chair         committee       138         0         0         0        0         0      2
+      a2122153      committee        57         0         0         0        0         0      2
+      12fb81f6      committee        49         0         0         0        0         0      3
+      0845a868      committee        33         0         0         0        0         0      2
+      6fe15f0a      committee        25         0         0         0        0         0      2
+      gate          committee        17         0         0         0        0         0      1
+      e             committee        11         0         0         0        0         0      2
+      unattributed  unattributed      7         0         0         0        0         0      0
+      backfill      committee         3         0         0         0        0         0      0
+      76cc418a      committee         3         0         0         0        0         0      1
+      b             committee         2         0         0         0        0         0      0
+      c             committee         2         0         0         0        0         0      0
+      46d3d352      committee         1         0         0         0        0         0      0
+
+  2026-09-07
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0b  committee    236         0         0         0        0         0      0
+      0c0c0c0a  committee    232         0         0         0        0         0     28
+      keeper    keeper       212         0         0         0        0         0      4
+      0845a868  committee     73         0         0         1        0         0      0
+      chair     committee     69         0         0         0        0         0      0
+      a2122153  committee     38         0         0         0        0         0      0
+      6fe15f0a  committee     14         0         0         0        0         0      0
+      12fb81f6  committee      9         0         0         0        0         0      0
+      backfill  committee      1         0         0         0        0         0      0
+      c         committee      1         0         0         0        0         0      0
+
+  2026-09-08
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0b  committee    452         0         0         0        0         0      8
+      0c0c0c0a  committee    428         0         0         0        0         0     20
+      keeper    keeper       357         0         4         0        0         0      8
+      12fb81f6  committee     99         0         0         0        0         0      1
+      a2122153  committee     94         0         0         0        0         0      2
+      chair     committee     85         0         0         0        0         0      0
+      6fe15f0a  committee     40         0         0         0        0         0      1
+      0845a868  committee     16         0         0         0        0         0      2
+      c         committee      1         0         0         0        0         0      0
+      backfill  committee      1         0         0         0        0         0      0
+
+  2026-09-09
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a      committee       511         0         0         0        0         0     11
+      keeper        keeper          429         0         0         0        0         0      5
+      0c0c0c0b      committee       284         0         0         0        0         0      6
+      chair         committee       169         0         0         0        0         0      0
+      12fb81f6      committee       159         0         0         0        0         0      1
+      a2122153      committee        70         0         0         0        0         0      2
+      0845a868      committee        66         1         0         0        0         0      1
+      6fe15f0a      committee        51         0         0         0        0         0      2
+      b             committee         4         0         0         0        0         0      0
+      sync          committee         3         0         0         0        0         0      0
+      unattributed  unattributed      3         0         0         0        0         0      0
+      backfill      committee         2         0         0         0        0         0      0
+      a             committee         2         0         0         0        0         0      2
+
+  2026-09-10
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0b  committee     74         0         0         0        0         0      2
+      keeper    keeper        56         0         0         0        0         0      0
+      0c0c0c0a  committee     10         0         0         0        0         0      0
+      chair     committee      9         0         0         0        0         0      0
+      sync      committee      3         0         0         0        0         0      0
+
+  2026-09-11
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0b  committee     95         0         0         0        0         0      4
+      keeper    keeper        71         0         0         0        0         0      4
+      0c0c0c0a  committee     57         0         0         0        0         0      0
+      chair     committee     23         0         0         0        0         0      0
+      sync      committee      4         0         0         0        0         0      0
+      0845a868  committee      2         0         0         0        0         0      0
+
+  2026-09-12
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0a  committee    197         0         0         0        0         0      4
+      a2122153  committee    138         0         0         0        0         0      4
+      keeper    keeper       134         0         0         0        0         0      0
+      0c0c0c0b  committee     95         0         0         0        0         0      0
+      6fe15f0a  committee     80         0         0         0        0         0      4
+      chair     committee     45         0         0         0        0         0      0
+      resume    committee      8         0         0         0        0         0      0
+      sync      committee      6         0         0         0        0         0      0
+
+  2026-09-14
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       584         0         0         0        0         0      4
+      0c0c0c0b  committee    421         0         0         0        0         0     12
+      0c0c0c0a  committee    260         0         4         0        0         0      8
+      chair     committee    137         0         0         0        0         0      0
+      a2122153  committee    127         0         0         0        0         0      0
+      6fe15f0a  committee    124         0         0         0        0         0      4
+      resume    committee     32         0         0         0        0         0      0
+      0845a868  committee     24         0         0         0        0         0      0
+      12fb81f6  committee     16         0         0         0        0         0      0
+      sync      committee     10         0         0         0        0         0      0
+
+  2026-09-15
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0b      committee       556         0         0         0        0         0     20
+      keeper        keeper          548         0         0         0        0         0      8
+      0c0c0c0a      committee       248         0         4         0        0         0      0
+      6fe15f0a      committee       200         0         0         0        0         0      0
+      chair         committee       148         0         0         0        0         0      0
+      a2122153      committee        56         0         0         0        0         0      0
+      12fb81f6      committee        47         0         0         0        0         0      4
+      0845a868      committee        44         0         0         0        0         0      0
+      resume        committee        24         0         0         0        0         0      0
+      sync          committee         8         0         0         0        0         0      0
+      unattributed  unattributed      1         0         0         0        0         0      0
+
+  2026-09-16
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          898         0         4         0        0         0     12
+      0c0c0c0b      committee       888         4         0         0        0         0     16
+      0845a868      committee       816         0         0         0        0         0      4
+      a2122153      committee       577         0         0         0        0         0      6
+      6fe15f0a      committee       476         0         0         0        0         0     16
+      0c0c0c0a      committee       476         4         0         0        0         0     28
+      12fb81f6      committee       329         0         0         0        0         0      8
+      chair         committee        48         0         0         0        0         0      0
+      resume        committee        20         0         0         0        0         0      0
+      sync          committee         9         0         0         0        0         0      0
+      blind         committee         9         0         0         0        0         0      0
+      trailer-      committee         4         0         0         0        0         0      0
+      unattributed  unattributed      3         0         0         0        0         0      0
+
+  2026-09-17
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper        80         0         0         0        0         0      0
+      0c0c0c0b  committee     48         4         0         0        0         0      0
+      12fb81f6  committee     44         0         0         0        0         0      4
+      6fe15f0a  committee     36         0         0         0        0         0      4
+      0c0c0c0a  committee     28         0         0         0        0         0      0
+      chair     committee     12         0         0         0        0         0      0
+      resume    committee      4         0         0         0        0         0      0
+      sync      committee      1         0         0         0        0         0      0
+
+  2026-09-18
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      a2122153  committee    126         0         0         0        0         0      0
+      keeper    keeper       124         0         0         0        0         0      0
+      0c0c0c0b  committee     84         0         0         0        0         0      4
+      0845a868  committee     56         0         0         0        0         0      4
+      0c0c0c0a  committee     40         0         0         0        0         0      0
+      6fe15f0a  committee     20         0         0         0        0         0      0
+      chair     committee     16         0         0         0        0         0      0
+      resume    committee      8         0         0         0        0         0      0
+      sync      committee      2         0         0         0        0         0      0
+      trailer-  committee      1         0         0         0        0         0      0
+
+  2026-09-19
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       695         0         0         0        0         0     48
+      a2122153  committee    395         0         0         0        0         0      0
+      0c0c0c0b  committee    364         0         0         0        0         0     16
+      0845a868  committee    344         0         0         0        0         0      4
+      0c0c0c0a  committee    304         0         0         0        0         0     12
+      12fb81f6  committee    240         0         0         0        0         0     12
+      6fe15f0a  committee    180         0         0         0        0         0      8
+      chair     committee    152         0         0         0        0         0      2
+      blind     committee     14         0         0         0        0         0      0
+      resume    committee      8         0         0         0        0         0      0
+      trailer-  committee      3         0         0         0        0         0      0
+      sync      committee      2         0         0         0        0         0      0
+
+  2026-09-20
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      0c0c0c0b  committee   1208         8         0         0        0         0     56
+      0845a868  committee    760         0         0         0        0         0     12
+      keeper    keeper       663         8         0         0        0         0     32
+      12fb81f6  committee    413         0         0         0        0         0     16
+      0c0c0c0a  committee    348         0         0         0        0         0     12
+      a2122153  committee    330         0         0         0        0         0      4
+      6fe15f0a  committee    276         0         0         0        0         0     12
+      chair     committee    115         0         0         0        0         0      0
+      resume    committee     12         0         0         0        0         0      0
+      trailer-  committee     10         0         0         0        0         0      0
+      c         committee      8         0         0         0        0         0      0
+      blind     committee      8         0         0         0        0         0      0
+      digest-g  committee      8         0         0         0        0         0      0
+      sync      committee      5         0         0         0        0         0      0
+
+  2026-09-21
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper      1200         0         4         0        0         0     16
+      0c0c0c0b  committee    616        12         0         0        0         4     32
+      6fe15f0a  committee    480         0         0         0        0         0      4
+      0845a868  committee    424         0         0         0        0         0     12
+      a2122153  committee    373         0         0         0        0         0      0
+      0c0c0c0a  committee    356         0         0         0        0         0      0
+      12fb81f6  committee    303         0         0         0        0         0      4
+      chair     committee    190         0         0         0        0         0      0
+      blind     committee     72         0         0         0        0         0      0
+      digest-g  committee     55         0         0         0        0         0      0
+      c         committee     15         0         0         0        0         0      0
+      resume    committee      8         0         0         0        0         0      0
+      trailer-  committee      6         0         0         0        0         0      0
+      sync      committee      4         0         0         0        0         0      0
+
+  2026-09-22
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper         1923         0         4         0        0         0     28
+      0c0c0c0b      committee      1000         4         0         0        0         0     40
+      0845a868      committee       852         0         0         0        0         0     16
+      6fe15f0a      committee       824         0         4         0        0         0      8
+      0c0c0c0a      committee       720         0         0         0        0         0      8
+      12fb81f6      committee       487         0         0         0        0         0     12
+      a2122153      committee       486         0         0         0        0         0      7
+      chair         committee       337         0         0         0        0         0      0
+      digest-g      committee        68         0         0         0        0         0      0
+      blind         committee        54         0         0         0        0         0      0
+      c             committee        23         0         0         0        0         0      0
+      resume        committee        16         0         0         0        0         0      0
+      trailer-      committee        12         0         0         0        0         0      0
+      sync          committee         6         0         0         0        0         0      0
+      unattributed  unattributed      1         0         0         0        0         0      0
+
+  2026-09-23
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper      1194         0         0         0        0         0     12
+      0c0c0c0b  committee    908         4         0         0        0         0     12
+      6fe15f0a  committee    831         0         0         0        0         0      0
+      0845a868  committee    680         0         0         0        0         0      4
+      a2122153  committee    676         0         0         0        0         0      0
+      0c0c0c0a  committee    544         0         0         0        0         0      4
+      12fb81f6  committee    432         0         0         0        0         0      4
+      chair     committee     83         0         0         0        0         0      0
+      blind     committee     20         0         0         0        0         0      0
+      digest-g  committee     15         0         0         0        0         0      0
+      resume    committee      4         0         0         0        0         0      0
+      b         committee      3         0         0         0        0         0      0
+      sync      committee      2         0         0         0        0         0      0
+      c         committee      2         0         0         0        0         0      0
+      trailer-  committee      1         0         0         0        0         0      0
+
+  2026-09-24
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          660         0         0         0        0         0      0
+      0c0c0c0b      committee       440         0         0         0        0         0      4
+      0845a868      committee       404         0         0         0        0         0      0
+      12fb81f6      committee       377         0         0         0        0         0      0
+      6fe15f0a      committee       359         0         0         0        0         0      0
+      a2122153      committee       313         0         0         0        0         0      0
+      0c0c0c0a      committee       196         0         0         0        0         0      0
+      chair         committee       192         0         0         0        0         0      0
+      digest-g      committee        20         0         0         0        0         0      0
+      resume        committee         8         0         0         0        0         0      0
+      c             committee         5         0         0         0        0         1      0
+      b             committee         4         0         0         0        0         0      0
+      blind         committee         2         0         0         0        0         0      0
+      sync          committee         2         0         0         0        0         0      0
+      unattributed  unattributed      1         0         0         0        0         0      0
+
+  2026-09-25
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       455         0         0         0        0         0      0
+      0c0c0c0b  committee    304         0         0         0        0         0      0
+      0845a868  committee    272         0         0         0        0         0      0
+      6fe15f0a  committee    235         0         0         0        0         0      0
+      0c0c0c0a  committee    200         0         0         0        0         0      0
+      12fb81f6  committee    143         0         0         0        0         0      0
+      chair     committee    126         0         0         0        0         0      0
+      a2122153  committee     16         0         0         0        0         0      0
+      digest-g  committee     12         0         0         0        0         0      0
+      resume    committee      8         0         0         0        0         0      0
+      c         committee      4         0         0         0        0         0      0
+      b         committee      4         0         0         0        0         0      0
+      sync      committee      2         0         0         0        0         0      0
+
+  2026-09-26
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          710         0         0         0        0         0     12
+      0c0c0c0b      committee       336         0         0         0        0         0     12
+      0c0c0c0a      committee       336         0         0         0        0         0      8
+      6fe15f0a      committee       320         0         0         0        0         0      0
+      0845a868      committee       232         0         0         0        0         4      0
+      12fb81f6      committee       212         0         0         0        0         0      4
+      chair         committee       202         0         0         0        0         0      0
+      a2122153      committee       180         0         0         0        0         0      0
+      digest-g      committee        26         0         0         0        0         0      0
+      trailer-      committee         5         0         0         0        0         0      0
+      unattributed  unattributed      3         0         0         0        0         0      0
+      c             committee         3         0         0         0        0         0      0
+      b             committee         3         0         0         0        0         0      0
+
+  2026-09-27
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      6fe15f0a      committee      3109         0         0         0        0         0     12
+      keeper        keeper         3065         0         0         0        0         0     12
+      a2122153      committee      1952         0         0         0        0         4      8
+      12fb81f6      committee      1616         0         0         0        0         0     12
+      0845a868      committee      1554         0         0         0        0         0      0
+      0c0c0c0b      committee       972         4         0         0        0         4      4
+      0c0c0c0a      committee       615         0         0         0        0         0     12
+      chair         committee       333         0         0         0        0         0      0
+      digest-g      committee        83         0         0         0        0         0      0
+      trailer-      committee        28         0         0         0        0         0      0
+      c             committee        25         0         0         0        0         0      0
+      unattributed  unattributed     11         0         0         0        0         0      0
+      resume        committee         4         0         0         0        0         0      0
+      a             committee         4         0         0         0        0         0      0
+      sync          committee         2         0         0         0        0         0      0
+      gate          committee         2         0         0         0        0         0      0
+      e             committee         2         0         0         0        0         0      0
+      b             committee         1         0         0         0        0         0      0
+
+  2026-09-28
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper         1244         0         0         0        0         0      3
+      6fe15f0a      committee       981         0         0         0        0         0      0
+      0845a868      committee       962         0         0         0        0         0      4
+      a2122153      committee       828         0         0         0        0         0      8
+      12fb81f6      committee       692         0         0         0        0         0      0
+      0c0c0c0b      committee       401         3         0         0        0         0     10
+      chair         committee       346         0         0         0        0         0      0
+      0c0c0c0a      committee       241         0         0         0        0         0      0
+      digest-g      committee        72         0         0         0        0         0      0
+      resume        committee        14         0         0         0        0         0      0
+      e             committee        12         0         0         0        0         0      0
+      trailer-      committee        10         0         0         0        0         0      0
+      a             committee        10         0         0         0        0         0      0
+      c             committee         9         0         0         0        0         0      0
+      unattributed  unattributed      7         0         0         0        0         0      0
+      sync          committee         4         0         0         0        0         0      0
+      b             committee         3         0         0         0        0         0      0
+      gate          committee         2         0         0         0        0         0      0
+
+  2026-09-29
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       857         0         0         0        0         0      8
+      0c0c0c0b  committee    462         0         0         0        0         0      0
+      6fe15f0a  committee    384         0         0         0        0         0      3
+      12fb81f6  committee    322         0         0         0        0         0      0
+      0845a868  committee    288         0         0         0        0         0      0
+      a2122153  committee    246         0         0         0        0         0      0
+      0c0c0c0a  committee    186         0         0         0        0         0      0
+      chair     committee    113         0         0         0        0         0      0
+      digest-g  committee     18         0         0         0        0         0      0
+      resume    committee      8         0         0         0        0         0      0
+      sync      committee      3         0         0         0        0         0      0
+
+  2026-09-30
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       209         0         0         0        0         0      0
+      0c0c0c0b  committee    105         0         0         0        0         0      0
+      0845a868  committee    103         0         0         0        0         0      0
+      6fe15f0a  committee    101         0         0         0        0         0      0
+      0c0c0c0a  committee     99         0         0         0        0         0      0
+      a2122153  committee     90         0         0         0        0         0      0
+      12fb81f6  committee     69         0         0         0        0         0      0
+      chair     committee     64         0         0         0        0         0      0
+      digest-g  committee      9         0         0         0        0         0      0
+      resume    committee      4         0         0         0        0         0      0
+      sync      committee      1         0         0         0        0         0      0
+
+  2026-10-01
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       401         0         0         0        0         0      3
+      0c0c0c0b  committee    192         0         0         0        0         0      3
+      12fb81f6  committee    191         0         0         0        0         0      0
+      a2122153  committee    156         0         0         0        0         0      0
+      6fe15f0a  committee    131         0         0         0        0         0      0
+      chair     committee    127         0         0         0        0         0      0
+      0c0c0c0a  committee    117         0         0         0        0         0      0
+      0845a868  committee    111         0         0         0        0         0      0
+      digest-g  committee     17         0         0         0        0         0      0
+      resume    committee      4         0         0         0        0         0      0
+      sync      committee      1         0         0         0        0         0      0
+      trailer-  committee      1         0         0         0        0         0      0
+
+  2026-10-02
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       393         0         0         0        0         0      0
+      12fb81f6  committee    175         0         0         0        0         0      0
+      0c0c0c0b  committee    171         3         0         0        0         0     15
+      6fe15f0a  committee    169         0         0         0        0         0      3
+      chair     committee    167         0         0         0        0         0      0
+      0845a868  committee    134         0         0         0        0         0      0
+      0c0c0c0a  committee    132         0         0         0        0         0      3
+      a2122153  committee    117         0         0         0        0         0      0
+      digest-g  committee     21         0         0         0        0         0      0
+      resume    committee      4         0         0         0        0         0      0
+      sync      committee      1         0         0         0        0         0      0
+      trailer-  committee      1         0         0         0        0         0      0
+
+  2026-10-03
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       754         0         0         0        0         0      2
+      6fe15f0a  committee    424         0         0         0        0         0      0
+      12fb81f6  committee    317         0         0         0        0         0      0
+      0c0c0c0b  committee    304         0         0         0        0         0     18
+      chair     committee    255         0         0         0        0         0      0
+      0c0c0c0a  committee    237         0         0         0        0         0      5
+      0845a868  committee    224         0         0         0        0         0      3
+      a2122153  committee    222         0         0         0        0         0      0
+      digest-g  committee     37         0         0         0        0         0      0
+      resume    committee     14         0         0         0        0         0      0
+      sync      committee      4         0         0         0        0         0      0
+      trailer-  committee      3         0         0         0        0         0      0
+
+  2026-10-04
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       510         0         0         0        0         0      0
+      6fe15f0a  committee    346         0         0         0        0         0      0
+      chair     committee    278         0         0         0        0         0      0
+      0c0c0c0b  committee    206         0         0         0        0         0      0
+      12fb81f6  committee    159         0         0         0        0         0      0
+      0845a868  committee    157         0         0         0        0         0      0
+      0c0c0c0a  committee    148         0         0         0        0         0      0
+      a2122153  committee    106         0         0         0        0         0      0
+      digest-g  committee     29         0         0         0        0         0      0
+      trailer-  committee      2         0         0         0        0         0      0
+
+  2026-10-05
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       571         0         0         0        0         0      7
+      12fb81f6  committee    418         0         0         0        0         0      4
+      a2122153  committee    273         2         0         0        0         0      2
+      chair     committee    261         0         0         0        0         0      1
+      0845a868  committee    201         0         0         0        0         0      1
+      0c0c0c0b  committee    179         1         1         0        0         0      0
+      6fe15f0a  committee    143         0         0         0        0         0      0
+      0c0c0c0a  committee     89         0         0         0        0         0      0
+      digest-g  committee     44         0         0         0        0         0      0
+      resume    committee     26         0         0         0        0         0      0
+      trailer-  committee     18         0         0         0        0         0      0
+      sync      committee      6         0         0         0        0         0      0
+
+  2026-10-06
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       469         0         0         0        0         0      1
+      chair     committee    383         0         0         0        0         0      0
+      a2122153  committee    232         0         0         0        0         0      0
+      6fe15f0a  committee    216         0         0         0        0         0      1
+      12fb81f6  committee    197         0         0         0        0         0      0
+      0c0c0c0b  committee    180         1         0         0        0         0      3
+      0845a868  committee    177         0         0         0        0         0      0
+      0c0c0c0a  committee    133         0         0         0        0         0      0
+      digest-g  committee     59         0         0         0        0         0      0
+      trailer-  committee     12         0         0         0        0         0      0
+      resume    committee     12         0         0         0        0         0      0
+      sync      committee      3         0         0         0        0         0      0
+
+  2026-10-07
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      chair     committee    187         0         0         0        0         0      0
+      keeper    keeper       162         0         0         0        0         0      0
+      0c0c0c0b  committee     97         0         0         0        0         0      1
+      0845a868  committee     68         0         0         0        0         0      0
+      12fb81f6  committee     68         0         0         0        0         0      0
+      6fe15f0a  committee     63         0         0         0        0         0      0
+      a2122153  committee     61         0         0         0        0         0      0
+      0c0c0c0a  committee     50         0         0         0        0         0      0
+      digest-g  committee     12         0         0         0        0         0      0
+      trailer-  committee      8         0         0         0        0         0      0
+
+  2026-10-08
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      chair     committee    219         0         0         0        0         0      0
+      keeper    keeper       215         0         0         0        0         0      1
+      12fb81f6  committee    185         0         0         0        0         0      1
+      0845a868  committee    126         0         0         0        0         0      0
+      a2122153  committee    105         0         0         0        0         0      0
+      0c0c0c0b  committee    105         0         0         0        0         0      0
+      0c0c0c0a  committee     74         0         0         0        0         0      0
+      6fe15f0a  committee     71         0         0         0        0         0      0
+      digest-g  committee     29         0         0         0        0         0      0
+      trailer-  committee      1         0         0         0        0         0      0
+
+  2026-10-09
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          319         0         2         0        0         0      5
+      chair         committee       281         0         0         0        0         0      3
+      0c0c0c0b      committee       183         3         0         0        0         0      3
+      a2122153      committee       175         0         0         0        0         0      2
+      12fb81f6      committee       171         0         0         0        0         0      1
+      0c0c0c0a      committee       123         0         0         0        0         0      2
+      6fe15f0a      committee        94         0         0         0        0         0      0
+      0845a868      committee        91         0         0         0        0         0      1
+      digest-g      committee        48         0         0         0        0         0      0
+      trailer-      committee        11         0         0         0        0         0      0
+      resume        committee         4         0         0         0        0         0      0
+      sync          committee         1         0         0         0        0         0      0
+      unattributed  unattributed      1         0         0         0        0         0      0
+
+  2026-10-10
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          291         0         0         0        0         0      0
+      chair         committee       220         0         0         0        0         0      0
+      6fe15f0a      committee       127         0         0         0        0         0      0
+      a2122153      committee       122         0         0         0        0         0      1
+      0845a868      committee       120         0         0         0        0         0      0
+      12fb81f6      committee       112         0         0         0        0         0      1
+      0c0c0c0a      committee       111         0         0         0        0         0      1
+      0c0c0c0b      committee        98         0         0         0        0         0      0
+      digest-g      committee        25         0         0         0        0         0      0
+      trailer-      committee         8         0         0         0        0         0      0
+      resume        committee         4         0         0         0        0         0      0
+      unattributed  unattributed      1         0         0         0        0         0      0
+      c             committee         1         0         0         0        0         0      0
+      sync          committee         1         0         0         0        0         0      0
+
+  2026-10-11
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      chair         committee       288         0         0         0        0         0      0
+      keeper        keeper          268         0         0         0        0         0      3
+      0845a868      committee       161         0         0         0        0         0      2
+      a2122153      committee       118         0         0         0        0         0      4
+      0c0c0c0a      committee       113         0         0         0        0         0      0
+      0c0c0c0b      committee        99         1         0         0        0         0      4
+      12fb81f6      committee        90         0         0         0        0         0      2
+      6fe15f0a      committee        88         0         0         0        0         0      0
+      trailer-      committee        61         0         0         0        0         0      0
+      digest-g      committee        53         0         0         0        0         0      0
+      unattributed  unattributed      6         0         0         0        0         0      0
+
+  2026-10-12
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          583         0         0         0        0         0      2
+      chair         committee       376         0         0         0        0         0      0
+      0845a868      committee       278         0         0         1        0         0      0
+      a2122153      committee       262         0         0         0        0         0      0
+      6fe15f0a      committee       235         0         0         0        0         0      1
+      0c0c0c0a      committee       132         0         0         0        0         0      1
+      0c0c0c0b      committee       127         0         0         0        0         1      0
+      12fb81f6      committee       123         0         0         0        0         0      1
+      trailer-      committee        92         0         0         0        0         0      0
+      digest-g      committee        81         0         0         0        0         0      0
+      b             committee        15         0         0         0        0         0      0
+      a             committee        10         0         0         0        0         0      0
+      c             committee         9         0         0         0        0         0      0
+      e             committee         3         0         0         0        0         0      0
+      unattributed  unattributed      2         0         0         0        0         0      0
+
+  2026-10-13
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          455         0         0         0        0         0     10
+      a2122153      committee       330         0         0         0        0         0      4
+      chair         committee       326         0         0         0        0         0      0
+      0845a868      committee       307         0         0         0        0         0      0
+      12fb81f6      committee       185         0         0         0        0         0      3
+      6fe15f0a      committee       133         0         0         0        0         0      1
+      0c0c0c0b      committee       119         0         0         0        0         0      1
+      0c0c0c0a      committee        82         0         0         0        0         0      4
+      digest-g      committee        77         0         0         0        0         0      0
+      trailer-      committee        76         0         0         0        0         0      0
+      b             committee        14         0         0         0        0         0      0
+      e             committee         5         0         0         0        0         0      0
+      a             committee         4         0         0         0        0         0      0
+      unattributed  unattributed      4         0         0         0        0         0      0
+      resume        committee         4         0         0         0        0         0      0
+      c             committee         2         0         0         0        0         0      0
+      sync          committee         1         0         0         0        0         0      0
+
+  2026-10-14
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          453         0         0         0        0         0      9
+      chair         committee       253         0         0         0        0         0      1
+      0845a868      committee       243         0         0         0        0         0      5
+      a2122153      committee       195         0         0         0        0         0      1
+      6fe15f0a      committee       166         0         0         0        0         0      0
+      12fb81f6      committee       125         0         0         0        0         0      1
+      0c0c0c0b      committee       116         0         1         0        0         0      2
+      trailer-      committee        57         0         0         0        0         0      0
+      0c0c0c0a      committee        55         0         0         0        0         0      3
+      digest-g      committee        51         0         0         0        0         0      0
+      b             committee        13         0         0         0        0         1      0
+      unattributed  unattributed      6         0         0         0        0         0      0
+      resume        committee         4         0         0         0        0         0      0
+      sync          committee         1         0         0         0        0         0      0
+
+  2026-10-15
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          280         0         0         0        0         0      0
+      0845a868      committee       245         0         0         0        0         0      0
+      chair         committee       243         0         0         0        0         0      0
+      a2122153      committee       172         0         0         0        0         0      2
+      12fb81f6      committee        93         0         0         0        0         0      1
+      6fe15f0a      committee        89         0         0         0        0         0      0
+      0c0c0c0b      committee        67         0         0         0        0         0      1
+      0c0c0c0a      committee        59         0         0         0        0         0      1
+      trailer-      committee        32         0         0         0        0         0      0
+      digest-g      committee        28         0         0         0        0         0      0
+      unattributed  unattributed      9         0         0         0        0         0      0
+      b             committee         4         0         0         0        0         0      0
+      a             committee         1         0         0         0        0         0      0
+
+  2026-10-16
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          333         0         0         0        0         0      2
+      chair         committee       259         0         0         0        0         0      0
+      0845a868      committee       186         0         0         0        0         0      1
+      12fb81f6      committee       163         0         0         1        0         0      0
+      a2122153      committee       151         0         0         0        0         0      0
+      6fe15f0a      committee       125         0         0         0        0         0      0
+      0c0c0c0b      committee       101         1         0         0        0         0      1
+      0c0c0c0a      committee        96         0         0         0        0         0      1
+      trailer-      committee        72         0         0         0        0         0      0
+      digest-g      committee        32         0         0         0        0         0      0
+      unattributed  unattributed     15         0         0         0        0         0      0
+      b             committee         4         0         0         0        0         0      0
+
+  2026-10-17
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          447         1         0         0        0         0      7
+      chair         committee       367         0         0         0        0         0      0
+      0845a868      committee       289         0         0         0        0         0      1
+      a2122153      committee       224         0         0         0        0         0      4
+      12fb81f6      committee       224         0         0         0        0         0      0
+      0c0c0c0b      committee       166         0         1         0        0         0      3
+      trailer-      committee       126         0         0         0        0         0      0
+      0c0c0c0a      committee       125         0         0         0        0         0      1
+      6fe15f0a      committee       108         0         0         0        0         0      1
+      digest-g      committee        71         0         0         0        0         0      0
+      b             committee        21         0         0         0        0         0      0
+      unattributed  unattributed     12         0         0         0        0         0      0
+      e             committee         5         0         0         0        0         0      0
+      a             committee         1         0         0         0        0         0      0
+
+  2026-10-18
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          339         0         0         0        0         0      3
+      chair         committee       329         0         0         0        0         0      0
+      a2122153      committee       292         0         0         0        0         0      0
+      0845a868      committee       188         0         0         0        0         0      3
+      12fb81f6      committee       173         0         0         0        0         0      1
+      0c0c0c0b      committee       129         0         0         0        0         0      0
+      6fe15f0a      committee        86         0         0         0        0         0      1
+      trailer-      committee        81         0         0         0        0         0      0
+      0c0c0c0a      committee        75         0         0         0        0         0      0
+      digest-g      committee        51         0         0         0        0         0      0
+      b             committee        13         0         0         0        0         0      0
+      e             committee         2         0         0         0        0         0      0
+      unattributed  unattributed      1         0         0         0        0         0      0
+
+  2026-10-19
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       505         0         0         0        0         0      8
+      chair     committee    431         0         0         0        0         0      0
+      6fe15f0a  committee    264         0         0         0        0         0      0
+      12fb81f6  committee    169         0         0         0        0         0      0
+      0c0c0c0b  committee    162         0         0         0        0         0      5
+      0845a868  committee    160         0         0         0        0         0      2
+      a2122153  committee    142         0         0         0        0         0      0
+      c88002b1  committee    123         0         0         0        0         0      0
+      trailer-  committee     87         0         0         0        0         0      0
+      0c0c0c0a  committee     85         0         0         0        0         0      0
+      digest-g  committee     66         0         0         0        0         0      0
+      fbf98f8e  committee     66         1         0         0        0         0      1
+      b         committee     16         0         0         0        0         0      0
+
+  2026-10-20
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          345         0         0         0        0         0      1
+      chair         committee       333         0         0         0        0         0      0
+      0845a868      committee       171         0         0         0        0         0      1
+      c88002b1      committee       164         0         0         0        0         0      0
+      a2122153      committee       130         0         0         0        0         0      0
+      12fb81f6      committee       112         0         0         0        0         0      0
+      6fe15f0a      committee       102         0         0         0        0         0      0
+      0c0c0c0b      committee        79         0         1         0        0         0      0
+      0c0c0c0a      committee        64         0         1         0        0         0      0
+      trailer-      committee        60         0         0         0        0         0      0
+      digest-g      committee        53         0         0         0        0         0      0
+      fbf98f8e      committee        50         0         0         0        0         0      0
+      resume        committee         6         0         0         0        0         0      0
+      unattributed  unattributed      3         0         0         0        0         0      0
+      sync          committee         1         0         0         0        0         0      0
+
+  2026-10-21
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      chair         committee       185         0         0         0        0         0      0
+      keeper        keeper          159         0         0         0        0         0      0
+      6fe15f0a      committee        75         0         0         0        0         0      0
+      a2122153      committee        66         0         0         0        0         0      0
+      12fb81f6      committee        60         0         0         0        0         0      0
+      0845a868      committee        50         0         0         0        0         0      0
+      0c0c0c0b      committee        42         0         0         0        0         0      1
+      fbf98f8e      committee        35         0         0         0        0         0      0
+      0c0c0c0a      committee        33         0         0         0        0         0      0
+      trailer-      committee        16         0         0         0        0         0      0
+      digest-g      committee        16         0         0         0        0         0      0
+      c88002b1      committee        11         0         0         0        0         0      0
+      resume        committee         6         0         0         0        0         0      0
+      unattributed  unattributed      1         0         0         0        0         0      0
+      sync          committee         1         0         0         0        0         0      0
+
+  2026-10-22
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       290         0         0         0        0         0      4
+      chair     committee    276         0         0         0        0         0      0
+      a2122153  committee    144         0         0         0        0         0      0
+      12fb81f6  committee    102         0         0         0        0         0      1
+      0845a868  committee     99         0         0         0        0         0      1
+      c88002b1  committee     95         0         0         0        0         0      0
+      0c0c0c0b  committee     89         0         0         0        0         0      0
+      6fe15f0a  committee     77         0         0         0        0         0      0
+      fbf98f8e  committee     70         0         0         0        0         0      0
+      0c0c0c0a  committee     64         0         0         0        0         0      1
+      trailer-  committee     46         0         0         0        0         0      0
+      digest-g  committee     34         0         0         0        0         0      0
+
+  2026-10-23
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       273         0         0         0        0         0      0
+      chair     committee    262         0         0         0        0         0      0
+      c88002b1  committee    124         0         0         0        0         0      0
+      a2122153  committee    119         0         0         0        0         0      0
+      6fe15f0a  committee    106         0         0         0        0         0      0
+      fbf98f8e  committee     75         0         0         0        0         0      0
+      0c0c0c0b  committee     66         0         0         0        0         0      1
+      12fb81f6  committee     61         0         0         0        0         0      0
+      0845a868  committee     52         0         0         0        0         0      0
+      0c0c0c0a  committee     50         0         0         0        0         0      0
+      trailer-  committee     40         0         0         0        0         0      0
+      digest-g  committee     32         0         0         0        0         0      0
+      a         committee      1         0         0         0        0         0      0
+
+  2026-10-24
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      chair         committee       314         0         0         0        0         0      0
+      keeper        keeper          282         0         0         0        0         0      2
+      0845a868      committee       160         0         0         0        0         0      0
+      a2122153      committee       129         0         0         0        0         0      0
+      12fb81f6      committee       127         0         0         0        0         0      0
+      6fe15f0a      committee       121         0         0         0        0         0      0
+      fbf98f8e      committee        74         0         0         0        0         0      0
+      0c0c0c0b      committee        65         0         0         0        0         0      3
+      c88002b1      committee        62         0         0         0        0         0      0
+      0c0c0c0a      committee        54         0         0         0        0         0      2
+      digest-g      committee        31         0         0         0        0         0      0
+      trailer-      committee        26         0         0         0        0         0      0
+      c             committee         8         0         0         0        0         0      0
+      unattributed  unattributed      6         0         0         0        0         0      0
+      p             committee         3         0         0         0        0         0      0
+      b             committee         2         0         0         0        0         0      0
+
+  2026-10-25
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          374         0         3         0        0         0      1
+      chair         committee       371         0         1         0        0         0      2
+      6fe15f0a      committee       238         0         0         0        0         0      1
+      0845a868      committee       210         0         0         0        0         0      0
+      a2122153      committee       147         0         0         0        0         0      3
+      12fb81f6      committee       123         0         0         0        0         0      0
+      fbf98f8e      committee        98         0         0         0        0         0      0
+      0c0c0c0b      committee        90         0         0         0        0         0      2
+      0c0c0c0a      committee        73         0         0         0        0         0      1
+      trailer-      committee        67         0         0         0        0         0      0
+      digest-g      committee        60         0         0         0        0         0      0
+      c88002b1      committee        28         0         0         0        0         0      0
+      c             committee        12         0         0         0        0         0      0
+      unattributed  unattributed      3         0         0         0        0         0      0
+      p             committee         3         0         0         0        0         0      0
+      a             committee         2         0         0         0        0         0      0
+      b             committee         1         0         0         0        0         0      0
+
+  2026-10-26
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          363         0         1         0        0         0      3
+      chair         committee       341         0         0         0        0         0      0
+      6fe15f0a      committee       187         0         0         0        0         0      0
+      0845a868      committee       177         0         0         0        0         0      0
+      0c0c0c0b      committee       116         0         1         0        0         0      5
+      c88002b1      committee       114         0         0         0        0         0      0
+      12fb81f6      committee        94         0         0         1        0         0      0
+      trailer-      committee        92         0         0         0        0         0      0
+      a2122153      committee        85         0         0         0        0         0      0
+      0c0c0c0a      committee        68         0         0         0        0         0      0
+      digest-g      committee        53         0         0         0        0         0      0
+      fbf98f8e      committee        48         0         0         0        0         0      0
+      resume        committee         6         0         0         0        0         0      0
+      o             committee         4         0         0         0        0         0      0
+      unattributed  unattributed      3         0         0         0        0         0      0
+      e             committee         2         0         0         0        0         0      0
+      a             committee         1         0         0         0        0         0      0
+      b             committee         1         0         0         0        0         0      0
+      sync          committee         1         0         0         0        0         0      0
+
+  2026-10-27
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          378         0         0         0        0         0      0
+      chair         committee       260         0         0         0        0         0      0
+      a2122153      committee       201         0         0         0        0         0      1
+      6fe15f0a      committee       175         0         0         0        0         0      0
+      0845a868      committee       165         0         0         0        0         0      0
+      0c0c0c0b      committee       143         2         0         0        0         0      3
+      c88002b1      committee        94         0         0         0        0         0      0
+      0c0c0c0a      committee        78         0         0         0        0         0      0
+      trailer-      committee        64         0         0         0        0         0      0
+      digest-g      committee        37         0         0         0        0         0      0
+      e             committee         9         0         0         0        0         0      1
+      a             committee         6         0         0         0        0         0      0
+      resume        committee         6         0         0         0        0         0      0
+      o             committee         1         0         0         0        0         0      0
+      unattributed  unattributed      1         0         0         0        0         0      0
+      sync          committee         1         0         0         0        0         0      0
+
+  2026-10-28
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          454         0         0         0        0         0      0
+      chair         committee       400         0         0         0        0         0      0
+      0845a868      committee       319         0         0         0        0         0      0
+      a2122153      committee       263         0         0         0        0         0      0
+      0c0c0c0b      committee       180         0         0         0        0         0      1
+      c88002b1      committee       162         0         0         0        0         0      0
+      0c0c0c0a      committee       120         0         0         0        0         0      2
+      trailer-      committee       102         0         0         0        0         0      0
+      digest-g      committee        58         0         0         0        0         0      0
+      6fe15f0a      committee        44         0         0         0        0         0      0
+      c             committee         6         0         0         0        0         0      0
+      o             committee         4         0         0         0        0         0      0
+      e             committee         3         0         0         0        0         0      0
+      unattributed  unattributed      3         0         0         0        0         0      0
+
+  2026-10-29
+      actor         origin        turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────────  ────────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper        keeper          477         0         0         0        0         0      1
+      chair         committee       327         0         0         0        0         0      0
+      a2122153      committee       244         0         0         0        0         0      0
+      0c0c0c0b      committee       223         0         0         0        0         0      5
+      0845a868      committee       213         0         0         0        0         0      0
+      6fe15f0a      committee       185         0         0         0        0         0      1
+      trailer-      committee       120         0         0         0        0         0      0
+      0c0c0c0a      committee       103         0         0         0        0         0      2
+      c88002b1      committee        95         0         0         0        0         0      0
+      digest-g      committee        58         0         0         0        0         0      0
+      e             committee         5         0         0         0        0         0      0
+      unattributed  unattributed      4         0         0         0        0         0      0
+      c             committee         1         0         0         0        0         0      0
+
+  2026-10-30
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       441         0         0         0        0         0      2
+      chair     committee    353         0         0         0        0         0      0
+      0845a868  committee    197         0         0         0        0         0      0
+      6fe15f0a  committee    191         0         0         0        0         0      2
+      0c0c0c0b  committee    160         0         1         0        0         0      1
+      c88002b1  committee    138         0         0         0        0         0      3
+      a2122153  committee    136         0         0         0        0         0      2
+      0c0c0c0a  committee    126         0         0         0        0         0      1
+      trailer-  committee     67         0         0         0        0         0      0
+      digest-g  committee     60         0         0         0        0         0      0
+      resume    committee     12         0         0         0        0         0      0
+      fbf98f8e  committee      4         0         0         0        0         0      0
+      sync      committee      2         0         0         0        0         0      0
+      a         committee      1         0         0         0        0         0      0
+
+  2026-10-31
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       519         0         0         0        0         0      0
+      chair     committee    393         0         0         0        0         0      0
+      c88002b1  committee    325         0         0         0        0         0      1
+      0845a868  committee    322         0         0         0        0         0      1
+      a2122153  committee    180         0         0         0        0         0      1
+      6fe15f0a  committee    172         0         0         0        0         0      1
+      0c0c0c0b  committee    142         1         0         1        0         0      2
+      trailer-  committee    100         0         0         0        0         0      0
+      0c0c0c0a  committee     79         0         0         0        0         0      0
+      digest-g  committee     57         0         0         0        0         0      0
+      fbf98f8e  committee     26         0         0         0        0         0      0
+      a         committee      1         0         0         0        0         0      0
+      c         committee      1         0         0         0        0         0      0
+
+  2026-11-01
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       351         0         0         0        0         0      0
+      chair     committee    300         0         0         0        0         0      0
+      c88002b1  committee     98         0         0         0        0         0      0
+      6fe15f0a  committee     78         0         0         0        0         0      0
+      0845a868  committee     71         0         0         0        0         0      2
+      0c0c0c0b  committee     57         0         0         0        0         0      0
+      a2122153  committee     52         0         0         0        0         0      0
+      0c0c0c0a  committee     46         0         0         0        0         0      0
+      trailer-  committee     32         0         0         0        0         0      0
+      fbf98f8e  committee     25         0         0         0        0         0      0
+      digest-g  committee     18         0         0         0        0         0      0
+      12fb81f6  committee     15         0         0         0        0         0      0
+
+  2026-11-02
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       548         1         0         0        0         0      1
+      chair     committee    356         0         0         0        0         0      0
+      0845a868  committee    281         0         0         0        0         0      0
+      6fe15f0a  committee    239         0         0         1        0         0      0
+      c88002b1  committee    222         0         0         0        0         0      0
+      0c0c0c0b  committee    170         3         1         0        0         0      7
+      a2122153  committee    170         0         0         0        0         0      0
+      trailer-  committee     86         0         0         0        0         0      0
+      0c0c0c0a  committee     78         1         0         0        0         0      1
+      digest-g  committee     42         0         0         0        0         0      0
+      fbf98f8e  committee     26         0         0         0        0         0      0
+      12fb81f6  committee     23         0         0         0        0         0      0
+
+  2026-11-03
+      actor     origin     turns  unlosabl  reflexiv  preloade  generic  protecti  catch
+      ────────  ─────────  ─────  ────────  ────────  ────────  ───────  ────────  ─────
+      keeper    keeper       187         0         0         0        0         0      2
+      chair     committee    150         0         0         0        0         0      0
+      a2122153  committee    104         0         0         0        0         0      0
+      fbf98f8e  committee    103         0         0         0        0         0      0
+      0845a868  committee     84         0         0         0        0         0      0
+      c88002b1  committee     61         0         0         0        0         0      0
+      0c0c0c0b  committee     59         0         0         0        0         0      2
+      6fe15f0a  committee     57         0         0         0        0         0      0
+      trailer-  committee     36         0         0         0        0         0      0
+      0c0c0c0a  committee     30         0         0         0        0         0      0
+      digest-g  committee     21         0         0         0        0         0      0
+
+  filtered, across these windows: generic-blindspot 6 kept of 17 matched (11 filtered) · protective-predisclaimer 69 kept of 328 matched (259 filtered)
+
+CATCH-LANGUAGE VOLUME  (turns using the room's catch vocabulary, by who spoke)
+
+day         catch-turns  keeper  cmte  credited→keeper
+──────────  ───────────  ──────  ────  ───────────────
+2026-06-29            2       0     2                0
+2026-06-30           18       8    10                0
+2026-07-03            1       0     1                0
+2026-07-04           86      31    55               12
+2026-07-05           30      18    12                0
+2026-07-06           47      18    29               13
+2026-07-07            0       0     0                0
+2026-07-08            0       0     0                0
+2026-07-09           12       2    10                0
+2026-07-10            1       0     1                0
+2026-07-11           14       4    10                2
+2026-07-12           20       0    20                1
+2026-07-13           11       6     5                0
+2026-07-14           44       0    44                2
+2026-07-18           96       0    96               30
+2026-07-19           66       0    66                6
+2026-07-20           18       0    18                0
+2026-07-21            6       0     6                0
+2026-07-23            0       0     0                0
+2026-07-24            8       0     8                0
+2026-07-25          121       6   115               10
+2026-07-26           44       0    44                0
+2026-07-27          386      13   373               90
+2026-07-28          119       9   110                4
+2026-07-29           54       2    52               10
+2026-07-30           10       2     8                3
+2026-07-31           11       0    11                0
+2026-08-01           28       2    26                6
+2026-08-02           67       7    60               11
+2026-08-03           36       1    35                7
+2026-08-04            5       0     5                2
+2026-08-05            5       0     5                2
+2026-08-06            2       0     2                0
+2026-08-07            1       0     1                0
+2026-08-08            0       0     0                0
+2026-08-09           18       0    18                0
+2026-08-10           78       1    77               16
+2026-08-11           36       4    32                4
+2026-08-12           63       3    60               13
+2026-08-13           23       5    18                2
+2026-08-14            0       0     0                0
+2026-08-15          222       8   214               39
+2026-08-16           71       8    63                9
+2026-08-17           72       4    68               13
+2026-08-18           46       0    46                2
+2026-08-19           35       2    33                3
+2026-08-20           22       3    19                2
+2026-08-21            1       0     1                0
+2026-08-22          100       1    99               22
+2026-08-23          144      10   134               20
+2026-08-24           65       1    64               13
+2026-08-25          149      22   127               14
+2026-08-26            3       0     3                1
+2026-08-27            8       2     6                0
+2026-08-28            1       0     1                0
+2026-08-29           32       0    32               10
+2026-08-30           47       9    38                6
+2026-08-31           67       4    63                4
+2026-09-01           86      11    75               17
+2026-09-02           79       8    71                3
+2026-09-03            6       0     6                0
+2026-09-04           11       1    10                0
+2026-09-05            0       0     0                0
+2026-09-06           73       0    73                5
+2026-09-07           32       4    28                4
+2026-09-08           42       8    34                0
+2026-09-09           30       5    25                1
+2026-09-10            2       0     2                0
+2026-09-11            8       4     4                0
+2026-09-12           12       0    12                0
+2026-09-14           28       4    24                0
+2026-09-15           32       8    24                0
+2026-09-16           90      12    78                0
+2026-09-17            8       0     8                0
+2026-09-18            8       0     8                0
+2026-09-19          102      48    54                0
+2026-09-20          144      32   112               12
+2026-09-21           68      16    52                8
+2026-09-22          119      28    91                4
+2026-09-23           36      12    24                0
+2026-09-24            4       0     4                0
+2026-09-25            0       0     0                0
+2026-09-26           36      12    24                0
+2026-09-27           60      12    48                0
+2026-09-28           25       3    22                0
+2026-09-29           11       8     3                0
+2026-09-30            0       0     0                0
+2026-10-01            6       3     3                3
+2026-10-02           21       0    21                0
+2026-10-03           28       2    26                0
+2026-10-04            0       0     0                0
+2026-10-05           15       7     8                0
+2026-10-06            5       1     4                0
+2026-10-07            1       0     1                0
+2026-10-08            2       1     1                0
+2026-10-09           17       5    12                7
+2026-10-10            3       0     3                0
+2026-10-11           15       3    12                0
+2026-10-12            5       2     3                0
+2026-10-13           23      10    13                1
+2026-10-14           22       9    13                1
+2026-10-15            5       0     5                0
+2026-10-16            5       2     3                0
+2026-10-17           17       7    10                1
+2026-10-18            8       3     5                0
+2026-10-19           16       8     8                0
+2026-10-20            2       1     1                0
+2026-10-21            1       0     1                0
+2026-10-22            7       4     3                0
+2026-10-23            1       0     1                0
+2026-10-24            7       2     5                0
+2026-10-25           10       1     9                0
+2026-10-26            8       3     5                1
+2026-10-27            5       0     5                0
+2026-10-28            3       0     3                0
+2026-10-29            9       1     8                1
+2026-10-30           11       2     9                0
+2026-10-31            6       0     6                0
+2026-11-01            2       0     2                1
+2026-11-02            9       1     8                5
+2026-11-03            4       2     2                0
+
+  VOLUME AND SPEAKER ONLY. A turn using the word "brace" is not a catch, and this scanner
+  cannot tell them apart — so nothing here says who caught anything. `credited→keeper` counts
+  committee turns that credit the human ("you caught…", "you're right that…"); it is a phrase
+  count, not a keeper-caught tally.
+
+  THE MATURITY RATIO USED TO BE PRINTED HERE AND WAS DELETED (2026-07-28, chair decision).
+  It scored by SPEAKER and called the result CATCHER. When catch-ledger.js's withholding rule
+  was applied to it honestly it withheld 15 of 16 windows and the survivor read 0:1 — the
+  instrument reporting that it could not compute what it named. `catch-ledger.js` computes it
+  over the curated prose record, where attribution is actually written down, and is now the
+  room's only computation of it. Quote that one; do not reconstruct this one from these
+  columns, which is the move the deletion exists to prevent.
+
+These are candidates. Nothing here is a verdict about a pane or a person — read the lines
+(--show <tell>) and judge them. A falling rate is not progress; it is also what learning
+which phrases are counted looks like.

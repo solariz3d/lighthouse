@@ -1,0 +1,18 @@
+heavy-run: WARNING: C:\ has 43.8 GB free, under 50 GB; run node consonance/tools/janitor.js
+consonance/hooks/findings-return.test.js: pass 16 fail 0 exit 0
+consonance/tools/ask.test.js: pass 42 fail 0 exit 0
+consonance/tools/attached.test.js: pass 7 fail 0 exit 0
+consonance/tools/big-transcript.test.js: pass 8 fail 0 exit 0
+consonance/tools/chain-status.test.js: pass 162 fail 0 exit 0
+consonance/tools/lap-row.test.js: pass 142 fail 0 exit 0
+consonance/tools/offramp-check.test.js: pass 8 fail 0 exit 0
+consonance/tools/second-vantage.history.test.js: pass 5 fail 0 exit 0
+consonance/tools/second-vantage.test.js: pass 43 fail 0 exit 0
+consonance/tools/text-census.test.js: pass 1 fail 0 exit 0
+consonance/tools/usage.test.js: pass 27 fail 0 exit 0
+consonance/ui/chain-indicator.test.js: pass 1 fail 0 exit 0
+dev/shell/hooks/third-place-gate.test.js: pass 7 fail 0 exit 0
+dev/vantage/install_vantage.test.js: pass 1 fail 0 exit 0
+dev/shell/hooks/userprompt-submit.test.js: pass 5 fail 0 exit 0
+dev/shell/hooks/userprompt_pulse.test.js: pass 13 fail 0 exit 0
+TOTAL files 16 pass 488 fail 0; non-zero exit: none

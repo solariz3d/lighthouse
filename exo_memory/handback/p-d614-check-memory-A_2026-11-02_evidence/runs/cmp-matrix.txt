@@ -1,0 +1,26 @@
+elysium.t180track on t180-wt-a614: refuse 0 warn 0; detail opens 0 hairline 32 folds 92 steps 0 across 0 thin 0 rays 19296 read 18539 compared 18409; JSON 2048076 chars; old 22.2 s, new 0.0 s
+DIFFER at char 22: old â€¦{"refuse":[],"warn":[],"detail":{"opens":[],"hairline":[{"kind":"open","piece":"p1","fam":"skin","s":0,"u":-17.108667373657227,"worst":0.00267â€¦ new â€¦{"refuse":[],"warn":[]}â€¦
+== 81b8b25 crazy (exit )
+crazy.t180track on t180-wt-a614: refuse 0 warn 2; detail opens 0 hairline 0 folds 26 steps 0 across 0 thin 0 rays 17406 read 17060 compared 16923; JSON 1821375 chars; old 12.1 s, new 0.0 s
+DIFFER at char 21: old â€¦{"refuse":[],"warn":[{"kind":"fold","piece":"p2","s":1044,"u":-12.5599365234375,"count":1,"message":"the underside skin folds 15.8Â° across thâ€¦ new â€¦{"refuse":[],"warn":[]}â€¦
+== 81b8b25 test10 (exit )
+test10.t180track on t180-wt-a614: refuse 0 warn 0; detail opens 0 hairline 29 folds 46 steps 0 across 0 thin 0 rays 10458 read 9933 compared 9758; JSON 1007674 chars; old 4.7 s, new 0.0 s
+DIFFER at char 22: old â€¦{"refuse":[],"warn":[],"detail":{"opens":[],"hairline":[{"kind":"open","piece":"p10","fam":"skin","s":3698,"u":-11.355994495537862,"worst":0.0â€¦ new â€¦{"refuse":[],"warn":[]}â€¦
+== 8fb6ecc elysium (exit )
+elysium.t180track on tree-8fb6ecc: refuse 9 warn 10; detail opens 25 hairline 279 folds 92 steps 0 across 16 thin 1614 rays 19296 read 19063 compared 18991; JSON 2324388 chars; old 19.5 s, new 13.1 s
+SAME
+== 8fb6ecc crazy (exit )
+crazy.t180track on tree-8fb6ecc: refuse 12 warn 13; detail opens 269 hairline 182 folds 26 steps 0 across 32 thin 3086 rays 17406 read 17362 compared 17341; JSON 2246691 chars; old 14.7 s, new 8.3 s
+SAME
+== 8fb6ecc test10 (exit )
+test10.t180track on tree-8fb6ecc: refuse 11 warn 15; detail opens 40 hairline 121 folds 46 steps 0 across 16 thin 988 rays 10458 read 10397 compared 10306; JSON 1157364 chars; old 7.2 s, new 6.3 s
+SAME
+== e911792 elysium (exit )
+elysium.t180track on tree-e911792: refuse 9 warn 12; detail opens 32 hairline 377 folds 92 steps 2 across 16 thin 1555 rays 19296 read 19032 compared 18944; JSON 2335685 chars; old 21.1 s, new 12.7 s
+SAME
+== e911792 crazy (exit )
+crazy.t180track on tree-e911792: refuse 12 warn 20; detail opens 771 hairline 331 folds 26 steps 0 across 32 thin 2598 rays 17406 read 17353 compared 17327; JSON 2378362 chars; old 14.6 s, new 8.1 s
+SAME
+== e911792 test10 (exit )
+test10.t180track on tree-e911792: refuse 11 warn 18; detail opens 163 hairline 283 folds 46 steps 5 across 16 thin 469 rays 10458 read 10387 compared 10290; JSON 1194631 chars; old 5.8 s, new 3.7 s
+SAME

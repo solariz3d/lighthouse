@@ -1,0 +1,120 @@
+TAP version 13
+# Subtest: row 1: a clean lap with a pit lane: the check finds nothing, and the export carries exactly what the check returns on its welded scene
+ok 1 - row 1: a clean lap with a pit lane: the check finds nothing, and the export carries exactly what the check returns on its welded scene
+  ---
+  duration_ms: 2086.2499
+  type: 'test'
+  ...
+# Subtest: row 2: the pit lane's ends: no drivable face stands across the road there, and the lane is at most 0.1 m wide where it leaves and rejoins (the notch)
+ok 2 - row 2: the pit lane's ends: no drivable face stands across the road there, and the lane is at most 0.1 m wide where it leaves and rejoins (the notch)
+  ---
+  duration_ms: 268.7732
+  type: 'test'
+  ...
+# Subtest: row 3: beside the pit lane on a cupped road the hull's bottom has no step, and the check reads the bottom all along
+ok 3 - row 3: beside the pit lane on a cupped road the hull's bottom has no step, and the check reads the bottom all along
+  ---
+  duration_ms: 2161.0361
+  type: 'test'
+  ...
+# Subtest: row 4: tubes opened and closed, abrupt and gradual: no fold in the skin past the road's, no open edge, no sliver, no step in the bottom
+ok 4 - row 4: tubes opened and closed, abrupt and gradual: no fold in the skin past the road's, no open edge, no sliver, no step in the bottom
+  ---
+  duration_ms: 10410.8849
+  type: 'test'
+  ...
+# Subtest: row 5: each defect made by hand is found where it was made: a hole in the road refuses, in the skin warns, a face across the road refuses, a sliver warns, a sunk skin warns, a wide lane end refuses
+ok 5 - row 5: each defect made by hand is found where it was made: a hole in the road refuses, in the skin warns, a face across the road refuses, a sliver warns, a sunk skin warns, a wide lane end refuses
+  ---
+  duration_ms: 2349.4848
+  type: 'test'
+  ...
+# Subtest: row 6: under the bars: a crack in the road narrower than the ray check's 5 mm weld, a seam's zipper standing in the cross-section plane, and a hull that deepens evenly, are not found
+ok 6 - row 6: under the bars: a crack in the road narrower than the ray check's 5 mm weld, a seam's zipper standing in the cross-section plane, and a hull that deepens evenly, are not found
+  ---
+  duration_ms: 1287.1036
+  type: 'test'
+  ...
+# Subtest: row 7: the export gives the check its path, segments and pit lane, refuses with SCENE on a drivable fault and writes nothing, lists it in the TEST route instead, and passes each drawn fault on as a warning
+ok 7 - row 7: the export gives the check its path, segments and pit lane, refuses with SCENE on a drivable fault and writes nothing, lists it in the TEST route instead, and passes each drawn fault on as a warning
+  ---
+  duration_ms: 1682.8994
+  type: 'test'
+  ...
+# Subtest: row 9: a piece joint where the road's column count goes from even to odd (a cup ramp after a tube, then a cupped piece): the export refuses nothing, the planks there welded
+ok 8 - row 9: a piece joint where the road's column count goes from even to odd (a cup ramp after a tube, then a cupped piece): the export refuses nothing, the planks there welded
+  ---
+  duration_ms: 1893.2458
+  type: 'test'
+  ...
+# Subtest: row 10: a closed lap with a free jump: its road stops at the lip and starts again at the landing, and the export refuses nothing there
+ok 9 - row 10: a closed lap with a free jump: its road stops at the lip and starts again at the landing, and the export refuses nothing there
+  ---
+  duration_ms: 2608.9571
+  type: 'test'
+  ...
+# Subtest: row 8: bad input is refused by name
+ok 10 - row 8: bad input is refused by name
+  ---
+  duration_ms: 70.2676
+  type: 'test'
+  ...
+# Subtest: row 11: the triangles' tables keep every vertex and every edge as they grow, numbered in the order first seen
+ok 11 - row 11: the triangles' tables keep every vertex and every edge as they grow, numbered in the order first seen
+  ---
+  duration_ms: 29.4852
+  type: 'test'
+  ...
+# Subtest: row 12: a drawn surface that passes through another pass's road or apron warns, at its piece and station
+not ok 12 - row 12: a drawn surface that passes through another pass's road or apron warns, at its piece and station
+  ---
+  duration_ms: 1347.4822
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-a617base\\test\\export_finalscene.test.js:283:1'
+  failureType: 'testCodeFailure'
+  error: "the hull's run through the other pass's apron is found: "
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-a617base\test\export_finalscene.test.js:286:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 13: ELYSIUM: its p38's hull passes through p40's road and apron, and the check says so in piece p38
+not ok 13 - row 13: ELYSIUM: its p38's hull passes through p40's road and apron, and the check says so in piece p38
+  ---
+  duration_ms: 99716.4037
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-a617base\\test\\export_finalscene.test.js:294:1'
+  failureType: 'testCodeFailure'
+  error: 'nothing found'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-a617base\test\export_finalscene.test.js:297:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 11
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 126561.1754

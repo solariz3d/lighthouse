@@ -1,0 +1,9 @@
+textures true
+export full 62.9 s
+export light 73.6 s
+tris full  {"road":2902738,"PAINT":260,"1WALL":96,"underside":1026159,"apron":50100,"total":3979353}
+tris light {"road":2902738,"PAINT":260,"1WALL":96,"underside":487973,"apron":50100,"total":3441167}
+non-underside meshes 157 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 1051217 farthest from the light one 2.00 cm at 13.9,47.0,-478.0 hist <1mm,<1cm,<3cm,<5cm,>=5cm [615401,343109,92707,0,0]
+texel drift: vertices found by uv 1051217 not found 0 max 2.00 cm at 193.8,18.4,-666.3
+worst list []

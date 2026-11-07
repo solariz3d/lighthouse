@@ -1,0 +1,10 @@
+== t180
+origin	C:/Users/nname/Downloads/t180-fresh (fetch)
+origin	no_push (push)
+pushurl: no_push
+push --dry-run: fatal: 'no_push' does not appear to be a git repository
+== t180-track-builder-history
+origin	C:/Users/nname/Downloads/t180-track-builder (fetch)
+origin	no_push (push)
+pushurl: no_push
+push --dry-run: fatal: 'no_push' does not appear to be a git repository

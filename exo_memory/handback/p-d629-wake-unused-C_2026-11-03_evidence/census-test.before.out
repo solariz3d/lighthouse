@@ -1,0 +1,87 @@
+  ok   firstNul returns -1 on a clean buffer
+  ok   firstNul returns the byte offset of the FIRST NUL, not the count
+  ok   atOffset gives 1-based line and column
+  ok   atOffset handles a NUL on the first line
+  ok   parseAllow ignores blank lines and comments
+  ok   parseAllow REFUSES a row with no reason — an unexplained exemption is how these rot
+  ok   parseAllow names the LINE NUMBER of a bad row
+  ok   a clean tracked file passes
+  ok   a NUL-bearing TEXT file fails
+  ok   the failure names the file AND the byte offset — not just "something is binary"
+  ok   an ALLOW-LISTED binary passes
+  ok   an UNLISTED binary FAILS rather than silently passing
+  ok   a STALE allow-list entry — a path that is no longer tracked — FAILS
+  ok   a stale entry fails EVEN WHEN every scanned file is clean — it is its own failure
+  ok   an allow-listed file that is CLEAN is reported, and does not fail the run
+  ok   the green line always states how many files are ALLOWED — exempted must not read as fixed
+  ok   a file with two NULs reports the FIRST offset, deterministically
+  ok   the report prints the LIST, not only a count (J's D010 rule)
+  ok   a missing allow file is an EMPTY list, not a crash
+  ok   an unreadable file is a FINDING, not a silent skip
+  FAIL a type row "*.png" allows a NUL-bearing file whose header IS a PNG
+         Expected values to be strictly deep-equal:
+[32m+ actual[39m [31m- expected[39m
+
+[32m+[39m [
+[32m+[39m   {
+[32m+[39m     col: 1,
+[32m+[39m     line: 3,
+[32m+[39m     offset: 8,
+[32m+[39m     path: 'handback/x_evidence/shot.png',
+[32m+[39m     size: 12
+[32m+[39m   }
+[32m+[39m ]
+[31m-[39m []
+
+  FAIL type rows cover .gz and .ico by their own headers
+         Expected values to be strictly deep-equal:
+[32m+ actual[39m [31m- expected[39m
+
+[32m+[39m [
+[32m+[39m   {
+[32m+[39m     col: 4,
+[32m+[39m     line: 1,
+[32m+[39m     offset: 3,
+[32m+[39m     path: 'handback/x_evidence/run.tap.gz',
+[32m+[39m     size: 5
+[32m+[39m   },
+[32m+[39m   {
+[32m+[39m     col: 1,
+[32m+[39m     line: 1,
+[32m+[39m     offset: 0,
+[32m+[39m     path: 'handback/x_evidence/app.ico',
+[32m+[39m     size: 5
+[32m+[39m   }
+[32m+[39m ]
+[31m-[39m []
+
+  FAIL a file NAMED .png whose header is not a PNG still FAILS, and the report says why
+         Expected values to be strictly deep-equal:
+[32m+ actual[39m [31m- expected[39m
+
+[39m  [
+[32m+[39m   'handback/x_evidence/shot.png',
+[39m    'handback/x_evidence/notes.png'
+[39m  ]
+
+  FAIL with the images allowed by type, the NUL-bearing text file is the ONLY finding
+         Expected values to be strictly deep-equal:
+[32m+ actual[39m [31m- expected[39m
+
+[39m  [
+[32m+[39m   'handback/x_evidence/shot.png',
+[32m+[39m   'handback/x_evidence/run.tap.gz',
+[32m+[39m   'handback/x_evidence/app.ico',
+[39m    'map/B.md'
+[39m  ]
+
+  FAIL a type row for a type with no known header is REFUSED by the parser
+         Missing expected exception.
+  ok   a type row that matches NO tracked file is stale and FAILS
+  FAIL the green line states how many files a type row allowed — exempted must not read as fixed
+         Expected values to be strictly equal:
+
+false !== true
+
+
+  21 passed, 6 failed

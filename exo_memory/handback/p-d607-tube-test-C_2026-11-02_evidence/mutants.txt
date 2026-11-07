@@ -1,0 +1,5 @@
+C1 CAUGHT by collision inside | rows: ✔✖✖✖✔✖✔
+C2 CAUGHT by nothing clips | rows: ✔✖✖✖✖✔✔
+C3 CAUGHT by the AI line runs | rows: ✔✖✖✖✔✔✖
+C4 CAUGHT by the AI line runs | rows: ✔✖✖✖✔✔✖
+applied 4 / caught 4 / NOT APPLIED 0

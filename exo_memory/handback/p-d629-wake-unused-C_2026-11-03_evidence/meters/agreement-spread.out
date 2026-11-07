@@ -1,0 +1,9 @@
+blocks per negative (median positive pane count): 6
+scoreable: 529 positives (405 below floor), 113 negatives (32 below floor, 174 too few records)
+
+                      many minds    one mind    separation
+referent_overlap        0.0729      0.2032     -0.1303
+vantage_spread (old)    0.8286      0.8466     -0.0180
+
+spearman(overlap, vantage_spread) = -0.3609   [P3 wants |rho| < 0.5]
+spearman(overlap, mean length)    =  0.3246   [P4 wants |rho| < 0.25]

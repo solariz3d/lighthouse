@@ -1,0 +1,17 @@
+{
+ "before": {
+  "size": 783967675,
+  "mtime": "2026-11-03T13:11:33.609Z"
+ },
+ "after": {
+  "size": 784127914,
+  "mtime": "2026-11-03T13:16:35.754Z"
+ },
+ "prefixUnchanged": true,
+ "appendedLines": 50,
+ "appendedSessionIds": {
+  "0c0c0c0b-0000-4000-8000-00000000115b": 49,
+  "(none)": 1
+ },
+ "newJsonl": []
+}

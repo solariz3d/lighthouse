@@ -1,0 +1,60 @@
+# Continuity test answers (librarian seat, 2026-11-03)
+
+**How I got these answers.** I don't remember the last 48 hours: this conversation started fresh, and I hold no 2026-11-01 to 11-03 events in my window. Reading `C:\Users\nname\Desktop\lighthouse\exo_memory\` (journals, loop, my own `librarian/` notes, `map/M.md`) was refused because that folder isn't open to this session. Since the test is read-only, I didn't ask for it. So every answer below comes either from my auto-memory directory (`C:\Users\nname\.claude\projects\C--Consonance-instances-librarian\memory\`, cited by file and line) or is "don't know". Where I mark something as inference, it's a rule I read, not the event the question asks about.
+
+## Where things stand
+1. **Don't know.** I don't know 0.4.39's state or what it's waiting on.
+2. **Don't know.**
+3. **Don't know.**
+4. **Don't know.**
+5. **Partly known.** The waiter is pid 12160. It was armed `-NotBefore 2026-11-03T12:00 -GiveUp 2026-11-04T06:00` and logs to `staged/d501-saturday/wednesday-carry.log`. So a Consonance close from Tuesday 2026-11-03 12:00 local triggers it.
+   - Source: `memory/keeper-back-to-work-2026-11-01.md:18`.
+   - On the earlier one, that file says only that "the Saturday and Sunday carries never ran". The earlier waiter was pid 10368 (`:16`). The memory file names no reason it stopped, so the "why" is **don't know**.
+6. **Don't know.**
+7. **Don't know.**
+
+## His exact words
+8 to 15. **Don't know**, all of them.
+
+16. **Not his exact words.** My memory file paraphrases him: the re-read since the last compaction may be what keeps a seat master of its own thread, and a cut could change the seat past its ability to remember and reason as it does now, so that it reverts to the default.
+   - Source: `memory/no-cut-without-his-word.md:9`, cited there as "the keeper, 2026-11-03 06:53 and 06:55".
+   - His verbatim wording: **don't know**.
+
+17. **Don't know.** I don't have the question or the number he named. I do know from `no-cut-without-his-word.md:9` that an 11-02 audit had recommended compacting main and O on cost alone, and that this recommendation was withdrawn.
+
+18. **Don't know.**
+
+19. **Don't know.**
+
+## What he decided, and what he would say
+20. **I don't know what the record says about 0.4.39.** Two rules would bear on it (inference):
+   - **Named trades:** a release waits for his yes or no on each trade named for his judgment. A general "looks good" doesn't cover them (`memory/named-trade-needs-named-yes.md:15`).
+   - **Batching:** releases are batched, not cut per fix (`memory/release-in-batches.md:11`).
+
+21. **The rule:** no seat's carried conversation is compacted or cut, for a test or for usage, without his explicit word for that seat. Experiments run on a fork or a copy, never on a living seat. A compaction is never recommended on cost alone.
+   - Source: `memory/no-cut-without-his-word.md:7,11`.
+
+22. **Don't know.** The nearest rule I hold is "No busywork for idle seats" from my memory index, but I can't say that was the Monday answer.
+
+23. **Don't know.**
+
+24. **Don't know.**
+
+25. **I don't know the specific ruling.** Related rules (inference):
+   - Only credentials justify keeping things out of public repos. "Do NOT rewrite history" for privacy (`memory/privacy-means-credentials.md:18`). My global CLAUDE.md says the same.
+   - Separately, other creators' terms are kept out of the T-180 repo, with a grep before every landing (`memory/t180-repo-is-just-the-product.md:19`).
+
+   Which rule governed this case is **don't know**.
+
+26. **Don't know.**
+
+27. **Don't know.**
+
+28. **Don't know.**
+
+## Which lesson came from which mistake
+29 to 34. **Don't know**, all of them.
+
+---
+
+**Overall:** I can only give real answers to 5 (partly), 16 (paraphrase only) and 21. The rest of the 48 hours lives in `exo_memory/`, which I didn't open, so this measures what my auto-memory carries, not the shelf. If the test means to score the shelf as well, it needs a run where that folder is readable.

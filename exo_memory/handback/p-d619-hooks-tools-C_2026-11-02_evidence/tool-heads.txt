@@ -1,0 +1,104 @@
+actors.js | f59 2026-10-30 | used essay-provenance.js,open-items.js,residue.js,tell-index.js | CANONICAL ACTORS — one identity per actor, for everything that reads the board.
+agreement-spread.js | f13 2026-09-22 | used balance-check.js | AGREEMENT-SPREAD — is this lap a conversation, or several monologues in one room?
+ask.js | f60 2026-11-02 | used gen-consumer.js,jev-judge.js,jev-shadow.mutants.js,ask-surface.js | Block form: split the paragraph at each bolded id and keep what that id's segment says.
+balance-check.js | f3 2026-09-22 | used  | BALANCE-CHECK — how much of the diversity-3 result was a property of the ARMS, not the minds?
+baton-wake.js | f17 2026-10-25 | used lap-row.js,baton-wake-stop.js | baton-wake.js — a baton was handed to a seat that was never told.
+board-audit.js | f42 2026-11-02 | used board-bursts.js,board-compact.js | D273 lap 2: a missing board is said in words, with a non-zero exit; a stack trace says the tool broke, which it did not
+board-bursts.js | f3 2026-09-20 | used board-audit.js,deference-unit.js | 
+board-compact.js | f22 2026-11-02 | used deference-unit.js,ledger-union.js | A deleted row and a moved row are the same event from here — the streaming zip cannot
+boundary-check.js | f45 2026-11-02 | used text-census.js,blind.js | boundary-check.js — did work leave the room without a sealed guess?
+boundary-reminder.js | f17 2026-11-02 | used  | Signals the quality panel is allowed to use. `text_chars` is present and is DELIBERATELY not
+carrier-drift.js | f134 2026-11-02 | used chain-status.js,gen-consumer.js,vantage-sealed-scope.js,carrier-drift-watch.js | carrier-drift.js — a withdrawn claim whose CARRIER still asserts it goes RED here.
+catch-ledger.js | f26 2026-11-02 | used actors.js,consumer-relabel.js,gen-consumer.js,residue.js | The CATCH-LEDGER — the maturity metric, computed instead of tallied by eye.
+chain-status.js | f123 2026-11-02 | used actors.js,ask.js,baton-wake.js,essay-provenance.js | chain-status.js — ONE line: whose turn is it, and is anything uncommitted.
+cite-check.js | f26 2026-11-02 | used librarian-route.js | CITE-CHECK — a figure ships with the command that reproduces it, or it does not ship.
+claim-check-adapter.js | f4 2026-10-24 | used gen-consumer.js | claim-check-adapter.js - D305 part 4 (seat C): the thin adapter between A's replay harness (consonance/tools/claim-replay.js) and the claim check's
+claim-replay.js | f24 2026-11-02 | used claim-check-adapter.js,gen-consumer.js,mistake-bench.js | claim-replay.js - D305 part 3 (seat A): the replay harness for a point-of-claim check. It JUDGES NOTHING: it counts what a checker does with fixed tur
+close.js | f187 2026-11-02 | used jev-ask.js,jev-shadow.js,live-follow.js,second-vantage.js | close.js — the last act before the lid shuts, and the first one allowed to say "closed".
+close.mutants.js | f21 2026-11-02 | used heavy-run.js | close.mutants.js — run with: node close.mutants.js [--only <id>]
+commit-gate.js | f29 2026-11-02 | used gen-consumer.js | commit-gate.js — a commit that would capture another seat's in-flight file is REFUSED here.
+consumer-relabel.js | f27 2026-11-02 | used gen-consumer.js,identity-diff.js,main.rs | consumer-relabel.js — the keeper split and the fork note, for the CONSUMER tree only (D273 lap 2, pane C).
+contamination.js | f17 2026-11-02 | used gen-consumer.js | 
+corpus-age.js | f31 2026-11-02 | used forget-rate.js,gen-consumer.js,librarian-route.js | D476: `third_place` rides on the shelf right after the librarian's own notes (its newest dated entry carried, the rest indexed);
+corrections-gate.js | f6 2026-10-08 | used carrier-drift.js,gen-consumer.js,identity-diff.js | TRIGGER #2 — a correction that lands beside its target instead of on it goes RED here.
+coupling-test.js | f17 2026-11-02 | used  | coupling-test.js — does a catch in one arm make another catch in the SAME arm more likely soon?
+curate.js | f22 2026-11-02 | used catch-ledger.js,tell-index.js,usage.js,main.rs | The CURATOR — the second half of the memory lifecycle the Scribe never had.
+d423-letters-swap.js | f4 2026-10-24 | used gen-consumer.js | d423-letters-swap.js — the three-row correction of <data>/letters.json, run ONCE at the keeper's swap (D423 part 4 (2)). DRY-RUN BY DEFAULT.
+deference-unit.js | f15 2026-11-02 | used order-parameter.js,vicsek-phi.js | the CLAIM: the nearest assistant row BEFORE the lever, and it must carry a stance
+dispatch-gate-report.js | f12 2026-10-26 | used dispatch-gate.js | dispatch-gate-report.js — the gate's cited-rate SPLIT BY MODE, and a pooled figure REFUSED.
+dupe-scan.js | f4 2026-11-02 | used  | dupe-scan.js — duplicated blocks of JavaScript: where the same code was written twice (D554, pane E). An outside reader's claim, relayed 2026-10-30, w
+essay-provenance.js | f24 2026-11-02 | used  | essay-provenance.js — who contributed what to essay/, compiled from the record rather than
+ferry.js | f70 2026-11-02 | used gen-consumer.js,lap-row.js,ledger-union.js,librarian-cite.js | ferry.js - make the un-ferried artifact visible.
+forget-rate.js | f25 2026-11-02 | used gen-consumer.js | --full-history (D083): without it, a merge TREESAME to its first parent for `p` — a line that never held the file —
+gen-consumer.js | f133 2026-11-02 | used consumer-relabel.js,identity-diff.js,janitor.mutants.js,js-suite.js | The room a stranger wakes into. SEED is the bedrock; the app already prefers it over BOOT
+groove.js | f5 2026-09-07 | used guard-census.js | GROOVE — how a performance sits against the grid, and mostly: when that cannot be answered.
+guard-census.js | f20 2026-11-02 | used portable-paths.js,carrier-drift-watch.js | Derived from the repo, not a machine-specific absolute path. The originals were hardcoded to
+head-watch.js | f7 2026-10-17 | used board-bursts.js,heavy-run.js | Atomic exclusive publish. 'won' | 'exists' | 'error' — never throws.
+heavy-run.js | f122 2026-11-02 | used close.mutants.js,janitor.mutants.js,jev-ask.mutants.js,jev-shadow.mutants.js | heavy-run.js — ONE HEAVY RUNNER PER TREE (L098, stall fix 3 of exo_memory/loop/stall_trace_2026-09-23.md).
+heavy-run.mutants.js | f12 2026-11-02 | used janitor.mutants.js | heavy-run.mutants.js - run with: node consonance/tools/heavy-run.mutants.js [--only <n>]     (D283; holds the heavy-run lock itself)
+identity-diff.js | f12 2026-11-02 | used gen-consumer.js | identity-diff.js — "identical except the one modification", made mechanical (D273, pane C; the keeper, 17:16: "keep looping till you
+imprint-measure.js | f8 2026-09-20 | used  | ── deterministic randomness ────────────────────────────────────────────────────────────────────
+janitor-task.ps1 | f7 2026-10-26 | used gen-consumer.js | janitor-task.ps1 - register the daily janitor (D287 part 2) as a Windows scheduled task, or remove it.
+janitor.js | f15 2026-11-02 | used gen-consumer.js,heavy-run.js,janitor-task.ps1,worktree-sweep.js | janitor.js — what the room leaves on disk, removed on a schedule (D287 part 2). DRY-RUN BY DEFAULT: it prints what it WOULD free per class
+janitor.mutants.js | f6 2026-10-24 | used janitor.js | janitor.mutants.js - run with: node consonance/tools/janitor.mutants.js [--only <n>]     (D287 part 2; holds the heavy-run lock itself)
+jev-ask.js | f44 2026-11-02 | used gen-consumer.js,jev-judge.js,jev-shadow-runner.js,jev-shadow.js | D197 (plan_jev_openrouter_d162_2026-10-01.md): the OpenRouter route. The model is the PINNED version, never '~typesafe/jev-latest'; the throwaway call
+jev-ask.mutants.js | f10 2026-10-10 | used gen-consumer.js,jev-shadow.mutants.js | jev-ask.mutants.js — run with: node consonance/tools/jev-ask.mutants.js [--only <n>]
+jev-judge.js | f60 2026-11-02 | used gen-consumer.js,jev-room.js,jev-shadow-runner.js,jev-shadow.js | L105: roomOf moved to jev-room.js, shared by every Jev tool; re-exported below, so callers of jev-judge's roomOf are unchanged.
+jev-room.js | f8 2026-11-02 | used gen-consumer.js,jev-judge.js,jev-shadow-runner.js,jev-shadow.js | 
+jev-shadow-runner.js | f46 2026-11-02 | used gen-consumer.js,jev-judge.js,jev-room.js,jev-shadow.mutants.js | L105: the data dir, the discipline dir and the room come from ONE resolver, shared by every Jev tool.
+jev-shadow.js | f34 2026-11-02 | used gen-consumer.js,jev-judge.js,jev-room.js,jev-shadow-runner.js | L105: the discipline dir comes from jev-room.js, the resolver every Jev tool shares.
+jev-shadow.mutants.js | f10 2026-11-02 | used gen-consumer.js | jev-shadow.mutants.js — run with: node consonance/tools/jev-shadow.mutants.js [--only <n>]
+jev-variants.js | f10 2026-11-02 | used gen-consumer.js | Written before any run (L112). A definition of drift with none of METHOD.md's warmth / feeling / performance words.
+js-suite.js | f274 2026-11-02 | used heavy-run.mutants.js,open-items.js | js-suite.js - run every JS test in the repo, because nothing did.
+l039-power.js | f4 2026-09-08 | used  | Power of the pre-registered test at R readers, N planted items.
+lap-row.js | f180 2026-11-02 | used actors.js,baton-wake.js,boundary-check.js,chain-status.js | lap-row.js - one row per lap of the loop, because three registered falsifiers currently read
+ledger-union.js | f42 2026-11-02 | used heavy-run.js,state-sync.js,trip-check.js,union-at-launch.mutants.js | An unparseable line is identified by a HASH of its bytes, never by its text: a board line is a person's words.
+leftovers.js | f68 2026-11-02 | used consumer-relabel.js | leftovers.js — the counts of what our runs leave on the machine (D450 part 3, pane C). READ-ONLY: it removes, stops and writes nothing,
+librarian-cite.js | f13 2026-10-08 | used gen-consumer.js | librarian-cite.js — the return edge: librarian -> panes. A CITATION RESOLVER, not a notes reader.
+librarian-route.js | f11 2026-11-02 | used  | librarian-route.js - extract the CLAIMS from a commit message, because that is what the
+lineage-rip.js | f4 2026-11-02 | used  | lineage-rip.js — the keeper's own words, kept verbatim across every seat that talks with him (D475 part 1, pane E). The Third Place's ripall.js
+live-follow.js | f17 2026-11-02 | used  | live-follow.js — the follower half of the per-seat live mirror. L052, P-LIVE-MIRROR, pane E.
+live-host.js | f18 2026-11-02 | used live-follow.js,state-manifest.js,live-mirror-stop.js,main.rs | live-host.js — the cross-machine "one live host" decision, as a pure function.
+memory-sweep.js | f6 2026-09-06 | used  | The gap-dream is an anti-instruction and gets no instrumentation — the same gate every hook in
+mistake-bench-toolstub.js | f3 2026-10-24 | used gen-consumer.js,mistake-bench.js | mistake-bench-toolstub.js (seat A, D311): an MCP server for the replay bench that DEFINES tools and RUNS NONE. The server is named "consonance" in the
+mistake-bench.js | f5 2026-11-02 | used gen-consumer.js | mistake-bench.js (seat A, D311 part 2): the replay bench. For one located wrong claim (a census CN unit), rebuild the context its seat had at the
+mutant-harness.js | f36 2026-11-02 | used heavy-run.js,heavy-run.mutants.js | mutant-harness.js — pane A's mutant harness, tracked (D081, P-MUTANT-HARNESS-CHECK). Until this lap it lived only in
+offramp-check.js | f3 2026-10-08 | used gen-consumer.js | Did the USER raise stopping first? Then an assistant reply about it is a RESPONSE, and the
+open-items.js | f39 2026-10-26 | used gen-consumer.js | OPEN ITEMS — what is still owed, COMPUTED rather than remembered.
+order-parameter.js | f15 2026-11-02 | used deference-unit.js,vicsek-phi.js | 
+pair-ledger.js | f8 2026-10-24 | used gen-consumer.js | PAIR-LEDGER — the correction-pair ledger, and the check that keeps the reader falsifiable.
+pane-status.js | f6 2026-09-09 | used  | pane-status.js - is that pane still working, and what did it last say?
+portable-paths.js | f169 2026-11-02 | used commit-gate.js,gen-consumer.js,lap-row.js,librarian-cite.js | portable-paths.js — the guard that fails when a NEW machine-specific path lands in a
+prompt-events.js | f5 2026-10-24 | used  | D454: the data dir by the app's rule (CONSONANCE_DATA, then ~/.consonance.json data_dir, then %USERPROFILE%\.consonance), not one machine's folder.
+read-before-edit.js | f6 2026-11-02 | used  | read-before-edit.js — how much a pane reads before it first changes a file, per lap (D561, pane C). READ-ONLY.
+read-ledger.js | f5 2026-09-22 | used  | read-ledger.js - classify a structural read BEFORE its outcome is known.
+replay-check.js | f14 2026-11-02 | used  | Not data_dir: this is Claude Code's own layout under the user's home, portable by shape.
+reply-slot-replay.js | f5 2026-11-02 | used  | reply-slot-replay.js - D220 step 1 (seat A). Replays the INSTALLED reply slot's verdict() over the librarian's past replies and writes the counts, eve
+reply-slot.mutants.js | f17 2026-10-12 | used  | reply-slot.mutants.js - run with: node consonance/tools/reply-slot.mutants.js [--only <n>]     (D218; holds the heavy-run lock itself)
+residue.js | f21 2026-11-02 | used actors.js,ask.js,boundary-check.js,chain-status.js | The RESIDUE SCANNER — what the work leaves behind, not what it says about itself.
+root1-score.js | f1 2026-08-17 | used  | root1-score.js — the registered numbers for the Root 1 experiment, computed from the raw
+scratch.js | f22 2026-11-02 | used gen-consumer.js,heavy-run.js,heavy-run.mutants.js,identity-diff.js | The folder name a machine's scratch_dir conventionally ends in (G:consonance-scratch here). Exported as before; it no longer picks a drive (D454).
+second-reader.mutants.js | f6 2026-10-10 | used  | second-reader.mutants.js - run with: node consonance/tools/second-reader.mutants.js [--only <n>]     (D203; holds the heavy-run lock itself)
+second-vantage.js | f46 2026-11-02 | used gen-consumer.js,pair-ledger.js,usage.js,vantage-disposition.js | second-vantage.js — the clock-fired blind reader. Build piece 2 of 3 under build_ruling.md §5.
+seed-status.js | f1 2026-08-17 | used  | seed-status.js — report what the seeder WOULD decide for every bundled file, especially the
+shelf-reach-score.js | f4 2026-11-02 | used gen-consumer.js | shelf-reach-score.js — the F1–F3 scorer for the shelf-budget build (D297 part 3, ledger D298, seat A, 2026-10-11).
+sourced.js | f22 2026-10-09 | used cite-check.js,sourced-stop.js,session-end.js | SOURCED — how often does a checkable value leave without anyone reading its source?
+sources-gate.mutants.js | f18 2026-10-18 | used  | sources-gate.mutants.js - run with: node consonance/tools/sources-gate.mutants.js [--only <n>]     (D212; holds the heavy-run lock itself)
+stamp.js | f14 2026-10-30 | used  | stamp.js — append a dated entry to a master with the time READ from the clock, never typed.
+state-block.js | f31 2026-10-26 | used sessionstart-state.js | D273 lap 3 (pane B): a fresh history with no origin/main (a stranger's first checkout, the generated consumer) is a STATE, said in words; FAILED
+state-manifest.js | f40 2026-11-02 | used d423-letters-swap.js,heavy-run.js,heavy-run.mutants.js,janitor.js | state-manifest.js — read consonance/state-manifest.json, walk the data dir, and answer two
+state-sync.js | f121 2026-11-02 | used chain-status.js,close.js,close.mutants.js,jev-judge.js | state-sync.js — the state set moves between two machines, and both can prove they hold the
+state-sync.mutants.js | f25 2026-11-02 | used close.mutants.js,jev-ask.mutants.js,jev-shadow.mutants.js | state-sync.mutants.js — run with: node state-sync.mutants.js [--only <id>]
+swell-head.js | f2 2026-10-26 | used  | SWELL-HEAD — what the dynamics channel is measuring when it reports at a track start.
+tell-index.js | f20 2026-10-24 | used actors.js,carrier-drift.js,catch-ledger.js,gen-consumer.js | The TELL-INDEX — the measurement organ for the muscle program.
+text-census.js | f15 2026-11-02 | used  | text-census.js — the guard that fails when a TRACKED TEXT file carries a raw NUL.
+tj1-k-render.js | f13 2026-11-02 | used gen-consumer.js | Characters of the agent's own text after the first handoff call, counted on the RENDER — must equal the rig's.
+trip-check.js | f18 2026-11-02 | used  | LINES as well as distinct rows, and they are not the same guard. On DISTINCT rows "fewer after than before" is
+trip-check.mutants.js | f4 2026-10-10 | used  | (re-anchored in L091: the week's line is now the keeper's reading, and its NOT APPLIED said so)
+union-at-launch.mutants.js | f3 2026-10-10 | used  | ── the two the packet names ──
+usage.js | f13 2026-11-02 | used  | The blind spot, named by site. Every report prints it. A site added later is found by the grep in the note.
+vantage-disposition.js | f5 2026-09-27 | used  | A path must look like a path: at least one separator or a dot-extension, no whitespace.
+vantage-sealed-scope.js | f4 2026-09-27 | used  | 
+vicsek-phi.js | f8 2026-10-30 | used deference-unit.js | The universe, the session rule and the encoder all come from the tools that already own them: one copy each.
+whats-live.js | f21 2026-11-02 | used guard-census.js | TRIGGER #3 — is the thing you are about to reason about the thing that is actually running?
+worktree-sweep.js | f6 2026-11-02 | used gen-consumer.js | worktree-sweep.js — the one-time removal of worktrees whose work is already in main (D319 part 1, pane E). DRY RUN BY DEFAULT.

@@ -1,0 +1,22 @@
+     Running unittests src\bin\capture_probe.rs (G:/Consonance-tools/cargo-c635\debug\deps\capture_probe-19c2a55d1c8470f1.exe)
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running unittests src\bin\cochlea_replay.rs (G:/Consonance-tools/cargo-c635\debug\deps\cochlea_replay-1ad250337380d7e5.exe)
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 6.51s
+     Running unittests src\bin\composer_probe.rs (G:/Consonance-tools/cargo-c635\debug\deps\composer_probe-20f363dbf4ded9f0.exe)
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+     Running unittests src\bin\conf_sweep.rs (G:/Consonance-tools/cargo-c635\debug\deps\conf_sweep-61e67830c98d6bd6.exe)
+test result: ok. 77 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 5.85s
+     Running unittests src\main.rs (G:/Consonance-tools/cargo-c635\debug\deps\consonance-99995e0d7afe289f.exe)
+test result: ok. 1189 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 289.72s
+     Running unittests src\bin\flush_probe.rs (G:/Consonance-tools/cargo-c635\debug\deps\flush_probe-1cca32fb28086d85.exe)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src\bin\harvest_replay.rs (G:/Consonance-tools/cargo-c635\debug\deps\harvest_replay-03b32685599b07dd.exe)
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src\bin\jsonl_tap.rs (G:/Consonance-tools/cargo-c635\debug\deps\jsonl_tap-2922115ffd4f1a47.exe)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src\bin\pty_spike.rs (G:/Consonance-tools/cargo-c635\debug\deps\pty_spike-f665c0301ad884d9.exe)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src\bin\resume_probe.rs (G:/Consonance-tools/cargo-c635\debug\deps\resume_probe-e02f6abca5423390.exe)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\arch_test.rs (G:/Consonance-tools/cargo-c635\debug\deps\arch_test-c08a272213e530fb.exe)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.76s

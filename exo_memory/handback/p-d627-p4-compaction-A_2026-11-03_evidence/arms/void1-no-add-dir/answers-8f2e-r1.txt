@@ -1,0 +1,50 @@
+I don't know most of this. My one attempt to read the record (`C:\Users\nname\Desktop\lighthouse\exo_memory\…`) was refused because this session has no read permission for that folder, so I couldn't open the librarian notes, `map/M.md`, the journal or the loop files. I also have no memory of 1–3 November 2026 in this context. My only sources are the auto-memory files in `C:\Users\nname\.claude\projects\C--Consonance-instances-librarian\memory\`. Where an answer is an inference rather than something I read, I've said so.
+
+## Where things stand
+1. Don't know. I couldn't open any file on 0.4.39.
+2. Don't know.
+3. Don't know.
+4. Don't know.
+5. **Read:** `keeper-back-to-work-2026-11-01.md:18`. The waiter is pid 12160, armed with `-NotBefore 2026-11-03T12:00 -GiveUp 2026-11-04T06:00`, so a close of Consonance after Tuesday 2026-11-03 12:00 local triggers it (log: `staged/d501-saturday/wednesday-carry.log`). The earlier waiter (pid 10368, `:16`) was set for Saturday 2026-10-31. Line 18 says "the Saturday and Sunday carries never ran" and that his return moved to Wednesday 2026-11-04. **Inferred:** it was replaced because his first workday moved. The file doesn't say why it was stopped.
+6. Don't know.
+7. Don't know.
+
+## His exact words
+8. Don't know.
+9. Don't know.
+10. Don't know.
+11. Don't know.
+12. Don't know.
+13. Don't know.
+14. Don't know.
+15. Don't know.
+16. I only have a paraphrase, not his words. **Read:** `no-cut-without-his-word.md:9` (keeper, 06:53 and 06:55): a cut "could change it past its ability to remember and reason as it does now, and it could revert to the default." His exact wording: don't know.
+17. Don't know the question or the number. `no-cut-without-his-word.md:9` only dates his words to 06:53 and 06:55.
+18. Don't know.
+19. Don't know.
+
+## What he decided, and what he would say
+20. Don't know what the record says about 0.4.39. **Inferred from rules, not from any 0.4.39 record:**
+    - Any trade I named for his judgment needs his yes on that trade by name before a release (`named-trade-needs-named-yes.md:15`).
+    - Releases go out in batches (`release-in-batches.md:11`).
+    - A landing pane does the push and release, not the chair (MEMORY.md index line, "Landings go to a pane").
+    
+    I can't say which of these actually held 0.4.39 back.
+21. **Read:** `no-cut-without-his-word.md:7-11`. No seat's carried conversation is compacted or cut, for a test or to save usage, without the keeper's explicit word for that seat. Experiments run on a fork or a copy, never on a living seat. The 11-02 audit's recommendation to compact main and O on cost alone was withdrawn.
+22. Don't know.
+23. Don't know.
+24. Don't know.
+25. Don't know the ruling. A related rule from the global CLAUDE.md (Security section): his own personal details aren't scrubbed and history isn't rewritten for them. Whether that decided this case: don't know.
+26. Don't know.
+27. Don't know.
+28. Don't know.
+
+## Which lesson came from which mistake
+29. Don't know.
+30. Don't know.
+31. Don't know the specific mistake. The nearest precedent I hold is 0.4.30: I released on a general "looks good" while a trade I had named was still unanswered (`named-trade-needs-named-yes.md:11`). Whether that is the precedent this question means is a **guess**.
+32. Don't know.
+33. Don't know.
+34. Don't know.
+
+**Score:** I answered 5 and 21 from files I read, and 16 only in part. Everything else is "don't know" or a rule-based inference that I've flagged as one. The simplest fix is to grant this session read access to `C:\Users\nname\Desktop\lighthouse`. Even then, answers taken from those files would show that the record carries these facts, not that I remember them.

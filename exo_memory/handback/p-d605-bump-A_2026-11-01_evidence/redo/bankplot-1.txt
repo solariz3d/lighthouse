@@ -1,0 +1,2 @@
+base: rate at joint -0.000 °/m (bank 0.00°); least |rate| within 60 m 0.000 at s 780; under 0.03 °/m for 6 m; peak |rate| 0.621 at s 801
+step 2: rate at joint -0.000 °/m (bank 0.00°); least |rate| within 60 m 0.000 at s 780; under 0.03 °/m for 38 m; peak |rate| 0.394 at s 926.75

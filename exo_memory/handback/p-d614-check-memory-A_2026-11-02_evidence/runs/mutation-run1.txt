@@ -1,0 +1,60 @@
+# Subtest: control: the unmutated copy of finalscene.js passes every row the mutants are judged by
+ok 1 - control: the unmutated copy of finalscene.js passes every row the mutants are judged by
+# Subtest: control: the unmutated copy of fromwords.js passes every row the mutants are judged by
+ok 2 - control: the unmutated copy of fromwords.js passes every row the mutants are judged by
+# Subtest: mutation F1 a drivable face never stands across the road: applied, and caught by "row 5: each defect made by hand…"
+ok 3 - mutation F1 a drivable face never stands across the road: applied, and caught by "row 5: each defect made by hand…"
+# Subtest: mutation F2 a seam's zip fan is read as a face across the road: applied, and caught by "row 6: under the bars…"
+ok 4 - mutation F2 a seam's zip fan is read as a face across the road: applied, and caught by "row 6: under the bars…"
+# Subtest: mutation F3 the lane may be 1 m wide at its ends: applied, and caught by "row 5: each defect made by hand…"
+ok 5 - mutation F3 the lane may be 1 m wide at its ends: applied, and caught by "row 5: each defect made by hand…"
+# Subtest: mutation F4 the lane is never read: applied, and caught by "row 5: each defect made by hand…"
+ok 6 - mutation F4 the lane is never read: applied, and caught by "row 5: each defect made by hand…"
+# Subtest: mutation F5 every boundary edge counts as covered: applied, and caught by "row 5: each defect made by hand…"
+ok 7 - mutation F5 every boundary edge counts as covered: applied, and caught by "row 5: each defect made by hand…"
+# Subtest: mutation F6 a crack in the road must be 5 cm to count: applied, and caught by "row 6: under the bars…"
+ok 8 - mutation F6 a crack in the road must be 5 cm to count: applied, and caught by "row 6: under the bars…"
+# Subtest: mutation F7 a crack of 1 mm in the road counts: applied, and caught by "row 6: under the bars…"
+ok 9 - mutation F7 a crack of 1 mm in the road counts: applied, and caught by "row 6: under the bars…"
+# Subtest: mutation F8 a hole in the skin refuses like one in the road: applied, and caught by "row 5: each defect made by hand…"
+ok 10 - mutation F8 a hole in the skin refuses like one in the road: applied, and caught by "row 5: each defect made by hand…"
+# Subtest: mutation F9 an open track's two ends are read as open edges: applied, and caught by "row 4: tubes opened and closed…"
+ok 11 - mutation F9 an open track's two ends are read as open edges: applied, and caught by "row 4: tubes opened and closed…"
+# Subtest: mutation F10 the skin never folds: applied, and caught by "row 5: each defect made by hand…"
+ok 12 - mutation F10 the skin never folds: applied, and caught by "row 5: each defect made by hand…"
+# Subtest: mutation F11 a seam's zipper is read in the fold: applied, and caught by "row 6: under the bars…"
+ok 13 - mutation F11 a seam's zipper is read in the fold: applied, and caught by "row 6: under the bars…"
+# Subtest: mutation F16 the lip and landing of a jump are read as open edges: applied, and caught by "row 10: a closed lap with a free jump…"
+ok 14 - mutation F16 the lip and landing of a jump are read as open edges: applied, and caught by "row 10: a closed lap with a free jump…"
+# Subtest: mutation F12 the bottom never steps: applied, and caught by "row 5: each defect made by hand…"
+ok 15 - mutation F12 the bottom never steps: applied, and caught by "row 5: each defect made by hand…"
+# Subtest: mutation F13 the bottom is compared only 1.5 m apart (stations 2 m apart never are): applied, and caught by "row 3: beside the pit lane…"
+ok 16 - mutation F13 the bottom is compared only 1.5 m apart (stations 2 m apart never are): applied, and caught by "row 3: beside the pit lane…"
+# Subtest: mutation F15 the bottom's own slope is ignored (a hull deepening evenly reads as a step): applied, and caught by "row 6: under the bars…"
+ok 17 - mutation F15 the bottom's own slope is ignored (a hull deepening evenly reads as a step): applied, and caught by "row 6: under the bars…"
+# Subtest: mutation F14 no triangle is a sliver: applied, and caught by "row 5: each defect made by hand…"
+ok 18 - mutation F14 no triangle is a sliver: applied, and caught by "row 5: each defect made by hand…"
+# Subtest: mutation F17 an edge two triangles share reads as open (its count never passes 1): applied, and caught by "row 1: a clean lap with a pit lane…"
+ok 19 - mutation F17 an edge two triangles share reads as open (its count never passes 1): applied, and caught by "row 1: a clean lap with a pit lane…"
+# Subtest: mutation F18 the second triangle at an edge is not filed (the fold reads the first against nothing): applied, and caught by "row 5: each defect made by hand…"
+ok 20 - mutation F18 the second triangle at an edge is not filed (the fold reads the first against nothing): applied, and caught by "row 5: each defect made by hand…"
+# Subtest: mutation F19 the weld table loses its vertices when it grows: applied, and caught by "row 1: a clean lap with a pit lane…"
+not ok 21 - mutation F19 the weld table loses its vertices when it grows: applied, and caught by "row 1: a clean lap with a pit lane…"
+# Subtest: mutation F20 the edge table loses its edges when it grows: applied, and caught by "row 1: a clean lap with a pit lane…"
+not ok 22 - mutation F20 the edge table loses its edges when it grows: applied, and caught by "row 1: a clean lap with a pit lane…"
+# Subtest: mutation W1 a drivable fault never refuses the export: applied, and caught by "row 7: the export gives the check…"
+ok 23 - mutation W1 a drivable fault never refuses the export: applied, and caught by "row 7: the export gives the check…"
+# Subtest: mutation W2 a drawn fault is never passed on as a warning: applied, and caught by "row 7: the export gives the check…"
+ok 24 - mutation W2 a drawn fault is never passed on as a warning: applied, and caught by "row 7: the export gives the check…"
+# Subtest: mutation W3 the check is not given the pit lane: applied, and caught by "row 7: the export gives the check…"
+ok 25 - mutation W3 the check is not given the pit lane: applied, and caught by "row 7: the export gives the check…"
+# Subtest: mutation W4 the export does not return what the check found: applied, and caught by "row 1: a clean lap with a pit lane…"
+ok 26 - mutation W4 the export does not return what the check found: applied, and caught by "row 1: a clean lap with a pit lane…"
+# tests 26
+# suites 0
+# pass 24
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 219920.7712

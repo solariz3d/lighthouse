@@ -1,0 +1,208 @@
+ok 1 - control: the unmutated temp copy passes every export-isolated row
+ok 2 - mutation X1 a host that goes silent is never given up: applied, and caught by "row 4:…"
+ok 3 - mutation X2 the stage the host reports is not kept: applied, and caught by "row 4:…"
+ok 4 - mutation X3 a failure inside the host reads as a finished export: applied, and caught by "row 3:…"
+ok 5 - mutation X4 a host that died is used again: applied, and caught by "row 4b…"
+ok 6 - mutation X11 a refusal throws the host away: applied, and caught by "row 6:…"
+ok 7 - mutation X5 the road surface's slots do not cross: applied, and caught by "row 2:…"
+ok 8 - mutation X6 the core's lift does not cross: applied, and caught by "row 2b:…"
+ok 9 - mutation X9 the lost export's words name no stage: applied, and caught by "row 4:…"
+ok 10 - mutation X10 the exporter's own refusal comes back as a failure: applied, and caught by "row 6:…"
+ok 11 - mutation X7 Export builds on the page again: applied, and caught by "row 3:…"
+ok 12 - mutation X8 Export to Assetto Corsa does not wait for the build: applied, and caught by "row 3:…"
+ok 13 - mutation X12 the export never says it is building the pit-lane check: applied, and caught by "row 4:…"
+ok 14 - the export runs in its own process in a real page: b6969da's bytes, and a real heap out-of-memory there leaves the page drawn
+ok 15 - row 1: the export's bytes are b6969da's, a textured lap with a pit lane and an open TEST export
+ok 16 - row 2: through the runner (every message structured-cloned) the textured lap and the open TEST export are the same bytes
+ok 17 - row 2b: a LIFTED lap (a 1 m hill, the offset lift of the core not the identity) gives the same bytes through the runner as on the page
+ok 18 - row 3: an export that throws inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+ok 19 - row 4: an export that dies inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+ok 20 - row 4b: after a host died, the next export gets a fresh host and writes the same bytes as b6969da's
+ok 21 - row 5: the runner runs one job at a time; a newer start cancels the older; a stale reply is ignored; cancel replaces the host
+ok 22 - row 6: an export refused inside the host is the same ExportError as on the page, and the host is kept
+ok 23 - control: the unmutated copy of acready.js passes every test the mutants are judged by
+ok 24 - mutation A1 a standing triangle never counts as standing: applied, and caught by "row 4: weldSeams drops a standing triangle…"
+ok 25 - mutation A2 a seam is looked at only when a point was welded (the D460 fins slip through): applied, and caught by "row 4: weldSeams drops a standing triangle…"
+ok 26 - mutation A3 a standing triangle is kept when its seam is looked at: applied, and caught by "row 4: weldSeams drops a standing triangle…"
+ok 27 - mutation A4 the stand test inverted (a triangle facing up out of the road counts as standing): applied, and caught by "row 4: weldSeams drops a standing triangle…"
+ok 28 - mutation A5 the guard never counts a standing triangle: applied, and caught by "row 6: the fin guard finds…"
+ok 29 - mutation A6 the guard never counts a triangle off the surface it bridges: applied, and caught by "row 6: the fin guard finds…"
+ok 30 - mutation A7 the surface tolerance a hundred times too loose (1 m): applied, and caught by "row 6: the fin guard finds…"
+ok 31 - mutation A8 no point is welded (the next piece keeps its own edge): applied, and caught by "a seam whose rows are within SNAP is dropped…"
+ok 32 - mutation A9 slivers are kept (thinness never drops a triangle): applied, and caught by "a seam whose rows are within SNAP is dropped…"
+ok 33 - mutation A10 a moved point moves only in the seam, not in the next piece: applied, and caught by "a seam whose rows are within SNAP is dropped…"
+ok 34 - mutation A11 no plank vertex is ever welded: applied, and caught by "the edge apron's planks are welded at a joint…"
+ok 35 - mutation A12 a plank's row on the road moves too: applied, and caught by "a plank's row on the road never moves…"
+ok 36 - mutation A13 float rounding is welded (two copies of one row a hair apart): applied, and caught by "a plank's row on the road never moves…"
+ok 37 - mutation A14 a welded point moves in the plank only, not in the run under it: applied, and caught by "the edge apron's planks are welded at a joint…"
+ok 38 - control: the unmutated copy passes every row of export_apron.test.js
+ok 39 - mutation P1 the slope sign flipped (the apron rises from the edge): applied, and caught by "row 1:…"
+ok 40 - mutation P2 the join dropped (the wedge is left open under the plank): applied, and caught by "row 2:…"
+ok 41 - mutation P18 the run meeting the skin's far edge, not its own: applied, and caught by "row 2:…"
+ok 42 - mutation P3 the wall test dropped (a 90° cup gets an apron): applied, and caught by "row 4:…"
+ok 43 - mutation P4 the pit lane's side keeps its apron over the lane's span: applied, and caught by "row 10:…"
+ok 44 - mutation P5 every apron is 1ROAD_ (a gripped piece's loses its grip): applied, and caught by "row 11:…"
+ok 45 - mutation P6 the plank hidden again (what is drawn is not the physics): applied, and caught by "row 13:…"
+ok 46 - mutation P7 the pit lane's outline dropped (its edges bare, the main apron stopping square at the span): applied, and caught by "row 14:…"
+ok 47 - mutation P8 the run's normals into the hull (it is lit from inside): applied, and caught by "row 2:…"
+ok 48 - mutation P9 the apron's material the plain dark one again (not the road's asphalt): applied, and caught by "row 15:…"
+ok 49 - mutation P10 the pit lane's outline plank hidden (round the lane, what is drawn is not the physics): applied, and caught by "row 14:…"
+ok 50 - mutation P12 the road skin beside the lane hung along its own cupped normal again (it swings under the lane skin and clips through it): applied, and caught by "row 18:…"
+ok 51 - mutation P11 the physics re-aimed along the edge's own segment (the step the keeper kept out): applied, and caught by "row 17:…"
+ok 52 - mutation P13 the apron's asphalt at full light (not a little darker): applied, and caught by "row 15:…"
+ok 53 - mutation P14 the pit lane's outline drawn with no join (the wedge open along the lane): applied, and caught by "row 14:…"
+ok 54 - mutation P15 outline rows a few micrometres apart kept as two (a lip cell of no width): applied, and caught by "row 18:…"
+ok 55 - mutation P21 the plank walking across the lane's end again (a cap: the notch the keeper marked): applied, and caught by "row 22:…"
+ok 56 - mutation P22 the hull not eased out beside the lane (a step in the bottom at the leave): applied, and caught by "row 26:…"
+ok 57 - mutation P23 a wall side left open (no side face: the road's and the skin's edges free at a tube's slot): applied, and caught by "the drawn hull has no open edge…"
+ok 58 - mutation P24 a strip's triangles of no area kept (a tapered plank's first row): applied, and caught by "the drawn hull has no sliver…"
+ok 59 - mutation P25 a plank hung from the middle column by count again (an edge zone on one side leans it): applied, and caught by "row 28:…"
+ok 60 - mutation P26 the centre line column given to no plank: applied, and caught by "row 28:…"
+ok 61 - mutation P28 the run leaves the tip at the fixed lead, not as the mirror of its end: applied, and caught by "row 29:…"
+ok 62 - the fixture kit is the seal's: fixtures.js and manifest.json carry the sha256 the seal registered (and the D196 amendment record is the one registered)
+ok 63 - row 5a (amended D196, D222, D258): against the SEAL's manifest (c964c2d) F4, F6, F8 differ in segs and mesh only, F1, F2 in kn5 only, F7 in segs, path and mesh, and the three others are identical
+ok 64 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+ok 65 - row 5b (D225, /4): each fixture parsed, saved as /4 text and read again renders to the same digests (the round trip), its text is /4 and carries no edge or tube channel (seal E3c)
+ok 66 - row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed
+ok 67 - sector gates amendment record: only F1 F2 (the closed laps) changed, only their kn5, and the measure says the same triangles and meshes with exactly AC_TIME_1 and AC_TIME_2 added
+ok 68 - mesh cap amendment record: only the F2 kn5 changed, every other digest is the one in the D279 record, and the measure says the same triangles and markers in one more chunk, none over 32,768 vertices
+ok 69 - D279 amendment record: F1 F2 keep every digest but the kn5, and the measure says only their pit boxes changed, in material and coordinates
+ok 70 - D260 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and its triangle set and markers are the same in far fewer meshes
+ok 71 - D230 amendment record: F1 F2 keep their segs, path and mesh digests and their ROAD nodes byte for byte, only the kn5 moved (the skin nodes are added), and the measure says so
+ok 72 - D222 amendment record: F1 F2 keep their segs, path and mesh digests, only the kn5 moved, and the measure shows the AC-ready export (unique names, world space, a diffuse, no sliver seam)
+ok 73 - D196 amendment record: every changed fixture keeps its path digest, its segs and mesh digests moved, and the measure shows the steps gone
+ok 74 - D460 amendment record: only F1 F4 F6 F8 changed, only their mesh digest (and F1's kn5), "before" is the record each was last amended by, and the measure says only seam index arrays changed
+ok 75 - D572 amendment record: only F1 F2 changed, only their kn5, "before" is the record each was last amended by, and the measure keeps every mesh of before and adds only apron meshes
+ok 76 - D593 amendment record: only F1 F2 changed, only their kn5; built now, every mesh node is a93ae51's byte for byte and the only material record changed is t180b_apron's (the road's asphalt in its shade)
+ok 77 - D604 amendment record: only F1 F2 changed, only their kn5; built now, the road, paint and physics planks are the base's byte for byte, only the skins moved (drawn), the joins gone into them, and the only material record changed is t180b_underskin's
+ok 78 - D609 amendment record: only F1 F2 changed, only their kn5; built now, the road and paint are the D604 record's byte for byte, both skins moved, F2's physics planks moved and F1's did not, no node added or removed, no material changed
+ok 79 - the light hull's amendment record: only F1 F2 changed, only their kn5, and it is smaller; built now, every node but the drawn skins is the base's byte for byte in the same order, the skins are the record's, and no material record changed
+ok 80 - flattening keeps every vertex where the nested scene put it in the world
+ok 81 - after flattening, no mesh sits under a transformed node
+ok 82 - after flattening, every mesh name is unique and still starts with its surface key
+ok 83 - a marker keeps its world placement
+ok 84 - a name that is already unique is not changed, and a made name does not collide with a real one
+ok 85 - every material without a diffuse gets one, and one that has one keeps it
+ok 86 - a scene with no materials and no meshes passes through both unchanged in shape
+ok 87 - an exported track has no transformed road, unique names, and a diffuse on every material
+ok 88 - a seam whose rows are within SNAP is dropped, and the next piece's edge is moved onto the earlier row
+ok 89 - a seam wider than SNAP is a real bridge and is kept untouched
+ok 90 - a scene with no seam is returned as it was
+ok 91 - the edge apron's planks are welded at a joint: a plank's outer row 7 mm off the one before it is moved onto it, and the hull's run that starts there with it
+ok 92 - a plank's row on the road never moves, nor one under a millimetre off (float rounding), nor one APRON_SNAP or more off, and a scene with nothing to weld is returned as it was
+ok 93 - an exported closed track has no sliver seam left on its road
+ok 94 - row 1: on a flat open road each cell gets two aprons, their outer row widthM out and widthM·tan(25°) below the edge row (2.0 m: 0.93 m; 1.5 m: 0.70 m)
+ok 95 - row 2: the wedge is closed: each plank's tip row is in its cell's skin, its run meeting the skin's own edge vertices; no face points into the hull; the top faces up, the run down
+ok 96 - row 3: the road's own nodes are the same objects in the same places; a skin with an apron is that skin with its runs appended; the planks are appended, with one material added, and the skin's in the road's shade
+ok 97 - row 4: a wall side (a cup at 90°) gets no plank, only its side face from the edge to the skin; a closed tube ring gets none, a seam row gets none
+ok 98 - row 5: a side whose edge zone turns down (e < 0) is open, and its apron starts at the zone's outer row, the mesh's last column
+ok 99 - row 6: width 0: no apron, and a side face from the edge row straight down to the skin's edge row
+ok 100 - row 7: only the top is physics (<prefix>APRON_<cell>_L/R); the join and side face are APRONSIDE_ scenery; never "seam"; a darker material; bad options refused
+ok 101 - row 8: the aprons of consecutive cells meet, across a piece join too: each cell's first outer row is the last cell's last, to a millimetre
+ok 102 - row 9: the full export: the kn5 carries the aprons, the road meshes are the same at width 0 and 2, and the downforce-ray check finds no gap at the aprons
+ok 103 - row 10: the pit lane's side gets no apron over the lane's span; the other side, and the lane's side away from it, do
+ok 104 - row 11: a gripped piece's aprons are its own grip surface (1GRIP070_APRON_…), an ungripped piece's 1ROAD_APRON_
+ok 105 - row 12: the D563 wheel: 0.86 m out the physics apron is 0.40 m below the edge row, within 0.1 m of the 0.31 m the wheel was measured to fall
+ok 106 - row 13: what is drawn is the physics: on a flat, a banked and a cupped edge every apron top is drawn as it is, its run under it in its drawn skin, and no other apron mesh is drawn (no lip)
+ok 107 - row 14: the pit lane is one outline: a drawn physics apron runs from the main apron before the lane, round its ends and along its outer edge, back onto the main apron after it, with its join; the D563 wheel case holds on the lane's edge
+ok 108 - row 15: the apron wears the road's own asphalt a little darker: t180b_apron is the road material's texture with its ambient, diffuse and specular at LIP_SHADE, on the tops and the joins
+ok 109 - row 16: every apron top is exactly apronOf's, byte for byte, and the run under it, in its skin, is apronOf's run; all drawn (visible, renderable, casting shadows)
+ok 110 - row 17: the physics apron is byte for byte what the user drove (pinned at a93ae51), on a flat, a banked and a cupped edge
+ok 111 - row 18: the pit IS the track: nothing clips, nothing overlaps in one plane, no sliver under 1 cm (all round the lane), and no open edge drawn round either end
+ok 112 - row 19: the lane's drawn edge carries one texture along it: no face triangle edge round the lane squeezes more than 1 texture repeat into a metre
+ok 113 - row 20: on a road cupped 15.5° with a pit lane (his case): no lip anywhere, and the outline's plank is drawn and has its join
+ok 114 - row 21: the lane surface wears the road texture at the road scale where it narrows too: on every lane triangle u changes 0.1 a metre, within 10%
+ok 115 - row 22: the lane's ends have no cap and no step: no plank triangle lies across the road there, the lane is at most 0.1 m wide where it leaves and rejoins, and a join triangle across the road faces out of the lane
+ok 116 - row 23: the road is a hull: on a flat road the skin is 1.5 m under it all across, and each run goes from the plank tip only down and in to the skin edge
+ok 117 - row 24: the slab does not cut itself: on flat, banked, cupped and turned-down edges and the pit lap, no drawn triangle clips another, within one mesh or between meshes
+ok 118 - row 25: the hull's bottom is one smooth curve tip to tip: on a banked and two cupped edges each run only flattens from the tip in and runs on into the skin with no corner, and the bottom keeps 0.15 m off the road
+ok 119 - row 26: beside the pit lane the hull's bottom has no step: on a cupped road the skin under the lane's side of the road, 0.5 m in from its edge, changes depth by at most 0.03 m a metre over the 40 m before the leave and after the rejoin
+ok 120 - row 27: the planks meet across a piece joint where the road's column count goes from even to odd: each side's plank ends on the next piece's first row to a millimetre, its outer row and the run under it too
+ok 121 - row 28: every plank hangs at the apron's own slope from the road's frame, on a cupped piece with an edge zone on one side as on a symmetric one: 25° below the lateral, in the cross-section
+ok 122 - row 29: the run under every plank bends evenly into the skin: no more than 5° in any 0.3 m of it, and no more than 3° where it meets the skin's first span, on two cupped pieces with an edge zone on one side, a symmetric cup and a flat road
+ok 123 - row 1: a clean lap with a pit lane: the check finds nothing, and the export carries exactly what the check returns on its welded scene
+ok 124 - row 2: the pit lane's ends: no drivable face stands across the road there, and the lane is at most 0.1 m wide where it leaves and rejoins (the notch)
+ok 125 - row 3: beside the pit lane on a cupped road the hull's bottom has no step, and the check reads the bottom all along
+ok 126 - row 4: tubes opened and closed, abrupt and gradual: no fold in the skin past the road's, no open edge, no sliver, no step in the bottom
+ok 127 - row 5: each defect made by hand is found where it was made: a hole in the road refuses, in the skin warns, a face across the road refuses, a sliver warns, a sunk skin warns, a wide lane end refuses
+ok 128 - row 6: under the bars: a crack in the road narrower than the ray check's 5 mm weld, a seam's zipper standing in the cross-section plane, and a hull that deepens evenly, are not found
+ok 129 - row 7: the export gives the check its path, segments and pit lane, refuses with SCENE on a drivable fault and writes nothing, lists it in the TEST route instead, and passes each drawn fault on as a warning
+ok 130 - row 9: a piece joint where the road's column count goes from even to odd (a cup ramp after a tube, then a cupped piece): the export refuses nothing, the planks there welded
+ok 131 - row 10: a closed lap with a free jump: its road stops at the lip and starts again at the landing, and the export refuses nothing there
+ok 132 - row 8: bad input is refused by name
+ok 133 - control: the unmutated copy of finalscene.js passes every row the mutants are judged by
+ok 134 - control: the unmutated copy of fromwords.js passes every row the mutants are judged by
+ok 135 - mutation F1 a drivable face never stands across the road: applied, and caught by "row 5: each defect made by hand…"
+ok 136 - mutation F2 a seam's zip fan is read as a face across the road: applied, and caught by "row 6: under the bars…"
+ok 137 - mutation F3 the lane may be 1 m wide at its ends: applied, and caught by "row 5: each defect made by hand…"
+ok 138 - mutation F4 the lane is never read: applied, and caught by "row 5: each defect made by hand…"
+ok 139 - mutation F5 every boundary edge counts as covered: applied, and caught by "row 5: each defect made by hand…"
+ok 140 - mutation F6 a crack in the road must be 5 cm to count: applied, and caught by "row 6: under the bars…"
+ok 141 - mutation F7 a crack of 1 mm in the road counts: applied, and caught by "row 6: under the bars…"
+ok 142 - mutation F8 a hole in the skin refuses like one in the road: applied, and caught by "row 5: each defect made by hand…"
+ok 143 - mutation F9 an open track's two ends are read as open edges: applied, and caught by "row 4: tubes opened and closed…"
+ok 144 - mutation F10 the skin never folds: applied, and caught by "row 5: each defect made by hand…"
+ok 145 - mutation F11 a seam's zipper is read in the fold: applied, and caught by "row 6: under the bars…"
+ok 146 - mutation F16 the lip and landing of a jump are read as open edges: applied, and caught by "row 10: a closed lap with a free jump…"
+ok 147 - mutation F12 the bottom never steps: applied, and caught by "row 5: each defect made by hand…"
+ok 148 - mutation F13 the bottom is compared only 1.5 m apart (stations 2 m apart never are): applied, and caught by "row 3: beside the pit lane…"
+ok 149 - mutation F15 the bottom's own slope is ignored (a hull deepening evenly reads as a step): applied, and caught by "row 6: under the bars…"
+ok 150 - mutation F14 no triangle is a sliver: applied, and caught by "row 5: each defect made by hand…"
+ok 151 - mutation W1 a drivable fault never refuses the export: applied, and caught by "row 7: the export gives the check…"
+ok 152 - mutation W2 a drawn fault is never passed on as a warning: applied, and caught by "row 7: the export gives the check…"
+ok 153 - mutation W3 the check is not given the pit lane: applied, and caught by "row 7: the export gives the check…"
+ok 154 - mutation W4 the export does not return what the check found: applied, and caught by "row 1: a clean lap with a pit lane…"
+ok 155 - the light bottom has under 40% of the full bottom's triangles on a textured track, and fewer on an untextured one
+ok 156 - every mesh that is not the bottom is the same byte for byte (the road, the planks, their physics), with or without the light hull
+ok 157 - THE IMAGE: every vertex of the full bottom, found on the light bottom by its own uv, lies within LIGHT_TOL_M of where it was (textured and untextured)
+ok 158 - THE IMAGE at random points: a point of the light bottom carries the uv the full bottom carries within LIGHT_TOL_M of it
+ok 159 - no light triangle spans a uv jump: an untextured track's v starts again every 2 m, and no triangle of its bottom runs over more than one start
+ok 160 - the light bottom opens no edge and has no sliver: the drawn hull's uncovered boundary edges are the full one's, and no bottom triangle is thinner than SLIVER
+ok 161 - the light bottom faces where the full one does: every triangle is wound so its normal agrees with its vertices' normals (away from the road)
+ok 162 - vertex for vertex: the light hull has no boundary edge the full one does not have (a row it shares with a cell beside it carries the same vertices on both sides)
+ok 163 - every light piece ends on a whole cell: no triangle on a piece's first or last row reaches further along than one cell, on a piece that keeps every column too
+ok 164 - a scene with no equation-core road to lighten is returned as it is
+ok 165 - at an open route's two ends the light bottom ends on the full skin's own last cell: no light triangle on the bottom's end row reaches further along than a cell (the fixture textured and untextured, a plain straight route textured)
+ok 166 - the fixture is the cases it names, and every case has road and skin in the export (its open cases their apron too)
+ok 167 - THE JAG: across the road the skin bends no more than the road it hangs under (plus the slack), in every case, the openings included
+ok 168 - the drawn hull has no open edge: every boundary edge is covered by another (a T-junction), except at the track's two ends
+ok 169 - the drawn hull has no sliver: no triangle thinner than acready.js SLIVER
+ok 170 - nothing clips: no drawn triangle passes through another (road, skin, apron), outside the triangles that share a vertex
+ok 171 - collision inside: under the car on the centreline everywhere, and all round the closed ring, a ray finds a physics surface
+ok 172 - the AI line runs through every case, on the road
+ok 173 - row 1: a closed tube export has an underside skin on every cell: the road's own normal, the plank's drop away from the driver (outward), normals out, castShadows, its own dark material
+ok 174 - row 2: on an OPEN road the skin is BELOW it: the road keeps its light material, the skin is under every cell, and on the flat start straight it is the plank's drop down
+ok 175 - row 3: the DARK interior (ksAmbient 0.02) is on closed-ring cells only, the textured ones too; the set's shared material is untouched; the skin runs under the slot zone, the dark does not
+ok 176 - row 4: the ROAD nodes are the ones mesh.js made (the same objects): only skin nodes and materials are added; a word document comes back as the very same scene
+ok 177 - row 5: the skin is not a physics surface: no leading digit, no 1ROAD, no "seam", no surfaces.ini MESHES pattern matches it, and the 1ROAD meshes are as many as before
+ok 178 - row 6: the skin is light: about SKIN_COLUMNS vertices across, a fraction of the road's (under 60% on an open road, under 15% on a tube)
+ok 179 - row 7: the ring rule on a synthetic mesh: a seam row is a ring only when BOTH its segments are, and the lap's first seam joins the last piece to the first
+ok 180 - row 9: the hull's depth: 1.5 m under a flat road all across; under an edge that rises it is the plank's drop plus 2 m tan(rim + 5°) at the edge (1.5 to 3 m), easing back to 1.5 m 4 m in, with no step
+ok 181 - row 8: a seam row's skin (every vertex kept, no grid) is the road's triangles reversed and its vertices moved the plank's drop against the normal, on a zipper with area
+ok 182 - row 10: the section's up is its centre line's: the middle column on an odd row, the two middle ones' mean on an even row, the column at u = 0 with an edge on one side
+ok 183 - control: the unmutated copy passes every row of underskin.test.js and export_apron.test.js
+ok 184 - mutation U1 the skin at the plank's drop again (0.93 m: a slab, not the hull): applied, and caught by "row 23:…" in export_apron.test.js
+ok 185 - mutation U2 the skin's normals not reversed (it faces the road, not away from it): applied, and caught by "row 1:…" in underskin.test.js
+ok 186 - mutation U3 a seam's skin keeps the road's winding (it faces into the slab): applied, and caught by "row 8:…" in underskin.test.js
+ok 187 - mutation U4 the skin offset toward the driver (above the road, not under it): applied, and caught by "row 2:…" in underskin.test.js
+ok 188 - mutation U10 the skin hung along its own normal, not its section's up (the run under a plank folds back up to it): applied, and caught by "row 25:…" in export_apron.test.js
+ok 189 - mutation U11 the hull not deepened under a rising edge (the run from the tip makes an S): applied, and caught by "row 25:…" in export_apron.test.js
+ok 190 - mutation U12 the hull's depth eased back linearly (a crease where it reaches 1.5 m): applied, and caught by "row 9:…" in underskin.test.js
+ok 191 - mutation U5 a closed ring's interior left light: applied, and caught by "row 3:…" in underskin.test.js
+ok 192 - mutation U6 a cell left without a skin (a hole in the slab's underside): applied, and caught by "row 1:…" in underskin.test.js
+ok 193 - mutation U7 the skin named as road (a physics surface under the road): applied, and caught by "row 5:…" in underskin.test.js
+ok 194 - mutation U9 the skin far deeper than the hull (5 m): applied, and caught by "row 23:…" in export_apron.test.js
+ok 195 - mutation U8 the skin keeps every column (a full copy of the road under it): applied, and caught by "row 6:…" in underskin.test.js
+ok 196 - mutation U13 a seam's zipper kept where it is a sliver: applied, and caught by "the drawn hull has no sliver…" in tube_cases.test.js
+ok 197 - mutation U14 the section's up off the middle again when K is even (a crack at a 401 | 402 seam): applied, and caught by "row 10:…" in underskin.test.js
+ok 198 - mutation U15 the rows on a seam decimated (its chords off the seam's every-vertex row): applied, and caught by "the drawn hull has no open edge…" in tube_cases.test.js
+ok 199 - mutation U16 no twisted zone (the skin decimated under an abrupt opening): applied, and caught by "THE JAG…" in tube_cases.test.js
+ok 200 - mutation U17 the hull not thinned in the twisted zone: applied, and caught by "THE JAG…" in tube_cases.test.js
+ok 201 - mutation U18 no floor under a plank (its tip below a thinned hull: the run folds back): applied, and caught by "THE JAG…" in tube_cases.test.js
+ok 202 - mutation U19 the centre line taken by count again: applied, and caught by "row 28:…" in export_apron.test.js
+ok 203 - mutation U20 between two columns the nearer taken (half a column off with an even K): applied, and caught by "row 28:…" in export_apron.test.js
+ok 204 - mutation U21 the edge of the skin never read from the tip of the plank: applied, and caught by "row 29:…" in export_apron.test.js
+ok 205 - mutation U22 the edge of the skin read from the tip on a symmetric section too: applied, and caught by "THE JAG…" in tube_cases.test.js
+# tests 207
+# pass 207
+# fail 0

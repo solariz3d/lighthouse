@@ -1,0 +1,5 @@
+p38 skin vertices whose hang meets another piece's physics within depth + 1 m: 10; inside the depth (piercing): 10
+worst {"over":0.3587388902043802,"cell":"1ROAD_p38_body_0_282","r":1,"k":140,"edge":2.227436053041309,"dep":2.1867001123065535,"t":1.8279612221021733}
+edge 0-2 m     vertices [33m4[39m piercing [33m4[39m other surface at 2.126 skin depth up to 3.000
+edge 2-4 m     vertices [33m6[39m piercing [33m6[39m other surface at 1.475 skin depth up to 2.187
+cells [33m2[39m 1ROAD_p38_body_0_282 1ROAD_p38_body_0_283 ... widths 35

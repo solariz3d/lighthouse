@@ -1,0 +1,3 @@
+box vertices [33m65[39m bottom set [33m38[39m top set [33m3[39m y [33m0.48469433188438416[39m [33m1.474578857421875[39m
+frames [33m10990[39m dt [33m0.015[39m telemetry [33m5[39m time boost channel [33mtrue[39m
+rows [33m10988[39m

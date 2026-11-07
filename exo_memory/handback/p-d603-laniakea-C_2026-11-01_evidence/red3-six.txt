@@ -1,0 +1,14 @@
+✖ a line through vertical (a station exactly on 90°) is written, and no tangent AC reads is nearer vertical than 1e-4 (1.5687ms)
+✖ a point 5e-5 off vertical (between the 1e-6 that crashed and the bar) is moved: the least tangent clears 1e-4 (0.3384ms)
+✔ a road that stays vertical (a straight up) cannot be cleared: refused by name, VERTICAL_TANGENT (0.4202ms)
+✔ a climb to 80° (no station near vertical) is not touched: every point stays on its own station (0.638ms)
+✔ an ordinary track's AI line is byte-identical to before (the platform test, floor and wall lines) (71.1886ms)
+✖ ELYSIUM's AI line (a loop through vertical that AC loads) is byte-identical to before (1219.5725ms)
+✔ the export of a track that stays vertical finishes WITHOUT ai/fast_lane.ai, and the banner says why in plain words (467.478ms)
+✔ a layout folder of a track that stays vertical lists no AI line (src/export/layouts.js layoutSet) (392.8189ms)
+ℹ pass 5
+ℹ fail 3
+✖ failing tests:
+✖ a line through vertical (a station exactly on 90°) is written, and no tangent AC reads is nearer vertical than 1e-4 (1.5687ms)
+✖ a point 5e-5 off vertical (between the 1e-6 that crashed and the bar) is moved: the least tangent clears 1e-4 (0.3384ms)
+✖ ELYSIUM's AI line (a loop through vertical that AC loads) is byte-identical to before (1219.5725ms)

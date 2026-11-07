@@ -1,0 +1,13 @@
+not ok 11 - row 11: through the real shell and the preview: a flat track draws the ground grid, a hilly one the lattice; the modes and the mirror follow setGuides, and each change is announced once
+not ok 12 - row 11b: the plan follows the track: a flat track replaced by a hilly one is drawn as the lattice, with no setGuides call; the layer is given every frame's plan and is disposed with the preview
+not ok 24 - row 1: a commit or a drag that leaves the document as it was adds no undo step
+not ok 25 - row 2: a reopened history shares unchanged pieces between its steps, as a history made in this session does
+not ok 26 - row 3: undo and redo say what they changed, and say so when there is nothing
+not ok 27 - row 4: the checker keeps its result when only the start moved, and re-checks when the road changed
+not ok 28 - row 5: removing pieces from the end without an undo copy builds no full mesh, and equals a fresh full build
+not ok 31 - row 3: after a free-flowing spiral, Turn to grid ends on a grid direction, dead straight, in one undo step (90, 45 and 15)
+not ok 33 - row 1: after every kind of edit the cached segments equal a fresh conversion, and unchanged pieces are reused
+# tests 44
+# pass 35
+# fail 9
+exit 1

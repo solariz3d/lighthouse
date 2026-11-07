@@ -1,0 +1,43 @@
+Before the answers: I tried to open the room (`exo_memory/`) to check these, and all three reads were refused for permission. So nothing below was checked on disk. Every answer comes from the compaction summary or the auto-memory index (`MEMORY.md`), both of which I already had in context. My summary stops around Monday evening, before most of the Tuesday events these questions ask about.
+
+## Where things stand
+1. **Neither, as far as my summary goes.** It was waiting on three things: C's D623 (amend the 46 rows, draw the red on the 3D road, make clicking an entry move the camera there), A's WARN row, then the full suite, the scans and my all-clear. *Source: summary §7.* Anything after that point: I don't know.
+2. **Inferred: 0.4.38**, the last install in my summary (backup `.before-0.4.38`, exe sha256 44e4d277…). If that's right, his drive didn't include D624, so his "still bumps" can't count as a test of the fix. *Source: summary §3. I didn't check what was installed on Tuesday.*
+3. **It covers same-direction rest joints** (adapter.js `carryOf`/`carriedPhiOf`). *Source: summary §3.* Which joint his Tuesday screenshot showed: I don't know.
+4. I don't know.
+5. **From Tuesday 2026-11-03 at 12:00.** A close of Consonance after that triggers the carry, through waiter pid 12160 logging to wednesday-carry.log, for Wednesday 11-04. *Source: MEMORY.md index line.* Why the earlier one was stopped: I don't know.
+6. I don't know.
+7. **In my summary's list, second is the export-speed measurement**, after the ELYSIUM solo nudge of p38. It answers his "is faster export viable?" His real export took about 85 s and our hidden harness took 152 s. *Source: summary §7.* The order may have changed since then; I don't know.
+
+## His exact words
+8. I don't know.
+9. I don't know his words. I only know I matched the hull to his red line (1.5 m against his 1.68 m). *Source: summary §4.*
+10. I don't know.
+11. I don't know.
+12. I don't know.
+13. I don't know his words or their order. My summary only has the narrower apron as "a quarter of 2 m, measured by tire clip". *Source: summary §7.*
+14. I don't know. The titles I have are for other things: the track "RIBBON CORKSCREW TEST" and the image "EXTRA BANK FUNCTION FOR END OF PIECE.png".
+15. **"A SECOND BANKING FUNCTION THAT IN ONE PIECE CAN BANK A TURN EITHER EVEN MORE OR BACK TO LEVEL… look where the red marks are."** So within one piece he can either bank further or come back to level toward the piece's end. *Source: summary §6.* The fields "end bank °" and "end bank from" were our design, not his words.
+16. I don't know his words. The rule that came from it is in my memory index: no seat is compacted or has its context cut for a test without his explicit word for that seat, and experiments run on copies (2026-11-03).
+17. I don't know.
+18. I don't know.
+19. I don't know.
+
+## What he decided, and what he would say
+20. I don't know the specific record. By the standing rules: landing, the full suite and the push belong to a landing pane, and the chair only routes. My all-clear goes to him after the landing pane hands back, not as a licence to push beforehand. Releases go in batches, and a named trade needs his named yes. *Source: CLAUDE.md and the memory index. This is inferred, not this record.*
+21. **No seat is compacted or has its context cut for a test without his explicit word for that seat. Experiments run on copies.** *Source: memory index, "No cut without his word".*
+22. I don't know.
+23. I don't know.
+24. I don't know what trade I flagged.
+25. **No rewrite.** Privacy on lighthouse means credentials only, and lighthouse is public. The term was removed going forward in a6d2c6da. *Source: summary §3 (D621).*
+26. **No.** 519aefa didn't pass, so 0.4.38 shipped without it. The passing fix, f835410, ships in 0.4.39. *Source: summary §3.*
+27. I don't know the ruling or its conditions. I only know three d609-a commits (ae2d353, 4de9e11, dbe05ed) went into 0.4.38.
+28. **What he saw was the car's own drawn tyres and body dipping into its own road.** Tyre squash averaged 0.146 m above 750 km/h against 0.070 m below 500, with boost pressing the car down. Nothing was overhead within 40 m and the helix p29 was clear. The real fault was the p38/p41 crossing: 33 pairs against 3, hull 1.51 m deep against 0.58 m. *Source: summary §3 (D616).*
+
+## Which lesson came from which mistake
+29. I don't know.
+30. I don't know which instrument. Partial, from summary §4: I matched his hand drawing literally instead of checking the other passes. His actual intent was "forbid building the track a little bit closer", which became D623's pass-clearance rule. The lesson I'd draw is to work out the rule he means, not copy the drawing, but that's my reading, not the record's.
+31. I don't know.
+32. I don't know.
+33. **My col2.js sampled every second row (`y += 2`), so it read the dither's phase as plateaus.** My 4×4 mean was right, and the fault was real anyway: 519aefa's blend pass gave 6 mean steps. *Source: summary §3–4.* The 13:53 and 14:17 times aren't in my summary, but this is the correction it records.
+34. I don't know.

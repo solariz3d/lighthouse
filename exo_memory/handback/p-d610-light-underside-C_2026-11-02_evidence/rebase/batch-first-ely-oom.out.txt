@@ -1,0 +1,40 @@
+lockrun: holding the lock at 2026-11-02T17:00:46.639Z; starting d610-rebase-batch
+== ely textured
+== crazy textured
+scene check full refuse 0 warn 2 {"fold":2}
+scene check light refuse 0 warn 3 {"fold":2,"open":1}
+tris full  {"road":2115774,"PAINT":248,"1WALL":96,"underside":702710,"apron":35068,"APRONSIDE":248,"total":2854144}
+tris light {"road":2115774,"PAINT":248,"1WALL":96,"underside":268352,"apron":35068,"APRONSIDE":248,"total":2419786}
+non-underside meshes 125 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 722370 farthest from the light one 2.01 cm at -22.8,-315.2,3438.1 hist <1mm,<1cm,<3cm,<5cm,>=5cm [380156,174360,167854,0,0]
+texel drift: vertices found by uv 722370 not found 0 max 2.01 cm at -1570.5,116.0,2748.2
+== t10 textured
+scene check full refuse 0 warn 0 {}
+scene check light refuse 0 warn 0 {}
+tris full  {"road":725058,"PAINT":220,"1WALL":96,"underside":484370,"apron":22972,"total":1232716}
+tris light {"road":725058,"PAINT":220,"1WALL":96,"underside":202692,"apron":22972,"total":951038}
+non-underside meshes 62 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 495856 farthest from the light one 2.00 cm at 150.5,260.6,313.0 hist <1mm,<1cm,<3cm,<5cm,>=5cm [271903,168576,55377,0,0]
+texel drift: vertices found by uv 495856 not found 0 max 2.00 cm at -475.4,-196.8,785.7
+== lan textured
+scene check full refuse 0 warn 0 {}
+scene check light refuse 0 warn 0 {}
+tris full  {"road":91336,"PAINT":228,"1WALL":96,"underside":122640,"apron":5840,"total":220140}
+tris light {"road":91336,"PAINT":228,"1WALL":96,"underside":40512,"apron":5840,"total":138012}
+non-underside meshes 23 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 125560 farthest from the light one 1.99 cm at 1786.8,-45.7,229.0 hist <1mm,<1cm,<3cm,<5cm,>=5cm [81226,31940,12394,0,0]
+texel drift: vertices found by uv 125560 not found 0 max 2.00 cm at 569.0,-1.5,457.5
+== tube textured
+scene check full refuse 0 warn 0 {}
+scene check light refuse 0 warn 0 {}
+tris full  {"road":746300,"PAINT":280,"1WALL":96,"underside":97986,"apron":952,"APRONSIDE":720,"total":846334}
+tris light {"road":746300,"PAINT":280,"1WALL":96,"underside":63872,"apron":952,"APRONSIDE":720,"total":812220}
+non-underside meshes 39 byte-equal (positions, normals, uvs, indices, material): true
+full underside vertices 100046 farthest from the light one 1.94 cm at 16.2,-1.5,436.0 hist <1mm,<1cm,<3cm,<5cm,>=5cm [84186,11668,4192,0,0]
+texel drift: vertices found by uv 100046 not found 0 max 1.95 cm at 692.7,28.8,976.0
+== ely untextured
+written rb-grid-lan-full.kn5 underside tris 122640 underside texture was t180b_made-993b5297d4ad20a5-1024.dds
+written rb-grid-lan-light.kn5 underside tris 40512 underside texture was t180b_made-993b5297d4ad20a5-1024.dds
+written rb-grid-t10-full.kn5 underside tris 484370 underside texture was t180b_made-c5e045c72db12fa3-1024.dds
+written rb-grid-t10-light.kn5 underside tris 202692 underside texture was t180b_made-c5e045c72db12fa3-1024.dds
+lockrun: done at 2026-11-02T17:08:20.428Z, exit 0

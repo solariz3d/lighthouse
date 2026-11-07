@@ -1,0 +1,133 @@
+// hull_clearance.test.js: node --test test/hull_clearance.test.js   (rows 4 and 5 export ELYSIUM, about a minute and a half each)
+// THE HULL KEEPS CLEAR OF ANOTHER PASS (src/export/underskin.js clearanceZone). The hull hangs 1.5 m under the road, and deeper under an edge that rises (up to
+// 3 m, hullDepth). Where another pass of the track runs close under it, the drawn hull came down through that pass's road or edge apron: on ELYSIUM, where
+// one piece's edge passes over the next lap's apron, by up to 1.0 m along 6.6 m. It is drawn only, so a car passes through it, and the eye sees the hull
+// stand up out of the road beside it. The hull now comes up there, eased along the road, and keeps its one curve from plank tip to plank tip.
+// Rows:
+//   1  two passes, one lap's edge over the next lap's apron (a spiral of a lap and a half): no drawn surface passes through the other pass's road or apron
+//   2  there the hull keeps its sweep: the final-scene check finds no fold and no step in its bottom, the skin is shallower than without the clearance where
+//      the other pass is, and is exactly as it was further than the ease from it
+//   3  every physics node (road, apron, catch) is byte-equal with the clearance and without it (`hullClear: false`)
+//   4  ELYSIUM (the fixture): no drawn surface passes through another pass's road or apron, but where that pass's own plank already lies within its plank's
+//      drop (the plank is physics; the hull keeps below its tip, so it cannot clear a pass that close): that is said, not hidden
+//   5  a lap with no pass over another (the clean pit lap of export_finalscene): the skin is byte-equal with the clearance and without it
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('fs'), path = require('path');
+const D = require('../src/core/document.js');
+const { extend } = require('../src/core/extend.js');
+const { close } = require('../src/core/close.js');
+const A = require('../src/core/adapter.js');
+const FW = require(process.env.FROMWORDS_FILE || require.resolve('../src/export/fromwords.js'));
+const AR = require('../src/export/acready.js');
+const { startLayout } = require('../app/core/coreshell.js');
+
+const PASS_M = 25;   // stations further apart than this along the road are another pass (src/geom/bvh.js minSeparationM)
+
+/** A spiral of a lap and a half: a lap at radius 120 m, then 0.6 of a lap 21 m further in, climbing 3.4 m a lap: the second lap's outer edge (it rises: a
+ *  15.5° cup) runs over the first lap's inner apron. Open (a test route). */
+function twoPasses() {
+  const gap = 3.4, R1 = 120, R2 = R1 - 21, turn = 2 * Math.PI * R1, p = Math.atan(gap / turn);
+  let d = D.createDoc('two passes'); d = { ...d, start: { ...d.start, pitch: p } };
+  d = extend(d, { length: 300, family: 'bowl', first: { w: 20, c: 15.5 } });
+  d = extend(d, { length: 0.75 * turn, transition: 40, targets: { kh: Math.cos(p) / R1 } });
+  d = extend(d, { length: 0.6 * 2 * Math.PI * R2, transition: 40, targets: { kh: Math.cos(p) / R2 } });
+  return d;
+}
+function exportDoc(doc, o = {}) {
+  const segs = A.toSegments(doc), lift = (q) => A.offsetPath(doc, segs, q), start = { pos: doc.start.pos.slice(), theta: doc.start.heading, p: doc.start.pitch }, open = !doc.closed;
+  return FW.buildFromSegments(segs, { name: doc.name, via: 'test', liftPath: lift, start }, { markers: startLayout(segs, lift, start, open ? { open: true } : undefined), test: open, ...o });
+}
+const flat = (b) => AR.weldApronJoints(AR.weldSeams(AR.flattenForAc(b.scene)));
+const meshes = (scene) => scene.root.children.filter((m) => m.type === 'mesh' && m.indices && m.indices.length);
+const physics = (n) => /^1(ROAD|GRIP\d{3})_/.test(n), drivable = (n) => physics(n) && !/CATCH/.test(n), drawn = (n) => /^(UNDERSKIN|APRONSIDE|APRONLIP)_/.test(n);
+
+/** Every pair (a drawn triangle, or one `isDrawn` names, against a drivable triangle of another pass) that meets: an edge of one crosses the other. Counted
+ *  independently of the export's own check. */
+function crossings(b, isDrawn = drawn) {
+  const S = b.path.samples, L = S[S.length - 1].s, closed = !!b.path.closed, G = 10, sg = new Map();
+  S.forEach((q, i) => { const k = q.pos.map((x) => Math.floor(x / G)).join(','); let l = sg.get(k); if (!l) sg.set(k, (l = [])); l.push(i); });
+  const sOf = (p) => { const c = p.map((x) => Math.floor(x / G)); let bi = -1, bd = Infinity; for (let r = 1; r <= 3 && bi < 0; r++) for (let x = -r; x <= r; x++) for (let y = -r; y <= r; y++) for (let z = -r; z <= r; z++) for (const i of sg.get(`${c[0] + x},${c[1] + y},${c[2] + z}`) || []) { const q = S[i].pos, d = (q[0] - p[0]) ** 2 + (q[1] - p[1]) ** 2 + (q[2] - p[2]) ** 2; if (d < bd) { bd = d; bi = i; } } return bi < 0 ? null : S[bi].s; };
+  const apart = (a, c) => { const d = Math.abs(a - c); return (closed ? Math.min(d, L - d) : d) > PASS_M; };
+  const sub = (a, c) => [a[0] - c[0], a[1] - c[1], a[2] - c[2]], dot = (a, c) => a[0] * c[0] + a[1] * c[1] + a[2] * c[2], cr = (a, c) => [a[1] * c[2] - a[2] * c[1], a[2] * c[0] - a[0] * c[2], a[0] * c[1] - a[1] * c[0]];
+  const segTri = (p, q, t) => { const d = sub(q, p), e1 = sub(t[1], t[0]), e2 = sub(t[2], t[0]), h = cr(d, e2), a = dot(e1, h); if (Math.abs(a) < 1e-12) return false; const f = 1 / a, s = sub(p, t[0]), u = f * dot(s, h); if (u < 0 || u > 1) return false; const qq = cr(s, e1), v = f * dot(d, qq); if (v < 0 || u + v > 1) return false; const tt = f * dot(e2, qq); return tt > 1e-6 && tt < 1 - 1e-6; };
+  const tris = (m) => { const out = []; for (let t = 0; t < m.indices.length; t += 3) out.push([0, 1, 2].map((j) => { const i = m.indices[t + j] * 3; return [m.positions[i], m.positions[i + 1], m.positions[i + 2]]; })); return out; };
+  const C = 4, grid = new Map(), T = [], cellsOf = (v) => { const lo = [0, 1, 2].map((c) => Math.floor(Math.min(v[0][c], v[1][c], v[2][c]) / C)), hi = [0, 1, 2].map((c) => Math.floor(Math.max(v[0][c], v[1][c], v[2][c]) / C)), o = []; for (let x = lo[0]; x <= hi[0]; x++) for (let y = lo[1]; y <= hi[1]; y++) for (let z = lo[2]; z <= hi[2]; z++) o.push(`${x},${y},${z}`); return o; };
+  const sc = flat(b);
+  for (const m of meshes(sc)) if (drivable(m.name)) for (const v of tris(m)) { const id = T.push({ v, name: m.name, s: null }) - 1; for (const k of cellsOf(v)) { let l = grid.get(k); if (!l) grid.set(k, (l = [])); l.push(id); } }
+  const out = [];
+  for (const m of meshes(sc)) if (isDrawn(m.name)) for (const v of tris(m)) {
+    const ids = new Set(); for (const k of cellsOf(v)) for (const id of grid.get(k) || []) ids.add(id);
+    if (!ids.size) continue;
+    const s0 = sOf(v[0]);
+    for (const id of ids) {
+      const o = T[id]; if (o.s === null) o.s = sOf(o.v[0]); if (s0 === null || o.s === null || !apart(s0, o.s)) continue;
+      if ([[0, 1], [1, 2], [2, 0]].some(([i, j]) => segTri(v[i], v[j], o.v) || segTri(o.v[i], o.v[j], v))) out.push({ drawn: m.name, other: o.name, s: s0, sOther: o.s, at: v[0] });
+    }
+  }
+  return out;
+}
+const memo = {};
+const two = (o = {}) => { const k = JSON.stringify(o); return memo[k] || (memo[k] = exportDoc(twoPasses(), o)); };
+
+test('row 1: two passes, one lap\'s edge over the next lap\'s apron: no drawn surface passes through the other pass\'s road or apron', () => {
+  const b = two(), x = crossings(b);
+  assert.deepEqual(b.test.reds, [], 'control: the two passes export as a clean test route');
+  assert.equal(crossings(two({ hullClear: false })).length > 0, true, 'control: without the clearance the hull does pass through the other pass');
+  assert.deepEqual(x.map((c) => `${c.drawn} x ${c.other} at s ${c.s.toFixed(0)}`), []);
+});
+
+test('row 2: there the hull keeps its sweep: no fold, no step in its bottom, shallower than without the clearance where the other pass is, as it was further off', () => {
+  const b = two({ lightHull: false }), was = two({ lightHull: false, hullClear: false });
+  assert.deepEqual(b.sceneCheck.warn.filter((w) => w.kind === 'fold' || w.kind === 'bottom').map((w) => w.message), []);
+  const skins = (sc) => new Map(meshes(AR.flattenForAc(sc)).filter((m) => /^UNDERSKIN_/.test(m.name)).map((m) => [m.name, m]));
+  const now = skins(b.scene), then = skins(was.scene), S = b.path.samples;
+  const sAt = (p) => { let bs = 0, bd = Infinity; for (const q of S) { const d = (q.pos[0] - p[0]) ** 2 + (q.pos[1] - p[1]) ** 2 + (q.pos[2] - p[2]) ** 2; if (d < bd) { bd = d; bs = q.s; } } return bs; };
+  assert.deepEqual([...now.keys()].sort(), [...then.keys()].sort(), 'control: the same skin meshes either way');
+  const zone = crossings(was).map((c) => c.s), moved = [];
+  let raised = 0;
+  for (const [n, m] of now) {
+    const o = then.get(n); assert.equal(m.positions.length, o.positions.length, `${n}: the same vertices`);
+    for (let i = 0; i < m.positions.length; i += 3) {
+      const d = Math.hypot(m.positions[i] - o.positions[i], m.positions[i + 1] - o.positions[i + 1], m.positions[i + 2] - o.positions[i + 2]);
+      if (d > 1e-6) moved.push(sAt([o.positions[i], o.positions[i + 1], o.positions[i + 2]]));
+      if (d > 0.3) raised++;
+    }
+  }
+  assert.ok(zone.length && raised > 0, `the hull came up where the other pass is (${raised} vertices moved over 0.3 m)`);
+  // only the stretches of road above or below the other pass move, each eased back over 30 m (underskin.js HULL_CLEAR_EASE_M) and a cell's length
+  const far = moved.filter((s) => zone.every((z) => Math.abs(s - z) > 120));
+  assert.deepEqual(far, [], 'nothing of the skin moves far from the crossing');
+});
+
+test('row 3: every physics node (road, apron, catch) is byte-equal with the clearance and without it', () => {
+  const pick = (b) => meshes(flat(b)).filter((m) => physics(m.name)).map((m) => [m.name, Buffer.from(m.positions.buffer, m.positions.byteOffset, m.positions.byteLength).toString('base64'), Buffer.from(m.indices.buffer, m.indices.byteOffset, m.indices.byteLength).toString('base64')].join('|'));
+  const a = pick(two()), c = pick(two({ hullClear: false }));
+  assert.ok(a.length > 100, `control: ${a.length} physics meshes`);
+  assert.deepEqual(a, c);
+});
+
+test('row 4: ELYSIUM: no drawn surface passes through another pass\'s road or apron, but where that pass\'s plank already lies within the plank\'s drop', () => {
+  const doc = D.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'elysium-2026-10-22.t180track'), 'utf8')), b = exportDoc(doc);
+  const x = crossings(b), phys = physicsCrossings(b);
+  assert.ok(phys.length > 0, 'control: on this lap a plank (physics) already crosses another pass near p38');
+  const unexplained = x.filter((c) => !phys.some((p) => Math.hypot(p.at[0] - c.at[0], p.at[1] - c.at[1], p.at[2] - c.at[2]) < PLANK_REACH_M));
+  assert.deepEqual(unexplained.map((c) => `${c.drawn} x ${c.other} at s ${c.s.toFixed(0)}`), []);
+});
+
+test('row 5: a lap with no pass over another: the skin is byte-equal with the clearance and without it', () => {
+  let d = extend(D.createDoc('one pass'), { length: 400, family: 'bowl', first: { w: 20, c: 0 } });
+  for (let i = 0; i < 4; i++) d = extend(d, { length: (Math.PI * 180) / 2, transition: 40, targets: { kh: 1 / 180 } });
+  d = extend(d, { length: 60, transition: 40, targets: { kh: 0 } });
+  const r = close(d, { edited: [0] }); assert.equal(r.converged, true, r.report);
+  const skin = (b) => meshes(flat(b)).filter((m) => drawn(m.name)).map((m) => [m.name, Buffer.from(m.positions.buffer, m.positions.byteOffset, m.positions.byteLength).toString('base64')].join('|'));
+  const a = skin(exportDoc(r.doc)), c = skin(exportDoc(r.doc, { hullClear: false }));
+  assert.ok(a.length > 0, 'control: the lap has a skin');
+  assert.deepEqual(a, c);
+});
+
+// where a plank (physics) of one pass already crosses another pass's road or apron, the hull keeps below that plank's tip, so within a plank's reach of it
+// the hull may still meet the other pass (row 4)
+const PLANK_REACH_M = 6;
+const physicsCrossings = (b) => crossings(b, (n) => /^1ROAD_APRON_/.test(n));

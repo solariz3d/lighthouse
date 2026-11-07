@@ -1,0 +1,46 @@
+# tests 4225
+# suites 0
+# pass 4196
+# fail 7
+# cancelled 0
+# skipped 21
+# todo 1
+# duration_ms 3339178.4419
+
+not ok lines (TODO marked rows are not failures):
+not ok 24 - list: the preview's material and texture list EQUALS the kn5's # TODO the preview does not draw the start and grid paint (t180b_paint, PAINT_* meshes) or the closing seam the export builds (D177 §3)
+not ok 676 - row 1: a 1,000 m turn dragged in every look: the work frames' p95 is within one frame at 165 Hz (6.0 ms)
+not ok 677 - row 2: a 2,000 m turn dragged in every look: p95 within one frame at 165 Hz (6.0 ms)
+not ok 678 - row 3: a 1,000 m and a 2,000 m piece stretched by its length handle: p95 within one frame at 165 Hz (6.0 ms)
+not ok 681 - row 6: a 1,000 m piece with bank, cup and edge typed, stretched by its length handle: p95 within 0.4.19's cost with margin (13.4 ms)
+not ok 682 - row 7: a 1,000 m piece with a left edge typed, turned after a placed piece: p95 within one frame at 144 Hz (6.9 ms)
+not ok 683 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+not ok 1238 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+
+tube test rows:
+0
+ok 92 - row 1: the track model: a CHEAP ghost of a 1000 m tube meshes at most a quarter of the vertices, has the same path, touches nothing placed, and the full ghost after it is the full ghost without it
+ok 395 - row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips
+ok 412 - row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's
+ok 426 - flattening a TUBE says up front that opening a tube under the racing line usually fails the export
+ok 476 - row 1: every piece's readout at once is pieceReadout's, bit for bit: a closed lap, a lap with a jump, a closed tube, offsets, an empty track
+ok 489 - row 5: the guard refuses BY NAME when a change would move the centreline: a closed tube's width and bank, and a brush that steers; the drag stays at its last good step
+ok 493 - row 9 (D243 F3): the refusal says the REAL reason in plain words, never an internal field: an OPEN tube whose sweep would cross 300°, a closed tube, a steering change, and every other kind
+ok 498 - row 10 (D335): a Sculpt drag lands on the asked bank (to 1e-6 degrees) and width (to 0.5 mm, the width is not quite linear in the brush; the label shows 0.01) at the piece's middle (opentube), and a drag back to 0 lands on 0
+ok 523 - D234 a REFUSED GRID (a tube too narrow for even one slot) and a RED lap into an empty picked folder: refused, shown, folder gone
+ok 611 - a TUBE (sweep 360): the figures are the distance ROUND, each entry says how wide that is across (w/π), and the note says w is round the tube
+ok 613 - the PANEL on a tube: the sweep at 360 turns the entries to round-and-across and shows the note; back below 360 they read plain again; the note follows the width
+ok 614 - the PANEL at a tube head: the sweep field SHOWS the head's 360, so the entries read round and across with nothing typed
+4223
+test/tube_cases.test.js: 7 titles; ok 7, not ok 0, not matched 0
+test/lighthull.test.js: 11 titles; ok 11, not ok 0, not matched 0
+test/export_finalscene.test.js: 11 titles; ok 11, not ok 0, not matched 0
+test/finalscene_heap.test.js: 1 titles; ok 1, not ok 0, not matched 0
+test/finalscene_mutation.test.js: 0 titles; ok 0, not ok 0, not matched 0
+app/test/export-isolated.test.js: 6 titles; ok 6, not ok 0, not matched 0
+app/test/export-isolated-page.test.js: 1 titles; ok 1, not ok 0, not matched 0
+app/test/export-isolated-mutation.test.js: 1 titles; ok 1, not ok 0, not matched 0
+test/core_cup_fixtures.test.js: 18 titles; ok 18, not ok 0, not matched 0
+test/underskin.test.js: 10 titles; ok 10, not ok 0, not matched 0
+test/export_apron.test.js: 29 titles; ok 29, not ok 0, not matched 0
+app/test/core-pieces-ui.test.js: 53 titles; ok 53, not ok 0, not matched 0

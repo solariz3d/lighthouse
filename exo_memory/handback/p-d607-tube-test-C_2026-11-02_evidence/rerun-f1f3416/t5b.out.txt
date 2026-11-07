@@ -1,0 +1,63 @@
+TAP version 13
+# PAIRS 4185 over 1e-3: 0 over 1e-4: 0 over 1e-5: 406 [{"m":0.00006737196185072303,"k":"gradual-open skin/skin","at":"s 1780 m, u 5.5, v 12.0"},{"m":0.000053095158741384504,"k":"gradual-open skin/skin","at":"s 1780 m, u -2.0, v 14.0"},{"m":0.00005039537667691424,"k":"gradual-open skin/skin","at":"s 1780 m, u -5.8, v 11.7"},{"m":0.00005012677025108673,"k":"gradual-open skin/skin","at":"s 1780 m, u -7.8, v 7.0"},{"m":0.00004994415861854583,"k":"gradual-open skin/skin","at":"s 1780 m, u 7.0, v 9.8"}]
+# Subtest: nothing clips: no drawn triangle passes through another (road, skin, apron), outside the triangles that share a vertex
+not ok 1 - nothing clips: no drawn triangle passes through another (road, skin, apron), outside the triangles that share a vertex
+  ---
+  duration_ms: 42067.1271
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d607\\rerun\\t5b.test.js:155:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'closed-run, road through road: 379 pair(s), the first at s 180 m, u -0.3, v 12.7',
+    +   'closed-run, skin through skin: 561 pair(s), the first at s 180 m, u -0.0, v 14.2',
+    +   'abrupt-open, road through road: 253 pair(s), the first at s 300 m, u -0.3, v 12.8',
+    +   'abrupt-open, skin through skin: 616 pair(s), the first at s 300 m, u -0.2, v 13.4',
+    +   'abrupt-open, join through skin: 6 pair(s), the first at s 326 m, u -16.9, v 9.0',
+    +   'road-between, road through road: 29 pair(s), the first at s 420 m, u -17.1, v 0.1',
+    +   'gradual-close, road through road: 186 pair(s), the first at s 480 m, u -19.4, v 0.0',
+    +   'bend-in, road through road: 516 pair(s), the first at s 680 m, u -0.3, v 12.7',
+    +   'bend-in, skin through skin: 607 pair(s), the first at s 680 m, u -0.0, v 14.2',
+    +   'gradual-open, road through road: 248 pair(s), the first at s 1780 m, u -0.8, v 12.7',
+    +   'gradual-open, skin through skin: 413 pair(s), the first at s 1780 m, u -0.2, v 14.2',
+    +   'run-out, road through road: 113 pair(s), the first at s 1980 m, u -14.8, v 0.0',
+    +   'run-out, skin through skin: 152 pair(s), the first at s 1980 m, u -14.7, v -1.5',
+    +   'road-between, skin through skin: 73 pair(s), the first at s 420 m, u -19.4, v -1.4',
+    +   'gradual-close, skin through skin: 33 pair(s), the first at s 480 m, u -19.7, v -1.5'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'closed-run, road through road: 379 pair(s), the first at s 180 m, u -0.3, v 12.7'
+    1: 'closed-run, skin through skin: 561 pair(s), the first at s 180 m, u -0.0, v 14.2'
+    2: 'abrupt-open, road through road: 253 pair(s), the first at s 300 m, u -0.3, v 12.8'
+    3: 'abrupt-open, skin through skin: 616 pair(s), the first at s 300 m, u -0.2, v 13.4'
+    4: 'abrupt-open, join through skin: 6 pair(s), the first at s 326 m, u -16.9, v 9.0'
+    5: 'road-between, road through road: 29 pair(s), the first at s 420 m, u -17.1, v 0.1'
+    6: 'gradual-close, road through road: 186 pair(s), the first at s 480 m, u -19.4, v 0.0'
+    7: 'bend-in, road through road: 516 pair(s), the first at s 680 m, u -0.3, v 12.7'
+    8: 'bend-in, skin through skin: 607 pair(s), the first at s 680 m, u -0.0, v 14.2'
+    9: 'gradual-open, road through road: 248 pair(s), the first at s 1780 m, u -0.8, v 12.7'
+    10: 'gradual-open, skin through skin: 413 pair(s), the first at s 1780 m, u -0.2, v 14.2'
+    11: 'run-out, road through road: 113 pair(s), the first at s 1980 m, u -14.8, v 0.0'
+    12: 'run-out, skin through skin: 152 pair(s), the first at s 1980 m, u -14.7, v -1.5'
+    13: 'road-between, skin through skin: 73 pair(s), the first at s 420 m, u -19.4, v -1.4'
+    14: 'gradual-close, skin through skin: 33 pair(s), the first at s 480 m, u -19.7, v -1.5'
+  operator: 'deepStrictEqual'
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 42282.5195

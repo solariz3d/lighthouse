@@ -1,0 +1,79 @@
+TAP version 13
+# Subtest: the fixture is the cases it names, and every case has road and skin in the export (its open cases their apron too)
+ok 1 - the fixture is the cases it names, and every case has road and skin in the export (its open cases their apron too)
+  ---
+  duration_ms: 13047.5737
+  type: 'test'
+  ...
+# Subtest: nothing clips: no drawn triangle passes through another (road, skin, apron), outside the triangles that share a vertex
+ok 2 - nothing clips: no drawn triangle passes through another (road, skin, apron), outside the triangles that share a vertex
+  ---
+  duration_ms: 25016.4619
+  type: 'test'
+  ...
+# Subtest: collision inside: under the car on the centreline everywhere, and all round the closed ring, a ray finds a physics surface
+not ok 3 - collision inside: under the car on the centreline everywhere, and all round the closed ring, a ray finds a physics surface
+  ---
+  duration_ms: 375.9896
+  type: 'test'
+  location: 'C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\d607\\rerun\\t6a.test.js:186:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'closed-run: no wall at 180° round the ring, 32 time(s), the first at s 186 m',
+    +   'bend-in: no wall at 300° round the ring, 2 time(s), the first at s 772 m',
+    +   'bend-in: no surface under the car, 1 time(s), the first at s 846 m',
+    +   'bend-in: no wall at 0° round the ring, 1 time(s), the first at s 846 m',
+    +   'bend-in: no wall at 75° round the ring, 1 time(s), the first at s 862 m',
+    +   'bend-in: no wall at 135° round the ring, 1 time(s), the first at s 864 m',
+    +   'bend-out: no wall at 120° round the ring, 1 time(s), the first at s 944 m',
+    +   'bend-out: no wall at 210° round the ring, 1 time(s), the first at s 958 m',
+    +   'bank-in: no wall at 315° round the ring, 1 time(s), the first at s 984 m',
+    +   'bank-in: no wall at 210° round the ring, 1 time(s), the first at s 1044 m',
+    +   'bank-in: no wall at 120° round the ring, 1 time(s), the first at s 1048 m',
+    +   'bank-out: no wall at 240° round the ring, 1 time(s), the first at s 1196 m',
+    +   'bank-out: no wall at 165° round the ring, 1 time(s), the first at s 1214 m',
+    +   'bank-out: no wall at 60° round the ring, 1 time(s), the first at s 1258 m',
+    +   'crest-in: no wall at 315° round the ring, 1 time(s), the first at s 1534 m',
+    +   'crest-in: no wall at 165° round the ring, 1 time(s), the first at s 1544 m',
+    +   'crest-out: no wall at 300° round the ring, 1 time(s), the first at s 1752 m',
+    +   'run-out: no surface under the car, 1 time(s), the first at s 1980 m'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'closed-run: no wall at 180° round the ring, 32 time(s), the first at s 186 m'
+    1: 'bend-in: no wall at 300° round the ring, 2 time(s), the first at s 772 m'
+    2: 'bend-in: no surface under the car, 1 time(s), the first at s 846 m'
+    3: 'bend-in: no wall at 0° round the ring, 1 time(s), the first at s 846 m'
+    4: 'bend-in: no wall at 75° round the ring, 1 time(s), the first at s 862 m'
+    5: 'bend-in: no wall at 135° round the ring, 1 time(s), the first at s 864 m'
+    6: 'bend-out: no wall at 120° round the ring, 1 time(s), the first at s 944 m'
+    7: 'bend-out: no wall at 210° round the ring, 1 time(s), the first at s 958 m'
+    8: 'bank-in: no wall at 315° round the ring, 1 time(s), the first at s 984 m'
+    9: 'bank-in: no wall at 210° round the ring, 1 time(s), the first at s 1044 m'
+    10: 'bank-in: no wall at 120° round the ring, 1 time(s), the first at s 1048 m'
+    11: 'bank-out: no wall at 240° round the ring, 1 time(s), the first at s 1196 m'
+    12: 'bank-out: no wall at 165° round the ring, 1 time(s), the first at s 1214 m'
+    13: 'bank-out: no wall at 60° round the ring, 1 time(s), the first at s 1258 m'
+    14: 'crest-in: no wall at 315° round the ring, 1 time(s), the first at s 1534 m'
+    15: 'crest-in: no wall at 165° round the ring, 1 time(s), the first at s 1544 m'
+    16: 'crest-out: no wall at 300° round the ring, 1 time(s), the first at s 1752 m'
+    17: 'run-out: no surface under the car, 1 time(s), the first at s 1980 m'
+  operator: 'deepStrictEqual'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 2
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 38647.6456

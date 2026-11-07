@@ -1,0 +1,8 @@
+not ok 619 - row 2: a reopened history shares unchanged pieces between its steps, as a history made in this session does
+not ok 620 - row 3: undo and redo say what they changed, and say so when there is nothing
+not ok 621 - row 4: the checker keeps its result when only the start moved, and re-checks when the road changed
+not ok 777 - row 1: after every kind of edit the cached segments equal a fresh conversion, and unchanged pieces are reused
+# tests 818
+# pass 814
+# fail 4
+exit 1

@@ -1,0 +1,2 @@
+t180b_elysium.kn5 drawn tris [33m2435[39m physics tris [33m10796[39m intersecting pairs [33m3[39m {"APRONSIDE_p38 x 1ROAD_APRON_p41":3} extent x/y/z [["41.78","41.91"],["27.14","27.88"],["-474.67","-473.16"]]
+drawn vertices behind a physics triangle (within 1.5 m): [33m3[39m deepest {"h":-0.6358,"v":[42.279,27.027,-474.25],"drawn":"APRONSIDE_p38_chunk_51","phys":"1ROAD_APRON_p41_chunk_54"}

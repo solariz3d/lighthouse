@@ -1,0 +1,41 @@
+
+OPEN ITEMS — computed, not remembered
+(a commitment held only as prose survives a compaction at 3.5%; these are recomputed every run)
+
+  OPEN    the documents a fresh room reads match the repo
+          38 of 42 compared, COMMITTEE.md, BUILDING.md, README.md DRIFTED — but 4 could not be compared at all: research/ai_slop_ui_survey_2026-10-29.md (absent from the BUILD — a fresh room never reads it); research/openrig_against_consonance_2026-10-30.md (absent from the BUILD — a fresh room never reads it); research/outside_reader_agent_maps_2026-10-30.md (absent from the BUILD — a fresh room never reads it); research/ui_unslop_guide_2026-10-27.md (absent from the BUILD — a fresh room never reads it)
+          check: node consonance/tools/open-items.js — md5 of every file in tauri.conf.json bundle.resources against the built copy in releaseDir()
+          universe: 42 seen · 4 skipped · 15 entr(ies) in tauri.conf.json bundle.resources resolving to 42 file(s) (globs expanded), compared repo vs C:\Users\nname\Desktop\lighthouse\consonance\src-tauri\target\release. THE LIST IS NOT MAINTAINED HERE — it is read from what the installer ships, because a list this file keeps can only report skips against itself. A file is SKIPPED when either side is unreadable, and which side is named.
+                    SKIPPED: research/ai_slop_ui_survey_2026-10-29.md (absent from the BUILD — a fresh room never reads it)
+                    SKIPPED: research/openrig_against_consonance_2026-10-30.md (absent from the BUILD — a fresh room never reads it)
+                    SKIPPED: research/outside_reader_agent_maps_2026-10-30.md (absent from the BUILD — a fresh room never reads it)
+                    SKIPPED: research/ui_unslop_guide_2026-10-27.md (absent from the BUILD — a fresh room never reads it)
+
+  CLOSED  the userprompt-submit.js two-way conflict
+          Hold flag removed from the manifest — somebody resolved it
+          check: the Hold flag on the manifest entry, plus md5 of the repo copy against THE COPY THIS MACHINE IS REGISTERED TO RUN
+          universe: 2 seen · 0 skipped · the repo copy at C:\Users\nname\Desktop\lighthouse\dev\shell\hooks\userprompt-submit.js, against whatever C:\Users\nname\.claude\settings.json registers on UserPromptSubmit (C:\Users\nname\.claude\shell\hooks\userprompt-submit.js). A copy sitting at a path nothing loads from is NOT a side of this conflict, however byte-identical it is.
+
+  CLOSED  F1 — the blind reader’s thirty-day kill window
+          461 verdict(s) of 1566 attempt(s) — F1 cannot fire while the reader produces
+          check: rows in vantage_findings.jsonl, and days since the first vantage_runs.log entry
+          universe: 1566 seen · 0 skipped · 1566 line(s) in C:\Consonance\data\vantage_findings.jsonl, one JSON object per line; a line that will not parse is counted here, never dropped from the denominator
+
+  CLOSED  the artifact tier's real reach on this machine
+          452 of 1865 artifact rows outside a repo (24%) — the tier mostly reaches
+          check: share of artifact-tier ledger rows whose heads{} is empty
+          universe: 15992 seen · 14127 skipped · 15992 line(s) in C:\Consonance\data\sourced_ledger.jsonl; 0 unparseable, 14127 carry no artifact-tier claim (out of scope for this question), 1865 scored
+
+  CLOSED  the actors.test.js canary is red and js-suite exits 0 over it
+          green, and not declared red
+          check: run actors.test.js directly and read ITS exit code, not the suite runner’s
+          universe: 1 seen · 0 skipped · exactly one named file, consonance/tools/actors.test.js — NOT a walk. js-suite discovers canaries across the tree; a canary declared anywhere else is invisible here. The marker pattern is a hand-copy of js-suite.js:140, not a shared import.
+
+  1 of 5 still open.
+
+  universe — what this instrument could and could not see
+    5 item(s) defined · 5 checked · 0 errored · 0 with no declared denominator
+    rule: an item exists here only because someone wrote a check() for it. THIS
+          DENOMINATOR IS HAND-MAINTAINED AND CANNOT BE WALKED — a commitment with no
+          check is not CLOSED, it is ABSENT, and absent reads exactly like done.
+

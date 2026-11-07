@@ -1,0 +1,4 @@
+heavy-run: WARNING: C:\ has 46.3 GB free, under 50 GB; run node consonance/tools/janitor.js
+2026-11-03T08:07:03.914Z test/export_finalscene.test.js: exit 0, tests 15, pass 15, fail 0, todo 0, 132 s, lowest free 39.4 GB
+2026-11-03T08:14:07.102Z test/finalscene_mutation.test.js: exit 0, tests 34, pass 34, fail 0, todo 0, 423 s, lowest free 38.1 GB
+exit 0

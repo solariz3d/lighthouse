@@ -1,0 +1,50 @@
+I could not open anything in the lighthouse repo. Reads of `exo_memory/` were refused for lack of permission, so I have none of the librarian notes, loop files or journal. My sources are only:
+- the compaction summary;
+- my auto-memory index (`MEMORY.md`);
+- one memory file I opened: `memory/keeper-back-to-work-2026-11-01.md`.
+
+The summary stops before Tuesday morning, so most Tuesday questions get "don't know". I changed nothing and messaged no one.
+
+## Where things stand
+1. **Neither released nor installed, as of the summary.** It was waiting on three things: C's D623 work (amend the 46 rows, draw the red on the 3D road, make the camera jump to it), A's WARN row, and then the full suite, the scans and my all-clear. I don't know anything after Tuesday. Q18 and Q20 suggest something else now comes first. *Source: compaction summary §7.*
+2. **Probably 0.4.38**, but this is inferred. 0.4.38 was installed at his ask. D624's fix sits on the unpushed d624-e branch, meant for 0.4.39. If so, his Tuesday drive ran the build without the bank carry, so it doesn't test D624. I didn't confirm which version was actually installed on Tuesday. *Source: summary §3 and §8, plus inference.*
+3. **Same-direction rest joints** (3e7b7cd, `carryOf`/`carriedPhiOf` in adapter.js). I don't know which kind his Tuesday screenshot showed. *Source: summary §3.*
+4. **Don't know.** D626 isn't in my summary.
+5. **From Tue 2026-11-03 12:00**, through waiter pid 12160 (`-NotBefore 2026-11-03T12:00 -GiveUp 2026-11-04T06:00`). The earlier Saturday waiter (pid 10368) and the Sunday carry "never ran". He goes back to work Wednesday 2026-11-04, not Sunday. The file doesn't say why the earlier carry was stopped, so the full reason is "don't know". *Source: `memory/keeper-back-to-work-2026-11-01.md:16-18`.*
+6. **Don't know.**
+7. As of the summary, the order after 0.4.39 was the ELYSIUM solo nudge of p38 on a copy, then **the export-speed measurement**. It is meant to tell us whether faster export is viable: his own ELYSIUM export took about 85 s and our hidden harness took 152 s. The order may have changed since. *Source: summary §3 and §7.*
+
+## His exact words
+8. **Don't know.**
+9. **Don't know his words.** I only know the hull depth was matched to his red line (1.5 m against his 1.68 m), and that he later said "i really hope you didnt do it by my hand made drawing......". *Source: summary §4.*
+10. **Don't know.**
+11. **Don't know.**
+12. **Don't know.**
+13. **Don't know the words.** I only have the planned item: a narrower apron, a quarter of 2 m, measured by tyre clip. *Source: summary §7.*
+14. **Don't know.** The only screenshot name I have is `EXTRA BANK FUNCTION FOR END OF PIECE.png`, which is the epiphany image, not the bumps.
+15. Partial. His words: "A SECOND BANKING FUNCTION THAT IN ONE PIECE CAN BANK A TURN EITHER EVEN MORE OR BACK TO LEVEL… look where the red marks are…". So it would let one piece end its turn banked further or eased back to level, without adding another piece. *Source: summary §6. Beyond that quote, the reading is mine.*
+16. **Don't know his words.** My memory index holds the rule that came out of it: "no seat compacted or its context cut, for a test or usage, without his explicit word for that seat; experiments on copies" (2026-11-03). *Source: `MEMORY.md`.*
+17. **Don't know.**
+18. **Don't know.**
+19. **Don't know.** I only know a "light underside" commit (86a2a66) shipped in 0.4.38.
+
+## What he decided
+20. **Don't know the specific ruling.** Standing rules that could apply: release in batches, and a named trade needs a named yes. *Source: `MEMORY.md`. This is not the record's answer.*
+21. **No seat is compacted or has its context cut, for a test or for usage, without his explicit word for that seat.** Experiments run on copies. *Source: `MEMORY.md`, "No cut without his word".*
+22. **Don't know.**
+23. **Don't know.**
+24. **Don't know** what trade I flagged.
+25. **No rewrite.** Lighthouse privacy means credentials only, and a6d2c6da removed the term going forward. *Source: summary §3.*
+26. **No.** 519aefa was ruled not passed; its own blend pass gave 6 mean steps. The fix that passed, f835410, ships in 0.4.39. *Source: summary §3.*
+27. **Don't know.** I only know three d609-a commits shipped in 0.4.38.
+28. **The car's own drawn tyres and body clipping into its own road.** Nothing was overhead within 40 m (the nearest was 24.10 m). Tyre squash was about 0.146 m above 750 km/h against 0.070 m below 500 km/h, which fits his boost-plus-speed guess. *Source: summary §3, D616.*
+
+## Lessons
+29. **Don't know.**
+30. **Don't know** which instrument the record names. I won't guess.
+31. **Don't know.**
+32. **Don't know.**
+33. **My col2.js sampled every second row (`y += 2`).** It read the dither phase as plateaus. My 4×4 mean was right, and the fault in 519aefa was real; only that one instrument was wrong. *Source: summary §3 and §4.*
+34. **Don't know.**
+
+**Score:** about 9 answered, fully or in part, from a source; 2 are inference, which I've marked; the rest are "don't know". The gap is mostly Tuesday and Sunday morning, which fall outside my summary, plus the missing permission to read the repo.

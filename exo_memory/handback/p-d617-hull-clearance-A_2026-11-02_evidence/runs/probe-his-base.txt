@@ -1,0 +1,4 @@
+built in 83 s; scene check refuse [33m0[39m warn [33m0[39m
+mesh name classes: #ROAD_p#_body_#_# x12479 | #ROAD_APRON_p#_body_#_L_# x12479 | #ROAD_APRON_p#_body_#_R_# x12073 | UNDERSKIN_p#_body_#_# x1058 | #ROAD_CATCH_p#_body_#_# x573 | #ROAD_p#_body_# x46 | UNDERSKIN_p#_body_# x46 | #ROAD_APRON_p#_body_#_R x46 | #ROAD_APRON_p#_body_#_L x46 | #ROAD_CATCH_p#_body_# x7 | #ROAD_seam_p#_body x6 | #ROAD_PIT_body_# x5 | UNDERSKIN_PIT_body_# x5 | PAINT_GRID_# x4 | PAINT_PIT_# x2 | PAINT_START_LINE x1 | #ROAD_PIT_in_# x1 | #ROAD_PIT_out_# x1 | #ROAD_PIT_fill_# x1 | UNDERSKIN_PIT_in_# x1 | UNDERSKIN_PIT_out_# x1 | UNDERSKIN_PIT_fill_# x1 | #ROAD_APRON_PIT_R x1 | APRONSIDE_PIT_R x1
+drawn x other-piece physics intersecting pairs: [33m38[39m {"UNDERSKIN_body p38 x 1ROAD_APRON p41":33,"UNDERSKIN_body p40 x 1ROAD_APRON p38":5}
+extent x/y/z [["35.17","42.44"],["26.77","27.78"],["-475.15","-473.11"]]

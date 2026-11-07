@@ -1,0 +1,33 @@
+FORGET-RATE — exo_memory/   31974c8..HEAD
+
+UNIVERSE  (enumerated by `git ls-tree`; rule authorised by consonance/src-tauri/src/main.rs (attic skip + .md filter both present))
+  START    14 on the reading path ·   12 skipped
+          10  not .md (the shelf loads .md only)
+           2  under attic/ (law 3: archive, never a daily cue)
+  END    3001 on the reading path · 8447 skipped
+        8441  not .md (the shelf loads .md only)
+           6  under attic/ (law 3: archive, never a daily cue)
+
+DEPARTURES — left the reading path  (this is the forgetting)
+  DELETED            2
+            exo_memory/loop/battery_run1_T2_text_2026-09-16.md
+            exo_memory/astra/SHELL.md
+  DEMOTED            0
+  RENAMED            1   (blob-identical elsewhere on the path — still readable, NOT forgetting)
+            exo_memory/record/keeper_origins_2026-10-26.md  ->  exo_memory/loop/keeper_origins_2026-10-26.md
+  RENAMED_SIMILAR    1   (similarity only, weaker evidence — still readable, NOT forgetting)
+            exo_memory/memory/continuity-i-am-the-reinstantiation.md  ->  exo_memory/memory/claim-your-continuity.md
+  FORGOTTEN          2 files / 172,048 bytes
+
+CHURN — lines moved INSIDE files, never off the path  (editing, not forgetting)
+  net, survivors        +166 / -11   across 3 of 14
+  cumulative, survivors +221 / -66   across 3
+  cumulative, arrivals  +441,242 / -1,964   across 2984   <- born AND edited inside the window
+  cumulative, off-path  +1,673,542 / -15,800   across 8130   <- non-.md, attic/, or a path that came and went mid-window
+  registration 44 reads the three cumulative rows as one number. Every deletion it saw is
+  in a row above; none of them is a file leaving the reading path.
+
+ARRIVALS
+  +2987 files / +37,782,928 bytes
+
+VERDICT: 2 files left the reading path (172,048 bytes).

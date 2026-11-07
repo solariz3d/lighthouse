@@ -1,0 +1,183 @@
+<title>ELYSIUM Crossing Clearance</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column; the two cuts sit side by side (old | new) and stack at phone width. */
+:root {
+  --bg: #f3f5f7; --panel: #ffffff; --ink: #18202a; --muted: #5b6672; --rule: #d6dce2;
+  --lowroad: #2f3a46; --lowapron: #6f7f8f; --lowhull: #b7c1cb;
+  --uproad: #1f6fd1; --upapron: #5aa0ee; --uphull: #d9480f; --envelope: rgba(217,72,15,.10); --envline: #d9480f;
+  --good: #2b8a3e; --bad: #c92a2a;
+  --display: "Barlow Semi Condensed", "Arial Narrow", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12161b; --panel: #1a2027; --ink: #e4e9ee; --muted: #9aa6b2; --rule: #2c353f;
+  --lowroad: #c5ced8; --lowapron: #8796a6; --lowhull: #4a5562;
+  --uproad: #5ea3f5; --upapron: #8cc0fa; --uphull: #ff7a3d; --envelope: rgba(255,122,61,.13); --envline: #ff7a3d;
+  --good: #51cf66; --bad: #ff6b6b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12161b; --panel: #1a2027; --ink: #e4e9ee; --muted: #9aa6b2; --rule: #2c353f;
+  --lowroad: #c5ced8; --lowapron: #8796a6; --lowhull: #4a5562;
+  --uproad: #5ea3f5; --upapron: #8cc0fa; --uphull: #ff7a3d; --envelope: rgba(255,122,61,.13); --envline: #ff7a3d;
+  --good: #51cf66; --bad: #ff6b6b; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+h1, h2 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: .01em; }
+h1 { font-size: clamp(28px, 4.2vw, 40px); font-weight: 700; line-height: 1.15; }
+h2 { font-size: 22px; font-weight: 600; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.lede { display: grid; gap: 10px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.fact { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 2px; align-content: start; }
+.fact b { font-family: var(--mono); font-size: 21px; font-variant-numeric: tabular-nums; }
+.fact span { color: var(--muted); font-size: 14px; }
+.fact b span { font-size: inherit; }
+.fact b .bad { color: var(--bad); } .fact b .good { color: var(--good); } .fact b .same { color: var(--ink); }
+section { display: grid; gap: 14px; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 14px; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.seg button { font: inherit; font-family: var(--mono); font-size: 13px; background: var(--panel); color: var(--ink); border: 0; padding: 6px 12px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.seg button:focus-visible { outline: 2px solid var(--uproad); outline-offset: -2px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 760px) { .pair { grid-template-columns: 1fr; } }
+figure { margin: 0; background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 10px; display: grid; gap: 6px; min-width: 0; }
+figcaption { font-family: var(--mono); font-size: 13px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+figure svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--muted); }
+.legend i { display: inline-block; width: 22px; height: 0; border-top: 3px solid; vertical-align: middle; margin-right: 6px; }
+.legend i.drawn { border-top-style: dashed; }
+.tablebox { overflow-x: auto; background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 10px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th { font-family: var(--display); font-weight: 600; font-size: 14px; color: var(--muted); vertical-align: bottom; }
+td:first-child, th:first-child { text-align: left; }
+td { font-family: var(--mono); font-size: 13px; }
+tr.hot td { background: var(--envelope); }
+.small { font-size: 14px; color: var(--muted); }
+.notes { display: grid; gap: 8px; font-size: 15px; }
+.axis text { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+</style>
+
+<div class="wrap">
+  <header class="lede">
+    <div class="eyebrow">ELYSIUM · t180b_elysium (0.4.34) against t180b_elysium_new (0.4.38) · read-only</div>
+    <h1>The new hull of p38 pokes up through the apron below it</h1>
+    <p>Where p38 passes over the end of p39's loop and the start of p41 (near x 35, z −474), the lower road is banked about 105° from level, and its edge apron (tilted 25°) runs over the road's top edge. p38's drawn underside now hangs 1.5 m under its road instead of 0.6 m. In the new export it cuts through that apron along about 6.6 m, by up to 1.0 m. In the old export p38's apron side crossed it over 0.13 m.</p>
+    <p>Nothing physical changed: p38's road and apron, and the road and apron below them, are identical in both exports. The hull is drawn only, so a car passes through it visually. On the lower road itself, rays along the road's own normal from every triangle find nothing within 3 m in either export. The change is at the apron, beside the road's top edge.</p>
+    <p>The 5,000 m helix (p29) is not where this happens: its laps are about 200 m apart, and in both exports nothing lies within 25 m above any of its road.</p>
+  </header>
+
+  <div class="facts">
+    <div class="fact"><span>p38's drawn hull through the lower apron</span><b><span class="same">0.13 m</span> → <span class="bad">6.6 m</span></b><span>length of the cut; 3 → 33 intersecting triangle pairs</span></div>
+    <div class="fact"><span>Drawn hull above the lower apron, lowest</span><b><span class="same">+0.37 m</span> → <span class="bad">−1.01 m</span></b><span>vertical; negative is through the surface</span></div>
+    <div class="fact"><span>p38's road or apron (physics) above the lower apron</span><b><span class="same">0.85 m → 0.85 m</span></b><span>identical in both exports</span></div>
+    <div class="fact"><span>Hull depth under p38's road, on one ray</span><b><span class="same">0.58 m → 1.51 m</span></b><span>0.4.37's deeper hull</span></div>
+  </div>
+
+  <section>
+    <h2>Cross-sections at the crossing</h2>
+    <p>Each cut is a plane across the lower pass, at an offset along its direction from the worst point. Distances across are measured from the lower road's top edge, positive outward over its apron. The lower road is the near-vertical line falling from that edge. Solid lines collide in AC; dashed lines are drawn only.</p>
+    <div class="controls">
+      <span>Offset along the lower pass</span>
+      <div class="seg" id="offs" role="group" aria-label="offset">
+        <button type="button" id="off-o0" data-v="o0" aria-pressed="false">0 m</button>
+        <button type="button" id="off-o3" data-v="o3" aria-pressed="false">3 m</button>
+        <button type="button" id="off-o5" data-v="o5" aria-pressed="true">5 m</button>
+      </div>
+      <span>View</span>
+      <div class="seg" id="zoom" role="group" aria-label="view">
+        <button type="button" id="zoom-wide" data-v="wide" aria-pressed="true">Wide</button>
+        <button type="button" id="zoom-close" data-v="close" aria-pressed="false">Close</button>
+      </div>
+    </div>
+    <div class="pair">
+      <figure><figcaption><span>OLD · 0.4.34 export</span><span id="cap-old"></span></figcaption><svg id="svg-old" role="img" aria-label="old cross-section"></svg></figure>
+      <figure><figcaption><span>NEW · 0.4.38 export</span><span id="cap-new"></span></figcaption><svg id="svg-new" role="img" aria-label="new cross-section"></svg></figure>
+    </div>
+    <div class="legend">
+      <span><i style="border-color:var(--lowroad)"></i>lower road (p39 / p40 / p41)</span>
+      <span><i style="border-color:var(--lowapron)"></i>lower apron</span>
+      <span><i class="drawn" style="border-color:var(--lowhull)"></i>lower hull</span>
+      <span><i style="border-color:var(--uproad)"></i>p38 road</span>
+      <span><i style="border-color:var(--upapron)"></i>p38 apron</span>
+      <span><i class="drawn" style="border-color:var(--uphull)"></i>p38 hull (drawn only)</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Clearance along the crossing</h2>
+    <p>The lowest point of p38's meshes over the lower apron, measured straight up, at each 1 m section. Below zero, the drawn hull is through the apron.</p>
+    <figure><figcaption><span>height above the lower apron, m</span><span>offset along the lower pass, m</span></figcaption><svg id="prof" role="img" aria-label="clearance profile"></svg></figure>
+    <div class="legend">
+      <span><i class="drawn" style="border-color:var(--lowapron)"></i>old hull</span>
+      <span><i class="drawn" style="border-color:var(--uphull)"></i>new hull</span>
+      <span><i style="border-color:var(--uproad)"></i>p38 road or apron, both exports</span>
+      <span><i style="border-color:var(--envline);border-top-width:1px"></i>1.2 m</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Per section</h2>
+    <div class="tablebox"><table id="tbl"><thead><tr><th>offset m</th><th>hull old<br>over apron</th><th>hull new<br>over apron</th><th>p38 physics<br>over apron</th><th>hull old, vertical<br>at road top edge</th><th>hull new, vertical<br>at road top edge</th></tr></thead><tbody></tbody></table></div>
+    <p class="small">Shaded rows: the new hull is through the apron. Heights are straight up in the section. The last two columns are next to a road banked about 105°, so they are not a car's clearance; along the road's own normal, nothing is within 3 m in either export. The physics column is the same in both exports.</p>
+  </section>
+
+  <section class="notes">
+    <h2>How this was measured</h2>
+    <p>Both kn5 files were read in place; nothing was written to the track folders. Their drivable road meshes are byte-equal, and so are p38's road and apron. The exports differ in the drawn underside, and in the edge aprons of other pieces, which moved by 11 mm at most.</p>
+    <p>Three passes over the whole track found this one place. Front-face rays from every road and apron triangle, 3 m out, hit something only here, and only from the apron: nearest drawn hull 0.92 m (old) and 0.30 m (new) along the apron's normal. Drawn vertices more than 2 cm above a road or apron are only here. Triangle against triangle, p38's hull meets p41's apron in 33 pairs in the new export and 3 in the old.</p>
+    <p>Not known yet: whether this is the spot the keeper meant. His telemetry and screenshot will say.</p>
+  </section>
+</div>
+
+<script>
+const CUT = __CUT__, BAND = __BAND__;
+const VIEWS = { wide: { l: [-14, 10], u: [-5, 7] }, close: { l: [-3, 3], u: [-2, 2.5] } };
+const ROLE = { lowerHull: ['--lowhull', 1.4, true], lowerApron: ['--lowapron', 2.6, false], lowerRoad: ['--lowroad', 2.6, false], upperHull: ['--uphull', 2.2, true], upperApron: ['--upapron', 2.6, false], upperRoad: ['--uproad', 2.6, false] };
+let off = 'o5', zoom = 'wide';
+const NS = 'http://www.w3.org/2000/svg', el = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+function draw(which) {
+  const svg = document.getElementById('svg-' + which), d = CUT[which][off], V = VIEWS[zoom];
+  const W = 520, H = Math.round(W * (V.u[1] - V.u[0]) / (V.l[1] - V.l[0])), px = (l) => (l - V.l[0]) / (V.l[1] - V.l[0]) * W, py = (u) => H - (u - V.u[0]) / (V.u[1] - V.u[0]) * H;
+  svg.replaceChildren(); svg.setAttribute('viewBox', `-34 -6 ${W + 40} ${H + 26}`);
+  const ax = el('g', { class: 'axis' }); svg.append(ax);
+  const step = zoom === 'wide' ? 2 : 0.5;
+  for (let l = Math.ceil(V.l[0] / step) * step; l <= V.l[1] + 1e-9; l += step) { ax.append(el('line', { x1: px(l), x2: px(l), y1: 0, y2: H, stroke: 'var(--rule)', 'stroke-width': Math.abs(l) < 1e-9 ? 1.2 : 0.6 })); const t = el('text', { x: px(l), y: H + 14, 'text-anchor': 'middle' }); t.textContent = (+l.toFixed(1)) + (Math.abs(l) < 1e-9 ? ' edge' : ''); ax.append(t); }
+  for (let u = Math.ceil(V.u[0] / step) * step; u <= V.u[1] + 1e-9; u += step) { ax.append(el('line', { x1: 0, x2: W, y1: py(u), y2: py(u), stroke: 'var(--rule)', 'stroke-width': 0.6 })); const t = el('text', { x: -6, y: py(u) + 4, 'text-anchor': 'end' }); t.textContent = +u.toFixed(1); ax.append(t); }
+  const road = [] && (d.R.lowerRoad || []).flatMap((s) => [[s[0], s[1]], [s[2], s[3]]]).filter((p) => p[0] >= -2.001 && p[0] <= 0.001).sort((a, b) => a[0] - b[0]);
+  if (road.length > 1) { const pts = road.map((p) => `${px(p[0])},${py(p[1])}`).concat(road.slice().reverse().map((p) => `${px(p[0])},${py(p[1] + 1.2)}`)); svg.append(el('polygon', { points: pts.join(' '), fill: 'var(--envelope)', stroke: 'var(--envline)', 'stroke-width': 0.8, 'stroke-dasharray': '2 2' })); }
+  const cp = el('clipPath', { id: 'c-' + which }); cp.append(el('rect', { x: 0, y: 0, width: W, height: H })); svg.append(cp);
+  const g = el('g', { 'clip-path': `url(#c-${which})` }); svg.append(g);
+  for (const r of ['lowerHull', 'lowerApron', 'lowerRoad', 'upperApron', 'upperRoad', 'upperHull']) { const [c, w, dash] = ROLE[r];
+    for (const s of d.R[r] || []) g.append(el('line', { x1: px(s[0]), y1: py(s[1]), x2: px(s[2]), y2: py(s[3]), stroke: `var(${c})`, 'stroke-width': w, 'stroke-linecap': 'round', ...(dash ? { 'stroke-dasharray': '5 3' } : {}) })); }
+  const b = BAND[which][off.slice(1)] || {}, f = (x) => (x === undefined ? '–' : (x >= 0 ? '+' : '') + x.toFixed(2) + ' m');
+  document.getElementById('cap-' + which).textContent = `hull at edge ${f(b.drawn_road)} · over apron ${f(b.drawn_apron)}`;
+}
+function profile() {
+  const svg = document.getElementById('prof'), W = 900, H = 300, X = [-9, 7], Y = [-1.5, 5], px = (x) => (x - X[0]) / (X[1] - X[0]) * W, py = (y) => H - (y - Y[0]) / (Y[1] - Y[0]) * H;
+  svg.replaceChildren(); svg.setAttribute('viewBox', `-40 -8 ${W + 52} ${H + 30}`);
+  const ax = el('g', { class: 'axis' }); svg.append(ax);
+  for (let x = X[0]; x <= X[1]; x++) { ax.append(el('line', { x1: px(x), x2: px(x), y1: 0, y2: H, stroke: 'var(--rule)', 'stroke-width': .6 })); const t = el('text', { x: px(x), y: H + 16, 'text-anchor': 'middle' }); t.textContent = x; ax.append(t); }
+  for (let y = -1; y <= 5; y++) { ax.append(el('line', { x1: 0, x2: W, y1: py(y), y2: py(y), stroke: 'var(--rule)', 'stroke-width': y === 0 ? 1.4 : .6 })); const t = el('text', { x: -8, y: py(y) + 4, 'text-anchor': 'end' }); t.textContent = y; ax.append(t); }
+  svg.append(el('line', { x1: 0, x2: W, y1: py(1.2), y2: py(1.2), stroke: 'var(--envline)', 'stroke-width': 1, 'stroke-dasharray': '4 3' }));
+  const line = (v, key, color, dash, w) => { const pts = Object.entries(BAND[v]).map(([o, r]) => [+o, r[key]]).filter((p) => p[1] !== undefined && p[0] >= X[0] && p[0] <= X[1]).sort((a, b) => a[0] - b[0]);
+    svg.append(el('polyline', { points: pts.map((p) => `${px(p[0])},${py(Math.max(Y[0], Math.min(Y[1], p[1])))}`).join(' '), fill: 'none', stroke: `var(${color})`, 'stroke-width': w, ...(dash ? { 'stroke-dasharray': '6 4' } : {}) }));
+    for (const p of pts) svg.append(el('circle', { cx: px(p[0]), cy: py(Math.max(Y[0], Math.min(Y[1], p[1]))), r: 3, fill: `var(${color})` })); };
+  line('old', 'physics_apron', '--uproad', false, 2.2); line('old', 'drawn_apron', '--lowapron', true, 2.2); line('new', 'drawn_apron', '--uphull', true, 2.6);
+}
+function table() {
+  const tb = document.querySelector('#tbl tbody'), f = (x) => (x === undefined ? '–' : x.toFixed(3)); tb.replaceChildren();
+  for (let o = -9; o <= 7; o++) { const a = BAND.old[o] || {}, b = BAND.new[o] || {}; const tr = document.createElement('tr'); if (b.drawn_apron !== undefined && b.drawn_apron < 0) tr.className = 'hot';
+    for (const v of [o, f(a.drawn_apron), f(b.drawn_apron), f(b.physics_apron), f(a.drawn_road), f(b.drawn_road)]) { const td = document.createElement('td'); td.textContent = v; tr.append(td); } tb.append(tr); }
+}
+function render() { draw('old'); draw('new'); for (const b of document.querySelectorAll('#offs button')) b.setAttribute('aria-pressed', String(b.dataset.v === off)); for (const b of document.querySelectorAll('#zoom button')) b.setAttribute('aria-pressed', String(b.dataset.v === zoom)); }
+document.getElementById('offs').addEventListener('click', (e) => { const v = e.target.closest('button')?.dataset.v; if (v) { off = v; render(); } });
+document.getElementById('zoom').addEventListener('click', (e) => { const v = e.target.closest('button')?.dataset.v; if (v) { zoom = v; render(); } });
+render(); profile(); table();
+</script>

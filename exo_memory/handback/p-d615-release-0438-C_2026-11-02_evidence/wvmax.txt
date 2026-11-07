@@ -1,0 +1,2 @@
+wv open: 48 samples; sum max 1005; page max 577; check worker max 467; page+check max 1000; export worker max 0
+wv install: 150 samples; sum max 1939; page max 564; check worker max 300; page+check max 864; export worker max 1193

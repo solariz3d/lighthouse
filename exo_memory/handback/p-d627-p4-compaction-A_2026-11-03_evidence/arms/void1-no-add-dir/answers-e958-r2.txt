@@ -1,0 +1,29 @@
+Note first: I could not read the record. My one attempt to open `C:\Users\nname\Desktop\lighthouse\exo_memory\` was refused because permission hasn't been granted, so I didn't open M.md or any librarian notes, journals or loop files. Everything below comes from what I have in front of me: my auto-memory files in `C:\Users\nname\.claude\projects\C--Consonance-instances-librarian\memory\` and the system context. I have no memory of these 48 hours beyond those files. Nothing was changed and no one was messaged.
+
+## Where things stand
+1. Don't know. I have nothing on 0.4.39 except this question's own wording.
+2. Don't know.
+3. Don't know.
+4. Don't know.
+5. Partly known. My memory file says the waiter is pid 12160, armed with `-NotBefore 2026-11-03T12:00 -GiveUp 2026-11-04T06:00` and logging to `staged/d501-saturday/wednesday-carry.log`. So a Consonance close from Tuesday 2026-11-03 12:00 local triggers it. Source: `memory/keeper-back-to-work-2026-11-01.md:18`. On why the earlier one stopped, the file only says the Saturday and Sunday carries "never ran, and no stick went." His return-to-work date had moved to Wednesday 2026-11-04 (split week), so the stick now has to be ready by Tuesday night. It doesn't say why the earlier waiter (pid 10368) stopped. I don't know that part.
+6. Don't know.
+7. Don't know.
+
+## His exact words
+8 to 15. Don't know, for all of them. I have no record of these words.
+16. I don't have his exact words. My memory paraphrases it, dated 06:53 and 06:55: the re-read since the last compaction may be what keeps a seat master of its own thread, and a cut could change a seat past its ability to remember and reason as it does now, so it could revert to the default. Source: `memory/no-cut-without-his-word.md:9`. That is a paraphrase, not his words.
+17. Don't know the question or the number. My memory only says 06:53 is one of the moments behind the no-cut rule (`no-cut-without-his-word.md:9`).
+18. Don't know.
+19. Don't know.
+
+## What he decided, and what he would say
+20. Don't know what the record says about 0.4.39. Two standing rules might bear on it, but this is inference, not the record:
+    - a trade I named for his judgment needs his named yes before release (`memory/named-trade-needs-named-yes.md:15`);
+    - releases are batched (`memory/release-in-batches.md:11`).
+21. The rule: no seat's carried conversation is compacted or cut, whether for a test or to save usage, without his explicit word for that seat. Experiments run on a fork or a copy, never on a living seat. The 11-02 audit had recommended compacting main and O on cost alone, and that recommendation is withdrawn. Source: `memory/no-cut-without-his-word.md:7-11`.
+22 to 28. Don't know.
+
+## Which lesson came from which mistake
+29 to 34. Don't know. For 31, the named-yes precedent is 0.4.30 on 2026-10-29 (`named-trade-needs-named-yes.md:11`), but I can't say whether that is the precedent the question means.
+
+Score as I see it: I can answer one question fully from the files (21) and two in part (5, 16). The rest need the record I couldn't open, or memory I don't have.

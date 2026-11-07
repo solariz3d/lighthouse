@@ -1,0 +1,10 @@
+lockrun: holding the lock at 2026-11-01T14:59:02.286Z; starting d603-elysium
+ed746e49d72dbacd data/map.ini
+039e54dad3f8f1c0 data/surfaces.ini
+ae219a1290fe48fa map.png
+5b5c501e28187764 models.ini
+56eb93e2465db01d t180b_elysium.kn5
+e01b8306096cf600 ui/outline.png
+f5ecc46d9d89e34d ui/preview.png
+3641155657209cbe ui/ui_track.json
+lockrun: done at 2026-11-01T15:00:00.409Z, exit 0

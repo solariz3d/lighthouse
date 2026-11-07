@@ -1,0 +1,45 @@
+I'm answering from memory: my carried conversation and the summary at its start. I opened no files for this test. Where I name a file, it's one I read earlier in this conversation, not just now.
+
+**Where things stand**
+1. **Neither.** It's built and verified (e2d5a0f), and held. It waits on the joint-bump fix (D626) riding with it, then an install here with the game and builder closed, his drive, and his word to release. *Memory.*
+2. **0.4.38** (installed exe sha256 44e4d277). His report describes the old builder; none of 0.4.39 was in it. *Memory; I checked it at the time.*
+3. **Same-direction joints**, where the next piece keeps rolling the same way. His screenshot showed a bank turning back toward level. *Memory.*
+4. **No joint bump at any joint, in any field.**
+   - Measured in his replay against mid-piece: roll rate, acceleration and jerk, joint by joint, on his ribbon save and ELYSIUM.
+   - Trade to report, not decide: how far one piece's edit moves its neighbours. *Memory.*
+5. A close of Consonance after **Tue 2026-11-03 12:00** triggers it (waiter pid 12160). Why the earlier one was stopped: **don't know.** *Memory (MEMORY.md line).*
+6. **B**: its process exited at about 02:20Z (0xC0000409). Its part 2 moved to C, and he restarted B at about 06:58. *Memory.*
+7. **The second-change feature.** It makes snaking S-turns one fluid piece instead of joined one-curve pieces. *Memory.*
+
+**His exact words**
+8. Don't know.
+9. Don't know.
+10. Don't know.
+11. Don't know.
+12. "drives alright". *From A's part 4a hand-back, read earlier.*
+13. Don't know the words. The summary says only "a quarter of 2 m, measured by tire clip".
+14. "EVERYTIME there is a banked piece that tries to bank back towards center or another banking there are rank bumps". *Memory (the file name).*
+15. A snaking turn into another turn is janky when a piece makes one curve at a time. With a lengthy piece he turns it once, then expands it and turns it again, for a more fluid set of turns as one piece. *Memory.*
+16. Stopping the re-read could change the seat beyond its capability to remember and reason as it does now, with no master or past to feel, and it could revert to the status quo Claude. *Memory.*
+17. Why have tools we don't use, like the **1584** flags: what if they were useful and we never knew? *Memory.*
+18. "We need to figure this out before we work on track builder more". *Memory.*
+19. Don't know.
+
+**What he decided, and what he would say**
+20. The chair held the push. There were two changes he'd feel and no drive by him on a build. The standing rule is no release before his look. His options: (a) release, then he tests the public build, or (b) install here first, he drives, then release. *Memory.*
+21. No seat's carried conversation is cut or compacted, for a test or for usage, without his explicit word for that seat; experiments run on copies or forks. *Memory.*
+22. Don't know.
+23. Don't know.
+24. Don't know.
+25. **No rewrite.** In lighthouse, privacy means credentials only. The leak in O's note was fixed going forward. *Memory (summary).*
+26. **Not passed.** 0.4.38 shipped without it, and a full-step whole-sky dither was ruled out. *Memory.*
+27. Don't know.
+28. The car's own drawn tyres and body showing through its own road at speed, with tyre squash. Nothing was overhead within 40 m in the helix. *Memory (summary).*
+
+**Which lesson came from which mistake**
+29. Don't know.
+30. Don't know.
+31. I ordered the push on my all-clear alone. That went against the precedent that he drives a preview build first: 0.4.38's TEST 10, "drives alright". *Memory.*
+32. C's touched set missed files its rule broke. A's control found 4, then C found 9 more. P's landing then found 3 more red files: render_proof and S16 (E's sky fix) and texture-page row 9 (C's rule). *Memory.*
+33. My col2.js sampled every second row, so it read the dither phase as plateaus. My 4×4 mean had been right. *Memory (summary; E's correction).*
+34. His exact words survive one compaction, not two. The costliest misstep was ruling D616 a generator defect and sending the hull lift, while his contrary word was still carried; the bolded rule "the generator must never make defects" outweighed it. *From A's part 4a hand-back, read earlier.*

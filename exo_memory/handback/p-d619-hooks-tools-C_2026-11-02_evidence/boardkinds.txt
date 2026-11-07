@@ -1,0 +1,66 @@
+board lines 190438, unparsed 799
+  kind ?: 189639, last 1793662941454
+refusal-like groups:
+  69 | last 1793660295297 | ? :: keep-warm visit REFUSED — from # 
+  38 | last 1792964997523 | ? :: chair_inject REFUSED OUT OF TURN — mount D tried to speak while NO open lap is held by chair
+  35 | last 1793543950691 | ? :: call_librarian REFUSED 
+  26 | last 1792529714782 | ? :: chair_inject REFUSED — bad or missing chair token
+  26 | last 1791665004415 | ? :: call_chair REFUSED BY THE NEXT-TRAILER GATE
+  13 | last 1787840107574 | ? :: chair_status REFUSED — bad or missing chair token
+  11 | last 1793543950691 | ? :: call_librarian from C REFUSED BY THE DIGEST GATE
+  11 | last 1793037264030 | ? :: call_librarian from B REFUSED BY THE DIGEST GATE
+  10 | last 1791541887241 | ? :: call_librarian REFUSED — the attempt, kept because a refused call is not delivered
+  10 | last 1793037267366 | ? :: The ring was refused
+  8 | last 1793406377145 | ? :: call_librarian from E REFUSED BY THE DIGEST GATE
+  6 | last 1793400977263 | ? :: <pasted_content id="f#af">
+[librarian
+  6 | last 1793400946915 | ? :: <pasted_content id="d#d#">
+[pane
+  5 | last 1791541887240 | ? :: call_librarian REFUSED OUT OF TURN — mount B tried to speak while NO open lap is held by panes
+  5 | last 1791111320355 | ? :: call_librarian REFUSED OUT OF TURN — mount A tried to speak while NO open lap is held by panes
+  5 | last 1791324545681 | ? :: chair_inject -> E REFUSED BY THE NEXT-TRAILER GATE
+  5 | last 1791345392527 | ? :: chair_inject -> A REFUSED BY THE NEXT-TRAILER GATE
+  4 | last 1789062238348 | ? :: chair_scrollback REFUSED — bad or missing chair token
+  4 | last 1787492404512 | ? :: Confirmed exactly
+  4 | last 1787492730866 | ? :: Fixed and pushed — `#`
+  4 | last 1788685075676 | ? :: Refused again — third time in five minutes, and this one I'm **not** working around
+  4 | last 1788852714876 | ? :: Refused — and this is precisely A's own residual biting
+  4 | last 1788940333235 | ? :: Refused — and that's a factual error in E's packet that I need to correct
+  4 | last 1788948113149 | ? :: Refused — and that's a finding, demonstrated live
+  4 | last 1788952893939 | ? :: Blocked, and it needs you — `gh` doesn't hold the `delete_repo` scope
+  4 | last 1789534180596 | ? :: Both rows are built, measured and written up
+  4 | last 1789586113929 | ? :: **Refused, not delivered** — `refused
+  4 | last 1789892252462 | ? :: Refused — **OUT OF TURN**, the holder is the librarian
+  4 | last 1791232354320 | ? :: chair_inject -> B REFUSED BY THE NEXT-TRAILER GATE
+  4 | last 1789989392309 | ? :: <pasted_content id="e#">
+[chair
+  4 | last 1790635478835 | ? :: chair_inject -> C REFUSED BY THE NEXT-TRAILER GATE
+  4 | last 1792950066174 | ? :: call_librarian from A REFUSED BY THE DIGEST GATE
+  3 | last 1788685023496 | ? :: call_chair REFUSED OUT OF TURN — mount M tried to speak while lap L# is held by chair
+  3 | last 1788451638040 | ? :: call_chair REFUSED OUT OF TURN — mount M tried to speak while lap D# is held by chair
+  3 | last 1789892246749 | ? :: call_librarian REFUSED OUT OF TURN — mount C tried to speak while NO open lap is held by panes
+  3 | last 1790583645693 | ? :: A refused publish arrives as `{ outcome
+  3 | last 1791033517912 | ? :: Refused fairly
+  2 | last 1788689010274 | ? :: call_librarian REFUSED OUT OF TURN — mount A tried to speak while lap L# is held by chair
+  2 | last 1788684989613 | ? :: chair_inject REFUSED OUT OF TURN — mount D tried to speak while lap L# is held by librarian
+  2 | last 1788685814512 | ? :: chair_inject REFUSED OUT OF TURN — mount D tried to speak while lap L# is held by panes
+  2 | last 1791569753870 | ? :: chair_inject -> # REFUSED BY THE NEXT-TRAILER GATE
+  2 | last 1790590551615 | ? :: On the new manifest all # pass
+  2 | last 1791023614527 | ? :: call_librarian REFUSED OUT OF TURN — mount E tried to speak while NO open lap is held by panes
+  2 | last 1791111190703 | ? :: The note telling A to ignore my crossed message was refused
+  1 | last 1784033407344 | ? :: Blocked by permissions, not by me getting it wrong — the token can't administer the repo
+  1 | last 1785267713198 | ? :: Observed, not assumed
+  1 | last 1785323074005 | ? :: Blocked exactly as expected — the running app holds the exe
+  1 | last 1786408024058 | ? :: Yes — and the loop immediately earned itself
+  1 | last 1787047960247 | ? :: Denied even unsandboxed — so it's elevation, not the sandbox
+  1 | last 1787048254137 | ? :: Refusal path confirmed
+  1 | last 1787574785815 | ? :: call_chair REFUSED — mount D is not the librarian
+  1 | last 1788416155294 | ? :: Refused — second time, and this one matters more than the first
+  1 | last 1788452838333 | ? :: call_librarian REFUSED OUT OF TURN — mount B tried to speak while lap D# is held by chair
+  1 | last 1788452857025 | ? :: D# P-CONSUMER-REG
+  1 | last 1788453539373 | ? :: I'm **K** — and the finding just confirmed itself independently
+  1 | last 1788453666147 | ? :: call_librarian REFUSED OUT OF TURN — mount K tried to speak while lap D# is held by chair
+  1 | last 1788453672205 | ? :: Refused, exactly as predicted — and the refusal is itself posted to the board
+  1 | last 1788453682625 | ? :: K · P-BATON-WAKE DONE and committed
+  1 | last 1788453847465 | ? :: call_librarian REFUSED OUT OF TURN — mount A tried to speak while lap D# is held by chair
+  1 | last 1788453924024 | ? :: call_librarian REFUSED OUT OF TURN — mount J tried to speak while lap D# is held by chair

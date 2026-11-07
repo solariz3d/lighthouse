@@ -1,0 +1,13 @@
+# tests 3281
+# pass 3224
+# fail 3
+# cancelled 0
+# skipped 53
+# todo 1
+✖ failing tests:
+✖ File holds Export for Blender… after Export layouts…, and Settings holds Blender… (21004.9946ms)
+  Error: headless Chrome did not answer on port 49999
+✖ the question on the page: Blender not found outside the app, so no FBX tick and a note why; Cancel writes nothing and says so (0.8852ms)
+  Error: headless Chrome did not answer on port 49999
+✖ row 6: launchChrome holds a slot while its Chrome lives and gives it back when that Chrome exits (21065.2271ms)
+  Error: headless Chrome did not answer on port 50005

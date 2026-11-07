@@ -1,0 +1,8 @@
+  MARK export-begin  at 1.5 s: heap after full GC 100.5 MB, rss 302.6 MB
+  MARK check-begin   at 57.0 s: heap after full GC 1477 MB, rss 3338.8 MB
+  MARK check-end     at 57.3 s: heap after full GC 1477 MB, rss 3338.7 MB
+  MARK export-end    at 80.8 s: heap after full GC 358.2 MB, rss 3225.7 MB
+export: 79.3 s, 3270 GCs, peak heap 1951.1 MB (GC to 1453.1), largest after-GC 1884.5 MB; retained 100.5 -> 358.2 MB
+check: 0.3 s, 1 GCs, peak heap 1671.5 MB (GC to 1477), largest after-GC 1477 MB; retained 1477 -> 1477 MB
+findings refuse 0 warn 0
+maxRSS 4219.4 MB

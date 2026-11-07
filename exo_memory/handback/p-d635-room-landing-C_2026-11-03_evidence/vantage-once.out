@@ -1,0 +1,46 @@
+configured repos: 4 (arity)
+{
+ "claimSha": "d84d40df7",
+ "claimHead": "0cbe078f377db04ea5532547f3d93379a03f6fee",
+ "inLighthouse": "absent",
+ "status": "SURFACE",
+ "repo": {
+  "root": "G:\\Consonance-tools\\vantage-repos\\t180",
+  "by": "commit"
+ },
+ "world": {
+  "checked": true,
+  "moved": false,
+  "claimHead": "0cbe078f377db04ea5532547f3d93379a03f6fee",
+  "currentHead": "60c768811ad9709a6d22eeb36c3783d77b7794a6"
+ },
+ "readerCalls": [
+  "G:\\Consonance-tools\\vantage-repos\\t180",
+  "G:\\consonance-scratch\\vantage-wt-1gz0sw"
+ ],
+ "before": {
+  "G:\\Consonance-tools\\vantage-repos\\t180": 1,
+  "G:\\Consonance-tools\\vantage-repos\\t180-track-builder-history": 1,
+  "C:/Users/nname/Downloads/t180-fresh": 75,
+  "C:/Users/nname/Downloads/t180-track-builder": 79,
+  "C:/Users/nname/Desktop/lighthouse": 47
+ },
+ "during": {
+  "root": "G:\\consonance-scratch\\vantage-wt-1gz0sw",
+  "lists": {
+   "G:\\Consonance-tools\\vantage-repos\\t180": 2,
+   "G:\\Consonance-tools\\vantage-repos\\t180-track-builder-history": 1,
+   "C:/Users/nname/Downloads/t180-fresh": 75,
+   "C:/Users/nname/Downloads/t180-track-builder": 79,
+   "C:/Users/nname/Desktop/lighthouse": 47
+  },
+  "clone": "G:/Consonance-tools/vantage-repos/t180   60c7688 [main]\nG:/consonance-scratch/vantage-wt-1gz0sw  0cbe078 (detached HEAD)"
+ },
+ "after": {
+  "G:\\Consonance-tools\\vantage-repos\\t180": 1,
+  "G:\\Consonance-tools\\vantage-repos\\t180-track-builder-history": 1,
+  "C:/Users/nname/Downloads/t180-fresh": 75,
+  "C:/Users/nname/Downloads/t180-track-builder": 79,
+  "C:/Users/nname/Desktop/lighthouse": 47
+ }
+}

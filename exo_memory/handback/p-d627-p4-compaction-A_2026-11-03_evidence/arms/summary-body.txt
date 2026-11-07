@@ -1,0 +1,218 @@
+This session is being continued from a previous conversation that ran out of context. The summary below covers the earlier portion of the conversation.
+
+<system-reminder>
+<tools-used-before-summary>Agent, Artifact, AskUserQuestion, Bash, Edit, Grep, Monitor, PowerShell, Read, SendUserFile, Skill, TaskStop, ToolSearch, WebFetch, WebSearch, Write, mcp__consonance__call_chair, mcp__consonance__post_board, mcp__consonance__read_board</tools-used-before-summary>
+</system-reminder>
+Summary:
+1. Primary Request and Intent
+
+**Roles.** The keeper is Zacc (solariz3d). This seat is "Ana", the librarian: it plans, rules and verifies on disk, and does just-do-it edits only.
+- Panes A, C, E and O build; B and P are idle (keep-warms only). The chair (Main) routes. Every seat runs Opus 5.5.
+- Reach the chair with `mcp__consonance__call_chair`. After compaction, load it with ToolSearch `select:mcp__consonance__call_chair` (read_board likewise).
+- Every ring ends with `NEXT: <station> <command> when <condition>`. Collations carry the line `OUTPUT → NEXT: changed|unchanged — <why>`.
+- Keep-warm visits get the reply "ok".
+
+**Notes and commits.** Stamp from `C:\Users\nname\Desktop\lighthouse`:
+`printf '%s' "text" | node consonance/tools/stamp.js exo_memory/librarian/2026-10-18.md`
+- No backticks in the text, and the text must not begin with a time.
+- Commit: `rm -f .git/index.lock; git -c core.hooksPath=/dev/null commit -q -m "..." -- <paths>` (`git add` new files first), then `git push -q origin HEAD`.
+- Trailer: `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
+- No Python: use node scripts in the scratchpad. Bash-first mode: use cat/sed/grep via Bash.
+
+**Standing rules (verbatim intent):**
+- Privacy means credentials only.
+- No dollar figures.
+- Ask before deletes and anything irreversible.
+- Never hand the keeper a command.
+- No remarks about sleep or tiredness.
+- Headless only, never steal focus, `--mute-audio`, windowsHide on every child process.
+- Nothing runs while acs.exe is up; check before EACH run.
+- We never launch acs.exe ourselves.
+- Install only with the builder and the game closed, with a .before backup and a sha256 compare.
+- Never close the game ourselves.
+- Visuals go to him as an Artifact with real LARGE images (full width, one per row, click to open full size), never diagrams.
+- Release in batches.
+- The public t180 repo is the product only: plain one-line commits, and no lap ids, seat words, "keeper", or other creators' names (term list `C:\Consonance\private\d528\terms.txt`, 72 terms, skip # lines).
+- Lighthouse is PUBLIC.
+- A named trade needs a named yes.
+- Report in outcomes.
+- Ask him before acting on an ambiguous or angry line.
+- Check every render before he sees it, against what he asked.
+- **The generator itself must never make defects.** Fixes go in the generator code.
+
+2. Key Technical Concepts
+
+- **T-180 Track Builder:** Tauri v2, plain JS. Public repo `C:\Users\nname\Downloads\t180-fresh`.
+- **The hull (UNDERSKIN):** drawn only. `UNDERSKIN_OFFSET_M` 1.5 m, deeper under rising edges; HULL_EDGE_MAX_M 3.
+- **The pass-clearance rule (D623):** `CAR_MARGIN_M` = 3.1 m.
+- **The bank carry (D624):** quintic per side, C2.
+- **The banding fix (D611):** the vignette is applied in the sky pass before its dither.
+- **The export check memory (D614):** typed-array tables in finalscene.js.
+- **Prompt cache:** a cached re-read costs about 0.1 of a fresh read.
+
+3. Files, shas and numbers
+
+**0.4.38: RELEASED, INSTALLED, ALL-CLEAR GIVEN.** Tag v0.4.38 on a005e1d.
+- Setup 8,109,478 B, sha256 85002edd…a50, checked on GitHub.
+- The commit messages carry 0 of the 72 terms (my scan).
+- Range b497c5d..a005e1d, 7 commits:
+  - ae2d353, 4de9e11 and dbe05ed (from d609-a);
+  - 86a2a66 (light underside);
+  - f2489a2 (d614 compact tables);
+  - b5524ff (mirror tick box);
+  - a005e1d (version).
+- Main CI run 41525508985:
+  - attempt 1 failed: close-reuse ratio 0.55 against bound 0.5;
+  - attempt 2 failed: three Chrome 21 s timeouts;
+  - attempt 3 SUCCESS, 3,281 tests.
+- The tag run 41525551977 was a success.
+- Installed at his ask with the game and builder closed:
+  - backup `t180-track-builder.exe.before-0.4.38` (sha b95319ba);
+  - new exe sha256 44e4d277…e838 = C's build at `G:\Consonance-tools\scratch-C-d615\target\release`.
+- C's built-app run on ELYSIUM: page + checker 864 MB, export worker 1,193 MB, kn5 178,653,991 B, 89/89 main road equal.
+- His own real export took ~85 s by his count; our hidden harness took 152 s.
+
+**D614 (A), collated:**
+- d614-a 71a8556: the 3 GB heap row is red on 81b8b25 and green on d614-a.
+- Built app export worker: 1,106 MB new, 1,159 stub, 3,413 old.
+- Findings SAME on 9/9 pairs; touched 727 pass, 0 fail.
+- Note df87edf6.
+
+**D611 banding (E):**
+- 519aefa NOT passed. My crop showed plateaus.
+- **Correction by E:** my col2.js sampled every 2nd row (`y += 2`), so it read the dither phase as plateaus; my 4×4 mean was right. The fault was real: 519aefa's own blend pass gave 6 mean steps, the sky alone 0.
+- f835410 PASSED:
+  - 4×4 mean smooth 37.9→30.6 (glass) and 35.6→29.8 (aqua), in 0.1–0.2 steps;
+  - vignette-page.test.js red at b497c5d and 519aefa, green at f835410;
+  - p95 1.9 ms.
+- Ruled: no full-step whole-sky dither, because the stars' rule (sky-crisp p90 ≤1.8) stands.
+- Notes 2524b1a6 (not passed), d35519f8 (passed). Ships in 0.4.39.
+
+**D616 helix (A):**
+- The helix p29 is clear in both exports.
+- Found instead: the p38/p41 crossing. UNDERSKIN_p38 × APRON_p41 is 33 pairs in the new export against 3 in the old; the hull is 1.51 m deep against 0.58 m.
+- Replay read (Desktop/blackbox/ui/acreplay.js), on `C:\Users\nname\Documents\Assetto Corsa\replay\AC_021126-164903_…elysium_new_.acreplay` (31,122,453 B):
+  - nothing overhead within 40 m in the helix;
+  - collision box lowest +0.236 m (helix), +0.059 m (lap);
+  - tyre squash 0.146 m mean above 750 km/h in the helix, against 0.070 below 500; largest 0.192 m;
+  - box top median 1.33 m, highest 2.42 m;
+  - nearest overhead 24.10 m.
+- The clip he saw was the car's own drawn tyres and body in its own road.
+- Notes 6434654b, 9a5c7124, 838a46f3.
+
+**D617 (A):** stopped. Lifting the hull folds it (179.8°). The keeper's ruling replaced a/b/c. A keeps only the WARN row (finalscene kind `through`).
+- Row 13: green.
+- Row 12: still red, with a false positive and a miss.
+
+**D622 renders (O):** finished before the cancel. Page https://claude.ai/artifact/TKAByJwudysXMh5ay8bz7K (I viewed every image).
+- A's diagram page was https://claude.ai/artifact/FMfqYNxMHrwVQd8p9JuuCT. The keeper: "not sure what i am looking for".
+
+**D623 pass clearance (C):** t180 d623-c off a005e1d, worktree `Desktop\worktrees\t180-c623`, not committed.
+- The function:
+  `passClearance(path, segments, {apronM, marginM, minSeparationM, from}) -> [{s,u,otherS,otherU,gapM,needM,shortM,surfaceGapM,apron,onApron,hullM,clip,at}]` in src/validate/passclear.js.
+- Bound: 4.6 m road to road over a flat road; up to 6.1 m.
+- Tests: passclear 10/10, mutants 13/13, refusal 4/4. The touched set had 864 tests: 818 pass, 46 fail.
+- Red on:
+  - ELYSIUM: 1, p38/p41, 4.81 m short, clip;
+  - CRAZY TEST: 1, 1.14 m;
+  - TEST 10: 3, including p5 under itself (4.21 m short; D446 had said "not a gap").
+- Ruled:
+  - amend the 46 rows by name (they used adopt(), OPTS, and Close counts the red), citing his word;
+  - OWED: the red drawn on the 3D road, plus clicking the entry moves the camera there (C's shot showed it in the list only).
+
+**D624 ribbon (E):** d624-e:
+- 51f3a82, bug 2: panel.js:291 bankTarget wrapTurn turned −360 into 0; now ±360 means a full turn.
+- 3e7b7cd, bug 1: adapter.js carryOf/carriedPhiOf carry the roll through same-direction rest joints.
+- 4e6398c: the ruling comment.
+- Evidence:
+  - joint rate −0.010 → −0.346/−0.360 °/m;
+  - replay swing 40.7/50.4/89.4 m/s² at the joints;
+  - modelled after: 0.35/0.09/0.46.
+- Tests: core_roll_carry 5 rows red first; mutants 7/7; touched 1,731 pass, 1 fail (drag-frame row 8).
+- Ruled: amend D185 TEST 3 by name; his ride wins.
+- ELYSIUM NEW roll changes ≤3° at p13/14, p19/20 and p26/27. CRAZY TEST and TEST 10 are identical.
+- Page https://claude.ai/artifact/5B4U97fqizXEuSdPL7Lczo (I viewed the 5800 pair).
+- Safe copies: `G:\Consonance-tools\scratch-lib-ribbon\` (the save and replay AC_021126-190514).
+- Still open, his call: a second spiral turn (D259's absolute rule).
+
+**Room audit:** collated in `exo_memory/loop/room_audit_result_2026-11-02.md` (2f3048b1), from:
+- D618 (E): the per-turn cost is carried conversation; main is at 773k and O at 801k; keep-warms are about 14M cached a day each; B 27/27 and P 25/25 keep-warm.
+- D619 (C): second-reader makes a Sonnet call per ring, with 1,584 flags never adjudicated. second-vantage: 683 UNLAUNCHABLE. 7 installed hooks are older than their source. 39 tools never caught anything.
+- D620 (O): 79 of 85 laps can close; all 32 "unconfirmed" dispatches were delivered.
+
+**D621 (O):** bookkeeping fixes.
+- 5c1aa36e had a gate hole that I caught: Unknown/Filed laps inferred from text were allowed.
+- 846df413 fixes it: 2 new rows red at 5c1aa36e; cargo 1181/0.
+- LANDED on lighthouse main as merge 5c64caf1. O's note 0352f872 leaked one t180 private term; a6d2c6da removed it. Ruled: no rewrite (lighthouse = credentials only).
+- Running app exe built 2026-10-30, so 846df413 is NOT live until the keeper's restart word.
+
+**Librarian notes this stretch:** df87edf6, 2524b1a6, d35519f8, 6434654b, 9a5c7124, 838a46f3, de7f9e08 (0.4.38 all-clear), 2f3048b1, af4300f6, 72753965, 21819167.
+
+4. Errors and corrections
+
+- **Mine:** the col2.js every-2nd-row sampling (E corrected it).
+- **Mine:** I said "I'm stopping the hull-lift work and renders" before I had rung the chair. I rang it in the next turn.
+- **Mine:** I matched the hull depth to his drawing. He was angry: "i really hope you didnt do it by my hand made drawing......" I owned that the shape and depth were matched to his red line (1.5 m against his 1.68 m), and that the failure was ours, for not checking other passes.
+- **His correction:** "all you had to do was forbid building the track a little but closer because of the bulk of the underside." I agreed fully. It became D623.
+- **His correction:** "bro why are u guys working on the elysium fix…" I clarified we were building the rule, not fixing ELYSIUM, and accepted his solo project offer for after the rule lands.
+- **His point:** "u never use them" (P). I agreed: P idle since 10-26, B the same.
+
+5. Problem solving
+
+Solved: 0.4.38 shipped and installed; D614; D611; D616; D621; the audit collated; D624 code done.
+Open: D623 (amend 46 rows, red on road, camera jump) plus A's WARN row; 0.4.39 landing.
+
+6. All user messages (verbatim intent)
+
+- "sup"
+- "so where do i test"
+- "i wonder do you think faster export is viable?"
+- "took like 85 secondsish i think elysium"
+- "wait i will send you the telemetry when i have it but there is more clipping for some reason in that one helix part of elysium uh oh"
+- "look for mach6 ELYSIUM NEW, tbh the clipping was the same, i think i just had some transient clip one time it was good other times, i think it has to do with the raw speed and boosting at the same time, as boosting pressing the car down even more"
+- "so whats in motion rn"
+- "it says 0.438 came out two hours ago"
+- "wait send the artifact again"
+- "not sure what i am looking for"
+- "i really hope you didnt do it by my hand made drawing......"
+- "all you had to do was forbid building the track a little but closer because of the bulk of the underside"
+- "I HAD AN EPIPHANY FOR TRACK BUILDER, A SECOND BANKING FUNCTION THAT IN ONE PIECE CAN BANK A TURN EITHER EVEN MORE OR BACK TO LEVEL… look where the red marks are…" (image `C:\Users\nname\Pictures\Screenshots\EXTRA BANK FUNCTION FOR END OF PIECE.png`)
+- "bro why are u guys working on the elysium fix, its okay, we can just make new tracks with the new enforcement, however u could do the solo project of just fixing it"
+- "i made a new test track, RIBBON CORKSCREW TEST… bumps from connecting different banking… last straight ribbon section that goes banked 90 degrees all the way around 360 degrees, double bug also… -360 degrees, it only hits 359.99 and then glitches out…"
+- "i just realized what is the purpose of P" / "u never use them"
+- Keep-warm visits got "ok".
+
+Sentences of mine he answered:
+- I said: "I'm queuing the measurement right after the research audit, ahead of the narrower apron. If you want it sooner, it can run during the audit, since it only measures and changes nothing." He replied: "took like 85 secondsish i think elysium".
+- I said: "One question: did you export over your existing ELYSIUM, or under a new name? If the old one still exists, I can compare the two directly." He replied: "look for mach6 ELYSIUM NEW, tbh the clipping was the same…"
+- I said: "Of the three options, (b) and (c) keep your shape everywhere, and only (a) changes it, just at those spots." He replied: "all you had to do was forbid building the track a little but closer…"
+
+7. Pending tasks
+
+- **Keeper decisions owed:**
+  - audit calls A–E (stop second-reader/second-vantage/findings-return; attic the dormant hooks and 39 tools; keep push-gate and chime; reinstall the 7 stale hooks; compact main and O);
+  - P → the export-speed measurement, and B → ELYSIUM solo or close;
+  - the restart word for the D621 rebuild;
+  - the second spiral turn (D259).
+- **D623:** C amends the 46 rows, adds the red on the 3D road and the camera jump, reruns, commits. A finishes the WARN row on the D623 function. They land together.
+- **0.4.39:** d611-e f835410 + d624-e (3e7b7cd/4e6398c) + D623/A's row. Full suite, scans, then my all-clear.
+- **After:**
+  - ELYSIUM solo nudge of p38, on a copy;
+  - the export-speed measurement;
+  - the second-bank feature (fields "end bank °" and "end bank from", blended; his image is the drawn shape);
+  - the narrower apron (a quarter of 2 m, measured by tire clip);
+  - edgeDepth on all sections, the P19 measure;
+  - the gradual-opening kink, CRAZY p2/p6 tube folds;
+  - underside and side textures; animations;
+  - the registered audit test: "a seat started fresh must answer from the room alone where we are, what is live and what he decided, without asking him."
+- **Tuesday:** check waiter pid 12160 (wednesday-carry.log), D501.
+
+8. Current work
+
+E's D624 ruling ring arrived. The amendment stands in 3e7b7cd, and 4e6398c adds the ruling line (six phi-brush rows pass); it is not pushed. E's NEXT: a landing pane takes d624-e when 0.4.39 lands. Nothing was owed beyond collating.
+
+9. Optional next step
+
+Collate E's 4e6398c ring by stamping a short note: d624-e is now at 4e6398c for 0.4.39. Then wait for C's D623 completion and A's WARN row, and relay the keeper's answers on A–E and P/B when he gives them.
+
+If you need specific details from before compaction (like exact code snippets, error messages, or content you generated), read the full transcript at: C:\Users\nname\.claude\projects\C--Consonance-instances-librarian\0c0c0c0b-0000-4000-8000-00000000115b.jsonl

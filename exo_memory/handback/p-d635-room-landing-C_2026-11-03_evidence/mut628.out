@@ -1,0 +1,15 @@
+heavy-run: WARNING: C:\ has 43.8 GB free, under 50 GB; run node consonance/tools/janitor.js
+R1 owed pane: any letter but its own caught exit [33m101[39m  | test result: FAILED. 2 passed; 3 failed; 0 ignored; 0 measured; 1190 filtered out; finished in 0.02s owed_visit_tests::an_owed_pane_gets_a_work_turn_naming_its_lap_and_the_action,owed_visit_tests::a_seat_not_owed_keeps_its_keep_warm_byte_for_byte,owed_visit_tests::the_guard_the_visit_path_only_changes_what_a_visit_says 7 s
+R2 owing applies to every role caught exit [33m101[39m  | test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 1190 filtered out; finished in 0.01s owed_visit_tests::a_seat_not_owed_keeps_its_keep_warm_byte_for_byte 7 s
+R3 all-in applies to every role caught exit [33m101[39m  | test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 1190 filtered out; finished in 0.01s owed_visit_tests::a_seat_not_owed_keeps_its_keep_warm_byte_for_byte 7 s
+R4 a work turn is harvested as a letter caught exit [33m101[39m  | test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 1190 filtered out; finished in 0.02s owed_visit_tests::an_owed_pane_gets_a_work_turn_naming_its_lap_and_the_action 7 s
+R5 no lap is not refused caught exit [33m101[39m  | test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 1190 filtered out; finished in 0.01s owed_visit_tests::a_seat_not_owed_keeps_its_keep_warm_byte_for_byte 7 s
+R6 the send ignores the owed state caught exit [33m101[39m  | test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 1190 filtered out; finished in 0.01s owed_visit_tests::the_guard_the_visit_path_only_changes_what_a_visit_says 7 s
+R7 every unowed text counts as a letter caught exit [33m101[39m  | test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 1190 filtered out; finished in 0.01s owed_visit_tests::a_seat_not_owed_keeps_its_keep_warm_byte_for_byte 7 s
+R8 a state-less object reads as a state caught exit [33m101[39m  | test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 1190 filtered out; finished in 0.01s owed_visit_tests::an_unreadable_owed_state_changes_nothing 7 s
+J1 owed while the panes are not the holder caught exit [33m1[39m  | ℹ fail 1  0 s
+J2 no pointers asked for caught exit [33m1[39m  | ℹ fail 2  0 s
+J3 the OLDEST pointer kept caught exit [33m1[39m  | ℹ fail 1  0 s
+J4 pointers from before the anchor caught exit [33m1[39m  | ℹ fail 1  0 s
+J5 --owed-json not answered caught exit [33m1[39m  | ℹ fail 1  0 s
+applied 13 / caught 13 / NOT APPLIED 0

@@ -1,0 +1,21 @@
+off [33m-10[39m road l -22.52..-0.87 
+off [33m-9[39m road l -22.41..-0.86 UNDERSKIN_p38_chunk_59 4.4741@l0.671 over 1ROAD_APRON_p41 past edge 1.531
+off [33m-8[39m road l -22.30..-0.85 UNDERSKIN_p38_chunk_59 3.6669@l0.683 over 1ROAD_APRON_p41 past edge 1.53
+off [33m-7[39m road l -22.19..-0.83 UNDERSKIN_p38_chunk_59 2.9338@l0.688 over 1ROAD_APRON_p41 past edge 1.522 | 1ROAD_p38_chunk_77 4.7654@l0.691 over 1ROAD_APRON_p41 past edge 1.525
+off [33m-6[39m road l -22.08..-0.82 UNDERSKIN_p38_chunk_59 2.2942@l0.685 over 1ROAD_APRON_p41 past edge 1.505 | 1ROAD_p38_chunk_77 4.0381@l0.666 over 1ROAD_APRON_p41 past edge 1.486
+off [33m-5[39m road l -21.97..-0.80 UNDERSKIN_p38_chunk_59 1.7438@l0.651 over 1ROAD_APRON_p41 past edge 1.456 | 1ROAD_p38_chunk_77 3.3937@l0.664 over 1ROAD_APRON_p41 past edge 1.469
+off [33m-4[39m road l -21.86..-0.79 UNDERSKIN_p38_chunk_59 1.258@l0.657 over 1ROAD_APRON_p41 past edge 1.444 | 1ROAD_p38_chunk_77 2.8409@l0.634 over 1ROAD_APRON_p41 past edge 1.422
+off [33m-3[39m road l -21.75..-0.77 UNDERSKIN_p38_chunk_59 0.8438@l0.654 over 1ROAD_APRON_p41 past edge 1.424 | 1ROAD_p38_chunk_77 2.3345@l0.669 over 1ROAD_APRON_p41 past edge 1.439
+off [33m-2[39m road l -21.64..-0.75 UNDERSKIN_p38_chunk_59 0.5052@l0.645 over 1ROAD_APRON_p41 past edge 1.396 | 1ROAD_p38_chunk_77 1.9237@l0.643 over 1ROAD_APRON_p41 past edge 1.394
+off [33m-1[39m road l -21.53..-0.73 UNDERSKIN_p38_chunk_59 0.2222@l0.655 over 1ROAD_APRON_p41 past edge 1.386 | 1ROAD_p38_chunk_77 1.5627@l0.667 over 1ROAD_APRON_p41 past edge 1.398
+off [33m0[39m road l -21.42..-0.71 UNDERSKIN_p38_chunk_59 -0.0384@l0.636 over 1ROAD_APRON_p41 past edge 1.345 | 1ROAD_p38_chunk_77 1.2798@l0.668 over 1ROAD_APRON_p41 past edge 1.377
+off [33m1[39m road l -21.31..-0.69 UNDERSKIN_p38_chunk_59 -0.3123@l0.629 over 1ROAD_APRON_p41 past edge 1.316 | 1ROAD_p38_chunk_77 1.079@l0.634 over 1ROAD_APRON_p41 past edge 1.322
+off [33m2[39m road l -21.20..-0.66 UNDERSKIN_p38_chunk_59 -0.5768@l0.632 over 1ROAD_APRON_p41 past edge 1.296 | 1ROAD_p38_chunk_77 0.9426@l0.63 over 1ROAD_APRON_p41 past edge 1.294
+off [33m3[39m road l -21.10..-0.64 UNDERSKIN_p38_chunk_59 -0.7764@l0.646 over 1ROAD_APRON_p41 past edge 1.285 | 1ROAD_p38_chunk_77 0.8544@l0.671 over 1ROAD_APRON_p41 past edge 1.31
+off [33m4[39m road l -20.99..-0.61 UNDERSKIN_p38_chunk_59 -0.9202@l0.682 over 1ROAD_APRON_p41 past edge 1.294 | 1ROAD_p38_chunk_77 0.8735@l0.674 over 1ROAD_APRON_p41 past edge 1.286
+off [33m5[39m road l -20.88..-0.59 UNDERSKIN_p38_chunk_59 -0.9987@l0.681 over 1ROAD_APRON_p41 past edge 1.266 | 1ROAD_p38_chunk_77 0.9768@l0.68 over 1ROAD_APRON_p41 past edge 1.265
+off [33m6[39m road l -20.77..-0.56 UNDERSKIN_p38_chunk_59 -1.0089@l0.685 over 1ROAD_APRON_p41 past edge 1.241 | 1ROAD_APRON_p38_chunk_51 1.1246@l-1.255 over 1ROAD_APRON_p41 past edge 0 | 1ROAD_p38_chunk_77 1.1463@l0.681 over 1ROAD_APRON_p41 past edge 1.237
+off [33m7[39m road l -20.67..-0.53 UNDERSKIN_p38_chunk_59 -0.9451@l0.691 over 1ROAD_APRON_p41 past edge 1.218 | 1ROAD_APRON_p38_chunk_51 -0.8816@l0.595 over 1ROAD_APRON_p41 past edge 1.121
+off [33m8[39m road l -20.56..-0.49 
+off [33m9[39m road l -20.46..-0.46 
+off [33m10[39m road l -20.35..-0.43 

@@ -1,0 +1,69 @@
+push-gate: rows 270, 2026-10-06T08:54 .. 2026-11-02T23:37; catches 10; last catch 2026-11-01T05:18 allow-error: ""
+     8 x allow-error: ""
+     1 x deny: [{"file":"planted#.txt","line":#,"kind":"gateway key (
+     1 x deny: [{"file":"h.txt","line":#,"commit":"a#f#d#","kind":"ga
+delete-gate: rows 638, 2026-10-06T09:30 .. 2026-11-02T23:09; catches 5; last catch 2026-10-29T16:56 deny:  [["Remove-Item -Recurse",true,false,0],["Remove-Item -Recurse",false,false,1],["
+     2 x deny:  [["rm -r",false,false,#]]
+     1 x deny:  [["Remove-Item -Recurse",false,false,#]]
+     1 x deny:  [["rm -r",true,false,#],["rm -r",true,false,#],["rm -
+     1 x deny:  [["Remove-Item -Recurse",true,false,#],["Remove-Item 
+sources-gate: rows 5279, 2026-10-02T19:58 .. 2026-11-02T23:38; catches 2154; last catch 2026-11-02T23:38 warn unmatched light
+     1022 x warn unmatched light
+     698 x warn missing light
+     259 x deny unmatched light
+     161 x deny unmatched 
+     5 x deny missing 
+second-reader: rows 3364, 2026-10-01T16:14 .. 2026-11-02T23:37; catches 1584; last catch 2026-11-02T23:37 ok 2 flag(s)
+     1584 x ok # flag(s)
+reply-slot: rows 5336, 2026-10-03T10:16 .. 2026-11-02T23:42; catches 875; last catch 2026-11-02T23:42 wouldBlock would-block-missing shadow=false
+     817 x wouldBlock would-block-missing shadow=false
+     43 x BLOCKED would-block-unmatched shadow=false
+     8 x wouldBlock would-block-unmatched shadow=false
+     4 x BLOCKED would-block-missing shadow=false
+     3 x wouldBlock would-block-missing shadow=true
+ask-ending: rows 6145, 2026-10-06T08:54 .. 2026-11-02T23:41; catches 22; last catch 2026-11-02T15:14 matched mode=shadow user
+     15 x matched mode=shadow user
+     7 x matched mode=shadow relay
+release-chime: rows 67, 2026-10-10T03:38 .. 2026-11-02T21:08; catches 44; last catch 2026-11-02T21:07 chimed push t180-track-builder
+     38 x chimed push t#-track-builder
+     4 x chimed release t#-track-builder
+     1 x chimed push consonance
+     1 x chimed release consonance
+sourced-stop: rows 15859, 2026-08-15T11:34 .. 2026-11-02T23:41; catches 3127; last catch 2026-11-02T23:41 unsourced: 0 value(s), 0 claim(s)
+     3127 x unsourced: # value(s), # claim(s)
+findings-return: rows 100, 2026-08-16T05:09 .. 2026-11-01T15:12; catches 48; last catch 2026-11-01T15:12 surfaced 1, misses 0
+     48 x surfaced #, misses #
+second-vantage findings: rows 1566, 2026-08-18T06:45 .. 2026-11-02T15:05; catches 1566; last catch 2026-11-02T15:05  
+     321 x  
+     7 x  - node walk of `~/.claude/projects` reproducing `transcript
+     7 x  `main.rs` is clean vs HEAD, mtime #:#:#, #,# lines — so `:#
+     7 x  VPO.** The log from your #:# launch shows BepInEx loading e
+     7 x  "Don't sweep before the tail read" has no correct implement
+precompact-preserve: rows 3097, 2026-08-18T12:09 .. 2026-11-02T20:38; catches 0; last catch  
+sessionstart-state: rows 9136, 2026-08-18T12:49 .. 2026-11-02T20:39; catches 1; last catch 2026-08-19T04:45 emitted failed
+     1 x emitted failed
+carrier-drift-watch: rows 4117, 2026-08-24T12:52 .. 2026-09-22T13:44; catches 2050; last catch 2026-09-22T13:38 RED findings 44 spoke=true
+     1982 x RED findings # spoke=false
+     68 x RED findings # spoke=true
+dispatch-gate: rows 525, 2026-08-24T11:31 .. 2026-09-09T13:54; catches 73; last catch 2026-09-09T12:58 asked mcp__consonance__call_chair 
+     48 x asked mcp__consonance__call_chair 
+     25 x asked mcp__consonance__chair_inject 
+ferry-watch: rows 137, 2026-08-10T11:04 .. 2026-09-02T13:13; catches 137; last catch 2026-09-02T13:13 ferried 63b4e94 to B
+     2 x ferried # to C
+     2 x ferried # to B
+     2 x ferried #c# to librarian
+     2 x ferried #b# to E
+     2 x ferried #b# to A
+janitor (tool): rows 51, 2026-10-11T11:40 .. 2026-11-02T11:40; catches 11; last catch 2026-11-02T11:40 freed 4.04 GB, strays 6
+     8 x freed # GB, strays #
+     3 x freed # GB, strays undefined
+lap gates: rows 13433, 2026-08-24T07:23 .. 2026-11-02T23:39; catches 9817; last catch 2026-11-02T23:39 D617 chain gate="rung"
+     4948 x D# chain gate="retake"
+     4434 x D# chain gate="rung"
+     171 x L# chain gate="rung"
+     145 x L# chain gate="retake"
+     63 x D# chain gate="parked"
+l2-overseer: rows 8298,  .. ; catches 3453; last catch  "drift"
+     3453 x "drift"
+l3-overseer: rows 8292,  .. ; catches 0; last catch  
+shell event_log (session-start/stop/end/userprompt): rows 40183,  .. ; catches 0; last catch  

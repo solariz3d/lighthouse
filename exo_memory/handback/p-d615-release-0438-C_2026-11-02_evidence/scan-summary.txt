@@ -1,0 +1,18 @@
+7 commits; 2516 lines added across the commits' own diffs; net: 30 files changed, 2470 insertions(+), 78 deletions(-)
+credential prefixes checked: 7 patterns over 15 files
+added-1-ae2d353.txt: 71 terms checked, term hits 0; room words lap ids (D/L/P + digits) 2
+added-2-4de9e11.txt: 71 terms checked, term hits 0; room words lap ids (D/L/P + digits) 2
+added-3-dbe05ed.txt: 71 terms checked, term hits 0; room words lap ids (D/L/P + digits) 39
+added-4-86a2a66.txt: 71 terms checked, term hits 0; room words lap ids (D/L/P + digits) 24
+added-5-f2489a2.txt: 71 terms checked, term hits 0; room words 0
+added-6-b5524ff.txt: 71 terms checked, term hits 0; room words 0
+added-7-a005e1d.txt: 71 terms checked, term hits 0; room words 0
+msg-1-ae2d353.txt: 71 terms checked, term hits 0; room words 0
+msg-2-4de9e11.txt: 71 terms checked, term hits 0; room words 0
+msg-3-dbe05ed.txt: 71 terms checked, term hits 0; room words 0
+msg-4-86a2a66.txt: 71 terms checked, term hits 0; room words 0
+msg-5-f2489a2.txt: 71 terms checked, term hits 0; room words 0
+msg-6-b5524ff.txt: 71 terms checked, term hits 0; room words 0
+msg-7-a005e1d.txt: 71 terms checked, term hits 0; room words 0
+net-added.txt: 71 terms checked, term hits 0; room words lap ids (D/L/P + digits) 63
+total hits 130

@@ -1,0 +1,18 @@
+{
+  "pane-status: a seat dead or stalled, unnoticed": "(process exited|isn'?t reopening|not reopening|pane (was )?(dead|gone|stalled)|stalled for|nobody noticed .*(pane|seat)|seat .*(exited|died))",
+  "text-census: a file invisible to grep (NUL / binary)": "(raw NUL|carries a NUL|Binary file .* matches|read as binary|NUL byte)",
+  "memory-sweep: a seat's harness memory carried a retired wording": "(memory[/\\\\]\\S*\\.md.*(stale|retired|wrong)|MEMORY\\.md.*(stale|wrong))",
+  "seed-status: a bundled file not updated in the install": "(seeder|not seeded|stale (copy|seed)|bundled .* (stale|old))",
+  "corrections-gate: a correction filed beside its target, not on it": "(did not propagate|didn'?t propagate|still (live|says) .* after .* correct|correction .* (beside|not on))",
+  "whats-live: a claim about the running thing measured on another copy": "(installed cop(y|ies) .* (older|differ|stale)|what runs is not|not what (the repo|source) says|stale (exe|binary|build)|old (exe|binary|build) (was )?running|measured the wrong (build|copy|exe))",
+  "open-items: a commitment lost at compaction": "(lost (at|in|to) (the )?compact|compaction (lost|dropped)|forgot(ten)? after (the )?compact|summary (lost|dropped))",
+  "boundary-check: work left without a sealed guess/prediction": "(no sealed (guess|prediction)|unsealed|without a (sealed )?(guess|prediction))",
+  "board replay / duplicate rows (board-bursts, replay-check)": "(board .*replay|replayed rows|duplicate (board )?rows)",
+  "deference / echo / one voice (agreement-spread, deference-unit, order-parameter, vicsek-phi, tell-index, catch-ledger)": "(phase.?lock|echo is deference|yes.?man|rubber.?stamp|just agreed|deferred to the chair|unison)",
+  "librarian-cite / librarian-route: a citation that did not resolve, or a claim routed wrong": "(citation .*(did not|does not|didn'?t) resolve|cites? a (line|path) that (does not|doesn'?t) (exist|say)|wrong (path|line) cited|stale cite)",
+  "usage: token / cost overrun": "(usage limit|rate limit|out of (tokens|credits)|weekly limit|token (budget|use) .*(over|spike))",
+  "lineage-rip: the keeper's words lost or reworded": "(keeper'?s words .* (lost|reworded|paraphras)|paraphrased the keeper|misquot)",
+  "dupe-scan: duplicated code": "(duplicated (code|block)|same code (written )?twice|copy.?paste(d)? (code|block))",
+  "letters (d423): a seat's letter wrong": "(wrong letter|letter (mix|clash|collision)|two seats .* same letter)",
+  "worktrees piling up (worktree-sweep)": "(worktrees? .*(pile|stale|leftover|cleanup)|GiB of worktrees)"
+}

@@ -1,0 +1,23 @@
+total 194661
+drwxr-xr-x 1 nname 197609         0 Nov  2 15:03 ai
+drwxr-xr-x 1 nname 197609         0 Nov  2 15:03 data
+-rw-r--r-- 1 nname 197609  20673690 Nov  2 15:03 map.png
+-rw-r--r-- 1 nname 197609        63 Nov  2 15:03 models.ini
+-rw-r--r-- 1 nname 197609 178653991 Nov  2 15:03 t180b_elysium.kn5
+drwxr-xr-x 1 nname 197609         0 Nov  2 15:03 ui
+meshes: his 296, ours 253
+main road physics (1ROAD_p*): same 89, differ 0, only his 0, only ours 0
+pit lane (1ROAD_PIT*): same 5, differ 3, only his 0, only ours 0
+  differ: 1ROAD_PIT_fill_0, 1ROAD_PIT_in_0, 1ROAD_PIT_out_0
+apron (1ROAD_APRON*, APRONSIDE*): same 16, differ 41, only his 57, only ours 2
+  differ: 1ROAD_APRON_p15_chunk_16, 1ROAD_APRON_p15_chunk_17, 1ROAD_APRON_p16_chunk_18, 1ROAD_APRON_p16_chunk_19, 1ROAD_APRON_p16_chunk_20, 1ROAD_APRON_p19_chunk_21, 1ROAD_APRON_p1_chunk_0, 1ROAD_APRON_p1_chunk_1, 1ROAD_APRON_p1_chunk_2, 1ROAD_APRON_p21_chunk_22, 1ROAD_APRON_p21_chunk_23, 1ROAD_APRON_p22_chunk_24 …
+  onlyHis: APRONSIDE_p15_chunk_16, APRONSIDE_p15_chunk_17, APRONSIDE_p16_chunk_18, APRONSIDE_p16_chunk_19, APRONSIDE_p16_chunk_20, APRONSIDE_p19_chunk_21, APRONSIDE_p1_chunk_0, APRONSIDE_p1_chunk_1, APRONSIDE_p1_chunk_2, APRONSIDE_p21_chunk_22, APRONSIDE_p21_chunk_23, APRONSIDE_p22_chunk_24 …
+  onlyOurs: 1ROAD_APRON_PIT_R, APRONSIDE_PIT_R
+catch (1ROAD_CATCH*): same 3, differ 0, only his 0, only ours 0
+paint (PAINT*): same 25, differ 0, only his 0, only ours 0
+underskin (UNDERSKIN*): same 0, differ 16, only his 41, only ours 53
+  differ: UNDERSKIN_p16_chunk_20, UNDERSKIN_p1_chunk_0, UNDERSKIN_p1_chunk_1, UNDERSKIN_p1_chunk_2, UNDERSKIN_p29_chunk_34, UNDERSKIN_p29_chunk_35, UNDERSKIN_p29_chunk_36, UNDERSKIN_p29_chunk_37, UNDERSKIN_p29_chunk_38, UNDERSKIN_p2_chunk_3, UNDERSKIN_p2_chunk_4, UNDERSKIN_p2_chunk_5 …
+  onlyHis: UNDERSKIN_p15_chunk_16, UNDERSKIN_p15_chunk_17, UNDERSKIN_p16_chunk_18, UNDERSKIN_p16_chunk_19, UNDERSKIN_p19_chunk_21, UNDERSKIN_p21_chunk_22, UNDERSKIN_p21_chunk_23, UNDERSKIN_p22_chunk_24, UNDERSKIN_p23_chunk_25, UNDERSKIN_p27_chunk_26, UNDERSKIN_p27_chunk_27, UNDERSKIN_p28_chunk_28 …
+  onlyOurs: UNDERSKIN_PIT_chunk_65, UNDERSKIN_PIT_chunk_66, UNDERSKIN_PIT_fill_0, UNDERSKIN_PIT_out_0, UNDERSKIN_p15_chunk_18, UNDERSKIN_p15_chunk_19, UNDERSKIN_p16_chunk_21, UNDERSKIN_p16_chunk_22, UNDERSKIN_p16_chunk_23, UNDERSKIN_p17_chunk_24, UNDERSKIN_p20_chunk_25, UNDERSKIN_p21_chunk_26 …
+anything else: same 0, differ 0, only his 0, only ours 0
+384fdb1fe5e773edc2061539a1d225bc9f81e05631e7faf035389fbf8c2987f6 *G:/Consonance-tools/scratch-C-d615/wv/steam/steamapps/common/assettocorsa/content/tracks/t180b_elysium/t180b_elysium.kn5

@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: control: the unmutated copy of finalscene.js passes every row the mutants are judged by
+ok 1 - control: the unmutated copy of finalscene.js passes every row the mutants are judged by
+  ---
+  duration_ms: 129458.4759
+  type: 'test'
+  ...
+# Subtest: control: the unmutated copy of fromwords.js passes every row the mutants are judged by
+ok 2 - control: the unmutated copy of fromwords.js passes every row the mutants are judged by
+  ---
+  duration_ms: 132193.3517
+  type: 'test'
+  ...
+# Subtest: mutation F22 a drawn face is another pass's by its centre's station alone: applied, and caught by "row 15: a drawn face is another pass…"
+ok 3 - mutation F22 a drawn face is another pass's by its centre's station alone: applied, and caught by "row 15: a drawn face is another pass…"
+  ---
+  duration_ms: 1575.4768
+  type: 'test'
+  ...
+# Subtest: mutation F23 a drawn face must stand 2 m out to count: applied, and caught by "row 13: ELYSIUM…"
+ok 4 - mutation F23 a drawn face must stand 2 m out to count: applied, and caught by "row 13: ELYSIUM…"
+  ---
+  duration_ms: 96378.238
+  type: 'test'
+  ...
+# Subtest: mutation F24 another pass is any surface over a metre along the road: applied, and caught by "row 15: a drawn face is another pass…"
+ok 5 - mutation F24 another pass is any surface over a metre along the road: applied, and caught by "row 15: a drawn face is another pass…"
+  ---
+  duration_ms: 5458.7584
+  type: 'test'
+  ...
+# Subtest: mutation F26 a drawn face stands out by its corners over the other face's whole plane: applied, and caught by "row 15: a drawn face is another pass…"
+ok 6 - mutation F26 a drawn face stands out by its corners over the other face's whole plane: applied, and caught by "row 15: a drawn face is another pass…"
+  ---
+  duration_ms: 2116.5154
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 367233.1589

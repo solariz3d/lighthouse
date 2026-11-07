@@ -1,0 +1,45 @@
+red-ailine.out:✖ a line that reaches vertical is refused by name, VERTICAL_TANGENT, not written with a camber of ±π (1.8005ms)
+red-ailine.out:✖ a climb to 86° (4° short of vertical, inside the 6° that AC cannot take) is refused too (0.7627ms)
+red-ailine.out:✔ the edge: a climb to 80° (10° short of vertical) still makes a line, with every camber finite and well inside ±π/2 (0.4292ms)
+red-ailine.out:✔ an ordinary track's AI line is byte-identical to before (the platform test, floor and wall lines) (67.8317ms)
+red-ailine.out:✖ the export of a track that goes vertical finishes WITHOUT ai/fast_lane.ai, and the banner says why in plain words (379.7313ms)
+red-ailine.out:✖ a layout folder of a track that goes vertical lists no AI line (src/export/layouts.js layoutSet) (275.5013ms)
+red-ailine.out:ℹ tests 6
+red-ailine.out:ℹ pass 2
+red-ailine.out:ℹ fail 4
+red-ailine.out:✖ failing tests:
+red-ailine.out:✖ a line that reaches vertical is refused by name, VERTICAL_TANGENT, not written with a camber of ±π (1.8005ms)
+red-ailine.out:✖ a climb to 86° (4° short of vertical, inside the 6° that AC cannot take) is refused too (0.7627ms)
+red-ailine.out:✖ the export of a track that goes vertical finishes WITHOUT ai/fast_lane.ai, and the banner says why in plain words (379.7313ms)
+red-ailine.out:✖ a layout folder of a track that goes vertical lists no AI line (src/export/layouts.js layoutSet) (275.5013ms)
+green-ailine.out:✔ a line that reaches vertical is refused by name, VERTICAL_TANGENT, not written with a camber of ±π (1.7494ms)
+green-ailine.out:✔ a climb to 86° (4° short of vertical, inside the 6° that AC cannot take) is refused too (0.5192ms)
+green-ailine.out:✔ the edge: a climb to 80° (10° short of vertical) still makes a line, with every camber finite and well inside ±π/2 (0.7224ms)
+green-ailine.out:✔ an ordinary track's AI line is byte-identical to before (the platform test, floor and wall lines) (70.9392ms)
+green-ailine.out:✔ the export of a track that goes vertical finishes WITHOUT ai/fast_lane.ai, and the banner says why in plain words (365.8534ms)
+green-ailine.out:✔ a layout folder of a track that goes vertical lists no AI line (src/export/layouts.js layoutSet) (278.1384ms)
+green-ailine.out:ℹ tests 6
+green-ailine.out:ℹ pass 6
+green-ailine.out:ℹ fail 0
+red-sectors.out:✔ a closed lap: AC_TIME_1 and AC_TIME_2 a third and two thirds of the lap past the start line, on road (31.5124ms)
+red-sectors.out:✔ an open track has no sector gates (6.3461ms)
+red-sectors.out:✔ ELYSIUM: both sector gates stand on flat road (level across within 15°, climbing under 20°, the road facing up, neither end past vertical) (727.4735ms)
+red-sectors.out:✔ ELYSIUM: each sector gate is at the NEAREST flat station to its third, looking both ways (no flat station is nearer on either side) (630.4929ms)
+red-sectors.out:✔ a lap with no flat road within a quarter lap of a third: the gate is left out, and the layout says so in an amber note (28.3564ms)
+red-sectors.out:✔ the markers check flags a gate narrower than half the road seen from above (across a steep bank), and passes a level one (1.7083ms)
+red-sectors.out:✖ the sector gate the search picks passes the export's own gate check (its dummies, as checkMarkers reads them), on a bank exit with a one-sided edge (20.9762ms)
+red-sectors.out:ℹ tests 7
+red-sectors.out:ℹ pass 6
+red-sectors.out:ℹ fail 1
+red-sectors.out:✖ failing tests:
+red-sectors.out:✖ the sector gate the search picks passes the export's own gate check (its dummies, as checkMarkers reads them), on a bank exit with a one-sided edge (20.9762ms)
+green-sectors.out:✔ a closed lap: AC_TIME_1 and AC_TIME_2 a third and two thirds of the lap past the start line, on road (30.8756ms)
+green-sectors.out:✔ an open track has no sector gates (5.7598ms)
+green-sectors.out:✔ ELYSIUM: both sector gates stand on flat road (level across within 15°, climbing under 20°, the road facing up, neither end past vertical) (731.734ms)
+green-sectors.out:✔ ELYSIUM: each sector gate is at the NEAREST flat station to its third, looking both ways (no flat station is nearer on either side) (632.8898ms)
+green-sectors.out:✔ a lap with no flat road within a quarter lap of a third: the gate is left out, and the layout says so in an amber note (29.4883ms)
+green-sectors.out:✔ the markers check flags a gate narrower than half the road seen from above (across a steep bank), and passes a level one (1.2294ms)
+green-sectors.out:✔ the sector gate the search picks passes the export's own gate check (its dummies, as checkMarkers reads them), on a bank exit with a one-sided edge (25.4666ms)
+green-sectors.out:ℹ tests 7
+green-sectors.out:ℹ pass 7
+green-sectors.out:ℹ fail 0

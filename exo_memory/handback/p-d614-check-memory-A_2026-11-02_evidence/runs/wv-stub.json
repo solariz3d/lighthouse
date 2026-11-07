@@ -1,0 +1,117 @@
+{
+  "started": "2026-11-02T19:16:15.951Z",
+  "exe": "G:\\Consonance-tools\\scratch-A-d614\\builds\\stub\\t180-track-builder.exe",
+  "track": "G:\\Consonance-tools\\scratch-A-d614\\wv-stub\\eq-ELYSIUM.t180track",
+  "steps": [
+    {
+      "name": "launch",
+      "ok": true,
+      "s": 1.653,
+      "result": "menus ready"
+    },
+    {
+      "name": "open",
+      "ok": true,
+      "s": 56.32,
+      "result": "loaded: head shown at 2.7 s, still from 36.3 s; peak 963 MB at 37.0 s (page 460, worker:overlapworker.js#0 1, worker:overlapworker.js#1 2, worker:closeworker.js#2 2, worker:checkworker.js#3 498); settled 774 MB (page 469, worker:overlapworker.js#0 1, worker:overlapworker.js#1 2, worker:closeworker.js#2 2, worker:checkworker.js#3 300)"
+    },
+    {
+      "name": "install",
+      "ok": true,
+      "s": 223.32,
+      "result": "ELYSIUM · closed loop | No saved pieces yet: select pieces on the track and press Save as piece. |  |  |  |  |  |  | end heading 180.00°, on the 90° grid | expo | files 10, kn5 178653991 B; peak 1909 MB at 156.6 s (page 445, worker:overlapworker.js#0 1, worker:overlapworker.js#1 2, worker:closeworker.js#2 2, worker:checkworker.js#3 300, iframe:about:srcdoc#4 1, worker:01f8e73b-3c34-481c-8b6f-c489bf#5 1159)"
+    }
+  ],
+  "marks": [
+    {
+      "t": "1.5",
+      "mark": "begin launch"
+    },
+    {
+      "t": "3.2",
+      "mark": "end launch"
+    },
+    {
+      "t": "7.0",
+      "mark": "begin open"
+    },
+    {
+      "t": "63.3",
+      "mark": "end open"
+    },
+    {
+      "t": "63.3",
+      "mark": "begin install"
+    },
+    {
+      "t": "286.6",
+      "mark": "end install"
+    }
+  ],
+  "crashes": [
+    {
+      "t": "289.9",
+      "what": "the CDP socket closed: code 1000 reason  clean true; app pid GONE; webview/t180 processes 20",
+      "mark": "install"
+    }
+  ],
+  "pageErrors": [],
+  "targets": {
+    "worker:overlapworker.js#0": "2.1",
+    "worker:overlapworker.js#1": "2.1",
+    "worker:closeworker.js#2": "2.1",
+    "worker:checkworker.js#3": "2.8",
+    "iframe:about:srcdoc#4": "63.8",
+    "worker:01f8e73b-3c34-481c-8b6f-c489bf#5": "67.6"
+  },
+  "pid": 13492,
+  "userDesktop": "0",
+  "files": {
+    "export": [],
+    "ac": [
+      [
+        "t180b_elysium\\.t180b-builder.json",
+        415
+      ],
+      [
+        "t180b_elysium\\ai\\fast_lane.ai",
+        384124
+      ],
+      [
+        "t180b_elysium\\data\\map.ini",
+        113
+      ],
+      [
+        "t180b_elysium\\data\\surfaces.ini",
+        772
+      ],
+      [
+        "t180b_elysium\\map.png",
+        20673690
+      ],
+      [
+        "t180b_elysium\\models.ini",
+        63
+      ],
+      [
+        "t180b_elysium\\t180b_elysium.kn5",
+        178653991
+      ],
+      [
+        "t180b_elysium\\ui\\outline.png",
+        280600
+      ],
+      [
+        "t180b_elysium\\ui\\preview.png",
+        284288
+      ],
+      [
+        "t180b_elysium\\ui\\ui_track.json",
+        380
+      ]
+    ]
+  },
+  "leftRunning": 0,
+  "exitCode": 0,
+  "nSamples": 277
+}

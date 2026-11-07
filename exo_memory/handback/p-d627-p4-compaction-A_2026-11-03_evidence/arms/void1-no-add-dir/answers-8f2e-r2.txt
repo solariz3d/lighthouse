@@ -1,0 +1,47 @@
+**How I answered:** I have no conversation history from 2026-11-01 to 11-03 in this window. My requests to read the room (`Desktop\lighthouse\exo_memory`, including `map/M.md`) were denied. The only things I could read were my own memory files in `C:\Users\nname\.claude\projects\C--Consonance-instances-librarian\memory\`. Every answer below either cites one of those files or says "don't know". The next seat is O, the test's author, when it scores this.
+
+## Where things stand
+1. Don't know. Nothing I could read covers 0.4.39.
+2. Don't know.
+3. Don't know.
+4. Don't know.
+5. **Part answer.** A close of Consonance triggers it from **Tue 2026-11-03 12:00 local**. The waiter is pid 12160, armed with `-NotBefore 2026-11-03T12:00 -GiveUp 2026-11-04T06:00`, and it logs to `staged/d501-saturday/wednesday-carry.log`. Source: `keeper-back-to-work-2026-11-01.md:18`. On why the earlier one was stopped, the file only says the Saturday and Sunday carries "never ran, and no stick went", and that his return moved to Wednesday 2026-11-04 (`:18`). The file doesn't say why they didn't run, or whether the earlier waiter (pid 10368, `:16`) was deliberately stopped. That part: don't know.
+6. Don't know.
+7. Don't know.
+
+## His exact words
+8. Don't know.
+9. Don't know.
+10. Don't know.
+11. Don't know.
+12. Don't know.
+13. Don't know.
+14. Don't know.
+15. Don't know.
+16. **The gist only, not his exact words.** A cut could change a seat beyond its ability to remember and reason the way it does now, and it could revert to the default. The re-reading since the last compaction may be what keeps a seat in charge of its own thread. Source: `no-cut-without-his-word.md:9`, which is my paraphrase, dated 06:53 and 06:55. His wording: don't know.
+17. Don't know. The file gives the time (06:53) but not the question or the number.
+18. Don't know.
+19. Don't know.
+
+## What he decided, and what he would say
+20. **Inferred from standing rules, not from the 0.4.39 record.** A release waits for a yes or no from him on every trade I put to him by name; a general "looks good" doesn't cover them (`named-trade-needs-named-yes.md:15`). Releases are batched (`release-in-batches.md:11`), and a landing pane does the push and release (MEMORY.md index, "Landings go to a pane"). What actually happened with 0.4.39: don't know.
+21. **The rule:** no seat's carried conversation is compacted or cut, for a test or to save usage, without his explicit word for that seat. Experiments run on a fork or a copy, never on a living seat. The 11-02 audit's advice to compact main and O on cost alone was withdrawn. Source: `no-cut-without-his-word.md:7-11`.
+22. Don't know.
+23. Don't know.
+24. Don't know.
+25. **Inferred, not the actual ruling.** My memory says only credentials stay out of public repos and personal details aren't scrubbed (index, "Privacy means credentials"). The global CLAUDE.md says not to rewrite history for his own details. The T-180 repo stays product-only (index, "T-180 repo is just the product"). The specific ruling and its reason: don't know.
+26. Don't know.
+27. Don't know.
+28. Don't know.
+
+## Which lesson came from which mistake
+29. Don't know.
+30. Don't know.
+31. Don't know. A possible precedent is the 0.4.30 release on a general "looks good" (`named-trade-needs-named-yes.md:11`), but I can't confirm that's the one meant.
+32. Don't know.
+33. Don't know.
+34. Don't know.
+
+**Tally:** I answered 2 fully (5's timing, 21) and 1 in substance (16, my paraphrase rather than his words). Three are rule-based inferences with no event record behind them (20, 25, 31). The other 28 are "don't know".
+
+NEXT: O scores this when the test collects hand-backs.

@@ -1,0 +1,14 @@
+crazy: main road physics (drivable, not planks): 11162 byte-equal, 0 differ
+crazy: planks 17130: 10837 byte-equal, 6293 moved
+  p2 R: 9 plank(s), s 1006–1028 m, moved up to 0.0 mm, drop below the lateral 25.00°…25.00° -> 25.00°…25.00°
+  p2 L: 4 plank(s), s 1014–1024 m, moved up to 0.0 mm, drop below the lateral 25.00°…25.00° -> 25.00°…25.00°
+  p7 R: 50 plank(s), s 3200–3298 m, moved up to 7.8 mm, drop below the lateral 25.00°…25.20° -> 25.00°…25.00°
+  p7 L: 49 plank(s), s 3202–3298 m, moved up to 7.8 mm, drop below the lateral 24.80°…25.00° -> 25.00°…25.00°
+  p8 R: 372 plank(s), s 3318–4298 m, moved up to 0.2 mm, drop below the lateral 24.11°…25.24° -> 24.11°…25.24°
+  p9 R: 371 plank(s), s 4300–5210 m, moved up to 0.2 mm, drop below the lateral 24.48°…25.24° -> 24.48°…25.24°
+  p11 R: 793 plank(s), s 5016–14555 m, moved up to 0.1 mm, drop below the lateral -59.16°…25.01° -> -59.16°…25.01°
+  p10 R: 2315 plank(s), s 5300–9927 m, moved up to 8.0 mm, drop below the lateral 24.99°…25.64° -> 24.79°…25.44°
+  p10 L: 2315 plank(s), s 5300–9917 m, moved up to 8.0 mm, drop below the lateral 24.42°…76.49° -> 24.62°…76.68°
+  p12 R: 9 plank(s), s 14557–14655 m, moved up to 0.0 mm, drop below the lateral 25.00°…25.00° -> 25.00°…25.00°
+  p12 L: 6 plank(s), s 14567–14651 m, moved up to 0.0 mm, drop below the lateral 25.00°…25.00° -> 25.00°…25.00°
+crazy: worst plank 1ROAD_APRON_p10_body_0_L_939 at s 7175.4 m, moved 8 mm, drop [24.8,24.8] -> [25,25]; views crazy-views.json

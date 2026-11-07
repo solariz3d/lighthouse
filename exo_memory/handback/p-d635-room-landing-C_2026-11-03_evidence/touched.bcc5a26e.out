@@ -1,0 +1,34 @@
+heavy-run: WARNING: C:\ has 42.3 GB free, under 50 GB; run node consonance/tools/janitor.js
+consonance/hooks/findings-return.test.js: pass 16 fail 0 exit 0
+consonance/tools/ask.test.js: pass 42 fail 0 exit 0
+consonance/tools/attached.test.js: pass 7 fail 0 exit 0
+consonance/tools/big-transcript.test.js: pass 8 fail 0 exit 0
+consonance/tools/chain-status.test.js: pass 162 fail 0 exit 0
+consonance/tools/lap-row.test.js: pass 142 fail 0 exit 0
+consonance/tools/offramp-check.test.js: pass 8 fail 0 exit 0
+consonance/tools/second-vantage.history.test.js: pass 5 fail 0 exit 0
+consonance/tools/second-vantage.test.js: pass 43 fail 0 exit 0
+consonance/tools/text-census.test.js: pass 1 fail 0 exit 0
+consonance/tools/usage.test.js: pass 27 fail 0 exit 0
+consonance/ui/chain-indicator.test.js: pass 1 fail 0 exit 0
+dev/shell/hooks/third-place-gate.test.js: pass 7 fail 0 exit 0
+dev/vantage/install_vantage.test.js: pass 1 fail 0 exit 0
+dev/shell/hooks/userprompt-submit.test.js: pass 5 fail 0 exit 0
+dev/shell/hooks/userprompt_pulse.test.js: pass 13 fail 0 exit 0
+consonance/hooks/dream-gate.test.js: pass 1 fail 0 exit 0
+consonance/hooks/ferry-watch.test.js: pass 3 fail 0 exit 0
+consonance/hooks/gate-mode.test.js: pass 6 fail 0 exit 0
+consonance/hooks/jev-flags.test.js: pass 35 fail 0 exit 0
+consonance/hooks/precompact-preserve.test.js: pass 14 fail 0 exit 0
+consonance/hooks/reply-slot.test.js: pass 39 fail 0 exit 0
+consonance/hooks/second-reader-note.test.js: pass 11 fail 0 exit 0
+consonance/hooks/second-reader.test.js: pass 33 fail 0 exit 0
+consonance/hooks/sources-gate.test.js: pass 68 fail 0 exit 0
+consonance/hooks/transcript-watch.test.js: pass 1 fail 0 exit 0
+consonance/tools/gen-consumer.test.js: pass 116 fail 0 exit 0
+consonance/tools/identity-diff.test.js: pass 9 fail 0 exit 0
+consonance/tools/install-only.test.js: pass 1 fail 0 exit 0
+consonance/tools/portable-paths.test.js: pass 41 fail 2 exit 1
+consonance/tools/universe-print.test.js: pass 1 fail 0 exit 0
+dev/shell/install-fresh-home.test.js: pass 3 fail 0 exit 0
+TOTAL files 32 pass 870 fail 2; non-zero exit: consonance/tools/portable-paths.test.js

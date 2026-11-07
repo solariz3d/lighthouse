@@ -1,0 +1,14 @@
+baseline node -e 0: median 120 ms (min 112, max 132); stdout 0 chars
+PreToolUse push-gate: median 152 ms (min 120, max 169); stdout 0 chars
+PreToolUse delete-gate: median 116 ms (min 108, max 120); stdout 0 chars
+PostToolUse release-chime: median 118 ms (min 105, max 123); stdout 0 chars
+UserPromptSubmit userprompt-submit: median 271 ms (min 227, max 354); stdout 116 chars
+UserPromptSubmit findings-return: median 130 ms (min 129, max 140); stdout 0 chars
+UserPromptSubmit ask-surface: median 228 ms (min 212, max 247); stdout 0 chars
+UserPromptSubmit ready-prompt: median 104 ms (min 94, max 254); stdout 2 chars
+Stop stop: median 109 ms (min 106, max 111); stdout 2 chars
+Stop sourced-stop: median 107 ms (min 101, max 120); stdout 0 chars
+Stop ready-stop: median 104 ms (min 96, max 218); stdout 2 chars
+Stop reply-slot: median 110 ms (min 108, max 131); stdout 0 chars
+Stop ask-ending: median 107 ms (min 92, max 119); stdout 0 chars
+written into the scratch dirs: data\ask-ending.jsonl, shell\event_log.jsonl, shell\userprompt_state.json

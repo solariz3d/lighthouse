@@ -1,0 +1,5 @@
+crazy.t180track: per piece, the skin's section up by count against the centre line's, the largest change in the skin's depth, and the largest move of a skin vertex
+  p7: K 66, centre column 32.5 (by count 33, 0.29 m off the centre): up tilts up to 0.00°, depth changes up to 8 mm, a skin vertex moves up to 8 mm (100 rows)
+  p8: K 65, centre column 32 (by count 32, -0.00 m off the centre): up tilts up to 0.00°, depth changes up to 0 mm, a skin vertex moves up to 0 mm (1000 rows)
+  p10: K 66, centre column 32.5 (by count 33, 0.29 m off the centre): up tilts up to 0.00°, depth changes up to 8 mm, a skin vertex moves up to 8 mm (4630 rows)
+  pieces where the two agree to the bit: none

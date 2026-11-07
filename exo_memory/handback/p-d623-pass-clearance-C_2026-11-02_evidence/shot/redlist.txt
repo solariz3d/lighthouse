@@ -1,0 +1,5 @@
+2 red · 33 amber · lap proved · 0 jumps
+red: another pass of the road is too close over this one here: the road above needs its underside's depth plus 3.1 m for a car under it, at 22663–22665 and 23720–23734 m
+amber: on this wall (steeper than 60°) a climb change asks a sideways swerve here as hard as the hardest one driven (3.2 g, which recovered), while less than 1 g presses the car into the road: an estimate, not a known failure (a warning), at 17613–17731 and 23708–23796 m
+info: the road faces the ground here and holds the car only above 97 km/h, at 9693–10357 m
+info: the road faces the ground here and holds the car only above 54 km/h, at 17693–18381 m

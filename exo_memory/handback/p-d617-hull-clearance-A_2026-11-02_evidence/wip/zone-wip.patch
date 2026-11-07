@@ -1,0 +1,273 @@
+diff --git a/src/export/apron.js b/src/export/apron.js
+index dafee16..0f06aac 100644
+--- a/src/export/apron.js
++++ b/src/export/apron.js
+@@ -46,7 +46,7 @@
+ //   zone turns down (e < 0) is open and its apron starts at the zone's outer row, which is the mesh's last column. Flights (jump segments) have no cells and no apron.
+ //   The mesh's column 0 is the road's right (−u) and column K − 1 its left (+u, the frame's L).
+ 'use strict';
+-const { UNDERSKIN_OFFSET_M, ringCells, skinDir, sectionUp, centreColumn, colAt, rowDepths, rowPointIn, hullDepth, hullEase, twistZone, hullScaleAt, skinColumns, HULL_EDGE_SPAN_M } = require('./underskin.js');
++const { UNDERSKIN_OFFSET_M, ringCells, skinDir, sectionUp, centreColumn, colAt, rowDepths, rowPointIn, hullDepth, hullEase, twistZone, hullScaleAt, clearanceOf, skinColumns, HULL_EDGE_SPAN_M } = require('./underskin.js');
+ const { gripKey } = require('./gripkeys.js');
+ 
+ const APRON_WIDTH_M = 2.0;     // the default: one measured excursion reached 0.86 m past the edge (p-d563), and 2 m covers it with room
+@@ -507,6 +507,8 @@ function withApron(scene, mesh, segments, opts = {}) {
+   if (lane && !(lane.side === 'L' || lane.side === 'R') ) throw new Error(`the pit lane's side must be 'L' or 'R', not ${lane.side}`);
+   if (!mesh || !mesh.cells || !mesh.scene) return scene;
+   const chosen = apronCells(mesh, segments), he = hullEase(mesh, segments), tz = twistZone(kids0(scene), mesh, segments);
++  // the clearance zone (underskin.js clearanceZone), as the skin reads it: `opts.clear` false only for a before/after comparison, with the skin's own false
++  const cz = opts.clear === false ? null : clearanceOf(mesh.scene.root.children, mesh, segments);
+   if (!chosen.size) return scene;
+   const kids = scene.root.children, orig = mesh.scene.root.children, materials = scene.materials.slice(), matIndex = materials.length, add = [];
+   let roadMat = null;   // the road material the first apron sits on: the apron's material is its darker shade (apronMaterial)
+@@ -529,7 +531,7 @@ function withApron(scene, mesh, segments, opts = {}) {
+             // each road row's skin depth under its edge and the skin's vertex one column in, as apronOf reads them for a main plank (the outline's run arrives along it)
+             const P0 = m.positions, N0 = m.normals, ec = side === 0 ? 0 : K - 1;
+             rowsWorld(rows, c.matrix).forEach((q, r) => {
+-              const s = cell.s0 + (R > 1 ? (cell.s1 - cell.s0) * r / (R - 1) : 0), e = padEase(s, lane), dd = rowDepths(P0, N0, r * K, K, true, [he.at(0, s), he.at(1, s)], hullScaleAt(he, tz, s), mid), ez = (d) => UNDERSKIN_OFFSET_M + (d - UNDERSKIN_OFFSET_M) * e;
++              const s = cell.s0 + (R > 1 ? (cell.s1 - cell.s0) * r / (R - 1) : 0), e = padEase(s, lane), dd = rowDepths(P0, N0, r * K, K, true, [he.at(0, s), he.at(1, s)], hullScaleAt(he, tz, s, cz), mid), ez = (d) => UNDERSKIN_OFFSET_M + (d - UNDERSKIN_OFFSET_M) * e;
+               const rp = rowPointIn(P0, N0, r * K, K, side === 0 ? 0 : 1), inward = rp ? toWorld(c.matrix, sub(rp.p, mul(skinDir(rp.n, rows[r].Nc), ez(dd[rp.k0] + (dd[rp.k1] - dd[rp.k0]) * rp.w)))) : null;
+               if (!toOutline.length || len(sub(q.E, toOutline[toOutline.length - 1].E)) > 1e-6) toOutline.push({ ...q, s, hullSkin: ez(dd[ec]), inward });
+             });
+@@ -540,7 +542,7 @@ function withApron(scene, mesh, segments, opts = {}) {
+       }
+       // each row's share of the hull's deepening: where the apron stops (underskin.js hullEase) and, on the lane's side, beside the pit lane (padEase); the skin's the same
+       const R0 = m.positions.length / 3 / K, cl = mesh.cells[k], sAt = (r) => cl.s0 + (R0 > 1 ? (cl.s1 - cl.s0) * r / (R0 - 1) : 0);
+-      const taper = Array.from({ length: R0 }, (_, r) => he.at(side === 0 ? 0 : 1, sAt(r))), ease = taper.map((h, r) => h * (lane && lane.side === tag ? padEase(sAt(r), lane) : 1)), scale = taper.map((_, r) => hullScaleAt(he, tz, sAt(r)));
++      const taper = Array.from({ length: R0 }, (_, r) => he.at(side === 0 ? 0 : 1, sAt(r))), ease = taper.map((h, r) => h * (lane && lane.side === tag ? padEase(sAt(r), lane) : 1)), scale = taper.map((_, r) => hullScaleAt(he, tz, sAt(r), cz));
+       const ap = apronOf(m, K, side, { widthM, slopeDeg, ease: ease.some((x) => x < 1) ? ease : null, taper: taper.some((x) => x < 1) ? taper : null, closeWall: widthM > 0, scale: scale.some((x) => x !== 1) ? scale : null, mid }, { top: `${prefix}${APRON_TAG}_${rest}_${tag}`, side: `${SIDE_PREFIX}_${rest}_${tag}` });
+       if (!ap) continue;
+       if (roadMat === null) roadMat = m.material;
+@@ -562,7 +564,7 @@ function withApron(scene, mesh, segments, opts = {}) {
+     const ps = pitSkins(scene, mesh, lane.mesh, lane, skinMat);
+     add.push(...ps.add); replaced = ps.replace;
+     // the outline's rows at a join take the join's normal too, so its join ends where every other skin there does
+-    const ol0 = outlineRows(toOutline, lane.mesh, lane), ol = ol0 && ol0.map((q) => { const nj = ps.joinNormal(q.E); return nj ? { ...q, NE: nj, atJoin: true } : q.lane || q.end ? q : { ...q, hull: q.hullSkin !== undefined ? q.hullSkin : (UNDERSKIN_OFFSET_M + (hullDepth(q.rim) - UNDERSKIN_OFFSET_M) * he.at(lane.side === 'R' ? 0 : 1, q.s) * padEase(q.s, lane)) * hullScaleAt(he, tz, q.s) }; });
++    const ol0 = outlineRows(toOutline, lane.mesh, lane), ol = ol0 && ol0.map((q) => { const nj = ps.joinNormal(q.E); return nj ? { ...q, NE: nj, atJoin: true } : q.lane || q.end ? q : { ...q, hull: q.hullSkin !== undefined ? q.hullSkin : (UNDERSKIN_OFFSET_M + (hullDepth(q.rim) - UNDERSKIN_OFFSET_M) * he.at(lane.side === 'R' ? 0 : 1, q.s) * padEase(q.s, lane)) * hullScaleAt(he, tz, q.s, cz) }; });
+     if (ol) {
+       const tag = `PIT_${lane.side}`, name = (p) => `${p}_${tag}`;
+       const out = outlineMeshes(ol, widthM, slopeDeg, { physics: `1ROAD_${APRON_TAG}_${tag}`, side: name(SIDE_PREFIX) });
+diff --git a/src/export/fromwords.js b/src/export/fromwords.js
+index 03e3afb..482c7ac 100644
+--- a/src/export/fromwords.js
++++ b/src/export/fromwords.js
+@@ -313,7 +313,8 @@ function buildFromSegments(segs, meta = {}, opts = {}) {
+   // side over the lane's span, where the lane and its infill join the road
+   const laneSpan = pit && doc.pitLane ? { side: doc.pitLane.side, s0: pit.lane.joins.leave.s, s1: pit.lane.joins.rejoin.s, mesh: pit.mesh } : null;   // mesh: the lane's own, so the apron runs round it as one outline (apron.js outlineRows, D593)
+   let aproned;
+-  try { aproned = withApron(withUnderskin(boxed, mesh, segs), mesh, segs, { widthM: o.edgeApronM === undefined ? APRON_WIDTH_M : o.edgeApronM, lane: laneSpan }); } catch (e) { throw new ExportError('BAD_OPTION', e.message); }
++  try { aproned = withApron(withUnderskin(boxed, mesh, segs, { clear: o.hullClear !== false }), mesh, segs, { widthM: o.edgeApronM === undefined ? APRON_WIDTH_M : o.edgeApronM, lane: laneSpan, clear: o.hullClear !== false }); } catch (e) { throw new ExportError('BAD_OPTION', e.message); }
++  // where another pass runs under the hull it comes up clear of it (underskin.js clearanceZone); `hullClear: false` keeps it as deep, for a before/after comparison only
+   // the hull's bottom redrawn light (src/export/lighthull.js): drawn only, every physics node as it was; `lightHull: false` keeps the full skin, for a before/after comparison only
+   if (o.lightHull !== false) aproned = withLightHull(aproned, mesh, segs);
+   const scene = withGripKeys(withCatch(aproned, mesh, segs, catchMode), mesh, segs);
+diff --git a/src/export/underskin.js b/src/export/underskin.js
+index 4c4e412..3ed31b4 100644
+--- a/src/export/underskin.js
++++ b/src/export/underskin.js
+@@ -381,20 +381,184 @@ function twistZone(kids, mesh, segments) {
+ /**
+  * The hull's depth scale at main s: the twisted zone's (twistZone `at`), but never so thin that a plank's tip hangs below the bottom: where an apron runs (hullEase's
+  * share of the default plank, as apron.js tapers it) the hull keeps HULL_TWIST_CLEAR_M under that plank's drop. A wall's side has no plank (share 0), so there the
+- * zone's full thinning holds. Outside the zone, exactly 1. Shared by the skin (withUnderskin) and every edge piece that meets it (apron.js).
++ * zone's full thinning holds. Outside the zone, exactly 1. Then the clearance zone's (clearanceZone `at`, `cz`), where it is less. Shared by the skin
++ * (withUnderskin) and every edge piece that meets it (apron.js).
+  */
+ const HULL_TWIST_CLEAR_M = 0.4;
+-function hullScaleAt(he, tz, s) {
+-  const t = tz.at(s); if (t === 1) return 1;
++function hullScaleAt(he, tz, s, cz = null) {
++  const c = cz ? cz.at(s) : 1, t = tz.at(s); if (t === 1) return c;
+   const drop = HULL_PLANK_DROP * Math.max(he.at(0, s), he.at(1, s));
+-  return Math.max(t, Math.min(1, (drop + HULL_TWIST_CLEAR_M) / UNDERSKIN_OFFSET_M));
++  return Math.min(c, Math.max(t, Math.min(1, (drop + HULL_TWIST_CLEAR_M) / UNDERSKIN_OFFSET_M)));
+ }
+ 
+-function withUnderskin(scene, mesh, segments) {
++/**
++ * THE CLEARANCE ZONE (D617: on his ELYSIUM, where one piece's edge passes over the next lap's apron, the hull under that edge hung 2 to 3 m deep, hullDepth, and came
++ * down through the apron below by up to 1.0 m along 6.6 m: drawn only, so a car passes through it, and the eye sees the hull stand up out of the road beside it).
++ * Where another PASS of the track (a station more than HULL_PASS_M away along the road, both ways round a closed lap: src/geom/bvh.js's same pass) runs under the
++ * hull, the hull comes up so that it keeps HULL_CLEAR_M off that pass's road and its edge apron: the whole row's depth scaled by one factor, the way the twisted
++ * zone thins it, so the bottom keeps its one curve from plank tip to plank tip; and the factor eases back to 1 over HULL_CLEAR_EASE_M of road either side
++ * (smoothstep), so the bottom has no step along the road either. It never comes up so far that the hull's edge, under a plank, rises within HULL_TWIST_CLEAR_M of
++ * that plank's tip (the run from the tip into the skin would turn up): a pass that close is not cleared, and the final-scene check says so (finalscene.js, `through`).
++ * Read from the road cells themselves (`kids`, in each cell's frame, placed by its node's matrix) and, for the other pass's apron, its plank as apron.js lays it by
++ * default (HULL_PLANK_W out across the section, HULL_PLANK_DROP down; a wall side, rim HULL_WALL_DEG or more, has none). Each kept skin column's hang is cast from the
++ * road vertex, along skinDir, as far as its depth and HULL_CLEAR_M; the row's factor is the least (hit − HULL_CLEAR_M) / depth over its columns. Only rows whose
++ * cell's box comes within reach of another pass's are cast. On a road with no pass over another, `at` is 1 everywhere and nothing changes.
++ * Returns { points (the rows that must come up: { s, v }), at(s) }.
++ */
++const HULL_CLEAR_M = 0.15, HULL_CLEAR_EASE_M = 30, HULL_PASS_M = 25, RUN_SHARES = [1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6];
++function clearanceZone(kids, mesh, segments) {
++  const st = mesh && mesh._state, none = { points: [], at: () => 1 };
++  if (!st) return none;
++  const rings = ringCells(mesh, segments), he = hullEase(mesh, segments), tz = twistZone(kids, mesh, segments);
++  const L = mesh.cells.reduce((a, c) => Math.max(a, c.s1), 0), closed = mesh.cells.some((c) => c.seam && c.piece === 0);
++  const apart = (a, b) => { const d = Math.abs(a - b); return (closed ? Math.min(d, L - d) : d) > HULL_PASS_M; };
++  const world = (M, p) => [p[0] * M[0] + p[1] * M[4] + p[2] * M[8] + M[12], p[0] * M[1] + p[1] * M[5] + p[2] * M[9] + M[13], p[0] * M[2] + p[1] * M[6] + p[2] * M[10] + M[14]];
++  const turn = (M, v) => [v[0] * M[0] + v[1] * M[4] + v[2] * M[8], v[0] * M[1] + v[1] * M[5] + v[2] * M[9], v[0] * M[2] + v[1] * M[6] + v[2] * M[10]];
++  // the core grid cells: each one's road in world space, its rows, and its box
++  const cells = [];
++  mesh.cells.forEach((cell, k) => {
++    const seg = segments[cell.piece], pc = st.pieces[cell.piece], node = kids[k], m = node && node.children && node.children[0];
++    if (cell.seam || !seg || seg.word !== 'core' || !pc || !m || !(pc.K >= 3)) return;
++    const K = pc.K, R = m.positions.length / 3 / K, M = node.matrix, W = new Float64Array(m.positions.length), lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
++    for (let i = 0; i < m.positions.length; i += 3) { const w = world(M, [m.positions[i], m.positions[i + 1], m.positions[i + 2]]); for (let a = 0; a < 3; a++) { W[i + a] = w[a]; lo[a] = Math.min(lo[a], w[a]); hi[a] = Math.max(hi[a], w[a]); } }
++    cells.push({ k, m, K, R, M, W, lo, hi, s0: cell.s0, s1: cell.s1, ring: rings.has(k), mid: centreColumn(pc) });
++  });
++  // the triangles another pass offers: its road, and its plank (two triangles a row span, each side that is not a wall), filed in REACH cubes
++  const REACH = 8, reach = HULL_EDGE_MAX_M + HULL_CLEAR_M + 1, cube = (p) => p.map((x) => Math.floor(x / REACH)), grid = new Map(), tris = [];
++  const file = (t, s) => { const id = tris.push({ t, s }) - 1, lo = cube([0, 1, 2].map((a) => Math.min(t[0][a], t[1][a], t[2][a]))), hi = cube([0, 1, 2].map((a) => Math.max(t[0][a], t[1][a], t[2][a])));
++    for (let x = lo[0]; x <= hi[0]; x++) for (let y = lo[1]; y <= hi[1]; y++) for (let z = lo[2]; z <= hi[2]; z++) { const key = `${x},${y},${z}`; let l = grid.get(key); if (!l) grid.set(key, (l = [])); l.push(id); } };
++  // first, which cells come within reach of another pass's box at all (most of a lap: none)
++  const boxes = new Map(), near = new Set();
++  cells.forEach((c, i) => { const lo = cube(c.lo.map((x) => x - reach - HULL_PLANK_W)), hi = cube(c.hi.map((x) => x + reach + HULL_PLANK_W));
++    for (let x = lo[0]; x <= hi[0]; x++) for (let y = lo[1]; y <= hi[1]; y++) for (let z = lo[2]; z <= hi[2]; z++) { const key = `${x},${y},${z}`; let l = boxes.get(key); if (!l) boxes.set(key, (l = [])); l.push(i); } });
++  for (const l of boxes.values()) for (let a = 0; a < l.length; a++) for (let b = a + 1; b < l.length; b++) {
++    const A = cells[l[a]], B = cells[l[b]];
++    if (!apart((A.s0 + A.s1) / 2, (B.s0 + B.s1) / 2)) continue;
++    if ([0, 1, 2].every((x) => A.lo[x] - reach - HULL_PLANK_W <= B.hi[x] && B.lo[x] - reach - HULL_PLANK_W <= A.hi[x])) { near.add(l[a]); near.add(l[b]); }
++  }
++  if (process.env.DEBUG617) console.log("cz cells", cells.length, "near", near.size, "L", L, "closed", closed);
++  if (!near.size) return none;
++  for (const i of near) {
++    const c = cells[i], P = c.W, at = (r, k) => [P[(r * c.K + k) * 3], P[(r * c.K + k) * 3 + 1], P[(r * c.K + k) * 3 + 2]], s = (c.s0 + c.s1) / 2;
++    for (let r = 0; r + 1 < c.R; r++) for (let k = 0; k + 1 < c.K; k++) { const a = at(r, k), b = at(r, k + 1), d = at(r + 1, k), e = at(r + 1, k + 1); file([a, b, d], s); file([b, e, d], s); }
++    if (c.ring) continue;
++    const tips = [];
++    for (let r = 0; r < c.R; r++) {
++      const e = rowEdges(c.m.positions, c.m.normals, r * c.K, c.K, c.mid), up = sectionUp(c.m.normals, r * c.K, c.K, c.mid);
++      tips.push(e.map(({ E, X, rim }, j) => (rim >= HULL_WALL_DEG ? null : [at(r, j === 0 ? 0 : c.K - 1), world(c.M, [E[0] + HULL_PLANK_W * X[0] - HULL_PLANK_DROP * up[0], E[1] + HULL_PLANK_W * X[1] - HULL_PLANK_DROP * up[1], E[2] + HULL_PLANK_W * X[2] - HULL_PLANK_DROP * up[2]])])));
++    }
++    for (let r = 0; r + 1 < c.R; r++) for (let j = 0; j < 2; j++) { const p = tips[r][j], q = tips[r + 1][j]; if (p && q) { file([p[0], p[1], q[0]], s); file([p[1], q[1], q[0]], s); } }
++  }
++  const sub = sub3, crs = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
++  const cast = (o, d, len, s) => {   // the nearest hit of another pass's triangle along o + t d, 0 < t <= len
++    let best = Infinity; const seen = new Set();
++    for (let u = 0; u <= len + REACH; u += REACH / 2) {
++      const q = [0, 1, 2].map((a) => o[a] + d[a] * Math.min(u, len)), l = grid.get(cube(q).join(','));
++      if (l) for (const id of l) {
++        if (seen.has(id)) continue; seen.add(id);
++        const T = tris[id]; if (!apart(T.s, s)) continue;
++        const [a, b, c] = T.t, e1 = sub(b, a), e2 = sub(c, a), p = crs(d, e2), det = dot3(e1, p); if (Math.abs(det) < 1e-12) continue;
++        const tv = sub(o, a), uu = dot3(tv, p) / det; if (uu < 0 || uu > 1) continue;
++        const qq = crs(tv, e1), vv = dot3(d, qq) / det; if (vv < 0 || uu + vv > 1) continue;
++        const t = dot3(e2, qq) / det; if (t > 0 && t <= len && t < best) best = t;
++      }
++      if (best <= u) break;
++    }
++    return best;
++  };
++  const meets = (p, q, t) => {   // the segment p-q crosses the triangle t (its ends excluded)
++    const d = sub(q, p), e1 = sub(t[1], t[0]), e2 = sub(t[2], t[0]), h = crs(d, e2), a = dot3(e1, h); if (Math.abs(a) < 1e-12) return false;
++    const u = dot3(sub(p, t[0]), h) / a; if (u < 0 || u > 1) return false; const w = crs(sub(p, t[0]), e1), v = dot3(d, w) / a; if (v < 0 || u + v > 1) return false;
++    const x = dot3(e2, w) / a; return x > 1e-6 && x < 1 - 1e-6;
++  };
++  // each near cell: the factor its hull must come up by (its rows' depths are the twisted zone's already; the factor is the whole hull's, as hullScaleAt's). With the
++  // hull scaled by f, it is CLEAR when every kept skin column's hang, and every point and span of the hull's run under each plank (apron.js apronOf, the very run the
++  // export draws, at that depth), keeps HULL_CLEAR_M off another pass: a run point is cast that far down its row's section up, a span along itself. f is found by
++  // bisection between 1 and the floor, where each side's edge stays HULL_TWIST_CLEAR_M under its plank's tip (by its share, hullEase), as hullScaleAt keeps it for the
++  // twisted zone. A cell not clear even at the floor keeps the floor: a pass that close is the final-scene check's to say
++  if (process.env.DEBUG617) { const H = [10.6, 5.1, 285.1]; const nearT = tris.filter((T) => T.t.some((p) => Math.hypot(p[0] - H[0], p[1] - H[1], p[2] - H[2]) < 1.5)); console.log("cz filed near hit", nearT.length, nearT.slice(0, 4).map((T) => T.s.toFixed(0) + ":" + T.t.map((p) => p.map((x) => x.toFixed(2)).join(",")).join(" | ")).join(" || ")); }
++  const { apronOf } = require('./apron.js');   // here, not at the top: apron.js requires this module
++  const points = [];
++  for (const i of near) {
++    const c = cells[i], N = c.m.normals, cols = skinColumns(c.K);
++    if (c.ring) continue;   // a closed ring keeps the plain depth all round and has no plank; it is not lifted here
++    const sOf = (r) => c.s0 + (c.R > 1 ? ((c.s1 - c.s0) * r) / (c.R - 1) : 0), rows = [];
++    for (let r = 0; r < c.R; r++) {
++      const s = sOf(r), keep = [he.at(0, s), he.at(1, s)], scale = hullScaleAt(he, tz, s), dep = rowDepths(c.m.positions, N, r * c.K, c.K, true, keep, scale, c.mid), up = sectionUp(N, r * c.K, c.K, c.mid);
++      const hangs = cols.map((k) => ({ k, o: [c.W[(r * c.K + k) * 3], c.W[(r * c.K + k) * 3 + 1], c.W[(r * c.K + k) * 3 + 2]], d: turn(c.M, skinDir([N[(r * c.K + k) * 3], N[(r * c.K + k) * 3 + 1], N[(r * c.K + k) * 3 + 2]], up)).map((x) => -x) }));
++      rows.push({ s, keep, scale, dep, upW: turn(c.M, up), hangs, floor: Math.max(...[0, c.K - 1].map((k, j) => (HULL_PLANK_DROP * keep[j] + HULL_TWIST_CLEAR_M) / dep[k])) });
++    }
++    const runs = (f) => [0, 1].map((side) => apronOf(c.m, c.K, side, { taper: rows.map((q) => q.keep[side]), scale: rows.map((q) => q.scale * f), mid: c.mid }, { top: 'top', side: 'run' }));
++    // the hull's own triangles at f, HULL_CLEAR_M further down: the skin's (its kept columns, row to row, as skinOf lays them) and each run's (apron.js), each met
++    // against the other pass's triangles near it (a ray from the skin's columns missed the thin tip of an apron poking up between them)
++    const hits = (t, s) => {
++      const lo = cube([0, 1, 2].map((a) => Math.min(t[0][a], t[1][a], t[2][a]))), hi = cube([0, 1, 2].map((a) => Math.max(t[0][a], t[1][a], t[2][a])));
++      for (let x = lo[0]; x <= hi[0]; x++) for (let y = lo[1]; y <= hi[1]; y++) for (let z = lo[2]; z <= hi[2]; z++) for (const id of grid.get(`${x},${y},${z}`) || []) {
++        const T = tris[id]; if (!apart(T.s, s)) continue;
++        for (const [i, j] of [[0, 1], [1, 2], [2, 0]]) if (meets(t[i], t[j], T.t) || meets(T.t[i], T.t[j], t)) return true;
++      }
++      return false;
++    };
++    // a hull at f is scored by how many of its triangles meet another pass, and whether its run under a plank FOLDS (turns past 90° from one span to the next, or
++    // into the skin's first span): the run from the plank's tip to a skin hung too shallow doubles back, a 180° jag in the outline (his ELYSIUM at the floor alone)
++    const score = (f) => {
++      let n = 0, fold = false;
++      const skin = rows.map((q) => q.hangs.map((h) => [0, 1, 2].map((a) => h.o[a] + h.d[a] * (q.dep[h.k] * f + HULL_CLEAR_M))));
++      for (let r = 0; r + 1 < c.R; r++) for (let j = 0; j + 1 < cols.length; j++) {
++        const A = skin[r][j], B = skin[r][j + 1], C = skin[r + 1][j], D = skin[r + 1][j + 1], s = rows[r].s;
++        if (hits([A, B, C], s)) n++; if (hits([B, D, C], s)) n++;
++      }
++      runs(f).forEach((ap, side) => {
++        if (!ap || !ap.side || ap.wall) return;
++        const P = ap.side.positions, m = P.length / 3 / c.R, raw = (r, j) => world(c.M, [P[(r * m + j) * 3], P[(r * m + j) * 3 + 1], P[(r * m + j) * 3 + 2]]);
++        const pt = (r, j) => { const w = raw(r, j), u = rows[r].upW; return [0, 1, 2].map((x) => w[x] - u[x] * HULL_CLEAR_M); };
++        for (let r = 0; r + 1 < c.R; r++) for (let j = 0; j + 1 < m; j++) {
++          const A = pt(r, j), B = pt(r, j + 1), C = pt(r + 1, j), D = pt(r + 1, j + 1), s = rows[r].s;
++          if (hits([A, B, C], s)) n++; if (hits([B, D, C], s)) n++;
++        }
++        for (let r = 0; r < c.R && !fold; r++) {
++          const line = []; for (let j = 0; j < m; j++) line.push(raw(r, j));
++          const hj = rows[r].hangs, inner = side === 0 ? hj[1] : hj[hj.length - 2], q = rows[r];
++          line.push([0, 1, 2].map((x) => inner.o[x] + inner.d[x] * q.dep[inner.k] * f));   // the skin's first span in from the run's end
++          for (let j = 0; j + 2 < line.length; j++) { const u = sub3(line[j + 1], line[j]), v = sub3(line[j + 2], line[j + 1]); if (dot3(u, v) < 0) { fold = true; break; } }
++        }
++      });
++      return { n, fold };
++    };
++    const at1 = score(1);
++    if (at1.n === 0) continue;
++    const floor = Math.min(1, Math.max(...rows.map((q) => q.floor)));
++    let f = 1;
++    const fl = score(floor);
++    if (fl.n === 0 && !fl.fold) { let lo = floor, hi = 1; for (let it = 0; it < 12; it++) { const mid = (lo + hi) / 2, sc = score(mid); if (sc.n === 0 && !sc.fold) lo = mid; else hi = mid; } f = lo; }
++    else {
++      // not clear at the floor: the factor, from 1 down to the floor in twentieths, that leaves fewest crossings without folding (the deeper of equals); 1 if none is fewer
++      let best = at1.n;
++      for (let g = 0.95; g >= floor - 1e-9; g -= 0.05) { const sc = score(g); if (!sc.fold && sc.n < best) { best = sc.n; f = g; } }
++    }
++    if (process.env.DEBUG617) console.log("cz cell", c.k, "s", c.s0.toFixed(0), "at 1", at1.n, "floor", floor.toFixed(3), JSON.stringify(fl), "f", f.toFixed(3));
++    if (!(f < 1)) continue;
++    for (const q of rows) points.push({ s: q.s, v: q.scale * f });
++  }
++  const pts = points.sort((a, b) => a.s - b.s);
++  if (process.env.DEBUG617) console.log("cz points", pts.length, JSON.stringify(pts.slice(0, 5)));
++  if (!pts.length) return none;
++  const ease = (x) => { const t = Math.min(1, Math.max(0, x)); return t * t * (3 - 2 * t); }, gap = (a, b) => { const d = Math.abs(a - b); return closed ? Math.min(d, L - d) : d; };
++  return {
++    points: pts,
++    at(s) { let out = 1; for (const p of pts) { const d = gap(s, p.s); if (d < HULL_CLEAR_EASE_M) out = Math.min(out, p.v + (1 - p.v) * ease(d / HULL_CLEAR_EASE_M)); } return out; },
++  };
++}
++const zones = new WeakMap();
++/** The clearance zone of a mesh, made once (the skin and the apron both read it). */
++function clearanceOf(kids, mesh, segments) { if (!zones.has(mesh)) zones.set(mesh, clearanceZone(kids, mesh, segments)); return zones.get(mesh); }
++
++// `clear` (default true): the clearance zone (clearanceZone); false keeps the hull as deep as it was over another pass, for a before/after comparison only
++function withUnderskin(scene, mesh, segments, { clear = true } = {}) {
+   if (!mesh || !mesh.cells || !mesh.scene) return scene;
+   const skinned = skinCells(mesh, segments);
+   if (!skinned.size) return scene;
+-  const rings = ringCells(mesh, segments), kids = scene.root.children, orig = mesh.scene.root.children, he = hullEase(mesh, segments), tz = twistZone(kids, mesh, segments);
++  const rings = ringCells(mesh, segments), kids = scene.root.children, orig = mesh.scene.root.children, he = hullEase(mesh, segments), tz = twistZone(kids, mesh, segments), cz = clear ? clearanceOf(orig, mesh, segments) : null;
+   // the grid cells beside a seam: the piece before's last cell and the seam's own piece's first (by s along the piece: the cells are not listed in road order there)
+   const firstOf = new Map(), lastOf = new Map(), np = mesh._state.pieces.length;
+   mesh.cells.forEach((c, j) => { if (c.seam) return; if (!firstOf.has(c.piece) || c.s0 < mesh.cells[firstOf.get(c.piece)].s0) firstOf.set(c.piece, j); if (!lastOf.has(c.piece) || c.s1 > mesh.cells[lastOf.get(c.piece)].s1) lastOf.set(c.piece, j); });
+@@ -420,7 +584,7 @@ function withUnderskin(scene, mesh, segments) {
+       seamKa = before.K; mids = { a: centreColumn(before), b: centreColumn(own) };
+     }
+     // each row's share of the hull's deepening on either side (hullEase), by its main s: a grid cell's rows evenly from s0 to s1, a seam's two rows at its ends
+-    const Rr = cell.seam ? 2 : m.positions.length / 3 / pcs[cell.piece].K, keep = (r) => { const sr = cell.s0 + (Rr > 1 ? (cell.s1 - cell.s0) * r / (Rr - 1) : 0); return [he.at(0, sr), he.at(1, sr), hullScaleAt(he, tz, sr)]; };   // and the hull's depth scale (twistZone, hullScaleAt)
++    const Rr = cell.seam ? 2 : m.positions.length / 3 / pcs[cell.piece].K, keep = (r) => { const sr = cell.s0 + (Rr > 1 ? (cell.s1 - cell.s0) * r / (Rr - 1) : 0); return [he.at(0, sr), he.at(1, sr), hullScaleAt(he, tz, sr, cz)]; };   // and the hull's depth scale (twistZone, clearanceZone, hullScaleAt)
+     // a grid cell beside a seam keeps every column, so its row there is the seam's row vertex for vertex (decimated, its chords stood up to 3 cm off a tube's ring, a
+     // crack of sky at every joint: the tube test, 301 open edges each); a seam whose zipper was all sliver has no skin of its own
+     const full = cell.seam || !seamRows.has(k) ? null : seamRows.get(k).flatMap((w) => (w === 'all' ? Array.from({ length: Rr }, (_, r) => r) : [w === 'first' ? 0 : Rr - 1]));
+@@ -432,4 +596,4 @@ function withUnderskin(scene, mesh, segments) {
+   return { ...scene, materials, root: { ...scene.root, children: [...children, ...skins] } };
+ }
+ 
+-module.exports = { withUnderskin, skinCells, ringCells, skinOf, skinDir, sectionUp, centreColumn, colAt, rowPointIn, RUN_ARRIVE_M, twistZone, hullScaleAt, HULL_TWIST_DEPTH, hullDepth, hullEase, HULL_ALONG_M, rowDepths, skinColumns, HULL_EDGE_SPAN_M, darkOf, UNDERSKIN_OFFSET_M, TUBE_RING_AMBIENT, SKIN_AMBIENT, SKIN_DIFFUSE, SKIN_COLUMNS };
++module.exports = { withUnderskin, skinCells, ringCells, skinOf, skinDir, sectionUp, centreColumn, colAt, rowPointIn, RUN_ARRIVE_M, twistZone, hullScaleAt, clearanceZone, clearanceOf, HULL_CLEAR_M, HULL_CLEAR_EASE_M, HULL_PASS_M, HULL_TWIST_DEPTH, hullDepth, hullEase, HULL_ALONG_M, rowDepths, skinColumns, HULL_EDGE_SPAN_M, darkOf, UNDERSKIN_OFFSET_M, TUBE_RING_AMBIENT, SKIN_AMBIENT, SKIN_DIFFUSE, SKIN_COLUMNS };

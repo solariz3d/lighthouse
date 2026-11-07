@@ -1,0 +1,36 @@
+ℹ tests 7
+ℹ pass 4
+ℹ fail 3
+ℹ duration_ms 38219.0249
+  +   'abrupt-close: the skin bends 37.0° across the road at s 98 m, u -14.1, v 7.6, the road at most 12.5°',
+  +   'abrupt-open: the skin bends 29.1° across the road at s 320 m, u 13.9, v 10.3, the road at most 5.2°'
+  +   'abrupt-close, road: 84 open edge(s), the first at s 94 m, u -17.3, v 8.5',
+  +   'abrupt-open, road: 26 open edge(s), the first at s 300 m, u 0.0, v 12.7',
+  +   'gradual-close, road: 123 open edge(s), the first at s 556 m, u -16.7, v 9.3',
+  +   'bend-in, road: 1 open edge(s), the first at s 680 m, u -0.0, v 12.7',
+  +   'gradual-open, road: 124 open edge(s), the first at s 1780 m, u -0.0, v 12.7',
+  +   'abrupt-close, skin: 98 open edge(s), the first at s 94 m, u -19.1, v 7.2',
+  +   'closed-run, skin: 301 open edge(s), the first at s 180 m, u -7.5, v 4.0',
+  +   'abrupt-open, skin: 341 open edge(s), the first at s 300 m, u -7.5, v 4.1',
+  +   'gradual-close, skin: 137 open edge(s), the first at s 556 m, u -18.5, v 8.1',
+  +   'bend-in, skin: 302 open edge(s), the first at s 680 m, u -7.5, v 4.0',
+  +   'gradual-open, skin: 439 open edge(s), the first at s 1780 m, u -7.5, v 4.1',
+  +   'abrupt-close, apron: 2 open edge(s), the first at s 94 m, u -19.3, v 7.6',
+  +   'abrupt-open, apron: 2 open edge(s), the first at s 326 m, u -16.5, v 9.6',
+  +   'gradual-close, apron: 2 open edge(s), the first at s 556 m, u -18.7, v 8.4',
+  +   'gradual-open, apron: 2 open edge(s), the first at s 1904 m, u -16.7, v 9.3'
+  +   'abrupt-close, skin: 441 sliver(s), the first at s 80 m, u -20.0, v -1.5',
+  +   'closed-run, skin: 561 sliver(s), the first at s 180 m, u -0.0, v 14.2',
+  +   'abrupt-open, skin: 561 sliver(s), the first at s 300 m, u -0.0, v 14.2',
+  +   'road-between, skin: 442 sliver(s), the first at s 420 m, u -20.0, v -1.4',
+  +   'gradual-close, skin: 442 sliver(s), the first at s 480 m, u -20.0, v -1.5',
+  +   'bend-in, skin: 561 sliver(s), the first at s 680 m, u -0.0, v 14.2',
+  +   'gradual-open, skin: 561 sliver(s), the first at s 1780 m, u -0.0, v 14.2',
+  +   'run-out, skin: 441 sliver(s), the first at s 1980 m, u -20.0, v -1.5'
+ok 1 - the fixture is the cases it names, and every case has road and skin in the export (its open cases their apron too)
+not ok 2 - THE JAG: across the road the skin bends no more than the road it hangs under (plus the slack), in every case, the openings included
+not ok 3 - the drawn hull has no open edge: every boundary edge is covered by another (a T-junction), except at the track's two ends
+not ok 4 - the drawn hull has no sliver: no triangle thinner than acready.js SLIVER
+ok 5 - nothing clips: no drawn triangle passes through another (road, skin, apron), outside the triangles that share a vertex
+ok 6 - collision inside: under the car on the centreline everywhere, and all round the closed ring, a ray finds a physics surface
+ok 7 - the AI line runs through every case, on the road

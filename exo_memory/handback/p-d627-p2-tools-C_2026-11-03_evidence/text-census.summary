@@ -1,0 +1,13 @@
+text-census: 313 tracked file(s) carry a raw NUL and read as BINARY to grep —
+flagged paths by extension:
+      1   anywhere reports that a file was skipped.
+      1   they are invisible to `grep -r`, `git grep` and every search this room runs, and nothing
+     12 gz
+      6 ico
+      1 md
+    294 png
+flagged paths that are not image/archive files:
+  they are invisible to `grep -r`, `git grep` and every search this room runs, and nothing
+  anywhere reports that a file was skipped.
+  exo_memory/map/B.md
+      byte 340388 of 436269  (line 1969, col 1)

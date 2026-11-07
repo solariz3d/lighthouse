@@ -1,0 +1,23 @@
+physics meshes same [33m113[39m differ [33m44[39m only old [33m0[39m only new [33m1[39m
+1ROAD_PIT_in_0 b01385e140fb 1da6f244f171 t180b_floor_made-993b5297d4ad20a5-1024/t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_PIT_out_0 d67340fe1913 53f2541a1d56 t180b_floor_made-993b5297d4ad20a5-1024/t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_PIT_fill_0 92ce62f745d9 efb2bc65f8ed t180b_floor_made-993b5297d4ad20a5-1024/t180b_floor_made-993b5297d4ad20a5-1024
+1ROAD_APRON_p1_chunk_0 ec985cde3086 fd056c9013d8 t180b_apron/t180b_apron
+1ROAD_APRON_p1_chunk_1 3b5aa6ee6edb 9025bd2cb6a5 t180b_apron/t180b_apron
+1ROAD_APRON_p1_chunk_2 62c4c83d2781 7df8885fa001 t180b_apron/t180b_apron
+1ROAD_APRON_p2_chunk_3 5a647b836db3 4dbc0ac9b52b t180b_apron/t180b_apron
+1ROAD_APRON_p2_chunk_4 e5b67d5ee59e b6ef3fab73d3 t180b_apron/t180b_apron
+1ROAD_APRON_p2_chunk_5 7769de8fcb20 b1288febcf1d t180b_apron/t180b_apron
+1ROAD_APRON_p3_chunk_6 a1d9a0d551da f56394d6464d t180b_apron/t180b_apron
+1ROAD_APRON_p3_chunk_7 5e2a45a0d343 e9dbb60e6675 t180b_apron/t180b_apron
+1ROAD_APRON_p4_chunk_8 3d39cee0a2b5 1ff95316ed44 t180b_apron/t180b_apron
+1ROAD_APRON_p6_chunk_9 5a11114656d7 cc11a252899b t180b_apron/t180b_apron
+1ROAD_APRON_p6_chunk_10 53c25e47b772 7452cc5497b7 t180b_apron/t180b_apron
+1ROAD_APRON_p7_chunk_11 9d45b53a5249 ffb01595b6ef t180b_apron/t180b_apron
+1ROAD_APRON_p7_chunk_12 7e77155c1d50 4993fbac2f5b t180b_apron/t180b_apron
+1ROAD_APRON_p8_chunk_13 c77189428c62 9e241a8f177a t180b_apron/t180b_apron
+1ROAD_APRON_p8_chunk_14 995b52363cb6 63913202a4dd t180b_apron/t180b_apron
+1ROAD_APRON_p9_chunk_15 2ad2ffef02c8 bc852687cc42 t180b_apron/t180b_apron
+1ROAD_APRON_p15_chunk_16 a92c38a863b2 840495bb1a81 t180b_apron/t180b_apron
+only old: 
+only new: 1ROAD_APRON_PIT_R

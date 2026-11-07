@@ -1,0 +1,23 @@
+ℹ pass 4
+ℹ fail 3
+  +   'abrupt-close: the skin bends 37.0° across the road at s 98 m, u -14.1, v 7.6, the road at most 12.5°',
+  +   'closed-run: the skin bends 180.0° across the road at s 180 m, u -0.0, v 12.9, the road at most 0.0°',
+  +   'abrupt-open: the skin bends 170.7° across the road at s 300 m, u 0.0, v 12.7, the road at most 5.2°',
+  +   'bend-in: the skin bends 179.6° across the road at s 680 m, u -0.0, v 12.9, the road at most 0.8°',
+  +   'gradual-open: the skin bends 179.7° across the road at s 1780 m, u -0.0, v 12.7, the road at most 0.5°'
+  +   'closed-run, skin: 301 open edge(s), the first at s 180 m, u -7.5, v 4.0',
+  +   'abrupt-open, skin: 301 open edge(s), the first at s 300 m, u -7.5, v 4.1',
+  +   'bend-in, skin: 301 open edge(s), the first at s 680 m, u -7.5, v 4.0',
+  +   'gradual-open, skin: 301 open edge(s), the first at s 1780 m, u -7.5, v 4.1'
+  +   'abrupt-close, skin: 441 sliver(s), the first at s 80 m, u -20.0, v -1.5',
+  +   'closed-run, skin: 561 sliver(s), the first at s 180 m, u -0.0, v 14.2',
+  +   'abrupt-open, skin: 561 sliver(s), the first at s 300 m, u -0.0, v 14.2',
+  +   'road-between, skin: 442 sliver(s), the first at s 420 m, u -20.0, v -1.4',
+  +   'gradual-close, skin: 442 sliver(s), the first at s 480 m, u -20.0, v -1.5',
+  +   'bend-in, skin: 561 sliver(s), the first at s 680 m, u -0.0, v 14.2',
+  +   'gradual-open, skin: 561 sliver(s), the first at s 1780 m, u -0.0, v 14.2',
+  +   'run-out, skin: 441 sliver(s), the first at s 1980 m, u -20.0, v -1.5',
+  +   'abrupt-close, apron: 2 sliver(s), the first at s 94 m, u -17.7, v 7.9',
+  +   'abrupt-open, apron: 2 sliver(s), the first at s 326 m, u -16.8, v 9.2',
+  +   'gradual-close, apron: 2 sliver(s), the first at s 556 m, u -16.9, v 9.2',
+  +   'gradual-open, apron: 2 sliver(s), the first at s 1904 m, u -16.8, v 9.2'

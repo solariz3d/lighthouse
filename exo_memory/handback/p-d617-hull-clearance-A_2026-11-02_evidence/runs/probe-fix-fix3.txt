@@ -1,0 +1,14 @@
+cz cells [33m13798[39m near [33m3664[39m L [33m27592.00000000036[39m closed [33mtrue[39m
+cz filed near hit [33m0[39m 
+cz cell [33m11339[39m s 22667 at 1 [33m12[39m floor 0.444 {"n":19,"fold":false} f 1.000
+cz cell [33m11340[39m s 22669 at 1 [33m20[39m floor 0.444 {"n":8,"fold":false} f 0.450
+cz cell [33m11866[39m s 23720 at 1 [33m10[39m floor 0.444 {"n":14,"fold":false} f 1.000
+cz points [33m2[39m [{"s":22669.00000000003,"v":0.4499999999999996},{"s":22671.00000000003,"v":0.4499999999999996}]
+through cell [33m1[39m [33m0[39m [33m71[39m s 282.0 288.0
+through cell [33m2[39m [33m0[39m [33m71[39m s 282.0 288.0
+through cell [33m3[39m [33m0[39m [33m71[39m s 282.0 288.0
+through: cells [33m115798[39m two-pass cells [33m11[39m sEnd [33m27592.00000000036[39m closedLap [33mtrue[39m
+built in 275 s; scene check refuse [33m0[39m warn [33m3[39m
+mesh name classes: #ROAD_p#_body_#_# x13754 | #ROAD_APRON_p#_body_#_L_# x13754 | #ROAD_APRON_p#_body_#_R_# x13348 | UNDERSKIN_p#_body_#_# x905 | #ROAD_CATCH_p#_body_#_# x460 | #ROAD_p#_body_# x44 | UNDERSKIN_p#_body_# x44 | #ROAD_APRON_p#_body_#_R x44 | #ROAD_APRON_p#_body_#_L x44 | #ROAD_CATCH_p#_body_# x6 | #ROAD_seam_p#_body x5 | #ROAD_PIT_body_# x5 | UNDERSKIN_PIT_body_# x5 | PAINT_GRID_# x4 | PAINT_PIT_# x2 | PAINT_START_LINE x1 | #ROAD_PIT_in_# x1 | #ROAD_PIT_out_# x1 | #ROAD_PIT_fill_# x1 | UNDERSKIN_PIT_in_# x1 | UNDERSKIN_PIT_out_# x1 | UNDERSKIN_PIT_fill_# x1 | #ROAD_APRON_PIT_R x1 | APRONSIDE_PIT_R x1
+drawn x other-piece physics intersecting pairs: [33m48[39m {"UNDERSKIN_body p38 x 1ROAD_APRON p40":27,"UNDERSKIN_body p38 x 1ROAD p40":8,"UNDERSKIN_body p38 x 1ROAD_APRON p41":2,"UNDERSKIN_body p40 x 1ROAD_APRON p38":11}
+extent x/y/z [["34.31","41.71"],["26.30","27.77"],["-473.92","-471.59"]]

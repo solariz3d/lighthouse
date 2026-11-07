@@ -1,0 +1,6 @@
+wv-stub open: 55 samples; sum max 963; page max 549; check worker max 498; page+check max 958; export worker max 0
+wv-stub install: 219 samples; sum max 1909; page max 563; check worker max 300; page+check max 863; export worker max 1159
+wv-new open: 47 samples; sum max 956; page max 572; check worker max 494; page+check max 952; export worker max 0
+wv-new install: 185 samples; sum max 1876; page max 557; check worker max 300; page+check max 857; export worker max 1106
+wv-old open: 46 samples; sum max 968; page max 568; check worker max 489; page+check max 962; export worker max 0
+wv-old install: 203 samples; sum max 4188; page max 559; check worker max 300; page+check max 859; export worker max 3413

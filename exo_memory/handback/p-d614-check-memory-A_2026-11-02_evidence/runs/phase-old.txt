@@ -1,0 +1,6 @@
+PH begin heap 905 ab 496 
+PH tris heap 2929 ab 496 N 3487592 verts 1746065
+PH edges heap 4470 ab 496 edges 5234332
+PH fold heap 4470 ab 496 bnd 5888
+PH rgrid heap 4499 ab 496 rays 19296 rgrid 44415
+PH steps heap 4499 ab 496 

@@ -1,0 +1,16 @@
+== lap files 10 10
+ changed: t180b_untitled/.t180b-builder.json
+ changed: t180b_untitled/t180b_untitled.kn5
+  meshes 32 32 materials same true
+  moved UNDERSKIN_p1_chunk_0 UNDERSKIN_p1_chunk_1 UNDERSKIN_p3_chunk_2
+  only before UNDERSKIN_p5_chunk_3
+  only after UNDERSKIN_p4_chunk_3
+  non-skin moved/gone/added 0
+== open files 11 11
+ changed: t180b_untitled_test/.t180b-builder.json
+ changed: t180b_untitled_test/t180b_untitled_test.kn5
+  meshes 17 17 materials same true
+  moved UNDERSKIN_p1_chunk_0 UNDERSKIN_p2_chunk_1 UNDERSKIN_p3_chunk_2
+  only before 
+  only after 
+  non-skin moved/gone/added 0

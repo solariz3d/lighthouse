@@ -1,0 +1,29 @@
+✔ CONTROL: the whole of ailine_vertical.test.js passes on an unmutated copy of src/, tools/, app/ and scripts/ (2800.0311ms)
+✔ mutant V1 the line is never cleared (points stay on vertical): applied, and caught by ailine_vertical.test.js (2474.2762ms)
+ℹ V1 the line is never cleared (points stay on vertical): 5 of 8 tests failed
+✔ mutant V2 the bar is 1e-6 (the value that crashed AC), not 1e-4: applied, and caught by ailine_vertical.test.js (2486.1991ms)
+ℹ V2 the bar is 1e-6 (the value that crashed AC), not 1e-4: 1 of 8 tests failed
+✔ mutant V3 the bar is 1e-2 (it moves points of a line AC loads): applied, and caught by ailine_vertical.test.js (2561.3905ms)
+ℹ V3 the bar is 1e-2 (it moves points of a line AC loads): 1 of 8 tests failed
+✔ mutant V4 only the tangent to the next point is read (not across both neighbours): applied, and caught by ailine_vertical.test.js (2377.9737ms)
+ℹ V4 only the tangent to the next point is read (not across both neighbours): 2 of 8 tests failed
+✔ mutant V10 a stretch that stays vertical is not refused (the line is written on it): applied, and caught by ailine_vertical.test.js (2447.3503ms)
+ℹ V10 a stretch that stays vertical is not refused (the line is written on it): 3 of 8 tests failed
+✔ mutant V5 the export does not catch the refusal (it fails instead of finishing): applied, and caught by ailine_vertical.test.js (2347.4447ms)
+ℹ V5 the export does not catch the refusal (it fails instead of finishing): 2 of 8 tests failed
+✔ mutant V6 the export finishes without saying why: applied, and caught by ailine_vertical.test.js (2547.4337ms)
+ℹ V6 the export finishes without saying why: 1 of 8 tests failed
+✔ mutant V7 the folder writes an AI line it does not have: applied, and caught by ailine_vertical.test.js (2552.4398ms)
+ℹ V7 the folder writes an AI line it does not have: 1 of 8 tests failed
+✔ mutant V8 the layout folder lists an AI line it does not have: applied, and caught by ailine_vertical.test.js (2398.9948ms)
+ℹ V8 the layout folder lists an AI line it does not have: 1 of 8 tests failed
+✔ mutant V9 the banner shows the builders' note, not the words: applied, and caught by ailine_vertical.test.js (2430.7779ms)
+ℹ V9 the banner shows the builders' note, not the words: 1 of 8 tests failed
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27475.2496

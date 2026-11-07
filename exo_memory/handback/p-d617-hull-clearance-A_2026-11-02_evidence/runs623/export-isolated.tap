@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: row 1: the export's bytes are b6969da's, a textured lap with a pit lane and an open TEST export
+not ok 1 - row 1: the export's bytes are b6969da's, a textured lap with a pit lane and an open TEST export
+  ---
+  duration_ms: 3767.1322
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-a617c\\app\\test\\export-isolated.test.js:124:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    [32m+ actual[39m [31m- expected[39m
+    
+    [39m  {
+    [32m+[39m   lap: 'sha256 c41cdb114d71bb2c files 10',
+    [31m-[39m   lap: 'sha256 a5eef6d390282bc0 files 10',
+    [39m    open: 'sha256 8c49973d829104e6 files 11'
+    [39m  }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    lap: 'sha256 a5eef6d390282bc0 files 10'
+    open: 'sha256 8c49973d829104e6 files 11'
+  actual:
+    lap: 'sha256 c41cdb114d71bb2c files 10'
+    open: 'sha256 8c49973d829104e6 files 11'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-a617c\app\test\export-isolated.test.js:129:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# Subtest: row 2: through the runner (every message structured-cloned) the textured lap and the open TEST export are the same bytes
+not ok 2 - row 2: through the runner (every message structured-cloned) the textured lap and the open TEST export are the same bytes
+  ---
+  duration_ms: 4296.9611
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-a617c\\app\\test\\export-isolated.test.js:186:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    [32m+ actual[39m [31m- expected[39m
+    
+    [39m  {
+    [32m+[39m   lap: 'sha256 c41cdb114d71bb2c files 10',
+    [31m-[39m   lap: 'sha256 a5eef6d390282bc0 files 10',
+    [39m    open: 'sha256 8c49973d829104e6 files 11'
+    [39m  }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    lap: 'sha256 a5eef6d390282bc0 files 10'
+    open: 'sha256 8c49973d829104e6 files 11'
+  actual:
+    lap: 'sha256 c41cdb114d71bb2c files 10'
+    open: 'sha256 8c49973d829104e6 files 11'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-a617c\app\test\export-isolated.test.js:190:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 2b: a LIFTED lap (a 1 m hill, the offset lift of the core not the identity) gives the same bytes through the runner as on the page
+ok 3 - row 2b: a LIFTED lap (a 1 m hill, the offset lift of the core not the identity) gives the same bytes through the runner as on the page
+  ---
+  duration_ms: 4405.5174
+  type: 'test'
+  ...
+# Subtest: row 3: an export that throws inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+ok 4 - row 3: an export that throws inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+  ---
+  duration_ms: 1565.9569
+  type: 'test'
+  ...
+# Subtest: row 4: an export that dies inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+ok 5 - row 4: an export that dies inside its host building the pit-lane check writes nothing, leaves the AC folder byte-identical, and says the stage
+  ---
+  duration_ms: 2359.4452
+  type: 'test'
+  ...
+# Subtest: row 4b: after a host died, the next export gets a fresh host and writes the same bytes as b6969da's
+not ok 6 - row 4b: after a host died, the next export gets a fresh host and writes the same bytes as b6969da's
+  ---
+  duration_ms: 3913.9333
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-a617c\\app\\test\\export-isolated.test.js:256:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    [32mactual[39m [31mexpected[39m
+    
+    [39m'[39m[39ms[39m[39mh[39m[39ma[39m[39m2[39m[39m5[39m[39m6[39m[39m [39m[32mc[39m[32m4[39m[32m1[39m[32mc[39m[31ma[39m[31m5[39m[31me[39m[31me[39m[31mf[39m[31m6[39m[39md[39m[32mb[39m[32m1[39m[32m1[39m[32m4[39m[32md[39m[32m7[39m[32m1[39m[32mb[39m[32mb[39m[31m3[39m[31m9[39m[31m0[39m[39m2[39m[31m8[39m[31m2[39m[31mb[39m[39mc[39m[31m0[39m[39m [39m[39mf[39m[39mi[39m[39ml[39m[39me[39m[39ms[39m[39m [39m[39m1[39m[39m0[39m[39m'[39m
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'sha256 a5eef6d390282bc0 files 10'
+  actual: 'sha256 c41cdb114d71bb2c files 10'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-a617c\app\test\export-isolated.test.js:264:10)
+    async Test.run (node:internal/test_runner/test:1125:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 5: the runner runs one job at a time; a newer start cancels the older; a stale reply is ignored; cancel replaces the host
+ok 7 - row 5: the runner runs one job at a time; a newer start cancels the older; a stale reply is ignored; cancel replaces the host
+  ---
+  duration_ms: 1.2919
+  type: 'test'
+  ...
+# Subtest: row 6: an export refused inside the host is the same ExportError as on the page, and the host is kept
+ok 8 - row 6: an export refused inside the host is the same ExportError as on the page, and the host is kept
+  ---
+  duration_ms: 777.2773
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 5
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21277.0943

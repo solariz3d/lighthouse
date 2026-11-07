@@ -1,0 +1,20 @@
+note: letters.json is 0d older than panes.json — a letter here may be stale; the id is the fact.
+node:fs:440
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: Cannot create a string longer than 0x1fffffe8 characters
+[90m    at Object.readFileSync (node:fs:440:20)[39m
+    at lastTurn [90m(C:\Users\nname\Desktop\lighthouse\[39mconsonance\tools\pane-status.js:96:20[90m)[39m
+    at Object.<anonymous> [90m(C:\Users\nname\Desktop\lighthouse\[39mconsonance\tools\pane-status.js:129:35[90m)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1812:14)[39m
+[90m    at Object..js (node:internal/modules/cjs/loader:1943:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:1533:32)[39m
+[90m    at Module._load (node:internal/modules/cjs/loader:1335:12)[39m
+[90m    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)[39m
+[90m    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)[39m
+[90m    at node:internal/main/run_main_module:33:47[39m {
+  code: [32m'ERR_STRING_TOO_LONG'[39m
+}
+
+Node.js v24.14.1

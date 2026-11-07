@@ -1,0 +1,29 @@
+  ok   firstNul returns -1 on a clean buffer
+  ok   firstNul returns the byte offset of the FIRST NUL, not the count
+  ok   atOffset gives 1-based line and column
+  ok   atOffset handles a NUL on the first line
+  ok   parseAllow ignores blank lines and comments
+  ok   parseAllow REFUSES a row with no reason — an unexplained exemption is how these rot
+  ok   parseAllow names the LINE NUMBER of a bad row
+  ok   a clean tracked file passes
+  ok   a NUL-bearing TEXT file fails
+  ok   the failure names the file AND the byte offset — not just "something is binary"
+  ok   an ALLOW-LISTED binary passes
+  ok   an UNLISTED binary FAILS rather than silently passing
+  ok   a STALE allow-list entry — a path that is no longer tracked — FAILS
+  ok   a stale entry fails EVEN WHEN every scanned file is clean — it is its own failure
+  ok   an allow-listed file that is CLEAN is reported, and does not fail the run
+  ok   the green line always states how many files are ALLOWED — exempted must not read as fixed
+  ok   a file with two NULs reports the FIRST offset, deterministically
+  ok   the report prints the LIST, not only a count (J's D010 rule)
+  ok   a missing allow file is an EMPTY list, not a crash
+  ok   an unreadable file is a FINDING, not a silent skip
+  ok   a type row "*.png" allows a NUL-bearing file whose header IS a PNG
+  ok   type rows cover .gz and .ico by their own headers
+  ok   a file NAMED .png whose header is not a PNG still FAILS, and the report says why
+  ok   with the images allowed by type, the NUL-bearing text file is the ONLY finding
+  ok   a type row for a type with no known header is REFUSED by the parser
+  ok   a type row that matches NO tracked file is stale and FAILS
+  ok   the green line states how many files a type row allowed — exempted must not read as fixed
+
+  27 passed, 0 failed

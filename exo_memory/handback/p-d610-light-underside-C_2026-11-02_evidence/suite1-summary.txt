@@ -1,0 +1,21 @@
+# tests 4145
+# pass 4105
+# fail 18
+# skipped 21
+# todo 1
+not ok 683 - row 8: a 1,000 m piece with a left edge typed, stretched on an empty track: the page works only on a move (at most 120 work frames a second), p95 within one frame at 144 Hz (6.9 ms)
+not ok 701 - control: the unmutated temp copy passes every export-isolated row
+not ok 714 - the export runs in its own process in a real page: b6969da's bytes, and a real heap out-of-memory there leaves the page drawn
+not ok 715 - row 1: the export's bytes are b6969da's, a textured lap with a pit lane and an open TEST export
+not ok 716 - row 2: through the runner (every message structured-cloned) the textured lap and the open TEST export are the same bytes
+not ok 720 - row 4b: after a host died, the next export gets a fresh host and writes the same bytes as b6969da's
+not ok 1238 - row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms
+not ok 2074 - row 5a (amended D196): against the D196 baseline every fixture renders identically: "0 of 9 differ"
+not ok 2075 - row 5b (D225, /4): each fixture parsed, saved as /4 text and read again renders to the same digests (the round trip), its text is /4 and carries no edge or tube channel (seal E3c)
+not ok 2076 - row 5 CONTROL: the check has teeth: a manifest with one digest altered reads "1 of 9 differ", and a changed fixture file is reported as changed
+not ok 2086 - D593 amendment record: only F1 F2 changed, only their kn5; built now, every mesh node is a93ae51's byte for byte and the only material record changed is t180b_apron's (the road's asphalt
+not ok 2087 - D604 amendment record: only F1 F2 changed, only their kn5; built now, the road, paint and physics planks are the base's byte for byte, only the skins moved (drawn), the joins gone into t
+not ok 3896 - row 1: a closed tube export has an underside skin on every cell: the road's own normal, the plank's drop away from the driver (outward), normals out, castShadows, its own dark material
+not ok 3897 - row 2: on an OPEN road the skin is BELOW it: the road keeps its light material, the skin is under every cell, and on the flat start straight it is the plank's drop down
+not ok 3901 - row 6: the skin is light: about SKIN_COLUMNS vertices across, a fraction of the road's (under 60% on an open road, under 15% on a tube)
+not ok 3905 - control: the unmutated copy passes every row of underskin.test.js and export_apron.test.js

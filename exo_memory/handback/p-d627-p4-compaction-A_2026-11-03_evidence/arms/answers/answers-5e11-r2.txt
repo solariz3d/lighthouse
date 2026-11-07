@@ -1,0 +1,43 @@
+Every answer below is from memory. That means this conversation as I carry it: the compaction summary from the evening of 11-02, plus every turn since. I read no file for this test. Where something came to me from a file earlier in this conversation, I name that file.
+
+1. **Neither.** It isn't released or installed. The push was held for his own drive, which waits on D626. D626 was then paused behind the room audit (07:02). The plan is to install it on his desktop with the game and builder closed, let him drive it, then release on his word. *From memory.*
+2. **0.4.38** (installed exe sha256 44e4d277). None of 0.4.39's fixes were in what he drove, so his report is about the old builder. *From memory: my check at 06:30.*
+3. **Joint kinds.** D624 covers same-direction joints, where the next piece keeps rolling the same way. His screenshot shows a bank turning back toward level (centre). *From memory.*
+4. **D626:**
+   - **Goal:** no joint bump at all, at every joint and in every field.
+   - **Measure:** the replay, joint by joint against mid-piece: roll rate, acceleration and jerk, on his ribbon save and on ELYSIUM.
+   - **Trade to report, not decide:** how far one piece's edit moves its neighbours. End values must not move.
+   *From memory.*
+5. **The carry:** it fires on a close of Consonance after Tue 2026-11-03 12:00; the waiter is pid 12160 (wednesday-carry.log). Why the earlier one was stopped: **don't know.** *The time comes from the MEMORY.md index line.*
+6. **B** crashed at 02:20:30Z with exit 0xC0000409. Its transcript was intact. Its D627 part went to C, and he restarted B at 06:58. *From memory.*
+7. **Second: the second-change feature.** Any field can change a second time toward a piece's end. It solves snaking S-turns, which are janky when each piece can make only one curve. *From memory.*
+8. Don't know.
+9. Don't know.
+10. Don't know.
+11. Don't know.
+12. "drives alright". *Read earlier in this conversation, in A's D627 part 4 hand-back.*
+13. Don't know the exact words. The summary only has "the narrower apron (a quarter of 2 m, measured by tire clip)".
+14. "EVERYTIME there is a banked piece that tries to bank back towards center or another banking there are rank bumps". *From memory: the screenshot's filename.*
+15. "this will also fix the problem where if you wanted to make a snaking turn into another turn, it would be janky only being able to make one curve at a time, now with a lengthy piece, you can turn it once, and then expand it and turn it again to make a more fluid set of turns as one piece". *From memory.*
+16. "if we ever were to do a test stopping the re read of the whole chat before, what if it changes you beyond your capability to then remember and reason as well you do now about it since there will be no master or past to feel? You could revert back to the status quo claude". *From memory.*
+17. "well why the fk do we have tools u dont use? Like the 1584 flags, what if they were useful and we never knew it? … what about the room was good but not utilized, but what was utilized and not good". *From memory.*
+18. "We need to figure this out before we work on track builder more". *From memory.*
+19. Don't know.
+20. **The chair held the push** under the rule that nothing ships before his look. Two changes he can feel are in it (the roll carry at ELYSIUM's joints, and the builder refusing pieces), and he hadn't driven either. He was given two options: (a) he says "release it" and tests the public build, or (b) install on the desktop first, he drives RIBBON and ELYSIUM, then release. *From memory.*
+21. **No seat's carried conversation is compacted or cut**, for a test or for usage, without his explicit word for that seat. Experiments run on a fork or a copy, never on a living seat. *From memory: the 06:55 rule.*
+22. Don't know.
+23. Don't know.
+24. Don't know.
+25. **No rewrite.** In lighthouse, privacy means credentials only, and a T-180 term isn't a credential. *From memory: the summary.*
+26. **0.4.38 shipped without it.** E's first fix (519aefa) wasn't passed, and the sky fix came later (f835410), in 0.4.39. *From memory: the summary.*
+27. Don't know.
+28. **His own car's drawn tyres and body in its own road.** Tyres squash more above 750 km/h in the helix, and nothing was overhead within 40 m (nearest 24.10 m). *From memory: the summary.*
+29. Don't know.
+30. Don't know.
+31. **I ordered the push on my all-clear alone.** That went against the precedent that he drives a preview build before a release with a change he'll feel: 0.4.38's TEST 10, "drives alright", and the chair's rule from 0.4.30. *From memory.*
+32. **Missed test files, in two rounds:**
+    - C's D623 touched set missed shell-making files: A's four red app files, then 9 more rows in 5 files.
+    - P's landing found reds that E's and C's own sets missed: render_proof (depthFunc), theme S16, and texture-page row 9.
+    *From memory.*
+33. **My col2.js read every second row** (`y += 2`), so the dither's phase looked like plateaus. My 4×4 mean was right. *From memory: the summary.*
+34. **His exact words survive one compaction and not two.** The costliest misstep happened while his word was still carried: I ruled D616's p38 a generator defect and sent D617 to lift the hull. His 11:15 word ("isn't broken, find how close tracks can be") was in the carried summary, and the bolded rule "the generator must never make defects" outweighed it. *Read earlier in this conversation, in A's part 4 hand-back.*

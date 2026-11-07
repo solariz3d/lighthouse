@@ -1,0 +1,42 @@
+frames [33m10988[39m boost min [33m1.421[39m max [33m1.945[39m frames boost>0.5 [33m10988[39m | speed max [33m970.7[39m
+body over wheel plane (m): p1 [33m-0.1951[39m median [33m-0.0231[39m p99 [33m0.1324[39m
+p1       826 bodyLow 0.396 @f1052 lapT -0.360 770.0 km/h boost 1.943 gas 1.000 | wheelCtrLow 0.344 | above nothing within 40 m
+p2       500 bodyLow 0.214 @f1343 lapT 4.005 612.7 km/h boost 1.650 gas 0.000 | wheelCtrLow 0.246 | above nothing within 40 m
+p3       349 bodyLow 0.220 @f1450 lapT 5.610 440.5 km/h boost 1.666 gas 1.000 | wheelCtrLow 0.247 | above nothing within 40 m
+p4       214 bodyLow 0.243 @f1917 lapT 12.615 645.3 km/h boost 1.844 gas 1.000 | wheelCtrLow 0.282 | above nothing within 40 m
+p5       155 bodyLow 0.409 @f1980 lapT 13.560 660.9 km/h boost 1.844 gas 1.000 | wheelCtrLow 0.349 | above nothing within 40 m
+p6       264 bodyLow 0.224 @f2283 lapT 18.105 815.9 km/h boost 1.851 gas 1.000 | wheelCtrLow 0.247 | above nothing within 40 m
+p7       222 bodyLow 0.250 @f2399 lapT 19.845 766.6 km/h boost 1.766 gas 0.000 | wheelCtrLow 0.249 | above nothing within 40 m
+p8       214 bodyLow 0.399 @f2814 lapT 26.070 349.7 km/h boost 1.762 gas 0.000 | wheelCtrLow 0.326 | above nothing within 40 m
+p9       200 bodyLow 0.114 @f2991 lapT 28.725 342.0 km/h boost 1.841 gas 1.000 | wheelCtrLow 0.241 | above nothing within 40 m
+p11      266 bodyLow 0.204 @f3210 lapT 32.010 556.7 km/h boost 1.940 gas 1.000 | wheelCtrLow 0.241 | above nothing within 40 m
+p14      206 bodyLow 0.333 @f3413 lapT 35.055 703.1 km/h boost 1.869 gas 1.000 | wheelCtrLow 0.283 | above nothing within 40 m
+p15      145 bodyLow 0.413 @f3651 lapT 38.625 807.4 km/h boost 1.943 gas 1.000 | wheelCtrLow 0.356 | above nothing within 40 m
+p16      442 bodyLow 0.244 @f4093 lapT 45.255 775.0 km/h boost 1.856 gas 1.000 | wheelCtrLow 0.234 | above nothing within 40 m
+p17      109 bodyLow 0.221 @f4151 lapT 46.125 772.2 km/h boost 1.848 gas 1.000 | wheelCtrLow 0.229 | above nothing within 40 m
+p18      124 bodyLow 0.212 @f4255 lapT 47.685 785.8 km/h boost 1.847 gas 1.000 | wheelCtrLow 0.235 | above nothing within 40 m
+p20      107 bodyLow 0.272 @f4388 lapT 49.680 844.4 km/h boost 1.849 gas 1.000 | wheelCtrLow 0.203 | above nothing within 40 m
+p21      307 bodyLow 0.310 @f4726 lapT 54.750 654.8 km/h boost 1.940 gas 1.000 | wheelCtrLow 0.240 | above nothing within 40 m
+p22      100 bodyLow 0.298 @f4784 lapT 55.620 687.2 km/h boost 1.878 gas 1.000 | wheelCtrLow 0.234 | above 37.80 UNDERSKIN_p20_chunk_25 @f4814 710.7 km/h boost 1.854
+p24      115 bodyLow 0.203 @f4953 lapT 58.155 685.2 km/h boost 1.730 gas 0.000 | wheelCtrLow 0.236 | above nothing within 40 m
+p25      134 bodyLow 0.059 @f4974 lapT 58.470 632.3 km/h boost 1.678 gas 0.000 | wheelCtrLow 0.222 | above nothing within 40 m
+p26      116 bodyLow 0.261 @f5091 lapT 60.225 422.3 km/h boost 1.558 gas 0.000 | wheelCtrLow 0.247 | above nothing within 40 m
+p27      111 bodyLow 0.395 @f5288 lapT 63.180 375.2 km/h boost 1.854 gas 0.000 | wheelCtrLow 0.327 | above nothing within 40 m
+p28      362 bodyLow 0.318 @f5532 lapT 66.840 427.7 km/h boost 1.836 gas 1.000 | wheelCtrLow 0.341 | above 31.64 UNDERSKIN_p29_chunk_35 @f5471 399.0 km/h boost 1.825
+p29     2257 bodyLow 0.236 @f7308 lapT 93.480 795.1 km/h boost 1.943 gas 1.000 | wheelCtrLow 0.235 | above nothing within 40 m
+p30      107 bodyLow 0.246 @f7936 lapT 102.900 854.7 km/h boost 1.914 gas 1.000 | wheelCtrLow 0.248 | above nothing within 40 m
+p31       92 bodyLow 0.429 @f8058 lapT 104.730 866.6 km/h boost 1.876 gas 1.000 | wheelCtrLow 0.352 | above nothing within 40 m
+p32       78 bodyLow 0.270 @f8143 lapT 106.005 877.8 km/h boost 1.944 gas 1.000 | wheelCtrLow 0.219 | above 24.10 UNDERSKIN_p29_chunk_38 @f8207 899.8 km/h boost 1.944
+p33      149 bodyLow 0.254 @f8283 lapT 108.105 926.3 km/h boost 1.945 gas 1.000 | wheelCtrLow 0.240 | above 34.67 UNDERSKIN_p29_chunk_37 @f8279 926.2 km/h boost 1.945
+p34      244 bodyLow 0.281 @f8389 lapT 109.695 959.7 km/h boost 1.945 gas 1.000 | wheelCtrLow 0.223 | above nothing within 40 m
+p35      171 bodyLow 0.294 @f8759 lapT 115.245 948.2 km/h boost 1.895 gas 1.000 | wheelCtrLow 0.229 | above nothing within 40 m
+p36      168 bodyLow 0.279 @f8811 lapT 116.025 938.2 km/h boost 1.856 gas 1.000 | wheelCtrLow 0.245 | above nothing within 40 m
+p37      219 bodyLow 0.277 @f9163 lapT 121.305 647.6 km/h boost 1.842 gas 1.000 | wheelCtrLow 0.245 | above nothing within 40 m
+p38      173 bodyLow 0.242 @f9336 lapT 123.900 552.1 km/h boost 1.691 gas 0.000 | wheelCtrLow 0.240 | above nothing within 40 m
+p39      304 bodyLow 0.220 @f9384 lapT 124.620 449.9 km/h boost 1.624 gas 0.000 | wheelCtrLow 0.239 | above 25.36 UNDERSKIN_p38_chunk_59 @f9640 359.7 km/h boost 1.756
+p41       97 bodyLow 0.178 @f9737 lapT 129.915 345.9 km/h boost 1.821 gas 1.000 | wheelCtrLow 0.290 | above 25.25 UNDERSKIN_p38_chunk_59 @f9641 360.2 km/h boost 1.782
+p42      121 bodyLow 0.157 @f9750 lapT 130.110 348.5 km/h boost 1.836 gas 1.000 | wheelCtrLow 0.246 | above nothing within 40 m
+p43      100 bodyLow 0.377 @f9958 lapT 133.230 411.0 km/h boost 1.843 gas 1.000 | wheelCtrLow 0.327 | above nothing within 40 m
+p44      304 bodyLow 0.238 @f10232 lapT 137.340 654.0 km/h boost 1.941 gas 1.000 | wheelCtrLow 0.240 | above nothing within 40 m
+p45      547 bodyLow 0.257 @f10264 lapT 137.820 682.5 km/h boost 1.941 gas 1.000 | wheelCtrLow 0.249 | above nothing within 40 m
+p46      269 bodyLow 0.441 @f10390 lapT 139.710 742.0 km/h boost 1.847 gas 1.000 | wheelCtrLow 0.369 | above nothing within 40 m

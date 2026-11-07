@@ -1,0 +1,8 @@
+elysium.t180track on t180-wt-a614: refuse 0 warn 0; detail opens 0 hairline 32 folds 92 steps 0 across 0 thin 0 rays 19296 read 18539 compared 18409; JSON 2048076 chars; old 24.3 s, new 16.8 s
+SAME
+crazy.t180track on t180-wt-a614: refuse 0 warn 2; detail opens 0 hairline 0 folds 26 steps 0 across 0 thin 0 rays 17406 read 17060 compared 16923; JSON 1821375 chars; old 11.7 s, new 5.4 s
+  WARN   the underside skin folds 15.8° across the road at 1.04 km (s 1044 m), 12.6 m right of the centre, in piece p2, where the road bends at most 3.2°: a jag in the hull's outline
+  WARN   the underside skin folds 17.5° across the road at 3.16 km (s 3156 m), 17.1 m left of the centre, in piece p6, where the road bends at most 1.8°: a jag in the hull's outline
+SAME
+test10.t180track on t180-wt-a614: refuse 0 warn 0; detail opens 0 hairline 29 folds 46 steps 0 across 0 thin 0 rays 10458 read 9933 compared 9758; JSON 1007674 chars; old 5.1 s, new 3.3 s
+SAME

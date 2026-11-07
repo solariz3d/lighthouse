@@ -1,0 +1,181 @@
+TAP version 13
+# Subtest: row 1: a clean lap with a pit lane: the check finds nothing, and the export carries exactly what the check returns on its welded scene
+ok 1 - row 1: a clean lap with a pit lane: the check finds nothing, and the export carries exactly what the check returns on its welded scene
+  ---
+  duration_ms: 1430.6966
+  type: 'test'
+  ...
+# Subtest: row 2: the pit lane's ends: no drivable face stands across the road there, and the lane is at most 0.1 m wide where it leaves and rejoins (the notch)
+ok 2 - row 2: the pit lane's ends: no drivable face stands across the road there, and the lane is at most 0.1 m wide where it leaves and rejoins (the notch)
+  ---
+  duration_ms: 216.0148
+  type: 'test'
+  ...
+# Subtest: row 3: beside the pit lane on a cupped road the hull's bottom has no step, and the check reads the bottom all along
+ok 3 - row 3: beside the pit lane on a cupped road the hull's bottom has no step, and the check reads the bottom all along
+  ---
+  duration_ms: 1725.8565
+  type: 'test'
+  ...
+# Subtest: row 4: tubes opened and closed, abrupt and gradual: no fold in the skin past the road's, no open edge, no sliver, no step in the bottom
+ok 4 - row 4: tubes opened and closed, abrupt and gradual: no fold in the skin past the road's, no open edge, no sliver, no step in the bottom
+  ---
+  duration_ms: 10591.2562
+  type: 'test'
+  ...
+# Subtest: row 5: each defect made by hand is found where it was made: a hole in the road refuses, in the skin warns, a face across the road refuses, a sliver warns, a sunk skin warns, a wide lane end refuses
+ok 5 - row 5: each defect made by hand is found where it was made: a hole in the road refuses, in the skin warns, a face across the road refuses, a sliver warns, a sunk skin warns, a wide lane end refuses
+  ---
+  duration_ms: 2915.4773
+  type: 'test'
+  ...
+# Subtest: row 6: under the bars: a crack in the road narrower than the ray check's 5 mm weld, a seam's zipper standing in the cross-section plane, and a hull that deepens evenly, are not found
+ok 6 - row 6: under the bars: a crack in the road narrower than the ray check's 5 mm weld, a seam's zipper standing in the cross-section plane, and a hull that deepens evenly, are not found
+  ---
+  duration_ms: 1494.5848
+  type: 'test'
+  ...
+# Subtest: row 7: the export gives the check its path, segments and pit lane, refuses with SCENE on a drivable fault and writes nothing, lists it in the TEST route instead, and passes each drawn fault on as a warning
+ok 7 - row 7: the export gives the check its path, segments and pit lane, refuses with SCENE on a drivable fault and writes nothing, lists it in the TEST route instead, and passes each drawn fault on as a warning
+  ---
+  duration_ms: 1882.8761
+  type: 'test'
+  ...
+# Subtest: row 9: a piece joint where the road's column count goes from even to odd (a cup ramp after a tube, then a cupped piece): the export refuses nothing, the planks there welded
+ok 8 - row 9: a piece joint where the road's column count goes from even to odd (a cup ramp after a tube, then a cupped piece): the export refuses nothing, the planks there welded
+  ---
+  duration_ms: 1772.7719
+  type: 'test'
+  ...
+# Subtest: row 10: a closed lap with a free jump: its road stops at the lip and starts again at the landing, and the export refuses nothing there
+ok 9 - row 10: a closed lap with a free jump: its road stops at the lip and starts again at the landing, and the export refuses nothing there
+  ---
+  duration_ms: 2406.3238
+  type: 'test'
+  ...
+# Subtest: row 8: bad input is refused by name
+ok 10 - row 8: bad input is refused by name
+  ---
+  duration_ms: 67.9489
+  type: 'test'
+  ...
+# Subtest: row 11: the triangles' tables keep every vertex and every edge as they grow, numbered in the order first seen
+ok 11 - row 11: the triangles' tables keep every vertex and every edge as they grow, numbered in the order first seen
+  ---
+  duration_ms: 38.034
+  type: 'test'
+  ...
+# Subtest: row 12: a drawn surface that passes through another pass's road or apron warns at its piece and station; with the hull's clearance, nothing
+not ok 12 - row 12: a drawn surface that passes through another pass's road or apron warns at its piece and station; with the hull's clearance, nothing
+  ---
+  duration_ms: 1376.6305
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-a617\\test\\export_finalscene.test.js:282:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the hull through the other pass is found: 
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-a617\test\export_finalscene.test.js:284:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+# Subtest: row 1: two passes, one lap's edge over the next lap's apron: no drawn surface passes through the other pass's road or apron
+not ok 13 - row 1: two passes, one lap's edge over the next lap's apron: no drawn surface passes through the other pass's road or apron
+  ---
+  duration_ms: 2509.3987
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-a617\\test\\hull_clearance.test.js:74:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    [32m+ actual[39m [31m- expected[39m
+    
+    [32m+[39m [
+    [32m+[39m   'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_83 at s 284',
+    [32m+[39m   'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_83 at s 286',
+    [32m+[39m   'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_89 at s 296',
+    [32m+[39m   'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_89 at s 300',
+    [32m+[39m   'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_95 at s 310',
+    [32m+[39m   'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_95 at s 312'
+    [32m+[39m ]
+    [31m-[39m []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_83 at s 284'
+    1: 'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_83 at s 286'
+    2: 'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_89 at s 296'
+    3: 'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_89 at s 300'
+    4: 'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_95 at s 310'
+    5: 'UNDERSKIN_p3_body_0_2 x 1ROAD_APRON_p3_body_0_R_95 at s 312'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-a617\test\hull_clearance.test.js:78:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.start (node:internal/test_runner/test:1015:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+  ...
+# Subtest: row 2: there the hull keeps its sweep: no fold, no step in its bottom, shallower than without the clearance where the other pass is, as it was further off
+not ok 14 - row 2: there the hull keeps its sweep: no fold, no step in its bottom, shallower than without the clearance where the other pass is, as it was further off
+  ---
+  duration_ms: 2300.3545
+  type: 'test'
+  location: 'C:\\Users\\nname\\Downloads\\t180-wt-a617\\test\\hull_clearance.test.js:81:1'
+  failureType: 'testCodeFailure'
+  error: 'the hull came up where the other pass is (0 vertices moved over 0.3 m)'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (C:\Users\nname\Downloads\t180-wt-a617\test\hull_clearance.test.js:98:10)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# Subtest: row 3: every physics node (road, apron, catch) is byte-equal with the clearance and without it
+ok 15 - row 3: every physics node (road, apron, catch) is byte-equal with the clearance and without it
+  ---
+  duration_ms: 91.1616
+  type: 'test'
+  ...
+# Subtest: row 4: ELYSIUM: no drawn surface passes through another pass's road or apron, but where that pass's plank already lies within the plank's drop
+ok 16 - row 4: ELYSIUM: no drawn surface passes through another pass's road or apron, but where that pass's plank already lies within the plank's drop
+  ---
+  duration_ms: 122813.9916
+  type: 'test'
+  ...
+# Subtest: row 5: a lap with no pass over another: the skin is byte-equal with the clearance and without it
+ok 17 - row 5: a lap with no pass over another: the skin is byte-equal with the clearance and without it
+  ---
+  duration_ms: 2033.7301
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 14
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 130104.0094

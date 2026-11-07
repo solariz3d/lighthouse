@@ -1,0 +1,12 @@
+start 20:01:14Z head a005e1d tree 95b8e2c
+build exit 0 20:03:44Z
+44e4d277dc67ff5ab3a20649023c8d5f95663ec35f87dfb708f1f5f4afb8e838 *G:/Consonance-tools/scratch-C-d615/target/release/t180-track-builder.exe
+85002edd6c8b6fa1e0f878eac82ce271eddf1344aea70e41c8706597cec87a50 *G:/Consonance-tools/scratch-C-d615/target/release/bundle/nsis/T-180 Track Builder_0.4.38_x64-setup.exe
+-rwxr-xr-x 1 nname 197609  8109478 Nov  2 14:03 G:/Consonance-tools/scratch-C-d615/target/release/bundle/nsis/T-180 Track Builder_0.4.38_x64-setup.exe
+-rwxr-xr-x 2 nname 197609 15819264 Nov  2 14:03 G:/Consonance-tools/scratch-C-d615/target/release/t180-track-builder.exe
+t180-track-builder.exe: 15819264 bytes, no private paths
+T-180 Track Builder_0.4.38_x64-setup.exe: 8109478 bytes, no private paths
+full exit 1 20:59:24Z
+cargo exit 0 21:00:20Z
+hidden exit 0 21:03:52Z
+done 21:03:58Z

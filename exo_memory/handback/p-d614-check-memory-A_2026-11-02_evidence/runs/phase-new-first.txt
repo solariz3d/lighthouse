@@ -1,0 +1,8 @@
+PH begin heap 905 ab 496 
+PH edges heap 913 ab 1007 
+PH tris heap 913 ab 987 N 3487592 verts 1746065 edges 5234332 thin 0
+PH fold heap 913 ab 955 bnd 5888 most 92
+PH cand heap 915 ab 723 cand 32 grid 1832
+PH opens heap 914 ab 723 opens 0 hairline 32
+PH rgrid heap 943 ab 723 rays 19296 rgrid 44415
+PH steps heap 943 ab 723 steps 0
