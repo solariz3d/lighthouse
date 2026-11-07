@@ -1,0 +1,15 @@
+chrome pid 14080
+patched lab/app/preview/index.js
+patched lab/app/preview/preview.js
+lab S: extra turn made true typed true
+lab S: extra bank made true typed true
+lab S state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","380"]]}
+look 380 380 35 45 {"s0":1000,"eye":1380,"at":1380}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders3\l154-S-82ae771-tick380-run2.png
+lab mid-drag state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","478"]]}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders3\l154-S-82ae771-middrag.png
+lab after-release state {"length":"1000","turn":"-90","bank":"17.39","rows":[["extra turn","180"],["extra turn from","500"],["extra bank","-34.78"],["extra bank from","478"]]}
+wrote C:\Users\zackn\AppData\Local\Temp\claude\8e9709f509cfea85\a2122153-a37e-41a6-a86f-534267ec0565\scratchpad\l154\renders3\l154-S-82ae771-released.png
+page errors none
+closed chrome 14080
+profile removed
