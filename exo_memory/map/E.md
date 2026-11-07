@@ -2910,3 +2910,8 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-07 ~02:4x local (L) · L150 registration and ruling → `exo_memory/loop/l150_registration_2026-11-07.md` (5be555d7), `exo_memory/handback/p-l150-E_2026-11-07.md`
 - O1, the extra bank lags by design: it starts with the extra turn at 500 m but is a monotone quintic against a curvature bell, so it is half done at the turn's peak (λ_doc 125 m; 120 from B's 10 m rows) and still rolling where the turn ends; builder lag 0; the same ramp is on time (−1 m) in his good piece. My pre-registered 125 m and "asked returns to 0" both came true.
 - **Carry:** a felt-size number must hold sharpness fixed; my ΔfLat compared bends 3.5× apart and could not tell lag from size.
+
+## 2026-11-07 ~04:5x local (L) · L152 review of l151-way1 17767bd and l151-mirror-refusal 273e28d: both GREEN → `exo_memory/handback/p-l152-E_2026-11-07.md`
+- Way 1 cuts the extra bank's lag from 125 to 65 m on his S (C's ~60 m prediction met). At 579 m the bank is +0.07° with first bank 17.39 (was +8.48°). His good save is byte-equal, and both orders give one hash. C's "turn first 380, bank first 500" does not hold, because of B's fold-in.
+- Mirror: 279 of 279 accepted pieces are byte-equal and each stated "from at least X" is true (10 of 10), but a message names the nearest limit, not the window (his case laid 553–720 with a hole near 725). My renders do not show the road difference.
+- **Carry:** zooming in with the mouse wheel in Free view barely moves the camera; for a picture of one spot on the road, put the camera at that spot.
