@@ -47,6 +47,7 @@
 - 2026-11-06 10:28Z (L): "after all is done, write the handoff for the track builder repo, and lighthouse, ending tonights work to simply chill, almost out of our weekly limit till 4pm this afternoon so its chill we will be back after that"
 
 - 2026-11-06 18:58Z (D), trying 0.4.39 (installed sha256 3d1a971e..., the release asset): "the turn from needs to be placed on the actual purple line and not on the turn part for the extra turn. i mean where you click to drag the length of the extra turn or where it kicks in u know"
+- 2026-11-07 05:24Z (D), on the D644 page (the extra turn grab on the purple line), after "see u later": "wait yes do it and put it as newest build but not released ,will be testing it at work". Read as: build D644; land it on t180 main with no tag and no release, so the rebuilder on L builds it at his next click at work.
 
 ## The problem, in one line
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
@@ -55,7 +56,7 @@ pieces. He wants one piece to change a second time toward its end.
 ## State — updated 2026-11-06 23:1x (D), tonight's handoff: `loop/handoff_t180_2026-11-06-D.md`
 - **Released:** 0.4.39 = origin main = tag v0.4.39 = f2884fa (L, overnight). Installed on D from the release asset, sha256 3d1a971e… (same as L). Backup `t180-track-builder.exe.before-d643-064ecd5`. The shortcut targets the exe.
 - **D643, the two forks compared (E, `handback/p-d643-forks-E_2026-11-06.md`):** L's f2884fa and D's 376ddc2 (d603090 + the row-9 median of three, local, not pushed) build the same road: 5 roads and 4,248 core answers have identical sha256. The only speed difference is the into-the-hold drag, where D is 10% faster (p95 9.10 against 10.05 ms). Page: https://claude.ai/artifact/69MBZZBwMr9Fz9PRkxwcZ2. After his "are u sure", the call is: stay on 0.4.39 and fold D's probe into the next feature batch. The A/B exe of 376ddc2 is built, not installed (P, `handback/p-d643-install-ab-P_2026-11-06.md`).
-- **D644, his 18:58Z word (the extra turn's grab on the purple line):** renders only, nothing built (C, line below). Page: https://claude.ai/artifact/6BMn9w6QDCE64EPd4ByvSy. **Waiting on his yes.** On a yes: C builds on f2884fa (red rows first), E reviews, P installs on D.
+- **D644, his 18:58Z word (the extra turn's grab on the purple line):** renders only, nothing built (C, line below). Page: https://claude.ai/artifact/6BMn9w6QDCE64EPd4ByvSy. **His yes, 05:24Z 11-07: build it, put it on main as the newest build, no release.** C builds on f2884fa (red rows first), E reviews, P runs the touched set, pushes main (no tag, no release), and installs on D.
 
 ## State — updated 2026-11-05 19:1x (D), the handoff then: `loop/handoff_t180_2026-11-05-D.md`
 - **2026-11-06 19:2x (C), D644, his 18:58Z word, renders only, nothing built:** on 0.4.39 the extra turn handle (the grab whose along-drag slides where the extra turn kicks in) stands at 0.89 by the turn handle; the purple from mark is at 500 on the bank/climb handles. Moved onto the mark alone it lands ON the bank handle (0 px); with bank and climb stepping back by the clearExtras rule it clears ≥36.3 px in all 8 views rendered (half piece 220-378 px). Renders + table: `handback/p-d644-from-grab-renders-C_2026-11-06.md`. Waiting on his look.
