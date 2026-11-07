@@ -37,11 +37,11 @@
   - An env setting for test concurrency (`T180_TEST_CONCURRENCY`, default 4, set to 2 on L), read by test-fast and test-touched.
   - Its own tests: a changed panel.js picks the panel tests; a changed core module picks its harness; an unknown file falls back to test-fast.
   - Update the `CLAUDE.md` "Tests" section with the tiers.
-- **E (the proof, before anything replaces the full run):** register first, then run.
+- **AMENDED again at his word, 09:08Z:** "dont you ever think we create more work for ourselves constantly planting bugs to fix? Like it was good in the beginning learning to trust ourselves and the process we made ,but now its like just getting in the way". Checked: 22 t180 commits since 10-07 mention mutation; by their subjects they are almost all upkeep of the harnesses (new mutants per feature, re-anchoring after rewording, retiring untestable ones). None of the subjects names a road defect found by a surviving mutant. So: **no new mutation harnesses or mutants with features; the 30 that exist run weekly on CI only; E's proof below plants no bugs.**
+- **E (the proof, before anything replaces the full run, NO planted bugs):** register first, then read.
   - For the last landings with a red (L144 drag-frame row 8 and release-frame row 1; the 5 fails of 4,500; any reds in L152), would the new tiers have run the test that went red?
-  - Also, by mutation: take 10 recent real fixes from git log, revert each on a scratch tree, and check that test-touched picks a file that fails.
-  - Falsifier: any revert whose failing test the tiers do not run means the tiers are not as diligent, and the plan stops.
-  - **His point, as a number:** for each revert, count how many failing test files are OUTSIDE the touched set, i.e. caught only by the whole base. That count says how often a ripple travels beyond the require graph, which is what he asked about. If it is common, touched-only mid-lap costs rework, and the pane runs test-fast more often.
+  - Read only what already happened: for every landing hand-back since 10-20 with a red, which test file went red, and was it in the touched set, in test-fast, or only in the mutation or timing groups? Falsifier: a real red caught only by a mutation harness means the weekly run is too rare, and it moves back to landing.
+  - **His point about the surrounding code, as a number:** how many of those reds were OUTSIDE the touched set, i.e. caught only by the whole base.
 - **Librarian:** the room's rule text (`COMMITTEE.md` / `BUILDING.md`, wherever a lap's "full suite" is named), changed in the same landing as B's script, after E's proof.
 
 **Stop rule:** if E's proof misses a revert, the full run stays the landing check, and only the slot, concurrency and timing changes go in.

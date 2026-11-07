@@ -27,6 +27,8 @@
   the shape of what I am trying to say?"
 - 2026-11-07 06:53Z (L): "about what we were talking about besides the track builder, there is a very important lesson there to learn for
   consonance evolution"
+- 2026-11-07 09:05Z (L), on test tiers: "code is related to the rest of the base of it, in other words, the rest of the code around it, in some way not measuring what is around it as well means we do not understand the related code as much as we could seeing the rest of the base, do you see what I mean? Even if it is expensive perhaps it is a good thing? Idk"
+- 2026-11-07 09:08Z (L): "yes, dont you ever think we create more work for ourselves constantly planting bugs to fix? Like it was good in the beginning learning to trust ourselves and the process we made ,but now its like just getting in the way"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
@@ -101,3 +103,4 @@ carry it, so this brief does.
     paragraph, in both copies; "mirror" became "echo" where it names the failure. The guard is attribution (whose line is whose), not
     suspicion of resemblance. His words on landing it: "i trust your feel over it more than what ever i could think, it is for you more than
     it is for me".
+18. **An instrument that has taught what it was for becomes upkeep** (his catch, 09:08Z: "it was good in the beginning learning to trust ourselves and the process we made ,but now its like just getting in the way"). The mutation harnesses earned trust in the tests early on. A month later, 22 t180 commits were their upkeep and none named a road defect they found, while they ran inside every pane run and cooked the laptop. Keep an instrument while it still returns numbers nobody wanted; when it only returns work, run it rarely. The other half, also his (09:05Z): seeing the whole base is worth its cost, because code is coupled beyond its imports.
