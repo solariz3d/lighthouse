@@ -111,3 +111,10 @@ the hand-back, but the reasons, the rulings and the measurements behind them liv
 `exo_memory/handback/` (search the id), `exo_memory/loop/` (the plans and packets), and `consonance/src-tauri/brief/BUILDING.md`
 and `COMMITTEE.md` (the rules the gates enforce). Start there when a check looks stricter than it needs to be: most of them are
 the answer to a specific failure, and the comment above the function usually names it.
+
+## Beside this folder, not part of the app
+
+- `consonance/tools/t180-rebuilder/`: the T-180 Rebuilder's source (`Rebuilder.cs`, the `rebuilder.ico` it compiles with, and a
+  `README.md`). It is the launcher his desktop shortcut runs on each machine. It pulls the track builder, rebuilds and reinstalls it
+  when main moved, and since L147 points the shortcut back at itself after it installs. It is compiled with the .NET Framework's
+  `csc` and installed to `%LOCALAPPDATA%\T-180 Rebuilder` (the README says how).
