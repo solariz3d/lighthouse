@@ -2176,3 +2176,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-11-07 (on D, Opus 5.5) — D645 (b) A: D has no heavy-run knee between 8 and 16 threads for t180 test-fast (wall 895–924 s, package ~95 W at every cap; the workload uses ~7 of 16 threads), so heavy.cpus = 8 (spread, one per core) was written to D's ~/.consonance.json after a backup; the frequency counter read a flat nominal 4,700 and measured nothing
 `exo_memory/handback/p-d645b-profile-A_2026-11-07.md`. Lesson: check a sensor moves before naming it in a plan.
+
+## 2026-11-09 (on D, Opus 5.5) — D646 A: levelEnd(doc, i) levels the end of a placed piece by re-solving only its kv points (joint held, end at rate 0 and slope 0, its own frame), and the next road piece must be RE-JOINED (its first two kv to 0/0) because checkDoc refuses a non-C1 joint; Level and To floor now drop a climb corner. t180 level-end 5c4ad36 off fc3cc63: 9 rows red first, mutants 16/16/0, touched files 81/81; UI rendered A (selection box, my pick) and B (Build menu), not built
+`exo_memory/handback/p-d646-level-end-A_2026-11-09.md`. Lesson: a mutant can hide behind a fixture that already has the property (his joints were all 0/0); test the case that does not.
