@@ -21,4 +21,10 @@
   - "It disappears" was reproduced on the installed 82ae771 at 1536x864: with a piece selected the refusal is written below the window (`t180_level_end_repro_offscreen_2026-11-09.png`). A new refusal is now scrolled into view, guarded by `app/test/level-refusal-page.test.js`.
   - The placement render with the tail is `t180_level_end_place_A2_tail_2026-11-09.png`. The tail's drag mark on the track is not drawn yet.
   - Open question for him: Level drops a climb typed in the fields (it solves the climb itself). Is that fine, or should it refuse, on screen?
+- His pick, 12:10: B ("for the artifact i like keeping the level where it is in B").
+- 2026-11-09, pane A, `level-end` at `b7ec45f`, BUILT: Build ▸ Level end of <piece>, under To floor.
+  - Pressing it levels the selected piece over its default tail in one undo step. The camera goes to the levelled stretch, which shows as an orange span with a mark at its start; dragging the mark earlier or later re-levels it, one undo for the whole drag.
+  - With nothing selected, or a stretch too short, it says why on screen.
+  - Seen in the page: `t180_level_end_built_menu_2026-11-09.png`, `t180_level_end_built_span_2026-11-09.png`, `t180_level_end_built_dragged_2026-11-09.png`.
+- Next lap, not this one: his "perhaps the rest of the functions should also work in a similar fashion as level?"
 - Hand-back: `exo_memory/handback/p-d646-level-end-A_2026-11-09.md`.
