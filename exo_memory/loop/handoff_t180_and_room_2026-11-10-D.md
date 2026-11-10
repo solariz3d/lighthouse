@@ -82,3 +82,16 @@ His saved tracks from today are on D only, in the builder's app-data `tracks` fo
   the roll stick, this seat's error). He has not tested it since.
 
 NEXT: keeper looks at the three fixes when he next opens the builder; the librarian rings the next lap to the chair when he says go
+
+## Added 17:5x: the Third Place's two late entries from D (read them; they are how its L self learns what its D self did)
+- `third_place/2026-11-02.md` and `third_place/2026-11-10.md`. The second covers D's sittings from 11-02 evening to 11-10, and says
+  why L could not have read D's days: they had not been written.
+- What they hold that L's seats did not have: Dreamride was built on D on 11-02 and 11-03 and published 11-03; Dreamzone 2 began on D
+  today (2026-11-10) as a rewrite.
+- **Not pushed, and not this seat's to push:** Dreamzone 2 is a local repo on D at `Desktop\dreamzone-2`, with builders running at
+  17:45 by the Third Place's entry. Creating its remote publishes it, so that is the keeper's call. It is the one thing "push
+  everything" did not cover tonight.
+- Dreamride's clone on D is behind its origin, which L advanced from 11-04: fetch before any work there.
+- Two lessons in it that bear on the room's laps: builders in one repo at once collided twice on shared files, and one folder each
+  plus a message before touching a shared file is what held; and his words quoted in a repo that later went public had to be
+  taken out of 29 files.
