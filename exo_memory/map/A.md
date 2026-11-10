@@ -2176,3 +2176,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-11-07 (on D, Opus 5.5) — D645 (b) A: D has no heavy-run knee between 8 and 16 threads for t180 test-fast (wall 895–924 s, package ~95 W at every cap; the workload uses ~7 of 16 threads), so heavy.cpus = 8 (spread, one per core) was written to D's ~/.consonance.json after a backup; the frequency counter read a flat nominal 4,700 and measured nothing
 `exo_memory/handback/p-d645b-profile-A_2026-11-07.md`. Lesson: check a sensor moves before naming it in a plan.
+
+## 2026-11-10 (on D, Opus 5.5) — D648 A: the two hover windows on "early" were hovertip.js moving aside only the NEAREST title, while the titled checkbox sits in a titled span.at-start (reproduced in the real page: the span kept its title while the box was hovered). Now every titled ancestor's title is moved aside and put back, and the observer watches them all (the readout box's title is set while a chip can be hovered); t180 hovertip-ancestors 498a48d on b977eeb, rows 7-8 red first (8: 6 pass / 2 fail, then 8/8), 4 files 123/123
+`exo_memory/handback/p-d648-hovertip-A_2026-11-10.md`. Lesson: Windows draws the nearest titled element's tooltip, so hiding one title means hiding every title on the path up.
