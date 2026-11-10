@@ -28,3 +28,6 @@
   - Seen in the page: `t180_level_end_built_menu_2026-11-09.png`, `t180_level_end_built_span_2026-11-09.png`, `t180_level_end_built_dragged_2026-11-09.png`.
 - Next lap, not this one: his "perhaps the rest of the functions should also work in a similar fashion as level?"
 - Hand-back: `exo_memory/handback/p-d646-level-end-A_2026-11-09.md`.
+- 2026-11-09 16:0x, LANDED AND RELEASED: Level end is on t180 main and in **v0.4.40** (tag and main `b977eeb`), at his word 16:01: "push new release all of it its good". The release also carries the mark labels, way 1 and the mirror refusal. Hand-backs: `handback/p-d646-land-P_2026-11-09.md`, `handback/p-d647-release-done-P_2026-11-09.md`.
+- Known gap, in the changelog: after undoing a drag of the tail, the span is not redrawn until Level end is pressed again.
+- Open, his calls: a climb typed in the fields when Level is pressed is dropped quietly (flip to refuse if he says so); the end-forms lap (To floor end, Turn to grid end, Straight end on a placed piece, on the tail machinery) starts at his go.

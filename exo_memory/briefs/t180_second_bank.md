@@ -61,6 +61,15 @@
 A piece makes one change per field, so ending a banked turn level (or steeper) takes an extra flattening piece, and an S takes several
 pieces. He wants one piece to change a second time toward its end.
 
+## State — updated 2026-11-10 17:4x (D), by the librarian: D649 and D650 are LANDED on t180 main `3b33b38` and installed on D; not released
+- t180 main: `313b95a` (D649, the extra turn and climb), then `33c54aa` and `3b33b38` (D650, the extra bank, width, cup and edges, and its mirror amendment). Version still 0.4.40; no tag. Held for the next release batch.
+- Installed on D 17:34: exe sha256 98493084c133c785…, 15,895,040 B; backup `t180-track-builder.exe.before-d650-313b95a`. **L has none of this until it is built from main there.**
+- Landing run (P): test-fast tests 3569, pass 3551, fail 0, todo 2, skipped 16; ramp harness 106 of 106; turnby harness 22 of 22. Hand-backs: `handback/p-d649-land-P_2026-11-10.md`, `handback/p-d650-land-P_2026-11-10.md` (the stop on two mirror-refusal rows), `handback/p-d650-mirror-amend-A_2026-11-10.md`, `handback/p-d650m-land-P_2026-11-10.md`.
+- His pictures for the two reports: `t180_extra_turn_held_2026-11-10.png` (13:56) and `t180_extra_bank_held_2026-11-10.png` (15:42).
+- NOT yet seen by him: the extra turn dragging to 45° on his 125 m piece, the extra bank past −5°, and the held drag's reason label.
+- Open: the slow drag into the hold (D650, below); the held box sits under the camera bar's grid label; the comfort length lays 78 and 79 m for −5° though the built road misses its hold by about 1° (A's finding); on a straight road a same-way quick bank is still refused (his call, see `t180_banked_s_and_wall_hairpin.md`).
+- Next: `briefs/t180_banked_s_and_wall_hairpin.md`.
+
 ## State — updated 2026-11-10 (D), D650, pane A: t180 branch `extra-change-free` at e5b3cd0 on 313b95a, not pushed, not landed
 - An extra bank, width, cup or edge change is refused only where the road as built cannot carry it: the width under 40 m, the cup and edges under 26 m (each, or its old comfort length where shorter), the bank under 26 m or where this piece's built bank (the adapter's rounding) leaves the hold or the target by over 0.5°. A change the comfort length passed is laid as before.
 - On his piece the extra bank goes to −20°, −45° and −90° from 47.5 m. Two things free it there: the piece turns (the builder keeps a turning road's bank) and his extra bank goes back the other way from his first 0.13° (the builder pins the bank's turn). At a straight road's end, a short change on the same way is still refused, with its reason.
