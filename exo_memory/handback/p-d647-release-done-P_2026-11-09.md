@@ -52,3 +52,15 @@ Worktree `C:\Users\nname\Downloads\t180-wt-p647`, detached at b977eeb.
 - A watch is running (`gh run watch --exit-status` on both); I re-ring with the two conclusions when it returns.
 
 BASE: C:\Users\nname\Downloads\t180-fresh 5cb76b5
+
+## CI concluded (appended 00:05Z 11-10)
+
+- checked: `gh run watch --exit-status` then `gh run list` → **42716005200 (main, b977eeb): success**, completed 2026-11-10T00:02:09Z.
+  **42716009551 (tag v0.4.40, same commit b977eeb): failure**, completed 2026-11-09T23:55:47Z; job "fast" failed, "mutation" skipped.
+- checked: `gh run view 42716009551 --log-failed` (saved S/ci-tag-failed.log, 3,712 lines) → TAP tests 3539, pass 3480, fail 1, skipped 56,
+  todo 2. The one failure: `app/test/core-extra-bank-drag-cost.test.js:94`, "dragging the extra bank back toward level … within 2 × …
+  (p95)": "the rolling drag's p95 is 51.6 ms a move, the early drag's 25.1 ms: 2.06 ×, over 2 ×". The other two listed rows (aclook :219,
+  drag-cost :111) are todo rows.
+- inferred: the known drag-cost timing row (red on main in D646 at 2.27×, green in D647's local suite at 1.85×), flaking on a shared runner;
+  the same commit passed in the main run. Nothing changed, nothing re-run; the release and install stand. A re-run of the tag run is the
+  chair's call.
