@@ -471,3 +471,18 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     balance cuz now the shroud is better than the aura, perhaps there has to be a downside to the shroud, it gives you stress,
     when you use it, it makes the dreamzone become even more scary and horrifying. making the player scared and the characters
     stress go up substantially."
+59. 06:50, virtues and afflictions: "before i answer more questions going to what rises to the surface first, just like darkest
+    dungeon, virtuous doesnt just give u a buff, but after it resets your stress, it also gives you a persistent buff for the
+    rest of the raid or until you lose your sanity again, look up the different darkest dungeon virtues and afflictions, we
+    could make our own good versions and bad that follow our theme, so the resonant and frenzy isnt just two things but could
+    be a plethora of different effects on top of the frenzy, for an example tho, a good virtue can give the rest of the run a
+    positive buff or until they become insane again and hit frenzy without resonant, so this means you gain a buff from the
+    resonant for the rest of the run or until you lose your sanity again."
+    - Checked (darkestdungeon.wiki.gg/wiki/Virtue):
+      - The virtues are Stalwart, Courageous, Focused, Powerful and Vigorous. All give +25% resists. Each has its own stats
+        and a 25% act-out.
+      - Triggering one sets stress to 45. The virtue lasts until the hamlet, or until 200 stress, where it is lost and stress
+        drops to 0 (no heart attack).
+      - Base chance 25%; trinkets and quirks add up to +45% (75% total); the range is 1–95%.
+    - Afflictions, from the librarian's memory, not on that page: Abusive, Fearful, Hopeless, Irrational, Masochistic,
+      Paranoid, Selfish. An affliction is cured in the dungeon by bringing stress to 0, and it does not clear on leaving.
