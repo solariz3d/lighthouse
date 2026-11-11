@@ -272,3 +272,33 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     responses for the interaction that also build off of each other for the next interaction branching seriously. Depending
     the mom can offer relief from insanity or even trigger it more, even perhaps mimicking eventually players mom when it is
     an entity invading, you like these ideas?"
+32. 2026-11-11 ~04:17 local (L), to the librarian. The message arrived ending mid-sentence, with a pane's ring pasted after it.
+    His words as they arrived: "1. I am thinking, there should be a cap how much looking out the window decreases sanity, it would
+    be too op to just look out the window every time u fail or accumulate too much stress, perhaps stress is better than
+    insanity, fuck it, we do darkest dungeon mechanic, the virtuous and afflicted, in dd there is a 75% chance the player goes
+    insane on stress full, which leaves a 25% chance to become virtious in the face of despair, it gives me goosebumps thinking
+    of the runs where pixels on a screen convey more emotional dissolve than real characters in a real story, the emergence of
+    narratives with the characters you have in darkest dungeon needs to be studied, but it gives me goosebumps for a character
+    to persevere under grave odds, which would make a similar mechanic for this game insane, so upon going insane in the dream,
+    there is that 25% chance that instead of triggering the frenzy, you reset your full stress bar and become resonant, its
+    like star in mario, you become like cheating levels fast and can feel the resonant aura of the signal of truth and love,
+    but it doesnt last forever, perhaps like a solid 15-30 seconds, and then perhaps there could be an ability that modulates
+    the odds or strength of this, some players might try to spec into becoming stressed just to get the powerup to gain a
+    serious advantage but it is risky, perhaps since we are going darkest dungeon route, there could be dreamzones version of
+    trickets, two you can equip that offer passive buffs, common, uncommon, rare, epic, resonant tiers, with increasing rarity
+    to drop, you can get the drops from good entities, or perhaps some variant of the chest archetype that could sometimes
+    spawn in the reprieve areas, which give the player a solid second or two to look at it and click it, it will take the
+    dopamine fuelled design of megabonk, but skinned with the theme of mystical occult/scientific mystical angle, you know? So
+    what you get from the chest is usually the run dependent abilities that are unlocked, at first without buying the
+    abilities, wait, if you are confused, just look up the menu structure of megabonk and how they do resources and unlocks, it
+    will be almost the same just skinned differently, but anyway you start with like"
+    - Checked (search, guides; thresholds vary by source and patch). In Megabonk:
+      - unlocks are permanent;
+      - Silver is the meta currency, from quests, shrines and pots;
+      - the Shop is locked at first and opens after enough quests;
+      - 200+ quests unlock characters, weapons, tomes, items and skins;
+      - items mostly come from chests; 35 of 77 are available by default, and the rest unlock through quests, then cost Silver
+        in the Unlocks menu;
+      - quest milestones open extra weapon and tome slots (about 25 and 35 quests), Skip, Banish and Toggler (Toggler after
+        about 40 unlocks).
+      - Sources: progameguides "How to Unlock All Items", destructoid "All shop items", megabonk.wiki/wiki/Shop.
