@@ -771,3 +771,15 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Wanted: more reprieve shapes; some joined to the long hallways that open a gap; and reprieve passages built from curated,
       hand-designed pieces that can be mirrored and linked interchangeably into longer, unique passages. Not every time.
     - Read with items 54-56 (a reprieve erodes 10 s after first entry) and the variety finding of item 91.
+94. 2026-11-11 16:31 (on D), refining item 93: "but then not every point needs to be a long reprieval you know? It can be short
+    ones like how it is now, to a varying length perhaps even larger ones that we expect through RNG, i guess just make it possible
+    to scale big, but less chance after like 4 pieces plus. You get what I mean, so now there could be reprieval upgrades and apart
+    of the luck mechanic for it to spawn longer safe zones, perhaps even more chances for chests to spawn, or even extending the
+    time you can be there with it working. you know?"
+    - Reprieve passages of varying length: short ones as today, longer ones by chance; possible to scale big, with the chance
+      falling off past about 4 pieces.
+    - Upgrades and luck (item 41's luck) can raise: the chance of longer passages, the chance of chests in them, and the time a
+      reprieve keeps working (items 54-56's 10 s erosion).
+    - The librarian's note: the world is deterministic per seed and does not shift with the player's upgrades (the voids are
+      sized from a fixed base for that reason). So the proposal to him is that the seed lays out each passage's full possible
+      length and luck opens more of it (the extra pieces sealed at lower luck), which keeps one seed one world.
