@@ -456,3 +456,18 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     this would mean that Bhopping mechanic should be in the base game, but its very hard to accumulate momentum until you get
     the perk. You know what I mean? This means we have to allow for it with the movement system, sort of mimicking the ancient
     movement system of games of old source engine type shit"
+58. 06:45, correcting the librarian's reading of item 57 (build-specced XP) and adding psychic abilities: "its not that if you
+    spec into it it pays more, but it allows you to gain more points from having better movement abilities, say, when you slide
+    you gain points, but then you have a trinket or perk that increases slide speed or duration, that is the perfect example of
+    how specing more into physical can make you acquire more points for it, bc it makes you do it more, not that it gives extra
+    points. Same for psychic abilities when they are more fleshed out, but a little different, if you have them you can do
+    them, but if you dont you cannot get points from abilities you cannot use, but there could be an ability that distracts or
+    tricks the entities, the aura ability might be able to be learnt, but it is more fleeting than the good god giving it to
+    you, since it is your own lesser version of it, maybe it can be upgraded to god levels. there is that flashlight fusion,
+    holding it on entities gives points. There could be a psychic ability that in a way augments physical stats temporarily
+    for people who go full psychic build, say a "spell" or something that increases max speed by a ton for a little while, or
+    anything of that nature, a spell that temporarily makes the entities lose your location, it is different than the aura,
+    the aura they still know where you are, but cannot touch you, the shroud gives you even more time, but it is interesting to
+    balance cuz now the shroud is better than the aura, perhaps there has to be a downside to the shroud, it gives you stress,
+    when you use it, it makes the dreamzone become even more scary and horrifying. making the player scared and the characters
+    stress go up substantially."
