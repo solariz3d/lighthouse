@@ -1,0 +1,102 @@
+  seed 2 done (3 s)
+  seed 3 done (5 s)
+  seed 1 done (5 s)
+  seed 4 done (5 s)
+  seed 5 done (8 s)
+  seed 7 done (9 s)
+  seed 6 done (9 s)
+  seed 8 done (9 s)
+  seed 10 done (12 s)
+  seed 11 done (13 s)
+  seed 12 done (13 s)
+  seed 9 done (13 s)
+  seed 13 done (17 s)
+  seed 14 done (17 s)
+  seed 15 done (18 s)
+  seed 16 done (18 s)
+  seed 17 done (20 s)
+  seed 19 done (21 s)
+  seed 18 done (22 s)
+  seed 20 done (23 s)
+  seed 21 done (23 s)
+  seed 22 done (24 s)
+  seed 23 done (25 s)
+  seed 24 done (26 s)
+  seed 25 done (27 s)
+  seed 26 done (27 s)
+  seed 27 done (28 s)
+  seed 29 done (29 s)
+  seed 28 done (30 s)
+  seed 31 done (31 s)
+  seed 30 done (32 s)
+  seed 32 done (32 s)
+  seed 33 done (33 s)
+  seed 34 done (35 s)
+  seed 36 done (36 s)
+  seed 35 done (36 s)
+  seed 37 done (37 s)
+  seed 38 done (39 s)
+  seed 39 done (39 s)
+  seed 40 done (40 s)
+  seed 42 done (42 s)
+  seed 41 done (42 s)
+  seed 43 done (43 s)
+  seed 44 done (44 s)
+  seed 45 done (45 s)
+  seed 46 done (46 s)
+  seed 47 done (47 s)
+  seed 48 done (49 s)
+sweep: seeds 1..48, arena 2 chunks each way, runs stopped at 300 s; default dials
+speed model ( legacy):
+ref_speed         7.000   the chasers' reference speed, metres per second; every row and dial is a multiple of it
+dist_per_km       0.000   share of top speed gained for each kilometre the player has covered
+dist_max          0.000   the most the distance can add, as a share of top speed
+straight_rate     0.000   share of top speed a chaser gains each second it runs straight at its top speed
+straight_max      0.000   the most a straight can add, as a share of top speed
+straight_turn     0.300   radians a second: it is running straight while it turns slower than this
+run_up_bleed      0.000   share of the run-up lost for every radian it turns
+turn_drag         0.000   share of its speed a chaser loses for every radian it turns
+corner_floor      0.000   least share of the braking a corner asks for that every chaser does before it (1: it never swings into a wall)
+wall_stand        1.000   scale on the seconds a chaser stands after meeting a wall head-on (0: it never stops dead)
+
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  line     48    10.3    18.1    23.5    31.5    55.7    87.8    191.9         0
+normal  juke     48     9.9    14.1    17.8    23.5    28.3    34.8     55.2         0
+normal  flee     48   127.6   217.0   276.6   300.0   300.0   300.0    300.0        32
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  line       69%      31%          0%    0% |       96%           0%         0%         4% |          398
+normal  juke       79%      19%          2%    0% |       96%           4%         0%         0% |          281
+normal  flee       21%       6%          4%    2% |       33%           0%         0%         0% |        10500
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  line   |      0.00        0%      0.12     0.06      0.00 |   0.00   0.00    0.00 |     1.83   0.16   0.00   0.99     0.00 |    0.42     0%       0%
+normal  juke   |      0.00        0%      0.04     0.04      0.00 |   0.00   0.00    0.00 |     2.43   0.05   0.00   0.35     0.00 |    0.25     0%       0%
+normal  flee   |      0.85       54%      0.00     0.00      0.00 |   0.00   0.08    0.09 |     1.76   0.76   0.28   2.51     0.00 |    0.09     5%       0%
+
+where chasers caught on the world, per minute of chase
+level   policy minutes    wall hits scrape s
+                           head-on (ticks/240)   stalls   stood s
+normal  line     38.2        3.480     6.09    0.000     1.277   (totals: 133 hits, 55848 scrape ticks, 0 stalls, 11712 stood ticks)
+        by kind (hits, scrape ticks):  hunter 57, 20253;  sprinter 74, 33191;  interceptor 2, 2404;
+normal  juke     19.8        2.730     5.65    0.000     0.879   (totals: 54 hits, 26841 scrape ticks, 0 stalls, 4173 stood ticks)
+        by kind (hits, scrape ticks):  hunter 31, 12736;  sprinter 23, 13950;  interceptor 0, 155;
+normal  flee    221.6        4.724    11.31    0.005     1.538   (totals: 1047 hits, 601578 scrape ticks, 1 stalls, 81819 stood ticks)
+        by kind (hits, scrape ticks):  hunter 566, 250904;  sprinter 440, 253279;  interceptor 28, 73791;  pack 13, 23604;
+
+reprieves: 37 passages through and 4 back out the way in, in 26 of 144 runs; with the hunter out and a way to the player both times (34):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        1.9     5.1     8.3
+  and coming out: the lead                         6.0     8.9    15.4
+  lead gained                                      0.7     4.0    11.1
+  way round, the generator's figure                6.6     9.7    12.9
+  way round on the mesh, the hunter's speeds       5.3     8.0    14.8
+  lead gained over the way round on the mesh      0.09    0.59    0.84
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
+49 s in all on 4 threads
+lockrun: legacy-speed sweep line,juke,flee (stood seconds) WALL 49 s, exit 0

@@ -1,0 +1,20 @@
+base seed 9: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 13: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 14: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 15: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 16: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 17: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 18: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 19: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 20: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 21: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 22: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 23: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 24: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 25: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 26: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 27: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 28: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 29: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+base seed 30: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+lockrun: baseline seed scan at d11ce9a WALL 67 s, exit 0

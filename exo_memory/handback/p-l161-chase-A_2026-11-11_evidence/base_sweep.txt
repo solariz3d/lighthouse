@@ -1,0 +1,81 @@
+  seed 2 done (6 s)
+  seed 1 done (8 s)
+  seed 3 done (8 s)
+  seed 4 done (9 s)
+  seed 5 done (13 s)
+  seed 6 done (13 s)
+  seed 7 done (14 s)
+  seed 8 done (16 s)
+  seed 9 done (18 s)
+  seed 10 done (20 s)
+  seed 11 done (20 s)
+  seed 12 done (22 s)
+  seed 13 done (24 s)
+  seed 14 done (26 s)
+  seed 15 done (26 s)
+  seed 16 done (27 s)
+  seed 17 done (29 s)
+  seed 18 done (31 s)
+  seed 19 done (31 s)
+  seed 21 done (33 s)
+  seed 20 done (34 s)
+  seed 23 done (36 s)
+  seed 22 done (36 s)
+  seed 24 done (39 s)
+  seed 25 done (40 s)
+  seed 26 done (41 s)
+  seed 27 done (42 s)
+  seed 28 done (45 s)
+  seed 29 done (46 s)
+  seed 31 done (47 s)
+  seed 30 done (48 s)
+  seed 32 done (50 s)
+  seed 33 done (52 s)
+  seed 34 done (53 s)
+  seed 35 done (55 s)
+  seed 36 done (55 s)
+  seed 38 done (57 s)
+  seed 37 done (58 s)
+  seed 39 done (60 s)
+  seed 40 done (62 s)
+  seed 41 done (62 s)
+  seed 42 done (64 s)
+  seed 43 done (67 s)
+  seed 45 done (68 s)
+  seed 44 done (70 s)
+  seed 46 done (70 s)
+  seed 48 done (74 s)
+  seed 47 done (74 s)
+sweep: seeds 1..48, arena 2 chunks each way, runs stopped at 300 s; default dials
+
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  line     48    10.3    18.1    22.1    30.9    54.2    94.4    186.9         0
+normal  flee     48    50.8   207.8   293.9   300.0   300.0   300.0    300.0        36
+normal  still    48     8.0     8.0     8.0     8.0     8.0     8.0      8.0         0
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  line       56%      40%          4%    0% |       96%           0%         0%         4% |          388
+normal  flee        8%      10%          4%    2% |       25%           0%         0%         0% |        10500
+normal  still     100%       0%          0%    0% |      100%           0%         0%         0% |           85
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  line   |      0.00        0%      0.10     0.06      0.00 |   0.00   0.00    0.00 |     1.88   0.13   0.00   0.94     0.00 |    0.43     0%       0%
+normal  flee   |      0.71       46%      0.00     0.00      0.00 |   0.00   0.05    0.14 |     1.70   0.80   0.36   2.55     0.01 |    0.07     4%       0%
+normal  still  |      0.00        0%      0.00     0.00      0.00 |   0.00   0.00    0.00 |     0.00   0.00   0.00   0.00     0.00 |    0.00     0%       0%
+
+reprieves: 31 passages through and 3 back out the way in, in 22 of 144 runs; with the hunter out and a way to the player both times (28):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        3.2     6.2     8.6
+  and coming out: the lead                         6.6     9.4    13.7
+  lead gained                                     -0.3     2.5     9.3
+  way round, the generator's figure                6.6    10.3    14.1
+  way round on the mesh, the hunter's speeds       5.7     9.2    15.7
+  lead gained over the way round on the mesh     -0.03    0.36    0.78
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
+74 s in all on 4 threads
+lockrun: baseline sweep 48 seeds level 1 line,flee,still (d11ce9a) WALL 74 s, exit 0

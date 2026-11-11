@@ -1,0 +1,101 @@
+ok    the_score_is_time_survived_and_worth_more_the_longer_the_run
+ok    every_dial_starts_where_it_says_moves_as_it_says_and_stops_at_its_limit
+ok    dial_text_is_read_or_refused_whole
+ok    three_archetypes_and_the_climber_are_built_and_the_rest_are_named
+ok    a_faster_body_must_take_a_corner_slower_and_a_sharper_corner_slower_still
+    12 routes with three corners or more: the body that never brakes for one met the mesh's edge for longer on 11 and was the slower on 10; it met a wall head-on 21 times against 7, and took 198.5 s in all against 159.7 s
+ok    a_sprinter_that_does_not_brake_for_corners_meets_the_walls_and_one_that_does_gets_there_sooner
+    the sprinter is planned first by a quarter or more on 10 of 10 level routes; up 6 flights its best speed along the stairs was 4.67 m/s (its flat speed is 10.15, the player's sprint 7.00)
+ok    a_sprinter_wins_the_straight_and_loses_the_stairs
+    6 drops and 4 ladders the hunter's quickest way uses: it crossed 10 and was off the mesh for 0 ticks after; the others were planned a denied link 0 times and took one 0 times in 10 walks
+ok    a_chaser_takes_only_the_links_its_kind_may
+ok    a_lesser_chaser_that_never_senses_the_player_gives_up_after_its_time_to_look
+ok    a_lesser_chaser_loses_the_player_a_set_time_after_its_last_contact
+ok    a_sprinting_player_is_heard_through_a_wall_and_a_walking_one_is_not
+ok    the_interceptor_aims_ahead_of_the_player_and_keeps_the_place_it_chose
+ok    the_hunter_knows_where_the_player_is_as_precisely_as_its_dial_says
+ok    a_chaser_is_never_caught_up_with_by_a_wall_it_cannot_see_through
+ok    a_sprint_is_muffled_by_a_wall
+ok    the_director_spawns_nothing_where_every_site_is_in_sight
+ok    a_player_more_than_a_metre_above_a_chaser_is_out_of_its_reach
+    default world, brutal, 150 s: 117125 chaser ticks (117125 on the mesh, 0 on links); off the mesh 0 (worst 0.00001 m), in a reprieve 0, through geometry 0, over its speed 0 in a tick (worst 0.000 m/s over) and 0 over a second, over its turn rate 0, off its link 0, a denied link 0, wrong top speed 0
+    world thick with reprieves, hard, 240 s: 151533 chaser ticks (151533 on the mesh, 0 on links); off the mesh 0 (worst 0.00001 m), in a reprieve 0, through geometry 0, over its speed 0 in a tick (worst 0.000 m/s over) and 0 over a second, over its turn rate 0, off its link 0, a denied link 0, wrong top speed 0
+    the player went into 2 reprieves in that time, and lesser chasers were lost at a mouth 0 times
+ok    a_chaser_stays_on_the_mesh_out_of_geometry_out_of_reprieves_and_inside_its_limits
+    10 of 10 players standing 30 to 110 m from the door were reached; the slowest took 1.61 times the planned time
+ok    the_hunter_always_reaches_a_player_who_stands_still_in_connected_space
+    a reprieve 24 m long: the generator's way round 5.1 s (at 7 m/s), the mesh's 4.7 s at the hunter's 6.71 m/s; it stood 2.0 s at the mouth, took 4.8 s to go round, and when the player came back out it was 4.8 s away and took 6.0 s to arrive
+ok    the_hunter_stops_at_a_reprieves_mouth_goes_round_and_its_detour_is_the_players_lead
+    the hunter stood 1.90 m from a player 0.4 m inside the mouth, with a reach of 3.5 m, for 40 s; out of the mouth they were caught after 5.2 s
+ok    a_player_just_inside_a_reprieves_mouth_cannot_be_caught
+    the sprinter gave up 1.4 s after its last contact, with the player 3.7 m inside
+ok    a_lesser_chaser_loses_the_player_at_a_reprieves_mouth
+    climb-out 1: the way round planned from the dead end 4.3 s; the lead as the player landed 4.2 s (1.1 s as the crow flies); caught 5.5 s later
+    climb-out 2: the way round planned from the dead end 4.0 s; the lead as the player landed 4.0 s (1.5 s as the crow flies); caught 5.7 s later
+    climb-out 3: the way round planned from the dead end 4.1 s; the lead as the player landed 4.0 s (1.1 s as the crow flies); caught 5.1 s later
+    climb-out 4: the way round planned from the dead end 4.6 s; the lead as the player landed 4.5 s (0.9 s as the crow flies); caught 5.8 s later
+ok    a_climb_out_of_a_dead_end_makes_the_hunter_go_round
+    31 spawns in 300 s: in sight 0, closer than the dial 0, with no way to the player 0; the nearest was 0.2 s over the dial and 31 m off
+ok    the_director_never_spawns_in_sight_or_closer_than_its_travel_time
+    420 s on hard: 7 peaks, 6 reliefs, the shortest finished relief 14.0 s; 0 lesser chasers spawned during a relief
+ok    the_director_builds_to_a_peak_and_then_gives_relief
+    75 s on hard, 11 events, 4 lesser chasers: chase e208de824f7e3246, simulation 665fd70241c46cbd, four times over
+ok    the_same_seed_and_inputs_give_the_same_chase
+    streamed, hard, 60 s: 36958 chaser ticks (36958 on the mesh, 0 on links); off the mesh 0 (worst 0.00000 m), in a reprieve 0, through geometry 0, over its speed 0 in a tick (worst 0.000 m/s over) and 0 over a second, over its turn rate 0, off its link 0, a denied link 0, wrong top speed 0
+    60 s on hard, 43 tiles streamed in, 13 events: chase 68d98eb53985b25c all four times; tiles waited for at their tick: 43 with one worker, 30 with six, 25 with six that dawdle (a headless run goes many times faster than the clock, so the workers are behind it)
+ok    streamed_navigation_gives_the_same_chase_whatever_the_workers_do
+    run seed 1: still 8.0 s, line 32.9 s, flee 271.8 s
+    run seed 2: still 8.0 s, line 18.8 s, flee 189.7 s
+    run seed 3: still 8.0 s, line 41.8 s, flee 436.4 s
+ok    the_three_policies_end_as_they_should
+    a reprieve 24 m long: the tell from 14.0 s, open at 20.0 s; the hunter came in 0.0 s later from 12.0 m along it and caught a player who stood still 2.7 s after that
+ok    a_reprieve_holds_for_its_time_gives_its_tell_and_then_the_hunter_comes_in
+ok    stepping_out_of_a_reprieve_and_in_again_does_not_wind_its_time_back
+ok    the_hunter_walks_out_of_a_reprieve_the_player_has_left_and_is_on_the_mesh_again
+    ledge 1: out of reach for 12.0 s when the climber was sent from 19.9 s of its travel away; it went up the ledge and caught a player who stayed 22.6 s later
+    ledge 2: out of reach for 14.0 s when the climber was sent from 19.6 s of its travel away; it went up the ledge and caught a player who stayed 24.5 s later
+ok    a_player_who_stays_on_a_ledge_is_sent_a_climber_and_one_who_moves_on_is_not
+ok    a_player_hanging_on_a_ladder_is_out_of_the_hunters_reach_and_in_the_climbers
+    left 73 m behind, the hunter was 11.8 s off the mesh and caught a standing player 5.8 s after stepping back onto it
+ok    a_hunter_left_behind_by_the_stage_comes_on_without_the_mesh_and_steps_back_onto_it
+ok    the_speed_model_is_set_from_text_and_legacy_is_the_old_chase
+ok    the_chasers_have_their_own_reference_speed_and_the_players_sprint_does_not_move_it
+    covered 3000 m: hunter's top speed 7.350 at 500 m, 7.700 at 1000 m, 8.050 at 3000 m (cap 15%)
+ok    top_speed_grows_with_the_ground_the_player_has_covered_and_stops_at_its_cap
+    a straight of 69 m: peak 7.98 m/s with the model (top 6.65, run-up cap 7.98), 6.65 without it; 9.4 s against 10.7 s
+ok    the_longer_the_straight_the_more_speed_and_a_turn_takes_it_back
+    the circle at top speed: hunter 2.54 m (top 6.65), interceptor 1.44 m (top 6.30), sprinter 6.46 m (top 10.15)
+    12 routes of three corners or more: the tightest circle followed at 80% of top speed 1.43 m; its mean speed at the corners of a route was 40% under top with the model against 45% without; 147.2 s in all against 156.3 s
+ok    a_turn_costs_speed_and_the_hunter_cannot_turn_on_a_dime
+    12 routes: a sprinter that does not brake for corners met a wall head-on 13 times and stood 6.5 s after them with the old body, and 81 times and 0.0 s with the model's
+ok    a_chaser_is_never_stood_still_by_a_wall_but_a_body_built_the_old_way_is
+ok    the_interceptor_is_the_nimble_one_a_lower_top_speed_and_the_tightest_turn
+    today 7 / 8.75 over 8 s:
+       seconds    player    hunter    metres   ratio
+            10      8.75      6.72        81    0.77
+            30      8.75      6.88       256    0.79
+            60      8.75      7.11       519    0.81
+           120      8.75      7.59      1044    0.87
+           300      8.75      9.10      2618    1.04
+           600      8.75     11.93      5243    1.36
+          1200      8.75     13.65     10495    1.56
+    recommended 6 / 9 over 4 s:
+       seconds    player    hunter    metres   ratio
+            10      9.00      6.72        83    0.75
+            30      9.00      6.88       263    0.76
+            60      9.00      7.12       534    0.79
+           120      9.00      7.60      1074    0.84
+           300      9.00      9.13      2693    1.01
+           600      9.00     12.00      5393    1.33
+          1200      9.00     13.65     10795    1.52
+ok    the_player_is_a_little_faster_at_first_and_the_hunter_overtakes_at_both_sets_of_movement_numbers
+    70.0 s of chase, 10 events, 244 tiles asked for and 114 let go; tiles waited for at their tick: 174, 229 with slow workers, 124 with ragged ones
+ok    the_streamed_world_gives_the_same_chase_whatever_the_workers_do
+ok    a_record_of_the_policys_inputs_plays_back_to_the_same_chase
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\streamed_tests.cpp(136): CHECK_EQ failed: off_tile = 1, 0 = 0
+    916 m run in 109.7 s over 13 positions of the tile block; at most 140 tiles held, 309 asked for, 182 let go; 47872 looks at a chaser, 0 ticks with the player in a reprieve
+FAIL  navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone
+    104 reprieves and 403 dead ends (376 with a way out for the player) known to the run six seconds in
+ok    the_streamed_world_tells_the_run_of_its_reprieves_and_dead_ends
+46 tests, 1 failed
+lockrun: chase_tests full (final 3) WALL 199 s, exit 1

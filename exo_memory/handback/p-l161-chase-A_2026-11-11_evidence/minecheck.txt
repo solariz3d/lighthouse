@@ -1,0 +1,20 @@
+mine seed 9: FAIL  navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 13: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 14: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 15: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 16: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 17: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 18: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 19: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 20: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 21: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 22: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 23: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 24: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 25: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 26: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 27: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 28: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 29: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+mine seed 30: ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone 
+lockrun: my build seed scan WALL 74 s, exit 0
