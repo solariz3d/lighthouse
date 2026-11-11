@@ -745,3 +745,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The sounds as made today are all synthesised in code (audio/mixer.cpp: footsteps, lamp hum, fridge, the TV's murmur,
       the chasers' voices). Which ones fall short is to be asked; the librarian's 10:2x advice stands: code does hums and
       drones well and anything physical or alive badly; recorded sound is the fix for the latter.
+91. 2026-11-11 16:21 (on D), after a long run: "just had a far run, the proc gen does get way too repetitive over time, like more
+    than i thought it would running throught it for 5 mins straight, also, for most of it i cant see how its keeping up with me,
+    how is the data"
+    - Read from `game/runs/run-20261111-221301.txt` (the librarian): brutal, seed 1, build b212ae8, **caught by the pack (#64)
+      after 450.85 s**, about 3 km from the spawn (at 1883, 7, 2368). The only close calls were the hunter at 418.7 s (1.42 m)
+      and 431.6 s (2.30 m). So for about seven minutes nothing kept up with him; the hunter closed only near the end. The speed
+      model's straight-line formula said it overtakes at about 135 s; on a real route it did not.
+    - The generator reads as too repetitive over five minutes of running.
