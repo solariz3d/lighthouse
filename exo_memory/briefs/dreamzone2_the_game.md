@@ -529,3 +529,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - So: caught before the timer, the run is lost with all its points. Survive the timer and overtime starts; the evil god
       always catches you, the good god always saves you, and the run counts as a success with its points kept (plus item
       53's overtime bonus for every second you last). Being consumed happens only before the timer.
+67. 2026-11-11 08:45 (on D), settling the design map's currency contradiction (item 41, (a) against (b)): "Silver could just be
+    cash, and gold could be "energy" or something like that, cash you spend on the PC for most things, energy for meditation
+    leveling up, and even on the illicit site, it will show a mix of cash, and energy, as if you are trading it for one of the
+    trinkets to another human who knows the importance of it and the energy you give them."
+    - So two currencies: **cash** (spent at the PC on most things) and **energy** (spent in the meditation chair to level up).
+      The site's rare trinkets cost a mix of both, read as a trade with another person who knows what the trinket is worth.
+      Neither (a) nor (b) as written: it is a third version.

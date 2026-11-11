@@ -175,6 +175,7 @@
   - (a) silver for cosmetics and furniture, a premium one for abilities and persistent stats;
   - (b) gold for premium cosmetics, abilities and upgrading good entities, silver for cheaper cosmetics and physical attributes.
 - **Contradiction, inside 41:** (a) against (b). Left for him.
+- [decided 67, settles the contradiction above] Neither as written. **Cash** (the silver) is spent at the PC on most things; **energy** (the gold) is spent in the meditation chair to level up. The illicit site prices trinkets in a mix of cash and energy, read as trading with another person who knows the trinket's worth and the energy you give them.
 - [proposed: E, look hand-back] Containers in the world's language: a found cassette, a typed memo page, an object in a reprieve's light. Not chosen; item 40 asks for exactly this.
 - [GAP] The container's form (item 40). One per biome, or one kind everywhere?
 - [GAP] Currency (a) or (b)?
