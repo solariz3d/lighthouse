@@ -13,6 +13,11 @@ The repo on L is `C:\Users\zackn\Downloads\dreamride`. Read its `HANDOFF.md` fir
   - Checked on L: `C:\Program Files\Common Files\VST3\Omnisphere.vst3` (dated 2026-05-23), and the VST2
     `C:\Program Files\Steinberg\VSTPlugins\Omnisphere.dll`.
 
+- 01:4x, asked whether the chosen sounds could ship without the Omnisphere install: "but do you think it would be possible to make it so once we find the right mix and amount of instrumentation, that we could package it with dreamride without needing the heavy omnisphere installation?"
+- 01:52, after the librarian raised Spectrasonics' license on resampling: "but just think, what is the difference between me in a daw manually choosing and sequencing shit, and then building a system that then does it for me through procedural music? It is bullshit to be honest. I paid for it legit, an arm and a leg for a fkn VST, we are going to use it how we want, they are lucky didnt torrent that shit for free"
+  - **His call, taken as the go:** host Omnisphere (VST3 SDK, MIT), and print the chosen patches into a local sample set.
+  - **The one line kept:** the printed samples stay out of the public dreamride repo (gitignored, his machines only).
+
 ## Tonight's marks (01:27 to 01:40 local, from the app; checked with `ls -t`)
 
 - Good (in `examples\`): 539681 at stages 1–3; 963135 at 4–7; 971140 at 1–2, 1–4 and 2–5; 70372 at 5–8.
