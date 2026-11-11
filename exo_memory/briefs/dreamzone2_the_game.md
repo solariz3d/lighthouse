@@ -605,3 +605,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - His arc: he contacts the institute to train; at first he needs the tapes to get in at all; as he hones it and makes his
       own "bubble", his meditation chair becomes the upgrade chair (item 49), and later he enters simply by sleeping.
     - He said he could expand it further; not final.
+72. 2026-11-11 09:12 (on D), the order of work: "hmmm this is good, but i think we should fully flesh out the kids full arc
+    before doing others, but it was good to come up with the archetypes without fully fleshing it out, there will prob be 4,
+    maybe two more DLC characters lol. But first i think, we need to get the game feeling good right? Worry about the narrative
+    after"
+    - Order: the game's feel first; then the kid's full arc; the other characters after that. About four characters, perhaps
+      two more as DLC. Items 68-71's characters are archetypes, kept unfleshed on purpose.
