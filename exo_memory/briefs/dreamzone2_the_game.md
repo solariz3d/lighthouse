@@ -348,3 +348,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 39. 04:53, the balance: "i think the balancing is like this, the flashlight unlocks pretty early on, but the ability it
     synergizes with takes time to get, but also, the whole point is to stop the interceptor or future archetypes that spawn
     infront of you, it repels them creating a path ahead while they swarm and frenzy behind"
+40. 04:54: "but remember you do not spawn with it, you find it in the chests or what ever the chests become, it is unlocked early
+    you just need to get it, also, is there a better thing that a generic chest for our theme you think?"
+    - Design: the flashlight is unlocked early, never carried at spawn; it is found in a run's containers. The play setting
+      `flashlight = 1` stands only while no container exists to find it in (C moves it to a local override in L162).
