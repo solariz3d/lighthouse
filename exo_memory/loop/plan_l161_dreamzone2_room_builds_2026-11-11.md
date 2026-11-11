@@ -12,9 +12,15 @@
 ## The base
 - The play folder is at `062d5c4` with **47 changed files uncommitted**: the launcher, the flashlight, the two-stage sprint and
   the camera. The last run there: ten suites, 305 s; self-tests 26/26 and 51/51.
-- **Asked of him:** commit that folder as the base, locally, in his private repo. Then each pane works in a `git worktree` of
-  its own on its own branch, and nothing touches the play folder until a part lands.
-- If he says no: each pane copies the folder, without `build/`, into its own directory, and the merge is by hand.
+- **Settled 02:3x, his choice:** a whole new repo, with the original kept as reference.
+  - **`solariz3d/dreamzone-3`, private**, local at `C:\Users\zackn\Downloads\dreamzone-3`.
+  - Its first commit, `d11ce9a`, is the play folder as it stood: byte-identical, 256 files compared, 0 differ. Jolt v5.6.0 and
+    Recast v1.6.0 are submodules at the same commits.
+  - `git ls-remote origin main` returned `d11ce9a`.
+  - `solariz3d/dreamzone-2` stays at `062d5c4`, untouched.
+- Each pane works in its own `git worktree` of dreamzone-3, on its own branch (`l161-<part>`).
+- Nothing touches `Downloads\dreamzone-2`, his play folder, which his desktop shortcuts open. The shortcuts move to dreamzone-3
+  when a part lands and he says so.
 
 ## Parts (one pane each, one module folder each; `-j 4` each, under the heavy-run lock; L has 32 logical CPUs)
 
