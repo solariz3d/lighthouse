@@ -416,3 +416,5 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     fades back into their head as the room comes back. yous"
     - Read against items 26 and 29: the chair is reached only after the character knows of Gateway (item 29), so Hemi-Sync and
       Focus levels appear here as the story's late reveal, not at the start. That fits item 26's "ambiguous at first".
+50. 05:58: "the meditating can become apart of the ability tweaking process, when you go into tweak it, it gives like a baserate
+    reduction of stress, which can also be upgraded to be more potent"
