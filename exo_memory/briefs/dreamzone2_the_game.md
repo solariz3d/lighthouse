@@ -423,3 +423,15 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     decent buffs for the last two rarities"
 52. 06:07, correcting item 51's reading: "common and the rest can have buffs, but its like slight buff like runes or masteries in
     league vs the trinkets are strong buffs"
+53. 06:28, answering the librarian's gaps 1 (XP) and 2 (the starting abilities): "1. XP could scale from different factors,
+    distance, i was going to say time, but if you dont survive you dont accumulate anything, so not time, distance, and perhaps
+    like a multiplier past certain distances and difficulties, being in frenzy mode brings more xp per second, as well
+    proximity to entities it scales with a multiplier that has a UI element that works being minimalistic horror sci fi
+    existential dread themed. Using the reprieval zones gives a solid chunk, evading the smaller entities gives XP, opening the
+    special "chests" give xp bonus too. Perhaps there can be base movement mechanics that are just apart of the game no skills
+    required, things like connecting together movements in a skill chain or like sprinting in a straight line for extended time
+    gives points for letting it catch up, etc, ideas like that we can brain storm solely as its own thing to figure out more
+    fleshed out ways to gain XP. 2. or idk if we should have tons of base physical abilities or use the megabonk limited slots to
+    spec a character who is all movement, or all psychic or mix of both, either way you can points from doing things you specced
+    your build into, make sense in a way? Also tons of bonus XP for surviving a longer time after the round is over evading the
+    malicious god"
