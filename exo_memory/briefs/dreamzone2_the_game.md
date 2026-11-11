@@ -352,3 +352,14 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     you just need to get it, also, is there a better thing that a generic chest for our theme you think?"
     - Design: the flashlight is unlocked early, never carried at spawn; it is found in a run's containers. The play setting
       `flashlight = 1` stands only while no container exists to find it in (C moves it to a local override in L162).
+41. 05:01, currencies, attributes and the opening: "but for the chests, they also drop cash or whatever the currency will be for
+    buying cosmetics and using for abilities, silver equilivent will be for cosmetics and furniture etc, then the more premium
+    currency will be for abilities and leveling up persistent stats, or what do you think, the gold could be for premium
+    cosmetics and abilities, and upgrading the good entities, and the silver will be for cheaper cosmetics and physical
+    attribute? Cuz remember, there is the ability progression on the PC, but then there is the physical build progression,
+    There could be, Speed, which is combo of top speed and acceleration, then agility, it allows you to climb faster, and more
+    nimble on your feet fighting inertia and momentum to juke entities, luck, which could be a blanket term that modulates
+    every aspect of the game, from reprieval spawns to the chests in them etc. Also, when you open a chest, I want those like
+    spinning animations sucking out your dopamine, you know, you open the chest, you get one thing wow, but then one time you
+    open it, its like, BOOM, BOOOM, BOOOOM, BOOOOOOOOM ULTRA CHEST DOPAMINE LESSSGO! There should be that RNG aspect exploiting
+    our dopamine lmfao"
