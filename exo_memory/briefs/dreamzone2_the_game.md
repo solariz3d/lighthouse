@@ -838,3 +838,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       cables; colours and combinations true to each era. Also monitor, mouse and keyboard.
     - The writer (2026) may also build an older setup if the player wants.
     - Both eras: simple yet comprehensive.
+100. 2026-11-11 17:09 (on D), the operator's text: "i had this idea for the operative, all text at first glance is russian, but when
+    the player focus middle of screen on it, it becomes english to read"
+    - In the operator's story, every piece of text (fliers, ledger, signs, reports, his room and his biomes) is Russian at a
+      glance and turns to English when the player holds it at the middle of the screen.
+    - The librarian's notes for the build: real Russian, translated properly (never fake Cyrillic); the change can be a
+      dream-like morph of the letters; an accessibility setting shows English at once.
