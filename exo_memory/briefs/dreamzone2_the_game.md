@@ -435,3 +435,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     spec a character who is all movement, or all psychic or mix of both, either way you can points from doing things you specced
     your build into, make sense in a way? Also tons of bonus XP for surviving a longer time after the round is over evading the
     malicious god"
+54. 06:31, the safe zones: "i have an idea for the safe zones, over like 10 seconds they errode becoming hell red and screaming
+    effects"
+    - Against the built game: today a reprieve holds 20 s after entry, then the hunter walks in. That was the Third Place's
+      default, on a dial (items "Two defaults this seat set without him", above). His erosion would make that clock visible and
+      audible, and shorter.
