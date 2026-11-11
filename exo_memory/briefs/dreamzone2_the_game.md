@@ -611,3 +611,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     after"
     - Order: the game's feel first; then the kid's full arc; the other characters after that. About four characters, perhaps
       two more as DLC. Items 68-71's characters are archetypes, kept unfleshed on purpose.
+73. 2026-11-11 10:05 (on D), his first play of Dreamzone 3 on D: "damnit i fell into a void, fuck it is pretty fun already, i
+    like the safe zones, it just needs more refined animations and quality of style, idk where to even start"
+    - Checked by the librarian against the code (dreamzone-3 39e03db): everything seen is boxes. The body is posed boxes
+      (`game/body.h:23`, `game/body_figure`), the chasers are placeholders (`docs/ARCHITECTURE.md`, M4), and no file in the repo
+      loads a model or a skinned mesh (no glTF, no bones outside the body's two-bone arm). So refined animation and style
+      first need a way to bring real art into the engine.
