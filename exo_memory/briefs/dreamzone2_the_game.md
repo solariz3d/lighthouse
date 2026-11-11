@@ -673,3 +673,19 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       10% start advantage (item 28 via A, about 0.91 hunter-to-player at 30 s).
     - The generator sizes voids from the base sprint (7.0, `gen/src/gen.h:106`), not the peak, so raising only the peak
       leaves every seed's world unchanged.
+82. 2026-11-11 11:06 (on D), the order for while he sleeps: "while I sleep, can you guys continue to work on the proc gen
+    design for the different biomes for the kid. And then when that is good, continue to refine the player model and entities
+    we have from their design/textures, and animations, remember, the design for the kid will be their persona and identity as
+    well, so lets make it good, doesnt matter to me how he looks, and also remember, the camera the player sees through is
+    attached to the face of the real model that is animated like how we have right? Make the models as detailed as you can go.
+    And then we can do multiple passes if we have to. Once that is done to a sufficient level, we need to really make the
+    textures and objects that spawn in the proc gen look good and aware to their surroundings with how they spawn in. It is a
+    lot but it is a decent chunk to get the game looking better. At the same time, do you remember the overall aesthetic the
+    game is going for?"
+    - The order, in his sequence: (1) the generator's biome design for the kid; (2) the player model (the kid: his persona and
+      identity; his look is the room's choice) and the entities: design, textures, animation, as detailed as can be, in passes;
+      (3) textures and props in the generator, placed with awareness of their surroundings.
+    - His camera question, checked by the librarian against the code: today it is the other way round. The camera is the
+      simulation's eye, unchanged to the tick, and C's L161 body hangs from it (`handback/p-l161-body-C_2026-11-11.md`). He
+      wants the camera attached to the face of a real animated model. That is a design change to how the view moves; see the
+      night's plan.
