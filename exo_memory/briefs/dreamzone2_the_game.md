@@ -302,3 +302,22 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       - quest milestones open extra weapon and tome slots (about 25 and 35 quests), Skip, Banish and Toggler (Toggler after
         about 40 unlocks).
       - Sources: progameguides "How to Unlock All Items", destructoid "All shop items", megabonk.wiki/wiki/Shop.
+33. 2026-11-11 04:19 local (L), to the librarian, finishing item 32: "BUT ANYWAY you start with like, 6 basic abilties, 4 out of
+    the six will be physical based abilities that the player does with their bodies such as being more athletic, and the other
+    two abilities will be the base psychic ones the player starts with, not decided yet, so the 4 abiltiies physical can
+    synergize to form 2 ultimate abilties, and thw two base psychic abiltiies can synergize to form one ultimate, then as the
+    game progresses, the player can train to unlock more new physical abilities, and then that illicit website trains the
+    player how to utilize new psychic abilties in the dreamzone runs, get it? LOOK up now how megabonk does their abiltiies and
+    synergies to understand"
+    - Checked (search, guides):
+      - Megabonk's run has **weapons**, which level up and scale with stats, and **tomes**, which are global stat boosts (one
+        stat each, about 23) and lift every weapon at once. Weapons are short-term power; tomes are long-term scaling.
+      - Its synergies are stat interactions, not fusions. Examples: Damage and Precision tomes with offensive tomes; Quantity
+        with projectile weapons; attack speed with on-hit items.
+      - The "Holy Trinity" is the **Curse Tome** (more enemies) plus XP for faster levels. That is his item 26's "make the
+        entities stronger for more XP".
+      - Named fusions were not confirmed for Megabonk. **The closer precedent for "two abilities fuse into an ultimate" is
+        Vampire Survivors' evolutions** (a weapon at max level plus a specific passive, opened from a chest after 10 min) and
+        its unions. That is from the librarian's knowledge; not searched this turn.
+      - Sources: gfinityesports "Weapon Scaling Explained", gurugamer "complete weapon and tome upgrades guide",
+        rogueranker "Megabonk tips", megabonk.wiki tome pages.
