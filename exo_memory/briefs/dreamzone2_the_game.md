@@ -445,3 +445,14 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     having entered it"
     - So the clock starts on first entry and keeps running whether he stays or leaves. Ten seconds after he first steps in, the
       zone has eroded (and per item 55 it is ordinary dream space from then on). Stepping out does not pause it.
+57. 06:39, on gap 1 (XP by build) and movement: "1. Say specific example, if you spec into psychic build, you can still derive XP
+    from doing physical related things, such as parkour like movement or chaining together jumps and slides and jukes, there
+    could be an ability that gives you a super slide effect, or a dive into a roll that moves with the head to have this fun
+    finessable movement, say like diving over top of the shorter enemies like summersault type shit. I think we need to do more
+    research into parkour running type games like mirrors edge, or other types of games where you run from something, the best
+    example is GMOD nexbot and there was this parkour swepe mod that worked decent for movement, also on the fence if there
+    should be a bhop feature that then lets you chain everything all movement, but this would be like end game perk that is for
+    endless, it helps you gain so much speed to outrun even the evil god and the worst frenzies, well not outrun, but survive,
+    this would mean that Bhopping mechanic should be in the base game, but its very hard to accumulate momentum until you get
+    the perk. You know what I mean? This means we have to allow for it with the movement system, sort of mimicking the ancient
+    movement system of games of old source engine type shit"
