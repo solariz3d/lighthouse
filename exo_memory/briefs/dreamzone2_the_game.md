@@ -708,3 +708,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       the dreamzone, unique buff and biome set (74); then the design of how their stories intertwine (68: each discloses what
       makes another's make sense, playable in any order past the unlock caps). The kid (46-47) and the writer (71) are the two
       archetypes already on record; the kid's arc stays first (72).
+    - CORRECTION to item 79's note (librarian, 2026-11-11 13:0x): "the entities stay the things never seen sharp" was the
+      librarian's reading of a NIGHT-RUNNERS reviewer's description, not his word, and it was carried into E's chaser sheets as
+      a rule to model the chasers with less detail. His own word (item 82) is that the player model AND the entities are made
+      "as detailed as you can go". The entities are built fully detailed; how sharply they are seen is left to the render
+      (haze, light, the dream dial).
