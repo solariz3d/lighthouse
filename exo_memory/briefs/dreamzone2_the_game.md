@@ -733,3 +733,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     intelligent you know?"
     - After a corner, a chaser snaps onto a dead-straight line at him. He wants pursuit that reads as an organic intelligence,
       not a machine locking on.
+89. 2026-11-11 15:51 (on D), biomes in his build, and doors: "also is there more biomes in the current build? I do love the proc
+    gen as it is now for the starting biome, but sometimes there are too many doors you know?"
+    - Checked: his build is main b212ae8 (the apartment's textures in, built 15:30). It holds the apartment, the hotel, the
+      school and the hospital. The home regions round the spawn are always the apartment; the others lie out in the biome field,
+      so they are met only after travelling; nothing yet lets him start in a chosen biome.
+    - Doors: today's school landing raised the apartment's `door_rate` 0.25 → 0.30 (E's D658 "a door too many", from the D652
+      trait list), and D656 added doors set onto walls (`false_doors` 0.01). He loves the apartment's generator as it is but
+      finds the doors too many: the door_rate goes back to 0.25 or under, measured.
