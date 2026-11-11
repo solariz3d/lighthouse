@@ -741,3 +741,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Doors: today's school landing raised the apartment's `door_rate` 0.25 → 0.30 (E's D658 "a door too many", from the D652
       trait list), and D656 added doors set onto walls (`false_doors` 0.01). He loves the apartment's generator as it is but
       finds the doors too many: the door_rate goes back to 0.25 or under, measured.
+90. 2026-11-11 16:12 (on D), after playing the build with D656's sound: "the sounds themselves need work"
+    - The sounds as made today are all synthesised in code (audio/mixer.cpp: footsteps, lamp hum, fridge, the TV's murmur,
+      the chasers' voices). Which ones fall short is to be asked; the librarian's 10:2x advice stands: code does hums and
+      drones well and anything physical or alive badly; recorded sound is the fix for the latter.
