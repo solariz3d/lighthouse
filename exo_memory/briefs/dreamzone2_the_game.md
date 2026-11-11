@@ -617,3 +617,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       (`game/body.h:23`, `game/body_figure`), the chasers are placeholders (`docs/ARCHITECTURE.md`, M4), and no file in the repo
       loads a model or a skinned mesh (no glTF, no bones outside the body's two-bone arm). So refined animation and style
       first need a way to bring real art into the engine.
+74. 2026-11-11 10:07 (on D), the look's references and biomes per character, answering the librarian's "what should it look
+    like?": "yes look up like liminal spaces creepy pasta type internet culture, or those nostalgia bait type content, but also
+    it made me realize, if we are making separate characters, there has to be different themes that go along with their psyche
+    in the proc gen you know? The kid has his archetypes that manifest, every other character could have their own style of
+    biomes that the dreamzone manifests. But this comes later, just spit balling ideas when I get them"
+    - The look's reference: liminal-space and creepypasta internet culture, and nostalgia-bait content. To be researched.
+    - Later, not now: each character's psyche shapes its own biome set in the generator (item 26 made the biomes the kid's
+      psyche; this extends it to every character).
