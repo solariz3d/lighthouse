@@ -500,3 +500,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     runs out, the passive buffs and no stress remai[n], but the star buff goes away, we should call it something else to avoid
     the mario comparison, haha but its the best one, its like super sayian or like the energy ive had during those intense
     contact"
+62. 07:20, naming and the question under it: "i think it should just be called recognition, but idk, what I am balancing right now
+    is this, if it happens once and is transient, why? Why cant the player constantly embody that state if it can be achieved at
+    all?"
