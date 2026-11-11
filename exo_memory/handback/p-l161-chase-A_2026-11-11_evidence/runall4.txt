@@ -1,0 +1,13 @@
+=== chase_tests
+47 tests, 0 failed
+=== game_tests
+119 tests, 0 failed
+=== world_app_tests
+25 tests, 0 failed
+=== dz-gym --selftest
+  ok    24 frames presented to the hidden window's swap chain: play, the overlay, a resize, the prompt
+selftest: passed (26 of 26 checks passed)
+=== dz-world --selftest
+  ok    every frame drew
+selftest: passed (51 of 51 checks passed)
+lockrun: all suites + selftests (L162 tip) WALL 341 s, exit 0

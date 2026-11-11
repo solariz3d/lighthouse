@@ -1,0 +1,4 @@
+    chaser-ticks in direct pursuit: range 0 with the player 9 m off: 0; range 10 with the player 9 m off: 400; range 10 with the player 30 m off: 0
+ok    a_chaser_within_close_range_pursues_the_players_position_directly_and_one_outside_it_does_not
+1 tests, 0 failed
+lockrun: close test WALL 3 s, exit 0
