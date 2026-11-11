@@ -1,0 +1,11 @@
+DBG pos -50.5375 0.0375 108.0125 d(0.00 0.00 0.00) tile -2 0 3 held 0
+DBG pos -50.5375 0.0375 108.0125 d(-0.01 0.00 0.00) tile -2 0 3 held 0
+DBG pos -50.5375 0.0375 108.0125 d(0.01 0.00 0.00) tile -2 0 3 held 0
+DBG pos -50.5375 0.0375 108.0125 d(0.00 0.00 -0.01) tile -2 0 2 held 1
+DBG pos -50.5375 0.0375 108.0125 d(0.00 0.00 0.01) tile -2 0 3 held 0
+DBG pos -50.5375 0.0375 108.0125 d(0.00 -0.31 0.00) tile -2 0 3 held 0
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\streamed_tests.cpp(143): CHECK_EQ failed: off_tile = 1, 0 = 0
+    916 m run in 109.7 s over 13 positions of the tile block; at most 140 tiles held, 309 asked for, 182 let go; 47872 looks at a chaser, 0 ticks with the player in a reprieve
+FAIL  navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone
+1 tests, 1 failed
+lockrun: test tile debug WALL 7 s, exit 1

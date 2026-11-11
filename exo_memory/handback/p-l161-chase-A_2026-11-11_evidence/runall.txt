@@ -1,0 +1,24 @@
+chase_tests.exe
+dz-gym.exe
+dz-world.exe
+game_tests.exe
+world_app_tests.exe
+=== chase_tests
+46 tests, 0 failed
+=== game_tests
+119 tests, 0 failed
+=== world_app_tests
+25 tests, 0 failed
+=== dz-gym --selftest
+  ok    F1 opens the overlay with the simulation still running, and closes it
+  ok    F11 reaches the window as a fullscreen request (not carried out on a hidden window)
+  ok    Esc, then Esc again at the prompt, asks the window to close
+  ok    24 frames presented to the hidden window's swap chain: play, the overlay, a resize, the prompt
+selftest: passed (26 of 26 checks passed)
+=== dz-world --selftest
+  ok    a reprieve holds for its time, and then the hunter comes in: in at 4.3 s, the tell from 6.3 s, open at 9.3 s, the hunter in at 10.5 s, caught at 14.0 s
+  ok    its tell is a light that was not there and a sound that grows: the light at most 1.00 (none before the tell); the mix 0.1103 in the last third of the tell against 0.0780 in the second before it
+  ok    a player who stays on a ledge is sent a climber, and it comes up after them: out of reach 3.0 s when it was sent from 19.3 s away; caught by the crawler at 27.8 s (418 frames drawn)
+  ok    every frame drew
+selftest: passed (51 of 51 checks passed)
+lockrun: game tests + selftests WALL 396 s, exit 0
