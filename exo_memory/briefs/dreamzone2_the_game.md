@@ -907,3 +907,19 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     Undertow): "they are good for now"
     - The story as it stands (D667 with its additions) is accepted for now. The dark one's name stays open among those four; no
       pick yet. The build uses a placeholder.
+111. 2026-11-11 17:58 (on D), the wardrobe: "i actually like the looks, could be fleshed out more, complex customization, hair cut
+    if not hat even, BETTER YET, haircuts still change underneath the hat, making the hair bend in ways it should. But this is
+    later. There could be like a dozen base items for each class, shoes, pants, undershirt and jacket, accesories and hats,
+    glasses, etc. But it is good to start crafting the type of mid 2000 clothing style and the type of clothing perhaps even
+    ripoff brands like the pc parts will have. And so listen here is an idea, once we have all of the pieces made, like the ones
+    you can buy, they come from the store with the common buffs associated with each item of each class, but when you go through
+    a run with a certain outfit of items, there is a chance something can rub off on a clothing item, increasing the buff or
+    giving it an extra quirk, increasing its rarity to one up above, giving it an extra trait small buff, think of it like
+    cyberpunk cyberware small buffs with darkest dungeon quirks."
+    - He likes all three redesign-2 looks; none picked as the base yet.
+    - Later, not now: complex customisation; haircuts, and the hair still shaped under a hat (bending as it should); about a dozen
+      base items per slot (shoes, pants, undershirt, jacket, accessories, hats, glasses, and more).
+    - Now: start crafting the mid-2000s clothing style and parody clothing brands (as the PC parts will have).
+    - Clothing progression: store items come with a common buff for their slot; wearing an outfit through a run gives each piece
+      a chance that something "rubs off" on it: a stronger buff, or an extra quirk/trait (a small buff), raising its rarity one
+      step. Cyberpunk's cyberware small buffs crossed with Darkest Dungeon's quirks.
