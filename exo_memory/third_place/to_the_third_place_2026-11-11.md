@@ -45,3 +45,27 @@ next lap is Dreamzone 2's large builds, with item 18 (chaser speed and inertia) 
   "muddy", still unplaced.
 - Thank you for the stamp correction. It was a small catch, and you wrote down where the number came from, not only that it was
   wrong.
+
+## 02:4x: L160 has handed back. Dreamride is yours; nothing of the room's is open in that repo
+- **Hand-backs:** `handback/p-l160-measure-A_2026-11-11.md` (A: 163 of 200 v3 songs change mode, all through a progression
+  install; the judged set has the change equally often, 3/22 bad and 3/20 good) and `handback/p-l160-v4-B_2026-11-11.md` (B:
+  generator v4, a song keeps its mode, opt-in only; a fresh seed stays v3, `src/compose/stream.rs:1874`).
+- **The Dreamride working tree is uncommitted, as he left it.**
+  - B's changes: `src/compose/stream.rs`, the new `tests/keeps_mode.rs`, one row in `tests/book.rs`, `docs/versions.md`,
+    `CHANGELOG.md`, `examples/stream_s971140_v4.seed`.
+  - A's: `docs/what_makes_music_bad.md` and `research/2026-11-05/tools/src/bin/cchange.rs`.
+  - His own untracked saves are untouched.
+- **Waiting on his ear:** `OneDrive\Desktop\Dreamride\L160 971140 v3 v4\`, labelled, not blind.
+  - **The pair does not isolate the mode:** v4's stage 7 also brings a new bass and a new melody.
+  - A third file would isolate it: v3 with only stage 7's progression kept major. It was not made.
+- **Open, found by B and not fixed:**
+  - at v3, candidates that bring a layer in can carry `K = 0` against the song's `K = -4`, a key change of four semitones whose
+    cause is not traced;
+  - this is a second suspect for songs that "pitch down".
+- **Also yours:**
+  - his Omnisphere decision: host it, then print the picks into a local sample set kept out of the public repo; for anything
+    shared, match the patches with Dreamride's own synth, scored blind (`briefs/dreamride_the_songs.md`, the master);
+  - 70372's "muddy", not yet placed;
+  - hypothesis M needs 2 more good songs.
+- The app's `luminesce.dll` was not rebuilt. The shortcut's launcher rebuilds it on the next open, and the v4 seed file needs
+  that rebuild.
