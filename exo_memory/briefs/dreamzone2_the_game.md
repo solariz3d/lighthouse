@@ -576,3 +576,13 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - A run lost before the timer still adds a little to the global level ("crumbs"); a won run adds the real amount.
     - Energy comes from successful escapes (runs that survive the timer) and from the containers.
     - Open, his: why a dream pays cash. He allows it may simply be a game mechanic left unexplained.
+70. 2026-11-11 09:02 (on D), the first cheque and the period, after the librarian offered "someone pays for what you see in
+    there" as the reason a dream pays cash: "So since everyone starts with the kid, who doesnt know shit all, what if there is
+    like a first time tutorial that goes along for the first playthrough of him, After the first successful run, a random
+    cheque comes under your door, and it is in the value of the money you made during the run, at first the character is like ?
+    bc it doesnt say why he got it, it just has his name on it, and something called The Monroe Institute. I am just thinking,
+    what time period would we like? I had this idea just now, like early mid 2000s aesthetic, especially with the PC builder"
+    - A first-time tutorial runs alongside the kid's first playthrough.
+    - After his first successful run, a cheque comes under the door for the run's cash, with his name and the payer's name on
+      it and no reason given. The kid does not know why. (The payer is the cash's in-world source.)
+    - The period: early to mid 2000s, proposed by him, "especially with the PC builder". Not yet decided.
