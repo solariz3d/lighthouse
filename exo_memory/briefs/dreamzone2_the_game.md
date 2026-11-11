@@ -345,3 +345,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 37. 04:5x: "the flashlight can be an ability you unlock, then it could be specced with some sort of psychic power, combining to
     form an op flashlight that when shined upon entities, it slows them down or repels them for a short time"
 38. 04:51, finishing item 37: "but it frenzies all other entities that it isnt being pointed at"
+39. 04:53, the balance: "i think the balancing is like this, the flashlight unlocks pretty early on, but the ability it
+    synergizes with takes time to get, but also, the whole point is to stop the interceptor or future archetypes that spawn
+    infront of you, it repels them creating a path ahead while they swarm and frenzy behind"
