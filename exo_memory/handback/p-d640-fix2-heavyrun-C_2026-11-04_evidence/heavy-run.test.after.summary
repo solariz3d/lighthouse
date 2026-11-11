@@ -1,0 +1,63 @@
+ok 1 - TWO RUNS STARTED TOGETHER: the second WAITS, names the first's seat, pid and command, and runs only after it
+ok 2 - A STALE LOCK (its pid is dead) is taken over, and the takeover is logged with the holder and its age
+ok 3 - a LIVE holder is never taken over: after the max wait the second FAILS LOUDLY with the holder's details and does not run
+ok 4 - RELEASE ON A THROWN ERROR: a runner that throws leaves no lock behind
+ok 5 - RELEASE ON SIGINT: the handler hold() installs releases and exits 130 (the handler, run by emitting the signal in-process)
+ok 6 - RELEASE ON NORMAL EXIT, and release removes only its OWN lock
+ok 7 - a NESTED run under the holder (its token in the environment) is the same run: it does not wait and does not release
+ok 8 - a token that is NOT the current holder's (a child of some earlier run) is no pass: it waits like anyone else
+ok 9 - no data dir is a REFUSAL, never a run without the lock
+ok 10 - the lock holds {pid, seat, cmd, started} (and the token, since D286 the tree, and since L124 the holder's identity {image, holder_start})
+ok 11 - pidAlive: this process is alive; a pid that does not exist is not
+ok 12 - D283 (RED FIRST) the claimed false takeover: kill(0) reads a 5-minute-old holder dead, tasklist reads it RUNNING: the lock is NOT taken, the disagreement is said once with both readings, and at the max wait it fails loudly
+ok 13 - D283 a young lock whose holder BOTH methods say is gone IS taken over, and logged (a TaskStop leaves exactly this)
+ok 14 - D283 a young lock the second method CANNOT judge (null) is not taken: unknown is the safe side; it waits and fails loudly
+ok 15 - D283 an OLD lock (30 minutes or more) is taken on kill(0) alone: the second method is never asked; to the millisecond
+ok 16 - D283 a lock whose age cannot be read (no started, or junk) counts as YOUNG: the second witness is asked
+ok 17 - D283 PID REUSE fails safe: a lock whose pid is now some OTHER live process reads alive on every method, so the waiter waits and gives up loudly (real methods)
+ok 18 - D283 REAL: a live holder in another process is never taken: the real kill(0) and the real tasklist both say running, the waiter gives up, the lock is untouched and the holder still runs
+ok 19 - D283 REAL: a holder killed HARD (as a stopped task is) leaves its lock, and the next runner takes it over at once, logged, naming the dead pid (real kill(0) and real tasklist)
+ok 20 - D283 pidGone: tasklist is asked for exactly that pid; a listed row means running; no row (exit 0) means gone; a failure, an error or garbage means "cannot tell"; off Windows kill(0) is the whole truth
+ok 21 - D289 pidGone: a call that timed out after tasklist exited 0 (error set, status 0, partial output) is "cannot tell", not gone
+ok 22 - D283 pidAlive: EPERM is alive (not allowed to touch it is not dead); ESRCH, any other error and a bad pid are not
+ok 23 - D283 a race: a LIVE lock created between the read and the takeover is put back, not clobbered, and the waiter keeps waiting
+ok 24 - D289 a race: a YOUNG lock caught by the rename is not thrown away on kill(0) alone; it is put back, tasklist is asked, and while tasklist says RUNNING the waiter waits
+ok 25 - D289 F1 a race: another runner's claim caught between its wx open and its write (an empty lock) is put back, not thrown away, and the waiter waits; the racer's write lands in the slot
+ok 26 - D289 F1 a claim being written this instant (unreadable, younger than the grace) is waited for without ever being moved aside
+ok 27 - D289 F1 the same race when the lock first read was itself an OLD unreadable lock: the racer's fresh empty claim is still put back (only an old unreadable file is taken)
+ok 28 - D283 hold() exits 3 when the max wait runs out behind a live holder (loudly, naming it) and 2 when there is no data dir; it never runs the work
+ok 29 - D283 an UNREADABLE lock: one written this instant (younger than the grace) is waited for; an old one is taken over and logged as unreadable
+ok 30 - WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harness.js take the lock through this helper
+ok 31 - D286 (RED FIRST) two runners on DIFFERENT trees both run: slots 1 and 2, each lock names its tree
+ok 32 - D286 two runners on the SAME tree: the second waits, though slot 2 is free, and names the first
+ok 33 - D286 the same tree waits WHICHEVER slot holds it (the holder is in slot 2, slot 1 is free)
+ok 34 - D286 a THIRD runner with both slots held waits and names BOTH holders
+ok 35 - D286 SLOTS=1 is today's lock: a different tree WAITS, the second slot file is never made, and a live holder in slot 2 (someone with more slots) also blocks
+ok 36 - D286 a DEAD holder in slot 2 is taken over and logged, and the new lock in slot 2 records whom it replaced
+ok 37 - D286 D283's second witness applies PER SLOT: a young slot-2 lock whose holder kill(0) calls dead but tasklist calls RUNNING is not taken
+ok 38 - D286 a NESTED run re-enters its own slot, slot 2 as well as slot 1, and releases nothing
+ok 39 - D286 a lock from before D286 (no tree recorded) blocks every tree: unknown is the safe side
+ok 40 - D286 a RACE between two runners of one tree that claim different free slots in the same instant: the later one sees the earlier and backs off, so only one runs
+ok 41 - D286 slot count: the option and CONSONANCE_HEAVY_SLOTS; a typo is the default 2 (it must not switch the lock off); file names heavy-run.lock, heavy-run.2.lock, heavy-run.3.lock
+ok 42 - D286 resolveTree: a git checkout is its top level (one tree from any subfolder), another checkout is another tree, and a cwd outside git is the one shared non-git bucket
+ok 43 - D286 REAL processes: two runners in two different git checkouts hold the lock AT THE SAME TIME; two in one checkout do not
+ok 44 - D286 the claim is EXCLUSIVE: a rival that takes the slot between this runner's look and its claim is never overwritten; the runner waits for it
+ok 45 - D287 disk guard: under 20 GB free on a drive the run writes to, it REFUSES before taking a slot, naming the drive, the figure and the janitor's total
+ok 46 - D454 part 2: the disk refusal points to GATES.md, the page that explains what refuses a seat
+ok 47 - D287 disk guard: at a normal free space it runs (takes the slot) and says nothing
+ok 48 - D287 disk guard: between 20 and 50 GB it WARNS once and still runs; the LOWEST drive decides
+ok 49 - D287 disk guard: a drive that cannot be read is said and skipped, never a refusal or a silent pass
+ok 50 - D287 disk guard: what the run writes to is the cwd, the scratch root and CARGO_TARGET_DIR
+ok 51 - D287 disk guard through hold(): a refused run EXITS 4, loudly, and never starts
+ok 52 - APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty or absent, hold() takes its lock in USERPROFILE/.consonance and runs the work
+ok 53 - PID REUSED by another program (alive, different image): the lock is STALE — taken over, logged as reused, recorded in took_over
+ok 54 - PID REUSED by the SAME image (a later node took the pid): a start time more than the tolerance off is STALE
+ok 55 - the SAME process (alive, same image, start within the tolerance, case-insensitive image) is HELD: it waits and times out, lock untouched
+ok 56 - a DEAD pid with an identity lock is STALE as before, without asking the OS who has it
+ok 57 - an OLD-FORMAT lock (no identity recorded) behaves exactly as before: a live pid is HELD and the OS is never asked
+ok 58 - an UNKNOWN identity (the OS query failed) is HELD — failing to look is never a reason to take a live lock
+ok 59 - the OS is asked about a waited-on holder at most once per identity-recheck interval, not on every poll
+ok 60 - REAL (this machine): processIdentity of THIS process matches the identity this process records — same image, start within the tolerance
+ok 61 - REAL (this machine): processIdentity of a pid that does not exist is null (unknown), never a guess
+# pass 61
+# fail 0
