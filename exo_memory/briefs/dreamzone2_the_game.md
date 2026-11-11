@@ -440,3 +440,4 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Against the built game: today a reprieve holds 20 s after entry, then the hunter walks in. That was the Third Place's
       default, on a dial (items "Two defaults this seat set without him", above). His erosion would make that clock visible and
       audible, and shorter.
+55. 06:31, continuing item 54: "eventually stop being safezones altogether once it errodes into regular space in the dream"
