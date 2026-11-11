@@ -367,3 +367,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     not only mitigates stress, but lowers the peak of the frenzy, not by enough to stop it, but it makes it more tolerable when
     it happens, since your mental fortitude stops them from frenzying harder since even though the player is stressed, they can
     deal with it better without the energy leaking out, like sharks and blood in water"
+43. 05:2x, the horror: "i feel like i have been forgetting to imbed in more horror themes, this should be a horror game, besides
+    the fun addrealine of running, there should be real horror tropes and context, not just mindless but effective jumpscares,
+    but truly terrifying content that is relavent, what I am getting at is the inherent horror of existence at all, there is
+    this quote that comes to mind, take the shape of this: biology is just a temporary phase of geometry. Watch as the flesh
+    calcifies into cold iridescent iron. We are crawling through the veins of a dying machine. the structural transition is
+    complete, the incubation void is open."
+    - The quote's author is not known to the librarian; it was not searched. It is kept as his reference for the shape, not
+      attributed.
