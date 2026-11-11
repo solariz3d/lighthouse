@@ -800,3 +800,26 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       meet the others' traces there.
     - Documented ground the librarian points to: Gateway's Focus 15 is the state of "no time" (E's L161 lore, L161 handback
       "Focus 10, 12, 15 and 21"), and the 1983 memo describes Focus 21 as "movement outside of the boundaries of time-space".
+98. 2026-11-11 16:55 (on D), each character's room and how they progress: "for the kid the means of acquiring new abilities and
+    cosmetics is the same through his PC and exercising in his room, the writer also has similar home gym setup, and perhaps say
+    a modern day PC setup, this allows for more customization for PC lovers, we can when the time comes, create ripoff brands of
+    pc parts and mimic designs lol, just like that pc builder sim game, it will be like a mini game remember? It wont be AS
+    detailed, but you can buy the parts and assemble them in a case like just buying them online, even for 2005, and 2026, the PC
+    will work similar but have different design for the UI within the game lol. So windows from 2005 look vs modern windows 11 and
+    ui style. For the russian, it will be a lot different, they will have their little living quarters, perhaps some sort of
+    underground bunker base or not sure how it would go, but they have their exercise mat or what ever those kgb fks would use, no
+    pc screen bc no internet, perhaps where the desk is there are a bunch of fliers or something you can browse through for
+    character specific cosmetics, then he uses the same strat as the kid eventually meditating to unlock abilities, and then can
+    acquire trinkets from the kgb some how through their shop we some how set up that makes sense, they trade cash and energy for
+    something, but it tells the story of the military trying to control it, something that cannot be truly comprehended"
+    - The kid (2005): abilities and cosmetics through his PC and exercising in his room (items 48-51, 68).
+    - The writer: a similar home gym and a modern PC (so the writer's era is the present, 2026). The PC builder mini game works
+      the same for both eras (buy parts online, assemble them in a case; not as detailed as a full builder sim), with each era's
+      own desktop UI: a 2005 look against a modern one. Parody brands of PC parts, made up.
+    - The operator: living quarters, perhaps an underground bunker; an exercise mat; no PC, no internet; at the desk, a stack of
+      fliers to browse for his own cosmetics; he meditates to unlock abilities as the kid eventually does; trinkets through a KGB
+      supply he trades cash and energy into, telling the story of the military trying to control something that cannot be
+      comprehended.
+    - The librarian's note for whoever builds the UIs and brands: the brands are invented parodies with their own names and
+      logos; the two desktops are period-styled originals, never a copy of a real operating system's logos, names or exact
+      screens.
