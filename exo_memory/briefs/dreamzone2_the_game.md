@@ -400,3 +400,19 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     same for the exercise equipment, I had an idea, what if the PC is just for cosmetics and rare trinkets on that site, but
     then, the third thing to upgrade in the room/hamlet would be, the abilties themselves, how it would work, there is a chair
     or beanbag in the room, you sit in it and this is where you"
+49. 05:55, finishing item 48 (it arrived cut off again, at "yous", with a pane's ring pasted after it): "THIS IS WHERE you upgrade
+    your abiltiies and acquire new ones through the out of body state, think of it like, some ether world like it turns to
+    skyrim in the stars or something looking at the abilities, or think of it like, the player sits down, and depending on which
+    focus level they are one, is what dictates which abilties unlock and can even be upgraded themselves to be more potent, so
+    the setup is a chair the player sits in, meditates with hemi sync, forcing the player into an out of body state, reminds me
+    of like viktor in arcane after he is in what looks like to be the cosmic realm or some shit lol. But its just a stable area
+    of dreamzone made by the player, it is more of a menu than a section of world, it goes to third person after you sit in the
+    chair, and the rest of the room dissolves away, showing the ground where the beanbag chair is and the player, but the rest
+    of the room dissolved away into an infinite void of colour and darkness at the same time. You get what I mean right, the
+    player sits in the chair, causing this like, darksouls type menu to open transparent that shows the background turn to like
+    this cosmic realm, when the player is done, the room fades back like how it faded away, and your soul comes back to your
+    body third person to first, or rather third person, the camera first rises out of the body, and moves upward as the room
+    dissolves showing the cosmic void, when tweaking loadout is done, the camera lowers back, showing the body of the player and
+    fades back into their head as the room comes back. yous"
+    - Read against items 26 and 29: the chair is reached only after the character knows of Gateway (item 29), so Hemi-Sync and
+      Focus levels appear here as the story's late reveal, not at the start. That fits item 26's "ambiguous at first".
