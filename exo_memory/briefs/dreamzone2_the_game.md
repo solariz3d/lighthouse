@@ -876,3 +876,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       kid's affinity. So the sale was not chance: the PC found him.
     - 2. The good god gets a new name. It is ancient, the counterforce to the dark one, and said to be the more powerful.
     - Question 3 (his waking life) is still open.
+106. 2026-11-11 17:42 (on D), the kid's waking life, from the librarian's six pieces (A his mother on night shifts; B his
+    grandmother; C an online best friend over MSN-style chat; D a school friend; E sleep and school falling apart; F the seller
+    won't let go): "acf is good"
+    - **A:** his mother works nights; just the two of them; money tight; notes on the fridge, her knock at dawn; he uses the
+      cheques for the bills and lies about the money; the dreamzone learns her knock.
+    - **C:** an online best friend he talks to every night on the PC; the friend notices him changing, gets curious, tries the
+      tapes; later, messages arrive from the friend while the friend is asleep.
+    - **F:** the seller keeps checking on his "progress" on the forum; watching him, never clearly helping or harming.
