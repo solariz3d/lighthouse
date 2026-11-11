@@ -97,7 +97,7 @@ His order, 07:32 (see the lighthouse handoff). **Read first:**
 - **Whether the hunter paces an eroding safe zone or waits** (items 54–56).
 
 ## PICK UP HERE (D)
-1. **On D:** `git clone --recursive https://github.com/solariz3d/dreamzone-3` beside dreamzone-2, `build.bat`, then `build.bat test`. Point D's shortcuts at it, as L's were (`handback/p-l161-land-B_2026-11-11.md`, "THE SHORTCUTS"). Copy his local `gameconfigworld.local.txt` if he wants the flashlight there too.
+1. **On D:** `git clone --recursive https://github.com/solariz3d/dreamzone-3` beside dreamzone-2, `build.bat`, then `build.bat test`. Point D's shortcuts at it, as L's were (`handback/p-l161-land-B_2026-11-11.md`, "THE SHORTCUTS"). Copy his local `game/config/world.local.txt` if he wants the flashlight there too.
 2. **Read** `briefs/dreamzone3_design.md`, then the brief's items 54–63, which the design map does not hold yet. Fold them in.
 3. **Put his open calls to him** (list above), the contradictions first. Then gap 2, the six abilities.
 4. **A: the stair fix against the levers** (`proof_tests.cpp:159`, red with e2dc31b on main). Register first and do not weaken the row.
