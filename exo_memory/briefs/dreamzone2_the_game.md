@@ -503,3 +503,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 62. 07:20, naming and the question under it: "i think it should just be called recognition, but idk, what I am balancing right now
     is this, if it happens once and is transient, why? Why cant the player constantly embody that state if it can be achieved at
     all?"
+63. 07:30, on the render: "okay sounds good, one small complaint about the lighting as it was, not the entities themselves, but
+    how the raytraces lighting is drawn, sometimes it is too grainy or there are shimmering after images from the player model
+    cutting through it in a funky way, you know? Like there is too much noise by the raytraced lighting"
