@@ -823,3 +823,18 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The librarian's note for whoever builds the UIs and brands: the brands are invented parodies with their own names and
       logos; the two desktops are period-styled originals, never a copy of a real operating system's logos, names or exact
       screens.
+99. 2026-11-11 17:01 (on D), the PC builder's design: "we also should go with realistic pricing for the times, besides the spike of
+    2026 for pc parts lol, that would be asking too much of even the player to get that money xD. But yea, so its not something
+    the player will invest in at first, but be a resource sink for fun eventually when they dont need to keep spending money on
+    physical attribute boost or cosmetics, closer to an end game fun little mini game, but yes, all parody brands of real parts. It
+    should be cases, motherboards, Cpu, cpu coolers, ram, gpus, power supplies, memory systems, case fans, every major part of the
+    PC, even the wiring or whatever, can create different combos, different colors of different parts that made sense and were
+    authentic. Perhaps even different monitor and mouse and keyboard, also for the writer, it even will allow him to build an older
+    setup if the player wants. But yes for both eras the pc builder will be simple yet comprehensive"
+    - Prices realistic for each era, except 2026's price spike, which is not passed on in full.
+    - Placed as a late-game resource sink for fun, once physical boosts and cosmetics no longer need the money; not an early
+      investment.
+    - All parody brands of real parts. Parts: case, motherboard, CPU, CPU cooler, RAM, GPU, power supply, storage, case fans,
+      cables; colours and combinations true to each era. Also monitor, mouse and keyboard.
+    - The writer (2026) may also build an older setup if the player wants.
+    - Both eras: simple yet comprehensive.
