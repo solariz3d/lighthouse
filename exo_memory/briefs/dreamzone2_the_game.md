@@ -635,3 +635,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       `handback/p-l161-look-E_2026-11-11.md` (effect table, one "dream intensity" dial).
     - The target: pseudo-photoreal, stylized hyperrealism made by rendering tricks. His reference: the game Nightrunners.
     - Kept from the page: the light, surfaces, composition and sound traits; none of the three example pictures.
+76. 2026-11-11 10:18 (on D), confirming what item 75 keeps from the look page: "but the lighing and surfaces, composition and
+    sound seem chill"
+    - Kept as the base: the page's light (cool fluorescent and warm tungsten per biome, flat overhead, a dead or flickering
+      tube), surfaces (carpet, drop ceilings, wallpaper, pool tile, terrazzo, lockers; light wear), composition (emptiness,
+      repetition, wrong scale, thresholds; the signs of missing people) and sound (ballast hum, HVAC, room reverb, distant muzak).
