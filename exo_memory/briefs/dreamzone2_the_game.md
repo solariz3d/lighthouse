@@ -137,3 +137,24 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       - **The way out is the "click out"** (¶19–22): consciousness "'clicks out' of time-space and joins infinity". Focus 21
         is the furthest Gateway state (¶30).
       - The CIA site refused the fetch; the text was read from Wikisource. Copies differ by OCR, so E checks the scan.
+25. 2026-11-11 02:42 local (L), to the librarian, on the lore and the run's structure: "Yes the lore should be ambigious at
+    first, say like, the player is someone accessing this side of themselves with no training and no prior knowledge of how to
+    navigate these spaces, look and elaborate off of the paper saying there exists other intelligences outside of time space,
+    some good, some bad, these will be the entities, perhaps we could flesh out in the future good entities, perhaps one that
+    for an example fills you with holy aura that temporarily stops the bad entities from feeding on you and consuming you,
+    another good entity is a physical being that spawns into the world and tanks agro for you for a short time to create
+    distance, etc. Perhaps we could make it like, rogelite, vampire survivors or megabonk game structure, each run you build
+    strength, but you can also keep getting stronger or faster during the run to keep escaping, this would mean the player has
+    their base stats, and then perhaps there could be abilities you start out with, and then can find chests or good entities
+    that freeze time and let you choose a new ability at random that could then be synergized with another if found together
+    like vampire survivors, this could be like, one ability could be a faster sprint top speed, then the other ability to go
+    with it would be like increased acceleration, together they make you very nimble and fast, not a definite ability to be
+    made just an example for you to understand what I mean."
+    - **Checked by the librarian against the paper (Wikisource text):**
+      - ¶26 "perhaps to interact with other forms of consciousness within the universe".
+      - ¶27 "interact with other intelligences in other dimensions within the universe".
+      - ¶29: the energy balloon is "protection against conscious entities possessing lower energy levels", "which the
+        participant might encounter in the event that he achieves an out-of-body state".
+      - ¶33 "thought forms" met out of body.
+      - ¶38 J "Be intellectually prepared to react to possible encounters with intelligent, non-corporal energy forms".
+      - The paper does not sort them into good and bad beyond ¶29's protective framing. The good ones are his.
