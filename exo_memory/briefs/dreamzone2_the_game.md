@@ -640,3 +640,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Kept as the base: the page's light (cool fluorescent and warm tungsten per biome, flat overhead, a dead or flickering
       tube), surfaces (carpet, drop ceilings, wallpaper, pool tile, terrazzo, lockers; light wear), composition (emptiness,
       repetition, wrong scale, thresholds; the signs of missing people) and sound (ballast hum, HVAC, room reverb, distant muzak).
+77. 2026-11-11 10:18 (on D), the audio: "there should defintelly be an indepth audio system that works like ray traced audio or
+    whatever, look into the work of bodycam and their sound design"
+    - Checked by the librarian (dreamzone-3 39e03db, `audio/audio.h:23,78`): today a source with no line of sight is
+      low-passed at 800 Hz and 9 dB quieter; that is the whole of the acoustics. No reverb, reflection or propagation.
+    - His reference: the game Bodycam's sound design. To be researched (D654).
