@@ -862,3 +862,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       Whoever owned the PC before him went somewhere and never came back, and the dreamzone is full of their traces. The PC
       room is the story's heart.
     - He picked 4 alone; the blend with 5 (the previous owner being his father) is not taken unless he says so.
+104. 2026-11-11 17:20 (on D), on the Signal's spine: "we could throw in the lore of the kgb or cia operative findings or something
+    idk"
+    - The agencies' findings join the kid's story as found lore: the American side and the Soviet side.
+    - The librarian's proposal in reply (17:2x): the real 1983 Gateway memo was cleared for public release in 2003 (CIA reading
+      room, approved for release 2003/09/10; E's L161 lore), so in 2005 it is newly out and passed round forums: the previous
+      owner built the program from it. American files appear redacted and the bars lift on focus; the Soviet ledger is Russian
+      that turns English on focus (item 100). Never claiming what the agencies did beyond the record.
