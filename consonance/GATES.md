@@ -253,6 +253,35 @@ without `--apply`), or, for a wait, let the holder finish or ask that seat.
 **To change it:** `CONSONANCE_HEAVY_WAIT_MS` sets the wait. The disk floor is `DISK_REFUSE_BYTES` in `consonance/tools/heavy-run.js`;
 there is no switch for it.
 
+### The exclusive hold (D663)
+
+**What.** A run that needs the machine quiet takes the **exclusive hold**: `hold({ cmd, exclusive: true })`, or from a shell:
+
+    node consonance/tools/heavy-run.js --run --exclusive --cmd "<what>" -- <program> [args...]
+
+- **The hold file.** It writes `<data>/heavy-run.hold`.
+- **It waits for the machine to empty.** Until every slot is free of other runs, in any checkout and from any seat.
+- **Then it runs.** Every other heavy run waits for as long as the hold stands, and says once:
+  `heavy-run: waiting on an exclusive hold by <seat> pid <pid> (<cmd>, since <t>)`. The 30-minute wait and its exit 3 apply as for
+  the lock.
+- **Its own children pass.** They carry its token.
+- **A dead holder's hold is taken over** by the lock's own rules.
+- **A hold older than 90 minutes is ignored,** with a loud `heavy-run: IGNORING the exclusive hold by …` line, so a forgotten hold
+  never parks the room.
+
+**Why.** A hold relayed in words cannot bind: it waits in a busy pane's inbox. On 2026-11-11, C's slot-2 work ran in P's quiet
+landing window 14 minutes before the word reached it. A file every runner reads binds at once.
+
+**The rule that goes with it:**
+- **Take the exclusive hold for** a timing session and a landing's quiet window.
+- **Run these through heavy-run too:** Blender bakes and any game run over 10 seconds (the ordinary lock, `--run` without
+  `--exclusive`, or `hold({ cmd })` in a node wrapper). A run that never takes heavy-run is not stopped by the hold; A's Blender runs
+  and the short `dz-world` runs did not, which is how unlocked load reached P's window.
+- **Not in scope:** a process watcher.
+
+**To change it:** `HOLD_MAX_MS` in `consonance/tools/heavy-run.js`. A hold whose run is over can be removed by hand; the IGNORING line and
+the wait's exit-3 message name its file.
+
 ## The app's delivery refusal
 
 **What.** When a message is sent to a seat whose terminal has exited and is not being reopened, the app writes it nowhere. It sends

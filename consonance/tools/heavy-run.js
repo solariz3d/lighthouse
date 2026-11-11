@@ -74,6 +74,18 @@
 // key or field, or an invalid value (dropped and named in `ignored`), is today's behaviour. Other tools read it with `node consonance/tools/heavy-run.js --profile [key]`
 // (JSON of every set field, or one value, empty when unset) or `require('./heavy-run.js').profile().values`.
 //
+// THE EXCLUSIVE HOLD (D663; the chair, 2026-11-11 21:23Z: a hold RELAYED to a busy pane waits in its inbox and cannot bind, so C's slot-2 work ran in P's quiet landing
+// window 14 minutes before the word reached it). A run that needs the machine quiet — a timing session, a landing's quiet window — calls hold({ cmd, exclusive: true }),
+// or the CLI `node heavy-run.js --run --exclusive --cmd "<what>" -- <program> [args...]`. It writes <data>/heavy-run.hold with 'wx' ({pid, seat, cmd, tree, started,
+// token, image, holder_start, exclusive}), then waits until EVERY slot is free of other runs (any tree, any seat), then takes its slot under the same token. While the hold
+// exists every other runner WAITS, in the lock's own style (not a refusal), and says once: `heavy-run: waiting on an exclusive hold by <seat> pid <pid> (<cmd>, since <t>)`;
+// the max wait and its loud failure apply as for a lock. A runner carrying the hold's token (the holder's children, through CONSONANCE_HEAVY_RUN_TOKEN) passes. A
+// runner that claimed a slot looks at the hold once more after its claim and backs off if one appeared (the same two-step as the slot rival check), so a claim racing
+// the hold's write never runs inside it. Release removes the hold only with its own token, and a holder that gives up (the max wait) removes its hold before it fails.
+// A STALE hold (holder gone) is taken over by the lock's own rules (takeIfStale: kill(0), D283's second witness when young, PID reuse), and logged. A hold older
+// than HOLD_MAX_MS (90 min) is IGNORED, with a loud line once per hold: a forgotten hold must never park the room. An exclusive runner that meets an over-age hold moves it
+// aside (loudly) and writes its own. Not in scope: a process watcher (a run that never takes heavy-run is not stopped by any of this; GATES.md says which runs must).
+//
 //   const h = require('./heavy-run.js').hold({ cmd: 'js-suite' });   // waits, or exits 3 loudly; releases on exit
 
 const fs = require('fs');
@@ -86,6 +98,8 @@ const { dataDir: manifestDataDir } = require('./state-manifest.js');
 const appDefaultDataDir = () => path.join(process.env.USERPROFILE || require('os').homedir(), '.consonance');
 
 const LOCK_NAME = 'heavy-run.lock';   // slot 1; slot k is heavy-run.k.lock (D286)
+const HOLD_NAME = 'heavy-run.hold';   // D663: the exclusive hold
+const HOLD_MAX_MS = 90 * 60 * 1000;   // D663: a hold older than this is ignored, loudly
 const DEFAULT_SLOTS = 2;
 const MAX_SLOTS = 8;
 const NON_GIT_TREE = '(not in a git tree)';
@@ -316,7 +330,7 @@ function acquire({
   cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim, beforeTake,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
   alive = pidAlive, confirmGone = pidGone, identify = processIdentity, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
-  writes, diskFree = freeBytes, diskTotal = janitorTotal, heavy,
+  writes, diskFree = freeBytes, diskTotal = janitorTotal, heavy, exclusive = false, holdMaxMs = HOLD_MAX_MS,
 } = {}) {
   let dir = dataDir === undefined ? manifestDataDir() : dataDir;
   if (dataDir === undefined && !dir) { dir = appDefaultDataDir(); fs.mkdirSync(dir, { recursive: true }); }
@@ -403,7 +417,67 @@ function acquire({
     return true;
   }
 
+  // D663: the exclusive hold (see the header). foreignHold() reads <data>/heavy-run.hold: null = none that binds me (absent, mine, my parent's, or stale and now taken
+  // over); { h, ignored } = another run's hold, ignored when past holdMaxMs (said once per hold).
+  const holdFile = path.join(dir, HOLD_NAME);
+  const ignoredHolds = new Set();
+  let myHold = false, saidHold = false, holdTookOver = null;
+  function foreignHold() {
+    for (let i = 0; i < 3; i++) {
+      const h = readLock(holdFile);
+      if (h === null) return null;
+      if (h.token && (h.token === token || h.token === env[TOKEN_ENV])) return null;   // mine, or the holder's child
+      const before = tookOver;
+      if (takeIfStale(holdFile, 'hold', h)) { holdTookOver = tookOver; tookOver = before; continue; }   // a stale hold, taken over by the lock's own rules and logged
+      const hAge = ageOf(h, now());
+      if (hAge !== null && hAge > holdMaxMs) {
+        if (!ignoredHolds.has(h.token)) {
+          ignoredHolds.add(h.token);
+          log(`heavy-run: IGNORING the exclusive hold by ${describe(h)}: it is ${mins(hAge)} old, past the ${mins(holdMaxMs)} maximum, so it no longer parks the room. If its run is over, remove ${holdFile}`);
+        }
+        return { h, ignored: true };
+      }
+      return { h, ignored: false };
+    }
+    return null;
+  }
+  const dropMyHold = () => { if (!myHold) return; const cur = readLock(holdFile); if (cur && cur.token === token) { try { fs.unlinkSync(holdFile); } catch (_) {} } myHold = false; };
+  const holdWait = (h) => {
+    const waited = now() - t0;
+    if (waited >= maxWaitMs) { dropMyHold(); throw Object.assign(new Error(`heavy-run: gave up waiting on an exclusive hold after ${mins(waited)} — ${describe(h)} still holds ${holdFile}. Not running inside it: an exclusive hold is a quiet window (a timing session or a landing). Wait for it, or ask that seat.`), { code: 'HEAVY_RUN_TIMEOUT', holder: h, holders: [h] }); }
+    if (!saidHold) { saidHold = true; log(`heavy-run: waiting on an exclusive hold by ${describe(h)}`); }
+    sleep(pollMs);
+  };
+  if (exclusive) {
+    for (;;) {
+      const f = foreignHold();
+      if (f && f.ignored) {   // past the maximum: moved aside, loudly (said by foreignHold), so this run's hold can be written
+        const aside = `${holdFile}.ignored-${process.pid}-${now()}`;
+        try { fs.renameSync(holdFile, aside); } catch (_) { continue; }
+        const moved = readLock(aside);
+        if (moved && moved.token !== f.h.token) { try { fs.linkSync(aside, holdFile); } catch (_) { /* a newer hold is already there */ } }
+        try { fs.unlinkSync(aside); } catch (_) {}
+        continue;
+      }
+      if (f) { holdWait(f.h); continue; }
+      let hfd;
+      try { hfd = fs.openSync(holdFile, 'wx'); } catch (e) { if (e.code === 'EEXIST') continue; throw e; }
+      const hrec = { pid: process.pid, seat: seatName(env), cmd, exclusive: true, tree: myTree, started: new Date(now()).toISOString(), token, image: self.image, holder_start: self.holder_start };
+      if (holdTookOver) hrec.took_over = holdTookOver;
+      try { fs.writeSync(hfd, JSON.stringify(hrec)); } finally { fs.closeSync(hfd); }
+      myHold = true;
+      break;
+    }
+  }
+  // An exclusive holder waits for EVERY other run (any tree, any seat); everyone else by the slot rules.
+  const blocksMe = (h) => exclusive || blocks(h);
+
+  try {
   for (;;) {
+    if (!exclusive) {   // D663: a hold binds every runner but its holder and the holder's children
+      const fh = foreignHold();
+      if (fh && !fh.ignored) { holdWait(fh.h); continue; }
+    }
     // Look at every slot — the ones above n too: a runner told to use fewer slots still honours a holder in another.
     const live = [], free = [];
     for (let k = 1; k <= MAX_SLOTS; k++) {
@@ -412,7 +486,7 @@ function acquire({
       if (takeIfStale(file, k, h)) { if (k <= n) free.push(k); continue; }
       live.push({ k, file, h });
     }
-    const blockers = live.filter((x) => blocks(x.h));
+    const blockers = live.filter((x) => blocksMe(x.h));
     if (blockers.length === 0 && free.length) {
       const k = free[0], file = slotFile(dir, k);
       const rec = { pid: process.pid, seat: seatName(env), cmd, tree: myTree, started: new Date(now()).toISOString(), token, image: self.image, holder_start: self.holder_start };
@@ -430,6 +504,10 @@ function acquire({
         const o = readLock(slotFile(dir, j));
         if (o && o.token !== token && blocks(o)) clash = true;
       }
+      if (!clash && !exclusive) {   // D663: a hold written between my look and my claim: back off, so a racing claim never runs inside it
+        const late = foreignHold();
+        if (late && !late.ignored) clash = true;
+      }
       if (!clash) {
         env[TOKEN_ENV] = token;
         let released = false;
@@ -440,6 +518,8 @@ function acquire({
             released = true;
             const cur = readLock(file);
             if (cur && cur.token === token) { try { fs.unlinkSync(file); } catch (_) { /* already gone */ } }
+            const curHold = myHold ? readLock(holdFile) : null;   // D663: the hold goes only with its own token
+            if (curHold && curHold.token === token) { try { fs.unlinkSync(holdFile); } catch (_) { /* already gone */ } }
             if (env[TOKEN_ENV] === token) delete env[TOKEN_ENV];
           },
         };
@@ -464,6 +544,7 @@ function acquire({
     }
     sleep(pollMs);
   }
+  } catch (e) { dropMyHold(); throw e; }   // D663: a holder that gives up (the max wait) leaves no hold behind
 }
 
 /** Take the lock for this process (waiting as acquire does) and release it on exit, error and signal. On a timeout or a
@@ -486,7 +567,25 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+module.exports = { HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+
+// D663: `node heavy-run.js --run [--exclusive] --cmd "<what>" -- <program> [args...]` runs one program under the lock (and the hold, with --exclusive) and exits
+// with its code. For a run that is not node (a Blender bake, a game run over 10 s, a timing session's own binary): GATES.md, "The heavy-run lock".
+function runCli(argv, { spawn = spawnSync } = {}) {
+  const dd = argv.indexOf('--');
+  const flags = dd < 0 ? argv : argv.slice(0, dd), prog = dd < 0 ? [] : argv.slice(dd + 1);
+  const ci = flags.indexOf('--cmd');
+  const cmd = ci >= 0 ? flags[ci + 1] : undefined;
+  if (!prog.length || !cmd) { process.stderr.write('heavy-run: usage: node heavy-run.js --run [--exclusive] --cmd "<what>" -- <program> [args...]\n'); return 2; }
+  hold({ cmd, exclusive: flags.includes('--exclusive') });
+  const r = spawn(prog[0], prog.slice(1), { stdio: 'inherit', windowsHide: true });
+  if (r.error) { process.stderr.write(`heavy-run: could not start ${prog[0]}: ${r.error.message}\n`); return 2; }
+  return r.status === null ? 1 : r.status;
+}
+
+if (require.main === module && process.argv[2] === '--run') {
+  process.exitCode = runCli(process.argv.slice(3));
+}
 
 if (require.main === module && process.argv[2] === '--profile') {
   const { values } = profile();

@@ -741,8 +741,11 @@ test('CPU CAP mask: N lowest logical CPUs; unset, empty, junk, 0, negative, frac
 });
 test('CPU CAP applyCap: unset env asks the OS NOTHING and says nothing (today\'s behaviour exactly)', () => {
   let asked = 0;
-  H.applyCap({ env: { CONSONANCE_HEAVY_CPUS: '  ' }, pid: 1234, platform: 'win32', cpus: 32, run: () => { asked++; return {}; }, log: () => { asked++; } });
-  const r = H.applyCap({ env: {}, pid: 1234, platform: 'win32', cpus: 32, run: () => { asked++; return {}; }, log: () => { asked++; } });
+  // D663 amendment (pane E): the env given here names the suite's own empty config. With `env: {}` the profile was read from THIS machine's ~/.consonance.json, so on a
+  // machine whose profile sets `heavy.cpus` (D does) the row read the cap and went red on main too, and the mutant harness's control could never be green there.
+  const noProfile = { CONSONANCE_CONFIG: process.env.CONSONANCE_CONFIG };
+  H.applyCap({ env: { ...noProfile, CONSONANCE_HEAVY_CPUS: '  ' }, pid: 1234, platform: 'win32', cpus: 32, run: () => { asked++; return {}; }, log: () => { asked++; } });
+  const r = H.applyCap({ env: { ...noProfile }, pid: 1234, platform: 'win32', cpus: 32, run: () => { asked++; return {}; }, log: () => { asked++; } });
   assert.strictEqual(asked, 0);
   assert.strictEqual(r.applied, false);
 });
@@ -790,7 +793,10 @@ test('REAL (this machine): hold() with CONSONANCE_HEAVY_CPUS=2 pins the holder A
   const capped = run({ CONSONANCE_HEAVY_CPUS: '2', CONSONANCE_HEAVY_SHAPE: 'lowest' });   // the lowest-N shape: mask 0b11 (the spread shape has its own rows)
   assert.deepStrictEqual(capped.m, { holder: '3', mid: '3', grand: '3' }, capped.err);
   const free = run({ CONSONANCE_HEAVY_CPUS: '' });
-  const all = String((1n << BigInt(os.cpus().length)) - 1n);
+  // D663 amendment (pane E): "unset" adds no cap OF ITS OWN, so the family keeps THIS process's affinity. That is every CPU on an uncapped machine, as before.
+  // Under a capped parent (the mutant harness holds the lock, and D's profile sets heavy.cpus 8), the children inherit the parent's cap, and the old "every CPU"
+  // expectation read 21845 against 65535: the control of heavy-run.mutants.js could never be green on D.
+  const all = spawnSync('powershell', ['-NoProfile', '-Command', aff(process.pid)], { encoding: 'utf8', windowsHide: true }).stdout.trim();
   assert.deepStrictEqual(free.m, { holder: all, mid: all, grand: all }, free.err);
 });
 
@@ -927,4 +933,176 @@ test('REAL (this machine): hold() with CONSONANCE_HEAVY_CPUS=4 pins the holder a
   assert.strictEqual(cores.filter((c) => (c & sp.m.holder) !== 0n).length, 4, 'four different cores');
   const lo = run({ CONSONANCE_HEAVY_SHAPE: 'lowest' });
   assert.deepStrictEqual(lo.m, { holder: 15n, child: 15n }, lo.err);
+});
+
+// ---- D663: THE EXCLUSIVE HOLD (the chair, 2026-11-11 21:23Z: a hold relayed to a busy pane cannot bind; C's slot-2 work ran in P's quiet window) ----
+const holdOf = (d) => path.join(d, 'heavy-run.hold');   // the literal name, so these rows read red on a heavy-run.js without the hold (not a TypeError)
+const readHold = (d) => JSON.parse(fs.readFileSync(holdOf(d), 'utf8'));
+const liveHold = (over = {}) => ({ pid: 5151, seat: 'pppp7777', cmd: 'landing quiet window', tree: '/t/p', started: new Date(Date.now() - 5 * 60000).toISOString(), token: 'HOLDTOKEN', exclusive: true, ...over });
+
+test('D663 HOLD: an exclusive hold makes an ORDINARY runner of ANOTHER tree wait, saying once whose hold it is, and fail loudly at the max wait without running', () => {
+  const d = tmp();
+  const held = liveHold();
+  fs.writeFileSync(holdOf(d), JSON.stringify(held));
+  const logs = [], c = fakeClock();
+  assert.throws(
+    () => H.acquire({ cmd: 'gen_tests', dataDir: d, env: {}, tree: '/t/other', slots: 2, alive: () => true, maxWaitMs: 1000, pollMs: 100, ...c, log: (s) => logs.push(s) }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT' && /exclusive hold/.test(e.message) && /pppp7777 pid 5151 \(landing quiet window, since /.test(e.message),
+  );
+  const said = notDisk(logs).filter((s) => /^heavy-run: waiting on an exclusive hold by pppp7777 pid 5151 \(landing quiet window, since /.test(s));
+  assert.strictEqual(said.length, 1, `said once: ${JSON.stringify(logs)}`);
+  assert.ok(!fs.existsSync(lockOf(d)) && !fs.existsSync(path.join(d, 'heavy-run.2.lock')), 'no slot was taken');
+  assert.deepStrictEqual(readHold(d), held, 'the hold is untouched');
+});
+
+test('D663 HOLD: TWO REAL PROCESSES: while an exclusive holder runs, an ordinary runner waits on it and runs only after its release', async () => {
+  const d = tmp();
+  const first = spawn(process.execPath, ['-e', `const H=require(${JSON.stringify(HELPER)});H.hold({cmd:'timing session',exclusive:true,pollMs:50});console.log('HELD '+Date.now());setTimeout(()=>{console.log('END '+Date.now())},1200)`],
+    { env: cleanEnv({ CONSONANCE_DATA: d, CONSONANCE_PANE: 'tttt1111-timing' }), stdio: ['ignore', 'pipe', 'pipe'] });
+  const firstDone = done(first);
+  await until(() => fs.existsSync(holdOf(d)) && fs.existsSync(lockOf(d)));
+  assert.strictEqual(readHold(d).pid, first.pid);
+  const second = child(d, 'dz-world 12s', 'console.log("RAN "+Date.now())', 'ssss2222-other');
+  const r2 = await done(second);
+  const r1 = await firstDone;
+  assert.strictEqual(r1.code, 0, r1.err); assert.strictEqual(r2.code, 0, r2.err);
+  assert.match(r2.err, new RegExp(`heavy-run: waiting on (an exclusive hold by )?tttt1111 pid ${first.pid}`), r2.err);
+  const end = Number(r1.out.match(/END (\d+)/)[1]), ran = Number(r2.out.match(/RAN (\d+)/)[1]);
+  assert.ok(ran >= end, `the ordinary run started after the holder ended (${ran} >= ${end})`);
+  assert.ok(!fs.existsSync(holdOf(d)), 'the hold is released with the run');
+});
+
+test('D663 HOLD: the holder\'s CHILDREN pass (they carry its token), and only they do', () => {
+  const d = tmp();
+  const env = {};
+  const h = H.acquire({ cmd: 'timing session', dataDir: d, env, tree: '/t/p', slots: 2, exclusive: true, alive: () => true, log: () => {} });
+  assert.ok(fs.existsSync(holdOf(d)), 'the exclusive run wrote the hold');
+  assert.strictEqual(readHold(d).token, env[H.TOKEN_ENV], 'one token for the hold and the slot');
+  const kid = H.acquire({ cmd: 'its bench child', dataDir: d, env: { [H.TOKEN_ENV]: env[H.TOKEN_ENV] }, tree: '/t/q', slots: 2, alive: () => true, log: () => {} });
+  assert.strictEqual(kid.reentrant, true, 'a child of the holder passes');
+  const c = fakeClock();
+  assert.throws(() => H.acquire({ cmd: 'stranger', dataDir: d, env: { [H.TOKEN_ENV]: 'SOMEONE-ELSE' }, tree: '/t/q', slots: 2, alive: () => true, maxWaitMs: 500, pollMs: 100, ...c, log: () => {} }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT', 'a runner carrying another token waits like anyone');
+  h.release();
+  assert.ok(!fs.existsSync(holdOf(d)) && !fs.existsSync(lockOf(d)), 'released, both files');
+});
+
+test('D663 HOLD: a runner carrying the HOLD\'s token passes the hold even when the holder has no slot yet (the hold binds strangers, never its own run)', () => {
+  const d = tmp();
+  fs.writeFileSync(holdOf(d), JSON.stringify(liveHold()));
+  const h = H.acquire({ cmd: 'holder\'s own step', dataDir: d, env: { [H.TOKEN_ENV]: 'HOLDTOKEN' }, tree: '/t/p', slots: 2, alive: () => true, maxWaitMs: 500, pollMs: 100, ...fakeClock(), log: () => {} });
+  assert.strictEqual(h.slot, 1, 'it ran');
+  h.release();
+});
+
+test('D663 HOLD: an EXCLUSIVE runner waits until every slot is free of OTHER trees too, where an ordinary runner would have run beside them', () => {
+  const d = tmp();
+  fs.writeFileSync(path.join(d, 'heavy-run.2.lock'), JSON.stringify({ pid: 6262, seat: 'bbbb4444', cmd: 'school gen_tests', tree: '/t/b', started: new Date().toISOString(), token: 'B' }));
+  const c = fakeClock(), logs = [];
+  assert.throws(() => H.acquire({ cmd: 'landing', dataDir: d, env: {}, tree: '/t/p', slots: 2, exclusive: true, alive: () => true, maxWaitMs: 1000, pollMs: 100, ...c, log: (s) => logs.push(s) }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT' && /bbbb4444 pid 6262/.test(e.message));
+  assert.ok(!fs.existsSync(holdOf(d)), 'a holder that gives up removes its hold');
+  const ord = H.acquire({ cmd: 'ordinary', dataDir: d, env: {}, tree: '/t/p', slots: 2, alive: () => true, log: () => {} });
+  assert.strictEqual(ord.slot, 1, 'an ordinary run of another tree runs beside it (the slot rules, unchanged)');
+  ord.release();
+});
+
+test('D663 HOLD: a STALE hold (its holder dead, old) is taken over and logged; an exclusive runner then writes its own', () => {
+  const d = tmp();
+  fs.writeFileSync(holdOf(d), JSON.stringify(liveHold({ pid: 424242, started: new Date(Date.now() - 60 * 60000).toISOString(), token: 'DEAD' })));
+  const logs = [];
+  const h = H.acquire({ cmd: 'new session', dataDir: d, env: {}, tree: '/t/p', slots: 2, exclusive: true, alive: (pid) => pid !== 424242, log: (s) => logs.push(s) });
+  assert.match(logs.join('\n'), /took over a stale lock — pppp7777 pid 424242 \(landing quiet window, since .*\) is not running; it was 60m old \(slot hold\)/);
+  const now = readHold(d);
+  assert.strictEqual(now.pid, process.pid);
+  assert.strictEqual(now.took_over.holder.pid, 424242, 'the new hold records whom it replaced');
+  assert.ok(!readLock(d).took_over, 'the slot lock does not claim the hold\'s takeover');
+  h.release();
+  assert.deepStrictEqual(fs.readdirSync(d), [], 'nothing left behind');
+});
+
+test('D663 HOLD: a stale hold is taken over by an ORDINARY runner too (it then runs); a YOUNG one needs the second witness, as a lock does', () => {
+  const d = tmp();
+  fs.writeFileSync(holdOf(d), JSON.stringify(liveHold({ pid: 424242, started: new Date(Date.now() - 60 * 60000).toISOString(), token: 'DEAD' })));
+  const h = H.acquire({ cmd: 'ordinary', dataDir: d, env: {}, tree: '/t/o', slots: 2, alive: (pid) => pid !== 424242, log: () => {} });
+  assert.ok(!fs.existsSync(holdOf(d)), 'the dead hold is gone'); h.release();
+  const d2 = tmp();
+  fs.writeFileSync(holdOf(d2), JSON.stringify(liveHold({ pid: 424242, started: new Date(Date.now() - 5 * 60000).toISOString(), token: 'YOUNG' })));
+  const c = fakeClock(), logs = [];
+  assert.throws(() => H.acquire({ cmd: 'ordinary', dataDir: d2, env: {}, tree: '/t/o', slots: 2, alive: () => false, confirmGone: () => false, maxWaitMs: 500, pollMs: 100, ...c, log: (s) => logs.push(s) }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT');
+  assert.ok(fs.existsSync(holdOf(d2)), 'a young hold whose holder tasklist still lists is NOT taken');
+  assert.match(logs.join('\n'), /RUNNING to tasklist/);
+});
+
+test('D663 HOLD: release removes the hold ONLY with its own token', () => {
+  const d = tmp();
+  const env = {};
+  const h = H.acquire({ cmd: 'timing session', dataDir: d, env, tree: '/t/p', slots: 2, exclusive: true, alive: () => true, log: () => {} });
+  const other = liveHold({ token: 'NOT-MINE' });
+  fs.writeFileSync(holdOf(d), JSON.stringify(other));   // someone else's hold now stands there (as after a takeover)
+  h.release();
+  assert.deepStrictEqual(readHold(d), other, 'another run\'s hold is left alone');
+  assert.ok(!fs.existsSync(lockOf(d)), 'its own slot lock is released');
+});
+
+test('D663 HOLD: a NON-exclusive runner never writes a hold', () => {
+  const d = tmp();
+  const h = H.acquire({ cmd: 'ordinary', dataDir: d, env: {}, tree: '/t/o', slots: 2, alive: () => true, log: () => {} });
+  assert.ok(!fs.existsSync(holdOf(d)));
+  h.release();
+});
+
+test('D663 HOLD: a hold past the 90-minute maximum is IGNORED with a loud line (once): an ordinary runner runs; an exclusive one replaces it', () => {
+  assert.strictEqual(H.HOLD_MAX_MS, 90 * 60 * 1000);
+  const d = tmp();
+  const old = liveHold({ started: new Date(Date.now() - 95 * 60000).toISOString(), token: 'FORGOTTEN' });
+  fs.writeFileSync(holdOf(d), JSON.stringify(old));
+  const logs = [];
+  const h = H.acquire({ cmd: 'ordinary', dataDir: d, env: {}, tree: '/t/o', slots: 2, alive: () => true, log: (s) => logs.push(s) });
+  const loud = notDisk(logs).filter((s) => /^heavy-run: IGNORING the exclusive hold by pppp7777 pid 5151 .* 95m old, past the 90m maximum/.test(s));
+  assert.strictEqual(loud.length, 1, JSON.stringify(logs));
+  assert.deepStrictEqual(readHold(d), old, 'an ordinary runner leaves it in place');
+  h.release();
+  const logs2 = [];
+  const x = H.acquire({ cmd: 'new session', dataDir: d, env: {}, tree: '/t/p', slots: 2, exclusive: true, alive: () => true, log: (s) => logs2.push(s) });
+  assert.match(logs2.join('\n'), /IGNORING the exclusive hold/);
+  assert.strictEqual(readHold(d).pid, process.pid, 'the exclusive runner wrote its own hold');
+  x.release();
+  const d2 = tmp();
+  fs.writeFileSync(holdOf(d2), JSON.stringify(liveHold({ started: new Date(Date.now() - 89 * 60000).toISOString() })));
+  const c = fakeClock();
+  assert.throws(() => H.acquire({ cmd: 'ordinary', dataDir: d2, env: {}, tree: '/t/o', slots: 2, alive: () => true, maxWaitMs: 500, pollMs: 100, ...c, log: () => {} }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT', 'an 89-minute hold still binds');
+});
+
+test('D663 HOLD: a claim RACING the hold backs off: a hold written between an ordinary runner\'s look and its claim makes it wait', () => {
+  const d = tmp();
+  const c = fakeClock();
+  let wrote = false;
+  assert.throws(() => H.acquire({ cmd: 'ordinary', dataDir: d, env: {}, tree: '/t/o', slots: 2, alive: () => true, maxWaitMs: 1000, pollMs: 100, ...c, log: () => {},
+    beforeClaim: () => { if (!wrote) { wrote = true; fs.writeFileSync(holdOf(d), JSON.stringify(liveHold())); } } }),
+  (e) => e.code === 'HEAVY_RUN_TIMEOUT' && /exclusive hold/.test(e.message));
+  assert.ok(!fs.existsSync(lockOf(d)), 'its claim was withdrawn');
+});
+
+test('D663 HOLD: two exclusive runners: the second waits on the first\'s hold', () => {
+  const d = tmp();
+  fs.writeFileSync(holdOf(d), JSON.stringify(liveHold()));
+  const c = fakeClock();
+  assert.throws(() => H.acquire({ cmd: 'second session', dataDir: d, env: {}, tree: '/t/x', slots: 2, exclusive: true, alive: () => true, maxWaitMs: 500, pollMs: 100, ...c, log: () => {} }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT' && /pppp7777/.test(e.message));
+  assert.strictEqual(readHold(d).token, 'HOLDTOKEN', 'the first hold stands');
+});
+
+test('D663 CLI: `heavy-run.js --run --exclusive --cmd <what> -- <program>` runs the program under the hold and exits with its code', () => {
+  const d = tmp();
+  const prog = `const fs=require('fs');const h=JSON.parse(fs.readFileSync(${JSON.stringify(path.join(d, 'heavy-run.hold'))},'utf8'));console.log('HOLD '+h.cmd+' '+(h.token===process.env.CONSONANCE_HEAVY_RUN_TOKEN));process.exit(7)`;
+  const r = spawnSync(process.execPath, [HELPER, '--run', '--exclusive', '--cmd', 'cli session', '--', process.execPath, '-e', prog],
+    { env: cleanEnv({ CONSONANCE_DATA: d }), encoding: 'utf8', timeout: 30000 });
+  assert.strictEqual(r.status, 7, r.stderr);
+  assert.match(r.stdout, /HOLD cli session true/, 'the program ran inside the hold, carrying its token');
+  assert.ok(!fs.existsSync(holdOf(d)) && !fs.existsSync(lockOf(d)), 'released at exit');
+  const bad = spawnSync(process.execPath, [HELPER, '--run', '--cmd', 'x'], { env: cleanEnv({ CONSONANCE_DATA: d }), encoding: 'utf8', timeout: 30000 });
+  assert.strictEqual(bad.status, 2); assert.match(bad.stderr, /usage/);
 });
