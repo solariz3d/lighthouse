@@ -389,3 +389,14 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 47. 05:42: "yesss trinkets could be lore items, not just some mystical object, but something with relevance, example, Dads watch,
     could be  resonant item, even though dad is gone, he trace lives on, it could turn out that the god entity was the embodied
     for the love he had for his father, or it could turn out to be him in a way."
+48. 05:50. The message arrived cut off mid-sentence, with a pane's ring pasted after it: "lets flesh out the trinkets since i have
+    ideas, so there will be different collections of different genres of trinkets, there are the family ones that range in
+    rarity, personal trinkets that align with the player character themselves, things that give depth to the main character
+    and their persona. Then there will be Monroe institute collection of trinkets, which are those mystical trinkets that follow
+    the theme of the occult and perhaps isac bentov scientific angle fusion. Like objects that have occult connotations but
+    fused with a scientific outlook, these will be the rare and more resonant trinkets with power acquired through drops, or
+    even the site for expensive prices that are locked at first, but then open up every run random selection, you can even
+    invest upgrades into it, like say the hamlet in darkest dungeon, the PC can be upgraded like the forge and training room,
+    same for the exercise equipment, I had an idea, what if the PC is just for cosmetics and rare trinkets on that site, but
+    then, the third thing to upgrade in the room/hamlet would be, the abilties themselves, how it would work, there is a chair
+    or beanbag in the room, you sit in it and this is where you"
