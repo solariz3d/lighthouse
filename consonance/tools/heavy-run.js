@@ -462,7 +462,7 @@ function acquire({
       if (f) { holdWait(f.h); continue; }
       let hfd;
       try { hfd = fs.openSync(holdFile, 'wx'); } catch (e) { if (e.code === 'EEXIST') continue; throw e; }
-      const hrec = { pid: process.pid, seat: seatName(env), cmd, tree: myTree, started: new Date(now()).toISOString(), token, image: self.image, holder_start: self.holder_start, exclusive: true };
+      const hrec = { pid: process.pid, seat: seatName(env), cmd, exclusive: true, tree: myTree, started: new Date(now()).toISOString(), token, image: self.image, holder_start: self.holder_start };
       if (holdTookOver) hrec.took_over = holdTookOver;
       try { fs.writeSync(hfd, JSON.stringify(hrec)); } finally { fs.closeSync(hfd); }
       myHold = true;

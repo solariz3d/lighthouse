@@ -31,7 +31,7 @@ const MUTANTS = [
   // ---- the takeover ----
   ['takeover: a dead holder is never taken (stale is always false)', SRC, '      stale = !alive(h.pid);\n', '      stale = false;\n'],
   ['takeover: every holder is taken (stale is always true)', SRC, '      stale = !alive(h.pid);\n', '      stale = true;\n'],
-  ['takeover: the takeover is not logged', SRC, "log(`heavy-run: took over a stale lock", "void (`heavy-run: took over a stale lock"],
+  ['takeover: the takeover is not logged', SRC, "log(`heavy-run: took over a stale lock — ${h.unreadable", "void (`heavy-run: took over a stale lock — ${h.unreadable"],   // D663: re-anchored; the old anchor was in both log lines (NOT APPLIED on main too)
   ['takeover: whom it replaced is not recorded', SRC, 'if (tookOver) rec.took_over = tookOver;', ''],
   ['takeover: the set-aside file is left behind', SRC, "    try { fs.unlinkSync(aside); } catch (_) {}\n    const age = h.started", '    const age = h.started'],
   ['race: a live lock caught by the rename is not put back', SRC, "try { fs.linkSync(aside, file); } catch (_) { /* a newer lock is already there */ }", ''],
@@ -50,10 +50,11 @@ const MUTANTS = [
   // ---- D283: the second method ----
   ['tasklist: asked about another pid', SRC, '`PID eq ${pid}`', '`PID eq ${pid + 1}`'],
   ['tasklist: the pid is read from the name column', SRC, 'Number(c[1].slice(1, -1)) === pid', 'Number(c[0].slice(1, -1)) === pid'],
-  ['tasklist: a failed call (status != 0) is read as an answer', SRC, "r.error || r.status !== 0 || typeof r.stdout !== 'string'", "r.error || typeof r.stdout !== 'string'"],
-  ['tasklist: a spawn error is read as an answer', SRC, "if (!r || r.error || r.status !== 0", 'if (!r || r.status !== 0'],
+  // D663: the next three re-anchored on the tasklist call alone; their old anchors matched three functions (pidGone, processIdentity, coreMasks), NOT APPLIED on main too
+  ['tasklist: a failed call (status != 0) is read as an answer', SRC, "if (!r || r.error || r.status !== 0 || typeof r.stdout !== 'string') return null;\n  const listed", "if (!r || r.error || typeof r.stdout !== 'string') return null;\n  const listed"],
+  ['tasklist: a spawn error is read as an answer', SRC, "if (!r || r.error || r.status !== 0 || typeof r.stdout !== 'string') return null;\n  const listed", "if (!r || r.status !== 0 || typeof r.stdout !== 'string') return null;\n  const listed"],
   ['tasklist: "listed" means gone', SRC, 'return !listed;', 'return listed;'],
-  ['tasklist: a throw while asking is read as gone', SRC, '} catch (_) { return null; }\n  if (!r || r.error', '} catch (_) { return true; }\n  if (!r || r.error'],
+  ['tasklist: a throw while asking is read as gone', SRC, "timeout: 8000, windowsHide: true }); } catch (_) { return null; }", "timeout: 8000, windowsHide: true }); } catch (_) { return true; }"],
   ['tasklist: asked on every platform', SRC, "if (platform !== 'win32') return true;", ''],
   ['tasklist: not hidden', SRC, "'/NH'], { encoding: 'utf8', timeout: 8000, windowsHide: true }", "'/NH'], { encoding: 'utf8', timeout: 8000 }"],
   ['tasklist: no timeout', SRC, "'/NH'], { encoding: 'utf8', timeout: 8000, windowsHide: true }", "'/NH'], { encoding: 'utf8', windowsHide: true }"],
@@ -83,7 +84,7 @@ const MUTANTS = [
   ['claim: the second look takes ANY lock as a rival, even another tree\'s', SRC, 'if (o && o.token !== token && blocks(o)) clash = true;', 'if (o && o.token !== token) clash = true;'],
   ['nested: only slot 1 is searched for the run\'s own token', SRC, "for (let k = 1; k <= MAX_SLOTS; k++) {\n      const file = slotFile(dir, k), current", "for (let k = 1; k <= 1; k++) {\n      const file = slotFile(dir, k), current"],
   ['takeover: only a dead holder in slot 1 is taken', SRC, 'if (takeIfStale(file, k, h)) {', 'if (k === 1 && takeIfStale(file, k, h)) {'],
-  ['takeover: the log does not name the slot', SRC, ' (slot ${k})`);', '`);'],
+  ['takeover: the log does not name the slot', SRC, ' (slot ${k})`;', '`;'],   // D663: re-anchored; the line ends `; so the old anchor was found 0 times (NOT APPLIED on main too)
   // ---- D287 part 2: the disk guard ----
   ['disk: the refusal floor is zero (a run starts on a full disk)', SRC, 'const DISK_REFUSE_BYTES = 20e9;', 'const DISK_REFUSE_BYTES = 0;'],
   ['disk: the warning is never given', SRC, 'if (low.bytes < DISK_WARN_BYTES) log(', 'if (false) log('],
