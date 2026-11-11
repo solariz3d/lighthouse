@@ -844,3 +844,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       glance and turns to English when the player holds it at the middle of the screen.
     - The librarian's notes for the build: real Russian, translated properly (never fake Cyrillic); the change can be a
       dream-like morph of the letters; an accessibility setting shows English at once.
+101. 2026-11-11 17:11 (on D), the scope: "what if we are getting ahead of ourselves making multiple characters, what if we make just
+    one great one? I think that is the right path"
+    - One playable character, made great: the kid. Items 68-71 and 96-98's other playable characters (the writer, the operator)
+      and their unlock ladder are set aside, not deleted: they stay in this brief and on the lore page as ideas.
+    - The librarian's proposal in reply (17:1x): what was good in them can live inside the kid's one story as traces and lore he
+      finds (the operator's ledger and its Russian that turns English on focus; the writer's book and the site's archive; the
+      watch across decades), so the intertwining survives as mystery rather than as playable saves.
