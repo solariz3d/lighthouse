@@ -586,3 +586,22 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - After his first successful run, a cheque comes under the door for the run's cash, with his name and the payer's name on
       it and no reason given. The kid does not know why. (The payer is the cash's in-world source.)
     - The period: early to mid 2000s, proposed by him, "especially with the PC builder". Not yet decided.
+71. 2026-11-11 09:09 (on D), a second character, the writer: "another idea i had for another characters archetype, they start
+    as someone already established in the trade, if it could be called such a thing, has a decent highrise loft, outlooking over
+    a city, established abundence of cash, but no energy, they are searching for it, they have only heard of the gateway tapes
+    and an other world, but cannot access it like the kid could naturally, so it is the opposite, the player can learn lots
+    about what is supposedly going on through that characters PC and what that characters knows in the very beginning, it still
+    should have mystery and not throw all the cards on the table, but the guy knows way more than the kid did starting out. The
+    catch is this, he is a failing writer, and his savings are drying up fast, the characters chooses to not spend his savings
+    on any of the game features so he starts from square one, contacing monroe institute since he wants to train to access the
+    dreamzone, he then starts his runs by sitting down, and practicing the gateway tapes, instead of sleeping like how the kid
+    accessed it naturally, and eventually when he hones his senses and creates his own bubble to upgrade, the guy at first needs
+    the hemi sync to access dreamzone at all, over time, the chair he sits in to meditate becomes the upgrade chair, and he
+    simply goes to sleep to access it further throughout his run, you get the general shape? I could think and expand mor"
+    - The writer is the kid's opposite: cash and no energy (the kid: access and no cash); he reaches the dreamzone by technique
+      (sitting with the tapes), the kid by sleep; he starts knowing much more, and his PC is where the player learns it, with
+      mystery kept.
+    - He starts from square one by his own choice: his savings stay unspent on the game's features, and they are running out.
+    - His arc: he contacts the institute to train; at first he needs the tapes to get in at all; as he hones it and makes his
+      own "bubble", his meditation chair becomes the upgrade chair (item 49), and later he enters simply by sleeping.
+    - He said he could expand it further; not final.
