@@ -753,3 +753,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       and 431.6 s (2.30 m). So for about seven minutes nothing kept up with him; the hunter closed only near the end. The speed
       model's straight-line formula said it overtakes at about 135 s; on a real route it did not.
     - The generator reads as too repetitive over five minutes of running.
+92. 2026-11-11 16:24 (on D), how the lesser entities should behave: "i feel like, things that come in front of you should like
+    hear you, and then slowly move toward the sound until it sees you, remember, the evil god is playing with you at this point,
+    the AI should try to scare you more than trying to catch you at first almost, besides the hunter who is always coming"
+    - The lesser entities ahead of him: they hear him, move slowly toward the sound, and only commit once they see him.
+    - Early in a run they try to scare more than to catch: the evil god "playing with its food" (item 30). The hunter is the
+      exception: it is always coming (item 65).
+    - Ties to: item 65 (only the lesser ones hear; the hunter always knows), D654 audio step 3 (they hear along the walk graph,
+      what they hear he can hear coming), item 64 (he was cut off from the front by a pack that heard him).
