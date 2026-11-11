@@ -722,3 +722,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The kid: "decent", but "more designed": a stronger, more intentional character design, not only a correct one.
     - A base outfit with no buff: his original appearance, the default before any customisation; buffs belong to clothing he
       finds or buys later (items 51-52).
+87. 2026-11-11 15:45 (on D), the clothing slots: "how customizable should it be, i have this idea, like, shoes, pants,
+    shirt/jacket, accesories."
+    - His four: shoes, pants, shirt/jacket, accessories. The librarian's proposal in reply (15:4x), for his word: split the top
+      into an inner shirt and an outer layer (the outer layer's sleeves and cuffs are what first person shows most); hair as a
+      cosmetic-only slot, the face fixed (it is the persona); accessories as two small slots that never take a trinket's place
+      (an equipped trinket shows on the body where it belongs, as the watch does on the wrist).
