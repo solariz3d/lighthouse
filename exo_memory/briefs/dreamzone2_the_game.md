@@ -516,3 +516,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       - The sprinter (#10) was closing from 41 m at 13.8 m/s.
     - So, as in item 35, he was **cut off from the front**, not run down. This is the case item 39's flashlight is for (clear the
       path ahead).
+65. 07:39, correcting the librarian's "sprinting is loud, so stealthier movement could matter": "but no stealth isnt a thing, the main
+    hunter always knows where you are, and if you stop running it will catch you"
+    - So hearing and sight belong to the lesser entities only (the pack heard him at 12 m in item 64). The hunter is omniscient.
+      There is no stealth build; there is only running. This matches item 58's shroud, which costs heavy stress.
