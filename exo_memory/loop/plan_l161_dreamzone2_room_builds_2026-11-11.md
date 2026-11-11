@@ -37,6 +37,29 @@
     gym gaps sized by hand for 7 m/s).
 - Hand-back `handback/p-l161-speed-E_2026-11-11.md`.
 
+**E, second, after the speed: the look and the lore (item 23). Research only; nothing is built until he has read it.**
+- **The look:**
+  - PsychonautWiki's visual effects, as subtle and powerful as he asked: drifting and breathing surfaces, tracers, haze, colour
+    enhancement, depth and scale distortion, symmetrical texture repetition, scenery slicing, geometry.
+  - For each effect, give a short description, and say how a real-time raytraced renderer would do it. Name the technique: a
+    post-process pass, vertex displacement, temporal accumulation, a fog or volume term, or an FOV or projection change.
+  - Give its cost on this renderer, read from `render/`. Say whether it can be tied to game state (the chase's tension, a
+    reprieve, the run's depth) so it stays subtle until it matters.
+  - "Semi high FOV": give a recommended base FOV against the current camera rig's baseline and widening (`game/camera.cpp`).
+  - "Out of body, lucid": what such reports describe visually, and which of the effects above carries it.
+- **The lore:**
+  - The Monroe Institute's Gateway Experience tapes and Hemi-Sync: the focus levels and what each was said to be.
+  - The places between focus levels that the literature describes, and what it actually called the "intermediary zones" he
+    remembers. Find the real term, and say plainly if there is none.
+  - The 1983 declassified US Army/CIA "Analysis and Assessment of Gateway Process".
+  - Sources for everything. Mark what the documents say apart from what later retellings add.
+- **Return:**
+  - a short menu of ways the lore could sit in the world subtly: names of zones or biomes, signs, a sound motif. Binaural beats
+    fit the game's sound module.
+  - one or two easter-egg shapes that flesh out the story for players who look.
+  - **Ideas for him to choose from, not a design.** Quote no one in `dreamzone-3`; his words stay in the brief.
+- Hand-back `handback/p-l161-look-E_2026-11-11.md`. The look's figures go into the repo's `docs/` only when he picks.
+
 **A — the chasers' speed model (item 18), parametric, so E's numbers drop in.**
 - Chasers get their own reference speed, no longer a multiple of `sprint_speed` (`chase/chaser.cpp` `make_body`, and its four
   callers per the HANDOFF).

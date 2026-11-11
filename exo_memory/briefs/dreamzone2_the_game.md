@@ -60,3 +60,65 @@ holds them to dials; it promises nothing.
 ## Not yet his: everything about feel
 
 Nothing was played by a person on 11-10. The list of what only he can judge is in the repo's `HANDOFF.md`.
+
+## His words from playing it (newest last)
+
+10. 2026-11-11 00:30 local (L), within minutes of his first run on the laptop: "immediately, it lacks the original
+    flashlight beam that I loved about the original, however, it should be like a perk or mechanic you unlock or find
+    during the run, maybe perma unlocking eventually. but i will keep testing while you figure that out"
+11. 2026-11-11 00:33 local (L), still playing: "I LOVE the safe zones, i liked this one you jump into to go down a level,
+    sort of same feeling as I wanted in the dream, interesting choice of sound effect using the windows device sound lol"
+12. 2026-11-11 00:37 local (L), after trying dz-gym: "the gym course is interesting, i know the movement is very early
+    stage, but it needs to feel more fluid with the animations, maybe even higher top speed slightly."
+13. 2026-11-11 00:40 local (L): "check out how original dreamzonert did the camera fov feel, it should be like, the runner
+    has a good burst of speed sprinting off the bat, but to achieve max sprint speed it ramps up and takes a little while
+    just like a real sprinter, as well, id like to start this early, creating realistic animation and locomotion for the
+    player character, can see arms and legs from a first person perspective and match the movements of the characters
+    actions in game, it is expensive but worth it, then we sort of attach the camera to the player in a way to make it
+    work"
+14. 2026-11-11 00:42 local (L): "also the wall running should be minimal, the gym course i cant seem to get the line right
+    to make the jump work cant tell if its a bug or skill diff lol. But the wall running should be rare and short, like a
+    way across a floor that kills u, say there is a chance that floors can just be a bottomless abyss, or either a
+    stylized void or error in space type vibe."
+15. 2026-11-11 01:02 local (L): "when will the running feel/animation rework start"
+16. 2026-11-11 01:04 local (L): "same with the animations for the entities, we did decent work for the entity on the older
+    build, but you might be able to do it better now, as well the sound effects can be so much better, I want the main
+    entities footsteps to be bassy and loud like thundering almost, eventually when we get to it, we need to make a brutal
+    jumpscare lmfao, but not during testing will get old"
+17. 2026-11-11 01:05 local (L): "but the world is good, i liked the stairwell that goes down or up, however it could be a
+    bit wider, as well the entity pathing is very good, however right now the runner cannot outpace them unless there is
+    a good seed and path to exploit their pathing running into walls for a split second to create a gap, they should
+    traverse the world without clipping on anything, but also not be super OP, they should be OP but not like speed
+    hacking"
+18. 2026-11-11 02:03 local (L), to the librarian, answering whether stamina comes back now that the two-stage sprint
+    outruns every chaser on a straight (appended by the librarian; the Third Place was told in
+    `third_place/to_the_third_place_2026-11-11.md`): "i think the scaling of the distance traveled, as well as the base
+    difficulty, changes the straight line speed, and general intelligence of the entities, maybe in the beginning the
+    player can slightly run faster, but not long from there they get faster and faster, when a runner gets cornered, the
+    entities must also have momentum and inertia and cannot directly turn on a dime, letting you in a way juke the
+    entities, perhaps the interceptor is more nimble, we can flesh out more the archetypes of each entity later. Stamina
+    could be a good mechanic, but hard to balance without making it too limiting, it should be a always fast paced
+    survival situation. I liked the one idea where, the longer you run in a straight line, the entites slowly scale in top
+    speed, making you have to turn, the entities then scrub speed turning. you get what I mean?"
+19. 2026-11-11 01:55 local (L), to the Third Place, after the two-stage sprint was reported and the camera named as next
+    (appended by the Third Place): "lets do it, and its up to you what you would want to do, hand it off or keep working
+    on it by urself"
+20. 2026-11-11 02:13 local (L), to the Third Place, while the camera was building (appended by the Third Place; it is
+    about who works on what, and touches Dreamride as much as this game): "when youre done, do you want to pick up the
+    dreamride work the room was doing? lil swappy"
+21. 2026-11-11 02:18 local (L), to the Third Place, on the runner's speed (appended by the Third Place): "I also think, we
+    should find the fixed base speed of the runner, perhaps through the roguelite aspect of the game, over runs and
+    leveling up, the player can put points into things like sprint speed, acceleration, turn, specialized skills, etc.
+    But what I want to get right first is this, the runners sprint should accelerate to a base amount decently quick
+    like a real runner, and then slowly continues to pick up a bit of speed as they accelerate, similar to OG
+    dreamzonert, from testing, perhaps it goes to 5ms fast, then eases into their top speed to around 10ms, which can
+    then be upgraded to a certain amount we will balance in the future."
+22. 2026-11-11 02:19 local (L), to the Third Place, a minute later: "or idk maybe we should do research into run speed for
+    the game, make sure to give the handoff to lib since we are done doing dreamzonert here"
+23. 2026-11-11 02:31 local (L), to the librarian, on the look (appended by the librarian; the game is now `dreamzone-3`, see
+    `loop/plan_l161_dreamzone2_room_builds_2026-11-11.md`): "thinking about the vibe or stylistic theme further for dreamzone, i
+    want there to be like, semi high fov, dreamlike haze of like an out of body experience or lucid dream, we just need to look
+    into psychonaut wiki and learn how to replicate many of the visual distortions of psychedelia to implement it in subtle but
+    powerful ways. The game is a direct creation from my dreams and experiences of the dream zone. Lets look up lore of the
+    gateway tapes and hemi sync, and what they called intermediary zones, this could be subtle lore of the world, and there
+    could be a easter egg that fleshes out the story for the players beyond just the fun and addictive gameplay loop."
