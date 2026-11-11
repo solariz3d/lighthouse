@@ -506,3 +506,13 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 63. 07:30, on the render: "okay sounds good, one small complaint about the lighting as it was, not the entities themselves, but
     how the raytraces lighting is drawn, sometimes it is too grainy or there are shimmering after images from the player model
     cutting through it in a funky way, you know? Like there is too much noise by the raytraced lighting"
+64. 07:37: "just did a solid run on brutal, u see the data"
+    - Read from `game/runs/run-20261111-133514.txt`, and `dz-world --replay-run last --window 20` (exit 0: it replayed to both
+      fingerprints):
+      - brutal, seed 1, build 39e03db: **caught by the pack (#12) at 120.15 s**.
+      - The hunter held 9–15 m behind him for the whole last 20 s and never closed.
+      - Pack #12 had been wandering ("investigate") 30–47 m to his left. By 118.5 s it was ahead of him. At 119.35 s it heard him
+        sprinting at 12 m and turned to pursue. He met it head-on 0.8 s later.
+      - The sprinter (#10) was closing from 41 m at 13.8 m/s.
+    - So, as in item 35, he was **cut off from the front**, not run down. This is the case item 39's flashlight is for (clear the
+      path ahead).
