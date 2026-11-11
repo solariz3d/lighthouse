@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 700" width="1080" height="700" font-family="Helvetica, Arial, sans-serif">
+  <!-- D659 kid redesign: three directions for his pick (pane E). Same body (BodyBuild 1.80 m, eye 1.65), 1 m = 200 px, ground y=600. Invented designs; no real person, brand or existing character. -->
+  <rect width="1080" height="700" fill="#efece6"/>
+  <text x="20" y="30" font-size="19" font-weight="bold" fill="#1d1d1d">The kid: three directions (pick one). Same boy, same body, same father's hoodie.</text>
+  <text x="20" y="50" font-size="12" fill="#555">Each keeps the grief by absence: the father's hoodie (too big), the darned cuff (pale stitch), the pale band on the left wrist (where a watch was). Never said.</text>
+
+  <!-- column headers: the one-line reads -->
+  <g font-size="14" fill="#1d1d1d">
+    <text x="60" y="88" font-weight="bold">1 · SWALLOWED</text>
+    <text x="60" y="106" font-size="12" fill="#444">Hood up, sleeves past his fingers: a boy</text>
+    <text x="60" y="121" font-size="12" fill="#444">inside his father's hoodie.</text>
+    <text x="410" y="88" font-weight="bold">2 · OUTGROWN</text>
+    <text x="410" y="106" font-size="12" fill="#444">His own red vest is two winters too small;</text>
+    <text x="410" y="121" font-size="12" fill="#444">the only thing that fits is the one that's too big.</text>
+    <text x="760" y="88" font-weight="bold">3 · TIED ON</text>
+    <text x="760" y="106" font-size="12" fill="#444">Never wears it, never takes it off: the hoodie</text>
+    <text x="760" y="121" font-size="12" fill="#444">knotted at his hip, headphones, a strap across.</text>
+  </g>
+  <line x1="20" y1="600" x2="1060" y2="600" stroke="#aaa"/>
+
+  <!-- ===== 1 SWALLOWED ===== -->
+  <g transform="translate(180,600)">
+    <!-- legs: black slim jeans -->
+    <path d="M-30,-190 L-34,-14 L-12,-14 L-4,-150 L4,-150 L12,-14 L34,-14 L30,-190 Z" fill="#1f2124"/>
+    <!-- shoes: worn white high-tops -->
+    <path d="M-40,-20 L-8,-20 L-8,0 L-46,0 Z" fill="#d6d2c8"/><path d="M8,-20 L40,-20 L46,0 L8,0 Z" fill="#d6d2c8"/>
+    <rect x="-46" y="-4" width="38" height="4" fill="#8a857a"/><rect x="8" y="-4" width="38" height="4" fill="#8a857a"/>
+    <!-- hoodie: huge, dropped shoulders, long to mid-thigh -->
+    <path d="M-34,-302 Q0,-318 34,-302 L74,-284 L82,-160 L66,-150 L60,-250 L56,-170 Q0,-160 -56,-170 L-60,-250 L-66,-150 L-82,-160 L-74,-284 Z" fill="#3a3d42"/>
+    <!-- sleeves past the fingers -->
+    <path d="M-82,-160 L-66,-150 L-70,-128 L-86,-134 Z" fill="#33363b"/><path d="M82,-160 L66,-150 L70,-128 L86,-134 Z" fill="#33363b"/>
+    <!-- darned cuff (his right = viewer left) -->
+    <line x1="-84" y1="-140" x2="-69" y2="-135" stroke="#c9c2b2" stroke-width="2" stroke-dasharray="2 2"/>
+    <!-- kangaroo pocket -->
+    <path d="M-30,-215 L30,-215 L36,-180 L-36,-180 Z" fill="#33363b"/>
+    <!-- hood up, peaked, orange lining at the opening -->
+    <path d="M-38,-300 Q-44,-352 0,-372 Q44,-352 38,-300 Q20,-296 0,-298 Q-20,-296 -38,-300 Z" fill="#3a3d42"/>
+    <ellipse cx="0" cy="-322" rx="19" ry="23" fill="#d98a3a"/>
+    <ellipse cx="0" cy="-320" rx="15" ry="19" fill="#c9a07e"/>
+    <path d="M-15,-334 Q0,-344 15,-334 L15,-326 Q2,-332 -15,-322 Z" fill="#3b2a20"/>
+    <!-- one drawstring only (the other lost) -->
+    <line x1="6" y1="-298" x2="8" y2="-262" stroke="#d6d2c8" stroke-width="2"/>
+  </g>
+
+  <!-- ===== 2 OUTGROWN ===== -->
+  <g transform="translate(530,600)">
+    <!-- legs: dark indigo bootcut, frayed hems -->
+    <path d="M-30,-190 L-40,-14 L-12,-14 L-4,-150 L4,-150 L12,-14 L40,-14 L30,-190 Z" fill="#2f3e5c"/>
+    <path d="M-38,-60 L-16,-60 L-16,-40 L-38,-40 Z" fill="#50607e"/>
+    <!-- shoes: grey suede skate shoes -->
+    <path d="M-46,-18 L-10,-18 L-8,0 L-52,0 Z" fill="#6b6b68"/><path d="M10,-18 L46,-18 L52,0 L8,0 Z" fill="#6b6b68"/>
+    <!-- hoodie underneath: long, hem below the vest, sleeves long -->
+    <path d="M-48,-290 L48,-290 L62,-180 L-62,-180 Z" fill="#3a3d42"/>
+    <path d="M-50,-286 L-72,-180 L-76,-128 L-60,-126 L-56,-180 Z" fill="#3a3d42"/><path d="M50,-286 L72,-180 L76,-128 L60,-126 L56,-180 Z" fill="#3a3d42"/>
+    <line x1="-75" y1="-136" x2="-61" y2="-133" stroke="#c9c2b2" stroke-width="2" stroke-dasharray="2 2"/>
+    <!-- the vest: faded red puffer, too SHORT (ends at the ribs), horizontal baffles -->
+    <path d="M-50,-292 L50,-292 L54,-216 L-54,-216 Z" fill="#9b2f2a"/>
+    <g stroke="#7e2622" stroke-width="2"><line x1="-52" y1="-270" x2="52" y2="-270"/><line x1="-53" y1="-246" x2="53" y2="-246"/></g>
+    <line x1="0" y1="-292" x2="0" y2="-216" stroke="#5a1a17" stroke-width="2"/>
+    <!-- hood out over the vest collar -->
+    <path d="M-30,-300 Q0,-286 30,-300 L34,-286 Q0,-276 -34,-286 Z" fill="#45484e"/>
+    <!-- head: hair grown out -->
+    <rect x="-10" y="-308" width="20" height="14" fill="#c9a07e"/>
+    <ellipse cx="0" cy="-330" rx="21" ry="26" fill="#c9a07e"/>
+    <path d="M-24,-334 Q-26,-362 0,-362 Q26,-362 24,-334 L20,-342 Q4,-340 -6,-332 Q-16,-338 -22,-322 Z" fill="#3b2a20"/>
+    <ellipse cx="-22" cy="-330" rx="4" ry="7" fill="#c09474"/><ellipse cx="22" cy="-330" rx="4" ry="7" fill="#c09474"/>
+  </g>
+
+  <!-- ===== 3 TIED ON ===== -->
+  <g transform="translate(880,600)">
+    <!-- legs: light-wash worn jeans -->
+    <path d="M-30,-190 L-36,-14 L-12,-14 L-4,-150 L4,-150 L12,-14 L36,-14 L30,-190 Z" fill="#5b6f8f"/>
+    <!-- shoes: black skate shoes, white sole -->
+    <path d="M-44,-18 L-10,-18 L-8,0 L-50,0 Z" fill="#1e1e1e"/><path d="M10,-18 L44,-18 L50,0 L8,0 Z" fill="#1e1e1e"/>
+    <rect x="-50" y="-4" width="42" height="4" fill="#e8e4da"/><rect x="8" y="-4" width="42" height="4" fill="#e8e4da"/>
+    <!-- tee: off-white, a marker drawing he did himself -->
+    <path d="M-44,-292 L44,-292 L48,-190 L-48,-190 Z" fill="#e8e4da"/>
+    <path d="M-44,-292 L-62,-262 L-50,-252 L-40,-270 Z" fill="#e8e4da"/><path d="M44,-292 L62,-262 L50,-252 L40,-270 Z" fill="#e8e4da"/>
+    <path d="M-12,-252 l8,-14 l6,12 l10,-6 l-4,14 l10,4 l-12,6 l2,12 l-10,-6 l-8,8 l-2,-12 l-12,-2 l10,-8 Z" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+    <!-- bare forearms; the pale band on his left wrist (viewer right) -->
+    <path d="M-62,-262 L-50,-252 L-56,-150 L-70,-152 Z" fill="#c9a07e"/><path d="M62,-262 L50,-252 L56,-150 L70,-152 Z" fill="#c9a07e"/>
+    <rect x="55" y="-168" width="15" height="6" fill="#e2c7ad"/>
+    <!-- the hoodie tied at the hip: body hanging behind, sleeves knotted in front -->
+    <path d="M-50,-196 L50,-196 L58,-120 L-58,-120 Z" fill="#3a3d42" opacity="0.92"/>
+    <path d="M-30,-196 Q0,-180 30,-196 L8,-176 L14,-140 L-2,-142 L-2,-176 Z" fill="#33363b"/>
+    <circle cx="4" cy="-180" r="9" fill="#2b2e33"/>
+    <line x1="6" y1="-150" x2="13" y2="-147" stroke="#c9c2b2" stroke-width="2" stroke-dasharray="2 2"/>
+    <!-- strap across: right shoulder to left hip, a satchel at the hip -->
+    <line x1="-36" y1="-292" x2="44" y2="-200" stroke="#2a3550" stroke-width="7"/>
+    <rect x="34" y="-212" width="30" height="24" rx="3" fill="#2a3550"/>
+    <!-- headphones round the neck -->
+    <path d="M-24,-296 Q0,-270 24,-296" fill="none" stroke="#9aa0a6" stroke-width="5"/>
+    <circle cx="-24" cy="-294" r="7" fill="#2b2e33"/><circle cx="24" cy="-294" r="7" fill="#2b2e33"/>
+    <!-- head -->
+    <rect x="-10" y="-310" width="20" height="16" fill="#c9a07e"/>
+    <ellipse cx="0" cy="-332" rx="21" ry="26" fill="#c9a07e"/>
+    <path d="M-24,-336 Q-26,-364 0,-364 Q26,-364 24,-336 L18,-348 Q6,-352 -8,-344 Q-18,-346 -22,-326 Z" fill="#3b2a20"/>
+  </g>
+
+  <!-- slot legend -->
+  <g font-size="11" fill="#333">
+    <text x="20" y="632" font-weight="bold">Clothing slots (cosmetic, no buffs):</text>
+    <text x="20" y="650">Hair · Head (empty at base) · Top (L1) · Outer (L2: the father's hoodie, the keepsake) · Over (L2b: vest / strap / headphones) · Legs (L1) · Shoes (L3) · Neck (L3: key cord)</text>
+    <text x="20" y="668">Left wrist: NOT a cosmetic slot. The pale band stays until the watch trinket is equipped (the trinket system is the only source of buffs).</text>
+  </g>
+  <text x="20" y="692" font-size="10" fill="#777">Invented designs: no real person, brand or existing character. Proportion and colour guides for A's Blender passes, not finished art.</text>
+</svg>
