@@ -645,3 +645,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Checked by the librarian (dreamzone-3 39e03db, `audio/audio.h:23,78`): today a source with no line of sight is
       low-passed at 800 Hz and 9 dB quieter; that is the whole of the acoustics. No reverb, reflection or propagation.
     - His reference: the game Bodycam's sound design. To be researched (D654).
+78. 2026-11-11 10:22 (on D), which game item 75 meant: "night runners racing game i meant btw"
+    - NIGHT-RUNNERS Prologue (PLANET JEM, 2024, Steam 2707900), as E inferred in D653. Its look as reviewers describe it: a
+      simple world with detailed hero objects, people never sharp, thick air and short draw distance, detail softening with
+      speed. Its CRT filter is the one part not taken (item 75).
