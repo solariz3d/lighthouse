@@ -1,0 +1,96 @@
+  seed 2 done (4 s)
+  seed 3 done (5 s)
+  seed 1 done (5 s)
+  seed 4 done (6 s)
+  seed 6 done (8 s)
+  seed 5 done (8 s)
+  seed 7 done (9 s)
+  seed 8 done (10 s)
+  seed 10 done (10 s)
+  seed 9 done (11 s)
+  seed 11 done (13 s)
+  seed 12 done (14 s)
+  seed 14 done (15 s)
+  seed 13 done (17 s)
+  seed 15 done (18 s)
+  seed 16 done (19 s)
+  seed 17 done (19 s)
+  seed 20 done (21 s)
+  seed 18 done (22 s)
+  seed 19 done (22 s)
+  seed 21 done (23 s)
+  seed 22 done (25 s)
+  seed 23 done (26 s)
+  seed 25 done (27 s)
+  seed 24 done (27 s)
+  seed 26 done (29 s)
+  seed 27 done (31 s)
+  seed 28 done (31 s)
+  seed 30 done (32 s)
+  seed 29 done (33 s)
+  seed 31 done (35 s)
+  seed 32 done (35 s)
+  seed 33 done (37 s)
+  seed 34 done (38 s)
+  seed 36 done (39 s)
+  seed 35 done (40 s)
+  seed 37 done (42 s)
+  seed 39 done (43 s)
+  seed 38 done (44 s)
+  seed 40 done (45 s)
+  seed 42 done (45 s)
+  seed 41 done (46 s)
+  seed 43 done (49 s)
+  seed 46 done (49 s)
+  seed 45 done (50 s)
+  seed 44 done (51 s)
+  seed 48 done (54 s)
+  seed 47 done (54 s)
+sweep: seeds 1..48, arena 2 chunks each way, runs stopped at 300 s; default dials
+speed model ( stairs_lift=0):
+ref_speed         7.000   the chasers' reference speed, metres per second; every row and dial is a multiple of it
+dist_per_km       0.050   share of top speed gained for each kilometre the player has covered
+dist_max          0.300   the most the distance can add, as a share of top speed
+straight_rate     0.050   share of top speed a chaser gains each second it runs straight at its top speed
+straight_max      0.200   the most a straight can add, as a share of top speed
+straight_turn     0.300   radians a second: it is running straight while it turns slower than this
+run_up_bleed      1.000   share of the run-up lost for every radian it turns
+turn_drag         0.200   share of its speed a chaser loses for every radian it turns
+corner_floor      1.000   least share of the braking a corner asks for that every chaser does before it (1: it never swings into a wall)
+wall_stand        0.000   scale on the seconds a chaser stands after meeting a wall head-on (0: it never stops dead)
+brake_scale       1.000   scale on every chaser's braking, metres per second squared (1: the rows and the hunter's dial as they are)
+stairs_lift       0.000   share of a stairs leg's slope a chaser's step is lifted by (0: a flat step, which stalls at the foot of a steep flight)
+
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  flee     48    33.1   120.0   228.5   300.0   300.0   300.0    300.0        31
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  flee       23%       6%          0%    6% |       35%           0%         0%         0% |        10500
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  flee   |      0.73       48%      0.00     0.00      0.00 |   0.00   0.08    0.16 |     1.74   0.79   0.31   2.51     0.00 |    0.06     3%       0%
+
+where chasers caught on the world, per minute of chase
+level   policy minutes    wall hits scrape s
+                           head-on (ticks/240)   stalls   stood s
+normal  flee    201.8       12.097    11.14    0.466     0.000   (totals: 2441 hits, 539318 scrape ticks, 94 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 1602, 239108;  sprinter 559, 198407;  interceptor 172, 73835;  pack 108, 27968;
+  stalls: flee, run seed 7: 75 in 297 s; sprinter 75;
+  stalls: flee, run seed 39: 15 in 300 s; sprinter 15;
+
+reprieves: 34 passages through and 1 back out the way in, in 23 of 48 runs; with the hunter out and a way to the player both times (32):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        3.8     6.5     9.8
+  and coming out: the lead                         7.0     9.5    13.0
+  lead gained                                      0.5     2.8     7.5
+  way round, the generator's figure                6.6    11.1    13.7
+  way round on the mesh, the hunter's speeds       5.2     8.9    11.3
+  lead gained over the way round on the mesh      0.05    0.39    0.79
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
+55 s in all on 4 threads
+lockrun: R4-b1 flee set B stairs_lift=0 WALL 55 s, exit 0
