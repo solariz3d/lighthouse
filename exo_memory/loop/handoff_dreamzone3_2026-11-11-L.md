@@ -14,8 +14,7 @@ His order, 07:32 (see the lighthouse handoff). **Read first:**
 - **main on L: `39e03db`**, the revert of the stair-stall merge, naming A.
   - `build.bat test` 10/10, `dz-gym --selftest` 26/26, `dz-world --selftest` 51/51.
   - `launch.stamp` written 13:24:08Z; `-Check` says up to date (`handback/p-l161-land-B_2026-11-11.md`, "revert and stamp").
-  - **Pushed: only `d11ce9a`.** Everything since is local, because he said "let me test it before pushing".
-  - **D cannot pick this up until it is pushed: his call.**
+  - **Pushed at his word (07:42): main `39e03db`, plus the carried branches `l162-stair-stall` e2dc31b and `l162-chase` abe8237.** `git ls-remote origin` returned the same shas.
 - **His desktop shortcuts on L** ("Dreamzone 2 World" and "Dreamzone 2 Gym") now open dreamzone-3; the `.lnk.before-l161` backups are
   beside them.
 - `game/config/world.local.txt` (git-ignored) holds his test setting, `flashlight = 1`. The design default stays "spawn without it"
@@ -98,8 +97,7 @@ His order, 07:32 (see the lighthouse handoff). **Read first:**
 - **Whether the hunter paces an eroding safe zone or waits** (items 54–56).
 
 ## PICK UP HERE (D)
-1. **Ask him to push dreamzone-3,** after he has played main on L. Then on D: `git clone --recursive` it beside dreamzone-2, build
-   with `build.bat`, run `build.bat test`.
+1. **On D:** `git clone --recursive https://github.com/solariz3d/dreamzone-3` beside dreamzone-2, `build.bat`, then `build.bat test`. Point D's shortcuts at it, as L's were (`handback/p-l161-land-B_2026-11-11.md`, "THE SHORTCUTS"). Copy his local `gameconfigworld.local.txt` if he wants the flashlight there too.
 2. **Read** `briefs/dreamzone3_design.md`, then the brief's items 54–63, which the design map does not hold yet. Fold them in.
 3. **Put his open calls to him** (list above), the contradictions first. Then gap 2, the six abilities.
 4. **A: the stair fix against the levers** (`proof_tests.cpp:159`, red with e2dc31b on main). Register first and do not weaken the row.
@@ -108,4 +106,4 @@ His order, 07:32 (see the lighthouse handoff). **Read first:**
 6. **Next builds, at his go:** the containers and the run's XP (items 53, 57–58); the stress system with virtues and afflictions (59–62).
    The hub (M5) after the design gaps close.
 
-NEXT: D's librarian opens this file's "From the last handoff" and its PICK UP HERE first, after he says whether dreamzone-3 is pushed
+NEXT: D's librarian opens this file's "From the last handoff" and its PICK UP HERE first when Consonance next wakes on D
