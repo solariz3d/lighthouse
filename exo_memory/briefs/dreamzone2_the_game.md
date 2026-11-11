@@ -625,3 +625,13 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The look's reference: liminal-space and creepypasta internet culture, and nostalgia-bait content. To be researched.
     - Later, not now: each character's psyche shapes its own biome set in the generator (item 26 made the biomes the kid's
       psyche; this extends it to every character).
+75. 2026-11-11 10:17 (on D), on the look page (artifact KMm3AnmcRkhzDFo5GTozJ2, D652): "i like the ideas in the artifact except
+    the idea of it coming from a camera, not a slender rip off, it is a dream experience, if anything, remember the idea for us
+    to study psychonaut wiki for psychedelic effects to replicate for that fear aspect rather than static of a video or picture.
+    Not sure I l;ike any of the examples of the pictures, the style should be pseudo photoreal, like stylized hyperrealism
+    through rendering tricks, think of like, the game nightrunners"
+    - Rejected: any camera, photo or tape look (D652's A "found photo" and B "tape"). It is a dream experienced, not footage.
+    - The fear comes from PsychonautWiki's visual effects (item 23), not from video static. That study exists:
+      `handback/p-l161-look-E_2026-11-11.md` (effect table, one "dream intensity" dial).
+    - The target: pseudo-photoreal, stylized hyperrealism made by rendering tricks. His reference: the game Nightrunners.
+    - Kept from the page: the light, surfaces, composition and sound traits; none of the three example pictures.
