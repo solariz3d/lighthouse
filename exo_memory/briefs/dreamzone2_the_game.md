@@ -421,3 +421,5 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 51. 06:00: "you can also buy online, new design beanbag chairs lol, some funky cool psychedelic designs, as well i had this idea
     too, for base cosmetics to have a slight effect too, nothing too crazy, but perhaps even clothing could have rarity and
     decent buffs for the last two rarities"
+52. 06:07, correcting item 51's reading: "common and the rest can have buffs, but its like slight buff like runes or masteries in
+    league vs the trinkets are strong buffs"
