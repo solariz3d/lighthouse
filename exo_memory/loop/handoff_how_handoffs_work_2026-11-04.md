@@ -90,3 +90,22 @@ NEXT: chair pushes lighthouse (this file, briefs/, today's notes) when the keepe
 - **The rule:** before the handoff push, squash every branch the brief names (as D did for `second-change-additive`), with a plain message
   and no lap ids or seat lines, and push it. If something truly cannot go to a public repo, the brief says so in its first line and names
   where it lives.
+
+## Added 2026-11-11 00:3x (L), at the keeper's word: a handoff starts from the other machine's PICK UP HERE
+His words, after the librarian read D's 11-10 handoff and said where it fell short: "that is good you learnt how to make the handoffs
+better, you can improve upon them for the desktop and leave a pointer within them for yourself there to learn when the time comes
+later tonight to write the handoffs".
+
+- **What went wrong (checked):** D's `loop/handoff_t180_and_room_2026-11-10-D.md` was a good narrative of D's days and carried none of
+  L's `loop/handoff_t180_2026-11-07.md` PICK UP HERE items 2–3: the test-tier branch `l153-test-tiers` unlanded, E's 13-row re-score
+  owed, A's cap measure stopped at 16, no machine's `heavy` profile written. So D asked "the flaky timing test: fix it or leave it",
+  which that unlanded branch already answers. Each machine's handoff read as if the other machine's last one did not exist.
+- **The rule, first section of every handoff, before the narrative: "From the last handoff".** Open the OTHER machine's newest
+  `loop/handoff_*.md` (and this machine's own, if newer work happened elsewhere), take its PICK UP HERE and its Open list item by
+  item, and say what became of each, in one line: **done** (with the commit or file), **carried** (copied into this handoff's own
+  PICK UP HERE), or **dropped on purpose** (with the reason and whose call it was). Nothing is left unaccounted for; "not looked at"
+  is an honest entry and better than silence.
+- **And end every handoff with PICK UP HERE**, numbered, each step naming its file, so the next machine's first section has a list
+  to account for.
+- **Things only the other machine can find** (a snag in a recipe, a stale tool, a stall) go in the receiving machine's notes the night
+  they are found, and into its next handoff's "From the last handoff" as corrections to the recipe. Example: `loop/stall_trace_rebuilder_pull_cargo_toml_2026-11-11.md`.
