@@ -36,3 +36,14 @@ His words: `briefs/dreamzone2_the_game.md` items 35–37. **Base:** dreamzone-3 
 - the loadout itself.
 
 Both go into the design document (L163).
+
+## Added 04:5x, at dispatch
+- **Base:** dreamzone-3 main `8b04508`, landed by B (`handback/p-l161-land-B_2026-11-11.md`). Local only; his shortcuts now open
+  dreamzone-3.
+- The librarian set `flashlight = 1` in dreamzone-3's tracked `game\config\world.txt` for his testing. **It is uncommitted on
+  main.** C gives play settings a git-ignored local override (for example `world.local.txt` read after `world.txt`), moves the
+  flashlight line there, and restores `world.txt` to 0, so main stays clean and the design default stays "spawn without it".
+- **A:** its braking-lever round (L161 continuation, `l161-chase` past 4191b09) carries on as L162's A part. It hands back to the
+  same file's continuation section.
+- His item 39, for the design doc only: the flashlight unlocks early. Its psychic partner comes late. The pair repels what is
+  AHEAD (interceptors and future front-spawners), clearing a path while the rest swarm and frenzy behind.
