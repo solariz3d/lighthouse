@@ -183,6 +183,8 @@
 
 ## 8. The waking room
 
+- [decided 68] The PC and the home gym are upgraded with cash, part by part (monitors, peripherals; the gym's kind and its equipment): "a subtle pc part builder game". Anything that can be customised, is. Time spent in the room is what raises the chance of an invasion (31). Later unlocks: bigger rooms, windows looking out on different places.
+
 **Built today:**
 - none: `HANDOFF.md:78-80`, "M5, the run's frame", not started;
 - a run starts at a closed bedroom door in a corridor.
@@ -247,6 +249,10 @@
 ## 10. Story
 
 **Built today:** none (no story, encounters or chapters in code; `grep -i "story|lore|chapter"` finds nothing relevant).
+
+- [decided 68] **Several playable characters**, each with its own backstory, story, save and a unique buff that can synergise with a build; any build is open to each. You start as the kid who lost his father (46). About a quarter of the way into one story the next character unlocks, never forced. The stories are not in sequence: each discloses what makes another's make sense ("a chaotic intertwining narrative"). His weighting: the intertwining is "the most important part to get right".
+- [decided 68] **Two levels:** the character's level inside a run, and a GLOBAL level carrying all XP across runs and characters. The strongest unlocks (items, abilities, better trinkets, upgrades, cosmetics, new characters) sit behind global level caps.
+- [GAP, from 68 against 28/30] Does a run lost before the timer still add its XP to the global level, or is it lost there too?
 
 - [decided 23] Gateway tapes and Hemi-Sync as subtle lore; an easter egg that fleshes out the story beyond the gameplay loop.
 - [decided 24] The 1983 paper's in-between ("intermediary bubbles" in his words; the paper says "intervening dimensions" ¶18 and "intermediate dimensions" ¶21; "bubble" is not in the text).

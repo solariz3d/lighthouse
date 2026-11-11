@@ -536,3 +536,36 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - So two currencies: **cash** (spent at the PC on most things) and **energy** (spent in the meditation chair to level up).
       The site's rare trinkets cost a mix of both, read as a trade with another person who knows what the trinket is worth.
       Neither (a) nor (b) as written: it is a third version.
+68. 2026-11-11 08:55 (on D), the room as a builder, and characters with a global level: "even leveling up the PC and home gym,
+    can spend money to make the PC better and spiffier same with the gym, its like, subtle pc part builder game mixed in, new
+    monitors and peripherals. This will be what makes people spend more time in the room, which could cause invasions. Can
+    customize the type of home gym and equipment you have for the small area in your room, can customize anything if we can
+    think of it, could be a good idea, future runs, you can even unlock bigger and better rooms, different windows looking out
+    to different places, as well and this is the biggest idea for more replayability, different narratives driven by different
+    characters that interface with the dreamzone, the players can play them however they want spec wise, but they will have a
+    unique backstory and narrative to unravel, and all of them connect together in a gloriously beauitful way. And perhaps each
+    one could have their own unique buff as well that could synergize with a build. But the most important part to get right
+    is how the narratives intertwine, you start as the kid who lost his father, eventually, you unlock new characters that you
+    can play with new set and settings, and each character can act as its own save, so like quarter of the way through the
+    first characters run and story narrative, it unlocks the ability to play as someone else before you finish the first
+    character even, it doesnt force you to play, but could intice curious players to start a new run with the new character
+    before finishing the first, which could have a different flavor of how the narrative unfolds with each character slowly
+    learning what is going on and how everything is all connected together, say for an example, the story of the kid may only
+    teach you so much about the global setting of the world and dreamzone, and all of the lore surrounding it, but say in
+    another characters story arch and narrative, it discloses a bunch of things that make things from before make sense in a
+    way. Not that they all lead into each other, but its more of a chaotic intertwining narrative that could be played any way
+    besides the level cap of when new characters unlock, so say, there is your GLOBAL level, that is independent than your
+    characters level in the run, this carries your overall XP and can be needed to unlock cool things from simply playing more
+    u know?? Instead of there being things that can only be unlocked during the run itself, there will be things, more op
+    things, locked behind a global level cap. Which can give items, abilities, better trinkets or upgrades or cosmetics and new
+    characters to unravel the story with, with unique traits and playstyle."
+    - The room: the PC and the home gym are upgraded with cash, part by part (monitors, peripherals; the gym's kind and its
+      equipment), and anything else that can be customised. Time spent there is what raises the chance of an invasion (item
+      31). Later: bigger rooms, and windows that look out on different places.
+    - Characters: several, each with its own backstory, story, save and a unique buff that can synergise with a build; any
+      build is open to any of them. You start as the kid who lost his father (item 46). About a quarter of the way into one
+      character's story, the next unlocks, without forcing a switch. The stories do not run in sequence: each discloses what
+      makes another's make sense, "a chaotic intertwining narrative".
+    - Two levels: the character's level inside a run, and a GLOBAL level carrying all XP across runs and characters. The
+      strongest unlocks (items, abilities, better trinkets, upgrades, cosmetics, new characters) sit behind global level caps.
+    - His own weighting: "the most important part to get right is how the narratives intertwine".
