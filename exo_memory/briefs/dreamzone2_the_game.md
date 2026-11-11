@@ -232,3 +232,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       minute after. The developer confirms players are not meant to kill it, and being killed by it is the normal end of a map
       (vampire-survivors.fandom.com/wiki/The_Reaper; primagames "How to Reach Minute 31"). Megabonk's end was not found in one
       search; his description stands.
+29. 2026-11-11 03:50 local (L), to the librarian, on the second kind of upgrade: "but expanding off of hwat i said about there
+    being two upgradables, the second, is the ability loadout once its unlocked and the character knows of gateway and learns
+    how to gain those abilities, one is that golden aura shield, an other is maybe like super sprint movement or like
+    something crazy like dream flight flying through the hallways like invincible or homelander, maybe no clipping but that
+    might be too op, but it could be cool, a very rare powerup that lets you no clip through the map, outside of it, is this
+    beautifully dark and ominous void that is the intermediate zone between reality and the source, and can only be seen when
+    you enter the state, the players wouldnt know there is anything on the other side of the walls until they noclip, showing
+    whats beyond the walls, and it is an unknowable cosmic horror that is some how beauitful."
