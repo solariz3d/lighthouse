@@ -158,3 +158,35 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       - ¶33 "thought forms" met out of body.
       - ¶38 J "Be intellectually prepared to react to possible encounters with intelligent, non-corporal energy forms".
       - The paper does not sort them into good and bad beyond ¶29's protective framing. The good ones are his.
+26. 2026-11-11 03:22 local (L), to the librarian, after E's look-and-lore menu (`handback/p-l161-look-E_2026-11-11.md`): "we
+    shouldnt directly associate the gateway tapes to the player or hemi sync, it should be ambigious until the player plays the
+    story out through many runs, uncovering new secrets that paint the narrative for the player, say as the runs begin, there
+    will be rare encounters that progress, so say the first time the player witnesses it, it sets up in chronochological
+    sequence the next encounters that drip feed the player lore, also subtle things around the proc gen, we could design real
+    pieces to be imbeded into the seeds, like designed areas with meaning. The belief system territories are but different
+    manifestations of the space from the player characters psyche, so there is his apartment, underground research facility,
+    empty mall, empty hospital, empty highschool, perhaps empty hotel. I am even thinkin of an exceedingly rare biome that is
+    some how "outside" you know how the backrooms does it, there will be a door to a liminal outside neighborhood, or a
+    unnatural green looking hill, just glitched out wildnerness vs the shape and form of interiors, before we go deeper, we
+    talked about too much too fast, we need to take inventory again on what we got before going deeper, as well i want to do
+    research on the lore of backrooms just to learn more, 5. i like that idea of like, all the sound that occurs in the game,
+    character heavy breathing from endless sprinting, the sounds of entities and the bending contorting horror of the field
+    itself, it all quiets down when a good entity is near by, and it shines this resonant golden aura around the hallways, like
+    an angel, and it has this beauitful harmonious cord or tone that brings you closer to love. 6. yes having a binaural beat
+    play for the real player actually creates a real physiological response for the player, it will be a low vol theta usually
+    blended in with the rest of the sounds. when the player gets caught, i have this imagry of a brutally scary jumpscare of
+    some sort, and the players camera and soul gets sucked into this rapturing portal leading back to the player awakening in
+    their bed in the real world, there is the room you spawn in can walk around and customize, closet will change the look of
+    your character, PC you can go on it online and spend one of the currencies on new clothing or furniture, as well as an
+    elicit site that unlocks once the player character gets past a certain point of understanding in the game progressing
+    through the story, once they get past that part the site unlocks where they read and learn new abilities which then carry
+    over into the dreamworld run, perhaps maybe the base skills could be made better at like, a treadmill and weight rack or
+    something, and there could be a mini game where you spent your points to upgrade your speed and acceleration mobility, PC
+    is where you buy new clothing and furniture, and eventually unlocks access to the ability screen where you make your
+    loadout and unlock new abilities and functions, perhaps unlocking the good entities is something you buy and can upgrade,
+    from the power of the good entities, to even how frequently they can spawn, it also has a higher level option that is
+    locked until reached, it has to do with making the entites stronger, scaling their strength and speed to gain more
+    currency or XP similar to vampire survivors or mega bonk making more enemies on purpose to get more resources. The
+    easteregg then is basically just the background progression of the narrative on top of the gameplay and the runs
+    progressing over time. Tapes could be bought online and are one of the ways you gain new xp and skills, idk. Also, there
+    shouldnt be out of body experiences in the dreamzone since you are already technically out of your body."
