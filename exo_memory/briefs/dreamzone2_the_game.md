@@ -855,3 +855,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     death thing, it could just be like, idk lets brain storm"
     - The kid's whole story is open again: the father's death (items 46-47) is no longer required. Brainstorm first; the
       librarian offers premises in reply (17:1x).
+103. 2026-11-11 17:19 (on D), picking the kid's story from the librarian's five premises (17:1x: 1 The Sleeper, 2 The Coma, 3
+    Insomnia, 4 The Signal, 5 The Father, but alive; the librarian leaned 4, perhaps blended with 5): "truue, 4"
+    - **The Signal:** in 2005 the kid buys a used PC off a sketchy forum. On its drive are old Gateway tape rips and a program
+      that plays them. He runs it one night out of curiosity, and something answers. The cheques start after his first run.
+      Whoever owned the PC before him went somewhere and never came back, and the dreamzone is full of their traces. The PC
+      room is the story's heart.
+    - He picked 4 alone; the blend with 5 (the previous owner being his father) is not taken unless he says so.
