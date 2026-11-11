@@ -492,3 +492,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - So the families get renamed. The 25% good roll gives one of the virtues. Within it, a further roll of about 1–2% gives
       **Resonant** itself: every virtue's buff for the rest of the run, and stress can no longer rise. The rest of the good roll
       is the lesser virtues. The odds of Resonant per full-stress event are 0.25 × 0.01–0.02 = 0.25–0.5%.
+61. 07:11, about Resonant. It arrived split around a pane's pasted ring and ended cut off; joined here as written: "but i will say,
+    the golden star effect only lasts say like a solid 2-3 mins, during this time, frenzy also occurs with the resonant too,
+    since the evil entity is trying to rebel back with all its power similar to the end, but does not show itself yet, but it
+    is futile while it lasts because the signal then cannot be destroyed during, you get what I mean right? Like the evil god is
+    pissed at the fact we got it and throws everything at u no matter the point in the game, but it cannot get you, then when it
+    runs out, the passive buffs and no stress remai[n], but the star buff goes away, we should call it something else to avoid
+    the mario comparison, haha but its the best one, its like super sayian or like the energy ive had during those intense
+    contact"
