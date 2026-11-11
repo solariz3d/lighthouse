@@ -897,3 +897,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       darned cuff his mother's hand. E's "gone, not dead" option (D667 section 10) is not taken. How the death sits beside The
       Signal is for E to weave (the bible's sections 6, 7 and 10 read again).
     - "the one that follows" as the dark one's name did not land with him; the librarian explains it and offers others (17:5x).
+109. 2026-11-11 17:50 (on D), correcting the librarian's reading of item 108: "no the hoodie isnt his fathers, he starts the run with
+    his regular clothing, and then can unlock it later as late game item"
+    - The kid's base outfit is his own regular clothing, not his father's hoodie.
+    - The father's hoodie is a late-game unlock (an item he earns later), not what he starts in.
+    - Corrects item 108's note ("the hoodie is his dead father's" as his base) and E's redesign sheet, whose three directions all
+      built the base outfit round the father's hoodie.
