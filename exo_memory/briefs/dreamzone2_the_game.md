@@ -363,3 +363,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     spinning animations sucking out your dopamine, you know, you open the chest, you get one thing wow, but then one time you
     open it, its like, BOOM, BOOOM, BOOOOM, BOOOOOOOOM ULTRA CHEST DOPAMINE LESSSGO! There should be that RNG aspect exploiting
     our dopamine lmfao"
+42. 05:04, mental fortitude: "mental fortitude could be like, ancient meditation mini game that is some how fun lol, but yes it
+    not only mitigates stress, but lowers the peak of the frenzy, not by enough to stop it, but it makes it more tolerable when
+    it happens, since your mental fortitude stops them from frenzying harder since even though the player is stressed, they can
+    deal with it better without the energy leaking out, like sharks and blood in water"
