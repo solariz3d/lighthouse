@@ -95,3 +95,7 @@ NEXT: keeper looks at the three fixes when he next opens the builder; the librar
 - Two lessons in it that bear on the room's laps: builders in one repo at once collided twice on shared files, and one folder each
   plus a message before touching a shared file is what held; and his words quoted in a repo that later went public had to be
   taken out of 29 files.
+
+## Added 23:5x: Dreamzone 2 is settled, this corrects the section above
+- The section above says Dreamzone 2 was not pushed and waited on his call. That no longer holds: at his word the Third Place pushed it to a private remote and wrote its own handoff, `loop/handoff_dreamzone2_2026-11-10-D.md` (lighthouse main `c28ea4dc`; git-blob 69107b71…, checked by the librarian against the ring). Read that file for Dreamzone 2; public or private stays his call, private for now.
+- Consonance on D was closed after this, at his word to the Third Place.
