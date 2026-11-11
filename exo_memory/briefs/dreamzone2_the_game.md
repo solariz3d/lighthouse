@@ -441,3 +441,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       default, on a dial (items "Two defaults this seat set without him", above). His erosion would make that clock visible and
       audible, and shorter.
 55. 06:31, continuing item 54: "eventually stop being safezones altogether once it errodes into regular space in the dream"
+56. 06:32, correcting the librarian's reading of item 54: "but it isnt just staying in it for 10 seconds, but upon 10 seconds of
+    having entered it"
+    - So the clock starts on first entry and keeps running whether he stays or leaves. Ten seconds after he first steps in, the
+      zone has eroded (and per item 55 it is ordinary dream space from then on). Stepping out does not pause it.
