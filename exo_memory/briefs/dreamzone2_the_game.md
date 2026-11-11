@@ -250,3 +250,25 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       shows, indirectly, that it was always the malevolent god playing with its food; a part of you is consumed; you wake feeling
       normal, not knowing which part. Reach the timer: it stops playing and comes for you; the good entity steps in, because the
       evil force broke the equilibrium, and mirrors its symmetry.
+31. 2026-11-11 04:05 local (L), to the librarian, on invasions of the waking room: "i had this brilliant idea, if you are max
+    insanity, there is a small chance, that your safe room in waking state is invaded while you are doing things such as on PC
+    or excercising mini game, there is like a scary and unique variation of invasions that jump scare the player if they arent
+    paying attention, the cool part, if the player is wary or paranoid, say from it happening once before, there could be
+    subtle cues you could pick up on to know its coming, depending on how they manifest will be different cues, one that comes
+    to mind, if you look outside the window, sometimes there will be a figure that isnt usually there, if the player doesnt see
+    it it slowly finds its way into the room, if its behind the player it will eventually grab them and jump scare the fuck
+    outta them, but if they turn around or see them first it engages it there, then it forces the next run. But yeah, so the
+    cue would be, if the player looked out the window, which there could be a reason to, looking out the window could lower
+    insanity, but also, the longer time you spend in your room without sleeping or dreaming the next run, your insanity goes up
+    by itself anyway over like a long period of time say longer than 15 mins. This increases the chances of being invaded. But
+    yes anyway like I was saying, if the one invasion is triggered where the being spawns outside further away like behind
+    bushes or behind a parked car, or on the roof across the street hiding behind it etc, the player can notice it and see it,
+    knowing that its coming, it cant stop it, but maybe they start the dream themselves before, if they get invaded and thrown
+    into a dream they start with maxed out insanity too. So it is good to engage the run yourself if you can. We can flesh out
+    other invasion ideas, say another one, it could happen like, electricity flickering, or like an entity appearing on the
+    screen of the pc in the room in game that trolls them into a fucking brutal scare, or someone knocking on the door of the
+    real room, perhaps even the player mother can be a character, never seen, but can knock and check up on the player every
+    now and then random event, which then the player has dialogue options like say fallout new vegas different branching
+    responses for the interaction that also build off of each other for the next interaction branching seriously. Depending
+    the mom can offer relief from insanity or even trigger it more, even perhaps mimicking eventually players mom when it is
+    an entity invading, you like these ideas?"
