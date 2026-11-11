@@ -783,3 +783,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The librarian's note: the world is deterministic per seed and does not shift with the player's upgrades (the voids are
       sized from a fixed base for that reason). So the proposal to him is that the seed lays out each passage's full possible
       length and luck opens more of it (the extra pieces sealed at lower luck), which keeps one seed one world.
+95. 2026-11-11 16:33 (on D), the safe zones' name: asked for a Monroe-lore name ("we also need a new name for it, do we have a
+    monroe institute lore based idea for the name"), offered "the Park" (Monroe's Focus 27 way-station, secondary source; lore
+    T3), "Balloon" (Gateway's Resonant Energy Balloon) and "Reception"; his answer: "I like it" (to the Park, the
+    librarian's pick).
+    - The reprieves / safe zones are called **the Park** in player-facing text and design from now on. Erosion reads as the
+      Park dissolving. Code identifiers may keep "reprieve" internally.
