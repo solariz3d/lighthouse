@@ -1,0 +1,9 @@
+stage 1: c=Some("5") prog=Some("automaton/prog.lofi_fall") species=automaton | the seed opens with the clap and perc
+stage 2: c=Some("5") prog=Some("automaton/prog.lofi_fall") species=automaton | build: the lead comes in, playing automaton/lead.runs
+stage 3: c=Some("5") prog=Some("automaton/prog.lofi_fall") species=automaton | build: the pads come in, playing automaton/pads.cells
+stage 4: c=Some("5") prog=Some("automaton/prog.axis") species=automaton | build: the bass comes in; a new progression, automaton/prog.axis; into the seam, automaton/seam.next
+stage 5: c=Some("5") prog=Some("automaton/prog.axis") species=automaton | peak: the kick comes in, playing automaton/kick.five; into the seam, automaton/seam.roll
+stage 6: c=Some("5") prog=Some("automaton/prog.axis") species=automaton | breakdown: only the bass and lead; the bass takes automaton/bass.rows
+stage 7: c=Some("2") prog=Some("automaton/prog.picardy") species=automaton <- c CHANGE, cause PROG | turn: a new progression, automaton/prog.picardy; into the seam, automaton/seam.next
+stage 8: c=Some("5") prog=Some("automaton/prog.three_six_two_five") species=automaton <- c CHANGE, cause PROG | return: the drop: the kick, pads, hat and clap return; a new progression, automaton/prog.three_six_two_five; into the seam, automaton/seam.next
+c changes in stages 1..=8: [(7, "PROG"), (8, "PROG")]

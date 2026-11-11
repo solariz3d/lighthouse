@@ -1,0 +1,3 @@
+STRETCH stream_s104389_1-3.txt v3 stages 1-3 species=chaos inside_changes=[] entering_change=false (c at 1..3: ["5", "5", "5"])
+STRETCH stream_s518643_1-3.txt v3 stages 1-3 species=oneline inside_changes=[] entering_change=false (c at 1..3: ["5", "5", "5"])
+TOTAL judged/good: stretches=2 not_reproduced=0 with_a_c_change_inside=0 with_one_inside_or_entering=0 transitions=4 transitions_with_change=0

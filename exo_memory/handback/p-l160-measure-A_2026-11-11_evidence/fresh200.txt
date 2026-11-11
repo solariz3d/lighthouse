@@ -1,0 +1,640 @@
+SONG seed=179022 species=chaos stages=17 ended=true c_changes=2
+  CHANGE seed=179022 stage=7 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.descending")->Some("chaos/prog.deep_minor") summary="turn: a new progression, chaos/prog.deep_minor; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=179022 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.deep_minor")->Some("prog.borrowed_four") summary="intro: a new species, lens: the move book: 12-tone modes through the scale lens h(d), city pop made of graphs"
+SONG seed=457213 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=457213 stage=4 cause=PROG c=Some("6")->Some("5") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.deceptive") summary="build: the pads take dialogue/pads.still; a new progression, dialogue/prog.deceptive; into the seam, dialogue/seam.inhale"
+  CHANGE seed=457213 stage=15 cause=PROG c=Some("5")->Some("6") prog=Some("dialogue/prog.tritone")->Some("dialogue/prog.lydian_float.coda") summary="coda: home to dialogue/prog.lydian_float, the first melody, dialogue/lead.question, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=640900 species=dialogue stages=17 ended=true c_changes=3
+  CHANGE seed=640900 stage=4 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.borrowed_four")->Some("dialogue/prog.minor_circle") summary="build: the hat comes in; a new progression, dialogue/prog.minor_circle; into the seam, dialogue/seam.brushroll"
+  CHANGE seed=640900 stage=10 cause=PROG c=Some("2")->Some("6") prog=Some("prog.picardy")->Some("prog.lydian_float") summary="build: the kick comes in; a new progression, prog.lydian_float"
+  CHANGE seed=640900 stage=16 cause=PROG c=Some("6")->Some("2") prog=Some("prog.lydian_float")->Some("prog.picardy.coda") summary="coda: home to prog.picardy, the first melody, lead.weierstrass_bend, again; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=549515 species=lens stages=17 ended=true c_changes=3
+  CHANGE seed=549515 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("prog.backdoor")->Some("prog.minor_climb") summary="build: the kick comes in, playing kick.citypop4; a new progression, prog.minor_climb"
+  CHANGE seed=549515 stage=4 cause=PROG c=Some("2")->Some("3") prog=Some("prog.minor_climb")->Some("prog.dorian_vamp") summary="build: the pads take pads.folded; a new progression, prog.dorian_vamp"
+  CHANGE seed=549515 stage=9 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("dialogue/prog.backdoor") summary="intro: a new species, dialogue: call and response between two curves, on a breathing clock, over written harmony"
+SONG seed=807088 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=807088 stage=13 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.circle")->Some("dialogue/prog.deep_minor") summary="turn: a new progression, dialogue/prog.deep_minor; into the seam, dialogue/seam.brushroll"
+  CHANGE seed=807088 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.deep_minor")->Some("dialogue/prog.two_five_one") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.tritone; home to dialogue/prog.two_five_one; into the seam, dialogue/seam.inhale"
+SONG seed=681238 species=dialogue stages=16 ended=true c_changes=4
+  CHANGE seed=681238 stage=7 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.lofi_fall")->Some("dialogue/prog.deep_minor") summary="turn: a new progression, dialogue/prog.deep_minor; into the seam, dialogue/seam.inhale"
+  CHANGE seed=681238 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.deep_minor")->Some("dialogue/prog.axis") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.axis; the bass takes dialogue/bass.answer; into the seam, dialogue/seam.inhale"
+  CHANGE seed=681238 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("prog.deceptive")->Some("prog.minor_climb") summary="build: the kick comes in, playing kick.citypop11; a new progression, prog.minor_climb"
+  CHANGE seed=681238 stage=11 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_climb")->Some("prog.circle") summary="peak: the lead comes in, playing lead.blancmange_triplet; a new progression, prog.circle; into the seam, seam.cascade"
+SONG seed=715416 species=dialogue stages=17 ended=true c_changes=6
+  CHANGE seed=715416 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.picardy")->Some("dialogue/prog.descending") summary="turn: a new progression, dialogue/prog.descending; into the seam, dialogue/seam.inhale"
+  CHANGE seed=715416 stage=8 cause=PROG c=Some("5")->Some("6") prog=Some("dialogue/prog.descending")->Some("dialogue/prog.lydian_float") summary="return: the drop: the kick, pads, bass and hat return; a new progression, dialogue/prog.lydian_float; into the seam, dialogue/seam.inhale"
+  CHANGE seed=715416 stage=9 cause=PROG c=Some("6")->Some("5") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.line_cliche") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 6); a new progression, dialogue/prog.line_cliche"
+  CHANGE seed=715416 stage=11 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.line_cliche")->Some("dialogue/prog.marusa") summary="build: the pads take dialogue/pads.breath; a new progression, dialogue/prog.marusa"
+  CHANGE seed=715416 stage=12 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.marusa")->Some("dialogue/prog.axis") summary="peak: the hat comes in; a new progression, dialogue/prog.axis; into the seam, dialogue/seam.inhale"
+  CHANGE seed=715416 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.axis")->Some("dialogue/prog.minor_circle") summary="turn: a new progression, dialogue/prog.minor_circle; into the seam, dialogue/seam.brushroll"
+SONG seed=879260 species=lens stages=16 ended=true c_changes=2
+  CHANGE seed=879260 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("prog.two_five_one")->Some("prog.minor_climb") summary="intro: modulates up a fourth (K = 5); a new progression, prog.minor_climb"
+  CHANGE seed=879260 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_climb")->Some("prog.royal_road") summary="build: the pads come in, playing pads.swell; a new progression, prog.royal_road; into the seam, seam.stutter"
+SONG seed=234576 species=lens stages=15 ended=true c_changes=0
+SONG seed=722615 species=lens stages=17 ended=true c_changes=3
+  CHANGE seed=722615 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("chaos/prog.two_five_one") summary="intro: a new species, chaos: the logistic map at the edge of chaos, in 7/8 on a pentatonic lens"
+  CHANGE seed=722615 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.two_five_one")->Some("chaos/prog.deep_minor") summary="turn: a new progression, chaos/prog.deep_minor; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=722615 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.deep_minor")->Some("chaos/prog.two_five_one") summary="return: the drop: the kick, pads, hat and clap return; the melody moves down an octave; home to chaos/prog.two_five_one; into the seam, chaos/seam.bifurcate"
+SONG seed=438901 species=lens stages=21 ended=true c_changes=2
+  CHANGE seed=438901 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("prog.descending")->Some("prog.minor_circle") summary="build: the lead comes in; a new progression, prog.minor_circle"
+  CHANGE seed=438901 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("dialogue/prog.two_five_one") summary="intro: a new species, dialogue: call and response between two curves, on a breathing clock, over written harmony"
+SONG seed=7311 species=oneline stages=15 ended=true c_changes=2
+  CHANGE seed=7311 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.borrowed_four")->Some("oneline/prog.marusa") summary="build: the clap comes in; a new progression, oneline/prog.marusa"
+  CHANGE seed=7311 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.marusa")->Some("oneline/prog.circle") summary="return: the drop: the hat, clap and perc return; a new progression, oneline/prog.circle; into the seam, oneline/seam.sweep"
+SONG seed=324371 species=lens stages=17 ended=true c_changes=2
+  CHANGE seed=324371 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("prog.line_cliche")->Some("prog.minor_circle") summary="intro: a new progression, prog.minor_circle"
+  CHANGE seed=324371 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_circle")->Some("prog.turnaround") summary="build: the kick comes in, playing kick.citypop17; a new progression, prog.turnaround"
+SONG seed=571111 species=lens stages=16 ended=true c_changes=2
+  CHANGE seed=571111 stage=9 cause=PROG c=Some("3")->Some("2") prog=Some("prog.dorian_vamp")->Some("prog.deep_minor") summary="build: the bass takes bass.walk; a new progression, prog.deep_minor"
+  CHANGE seed=571111 stage=14 cause=PROG c=Some("2")->Some("3") prog=Some("prog.minor_circle")->Some("prog.dorian_vamp") summary="return: the hat comes in; home to prog.dorian_vamp, the first melody, lead.blancmange, again; into the seam, seam.fall"
+SONG seed=389278 species=chaos stages=17 ended=true c_changes=4
+  CHANGE seed=389278 stage=8 cause=PROG c=Some("6")->Some("5") prog=Some("chaos/prog.lydian_float")->Some("chaos/prog.turnaround") summary="return: the drop: the kick, pads, hat and clap return; a new progression, chaos/prog.turnaround; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=389278 stage=9 cause=PROG c=Some("5")->Some("6") prog=Some("chaos/prog.turnaround")->Some("bounce/prog.lydian_float") summary="intro: a new species, bounce: physical models over written harmony: phrases shaped by bouncing balls, pendulums and springs"
+  CHANGE seed=389278 stage=14 cause=PROG c=Some("6")->Some("2") prog=Some("bounce/prog.lydian_float")->Some("bounce/prog.minor_climb") summary="turn: a new progression, bounce/prog.minor_climb; into the seam, bounce/seam.drop"
+  CHANGE seed=389278 stage=15 cause=PROG c=Some("2")->Some("6") prog=Some("bounce/prog.minor_climb")->Some("bounce/prog.lydian_float") summary="return: the drop: the kick, pads, hat and clap return; home to bounce/prog.lydian_float; into the seam, bounce/seam.drop"
+SONG seed=568449 species=oneline stages=16 ended=true c_changes=2
+  CHANGE seed=568449 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.picardy")->Some("oneline/prog.two_five_one") summary="build: the perc comes in; a new progression, oneline/prog.two_five_one; into the seam, oneline/seam.sweep"
+  CHANGE seed=568449 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.two_five_one")->Some("oneline/prog.picardy") summary="return: the drop: the kick, hat, clap and perc return; the melody moves down an octave; home to oneline/prog.picardy, the first melody, oneline/lead.four, again; into the seam, oneline/seam.sweep"
+SONG seed=38474 species=oneline stages=22 ended=true c_changes=2
+  CHANGE seed=38474 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.minor_circle")->Some("oneline/prog.two_five_one") summary="intro: it thins to the counter, lead and kick; modulates up a fourth (K = 6); a new progression, oneline/prog.two_five_one"
+  CHANGE seed=38474 stage=20 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.two_five_one")->Some("oneline/prog.picardy") summary="return: the drop: the hat, clap and perc return; home to oneline/prog.picardy, the first melody, oneline/lead.three, again; into the seam, oneline/seam.sweep"
+SONG seed=655947 species=lens stages=16 ended=true c_changes=3
+  CHANGE seed=655947 stage=5 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("prog.axis") summary="peak: a new progression, prog.axis; into the seam, seam.cascade"
+  CHANGE seed=655947 stage=7 cause=PROG c=Some("5")->Some("2") prog=Some("prog.axis")->Some("prog.minor_circle") summary="turn: a new progression, prog.minor_circle; the kick comes in, playing kick.citypop4; into the seam, seam.swell"
+  CHANGE seed=655947 stage=15 cause=PROG c=Some("2")->Some("3") prog=Some("prog.minor_circle")->Some("prog.dorian_vamp.coda") summary="coda: home to prog.dorian_vamp, the first melody, lead.lorenz, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=649451 species=oneline stages=16 ended=true c_changes=0
+SONG seed=5892 species=dialogue stages=16 ended=true c_changes=0
+SONG seed=608314 species=bounce stages=17 ended=true c_changes=4
+  CHANGE seed=608314 stage=7 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.turnaround")->Some("bounce/prog.deep_minor") summary="turn: a new progression, bounce/prog.deep_minor; into the seam, bounce/seam.drop"
+  CHANGE seed=608314 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.deep_minor")->Some("bounce/prog.circle") summary="return: the drop: the kick, pads, bass and hat return; a new progression, bounce/prog.circle; into the seam, bounce/seam.drop"
+  CHANGE seed=608314 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.borrowed_four")->Some("chaos/prog.deep_minor") summary="build: the bass comes in, playing chaos/bass.groups; a new progression, chaos/prog.deep_minor"
+  CHANGE seed=608314 stage=16 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.marusa")->Some("chaos/prog.borrowed_four.coda") summary="coda: home to chaos/prog.borrowed_four, the first melody, chaos/lead.orbit, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=780388 species=bounce stages=17 ended=true c_changes=6
+  CHANGE seed=780388 stage=5 cause=PROG c=Some("2")->Some("3") prog=Some("bounce/prog.minor_climb")->Some("bounce/prog.dorian_vamp") summary="peak: the bass comes in; a new progression, bounce/prog.dorian_vamp; into the seam, bounce/seam.roll"
+  CHANGE seed=780388 stage=9 cause=PROG c=Some("3")->Some("5") prog=Some("bounce/prog.dorian_vamp")->Some("bounce/prog.lofi_fall") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 6); a new progression, bounce/prog.lofi_fall"
+  CHANGE seed=780388 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.lofi_fall")->Some("bounce/prog.minor_climb") summary="build: the clap comes in; a new progression, bounce/prog.minor_climb"
+  CHANGE seed=780388 stage=11 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.minor_climb")->Some("bounce/prog.circle") summary="build: the kick comes in, playing bounce/kick.ball; a new progression, bounce/prog.circle; the bass takes bounce/bass.walk"
+  CHANGE seed=780388 stage=14 cause=PROG c=Some("5")->Some("3") prog=Some("bounce/prog.circle")->Some("bounce/prog.dorian_vamp") summary="turn: a new progression, bounce/prog.dorian_vamp; into the seam, bounce/seam.drop"
+  CHANGE seed=780388 stage=16 cause=PROG c=Some("3")->Some("2") prog=Some("bounce/prog.dorian_vamp")->Some("bounce/prog.minor_climb.coda") summary="coda: home to bounce/prog.minor_climb; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=572839 species=chaos stages=15 ended=true c_changes=2
+  CHANGE seed=572839 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.lofi_fall")->Some("chaos/prog.marusa") summary="build: the bass takes chaos/bass.spikes; a new progression, chaos/prog.marusa; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=572839 stage=13 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.marusa")->Some("chaos/prog.backdoor") summary="return: the drop: the pads, hat and clap return; a new progression, chaos/prog.minor_circle; home to chaos/prog.backdoor; into the seam, chaos/seam.bifurcate"
+SONG seed=158206 species=dialogue stages=16 ended=true c_changes=3
+  CHANGE seed=158206 stage=3 cause=PROG c=Some("3")->Some("2") prog=Some("dialogue/prog.dorian_vamp")->Some("dialogue/prog.marusa") summary="build: the kick comes in; a new progression, dialogue/prog.marusa"
+  CHANGE seed=158206 stage=5 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.marusa")->Some("dialogue/prog.circle") summary="peak: the lead comes in; a new progression, dialogue/prog.circle; into the seam, dialogue/seam.inhale"
+  CHANGE seed=158206 stage=15 cause=PROG c=Some("5")->Some("3") prog=Some("dialogue/prog.circle")->Some("dialogue/prog.dorian_vamp.coda") summary="coda: home to dialogue/prog.dorian_vamp, the first melody, dialogue/lead.question, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=991635 species=lens stages=16 ended=true c_changes=1
+  CHANGE seed=991635 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("prog.royal_road")->Some("automaton/prog.picardy") summary="intro: a new species, automaton: an elementary cellular automaton in 5/4 on the whole-tone scale: the rule is the score"
+SONG seed=402983 species=automaton stages=21 ended=true c_changes=3
+  CHANGE seed=402983 stage=14 cause=PROG c=Some("5")->Some("6") prog=Some("dialogue/prog.turnaround")->Some("automaton/prog.lydian_float") summary="intro: a new species, automaton: an elementary cellular automaton in 5/4 on the whole-tone scale: the rule is the score"
+  CHANGE seed=402983 stage=16 cause=PROG c=Some("6")->Some("5") prog=Some("automaton/prog.lydian_float")->Some("automaton/prog.turnaround") summary="peak: the hat comes in; a new progression, automaton/prog.turnaround; into the seam, automaton/seam.roll"
+  CHANGE seed=402983 stage=19 cause=PROG c=Some("5")->Some("6") prog=Some("automaton/prog.turnaround")->Some("automaton/prog.lydian_float") summary="return: the drop: the kick, pads, hat and clap return; a new melody, automaton/lead.runs; home to automaton/prog.lydian_float, the first melody, automaton/lead.column, again; into the seam, automaton/seam.next"
+SONG seed=662633 species=bounce stages=16 ended=true c_changes=3
+  CHANGE seed=662633 stage=2 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.picardy")->Some("bounce/prog.deceptive") summary="build: the bass comes in; a new progression, bounce/prog.deceptive"
+  CHANGE seed=662633 stage=9 cause=PROG c=Some("5")->Some("3") prog=Some("bounce/prog.circle")->Some("bounce/prog.dorian_vamp") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 4); a new progression, bounce/prog.dorian_vamp; the bass takes bounce/bass.ball"
+  CHANGE seed=662633 stage=14 cause=PROG c=Some("3")->Some("2") prog=Some("bounce/prog.dorian_vamp")->Some("bounce/prog.picardy") summary="return: the drop: the kick, pads, bass and hat return; the bass takes bounce/bass.walk; home to bounce/prog.picardy; into the seam, bounce/seam.drop"
+SONG seed=654478 species=lens stages=22 ended=true c_changes=2
+  CHANGE seed=654478 stage=4 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("prog.backdoor") summary="build: the arp takes arp.updown; a new progression, prog.backdoor"
+  CHANGE seed=654478 stage=20 cause=PROG c=Some("5")->Some("2") prog=Some("prog.descending")->Some("prog.picardy") summary="return: the kick comes in; home to prog.picardy; into the seam, seam.fall"
+SONG seed=821681 species=bounce stages=15 ended=true c_changes=2
+  CHANGE seed=821681 stage=13 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.line_cliche")->Some("bounce/prog.minor_circle") summary="return: the drop: the kick, pads, hat and clap return; a new progression, bounce/prog.minor_circle; into the seam, bounce/seam.drop"
+  CHANGE seed=821681 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.minor_circle")->Some("bounce/prog.descending.coda") summary="coda: home to bounce/prog.descending, the first melody, bounce/lead.pendulum, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=739141 species=dialogue stages=17 ended=true c_changes=3
+  CHANGE seed=739141 stage=2 cause=PROG c=Some("3")->Some("2") prog=Some("dialogue/prog.dorian_vamp")->Some("dialogue/prog.minor_climb") summary="build: the kick comes in; a new progression, dialogue/prog.minor_climb"
+  CHANGE seed=739141 stage=4 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_climb")->Some("dialogue/prog.royal_road") summary="build: the hat comes in; a new progression, dialogue/prog.royal_road; into the seam, dialogue/seam.brushroll"
+  CHANGE seed=739141 stage=16 cause=PROG c=Some("5")->Some("3") prog=Some("dialogue/prog.tritone")->Some("dialogue/prog.dorian_vamp.coda") summary="coda: home to dialogue/prog.dorian_vamp, the first melody, dialogue/lead.question, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=856714 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=856714 stage=4 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.descending")->Some("dialogue/prog.marusa") summary="build: the bass takes dialogue/bass.breath; a new progression, dialogue/prog.marusa; into the seam, dialogue/seam.inhale"
+  CHANGE seed=856714 stage=5 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.marusa")->Some("dialogue/prog.circle") summary="peak: the hat comes in; a new progression, dialogue/prog.circle; into the seam, dialogue/seam.inhale"
+SONG seed=866074 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=866074 stage=8 cause=PROG c=Some("3")->Some("5") prog=Some("dialogue/prog.dorian_vamp")->Some("dialogue/prog.royal_road") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.royal_road; into the seam, dialogue/seam.inhale"
+  CHANGE seed=866074 stage=15 cause=PROG c=Some("5")->Some("3") prog=Some("dialogue/prog.borrowed_four")->Some("dialogue/prog.dorian_vamp.coda") summary="coda: home to dialogue/prog.dorian_vamp; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=31324 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=31324 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.axis")->Some("dialogue/prog.picardy") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.picardy; into the seam, dialogue/seam.inhale"
+  CHANGE seed=31324 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_circle")->Some("dialogue/prog.circle") summary="return: the drop: the kick, pads, bass and hat return; home to dialogue/prog.circle, the first melody, dialogue/lead.question, again; into the seam, dialogue/seam.inhale"
+SONG seed=106468 species=bounce stages=17 ended=true c_changes=2
+  CHANGE seed=106468 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.marusa")->Some("bounce/prog.lofi_fall") summary="turn: a new progression, bounce/prog.lofi_fall; into the seam, bounce/seam.drop"
+  CHANGE seed=106468 stage=16 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.circle")->Some("bounce/prog.marusa.coda") summary="coda: home to bounce/prog.marusa; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=360566 species=lens stages=17 ended=true c_changes=4
+  CHANGE seed=360566 stage=7 cause=PROG c=Some("5")->Some("2") prog=Some("prog.axis")->Some("prog.marusa") summary="turn: a new progression, prog.marusa; into the seam, seam.roll"
+  CHANGE seed=360566 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("prog.marusa")->Some("prog.borrowed_four") summary="intro: a new progression, prog.borrowed_four"
+  CHANGE seed=360566 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("prog.tritone")->Some("prog.minor_climb") summary="turn: a new progression, prog.minor_climb; into the seam, seam.doubling"
+  CHANGE seed=360566 stage=16 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_climb")->Some("prog.lofi_fall.coda") summary="coda: home to prog.lofi_fall, the first melody, lead.blancmange, again; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=715635 species=automaton stages=17 ended=true c_changes=2
+  CHANGE seed=715635 stage=8 cause=PROG c=Some("5")->Some("6") prog=Some("automaton/prog.deceptive")->Some("automaton/prog.lydian_float") summary="return: the drop: the kick, pads, bass and hat return; a new progression, automaton/prog.lydian_float; into the seam, automaton/seam.next"
+  CHANGE seed=715635 stage=9 cause=PROG c=Some("6")->Some("5") prog=Some("automaton/prog.lydian_float")->Some("prog.two_five_one") summary="intro: a new species, lens: the move book: 12-tone modes through the scale lens h(d), city pop made of graphs"
+SONG seed=19254 species=lens stages=15 ended=true c_changes=0
+SONG seed=530874 species=chaos stages=17 ended=true c_changes=1
+  CHANGE seed=530874 stage=9 cause=PROG c=Some("3")->Some("5") prog=Some("chaos/prog.dorian_vamp")->Some("bounce/prog.royal_road") summary="intro: a new species, bounce: physical models over written harmony: phrases shaped by bouncing balls, pendulums and springs"
+SONG seed=848394 species=automaton stages=16 ended=true c_changes=1
+  CHANGE seed=848394 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_circle")->Some("dialogue/prog.two_five_one") summary="intro: a new species, dialogue: call and response between two curves, on a breathing clock, over written harmony"
+SONG seed=736099 species=oneline stages=15 ended=true c_changes=2
+  CHANGE seed=736099 stage=13 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.deceptive")->Some("oneline/prog.minor_circle") summary="return: the drop: the kick, hat, clap and perc return; a new progression, oneline/prog.minor_circle; into the seam, oneline/seam.sweep"
+  CHANGE seed=736099 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.minor_circle")->Some("oneline/prog.descending.coda") summary="coda: home to oneline/prog.descending, the first melody, oneline/lead.rolled, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=528745 species=dialogue stages=15 ended=true c_changes=4
+  CHANGE seed=528745 stage=6 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.circle")->Some("dialogue/prog.picardy") summary="turn: a new progression, dialogue/prog.picardy; into the seam, dialogue/seam.inhale"
+  CHANGE seed=528745 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.picardy")->Some("dialogue/prog.deceptive") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.deceptive; into the seam, dialogue/seam.inhale"
+  CHANGE seed=528745 stage=12 cause=PROG c=Some("5")->Some("3") prog=Some("prog.circle")->Some("prog.dorian_vamp") summary="turn: a new progression, prog.dorian_vamp; into the seam, seam.glissando"
+  CHANGE seed=528745 stage=14 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("prog.descending.coda") summary="coda: home to prog.descending; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=136627 species=dialogue stages=16 ended=true c_changes=1
+  CHANGE seed=136627 stage=7 cause=PROG c=Some("6")->Some("5") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.circle") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.circle; into the seam, dialogue/seam.inhale"
+SONG seed=433718 species=dialogue stages=15 ended=true c_changes=4
+  CHANGE seed=433718 stage=3 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.deep_minor")->Some("dialogue/prog.deceptive") summary="build: the hat comes in; a new progression, dialogue/prog.deceptive"
+  CHANGE seed=433718 stage=6 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.deceptive")->Some("dialogue/prog.minor_climb") summary="turn: a new progression, dialogue/prog.minor_climb; into the seam, dialogue/seam.inhale"
+  CHANGE seed=433718 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_climb")->Some("dialogue/prog.tritone") summary="return: the drop: the kick, pads, bass and hat return; a new progression, dialogue/prog.tritone; the bass takes dialogue/bass.answer; into the seam, dialogue/seam.inhale"
+  CHANGE seed=433718 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.tritone")->Some("prog.picardy") summary="intro: a new species, lens: the move book: 12-tone modes through the scale lens h(d), city pop made of graphs"
+SONG seed=594206 species=lens stages=17 ended=true c_changes=3
+  CHANGE seed=594206 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("prog.deceptive")->Some("automaton/prog.minor_climb") summary="intro: a new species, automaton: an elementary cellular automaton in 5/4 on the whole-tone scale: the rule is the score"
+  CHANGE seed=594206 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_climb")->Some("automaton/prog.turnaround") summary="build: the pads come in; a new progression, automaton/prog.turnaround"
+  CHANGE seed=594206 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.turnaround")->Some("automaton/prog.minor_climb") summary="return: the drop: the kick, pads, hat and clap return; the melody moves up an octave; home to automaton/prog.minor_climb, the first melody, automaton/lead.runs, again; into the seam, automaton/seam.next"
+SONG seed=664761 species=chaos stages=16 ended=true c_changes=2
+  CHANGE seed=664761 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.picardy")->Some("chaos/prog.lofi_fall") summary="build: the bass takes chaos/bass.spikes; a new progression, chaos/prog.lofi_fall"
+  CHANGE seed=664761 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.tritone")->Some("chaos/prog.picardy") summary="return: the drop: the kick, pads, hat and clap return; a new progression, chaos/prog.marusa; the bass takes chaos/bass.drift; home to chaos/prog.picardy, the first melody, chaos/lead.orbit, again; into the seam, chaos/seam.bifurcate"
+SONG seed=803911 species=oneline stages=16 ended=true c_changes=0
+SONG seed=542467 species=dialogue stages=16 ended=true c_changes=1
+  CHANGE seed=542467 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.circle")->Some("automaton/prog.deep_minor") summary="intro: a new species, automaton: an elementary cellular automaton in 5/4 on the whole-tone scale: the rule is the score"
+SONG seed=876742 species=automaton stages=16 ended=true c_changes=0
+SONG seed=613312 species=dialogue stages=15 ended=true c_changes=0
+SONG seed=496481 species=dialogue stages=16 ended=true c_changes=0
+SONG seed=15393 species=bounce stages=15 ended=true c_changes=4
+  CHANGE seed=15393 stage=4 cause=PROG c=Some("6")->Some("5") prog=Some("bounce/prog.lydian_float")->Some("bounce/prog.circle") summary="peak: the bass comes in; a new progression, bounce/prog.circle; into the seam, bounce/seam.roll"
+  CHANGE seed=15393 stage=6 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.circle")->Some("bounce/prog.minor_climb") summary="turn: a new progression, bounce/prog.minor_climb; into the seam, bounce/seam.roll"
+  CHANGE seed=15393 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.minor_climb")->Some("bounce/prog.turnaround") summary="return: the drop: the kick, pads, hat and clap return; a new progression, bounce/prog.turnaround; into the seam, bounce/seam.drop"
+  CHANGE seed=15393 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.turnaround")->Some("chaos/prog.deep_minor") summary="intro: a new species, chaos: the logistic map at the edge of chaos, in 7/8 on a pentatonic lens"
+SONG seed=555254 species=oneline stages=17 ended=true c_changes=0
+SONG seed=691447 species=oneline stages=15 ended=true c_changes=2
+  CHANGE seed=691447 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.backdoor")->Some("oneline/prog.minor_climb") summary="build: the kick comes in, playing oneline/kick.four; a new progression, oneline/prog.minor_climb"
+  CHANGE seed=691447 stage=13 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.minor_climb")->Some("oneline/prog.backdoor") summary="return: the drop: the kick, hat, clap and perc return; a new progression, oneline/prog.backdoor; into the seam, oneline/seam.sweep"
+SONG seed=764481 species=bounce stages=17 ended=true c_changes=2
+  CHANGE seed=764481 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.circle")->Some("bounce/prog.picardy") summary="intro: it thins to the bass, pads and lead; a new progression, bounce/prog.picardy; the bass takes bounce/bass.walk"
+  CHANGE seed=764481 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.picardy")->Some("bounce/prog.borrowed_four") summary="return: the drop: the kick, pads, bass and hat return; home to bounce/prog.borrowed_four, the first melody, bounce/lead.pendulum, again; into the seam, bounce/seam.drop"
+SONG seed=23743 species=automaton stages=17 ended=true c_changes=2
+  CHANGE seed=23743 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.two_five_one")->Some("automaton/prog.picardy") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 0); a new progression, automaton/prog.picardy"
+  CHANGE seed=23743 stage=11 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.picardy")->Some("automaton/prog.three_six_two_five") summary="build: the pads take automaton/pads.cells; a new progression, automaton/prog.three_six_two_five; into the seam, automaton/seam.next"
+SONG seed=302880 species=oneline stages=17 ended=true c_changes=3
+  CHANGE seed=302880 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.two_five_one")->Some("bounce/prog.deep_minor") summary="intro: a new species, bounce: physical models over written harmony: phrases shaped by bouncing balls, pendulums and springs"
+  CHANGE seed=302880 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.minor_circle")->Some("bounce/prog.axis") summary="return: the drop: the kick, pads, hat and clap return; a new progression, bounce/prog.axis; into the seam, bounce/seam.drop"
+  CHANGE seed=302880 stage=16 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.axis")->Some("bounce/prog.deep_minor.coda") summary="coda: home to bounce/prog.deep_minor, the first melody, bounce/lead.ball, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=64045 species=dialogue stages=17 ended=true c_changes=2
+  CHANGE seed=64045 stage=5 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.royal_road")->Some("dialogue/prog.minor_climb") summary="peak: the perc comes in; a new progression, dialogue/prog.minor_climb; the bass takes dialogue/bass.answer; into the seam, dialogue/seam.inhale"
+  CHANGE seed=64045 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_climb")->Some("dialogue/prog.circle") summary="return: the drop: the pads, hat and clap return; a new progression, dialogue/prog.circle; into the seam, dialogue/seam.inhale"
+SONG seed=131444 species=bounce stages=17 ended=true c_changes=2
+  CHANGE seed=131444 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.circle")->Some("bounce/prog.picardy") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 3); a new progression, bounce/prog.picardy; the bass takes bounce/bass.ball"
+  CHANGE seed=131444 stage=12 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.picardy")->Some("bounce/prog.axis") summary="peak: the perc comes in; a new progression, bounce/prog.axis; the bass takes bounce/bass.walk; into the seam, bounce/seam.roll"
+SONG seed=449621 species=lens stages=23 ended=true c_changes=3
+  CHANGE seed=449621 stage=3 cause=PROG c=Some("6")->Some("5") prog=Some("prog.lydian_float")->Some("prog.three_six_two_five") summary="build: the bass takes bass.slide808; a new progression, prog.three_six_two_five"
+  CHANGE seed=449621 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("prog.two_five_one")->Some("prog.picardy") summary="build: the bass takes bass.slide808; a new progression, prog.picardy"
+  CHANGE seed=449621 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("automaton/prog.line_cliche") summary="intro: a new species, automaton: an elementary cellular automaton in 5/4 on the whole-tone scale: the rule is the score"
+SONG seed=389878 species=lens stages=16 ended=true c_changes=4
+  CHANGE seed=389878 stage=5 cause=PROG c=Some("2")->Some("6") prog=Some("prog.marusa")->Some("prog.lydian_float") summary="peak: a new progression, prog.lydian_float; into the seam, seam.fall"
+  CHANGE seed=389878 stage=7 cause=PROG c=Some("6")->Some("2") prog=Some("prog.lydian_float")->Some("prog.picardy") summary="turn: a new progression, prog.picardy; the bass takes bass.answer; into the seam, seam.glissando"
+  CHANGE seed=389878 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("prog.descending") summary="intro: a new progression, prog.descending; the lead comes in"
+  CHANGE seed=389878 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("prog.tritone")->Some("prog.deep_minor.coda") summary="coda: home to prog.deep_minor, the first melody, lead.weierstrass_bend, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=268535 species=bounce stages=16 ended=true c_changes=5
+  CHANGE seed=268535 stage=5 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.deep_minor")->Some("bounce/prog.turnaround") summary="peak: the perc comes in; a new progression, bounce/prog.turnaround; into the seam, bounce/seam.roll"
+  CHANGE seed=268535 stage=7 cause=PROG c=Some("5")->Some("3") prog=Some("bounce/prog.turnaround")->Some("bounce/prog.dorian_vamp") summary="turn: a new progression, bounce/prog.dorian_vamp; into the seam, bounce/seam.drop"
+  CHANGE seed=268535 stage=9 cause=PROG c=Some("3")->Some("2") prog=Some("bounce/prog.dorian_vamp")->Some("chaos/prog.picardy") summary="intro: a new species, chaos: the logistic map at the edge of chaos, in 7/8 on a pentatonic lens"
+  CHANGE seed=268535 stage=11 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.picardy")->Some("chaos/prog.deceptive") summary="peak: the kick comes in; a new progression, chaos/prog.deceptive; into the seam, chaos/seam.roll"
+  CHANGE seed=268535 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.turnaround")->Some("chaos/prog.picardy.coda") summary="coda: home to chaos/prog.picardy; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=844491 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=844491 stage=14 cause=PROG c=Some("5")->Some("3") prog=Some("dialogue/prog.turnaround")->Some("dialogue/prog.dorian_vamp") summary="return: the drop: the pads, hat and clap return; a new progression, dialogue/prog.dorian_vamp; into the seam, dialogue/seam.inhale"
+  CHANGE seed=844491 stage=15 cause=PROG c=Some("3")->Some("5") prog=Some("dialogue/prog.dorian_vamp")->Some("dialogue/prog.two_five_one.coda") summary="coda: home to dialogue/prog.two_five_one; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=175059 species=lens stages=16 ended=true c_changes=2
+  CHANGE seed=175059 stage=10 cause=PROG c=Some("6")->Some("5") prog=Some("prog.lydian_float")->Some("prog.tritone") summary="build: a new progression, prog.tritone; into the seam, seam.stutter"
+  CHANGE seed=175059 stage=14 cause=PROG c=Some("5")->Some("6") prog=Some("prog.line_cliche")->Some("prog.lydian_float") summary="return: the pads come in, playing pads.struck; home to prog.lydian_float, the first melody, lead.blancmange_slow, again; into the seam, seam.glissando"
+SONG seed=568263 species=lens stages=15 ended=true c_changes=0
+SONG seed=541463 species=dialogue stages=16 ended=true c_changes=0
+SONG seed=824649 species=lens stages=16 ended=true c_changes=2
+  CHANGE seed=824649 stage=9 cause=PROG c=Some("5")->Some("6") prog=Some("prog.borrowed_four")->Some("prog.lydian_float") summary="build: the bass takes bass.slide808; a new progression, prog.lydian_float"
+  CHANGE seed=824649 stage=14 cause=PROG c=Some("6")->Some("5") prog=Some("prog.lydian_float")->Some("prog.borrowed_four") summary="return: the kick comes in; home to prog.borrowed_four, the first melody, lead.blancmange, again; into the seam, seam.swell"
+SONG seed=383130 species=chaos stages=15 ended=true c_changes=4
+  CHANGE seed=383130 stage=3 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.picardy")->Some("chaos/prog.three_six_two_five") summary="build: the pads come in, playing chaos/pads.open; a new progression, chaos/prog.three_six_two_five; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=383130 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.turnaround")->Some("chaos/prog.picardy") summary="intro: it thins to the bass, pads and lead; a new progression, chaos/prog.picardy"
+  CHANGE seed=383130 stage=10 cause=PROG c=Some("2")->Some("6") prog=Some("chaos/prog.picardy")->Some("chaos/prog.lydian_float") summary="peak: the kick comes in; a new progression, chaos/prog.lydian_float; into the seam, chaos/seam.roll"
+  CHANGE seed=383130 stage=13 cause=PROG c=Some("6")->Some("2") prog=Some("chaos/prog.lydian_float")->Some("chaos/prog.picardy") summary="return: the drop: the bass, hat and clap return; a new progression, chaos/prog.marusa; home to chaos/prog.picardy; into the seam, chaos/seam.bifurcate"
+SONG seed=99317 species=oneline stages=15 ended=true c_changes=3
+  CHANGE seed=99317 stage=8 cause=PROG c=Some("3")->Some("2") prog=Some("oneline/prog.dorian_vamp")->Some("oneline/prog.picardy") summary="intro: it thins to the counter, lead and clap; a new progression, oneline/prog.picardy"
+  CHANGE seed=99317 stage=12 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.picardy")->Some("oneline/prog.lofi_fall") summary="turn: a new progression, oneline/prog.lofi_fall; into the seam, oneline/seam.roll"
+  CHANGE seed=99317 stage=13 cause=PROG c=Some("5")->Some("3") prog=Some("oneline/prog.lofi_fall")->Some("oneline/prog.dorian_vamp") summary="return: the drop: the kick, hat, clap and perc return; a new progression, oneline/prog.circle; home to oneline/prog.dorian_vamp, the first melody, oneline/lead.four, again; into the seam, oneline/seam.sweep"
+SONG seed=724497 species=lens stages=23 ended=true c_changes=2
+  CHANGE seed=724497 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("prog.three_six_two_five")->Some("prog.marusa") summary="build: the lead comes in, playing lead.lissajous; a new progression, prog.marusa"
+  CHANGE seed=724497 stage=4 cause=PROG c=Some("2")->Some("5") prog=Some("prog.marusa")->Some("prog.tritone") summary="build: the bass takes bass.anticipate; a new progression, prog.tritone; into the seam, seam.toms"
+SONG seed=524363 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=524363 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.borrowed_four")->Some("dialogue/prog.picardy") summary="intro: it thins to the bass, pads and lead; a new progression, dialogue/prog.picardy; the bass takes dialogue/bass.breath"
+  CHANGE seed=524363 stage=11 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.picardy")->Some("dialogue/prog.circle") summary="peak: the kick comes in, playing dialogue/kick.soft; a new progression, dialogue/prog.circle; into the seam, dialogue/seam.inhale"
+SONG seed=731638 species=lens stages=15 ended=true c_changes=2
+  CHANGE seed=731638 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("prog.borrowed_four") summary="intro: a new progression, prog.borrowed_four"
+  CHANGE seed=731638 stage=13 cause=PROG c=Some("5")->Some("2") prog=Some("prog.borrowed_four")->Some("prog.picardy") summary="return: the pads come in, playing pads.stabs; home to prog.picardy, the first melody, lead.pisano, again; into the seam, seam.glissando"
+SONG seed=577122 species=lens stages=15 ended=true c_changes=4
+  CHANGE seed=577122 stage=3 cause=PROG c=Some("5")->Some("3") prog=Some("prog.two_five_one")->Some("prog.dorian_vamp") summary="build: the lead comes in, playing lead.blancmange_triplet; a new progression, prog.dorian_vamp"
+  CHANGE seed=577122 stage=4 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("prog.three_six_two_five") summary="peak: the pads come in; a new progression, prog.three_six_two_five; into the seam, seam.cascade"
+  CHANGE seed=577122 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("prog.three_six_two_five")->Some("prog.marusa") summary="build: the arp takes arp.updown; a new progression, prog.marusa"
+  CHANGE seed=577122 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("prog.marusa")->Some("prog.two_five_one.coda") summary="coda: home to prog.two_five_one, the first melody, lead.blancmange_triplet, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=526504 species=chaos stages=16 ended=true c_changes=4
+  CHANGE seed=526504 stage=3 cause=PROG c=Some("5")->Some("3") prog=Some("chaos/prog.borrowed_four")->Some("chaos/prog.dorian_vamp") summary="build: the bass takes chaos/bass.spikes; a new progression, chaos/prog.dorian_vamp"
+  CHANGE seed=526504 stage=9 cause=PROG c=Some("3")->Some("6") prog=Some("chaos/prog.dorian_vamp")->Some("chaos/prog.lydian_float") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 5); a new progression, chaos/prog.lydian_float; the bass takes chaos/bass.groups"
+  CHANGE seed=526504 stage=13 cause=PROG c=Some("6")->Some("2") prog=Some("chaos/prog.lydian_float")->Some("chaos/prog.marusa") summary="turn: a new progression, chaos/prog.marusa; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=526504 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.marusa")->Some("chaos/prog.borrowed_four") summary="return: the drop: the kick, pads, hat and clap return; home to chaos/prog.borrowed_four; into the seam, chaos/seam.bifurcate"
+SONG seed=35817 species=lens stages=15 ended=true c_changes=1
+  CHANGE seed=35817 stage=3 cause=PROG c=Some("2")->Some("5") prog=Some("prog.deep_minor")->Some("prog.descending") summary="build: the bass comes in; a new progression, prog.descending; into the seam, seam.riser"
+SONG seed=479491 species=bounce stages=17 ended=true c_changes=3
+  CHANGE seed=479491 stage=9 cause=PROG c=Some("5")->Some("6") prog=Some("bounce/prog.circle")->Some("chaos/prog.lydian_float") summary="intro: a new species, chaos: the logistic map at the edge of chaos, in 7/8 on a pentatonic lens"
+  CHANGE seed=479491 stage=12 cause=PROG c=Some("6")->Some("5") prog=Some("chaos/prog.lydian_float")->Some("chaos/prog.axis") summary="peak: the pads come in, playing chaos/pads.open; a new progression, chaos/prog.axis; into the seam, chaos/seam.roll"
+  CHANGE seed=479491 stage=15 cause=PROG c=Some("5")->Some("6") prog=Some("chaos/prog.axis")->Some("chaos/prog.lydian_float") summary="return: the drop: the kick, pads, bass and hat return; a new progression, chaos/prog.circle; home to chaos/prog.lydian_float; into the seam, chaos/seam.bifurcate"
+SONG seed=837678 species=oneline stages=16 ended=true c_changes=3
+  CHANGE seed=837678 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.backdoor")->Some("oneline/prog.marusa") summary="build: the kick comes in, playing oneline/kick.chip; a new progression, oneline/prog.marusa"
+  CHANGE seed=837678 stage=7 cause=PROG c=Some("2")->Some("6") prog=Some("oneline/prog.marusa")->Some("oneline/prog.lydian_float") summary="turn: a new progression, oneline/prog.lydian_float; into the seam, oneline/seam.roll"
+  CHANGE seed=837678 stage=10 cause=PROG c=Some("6")->Some("5") prog=Some("oneline/prog.lydian_float")->Some("oneline/prog.backdoor") summary="build: the kick comes in; a new progression, oneline/prog.backdoor; into the seam, oneline/seam.sweep"
+SONG seed=10825 species=chaos stages=16 ended=true c_changes=2
+  CHANGE seed=10825 stage=8 cause=PROG c=Some("3")->Some("2") prog=Some("chaos/prog.dorian_vamp")->Some("chaos/prog.picardy") summary="intro: it thins to the bass, pads and lead; a new progression, chaos/prog.picardy"
+  CHANGE seed=10825 stage=14 cause=PROG c=Some("2")->Some("3") prog=Some("chaos/prog.picardy")->Some("chaos/prog.dorian_vamp") summary="return: the drop: the kick, pads, hat and clap return; a new progression, chaos/prog.axis; home to chaos/prog.dorian_vamp; into the seam, chaos/seam.bifurcate"
+SONG seed=527190 species=lens stages=16 ended=true c_changes=4
+  CHANGE seed=527190 stage=3 cause=PROG c=Some("5")->Some("3") prog=Some("prog.borrowed_four")->Some("prog.dorian_vamp") summary="build: the bass comes in; a new progression, prog.dorian_vamp; into the seam, seam.stutter"
+  CHANGE seed=527190 stage=6 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("prog.deceptive") summary="turn: a new progression, prog.deceptive; into the seam, seam.swell"
+  CHANGE seed=527190 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.backdoor")->Some("automaton/prog.minor_circle") summary="return: the drop: the pads, hat and clap return; a new progression, automaton/prog.minor_circle; into the seam, automaton/seam.next"
+  CHANGE seed=527190 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_circle")->Some("automaton/prog.backdoor.coda") summary="coda: home to automaton/prog.backdoor, the first melody, automaton/lead.runs, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=386523 species=lens stages=15 ended=true c_changes=3
+  CHANGE seed=386523 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("chaos/prog.line_cliche") summary="intro: a new species, chaos: the logistic map at the edge of chaos, in 7/8 on a pentatonic lens"
+  CHANGE seed=386523 stage=10 cause=PROG c=Some("5")->Some("3") prog=Some("chaos/prog.line_cliche")->Some("chaos/prog.dorian_vamp") summary="peak: the pads come in, playing chaos/pads.orbit; a new progression, chaos/prog.dorian_vamp; into the seam, chaos/seam.roll"
+  CHANGE seed=386523 stage=13 cause=PROG c=Some("3")->Some("5") prog=Some("chaos/prog.dorian_vamp")->Some("chaos/prog.line_cliche") summary="return: the drop: the kick, pads, hat and clap return; home to chaos/prog.line_cliche, the first melody, chaos/lead.orbit, again; into the seam, chaos/seam.bifurcate"
+SONG seed=806086 species=dialogue stages=15 ended=true c_changes=4
+  CHANGE seed=806086 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.descending")->Some("dialogue/prog.marusa") summary="build: the kick comes in; a new progression, dialogue/prog.marusa"
+  CHANGE seed=806086 stage=6 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.marusa")->Some("dialogue/prog.lofi_fall") summary="turn: a new progression, dialogue/prog.lofi_fall; into the seam, dialogue/seam.brushroll"
+  CHANGE seed=806086 stage=8 cause=PROG c=Some("5")->Some("6") prog=Some("dialogue/prog.circle")->Some("dialogue/prog.lydian_float") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 2); a new progression, dialogue/prog.lydian_float"
+  CHANGE seed=806086 stage=13 cause=PROG c=Some("6")->Some("5") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.circle") summary="return: the drop: the kick, pads and clap return; a new progression, dialogue/prog.circle; into the seam, dialogue/seam.inhale"
+SONG seed=725694 species=bounce stages=16 ended=true c_changes=3
+  CHANGE seed=725694 stage=6 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.tritone")->Some("bounce/prog.minor_circle") summary="turn: a new progression, bounce/prog.minor_circle; into the seam, bounce/seam.drop"
+  CHANGE seed=725694 stage=13 cause=PROG c=Some("2")->Some("3") prog=Some("bounce/prog.picardy")->Some("bounce/prog.dorian_vamp") summary="turn: a new progression, bounce/prog.dorian_vamp; into the seam, bounce/seam.drop"
+  CHANGE seed=725694 stage=15 cause=PROG c=Some("3")->Some("5") prog=Some("bounce/prog.dorian_vamp")->Some("bounce/prog.royal_road.coda") summary="coda: home to bounce/prog.royal_road; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=194434 species=automaton stages=15 ended=true c_changes=2
+  CHANGE seed=194434 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.tritone")->Some("automaton/prog.minor_circle") summary="build: the hat comes in; a new progression, automaton/prog.minor_circle; the bass takes automaton/bass.pulse"
+  CHANGE seed=194434 stage=13 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_circle")->Some("automaton/prog.three_six_two_five") summary="return: the drop: the kick, pads, hat and clap return; home to automaton/prog.three_six_two_five, the first melody, automaton/lead.runs, again; into the seam, automaton/seam.next"
+SONG seed=512804 species=dialogue stages=15 ended=true c_changes=5
+  CHANGE seed=512804 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.three_six_two_five")->Some("dialogue/prog.minor_climb") summary="build: the kick comes in; a new progression, dialogue/prog.minor_climb"
+  CHANGE seed=512804 stage=3 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_climb")->Some("dialogue/prog.lofi_fall") summary="build: the hat comes in; a new progression, dialogue/prog.lofi_fall"
+  CHANGE seed=512804 stage=6 cause=PROG c=Some("5")->Some("3") prog=Some("dialogue/prog.lofi_fall")->Some("dialogue/prog.dorian_vamp") summary="turn: a new progression, dialogue/prog.dorian_vamp; the kick comes in, playing dialogue/kick.soft; into the seam, dialogue/seam.inhale"
+  CHANGE seed=512804 stage=7 cause=PROG c=Some("3")->Some("5") prog=Some("dialogue/prog.dorian_vamp")->Some("dialogue/prog.circle") summary="return: the drop: the lead, hat and clap return; a new progression, dialogue/prog.circle; the bass takes dialogue/bass.breath; into the seam, dialogue/seam.inhale"
+  CHANGE seed=512804 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.circle")->Some("prog.picardy") summary="intro: a new species, lens: the move book: 12-tone modes through the scale lens h(d), city pop made of graphs"
+SONG seed=321391 species=automaton stages=15 ended=true c_changes=5
+  CHANGE seed=321391 stage=4 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.axis")->Some("automaton/prog.marusa") summary="peak: the bass comes in, playing automaton/bass.slide; a new progression, automaton/prog.marusa; into the seam, automaton/seam.roll"
+  CHANGE seed=321391 stage=6 cause=PROG c=Some("2")->Some("6") prog=Some("automaton/prog.marusa")->Some("automaton/prog.lydian_float") summary="turn: a new progression, automaton/prog.lydian_float; into the seam, automaton/seam.roll"
+  CHANGE seed=321391 stage=7 cause=PROG c=Some("6")->Some("5") prog=Some("automaton/prog.lydian_float")->Some("automaton/prog.descending") summary="return: the drop: the kick, pads, hat and clap return; a new progression, automaton/prog.descending; into the seam, automaton/seam.next"
+  CHANGE seed=321391 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.descending")->Some("automaton/prog.minor_circle") summary="build: the pads take automaton/pads.cells; a new progression, automaton/prog.minor_circle; into the seam, automaton/seam.next"
+  CHANGE seed=321391 stage=12 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_circle")->Some("automaton/prog.backdoor") summary="turn: a new progression, automaton/prog.backdoor; into the seam, automaton/seam.next"
+SONG seed=266017 species=automaton stages=21 ended=true c_changes=2
+  CHANGE seed=266017 stage=7 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.circle")->Some("automaton/prog.minor_circle") summary="return: the drop: the pads, hat and clap return; a new progression, automaton/prog.minor_circle; into the seam, automaton/seam.next"
+  CHANGE seed=266017 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("prog.circle") summary="peak: the lead comes in; a new progression, prog.circle; into the seam, seam.cascade"
+SONG seed=972061 species=automaton stages=17 ended=true c_changes=1
+  CHANGE seed=972061 stage=5 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_circle")->Some("automaton/prog.turnaround") summary="peak: the pads come in; a new progression, automaton/prog.turnaround; into the seam, automaton/seam.roll"
+SONG seed=556153 species=bounce stages=16 ended=true c_changes=3
+  CHANGE seed=556153 stage=7 cause=PROG c=Some("2")->Some("3") prog=Some("bounce/prog.picardy")->Some("bounce/prog.dorian_vamp") summary="return: the drop: the kick, pads, hat and clap return; a new progression, bounce/prog.dorian_vamp; the bass takes bounce/bass.ball; into the seam, bounce/seam.drop"
+  CHANGE seed=556153 stage=8 cause=PROG c=Some("3")->Some("5") prog=Some("bounce/prog.dorian_vamp")->Some("bounce/prog.two_five_one") summary="intro: it thins to the bass, pads and lead; a new progression, bounce/prog.two_five_one"
+  CHANGE seed=556153 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.three_six_two_five")->Some("bounce/prog.picardy.coda") summary="coda: home to bounce/prog.picardy; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=484075 species=bounce stages=17 ended=true c_changes=2
+  CHANGE seed=484075 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.deceptive")->Some("bounce/prog.picardy") summary="turn: a new progression, bounce/prog.picardy; into the seam, bounce/seam.drop"
+  CHANGE seed=484075 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.picardy")->Some("bounce/prog.lofi_fall") summary="return: the drop: the kick, pads, hat and clap return; a new progression, bounce/prog.circle; home to bounce/prog.lofi_fall; into the seam, bounce/seam.drop"
+SONG seed=679467 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=679467 stage=7 cause=PROG c=Some("5")->Some("3") prog=Some("dialogue/prog.descending")->Some("dialogue/prog.dorian_vamp") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.dorian_vamp; into the seam, dialogue/seam.inhale"
+  CHANGE seed=679467 stage=10 cause=PROG c=Some("3")->Some("5") prog=Some("dialogue/prog.dorian_vamp")->Some("dialogue/prog.deceptive") summary="build: the pads take dialogue/pads.still; a new progression, dialogue/prog.deceptive; into the seam, dialogue/seam.inhale"
+SONG seed=11953 species=lens stages=16 ended=true c_changes=4
+  CHANGE seed=11953 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("prog.borrowed_four")->Some("prog.minor_circle") summary="build: the kick comes in, playing kick.citypop11; a new progression, prog.minor_circle"
+  CHANGE seed=11953 stage=8 cause=PROG c=Some("2")->Some("6") prog=Some("prog.minor_circle")->Some("dialogue/prog.lydian_float") summary="intro: a new species, dialogue: call and response between two curves, on a breathing clock, over written harmony"
+  CHANGE seed=11953 stage=14 cause=PROG c=Some("6")->Some("5") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.three_six_two_five") summary="return: the drop: the pads, hat and clap return; a new progression, dialogue/prog.three_six_two_five; into the seam, dialogue/seam.inhale"
+  CHANGE seed=11953 stage=15 cause=PROG c=Some("5")->Some("6") prog=Some("dialogue/prog.three_six_two_five")->Some("dialogue/prog.lydian_float.coda") summary="coda: home to dialogue/prog.lydian_float, the first melody, dialogue/lead.question, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=348389 species=lens stages=22 ended=true c_changes=4
+  CHANGE seed=348389 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("prog.backdoor")->Some("prog.minor_circle") summary="build: the kick comes in, playing kick.citypop10; a new progression, prog.minor_circle"
+  CHANGE seed=348389 stage=4 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_circle")->Some("prog.circle") summary="peak: a new progression, prog.circle; into the seam, seam.toms"
+  CHANGE seed=348389 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("prog.circle")->Some("prog.deep_minor") summary="intro: it thins to the pads, counter and lead; a new progression, prog.deep_minor"
+  CHANGE seed=348389 stage=20 cause=PROG c=Some("2")->Some("5") prog=Some("prog.marusa")->Some("prog.backdoor") summary="return: the hat comes in; the bass takes bass.funk; home to prog.backdoor, the first melody, lead.lorenz, again; into the seam, seam.glissando"
+SONG seed=720094 species=lens stages=17 ended=true c_changes=4
+  CHANGE seed=720094 stage=3 cause=PROG c=Some("6")->Some("5") prog=Some("prog.lydian_float")->Some("prog.turnaround") summary="build: the pads come in, playing pads.folded; a new progression, prog.turnaround"
+  CHANGE seed=720094 stage=4 cause=PROG c=Some("5")->Some("2") prog=Some("prog.turnaround")->Some("prog.minor_climb") summary="build: the bass takes bass.wander; a new progression, prog.minor_climb; into the seam, seam.riser"
+  CHANGE seed=720094 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.deep_minor")->Some("dialogue/prog.axis") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.axis; into the seam, dialogue/seam.inhale"
+  CHANGE seed=720094 stage=16 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.axis")->Some("dialogue/prog.deep_minor.coda") summary="coda: home to dialogue/prog.deep_minor, the first melody, dialogue/lead.call, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=29253 species=bounce stages=15 ended=true c_changes=2
+  CHANGE seed=29253 stage=13 cause=PROG c=Some("5")->Some("3") prog=Some("bounce/prog.lofi_fall")->Some("bounce/prog.dorian_vamp") summary="return: the drop: the kick, pads, bass and hat return; a new progression, bounce/prog.dorian_vamp; into the seam, bounce/seam.drop"
+  CHANGE seed=29253 stage=14 cause=PROG c=Some("3")->Some("5") prog=Some("bounce/prog.dorian_vamp")->Some("bounce/prog.line_cliche.coda") summary="coda: home to bounce/prog.line_cliche; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=509595 species=dialogue stages=16 ended=true c_changes=4
+  CHANGE seed=509595 stage=8 cause=PROG c=Some("6")->Some("5") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.two_five_one") summary="return: the drop: the pads, hat and clap return; a new progression, dialogue/prog.two_five_one; into the seam, dialogue/seam.inhale"
+  CHANGE seed=509595 stage=9 cause=PROG c=Some("5")->Some("6") prog=Some("dialogue/prog.two_five_one")->Some("prog.lydian_float") summary="intro: a new species, lens: the move book: 12-tone modes through the scale lens h(d), city pop made of graphs"
+  CHANGE seed=509595 stage=13 cause=PROG c=Some("6")->Some("5") prog=Some("prog.lydian_float")->Some("prog.three_six_two_five") summary="turn: a new progression, prog.three_six_two_five; the kick comes in; into the seam, seam.doubling"
+  CHANGE seed=509595 stage=15 cause=PROG c=Some("5")->Some("6") prog=Some("prog.three_six_two_five")->Some("prog.lydian_float.coda") summary="coda: home to prog.lydian_float; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=905400 species=lens stages=23 ended=true c_changes=0
+SONG seed=714721 species=automaton stages=16 ended=true c_changes=2
+  CHANGE seed=714721 stage=8 cause=PROG c=Some("2")->Some("3") prog=Some("automaton/prog.picardy")->Some("automaton/prog.dorian_vamp") summary="intro: it thins to the bass, pads and lead; a new progression, automaton/prog.dorian_vamp; the bass takes automaton/bass.rows"
+  CHANGE seed=714721 stage=14 cause=PROG c=Some("3")->Some("2") prog=Some("automaton/prog.dorian_vamp")->Some("automaton/prog.picardy") summary="return: the drop: the kick, pads, hat and clap return; a new progression, automaton/prog.circle; home to automaton/prog.picardy; into the seam, automaton/seam.next"
+SONG seed=374680 species=oneline stages=15 ended=true c_changes=0
+SONG seed=496093 species=chaos stages=16 ended=true c_changes=3
+  CHANGE seed=496093 stage=4 cause=PROG c=Some("2")->Some("3") prog=Some("chaos/prog.deep_minor")->Some("chaos/prog.dorian_vamp") summary="build: the bass takes chaos/bass.groups; a new progression, chaos/prog.dorian_vamp; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=496093 stage=9 cause=PROG c=Some("3")->Some("5") prog=Some("chaos/prog.dorian_vamp")->Some("chaos/prog.descending") summary="intro: it thins to the bass, pads and lead; a new progression, chaos/prog.descending; the bass takes chaos/bass.drift"
+  CHANGE seed=496093 stage=13 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.descending")->Some("chaos/prog.deep_minor") summary="turn: a new progression, chaos/prog.deep_minor; into the seam, chaos/seam.bifurcate"
+SONG seed=764771 species=lens stages=22 ended=true c_changes=5
+  CHANGE seed=764771 stage=7 cause=PROG c=Some("5")->Some("2") prog=Some("prog.tritone")->Some("prog.deep_minor") summary="turn: a new progression, prog.deep_minor; the bass takes bass.breath; into the seam, seam.roll"
+  CHANGE seed=764771 stage=9 cause=PROG c=Some("2")->Some("6") prog=Some("prog.deep_minor")->Some("prog.lydian_float") summary="intro: a new progression, prog.lydian_float"
+  CHANGE seed=764771 stage=16 cause=PROG c=Some("6")->Some("3") prog=Some("prog.lydian_float")->Some("prog.dorian_vamp") summary="build: the clap comes in, playing clap.citypop5; a new progression, prog.dorian_vamp"
+  CHANGE seed=764771 stage=18 cause=PROG c=Some("3")->Some("2") prog=Some("prog.dorian_vamp")->Some("prog.minor_climb") summary="peak: a new progression, prog.minor_climb; the bass takes bass.answer; into the seam, seam.cascade"
+  CHANGE seed=764771 stage=21 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_climb")->Some("prog.two_five_one.coda") summary="coda: home to prog.two_five_one, the first melody, lead.blancmange, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=275273 species=dialogue stages=17 ended=true c_changes=0
+SONG seed=420912 species=oneline stages=15 ended=true c_changes=2
+  CHANGE seed=420912 stage=3 cause=PROG c=Some("5")->Some("3") prog=Some("oneline/prog.lofi_fall")->Some("oneline/prog.dorian_vamp") summary="build: the clap comes in; a new progression, oneline/prog.dorian_vamp"
+  CHANGE seed=420912 stage=13 cause=PROG c=Some("3")->Some("5") prog=Some("oneline/prog.dorian_vamp")->Some("oneline/prog.two_five_one") summary="return: the drop: the kick, hat and perc return; a new progression, oneline/prog.two_five_one; into the seam, oneline/seam.sweep"
+SONG seed=587270 species=automaton stages=15 ended=true c_changes=3
+  CHANGE seed=587270 stage=7 cause=PROG c=Some("2")->Some("3") prog=Some("automaton/prog.marusa")->Some("automaton/prog.dorian_vamp") summary="return: the drop: the kick, bass, hat and clap return; a new progression, automaton/prog.dorian_vamp; into the seam, automaton/seam.next"
+  CHANGE seed=587270 stage=8 cause=PROG c=Some("3")->Some("5") prog=Some("automaton/prog.dorian_vamp")->Some("automaton/prog.borrowed_four") summary="intro: it thins to the bass, pads and lead; a new progression, automaton/prog.borrowed_four"
+  CHANGE seed=587270 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.turnaround")->Some("automaton/prog.marusa.coda") summary="coda: home to automaton/prog.marusa, the first melody, automaton/lead.column, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=785795 species=chaos stages=17 ended=true c_changes=4
+  CHANGE seed=785795 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.axis")->Some("chaos/prog.minor_circle") summary="build: the bass takes chaos/bass.groups; a new progression, chaos/prog.minor_circle"
+  CHANGE seed=785795 stage=4 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.minor_circle")->Some("chaos/prog.backdoor") summary="build: the bass takes chaos/bass.drift; a new progression, chaos/prog.backdoor; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=785795 stage=9 cause=PROG c=Some("5")->Some("6") prog=Some("chaos/prog.backdoor")->Some("chaos/prog.lydian_float") summary="intro: it thins to the bass, pads and lead; a new progression, chaos/prog.lydian_float; the bass takes chaos/bass.groups"
+  CHANGE seed=785795 stage=16 cause=PROG c=Some("6")->Some("5") prog=Some("chaos/prog.lydian_float")->Some("chaos/prog.two_five_one.coda") summary="coda: home to chaos/prog.two_five_one, the first melody, chaos/lead.orbit, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=517662 species=lens stages=16 ended=true c_changes=3
+  CHANGE seed=517662 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("prog.backdoor")->Some("prog.minor_circle") summary="build: the bass takes bass.slide808; a new progression, prog.minor_circle; into the seam, seam.stutter"
+  CHANGE seed=517662 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.picardy")->Some("automaton/prog.three_six_two_five") summary="build: the lead comes in, playing automaton/lead.runs; a new progression, automaton/prog.three_six_two_five"
+  CHANGE seed=517662 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.three_six_two_five")->Some("automaton/prog.picardy.coda") summary="coda: home to automaton/prog.picardy, the first melody, automaton/lead.runs, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=712405 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=712405 stage=7 cause=PROG c=Some("6")->Some("2") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.minor_circle") summary="return: the drop: the kick, pads, bass and hat return; a new progression, dialogue/prog.minor_circle; into the seam, dialogue/seam.inhale"
+  CHANGE seed=712405 stage=8 cause=PROG c=Some("2")->Some("6") prog=Some("dialogue/prog.minor_circle")->Some("prog.lydian_float") summary="intro: a new species, lens: the move book: 12-tone modes through the scale lens h(d), city pop made of graphs"
+SONG seed=327030 species=dialogue stages=17 ended=true c_changes=2
+  CHANGE seed=327030 stage=2 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.picardy")->Some("dialogue/prog.turnaround") summary="build: the kick comes in; a new progression, dialogue/prog.turnaround"
+  CHANGE seed=327030 stage=16 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.axis")->Some("dialogue/prog.picardy.coda") summary="coda: home to dialogue/prog.picardy; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=384919 species=dialogue stages=15 ended=true c_changes=2
+  CHANGE seed=384919 stage=4 cause=PROG c=Some("6")->Some("5") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.axis") summary="peak: the bass comes in; a new progression, dialogue/prog.axis; into the seam, dialogue/seam.inhale"
+  CHANGE seed=384919 stage=14 cause=PROG c=Some("5")->Some("6") prog=Some("dialogue/prog.axis")->Some("dialogue/prog.lydian_float.coda") summary="coda: home to dialogue/prog.lydian_float, the first melody, dialogue/lead.sigh, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=781526 species=bounce stages=16 ended=true c_changes=1
+  CHANGE seed=781526 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.deep_minor")->Some("oneline/prog.lofi_fall") summary="intro: a new species, oneline: the single-curve illusion: one function leaping fast enough to be heard as bass, chords and melody"
+SONG seed=965656 species=dialogue stages=16 ended=true c_changes=0
+SONG seed=767871 species=lens stages=22 ended=true c_changes=4
+  CHANGE seed=767871 stage=6 cause=PROG c=Some("5")->Some("3") prog=Some("prog.lofi_fall")->Some("prog.dorian_vamp") summary="turn: a new progression, prog.dorian_vamp; into the seam, seam.glissando"
+  CHANGE seed=767871 stage=8 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("prog.backdoor") summary="intro: modulates up a fourth (K = 6); a new progression, prog.backdoor"
+  CHANGE seed=767871 stage=16 cause=PROG c=Some("5")->Some("3") prog=Some("prog.borrowed_four")->Some("prog.dorian_vamp") summary="build: the bass takes bass.slide808; a new progression, prog.dorian_vamp"
+  CHANGE seed=767871 stage=21 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("prog.lofi_fall.coda") summary="coda: home to prog.lofi_fall, the first melody, lead.blancmange_triplet, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=118883 species=chaos stages=22 ended=true c_changes=2
+  CHANGE seed=118883 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.circle")->Some("chaos/prog.deep_minor") summary="intro: it thins to the bass, pads and lead; a new progression, chaos/prog.deep_minor; the bass takes chaos/bass.drift"
+  CHANGE seed=118883 stage=19 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.deep_minor")->Some("chaos/prog.descending") summary="turn: a new progression, chaos/prog.descending; into the seam, chaos/seam.roll"
+SONG seed=853598 species=automaton stages=15 ended=true c_changes=4
+  CHANGE seed=853598 stage=4 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.picardy")->Some("automaton/prog.tritone") summary="peak: the kick comes in, playing automaton/kick.five; a new progression, automaton/prog.tritone; into the seam, automaton/seam.roll"
+  CHANGE seed=853598 stage=6 cause=PROG c=Some("5")->Some("3") prog=Some("automaton/prog.tritone")->Some("automaton/prog.dorian_vamp") summary="turn: a new progression, automaton/prog.dorian_vamp; into the seam, automaton/seam.next"
+  CHANGE seed=853598 stage=7 cause=PROG c=Some("3")->Some("5") prog=Some("automaton/prog.dorian_vamp")->Some("automaton/prog.axis") summary="return: the drop: the kick, bass, hat and clap return; a new progression, automaton/prog.axis; the bass takes automaton/bass.slide; into the seam, automaton/seam.next"
+  CHANGE seed=853598 stage=13 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.turnaround")->Some("automaton/prog.picardy") summary="return: the drop: the kick, pads, hat and clap return; a new melody, automaton/lead.runs; home to automaton/prog.picardy, the first melody, automaton/lead.column, again; into the seam, automaton/seam.next"
+SONG seed=564066 species=automaton stages=15 ended=true c_changes=3
+  CHANGE seed=564066 stage=4 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.line_cliche")->Some("automaton/prog.minor_circle") summary="peak: the kick comes in, playing automaton/kick.five; a new progression, automaton/prog.minor_circle; into the seam, automaton/seam.roll"
+  CHANGE seed=564066 stage=7 cause=PROG c=Some("2")->Some("3") prog=Some("automaton/prog.minor_circle")->Some("automaton/prog.dorian_vamp") summary="return: the drop: the pads, hat and clap return; a new progression, automaton/prog.dorian_vamp; into the seam, automaton/seam.next"
+  CHANGE seed=564066 stage=13 cause=PROG c=Some("3")->Some("5") prog=Some("automaton/prog.dorian_vamp")->Some("automaton/prog.line_cliche") summary="return: the drop: the kick, pads, hat and clap return; a new progression, automaton/prog.turnaround; home to automaton/prog.line_cliche, the first melody, automaton/lead.neighbourhood, again; into the seam, automaton/seam.next"
+SONG seed=452246 species=dialogue stages=16 ended=true c_changes=4
+  CHANGE seed=452246 stage=2 cause=PROG c=Some("6")->Some("2") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.deep_minor") summary="build: the counter takes dialogue/counter.resolve; a new progression, dialogue/prog.deep_minor"
+  CHANGE seed=452246 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.deep_minor")->Some("prog.line_cliche") summary="intro: a new species, lens: the move book: 12-tone modes through the scale lens h(d), city pop made of graphs"
+  CHANGE seed=452246 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("prog.line_cliche")->Some("prog.picardy") summary="build: the bass takes bass.slide808; a new progression, prog.picardy"
+  CHANGE seed=452246 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("prog.line_cliche.coda") summary="coda: home to prog.line_cliche; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=432777 species=lens stages=17 ended=true c_changes=2
+  CHANGE seed=432777 stage=14 cause=PROG c=Some("5")->Some("3") prog=Some("prog.turnaround")->Some("prog.dorian_vamp") summary="turn: a new progression, prog.dorian_vamp; into the seam, seam.stutter"
+  CHANGE seed=432777 stage=16 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("prog.two_five_one.coda") summary="coda: home to prog.two_five_one, the first melody, lead.takagi_bits, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=644244 species=dialogue stages=16 ended=true c_changes=4
+  CHANGE seed=644244 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.two_five_one")->Some("dialogue/prog.minor_circle") summary="build: the bass takes dialogue/bass.breath; a new progression, dialogue/prog.minor_circle"
+  CHANGE seed=644244 stage=3 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_circle")->Some("dialogue/prog.axis") summary="build: the bass takes dialogue/bass.answer; a new progression, dialogue/prog.axis"
+  CHANGE seed=644244 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.descending")->Some("automaton/prog.deep_minor") summary="build: the kick comes in, playing automaton/kick.five; a new progression, automaton/prog.deep_minor"
+  CHANGE seed=644244 stage=11 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.deep_minor")->Some("automaton/prog.axis") summary="peak: the lead comes in; a new progression, automaton/prog.axis; into the seam, automaton/seam.roll"
+SONG seed=335456 species=chaos stages=16 ended=true c_changes=2
+  CHANGE seed=335456 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.lofi_fall")->Some("chaos/prog.marusa") summary="build: the clap comes in; a new progression, chaos/prog.marusa; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=335456 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.marusa")->Some("chaos/prog.two_five_one.coda") summary="coda: home to chaos/prog.two_five_one, the first melody, chaos/lead.orbit, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=266657 species=automaton stages=17 ended=true c_changes=3
+  CHANGE seed=266657 stage=7 cause=PROG c=Some("2")->Some("6") prog=Some("automaton/prog.deep_minor")->Some("automaton/prog.lydian_float") summary="turn: a new progression, automaton/prog.lydian_float; into the seam, automaton/seam.roll"
+  CHANGE seed=266657 stage=9 cause=PROG c=Some("6")->Some("5") prog=Some("automaton/prog.lydian_float")->Some("automaton/prog.lofi_fall") summary="intro: it thins to the bass, arp and lead; a new progression, automaton/prog.lofi_fall; the bass takes automaton/bass.rows"
+  CHANGE seed=266657 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.three_six_two_five")->Some("automaton/prog.deep_minor") summary="return: the drop: the pads, hat and clap return; a new progression, automaton/prog.minor_circle; the bass takes automaton/bass.slide; home to automaton/prog.deep_minor, the first melody, automaton/lead.runs, again; into the seam, automaton/seam.next"
+SONG seed=402216 species=lens stages=23 ended=true c_changes=4
+  CHANGE seed=402216 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("prog.deep_minor")->Some("prog.deceptive") summary="build: the pads take pads.swell; a new progression, prog.deceptive"
+  CHANGE seed=402216 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("prog.deceptive")->Some("prog.deep_minor") summary="return: the pads come in, playing pads.stabs; home to prog.deep_minor, the first melody, lead.pisano, again; into the seam, seam.glissando"
+  CHANGE seed=402216 stage=17 cause=PROG c=Some("2")->Some("5") prog=Some("prog.deep_minor")->Some("prog.borrowed_four") summary="build: the pads take pads.folded; a new progression, prog.borrowed_four"
+  CHANGE seed=402216 stage=21 cause=PROG c=Some("5")->Some("2") prog=Some("prog.borrowed_four")->Some("prog.deep_minor") summary="return: the kick comes in; home to prog.deep_minor, the first melody, lead.pisano, again; into the seam, seam.fall"
+SONG seed=921946 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=921946 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.deceptive")->Some("dialogue/prog.marusa") summary="build: the bass takes dialogue/bass.breath; a new progression, dialogue/prog.marusa"
+  CHANGE seed=921946 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_climb")->Some("dialogue/prog.axis") summary="return: the drop: the pads, hat and clap return; a new progression, dialogue/prog.axis; into the seam, dialogue/seam.inhale"
+SONG seed=285759 species=automaton stages=17 ended=true c_changes=1
+  CHANGE seed=285759 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.borrowed_four")->Some("automaton/prog.minor_circle") summary="build: the pads take automaton/pads.voiced; a new progression, automaton/prog.minor_circle"
+SONG seed=427484 species=oneline stages=17 ended=true c_changes=0
+SONG seed=15855 species=dialogue stages=16 ended=true c_changes=2
+  CHANGE seed=15855 stage=4 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.turnaround")->Some("dialogue/prog.minor_circle") summary="build: the bass comes in, playing dialogue/bass.answer; a new progression, dialogue/prog.minor_circle; into the seam, dialogue/seam.inhale"
+  CHANGE seed=15855 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_circle")->Some("dialogue/prog.axis") summary="return: the drop: the pads, hat and clap return; a new progression, dialogue/prog.axis; into the seam, dialogue/seam.inhale"
+SONG seed=363793 species=bounce stages=16 ended=true c_changes=2
+  CHANGE seed=363793 stage=13 cause=PROG c=Some("5")->Some("3") prog=Some("bounce/prog.circle")->Some("bounce/prog.dorian_vamp") summary="turn: a new progression, bounce/prog.dorian_vamp; into the seam, bounce/seam.roll"
+  CHANGE seed=363793 stage=14 cause=PROG c=Some("3")->Some("5") prog=Some("bounce/prog.dorian_vamp")->Some("bounce/prog.backdoor") summary="return: the drop: the kick, pads, hat and clap return; home to bounce/prog.backdoor; into the seam, bounce/seam.drop"
+SONG seed=323098 species=lens stages=17 ended=true c_changes=2
+  CHANGE seed=323098 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("prog.tritone")->Some("prog.deep_minor") summary="build: the kick comes in; a new progression, prog.deep_minor"
+  CHANGE seed=323098 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("prog.deep_minor")->Some("prog.borrowed_four") summary="return: the kick comes in, playing kick.citypop13; home to prog.borrowed_four, the first melody, lead.blancmange, again; into the seam, seam.swell"
+SONG seed=627910 species=bounce stages=16 ended=true c_changes=1
+  CHANGE seed=627910 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.picardy")->Some("chaos/prog.lofi_fall") summary="intro: a new species, chaos: the logistic map at the edge of chaos, in 7/8 on a pentatonic lens"
+SONG seed=955760 species=chaos stages=17 ended=true c_changes=3
+  CHANGE seed=955760 stage=11 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.circle")->Some("chaos/prog.minor_climb") summary="build: the pads take chaos/pads.open; a new progression, chaos/prog.minor_climb; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=955760 stage=15 cause=PROG c=Some("2")->Some("3") prog=Some("chaos/prog.minor_climb")->Some("chaos/prog.dorian_vamp") summary="return: the drop: the kick, pads, hat and clap return; a new progression, chaos/prog.dorian_vamp; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=955760 stage=16 cause=PROG c=Some("3")->Some("5") prog=Some("chaos/prog.dorian_vamp")->Some("chaos/prog.borrowed_four.coda") summary="coda: home to chaos/prog.borrowed_four, the first melody, chaos/lead.orbit, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=332842 species=lens stages=17 ended=true c_changes=4
+  CHANGE seed=332842 stage=3 cause=PROG c=Some("5")->Some("6") prog=Some("prog.descending")->Some("prog.lydian_float") summary="build: the arp takes arp.bits; a new progression, prog.lydian_float"
+  CHANGE seed=332842 stage=9 cause=PROG c=Some("6")->Some("5") prog=Some("prog.lydian_float")->Some("automaton/prog.two_five_one") summary="intro: a new species, automaton: an elementary cellular automaton in 5/4 on the whole-tone scale: the rule is the score"
+  CHANGE seed=332842 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.two_five_one")->Some("automaton/prog.minor_circle") summary="build: the kick comes in; a new progression, automaton/prog.minor_circle"
+  CHANGE seed=332842 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_circle")->Some("automaton/prog.circle") summary="return: the drop: the kick, pads, hat and clap return; a new progression, automaton/prog.circle; the bass takes automaton/bass.rows; into the seam, automaton/seam.next"
+SONG seed=266994 species=chaos stages=15 ended=true c_changes=4
+  CHANGE seed=266994 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.borrowed_four")->Some("chaos/prog.minor_climb") summary="build: the lead comes in; a new progression, chaos/prog.minor_climb; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=266994 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.marusa")->Some("chaos/prog.three_six_two_five") summary="intro: it thins to the bass, counter and lead; a new progression, chaos/prog.three_six_two_five"
+  CHANGE seed=266994 stage=9 cause=PROG c=Some("5")->Some("6") prog=Some("chaos/prog.three_six_two_five")->Some("chaos/prog.lydian_float") summary="build: the kick comes in; a new progression, chaos/prog.lydian_float; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=266994 stage=13 cause=PROG c=Some("6")->Some("5") prog=Some("chaos/prog.lydian_float")->Some("chaos/prog.borrowed_four") summary="return: the drop: the kick, bass, hat and clap return; a new progression, chaos/prog.picardy; home to chaos/prog.borrowed_four; into the seam, chaos/seam.bifurcate"
+SONG seed=289730 species=bounce stages=17 ended=true c_changes=4
+  CHANGE seed=289730 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.royal_road")->Some("bounce/prog.minor_circle") summary="build: the kick comes in; a new progression, bounce/prog.minor_circle"
+  CHANGE seed=289730 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.minor_circle")->Some("chaos/prog.line_cliche") summary="intro: a new species, chaos: the logistic map at the edge of chaos, in 7/8 on a pentatonic lens"
+  CHANGE seed=289730 stage=10 cause=PROG c=Some("5")->Some("6") prog=Some("chaos/prog.line_cliche")->Some("chaos/prog.lydian_float") summary="build: the kick comes in; a new progression, chaos/prog.lydian_float"
+  CHANGE seed=289730 stage=11 cause=PROG c=Some("6")->Some("5") prog=Some("chaos/prog.lydian_float")->Some("chaos/prog.lofi_fall") summary="build: the lead comes in, playing chaos/lead.cobweb; a new progression, chaos/prog.lofi_fall; into the seam, chaos/seam.bifurcate"
+SONG seed=709716 species=oneline stages=17 ended=true c_changes=0
+SONG seed=105270 species=chaos stages=16 ended=true c_changes=0
+SONG seed=285962 species=lens stages=17 ended=true c_changes=2
+  CHANGE seed=285962 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("prog.backdoor")->Some("prog.minor_climb") summary="build: the bass takes bass.walk; a new progression, prog.minor_climb"
+  CHANGE seed=285962 stage=16 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_climb")->Some("prog.line_cliche.coda") summary="coda: home to prog.line_cliche; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=971602 species=lens stages=16 ended=true c_changes=3
+  CHANGE seed=971602 stage=2 cause=PROG c=Some("3")->Some("2") prog=Some("prog.dorian_vamp")->Some("prog.minor_circle") summary="build: the counter takes counter.takagi_low; a new progression, prog.minor_circle"
+  CHANGE seed=971602 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_circle")->Some("prog.descending") summary="intro: a new progression, prog.descending"
+  CHANGE seed=971602 stage=15 cause=PROG c=Some("5")->Some("3") prog=Some("prog.descending")->Some("prog.dorian_vamp.coda") summary="coda: home to prog.dorian_vamp, the first melody, lead.lissajous, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=391744 species=oneline stages=17 ended=true c_changes=3
+  CHANGE seed=391744 stage=3 cause=PROG c=Some("3")->Some("2") prog=Some("oneline/prog.dorian_vamp")->Some("oneline/prog.minor_circle") summary="build: the clap comes in; a new progression, oneline/prog.minor_circle"
+  CHANGE seed=391744 stage=4 cause=PROG c=Some("2")->Some("6") prog=Some("oneline/prog.minor_circle")->Some("oneline/prog.lydian_float") summary="build: the kick comes in, playing oneline/kick.four; a new progression, oneline/prog.lydian_float"
+  CHANGE seed=391744 stage=16 cause=PROG c=Some("6")->Some("3") prog=Some("oneline/prog.lydian_float")->Some("oneline/prog.dorian_vamp.coda") summary="coda: home to oneline/prog.dorian_vamp; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=868202 species=automaton stages=16 ended=true c_changes=2
+  CHANGE seed=868202 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_circle")->Some("automaton/prog.three_six_two_five") summary="return: the drop: the pads, hat and clap return; a new progression, automaton/prog.three_six_two_five; into the seam, automaton/seam.next"
+  CHANGE seed=868202 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.three_six_two_five")->Some("automaton/prog.deep_minor.coda") summary="coda: home to automaton/prog.deep_minor; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=405456 species=chaos stages=15 ended=true c_changes=2
+  CHANGE seed=405456 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.backdoor")->Some("chaos/prog.deep_minor") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 6); a new progression, chaos/prog.deep_minor"
+  CHANGE seed=405456 stage=13 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.deep_minor")->Some("chaos/prog.backdoor") summary="return: the drop: the kick, pads, hat and clap return; home to chaos/prog.backdoor; into the seam, chaos/seam.bifurcate"
+SONG seed=286129 species=lens stages=16 ended=true c_changes=2
+  CHANGE seed=286129 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("prog.three_six_two_five")->Some("prog.minor_climb") summary="build: the bass takes bass.walk; a new progression, prog.minor_climb"
+  CHANGE seed=286129 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_climb")->Some("prog.two_five_one") summary="return: the kick comes in, playing kick.citypop3; home to prog.two_five_one; into the seam, seam.swell"
+SONG seed=658405 species=lens stages=17 ended=true c_changes=2
+  CHANGE seed=658405 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.line_cliche")->Some("automaton/prog.minor_climb") summary="build: the pads come in, playing automaton/pads.voiced; a new progression, automaton/prog.minor_climb"
+  CHANGE seed=658405 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_climb")->Some("automaton/prog.descending") summary="turn: a new progression, automaton/prog.descending; into the seam, automaton/seam.roll"
+SONG seed=975031 species=oneline stages=16 ended=true c_changes=2
+  CHANGE seed=975031 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.two_five_one")->Some("oneline/prog.picardy") summary="intro: it thins to the counter, lead and clap; modulates up a fourth (K = 2); a new progression, oneline/prog.picardy"
+  CHANGE seed=975031 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.picardy")->Some("oneline/prog.two_five_one") summary="return: the drop: the kick, hat, clap and perc return; home to oneline/prog.two_five_one, the first melody, oneline/lead.four, again; into the seam, oneline/seam.sweep"
+SONG seed=765614 species=lens stages=16 ended=true c_changes=0
+SONG seed=906462 species=chaos stages=15 ended=true c_changes=1
+  CHANGE seed=906462 stage=8 cause=PROG c=Some("6")->Some("5") prog=Some("chaos/prog.lydian_float")->Some("bounce/prog.line_cliche") summary="intro: a new species, bounce: physical models over written harmony: phrases shaped by bouncing balls, pendulums and springs"
+SONG seed=361067 species=automaton stages=16 ended=true c_changes=2
+  CHANGE seed=361067 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_climb")->Some("automaton/prog.three_six_two_five") summary="return: the drop: the kick, pads, hat and clap return; a new progression, automaton/prog.three_six_two_five; into the seam, automaton/seam.next"
+  CHANGE seed=361067 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.three_six_two_five")->Some("automaton/prog.picardy") summary="intro: it thins to the bass, pads and lead; a new progression, automaton/prog.picardy"
+SONG seed=131881 species=chaos stages=16 ended=true c_changes=2
+  CHANGE seed=131881 stage=9 cause=PROG c=Some("6")->Some("3") prog=Some("chaos/prog.lydian_float")->Some("chaos/prog.dorian_vamp") summary="build: the pads take chaos/pads.orbit; a new progression, chaos/prog.dorian_vamp"
+  CHANGE seed=131881 stage=14 cause=PROG c=Some("3")->Some("6") prog=Some("chaos/prog.dorian_vamp")->Some("chaos/prog.lydian_float") summary="return: the drop: the kick, pads, hat and clap return; the melody moves down an octave; the bass takes chaos/bass.drift; home to chaos/prog.lydian_float; into the seam, chaos/seam.bifurcate"
+SONG seed=365935 species=dialogue stages=15 ended=true c_changes=2
+  CHANGE seed=365935 stage=4 cause=PROG c=Some("6")->Some("5") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.tritone") summary="peak: the hat comes in; a new progression, dialogue/prog.tritone; into the seam, dialogue/seam.inhale"
+  CHANGE seed=365935 stage=14 cause=PROG c=Some("5")->Some("6") prog=Some("dialogue/prog.borrowed_four")->Some("dialogue/prog.lydian_float.coda") summary="coda: home to dialogue/prog.lydian_float, the first melody, dialogue/lead.question, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=290743 species=chaos stages=16 ended=true c_changes=3
+  CHANGE seed=290743 stage=9 cause=PROG c=Some("5")->Some("6") prog=Some("chaos/prog.two_five_one")->Some("bounce/prog.lydian_float") summary="intro: a new species, bounce: physical models over written harmony: phrases shaped by bouncing balls, pendulums and springs"
+  CHANGE seed=290743 stage=13 cause=PROG c=Some("6")->Some("5") prog=Some("bounce/prog.lydian_float")->Some("bounce/prog.lofi_fall") summary="turn: a new progression, bounce/prog.lofi_fall; into the seam, bounce/seam.roll"
+  CHANGE seed=290743 stage=14 cause=PROG c=Some("5")->Some("6") prog=Some("bounce/prog.lofi_fall")->Some("bounce/prog.lydian_float") summary="return: the drop: the kick, pads, hat and clap return; a new progression, bounce/prog.three_six_two_five; home to bounce/prog.lydian_float; into the seam, bounce/seam.drop"
+SONG seed=379017 species=automaton stages=16 ended=true c_changes=2
+  CHANGE seed=379017 stage=8 cause=PROG c=Some("6")->Some("5") prog=Some("automaton/prog.lydian_float")->Some("automaton/prog.backdoor") summary="return: the drop: the kick, pads, bass and hat return; a new progression, automaton/prog.backdoor; the bass takes automaton/bass.pulse; into the seam, automaton/seam.next"
+  CHANGE seed=379017 stage=14 cause=PROG c=Some("5")->Some("6") prog=Some("automaton/prog.backdoor")->Some("automaton/prog.lydian_float") summary="return: the drop: the kick, pads, hat and clap return; a new progression, automaton/prog.circle; the bass takes automaton/bass.slide; home to automaton/prog.lydian_float, the first melody, automaton/lead.neighbourhood, again; into the seam, automaton/seam.next"
+SONG seed=188031 species=bounce stages=16 ended=true c_changes=0
+SONG seed=113297 species=lens stages=16 ended=true c_changes=5
+  CHANGE seed=113297 stage=2 cause=PROG c=Some("2")->Some("5") prog=Some("prog.deep_minor")->Some("prog.tritone") summary="build: the counter takes counter.swell; a new progression, prog.tritone"
+  CHANGE seed=113297 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("prog.tritone")->Some("prog.marusa") summary="build: the kick comes in; a new progression, prog.marusa"
+  CHANGE seed=113297 stage=6 cause=PROG c=Some("2")->Some("3") prog=Some("prog.marusa")->Some("prog.dorian_vamp") summary="turn: a new progression, prog.dorian_vamp; the lead comes in; into the seam, seam.doubling"
+  CHANGE seed=113297 stage=9 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("prog.three_six_two_five") summary="build: the counter takes counter.swell; a new progression, prog.three_six_two_five"
+  CHANGE seed=113297 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("prog.three_six_two_five")->Some("prog.deep_minor.coda") summary="coda: home to prog.deep_minor, the first melody, lead.binary, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=3184 species=dialogue stages=15 ended=true c_changes=2
+  CHANGE seed=3184 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.borrowed_four")->Some("dialogue/prog.minor_circle") summary="build: the kick comes in, playing dialogue/kick.walk; a new progression, dialogue/prog.minor_circle"
+  CHANGE seed=3184 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_circle")->Some("dialogue/prog.deceptive") summary="return: the drop: the kick, lead, hat and clap return; a new progression, dialogue/prog.deceptive; into the seam, dialogue/seam.inhale"
+SONG seed=42285 species=lens stages=16 ended=true c_changes=2
+  CHANGE seed=42285 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("prog.turnaround")->Some("prog.minor_circle") summary="build: the pads take pads.struck; a new progression, prog.minor_circle"
+  CHANGE seed=42285 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_circle")->Some("prog.line_cliche.coda") summary="coda: home to prog.line_cliche, the first melody, lead.weierstrass_bend, again; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=427792 species=automaton stages=16 ended=true c_changes=0
+SONG seed=839683 species=oneline stages=15 ended=true c_changes=2
+  CHANGE seed=839683 stage=8 cause=PROG c=Some("2")->Some("6") prog=Some("oneline/prog.picardy")->Some("oneline/prog.lydian_float") summary="intro: it thins to the counter, lead and clap; a new progression, oneline/prog.lydian_float"
+  CHANGE seed=839683 stage=13 cause=PROG c=Some("6")->Some("2") prog=Some("oneline/prog.lydian_float")->Some("oneline/prog.picardy") summary="return: the drop: the kick, hat, clap and perc return; home to oneline/prog.picardy, the first melody, oneline/lead.four, again; into the seam, oneline/seam.sweep"
+SONG seed=715702 species=dialogue stages=15 ended=true c_changes=2
+  CHANGE seed=715702 stage=6 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.two_five_one")->Some("dialogue/prog.marusa") summary="turn: a new progression, dialogue/prog.marusa; into the seam, dialogue/seam.brushroll"
+  CHANGE seed=715702 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.marusa")->Some("dialogue/prog.circle") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.circle; the bass takes dialogue/bass.walk; into the seam, dialogue/seam.inhale"
+SONG seed=873403 species=lens stages=16 ended=true c_changes=2
+  CHANGE seed=873403 stage=8 cause=PROG c=Some("3")->Some("5") prog=Some("prog.dorian_vamp")->Some("prog.borrowed_four") summary="intro: a new progression, prog.borrowed_four"
+  CHANGE seed=873403 stage=14 cause=PROG c=Some("5")->Some("3") prog=Some("prog.borrowed_four")->Some("prog.dorian_vamp") summary="return: the kick comes in, playing kick.citypop11; home to prog.dorian_vamp; into the seam, seam.glissando"
+SONG seed=472824 species=oneline stages=17 ended=true c_changes=2
+  CHANGE seed=472824 stage=5 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.circle")->Some("oneline/prog.minor_climb") summary="peak: the hat comes in; a new progression, oneline/prog.minor_climb; into the seam, oneline/seam.roll"
+  CHANGE seed=472824 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.minor_climb")->Some("oneline/prog.backdoor") summary="intro: it thins to the counter, lead and hat; modulates up a fourth (K = 1); a new progression, oneline/prog.backdoor"
+SONG seed=993131 species=dialogue stages=17 ended=true c_changes=0
+SONG seed=732137 species=bounce stages=16 ended=true c_changes=5
+  CHANGE seed=732137 stage=3 cause=PROG c=Some("6")->Some("5") prog=Some("bounce/prog.lydian_float")->Some("bounce/prog.three_six_two_five") summary="build: the hat comes in; a new progression, bounce/prog.three_six_two_five"
+  CHANGE seed=732137 stage=6 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.three_six_two_five")->Some("bounce/prog.marusa") summary="turn: a new progression, bounce/prog.marusa; into the seam, bounce/seam.roll"
+  CHANGE seed=732137 stage=7 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.marusa")->Some("bounce/prog.circle") summary="return: the drop: the kick, pads, hat and clap return; a new progression, bounce/prog.circle; into the seam, bounce/seam.drop"
+  CHANGE seed=732137 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.circle")->Some("bounce/prog.picardy") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 7); a new progression, bounce/prog.picardy; the bass takes bounce/bass.pendulum"
+  CHANGE seed=732137 stage=14 cause=PROG c=Some("2")->Some("6") prog=Some("bounce/prog.picardy")->Some("bounce/prog.lydian_float") summary="return: the drop: the kick, pads, hat and clap return; home to bounce/prog.lydian_float; into the seam, bounce/seam.drop"
+SONG seed=446131 species=oneline stages=16 ended=true c_changes=0
+SONG seed=883203 species=chaos stages=15 ended=true c_changes=4
+  CHANGE seed=883203 stage=4 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.deep_minor")->Some("chaos/prog.three_six_two_five") summary="peak: the hat comes in, playing chaos/hat.orbit; a new progression, chaos/prog.three_six_two_five; into the seam, chaos/seam.roll"
+  CHANGE seed=883203 stage=7 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.three_six_two_five")->Some("chaos/prog.marusa") summary="return: the drop: the kick, pads, hat and clap return; a new progression, chaos/prog.marusa; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=883203 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.marusa")->Some("chaos/prog.backdoor") summary="intro: it thins to the bass, pads and lead; a new progression, chaos/prog.backdoor; the bass takes chaos/bass.groups"
+  CHANGE seed=883203 stage=12 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.backdoor")->Some("chaos/prog.deep_minor") summary="turn: a new progression, chaos/prog.deep_minor; into the seam, chaos/seam.bifurcate"
+SONG seed=587037 species=dialogue stages=16 ended=true c_changes=0
+SONG seed=68466 species=lens stages=15 ended=true c_changes=3
+  CHANGE seed=68466 stage=2 cause=PROG c=Some("6")->Some("2") prog=Some("prog.lydian_float")->Some("prog.picardy") summary="build: the pads come in, playing pads.struck; a new progression, prog.picardy"
+  CHANGE seed=68466 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_climb")->Some("prog.backdoor") summary="intro: it thins to the bass, pads and lead; a new progression, prog.backdoor"
+  CHANGE seed=68466 stage=14 cause=PROG c=Some("5")->Some("6") prog=Some("prog.backdoor")->Some("prog.lydian_float.coda") summary="coda: home to prog.lydian_float, the first melody, lead.blancmange_triplet, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=622044 species=bounce stages=16 ended=true c_changes=2
+  CHANGE seed=622044 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.tritone")->Some("bounce/prog.picardy") summary="intro: it thins to the bass, pads and lead; a new progression, bounce/prog.picardy; the bass takes bounce/bass.ball"
+  CHANGE seed=622044 stage=11 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.picardy")->Some("bounce/prog.circle") summary="peak: the hat comes in, playing bounce/hat.eighths; a new progression, bounce/prog.circle; into the seam, bounce/seam.roll"
+SONG seed=105880 species=chaos stages=16 ended=true c_changes=4
+  CHANGE seed=105880 stage=5 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.minor_circle")->Some("chaos/prog.circle") summary="peak: the pads come in; a new progression, chaos/prog.circle; into the seam, chaos/seam.roll"
+  CHANGE seed=105880 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.circle")->Some("chaos/prog.marusa") summary="return: the drop: the kick, pads, hat and clap return; a new progression, chaos/prog.marusa; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=105880 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.marusa")->Some("chaos/prog.lofi_fall") summary="intro: it thins to the bass, pads and lead; a new progression, chaos/prog.lofi_fall"
+  CHANGE seed=105880 stage=13 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.lofi_fall")->Some("chaos/prog.marusa") summary="turn: a new progression, chaos/prog.marusa; into the seam, chaos/seam.bifurcate"
+SONG seed=535078 species=oneline stages=17 ended=true c_changes=0
+SONG seed=720219 species=automaton stages=15 ended=true c_changes=0
+SONG seed=402987 species=dialogue stages=15 ended=true c_changes=2
+  CHANGE seed=402987 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.lofi_fall")->Some("dialogue/prog.minor_climb") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 0); a new progression, dialogue/prog.minor_climb; the bass takes dialogue/bass.walk"
+  CHANGE seed=402987 stage=13 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_climb")->Some("dialogue/prog.axis") summary="return: the drop: the bass, hat and clap return; a new progression, dialogue/prog.axis; into the seam, dialogue/seam.inhale"
+SONG seed=315809 species=lens stages=23 ended=true c_changes=2
+  CHANGE seed=315809 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("prog.tritone")->Some("prog.minor_climb") summary="intro: modulates up a fourth (K = 4); a new progression, prog.minor_climb"
+  CHANGE seed=315809 stage=16 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_climb")->Some("automaton/prog.lofi_fall") summary="intro: a new species, automaton: an elementary cellular automaton in 5/4 on the whole-tone scale: the rule is the score"
+SONG seed=572535 species=dialogue stages=15 ended=true c_changes=4
+  CHANGE seed=572535 stage=3 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.picardy")->Some("dialogue/prog.tritone") summary="build: the lead comes in, playing dialogue/lead.question; a new progression, dialogue/prog.tritone; into the seam, dialogue/seam.brushroll"
+  CHANGE seed=572535 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.circle")->Some("dialogue/prog.picardy") summary="intro: it thins to the bass, pads and lead; a new progression, dialogue/prog.picardy; the bass takes dialogue/bass.breath"
+  CHANGE seed=572535 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.picardy")->Some("dialogue/prog.turnaround") summary="peak: the counter comes in; a new progression, dialogue/prog.turnaround; into the seam, dialogue/seam.inhale"
+  CHANGE seed=572535 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.axis")->Some("dialogue/prog.picardy.coda") summary="coda: home to dialogue/prog.picardy; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=460450 species=automaton stages=17 ended=true c_changes=2
+  CHANGE seed=460450 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.tritone")->Some("automaton/prog.minor_circle") summary="return: the drop: the kick, pads, hat and clap return; a new progression, automaton/prog.minor_circle; into the seam, automaton/seam.next"
+  CHANGE seed=460450 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.picardy")->Some("automaton/prog.deceptive") summary="build: the hat comes in, playing automaton/hat.row; a new progression, automaton/prog.deceptive"
+SONG seed=256740 species=dialogue stages=16 ended=true c_changes=0
+SONG seed=767493 species=bounce stages=16 ended=true c_changes=3
+  CHANGE seed=767493 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.tritone")->Some("chaos/prog.picardy") summary="intro: a new species, chaos: the logistic map at the edge of chaos, in 7/8 on a pentatonic lens"
+  CHANGE seed=767493 stage=11 cause=PROG c=Some("2")->Some("5") prog=Some("chaos/prog.picardy")->Some("chaos/prog.turnaround") summary="peak: the lead comes in; a new progression, chaos/prog.turnaround; into the seam, chaos/seam.roll"
+  CHANGE seed=767493 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.turnaround")->Some("chaos/prog.picardy.coda") summary="coda: home to chaos/prog.picardy; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=40443 species=dialogue stages=17 ended=true c_changes=0
+SONG seed=265673 species=dialogue stages=16 ended=true c_changes=0
+SONG seed=80319 species=oneline stages=16 ended=true c_changes=0
+SONG seed=824874 species=automaton stages=16 ended=true c_changes=2
+  CHANGE seed=824874 stage=10 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.circle")->Some("automaton/prog.minor_circle") summary="build: the kick comes in, playing automaton/kick.cells; a new progression, automaton/prog.minor_circle"
+  CHANGE seed=824874 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_circle")->Some("automaton/prog.descending") summary="return: the drop: the kick, bass, hat and clap return; the bass takes automaton/bass.slide; home to automaton/prog.descending, the first melody, automaton/lead.runs, again; into the seam, automaton/seam.next"
+SONG seed=647470 species=lens stages=15 ended=true c_changes=2
+  CHANGE seed=647470 stage=2 cause=PROG c=Some("5")->Some("2") prog=Some("prog.axis")->Some("prog.minor_climb") summary="build: the pads come in, playing pads.struck; a new progression, prog.minor_climb"
+  CHANGE seed=647470 stage=3 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_climb")->Some("prog.tritone") summary="build: the hat comes in, playing hat.citypop16; a new progression, prog.tritone"
+SONG seed=709589 species=lens stages=22 ended=true c_changes=2
+  CHANGE seed=709589 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("prog.turnaround")->Some("prog.picardy") summary="intro: modulates up a fourth (K = 3); a new progression, prog.picardy"
+  CHANGE seed=709589 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("prog.picardy")->Some("prog.descending") summary="intro: modulates up a fourth (K = 1); a new progression, prog.descending"
+SONG seed=869372 species=automaton stages=15 ended=true c_changes=1
+  CHANGE seed=869372 stage=8 cause=PROG c=Some("6")->Some("5") prog=Some("automaton/prog.lydian_float")->Some("prog.three_six_two_five") summary="intro: a new species, lens: the move book: 12-tone modes through the scale lens h(d), city pop made of graphs"
+SONG seed=954767 species=dialogue stages=17 ended=true c_changes=3
+  CHANGE seed=954767 stage=3 cause=PROG c=Some("3")->Some("2") prog=Some("dialogue/prog.dorian_vamp")->Some("dialogue/prog.minor_climb") summary="build: the kick comes in, playing dialogue/kick.soft; a new progression, dialogue/prog.minor_climb"
+  CHANGE seed=954767 stage=8 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.minor_climb")->Some("dialogue/prog.royal_road") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.royal_road; into the seam, dialogue/seam.inhale"
+  CHANGE seed=954767 stage=15 cause=PROG c=Some("5")->Some("3") prog=Some("dialogue/prog.borrowed_four")->Some("dialogue/prog.dorian_vamp") summary="return: the drop: the kick, pads, hat and clap return; a new progression, dialogue/prog.two_five_one; home to dialogue/prog.dorian_vamp, the first melody, dialogue/lead.call, again; into the seam, dialogue/seam.inhale"
+SONG seed=282276 species=lens stages=21 ended=true c_changes=0
+SONG seed=891842 species=chaos stages=16 ended=true c_changes=1
+  CHANGE seed=891842 stage=4 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.circle")->Some("chaos/prog.marusa") summary="build: the pads come in, playing chaos/pads.open; a new progression, chaos/prog.marusa"
+SONG seed=558650 species=automaton stages=16 ended=true c_changes=2
+  CHANGE seed=558650 stage=11 cause=PROG c=Some("5")->Some("2") prog=Some("prog.borrowed_four")->Some("prog.marusa") summary="peak: a new progression, prog.marusa; the bass takes bass.walk; into the seam, seam.toms"
+  CHANGE seed=558650 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("prog.marusa")->Some("prog.borrowed_four") summary="return: the pads come in; home to prog.borrowed_four, the first melody, lead.binary, again; into the seam, seam.fall"
+SONG seed=715192 species=chaos stages=15 ended=true c_changes=0
+SONG seed=591519 species=lens stages=17 ended=true c_changes=3
+  CHANGE seed=591519 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("prog.lofi_fall")->Some("dialogue/prog.picardy") summary="intro: a new species, dialogue: call and response between two curves, on a breathing clock, over written harmony"
+  CHANGE seed=591519 stage=11 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.picardy")->Some("dialogue/prog.royal_road") summary="build: the bass takes dialogue/bass.breath; a new progression, dialogue/prog.royal_road; into the seam, dialogue/seam.brushroll"
+  CHANGE seed=591519 stage=15 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.royal_road")->Some("dialogue/prog.picardy") summary="return: the drop: the kick, pads, hat and clap return; home to dialogue/prog.picardy; into the seam, dialogue/seam.inhale"
+SONG seed=748656 species=automaton stages=21 ended=true c_changes=6
+  CHANGE seed=748656 stage=6 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.picardy")->Some("automaton/prog.three_six_two_five") summary="turn: a new progression, automaton/prog.three_six_two_five; the bass takes automaton/bass.slide; into the seam, automaton/seam.roll"
+  CHANGE seed=748656 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.descending")->Some("automaton/prog.minor_climb") summary="build: the bass takes automaton/bass.rows; a new progression, automaton/prog.minor_climb; into the seam, automaton/seam.next"
+  CHANGE seed=748656 stage=10 cause=PROG c=Some("2")->Some("5") prog=Some("automaton/prog.minor_climb")->Some("automaton/prog.turnaround") summary="peak: the kick comes in; a new progression, automaton/prog.turnaround; into the seam, automaton/seam.roll"
+  CHANGE seed=748656 stage=15 cause=PROG c=Some("5")->Some("3") prog=Some("automaton/prog.tritone")->Some("automaton/prog.dorian_vamp") summary="build: the bass takes automaton/bass.rows; a new progression, automaton/prog.dorian_vamp; into the seam, automaton/seam.next"
+  CHANGE seed=748656 stage=16 cause=PROG c=Some("3")->Some("5") prog=Some("automaton/prog.dorian_vamp")->Some("automaton/prog.royal_road") summary="peak: the kick comes in; a new progression, automaton/prog.royal_road; into the seam, automaton/seam.roll"
+  CHANGE seed=748656 stage=19 cause=PROG c=Some("5")->Some("2") prog=Some("automaton/prog.royal_road")->Some("automaton/prog.picardy") summary="return: the drop: the kick, pads, hat and clap return; a new progression, automaton/prog.three_six_two_five; home to automaton/prog.picardy, the first melody, automaton/lead.runs, again; into the seam, automaton/seam.next"
+SONG seed=319731 species=oneline stages=17 ended=true c_changes=2
+  CHANGE seed=319731 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.two_five_one")->Some("oneline/prog.picardy") summary="intro: it thins to the counter, lead and kick; a new progression, oneline/prog.picardy"
+  CHANGE seed=319731 stage=16 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.picardy")->Some("oneline/prog.line_cliche.coda") summary="coda: home to oneline/prog.line_cliche, the first melody, oneline/lead.four, again; its opening again, then IV V7 I under a final ritard, a last kick, and it rings out"
+SONG seed=616769 species=bounce stages=17 ended=true c_changes=3
+  CHANGE seed=616769 stage=2 cause=PROG c=Some("6")->Some("5") prog=Some("bounce/prog.lydian_float")->Some("bounce/prog.deceptive") summary="build: the kick comes in, playing bounce/kick.half; a new progression, bounce/prog.deceptive"
+  CHANGE seed=616769 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.deceptive")->Some("bounce/prog.minor_climb") summary="build: the lead comes in; a new progression, bounce/prog.minor_climb"
+  CHANGE seed=616769 stage=4 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.minor_climb")->Some("bounce/prog.royal_road") summary="build: the pads come in; a new progression, bounce/prog.royal_road; into the seam, bounce/seam.drop"
+SONG seed=388895 species=oneline stages=15 ended=true c_changes=0
+SONG seed=607671 species=bounce stages=17 ended=true c_changes=2
+  CHANGE seed=607671 stage=14 cause=PROG c=Some("5")->Some("2") prog=Some("bounce/prog.circle")->Some("bounce/prog.minor_climb") summary="turn: a new progression, bounce/prog.minor_climb; into the seam, bounce/seam.drop"
+  CHANGE seed=607671 stage=15 cause=PROG c=Some("2")->Some("5") prog=Some("bounce/prog.minor_climb")->Some("bounce/prog.two_five_one") summary="return: the drop: the kick, pads, bass and hat return; a new progression, bounce/prog.picardy; the bass takes bounce/bass.ball; home to bounce/prog.two_five_one, the first melody, bounce/lead.spring, again; into the seam, bounce/seam.drop"
+SONG seed=615375 species=oneline stages=16 ended=true c_changes=0
+SONG seed=309300 species=chaos stages=16 ended=true c_changes=1
+  CHANGE seed=309300 stage=9 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.three_six_two_five")->Some("bounce/prog.picardy") summary="intro: a new species, bounce: physical models over written harmony: phrases shaped by bouncing balls, pendulums and springs"
+SONG seed=537189 species=bounce stages=15 ended=true c_changes=2
+  CHANGE seed=537189 stage=4 cause=PROG c=Some("5")->Some("3") prog=Some("bounce/prog.line_cliche")->Some("bounce/prog.dorian_vamp") summary="peak: the lead comes in; a new progression, bounce/prog.dorian_vamp; the bass takes bounce/bass.ball; into the seam, bounce/seam.roll"
+  CHANGE seed=537189 stage=8 cause=PROG c=Some("3")->Some("5") prog=Some("bounce/prog.dorian_vamp")->Some("bounce/prog.lofi_fall") summary="intro: it thins to the bass, pads and lead; a new progression, bounce/prog.lofi_fall"
+SONG seed=817031 species=oneline stages=17 ended=true c_changes=2
+  CHANGE seed=817031 stage=3 cause=PROG c=Some("5")->Some("2") prog=Some("oneline/prog.lofi_fall")->Some("oneline/prog.marusa") summary="build: the counter comes in, playing oneline/counter.bassline; a new progression, oneline/prog.marusa"
+  CHANGE seed=817031 stage=9 cause=PROG c=Some("2")->Some("5") prog=Some("oneline/prog.minor_climb")->Some("oneline/prog.backdoor") summary="intro: it thins to the counter, lead and clap; modulates up a fourth (K = 6); a new progression, oneline/prog.backdoor"
+SONG seed=40452 species=chaos stages=16 ended=true c_changes=3
+  CHANGE seed=40452 stage=3 cause=PROG c=Some("6")->Some("5") prog=Some("chaos/prog.lydian_float")->Some("chaos/prog.circle") summary="build: the kick comes in; a new progression, chaos/prog.circle"
+  CHANGE seed=40452 stage=8 cause=PROG c=Some("5")->Some("2") prog=Some("chaos/prog.circle")->Some("chaos/prog.marusa") summary="return: the drop: the kick, pads, hat and clap return; a new progression, chaos/prog.marusa; the bass takes chaos/bass.drift; into the seam, chaos/seam.bifurcate"
+  CHANGE seed=40452 stage=14 cause=PROG c=Some("2")->Some("6") prog=Some("chaos/prog.deep_minor")->Some("chaos/prog.lydian_float") summary="return: the drop: the kick, pads, hat and clap return; home to chaos/prog.lydian_float, the first melody, chaos/lead.orbit, again; into the seam, chaos/seam.bifurcate"
+SONG seed=799097 species=lens stages=17 ended=true c_changes=3
+  CHANGE seed=799097 stage=3 cause=PROG c=Some("6")->Some("2") prog=Some("prog.lydian_float")->Some("prog.minor_circle") summary="build: the bass comes in, playing bass.slide808; a new progression, prog.minor_circle"
+  CHANGE seed=799097 stage=4 cause=PROG c=Some("2")->Some("5") prog=Some("prog.minor_circle")->Some("prog.royal_road") summary="build: the pads take pads.swell; a new progression, prog.royal_road; into the seam, seam.doubling"
+  CHANGE seed=799097 stage=16 cause=PROG c=Some("5")->Some("6") prog=Some("prog.lofi_fall")->Some("prog.lydian_float.coda") summary="coda: home to prog.lydian_float, the first melody, lead.lissajous, again; the lead an octave down; the opening's bars, then IV V7 I under a final ritard, a last kick on the tonic, and it rings out"
+SONG seed=18428 species=dialogue stages=16 ended=true c_changes=0
+SONG seed=94245 species=lens stages=16 ended=true c_changes=0
+SONG seed=134755 species=dialogue stages=15 ended=true c_changes=0
+SONG seed=925414 species=dialogue stages=16 ended=true c_changes=4
+  CHANGE seed=925414 stage=9 cause=PROG c=Some("5")->Some("6") prog=Some("dialogue/prog.borrowed_four")->Some("dialogue/prog.lydian_float") summary="intro: it thins to the bass, pads and lead; modulates up a fourth (K = 5); a new progression, dialogue/prog.lydian_float; the bass takes dialogue/bass.breath"
+  CHANGE seed=925414 stage=10 cause=PROG c=Some("6")->Some("5") prog=Some("dialogue/prog.lydian_float")->Some("dialogue/prog.three_six_two_five") summary="build: the hat comes in; a new progression, dialogue/prog.three_six_two_five"
+  CHANGE seed=925414 stage=13 cause=PROG c=Some("5")->Some("2") prog=Some("dialogue/prog.three_six_two_five")->Some("dialogue/prog.deep_minor") summary="turn: a new progression, dialogue/prog.deep_minor; into the seam, dialogue/seam.brushroll"
+  CHANGE seed=925414 stage=14 cause=PROG c=Some("2")->Some("5") prog=Some("dialogue/prog.deep_minor")->Some("dialogue/prog.borrowed_four") summary="return: the drop: the kick, bass, hat and clap return; a new progression, dialogue/prog.circle; the bass takes dialogue/bass.answer; home to dialogue/prog.borrowed_four; into the seam, dialogue/seam.inhale"
+TOTAL songs=200 with_a_c_definition=200 songs_with_a_c_change=163 not_ended=0
+TOTAL c_changes=435 MODE=0 PROG=435 BOTH=0 OTHER=0
+TOTAL stages_whose_summary_says_the_lens_moves=0 progression_installs=871 of_which_change_c=435
+TOTAL changes_by_stage={2: 19, 3: 31, 4: 25, 5: 10, 6: 14, 7: 31, 8: 50, 9: 58, 10: 30, 11: 13, 12: 7, 13: 27, 14: 50, 15: 38, 16: 21, 17: 1, 18: 1, 19: 3, 20: 3, 21: 3}
+TOTAL by_species(songs, with_change)={"automaton": (25, 22), "bounce": (25, 24), "chaos": (25, 23), "dialogue": (48, 35), "lens": (51, 44), "oneline": (26, 15)}
