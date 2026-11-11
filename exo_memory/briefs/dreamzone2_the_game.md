@@ -202,3 +202,33 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Checked: dreamzone-3 has no look-behind (no match for lookback, lookbehind or glance). The first game had it:
       `dreamzone-rt/src/main.cpp:57` (hold V, an over-the-shoulder glance, view only, the run unaffected),
       `:7230-7233` (a fast whip back and a softer return), and `:7335-7339` (about 166° of yaw).
+28. 2026-11-11 03:46 local (L), to the librarian, answering the start advantage and the chasers' ceiling (A's hand-back): "10%
+    sounds good for the start, but see, this is considering a fresh start, as the player has more runs in the bag, their base
+    speed is modulated by their investment into their skills expanding, increasing their base top speed and acceleration and
+    agility. We will have to flesh out more skills and abilities when the time comes, right now there are two different
+    upgradables, you have your physical attributes such as speed, acceleration, agility, even luck and mental fortitude, which
+    could help in a way, we could some how create a sanity system, similar to darkest dungeon, you start baseline sanity,
+    throughout the first run, encountering the entity and being closely purseued makes insanity meter go up, which then adds
+    another layer to the AI entities aggression, they fixate on fear and instability, one way to lower your insanity is to find
+    the reprievals or whatever, as well as blocking line of sight, if you can continually evade it without line of sight for a
+    solid chunk of time, your insanity goes down, but the longer you remain in line of sight it you become insane, when you
+    become insane, the entities are in a frenzy mode, that is hard on base difficulty, but also scales exponentially with the
+    base difficulty chosen and distance or time survived. I just now thought of it, it will be like mega bonk at first, there
+    will be a time limit, perhaps like 10-15 min runs depending on play testing, you have to just survive, when the time runs
+    out, there is a super god entity, and a malevolent God one, they both fight over your soul, but if you survive, the super
+    god entity saves you and sends you back to your bed, if it consumes you, you lose all your xp for that run, and retain all
+    your insanity waking up for the next run. meaning the next run starts out hard and you have to break line of sight fast to
+    lower insanity, or we can flesh out other ways of managing insanity. But do you like that idea? Eventually after many runs,
+    when you beat the game, it can unlock endless mode. But this could be like, different stages of dreamzone through the
+    chapters of the story, as the story progresses, the seeds get more chaotic and the further biomes become closer to reach.
+    Here is how the ending works though, look up the end of a vampire survivors run, this unkillable demon guy comes at you at
+    mach jesus, and even if you have the max speed build you cannot outrun death, that is the idea, this malevolent god entity
+    spawns in, and this is like the end of the round mode for megabonk, how long can you survive the onslaught, except its the
+    malevolent god entity chasing you down, you cannot escape it, its like lighting fast next bot, it is cheating and it is
+    there to devour you, even safe zones dont save you, just reroute it, since you cannot escape, what happens is when you get
+    caught, the good god entity saves you last second, ripping the player out of the metaphorical jaws of the most powerful and
+    horrifying manifestation of malice"
+    - Checked: Vampire Survivors' Reaper. At 30:00 every normal enemy is cleared and the Reaper arrives; another arrives each
+      minute after. The developer confirms players are not meant to kill it, and being killed by it is the normal end of a map
+      (vampire-survivors.fandom.com/wiki/The_Reaper; primagames "How to Reach Minute 31"). Megabonk's end was not found in one
+      search; his description stands.
