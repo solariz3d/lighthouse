@@ -689,3 +689,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       simulation's eye, unchanged to the tick, and C's L161 body hangs from it (`handback/p-l161-body-C_2026-11-11.md`). He
       wants the camera attached to the face of a real animated model. That is a design change to how the view moves; see the
       night's plan.
+83. 2026-11-11 11:09 (on D), Blender and Python, after the librarian asked whether panes may use Blender (headless, scripted)
+    and so Python for Blender work only: "yep well u have access its on steam"
+    - Checked: `C:\Program Files (x86)\Steam\steamapps\common\Blender\blender.exe --version` → Blender 5.2.3 LTS (build
+      2026-10-22). Run headless (`--background --python`), never the launcher, never a window.
+    - His yes covers Blender and Python scripts for Blender work only; the room's other scripts stay Bash and Node.
