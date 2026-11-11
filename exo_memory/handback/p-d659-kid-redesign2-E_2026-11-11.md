@@ -107,3 +107,22 @@ The most movement in the cloth of the three.
 - **The sheet is a proportion and colour guide,** drawn in SVG and looked at once in headless Chrome; it is not concept art.
 - **The materials** are picked at fetch from Poly Haven and ambientCG (CC0), as in the first sheet.
 - **The moth's rhyme with `pixelmoth`,** and the patched knee replacing the darned cuff, are mine, for his yes.
+
+## CORRECTION (appended 2026-11-11, the librarian's 17:53 ruling, chair 23:53Z): clothing is NOT cosmetic only
+
+- **Old lines:**
+  - the slots section: "**Clothing is cosmetic only.** The base outfit gives no buff, and neither does anything after it, **the
+    father's hoodie included**";
+  - the sheet's legend: "Slots as before (cosmetic, no buffs)", and "It also gives no buff".
+- **The rule, his:**
+  - items 51-52: clothing has rarity, and "common and the rest can have buffs, but its like slight buff like runes or masteries in
+    league vs the trinkets are strong buffs";
+  - item 86: only the **base outfit** gives no buff.
+- **So:**
+  - his own clothes, whichever direction he picks, are the buff-free base;
+  - every clothing item after it, from common up, carries a slight buff by rarity;
+  - trinkets carry the strong ones.
+- **The father's hoodie** may stay buff-free as the one item that is only meaning. That is my proposal (story bible item 6), for his
+  yes.
+- **The sheet's PNG and SVG legend still read "cosmetic, no buffs".** This correction is the record; the legend is redrawn if he
+  wants the sheet reissued.

@@ -141,3 +141,19 @@ A big soft shape on two sticks. It reads at any distance and from behind, which 
 - **The sheet is a proportion and colour guide.** It is drawn in SVG and looked at once in headless Chrome; it is not concept art.
 - **The vest's material** (an ambientCG nylon or plain fabric) is a category, chosen at fetch.
 - **The keepsake rule and the L2b layer are proposals,** for him and for A.
+
+## CORRECTION (appended 2026-11-11, the librarian's 17:53 ruling, chair 23:53Z): clothing is NOT cosmetic only
+
+- **Old line** ("The base outfit carries no buff" section): "**So is every clothing item after it: clothing is cosmetic only**";
+  and the slot legend "Clothing slots (cosmetic, no buffs)".
+- **The rule, his:**
+  - items 51-52 (06:00-06:07): clothing has rarity, and "common and the rest can have buffs, but its like slight buff like runes or
+    masteries in league vs the trinkets are strong buffs";
+  - item 86: only the **base outfit** gives no buff.
+- **So:**
+  - the base outfit, whichever direction he picks, is buff-free;
+  - every other clothing item, from common up, carries a **slight** buff scaled by its rarity;
+  - **trinkets** carry the strong buffs;
+  - the slots stand as listed.
+- **The father's hoodie (story bible item 6)** may stay buff-free, as the one item that is only meaning. That is my proposal, for his
+  yes.
