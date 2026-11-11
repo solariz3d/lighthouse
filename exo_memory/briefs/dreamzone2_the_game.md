@@ -333,3 +333,14 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     in bed, first person, taking the covers off and realizing they have the trinket in their hand IRL."
     - **His catch, owned:** the librarian's item-33 table left out Megabonk's slot limits. Weapons and tomes are capped by
       slots, and extra slots open at quest milestones. That cap is what forces every choice in a run.
+35. 2026-11-11 04:48 local (L), to the librarian, after a run on brutal, in the Dreamzone 2 play folder (the shortcuts were not
+    switched yet): "i was doing a brutal run, damnit something cut me off, like intelligent interceptor, the main entity couldnt
+    catch me, can you see the telemtry from my run?"
+    - Checked: the game writes no run record. The only trace is `game\config\best_times.txt`: brutal = 222.28 s, a new best,
+      written 04:47:47. What caught him is not on disk.
+36. 04:50: "also add the flashlight rn for me to test, the original one, as well, fresh spawn you will have no flashlight, i do
+    like the current lights, but i think there should be a little more lights on average, too dark, but that doesnt mean there
+    cant be darker areas or variation of less lighting, but the first biome and on average more places should be lit."
+    - Done at once: `flashlight = 1` in the play folder's `game\config\world.txt` (it was 0). A test setting, not the design.
+37. 04:5x: "the flashlight can be an ability you unlock, then it could be specced with some sort of psychic power, combining to
+    form an op flashlight that when shined upon entities, it slows them down or repels them for a short time"
