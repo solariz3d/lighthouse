@@ -122,3 +122,18 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     powerful ways. The game is a direct creation from my dreams and experiences of the dream zone. Lets look up lore of the
     gateway tapes and hemi sync, and what they called intermediary zones, this could be subtle lore of the world, and there
     could be a easter egg that fleshes out the story for the players beyond just the fun and addictive gameplay loop."
+24. 2026-11-11 02:33 local (L), to the librarian: "look into the gateway cia paper, they talked about their being intermediary
+    bubbles between what they call the absolute, and our reality"
+    - **Checked by the librarian, 02:3x**, against the Wikisource text of McDonnell, "Analysis and Assessment of Gateway
+      Process", US Army INSCOM, 9 June 1983 (CIA reading room CIA-RDP96-00788R001700210016-5):
+      - **"The Absolute"** is ¶18: "Energy in this state of inactive infinity is termed by physicists as energy in its absolute
+        state, or simply 'the Absolute.'"
+      - **The in-between is the report's own idea, in its own words:** "various intervening dimensions to which human
+        consciousness in altered states of being may gain access" (¶18), "those dimensions located between time-space and
+        the Absolute" (¶19), and "the intermediate dimensions beyond time-space" (¶21).
+      - **"Bubble" is not in the text.** Its nearest shapes are the "cosmic egg" (¶24–25), an ovoid universe with the
+        Absolute "layered over" it; the "Torus" hologram inside it (¶24); and the "energy balloon" (¶29), the protective
+        field a Gateway listener builds, "very reminiscent of the cosmic egg".
+      - **The way out is the "click out"** (¶19–22): consciousness "'clicks out' of time-space and joins infinity". Focus 21
+        is the furthest Gateway state (¶30).
+      - The CIA site refused the fetch; the text was read from Wikisource. Copies differ by OCR, so E checks the scan.
