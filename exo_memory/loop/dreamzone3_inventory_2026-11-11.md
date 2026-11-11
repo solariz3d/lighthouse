@@ -94,14 +94,16 @@ His words are the master: `briefs/dreamzone2_the_game.md`, items 1–26. This fi
 - A jumpscare, eventually, "but not during testing" (16).
 
 ## 4. Proposed by seats, not chosen
-- **The look:** E's effect menu (look hand-back, the table), driven by one "dream intensity" dial from game state.
-- **The FOV:** keep 100° horizontal (E). Key the widening to the top speed rather than the surge (E; a choice for him).
+- **The look:** E's effect menu (look hand-back, the table). **His, item 27:** not a slider. A director algorithm chooses how and when the intensity changes, over a dream-like base that is always present.
+- **The FOV, his, item 27:** dynamic. It widens slowly as something comes closer and as you go faster: enough to feel speed, never fish-eyed. The base stays at 100° (E). **Look-behind while running comes back** (the first game's hold-V glance).
 - **Lore naming:** Focus levels as depth tiers. **His item 26 cuts against direct Gateway terms, so this is likely out.** Monroe's
   Locales as biome families: likely out by the same cut. "The Park" for a safe zone: open. Quiet signs (the egg shape, a
   golden oval of light): open.
 - **Easter eggs:** the memo with a missing page; the tapes. **His item 26 makes the story itself the easter egg,** so these
   survive at most as pieces inside it.
 - The player's speed numbers, 6 / 9 / 4 s (E).
+
+- **His, item 27, for when the body is ready:** procedural animation aware of the world. Hands go onto walls, the body feels a wall when running along it diagonally, and nothing clips into geometry (like an FPS weapon that never pokes through a wall).
 
 ## 5. Research queued
 - **Backrooms lore**, to learn from (26). **Done:** `handback/p-l161-backrooms-E_2026-11-11.md`.
@@ -114,8 +116,7 @@ His words are the master: `briefs/dreamzone2_the_game.md`, items 1–26. This fi
     - designed pieces carry the lore, procedural rooms carry the dread.
 
 ## 6. Constraints the builds must carry (librarian; each is checkable)
-- **Photosensitivity.** Psychedelic effects that flash or slice must stay under the usual seizure-safety limits (no more than 3
-  flashes a second; no large saturated-red flashes). Scenery slicing and recursion are the ones to watch.
+- **Photosensitivity: his, 03:3x, "we could also just have a seizure warning lol".** A warning at launch, as games carry, plus a reduce-flashing setting. Most of the effects are slow drifts and never flash; scenery slicing and recursion are the ones the setting would soften.
 - **The binaural beat needs stereo headphones** to exist at all; on speakers it becomes an ordinary low pulse.
   - E's source: the EEG "frequency-following" claim is contested (Stone et al. 2002, in `handback/p-l161-look-E_2026-11-11.md`,
     L6).

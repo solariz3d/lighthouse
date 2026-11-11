@@ -190,3 +190,15 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     easteregg then is basically just the background progression of the narrative on top of the gameplay and the runs
     progressing over time. Tapes could be bought online and are one of the ways you gain new xp and skills, idk. Also, there
     shouldnt be out of body experiences in the dreamzone since you are already technically out of your body."
+27. 2026-11-11 03:30 local (L), to the librarian, answering the inventory's "proposed" list: "4. The dream intensity shouldnt be
+    a slider, it should be an algo that chooses how and when to change intensity, there should always be a base dream like
+    quality. the fov could be dynamic in a way, the closer something gets to you, the fov slowly heightens, also the faster you
+    run and go, it should never get too fish eyey, but enough to feel speed, as well we need to add the function back to look
+    behind while running, that was good. Also just spit balling, once the player body and animations are ready to start, i
+    want procedural animations when touching walls or objects like the user puts their hands on the wall, or like running
+    against it diagonally you can feel the wall through the animation, in an FPS, what comes to my mind is when a player walks
+    close to a wall, and the animation is aware to not clip the gun into the wall, like that but with the players body. And
+    the animations are procedural relative to the environment"
+    - Checked: dreamzone-3 has no look-behind (no match for lookback, lookbehind or glance). The first game had it:
+      `dreamzone-rt/src/main.cpp:57` (hold V, an over-the-shoulder glance, view only, the run unaffected),
+      `:7230-7233` (a fast whip back and a softer return), and `:7335-7339` (about 166° of yaw).
