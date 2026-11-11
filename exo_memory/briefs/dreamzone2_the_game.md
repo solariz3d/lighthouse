@@ -713,3 +713,12 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       a rule to model the chasers with less detail. His own word (item 82) is that the player model AND the entities are made
       "as detailed as you can go". The entities are built fully detailed; how sharply they are seen is left to the render
       (haze, light, the dream dial).
+86. 2026-11-11 15:42 (on D), back from sleep, to the five questions waiting on him (cgltf and texconv; the void at 10 m/s; the calm
+    school; the kid's next pass; Git LFS and textures on a fresh clone): "do all waiting on me, also, the desiign for the kid is
+    decent, however I want it to be more designed, also, he needs to come with a base outfit and clothing that give no buff, you
+    know like his original appearance before people customize him."
+    - "do all waiting on me": a yes to each, taken as the librarian's recommendation where one was given and the librarian's call
+      where it was not (stated to him in the reply of 15:4x).
+    - The kid: "decent", but "more designed": a stronger, more intentional character design, not only a correct one.
+    - A base outfit with no buff: his original appearance, the default before any customisation; buffs belong to clothing he
+      finds or buys later (items 51-52).
