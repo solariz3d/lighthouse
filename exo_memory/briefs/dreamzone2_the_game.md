@@ -794,3 +794,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The lore ties are kept. The cast: the kid and the writer stay; the night nurse, the analyst and the two DLC proposals are
       not taken.
     - The third character: a Russian operator trained by the KGB; his room is like a military barracks.
+97. 2026-11-11 16:44 (on D), on the cast's eras: "but then see this is funny, time is non linear there, we do not have to be bound
+    to the same time period"
+    - Time is non-linear in the dreamzone, so the characters need not share one period: each can live in his own era and still
+      meet the others' traces there.
+    - Documented ground the librarian points to: Gateway's Focus 15 is the state of "no time" (E's L161 lore, L161 handback
+      "Focus 10, 12, 15 and 21"), and the 1983 memo describes Focus 21 as "movement outside of the boundaries of time-space".
