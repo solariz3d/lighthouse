@@ -520,3 +520,12 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     hunter always knows where you are, and if you stop running it will catch you"
     - So hearing and sight belong to the lesser entities only (the pack heard him at 12 m in item 64). The hunter is omniscient.
       There is no stealth build; there is only running. This matches item 58's shroud, which costs heavy stress.
+66. 2026-11-11 08:43 (on D), settling the design map's contradiction 28 against 30, after the librarian put it to him as "can
+    you be consumed at the very end": "you dont get it. if they player completes that particular run by surviving the timer, it
+    goes into overtime mode where the evil god then comes to you himself, the comparison is like vampire survivors ending, its
+    like this unbeatable entity that you cannot run from, it will catch you, but you can try your best to outrun it for as long
+    as you can, when it catches you, right before the resonant god acts and saves you. So you can die and lose all your points
+    by losing before the timer, the overtime mode is meant to be lost, but good god saves you and sends you back successfully"
+    - So: caught before the timer, the run is lost with all its points. Survive the timer and overtime starts; the evil god
+      always catches you, the good god always saves you, and the run counts as a success with its points kept (plus item
+      53's overtime bonus for every second you last). Being consumed happens only before the timer.

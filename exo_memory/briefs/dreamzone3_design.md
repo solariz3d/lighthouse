@@ -49,6 +49,7 @@
 - [decided 16] A brutal jumpscare, "but not during testing".
 - [decided 28] Being consumed loses all your XP for that run, and you keep your insanity (stress, item 32) waking up for the next run.
 - **Contradiction, 28 against 28/30:** item 28 says "if it consumes you, you lose all your xp", and also "when you get caught, the good god entity saves you last second". Item 30 reads it as: caught by regulars before the timer, you lose it all; at the timer the good god always saves you. Then **is being consumed at the end possible at all?** Left for him.
+- [decided 66, settles the contradiction above] No. Caught before the timer: the run is lost with all its points. Survive the timer: overtime, the evil god comes himself (Vampire Survivors' ending), it always catches you, the good god always saves you "and sends you back successfully", points kept plus the overtime bonus (53). Being consumed is a before-the-timer loss only.
 - [proposed: chase SPEED_MODEL, A] A fresh player's start advantage of about 10% (`chase/SPEED_MODEL.md:289`). [decided 28] "10% sounds good for the start".
 - [GAP] What "the part taken" does in play. Is it only felt, or does a run's loss remove something real (a trinket, an ability slot, a memory of the story)?
 - [GAP] The timer: one length, or per difficulty (10–15 min is his range)? Is the timer shown, and how?
