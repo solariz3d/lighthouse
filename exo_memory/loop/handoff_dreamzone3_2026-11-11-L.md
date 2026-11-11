@@ -41,8 +41,12 @@ His order, 07:32 (see the lighthouse handoff). **Read first:**
 - `l162-stair-stall` e2dc31b. B's bot-only fix: PlayGraph::nearest no longer snaps through a wall. Landed, then **reverted on main**
   (39e03db), because it turned `proof_tests.cpp:159` red when it met A's levers. **Carried to A.**
 - `l162-chase` abe8237. Close-range direct pursuit, off by default. It did not make a juke pay (1.07×). Kept as a dial he could feel.
-- **L165,** the render's grain and ghost trails (item 63). C's diagnosis is **partial**: a code reading, with no capture taken
-  (`handback/p-l165-render-C_2026-11-11.md`).
+- **L165,** the render's grain and ghost trails (item 63). C's diagnosis is **finished, with captures**
+  (`handback/p-l165-render-C_2026-11-11.md`; 92 frames in `Downloads\dreamzone-3-l165-render-captures\`).
+  - **Measured on the same sprint input:** with the body shown, 1.5–6.5% of pixels change by more than 8 levels a frame. With the body
+    hidden, 0.7–1.2%. With the body shown and the hand light off, 1.1–2.4%.
+  - **So the hand light lighting the body is most of the shimmer** he saw. Fix 1 below is the first to build.
+  - The bullets that follow were written from the code before the captures; the captures confirm the body line.
   - **Grain:** every lit term but emission is one random sample a pixel a frame. Nothing smooths it across neighbouring pixels. The
     32-frame history is cut on fast camera moves and on newly seen surfaces, so raw noise shows exactly when he is moving.
   - **Ghosts:** **no instance writes motion vectors.** History and TAA reproject by the camera alone, so chasers, the body's limbs and
