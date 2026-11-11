@@ -344,3 +344,4 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Done at once: `flashlight = 1` in the play folder's `game\config\world.txt` (it was 0). A test setting, not the design.
 37. 04:5x: "the flashlight can be an ability you unlock, then it could be specced with some sort of psychic power, combining to
     form an op flashlight that when shined upon entities, it slows them down or repels them for a short time"
+38. 04:51, finishing item 37: "but it frenzies all other entities that it isnt being pointed at"
