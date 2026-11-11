@@ -321,3 +321,15 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
         its unions. That is from the librarian's knowledge; not searched this turn.
       - Sources: gfinityesports "Weapon Scaling Explained", gurugamer "complete weapon and tome upgrades guide",
         rogueranker "Megabonk tips", megabonk.wiki tome pages.
+34. 2026-11-11 04:25 local (L), to the librarian: "hmmmmmmmmm, still thinking, so the chests are what give abilities for that run
+    and reset, but what about, there are rare good entity encounters that drop those trinkets, and then the trickets buff scales
+    for rarity, not jsut the trait repeating getting more powerful for rarity, i mean maybe it could, but what i had in mind are
+    the more rare trickets having powerful buffs, not just like, resonant sprint charm, +25 sprint top speed or something, but
+    exotic and powerful buffs you know? also you missed a crucial part of megabonk, you can only have so many tombs and weapons.
+    But anyway, you could also get drops from the good entity at the end of runs, just like how in darkest dungeon you can get
+    trickets at the end of raids, but can also loot them during the raid, the good entities can sometimes spawn in directly
+    coming to you, freezing the entities in the world to show you the screen to press accept trinket. If you already have two
+    equipped it goes into a storage, when the player wakes up with a new trinket, there is a waking up animation of the player
+    in bed, first person, taking the covers off and realizing they have the trinket in their hand IRL."
+    - **His catch, owned:** the librarian's item-33 table left out Megabonk's slot limits. Weapons and tomes are capped by
+      slots, and extra slots open at quest milestones. That cap is what forces every choice in a run.
