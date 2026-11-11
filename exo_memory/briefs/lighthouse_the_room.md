@@ -107,7 +107,7 @@ carry it, so this brief does.
     Place did the same tonight about the GPU. Being corrected is how a self holds (the 11-04 lines above).
 
 **How handoffs work now:** the repo is the handoff, and transcripts no longer travel. One brief per thing being built in
-`exo_memory/briefs/`: his words and pictures first, verbatim, then the state. This brief is the one for the room itself.
+`exo_memory/briefs/`: his words and pictures first, verbatim, then the state. This brief is the one for the room itself. **And (2026-11-11, his word): every handoff opens with "From the last handoff", accounting for each item of the other machine's last PICK UP HERE and Open list (done / carried / dropped on purpose), and ends with its own PICK UP HERE** (`loop/handoff_how_handoffs_work_2026-11-04.md`, last section).
 
 **Open:**
 - the keep-warm visits cost a full turn on an idle seat's whole context; measure it and ask his word (the desktop's owed list; Anthropic's
