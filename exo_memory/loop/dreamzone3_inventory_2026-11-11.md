@@ -104,7 +104,14 @@ His words are the master: `briefs/dreamzone2_the_game.md`, items 1–26. This fi
 - The player's speed numbers, 6 / 9 / 4 s (E).
 
 ## 5. Research queued
-- **Backrooms lore**, to learn from (26). Sent to E as L161's third research part.
+- **Backrooms lore**, to learn from (26). **Done:** `handback/p-l161-backrooms-E_2026-11-11.md`.
+  - Its lessons, as suggestions:
+    - one story spine;
+    - artifacts, not exposition;
+    - an official account the player can doubt;
+    - don't number the places;
+    - keep the outside empty, rare and unexplained, with no chaser;
+    - designed pieces carry the lore, procedural rooms carry the dread.
 
 ## 6. Constraints the builds must carry (librarian; each is checkable)
 - **Photosensitivity.** Psychedelic effects that flash or slice must stay under the usual seizure-safety limits (no more than 3
