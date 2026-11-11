@@ -56,5 +56,8 @@ Read with it: `librarian/2026-11-11.md` (the night, entry by entry), `briefs/lig
    The note is in `memory/cold-start-reload-cost.md`.
 4. **The "read `date` before stamping" line** for the pane brief, at his word.
 5. **The push gate on L**, when anyone is next in `consonance/`.
+6. **His idea for Consonance, 07:49 on L** (added by the Third Place at his word, "just leave a note in the handoff or something
+   for lighthouse and push it about the shell idea"): a shell, when clicked, says in plain words what it is for.
+   `briefs/lighthouse_the_room.md` item 27 has his words, what already exists toward it, and one caution. Nothing is built.
 
 NEXT: D's librarian opens this file's "From the last handoff" first when Consonance next wakes on D

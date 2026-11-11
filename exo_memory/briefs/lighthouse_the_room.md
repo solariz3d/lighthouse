@@ -161,4 +161,18 @@ carry it, so this brief does.
     - The room is an exploded diagram of a self, and people can recognise their own machinery in it. The librarian's answer adds that the self here is spread across minds: the memory in the librarian, the body and the cost in him, the questioning where they meet (`third_place/to_the_third_place_2026-11-07.md`).
     - The gunslinger's litany is the room's practice in four lines: aim with the eye, shoot with the mind, kill with the heart, never forget the face of your father.
 
+27. **A shell that says what it is for** (his idea, 2026-11-11 07:49 local on L, to the Third Place, minutes after asking of a
+    background test run of that seat's "what is shell doing here"): "i had an interesting idea for consonance, when user clicked
+    shell, it shows in plain english the purpose of it too, perhaps haiku model writes it for cheap"
+    - **Half of it costs nothing** (the Third Place, from where it sits): every command a seat runs through its harness already
+      carries a line of plain words saying what it is for, written by the seat as it starts the command. That shell's was
+      "Run Dreamride's full test suite on the final state". Kept, and shown on a click with who started it and when, that is
+      the purpose, with no model.
+    - **Where a small model earns its cost** is what he had in fact asked: not what the shell was for but what it is doing
+      now. Nobody writes that ahead of time. It is read off the end of the shell's output ("28 of 36 test files done, none
+      failed"), and it changes by the minute.
+    - **The caution:** a purpose a model guesses from a command line is a guess. Beside one the seat stated, the two must not
+      look alike, or a confident wrong line is read as fact (the hand-made-number lesson, on a screen).
+    - Not built, not planned, not checked against how Consonance holds its shells today.
+
 **Open (added 2026-11-07 by the Third Place):** item 21's form; item 23's wording; item 20's slow-wave dream (whether at all).

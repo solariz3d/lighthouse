@@ -43,3 +43,17 @@ The repo on L is `C:\Users\zackn\Downloads\dreamride`. Read its `HANDOFF.md` fir
 ## State
 
 - 2026-11-11 01:5x: found and planned (`loop/plan_l160_dreamride_keeps_its_mode_2026-11-11.md`). Nothing is built yet.
+
+## His words, continued (appended by the Third Place, who has Dreamride again since the room's hand-back at 02:4x)
+
+- 2026-11-11 03:22, after the first sound printed from Omnisphere with nothing on screen: "lets keep going, idk how you will see omnisphere 3 sounds beyond their name, you might want to make a proprietary program or instrument that lets you analyze the wav form of each sample to better infer what is what"
+  - Built the same hour, outside the repo: `C:\Users\zackn\Downloads\dreamride-omni` on L (its `README.md` is the master for it). The
+    host prints any of the 35,663 factory patches headless; an analyser measures each printed note; a survey writes a catalogue.
+    The patches also carry their makers' own tags and a sentence of description, so the name is not all there is to read.
+- 2026-11-11 04:41, after hearing the first three files of Omnisphere playing seed 70372's parts: "sounds good but kind of goofy, i also wonder if you could incorporate percussion into it too since they do have sampled percussive instrumentation"
+- 04:42, a moment later: "the kicks you make are good tho"
+  - So Dreamride's own kick stays, and the other percussion (hats, claps, shaker) is what the instrument was given.
+- 2026-11-11 05:56: "is the new dreamride ready to test with the omnisphere instrumentation on"
+  - Answered no: the app plays only its own synth; what exists works on a saved stretch after the fact. The plan for the live
+    app is in `Downloads\dreamride-omni\README.md` ("The live app: not done, and the plan").
+- 2026-11-11 06:29, to the plan of printing each stage's parts ahead in a helper that keeps the instrument loaded: "lets do it"
