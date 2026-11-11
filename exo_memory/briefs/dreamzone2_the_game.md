@@ -694,3 +694,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Checked: `C:\Program Files (x86)\Steam\steamapps\common\Blender\blender.exe --version` → Blender 5.2.3 LTS (build
       2026-10-22). Run headless (`--background --python`), never the launcher, never a window.
     - His yes covers Blender and Python scripts for Blender work only; the room's other scripts stay Bash and Node.
+84. 2026-11-11 11:13 (on D), lore, queued: "wow if you guys get it done faster than expected, can you add to the queue to do
+    theory crafting ideas for the lore and how it ties into the monroe institute and hemi sync, its not illegal to reference real
+    thngs in a game, just make the cheque not say who its from i guess"
+    - Queued after the day run's phases (or when a pane is idle): lore theorycrafting tying the dreamzone to the Monroe
+      Institute and Hemi-Sync. Prior art: E's L161 lore section (`handback/p-l161-look-E_2026-11-11.md`, "The lore": the 1983
+      Gateway memorandum, Focus 10-21, the later Focus 22-27 territories, Belief System Territories, "the Park", Hemi-Sync).
+    - Real names may be referenced in the game (his call, item 84; this answers the librarian's 09:0x caution on item 70).
+      The cheque itself names no payer.
