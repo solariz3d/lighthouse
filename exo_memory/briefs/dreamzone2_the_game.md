@@ -702,3 +702,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       Gateway memorandum, Focus 10-21, the later Focus 22-27 territories, Belief System Territories, "the Park", Hemi-Sync).
     - Real names may be referenced in the game (his call, item 84; this answers the librarian's 09:0x caution on item 70).
       The cheque itself names no payer.
+85. 2026-11-11 11:13 (on D), widening item 84: "but even potential character ideas and life paths and backstories that connect
+    to what we want, and then craft the ultimate way they intertwine together"
+    - D661 widens: character ideas (about four, plus two as possible DLC, item 72), each with a life path, backstory, way into
+      the dreamzone, unique buff and biome set (74); then the design of how their stories intertwine (68: each discloses what
+      makes another's make sense, playable in any order past the unlock caps). The kid (46-47) and the writer (71) are the two
+      archetypes already on record; the kid's arc stays first (72).
