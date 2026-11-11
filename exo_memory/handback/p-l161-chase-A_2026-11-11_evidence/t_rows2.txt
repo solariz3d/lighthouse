@@ -1,0 +1,5 @@
+    420 s on hard: 1 peaks, 1 reliefs, the shortest finished relief 1000000000.0 s; 0 lesser chasers spawned during a relief
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\proof_tests.cpp(526): CHECK failed: peaks >= 2 && reliefs >= 2
+FAIL  the_director_builds_to_a_peak_and_then_gives_relief
+1 tests, 1 failed
+lockrun: director row WALL 10 s, exit 1

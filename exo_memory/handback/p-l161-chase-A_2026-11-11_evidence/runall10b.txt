@@ -1,0 +1,29 @@
+=== audio_tests
+77 tests, 0 failed
+=== chase_tests
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\proof_tests.cpp(526): CHECK failed: peaks >= 2 && reliefs >= 2
+FAIL  the_director_builds_to_a_peak_and_then_gives_relief
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\proof_tests.cpp(642): CHECK failed: flee > 3.0 * line
+FAIL  the_three_policies_end_as_they_should
+47 tests, 2 failed
+=== core_tests
+15 tests, 0 failed
+=== game_tests
+133 tests, 0 failed
+=== world_app_tests
+26 tests, 0 failed
+=== gen_tests
+27 tests, 0 failed
+=== gen_walk_tests
+9 tests, 0 failed
+=== nav_tests
+32 tests, 0 failed
+=== sim_tests
+154 tests, 0 failed
+=== world_tests
+24 tests, 0 failed
+=== dz-gym --selftest
+selftest: passed (26 of 26 checks passed)
+=== dz-world --selftest
+selftest: FAILED (50 of 51 checks passed)
+lockrun: ten suites + selftests (final lamps tip) WALL 528 s, exit 0

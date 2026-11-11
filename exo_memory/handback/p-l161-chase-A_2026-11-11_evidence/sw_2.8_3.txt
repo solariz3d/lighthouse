@@ -1,0 +1,9 @@
+arena: seed 3, chunks x -2..2  y -1..1  z -2..2; 75 tiles (75 from the cache, 0 failed), 48069 polygons, 1547928 triangles, 16953 graph nodes; 23 reprieves, 45 dead ends (16 with a way out), 156 pockets at the block's edge; 2.1 s to build
+
+flee, level 1 (normal): caught by the hunter after 511.1 s, score 26883; in connected space; 3966 m run
+  lesser chasers: 13 sprinters, 5 interceptors, 15 pack bodies; sighted 1, heard 4, lost 26 (0 at a reprieve's mouth); peaks 2, reliefs 2
+  the player: 1 reprieves used, 0 dead ends entered, cornered 0, climbed out 0; climbs 0, drops 0, ladders 0; idle 6 s; 2535 plans, 0 with nowhere safe, stuck 0
+  reprieve: hunter 4.9 s behind going in, 6.5 s coming out the far side after 2.8 s inside; way round 9.1 s (generator), 6.4 s (mesh)
+  cost: 5.06 us a tick on average, 1508 us at worst; 1.548% of ticks over 50 us, 0.3448% over 200 us; 8.3 paths a second (0 failed)
+  fingerprints: chase 809ec3116ae298f9, simulation 2a823e407e1aeeb7
+lockrun: flee seed 3 stair_width 2.8 WALL 7 s, exit 0

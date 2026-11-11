@@ -1,0 +1,6 @@
+    run seed 1: chase b25e34ed047135ad / b25e34ed047135ad, simulation b121460a098b5edb / b121460a098b5edb, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 80.1 s / 80.1 s
+    run seed 2: chase 6027ca73bdcc2877 / 6027ca73bdcc2877, simulation b583bc9aa1395c76 / b583bc9aa1395c76, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 80.2 s / 80.2 s
+    run seed 3: chase 6f197c1ba520ce35 / 6f197c1ba520ce35, simulation 6ba1ed88b68fc6ba / 6ba1ed88b68fc6ba, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 120.0 s
+ok    lamps_do_not_move_the_chase
+1 tests, 0 failed
+lockrun: lamps test WALL 9 s, exit 0

@@ -1,0 +1,7 @@
+    run seed 1: still 8.0 s, line 19.1 s, flee 80.1 s
+    run seed 2: still 8.0 s, line 127.0 s, flee 80.2 s
+    run seed 3: still 8.0 s, line 74.0 s, flee 371.0 s
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\proof_tests.cpp(642): CHECK failed: flee > 3.0 * line
+FAIL  the_three_policies_end_as_they_should
+1 tests, 1 failed
+lockrun: chase rows on the lamps-out tip WALL 7 s, exit 1

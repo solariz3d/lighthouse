@@ -1,0 +1,12 @@
+    run seed 1: chase 3ad296ef4a256ca8 / b25e34ed047135ad, simulation 734bf1997565896e / b121460a098b5edb, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 80.1 s
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\speed_tests.cpp(346): CHECK_EQ failed: static_cast<long long>(a.chase_hash) = 4238616153794374824, static_cast<long long>(b.chase_hash) = -5593975494561155667
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\speed_tests.cpp(347): CHECK_EQ failed: static_cast<long long>(a.sim_hash) = 8307999579016890734, static_cast<long long>(b.sim_hash) = -5683184245841109285
+    run seed 2: chase b08d2eb1d154c977 / 6027ca73bdcc2877, simulation a84d9a1b93c98011 / b583bc9aa1395c76, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 80.2 s
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\speed_tests.cpp(346): CHECK_EQ failed: static_cast<long long>(a.chase_hash) = -5724868210061948553, static_cast<long long>(b.chase_hash) = 6928729150187120759
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\speed_tests.cpp(347): CHECK_EQ failed: static_cast<long long>(a.sim_hash) = -6319225258896687087, static_cast<long long>(b.sim_hash) = -5367238958579622794
+    run seed 3: chase 1478094ed1fefbc1 / 6f197c1ba520ce35, simulation cb6b7f2d1e8048a0 / 6ba1ed88b68fc6ba, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 120.0 s
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\speed_tests.cpp(346): CHECK_EQ failed: static_cast<long long>(a.chase_hash) = 1474939112099085249, static_cast<long long>(b.chase_hash) = 8005566270804119093
+    C:\Users\zackn\Downloads\dreamzone-3-a-l161\chase\tests\speed_tests.cpp(347): CHECK_EQ failed: static_cast<long long>(a.sim_hash) = -3788794829740160864, static_cast<long long>(b.sim_hash) = 7755741204742915770
+FAIL  lamps_do_not_move_the_chase
+1 tests, 1 failed
+lockrun: lamps test (expect red on 25dc5e7) WALL 9 s, exit 1
