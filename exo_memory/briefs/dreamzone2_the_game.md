@@ -869,3 +869,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       room, approved for release 2003/09/10; E's L161 lore), so in 2005 it is newly out and passed round forums: the previous
       owner built the program from it. American files appear redacted and the bars lift on focus; the Soviet ledger is Russian
       that turns English on focus (item 100). Never claiming what the agencies did beyond the record.
+105. 2026-11-11 17:22 (on D), answering the librarian's questions on the Signal: "also ur questions. 1. a stranger prob someone
+    connected to the monroe institute or cia or some party that knew his affinity for it some how. 2. the "good god" needs a new
+    name, but it is something ancient, the counter force to the dark one, but it is said to be more powerful."
+    - 1. The previous owner: a stranger, probably connected to the Monroe Institute, the CIA or some party, who somehow knew the
+      kid's affinity. So the sale was not chance: the PC found him.
+    - 2. The good god gets a new name. It is ancient, the counterforce to the dark one, and said to be the more powerful.
+    - Question 3 (his waking life) is still open.
