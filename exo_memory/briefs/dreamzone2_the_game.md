@@ -903,3 +903,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The father's hoodie is a late-game unlock (an item he earns later), not what he starts in.
     - Corrects item 108's note ("the hoodie is his dead father's" as his base) and E's redesign sheet, whose three directions all
       built the base outfit round the father's hoodie.
+110. 2026-11-11 17:52 (on D), on the story's latest and the dark one's name candidates (the Echo, the Hollow, the Remainder, the
+    Undertow): "they are good for now"
+    - The story as it stands (D667 with its additions) is accepted for now. The dark one's name stays open among those four; no
+      pick yet. The build uses a placeholder.
