@@ -1,0 +1,27 @@
+$ dz-gen.exe --sweep 20 --biome apartment
+exit 0
+20 seeds, block (-1 0 -1)..(1 1 1)
+  per seed                          least         5%     median        95%       most
+  chaser connected share           0.9922     0.9926     0.9960     0.9983     0.9986
+  player connected share           0.9982     0.9991     1.0000     1.0000     1.0000
+  ways round per chunk            16.6111    17.2222    18.4444    20.1667    20.6667
+  dead-end share of cells          0.0048     0.0060     0.0121     0.0176     0.0216
+  dead ends per chunk              0.1667     0.2778     0.5000     0.7222     0.7778
+  alcoves per chunk                0.1667     0.1667     0.2778     0.5000     0.5556
+  reprieves per chunk              0.0000     0.0556     0.1667     0.3333     0.4444
+  stairs per chunk                 1.1111     1.4444     1.6667     2.1111     2.1667
+  shafts per chunk                 0.0000     0.0000     0.1111     0.2222     0.2222
+  wells per chunk                  0.0000     0.0000     0.0556     0.1111     0.1667
+  atrium cells per chunk           0.0000     0.0000     0.0000     2.5000     2.7778
+  lamps per 100 cells              4.9724     5.2161     6.0538     6.5905     6.6889
+  triangles per chunk           4969.3335  5072.6665  5451.3335  5788.6665  5789.1113
+  ms per chunk                     0.4663     0.4720     0.5860     0.6794     0.6803
+  storey agreement                 0.3873     0.3943     0.4475     0.4807     0.4969
+  corridor sightline m            34.6473    41.4194    46.3814    52.8515    53.1633
+  doorways per corridor cell       0.1214     0.1443     0.2053     0.2768     0.2872
+  open share                       0.5633     0.6134     0.6721     0.7330     0.7585
+  lit share                        0.5193     0.5261     0.5698     0.6237     0.6321
+  lit share spread                 0.0864     0.0955     0.1159     0.1375     0.1559
+  dark chunk share                 0.0000     0.0000     0.0556     0.1111     0.1111
+  over all seeds: 176 dead ends, 36.4% with a climb or drop out; 161 of them built as one-door rooms, 39.1% of those with a climb out
+  over all seeds: 67 reprieves (46 between storeys, 0 with no way round in reach); way round least 5.07 s, 5% 5.14, median 8.28, 95% 13.27, most 18.07

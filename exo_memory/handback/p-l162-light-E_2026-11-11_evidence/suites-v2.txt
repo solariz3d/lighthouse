@@ -1,0 +1,11 @@
+heavy-run: waiting on 0845a868 pid 26608 (t180 C: dz3 L162 runs: build + world_app_tests, since 2026-11-11T11:26:57.626Z) — it holds this tree
+audio_tests.exe: exit 0 (6 s) ok    the_game_feeds_the_mixer_while_a_silent_device_plays_it_and_the_device_can_be_opened_again | 77 tests, 0 failed
+chase_tests.exe: exit 1 (160 s) ok    the_streamed_world_tells_the_run_of_its_reprieves_and_dead_ends | 46 tests, 1 failed
+core_tests.exe: exit 0 (1 s) ok    xform_point_applies_rotation_then_translation | 15 tests, 0 failed
+game_tests.exe: exit 0 (2 s) ok    the_ghost_clock_waits_at_the_line_then_runs_with_the_attempt | 133 tests, 0 failed
+gen_tests.exe: exit 1 (33 s) ok    a_straight_stairwell_is_as_wide_as_the_dial_says | 27 tests, 1 failed
+gen_walk_tests.exe: exit 0 (86 s) ok    one_seed_is_the_same_world_whatever_the_players_movement_numbers | 9 tests, 0 failed
+nav_tests.exe: exit 0 (61 s) ok    a_different_latency_is_a_different_run | 32 tests, 0 failed
+sim_tests.exe: exit 0 (2 s) ok    the_state_hash_changes_every_tick_even_standing_still | 154 tests, 0 failed
+world_app_tests.exe: exit 0 (43 s) ok    a_body_that_falls_into_a_void_ends_the_run_with_that_cause | 26 tests, 0 failed
+world_tests.exe: exit 0 (19 s) ok    every_ladder_near_the_spawn_is_climbed_both_ways_by_the_real_controller | 24 tests, 0 failed
