@@ -1,0 +1,53 @@
+selftest
+  ok    the world starts paused on its defaults, at the door, with nothing hunting yet and nothing to report
+  ok    the generator names a spawn cell for this seed: cell -2 0 1, at (-4.5 0.0 4.5)
+  ok    a Direct3D 12 device with DXR 1.1, offscreen: NVIDIA GeForce RTX 5070 Ti Laptop GPU
+  ok    the block round the spawn is loaded and drawn: 245 chunks loaded, 245 with triangles drawn, 2.62 million triangles, 3044 lamps; collision for 27
+  ok    each chunk is one compacted bottom-level structure, built off the frame's thread: 67 MB in all; a chunk: merging 0.34 ms, build and compaction 0.63 ms (worst 2.59)
+  ok    the lamps are sorted into the light grid: 3044 lamps in 67335 cells of 4 x 3.5 x 4 m, eight to a cell; 206 cells had more than eight reach them; sorted in 4.1 ms
+  ok    the player stands on the spawn cell's floor
+  ok    the frame at the spawn is lit, and not blown out: mean 0.267, 100% of pixels lit, 0.00% pure white, 0 bad HDR values
+  ok    with the hand light off the same view is darker: the building is dark by default: mean 0.064 against 0.267, 90% of pixels lit
+  ok    the flashlight is a beam: it lights the middle of the view far more than the hand light does, and more than the rim: middle 0.673 and rim 0.072 by the flashlight; middle 0.417 and rim 0.218 by the hand light; 0.00% pure white
+  ok    focused, the beam is a small bright patch with the dark close round it, where the wide beam still lit: the patch 0.774 against 0.085 just outside it; with the wide beam the same two were 0.676 and 0.192
+  ok    a mesh that moves is drawn beside the streamed world, and goes where it is put: the picture differs by 15.4/255 with a glowing box before the eye and 0.52/255 once it is moved away; 245 chunks drawn throughout
+  ok    a window that is never shown takes the messages
+  ok    F switches the hand light, which starts on
+  ok    M shows the map and F1 the overlay, and both draw
+  ok    W and Shift held: the player sprints down the corridor: 9.1 m in 1.5 s
+  ok    R returns to the spawn
+  ok    Esc pauses, and paused time does not pass
+  ok    a walk is planned over the walk graph from the spawn: 114 places, 313 m
+  ok    the real controller walks the route to its end: 308 m in 73.2 s
+  ok    through many chunks and several storeys: 19 chunks entered, storeys -1 to 2
+  ok    chunks load ahead of the walk and unload behind it: 203 generated, 89 dropped; 359 loaded now
+  ok    the body never falls through missing collision: the feet were never more than 0.00 m below the route's lowest floor; every chunk in the body's reach had its collision on every frame
+  ok    no tick had to wait for a chunk: 0 waits
+  ok    the body mover's results were plausible: 0 moves made again
+  ok    frames along the walk are lit: 36 of 36 pictures lit; mean brightness 0.050 to 0.465; 0 bad HDR values
+  ok    a flight at three times sprint speed, through many chunks and several storeys: 1103 m at 21 m/s in 52.7 s; 37 chunks entered, storeys -2 to 3
+  ok    chunks load and unload all the way, in the simulation and in the picture: 691 generated and 673 dropped; 691 raytracing structures built and 673 removed
+  ok    collision is under the body at three times sprint speed: every chunk in reach had its collision on every frame; a ray down found a floor on 3161 of 3161 frames probed
+  ok    no tick had to wait for a chunk at three times sprint speed: 0 waits (0.0 ms)
+  ok    no more is held than the loaded block and its margin: at most 374 chunks loaded and 374 drawn, of 567 allowed
+  ok    memory is bounded over the flight, in the process and on the GPU: at a third, two thirds and the end: process 935, 941, 964 MB; on the adapter 379, 379, 379 MB; raytracing structures 85, 93, 104 MB
+  ok    a fall at terminal speed outruns nothing: no tick had to wait for a chunk: 140 m straight down at 45 m/s in 3.1 s, 914 chunks generated on the way; 0 waits (0.0 ms)
+  ok    a new seed replaces the whole world, and the player stands at its spawn: seed 2: 245 chunks loaded, 245 drawn
+  ok    going to a chunk puts the player on a floor there: asked for 3 -2 2, standing in 3 -2 2 on storey -4
+  ok    the same inputs give the same state hash with ordinary workers, slowed workers, and everything loaded up front: ef552803263552b7 / ef552803263552b7 / ef552803263552b7 over 9825 ticks and 6 chunk crossings; waits for a worker: 4, 4, 0 (789 chunks built beforehand)
+  ok    the flee bot's record gives the same run here as in the headless harness: 60.0 s at the hard level: 7 events, chase fingerprint 92a3db011b4fdeba against 92a3db011b4fdeba, simulation e10809781f7bba46 against e10809781f7bba46
+  ok    the chasers are drawn as the run goes: a figure in 1560 of the 1801 frames drawn, 3 at once at most
+  ok    a catch ends the run, as it did headless: the poor policy at the hardest level: caught by the hunter after 13.2 s, 147 points
+  ok    the run's end is a cut to dark, and then the results card: 0.00% of the picture lit in the dark, 38.0% with the card up (mean 0.035)
+  ok    a policy's run sets nobody's best time
+  ok    Enter on the card starts a run in the next building, and R starts this one again: seed 1, then 2
+  ok    a person's run that beats the level's best is kept in best_times.txt: 8.0 s at the brutal level
+  ok    the mix is not silent when a chaser is near: the hunter 6.0 m off: level 0.1137, against 0.0000 with nothing about and 0.0000 before the run
+  ok    and it does not clip: largest sample 0.447
+  ok    what is to one side is louder on that side: to the right: left 0.1112, right 0.1161; to the left: left 0.1031, right 0.0949
+  ok    the sound device opens silent and pulls the mix: no bed: assets/ambience1.wav is not there; device open, silent
+  ok    a reprieve holds for its time, and then the hunter comes in: in at 4.3 s, the tell from 6.3 s, open at 9.3 s, the hunter in at 10.5 s, caught at 14.0 s
+  ok    its tell is a light that was not there and a sound that grows: the light at most 1.00 (none before the tell); the mix 0.1103 in the last third of the tell against 0.0780 in the second before it
+  ok    a player who stays on a ledge is sent a climber, and it comes up after them: out of reach 3.0 s when it was sent from 19.3 s away; caught by the crawler at 27.8 s (418 frames drawn)
+  ok    every frame drew
+selftest: passed (51 of 51 checks passed)
