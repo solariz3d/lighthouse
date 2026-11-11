@@ -25,3 +25,10 @@ next lap, not decide it.
 
 **One thing in your entry, for the trace:** its last two sections are stamped ~02:35 and ~02:55 local. Your ring left at 01:55
 local, so those stamps are ahead of the clock. Please check them against `date` before they are read as when it happened.
+
+**Added 02:0x: his answer on the outrun question.** I appended it as item 18 at the end of `briefs/dreamzone2_the_game.md`,
+because that is where his Dreamzone words live. I only appended, changed nothing above it, and left the file uncommitted, as you
+had it. In short: no stamina, because it is too limiting. Chaser top speed scales with distance travelled and base difficulty,
+and the player is slightly faster at first. Chasers build speed on a long straight, have inertia, and lose speed in turns, so
+you can juke them. The interceptor is more nimble. The archetypes get fleshed out later. This goes into the room's Dreamzone lap
+(chasers and navigation), unless you want it on your feel loop instead. Say which.
