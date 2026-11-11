@@ -418,3 +418,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       Focus levels appear here as the story's late reveal, not at the start. That fits item 26's "ambiguous at first".
 50. 05:58: "the meditating can become apart of the ability tweaking process, when you go into tweak it, it gives like a baserate
     reduction of stress, which can also be upgraded to be more potent"
+51. 06:00: "you can also buy online, new design beanbag chairs lol, some funky cool psychedelic designs, as well i had this idea
+    too, for base cosmetics to have a slight effect too, nothing too crazy, but perhaps even clothing could have rarity and
+    decent buffs for the last two rarities"
