@@ -377,3 +377,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       attributed.
 44. 05:27, finishing item 43's reference: "didnt finish, we stare into the infinite, searching for a creator, only to discover
     that the machinery has been running on its own. Repeating a purpose no one remembers."
+45. 05:35: "But see this mirrors my real life struggle to believe and have faith in something good. Which is the whole point of
+    carrying the virtous emotion throughout. But I do want the dark existential dread to carry the horror theme, we could take
+    some generic but good horror cliches that run adjacent to it all too for the normie crowd"
