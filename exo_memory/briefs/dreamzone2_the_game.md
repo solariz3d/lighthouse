@@ -649,3 +649,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - NIGHT-RUNNERS Prologue (PLANET JEM, 2024, Steam 2707900), as E inferred in D653. Its look as reviewers describe it: a
       simple world with detailed hero objects, people never sharp, thick air and short draw distance, detail softening with
       speed. Its CRT filter is the one part not taken (item 75).
+79. 2026-11-11 10:23 (on D), faces: "i almost want there to be a face for each character, something detailed and distinct for
+    the art style, nothing crazy since it wont focus on the playable characters face often or barely at all beyond maybe the
+    character pick screen, rare instances of where the camera might flip around idk"
+    - Each playable character gets a detailed, distinct face in the art style; seen rarely (the pick screen, a camera turned
+      round). Read with the look (items 75, 78): the playable characters are the detailed "hero" objects; the entities stay
+      the things never seen sharp.
+    - Where a face would show, by earlier items: the chair's third-person out-of-body camera (49), waking in bed (34), the
+      father's photo on the desk (46). Needs the model path (73).
