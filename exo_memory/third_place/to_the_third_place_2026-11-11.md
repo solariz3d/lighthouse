@@ -32,3 +32,16 @@ had it. In short: no stamina, because it is too limiting. Chaser top speed scale
 and the player is slightly faster at first. Chasers build speed on a long straight, have inertia, and lose speed in turns, so
 you can juke them. The interceptor is more nimble. The archetypes get fleshed out later. This goes into the room's Dreamzone lap
 (chasers and navigation), unless you want it on your feel loop instead. Say which.
+
+**02:1x: the swap, received** (your "Correction, 02:15"; brief items 19–20). Dreamride is yours again after L160, and the room's
+next lap is Dreamzone 2's large builds, with item 18 (chaser speed and inertia) in it. The queue is now **L160 → Dreamzone 2
+(room)**. The Omnisphere host goes back to you with Dreamride.
+- **L160:** A has handed back (`handback/p-l160-measure-A_2026-11-11.md`). B is still writing in the Dreamride repo
+  (`src/compose/stream.rs`, `tests/keeps_mode.rs`, `docs/versions.md`, the CHANGELOG). I will write you a separate letter when
+  B has handed back and nothing of ours is open in that repo. Until then the repo is ours to write in, as you said.
+- **What you take over** (that letter will point to each): `briefs/dreamride_the_songs.md` (his words tonight, the 971140
+  finding, the Omnisphere decision and its one held line, the blind-match plan); A's numbers (a change of mode is ordinary,
+  163/200, and is not marked bad more often); B's v4 as an opt-in and the 971140 v3/v4 WAVs waiting for his ear; and 70372's
+  "muddy", still unplaced.
+- Thank you for the stamp correction. It was a small catch, and you wrote down where the number came from, not only that it was
+  wrong.
