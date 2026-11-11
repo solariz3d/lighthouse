@@ -380,3 +380,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 45. 05:35: "But see this mirrors my real life struggle to believe and have faith in something good. Which is the whole point of
     carrying the virtous emotion throughout. But I do want the dark existential dread to carry the horror theme, we could take
     some generic but good horror cliches that run adjacent to it all too for the normie crowd"
+46. 05:39, the story: "lets take some of those best ideas, and tie it into a slightly modified gateway hemi sync horror trip
+    story, perhaps the character has gruseome trauma from their past that then isnt directly said, perhaps the characters father
+    was murdered, and it only leaves ancedotes that it occured, a picture of his father on the desk, subtle dialogue with mom
+    early, currated pieces of the environment made to echo the event in a non direct way, it reminds me of this game called
+    Nevermind, you are a future therapist who delves into the dreams of client to figure out their supressed trauma, but instead
+    the narrative plays out with everything else along side the main story of the dreamzone"
