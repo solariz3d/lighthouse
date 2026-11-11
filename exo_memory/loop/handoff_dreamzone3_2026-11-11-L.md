@@ -11,7 +11,9 @@ His order, 07:32 (see the lighthouse handoff). **Read first:**
   - Local: `C:\Users\zackn\Downloads\dreamzone-3`.
   - Its first commit, `d11ce9a`, is the Dreamzone 2 play folder byte for byte (256/256 files), plus tonight's laptop work.
   - `solariz3d/dreamzone-2` stays at `062d5c4`, untouched, as the reference.
-- **main on L:** **[filled in when B's revert landing rings: tip and suite counts]**.
+- **main on L: `39e03db`**, the revert of the stair-stall merge, naming A.
+  - `build.bat test` 10/10, `dz-gym --selftest` 26/26, `dz-world --selftest` 51/51.
+  - `launch.stamp` written 13:24:08Z; `-Check` says up to date (`handback/p-l161-land-B_2026-11-11.md`, "revert and stamp").
   - **Pushed: only `d11ce9a`.** Everything since is local, because he said "let me test it before pushing".
   - **D cannot pick this up until it is pushed: his call.**
 - **His desktop shortcuts on L** ("Dreamzone 2 World" and "Dreamzone 2 Gym") now open dreamzone-3; the `.lnk.before-l161` backups are
