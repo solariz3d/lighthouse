@@ -7,6 +7,12 @@ The repo on L is `C:\Users\zackn\Downloads\dreamride`. Read its `HANDOFF.md` fir
 
 - 2026-11-11 01:4x, with a picture of the saved file `stream_s971140_1-4`: "lets work on dreamride right now, i have a whole bunch of seeds saved as good and bad to look through, the last seed, there was something real and good going on there, but the melodies seemed to get too muddy overtime, as well, [picture] this seed is very good and I like the main structure of the song, but sometime during it, it pitches down a little bit and ruins the coherent feel of the pitch, if you look through that seed you will see towards the end where i rated the segment bad"
 
+- 2026-11-11 01:4x, after L160 went out: "i like the sounds as it is, but I wonder if we could somehow use different instrumentation, say, through our omnisphere 3, since the program wont be given to others, we can use the omnisphere 3 sounds"
+  - This part-answers the handoff's open "writing or sound?" question (11-05 §1): he likes the sound as it is, and wants
+    other instruments as an option.
+  - Checked on L: `C:\Program Files\Common Files\VST3\Omnisphere.vst3` (dated 2026-05-23), and the VST2
+    `C:\Program Files\Steinberg\VSTPlugins\Omnisphere.dll`.
+
 ## Tonight's marks (01:27 to 01:40 local, from the app; checked with `ls -t`)
 
 - Good (in `examples\`): 539681 at stages 1–3; 963135 at 4–7; 971140 at 1–2, 1–4 and 2–5; 70372 at 5–8.
