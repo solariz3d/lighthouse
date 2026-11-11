@@ -664,3 +664,12 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       in HANDOFF.md's controls as "M map".
     - His ruling: the player has no map. The M key goes. (The librarian's reading: the walk graph itself stays, since the
       chasers, the generator and the planned audio use it; only the player-facing view goes.)
+81. 2026-11-11 10:54 (on D), sprint speed: "I almost want the top speed of sprint to be a little faster, peraps tapering off at
+    10ms when holding it down for longer and taking good lines, then upgrading it from there makes you a speed demon, but we
+    have to make sure that we also slightly make all mobs quicker too to compensate"
+    - Today (dreamzone-3 e656a9c, `sim/params.h:35-40`): sprint reaches 7.0 m/s in 0.6 s, then climbs to a peak of 8.75 m/s
+      over 8 s of unbroken sprinting. His ask: that peak about 10 m/s, earned by holding the sprint and taking good lines;
+      upgrades raise it further. The chasers' own reference speed (7 m/s, `chase/SPEED_MODEL.md`) rises to match, keeping his
+      10% start advantage (item 28 via A, about 0.91 hunter-to-player at 30 s).
+    - The generator sizes voids from the base sprint (7.0, `gen/src/gen.h:106`), not the peak, so raising only the peak
+      leaves every seed's world unchanged.
