@@ -761,3 +761,13 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       exception: it is always coming (item 65).
     - Ties to: item 65 (only the lesser ones hear; the hunter always knows), D654 audio step 3 (they hear along the walk graph,
       what they hear he can hear coming), item 64 (he was cut off from the front by a pack that heard him).
+93. 2026-11-11 16:29 (on D), the reprieves' shapes: "lots of the reprieval zones i have found are more of the short ladder climb
+    down, which is a fine mechanic, but its too short and doesnt save as much time as u think. Perhaps it could be connected to
+    those long hallways, like, you know how those long hallways create a good gap, it doesnt have to be every time, but perhaps we
+    can expand the shapes the reprieval zones can take, even combining the pieces together to form unique passage ways that can
+    spawn in built off of currated designed that can be mirrored and interchangably linked to form a longer passage, you know
+    what  imean?"
+    - Today most reprieves he meets are a short ladder climb down: fine, but too short to buy much time.
+    - Wanted: more reprieve shapes; some joined to the long hallways that open a gap; and reprieve passages built from curated,
+      hand-designed pieces that can be mirrored and linked interchangeably into longer, unique passages. Not every time.
+    - Read with items 54-56 (a reprieve erodes 10 s after first entry) and the variety finding of item 91.
