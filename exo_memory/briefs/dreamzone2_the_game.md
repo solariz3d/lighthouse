@@ -789,3 +789,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     librarian's pick).
     - The reprieves / safe zones are called **the Park** in player-facing text and design from now on. Erosion reads as the
       Park dissolving. Code identifiers may keep "reprieve" internally.
+96. 2026-11-11 16:41 (on D), on the D661 lore page: "everything for the lore sounds decent except the cast, the kid and the writer
+    is good, but what about a third, russian operator trained by the kgb, his room is like this military barracks"
+    - The lore ties are kept. The cast: the kid and the writer stay; the night nurse, the analyst and the two DLC proposals are
+      not taken.
+    - The third character: a Russian operator trained by the KGB; his room is like a military barracks.
