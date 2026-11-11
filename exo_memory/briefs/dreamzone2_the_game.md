@@ -891,3 +891,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The librarian's reading of what already points there (17:4x): the hunter was designed as the kid's own outline grown wrong
       (E's chaser sheet section 1, the hood and hoodie cut of his own); item 62 named the top virtue "Recognition" and asked why
       it cannot last; the dreamzone is built from the dreamer's own psyche (item 26, Monroe's Belief System Territories).
+108. 2026-11-11 17:49 (on D), on the hoodie and the dark one's name: "father is dead is still a good plotline, i dont get the one that
+    follows"
+    - The father's death stays in the kid's story (items 46-47, reopened at 102, now kept): the hoodie is his dead father's, the
+      darned cuff his mother's hand. E's "gone, not dead" option (D667 section 10) is not taken. How the death sits beside The
+      Signal is for E to weave (the bible's sections 6, 7 and 10 read again).
+    - "the one that follows" as the dark one's name did not land with him; the librarian explains it and offers others (17:5x).
