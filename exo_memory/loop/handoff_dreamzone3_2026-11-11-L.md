@@ -41,8 +41,22 @@ His order, 07:32 (see the lighthouse handoff). **Read first:**
 - `l162-stair-stall` e2dc31b. B's bot-only fix: PlayGraph::nearest no longer snaps through a wall. Landed, then **reverted on main**
   (39e03db), because it turned `proof_tests.cpp:159` red when it met A's levers. **Carried to A.**
 - `l162-chase` abe8237. Close-range direct pursuit, off by default. It did not make a juke pay (1.07×). Kept as a dial he could feel.
-- **L165,** the render's grain and ghost trails (item 63). C's diagnosis is partial:
-  `handback/p-l165-render-C_2026-11-11.md` **[when C rings]**.
+- **L165,** the render's grain and ghost trails (item 63). C's diagnosis is **partial**: a code reading, with no capture taken
+  (`handback/p-l165-render-C_2026-11-11.md`).
+  - **Grain:** every lit term but emission is one random sample a pixel a frame. Nothing smooths it across neighbouring pixels. The
+    32-frame history is cut on fast camera moves and on newly seen surfaces, so raw noise shows exactly when he is moving.
+  - **Ghosts:** **no instance writes motion vectors.** History and TAA reproject by the camera alone, so chasers, the body's limbs and
+    their shadows trail for up to 32 frames.
+  - **Likely made worse tonight by the body** (inferred): the hand light's 0.30 m disc sits inside the right shoulder's reach, so the
+    swinging arm shadows the light he carries.
+  - C's part-2 order (registered, not built):
+    1. move the hand light clear of the body, or mask the body out of its shadow rays;
+    2. per-instance motion vectors;
+    3. a reactive or disocclusion term in TAA;
+    4. a guided spatial pass.
+  - An unbuilt burst-capture mode sits uncommitted in the detached worktree `Downloads\dreamzone-3-c-l165`.
+- **His run at 07:37** (brief item 64, read from the run record and replayed): brutal, seed 1, caught at 120.15 s by a pack that
+  wandered ahead of him and heard him sprinting. The hunter never closed.
 - Worktrees on L, made by git, each its own folder under `Downloads\` (`dreamzone-3-a-l161`, `-c-l161`, `-c-l162`, `dz3-wt-l161-gen`,
   `dz3-wt-l162-light`, and others). Clean them only after the branches they hold are landed or dropped.
 
