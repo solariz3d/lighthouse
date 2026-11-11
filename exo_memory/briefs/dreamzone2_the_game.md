@@ -386,3 +386,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     early, currated pieces of the environment made to echo the event in a non direct way, it reminds me of this game called
     Nevermind, you are a future therapist who delves into the dreams of client to figure out their supressed trauma, but instead
     the narrative plays out with everything else along side the main story of the dreamzone"
+47. 05:42: "yesss trinkets could be lore items, not just some mystical object, but something with relevance, example, Dads watch,
+    could be  resonant item, even though dad is gone, he trace lives on, it could turn out that the god entity was the embodied
+    for the love he had for his father, or it could turn out to be him in a way."
