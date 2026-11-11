@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 700" width="1080" height="700" font-family="Helvetica, Arial, sans-serif">
+  <!-- D659 kid redesign 2: his OWN regular clothes, three directions for his pick (pane E). Same body (BodyBuild 1.80 m, eye 1.65), 1 m = 200 px, ground y=600. Invented designs; no real person, brand, logo or existing character. -->
+  <rect width="1080" height="700" fill="#efece6"/>
+  <text x="20" y="30" font-size="19" font-weight="bold" fill="#1d1d1d">The kid, his own clothes: three base outfits (pick one). No buff. Spring 2005.</text>
+  <text x="20" y="50" font-size="12" fill="#555">Each keeps: the knee his mother patched (pale stitch), the pale band on his left wrist (his father's watch, gone since his first run), the key on a cord.</text>
+
+  <g font-size="14" fill="#1d1d1d">
+    <text x="60" y="88" font-weight="bold">1 · LOW AND WIDE</text>
+    <text x="60" y="106" font-size="12" fill="#444">Beanie, a tee two sizes big, wide carpenter</text>
+    <text x="60" y="121" font-size="12" fill="#444">jeans, a wallet chain: a skater's shape.</text>
+    <text x="410" y="88" font-weight="bold">2 · ZIPPED UP</text>
+    <text x="410" y="106" font-size="12" fill="#444">A track jacket zipped to the chin, cargo</text>
+    <text x="410" y="121" font-size="12" fill="#444">pants: built to run, hiding in his collar.</text>
+    <text x="760" y="88" font-weight="bold">3 · OPEN FLANNEL</text>
+    <text x="760" y="106" font-size="12" fill="#444">A long open flannel over a thermal, boots,</text>
+    <text x="760" y="121" font-size="12" fill="#444">fingerless gloves: it flies behind him.</text>
+  </g>
+  <line x1="20" y1="600" x2="1060" y2="600" stroke="#aaa"/>
+
+  <!-- ===== 1 LOW AND WIDE ===== -->
+  <g transform="translate(180,600)">
+    <!-- wide carpenter jeans, stone wash, hammer loop -->
+    <path d="M-40,-196 L-56,-12 L-14,-12 L-4,-150 L4,-150 L14,-12 L56,-12 L40,-196 Z" fill="#6f84a3"/>
+    <rect x="34" y="-150" width="6" height="22" fill="#5b6f8f"/>
+    <!-- patched knee (his mother's stitch) -->
+    <rect x="-48" y="-66" width="24" height="22" fill="#8a9cb8"/>
+    <rect x="-48" y="-66" width="24" height="22" fill="none" stroke="#e8e2d2" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <!-- wallet chain -->
+    <path d="M28,-192 Q44,-150 30,-118" fill="none" stroke="#b9bcc0" stroke-width="2.5" stroke-dasharray="3 2"/>
+    <!-- chunky skate shoes -->
+    <path d="M-62,-20 L-12,-20 L-10,0 L-68,0 Z" fill="#2b2e33"/><path d="M12,-20 L62,-20 L68,0 L10,0 Z" fill="#2b2e33"/>
+    <rect x="-68" y="-5" width="58" height="5" fill="#e8e4da"/><rect x="10" y="-5" width="58" height="5" fill="#e8e4da"/>
+    <!-- tee two sizes big: wide, to the thigh, sleeves to the elbow -->
+    <path d="M-50,-292 L50,-292 L84,-262 L70,-236 L58,-246 L60,-176 L-60,-176 L-58,-246 L-70,-236 L-84,-262 Z" fill="#c76b2e"/>
+    <!-- his own drawing on the tee: a moth, in black marker (invented) -->
+    <path d="M0,-240 l-18,-10 q-8,10 0,18 l18,-6 l18,6 q8,-8 0,-18 Z" fill="none" stroke="#1d1d1d" stroke-width="2"/>
+    <line x1="0" y1="-246" x2="0" y2="-226" stroke="#1d1d1d" stroke-width="2"/>
+    <!-- forearms, the pale band (his left = viewer right) -->
+    <path d="M-70,-236 L-58,-246 L-62,-150 L-76,-152 Z" fill="#c9a07e"/><path d="M70,-236 L58,-246 L62,-150 L76,-152 Z" fill="#c9a07e"/>
+    <rect x="61" y="-168" width="15" height="6" fill="#e2c7ad"/>
+    <!-- key cord -->
+    <path d="M-10,-292 Q0,-262 10,-292" fill="none" stroke="#2a3550" stroke-width="2"/>
+    <!-- head, beanie low -->
+    <rect x="-10" y="-308" width="20" height="16" fill="#c9a07e"/>
+    <ellipse cx="0" cy="-330" rx="21" ry="26" fill="#c9a07e"/>
+    <path d="M-24,-334 Q-24,-366 0,-368 Q24,-366 24,-334 Z" fill="#3c4a3a"/>
+    <rect x="-25" y="-340" width="50" height="8" fill="#33402f"/>
+    <path d="M-24,-332 L-26,-318 L-18,-326 Z" fill="#3b2a20"/><path d="M24,-332 L26,-318 L18,-326 Z" fill="#3b2a20"/>
+  </g>
+
+  <!-- ===== 2 ZIPPED UP ===== -->
+  <g transform="translate(530,600)">
+    <!-- cargo pants, olive, side pockets -->
+    <path d="M-32,-196 L-38,-14 L-12,-14 L-4,-150 L4,-150 L12,-14 L38,-14 L32,-196 Z" fill="#5d5f45"/>
+    <rect x="-40" y="-120" width="14" height="26" fill="#52543c"/><rect x="26" y="-120" width="14" height="26" fill="#52543c"/>
+    <rect x="-36" y="-70" width="20" height="20" fill="#6d6f53"/>
+    <rect x="-36" y="-70" width="20" height="20" fill="none" stroke="#e8e2d2" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <!-- running shoes, grey with one colour flash (no real brand marks) -->
+    <path d="M-46,-18 L-10,-18 L-8,0 L-52,0 Z" fill="#8f9399"/><path d="M10,-18 L46,-18 L52,0 L8,0 Z" fill="#8f9399"/>
+    <path d="M-40,-12 L-20,-14" stroke="#d9a520" stroke-width="3"/><path d="M20,-14 L40,-12" stroke="#d9a520" stroke-width="3"/>
+    <!-- track jacket: navy, mustard chest panel, collar zipped to the chin -->
+    <path d="M-46,-296 L46,-296 L54,-190 L-54,-190 Z" fill="#23304d"/>
+    <path d="M-46,-268 L46,-268 L47,-246 L-47,-246 Z" fill="#d9a520"/>
+    <line x1="0" y1="-312" x2="0" y2="-190" stroke="#c9ccd1" stroke-width="2"/>
+    <path d="M-48,-292 L-66,-180 L-70,-134 L-56,-132 L-52,-180 Z" fill="#23304d"/><path d="M48,-292 L66,-180 L70,-134 L56,-132 L52,-180 Z" fill="#23304d"/>
+    <rect x="-71" y="-140" width="16" height="7" fill="#1b2540"/><rect x="55" y="-140" width="16" height="7" fill="#1b2540"/>
+    <!-- high collar up over the chin -->
+    <path d="M-22,-316 L22,-316 L24,-292 L-24,-292 Z" fill="#23304d"/>
+    <!-- head, hair grown out, chin in the collar -->
+    <ellipse cx="0" cy="-338" rx="21" ry="25" fill="#c9a07e"/>
+    <path d="M-24,-342 Q-26,-370 0,-370 Q26,-370 24,-342 L18,-354 Q6,-358 -8,-350 Q-18,-352 -22,-330 Z" fill="#3b2a20"/>
+    <ellipse cx="-22" cy="-338" rx="4" ry="7" fill="#c09474"/><ellipse cx="22" cy="-338" rx="4" ry="7" fill="#c09474"/>
+    <!-- earbud wire from the collar -->
+    <path d="M-18,-330 Q-30,-300 -14,-270" fill="none" stroke="#e8e4da" stroke-width="1.5"/>
+  </g>
+
+  <!-- ===== 3 OPEN FLANNEL ===== -->
+  <g transform="translate(880,600)">
+    <!-- dark jeans, patched knee -->
+    <path d="M-30,-190 L-34,-14 L-12,-14 L-4,-150 L4,-150 L12,-14 L34,-14 L30,-190 Z" fill="#26324a"/>
+    <rect x="14" y="-66" width="20" height="20" fill="#3a4866"/>
+    <rect x="14" y="-66" width="20" height="20" fill="none" stroke="#e8e2d2" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <!-- worn work boots -->
+    <path d="M-44,-34 L-12,-34 L-10,0 L-50,0 Z" fill="#6b4a2e"/><path d="M12,-34 L44,-34 L50,0 L10,0 Z" fill="#6b4a2e"/>
+    <rect x="-50" y="-5" width="40" height="5" fill="#2b2e33"/><rect x="10" y="-5" width="40" height="5" fill="#2b2e33"/>
+    <!-- thermal underneath, oatmeal -->
+    <path d="M-40,-292 L40,-292 L42,-186 L-42,-186 Z" fill="#d8ccb4"/>
+    <!-- open flannel: green and navy plaid, long, flaring back -->
+    <g>
+      <path d="M-46,-296 L-14,-296 L-18,-160 L-62,-150 Z" fill="#2f5a46"/>
+      <path d="M46,-296 L14,-296 L18,-160 L62,-150 Z" fill="#2f5a46"/>
+      <g stroke="#1f2f4a" stroke-width="4" opacity="0.8">
+        <line x1="-58" y1="-270" x2="-16" y2="-270"/><line x1="-60" y1="-220" x2="-17" y2="-220"/><line x1="-62" y1="-175" x2="-18" y2="-175"/>
+        <line x1="16" y1="-270" x2="58" y2="-270"/><line x1="17" y1="-220" x2="60" y2="-220"/><line x1="18" y1="-175" x2="62" y2="-175"/>
+        <line x1="-36" y1="-296" x2="-40" y2="-155"/><line x1="36" y1="-296" x2="40" y2="-155"/>
+      </g>
+      <!-- sleeves rolled to the forearm -->
+      <path d="M-48,-292 L-66,-210 L-54,-206 L-40,-270 Z" fill="#2f5a46"/><path d="M48,-292 L66,-210 L54,-206 L40,-270 Z" fill="#2f5a46"/>
+    </g>
+    <!-- forearms (thermal sleeve) and fingerless gloves -->
+    <path d="M-66,-210 L-54,-206 L-58,-160 L-70,-162 Z" fill="#d8ccb4"/><path d="M66,-210 L54,-206 L58,-160 L70,-162 Z" fill="#d8ccb4"/>
+    <path d="M-70,-162 L-58,-160 L-60,-138 L-72,-140 Z" fill="#2b2e33"/><path d="M70,-162 L58,-160 L60,-138 L72,-140 Z" fill="#2b2e33"/>
+    <!-- the pale band shows between thermal cuff and glove (his left = viewer right) -->
+    <rect x="57" y="-168" width="13" height="5" fill="#e2c7ad"/>
+    <!-- key cord -->
+    <path d="M-10,-292 Q0,-262 10,-292" fill="none" stroke="#2a3550" stroke-width="2"/>
+    <!-- head -->
+    <rect x="-10" y="-308" width="20" height="16" fill="#c9a07e"/>
+    <ellipse cx="0" cy="-332" rx="21" ry="26" fill="#c9a07e"/>
+    <path d="M-24,-336 Q-26,-364 0,-364 Q26,-364 24,-336 L18,-348 Q6,-352 -8,-344 Q-18,-346 -22,-326 Z" fill="#3b2a20"/>
+  </g>
+
+  <g font-size="11" fill="#333">
+    <text x="20" y="632" font-weight="bold">Slots as before (cosmetic, no buffs): Hair · Head · Top · Outer · Over · Legs · Shoes · Neck. Left wrist reserved (the watch trinket).</text>
+    <text x="20" y="650">The father's hoodie is NOT here: it is a late-game unlock for the Outer slot (the story bible says how it is earned). It also gives no buff.</text>
+  </g>
+  <text x="20" y="690" font-size="10" fill="#777">Invented designs: no real person, brand, logo or existing character. Proportion and colour guides for A's Blender passes, not finished art.</text>
+</svg>
