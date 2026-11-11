@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 800" width="1500" height="800" font-family="Helvetica, Arial, sans-serif">
+  <!-- D659 chasers lineup (pane E). Scale: 1 m = 150 px. Row 1 clear, row 2 the same shapes in haze, as the player meets them. Invented designs. -->
+  <defs>
+    <filter id="haze" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter>
+    <linearGradient id="fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f8a80"/><stop offset="1" stop-color="#5d5952"/></linearGradient>
+    <radialGradient id="seam" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#2a1640"/><stop offset="0.6" stop-color="#0b0a14"/><stop offset="1" stop-color="#0b0a14" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1500" height="800" fill="#f4f2ee"/>
+  <text x="20" y="28" font-size="18" font-weight="bold" fill="#222">The chasers, against the kid (1.80 m): silhouettes at scale, clear and in haze</text>
+  <text x="20" y="46" font-size="12" fill="#555">1 m = 150 px. Each shows the void seam (dark violet) where a face would be: the one tell they share (lore T1/T10).</text>
+
+  <!-- ROW 1: ground y=380 -->
+  <g id="row">
+    <line x1="20" y1="380" x2="1480" y2="380" stroke="#999"/>
+    <!-- the kid, for scale -->
+    <g transform="translate(90,380)">
+      <path d="M-14,-270 a22,24 0 1,1 28,0 L18,-228 L42,-206 L46,-90 L30,-88 L24,-150 L22,-60 L18,0 L4,0 L0,-120 L-4,0 L-18,0 L-22,-60 L-24,-150 L-30,-88 L-46,-90 L-42,-206 L-18,-228 Z" fill="#3a3d42"/>
+      <text x="-30" y="22" font-size="12" fill="#333">kid 1.80</text>
+    </g>
+    <!-- HUNTER 2.15 m: hood up, peak, high hunched shoulders, long arms -->
+    <g transform="translate(260,380)">
+      <path d="M0,-322 L18,-296 L22,-268 L50,-250 L60,-200 L66,-120 L70,-40 L58,-36 L48,-118 L40,-180 L30,-120 L24,0 L8,0 L2,-110 L-4,0 L-20,0 L-28,-120 L-38,-180 L-46,-118 L-56,-36 L-68,-40 L-64,-120 L-58,-200 L-48,-250 L-20,-268 L-16,-296 Z" fill="#2b2d31"/>
+      <ellipse cx="2" cy="-286" rx="9" ry="12" fill="url(#seam)"/>
+      <text x="-40" y="22" font-size="12" fill="#333">hunter ~2.15</text>
+    </g>
+    <!-- SPRINTER: low, torso near horizontal, long legs, 2.2 m long -->
+    <g transform="translate(520,380)">
+      <path d="M-150,-170 L-110,-182 L40,-200 L120,-196 L160,-186 L150,-172 L60,-170 L40,-150 L70,-80 L110,0 L92,0 L50,-70 L20,-120 L-10,-130 L-60,-80 L-90,0 L-108,0 L-84,-90 L-60,-150 L-120,-160 Z" fill="#5a5651"/>
+      <path d="M40,-196 L-40,-150 L-70,-120" fill="none" stroke="#5a5651" stroke-width="8"/>
+      <ellipse cx="150" cy="-184" rx="10" ry="8" fill="url(#seam)"/>
+      <text x="-60" y="22" font-size="12" fill="#333">sprinter, 1.35 tall, 2.2 long</text>
+    </g>
+    <!-- INTERCEPTOR: broad, low, side-on, arms out wide, head turned -->
+    <g transform="translate(830,380)">
+      <path d="M-10,-250 a18,18 0 1,1 26,8 L40,-220 L100,-200 L104,-188 L44,-196 L40,-120 L50,0 L32,0 L20,-100 L4,-100 L-8,0 L-26,0 L-18,-120 L-30,-196 L-96,-186 L-98,-198 L-34,-220 Z" fill="#3f3b35"/>
+      <ellipse cx="14" cy="-246" rx="7" ry="10" fill="url(#seam)"/>
+      <text x="-50" y="22" font-size="12" fill="#333">interceptor ~1.70, 1.4 wide</text>
+    </g>
+    <!-- PACK: three alike, 1.25 m, hunched -->
+    <g transform="translate(1030,380)">
+      <g id="pk"><path d="M-6,-186 a14,14 0 1,1 20,4 L22,-160 L30,-110 L26,-60 L20,0 L8,0 L4,-60 L-4,0 L-16,0 L-16,-70 L-24,-110 L-14,-160 Z" fill="#4a4844"/><ellipse cx="6" cy="-180" rx="5" ry="7" fill="url(#seam)"/></g>
+      <use href="#pk" x="60"/><use href="#pk" x="120"/>
+      <text x="-10" y="22" font-size="12" fill="#333">pack, 3 × ~1.25</text>
+    </g>
+    <!-- CHARGER: low heavy, shoulders above head -->
+    <g transform="translate(1340,380)">
+      <path d="M-70,-200 L-30,-230 L30,-230 L74,-200 L90,-120 L84,-40 L64,-36 L60,-110 L46,-90 L40,0 L18,0 L10,-80 L-10,-80 L-18,0 L-40,0 L-46,-90 L-60,-110 L-64,-36 L-84,-40 L-90,-120 Z" fill="#33302c"/>
+      <ellipse cx="0" cy="-196" rx="16" ry="10" fill="url(#seam)"/>
+      <text x="-60" y="22" font-size="12" fill="#333">charger ~1.55, 1.2 wide</text>
+    </g>
+  </g>
+
+  <!-- ROW 2: the same in haze -->
+  <rect x="0" y="420" width="1500" height="380" fill="url(#fog)"/>
+  <text x="20" y="444" font-size="12" fill="#e8e4dc">In haze at 15-25 m, as the player first meets them: only the silhouette and the seam survive.</text>
+  <g transform="translate(0,370)" filter="url(#haze)" opacity="0.78">
+    <use href="#row"/>
+  </g>
+  <text x="20" y="790" font-size="10" fill="#d8d4cc">Invented designs, not based on any existing creature or character. Shapes are proportion guides for the blockout pass, not finished art.</text>
+</svg>

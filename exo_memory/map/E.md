@@ -2967,3 +2967,13 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-11 13:1x local (D) · D659 the kid, character design and A's reference sheet → `exo_memory/handback/p-d659-kid-E_2026-11-11.md` (+ `_sheet.svg`)
 - He is 16 in spring 2005 and 1.80 m tall. That height is BodyBuild's, so the camera never moves: tall for his age, lanky, grown in the last year. Every echo of the father is unsaid: a man's charcoal hoodie too big for him with a cuff his mother darned, a pale band on the left wrist where the watch trinket later appears, and a house key on a cord. Because the first-person view lives on his cuffs and hands, they get the most detail. Materials are Poly Haven CC0 (jersey_melange, denim_fabric, jogging_melange, scuba_suede).
 - **Carry:** BodyBuild's numbers don't close standing straight (pelvis 0.92 minus 0.91 of leg leaves the ankle at 0.01, not 0.07); read the rest pose before fitting.
+
+## 2026-11-11 13:3x local (D) · D659 the chasers' designs → `exo_memory/handback/p-d659-chasers-E_2026-11-11.md` (+ `_lineup.svg`)
+- Five sheets, each built from its chase row outward:
+  - the hunter is the kid's own hooded outline, grown 35 cm too tall; it leans visibly on a straight and swings wide at corners;
+  - the sprinter is a flat, car-length body that slides at corners and scrabbles on stairs;
+  - the interceptor's head is turned to where you are going, and its 0.8 s commit shows as a pose;
+  - the pack's three heads snap together, so shared senses are visible;
+  - the charger's wind-up lowers it and raises its shoulders, and it stays stuck in the wall for the stun.
+- All five share one tell, a soft violet seam of the void where a face would be, which the death reveal opens. The blurred lineup shows each silhouette stays distinct in haze.
+- **Carry:** design a chaser's motion from its row's numbers (commit_s, turn circle, wind-up); a number the player can see is a number they can learn to beat.
