@@ -657,3 +657,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       the things never seen sharp.
     - Where a face would show, by earlier items: the chair's third-person out-of-body camera (49), waking in bed (34), the
       father's photo on the desk (46). Needs the model path (73).
+80. 2026-11-11 10:28 (on D), after the librarian said "room map" for the generator's layout: "remove map, you shouldnt have or
+    need one, didnt ask for it"
+    - What exists (dreamzone-3 39e03db): M toggles `debug_map`, a view of the walk graph of the player's storey
+      (`game/world/world_app.cpp:264,284`; `world_settings.h:51`), with chasers' routes when `debug_chasers` is on. It is listed
+      in HANDOFF.md's controls as "M map".
+    - His ruling: the player has no map. The M key goes. (The librarian's reading: the walk graph itself stays, since the
+      chasers, the generator and the planned audio use it; only the player-facing view goes.)
