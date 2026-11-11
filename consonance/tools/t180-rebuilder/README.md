@@ -43,3 +43,15 @@ Then copy `Rebuilder.cs` and `T-180 Rebuilder.exe` into `%LOCALAPPDATA%\T-180 Re
   ```
 
 The hand-back with the proving check is `exo_memory/handback/p-l147-C_2026-11-07.md`.
+
+## What changed on 2026-11-11 (L158)
+- **The bug:** after any build `src-tauri/Cargo.toml` is LF on disk while a `core.autocrlf=true` checkout recorded it CRLF. Git lists it as changed though its bytes equal the blob, so `git pull --ff-only` refused whenever a release touched it, and the click opened the old build without saying why (`exo_memory/loop/stall_trace_rebuilder_pull_cargo_toml_2026-11-11.md`).
+- **The fix, here:** before the pull, `SettleStaleRecords` runs `git diff --quiet HEAD` (it compares content through git's filters, not stamps); when nothing differs it runs `git add -u`, which stages nothing and only re-records the stamps. A real change (the diff says it differs) is left alone, the pull stops, and the run says plainly which files: "There are changes of your own in the checkout, so it was not updated: <files>. They were not touched."
+- **The fix, in t180:** `.gitattributes` checks `src-tauri/Cargo.toml` and `Cargo.lock` out with LF, so a build's rewrite leaves nothing for git to list.
+- **A check-only switch** runs the update step alone on any checkout, and builds and launches nothing:
+
+  ```
+  "T-180 Rebuilder.exe" --pull-only <checkout folder>
+  ```
+
+The hand-back with the red/green check is `exo_memory/handback/p-l158-stall-A_2026-11-11.md`.

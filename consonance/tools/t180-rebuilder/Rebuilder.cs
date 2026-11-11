@@ -11,7 +11,7 @@ using System.Reflection;
 
 class Rebuilder
 {
-    const string Repo = @"C:\Users\zackn\Downloads\t180-track-builder";
+    static string Repo = @"C:\Users\zackn\Downloads\t180-track-builder";   // only the check-only --pull-only switch below ever points it elsewhere
     static readonly string AppExe = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"T-180 Track Builder\t180-track-builder.exe");
     static readonly string Stamp = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"T-180 Rebuilder\built-head.txt");
     // the desktop shortcut the installer rewrites (DesktopDirectory follows a OneDrive-redirected desktop)
@@ -28,6 +28,23 @@ class Rebuilder
         p.Start(); p.BeginOutputReadLine(); p.BeginErrorReadLine(); p.WaitForExit();
         output = sb.ToString();
         return p.ExitCode;
+    }
+
+    // L158 (2026-11-11): after any build the manifest src-tauri/Cargo.toml is LF on disk while git's record of it (made at a CRLF checkout, core.autocrlf=true) is
+    // stale, so git lists it as changed though its bytes equal the blob, and `git pull --ff-only` refuses whenever upstream touches it (every release). The click
+    // then opened the OLD build without saying why. Before the pull: when NOTHING differs from HEAD once git's filters are applied (`git diff --quiet HEAD` says
+    // so, and compares content, not stamps), re-record the stamps with `git add -u`, which then stages nothing. A REAL change (diff says it differs) is left alone.
+    static void SettleStaleRecords()
+    {
+        string o;
+        if (Run("git", "diff --quiet HEAD", out o, false) == 0) Run("git", "add -u", out o, false);
+    }
+
+    /// The tracked files whose content differs from HEAD (git's own warnings dropped), comma-separated; empty when there are none.
+    static string OwnChanges()
+    {
+        string o; Run("git", "diff --name-only HEAD", out o, false);
+        return string.Join(", ", o.Split('\n').Select(l => l.Trim()).Where(l => l.Length > 0 && !l.StartsWith("warning:")));
     }
 
     static void Launch()
@@ -111,12 +128,34 @@ class Rebuilder
             return ok ? 0 : 2;
         }
 
+        // a check only (L158): the update step alone, on any checkout. Settles stale records, pulls, prints what happened and the head. Builds and launches nothing.
+        //   "T-180 Rebuilder.exe" --pull-only <checkout folder>
+        if (args.Length == 2 && args[0] == "--pull-only")
+        {
+            Repo = args[1];
+            string po;
+            SettleStaleRecords();
+            int rc = Run("git", "pull --ff-only", out po);
+            if (rc != 0)
+            {
+                string real = OwnChanges();
+                Console.WriteLine(real.Length > 0 ? "STOPPED: changes of your own in the checkout: " + real : "STOPPED: the update could not be applied (offline, or other).");
+            }
+            Run("git", "rev-parse --short HEAD", out po, false);
+            Console.WriteLine("pull rc=" + rc + " head=" + po.Trim());
+            return rc == 0 ? 0 : 3;
+        }
+
         Console.Title = "T-180 Rebuilder";
         string o;
         Console.WriteLine("Checking GitHub for a newer version...");
+        SettleStaleRecords();
         if (Run("git", "pull --ff-only", out o) != 0)
         {
-            Console.WriteLine("Could not update (offline, or local changes). Opening the installed version.");
+            string real = OwnChanges();
+            if (real.Length > 0) Note("There are changes of your own in the checkout, so it was not updated: " + real + ". They were not touched.");
+            else Console.WriteLine("Could not update (offline, or the update could not be applied).");
+            Console.WriteLine("Opening the installed version.");
             Launch(); System.Threading.Thread.Sleep(3000); return 0;
         }
         Run("git", "rev-parse HEAD", out o, false);
