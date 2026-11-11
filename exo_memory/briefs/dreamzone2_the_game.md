@@ -486,3 +486,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       - Base chance 25%; trinkets and quirks add up to +45% (75% total); the range is 1–95%.
     - Afflictions, from the librarian's memory, not on that page: Abusive, Fearful, Hopeless, Irrational, Masochistic,
       Paranoid, Selfish. An affliction is cured in the dungeon by bringing stress to 0, and it does not clear on leaving.
+60. 06:55, the top virtue: "I want the best virtue to be simple Resonant, it is ultra rare out of the bunch, so base you need to
+    hit the 25% first, then it will be like 1-3% trigger on top of that, it gives all buffs for the rest of the run and your
+    stress cannot increase, this is the dragon players will chase. Even 1-3% might be lots like 1-2 maybe"
+    - So the families get renamed. The 25% good roll gives one of the virtues. Within it, a further roll of about 1–2% gives
+      **Resonant** itself: every virtue's buff for the rest of the run, and stress can no longer rise. The rest of the good roll
+      is the lesser virtues. The odds of Resonant per full-stress event are 0.25 × 0.01–0.02 = 0.25–0.5%.
