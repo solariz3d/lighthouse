@@ -569,3 +569,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Two levels: the character's level inside a run, and a GLOBAL level carrying all XP across runs and characters. The
       strongest unlocks (items, abilities, better trinkets, upgrades, cosmetics, new characters) sit behind global level caps.
     - His own weighting: "the most important part to get right is how the narratives intertwine".
+69. 2026-11-11 08:59 (on D), answering the librarian's two questions from item 68 (global XP after a lost run; where energy
+    comes from): "1. you could gain global XP for losing but it would be crumbs compared to winning. 2. Energy comes from
+    succesful escapes and "chests". The one part I cant figure out bc it doesnt make sense and could easily just be ignored as a
+    gameplay mechanic, but how tf does the character get money from doing tricks in a dream xDDdD"
+    - A run lost before the timer still adds a little to the global level ("crumbs"); a won run adds the real amount.
+    - Energy comes from successful escapes (runs that survive the timer) and from the containers.
+    - Open, his: why a dream pays cash. He allows it may simply be a game mechanic left unexplained.
