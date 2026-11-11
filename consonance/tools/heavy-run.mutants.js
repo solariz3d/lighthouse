@@ -99,6 +99,26 @@ const MUTANTS = [
   ['race F1: an unreadable moved lock is thrown away (a claim caught before its write: two runners in one slot)', SRC, 'if (moved && (moved.unreadable ? movedAge() <= UNREADABLE_GRACE_MS : moved.token !== h.token)) {', 'if (moved && !moved.unreadable && moved.token !== h.token) {'],
   ['race F1: an unreadable moved lock is put back only when the first read was readable (the narrower condition)', SRC, 'moved.unreadable ? movedAge() <= UNREADABLE_GRACE_MS :', 'moved.unreadable ? !h.unreadable :'],
   ['race F1: an OLD unreadable moved lock is put back too (the takeover of a junk lock never ends)', SRC, 'moved.unreadable ? movedAge() <= UNREADABLE_GRACE_MS :', 'moved.unreadable ? true :'],
+  // ---- D663: the exclusive hold (appended, so the numbers above stay what earlier hand-backs cite) ----
+  ['hold: ordinary runners ignore the hold (the check dropped)', SRC, '      if (fh && !fh.ignored) { holdWait(fh.h); continue; }\n', ''],
+  ['hold: a non-holder passes (any token lets a runner through)', SRC, 'if (h.token && (h.token === token || h.token === env[TOKEN_ENV])) return null;', 'if (h.token) return null;'],
+  ['hold: the holder\'s own token is not a pass (only the hold\'s writer passes)', SRC, '(h.token === token || h.token === env[TOKEN_ENV])', '(h.token === token)'],
+  ['hold: an exclusive runner takes over a LIVE hold (treats it as past the maximum)', SRC, '      if (f && f.ignored) {   // past the maximum', '      if (f) {   // past the maximum'],
+  ['hold: a stale hold is never taken over', SRC, "if (takeIfStale(holdFile, 'hold', h)) {", 'if (false) {'],
+  ['hold: the hold\'s takeover is recorded in the slot lock, not the hold', SRC, "if (takeIfStale(holdFile, 'hold', h)) { holdTookOver = tookOver; tookOver = before; continue; }", "if (takeIfStale(holdFile, 'hold', h)) { continue; }"],
+  ['hold: the max-age warning is skipped (ignored in silence)', SRC, 'log(`heavy-run: IGNORING the exclusive hold by', 'void (`heavy-run: IGNORING the exclusive hold by'],
+  ['hold: a hold past the maximum still binds (never ignored)', SRC, 'if (hAge !== null && hAge > holdMaxMs) {', 'if (false) {'],
+  ['hold: HOLD_MAX_MS is one minute', SRC, 'const HOLD_MAX_MS = 90 * 60 * 1000;', 'const HOLD_MAX_MS = 60 * 1000;'],
+  ['hold: an exclusive runner does not wait for other trees', SRC, 'const blocksMe = (h) => exclusive || blocks(h);', 'const blocksMe = (h) => blocks(h);'],
+  ['hold: a non-exclusive runner writes the hold', SRC, '  if (exclusive) {\n    for (;;) {\n      const f = foreignHold();', '  if (true) {\n    for (;;) {\n      const f = foreignHold();'],
+  ['hold: release removes any hold, not only its own', SRC, 'if (curHold && curHold.token === token) {', 'if (curHold) {'],
+  ['hold: a claim racing the hold is not withdrawn (the post-claim look is off)', SRC, '        if (late && !late.ignored) clash = true;\n', ''],
+  ['hold: the waiting line is never said', SRC, 'if (!saidHold) { saidHold = true; log(`heavy-run: waiting on an exclusive hold by', 'if (!saidHold) { saidHold = true; void (`heavy-run: waiting on an exclusive hold by'],
+  ['hold: the waiting line is said at every poll, not once', SRC, 'if (!saidHold) {', 'if (true) {'],
+  ['hold: a holder that gives up leaves its hold behind', SRC, '  } catch (e) { dropMyHold(); throw e; }', '  } catch (e) { throw e; }'],
+  ['hold: the hold wait never gives up (no max wait)', SRC, 'if (waited >= maxWaitMs) { dropMyHold(); throw', 'if (false) { dropMyHold(); throw'],
+  ['CLI: --exclusive is not passed to hold()', SRC, "hold({ cmd, exclusive: flags.includes('--exclusive') });", 'hold({ cmd });'],
+  ['CLI: the exit code is not the program\'s', SRC, 'return r.status === null ? 1 : r.status;', 'return 0;'],
 ];
 
 function tree() {
