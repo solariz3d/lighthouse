@@ -252,6 +252,8 @@
 
 **Built today:** none (no story, encounters or chapters in code; `grep -i "story|lore|chapter"` finds nothing relevant).
 
+- [decided 174] **The lore's depth:** the game is played on the surface. The lore is never forced, and for those who search it is abundant, made of real research (Gateway, Monroe, grief and trauma psychology) woven into the fiction, which stays fiction. Research link: Jenkins 2004, "embedded narrative" (brief 174).
+
 - [decided 68] **Several playable characters**, each with its own backstory, story, save and a unique buff that can synergise with a build; any build is open to each. You start as the kid who lost his father (46). About a quarter of the way into one story the next character unlocks, never forced. The stories are not in sequence: each discloses what makes another's make sense ("a chaotic intertwining narrative"). His weighting: the intertwining is "the most important part to get right".
 - [decided 68] **Two levels:** the character's level inside a run, and a GLOBAL level carrying all XP across runs and characters. The strongest unlocks (items, abilities, better trinkets, upgrades, cosmetics, new characters) sit behind global level caps.
 - [GAP, from 68 against 28/30] Does a run lost before the timer still add its XP to the global level, or is it lost there too?
