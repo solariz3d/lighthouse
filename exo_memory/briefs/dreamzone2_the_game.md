@@ -954,3 +954,18 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The librarian's proposal in reply (18:0x), for his word: clothing carries the slight buffs and the rub-off; accessories are
       look only; trinkets are the two strong-buff lore objects. E's legendary set re-sorted on that line: garments stay legendary
       clothing; small objects (a pick, a badge, a wristband, a CD sleeve, the father's watch) become trinkets.
+117. 2026-11-11 18:07 (on D), answering item 116's split (the librarian had proposed accessories as look only): "the accessories can
+    give small buffs too, say there could be legendary glasses that make the dark a little more visible type shit, not just that,
+    but small buffs that reroll on the shop every day, so for example, one day it could say on common buff for different more
+    expensive shoes +2.5-5% acceleration or top speed, or they could be luck shoes, or like more cash earned type shit, we could
+    research more mini buffs that could exist for each cosmetic item. say a player wants max speed, they can try find every version
+    of every cosmetic that drops with the buff they want, rerolled every run in the shop. Eventually when the beanbag meditation
+    setup is unlocked, within that spectral menu in the cosmic realm out of body worl" (the message arrived cut off here, with a
+    pane's ring pasted after it).
+    - Accessories carry small buffs too (not look only); e.g. legendary glasses that make the dark a little more visible.
+    - The shop's items carry small buffs that REROLL: the same item can show a different common buff from one restock to the next
+      (he says "every day" and "every run"), in a range (e.g. +2.5-5 % acceleration or top speed; luck; more cash). A player
+      chasing max speed hunts the versions that roll the buff he wants.
+    - Research owed: the possible mini buffs for each cosmetic item.
+    - Something about the beanbag meditation menu in the cosmic realm; cut off, to be asked.
+    - So the line between clothing and accessories is not buffs; trinkets (two carried) stay the strong ones.
