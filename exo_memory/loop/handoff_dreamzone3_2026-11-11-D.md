@@ -29,7 +29,7 @@ His word, 23:20: "get ready to stop and write the handoffs for dreamzone3 and li
     falsifier 2 restated and row 5 added (`librarian/2026-11-11.md`, 23:1x).
   - `d673-chase` (A): **the interface is committed, `db8e557`** on cab3530 (`run_length_s` with 0 = no timer, `overtime()`,
     `overtime_seconds()`, `saved()`, `kept_score()`, `Kind::Dark`, `Phase::Overtime`). Behaviour unchanged: chase 54/54, world_app
-    40/40, world selftest 52/52, fingerprints = main. A's hand-back §1: `p-d673-chase-A_2026-11-11.md` (lighthouse branch d664-a,
+    40/40, world selftest 52/52, fingerprints = main. A's hand-back §1: `handback/p-d673-chase-A_2026-11-11.md` (copied to main at the close; from branch d664-a,
     3d059897). **Not in it yet (checked, `git grep` on db8e557): `PlayParams::run_length_s`** in `chase/play.h`, which the plan's
     amendment asks for (C's save rows and A's F1-F3 go through `play_streamed`). The overtime chase itself is not built.
   - `d673-chase-wip` at **`fc8206d`** (on db8e557): **A's overtime chase as it stood, uncommitted, when Consonance was closed**,
