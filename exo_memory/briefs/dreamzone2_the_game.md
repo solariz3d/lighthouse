@@ -947,3 +947,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       popular labels of the time), in the spirit of the PC parts' parody brands, not unrelated invented labels.
     - The librarian's line (18:0x): the NAMES may wink at the real brand (as GTA's parody brands do); the LOGOS, stripes,
       colour blocks and trade dress must be our own, never a lookalike of the real mark; a legal review before release.
+116. 2026-11-11 18:02 (on D), on E's first set of lore legendaries (D668 ADDED, which mixes garments with small objects worn on a
+    cord or wrist): "but see we have to make a sharp distinction between cosmetics and accesory, and the two trinkets u can carry at
+    once"
+    - Three categories, kept sharply apart: clothing (cosmetics), accessories, and trinkets (two carried at once, item 32).
+    - The librarian's proposal in reply (18:0x), for his word: clothing carries the slight buffs and the rub-off; accessories are
+      look only; trinkets are the two strong-buff lore objects. E's legendary set re-sorted on that line: garments stay legendary
+      clothing; small objects (a pick, a badge, a wristband, a CD sleeve, the father's watch) become trinkets.
