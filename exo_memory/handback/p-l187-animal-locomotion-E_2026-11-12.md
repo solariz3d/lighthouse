@@ -190,6 +190,68 @@ dreamzone-rt `9d98b64` `src/main.cpp:6350-6356` (read): "detuned toward wrong: a
   - T4 is a stride-law swap in `gait_pose`.
 - **Test:** his eye, as the plan says. The mechanical bars (replays, the lean timing) guard; they do not measure eeriness.
 
+## 9. The H2 law: the hunter corners like a hunting animal (his call, brief 168; the chair's 10:31:46Z). Written 2026-11-12 04:5x local
+
+### 9.1 What I could read
+
+| source | status | terms |
+|---|---|---|
+| Usherwood & Wilson 2005, *Nature* 438:753 | **abstract only, again.** The full text is paywalled (Springer and Nature); no repository copy was found. **The bend's radius, the dogs' speeds and the stride figures remain UNREAD.** | © NPG |
+| Tan & Wilson 2011, *Proc R Soc B* 278:2105, doi 10.1098/rspb.2010.2395 (horses, polo and racing) | **abstract** (PubMed 21147799). The PMC page gave a captcha and Europe PMC no full text: **full text unread.** | © The Royal Society |
+| Wilson, Lowe, Roskilly, Hudson, Golabek & McNutt 2013, *Nature* 498:185, doi 10.1038/nature12295 (wild cheetahs) | **abstract** (PubMed 23765495). The RVC repository returned 403. A copy at originalwisdom.com came back as **a third-party summary page** ("© … Original Wisdom"), not the paper, so its figures are **[press, unverified]**. | © NPG |
+
+**Read:**
+- **Greyhounds hold stride and speed on a bend.**
+  - Usherwood & Wilson [abstract]: "on entering a tight bend, greyhounds do not change their foot-contact timings, and so have to withstand a 65% increase in limb forces".
+  - Tan & Wilson [abstract], restating it: "greyhounds do not slow down or change stride parameters during bend running".
+- **Horses show two regimes** (Tan & Wilson [abstract]):
+  - "During high-speed turns of large radius horizontal speed was lower on the bend, as would be predicted from a model assuming a limb force limit";
+  - "During small radius turns the angular velocity of heading decreased with increasing speed in a manner consistent with the coefficient of friction of the hoof-surface interaction setting the limit to centripetal force to avoid slipping".
+- **Cheetahs** (Wilson 2013 [abstract]): 367 runs of 5 wild cheetahs, top speed 25.9 m/s, "some of the highest measured values for lateral and forward acceleration, deceleration … for any terrestrial mammal".
+  - **[press, unverified]**, the summary page: lateral acceleration "often exceeded 13 m per second per second at speeds under 17 m per second"; they "often slowed sharply before turning"; "slowing from 16 to 4 m per second … shrinks the turn radius from 19.7 m to 1.2 m".
+  - [computed] Those last numbers are self-consistent at about 13 m/s² (16²/19.7 = 13.0; 4²/1.2 = 13.3).
+
+### 9.2 The law, in Eqn 5's form
+
+**`H2_hunting_animal(V_o, R; μ) = min(V_o, √(μ·g·R))`**
+
+- **What it says:** no limb-force slowdown (the greyhound: contact timing and speed held on the bend). The only limit is **grip** (the horses' small-radius regime; the cheetah's grip-limited tight turns). Below the radius where grip binds, it slows exactly as friction requires; above it, it keeps the straight speed.
+- **Swappable:**
+  - the human law is **`H1_human(V_o, R) = min(V_o, 0.746·V_o·(R·g/V_o²)^0.363, √(g·R))`** (Chang & Kram Eqn 5, with the cap);
+  - H2 takes the same arguments plus μ.
+- **The dial μ** (the grip, as a multiple of g):
+  - **1.0**, the friction bound used in §3 [inferred, not measured for any surface here];
+  - **about 1.33**, the cheetah's figure [press, unverified, 13 m/s²].
+  - [inferred] **μ is where "how monstrous" lives:** at 1.0 the hunter corners exactly at a physically possible limit for a human-shaped foot; above 1.0 it grips like no human can. That is a T1 mismatch (§8.2) the player can read.
+- **Measured range, stated plainly:**
+  - **the greyhound half is measured on "a tight bend" whose radius I have NOT read;**
+  - the horse regimes on polo and race tracks, radii unread;
+  - the cheetah figures cover 1.2–19.7 m at 4–16 m/s, **[press, unverified]**.
+  - **Below about 1 m, and at our hunter's 9–13 m/s, nothing I read measured it.** The law is the sources' **shape** (no limb-force slowdown, grip-bound), not a fit.
+- **[computed] Against the human law** (`scratchpad/l187/h2.js`), in m/s:
+
+| R (m) | 1 | 1.5 | 2 | 3 | 4.5 | 6 | 10 | 20 |
+|---|---|---|---|---|---|---|---|---|
+| V_o 9, H1 human | 3.12 | 3.61 | 4.01 | 4.65 | 5.39 | 5.98 | 7.20 | 9.00 |
+| V_o 9, H2 μ 1.0 | 3.13 | 3.84 | 4.43 | 5.42 | 6.64 | 7.67 | 9.00 | 9.00 |
+| V_o 9, H2 μ 1.33 | 3.61 | 4.42 | 5.11 | 6.26 | 7.66 | 8.85 | 9.00 | 9.00 |
+| V_o 11.1, H1 human | 3.13 | 3.83 | 4.25 | 4.92 | 5.70 | 6.33 | 7.62 | 9.80 |
+| V_o 11.1, H2 μ 1.0 | 3.13 | 3.84 | 4.43 | 5.42 | 6.64 | 7.67 | 9.90 | 11.10 |
+| V_o 11.1, H2 μ 1.33 | 3.61 | 4.42 | 5.11 | 6.26 | 7.66 | 8.85 | 11.10 | 11.10 |
+
+- **H1 here includes the √(gR) cap**, so at R 1 m and V_o 11.1 it reads 3.13, not §3's uncapped 3.30. H1 beyond R 6 m is extrapolated.
+- **The radius at which H2 keeps the full straight speed:**
+  - μ 1.0: 8.3 m at V_o 9, 12.6 m at V_o 11.1;
+  - μ 1.33: 6.2 m and 9.4 m.
+
+**[inferred] What he will see:** in doorways and tight corridor turns (R 1–2 m) the H2 hunter is within about 0.5 m/s of a human at μ 1.0. **In rooms, atria and long curves (R 3–10 m) it is 1–2.5 m/s faster than a human** at the same straight speed, holding its stride where a human visibly brakes. That is item 168's "hunting animal" made visible where the space allows it, and still faithful to his item 164 (no free speed round tight corners).
+
+### 9.3 What it needs from A's L182 [inferred]
+
+- The turn law as a function of (V_o, R) per chaser kind, with H1 and H2 as named entries and μ per kind.
+- **The cheetah's "slowed sharply before turning"** [press] is a braking behaviour, not a cornering law. It joins A's look-ahead (L-I1): brake to `H2(V_o, R_next)` before the corner, not in it.
+- **Unread before it is called measured:** the Usherwood & Wilson full text (the radius), and Wilson 2013's full text (the lateral-acceleration figures, from the paper rather than a summary).
+
 ## Commands
 
     node -e '...'   # the Eqn 5 table, the friction bound and the stride table (`scratchpad/l187/laws.js` in pane E's session scratch; its output reproduces every table here)
