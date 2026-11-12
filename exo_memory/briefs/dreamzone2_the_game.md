@@ -1007,3 +1007,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     creeps along the passage at about 3 m/s): "lets do 15 seconds"
     - Yes to the creep, with the start at **15 s** after first entry (item 54's 10 s becomes 15). Creep speed as proposed, about
       3 m/s, to be tuned in play.
+126. 2026-11-11 18:45 (on D), a bug from play: "i swear it says i fell into a void, but i swear there wasnt any it was just a normal
+    floor just now"
+    - Read from his run (game/runs/run-20261112-004249.txt, the librarian): brutal, seed 2, build af9727b (the floor packet, landed
+      minutes before), "fell into a void after 115.49 s" at (529.60, 3.50, -558.10). y = 3.50 is exactly a storey's floor height:
+      the run ended as a void fall while he stood on a floor.
