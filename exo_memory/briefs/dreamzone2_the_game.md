@@ -1038,3 +1038,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      starts a game, putting it to brutal right at the start will be harder, but the first few runs will be forgiving."
 133. 01:01, on the librarian's ordered list of next steps (17 items, from E's ranked sweep, D's handoff and items 1–132): "the list you
      made, feel free to do all of it in the order you made, after that we will then see where we stand"
+134. 01:08, an idea from the drive to work: "while the rest works, i was thinking of this while driving to work, simply holding sprint
+     and running isnt enough, there needs to be like running/movement mechanic, what comes to my mind is something like COD new age
+     movement with slide cancelling and sprint reset, maybe we could do something like that, if you sprint for longer than 10
+     seconds, if you slide it resets your sprint or something, do you think we could queue up research on how to do a fun and
+     addicting movement system made by someone wit adhd lol"
