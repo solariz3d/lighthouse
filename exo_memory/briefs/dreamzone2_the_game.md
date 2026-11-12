@@ -986,3 +986,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - His rule (items 60-61): once Recognition happens, stress cannot rise for the rest of the run; only the golden phase (2-3 min)
       ends, the passive buffs and no-stress remain. So a buff for "after Recognition ends" does nothing. The pick needs a new
       signature.
+122. 2026-11-11 18:13 (on D), the course: "i think we are getting ahead of ourselves and need ot get back to fundementals quick, after
+    all work in motion is done, lets do a comprehensive sweep to see where the gaps are again"
+    - Stop opening new design threads. Finish the work in motion, then a comprehensive sweep of the game's gaps, back to
+      fundamentals.
