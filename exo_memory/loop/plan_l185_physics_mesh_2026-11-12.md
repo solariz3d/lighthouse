@@ -21,7 +21,7 @@
 
 ## Kept from L183 §3 (not up for change)
 - **Picture only:** a separate `PhysicsSystem` in `game/`, reading the sim and writing nothing back. Replays stay byte-identical.
-- **The player's camera and controller are never driven by physics.** His body's ragdoll is picture only (Geijtenbeek l.83).
+- ~~**The player's camera and controller are never driven by physics.**~~ **Overturned by his item 161** ("physics could control the camera and controls, it would make sense to me if it is done right"). Now open: see `loop/plan_l186_physics_player_2026-11-12.md`.
 
 ## Order (after L181, since the chain is the target)
 1. **The rotation skeleton** for the 21-joint body (E's §6.1), round-trip tested. Pure `game/`. **It can start now.**
