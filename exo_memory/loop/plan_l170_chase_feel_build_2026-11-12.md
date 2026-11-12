@@ -56,3 +56,13 @@ collation.
   - The cutback may stay unproven by bots. That is a known outcome and is said plainly, not chased with a sixth lever.
 - **C:** the fingerprints are unchanged with the lean and feet on, and the look-behind captures show the hunter leaning into a
   corner.
+
+## Amendment 01:0x, from A's L169 addendum (`handback/p-l169-code-A_2026-11-12.md`, "Addendum, 2026-11-12 00:5x", 4db32afc)
+- **A's instrument gains a slosh test:** a script over the existing `keep_paths` tracks that measures overshoot outside the runner's
+  track at corners. It is built with the other two instrument gaps, before any lever runs.
+- **Lever names reconciled:** A's L-I2 ("velocity outlives facing") is P2, side friction. A's L-I1 ("a non-minimal line": look-ahead,
+  and not Detour's straightened funnel path) joins the arms after P2+P1.
+- **The order stands:** instruments (CSV, lever fields, slosh script); P3; then P2 (L-I2) with P1; then L-I1. P3 stays first because
+  the soft chase is the measured cause and his first call. Every arm also reports the slosh test.
+- **A's finding, kept as stated:** NextBot has no path randomisation (only an avoid-wait jitter). Our seeded sway is ours, not
+  Valve's.
