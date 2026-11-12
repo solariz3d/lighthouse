@@ -1185,3 +1185,4 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        - Preprints 202309.0510: shoulder rotation increases with speed in elite junior runners, citing Arellano & Kram on arm swing reducing trunk rotation and energy cost.
        - The classic centre-of-mass study (Hinrichs, mirrored): the arms' contribution grows with speed.
      - Routed: the arm swing comes from these, coupled to the chain's thorax counter-rotation and grown with speed.
+176. 07:1x, on L190 (C stopped: no readable source for arm swing against speed; one figure read, Otsuka ±35° at 4.3 m/s): asked what "swing with the body more" meant, he chose **"Both"**: a bigger swing at speed (from Otsuka's ±35°, grown with speed by a named, swappable factor **marked ours**, red-first on d0c1aba) **and** the arms riding more of the torso's twist (the share marked ours unless a source is found). His eye is the bar.
