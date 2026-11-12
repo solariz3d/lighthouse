@@ -1,0 +1,28 @@
+MEASURE seed 1 reprieves 3 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 2 reprieves 6 lost_at_mouth 1 caught 0 seconds 240.0
+MEASURE seed 3 reprieves 3 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 4 reprieves 3 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 5 reprieves 3 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 6 reprieves 1 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 7 reprieves 2 lost_at_mouth 1 caught 0 seconds 240.0
+MEASURE seed 8 reprieves 2 lost_at_mouth 1 caught 0 seconds 240.0
+MEASURE seed 9 reprieves 1 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 10 reprieves 1 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 11 reprieves 3 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 12 reprieves 3 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 13 reprieves 4 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 14 reprieves 2 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 15 reprieves 5 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 16 reprieves 4 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 17 reprieves 4 lost_at_mouth 1 caught 0 seconds 240.0
+MEASURE seed 18 reprieves 7 lost_at_mouth 1 caught 0 seconds 240.0
+MEASURE seed 19 reprieves 3 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 20 reprieves 4 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 21 reprieves 2 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 22 reprieves 4 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 23 reprieves 2 lost_at_mouth 0 caught 0 seconds 240.0
+MEASURE seed 24 reprieves 2 lost_at_mouth 2 caught 0 seconds 240.0
+MEASURE summary: 21 of 24 runs reach the row's bar (at least 2 reprieves)
+ok    measure_reprieve_row_over_seeds
+1 tests, 0 failed
+lockrun: L170 A reprieve measure a-m2 WALL 142 s, exit 0
