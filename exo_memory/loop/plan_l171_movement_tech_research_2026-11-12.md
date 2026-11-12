@@ -46,3 +46,19 @@ COD's slide cancel is a bend (an exploit made a feature). Item 57's late bhop is
 - **Added 01:11 (his item 136):** a bend's cue IS the psychedelic-distortion layer (`handback/p-l161-look-E_2026-11-11.md`), not a
   new effect. For each bend, name which of those effects marks it (e.g. a tracer smear on a slide cancel, the haze breathing on a
   sprint reset). That layer is not built (queue step 14), so say which bends need it to read and which work without it.
+
+**Added 01:1x (his item 137): the base kit, and the near-miss surge.**
+- **The base movement without abilities:** list what exists today (sprint stages, slide, dive, roll, vault, climb, wall-run, rare
+  and short, wall-kick, ladders, jump), and say which of shapes A–D (§5) belongs in the base. Abilities then spec around them: "do
+  all movement mechanics and you can change how you play or spec your character".
+- **The near-miss surge** (his: getting close to corners, doorways or walls raises speed; it compounds and decays). Design it
+  against the controller:
+  - **What counts as a near miss.** In 3 m corridors the player is ALWAYS within 1.5 m of a wall, so parallel wall proximity cannot
+    count. Propose: passing a **convex edge** (a corner, a door frame) within X m at ≥ Y m/s, and passing a **chaser** within Z m
+    (the juke made countable, item 53's proximity). Reward the pass, not the hug.
+  - **Compounding and decay:** add per near miss, a cap (the 12.4 m/s human line, item 135's rule for when it becomes a bend),
+    decay per second, and a cooldown per edge so one doorway can't be farmed.
+  - Its **bend** and its **cue** from the distortion layer (items 135–136).
+  - How it reads in the 3D generated world: the walk graph knows corners and doors (gen).
+  - Its tie to movement XP (items 53, 57).
+- Sources: Burnout's near-miss boost (Criterion), and Galactic Racer's Afterburner/Ramjet (Fuse Games), as checked above.

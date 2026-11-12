@@ -1049,3 +1049,12 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 136. 01:11, on how a bend shows: "remember, that is the psychedelic replication distortions around the world, we hvent built that yet"
      - So a bend's cue comes from the psychedelic-distortion layer (E's L161 look menu, `handback/p-l161-look-E_2026-11-11.md`:
        breathing, tracers, haze, slicing and the rest, run by a dream director per item 27). It is queue step 14, **not built**.
+137. 01:16, on the base movement: "what if we some how do all movement mechanics and you can change how you play or spec your
+     character. But what would be the base movement without the abilities? Sprint, slide, dive, wall run, I had this idea, getting
+     close to corners or door ways or walls increases speed, say when you a near miss, and it compounds but loses speed over time,
+     think of the surge ability from star was galactic racer"
+     - Checked (search): *Star Wars: Galactic Racer* (Fuse Games, former Criterion/Burnout staff) has two boosts. The Afterburner
+       gives short bursts and recharges; the **Ramjet** is stronger and heats the engine toward "Redline", destroying it if held
+       too long (risk and reward, per its creative director). There is also a launch surge timed off the line. **No near-miss boost
+       was found for it in one search.** Near misses filling a boost meter is the *Burnout* series' signature, which is Fuse's
+       lineage.
