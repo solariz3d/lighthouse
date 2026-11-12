@@ -1,0 +1,220 @@
+  seed 151 done (6 s)
+  seed 152 done (7 s)
+  seed 153 done (8 s)
+  seed 154 done (11 s)
+  seed 157 done (17 s)
+  seed 156 done (19 s)
+  seed 155 done (19 s)
+  seed 158 done (19 s)
+  seed 159 done (21 s)
+  seed 160 done (25 s)
+  seed 163 done (26 s)
+  seed 161 done (26 s)
+  seed 162 done (30 s)
+  seed 164 done (33 s)
+  seed 165 done (34 s)
+  seed 168 done (38 s)
+  seed 166 done (39 s)
+  seed 167 done (43 s)
+  seed 171 done (44 s)
+  seed 170 done (44 s)
+  seed 169 done (44 s)
+  seed 172 done (49 s)
+  seed 175 done (50 s)
+  seed 173 done (51 s)
+  seed 174 done (54 s)
+  seed 178 done (56 s)
+  seed 177 done (59 s)
+  seed 180 done (60 s)
+  seed 176 done (60 s)
+  seed 179 done (62 s)
+  seed 181 done (66 s)
+  seed 182 done (67 s)
+  seed 183 done (68 s)
+  seed 184 done (69 s)
+  seed 185 done (71 s)
+  seed 186 done (74 s)
+  seed 188 done (74 s)
+  seed 187 done (77 s)
+  seed 190 done (77 s)
+  seed 193 done (82 s)
+  seed 191 done (82 s)
+  seed 189 done (84 s)
+  seed 192 done (84 s)
+  seed 194 done (88 s)
+  seed 196 done (91 s)
+  seed 198 done (94 s)
+  seed 197 done (94 s)
+  seed 195 done (95 s)
+  seed 199 done (98 s)
+  seed 200 done (101 s)
+  seed 201 done (101 s)
+  seed 202 done (103 s)
+  seed 203 done (104 s)
+  seed 204 done (107 s)
+  seed 205 done (109 s)
+  seed 206 done (111 s)
+  seed 207 done (113 s)
+  seed 208 done (114 s)
+  seed 209 done (120 s)
+  seed 210 done (121 s)
+  seed 212 done (125 s)
+  seed 211 done (125 s)
+  seed 214 done (129 s)
+  seed 216 done (130 s)
+  seed 213 done (131 s)
+  seed 217 done (137 s)
+  seed 215 done (137 s)
+  seed 218 done (138 s)
+  seed 221 done (147 s)
+  seed 219 done (147 s)
+  seed 222 done (147 s)
+  seed 220 done (148 s)
+  seed 225 done (155 s)
+  seed 223 done (156 s)
+  seed 226 done (160 s)
+  seed 224 done (162 s)
+  seed 227 done (164 s)
+  seed 229 done (165 s)
+  seed 228 done (166 s)
+  seed 230 done (168 s)
+  seed 231 done (171 s)
+  seed 232 done (174 s)
+  seed 233 done (176 s)
+  seed 234 done (177 s)
+  seed 236 done (181 s)
+  seed 235 done (183 s)
+  seed 238 done (184 s)
+  seed 239 done (186 s)
+  seed 237 done (186 s)
+  seed 240 done (189 s)
+  seed 243 done (191 s)
+  seed 241 done (194 s)
+  seed 242 done (195 s)
+  seed 244 done (198 s)
+  seed 246 done (198 s)
+  seed 247 done (202 s)
+  seed 245 done (202 s)
+  seed 248 done (206 s)
+  seed 250 done (209 s)
+  seed 249 done (209 s)
+  seed 251 done (209 s)
+  seed 255 done (214 s)
+  seed 253 done (215 s)
+  seed 252 done (216 s)
+  seed 254 done (217 s)
+  seed 257 done (219 s)
+  seed 258 done (223 s)
+  seed 259 done (227 s)
+  seed 256 done (227 s)
+  seed 260 done (229 s)
+  seed 264 done (237 s)
+  seed 263 done (237 s)
+  seed 261 done (238 s)
+  seed 262 done (241 s)
+  seed 267 done (245 s)
+  seed 265 done (247 s)
+  seed 266 done (248 s)
+  seed 268 done (251 s)
+  seed 269 done (253 s)
+  seed 270 done (253 s)
+  seed 271 done (255 s)
+  seed 273 done (259 s)
+  seed 274 done (262 s)
+  seed 272 done (263 s)
+  seed 275 done (264 s)
+  seed 277 done (267 s)
+  seed 278 done (269 s)
+  seed 279 done (273 s)
+  seed 281 done (274 s)
+  seed 280 done (274 s)
+  seed 276 done (278 s)
+  seed 284 done (285 s)
+  seed 282 done (287 s)
+  seed 283 done (288 s)
+  seed 285 done (293 s)
+  seed 288 done (295 s)
+  seed 287 done (296 s)
+  seed 286 done (297 s)
+  seed 289 done (299 s)
+  seed 291 done (303 s)
+  seed 292 done (307 s)
+  seed 293 done (307 s)
+  seed 290 done (307 s)
+  seed 294 done (309 s)
+  seed 298 done (315 s)
+  seed 297 done (316 s)
+  seed 296 done (316 s)
+  seed 295 done (318 s)
+  seed 300 done (326 s)
+  seed 299 done (328 s)
+sweep: seeds 151..300, arena 2 chunks each way, runs stopped at 300 s; default dials
+speed model ( lead_range=10;slip_rate=3):
+ref_speed         8.000   the chasers' reference speed, metres per second; every row and dial is a multiple of it
+dist_per_km       0.050   share of top speed gained for each kilometre the player has covered
+dist_max          0.300   the most the distance can add, as a share of top speed
+straight_rate     0.050   share of top speed a chaser gains each second it runs straight at its top speed
+straight_max      0.200   the most a straight can add, as a share of top speed
+straight_turn     0.300   radians a second: it is running straight while it turns slower than this
+run_up_bleed      1.000   share of the run-up lost for every radian it turns
+turn_drag         0.200   share of its speed a chaser loses for every radian it turns
+corner_floor      1.000   least share of the braking a corner asks for that every chaser does before it (1: it never swings into a wall)
+wall_stand        0.000   scale on the seconds a chaser stands after meeting a wall head-on (0: it never stops dead)
+brake_scale       1.000   scale on every chaser's braking, metres per second squared (1: the rows and the hunter's dial as they are)
+hunter_start_bonus    0.170   added to the hunter's dial at the start of a run, and fading to nothing over hunter_bonus_fade_s: a fresh player's margin
+hunter_bonus_fade_s  600.000   seconds over which hunter_start_bonus fades away
+stairs_lift       1.000   share of a stairs leg's slope a chaser's step is lifted by (0: a flat step, which stalls at the foot of a steep flight)
+corner_floor_speed    0.000   L170 P3: the share of its top speed a corner may not take a chaser below (0: the chase as it is; 0.5 is NextBot's)
+slip_rate         3.000   L170 SLIP: per second, how fast a chaser's velocity follows its facing (0: it travels along its facing, as it does; 3 is NextBot's sideways friction)
+lead_range       10.000   L170 P1: metres; the hunter plans toward where the player will be, leading by lead_base_s plus its distance (to this many metres) over its speed (0: toward where they were seen)
+lead_base_s       0.500   L170 P1: seconds of lead before the distance is added (used only when lead_range is above 0)
+
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  line    150     9.8    15.6    21.7    33.0    55.4    84.1    300.0         1
+normal  flee    150    45.2   147.8   243.2   300.0   300.0   300.0    300.0        96
+normal  cutback  150     8.2    21.6    31.2    50.3    74.2   122.7    211.6         0
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  line       83%      15%          1%    0% |       89%           3%         1%         8% |          421
+normal  flee       21%       6%          5%    3% |       36%           0%         0%         0% |        10500
+normal  cutback     76%      23%          1%    0% |       92%           1%         1%         7% |          713
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  line   |      0.00        0%      0.07     0.03      0.00 |   0.00   0.00    0.00 |     1.97   0.14   0.00   1.09     0.00 |    0.29     0%       0%
+normal  flee   |      0.56       43%      0.00     0.00      0.00 |   0.00   0.06    0.19 |     1.80   0.80   0.26   2.54     0.00 |    0.04     8%       0%
+normal  cutback |      0.00        0%      0.08     0.02      0.00 |   0.00   0.00    0.00 |     1.96   0.25   0.00   1.41     0.00 |    0.28     0%       0%
+paired flee vs line (150 seeds): outlived it in 145, was outlived in 5, within half a second in 0; median of the ratio 7.71 (quartiles 4.33 to 11.62)
+paired cutback vs line (150 seeds): outlived it in 85, was outlived in 50, within half a second in 15; median of the ratio 1.21 (quartiles 0.85 to 2.31)
+
+the look-behind (corners of 60 degrees or more; chasers 4 to 15 m behind; chase/slosh.h)
+level   policy   pairs  overshoot   1 m up screen@100     @107.5     seen     slip
+normal  line       464      1.19m      58%      5.73%      5.01%      45%    29.1
+normal  flee       856      2.11m      62%      8.59%      7.51%      25%    41.2
+normal  cutback     565      1.90m      72%      9.51%      8.31%      36%    35.8
+
+where chasers caught on the world, per minute of chase
+level   policy minutes    wall hits scrape s
+                           head-on (ticks/240)   stalls   stood s
+normal  line    113.9       11.296     5.62    0.026     0.000   (totals: 1287 hits, 153595 scrape ticks, 3 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 890, 79179;  sprinter 355, 70502;  interceptor 42, 3914;
+normal  flee    646.9       13.201     8.74    0.022     0.000   (totals: 8539 hits, 1356904 scrape ticks, 14 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 4526, 683215;  sprinter 1479, 441319;  interceptor 2090, 182161;  pack 444, 50209;
+normal  cutback  150.5       11.043     5.82    0.027     0.000   (totals: 1662 hits, 210128 scrape ticks, 4 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 1161, 108220;  sprinter 398, 91414;  interceptor 103, 10494;
+
+reprieves: 83 passages through and 1 back out the way in, in 65 of 450 runs; with the hunter out and a way to the player both times (76):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        2.8     5.7     9.2
+  and coming out: the lead                         6.0     8.7    11.2
+  lead gained                                     -0.1     2.3     5.7
+  way round, the generator's figure                7.8    11.6    14.7
+  way round on the mesh, the hunter's speeds       4.4     7.2    11.0
+  lead gained over the way round on the mesh     -0.01    0.33    0.72
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
+328 s in all on 4 threads
+lockrun: L170 A arm p1s3 b151 WALL 328 s, exit 0

@@ -1,0 +1,5 @@
+dz chase_tests p3_turn (feel_tests.cpp, branch l170-chase 84ad3b3), verbatim:
+    at a corner (median over 10 / 11 corners), within a second either side:
+      control  : sharpest turn 276 deg/s at 4.2 m/s (lateral 19.8 m/s^2); 27 % of the corner above Chang & Kram's Eqn 5 speed for its radius; worst point 1.47 times it
+      floor 0.5: sharpest turn 256 deg/s at 4.7 m/s (lateral 21.2 m/s^2); 33 % of the corner above Chang & Kram's Eqn 5 speed for its radius; worst point 1.51 times it
+      (cross-check against Table 1 itself: control 23 % above it, floor 0.5 32 %)

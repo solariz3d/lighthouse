@@ -1,0 +1,13 @@
+slip-blend-removed: build failed
+slip-never-stored: CAUGHT by slip_carries
+slip-rate-ignored: build failed
+slip-rate-x10: CAUGHT by slip_carries
+floor-corner-removed: SURVIVED
+floor-uses-min: CAUGHT by corner_floor
+lead-always-none: CAUGHT by the_hunter_leads
+lead-through-the-runner: CAUGHT by the_hunter_leads
+lead-distance-uncapped: CAUGHT by the_hunter_leads
+scorer-outside-sign: CAUGHT by the_slosh_scorer
+scorer-slip-forward: SURVIVED
+scorer-seen-near: SURVIVED
+applied 10 / caught 7 / NOT APPLIED 2; survivors: floor-corner-removed, scorer-slip-forward, scorer-seen-near
