@@ -263,7 +263,9 @@
 - [decided 29] The second upgrade track opens once the character "knows of gateway".
 - **Contradiction, 23 against 26:** Gateway as the world's lore (23) against never tying it directly (26). Item 49's librarian note reads 26 as "late reveal". Left for him.
 - **Contradiction, 26 against 48–49:** a "Monroe institute collection" of trinkets, and meditating "with hemi sync" in the chair, against item 26's "shouldnt directly associate". These are late-game pieces; is that the line?
-- [decided 46] A "slightly modified gateway hemi sync horror trip story". The character has gruesome trauma, never said directly: perhaps his father was murdered. Only anecdotes: a picture on the desk, subtle dialogue with mom early, curated environment pieces echoing the event. ("Nevermind" as a reference.)
+- [decided 170, supersedes 46's trauma] His father died an ordinary death, young. No murder ("melodramatic"). The story is the hole left in the kid's life, and grief too large to understand, which "never makes sense" even later. Research link: Klass, Silverman & Nickman 1996, *Continuing Bonds* (brief 170).
+- ~~[decided 46] … gruesome trauma, never said directly: perhaps his father was murdered.~~ (struck 2026-11-12 at his item 170; kept as the trace)
+- [decided 46, still standing] A "slightly modified gateway hemi sync horror trip story". It is never said directly. Only anecdotes: a picture on the desk, subtle dialogue with mom early, curated environment pieces echoing the event. ("Nevermind" as a reference.)
 - [decided 47] The god entity may be the embodiment of his love for his father, or his father "in a way".
 - [decided 26] The illicit site unlocks once the character passes "a certain point of understanding".
 - [decided 28] Chapters: as the story progresses, seeds get more chaotic and further biomes come closer. Beating the game unlocks endless mode.
