@@ -1162,3 +1162,13 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        - **Trauma and anomalous experience (real literature).** Marks's review, "Subjective Paranormal Experience and the Homeostatic Response to Early Trauma", proposes paranormal experience as one sign of trauma-related dissociation. A path analysis found trauma's link to noetic beliefs and experiences fully mediated by hypersensitivity and unusual sensory experiences. Clinical studies link childhood trauma to dissociation (r ≈ .40) and hallucinations (r ≈ .36). These are correlations and theory, not evidence of powers.
      - **For the game:** grief as the crack the attunement comes through. It is already half-built in item 32 (full stress → 25 % Resonant). **The real person and his victims stay out of the lore** (the librarian's recommendation, put to him); the fiction carries the idea, sourced to the psychology, never to the case.
      - 05:36, his word: "ofc we dont mention epstein directly was just trying to show you the idea of it". The idea was the point; the librarian's caution was not needed.
+172. 05:42, **the game's thesis, in his words**: "under all the despair and horror, we need to try make the truth of love some how shine through the horror of life. In a way, the game is all a representation from running away from death, all we can do, we cant stop and fight it, all we can do is run, and hope that at the end when it catches us, there is something else out there good, that saves us"
+     - **What it binds together, already in his items:**
+       - you cannot fight, only run (1, 18);
+       - the overtime Reaper you cannot outrun (28, 66);
+       - the good god saving you at the last second (28, 30, 66);
+       - Resonant as "the signal of truth and love" (32);
+       - his "struggle to believe and have faith in something good" (45);
+       - the father, and love as the good god (47, 170).
+     - **Research link, same turn:** Ernest Becker, *The Denial of Death* (1973, Pulitzer 1974). Its empirical line is terror management theory (Greenberg, Pyszczynski & Solomon; codified in *The Worm at the Core*, 2015): life lived under the knowledge of death, held off by meaning. The game makes the flight from death literal and answers it with love rather than a hero project. That answer is his, not Becker's.
+     - **A design rule that follows:** the love must be **felt in play**, not only told (his "shine through"). Where it already lives: the good god's arrival, Resonant, the golden aura and chord of the good entities (26), the father's trinkets. Each should be built to land as the counterweight to the horror.
