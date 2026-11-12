@@ -55,3 +55,16 @@ is to accept 1.34 and leave the rest to the kit (§3b-d), whose pieces are laid 
   held for step 3. **What would change my mind:** if he would rather have fewer Parks now than any Park that doesn't pay.
 
 NEXT: librarian, rule on (a) and (b) when this is read; B then finishes step 2 and runs its proof. Nothing heavy of mine runs during P's loader landing.
+
+## 4. The rulings (the librarian's "D665 STEP 2 RULINGS", 20:38), and the band REGISTERED before the measure
+
+- **(b) taken:** the true buy rule (the way round minus the Park's own crossing, at the hunter's real speed) goes in. **Steps 2 and 3 land together, with
+  the Park kit.** The red row (`no_reprieve_has_a_quick_way_round_on_the_assembled_graph`) stays red on the branch until the kit greens it. Nothing is
+  amended to pass in between, and step 2 never lands alone.
+- **(a), the path factor, its band stated now, before any measuring:**
+  - **The measure:** a chase test over **6 worlds** (the arenas of seeds 3 and 7, and four more seeds). For every Park the generator recorded there,
+    with its detour not capped: the mesh's way round between its two mouths (`find_path` with the hunter's starting profile, §1), divided by the
+    generator's detour. One ratio a Park.
+  - **NARROW, and a factor is used, only if:** at least **100** Parks, and the middle half of the ratios lies within **±10% of their median**
+    (25th percentile ≥ 0.90 × median and 75th percentile ≤ 1.10 × median). The factor is then that median, held by a test.
+  - **Otherwise:** no factor, and **V5 is reported as failing at 1.34**.
