@@ -42,3 +42,6 @@ on what). It is read before every dispatch.
 - 01:1x: **a dependency, his item 136:** movement bends (L171) show through the distortion layer, step 14. If he adopts movement
   tech that bends physics, step 14's core (the director and two or three effects) may need to move up the queue. That is his call,
   when L171's menu is read.
+- 01:3x: **after the list is done** (his items 143–144): a Roblox remake as a business question. It would be the design rebuilt in
+  Luau, not a port. E researches it then: what nextbot games earn there, their mechanics, Roblox's content rules for this game's
+  themes, and Roblox's rules on paid random items (odds disclosure) and children's spending. Not before.
