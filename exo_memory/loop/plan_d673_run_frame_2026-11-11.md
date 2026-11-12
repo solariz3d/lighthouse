@@ -108,3 +108,8 @@ with a non-default `run_length_s` in `world.txt`; C3, a run caught before the ti
 - The meta loop (rank 3): kept points are recorded, not spent.
 - Stress, virtues, Recognition (rank 5); the dark one's model (a stand-in: the hunter's model, darkened and larger, or the box).
 - The softer chase and the cutback question (rank 2): his call, put to him when he is back.
+
+## Amendment, 2026-11-11 23:1x (librarian, from C's interim)
+
+- **C1 as first written could not hold:** none of his 11 kept runs in `game/runs/` replays identically even on cab3530 (C, `d673/replays-base.txt`), because the world and chase changed since they were recorded. C1 now reads: a record made at the base, with the new lines removed, replays as before; and his records still read.
+- **The interface gains `PlayParams::run_length_s`** (`chase/play.h:14-28`), carried into `RunParams`, so the headless bot harness (`chase::play_streamed`) can reach overtime. A puts it in the first commit.
