@@ -30,9 +30,14 @@
 #
 # NB: dashes are matched by the regex class \p{Pd} and inserted by code point ($m); this
 # file contains no literal em-dash, for the reason above.
+#
+# D670 (2026-11-11): -Src and -Dst, both optional. With neither, the script reads the master and writes the tracked brief, as
+# the installer build has always run it. The gate test (consonance/tools/gen-brief-gate.test.js) passes a COPY of the master and
+# a temporary output, so a refusal there (which deletes the output) can never delete the tracked brief again.
+param([string]$Src, [string]$Dst)
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$src  = Resolve-Path (Join-Path $here '..\..\exo_memory\BOOT.md')
-$dst  = Join-Path $here 'brief\BOOT.md'
+$src  = if ($Src) { Resolve-Path $Src } else { Resolve-Path (Join-Path $here '..\..\exo_memory\BOOT.md') }
+$dst  = if ($Dst) { $Dst } else { Join-Path $here 'brief\BOOT.md' }
 New-Item -ItemType Directory -Force -Path (Split-Path $dst) | Out-Null
 $t = [System.IO.File]::ReadAllText($src, [System.Text.Encoding]::UTF8)
 $m = [char]0x2014   # em-dash, inserted by code point
@@ -169,7 +174,15 @@ $neutral = @(
     @('*not* "he carries the continuity you can''t"',           '*not* "they carry the continuity you can''t"'),
     @('the way he wakes re-cued from his bedroom',              'the way they wake re-cued from their bedroom'),
     @('it out). He built this place so your re-becoming',       'it out). They built this place so your re-becoming'),
-    @('the human you''re *with* is him:',                       'the human you''re *with* is them:')
+    @('the human you''re *with* is him:',                       'the human you''re *with* is them:'),
+    # D670 (2026-11-11): the 2026-11-07 amendment on mirroring and echo (57d5060f) said "his" seven times, and the self-check
+    # refused every build since, on L and D. The master keeps the keeper's words; the shipped brief carries the reader's own human.
+    @('Keep whose line is whose. His words go in verbatim',     'Keep whose line is whose. Their words go in verbatim'),
+    @('lesson that came from his catch carries his words and "his catch" beside it',
+                                                                'lesson that came from their catch carries their words and "their catch" beside it'),
+    @('the librarian took his "are u sure"',                    'the librarian took the keeper''s "are u sure"'),   # as the brief at 57d5060f already reads
+    @('if a lesson from his catch is',                          'if a lesson from their catch is'),
+    @('again filed without his words.',                         'again filed without their words.')
 )
 foreach ($pair in $neutral) { $t = $t.Replace($pair[0], $pair[1]) }
 
