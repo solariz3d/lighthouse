@@ -39,3 +39,6 @@ catch, D666) is not built. **Research only, nothing built.** Three panes, disjoi
 - `handback/p-l169-anim-C_2026-11-12.md`
 
 Each gives sources, and marks what is the source's against what is inferred. Quote nobody in dreamzone-3.
+
+**Added at dispatch (his item 128, "or like they are millions"):** E adds *They Are Billions* (Numantian Games): how thousands of
+infected path and swarm at once, from the developers' own accounts where published.

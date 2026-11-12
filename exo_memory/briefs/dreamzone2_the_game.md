@@ -1016,3 +1016,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      calls): "i guess it wouldnt hurt to look into the ai pathing logic of known games or even open source projects, say like, what
      comes to mind is tower defense like games where many mobs path towards you at once, or like left for dead would be the ideal
      comparison for peak animations and pathing"
+128. 00:46, continuing 127: "or like they are millions"
+     - Read as *They Are Billions* (Numantian Games, 2019), the colony RTS whose zombie hordes number in the thousands. Added to
+       L169 E's list.
