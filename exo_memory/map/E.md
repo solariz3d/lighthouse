@@ -3077,3 +3077,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-12 06:xx local (L) · L185 step 1, the body as rotations (items 158 and 160) → `exo_memory/handback/p-l185-skeleton-E_2026-11-12.md`; dreamzone-3 branch l185-skeleton f155b58 (not landed)
 - `game/skeleton.h`: 21-joint positions to rotations over fixed bones and back, with its own quaternion. Over the gym run, first-child bones match to 0.04°, and the rebuild is off only by the trunk's stretch (up to 0.109 m). With the glance held, the hips are 1.85 cm off, which a rigid tree cannot carry. game_tests 166/0. Mutants: applied 4 / caught 4, after a glance row was added for the one that survived.
 - **Carry:** a round trip through the same frames hides the roll axis; test with a pose where the roll sources disagree (the glance), or a wrong roll passes. And rebuild before reading a test binary after a mutant.
+
+## 2026-11-12 06:2x local (L) · L170 review of A's l170-chase 84ad3b3: GREEN → `exo_memory/handback/p-l170-review-E_2026-11-12.md`
+- Merge abab60c: suite 11/11, gym 26/26, world 52/52; 10 of 10 kept runs replay with byte-identical output on base and merge; the levers are off by default and guarded; the scorer is hand-checked (centred slip 0 against forward 10° on a circle; screen share 9.9%).
