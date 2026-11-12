@@ -68,3 +68,20 @@ NEXT: librarian, rule on (a) and (b) when this is read; B then finishes step 2 a
   - **NARROW, and a factor is used, only if:** at least **100** Parks, and the middle half of the ratios lies within **±10% of their median**
     (25th percentile ≥ 0.90 × median and 75th percentile ≤ 1.10 × median). The factor is then that median, held by a test.
   - **Otherwise:** no factor, and **V5 is reported as failing at 1.34**.
+
+## 5. The path factor, measured against the registered band: NARROW, so it is used
+
+`factor_row.js` (a scratch chase test, not committed) run at 02:46:47Z under the ordinary lock (`factor.txt`), 8 minutes after the band was committed
+(acd2059b). Six worlds: seed 3 (the plain arena) and seeds 7, 11, 13, 17, 19 with the rich arena's Park rate (0.5), as seed 7's arena has. The registration
+said "four more seeds" and didn't name their dials; the higher rate gives more Parks, not a different ratio (inferred).
+
+| | |
+|---|---|
+| Parks measured (uncapped, matched, with a mesh path) | **475** (14, 88, 93, 90, 95, 95); capped 0, unmatched 0, no path 0 |
+| mesh ÷ generator: median | **0.835** |
+| 25th / 75th percentile | 0.808 (0.97 × median) / 0.890 (1.07 × median): **inside ±10%** |
+| min / max | 0.705 / 1.820 |
+| by kind | ladder ducts 468, mean 0.880; passages 7, mean 0.842 |
+
+**Narrow: yes.** The factor is **0.835**: the generator's graph way round is scaled by it, so its rating is the mesh's at the median. A test will hold it.
+Applied to the bots' 1.34, V5 would read about 1.12 (inferred; it is measured again after the change).
