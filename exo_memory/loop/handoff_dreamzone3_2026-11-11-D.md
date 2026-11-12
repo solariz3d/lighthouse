@@ -32,6 +32,10 @@ His word, 23:20: "get ready to stop and write the handoffs for dreamzone3 and li
     40/40, world selftest 52/52, fingerprints = main. A's hand-back §1: `p-d673-chase-A_2026-11-11.md` (lighthouse branch d664-a,
     3d059897). **Not in it yet (checked, `git grep` on db8e557): `PlayParams::run_length_s`** in `chase/play.h`, which the plan's
     amendment asks for (C's save rows and A's F1-F3 go through `play_streamed`). The overtime chase itself is not built.
+  - `d673-chase-wip` at **`fc8206d`** (on db8e557): **A's overtime chase as it stood, uncommitted, when Consonance was closed**,
+    saved by the librarian from A's worktree (`G:\consonance-scratch\a-d664-dz3`, left untouched) without building or running it:
+    `chase/play.h`, `play.cpp`, `dials.h`, `CMakeLists.txt`, and a new `chase/tests/overtime_tests.cpp`. Untested. Read it before
+    building on it; A's stop note never arrived.
   - `d673-frame` (C, `7f6385f` at 23:12): the half that needs nothing from the chase. Rebases onto `db8e557`. **Stopped clean at `8614983`**, rebased onto A's
     `db8e557` (from `7f6385f`, where world_app_tests were 43/43); **not rebuilt after the rebase**, so build and test it first. The A-dependent half (the endings, kept points, the timer notice, `won`, three rows) is
     written and kept in the evidence folder of C's stop note, `handback/p-d673-frame-C_2026-11-12.md` (lighthouse e745b632).
