@@ -182,6 +182,101 @@
 - **Waits for step 14:** breathing (the momentum tier, the dive roll), stretching (the burst), slicing (the bhop's top end), recursion (noclip).
 - **The dive roll past a real turn should not ship before the layer.** Without its cue it reads as a glitch, which is the very failure item 135 names.
 
+## 8. ADDENDUM, 2026-11-12 01:1x (his item 137): the base kit, and the near-miss surge
+
+**His words** (item 137, via the plan's design note at 4fd12f69): do all the movement mechanics, and let abilities change how you play. The base is sprint, slide, dive and wall-run. And a surge: getting close to corners, doorways or walls raises speed; it compounds and decays, like *Galactic Racer*'s surge.
+
+### 8.1 The base kit: what a player has with no abilities [code]
+
+| verb | as built | where |
+|---|---|---|
+| walk, crouch | 3.0 m/s; crouch 1.8 m/s | `sim/params.h:34`, crouch block |
+| sprint, two stages | 7.0 m/s in 0.6 s, then the long build to 8.75 m/s over 8 s | `params.h:35-40`; `world.cpp:837-851` |
+| jump | with coyote time and a jump buffer (0.12 s each); a released jump cuts the rise | `params.h`, jump block |
+| slide | at ≥ 5 m/s; +2 m/s, 1.5 s cooldown, halved within 3 s; **slide-hop keeps the speed** | `params.h:70-79`; `world.cpp:918-920, 1110-1128` |
+| dive → roll | at ≥ 5 m/s; landing from a dive always rolls, keeping 80 % | `params.h:112-122`; `world.cpp:264-274, 772-786` |
+| vault (automatic), mantle or climb | vault ≤ 1.1 m at ≥ 4 m/s; mantle ≤ 2.2 m | `params.h`, vault and mantle blocks |
+| wall-run (rare, short) and wall-kick | 1.6 s max; kick 6 up and 4.5 out | `params.h:93-108` |
+| ladders | climb and jump-off | `world.cpp:695-712` |
+| look-behind | V, view only | `game/bindings.cpp:22,106` |
+
+**Which of §5's shapes belong in the base** [option]
+- **B, the peak burns and a slide re-lights it:** base. It is realistic but for the re-light, cheap, and cueable now (§6, §7).
+- **C, the momentum tier:** base, as the near-miss surge's **container** (below). Both raise one top speed.
+- **A, the burst:** **an ability**, not base (abilities sheet P1/P2-like, or Galactic Racer's second stage, below).
+- **D, the bhop:** the endless perk only (item 57).
+
+### 8.2 The near-miss surge
+
+**Sources**
+- **Burnout 3: Takedown** (Criterion, 2004) [source: game guides and coverage via search; Burnout fandom wiki]:
+  - boost comes from "oncoming-lane driving, near misses, drifting, and air time", and tailgating;
+  - boost "can be used immediately… unlike previous Burnout games which required the boost meter to be full";
+  - a **Takedown** is the strongest source, and a streak counts takedowns "within 10 seconds of each other".
+  - **It is a meter you spend, not an automatic speed rise.**
+- ***Star Wars: Galactic Racer*** (Fuse Games, former Criterion staff) [source: coverage, Kieran Crimmins and Matt Webster]: two stages.
+  - The **Afterburner** "acts as a standard boost system and gradually refills".
+  - The **Ramjet** is "extremely fast but also generates a lot of heat"; keep it on too long and "you'll blow up your vehicle" (risk against reward). Webster wanted "a sort of tactical decision-making".
+  - **No near-miss boost was found for it** (the librarian's check, item 137's note, and mine). No numbers are published for heat or cooldowns.
+- [inferred] **His surge is Burnout's near-miss source feeding an automatic tier**, and Galactic Racer's heat is the shape of its risk.
+
+**What counts as a near miss** [option, against the plan's rule: reward the pass, not the hug]
+- **N1, a convex edge passed at speed:**
+  - the player's path comes within **0.6 m** of a convex corner's apex (an outside wall corner, or a door frame's jamb);
+  - at **≥ 0.9 × the current top speed**;
+  - **and the heading turns ≥ 30° round it, or passes through the frame** (a doorway crossed).
+  - Parallel walls never count: they are flat, not convex.
+- **N2, a chaser passed:**
+  - a chaser's body within **1.6 m** (just past `catch_reach`'s limit of 1.3 m, `chase/dials.h:21`) **and no catch**;
+  - at **≥ `sprint_speed`**;
+  - the chaser **closing**, not parallel (the relative velocity points toward the player).
+  - That is item 53's proximity and L164's option F, the juke made countable.
+- **Where the edges come from** [code, inferred]: the generator knows its doors and walls per cell (`EdgeKind::Door`, `Threshold`, `HomeDoor` … in `gen/src/emit.cpp:22-25`), and the walk graph knows its corners. A per-chunk list of **edge points** (convex corners and door jambs), handed out the way `WorldFacts` hands out reprieves (`chase/run.h:58`), would let the sim test N1 with no ray casts. It is **gen's** change, small and deterministic.
+
+**The numbers** [option; the first values are for bots, then his feel]
+
+| parameter | value | why |
+|---|---|---|
+| gain per N1 (an edge) | **+0.25 m/s** | small, so corners pay a little |
+| gain per N2 (a chaser) | **+0.6 m/s** | the danger pays more |
+| compounding | additive, into the **momentum tier** (`flow`, `world.cpp:163-174`), not a second tier | one top speed, one cue |
+| **cap** | surge ≤ **+2.0 m/s** above the run's top, **and never above 12.4 m/s at base** (the human line, §6). Past 12.4 only with an ability, and then it is a cued bend | |
+| **decay** | holds **1.5 s** after the last near miss, then falls **0.6 m/s per second** | the flow tier's own `flow_decay_time` is 1.5 s (`params.h:52`) |
+| **per-edge cooldown** | **8 s per edge id**: one doorway can't be farmed by circling | Burnout's 10 s streak window is the scale |
+| per-chaser cooldown | **4 s per chaser** | one chaser can't be farmed either |
+| a hard stop (< 3.5 m/s) | the surge drops to 0 | the flow tier's `flow_break_speed` (`params.h:53`) |
+
+**Two variants on top** [option]
+- **S-a, automatic** (his wording): the surge raises the top speed directly. The simplest; it reads as "danger made me faster".
+- **S-b, Galactic Racer's heat:**
+  - near misses fill the tier as above, but **holding it above a line builds heat, read as stress** (queue step 5);
+  - at "redline" the stress roll comes early (the frenzy's 75 %, or a virtue's 25 %, items 28, 32).
+  - It gives the surge a cost and a reason to let it fall. **It needs stress, so it comes later.**
+
+**Its bend and its cue** (§6, §7)
+- **A bend:** a real runner loses speed at a corner and near a body.
+- **Its justification:** the dream feeds on **fear survived**. Passing close to danger, a corner you could have hit or a hand that almost closed, pays you in speed. The hunter feeds on straight lines (item 18), and the dream feeds you for breaking them.
+- **The cue:**
+  - **tracers**, which work now (§7, a `taaHistory` nudge);
+  - a step of **colour enhancement** per near miss, which also works now (`saturation`);
+  - on N2, the **chaser's smear** as you pass. It is the accidental ghosting today (§7) and the layer's tracer on that chaser later;
+  - and a sound for each pass: a short whoosh, Burnout's near-miss cue in spirit.
+
+**Its tie to XP** (items 53, 57, 58)
+- Each near miss is a **chain link** (L164 option F).
+- **N2 pays far more XP than N1**, with the proximity multiplier of item 53 (the closer the chaser, the more).
+- N1 pays little, so corner-farming is not worth the cooldown.
+- An ability that makes near misses easier (abilities sheet P4 dive roll, P6 sure feet) makes you **do** more of them, item 58's rule, not pay more for each.
+
+**What bots measure, and what only he can** [inferred]
+- **Bots:**
+  - near misses a minute for each policy (flee, juke, line);
+  - that the per-edge cooldown holds (a loop-one-door bot gains nothing after the first pass);
+  - the surge's mean and peak;
+  - the catch-rate change in A's paired 150-seed blocks;
+  - that the base never exceeds 12.4 m/s (an invariant row).
+- **Only he:** whether it **feels** like "danger made me faster" or like a random speed-up, the thresholds (0.6 m, 1.6 m, 30°), and the cue's strength.
+
 ## Sources
 
 - Call of Duty Wiki: "Tactical Sprint", "Double Time" (fandom).
