@@ -67,3 +67,7 @@ COD's slide cancel is a bend (an exploit made a feature). Item 57's late bhop is
   - a **near miss**, cutting close past a convex edge or a chaser.
   - Both feed one compounding, decaying surge. Check Galactic Racer's surge from sources, and weight the overtake above the near
     miss (it is rarer and riskier).
+- **Ruled 01:22 (his items 139–140):** the surge's per-source cooldowns become **diminishing returns**: a repeat source pays less
+  within a window, never zero. **The base surge stays limited**, by its cap (+2 m/s, ≤ 12.4 m/s) and its hold (≤ 10 s). **Abilities
+  raise them**, so "nutty speed lines" are the upgraded player's. E: in §8.4, propose the decay curve per repeat and which abilities
+  lift which limit (the abilities sheet's P1, P2, P3, P6, Ψ3, and the burst as an ability).

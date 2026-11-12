@@ -1062,3 +1062,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - So Galactic Racer's surge is earned by **overtaking**. His idea fuses that with Burnout's near miss. In Dreamzone, the
        overtake would be getting past a chaser that is in your way, ahead of you, without being caught; the near miss is cutting
        close past an edge or a chaser. Both feed one decaying, compounding surge.
+139. 01:21, asked what the surge's per-source cooldowns are for: "cooldown?"
+140. 01:22, his ruling: "diminishing returns, i mean, people should be able to create nutty speed lines, but say the basic gameplay
+     mechanic is limited for the boost, until you get ability that upgrades it."
+     - Ruled:
+       - **Diminishing returns replace the per-source cooldowns.** The same chaser or edge pays less each time within a window, never
+         zero (Tony Hawk's rule, E's L164).
+       - **The base surge is limited** (the cap and the hold E proposed in §8.3).
+       - **Abilities raise the limits.** "Nutty speed lines" are the skilled, upgraded player's.
