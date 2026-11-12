@@ -1099,3 +1099,5 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - Found in the replay of `run-20261112-080329` (seed 3, brutal, 682fb36). At 252.0–254.0 s, at x −56.5, z −502, he falls from
        y −3.9 to −21.0 (17 m in about 1.5 s) with almost no horizontal speed. Inferred: a shaft beside a widened straight flight
        (B's L161 wide stairs, `stair_width` 4.2, whose well takes the two cells west of the junction).
+150. 02:22: "instead of making our own animations from scratch, dont you think it could be good to research open source alternatives, not
+     to use, but to learn from"
