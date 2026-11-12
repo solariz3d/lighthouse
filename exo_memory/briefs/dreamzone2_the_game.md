@@ -1019,3 +1019,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 128. 00:46, continuing 127: "or like they are millions"
      - Read as *They Are Billions* (Numantian Games, 2019), the colony RTS whose zombie hordes number in the thousands. Added to
        L169 E's list.
+129. 00:48, the point of L169: "but remember the leftfordead pathing logic documentary, it was like, back peddaling while being chased,
+     the infecteds pathing and animations had this like momentum or inertia with themm that felt life like, not just a straight line
+     right at you artificially most optimal path"

@@ -42,3 +42,15 @@ Each gives sources, and marks what is the source's against what is inferred. Quo
 
 **Added at dispatch (his item 128, "or like they are millions"):** E adds *They Are Billions* (Numantian Games): how thousands of
 infected path and swarm at once, from the developers' own accounts where published.
+
+**Added 00:48 (his item 129), the focus for all three:**
+- He remembers a Left 4 Dead pathing documentary or video: the player backpedals while being chased, and the infected's pathing and
+  animation carry momentum and inertia that feel alive, "not just a straight line right at you, artificially most optimal path".
+- **E:** find that piece (a talk, video or article), and say what it shows.
+- **A:** find in NextBot and Booth's method exactly what makes a pursuer NOT take the optimal line:
+  - path smoothing and look-ahead;
+  - steering with momentum;
+  - local avoidance;
+  - path randomization;
+  - animation-driven speed.
+- **C:** how the animation carries that weight.
