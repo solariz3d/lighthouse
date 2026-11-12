@@ -974,3 +974,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Once the beanbag meditation setup is unlocked (item 49), its spectral menu in the cosmic out-of-body realm shows the
       "enchantment" buffs (the quirks) on his cosmetics, and there they are removed or locked, as in Darkest Dungeon (items 112).
     - So quirk management lives in the chair's out-of-body menu, not in a shop or the washer.
+119. 2026-11-11 18:08 (on D), the shop's reroll cadence: "every run is every day since they wake up then sleep"
+    - One run is one night: he sleeps, runs, wakes. So "every day" and "every run" are the same: the shop restocks and rerolls
+      once per day-night cycle, between runs.
