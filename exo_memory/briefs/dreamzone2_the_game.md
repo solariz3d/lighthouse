@@ -1003,3 +1003,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Luck acts on chests: they spawn more often, roll better loot, and can give several things at once (a Megabonk-style open:
       more abilities or items in one chest; item 41's slot-machine opening).
     - Item 94's "luck for longer safe zones" is superseded by this.
+125. 2026-11-11 18:37 (on D), on the Park's erosion creep (D665 section 3g: erosion starts at the entry 10 s after first entry and
+    creeps along the passage at about 3 m/s): "lets do 15 seconds"
+    - Yes to the creep, with the start at **15 s** after first entry (item 54's 10 s becomes 15). Creep speed as proposed, about
+      3 m/s, to be tuned in play.
