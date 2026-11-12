@@ -1077,3 +1077,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      and a bot test; counts by E's G2 + M3): "okay we can try it"
 143. 01:34: "my friend said we could get rich off of this game concept if it was ported to roblox when its done lol"
 144. 01:35: "keep it in mind for when we are done, i like the idea of micro transactions we could suck their parents wallets dry lmfao"
+145. 01:36–01:37, on Roblox monetization: "you dont get it, look at every other game on roblox, it has these like micro transactions or
+     lootboxes that create a waterfall of profit", then "dont research this yet, this is like towards the end, just keep it
+     documented, we have a lot more important work to do right now"
+     - Documented only. Paid random items (eggs, crates) are common and allowed on Roblox with the odds shown (the librarian
+       overstated the risk at first; his correction). **No research until the list is done.**
