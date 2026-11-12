@@ -936,3 +936,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The dream drops are iconic, resonant-tier cosmetics never sold in the store: lore-based legendary items (each tied to the
       story: the previous owner, the agencies, the ledger, the hospital, the father).
     - Added at once (18:00): "that are unique": each lore legendary is unique, one of a kind in a save; never a duplicate.
+114. 2026-11-11 18:01 (on D), the father's item: "i think it should be his fathers watch, not hoodie."
+    - The father's late-game item is his **watch**, not a hoodie. The father's hoodie is dropped from the story.
+    - The watch: the pale band on his left wrist (he wore it after the funeral; it went missing the night of his first run); found
+      in the dreamzone; the late-game unlock behind the hospital door (story bible item 6's placement, now the watch); it fills the
+      reserved left-wrist slot, a trinket (item 47), unique.
