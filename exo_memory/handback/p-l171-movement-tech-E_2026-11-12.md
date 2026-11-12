@@ -121,6 +121,37 @@
 - **Bots:** the catch rate per shape, with a chaining policy and a plain one (A's paired method); how long the burst or peak is held; chain length; and that `kBaseMove` holds (the world's fingerprints unchanged).
 - **Only he:** whether the reset reads as fun or as a chore, whether the rhythm is "no dead time" or busywork, and which feedback sells it.
 
+## 6. Realistic or a bend? (his item 135, added 01:1x)
+
+**His rule** (item 135, via the plan's addition): mostly realistic, bent stylistically where the setting and lore make sense of it. It is a dream, the in-between.
+
+**A principle for every bend** [inferred]
+- **A bend reads as dream-logic when it is consistent and announced, and as a bug when it is silent or random.**
+- So every bend gets **the same signature cue**, every time it acts, and nothing realistic ever gets it. The player learns that one cue means "the dream gave you this", the way a game's hit-flash means a hit landed.
+- **A suggestion for that signature:** a brief **chromatic shimmer** at the screen's edge (the renderer's existing `chroma` term, `render/renderer.h:94`, pulsed for ~0.2 s), and a soft **inhaled, reversed breath**, one sound used for every bend. It costs almost nothing: the grade pass runs at 0.03 ms (`render/CHANGES.md:153`).
+- It fits item 27's "base dream like quality" and the look hand-back's effects, and it uses no Gateway words (item 26).
+
+| tech | realistic or bend | if a bend: what in the dream justifies it | its cue (beyond the shared signature) |
+|---|---|---|---|
+| **The two-stage sprint** (surge, then the long build, today) | **Realistic.** Humans reach about 90 % of top speed in 2.3–2.8 s; the longer climb is a game stretch (my L161 speed hand-back). | — | none needed. The FOV widening already shows speed (`game/camera.cpp:147-154`). |
+| **The peak burns after ~10 s** (shape B's fade) | **Realistic.** USATF: top speed "can only be maintained for approximately 40 meters" (L161), about 3–4 s for a sprinter. A fade after 10 s is generous to the player, not a bend. | — | breath. The camera rig's breathing and winded slump (the first game's, carried over) show it. |
+| **A slide re-lights the peak, or refreshes a burst** (shapes A, B) | **A bend.** A slide costs a real body speed; it never refills it. This is COD's slide cancel made a rule, the plan's first named bend. | The dream runs on **motion, not muscle.** In the in-between, the body is a thought of a body, and breaking a line re-lights it. Stillness, not effort, is what tires you here: the hunter feeds on a straight line (item 18). | the shared signature on the re-light, plus a short **rising tone** under the music. The FOV takes a small pulse back up. |
+| **Slide boost and slide-hop keeping speed** (today) | **A mild bend.** A real slide decelerates at once, and a jump out of one loses most of its speed. | The same: motion begets motion. | the signature on the slide-hop only, not the plain slide (a slide's boost is close enough to real to go uncued). |
+| **The momentum tier** (shape C: each clean move raises the top speed toward 10 m/s) | **A mild bend.** A vault or a roll costs a real runner speed. 10 m/s itself is a trained sprinter's real top (L161). | The dream **rewards flow**: a body that keeps moving goes further than it could in the waking world. It is item 32's resonant aura in miniature, the signal of moving without fear. | the signature on each step up the tier; a **counter** or **pitch ladder** that rises with chain length (item 53's multiplier UI). |
+| **The burst itself** (shape A: speed above the run's top, for a few seconds) | **A bend if it passes about 12.4 m/s** (the fastest human measured, L161). Below that it is a realistic sprint tier. | A burst past human speed is **the dream leaking through**. Keep it under 12.4 at base so the bend is the upgrades' (abilities sheet P2, Ψ3), not the base's. | above 12.4 only: the signature, plus **tracers** on the edges (the look hand-back's "tracers" via TAA history weight, about zero cost). |
+| **Air strafing and the late bhop** (shape D; item 57) | **A strong bend**, the plan's second named one. Steering and gaining speed in the air breaks physics outright. | **The late perk is the bend earned:** by endless, the character has learned the in-between well enough that **intent steers the body** where the waking world would not. It is the only bend that lets a body outrun what hunts it, which is exactly endless's purpose (item 57: survive the dark one, not escape it). | the signature on each gaining hop; a **hum** whose pitch climbs with the speed gained; **air ripples** from the feet at take-off. Silent when the perk is not owned, because the base hop gains nothing. |
+| **Coyote time, the jump buffer, the soft speed cap** (today) | **Invisible game conventions**, not bends a player perceives. | — | **none.** Cueing them would teach the player a bend that is meant to go unfelt. |
+| **The dive roll following the head** (abilities sheet P4) | **Mostly realistic:** a roll can be steered a little by the shoulders. | Fully view-steered, it is a mild bend: the dream's body goes where you look. | the signature only when it turns more than a real roll could. That needs a threshold (an angle per second), a number for him. |
+| **The somersault over a chaser** (abilities sheet P5) | **Realistic for an athlete** over something waist-high. **A bend** over a full-height chaser. | Over a full-height one, the chaser is **less solid than it looks**. The lesser entities are "thought forms" (the 1983 paper's ¶33, brief item 25's lore), and you pass through their top. | the signature, plus the chaser's form **smearing** as you pass over it. |
+| **The noclip power-up** (item 29) | **The largest bend**, by his own design: "very rare… too op". | It **is** the in-between shown: the walls are thin, and beyond them is the void he described. | his own description is the cue: the void beyond the walls, seen only in that state. |
+
+**What this changes in the shapes** [inferred]
+- **Shape B** is the most **realistic** (its fade is real); only its re-light is a bend.
+- **Shape A's** reset is a bend by definition.
+- **Shape C** is a mild bend throughout.
+- **Shape D** is the strong bend, kept for endless.
+- His rule therefore orders them, most realistic first: **B, then C, then A, then D**. With the cue grammar, every bend in them can be shown as the dream's, not the code's.
+
 ## Sources
 
 - Call of Duty Wiki: "Tactical Sprint", "Double Time" (fandom).
