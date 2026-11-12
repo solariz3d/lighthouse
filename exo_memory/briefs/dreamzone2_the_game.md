@@ -1022,3 +1022,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 129. 00:48, the point of L169: "but remember the leftfordead pathing logic documentary, it was like, back peddaling while being chased,
      the infecteds pathing and animations had this like momentum or inertia with themm that felt life like, not just a straight line
      right at you artificially most optimal path"
+130. 00:50, sharpening 129: "not just back pedalling, since you cant walk backwards fast enough, but looking back and seeing them
+     behind you slosh around corners is scary."
+     - So the test is what the look-behind (V) shows: pursuers that swing wide and slosh around corners behind him, their momentum
+       visible.

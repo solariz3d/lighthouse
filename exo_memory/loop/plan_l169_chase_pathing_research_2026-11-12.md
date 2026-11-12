@@ -54,3 +54,8 @@ infected path and swarm at once, from the developers' own accounts where publish
   - path randomization;
   - animation-driven speed.
 - **C:** how the animation carries that weight.
+
+**Added 00:50 (his item 130):** the measure of success is what the **look-behind** shows. Glancing back mid-sprint, he sees pursuers
+**slosh around corners**: swinging wide, overshooting, carrying momentum. A: the levers should also be scored on that (for example,
+the lateral overshoot past a corner's inside line, measured from the runner's view). C: what animation sells a pursuer sliding wide
+around a corner.
