@@ -87,3 +87,20 @@
   - **A scraped step turns the velocity in one tick:** `chaser.cpp:394-418`, his run at 19.34 s, 213°/s.
   - **A refused step zeroes the speed in one tick:** `chaser.cpp:418-421`, at 30.65 s. The tilt pitches the hunter back to about −30° for about 0.3 s (estimated by C).
   - The sourced tilt draws them as written. The fix is the chase's: no instant velocity changes, under the same replay gating as the sway.
+
+## L182 widened by his item 164 (04:18): the chase's lines. A, after L170 measures. Every step sourced.
+His words: "gets caught on walls and door ways too much … able to turn way too fast keeping speed, it needs to find better lines to keep speed, not abusing little speed scrub on turning".
+1. **A line with clearance, looking ahead** (A's L-I1):
+   - Sources: NextBot's `m_minLookAheadRange` (`NextBotPathFollow.cpp:463-523`); DetourCrowd `optimizePathVisibility` / `calcSmoothSteerDirection` (`DetourPathCorridor.cpp:310-352`, `DetourCrowd.cpp:104-133`, zlib); Booth's slides 12-14 and 28.
+   - The chaser aims down the path, off the corner's inside edge, so it enters wide and carries speed out. It no longer hugs the inside and scrapes.
+2. **Pushed off walls before touching** (A's I3): NextBot `Avoid` (`NextBotPathFollow.cpp:874-1083`), two feelers left and right that rotate the goal away from a blocked side.
+3. **A real turning limit at speed:**
+   - A body at speed v cannot turn tighter than its sideways grip allows. Take the limit of speed against curve radius from a **cited human curve-running study**, for example Chang & Kram 2007, J Exp Biol 210, "Limitations to maximum running speed on flat curves". The pane reads it; the librarian has not.
+   - The hunter's catch power then comes from the **line**, not from turning on the spot with a small scrub.
+   - **Check against L170's P3** (`corner_floor_speed`, a floor on corner speed). P3 raises the speed held through a corner. **If P3 lands, it must not raise the turn rate at speed beyond the cited limit.** Read P3's arms with that in mind.
+4. **The sway out, and no instant velocity changes** (as above, from his item 157 and C's L180 trace), behind a version or dial so kept runs still replay.
+- **Tests (red first):**
+  - wall contacts per minute (scrapes, refused steps) fall against the control in both 150-seed blocks;
+  - the largest turn rate at each speed stays inside the cited curve-running limit;
+  - the catch rate is reported against L170's bars, as a price, not a target: his complaint is how it moves, and the catch is read alongside.
+  - His eye on a run is the last bar.
