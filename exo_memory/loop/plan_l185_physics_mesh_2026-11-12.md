@@ -31,3 +31,15 @@
 5. **One reaction** (layer 3): a wall brush with the hands (item 159) for the player, and the catch for the hunter.
 - Each step is its own lap with tests red first, captures, and his eye.
 - Cost is read, not timed on L. A timed run on the desktop before more than the hunter and the player get ragdolls.
+
+## His pick for the player (brief 162), after L186 (`handback/p-l186-physics-player-E_2026-11-12.md`)
+- **K1:** the eye rides the head body of the player's ragdoll, filtered toward `camera.h`'s springs, with `camera_effects` still taking it to nothing (the Mirror's Edge guard).
+- **K2:** the player's arms, torso and head react physically: hands meet walls and slide (item 159), and landings and hits show in the body.
+- **Picture only,** in the L185 system. The aim's yaw and pitch pass through untouched.
+- **K3 dial (experimental):** inertia on direction reversals only, **off by default**. It is in the sim, so replays must stay byte-identical with the dial at 0. The bots measure input-to-motion and the juke (A's paired method) before his hands.
+- **Order:** after L185 steps 1–2, E's L186 §3 steps 2–4. Then the K3 dial as its own lap.
+- **Tests (E §3):**
+  - (a) replays byte-identical;
+  - (b) with `camera_effects` 0 the eye equals today's to the millimetre;
+  - (c) the aim equals the input every tick;
+  - (d) the K3 dial at 0 changes nothing.
