@@ -1070,3 +1070,5 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
          zero (Tony Hawk's rule, E's L164).
        - **The base surge is limited** (the cap and the hold E proposed in §8.3).
        - **Abilities raise the limits.** "Nutty speed lines" are the skilled, upgraded player's.
+141. 01:26, after §8.4: "but see now i think we are making the player too fast now, need to make the ai pathing good, perhaps every
+     mob gets their own unique ability or passive to level the field"
