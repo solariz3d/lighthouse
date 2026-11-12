@@ -1,3 +1,5 @@
+**SUPERSEDED 03:3x by `loop/plan_l180_animation_from_the_sources_2026-11-12.md` (his picks, brief 155). Kept as the trace.**
+
 # L178 (queued, after L177 and L174 land): the animation's hard rework toward real procedural movement (his item 152). Librarian, on L, 2026-11-12 03:1x local
 
 **His words:** `briefs/dreamzone2_the_game.md` 146, 147, 150, 151, 152 ("the overall animation as well needs a hard rework, same with the player animation looking down, it needs to be more accurate to real procedural movement").

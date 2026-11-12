@@ -1110,3 +1110,4 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - Read as: remove the home-made lean (L173's spring chain on main, c83f8dc) and the home-made L177 plan; build what the research found instead. Trace of how it happened: librarian/2026-11-12.md, 03:1x.
 154. 03:11: "cant we learn how they did animations too? we need to get them right first"
      - "They" read as Left 4 Dead / Valve (item 129's documentary, Booth). "Right first": research before building. L177b and L178 wait for L179's research.
+155. 03:3x, his picks after L176 and L179 (both halves): **the lean is both, tilt first** (Overgrowth's tilt from acceleration now; Valve's slide when A's SLIP lands); **while sliding, the hunter faces you** (Valve: the facing holds on its target at a capped rate while the legs run along the travel); **the climb uses Overgrowth's grips** (procedural; no clips). Plan: `loop/plan_l180_animation_from_the_sources_2026-11-12.md`.

@@ -1,3 +1,5 @@
+**SUPERSEDED 03:3x by `loop/plan_l180_animation_from_the_sources_2026-11-12.md` (his picks, brief 155). Kept as the trace.**
+
 # L177b: remove L173's home-made lean; build the lean the research found (his items 151–153). Librarian, on L, 2026-11-12 03:1x local
 
 **His words:**
