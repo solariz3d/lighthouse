@@ -316,6 +316,51 @@
 - **Bend and cue:** as §8.2. The **overtake gets its own sound**, a rising sweep distinct from the near-miss whoosh, so the player learns which earned what. The chaser smears as you pass it (§7).
 - **Bots can measure:** overtakes a minute for each policy (a juking bot should overtake interceptors; a straight-line one should not), that the hold cap holds at 10 s, that nothing exceeds 12.4 m/s at base, and the catch-rate change in A's paired blocks.
 
+### 8.4 RULED 01:22 (his items 139–140): diminishing returns, not cooldowns; the base limited, abilities lift it
+
+**His ruling** (items 139–140, via the plan at c0e3a06): no cooldowns. A repeat source pays less within a window, never zero, "people should be able to create nutty speed lines", but the basic mechanic is limited "until you get ability that upgrades it". **§8.2's and §8.3's per-source cooldowns are superseded by this.**
+
+**The curve** [option]
+- A source is one edge id or one chaser id.
+- Its **k-th payout within the window** is multiplied by **m(k) = max(floor, 0.5^(k−1))**: 1, 0.5, 0.25, then the **floor 0.15** for every repeat after.
+- **The window is 20 s since that source last paid.** A source unused for 20 s is fresh again (k = 1).
+- The multiplier applies to **both** the speed gain and the hold time added.
+- Never zero. That is Tony Hawk's repetition rule (L164 §5: "Using the same trick repeatedly in your Combo causes that Trick's score to drop").
+
+**Worked example, against a real line** (simulated: `node -e`, the surge as §8.3 plus this curve, 0.05 s steps; the base limits are cap +2.0 m/s, hold ≤ 10 s, decay 0.6 m/s per s after the hold)
+
+| | events | surge at 5 s | at 10 s | at 15 s | at 20 s |
+|---|---|---|---|---|---|
+| **The farm:** one door jamb, passed every 4 s for 40 s | the same edge 11 times: ×1, 0.5, 0.25, then 0.15 every time | 0.00 | 0.00 | 0.00 | 0.03 (it never rises above **0.20**, the first pass) |
+| **A real line:** overtake an interceptor (1 s), two edges (2.5, 4 s), a pack near miss (5.5 s), overtake a pack flanker (6.5 s), two more edges (8, 9.5 s), overtake a second interceptor (12 s), an edge (14 s) | nine different sources, each ×1 | 1.20 | **2.00** (capped) | **2.00** | 0.00 (decayed after the hold ran out, ~17 s) |
+
+- **Why the farm fails without a cooldown:** each repeat adds less hold than the 4 s it took to come round. So the hold runs out, the surge decays at 0.6 m/s per s, and the floor's +0.03 per pass never outpaces it.
+- **A real line stays capped as long as new sources keep coming.** That is the "nutty line" at base, limited only by the cap.
+- [inferred] **The floor matters only for loops with many sources.** Circling a block with four corners every 6 s pays 4 × 0.03 ≈ +0.12 a loop after the first ones. That is still under the decay, so it fails too. A **chaser** passed again is a new event only if it got ahead of you again, which is real play, not a farm.
+
+**Which abilities lift which limit** [option; the abilities sheet's ids]
+
+| limit | base | lifted by | to |
+|---|---|---|---|
+| the surge's cap above the run | +2.0 m/s | **P2 Long Stride** | +3.0 m/s |
+| the absolute ceiling (the human line) | 12.4 m/s | **P2 Long Stride** | 13.5 m/s, a cued bend (§6, §7) |
+| the hold cap | 10 s | **P1 Quick Start** | 14 s, and each overtake adds +4 s instead of +3 |
+| the decay after the hold | 0.6 m/s per s | **P6 Sure Feet** | 0.35 m/s per s; and "ends on impact" (§8.3) halves the surge instead of ending it |
+| the repeat curve | floor 0.15, window 20 s | **P3 Long Slide** | for **edges passed in a slide**: floor 0.3, window 12 s. Doorway slide-lines become the slider's speciality |
+| all of the above, briefly | — | **Ψ3 Overclock** | for its duration: no cap above the run, no 12.4 ceiling (up to the soft cap of 14 m/s, `sim/params.h`), every gain ×2. A cued bend |
+| a different use of the surge | — | **The burst** (shape A, as an ability) | **spends** the banked surge, Burnout-style: the current surge × 2 as a burst above every cap for 3 s, then the surge is 0. A choice: keep it, or cash it in |
+
+- **Stacking:** with P1, P2, P3, P6 and Overclock all owned, a line holds +3.0 for 14 s, decays slowly, survives a bump, and briefly goes past 14 m/s under Overclock. Those are his "nutty speed lines", and they belong to the upgraded player.
+- **Nothing moves the world:** voids are sized from `kBaseMove` (`gen/src/gen.h:138`).
+
+**What bots measure** [inferred]
+- The farm and real-line examples above, as rows: a loop-one-door bot never exceeds +0.2.
+- A varied-line bot reaches the cap.
+- With each ability on, its limit moves and only its limit.
+- Nothing exceeds 12.4 m/s at base.
+
+**Only he** judges whether 0.5 per repeat with a 0.15 floor feels fair, or too stingy for the lines he means.
+
 ## Sources
 
 - Call of Duty Wiki: "Tactical Sprint", "Double Time" (fandom).
