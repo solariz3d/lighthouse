@@ -85,3 +85,71 @@ said "four more seeds" and didn't name their dials; the higher rate gives more P
 
 **Narrow: yes.** The factor is **0.835**: the generator's graph way round is scaled by it, so its rating is the mesh's at the median. A test will hold it.
 Applied to the bots' 1.34, V5 would read about 1.12 (inferred; it is measured again after the change).
+
+## 6. The factor in the generator, and step 2 committed on the branch (NOT landed; with the kit, per ruling (b))
+
+dreamzone-3 **`1eea919`** on `d665-variety-b` (after step 1 `2d72bd2`), worktree `C:\Users\nname\Desktop\worktrees\dz3-d658-b`, NOT pushed. Run under
+the ordinary lock after P's landing window (`f2_*.txt`, `f3_*.txt` in my scratch `d665b\`).
+- `gen/src/gen.h` `HunterModel::path_factor = 0.835`; `gen/src/graph.cpp` `detour_seconds` returns the graph's way round times it (and the capped
+  lower bound too).
+- **The holding test, its bar fixed before it ran:** `chase_tests` `the_generators_way_round_is_the_meshs_at_the_median`: the same six worlds, every
+  uncapped Park, mesh ÷ generator; at least 100 Parks, the middle half within ±10% of the median (the registered band), and the median within **5% of
+  1**. **Green:** 380 Parks (fewer: the factor keeps fewer), median **1.000**, p25 0.967, p75 1.073, min 0.845, max 2.180; unmatched 0, no mesh path 0.
+- The hunter-model row: green (walk 8.960, stairs 6.272, ladder 1.500, drop 1.600 s, both sides).
+- **Amended by name:** `nav` `reprieve_detours_on_the_mesh_agree_with_the_generator`, line 173: "the joined graph is no slower than the generator's
+  figure" now takes the factor back out (`on_graph * path_factor <= detour_s`; it was `on_graph <= detour_s`). Its rule changed with ruling (a): the
+  generator's figure is no longer a graph time. Green after (`f3_nav.txt`); its mesh-to-graph tolerance (0.70 to 1.05) is untouched (least 0.770).
+- **Red on the branch, as ruled, and not amended:**
+  - `gen` `no_reprieve_has_a_quick_way_round_on_the_assembled_graph` (:245 the shortcut check; :255 0 passages of 213 judged).
+  - **New:** `gen` `the_default_dials_land_in_their_ranges_over_200_seeds_in_each_biome` (:104): the hotel's Parks per chunk **0.119**, its band
+    0.12 to 0.32 (the apartment's 0.116 is inside 0.10 to 0.30). It was 0.150 before the factor (`s2_gen.txt`). This is ruling (b)'s "Parks must not
+    vanish", measured: the kit has to green it.
+- Not run: the whole suite, the bots' V5 again (that waits for the kit, since steps 2 and 3 land together).
+
+## 7. Step 3, measured before building: in this grid only VERTICAL Parks can buy time, and ruling (b)'s price of the crossing leaves almost none
+
+A scratch gen row (`scratch_d665_kit_shapes`, never committed; `f4_shapes.txt`, run 03:26:38Z under the ordinary lock, the code at `1eea919` plus the
+row). Seeds 1 to 8, default dials, the block 60 cells square × 6 storeys, sites with their lane ends inside x and z −12 to 23. For every place a
+shape fits through solid mass between two lane cells: the hunter's way round on the assembled graph × 0.835, and what the shape buys = way round − its
+own crossing, the crossing priced two ways:
+- **the hunter's speeds** (ruling (b)): walk 8.96 m/s, ladder 1.5 m/s per 4.8 m, a drop 1.6 s a storey;
+- **the player's speeds** (`sim/params.h`): sprint 7 m/s, ladder up 2.6 m/s + 0.3 s to step off, a fall under fall gravity 37.5 m/s² (from
+  jump_apex 1.2 m in 0.32 s, × 1.6), + the 0.4 s stagger past 6 m.
+
+| shape | sites | way round, median | buys, hunter's crossing: median / 5 s+ | buys, player's crossing: median / 5 s+ / 3 s+ |
+|---|---|---|---|---|
+| row run (today's passage) | 99 | 2.8 s | 1.2 / 0 | 0.6 / 0 / 0 |
+| column run | 131 | 2.8 s | 1.2 / 0 | 0.6 / 0 / 0 |
+| turn (an L through a corner) | 661 | 1.7 s | −0.3 / 0 | −0.7 / 0 / 0 |
+| duct, one storey up (today's) | 62 | 4.8 s | 1.0 / 2 | 2.3 / 6 (10%) / 26 (42%) |
+| two storeys up | 28 | 8.0 s | 0.9 / 0 | 3.9 / 4 (14%) / 14 (50%) |
+| duct and a run on the storey above | 65 | 6.6 s | 1.9 / 4 | 3.1 / 9 (14%) / 35 (54%) |
+| **chute, one storey down** | 43 | 4.3 s | 2.0 / 6 | **3.0 / 16 (37%) / 27 (63%)** |
+| **chute, two storeys down** | 12 | 5.8 s | 2.0 / 0 | **4.0 / 5 (42%) / 7 (58%)** |
+
+What it says:
+1. **A Park on one storey never pays in this grid**: 0 of 891 sites buy even 3 s, at either price. Lanes cross every band (18 m), so the way round any
+   gap in the mass is under 3 s. Runs and turns can be the middle of a Park, never a Park.
+2. **The vertical shapes pay, and the chute best**: a fall is nearly free for the player (0.43 s a storey), the hunter's way down by the stairs is not.
+3. **Priced at the hunter's speeds, almost nothing pays** (12 of 1,101 sites, 1%), whatever the kit. Ruling (b) took the crossing at the hunter's
+   speed because I proposed it so (§3b: "the way round minus its own crossing, at the hunter's real speed"). **That was my framing, and I now think it
+   is wrong:** what a Park buys is the lead the PLAYER gains: the hunter's way round minus the player's own time through. The hunter never crosses it.
+   Priced so, the ladder (2.6 m/s against 1.5) and the fall (0.43 s against 1.6) change everything.
+
+**B's view (the room decides; what would change my mind follows each):**
+- **(i) The crossing at the player's speeds** (above). Changes my mind: if the room wants the margin for a slow or unskilled player; then the player's
+  walk speed (3 m/s) on the flat instead of the sprint, which costs the shapes with runs most.
+- **(ii) The kit is vertical, with the chute first:** chute (one or two storeys down, one way), ladder up (today's duct), two storeys, a ladder and a
+  run; runs and turns only as middle pieces, which add shape (V6) but not time. The length chance (0.7 to 3 pieces, then 0.35) then counts middle
+  pieces of a vertical Park. Changes my mind: a measure of the room piece (a block of mass made into the lit room) that shows a horizontal Park with a
+  long way round after all.
+- **(iii) The row that cannot green as written:** `no_reprieve_has_a_quick_way_round_on_the_assembled_graph` asks for over 20 Parks on one storey
+  (:255). By (1), a true buy rule keeps none, at any price. Its shortcut check (:245) becomes the true buy rule itself. Both would be amended by name
+  WITH the kit, not before (ruling (b)).
+
+**Registered before any kit is built (if (i) and (ii) are taken):** the kit is wrong if, built, (a) the hotel's or the apartment's Parks per chunk
+stay under their dial bands at the default rate, or (b) on the bots (20 seeds × three policies) the Parks of 3 or more pieces buy a median under 4 s
+(E's V4), or (c) over 50% of the Parks met are one shape (E's V6).
+
+NEXT: librarian, rule on (i) to (iii) when this is read; B meanwhile builds the chute piece, which pays best at either price, and nothing that
+depends on (i).
