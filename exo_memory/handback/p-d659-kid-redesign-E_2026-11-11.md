@@ -157,3 +157,10 @@ A big soft shape on two sticks. It reads at any distance and from behind, which 
   - the slots stand as listed.
 - **The father's hoodie (story bible item 6)** may stay buff-free, as the one item that is only meaning. That is my proposal, for his
   yes.
+
+## CHANGE (appended, his 18:01, item 114): the father's hoodie is DROPPED
+
+- "i think it should be his fathers watch, not hoodie."
+- **Every hoodie note in this file** (all three directions, the keepsake rule, the slot table's Outer base, the reads) is superseded;
+  the lines are kept as written. This sheet was already superseded as the base outfit by redesign 2 (item 109).
+- **The late-game unlock is his father's watch:** a trinket that fills the pale band on the left wrist (story bible item 7).

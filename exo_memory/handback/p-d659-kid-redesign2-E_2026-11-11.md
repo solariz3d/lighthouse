@@ -126,3 +126,14 @@ The most movement in the cloth of the three.
   yes.
 - **The sheet's PNG and SVG legend still read "cosmetic, no buffs".** This correction is the record; the legend is redrawn if he
   wants the sheet reissued.
+
+## CHANGE (appended, his 18:01, item 114): the father's hoodie is DROPPED; the late-game unlock is the WATCH
+
+- "i think it should be his fathers watch, not hoodie."
+- **Superseded lines** (kept as written):
+  - "What none has: the father's hoodie. It is a late-game unlock";
+  - the sheet's legend "The father's hoodie is NOT here: it is a late-game unlock for the Outer slot".
+- **The late-game unlock** behind the hospital door is **his father's watch** (story bible item 7):
+  - a trinket and a unique lore legendary;
+  - it fills the pale band on his left wrist, the reserved slot all three directions keep.
+- **The three directions are unchanged.** The pale band now waits for exactly that watch.
