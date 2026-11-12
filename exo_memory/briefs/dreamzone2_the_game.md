@@ -935,3 +935,4 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     in the store, like lore based legendary items"
     - The dream drops are iconic, resonant-tier cosmetics never sold in the store: lore-based legendary items (each tied to the
       story: the previous owner, the agencies, the ledger, the hospital, the father).
+    - Added at once (18:00): "that are unique": each lore legendary is unique, one of a kind in a save; never a duplicate.
