@@ -1,4 +1,6 @@
-# L177: the hunter leans INTO the turn, before its heading turns (his item 151). Librarian, on L, 2026-11-12 03:1x local
+# ~~L177~~ WITHDRAWN 03:1x at his word ("get rid of it", brief item 153). The lean from the corner ahead was the librarian's own idea, not the research's. Superseded by `loop/plan_l177b_research_lean_2026-11-12.md`; kept as the trace.
+
+# (withdrawn) L177: the hunter leans INTO the turn, before its heading turns (his item 151). Librarian, on L, 2026-11-12 03:1x local
 
 **His words** (`briefs/dreamzone2_the_game.md` 151): "it still doesnt look good, it will turn, and then lean, not lean into the turn".
 **Base:** dreamzone-3 main `c83f8dc` (L173 landed: `handback/p-l173-lean-C_2026-11-12.md`).
