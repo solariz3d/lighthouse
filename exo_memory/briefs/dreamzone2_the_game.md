@@ -1094,3 +1094,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **The wooden door is a "false door"** (D656, `gen/src/emit.cpp:347-368`): a closed frame and leaf drawn on a room's wall now
        and then, for show only. Nothing collides with it, walks through it, or hears it. The real bedroom door (`HomeDoor`) exists
        only within 16 cells of the origin (`gen/src/layout.cpp:729-731`).
+149. 02:10: "also i found an interesting bug with the stairs, there are there wider stairs, and u can fall all the way down to the side of
+     them, you should see me drop fast somewhere"
+     - Found in the replay of `run-20261112-080329` (seed 3, brutal, 682fb36). At 252.0–254.0 s, at x −56.5, z −502, he falls from
+       y −3.9 to −21.0 (17 m in about 1.5 s) with almost no horizontal speed. Inferred: a shaft beside a widened straight flight
+       (B's L161 wide stairs, `stair_width` 4.2, whose well takes the two cells west of the junction).
