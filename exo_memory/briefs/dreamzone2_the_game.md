@@ -1101,3 +1101,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        (B's L161 wide stairs, `stair_width` 4.2, whose well takes the two cells west of the junction).
 150. 02:22: "instead of making our own animations from scratch, dont you think it could be good to research open source alternatives, not
      to use, but to learn from"
+151. 03:07, after playing c83f8dc (L173's eased lean): "it still doesnt look good, it will turn, and then lean, not lean into the turn, did we ever implement the insight learnt from the leftfordead ai pathing?"
+     - Answer, traced: no. Booth's three (A's L169, `handback/p-l169-code-A_2026-11-12.md` I1–I3) are look-ahead on an unstraightened path, momentum (SLIP, velocity outliving facing) and local avoidance. None has landed. SLIP is being measured in L170; look-ahead (L-I1) is queued after it; avoidance (P6) is parked for the lesser chasers' arc.
+     - Why "turn, then lean": L173 eases a lean taken from the turn already happening, so the lean lags the turn by about the spring (0.36 s). L173's registered bars measured only the jitter (sign changes, rate), not whether the lean leads the turn. The librarian's brief offered "a spring or the travel's curvature" and set no bar for timing; that is the librarian's miss.
