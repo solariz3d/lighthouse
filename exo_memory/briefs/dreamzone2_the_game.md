@@ -969,3 +969,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Research owed: the possible mini buffs for each cosmetic item.
     - Something about the beanbag meditation menu in the cosmic realm; cut off, to be asked.
     - So the line between clothing and accessories is not buffs; trinkets (two carried) stay the strong ones.
+118. 2026-11-11 18:07 (on D), finishing item 117's cut sentence: "out of body world, it shows the "enchantment" buffs on your
+    cosmetics that can be gotten rid of or locked, like the darkest dunegon mechanic"
+    - Once the beanbag meditation setup is unlocked (item 49), its spectral menu in the cosmic out-of-body realm shows the
+      "enchantment" buffs (the quirks) on his cosmetics, and there they are removed or locked, as in Darkest Dungeon (items 112).
+    - So quirk management lives in the chair's out-of-body menu, not in a shop or the washer.
