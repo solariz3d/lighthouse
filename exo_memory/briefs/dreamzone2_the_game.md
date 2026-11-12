@@ -1036,3 +1036,5 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 132. 00:58, answering the L169 collation's two questions: "1. do it. 2. Im not sure how many chasers, it should scale with the base
      difficulty and the progression of the story. That is something we might have to get right sooner than later, when a new player
      starts a game, putting it to brutal right at the start will be harder, but the first few runs will be forgiving."
+133. 01:01, on the librarian's ordered list of next steps (17 items, from E's ranked sweep, D's handoff and items 1–132): "the list you
+     made, feel free to do all of it in the order you made, after that we will then see where we stand"
