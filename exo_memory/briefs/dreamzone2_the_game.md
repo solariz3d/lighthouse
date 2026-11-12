@@ -931,3 +931,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
       road beside the rub-off levelling of item 111.
     - Quirks can be locked or removed, as in Darkest Dungeon: when an item's quirk slots are full, a new quirk replaces the
       newest unlocked one; locked quirks stay.
+113. 2026-11-11 18:00 (on D), what the dream's legendary drops are: "so these will be iconic or resonant cosmetics that you cant find
+    in the store, like lore based legendary items"
+    - The dream drops are iconic, resonant-tier cosmetics never sold in the store: lore-based legendary items (each tied to the
+      story: the previous owner, the agencies, the ledger, the hospital, the father).
