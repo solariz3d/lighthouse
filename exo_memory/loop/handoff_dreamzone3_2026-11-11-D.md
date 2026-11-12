@@ -13,7 +13,13 @@ His word, 23:20: "get ready to stop and write the handoffs for dreamzone3 and li
   Without LFS the loader reads pointer files.
 - Unlanded branches (pushed for L only if the stop notes below say so):
   - `d665-variety-b` (B): the Park kit, steps 2+3 at `151aead`, plus step 4 if started. STOP NOTE: _to fill when B rings_.
-  - `d673-chase` (A) and `d673-frame` (C, `7f6385f` at 23:12): the run's frame. STOP NOTES: _to fill when A and C ring_.
+  - `d673-chase` (A): **the interface is committed, `db8e557`** on cab3530 (`run_length_s` with 0 = no timer, `overtime()`,
+    `overtime_seconds()`, `saved()`, `kept_score()`, `Kind::Dark`, `Phase::Overtime`). Behaviour unchanged: chase 54/54, world_app
+    40/40, world selftest 52/52, fingerprints = main. A's hand-back §1: `p-d673-chase-A_2026-11-11.md` (lighthouse branch d664-a,
+    3d059897). **Not in it yet (checked, `git grep` on db8e557): `PlayParams::run_length_s`** in `chase/play.h`, which the plan's
+    amendment asks for (C's save rows and A's F1-F3 go through `play_streamed`). The overtime chase itself is not built.
+  - `d673-frame` (C, `7f6385f` at 23:12): the half that needs nothing from the chase. Rebases onto `db8e557`. STOP NOTE: _to fill when C
+    rings_.
 
 ## Landed on D today (each with its hand-back in `exo_memory/handback/`)
 - **D651:** render noise (the hand light no longer lights the body), the stair fix, the map removed (his "remove map").
