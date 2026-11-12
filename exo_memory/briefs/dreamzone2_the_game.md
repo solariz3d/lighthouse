@@ -1012,3 +1012,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Read from his run (game/runs/run-20261112-004249.txt, the librarian): brutal, seed 2, build af9727b (the floor packet, landed
       minutes before), "fell into a void after 115.49 s" at (529.60, 3.50, -558.10). y = 3.50 is exactly a storey's floor height:
       the run ended as a void fall while he stood on a floor.
+127. 2026-11-12 00:46 local (L), to the librarian, after the desktop's handoff was read to him (the softer chase first among his
+     calls): "i guess it wouldnt hurt to look into the ai pathing logic of known games or even open source projects, say like, what
+     comes to mind is tower defense like games where many mobs path towards you at once, or like left for dead would be the ideal
+     comparison for peak animations and pathing"
