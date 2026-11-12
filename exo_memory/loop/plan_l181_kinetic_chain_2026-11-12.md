@@ -55,3 +55,16 @@
 ## Correction (librarian, 04:1x; C caught it)
 - **The line numbers above are at dreamzone-rt HEAD `9d98b64`, not at `2e04aa5`.** I took the commit from `git log -S"KINETICS"` (the commit that first added the block) and the lines from the working tree, which is at 9d98b64 and clean.
 - At 2e04aa5 the [KINETICS] block is at :5810; at 9d98b64 it is at :6605. Read at **9d98b64**.
+
+## Amendment 04:2x, his item 163 (after playing add21fe). These come FIRST in L181.
+1. **The stride (the hunter; C):**
+   - **The cause:** `game/model_rig.cpp:576-580` fixes the step at 0.8 leg lengths at every speed. At the hunter's 9–13 m/s that is roughly 15 steps a second (computed with an assumed 0.9 m leg; the pane measures the rig's real leg).
+   - **The fix:** the step length grows with speed, from a **cited human gait source**. For example, Weyand et al. 2000 (J Appl Physiol 89, "Faster top running speeds are achieved with greater ground forces not more rapid leg movements"), or Dorn, Schache & Pandy 2012 (J Exp Biol), for step length and step rate against running speed. The pane reads the source and takes its curve, not the librarian's memory of it.
+   - Rosen's "stride wheel" (L179 half 2, step 4) is the sourced structure: the stride grows with speed.
+   - **Test:** steps per second at 4, 8 and 12 m/s fall inside the cited source's range, red on add21fe first.
+2. **Torso and arm swing more (the hunter; C):** the counter-rotation amplitudes (item 5 above) come from the cited gait study, scaled with speed as that study gives them. The first game's numbers are the floor his eye liked, not the spec.
+3. **The player's look, head first, then the body underneath (B, with L184):**
+   - The head turns first, the chest follows with a lag, and the hips follow the travel.
+   - Sources: the first game's [STEER] (dreamzone-rt `9d98b64` :6595-6604); Valve's split of eyes, torso and feet (`multiplayer_animstate.cpp:1716-1771`, torso aim = eyes − feet; feet within 45° standing); ozz's chain weights (`sample_look_at.cc:106-160`); Holden's springs for the lag.
+   - It replaces `glanced()`'s fixed 50° chest split (`game/body.cpp:145-153`).
+   - **Test:** on a scripted sideways look, the head's yaw leads the chest's, which leads the pelvis's (the times of their peaks in that order), and no camera ray meets the body.
