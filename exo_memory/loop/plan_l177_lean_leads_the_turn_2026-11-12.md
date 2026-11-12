@@ -25,3 +25,11 @@ Booth's Left 4 Dead insight is three things (`handback/p-l169-code-A_2026-11-12.
 - **local avoidance** (P6): parked for the lesser chasers' arc.
 
 Those change how the chaser *moves* through a corner. L177 changes how it *shows* the corner it is about to take. They stack: once SLIP and the look-ahead land, the turn itself is a gradient, and the lean should lead it.
+
+## Amendment 03:1x, after L176 landed (`handback/p-l176-openanim-C_2026-11-12.md`, c4c9e313) and his item 152
+- **Method:** use L176's sources, not a third spring chain.
+  - The lean comes from the body's **acceleration** (Overgrowth `aschar.as:7921-7940`: a low-pass of about 0.16 s on the acceleration, then about 0.08 s on the tilt). That is far quicker than L173's 0.36 s spring plus its 100°/s cap.
+  - Replace the hard cap with a double or velocity spring (Holden, `doublespring.c`, `velocityspring.c`). Express the tunables as half-lives in seconds.
+- **A trap to check, not assume:** our chaser travels along its heading (no slip, `chaser.cpp:376-378`). Its lateral acceleration is therefore speed × turn rate, the same signal L173 used. The quicker constants shrink the lag, but **a lean that leads the turn needs a signal from before the turn**. That signal is the corner ahead (the summed `turn` over `kCornerSpan`) or A's SLIP once it lands. The pane measures which, against the timing bar.
+- **The sway:** L176 §1 says acceleration-based lean still feels D664's sway (a few m/s² at 11 m/s). Use a soft knee in the picture. If the sway must shrink at its source, that is `chase/` and A's, so flag it and do not touch it.
+- **The timing bar stands as registered above.** This lap is the first piece of item 152's rework, and the rest is L178.
