@@ -277,6 +277,45 @@
   - that the base never exceeds 12.4 m/s (an invariant row).
 - **Only he:** whether it **feels** like "danger made me faster" or like a random speed-up, the thresholds (0.6 m, 1.6 m, 30°), and the cue's strength.
 
+### 8.3 CORRECTION, 01:2x (his item 138): Galactic Racer's surge is earned by OVERTAKING, and the two are fused
+
+**What the sources say** (checked this turn):
+- [source: KeenGamer, R. Wibowo, "Best racer styles in Star Wars Galactic Racer", 7 Oct 2026]
+  - **Surge** is the starting ability of the **Slipstreamer** and **Clean Racer** styles.
+  - Surge "extends every time you overtake", and an upgrade, "Overtaking Surge II", will "stretch each chain".
+  - Surge "**ends on impact**, so this style punishes sloppy contact".
+- [source: a second guide, via search result] "The Overtaking Surge ability lasts for 10 seconds, overtakes extend the duration and increase its potency."
+- [source: same KeenGamer page] **Afterburner** (a short, recharging boost) and **Ramjet** (stronger, heats toward Redline) are separate systems. Energy refills by takedowns for the Brawler.
+- **So his correction stands:** Galactic Racer's surge comes from **overtakes**, not near misses. **§8.2's line "his surge is Burnout's near-miss source feeding an automatic tier" is superseded** by the fused design below. Burnout's near misses remain the source for the near-miss half.
+
+**The fused surge** [option]: one compounding, decaying surge, fed by two things.
+
+**The overtake (the higher weight)** is a chaser that was ahead of you, now behind you, without a catch.
+- At the start of the pass: `dot(chaser − player, run_dir) > 0`, i.e. ahead along your run (the same test `find_site` uses for "ahead", `chase/run.cpp` find_site line 21).
+- At the end: `< 0`, i.e. behind.
+- The **closest distance during the pass ≤ 3.0 m** (a real pass, not a parallel corridor), **on the same storey**, and **no catch**.
+- Interceptors (`Aim::Ahead`, `chase/archetype.cpp:61`) and a pack's flankers spawn **ahead** by design (`run.cpp:1101-1102`). So overtakes arise from the game as built: getting past the ones sent to cut you off.
+
+**The near miss (the lower weight)**: N1 (a convex edge) and N2 (a closing chaser within 1.6 m), exactly as §8.2.
+
+| event | gain | duration added | cooldown |
+|---|---|---|---|
+| **overtake** (O) | **+0.8 m/s** | **+3 s** to the hold (Galactic Racer's "extends every time you overtake") | 6 s per chaser |
+| N2, a chaser near miss | +0.5 m/s | +1 s | 4 s per chaser |
+| N1, an edge near miss | +0.2 m/s | +0.5 s | 8 s per edge |
+
+- **One pass can count as both O and N2.** Score the overtake, plus N2 only if it was also within 1.6 m: a close overtake is the best play.
+- **Compounding:** additive into the one surge (the momentum tier, as §8.2).
+- **Cap:** +2.0 m/s above the run's top, and **≤ 12.4 m/s at base** (§6's human line). Past it only with an ability, as a cued bend.
+- **Hold and decay:** the surge holds while its **hold timer** runs (each event adds the duration above, capped at **10 s**, Galactic Racer's figure). Then it decays **0.6 m/s per second**.
+- **Galactic Racer's "ends on impact", translated** [option, his to rule]:
+  - **a hard landing's stagger** (`sim/world.cpp:275-280`, which already zeroes `flow`);
+  - **or a wall hit at speed**, ends the surge.
+  - This makes clean running the skill, as Clean Racer intends. A softer version halves it instead of ending it.
+- **XP** (items 53, 57): an overtake is the most valuable chain link, then a chaser near miss (with item 53's proximity multiplier), then an edge.
+- **Bend and cue:** as §8.2. The **overtake gets its own sound**, a rising sweep distinct from the near-miss whoosh, so the player learns which earned what. The chaser smears as you pass it (§7).
+- **Bots can measure:** overtakes a minute for each policy (a juking bot should overtake interceptors; a straight-line one should not), that the hold cap holds at 10 s, that nothing exceeds 12.4 m/s at base, and the catch-rate change in A's paired blocks.
+
 ## Sources
 
 - Call of Duty Wiki: "Tactical Sprint", "Double Time" (fandom).
