@@ -18,8 +18,9 @@ His word, 23:20: "get ready to stop and write the handoffs for dreamzone3 and li
     40/40, world selftest 52/52, fingerprints = main. A's hand-back §1: `p-d673-chase-A_2026-11-11.md` (lighthouse branch d664-a,
     3d059897). **Not in it yet (checked, `git grep` on db8e557): `PlayParams::run_length_s`** in `chase/play.h`, which the plan's
     amendment asks for (C's save rows and A's F1-F3 go through `play_streamed`). The overtime chase itself is not built.
-  - `d673-frame` (C, `7f6385f` at 23:12): the half that needs nothing from the chase. Rebases onto `db8e557`. STOP NOTE: _to fill when C
-    rings_.
+  - `d673-frame` (C, `7f6385f` at 23:12): the half that needs nothing from the chase. Rebases onto `db8e557`. **Stopped clean at `7f6385f`**,
+    world_app_tests 43/43, not rebased yet. The A-dependent half (the endings, kept points, the timer notice, `won`, three rows) is
+    written and kept in the evidence folder of C's stop note, `handback/p-d673-frame-C_2026-11-12.md` (lighthouse b5ae1003).
 
 ## Landed on D today (each with its hand-back in `exo_memory/handback/`)
 - **D651:** render noise (the hand light no longer lights the body), the stair fix, the map removed (his "remove map").
