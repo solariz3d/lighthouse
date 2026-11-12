@@ -996,3 +996,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - His father's bomber jacket: a legendary jacket (clothing, Outer).
     - His father's sunglasses: a legendary accessory.
     - The rest of the trinkets and legendary cosmetics are fleshed out later (item 122: fundamentals first).
+124. 2026-11-11 18:37 (on D), on the sealed Park pieces opened by luck (D665 section 3f): "1. i guess i never thought of that, keep the
+    luck to the chests that spawn in, so not only does luck make them spawn more often, but then also better chances of better loot
+    and more ability or item drop, similar to the megabonk chest open where you can acquire multiple things at once"
+    - No sealed pieces: luck does not touch the Park's length. A Park's length is the seed's alone (item 94's chance curve).
+    - Luck acts on chests: they spawn more often, roll better loot, and can give several things at once (a Megabonk-style open:
+      more abilities or items in one chest; item 41's slot-machine opening).
+    - Item 94's "luck for longer safe zones" is superseded by this.
