@@ -12,6 +12,8 @@
 
 ## 1. Pillars and tone
 
+**[decided 172] The thesis, his words:** "the game is all a representation from running away from death, all we can do, we cant stop and fight it, all we can do is run, and hope that at the end when it catches us, there is something else out there good, that saves us"; "make the truth of love some how shine through the horror of life".
+
 **Built today:**
 - the grade has a horror look (`render/renderer.h:87-96`: vignette, contrast, grain, chromatic aberration, split tone);
 - nothing else of tone, faith or story is in code.
