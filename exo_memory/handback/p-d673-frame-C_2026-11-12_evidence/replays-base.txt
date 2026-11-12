@@ -1,0 +1,14 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+run: holding the lock at 2026-11-12T05:03:18.698Z; starting d673-replays
+run-20261111-160137.txt: the replay: caught by the hunter #1 after 28.68 s; NOT the same run: the fingerprints differ 
+run-20261111-214549.txt: the replay: caught by the hunter #1 after 15.08 s; NOT the same run: the fingerprints differ 
+run-20261111-214620.txt: the replay: caught by the pack #4 after 15.93 s; NOT the same run: the fingerprints differ 
+run-20261111-214717.txt: the replay: caught by the hunter #1 after 42.25 s; NOT the same run: the fingerprints differ 
+run-20261111-214835.txt: the replay: caught by the hunter #1 after 10.52 s; NOT the same run: the fingerprints differ 
+run-20261111-214938.txt: the replay: caught by the hunter #1 after 16.36 s; NOT the same run: the fingerprints differ 
+run-20261111-220509.txt: the replay: caught by the hunter #1 after 29.63 s; NOT the same run: the fingerprints differ 
+run-20261111-221248.txt: the replay: left the run after 1.00 s; NOT the same run: the fingerprints differ 
+run-20261111-221301.txt: the replay: caught by the interceptor #2 after 21.32 s; NOT the same run: the fingerprints differ 
+run-20261112-004150.txt: the replay: caught by the hunter #1 after 28.15 s; NOT the same run: the fingerprints differ 
+run-20261112-004249.txt: the replay: caught by the hunter #1 after 36.33 s; NOT the same run: the fingerprints differ 
+run: done at 2026-11-12T05:03:55.748Z, exit 0
