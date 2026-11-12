@@ -941,3 +941,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - The watch: the pale band on his left wrist (he wore it after the funeral; it went missing the night of his first run); found
       in the dreamzone; the late-game unlock behind the hospital door (story bible item 6's placement, now the watch); it fills the
       reserved left-wrist slot, a trinket (item 47), unique.
+115. 2026-11-11 18:02 (on D), on E's invented brands: "but what about parody of name brand clothing, such as nike, or adidas or tommy
+    hill figure other populer brands of the time"
+    - He wants the clothing brands as parodies of the real big brands of 2005 (Nike, Adidas, Tommy Hilfiger and the other
+      popular labels of the time), in the spirit of the PC parts' parody brands, not unrelated invented labels.
+    - The librarian's line (18:0x): the NAMES may wink at the real brand (as GTA's parody brands do); the LOGOS, stripes,
+      colour blocks and trade dress must be our own, never a lookalike of the real mark; a legal review before release.
