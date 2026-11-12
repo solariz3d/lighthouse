@@ -81,3 +81,9 @@
   - the catch rates are measured (A's paired method, a price bar registered first);
   - the replays of old runs must still replay. Gate the change behind a version or dial (`wander` 0), the "0 = today's behaviour" rule, so his kept runs keep their fingerprints.
 - **Pass:** L180's straights row, ≤ 0.5 flips/s on the bot's run under the new chase.
+
+## Lap 1 landed: add21fe (librarian checked: origin/main = HEAD = add21fe; `launch.ps1 world -Check` → "up to date")
+- **L182 grows by two causes C traced** (`handback/p-l180-lap1-C_2026-11-12.md`, "Landing"). Both are in `chase/`, so they are A's.
+  - **A scraped step turns the velocity in one tick:** `chaser.cpp:394-418`, his run at 19.34 s, 213°/s.
+  - **A refused step zeroes the speed in one tick:** `chaser.cpp:418-421`, at 30.65 s. The tilt pitches the hunter back to about −30° for about 0.3 s (estimated by C).
+  - The sourced tilt draws them as written. The fix is the chase's: no instant velocity changes, under the same replay gating as the sway.
