@@ -1084,3 +1084,5 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        overstated the risk at first; his correction). **No research until the list is done.**
 146. 02:01, after playing 682fb36: "the animation of the hunter isnt good, it doesnt lean naturally its like glitchy back and forth not
      smooth into turns on a nice gradient. Like its pathing is still messing with the animation itself or something"
+147. 02:02, after playing 682fb36: "the player character animation from first person perspective needs to be better too, as well look
+     back clips into the characters neck and shoulder area"
