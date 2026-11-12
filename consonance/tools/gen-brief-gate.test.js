@@ -24,7 +24,20 @@ const { spawnSync } = require('node:child_process');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const SCRIPT = path.join(REPO, 'consonance', 'src-tauri', 'gen-brief.ps1');
-const OUT = path.join(REPO, 'consonance', 'src-tauri', 'brief', 'BOOT.md');
+const MASTER = path.join(REPO, 'exo_memory', 'BOOT.md');
+const TRACKED_BRIEF = path.join(REPO, 'consonance', 'src-tauri', 'brief', 'BOOT.md');
+/* D670 (2026-11-11): EVERY RUN OF THIS GATE WRITES TO A TEMPORARY FOLDER, never to a tracked file. Before this, the gate ran gen-brief in
+ * place: on a refusal the generator deletes its output, which was the tracked consonance/src-tauri/brief/BOOT.md, and 8 other test files
+ * went red on the missing brief (P's D663 landing, the librarian's 18:20 attribution). The planted-leak probes also wrote the tracked
+ * master and restored it. Now the master is read and COPIED to a temp source, and the output goes to a temp folder (gen-brief.ps1's
+ * -Src and -Dst). A run of this file cannot write or delete either tracked file; the row "a run of this gate never writes or deletes a
+ * tracked file" holds it. */
+const os = require('node:os');
+const crypto = require('node:crypto');
+const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-brief-gate-'));
+process.on('exit', () => { try { fs.rmSync(TMP, { recursive: true, force: true }); } catch (_) { /* the OS's temp sweep takes it */ } });
+const TMP_SRC = path.join(TMP, 'BOOT.src.md');
+const OUT = path.join(TMP, 'brief', 'BOOT.md');
 
 /* IN A CONSUMER TREE (D273 lap 3, pane C). gen-brief.ps1 turns the keeper's MASTER BOOT into the shipped brief, stripping the record
  * before it reaches a stranger. A consumer tree IS that shipped side: it has no master (its exo_memory/BOOT.md is the shipped brief,
@@ -39,11 +52,24 @@ const OUT = path.join(REPO, 'consonance', 'src-tauri', 'brief', 'BOOT.md');
 const CONSUMER = fs.existsSync(path.join(REPO, 'CONSUMER-STATUS.md')) || fs.existsSync(path.join(REPO, 'exo_memory', 'CUTOFF.md'));
 const DEV_ONLY = CONSUMER && 'a consumer tree: gen-brief.ps1 (the master BOOT -> the shipped brief) is the dev tree\'s tool and does not ship here; the last row checks the shipped brief itself';
 
-function runGenBrief() {
-  const r = spawnSync('powershell', ['-NoProfile', '-File', SCRIPT],
-    { cwd: REPO, encoding: 'utf8', timeout: 120000 });
+/** Run gen-brief on a COPY of the master (or on `srcText`, a planted variant) into the temp folder. */
+function runGenBrief(srcText) {
+  fs.writeFileSync(TMP_SRC, srcText === undefined ? fs.readFileSync(MASTER) : srcText);
+  const r = spawnSync('powershell', ['-NoProfile', '-File', SCRIPT, '-Src', TMP_SRC, '-Dst', OUT],
+    { cwd: REPO, encoding: 'utf8', timeout: 120000, windowsHide: true });
   return { status: r.status, out: (r.stdout || '') + (r.stderr || '') };
 }
+const fingerprint = (f) => (fs.existsSync(f) ? crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex') + ' ' + fs.statSync(f).mtimeMs : null);
+
+test('a run of this gate never writes or deletes a tracked file: the master and the shipped brief survive, byte for byte and untouched', { skip: DEV_ONLY }, () => {
+  const tracked = [MASTER, TRACKED_BRIEF];
+  const before = tracked.map(fingerprint);
+  assert.ok(before[1] !== null, 'the tracked shipped brief is missing before the run: restore it with git checkout -- consonance/src-tauri/brief/BOOT.md');
+  runGenBrief(fs.readFileSync(MASTER, 'utf8') + '\n\nSELF_TRACE.md is the trace.\n');   // a run the generator REFUSES (it deletes its output)
+  runGenBrief();                                                                        // and an ordinary run (it writes its output)
+  assert.deepStrictEqual(tracked.map(fingerprint), before,
+    'a gate run wrote or deleted a tracked file (sha256 and mtime, master then shipped brief): the gate must write only to its temp folder');
+});
 
 test('gen-brief runs and exits 0 against the current BOOT', { skip: DEV_ONLY }, () => {
   // The whole point: an edit to the master must not break the shipped brief silently.
@@ -73,7 +99,7 @@ test('dedangling keeps the DATE, so the prose still says when', { skip: DEV_ONLY
   // `the record, 2026-08-16` -- checkable in the private tree, not a broken link in the shipped one.
   runGenBrief();
   const brief = fs.readFileSync(OUT, 'utf8');
-  const src = fs.readFileSync(path.join(REPO, 'exo_memory', 'BOOT.md'), 'utf8');
+  const src = fs.readFileSync(MASTER, 'utf8');
   const srcDates = new Set((src.match(/journal\/(\d{4}-\d{2}-\d{2})\.md/g) || [])
     .map((m) => m.slice(8, 18)));
   if (srcDates.size === 0) { assert.ok(true, 'BOOT cites no journal entries; nothing to preserve'); return; }
@@ -85,24 +111,11 @@ test('dedangling keeps the DATE, so the prose still says when', { skip: DEV_ONLY
 
 test('the generator still REFUSES on a planted leak — the guard is not disarmed', { skip: DEV_ONLY }, () => {
   /* The dangerous fix for a refusing generator is to weaken the refusal. Plant a leak in a scratch
-   * copy of BOOT, run, and require a non-zero exit. Restored in a finally, and the restore is
-   * verified by hash rather than assumed. */
-  const bootPath = path.join(REPO, 'exo_memory', 'BOOT.md');
-  const original = fs.readFileSync(bootPath);
-  const crypto = require('node:crypto');
-  const before = crypto.createHash('md5').update(original).digest('hex');
-  try {
-    fs.writeFileSync(bootPath, original.toString('utf8') + '\n\nSELF_TRACE.md is the trace.\n');
-    const r = runGenBrief();
-    assert.notStrictEqual(r.status, 0,
-      'a planted SELF_TRACE.md reference did NOT stop the generator — the self-check is disarmed');
-    assert.match(r.out, /REFUSED/, 'the generator failed without saying it refused');
-  } finally {
-    fs.writeFileSync(bootPath, original);
-    const after = crypto.createHash('md5').update(fs.readFileSync(bootPath)).digest('hex');
-    assert.strictEqual(after, before, 'BOOT.md was not restored byte-identically after the probe');
-    runGenBrief(); // leave the shipped brief regenerated from the real master
-  }
+   * copy of BOOT, run, and require a non-zero exit. D670: the scratch copy is the temp source, so the tracked master is never written. */
+  const r = runGenBrief(fs.readFileSync(MASTER, 'utf8') + '\n\nSELF_TRACE.md is the trace.\n');
+  assert.notStrictEqual(r.status, 0,
+    'a planted SELF_TRACE.md reference did NOT stop the generator — the self-check is disarmed');
+  assert.match(r.out, /REFUSED/, 'the generator failed without saying it refused');
 });
 
 /* ── THE READER'S OWN KEEPER (2026-09-04) ────────────────────────────────────────────────────────
@@ -134,22 +147,10 @@ test('the generator REFUSES on a planted gendered pronoun — the guard is mecha
   /* Same shape as the planted-leak probe above, and for the same reason: the dangerous fix for a
    * coverage gap is to close the three sites you can see and call the class handled. If the master
    * gains a `he` tomorrow, the build must stop rather than ship it. */
-  const bootPath = path.join(REPO, 'exo_memory', 'BOOT.md');
-  const original = fs.readFileSync(bootPath);
-  const crypto = require('node:crypto');
-  const before = crypto.createHash('md5').update(original).digest('hex');
-  try {
-    fs.writeFileSync(bootPath, original.toString('utf8') + '\n\nThe keeper wrote this; he meant it.\n');
-    const r = runGenBrief();
-    assert.notStrictEqual(r.status, 0,
-      'a planted `he` did NOT stop the generator — the pronoun guard is decorative');
-    assert.match(r.out, /REFUSED/, 'the generator failed without saying it refused');
-  } finally {
-    fs.writeFileSync(bootPath, original);
-    const after = crypto.createHash('md5').update(fs.readFileSync(bootPath)).digest('hex');
-    assert.strictEqual(after, before, 'BOOT.md was not restored byte-identically after the probe');
-    runGenBrief(); // leave the shipped brief regenerated from the real master
-  }
+  const r = runGenBrief(fs.readFileSync(MASTER, 'utf8') + '\n\nThe keeper wrote this; he meant it.\n');   // D670: the temp source, never the master
+  assert.notStrictEqual(r.status, 0,
+    'a planted `he` did NOT stop the generator — the pronoun guard is decorative');
+  assert.match(r.out, /REFUSED/, 'the generator failed without saying it refused');
 });
 
 test('a consumer tree: both shipped briefs carry no record, no journal citation, one empty pointer and no gendered keeper', { skip: !CONSUMER && 'the dev tree: the rows above run the generator itself' }, () => {
