@@ -39,3 +39,6 @@ on what). It is read before every dispatch.
 
 ## Log
 - 01:0x: queue opened; step 1 running (L170, `loop/plan_l170_chase_feel_build_2026-11-12.md`).
+- 01:1x: **a dependency, his item 136:** movement bends (L171) show through the distortion layer, step 14. If he adopts movement
+  tech that bends physics, step 14's core (the director and two or three effects) may need to move up the queue. That is his call,
+  when L171's menu is read.

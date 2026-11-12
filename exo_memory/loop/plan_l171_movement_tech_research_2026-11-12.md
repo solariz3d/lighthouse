@@ -43,3 +43,6 @@ purposes that make sense for the setting and lore". It is a dream, the in-betwee
   sound cue).
 
 COD's slide cancel is a bend (an exploit made a feature). Item 57's late bhop is one too.
+- **Added 01:11 (his item 136):** a bend's cue IS the psychedelic-distortion layer (`handback/p-l161-look-E_2026-11-11.md`), not a
+  new effect. For each bend, name which of those effects marks it (e.g. a tracer smear on a slide cancel, the haze breathing on a
+  sprint reset). That layer is not built (queue step 14), so say which bends need it to read and which work without it.

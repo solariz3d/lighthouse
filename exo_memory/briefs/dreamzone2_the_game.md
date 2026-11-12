@@ -1046,3 +1046,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 135. 01:10, a rule for the movement work: "to expand, it is a dream, or in the inbetween, so reality and common sense can be a little
      malluable, i want the physics to be mostly realistic, but it can be bent stylistically for gameplay purposes that make sense for
      the setting and lore"
+136. 01:11, on how a bend shows: "remember, that is the psychedelic replication distortions around the world, we hvent built that yet"
+     - So a bend's cue comes from the psychedelic-distortion layer (E's L161 look menu, `handback/p-l161-look-E_2026-11-11.md`:
+       breathing, tracers, haze, slicing and the rest, run by a dream director per item 27). It is queue step 14, **not built**.
