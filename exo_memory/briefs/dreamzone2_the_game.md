@@ -1058,3 +1058,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        too long (risk and reward, per its creative director). There is also a launch surge timed off the line. **No near-miss boost
        was found for it in one search.** Near misses filling a boost meter is the *Burnout* series' signature, which is Fuse's
        lineage.
+138. 01:17, correcting the librarian's reading of 137: "surge is like overtake, not near miss, but i am saying a fusion of the sort"
+     - So Galactic Racer's surge is earned by **overtaking**. His idea fuses that with Burnout's near miss. In Dreamzone, the
+       overtake would be getting past a chaser that is in your way, ahead of you, without being caught; the near miss is cutting
+       close past an edge or a chaser. Both feed one decaying, compounding surge.

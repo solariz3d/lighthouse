@@ -62,3 +62,8 @@ COD's slide cancel is a bend (an exploit made a feature). Item 57's late bhop is
   - How it reads in the 3D generated world: the walk graph knows corners and doors (gen).
   - Its tie to movement XP (items 53, 57).
 - Sources: Burnout's near-miss boost (Criterion), and Galactic Racer's Afterburner/Ramjet (Fuse Games), as checked above.
+- **Correction 01:17 (his item 138):** Galactic Racer's surge comes from **overtaking**, not near misses. His idea is a **fusion**:
+  - an **overtake**, getting past a chaser ahead of you (an interceptor or a pack flanker, which spawn ahead) without being caught;
+  - a **near miss**, cutting close past a convex edge or a chaser.
+  - Both feed one compounding, decaying surge. Check Galactic Racer's surge from sources, and weight the overtake above the near
+    miss (it is rarer and riskier).
