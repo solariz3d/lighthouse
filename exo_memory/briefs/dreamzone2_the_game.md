@@ -923,3 +923,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     - Clothing progression: store items come with a common buff for their slot; wearing an outfit through a run gives each piece
       a chance that something "rubs off" on it: a stronger buff, or an extra quirk/trait (a small buff), raising its rarity one
       step. Cyberpunk's cyberware small buffs crossed with Darkest Dungeon's quirks.
+112. 2026-11-11 18:00 (on D), expanding item 111: "to expand off of the clothing, there could be legendary clothing or cosmetic drops
+    within the dream, so instead of manually level up clothing with the chances of getting better and more traits, you could get a
+    legendary drop already kitted with random buffs, which can then be locked or rid of just like darkest dungeon, if its full, the
+    newest one gets replaces etc if not locked."
+    - Legendary clothing and cosmetic drops inside the dream: they arrive already kitted with random buffs and quirks, a second
+      road beside the rub-off levelling of item 111.
+    - Quirks can be locked or removed, as in Darkest Dungeon: when an item's quirk slots are full, a new quirk replaces the
+      newest unlocked one; locked quirks stay.
