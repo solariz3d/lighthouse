@@ -1075,3 +1075,4 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 142. 01:33, after the librarian recommended R1 in two waves for queue step 4 (wave 1: the hunter's Appetite, the interceptor's Mirror,
      the pack's Call, the sprinter's Lunge, the charger; wave 2: the stalker and the climber's Through; every signature with a tell
      and a bot test; counts by E's G2 + M3): "okay we can try it"
+143. 01:34: "my friend said we could get rich off of this game concept if it was ported to roblox when its done lol"
