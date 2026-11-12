@@ -1033,3 +1033,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        foot placement and movement on a physics-based body, drawn from robotics research, with a coded torque "magic" the reward
        penalizes overusing. **Tactics are behaviour trees**, layered on top. Not generative AI. Training-scale figures in some
        coverage are unverified.
+132. 00:58, answering the L169 collation's two questions: "1. do it. 2. Im not sure how many chasers, it should scale with the base
+     difficulty and the progression of the story. That is something we might have to get right sooner than later, when a new player
+     starts a game, putting it to brutal right at the start will be harder, but the first few runs will be forgiving."
