@@ -1177,3 +1177,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **The rule:** surface play first. The lore is never forced; it waits for those who search, and then it is abundant. Its material is real research (the Gateway paper, Monroe, the psychology of grief and trauma, Becker), woven into the fiction, while the fiction stays fiction.
      - **Research check, same turn:** Henry Jenkins, "Game Design as Narrative Architecture" (2004, MIT-hosted text): **embedded narrative**, story clues placed in the space for the player to discover, revealing backstory "instead of forcing it". E's Backrooms hand-back already found the same ("suggestion over explanation"; the Backrooms declined from explaining). Jenkins's four-mode list comes from secondary notes and is to be read in the essay before it is cited exactly.
      - Folds into the design map's story section and 26 ("never directly tied … until the player has played the story out").
+175. 06:56, after playing d0c1aba: "the animation for the hunter is defintelly better, now the arms need to swing with the body more"
+     - Traced: C's L181 left the arms unchanged ("No sourced amplitude was found that I could read", `handback/p-l180-lap2-C_2026-11-12.md:103-106`). `gait_pose`'s arm swing is still 0.1 + 0.5·run rad, ours from before L170, and is not coupled to the trunk's new counter-rotation.
+     - **Research check, same turn (search summaries; to be read in full):**
+       - *SpringerPlus* 2016, doi 10.1186/s40064-016-2291-5: humerothoracic flexion/extension range in arm swing during accelerated running; speed drops when the arms are constrained.
+       - Frontiers 2021, doi 10.3389/fspor.2021.702743: peak shoulder extension against stride (racewalkers).
+       - Preprints 202309.0510: shoulder rotation increases with speed in elite junior runners, citing Arellano & Kram on arm swing reducing trunk rotation and energy cost.
+       - The classic centre-of-mass study (Hinrichs, mirrored): the arms' contribution grows with speed.
+     - Routed: the arm swing comes from these, coupled to the chain's thorax counter-rotation and grown with speed.
