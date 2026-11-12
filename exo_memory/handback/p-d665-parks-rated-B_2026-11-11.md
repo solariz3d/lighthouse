@@ -248,3 +248,42 @@ erosion creep, now.
    move, by name, to first entry + hold + metres along ÷ speed).
 
 NEXT: librarian, read this when it arrives; B is building it now.
+
+## 10. STOP NOTE at the wind-down (2026-11-12 ~05:3xZ): where D665 stands, nothing pushed, nothing landed
+
+**Branches (dreamzone-3, worktree `C:\Users\nname\Desktop\worktrees\dz3-d658-b`, NOT pushed):**
+- **`d665-variety-b` at `151aead`**: step 1 `2d72bd2`, step 2 `1eea919`, step 3 `151aead`. This is the steps 2+3 head. It is NOT yet rebased onto
+  main `cab3530`.
+- **`d665-creep-b` at `868c6e1`** (off `151aead`): step 4, PARTIAL. Parked on its own branch, not on `d665-variety-b`, so that steps 2+3 stay one
+  head and step 4 is its own commit, as ordered. A small departure from "commit on d665-variety-b", made for that reason.
+
+**The 23:17 checks (1)-(4) on steps 2+3: NONE done.**
+- **(1) the −1 after deep falls:** investigated, NOT confirmed. Hypothesis, inferred from the code: the chase side. The streamed chase holds
+  navigation for three chunk layers (six storeys) round the loaded block (`chase/streamed.h`, `nav_radius_v = 1`). A chute of 3-4 storeys reaches
+  past it: its foot is off the hunter's mesh at entry, and after the fall the hunter left above is off the new window, so the path is partial
+  (`Run::eta` and the entry's way round return −1). The test that would decide it is set up but NOT run: the throwaway worktree
+  `C:\Users\nname\Desktop\worktrees\dz3-d665-b` sits at `151aead` with two SCRATCH edits (`chase/streamed.h` `nav_radius_v = 2`, and a worst-pair print
+  in `nav/tests/path_tests.cpp`, for (2)); my scratch `d665b\w1.cmd` builds it and reruns seeds 15, 18 and 7. If the −1s go, the cause is the
+  window, and per the ruling the chute is capped at 2 storeys by one dial (gen `kChuteMost` made a dial), for A after D673. The throwaway's edits are
+  scratch; never commit them.
+- **(2) the nav worst pair:** set up (above), not run. What is known: the row's walker profile walks only (`nav/nav.h` `kWalker`), and navigation
+  drops every link with an end in a Park, so inferred: a walker's path cannot cross a chute; the print will say whether either way passes beside one.
+- **(3) n ≥ 15 Parks of 3+ pieces:** not started. Note for whoever picks it up: if (1) caps chutes at 2 storeys, a 3-piece Park is only a 2-storey
+  chute with a run (about 1 in 11 chutes). The bots meet about 11 chutes in 60 runs, so the measure will need `--gen-dial reprieve_rate=...` raised
+  (stated as such) or several hundred runs.
+- **(4) rebase onto `cab3530` + the whole suite + both selftests:** not started.
+
+**Green / red as last measured** (§8): at `151aead`'s content `build.bat test` 8 of 10; `gen_tests` 37/37; red: `chase` sprinter-margin (A's fix
+on `cab3530` turns it green, per the chair: not yet seen on this branch) and `nav` `the_way_there_is_about_as_quick_as_the_way_back` (worst pair
+22.9% against 20%; 14.3% at step 2). Both selftests NOT run on steps 2+3.
+
+**Step 4: PARTIAL, not started on the rulings of 23:18.** `868c6e1` has the hold at 15 s, the 3 m/s front from the first-entered mouth, the Park
+giving out where he stands (choice 1, ruled YES), and the creep's row, seen RED against the old run (`c6_red.txt`: gave out at 20.00 s where 17.00
+s was due). Its green was NOT run: the suite was stopped at the wind-down (my process tree ended whole, pid 31552, and my own stale lock removed
+after checking the pid was gone). It still has the CORRECTED choice 2 (the hunter waits for the far mouth), which must go: eroded space is
+ordinary for every chaser by either mouth, falsifier 2 restated, row 5 added, and the hold/tell rows and the world selftest restated by name.
+
+**On the record from the chair, accepted:** V4's second clause fired and stands as fired. The 8.75 sprint peak is not a miss: voids are sized
+from the fixed base movement by ruling, and the 10 m/s crossing is kept as a reward for speed (item 86). My §8 line calling it a miss is withdrawn.
+
+NEXT: librarian, read this stop note when it arrives; whoever takes D665 next starts with check (1), running `d665b\w1.cmd`.
