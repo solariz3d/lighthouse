@@ -66,3 +66,18 @@
 ## Not in this plan
 - **Clips**, by his pick.
 - **Active ragdolls** (Techland): needs a physics body per chaser; out of scope.
+
+## Ruling on lap 1 (his, 03:5x, brief 157), after `handback/p-l180-lap1-C_2026-11-12.md` (WIP `l180-lap1` 4b30a43)
+- **The source stays as written.** No lengthened half-lives and no knee.
+- **The rate bar:** L173's 120°/s was the librarian's own number, set against 3,460°/s flips. It becomes **≤ 300°/s per frame** (ours, marked ours in the row). That is about twice the source's real-corner peak (144°/s) and an order under the flip class.
+  - **First,** C traces the two non-corner excursions (19.34 s at 213°/s; 30.65 s standing) to their cause.
+  - If they are a defect, fix it. If they are the source's off-feet decay (Overgrowth `:7927-7928`), say so with the line.
+- **The straights flip row** (≤ 0.5/s; his run 0.68/s) becomes **L182's pass condition**. Its cause is D664's sway, in `chase/`. In lap 1 it is **reported, not gating**: the row stays in the suite, marked pending L182 by name.
+- **Land lap 1** as L173 did, then show him stills and the charts, and the build.
+
+## L182 (A, after L170 lands): take D664's sway out of the chase
+- **Source:** A's L169 I4 (`handback/p-l169-code-A_2026-11-12.md`). NextBot has no path randomisation; L4D's variety is avoidance, the unoptimised path and animation. "The keeper's 'alive' does not come from randomness."
+- **It changes the chase:**
+  - the catch rates are measured (A's paired method, a price bar registered first);
+  - the replays of old runs must still replay. Gate the change behind a version or dial (`wander` 0), the "0 = today's behaviour" rule, so his kept runs keep their fingerprints.
+- **Pass:** L180's straights row, ≤ 0.5 flips/s on the bot's run under the new chase.
