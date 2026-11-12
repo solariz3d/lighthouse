@@ -221,3 +221,30 @@ itself did not change.
 
 NEXT: librarian, collate steps 2+3 for landing when this is read (the two red margin rows above are for their owners); B goes on to step 4, the
 erosion creep, now.
+
+## 9. Step 4, the erosion creep (item 125, "lets do 15 seconds"): what B builds, REGISTERED before any code (2026-11-12 ~05:3xZ)
+
+**Today** (`chase/run.cpp`): a Park holds chasers out for `reprieve_hold_s` (20 s) after the player goes in, gives a tell over the last
+`reprieve_tell_s` (6 s), then "opens": the hunter, guarding the far mouth, walks in along the way. Stepping out and in buys nothing.
+
+**The creep, as B builds it** (E's section 3g and item 125; the room may correct either choice):
+- **The front.** From the Park's FIRST entry, it holds whole for `reprieve_hold_s` (default 20 → **15**), then a front leaves the mouth the
+  player first went in by and moves along the Park's way at **`reprieve_erode_speed`** (new dial, **3 m/s**), whether he stays or not.
+- **For the player:** the Park gives out where he stands when the front reaches him. The tell (`reprieve_tell_s`, 6 s) runs over the last 6 s
+  before that, and `reprieve_left_s()` is the time until then. So going deeper buys time, standing at the mouth buys the least, and stepping out
+  and in buys nothing, since the front keeps its own clock.
+- **For the hunter: it may enter eroded space only.** It guards the far mouth as now and walks in when the front reaches that mouth: "the
+  exit erodes last". These Parks are 6 to 20 m along their way, so that is 2 to 7 s after the front leaves the entry.
+- **Unchanged:** the world (the creep is the run's, never the generator's: no fingerprint moves), lesser chasers lost at the mouth, the hunter's
+  speed inside.
+- **The game's tell** (the red, the scream) reads the same `reprieve_tell()` / `reprieve_open()` as today, so it follows the front at his spot.
+  A visible red line along the Park is NOT in this step.
+
+**Registered before building, the creep is wrong if:**
+1. on bots (20 seeds × three policies, the streamed world), any Park run straight through ends with the player caught inside it;
+2. a player standing still inside a Park is not caught within `hold + (way length ÷ speed) + the hunter's walk to him` (+1 s);
+3. any world fingerprint changes; or
+4. the chase rows that test a Park's hold, tell and mouth cannot be stated in the creep's terms without weakening a check (their timings
+   move, by name, to first entry + hold + metres along ÷ speed).
+
+NEXT: librarian, read this when it arrives; B is building it now.
