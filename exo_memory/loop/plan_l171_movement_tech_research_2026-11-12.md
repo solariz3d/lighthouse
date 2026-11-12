@@ -35,3 +35,11 @@ queue (`loop/queue_dreamzone3_2026-11-12.md`), not in it: it informs steps 7–9
 
 Hand-back: `handback/p-l171-movement-tech-E_2026-11-12.md`. Sources cited; [source] and [inferred] kept apart. Quote nobody in
 dreamzone-3.
+
+**Added 01:10 (his item 135), the design rule for the menu:** "mostly realistic, but it can be bent stylistically for gameplay
+purposes that make sense for the setting and lore". It is a dream, the in-between. So for each tech in the menu, say:
+- whether it is realistic as it stands, or a bend;
+- if a bend, what in the dream justifies it, and how the game could show the bend as dream-logic rather than a bug (a visual or
+  sound cue).
+
+COD's slide cancel is a bend (an exploit made a feature). Item 57's late bhop is one too.

@@ -1043,3 +1043,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      movement with slide cancelling and sprint reset, maybe we could do something like that, if you sprint for longer than 10
      seconds, if you slide it resets your sprint or something, do you think we could queue up research on how to do a fun and
      addicting movement system made by someone wit adhd lol"
+135. 01:10, a rule for the movement work: "to expand, it is a dream, or in the inbetween, so reality and common sense can be a little
+     malluable, i want the physics to be mostly realistic, but it can be bent stylistically for gameplay purposes that make sense for
+     the setting and lore"
