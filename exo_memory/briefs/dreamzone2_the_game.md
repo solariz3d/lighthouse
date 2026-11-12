@@ -1026,3 +1026,10 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      behind you slosh around corners is scary."
      - So the test is what the look-behind (V) shows: pursuers that swing wide and slosh around corners behind him, their momentum
        visible.
+131. 00:55, after the L169 collation: "one thing that comes to mind from a game i played recently, was arc raiders and their own
+     proprietary system for training AI entities"
+     - Checked (search; GDC 2026 session "Learning to Move: Physics-Based Enemy Locomotion in ARC Raiders"; 80.lv; GamesRadar;
+       Hitmarker): Embark uses reinforcement learning **only for the locomotion** of its larger multi-legged ARC robots. That covers
+       foot placement and movement on a physics-based body, drawn from robotics research, with a coded torque "magic" the reward
+       penalizes overusing. **Tactics are behaviour trees**, layered on top. Not generative AI. Training-scale figures in some
+       coverage are unverified.
