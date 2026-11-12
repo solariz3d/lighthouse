@@ -231,7 +231,7 @@
   - at **≥ `sprint_speed`**;
   - the chaser **closing**, not parallel (the relative velocity points toward the player).
   - That is item 53's proximity and L164's option F, the juke made countable.
-- **Where the edges come from** [code, inferred]: the generator knows its doors and walls per cell (`EdgeKind::Door`, `Threshold`, `HomeDoor` … in `gen/src/emit.cpp:42-45`, the `wallish` list, at the checkout's current HEAD; it was `:22-25` at cab3530, before L162's lighting landed), and the walk graph knows its corners. A per-chunk list of **edge points** (convex corners and door jambs), handed out the way `WorldFacts` hands out reprieves (`chase/run.h:58`), would let the sim test N1 with no ray casts. It is **gen's** change, small and deterministic.
+- **Where the edges come from** [code, inferred]: the generator knows its doors and walls per cell (`EdgeKind::Door`, `Threshold`, `HomeDoor` … in `gen/src/emit.cpp:42-45`, the `wallish` list, at `cab3530`; a first draft cited `:22-25`, which I had read on 8b04508 in L162), and the walk graph knows its corners. A per-chunk list of **edge points** (convex corners and door jambs), handed out the way `WorldFacts` hands out reprieves (`chase/run.h:58`), would let the sim test N1 with no ray casts. It is **gen's** change, small and deterministic.
 
 **The numbers** [option; the first values are for bots, then his feel]
 
