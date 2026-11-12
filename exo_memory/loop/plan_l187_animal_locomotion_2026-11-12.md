@@ -23,3 +23,23 @@
 - The formulas with their sources and valid ranges.
 - What changes in L181 (C's stride) and L182 (A's turning limit) if they take these laws instead of a single human study.
 - Options for his choice above.
+
+## Mixing: human-shaped bodies with animal traits, for the uncanny (his item 167)
+His words: "the hunter, and other entities, can take things from different animals, while being humanlike at the same time, to create that uncanny valley effect".
+
+**What the sources say so far** (brief 167; abstracts only):
+- **Mismatch** (Kätsyri 2015 review; Saygin 2012): a human appearance with non-biological or non-human motion is where the eeriness lives.
+- **A gradient of "slightly off" gait** did not make a valley (*Perception*, doi 10.1068/p6900).
+
+**Add to the research:**
+1. Read the Kätsyri review and Saygin 2012 in full. What kinds of mismatch raise eeriness: which cue, how strong, and whether they compound.
+2. **A catalogue of animal traits a human-shaped body can carry,** each with its locomotion source:
+   - a greyhound's cornering (Usherwood & Wilson 2005);
+   - the back flex of a galloping quadruped;
+   - a bird's head stabilisation (the head held still in space while the body moves; a source on avian head-bobbing and stabilisation);
+   - a big cat's stalk (slow, low, still between steps);
+   - an insect's or spider's gait timing.
+   - For each: which part of our rig it touches (`gait_pose`, L181's chain, L182's turning).
+3. **The first game's "non-human" choices** (dreamzone-rt `9d98b64` :6350-6356: limb overspeed, asymmetric phase, the head pinned). Read them against the mismatch findings. Item 163 already rejects legs that fail to keep up, so overspeed is out unless a source argues it back.
+4. **Per entity, options for him:** the hunter and each lesser kind with one or two animal traits on a human body, chosen so each cue disagrees clearly with the human shape. This joins E's L172 kit (each kind's signature) as a kit of motion.
+**Test, for later builds:** his eye. There is no instrument for eeriness. The bars stay mechanical (replays, fingerprints, the lean timing) and the uncanny is his call on a build.
