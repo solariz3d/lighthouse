@@ -50,3 +50,12 @@ His words: "the hunter, and other entities, can take things from different anima
 - **Routing §6:**
   - **C (L181):** stride from Alexander's closed form, `step = 1.15 h (v²/gh)^0.3`, with each body's own hip height, swappable.
   - **A (L182):** the turning limit from Chang & Kram Eqn 5, `V_curve = V_o · 0.746 (R g / V_o²)^0.363`, capped by `√(μ g R)` and `V_o`, as a named, swappable law. The H2 variant for the hunter comes after the Usherwood read.
+- **His per-entity picks (brief 169):**
+  - hunter T1 only;
+  - sprinter T3;
+  - pack T4;
+  - interceptor T2;
+  - climber/crawler T4;
+  - stalker T2;
+  - charger T3.
+  - Build order: T1 is in L182 (A, after the Usherwood full-text read). T3 needs a spine joint (`game/body.h`), and T2 and T4 touch L181's chain and stride law. All the lesser kinds wait for humanoid models, which are not yet planned.
