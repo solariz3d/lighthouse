@@ -113,6 +113,83 @@
 - [inferred] H2 fits "human silhouette, non-human motion" and his 164 at once, because a doorway limits every body.
 - **Unread, worth reading before H2 is built:** Usherwood & Wilson's full text (the bend radius and speeds), and any cheetah turning data (Wilson et al. 2013, *Nature*, not searched this lap).
 
+## 8. Mixing: animal traits on human bodies, for the uncanny (his item 167; the chair's addition, 10:26:30Z; plan tail bcac7d6). Written 04:4x local
+
+### 8.1 What the uncanny sources say, read in full where open
+
+| source | status | terms |
+|---|---|---|
+| Kätsyri, Förger, Mäkäräinen & Takala 2015, *Front Psychol* 6:390, PMC4392592 | **[read full]** (PMC full text through E-utilities; "l.N" = the line of my sentence split) | **CC BY 4.0** |
+| Saygin, Chaminade, Ishiguro, Driver & Frith 2012, *Soc Cogn Affect Neurosci* 7:413-422, PMC3324571 | **[read full]** (the same way) | **CC BY-NC 3.0** |
+| Thompson, Trafton & McKnight 2011, *Perception* 40:695-704, doi 10.1068/p6900 | **[read abstract]** (PubMed 21936298) | © Pion |
+| Piwek, McKay & Pollick 2014, *Cognition* 130:271-277 | **[read abstract]** (PubMed 24374019) | © Elsevier |
+
+- **Mismatch is the best-supported road, but its evidence is mostly STATIC.**
+  - Kätsyri l.326: "good support for the perceptual mismatch hypotheses related to both inconsistent realism levels (H4a; 4 out of 4 studies) and sensitivity to atypical features (H4b; 3 out of 4 studies)".
+  - **l.366:** "refined uncanny valley hypotheses … have up to date been studied using only static stimuli, and that movement could possibly amplify their effects."
+  - Their two clearest cases are face cues: "enlarged eyes presented on human faces" (l.391).
+- **Movement on its own makes no valley.**
+  - Kätsyri l.303: in the two movement studies, "more humanlike movement was found to elicit higher affinity … whereas a nonlinear uncanny valley curve … was not observed".
+  - Thompson 2011 [abstract]: with three kinematic features of walking avatars varied, ratings "changed monotonically".
+  - Piwek 2014 [abstract]: "improving the motion quality systematically improved the acceptability"; the deepest-valley character "became more acceptable when it was animated".
+  - Kätsyri l.305: movement effects appeared only "specific to plausible outlier characters (ill-looking face …; and zombie character in Piwek et al., 2014)". **A horror figure is an outlier character.**
+- **Motion that mismatches appearance has a measured effect, in the brain.**
+  - Saygin l.6, l.8: participants watched "a human (biological appearance and movement), a robot (mechanical appearance and movement) or an android (biological appearance, mechanical movement)". The responses were distinctive "to the mismatch between appearance and motion", "notably in bilateral anterior intraparietal sulcus".
+  - l.9, read as "increased prediction error as the brain negotiates an agent that appears human, but does not move biologically".
+  - **Its limits:**
+    - 20 adults (l.99);
+    - the measure is fMRI repetition suppression, **not eeriness ratings**;
+    - the non-human motion is a **robot's mechanical motion**, with identical kinematics in both robot conditions (l.114), **not an animal's**.
+- **[inferred] So, for item 167:**
+  - The sources support **a clear, categorical disagreement between a human body and how it moves** (Saygin; Kätsyri's H4a, by extension from static cues).
+  - They **do not** support motion made uniformly "a bit off" (Thompson; Piwek).
+  - **No source I read tests ANIMAL motion on a human body.** Whether that is eerie, and not merely strange, is his eye's call; that is the plan's own test.
+  - **One cue per body, strong and consistent, beats many weak ones**, by the same reading. Whether mismatches compound is not tested in what I read (Kätsyri l.390 leaves "whether any kind of perceptual mismatch would lead to the uncanny valley" open).
+
+### 8.2 A catalogue of animal traits, each with its locomotion source
+
+| trait | what it looks like on a human body | source (status, terms) | touches |
+|---|---|---|---|
+| **T1, greyhound cornering:** contact timing held on a bend | it goes round a wide curve at full stride with no slowdown and no shortened step, where a human visibly brakes and spreads the step | Usherwood & Wilson 2005 [read abstract]: greyhounds "do not change their foot-contact timings … withstand a 65% increase in limb forces". © NPG | L182 (the turn law, §3's H2); `gait_pose` (no step change on the curve) |
+| **T2, bird head stabilisation:** the head held still in space, then thrust | the head stays fixed in the world while the body moves under it, then snaps forward: a hold, then a thrust | Ortega, Stoppa, Güntürkün & Troje 2009, *Exp Brain Res* 199:313 [read abstract]: "During the hold phase, the head of the bird remains stable in space, while during the thrust phase, the head is rapidly moved forward." © Springer. Theunissen & Troje 2017, *Front Neurosci* 11:551 [read abstract]: in translations the head was "almost perfectly sta[bilised]" (PMC, open; the full text was not read) | L181's chain (the neck and head end); the head look (L180's head yaw) |
+| **T3, galloping back flex:** the spine bends and extends each stride | the trunk folds and unfolds in the sagittal plane with each stride, gathering and extending, where a human trunk stays nearly rigid | Schilling & Hackert 2006, *J Exp Biol* 209:3925 [read abstract]: "maximum flexion of the spine was observed in the interval between the last third of the swing phase and touch-down", over "7±1 presacral intervertebral joints". © CoB. Kamimura et al. 2021 *Sci Rep* / 2022 *Front Bioeng* [read abstract]: cheetahs gallop with "large spine bending movement" and two flight types, "gathered and extended" (open-access journals; licence line not read; the full text was not read) | L181's chain (the pelvis-chest link; it needs a spine joint our 21-joint body lacks: Chest–Pelvis is one segment, `game/body.h:38-43`) |
+| **T4, insect gait timing:** stride rate nearly fixed, speed from stride length; tripod at speed | the legs keep one fixed rhythm whatever the speed, so it covers ground by reaching further, never by stepping faster | Full & Tu 1991, *J Exp Biol* 156:215 [read abstract]: "High speeds were attained by increasing stride length, whereas stride frequency showed little increase with speed." © CoB | `gait_pose` stride law (§1 swaps for a fixed-rate law) |
+| **T5, big-cat stalk:** low, slow, still between steps | — | **No source found or read this lap.** Listed only because the plan named it; **unsourced**. | — |
+
+- **[inferred] T4 is close to human sprinting** (Weyand: swing time constant, speed from force and stride). On a human it may read as ordinary, not uncanny.
+- **T2 and T3 disagree most clearly with a human shape**: a human head bobs and turns with the body, and a human trunk does not fold per stride. They are also the two that match the sources' "clear mismatch".
+
+### 8.3 The first game's "non-human" choices, against the findings
+
+dreamzone-rt `9d98b64` `src/main.cpp:6350-6356` (read): "detuned toward wrong: asymmetric leg phase, 1.22x limb overspeed (legs churn faster than travel justifies), head pinned down, no head stabilization. Human silhouette, non-human motion."
+
+| choice | kind of cue, by the sources | verdict [inferred] |
+|---|---|---|
+| asymmetric leg phase | a **gradient** degradation of a human gait | **Weak by Thompson 2011** ("monotonic", no valley) unless the asymmetry is large enough to read as a categorical difference (a lope, not a limp). |
+| 1.22x limb overspeed | a gradient degradation; and **rejected by him** (item 163, "moving too fast for the legs to keep up") | **Out.** No source argues it back; Alexander/Weyand say longer strides, not faster legs. |
+| head pinned down, no head stabilisation | a posture, plus the **absence** of stabilisation (the human norm is a stabilised head) | **Half right.** Removing human stabilisation is a degradation. **T2 (a bird's hold-and-thrust) is the categorical version**: a head that clearly stabilises like no human does. |
+| "Human silhouette, non-human motion" | Saygin's android condition, in words | **The principle is the sources'**; the first game's means (detuning) is the weak form. |
+
+### 8.4 Per-entity options for him (options only; each one trait, chosen to disagree clearly)
+
+| entity (L172 kit) | option A | option B |
+|---|---|---|
+| **Hunter** | **T2 head hold** (its head stays fixed on the player while the body runs and turns under it; the omniscient one, item 65) | **T1 greyhound cornering** on wide curves (§3's H2) |
+| **Sprinter** | **T3 back flex** (a galloping fold, reckless, `corner_care` 0.5) | T1 |
+| **Interceptor** | T2 (it watches where you will be) | — |
+| **Pack** | **T4 fixed rhythm**, all three bodies in one rhythm (a swarm cue) | T3 |
+| **Climber / crawler** | T4 (the insect, "ignores the waking world's rules") | — |
+| **Stalker** | T2 (still head, between glances) | T5 if a source is found |
+| **Charger** | T3 (a bull-like fold into the charge) | — |
+
+- **[inferred]** One trait per kind keeps each cue clear (§8.1). The same trait on two kinds (T2 on the hunter and the interceptor) is his call: it trades distinctness for a family look.
+- **Costs** (read from the rig, not built):
+  - T1 is L182's law;
+  - T2 is a head-target change in L181's chain;
+  - T3 needs a spine joint the body does not have (a new joint, `game/body.h`);
+  - T4 is a stride-law swap in `gait_pose`.
+- **Test:** his eye, as the plan says. The mechanical bars (replays, the lean timing) guard; they do not measure eeriness.
+
 ## Commands
 
     node -e '...'   # the Eqn 5 table, the friction bound and the stride table (`scratchpad/l187/laws.js` in pane E's session scratch; its output reproduces every table here)
