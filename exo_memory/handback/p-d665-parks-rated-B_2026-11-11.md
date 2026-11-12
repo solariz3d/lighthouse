@@ -153,3 +153,71 @@ stay under their dial bands at the default rate, or (b) on the bots (20 seeds ×
 
 NEXT: librarian, rule on (i) to (iii) when this is read; B meanwhile builds the chute piece, which pays best at either price, and nothing that
 depends on (i).
+
+## 8. Step 3, the Park kit, BUILT on the rulings (i) to (iii): committed `151aead`, steps 2+3 together, NOT landed
+
+dreamzone-3 `d665-variety-b`: `2d72bd2` (step 1) → `1eea919` (step 2) → **`151aead`** (step 3), worktree `C:\Users\nname\Desktop\worktrees\dz3-d658-b`,
+NOT pushed. Every run under the ORDINARY lock, hidden, BelowNormal; outputs in my scratch `d665b\` (named below).
+
+**What was built** (the CHANGELOG says it in words for him):
+- **(i) The true buy rule at the player's fixed base movement.** `graph.cpp` `crossing_seconds` / `judge`: a Park is kept when the hunter's way
+  round (graph × 0.835) less the player's way through ≥ `reprieve_min_detour_s`. The crossing reads `kBaseMove` only (base sprint 7, ladder 2.6 m/s
+  + 0.3 s off, a fall under fall gravity + the 0.4 s stagger past 6 m): new `MoveReach` fields, filled in `reach_from`, **held** by `walk_tests`
+  `the_base_movement_prices_a_park_as_the_controller_moves` (green, `g6_walk.txt`). Records carry `crossing_s`.
+- **(ii) The vertical kit, the chute first.** A chute is a one-way fall down a junction column (new salts after every old one): mouths at its top
+  and foot only, walled between, no node in its air; the top lane's mouth edge goes straight to the foot (`kEdgeChute`), a drop traversal, proved
+  as a drop by the controller. **Its depth is the seed's chance curve** (0.7 while under three pieces, then 0.35, seven at most; groups of eight
+  storeys with a phase per column; as deep as the column allows). A chute may go on at its foot as a **run** along the row's cut line to one mouth
+  on the lane (the next piece on the same curve). **No sealed pieces**: luck and upgrades touch nothing.
+  - **Red first, both:** the chute row red before its code (`c_red.txt`: 0 chutes), green after; the run row red with the run turned off
+    (`c5_red.txt`: 0 runs), green after. My first attempt at the run's red did not compile (`c4_red_build.txt`) and is not counted.
+  - **Turns: NOT built.** Runs are straight; a turn at the corner of the cut lines is the next middle piece.
+- **(iii) With the kit, by name:** the dial row's one-storey count removed and its shortcut check made the buy rule (also: seeds 24 → 32, and a
+  chute's first mouth is its top); the way-back row and the traversal count take a chute as a drop; the nav reprieve row takes seeds 33 and 34; the
+  factor row counts mouths beyond the arena apart. **The seven chase rows that test a one-storey Park's hold, tell and mouth** now stand in
+  `passage_arena()` (the rich arena with the minimum buy at 0), each line marked; the mechanics they test are unchanged.
+- **The bot (A's `chase/bots.cpp`, a few lines):** it took every Park edge that changes height as a ladder, so it could not use a chute (the first
+  bot arm entered 10 Parks, all ladders, `v_kit_measure.txt`). Now a chute is fallen as a drop. `dz-chase --parks` names each Park entered.
+
+**Proof at `151aead`'s content** (`c5_suite.txt`, `g6_*.txt`, `v2_chase.txt`): `build.bat test` **8 of 10 suites**. `gen_tests` 37/37: Parks per chunk
+apartment 0.159 (band 0.10-0.30), hotel 0.188 (0.12-0.32); 175 judged; 86 chutes, falls 47/23/13/2/1, 18 with a run. `gen_walk_tests` green; the
+rare-pieces row walked 52 ramps against its bar of 50 (**64 at step 2**): thin, and every edge completed.
+**Red, NOT amended, for their owners:**
+- `chase` `a_sprinter_that_does_not_brake_for_corners...`: the margin row, red since step 1 (the straights hand-back, §5; the whole suite decides).
+- `nav` `the_way_there_is_about_as_quick_as_the_way_back`: the worst pair **22.9%** against its 20% bound; **14.3% at step 2** (`n0_nav.txt`, the
+  throwaway worktree at `1eea919`). Its mean (0.96%) and its count over 5% (101 of 2,943; 90 before) barely moved. The walker only walks, and both
+  ways found complete paths. inferred: the search's inexactness on new geometry (Park cells cut out of the mesh), not a gap. The bound is the owner's.
+
+**The kit's registered falsifier (§7), measured** (bots, 20 seeds × flee/line/juke, the streamed world, `--parks`; `v_kit2_measure.txt`):
+
+| | registered: wrong if | measured |
+|---|---|---|
+| (a) Parks per chunk | under the dial bands at the default rate | apartment 0.159, hotel 0.188: **held** |
+| (b) Parks of 3+ pieces, bought on bots | median under 4 s | **+5.7 s: held, but only 3 measured** |
+| (c) the commonest shape met | over 50% | **43%** (ladder 1: 9; chutes of 1 to 4 storeys: 11, one with a run): **held** |
+
+E's V-table: **V5** generator ÷ mesh median 1.18, p75 1.28 (held; the worst 1.42); **V8** survival median 39.1 s against 41.8 before D665 (held);
+21 Parks entered (11 at step 2). **V4's second clause FIRES as written:** the one-piece ladder bought 3.6 s against E's 1.3 s (registered: "the
+1-piece ladder buys more than before (it should not change)"). inferred cause: step 2's true rating keeps only the ducts that pay; the ladder piece
+itself did not change.
+
+**Found, not mine to fix:**
+- **After a fall of three storeys or more, the run sometimes cannot place the player on the chasers' navigation:** the hunter's time reads −1 at
+  entry or exit for 3 of the 21 Parks (a chute 4, a chute 3, a chute 3 with a run). inferred: the landing spot is where the player's nav location
+  fails for a moment, and the hunter may lose him too. A's area; in HANDOFF's known issues.
+- **The generator's base movement still has `sprint_peak_speed = 8.75`** (`gen/src/gen.h:108`); D657 (mine) raised the controller's peak to 10.
+  Voids are sized so a jump at the base peak does not clear them. inferred: a 10 m/s jump may now clear one without the wall-run. Not measured;
+  my own miss from D657, not touched here (outside this packet).
+
+## Corrections, mine (step 3)
+
+- Twice a `node -e "…"` with backticks in it ran the backticked names as shell commands: bash executed `gen/src/gen.h`, `graph.cpp` and
+  `layout.cpp` as scripts, which stopped at a syntax error with no effect, and the changelog entry lost its file names (fixed by hand). Once a
+  `printf` turned `\n0_nav` into a newline, and that run ran nothing.
+- My first V-measure read the run's −1 ("no answer") as a lead, and its pattern missed two entry lines with a negative figure, so its pairs
+  slipped: it said Parks of 3+ pieces bought −3.70 s. Re-read line by line and both fixed: +5.7 s, n 3.
+- The first red for the run piece did not compile (an early return made unreachable code, a warning treated as an error); redone with the chance
+  set out of reach.
+
+NEXT: librarian, collate steps 2+3 for landing when this is read (the two red margin rows above are for their owners); B goes on to step 4, the
+erosion creep, now.
