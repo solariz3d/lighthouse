@@ -1,0 +1,130 @@
+# p-l187-animal-locomotion-E: locomotion laws from animals and humans (his items 166, 165), for C's stride (L181) and A's turning limit (L182). Pane E, on L, 2026-11-12, written from 04:3x local (`date`)
+
+**Packet:** the chair's L187, 10:23:57Z. **Plan:** `loop/plan_l187_animal_locomotion_2026-11-12.md` (02805ac8), read whole. Items 163, 164 and 165 were read in the brief.
+**Research only; nothing built.**
+**Marking:**
+- **[read full]** is the full text, read;
+- **[read abstract]** is only the abstract, read (PubMed E-utilities, verbatim);
+- **[via X]** is a figure quoted by a later paper I read, X, with the original unread;
+- **[unread]**: I could not get it;
+- **[computed]** is the law evaluated by me (`node -e`, below);
+- **[inferred]** is mine.
+
+## Sources and their terms
+
+| source | status | terms |
+|---|---|---|
+| Chang & Kram 2007, *J Exp Biol* 210:971-982, doi 10.1242/jeb.02728 | **[read full]**: the journal page through WebFetch. Eqn 5, Table 1 and the methods sentences were copied exactly. The last 40k characters of the page were not read. | © The Company of Biologists 2007 |
+| Weyand, Sternlight, Bellizzi & Wright 2000, *J Appl Physiol* 89:1991-1999 | **[read abstract]** (PubMed 11053354). The full text returned 403. | © the American Physiological Society |
+| Usherwood & Wilson 2005, *Nature* 438:753-754, doi 10.1038/438753a | **[read abstract]** (PubMed 16341003). The full text is paywalled. **The bend's radius and the speeds are unread.** | © Nature Publishing Group |
+| Alexander & Jayes 1983 | **[unread]**: the original returned 403. **Correction to the plan: it is *J. Zool.* 201:135-152 (doi 10.1111/j.1469-7998.1983.tb04266.x), not *J Exp Biol* 115** (Wiley and scilit records). | © Zoological Society of London / Wiley |
+| Alexander 1976, *Nature* 261:129-130 ("Estimates of speeds of dinosaurs") | **[via Mazzetta & Blanco 2001]**, *Acta Palaeontologica Polonica* 46(2):235-246, read full (pdftotext) | APP is an open-access journal; I did not read a licence line in the PDF |
+| Donelan & Kram 1997, *J Exp Biol* 200:3193-3201 ("The effect of reduced gravity on the kinematics of human walking: a test of the dynamic similarity hypothesis for locomotion") | **[read full]** (pdftotext, sfu.ca copy) | © The Company of Biologists 1997 |
+| Heglund & Taylor 1988, *J Exp Biol* 138:301-318 | **[read abstract]** (PubMed 3193059). The full text shows the abstract only. | © The Company of Biologists 1988 |
+| CMU Graphics Lab Motion Capture Database | **[read]**: the site's own terms (mocap.cs.cmu.edu) | the CMU terms, quoted in §5 |
+| RGBD-Dog (Kearney et al., CVPR 2020), github CAMERA-Bath/RGBD-Dog | **[read]**: the repository has **no licence file**; it ships `Data_Release_Form_RGBDDog_CVPR_2020.pdf`. The form itself is unread. | a release form, not an open licence |
+
+## 1. Stride against speed, any body size
+
+- **The law [via Mazzetta & Blanco 2001, quoting Alexander 1976]:**
+  - relative stride length `λ/h` is tied to the Froude number `Fr = v²/(g·h)`, where **h is "the height of the hip joint from the ground in normal standing"** (APP p. 236, l.31);
+  - their speed form: "v = 0.25 s^1.67 h^-1.17" (s = stride, m).
+  - The search-returned citations (Ruiz & Torices 2013, unread) give the stride form `λ/h ≈ 2.3 (v²/gh)^0.3` and speed `v ≈ 0.25 g^0.5 λ^1.67 h^-1.17`.
+  - **[computed]** Inverting `λ/h = 2.3 Fr^0.3` gives exactly `v = 0.249 g^0.5 λ^1.667 h^-1.167`, so the two forms agree. **Mazzetta & Blanco's printed form drops the g^0.5**; my reading is that the factor was lost in their typesetting or folded into the constant. The librarian's half-remembered "2.3 × Fr^0.3" is **right**, via these two sources.
+  - **Where it holds:** fitted on extant mammals (the APP text: "derived from observations of mammals"). The search summaries of A&J 1983 (unread) say it holds best **within cursorial quadrupeds** and less well between cursorial and non-cursorial.
+- **Disagreement, read full:** **Donelan & Kram 1997** tested it on humans walking in simulated reduced gravity (0.25–1.0 g, Fr 0.1–0.4). At equal Fr the duty factor matched (within 2 %), but relative stride length **"differed by as much as 67 %"**; they "reject" the hypothesis for stride. **For our game this matters only if gravity changes** (dreams, item 29's flight); at 1 g the law's g is constant.
+- **Stride frequency against size [read abstract, Heglund & Taylor 1988]:** 16 species from "30 g mice to 200 kg horses". The equivalent speeds "scale with about the 0.2 power of body mass", and the frequencies "the -0.15 power". Constants are unread.
+- **Humans at top speed [read abstract, Weyand 2000]:** 33 runners, top speeds 6.2 to 11.1 m/s. Swing time "did not vary (P = 0.18)", and the force was "1.26 times greater" for the faster. **So a faster human runs with longer strides at about the same leg-swing time, not faster legs.**
+
+**[computed] Our player body** (hip height `h = thigh 0.46 + shin 0.45 + ankle 0.07 = 0.98 m`, `game/body.h` `BodyBuild`), Alexander's law at 1 g:
+
+| v m/s | Fr | stride λ (2 steps) | step | stride rate | λ/h |
+|---|---|---|---|---|---|
+| 1.5 | 0.23 | 1.46 m | 0.73 m | 1.03 Hz | 1.49 |
+| 3 | 0.94 | 2.21 | 1.10 | 1.36 | 2.25 |
+| 5 | 2.60 | 3.00 | 1.50 | 1.67 | 3.06 |
+| 7 | 5.10 | 3.67 | 1.84 | 1.91 | 3.75 |
+| 8.75 (base peak) | 7.96 | 4.20 | 2.10 | 2.08 | 4.29 |
+| 10.75 (full surge) | 12.0 | 4.75 | 2.38 | 2.26 | 4.85 |
+
+**[inferred] Against item 163 and the code:** `gait_phase_per_metre` sets a step of about **0.8 leg lengths at every speed** (checked, `game/model_rig.cpp:578`, main `add21fe`). With leg = thigh + shin = 0.91 m (the code's own `leg`), the law gives a step of **0.80 leg lengths at 1.5 m/s (0.73 m) and 2.3 at the base peak (2.10 m)**, so the fixed step is right only at a slow walk. **The research agrees with him** ("needs to take longer strides").
+- **Caveat:** 8.75–10.75 m/s is Fr 8–12. That is far above Mazzetta & Blanco's trackway range, but inside the mammal data Alexander fitted (his gallops). Whether it holds that high **for a human** is not in what I read. Weyand's full text (unread) has the human figures.
+
+## 2. Gait changes
+
+- **[via Mazzetta & Blanco, quoting Alexander 1976 and Thulborn]:** mammals change "from a walk to a run or trot when the ratio of stride length to hip height (s/h) reaches a value of about 2.0"; Thulborn's bands are "walk (s/h < 2.0), trot (2.0–2.9), run (> 2.9)".
+- **[computed] As Froude numbers,** through the law: s/h 2.0 → **Fr ≈ 0.63**; s/h 2.9 → **Fr ≈ 2.2**.
+- **Humans:** the walk-run transition at about **Fr 0.5** is in the search summaries only (Kram et al. 1997, unread). Donelan & Kram 1997 [read full] cites that humans in reduced gravity "change gait, from a walk to a run, at similar Froude numbers", but gives no value in what I read.
+- **[computed]** For h 0.98 m, Fr 0.5 is **2.19 m/s**.
+
+## 3. Cornering: human against hunting animal
+
+- **Humans [read full, Chang & Kram 2007]:**
+  - "five recreationally fit men", "circular tracks of 1, 2, 3, 4 and 6 m radii", flat (unbanked);
+  - maximum speeds (Table 1, untethered): straight **7.70**; 6 m **5.66**; 4 m **5.07**; 3 m **4.49**; 2 m **3.77**; 1 m **2.99** m/s.
+  - The fit, **Eqn 5:** `V_curve/V_o = 0.746 (R·g/V_o²)^0.363±0.012`.
+  - The cause: the **inside leg** produces less peak force on tight curves (1.87 BW at 1 m against 2.48 at 6 m), against the hypothesis that the straight-path force is reached.
+- **Greyhounds [read abstract, Usherwood & Wilson 2005]:** "on entering a tight bend, greyhounds do not change their foot-contact timings, and so have to withstand a 65% increase in limb forces"; they "power locomotion by torque about the hips". Humans "change the duration of foot contact to spread the time over which the load is applied". **The bend's radius and the dogs' speeds are not in the abstract** (unread).
+- **[inferred] A bound no body escapes:** on a flat turn the side force is `m·v²/R`, and friction caps it at `μ·m·g`, so **`v ≤ √(μ g R)`**. That is physics, not a source here. At μ = 1: R 1.5 m → **3.8 m/s**; R 3 m → **5.4 m/s**. **"Keeps speed on a bend" (the greyhound) is about a race-track bend, where the bound is far above its speed. In a doorway (R 1–3 m) the bound itself is near Chang & Kram's human speeds**, so even an animal law cannot keep 9 m/s round a doorway corner without sliding.
+
+**[computed] Eqn 5 at our bodies' straight speeds** (extrapolated: the fit was made with V_o = 7.70 only):
+
+| straight V_o | R 1 | R 1.5 | R 2 | R 3 | R 4.5 | R 6 m |
+|---|---|---|---|---|---|---|
+| 7.70 (the study) | 2.99 | 3.46 | 3.84 | 4.45 | 5.16 | 5.73 |
+| 8.75 (player peak) | 3.10 | 3.59 | 3.98 | 4.61 | 5.34 | 5.93 |
+| 9.0 (hunter, normal, 0 min) | 3.12 | 3.61 | 4.01 | 4.65 | 5.39 | 5.98 |
+| 11.1 | 3.30 | 3.83 | 4.25 | 4.92 | 5.70 | 6.33 |
+| friction bound √(gR) | 3.13 | 3.84 | 4.43 | 5.42 | 6.64 | 7.67 |
+
+- The 7.70 row reproduces Table 1 within 0.07 m/s, which checks my evaluation.
+- **[inferred] Against item 164** ("turn way too fast keeping speed"): the research agrees. A human-shaped hunter at 9 m/s should be near **4 m/s round a 2 m corner**. A's measured "858 m given back at corners" (L172) says ours loses some speed there, but item 164 says not enough, and not in the right way. **The physics bound says even a greyhound-law hunter is near the human figure in a doorway.** The animal law only differs on wide bends (R ≫ 6 m: atria, long curves), where it would keep speed and a human would not.
+
+## 4. Arm and torso swing
+
+- **Not read this lap.** C's "Active Arm Swing During Running" (L176/L179) is C's source. I found and read no quadruped trunk counter-rotation source. **[unread]**: nothing claimed.
+
+## 5. Motion data: may it ship?
+
+- **CMU mocap [read, the site's terms]:**
+  - "This data is free for use in research projects. You may include this data in commercially-sold products, but you may not resell this data directly, even in converted form."
+  - They ask for an acknowledgement ("The data used in this project was obtained from mocap.cs.cmu.edu …").
+  - **[inferred]** It can ship inside the game as motion, with the acknowledgement; it cannot be sold as data. Humans only.
+- **Dogs (RGBD-Dog) [read]:** no licence file, a data release form instead (unread). Treat as **study only** until the form is read. Another dog set in the search (DigiDogs) is "non-commercial research purposes only" (search summary, unread).
+- **[inferred]** No open animal locomotion data cleared for shipping was found. The animal laws (§1-§3) are equations, which carry no licence. **The law ships; the data does not.**
+
+## 6. What changes in L181 and L182
+
+- **L181 (C's stride, from Weyand):**
+  - Alexander's law **agrees** with Weyand (longer strides with speed, swing time about constant). It adds a **closed form for any leg length**: `step = 1.15 h (v²/gh)^0.3`. So the hunter, the lesser chasers and the player each get their stride from their own hip height, with no per-body table.
+  - Weyand's full text could replace it for humans above Fr 8 if C reads it. Alexander is the swappable law the plan asked for.
+- **L182 (A's turning limit, from Chang & Kram):**
+  - **Eqn 5 is now read, with its constants:** `V_curve = V_o · 0.746 (R g / V_o²)^0.363`, measured R 1–6 m.
+  - [inferred] Cap it by `√(μ g R)` and by `V_o`. Above R 6 m it is extrapolated.
+  - **A greyhound option** would hold `V_o` on bends **only where `√(μ g R)` allows it**; so the same at doorways, faster on wide curves.
+
+## 7. For him (his calls)
+
+- **The player:** human laws. Alexander's stride and Chang & Kram's corners agree with his items 163 and 164.
+- **The hunter, three options:**
+  - **(H1) human** (Chang & Kram everywhere);
+  - **(H2) hunting animal** (greyhound: speed held on wide bends, friction-bound in doorways). That is "non-human motion" where it is visible, the long curves, and fair at doorways;
+  - **(H3) per kind:** the hunter H2, the lesser chasers human, the sprinter something looser.
+- [inferred] H2 fits "human silhouette, non-human motion" and his 164 at once, because a doorway limits every body.
+- **Unread, worth reading before H2 is built:** Usherwood & Wilson's full text (the bend radius and speeds), and any cheetah turning data (Wilson et al. 2013, *Nature*, not searched this lap).
+
+## Commands
+
+    node -e '...'   # the Eqn 5 table, the friction bound and the stride table (`scratchpad/l187/laws.js` in pane E's session scratch; its output reproduces every table here)
+
+## NOT verified
+
+- Chang & Kram: the full text came through a WebFetch extraction (Eqn 5, Table 1 and the methods sentences copied "exactly" on a second fetch). It was not read as a PDF.
+- Alexander & Jayes 1983 and Alexander 1976 are both unread; the law comes through Mazzetta & Blanco (read) and a search summary of Ruiz & Torices (unread).
+- checked: the 0.8-leg-length step is `game/model_rig.cpp:578` at main `add21fe`: `const float step = std::max(0.3f, 0.8f * leg);   // a step of about 0.8 leg lengths`, in `gait_phase_per_metre`. That drives the drawn chasers; the player's own body keeps the camera's stride (`game/body.h`), not checked against the law here.
+
+## Corrections
+
+- **To the plan (the librarian's):** Alexander & Jayes 1983 is in *J. Zool.* 201:135-152, not *J Exp Biol* 115.
+
+NEXT: librarian route §6 to C (L181) and A (L182), and put §7's H1/H2/H3 to him, when this pointer is read.
