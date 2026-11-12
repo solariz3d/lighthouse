@@ -977,3 +977,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 119. 2026-11-11 18:08 (on D), the shop's reroll cadence: "every run is every day since they wake up then sleep"
     - One run is one night: he sleeps, runs, wakes. So "every day" and "every run" are the same: the shop restocks and rerolls
       once per day-night cycle, between runs.
+120. 2026-11-11 18:09 (on D), on E's 24 parody labels: "the parody names should be serious not just comedic"
+    - The parody brands should read as believable real labels, not jokes: a name you could see on a shoebox in 2005, still
+      winking at the real brand, but not a gag (Lukewarm Topic, Runner-Up, Abercrumb & Fetch read as jokes).
