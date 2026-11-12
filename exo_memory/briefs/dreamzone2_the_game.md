@@ -1108,3 +1108,5 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - Read with 150 (learn from open-source animation, not to use it) and 146–147: a rework of both bodies, the hunter's and the player's first-person body seen looking down, toward real procedural movement. L176 (C's open-animation research) is the ground for it; L177's timing bar becomes one of the rework's registered tests.
 153. 03:09, on L177's plan (a lean from the corner ahead, the librarian's own idea) and L173's spring chain: "well why the fk did we do all the research just to ignore it and do our own thing????????????????" then "get rid of it"
      - Read as: remove the home-made lean (L173's spring chain on main, c83f8dc) and the home-made L177 plan; build what the research found instead. Trace of how it happened: librarian/2026-11-12.md, 03:1x.
+154. 03:11: "cant we learn how they did animations too? we need to get them right first"
+     - "They" read as Left 4 Dead / Valve (item 129's documentary, Booth). "Right first": research before building. L177b and L178 wait for L179's research.
