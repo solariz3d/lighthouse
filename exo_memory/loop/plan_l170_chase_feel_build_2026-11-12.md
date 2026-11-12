@@ -66,3 +66,7 @@ collation.
   the soft chase is the measured cause and his first call. Every arm also reports the slosh test.
 - **A's finding, kept as stated:** NextBot has no path randomisation (only an avoid-wait jitter). Our seeded sway is ours, not
   Valve's.
+- **01:0x: A registered SLIP** (`handback/p-l169-code-A_2026-11-12.md`, "The SLIP lever, registered 2026-11-12 01:0x", b93d05d4).
+  **It supersedes P2 and L-I2.** `slip_rate` per second, 0 = legacy. Arms 3, 6 and 12, plus pairs with P3 and P1. A red-first
+  mechanism row comes before any sweep. The wall-hit rate is a registered guard, since a 3 m lane caps the carry. Read P2 as SLIP
+  everywhere in this plan.
