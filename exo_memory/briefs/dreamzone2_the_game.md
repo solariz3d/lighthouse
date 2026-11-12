@@ -990,3 +990,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
     all work in motion is done, lets do a comprehensive sweep to see where the gaps are again"
     - Stop opening new design threads. Finish the work in motion, then a comprehensive sweep of the game's gaps, back to
       fundamentals.
+123. 2026-11-11 18:19 (on D), the father's legendaries: "dads watch is a trinket, legendary jacket would be dads bomber. Dads
+    sunglasses are legendary accessory. We can flesh out the trinkets and other legendary cosmetics later"
+    - His father's watch: a trinket (as item 114).
+    - His father's bomber jacket: a legendary jacket (clothing, Outer).
+    - His father's sunglasses: a legendary accessory.
+    - The rest of the trinkets and legendary cosmetics are fleshed out later (item 122: fundamentals first).
