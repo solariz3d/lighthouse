@@ -11,8 +11,22 @@ His word, 23:20: "get ready to stop and write the handoffs for dreamzone3 and li
 - **On L, before building:** `git pull`, then `git submodule update --init --recursive` (cgltf v1.15 was added), and **Git LFS must
   be installed** (`git lfs install`, then `git lfs pull`): the kid's and the hunter's models are LFS files in `content/models/*.glb`.
   Without LFS the loader reads pointer files.
-- Unlanded branches (pushed for L only if the stop notes below say so):
-  - `d665-variety-b` (B): the Park kit, steps 2+3 at `151aead`, plus step 4 if started. STOP NOTE: _to fill when B rings_.
+- Unlanded branches, all pushed to origin for L (main stays `cab3530`):
+  - `d665-variety-b` (B) at **`151aead`**: the Park kit, steps 1-3, **not rebased onto cab3530**. B's stop note:
+    `handback/p-d665-parks-rated-B_2026-11-11.md` §10 (lighthouse 5bb2935c). **None of the four checks is done.**
+    - Check (1), B's hypothesis (inferred, not run): the streamed chase holds nav for only three chunk layers round the loaded block
+      (`chase/streamed.h`, `nav_radius_v = 1`), so a chute of 3-4 storeys falls off the hunter's mesh. **The deciding run:** in a
+      throwaway worktree at 151aead, set `nav_radius_v = 2` and rerun seeds 15, 18 and 7 (B's `w1.cmd` lives in D's temp scratch, so L
+      rebuilds that by hand; **never commit the scratch edit**). If the -1s go, cap chutes at 2 storeys (make gen `kChuteMost` a dial)
+      for this landing, and the window goes to A after D673.
+    - Check (2): navigation drops every link with an end in a Park (inferred), so a walker cannot cross a chute; print the worst pair.
+    - Check (3): with chutes capped at 2, Parks of 3+ pieces are rare (~1 in 11 chutes); raise `--gen-dial reprieve_rate=…` (said so)
+      or run several hundred.
+    - Check (4): rebase, suite, both self-tests (not run on 2+3).
+  - `d665-creep-b` (B) at **`868c6e1`**, off 151aead: step 4, PARTIAL. It has the 15 s hold, the 3 m/s front and the Park giving
+    out where he stands; its row was red-before (gave out at 20.00 s where 17.00 was due), and green is not run. **It still has the
+    corrected hunter rule** (waits for the far mouth); that must become ordinary eroded space for every chaser by either mouth, with
+    falsifier 2 restated and row 5 added (`librarian/2026-11-11.md`, 23:1x).
   - `d673-chase` (A): **the interface is committed, `db8e557`** on cab3530 (`run_length_s` with 0 = no timer, `overtime()`,
     `overtime_seconds()`, `saved()`, `kept_score()`, `Kind::Dark`, `Phase::Overtime`). Behaviour unchanged: chase 54/54, world_app
     40/40, world selftest 52/52, fingerprints = main. A's hand-back §1: `p-d673-chase-A_2026-11-11.md` (lighthouse branch d664-a,
