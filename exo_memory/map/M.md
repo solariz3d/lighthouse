@@ -1000,3 +1000,15 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 ## 2026-11-11 (L) — the rebuilder's pull dies on a phantom-changed Cargo.toml
 - After any build on a Windows checkout with autocrlf, `src-tauri/Cargo.toml` is LF on disk with a stale index record; git shows ` M` though the bytes equal the blob, and `git pull --ff-only` refuses whenever upstream touched the file (every release). The rebuilder then opens the old build. Trace and fix plan: `loop/stall_trace_rebuilder_pull_cargo_toml_2026-11-11.md`. One-off unblock: `git add` the file (same blob), then fast-forward.
 - D's 11-10 handoff dropped L's 11-07 open list (test tiers 4e09397 unlanded, cap measure, heavy profiles). The drag-cost flake D asks about is answered by that branch.
+
+## 2026-11-12 (L), before a compaction
+- The Dreamzone 3 work is a queue: `loop/queue_dreamzone3_2026-11-12.md`. State: `librarian/2026-11-12.md`, "02:2x STATE BEFORE
+  COMPACTION".
+- **Findings worth keeping:**
+  - **His play finds what bots miss.** The lean jitter (item 146), the look-back clip (147) and the stair shaft (149) all came from
+    two runs. His run records, replayed headless, locate a fault to the second and the metre.
+  - **Read a "too X" premise against the numbers first.** E's L172 corrected "the player is too fast": the base player is slower
+    than the hunter; corners and missing answers were the cause.
+  - **A no-slip body read 10° of slip** on a forward-difference estimator (B, L170 §3). Check an instrument on a case whose true
+    answer is known by construction.
+  - **An idle lock holder blocks the room silently** (the `cmd /c` mangling). Check a held lock's child for CPU before waiting on it.
