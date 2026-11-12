@@ -1086,3 +1086,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      smooth into turns on a nice gradient. Like its pathing is still messing with the animation itself or something"
 147. 02:02, after playing 682fb36: "the player character animation from first person perspective needs to be better too, as well look
      back clips into the characters neck and shoulder area"
+148. 02:08: "check out my latest run, did i some how loop back all the way around?? bc i found a door that was wooden like the spawn door"
+     - Read from `game/runs/run-20261112-080329.txt` and a full headless replay (`--replay-run last --window 290`, exit 0):
+       - brutal, seed 3, build 682fb36: **caught by the hunter at 285.17 s**, past his old brutal best of 222.28;
+       - **he never looped back.** After the first minute he was never nearer than about 150 m to the spawn. He went 630 m out,
+         came round to about 370 m away, and was 21 m (six storeys) down when caught.
+     - **The wooden door is a "false door"** (D656, `gen/src/emit.cpp:347-368`): a closed frame and leaf drawn on a room's wall now
+       and then, for show only. Nothing collides with it, walks through it, or hears it. The real bedroom door (`HomeDoor`) exists
+       only within 16 cells of the origin (`gen/src/layout.cpp:729-731`).
