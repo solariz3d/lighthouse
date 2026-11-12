@@ -1082,3 +1082,5 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      documented, we have a lot more important work to do right now"
      - Documented only. Paid random items (eggs, crates) are common and allowed on Roblox with the odds shown (the librarian
        overstated the risk at first; his correction). **No research until the list is done.**
+146. 02:01, after playing 682fb36: "the animation of the hunter isnt good, it doesnt lean naturally its like glitchy back and forth not
+     smooth into turns on a nice gradient. Like its pathing is still messing with the animation itself or something"
