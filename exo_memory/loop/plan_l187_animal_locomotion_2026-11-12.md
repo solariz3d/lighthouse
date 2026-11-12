@@ -43,3 +43,10 @@ His words: "the hunter, and other entities, can take things from different anima
 3. **The first game's "non-human" choices** (dreamzone-rt `9d98b64` :6350-6356: limb overspeed, asymmetric phase, the head pinned). Read them against the mismatch findings. Item 163 already rejects legs that fail to keep up, so overspeed is out unless a source argues it back.
 4. **Per entity, options for him:** the hunter and each lesser kind with one or two animal traits on a human body, chosen so each cue disagrees clearly with the human shape. This joins E's L172 kit (each kind's signature) as a kit of motion.
 **Test, for later builds:** his eye. There is no instrument for eeriness. The bars stay mechanical (replays, fingerprints, the lean timing) and the uncanny is his call on a build.
+
+## His calls after the hand-back (brief 168)
+- **The hunter: H2, in a humanoid body.** Speed is held on wide bends where `√(μ g R)` allows; in doorways the friction bound and the human figure govern. **Before H2 is built:** read Usherwood & Wilson 2005 in full (bend radius and speeds) and any cheetah turning data (Wilson et al. 2013), so H2 rests on read figures.
+- **Every entity humanoid, each with its own uncanniness** (the "Mixing" section's catalogue, one or two clear traits per kind). The shapes are the psyche's manifestations (lore), so the trait catalogue goes to him with that framing for the picks.
+- **Routing §6:**
+  - **C (L181):** stride from Alexander's closed form, `step = 1.15 h (v²/gh)^0.3`, with each body's own hip height, swappable.
+  - **A (L182):** the turning limit from Chang & Kram Eqn 5, `V_curve = V_o · 0.746 (R g / V_o²)^0.363`, capped by `√(μ g R)` and `V_o`, as a named, swappable law. The H2 variant for the hunter comes after the Usherwood read.
