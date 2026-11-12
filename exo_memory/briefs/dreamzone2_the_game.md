@@ -1123,3 +1123,4 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - Answered yes, from the sources: `loop/plan_l185_physics_mesh_2026-11-12.md`.
 161. 04:10: "physics could control the camera and controls, it would make sense to me if it is done right"
      - It overturns L185's "the player's camera and controller are never driven by physics" (E's inference from Geijtenbeek l.83, made a rule by the librarian). Research first: `loop/plan_l186_physics_player_2026-11-12.md`.
+     - Correction to 156 (librarian, 04:1x): the dreamzone-rt lines cited are at HEAD `9d98b64`, not `2e04aa5` (at 2e04aa5 [KINETICS] is at :5810). C caught it.

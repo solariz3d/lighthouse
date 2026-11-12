@@ -51,3 +51,7 @@
 ## Who
 - **C:** the chain in `game/model_rig.cpp`, the hunter first. L180 lap 2.
 - **B:** the first-person body on the same chain, after L174. It joins L180's B part.
+
+## Correction (librarian, 04:1x; C caught it)
+- **The line numbers above are at dreamzone-rt HEAD `9d98b64`, not at `2e04aa5`.** I took the commit from `git log -S"KINETICS"` (the commit that first added the block) and the lines from the working tree, which is at 9d98b64 and clean.
+- At 2e04aa5 the [KINETICS] block is at :5810; at 9d98b64 it is at :6605. Read at **9d98b64**.
