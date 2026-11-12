@@ -1,0 +1,130 @@
+===== reconciliation, seeds 1-50
+  seed 2 done (5 s)
+  seed 4 done (7 s)
+  seed 3 done (8 s)
+  seed 1 done (11 s)
+  seed 5 done (13 s)
+  seed 7 done (15 s)
+  seed 8 done (17 s)
+  seed 6 done (18 s)
+  seed 9 done (19 s)
+  seed 10 done (21 s)
+  seed 11 done (25 s)
+  seed 12 done (26 s)
+  seed 13 done (27 s)
+  seed 14 done (29 s)
+  seed 15 done (32 s)
+  seed 16 done (33 s)
+  seed 17 done (33 s)
+  seed 18 done (35 s)
+  seed 19 done (38 s)
+  seed 21 done (39 s)
+  seed 20 done (41 s)
+  seed 22 done (41 s)
+  seed 23 done (42 s)
+  seed 24 done (47 s)
+  seed 26 done (48 s)
+  seed 25 done (48 s)
+  seed 27 done (53 s)
+  seed 30 done (54 s)
+  seed 29 done (55 s)
+  seed 28 done (56 s)
+  seed 31 done (59 s)
+  seed 32 done (60 s)
+  seed 33 done (62 s)
+  seed 34 done (64 s)
+  seed 36 done (65 s)
+  seed 35 done (69 s)
+  seed 38 done (70 s)
+  seed 37 done (70 s)
+  seed 39 done (73 s)
+  seed 41 done (76 s)
+  seed 42 done (78 s)
+  seed 40 done (78 s)
+  seed 45 done (83 s)
+  seed 44 done (83 s)
+  seed 43 done (84 s)
+  seed 46 done (85 s)
+  seed 49 done (90 s)
+  seed 50 done (91 s)
+  seed 47 done (96 s)
+  seed 48 done (96 s)
+sweep: seeds 1..50, arena 2 chunks each way, runs stopped at 300 s; default dials
+speed model (default):
+ref_speed         8.000   the chasers' reference speed, metres per second; every row and dial is a multiple of it
+dist_per_km       0.050   share of top speed gained for each kilometre the player has covered
+dist_max          0.300   the most the distance can add, as a share of top speed
+straight_rate     0.050   share of top speed a chaser gains each second it runs straight at its top speed
+straight_max      0.200   the most a straight can add, as a share of top speed
+straight_turn     0.300   radians a second: it is running straight while it turns slower than this
+run_up_bleed      1.000   share of the run-up lost for every radian it turns
+turn_drag         0.200   share of its speed a chaser loses for every radian it turns
+corner_floor      1.000   least share of the braking a corner asks for that every chaser does before it (1: it never swings into a wall)
+wall_stand        0.000   scale on the seconds a chaser stands after meeting a wall head-on (0: it never stops dead)
+brake_scale       1.000   scale on every chaser's braking, metres per second squared (1: the rows and the hunter's dial as they are)
+hunter_start_bonus    0.170   added to the hunter's dial at the start of a run, and fading to nothing over hunter_bonus_fade_s: a fresh player's margin
+hunter_bonus_fade_s  600.000   seconds over which hunter_start_bonus fades away
+stairs_lift       1.000   share of a stairs leg's slope a chaser's step is lifted by (0: a flat step, which stalls at the foot of a steep flight)
+
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  line     50     9.0    15.8    21.7    43.5    62.9   137.1    300.0         1
+normal  flee     50    45.4   128.7   227.2   300.0   300.0   300.0    300.0        30
+normal  cutback   50    10.4    20.5    23.4    35.8    51.4    87.2    123.1         0
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  line       66%      32%          0%    0% |       86%           2%         0%        10% |          593
+normal  flee       30%       8%          0%    2% |       40%           0%         0%         0% |        10500
+normal  cutback     66%      34%          0%    0% |       80%           6%         0%        14% |          465
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  line   |      0.00        0%      0.06     0.04      0.00 |   0.00   0.00    0.00 |     1.61   0.06   0.00   0.79     0.00 |    0.62     0%       0%
+normal  flee   |      0.58       34%      0.00     0.00      0.00 |   0.00   0.07    0.26 |     1.74   0.82   0.28   2.56     0.00 |    0.05     3%       0%
+normal  cutback |      0.00        0%      0.10     0.08      0.00 |   0.00   0.00    0.00 |     1.91   0.11   0.00   1.05     0.00 |    0.40     0%       0%
+paired flee vs line (50 seeds): outlived it in 46, was outlived in 2, within half a second in 2; median of the ratio 6.02 (quartiles 3.83 to 10.32)
+paired cutback vs line (50 seeds): outlived it in 22, was outlived in 26, within half a second in 2; median of the ratio 0.92 (quartiles 0.53 to 1.79)
+
+the look-behind (corners of 60 degrees or more; chasers 4 to 15 m behind; chase/slosh.h)
+level   policy   pairs  overshoot   1 m up screen@100     @107.5     seen     slip
+normal  line       307      0.84m      43%      4.48%      3.91%      39%     9.1
+normal  flee       361      1.91m      63%      8.14%      7.11%      25%    10.9
+normal  cutback     165      1.31m      59%      5.74%      5.02%      36%    10.1
+
+RECONCILIATION, same kept tracks: A = chase/slosh.h (47dc5e5), B = slosh_b.h (B's withdrawn scorer, 90b340d)
+policy  who   corners    pairs  overshoot    >=1 m screen@100     seen  slip med  slip p90
+line    A           -      307     0.838m    43.3%      4.48%    38.8%     9.13d    28.88d
+line    B        1355     1154     0.804m    36.6%      3.99%    41.0%     2.69d    23.15d
+flee    A           -      361     1.910m    62.6%      8.14%    24.7%    10.94d    17.24d
+flee    B       11095      219     1.276m    62.1%      8.73%    48.9%     4.96d    22.78d
+cutback A           -      165     1.307m    59.4%      5.74%    36.4%    10.10d    16.76d
+cutback B        1155      729     1.150m    59.3%      5.73%    51.3%     3.14d    22.26d
+all     A           -      833     1.151m    54.9%      5.36%    32.2%     9.86d    17.82d
+all     B       13605     2102     0.951m    47.1%      4.77%    45.4%     2.85d    22.96d
+negative overshoots (inside the runner's line at their largest): A 30 of 833, B 112 of 2102; A overshoot p10/p25/p75/p90 0.20/0.54/3.24/8.96 m
+
+where chasers caught on the world, per minute of chase
+level   policy minutes    wall hits scrape s
+                           head-on (ticks/240)   stalls   stood s
+normal  line     48.4       20.599     5.57    0.062     0.000   (totals: 997 hits, 64654 scrape ticks, 3 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 586, 33020;  sprinter 399, 31018;  interceptor 12, 616;
+normal  flee    211.6       19.645     8.97    0.066     0.000   (totals: 4156 hits, 455185 scrape ticks, 14 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 2674, 213790;  sprinter 782, 161498;  interceptor 439, 59107;  pack 261, 20790;
+normal  cutback   37.1       18.888     5.62    0.000     0.000   (totals: 701 hits, 50025 scrape ticks, 0 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 450, 26553;  sprinter 248, 22746;  interceptor 3, 726;
+  stalls: flee, run seed 6: 4 in 300 s; hunter 3; interceptor 1;
+
+reprieves: 29 passages through and 0 back out the way in, in 17 of 150 runs; with the hunter out and a way to the player both times (25):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        4.2     6.1     8.4
+  and coming out: the lead                         6.8     8.2    12.4
+  lead gained                                      0.8     2.3     5.5
+  way round, the generator's figure                8.8    11.5    15.9
+  way round on the mesh, the hunter's speeds       5.7     6.7    11.6
+  lead gained over the way round on the mesh      0.09    0.41    0.70
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
+97 s in all on 4 threads
+===== done
