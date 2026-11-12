@@ -152,6 +152,36 @@
 - **Shape D** is the strong bend, kept for endless.
 - His rule therefore orders them, most realistic first: **B, then C, then A, then D**. With the cue grammar, every bend in them can be shown as the dream's, not the code's.
 
+## 7. ADDENDUM, 2026-11-12 01:1x (his item 136): the bend's cue IS the distortion layer
+
+**Note for the chair:** item 135 was already in, as §6 (committed 10f82db7 at 01:12; the grep that found no "bend" read the earlier 57b3fd09). This section adds item 136.
+
+**His correction** (item 136, via the plan's addition at 18a13255): a bend's cue comes from the psychedelic-distortion layer, the effects of my L161 look menu (`handback/p-l161-look-E_2026-11-11.md`), run by a dream director (item 27). It is not a new effect. That layer is queue step 14, **not built**.
+- **This supersedes §6's "shared signature" (a chroma pulse + a reversed breath).**
+- [code] The game deliberately sets chromatic aberration to 0 in the world (`game/world/stage.cpp:192`), so a chroma pulse would also have been a new look.
+- The reversed breath can stay as **sound**: the layer is visual.
+
+**What already works without the layer** [code]
+- The game already drives the renderer's settings **every frame**. `stage.cpp:658` scales `fogDensity` by speed (`fog_base_ × (1 + speed_haze × haze_)`), and the renderer copies its settings into the frame's constants each draw (`render/src/renderer.cpp:2125-2142`: `taaHistory`, `fogDensity`, `chroma`, `warmth`, …).
+- So **any cue made from the renderer's existing numbers** works today, as a per-frame nudge: haze (fog), tracers (`taaHistory`/`taaClip`, `render/renderer.h:75-76`), colour (`saturation`, `warmth`), FOV (`game/camera.cpp:147-154`).
+- **The layer's own effects need new code:** breathing (ray-direction warp), flowing and symmetrical repetition (shading), stretching, slicing and depth distortion (projection), recursion and geometry (post passes).
+
+| bend (§6) | the effect from the L161 menu that marks it | needs the layer to read? |
+|---|---|---|
+| **A slide re-lights the peak / refreshes the burst** (shapes A, B) | **tracers**: a brief smear behind the world as speed comes back. The plan's own example. | **Works without it:** a `taaHistory` pulse for ~0.3 s is a per-frame nudge, like the speed haze already is. The layer makes it richer (tracers on chasers only, with motion vectors), but it reads today. |
+| **Slide-hop keeping speed** | **tracers**, shorter than the re-light | **Works without it** (the same nudge). |
+| **The momentum tier's steps** (shape C) | **haze breathing** (the plan's example) and **colour enhancement** rising with the chain | **Half.** The colour rise (`saturation` up a step per tier) works now; the breathing needs the layer's ray-direction warp. |
+| **A burst past 12.4 m/s** | **depth and perspective distortion** (a dolly-zoom widening) and **visual stretching** | **Half.** The FOV part already exists (the speed widening, `camera.cpp:147-154`, limited to 1.5× `fov_speed_add`); a deeper widening is a setting. Stretching (unequal horizontal and vertical scale) needs the layer's projection. |
+| **The late bhop perk** (shape D) | **tracers** on each gaining hop, and **scenery slicing** at the very highest speeds (a rare beat, as the look menu advised) | **Tracers work without it; slicing needs the layer.** The bend reads without slicing: the climbing hum (sound) and tracers carry it. |
+| **The view-steered dive roll** past a real roll's turn | **breathing**: one slow contraction of the view as it turns | **Needs the layer.** Without it, no cue; the turn alone may read as a bug at a high rate. **Hold the threshold low until the layer exists.** |
+| **The somersault over a full-height chaser** | **tracers on the chaser**: its form smears as you pass | **Accidentally available now, imperfectly.** [code, via C's L165 hand-back as carried in the live edge] the renderer has no motion vectors, so moving objects already **ghost** for up to about 31 frames. That smear exists today, but on every moving thing and never on purpose. The layer would put it only on the passed chaser. |
+| **Noclip** (item 29) | **recursion** and **symmetrical texture repetition** on the walls, then **haze** into the void beyond | **Needs the layer**, and a void to render. It is the largest bend and the most layer-dependent. |
+
+**So, against queue order** [inferred]
+- **Usable before step 14:** the slide re-light and slide-hop (tracers by `taaHistory`), and the burst's FOV, all as per-frame nudges like today's speed haze. **Shape B's re-light can be cued now.**
+- **Waits for step 14:** breathing (the momentum tier, the dive roll), stretching (the burst), slicing (the bhop's top end), recursion (noclip).
+- **The dive roll past a real turn should not ship before the layer.** Without its cue it reads as a glitch, which is the very failure item 135 names.
+
 ## Sources
 
 - Call of Duty Wiki: "Tactical Sprint", "Double Time" (fandom).
