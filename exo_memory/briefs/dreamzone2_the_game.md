@@ -980,3 +980,9 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 120. 2026-11-11 18:09 (on D), on E's 24 parody labels: "the parody names should be serious not just comedic"
     - The parody brands should read as believable real labels, not jokes: a name you could see on a shoebox in 2005, still
       winking at the real brand, but not a gag (Lukewarm Topic, Runner-Up, Abercrumb & Fetch read as jokes).
+121. 2026-11-11 18:11 (on D), catching a design error in the guitar pick's signature ("after Recognition ends, stress stays at zero
+    for 30 s"): "but what do you mean after recognition ends, if recognition does happen there is no stress for the rest of the
+    run, so that item doesnt make sense"
+    - His rule (items 60-61): once Recognition happens, stress cannot rise for the rest of the run; only the golden phase (2-3 min)
+      ends, the passive buffs and no-stress remain. So a buff for "after Recognition ends" does nothing. The pick needs a new
+      signature.
