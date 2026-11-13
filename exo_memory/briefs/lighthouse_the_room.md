@@ -102,6 +102,8 @@
   because an agent launched with no model named takes the seat's)
 - 2026-11-13 09:36 (D), sent as the librarian's reply on the swarm crossed it: "but before jumping into the swarm, really make sure you attack the
   right and most needed vector"; then "sent that while u sent ur last output, i get it"
+- 2026-11-13 09:49 (D), after the librarian's reply on the render experiment, which ended by naming six room calls as still open: "dont worry
+  about that haha" (which "that" he meant, the experiment or the six calls, was asked back in the same turn; not assumed)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
