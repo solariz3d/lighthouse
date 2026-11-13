@@ -53,8 +53,9 @@ const MUTANTS = [
   ['gate: a stdout redirect is allowed', GATE, "/(^|[^2&])>/.test(seg) || ", ''],
   ['gate: -TotalCount / -Head / -Tail are allowed', GATE, ' || w.some((x) => PARTIAL_FLAGS.test(x))', ''],
   ['gate: a persisted-output preview counts', GATE, '  if (res.includes(PERSISTED)) return out;\n', ''],
-  ['gate: an errored call counts', GATE, '  if (!call || !call.done || call.err) return out;', '  if (!call || !call.done) return out;'],
-  ['gate: a call with no result yet counts', GATE, '  if (!call || !call.done || call.err) return out;', '  if (!call || call.err) return out;'],
+  ['gate: an errored call counts', GATE, '  if (!call || call.err) return out;', '  if (!call) return out;'],
+  // (was 'a call with no result yet counts' on `!call.done`, which SURVIVED as an equivalent mutant: a call with no result has an empty result and
+  // returns no lines by construction, so the check was removed; the row "an errored Read, or a call whose result is not on disk yet" still holds it)
   ['gate (the ruled bar): S ignored, the whole note always', GATE, 'start: rel === r.note ? startLine(dir, payload.session_id, rel, w && w.t, lines.length) : 1', 'start: 1'],
   ['gate (the ruled bar): the 10 s window removed (this wake\'s own row read as the previous)', GATE, 'const cut = Date.parse(wakeT) - 10000;', 'const cut = Infinity;'],
   ['gate (the ruled bar): the session match removed', GATE, 'r.session === session && ', ''],

@@ -127,7 +127,7 @@ const names = (p, rel) => { const n = normP(p), r = normP(rel); return n === r |
  * another stage still counts for what it printed, and a cut result counts only for the part that came back. */
 function returnedLines(rel, call, fileLines) {
   const out = new Set();
-  if (!call || !call.done || call.err) return out;
+  if (!call || call.err) return out;   // a call with no result on disk yet has an empty result, so it returns no lines by construction
   const res = String(call.result || '');
   if (res.includes(PERSISTED)) return out;
   const i = call.input || {};

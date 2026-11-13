@@ -374,3 +374,17 @@ test('WG-BAR a returned line counts only from a Read of THAT file: the same numb
   const g = gate(rows, { repo, now: NOW1646 });
   assert.strictEqual(g.row.ranges[NOTE], '1-689');
 });
+
+test('WG-BAR a persisted result covers nothing, though its preview shows numbered lines; an errored result covers nothing, though it printed the file', () => {
+  const repo = room({ [NOTE]: textOf(3), [LH]: textOf(3), [DZ]: textOf(3) });
+  const handoffs = () => [call('2026-11-13T22:47:40Z', 'Read', { file_path: path.join(repo, LH) }, { lines: [1, 3] }), call('2026-11-13T22:47:41Z', 'Read', { file_path: path.join(repo, DZ) }, { lines: [1, 3] })];
+  n = 0;
+  const preview = `<persisted-output>\nOutput too large. Full output saved to a file. Preview:\n1\tline 1 of the note\n2\tline 2 of the note\n3\tline 3 of the note\n</persisted-output>`;
+  const p = gate([wakeRow('2026-11-13T22:46:27.900Z', 'resume'), call('2026-11-13T22:47:00Z', 'Read', { file_path: path.join(repo, NOTE) }, { text: preview }), ...handoffs()], { repo, now: NOW1646 });
+  assert.ok(p.deny, 'a preview is not the file');
+  assert.strictEqual(p.row.ranges[NOTE], '1-3');
+  n = 0;
+  const e = gate([wakeRow('2026-11-13T22:46:27.900Z', 'resume'), call('2026-11-13T22:47:00Z', 'Bash', { command: `cat ${NOTE}` }, { err: true, text: textOf(3).trim() }), ...handoffs()], { repo, now: NOW1646 });
+  assert.ok(e.deny, 'an errored call is not counted, whatever it printed');
+  assert.strictEqual(e.row.ranges[NOTE], '1-3');
+});
