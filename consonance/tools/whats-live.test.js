@@ -93,3 +93,55 @@ test('APP RULE (D454): with nothing in ~/.consonance.json the board is under USE
   const got2 = JSON.parse(cp.execFileSync(process.execPath, ['-e', js], { env, encoding: 'utf8' }));
   assert.strictEqual(got2.board, path.join(h, 'd', 'board.jsonl'), JSON.stringify(got2)); assert.strictEqual(got2.live, 0, 'instances_dir is honoured');
 });
+
+// ── Lap I, I2 (exo_memory/loop/landed_live_2026-11-13/00_lap_i_spec.md:192-231; pane P, 2026-11-13) ──
+// The app is judged by CARGO'S OWN BUILD INPUTS (target/release/consonance.d), plus Cargo.toml and Cargo.lock, never by "anything under src".
+// The recorded case: on 2026-11-13 this tool printed "RED: the running release binary predates 53bac6a0 ... that commit is NOT live" and exited 1;
+// 53bac6a0 changed only src/MAP.md, which is not one of the 116 dep-info inputs, and 0 of the 116 were newer than the exe. That false line was
+// printed at every compaction and repeated to the keeper as fact.
+const { appStaleness, parseDepinfo } = require('./whats-live.js');
+const pw = require('path').win32;
+// a UNC root: path.win32 resolves it as it does a drive, and it is no machine's drive path (portable-paths.js flags those)
+const P = (rel) => pw.join('\\\\host\\share\\repo\\consonance\\src-tauri', ...rel.split('/'));
+const depinfo = (rels) => `${P('target/release/consonance.exe')}: ${rels.map(P).join(' ')}\n`;
+const IN = ['src/main.rs', 'src/mcp.rs', 'build.rs', '../../exo_memory/SOURCE.md', 'brief/BUILDING.md', 'brief/COMMITTEE.md', 'ui/app.js', 'research/a_2026-11-12.md'];
+const statAt = (times) => (p) => { const k = Object.keys(times).find((r) => P(r).toLowerCase() === pw.resolve(p).toLowerCase()); return k === undefined ? 0 : times[k]; };
+const EXE = 100 * MIN;
+const older = Object.fromEntries([...IN, 'Cargo.toml', 'Cargo.lock'].map((r) => [r, 50 * MIN]));
+const BUNDLE = ['brief/BUILDING.md', 'brief/COMMITTEE.md', 'research/a_2026-11-12.md', 'research/stomp_2026-11-13.md', 'research/sonniss_2026-11-13.md'].map((r) => ({ src: P(r) }));
+const base2 = { exe: P('target/release/consonance.exe'), exeBuilt: EXE, repoRoot: P('') };
+
+test('I2 (RED FIRST) the 11-13 case: only src/MAP.md changed, no build input is newer than the exe: NOT stale, and the two unbundled research files are named apart', () => {
+  const r = appStaleness({ ...base2, depinfoText: depinfo(IN), stat: statAt({ ...older, 'src/MAP.md': 200 * MIN }), bundle: BUNDLE });
+  assert.strictEqual(r.readable, true);
+  assert.deepStrictEqual(r.inputsNewer, [], 'MAP.md is not a build input');
+  assert.deepStrictEqual(r.bundleNew.map((p) => pw.basename(p)).sort(), ['sonniss_2026-11-13.md', 'stomp_2026-11-13.md']);
+  assert.deepStrictEqual(r.red, []);
+});
+test('I2 the 11-03 true-stale case: main.rs, mcp.rs, brief/BUILDING.md and brief/COMMITTEE.md newer than the exe: RED, each named', () => {
+  const r = appStaleness({ ...base2, depinfoText: depinfo(IN), bundle: BUNDLE,
+    stat: statAt({ ...older, 'src/main.rs': 120 * MIN, 'src/mcp.rs': 121 * MIN, 'brief/BUILDING.md': 122 * MIN, 'brief/COMMITTEE.md': 123 * MIN }) });
+  for (const n of ['main.rs', 'mcp.rs', 'BUILDING.md', 'COMMITTEE.md']) assert.ok(r.inputsNewer.some((p) => pw.basename(p) === n), n);
+  assert.strictEqual(r.red.length, 1);
+  assert.match(r.red[0], /4 build input\(s\) newer than the running exe/);
+});
+test('I2 edge: Cargo.lock newer is RED (cargo fingerprints it, and it is not in the dep-info)', () => {
+  const r = appStaleness({ ...base2, depinfoText: depinfo(IN), stat: statAt({ ...older, 'Cargo.lock': 150 * MIN }), bundle: [] });
+  assert.ok(r.inputsNewer.some((p) => pw.basename(p) === 'Cargo.lock'));
+  assert.strictEqual(r.red.length, 1);
+});
+test('I2 edge (the second reader\'s weak spot): a ui/ file or build.rs newer is RED, not only src/*.rs and brief/*.md', () => {
+  for (const f of ['ui/app.js', 'build.rs']) {
+    const r = appStaleness({ ...base2, depinfoText: depinfo(IN), stat: statAt({ ...older, [f]: 150 * MIN }), bundle: [] });
+    assert.strictEqual(r.red.length, 1, f);
+  }
+});
+test('I2 edge: no dep-info is "inputs not readable", never a silent green', () => {
+  const r = appStaleness({ ...base2, depinfoText: null, stat: statAt(older), bundle: [] });
+  assert.strictEqual(r.readable, false);
+  assert.match(r.note, /inputs not readable/);
+});
+test('I2 the dep-info parse: one target line, an escaped space kept inside a path, ".." resolved', () => {
+  const t = '\\\\h\\s\\r\\target\\release\\consonance.exe: \\\\h\\s\\r\\src\\main.rs \\\\h\\s\\r\\my\\ dir\\x.md \\\\h\\s\\r\\src-tauri\\..\\..\\exo_memory\\SOURCE.md\n';
+  assert.deepStrictEqual(parseDepinfo(t), ['\\\\h\\s\\r\\src\\main.rs', '\\\\h\\s\\r\\my dir\\x.md', '\\\\h\\s\\exo_memory\\SOURCE.md']);
+});

@@ -103,6 +103,29 @@ function staleness({ srcTs, hash, built, started, profile }) {
   return red;
 }
 
+/* Lap I, I2 (exo_memory/loop/landed_live_2026-11-13/00_lap_i_spec.md:192-231): THE APP IS JUDGED BY CARGO'S OWN BUILD INPUTS. The rule above
+ * compared the newest commit under src/ with the exe, so on 2026-11-13 it called the binary stale over 53bac6a0, which changed only src/MAP.md:
+ * not a build input. Cargo writes the exact list beside the exe (<exe dir>/consonance.d, one line, `<exe>: <input> <input> ...`); Cargo.toml and
+ * Cargo.lock are fingerprinted too and are not in it. RED only when one of those inputs is newer than the exe. Files a tauri.conf.json resource
+ * glob would bundle that are not inputs print on their own line: a rebuild copies them, but they change no code that runs. */
+function parseDepinfo(text) {
+  const line = String(text || '').split(/\r?\n/).find((l) => /\.exe:\s/i.test(l)) || '';
+  const deps = line.slice(line.search(/\.exe:\s/i) + 5);
+  return deps.split(/(?<!\\) +/).filter(Boolean).map((p) => path.win32.resolve(p.replace(/\\ /g, ' ')));
+}
+function appStaleness({ exe, exeBuilt, depinfoText, stat, repoRoot, bundle }) {
+  if (depinfoText == null) return { readable: false, inputsNewer: [], bundleNew: [], red: [], note: 'inputs not readable (no dep-info beside the exe): judged by the source rule instead' };
+  const inputs = parseDepinfo(depinfoText);
+  if (!inputs.length) return { readable: false, inputsNewer: [], bundleNew: [], red: [], note: 'inputs not readable (the dep-info names no input): judged by the source rule instead' };
+  const tauri = path.win32.join(repoRoot, '');
+  const all = [...inputs, path.win32.join(tauri, 'Cargo.toml'), path.win32.join(tauri, 'Cargo.lock')];
+  const inputsNewer = all.filter((p) => { const m = stat(p); return m && exeBuilt && m > exeBuilt; });
+  const known = new Set(inputs.map((p) => p.toLowerCase()));
+  const bundleNew = (bundle || []).map((e) => e && e.src).filter(Boolean).map((p) => path.win32.resolve(p)).filter((p) => !known.has(p.toLowerCase()));
+  const red = inputsNewer.length ? [`${inputsNewer.length} build input(s) newer than the running exe (${exe}): ${inputsNewer.slice(0, 6).map((p) => path.win32.basename(p)).join(', ')}${inputsNewer.length > 6 ? ', …' : ''} — not live until a rebuild and restart`] : [];
+  return { readable: true, inputs: inputs.length, inputsNewer, bundleNew, red };
+}
+
 function check() {
   const rows = [], red = [];
   const app = runningApp();
@@ -117,7 +140,22 @@ function check() {
     rows.push(['app built', when(app.built), 'the binary the PROCESS is running']);
     rows.push(['app started', when(app.started), '']);
     rows.push(['newest rust', when(src.ts), src.hash]);
-    red.push(...staleness({ srcTs: src.ts, hash: src.hash, built: app.built, started: app.started, profile }));
+    // I2: cargo's build inputs decide; the source rule is only the fallback when they cannot be read. The rebuilt-not-restarted rule is unchanged.
+    // Everything is read from the tree the RUNNING exe was built in (<tauri>/target/<profile>/consonance.exe), never from this checkout: a
+    // worktree's Cargo.lock, written at its checkout, would read as newer than every exe on the machine.
+    const exeTauri = path.resolve(path.dirname(app.exe), '..', '..');
+    let depinfoText = null; try { depinfoText = fs.readFileSync(path.join(path.dirname(app.exe), 'consonance.d'), 'utf8'); } catch { /* none */ }
+    let bundle = []; try { bundle = require('./open-items.js').bundleResources(path.join(exeTauri, 'tauri.conf.json')).entries || []; } catch { /* the authority unreadable: no bundle line */ }
+    const st = appStaleness({ exe: app.exe, exeBuilt: app.built, depinfoText, stat: mtime, repoRoot: exeTauri, bundle });
+    if (st.readable) {
+      rows.push(['app inputs', `${st.inputs} + Cargo.toml/.lock`, `cargo's own list (${path.join(path.dirname(app.exe), 'consonance.d')}); ${st.inputsNewer.length} newer than the exe`]);
+      red.push(...st.red);
+      red.push(...staleness({ srcTs: 0, hash: src.hash, built: app.built, started: app.started, profile }));
+      if (st.bundleNew.length) rows.push(['app bundle', `${st.bundleNew.length} not yet copied`, `${st.bundleNew.map((p) => path.basename(p)).join(', ')}: bundled resources a rebuild copies, not code that runs (not red)`]);
+    } else {
+      rows.push(['app inputs', 'not readable', st.note]);
+      red.push(...staleness({ srcTs: src.ts, hash: src.hash, built: app.built, started: app.started, profile }));
+    }
     // finding 4 in one line: name the profile that is NOT running, so nobody checks it
     const other = profile === 'release' ? 'debug' : 'release';
     const otherExe = app.exe.replace(new RegExp(`([\\\\/])${profile}([\\\\/])`, 'i'), `$1${other}$2`);
@@ -158,6 +196,6 @@ function main(argv) {
   return argv.includes('--warn') ? 0 : (red.length ? 1 : 0);
 }
 
-module.exports = { check, staleness, runningApp, newestSourceCommit, dreams };
+module.exports = { check, staleness, appStaleness, parseDepinfo, runningApp, newestSourceCommit, dreams };
 
 if (require.main === module) process.exit(main(process.argv.slice(2)));

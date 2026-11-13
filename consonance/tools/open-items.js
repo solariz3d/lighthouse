@@ -129,12 +129,12 @@ function readLedger(file) {
 // gets one entry short, which is the defect this whole file is answering.
 function escapeRx(t) { return t.replace(/[^A-Za-z0-9_-]/g, function (c) { return '\\' + c; }); }
 
-function bundleResources() {
+function bundleResources(confPath) {   // confPath (Lap I, I2): whats-live.js asks for the RUNNING exe's own tree, which need not be this checkout
   /* OPEN_ITEMS_TAURI_CONF exists so the authority can be SWAPPED in a test, which is the only
    * way to show this check actually reads it rather than reciting a number that happens to match.
    * Same seam as FERRY_LEDGER, VANTAGE_DATA, CARRIER_DRIFT_ROOT and JS_SUITE_ROOT, for the same
    * stated reason: an instrument that cannot be pointed at a known corpus cannot be shown to work. */
-  const conf = process.env.OPEN_ITEMS_TAURI_CONF || path.join(REPO, 'consonance/src-tauri/tauri.conf.json');
+  const conf = confPath || process.env.OPEN_ITEMS_TAURI_CONF || path.join(REPO, 'consonance/src-tauri/tauri.conf.json');
   let j;
   try { j = JSON.parse(fs.readFileSync(conf, 'utf8')); }
   catch (e) { return { error: 'cannot read ' + conf + ' — ' + e.message, entries: [], declared: 0 }; }
@@ -488,6 +488,11 @@ const ITEMS = [
   },
 ];
 
+/* Lap I, I2: the run below is the command line's; `require` gets bundleResources only (whats-live.js reads which files a rebuild bundles).
+ * Before this guard a require ran every check and ended the caller in process.exit(0) (the spec's second reader, 00_lap_i_spec.md:197-201). */
+module.exports = { bundleResources };
+if (require.main === module) run();
+function run() {
 const rows = ITEMS.map((it) => {
   let r;
   try { r = it.check(); }
@@ -537,3 +542,4 @@ console.log('          DENOMINATOR IS HAND-MAINTAINED AND CANNOT BE WALKED — a
 console.log('          check is not CLOSED, it is ABSENT, and absent reads exactly like done.');
 console.log('');
 process.exit(0);
+}
