@@ -373,7 +373,11 @@ function main(argv) {
   const data = dataDir();
   const flag = (n) => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
   if (cmd === 'ready') {
-    const branch = argv[1];
+    // The branch is the one word that is neither a flag nor a flag's value (`ready --config FILE <branch> --pane P --lap L`).
+    const valued = new Set(['--config', '--pane', '--lap', '--log-dir']);
+    const words = [];
+    for (let i = 1; i < argv.length; i++) { if (valued.has(argv[i])) { i++; continue; } if (!argv[i].startsWith('--')) words.push(argv[i]); }
+    const branch = words[0];
     const s = branch && sha(cfg.repo, branch);
     if (!s) { process.stderr.write(`landing-train: no branch '${branch}' in ${cfg.repo}\n`); return 2; }
     writeReady(data, addReady(readReady(data), { branch, sha: s, pane: flag('--pane'), lap: flag('--lap'), t: new Date().toISOString() }));
