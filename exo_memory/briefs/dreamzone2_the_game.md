@@ -1218,7 +1218,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **More builder panes: "Two more (Recommended)".** Lanes: `loop/plan_two_more_panes_2026-11-13.md`.
      - **Still open:** whether the generator path moves up his queue (it sits at step 13).
 183. 2026-11-13 03:5x on, his picks on the decision page (https://claude.ai/artifact/Cu4oEJHEmeeQyW9jpVGPU1, private to him; built from `loop/his_calls_2026-11-13.json`). Each pick is saved in the page's store as `answers/<call id>`. This item is rewritten whole from the store each time it is read (`loop/his_calls_to_brief_2026-11-13.js`):
-     - **Last read: 10:26Z, 34 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
+     - **Last read: 10:31Z, 37 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
      - **Changed by him:** `run_frame-1` was "Show nothing" at 09:59:34Z before the pick listed below.
      - `run_frame-1` "Show the timer?": **"Late warning only"** (NOT the page's suggestion, which was "Show nothing") (10:00:06Z).
        - the option as he read it: Show it only in the last minute; one extra screen state.
@@ -1298,6 +1298,14 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        - his note, verbatim: Also jumping or mantling over objects, exiting a reprieve zone. Jumping into a slide gives you a very transient boost of speed, like 1/10th of the surge.
      - `movement-3` "Does contact end the surge?": **"Ends"** (10:23:16Z).
        - the option as he read it: Clean running becomes the skill.
-     - `movement-5` "Voids and the 10 m/s peak": **"Keep 8.75"** (10:24:15Z).
+     - `movement-5` "Voids and the 10 m/s peak": **"Keep 8.75"** (10:25:14Z).
        - the option as he read it: Accept slide-jump-mantle crossings of voids.
-       - his note, verbatim: I like the summersault jump idea for crossing some voids if not wall running, we need to do the first person animation right for the summersault front flip, the camera fro
+       - his note, verbatim: I like the summersault jump idea for crossing some voids if not wall running, we need to do the first person animation right for the summersault front flip, the camera from the first person view physically flips with the character to create that sense of awe doing a flip, then can be connected to a slide etc. This will be interesting to figure out.
+     - `movement-7` "Bunny hop at base?": **"Add a landing-friction window"** (10:28:27Z).
+       - the option as he read it: Base hops are hard, the perk widens it; moves existing tests.
+       - his note, verbatim: for the bhopping, this also means we have to change how movement works, right now, how I run i hold W and then move my mouse to turn, I never use A or D to strafe, you should be able to press a or d while holding W retaining speed, changing course diaganolly instead of W and turning mouse only, this will mimic the source engine and the classic , A left strafe jump D right strafe jump, right now you need to press W to go forward, letting go doesnt carry momentum.
+     - `movement-8` "Base hop strength?": **"A little"** (10:28:49Z).
+       - the option as he read it: About 10 to 25 percent of full; skilled players gain a bit.
+       - his note, verbatim: 10% base, the end game upgraded perks will make it compound as fast as u can go.
+     - `movement-10` "What counts as a movement chain?": **"E or F: hops / near misses"** (10:29:31Z).
+       - the option as he read it: Needs hop perk or chase reporting.
