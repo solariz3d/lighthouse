@@ -131,6 +131,13 @@ So ours swings as far but **about 15° too far forward and 12° too little back*
 
 **Tolerances (registered here, from the references' own spread, not invented):**
 - a leg joint passes when its RMS from the runners' mean is no more than the runners' own spread (rms/sd ≤ 1);
+  - **AMENDED 2026-11-13 04:4x local, before anyone tuned to it** (the chair's 10:40Z ask). As written, this bar
+    contradicted point 3 above, which says to read the hip's range and lag, not its offset. **The hip is held to its
+    RMS with each curve's own mean removed** (the offset taken out), at most the runners' sd.
+  - The hip's mean offset is reported, not gated. It cannot be separated from the pelvis frames: theirs is anatomical
+    and tilts forward, ours takes the body's up. How much is frames is not measured (inferred).
+  - **The knee and ankle keep the plain RMS:** they are measured between our own two segments, with no pelvis frame.
+  - This is a registered change to the tool, built once its mutant run ends; its numbers are added here.
 - the elbow mean, within one between-runner sd (12.4°) of the recorded mean at the clip's speed;
 - each end of the shoulder swing, within one sd over clips (3.7° back, 7.0° front).
 
