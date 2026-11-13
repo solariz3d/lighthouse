@@ -130,3 +130,14 @@ NOT APPLIED 0**:
 - **The worktree's submodules** were checked out from his clone's module repositories (read only, local file transport
   allowed for that one command). His clone is unchanged at `31d1c6d`, clean.
 - **C: was not written** beyond the shared clone's git objects. The build tree is on G:.
+
+## Addendum (23:35Z): the branch pushed for B's landing (the chair's ruling 1)
+
+- checked: `git log -p yardstick-toe-e --not --remotes=origin`, added lines → 0 hits over 2 commits, against the push
+  scan's shapes.
+- Push gate: allow, 23:35:35Z.
+- checked: `git ls-remote origin` → `refs/heads/yardstick-toe-e` at `704774c139e3e3b4d21635ca38e90db061c3123e`.
+- main is unchanged at `b08f25e`, and his clone at `31d1c6d`.
+- **For the record, one correction to the chair's 23:35Z line.** The remote's `l185-skeleton` (`b226b95`) is my 11-12
+  step-2 WIP, not today's push. Today's `l185-skeleton` went up as `l185-skeleton-steps45` (`1b690fd`), because the two
+  had diverged (the push addendum in `p-l185-refilm-E_2026-11-13.md`).
