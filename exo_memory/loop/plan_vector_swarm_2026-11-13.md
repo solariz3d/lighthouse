@@ -52,3 +52,12 @@ push, the remote is asked what it holds).
 in flight are handed back. It launches when the room is at rest: every pane has handed back and holds no queued packet, Lap W's two
 panes included, and the Third Place's probe experiment has ended. The librarian tells him the room is at rest, and what the picture is,
 before anything is launched.
+
+## Amendment, 12:2x: launched (his word of 12:15 corrects the amendment above)
+
+"wait I more so meant, wait for all lighthouse work if there is any in motion that could give us more insight, if its dreamzone work,
+thats fine". Checked what lighthouse work was in motion at 12:2x: the idle guard's last row (P, queued behind the render bench) and Lap W's
+two panes (dispatched, not started). Neither would add rows to a ledger of what has already gone wrong; today's incidents are in the
+notes. So the Sonnet level was launched: workflow wf_a59c8338-2c1, every agent named Sonnet; output `loop/vector_swarm_2026-11-13/`. Twelve
+ledger readers, a clerk and a second reader for the ledger, four blind groups, a roots clerk, then two scorers and one adversary for
+each root (up to twelve roots), a ranker and a critic. The Opus level is NOT launched: the top two come to a person first.

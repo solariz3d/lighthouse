@@ -124,6 +124,8 @@
   over our findings, with the purpose of finding something to then let a swarm of opus eat up, but see, we cant be picking the wrong root, we
   need the proper vector like i said before."
 - 2026-11-13 12:13 (D), on when that swarm runs: "like i said wait for all shit in motion to come to rest so we see more of an image first"
+- 2026-11-13 12:15 (D), correcting how the librarian had read the line above: "wait I more so meant, wait for all lighthouse work if there is any
+  in motion that could give us more insight, if its dreamzone work, thats fine, that doesnt affect our consonance R n D"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
