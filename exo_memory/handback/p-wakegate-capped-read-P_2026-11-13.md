@@ -31,3 +31,22 @@ librarian's to rule; the coverage count works for either bar.
 BASE: none (no repository changed)
 SOURCES: consonance/hooks/wake-gate.js (openedWhole); exo_memory/loop/wake_level2_2026-11-13/first_dispatch_gate.md; exo_memory/loop/wake_level2_2026-11-13/00_lap_w_spec.md
 NEXT: librarian carry this into tonight's handoff with W4's limit when it is read; a build waits on the ruling about the bar
+
+## Addendum, on the librarian's recommendation (the chair's 23:04Z): "a Read that reaches the file's last line"
+
+- **It measures a different bar from "whole".** The librarian's own second Read at that wake, lines 690-754, reaches the last line, so this
+  condition passes with or without lines 184-689. What it proves is that **the newest part of the note was read**.
+- **For an append-only dated note that may be the right bar.** Today's newest entries are at its end. If that is the ruled bar, the condition is
+  correct, and cheaper than coverage: one Read with an offset instead of about five.
+- **It can be read from the hook's input.**
+  - The transcript holds each Read's result with its `cat -n` line numbers, so the highest number returned is visible, unless the result was
+    persisted (no numbers then, so it does not count).
+  - The file's line count is read at the decision, as the mtime is today.
+  - An own append after the Read moves the last line on, and the row is named `own-append` as now.
+- **One caveat either way:** "the last line" is the last line at the decision. Count it from the file as it stands then, not from a number the
+  seat states.
+- **So the choice is the bar, not the mechanism.**
+  - "Whole": the union of returned line numbers covers 1..N.
+  - "The newest part": the highest returned line number is N.
+  - Both read the same field of the same result. The red-first fixture is the same 1-183 / 690-754 case: deny under "whole", allow under "the
+    newest part".
