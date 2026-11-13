@@ -1,0 +1,17 @@
+format-written-as-a-comment: CAUGHT by a_new_record_text_says_its_format, a_newer_format_an_unknown, a_new_run_begins_with_the_shipped
+speed-section-empty: CAUGHT by a_newer_format_an_unknown, a_run_played_with_another_speed_model
+speed-errors-swallowed: CAUGHT by a_newer_format_an_unknown
+speed-section-not-read: CAUGHT by a_new_record_text_says_its_format, a_newer_format_an_unknown, a_run_played_with_another_speed_model
+newer-format-accepted: CAUGHT by a_newer_format_an_unknown
+format-read-and-dropped: CAUGHT by a_new_record_text_says_its_format, a_new_run_begins_with_the_shipped
+format-garbage-accepted: CAUGHT by a_new_run_begins_with_the_shipped
+saved-has-no-name: CAUGHT by a_saved_run_and_its_kept_points
+saved-not-read: CAUGHT by a_saved_run_and_its_kept_points
+kept-score-not-read: CAUGHT by an_old_text_with_no_record_format, a_new_record_text_says_its_format, a_newer_format_an_unknown, a_run_played_with_another_speed_model, a_new_run_begins_with_the_shipped, a_saved_run_and_its_kept_points, a_run_record_reads_back_as_it_was_written_to_the_bit
+replay-ignores-the-recorded-model: CAUGHT by a_run_played_with_another_speed_model
+run-ignores-the-app-model: CAUGHT by a_run_played_with_another_speed_model
+record-names-the-next-runs-model: CAUGHT by a_new_run_begins_with_the_shipped
+run-model-not-snapshotted: CAUGHT by a_run_played_with_another_speed_model
+streamed-harness-drops-the-model: CAUGHT by a_run_played_with_another_speed_model
+shipped-is-not-the-default: CAUGHT by an_old_text_with_no_record_format, what_a_new_run_starts_with
+applied 16 / caught 16 / NOT APPLIED 0; survivors: none
