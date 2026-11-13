@@ -251,3 +251,60 @@ row, with C's and A's heavy runs going.
     from the run's tell value), so what differs is what else sounds there: the chasers or the room. For the sound lane.
 - **For A** (the record): the dial list is built and its off path proven at `0df4c77`; `[gen]` and `gen_world` are A's.
 - **Next, if no ruling comes back first:** the same-seed pictures before and after for him; V8 on bots, main against the kit.
+
+## D, 2026-11-13 ~17:3xZ (D675): the nav row's cause, his before-and-after pages, V8 on bots
+
+Branch `gen-lap2-kit` local **`e2a7ed8`** (`c05e074` plus the tools' `--kit-off` and `--gen`), NOT pushed, tree clean. Every run was offscreen
+and hidden, BelowNormal, under the ordinary lock, with acs.exe checked first (`d665b\d9_*.txt`).
+
+### 1. NAV, the way-there-and-back bound: the cause (tier CHECK IT; nav and the bound untouched)
+
+**The inference ("the path's shortening, not the world") is wrong. The cause is the search choosing a different stairwell.**
+- checked (`d665b\d9_nav_pair.txt`, a scratch row in the row's own world, seed 3, apartment, the same block, since removed): the printed pair,
+  a (−1.5, 3.5, 10.5) to b (1.5, 0, 22.5):
+  - there 6.25 s, 40.7 m, **23 polygons**: north along storey 1 to z ≈ 30, **down the stair at z 33–36**, then back south to b;
+  - back 5.09 s, 32.6 m, **31 polygons**: south along storey 0 to z ≈ 14.5, **up the stair at z 15–18**, then to a;
+  - **the corridor there is not the corridor back reversed; they share 2 of their 23 and 31 polygons.**
+- So the two searches took different ways, by different stairwells. Straightening (string-pulling) works inside one corridor, and the shortest
+  line through one fixed chain of polygons is the same either way; it cannot pick a stairwell. The longer way there was chosen by Detour's search
+  (`nav/world.cpp:362` `findPath`), which scores a corridor by the distances between polygon edge midpoints. That score is inexact and can
+  differ by direction. inferred: through large lane polygons, whose midpoints lie far off the straight line.
+- The point counts (10 against 24) also come from `DT_STRAIGHTPATH_AREA_CROSSINGS` (a point at each floor/stairs change) and the two different
+  ways, not from the straightening.
+- This is the case the row's own comment names ("the search is exact over the middles of polygon edges ... the two searches can choose different
+  ways"). The kit's world happens to hold a pair for which it costs 22.9%. Nav and the bound: the owner's.
+
+### 2. His pages: the same seeds before and after (in `C:\Users\nname\Downloads\dreamzone-3-lap2-review\`)
+
+- **`page_world.png`** (the game's own world), **`page_apartment.png`**, **`page_hotel.png`**, **`page_school.png`**, **`page_hospital.png`**: each is
+  the floor plan round the spawn, seed 1, ground storey (`dz-gen --overview`). Left: the generator before the kit (`--kit-off`). Right: the kit on.
+  On the world page, the one-storey passage left of centre is gone, and chute cells appear (green, hatched).
+- **`numbers.txt`**: a 450 s forward runner, seeds 1–20, per biome, each arm (`dz-gen range`), the median over the 60 s windows:
+
+| | corridor | rooms | straight (cells) | kinds a minute | Parks met | the commonest shape's share |
+|---|---|---|---|---|---|---|
+| apartment before / after | 68% / 71% | 26% / 28% | 16 / 16 | 13 / 13 | 37 / 29 | **76% / 24%** |
+| hotel | 49% / 49% | 47% / 46% | 18 / 18 | 10 / 10 | 23 / 27 | **52% / 33%** |
+| school | 64% / 66% | 33% / 31% | 37 / 36 | 8 / 8 | 22 / 20 | **100% / 45%** |
+| hospital | 68% / 68% | 30% / 30% | 33 / 31 | 9 / 9 | 30 / 22 | **90% / 36%** |
+
+- **The "before" arm reproduces Lap 1's apartment page exactly** (68%, 26%, 48 m), as the off path should.
+- **What the kit changes for him:** the Parks. Before, three biomes met almost only the one-storey ladder; after, chutes of 1 to 6 storeys, some with
+  a run, and no shape above 45%. The layout's numbers barely move: his door rate 0.15 shifts rooms by a point or two at most. That was expected:
+  D658 measured the rate moving doorways 3–4% a step, because each room's two guaranteed doorways dominate. So he may not see fewer doors.
+
+### 3. V8 on bots: today's main against the kit (`dz-chase run --world`, seeds 1–20 × flee, line, juke, normal, ≤300 s; `d665b\v8_main.txt`, `v8_kit.txt`)
+
+| | main (`--kit-off`) | the kit |
+|---|---|---|
+| survival, median | 31.9 s | **37.9 s** (+18.8%; V8 is wrong past 25% either way: **held**) |
+| Parks entered | 22, all one-storey ladders | 16: ladder 8, chutes of 1–4 storeys 8 |
+| V6, the commonest shape | 100% | **50%**: "over 50%" is wrong, so held, by nothing |
+| V5, generator ÷ mesh way round, median | 1.69 | **1.12** (max 1.26) |
+| V4, what a Park bought, median | 1.70 s | 3.30 s; Parks of 3+ pieces 5.50 s (**n = 3**) |
+
+- Not measured: V8's other half (the hunter's ETA distribution).
+- Both arms run today's chase (A's overtime), so they compare with each other, not with 11-12's numbers.
+- 1 of 16 Parks on the kit side read −1 (the deep-fall nav position; A has it).
+
+NEXT: librarian, read when this arrives; the remaining reds stay with A (two chase rows), E (the tell's sound) and nav's owner (the bound, its cause now named).
