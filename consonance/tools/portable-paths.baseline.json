@@ -10,7 +10,8 @@
     "FATAL-USER": 7,
     "FATAL-DEFAULT": 8,
     "FATAL-TEST-READ": 2,
-    "FATAL-SHIPPED-INSTRUCTION": 1
+    "FATAL-SHIPPED-INSTRUCTION": 1,
+    "BENIGN-RECORD": 2
   },
   "sites": [
     {
@@ -3319,6 +3320,22 @@
       "text": "Nine `sibling-*` project dirs on D (`ls -d ~/.claude/projects/C--Consonance-instances-sibling-*`), lettered in `C:\\Consonance\\data\\letters.json` (A, B, C, D, F, J, L, M …). They were not retired by the placement — committee panes are per-machine by their random cwds, which is the defect `to_the_laptop` §1 names (fixed names, not `sibling-<random>`, is part of the fix). Their maps are appended, one writer each, in `exo_memory/map/`.",
       "key": "exo_memory/record/retired_seats_2026-09-11.md\u0000Nine `sibling-*` project dirs on D (`ls -d ~/.claude/projects/C--Consonance-instances-sibling-*`), lettered in `C:\\Consonance\\data\\letters.json` (A, B, C, D, F, J, L, M …). They were not retired by the placement — committee panes are per-machine by their random cwds, which is the defect `to_the_laptop` §1 names (fixed names, not `sibling-<random>`, is part of the fix). Their maps are appended, one writer each, in `exo_memory/map/`.\u0000#1",
       "why": "L062 R-C3 (C, 2026-09-21), carrying A's argument (exo_memory/handback/p-l060-ch4-A_2026-09-21.md §2): the path resolves on both machines (letters.json exists under the same data dir on L and D), so the finding is about the line's FORM, not a wrong instruction. The file is a dated record master (librarian, 397e29c) and is CH-4 frozen (B, 043d78b), so it is not rewritten. Verdict left FATAL deliberately: exempted, NOT fixed. NOTE: --update rewrites every row from live sites as {file,detector,verdict,text,key} and will DROP this field."
+    },
+    {
+      "file": "exo_memory/research/stomp_recordings_and_sonniss_licence_read_2026-11-13.md",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-RECORD",
+      "text": "header was added. Its downloads are in `C:\\Users\\zackn\\Downloads\\dz3-sound-data\\stomp2_candidates\\` on L only (98 files,",
+      "key": "exo_memory/research/stomp_recordings_and_sonniss_licence_read_2026-11-13.md\u0000header was added. Its downloads are in `C:\\Users\\zackn\\Downloads\\dz3-sound-data\\stomp2_candidates\\` on L only (98 files,\u0000#1",
+      "why": "Ruled by the librarian, 2026-11-13 (the chair at 20:39Z; pane P baselined it): a record of where downloaded sound files sit on L, outside the repo; a location record, not an instruction. The note is pane E's (48567b23) and is not edited."
+    },
+    {
+      "file": "exo_memory/research/stomp_recordings_and_sonniss_licence_read_2026-11-13.md",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-RECORD",
+      "text": "I found no ready-made heavy-foot take set under a licence you allow; the closest are a CC0 wet-towel floor-hit pack and some rock and body impacts in the Sonniss GDC bundles. Everything is downloaded into `C:\\Users\\zackn\\Downloads\\dz3-sound-data\\stomp2_candidates\\` (27 MB, 98 files). I could not listen to anything, so \"fits a monster foot\" is not judged.",
+      "key": "exo_memory/research/stomp_recordings_and_sonniss_licence_read_2026-11-13.md\u0000I found no ready-made heavy-foot take set under a licence you allow; the closest are a CC0 wet-towel floor-hit pack and some rock and body impacts in the Sonniss GDC bundles. Everything is downloaded into `C:\\Users\\zackn\\Downloads\\dz3-sound-data\\stomp2_candidates\\` (27 MB, 98 files). I could not listen to anything, so \"fits a monster foot\" is not judged.\u0000#1",
+      "why": "Ruled by the librarian, 2026-11-13 (the chair at 20:39Z; pane P baselined it): a record of where downloaded sound files sit on L, outside the repo; a location record, not an instruction. The note is pane E's (48567b23) and is not edited."
     },
     {
       "file": "jev/test/config.test.js",

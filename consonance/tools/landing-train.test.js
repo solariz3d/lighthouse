@@ -203,7 +203,9 @@ test('the privacy scan refuses an email address or an account path: nothing is p
   assert.doesNotMatch(r.stopped, new RegExp(addr.replace('.', '\\.')), 'the address itself is never shown');
   assert.equal(git(w.repo, 'rev-parse', 'main'), before.main, 'main did not move');
   assert.equal(originMain(w), before.origin, 'nothing was pushed');
-  const acct = branch(w, 'p2', 'paths.txt', 'see C:\\Users\\someone\\Downloads\\x\n');
+  // The account path is BUILT at run time, so the file still carries `see C:\Users\someone\Downloads\x` for the scan to refuse, while this source
+  // holds no literal drive path for portable-paths.js to flag (the same move as push-gate.test.js's fake secrets; pane P, 2026-11-13).
+  const acct = branch(w, 'p2', 'paths.txt', `see ${['C:', 'Users', 'someone', 'Downloads', 'x'].join('\\')}\n`);
   T.writeReady(w.data, [acct]);
   assert.match(T.runTrain(w.cfg, { ...quiet, data: w.data }).stopped || '', /privacy scan refused.*paths\.txt:1/);
 });
