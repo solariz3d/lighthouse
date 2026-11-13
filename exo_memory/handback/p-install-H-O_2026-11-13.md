@@ -77,3 +77,21 @@ NEXT: librarian read the install table when this ring is read; O goes on to Lap 
 3. **The disk:** nothing of mine has needed the lock since the suite.
    - The Lap I rows ran one hook test file each (no lock), plus file syncs. Nothing was bypassed and nothing was deleted.
    - checked: `df -h /c` at 22:56Z → 21G available. That is df's rounding, in GiB; heavy-run's figure is its own.
+
+## The chair's two owed lines (23:04Z; appended 23:10Z)
+1. **Clause 3's first half, scored: YES, all 16 LIVE entries are matched to a settings.json command on D.**
+   - checked: `node p-install-H-O_2026-11-13_scripts/live-cmd.js <landed-live --all output> <settings.json> dev/shell/install.ps1`, run on the table's landed-live run against settings as it stood then (12,332 B, the copy before Lap I's row 1) → **16 of 16** (`S\inst\live-cmd.txt`):
+     - **13 hooks run by a command at the installed path** `~/.claude/shell/<To>`. The match is strict on the path, not only the file name.
+     - **3 Libs** (ambient.js, fresh-guard.js, ready.js), each required by at least one hook in its install.ps1 `By` list that a command runs.
+   - checked: the same after Lap I's rows → landed-live "24/25 live; owed none; new none", and **24 of 24** matched (`S\inst\live-cmd-now.txt`).
+2. **The scripts are committed beside this file,** in `exo_memory/handback/p-install-H-O_2026-11-13_scripts/`:
+   - `semdiff.js`, the semantic settings diff;
+   - `compare.js`, landed-live beside -Check, file by file;
+   - `minsize.js`, raw against minified size;
+   - `live-cmd.js`, line 1's instrument.
+   - checked: grep for drive, home and AppData paths → none.
+   - checked: `node consonance/tools/portable-paths.test.js` with them staged → pass 43, fail 0.
+   - **L repeats the semantic check** with `node semdiff.js <settings copy before> <settings.json>`.
+- **"Not established" is now SETTLED by the chair's reading, not mine:** a running seat picks up a new registration without a restart.
+  - The librarian's compaction wake printed the body line.
+  - `wake-gate.jsonl` has two allow rows for its session (22:48:15Z, 22:59:35Z).

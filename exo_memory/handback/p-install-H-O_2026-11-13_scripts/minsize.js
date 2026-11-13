@@ -1,0 +1,2 @@
+const fs=require('fs');
+for (const p of process.argv.slice(2)) { const raw=fs.readFileSync(p,'utf8'); const j=JSON.parse(raw.replace(/^﻿/,'')); console.log(p.split(/[\/]/).pop(), 'raw', Buffer.byteLength(raw), 'B; minified', Buffer.byteLength(JSON.stringify(j)), 'B; indent of line 2:', JSON.stringify((raw.split('\n')[1]||'').match(/^\s*/)[0]), '; CRLF', /\r\n/.test(raw), '; BOM', raw.charCodeAt(0)===0xFEFF); }
