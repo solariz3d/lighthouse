@@ -195,6 +195,9 @@ const ENTRY = {
   // Added 2026-11-13 (Lap W, W3, pane P) with sessionstart-body.js, in the same change as its install.ps1 entry: the CONSONANCE_DREAM guard is the first
   // statement, above `function main()` and above the call site, which is the entry marker (`try { main(); }` on one line under require.main).
   'sessionstart-body.js': 'try { main(); }',
+  // Added 2026-11-13 (Lap W, W4, pane P) with wake-gate.js, in the same change as its install.ps1 entry: the guard is the first statement, above the
+  // call site, which is the entry marker (`try { main(); }`, under require.main beside the --replay branch).
+  'wake-gate.js': 'try { main(); }',
   // Added 2026-10-03 (D218) with reply-slot.js, in the same change as its install.ps1 entry. Call site, not definition, per this table's header.
   'reply-slot.js': 'try { main(); }',
   // Added 2026-09-06 with the ready stamp's two hooks (P-READY-SIGNAL), in the same change as

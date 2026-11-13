@@ -118,13 +118,15 @@ function originSynced(repo) {
   return m ? new Date(Number(m[1]) * 1000) : null;
 }
 
-/** What the librarian is held to at a wake (W4) and pointed at (W3), by the date in each name. Same text in wake-gate.js (a test compares them). */
+// W3/W4 required: begin
+/** What the librarian is held to at a wake (W4) and pointed at (W3), by the date in each name, none more than a day ahead of `today`. The same text is
+ * in wake-gate.js and sessionstart-body.js; wake-gate.test.js compares the two and feeds both one repo. */
 function required(repo, machine, today) {
   const dated = (dir, re) => { try { return fs.readdirSync(path.join(repo, dir)).map((n) => ({ n, m: re.exec(n) })).filter((x) => x.m); } catch (_) { return []; } };
   const limit = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate() + 1)).toISOString().slice(0, 10);
   const notes = dated('exo_memory/librarian', /^(\d{4}-\d{2}-\d{2})\.md$/).filter((x) => x.m[1] <= limit).sort((a, b) => (a.n < b.n ? 1 : -1));
   const other = machine === 'D' ? 'L' : machine === 'L' ? 'D' : null;
-  const offs = other ? dated('exo_memory/loop', /^handoff_.+_(\d{4}-\d{2}-\d{2})-([A-Z])\.md$/).filter((x) => x.m[2] === other) : [];
+  const offs = other ? dated('exo_memory/loop', /^handoff_.+_(\d{4}-\d{2}-\d{2})-([A-Z])\.md$/).filter((x) => x.m[2] === other && x.m[1] <= limit) : [];
   const newest = offs.reduce((d, x) => (x.m[1] > d ? x.m[1] : d), '');
   const skips = [];
   if (!notes.length) skips.push('no-note');
@@ -132,6 +134,7 @@ function required(repo, machine, today) {
   return { note: notes.length ? `exo_memory/librarian/${notes[0].n}` : null, other,
     handoffs: offs.filter((x) => x.m[1] === newest).map((x) => `exo_memory/loop/${x.n}`).sort(), skips };
 }
+// W3/W4 required: end
 /** The Third Place's newest file, by the date in its name (ties: the later name). */
 function thirdPlaceNewest(repo) {
   try {
