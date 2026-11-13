@@ -1,0 +1,97 @@
+-- Configuring done (0.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: G:/consonance-scratch/a-gen-dz3/build
+[1/87] Building CXX object gen\CMakeFiles\dz_gen.dir\src\biome.cpp.obj
+[2/87] Building CXX object nav\CMakeFiles\dz_nav_gen.dir\gen_adapter.cpp.obj
+[3/87] Building CXX object gen\CMakeFiles\dz_gen_walk.dir\src\walk_proof.cpp.obj
+[4/87] Building CXX object gen\CMakeFiles\dz_gen_walk.dir\src\drop_proof.cpp.obj
+[5/87] Building CXX object gen\CMakeFiles\dz_gen.dir\src\emit.cpp.obj
+[6/87] Building CXX object gen\CMakeFiles\dz_gen.dir\src\measure.cpp.obj
+[7/87] Building CXX object chase\CMakeFiles\dz_chase.dir\dials.cpp.obj
+[8/87] Building CXX object gen\CMakeFiles\dz_gen.dir\src\graph.cpp.obj
+[9/87] Building CXX object gen\CMakeFiles\dz_gen.dir\src\route_profile.cpp.obj
+[10/87] Building CXX object gen\CMakeFiles\dz_gen.dir\src\voids.cpp.obj
+[11/87] Building CXX object gen\CMakeFiles\dz_gen.dir\src\layout.cpp.obj
+[12/87] Building CXX object world\CMakeFiles\dz_world.dir\route.cpp.obj
+[13/87] Building CXX object world\CMakeFiles\dz_world.dir\walk.cpp.obj
+[14/87] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\bots.cpp.obj
+[15/87] Building CXX object gen\CMakeFiles\dz-gen.dir\tools\dz-gen\plan.cpp.obj
+[16/87] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\play.cpp.obj
+[17/87] Building CXX object chase\CMakeFiles\dz_chase.dir\run.cpp.obj
+[18/87] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\void_tests.cpp.obj
+[19/87] Building CXX object world\CMakeFiles\dz_world.dir\stream.cpp.obj
+[20/87] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\slosh.cpp.obj
+[21/87] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\layout_tests.cpp.obj
+[22/87] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\arena.cpp.obj
+[23/87] Building CXX object chase\CMakeFiles\dz_chase_world.dir\streamed.cpp.obj
+[24/87] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\stair_tests.cpp.obj
+[25/87] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\range_tests.cpp.obj
+[26/87] Building CXX object gen\CMakeFiles\gen_drop_tests.dir\tests\drop_tests.cpp.obj
+[27/87] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\dial_tests.cpp.obj
+[28/87] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\pin_tests.cpp.obj
+[29/87] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\geometry_tests.cpp.obj
+[30/87] Building CXX object gen\CMakeFiles\gen_walk_tests.dir\tests\walk_tests.cpp.obj
+[31/87] Building CXX object gen\CMakeFiles\dz-gen.dir\tools\dz-gen\main.cpp.obj
+[32/87] C:\WINDOWS\system32\cmd.exe /C "cd /D G:\consonance-scratch\a-gen-dz3\build\game && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=G:/consonance-scratch/a-gen-dz3 -DOUT=G:/consonance-scratch/a-gen-dz3/build/game/generated/build_commit.h -P G:/consonance-scratch/a-gen-dz3/game/world/build_commit.cmake"
+[33/87] Building CXX object world\CMakeFiles\world_tests.dir\tests\coords_tests.cpp.obj
+[34/87] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\rule_tests.cpp.obj
+[35/87] Linking CXX static library gen\dz_gen.lib
+[36/87] Building CXX object world\CMakeFiles\world_tests.dir\tests\route_tests.cpp.obj
+[37/87] Linking CXX static library chase\dz_chase.lib
+[38/87] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\body_tests.cpp.obj
+[39/87] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\connect_tests.cpp.obj
+[40/87] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\reprieve_tests.cpp.obj
+[41/87] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\speed_tests.cpp.obj
+[42/87] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\stay_tests.cpp.obj
+[43/87] Building CXX object world\CMakeFiles\world_tests.dir\tests\stream_tests.cpp.obj
+[44/87] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\stream_tests.cpp.obj
+[45/87] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\path_tests.cpp.obj
+[46/87] Building CXX object game\CMakeFiles\dz_world_game.dir\world\acoustics.cpp.obj
+[47/87] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\build_tests.cpp.obj
+[48/87] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\proof_tests.cpp.obj
+[49/87] Building CXX object nav\CMakeFiles\dz-nav.dir\tools\dz-nav\main.cpp.obj
+[50/87] Building CXX object chase\CMakeFiles\dz-chase.dir\tools\dz-chase\main.cpp.obj
+[51/87] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\pursuit_tests.cpp.obj
+[52/87] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_app.cpp.obj
+[53/87] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\overtime_tests.cpp.obj
+[54/87] Building CXX object game\CMakeFiles\dz_world_game.dir\world\run_record.cpp.obj
+[55/87] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\streamed_tests.cpp.obj
+[56/87] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\feel_tests.cpp.obj
+[57/87] Linking CXX static library gen\dz_gen_walk.lib
+[58/87] Linking CXX static library world\dz_world.lib
+[59/87] Linking CXX static library nav\dz_nav_gen.lib
+[60/87] Building CXX object game\CMakeFiles\dz-world.dir\world\sound.cpp.obj
+[61/87] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\run_record_tests.cpp.obj
+[62/87] Building CXX object game\CMakeFiles\dz-world.dir\world\stage.cpp.obj
+[63/87] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_run.cpp.obj
+[64/87] Building CXX object game\CMakeFiles\dz-world.dir\world\hud.cpp.obj
+[65/87] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen.cpp.obj
+[66/87] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\world_app_tests.cpp.obj
+[67/87] Building CXX object game\CMakeFiles\dz-world.dir\world\main.cpp.obj
+[68/87] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_models.cpp.obj
+[69/87] Linking CXX executable bin\dz-gen.exe
+[70/87] Linking CXX static library chase\dz_chase_arena.lib
+[71/87] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_look.cpp.obj
+[72/87] Linking CXX executable bin\gen_tests.exe
+[73/87] Linking CXX executable bin\gen_walk_tests.exe
+[74/87] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_burst.cpp.obj
+[75/87] Linking CXX static library chase\dz_chase_world.lib
+[76/87] Linking CXX executable bin\dz-nav.exe
+[77/87] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest_run.cpp.obj
+[78/87] Linking CXX executable bin\gen_drop_tests.exe
+[79/87] Linking CXX executable bin\nav_tests.exe
+[80/87] Linking CXX executable bin\world_tests.exe
+[81/87] Linking CXX static library game\dz_world_game.lib
+[82/87] Linking CXX executable bin\chase_tests.exe
+[83/87] Linking CXX executable bin\dz-chase.exe
+[84/87] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_fpbody.cpp.obj
+[85/87] Linking CXX executable bin\world_app_tests.exe
+[86/87] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest.cpp.obj
+[87/87] Linking CXX executable bin\dz-world.exe
+    the juke bot on seed 8, timer 30 s: not caught after 370.0 s of overtime
+    G:\consonance-scratch\a-gen-dz3\chase\tests\overtime_tests.cpp(168): CHECK failed: out.caught && out.by == Kind::Dark
+    G:\consonance-scratch\a-gen-dz3\chase\tests\overtime_tests.cpp(169): CHECK failed: out.overtime_s <= 90.0f
+FAIL  the_dark_one_closes_on_a_player_who_circles_inside_its_turning_circle
+1 tests, 1 failed
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
