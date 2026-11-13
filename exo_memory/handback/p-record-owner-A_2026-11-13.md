@@ -127,3 +127,46 @@ exactly. The record gains a `[gen]` section. A record without one replays with e
   - a `[gen]` record reads back as written;
   - the un-dialled-change row above.
 - Built on a branch off B's kit when the dial list exists; then the train.
+
+## D, Friday 09:56 local (`date`): the [gen] fields, registered before they are written (B's list: `p-gen-lap2-kit-B_2026-11-13.md:141`, kit `0df4c77`)
+
+**B's open point: does the record carry the game's `gen_dials_`? The inference is checked, and it is right: no.**
+- checked: `git grep set_generator_dials 0df4c77 -- game/` → `world_app.cpp:201` (the definition), and callers only at
+  `game/tests/world_app_tests.cpp:725` and `game/world/selftest_run.cpp:277,378`.
+- In play, `gen_dials_` is always `gen::Dials{}`, and `run_text` writes nothing of it (`[dials]` is the chase's difficulty).
+- **So `[gen]` must carry them, in a section of their own.**
+  - **Why:** they change the world (loop density, void rate, stair width ...), so a run made with any of them moved replays into another
+    world.
+  - Today only a test or the self-test moves them, so no kept run of his is affected yet.
+  - The first default changed in `gen::Dials` would break every record that does not say its dials, silently, and the tripwire below
+    catches that only in records that carry `gen_world`.
+
+**B's list is right for the record.** Eight names, each an off value equal to `GenParams{}`, `set_gen` refusing unknown names. I key off
+`DZ_GEN_KIT` itself (the X-macro), never a copy, so a field B adds is written and read with no change of mine.
+
+**The fields** (record_format stays 1: each is a named, optional field, and a missing one reads as the day it was missing):
+- **`[gen]`:** every `DZ_GEN_KIT` field, `name = value`, read back with B's `gen::set_gen`. A record with no `[gen]` is `GenParams{}`: the
+  kit off.
+- **`[gen_dials]`:** every `gen::kDialSpecs` dial, `name = value`, an unknown name refused. A record with none is `gen::Dials{}`.
+- **`gen_world = <hex>`** in the head: the fingerprint (`gen::fingerprint`) of the chunk holding the spawn cell, generated with the run's
+  `GenParams` and seed. 0 or missing: not carried (every record before it).
+- **The run's side:** `world_app` snapshots the run's `GenParams` at its start, as it does `run_speed_`, and writes it.
+- **The replay's side:** `replay_run` builds the world from the record's `GenParams` (`apply_gen`), not from `shipped_gen()`. Where the
+  record says a `gen_world`, a world whose spawn chunk differs is **refused**, saying: "this record's world is not this build's under the
+  same generator settings: the generator changed outside its dials".
+
+**The rows, red first** (`game/tests/run_record_tests.cpp`):
+1. `a_new_record_says_the_generator_it_was_played_in`: a written record's `[gen]` and `[gen_dials]` hold every kit field at
+   `shipped_gen()`'s value and every dial; `gen_world` is not 0; and it reads back to the bit.
+2. `a_record_with_no_gen_section_replays_in_the_generator_before_the_kit`: an old text (no `[gen]`) reads as `GenParams{}`, and the
+   replay's world is the off world. Its spawn chunk fingerprint equals `GenParams{}`'s and differs from `shipped_gen()`'s.
+3. `a_record_whose_world_is_not_this_builds_is_refused_by_name`: a `[gen]` record whose `gen_world` does not match is refused with that
+   message, and nothing is played.
+   - **Honest limit:** a test cannot change a generator constant at run time. This row tampers the stored fingerprint, which is what an
+     un-dialled change would produce on replay. The constant change itself is proved by a mutant: an edit to a world-changing constant in
+     `gen/` with the stored record kept, which must make row 3's sibling refuse.
+4. `the_gen_dials_and_the_kit_round_trip_and_an_unknown_name_is_refused`: `[gen_dials]` with a changed dial reads back, and an unknown
+   dial or kit name is refused.
+
+**Falsifier:** any existing record row (Lap R's seven, `what_a_new_run_starts_with`) goes red. A field added must not move a record that
+does not carry it.
