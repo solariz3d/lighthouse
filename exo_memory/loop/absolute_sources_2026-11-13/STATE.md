@@ -1,6 +1,6 @@
-**CHECKPOINT on 2026-11-13 at 07:38 local, on L: the swarm is STILL RUNNING, at the keeper's word ("wait no let the swarm finish! I will stay after 8 if it needs to", 07:36). All 16 readers have finished; 15 of 16 second readers have returned and the sixteenth (02) wrote its section at 07:37; the Apply stage (three writers) and the Critic have not run yet.**
+**ENDED on 2026-11-13 at 08:03 local, on L, at the keeper's word (he had to leave; "cant we just get another agent to criticize it when i get home?"). FINISHED: all 16 readers, all 16 second readers, and the three applying writers (files 90, 91, 92). CUT: the Critic, which was mid-work and wrote nothing; `99_what_is_missing.md` does not exist.**
 
-# Absolute sources: the state at this checkpoint, and how to go on if it is cut
+# Absolute sources: where the swarm ended, and the one stage left
 
 Written by the Third Place seat, which launched the swarm at 06:25 at the keeper's word (run `wf_b79d39a2-287`,
 36 agents, Opus 5.5). The record of why and how is `third_place/2026-11-13.md`. This file is rewritten when the
@@ -15,11 +15,15 @@ swarm finishes or is cut; its first line always says which.
   with the correction beside it, and the section's last line says how far the file can be trusted.
 - `absolute-sources.workflow.js`: the swarm's script, copied here by the librarian.
 
-## What is not here yet
+- `90_for_the_story_bible.md`, `91_for_abilities_room_and_rescue.md`, `92_risk_and_wording.md`: the three applying
+  files. Each maps the checked findings onto the room's files as offers, names the pick of the keeper's that bears,
+  and lists what not to build on. `90` also lists 24 corrections the sources force on the room's own bible, build
+  path and notes.
 
-`90_for_the_story_bible.md`, `91_for_abilities_room_and_rescue.md`, `92_risk_and_wording.md` and
-`99_what_is_missing.md`. Until they exist, nothing in this folder has been applied to the story bible or to any
-build path, and no critic has read it.
+## What is not here
+
+`99_what_is_missing.md`. No critic has read this folder. The applying files are offers: nothing in them has been
+written into the story bible or any build path, and none was weighed against the code or play.
 
 ## The counts, as each agent returned them
 
@@ -29,7 +33,7 @@ agents' own counts. Nobody has recounted them.
 | topic | findings | [read] | [summary] | offers | second reader: checked | ok | wrong | unsupported | downgraded |
 |---|---|---|---|---|---|---|---|---|---|
 | 01 memo_whole | 61 | 60 | 0 | 21 | 37 | 27 | 6 | 1 | 3 |
-| 02 monroe_books | 60 | 73 | 6 | 14 | not returned at 07:37 | | | | |
+| 02 monroe_books | 60 | 73 | 6 | 14 | 60 | 55 | 1 | 1 | 3 |
 | 03 gateway_toolkit | 60 | 60 | 0 | 21 | 39 | 35 | 3 | 1 | 0 |
 | 04 army_and_institute | 60 | 56 | 3 | 13 | 79 | 73 | 4 | 1 | 1 |
 | 05 the_absolute_lineage | 58 | 55 | 1 | 15 | 64 | 48 | 8 | 5 | 3 |
@@ -44,29 +48,32 @@ agents' own counts. Nobody has recounted them.
 | 14 names_and_the_law | 60 | 52 | 4 | 16 | 61 | 53 | 7 | 1 | 0 |
 | 15 binaural_evidence | 60 | 42 | 18 | 13 | 66 | 59 | 5 | 2 | 0 |
 | 16 horror_that_carries_love | 60 | 60 | 2 | 18 | 64 | 56 | 5 | 1 | 2 |
-| total | 959 | 815 | 157 | 264 | 944 | 793 | 93 | 43 | 14 |
+| total | 959 | 815 | 157 | 264 | 1004 | 848 | 94 | 44 | 17 |
 
 Some rows do not add up as returned (02, 09 and 16 report more marks than findings). The agents counted marks, and
 a finding can carry more than one. Left as returned.
 
-**Read this before building on anything here.** The second readers corrected about one checked claim in six (150 of
-944). A claim no second reader reached has had no such check, and it is my inference, not a measurement, that it
+**Read this before building on anything here.** The second readers corrected 155 of the 1,004 claims they checked,
+between one in six and one in seven. A claim no second reader reached has had no such check, and it is my inference, not a measurement, that it
 errs about as often. A finding that is struck, or an offer marked as standing on a struck finding, is not to be
 built on.
 
-## If the run is cut before it finishes
+## The one stage left: a critic, on any machine
 
-1. A run cannot be resumed from another machine or another session. Run only the script's last two stages (Apply and
-   Critic) against the committed files. The script's three paths at its top (`OUT`, `SCRATCH`, `EXO`) are L's.
-2. **One gap to fix in the script first.** The story-bible writer is told to read the bible, the story build path
-   and the design briefs, and is not told to read the keeper's picks of 2026-11-13
-   (`briefs/dreamzone2_the_game.md`, item 183 and items 184 to 188). The librarian's letter
-   `third_place/to_the_third_place_2026-11-13b.md` lists the picks that bear. One of them settles a call the writer
-   is asked to lay out as open (how the father dies). If the run does finish here, `90_…` is to be read against
-   those picks before it is used.
-3. `14_names_and_the_law.md` is research and not legal advice, and says so.
+1. One agent does it. Its task is the last `agent(...)` call in `absolute-sources.workflow.js` (the prompt that
+   begins "YOU ARE THE COMPLETENESS CRITIC"), with the rules block `COMMON` from the top of the same script. It
+   reads every file in this folder and writes `99_what_is_missing.md`. The script's three paths (`OUT`, `SCRATCH`,
+   `EXO`) are L's; a run cannot be resumed from another machine or session, so start that one agent fresh.
+2. **The gap I feared in the script did not bite.** The story-bible writer was not told to read the keeper's picks
+   of 2026-11-13, and it read them anyway: `90`'s header says it was read against item 183, and its section 3 cites
+   his pick on how the father dies. The critic should still check `90` to `92` against item 183 and items 184 on.
+3. `14_names_and_the_law.md` and `92_risk_and_wording.md` are research and not legal advice, and say so.
 
-## Two things seen at this checkpoint, each read by me in the file
+## Things seen in the files, each read by me
+
+- `90_for_the_story_bible.md`, SB04 and section 2: the memo's page 24 gives the Father and the Son and breaks off
+  mid-sentence at "serves the"; the Holy Spirit sentence is on page 25, the page missing from the CIA's copy until
+  2021. The reading of that missing third as the love is marked [ours] there.
 
 - `03_gateway_toolkit.md`, F47, marked [read] and found OK by its second reader (V28): the Gateway Experience's
   Wave VIII ends on a track named "The Absolute". The finding quotes its manual: "As you make your way through a
