@@ -188,6 +188,26 @@ test('the scan refuses a planted key shape: nothing is pushed, main does not mov
   assert.ok(!JSON.stringify(rows).includes(fake), 'the ledger never carries the key');
 });
 
+test('the privacy scan refuses an email address or an account path: nothing is pushed, main does not move, and the line is named, never shown', () => {
+  // The plan keeps "the credential and privacy scan" from today's landings (plan_l194_landing_train_2026-11-13.md, "Kept").
+  // The first real batch (2026-11-13) ran the credential scan only; this is the other half.
+  const w = world();
+  const addr = ['someone', 'example.com'].join('@');
+  const row = branch(w, 'p1', 'notes.txt', `write to ${addr} for the build\n`);
+  T.writeReady(w.data, [row]);
+  const before = { main: git(w.repo, 'rev-parse', 'main'), origin: originMain(w) };
+  const r = T.runTrain(w.cfg, { ...quiet, data: w.data });
+  assert.equal(r.pushed, false);
+  assert.match(r.stopped, /privacy scan refused/);
+  assert.match(r.stopped, /notes\.txt:1/);
+  assert.doesNotMatch(r.stopped, new RegExp(addr.replace('.', '\\.')), 'the address itself is never shown');
+  assert.equal(git(w.repo, 'rev-parse', 'main'), before.main, 'main did not move');
+  assert.equal(originMain(w), before.origin, 'nothing was pushed');
+  const acct = branch(w, 'p2', 'paths.txt', 'see C:\\Users\\someone\\Downloads\\x\n');
+  T.writeReady(w.data, [acct]);
+  assert.match(T.runTrain(w.cfg, { ...quiet, data: w.data }).stopped || '', /privacy scan refused.*paths\.txt:1/);
+});
+
 test('the remote refuses the push: it is reported as not landed, the READY list keeps the branch, and reconcile can finish it later', () => {
   const w = world();
   const row = branch(w, 'r1', 'r.txt', 'r\n');

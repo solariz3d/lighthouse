@@ -49,6 +49,7 @@ const MUTANTS = [
   ['push: the remote is not read back (a push that did not land reads as pushed)', SRC,
     "  result.pushed = push.code === 0 && remoteSha === trainSha;", "  result.pushed = true;"],
   ['dreamzone-3 check: build.bat called by its bare name ("not recognized" in a Claude Code shell)', CHECK, 'call "%CD%\\build.bat" test', 'call build.bat test'],
+  ['privacy: a refusal by the privacy scan is ignored (an email address or account path is pushed)', SRC, '  if (!priv.ok) {', '  if (false) {'],
   ['failingRows: a command cmd could not run is not named', SRC, '|is not recognized as an internal or external command/', '/'],
 ];
 

@@ -29,6 +29,8 @@
 //   - a red batch: the newest branch is set aside and the rest tried again, down to one; the largest green batch lands; the branches set aside
 //     stay READY for the next pass, and a branch is named red (and leaves the list) only when it is red ALONE on main. Each pass lands at least
 //     one branch or names one, so the train ends;
+//   - the privacy scan finds an email address, an account path, an AppData path or a private folder in what the push would publish, or
+//     cannot read it: NOTHING is pushed, and each hit is named by file, line, commit and kind, never shown (privacyScan);
 //   - the scan finds a credential shape, or cannot run: NOTHING is pushed and main is not moved (fail CLOSED: the push-gate hook fails open so a
 //     hook bug never traps a seat, but a push from a script is not seen by the hook at all, so here the scan is the only gate). The decision is
 //     written to <data>/push-gate.jsonl in the hook's own shape;
@@ -114,6 +116,37 @@ function scanForPush(repo, remote, pushSha, { gate = require('../hooks/push-gate
   try { d = gate.decide(`git push ${remote} ${pushSha}:refs/heads/main`, repo); } catch (e) { return { ok: false, decision: 'error', error: String(e && e.message || e).slice(0, 160) }; }
   // Fail CLOSED: only a clean 'allow' pushes. 'allow-error' (the hook's fail-open) and 'not-a-push' (a command the gate did not read) do not.
   return { ok: d.decision === 'allow', ...d };
+}
+// ── the privacy scan (the plan keeps "the credential and privacy scan" from today's landings): every line the push would publish
+//    that is ADDED (each commit, first parent, as the gate reads them) and every commit message, against the room's privacy grep.
+//    A hit is named by file, line, commit and kind, never shown. Fails CLOSED, as the credential scan does. ──
+const PRIVACY = [
+  { kind: 'an email address', re: /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.(?:com|net|org|io)\b/ },
+  { kind: 'an account path', re: /\bUsers[\\/]+(?!Public\b)[A-Za-z0-9._-]+[\\/]/i },
+  { kind: 'an AppData path', re: /\bAppData[\\/]/i },
+  { kind: 'a private folder', re: /\bprivate[\\/]|stays here/i },
+];
+const PRIVACY_ALLOW = /noreply@anthropic\.com|users\.noreply\.github\.com/i;   // the commits' own Co-Authored-By and author lines
+function privacyScan(repo, remote, pushSha) {
+  const not = ['--not', `--remotes=${remote}`];
+  const log = git(repo, ['log', '-p', '--no-color', '--no-ext-diff', '-U0', '--diff-merges=first-parent', '--format=%x00%h', pushSha, ...not]);
+  const msgs = git(repo, ['log', '--format=%x00%h%n%B', pushSha, ...not]);
+  if (log.code !== 0 || msgs.code !== 0) return { ok: false, error: `git could not read what the push would publish: ${(log.err || msgs.err).slice(0, 160)}` };
+  const found = [];
+  const hit = (text) => (PRIVACY_ALLOW.test(text) ? null : (PRIVACY.find((p) => p.re.test(text)) || null));
+  let commit = '', file = '', line = 0;
+  for (const raw of log.out.split('\n')) {
+    if (raw.startsWith('\u0000')) { commit = raw.slice(1).trim(); continue; }
+    if (raw.startsWith('+++ ')) { file = raw.replace(/^\+\+\+ (b\/)?/, ''); continue; }
+    const h = raw.match(/^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/);
+    if (h) { line = Number(h[1]); continue; }
+    if (raw.startsWith('+') && file) { const p = hit(raw.slice(1)); if (p) found.push({ file, line, commit, kind: p.kind }); line++; }
+  }
+  for (const block of msgs.out.split('\u0000').filter(Boolean)) {
+    const [sha7, ...body] = block.split('\n');
+    body.forEach((l, i) => { const p = hit(l); if (p) found.push({ file: '(commit message)', line: i + 1, commit: sha7.trim(), kind: p.kind }); });
+  }
+  return { ok: found.length === 0, found };
 }
 function recordGate(data, row) {
   try { fs.mkdirSync(data, { recursive: true }); fs.appendFileSync(path.join(data, GATE_LEDGER), JSON.stringify({ t: new Date().toISOString(), seat: 'landing-train', ...row }) + '\n'); return true; } catch (_) { return false; }
@@ -240,6 +273,13 @@ function land(cfg, data, { baseSha, rows, say, result }) {
   const scan = scanForPush(cfg.repo, remote, trainSha, opts_gate(cfg));
   recordGate(data, { cwd: cfg.repo, decision: scan.decision, by: 'landing-train', sha: trainSha, ...(scan.error ? { error: scan.error } : {}), ...(scan.scanned ? { scanned: scan.scanned } : {}), ...(scan.found ? { found: scan.found.slice(0, 50).map((h) => ({ file: h.file, line: h.line, commit: h.commit, kind: h.kind })) } : {}) });
   if (!scan.ok) { result.stopped = `the scan refused the push (${scan.decision}${scan.found ? `: ${scan.found.length} credential-shaped line(s), e.g. ${scan.found[0].file}:${scan.found[0].line} in ${scan.found[0].commit}` : ''}${scan.error ? `: ${scan.error}` : ''}); nothing landed`; result.pushed = false; return false; }
+  const priv = privacyScan(cfg.repo, remote, trainSha);
+  if (!priv.ok) {
+    result.stopped = `the privacy scan refused the push (${priv.error || `${priv.found.length} line(s): ${priv.found.slice(0, 3).map((h) => `${h.file}:${h.line} in ${h.commit} (${h.kind})`).join('; ')}`}); nothing landed`;
+    result.pushed = false;
+    appendLog(data, { event: 'privacy-refused', sha: trainSha, found: priv.found, error: priv.error });
+    return false;
+  }
   fs.writeFileSync(path.join(data, MARK_NAME), JSON.stringify({ t: new Date().toISOString(), sha: trainSha, base: baseSha, rows }));
   const ff = git(cfg.repo, ['merge', '--ff-only', '-q', trainSha]);
   if (ff.code !== 0) { fs.rmSync(path.join(data, MARK_NAME), { force: true }); result.stopped = `main would not fast-forward: ${ff.err.slice(0, 200)}`; return false; }
@@ -402,4 +442,4 @@ function main(argv) {
 
 if (require.main === module) process.exitCode = main(process.argv.slice(2));
 
-module.exports = { stage, stagingDir, READY_NAME, LOG_NAME, MARK_NAME, dataDir, readReady, writeReady, addReady, without, failingRows, boardLine, scanForPush, recordGate, runTrain, promote, reconcile, cleanWorktree, mergeBatch, loadConfig, main };
+module.exports = { privacyScan, stage, stagingDir, READY_NAME, LOG_NAME, MARK_NAME, dataDir, readReady, writeReady, addReady, without, failingRows, boardLine, scanForPush, recordGate, runTrain, promote, reconcile, cleanWorktree, mergeBatch, loadConfig, main };
