@@ -47,7 +47,7 @@ checked: `mixer.cpp:1366-1412`
 2. **"The sound of going in has died away by then" is not guaranteed after a chute fall.**
    - The landing thump and the steps go into the room's reverb, and the reprieve does not hold them down.
    - The room comes from the listener's cells by Sabine's formula, and its decay runs to `kMaxDecay`, **4 s**
-     (`acoustics.cpp:39`), with tall cells counted in (`tall()`, :60).
+     (`acoustics.cpp:35`), with tall cells counted in (`tall()`, :60).
    - A tail with a 4 s decay is still about 15 dB down only 1 s later, and the "quiet" window starts 1 s after going
      in. In a short room (main's apartment, about a third of a second) it has died away; **in a tall one it has not.**
      inferred: whether the reprieve at a chute's foot is in a tall room depends on how B's chute cells count in the
