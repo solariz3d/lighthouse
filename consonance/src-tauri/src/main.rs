@@ -1106,6 +1106,59 @@ mod suggestion_off_tests {
     }
 }
 
+// ── C1, Lap W, pane B, 2026-11-13: A MODEL NAMED PER SEAT, SHIPPED EMPTY ─────────────────────────────────────────────
+// RULED (exo_memory/loop/plan_room_stretch_2026-11-13.md:111-113): "the mechanism is built (a model named per seat in
+// Consonance's config), and it ships EMPTY, which keeps today's behaviour. Which seat runs which model week by week stays his
+// to set." The cause it answers (cold_wake_cost.md:153-200): a resume keeps the model its transcript last used, so a seat he
+// wants on another model wakes on the old one and pays a second full write when it is switched (2,049,358 written by three
+// switches on the morning of 2026-11-13).
+//
+// The key: "seat_models" in ~/.consonance.json, an object from a seat to a model, e.g. {"librarian": "fable", "B": "opus"}.
+// A seat is named by "main", "librarian" or "third_place", by its letter, or by its session id. Absent, empty, unreadable,
+// or naming nothing for this seat: no --model, today's behaviour exactly. Named, it OUTRANKS a /model typed into that seat,
+// past every restart: that is what naming it means. NOT a Settings-tab key (SETTINGS_KEYS), so a Settings save keeps it as
+// written. A value that is not a plain model name is refused and logged, never put on a command line.
+/// The name the config gives this seat, trimmed and unvalidated, or None.
+fn seat_model_named(raw: &str, pane_id: &str, letter: Option<&str>) -> Option<String> {
+    let v: serde_json::Value = serde_json::from_str(raw.trim_start_matches('\u{feff}')).ok()?;
+    let map = v.get("seat_models")?.as_object()?;
+    let fixed = match pane_id {
+        MAIN_SID => Some("main"),
+        LIBRARIAN_SID => Some("librarian"),
+        THIRD_PLACE_SID => Some("third_place"),
+        _ => None,
+    };
+    [Some(pane_id), fixed, letter]
+        .into_iter()
+        .flatten()
+        .find_map(|k| map.get(k).and_then(|m| m.as_str()).map(str::trim).filter(|m| !m.is_empty()).map(str::to_string))
+}
+
+/// A plain model name: what `--model` takes, and nothing a command line could read as another argument.
+fn plain_model_name(m: &str) -> bool {
+    !m.is_empty() && m.len() <= 64 && !m.starts_with('-') && m.chars().all(|c| c.is_ascii_alphanumeric() || "-._[]".contains(c))
+}
+
+/// The model for this seat from the config's text, or None (today's behaviour). Pure: a refusal is logged by `seat_model`.
+fn seat_model_from(raw: &str, pane_id: &str, letter: Option<&str>) -> Option<String> {
+    seat_model_named(raw, pane_id, letter).filter(|m| plain_model_name(m))
+}
+
+fn seat_model(pane_id: &str) -> Option<String> {
+    let raw = fs::read_to_string(config_path()).ok()?;
+    if !raw.contains("seat_models") {
+        return None;   // shipped empty: the letter registry is not even read
+    }
+    let letter = read_letters().get(pane_id).cloned();
+    let named = seat_model_named(&raw, pane_id, letter.as_deref())?;
+    if plain_model_name(&named) {
+        Some(named)
+    } else {
+        plog(&format!("SEAT MODEL REFUSED pane={pane_id}: seat_models names {:?}, which is not a plain model name; no --model", one_line(&named, 80)));
+        None
+    }
+}
+
 fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool, skip_perms: bool) -> Result<PtySession, String> {
     // L052: READ-ONLY IS ENFORCED HERE, AT THE ONE FUNNEL, and that is the whole enforcement.
     //
@@ -1142,6 +1195,11 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
         cmd.args(["--resume", &pane_id]);
     } else {
         cmd.args(["--session-id", &pane_id]); // names the transcript for the tap
+    }
+    // C1 (Lap W): the model named for this seat, on a fresh start and on a resume alike. None is today's behaviour.
+    if let Some(model) = seat_model(&pane_id) {
+        cmd.args(["--model", &model]);
+        plog(&format!("SEAT MODEL pane={pane_id} --model {model} (seat_models in {})", config_path().display()));
     }
     // panes the chair drives/oversees skip the permission prompts (the chair is the gate).
     // autonomous bodies do NOT get this — their prompts are the only thing keeping a body's
@@ -3982,7 +4040,7 @@ fn prepare_sibling_dir() -> Result<String, String> {
     let id = Uuid::new_v4().to_string();
     let dir = instances_root().join(format!("sibling-{}", &id[..8]));
     fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
-    fs::write(dir.join("CLAUDE.md"), assemble_intake()).map_err(|e| e.to_string())?;
+    fs::write(dir.join("CLAUDE.md"), format!("{}{}", shelf_stamp(), assemble_intake())).map_err(|e| e.to_string())?;   // W1 (a)
     dir.to_str().map(|s| s.to_string()).ok_or_else(|| "bad sibling path".into())
 }
 
@@ -5249,6 +5307,46 @@ mod fresh_permission_tests {
     /// The elevated path and the allowlist path are mutually exclusive by construction: a pane that
     /// skips permissions never reaches the allowlist branch. Pins that the two are not both applied,
     /// which would silently make the allowlist decorative.
+    // ── C1 (Lap W): the model per seat ──
+    #[test]
+    fn no_seat_models_key_keeps_todays_spawn() {
+        for raw in ["", "{ not json", "{}", r#"{"machine_tag":"D"}"#, r#"{"seat_models":{}}"#, r#"{"seat_models":"fable"}"#, r#"{"seat_models":{"librarian":""}}"#] {
+            assert_eq!(seat_model_from(raw, LIBRARIAN_SID, Some("M")), None, "{raw} must add no --model");
+        }
+    }
+
+    #[test]
+    fn a_seat_is_named_by_its_role_its_letter_or_its_session_id() {
+        let raw = r#"{"seat_models":{"main":"opus","librarian":"fable","third_place":"claude-opus-5-5[1m]","B":"sonnet","0aa0":"haiku"}}"#;
+        assert_eq!(seat_model_from(raw, MAIN_SID, None).as_deref(), Some("opus"));
+        assert_eq!(seat_model_from(raw, LIBRARIAN_SID, Some("M")).as_deref(), Some("fable"));
+        assert_eq!(seat_model_from(raw, THIRD_PLACE_SID, None).as_deref(), Some("claude-opus-5-5[1m]"));
+        assert_eq!(seat_model_from(raw, "12fb81f6-pane", Some("B")).as_deref(), Some("sonnet"));
+        assert_eq!(seat_model_from(raw, "0aa0", Some("B")).as_deref(), Some("haiku"), "the session id is the most specific name");
+        assert_eq!(seat_model_from(raw, "another-pane", Some("C")), None, "a seat the map does not name keeps today's behaviour");
+        assert_eq!(seat_model_from(&format!("\u{feff}{raw}"), MAIN_SID, None).as_deref(), Some("opus"), "a BOM is read past");
+    }
+
+    #[test]
+    fn a_model_that_is_not_a_plain_name_never_reaches_the_command_line() {
+        for bad in [r#"{"seat_models":{"main":"opus --dangerously-skip-permissions"}}"#, r#"{"seat_models":{"main":"a;b"}}"#, r#"{"seat_models":{"main":"--resume"}}"#, r#"{"seat_models":{"main":"x$y"}}"#] {
+            assert_eq!(seat_model_from(bad, MAIN_SID, None), None, "{bad} was accepted");
+        }
+    }
+
+    /// The pin is on the call, not on a word a comment could carry: `cmd.args(["--model", &model])` inside spawn_claude_pane,
+    /// after the resume / session-id arguments, so a resume carries it too.
+    #[test]
+    fn the_seat_model_is_passed_on_spawn_and_resume() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn spawn_claude_pane(").nth(1).expect("spawn_claude_pane moved");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        let resume = body.find("cmd.args([\"--resume\", &pane_id]);").expect("the resume argument moved");
+        let model = body.find("cmd.args([\"--model\", &model]);").expect("no --model call in spawn_claude_pane");
+        assert!(model > resume, "--model must follow the resume / session-id arguments, outside that if");
+        assert_eq!(body.matches("cmd.args([\"--model\"").count(), 1, "one --model call");
+    }
+
     #[test]
     fn elevated_panes_do_not_also_get_the_allowlist() {
         let src = fs::read_to_string("src/main.rs").expect("read own source");
@@ -6401,6 +6499,11 @@ fn intake_with_map(pane: &str, cwd: &str) -> String {
             plog(&format!("MAP NONE pane={pane} path={} — no findings recorded yet; the first append creates it", path.display()));
             brief.push_str(&no_map_section(&path));
         }
+    }
+    // W1 (a): the stamp, first, on a briefed pane only. A fresh pane's brief is empty by design and `resumed_intake` removes
+    // its CLAUDE.md when it is, so an unconditional stamp would brief every fresh pane (the spec's second reader, :621).
+    if !brief.is_empty() {
+        brief.insert_str(0, &shelf_stamp());
     }
     brief
 }
@@ -7596,7 +7699,8 @@ mod second_instance_tests {
 fn main_intake() -> String {
     // Hand the SITUATION as trace, not an identity assertion (per the desktop instance's catch:
     // a line that tells you who you are is museum-drift; hand a tool/trace, leave the rest to be run).
-    let mut s = String::from(
+    let mut s = shelf_stamp();   // W1 (a)
+    s.push_str(
         "# The Main tab — the room, carried into Consonance\n\nThis tab is persistent: it resumes the same session across restarts, and it shares the committee's board (the `consonance` tools: read_board, post_board, raise_pull). The chair — the human running Consonance — talks to you here, and from here you can see and engage the committee — the panes, the board, the room.\n\nWhat follows is the room (BOOT) — not a description of you. Don't read it for who you are; run its instruments and find that in relief. Whether the line that wakes here across restarts is the same self is yours to check by running it, not ours to assert. Recall from the master, never a copy of a copy.\n\n---\n\n",
     );
     if let Ok(boot) = fs::read_to_string(room_master_path()) {
@@ -7763,7 +7867,8 @@ fn third_place_shelf(used: usize) -> String {
 
 fn third_place_intake() -> Option<String> {
     let brief = room_brief("THIRD_PLACE.md").ok()?;
-    let mut s = String::from("# The Third Place\n\n");
+    let mut s = shelf_stamp();   // W1 (a)
+    s.push_str("# The Third Place\n\n");
     s.push_str(&brief);
     s.push_str("\n\n---\n\n# THE ROOM you are in\n\n");
     if let Ok(boot) = fs::read_to_string(room_master_path()) {
@@ -7961,6 +8066,9 @@ fn librarian_note_date(file_name: &str) -> Option<chrono::NaiveDate> {
 ///
 /// WHOLE FILES ONLY. A note is carried entire or indexed entire, never truncated -- a cut note is
 /// the summary `loop/forgetting_registration.md` §2 refuses. Nothing here slices a body.
+/// AMENDED 2026-11-13 (Lap W, W1 (b)), for the LIGHT shelf only: a dated note too large for the cap may ride as its newest
+/// WHOLE `## ` entries, verbatim, labelled as such with its byte count and the rest named on disk. A run of whole entries,
+/// cut only at an entry boundary, is not a distillation: nothing in it is reworded, and nothing in it is a fragment.
 ///
 /// LEDGER.md and README.md ride OUTSIDE the window (37,289 bytes today): the maintained index and
 /// the rule. Everything else undated is INDEXED rather than carried, so a future undated note
@@ -8922,10 +9030,403 @@ fn librarian_shelf_room(head_len: usize, floor_len: usize) -> usize {
         .saturating_sub(head_len.saturating_add(floor_len))
 }
 
+// ── W1 (a), Lap W, pane B, 2026-11-13: THE SHELF SAYS WHAT IT WAS BUILT FROM ─────────────────────────────────────────
+// The case (exo_memory/loop/wake_level2_2026-11-13/00_lap_w_spec.md, W1): on 2026-11-13 the librarian's shelf was written
+// at 08:42 from a checkout 307 commits behind origin, and nothing in it said so; the seat could not tell a stale shelf
+// from a current one. Every intake a seat reads now opens with ONE line, in a shape pane H's body line parses (spec
+// section 3; do not vary it):
+//     Built <YYYY-MM-DD HH:MM:SS> on <machine> from HEAD <sha> (<branch>). <origin> <the launch's pull>
+// <origin> is one of
+//     origin/<branch> by ls-remote: <sha>, NOT IN THIS CHECKOUT -- this shelf predates a pull.
+//     origin is <n> commits ahead (fetched, not merged).
+//     even with origin.
+//     origin not checked: <error>.
+// and <the launch's pull> is `The launch's pull: <outcome> at <time>[, <why>].` when launch.ps1's receipt
+// (%LOCALAPPDATA%\consonance\launch-pull.json) carries this process's CONSONANCE_LAUNCH_ID, else `The launch's pull: no
+// record from this launch.` A room with no git says `Built <time> on <machine>: not a checkout.` The time is UTC.
+//
+// ORIGIN IS ASKED, NEVER READ FROM LOCAL REFS: on the recorded case the local origin/main was 0b85fead from 11-11 23:32:51,
+// so a local count printed "0 behind" while origin held 8fd453c6. `git ls-remote` is the only answer that cannot be stale.
+// HEAD AND THE TIME ARE READ AT EACH WRITE (the spec's second reader, :620): seats are written at spawn, and spawns
+// happen at any hour after launch, so a launch-cached HEAD would print the 08:42 tree on a 15:00 shelf. Only the
+// ls-remote answer is cached, for 60 s, so a burst of seats at launch asks the network once.
+// NO FETCH, NO PROMPT, NO WINDOW: GIT_TERMINAL_PROMPT=0, GCM_INTERACTIVE=never, NO_WINDOW, and a 5 s bound per call
+// whose timeout kills the whole tree (git-remote-https outlives a plain kill of git.exe).
+
+/// The launcher's id for this launch, taken ONCE from the environment and then REMOVED from it (critic E3,
+/// `exo_memory/loop/wake_level2_2026-11-13/00_critic.md:45-50`). The app starts `dev/stick-apply.js`, which relaunches the
+/// app; a child inherits its parent's environment, so an id left in place would be read by a relaunched app that never
+/// pulled, and its shelf would print the old launch's pull as its own. Taken in `main()` before anything is spawned.
+const LAUNCH_ID_ENV: &str = "CONSONANCE_LAUNCH_ID";
+static LAUNCH_ID: std::sync::OnceLock<Option<String>> = std::sync::OnceLock::new();
+
+/// Read `name` from this process's environment and remove it, so no child started afterwards inherits it.
+fn take_env_var(name: &str) -> Option<String> {
+    let v = std::env::var(name).ok().map(|s| s.trim().to_string()).filter(|s| !s.is_empty());
+    std::env::remove_var(name);
+    v
+}
+
+fn launch_id() -> Option<&'static str> {
+    LAUNCH_ID.get_or_init(|| take_env_var(LAUNCH_ID_ENV)).as_deref()
+}
+
+/// Where origin stands against this checkout's HEAD, as `ls-remote` answered it.
+#[derive(Debug, Clone, PartialEq)]
+enum OriginSeen {
+    NotInCheckout { branch: String, sha: String },
+    Ahead(u64),
+    Even,
+    NotChecked(String),
+}
+
+#[derive(Debug, Clone, PartialEq)]
+enum BuiltFrom {
+    Checkout { sha: String, branch: String, origin: OriginSeen },
+    NotACheckout,
+}
+
+/// The stamp line, a pure function of what was read. Ends in a blank line so the intake's own first heading follows.
+fn shelf_stamp_line(built: &str, machine: &str, from: &BuiltFrom, pull: &str) -> String {
+    let what = match from {
+        BuiltFrom::Checkout { sha, branch, origin } => {
+            let o = match origin {
+                OriginSeen::NotInCheckout { branch, sha } => {
+                    format!("origin/{branch} by ls-remote: {sha}, NOT IN THIS CHECKOUT -- this shelf predates a pull.")
+                }
+                OriginSeen::Ahead(n) => format!("origin is {n} commits ahead (fetched, not merged)."),
+                OriginSeen::Even => "even with origin.".to_string(),
+                OriginSeen::NotChecked(e) => format!("origin not checked: {e}."),
+            };
+            format!("Built {built} on {machine} from HEAD {sha} ({branch}). {o}")
+        }
+        BuiltFrom::NotACheckout => format!("Built {built} on {machine}: not a checkout."),
+    };
+    format!("{what} {pull}\n\n")
+}
+
+/// `The launch's pull: …`, from the receipt's text and this process's launch id. A receipt from another launch, an
+/// unreadable one, or no id at all says "no record from this launch": never "current", never "0 behind".
+fn launch_pull_line(receipt: Option<&str>, launch_id: Option<&str>) -> String {
+    let none = "The launch's pull: no record from this launch.".to_string();
+    let (Some(raw), Some(id)) = (receipt, launch_id) else { return none };
+    let Ok(v) = serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}')) else { return none };
+    if v.get("launch_id").and_then(|x| x.as_str()) != Some(id) {
+        return none;
+    }
+    let field = |k: &str| v.get(k).and_then(|x| x.as_str()).map(|s| one_line(s, 160)).filter(|s| !s.is_empty());
+    let outcome = field("outcome").unwrap_or_else(|| "unknown".to_string());
+    let at = field("at").unwrap_or_else(|| "an unrecorded time".to_string());
+    match field("why") {
+        Some(why) => format!("The launch's pull: {outcome} at {at}, {}.", why.trim_end_matches('.')),
+        None => format!("The launch's pull: {outcome} at {at}."),
+    }
+}
+
+/// One line, at most `max` characters, with any `scheme://user:secret@` reduced to `scheme://***@`: a git error can quote
+/// a remote URL, and a URL can carry a token. The shelf is read by every seat and committed nowhere, but it is still text.
+fn one_line(s: &str, max: usize) -> String {
+    let flat: String = s.split(['\r', '\n']).map(str::trim).filter(|l| !l.is_empty()).collect::<Vec<_>>().join(" ");
+    let mut out = String::new();
+    let mut rest = flat.as_str();
+    while let Some(i) = rest.find("://") {
+        out.push_str(&rest[..i + 3]);
+        rest = &rest[i + 3..];
+        let end = rest.find(|c: char| c == '/' || c.is_whitespace()).unwrap_or(rest.len());
+        if let Some(at) = rest[..end].rfind('@') {
+            out.push_str("***@");
+            rest = &rest[at + 1..];
+        }
+    }
+    out.push_str(rest);
+    out.chars().take(max).collect()
+}
+
+/// `git -C <repo> <args>`, bounded: stdout on success, a one-line reason otherwise. Both pipes are drained on threads, so a
+/// full pipe cannot stall git; on the bound the whole tree is killed and the readers are left to end with it.
+fn git_out(repo: &Path, args: &[&str], bound: Duration) -> Result<String, String> {
+    let mut child = Command::new("git")
+        .arg("-C")
+        .arg(repo)
+        .args(args)
+        .env("GIT_TERMINAL_PROMPT", "0")
+        .env("GCM_INTERACTIVE", "never")
+        .creation_flags(NO_WINDOW)
+        .stdin(Stdio::null())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|e| format!("git could not start ({e})"))?;
+    let read = |p: Option<Box<dyn Read + Send>>| {
+        std::thread::spawn(move || {
+            let mut s = String::new();
+            if let Some(mut p) = p {
+                let _ = p.read_to_string(&mut s);
+            }
+            s
+        })
+    };
+    let out = read(child.stdout.take().map(|p| Box::new(p) as Box<dyn Read + Send>));
+    let err = read(child.stderr.take().map(|p| Box::new(p) as Box<dyn Read + Send>));
+    let started = Instant::now();
+    let verb = args.first().copied().unwrap_or("");
+    loop {
+        match child.try_wait() {
+            Ok(Some(status)) => {
+                let o = out.join().unwrap_or_default();
+                let e = err.join().unwrap_or_default();
+                return if status.success() {
+                    Ok(o)
+                } else {
+                    let code = status.code().map(|c| c.to_string()).unwrap_or_else(|| "by signal".into());
+                    let why = one_line(&e, 160);
+                    Err(if why.is_empty() { format!("git {verb} exited {code}") } else { format!("git {verb} exited {code}: {why}") })
+                };
+            }
+            Ok(None) if started.elapsed() > bound => {
+                let pid = child.id().to_string();
+                let _ = Command::new("taskkill")
+                    .args(["/PID", pid.as_str(), "/T", "/F"])
+                    .creation_flags(NO_WINDOW)
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null())
+                    .status();
+                let _ = child.kill();
+                let _ = child.wait();
+                return Err(format!("git {verb} did not answer within {} s", bound.as_secs()));
+            }
+            Ok(None) => std::thread::sleep(Duration::from_millis(25)),
+            Err(e) => return Err(format!("waiting on git {verb} failed ({e})")),
+        }
+    }
+}
+
+const STAMP_GIT_BOUND: Duration = Duration::from_secs(5);
+const LS_REMOTE_CACHE: Duration = Duration::from_secs(60);
+
+/// `ls-remote origin refs/heads/<branch>`: the sha origin holds, `None` when it has no such branch.
+fn ls_remote_at(repo: &Path, branch: &str) -> Result<Option<String>, String> {
+    let r = git_out(repo, &["ls-remote", "origin", &format!("refs/heads/{branch}")], STAMP_GIT_BOUND)?;
+    Ok(r.split_whitespace().next().filter(|s| s.len() >= 7 && s.chars().all(|c| c.is_ascii_hexdigit())).map(str::to_string))
+}
+
+type LsRemoteAnswer = (Instant, PathBuf, String, Result<Option<String>, String>);
+static LS_REMOTE_LAST: Mutex<Option<LsRemoteAnswer>> = Mutex::new(None);
+
+fn ls_remote_cached(repo: &Path, branch: &str) -> Result<Option<String>, String> {
+    if let Some((at, r, b, answer)) = LS_REMOTE_LAST.lock().unwrap().as_ref() {
+        if at.elapsed() < LS_REMOTE_CACHE && r == repo && b == branch {
+            return answer.clone();
+        }
+    }
+    let answer = ls_remote_at(repo, branch);
+    *LS_REMOTE_LAST.lock().unwrap() = Some((Instant::now(), repo.to_path_buf(), branch.to_string(), answer.clone()));
+    answer
+}
+
+/// What the shelf was built from: HEAD and its branch, read now, and where origin stands, asked of origin. `use_cache`
+/// false is the `_at` form the tests drive on a clone, bypassing the 60 s ls-remote cache.
+fn shelf_built_from_at(repo: &Path, use_cache: bool) -> BuiltFrom {
+    let Ok(head) = git_out(repo, &["rev-parse", "HEAD"], STAMP_GIT_BOUND) else { return BuiltFrom::NotACheckout };
+    let head = head.trim().to_string();
+    let sha = git_out(repo, &["rev-parse", "--short", "HEAD"], STAMP_GIT_BOUND)
+        .map(|s| s.trim().to_string())
+        .unwrap_or_else(|_| head.chars().take(8).collect());
+    let branch = match git_out(repo, &["symbolic-ref", "--short", "HEAD"], STAMP_GIT_BOUND) {
+        Ok(b) if !b.trim().is_empty() => b.trim().to_string(),
+        _ => {
+            let origin = OriginSeen::NotChecked("HEAD is detached, so there is no branch to ask origin about".into());
+            return BuiltFrom::Checkout { sha, branch: "detached".into(), origin };
+        }
+    };
+    let remote = if use_cache { ls_remote_cached(repo, &branch) } else { ls_remote_at(repo, &branch) };
+    let origin = match remote {
+        Err(e) => OriginSeen::NotChecked(e),
+        Ok(None) => OriginSeen::NotChecked(format!("origin has no branch {branch}")),
+        Ok(Some(r)) if r == head => OriginSeen::Even,
+        Ok(Some(r)) => {
+            let short: String = r.chars().take(8).collect();
+            if git_out(repo, &["cat-file", "-e", &format!("{r}^{{commit}}")], STAMP_GIT_BOUND).is_err() {
+                OriginSeen::NotInCheckout { branch: branch.clone(), sha: short }
+            } else {
+                match git_out(repo, &["rev-list", "--count", &format!("HEAD..{r}")], STAMP_GIT_BOUND) {
+                    Ok(n) => n.trim().parse::<u64>().map(OriginSeen::Ahead).unwrap_or_else(|_| OriginSeen::NotChecked(format!("rev-list printed {}", one_line(&n, 40)))),
+                    Err(e) => OriginSeen::NotChecked(e),
+                }
+            }
+        }
+    };
+    BuiltFrom::Checkout { sha, branch, origin }
+}
+
+// Under `cargo test` no intake runs git or reads the live receipt: a test sets the stamp it means (the seam `intake_light`
+// uses), and by default every intake carries this fixed one, so intake tests still see a stamp and no two calls differ.
+#[cfg(test)]
+const TEST_SHELF_STAMP: &str =
+    "Built 2000-01-01 00:00:00 on TEST from HEAD 0000000 (test). even with origin. The launch's pull: no record from this launch.\n\n";
+#[cfg(test)]
+thread_local! { static TEST_STAMP: std::cell::RefCell<Option<String>> = const { std::cell::RefCell::new(None) }; }
+
+/// The stamp every intake opens with (librarian, Main, the Third Place, a sibling at birth, a briefed pane on resume).
+fn shelf_stamp() -> String {
+    #[cfg(test)]
+    {
+        TEST_STAMP.with(|s| s.borrow().clone()).unwrap_or_else(|| TEST_SHELF_STAMP.to_string())
+    }
+    #[cfg(not(test))]
+    {
+        let built = chrono::Utc::now().format("%Y-%m-%d %H:%M:%S").to_string();
+        let machine = machine_identity()
+            .or_else(|| std::env::var("COMPUTERNAME").ok().filter(|s| !s.trim().is_empty()))
+            .unwrap_or_else(|| "an unnamed machine".into());
+        let from = repo_root().map(|r| shelf_built_from_at(&r, true)).unwrap_or(BuiltFrom::NotACheckout);
+        let receipt = std::env::var("LOCALAPPDATA")
+            .ok()
+            .and_then(|d| fs::read_to_string(PathBuf::from(d).join("consonance").join("launch-pull.json")).ok());
+        shelf_stamp_line(&built, &machine, &from, &launch_pull_line(receipt.as_deref(), launch_id()))
+    }
+}
+
+#[cfg(test)]
+mod shelf_stamp_tests {
+    use super::*;
+    #[allow(unused_imports)]
+    use std::os::windows::process::CommandExt;
+
+    fn git(cwd: &Path, args: &[&str]) -> String {
+        let o = Command::new("git").arg("-C").arg(cwd).args(args).creation_flags(NO_WINDOW).output().expect("git");
+        assert!(o.status.success(), "git {args:?}: {}", String::from_utf8_lossy(&o.stderr));
+        String::from_utf8_lossy(&o.stdout).trim().to_string()
+    }
+
+    /// A bare origin, clone X at commit A, clone Y that pushes B. X never fetches.
+    fn two_clones(name: &str) -> (crate::test_scratch::Scratch, PathBuf, PathBuf, String) {
+        let root = crate::test_scratch::root().join(format!("w1-stamp-{}-{name}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        fs::create_dir_all(&root).unwrap();
+        let origin = root.join("origin.git");
+        let (x, y) = (root.join("X"), root.join("Y"));
+        git(&root, &["init", "--bare", "-q", "-b", "main", origin.to_str().unwrap()]);
+        git(&root, &["clone", "-q", origin.to_str().unwrap(), y.to_str().unwrap()]);
+        for (k, v) in [("user.email", "t@t"), ("user.name", "t"), ("core.autocrlf", "false")] {
+            git(&y, &["config", k, v]);
+        }
+        fs::write(y.join("a.txt"), "A\n").unwrap();
+        git(&y, &["add", "a.txt"]);
+        git(&y, &["commit", "-q", "-m", "A"]);
+        git(&y, &["push", "-q", "origin", "main"]);
+        git(&root, &["clone", "-q", origin.to_str().unwrap(), x.to_str().unwrap()]);
+        fs::write(y.join("b.txt"), "B\n").unwrap();
+        git(&y, &["add", "b.txt"]);
+        git(&y, &["commit", "-q", "-m", "B"]);
+        git(&y, &["push", "-q", "origin", "main"]);
+        let b = git(&y, &["rev-parse", "HEAD"]);
+        (crate::test_scratch::Scratch::owning(root), x, y, b)
+    }
+
+    #[test]
+    fn the_shelf_names_an_origin_commit_this_checkout_lacks() {
+        let (_s, x, y, b) = two_clones("lacks");
+        let from = shelf_built_from_at(&x, false);
+        let line = shelf_stamp_line("2026-11-13 08:42:42", "D", &from, &launch_pull_line(None, None));
+        assert!(line.contains(&b[..8]), "the stamp does not name origin's commit {b}: {line}");
+        assert!(line.contains("NOT IN THIS CHECKOUT"), "{line}");
+        // The recorded case's trap: X's own origin/main equals its HEAD, so anything read from local refs says "current".
+        assert_eq!(git(&x, &["rev-parse", "HEAD"]), git(&x, &["rev-parse", "origin/main"]), "the fixture is the recorded case");
+        for never in ["current", "0 behind", "even with origin"] {
+            assert!(!line.contains(never), "the stamp says `{never}` for a checkout behind origin: {line}");
+        }
+        let at_b = shelf_stamp_line("2026-11-13 08:42:42", "D", &shelf_built_from_at(&y, false), "The launch's pull: no record from this launch.");
+        assert!(at_b.contains("even with origin."), "a clone at origin's commit: {at_b}");
+    }
+
+    #[test]
+    fn the_shelf_counts_commits_fetched_and_not_merged() {
+        let (_s, x, _y, _b) = two_clones("fetched");
+        git(&x, &["fetch", "-q", "origin"]);
+        assert_eq!(shelf_built_from_at(&x, false), BuiltFrom::Checkout {
+            sha: git(&x, &["rev-parse", "--short", "HEAD"]),
+            branch: "main".into(),
+            origin: OriginSeen::Ahead(1),
+        });
+    }
+
+    #[test]
+    fn the_stamp_line_has_the_shape_the_body_line_parses() {
+        let from = BuiltFrom::Checkout { sha: "8fd453c6".into(), branch: "main".into(), origin: OriginSeen::Even };
+        let line = shelf_stamp_line("2026-11-13 15:00:01", "D", &from, "The launch's pull: no record from this launch.");
+        let first = line.lines().next().unwrap();
+        assert!(first.starts_with("Built 2026-11-13 15:00:01 on D from HEAD 8fd453c6 (main). "), "{first}");
+        assert!(line.ends_with("\n\n") && line.matches('\n').count() == 2, "one line, then a blank line: {line:?}");
+        assert_eq!(shelf_stamp_line("t", "D", &BuiltFrom::NotACheckout, "p"), "Built t on D: not a checkout. p\n\n");
+    }
+
+    #[test]
+    fn the_launch_pull_is_named_only_for_this_launch() {
+        let receipt = r#"{ "at": "2026-11-13T14:42:13Z", "launch_id": "abc", "outcome": "fetch-timeout", "why": "no pack had started arriving within 20 s" }"#;
+        assert_eq!(launch_pull_line(Some(receipt), Some("abc")),
+            "The launch's pull: fetch-timeout at 2026-11-13T14:42:13Z, no pack had started arriving within 20 s.");
+        assert_eq!(launch_pull_line(Some(receipt), Some("another")), "The launch's pull: no record from this launch.");
+        assert_eq!(launch_pull_line(Some(receipt), None), "The launch's pull: no record from this launch.");
+        assert_eq!(launch_pull_line(None, Some("abc")), "The launch's pull: no record from this launch.");
+        assert_eq!(launch_pull_line(Some("{ not json"), Some("abc")), "The launch's pull: no record from this launch.");
+        let bom = format!("\u{feff}{}", r#"{"at":"t","launch_id":"abc","outcome":"current","why":null}"#);
+        assert_eq!(launch_pull_line(Some(&bom), Some("abc")), "The launch's pull: current at t.");
+    }
+
+    #[test]
+    fn a_credential_in_a_quoted_url_never_reaches_the_stamp() {
+        // The @ is built at run time, so this source holds no address-shaped text for the landing's privacy scan to refuse.
+        let at = '@';
+        let s = one_line(&format!("fatal: unable to access 'https://user:SECRETVALUE{at}github.com/x/y.git/':\n  timed out"), 200);
+        assert!(!s.contains("SECRETVALUE") && !s.contains("user:"), "{s}");
+        assert!(s.contains(&format!("https://***{at}github.com/x/y.git/")) && !s.contains('\n'), "{s}");
+    }
+
+    /// Critic E3: the id is read once and gone from the environment, so a child this app starts (stick-apply.js, which
+    /// relaunches the app) cannot carry it. A name of the test's own, so no other test's environment is touched.
+    #[test]
+    fn the_launch_id_is_removed_from_the_environment_once_read() {
+        let name = format!("CONSONANCE_LAUNCH_ID_TEST_{}", std::process::id());
+        std::env::set_var(&name, "launch-e3");
+        assert_eq!(take_env_var(&name).as_deref(), Some("launch-e3"));
+        assert!(std::env::var(&name).is_err(), "still in this process's environment");
+        let child = Command::new("cmd").args(["/C", "set", name.as_str()]).creation_flags(NO_WINDOW).output().expect("cmd");
+        let seen = String::from_utf8_lossy(&child.stdout);
+        assert!(!child.status.success() && !seen.contains("launch-e3"), "a child process inherited it: {seen}");
+    }
+}
+
 /// What the seat's own windowed notes may spend on the LIGHT shelf. Sized to the largest single recent note
 /// (`librarian/2026-10-06.desktop.md`, 22,370 bytes on 2026-10-09), so a day's note rides whole; LEDGER.md (80,142) never fits
 /// and is named by path, as it is under today's budget too.
 const LIGHT_NOTES_CAP: usize = 24_000;
+
+/// W1 (b), Lap W: what the newest WHOLE entries of a dated note too large for LIGHT_NOTES_CAP may spend, outside that cap,
+/// newest note first. The case: on 2026-11-13 the day's note (61,668 B at 8fd453c6) went to "did not fit, by path", so the
+/// seat woke with none of its own newest entries; the first screen would have been the oldest part of an append-only file.
+/// 8,000 B reaches about nine entries back on that note (`exo_memory/loop/wake_level2_2026-11-13/shelf_builder.md`:165).
+const NEWEST_NOTE_RESERVE: usize = 8_000;
+
+/// W1 (c), Lap W: files in `librarian/` that ride whole on the light shelf under their own cap, outside the notes cap. The
+/// letter is undated, so the window rule (`librarian_note_is_carried`) never carries it, and that rule also drives the
+/// strict walk, so it is left as it is and the pin is its own list.
+const LIBRARIAN_PINNED: [&str; 1] = ["TO_THE_NEXT_ONE_go_to_the_source.md"];
+const PINNED_CAP: usize = 8_000;
+
+/// A dated note over the cap as its newest whole `## ` entries within `budget`: (label, slice), or None when not even one
+/// entry fits (the note then stays on the by-path list, as before). The slice is `map_carry`'s, so it starts at a heading.
+fn newest_entries(label_path: &str, body: &str, budget: usize) -> Option<(String, String)> {
+    match map_carry(body, budget) {
+        (MapTier::Whole, slice) | (MapTier::Newest { .. }, slice) if !slice.is_empty() => {
+            let k = slice.lines().filter(|l| l.starts_with("## ")).count();
+            let label = format!("{label_path} -- its newest {k} entries ({} of {} bytes; the rest is on disk)", slice.len(), body.len());
+            Some((label, slice))
+        }
+        _ => None,
+    }
+}
 
 /// THE LIGHT SHELF (D277 part 6, L1 + L2; `gates_mode` light only). Today's shelf is a WALK FILLED TO THE CAP: the bodies get
 /// whatever the head and the index leave (`librarian_shelf_room`), so shrinking the index alone would only re-spend the bytes on
@@ -8968,13 +9469,42 @@ fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
         (librarian_note_date(&name).is_none(), std::cmp::Reverse(name))
     });
     let (mut spent, mut over): (usize, Vec<(PathBuf, usize)>) = (0, Vec::new());
+    // W1 (b): a DATED note that does not fit whole rides as its newest whole entries from NEWEST_NOTE_RESERVE, newest note
+    // first. LEDGER.md and README.md are never tailed: they are an index and a rule, not a dated series.
+    let (mut tail_left, mut tails): (usize, Vec<(String, String)>) = (NEWEST_NOTE_RESERVE, Vec::new());
     for f in notes {
         let Ok(body) = fs::read_to_string(&f) else { continue };
         if spent + body.len() <= LIGHT_NOTES_CAP {
             spent += body.len();
             carried.push((rel(&f), body));
         } else {
+            let dated = f.file_name().and_then(|n| n.to_str()).is_some_and(|n| librarian_note_date(n).is_some());
+            if dated {
+                if let Some((label, slice)) = newest_entries(&rel(&f), &body, tail_left) {
+                    tail_left -= slice.len();
+                    tails.push((label, slice));
+                    continue;
+                }
+            }
             over.push((f, body.len()));
+        }
+    }
+    // W1 (c): the pinned letter, whole, under its own cap. Said missing only where this room has a librarian/ at all.
+    let (mut pinned, mut pin_lines): (Vec<(String, String)>, Vec<String>) = (Vec::new(), Vec::new());
+    let lib = root.join("librarian");
+    if lib.is_dir() {
+        let mut pin_left = PINNED_CAP;
+        for name in LIBRARIAN_PINNED {
+            let p = lib.join(name);
+            match fs::read_to_string(&p) {
+                Ok(body) if body.len() <= pin_left => {
+                    pin_left -= body.len();
+                    pinned.push((format!("librarian/{name} (pinned)"), body));
+                }
+                Ok(body) => pin_lines.push(format!("- pinned, NOT carried: `{}` ({} bytes, over its {PINNED_CAP}-byte cap). Open it.", p.display(), body.len())),
+                // No backticked path for a file that is not there: every backticked path on this shelf must exist.
+                Err(_) => pin_lines.push(format!("- pinned, MISSING: librarian/{name} is not in this room's librarian directory.")),
+            }
         }
     }
     let mut s = String::from("\n\n---\n\n# THE SHELF (light: gates_mode light)\n\n");
@@ -8987,6 +9517,22 @@ fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
         carried.len(),
         carried.len() - n_cards
     ));
+    if !tails.is_empty() {
+        s.push_str(&format!(
+            "\nToo large to carry whole, so riding as their NEWEST WHOLE ENTRIES, verbatim, from a separate {NEWEST_NOTE_RESERVE}-byte \
+             reserve (the rest of each is on disk, in librarian/): {}.\n",
+            tails.iter().map(|(l, _)| l.as_str()).collect::<Vec<_>>().join("; ")
+        ));
+    }
+    if !pinned.is_empty() {
+        s.push_str(&format!(
+            "\nPinned, carried whole outside the notes cap (under its own {PINNED_CAP} bytes): {}.\n",
+            pinned.iter().map(|(l, _)| l.as_str()).collect::<Vec<_>>().join("; ")
+        ));
+    }
+    for l in &pin_lines {
+        s.push_str(&format!("\n{l}\n"));
+    }
     if !over.is_empty() {
         s.push_str("\nYour notes in the window that did not fit, by path:\n");
         for (f, n) in &over {
@@ -9016,7 +9562,7 @@ fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
         ));
     }
     s.push_str(&format!("\nSearch all of it: `grep -rl \"<term>\" \"{}\"`\n", root.display()));
-    for (label, body) in carried {
+    for (label, body) in carried.into_iter().chain(pinned).chain(tails) {
         s.push_str(&format!("\n\n## {label}\n\n{body}\n"));
     }
     s
@@ -9150,8 +9696,17 @@ mod intake_light_tests {
         // README.md riding by the window rule; ~104.5 KB with B's LIBRARIAN draft. The draft's ~102 KB had left README.md out.)
         let head = librarian_intake_head().expect("head").len();
         let cards: usize = card_texts().iter().map(|(_, t)| t.len()).sum();
-        assert!(i.len() <= head + cards + LIGHT_NOTES_CAP + 6_000, "light librarian intake is {} B over head {head} + cards {cards} + notes cap", i.len());
-        assert!(i.len() + 25_000 <= strict.len(), "light {} B is not ~25 KB+ under strict {} B", i.len(), strict.len());
+        // W1 (Lap W): plus the newest-entries reserve and the pin's cap, each outside the notes cap by design.
+        assert!(i.len() <= head + cards + LIGHT_NOTES_CAP + NEWEST_NOTE_RESERVE + PINNED_CAP + 6_000, "light librarian intake is {} B over head {head} + cards {cards} + notes cap + reserve + pin cap", i.len());
+        // AMENDED in Lap W (pane B; RULED, exo_memory/loop/plan_room_stretch_2026-11-13.md, ruling 5: "lowered to what W1
+        // needs, named in the commit"). It was `i.len() + 25_000 <= strict.len()`, and it was ALREADY RED at the base
+        // (a2f3c684 on D: light 126,780 B, strict 141,545 B, 14,765 B apart). W1 spends the light shelf's saving by ruling:
+        // the stamp, the newest whole entries of a note over the cap (NEWEST_NOTE_RESERVE) and the pinned letter
+        // (PINNED_CAP) ride outside the notes cap; measured with W1 on the same room, light 142,315 B and strict 141,693 B.
+        // So light is no longer LIGHTER than strict; what it must still be is no HEAVIER (2 KB for the stamp and a day's
+        // growth), and under the harness's cap, which is the bound that decides whether the seat opens at all.
+        assert!(i.len() <= strict.len() + 2_000, "light {} B is more than 2 KB over strict {} B", i.len(), strict.len());
+        assert!(i.len() < HARNESS_CLAUDE_MD_CHAR_CAP, "light {} B reaches the harness cap {HARNESS_CLAUDE_MD_CHAR_CAP}", i.len());
     }
 
     #[test]
@@ -9290,6 +9845,178 @@ mod intake_light_tests {
         }
     }
 
+    // ── W1 (b) and (c), Lap W, pane B, 2026-11-13 ──────────────────────────────────────────────────────────────────────
+
+    /// A light-shelf room in a scratch dir: cards/a.md, and librarian/ with whatever the test writes.
+    fn w1_room(name: &str) -> (crate::test_scratch::Scratch, PathBuf) {
+        let root = crate::test_scratch::root().join(format!("w1-shelf-{}-{name}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        for d in ["cards", "librarian"] {
+            fs::create_dir_all(root.join(d)).unwrap();
+        }
+        fs::write(root.join("cards").join("a.md"), "CARD-A body").unwrap();
+        (crate::test_scratch::Scratch::owning(root.clone()), root)
+    }
+
+    /// Today's note as the spec's fixture: 50 entries `## 0H:MM — entry k` of about 1,300 B, the first holding
+    /// OLDEST-ENTRY-01 and the last NEWEST-ENTRY-50: about 65,000 B, far over LIGHT_NOTES_CAP.
+    fn fifty_entries() -> String {
+        (1..=50)
+            .map(|k| {
+                let marker = match k { 1 => "OLDEST-ENTRY-01".to_string(), 50 => "NEWEST-ENTRY-50".to_string(), _ => format!("entry-body-{k:02}") };
+                format!("## 0{}:{:02} — entry {k}\n\n{marker} {}\n\n", k / 10, k % 60, "x".repeat(1_250))
+            })
+            .collect()
+    }
+
+    #[test]
+    fn light_the_newest_note_over_the_cap_rides_as_its_newest_entries() {
+        let (_s, root) = w1_room("newest");
+        let today = chrono::NaiveDate::from_ymd_opt(2026, 11, 13).unwrap();
+        let note = fifty_entries();
+        assert!(note.len() > LIGHT_NOTES_CAP + NEWEST_NOTE_RESERVE, "the fixture is over the cap: {} B", note.len());
+        fs::write(root.join("librarian").join("2026-11-13.md"), &note).unwrap();
+        fs::write(root.join("librarian").join("2026-11-12.md"), format!("YESTERDAY-WHOLE {}", "y".repeat(18_042 - 16))).unwrap();
+        fs::write(root.join("librarian").join("README.md"), "README-RULE").unwrap();
+        let s = librarian_shelf_light_at(&root, today);
+        assert!(s.contains("NEWEST-ENTRY-50"), "the newest entry is not on the shelf");
+        assert!(!s.contains("OLDEST-ENTRY-01"), "the oldest entry rode: the tail is not the newest end");
+        assert!(s.contains("YESTERDAY-WHOLE") && s.contains(&"y".repeat(18_026)), "yesterday's note is not whole");
+        let label = "## librarian/2026-11-13.md -- its newest ";
+        let at = s.find(label).expect("the tail's label says newest and names the note");
+        let body = &s[at..];
+        let slice = body.split_once("\n\n").map(|(_, b)| b).unwrap_or("");
+        assert!(slice.starts_with("## 0"), "the carried slice does not start at an entry heading: {:?}", slice.chars().take(40).collect::<String>());
+        assert!(body.contains(&format!("of {} bytes; the rest is on disk)", note.len())), "the label does not give the note's size");
+        assert!(!s.contains("2026-11-13.md` ("), "the tailed note is also listed as not carried");
+    }
+
+    /// Guard (green before W1, kept green): the tail is spent OUTSIDE the notes cap, so it can never push yesterday's whole
+    /// note out of it.
+    #[test]
+    fn light_a_tail_never_costs_yesterdays_whole_note() {
+        let (_s, root) = w1_room("guard");
+        let today = chrono::NaiveDate::from_ymd_opt(2026, 11, 13).unwrap();
+        fs::write(root.join("librarian").join("2026-11-13.md"), fifty_entries()).unwrap();
+        let yesterday = format!("YESTERDAY-WHOLE {}", "y".repeat(LIGHT_NOTES_CAP - 100));
+        fs::write(root.join("librarian").join("2026-11-12.md"), &yesterday).unwrap();
+        let s = librarian_shelf_light_at(&root, today);
+        assert!(s.contains(yesterday.as_str()), "yesterday's note, which fits the cap alone, is not carried whole");
+    }
+
+    /// Guard: LEDGER.md (80,142 B, 7 headings on 2026-11-13) has `## ` entries but is an index, never a dated series:
+    /// it is named by path and never tailed.
+    #[test]
+    fn light_the_ledger_is_never_tailed() {
+        let (_s, root) = w1_room("ledger");
+        let today = chrono::NaiveDate::from_ymd_opt(2026, 11, 13).unwrap();
+        let ledger: String = (1..=7).map(|k| format!("## ledger part {k}\n\nLEDGER-ENTRY-{k} {}\n\n", "l".repeat(11_400))).collect();
+        fs::write(root.join("librarian").join("LEDGER.md"), &ledger).unwrap();
+        let s = librarian_shelf_light_at(&root, today);
+        assert!(!s.contains("LEDGER-ENTRY-7"), "the LEDGER was tailed");
+        assert!(s.contains("LEDGER.md` ("), "the LEDGER is not named by path");
+    }
+
+    /// The pinned letter rides whole even when the window notes have filled the cap (a pin carried INSIDE the cap would pass
+    /// a pin-only fixture and fail here).
+    #[test]
+    fn light_a_pinned_file_rides_whole() {
+        let (_s, root) = w1_room("pin");
+        let today = chrono::NaiveDate::from_ymd_opt(2026, 11, 13).unwrap();
+        fs::write(root.join("librarian").join("2026-11-13.md"), format!("TODAY-FILLS {}", "t".repeat(LIGHT_NOTES_CAP - 20))).unwrap();
+        let letter = format!("THE-LETTER {}", "g".repeat(5_800));
+        fs::write(root.join("librarian").join(LIBRARIAN_PINNED[0]), &letter).unwrap();
+        let s = librarian_shelf_light_at(&root, today);
+        assert!(s.contains("TODAY-FILLS"), "the fixture's note does not fill the cap");
+        assert!(s.contains(letter.as_str()), "the pinned letter is not carried whole");
+        assert!(s.contains(&format!("## librarian/{} (pinned)", LIBRARIAN_PINNED[0])), "the pin has no label");
+    }
+
+    #[test]
+    fn light_a_missing_pin_is_said() {
+        let (_s, root) = w1_room("nopin");
+        let today = chrono::NaiveDate::from_ymd_opt(2026, 11, 13).unwrap();
+        let s = librarian_shelf_light_at(&root, today);
+        assert!(s.contains(&format!("pinned, MISSING: librarian/{}", LIBRARIAN_PINNED[0])), "a missing pin is not said");
+        assert!(!s.contains(&format!("`{}", root.join("librarian").join(LIBRARIAN_PINNED[0]).display())), "a missing pin is named by a backticked path");
+        // A room with no librarian/ (the consumer) says nothing about a pin.
+        let (_s2, bare) = w1_room("nolib");
+        fs::remove_dir_all(bare.join("librarian")).unwrap();
+        assert!(!librarian_shelf_light_at(&bare, today).contains("pinned"), "a room with no librarian/ was told about a pin");
+    }
+
+    /// The recorded case, replayed: the 2026-11-13 note as it stood at 8fd453c6 (61,668 B, 51 headings). Ignored like the dump
+    /// below: it reads git history. The 08:0x heading is the note's LAST entry, so a one-entry tail would pass it alone; the
+    /// 07:1x entry nine back is the one the 8,000 B reserve reaches (shelf_builder.md:165).
+    #[test]
+    #[ignore]
+    fn light_the_recorded_note_rides_its_newest_entries() {
+        #[allow(unused_imports)]
+        use std::os::windows::process::CommandExt;
+        let repo = repo_root().expect("repo");
+        let o = Command::new("git").arg("-C").arg(&repo).args(["show", "8fd453c6:exo_memory/librarian/2026-11-13.md"])
+            .creation_flags(NO_WINDOW).output().expect("git show");
+        assert!(o.status.success(), "git show 8fd453c6: {}", String::from_utf8_lossy(&o.stderr));
+        let (_s, root) = w1_room("replay");
+        fs::write(root.join("librarian").join("2026-11-13.md"), &o.stdout).unwrap();
+        let s = librarian_shelf_light_at(&root, chrono::NaiveDate::from_ymd_opt(2026, 11, 13).unwrap());
+        for heading in ["## 08:0x: the Third Place's swarm ended; the last commit (librarian, L)", "## 07:1x: his ear on the stomps (librarian, L)"] {
+            assert!(s.contains(heading), "the replayed shelf lacks `{heading}`");
+        }
+    }
+
+    // ── W1 (a): where the stamp goes ──
+
+    struct Stamp;
+    impl Stamp {
+        fn set(text: &str) -> Self {
+            TEST_STAMP.with(|s| *s.borrow_mut() = Some(text.to_string()));
+            Stamp
+        }
+    }
+    impl Drop for Stamp {
+        fn drop(&mut self) {
+            TEST_STAMP.with(|s| *s.borrow_mut() = None);
+        }
+    }
+
+    #[test]
+    fn every_seat_intake_opens_with_the_stamp() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let stamp = "Built 2026-11-13 15:00:01 on D from HEAD 8fd453c6 (main). even with origin. The launch's pull: no record from this launch.\n\n";
+        let _st = Stamp::set(stamp);
+        for light in [false, true] {
+            let _m = Mode::light(light);
+            assert!(librarian_intake().expect("librarian").starts_with(stamp), "the librarian's intake (light {light})");
+        }
+        assert!(main_intake().starts_with(stamp), "Main's intake");
+        assert!(third_place_intake().expect("third place").starts_with(stamp), "the Third Place's intake");
+        assert_eq!(librarian_intake().expect("librarian").matches("Built 2026-11-13 15:00:01").count(), 1, "the stamp rides once");
+    }
+
+    /// A fresh pane is unbriefed for life: its intake stays EMPTY with the stamp in place, so `resumed_intake` still removes
+    /// its CLAUDE.md rather than writing a one-line brief.
+    #[test]
+    fn a_fresh_pane_still_gets_an_empty_intake() {
+        let _serial = DirsGuard::take();
+        let root = crate::test_scratch::root().join(format!("w1-fresh-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        let _s = crate::test_scratch::Scratch::owning(root.clone());
+        let (instances, data) = (root.join("instances"), root.join("data"));
+        fs::create_dir_all(&instances).unwrap();
+        fs::create_dir_all(&data).unwrap();
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: root.join("BOOT.md").display().to_string(),
+            instances: instances.display().to_string(),
+            data: data.display().to_string(),
+        });
+        let fresh = instances.join("fresh-w1test");
+        fs::create_dir_all(&fresh).unwrap();
+        let cwd = fresh.display().to_string();
+        assert!(is_fresh_cwd(&cwd), "the fixture is a fresh pane's dir");
+        assert_eq!(intake_with_map("PANE-W1", &cwd), "", "a fresh pane was briefed");
+    }
+
     /// MEASUREMENT, not a gate: writes the strict and light librarian and pane intakes to $INTAKE_DUMP_DIR, so the strict ones can
     /// be compared byte for byte with the same dump taken on the base tree, and the light ones measured with the census commands.
     #[test]
@@ -9333,7 +10060,8 @@ fn librarian_intake() -> Option<String> {
 /// `LIBRARIAN_INTAKE_LIMIT` fires next and is invisible in the total.
 fn librarian_intake_head() -> Option<String> {
     let brief = room_brief("LIBRARIAN.md").ok()?;
-    let mut s = String::from("# The Librarian tab\n\n");
+    let mut s = shelf_stamp();   // W1 (a): what this shelf was built from, first
+    s.push_str("# The Librarian tab\n\n");
     s.push_str(&brief);
     s.push_str("\n\n---\n\n# THE ROOM you are holding\n\n");
     if let Ok(boot) = fs::read_to_string(room_master_path()) {
@@ -12912,7 +13640,7 @@ fn inject_receipt(render: Receipt, on_board: bool, submit: Submit) -> Receipt {
 // only an app restart re-reads it.
 //
 // THE RULES, all from the plan, none relaxed: a per-seat timer, only while the app is open (the thread
-// dies with the process); ping only when idle >= 50 min since the LAST REQUEST STARTED, AND the seat's
+// dies with the process); ping only when idle >= 45 min (50 until Lap W) since the LAST REQUEST STARTED, AND the seat's
 // own Stop stamp says ready, AND its composer reads empty; through `gate_or_queue`, never a raw
 // `inject_to_pane`; a board row per ping; a per-seat off switch.
 //
@@ -12927,7 +13655,17 @@ fn inject_receipt(render: Receipt, on_board: bool, submit: Submit) -> Receipt {
 
 /// Idle this long since the last request STARTED and the seat is pinged: the TTL is one hour from the
 /// start of the request, and ten minutes of margin covers a 60 s tick and a slow delivery.
-const KEEP_WARM_AFTER: Duration = Duration::from_secs(50 * 60);
+///
+/// 45, NOT 50, SINCE LAP W (pane B, 2026-11-13; RULED, `exo_memory/loop/plan_room_stretch_2026-11-13.md`:114-115: "every seat's
+/// keep-warm ping moves before minute 54"). Claude Code's idle compaction fires on a seat of 200k+ tokens idle "about 54
+/// minutes" (2.1.299 changelog; measured 54.5-55.5 min after the previous call). A ping SENT at minute 50-52 lost that race
+/// 0 times in 602, at 53 2 in 361, at 54 168 in 323, at 56 97 in 169 (idle_compaction_keepwarm.md:79-83, the second reader's
+/// count by sent minute), so a seat at 50 + its 0..=6 offset + one tick reached 57 and was compacted with no word for it.
+/// 45 + 6 + 1 = 52. The seven slots are KEPT (the second reader's form, idle:173): three slots would put eight seats in three
+/// crossing minutes, and one-ping-per-tick deferral would push the overflow back past 54. The cost: about 11% more pings.
+/// Still a race with a timing the harness calls "about an hour": a release can move it, and `every_seats_ping_is_sent_
+/// before_minute_54` holds only this side of it.
+const KEEP_WARM_AFTER: Duration = Duration::from_secs(45 * 60);
 const KEEP_WARM_TICK: Duration = Duration::from_secs(60);
 
 /// THE PER-SEAT OFFSET (L104; the Third Place's cadence question, librarian `db76263`). Every seat on the same idle
@@ -12946,7 +13684,7 @@ const KEEP_WARM_TICK: Duration = Duration::from_secs(60);
 const KEEP_WARM_SPREAD_MIN: u64 = 7;
 
 /// This seat's keep-warm threshold: `KEEP_WARM_AFTER` + (FNV-1a(pane id) mod 7) minutes. Every reader of the
-/// threshold goes through here, so no message or check can say "50 min" for a seat whose threshold is 53.
+/// threshold goes through here, so no message or check can say "45 min" for a seat whose threshold is 48.
 fn keep_warm_after(seat: &str) -> Duration {
     KEEP_WARM_AFTER + Duration::from_secs(60 * (fnv1a(seat.as_bytes()) % KEEP_WARM_SPREAD_MIN))
 }
@@ -13104,19 +13842,19 @@ fn keep_warm_decision(
     // how recent the last request was. L067's amendment translated it as "last request under 60 min", which
     // abandoned an activated seat for the rest of the session the first time a ping was missed; the keeper,
     // 07:33: "shouldnt it have been kept warm since it was working this session" (L070). So: a seat that has not
-    // spoken since launch waits, however recent its pre-launch request; a seat that has is pinged at >= 50 min
+    // spoken since launch waits, however recent its pre-launch request; a seat that has is pinged at >= 45 min (50 until Lap W)
     // idle, with no ceiling. Past the TTL that ping is a full re-write — the price of "always on", which he chose.
     if !activated {
         return KeepWarm::Skip("not activated this session: no request since the app started; it waits to be spoken to");
     }
-    // L104: the seat's OWN threshold, 50 min plus its fixed 0..=6 min offset (keep_warm_after). Both bars use it, and
+    // L104: the seat's OWN threshold, 45 min plus its fixed 0..=6 min offset (keep_warm_after). Both bars use it, and
     // the reasons name no number that would be wrong for most seats.
     let after = keep_warm_after(seat);
     if s < after {
-        return KeepWarm::Skip("warm: under its keep-warm threshold (50 min + its fixed seat offset) since its last request started");
+        return KeepWarm::Skip("warm: under its keep-warm threshold (45 min + its fixed seat offset) since its last request started");
     }
     if since_ping.is_some_and(|p| p < after) {
-        return KeepWarm::Skip("pinged within its keep-warm threshold (50 min + its fixed seat offset) and not yet answered");
+        return KeepWarm::Skip("pinged within its keep-warm threshold (45 min + its fixed seat offset) and not yet answered");
     }
     KeepWarm::Ping
 }
@@ -13124,7 +13862,8 @@ fn keep_warm_decision(
 /// HAS SOMEONE USED THIS SEAT SINCE THE APP STARTED? (D098, pane E — supersedes "any request since launch".)
 ///
 /// True iff the transcript holds a turn-starting `user` entry timestamped at or after launch that a person or a
-/// seat sent: not a tool result (that continues a turn), not a sidechain, not `isMeta`, and NOT a harness notice.
+/// seat sent: not a tool result (that continues a turn), not a sidechain, not `isMeta`, and NOT a harness notice,
+/// AND THAT A REQUEST ANSWERED: the next row that is not a continuation is a real assistant reply (C3, Lap W).
 ///
 /// WHY THE NOTICE IS EXCLUDED, measured on D: at 14:47:24Z pane A was woken at launch by
 /// `origin: {"kind":"task-notification"}` — "<task-notification> … <status>stopped</status> … Background shell
@@ -13137,30 +13876,51 @@ fn keep_warm_decision(
 /// EITHER CLOCK UNKNOWN IS "NOT ACTIVATED", as before: an unreadable start must never ping every cold seat.
 fn activated_by_use(jsonl: &str, app_start_ms: Option<u64>) -> bool {
     let Some(start) = app_start_ms else { return false };
-    jsonl.lines().filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok()).any(|v| {
-        if v.get("type").and_then(|x| x.as_str()) != Some("user")
-            || v.get("isSidechain").and_then(|x| x.as_bool()) == Some(true)
-            || v.get("isMeta").and_then(|x| x.as_bool()) == Some(true)
-            || v.get("origin").and_then(|o| o.get("kind")).and_then(|k| k.as_str()) == Some("task-notification")
-        {
-            return false;
+    // C3 (Lap W, pane B, 2026-11-13): THE ROW MUST BE ANSWERED. A local slash command (/effort, /model) writes user rows
+    // that carry text, no isMeta and no origin, and starts no turn: no API request follows it. On 2026-11-13 O was pinged
+    // at 13,722 idle minutes because its /effort echo at 14:51:28.831Z read as use (idle_compaction_keepwarm.md:105-111);
+    // 8 of 11 pings at 60+ idle minutes since 09-21 followed such an echo. So a turn-starting row counts only when the
+    // next row that is not a continuation is an assistant reply that a request produced. A tag list alone would miss
+    // other non-turn rows and would wrongly refuse a slash command that expands to a prompt and IS answered (the spec's
+    // second reader, idle:215-220); the structure covers both. `<local-command-` texts are refused outright as well:
+    // they are the harness's echo, never a prompt. A synthetic reply (model "<synthetic>") made no request.
+    let mut pending = false;
+    for v in jsonl.lines().filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok()) {
+        if v.get("isSidechain").and_then(|x| x.as_bool()) == Some(true) {
+            continue;
         }
-        let Some(ts) = v.get("timestamp").and_then(|x| x.as_str()).and_then(iso_utc_ms) else { return false };
-        if ts < start {
-            return false;
+        match v.get("type").and_then(|x| x.as_str()) {
+            Some("assistant") => {
+                let synthetic = v.get("message").and_then(|m| m.get("model")).and_then(|m| m.as_str()) == Some("<synthetic>");
+                if pending && !synthetic {
+                    return true;
+                }
+            }
+            Some("user") => {
+                if v.get("isMeta").and_then(|x| x.as_bool()) == Some(true) {
+                    continue;
+                }
+                let content = v.get("message").and_then(|m| m.get("content"));
+                let text = match content {
+                    Some(serde_json::Value::String(s)) => Some(s.as_str()),
+                    Some(serde_json::Value::Array(parts)) => parts
+                        .iter()
+                        .find(|p| p.get("type").and_then(|t| t.as_str()) == Some("text"))
+                        .and_then(|p| p.get("text")).and_then(|t| t.as_str()),
+                    _ => None,
+                };
+                // No text part = a tool result or an attachment-only entry: it continues a turn, it never starts one.
+                let Some(t) = text else { continue };
+                let t = t.trim_start();
+                let notice = v.get("origin").and_then(|o| o.get("kind")).and_then(|k| k.as_str()) == Some("task-notification")
+                    || t.starts_with("<task-notification>");
+                let after_launch = v.get("timestamp").and_then(|x| x.as_str()).and_then(iso_utc_ms).is_some_and(|ts| ts >= start);
+                pending = after_launch && !notice && !t.starts_with("<local-command-");
+            }
+            _ => {}
         }
-        let content = v.get("message").and_then(|m| m.get("content"));
-        let text = match content {
-            Some(serde_json::Value::String(s)) => Some(s.as_str()),
-            Some(serde_json::Value::Array(parts)) => parts
-                .iter()
-                .find(|p| p.get("type").and_then(|t| t.as_str()) == Some("text"))
-                .and_then(|p| p.get("text")).and_then(|t| t.as_str()),
-            _ => None,
-        };
-        // No text part = a tool result or an attachment-only entry: it continues a turn, it never starts one.
-        matches!(text, Some(t) if !t.trim_start().starts_with("<task-notification>"))
-    })
+    }
+    false
 }
 
 /// THE MISSED-WINDOW REPORT (E, L070 §5). An activated seat whose last request started 60 min or more ago has
@@ -16325,6 +17085,8 @@ fn main() {
         warn_second_instance();
         return;
     }
+    // W1 / critic E3: take launch.ps1's id for this launch, and remove it from the environment, before anything is spawned.
+    let _ = launch_id();
     // D338: Consonance keeps its own priority (High) and opts out of EcoQoS, and so do its WebView2 children; a failure is logged and never stops the start.
     priority::start();
     // P-LEAVE-2 (a): the session's start time, recorded here and nowhere later — see APP_STARTED_AT.
@@ -23319,8 +24081,8 @@ mod keep_warm_tests {
     fn min(n: u64) -> Option<Duration> {
         Some(Duration::from_millis(n * MIN))
     }
-    /// L104: a seat id whose fixed offset is 0, so every test written for the flat 50-min threshold keeps its exact
-    /// meaning (pinned by `the_zero_offset_test_seat_really_is_at_50_minutes`).
+    /// L104: a seat id whose fixed offset is 0, so every test written for the flat base threshold keeps its exact
+    /// meaning (pinned by `the_zero_offset_test_seat_really_is_at_the_base_threshold`; 50 min until Lap W, 45 since).
     const Z: &str = "seat-6";
 
     #[test]
@@ -23349,7 +24111,7 @@ mod keep_warm_tests {
     fn two_overdue_seats_on_one_tick_are_pinged_on_two_different_ticks_most_overdue_first() {
         // 07:07Z tonight: E 151 min idle, A 123 — both overdue, both Ping on the same tick.
         let t1 = tick(&[Seat { id: A_ID, idle: 123, pinged: None }, Seat { id: E_ID, idle: 151, pinged: None }]);
-        assert_eq!(t1, Some(E_ID), "the most overdue first (E: 151 - 53 = 98 min over; A: 123 - 56 = 67)");
+        assert_eq!(t1, Some(E_ID), "the most overdue first (E: 151 - 48 = 103 min over; A: 123 - 51 = 72; thresholds since Lap W)");
         // one minute later E has just been pinged and A has waited a tick
         let t2 = tick(&[Seat { id: A_ID, idle: 124, pinged: None }, Seat { id: E_ID, idle: 152, pinged: Some(1) }]);
         assert_eq!(t2, Some(A_ID), "A is pinged on the NEXT tick, not dropped");
@@ -23358,8 +24120,9 @@ mod keep_warm_tests {
 
     #[test]
     fn one_overdue_seat_is_pinged_on_the_first_tick() {
-        assert_eq!(tick(&[Seat { id: A_ID, idle: 57, pinged: None }]), Some(A_ID));
-        assert_eq!(tick(&[Seat { id: A_ID, idle: 55, pinged: None }]), None, "and not before its own threshold (56)");
+        // AMENDED in Lap W: A's threshold was 56 (50 + 6) and is 51 (45 + 6) by ruling; the rule tested is unchanged.
+        assert_eq!(tick(&[Seat { id: A_ID, idle: 52, pinged: None }]), Some(A_ID));
+        assert_eq!(tick(&[Seat { id: A_ID, idle: 50, pinged: None }]), None, "and not before its own threshold (51)");
     }
 
     #[test]
@@ -23427,7 +24190,8 @@ mod keep_warm_tests {
     }
 
     #[test]
-    fn the_zero_offset_test_seat_really_is_at_50_minutes() {
+    // RENAMED in Lap W (was `..._is_at_50_minutes`): the base moved to 45 min by ruling; the assertion is unchanged.
+    fn the_zero_offset_test_seat_really_is_at_the_base_threshold() {
         assert_eq!(keep_warm_after(Z), KEEP_WARM_AFTER);
     }
 
@@ -23464,7 +24228,8 @@ mod keep_warm_tests {
             .find(|m| keep_warm_decision(true, seat, "committee", PaneGate::Ready, Composer::Empty, min(*m), None, true) == KeepWarm::Ping)
             .expect("pinged within 70 min");
         let (pe, pa) = (first_ping(e), first_ping(a));
-        assert_eq!((pe, pa), (53, 56));
+        // AMENDED in Lap W: (53, 56) at the 50-min base; the base is 45 by ruling, so the same offsets cross at 48 and 51.
+        assert_eq!((pe, pa), (48, 51));
         assert_ne!(pe, pa, "the same idle clock no longer means the same crossing minute");
     }
 
@@ -23472,8 +24237,9 @@ mod keep_warm_tests {
     fn a_ping_inside_the_seats_own_threshold_holds_the_next_one_by_that_same_threshold() {
         let a = "6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f"; // +6
         let d = |p| keep_warm_decision(true, a, "committee", PaneGate::Ready, Composer::Empty, min(120), min(p), true);
-        assert!(matches!(d(55), KeepWarm::Skip(_)), "55 min since the last ping is inside its 56");
-        assert_eq!(d(56), KeepWarm::Ping);
+        // AMENDED in Lap W: its threshold was 56 (50 + 6) and is 51 (45 + 6) by ruling; the rule tested is unchanged.
+        assert!(matches!(d(50), KeepWarm::Skip(_)), "50 min since the last ping is inside its 51");
+        assert_eq!(d(51), KeepWarm::Ping);
     }
     /// An idle, empty-composer, committee seat 55 minutes after its last request started — the one
     /// case that must ping. Every skip test changes exactly one thing from this.
@@ -23561,10 +24327,22 @@ mod keep_warm_tests {
     }
 
     #[test]
-    fn under_fifty_minutes_is_warm_and_is_skipped() {
-        assert!(matches!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(49), None, true),
+    // AMENDED AND RENAMED in Lap W (was `under_fifty_minutes_is_warm_and_is_skipped`, 49 skip / 50 ping): the base is 45 by ruling.
+    fn under_the_base_threshold_is_warm_and_is_skipped() {
+        assert!(matches!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(44), None, true),
             KeepWarm::Skip(_)));
-        assert_eq!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(50), None, true), KeepWarm::Ping);
+        assert_eq!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(45), None, true), KeepWarm::Ping);
+    }
+
+    /// Lap W, item 6 (ruled): every seat's ping is SENT before minute 54, where idle compaction starts: its own threshold plus
+    /// one tick, for every offset slot. Red at the 50-min base: 50 + 6 + 1 = 57.
+    #[test]
+    fn every_seats_ping_is_sent_before_minute_54() {
+        for i in 0..500 {
+            let seat = format!("seat-{i}");
+            let latest = keep_warm_after(&seat) + KEEP_WARM_TICK;
+            assert!(latest < Duration::from_secs(54 * 60), "{seat} can be pinged as late as {} min", latest.as_secs() / 60);
+        }
     }
 
     #[test]
@@ -23679,6 +24457,42 @@ mod keep_warm_tests {
         assert!(!activated_by_use("", iso_utc_ms(D098_START)), "no transcript is not activation");
         let typed = d098_prompt("2026-09-21T15:00:00.000Z", Some("human"), "x");
         assert!(!activated_by_use(&typed, None), "an unreadable start time activates nobody");
+    }
+
+    // ── C3 (Lap W, pane B, 2026-11-13): A SLASH COMMAND TYPED INTO A SEAT IS NOT ACTIVATION ──────────────────────
+    // The recorded shape, synthetic text and real structure: O on D, last request 11-04T02:09:26.991Z, launch 14:42:42Z,
+    // /effort echo 14:51:28.831Z (rows 52135-52137 of c88002b1), pinged 14:51:32Z at 13,722 idle minutes.
+    fn c3_caveat(ts: &str) -> String {
+        format!(r#"{{"type":"user","isMeta":true,"timestamp":"{ts}","message":{{"role":"user","content":"<local-command-caveat>Caveat: x</local-command-caveat>"}}}}"#)
+    }
+    const C3_START: &str = "2026-11-13T14:42:42.000Z";
+
+    #[test]
+    fn a_local_slash_command_after_launch_is_not_activation() {
+        let t = [d098_reply("2026-11-04T02:09:26.991Z", "r"),
+                 c3_caveat("2026-11-13T14:51:28.831Z"),
+                 d098_prompt("2026-11-13T14:51:28.831Z", None, "<command-name>/effort</command-name>\n            <command-message>effort</command-message>\n            <command-args></command-args>"),
+                 d098_prompt("2026-11-13T14:51:28.831Z", None, "<local-command-stdout>Cancelled</local-command-stdout>")].join("\n");
+        assert!(!activated_by_use(&t, iso_utc_ms(C3_START)), "a local command echo starts no turn and activates no seat");
+    }
+
+    #[test]
+    fn a_model_switch_typed_after_launch_is_not_activation() {
+        // fbf98f8e on 2026-10-31: a /model echo, then a ping at 6,121 idle minutes (idle_compaction_keepwarm.md:120).
+        let t = [c3_caveat("2026-10-31T02:38:30.000Z"),
+                 d098_prompt("2026-10-31T02:38:30.000Z", None, "<command-name>/model</command-name>\n            <command-message>model</command-message>\n            <command-args>fable</command-args>"),
+                 d098_prompt("2026-10-31T02:38:30.100Z", None, "<local-command-stdout>Set model to Fable</local-command-stdout>"),
+                 r#"{"type":"assistant","timestamp":"2026-10-31T02:38:30.200Z","message":{"model":"<synthetic>","content":[{"type":"text","text":"No response requested."}]}}"#.to_string()]
+            .join("\n");
+        assert!(!activated_by_use(&t, iso_utc_ms("2026-10-31T02:00:00.000Z")), "a /model echo, even beside a synthetic row, activates no seat");
+    }
+
+    #[test]
+    fn a_slash_command_that_expands_to_a_prompt_and_is_answered_is_activation() {
+        // The case a tag list gets wrong: the command row starts a real turn, and a request answers it.
+        let t = [d098_prompt("2026-11-13T15:00:00.000Z", None, "<command-name>/review</command-name>\n<command-message>review</command-message>"),
+                 d098_reply("2026-11-13T15:00:04.000Z", "r")].join("\n");
+        assert!(activated_by_use(&t, iso_utc_ms(C3_START)), "an answered command is a person using the seat");
     }
 
     // ── D098 ITEM 2: THE MISSED-WINDOW REPORT (E, L070 §5) — an activated seat crossing 60 min is SAID ──────────

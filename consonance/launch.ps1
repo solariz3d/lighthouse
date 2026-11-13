@@ -76,9 +76,11 @@ function Notify($message, $title, $seconds, $colour) {
 # CONSONANCE_UPDATE_FUSE=off (a metered or offline machine). Each of those is written to the receipt as `skipped`.
 #
 # NOT COVERED, named: four paths start the app without this script - consonance\restore-main.ps1:153,
-# dev\ARRIVING.ps1:132, dev\TAKE-STICK.ps1:70, and stick-apply.js relaunched by main.rs:12549. The one place every path
-# passes through is the app's setup hook beside sync_at_launch() (main.rs:13253); that is the fuse's proper home once
-# it can be built and cargo-tested there (handback/p-l101-fuse-B_2026-09-23.md §2).
+# dev\ARRIVING.ps1:146, dev\TAKE-STICK.ps1:70, and dev/stick-apply.js, which main.rs:15387-15389 starts and which
+# relaunches the app. The one place every path passes through is the app's setup hook beside sync_at_launch()
+# (main.rs:16403); that is the fuse's proper home once it can be built and cargo-tested there
+# (handback/p-l101-fuse-B_2026-09-23.md §2). (Pointers re-read 2026-11-13, Lap W F3; they had drifted from :132, :12549
+# and :13253.)
 function Test-ConsonanceRunning { [bool](Get-Process -Name 'consonance' -ErrorAction SilentlyContinue) }
 function Get-ClaudeProcessCount { @(Get-Process -Name 'claude' -ErrorAction SilentlyContinue).Count }
 
@@ -407,74 +409,234 @@ function Save-ParkRecord($git, $repo, $record) {
   } catch { }
 }
 
-function Update-FromOrigin($repo) {
-  $ErrorActionPreference = 'SilentlyContinue'   # function scope: a native stderr line never throws here
+# --- THE PULL'S RECEIPT, AND A WAIT THAT LETS A LARGE CATCH-UP FINISH (W5, Lap W, pane B, 2026-11-13) ------------
+# The case (exo_memory/loop/wake_level2_2026-11-13/launch_and_pull.md): the 08:41 launch on D opened 307 commits behind
+# origin and nothing on disk said why. The fetch was receiving a 90.5 MB pack (`git rev-list --objects --disk-usage
+# 0b85fead..8fd453c6` = 90,516,246) and was cut at the 20 s ceiling with 2,138,111 B received: tmp_pack_Hl1ze7 is
+# still in .git/objects/pack, written last at 08:41:57.664.
+#
+# F1, the receipt. Every return of Update-FromOrigin writes %LOCALAPPDATA%\consonance\launch-pull.json (beside the fuse's
+# claude-update.json, for the fuse's reason above), whatever happened. Fields, fixed by the spec's section 3 because the
+# app's shelf stamp (W1) reads them: at, machine, launch_id, outcome, head_before, head_after, behind, fetch_ms,
+# bytes_received, last_progress, why. outcome is one of pulled, current, skipped-running, skipped-branch, fetch-timeout,
+# fetch-failed, refused-dirty, parked, ff-refused, error. The receipt dir is a PARAMETER, so the park tests write to a
+# temp dir and never over the live receipt.
+#
+# The launch id. This script puts a fresh CONSONANCE_LAUNCH_ID in its own environment before the pull, writes the same id
+# into the receipt, and the app inherits it, so the shelf can tell "this launch's pull" from an older receipt. The app
+# REMOVES it from its own environment once read (critic E3, 00_critic.md:45-50): dev/stick-apply.js, which the app
+# starts and which relaunches the app, would otherwise hand the old id to an app that never pulled.
+#
+# F1b, the wait. The 20 s ceiling now holds only until the fetch opens a pack: index-pack writes tmp_pack_* in the
+# objects\pack dir as bytes arrive. Once a NEW tmp_* file appears there, the launcher waits while new tmp_* bytes keep
+# growing (polled each second), kills after 15 s with no growth, and never waits past 120 s (the fuse's cap). D066's
+# no-answer server opens no pack, so it still ends at 20 s. `-c fetch.unpackLimit=1` makes git keep a pack for every
+# fetch: below the default limit of 100 objects git unpacks loose and opens no tmp_pack_*, so a catch-up of one commit
+# holding one large file would have been cut at 20 s as before (the spec's second reader, 00_lap_w_spec.md:611).
+# NOT PROVEN, named (critic E2, 00_critic.md:38-43): at this morning's 113.7 KB/s the 120 s cap carries about 13.6 MB of
+# the 90.5 MB; the wait finishes the recorded case only if the network was faster than that. The receipt's
+# bytes_received, fetch_ms and last_progress at the next large catch-up are what answer it.
+
+# The receipt, written like the fuse's: UTF-8 without a BOM, never throws (a launch must open whatever this does).
+function Save-PullReceipt([string]$dir, $receipt) {
   try {
+    if ($dir -and (Test-Path -LiteralPath $dir)) {
+      $json = ConvertTo-Json -InputObject $receipt -Depth 3
+      [System.IO.File]::WriteAllText((Join-Path $dir 'launch-pull.json'), $json + "`n", (New-Object System.Text.UTF8Encoding $false))
+    }
+  } catch { }
+}
+
+# Bytes in tmp_* files under $packDir whose names were not there before the fetch, or $null when there are none.
+# THE SIZE IS READ THROUGH A HANDLE, NOT FROM THE LISTING. On Windows a directory entry's size for a file another process
+# holds open for writing lags what has been written, and index-pack holds its tmp_pack_* open for the whole download:
+# measured 2026-11-13 on D in launch.park.test.js (ii), the listing read 0 B for 15 s while a throttled 24 MB pack was
+# arriving, and the wait cut it for silence at 16.3 s. (The recorded 2,138,111 B of tmp_pack_Hl1ze7 was read after the
+# kill closed the handle.) A handle shared for read, write AND delete reports the real length and does not stop git
+# writing or renaming the file at the end; if it cannot be opened, the listing's size is the fallback. Red first, with this
+# open taken out (the listing alone): (ii) read 0 B and was cut at 16.3 s, (iv) read 0 B and was killed at 1.4 s.
+# (Opening and closing a handle of our own also brings the listing up to date for the next poll, so a reader that opens the
+# file and then trusts the listing passes too: what matters is that something opens it.)
+function Get-NewTmpPackBytes([string]$packDir, [string[]]$before) {
+  $n = $null
+  try {
+    foreach ($f in @(Get-ChildItem -LiteralPath $packDir -Filter 'tmp_*' -File -Force -ErrorAction Stop)) {
+      if (@($before) -contains $f.Name) { continue }
+      $len = $f.Length
+      try {
+        $share = [System.IO.FileShare]::ReadWrite -bor [System.IO.FileShare]::Delete
+        $h = [System.IO.File]::Open($f.FullName, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, $share)
+        try { $len = $h.Length } finally { $h.Dispose() }
+      } catch { }
+      $n = [int64]$n + $len
+    }
+  } catch { }
+  $n
+}
+
+# Wait for a fetch child. Until a new tmp_* file opens under $PackDir: $CeilingMs. After: while it grows, killed after
+# $SilenceMs without growth, and never past $CapMs from the start. Returns exited, killed (ceiling | silence | cap |
+# $null), ms, packSeen and bytes (the last size seen of the new tmp_* files). The whole tree is killed at a bound.
+function Wait-FetchChild {
+  param($Process, [string]$PackDir, [string[]]$Before = @(), [int]$CeilingMs = 20000, [int]$SilenceMs = 15000,
+    [int]$CapMs = 120000, [int]$PollMs = 1000)
+  $w = @{ exited = $false; killed = $null; ms = 0; packSeen = $false; bytes = $null }
+  $sw = [System.Diagnostics.Stopwatch]::StartNew()
+  $lastGrowth = 0
+  while ($true) {
+    if ($Process.WaitForExit($PollMs)) { $w.exited = $true; break }
+    $now = $sw.ElapsedMilliseconds
+    $b = if ($PackDir) { Get-NewTmpPackBytes $PackDir $Before } else { $null }
+    if ($null -ne $b) {
+      if (-not $w.packSeen) { $w.packSeen = $true; $lastGrowth = $now; $w.bytes = $b }
+      elseif ($b -gt $w.bytes) { $lastGrowth = $now; $w.bytes = $b }
+    }
+    if (-not $w.packSeen) {
+      if ($now -ge $CeilingMs) { $w.killed = 'ceiling'; break }
+    } elseif ($now -ge $CapMs) { $w.killed = 'cap'; break }
+    elseif (($now - $lastGrowth) -ge $SilenceMs) { $w.killed = 'silence'; break }
+  }
+  if ($w.killed) {
+    & "$env:SystemRoot\System32\taskkill.exe" /PID $Process.Id /T /F 2>$null | Out-Null
+    try { $Process.WaitForExit(5000) | Out-Null } catch { }
+  }
+  $w.ms = [int]$sw.ElapsedMilliseconds
+  $w
+}
+
+# git's stderr, split at \r and \n: the last progress line, and the first line worth quoting as the reason.
+function Get-FetchStderrLines([string]$text) {
+  $segs = @("$text" -split "[\r\n]+" | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+  $isProgress = { param($s) $s -match '\(\d+/\d+\)' -or $s -match '\d+%' }
+  $progress = @($segs | Where-Object { & $isProgress $_ })
+  $why = @($segs | Where-Object { $_ -match '^(fatal|error|warning):' }) | Select-Object -First 1
+  if (-not $why) { $why = @($segs | Where-Object { -not (& $isProgress $_) }) | Select-Object -First 1 }
+  @{ lastProgress = $(if ($progress.Count) { $progress[-1] } else { $null }); why = $why }
+}
+
+function Update-FromOrigin {
+  param(
+    [string]$repo,
+    [string]$ReceiptDir = (Get-FuseReceiptDir),
+    [string]$LaunchId = $env:CONSONANCE_LAUNCH_ID,
+    [int]$FetchCeilingMs = 20000,
+    [int]$SilenceMs = 15000,
+    [int]$CapMs = 120000,
+    [int]$PollMs = 1000
+  )
+  $ErrorActionPreference = 'SilentlyContinue'   # function scope: a native stderr line never throws here
+  $rc = [ordered]@{
+    at = (Get-Date).ToUniversalTime().ToString('o'); machine = $null; launch_id = $LaunchId; outcome = $null
+    head_before = $null; head_after = $null; behind = $null; fetch_ms = $null; bytes_received = $null
+    last_progress = $null; why = $null
+  }
+  $git = $null
+  try {
+    try { $rc.machine = Get-ParkMachine } catch { $rc.machine = $env:COMPUTERNAME }
     $holder = Resolve-ConsonanceHolder
     if ($holder.State -eq 'ghost') {
+      $rc.outcome = 'skipped-running'; $rc.why = "a Consonance with no window is running (pid $($holder.Pids -join ', '))"
       $script:ghostNotified = $true
       Notify "A Consonance with no window (pid $($holder.Pids -join ', ')) is running, so the check for a newer version was skipped: pulling under it would hand its close a newer dev/tail-carry.js than the exe that calls it.`n`nEnd consonance.exe in Task Manager, then click the shortcut once." 'not updated - a Consonance with no window is running' 15 'Yellow'
       return
     }
     if ($holder.State -eq 'unknown') {
+      $rc.outcome = 'skipped-running'; $rc.why = 'could not tell whether Consonance is already running'
       Notify "Could not tell whether Consonance is already running, so the check for a newer version was skipped.`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
       return
     }
     if ($holder.State -ne 'none') {
+      $rc.outcome = 'skipped-running'; $rc.why = "Consonance is running ($($holder.State), pid $($holder.Pids -join ', '))"
       Write-Host '  pull: Consonance is running - not touching the checkout.' -ForegroundColor DarkGray
       return
     }
-    $git = Get-Command 'git.exe' -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
-    if (-not $git) {
+    $gitCmd = Get-Command 'git.exe' -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $gitCmd) {
+      $rc.outcome = 'error'; $rc.why = 'git was not found on PATH'
       Notify "Could not check for a newer version: git was not found on PATH.`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
       return
     }
-    $git = $git.Source
+    $git = $gitCmd.Source
     $repo = "$repo".TrimEnd('\')
 
     $branch = & $git -C $repo rev-parse --abbrev-ref HEAD 2>$null
     if ($LASTEXITCODE -ne 0) {
+      $git = $null   # not a checkout: no head_after to read
+      $rc.outcome = 'error'; $rc.why = "not a git checkout: $repo"
       Notify "Could not check for a newer version: this folder is not a git checkout.`n  $repo`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
       return
     }
+    $rc.head_before = "$(& $git -C $repo rev-parse HEAD 2>$null)".Trim()
     if ("$branch".Trim() -ne 'main') {
+      $rc.outcome = 'skipped-branch'; $rc.why = "on '$("$branch".Trim())', not main"
       Write-Host "  pull: on '$("$branch".Trim())', not main - not pulling." -ForegroundColor DarkGray
       return
     }
 
     $dirty = & $git -C $repo status --porcelain --untracked-files=no 2>$null
     if ($LASTEXITCODE -ne 0) {
+      $rc.outcome = 'error'; $rc.why = 'git status failed'
       Notify "Could not check for a newer version: git status failed.`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
       return
     }
 
+    # Where index-pack writes: --git-path follows a worktree to the common dir. Relative output is relative to $repo.
+    $packDir = "$(& $git -C $repo rev-parse --git-path objects/pack 2>$null)".Trim()
+    if ($packDir -and -not [System.IO.Path]::IsPathRooted($packDir)) { $packDir = Join-Path $repo $packDir }
+    $before = [string[]]@()
+    try { $before = [string[]]@(Get-ChildItem -LiteralPath $packDir -Filter 'tmp_*' -File -Force -ErrorAction Stop | ForEach-Object { $_.Name }) } catch { }
+
     $psi = New-Object System.Diagnostics.ProcessStartInfo
     $psi.FileName = $git
-    $psi.Arguments = "-C `"$repo`" -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=15 fetch --quiet origin main"
+    $psi.Arguments = "-C `"$repo`" -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=15 -c fetch.unpackLimit=1 fetch --quiet --progress origin main"
     $psi.UseShellExecute = $false
     $psi.CreateNoWindow = $true
+    $psi.RedirectStandardError = $true   # drained asynchronously below: an undrained --progress pipe can stall git
     $psi.EnvironmentVariables['GIT_TERMINAL_PROMPT'] = '0'
     $psi.EnvironmentVariables['GCM_INTERACTIVE'] = 'never'
     $fetch = [System.Diagnostics.Process]::Start($psi)   # NOT Start-Process -PassThru - see above
-    if (-not $fetch.WaitForExit(20000)) {
-      & "$env:SystemRoot\System32\taskkill.exe" /PID $fetch.Id /T /F 2>$null | Out-Null
-      Notify "Checking for a newer version took more than 20 seconds (a slow or blocked network), so it was stopped.`n`nOpening what is on this disk." 'not updated - network too slow' 8 'Yellow'
+    $errTask = $fetch.StandardError.ReadToEndAsync()
+    $w = Wait-FetchChild -Process $fetch -PackDir $packDir -Before $before -CeilingMs $FetchCeilingMs -SilenceMs $SilenceMs -CapMs $CapMs -PollMs $PollMs
+    if ($w.exited) { $fetch.WaitForExit() }
+    $rc.fetch_ms = $w.ms
+    $rc.bytes_received = $w.bytes
+    $errText = $null
+    try { if ($errTask.Wait(5000)) { $errText = "$($errTask.Result)" } } catch { }
+    $lines = Get-FetchStderrLines $errText
+    $rc.last_progress = $lines.lastProgress
+    if ($w.killed) {
+      $rc.outcome = 'fetch-timeout'
+      $rc.why = switch ($w.killed) {
+        'ceiling' { "no pack had started arriving within $([int]($FetchCeilingMs / 1000)) s" }
+        'silence' { "the download stalled: no new bytes for $([int]($SilenceMs / 1000)) s" }
+        default   { "the download did not finish within $([int]($CapMs / 1000)) s" }
+      }
+      if ($lines.why) { $rc.why += "; git said: $($lines.why)" }
+      if ($w.killed -eq 'ceiling') {
+        Notify "Checking for a newer version took more than $([int]($FetchCeilingMs / 1000)) seconds (a slow or blocked network), so it was stopped.`n`nOpening what is on this disk." 'not updated - network too slow' 8 'Yellow'
+      } else {
+        Notify "Downloading the newer version was stopped: $($rc.why). $($w.bytes) bytes had arrived.`n`nOpening what is on this disk, which is OLDER than origin. The next launch tries again." 'not updated - download stopped' 10 'Yellow'
+      }
       return
     }
-    $fetch.WaitForExit()
     if ($fetch.ExitCode -ne 0) {
+      $rc.outcome = 'fetch-failed'
+      $rc.why = if ($lines.why) { $lines.why } else { "git fetch exited $($fetch.ExitCode)" }
       Notify "Could not reach origin to check for a newer version (offline, or the network blocked it).`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
       return
     }
 
     $behind = & $git -C $repo rev-list --count 'HEAD..origin/main' 2>$null
     if ($LASTEXITCODE -ne 0) {
+      $rc.outcome = 'error'; $rc.why = 'could not compare with origin/main'
       Notify "Could not compare with origin/main.`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
       return
     }
     $behind = [int]("$behind".Trim())
+    $rc.behind = $behind
 
     if ($behind -eq 0) {
+      $rc.outcome = 'current'
       if ($dirty) { Write-Host '  pull: already current; tracked files have local changes.' -ForegroundColor DarkGray }
       return
     }
@@ -486,9 +648,10 @@ function Update-FromOrigin($repo) {
       # (b) an untracked file the pull would ADD at the same path: refused BEFORE anything is stashed.
       $untracked = Get-GitLines $git $repo @('ls-files', '--others', '--exclude-standard')
       $added = Get-GitLines $git $repo @('diff', '--name-only', '--diff-filter=A', 'HEAD', 'origin/main')
-      if ($null -eq $untracked -or $null -eq $added) { Notify $refuse 'not updated - local changes' 12 'Yellow'; return }
+      if ($null -eq $untracked -or $null -eq $added) { $rc.outcome = 'refused-dirty'; $rc.why = 'local changes, and git could not list the untracked or added paths'; Notify $refuse 'not updated - local changes' 12 'Yellow'; return }
       $collide = @($untracked | Where-Object { $added -contains $_ })
       if ($collide.Count) {
+        $rc.outcome = 'refused-dirty'; $rc.why = 'an untracked file is at a path the pull adds: ' + ($collide -join ', ')
         Notify ($refuse + "`n`nAn untracked file here is at a path the pull adds, so the pull would fail half-way: " + ($collide -join ', ')) 'not updated - local changes' 12 'Yellow'
         return
       }
@@ -501,7 +664,7 @@ function Update-FromOrigin($repo) {
       & $git -C $repo stash push --quiet -m $message 2>$null | Out-Null
       $pushed = ($LASTEXITCODE -eq 0)
       $sha = "$(& $git -C $repo rev-parse -q --verify refs/stash 2>$null)".Trim()
-      if (-not $pushed -or -not $sha -or $sha -eq $prior) { Notify $refuse 'not updated - local changes' 12 'Yellow'; return }
+      if (-not $pushed -or -not $sha -or $sha -eq $prior) { $rc.outcome = 'refused-dirty'; $rc.why = 'local changes, and parking them in a stash failed'; Notify $refuse 'not updated - local changes' 12 'Yellow'; return }
       $paths = Get-GitLines $git $repo @('diff', '--name-only', "$sha^1", $sha)
       if ($null -eq $paths) { $paths = [string[]]@() }
       $record = [ordered]@{ at = $stamp; machine = $machine; behind = $behind; stash = $sha; message = $message;
@@ -519,6 +682,7 @@ function Update-FromOrigin($repo) {
         & $git -C $repo stash apply --index --quiet $sha 2>$null | Out-Null
         if ($LASTEXITCODE -eq 0) { & $dropPark; $record.outcome = 'restored-not-pulled' } else { $record.outcome = 'parked-not-pulled' }
         Save-ParkRecord $git $repo $record
+        $rc.outcome = 'ff-refused'; $rc.why = "$reason"; if ($record.outcome -eq 'parked-not-pulled') { $rc.why += " (local changes parked in stash $sha)" }
         $kept = if ($record.outcome -eq 'parked-not-pulled') { "`n`nYour local changes are PARKED in stash $sha ($message): git stash apply --index $sha" } else { '' }
         Notify "origin/main has $behind new commit(s), but git refused to fast-forward to it, so nothing was merged or overwritten.`n`ngit said: $reason$kept`n`nOpening what is on this disk." 'not updated' 12 'Yellow'
         return
@@ -533,6 +697,7 @@ function Update-FromOrigin($repo) {
           & $dropPark
           $record.outcome = 'reapplied'
           Save-ParkRecord $git $repo $record
+          $rc.outcome = 'pulled'; $rc.why = "parked $($paths.Count) changed file(s) and put them back"
           Write-Host "  pull: parked $($paths.Count) changed file(s), fast-forwarded $behind commit(s) from origin/main, and put them back." -ForegroundColor Green
           return
         }
@@ -543,6 +708,7 @@ function Update-FromOrigin($repo) {
         $record.outcome = 'parked'
       }
       Save-ParkRecord $git $repo $record
+      $rc.outcome = 'parked'; $rc.why = "local changes parked in stash $sha ($($record.outcome))"
       $overlapText = if ($record.overlap.Count) { "These parked files were also changed by what arrived: " + ($record.overlap -join ', ') } else { "Putting them back failed, so the tree is exactly the pulled commit." }
       Notify "Fast-forwarded $behind commit(s) from origin/main. Your local changes were PARKED, not merged, and are still parked:`n  stash $sha`n  $message`n`n$overlapText`n`nParked files: $($paths -join ', ')`nTo bring them back after checking: git stash apply --index $sha" 'updated - local changes parked' 20 'Yellow'
       return
@@ -551,14 +717,24 @@ function Update-FromOrigin($repo) {
     $why = & $git -C $repo merge --ff-only --quiet 'origin/main' 2>&1
     if ($LASTEXITCODE -ne 0) {
       $reason = (@($why) | ForEach-Object { "$_".Trim() } | Where-Object { $_ } | Select-Object -First 1)
+      $rc.outcome = 'ff-refused'; $rc.why = "$reason"
       Notify "origin/main has $behind new commit(s), but git refused to fast-forward to it, so nothing was merged or overwritten.`n`ngit said: $reason`n`nOpening what is on this disk." 'not updated' 12 'Yellow'
       return
     }
+    $rc.outcome = 'pulled'
     Write-Host "  pull: fast-forwarded $behind commit(s) from origin/main." -ForegroundColor Green
   } catch {
+    $rc.outcome = 'error'; $rc.why = "the update check threw: $($_.Exception.Message)"
     Notify "The update check failed unexpectedly and was skipped.`n`n$($_.Exception.Message)`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
+  } finally {
+    # Every return above passes here, so every launch leaves a receipt (F1).
+    if (-not $rc.outcome) { $rc.outcome = 'error'; $rc.why = 'a return named no outcome' }
+    if ($git) { try { $h = "$(& $git -C $repo rev-parse HEAD 2>$null)".Trim(); if ($h) { $rc.head_after = $h } } catch { } }
+    Save-PullReceipt $ReceiptDir $rc
   }
 }
+# One id per launch, in this process's environment so the app started below inherits it; the receipt carries the same id.
+$env:CONSONANCE_LAUNCH_ID = [guid]::NewGuid().ToString()
 Update-FromOrigin $root
 # --- PULL BEFORE THE REBUILD CHECK -- END -----------------------------------------------------
 
