@@ -3133,3 +3133,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 14:4x local (D) · L185 steps 4-5 GREEN on `l185-skeleton` 2767855 (local, not landed): the hunter's upper body on the soft keyframe, drawn; the catch reacts → `exo_memory/handback/p-l185-steps4-5-E_2026-11-13.md`
 - Option (a): R4.3 p95 0.69 cm, follow-through 13.1 cm, 10/10 rows, mutants 5/5, suite 14/14, self-tests 26/26 and 52/52, his 16 runs byte-identical on base and branch. The clip is in `worktrees\clips_L185\index.html`. R4.5's 30 m/s bar was amended by name: the keyframe itself goes 39 m/s, through the pelvis jump at 0.1 m/s, which went to C. R4.7's cost waits for the ring.
 - **Carry:** a soft keyframe follows any chain at any strength, where motors could not. And never write a sha before git has given it.
+
+## 2026-11-13 15:5x local (D) · the tell row re-registered and run: red first, green on main and on B's kit, chute included; the kit does not change the tell → `exo_memory/handback/p-tell-row-run-E_2026-11-13.md`
+- In its own band (660-880 Hz) the tell grows to 0.0462 from about 0.0012 on every case. The old row read the hunter: on main, 5.8 m away in the quiet and 15 m through the tell, the whole mix was flat (0.0969 against 0.0958). `tell-row-e` 5e49c97 is ready for the kit.
+- **Carry:** a build step that fails silently makes a mutant run the clean code. Make the driver refuse a build that does not link.
