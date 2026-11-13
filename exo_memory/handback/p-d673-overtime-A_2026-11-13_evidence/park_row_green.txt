@@ -1,0 +1,5 @@
+    a player inside a reprieve that holds for 1000 s, timer 5 s: held before the timer 1 (997 s left); open after it 1; the run ended 1 at 9.6 s, caught by the dark, saved 1
+    a Park entered 0.5 s into overtime: in it 1, open on entry 1, 0 s of hold left
+ok    in_overtime_every_park_stops_protecting_and_no_park_cell_refuses_the_dark_one
+1 tests, 0 failed
+lockrun: D673 Park row green WALL 2 s, exit 0

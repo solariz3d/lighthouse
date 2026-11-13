@@ -1,0 +1,36 @@
+=== with_the_timer_unreached
+    9600 ticks untimed and 9600 timed at 40 s: the first that differs is 9600
+ok    with_the_timer_unreached_a_timed_run_is_the_untimed_run_tick_for_tick
+1 tests, 0 failed
+lockrun: D673 row with_the_timer_unreached WALL 4 s, exit 0
+=== at_the_timer_the_run_goes
+=== in_overtime_the_others_walk_off
+    4 seeds, timer 25 s, clear 12 s: 4 reached overtime with 8 others about; ticks with one left after the clear 0; taken out in view 0; caught in overtime by another 0
+ok    in_overtime_the_others_walk_off_out_of_sight_and_are_gone_by_the_clear
+1 tests, 0 failed
+lockrun: D673 row in_overtime_the_others_walk_off WALL 12 s, exit 0
+=== the_dark_one_comes_from
+    timer 20 s: the dark one first stood 39.6 m off, in view 0; the run ended at 84.1 s, caught by the dark, saved 1, kept 4508 of 4508
+ok    the_dark_one_comes_from_out_of_sight_behind_and_a_catch_by_it_is_the_save
+1 tests, 0 failed
+lockrun: D673 row the_dark_one_comes_from WALL 4 s, exit 0
+=== a_catch_before_the_timer
+    a still player, timer 600 s: caught at 8.0 s by the hunter, saved 0, kept 0 of 85
+ok    a_catch_before_the_timer_keeps_nothing
+1 tests, 0 failed
+lockrun: D673 row a_catch_before_the_timer WALL 3 s, exit 0
+=== a_park_does_not_hold
+    a player inside a reprieve that holds for 1000 s, timer 5 s: in the reprieve 1; the run ended 1 at 9.6 s, caught by the dark, saved 1
+ok    a_park_does_not_hold_the_dark_one
+1 tests, 0 failed
+lockrun: D673 row a_park_does_not_hold WALL 3 s, exit 0
+=== a_fall_into_a_void
+    timer 3 s: a fall at 2 s saved 0; a fall at 4 s (over before it 0) saved 1, kept 83 of 83
+ok    a_fall_into_a_void_in_overtime_is_the_save_and_before_it_is_not
+1 tests, 0 failed
+lockrun: D673 row a_fall_into_a_void WALL 3 s, exit 0
+=== overtime_pays_its_multiple
+    timer 60 s, 70 s survived: the score 1900.0 against 900.0 (the first minute) + 5 x 20.00 a second x 10 s = 1900.0
+ok    overtime_pays_its_multiple_of_the_rate_the_run_had_at_the_timer
+1 tests, 0 failed
+lockrun: D673 row overtime_pays_its_multiple WALL 3 s, exit 0

@@ -1,0 +1,7 @@
+    a player inside a reprieve that holds for 1000 s, timer 5 s: held before the timer 1 (997 s left); open after it 0; the run ended 1 at 9.6 s, caught by the dark, saved 1
+    C:\Users\zackn\Downloads\dreamzone-3-a-d673\chase\tests\overtime_tests.cpp(205): CHECK failed: opened_at_timer
+    a Park entered 0.5 s into overtime: in it 1, open on entry 0, 1000 s of hold left
+    C:\Users\zackn\Downloads\dreamzone-3-a-d673\chase\tests\overtime_tests.cpp(220): CHECK failed: late.reprieve_open() && late.reprieve_left_s() == 0.0f
+FAIL  in_overtime_every_park_stops_protecting_and_no_park_cell_refuses_the_dark_one
+1 tests, 1 failed
+lockrun: D673 Park row red WALL 3 s, exit 1
