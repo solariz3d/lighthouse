@@ -234,6 +234,19 @@ test('the board line names what landed (branch, sha, pane, lap), the pushed sha,
   assert.equal(T.boardLine({ landed: [], named: [], sha: null, pushed: null }, 'main'), null);
 });
 
+test('the CLI as a pane types it: `ready --config FILE <branch> --pane P --lap L` marks the branch, and `list` shows it', () => {
+  const w = world();
+  const row = branch(w, 'cli1', 'cli.txt', 'c\n');
+  const cfgFile = path.join(w.root, 'cfg.json');
+  fs.writeFileSync(cfgFile, JSON.stringify(w.cfg));
+  const env = { ...process.env, CONSONANCE_DATA: w.data };
+  const r = spawnSync(process.execPath, [SCRIPT, 'ready', '--config', cfgFile, 'cli1', '--pane', 'B', '--lap', 'L194'], { encoding: 'utf8', env });
+  assert.equal(r.status, 0, r.stderr);
+  assert.deepEqual(T.readReady(w.data).map((x) => [x.branch, x.sha, x.pane, x.lap]), [['cli1', row.sha, 'B', 'L194']]);
+  const l = spawnSync(process.execPath, [SCRIPT, 'list', '--config', cfgFile], { encoding: 'utf8', env });
+  assert.match(l.stdout, new RegExp(`^cli1 ${row.sha.slice(0, 7)} B L194 `, 'm'));
+});
+
 test('failingRows names dreamzone-3\'s own red lines: CHECK_NEAR and CHECK_EQ (tests/dz_test_main.cpp) and a self-test\'s FAILED total', () => {
   const out = [
     'ok    a_row',
