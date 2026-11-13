@@ -134,10 +134,15 @@ test('the specific override still wins over CONSONANCE_DATA', () => {
 // The OLD directive (b6fff168..0d6faf70), pinned by sha256 per trigger: a build seat's output must be byte-identical to it except for the ONE
 // new line, item 6. The hashes were taken from the installed hook BEFORE the change (its byte-identical backup is beside the hand-back).
 const crypto = require('node:crypto');
+// RE-PINNED, deliberately (Lap W, W2 step 2, pane P, 2026-11-13; exo_memory/loop/wake_level2_2026-11-13/00_lap_w_spec.md:256-262): the old pin
+// held the exact lines D089 showed out of date (the pre-directive figures stated as current, "any of the five above" over six items, and "the
+// previous seven summaries of this conversation", true only of Main). The new hashes were derived from the OLD directive by those three exact
+// line replacements, by a script that never loaded the changed hook (P's scratchpad lapw/newpin.js), so the pin checks the edit, not itself.
+// The pre-D245 hashes it replaces: manual 0a5872ed…, auto 3bdc67c8…, unknown 1e99447c….
 const OLD_SHA = {
-  manual: '0a5872ed020d096f6f2fb5cd8c9a3b15fbf580385140dff03b19a48663d55f38',
-  auto: '3bdc67c874bef066c5993a89ab2b07d806a6b145d5913049f4efcb8317fb2864',
-  unknown: '1e99447c486f7235ad42b163cce33930ffbf9a82953c64c86e37c5c519a11c22',
+  manual: '58245adaeb0c973c10783dfff2d275b615d817ee8afb84b120665190086aa1d8',
+  auto: '73e726bb768414268ded45cc34890615a563af3cc0e3c232a01338eda390ab9a',
+  unknown: '43feae26f490952329f370083b8ff4f145307824cf4c8a1eef6a14cbf260cba8',
 };
 const ITEM6 = '6. VERBATIM and quoted, every sentence of the assistant\'s that the user answered with a correction or an agreement.\n';
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
@@ -147,7 +152,8 @@ const BUILD = [String.raw`C:\Consonance\instances\main`, String.raw`C:\Consonanc
   String.raw`C:\Consonance\instances\third-placement`, String.raw`C:\Consonance\instances\third_place`, String.raw`C:\x\my third-place`, 'third-place', undefined];
 
 test('item 1: EVERY seat gets item 6, and a build seat\'s directive is byte-identical to the old one except that line (all three triggers)', () => {
-  for (const cwd of BUILD) for (const trigger of ['manual', 'auto', undefined]) {
+  // Lap W (W2): the librarian's cwd now gets the room-side section, tested on its own below, so it leaves this byte-for-byte loop.
+  for (const cwd of BUILD.filter((c) => !/[\\/]librarian$/i.test(String(c)))) for (const trigger of ['manual', 'auto', undefined]) {
     const out = run({ trigger, cwd, session_id: 's' }, { CONSONANCE_DATA: require('../tools/scratch.js').mkdtemp('ppC-') });
     const parsed = JSON.parse(out), text = parsed.additionalContext;
     assert.strictEqual(text.split(ITEM6).length - 1, 1, `item 6 once, cwd ${cwd}`);
@@ -169,5 +175,48 @@ test('item 2: the Third Place\'s seat (every spelling, path-normalised as board-
 
 test('the dream gate still wins over both: a dreaming instance gets nothing, on the Third Place\'s cwd too', () => {
   const out = run({ trigger: 'auto', cwd: TP[0] }, { CONSONANCE_DREAM: '1', CONSONANCE_DATA: require('../tools/scratch.js').mkdtemp('ppC-') });
+  assert.strictEqual(out, '');
+});
+
+// ── Lap W, W2 step 2 (pane P, 2026-11-13; 00_lap_w_spec.md:256-275, compaction_directive.md sections 5 and 6) ──
+// The librarian's summaries dropped the room side: over 65 auto windows on D, third_place/ was touched in 20 and named in 7, map/M.md in 12
+// and 5 (the window-path count, red on the recorded case). The librarian's seat gets "Room side, with paths" first, as item 0.
+// Every spelling the Third Place's test uses (Windows, trailing separator, slash, lower case, "\."), for the librarian's folder. Derived from TP so
+// no new machine-specific path enters the tree (portable-paths.js baselines the lists above).
+const LIB = TP.map((c) => c.replace(/third-place/i, 'librarian'));
+const NOT_LIB = [BUILD[0], BUILD[2], `${LIB[0]}-old`, LIB[2].replace(/instances\/librarian$/, 'x/my librarian x'),
+  LIB[0].replace(/instances\\librarian$/, 'exo_memory\\librarian'), LIB[2].replace(/instances\/librarian$/, 'exo_memory/librarian/'), TP[0], undefined];
+
+test('W2: the librarian seat gets "Room side, with paths" FIRST, with its paths, on every trigger and every spelling', () => {
+  for (const cwd of LIB) for (const trigger of ['manual', 'auto', undefined]) {
+    const text = instruction(trigger, cwd), lines = text.split('\n');
+    assert.match(lines[3], /^0\. FIRST, at the very top of the summary/, `cwd ${cwd}`);
+    assert.ok(text.includes('"Room side, with paths"'), `the section is titled: cwd ${cwd}`);
+    for (const p of ['exo_memory/third_place/', 'exo_memory/librarian/TO_THE_NEXT_ONE_*.md', 'exo_memory/librarian/<date>.md', 'exo_memory/map/M.md'])
+      assert.ok(text.includes(p), `it names ${p}: cwd ${cwd}`);
+    assert.ok(text.includes('"none in this window"'), 'an empty kind is said, not left out');
+    assert.ok(text.indexOf('Room side, with paths') < text.indexOf('1. Every commit sha'), 'above every task-shaped item');
+    assert.ok(text.includes(ITEM6), 'and item 6 too');
+  }
+});
+
+test('W2: no other seat gets the room-side section (build seats, the Third Place, a cwd that only ends in "librarian")', () => {
+  for (const cwd of NOT_LIB) assert.ok(!instruction('auto', cwd).includes('Room side'), `cwd ${cwd}`);
+});
+
+test('W2: the directive never states its own item count, so it cannot go stale again', () => {
+  for (const cwd of [LIB[0], TP[0], BUILD[0]]) assert.doesNotMatch(instruction('auto', cwd), /any of the (five|six|seven|eight) above/i, `cwd ${cwd}`);
+});
+
+test('W2: the stated survival figures are dated, and include the 2026-09-19 re-measure', () => {
+  const t = instruction('manual');
+  assert.match(t, /Measured before this directive/);
+  assert.match(t, /6\.4%/, 'the re-measured falsifier survival');
+  assert.match(t, /2026-09-19/);
+  assert.doesNotMatch(t, /summaries of this conversation/, "the measurement was of Main's seven, not of every seat's own");
+});
+
+test("W2: the dream gate still wins on the librarian's cwd: a dreaming instance gets nothing", () => {
+  const out = run({ trigger: 'auto', cwd: LIB[0] }, { CONSONANCE_DREAM: '1', CONSONANCE_DATA: require('../tools/scratch.js').mkdtemp('ppW-') });
   assert.strictEqual(out, '');
 });

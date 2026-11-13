@@ -174,3 +174,39 @@ test('APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty, a push wit
   const lp = path.join(def, G.LEDGER), ledger = fs.existsSync(lp) ? fs.readFileSync(lp, 'utf8') : '';
   assert.ok(ledger.includes('"decision":"deny"'), 'the deny is recorded under the default data dir'); assert.ok(!ledger.includes(FAKE_VCK), 'and never the secret');
 });
+
+// ── Lap W ruling 6 (exo_memory/loop/plan_room_stretch_2026-11-13.md:96, the librarian at his word of 12:05): "From here no single file over 10 MB
+// goes into this repository: the push gate refuses one, red first on the commit that carried it (3de92e53)." That commit carried an 85 MB encrypted
+// transcript; it stays where it is (ruled), and the next one is refused before it leaves the machine. (Pane P, 2026-11-13.)
+const MB10 = 10 * 1000 * 1000;
+test('RED (ruling 6) on the recorded commit: the gate\'s range scan over 3de92e53 finds its one file over 10 MB, by path and size', { skip: spawnSync('git', ['-C', path.join(__dirname, '..', '..'), 'cat-file', '-e', '3de92e53^{commit}']).status !== 0 && 'this checkout does not carry 3de92e53' }, () => {
+  const big = G.largeFiles(path.join(__dirname, '..', '..'), '3de92e53', ['3de92e53^']);
+  assert.deepStrictEqual(big.map((b) => [b.file, b.bytes]), [['future_experiments/librarian_0c0c0c0b_2026-11-13_0650L.jsonl.gz.enc', 85189536]]);
+});
+test('RED (ruling 6): a push carrying a file over 10 MB is refused, naming the file and its size; the ledger records it', () => {
+  const { work } = repo(), data = tmp('pgd-');
+  fs.writeFileSync(path.join(work, 'big.bin'), Buffer.alloc(MB10 + 1, 7)); git(work, 'add', 'big.bin'); git(work, 'commit', '-q', '-m', 'big');
+  const r = runHook(push(work), data);
+  assert.equal(r.code, 0); assert.equal(r.deny, true, r.out);
+  assert.match(r.reason, /big\.bin/); assert.match(r.reason, /10,000,001 bytes/); assert.match(r.reason, /over 10 MB/);
+  assert.match(r.ledger, /"decision":"deny"/); assert.match(r.ledger, /"large":\[\{"file":"big\.bin","bytes":10000001/);
+});
+test('pass (ruling 6): exactly 10 MB is not over it; a big file the remote already has is not sent again, so it is not refused', () => {
+  const { work } = repo(), data = tmp('pgd-');
+  fs.writeFileSync(path.join(work, 'edge.bin'), Buffer.alloc(MB10, 7)); git(work, 'add', 'edge.bin'); git(work, 'commit', '-q', '-m', 'edge');
+  assert.equal(runHook(push(work), data).out, '', 'exactly 10,000,000 bytes passes');
+  // a file OVER the limit that the remote already holds (pushed past the gate, as 3de92e53 was): a later push does not send it again
+  fs.writeFileSync(path.join(work, 'old-big.bin'), Buffer.alloc(MB10 + 1, 3)); git(work, 'add', 'old-big.bin'); git(work, 'commit', '-q', '-m', 'old big');
+  git(work, 'push', '-q');
+  fs.writeFileSync(path.join(work, 'small.txt'), 'x\n'); git(work, 'add', 'small.txt'); git(work, 'commit', '-q', '-m', 'small');
+  assert.equal(runHook(push(work), data).out, '', 'the remote has old-big.bin already; only small.txt is sent');
+});
+test('RED (ruling 6): a key and a large file in one push are both named; the key refusal keeps its own text', () => {
+  const { work } = repo(), data = tmp('pgd-');
+  fs.writeFileSync(path.join(work, 'big.bin'), Buffer.alloc(MB10 + 5, 1)); fs.writeFileSync(path.join(work, 'k.txt'), `${FAKE_VCK}\n`);
+  git(work, 'add', 'big.bin', 'k.txt'); git(work, 'commit', '-q', '-m', 'both');
+  const r = runHook(push(work), data);
+  assert.equal(r.deny, true);
+  assert.match(r.reason, /push refused \(G1, credentials before a push\)/); assert.match(r.reason, /k\.txt:1/);
+  assert.match(r.reason, /big\.bin/); assert.ok(!r.reason.includes(FAKE_VCK));
+});

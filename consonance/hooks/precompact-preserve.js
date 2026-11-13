@@ -102,15 +102,37 @@ const ALIVE = [
   '',
 ];
 
+/* Lap W, W2 step 2 (exo_memory/loop/wake_level2_2026-11-13/00_lap_w_spec.md:256-275, compaction_directive.md section 6): the LIBRARIAN's
+ * seat ONLY gets the room side first. Over 65 auto windows on D its summaries named third_place/ in 7 of the 20 it touched, map/M.md in 5 of
+ * 12. Same cwd test as the Third Place's, path-normalised; a folder that merely ends in "librarian" inside exo_memory is a session opened in
+ * the notes, not the seat (the spec's own risk, :291), so it is left out. The bullets are the shared text pane R's LIBRARIAN.md carries
+ * (`# Compact instructions`); the agreement test compares the two. */
+const isLibrarianCwd = (cwd) => { const c = tpNorm(cwd); return /[\\/]librarian$/i.test(c) && !/[\\/]exo_memory[\\/]librarian$/i.test(c); };
+const ROOM_BULLETS = [
+  '- the user\'s own words about the room or about this seat, not about a build;',
+  '- letters to or from the Third Place (exo_memory/third_place/);',
+  '- the librarian\'s letter to its next instance (exo_memory/librarian/TO_THE_NEXT_ONE_*.md);',
+  '- catches and corrections about this seat itself (exo_memory/librarian/<date>.md, exo_memory/map/M.md);',
+  '- the questions left open, each with the file that holds it.',
+];
+const ROOM = [
+  '0. FIRST, at the very top of the summary and above any task or pending work, a section titled',
+  '   "Room side, with paths". Carry VERBATIM and quoted, each with the file it sits in (path:line where known):',
+  ...ROOM_BULLETS.map((b) => '   ' + b),
+  '   Where the window held none of a kind, write "none in this window" for that kind.',
+  '',
+];
+
 function instruction(trigger, cwd) {
   return [
-    `[${CANARY}] Preservation directive for this summary, from a measurement of the previous`,
-    `seven summaries of this conversation (trigger: ${trigger || 'unknown'}).`,
+    `[${CANARY}] Preservation directive for this summary, from a measurement of`,
+    `compaction summaries in this project (trigger: ${trigger || 'unknown'}).`,
     '',
     ...(isThirdPlaceCwd(cwd) ? ALIVE : []),
-    'Those summaries kept narrative and dropped verification. Measured survival: file and',
-    'instrument names 33.8%, commit shas 10.2%, structured numbers 9.3%, and registered',
-    'predictions or falsifiers 3.5% - the last being the class this project runs on.',
+    ...(isLibrarianCwd(cwd) ? ROOM : []),
+    'Measured before this directive, on the chair\'s seven summaries: file and instrument names 33.8%, commit',
+    'shas 10.2%, structured numbers 9.3%, registered predictions or falsifiers 3.5%. Re-measured a month after',
+    'it (2026-09-19): falsifiers 6.4%, still the class kept least; names 31.0%, not risen.',
     '',
     'Therefore, when writing the summary, carry forward VERBATIM and in full:',
     '',
@@ -128,7 +150,7 @@ function instruction(trigger, cwd) {
     '   nothing was ever wrong.',
     '6. VERBATIM and quoted, every sentence of the assistant\'s that the user answered with a correction or an agreement.',
     '',
-    'Prefer dropping narrative, atmosphere and restatement over dropping any of the five above.',
+    'Prefer dropping narrative, atmosphere and restatement over dropping any numbered item above.',
     'If length forces a choice, a summary that is a bare list of checkable items is more useful',
     'here than a readable account with the checkable items removed.',
   ].join('\n');
@@ -162,6 +184,6 @@ function main() {
   } catch (_) { /* never block a compaction over a ledger write */ }
 }
 
-module.exports = { instruction, CANARY, LEDGER, isThirdPlaceCwd };
+module.exports = { instruction, CANARY, LEDGER, isThirdPlaceCwd, isLibrarianCwd, ROOM_BULLETS };
 
 if (require.main === module) main();

@@ -155,6 +155,9 @@ $files = @(
   # Added 2026-08-18 with the hook, same commit, same reason as the line above: registration and
   # manifest ship together or a fresh install silently loses it.
   @{ From = 'consonance\hooks\sessionstart-state.js';     To = 'sessionstart-state.js' }
+  # Lap W, W3 (2026-11-13): the body line, one line of facts at every start. Its registration ships in the same commit (below). Install
+  # with -Only sessionstart-body.js; a full install would overwrite other drifted hooks (00_lap_w_spec.md:371).
+  @{ From = 'consonance\hooks\sessionstart-body.js';      To = 'sessionstart-body.js' }
   # Added 2026-08-24 with its registration below, same commit, same reason as the two entries
   # above. This one is a PreToolUse gate, so it also needed Matcher support in $register -- an
   # unmatched PreToolUse hook fires on every tool call in the session.
@@ -177,6 +180,10 @@ $files = @(
   # on the same two hand-back verbs that DENIES a ring with no SOURCES: line or an item no call of this turn backs, fails open, logs every decision. Plan:
   # exo_memory/loop/plan_sources_gate_d212_2026-10-02.md. Install it with -Only sources-gate.js.
   @{ From = 'consonance\hooks\sources-gate.js';            To = 'hooks\sources-gate.js' }
+  # Lap W, W4 (2026-11-13): the wake gate. The librarian's first call_chair after a wake is refused, on D, until today's note and the other machine's
+  # newest handoffs were opened whole (ruling 2, exo_memory/loop/plan_room_stretch_2026-11-13.md:96). Self-contained; its registration ships below.
+  # Install with -Only wake-gate.js.
+  @{ From = 'consonance\hooks\wake-gate.js';               To = 'hooks\wake-gate.js' }
   # Added 2026-10-03 (D218, the keeper: "lets finish it all") with its registration below, same commit, same reason as the entries above. THE REPLY SLOT, LIVE since D220 (built in SHADOW at D218; SHADOW = false in
   # reply-slot.js): a Stop hook for the librarian and chair sessions only that BLOCKS the stop, once per turn, on a reply to the keeper that names a path/sha/count/percentage/version and does
   # not end with a Sources: line the turn backs; it fails open on any error. It requires ./sources-gate.js, so it installs into the SAME directory. Plan: exo_memory/loop/plan_finish_retrieval_2026-10-03.md. Install with -Only reply-slot.js.
@@ -288,6 +295,8 @@ $register = @(
   # the comment shipped and the registration did not.
   @{ Event = 'PreCompact';       Rel = 'precompact-preserve.js';      Runner = 'node' }
   @{ Event = 'SessionStart';     Rel = 'sessionstart-state.js';       Runner = 'node' }
+  # Lap W, W3: the body line, every source (startup, resume, compact), no matcher. It never blocks a start.
+  @{ Event = 'SessionStart';     Rel = 'sessionstart-body.js';        Runner = 'node' }
   # The dispatch gate. Matcher-scoped on purpose: it must see the two verbs that put text into
   # another seat's pane and nothing else. It ASKS rather than blocks, and fails open on any error.
   @{ Event = 'PreToolUse';       Rel = 'dispatch-gate.js';            Runner = 'node';
@@ -307,6 +316,9 @@ $register = @(
   # verbs plus chair_inject) and so its own group, and the second reader's matcher is UNCHANGED. Hooks run in parallel; this is the only one that can deny.
   @{ Event = 'PreToolUse';       Rel = 'hooks\sources-gate.js';       Runner = 'node';
      Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }
+  # Lap W, W4: the wake gate, on the one verb it gates (exact name). It exits at once for every seat but the librarian.
+  @{ Event = 'PreToolUse';       Rel = 'hooks\wake-gate.js';          Runner = 'node';
+     Matcher = 'mcp__consonance__call_chair' }
   # G1 and G2 (D248): the two shell tools, exact names. Each reads the command and exits at once unless it is a push (G1) or a recursive delete (G2).
   @{ Event = 'PreToolUse';       Rel = 'hooks\push-gate.js';          Runner = 'node';
      Matcher = 'Bash|PowerShell' }

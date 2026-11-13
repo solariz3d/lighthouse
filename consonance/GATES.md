@@ -1,6 +1,6 @@
 # The gates — what refuses you, why, and how to answer
 
-Consonance runs **seven gates**: four on what its seats send each other, one on what the chair dispatches, and two on your machine's
+Consonance runs **eight gates**: five on what its seats send each other, one on what the chair dispatches, and two on your machine's
 history and files. They are on in every room. They **refuse; they don't remind**, because a rule written in a brief is followed
 about half the time and a rule that refuses at the moment of sending is followed almost always. That was measured, not assumed. In
 a census of the rules this program was built with (the D210 rule census, [`exo_memory/loop/rule_census_score_2026-10-02.md`](https://github.com/solariz3d/lighthouse/blob/main/exo_memory/loop/rule_census_score_2026-10-02.md)
@@ -11,8 +11,8 @@ in the public lighthouse repository):
 - the **5 ungated rules that had to fire mid-sentence** — like "give the source of every number" — had a median of **0.276**, and
   the two about numbers sat at **0.010** and **0.041**.
 
-**Where they apply.** The five hook gates are Claude Code hooks registered in `%USERPROFILE%\.claude\settings.json`, which every Claude Code
-session on your machine reads, inside Consonance or not. The SOURCES gate, the reply slot and the dispatch gate only ever act on Consonance's own
+**Where they apply.** The six hook gates are Claude Code hooks registered in `%USERPROFILE%\.claude\settings.json`, which every Claude Code
+session on your machine reads, inside Consonance or not. The SOURCES gate, the reply slot, the dispatch gate and the wake gate only ever act on Consonance's own
 verbs and seats, so outside Consonance they do nothing. **The push gate and the delete gate are machine-wide:** they check every `git push` and every
 recursive delete that any Claude Code session runs, in any project.
 
@@ -137,6 +137,13 @@ key cannot be taken back.
 **How to answer it:** remove the key from the history it names (not just from the latest commit), rotate it if it was ever real,
 and push again.
 
+**And files over 10 MB (Lap W, ruling 6, 2026-11-13).** The same gate refuses a push that would send any single file over 10 MB
+(10,000,000 bytes): every file the remote does not have yet, so a large file added and deleted again before the push still counts.
+The refusal names each file and its size: `push refused (Lap W ruling 6, no file over 10 MB): …`. Answer it by taking the file out
+of every unpushed commit that carries it, and keep large records in the private repository that holds the key. Why: one 85 MB
+encrypted transcript (commit `3de92e53`) made a morning's catch-up 90.5 MB on both machines; it stays where it is, by ruling, and the
+next one is refused before it leaves.
+
 **To turn it off:** remove the `push-gate.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `PreToolUse`).
 
 ## 6. The delete gate — junctions before a recursive delete
@@ -190,6 +197,42 @@ the `BASE:` line; then ring again.
 
 **To turn it off:** this one is not a hook. It is part of the app (`consonance/src-tauri/src/mcp.rs`, `fn map_gate`): light mode
 makes it warn instead of refuse; turning it off means removing its call from `call_librarian` and rebuilding Consonance.
+
+## 8. The wake gate — the librarian's first ring after a wake
+
+**What.** When the librarian wakes (a resume, a fresh start or a compaction), its **first** `call_chair` is refused until it has
+opened, **whole**, since that wake:
+- its newest dated note, `exo_memory/librarian/<date>.md` (picked by the date in the name, no more than a day ahead of today);
+- every handoff the other machine wrote on its newest date, `exo_memory/loop/handoff_*_<date>-<L or D>.md` (the other machine is
+  read from `machine_tag` in `%USERPROFILE%\.consonance.json`).
+
+"Whole" means one `Read` with no offset and no limit (`allow_large` is fine), or a shell command whose stage is only `cat`, `type`,
+`Get-Content` or `gc` naming the file, with no pipe after it, no redirect and no `-TotalCount`/`-Head`/`-Tail`. A result Claude Code
+saved aside as a preview (`<persisted-output>`) is not whole. On a **resume** wake, a whole open made since the last compaction still
+counts while the file has not changed since; on a **compaction** wake, nothing from before it counts, because the summary dropped it.
+Only the librarian is gated (`hooks\wake-gate.js`, matcher `mcp__consonance__call_chair`); every other seat is never gated. A
+subagent's `call_chair` is refused. The second and later rings after a wake are not gated.
+
+**Why.** At its 14:42:47Z wake on 2026-11-13 the librarian rang the chair after grepping its own note and cutting a handoff; nothing
+it rang about came from reading either. The room's warnings on the same ring reached no seat. A note opened whole is in the window;
+a grep of it is not. Ruled for the librarian only, refusing, on D (`exo_memory/loop/plan_room_stretch_2026-11-13.md:96`, ruling 2).
+
+**Warn or refuse.** It refuses on the machine tagged `D` and only warns and records elsewhere (not ruled for L). It does not read
+`gates_mode`.
+
+**A refusal looks like:** `wake gate (W4, the librarian's first call_chair after a wake): since your resume wake at …, these were not
+opened whole: exo_memory/librarian/2026-11-13.md …`.
+
+**How to answer it:** open each named file with one `Read`, no offset or limit, `allow_large: true`; then ring again in a **later**
+message (a ring in the same message as the Read is decided before the Read's result is on disk). A stop or hold that cannot wait one
+read: put `[interrupt]` in the ring's text; it passes and is recorded.
+
+**What it records.** `wake-gate.jsonl` in the data folder: every decision, the files missing and satisfied, and the kind
+(`missing`, `own-append` when the seat's own append outdated an earlier whole open, `not-first`, `interrupt`, `subagent`,
+`nothing-required` with its skips `no-note`, `no-handoff`, `no-machine`). The row is written before a refusal; a refusal that cannot be
+recorded is not given. `node wake-gate.js --replay <transcript.jsonl>` counts how every ring in a transcript would have been decided.
+
+**To turn it off:** remove the `wake-gate.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `PreToolUse`).
 
 ## Also installed, and it spends your usage: the second reader
 
