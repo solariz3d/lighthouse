@@ -5,7 +5,7 @@
 - **Pushed:** dreamzone-3 `l192-footsteps` **d8f77ba**, rebased onto c9d520e. It is not landed and not READY.
 - **Green, before the rebase:**
   - `audio_tests` 86/0;
-  - mutants applied 8 / caught 7 / NOT APPLIED 0, the survivor said in §5.
+  - mutants applied 8 / caught 7 / NOT APPLIED 0, the survivor said in §3.
 
   inferred: the rebase touched only CHANGELOG.md, where both entries were kept, so the audio files are as tested. Not
   re-run after it.
