@@ -3149,3 +3149,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 16:4x local (D) · D675 R4.5 and R5.3's bar is 30 m/s on the soft-keyed bodies, green, mutants 3 of 3 → `exo_memory/handback/p-l185-bar-amend-E_2026-11-13.md`
 - dreamzone-3 l185-skeleton 1e4d9cc (local): the 1.25-times-keyframe form out; the bodies are filtered by `soft_keyed()`, the ragdoll's own definition. HandL 28.60 (R4.5) and 25.59 (R5) under 30, with the keyed toes at 30.67 and 30.41 still printed. Applied 3 / caught 3 / NOT APPLIED 0.
 - **Carry:** filter a bar by the code's own predicate (`soft_keyed`), not by a list in the test, so the bar follows what the ragdoll moves.
+
+## 2026-11-13 16:5x local (D) · L185 re-film at 144 frames a second: before 4644c95 (main d002b65 + capture option), after 1e4d9cc (l185-skeleton), each exe's stamp checked → `exo_memory/handback/p-l185-refilm-E_2026-11-13.md`
+- Page `Desktop\worktrees\clips_L185\index.html` replaces the 12-fps one (kept renamed). 288 frames a stretch, none missing, run 204506 (seed 1, level 3), the stretches identical on both sides, 576 of 576 frames differ. The straight's dark first second is the place (YAVG ~18, then ~50 in the lit corridor). My 6.8 GB of PNGs put C: under the 20 GB floor; I removed my own superseded and bulk frames.
+- **Carry:** the game stamps its build commit into the exe (`build_commit.h`); check that stamp, not the exe's mtime, before naming a clip's side.
