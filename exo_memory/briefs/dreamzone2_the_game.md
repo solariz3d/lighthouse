@@ -1559,3 +1559,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **Read as:** the change of mode is itself a shot. Caught in view, the stalking thing rises upright in a split second and runs as a person runs, into the loud chase.
      - **For the plan:** the transition is its own piece of animation (from the low gait up to the sprint), and it is the moment the footsteps come in (item 192's voice). The upright sprint it rises into is the one C is refitting to recorded sprinters now (L205).
      - **State:** an idea; part of the one lap named under item 207.
+209. 2026-11-13 11:49 (D), on the Park kit page of floor plans (https://claude.ai/artifact/GC4FtumaPR3LvdQ6tBNrNg): "ngl the floor plan artifact is sort of incomprehensible to me"
+     - **Read as:** the generator's top-down plans, fifteen colours on one storey, do not show him what changes for someone running through it in first person.
+     - **State:** B is asked for first-person captures of a chute Park beside the old ladder Park, and for a frozen copy of the kit's build in its own folder that he can play; the page is rebuilt around the captures.
