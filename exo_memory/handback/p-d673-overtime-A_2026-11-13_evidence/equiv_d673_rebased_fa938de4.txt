@@ -1,0 +1,22 @@
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  line     12    15.6    17.9    20.5    38.3    58.7    68.2    121.6         0
+normal  flee     12    91.3   217.0   297.3   300.0   300.0   300.0    300.0         9
+normal  cutback   12    17.7    23.3    34.3    49.0    64.0    64.2    164.3         0
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  line       67%      33%          0%    0% |       83%          17%         0%         0% |          521
+normal  flee        8%      17%          0%    0% |       25%           0%         0%         0% |        10500
+normal  cutback     75%      25%          0%    0% |       92%           0%         0%         8% |          691
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  line   |      0.00        0%      0.25     0.17      0.00 |   0.00   0.00    0.00 |     1.69   0.00   0.00   0.56     0.00 |    0.67     0%       0%
+normal  flee   |      0.42       33%      0.00     0.00      0.00 |   0.00   0.02    0.18 |     1.82   0.77   0.29   2.59     0.00 |    0.05     3%       0%
+normal  cutback |      0.00        0%      0.17     0.00      0.00 |   0.00   0.00    0.00 |     1.82   0.18   0.00   1.09     0.00 |    0.55     0%       0%
+paired flee vs line (12 seeds): outlived it in 12, was outlived in 0, within half a second in 0; median of the ratio 5.51 (quartiles 4.65 to 14.41)
+paired cutback vs line (12 seeds): outlived it in 6, was outlived in 3, within half a second in 3; median of the ratio 1.22 (quartiles 1.00 to 2.37)
+
+where chasers caught on the world, per minute of chase

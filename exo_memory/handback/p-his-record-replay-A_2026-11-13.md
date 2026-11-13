@@ -1,5 +1,15 @@
 # p-his-record-replay-A: his own recorded runs replayed, and what his uncaught stretches are (the librarian's ruling on the blind check), 2026-11-13
 
+## WHERE IT STOPS (L, 13:5xZ)
+- **This report is COMPLETE; nothing is pending on it.** Pushed in lighthouse (the report, the analysis outputs, the scripts `analyze_replay.js` and `scan_moves.js`, the dump tool `replay_dump.cpp`).
+- **Green:** all four replays are exact (both fingerprints equal the records'); the detector finds a synthetic circle and a line shuttle at 8 s and ignores a straight run. **Red / open:** none; the finding is that his record shows no sustained circle strafe or wall-to-wall shuttle, so the question to him stands (on the board).
+- **To redo it on the desktop:** his run files are in `game\runs\` of the main checkout (`run-20261113-082347`, `-080629`, `-081208`, `-081820`; read-only data, copy them first); make a worktree at `e0184ea` (the build they name), add `replay_dump.cpp` (from the evidence folder) to `game/world/` and these two lines after the `world_app_tests` target in `game/CMakeLists.txt`: `add_executable(replay_dump world/replay_dump.cpp)` and `target_link_libraries(replay_dump PRIVATE dz_world_game)`; build `replay_dump`; run `replay_dump <run.txt> <out_prefix> 0.1`, then `node analyze_replay.js <out_prefix> 12 5` and `node scan_moves.js <out_prefix> 8` (and `3`).
+
+- **Scripts:** every script of mine is copied to `p-l182-lines-A_2026-11-12_evidence/scripts_L/` (47 files: the sweep wrappers `arms182b.sh` / `arms_brutal.sh` / `restart_brutal.sh`, `lockrun.js`, the scorers `score182.js` / `score.js`, the mutant harnesses `mutants_lapr.js` / `mutants_d673.js`, the chains `chain_*.sh`, the `cbuild_*.bat` builders, `analyze_replay.js`, `scan_moves.js`). **Their paths are L's** (`C:/Users/zackn/Downloads/dreamzone-3-a-*`, my scratchpad): set `SP`, `WT`, `EXE` at the top of each before running.
+- **Worktrees on L** (none holds uncommitted work; each equals its HEAD, checked): `dreamzone-3-a-l182` (branch l182-lines, THE FROZEN SWEEP BINARY `chase\build\bin\dz-chase.exe`), `-a-l182h` (l182-hawk), `-a-d673` (a-d673-overtime), `-a-l197` (l197-record, merged), `-a-replay` (detached e0184ea + the untracked `game/world/replay_dump.cpp`, kept in the evidence folder), and older `-a-l170`, `-a-row`, `-a-l161` (not needed).
+- **L-only data, not in the repo:** the raw replay dumps and copies of his run files (scratchpad `replay/`: his play data, read-only copies), `arms182/` (the normal-level arm CSVs a1 to a5: copied to the evidence folder), `arms182_brutal/*_pairs.csv` (the control's slosh pairs, 150 KB each; the runs CSVs and tables are in the repo), the memory sampler `mem.jsonl`.
+
+
 Pane A (Sonnet 5.5 trial, machine L). The ruling (chair's 12:49Z, the librarian's): go to the source before guessing another bot; replay his run `run-20261113-082347` on the build it names, dump the tracks, find where he shuttles between walls and where he circles, report where the hunter was and what it did; the reactive shuttle's settings come from the record; he is asked only if the record shows no such stretch.
 
 ## What was done (checked)

@@ -1,0 +1,23 @@
+tip: 37a2f29 D673: dz-chase --run-length and the overtime table (what F1 to F3 are read from)
+=== build 13:02:27
+lockrun: D673 rebased build WALL 12 s, exit 0
+=== overtime rows 13:10:53
+ok    with_the_timer_unreached_a_timed_run_is_the_untimed_run_tick_for_tick
+1 tests, 0 failed
+ok    at_the_timer_the_run_goes_into_overtime_and_only_the_dark_one_is_sent
+1 tests, 0 failed
+ok    in_overtime_the_others_walk_off_out_of_sight_and_are_gone_by_the_clear
+1 tests, 0 failed
+ok    the_dark_one_comes_from_out_of_sight_behind_and_a_catch_by_it_is_the_save
+1 tests, 0 failed
+ok    a_catch_before_the_timer_keeps_nothing
+1 tests, 0 failed
+ok    in_overtime_every_park_stops_protecting_and_no_park_cell_refuses_the_dark_one
+1 tests, 0 failed
+ok    a_fall_into_a_void_in_overtime_is_the_save_and_before_it_is_not
+1 tests, 0 failed
+ok    overtime_pays_its_multiple_of_the_rate_the_run_had_at_the_timer
+1 tests, 0 failed
+=== byte-identity 13:11:51
+d673 md5 fa938de45995bd2d13b98ba28fae0c34 (want 599ab2395194ded75d0d102f84b3195d), 22 lines
+=== done 13:13:01
