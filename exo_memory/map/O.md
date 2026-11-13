@@ -472,3 +472,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-13: five-branch landing held on two reds; and a portable-paths red must be classified by its PATHS, not its rows.** The suite on da225e0d gave 195 green, 1 failed, 1 crashed of 199. universe-print breaks at lap-i-p's multi-line install.ps1 row: 16/0 at 92647969, crash from dc89ba50. portable-paths names only heavy-run.js:404, from the guard I landed at 0fedf4d3; I had called its rows base-red at the guard landing, and the guard merge actually carried 4 paths, one of them its own. Could be wrong if the 404 text is meant to be baselined, but it was red, and I called it base.
 → `exo_memory/handback/p-land-five-O_2026-11-13.md`
+
+**2026-11-13: six branches landed and pushed as fab53587. A credential-prefix count in a range scan is a NAME until a token run follows it.** Suite on 4cca2ee3: 197 green, 0 failed of 199. The range scan counted sk-or- and the other prefixes 8-12x; every hit sat in a landing hand-back, followed by a token run of 0. Could be wrong if a key were split across lines, but credwhere.js checks the run on the matched line only.
+→ `exo_memory/handback/p-land-six-O_2026-11-13.md`
