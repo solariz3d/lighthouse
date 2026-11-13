@@ -72,7 +72,7 @@ line, biome detail.
 | SB44 | room event | [ours] On her shift nights there is no knock, and the silence is the cue; staying awake raises stress faster on those nights, read as grief's sleeplessness. A measured fear in bereaved youth: "How much do you worry that you may be left all alone?". Sleep problems and waking early were reported at 15-17. | [read] 08 F36; 06 F33; [summary: abstract] 06 F40 | design `:206-207`; `p-d667:95`, `:372` | [read] Design `:206` has her knock "at random"; `p-d667:95` puts it at dawn (08 §4). |
 | SB45 | note | [ours] A late note: "Do you dream about him?" (ours), the answer branching. The family program taught that "it is not unusual for children to think they see their parent who has died or to dream about the deceased parent"; teens kept such dreams from the parent so as not to upset them. | [read] 08 F41; 07 F41 | item 31; item 47 | [inferred] None. |
 | SB46 | room event | [ours] Her tell, "the real one knocks twice and says his name", is made of the sounds the edge of sleep fakes: hearing "knocks on the door or one's name being called" is "not at all unusual" on waking. Options: keep it knowing that; give the real mother a tell the edge does not make (her note, light under the door); or never let the player be sure. | [read] 10 F3, F4 (no source ranks these sounds first; 10 O2 second reader) | `p-d667:108`, `:357`; item 31 | [inferred] None. |
-| SB47 | room event | [ours] After a loss, a false waking: the real room "to an atmosphere of suspense", the covers pulled a beat before his hands, and lying still lets "everything ... suddenly `click' back to normal". | [read] 10 F58, F34, F59 (its "struggling made it worse" is struck) | run_frame lap 3; item 34's waking | [inferred] None. |
+| SB47 | room event | [ours] After a loss, a false waking: the real room "to an atmosphere of suspense", the covers pulled a beat before his hands, and, lying still, "everything would suddenly `click' back to normal". | [read] 10 F58, F34, F59 (its "struggling made it worse" is struck) | run_frame lap 3; item 34's waking | [inferred] None. |
 | SB48 | room event | [ours] The chair's focus object is the watch or the photo, never named as the father. A proposed four-step response to sleep paralysis focuses on "a memory of a loved one or event". | [read] 10 F53 (a proposal with cases, not a trial) | pick `waking_room-2` breathing game (`brief:1426`); items 49-50 | [inferred] Not to be presented as treatment (10 O8). |
 | SB49 | found object (rule) | [ours] How found text behaves: in dream reports "The print seems clear enough until one tries to read it: then the letters become blurred or run together, or fade away, or change to others". Options: keep lap 1's blur-to-line as the tell that something else is writing; let a second look differ; cap lines at a few words. | [read] 09 F52-F55 | lap 1 (`bp_story:64`) | [read] Lap 1 has letters that "morph from a blur into a line" (`bp_story:64`), the reverse of the reports (09 §4). |
 | SB50 | ledger line | [ours] The kid's own ledger knows it is a dream and it does not help. In 20 of 39 lucid nightmares the dreamer still felt fear and "was not able to change the dream action". | [read] 09 F45, F46 | pick `story_lore-7` (the kid's naming); item 172 | [read] Pick `look_fear-1` gave up "a lucid beat" (`brief:1446-1447`); a ledger line costs no camera beat. |
@@ -84,7 +84,7 @@ line, biome detail.
 | SB56 | room event | [ours] A new waking-room line after every run, won or lost, so a loss still adds to beats seen. Kasavin: "We wondered, could we make the moment of death something players almost look forward to, rather than dread?" | [read] 13 F1, F7, F9 | pick `story_lore-6` "Wins plus story beats seen" (`brief:1464`); `p-d667:70` | [read] Picks `meta_loop-3` "Lose all but crumbs of global XP" (`brief:1242`) and "only one difficulty, changed my mind, and its brutal." (`brief:1470`): with chapters gated on wins alone (`p-d667:70`), a losing player stalls (13 §4). |
 | SB57 | LANDS | [ours] Rescue as integration, not victory, and the dark one still met with care in endless mode. Kent: "You can't kill the monster, you can only integrate it."; the film ends as "she soothes it and it retreats to the corner". | [read] 16 F5, F6, F8 | `p-d667:286-289`, `:395`; endless mode (item 28) | [read] Item 172: "we cant stop and fight it" (`brief:1165`); fits. |
 | SB58 | LANDS | [ours] Withhold the last word: the last folder holds a file that will not open, or a name never rendered, and the camera turn carries it alone. Lowery on the unshown note: "Nothing written there would mean anything to the audience at that point, and it would just complicate that moment". The other precedent: one plain statement at the very end (16 F12, F27). | [read] 16 F20, F12, F27 | `p-d667:273-274` | [read] Pick `story_lore-5` "Unnamed until chapter 5" (`brief:1354`). Sources disagree; the call is his (16 §4). |
-| SB59 | PLANT | [ours] Some facts reachable only by looking at his own wrist or hands, never pointed at. Edith Finch's one hopeful fact was found only by players who looked down at her own body. | [read: Wikipedia] 16 F32 | `p-d667:441`, `:449`; design `:256` | [inferred] None. |
+| SB59 | PLANT | [ours] Some facts reachable only by looking at his own wrist or hands, never pointed at. Edith Finch's one hopeful fact was available early only to a player who looked down at her own first-person body. | [read: Wikipedia] 16 F32 | `p-d667:441`, `:449`; design `:256` | [inferred] None. |
 | SB60 | TURN | [ours] The ending counted from small unprompted acts of attention (looking at the photo, rereading a note, opening the door to the knock), never a menu. Silent Hill 2 reads health, a knife examined, a diary read; Omori a garden watered. | [read: fan guide] 16 F26; [read: Wikipedia] 16 F34; [read] 16 F25 | `p-d667:172`, `:298-302` | [inferred] The bible picks the ending by Recognition count; Recognition is rare, so the ending waits on a rare state (13 §4). |
 
 **Cautions the sources raise for the whole bible.**
@@ -136,12 +136,11 @@ all of ¶35 "Left Brain Limitations" and all of ¶36 "Self Knowledge", about 635
 
 **What it gives the fiction.**
 - [read] The title's word mapped to "the Father", as energy at rest that cannot be perceived: ¶18, "it cannot be perceived
-  by consciousness operating in the active universe" (01 F19). [read] The Third Place record of today holds that he chose
-  the title before he knew the sentence (`third_place/2026-11-13.md:44-54`).
+  by consciousness operating in the active universe" (01 F19).
 - [read] A Son who is will, the "motive force" that sets energy moving to create reality (01 F27).
 - [read] A hologram that is "the actual agent of all creation" (01 F27), and a "mirror image of the Absolute" (01 F27).
   [ours] A source for the hunter that mirrors him (01 O18) and for a saver who is not the Absolute at rest (01 O3).
-- [read] "union with Him": the memo's only pronoun for the Absolute is on page 25 (01 F27, F29).
+- [read] "union with Him": page 25 calls the Absolute "Him" (01 F27, F29; 05 F12).
 - [read] A third, the Holy Spirit as a "thought model" that "perfectly reflects the essence or "spirit"" (01 F28). [read]
   In a 2005 world that third is the one that is missing (01 F2-F5). [ours] The missing one could be the love (SB04).
 - [read] ¶36's "Know thyself." on the missing page, next to a reveal that the darkness is his own self (01 O1).
@@ -174,8 +173,8 @@ SB04); ¶19's "their home in the state of infinity(the Absolute)" as the first f
 ## 3. How the father dies: the research laid beside each option
 
 **Status of the call.** [read] `bp_story:48` lists it open, with (a) long illness, (b) sudden and ordinary, (c) never stated,
-and "All three delete 'unsolved'". [read] His pick on the decision page: `story_lore-1` "Sudden and ordinary", his note "One
-day, he was just gone." (`brief:1351-1353`). [read] Item 170 removed the murder (`brief:1156`). This section lays the
+and notes that all three delete "unsolved". [read] His pick on the decision page: `story_lore-1` "Sudden and ordinary",
+his note "One day, he was just gone." (`brief:1351-1353`). [read] Item 170 removed the murder (`brief:1156`). This section lays the
 evidence beside each option as asked and makes no choice; where the evidence bears on how "sudden and ordinary" is shown,
 it says so. [inferred] The child's age matters: the bible makes him 16 in spring 2005 and the death about a year earlier
 (`p-d667:24`, `:348`), so the adolescent findings apply more than the school-age ones (06 §4).
@@ -184,22 +183,23 @@ it says so. [inferred] The child's age matters: the bible makes him 16 in spring
 - For the child: [summary: abstract] forewarning "is not associated with more favorable mental health outcomes than is
   sudden death of a parent" (08 F44). [summary: abstract] In 63 children, prolonged illness went with higher maladaptive
   grief (d = 3.13) and PTSS (d = 3.33) than sudden natural death (08 F47); the groups are small and such large effects are
-  fragile (08 §6). [read] Children "are likely to show the greatest distress just prior to the parent's death" (08 F48).
+  fragile (08 §6). [read] A hospice study's introduction notes that children's distress is likely greatest just before
+  the parent's death (08 F48).
   [read] Having talked with the dying parent about what mattered predicted an okay way to grieve, OR 2.00 (08 F30).
   [summary: abstract] Teens told nothing before the death later distrusted the care more often (RR 2.5; 3.2 if told only
   afterwards) (06 F60).
 - For the mother: [summary: abstract] 58 % of well husbands and 42 % of well wives of terminally ill patients scored in a
   clinical range before the death (08 F8). [summary: abstract] Lengthy illness went with less child-centred parenting
   (08 F46), and caregivers reported less depression than after a sudden natural death (08 F47).
-- Fit with the bible: [inferred] her hospital nights (`p-d667:352`) and the hospital as "the waiting" (`dreamzone3_biomes.md:206`)
-  fit an illness most literally. [read] Deathbed accounts, in which a dead relative comes "to take" the dying, are illness
-  accounts as reported by physicians and nurses (11 F47-F49). [read] It does not fit his note "One day, he was just gone."
-  (`brief:1353`).
+- Fit with the bible: [inferred] her hospital nights (`p-d667:352`) and the hospital as "the waiting"
+  (`dreamzone3_biomes.md:206`) fit an illness most literally. [read] Deathbed accounts, in which a dead relative is said to
+  come to "take them away", are reports by physicians and nurses about dying patients (11 F47-F49). [read] It does not fit
+  his note "One day, he was just gone." (`brief:1353`).
 
 **(b) Sudden and ordinary (his pick).**
 - What "ordinary" most often was: [read] in a sample of 182 youths whose parent died within 24 hours, the deaths were 42
-  suicides, 31 accidents and 51 sudden natural deaths; of the natural deaths, 21 were heart attacks and 18 other heart
-  conditions (06 F44).
+  suicides, 31 accidents and 51 sudden natural deaths (counts of deceased parents); of the natural deaths, 21 were heart
+  attacks and 18 other heart conditions (06 F44).
 - Grief over time: [read] three courses over 33 months: 58.8 % low and falling; 30.8 % high at 9 months and declining
   steadily; 10.4 % high with "virtually no change" at 21 and 33 months (08 F5; 06 F45 as corrected). [read] Natural deaths
   were 53.3 % of the low-grief class and 15.8 % of the persistent-high class; against natural death, accident predicted the
@@ -287,14 +287,15 @@ correction carries the topic finding's mark.
     guide us.'" (02 F54). Not wrong; it now has a documented source (02 O11).
 
 **On the build path, `loop/buildpath_story_lore_2026-11-13.md`:**
-13. `:36` "('no time', the Park, Belief System Territories are later Monroe usage)". [read] "No time" is in print by early
-    1983 (item 2 above); the Park's name is 1994 but the place is in the 1971 book (02 F12, F48-F50); the Territories are
+13. `:36` says "no time", the Park and the Belief System Territories "are later Monroe usage". [read] "No time" is in
+    print by early 1983 (item 2 above); the Park's name is 1994 but the place is in the 1971 book (02 F12, F48-F50); the Territories are
     1994 (02 F47).
 14. `:42` lists the grief literature, Jenkins's essay, Monroe's books, page 25 and beat pacing as unresearched. [read] Now
     researched in 06-08, 12, 02, 01 and 13; the Silverman & Nickman chapter itself is still unread (06 §5; 07 §5).
 15. `:48` option (a) long illness "heavier". [inferred] Not settled by the research (section 3; 08 §4).
-16. `:64` calls the blur-to-line morph dream-like (with the librarian's note at `brief:845-846`). [read] Dream reports run the
-    other way: focusing blurs or changes text (09 F52-F55; 09 §4 and its second reader).
+16. `:64` has letters that "morph from a blur into a line", after the librarian's build note under item 100, "a dream-like
+    morph of the letters" (`brief:845-846`). [read] Dream reports run the other way: focusing blurs or changes text (09
+    F52-F55; 09 §4 and its second reader).
 
 **On the briefs' research-check lines (the librarian's notes, not the author's words):**
 17. `brief:1178` (item 174's check) gives Jenkins as revealing backstory "instead of forcing it", in quotation marks. [read]
@@ -328,14 +329,16 @@ correction carries the topic finding's mark.
 
 **Strains with his own words, not corrections** (the evidence beside them; the call stays his):
 - [read] Item 26: "having a binaural beat play for the real player actually creates a real physiological response"
-  (`brief:175-176`). Controlled EEG studies are mostly negative and home studies found slightly worse scores, while
-  meta-analyses report medium effects with caveats (15 §4). The room's "claim no effect" fits the evidence.
-- [read] Items 104-105 frame the files as "kgb or cia" findings (`brief:865-876`). The memo is an Army (INSCOM) memo released
-  through the CIA's database (04 §4; 14 F3).
-- [read] `p-d667:437-440` opens the hospital door after 3 Recognitions; Recognition odds are put at 0.25 to 0.5 % per
-  full-stress event, an [inferred] figure in `loop/buildpath_stress_2026-11-13.md:45` (13 §4, second reader); and his pick
-  `story_lore-2` is "forget this for now" (`brief:1458`). A critic also faults endings that resolve grief as "too neat"
-  (16 F48), against item 170's "never makes sense" (16 §4).
+  (`brief:175-176`). [read] Most controlled EEG studies found no entrainment and home studies found slightly worse scores
+  (15 F9, F10, F14, F16, F19-F21). [summary: abstracts] Meta-analyses report medium effects, with conflicting results by
+  band (15 F1, F4). [inferred] The room's "claim no effect" (design `:247`) fits the evidence.
+- [read] Items 104-105 frame the files as "kgb or cia" findings (`brief:865-876`). [read] The memo is an Army (INSCOM) memo
+  released through the CIA's database (04 §4; 14 F3).
+- [read] `p-d667:437-440` opens the hospital door after 3 Recognitions, and his pick `story_lore-2` is "forget this for now"
+  (`brief:1458`). [read] Recognition odds are put at 0.25 to 0.5 % per full-stress event, a figure that file itself marks
+  [inferred] (`loop/buildpath_stress_2026-11-13.md:45`; 13 §4, second reader). [read] A critic faults a resolving ending as
+  "too neat" (16 F48); [inferred] a door earned by making sense of the loss sits against item 170's "never makes sense"
+  (16 §4).
 
 ## 5. Do not build on: struck findings someone might reach for
 
