@@ -123,6 +123,7 @@
 - 2026-11-13 12:11 (D), a further idea for the swarms: "I had a stupid idea, what if once everything is in, we do another big sonnett swarm to go
   over our findings, with the purpose of finding something to then let a swarm of opus eat up, but see, we cant be picking the wrong root, we
   need the proper vector like i said before."
+- 2026-11-13 12:13 (D), on when that swarm runs: "like i said wait for all shit in motion to come to rest so we see more of an image first"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer

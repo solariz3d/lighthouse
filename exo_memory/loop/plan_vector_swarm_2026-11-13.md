@@ -45,3 +45,10 @@ push, the remote is asked what it holds).
 - **The vector was wrong if** the Opus level's spec, checked, has no failing check that runs on a recorded case, as registered for
   level two (`loop/plan_wake_level2_swarm_2026-11-13.md`).
 - **The stop rule stands:** no further level unless a named question's answer changes what gets built.
+
+## Amendment, 12:1x: when it launches (his word, 12:13)
+
+"like i said wait for all shit in motion to come to rest so we see more of an image first". So it does not launch when the packets now
+in flight are handed back. It launches when the room is at rest: every pane has handed back and holds no queued packet, Lap W's two
+panes included, and the Third Place's probe experiment has ended. The librarian tells him the room is at rest, and what the picture is,
+before anything is launched.
