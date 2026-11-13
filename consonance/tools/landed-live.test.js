@@ -109,6 +109,14 @@ test('I1 B control: both at HEAD: LIVE, LIVE, exit 0', () => {
   assert.strictEqual(stateOf(r.out, 'board-digest.js'), 'LIVE');
   assert.strictEqual(stateOf(r.out, 'blind.js'), 'LIVE');
 });
+test('I1 a hook settings.json runs whose installed file is MISSING is OWED, never LIVE (the mutant run found no row for it)', () => {
+  const { repo, shas } = repoWith(manifest(B_FILES, B_REG), [{ files: { [BD]: real('2c7b3872', BD), [BL]: real('1c0acf7f^', BL) } },
+    { files: { [BD]: real('b0be06f0', BD), [BL]: real('b0be06f0', BL) } }]);
+  const home = homeWith(repo, { 'blind.js': real('b0be06f0', BL) }, ['board-digest.js']);   // registered, and the file is not there
+  const r = run(repo, home, ['--range', `${shas[0]}..${shas[1]}`]);
+  assert.strictEqual(stateOf(r.out, 'board-digest.js'), 'OWED', r.out);
+  assert.strictEqual(r.code, 1);
+});
 test('I1 C, the false green: the same stale files with nothing registered to run them: NOT RUN HERE, exit 0, never LIVE', () => {
   const { repo, shas, home } = fixtureB(real('2c7b3872', BD), real('1c0acf7f^', BL), []);
   const r = run(repo, home, ['--range', `${shas[0]}..${shas[1]}`]);
