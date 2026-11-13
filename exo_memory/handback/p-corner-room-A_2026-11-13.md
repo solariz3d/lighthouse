@@ -81,8 +81,8 @@ the careful body faster than the careless one only by making it hit walls".
 5. **Printable from a run:** `dz-chase run --trace` prints, for each chaser, its corner's room, radius and speed as it heads into one.
 
 **The law, as it stands today** (for the hand-back's required statement; read at `dcbfd3c`):
-- `corner_speed` → `speed_for_radius` (`chaser.cpp:46-58`): the fastest `v` with `v / turn_rate(v) ≤ radius`. `turn_rate` falls linearly from
-  `turn_slow_deg` at rest to `turn_fast_deg` at top speed (`chaser.cpp:160-163`).
+- `corner_speed` → `speed_for_radius` (`chaser.cpp:47`, checked by grep; first written ":46-58", from memory): the fastest `v` with `v / turn_rate(v) ≤ radius`. `turn_rate` falls linearly from
+  `turn_slow_deg` at rest to `turn_fast_deg` at top speed (`chaser.cpp:169`, checked by grep; first written ":160-163", from memory).
 - So today it is a **turn-rate law**. **There is NO grip figure in the chase:** no μ, no lateral-acceleration limit.
 - His choice, item 168, is **H2: `min(V, √(μ·g·R))`**, grip-bound only, μ 1.0–1.33 (E's L187 §9). Today's law and H2 differ in form. Whether the
   lap moves to H2 is not in this registration, and I would ask before changing the law itself.
