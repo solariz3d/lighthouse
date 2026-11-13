@@ -91,6 +91,9 @@
   the letter's falsifier reads: `librarian/TO_THE_NEXT_ONE_go_to_the_source.md`, "Falsifier")
 - 2026-11-13 09:02 (D), to the librarian, in the awareness stretch: "I have this feeling, we should always keep you, orch, and third place on
   Xhigh reasoning for more awareness of embodiment" (the three seats that persist; the panes are not named in it)
+- 2026-11-13 09:05 (D), his correction, to the librarian's line "the three of us are the seats whose job is holding the whole room":
+  "correction, ur job is to hold the whole room" (his catch; the seat's own instructions say the same: "the only job here that requires
+  holding the whole corpus")
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
