@@ -104,3 +104,7 @@ His words: "gets caught on walls and door ways too much … able to turn way too
   - the largest turn rate at each speed stays inside the cited curve-running limit;
   - the catch rate is reported against L170's bars, as a price, not a target: his complaint is how it moves, and the catch is read alongside.
   - His eye on a run is the last bar.
+
+## Correction 2026-11-13 03:2x (C caught it, `handback/p-l191-arm-shape-C_2026-11-13.md`, last section)
+- **Lap 2 step 4 cited Valve `NextBotBodyInterface.h:73` (`ENTINDEX_PLAYBACK_RATE`) for per-chaser variation. That flag is declared and never used in the public SDK** (C grepped 3,569 files at e1f1fd4).
+- **What Valve does use:** a random rate per entity: `npc_antliongrub.cpp:627-628` ("Add some variation because we are often in large bunches", `RandomFloat(0.8, 1.2)`) and `npc_fastzombie.cpp:1642-1646` (0.9 to 1.1). The stride variation cites those.
