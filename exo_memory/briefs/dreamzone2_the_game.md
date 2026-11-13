@@ -1212,3 +1212,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 181. 2026-11-13 03:31, on the sounds: "i think we shouldnt implement our own sounds from scratch, we could use an open source, high quality synth or something beyond your native sound capabilities."
      - **Research check, same turn (one search; leads, to be read properly):** DaisySP core is MIT and usable in closed and commercial projects; its Csound-derived modules are split out as DaisySP-LGPL (LGPL-2.1). sfizz, an SFZ sample player, is BSD-2-Clause, with bundled parts under their own licences, and its repository is archived. Mutable Instruments module code (Plaits, Rings, Elements) is recalled as MIT, **not verified**. Many well-known synths (Surge XT, Vital, ZynAddSubFX) are GPL, which matters for a game that links them.
      - **What it changes:** L192 timing, force and mix layer stays (when a footfall sounds and how loud); the voice behind it is swapped for a sourced engine or recorded material. A research scout was launched the same turn (`loop/sound_sources_scout_2026-11-13.md`).
+182. 2026-11-13 03:4x, his answers after the swarm (three of four; the first answer slot was taken by a pane ring, so it is NOT his and is asked again):
+     - **The apartment: "Freeze the apartment (Recommended)".** New generator structure goes into the hotel, school and hospital first.
+     - **Designed pieces (item 93): "Room drafts, you judge (Recommended)".** The room drafts shape-only layouts and he judges rendered pictures before any land.
+     - **More builder panes: "Two more (Recommended)".** Lanes: `loop/plan_two_more_panes_2026-11-13.md`.
+     - **Still open:** whether the generator path moves up his queue (it sits at step 13).
