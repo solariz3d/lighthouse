@@ -463,6 +463,9 @@ $drift  = 0   # exists at the destination and the bytes differ
 $absent = 0   # not at the destination at all - a different fact, and it used to print as drift
 $held   = 0
 $holdExpired = 0   # Lap I, I7: a dated hold past its date; red in -Check's exit
+# A DATED HOLD HAS ITS OWN COUNT (the librarian's ruling, 2026-11-13): `$held` is the two-way conflict alone, and its summary line tells the
+# reader to resolve by hand and drop Hold, which, said of a dated hold, read as an order to drop K3's ruled holds on D.
+$heldDated = @()   # "<leaf> until <date>", one per dated hold in force here
 foreach ($f in $syncFiles) {
   $src = Join-Path $repo $f.From
   $dst = Join-Path $dest $f.To
@@ -477,7 +480,7 @@ foreach ($f in $syncFiles) {
   $hold = $heldLeaf[(Split-Path -Leaf $f.To).ToLower()]
   if ($hold) {
     Write-Host (Format-Hold $f.To $hold) -ForegroundColor $(if ($hold.Expired) { 'Red' } else { 'Magenta' })
-    if ($hold.Expired) { $holdExpired++ } else { $held++ }
+    if ($hold.Expired) { $holdExpired++ } else { $heldDated += ("{0}{1}" -f (Split-Path -Leaf $f.To), $(if ($hold.Until) { " until $($hold.Until)" } else { '' })) }
     continue
   }
 
@@ -644,6 +647,9 @@ foreach ($u in $dstUnclaimed) { Write-Host ("                     {0}" -f $u) -F
 if ($held -gt 0) {
   Write-Host ("`n{0} file(s) HELD - a real two-way conflict this script refuses to decide." -f $held) -ForegroundColor Magenta
   Write-Host "Resolve by hand, then drop Hold from the manifest entry." -ForegroundColor Magenta
+}
+if ($heldDated.Count -gt 0) {
+  Write-Host ("`n{0} file(s) HELD BY A DATED HOLD on this machine, by ruling: {1}. Not copied and not registered here, on purpose; each HELD line above names its ruling." -f $heldDated.Count, ($heldDated -join ', ')) -ForegroundColor Magenta
 }
 
 if ($Check) {
