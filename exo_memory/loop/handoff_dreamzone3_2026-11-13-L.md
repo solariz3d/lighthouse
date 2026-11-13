@@ -46,13 +46,17 @@ items 183 to 190 are today's) and from each pane's "WHERE IT STOPS" section name
 - "make the flashlight beam tighten button F". Today the beam tightens while a separate focus action is held (`game/world/stage.cpp:686-690`) and F turns the hand light on and off (`game/world/hud.cpp:355`). Proposed, ours, to confirm with him: a tap of F is on and off, holding F tightens. Small; red first; the controls list in `hud.cpp` changes with it.
 - **The timer wording: taken as 2, "It is coming" with the countdown** (his "2 is fine, its coming"). Confirm if in doubt; the other reading is that 2 answered where he tested the exploit.
 
+## His pick of the hunter’s voice, for D to build (item 192, 07:28)
+
+- "recorded heavy hits, three to a step, is almost perfect, good for now": footfall one of E’s second pass (F3c in `handback/p-l199-voices-E_2026-11-13.md`, section 8b): stomp one’s boom, shortened, under recorded heavy impacts (Kenney, CC0), three hits to a step at 0, 45 and 105 ms, five takes in rotation, a 20 ms gap before each landing.
+- E on D: move it from the offline tools (`l199-offline-tools` 92be868, parked, never lands) into `audio/` on `l192-footsteps` (d8f77ba), red first; the takes and a CREDITS line with them; then the game wiring C approved; then land through the train. The clip he judged is on L only.
+
 ## Open with him
 
 1. **The late timer's words:** "in 45.8 s it comes for you itself", or "It is coming 0:45.8". Both stills are on L only (below).
 2. **Does the flashlight take one of the six ability slots** (item 40 against his note on `abilities-4`).
 3. **"Parks close in overtime":** built as Parks no longer protecting, with the geometry kept. He has not said whether he meant
    them sealed.
-4. **The stomp's second pass** is for his ear when it lands.
 5. **Sprint speeds:** his two notes differ (10 and 12 m/s at 10:21Z; 8 and 10 m/s at 11:31Z). Taken as the later.
 
 ## Research that landed today (read the file before building from it)
