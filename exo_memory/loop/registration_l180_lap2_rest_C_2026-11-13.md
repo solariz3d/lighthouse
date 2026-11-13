@@ -49,7 +49,7 @@ fetched files). At 0.8 a tick the half-life is 26 ms.
 
 - **Source:** Valve's overlay fade (`BaseAnimatingOverlay.cpp:162-188`, read at L192): a gesture's weight rises and falls
   over its own clock as `3w^2 - 2w^3`.
-- **Only on the chase's own events:** a refused step (`chaser.cpp:418-421`) and a scrape (`chaser.h:98`, `scraped`),
+- **Only on the chase's own events:** a refused step (`chaser.cpp:419-423` at main 682e699) and a scrape (`:415`; the field `chaser.h:98`),
   which C traced at L180 lap 1. The gesture's shape (what the trunk and head do, how long) has no readable source; it
   will be marked OURS and shown to him as a clip before it lands.
 - **Red first:** on a refused step the drawn trunk pitches by the gesture, its weight 0 before the event, rising and
