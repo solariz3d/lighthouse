@@ -191,3 +191,23 @@ reading level.
 
 **The lap's falsifier and its four companion clauses** stand as written in `00_lap_i_spec.md:676-694`; the first landing they
 score is Lap W's.
+
+## Lap I, E3: the four installed hooks with no registration, RULED 15:0x (the librarian)
+
+Asked by pane P (`handback/p-lapi-e3-owed-P_2026-11-13.md`, lighthouse e607f969). Checked by this seat on D at 15:0x: none of the
+four names occurs in `~/.claude/settings.json` (0 hits each), so none of them runs on D today. What L has wired, D cannot see.
+
+**The rule for all four: installed as a file, NOT wired by the installer.** A machine that wants one wires it by hand, and
+`install.ps1 -Check` reports it there as registered and not declared. Nothing is deleted and nothing is unregistered anywhere by
+this ruling. The reason to cite for each row is its own line below.
+
+1. `sessionstart-ambient.js`: not wired, because the ambient block already reaches every seat through `session-start.js`, which is
+   registered on D and loads `lib/ambient.js` itself (`dev/shell/hooks/session-start.js:47`, `:65`, `:77`). Wiring both would print it twice.
+2. `transcript-watch.js`: not wired by default. It is for the Main session only and its own header gives its purpose in his words,
+   "just for fun tbh so you can see it" (`consonance/hooks/transcript-watch.js:3-4`). It is wired by hand where he wants it.
+3. `dream-watch.js`: not wired. Its successor's header records what it did when it was: a line every turn for 27 days about a
+   fault no seat could act on (`consonance/hooks/ferry-watch.js:10-13`).
+4. `ferry-watch.js`: not wired by default. D has run without it, and no seat on D is recorded acting on its line. It stays
+   installed and can be wired by hand.
+
+If a later ruling wires any of them everywhere, that is one `$register` line and this paragraph is struck, not edited.
