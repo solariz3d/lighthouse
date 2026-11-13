@@ -217,3 +217,7 @@ lock, while **his game was running on this GPU** (the Riot client, from 14:04), 
 - `world_app_tests`' flee bot: chase `c5fb2b3e0165f6d1` → **`e14a93fe53887f37`**; simulation `87bb91eb43102d0e` → **`49dfe0821d55d70d`**. The simulation moves too,
   because the bot runs from a hunter that now finds a standing player.
 - **Every hunter's chase fingerprint moves with this fix,** as section 4 said. No chase row other than the sprinter's (already red) went red.
+
+**Correction to §7 (D, 15:24 local, `date` by the shell):** the tell row's reading "B fixes the route" is WRONG and superseded. E answered that the row measures
+the whole mix; E owns it and has re-registered it. It is neither the kit's fault nor B's route until E's one run says so (the chair's 21:23Z note). The
+four timing rows are load, not verdicts, and are owed a quiet re-read before the kit's suite counts toward its landing.
