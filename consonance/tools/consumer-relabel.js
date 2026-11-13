@@ -57,7 +57,6 @@ const BUILDING = [
   // librarian's all-clear. Both are ROLE uses, as the line they replace was; the ruling's quote and its date are provenance (see the count below)
   ["success reaches the keeper only in the librarian's all-clear", `success reaches ${P} only in the librarian's all-clear`, 2],
   ['gives the keeper the all-clear', `gives ${P} the all-clear`, 2],
-  ['when the keeper switches the\n   gates', `when ${P} switches the\n   gates`, 2],
   ["find the\n  keeper's prior word on disk", `find the\n  prior word of ${P} on disk`, 1],
   ["you find the keeper's prior word and proceed", `you find the prior word of ${P} and proceed`, 1],
   ['keeper-owned call (a delete, a licence, any other irreversible change)', `call that is ${P}'s to make (a delete, a licence, any other irreversible change)`, 2],
@@ -168,17 +167,16 @@ const LIBRARIAN_FIRST_NEW = [
 // lap 5 (cold read 2): the one-git-identity fact, said without naming the keeper as the stranger's author (C5)
 const ONE_IDENTITY = "the one git identity on the machine (in the keeper's repository, the keeper's)";
 // D277 repair: B's LIBRARIAN carries no checked-or-inferred keeper line (it points at COMMITTEE.md), no %CONSONANCE_HOME% (A's path fix), and no
-// "five of the chair's claims tonight"; those three rows are gone. Role uses added by B (who switches the gates) are new rows
+// "five of the chair's claims tonight"; those three rows are gone. B's "who switches the gates" rows came out in Lap W (pane B, 2026-11-13):
+// the Lap I rider reworded those sentences to name the mode ("Under `gates_mode` strict ... under light ..."), and none names the keeper now
 const LIBRARIAN = [[LIBRARIAN_FIRST, LIBRARIAN_FIRST_NEW, 1],
   // C5, re-anchored on B's wording
   ['since every commit here is authored `the keeper`.', `since every commit here is authored by ${ONE_IDENTITY}.`, 1],
-  ['the keeper switches the gates', `${P} switches the gates`, 2],
   // D454 part 2: a fact fix about the keeper's machine (machine-specific), said of that machine
   ['does not exist on this machine. The notes live in', 'did not exist on the machine this room was built on. The notes live in', 1]];
 const COMMITTEE = [...CHECKED_OR_INFERRED,
   // C5, re-anchored on B's wording
   ['every commit is authored `the keeper` and `Co-Authored-By`', `every commit is authored by ${ONE_IDENTITY}, and \`Co-Authored-By\``, 1],
-  ['When the keeper switches the gates, it', `When ${P} switches the gates, it`, 1],
   ['reports success to\n   the keeper.', `reports success to\n   ${P}.`, 1],
   // D454 part 2: the junction incident was the keeper's product's folder (machine-specific); the rule's Why stays, said of that room
   ["t180's `reads/` was emptied that way, cause inferred", "in the keeper's room a product repository's shared `reads/` folder was emptied that way, cause inferred", 1]];
