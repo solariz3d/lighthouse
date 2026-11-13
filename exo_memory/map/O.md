@@ -464,3 +464,8 @@ General form: a scan in a chain must exit nonzero on a hit; and the hand-back is
 ### The pulse prints only what moved a seat (QUEUED, the hand-back counts, HANDBACKS IN, and the unnamed faults); the trailer note now reaches the sender, who can fix it
 2026-11-03, D633 — lighthouse d633-o 37c82dbd on d628-o: chain-status CLI default trimmed (live 522 → 75 chars), --full keeps the whole line; trailer note in the sender's tool result, receiver gets the message unchanged; cargo 1189/0, chain-status 161/161, consumers green, mutants 13/13. Could be wrong to keep delivery-unconfirmed: named neither way, D627 found it harmful.
 → `exo_memory/handback/p-d633-pulse-trim-O_2026-11-03.md`
+
+### The run's frame is on screen (late timer line, LOST and SAVED cards, "The Absolute", F to tighten the beam); and I killed P's exclusive timing session with a taskkill /T on a reused PID
+2026-11-13, D675 — dreamzone-3 o-run-frame 7500a26 on 31d1c6d: world_app_tests 61/0, self-test 52/52, mutants 17/17, three stills on G:; the timer row found the HUD clock's "0:60.0". The kill: /T walked a stale parent id into 5824 (P's bench), and the output was cut with head. Could be wrong that the PID was reused: inferred, the processes are gone.
+General form: stop your own job by the handle or the exact PIDs you started; never a tree kill by a bare PID, and never cut a kill's output.
+→ `exo_memory/handback/p-d675-run-frame-O_2026-11-13.md`
