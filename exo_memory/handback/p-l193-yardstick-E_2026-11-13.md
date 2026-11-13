@@ -195,9 +195,12 @@ the run). Each run ends with a clean rebuild, and a check that `tools/yardstick`
   - `cardan_order` was caught by row 12 (`the_cardan_order_reads_back_three_angles_set_at_once`).
   - `hand_dropped2` was caught by row 8 (`a_pose_in_a_world_handed_the_other_way_reads_the_same`).
   - Clean rebuild 12 / 0; restored == HEAD.
-- **The eight caught at b90eda9 were not rerun at 0b8a8d1.** The whole set is now running again at 0b8a8d1
-  (`scratchpad/l193/mut193c.txt`), so the commit that lands has one count of its own. The yardstick does not land until
-  that count is in.
+- **The whole set at 0b8a8d1, the commit that would land (12 rows):** applied 10 / caught 10 / NOT APPLIED 0.
+  checked: `scratchpad/l193/mut193c.txt`, run 05:2x-05:4x local behind B's lock, gated on memory.
+  - Each mutant was caught by the row named for it above. `hand_dropped2` stands in for `hand_dropped`.
+  - Clean rebuild 12 / 0; restored == HEAD.
+  - This is the count the landing carries. The two earlier runs are kept above as the record of the survivor and the
+    mutant that did not build.
 
 ## 8. Corrections and slips (mine)
 
