@@ -14,6 +14,14 @@ No dependencies; standard library only.
 - **`dupe-scan.js`** — blocks of JavaScript written twice: 8+ code lines in 2+ places, as clusters with paths and line ranges,
   and the duplicated share per tree, test and non-test apart (`node consonance/tools/dupe-scan.js <label>=<dir> … [--json]`).
   Reads and prints only. First run: D554, `exo_memory/handback/p-d554-dupes-E_2026-10-30.md`. See the header.
+- **`landing-train.js`** — the landing train (L194, `exo_memory/loop/plan_l194_landing_train_2026-11-13.md`). Panes mark a
+  branch READY; the train merges every READY branch in its own worktree, checks the batch under the exclusive hold and the
+  memory gate, and when it is green scans (failing closed: the push-gate hook does not see a script's push), fast-forwards
+  main, pushes and reads the push back. A red batch sets its newest branch aside and retries; a conflict is named by file.
+  The checked build is staged at the landing and promoted into the main checkout only when no game runs. Its config is a
+  machine's paths and lives in the data folder (`landing-train.config.<repo>.json`); dreamzone-3's check and game guard are
+  `landing-train-dz3-check.cmd` and `landing-train-dz3-guard.cmd`. Rows: `landing-train.test.js`; each row seen red by
+  `landing-train.mutants.js`. See the header.
 
 ---
 
