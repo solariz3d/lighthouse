@@ -178,3 +178,53 @@ and the `MoveReach` fields. None changes a world: the fingerprint reads none of 
 ever set. The pin proves it when it runs.
 
 - **BUILT and the off path PROVEN (D, ~15:5xZ):** the list above is dreamzone-3 `gen-lap2-kit` **`0df4c77`** (local; not pushed; A sees it in the shared repository). checked: `gen_tests` at its content, 64 of 65, `the_default_world_equals_the_pin` GREEN (all 384 chunks equal to the pin captured before any generator lap, so `GenParams{}` IS the generator before the kit) and `every_kit_field_is_off_by_default_and_on_in_the_shipped_world` green (my scratchpad `d665b\d4_gen.txt`). The one red was the new kit pin, empty by design; its printed values are now pasted into `kKitPin`. **The list did not grow.** The drop harness: crash reproduced at 192b50c (exit -1073741819), green after its fix (51,394 attempts, 0 unintended; `d4_drop_before.txt`, `d4_drop_after.txt`). The whole suite and both self-tests are running now.
+
+## D, 2026-11-13 ~16:4xZ: what the kit's world does to three margin rows, split by part (for rulings); nav's pair; the self-test
+
+Measured with scratch rows (never committed) that build arenas with the kit's fields set by `set_gen`. Outputs are in my scratchpad `d665b\`:
+`d4_split.txt`, `d5_diag.txt`, `d6_sprint.txt`, `d6_cells.txt`, `d7_reach.txt`, `d7_sprint.txt`, `d7_nav.txt`, `d7_world.txt`.
+
+**1. chase `the_hunter_always_reaches_a_player_who_stands_still_in_connected_space`** (bar: the slowest within 2.5x the planned time):
+
+| arena seed | off | chutes only | rating only | door only | **all on** | all but chutes | all but rating | all but door | all but buy rule |
+|---|---|---|---|---|---|---|---|---|---|
+| 3 | 1.87 | 1.79 | 1.73 | 1.84 | **2.68** | 1.73 | 1.79 | **2.68** | 1.93 |
+| 5 | 1.95 | 1.95 | 2.29 | 2.39 | 2.02 | | | | |
+| 9 | 1.74 | 1.55 | 1.71 | 1.74 | **2.98** | 1.69 | 1.59 | **2.98** | 1.76 |
+
+**2. chase `a_sprinter_that_does_not_brake_for_corners...`** (bar: the careful body sooner on 72 of 96):
+
+| | off | chutes only | rating only | door only | **all on** | all but chutes | all but rating | all but door | all but buy rule |
+|---|---|---|---|---|---|---|---|---|---|
+| careful sooner | 85 | 85 | 81 | 85 | **70** | 80 | 85 | **70** | 84 |
+
+**What the splits say:** both rows go red only when the chutes are kept by the true buy rule, that is, with the chutes, the buy rule and the
+kit's hunter all on. Take any one of those out and both rows are back inside their bars. **His door rate plays no part** (all but door gives the
+same numbers as all on). Chutes alone are judged by the old rule, keep few, and change nothing. So the cause is the number of kept chutes and
+their runs in the world, not one bad piece. inferred, from the same numbers: it is the ruled kit as a whole.
+
+**What the slow reach looks like** (seed 3, kit on, `d5_diag.txt`): the hunter covers the planned way in about the planned time, then stays
+within 3 to 5 m of the standing player for 9 to 12 s with many blocked ticks before the catch (seed 3: 89 blocked ticks, 2.68x; seed 9: 125,
+2.98x). The player there stands in a room whose way in is one doorway off a lane (`d6_cells.txt`), and **no Park cell lies within five cells on
+three storeys.** So it is not a chute beside the spot. inferred: a chase-side weakness at a doorway into a room, which the kit's world exposes
+more often. Not established.
+
+**Not changed, for rulings:** both are chase rows (A's). Options as I see them:
+- (a) the chase gets through that doorway (A's area);
+- (b) the rows stand in a fixed world, as D658 pinned mechanics rows to the apartment arena, for example the off world they were made on;
+- (c) his word on the kit as it is.
+
+My view: (a) first. A hunter that stands blocked for ten seconds three metres from a standing player is something he would see.
+
+**3. nav `the_way_there_is_about_as_quick_as_the_way_back`:** the worst pair **does not cross a chute** (`d7_nav.txt`): a (−1.5, 3.5, 10.5) to
+b (1.5, 0, 22.5), there 6.25 s / 40.7 m in 10 points, back 5.09 s / 32.6 m in 24 points. Neither way uses a link, and no Park cell lies within a
+cell of either path. Per the ruling: **reported, the bound left alone.** It stays red (22.9% against 20%), for its owner.
+
+**4. The world self-test:** with the route fix, "a reprieve holds for its time, and then the hunter comes in" now passes. "Its tell is a light
+... and a sound that grows" still fails, and the route print shows why (`d7_world.txt`): **the scripted player entered by a three-storey chute
+fall** (from y 0 to −10.5), so the "quiet" second after entering still holds the landing. The row assumes "the sound of going in has died away by
+then", which is true of walking in. **Fix (routing, not the check):** a route counts a chute's fall as a drop, so `kAllowOnFoot` ("what needs no
+move but walking") does not take one (`world/route.cpp` `allowed`). Running now.
+
+Also red in that run, and NOT the kit's: "a fall at terminal speed ... no tick had to wait for a chunk" (2 waits, 28.9 ms), the load-sensitive
+row, with C's and A's heavy runs going.
