@@ -401,7 +401,7 @@ async function postBoardVia(url, text) {
 }
 /** Name an idle holder: one log line here, and a board line posted by a detached child (so the wait never blocks on the network). */
 function reportIdle(h, info, { log, dataDir, env = process.env, spawnFn = require('child_process').spawn }) {
-  const text = `heavy-run: IDLE HOLDER — ${describe(h)}: its whole process tree (${(info.names || []).join(', ') || '?'}) used ${info.cpu.toFixed(2)} s of CPU in the last ${Math.round(info.minutes)} min. A shell started as \`cmd C:/\` by Git Bash looks like this. Reported only: nothing is stopped or released (L202).`;
+  const text = `heavy-run: IDLE HOLDER — ${describe(h)}: its whole process tree (${(info.names || []).join(', ') || '?'}) used ${info.cpu.toFixed(2)} s of CPU in the last ${Math.round(info.minutes)} min. An idle shell that Git Bash started with its \`cmd /c\` rewritten into a drive argument looks like this. Reported only: nothing is stopped or released (L202).`;
   log(text);
   const url = seatMountUrl({ dataDir, env });
   if (url) spawnFn(process.execPath, [__filename, '--post-board', url, text], { detached: true, stdio: 'ignore', windowsHide: true }).unref();

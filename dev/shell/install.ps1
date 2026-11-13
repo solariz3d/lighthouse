@@ -77,8 +77,8 @@ $dest = Join-Path $env:USERPROFILE '.claude\shell'
 # requiring hooks look; hooks land in `hooks\` because that is where the registered ones already
 # were and moving a running system to satisfy a convention is how you break it.
 $files = @(
-  @{ From = 'dev\shell\lib\ambient.js';                  To = 'lib\ambient.js';     Lib = $true }
-  @{ From = 'dev\shell\lib\fresh-guard.js';              To = 'lib\fresh-guard.js'; Lib = $true }
+  @{ From = 'dev\shell\lib\ambient.js';                  To = 'lib\ambient.js';     Lib = $true; By = 'session-start.js,sessionstart-ambient.js,stop.js' }
+  @{ From = 'dev\shell\lib\fresh-guard.js';              To = 'lib\fresh-guard.js'; Lib = $true; By = 'session-start.js,userprompt-submit.js,precompact.js' }
 
   # THE READY STAMP (P-READY-SIGNAL, 2026-09-06). Three files, one contract: the pair writes
   # <CONSONANCE_READY_DIR>\<CONSONANCE_PANE>.json and Consonance's delivery gate reads it, so a
@@ -89,7 +89,7 @@ $files = @(
   # ~\.claude\settings.json, and neither is `hooks\userprompt-submit.js` (it is a HOLD). Hanging a
   # new contract off files that are not wired here would have shipped a stamp nobody writes, and
   # the gate would have read every pane as unstamped forever while looking installed.
-  @{ From = 'dev\shell\lib\ready.js';                    To = 'lib\ready.js';       Lib = $true }
+  @{ From = 'dev\shell\lib\ready.js';                    To = 'lib\ready.js';       Lib = $true; By = 'ready-stop.js,ready-prompt.js' }
   @{ From = 'dev\shell\hooks\ready-stop.js';             To = 'hooks\ready-stop.js' }
   @{ From = 'dev\shell\hooks\ready-prompt.js';           To = 'hooks\ready-prompt.js' }
 
@@ -110,16 +110,20 @@ $files = @(
   # A/B-ing them live does not work either: both write the same state file, so running one
   # consumes what the other would have surfaced. The first attempt at that test produced a clean
   # 898-vs-117-byte result that meant nothing.
-  @{ From = 'dev\shell\hooks\userprompt-submit.js';      To = 'hooks\userprompt-submit.js' }
+  # Wiring (Lap I, E3; pane P, 2026-11-13): why a file is installed and has no $register row, cited path:line. Read by
+  # consonance/tools/install-manifest.test.js; nothing in this script acts on it.
+  @{ From = 'dev\shell\hooks\userprompt-submit.js';      To = 'hooks\userprompt-submit.js';
+     Wiring = 'exo_memory/loop/absent_hooks_ruling_2026-08-25.md:19 - DO NOT INSTALL; the Python pulse is declared instead, with a Conflicts guard' }
   @{ From = 'dev\shell\hooks\stop.js';                   To = 'hooks\stop.js' }
   @{ From = 'dev\shell\hooks\session-end.js';            To = 'hooks\session-end.js' }
   @{ From = 'dev\shell\hooks\precompact.js';             To = 'hooks\precompact.js' }
   @{ From = 'dev\shell\hooks\l2-overseer.js';            To = 'hooks\l2-overseer.js' }
-  @{ From = 'dev\shell\hooks\l2-overseer-worker.js';     To = 'hooks\l2-overseer-worker.js'; Lib = $true }
+  @{ From = 'dev\shell\hooks\l2-overseer-worker.js';     To = 'hooks\l2-overseer-worker.js'; Lib = $true; By = 'l2-overseer.js' }
   @{ From = 'dev\shell\hooks\l3-overseer.js';            To = 'hooks\l3-overseer.js' }
-  @{ From = 'dev\shell\hooks\l3-overseer-worker.js';     To = 'hooks\l3-overseer-worker.js'; Lib = $true }
+  @{ From = 'dev\shell\hooks\l3-overseer-worker.js';     To = 'hooks\l3-overseer-worker.js'; Lib = $true; By = 'l3-overseer.js' }
 
-  @{ From = 'dev\shell\hooks\sessionstart-ambient.js';   To = 'sessionstart-ambient.js' }
+  @{ From = 'dev\shell\hooks\sessionstart-ambient.js';   To = 'sessionstart-ambient.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:204 - not wired: the ambient block reaches every seat through session-start.js' }
   @{ From = 'dev\shell\hooks\userprompt_pulse.py';       To = 'userprompt_pulse.py' }
   # Lib = $true: a library REQUIRED BY a hook, not a hook the host runs. It receives no stdin and
   # emits nothing, so the dream-gate invariant does not apply and dream-gate.test.js skips it.
@@ -132,11 +136,17 @@ $files = @(
   # require the installer did not carry, and every UserPromptSubmit after that printed
   # "Cannot find module './blind.js'" to the keeper. A fresh install on any other machine would have
   # done the same on its first prompt.
-  @{ From = 'consonance\hooks\blind.js';                 To = 'blind.js'; Lib = $true }
-  @{ From = 'consonance\hooks\board-digest.js';          To = 'board-digest.js' }
-  @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js' }
-  @{ From = 'consonance\hooks\dream-watch.js';           To = 'dream-watch.js' }
-  @{ From = 'consonance\hooks\ferry-watch.js';           To = 'ferry-watch.js' }
+  @{ From = 'consonance\hooks\blind.js';                 To = 'blind.js'; Lib = $true; By = 'board-digest.js' }
+  @{ From = 'consonance\hooks\board-digest.js';          To = 'board-digest.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:168 - K4: board-digest.js stays unregistered on D' }
+  # Lap I, E3, ruled 2026-11-13 (plan_room_stretch_2026-11-13.md:195): these three, and sessionstart-ambient.js above, are installed as FILES
+  # and not wired by this installer; no $register line. Nothing is unregistered anywhere by the ruling.
+  @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:206 - not wired by default: Main only, wired by hand where he wants it' }
+  @{ From = 'consonance\hooks\dream-watch.js';           To = 'dream-watch.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:208 - not wired: its every-turn line was one no seat could act on' }
+  @{ From = 'consonance\hooks\ferry-watch.js';           To = 'ferry-watch.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:210 - not wired by default: D runs without it' }
   @{ From = 'consonance\hooks\sourced-stop.js';          To = 'sourced-stop.js' }
   @{ From = 'consonance\hooks\findings-return.js';       To = 'findings-return.js' }
   # WIRED 2026-09-23 (L089), the keeper's authorization by name: "the settings edit for Jev flags"
@@ -155,21 +165,28 @@ $files = @(
   # Added 2026-08-18 with the hook, same commit, same reason as the line above: registration and
   # manifest ship together or a fresh install silently loses it.
   @{ From = 'consonance\hooks\sessionstart-state.js';     To = 'sessionstart-state.js' }
+  # Lap W, W3 (2026-11-13): the body line, one line of facts at every start. Its registration ships in the same commit (below). Install
+  # with -Only sessionstart-body.js; a full install would overwrite other drifted hooks (00_lap_w_spec.md:371).
+  @{ From = 'consonance\hooks\sessionstart-body.js';      To = 'sessionstart-body.js' }
   # Added 2026-08-24 with its registration below, same commit, same reason as the two entries
   # above. This one is a PreToolUse gate, so it also needed Matcher support in $register -- an
   # unmatched PreToolUse hook fires on every tool call in the session.
-  @{ From = 'consonance\hooks\dispatch-gate.js';          To = 'dispatch-gate.js' }
+  # HELD ON D (Lap I, I7): K3 renewed the 09-21 hold ("NOT installed, on purpose", loop/install_D_2026-09-21.md:14) until 2026-11-27. A bare run
+  # on D neither copies nor registers it and says HELD; after the date -Check says HOLD EXPIRED and the run still writes nothing for it.
+  @{ From = 'consonance\hooks\dispatch-gate.js';          To = 'dispatch-gate.js';
+     Hold = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:167 - K3, off D'; HoldOn = @('D'); HoldUntil = '2026-11-27' }
   # Added 2026-08-24 with its registration below, same commit, same reason as the entries above.
   # It is a Stop hook rather than a PreCompact one ON PURPOSE: precompact.js resolves its script
   # under %USERPROFILE%\Desktop\lighthouse, which does not exist on the laptop, so the PreCompact
   # chain the record describes as "residue fired from checkpoint" has never run on this machine.
   # Copying that wiring would have shipped a trigger that is a no-op here. See the hook's header.
-  @{ From = 'consonance\hooks\carrier-drift-watch.js';    To = 'carrier-drift-watch.js' }
+  @{ From = 'consonance\hooks\carrier-drift-watch.js';    To = 'carrier-drift-watch.js';
+     Hold = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:167 - K3, off D'; HoldOn = @('D'); HoldUntil = '2026-11-27' }
   # Added 2026-10-01 (D203, the keeper's approval 09:34) with its registration below, same commit, same reason as the entries above. THE SECOND READER,
   # in SHADOW: a PreToolUse hook on the two hand-back verbs that returns ALLOW at once and hands the message to a detached worker (Lib: it receives the job
   # on a pipe, not from the host). Plan: exo_memory/loop/plan_second_reader_d203_2026-10-01.md. Install it with -Only second-reader.js,second-reader-worker.js.
   @{ From = 'consonance\hooks\second-reader.js';           To = 'hooks\second-reader.js' }
-  @{ From = 'consonance\hooks\second-reader-worker.js';    To = 'hooks\second-reader-worker.js'; Lib = $true }
+  @{ From = 'consonance\hooks\second-reader-worker.js';    To = 'hooks\second-reader-worker.js'; Lib = $true; By = 'second-reader.js' }
   # Added 2026-11-03 (D631 (b)) with its registration below, same commit. The second reader's SAME-TURN NOTE: a PostToolUse hook on call_chair that shows
   # the ringing seat the flags on the ring it just sent (the ring is already delivered: a note, never a block). Install with -Only second-reader.js,second-reader-worker.js,second-reader-note.js.
   @{ From = 'consonance\hooks\second-reader-note.js';      To = 'hooks\second-reader-note.js' }
@@ -177,6 +194,10 @@ $files = @(
   # on the same two hand-back verbs that DENIES a ring with no SOURCES: line or an item no call of this turn backs, fails open, logs every decision. Plan:
   # exo_memory/loop/plan_sources_gate_d212_2026-10-02.md. Install it with -Only sources-gate.js.
   @{ From = 'consonance\hooks\sources-gate.js';            To = 'hooks\sources-gate.js' }
+  # Lap W, W4 (2026-11-13): the wake gate. The librarian's first call_chair after a wake is refused, on D, until today's note and the other machine's
+  # newest handoffs were opened whole (ruling 2, exo_memory/loop/plan_room_stretch_2026-11-13.md:96). Self-contained; its registration ships below.
+  # Install with -Only wake-gate.js.
+  @{ From = 'consonance\hooks\wake-gate.js';               To = 'hooks\wake-gate.js' }
   # Added 2026-10-03 (D218, the keeper: "lets finish it all") with its registration below, same commit, same reason as the entries above. THE REPLY SLOT, LIVE since D220 (built in SHADOW at D218; SHADOW = false in
   # reply-slot.js): a Stop hook for the librarian and chair sessions only that BLOCKS the stop, once per turn, on a reply to the keeper that names a path/sha/count/percentage/version and does
   # not end with a Sources: line the turn backs; it fails open on any error. It requires ./sources-gate.js, so it installs into the SAME directory. Plan: exo_memory/loop/plan_finish_retrieval_2026-10-03.md. Install with -Only reply-slot.js.
@@ -288,6 +309,8 @@ $register = @(
   # the comment shipped and the registration did not.
   @{ Event = 'PreCompact';       Rel = 'precompact-preserve.js';      Runner = 'node' }
   @{ Event = 'SessionStart';     Rel = 'sessionstart-state.js';       Runner = 'node' }
+  # Lap W, W3: the body line, every source (startup, resume, compact), no matcher. It never blocks a start.
+  @{ Event = 'SessionStart';     Rel = 'sessionstart-body.js';        Runner = 'node' }
   # The dispatch gate. Matcher-scoped on purpose: it must see the two verbs that put text into
   # another seat's pane and nothing else. It ASKS rather than blocks, and fails open on any error.
   @{ Event = 'PreToolUse';       Rel = 'dispatch-gate.js';            Runner = 'node';
@@ -307,6 +330,9 @@ $register = @(
   # verbs plus chair_inject) and so its own group, and the second reader's matcher is UNCHANGED. Hooks run in parallel; this is the only one that can deny.
   @{ Event = 'PreToolUse';       Rel = 'hooks\sources-gate.js';       Runner = 'node';
      Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }
+  # Lap W, W4: the wake gate, on the one verb it gates (exact name). It exits at once for every seat but the librarian.
+  @{ Event = 'PreToolUse';       Rel = 'hooks\wake-gate.js';          Runner = 'node';
+     Matcher = 'mcp__consonance__call_chair' }
   # G1 and G2 (D248): the two shell tools, exact names. Each reads the command and exits at once unless it is a push (G1) or a recursive delete (G2).
   @{ Event = 'PreToolUse';       Rel = 'hooks\push-gate.js';          Runner = 'node';
      Matcher = 'Bash|PowerShell' }
@@ -362,6 +388,34 @@ $unmanaged = @(
      Why  = 'RETIRED, not unruled: Jev is off since D164, and D273 ruling 5 (2026-10-08) dropped its registration and its copy from this installer (the Excluded entry in $register). The file stays in the source repository as the record of what ran (a generated copy does not carry it); nothing installs it.' }
 )
 
+# DATED HOLDS (Lap I, I7; exo_memory/loop/landed_live_2026-11-13/00_lap_i_spec.md:416-461). A $files row may carry `Hold = '<ruling path:line>'`
+# (a STRING: the ruling), `HoldOn = @('<machine>')` (empty: every machine) and `HoldUntil = 'yyyy-MM-dd'` (the last day it holds). Where it applies,
+# the file is neither copied nor overwritten, its registration is not added, and every mode SAYS so: `HELD <leaf>: <ruling> until <date>`. Past
+# the date it is `HOLD EXPIRED`: still nothing written (no surprise writes), and -Check counts it red. Before this the 09-21 hold on D lived only
+# in a hand-back and a bare run copied and registered dispatch-gate.js against it. The older boolean `Hold = $true` (a two-way conflict, below in
+# the file loop) is unchanged and keeps its own message. The machine and the day are read ONCE, here: the room's one rule for the machine
+# (consonance/tools/state-sync.js machineTag), and CONSONANCE_INSTALL_NOW as the clock seam the tests set (this script read no date before).
+$hereTag = ([string]$env:CONSONANCE_MACHINE).Trim()
+if (-not $hereTag) {
+  try { $cfgHere = ([IO.File]::ReadAllText((Join-Path $HOME '.consonance.json')).TrimStart([char]0xFEFF) | ConvertFrom-Json).machine_tag; if ($cfgHere) { $hereTag = [string]$cfgHere } } catch { }
+}
+if (-not $hereTag) { $hereTag = [Environment]::MachineName }
+$today = Get-Date
+if ($env:CONSONANCE_INSTALL_NOW) { $today = [datetime]::Parse($env:CONSONANCE_INSTALL_NOW, [Globalization.CultureInfo]::InvariantCulture) }
+function Get-HoldHere($row) {
+  if (-not ($row.Hold -is [string]) -or -not $row.Hold) { return $null }
+  if ($row.HoldOn -and -not (@($row.HoldOn) -contains $hereTag)) { return $null }
+  $expired = $false
+  if ($row.HoldUntil) { $expired = $today -ge ([datetime]::ParseExact($row.HoldUntil, 'yyyy-MM-dd', [Globalization.CultureInfo]::InvariantCulture)).AddDays(1) }
+  return [pscustomobject]@{ Ruling = $row.Hold; Until = $row.HoldUntil; Expired = $expired }
+}
+function Format-Hold($leaf, $h) {
+  if ($h.Expired) { return ("HOLD EXPIRED {0}: {1} until {2} -- nothing written for it; renew it with a ruling or lift it" -f $leaf, $h.Ruling, $h.Until) }
+  return ("HELD     {0}: {1}{2}" -f $leaf, $h.Ruling, $(if ($h.Until) { " until $($h.Until)" } else { '' }))
+}
+$heldLeaf = @{}   # leaf -> its hold here, read by the file loop, both registration loops and the -Check report
+foreach ($f in $files) { $hh = Get-HoldHere $f; if ($hh) { $heldLeaf[(Split-Path -Leaf $f.To).ToLower()] = $hh } }
+
 # MUTANT-ANCHOR: THE FILTER. -Only narrows what this run ACTS on and nothing else. The universe and
 # registration reports below keep reading $files and $register -- the FULL sets -- so a restricted
 # run cannot print a smaller denominator and read as a whole one.
@@ -408,6 +462,7 @@ if (-not (Test-Path $dest)) {
 $drift  = 0   # exists at the destination and the bytes differ
 $absent = 0   # not at the destination at all - a different fact, and it used to print as drift
 $held   = 0
+$holdExpired = 0   # Lap I, I7: a dated hold past its date; red in -Check's exit
 foreach ($f in $syncFiles) {
   $src = Join-Path $repo $f.From
   $dst = Join-Path $dest $f.To
@@ -415,6 +470,14 @@ foreach ($f in $syncFiles) {
   if (-not (Test-Path $src)) {
     Write-Host ("ABSENT FROM REPO  {0}" -f $f.From) -ForegroundColor Red
     $drift++
+    continue
+  }
+
+  # A DATED HOLD is tested BEFORE the ABSENT branch (Lap I, I7): a hold on a file never installed must hold it too, and before this it could not.
+  $hold = $heldLeaf[(Split-Path -Leaf $f.To).ToLower()]
+  if ($hold) {
+    Write-Host (Format-Hold $f.To $hold) -ForegroundColor $(if ($hold.Expired) { 'Red' } else { 'Magenta' })
+    if ($hold.Expired) { $holdExpired++ } else { $held++ }
     continue
   }
 
@@ -644,6 +707,7 @@ if ($Check) {
   foreach ($e in $register) { $regDeclared[(Split-Path -Leaf $e.Rel).ToLower()] = $true }
 
   $notWired = @()
+  $heldReg = @()   # Lap I, I7: registrations held here by a dated hold, printed with their ruling and date
   $notDeclared = @()
   $conflicts = @()
   # AN EXCLUDED ENTRY IS NOT A DEFECT WHEN IT IS UNREGISTERED -- THAT IS THE RULING WORKING, and
@@ -682,7 +746,9 @@ if ($Check) {
         continue
       }
       if (-not $liveLeaf.ContainsKey($lf)) {
-        $notWired += ("{0,-16} {1}" -f $e.Event, $e.Rel)
+        # Lap I, I7: a held entry is not "declared, not registered"; it is held, and the report says so with its ruling and date
+        if ($heldLeaf.ContainsKey($lf)) { $heldReg += ("{0,-16} {1}" -f $e.Event, (Format-Hold $e.Rel $heldLeaf[$lf])) }
+        else { $notWired += ("{0,-16} {1}" -f $e.Event, $e.Rel) }
       }
     }
     foreach ($k in $liveLeaf.Keys) {
@@ -715,6 +781,10 @@ if ($Check) {
     Write-Host ("  `$register     {0,3} entr(ies)   what a fresh install of this repo would wire" -f $register.Count)
     Write-Host ("                {0,3} DECLARED, NOT REGISTERED   the file can be byte-perfect and the hook never fires" -f $notWired.Count) -ForegroundColor $(if ($notWired.Count) { 'Yellow' } else { 'DarkGray' })
     foreach ($n in $notWired) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
+    if ($heldReg.Count) {
+      Write-Host ("                {0,3} HELD BY A DATED HOLD       not registered here on purpose, until the date it names" -f $heldReg.Count) -ForegroundColor Magenta
+      foreach ($n in $heldReg) { Write-Host ("                     {0}" -f $n) -ForegroundColor Magenta }
+    }
     Write-Host ("                {0,3} REGISTERED, NOT DECLARED   runs here; a fresh install copies it and wires nothing" -f $notDeclared.Count) -ForegroundColor $(if ($notDeclared.Count) { 'Yellow' } else { 'DarkGray' })
     foreach ($n in $notDeclared) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
     Write-Host ("                {0,3} EXCLUDED BY RULING, correctly absent   declared here so the decision survives the seat that made it" -f $excludedHeld.Count) -ForegroundColor DarkGray
@@ -754,7 +824,8 @@ if ($Check) {
   # reported everything green. A finding that does not reach the exit code is a finding nobody
   # reads.
   $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count + $excludedLive.Count + $ruledLiveMissing.Count
-  exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0 -and $srcUndeclared.Count -eq 0) { 0 } else { 1 }))
+  if ($holdExpired) { Write-Host ("`n$holdExpired dated hold(s) EXPIRED -- nothing was written for them; renew each with a ruling or lift it.") -ForegroundColor Red }
+  exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0 -and $srcUndeclared.Count -eq 0 -and $holdExpired -eq 0) { 0 } else { 1 }))
 }
 
 $node = (Get-Command node -ErrorAction SilentlyContinue).Source
@@ -824,6 +895,7 @@ if ($NoRegister) {
   Write-Host "`nFiles are in sync. -NoRegister given; would have registered:" -ForegroundColor Cyan
   foreach ($e in $regEntries) {
     if ($e.Excluded) { Write-Host ("  {0,-17} {1}   SKIPPED -- {2}" -f $e.Event, (Split-Path -Leaf $e.Rel), $e.Excluded) -ForegroundColor Magenta; continue }
+    if ($heldLeaf.ContainsKey((Split-Path -Leaf $e.Rel).ToLower())) { Write-Host ("  {0,-17} {1}" -f $e.Event, (Format-Hold $e.Rel $heldLeaf[(Split-Path -Leaf $e.Rel).ToLower()])) -ForegroundColor Magenta; continue }
     Write-Host ("  {0,-17} {1}" -f $e.Event, (New-HookCommand $e)) -ForegroundColor DarkGray
   }
   Write-Host "`nRe-run without -NoRegister to apply." -ForegroundColor Cyan
@@ -858,6 +930,12 @@ foreach ($e in $regEntries) {
   # the failure mode this whole change is about.
   if ($e.Excluded) {
     Write-Host ("  EXCLUDED {0,-17} {1}   {2}" -f $e.Event, (Split-Path -Leaf $e.Rel), $e.Excluded) -ForegroundColor Magenta
+    $skipped++
+    continue
+  }
+  # Lap I, I7: a dated hold here keeps the registration out too, live or expired, and the run says so
+  if ($heldLeaf.ContainsKey((Split-Path -Leaf $e.Rel).ToLower())) {
+    Write-Host ("  {0,-17} {1}" -f $e.Event, (Format-Hold $e.Rel $heldLeaf[(Split-Path -Leaf $e.Rel).ToLower()])) -ForegroundColor Magenta
     $skipped++
     continue
   }

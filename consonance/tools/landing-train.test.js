@@ -17,6 +17,26 @@ const SCRIPT = path.join(__dirname, 'landing-train.js');
 
 const dirs = [];
 process.on('exit', () => { for (const d of dirs) { try { fs.rmSync(d, { recursive: true, force: true }); } catch (_) {} } });
+// Every stand-in game a row started is ended once the rows are done, so a row that fails before ending its own leaves no
+// process behind; and it is unref'd, so a live one can never hold this file open (a first draft hung here under the
+// mutant, whose failing rows threw before their own end).
+const games = [];
+const endGames = () => { for (const g of games) { try { g.kill(); } catch (_) {} } };
+test.after(endGames);
+process.on('exit', endGames);
+
+/** A STAND-IN GAME THAT LIVES UNTIL THE TEST ENDS IT, its pid where the guard reads it. It used to exit by itself after
+ * 1,500 ms, a race with the train: a train run takes 3.3 to 11.3 s on D (2026-11-13), so the game was gone before promotion
+ * was reached, the guard rightly saw none, and rows 3 to 5 went red at the base (ruled 20:44Z: the fault was the test).
+ * No row may depend on a fixed sleep being longer than the code under test; this one now waits on nothing but the test. */
+function standInGame(w) {
+  const proc = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)'], { stdio: 'ignore', windowsHide: true });
+  proc.unref();
+  games.push(proc);
+  const exited = new Promise((res) => proc.once('exit', res));
+  fs.writeFileSync(path.join(w.root, 'game.pid'), String(proc.pid));
+  return { end: () => { proc.kill(); return exited; } };
+}
 const git = (dir, ...args) => {
   const r = spawnSync('git', ['-C', dir, ...args], { encoding: 'utf8', windowsHide: true, env: { ...process.env, GIT_AUTHOR_NAME: 't', GIT_AUTHOR_EMAIL: 't@t', GIT_COMMITTER_NAME: 't', GIT_COMMITTER_EMAIL: 't@t' } });
   if (r.status !== 0) throw new Error(`git ${args.join(' ')}: ${r.stderr}`);
@@ -100,14 +120,13 @@ test('a conflict: the branch is dropped with its file named, and nothing half-me
 test('a stand-in game is running: the batch lands, promotion waits, and completes when the game exits', async () => {
   const w = world();
   T.writeReady(w.data, [branch(w, 'g1', 'g.txt', 'g\n')]);
-  const game = spawn(process.execPath, ['-e', 'setTimeout(()=>{}, 1500)'], { stdio: 'ignore' });
-  fs.writeFileSync(path.join(w.root, 'game.pid'), String(game.pid));
+  const game = standInGame(w);
   const r = T.runTrain(w.cfg, { ...quiet, data: w.data });
   assert.deepEqual(r.landed.map((x) => x.branch), ['g1']);
   assert.equal(r.pushed, true);
   assert.deepEqual(r.promoted, { done: false, waiting: true }, 'promotion waits while the game runs');
   assert.equal(fs.existsSync(path.join(w.repo, 'build', 'bin', 'app.bin')), false, 'nothing copied over the running game');
-  await new Promise((res) => game.on('exit', res));
+  await game.end();
   const p = T.promote(w.cfg, w.data, { wait: true });
   assert.equal(p.done, true);
   assert.deepEqual(p.mismatched, []);
@@ -118,14 +137,13 @@ test('a stand-in game is running: the batch lands, promotion waits, and complete
 test('a promotion that waited copies the build that was CHECKED, even after the worktree has moved on to the next batch', async () => {
   const w = world();
   T.writeReady(w.data, [branch(w, 'p1', 'p.txt', 'p\n')]);
-  const game = spawn(process.execPath, ['-e', 'setTimeout(()=>{}, 1500)'], { stdio: 'ignore' });
-  fs.writeFileSync(path.join(w.root, 'game.pid'), String(game.pid));
+  const game = standInGame(w);
   const r = T.runTrain(w.cfg, { ...quiet, data: w.data });
   assert.equal(r.pushed, true);
   assert.equal(r.promoted.waiting, true);
   // The plan: "the train waits at that last step alone, and the next batch can already be building" - in the same worktree.
   fs.writeFileSync(path.join(w.wt, 'build', 'bin', 'app.bin'), 'the next batch, not yet checked\n');
-  await new Promise((res) => game.on('exit', res));
+  await game.end();
   const p = T.promote(w.cfg, w.data, { wait: true });
   assert.equal(p.done, true);
   assert.equal(fs.readFileSync(path.join(w.repo, 'build', 'bin', 'app.bin'), 'utf8').trim(), r.sha, 'the landed build, not the next batch\'s');
@@ -134,14 +152,13 @@ test('a promotion that waited copies the build that was CHECKED, even after the 
 test('a staged build is not promoted once main has moved past it (a stale exe under a fresh stamp would read "up to date")', async () => {
   const w = world();
   T.writeReady(w.data, [branch(w, 's1', 's.txt', 's\n')]);
-  const game = spawn(process.execPath, ['-e', 'setTimeout(()=>{}, 1500)'], { stdio: 'ignore' });
-  fs.writeFileSync(path.join(w.root, 'game.pid'), String(game.pid));
+  const game = standInGame(w);
   const r = T.runTrain(w.cfg, { ...quiet, data: w.data });
   assert.equal(r.promoted.waiting, true);
   // A landing by hand moves main while the promotion waits.
   fs.writeFileSync(path.join(w.repo, 'h.txt'), 'by hand\n');
   git(w.repo, 'add', 'h.txt'); git(w.repo, 'commit', '-q', '-m', 'landed by hand');
-  await new Promise((res) => game.on('exit', res));
+  await game.end();
   const p = T.promote(w.cfg, w.data, { wait: true });
   assert.equal(p.done, false);
   assert.match(p.error, /main has moved/);
@@ -203,7 +220,9 @@ test('the privacy scan refuses an email address or an account path: nothing is p
   assert.doesNotMatch(r.stopped, new RegExp(addr.replace('.', '\\.')), 'the address itself is never shown');
   assert.equal(git(w.repo, 'rev-parse', 'main'), before.main, 'main did not move');
   assert.equal(originMain(w), before.origin, 'nothing was pushed');
-  const acct = branch(w, 'p2', 'paths.txt', 'see C:\\Users\\someone\\Downloads\\x\n');
+  // The account path is BUILT at run time, so the file still carries `see C:\Users\someone\Downloads\x` for the scan to refuse, while this source
+  // holds no literal drive path for portable-paths.js to flag (the same move as push-gate.test.js's fake secrets; pane P, 2026-11-13).
+  const acct = branch(w, 'p2', 'paths.txt', `see ${['C:', 'Users', 'someone', 'Downloads', 'x'].join('\\')}\n`);
   T.writeReady(w.data, [acct]);
   assert.match(T.runTrain(w.cfg, { ...quiet, data: w.data }).stopped || '', /privacy scan refused.*paths\.txt:1/);
 });
