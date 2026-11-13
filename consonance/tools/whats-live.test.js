@@ -101,7 +101,8 @@ test('APP RULE (D454): with nothing in ~/.consonance.json the board is under USE
 // printed at every compaction and repeated to the keeper as fact.
 const { appStaleness, parseDepinfo } = require('./whats-live.js');
 const pw = require('path').win32;
-const P = (rel) => pw.join('C:\\repo\\consonance\\src-tauri', ...rel.split('/'));
+// a UNC root: path.win32 resolves it as it does a drive, and it is no machine's drive path (portable-paths.js flags those)
+const P = (rel) => pw.join('\\\\host\\share\\repo\\consonance\\src-tauri', ...rel.split('/'));
 const depinfo = (rels) => `${P('target/release/consonance.exe')}: ${rels.map(P).join(' ')}\n`;
 const IN = ['src/main.rs', 'src/mcp.rs', 'build.rs', '../../exo_memory/SOURCE.md', 'brief/BUILDING.md', 'brief/COMMITTEE.md', 'ui/app.js', 'research/a_2026-11-12.md'];
 const statAt = (times) => (p) => { const k = Object.keys(times).find((r) => P(r).toLowerCase() === pw.resolve(p).toLowerCase()); return k === undefined ? 0 : times[k]; };
@@ -141,6 +142,6 @@ test('I2 edge: no dep-info is "inputs not readable", never a silent green', () =
   assert.match(r.note, /inputs not readable/);
 });
 test('I2 the dep-info parse: one target line, an escaped space kept inside a path, ".." resolved', () => {
-  const t = 'C:\\r\\target\\release\\consonance.exe: C:\\r\\src\\main.rs C:\\r\\my\\ dir\\x.md C:\\r\\src-tauri\\..\\..\\exo_memory\\SOURCE.md\n';
-  assert.deepStrictEqual(parseDepinfo(t), ['C:\\r\\src\\main.rs', 'C:\\r\\my dir\\x.md', 'C:\\exo_memory\\SOURCE.md']);
+  const t = '\\\\h\\s\\r\\target\\release\\consonance.exe: \\\\h\\s\\r\\src\\main.rs \\\\h\\s\\r\\my\\ dir\\x.md \\\\h\\s\\r\\src-tauri\\..\\..\\exo_memory\\SOURCE.md\n';
+  assert.deepStrictEqual(parseDepinfo(t), ['\\\\h\\s\\r\\src\\main.rs', '\\\\h\\s\\r\\my dir\\x.md', '\\\\h\\s\\exo_memory\\SOURCE.md']);
 });

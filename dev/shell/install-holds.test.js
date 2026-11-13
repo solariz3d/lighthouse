@@ -52,7 +52,7 @@ test('I7 (RED FIRST) a BARE run on D neither copies nor registers the two held h
   const repo = mkRepo(), home = mkHome();
   const r = run(repo, home, [], 'D', '2026-11-13T12:00:00');
   for (const leaf of HELD) {
-    assert.ok(!installed(home, leaf), `${leaf} was copied on D:\n${r.out.slice(-1500)}`);
+    assert.ok(!installed(home, leaf), `${leaf} was copied on machine D\n${r.out.slice(-1500)}`);
     assert.ok(!registered(home, leaf), `${leaf} was registered on D: ${JSON.stringify(commands(home))}`);
     assert.match(r.out, new RegExp(`HELD\\s+${leaf.replace(/\./g, '\\.')}: .*until 2026-11-27`), leaf);
   }
