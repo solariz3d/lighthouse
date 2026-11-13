@@ -60,3 +60,20 @@ Packet: the chair's D675 order of 22:18Z, the step after the six-branch landing 
 
 SOURCES: S\inst\{check-before.txt, install-*.txt, semdiff-five.txt, settings-after.txt, landed-live-all.txt, check-after.txt, compare.txt}; sha256sum of the five installed files against git show fab53587:<path>; S\inst\minsize.js
 NEXT: librarian read the install table when this ring is read; O goes on to Lap I's rows on D, driven by landed-live's OWED lines, with rows 7 and 8 last and a board row before and after them
+
+## Answers to the chair's 22:49Z questions (delivered 22:54Z, after this file's ring; appended 22:56Z)
+1. **Which floor: the REFUSE floor of 20 GB.**
+   - "Not met" meant the suite was not refused. It was under the 50 GB WARN line.
+   - checked: `S\land6\js-suite.out` → "heavy-run: WARNING: C:\ has 27.6 GB free, under 50 GB" (`heavy-run.js:58-61`).
+   - My wording in `p-land-six-O_2026-11-13.md` should have said so.
+2. **settings.json: only the two new groups changed in MEANING. The other bytes are re-serialisation.** See "The new settings baseline" above.
+   - **Minified size:** 3,341 B became 3,678 B (+337 B, the two hook entries).
+   - **The rest:** the installer re-writes the file with a 4-space indent and CRLF, where it had a 2-space indent and LF.
+   - **The meaning:** semdiff compares every hook group and every other top-level key's JSON. ADDED 2: the SessionStart group now carrying `sessionstart-body.js`, and the PreToolUse group for `wake-gate.js`. REMOVED 1: the same SessionStart group without the body line. Nothing else.
+   - **The copies kept from before, both 4,942 B:**
+     - `C:\Users\nname\.claude\settings.json.bak-20261113-164531`, the installer's own;
+     - `C:\Users\nname\AppData\Local\Temp\claude\e1275915e2cd5544\c88002b1-74d8-4036-8cc0-f64aefbeabff\scratchpad\inst\settings.before-H.json`, mine.
+   - **Since then, Lap I's row 11** added one PostToolUse group (13,069 B, sha256 cacf6209c4a352ef…; `p-lapi-rows-O_2026-11-13.md`).
+3. **The disk:** nothing of mine has needed the lock since the suite.
+   - The Lap I rows ran one hook test file each (no lock), plus file syncs. Nothing was bypassed and nothing was deleted.
+   - checked: `df -h /c` at 22:56Z → 21G available. That is df's rounding, in GiB; heavy-run's figure is its own.
