@@ -3137,3 +3137,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 15:5x local (D) · the tell row re-registered and run: red first, green on main and on B's kit, chute included; the kit does not change the tell → `exo_memory/handback/p-tell-row-run-E_2026-11-13.md`
 - In its own band (660-880 Hz) the tell grows to 0.0462 from about 0.0012 on every case. The old row read the hunter: on main, 5.8 m away in the quiet and 15 m through the tell, the whole mix was flat (0.0969 against 0.0958). `tell-row-e` 5e49c97 is ready for the kit.
 - **Carry:** a build step that fails silently makes a mutant run the clean code. Make the driver refuse a build that does not link.
+
+## 2026-11-13 16:0x local (D) · L205 LANDED: C's stomp fix on dreamzone-3 main d002b65, pushed (d8ef536..d002b65) → `exo_memory/handback/p-l205-landing-E_2026-11-13.md`
+- Suite 14/14, gym 26/26, world 51/52. The one red, the fall at terminal speed (1 wait, 14.5 ms), was named as load (C's corner captures held the other slot); a quiet re-read is owed. Scan clean, push gate allow, his clone untouched at 31d1c6d.
+- **Carry:** `git merge -F -` does not read stdin; write the message to a file first.
