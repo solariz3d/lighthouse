@@ -33,3 +33,21 @@ Checked: `C:\Consonance\data\board.jsonl`, assistant lines matching "API Error: 
 ## Not checked
 - Whether a `/login` in one pane refreshes the other panes' sessions, or whether the block simply lifted. If a pane fails again on its first call after the nudge, each pane needs its own `/login`.
 - Whether B's landing (lock holder pid 1272, alive at 09:54Z) was touched. B made no model call in the window, and its landing runs as a script.
+
+## The second burst, 10:15Z, and what it changes (added 04:2x local)
+Checked: the same board file, assistant lines since 09:53Z, read at 10:23Z.
+- **Who got it:** A at 10:15:26Z, C at 10:15:40Z, B at 10:15:44Z. Each error was the reply to the chair's packet of his picks.
+- **Who did not, in the same seconds:** the chair replied at 10:15:00Z and 10:15:35Z; E had no error after 09:53Z.
+- **B recovered with no login.** A task notification woke it and its replies from 10:21:21Z on are clean. No `/login` line is on the board after 10:14Z. A answered the chair's nudge by 10:24:35Z and C by 10:24:52Z, also with no login.
+- **So the login is probably not what clears it.** The block lifts by itself within minutes. What stays broken is that a seat ends its turn on one 403 and waits.
+- **Inferred, not established:** both bursts began when several seats started a call within the same seconds (the first while the chair released queued packets, the second while it sent three packets in 44 seconds). The reply is an edge block page, which fits a burst rule better than a session that expired.
+
+**The fix that works today, with no rebuild:** `loop/api_error_watch_2026-11-13.js`.
+- It reads the tail of the board every 10 seconds and exits, naming the seats, when any seat's last line is an API error older than 25 seconds.
+- A seat runs it in the background. Its exit wakes the seat, which nudges (the librarian by ringing the chair; the chair by its own inject).
+- **The proving check, done on the live board:** at 10:24:35Z `--once` printed "STOPPED: C (10:15:40Z)". After the chair's nudge, at 10:24:52Z, it printed "clear".
+- **Armed** in the librarian's session at 10:25Z for 45 minutes. It must be armed again after each exit, and the chair should run its own copy, since the librarian's cannot see itself stop.
+
+**Changed practice for the chair, from now:** space deliveries to different seats by about 30 seconds, and after each one check that the seat's next line is not the error.
+
+**Still owed (B, as fix 2 above):** the `[panes]` hook line, then the delivery path in `main.rs`. With the second burst, fix 2a should also retry by itself: a reply that is an API error is followed by one automatic "carry on" after a pause, and only a second failure is raised to a seat.

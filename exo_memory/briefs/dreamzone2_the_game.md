@@ -1218,7 +1218,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **More builder panes: "Two more (Recommended)".** Lanes: `loop/plan_two_more_panes_2026-11-13.md`.
      - **Still open:** whether the generator path moves up his queue (it sits at step 13).
 183. 2026-11-13 03:5x on, his picks on the decision page (https://claude.ai/artifact/Cu4oEJHEmeeQyW9jpVGPU1, private to him; built from `loop/his_calls_2026-11-13.json`). Each pick is saved in the page's store as `answers/<call id>`. This item is rewritten whole from the store each time it is read (`loop/his_calls_to_brief_2026-11-13.js`):
-     - **Last read: 10:10Z, 22 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
+     - **Last read: 10:26Z, 34 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
      - **Changed by him:** `run_frame-1` was "Show nothing" at 09:59:34Z before the pick listed below.
      - `run_frame-1` "Show the timer?": **"Late warning only"** (NOT the page's suggestion, which was "Show nothing") (10:00:06Z).
        - the option as he read it: Show it only in the last minute; one extra screen state.
@@ -1257,13 +1257,47 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        - the option as he read it: One clip with both voices on the same run.
      - `abilities-2` "Where are abilities bought?": **"Chair only"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
        - the option as he read it: PC is for shop, builder and cheques; cheapest.
-     - `player_body-5` "How to make a fist?": **"Model-only finger curl"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
-       - the option as he read it: No change to the body's joints; the room should take this.
      - `sound-0` "Your own steps cover the hunter's. Which mix?": **"Hear it again with the new voice"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
        - the option as he read it: Recorded footfalls will replace the home-made sound, so A and C will both change.
      - `tech_foundation-1` "Old runs after a change?": **"Warn that the build differs, and pin a few chosen runs with their build"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
        - the option as he read it: Cheapest, and honest about it.
      - `tech_foundation-4` "How strict is the landing train?": **"Land green branches, drop the red one"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
        - the option as he read it: The landing-train plan chooses this.
-     - `chase_entities-2` "Keep the wall pass?": **"Drop it"** (10:09:46Z).
+     - `chase_entities-2` "Keep the wall pass?": **"Drop it"** (10:10:14Z).
        - the option as he read it: Removes the break; costs the answer to the safe corner.
+       - his note, verbatim: ofc not.
+     - `chase_entities-3` "Do Shroud and Lure fool the hunter?": **"The hunter loses you briefly"** (10:12:24Z).
+       - the option as he read it: Breaks 'always knows where you are'; bigger build and a heavy stress cost.
+       - his note, verbatim: it will randomly keep going in the direction you were going before shrouding. Which if players realize this, can use it to their advantage tricking them, but at the same time, i wonder if we could make the AI in the game learn and adapt to the players playstyle for that one run, you know what I mean? Like every save, the first few runs learns the methods and reasoning logic of the player and how they move, even things like trciking them with the shroud, etc, learning how they usually play, would be so dope, this is the type of AI intelligence we should strive towards.
+     - `chase_entities-5` "Which chasers climb?": **"Only crawler and pack"** (10:14:17Z).
+       - the option as he read it: Keeps the ledge escape for the player.
+       - his note, verbatim: I tested this once with the hunter, the hunter will be like fuck, and run into the shadows away, waiting for you to come down for it to route to you, it is a creepy thing to do, but i wish it had more of an intelligent awareness to the fact that the player might be cheesing it, hides out of their view maybe close by, to gank them when they think theyre safe jumping down, you know?
+     - `chase_entities-6` "Speed margin against the hunter?": **"Tie hunter to player's surge"** (10:15:28Z).
+       - the option as he read it: Hunter speeds up when the player earns a surge; one chaser kind already does this.
+       - his note, verbatim: how about, the hunter itself gains the same mechanic as the player, learning to utilize the speed buffs from near misses and doing good lines, so if the player does good lines, and its mirror you, it learns even more from the player beyond the base training we give to the algo for it to be good right out of the box. This will be good.
+     - `entity_bodies-1` "Sprinter's body shape?": **"Decide kind by kind"** (10:15:28Z).
+       - the option as he read it: Settle each chaser separately.
+     - `entity_bodies-2` "Detail or frame time?": **"Nearest two or three full detail"** (10:17:02Z).
+       - the option as he read it: The rest lighter copies; players may see a pop as they swap.
+       - his note, verbatim: hunter full detail, the rest can be lower quality but still decent. But its not like we are making a photo realistic game, it can be look good, in a stylized efficient way. That is sort of the art style i want for the game, a pseudo realistic look with intelligent low poly design that uses techniques to look like realism.
+     - `player_body-2` "Which base outfit?": **"Pick one of the three sheets"** (10:17:24Z).
+       - the option as he read it: You choose; the artist does the Blender work.
+     - `player_body-3` "Staged or true to life?": **"Real first, stage where you ask"** (10:18:24Z).
+       - the option as he read it: Score against recorded human motion, then stage by request.
+       - his note, verbatim: I dont understand what staged from start means.
+     - `player_body-4` "Do your arm-shape notes bind the player?": **"Tune the player's own"** (10:18:24Z).
+       - the option as he read it: Separate tuning.
+     - `player_body-5` "How to make a fist?": **"New joints"** (NOT the page's suggestion, which was "Model-only finger curl") (10:20:23Z).
+       - the option as he read it: Touches the skeleton, ragdoll and hunter.
+       - his note, verbatim: the hands could also clench or open when running, and remember the arms and hands need their own procedural animations for coming up against walls like standing infront of one. or running up against the wall sprinting you bump into it and drag against the wall the arms should move to show it.
+     - `movement-1` "Does a slide refill the surge?": **"Surge alone"** (10:21:34Z).
+       - the option as he read it: As you ruled; lowest cost.
+       - his note, verbatim: Sliding resets the top speed boundary from dropping, so say right now, 10ms is the standard sprint speed, you can run up to 12ms for a short time when first sprinting max speed, but then tapers off back to 10ms, if you slide it refreshes it for a short time again.
+     - `movement-2` "What feeds the surge first?": **"Also edge near misses"** (10:23:16Z).
+       - the option as he read it: A small, deterministic list from the generator.
+       - his note, verbatim: Also jumping or mantling over objects, exiting a reprieve zone. Jumping into a slide gives you a very transient boost of speed, like 1/10th of the surge.
+     - `movement-3` "Does contact end the surge?": **"Ends"** (10:23:16Z).
+       - the option as he read it: Clean running becomes the skill.
+     - `movement-5` "Voids and the 10 m/s peak": **"Keep 8.75"** (10:24:15Z).
+       - the option as he read it: Accept slide-jump-mantle crossings of voids.
+       - his note, verbatim: I like the summersault jump idea for crossing some voids if not wall running, we need to do the first person animation right for the summersault front flip, the camera fro
