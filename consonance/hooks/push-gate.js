@@ -152,21 +152,46 @@ function findKeys(log) {
   return hits;
 }
 
+// LAP W RULING 6 (exo_memory/loop/plan_room_stretch_2026-11-13.md:96; pane P, 2026-11-13): "From here no single file over 10 MB goes into this
+// repository: the push gate refuses one, red first on the commit that carried it (3de92e53)" (an 85 MB encrypted transcript, which stays where it is).
+// Every BLOB the push would send (rev-list --objects of what the remote lacks, merges included), so a big file added and deleted again before the
+// push is still refused: it is in the history that leaves. Large records go to the private repository that holds the key. 10 MB is decimal.
+const MAX_FILE_BYTES = 10 * 1000 * 1000;
+/** Each file over MAX_FILE_BYTES among the blobs `src` carries that `notArgs` (e.g. --remotes=origin) do not: [{ file, bytes, blob }], or null on a git failure. */
+function largeFiles(dir, src, notArgs) {
+  const objs = git(dir, ['rev-list', '--objects', src, '--not', ...notArgs]);
+  if (objs === null) return null;
+  const r = spawnSync('git', ['-C', dir, 'cat-file', '--batch-check=%(objecttype) %(objectsize) %(objectname) %(rest)'], { input: objs, encoding: 'utf8', timeout: 6000, windowsHide: true, maxBuffer: 256 * 1024 * 1024 });
+  if (r.status !== 0) return null;
+  const out = [];
+  for (const line of r.stdout.split('\n')) {
+    const m = /^blob (\d+) ([0-9a-f]+) (.*)$/.exec(line.replace(/\r$/, ''));
+    if (m && Number(m[1]) > MAX_FILE_BYTES) out.push({ file: m[3], bytes: Number(m[1]), blob: m[2].slice(0, 8) });
+  }
+  return out;
+}
+
 function decide(command, cwd) {
   const targets = pushTargets(command, cwd);
   if (!targets.length) return { decision: 'not-a-push' };
-  const found = [], scanned = [];
+  const found = [], scanned = [], large = [];
   for (const t of targets) {
     if (t.deleting) continue;
     if (git(t.dir, ['rev-parse', '--git-dir']) === null) return { decision: 'allow-error', error: 'not a git repo', dir: t.dir };
     const remote = remoteOf(t.dir, t.remote), src = t.src && git(t.dir, ['rev-parse', '-q', '--verify', `${t.src}^{commit}`]) !== null ? t.src : 'HEAD';
     const log = git(t.dir, ['log', '-p', '--no-color', '--no-ext-diff', '-U0', '--diff-merges=first-parent', '--format=%x00%h', src, '--not', `--remotes=${remote}`]);
     if (log === null) return { decision: 'allow-error', error: 'git log failed', dir: t.dir };
+    const big = largeFiles(t.dir, src, [`--remotes=${remote}`]);
+    if (big === null) return { decision: 'allow-error', error: 'git rev-list failed', dir: t.dir };
     scanned.push({ dir: t.dir, remote, src });
     for (const h of findKeys(log)) found.push({ ...h, repo: t.dir, remote });
+    for (const b of big) large.push({ ...b, repo: t.dir, remote });
   }
-  return found.length ? { decision: 'deny', found, scanned } : { decision: 'allow', scanned };
+  return found.length || large.length ? { decision: 'deny', found, large, scanned } : { decision: 'allow', scanned };
 }
+const largeReasonOf = (large) => `push refused (Lap W ruling 6, no file over 10 MB): ${large.length} file(s) this push would send are over 10 MB (every blob the remote lacks, so a big file deleted again before the push still counts):\n`
+  + large.slice(0, 12).map((b) => `  ${b.file}  ${b.bytes.toLocaleString('en-US')} bytes  (blob ${b.blob})`).join('\n') + (large.length > 12 ? `\n  … and ${large.length - 12} more` : '')
+  + '\nTake the file out of every unpushed commit that carries it (rebase and drop or edit them), and keep large records in the private repository that holds the key. Why: consonance/GATES.md, the push gate.';
 const reasonOf = (found) => `push refused (G1, credentials before a push): ${found.length} line(s) this push would publish look like a credential (each commit's ADDED lines, so a key removed again in a later commit still counts: it is in the history):\n`
   + found.slice(0, 12).map((h) => `  ${h.file}:${h.line}  in ${h.commit}  (${h.kind})`).join('\n') + (found.length > 12 ? `\n  … and ${found.length - 12} more` : '')
   + `\nThe secret itself is not shown. Take it out of the history (rebase and edit or drop the commit that added it; amending only the last commit is not enough if an earlier one holds it), rotate the key if it was ever pushed, then push again. Scanned: every commit ${found[0].remote} does not have.`;
@@ -184,11 +209,11 @@ function main() {
   const dir = dataDir(), seat = (process.env.CONSONANCE_PANE || '').trim() || null;
   let d; try { d = decide(command, payload.cwd || process.cwd()); } catch (e) { record(dir, { seat, decision: 'error', error: String(e && e.message || e).slice(0, 120) }); return process.exit(0); }
   if (d.decision === 'not-a-push') return process.exit(0);
-  record(dir, { seat, session: payload.session_id || null, cwd: payload.cwd || null, decision: d.decision, ...(d.error ? { error: d.error, dir: d.dir } : {}), ...(d.scanned ? { scanned: d.scanned } : {}), ...(d.found ? { found: d.found.slice(0, 50).map((h) => ({ file: h.file, line: h.line, commit: h.commit, kind: h.kind })) } : {}) });
+  record(dir, { seat, session: payload.session_id || null, cwd: payload.cwd || null, decision: d.decision, ...(d.error ? { error: d.error, dir: d.dir } : {}), ...(d.scanned ? { scanned: d.scanned } : {}), ...(d.found ? { found: d.found.slice(0, 50).map((h) => ({ file: h.file, line: h.line, commit: h.commit, kind: h.kind })) } : {}), ...(d.large && d.large.length ? { large: d.large.slice(0, 50).map((b) => ({ file: b.file, bytes: b.bytes, blob: b.blob })) } : {}) });
   if (d.decision !== 'deny') return process.exit(0);
-  return emitDeny(reasonOf(d.found));
+  return emitDeny([d.found.length ? reasonOf(d.found) : null, d.large && d.large.length ? largeReasonOf(d.large) : null].filter(Boolean).join('\n\n'));
 }
 
 if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
 
-module.exports = { KEYS, LEDGER, pushTargets, segments, stripHeredocs, words, remoteOf, findKeys, decide, reasonOf, nativePath, cygpathCandidates, expandEnv };
+module.exports = { KEYS, LEDGER, MAX_FILE_BYTES, pushTargets, segments, stripHeredocs, words, remoteOf, findKeys, largeFiles, decide, reasonOf, largeReasonOf, nativePath, cygpathCandidates, expandEnv };

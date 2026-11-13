@@ -137,6 +137,13 @@ key cannot be taken back.
 **How to answer it:** remove the key from the history it names (not just from the latest commit), rotate it if it was ever real,
 and push again.
 
+**And files over 10 MB (Lap W, ruling 6, 2026-11-13).** The same gate refuses a push that would send any single file over 10 MB
+(10,000,000 bytes): every file the remote does not have yet, so a large file added and deleted again before the push still counts.
+The refusal names each file and its size: `push refused (Lap W ruling 6, no file over 10 MB): …`. Answer it by taking the file out
+of every unpushed commit that carries it, and keep large records in the private repository that holds the key. Why: one 85 MB
+encrypted transcript (commit `3de92e53`) made a morning's catch-up 90.5 MB on both machines; it stays where it is, by ruling, and the
+next one is refused before it leaves.
+
 **To turn it off:** remove the `push-gate.js` entry from `%USERPROFILE%\.claude\settings.json` (under `hooks` → `PreToolUse`).
 
 ## 6. The delete gate — junctions before a recursive delete
