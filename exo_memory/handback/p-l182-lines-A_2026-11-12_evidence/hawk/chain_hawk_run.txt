@@ -1,0 +1,84 @@
+=== build 12:25:54
+lockrun: L182b hawk rebuild (room level) WALL 6 s, exit 0
+=== hawk rows (l182b) 12:30:48
+ok    l182b_the_hawk_fields_are_off_by_default_and_refused_below_zero
+ok    l182b_the_hawk_law_commands_what_its_formula_says
+    shuttle lane 6.0 margin 1.0 speed 8, phase 2, default chase: caught at 12.96 s, 0 wall hits
+ok    l182b_the_arenas_build_and_the_hunter_runs_in_them_the_same_way_every_time
+ok    l182b_the_family_has_the_registered_cells_and_a_stair_cell_is_not_swept_as_zero
+    circle radius 2.5 ccw speed 8, []: caught 1 of 6
+    circle radius 2.5 ccw speed 8, [hawk_n=0.7;hawk_k=1.2]: caught 1 of 6
+    circle radius 2.5 ccw speed 8, [hawk_n=1;hawk_k=0]: caught 3 of 6
+ok    l182b_a_player_circling_in_the_open_room_is_run_under_each_law_and_who_was_caught_is_reported
+5 tests, 0 failed
+=== byte-identity 12:30:49
+hawk md5 599ab2395194ded75d0d102f84b3195d (want 599ab2395194ded75d0d102f84b3195d), 22 lines
+=== blind check, room control, level 1 12:41:18
+exploit search: level 1 (normal), 6 start phases a cell, up to 60 s a run, the hunter in at a corner with no head start; speed model: default
+policy         cells  not swept   runs    caught  exploits       near  wall hits
+shuttle           12          0     72    72/72          0          0          2
+circle            16          0     96    29/96          1         12         35
+figure-eight       8          0     48    13/48          0          8        145
+door-dance         8          0     48    40/48          0          1        645
+stair-juke         0          8      0     0/0           0          0          0
+exploit cells in all: 1 (near-exploits: 21)
+  near      circle radius 1.5 ccw speed 6: caught 2 of 6
+  near      circle radius 2.5 ccw speed 6: caught 1 of 6
+  near      circle radius 2.5 ccw speed 8: caught 1 of 6
+  near      circle radius 2.5 cw speed 6: caught 1 of 6
+  near      circle radius 2.5 cw speed 8: caught 1 of 6
+  near      circle radius 4.0 ccw speed 6: caught 1 of 6
+  EXPLOIT   circle radius 4.0 ccw speed 8: caught 0 of 6
+  near      circle radius 4.0 cw speed 6: caught 2 of 6
+  near      circle radius 4.0 cw speed 8: caught 1 of 6
+  near      circle radius 5.0 ccw speed 6: caught 1 of 6
+  near      circle radius 5.0 ccw speed 8: caught 1 of 6
+  near      circle radius 5.0 cw speed 6: caught 1 of 6
+  near      circle radius 5.0 cw speed 8: caught 1 of 6
+  near      figure-eight lobe 2.0 along x speed 6: caught 3 of 6
+  near      figure-eight lobe 2.0 along x speed 8: caught 1 of 6
+  near      figure-eight lobe 2.0 along z speed 6: caught 1 of 6
+  near      figure-eight lobe 2.0 along z speed 8: caught 3 of 6
+  near      figure-eight lobe 3.0 along x speed 6: caught 1 of 6
+  near      figure-eight lobe 3.0 along x speed 8: caught 2 of 6
+  near      figure-eight lobe 3.0 along z speed 6: caught 1 of 6
+  near      figure-eight lobe 3.0 along z speed 8: caught 1 of 6
+  near      door-dance spacing 5 ccw speed 8: caught 1 of 6
+lockrun: L182c blind check level 1 WALL 1 s, exit 0
+=== blind check, room control, level 3 12:41:30
+exploit search: level 3 (brutal), 6 start phases a cell, up to 60 s a run, the hunter in at a corner with no head start; speed model: default
+policy         cells  not swept   runs    caught  exploits       near  wall hits
+shuttle           12          0     72    72/72          0          0          0
+circle            16          0     96    26/96          0         15         67
+figure-eight       8          0     48    17/48          0          8         31
+door-dance         8          0     48    35/48          0          3        164
+stair-juke         0          8      0     0/0           0          0          0
+exploit cells in all: 0 (near-exploits: 26)
+  near      circle radius 1.5 ccw speed 8: caught 2 of 6
+  near      circle radius 1.5 cw speed 6: caught 2 of 6
+  near      circle radius 1.5 cw speed 8: caught 2 of 6
+  near      circle radius 2.5 ccw speed 6: caught 1 of 6
+  near      circle radius 2.5 ccw speed 8: caught 2 of 6
+  near      circle radius 2.5 cw speed 6: caught 2 of 6
+  near      circle radius 2.5 cw speed 8: caught 1 of 6
+  near      circle radius 4.0 ccw speed 6: caught 1 of 6
+  near      circle radius 4.0 ccw speed 8: caught 1 of 6
+  near      circle radius 4.0 cw speed 6: caught 2 of 6
+  near      circle radius 4.0 cw speed 8: caught 1 of 6
+  near      circle radius 5.0 ccw speed 6: caught 2 of 6
+  near      circle radius 5.0 ccw speed 8: caught 1 of 6
+  near      circle radius 5.0 cw speed 6: caught 1 of 6
+  near      circle radius 5.0 cw speed 8: caught 1 of 6
+  near      figure-eight lobe 2.0 along x speed 6: caught 2 of 6
+  near      figure-eight lobe 2.0 along x speed 8: caught 3 of 6
+  near      figure-eight lobe 2.0 along z speed 6: caught 3 of 6
+  near      figure-eight lobe 2.0 along z speed 8: caught 2 of 6
+  near      figure-eight lobe 3.0 along x speed 6: caught 1 of 6
+  near      figure-eight lobe 3.0 along x speed 8: caught 2 of 6
+  near      figure-eight lobe 3.0 along z speed 6: caught 3 of 6
+  near      figure-eight lobe 3.0 along z speed 8: caught 1 of 6
+  near      door-dance spacing 4 ccw speed 6: caught 3 of 6
+  near      door-dance spacing 5 ccw speed 6: caught 3 of 6
+  near      door-dance spacing 5 cw speed 6: caught 1 of 6
+lockrun: L182c blind check level 3 WALL 1 s, exit 0
+=== done 12:41:31
