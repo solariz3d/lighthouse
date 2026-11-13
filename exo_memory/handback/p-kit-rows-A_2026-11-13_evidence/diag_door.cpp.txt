@@ -1,0 +1,65 @@
+// SCRATCH, NEVER COMMITTED (pane A): the two slow reaches of the_hunter_always_reaches_a_player_who_stands_still_in_connected_space in
+// the kit's world, traced tick by tick, to name what holds the hunter 3 to 5 m from a standing player. Same loop as the row.
+#include "chase/tests/chase_test_util.h"
+
+using namespace dz;
+using namespace dz::chase;
+using namespace dz::chase::testing;
+
+DZ_TEST(diag_door_trace) {
+  const char* only = std::getenv("DZ_DIAG_CASE");   // "3:14" or "9:5"; empty: both
+  for (const auto [aseed, want_k] : {std::pair<uint32_t, uint32_t>{3u, 14u}, std::pair<uint32_t, uint32_t>{9u, 5u}}) {
+    if (only && *only && std::to_string(aseed) + ":" + std::to_string(want_k) != only) continue;
+    ArenaParams ap;
+    ap.gen.seed = aseed;
+    Arena            arena(ap);
+    const PlayGraph& g = arena.graph();
+    const int        door = g.nearest(arena.spawn().position);
+    nav::Query       query(arena.nav());
+    int              tried = 0;
+    for (uint32_t k = 0; tried < 10 && k < 4000; ++k) {
+      const size_t u = hash32(k * 2654435761u + 17u) % g.nodes.size();
+      if (g.nodes[u].id.slot != 0 || g.pocket[u] || (g.nodes[u].kind != gen::CellKind::Lane && g.nodes[u].kind != gen::CellKind::Room)) continue;
+      const float d = length(g.nodes[u].pos - arena.spawn().position);
+      if (d < 30.0f || d > 110.0f) continue;
+      if (graph_route(g, door, static_cast<int>(u), chaser_edge).empty()) continue;
+      ++tried;
+      if (k != want_k) continue;
+      sim::World& world = arena.sim();
+      world.spawn(g.nodes[u].pos + Vec3{0, 0.02f, 0}, 0.0f);
+      RunParams rp;
+      rp.seed = k;
+      rp.difficulty = with_dials(1, "head_start_s=0");
+      rp.spawn = arena.spawn().position;
+      rp.director = false;
+      Run         run(arena.nav(), arena, arena.facts(), rp);
+      const Vec3  p = world.player().position;
+      std::printf("CASE seed %u k %u player (%.2f %.2f %.2f) node kind %d\n", aseed, k, static_cast<double>(p.x), static_cast<double>(p.y), static_cast<double>(p.z),
+                  static_cast<int>(g.nodes[u].kind));
+      uint32_t last_hits = 0;
+      for (int t = 0; t < 240 * 150 && !run.over(); ++t) {
+        world.step({});
+        run.step(world.player());
+        const Agent* h = run.hunter();
+        if (!h) continue;
+        const Vec3  to = flat(world.player().position - h->body.pos);
+        const float dist = length(to);
+        const bool  hit = h->body.wall_hits != last_hits;
+        last_hits = h->body.wall_hits;
+        if ((dist < 8.0f && t % 12 == 0) || hit) {
+          const auto& pts = h->body.path.points;
+          std::printf("  t %6.2f d %5.2f pos (%.2f %.2f %.2f) hd %6.1f spd %5.2f turn %6.1f mode %s gait %d blk %d scr %d hit %d leg %zu/%zu", t / 240.0,
+                      static_cast<double>(dist), static_cast<double>(h->body.pos.x), static_cast<double>(h->body.pos.y), static_cast<double>(h->body.pos.z),
+                      static_cast<double>(h->body.heading * 57.29578f), static_cast<double>(h->body.speed), static_cast<double>(h->body.turn * 57.29578f),
+                      mode_name(h->mode), static_cast<int>(h->body.gait), h->body.blocked_ticks, h->body.scraped ? 1 : 0, hit ? 1 : 0, h->body.leg, pts.size());
+          for (size_t i = h->body.leg; i < pts.size() && i < h->body.leg + 3; ++i)
+            std::printf(" -> (%.2f %.2f %.2f)", static_cast<double>(pts[i].pos.x), static_cast<double>(pts[i].pos.y), static_cast<double>(pts[i].pos.z));
+          std::printf(" see %d\n", arena.clear(h->body.pos + Vec3{0, 1.0f, 0}, world.player().position + Vec3{0, 1.0f, 0}) ? 1 : 0);
+        }
+      }
+      std::printf("END seed %u k %u over %d at %.2f s by %s\n", aseed, k, run.over() ? 1 : 0, static_cast<double>(run.seconds()),
+                  run.caught_by() ? kind_name(run.caught_by()->body.kind) : "nothing");
+      break;
+    }
+  }
+}
