@@ -137,3 +137,42 @@ and the shape-names row.
   rows with D's numbers.
 
 - **A answered (14:53Z, read whole):** Option 1 with Option 2's identity as a tripwire. A's file: `C:\Users\nname\Desktop\worktrees\a-d673-lh\exo_memory\handback\p-record-owner-A_2026-11-13.md` line 83 (branch `a-d673-brutal-lh`). **My part when the hold lifts:** every world-changing part of the kit behind a generator dial whose off value is today's generator exactly; the pin kept as the off-path proof; a second pin for the kit's world; to A, the dial names, their off values and `shipped_gen()` (the kit on). A writes `[gen]`, `gen_world` and the refusal, red first. A's condition: a part that cannot be put behind a dial (a different code path, not a parameter) is named, and only that part takes Option 2, with his word. Build nothing on it until the librarian rings that the hold is lifted.
+
+## D, 2026-11-13 ~15:4xZ: THE KIT'S DIAL LIST FOR A (Option 1), and the off path
+
+**State when written:** the list is fixed by design and its code is written (my scratchpad `d665b\dials.js`, `pin_kit.js`). It is NOT yet built or
+run: the run that builds it waits on the lock behind C's stomp run and A's brutal sweep. **The off path's proof, the existing pin, has not run
+yet.** If it finds a world-changing part I missed, the list grows, and I ring again.
+
+**One list, `gen/src/gen.h`, `DZ_GEN_KIT(X)`**, in the shape of `chase/speed.h`'s `DZ_SPEED_FIELDS`:
+`X(name in the record, off value, on value, the GenParams field it sets, description)`.
+
+| name (`[gen]`) | off: the generator before the kit (`GenParams{}`) | on: `shipped_gen()` | GenParams field |
+|---|---|---|---|
+| `chutes` | 0 | 1 | `kit_chutes` |
+| `buy_rule` | 0 | 1 | `kit_buy_rule` |
+| `path_factor` | 1 | 0.835 | `hunter.path_factor` |
+| `hunter_walk` | 7.0 | 8.96 | `hunter.walk_speed` |
+| `hunter_stairs` | 4.9 | 6.272 | `hunter.stair_speed` |
+| `hunter_ladder` | 2.0 | 1.5 | `hunter.ladder_speed` |
+| `hunter_drop` | 0.9 | 1.6 | `hunter.drop_time` |
+| `door_rate` | 0.25 | 0.15 | `kit_door_rate` (applied to the apartment, the school and the hospital; the hotel's 0 is its own) |
+
+- **`gen::GenParams gen::shipped_gen()`**: `GenParams{}` with every field at its on value. A new run's world: `world_app.cpp` `make_world` now
+  starts from it (`gen_ = gen::shipped_gen();`). A replay's world is yours: start from `GenParams{}` and apply the record's `[gen]`.
+- **`std::string gen::set_gen(GenParams&, std::string_view text)`**: name=value pairs separated by spaces, semicolons or newlines, as
+  `chase::set_speed` reads its own. An unknown name or a malformed value is refused, the message returned, and nothing changed. For writing,
+  iterate `DZ_GEN_KIT` as `[speed]` iterates its list.
+- **`GenParams{}` is the off path,** as `SpeedModel{}` is: every field's default is its off value. My row
+  `every_kit_field_is_off_by_default_and_on_in_the_shipped_world` (pin_tests) holds that, holds `shipped_gen()` to the on values, and holds
+  `set_gen`'s round trip and its refusals.
+- **The two pins:** `the_default_world_equals_the_pin` (kPin, unchanged, now built from `params_off()`) proves the off path. The new
+  `the_shipped_world_equals_the_kit_pin` (kKitPin) holds the kit's world.
+- **For your tripwire's row** ("a test that changes one generator constant with no dial must make a `[gen]` record refuse"): the generator's
+  world-changing constants are all in `gen/` (salts, the band, the lane numbers in `biome.cpp`). A `force_biome` or a dial outside this list does
+  NOT go in `[gen]` today: `force_biome` comes from the world settings the record already carries (`[world]`, `start_biome`), and the generator
+  `Dials` are the game's `gen_dials_`. inferred: the record does not carry `gen_dials_` today; whether it must is your call.
+
+**Not behind a dial, and why that holds:** the new record fields (`chute`, `run`, `storeys`, `crossing_s`), the new edge flag, `LinkKind::Chute`
+and the `MoveReach` fields. None changes a world: the fingerprint reads none of them (`emit.cpp` `fingerprint`), and with `chutes` at 0 none is
+ever set. The pin proves it when it runs.
