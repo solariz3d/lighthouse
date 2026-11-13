@@ -469,3 +469,6 @@ General form: a scan in a chain must exit nonzero on a hit; and the hand-back is
 2026-11-13, D675 — dreamzone-3 o-run-frame 7500a26 on 31d1c6d: world_app_tests 61/0, self-test 52/52, mutants 17/17, three stills on G:; the timer row found the HUD clock's "0:60.0". The kill: /T walked a stale parent id into 5824 (P's bench), and the output was cut with head. Could be wrong that the PID was reused: inferred, the processes are gone.
 General form: stop your own job by the handle or the exact PIDs you started; never a tree kill by a bare PID, and never cut a kill's output.
 → `exo_memory/handback/p-d675-run-frame-O_2026-11-13.md`
+
+**2026-11-13: five-branch landing held on two reds; and a portable-paths red must be classified by its PATHS, not its rows.** The suite on da225e0d gave 195 green, 1 failed, 1 crashed of 199. universe-print breaks at lap-i-p's multi-line install.ps1 row: 16/0 at 92647969, crash from dc89ba50. portable-paths names only heavy-run.js:404, from the guard I landed at 0fedf4d3; I had called its rows base-red at the guard landing, and the guard merge actually carried 4 paths, one of them its own. Could be wrong if the 404 text is meant to be baselined, but it was red, and I called it base.
+→ `exo_memory/handback/p-land-five-O_2026-11-13.md`
