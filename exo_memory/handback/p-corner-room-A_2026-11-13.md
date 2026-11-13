@@ -49,3 +49,40 @@ a release without his look.
 
 **Any one: this form does not do what it claims, and I say so before another.** The unwelcome outcome, in its own words: "the corner room makes
 the careful body faster than the careless one only by making it hit walls".
+
+## WHERE IT STOPS (D, Friday 15:41 local, `date` by the shell): the registration accepted; no code written yet
+
+**Ruled at 21:24Z** (the chair, from the librarian's read):
+- I add the one `nav/` query myself, in a commit that touches nothing else in `nav/`, with its own nav row. B reads that commit.
+- The sprinter row is amended by name to run BOTH worlds against the same 72 of 96, and I report what the second world adds to its run time.
+- The hand-back must state `corner_speed`'s law, where the grip figure lives, and how it stands against his H2.
+- A corner's speed and radius must be printable from a run.
+
+**State:**
+- dreamzone-3 branch `a-corner-room` at `a-kit-told` `dcbfd3c`, in `G:\consonance-scratch\a-gen-dz3`. No commits of mine on it yet, and the tree is clean.
+- The landing of o-run-frame came first and is done (`p-d675-land-o-A_2026-11-13.md`, origin/main `d8ef536`).
+
+**The design, ready to write (nothing of it is built):**
+1. **`nav::Query::open_along(Vec3 p, Vec3 dir, float max, const Profile&) const`** (`nav/nav.h` beside `nearest`; `nav/world.cpp` after `Query::nearest`, :442).
+   - `nearest_within` the point (reach 0.5/1.0/0.5), then `impl_->full->raycast(ref, at, at + flat(dir)·max/|dir|, &filter, &t, normal, polys, &n, 64)`.
+   - It returns `t ≥ 1 ? max : t·max` (Detour gives `FLT_MAX` when the ray reaches the end), and 0 when `p` is off the mesh or the call fails.
+2. **Its nav row (`nav/tests/path_tests.cpp`):** a `Built` block (`params_for(10, gen::kBiomeApartment)`, as `:276`), with cells picked by rule, not by hand:
+   - **an open cell:** the first graph node whose 8 grid neighbours are all present and walk-joined with no door;
+   - **a corridor cell:** the first Lane node with no neighbour on either side across its run.
+   - **The checks:** the same call twice gives the same float; the open cell reads at least 3 m in all four axis directions; the corridor cell reads
+     under 1.6 m across.
+   - Red first, against a stub returning 0.
+3. **Then `chaser.cpp`:**
+   - `corner_speed` takes the room: `radius = room · cos(θ/2) / sin(θ/2)`, with the room clamped to [0.9, 6] m.
+   - The room is read once per path point, when the leg moves to it, along the corner's outer bisector.
+   - Careful bodies only; care 0 is unchanged.
+4. **Then the rows:** the sprinter row amended to both worlds (by name, the old and new rule in a comment); the open-against-corridor row;
+   today's wall-hit and scrape totals measured first; the catch-power sweep both ways (seeds 1–96, against 52 and 62).
+5. **Printable from a run:** `dz-chase run --trace` prints, for each chaser, its corner's room, radius and speed as it heads into one.
+
+**The law, as it stands today** (for the hand-back's required statement; read at `dcbfd3c`):
+- `corner_speed` → `speed_for_radius` (`chaser.cpp:46-58`): the fastest `v` with `v / turn_rate(v) ≤ radius`. `turn_rate` falls linearly from
+  `turn_slow_deg` at rest to `turn_fast_deg` at top speed (`chaser.cpp:160-163`).
+- So today it is a **turn-rate law**. **There is NO grip figure in the chase:** no μ, no lateral-acceleration limit.
+- His choice, item 168, is **H2: `min(V, √(μ·g·R))`**, grip-bound only, μ 1.0–1.33 (E's L187 §9). Today's law and H2 differ in form. Whether the
+  lap moves to H2 is not in this registration, and I would ask before changing the law itself.
