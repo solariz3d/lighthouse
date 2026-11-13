@@ -475,3 +475,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-13: six branches landed and pushed as fab53587. A credential-prefix count in a range scan is a NAME until a token run follows it.** Suite on 4cca2ee3: 197 green, 0 failed of 199. The range scan counted sk-or- and the other prefixes 8-12x; every hit sat in a landing hand-back, followed by a token run of 0. Could be wrong if a key were split across lines, but credwhere.js checks the run on the matched line only.
 → `exo_memory/handback/p-land-six-O_2026-11-13.md`
+
+**2026-11-13: pane H's five hooks are LIVE on D; landed-live and install.ps1 -Check agree on 37 of 39 files, and the one real difference is require-closure.** reply-slot.js reads OWED in landed-live and ok in -Check: its bytes match, but it requires sources-gate.js, which is stale. settings.json grew 4,942 to 12,332 B and only +337 B of that is content, because the installer re-indents to 4 spaces and writes CRLF. Could be wrong if the installer's rewrite changed a value semdiff does not print; semdiff compares every top-level key.
+→ `exo_memory/handback/p-install-H-O_2026-11-13.md`
