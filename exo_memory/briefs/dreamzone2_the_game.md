@@ -1217,6 +1217,53 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **Designed pieces (item 93): "Room drafts, you judge (Recommended)".** The room drafts shape-only layouts and he judges rendered pictures before any land.
      - **More builder panes: "Two more (Recommended)".** Lanes: `loop/plan_two_more_panes_2026-11-13.md`.
      - **Still open:** whether the generator path moves up his queue (it sits at step 13).
-183. 2026-11-13 03:5x on, his picks on the decision page (https://claude.ai/artifact/Cu4oEJHEmeeQyW9jpVGPU1, private to him; built from `loop/his_calls_2026-11-13.json`). Each pick is saved in the page's store as `answers/<call id>` and is copied here when it is read:
-     - **Read 10:00Z:** `run_frame-1`, "Show the timer?": **"Show nothing"** (picked 09:59:34Z).
-     - **State:** 102 calls are open on the page (16 marked needed now) and 27 are settled. The four he was asked in text at 03:4x are on it as `world_gen-0`, `sound-2`, `sound-7` and `sound-8`.
+183. 2026-11-13 03:5x on, his picks on the decision page (https://claude.ai/artifact/Cu4oEJHEmeeQyW9jpVGPU1, private to him; built from `loop/his_calls_2026-11-13.json`). Each pick is saved in the page's store as `answers/<call id>`. This item is rewritten whole from the store each time it is read (`loop/his_calls_to_brief_2026-11-13.js`):
+     - **Last read: 10:10Z, 22 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
+     - **Changed by him:** `run_frame-1` was "Show nothing" at 09:59:34Z before the pick listed below.
+     - `run_frame-1` "Show the timer?": **"Late warning only"** (NOT the page's suggestion, which was "Show nothing") (10:00:06Z).
+       - the option as he read it: Show it only in the last minute; one extra screen state.
+     - `run_frame-3` "Void in overtime?": **"It saves you"** (the page's suggestion) (10:00:36Z).
+       - the option as he read it: Treated like any save; the run counts as a success.
+     - `run_frame-4` "Do Parks stop the dark one?": **"Parks close in overtime"** (NOT the page's suggestion, which was "It reroutes around") (10:00:56Z).
+       - the option as he read it: Removes the question; no safe place at all.
+     - `run_frame-5` "Is the dark one the hunter?": **"A new creature"** (the page's suggestion) (10:01:03Z).
+       - the option as he read it: The plan; it wears the hunter's shape as a stand-in. Cheapest.
+     - `chase_entities-1` "Softer hunter or more grip?": **"Grip above human"** (10:01:47Z).
+       - the option as he read it: The hunter corners better than a human ('monstrous'); the 1.33 figure behind it is unverified press.
+     - `abilities-1` "Six fixed, or slots?": **"Six fixed"** (10:06:08Z).
+       - the option as he read it: Simplest; set fusions.
+       - his note, verbatim: maybe we should add tombs equilivent from megabonk, so you can mix abilities and "tombs" which will be a big passive buff that upgrades instead of ability.  So there is a seperate pool for our version of tombs, and then weapons which would be our abilities.
+     - `abilities-7` "Rename the 'focus' key?": **"Live with it"** (10:06:26Z).
+       - the option as he read it: No work; two meanings.
+     - `stress-1` "What raises stress?": **"Both, weighted"** (10:06:31Z).
+       - the option as he read it: Doubles the tests.
+     - `meta_loop-1` "What is XP measured in?": **"Run points stay time-shaped; global XP from metres and events"** (the page's suggestion) (10:06:45Z).
+       - the option as he read it: Two numbers shown.
+     - `meta_loop-3` "Does a lost run pay?": **"Lose all but crumbs of global XP"** (10:06:54Z).
+       - the option as he read it: Matches your words literally; harsher, risk of a grind stall.
+     - `waking_room-1` "Is the room a walked 3D space?": **"A full walked room"** (10:07:40Z).
+       - the option as he read it: Scene, collision and the body in it; keeps the bed, window and invasion beats.
+       - his note, verbatim: fully interactable from what i said, can walk around, look out the window, sit at desk and go on pc, workout, customize setup.
+     - `world_gen-0` "Build the world's new structure now?": **"Move it up and start now"** (the page's suggestion) (10:07:40Z).
+       - the option as he read it: The first new pane builds district profiles for the hotel, school and hospital. You judge before-and-after pictures of the same seed.
+     - `look_fear-3` "What drives the wider view?": **"Key it to the peak"** (10:08:17Z).
+       - the option as he read it: Changes how fast every run feels.
+       - his note, verbatim: and then the closer the hunter gets to touching you, it modulates the fov to zoom out to feel like aAAAAA
+     - `look_fear-5` "Seizure warning: when?": **"Every launch"** (10:08:17Z).
+       - the option as he read it: A few seconds each time; no file.
+     - `sound-1` "Does the good entity quiet the hunter?": **"Duck all but the hunter's footsteps, to a floor"** (10:08:46Z).
+       - the option as he read it: Fair, weaker.
+     - `sound-2` "What makes the hunter's sound?": **"Build both, pick by ear"** (NOT the page's suggestion, which was "Recorded footfalls, our thud underneath") (10:09:06Z).
+       - the option as he read it: One clip with both voices on the same run.
+     - `abilities-2` "Where are abilities bought?": **"Chair only"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
+       - the option as he read it: PC is for shop, builder and cheques; cheapest.
+     - `player_body-5` "How to make a fist?": **"Model-only finger curl"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
+       - the option as he read it: No change to the body's joints; the room should take this.
+     - `sound-0` "Your own steps cover the hunter's. Which mix?": **"Hear it again with the new voice"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
+       - the option as he read it: Recorded footfalls will replace the home-made sound, so A and C will both change.
+     - `tech_foundation-1` "Old runs after a change?": **"Warn that the build differs, and pin a few chosen runs with their build"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
+       - the option as he read it: Cheapest, and honest about it.
+     - `tech_foundation-4` "How strict is the landing train?": **"Land green branches, drop the red one"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
+       - the option as he read it: The landing-train plan chooses this.
+     - `chase_entities-2` "Keep the wall pass?": **"Drop it"** (10:09:46Z).
+       - the option as he read it: Removes the break; costs the answer to the safe corner.

@@ -23,7 +23,7 @@ Steps:
 3. **Lap 3, district profiles,** in the new file `gen/src/intent.cpp`, behind `intent_strength` (0 = today's world, tested against the pin).
 4. **Lap 4, pass-through rooms** (`gen/src/through.cpp`), after reading `cell_base` and `edge()`, which no proposal opened.
 5. **Lap 5, beacons and sites.**
-- **Laps 3 to 5 need his word that the generator moves up his queue** (asked 03:4x; the answer was lost to a pane ring and is asked again). Until it comes, this pane prepares Lap 3: it reads the code the path cites, registers the tests, and drafts the first shape-only pieces as pictures for him.
+- **His word arrived at 10:07Z on the decision page (`world_gen-0`): "Move it up and start now".** Laps 3 to 5 are go once generator Lap 1 has landed. Before that, this pane reads the code the path cites, registers the tests, and drafts the first shape-only pieces as pictures for him.
 - **Each lap's review packet:** a top-down picture of the same seed before and after, and a short clip of a bot's route through it.
 
 ## Lane 6 (second new pane): first steps that live in new files, in his queue's order
@@ -34,3 +34,4 @@ Each is the first lap of its handoff, `loop/buildpath_<key>_2026-11-13.md`. Read
 4. **The front door** (queue step 12): the title constant and the photosensitivity notice.
 5. **Movement, the surge** (queue step 9): lap 1 only, in `sim/`. Its later laps wait for his calls.
 - **Before each item,** check `loop/his_calls_2026-11-13.json` (written; his picks arrive on the decision page and are copied into `briefs/dreamzone2_the_game.md`, item 183) for a call of his marked "now" on that aspect. If one blocks the first lap, skip to the next item and say so on the board.
+- **His picks that unblock these first laps** (stress, the ledger, the director, the front door) are in `loop/plan_13h_run_2026-11-13.md`, section "HIS PICKS FROM THE DECISION PAGE", and in full in `briefs/dreamzone2_the_game.md`, item 183.
