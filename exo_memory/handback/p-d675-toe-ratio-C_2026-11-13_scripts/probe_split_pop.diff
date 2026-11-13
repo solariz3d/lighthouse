@@ -1,0 +1,139 @@
+diff --git a/game/tests/ragdoll_tests.cpp b/game/tests/ragdoll_tests.cpp
+index ca83da6..8209e6a 100644
+--- a/game/tests/ragdoll_tests.cpp
++++ b/game/tests/ragdoll_tests.cpp
+@@ -183,3 +183,134 @@ DZ_TEST(the_hunters_head_body_turns_with_its_look) {
+   DZ_CHECK(turned * 57.29578f >= 20.0f);
+   DZ_CHECK(worst * 57.29578f <= 1.0f);
+ }
++
++// TEMPORARY (pane C, D675 toe ratio, the librarian's ruling of 17:34), never committed: R4.5's 60 s drive (the scripted
++// chase's 11 s schedule over and over, as long_poses on l185-skeleton-steps45 draws it), the drawn hunter's toe joints read
++// per tick, split by the schedule's segments, straights from turns; each segment's fastest toe with the hunter's own speed
++// at that tick. Two differences: one tick back (as R4.5 reads its bodies) and centred over two.
++DZ_TEST(zz_probe_toe_split) {
++  const auto& rest = hunter_rest();
++  struct Tick { BodyPose pose; float speed, t, yaw_rate; };
++  std::vector<Tick> ticks;
++  Drive       d;
++  DrawnChaser drawn;
++  drawn.reset(d.pos, d.heading, d.heading);
++  float phase = 0, last_yaw = 0;
++  for (int i = 0; i < 240 * 60; ++i) {
++    d.step();
++    if (d.t >= 11.0f) d.t = 0.0f;
++    drawn.step(d.pos, d.heading, d.heading, true, kDt);
++    phase = std::fmod(phase + d.speed * kDt * gait_phase_per_metre(rest, d.speed), 6.2831853f);
++    GaitMotion motion;
++    motion.lean = drawn.lean();
++    motion.pitch = drawn.pitch();
++    motion.follow = drawn.chain.drawn;
++    float dy = drawn.yaw - last_yaw;
++    while (dy > kPi) dy -= 2.0f * kPi;
++    while (dy < -kPi) dy += 2.0f * kPi;
++    last_yaw = drawn.yaw;
++    ticks.push_back({gait_pose(rest, d.pos, drawn.yaw, d.speed, phase, motion), d.speed, d.t, i ? dy / kDt : 0.0f});
++  }
++  const char* names[7] = {"run-up to 9 (straight)", "wide turn, 90 deg in 1 s", "9 m/s (straight)", "braking to 4 (straight)",
++                          "hairpin, 180 deg in 1 s", "sprint to 11 (straight)", "the stop (straight)"};
++  const float ends[7] = {3.0f, 4.0f, 6.0f, 6.5f, 7.5f, 9.5f, 11.0f};
++  struct Best { float back = 0, centred = 0, speed = 0, t = 0, yaw_rate = 0, ratio_most = 0, ratio_speed = 0; int tick = -1; const char* side = ""; };
++  Best seg[7];
++  for (size_t i = 1; i + 1 < ticks.size(); ++i) {
++    if (i < 240) continue;   // the first second places the body from rest
++    int s = 0;
++    while (s < 6 && ticks[i].t >= ends[s]) ++s;
++    for (int sd = 0; sd < 2; ++sd) {
++      const Joint j = sd ? Joint::ToeR : Joint::ToeL;
++      const float back = length(ticks[i].pose[j] - ticks[i - 1].pose[j]) / kDt;
++      const float cen = length(ticks[i + 1].pose[j] - ticks[i - 1].pose[j]) / (2.0f * kDt);
++      if (back > seg[s].back) {
++        seg[s].back = back, seg[s].centred = cen, seg[s].speed = ticks[i].speed, seg[s].t = static_cast<float>(i) * kDt;
++        seg[s].yaw_rate = ticks[i].yaw_rate, seg[s].tick = static_cast<int>(i), seg[s].side = sd ? "ToeR" : "ToeL";
++      }
++      if (ticks[i].speed >= 3.0f && back / ticks[i].speed > seg[s].ratio_most) seg[s].ratio_most = back / ticks[i].speed, seg[s].ratio_speed = ticks[i].speed;
++    }
++  }
++  float all = 0;
++  for (int s = 0; s < 7; ++s) {
++    all = std::max(all, seg[s].back);
++    std::printf("    %-26s fastest toe %.2f m/s one tick back (%.2f centred), %s at %.3f s; the hunter then %.2f m/s, turning %.0f deg/s: ratio %.3f; "
++                "the most toe over speed here at 3 m/s or more %.3f (at %.2f m/s)\n",
++                names[s], static_cast<double>(seg[s].back), static_cast<double>(seg[s].centred), seg[s].side, static_cast<double>(seg[s].t),
++                static_cast<double>(seg[s].speed), static_cast<double>(seg[s].yaw_rate * 57.29578f),
++                static_cast<double>(seg[s].speed > 0.0f ? seg[s].back / seg[s].speed : 0.0f), static_cast<double>(seg[s].ratio_most),
++                static_cast<double>(seg[s].ratio_speed));
++  }
++  std::printf("    over the 60 s: the fastest toe %.2f m/s one tick back\n", static_cast<double>(all));
++}
++
++// TEMPORARY (pane C, D675), never committed: the toe's one-tick pop. Per tick, how far a toe moves from the tick before
++// against half of its move over the two ticks round it; a pop is a tick whose own move exceeds that by more than 2 cm. At
++// held speeds in a straight line, and over R4.5's 60 s drive; for the largest, where it is (the toe's height, the phase).
++DZ_TEST(zz_probe_toe_pop) {
++  const auto& rest = hunter_rest();
++  const auto scan = [&](const char* name, const std::vector<BodyPose>& poses, const std::vector<float>& speed, const std::vector<float>& ph) {
++    int pops = 0;
++    float most = 0, most_move = 0, most_h = 0, most_v = 0, most_ph = 0, cen_max = 0;
++    int most_i = -1;
++    const char* most_side = "";
++    for (size_t i = 241; i + 1 < poses.size(); ++i)
++      for (int sd = 0; sd < 2; ++sd) {
++        const Joint j = sd ? Joint::ToeR : Joint::ToeL;
++        const float move = length(poses[i][j] - poses[i - 1][j]);
++        const float half = 0.5f * length(poses[i + 1][j] - poses[i - 1][j]);
++        cen_max = std::max(cen_max, half * 2.0f / (2.0f * kDt));
++        const float pop = move - half;
++        if (pop > 0.02f) ++pops;
++        if (pop > most) most = pop, most_move = move, most_h = poses[i][j].y, most_v = speed[i], most_ph = ph[i], most_i = static_cast<int>(i), most_side = sd ? "ToeR" : "ToeL";
++      }
++    std::printf("    %-22s ticks with a toe pop over 2 cm: %d; the largest %.1f cm (%s moved %.1f cm in that tick), at %.3f s, the hunter %.2f m/s, phase %.3f rad, the toe %.3f m up; "
++                "the fastest toe centred over two ticks %.2f m/s\n",
++                name, pops, static_cast<double>(most * 100), most_side, static_cast<double>(most_move * 100), static_cast<double>(most_i) * kDt,
++                static_cast<double>(most_v), static_cast<double>(most_ph), static_cast<double>(most_h), static_cast<double>(cen_max));
++    if (most_i > 2 && most_i + 2 < static_cast<int>(poses.size())) {
++      const Joint tj = most_side[3] == 0x52 ? Joint::ToeR : Joint::ToeL, aj = most_side[3] == 0x52 ? Joint::AnkleR : Joint::AnkleL, hj = most_side[3] == 0x52 ? Joint::HipR : Joint::HipL;
++      for (int k = most_i - 2; k <= most_i + 2; ++k) {
++        const BodyPose& q = poses[static_cast<size_t>(k)];
++        std::printf("      tick %+d: toe y %.3f, %.3f m ahead of its hip; ankle y %.3f, %.3f ahead; the hip %.3f up\n", k - most_i, static_cast<double>(q[tj].y),
++                    static_cast<double>(q[tj].z - q[hj].z), static_cast<double>(q[aj].y), static_cast<double>(q[aj].z - q[hj].z), static_cast<double>(q[hj].y));
++      }
++    }
++  };
++  for (float v : {3.53f, 5.19f, 6.97f, 9.47f, 11.0f}) {
++    std::vector<BodyPose> poses;
++    std::vector<float> sp, ph;
++    float phase = 0.0f;
++    Vec3 pos{0, 0, 0};
++    for (int i = 0; i < 240 * 6; ++i) {
++      pos.z += v * kDt;
++      phase = std::fmod(phase + v * kDt * gait_phase_per_metre(rest, v), 6.2831853f);
++      poses.push_back(gait_pose(rest, pos, 0.0f, v, phase));
++      sp.push_back(v), ph.push_back(phase);
++    }
++    char name[40];
++    std::snprintf(name, sizeof name, "held %.2f m/s", static_cast<double>(v));
++    scan(name, poses, sp, ph);
++  }
++  {
++    std::vector<BodyPose> poses;
++    std::vector<float> sp, ph;
++    Drive d;
++    DrawnChaser drawn;
++    drawn.reset(d.pos, d.heading, d.heading);
++    float phase = 0;
++    for (int i = 0; i < 240 * 60; ++i) {
++      d.step();
++      if (d.t >= 11.0f) d.t = 0.0f;
++      drawn.step(d.pos, d.heading, d.heading, true, kDt);
++      phase = std::fmod(phase + d.speed * kDt * gait_phase_per_metre(rest, d.speed), 6.2831853f);
++      GaitMotion motion;
++      motion.lean = drawn.lean();
++      motion.pitch = drawn.pitch();
++      motion.follow = drawn.chain.drawn;
++      poses.push_back(gait_pose(rest, d.pos, drawn.yaw, d.speed, phase, motion));
++      sp.push_back(d.speed), ph.push_back(phase);
++    }
++    scan("R4.5's 60 s drive", poses, sp, ph);
++  }
++}
