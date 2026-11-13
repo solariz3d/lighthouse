@@ -1,0 +1,2 @@
+65 tests, 0 failed
+lockrun: L197 full chase_tests WALL 385 s, exit 0

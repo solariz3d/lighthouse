@@ -1,0 +1,28 @@
+--- an_old_text_with_no_record_format
+ok    an_old_text_with_no_record_format_and_no_speed_section_still_reads_as_format_0_and_plays_to_the_same_fingerprints
+1 tests, 0 failed
+lockrun: L197 row an_old_text_with_no_record_format WALL 24 s, exit 0
+--- a_new_record_text_says_its_format
+ok    a_new_record_text_says_its_format_before_every_other_key_and_lists_every_speed_field_and_reads_back_to_the_bit
+1 tests, 0 failed
+lockrun: L197 row a_new_record_text_says_its_format WALL 0 s, exit 0
+--- a_newer_format_an_unknown
+ok    a_newer_format_an_unknown_speed_field_and_a_bad_speed_value_are_each_refused_and_name_why
+1 tests, 0 failed
+lockrun: L197 row a_newer_format_an_unknown WALL 0 s, exit 0
+--- a_run_played_with_another_speed_model
+ok    a_run_played_with_another_speed_model_replays_to_its_fingerprints_from_its_record_and_does_not_without_it
+1 tests, 0 failed
+lockrun: L197 row a_run_played_with_another_speed_model WALL 24 s, exit 0
+--- a_new_run_begins_with_the_shipped
+ok    a_new_run_begins_with_the_shipped_speed_model_and_its_record_names_it
+1 tests, 0 failed
+lockrun: L197 row a_new_run_begins_with_the_shipped WALL 24 s, exit 0
+--- a_saved_run_and_its_kept_points
+ok    a_saved_run_and_its_kept_points_round_trip_and_a_text_without_kept_points_reads_as_none
+1 tests, 0 failed
+lockrun: L197 row a_saved_run_and_its_kept_points WALL 0 s, exit 0
+--- speed pin
+ok    what_a_new_run_starts_with_is_the_default_model_until_the_flip_and_the_model_accepts_it
+1 tests, 0 failed
+lockrun: L197 pin WALL 0 s, exit 0

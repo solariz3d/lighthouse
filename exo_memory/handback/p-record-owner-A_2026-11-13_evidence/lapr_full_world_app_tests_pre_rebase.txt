@@ -1,0 +1,3 @@
+FAIL  a_newer_format_an_unknown_speed_field_and_a_bad_speed_value_are_each_refused_and_name_why
+51 tests, 1 failed
+lockrun: L197 full world_app_tests WALL 624 s, exit 1

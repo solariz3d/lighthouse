@@ -1,0 +1,74 @@
+=== an_old_text_with_no_record_format
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(328): CHECK failed: a.same && b.same
+FAIL  an_old_text_with_no_record_format_and_no_speed_section_still_reads_as_format_0_and_plays_to_the_same_fingerprints
+1 tests, 1 failed
+lockrun: L197 stub row an_old_text_with_no_record_format WALL 16 s, exit 1
+=== a_new_record_text_says_its_format
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(343): CHECK failed: at_format != std::string::npos && at_result != std::string::npos && at_format < at_result
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(344): CHECK failed: contains(text, "[speed]")
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "ref_speed" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "dist_per_km" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "dist_max" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "straight_rate" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "straight_max" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "straight_turn" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "run_up_bleed" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "turn_drag" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "corner_floor" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "wall_stand" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "brake_scale" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "hunter_start_bonus" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "hunter_bonus_fade_s" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "stairs_lift" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "corner_floor_speed" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "slip_rate" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "lead_range" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(347): CHECK failed: text.find("\n" "lead_base_s" " = ", speed_at) != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(351): CHECK_EQ failed: back.format = 0, kRecordFormat = 1
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(352): CHECK failed: same_speed(back.speed, rec.speed)
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(353): CHECK failed: !same_speed(back.speed, chase::SpeedModel{})
+FAIL  a_new_record_text_says_its_format_before_every_other_key_and_lists_every_speed_field_and_reads_back_to_the_bit
+1 tests, 1 failed
+lockrun: L197 stub row a_new_record_text_says_its_format WALL 0 s, exit 1
+=== a_newer_format_an_unknown
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(364): CHECK failed: at != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(369): CHECK failed: !why.empty() && contains(why, "newer")
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(364): CHECK failed: at != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(371): CHECK failed: !why.empty() && contains(why, "record_format")
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(364): CHECK failed: at != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(373): CHECK failed: !why.empty() && contains(why, "bogus_field")
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(364): CHECK failed: at != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(375): CHECK failed: !why.empty() && contains(why, "ref_speed")
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(364): CHECK failed: at != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(377): CHECK failed: !why.empty()
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(378): CHECK_EQ failed: back.seed = 0, 99u = 99
+FAIL  a_newer_format_an_unknown_speed_field_and_a_bad_speed_value_are_each_refused_and_name_why
+1 tests, 1 failed
+lockrun: L197 stub row a_newer_format_an_unknown WALL 0 s, exit 1
+=== a_run_played_with_another_speed_model
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(393): CHECK failed: same_speed(rec.speed, other)
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(394): CHECK_EQ failed: rec.chase_hash = 6511590399796510396, p.headless.chase_hash = 5654815812139227470
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(396): CHECK failed: with.error.empty() && with.same
+FAIL  a_run_played_with_another_speed_model_replays_to_its_fingerprints_from_its_record_and_does_not_without_it
+1 tests, 1 failed
+lockrun: L197 stub row a_run_played_with_another_speed_model WALL 22 s, exit 1
+=== a_new_run_begins_with_the_shipped
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(413): CHECK failed: contains(text, "record_format = 1") && contains(text, "[speed]")
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(416): CHECK_EQ failed: rec.format = 0, kRecordFormat = 1
+FAIL  a_new_run_begins_with_the_shipped_speed_model_and_its_record_names_it
+1 tests, 1 failed
+lockrun: L197 stub row a_new_run_begins_with_the_shipped WALL 11 s, exit 1
+=== a_saved_run_and_its_kept_points
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(433): CHECK failed: contains(text, "end           = saved")
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(434): CHECK failed: contains(text, "saved")
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(437): CHECK failed: back.end == RunEnd::Saved
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(438): CHECK failed: back.kept_score == 1234.5f
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(442): CHECK failed: at != std::string::npos
+    C:\Users\zackn\Downloads\dreamzone-3-a-l197\game\tests\run_record_tests.cpp(448): CHECK failed: lost.end == RunEnd::Saved
+FAIL  a_saved_run_and_its_kept_points_round_trip_and_a_text_without_kept_points_reads_as_none
+1 tests, 1 failed
+lockrun: L197 stub row a_saved_run_and_its_kept_points WALL 0 s, exit 1
+=== speed pin (chase_tests)
+ok    what_a_new_run_starts_with_is_the_default_model_until_the_flip_and_the_model_accepts_it
+1 tests, 0 failed
+lockrun: L197 stub row speed pin WALL 0 s, exit 0

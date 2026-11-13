@@ -39,3 +39,29 @@ Hand mutants on the real source, reported `applied N / caught N / NOT APPLIED N`
 The cites are in other documents; my hand-backs are unchanged.
 
 NEXT: A builds Lap R in its own worktree off main once the overtime rows and the hawk blind check are read; rings the librarian with the landing.
+
+## Lap R landing section (written 06:0x local, with the branch READY and the train not yet run on it; completed when the train has landed it)
+**The change:** branch `l197-record`, tip `47d88d7`, one commit on main `c9d520e` (11 files; checked: `git diff --stat c9d520e..47d88d7`). Marked READY with B's train at 11:59:51Z (`landing-train.js list`: after C's `l189-drops-on-c9d520e`). Tier: prove it.
+
+**For his eye (three lines):** a hole is closed. The chasers' speed model was not in the run record, so changing any default of it would have silently changed what every kept run replays to (`game/world/world_app.cpp:393-395` left `cp.run.speed` at the code default). The record now carries it (one version number, `record_format = 1`) and what a new run starts with is one named function; nothing plays differently yet. The chase flip, when it comes, edits that function and goes through this gate.
+
+**Rows, red first** (`p-record-owner-A_2026-11-13_evidence/`): the stub commit `2f7ddce` (the API only: nothing written, read or replayed) was built and the rows run against it (`lapr_stub_red.txt`):
+- rows 2 (format first, every speed field, round trip), 3 (newer format, unknown field, bad value refused and named), 4 (a non-default model replays to its own fingerprints from its record and not without it), 5 (a new run starts with the shipped model and its record names it), 6 (`saved` and `kept_score` round trip, a text without them reads as none): **RED**, as registered.
+- **Row 1** (an old text with no `record_format` and no `[speed]` still reads and plays to the same fingerprints) **cannot honestly go red from the code**: it guards what already held. It did FAIL on the stub, but for a defect in the row itself (it read the text without the `.dzr`, so the replay had no inputs): fixed (it reads with `read_run`), and the row is green with the change. The speed pin (`what_a_new_run_starts_with...`, `speed_tests.cpp`) is green before and after by design: it is the pin that Lap R changes no behaviour, and Lap F edits that row by name.
+- **Two more defects of mine, found by running the rows and fixed in the rows:** row 3 added a second `ref_speed = 0` line that the real line overrode (the last line wins; it now replaces the line) (`lapr_first_green_row3_defect.txt`); row 5 did not test that a model changed mid-run leaves the run's own record alone (it does now, with `apply_speed` called while a run is going on).
+- **A gap found by row 4, fixed in this change:** `chase::play_streamed` dropped `PlayParams::speed`, so the headless streamed harness always played the default model and could not agree with an app run on any other (`chase/streamed.cpp`; `dz-chase run --world --speed` ignored `--speed`). With the default model nothing changes.
+
+**Green:** all seven (six rows and the pin) on `0ae3c45`, the same change before the rebase (`lapr_rows_green_on_0ae3c45.txt`). Before the rebase, the whole `chase_tests`: 65 tests, 0 failed (385 s); the whole `world_app_tests`: 51 tests, 1 failed, and that one was row 3's own defect above (`lapr_full_*_pre_rebase.txt`), so **every row that existed before Lap R was green: no fingerprint moved.** **On the rebased tip `47d88d7` the rows have NOT run** (the train held the exclusive heavy-run hold; the rebase was clean but for a CHANGELOG conflict, both entries kept); the train's own full check on the batch contains them and every other test, and is the check on falsifier 1 below.
+
+**Mutants** (`mutants_lapr.js`, 16 hand mutants of the real source): **applied 3 / caught 3 / NOT APPLIED 0 before the chain was stopped** so that the mutants would not hold up the landing (`lapr_mutants_partial_3_of_16.txt`: `format-written-as-a-comment`, `speed-section-empty`, `speed-errors-swallowed`); the fourth was cut mid-run and counts as unrun; 12 are unrun. They resume in units after the landing. **A survivor means a missing row, added as a follow-up; it does not change the format.** The count at landing time is the one above.
+
+**The falsifiers as registered (`:22-25`):**
+1. Lap R changes a fingerprint: **not seen** (all pre-existing rows of both suites green before the rebase); the train's full suite on the batch is the confirmation.
+2. The flip changes something that is not a `SpeedModel` field: not a Lap R matter; checked at Lap F.
+3. A record Lap R writes does not replay to its own fingerprint: **not seen** (row 4, green).
+
+**What this means for the other laps (the scheme in use):**
+- Anyone needing a record field asks A on the board and A adds it. Held for C: the one line `r.world.run_length_s = 0.0f;` in `read_run_text` (a missing `run_length_s` reads as no timer), which needs C's world setting; C's `8614983` record hunks are inside Lap R and are dropped from `d673-frame`. The world_app hunk was posted for C (nine added lines, none removed).
+- Later, not now: the generator's dials ride the same pattern (a `[gen]` section) before any generator lap flips a dial above 0; a learned hunter's state, if it is ever built, must be deterministic and saved, and will come here for fields.
+
+**Map line** (`exo_memory/map/A.md`) is appended with this section's final landing.
