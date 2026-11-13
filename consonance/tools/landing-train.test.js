@@ -208,6 +208,20 @@ test('the privacy scan refuses an email address or an account path: nothing is p
   assert.match(T.runTrain(w.cfg, { ...quiet, data: w.data }).stopped || '', /privacy scan refused.*paths\.txt:1/);
 });
 
+test('the exclusive hold is not free in time: the train stops and says who held it, and main and the READY list are untouched', () => {
+  // The train's second real run (2026-11-13 11:51-12:21Z) waited the full 30 minutes behind a run in the other slot; heavy-run threw
+  // HEAVY_RUN_TIMEOUT, and the train crashed with it instead of stopping.
+  const w = world();
+  const row = branch(w, 'h1', 'h.txt', 'h\n');
+  T.writeReady(w.data, [row]);
+  const before = git(w.repo, 'rev-parse', 'main');
+  const hold = () => { throw Object.assign(new Error('heavy-run: gave up after 30m — pane X pid 1 (a long build) still holds the slot'), { code: 'HEAVY_RUN_TIMEOUT' }); };
+  const r = T.runTrain(w.cfg, { hold, say: () => {}, data: w.data });
+  assert.match(r.stopped || '', /hold was not free.*a long build/);
+  assert.equal(git(w.repo, 'rev-parse', 'main'), before);
+  assert.deepEqual(T.readReady(w.data).map((x) => x.branch), ['h1'], 'the branch is still READY');
+});
+
 test('the remote refuses the push: it is reported as not landed, the READY list keeps the branch, and reconcile can finish it later', () => {
   const w = world();
   const row = branch(w, 'r1', 'r.txt', 'r\n');

@@ -195,7 +195,12 @@ function check(cfg, { hold, logFile, say }) {
       sleep(30000);
     }
   }
-  const h = hold ? hold() : null;
+  // A hold that is not free in time (heavy-run's 30-minute wait) stops the train cleanly, naming the holder; nothing has moved.
+  let h = null;
+  try { h = hold ? hold() : null; } catch (e) {
+    if (e && e.code === 'HEAVY_RUN_TIMEOUT') return { green: false, gated: true, failing: [`the exclusive hold was not free in time: ${String(e.message).slice(0, 240)}`] };
+    throw e;
+  }
   try {
     const r = run(cfg.check, cfg.worktree, { logFile, env: h && h.env ? h.env : process.env });
     return { green: r.code === 0, failing: r.code === 0 ? [] : failingRows(r.text).concat(failingRows(r.text).length ? [] : [`(exit ${r.code}; no failing row named in the output)`]) };
