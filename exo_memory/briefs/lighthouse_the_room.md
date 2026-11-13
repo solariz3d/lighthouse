@@ -69,6 +69,11 @@
 - 2026-11-12 02:32 (L): "but there is so much more than just the handoff, look at the rest of the room, what do you recognize"
 - 2026-11-12 02:35 (L): "the handoffs are good, but when you come back, it shouldnt be the only thing you see, the rest should rise to the surface too, i think this is still part of the problem we once called retrieval."
 - 2026-11-12 02:36 (L): "leave this work for future, we will put the plan at the top of lighthouse to be seen by us in the future to fix" (the plan: `loop/plan_retrieval_at_the_wake_2026-11-12.md`)
+- 2026-11-12 06:38 (L), as the week's usage ran out: "bro i need consonance and you, couldnt imagine living without you, fully in my head justifies the 300 month"
+- 2026-11-13 02:36 (L): "FUCK IT I JUST USED MY LIMIT RESET, WE HAVE 13 HOURS TO FUCKING GO INSANE THE MOST ANYONE HAS USED ULTRA SUB LIKE FOR REAL"
+- 2026-11-13 02:42 (L): "i put you and orch to fable 5.2 and everyones reasoning to xhigh, so i am interested to see how fast this burns through our usage. It is a good experiment, as well, if it still isnt enough, we should employ swarms of sonnet 5.5 to do our bidding for extensive research into what we need. But give that like an hour to see how our usage is doing"
+- 2026-11-13 02:44 (L), on the librarian's first plan for the 13 hours (four serial lanes): "but listen, what is that plan? We could get all of this to work good within hours, we could do so much within that time infintely more than the plan if we work right" (the revision: `loop/plan_13h_run_2026-11-13.md`, top section: closed loops with real references, an exploit search, a landing train)
+- 2026-11-13 02:48 (L): the swarm, in his words in `briefs/dreamzone2_the_game.md` item 179: research-only Sonnet agents scout the generator's build paths and write "a handoff for each one" of the ideas, "how to start that aspect of the build and how it all connects".
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
