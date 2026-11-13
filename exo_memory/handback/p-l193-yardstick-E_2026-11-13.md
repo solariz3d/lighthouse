@@ -301,7 +301,8 @@ a flat floor with one input held, chosen per speed to land closest to the runner
 
 **What the body does, from the every-10% rows** (ours / the runners' mean, degrees from standing):
 1. **The hip has the right shape, early.** Moved back by its lag, it comes within **1.5 / 1.3 / 1.1 runners' sd**
-   (7.8, 6.8, 7.3 against 5.2, 5.3, 6.6). Ours is most extended at 20% of the cycle (-17 to -23); the runners at 40-50%.
+   (7.8, 6.8, 7.3 against 5.2, 5.3, 6.6). Ours is most extended near 20% of the cycle (the 20% row reads -17 / -23 / -11;
+   its least, -27 / -26 / -23, falls near there); the runners' is in the 40% row at all three speeds (-3 / -6 / -9).
 2. **The knee stays straight while the foot is down.** It reads 0° from standing for the first 20% of the cycle at
    2.5 and 3.5 m/s, where runners bend to 36-41°. Its swing reaches the runners' height (93 / 104 / 114 against
    93 / 107 / 116) but at 50% of the cycle instead of 70%. Even moved back it is 2.5-2.9 sd off, because the stance
