@@ -56,3 +56,17 @@ clocks; the dz- programs); **a run that had company voids itself.** No run while
 - "The filter lifts the dark": row B fails for any view.
 - "It does not hold 3.33": the filter's p99 is 3.33 ms or over in any valid run.
 - "No cheaper form holds 2.78": named with the table.
+
+## The margin, filled in before the filter's first run (22:21Z)
+
+checked: `dz-world --selftest` with a temporary block measuring the defaults twice in each view (the branch at e4b056f
+plus the burst measure, 960x540; scratchpad `filter/spread.txt`, machine recorded in `filter/spread-machine.log`). The
+two runs of each view agree to the last printed digit:
+
+| view | darkest tenth, levels | over 8 levels, per frame |
+|---|---|---|
+| still, hand light | 4.5179, 4.5179 | 0.9977%, 0.9977% |
+| still, lamps alone | 1.4112, 1.4112 | 0.7686%, 0.7686% |
+| sprint, hand light | 11.9535, 11.9535 | 3.1109%, 3.1109% |
+
+The spread is 0, so by the rule above **the margin is 0.25 levels.** Nothing with the filter on has been drawn yet.
