@@ -228,3 +228,20 @@ in dB:
 - **(c) costs** some of the "thunder": the knock is a higher thock over the same low thud. His ear decides.
 
 **Not changed:** the wiring still waits on C. L185's proof still waits on the lock.
+
+## Rebased onto main c9d520e (06:5x local), still UNBUILT
+
+- `l192-footsteps` was rebased onto c9d520e and pushed (checked: `git ls-remote origin l192-footsteps` → d8f77ba). The
+  new shas:
+  - 302fa4e, the red registration;
+  - 1ac88d8, WIP green;
+  - f898d5f, the edge rows;
+  - 97d9eef, Keller and Weyand;
+  - 2c96889, the Keller plateau;
+  - d8f77ba, the game's wiring.
+- **One conflict, in CHANGELOG.md:** main's L194 train entry and mine landed in the same place. Both were kept, main's
+  first.
+- **The wiring (d8f77ba) is still unbuilt.** `game/world/stage.cpp` and `sound.cpp` compile only into `dz-world`, and no
+  test program includes them. Proving it compiles means a fresh full build in this worktree. I did not take a lock slot
+  for that while A had three jobs queued, because the wiring is not needed until he picks the hunter's voice. It builds
+  before the voice lands, and the train builds `dz-world` in its check.
