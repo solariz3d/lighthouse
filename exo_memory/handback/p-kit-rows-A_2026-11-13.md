@@ -56,3 +56,31 @@ cases next, as ruled, and reported either way.
 
 It walks fixed routes with no hunter and no knowledge, so section 1's cause cannot be its cause. Its own reproduction, by seed, comes next:
 which routes the careful body loses on the kit's world, and why.
+
+## 3. L162's lever on both recorded cases, as ruled (D, 11:02 local, `date` by the shell): it does NOT help the reach row; it DOES close the dark one's orbit
+
+**How:**
+- abe8237's `close_pursue` was applied by hand to `9150ddf` on the scratch branch, never committed (`l162_lever.js`; the cherry-pick conflicted in
+  four files, so only its code, its field and its count went in).
+- The hunter's call is as abe8237 had it. The dark one, which runs through the same function now, takes reaction 0, as its body does.
+- **Not carried over:** the lesser chasers' call (neither case has one).
+- The scratch row `diag_lever_both_cases` (`diag_door.cpp.txt`) runs the reach row's own loop on seeds 3 and 9, and seed 8's juke run in the world it
+  was recorded in (`GenParams{}`), at 0 m (the control) and 10 m (L162's setting).
+
+checked: `lever_both.log` (sha256 `dd98615b`):
+
+| case | off (0 m, the control) | the lever at 10 m |
+|---|---|---|
+| reach, seed 3, case k 14 | 19.85 s, ratio 2.68 | 19.08 s, ratio 2.57 (1,253 close ticks) |
+| reach, seed 3, the row's slowest | 2.68 (bar 2.5) | **2.57: still red** |
+| reach, seed 9, case k 5 | 36.00 s, ratio 2.98 | 36.17 s, ratio 2.99 (1,519 close ticks) |
+| reach, seed 9, the row | 10 of 10 reached, slowest 2.98 | **9 of 10 reached: one case never reached** |
+| the dark one, seed 8 juke, timer 30 s | not caught in 370 s of overtime | **caught by the dark one after 13.6 s** (739 close ticks) |
+
+- **The control reproduces all three recorded figures exactly.** The setup is the recorded one, and the dark one's case reproduces at
+  `9150ddf` in the old world.
+- **The reach row: the lever does not help, and it does harm.**
+  - Seed 3 goes from 2.68 to 2.57, still over the bar. Seed 9's case k 5 is unchanged, and one more of its cases is no longer reached in 150 s.
+  - This fits section 1: the lever pursues the knowledge's point, and the knowledge's point is the drawn one across a wall.
+- **The dark one: the lever closes the orbit.** See the correction in `p-d673-overtime-A_2026-11-13.md` ("10:00", the claim that the orbit is
+  the turn).

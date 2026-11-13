@@ -63,3 +63,68 @@ DZ_TEST(diag_door_trace) {
     }
   }
 }
+
+// SCRATCH, NEVER COMMITTED: L162's lever (close_range) on both recorded cases, at DZ_CLOSE metres (0: off, the control).
+DZ_TEST(diag_lever_both_cases) {
+  const char* env = std::getenv("DZ_CLOSE");
+  const float range = env ? static_cast<float>(std::atof(env)) : 10.0f;
+  // 1. The reach row's own loop, on the kit's world, seeds 3 and 9.
+  for (uint32_t aseed : {3u, 9u}) {
+    ArenaParams ap;
+    ap.gen.seed = aseed;
+    Arena            arena(ap);
+    const PlayGraph& g = arena.graph();
+    const int        door = g.nearest(arena.spawn().position);
+    nav::Query       query(arena.nav());
+    int              tried = 0, caught = 0;
+    float            worst = 0;
+    for (uint32_t k = 0; tried < 10 && k < 4000; ++k) {
+      const size_t u = hash32(k * 2654435761u + 17u) % g.nodes.size();
+      if (g.nodes[u].id.slot != 0 || g.pocket[u] || (g.nodes[u].kind != gen::CellKind::Lane && g.nodes[u].kind != gen::CellKind::Room)) continue;
+      const float d = length(g.nodes[u].pos - arena.spawn().position);
+      if (d < 30.0f || d > 110.0f) continue;
+      if (graph_route(g, door, static_cast<int>(u), chaser_edge).empty()) continue;
+      ++tried;
+      sim::World& world = arena.sim();
+      world.spawn(g.nodes[u].pos + Vec3{0, 0.02f, 0}, 0.0f);
+      RunParams rp;
+      rp.seed = k;
+      rp.difficulty = with_dials(1, "head_start_s=0");
+      rp.spawn = arena.spawn().position;
+      rp.director = false;
+      rp.speed.close_range = range;
+      Run       run(arena.nav(), arena, arena.facts(), rp);
+      nav::Path path;
+      const Body body = make_body(archetype(Kind::Hunter).limits, rp.speed.ref_speed, rp.speed.hunter_multiple(dials_at(rp.difficulty, 0).hunter_speed, 0.0f));
+      if (!query.find_path(arena.spawn().position, g.nodes[u].pos, profile_of(body, "hunter"), path) || path.partial) continue;
+      for (int t = 0; t < 240 * 150 && !run.over(); ++t) {
+        world.step({});
+        run.step(world.player());
+      }
+      caught += run.over();
+      const float ratio = run.over() ? run.seconds() / std::max(path.seconds, 1.0f) : 99.0f;
+      worst = std::max(worst, ratio);
+      if ((aseed == 3 && k == 14) || (aseed == 9 && k == 5))
+        std::printf("    LEVER %.1f m: seed %u case k %u caught %d at %.2f s, ratio %.2f, close ticks %u\n", static_cast<double>(range), aseed, k,
+                    run.over() ? 1 : 0, static_cast<double>(run.seconds()), static_cast<double>(ratio), run.snags().close_ticks);
+    }
+    std::printf("    LEVER %.1f m: seed %u: %d of %d reached; the slowest %.2f times the planned time (bar 2.5)\n", static_cast<double>(range), aseed, caught,
+                tried, static_cast<double>(worst));
+  }
+  // 2. The dark one's orbit: seed 8's juke run, in the world it was recorded in (the generator before the kit, GenParams{}), as registered.
+  ArenaParams ap;
+  ap.gen = gen::GenParams{};
+  ap.gen.seed = 8;
+  ap.radius = 2;
+  Arena      arena(ap);
+  PlayParams pp;
+  pp.policy = Policy::Juke;
+  pp.difficulty = with_dials(3, "head_start_s=1000 lesser_max=0 dark_speed_start=1.35 dark_speed_rise=0.05");
+  pp.seed = 8;
+  pp.max_seconds = 400.0f;
+  pp.run_length_s = 30.0f;
+  pp.speed.close_range = range;
+  const Outcome out = play(arena, pp);
+  std::printf("    LEVER %.1f m: seed 8 juke, timer 30 s: %s after %.1f s of overtime; close ticks %u\n", static_cast<double>(range),
+              out.caught ? (std::string("caught by the ") + kind_name(out.by)).c_str() : "not caught", static_cast<double>(out.overtime_s), out.snags.close_ticks);
+}
