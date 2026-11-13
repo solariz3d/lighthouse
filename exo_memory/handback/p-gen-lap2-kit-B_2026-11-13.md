@@ -228,3 +228,26 @@ move but walking") does not take one (`world/route.cpp` `allowed`). Running now.
 
 Also red in that run, and NOT the kit's: "a fall at terminal speed ... no tick had to wait for a chunk" (2 waits, 28.9 ms), the load-sensitive
 row, with C's and A's heavy runs going.
+
+## WHERE IT STOPS (D, 2026-11-13 ~17:0xZ)
+
+- **Branch:** dreamzone-3 `gen-lap2-kit` local **`c05e074`**, NOT pushed, tree clean (worktree `C:\Users\nname\Desktop\worktrees\dz3-d658-b`).
+  On top of L's `c9ad588`: `192b50c` (main 31d1c6d merged), `0df4c77` (the kit behind dials, the two pins, the drop harness, the route over a
+  chute), `9150ddf` (A's overtime row in the passage arena; the changelog), `c05e074` (a route on foot does not fall down a chute).
+- **Checked at `c05e074`'s content** (`build.bat test`, both self-tests, under the ordinary lock, hidden; my scratchpad `d665b\d8_*.txt`; the
+  self-test also carried a scratch route print, since removed):
+  - **12 of 14 suites pass**: gen_tests (both pins, the list, the kit's rows), gen_drop_tests (0 unintended), gen_walk_tests, world_tests,
+    world_app_tests, the rest. Was 10 of 14 at `c9ad588` on L.
+  - **dz-gym --selftest 26 of 26.**
+  - **dz-world --selftest 51 of 52** (was 50). "A reprieve holds for its time, and then the hunter comes in" now passes.
+- **Red, NOT amended, each routed for its owner's ruling** (evidence in the sections above):
+  - nav `the_way_there_is_about_as_quick_as_the_way_back`: 22.9% against 20%. Its worst pair does not cross a chute, so per the ruling: reported,
+    the bound left alone.
+  - chase `the_hunter_always_reaches_a_player_who_stands_still_in_connected_space` (2.68x against 2.5) and chase `a_sprinter_that_does_not_brake...`
+    (70 against 72): red only with the chutes kept by the buy rule; his door rate plays no part. The slow reach is the hunter blocked at a room's
+    doorway, with no Park near. For A.
+  - dz-world: "its tell is a light ... and a sound that grows": 0.0972 in the tell's last third against 0.1018 in the second before, in a chute's
+    run. On main it read 0.1247 against 0.0945 in a one-storey passage (A's D656 hand-back). The tell's sound has no position (the mixer plays it
+    from the run's tell value), so what differs is what else sounds there: the chasers or the room. For the sound lane.
+- **For A** (the record): the dial list is built and its off path proven at `0df4c77`; `[gen]` and `gen_world` are A's.
+- **Next, if no ruling comes back first:** the same-seed pictures before and after for him; V8 on bots, main against the kit.
