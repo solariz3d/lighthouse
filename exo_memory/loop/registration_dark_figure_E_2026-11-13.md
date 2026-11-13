@@ -41,6 +41,25 @@ Branch `dark-figure-e` off `b08f25e` (on the remote), in a worktree with its bui
    - **Nothing new is designed:** the same mesh, the same material, the same gait. Its look and name stay his.
    - If the model cannot load, the Dark is left undrawn and the row says so. No box is invented for it.
 
+## Additions by name (the chair, 23:51Z), written before the code they touch
+
+**Addition 1: the Dark's cost while it is away.** The Dark is absent for the first ten minutes of every run.
+- **One more row,** green on the fix: **"while no Dark is out, the stage neither poses nor draws `dark_`"**, from the
+  stage's own counts.
+  - The instrument, in the fix: the stage counts the frames in which it posed `dark_` by the gait, and the times it set
+    `dark_`'s palette at all (pose or put away).
+  - Over the frames before the timer in the overtime row's run: `dark_` is posed in 0 of them, and its palette is set
+    at most once (the first put-away). No Dark pose is given in those frames, and `figures_drawn()` never counts it.
+  - Red for this row is shown by a hand mutant: `dark_` posed every frame whether a Dark is out or not. It must turn the
+    row red.
+- **The frame-time read:** the defaults at 2560x1440, base `b08f25e` against the branch tip.
+  - It is taken **when the card is free**: no game of his on it, read at each run's start and end.
+  - It goes in the hand-back. If the card is not free when the rest is green, the branch lands on the row, and the read
+    is **named as owed**.
+
+**Addition 2: a wrong condition corrected** at the second unwelcome outcome (below). Frame-time figures were not closed
+by "the other experiments' GPU runs". The only condition is that no game of his is on the card.
+
 ## Checks (prove it)
 
 - **Red first:** the row on the red commit (the instrument and the row only) fails as expected; green on the fix.
@@ -75,7 +94,10 @@ Branch `dark-figure-e` off `b08f25e` (on the remote), in a worktree with its bui
   dark, as the hunter is. Being drawn does not make it visible; that is his look to decide, not mine.
 - **"A second hunter costs every frame":** a second skinned model of about 127,000 vertices may cost frame time even
   while put away.
-  - Frame-time figures are closed to me while the other experiments' GPU runs hold, so this is not measured here.
+  - ~~Frame-time figures are closed to me while the other experiments' GPU runs hold, so this is not measured here.~~
+    **Corrected (the chair, 23:51Z):** that condition was wrong. Those runs ended at 14:09:22
+    (`third_place/2026-11-13.md:839`). The one condition is that **no game of his is on the card**, read by me at each
+    run's start and end; a run that had company voids itself. The read is in Addition 1 below.
   - It is said, not hidden, and goes to the cost read.
 
 ## My bias
