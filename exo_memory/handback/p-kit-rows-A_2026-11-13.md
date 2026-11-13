@@ -188,3 +188,32 @@ before it started. checked: `sprint_trace.log` (sha256 `7dbbd43c`). Seed 8 match
 - or a corner is braked for only when the turn's room is narrow.
 - Either is a change to every chaser's braking: a hunter fingerprint and catch-power change. It needs its own registration and sweep. Not a
   tuning of this row.
+
+## 7. The whole suite and both self-tests on `a-kit-told` `dcbfd3c`, and which fingerprints moved (D, 15:20 local, `date` by the shell)
+
+checked: `kit_told_suite.log` (sha256 `7c374e3d`): `build.bat test`, `dz-gym --selftest`, `dz-world --selftest`, `world_app_tests`, under the ordinary
+lock, while **his game was running on this GPU** (the Riot client, from 14:04), with C's stomp run and P's mutants in the other slot.
+
+**Totals:**
+- ctest: 10 of 14 suites passed;
+- gym self-test 26 of 26;
+- world self-test 50 of 52;
+- `world_app_tests` 51 of 51.
+
+**Every red, by name, and why it is not this fix's:**
+
+| red | what it measures | reading |
+|---|---|---|
+| `gen_tests` `generation_time_and_triangle_counts_are_recorded` (`total / chunks < 5.0` ms) | time | **load-sensitive, under his game**; not retried |
+| `audio_tests` `a_full_scene_with_a_room_and_eight_place_sounds_…` (`best < 0.25` ms) | time | **load-sensitive**; not retried |
+| `nav_tests` `the_same_requests_give_the_same_paths_whatever_the_workers_do` (`in_time.counts.waits < flat_out.counts.waits`) | worker timing | **load-sensitive**; not retried |
+| world self-test "a fall at terminal speed … 1 waits (3.6 ms)" | time | **load-sensitive** (B flagged the same row at 10:43) |
+| `nav_tests` `the_way_there_is_about_as_quick_as_the_way_back` (`worst < 0.20`) | the kit's world | B's known red, its bound left to its owner (ruled 10:43) |
+| `chase_tests` the sprinter row (70 of 96) | the corner rule | known; its own lap, ruled |
+| world self-test "its tell is a light … a sound that grows" | the chute route | **red at the base too** (`kit_base_fp.log`, `8118f3c4`: 51 of 52, this row alone); B fixes the route |
+
+**The fingerprints that moved** (the base `9150ddf` built in the same worktree, `kit_base_fp.log`):
+- the world self-test's flee bot: chase `980067e8ed74213a` → **`d9f000c3d8df1d44`**; simulation `643620b6fbd1f5b7`, unchanged.
+- `world_app_tests`' flee bot: chase `c5fb2b3e0165f6d1` → **`e14a93fe53887f37`**; simulation `87bb91eb43102d0e` → **`49dfe0821d55d70d`**. The simulation moves too,
+  because the bot runs from a hunter that now finds a standing player.
+- **Every hunter's chase fingerprint moves with this fix,** as section 4 said. No chase row other than the sprinter's (already red) went red.
