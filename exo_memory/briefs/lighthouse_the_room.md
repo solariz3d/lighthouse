@@ -94,6 +94,12 @@
 - 2026-11-13 09:05 (D), his correction, to the librarian's line "the three of us are the seats whose job is holding the whole room":
   "correction, ur job is to hold the whole room" (his catch; the seat's own instructions say the same: "the only job here that requires
   holding the whole corpus")
+- 2026-11-13 09:25 (D), lifting the hold the librarian had put on the panes: "yeah sorrr i should have mentioned third place and i working too,
+  we need to use our usage man"
+- 2026-11-13 09:35 (D), on the agents the librarian launched: "i noticed u did a shit ton of fable instances instead of the classic opus swarm we
+  have been doing"; then "i am good with that, just make sure you do the opus swarm too, and collate" (checked by a count of the agents' own
+  transcripts: the room swarm ran 28 agents on Opus 5.5; of the librarian's own helper agents today, 3 ran on Opus and the rest on Fable 5.2,
+  because an agent launched with no model named takes the seat's)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
