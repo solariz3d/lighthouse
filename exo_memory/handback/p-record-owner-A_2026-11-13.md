@@ -228,3 +228,37 @@ after the time is spent.
   only label.
 - If a canonical run turns out too weak (a sim change it misses, shown by a mutant), then the identities would need more than one
   scenario each.
+
+## D, Friday 10:19 local (`date`, by the shell): the [gen] fields BUILT, red then green, on B's kit
+
+**The commits:** dreamzone-3 branch `a-gen-record` on B's `gen-lap2-kit` `0df4c77`, in my worktree `G:\consonance-scratch\a-gen-dz3`.
+`f978ce8` is the fields and the four rows; `b311709` is the CHANGELOG. Nothing is pushed.
+
+**What was built (as registered at 09:56):**
+- **`[gen]`:** every `DZ_GEN_KIT` field, read back by B's `gen::set_gen`.
+- **`[gen_dials]`:** every `kDialSpecs` dial, an unknown one refused.
+- **`gen_world`:** the spawn chunk's fingerprint.
+- **The replay:** builds its world from the record (`WorldApp::apply_gen`), not from `shipped_gen()`, and refuses by name when the world
+  differs.
+- A record with none of these reads as `GenParams{}`, the generator before the kit.
+
+**Red first, against stubs** (the fields and `apply_gen` declared, doing nothing). checked: `p-record-owner-A_2026-11-13_evidence/gen_red.log`
+(sha256 `94717879`) → all four rows FAIL.
+- **Honest limit:** row 2's replay check was already green under the stubs, because both sides then built the kit's world. Row 2's red came
+  from its other checks. Its replay check is proved by the mutant `replay-ignores-the-records-generator` (below), not by the stub run.
+
+**Green.** checked: `gen_green.log` (sha256 `ffd84ee8`) → `world_app_tests` 55 of 55, every Lap R record row among them (the
+falsifier: no record that lacks these fields moved).
+- **row 1:** a new run's record lists every kit field and dial, at `shipped_gen()`'s values, and a nonzero `gen_world` (gen_world 445410b473f81201).
+- **row 2:** a run played in the generator before the kit, its `[gen]` taken out, reads as `GenParams{}` and replays to its
+  fingerprints, 13,000 ticks.
+- **row 3:** the same record with its `gen_world` changed is refused: "this record's world is not this build's under the same generator
+  settings: the generator changed outside its dials". 0 ticks played.
+- **row 4:** the dials and the kit round-trip, and an unknown kit field, an unknown dial and a bad value are each refused by name.
+
+**Still to run before it is proved whole** (queued, after my overtime and Lap R harnesses finish with the lock):
+- `mutants_gen.js`, 10 hand mutants of these rules (anchors checked: "10 mutants, 0 with an anchor that does not appear exactly once");
+- the whole suite and both self-tests on `a-gen-record`.
+
+**Expected survivor, said now:** `replay-dials-ignored`. No row replays a run made with a changed generator dial, so a replay that dropped
+the record's dials would pass every row. If it survives, a row for it is owed.
