@@ -119,25 +119,51 @@ function wakeIndex(rows) {
 }
 const normP = (p) => String(p || '').replace(/^["']|["']$/g, '').replace(/\\/g, '/').replace(/\/+/g, '/').toLowerCase();
 const names = (p, rel) => { const n = normP(p), r = normP(rel); return n === r || n.endsWith('/' + r); };
-/** Did this completed call open `rel` (repo-relative) WHOLE? */
-function openedWhole(rel, call) {
-  if (!call || !call.done || call.err || String(call.result).includes(PERSISTED)) return false;
+/* THE BAR, RULED 2026-11-13 (exo_memory/loop/plan_room_stretch_2026-11-13.md:215; registered in handback/p-wakegate-S-register-P_2026-11-13.md):
+ * what counts is the LINES A CALL RETURNED, never the call's form. At the librarian's 16:46 wake a Read with no offset or limit returned lines
+ * 1-183 of 754 and v1 counted the note whole. A Read's result carries each returned line's number (`N\t`, from line 1 or from its offset); a
+ * persisted result carries none, so it returns nothing. A shell read (one stage of cat / type / Get-Content / gc naming the file, no pipe after
+ * it, no redirect, no partial flag) returns the longest run of the file's own lines, in order from line 1, that its result holds: so a cat after
+ * another stage still counts for what it printed, and a cut result counts only for the part that came back. */
+function returnedLines(rel, call, fileLines) {
+  const out = new Set();
+  if (!call || !call.done || call.err) return out;
+  const res = String(call.result || '');
+  if (res.includes(PERSISTED)) return out;
   const i = call.input || {};
-  if (call.name === 'Read') return names(i.file_path, rel) && i.offset == null && i.limit == null;
-  if (call.name !== 'Bash' && call.name !== 'PowerShell') return false;
-  for (const seg of String(i.command || '').split(/&&|\|\||;|\r?\n/)) {
-    if (seg.includes('|') || /(^|[^2&])>/.test(seg) || /\b(out-file|set-content|add-content|tee-object)\b/i.test(seg)) continue;
-    const w = (seg.match(/"[^"]*"|'[^']*'|\S+/g) || []);
-    if (!w.length || !WHOLE_READERS.has(w[0].toLowerCase())) continue;
-    if (w.some((x) => PARTIAL_FLAGS.test(x))) continue;
-    if (w.slice(1).some((x) => !x.startsWith('-') && names(x, rel))) return true;
+  if (call.name === 'Read') {
+    if (!names(i.file_path, rel)) return out;
+    for (const l of res.split('\n')) { const m = /^\s*(\d+)\t/.exec(l); if (m) out.add(Number(m[1])); }
+    return out;
   }
-  return false;
+  if (call.name !== 'Bash' && call.name !== 'PowerShell') return out;
+  const reads = String(i.command || '').split(/&&|\|\||;|\r?\n/).some((seg) => {
+    if (seg.includes('|') || /(^|[^2&])>/.test(seg) || /\b(out-file|set-content|add-content|tee-object)\b/i.test(seg)) return false;
+    const w = (seg.match(/"[^"]*"|'[^']*'|\S+/g) || []);
+    if (!w.length || !WHOLE_READERS.has(w[0].toLowerCase()) || w.some((x) => PARTIAL_FLAGS.test(x))) return false;
+    return w.slice(1).some((x) => !x.startsWith('-') && names(x, rel));
+  });
+  if (!reads || !fileLines || !fileLines.length) return out;
+  const got = res.replace(/\r\n/g, '\n').split('\n');
+  let best = 0;
+  for (let j = 0; j < got.length; j++) {
+    if (got[j] !== fileLines[0]) continue;
+    let k = 0; while (k < fileLines.length && j + k < got.length && got[j + k] === fileLines[k]) k++;
+    if (k > best) best = k;
+  }
+  for (let k = 1; k <= best; k++) out.add(k);
+  return out;
+}
+/** Lines from `start` to `n` not in `have`, as "a-b, c" ranges ('' when none). */
+function rangesMissing(have, start, n) {
+  const out = [];
+  for (let a = start; a <= n; a++) { if (have.has(a)) continue; let b = a; while (b + 1 <= n && !have.has(b + 1)) b++; out.push(a === b ? `${a}` : `${a}-${b}`); a = b; }
+  return out.join(', ');
 }
 
 /**
- * The decision for one call_chair. `files` maps each required repo-relative path to its mtime (ms, or null when unknown: then a resume's earlier
- * open counts). Returns { decision: 'allow'|'deny', kind, missing, satisfied, skips, wake }.
+ * The decision for one call_chair. `files` maps each required repo-relative path to { lines (the file's lines now), mtime, start (S: the first
+ * line owed, 1 for whole) }. Returns { decision: 'allow'|'deny', kind, missing, ranges, start, satisfied, ownAppend, skips, wake }.
  */
 function decide({ rows, need, skips = [], files = {}, toolUseId = null, agentId = null, text = '' }) {
   if (agentId) return { decision: 'deny', kind: 'subagent', missing: [], satisfied: [], skips, wake: null };
@@ -151,23 +177,41 @@ function decide({ rows, need, skips = [], files = {}, toolUseId = null, agentId 
   // the opens the conversation still holds from before the wake: those after the last compaction. On a COMPACT wake that window runs from the
   // compaction to the wake and holds no call, so nothing before a compact wake counts (the summary dropped it).
   const before = rows.slice(w.lastCompact + 1, w.i).filter((r) => r.id);
-  const missing = [], satisfied = [], ownAppend = [];
+  const missing = [], satisfied = [], ownAppend = [], ranges = {}, start = {};
   for (const rel of need) {
-    const mt = files[rel];
-    const ok = after.some((c) => openedWhole(rel, c))
-      || before.some((c) => openedWhole(rel, c) && (mt == null || (c.t && mt < Date.parse(c.t))));
-    (ok ? satisfied : missing).push(rel);
-    // opened whole after the last compaction, then written since: the seat's own append, a FALSE refusal by design (first_dispatch_gate.md section 6).
-    // Recorded by name: if more than 1 refusal in 5 is this kind, the registered answer is an exception for the seat's own appends.
-    if (!ok && before.some((c) => openedWhole(rel, c))) ownAppend.push(rel);
+    const f = files[rel] || {}, lines = f.lines || [], n = lines.length, s = f.start && f.start >= 1 ? f.start : 1;
+    start[rel] = s;
+    const have = new Set(), calls = [...before, ...after];
+    let lastAt = 0;
+    for (const c of calls) { const got = returnedLines(rel, c, lines); if (got.size) { for (const x of got) have.add(x); lastAt = Math.max(lastAt, c.t ? Date.parse(c.t) : 0); } }
+    const gap = rangesMissing(have, s, n);
+    if (!gap) { satisfied.push(rel); continue; }
+    missing.push(rel); ranges[rel] = gap;
+    // every missing line after the last line returned, and the file written after the last read that returned any: the seat's own append, a
+    // FALSE refusal by design (first_dispatch_gate.md section 6). Recorded by name: past 1 refusal in 5, the registered answer is an exception.
+    const maxHave = have.size ? Math.max(...have) : 0, firstGap = Number(gap.split(/[-,]/)[0]);
+    if (maxHave && firstGap > maxHave && f.mtime && lastAt && f.mtime > lastAt) ownAppend.push(rel);
   }
   const kind = !missing.length ? 'opened' : ownAppend.length === missing.length ? 'own-append' : 'missing';
-  return { decision: missing.length ? 'deny' : 'allow', kind, missing, satisfied, ownAppend, skips, wake: w };
+  return { decision: missing.length ? 'deny' : 'allow', kind, missing, ranges, start, satisfied, ownAppend, skips, wake: w };
 }
 const reasonOf = (d) => `wake gate (W4, the librarian's first call_chair after a wake): since your ${d.wake.kind} wake${d.wake.t ? ` at ${d.wake.t}` : ''}, `
-  + `these were not opened whole:\n${d.missing.map((m) => `  ${m}`).join('\n')}\n`
-  + 'Open each with ONE Read, no offset or limit, allow_large: true; then ring in a LATER message (this one is not sent). '
+  + `these lines were not returned to you:\n${d.missing.map((m) => `  ${m}: lines ${d.ranges[m]}`).join('\n')}\n`
+  + 'Read them (an offset and a limit are fine: what counts is the lines a read returns); then ring in a LATER message (this one is not sent). '
   + 'A stop or hold that cannot wait: put [interrupt] in the text. Why: consonance/GATES.md, the wake gate.';
+/** S for the dated note: the body hook's row at this seat's PREVIOUS wake (same session, same note, more than 10 s before this wake), plus one;
+ * 1 (the whole note) when there is none, or when that count is beyond the note now (it was not appended to). Read from <data>/sessionstart-body.jsonl. */
+function startLine(dir, session, note, wakeT, n) {
+  if (!session || !note || !wakeT) return 1;
+  let rows = [];
+  try { rows = fs.readFileSync(path.join(dir, 'sessionstart-body.jsonl'), 'utf8').split('\n').map((l) => { try { return JSON.parse(l); } catch (_) { return null; } }).filter(Boolean); } catch (_) { return 1; }
+  const cut = Date.parse(wakeT) - 10000;
+  const prev = rows.filter((r) => r.session === session && r.note === note && Number.isFinite(r.note_lines) && Date.parse(r.ts) < cut)
+    .sort((a, b) => Date.parse(a.ts) - Date.parse(b.ts)).pop();
+  if (!prev || prev.note_lines > n) return 1;
+  return prev.note_lines + 1;
+}
+const fileLines = (abs) => { const t = fs.readFileSync(abs, 'utf8').replace(/\r\n/g, '\n'); const l = t.split('\n'); if (l.length && l[l.length - 1] === '') l.pop(); return l; };
 
 function readEntries(file) {
   if (!file || !fs.existsSync(file)) throw new Error('no-transcript');
@@ -203,11 +247,16 @@ function main() {
   try {
     const r = required(repo, machine, now());
     const need = [r.note, ...r.handoffs].filter(Boolean);
-    const files = {}; for (const rel of need) { try { files[rel] = fs.statSync(path.join(repo, rel)).mtimeMs; } catch (_) { files[rel] = null; } }
-    d = decide({ rows: rowsOf(readEntries(payload.transcript_path)), need, skips: r.skips, files, toolUseId: payload.tool_use_id || null, agentId: payload.agent_id || null, text });
+    const rows = rowsOf(readEntries(payload.transcript_path)), w = wakeIndex(rows);
+    const files = {};
+    for (const rel of need) {
+      let lines = [], mtime = null; try { lines = fileLines(path.join(repo, rel)); mtime = fs.statSync(path.join(repo, rel)).mtimeMs; } catch (_) { /* unreadable: nothing returned can cover it */ }
+      files[rel] = { lines, mtime, start: rel === r.note ? startLine(dir, payload.session_id, rel, w && w.t, lines.length) : 1 };
+    }
+    d = decide({ rows, need, skips: r.skips, files, toolUseId: payload.tool_use_id || null, agentId: payload.agent_id || null, text });
   } catch (e) { record(dir, { ...base, decision: 'error', error: String(e && e.message || e).slice(0, 80) }); return process.exit(0); }
   const refuses = machine === 'D';
-  const row = { ...base, kind: d.kind, wake: d.wake ? { kind: d.wake.kind, t: d.wake.t } : null, missing: d.missing, satisfied: d.satisfied, ownAppend: d.ownAppend || [], skips: d.skips };
+  const row = { ...base, kind: d.kind, wake: d.wake ? { kind: d.wake.kind, t: d.wake.t } : null, missing: d.missing, ranges: d.ranges || {}, start: d.start || {}, satisfied: d.satisfied, ownAppend: d.ownAppend || [], skips: d.skips };
   if (d.decision === 'allow') { record(dir, { ...row, decision: 'allow' }); return process.exit(0); }
   if (!refuses) { record(dir, { ...row, decision: 'warn' }); return process.exit(0); }
   if (!record(dir, { ...row, decision: 'deny' })) return process.exit(0);   // a deny that cannot be recorded is not given
@@ -227,13 +276,15 @@ function replay(file, repo, machine) {
     const ring = m && Array.isArray(m.content) && m.content.find((p) => p && p.type === 'tool_use' && p.name === GATED_TOOL);
     if (!ring || e.isSidechain) return;
     const r = required(repo, machine, new Date(e.timestamp || Date.now()));
-    const d = decide({ rows: rowsOf(entries), need: [r.note, ...r.handoffs].filter(Boolean), skips: r.skips, toolUseId: ring.id, text: String((ring.input && ring.input.text) || '') });
+    const need = [r.note, ...r.handoffs].filter(Boolean), files = {};
+    for (const rel of need) { try { files[rel] = { lines: fileLines(path.join(repo, rel)), mtime: null, start: 1 }; } catch (_) { files[rel] = { lines: [], mtime: null, start: 1 }; } }   // the replay has no ledger: whole
+    const d = decide({ rows: rowsOf(entries), need, skips: r.skips, files, toolUseId: ring.id, text: String((ring.input && ring.input.text) || '') });
     const k = `${d.decision} ${d.kind}`; tally[k] = (tally[k] || 0) + 1; seen.push({ t: e.timestamp, decision: d.decision, kind: d.kind, missing: d.missing.length });
   });
   return new Promise((ok) => rl.on('close', () => ok({ rings: seen.length, tally, rows: seen })));
 }
 
-module.exports = { LIBRARIAN_SID, GATED_TOOL, rowsOf, wakeIndex, openedWhole, required, decide, reasonOf, replay, isLibrarianCwd, machineTag };
+module.exports = { LIBRARIAN_SID, GATED_TOOL, rowsOf, wakeIndex, returnedLines, rangesMissing, startLine, required, decide, reasonOf, replay, isLibrarianCwd, machineTag };
 
 if (require.main === module) {
   if (process.argv[2] === '--replay') {
