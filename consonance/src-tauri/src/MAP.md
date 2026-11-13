@@ -114,6 +114,13 @@ the answer to a specific failure, and the comment above the function usually nam
 
 ## Beside this folder, not part of the app
 
+- `consonance/tools/landing-train.js` (L194): the landing train for dreamzone-3. Panes mark branches READY; it merges them in
+  its own worktree, checks the batch under the exclusive hold and the memory gate, scans (credentials and privacy, failing
+  closed), fast-forwards and pushes main, and promotes the checked build into his checkout when no game runs. Its rows are
+  `landing-train.test.js`, each seen red by `landing-train.mutants.js`. dreamzone-3's check and game guard are
+  `landing-train-dz3-check.cmd` and `landing-train-dz3-guard.cmd`, and the config lives in the data folder
+  (`landing-train.config.dreamzone-3.json`). A Node tool, not part of the app.
+
 - `consonance/tools/t180-rebuilder/`: the T-180 Rebuilder's source (`Rebuilder.cs`, the `rebuilder.ico` it compiles with, and a
   `README.md`). It is the launcher his desktop shortcut runs on each machine. It pulls the track builder, rebuilds and reinstalls it
   when main moved, and since L147 points the shortcut back at itself after it installs. It is compiled with the .NET Framework's
