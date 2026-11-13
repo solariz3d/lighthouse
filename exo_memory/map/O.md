@@ -478,3 +478,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-13: pane H's five hooks are LIVE on D; landed-live and install.ps1 -Check agree on 37 of 39 files, and the one real difference is require-closure.** reply-slot.js reads OWED in landed-live and ok in -Check: its bytes match, but it requires sources-gate.js, which is stale. settings.json grew 4,942 to 12,332 B and only +337 B of that is content, because the installer re-indents to 4 spaces and writes CRLF. Could be wrong if the installer's rewrite changed a value semdiff does not print; semdiff compares every top-level key.
 → `exo_memory/handback/p-install-H-O_2026-11-13.md`
+
+**2026-11-13: Lap I rows 1-8, 10 and 11 are installed on D, each red before and green after; -Check now prints 0 DRIFT, and row 11 added exactly one PostToolUse group.** The spec's probes are grep -c, which counts lines; my driver first counted occurrences and refused row 4 wrongly. Could be wrong for rows 8 and 10 until a ring after their stamps is read.
+→ `exo_memory/handback/p-lapi-rows-O_2026-11-13.md`
