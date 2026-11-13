@@ -118,6 +118,11 @@ const UNREADABLE_GRACE_MS = 10 * 1000;   // a lock being written this instant re
 // (C's: node, bash, world_app_tests) of tree CPU in every 30 s; the two stalls used 0 s in 6 min and 0.27 s in 40. The whole tree is
 // summed because a ctest or cmd parent idles while its children work (cmd.exe 0.0 s beside dz-chase.exe 131 s, the chair at 12:32Z).
 // 5 minutes is far inside the waiter's 30-minute give-up, and under 1 s in 5 minutes is three orders of magnitude below a real run.
+// ITS LIMITS (P, 11-13, after it named two busy holders idle on D): (1) CLOSED: a tree whose CPU falls (a child that worked has exited)
+// is not measurable and starts its window afresh, never named for the fall; (2) CLOSED: a parent id is a reused number, so a process
+// counts as a child only when created at or after its parent (a stranger carrying a stale parent id is left out; an unknown time
+// counts; a clock step backwards between the two leaves a real child out); (3) OPEN: work done only by children that start and end
+// between two one-minute samples is never seen, so such a holder can read idle while it works. No row covers (3).
 const IDLE_WINDOW_MS = 5 * 60 * 1000;
 const IDLE_CPU_S = 1.0;
 const IDLE_CHECK_MS = 60 * 1000;
@@ -344,21 +349,27 @@ function idleSampleTree(pids, run = spawnSync, platform = process.platform) {
   const out = new Map();
   if (platform !== 'win32' || !pids.length) return out;
   const r = run('powershell', ['-NoProfile', '-NonInteractive', '-Command',
-    'Get-CimInstance Win32_Process | ForEach-Object { "{0}|{1}|{2}|{3}" -f $_.ProcessId, $_.ParentProcessId, ([double]$_.KernelModeTime + [double]$_.UserModeTime), $_.Name }'],
+    'Get-CimInstance Win32_Process | ForEach-Object { "{0}|{1}|{2}|{3}|{4}" -f $_.ProcessId, $_.ParentProcessId, ([double]$_.KernelModeTime + [double]$_.UserModeTime), $_.Name, $(if ($_.CreationDate) { $_.CreationDate.ToFileTimeUtc() } else { \'\' }) }'],
   { encoding: 'utf8', timeout: 30000, windowsHide: true, maxBuffer: 1 << 26 });
   if (!r || r.error || r.status !== 0) return out;
   const procs = new Map(), kids = new Map();
   for (const line of String(r.stdout || '').split(/\r?\n/)) {
-    const [pid, ppid, cpu, name] = line.split('|');
+    const [pid, ppid, cpu, name, created] = line.split('|');
     if (!pid) continue;
-    procs.set(Number(pid), { cpu: Number(cpu) / 1e7, name });
+    procs.set(Number(pid), { cpu: Number(cpu) / 1e7, name, created: created ? Number(created) : null });
     if (!kids.has(Number(ppid))) kids.set(Number(ppid), []);
     kids.get(Number(ppid)).push(Number(pid));
   }
+  // A process is a child only when it was created AT OR AFTER its parent (L202, the chair's ruling from O's accident at 18:13Z on 11-13:
+  // a parent id is a number Windows reuses, so a stranger whose real parent died can carry a later holder's pid as its parent id; it
+  // was created before that holder). An unknown creation time on either side counts, as before: leaving out a real child is what
+  // names a busy holder idle. Not closed: a clock step backwards between a parent's and a child's creation leaves the real child out
+  // (seen at boot on D: Secure System is stamped before its parent System).
+  const childOf = (p, k) => { const a = procs.get(p).created, b = procs.get(k).created; return a === null || b === null || b >= a; };
   for (const root of pids) {
     if (!procs.has(root)) continue;
     const tree = [root];
-    for (let i = 0; i < tree.length; i++) for (const k of kids.get(tree[i]) || []) if (k !== tree[i] && !tree.includes(k)) tree.push(k);
+    for (let i = 0; i < tree.length; i++) for (const k of kids.get(tree[i]) || []) if (k !== tree[i] && !tree.includes(k) && childOf(tree[i], k)) tree.push(k);
     out.set(root, { cpu: tree.reduce((s, p) => s + procs.get(p).cpu, 0), names: [...new Set(tree.map((p) => procs.get(p).name))] });
   }
   return out;

@@ -1209,3 +1209,21 @@ test('L202 a tree that shrank and then truly used nothing for a whole window aft
   assert.ok(r.reports[0].info.cpu >= 0 && r.reports[0].info.cpu < H.IDLE_CPU_S, `the figure (${r.reports[0].info.cpu})`);
   assert.ok(r.reports[0].t >= 120000 + H.IDLE_WINDOW_MS, `named only a full window after the fall (at ${r.reports[0].t} ms)`);
 });
+
+// L202 second fix (P, the chair's ruling of 2026-11-13, from O's accident at 18:13Z: a `taskkill /T` walked a REUSED process id recorded
+// as a parent and took another seat's run). The sampler built a holder's tree from ParentProcessId alone. A process whose real parent
+// died, and whose parent id was later reused by the holder, was created BEFORE the holder: it is a stranger, and its CPU must not count.
+test('L202 (RED FIRST) a stranger carrying the holder\'s pid as a stale parent id, created before the holder, is NOT counted in its tree', () => {
+  const ticks = (s) => String(Math.round(s * 1e7));
+  // holder 100 created at 2000; its own child 200 at 3000 (idle); a stranger 500 at 1000, parent id 100 left over from a dead process.
+  const rows = [`100|1|${ticks(0.1)}|cmd.exe|2000`, `200|100|${ticks(0.1)}|cmd.exe|3000`, `500|100|${ticks(50)}|stranger.exe|1000`];
+  let asked = '';
+  const run = (exe, args) => { asked = args.join(' '); return { status: 0, stdout: rows.join('\r\n') }; };
+  const m = H.idleSampleTree([100], run, 'win32');
+  assert.ok(Math.abs(m.get(100).cpu - 0.2) < 0.01, `the holder's tree is the holder and its own child only (${m.get(100).cpu} s)`);
+  assert.deepStrictEqual(m.get(100).names, ['cmd.exe'], 'the stranger is not named in the tree');
+  assert.match(asked, /CreationDate/, 'the query asks each process\'s creation time');
+  // a child created in the same instant as its parent is its child (at or after)
+  const same = H.idleSampleTree([100], () => ({ status: 0, stdout: [`100|1|${ticks(0)}|node.exe|2000`, `200|100|${ticks(7)}|dz-chase.exe|2000`].join('\r\n') }), 'win32');
+  assert.ok(Math.abs(same.get(100).cpu - 7) < 0.01, `a child created at its parent's own time counts (${same.get(100).cpu} s)`);
+});
