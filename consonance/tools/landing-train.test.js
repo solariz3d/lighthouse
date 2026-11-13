@@ -247,6 +247,27 @@ test('the CLI as a pane types it: `ready --config FILE <branch> --pane P --lap L
   assert.match(l.stdout, new RegExp(`^cli1 ${row.sha.slice(0, 7)} B L194 `, 'm'));
 });
 
+test('the dreamzone-3 check runs the worktree\'s own build.bat even where cmd does not search the current directory (NoDefaultCurrentDirectoryInExePath, set in a Claude Code shell)', () => {
+  // Found on the train's first real run (2026-11-13): "'build.bat' is not recognized", and the branch was sent back for it.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lt-dz3check-'));
+  dirs.push(dir);
+  spawnSync('git', ['init', '-q', dir]);
+  fs.writeFileSync(path.join(dir, 'build.bat'), '@echo off\r\necho STUB BUILD ran with %1\r\nexit /b 1\r\n');
+  const r = spawnSync('cmd', ['/c', path.join(__dirname, 'landing-train-dz3-check.cmd')], {
+    cwd: dir, encoding: 'utf8', windowsHide: true, env: { ...process.env, NoDefaultCurrentDirectoryInExePath: '1' },
+  });
+  const out = `${r.stdout}${r.stderr}`;
+  assert.match(out, /STUB BUILD ran with test/, `build.bat was not run: ${out}`);
+  assert.match(out, /SUITES RED/);
+  assert.equal(r.status, 1);
+});
+
+test('failingRows names a command cmd could not run, so a broken check is not read as a red branch', () => {
+  // The first real run's log (2026-11-13) named only "SUITES RED"; the line that said what broke was not among the rows.
+  const out = "SUITES RED \n'build.bat' is not recognized as an internal or external command,\noperable program or batch file.";
+  assert.deepEqual(T.failingRows(out), ['SUITES RED', "'build.bat' is not recognized as an internal or external command,"]);
+});
+
 test('failingRows names dreamzone-3\'s own red lines: CHECK_NEAR and CHECK_EQ (tests/dz_test_main.cpp) and a self-test\'s FAILED total', () => {
   const out = [
     'ok    a_row',

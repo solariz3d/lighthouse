@@ -9,7 +9,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const HERE = __dirname;
-const SRC = 'landing-train.js', SUITE = 'landing-train.test.js';
+const SRC = 'landing-train.js', SUITE = 'landing-train.test.js', CHECK = 'landing-train-dz3-check.cmd';
 
 const MUTANTS = [
   ['red batch: the plain "drop the newest" (it is named red at once, never retried), so an innocent newest is lost', SRC,
@@ -48,13 +48,15 @@ const MUTANTS = [
   ['push: never made, and only the ls-remote check after it can notice', SRC, "  const push = git(cfg.repo, ['push', '-q', remote, `${trainSha}:refs/heads/${base}`]);", "  const push = { code: 0, out: '', err: '' };"],
   ['push: the remote is not read back (a push that did not land reads as pushed)', SRC,
     "  result.pushed = push.code === 0 && remoteSha === trainSha;", "  result.pushed = true;"],
+  ['dreamzone-3 check: build.bat called by its bare name ("not recognized" in a Claude Code shell)', CHECK, 'call "%CD%\\build.bat" test', 'call build.bat test'],
+  ['failingRows: a command cmd could not run is not named', SRC, '|is not recognized as an internal or external command/', '/'],
 ];
 
 function tree() {
   const dir = require('./scratch.js').mkdtemp('lt-mut-');
   fs.mkdirSync(path.join(dir, 'tools'), { recursive: true });
   fs.mkdirSync(path.join(dir, 'hooks'), { recursive: true });
-  for (const f of [SRC, SUITE, 'heavy-run.js', 'state-manifest.js', 'scratch.js']) fs.copyFileSync(path.join(HERE, f), path.join(dir, 'tools', f));
+  for (const f of [SRC, SUITE, CHECK, 'heavy-run.js', 'state-manifest.js', 'scratch.js']) fs.copyFileSync(path.join(HERE, f), path.join(dir, 'tools', f));
   fs.copyFileSync(path.join(HERE, '..', 'hooks', 'push-gate.js'), path.join(dir, 'hooks', 'push-gate.js'));
   try { fs.copyFileSync(path.join(HERE, '..', 'state-manifest.json'), path.join(dir, 'state-manifest.json')); } catch (_) { /* not needed by the rows */ }
   return dir;

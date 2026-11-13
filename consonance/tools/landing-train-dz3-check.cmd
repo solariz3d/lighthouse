@@ -10,7 +10,9 @@ if not exist build.bat (echo BUILD FAILED: no build.bat in %CD% & exit /b 2)
 rem A merged branch may move a dependency's pin; a merge does not move the dependency's checkout, so this does.
 git submodule update --init --recursive
 if errorlevel 1 (echo BUILD FAILED: git submodule update & exit /b 2)
-call build.bat test
+rem By its full path: a Claude Code shell sets NoDefaultCurrentDirectoryInExePath, so a bare `call build.bat` is "not
+rem recognized" (the train's first real run, 2026-11-13). build\bin\... below has a path in it and is found either way.
+call "%CD%\build.bat" test
 if errorlevel 1 (echo SUITES RED & exit /b 1)
 build\bin\dz-gym.exe --selftest
 if errorlevel 1 (echo SELFTEST RED: dz-gym & exit /b 1)

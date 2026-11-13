@@ -102,7 +102,7 @@ function failingRows(text) {
   const out = [];
   for (const line of String(text || '').split(/\r?\n/)) {
     const l = line.trim();
-    if (/^FAIL\b|\*\*\*Failed|CHECK(_[A-Z]+)? failed|tests failed|selftest: FAILED|SELFTEST RED|SUITES RED|BUILD FAILED|error C\d+|: error\b/.test(l)) out.push(l.slice(0, 240));
+    if (/^FAIL\b|\*\*\*Failed|CHECK(_[A-Z]+)? failed|tests failed|selftest: FAILED|SELFTEST RED|SUITES RED|BUILD FAILED|error C\d+|: error\b|is not recognized as an internal or external command/.test(l)) out.push(l.slice(0, 240));
     if (out.length >= 20) break;
   }
   return out;
