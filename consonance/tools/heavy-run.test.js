@@ -1184,3 +1184,28 @@ test('L202 the sampler sums the holder\'s WHOLE tree: an idle node and cmd above
   assert.deepStrictEqual(m.get(100).names.sort(), ['cmd.exe', 'dz-chase.exe', 'node.exe']);
   assert.strictEqual(H.idleSampleTree([100], () => ({ status: 1, stdout: '' }), 'win32').size, 0, 'a failed query reads nothing, never idle');
 });
+
+// L202 fix (P, the chair's ruling of 2026-11-13): on D the guard named two BUSY holders idle, with negative figures (A's sweep -47.67 s,
+// C's stomp run -504.44 s, the board at 15:34:36Z and 15:38:40Z). The tree's CPU is summed over the processes alive at each sample, so a
+// child that used CPU and then exited takes its time out of the sum: the delta shrinks or goes negative, and under 1 s read as idle.
+// A shrinking tree is NOT MEASURABLE: it is never named for it.
+test('L202 (RED FIRST) a busy holder whose child used CPU and exited between the baseline and the sample is NOT named idle', () => {
+  const d = tmp(); idleLock(d);
+  // C's shape: a dz-world with 500 s of CPU exits at 3 min, and a new one starts from zero and works at 1 s of CPU per second.
+  // At 5 min the tree reads 120 s against a 500 s baseline: -380 s.
+  const tree = (t) => 0.2 + (t < 180000 ? 500 + t / 1000 : (t - 180000) / 1000);
+  const r = idleAttempt(d, { maxWaitMs: 12 * 60 * 1000, sample: (pids, t) => new Map(pids.map((p) => [p, { cpu: tree(t), names: ['node.exe', 'cmd.exe', 'dz-world.exe'] }])) });
+  assert.strictEqual(r.err && r.err.code, 'HEAVY_RUN_TIMEOUT', 'it still waits and gives up exactly as before');
+  assert.deepStrictEqual(r.reports.map((x) => `${x.info.cpu.toFixed(2)} s at ${x.t} ms`), [], 'a working holder is never named idle');
+});
+
+test('L202 a tree that shrank and then truly used nothing for a whole window after it IS named, with a figure that is not negative', () => {
+  const d = tmp(); idleLock(d);
+  // a child with 500 s of CPU exits at 2 min, and the wrapper left behind sits idle: the window is measured afresh from the fall.
+  const tree = (t) => (t < 120000 ? 500 + t / 1000 : 0.27);
+  const r = idleAttempt(d, { maxWaitMs: 12 * 60 * 1000, sample: (pids, t) => new Map(pids.map((p) => [p, { cpu: tree(t), names: ['node.exe', 'cmd.exe'] }])) });
+  assert.strictEqual(r.err && r.err.code, 'HEAVY_RUN_TIMEOUT');
+  assert.strictEqual(r.reports.length, 1, 'named once');
+  assert.ok(r.reports[0].info.cpu >= 0 && r.reports[0].info.cpu < H.IDLE_CPU_S, `the figure (${r.reports[0].info.cpu})`);
+  assert.ok(r.reports[0].t >= 120000 + H.IDLE_WINDOW_MS, `named only a full window after the fall (at ${r.reports[0].t} ms)`);
+});

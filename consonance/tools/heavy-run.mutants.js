@@ -126,6 +126,7 @@ const MUTANTS = [
   ['idle guard: a fault in the sampler escapes into the wait', SRC, "    } catch (_) { /* the guard only reports: a fault in it leaves the wait exactly as it was */ }", '    } finally {}'],
   ['idle guard: only the direct child is sampled, not the whole tree', SRC, 'for (let i = 0; i < tree.length; i++) for (const k of kids.get(tree[i]) || []) if (k !== tree[i] && !tree.includes(k)) tree.push(k);', 'void kids;'],
   ['idle guard: the board line does not echo the MCP session', SRC, "const extra = sid ? { 'mcp-session-id': sid } : {};", 'const extra = {};'],
+  ['idle guard: a shrinking tree is measured across the fall (a busy holder whose child exited is named idle)', SRC, 'const kept = prev.length && s.cpu < prev[prev.length - 1].cpu ? [] : prev;', 'const kept = prev;'],
 ];
 
 function tree() {

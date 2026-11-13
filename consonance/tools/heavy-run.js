@@ -433,7 +433,12 @@ function acquire({
       for (const h of holders) {
         const s = cpu && cpu.get(h.pid), key = h.token || String(h.pid);
         if (!s || idleNamed.has(key)) continue;
-        const samples = (idleSeen.get(key) || []).concat([{ t: now(), cpu: s.cpu }]);
+        // A live tree's CPU only grows. A fall means a child that used CPU has exited and taken its time out of the sum (A's sweep
+        // and C's stomp run named idle at -47.67 s and -504.44 s on D, 11-13): nothing before the fall measures this tree, so the
+        // window starts afresh here. A shrinking tree is not measurable, never idle.
+        const prev = idleSeen.get(key) || [];
+        const kept = prev.length && s.cpu < prev[prev.length - 1].cpu ? [] : prev;
+        const samples = kept.concat([{ t: now(), cpu: s.cpu }]);
         // keep the newest sample at least a window old (the baseline) and everything after it
         let b = 0;
         for (let i = 0; i < samples.length; i++) if (now() - samples[i].t >= idleWindowMs) b = i;
