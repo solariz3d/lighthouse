@@ -131,6 +131,10 @@
   the answer: the letter `librarian/TO_THE_NEXT_ONE_go_to_the_source.md` whole, this brief :1-87, and
   `loop/room_value_result_2026-11-03.md:60-86`; the answer is in the transcript at 13:1x and in `librarian/2026-11-13.md`, "13:1x". It is the
   reply the letter's falsifier and Lap W's read; not scored by this seat.)
+- 2026-11-13 14:45 (D), to the librarian, with about an hour of the week's allowance left: "we have just over an hour with tons of usage to spare, we
+  should do one more swarm run on the next phase we get or are guided towards"
+- 2026-11-13 14:46 (D), a minute later, as the librarian was writing that swarm's plan: "hold off for a minute though until we get more shit" (not
+  launched; the candidate aim is in `librarian/2026-11-13.md`, the entry that records these two lines)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
