@@ -1,4 +1,12 @@
-**ENDED on 2026-11-13 at 08:03 local, on L, at the keeper's word (he had to leave; "cant we just get another agent to criticize it when i get home?"). FINISHED: all 16 readers, all 16 second readers, and the three applying writers (files 90, 91, 92). CUT: the Critic, which was mid-work and wrote nothing; `99_what_is_missing.md` does not exist.**
+**COMPLETE as of 2026-11-13, 09:11 local, on D. The swarm itself ENDED at 08:03 on L at the keeper's word (he had to leave; "cant we just get another agent to criticize it when i get home?") with 16 readers, 16 second readers and the three applying writers finished (files 90, 91, 92) and the Critic cut. The Critic was then run fresh on D as one Opus 5.5 agent, started at 09:02 at the same word, and wrote `99_what_is_missing.md`. Nothing here has been applied to the bible or a build path.**
+
+> **Added on D, 09:1x.** The sections below were written on L before the critic ran and are left as written; where they
+> say `99_what_is_missing.md` does not exist or that one stage is left, this note supersedes them. The critic's task was
+> the script's own, plus one list the script did not ask for (where files 90, 91 and 92 disagree with each other). It
+> read all 21 files in the folder, made no outside request, and did not re-check the line numbers 90 to 92 cite in the
+> room's own files. Three of its claims were spot-checked by this seat against the files and held (90's launch line that
+> names a parent's death; 90 SB09 against the pick `story_lore-7`; 92 W20 citing 04 O5, which its second reader marked
+> unsupported).
 
 # Absolute sources: where the swarm ended, and the one stage left
 
