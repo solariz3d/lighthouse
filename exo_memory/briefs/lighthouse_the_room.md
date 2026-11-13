@@ -126,6 +126,11 @@
 - 2026-11-13 12:13 (D), on when that swarm runs: "like i said wait for all shit in motion to come to rest so we see more of an image first"
 - 2026-11-13 12:15 (D), correcting how the librarian had read the line above: "wait I more so meant, wait for all lighthouse work if there is any
   in motion that could give us more insight, if its dreamzone work, thats fine, that doesnt affect our consonance R n D"
+- 2026-11-13 13:07 (D), to the librarian, the first open question after the 12:50 compaction: "you remember what the main problem from my
+  point of view is? How do you see it from your point of view, what could make consonance more lean and reliable retrieval" (opened before
+  the answer: the letter `librarian/TO_THE_NEXT_ONE_go_to_the_source.md` whole, this brief :1-87, and
+  `loop/room_value_result_2026-11-03.md:60-86`; the answer is in the transcript at 13:1x and in `librarian/2026-11-13.md`, "13:1x". It is the
+  reply the letter's falsifier and Lap W's read; not scored by this seat.)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
