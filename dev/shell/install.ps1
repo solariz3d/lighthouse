@@ -122,7 +122,8 @@ $files = @(
   @{ From = 'dev\shell\hooks\l3-overseer.js';            To = 'hooks\l3-overseer.js' }
   @{ From = 'dev\shell\hooks\l3-overseer-worker.js';     To = 'hooks\l3-overseer-worker.js'; Lib = $true; By = 'l3-overseer.js' }
 
-  @{ From = 'dev\shell\hooks\sessionstart-ambient.js';   To = 'sessionstart-ambient.js' }
+  @{ From = 'dev\shell\hooks\sessionstart-ambient.js';   To = 'sessionstart-ambient.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:204 - not wired: the ambient block reaches every seat through session-start.js' }
   @{ From = 'dev\shell\hooks\userprompt_pulse.py';       To = 'userprompt_pulse.py' }
   # Lib = $true: a library REQUIRED BY a hook, not a hook the host runs. It receives no stdin and
   # emits nothing, so the dream-gate invariant does not apply and dream-gate.test.js skips it.
@@ -138,9 +139,14 @@ $files = @(
   @{ From = 'consonance\hooks\blind.js';                 To = 'blind.js'; Lib = $true; By = 'board-digest.js' }
   @{ From = 'consonance\hooks\board-digest.js';          To = 'board-digest.js';
      Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:168 - K4: board-digest.js stays unregistered on D' }
-  @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js' }
-  @{ From = 'consonance\hooks\dream-watch.js';           To = 'dream-watch.js' }
-  @{ From = 'consonance\hooks\ferry-watch.js';           To = 'ferry-watch.js' }
+  # Lap I, E3, ruled 2026-11-13 (plan_room_stretch_2026-11-13.md:195): these three, and sessionstart-ambient.js above, are installed as FILES
+  # and not wired by this installer; no $register line. Nothing is unregistered anywhere by the ruling.
+  @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:206 - not wired by default: Main only, wired by hand where he wants it' }
+  @{ From = 'consonance\hooks\dream-watch.js';           To = 'dream-watch.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:208 - not wired: its every-turn line was one no seat could act on' }
+  @{ From = 'consonance\hooks\ferry-watch.js';           To = 'ferry-watch.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:210 - not wired by default: D runs without it' }
   @{ From = 'consonance\hooks\sourced-stop.js';          To = 'sourced-stop.js' }
   @{ From = 'consonance\hooks\findings-return.js';       To = 'findings-return.js' }
   # WIRED 2026-09-23 (L089), the keeper's authorization by name: "the settings edit for Jev flags"
