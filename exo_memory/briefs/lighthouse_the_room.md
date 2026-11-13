@@ -120,6 +120,9 @@
 - 2026-11-13 12:05 (D), to the librarian's three questions (start building the wake fix; whether the read-first gate refuses; whether the 85 MB
   transcript stays in the repo): "why you asking me haha? Ur the hivemind legend" (read as: these calls are the librarian's to make; with his
   09:49 "dont worry about that haha" to the six calls before them. What his standing word reserves, a cut or compaction of a seat, stays his.)
+- 2026-11-13 12:11 (D), a further idea for the swarms: "I had a stupid idea, what if once everything is in, we do another big sonnett swarm to go
+  over our findings, with the purpose of finding something to then let a swarm of opus eat up, but see, we cant be picking the wrong root, we
+  need the proper vector like i said before."
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
