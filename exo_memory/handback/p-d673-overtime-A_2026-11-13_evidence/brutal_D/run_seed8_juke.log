@@ -1,0 +1,11 @@
+arena: seed 8, chunks x -3..1  y -1..1  z -2..2; 75 tiles (75 from the cache, 0 failed), 27492 polygons, 758196 triangles, 14747 graph nodes; 10 reprieves, 38 dead ends (17 with a way out), 155 pockets at the block's edge; 1.0 s to build
+
+juke, level 3 (brutal): not caught after 400.0 s, score 28125; not caught; 3858 m run
+  lesser chasers: 0 sprinters, 0 interceptors, 0 pack bodies; sighted 0, heard 0, lost 0 (0 at a reprieve's mouth); peaks 0, reliefs 0
+  the player: 0 reprieves used, 1 dead ends entered, cornered 0, climbed out 0; climbs 0, drops 0, ladders 0; idle 0 s; 155 plans, 0 with nowhere safe, stuck 0
+  cost: 1.42 us a tick on average, 372 us at worst; 0.007% of ticks over 50 us, 0.0010% over 200 us; 3.7 paths a second (0 failed)
+  fingerprints: chase 2e7976c6f4340273, simulation 0f7fb2aa2e01986a
+    24.50 s  the player enters a dead end
+    30.00 s  the director: overtime
+    30.00 s  the hunter (#1) is gone
+    30.00 s  a dark (#2) appears 9.2 s of its travel away, 42 m off, out of sight
