@@ -1,0 +1,73 @@
+# Score R08, scorer 2 (Sonnet research agent, 2026-11-13)
+
+Root: R08 "The token cost of a wake, ping or compaction is not metered when it is spent". Entry read in 00_roots.md:107-113 [read].
+Method [read]: every row of 00_ledger.md (1,123 rows, 7 marked REMOVE and skipped: L0029 L0162 L0255 L0299 L0300 L0390 L0409)
+was read once (event and cost fields, event up to about 200 characters); cost and primary fields were opened in full for the
+rows scored YES or PARTLY. The scoring is [inferred] (my judgement of whether a fix of this root prevents the row).
+Rule I held: YES needs a one-line mechanism for that row; a row about a rule, a wrong figure or a stall that is not a token
+spend or a size at wake is NO even when a meter would be nice to have. Rows where a context ceiling was breached are PARTLY or
+YES only where a per-event meter would have shown the spend when it happened.
+
+## Rows scored YES or PARTLY (24)
+
+| id | score | one-line mechanism | cost in row |
+|---|---|---|---|
+| L0010 | YES | a per-event meter beside the cache write would flag each 84 wrong-gap cold writes when spent | 42128568 tok |
+| L0016 | PARTLY | a per-relaunch re-read meter would show the 11 silent whole-transcript re-reads behind the raw share | not recorded |
+| L0025 | PARTLY | a per-wake token meter would show 163 emits of 3,012 chars bought nothing; ruled noise only after counting | 0.5M chars |
+| L0048 | PARTLY | a context meter at compaction would show 909,787/1M before the day's 2,458 lines | not recorded |
+| L0095 | PARTLY | a per-compaction meter shows +60k landing growth at the time rather than by later F-GROWTH | not recorded |
+| L0108 | PARTLY | a context ceiling alert would warn before "Context limit reached" took the seat dark for hours | not recorded |
+| L0123 | PARTLY | a real per-seat budget meter would not print 2,200,000 against 22,382 for nine days | not recorded |
+| L0201 | PARTLY | a per-launch re-read meter would show 39 launches replaying whole transcripts into the board | not recorded |
+| L0226 | YES | a per-launch token meter would show the intake written twice, +56-59k tokens per resume, at launch | 57k tok/resume |
+| L0235 | PARTLY | a context meter would warn chair window full before 100 min of queued rings | 100 min |
+| L0251 | PARTLY | a ceiling check at compaction shows intake 142,204 B over 140,000 before the shelf comes back empty | not recorded |
+| L0252 | YES | a per-launch meter shows 834,520 B intakes written twice, about 549k tokens, before a word is typed | 549k tok |
+| L0257 | YES | a meter on the first call after a gap/model switch shows an 826,005-token uncached write when it happens | 826005 tok |
+| L0263 | PARTLY | a ceiling meter on intake size (154,087 vs 150,000) would catch the seat-cannot-open state earlier | not recorded |
+| L0371 | YES | a per-ping token meter would show 282 pings answered after an idle compaction, writing 18,088,314 tokens, as they happen | 18088314 tok |
+| L0469 | YES | a per-turn context meter would show 400-550k tokens/turn on every seat when spent, not after the keeper's burn alarm | 1677900000 tok |
+| L0561 | PARTLY | a real meter replaces usage.js, which skipped transcripts over 512 MB (no rows for main, B, C, E); the crash parts are separate | not recorded |
+| L0562 | YES | a meter at spend replaces the usage.js table that left out about 93% of responses unsaid (figure is unmetered tokens, not a spend) | not recorded |
+| L0898 | YES | a per-compaction meter would show four of seven auto-compactions firing at 967-969k tokens as they happen | 30800000 weighted units |
+| L0899 | PARTLY | a per-turn context meter would show 4,750 tool results held in context re-read each turn (estimate, 3.7 chars/token) | 423200000 tok est |
+| L1013 | YES | a per-ping meter would show the keep-warm wake after 13,722 idle minutes writing 642,636 tokens at once | 642636 tok (+664706 in 4 of 8 cases) |
+| L1093 | YES | a per-resume meter would show nine seats writing 5,922,308 tokens and three switched seats writing 2,049,358 again at wake | 7971666 tok |
+| L1094 | YES | a per-resume meter would show C and E writing 1.73M at 892-906k context and compacting nine minutes later | 1871704 tok (likely inside L1093) |
+| L1097 | YES | a metered warm-resume figure (37-39k written) would have replaced the swarm's inferred "rewrites every seat whole" before specs were built on it | not recorded |
+
+## Rows scored NO (1092)
+
+All other live rows: rule breaches, wrong figures, test or landing reds, lock stalls, keeper catches about tone, design faults,
+none of which a spend meter touches.
+
+L0001 L0002 L0003 L0004 L0005 L0006 L0007 L0008 L0009 L0011 L0012 L0013 L0014 L0015 L0017 L0018 L0019 L0020 L0021 L0022 L0023 L0024 L0026 L0027 L0028 L0030 L0031 L0032 L0033 L0034 L0035 L0036 L0037 L0038 L0039 L0040 L0041 L0042 L0043 L0044 L0045 L0046 L0047 L0049 L0050 L0051 L0052 L0053 L0054 L0055 L0056 L0057 L0058 L0059 L0060 L0061 L0062 L0063 L0064 L0065 L0066 L0067 L0068 L0069 L0070 L0071 L0072 L0073 L0074 L0075 L0076 L0077 L0078 L0079 L0080 L0081 L0082 L0083 L0084 L0085 L0086 L0087 L0088 L0089 L0090 L0091 L0092 L0093 L0094 L0096 L0097 L0098 L0099 L0100 L0101 L0102 L0103 L0104 L0105 L0106 L0107 L0109 L0110 L0111 L0112 L0113 L0114 L0115 L0116 L0117 L0118 L0119 L0120 L0121 L0122 L0124 L0125 L0126 L0127 L0128 L0129 L0130 L0131 L0132 L0133 L0134 L0135 L0136 L0137 L0138 L0139 L0140 L0141 L0142 L0143 L0144 L0145 L0146 L0147 L0148 L0149 L0150 L0151 L0152 L0153 L0154 L0155 L0156 L0157 L0158 L0159 L0160 L0161 L0163 L0164 L0165 L0166 L0167 L0168 L0169 L0170 L0171 L0172 L0173 L0174 L0175 L0176 L0177 L0178 L0179 L0180 L0181 L0182 L0183 L0184 L0185 L0186 L0187 L0188 L0189 L0190 L0191 L0192 L0193 L0194 L0195 L0196 L0197 L0198 L0199 L0200 L0202 L0203 L0204 L0205 L0206 L0207 L0208 L0209 L0210 L0211 L0212 L0213 L0214 L0215 L0216 L0217 L0218 L0219 L0220 L0221 L0222 L0223 L0224 L0225 L0227 L0228 L0229 L0230 L0231 L0232 L0233 L0234 L0236 L0237 L0238 L0239 L0240 L0241 L0242 L0243 L0244 L0245 L0246 L0247 L0248 L0249 L0250 L0253 L0254 L0256 L0258 L0259 L0260 L0261 L0262 L0264 L0265 L0266 L0267 L0268 L0269 L0270 L0271 L0272 L0273 L0274 L0275 L0276 L0277 L0278 L0279 L0280 L0281 L0282 L0283 L0284 L0285 L0286 L0287 L0288 L0289 L0290 L0291 L0292 L0293 L0294 L0295 L0296 L0297 L0298 L0301 L0302 L0303 L0304 L0305 L0306 L0307 L0308 L0309 L0310 L0311 L0312 L0313 L0314 L0315 L0316 L0317 L0318 L0319 L0320 L0321 L0322 L0323 L0324 L0325 L0326 L0327 L0328 L0329 L0330 L0331 L0332 L0333 L0334 L0335 L0336 L0337 L0338 L0339 L0340 L0341 L0342 L0343 L0344 L0345 L0346 L0347 L0348 L0349 L0350 L0351 L0352 L0353 L0354 L0355 L0356 L0357 L0358 L0359 L0360 L0361 L0362 L0363 L0364 L0365 L0366 L0367 L0368 L0369 L0370 L0372 L0373 L0374 L0375 L0376 L0377 L0378 L0379 L0380 L0381 L0382 L0383 L0384 L0385 L0386 L0387 L0388 L0389 L0391 L0392 L0393 L0394 L0395 L0396 L0397 L0398 L0399 L0400 L0401 L0402 L0403 L0404 L0405 L0406 L0407 L0408 L0410 L0411 L0412 L0413 L0414 L0415 L0416 L0417 L0418 L0419 L0420 L0421 L0422 L0423 L0424 L0425 L0426 L0427 L0428 L0429 L0430 L0431 L0432 L0433 L0434 L0435 L0436 L0437 L0438 L0439 L0440 L0441 L0442 L0443 L0444 L0445 L0446 L0447 L0448 L0449 L0450 L0451 L0452 L0453 L0454 L0455 L0456 L0457 L0458 L0459 L0460 L0461 L0462 L0463 L0464 L0465 L0466 L0467 L0468 L0470 L0471 L0472 L0473 L0474 L0475 L0476 L0477 L0478 L0479 L0480 L0481 L0482 L0483 L0484 L0485 L0486 L0487 L0488 L0489 L0490 L0491 L0492 L0493 L0494 L0495 L0496 L0497 L0498 L0499 L0500 L0501 L0502 L0503 L0504 L0505 L0506 L0507 L0508 L0509 L0510 L0511 L0512 L0513 L0514 L0515 L0516 L0517 L0518 L0519 L0520 L0521 L0522 L0523 L0524 L0525 L0526 L0527 L0528 L0529 L0530 L0531 L0532 L0533 L0534 L0535 L0536 L0537 L0538 L0539 L0540 L0541 L0542 L0543 L0544 L0545 L0546 L0547 L0548 L0549 L0550 L0551 L0552 L0553 L0554 L0555 L0556 L0557 L0558 L0559 L0560 L0563 L0564 L0565 L0566 L0567 L0568 L0569 L0570 L0571 L0572 L0573 L0574 L0575 L0576 L0577 L0578 L0579 L0580 L0581 L0582 L0583 L0584 L0585 L0586 L0587 L0588 L0589 L0590 L0591 L0592 L0593 L0594 L0595 L0596 L0597 L0598 L0599 L0600 L0601 L0602 L0603 L0604 L0605 L0606 L0607 L0608 L0609 L0610 L0611 L0612 L0613 L0614 L0615 L0616 L0617 L0618 L0619 L0620 L0621 L0622 L0623 L0624 L0625 L0626 L0627 L0628 L0629 L0630 L0631 L0632 L0633 L0634 L0635 L0636 L0637 L0638 L0639 L0640 L0641 L0642 L0643 L0644 L0645 L0646 L0647 L0648 L0649 L0650 L0651 L0652 L0653 L0654 L0655 L0656 L0657 L0658 L0659 L0660 L0661 L0662 L0663 L0664 L0665 L0666 L0667 L0668 L0669 L0670 L0671 L0672 L0673 L0674 L0675 L0676 L0677 L0678 L0679 L0680 L0681 L0682 L0683 L0684 L0685 L0686 L0687 L0688 L0689 L0690 L0691 L0692 L0693 L0694 L0695 L0696 L0697 L0698 L0699 L0700 L0701 L0702 L0703 L0704 L0705 L0706 L0707 L0708 L0709 L0710 L0711 L0712 L0713 L0714 L0715 L0716 L0717 L0718 L0719 L0720 L0721 L0722 L0723 L0724 L0725 L0726 L0727 L0728 L0729 L0730 L0731 L0732 L0733 L0734 L0735 L0736 L0737 L0738 L0739 L0740 L0741 L0742 L0743 L0744 L0745 L0746 L0747 L0748 L0749 L0750 L0751 L0752 L0753 L0754 L0755 L0756 L0757 L0758 L0759 L0760 L0761 L0762 L0763 L0764 L0765 L0766 L0767 L0768 L0769 L0770 L0771 L0772 L0773 L0774 L0775 L0776 L0777 L0778 L0779 L0780 L0781 L0782 L0783 L0784 L0785 L0786 L0787 L0788 L0789 L0790 L0791 L0792 L0793 L0794 L0795 L0796 L0797 L0798 L0799 L0800 L0801 L0802 L0803 L0804 L0805 L0806 L0807 L0808 L0809 L0810 L0811 L0812 L0813 L0814 L0815 L0816 L0817 L0818 L0819 L0820 L0821 L0822 L0823 L0824 L0825 L0826 L0827 L0828 L0829 L0830 L0831 L0832 L0833 L0834 L0835 L0836 L0837 L0838 L0839 L0840 L0841 L0842 L0843 L0844 L0845 L0846 L0847 L0848 L0849 L0850 L0851 L0852 L0853 L0854 L0855 L0856 L0857 L0858 L0859 L0860 L0861 L0862 L0863 L0864 L0865 L0866 L0867 L0868 L0869 L0870 L0871 L0872 L0873 L0874 L0875 L0876 L0877 L0878 L0879 L0880 L0881 L0882 L0883 L0884 L0885 L0886 L0887 L0888 L0889 L0890 L0891 L0892 L0893 L0894 L0895 L0896 L0897 L0900 L0901 L0902 L0903 L0904 L0905 L0906 L0907 L0908 L0909 L0910 L0911 L0912 L0913 L0914 L0915 L0916 L0917 L0918 L0919 L0920 L0921 L0922 L0923 L0924 L0925 L0926 L0927 L0928 L0929 L0930 L0931 L0932 L0933 L0934 L0935 L0936 L0937 L0938 L0939 L0940 L0941 L0942 L0943 L0944 L0945 L0946 L0947 L0948 L0949 L0950 L0951 L0952 L0953 L0954 L0955 L0956 L0957 L0958 L0959 L0960 L0961 L0962 L0963 L0964 L0965 L0966 L0967 L0968 L0969 L0970 L0971 L0972 L0973 L0974 L0975 L0976 L0977 L0978 L0979 L0980 L0981 L0982 L0983 L0984 L0985 L0986 L0987 L0988 L0989 L0990 L0991 L0992 L0993 L0994 L0995 L0996 L0997 L0998 L0999 L1000 L1001 L1002 L1003 L1004 L1005 L1006 L1007 L1008 L1009 L1010 L1011 L1012 L1014 L1015 L1016 L1017 L1018 L1019 L1020 L1021 L1022 L1023 L1024 L1025 L1026 L1027 L1028 L1029 L1030 L1031 L1032 L1033 L1034 L1035 L1036 L1037 L1038 L1039 L1040 L1041 L1042 L1043 L1044 L1045 L1046 L1047 L1048 L1049 L1050 L1051 L1052 L1053 L1054 L1055 L1056 L1057 L1058 L1059 L1060 L1061 L1062 L1063 L1064 L1065 L1066 L1067 L1068 L1069 L1070 L1071 L1072 L1073 L1074 L1075 L1076 L1077 L1078 L1079 L1080 L1081 L1082 L1083 L1084 L1085 L1086 L1087 L1088 L1089 L1090 L1091 L1092 L1095 L1096 L1098 L1099 L1100 L1101 L1102 L1103 L1104 L1105 L1106 L1107 L1108 L1109 L1110 L1111 L1112 L1113 L1114 L1115 L1116 L1117 L1118 L1119 L1120 L1121 L1122 L1123
+
+## Totals
+
+- YES: 12 (L0010 L0226 L0252 L0257 L0371 L0469 L0562 L0898 L1013 L1093 L1094 L1097)
+- PARTLY: 12
+- NO: 1092
+- Skipped as REMOVE: 7. Check: 12 + 12 + 1092 + 7 = 1123 rows [inferred, my arithmetic].
+
+## Cost covered (YES rows only)
+
+- Minutes: none of the 12 YES rows states minutes. [read]
+- Tokens as stated in the YES rows: 1,748,770,895 [inferred: my sum]. Made of: L0010 42,128,568; L0252 549,000 (549k as stated);
+  L0257 826,005; L0371 18,088,314; L0469 1,677,900,000 (cache reads for pane O alone in 48 h; the row's seven-seat sum of about
+  7,565M is its own inference and I did not add it); L1013 642,636 written plus 664,706 added in 4 of 8 cases; L1093 7,971,666
+  (5,922,308 + 2,049,358).
+- Not in that sum: L1094 1,871,704 (1.73 M + 141,704), because C and E were two of the nine seats in L1093 and the row does not say
+  whether it is inside the 5,922,308 (if separate, the total is 1,750,642,599). L0898 30.8 M weighted units (not tokens). L0226
+  gives 56-59k tokens per resume, no total. L1013 also lists 17.07 M read by pings (not added).
+- YES rows with no cost recorded: 2 with nothing usable (L0562, L1097; L0562 states 3.53 B tokens left out of a table, an
+  undercount and not a spend) and 1 with a per-resume figure only (L0226).
+- About 96 percent of the sum is one figure (L0469). Without it the sum is 70,870,895.
+
+## What I did not open
+
+- The primary files behind the 24 scored rows (cold_wake_cost.md, idle_compaction_keepwarm.md, third_place/2026-10-31.md and
+  the handbacks): I used the ledger's cost field and line cites. Every mechanism line is [inferred].
+- I read event text only up to about 200 characters for the NO rows; a NO on a long row could hide a token clause in its tail.
+- Other scorers' files, the groups' files, the other roots, and the 7 REMOVE rows.
