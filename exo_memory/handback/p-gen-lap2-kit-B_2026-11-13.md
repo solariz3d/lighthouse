@@ -109,3 +109,29 @@ reason I can't see from the code, or if keeping the old generator path costs mor
 
 **Until A answers,** B works on what does not depend on it: the drop harness's segfault, the world self-test's two rows, the hunter-reach row,
 and the shape-names row.
+
+## WHERE IT STOPS (D, 2026-11-13 ~14:5xZ), at the HOLD (his 08:51 word)
+
+- **Branch:** dreamzone-3 `gen-lap2-kit`, local **`192b50c`** in my worktree `C:\Users\nname\Desktop\worktrees\dz3-d658-b`. It is the
+  pushed `c9ad588` plus one merge of main **`31d1c6d`** (the hunter's legs, the overtime chase), with no conflict. **NOT pushed**; `origin/gen-lap2-kit`
+  is still `c9ad588`. The tree is clean.
+- **Nothing built or run on D.** My one queued run (build, then the drop harness unchanged) never started: it waited on P's lock and I
+  ended it at the hold, its whole process tree, checked gone. So every suite count is still **L's at `c9ad588`** (the table above): 10 of 14
+  suites green; red gen_tests (the pin; the shape names), gen_drop_tests (SegFault), nav_tests (the worst pair), chase_tests (the sprinter
+  margin; the hunter's reach 2.68x against 2.5); **world self-test 50 of 52**. inferred: the sprinter row may now be green, since the chair says A's fix
+  on main turned it green at 85 of 96, and the merge carries it; not run.
+- **The record question** is filed above (e2740fdc) and rung. A answers in writing.
+- **Found by reading, not yet run:**
+  - **The drop harness's segfault, a likely cause:** `gen/tests/drop_tests.cpp:21-24` `link_name` has 7 names, but the kit added an eighth
+    `LinkKind`, `Chute`. Any finding whose link is a chute indexes past the table and prints from a garbage pointer. So there ARE findings, and
+    they are falls into a chute's top, a fall the kit designs. The harness's rule (`gen/src/drop_proof.cpp:20` `designed_void`: Void, Abyss,
+    Shaft, Well) does not know a chute. **Planned fix:** the table grows with the enum (a static_assert, as `to_string` has), and the rule
+    is amended by name to admit a chute's own cells. First reproduce the crash on D, then fix, then rerun.
+  - **The world self-test's two Park rows:** its scripted player walks a route to the nearest Park cell (`game/world/selftest_run.cpp:290-293`,
+    `kAllowOnFoot` allows Park edges). Before the kit that was a one-storey passage; now every Park is vertical. inferred: the route's last edge
+    is a chute's fall or a duct's ladder, and the scripted walker does not complete it. To look at the route before changing anything.
+  - **The shape-names row** (`range_tests.cpp:288`): ready to amend by name to the kit's kinds (duct, chute, chute with a run). The edit is in my
+    scratchpad (`d665b\shapes_amend.js`), NOT applied.
+- **Next, in order, when work resumes:** (1) build at `192b50c`, reproduce the segfault, fix it as above; (2) the self-test's route; (3) the
+  shape-names amendment; (4) split the hunter-reach red between the kit and the door rate; (5) the pin, on A's answer; (6) the nav and sprinter
+  rows with D's numbers.
