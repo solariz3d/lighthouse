@@ -135,3 +135,5 @@ and the shape-names row.
 - **Next, in order, when work resumes:** (1) build at `192b50c`, reproduce the segfault, fix it as above; (2) the self-test's route; (3) the
   shape-names amendment; (4) split the hunter-reach red between the kit and the door rate; (5) the pin, on A's answer; (6) the nav and sprinter
   rows with D's numbers.
+
+- **A answered (14:53Z, read whole):** Option 1 with Option 2's identity as a tripwire. A's file: `C:\Users\nname\Desktop\worktrees\a-d673-lh\exo_memory\handback\p-record-owner-A_2026-11-13.md` line 83 (branch `a-d673-brutal-lh`). **My part when the hold lifts:** every world-changing part of the kit behind a generator dial whose off value is today's generator exactly; the pin kept as the off-path proof; a second pin for the kit's world; to A, the dial names, their off values and `shipped_gen()` (the kit on). A writes `[gen]`, `gen_world` and the refusal, red first. A's condition: a part that cannot be put behind a dial (a different code path, not a parameter) is named, and only that part takes Option 2, with his word. Build nothing on it until the librarian rings that the hold is lifted.
