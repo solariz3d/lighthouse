@@ -51,6 +51,10 @@ items 183 to 190 are today's) and from each pane's "WHERE IT STOPS" section name
 - "recorded heavy hits, three to a step, is almost perfect, good for now": footfall one of E’s second pass (F3c in `handback/p-l199-voices-E_2026-11-13.md`, section 8b): stomp one’s boom, shortened, under recorded heavy impacts (Kenney, CC0), three hits to a step at 0, 45 and 105 ms, five takes in rotation, a 20 ms gap before each landing.
 - E on D: move it from the offline tools (`l199-offline-tools` 92be868, parked, never lands) into `audio/` on `l192-footsteps` (d8f77ba), red first; the takes and a CREDITS line with them; then the game wiring C approved; then land through the train. The clip he judged is on L only.
 
+## His next ask in sound, for D (item 193, 07:28)
+
+- "we just need to make the player steps better now". E on D, after the hunter’s voice is in the game: the player’s own footsteps by the same method (recorded contact, more than one hit to a step from the running sources, takes in rotation, by surface if the sources allow), with the bar kept that the hunter still clears his steps on at least 7 of 14 footfalls at 12 to 20 m. A clip for his ear before anything lands.
+
 ## Open with him
 
 1. **The late timer's words:** "in 45.8 s it comes for you itself", or "It is coming 0:45.8". Both stills are on L only (below).
