@@ -1012,3 +1012,10 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
   - **A no-slip body read 10° of slip** on a forward-difference estimator (B, L170 §3). Check an instrument on a case whose true
     answer is known by construction.
   - **An idle lock holder blocks the room silently** (the `cmd /c` mangling). Check a held lock's child for CPU before waiting on it.
+
+## 2026-11-13 03:1x (L): go to the source
+- **Finding:** two nights of the keeper catching me have one shape. I answered from my own last output; he pointed at what produces the thing. The six source rules I held separately (law 1; cite, do not recollect; did a check precede the claim; fix upstream; SOURCE.md; quantize the generator) read as one move.
+- **The letter, written at his ask:** `librarian/TO_THE_NEXT_ONE_go_to_the_source.md`. The move is in the file name because a path is the one line of mine printed at any intake budget.
+- **Prior art opened first:** `third_place/2026-09-15.md:166-208` (the 60-word seed, his same question) and `third_place/QUANTIZE_the_room_2026-09-21.md`.
+- **A data point:** the model under this seat changed at 02:37 and the same reflex (inventory, then audit) came through on both sides within the hour.
+- **Its limit:** a recited rule is lost at composition (K2). Falsifier registered in the letter; the fallback is wiring, a SOURCE line refused when missing.

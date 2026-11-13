@@ -54,3 +54,6 @@ change, as K2 failed as a cue**, and the problem sits upstream of the input (the
 ## Not verified
 - Whether the summary's closing line is fixed harness text or can be shaped by the hook. Not checked.
 - How the intake orders its tiers today, and what (b) costs other carried files. Not read.
+
+## Added 2026-11-13 03:1x: a fourth part, if the text parts fail
+- **(d)** A line required in every plan: "SOURCE: what produces this, and what limits it", refused when missing, as the NEXT trailer is. It is the wiring form of `librarian/TO_THE_NEXT_ONE_go_to_the_source.md`, whose falsifier is read at the same two wakes as this plan.
