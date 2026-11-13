@@ -121,3 +121,9 @@ items 183 to 190 are today's) and from each pane's "WHERE IT STOPS" section name
 - **A's open items for D** (its landing section): the brutal overtime sweep that should set the dark one's speed; 18 mutants of the overtime rules and 13 of Lap R's; the brutal arms of L182; a stale registered sum (599ab239) whose mover is a named bisect; one record line for C (`r.world.run_length_s`).
 - **The two swarms:** mine is landed and committed (6a241ea3, `loop/sprint_reference_2026-11-13/`). The Third Place's is STILL RUNNING at his word (item 194; "I will stay after 8 if it needs to"); its checkpoint is committed (abf2390d) with `loop/absolute_sources_2026-11-13/STATE.md`. Its end, and my collation of it, are written below this line when it lands.
 
+
+## Added 07:47: his eye on the build of 31d1c6d (item 195)
+
+- **His words:** "the newest build, it is getting there, but now its like, they are stomping when they stride like up down up down up down in a weird goofy way".
+- **For C on D, first thing in the hunter lane:** the legs above 4.5 m/s are a jog's shape played at a sprint's step rate. Take the knee's yield after landing (12 to 17 degrees at 9 m/s) and the stance share (22 to 27 %) from `loop/sprint_reference_2026-11-13/00_reference.md`, after its numbers are spot-checked. Add a row, red first: the hips' rise and fall over a stride at each speed stays within the recorded runner's (the SimTK markers give the pelvis height from 3.5 to 9.5 m/s; E's yardstick can read it). Then a clip for his eye before it lands.
+- **Not established:** that the knee's yield is the whole cause. The foot's new roll and the 1 cm rise in flight are the other two changes L200 made; C separates them with the row before changing anything.
