@@ -211,3 +211,40 @@ this ruling. The reason to cite for each row is its own line below.
    installed and can be wired by hand.
 
 If a later ruling wires any of them everywhere, that is one `$register` line and this paragraph is struck, not edited.
+
+## Lap W, the wake gate's bar for the dated note. RULED 17:1x (the librarian), on pane P's question
+
+**The case** (`handback/p-wakegate-capped-read-P_2026-11-13.md`, read whole with its addendum; `C:\Consonance\data\wake-gate.jsonl`, the row
+of 22:48:15Z): at my 16:46 compaction wake the gate recorded the dated note as `satisfied` on a Read that returned lines 1 to 183 of
+754 (215,051 B). I then read :690-754. Lines 184 to 689 were not returned before the ring. The gate judged the call's form.
+
+**The bar, ruled:** before the first ring after a wake, the seat has had returned to it **every line the dated note gained since its
+previous wake, through to the file's last line**. Where the previous wake is not known (a new session, a new day's note, no ledger
+row), the bar is the whole file. The other machine's newest handoffs stay whole, as now.
+
+**Why not "whole" at every wake.** At 754 lines a whole read is about 87,000 tokens, taken at each wake and then carried by every
+later call of that cycle; his measure of the problem is the carried context (`loop/handoff_lighthouse_2026-11-13-L.md:25-50`). A
+compaction's summary replaces exactly one cycle, and the entries written in that cycle are what restore it. The older part was the
+bar at the wake before. Today that part was :543-754.
+
+**Why not "a Read that reaches the last line"** (my own recommendation of 23:04Z, withdrawn): a read of the last line alone meets
+it. P's addendum says what it proves, and that is not enough.
+
+**The mechanism is P's coverage count,** as P wrote it: the union of the line numbers the Reads returned, against [S..N], N the
+file's line count at the decision. A shell `cat` counts only by the lines it returned. `own-append` stays as it is. **How S is
+found is P's to register before code.** A suggestion, not a ruling: the SessionStart body hook already runs at the wake and keeps a
+ledger; it can record the note's line count there, and S is that number plus one at the next wake.
+
+**Red first, P's fixture, with this bar's answer:** returned 1-183 and 690-754 of 754 with the previous wake at :543: deny, naming
+543-689. With them: allow. With no previous wake known and 184-689 missing: deny, naming them.
+
+**Registered with it.** **The bar is too low if,** at either of this seat's first two compaction wakes after the changed gate is
+live, something I tell him or rule to the chair in the first hour is corrected from a part of that day's note OLDER than the
+previous wake (read from the transcript and the notes by a seat that is neither this one nor P). Then the bar returns to the whole
+file, read in parts.
+
+**By this bar my own 16:46 wake was short** by lines 543 to 689. Read whole at 17:1x. I found no line in them that a ring sent
+since the wake contradicts.
+
+**Tier and order:** prove it (a gate of the room's own). P builds it on a branch; O lands it with pane R's half. For tonight's
+handoff: W4 on L warns and does not refuse, so L runs the old form until this lands there.
