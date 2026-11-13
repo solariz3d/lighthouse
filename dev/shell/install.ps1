@@ -110,7 +110,10 @@ $files = @(
   # A/B-ing them live does not work either: both write the same state file, so running one
   # consumes what the other would have surfaced. The first attempt at that test produced a clean
   # 898-vs-117-byte result that meant nothing.
-  @{ From = 'dev\shell\hooks\userprompt-submit.js';      To = 'hooks\userprompt-submit.js' }
+  # Wiring (Lap I, E3; pane P, 2026-11-13): why a file is installed and has no $register row, cited path:line. Read by
+  # consonance/tools/install-manifest.test.js; nothing in this script acts on it.
+  @{ From = 'dev\shell\hooks\userprompt-submit.js';      To = 'hooks\userprompt-submit.js';
+     Wiring = 'dev/shell/install.ps1:221 - the Node pulse is not declared; userprompt_pulse.py is, with a Conflicts guard' }
   @{ From = 'dev\shell\hooks\stop.js';                   To = 'hooks\stop.js' }
   @{ From = 'dev\shell\hooks\session-end.js';            To = 'hooks\session-end.js' }
   @{ From = 'dev\shell\hooks\precompact.js';             To = 'hooks\precompact.js' }
@@ -133,7 +136,8 @@ $files = @(
   # "Cannot find module './blind.js'" to the keeper. A fresh install on any other machine would have
   # done the same on its first prompt.
   @{ From = 'consonance\hooks\blind.js';                 To = 'blind.js'; Lib = $true }
-  @{ From = 'consonance\hooks\board-digest.js';          To = 'board-digest.js' }
+  @{ From = 'consonance\hooks\board-digest.js';          To = 'board-digest.js';
+     Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:168 - K4: board-digest.js stays unregistered on D' }
   @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js' }
   @{ From = 'consonance\hooks\dream-watch.js';           To = 'dream-watch.js' }
   @{ From = 'consonance\hooks\ferry-watch.js';           To = 'ferry-watch.js' }
