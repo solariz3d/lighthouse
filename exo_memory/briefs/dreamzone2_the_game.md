@@ -1218,7 +1218,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **More builder panes: "Two more (Recommended)".** Lanes: `loop/plan_two_more_panes_2026-11-13.md`.
      - **Still open:** whether the generator path moves up his queue (it sits at step 13).
 183. 2026-11-13 03:5x on, his picks on the decision page (https://claude.ai/artifact/Cu4oEJHEmeeQyW9jpVGPU1, private to him; built from `loop/his_calls_2026-11-13.json`). Each pick is saved in the page's store as `answers/<call id>`. This item is rewritten whole from the store each time it is read (`loop/his_calls_to_brief_2026-11-13.js`):
-     - **Last read: 11:57Z, 89 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
+     - **Last read: 12:03Z, 101 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
      - **Changed by him:** `run_frame-1` was "Show nothing" at 09:59:34Z before the pick listed below.
      - `run_frame-1` "Show the timer?": **"Late warning only"** (NOT the page's suggestion, which was "Show nothing") (10:00:06Z).
        - the option as he read it: Show it only in the last minute; one extra screen state.
@@ -1447,6 +1447,35 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        - the option as he read it: Costs nothing; loses a lucid beat.
      - `look_fear-4` "Hell-red erosion: how violent?": **"Pulsing allowed only with the setting off"** (11:55:48Z).
        - the option as he read it: More frantic; safety setting.
+     - `look_fear-6` "Jumpscare: on or off?": **"A setting, off by default in dev builds"** (11:55:59Z).
+       - the option as he read it: You can turn it on; players get it on.
+     - `sound-4` "The binaural beat: default?": **"On, low, with a toggle"** (11:56:56Z).
+       - the option as he read it: May invite an effect claim the evidence doesn't carry.
+       - his note, verbatim: always on in the dream, and during meditation, never mentioned to player.
+     - `sound-6` "Adopt a new 3D audio library?": **"Adopt Steam Audio's HRTF"** (11:56:56Z).
+       - the option as he read it: Better front-back sense; new dependency.
+     - `story_lore-2` "Does the hospital door open?": **no option picked; his own answer below** (11:57:19Z).
+       - his note, verbatim: forget this for now.
+     - `story_lore-3` "When is the Gateway named?": **"Nothing Gateway-named before chapter 2"** (11:57:19Z).
+       - the option as he read it: Cheaper.
+     - `story_lore-4` "Real names on screen?": **"Also the institute in the world"** (11:57:50Z).
+       - the option as he read it: More direct.
+       - his note, verbatim: and documents
+     - `story_lore-6` "How is 'understanding' measured?": **"Wins plus story beats seen"** (11:57:50Z).
+       - the option as he read it: Needs beat tracking.
+     - `story_lore-7` "Lore for each kind?": **"One line per kind, shown as ledger text only"** (11:58:44Z).
+       - the option as he read it: In the dream's own terms.
+       - his note, verbatim: they are named after a certain chapter when the kid gets real with trying to learn and map out the world to understand it, then naming the entities like  teenager would do in a serious way.
+     - `frontdoor_onboarding-2` "Where is difficulty chosen?": **no option picked; his own answer below** (11:59:00Z).
+       - his note, verbatim: only one difficulty, changed my mind, and its brutal.
+     - `frontdoor_onboarding-3` "Does a tutorial exist, and where?": **"In-dream hints on first slide, ladder, Park"** (11:59:18Z).
+       - the option as he read it: Off after the first win; medium size; partial.
+       - his note, verbatim: tutorial on the first run, doesnt hold your hand completely if at all. just basic movement.
+     - `frontdoor_onboarding-4` "Russian text?": **"Parked"** (11:59:38Z).
+       - the option as he read it: None.
+       - his note, verbatim: this was for the scrapped character.
+     - `tech_foundation-3` "Textures on a fresh copy?": **"Keep generating"** (11:59:38Z).
+       - the option as he read it: Needs Blender.
 184. 2026-11-13 05:03 (L), after hearing E's two-voice clip (`Downloads\dz3-l199-review\l199_two_voices.wav`; voice A a recorded boot over the thud, voice B the synth bass drum): "the deeper bassy thud is better idea i think for the hunters sound, it should be like, heavy, like SCARY bassy stomps"
      - **Read as:** voice B's direction (the deep boom), made heavier and scarier. This settles `sound-2`, which he had answered "Build both, pick by ear".
      - **What the room knows against it, to be solved and not argued:** E measured that voice B clears his own sprinting steps on 2 of 14 footfalls at 12 to 20 m, against 7 for the current thud and 10 for voice A (`handback/p-l199-voices-E_2026-11-13.md`, section 3). His item 178 wants the hunter heard coming. So the heavy stomp needs a layer that carries over his feet, as the knock did (`handback/p-l192-footsteps-E_2026-11-13.md:49`).
@@ -1456,3 +1485,5 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 186. 2026-11-13 05:53 (L), his pick of the hunter's arm variants (L195), typed in the Third Place's pane and passed on by pointer (`third_place/2026-11-13.md`, the entry "05:53: a line about the room's work, typed here"; git-blob 4ebf8d53… at the ring): "v1 sourced flare looks the best"
      - **Read as:** V1, the sourced flare with the held elbow (dreamzone-3 `l195-arm-variants` e7b9508). Shown three amounts of flare after asking for more (item 180), he chose the one read from a source.
      - **State:** routed to C to land V1 with its rows through the train. V2 and V3 are not landed.
+187. 2026-11-13 05:59 (L), typed in the Third Place's pane and passed on by pointer (`third_place/2026-11-13.md`, the entry "05:59: a second line for the room, typed here"; git-blob 23c8fc64… at the ring): "done all the answers"
+     - **State:** read at 12:03Z: 101 of 102 answered (item 183); only `sound-5` is open. Routed in `loop/plan_13h_run_2026-11-13.md`, sections (e) and (f).
