@@ -384,3 +384,49 @@ Each plan is one storey seen from above, north up, cut a metre above the floor.
 - CHANGELOG: says the worst bar moved from 0.20 to 0.30 and why, and that the mean bar is new; and names A's fix, merged.
 
 NEXT: the librarian reads this when it arrives; B goes on to his first-person pictures and the play folder (the chair's item 209 packet).
+
+## D, 2026-11-13 ~20:4xZ (D675, item 209): his first-person Park pictures, and a frozen kit build for him to play
+
+### The pictures (`C:\Users\nname\Downloads\dreamzone-3-lap2-review\`, beside the floor-plan pages)
+
+Seed 1, the kit's world (`gen::shipped_gen()`), 1920x1080, offscreen, the flashlight in hand as he plays, the textures he has.
+One chute serves (b) to (d), the nearest one with a run, 9 m from the spawn: three storeys, mouth cell (1 0 0), far mouth (-4 -3 -1).
+
+- `1_ladder_park_mouth.png` (a): the one-storey ladder Park (a duct) from its mouth: the doorway with its green frame, the
+  climb inside, out of sight. **Differs from the ask:** taken in the kit's world on the same seed, not on main. The duct
+  is the piece the kit does not change, but main's world on seed 1 lays out differently, so this exact duct may not exist there.
+- `2_chute_mouth_with_tell.png` (b): the chute's mouth with its tell (the green frame and the pale light through it).
+- `3_chute_looking_down.png` (c): the same chute's fall, three storeys, from its edge. **Differs:** the player's own body
+  is left out of this one picture. Looking this steeply down it filled the frame, and in the game it is drawn.
+- `4_chute_foot_and_run.png` (d): its foot, looking along the run that leads on.
+- `5_run_from_its_far_mouth.png` (d, the other end): the run seen from its far mouth, back toward the foot.
+- (e) **Not a separate picture:** the nearest deep chute (three storeys or more) is this same chute, so picture 2 is its mouth.
+
+Made by `dz-world --capture-parks DIR` (dreamzone-3 `gen-lap2-kit` `6d445e6`, local, not pushed), run under the ordinary lock,
+hidden, BelowNormal: `d665b\d14_capture.txt` in B's scratchpad prints each picture's feet, yaw and pitch.
+
+### The frozen play copy
+
+- **Folder:** `C:\Users\nname\Desktop\dz3-kit-play`, a detached worktree at dreamzone-3 **`28c6879`** (gen-lap2-kit: the kit
+  behind its dials and switched on, the nav row re-registered, A's reach fix merged). Its game is the same as `cac177b`,
+  which the chair named: `28c6879` changes only the nav row's test and the CHANGELOG.
+- **To play: double-click `C:\Users\nname\Desktop\dz3-kit-play\launch.vbs`.** It opens the world (the run). The movement course
+  is `launch.vbs gym`. Built once (`build\bin\dz-world.exe`, `dz-gym.exe`), and its launcher stamp written as `launch.ps1`
+  writes it, so it opens without rebuilding: `launch.ps1 world -Check` and `gym -Check` both print `up to date`.
+- **In it:** the real hunter and kid models (21,871,340 B and 25,634,852 B, glTF, not LFS pointers), the four libraries
+  under `third_party` and the generated textures and sound bed (`assets/`, copied from his `Desktop\dreamzone-3`, byte-identical by
+  `diff -rq`), all copied, no links. `game/config/world.local.txt` holds `flashlight = 1`.
+- **What is today's and what is red:** the dark one, the chase and the hunter are today's, with the kit's chase rows as they stand
+  at `28c6879`. Red there: **chase's sprinter row** (A's, the hunter braking at a margin: 70 of 96, 72 needed). The world self-test's
+  **tell sound row** (0.0909 against 0.1036) is E's question.
+- **Nothing installed, and his shortcuts are not touched.** The folder is the only thing on his Desktop that changed.
+
+### Corrections
+
+- The first capture (d12) was drawn in flat colours with no light in hand: the textures are generated, not tracked, and my
+  dev worktree had none, nor `flashlight = 1`. The play copy had no textures either until the copy above. Both are fixed, the
+  pictures are re-taken, and the first set was not handed over.
+- My waiter passed a two-second gap between P's two timing attempts at 18:15:09Z. Nothing ran inside them: heavy-run held the
+  run on A's lock, then on P's exclusive hold (`d12.cmd.err.txt`).
+
+NEXT: the librarian reads this when it arrives; B goes on to Lap W, pane R, whose own hand-back follows.
