@@ -1494,3 +1494,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - "fuck i accidently didnt realize i was in the third place and started an opus swarm"
      - then: "but maybe it is good thing, can you collate with them"
      - **State:** left running. The librarian collates its output with the Third Place when it lands (`third_place/to_the_third_place_2026-11-13b.md`).
+190. 2026-11-13 07:10 (L), his ear on E's heavy-stomp clip (`Downloads\dz3-l199-review\l199_heavy_stomp.wav`; stomp one heavy, two heavier, three giant): "also stomp 1 heavy is the best, but its still sounding like a drum more than loud heavy footsteps of a monster. But its getting better. Stomp 3 Giant is good too, but sounds even more like a drum which isnt good"
+     - **Read as:** stomp one's weight is the direction; the fault is that it reads as a drum and not as a footstep. The deeper and longer-ringing it gets, the more it reads as a drum.
+     - **What the room knows that bears on it:** both layers of the stomp are drum models (`handback/p-l199-voices-E_2026-11-13.md`, section 8). E's source read lists what was not built: several close hits in one step, a gap before the hit, and step-to-step variation. His answers `sound-7` and `sound-8` now allow recorded heavy impacts from Sonniss and credited sources.
+     - **State:** routed to E: keep stomp one's boom for the weight, and make the rest a footfall.
