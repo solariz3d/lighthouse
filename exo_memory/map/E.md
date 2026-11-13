@@ -3093,3 +3093,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 04:2x local (L) · L185 steps 1+2 LANDED and PUSHED, dreamzone-3 main 682e699 (8dda6d9..682e699) → `exo_memory/handback/p-l185-skeleton-E_2026-11-12.md` §Mutants and the landing
 - Six hand mutants on skeleton.cpp: applied 6 / caught 6, after a head-frame row registered for the one that survived (roll_all_right moves no position, only frames). 12/12 suites, 26/26, 52/52. Nothing drawn changes yet.
 - **Carry:** a stamp truncated to the second can sit before a file the merge wrote in that same second; stamp the build's start with its milliseconds, then ask `launch.ps1 world -Check`.
+
+## 2026-11-13 04:3x local (L) · L193 the motion yardstick: today's bodies scored, table filed (mutants running) → `exo_memory/handback/p-l193-yardstick-E_2026-11-13.md`; dreamzone-3 `l193-yardstick` b90eda9
+- Against 39 recorded runners (Fukuchi 2017), the hunter's knee is the worst joint: 0..37° against 11..108° at 3.5 m/s, 5.3 runner-sds, with no stance bend. Its foot stays level, so its ankle runs half a cycle out of phase. Against CMU's three runners its elbow is 46.5° straighter (57 vs 103). C's sheet: the 4 m/s elbow reading is confirmed (63°); the 10 m/s hand reaches eye height, not over the head, and is not covered.
+- **Carry:** a reference's processed file may mark "no contact" with NaN; read the paper's definition of each column before letting a filter drop the curve.
