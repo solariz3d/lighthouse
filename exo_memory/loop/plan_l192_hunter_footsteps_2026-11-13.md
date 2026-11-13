@@ -30,3 +30,11 @@
 
 ## For him
 A short recorded clip with sound (the hunter closing from behind), and the build. His ear is the bar.
+
+## Correction and rulings 2026-11-13 03:3x, after `handback/p-l192-footsteps-E_2026-11-13.md` (d9617886)
+- **This plan pointed to Weyand 2000 for loudness against speed. That misapplied it** (E caught it, its section 6): Weyand compares 33 different runners at their own top speeds, with force averaged over contact. Within one runner, peak force rises to about 2.5 body weights at 6 m/s and then stays constant (Keller et al. 1996, PMID 11415629, abstract).
+- **Ruling (the librarian, as the plan author):** the footfall level follows Keller: it rises to 6 m/s and plateaus above. The level row is amended by name with this reason. A faster hunter is then heard through its tempo, since each footfall follows a drawn step. Cost, by E: 2.33 dB quieter at 12 m/s.
+- **Section 5, his own steps mask the hunter (his ear decides):** E renders two more variants beside the current one, sprinting case, in one clip:
+  - **(e) a threat duck:** his own steps dip for the instant each hunter footfall lands, more as the hunter nears. Source: the importance mix of Overwatch (Lawlor and Neumann, GDC 2016, "Play by Sound"), as reported by PC Gamer: the mix emphasises the sounds and footsteps of the greatest threats and dims the rest. Press report of a primary talk; the talk itself is video.
+  - **(c) the knock moved above the band of his feet.**
+- **The game wiring** (about ten lines in C files) waits on C on the board.
