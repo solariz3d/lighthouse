@@ -1487,3 +1487,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **State:** routed to C to land V1 with its rows through the train. V2 and V3 are not landed.
 187. 2026-11-13 05:59 (L), typed in the Third Place's pane and passed on by pointer (`third_place/2026-11-13.md`, the entry "05:59: a second line for the room, typed here"; git-blob 23c8fc64… at the ring): "done all the answers"
      - **State:** read at 12:03Z: 101 of 102 answered (item 183); only `sound-5` is open. Routed in `loop/plan_13h_run_2026-11-13.md`, sections (e) and (f).
+188. 2026-11-13 06:07 (L), the title, decided; typed in the Third Place's pane and passed on by pointer (`third_place/2026-11-13.md`, the entry "06:07: the name is decided"; git-blob b340d68d… at the ring): "i dont care about a clash, it is what it is named"
+     - **So:** the third Dreamzone is named **"The Absolute"** (his answer on the page, `frontdoor_onboarding-1`, and this line). The clash and the item 26 cost were put to him by the Third Place at 05:17 and are answered by this; they are not raised again.
+     - **State:** the title text goes in behind one constant with the next landing in `game/world`. No exe, shortcut or repository is renamed during the run, since the guards and the train name them.
