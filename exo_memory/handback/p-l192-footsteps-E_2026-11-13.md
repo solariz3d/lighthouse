@@ -1,5 +1,31 @@
 # p-l192-footsteps-E: L192, the hunter's footsteps heard coming (his items 16 and 178). Pane E, on L, 2026-11-13, written from 03:23 local (`date`)
 
+## WHERE IT STOPS (L, 13:2xZ; the desktop starts here)
+
+- **Pushed:** dreamzone-3 `l192-footsteps` **d8f77ba**, rebased onto c9d520e. It is not landed and not READY.
+- **Green, before the rebase:**
+  - `audio_tests` 86/0;
+  - mutants applied 8 / caught 7 / NOT APPLIED 0, the survivor said in §5.
+
+  inferred: the rebase touched only CHANGELOG.md, where both entries were kept, so the audio files are as tested. Not
+  re-run after it.
+- **Unknown:** the game's wiring (d8f77ba: the stage hands the drawn hunter's stride phase and rate to the sound) has
+  **never been built**. `game/world/stage.cpp` and `sound.cpp` compile only into `dz-world`, and no test program
+  includes them.
+- **Waiting on:** the hunter's voice. His ear (item 190) picked stomp one's weight, and the second pass is L199's. The
+  voice lands on this branch's timing, force and mix layer.
+- **The exact next command,** in the worktree with the switch set:
+
+      MSYS_NO_PATHCONV=1 cmd /c <scratch>\l175\target.bat <worktree> dz-world
+
+  Or build all and run `build.bat test`. Then `audio\build\bin\audio_tests.exe`. Before landing, add a row that the
+  stage sends the drawn legs' phase and rate (C's files; C said yes on the board).
+- **On L's disk only:**
+  - the worktree `Downloads\dz3-wt-l192-steps`, which has no build directory;
+  - `scratchpad/l192/`: the clips, mutant logs and glimpse scripts;
+  - `Downloads\dz3-l192-review\`.
+
+
 **Packet:** the chair's 08:44:21Z order, the 13h run (`exo_memory/loop/plan_13h_run_2026-11-13.md`, 99c916b1), item 2.
 **Plan:** `exo_memory/loop/plan_l192_hunter_footsteps_2026-11-13.md`.
 **Branch:** `l192-footsteps` at **`5e3b36b`** in worktree `Downloads\dz3-wt-l192-steps` (made by git, links 0), off main

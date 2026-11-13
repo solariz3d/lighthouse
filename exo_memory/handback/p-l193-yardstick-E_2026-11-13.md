@@ -1,5 +1,35 @@
 # p-l193-yardstick-E: L193, real motion as the yardstick: today's bodies scored against recorded runners, joint by joint. Pane E, on L, 2026-11-13, written from 04:3x local (`date`)
 
+## WHERE IT STOPS (L, 13:2xZ; the desktop starts here)
+
+- **LANDED:** dreamzone-3 main **cc8eea8**, "Merge l193-yardstick (E, L193) by the landing train". The branch tip was
+  c7c3105.
+- **Green:**
+  - `yardstick_tests` 12/0;
+  - the ten hand mutants caught at the landing commit (§7);
+  - the player's table (§10);
+  - the hunter's tables (§4).
+- **Red:** every leg joint against the runners, the hunter's and the player's. That is the work list, not a fault in
+  the tool.
+- **Open, for B and C:**
+  - the player's body, worst first: the ankle at push-off, the knee's bend in stance, the foot's time down (§10);
+  - **the test of my inference** that the short stance makes most of the lag: lengthen `contact_length`
+    (`game/body.h`) and re-score.
+- **The exact next command,** in a build with the tool:
+
+      build\bin\dz-yardstick.exe --data <fukuchi dir> --player
+
+  - The hunter: drop `--player`.
+  - The arms: `--cmu <cmu dir> --clips 09_01,…` (the 25 in §2).
+  - A contact sheet: `--cmu <cmu dir> --sheet out.svg <clip>`.
+- **On L's disk only:**
+  - the data: `Downloads\dz3-yardstick-data\` (Fukuchi, 39 files; CMU, 37 files). It is refetched with
+    `tools/yardstick/fetch_fukuchi.ps1` and `fetch_cmu.ps1`, which pin sha256;
+  - the review tables and sheets: `Downloads\dz3-l193-review\`;
+  - the mutant harness and logs: `scratchpad/l193/`;
+  - the worktree `Downloads\dz3-wt-l193-yard`, whose branch has landed.
+
+
 **Packets:**
 - the chair's L193 packet, 08:49:51Z (delivered 09:46:58Z, after the 403);
 - its first two rows, 09:20:07Z;
