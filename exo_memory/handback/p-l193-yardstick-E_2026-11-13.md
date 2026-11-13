@@ -215,6 +215,38 @@ the run). Each run ends with a clean rebuild, and a check that `tools/yardstick`
 - **Two small tool builds ran inside my own L185 landing's exclusive hold**, at about 10:00Z (said in the L185
   hand-back).
 - **My first header line said "31 runners"**: that was one speed's count. It now prints each speed's count.
+- **My build held lock slot 2 for 40 minutes and did nothing** (11:50:47Z to 12:30Z; the librarian's trace is
+  `exo_memory/loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md`, "The second time").
+  - **What happened:** I typed the player-scoring build inline into Git Bash, at about 11:47Z, without
+    `MSYS_NO_PATHCONV=1`. Git Bash turned `cmd.exe /c` into `cmd.exe C:/`, so the wrapper's only child was a shell at a
+    prompt. It is the same failure as B's on 11-12, and it breaks the chair's own rule for `cmd /c` from Git Bash.
+  - **What I said meanwhile was wrong:** I told the keeper the build was "queued under the lock", and the board at 12:00Z
+    that it "holds the lock now". It held the lock and was doing nothing. I never looked at the child.
+  - **When it ended**, the librarian having stopped the idle cmd.exe, I read it as an ordinary failure. Only then did I
+    see the banner in its log.
+  - **Every wrapper of mine that calls cmd from Git Bash, checked** (`grep -rlE "cmd(\.exe)? +/c"` over my scratchpad,
+    12:3xZ). All ten script files already set `MSYS_NO_PATHCONV=1`:
+    - `l175/diverge.sh`, `l175/proof.sh`, `l175/wall.sh` (the users of `l175/lockcmd.js` and `l175/target.bat`);
+    - `l185/mut2.sh`, `l185/mut4.sh`, `l185/mut5.sh`, `l185/mutants.sh`;
+    - `l193/build193.sh`, `l193/mut193.sh`, and the new `l193/player_score.sh`.
+
+    The unguarded caller was the inline command, which no file search finds. So the fix is a rule, not a file: **a
+    build goes through a script file that sets the switch, never an inline `cmd /c`.** The rerun goes through
+    `l193/player_score.sh`.
+  - **The proving check:**
+    - checked: `node -e 'console.log(process.argv.slice(1))' cmd.exe /c x` → `["cmd.exe","C:/","x"]` without the switch,
+      `["cmd.exe","/c","x"]` with it;
+    - checked: a trivial `.cmd` through the guarded form → printed, exit 0 in 155 ms.
+  - **The look at the holder's child, owed until B's guard lands: the first one FAILED, and is fixed.**
+    - `l193/holder_look.sh` saw my wrapper take slot 2 at 12:41:21Z. Both CPU samples came back empty: node printed the
+      pid with colour codes (`[33m21160[39m`), so PowerShell's query was invalid.
+    - The build did work, by its own output: the ninja steps in `l193/player-build-*.log` (6, then 2), the tests 12/0,
+      and the scoring run to the end. But that is the output, not the look the chair asked for.
+    - **Fixed:** the pid is now written as a plain string, and the samples are at +5 s and +15 s, since this build finished
+      inside the old first sample's 20 s.
+    - **Proved:** checked: `l193/holder_look_proof.js` (a parent with one busy child and one idle child, the watcher's
+      own query) → the busy child 3.5 s then 7.2 s of CPU, the idle one 0.0 s both times. checked: the pid from a
+      sample lock file reads `12345` byte for byte (`od -c`).
 
 ## 9. Hands and fingers in the recorded motion (the chair's 10:34Z note: `player_body-5` is now "new joints")
 
@@ -240,3 +272,52 @@ hand channel over each clip (three runners):
 - New finger joints are new rows, scored against the hand bones above as far as those reach.
 
 Whatever B proposes on the board, I answer there before any code.
+
+## 10. The player's legs (B's Body, driven through the simulation): scored, and the lag traced (written 06:4x local)
+
+checked: `dz-yardstick.exe --data …\fukuchi2017 --player` at dreamzone-3 `l193-yardstick` fbe5aaa →
+`Downloads\dz3-l193-review\table_player_fbe5aaa.txt`. The runners and the bars are the hunter's (§4). The player runs on
+a flat floor with one input held, chosen per speed to land closest to the runners' speed.
+
+| m/s (input) | joint | rms | runners' sd | best-lag rms | late | bar |
+|---|---|---|---|---|---|---|
+| 2.5 (106, 2.50) | hip (centred 24.8) | 25.2 | 5.2 | **7.8** | -22 | FAIL |
+| 2.5 | knee | 41.4 | 7.6 | 22.2 | -17 | FAIL |
+| 2.5 | ankle | 38.3 | 5.1 | 24.7 | +32 | FAIL |
+| 3.5 (63 + sprint, 3.47) | hip (centred 30.4) | 30.5 | 5.3 | **6.8** | -24 | FAIL |
+| 3.5 | knee | 44.6 | 8.0 | 22.5 | -17 | FAIL |
+| 3.5 | ankle | 42.3 | 5.8 | 28.7 | +34 | FAIL |
+| 4.5 (82 + sprint, 4.52) | hip (centred 35.8) | 35.9 | 6.6 | **7.3** | -25 | FAIL |
+| 4.5 | knee | 47.9 | 9.4 | 23.3 | -18 | FAIL |
+| 4.5 | ankle | 46.8 | 5.7 | 34.0 | +35 | FAIL |
+
+**The lag is the body's, not the tool's** (the question left open in §4's player line):
+- The tool cuts strides where the right ankle comes within 3 cm of its lowest. Those strikes fall at stride phase
+  **0.15 / 0.17 / 0.18 turn** (the rig's own phase, averaged over the strikes).
+- The body puts the right foot's mid-stance at 0.25 turn (`game/body.h`). With the foot down 26 / 22 / 19% of the cycle,
+  its own contact is at **0.12 / 0.14 / 0.15**.
+- So the tool cuts **3 points of the cycle** after the body's own contact. Of the 17 to 25 points of lag at the hip
+  and knee, 3 are the tool's and the rest the body's.
+
+**What the body does, from the every-10% rows** (ours / the runners' mean, degrees from standing):
+1. **The hip has the right shape, early.** Moved back by its lag, it comes within **1.5 / 1.3 / 1.1 runners' sd**
+   (7.8, 6.8, 7.3 against 5.2, 5.3, 6.6). Ours is most extended at 20% of the cycle (-17 to -23); the runners at 40-50%.
+2. **The knee stays straight while the foot is down.** It reads 0° from standing for the first 20% of the cycle at
+   2.5 and 3.5 m/s, where runners bend to 36-41°. Its swing reaches the runners' height (93 / 104 / 114 against
+   93 / 107 / 116) but at 50% of the cycle instead of 70%. Even moved back it is 2.5-2.9 sd off, because the stance
+   bend is missing.
+3. **The ankle points the wrong way at push-off.** At 40-50% of the cycle ours is bent up 55-62°, where runners point
+   the foot down (-15 to -24°). Ours reaches 62-66°, against the runners' greatest 23-24°. The hunter showed the same
+   (§4, point 2).
+4. **The foot is down too briefly:** 26 / 22 / 19% of the cycle, against the runners' 40 / 36 / 34% (§4).
+
+inferred: the short stance is most of the hip's and knee's lag. A foot that lifts about 14 points early starts the
+swing about 14 points early. To check: lengthen the foot's time down in the Body (`contact_length`, `game/body.h`, B's)
+and re-run this table. The lag should shrink by about the same amount, or this inference is wrong.
+
+**For B (the player's body, his pick player_body-3: "Real first"), worst first:**
+- the ankle at push-off;
+- the knee's bend in stance;
+- the foot's time down.
+
+The hip needs only its timing.
