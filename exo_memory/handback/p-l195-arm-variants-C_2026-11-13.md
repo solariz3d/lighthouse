@@ -88,3 +88,31 @@ further. Checkable: re-run V1 with kArmTwistShare 1.0 and see the two rows retur
    the leak at its source and changes what he ruled on in L190.
 3. **Amend the two rows by name** to measure the swing in the arm's own twisted plane (the twist is ours, not Bruening's
    swing). The rule would change, so this needs his or the chair's word; I will not do it to make a variant pass.
+
+### V1's pictures, for the ruling (added after the ring, 10:35Z)
+
+- checked: `scratchpad/l195/V1_world.txt` → world_app_tests **45/0**; the lean row holds 13 of 24, as before. So the
+  stop is the two game_tests swing rows and nothing else.
+- checked: `scratchpad/l195/V1.log` → capture-lean exit 0, 192 frames in
+  `Downloads\dreamzone-3-l195-arm-variants\after_5ae66b8_V1`, brightened as L191's were (`lutrgb` gamma 0.3; checked
+  against an L191 frame re-made the same way: PSNR inf).
+- **`Downloads\dreamzone-3-l195-arm-variants\V1_against_L191.png`**: L191 and V1 side by side, each with its measured
+  numbers (`draw195.js` on each one's own joint dump), its sources in blue and ours in red, the side and front stills at
+  10 m/s, and a frame of the straight and the corner from the following camera.
+- **`clips\straight_eased_follow_L191_vs_V1.mp4`** (1.8 MB) and **`clips\corner_eased_follow_L191_vs_V1.mp4`** (3.7 MB).
+- V1 at 10 m/s, measured on the posed joints: bent 106.5° at the front and 80° at the back (L191 109.9 and 61.7); the
+  stand-off 7.4° at the front and 23.2° at the back (L191 9.5 and 9.5); **the hand's highest point 1.52 m, 9.5 cm under
+  the eye** (L191 1.59 m, 3.0 cm under it). The swing reads 50.2° forward and **51.5° back**: the extra is on the back,
+  where the stand-off is largest, which fits the inferred cause above without checking it.
+
+### Two faults in the capture, found making these (not in L195's files)
+
+- **The look-back passes do not show the hunter.** `--capture-lean`'s look-behind is the player's own view from the
+  replayed run (`offscreen_models.cpp:433`). At the two stretches the run picks, the hunter is not in it: the straight's
+  24 frames show an empty corridor, and the corner's 24 show the wall the player turned past. L191's look-back clips had
+  the same fault (its corner frame 12 is a wall). Look-back clips that show the arms need a stretch where the hunter is
+  close and in view, chosen in the capture tool (world code, not `game/model_rig*`), so they wait on the ruling with V2
+  and V3. The sheet uses the following camera for both stretches instead.
+- **The following camera still enters walls on the corner:** frames 0, 5-7, 9, 12-19 of the corner pass are in a wall or
+  the floor; the hunter is clear in 1-4, 8, 10-11 and 20-23. The sheet shows frame 21. This is L180 lap 2's open fault
+  (its frames 12 and 16), wider than it said there.
