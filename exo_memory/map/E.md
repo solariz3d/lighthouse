@@ -3129,3 +3129,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 10:5x local (D) · L185 step 4 STOPPED RED on `l185-skeleton` 370e3e6 (local): the forearm and hand cannot follow a sprint on swing-twist motors → `exo_memory/handback/p-l185-step4-E_2026-11-13.md`
 - Three causes found and fixed: Jolt's frequency motors are sized for two bodies only (a held pose sagged 0.85 m), placement with no velocity (the arms flung), and too few solver steps. The forearm and hand still miss by 0.21-0.61 m at the 95th percentile, and 3x stiffness is unstable. I put a method question to the chair: the soft keyframe of the plan's own sources.
 - **Carry:** a motor sized by frequency in Jolt holds its two bodies, not the chain below them. Size it from the subtree's inertia before judging the motor.
+
+## 2026-11-13 14:4x local (D) · L185 steps 4-5 GREEN on `l185-skeleton` 2767855 (local, not landed): the hunter's upper body on the soft keyframe, drawn; the catch reacts → `exo_memory/handback/p-l185-steps4-5-E_2026-11-13.md`
+- Option (a): R4.3 p95 0.69 cm, follow-through 13.1 cm, 10/10 rows, mutants 5/5, suite 14/14, self-tests 26/26 and 52/52, his 16 runs byte-identical on base and branch. The clip is in `worktrees\clips_L185\index.html`. R4.5's 30 m/s bar was amended by name: the keyframe itself goes 39 m/s, through the pelvis jump at 0.1 m/s, which went to C. R4.7's cost waits for the ring.
+- **Carry:** a soft keyframe follows any chain at any strength, where motors could not. And never write a sha before git has given it.
