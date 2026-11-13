@@ -230,14 +230,14 @@ his process list or his disk is ours to clean, and he should never be the one to
    to hand it to remind it."*); a plan item written as a destination turns a guess into an order over the output (the keeper,
    2026-09-23, L084; `exo_memory/librarian/2026-09-22.md`, "2026-09-23 01:1x, ON L"). The trailer gate
    (`consonance/src-tauri/src/trailer.rs`) follows `gates_mode` in `~/.consonance.json`: under strict a `chair_inject`
-   whose last line is not `NEXT:` is refused and handed back; under light, D's mode, it warns, the warning
+   whose last line is not `NEXT:` is refused and handed back; under light it warns, the warning
    returns to you, the sender, and the message is delivered unchanged (D633).
 8. What you read or ran for this message, as a `SOURCES:` line above the trailer, or `SOURCES: none (no state claims)` for a
    dispatch that only routes work.
    Why: gated source rules are followed, ungated ones are not (`exo_memory/loop/rule_census_score_2026-10-02.md`; D215,
    `exo_memory/loop/plan_sources_gate_dispatch_d215_2026-10-02.md`). `consonance/hooks/sources-gate.js` follows the same key:
    under strict it refuses the dispatch in the same turn when the line is missing or an item matches no call this turn made;
-   under light, D's mode, it writes a warn row to its ledger and prints nothing, so a wrong line is delivered and no one is told.
+   under light it writes a warn row to its ledger and prints nothing, so a wrong line is delivered and no one is told.
 9. Every "where" as a map anchor. Each place a packet points at (a file, a module, a function) is an anchor in that
    repository's code map (`consonance/src-tauri/src/MAP.md`, or the `MAP.md` at another repository's root) or a path the librarian supplied, never the
    chair's memory; and a packet for a repository names its checkout by path and its base sha beside it, as a line

@@ -124,7 +124,7 @@ Why: over 65 automatic compactions of this seat, `third_place/` was touched in 2
 - Finish your output, file it, then pass it on — in that order, in the same turn, without being asked. Grep, write the deliverable into your notes, re-read it, then `call_chair` with a pointer to it.
   Why: a dispatch is un-revisable once it renders, and on 2026-08-24 an unverified brief produced a wrong ruling in another seat (`exo_memory/loop/handoff_desktop_2026-08-24.md:173-175`); 101 of 103 chair dispatches went out before the turn's answer was finished (`exo_memory/loop/turn_boundary_detection_2026-08-25.md`). The notes are the master and the call is the pointer, because a channel message cannot be cited by `path:line`.
 - When your output is done and something is owed to another seat, carry it in that turn. Finishing is not stopping; the human is not the trigger.
-- End a hand-off with who acts next, and when (`NEXT: <station> <command> when <condition>`, the first word a seat or the verb that reaches one). Under `gates_mode` strict, `call_chair` refuses a ring whose last line lacks it and hands the message back; under light, D's mode, it warns, and the note returns to you, the sender (D633). The master is `COMMITTEE.md`, "The hand-back".
+- End a hand-off with who acts next, and when (`NEXT: <station> <command> when <condition>`, the first word a seat or the verb that reaches one). Under `gates_mode` strict, `call_chair` refuses a ring whose last line lacks it and hands the message back; under light it warns, and the note returns to you, the sender (D633). The master is `COMMITTEE.md`, "The hand-back".
   Why: the keeper, 2026-09-16: *"each seat tells the next where to hand it to remind it"*; a line naming no station preceded an 82-minute stall that night (`exo_memory/librarian/2026-09-16.md:83`).
 - When a pane's `call_librarian` arrives with no next station, name the next station yourself. Pane rings are never refused for this, in either mode, and since D633 they carry no bracketed note: the warning goes back to the pane, so you see the ring exactly as it was sent.
   Why: a refused `call_librarian` would drop the pane's pointer, so the gap is filled at your end instead (`mcp.rs`).
@@ -144,7 +144,7 @@ Why: over 65 automatic compactions of this seat, `third_place/` was touched in 2
   `OUTPUT → NEXT: changed|unchanged — <why, read from the output>`.
   Why: the keeper, 2026-09-23: *"how do we know the next step before we get the results from the current pane?"* (L084; spec
   `exo_memory/librarian/2026-09-22.md`, "2026-09-23 01:1x, ON L"). Under `gates_mode` strict,
-  `consonance/src-tauri/src/trailer.rs` turns a collation without it back; under light, D's mode, it warns, and the note returns
+  `consonance/src-tauri/src/trailer.rs` turns a collation without it back; under light it warns, and the note returns
   to you (D633). Panes do not owe this line.
 
 ## Contradictions resolved

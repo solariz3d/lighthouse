@@ -68,8 +68,11 @@ test('the role uses read "the person you\'re with" afterwards, and none of the o
   // reaches … only in the librarian's all-clear", and "gives … the all-clear" is a new one (consumer-relabel.js BUILDING)
   for (const gone of ["the keeper's typing included", 'report success to the keeper', 'success reaches the keeper', 'gives the keeper the all-clear', 'when the keeper switches the', "keeper's prior word", 'keeper-owned call',
     'he is away.', 'a credential only the keeper holds', 'the check is the keeper noticing', "same turn's message to the keeper does not describe"]) assert.ok(!b.includes(gone), `role wording survived: ${gone}`);
+  // AMENDED in Lap W (pane B, 2026-11-13): "when … switches the gates" left dev with the Lap I rider, which reworded the gate sentences to
+  // name the mode ("under strict … under light …") and no keeper, so its relabelled form is no longer expected; the old wording stays on
+  // the list above, so it still may not survive.
   for (const now of ["the typing of the person you're with included", "success reaches the person you're with only in the librarian's all-clear", "gives the person you're with the all-clear",
-    "when the person you're with switches the", "prior word of the person you're with on disk", "a credential only the person you're with holds",
+    "prior word of the person you're with on disk", "a credential only the person you're with holds",
     "the check is the person you're with noticing", "the hours\n  the person you're with is away."]) assert.ok(b.includes(now), `missing: ${now}`);
   const seed = R.relabel('exo_memory/SEED.md', read('consonance/src-tauri/brief/SEED.md'), { fork: FORK }).text;
   assert.ok(seed.includes("**The person you're with keeps this room from their first turn.**"));
