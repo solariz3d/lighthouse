@@ -166,3 +166,76 @@ come from an arm that opens to 45-52° at the back. So **the steady runners agre
 stride**, and the accelerating cricketers are the case that opens. Step 1's "no" holds for Lockie's data only. It
 rests on three runners, so it is shown to him on the sheet, not tuned to blind. CMU's swing also sits further back
 than ours (-34.4°/+7.8° against main's -22°/+25°); that too goes on the sheet as a number, not into the pose.
+
+## Step 3 done: the three variants, rendered and scored, under the rulings (nothing landed: he picks)
+
+**For his eye:**
+- Every variant bends the elbow more than main all through the stride: CMU's runners hold 103° on average and main
+  56.5°, where V1 holds 94°, V2 100° and V3 109°, all three inside the runners' spread. V2 is closest.
+- The arms stand further off the body the further back they swing (Otsuka's figure): V1 7.7° at the front to 23° at the
+  back at 10 m/s, V2 18° to 33°, V3 28° to 43° (main 9.5° at both ends).
+- What he sees of the swing at 10 m/s grows with the flare (50.9°, 52.6°, 54.5° each way, main 51.0°); against the chest
+  every variant swings exactly Bruening's. The front hand peaks about 10.5 cm below the eye in all three (main 3 cm).
+
+**The runs** (`l195-arm-variants`, all on origin; each variant its own commit selecting it):
+
+| | commit | game_tests | world_app_tests | capture |
+|---|---|---|---|---|
+| V1, the sourced flare, the held elbow | e7b9508 | 170/0 | 45/0 | `after_e7b9508_V1` |
+| V2, more flare (+10°, ours), a tighter bend | 4ef2027 | 170/0 | 45/0 | `after_4ef2027_V2` |
+| V3, the strongest (all ours past the sources) | bba95c4 | 170/0 | 45/0 | `after_bba95c4_V3` |
+
+checked: `scratchpad/l195/V{1,2,3}_game.txt`, `_world.txt` and `V{1,2,3}.log` / `V1s.log` → the figures above. Fingerprints are untouched
+(`world_app_tests` checks them).
+
+**Under the rulings (the chair's 10:32:59Z way 1; the librarian's two, relayed 10:35:06Z and 10:46:40Z):**
+- **The swing compensation** (`arm_swing_solved`, bisection) is DERIVED, not a source number: OURS. The posed amplitude
+  in code is no longer the law's own number; the swing MEASURED against the chest is. At F 0.88 / 1.12 / 1.36 every
+  stand-off reads 20.06 / 23.59 / 26.87° each way, and 49.33° at 10 m/s: Bruening's fit, extended above F 1.36 as ours.
+- **New row** `against_the_chest_every_variant_swings_brunings_range_whatever_its_stand_off` (main's fixed 15° and V1,
+  V2, V3; the existing chest row's 1.5° bar) and **L190's row amended by name**: its amount re-based to the chest's
+  forward, the frame its law is defined in. **This is a correction of the row against its own source and is not done to
+  let a variant through.** Its property, the arms swing further the faster the body runs, is checked in both frames.
+- **Red with the solve switched off** (cfa5f50, `kArmSwingSolve` false; checked: `solve_red_game.txt` → 170 tests, 3
+  failed): the amended row on V3 (52.9° against the chest, law 49.3, bar 3), the landed chest row on V1 (28.41 against
+  26.87), and the new row at every variant's stand-off (main's 15° stays inside). Green with it on (e7b9508).
+- **The heading-frame figures at 10 m/s, measured** (printed, not gated): main 51.0°, the fixed 15° 50.0°, V1 50.9°,
+  V2 52.6°, V3 54.5°. They equal the computation in "Step 3, resumed".
+
+**The yardstick** (E's tool, origin/l193-yardstick b90eda9, merged into a local scratch branch `c-ys-score` in
+`Downloads\dreamzone-3-c-ys`, never pushed; each variant built and scored against the 25 CMU clips;
+checked: `scratchpad/l195/score_{V1,V2,V3}.txt`, summarised by `score_sum.js` into `score_sum.jsonl`; main's from E's
+`table_arms_b90eda9.txt`, which the same script reads as E printed it):
+
+| | elbow mean (recorded 103, ±12.4) | swing back (-34.4, ±3.7) | swing front (+7.8, ±7.0) |
+|---|---|---|---|
+| main | 56.5 (-46.5) outside | -21.9 outside | +24.4 outside |
+| V1 | 94.2 (-8.8) **inside** | -21.2 outside | +23.6 outside |
+| V2 | 100.0 (-3.0) **inside** | -21.2 outside | +23.6 outside |
+| V3 | 108.8 (+5.8) **inside** | -21.2 outside | +23.6 outside |
+
+The swing's centre is not touched by any variant: it sits about 13-16° further forward than the runners' (three runners,
+weak). Shown to him, not tuned to.
+
+## Review packet (for him: two minutes)
+
+In `Downloads\dreamzone-3-l195-arm-variants`:
+1. **`contact_sheet.png`**: main and the three variants side by side: each one's measured angles at a runner's 4 m/s
+   and the hunter's 10 m/s, the swing against the chest beside Bruening's, the heading-frame swing and the front hand's
+   top for his eye, the yardstick's scores, every source in blue and every OURS in red, the side and front stills, and a
+   frame of the straight and the corner.
+2. **`clips\straight_eased_follow_all_four.mp4`** and **`clips\corner_eased_follow_all_four.mp4`**: main, V1, V2 and V3
+   in one picture, his run, brightened, 2 s at 12 frames a second. Each variant also has its own beside-main clip
+   (`*_L191_vs_V1/V2/V3.mp4`).
+3. **Then he picks** V1, V2, V3 or none. The pick lands with its rows (already green on its own commit), through the
+   train.
+
+**Not in the packet, and why:** the look-back clips the packet asked for. `--capture-lean`'s look-back passes never show
+the hunter at the stretches his run gives (found at V1, above), so the corner is shown from the following camera
+instead. A look-back stretch with the hunter in view is a change to the capture tool, not to the arms.
+
+**Corrections on the way, said here:** the "+4°" flare bound first written in Step 3, resumed (computed: +8.25°,
+corrected before the ring); step 1's "the bend at the back: no" (E's yardstick shows the steady runners' elbow far more
+bent than Lockie's accelerating cricketers); my runner's label carried an apostrophe and one red run never started
+(re-run, nothing lost); V1's first capture (`after_5ae66b8_V1`, before the solve) is kept as the stop's evidence and is
+not on the sheet.
