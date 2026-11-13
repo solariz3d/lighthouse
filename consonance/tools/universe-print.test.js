@@ -310,9 +310,12 @@ const HOLD_REPO = path.join(tmp, 'hold-repo');
   fs.copyFileSync(path.join(REAL_REPO, 'dev', 'shell', 'hooks', 'userprompt-submit.js'),
     path.join(HOLD_REPO, 'dev', 'shell', 'hooks', 'userprompt-submit.js'));
   const live = fs.readFileSync(path.join(REAL_REPO, 'dev', 'shell', 'install.ps1'), 'utf8');
-  const row = /(userprompt-submit\.js';[^\n]*?)\s*\}/;
+  // THE ROW IS ONE TABLE AND MAY SPAN LINES (Lap I, pane P, 2026-11-13): rows now carry reasons (`Wiring`) and run over several lines, so the
+  // row is read from its `@{` to its closing `}`, as landed-live.js's parser reads a table, never as one line. `Hold = $true;` goes on the row's
+  // FIRST line, right after its `To`: open-items.js:284 reads the flag on the line that names the file.
+  const row = /@\{\s*From = '[^']*userprompt-submit\.js';[^}]*\}/;
   if (!row.test(live)) throw new Error('fixture: the userprompt-submit.js row is not in the live manifest');
-  const held = live.replace(row, (m, head) => (/Hold\s*=/.test(head) ? m : head + '; Hold = $true }'));
+  const held = live.replace(row, (m) => (/Hold\s*=/.test(m) ? m : m.replace(/(To = '[^']*userprompt-submit\.js';)/, '$1 Hold = $true;')));
   if (!/userprompt-submit\.js';[^\n]*Hold\s*=\s*\$true/.test(held)) throw new Error('fixture: Hold was not re-added');
   fs.writeFileSync(path.join(HOLD_REPO, 'dev', 'shell', 'install.ps1'), held);
 })();
