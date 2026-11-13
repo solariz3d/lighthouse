@@ -1,0 +1,6 @@
+foot markers in the file: LLMAL LMMAL LHEEL LP1MT LTOE LP5MT RLMAL RMMAL RHEEL RP1MT RTOE RP5MT
+up axis z
+L: heel to toe marker 0.268 m along the floor; the ankle centre (lateral and medial malleoli) 0.074 m from the heel marker, 0.049 m above the lower of the two; so the TOE marker is 0.193 m ahead of the ankle and -0.049 m from it in height (marker heights: toe 0.059, heel 0.061, ankle 0.103)
+L: the ball (mid of the 1st and 5th metatarsal heads) 0.126 m ahead of the ankle, -0.017 m up; the TOE marker 0.067 m ahead of the ball, 0.000 m up
+R: heel to toe marker 0.272 m along the floor; the ankle centre (lateral and medial malleoli) 0.076 m from the heel marker, 0.049 m above the lower of the two; so the TOE marker is 0.196 m ahead of the ankle and -0.049 m from it in height (marker heights: toe 0.059, heel 0.059, ankle 0.103)
+R: the ball (mid of the 1st and 5th metatarsal heads) 0.127 m ahead of the ankle, -0.014 m up; the TOE marker 0.069 m ahead of the ball, 0.000 m up

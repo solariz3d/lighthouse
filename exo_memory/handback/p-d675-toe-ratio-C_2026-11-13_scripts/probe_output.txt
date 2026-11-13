@@ -1,0 +1,34 @@
+heavy-run: WARNING: C:\ has 27.4 GB free, under 50 GB; run node consonance/tools/janitor.js
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+run: holding the lock at 2026-11-13T23:34:16.912Z; starting toe-run
+    22 bodies, 21 constraints
+ok    the_hunters_ragdoll_has_a_body_for_every_joint
+    2880 steps: the bodies off their key by at most 0.000010 m and 0.0000 deg;
+    off the drawn pose by at most 0.001 m, the largest stretch above a joint 0.000 m (HandR), and at most 0.0013 m past it (HipL)
+ok    hard_keyed_every_body_is_where_the_key_put_it_and_off_the_drawn_pose_only_by_the_stretch
+ok    the_ragdoll_reads_back_the_same_bits_every_time
+    the head body's roll off the drawn head's at most 0.040 deg; the drawn head turned up to 57.2 deg off the body
+ok    the_hunters_head_body_turns_with_its_look
+    held 3.53 m/s, left foot: stride 71 ms, peak 1.28 m/s at 35% of it, 46 ms before the landing; stride 733 ms, peak 9.40 m/s at 77% of it, 171 ms before the landing; stride 75 ms, peak 1.28 m/s at 39% of it, 46 ms before the landing;
+    held 3.53 m/s, right foot: stride 75 ms, peak 1.28 m/s at 39% of it, 46 ms before the landing; stride 733 ms, peak 9.40 m/s at 77% of it, 171 ms before the landing; stride 71 ms, peak 1.28 m/s at 35% of it, 46 ms before the landing;
+    held 3.53 m/s, at the TOE marker's place on the foot (rest offset from the ankle -0.044 up 0.195 forward): fastest 9.40 m/s at 2.450 s, ratio 2.664
+    held 3.53 m/s: fastest toe 10.08 m/s (ToeR, at 2.854 s), the body 3.53 m/s, ratio 2.856; the pelvis then 3.53 m/s along the floor (ratio to it 2.856)
+    held 5.19 m/s, left foot: stride 692 ms, peak 13.20 m/s at 65% of it, 242 ms before the landing; stride 692 ms, peak 13.20 m/s at 64% of it, 246 ms before the landing; stride 688 ms, peak 13.20 m/s at 65% of it, 242 ms before the landing;
+    held 5.19 m/s, right foot: stride 692 ms, peak 13.20 m/s at 65% of it, 242 ms before the landing; stride 692 ms, peak 13.20 m/s at 64% of it, 246 ms before the landing; stride 688 ms, peak 13.20 m/s at 65% of it, 242 ms before the landing;
+    held 5.19 m/s, at the TOE marker's place on the foot (rest offset from the ankle -0.044 up 0.195 forward): fastest 13.20 m/s at 4.800 s, ratio 2.543
+    held 5.19 m/s: fastest toe 13.98 m/s (ToeR, at 5.838 s), the body 5.19 m/s, ratio 2.694; the pelvis then 5.19 m/s along the floor (ratio to it 2.694)
+    held 6.97 m/s, left foot: stride 29 ms, peak 0.57 m/s at 57% of it, 13 ms before the landing; stride 583 ms, peak 16.61 m/s at 66% of it, 196 ms before the landing; stride 33 ms, peak 0.57 m/s at 50% of it, 17 ms before the landing;
+    held 6.97 m/s, right foot: stride 33 ms, peak 0.57 m/s at 50% of it, 17 ms before the landing; stride 96 ms, peak 2.53 m/s at 96% of it, 4 ms before the landing; stride 488 ms, peak 16.60 m/s at 60% of it, 196 ms before the landing;
+    held 6.97 m/s, at the TOE marker's place on the foot (rest offset from the ankle -0.044 up 0.195 forward): fastest 16.61 m/s at 2.433 s, ratio 2.383
+    held 6.97 m/s: fastest toe 17.57 m/s (ToeR, at 4.583 s), the body 6.97 m/s, ratio 2.520; the pelvis then 6.97 m/s along the floor (ratio to it 2.520)
+    L: under three landings
+    R: under three landings
+    held 9.47 m/s, at the TOE marker's place on the foot (rest offset from the ankle -0.044 up 0.195 forward): fastest 21.42 m/s at 5.692 s, ratio 2.262
+    held 9.47 m/s: fastest toe 22.63 m/s (ToeL, at 5.421 s), the body 9.47 m/s, ratio 2.389; the pelvis then 9.47 m/s along the floor (ratio to it 2.389)
+    the scripted chase: fastest toe 24.94 m/s (ToeL, at 9.025 s), the body then 11.00 m/s, ratio 2.268; the pelvis 11.00 m/s along the floor
+    the scripted chase, at 3 m/s or more: the most toe over body speed 3.475, at 7.617 s, body 4.70 m/s
+    the right foot, standing (metres; +z forward, floor -0.000): ankle (foot_r) y 0.091 z -0.001; ball_r y 0.010 z 0.159; the toe joint y -0.017 z 0.213; the mesh's foremost point at the foot z 0.259
+    so the toe joint is 0.213 m ahead of the ankle, 0.054 m ahead of the ball, 0.046 m from the mesh's tip, -0.017 m above the floor; ankle to tip 0.259 m
+ok    zz_probe_toe_ratio
+5 tests, 0 failed
+run: done at 2026-11-13T23:34:17.266Z, exit 0
