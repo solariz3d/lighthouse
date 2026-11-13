@@ -27,6 +27,51 @@ last change to it is `26d4c72`. Branch: `yardstick-toe-e`, a new worktree. Nothi
 
 **Also ruled:** the new worktree's build tree goes on `G:\consonance-scratch`.
 
+## 0b. AMENDMENT 3 by name, ruled 2026-11-13 23:43Z (the chair, D675 item 1), written before its code
+
+**Why.** C measured where the hunter's toe JOINT sits against the runner's toe marker
+(`handback/p-d675-toe-ratio-C_2026-11-13.md:25-26`, lighthouse `3f111619`):
+- the joint is 0.213 m forward and 0.108 m down from the ankle, 0.239 m from it;
+- the marker is 0.193–0.196 m forward and 0.044 m down, 0.200 m from it.
+
+So the joint is about a fifth farther out on the lever. My falsifier 2 checked only the horizontal reach, and passed
+(0.426 against the ball's 0.297). It could not see the joint being 6 cm lower and 4 cm farther out than the marker.
+
+**The amendment.**
+- **The compared point** is the hunter's point at the marker's own place on the foot, C's construction (`:34`): in the
+  standing (rest) pose, 0.195 m forward and 0.044 m down from the Ankle joint.
+  - It is held in the foot's frame: `u` along Ankle to Toe, and `n`, the perpendicular in the foot's plane about the
+    side axis.
+  - It is carried with each pose: `P = Ankle + a·u + b·n`, with `a` and `b` fixed from the rest pose.
+- **The side axis:** the pose's `right`; in the rest pose, HipL to HipR. Forward is `right × up`.
+- **The toe joint** is printed beside, never compared (as the unfiltered reading is, under AMENDMENT 1).
+- **The verdict:** "the gait law itself whips" is read from the compared point, at each cut-off, all three, as under
+  AMENDMENT 1.
+- **C's figures at the marker's place,** 15 Hz: 2.66, 2.54, 2.38 and 2.26 at 3.53, 5.19, 6.97 and 9.47 m/s. By them the
+  outcome holds at three speeds and not at 9.47.
+
+**New rows, red before the code:**
+9. **The compared point stands where it was put:**
+   - in the hunter's rest pose it sits 0.195 m forward and 0.044 m down from the Ankle, within 1 mm;
+   - in a foot turned 30° about the side axis it keeps its distance from the Ankle (within 0.1 mm) and its angle to
+     Ankle–Toe (within 0.01°), so it is carried rigidly with the foot.
+10. **Two seats' constructions agree:** ours at the compared point, 15 Hz, reads C's 2.66, 2.54, 2.38 and 2.26 within
+    0.03 at the four speeds.
+11. **The verdict is taken from the compared point, not the joint:** `compared(r)` returns the marker point's ratios.
+    For a reading where the joint is over the runner by more than 0.1 and the marker point is not, "whips" is false.
+
+**New hand mutants,** each must turn a row red:
+- the compared point fixed in the world's axes, not the foot's (row 9);
+- "down" taken as up (row 9);
+- the verdict taken from the joint (row 11).
+
+**Falsifier 5:** this amendment's construction is wrong if row 10 misses, that is if two seats building the same point
+from the same words disagree by more than 0.03. Then neither figure is yet a measurement.
+
+**Unwelcome outcome, said before the run:** "the joint was the whip". The compared point reads inside 0.1 of JA1 at more
+speeds than the joint did. Then part of what was reported as the gait law whipping (my hand-back of 17:3x) was the joint's
+longer lever, and the hand-back's sentence is corrected by this run.
+
 ## 1. The measure
 
 For a body running straight at a steady speed:
