@@ -3081,3 +3081,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-12 06:2x local (L) · L170 review of A's l170-chase 84ad3b3: GREEN → `exo_memory/handback/p-l170-review-E_2026-11-12.md`
 - Merge abab60c: suite 11/11, gym 26/26, world 52/52; 10 of 10 kept runs replay with byte-identical output on base and merge; the levers are off by default and guarded; the scorer is hand-checked (centred slip 0 against forward 10° on a circle; screen share 9.9%).
 - 2026-11-12 06:4x local (L) · L175 LANDED and PUSHED: dreamzone-3 main d0c1aba (merges of e822f42, b67b4de and b91dc42), suite 11/11, gym 26/26, world 52/52, stamped; pushed 0389b0a..d0c1aba. Hand-back §5.
+
+## 2026-11-13 01:0x local (L) · L185 step 2, the hunter's ragdoll (hard-keyed, picture only) → `exo_memory/handback/p-l185-skeleton-E_2026-11-12.md` §Step 2; dreamzone-3 l185-skeleton b226b95 on e0184ea (not landed)
+- A Jolt ragdoll of 22 kinematic bodies in its own PhysicsSystem; a lower-spine joint lets the trunk lean off the hips. On e0184ea: ragdoll 3/3 (key 8 um, pose-equal 1.3 mm past the stretch, the same bits); game 168/0, glance row 0.0000 m (from 1.85 cm). Mutants NOT done: the first pass applied none (MSYS_NO_PATHCONV left node a POSIX path), and the rerun was reaped for low memory.
+- **Carry:** with MSYS_NO_PATHCONV=1 exported, give node Windows paths; and a reaped mutant run leaves the source mutated, so restore and check before anything builds.
