@@ -55,7 +55,9 @@ const MUTANTS = [
   ['gate: an errored call counts', GATE, '!call.done || call.err ||', '!call.done ||'],
   ['gate: a call with no result yet counts', GATE, 'if (!call || !call.done || call.err', 'if (!call || call.err'],
   ['gate: backslash paths are not normalised', GATE, ".replace(/\\\\/g, '/').replace(/\\/+/g, '/')", ".replace(/\\/+/g, '/')"],
-  ['gate: a compact wake counts opens before it', GATE, "const before = w.kind === 'compact' ? [] : rows", 'const before = rows'],
+  // (was 'a compact wake counts opens before it' on `w.kind === 'compact' ? [] :`, which SURVIVED as an equivalent mutant: that window holds no call
+  // on a compact wake by construction, so the branch was removed; this row breaks what does decide it, the last compaction's index)
+  ['gate: the last compaction is not tracked (a resume counts opens the summary dropped)', GATE, '    if (r.wake === \'compact\') { if (!r.hook) lastCompact = i;', "    if (r.wake === 'compact') {"],
   ['gate: a resume\'s earlier open counts though the file changed since', GATE, ' && (mt == null || (c.t && mt < Date.parse(c.t)))', ''],
   ['gate: every ring is gated, not only the first', GATE, 'if (after.some((r) => r.name === GATED_TOOL && r.done && !r.err', 'if (false && after.some((r) => r.name === GATED_TOOL && r.done && !r.err'],
   ['gate: a refused first ring counts as delivered', GATE, 'r.name === GATED_TOOL && r.done && !r.err && ', 'r.name === GATED_TOOL && r.done && '],

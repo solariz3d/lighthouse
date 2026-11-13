@@ -194,6 +194,17 @@ test('W4 a RESUME wake: a whole open after the last compaction counts while the 
   assert.deepStrictEqual(g.row.ownAppend, [NOTE]);
 });
 
+test('W4 a RESUME wake: a whole open from BEFORE the last compaction does not count (the summary dropped it), though the file is unchanged since', () => {
+  n = 0;
+  const repo = room({ [NOTE]: 100 }, '2026-11-13T04:00:00-06:00');   // 10:00Z, older than every row below
+  const rows = [call('2026-11-13T11:00:00Z', 'Read', { file_path: path.join(repo, NOTE) }), compactRow('2026-11-13T12:00:00Z'),
+    wakeRow('2026-11-13T12:00:01Z', 'compact'), wakeRow('2026-11-13T14:42:47Z', 'resume')];
+  const g = gate(rows, { repo });
+  assert.ok(g.deny, 'the open before the compaction is gone from the conversation');
+  assert.strictEqual(g.row.wake.kind, 'resume');
+  assert.deepStrictEqual(g.row.missing, [NOTE]);
+});
+
 test('W4 skips are recorded: no note and no machine tag fails open with nothing required', () => {
   n = 0;
   const g = gate([wakeRow('2026-11-13T14:42:47Z', 'resume')], { repo: room({}), machine: null });

@@ -91,6 +91,16 @@ test('W3 the origin age is the reflog ENTRY\'s, never the commit\'s: a commit 5.
   assert.doesNotMatch(lineOf(w.out), /38\.7 h/, 'the commit time (18:00 on 11-11) would read 38.7 h');
 });
 
+test('W3 a copy of origin 3 commits ahead of HEAD says "3 behind by that copy"', () => {
+  const repo = repoAt({ commitAt: '2026-11-11T18:00:00-06:00', syncedAt: '2026-11-11T23:32:51-06:00' });
+  const who = { GIT_AUTHOR_NAME: 't', GIT_AUTHOR_EMAIL: 't@t', GIT_COMMITTER_NAME: 't', GIT_COMMITTER_EMAIL: 't@t' };
+  let tip = repo.base;
+  for (let i = 0; i < 3; i++) tip = git(repo.dir, ['commit-tree', `${repo.base}^{tree}`, '-p', tip, '-m', `ahead ${i}`], who);
+  git(repo.dir, ['update-ref', '-m', 'fetch', 'refs/remotes/origin/main', tip], { ...who, GIT_COMMITTER_DATE: '2026-11-13T08:43:39-06:00' });
+  const line = lineOf(wake({ repo }).out);
+  assert.ok(line.includes('origin/main last synced 0 min ago, 3 behind by that copy'), line);
+});
+
 test('W3 the payload\'s model wins over the transcript, and is not marked "(last reply)"', () => {
   const line = lineOf(wake({ payload: { model: 'claude-fable-5-2' } }).out);
   assert.ok(line.includes('model claude-fable-5-2 ·'), line);

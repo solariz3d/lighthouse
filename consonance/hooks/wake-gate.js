@@ -148,7 +148,9 @@ function decide({ rows, need, skips = [], files = {}, toolUseId = null, agentId 
   if (after.some((r) => r.name === GATED_TOOL && r.done && !r.err && !/^\s*refused/i.test(r.result)))
     return { decision: 'allow', kind: 'not-first', missing: [], satisfied: [], skips, wake: w };
   if (!need.length) return { decision: 'allow', kind: 'nothing-required', missing: [], satisfied: [], skips, wake: w };
-  const before = w.kind === 'compact' ? [] : rows.slice(w.lastCompact + 1, w.i).filter((r) => r.id);
+  // the opens the conversation still holds from before the wake: those after the last compaction. On a COMPACT wake that window runs from the
+  // compaction to the wake and holds no call, so nothing before a compact wake counts (the summary dropped it).
+  const before = rows.slice(w.lastCompact + 1, w.i).filter((r) => r.id);
   const missing = [], satisfied = [], ownAppend = [];
   for (const rel of need) {
     const mt = files[rel];

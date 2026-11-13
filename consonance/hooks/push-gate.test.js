@@ -195,9 +195,11 @@ test('pass (ruling 6): exactly 10 MB is not over it; a big file the remote alrea
   const { work } = repo(), data = tmp('pgd-');
   fs.writeFileSync(path.join(work, 'edge.bin'), Buffer.alloc(MB10, 7)); git(work, 'add', 'edge.bin'); git(work, 'commit', '-q', '-m', 'edge');
   assert.equal(runHook(push(work), data).out, '', 'exactly 10,000,000 bytes passes');
+  // a file OVER the limit that the remote already holds (pushed past the gate, as 3de92e53 was): a later push does not send it again
+  fs.writeFileSync(path.join(work, 'old-big.bin'), Buffer.alloc(MB10 + 1, 3)); git(work, 'add', 'old-big.bin'); git(work, 'commit', '-q', '-m', 'old big');
   git(work, 'push', '-q');
   fs.writeFileSync(path.join(work, 'small.txt'), 'x\n'); git(work, 'add', 'small.txt'); git(work, 'commit', '-q', '-m', 'small');
-  assert.equal(runHook(push(work), data).out, '', 'the remote has edge.bin already; only small.txt is sent');
+  assert.equal(runHook(push(work), data).out, '', 'the remote has old-big.bin already; only small.txt is sent');
 });
 test('RED (ruling 6): a key and a large file in one push are both named; the key refusal keeps its own text', () => {
   const { work } = repo(), data = tmp('pgd-');
