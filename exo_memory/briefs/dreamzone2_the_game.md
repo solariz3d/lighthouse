@@ -1332,3 +1332,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - `world_gen-1` "Which biomes?": **"Build pool rooms as a fifth interior"** (10:59:12Z).
        - the option as he read it: A kit and a water look; no new generator code.
        - his note, verbatim: there is only one character now. But the more biomes the better, it would be cool and tons of variety, then every seed is different amount of each biome, starting from the apartment biome where you spawn in from ur bed.
+184. 2026-11-13 05:03 (L), after hearing E's two-voice clip (`Downloads\dz3-l199-review\l199_two_voices.wav`; voice A a recorded boot over the thud, voice B the synth bass drum): "the deeper bassy thud is better idea i think for the hunters sound, it should be like, heavy, like SCARY bassy stomps"
+     - **Read as:** voice B's direction (the deep boom), made heavier and scarier. This settles `sound-2`, which he had answered "Build both, pick by ear".
+     - **What the room knows against it, to be solved and not argued:** E measured that voice B clears his own sprinting steps on 2 of 14 footfalls at 12 to 20 m, against 7 for the current thud and 10 for voice A (`handback/p-l199-voices-E_2026-11-13.md`, section 3). His item 178 wants the hunter heard coming. So the heavy stomp needs a layer that carries over his feet, as the knock did (`handback/p-l192-footsteps-E_2026-11-13.md:49`).
+     - **State:** routed to E as the next voice (a third, "heavy stomp"), with a source read first and the same measurement; a clip for his ear before anything lands.
