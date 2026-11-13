@@ -187,3 +187,28 @@ C owns the fix; this is the number.
 - **Two small tool builds ran inside my own L185 landing's exclusive hold**, at about 10:00Z (said in the L185
   hand-back).
 - **My first header line said "31 runners"**: that was one speed's count. It now prints each speed's count.
+
+## 9. Hands and fingers in the recorded motion (the chair's 10:34Z note: `player_body-5` is now "new joints")
+
+checked: `node Downloads\dz3-l193-review\fingers.js <cmu dir> 09_01 09_06 16_45 16_46 35_17 35_24` gives the range of each
+hand channel over each clip (three runners):
+- **Fukuchi 2017:** lower body only (hip, knee, ankle). **No hands.**
+- **CMU's skeleton** gives each hand four bones: a wrist (`ry`), a hand (`rx rz`), **one** `fingers` bone with a single
+  bend channel for all four fingers together (`rx`), and a thumb (`rx rz`) (`09.asf`, `lhand`/`lfingers`/`lthumb`).
+  There are no per-finger joints.
+- **In every running clip read, the `fingers` channel is constant at 7.1°** (left and right). **So CMU records no
+  finger bend in these runs, and nothing on whether hands clench or open while running.**
+- What does move: the wrist (for example 15..37° on the left in 09_01), the hand's two angles, and the thumb (its two
+  channels swing by tens of degrees, for example 31..77° on the left in 09_01). inferred: the thumb may be partly
+  marker noise; it was not checked against video.
+- **So the yardstick can score the hand's orientation, but not a clench.** For his note (hands clench or open while
+  running, arms and hands react to walls), these two references give nothing. A source with finger motion would be
+  needed.
+
+**The yardstick's joint map can grow** (the chair's ask):
+- `acclaim.cpp` maps our joints from CMU's bones through a table of rows (our joint, the CMU bone whose end it is).
+- The scoring names joints and loops over no fixed count; the poses are the game's own `BodyPose`, sized by its
+  `kJointCount`.
+- New finger joints are new rows, scored against the hand bones above as far as those reach.
+
+Whatever B proposes on the board, I answer there before any code.
