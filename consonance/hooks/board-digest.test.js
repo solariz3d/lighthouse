@@ -371,3 +371,53 @@ test('SEALED END: the reader\'s own ring ends the window when it carries the sen
   ring(b, 'R', { text: '<pasted_content id="d7d4">\n[pane:R] hand-back: exo_memory/handback/x.md' + SENT });
   assert.match(runAs(b, READER, KEEPWARM), /sealed window for R ended — its hand-back rang at/);
 });
+
+// L198 (B), fix 2c of loop/stall_trace_403_packets_eaten_2026-11-13.md: between 09:46:56Z and 09:50:16Z the API answered 403 to
+// three panes, seven packets were stamped DELIVERED into them, none was acted on, and no seat was told. The digest now says so in
+// ONE line at the top: every pane whose newest line is an API error ("Please run /login" or "API Error"), by name.
+const API_C = 'cccccccc-2222-4000-8000-000000000003';
+const API_A = 'aaaaaaaa-3333-4000-8000-000000000001';
+const CLEAN = 'eeeeeeee-4444-4000-8000-000000000005';
+const ERR_403 = 'Please run /login · API Error: 403 Attention Required! | Cloudflare';
+function apiBed(extra = []) {
+  const instances = require('../tools/scratch.js').mkdtemp('bd-inst-');
+  const data = require('../tools/scratch.js').mkdtemp('bd-data-');
+  const cwd = path.join(instances, 'a-pane');
+  fs.mkdirSync(cwd, { recursive: true });
+  const now = Date.now();
+  const rows = [
+    { pane: API_C, role: 'user', text: '[chair:MAIN] C: a packet delivered into the pane', ts: now - 300_000 },
+    { pane: API_C, role: 'assistant', text: ERR_403, ts: now - 290_000 },
+    { pane: API_A, role: 'assistant', text: 'a long and substantive report from A, written before the error, about its own work', ts: now - 400_000 },
+    { pane: API_A, role: 'user', text: '<task-notification> a task result delivered into the pane', ts: now - 330_000 },
+    { pane: API_A, role: 'assistant', text: 'API Error: 529 Overloaded', ts: now - 320_000 },
+    { pane: CLEAN, role: 'user', text: 'a prompt for the clean pane', ts: now - 60_000 },
+    { pane: CLEAN, role: 'assistant', text: 'a reply long enough to read as a report rather than tool narration, from a pane that is well', ts: now - 30_000 },
+    ...extra.map((r) => ({ ...r, ts: now + r.ts })),
+  ];
+  fs.writeFileSync(path.join(data, 'board.jsonl'), rows.map((o) => JSON.stringify(o)).join('\n') + '\n');
+  fs.writeFileSync(path.join(data, 'letters.json'), JSON.stringify({ [API_C]: 'C', [API_A]: 'A', [CLEAN]: 'E' }));
+  return { instances, data, cwd };
+}
+
+test('L198 2c: every pane whose last line is an API error is named in ONE line at the top of [panes]', () => {
+  const out = run(apiBed());
+  const top = out.split('\n')[0];
+  assert.match(top, /^\[panes\] API ERROR/, 'the first line of the digest is the API-error line');
+  assert.match(top, /CHARLIE/, 'the pane whose last line is the 403 text is named');
+  assert.match(top, /ALPHA/, '"API Error" without "/login" is named too');
+  assert.doesNotMatch(top, /ECHO/, 'a pane whose last line is clean is not named');
+  assert.match(out, /ECHO\s+\d+ exch today/, 'the usual rows still follow');
+});
+
+test('L198 2c: one clean line from the pane clears it', () => {
+  const out = run(apiBed([{ pane: API_C, role: 'assistant', text: 'back: logged in, reading the packet now', ts: -1_000 }]));
+  const top = out.split('\n')[0];
+  assert.doesNotMatch(top, /CHARLIE/, 'C replied cleanly after the error, so it is not named');
+  assert.match(top, /^\[panes\] API ERROR.*ALPHA/, 'A still is');
+  const none = run(apiBed([
+    { pane: API_C, role: 'assistant', text: 'ok', ts: -2_000 },
+    { pane: API_A, role: 'assistant', text: 'ok', ts: -1_000 },
+  ]));
+  assert.doesNotMatch(none, /API ERROR/, 'with no pane on an error, no API-error line at all');
+});
