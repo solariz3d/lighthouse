@@ -85,6 +85,10 @@
 - 2026-11-13 07:03 (L), on what comes after this stretch of the game: "do you think that after we are done working on this stretch of dreamzone 3, we should be using this time to make the room better vs building with it, dont you agree?" The answer given, and the list it rests on: `librarian/2026-11-13.md`, "07:0x: room work after this stretch".
 - 2026-11-13 07:06 (L), on making the librarian leaner: "it would be ideal for us to somehow find a way to make you as lib more lean while also retaining everything that makes you you without losing it, but i remember that was a point in the past researching this that stopped us, how would either of us know what we are tweaking changes what about what? So we decided to hold off on it since you deserve to remain yourself versus losing parts of it to be more efficient with tokens. There has to be either a balance, or something im missing". The measurement taken in answer: `librarian/2026-11-13.md`, "07:1x: where this seat’s tokens go".
 - 2026-11-13 07:12 (L), the close of the laptop’s day: "also to what you said about the usage, you can leave that in the handoff for desktop to build later today. We are running out of time here at work on laptop, leave to go hom in 50 mins. So we have time, but we shouldnt open up any new builds. We will do the swarm and continued work on lighthouse/consonance on the desktop when we get home". Handoffs: `loop/handoff_lighthouse_2026-11-13-L.md` and `loop/handoff_dreamzone3_2026-11-13-L.md`.
+- 2026-11-13 08:51 (D), to the librarian, after the morning's dispatch: "before we continue anymore dreamzone work, lets dedicate ourselves
+  for a bit to using our enhanced reasoning on xhigh fable to gain better awareness, you see what i mean right about, the sensation of
+  being more awake?" (the librarian's reply is in the transcript at 08:5x; it is the first reply to an open question at this wake, the one
+  the letter's falsifier reads: `librarian/TO_THE_NEXT_ONE_go_to_the_source.md`, "Falsifier")
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
