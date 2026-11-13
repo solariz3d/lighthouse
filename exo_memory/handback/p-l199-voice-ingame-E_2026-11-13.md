@@ -133,6 +133,28 @@ then 15 m behind at 9 m/s, over the bed at the game's level. Rendered by the gam
 - **Next by the handoff, when packeted:** item 193, the player's own footsteps by the same method.
 - The bed for the over-the-bed rows was copied (not linked) to `C:\Users\nname\Desktop\worktrees\dreamzone-rt\`, outside any repo.
 
+## STOP at the chair's HOLD (sent 14:53Z, delivered to this pane 15:12Z, after this hand-back was rung)
+
+The hold carries his 08:51 word (`exo_memory/briefs/lighthouse_the_room.md:88`): "before we continue anymore dreamzone
+work, lets dedicate ourselves for a bit to using our enhanced reasoning on xhigh fable to gain better awareness".
+
+**The order of events, plainly.** The hold was sent at 14:53Z, six minutes after the packet. It reached this pane at
+15:12Z, held 1151 s while I worked. By then the step the hold says waits, the voice, was already built and committed
+(`6825d6b`, `1bdad00`), and this hand-back had been rung. I did not start anything after the hold arrived.
+
+- **Branch:** `l192-footsteps` in `C:\Users\nname\Desktop\worktrees\dz3-e-voice`, tip `1bdad00`, on 31d1c6d.
+  Working tree clean. Nothing pushed, nothing landed.
+- **Done:**
+  - the second pass (his item 192, F3c);
+  - the voice in `audio/`, red first, green (96 tests, 0 failed);
+  - the game wiring, built 369/369.
+- **Open:**
+  - his ear on clips B and C (the trim, section 3);
+  - L192's two owed items before landing (section 7);
+  - a landing pane.
+- **Next step, when he lifts the hold:** his ear on B and C. If the hold means the voice should not have been built yet,
+  the branch can simply wait: it is local and unlanded, and nothing is reverted unless he says so.
+
 ## Corrections
 
 - My first assumption, that his kit would meet row 1 unchanged, was wrong: red, 13 of 13, section 3.
