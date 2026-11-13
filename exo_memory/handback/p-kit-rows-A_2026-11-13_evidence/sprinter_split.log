@@ -1,0 +1,43 @@
+-- Configuring done (0.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: G:/consonance-scratch/a-gen-dz3/build
+[1/7] C:\WINDOWS\system32\cmd.exe /C "cd /D G:\consonance-scratch\a-gen-dz3\build\game && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=G:/consonance-scratch/a-gen-dz3 -DOUT=G:/consonance-scratch/a-gen-dz3/build/game/generated/build_commit.h -P G:/consonance-scratch/a-gen-dz3/game/world/build_commit.cmake"
+[2/6] Linking CXX static library game\dz_world_game.lib
+[3/6] Linking CXX executable bin\world_app_tests.exe
+[4/6] Linking CXX executable bin\dz-world.exe
+[5/6] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\diag_door.cpp.obj
+[6/6] Linking CXX executable bin\chase_tests.exe
+    LOST seed 1: 44 m, 1 corners of 45 deg+, longest straight 42 m; careless 5.19 s (scraped 5, hits 0) careful 5.34 s (scraped 5, hits 0)
+    LOST seed 1: 53 m, 2 corners of 45 deg+, longest straight 44 m; careless 7.52 s (scraped 108, hits 1) careful 8.15 s (scraped 81, hits 0)
+    LOST seed 1: 65 m, 0 corners of 45 deg+, longest straight 35 m; careless 8.23 s (scraped 24, hits 0) careful 8.60 s (scraped 14, hits 0)
+    LOST seed 1: 84 m, 1 corners of 45 deg+, longest straight 71 m; careless 9.39 s (scraped 0, hits 0) careful 9.71 s (scraped 3, hits 0)
+    LOST seed 1: 50 m, 1 corners of 45 deg+, longest straight 48 m; careless 5.76 s (scraped 2, hits 0) careful 5.93 s (scraped 2, hits 0)
+    LOST seed 3: 77 m, 1 corners of 45 deg+, longest straight 44 m; careless 8.65 s (scraped 0, hits 0) careful 9.12 s (scraped 3, hits 0)
+    LOST seed 3: 44 m, 1 corners of 45 deg+, longest straight 13 m; careless 8.29 s (scraped 168, hits 1) careful 8.87 s (scraped 153, hits 1)
+    LOST seed 4: 67 m, 3 corners of 45 deg+, longest straight 14 m; careless 10.38 s (scraped 266, hits 0) careful 10.57 s (scraped 228, hits 1)
+    LOST seed 4: 64 m, 0 corners of 45 deg+, longest straight 20 m; careless 10.72 s (scraped 247, hits 1) careful 11.04 s (scraped 211, hits 1)
+    LOST seed 4: 49 m, 0 corners of 45 deg+, longest straight 17 m; careless 7.62 s (scraped 132, hits 1) careful 7.71 s (scraped 125, hits 1)
+    LOST seed 4: 79 m, 3 corners of 45 deg+, longest straight 45 m; careless 9.68 s (scraped 327, hits 0) careful 10.84 s (scraped 39, hits 0)
+    LOST seed 4: 43 m, 2 corners of 45 deg+, longest straight 30 m; careless 9.30 s (scraped 626, hits 0) careful 9.32 s (scraped 534, hits 0)
+    LOST seed 4: 66 m, 1 corners of 45 deg+, longest straight 34 m; careless 9.00 s (scraped 174, hits 0) careful 9.14 s (scraped 76, hits 0)
+    LOST seed 5: 71 m, 2 corners of 45 deg+, longest straight 34 m; careless 11.05 s (scraped 140, hits 1) careful 12.04 s (scraped 264, hits 1)
+    LOST seed 5: 43 m, 0 corners of 45 deg+, longest straight 32 m; careless 5.03 s (scraped 1, hits 0) careful 5.03 s (scraped 1, hits 0)
+    LOST seed 5: 55 m, 2 corners of 45 deg+, longest straight 37 m; careless 6.42 s (scraped 1, hits 0) careful 6.75 s (scraped 5, hits 0)
+    LOST seed 5: 56 m, 3 corners of 45 deg+, longest straight 26 m; careless 7.32 s (scraped 96, hits 0) careful 7.43 s (scraped 5, hits 0)
+    LOST seed 6: 42 m, 0 corners of 45 deg+, longest straight 29 m; careless 8.73 s (scraped 215, hits 1) careful 8.96 s (scraped 125, hits 0)
+    LOST seed 7: 74 m, 3 corners of 45 deg+, longest straight 24 m; careless 14.52 s (scraped 358, hits 1) careful 14.55 s (scraped 205, hits 1)
+    LOST seed 7: 52 m, 0 corners of 45 deg+, longest straight 35 m; careless 6.04 s (scraped 1, hits 0) careful 6.12 s (scraped 0, hits 0)
+    LOST seed 7: 49 m, 2 corners of 45 deg+, longest straight 17 m; careless 9.84 s (scraped 313, hits 2) careful 10.21 s (scraped 312, hits 2)
+    LOST seed 8: 57 m, 0 corners of 45 deg+, longest straight 26 m; careless 6.50 s (scraped 0, hits 0) careful 6.64 s (scraped 0, hits 0)
+    LOST seed 8: 74 m, 0 corners of 45 deg+, longest straight 47 m; careless 9.73 s (scraped 95, hits 0) careful 10.00 s (scraped 94, hits 0)
+    LOST seed 8: 50 m, 3 corners of 45 deg+, longest straight 24 m; careless 7.82 s (scraped 480, hits 0) careful 8.01 s (scraped 57, hits 0)
+    LOST seed 8: 77 m, 5 corners of 45 deg+, longest straight 27 m; careless 12.48 s (scraped 334, hits 2) careful 13.27 s (scraped 89, hits 0)
+    LOST seed 8: 58 m, 2 corners of 45 deg+, longest straight 31 m; careless 9.50 s (scraped 511, hits 0) careful 9.54 s (scraped 221, hits 0)
+  KIT ON: careful sooner 70 of 96; routes it won: mean 64 m, 2.8 corners of 45 deg+, longest straight 31 m; routes it lost: 59 m, 1.5 corners, 32 m
+  KIT ON: routes with one real corner or none 30, the careful body sooner on 16; with two or more 66, sooner on 54; within 0.05 s of a tie 4
+  KIT OFF: careful sooner 85 of 96; routes it won: mean 65 m, 2.6 corners of 45 deg+, longest straight 30 m; routes it lost: 62 m, 1.6 corners, 37 m
+  KIT OFF: routes with one real corner or none 23, the careful body sooner on 17; with two or more 73, sooner on 68; within 0.05 s of a tie 0
+ok    diag_sprinter_routes
+1 tests, 0 failed
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.

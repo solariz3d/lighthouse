@@ -125,3 +125,35 @@ scratch trace file and its CMake line are not committed. Nothing is pushed.
 which has no hunter. The reach row reads 1.73, and the new row holds.
 - **Not yet run:** the whole suite and both self-tests on this commit. The fix changes every hunter's knowledge, so every chase fingerprint
   moves with the kit as it is.
+
+## 5. The sprinter row: reproduced, and PARTLY explained; its cause is NOT yet named (D, 11:33 local, `date` by the shell)
+
+**Reproduced:** 70 of 96 with the kit on (bar 72), B's figure. checked: `kit_fix_chase.log` (`52152450`), the row itself.
+- The row walks routes with no hunter and no knowledge, so section 4's fix does not touch it (it reads 70 on `dcbfd3c` as before).
+- The sprinter walks only (`archetype.cpp:46`), so it never takes a chute itself. The kit can only change which routes it walks.
+
+**Split by what the routes are.** A scratch dump (`diag_door.cpp.txt`, `diag_sprinter_routes`) runs the row's own routes, seeds 1–8, in the kit's world
+and in `GenParams{}`. Each route's real corners are counted whole (turns within 3 m summed, 45° or more). checked: `sprinter_split.log` (`24c94fc7`):
+
+| world | routes with one real corner or none | careful sooner on them | routes with two or more | careful sooner on them | all | near-ties (0.05 s) |
+|---|---|---|---|---|---|---|
+| kit ON | 30 | 16 (53 %) | 66 | 54 (82 %) | 70 of 96 | 4 |
+| kit OFF | 23 | 17 (74 %) | 73 | 68 (93 %) | 85 of 96 | 0 |
+
+**What it says:**
+- **The route mix is a small part.** The kit gives the row more near-straight routes (30 against 23), where braking for a corner has
+  little to win.
+  - Had the kit's routes kept the off world's win rates by class, the careful body would be sooner on about 30 x 0.74 + 66 x 0.93 ≈ 83.
+  - So the mix accounts for about 2 of the 15 routes. inferred: a weighted sum, not a run.
+- **Most of the drop is within each class.** On comparable routes the careful body wins less often in the kit's world: 53 % against 74 % with one
+  corner or none, and 82 % against 93 % with two or more. **That part is not named.**
+  - B's split says it needs the chutes, the buy rule and the kit's hunter together, so it is the kept chutes' geometry. Which feature of a
+    route makes the careful body lose there, I have not found.
+- The routes it lost on in the kit's world are in the earlier dump (`kit_fix_chase.log`, the LOST lines).
+  - Many are near-straight and lost by 0.02–0.3 s.
+  - Some have three or more real corners where the careless body scraped hundreds of ticks and still won: seed 8, 480 scrape ticks against
+    57, 7.82 s against 8.01 s.
+
+**What I would do next (not started; the order puts (a) before it unless ruled otherwise):** take the routes with two or more corners that the
+careful body loses in the kit's world (12) and trace the two bodies tick by tick on the worst three (seed 4, 79 m: 9.68 s against 10.84 s; seed 5,
+71 m; seed 8, 77 m), to see where the careful one gives the time away: braking for a corner it then does not need, or a run it slows into.

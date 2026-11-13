@@ -64,67 +64,96 @@ DZ_TEST(diag_door_trace) {
   }
 }
 
-// SCRATCH, NEVER COMMITTED: L162's lever (close_range) on both recorded cases, at DZ_CLOSE metres (0: off, the control).
-DZ_TEST(diag_lever_both_cases) {
-  const char* env = std::getenv("DZ_CLOSE");
-  const float range = env ? static_cast<float>(std::atof(env)) : 10.0f;
-  // 1. The reach row's own loop, on the kit's world, seeds 3 and 9.
-  for (uint32_t aseed : {3u, 9u}) {
-    ArenaParams ap;
-    ap.gen.seed = aseed;
-    Arena            arena(ap);
-    const PlayGraph& g = arena.graph();
-    const int        door = g.nearest(arena.spawn().position);
-    nav::Query       query(arena.nav());
-    int              tried = 0, caught = 0;
-    float            worst = 0;
-    for (uint32_t k = 0; tried < 10 && k < 4000; ++k) {
-      const size_t u = hash32(k * 2654435761u + 17u) % g.nodes.size();
-      if (g.nodes[u].id.slot != 0 || g.pocket[u] || (g.nodes[u].kind != gen::CellKind::Lane && g.nodes[u].kind != gen::CellKind::Room)) continue;
-      const float d = length(g.nodes[u].pos - arena.spawn().position);
-      if (d < 30.0f || d > 110.0f) continue;
-      if (graph_route(g, door, static_cast<int>(u), chaser_edge).empty()) continue;
-      ++tried;
-      sim::World& world = arena.sim();
-      world.spawn(g.nodes[u].pos + Vec3{0, 0.02f, 0}, 0.0f);
-      RunParams rp;
-      rp.seed = k;
-      rp.difficulty = with_dials(1, "head_start_s=0");
-      rp.spawn = arena.spawn().position;
-      rp.director = false;
-      rp.speed.close_range = range;
-      Run       run(arena.nav(), arena, arena.facts(), rp);
-      nav::Path path;
-      const Body body = make_body(archetype(Kind::Hunter).limits, rp.speed.ref_speed, rp.speed.hunter_multiple(dials_at(rp.difficulty, 0).hunter_speed, 0.0f));
-      if (!query.find_path(arena.spawn().position, g.nodes[u].pos, profile_of(body, "hunter"), path) || path.partial) continue;
-      for (int t = 0; t < 240 * 150 && !run.over(); ++t) {
-        world.step({});
-        run.step(world.player());
-      }
-      caught += run.over();
-      const float ratio = run.over() ? run.seconds() / std::max(path.seconds, 1.0f) : 99.0f;
-      worst = std::max(worst, ratio);
-      if ((aseed == 3 && k == 14) || (aseed == 9 && k == 5))
-        std::printf("    LEVER %.1f m: seed %u case k %u caught %d at %.2f s, ratio %.2f, close ticks %u\n", static_cast<double>(range), aseed, k,
-                    run.over() ? 1 : 0, static_cast<double>(run.seconds()), static_cast<double>(ratio), run.snags().close_ticks);
-    }
-    std::printf("    LEVER %.1f m: seed %u: %d of %d reached; the slowest %.2f times the planned time (bar 2.5)\n", static_cast<double>(range), aseed, caught,
-                tried, static_cast<double>(worst));
+
+// SCRATCH, NEVER COMMITTED: the sprinter row's routes, per seed, in the kit's world and the world before it, with what each route is.
+namespace {
+struct DWalk {
+  bool  arrived = false;
+  float seconds = 0;
+  int   scraped = 0, hits = 0;
+};
+DWalk dwalk(const Arena& arena, float care, Vec3 from, Vec3 to) {
+  nav::Query query(arena.nav());
+  Limits     l = archetype(Kind::Sprinter).limits;
+  l.corner_care = care;
+  Chaser c;
+  c.id = 1, c.kind = Kind::Sprinter, c.body = make_body(l, 7.0f);
+  DWalk w;
+  if (!place(c, query, from, 0.0f) || !plan_to(c, query, to)) return w;
+  for (int t = 0; t < 240 * 120 && !c.arrived; ++t) {
+    step(c, query);
+    w.scraped += c.scraped;
+    w.seconds = static_cast<float>(t + 1) / 240.0f;
   }
-  // 2. The dark one's orbit: seed 8's juke run, in the world it was recorded in (the generator before the kit, GenParams{}), as registered.
-  ArenaParams ap;
-  ap.gen = gen::GenParams{};
-  ap.gen.seed = 8;
-  ap.radius = 2;
-  Arena      arena(ap);
-  PlayParams pp;
-  pp.policy = Policy::Juke;
-  pp.difficulty = with_dials(3, "head_start_s=1000 lesser_max=0 dark_speed_start=1.35 dark_speed_rise=0.05");
-  pp.seed = 8;
-  pp.max_seconds = 400.0f;
-  pp.run_length_s = 30.0f;
-  pp.speed.close_range = range;
-  const Outcome out = play(arena, pp);
-  std::printf("    LEVER %.1f m: seed 8 juke, timer 30 s: %s after %.1f s of overtime; close ticks %u\n", static_cast<double>(range),
-              out.caught ? (std::string("caught by the ") + kind_name(out.by)).c_str() : "not caught", static_cast<double>(out.overtime_s), out.snags.close_ticks);
+  w.hits = static_cast<int>(c.wall_hits);
+  w.arrived = c.arrived && length(flat(c.pos - to)) < 1.0f;
+  return w;
+}
+}  // namespace
+
+DZ_TEST(diag_sprinter_routes) {
+  for (int world = 0; world < 2; ++world) {
+    int all = 0, sooner = 0;
+    double lost_len = 0, won_len = 0, lost_sharp = 0, won_sharp = 0, lost_straight = 0, won_straight = 0;
+    int    lost_n = 0, won_n = 0, flat_n = 0, flat_won = 0, bent_n = 0, bent_won = 0, ties = 0;
+    for (uint32_t seed = 1; seed <= 8; ++seed) {
+      ArenaParams p;
+      if (world == 1) p.gen = gen::GenParams{};
+      p.gen.seed = seed;
+      const Arena      arena(p);
+      const PlayGraph& g = arena.graph();
+      nav::Query       query(arena.nav());
+      int              here = 0, here_sooner = 0;
+      for (size_t u = 5; u < g.nodes.size() && here < 12; u += 211) {
+        if (g.nodes[u].id.slot != 0 || g.pocket[u]) continue;
+        for (size_t v = u + 97; v < g.nodes.size(); v += 89) {
+          if (g.nodes[v].id.slot != 0 || g.pocket[v] || g.nodes[v].id.y != g.nodes[u].id.y) continue;
+          const float d = length(g.nodes[u].pos - g.nodes[v].pos);
+          if (d < 40.0f || d > 80.0f) continue;
+          Chaser probe;
+          probe.id = 1, probe.kind = Kind::Sprinter, probe.body = make_body(archetype(Kind::Sprinter).limits, 7.0f);
+          if (!place(probe, query, g.nodes[u].pos, 0.0f) || !plan_to(probe, query, g.nodes[v].pos)) break;
+          const DWalk hot = dwalk(arena, 0.0f, g.nodes[u].pos, g.nodes[v].pos), careful = dwalk(arena, 1.0f, g.nodes[u].pos, g.nodes[v].pos);
+          const int   corners = static_cast<int>(probe.path.points.size()) - 2;
+          if (!hot.arrived || !careful.arrived || corners < 3) break;
+          ++here, ++all;
+          // The route: its length, its corners of 45 degrees or more (whole, as the chase now reads them: turns within 3 m summed), its longest straight leg.
+          const auto& pts = probe.path.points;
+          float len = 0, longest = 0, run = 0;
+          int   sharp = 0;
+          float turn_sum = 0, since_turn = 99;
+          for (size_t i = 0; i + 1 < pts.size(); ++i) {
+            const Vec3 seg = flat(pts[i + 1].pos - pts[i].pos);
+            len += length(seg), run += length(seg);
+            if (i + 2 < pts.size()) {
+              const Vec3 nxt = flat(pts[i + 2].pos - pts[i + 1].pos);
+              if (length(seg) > 1e-3f && length(nxt) > 1e-3f) {
+                const float tr = std::fabs(det_atan2(seg.x * nxt.z - seg.z * nxt.x, dot(seg, nxt)));
+                if (tr > 0.2f) longest = std::max(longest, run), run = 0;
+                turn_sum = since_turn <= 3.0f ? turn_sum + tr : tr;
+                since_turn = length(nxt);
+                if (turn_sum >= 0.785f) ++sharp, turn_sum = 0, since_turn = 99;
+              }
+            }
+          }
+          longest = std::max(longest, run);
+          const bool s = careful.seconds < hot.seconds;
+          if (sharp <= 1) ++flat_n, flat_won += s; else ++bent_n, bent_won += s;
+          ties += std::fabs(careful.seconds - hot.seconds) < 0.05f;
+          here_sooner += s, sooner += s;
+          if (s) won_len += len, won_sharp += sharp, won_straight += longest, ++won_n;
+          else lost_len += len, lost_sharp += sharp, lost_straight += longest, ++lost_n;
+          if (world == 0 && !s)
+            std::printf("    LOST seed %u: %.0f m, %d corners of 45 deg+, longest straight %.0f m; careless %.2f s (scraped %d, hits %d) careful %.2f s (scraped %d, hits %d)\n",
+                        seed, static_cast<double>(len), sharp, static_cast<double>(longest), static_cast<double>(hot.seconds), hot.scraped, hot.hits,
+                        static_cast<double>(careful.seconds), careful.scraped, careful.hits);
+          break;
+        }
+      }
+    }
+    std::printf("  %s: careful sooner %d of %d; routes it won: mean %.0f m, %.1f corners of 45 deg+, longest straight %.0f m; routes it lost: %.0f m, %.1f corners, %.0f m\n",
+                world == 0 ? "KIT ON" : "KIT OFF", sooner, all, won_len / std::max(won_n, 1), won_sharp / std::max(won_n, 1), won_straight / std::max(won_n, 1),
+                lost_len / std::max(lost_n, 1), lost_sharp / std::max(lost_n, 1), lost_straight / std::max(lost_n, 1));
+    std::printf("  %s: routes with one real corner or none %d, the careful body sooner on %d; with two or more %d, sooner on %d; within 0.05 s of a tie %d\n", world == 0 ? "KIT ON" : "KIT OFF", flat_n, flat_won, bent_n, bent_won, ties);
+  }
 }
