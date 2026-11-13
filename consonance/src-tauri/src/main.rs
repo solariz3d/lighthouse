@@ -9409,6 +9409,13 @@ const LIGHT_NOTES_CAP: usize = 24_000;
 /// 8,000 B reaches about nine entries back on that note (`exo_memory/loop/wake_level2_2026-11-13/shelf_builder.md`:165).
 const NEWEST_NOTE_RESERVE: usize = 8_000;
 
+/// THE WINDOW AND THE TAILS TOGETHER (ruled 2026-11-13 21:11Z: the WORST CASE of the light librarian intake must be under
+/// 145,000 B, 5,000 under the harness's 150,000 at which the seat does not open). With the window full (24,000) and a tail
+/// of the whole reserve (8,000) beside it, the built worst case was 145,901 B with the letter as it is (148,079 with the
+/// letter at its cap): `light_the_librarian_worst_case_intake_is_under_145_000`. Sharing one cap of 28,000 takes up to 4,000
+/// off it. A day whose window has room still gets the whole reserve: the recorded 11-13 note alone keeps its 8,000.
+const NOTES_WITH_TAIL_CAP: usize = 28_000;
+
 /// W1 (c), Lap W: files in `librarian/` that ride whole on the light shelf under their own cap, outside the notes cap. The
 /// letter is undated, so the window rule (`librarian_note_is_carried`) never carries it, and that rule also drives the
 /// strict walk, so it is left as it is and the pin is its own list.
@@ -9469,24 +9476,31 @@ fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
         (librarian_note_date(&name).is_none(), std::cmp::Reverse(name))
     });
     let (mut spent, mut over): (usize, Vec<(PathBuf, usize)>) = (0, Vec::new());
-    // W1 (b): a DATED note that does not fit whole rides as its newest whole entries from NEWEST_NOTE_RESERVE, newest note
-    // first. LEDGER.md and README.md are never tailed: they are an index and a rule, not a dated series.
-    let (mut tail_left, mut tails): (usize, Vec<(String, String)>) = (NEWEST_NOTE_RESERVE, Vec::new());
+    // W1 (b): a DATED note that does not fit whole rides as its newest whole entries, newest note first. LEDGER.md and
+    // README.md are never tailed: they are an index and a rule, not a dated series. The notes that fit whole are decided
+    // FIRST, and the tails take what is left of NOTES_WITH_TAIL_CAP, up to NEWEST_NOTE_RESERVE: a tail never costs a whole
+    // note, and the window and the tails together never pass NOTES_WITH_TAIL_CAP (the worst case, ruled 2026-11-13 21:11Z).
+    let mut too_big: Vec<(PathBuf, String)> = Vec::new();
     for f in notes {
         let Ok(body) = fs::read_to_string(&f) else { continue };
         if spent + body.len() <= LIGHT_NOTES_CAP {
             spent += body.len();
             carried.push((rel(&f), body));
+        } else if f.file_name().and_then(|n| n.to_str()).is_some_and(|n| librarian_note_date(n).is_some()) {
+            too_big.push((f, body));
         } else {
-            let dated = f.file_name().and_then(|n| n.to_str()).is_some_and(|n| librarian_note_date(n).is_some());
-            if dated {
-                if let Some((label, slice)) = newest_entries(&rel(&f), &body, tail_left) {
-                    tail_left -= slice.len();
-                    tails.push((label, slice));
-                    continue;
-                }
+            over.push((f.clone(), body.len()));
+        }
+    }
+    let (mut tail_left, mut tails): (usize, Vec<(String, String)>) =
+        (NEWEST_NOTE_RESERVE.min(NOTES_WITH_TAIL_CAP.saturating_sub(spent)), Vec::new());
+    for (f, body) in too_big {
+        match newest_entries(&rel(&f), &body, tail_left) {
+            Some((label, slice)) => {
+                tail_left -= slice.len();
+                tails.push((label, slice));
             }
-            over.push((f, body.len()));
+            None => over.push((f, body.len())),
         }
     }
     // W1 (c): the pinned letter, whole, under its own cap. Said missing only where this room has a librarian/ at all.
@@ -9519,8 +9533,8 @@ fn librarian_shelf_light_at(root: &Path, today: chrono::NaiveDate) -> String {
     ));
     if !tails.is_empty() {
         s.push_str(&format!(
-            "\nToo large to carry whole, so riding as their NEWEST WHOLE ENTRIES, verbatim, from a separate {NEWEST_NOTE_RESERVE}-byte \
-             reserve (the rest of each is on disk, in librarian/): {}.\n",
+            "\nToo large to carry whole, so riding as their NEWEST WHOLE ENTRIES, verbatim, from a reserve of up to {NEWEST_NOTE_RESERVE} bytes, the window and the tails within {NOTES_WITH_TAIL_CAP} together \
+             (the rest of each is on disk, in librarian/): {}.\n",
             tails.iter().map(|(l, _)| l.as_str()).collect::<Vec<_>>().join("; ")
         ));
     }
@@ -9715,6 +9729,22 @@ mod intake_light_tests {
         let strict = pane_intake(false);
         let light = pane_intake(true);
         eprintln!("PANE INTAKE strict {} B, light {} B", strict.len(), light.len());
+        // AMENDED BY NAME in Lap W (pane B; RULED 2026-11-13 22:17Z). The row's last bar was "at the floor reserve, light is ~14 KB+
+        // under strict", and it went red on 11-07: BOOT.md grew 3,071 B at 57d5060f and 441 B at 5e5d6948. The light rest carries
+        // BOOT whole beside an optional seat capped at LIGHT_OPTIONAL_CAP, while strict is assembled to a budget that absorbs it, so
+        // every byte of BOOT closes the gap byte for byte. Measured on one binary: with BOOT at 57d5060f^ (40,029 B) light 85,562 B,
+        // strict 100,097 B, 14,535 apart; with today's BOOT (43,541 B) light 89,074 B, strict 99,297 B, 10,223 apart. BOOT is not
+        // trimmed for a test, so the 14,000 B difference is DROPPED as a bar. What the row asserts instead, FIRST, before the rest:
+        // the light pane intake's own size is under SHELL_SOFT_CEILING (140,000), the room's own ceiling for a pane's shell and 10,000
+        // under the harness's 150,000 at which a seat does not open; and light is LIGHTER than strict at the floor reserve.
+        let floor_rest = |l: bool| {
+            let _m = Mode::light(l);
+            assemble_intake_within(SHELL_MAP_FLOOR)
+        };
+        let (light_at_floor, strict_at_floor) = (floor_rest(true), floor_rest(false));
+        let light_at_floor_len = light_at_floor.len() - fork_span(&light_at_floor);
+        assert!(light.len() < SHELL_SOFT_CEILING, "the light pane intake is {} B, not under SHELL_SOFT_CEILING {SHELL_SOFT_CEILING}", light.len());
+        assert!(light_at_floor_len < strict_at_floor.len(), "at the floor reserve, light {light_at_floor_len} B is not lighter than strict {} B", strict_at_floor.len());
         let boot = fs::read_to_string(room_master_path()).expect("BOOT");
         let (body, _) = split_pointer_tail(&boot);
         assert!(light.contains(body), "the room rides");
@@ -9769,7 +9799,7 @@ mod intake_light_tests {
         assert!(fork_floor <= FORK_SECTION_MAX, "the fork note at the floor reserve is {fork_floor} B, over its own ceiling {FORK_SECTION_MAX}");
         let (light_floor, strict_floor) = (light_floor_rest.len() - fork_floor, rest_at(SHELL_MAP_FLOOR, false).len());
         eprintln!("PANE INTAKE rests at the floor reserve: light {light_floor} B (fork note set aside), strict {strict_floor} B");
-        assert!(light_floor + 14_000 <= strict_floor, "at the floor reserve, light {light_floor} B is not ~14 KB+ under strict {strict_floor} B");
+        // The ~14 KB bar that stood here is dropped (Lap W, ruled 22:17Z); its replacement is at the top of this row.
     }
 
     #[test]
@@ -10015,6 +10045,68 @@ mod intake_light_tests {
         let cwd = fresh.display().to_string();
         assert!(is_fresh_cwd(&cwd), "the fixture is a fresh pane's dir");
         assert_eq!(intake_with_map("PANE-W1", &cwd), "", "a fresh pane was briefed");
+    }
+
+    /// THE WORST CASE OF THE LIBRARIAN'S LIGHT INTAKE, built (Lap W, ruled 2026-11-13 21:11Z: "BUILD THAT FIXTURE: the notes window
+    /// FULL TO ITS CAP, the letter present. PRINT THE SIZE"; the seat does not open over the harness's 150,000, 2026-09-01 and
+    /// 2026-09-20, and the ruling's bar is 145,000). The real head (brief and room) and the real cards, copied; a librarian
+    /// folder whose window notes fill LIGHT_NOTES_CAP to the byte (yesterday's note beside the real README.md), whose today's
+    /// note is far over the cap so it rides its newest entries out of the whole reserve, and the real letter, README and LEDGER.
+    /// The fixture's directory index is shorter than the live room's (no files, other paths), so the live index's extra bytes
+    /// are added back; and the real stamp, longer than the test's fixed one, is allowed for at its longest.
+    #[test]
+    fn light_the_librarian_worst_case_intake_is_under_145_000() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let _m = Mode::light(true);
+        let real = room_master_path().parent().expect("room root").to_path_buf();
+        let root = crate::test_scratch::root().join(format!("w1-worst-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        let _s = crate::test_scratch::Scratch::owning(root.clone());
+        let mut cards = Vec::new();
+        collect_md(&real.join("cards"), true, &mut cards);
+        for f in &cards {
+            let to = root.join(f.strip_prefix(&real).expect("a card under the room"));
+            fs::create_dir_all(to.parent().unwrap()).unwrap();
+            fs::copy(f, &to).unwrap();
+        }
+        for d in LIGHT_SHELF_DIRS.iter().filter(|d| !d.is_empty()) {
+            fs::create_dir_all(root.join(d)).unwrap();
+        }
+        let lib = root.join("librarian");
+        for name in ["README.md", "LEDGER.md", LIBRARIAN_PINNED[0]] {
+            fs::copy(real.join("librarian").join(name), lib.join(name)).expect(name);
+        }
+        let today = chrono::Local::now().date_naive();
+        let readme = fs::metadata(lib.join("README.md")).unwrap().len() as usize;
+        let head_line = "## 23:5x: yesterday, filling the window to its cap\n\n";
+        let yesterday = format!("{head_line}{}", "y".repeat(LIGHT_NOTES_CAP - readme - head_line.len()));
+        fs::write(lib.join(format!("{}.md", today.pred_opt().unwrap())), &yesterday).unwrap();
+        let entries: String = (0..300).map(|k| format!("## {:02}:{:02} — entry {k}\n\n{}\n\n", k / 60 % 24, k % 60, "t".repeat(360))).collect();
+        fs::write(lib.join(format!("{today}.md")), &entries).unwrap();
+        let shelf = librarian_shelf_light_at(&root, today);
+        // The fixture is the case it claims: the window carried to the byte, the tail near the whole reserve, the letter whole.
+        let letter = fs::read_to_string(lib.join(LIBRARIAN_PINNED[0])).unwrap();
+        assert!(shelf.contains(&yesterday) && shelf.contains("README") , "the window is not carried whole");
+        assert!(shelf.contains(&letter), "the letter is not carried");
+        let tail = shelf.split(&format!("## librarian/{today}.md -- its newest ")).nth(1).expect("no tail");
+        let tail_bytes: usize = tail.split(" of ").next().and_then(|t| t.split('(').nth(1)).and_then(|n| n.trim().parse().ok()).expect("tail size");
+        // The tail beside a full window is what NOTES_WITH_TAIL_CAP leaves it (4,000 B), not the whole reserve.
+        let tail_room = NEWEST_NOTE_RESERVE.min(NOTES_WITH_TAIL_CAP - LIGHT_NOTES_CAP);
+        assert!(tail_bytes <= tail_room && tail_bytes + 500 > tail_room, "the tail is not near the room it is given ({tail_room}): {tail_bytes}");
+        let index = |s: &str| s.find("\nSearch all of it:").unwrap_or(0).saturating_sub(s.find("\n## BY DIRECTORY").unwrap_or(0));
+        let index_extra = index(&librarian_shelf_light()).saturating_sub(index(&shelf));
+        // A live stamp: "Built <19> on <machine> from HEAD <sha> (<branch>). origin/<branch> by ls-remote: <8>, NOT IN THIS CHECKOUT
+        // -- this shelf predates a pull. The launch's pull: <outcome> at <33>, <why up to 160>." is under 400 B.
+        const LIVE_STAMP_MAX: usize = 400;
+        let head = librarian_intake_head().expect("head");
+        let worst = head.len() - TEST_SHELF_STAMP.len() + LIVE_STAMP_MAX + shelf.len() + index_extra;
+        let letter_at_cap = worst + PINNED_CAP.saturating_sub(letter.len());
+        eprintln!(
+            "LIBRARIAN WORST CASE (light) {worst} B: head {} B (stamp allowed at {LIVE_STAMP_MAX}), shelf {} B, live index +{index_extra} B; \
+             window {} B, tail {tail_bytes} B, letter {} B. With the letter grown to its cap: {letter_at_cap} B.",
+            head.len() - TEST_SHELF_STAMP.len() + LIVE_STAMP_MAX, shelf.len(), LIGHT_NOTES_CAP, letter.len()
+        );
+        assert!(worst < 145_000, "the worst-case light librarian intake is {worst} B, not under 145,000");
     }
 
     /// MEASUREMENT, not a gate: writes the strict and light librarian and pane intakes to $INTAKE_DUMP_DIR, so the strict ones can
