@@ -3145,3 +3145,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 16:4x local (D) · D675 the recorded runner's fastest toe is 2.2–2.4 times its running speed at all four recorded speeds; the hunter's keyed toe is 2.8 → `exo_memory/handback/p-l185-toe-ratio-E_2026-11-13.md`
 - SimTK JA1, RTOE/LTOE 3D lab speed over the pelvis centre's speed: 2.37 / 2.21 / 2.25 / 2.20 at 3.53 / 5.19 / 6.97 / 9.47 m/s (10 Hz; within 0.04 to 25 Hz). The data has four running trials, not the ruling's five. The hunter's 30.67 / 11 = 2.8 (the 11 inferred, the chase speed named). My memory-based "near twice" was low by about a tenth.
 - **Carry:** a figure quoted from memory in a hand-back gets a reader run before it goes to the seat who acts on it.
+
+## 2026-11-13 16:4x local (D) · D675 R4.5 and R5.3's bar is 30 m/s on the soft-keyed bodies, green, mutants 3 of 3 → `exo_memory/handback/p-l185-bar-amend-E_2026-11-13.md`
+- dreamzone-3 l185-skeleton 1e4d9cc (local): the 1.25-times-keyframe form out; the bodies are filtered by `soft_keyed()`, the ragdoll's own definition. HandL 28.60 (R4.5) and 25.59 (R5) under 30, with the keyed toes at 30.67 and 30.41 still printed. Applied 3 / caught 3 / NOT APPLIED 0.
+- **Carry:** filter a bar by the code's own predicate (`soft_keyed`), not by a list in the test, so the bar follows what the ragdoll moves.
