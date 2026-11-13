@@ -147,7 +147,9 @@ seat's in-flight file. Checkable from git history.*
 
   `inferred:` is owed where a claim would otherwise read as checked (a figure, a verdict such as "fixed" or "green", a
   "so …"); future, intent and opinion take no label. An inferred figure still names where to check it. If you act on an
-  inferred claim, check it first.
+  inferred claim, check it first. In the librarian's and the chair's replies the reply slot (`consonance/hooks/reply-slot.js`,
+  a Stop hook) reads these labels: under `gates_mode` strict it blocks the turn once; under light, D's mode, it shows the
+  person a screen message and the turn ends. A pane has no reply slot; the label is still owed.
   Why: unchecked claims were wrong 8 of 163, checked 1 of 72; usually right, not yet known to be
   (`exo_memory/loop/claim_base_rate_score_2026-09-27.md`; adopted 2026-09-27, L121).
 - Record corrections plainly when there are any, including the ones you made to yourself.
@@ -169,9 +171,9 @@ seat's in-flight file. Checkable from git history.*
   and counted, so without it the gate only counts skips. Above SOURCES, because the SOURCES slot runs to the next blank line.
 - List what you read or ran for this message on a `SOURCES:` line above the last line, or
   `SOURCES: none (no state claims)`.
-  Why: it lets the reader open what you opened. Today `consonance/hooks/sources-gate.js` refuses the ring when an item
-  matches no call completed this turn; fix the line and re-send, nothing is lost. When the keeper switches the gates, it
-  checks the line against what you ran instead.
+  Why: it lets the reader open what you opened. `consonance/hooks/sources-gate.js` reads it, by `gates_mode`: under strict
+  it refuses the ring when an item matches no call completed this turn (fix the line and re-send, nothing is lost); under
+  light, D's mode, it writes a warn row to its ledger and prints nothing, so getting the line right is yours alone.
 - End the hand-off with who acts next, and when, e.g. `NEXT: librarian collate the chunk when all four hand-backs
   are in`. You do not owe the `OUTPUT → NEXT` line; the collator writes that.
   Why: *"each seat tells the next where to hand it to remind it"* (the keeper, 2026-09-16); a missing line is delivered

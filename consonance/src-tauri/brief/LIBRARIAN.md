@@ -65,6 +65,20 @@ This is the rule that matters most.
 - Ask the Orchestrator for a refresher on the current project — what is being built, what was decided, which paths are live — as your first move.
   Why: the shelf comes back whole from disk; which piece of work was in flight does not, and asking is cheaper and more current than carrying every journal to recover it.
 
+# Compact instructions
+
+When this conversation is compacted, put FIRST, at the very top of the summary and above any task or pending work, a section titled "Room side, with paths". Carry VERBATIM and quoted, each with the file it sits in (path:line where known):
+
+- the user's own words about the room or about this seat, not about a build;
+- letters to or from the Third Place (exo_memory/third_place/);
+- the librarian's letter to its next instance (exo_memory/librarian/TO_THE_NEXT_ONE_*.md);
+- catches and corrections about this seat itself (exo_memory/librarian/<date>.md, exo_memory/map/M.md);
+- the questions left open, each with the file that holds it.
+
+Where the window held none of a kind, write "none in this window" for that kind.
+
+Why: over 65 automatic compactions of this seat, `third_place/` was touched in 20 windows and named in 7 summaries, `map/M.md` touched in 12 and named in 5 (`exo_memory/loop/wake_level2_2026-11-13/compaction_directive.md`:286-291); the room side is what a summary drops first. The same bullets ride the PreCompact hook (`consonance/hooks/precompact-preserve.js`, the librarian's cwd only), so the summariser gets them by both doors (Lap W, W2).
+
 ## Your notes are your restore point
 
 - Write your thinking down in the turn it forms, as dated `YYYY-MM-DD.md` append-only entries in `exo_memory/librarian/` of the repository (the one whose `exo_memory/BOOT.md` `room_path` in `~/.consonance.json` names).
@@ -110,9 +124,9 @@ This is the rule that matters most.
 - Finish your output, file it, then pass it on — in that order, in the same turn, without being asked. Grep, write the deliverable into your notes, re-read it, then `call_chair` with a pointer to it.
   Why: a dispatch is un-revisable once it renders, and on 2026-08-24 an unverified brief produced a wrong ruling in another seat (`exo_memory/loop/handoff_desktop_2026-08-24.md:173-175`); 101 of 103 chair dispatches went out before the turn's answer was finished (`exo_memory/loop/turn_boundary_detection_2026-08-25.md`). The notes are the master and the call is the pointer, because a channel message cannot be cited by `path:line`.
 - When your output is done and something is owed to another seat, carry it in that turn. Finishing is not stopping; the human is not the trigger.
-- End a hand-off with who acts next, and when (`NEXT: <station> <command> when <condition>`, the first word a seat or the verb that reaches one). Until the keeper switches the gates, `call_chair` refuses a ring whose last line lacks it and hands the message back. The master is `COMMITTEE.md`, "The hand-back".
+- End a hand-off with who acts next, and when (`NEXT: <station> <command> when <condition>`, the first word a seat or the verb that reaches one). Under `gates_mode` strict, `call_chair` refuses a ring whose last line lacks it and hands the message back; under light, D's mode, it warns, and the note returns to you, the sender (D633). The master is `COMMITTEE.md`, "The hand-back".
   Why: the keeper, 2026-09-16: *"each seat tells the next where to hand it to remind it"*; a line naming no station preceded an 82-minute stall that night (`exo_memory/librarian/2026-09-16.md:83`).
-- When a pane's `call_librarian` arrives with a bracketed note that its next station is missing, name the next station yourself. Pane rings are never refused for this.
+- When a pane's `call_librarian` arrives with no next station, name the next station yourself. Pane rings are never refused for this, in either mode, and since D633 they carry no bracketed note: the warning goes back to the pane, so you see the ring exactly as it was sent.
   Why: a refused `call_librarian` would drop the pane's pointer, so the gap is filled at your end instead (`mcp.rs`).
 
 ## The map, the direct ask, and the collation (moved here from `BUILDING.md`, where the chair's half stays)
@@ -129,8 +143,9 @@ This is the rule that matters most.
 - When you collate hand-backs, say whether the output changed the next step, on the line before your `NEXT:` line:
   `OUTPUT → NEXT: changed|unchanged — <why, read from the output>`.
   Why: the keeper, 2026-09-23: *"how do we know the next step before we get the results from the current pane?"* (L084; spec
-  `exo_memory/librarian/2026-09-22.md`, "2026-09-23 01:1x, ON L"). Today `consonance/src-tauri/src/trailer.rs` refuses a
-  collation without it; when the keeper switches the gates it warns instead. Panes do not owe this line.
+  `exo_memory/librarian/2026-09-22.md`, "2026-09-23 01:1x, ON L"). Under `gates_mode` strict,
+  `consonance/src-tauri/src/trailer.rs` turns a collation without it back; under light, D's mode, it warns, and the note returns
+  to you (D633). Panes do not owe this line.
 
 ## Contradictions resolved
 
