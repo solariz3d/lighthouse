@@ -148,8 +148,10 @@ them would be the same stop again, so they are not built until this is ruled. Th
 1. Measure L190's row against the chest's forward, as the F 1.36 row already does (a rule change of that row: way 3 for
    that one row only, since Bruening's quantity is thorax-relative).
 2. Solve in the heading's frame instead: then the chest-frame row (Bruening's own frame) fails for V2 and V3.
-3. Build only V1 as the sourced variant, and make V2 and V3 "more flare" without crossing that row's 3°: about +4° of
-   flare at most (inferred from the same computation), which may not be the "more" his eye asked for.
+3. Build only V1 as the sourced variant, and make V2 and V3 "more flare" without crossing that row's 3°: **+8.25° of
+   flare at most** (checked: the same computation, bisected on flare_add until the heading-frame swing is 52.3°; first
+   written here as "about +4" before it was computed, and corrected before the ring). So V2 at +8 and V3 no further,
+   which may not be the "more" his eye asked for.
 
 **Building now, as ruled:** the solve (way 1), and V1 under it, with the new row that holds the chest-frame property
 over the three variants' stand-offs.
