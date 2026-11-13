@@ -308,3 +308,55 @@ and hidden, BelowNormal, under the ordinary lock, with acs.exe checked first (`d
 - 1 of 16 Parks on the kit side read −1 (the deep-fall nav position; A has it).
 
 NEXT: librarian, read when this arrives; the remaining reds stay with A (two chase rows), E (the tell's sound) and nav's owner (the bound, its cause now named).
+
+## D, 2026-11-13 ~17:4xZ (D675, the ruling of 19040c87): the round-trip row over seeds 1–8, both worlds; and the colour key
+
+**The measure** (tier CHECK IT; nav and the bar untouched): the row's own code, the same block, the apartment, `Rng(11)`, 3,000 draws, over seeds
+1 to 8, the kit off (`GenParams{}`) and on (`shipped_gen()`). A scratch row, run under the ordinary lock, hidden, BelowNormal, then removed;
+output in my scratchpad, `d665b\d10_seeds.txt`, run at `e2a7ed8`'s content. No build failed and no way back failed in any of the 16.
+
+| seed | kit off: worst | mean | over 5% | kit on: worst | mean | over 5% |
+|---|---|---|---|---|---|---|
+| 1 | 14.7% | 0.79% | 2.56% | 11.4% | 0.77% | 2.21% |
+| 2 | **18.1%** | 0.83% | 2.07% | 12.0% | 0.76% | 2.41% |
+| 3 | 14.3% | 0.94% | 3.06% | **22.9%** | 0.96% | 3.53% |
+| 4 | 11.6% | 1.02% | 3.07% | **22.1%** | 0.95% | 2.74% |
+| 5 | 11.9% | 0.94% | 2.92% | 11.6% | 0.92% | 2.75% |
+| 6 | 15.3% | 0.89% | 2.49% | 17.5% | 0.87% | 2.75% |
+| 7 | 12.3% | 0.81% | 2.14% | 13.6% | 0.79% | 1.94% |
+| 8 | 12.9% | 0.74% | 1.93% | 12.8% | 0.74% | 1.84% |
+
+Each run had 2,925 to 2,951 pairs, all over the row's 2,000. Every share over 5% is under its one-in-twenty bar.
+
+**By the ruling's own branch: ONLY the kit's worlds pass 20%** (seeds 3 and 4, 22.9% and 22.1%). The kit-off world's worst over the eight seeds
+is 18.1%. So this comes **back to the librarian for a ruling, and is NOT a new bar.**
+
+What the table says beside that, for the ruling:
+- **The kit does not make paths less exact on the whole.** The means (kit off 0.74–1.02%, on 0.74–0.96%) and the shares over 5% (off 1.93–3.07%,
+  on 1.84–3.53%) overlap seed for seed.
+- **What moves is the single worst pair of a draw:** two seeds of eight cross 20% with the kit, none without.
+- **The off world itself sits 1.9 points under the bar** at its worst seed (18.1%).
+- The one pair looked at closely (seed 3, section D675) is two different stairwells chosen by the search.
+
+### The colour key of his pages
+
+Each plan is one storey seen from above, north up, cut a metre above the floor.
+- **near black (#2b2b31):** solid mass, where nobody can go.
+- **black lines (#141418):** walls.
+- **light grey (#d2d2cc):** corridors, the lane grid.
+- **blue-grey (#b4bcc8):** cross corridors, the cuts through the mass between two corridors.
+- **beige (#e6dcc2):** rooms. **Pinkish beige (#e6b8a8):** a room with one way in. **Pinker (#d9b0a6):** a blind corridor. **Sandier with an inner border (#d8c896):** a raised floor.
+- **red wash:** a dead end. **Orange wash:** a dead end the player can climb out of.
+- **dark red bar across a cell (#8a1c1c):** a blind corridor, one cell wide, going nowhere.
+- **pale green (#bcd4bc):** a stair's landing. **Green (#9ccf9c) with darker treads:** a stairwell and its flights.
+- **pale blue (#9aaee0):** a ladder shaft. **Light cyan (#7fd0ea):** a light well.
+- **cream (#f2e8c8):** an atrium's hall floor; **steel blue (#5d87ad):** the open air of an atrium above it.
+- **amber (#f0a850):** a ledge, the climb out of a dead end.
+- **mint green (#6fdc96):** a Park (reprieve) cell. **Bright green bars (#00a040):** the frame round a Park's mouth, the tell.
+- **hatched cells:** no floor there. Over mint green, that is a chute's open fall (the kit's); otherwise a shaft, a well or a void.
+- **magenta (#e010c0):** a door leaf; the magenta ring is where a run begins, with its line through the bedroom door.
+- **purple (#9030c0):** the doorway frame between two biomes.
+- **brown (#8a5a2a):** door frames.
+- **yellow dots (#ffd400):** lamps.
+- **Lines between cells:** dark green, stairs; magenta, a ladder; orange, a climb; blue, a drop (its dot is where it lands); green (#008838), the way through a Park.
+- **faint white lines:** chunk borders, every 36 m.
