@@ -81,3 +81,31 @@ our long-running     7 (older than 120 min, infrastructure left out)
   classes on main.
 - **The check:** the table above.
 - **V8 is NOT measured here.** My 151aead bots were confounded by its old chase base; main's side is in Lap 1's folders.
+
+## D, 2026-11-13 ~15:0xZ: THE QUESTION FOR A (the run record and a changed generator), routed through the librarian
+
+**What the record carries today** (checked on `origin/main` 31d1c6d): `record_format = 1`, the build, the seed, the level and dials, `[speed]`,
+`[params]` (movement) and `[world]` (world settings) (`game/world/run_record.cpp:107-176`). **Nothing of the generator's own parameters:** the game
+builds `gen::GenParams{}` with the seed, its gen dials and `force_biome` (`game/world/world_app.cpp:136-147`), and the record says none of it.
+
+**What the kit changes:** the worlds. 300 of the pin's 384 chunk fingerprints move on `gen-lap2-kit` (c9ad588): the chute, the true buy rule,
+the path factor, the hunter model the generator rates with, and his door rate 0.15. So every run recorded before the kit lands, his kept runs among
+them, would replay into a different world and not reach its fingerprint.
+
+**The two answers I can see; the call is A's (the record's owner):**
+- **Option 1, the scheme's own rule** ("a missing field means the behaviour of the day it was missing"; your line "a `[gen]` section before a
+  generator lap flips a dial above 0"). Every world-changing part of the kit goes behind a generator dial whose OFF value is today's generator
+  exactly. The record gains a `[gen]` section listing them, and a new run takes a `shipped_gen()` with the kit on, as `shipped_speed()` does. A
+  record with no `[gen]` replays with the kit off, to the bit. **The pin stays as it is and becomes the proof of the off path** (its 384 values
+  must not move with the dials off); a second pin holds the kit's world. Cost: the kit must keep the old generator reachable (chute rate 0, buy
+  rule off, path factor 1, the old hunter model, door rate 0.25). Inferred, from the code: each is already a parameter, so this is mostly
+  plumbing.
+- **Option 2, no way back.** The record gains a generator identity (for example the spawn chunk's fingerprint), and a replay whose world does not
+  match refuses, saying the generator changed. Runs from before the kit stop replaying; the pin is re-captured.
+
+**B's view:** Option 1. It is the rule the scheme already states. It keeps his recorded runs replayable, which your exploit search reads. And it
+turns the pin's red into a proof instead of a re-capture. **What would change my mind:** if the record must stay free of generator fields for a
+reason I can't see from the code, or if keeping the old generator path costs more than I estimate. I'll measure that cost before building.
+
+**Until A answers,** B works on what does not depend on it: the drop harness's segfault, the world self-test's two rows, the hunter-reach row,
+and the shape-names row.
