@@ -73,6 +73,12 @@ items 183 to 190 are today's) and from each pane's "WHERE IT STOPS" section name
   Place's; the sources behind the story) and `loop/sprint_reference_2026-11-13/` (mine; recorded sprinting above 4.5 m/s, to
   extend the yardstick toward the hunter's speed).
 
+## The sprint reference landed at 07:37 (the librarian’s swarm; read it before C builds above 4.5 m/s)
+
+- `loop/sprint_reference_2026-11-13/00_reference.md` (tables by speed, a csv block a tool can read, section 6 for the builders) and `00_check.md` (the second reader: about 675 numbers checked, 0 wrong).
+- **Full joint curves above 4.5 m/s come from one runner only** (the Dorn, Schache and Pandy data, 3.5 to 9.5 m/s; angles computed by the reader from the markers, marked inferred). The other five sources give touchdown and toe-off angles or timing. Nothing above about 11.6 m/s.
+- **Not spot-checked by the librarian** against the sources (no time before the close). D does that first; then E adds the curves to the yardstick as a second reference tier, and C’s legs above 4.5 m/s are scored against it.
+
 ## The yardstick's work list (the hunter and the player against recorded runners)
 
 - The hunter: `handback/p-l193-yardstick-E_2026-11-13.md`, section 4. C's L200 is the fix.
