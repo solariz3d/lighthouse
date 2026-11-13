@@ -1,0 +1,20 @@
+# stretches (hunter within 12 m for at least 5 s) and what each was; run 082347
+run: 1808 rows over 180.8 s; hunter within 12 m for at least 5 s in 6 stretch(es) (of 11 contacts)
+#1 t 10.7-48.0 s (37.3 s): hunter dist min 1.9 median 6.6 max 11.7 m; hunter speed median 9.2 m/s, snags(<2 m/s) 33 ticks of 0.1 s, its own about-turns 4; modes {"pursue":367}
+    player speed median 9.1 m/s; reversals 1; net turning 0.8 laps, total turning 7.0 laps; extent 121.1 x 66.9 m; others near: interceptor#2,interceptor#3   
+#2 t 51.7-58.5 s (6.8 s): hunter dist min 2.4 median 4.7 max 11.2 m; hunter speed median 6.7 m/s, snags(<2 m/s) 9 ticks of 0.1 s, its own about-turns 0; modes {"pursue":62}
+    player speed median 3.0 m/s; reversals 2; net turning -0.1 laps, total turning 1.6 laps; extent 10.2 x 9.2 m; others near: none   
+#3 t 80.0-86.2 s (6.2 s): hunter dist min 2.0 median 3.9 max 11.3 m; hunter speed median 6.0 m/s, snags(<2 m/s) 9 ticks of 0.1 s, its own about-turns 0; modes {"pursue":56}
+    player speed median 1.2 m/s; reversals 1; net turning 0.1 laps, total turning 0.4 laps; extent 4.7 x 4.3 m; others near: sprinter#4,sprinter#5   
+#4 t 89.3-94.9 s (5.6 s): hunter dist min 2.3 median 4.0 max 11.2 m; hunter speed median 7.3 m/s, snags(<2 m/s) 5 ticks of 0.1 s, its own about-turns 1; modes {"pursue":50}
+    player speed median 0.3 m/s; reversals 1; net turning -0.0 laps, total turning 0.8 laps; extent 5.7 x 4.8 m; others near: sprinter#4,sprinter#5   
+#5 t 126.1-131.8 s (5.7 s): hunter dist min 3.6 median 7.4 max 11.9 m; hunter speed median 11.8 m/s, snags(<2 m/s) 4 ticks of 0.1 s, its own about-turns 0; modes {"pursue":51}
+    player speed median 10.0 m/s; reversals 1; net turning 0.5 laps, total turning 1.3 laps; extent 23.7 x 19.2 m; others near: sprinter#5   
+#6 t 151.1-163.3 s (12.2 s): hunter dist min 1.9 median 5.7 max 11.7 m; hunter speed median 8.6 m/s, snags(<2 m/s) 20 ticks of 0.1 s, its own about-turns 1; modes {"pursue":97,"to mouth":3,"at mouth":11,"going round":5}
+    player speed median 9.9 m/s; reversals 3; net turning 1.9 laps, total turning 4.6 laps; extent 16.3 x 55.4 m; others near: sprinter#6   
+
+# 8 s windows
+out: 1808 rows over 180.8 s; windows of 8 s moving over 5 m/s: 0 circle stretch(es), 0 shuttle stretch(es)
+# 3 s windows
+out: 1808 rows over 180.8 s; windows of 3 s moving over 5 m/s: 1 circle stretch(es), 0 shuttle stretch(es)
+  CIRCLE  t 157.2-160.1 s (2.9 s): speed 9.8 m/s, turning 1.0 lap(s), reversals 2, path 10.6 x 5.3 m; hunter nearest 2.6 m, median-distance 6.5 m

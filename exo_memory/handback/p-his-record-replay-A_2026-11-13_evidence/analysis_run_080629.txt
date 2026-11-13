@@ -1,0 +1,8 @@
+# stretches (hunter within 12 m for at least 5 s) and what each was; run 080629
+run: 3126 rows over 312.6 s; hunter within 12 m for at least 5 s in 0 stretch(es) (of 3 contacts)
+
+# 8 s windows
+out_080629: 3126 rows over 312.6 s; windows of 8 s moving over 5 m/s: 0 circle stretch(es), 0 shuttle stretch(es)
+# 3 s windows
+out_080629: 3126 rows over 312.6 s; windows of 3 s moving over 5 m/s: 1 circle stretch(es), 0 shuttle stretch(es)
+  CIRCLE  t 278.2-281.1 s (2.9 s): speed 10.0 m/s, turning 0.8 lap(s), reversals 1, path 11.7 x 10.3 m; hunter nearest 37.6 m, median-distance 42.9 m

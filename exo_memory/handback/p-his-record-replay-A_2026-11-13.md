@@ -1,0 +1,37 @@
+# p-his-record-replay-A: his own recorded runs replayed, and what his uncaught stretches are (the librarian's ruling on the blind check), 2026-11-13
+
+Pane A (Sonnet 5.5 trial, machine L). The ruling (chair's 12:49Z, the librarian's): go to the source before guessing another bot; replay his run `run-20261113-082347` on the build it names, dump the tracks, find where he shuttles between walls and where he circles, report where the hunter was and what it did; the reactive shuttle's settings come from the record; he is asked only if the record shows no such stretch.
+
+## What was done (checked)
+- **His run files were copied to scratch first and only the copies were read** (`game\runs\` was not written). The raw track dumps stay in scratch (his play data); this folder keeps the analysis outputs and the scripts.
+- **A scratch worktree at `e0184ea`** (the build all his runs of today name; `dreamzone-3-a-replay`, detached) with one extra file, `game/world/replay_dump.cpp` (kept here as `evidence/replay_dump.cpp`), built behind the lock BelowNormal. It calls `read_run` and `replay_run` (the same code `dz-world --replay-run` calls) and writes the player and every chaser every 0.1 s. (The full `dz-world` is not needed to dump tracks; I say so because the ruling named it.)
+- **All four replays are EXACT** (checked: `replay: ... same 1`, both fingerprints equal the record's): `082347` (180.78 s, caught by the hunter; sim `53d836e6e6d445d3`, chase `83a4f6df0d268794`), and the three other long runs of today, `080629` (312.57 s, caught by the pack #44), `081208` (221.63 s, the hunter), `081820` (172.08 s, a crawler). All brutal, seeds 1 to 10, build `e0184ea`. So the tracks below are his runs, not an approximation.
+
+## How I looked (and that the detector sees what it should)
+- **Uncaught stretches:** the hunter within 12 m for at least 5 s without a catch (`analyze_replay.js`).
+- **His two named moves, over EVERY window of the run, whatever the hunter was doing** (`scan_moves.js`): a **circle** (median speed over 5 m/s, at least 0.75 lap of net turning inside a path under 22 m across) and a **line shuttle** (over 5 m/s, at least 2 reversals, the path a thin line: long axis over 8 m, short under 6 m), with windows of 8 s and of 3 s.
+- **The detector was tested before it was believed** (the L170 slip-estimator lesson; `evidence/detector_on_synthetic_tracks.txt`): a circle of radius 4 m at 8 m/s and a 10 m line shuttle reversing every 1.4 s are found at 8 s; a straight run is neither. **Its limit, said plainly:** at 3 s the same synthetic circle is just under the 0.75 lap bar and is MISSED, so the 3 s windows find fast tight moves and not slow wide ones.
+
+## Result: his record shows NO sustained circle strafe and NO sustained wall-to-wall shuttle
+- **8 s windows: 0 circle and 0 shuttle stretches in all four runs.**
+- **3 s windows: three short episodes, each read:**
+  - `082347` 157.2 to 160.1 s: a turn of about one lap in a 10.6 x 5.3 m area at 9.8 m/s: it is the approach to a **Park** he enters at 160.19 s with the hunter 0.6 s behind (the record's own event). Not a circle strafe.
+  - `080629` 278.2 to 281.1 s: 0.8 lap at 10 m/s with the hunter 38 m away: nothing was after him.
+  - `081208` 171.2 to 174.1 s: **the only shuttle-like episode**: 2 reversals on a 16.4 x 5.8 m path at 9.4 m/s, the hunter within 1.2 m at the nearest, four pack bodies near. Three seconds long.
+
+## What his uncaught stretches ARE (checked: `analysis_run_*.txt`; the hunter's and his speeds are from successive positions, 0.1 s apart)
+1. **Open ground at speed parity.** `082347` 10.7 to 48.0 s (37 s): the hunter a median 6.6 m behind (nearest 1.9), **hunter 9.2 m/s against his 9.1**, 3.3 s of snags (under 2 m/s) and 4 about-turns of its own. `081820` 28.8 to 63.1 s (34 s): hunter 10.9 against his 10.0, 0 snags. `081208` 183.5 to 215.4 s (32 s): 10.2 against 10.0. **`inferred:` a hunter at 1.0 to 1.09 times his speed, 6 or 7 m behind, does not close on a straight; the stretch is the speed balance (the fresh player's margin fades over 600 s), not a geometric trick.** The extent of these chases is 70 to 120 m across.
+2. **Dead ends with a way out.** The record logs, in `082347`, "cornered: the hunter (#1) is at the way in" and "the player gets out of the dead end by a way no chaser has; the hunter is 0.5 s / -1.0 s / 1.3 s / -1.0 s away" (five times, 36 to 96 s); in `081820` the same with the hunter 5.8 s and 4.8 s away. Slow stretches in a 5 to 10 m area (his speed 0.3 to 3 m/s) are these.
+3. **Parks.** `082347`: he enters a Park four times with the hunter 0.5 to 0.9 s behind (114.79, 120.24, 136.07, 160.19 s); the hunter "stops at the mouth for 1.1 to 1.3 s" then "turns and goes round: 2.9 to 3.1 s to the other mouth"; he leaves by the far mouth after 1.9 to 2.1 s with the hunter 2.6 to 3.1 s away. **Each Park is worth him about 2.5 s.**
+4. **A pit stand-off.** `081820` 144.9 to 163.5 s (18.6 s): **he stands on a floor 2.2 m below the hunter** (checked: player y -2.2, hunter y 0.0, for the whole stretch), the hunter 0 to 3 m away horizontally at a median 1.7 m/s, and the record logs "the player has been out of reach 15.0 s" at 153.0 s, when the director sends a climber (#13), and again for #14 at 162.15 s; the crawler #14 catches him at 172.08 s. This is the ledge escape (his pick `chase_entities-5`: it stays an escape from the hunter).
+
+## What this does to the blind check, said plainly
+- **His record shows no wall-to-wall stretch and no circle strafe.** The ruling's own condition ("he is asked only if the record shows no such stretch") therefore holds: **the question to him stands** (the chair has put it on the board), and **the reactive shuttle's lane, speed and reversal distance CANNOT be set from this record: there is no sustained shuttle in it to take them from.** I do not build or tune a shuttle from the one 3 s episode (speed 9.4 m/s, path 16.4 x 5.8 m, hunter nearest 1.2 m); that would be fitting. The registered bar (the search REPRODUCES the uncaught stretch his record shows) is met in kind for stretch 1 by the plain-arena sweeps, not by the room: the flee bot already outlives the hunter in the open (never caught: 62.7 % and 60.0 % of runs at normal; the brutal control is running).
+- **The room cannot reproduce what the record shows:** a 12 m room has no open ground for a parity chase, no Park and no pit; the door dance is a crude cousin of the Park. The room search stays PARTLY BLIND (circle found, straight shuttles not) and its tables say so.
+- **The circle finding stands** as the red row for the chase law (a player at 6 m/s is not caught in most circle cells), as ruled; but note that **no circle appears in his play**, so it is an exploit of the chase's law found by the search, not a thing he did.
+- **What his record does show, for the grip arms and for the lane after them:** the parity chase (grip arms: the hunter's cornering is where a hunter at parity can win the gap back), the Park's 2.5 s (stands and Parks are C's and B's), and the pit stand-off (the ledge rule).
+
+## Evidence
+`p-his-record-replay-A_2026-11-13_evidence/`: `analysis_run_{082347,080629,081208,081820}.txt` (stretches, then the 8 s and 3 s scans), `detector_on_synthetic_tracks.txt`, `events_run_082347.txt`, the three scripts and `replay_dump.cpp`.
+
+NEXT: the librarian reads this; the question to him stands; A goes on with the D673 gate (the byte-identity check is being diagnosed), the brutal arms and the mutants.

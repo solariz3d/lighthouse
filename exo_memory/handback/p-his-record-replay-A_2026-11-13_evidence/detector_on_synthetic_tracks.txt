@@ -1,0 +1,10 @@
+# the detector on synthetic tracks (circle r 4 m at 8 m/s; a 10 m line shuttle reversing every 1.4 s; a straight run)
+circle: 301 rows over 30.0 s; windows of 8 s moving over 5 m/s: 1 circle stretch(es), 0 shuttle stretch(es)
+  CIRCLE  t 0.1-29.0 s (28.9 s): speed 8.0 m/s, turning 2.3 lap(s), reversals 0, path 8.0 x 8.0 m; hunter nearest 9.0 m, median-distance 9.0 m
+circle: 301 rows over 30.0 s; windows of 3 s moving over 5 m/s: 0 circle stretch(es), 0 shuttle stretch(es)
+shuttle: 301 rows over 30.0 s; windows of 8 s moving over 5 m/s: 0 circle stretch(es), 1 shuttle stretch(es)
+  SHUTTLE t 0.1-29.0 s (28.9 s): speed 7.1 m/s, turning 0.5 lap(s), reversals 6, path 10.0 x 0.0 m; hunter nearest 9.0 m, median-distance 9.0 m
+shuttle: 301 rows over 30.0 s; windows of 3 s moving over 5 m/s: 0 circle stretch(es), 1 shuttle stretch(es)
+  SHUTTLE t 0.1-29.0 s (28.9 s): speed 7.1 m/s, turning 0.5 lap(s), reversals 2, path 10.0 x 0.0 m; hunter nearest 9.0 m, median-distance 9.0 m
+straight: 301 rows over 30.0 s; windows of 8 s moving over 5 m/s: 0 circle stretch(es), 0 shuttle stretch(es)
+straight: 301 rows over 30.0 s; windows of 3 s moving over 5 m/s: 0 circle stretch(es), 0 shuttle stretch(es)
