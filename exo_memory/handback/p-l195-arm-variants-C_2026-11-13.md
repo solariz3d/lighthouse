@@ -254,3 +254,8 @@ V2 4ef2027 and V3 bba95c4 stay on `l195-arm-variants`, not landed. checked: `scr
 tests, 0 failed; `v1land_world.txt` → 45 tests, 0 failed (the run first refused by memwatch at 12:2xZ, commit headroom
 5895 / 5993 MB under 6144, nothing of the room's running; it cleared at 12:23:06Z). Pushed; marked READY
 (`landing-train.js ready --pane C --lap L195` → "READY l195-v1 f0efe83").
+
+**Landed by B's landing train:** `Merge l195-v1 (C, L195) by the landing train`, 0324a7c, in the batch with A's L197,
+my L189 and E's L193; origin main is cc8eea8 (checked: `git ls-remote origin refs/heads/main` → cc8eea83…; 0324a7c
+touches only game/model_rig.h, model_rig.cpp and tests/model_rig_tests.cpp). The train ran the suite, the stamp, the
+scan and the push (its own record). V2 4ef2027 and V3 bba95c4 stay unlanded on `l195-arm-variants`.
