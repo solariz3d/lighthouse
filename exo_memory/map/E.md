@@ -3125,3 +3125,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 10:1x local (D) · item 193 and L192's two rows on `l192-footsteps` 367fe1c (local, not pushed) → `exo_memory/handback/p-l193-steps-l192-rows-E_2026-11-13.md`
 - The player's steps are now recordings, two hits each, the push-off after the runner's contact time. The hunter clears them on 11 of 14 at 12-20 m against 6 before. Row 3 (as loud) is red by 6.5 dB, held there by the limiter; row 2 (Tile's click) is red by 0.4 dB. Both are left for his ear. The legs row went red then green (1549 of 1549 frames). His 16 kept runs replay byte-identically on base and branch (14 of them miss their recordings on both).
 - **Carry:** the limiter runs before the master level. Work out a gain's headroom from that order, not from the volume.
+
+## 2026-11-13 10:5x local (D) · L185 step 4 STOPPED RED on `l185-skeleton` 370e3e6 (local): the forearm and hand cannot follow a sprint on swing-twist motors → `exo_memory/handback/p-l185-step4-E_2026-11-13.md`
+- Three causes found and fixed: Jolt's frequency motors are sized for two bodies only (a held pose sagged 0.85 m), placement with no velocity (the arms flung), and too few solver steps. The forearm and hand still miss by 0.21-0.61 m at the 95th percentile, and 3x stiffness is unstable. I put a method question to the chair: the soft keyframe of the plan's own sources.
+- **Carry:** a motor sized by frequency in Jolt holds its two bodies, not the chain below them. Size it from the subtree's inertia before judging the motor.
