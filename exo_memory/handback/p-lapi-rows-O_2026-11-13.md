@@ -65,3 +65,12 @@ Packet: the chair's D675 order of 20:17Z, items 2 to 5, as reshaped at 21:30Z (r
 
 SOURCES: S\inst\rows\{row1..row11}.txt and install-row*.txt; S\inst\semdiff-row11.txt; C:\Consonance\data\{second-reader.jsonl, reply-slot.jsonl, ask-ending.jsonl}; sed of 00_lap_i_spec.md :367-414
 NEXT: librarian read the install table when this ring is read; O reads rows 8 and 10's ledgers right after this ring and posts the result on the board
+
+## After the ring (appended 22:54Z, after the ring that carried this file)
+- **Row 10, GREEN.**
+  - checked: `second-reader.jsonl` → the first row after its stamp (22:53:34.130Z, my `call_librarian`) has status `skipped-class`, and it carries `toolUseId`.
+  - No `ok` row follows it.
+- **Row 8, GREEN.**
+  - checked: `sources-gate.jsonl` → the new gate ran on that ring (22:53:34.148Z) and wrote its row. Its decision was `warn` (mode light), and the ring was queued for delivery, not refused.
+  - `reply-slot.jsonl` has had no row since 22:50:26Z, so it holds no gate error.
+- **The warn was my formatting, not the gate's error.** It read my whole SOURCES line as one item, because I joined the items with `;` and `{a,b}` braces. Separate items would have matched.
