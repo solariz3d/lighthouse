@@ -85,3 +85,10 @@ the model switch (an assumption about relative price, not the plan's accounting)
 ## Not building (from `00_not_worth_it.md`, after its second reader)
 
 A priority queue on the lock; a second train on D; dead-letter counts; idempotency keys. No recorded cost stands behind them.
+
+## Amendment, 10:4x (librarian): Lap D item 1 is not ready
+
+P ran the guard's 73 unrun mutants on D (73 of 73 caught; 101 of 101 rows) and in that same run the guard named two working holders
+idle, with negative CPU figures, and posted both lines to the board (`handback/p-l202-check-P_2026-11-13.md`, section 4). A child
+that used CPU and exited leaves the sum (`heavy-run.js:442`, `:358-362`). 901d3c39 does not land. The fix is P's, red first on
+that case; another pane lands it.
