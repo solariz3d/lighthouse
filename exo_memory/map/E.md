@@ -3160,3 +3160,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-13 17:0x local (D) · L1's rows against 613c9ba's --lean-film: every frame MET (at 1/144 s, follow pass only); manifest, pose.csv, --clip-step, all passes, the hunter refusal and both rows NOT MET → `exo_memory/handback/p-l185-refilm-E_2026-11-13.md` (addendum)
 - My film.js stood in for the manifest outside the tool; L1 builds it in the tool. Deletions of my own frames came before the chair's 23:00Z "delete nothing"; none since. New clip folders go on G:\consonance-scratch.
+
+## 2026-11-13 17:1x local (D) · film-base 4644c95 and l185-skeleton (as l185-skeleton-steps45, 1b690fd) pushed to dreamzone-3's private remote, scan 0, gate allow; main untouched → `exo_memory/handback/p-l185-refilm-E_2026-11-13.md` (push addendum)
+- The remote's own l185-skeleton is my 11-12 step-2 WIP (b226b95), diverged; I pushed under a new name rather than force it.
+- **Carry:** before pushing a branch, `git ls-remote` its name; a diverged branch of the same name goes up under a new name, never forced.
