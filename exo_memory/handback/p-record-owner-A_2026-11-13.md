@@ -170,3 +170,61 @@ exactly. The record gains a `[gen]` section. A record without one replays with e
 
 **Falsifier:** any existing record row (Lap R's seven, `what_a_new_run_starts_with`) goes red. A field added must not move a record that
 does not carry it.
+
+## D, Friday 10:13 local (`date`, written by the shell): the chair's question. Should a record REFUSE BY NAME when the build's simulation is not the one it names?
+
+**The finding read whole:** E, `p-l193-steps-l192-rows-E_2026-11-13.md` §2 (lighthouse cb8b14e4).
+- **Checked by me:**
+  - `ls game/runs/*.txt` in D's clone → 16 kept runs;
+  - their `build` lines → `b212ae8` 8, `cab3530` 5, `af9727b` 2, `39e03db` 1, the four E names;
+  - none has a `record_format` line, so all 16 are from before the scheme (format 0).
+- **Files changed in `sim/ chase/ gen/ nav/ core/` (tests included) from each build to `31d1c6d`:** 38, 46, 45, 57. That is a wider
+  scope than E's 33–48 "simulation-side", so it is not a contradiction.
+- **Not re-run by me:** E's "2 of 16 reach their recorded fingerprints", which needs the 16 replays. It is E's measurement (`cmp` of the
+  pairs), and I have no reason to doubt it.
+
+**The answer: YES to a NAME, at the start of the replay. NO to a refusal for watching. YES to a refusal for every use that needs the run to
+be exact.**
+
+**Why a name:**
+- Today the only signal comes at the end: "NOT the same run: the fingerprints differ". That reads as "the replay is broken" and says
+  nothing about which side moved.
+- A replay that is going to differ should say so before it plays, and say which side: the simulation, the chase, or the generator
+  (`gen_world`, Option 1).
+
+**Why not refuse for watching:**
+- His kept runs are his to watch. 14 of 16 would become unwatchable for changes that mostly do not matter to watching them: the run
+  plays out roughly, then diverges.
+- Refusing them would take something from him to tell him something.
+
+**Why refuse for exact uses:** a test, the exploit search, a score, a fingerprint proof. Each is a claim that the run happened as
+recorded, and a run on a build whose simulation differs cannot back that claim. Today that difference shows only as a mismatch at the end,
+after the time is spent.
+
+**What the record would have to carry (proposal; not built until ruled):**
+- **`sim_identity` and `chase_identity`:** the fingerprints of two fixed canonical runs that the build computes for itself.
+  - For the simulation: the gym self-test's scripted course already gives one (`dz-gym --selftest`: "the bot completes the course on the
+    simulation alone: … fingerprint …").
+  - For the chase: one fixed `play()` of a fixed seed and policy.
+  - Seconds of work, cached for the process. The record writes both. A replay computes its own, and if either differs the replay names
+    which, up front.
+- **Why not the build sha alone:**
+  - Every docs-only commit would then name a difference that is not one.
+  - Hashing the simulation's source files has the same false alarms on a comment change.
+  - A canonical run moves only when behaviour does.
+- **Its honest limit:** a canonical run is a sample. A change it does not exercise passes it, and the end-of-run fingerprint stays the
+  final check.
+
+**Old records** (no identities, all 16 of his) cannot be named up front. They play as today, and the end check still speaks.
+
+**What makes an old run EXACT again is not a field but a build:** the record already says the commit it was played on (`build`).
+- A tool that builds that commit in a worktree and replays there gives his runs back exactly.
+- That is the honest route for "replay his kept runs to the bit". Option 1 cannot do it for the simulation, because every movement and
+  chase change would need an off path kept forever.
+- inferred: building one old commit is a few minutes, and four builds cover all 16 of his runs.
+
+**What would change my mind:**
+- If he wants his kept runs exact and not merely watchable, then the build-at-the-recorded-commit tool is the answer, and the identities
+  only label.
+- If a canonical run turns out too weak (a sim change it misses, shown by a mutant), then the identities would need more than one
+  scenario each.
