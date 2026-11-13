@@ -32,3 +32,12 @@ default, which showed nothing. Nothing is built; this is the still for his eye b
 - The words. Others in the same voice: "45.8 s left before it comes itself", or just the countdown "0:45.8" in amber.
 - Whether the line should grow or redden in the last ten seconds. That would be a second screen state, which his pick
   did not ask for, so the mock does not.
+
+## A second wording, offered (the chair's 11:58:50Z packet; his story_lore-5)
+
+His note on `story_lore-5` ("Unnamed until chapter 5"): "I like the ambigious "It" is coming." (brief item 183).
+- **The second still:** `Downloads\dreamzone-3-l195-arm-variants\timer_mock_it_is_coming.png` (its HTML beside it): the
+  same HUD with the amber line **"It is coming   0:45.8"**, the countdown in m:ss.s like the HUD's own clock.
+- Both stills are for him to choose between; the colour and the place stay OURS in both.
+- Not built; the run's frame comes after V1's landing and the legs (lane C item 4). For that lap: 10 minutes at brutal as
+  the default, the length one named setting, nothing wired per difficulty (`run_frame-2`, plan :192-216).
