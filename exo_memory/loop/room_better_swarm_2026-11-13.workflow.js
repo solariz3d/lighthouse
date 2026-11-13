@@ -13,7 +13,8 @@ export const meta = {
 // Launch from the lighthouse repository's root on the machine that holds the room. Pass the model as args, e.g. {model:'opus'}.
 // The keeper gave the word for this swarm on 2026-11-13 (briefs/lighthouse_the_room.md, 07:12 and 07:13); confirm model and size with him.
 const MODEL = (args && args.model) || 'sonnet'
-const EXO = 'exo_memory'
+const ROOT = 'C:/Users/nname/Desktop/lighthouse'  // D: the agents' working directory is not the repo, so paths are absolute
+const EXO = ROOT + '/exo_memory'
 const OUT = EXO + '/loop/room_better_2026-11-13'
 
 const COMMON = [
@@ -26,6 +27,7 @@ const COMMON = [
   '4. Quote the keeper only verbatim, with the path and line, and never infer anything about him as a person. Speak in traces and instruments, not verdicts about any seat.',
   '5. Never run grep with a bounded repeat larger than 200. Cut text with sed line ranges or a short node script. Prefer a command that returns a number to a file dump.',
   '6. Every finding about a fault names what it cost (minutes, tokens, a wrong ruling) from the record, or says "cost not recorded".',
+  '8. The repository root is C:/Users/nname/Desktop/lighthouse: cd there before any command; every repo path in your task is relative to it.',
   '7. Plain words, short sentences, no preamble. Lines about 120 characters wide. Offer options and evidence, never decisions.',
 ].join('\n')
 
