@@ -1,5 +1,31 @@
 # p-l194-landing-train-B: the landing train (L194)
 
+## WHERE IT STOPS (L, 13:5xZ)
+
+- **State: built, landed, in use.** The code is on lighthouse main (`consonance/tools/landing-train.js`, last change
+  12832fad). Batches it landed:
+  - c9d520e (mine, 11:21Z);
+  - cc8eea8 (four branches, 13:00:53Z, run by A).
+- **Green:** rows 17 of 17 (`node --test consonance/tools/landing-train.test.js`). Mutants 20 of 20 at 6de66034. The 21st
+  (12832fad, "a timeout waiting for the hold crashes the train") is written and NOT yet run.
+- **Next command:** `node consonance/tools/landing-train.mutants.js`, about 6 min. It holds the lighthouse tree's lock;
+  setting CONSONANCE_DATA to a scratch folder gives it its own.
+- **Open, named, not built:**
+  - a branch red alone is not checked against main alone, so a broken check or a red main sends an innocent branch back;
+  - there is no withdraw verb (edit `landing-ready.jsonl`);
+  - the train's exclusive hold parks the room while it waits for slots. My scratch `l194_waitfree.sh` waits for both slots
+    free, no hold and the memory gate clear BEFORE starting the train. It is not in the train itself, and should be.
+- **Only on L, needed again on the desktop in its own form:**
+  - the train's worktree `Downloads\dz3-train`, with its build;
+  - its staging folder `Downloads\dz3-train.promote`;
+  - the config `C:\Consonance\data\landing-train.config.dreamzone-3.json` (L's paths);
+  - the READY list and log, `C:\Consonance\data\landing-ready.jsonl` and `landing-train.jsonl`.
+  - **On the desktop:** `git worktree add --detach <dir> main` in its dreamzone-3, then
+    `git submodule update --init --reference <main checkout>\.git\modules\third_party\<name> -- third_party\<name>` for each
+    of the four, then a config with that machine's paths (the keys are in the train's header).
+- The check and the guard live in the repo (`consonance/tools/landing-train-dz3-check.cmd`, `-guard.cmd`). The memory gate
+  is `exo_memory/loop/memwatch_2026-11-13.js`.
+
 Packet: `[chair:MAIN]` 08:50:04Z (L194), from `loop/plan_l194_landing_train_2026-11-13.md` (560cb1ee). His pick, brief
 item 183, `tech_foundation-4`: "Land green branches, drop the red one". Tier: prove it.
 
