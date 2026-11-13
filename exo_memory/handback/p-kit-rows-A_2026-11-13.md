@@ -157,3 +157,34 @@ and in `GenParams{}`. Each route's real corners are counted whole (turns within 
 **What I would do next (not started; the order puts (a) before it unless ruled otherwise):** take the routes with two or more corners that the
 careful body loses in the kit's world (12) and trace the two bodies tick by tick on the worst three (seed 4, 79 m: 9.68 s against 10.84 s; seed 5,
 71 m; seed 8, 77 m), to see where the careful one gives the time away: braking for a corner it then does not need, or a run it slows into.
+
+## 6. The sprinter row's three worst routes, traced: WHERE the careful body gives the time away (D, 12:44 local, `date` by the shell)
+
+**How:** a scratch row (`diag_sprint.cpp.txt`, never committed) on `a-kit-told` `dcbfd3c` finds the three routes by the row's own loop and
+length, and walks both bodies, sampling every half metre of travel. Times are compared at equal distance. The run waited out P's GPU timing session
+before it started. checked: `sprint_trace.log` (sha256 `7dbbd43c`). Seed 8 matched two routes of 77 m; the one in question is 77.5 m.
+
+| route | careless / careful (s) | where the gap is made |
+|---|---|---|
+| seed 4, 79.3 m, 9 path points | 9.66 / 10.82 | **0.44 s** at the start turn (at 3 m: 3.96 m/s against 5.99); **~0.9 s** at a double corner, two turns of about 70° within 7 m around (−47.99, −17.99) → (−45.19, −11.54): the careful body brakes to 5.5 m/s, the careless one goes through at 6–10 m/s scraping the wall (its scrape count 40 → 327) and loses far less; then 45 m of straight at 10.15 m/s for both, the gap flat |
+| seed 5, 71.4 m, 11 points | 11.01 / 12.04 | 0.70 s at the start turn (at 3 m: 3.32 against 5.99); +0.52 s at 21 m, where both meet a wall; the careless body gives some back at 52–54 m; +0.33 s at 58 m (the careful one at 1.79 m/s) |
+| seed 8, 77.5 m, 21 points | 12.45 / 13.25 | the careful body brakes to **2.2–2.8 m/s** before the corners at 8, 15, 21, 30 and 35 m. The careless one takes the same corners at **7.5–10.15 m/s** and scrapes 56 ticks on the whole route. Its one loss is one wall hit at 11 m (2.86 m/s), where the careful one gains 0.87 s |
+
+**Named:**
+- **The careful body gives its time away braking for the path's turns, often to a speed far below what the floor there needs.** It loses at the
+  start turn and at each corner.
+- The braking is the corner rule: `corner_speed` of the turn ahead, summed within 3 m (my D665 change, `cab3530`). The careless body shows,
+  route by route, that a body can go through most of those corners at 7.5–10 m/s, touching a wall rarely or sliding along it cheaply.
+- **So in these corners braking costs more than not braking:** the rule reads the polyline's turn, not the room the body has to turn in.
+
+**What I have NOT established:**
+- **Why the kit's world has more such corners.** inferred: its kept chutes stand in junction columns, and the path's turns round them in open
+  floor are cuttable at speed. Not checked: I have not looked up which cells those corners stand in.
+- **Whether the off world's losses have the same shape.** Section 5's table says it loses fewer.
+
+**What would fix the role without moving the row** (for the ruling; not started):
+- the corner rule asks for the speed the body's own line needs, not the path's angle; for example, its turning room: the free distance across
+  the corner, read off the mesh;
+- or a corner is braked for only when the turn's room is narrow.
+- Either is a change to every chaser's braking: a hunter fingerprint and catch-power change. It needs its own registration and sweep. Not a
+  tuning of this row.
