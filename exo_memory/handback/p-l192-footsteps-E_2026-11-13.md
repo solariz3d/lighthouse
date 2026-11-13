@@ -176,7 +176,7 @@ the game's hunter keeps its clock, now with the knock and the force curve.
 - **L185:** the head-row proof (`scratchpad/l185/mut5.sh`) has waited on the heavy-run lock since about 08:50Z. A's
   arms take it back to back. L185 1+2 land when the proof shows the row green on clean and red on the survivor.
 
-## 10. After the rulings (plan tail, 5db62002), written from 03:5x local
+## 10. After the rulings (plan tail, 5db62002), written from 03:3x local (`date`)
 
 **§6 done: Keller's plateau.** `l192-footsteps` **`9eca8db`**: the force rises to 2.5 BW at 6 m/s and stays there.
 The level row's curve is amended by name with the ruling's reason; its cells and bar are unchanged.
