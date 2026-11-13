@@ -1186,3 +1186,11 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        - The classic centre-of-mass study (Hinrichs, mirrored): the arms' contribution grows with speed.
      - Routed: the arm swing comes from these, coupled to the chain's thorax counter-rotation and grown with speed.
 176. 07:1x, on L190 (C stopped: no readable source for arm swing against speed; one figure read, Otsuka ±35° at 4.3 m/s): asked what "swing with the body more" meant, he chose **"Both"**: a bigger swing at speed (from Otsuka's ±35°, grown with speed by a named, swappable factor **marked ours**, red-first on d0c1aba) **and** the arms riding more of the torso's twist (the share marked ours unless a source is found). His eye is the bar.
+177. 2026-11-13 00:38, after the L190 clip (e0184ea): "the arms are still not moving good, look into how arms should swing and it becomes obvious, its making me think you arent using the real reseaech. the arms are like too close to the sides of the body while moving"
+     - He is right about the research. L190's growth and coupling were **marked ours**, and only one sagittal figure (Otsuka ±35°) was read; nothing was read on the arm's **shape** (elbow bend, the arm held off the body, the hand's path in front).
+     - **Research check, same turn (search summaries):**
+       - Yegian & Tucker 2019, "Straight arm walking, bent arm running: gait-specific elbow angles": runners bend the elbow; it lowers shoulder torque about 32 %.
+       - Pontzer et al. 2009, J Exp Biol 212:523: arms as mass dampers against torso rotation.
+       - Hinrichs 1987, "Upper extremity function in running" I/II: upper and lower body angular momentum equal and opposite.
+       - "Kinematics of Elite" sprinting (zenodo 3402737): to be read for joint angles.
+     - Plan: L191, the arm's shape from these, read in full.
