@@ -6,7 +6,7 @@ items 183 to 190 are today's) and from each pane's "WHERE IT STOPS" section name
 
 ## Where the code is
 
-- **dreamzone-3 `main` = `origin/main` = `cc8eea8`** (checked by the librarian at 13:15Z: `git fetch`, `git log origin/main`). The
+- **dreamzone-3 `main` = `origin/main` = `31d1c6d` at the close** (see THE CLOSE at the end; it was `cc8eea8` when this section was first written at 13:15Z). The
   launcher on L says up to date.
 - **Landed on 2026-11-13, in order:** L191 the arm shape (04f3882); L188 step 1 the player's feet (8dda6d9); L185 steps 1+2 the
   skeleton and ragdoll, nothing visible (682e699); generator Lap 1 the measure and the pin, with the parallel suites (c9d520e);
@@ -105,4 +105,19 @@ items 183 to 190 are today's) and from each pane's "WHERE IT STOPS" section name
 6. B: the Park kit with the door rate; then the idle-holder guard live; then the fist's joints with E.
 
 ## THE CLOSE (filled in at about 08:00 local)
+
+**Written at 13:43Z (07:43 local) by the librarian. Where a line above disagrees with this section, this section is the later one.**
+
+- **dreamzone-3 `main` = `origin/main` = `31d1c6d`** (checked: `git fetch`, `git log origin/main`; the launcher on L says up to date). The last train batch landed at 13:40:07Z: **the hunter's legs** (L200, `l200-legs-on-cc8eea8` 2746681, merge 7aa8634) and **the overtime chase** (L203, `a-d673-overtime` 37a2f29, merge 31d1c6d).
+- **What he sees on that build, by the panes' own lines:**
+  - the hunter's knee bends about 40 degrees under its weight and folds to about 106 to 119 degrees in swing; its foot rolls; at its own 9 to 13 m/s the shapes are ours (`handback/p-l200-legs-C_2026-11-13.md`);
+  - at 10 minutes the hunter and the lesser chasers walk off, no Park protects, and one dark creature in the hunter's shape comes from behind; being caught by it or falling is the save. Its speed is an untuned first guess. Nothing on screen warns of it yet: C's frame and timer line are not built (`handback/p-d673-overtime-A_2026-11-13.md`, the landing section).
+- **Parked and pushed, NOT landed:**
+  - B, the Park kit with his door rate 0.15: `gen-lap2-kit` c9ad588. Four suites red and the world self-test 50 of 52; A has not yet answered what the run record carries for a changed generator (`handback/p-gen-lap2-kit-B_2026-11-13.md`, WHERE IT STOPS).
+  - B, the idle-holder guard: lighthouse `l202-idle-guard` 901d3c39, green (101 of 101; mutants 5 of 5), not merged, because it goes live for every seat when it lands (`handback/p-l202-idle-holder-guard-B_2026-11-13.md`).
+  - C: `l180-lap2-rest` 55d1451 (step 1 green); V2 and V3 on `l195-arm-variants` bba95c4.
+  - E: `l192-footsteps` d8f77ba (timing and mix, green, not READY); `l199-offline-tools` 92be868 (never lands).
+  - A: `l182-lines` c357bbd, `l182-hawk` ee55947.
+- **A's open items for D** (its landing section): the brutal overtime sweep that should set the dark one's speed; 18 mutants of the overtime rules and 13 of Lap R's; the brutal arms of L182; a stale registered sum (599ab239) whose mover is a named bisect; one record line for C (`r.world.run_length_s`).
+- **The two swarms:** mine is landed and committed (6a241ea3, `loop/sprint_reference_2026-11-13/`). The Third Place's is STILL RUNNING at his word (item 194; "I will stay after 8 if it needs to"); its checkpoint is committed (abf2390d) with `loop/absolute_sources_2026-11-13/STATE.md`. Its end, and my collation of it, are written below this line when it lands.
 
