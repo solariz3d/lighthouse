@@ -173,6 +173,16 @@ is a `tool_use` block and the board keeps text blocks — so the one fact that p
 editing the same file is precisely the one the board drops. Still facts, not instructions: these are
 files it had open, not *"do not touch."*
 
+**When the API is the one answering** (L198, `exo_memory/loop/stall_trace_403_packets_eaten_2026-11-13.md` fix 2c): a pane
+whose newest line begins "Please run /login" or "API Error" is named first, in one line, until it replies cleanly:
+
+```
+[panes] API ERROR — the last line of CHARLIE (4m ago), ALPHA (5m ago) is an API error ("Please run /login" or "API Error"); …
+        BRAVO  ≥54 exch today · last 1m · +3 since your last turn
+```
+
+Its row alone could not show it: `↳ said` prefers the pane's last long line, so it kept the report from before the error.
+
 ### Counting defects any tool over this data has to correct
 
 Not opinions — each was found by measuring a live board rather than trusting it, and each would

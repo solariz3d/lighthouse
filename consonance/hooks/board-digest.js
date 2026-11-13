@@ -87,6 +87,8 @@ function callsign(letter) {
 }
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+// A pane's reply that is the API's error and not the pane (L198 2c): what Claude Code prints when a call fails.
+const API_ERROR_RE = /^(Please run \/login|API Error)/;
 
 // The Orchestrator's fixed session id (src-tauri/src/main.rs, MAIN_SID — it is
 // constant precisely so Main can --resume itself). It carries its own callsign
@@ -375,7 +377,7 @@ function main(input) {
   for (const e of parsed) {
     if (perSecond.get(e.key) > BURST_THRESHOLD) continue; // replayed history
     let p = panes.get(e.pane);
-    if (!p) { p = { exch: 0, fresh: 0, last: 0, task: '', said: '' }; panes.set(e.pane, p); }
+    if (!p) { p = { exch: 0, fresh: 0, last: 0, task: '', said: '', newest: '', newestAt: 0 }; panes.set(e.pane, p); }
     if (e.ts > p.last) p.last = e.ts;
     const text = e.text.replace(/\s+/g, ' ').trim();
     if (e.role === 'user') {
@@ -395,6 +397,8 @@ function main(input) {
       // where the work stands. Take the newest reply of real length, and fall
       // back to the newest of any length rather than showing nothing.
       if (text.length >= MIN_SAID_CHARS || !p.said) p.said = text;
+      // The newest line of ANY length, for the API-error line below: an error is short, and `said` prefers the report before it.
+      if (e.ts >= p.newestAt) { p.newestAt = e.ts; p.newest = text; }
     }
   }
 
@@ -518,7 +522,16 @@ function main(input) {
   // #4), then clear the expired lock so the notice fires once instead of repeating forever; clearing
   // is the documented end of the window's lifecycle, and the chair can re-open one at any time.
   // A sealed window that ended this turn says so ahead of the digest, in the same emit (emit exits).
-  const digest = `${sealed.notice ? `${sealed.notice}\n        ` : ''}[panes] ${body.join('\n        ')}`;
+  // THE API-ERROR LINE (L198, fix 2c of loop/stall_trace_403_packets_eaten_2026-11-13.md). On 2026-11-13 between 09:46:56Z and
+  // 09:50:16Z the API answered 403 to three panes; seven packets were stamped DELIVERED into them, none was acted on, and no
+  // seat was told: each pane's row here still showed its last REPORT, because `said` prefers a long line and the error is short.
+  // So every pane whose newest line begins "Please run /login" or "API Error" is named first, in one line, until it replies
+  // cleanly. It names; it does not ring or resend (that is fixes 2a and 2b, in main.rs).
+  const apiDown = rows.filter(([, p]) => API_ERROR_RE.test(p.newest)).map(([pane, p]) => `${names[pane] || '?'} (${span(now - p.newestAt)} ago)`);
+  const apiLine = apiDown.length
+    ? `API ERROR — the last line of ${apiDown.join(', ')} is an API error ("Please run /login" or "API Error"); a packet delivered there is not acted on until it replies cleanly`
+    : null;
+  const digest = `${sealed.notice ? `${sealed.notice}\n        ` : ''}[panes] ${apiLine ? `${apiLine}\n        ` : ''}${body.join('\n        ')}`;
   if (b.reason === 'expired') {
     clearBlind();
     emit(`[blind] window expired — pane activity resumes below.\n        ${digest}`);
