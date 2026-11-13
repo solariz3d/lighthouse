@@ -84,3 +84,44 @@ checked: `lever_both.log` (sha256 `dd98615b`):
   - This fits section 1: the lever pursues the knowledge's point, and the knowledge's point is the drawn one across a wall.
 - **The dark one: the lever closes the orbit.** See the correction in `p-d673-overtime-A_2026-11-13.md` ("10:00", the claim that the orbit is
   the turn).
+
+## 4. The fix, as ruled (item 65 the specification), measured each way on seeds 3 and 9, red first (D, 11:26 local, `date` by the shell)
+
+**The ruling** (`librarian/2026-11-13.md:449`): option 2's guarantee is required; option 1 may go in with it; each is measured on the two
+traced cases; the reach row and its bar stay; a new row holds the guarantee.
+
+**The new row, registered before it was written:**
+- `a_hunter_near_where_it_was_sent_that_cannot_see_the_player_is_told_exactly` (`chase/tests/proof_tests.cpp`), on the two traced cases.
+- **The condition:** the hunter in Pursue has been within its error's radius of its aim for a quarter of a second, without sight of the player.
+- **What must follow:** within a second its aim is the player's own place (0.5 m).
+- **Why a second:** it acts on what it knew `hunter_reaction_s` (0.4 s) ago.
+
+**The two parts** (`told_code.js`; scratch switches for the measurement, hard-coded after):
+- **(1)** the drawn point is kept only if a walk of at most 1.5 x the error + 1.5 m joins it to the player. Up to four draws, the first being
+  the draw as it always was; else the player's own place.
+- **(2)** the guarantee: each sense tick, a hunter in Pursue, without contact, within the error's radius of its aim (same storey, 1.5 m), is
+  told the player's exact place.
+
+checked: `told_none.log` (`2d56f30c`), `told_opt2.log` (`7dbeec5c`), `told_opt1.log` (`c6815799`),
+`told_opt1_opt2.log` (`e1f59147`), one build:
+
+| | seed 3, case k 14 | seed 9, case k 5 | the new row | the reach row, slowest (bar 2.5) |
+|---|---|---|---|---|
+| neither (the code as it was: RED) | 19.85 s | 36.00 s | 0 of 7 held, FAIL | 2.68, FAIL |
+| (2) the guarantee alone | 11.01 s | 27.52 s | 2 of 2, ok | 1.73, ok |
+| (1) the walk-checked draw alone | 19.85 s | 19.93 s | 0 of 3, FAIL | 2.68, FAIL |
+| **both** | **11.01 s** | **19.93 s** | 1 of 1, ok | **1.73**, ok |
+
+- **The librarian's inference is CONFIRMED:** option 1 alone still leaves seed 3 as it was, at 19.85 s. A point within a short walk can still
+  lie in the lane outside the doorway.
+- **The guarantee is what makes the rows green.**
+- **Both together are quickest,** so both went in. The cleaner draw saves seed 9 another 7.6 s over the guarantee alone.
+- The every-distance form is not built, as ruled.
+
+**Committed:** dreamzone-3 branch `a-kit-told`, **`dcbfd3c`** on `9150ddf` (`chase/run.cpp`, `chase/tests/proof_tests.cpp`). The
+scratch trace file and its CMake line are not committed. Nothing is pushed.
+
+**The chase binary on it.** checked: `kit_fix_chase.log` (`52152450`) → "78 tests, 1 failed": the one red is the sprinter row (section 5),
+which has no hunter. The reach row reads 1.73, and the new row holds.
+- **Not yet run:** the whole suite and both self-tests on this commit. The fix changes every hunter's knowledge, so every chase fingerprint
+  moves with the kit as it is.
