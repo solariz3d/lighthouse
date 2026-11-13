@@ -106,7 +106,7 @@ items 183 to 190 are today's) and from each pane's "WHERE IT STOPS" section name
 
 ## THE CLOSE (filled in at about 08:00 local)
 
-**Written at 13:43Z (07:43 local) by the librarian. Where a line above disagrees with this section, this section is the later one.**
+**Written at 13:41Z (07:41 local) by the librarian. Where a line above disagrees with this section, this section is the later one.**
 
 - **dreamzone-3 `main` = `origin/main` = `31d1c6d`** (checked: `git fetch`, `git log origin/main`; the launcher on L says up to date). The last train batch landed at 13:40:07Z: **the hunter's legs** (L200, `l200-legs-on-cc8eea8` 2746681, merge 7aa8634) and **the overtime chase** (L203, `a-d673-overtime` 37a2f29, merge 31d1c6d).
 - **What he sees on that build, by the panes' own lines:**
