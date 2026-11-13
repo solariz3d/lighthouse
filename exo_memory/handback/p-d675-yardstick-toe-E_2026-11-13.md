@@ -141,3 +141,49 @@ NOT APPLIED 0**:
 - **For the record, one correction to the chair's 23:35Z line.** The remote's `l185-skeleton` (`b226b95`) is my 11-12
   step-2 WIP, not today's push. Today's `l185-skeleton` went up as `l185-skeleton-steps45` (`1b690fd`), because the two
   had diverged (the push addendum in `p-l185-refilm-E_2026-11-13.md`).
+
+## Addendum (23:4xZ): AMENDMENT 3, the compared point at the marker's place. This corrects the verdict above
+
+Ruling: the chair's D675 23:43Z item 1, from C's read of where the joint sits. Registered first (the registration's
+section 0b, lighthouse `fb9f519e`), then red, then green. dreamzone-3 `yardstick-toe-e`:
+- `e5d435c48871955facb10643b28123b11bd7e411`: red, 23 tests, 3 failed (rows 9 to 11);
+- **`0eabefc9af10db76e38b3c38e60b616404e28d42`**: green, 23 tests, 0 failed. **Pushed:** a fast-forward of the remote's
+  `704774c`, scan 0 over 2 commits, gate allow at 23:48:14Z. main is unchanged at `b08f25e`.
+
+checked: `dz-yardstick --simtk` on `0eabefc` (the whole output beside this file, `simtk_table_amendment3.txt`) →
+
+| m/s | JA1 toe marker | **ours at the marker's place (compared)** | above JA1 | ours toe joint (beside) | whips (all three) |
+|---|---|---|---|---|---|
+| 3.53 | 2.37 / 2.37 / 2.37 | **2.66 / 2.66 / 2.66** | +0.29 / +0.29 / +0.29 | 2.85 / 2.85 / 2.86 | yes |
+| 5.19 | 2.21 / 2.21 / 2.22 | **2.52 / 2.54 / 2.54** | +0.31 / +0.33 / +0.32 | 2.67 / 2.69 / 2.69 | yes |
+| 6.97 | 2.25 / 2.26 / 2.26 | **2.34 / 2.37 / 2.38** | **+0.09** / +0.11 / +0.12 | 2.47 / 2.51 / 2.52 | **no** |
+| 9.47 | 2.20 / 2.24 / 2.24 | **2.19 / 2.24 / 2.26** | −0.01 / 0.00 / +0.02 | 2.31 / 2.37 / 2.38 | no |
+| 11.00 | NOT COVERED | 2.08 / 2.13 / 2.15 | | 2.18 / 2.24 / 2.26 | NOT COVERED |
+
+**The checks:**
+- **Row 9:** standing, the point sits 0.1950 m forward and 0.0440 m down from the ankle. Turned 30° either way about the
+  side axis, its reach is off by 0.000000 m and its angle to the toe by 0.00001°.
+- **Row 10 (falsifier 5):** it reproduces C's 2.66, 2.54, 2.38 and 2.26 (15 Hz) within **0.0195**. Two seats built the
+  same point from the same words and agree.
+- **Row 11:** the verdict comes from `compared()`, not from the joint.
+- **Mutants:**
+  - the first run: applied 3 / caught 2 / did not build 1. The world-axes mutant left two parameters unused, and the
+    build treats that as an error. That was the mutant's fault, not a catch;
+  - re-made so it builds (`mutys3b.js`): applied 1 / caught 1, by rows 9 and 10.
+- **The clean rebuild:** 23 tests, 0 failed; `--simtk` exit 0.
+
+**The verdict, corrected and said precisely.**
+- By the registered rule (AMENDMENT 1, all three cut-offs), "the gait law itself whips" holds at **3.53 and 5.19 only,
+  not three speeds**. At 6.97 the 10 Hz margin is +0.09, under the 0.1 bar, while 15 and 25 Hz exceed it. The ruling's
+  "three speeds" read 15 Hz alone.
+- Said as the amendment requires: above one runner (JA1), never "outside the human range".
+- **The registered unwelcome outcome "the joint was the whip" holds.** At the compared point, 6.97 and 9.47 are not
+  over, where the joint was over at all four.
+- So my sentence above, "reads above JA1 at all four of JA1's speeds", was partly the joint's longer lever, and is
+  corrected by this run.
+- At 11 m/s, the compared point reads 2.08–2.15 on a straight. C's finding (a one-tick pop at take-off in the plant)
+  places the game's 2.8, and this measure does not need to.
+
+**One more thing visible in the table, for C, not acted on:** at 3.53 m/s the jog law is +0.29 above JA1 at the
+compared point. That is the widest gap. The ruling says nothing is refitted on this alone (one runner, and speeds the
+hunter does not chase at).
