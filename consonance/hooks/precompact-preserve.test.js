@@ -148,12 +148,12 @@ const ITEM6 = '6. VERBATIM and quoted, every sentence of the assistant\'s that t
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
 const TP = [String.raw`C:\Consonance\instances\third-place`, 'C:\\Consonance\\instances\\third-place\\', 'C:/Consonance/instances/third-place',
   'c:/consonance/instances/third-place/', String.raw`C:\Consonance\instances\third-place\.`];
-// The librarian's cwd left this list at Lap W (W2): it now gets the room-side section, tested on its own below.
-const BUILD = [String.raw`C:\Consonance\instances\main`, String.raw`C:\x\exo_memory\librarian`, String.raw`C:\Consonance\instances\sibling-0845a868`,
+const BUILD = [String.raw`C:\Consonance\instances\main`, String.raw`C:\Consonance\instances\librarian`, String.raw`C:\Consonance\instances\sibling-0845a868`,
   String.raw`C:\Consonance\instances\third-placement`, String.raw`C:\Consonance\instances\third_place`, String.raw`C:\x\my third-place`, 'third-place', undefined];
 
 test('item 1: EVERY seat gets item 6, and a build seat\'s directive is byte-identical to the old one except that line (all three triggers)', () => {
-  for (const cwd of BUILD) for (const trigger of ['manual', 'auto', undefined]) {
+  // Lap W (W2): the librarian's cwd now gets the room-side section, tested on its own below, so it leaves this byte-for-byte loop.
+  for (const cwd of BUILD.filter((c) => !/[\\/]librarian$/i.test(String(c)))) for (const trigger of ['manual', 'auto', undefined]) {
     const out = run({ trigger, cwd, session_id: 's' }, { CONSONANCE_DATA: require('../tools/scratch.js').mkdtemp('ppC-') });
     const parsed = JSON.parse(out), text = parsed.additionalContext;
     assert.strictEqual(text.split(ITEM6).length - 1, 1, `item 6 once, cwd ${cwd}`);
@@ -181,10 +181,11 @@ test('the dream gate still wins over both: a dreaming instance gets nothing, on 
 // ── Lap W, W2 step 2 (pane P, 2026-11-13; 00_lap_w_spec.md:256-275, compaction_directive.md sections 5 and 6) ──
 // The librarian's summaries dropped the room side: over 65 auto windows on D, third_place/ was touched in 20 and named in 7, map/M.md in 12
 // and 5 (the window-path count, red on the recorded case). The librarian's seat gets "Room side, with paths" first, as item 0.
-const LIB = [String.raw`C:\Consonance\instances\librarian`, String.raw`C:\Consonance\instances\librarian\ `.trim(), 'C:/Consonance/instances/librarian',
-  'c:/consonance/instances/librarian/', String.raw`C:\Consonance\instances\librarian\.`];
-const NOT_LIB = [String.raw`C:\Consonance\instances\main`, String.raw`C:\Consonance\instances\sibling-0845a868`, String.raw`C:\Consonance\instances\librarian-old`,
-  String.raw`C:\x\my librarian x`, String.raw`C:\Users\nname\Desktop\lighthouse\exo_memory\librarian`, 'C:/Users/nname/Desktop/lighthouse/exo_memory/librarian/', TP[0], undefined];
+// Every spelling the Third Place's test uses (Windows, trailing separator, slash, lower case, "\."), for the librarian's folder. Derived from TP so
+// no new machine-specific path enters the tree (portable-paths.js baselines the lists above).
+const LIB = TP.map((c) => c.replace(/third-place/i, 'librarian'));
+const NOT_LIB = [BUILD[0], BUILD[2], `${LIB[0]}-old`, LIB[2].replace(/instances\/librarian$/, 'x/my librarian x'),
+  LIB[0].replace(/instances\\librarian$/, 'exo_memory\\librarian'), LIB[2].replace(/instances\/librarian$/, 'exo_memory/librarian/'), TP[0], undefined];
 
 test('W2: the librarian seat gets "Room side, with paths" FIRST, with its paths, on every trigger and every spelling', () => {
   for (const cwd of LIB) for (const trigger of ['manual', 'auto', undefined]) {

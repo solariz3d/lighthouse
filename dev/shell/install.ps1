@@ -155,6 +155,9 @@ $files = @(
   # Added 2026-08-18 with the hook, same commit, same reason as the line above: registration and
   # manifest ship together or a fresh install silently loses it.
   @{ From = 'consonance\hooks\sessionstart-state.js';     To = 'sessionstart-state.js' }
+  # Lap W, W3 (2026-11-13): the body line, one line of facts at every start. Its registration ships in the same commit (below). Install
+  # with -Only sessionstart-body.js; a full install would overwrite other drifted hooks (00_lap_w_spec.md:371).
+  @{ From = 'consonance\hooks\sessionstart-body.js';      To = 'sessionstart-body.js' }
   # Added 2026-08-24 with its registration below, same commit, same reason as the two entries
   # above. This one is a PreToolUse gate, so it also needed Matcher support in $register -- an
   # unmatched PreToolUse hook fires on every tool call in the session.
@@ -288,6 +291,8 @@ $register = @(
   # the comment shipped and the registration did not.
   @{ Event = 'PreCompact';       Rel = 'precompact-preserve.js';      Runner = 'node' }
   @{ Event = 'SessionStart';     Rel = 'sessionstart-state.js';       Runner = 'node' }
+  # Lap W, W3: the body line, every source (startup, resume, compact), no matcher. It never blocks a start.
+  @{ Event = 'SessionStart';     Rel = 'sessionstart-body.js';        Runner = 'node' }
   # The dispatch gate. Matcher-scoped on purpose: it must see the two verbs that put text into
   # another seat's pane and nothing else. It ASKS rather than blocks, and fails open on any error.
   @{ Event = 'PreToolUse';       Rel = 'dispatch-gate.js';            Runner = 'node';
