@@ -30,6 +30,10 @@
 # which are a different subject that merely shared a symptom.
 
 * text=auto eol=lf
+# cmd.exe reads a batch file's labels and long lines wrong with LF endings (dreamzone-3 pins the same). L194, B: the
+# first .cmd files here were the landing train's; no other file matched when this was added.
+*.cmd text eol=crlf
+*.bat text eol=crlf
 
 # Binary: never line-ending-converted, never diffed as text. Listed explicitly rather than left to
 # git's content heuristic, because a heuristic that guesses right today is not a decision.
