@@ -33,4 +33,4 @@ Each is the first lap of its handoff, `loop/buildpath_<key>_2026-11-13.md`. Read
 3. **The look and fear layer** (queue step 14): the dream director in new `game/dream.*` files, with the capped field of view. `stage.cpp` is shared with C: ask on the board before touching it.
 4. **The front door** (queue step 12): the title constant and the photosensitivity notice.
 5. **Movement, the surge** (queue step 9): lap 1 only, in `sim/`. Its later laps wait for his calls.
-- **Before each item,** check `loop/his_calls_2026-11-13.json` (being written) for a call of his marked "now" on that aspect. If one blocks the first lap, skip to the next item and say so on the board.
+- **Before each item,** check `loop/his_calls_2026-11-13.json` (written; his picks arrive on the decision page and are copied into `briefs/dreamzone2_the_game.md`, item 183) for a call of his marked "now" on that aspect. If one blocks the first lap, skip to the next item and say so on the board.

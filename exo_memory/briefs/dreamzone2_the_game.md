@@ -1217,3 +1217,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **Designed pieces (item 93): "Room drafts, you judge (Recommended)".** The room drafts shape-only layouts and he judges rendered pictures before any land.
      - **More builder panes: "Two more (Recommended)".** Lanes: `loop/plan_two_more_panes_2026-11-13.md`.
      - **Still open:** whether the generator path moves up his queue (it sits at step 13).
+183. 2026-11-13 03:5x on, his picks on the decision page (https://claude.ai/artifact/Cu4oEJHEmeeQyW9jpVGPU1, private to him; built from `loop/his_calls_2026-11-13.json`). Each pick is saved in the page's store as `answers/<call id>` and is copied here when it is read:
+     - **Read 10:00Z:** `run_frame-1`, "Show the timer?": **"Show nothing"** (picked 09:59:34Z).
+     - **State:** 102 calls are open on the page (16 marked needed now) and 27 are settled. The four he was asked in text at 03:4x are on it as `world_gen-0`, `sound-2`, `sound-7` and `sound-8`.

@@ -1,0 +1,3364 @@
+{
+ "generated": "2026-11-13",
+ "open": [
+  {
+   "id": "run_frame-1",
+   "aspect": "run_frame",
+   "title": "Show the timer?",
+   "question": "When a run has a time limit, does the player see it on screen? Today the clock counts up and nothing says a limit exists.",
+   "options": [
+    {
+     "label": "Show nothing",
+     "detail": "Cheapest; a player may never learn a limit exists."
+    },
+    {
+     "label": "Show a countdown",
+     "detail": "Lets the player plan, but weakens the 'playing with its food' feeling."
+    },
+    {
+     "label": "Late warning only",
+     "detail": "Show it only in the last minute; one extra screen state."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "queue step 2 default (stands unless you veto); a second reader found it was never your own ruling, only an open gap",
+   "blocks": "The on-screen part of the run frame (the clock and overtime build).",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_run_frame_2026-11-13.md section 4 Q1",
+    "loop/queue_dreamzone3_2026-11-12.md step 2",
+    "loop/buildpaths_INDEX_2026-11-13.md section 6 (run_frame)"
+   ],
+   "his_words": [
+    "item 28"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "run_frame-2",
+   "aspect": "run_frame",
+   "title": "How long is a run?",
+   "question": "How long should a run last before the timer ends and the unbeatable end begins? You said ten to fifteen minutes depending on play testing; the build starts at ten.",
+   "options": [
+    {
+     "label": "One length for everyone",
+     "detail": "One number in the settings file; simplest."
+    },
+    {
+     "label": "Different per difficulty",
+     "detail": "A length for each level; more tuning."
+    },
+    {
+     "label": "Longer as chapters advance",
+     "detail": "Runs grow as the story does; ties into chapters."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Nothing yet; it can be tuned after you play the overtime build.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_run_frame_2026-11-13.md section 4 Q2"
+   ],
+   "his_words": [
+    "item 28"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "run_frame-3",
+   "aspect": "run_frame",
+   "title": "Void in overtime?",
+   "question": "In the unbeatable overtime, what happens if you fall into a void? The plan currently says the good god saves you.",
+   "options": [
+    {
+     "label": "It saves you",
+     "detail": "Treated like any save; the run counts as a success."
+    },
+    {
+     "label": "The run is lost",
+     "detail": "Like a void before the timer; harsher, and the good god is not always there."
+    },
+    {
+     "label": "The dark one carries you",
+     "detail": "A third reading; the handoff says a void that saves is unreadable to a player."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "the run frame plan (a default you may veto), relayed by the run_frame handoff",
+   "blocks": "The overtime chase build.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_run_frame_2026-11-13.md section 4 Q3",
+    "loop/queue_dreamzone3_2026-11-12.md step 2"
+   ],
+   "his_words": [
+    "item 28",
+    "item 66"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "run_frame-4",
+   "aspect": "run_frame",
+   "title": "Do Parks stop the dark one?",
+   "question": "The dark one in overtime cannot be outrun. Do the safe passages (Parks) hold it back at all? You said safe zones 'just reroute it'.",
+   "options": [
+    {
+     "label": "It reroutes around",
+     "detail": "It comes by the Park's own way in; matches what you said."
+    },
+    {
+     "label": "It walks through walls",
+     "detail": "Certain and fair, but it 'cheats' and costs the pathing work."
+    },
+    {
+     "label": "Parks close in overtime",
+     "detail": "Removes the question; no safe place at all."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "the run frame plan (a default you may veto)",
+   "blocks": "The overtime chase build.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_run_frame_2026-11-13.md section 4 Q4",
+    "loop/queue_dreamzone3_2026-11-12.md step 2"
+   ],
+   "his_words": [
+    "item 28"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "run_frame-5",
+   "aspect": "run_frame",
+   "title": "Is the dark one the hunter?",
+   "question": "You said the death shows it was always the evil god chasing you. Is the overtime dark one a new creature that appears after the others walk off, or is it the hunter itself changing?",
+   "options": [
+    {
+     "label": "A new creature",
+     "detail": "The plan; it wears the hunter's shape as a stand-in. Cheapest."
+    },
+    {
+     "label": "The hunter itself changes",
+     "detail": "The reveal lives in the world, not on a card; touches the hunter's model."
+    },
+    {
+     "label": "Both",
+     "detail": "Wears the hunter's shape until the catch; also touches the hunter's model."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "the run frame plan (planned option), relayed by the run_frame handoff",
+   "blocks": "The overtime chase build and the later death reveal.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_run_frame_2026-11-13.md section 4 Q5"
+   ],
+   "his_words": [
+    "item 30"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "run_frame-6",
+   "aspect": "run_frame",
+   "title": "What is 'the part taken'?",
+   "question": "When the evil god catches you early and takes a part of you, is the loss only a feeling, or does something real go (a trinket, an ability, a memory)?",
+   "options": [
+    {
+     "label": "Felt only",
+     "detail": "Screen and sound; nothing changes in your save."
+    },
+    {
+     "label": "A real loss",
+     "detail": "Something real is taken; reaches the long-term progression."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The death reveal (waits on the run frame). The handoff gives no option list; these are the two plainest readings.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_run_frame_2026-11-13.md section 4 Q6",
+    "briefs/dreamzone3_design.md gap on the part taken"
+   ],
+   "his_words": [
+    "item 30",
+    "item 28"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "run_frame-7",
+   "aspect": "run_frame",
+   "title": "Is the loss portal the reveal?",
+   "question": "When a run is lost there is a scare then a portal home. Is that the same sequence as the reveal that shows it was always the evil god, or two separate moments?",
+   "options": [
+    {
+     "label": "One sequence",
+     "detail": "Scare, portal, bed, with the reveal inside it."
+    },
+    {
+     "label": "Two sequences",
+     "detail": "A normal loss, and a separate reveal."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The death reveal build. The handoff gives no option list; these are the two plainest readings.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_run_frame_2026-11-13.md section 4 Q7"
+   ],
+   "his_words": [
+    "item 26",
+    "item 30"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "chase_entities-1",
+   "aspect": "chase_entities",
+   "title": "Softer hunter or more grip?",
+   "question": "Making chasers turn only as sharply as a person cuts their wall-snagging but costs them 15 to 18 points of catch power. Accept a softer lone hunter, or give the hunter extra grip?",
+   "options": [
+    {
+     "label": "Accept it",
+     "detail": "A softer solo hunter; win catches back with more chasers and the kit. Cheapest."
+    },
+    {
+     "label": "Grip above human",
+     "detail": "The hunter corners better than a human ('monstrous'); the 1.33 figure behind it is unverified press."
+    },
+    {
+     "label": "Raise the hunter's speed dials",
+     "detail": "Wins catches back directly, but fights your 'too fast' complaint."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The chase's turning law, which is in flight.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_chase_entities_2026-11-13.md section 4 Q1"
+   ],
+   "his_words": [
+    "item 164",
+    "item 178",
+    "item 141",
+    "item 168"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "chase_entities-2",
+   "aspect": "chase_entities",
+   "title": "Keep the wall pass?",
+   "question": "One chaser move, 'Through', passes through a wall. It breaks your 'without clipping' and 'route around' rules on purpose. Keep it?",
+   "options": [
+    {
+     "label": "Keep with a visible tell",
+     "detail": "A designed break, with a slice effect so it reads."
+    },
+    {
+     "label": "A ledge-only link",
+     "detail": "Same idea but no wall to pass through."
+    },
+    {
+     "label": "Drop it",
+     "detail": "Removes the break; costs the answer to the safe corner."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The second wave of lesser chasers.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_chase_entities_2026-11-13.md section 4 Q2"
+   ],
+   "his_words": [
+    "item 17",
+    "item 7"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "chase_entities-3",
+   "aspect": "chase_entities",
+   "title": "Do Shroud and Lure fool the hunter?",
+   "question": "You said the main hunter always knows where you are. Two things you also want (Shroud: entities lose you; Lure: a decoy) would fool chasers. Do they work on the hunter?",
+   "options": [
+    {
+     "label": "Lesser chasers only",
+     "detail": "The hunter ignores both; smallest build."
+    },
+    {
+     "label": "Shroud costs stress only",
+     "detail": "No effect on the hunter's tracking; the cost is stress."
+    },
+    {
+     "label": "The hunter loses you briefly",
+     "detail": "Breaks 'always knows where you are'; bigger build and a heavy stress cost."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The chaser kit's first waves and the Shroud ability.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_chase_entities_2026-11-13.md section 4 Q3",
+    "loop/buildpath_abilities_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 65",
+    "item 58"
+   ],
+   "same_as": [
+    "abilities-q4"
+   ]
+  },
+  {
+   "id": "chase_entities-4",
+   "aspect": "chase_entities",
+   "title": "Can good entities fail?",
+   "question": "Can the good entities be late or be caught, and how often? Or do they always arrive?",
+   "options": [
+    {
+     "label": "Never fail",
+     "detail": "Rare and scripted; the player never risks them."
+    },
+    {
+     "label": "They can be caught",
+     "detail": "The player risks losing them; a larger system."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "How good entities are built.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_chase_entities_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 25",
+    "item 26"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "chase_entities-5",
+   "aspect": "chase_entities",
+   "title": "Which chasers climb?",
+   "question": "Should every kind of chaser climb ledges, as in Left 4 Dead, or only some? You said entities must route around obstacles.",
+   "options": [
+    {
+     "label": "Only crawler and pack",
+     "detail": "Keeps the ledge escape for the player."
+    },
+    {
+     "label": "All kinds",
+     "detail": "Ends the ledge escape."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The second wave of lesser chasers and their bodies.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_chase_entities_2026-11-13.md section 4 Q5"
+   ],
+   "his_words": [
+    "item 7"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "chase_entities-6",
+   "aspect": "chase_entities",
+   "title": "Speed margin against the hunter?",
+   "question": "At full run the player's top speed leaves the hunter only about 10 percent behind, and only after 8 seconds of unbroken sprint. You also said the player was getting too fast. Leave as is, or tie the hunter's speed to the player's earned surge?",
+   "options": [
+    {
+     "label": "Leave as is",
+     "detail": "Hold the current margin."
+    },
+    {
+     "label": "Tie hunter to player's surge",
+     "detail": "Hunter speeds up when the player earns a surge; one chaser kind already does this."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Speed tuning of the chase.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_chase_entities_2026-11-13.md section 4 Q6"
+   ],
+   "his_words": [
+    "item 141",
+    "item 81"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "entity_bodies-1",
+   "aspect": "entity_bodies",
+   "title": "Sprinter's body shape?",
+   "question": "You said every entity is humanoid in nature with its own uncanniness, and that the sprinter gets a galloping back flex. The design sheet instead draws it with back-jointed paws and a flat trunk, and the pack's flankers drop to all fours. Which reading stands?",
+   "options": [
+    {
+     "label": "Keep as sheeted",
+     "detail": "No extra work; a looser reading of 'humanoid'."
+    },
+    {
+     "label": "Human legs, back flex as the one trait",
+     "detail": "One more Blender pass."
+    },
+    {
+     "label": "Decide kind by kind",
+     "detail": "Settle each chaser separately."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The sprinter's model and the first chaser-body work (needs the desktop's Blender).",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_entity_bodies_2026-11-13.md section 4 Q1"
+   ],
+   "his_words": [
+    "item 168",
+    "item 169"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "entity_bodies-2",
+   "aspect": "entity_bodies",
+   "title": "Detail or frame time?",
+   "question": "You said make entities 'as detailed as you can go'. Six full-detail sprinters cost too much frame time (2.78 ms budget). What gives?",
+   "options": [
+    {
+     "label": "Nearest two or three full detail",
+     "detail": "The rest lighter copies; players may see a pop as they swap."
+    },
+    {
+     "label": "Lighter models everywhere",
+     "detail": "No pops; less detail."
+    },
+    {
+     "label": "Wait for the desktop's timing",
+     "detail": "A slower start, but decided on measurement."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The sprinter model and timing runs on the desktop.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_entity_bodies_2026-11-13.md section 4 Q2"
+   ],
+   "his_words": [
+    "item 82"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "entity_bodies-3",
+   "aspect": "entity_bodies",
+   "title": "A face at the catch?",
+   "question": "At the catch, does the player ever see a face? The design rule 'no face, ever' was invented by the design pane, not you. You asked for a brutal jumpscare and a death reveal.",
+   "options": [
+    {
+     "label": "Seam only",
+     "detail": "The body opens along a void seam; no face."
+    },
+    {
+     "label": "A face only at the catch",
+     "detail": "One brief face shown at the catch."
+    },
+    {
+     "label": "No face; loud sound only",
+     "detail": "Sound carries the scare."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The death reveal and jumpscare build.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_entity_bodies_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 16",
+    "item 30",
+    "item 79"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "player_body-1",
+   "aspect": "player_body",
+   "title": "Sideways turn speed?",
+   "question": "At what speed does the player's body switch from stepping to crossing its legs when moving sideways? The 2.7 m/s now is ours, not your.",
+   "options": [
+    {
+     "label": "Keep and tune by eye",
+     "detail": "Simplest."
+    },
+    {
+     "label": "Make it a setting",
+     "detail": "Player or you can change it."
+    },
+    {
+     "label": "Measure from real sidestep clips",
+     "detail": "Needs the scoring tool built first."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Nothing blocks; a default ships.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_player_body_2026-11-13.md section 4 Q2"
+   ],
+   "his_words": [
+    "item 159"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "player_body-2",
+   "aspect": "player_body",
+   "title": "Which base outfit?",
+   "question": "You said the kid starts in your own regular clothes with no buff, and later named three design sheets but never picked. The model still wears the hoodie. Which outfit is the base?",
+   "options": [
+    {
+     "label": "Pick one of the three sheets",
+     "detail": "You choose; the artist does the Blender work."
+    },
+    {
+     "label": "Ask for a fourth",
+     "detail": "More options before choosing."
+    },
+    {
+     "label": "Plain placeholder",
+     "detail": "Ship plain clothes until you pick."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The player's clothing work and first-person sleeves, which you see most.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_player_body_2026-11-13.md section 4 Q3",
+    "loop/queue_dreamzone3_2026-11-12.md step 10"
+   ],
+   "his_words": [
+    "item 86",
+    "item 109",
+    "item 111"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "player_body-3",
+   "aspect": "player_body",
+   "title": "Staged or true to life?",
+   "question": "Should the player's body move as a real person would, or be staged slightly to read better on screen, like Mirror's Edge or Catalyst?",
+   "options": [
+    {
+     "label": "Real first, stage where you ask",
+     "detail": "Score against recorded human motion, then stage by request."
+    },
+    {
+     "label": "Staged from the start",
+     "detail": "Changes what the real-motion comparison measures."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The scoring of the player's body against real motion.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_player_body_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 159"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "player_body-4",
+   "aspect": "player_body",
+   "title": "Do your arm-shape notes bind the player?",
+   "question": "You said the hunter's arms were too close to its sides. The player's hands sit 4 cm off the shoulder line. Does the same complaint apply to the player's arms?",
+   "options": [
+    {
+     "label": "Share one arm-shape rule",
+     "detail": "The hunter and the player use the same sourced arm shape."
+    },
+    {
+     "label": "Tune the player's own",
+     "detail": "Separate tuning."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The player's arm work.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_player_body_2026-11-13.md section 4 Q5"
+   ],
+   "his_words": [
+    "item 177",
+    "item 176"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "player_body-5",
+   "aspect": "player_body",
+   "title": "How to make a fist?",
+   "question": "The body has no fingers. For the loose fist you picked, curl the fingers in the model only, or add new finger joints to the body?",
+   "options": [
+    {
+     "label": "Model-only finger curl",
+     "detail": "No change to the body's joints; the room should take this."
+    },
+    {
+     "label": "New joints",
+     "detail": "Touches the skeleton, ragdoll and hunter."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "player_body handoff",
+   "blocks": "The fist at the top of the sprint swing.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_player_body_2026-11-13.md section 4 Q6"
+   ],
+   "his_words": [
+    "item 173"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-1",
+   "aspect": "movement",
+   "title": "Does a slide refill the surge?",
+   "question": "You ruled a surge from overtakes with diminishing returns. Does a slide also restart or reset anything? Three shapes were drawn.",
+   "options": [
+    {
+     "label": "Surge alone",
+     "detail": "As you ruled; lowest cost."
+    },
+    {
+     "label": "Peak burns after 10 seconds unless a slide relights it",
+     "detail": "A timer and a chore risk."
+    },
+    {
+     "label": "Call-of-Duty style burst as an ability",
+     "detail": "A second timed state."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The surge beyond its first build.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q1",
+    "handback/p-l171-movement-tech-E_2026-11-12.md section 5 menu"
+   ],
+   "his_words": [
+    "item 137",
+    "item 138",
+    "item 140"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-2",
+   "aspect": "movement",
+   "title": "What feeds the surge first?",
+   "question": "Which events charge the surge to begin with?",
+   "options": [
+    {
+     "label": "Overtakes and chaser near misses only",
+     "detail": "No change to world generation."
+    },
+    {
+     "label": "Also edge near misses",
+     "detail": "A small, deterministic list from the generator."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The first surge build.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q2"
+   ],
+   "his_words": [
+    "item 137",
+    "item 138"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-3",
+   "aspect": "movement",
+   "title": "Does contact end the surge?",
+   "question": "When the player is staggered or hits a wall, does the surge end, halve, or stay?",
+   "options": [
+    {
+     "label": "Ends",
+     "detail": "Clean running becomes the skill."
+    },
+    {
+     "label": "Halves",
+     "detail": "A softer penalty."
+    },
+    {
+     "label": "Nothing",
+     "detail": "Contact is free."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The surge rules.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q3",
+    "handback/p-l171-movement-tech-E_2026-11-12.md section 8"
+   ],
+   "his_words": [
+    "item 140"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-4",
+   "aspect": "movement",
+   "title": "Top-speed ceiling?",
+   "question": "What is the absolute speed ceiling for the base player: 12.4 m/s (about a fast human) or lower? Lower leaves less room for 'nutty speed lines' before upgrades.",
+   "options": [
+    {
+     "label": "12.4 m/s",
+     "detail": "The human line."
+    },
+    {
+     "label": "Lower",
+     "detail": "Leaves less headroom for upgrades."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Speed tuning; the handoff gives no option list, these are the two plainest readings.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 81",
+    "item 140"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-5",
+   "aspect": "movement",
+   "title": "Voids and the 10 m/s peak",
+   "question": "The sprint peak is now 10 m/s but worlds are built for 8.75, so some voids are crossable by sliding and mantling. What should the world assume?",
+   "options": [
+    {
+     "label": "Build the world for 10",
+     "detail": "Deliberate change: every seed's world and every kept replay changes."
+    },
+    {
+     "label": "Keep 8.75",
+     "detail": "Accept slide-jump-mantle crossings of voids."
+    },
+    {
+     "label": "Cut the mantle reach",
+     "detail": "Leaves the world alone, shortens a move."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Any change to the generator and the old runs' replays.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q5"
+   ],
+   "his_words": [
+    "item 81",
+    "item 86"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-6",
+   "aspect": "movement",
+   "title": "First sprint stage speed?",
+   "question": "How fast is the first stage of the sprint: 7, 6 or 5 m/s? You wrote 5; the design pane said 6; the game has 7. Also whether the long build takes 8 seconds or 4.",
+   "options": [
+    {
+     "label": "7 m/s (today)",
+     "detail": "No change."
+    },
+    {
+     "label": "6 m/s",
+     "detail": "The design pane's number."
+    },
+    {
+     "label": "5 m/s",
+     "detail": "Your number."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Needs play, not research.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q6"
+   ],
+   "his_words": [
+    "item 21"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-7",
+   "aspect": "movement",
+   "title": "Bunny hop at base?",
+   "question": "Today a well-timed hop loses no speed to friction. You want bunny hopping hard at the start and loosened by a late endgame perk. Keep the rule, or add a landing window so base hops are hard?",
+   "options": [
+    {
+     "label": "Keep today's free hop",
+     "detail": "Only gate speed gain by the perk."
+    },
+    {
+     "label": "Add a landing-friction window",
+     "detail": "Base hops are hard, the perk widens it; moves existing tests."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Endless-mode movement tuning.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q7",
+    "handback/p-l164-movement-E_2026-11-11.md (the menu for him)"
+   ],
+   "his_words": [
+    "item 57"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-8",
+   "aspect": "movement",
+   "title": "Base hop strength?",
+   "question": "At base, should air strafing add any speed during a hop?",
+   "options": [
+    {
+     "label": "None until the perk",
+     "detail": "No gain at base."
+    },
+    {
+     "label": "A little",
+     "detail": "About 10 to 25 percent of full; skilled players gain a bit."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Endless-mode movement tuning.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q7",
+    "handback/p-l164-movement-E_2026-11-11.md (the menu for him)"
+   ],
+   "his_words": [
+    "item 57"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-9",
+   "aspect": "movement",
+   "title": "Hop perk's speed cap?",
+   "question": "How high can the endgame perk push speed? 14 m/s so the evil god is survived, or 18 to 20 so it can be escaped?",
+   "options": [
+    {
+     "label": "Leave 14",
+     "detail": "Survived, not escaped."
+    },
+    {
+     "label": "Raise to 18 to 20",
+     "detail": "Can escape the dark one on purpose."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Endless-mode movement tuning.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q7",
+    "handback/p-l164-movement-E_2026-11-11.md (the menu for him)"
+   ],
+   "his_words": [
+    "item 57",
+    "item 28"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-10",
+   "aspect": "movement",
+   "title": "What counts as a movement chain?",
+   "question": "Experience for chained moves needs a rule. Which? (A: clean moves within 2 s; B: A with less for repeats; C: speed held; D: only near a chaser; E: hops; F: near misses.)",
+   "options": [
+    {
+     "label": "A: clean moves in a window",
+     "detail": "Cheapest; the detector exists."
+    },
+    {
+     "label": "B: A, with variety",
+     "detail": "Repeating a move scores less."
+    },
+    {
+     "label": "C or D: speed held / chaser close",
+     "detail": "Rewards risk and speed."
+    },
+    {
+     "label": "E or F: hops / near misses",
+     "detail": "Needs hop perk or chase reporting."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Experience from movement and the ability rewards.",
+   "when": "soon",
+   "sources": [
+    "handback/p-l164-movement-E_2026-11-11.md (the menu for him) menu 4",
+    "loop/queue_dreamzone3_2026-11-12.md step 9"
+   ],
+   "his_words": [
+    "item 53",
+    "item 57",
+    "item 58"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-11",
+   "aspect": "movement",
+   "title": "The somersault?",
+   "question": "Is the dive-over-a-chaser somersault worth coupling the player's movement to the chasers' bodies, or should it be a vault over fixed walls only?",
+   "options": [
+    {
+     "label": "Full coupling",
+     "detail": "Sim and chase talk each tick; large build."
+    },
+    {
+     "label": "Vault over static geometry only",
+     "detail": "Cheap; no chaser interaction."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The Over the Top ability.",
+   "when": "soon",
+   "sources": [
+    "handback/p-l164-movement-E_2026-11-11.md (the menu for him) menu 5",
+    "loop/buildpath_abilities_2026-11-13.md section 4 / ability sheet P5"
+   ],
+   "his_words": [
+    "item 57"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "movement-12",
+   "aspect": "movement",
+   "title": "Dive steers by view or run?",
+   "question": "When the player dives or rolls, does it steer by where they look (new) or by where they run (today)?",
+   "options": [
+    {
+     "label": "By the view",
+     "detail": "A mild bend; needs the warp effect as a cue or it reads as a bug."
+    },
+    {
+     "label": "By the run",
+     "detail": "Today's behaviour."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The dive roll ability and the movement bends.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q8",
+    "handback/p-l164-movement-E_2026-11-11.md (the menu for him) menu 6"
+   ],
+   "his_words": [
+    "item 57",
+    "item 135",
+    "item 136"
+   ],
+   "same_as": [
+    "movement-q8"
+   ]
+  },
+  {
+   "id": "movement-13",
+   "aspect": "movement",
+   "title": "Wall-run rarity",
+   "question": "You said the wall-run should be minimal, rare and short, yet it is in the base kit. Should how rare it is be a world-generation dial?",
+   "options": [
+    {
+     "label": "Yes, a generator dial",
+     "detail": "Fewer wall-run spots in the world."
+    },
+    {
+     "label": "No, leave it to the controller",
+     "detail": "Rarity from the time limit and the player's skill."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Wall-run tuning. The handoff proposes yes; no other option was given.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_movement_2026-11-13.md section 4 Q9"
+   ],
+   "his_words": [
+    "item 14",
+    "item 137"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "abilities-1",
+   "aspect": "abilities",
+   "title": "Six fixed, or slots?",
+   "question": "Do you always carry the same six abilities, or choose which to carry in limited slots?",
+   "options": [
+    {
+     "label": "Six fixed",
+     "detail": "Simplest; set fusions."
+    },
+    {
+     "label": "Limited slots",
+     "detail": "An inventory with slot unlocks and a picker; larger build."
+    },
+    {
+     "label": "Six owned, N equipped",
+     "detail": "The chair's menu does the choosing."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The first ability loadout build.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_abilities_2026-11-13.md section 4 #1"
+   ],
+   "his_words": [
+    "item 33",
+    "item 53"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "abilities-2",
+   "aspect": "abilities",
+   "title": "Where are abilities bought?",
+   "question": "Is the ability screen on the PC, the meditation chair, or both? You said the PC early and the chair later.",
+   "options": [
+    {
+     "label": "Chair only",
+     "detail": "PC is for shop, builder and cheques; cheapest."
+    },
+    {
+     "label": "PC and chair",
+     "detail": "Two screens to build and balance."
+    },
+    {
+     "label": "PC sells, chair upgrades",
+     "detail": "Needs a link between them."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "the waking_room handoff's default (items 48-49 are later than item 26)",
+   "blocks": "The room and the ability screens.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_abilities_2026-11-13.md section 4 #2",
+    "loop/buildpath_waking_room_2026-11-13.md section 4 Q1"
+   ],
+   "his_words": [
+    "item 26",
+    "item 48",
+    "item 49",
+    "item 98"
+   ],
+   "same_as": [
+    "waking_room-q1"
+   ]
+  },
+  {
+   "id": "abilities-3",
+   "aspect": "abilities",
+   "title": "What is a Focus level?",
+   "question": "How does the chair's Focus level work: unlocked by the story, chosen each sitting, or both?",
+   "options": [
+    {
+     "label": "Story-unlocked tiers",
+     "detail": "The chair grows with the Gateway reveal; a data table."
+    },
+    {
+     "label": "Chosen each sitting",
+     "detail": "Needs a cost such as energy or time."
+    },
+    {
+     "label": "Both",
+     "detail": "Story sets the ceiling, the choice is within it."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The chair's tree (waits on the abilities list).",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_abilities_2026-11-13.md section 4 #3"
+   ],
+   "his_words": [
+    "item 29",
+    "item 42"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "abilities-4",
+   "aspect": "abilities",
+   "title": "Does a found flashlight stay?",
+   "question": "You said the flashlight is found in chests and unlocked early, not one of the six. Does a found flashlight stay for later runs, or is it re-found each run?",
+   "options": [
+    {
+     "label": "A free tool slot outside the six",
+     "detail": "A separate slot, always available once unlocked."
+    },
+    {
+     "label": "A run-only find with a permanent unlock rule",
+     "detail": "Needs the containers first."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The beam ability. Handoff offered 'one of the six' too, which you have already ruled out.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_abilities_2026-11-13.md section 4 #5"
+   ],
+   "his_words": [
+    "item 36",
+    "item 37",
+    "item 40"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "abilities-5",
+   "aspect": "abilities",
+   "title": "Which power joins the beam?",
+   "question": "The flashlight fuses with a psychic power to repel what it shines on. Which power: Aura, Lure, or a new one?",
+   "options": [
+    {
+     "label": "Aura",
+     "detail": "The brief aura of the good god."
+    },
+    {
+     "label": "Lure",
+     "detail": "A decoy for lesser chasers."
+    },
+    {
+     "label": "A new power",
+     "detail": "Decides what the beam does besides repel."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The beam ability.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_abilities_2026-11-13.md section 4 #6"
+   ],
+   "his_words": [
+    "item 37",
+    "item 38"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "abilities-6",
+   "aspect": "abilities",
+   "title": "What does 'frenzy' mean?",
+   "question": "When the beam frenzies the entities it isn't pointed at, is that a temporary state of each chaser, or the game-wide frenzy that stress builds?",
+   "options": [
+    {
+     "label": "Per chaser",
+     "detail": "A small chaser state."
+    },
+    {
+     "label": "Game-wide frenzy",
+     "detail": "Needs the stress system first."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The beam ability and stress.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_abilities_2026-11-13.md section 4 #7"
+   ],
+   "his_words": [
+    "item 38",
+    "item 28"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "abilities-7",
+   "aspect": "abilities",
+   "title": "Rename the 'focus' key?",
+   "question": "The control that narrows the beam is called focus, and the chair's levels are Focus levels. Rename the key now, or live with the clash?",
+   "options": [
+    {
+     "label": "Rename the key now",
+     "detail": "Cheap; for example beam focus."
+    },
+    {
+     "label": "Live with it",
+     "detail": "No work; two meanings."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Naming in the first ability build.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_abilities_2026-11-13.md section 4 #8"
+   ],
+   "his_words": [],
+   "same_as": []
+  },
+  {
+   "id": "abilities-8",
+   "aspect": "abilities",
+   "title": "Which six abilities, which three ultimates?",
+   "question": "Pick the starting abilities by name: four physical (of Quick Start, Long Stride, Long Slide, Dive Roll, Over the Top, Sure Feet, Long Wall) and two psychic (of Aura, Shroud, Overclock, Lure, Steady), and the three ultimates they fuse into.",
+   "options": [
+    {
+     "label": "Use the cheapest first set",
+     "detail": "Quick Start, Long Stride, Long Slide, Sure Feet, Aura, Overclock; ultimates Nimble, Flow, Carried. All small builds; leaves out the dive roll, somersault and shroud."
+    },
+    {
+     "label": "Pick your own from the full menu",
+     "detail": "Seven physical and five psychic with costs; Long Wall fights your rule that wall-runs stay rare."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The chair's tree and the ability list (queue step 8).",
+   "when": "soon",
+   "sources": [
+    "handback/p-l170-abilities-E_2026-11-12.md sections 1, 2, 4",
+    "loop/queue_dreamzone3_2026-11-12.md step 8"
+   ],
+   "his_words": [
+    "item 25",
+    "item 33",
+    "item 57",
+    "item 58"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "stress-1",
+   "aspect": "stress",
+   "title": "What raises stress?",
+   "question": "Which line of sight raises stress: a chaser having a clear line to you, you seeing a chaser in view, or both?",
+   "options": [
+    {
+     "label": "A chaser sees you",
+     "detail": "Few lines; the hunter keeps it high a lot, since it knows where you are."
+    },
+    {
+     "label": "You see a chaser",
+     "detail": "Needs a view test and rewards not looking."
+    },
+    {
+     "label": "Both, weighted",
+     "detail": "Doubles the tests."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The first stress build.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_stress_2026-11-13.md section 4 Q1"
+   ],
+   "his_words": [
+    "item 28",
+    "item 65"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "stress-2",
+   "aspect": "stress",
+   "title": "Frenzy and fairness",
+   "question": "You want aggression to follow fear, but the chase rules say difficulty rises with time survived only. Does frenzy break that rule?",
+   "options": [
+    {
+     "label": "Amend the rule",
+     "detail": "Stress may feed one named frenzy scale; touches every fairness bar."
+    },
+    {
+     "label": "Keep the rule",
+     "detail": "Frenzy changes only spawn and hints, never speeds; weaker than you asked."
+    },
+    {
+     "label": "Timed burst on any chaser",
+     "detail": "Needs an end rule."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Stress's effect on chasers.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_stress_2026-11-13.md section 4 Q2"
+   ],
+   "his_words": [
+    "item 28"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "stress-3",
+   "aspect": "stress",
+   "title": "How does a frenzy end?",
+   "question": "How does a frenzy end, and what is stress afterwards? You said 'exponentially' with no cap, which may make runs certain.",
+   "options": [
+    {
+     "label": "Reset to a floor",
+     "detail": "Like Darkest Dungeon's 45."
+    },
+    {
+     "label": "Lasts while stress is full, then bleeds off",
+     "detail": "A natural ending."
+    },
+    {
+     "label": "A fixed length",
+     "detail": "Simple."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Stress's effect on chasers.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_stress_2026-11-13.md section 4 Q3"
+   ],
+   "his_words": [
+    "item 28",
+    "item 32",
+    "item 61"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "stress-4",
+   "aspect": "stress",
+   "title": "How often is Recognition?",
+   "question": "Your odds work out to about 200 to 400 full-stress events per Recognition, while the story wants three Recognitions. Keep the odds and loosen the story, raise the odds, or add a second route?",
+   "options": [
+    {
+     "label": "Keep the odds, loosen the story gate",
+     "detail": "Rewrites a story step."
+    },
+    {
+     "label": "Raise the odds with abilities and gear",
+     "detail": "Feeds the 'spec into stress' exploit you accept."
+    },
+    {
+     "label": "A second, non-random route",
+     "detail": "Breaks 'ultra rare'."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The Recognition build and the hospital door.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_stress_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 60",
+    "item 62",
+    "item 32"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "stress-5",
+   "aspect": "stress",
+   "title": "Does Recognition stop catches?",
+   "question": "You said Recognition 'cannot be destroyed'. Does it stop catches for its two or three minutes?",
+   "options": [
+    {
+     "label": "Yes, no catch",
+     "detail": "A catch exception shared with the Aura."
+    },
+    {
+     "label": "A catch is a save",
+     "detail": "Score kept; a lucky player skips the timer."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The Recognition build and overtime.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_stress_2026-11-13.md section 4 Q5"
+   ],
+   "his_words": [
+    "item 60",
+    "item 61",
+    "item 66"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "stress-6",
+   "aspect": "stress",
+   "title": "Meter shown or felt?",
+   "question": "Is stress a bar on screen, or only felt through screen and sound? Does a normal catch carry stress to the next run?",
+   "options": [
+    {
+     "label": "Shown as a bar",
+     "detail": "Readable."
+    },
+    {
+     "label": "Felt only",
+     "detail": "Screen and sound only."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The first build shows it in a debug line either way.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_stress_2026-11-13.md section 4 Q6",
+    "briefs/dreamzone3_design.md"
+   ],
+   "his_words": [
+    "item 28",
+    "item 59"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "meta_loop-1",
+   "aspect": "meta_loop",
+   "title": "What is XP measured in?",
+   "question": "You said time alive earns XP, then said distance. Is XP metres walked, depth reached, or the time curve? One number for XP and score, or two?",
+   "options": [
+    {
+     "label": "Metres on the ground, with multipliers",
+     "detail": "A small distance counter."
+    },
+    {
+     "label": "Today's time curve",
+     "detail": "No work; ignores your distance wish."
+    },
+    {
+     "label": "Run points stay time-shaped; global XP from metres and events",
+     "detail": "Two numbers shown."
+    }
+   ],
+   "recommended": 2,
+   "recommended_by": "the meta_loop handoff (author's lean)",
+   "blocks": "The first profile ledger build.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #1"
+   ],
+   "his_words": [
+    "item 7",
+    "item 53"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "meta_loop-2",
+   "aspect": "meta_loop",
+   "title": "One global level, or per save?",
+   "question": "Is the global level one number for the whole profile, or does each character save its own? You have since set other characters aside to make one great one.",
+   "options": [
+    {
+     "label": "One shared level, per-character records",
+     "detail": "A profile file shaped for it now."
+    },
+    {
+     "label": "Fully separate saves",
+     "detail": "Simpler; breaks 'global level unlocks characters'."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The profile file's shape. Mostly moot while only the kid is playable; a later change needs a migration.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #2"
+   ],
+   "his_words": [
+    "item 68",
+    "item 101"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "meta_loop-3",
+   "aspect": "meta_loop",
+   "title": "Does a lost run pay?",
+   "question": "If a run is lost, do you keep container cash and energy? You said a lost run gives crumbs of global XP; the cheque comes after the first successful run.",
+   "options": [
+    {
+     "label": "Keep container finds on a loss",
+     "detail": "Softer; makes chests worth opening."
+    },
+    {
+     "label": "Lose all but crumbs of global XP",
+     "detail": "Matches your words literally; harsher, risk of a grind stall."
+    },
+    {
+     "label": "Crumbs of cash too",
+     "detail": "A middle reading."
+    },
+    {
+     "label": "Cash every run, cheque only after a win",
+     "detail": "One more reading."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The payout at the end of a run and the room's cheque.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #3",
+    "loop/buildpath_waking_room_2026-11-13.md section 4 Q3"
+   ],
+   "his_words": [
+    "item 66",
+    "item 69",
+    "item 70"
+   ],
+   "same_as": [
+    "waking_room-q3"
+   ]
+  },
+  {
+   "id": "meta_loop-4",
+   "aspect": "meta_loop",
+   "title": "Does luck change the world?",
+   "question": "You said luck makes chests spawn more often. Do chest locations come from the seed with luck deciding which are filled, or does luck change the world itself?",
+   "options": [
+    {
+     "label": "Seed fixes the sites, luck fills them",
+     "detail": "The world stays identical; replays store luck; a marker in the generator."
+    },
+    {
+     "label": "The generator reads luck",
+     "detail": "The world changes with upgrades, which you refused for Park length."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Containers and luck.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #4"
+   ],
+   "his_words": [
+    "item 124",
+    "item 94"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "meta_loop-5",
+   "aspect": "meta_loop",
+   "title": "Trinket storage?",
+   "question": "How many trinkets can you carry and store? You said you can only have so many.",
+   "options": [
+    {
+     "label": "Two carried, unlimited storage",
+     "detail": "Simplest."
+    },
+    {
+     "label": "Slots open at global levels",
+     "detail": "A level table."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Trinkets.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #5"
+   ],
+   "his_words": [
+    "item 34",
+    "item 116"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "meta_loop-6",
+   "aspect": "meta_loop",
+   "title": "When does cash arrive?",
+   "question": "Cash arrives instantly on waking, or as a cheque under the door? You described the cheque after the first successful run.",
+   "options": [
+    {
+     "label": "Cheque after the first win only; later cash at once",
+     "detail": "Two code paths."
+    },
+    {
+     "label": "A cheque after every win",
+     "detail": "One path, more story."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The room and the shop.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #6",
+    "loop/buildpath_waking_room_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 70"
+   ],
+   "same_as": [
+    "waking_room-q4"
+   ]
+  },
+  {
+   "id": "meta_loop-7",
+   "aspect": "meta_loop",
+   "title": "What unlocks the harder tiers?",
+   "question": "Does a global level unlock the stronger-entities tier, or only how many runs you've played? You want the first runs forgiving.",
+   "options": [
+    {
+     "label": "Run count only",
+     "detail": "Needs a runs-played counter."
+    },
+    {
+     "label": "Level-gated tiers too",
+     "detail": "A threshold table."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Difficulty and the front door.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #7"
+   ],
+   "his_words": [
+    "item 26",
+    "item 132"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "meta_loop-8",
+   "aspect": "meta_loop",
+   "title": "Confirm the trinket ruling?",
+   "question": "The librarian filed a ruling that you may own any number of trinkets, carry two, and all are strong. That was a reading of your words, not your words. Confirm?",
+   "options": [
+    {
+     "label": "Confirm",
+     "detail": "The trinket tables stand."
+    },
+    {
+     "label": "Reverse",
+     "detail": "The trinket table is re-cut."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The trinket build.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #8"
+   ],
+   "his_words": [
+    "item 32",
+    "item 116",
+    "item 117"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "meta_loop-9",
+   "aspect": "meta_loop",
+   "title": "New effect for the guitar pick?",
+   "question": "The guitar pick trinket's effect was 'after Recognition ends, stress stays at zero', which you showed makes no sense. What should it do instead?",
+   "options": [
+    {
+     "label": "Give it a new effect",
+     "detail": "A new effect is drafted for you."
+    },
+    {
+     "label": "Drop the pick from the list",
+     "detail": "Remove it."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The trinket list. The handoff gives no option list; these are the two plainest readings.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #8",
+    "loop/queue_dreamzone3_2026-11-12.md step 10"
+   ],
+   "his_words": [
+    "item 121"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "waking_room-1",
+   "aspect": "waking_room",
+   "title": "Is the room a walked 3D space?",
+   "question": "Is the bedroom a room you walk around in first person, or a still picture with menus?",
+   "options": [
+    {
+     "label": "A full walked room",
+     "detail": "Scene, collision and the body in it; keeps the bed, window and invasion beats."
+    },
+    {
+     "label": "A still picture with menus",
+     "detail": "Cheap; loses those beats."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The first room lap.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_waking_room_2026-11-13.md section 4 Q2"
+   ],
+   "his_words": [
+    "item 3",
+    "item 34",
+    "item 49"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "waking_room-2",
+   "aspect": "waking_room",
+   "title": "The gym minigame?",
+   "question": "What is the gym minigame (rhythm, timing, hold)? And is the 'ancient meditation' minigame the chair?",
+   "options": [
+    {
+     "label": "Rhythm",
+     "detail": "Press on the beat."
+    },
+    {
+     "label": "Timing",
+     "detail": "Hit the window."
+    },
+    {
+     "label": "Hold",
+     "detail": "Hold and release."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The gym and the chair. These are guessed from the question's wording; the handoff gives no list.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_waking_room_2026-11-13.md section 4 Q5"
+   ],
+   "his_words": [
+    "item 42"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "waking_room-3",
+   "aspect": "waking_room",
+   "title": "Does the PC build change play?",
+   "question": "You said the PC build is 'better and spiffier' and also 'for fun'. Does the build matter for play?",
+   "options": [
+    {
+     "label": "Cosmetic plus a small cash or luck buff",
+     "detail": "Some effect on play."
+    },
+    {
+     "label": "None",
+     "detail": "Pure fun."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The PC builder.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_waking_room_2026-11-13.md section 4 Q6"
+   ],
+   "his_words": [
+    "item 68",
+    "item 99"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "world_gen-0",
+   "aspect": "world_gen",
+   "title": "Build the world's new structure now?",
+   "question": "The swarm found why five minutes of the world feels the same: every choice is made cell by cell, and nothing varies slowly across a district. The fix is new structure: districts with their own character, rooms you run through, landmarks. It sits at step 13 of your list. A new pane could start it now, behind a dial that leaves today's world untouched at 0.",
+   "options": [
+    {
+     "label": "Move it up and start now",
+     "detail": "The first new pane builds district profiles for the hotel, school and hospital. You judge before-and-after pictures of the same seed."
+    },
+    {
+     "label": "Keep the list's order",
+     "detail": "The pane only prepares: it reads the code, registers the tests and drafts shape-only pieces for you to look at."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "the librarian (a pane is free for it, and nothing in the world changes until the dial is turned up)",
+   "blocks": "The first new pane (the generator, Laps 3 to 5).",
+   "when": "now",
+   "sources": [
+    "loop/plan_two_more_panes_2026-11-13.md:26",
+    "loop/procgen_buildpath_2026-11-13.md"
+   ],
+   "his_words": [
+    "item 179",
+    "item 182"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "world_gen-1",
+   "aspect": "world_gen",
+   "title": "Which biomes?",
+   "question": "The game has six biomes against the 26 imagined. Pool rooms and chaos are parked on the design pane's reading, not your ruling. What happens to them?",
+   "options": [
+    {
+     "label": "Keep them parked for other characters",
+     "detail": "Free."
+    },
+    {
+     "label": "Make chaos a late-chapter dial, not a biome",
+     "detail": "Cheap; dials only."
+    },
+    {
+     "label": "Build pool rooms as a fifth interior",
+     "detail": "A kit and a water look; no new generator code."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The variety work and its queue slot.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_world_gen_2026-11-13.md section 4 Q1",
+    "loop/queue_dreamzone3_2026-11-12.md step 10"
+   ],
+   "his_words": [
+    "item 74",
+    "item 28"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "world_gen-2",
+   "aspect": "world_gen",
+   "title": "What are Parks for?",
+   "question": "You want Parks that link hallways; measured, a one-storey passage buys about 1 second here. What should a Park be?",
+   "options": [
+    {
+     "label": "Parks stay vertical",
+     "detail": "Horizontal pieces only decorate; matches the data."
+    },
+    {
+     "label": "A long-hallway district",
+     "detail": "Lanes every 36+ m so a horizontal Park has a long way round; costs a lap."
+    },
+    {
+     "label": "Short Parks as places",
+     "detail": "A lit room, the golden light."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The Park kit lap.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_world_gen_2026-11-13.md section 4 Q2",
+    "loop/procgen_buildpath_2026-11-13.md section 5 #3"
+   ],
+   "his_words": [
+    "item 93",
+    "item 94"
+   ],
+   "same_as": [
+    "procgen-3"
+   ]
+  },
+  {
+   "id": "world_gen-3",
+   "aspect": "world_gen",
+   "title": "Doors: too many?",
+   "question": "You love the apartment but finds too many doors. What to do?",
+   "options": [
+    {
+     "label": "Leave the door rate at 0.25",
+     "detail": "Nothing changes."
+    },
+    {
+     "label": "One guaranteed doorway per room in the apartment",
+     "detail": "Moves every apartment seed; changes the start you love."
+    },
+    {
+     "label": "Re-skin false doors so they don't match the spawn door",
+     "detail": "Cheap; answers your 'did I loop back' run."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Generator tuning (queue step 10).",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_world_gen_2026-11-13.md section 4 Q3",
+    "loop/queue_dreamzone3_2026-11-12.md step 10"
+   ],
+   "his_words": [
+    "item 89",
+    "item 148"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "world_gen-4",
+   "aspect": "world_gen",
+   "title": "Stairs: which did you like?",
+   "question": "You liked the stairwell and wanted it wider. Only straight flights are wide; switchback and spiral flights are not. Widening them is a redesign. Which did you mean?",
+   "options": [
+    {
+     "label": "Only the straight flights",
+     "detail": "No redesign."
+    },
+    {
+     "label": "All stairs",
+     "detail": "Redesign switchbacks and spirals."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Stair work. The handoff gives no option list; these are the two plainest readings.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_world_gen_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 17"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "world_gen-5",
+   "aspect": "world_gen",
+   "title": "How rare is the outside?",
+   "question": "How often does the player reach the rare 'outside' biome? It needs a new kind of world generator (sky, ground), the largest new stage.",
+   "options": [
+    {
+     "label": "A seed hash, once in N runs",
+     "detail": "Rare and random."
+    },
+    {
+     "label": "Once a chapter",
+     "detail": "Scheduled."
+    },
+    {
+     "label": "Only through a designed door in a designed piece",
+     "detail": "A story event."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The outside biome.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_world_gen_2026-11-13.md section 4 Q5"
+   ],
+   "his_words": [
+    "item 26"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "world_gen-6",
+   "aspect": "world_gen",
+   "title": "Designed pieces before the story's facts?",
+   "question": "Can designed pieces (a kept room, a second coat) be made before the father's story facts are settled?",
+   "options": [
+    {
+     "label": "Ship shape-only pieces",
+     "detail": "No text; fits either death."
+    },
+    {
+     "label": "Wait for the story facts",
+     "detail": "Slower."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The designed-pieces lap.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_world_gen_2026-11-13.md section 4 Q6"
+   ],
+   "his_words": [
+    "item 26",
+    "item 170"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "world_gen-8",
+   "aspect": "world_gen",
+   "title": "Voids in school and hospital?",
+   "question": "There are no voids in the school and hospital biomes, because they use wide corridors. You wanted voids everywhere.",
+   "options": [
+    {
+     "label": "Accept it",
+     "detail": "Rare in wide-corridor biomes."
+    },
+    {
+     "label": "Add a void-capable corridor type",
+     "detail": "More generator work."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Biome tuning.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_world_gen_2026-11-13.md section 4 Q7"
+   ],
+   "his_words": [
+    "item 14"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "world_gen-9",
+   "aspect": "world_gen",
+   "title": "Chapters and the generator?",
+   "question": "How many chapters are there, and should the chapter change how a world is built (an input like the seed)? A proposal: 1.0, then 0.75, 0.5, 0.3.",
+   "options": [
+    {
+     "label": "Chapter is a world-building input",
+     "detail": "Deterministic like the seed; steps 1.0, 0.75, 0.5, 0.3 proposed."
+    },
+    {
+     "label": "Chapters are story only",
+     "detail": "The world is unchanged."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Chapters, endless mode, story pacing. The handoff gives no option list; these are the two plainest readings.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_world_gen_2026-11-13.md section 4 Q8"
+   ],
+   "his_words": [
+    "item 28"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "world_gen-11",
+   "aspect": "world_gen",
+   "title": "How rare are payoffs?",
+   "question": "How often should the generator place a clear payoff (a drop, a view, a special place)?",
+   "options": [
+    {
+     "label": "Today's rate, cut the longest gaps",
+     "detail": "Small change."
+    },
+    {
+     "label": "One a minute",
+     "detail": "A new beat."
+    },
+    {
+     "label": "Separate, rarer kinds",
+     "detail": "A second tier."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Generator laps 3 to 5.",
+   "when": "later",
+   "sources": [
+    "loop/procgen_buildpath_2026-11-13.md section 5 #2"
+   ],
+   "his_words": [
+    "item 91",
+    "item 179"
+   ],
+   "same_as": [
+    "procgen-2"
+   ]
+  },
+  {
+   "id": "world_gen-12",
+   "aspect": "world_gen",
+   "title": "Long straights?",
+   "question": "Long straight corridors are common. Cap them, make some on purpose as boulevards, or leave alone?",
+   "options": [
+    {
+     "label": "Cap everywhere",
+     "detail": "Fewer long straights."
+    },
+    {
+     "label": "Boulevards on purpose",
+     "detail": "A few made deliberate."
+    },
+    {
+     "label": "Leave alone",
+     "detail": "No change."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Generator laps 3 to 5.",
+   "when": "later",
+   "sources": [
+    "loop/procgen_buildpath_2026-11-13.md section 5 #5"
+   ],
+   "his_words": [
+    "item 91",
+    "item 179"
+   ],
+   "same_as": [
+    "procgen-5"
+   ]
+  },
+  {
+   "id": "world_gen-13",
+   "aspect": "world_gen",
+   "title": "Five minutes of your play?",
+   "question": "Will you play five minutes on a pinned build and save the run so the generator's runner model can be checked against a real run?",
+   "options": [
+    {
+     "label": "Yes",
+     "detail": "One saved run of your."
+    },
+    {
+     "label": "No, use bots only",
+     "detail": "Bots only."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The first read-only measure of the generator. The handoff gives no option list; these are the two plainest readings.",
+   "when": "soon",
+   "sources": [
+    "loop/procgen_buildpath_2026-11-13.md section 5 #7"
+   ],
+   "his_words": [
+    "item 91"
+   ],
+   "same_as": [
+    "procgen-7"
+   ]
+  },
+  {
+   "id": "look_fear-1",
+   "aspect": "look_fear",
+   "title": "Out-of-body haze?",
+   "question": "You asked for an out-of-body haze, then said there are no out-of-body moments in the dream. Does the haze stay?",
+   "options": [
+    {
+     "label": "Keep the haze, drop the camera-lifts-out beat",
+     "detail": "Costs nothing; loses a lucid beat."
+    },
+    {
+     "label": "Keep it only in the waking room's chair",
+     "detail": "Out-of-body belongs there."
+    },
+    {
+     "label": "Delete the haze",
+     "detail": "Loses the core of the haze."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "look_fear handoff (marked 'ours')",
+   "blocks": "The dream-effects director.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_look_fear_2026-11-13.md section 4 a"
+   ],
+   "his_words": [
+    "item 23",
+    "item 26"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "look_fear-2",
+   "aspect": "look_fear",
+   "title": "What drives the fear effects?",
+   "question": "Which inputs set how intense the dream effects are?",
+   "options": [
+    {
+     "label": "Chase pressure and distance only",
+     "detail": "Cheap, honest to what you said."
+    },
+    {
+     "label": "Add depth or tier, and stress",
+     "detail": "Needs the stress system."
+    },
+    {
+     "label": "Also the timer",
+     "detail": "Ties to the timer decision."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The dream director.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_look_fear_2026-11-13.md section 4 b"
+   ],
+   "his_words": [
+    "item 27"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "look_fear-3",
+   "aspect": "look_fear",
+   "title": "What drives the wider view?",
+   "question": "The field of view widens as you run. Does it follow your current speed, or your peak speed (the long 7 to 8.75 climb is unseen today)?",
+   "options": [
+    {
+     "label": "Keep it on current speed",
+     "detail": "Today."
+    },
+    {
+     "label": "Key it to the peak",
+     "detail": "Changes how fast every run feels."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The first director lap.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_look_fear_2026-11-13.md section 4 c"
+   ],
+   "his_words": [
+    "item 13",
+    "item 81"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "look_fear-4",
+   "aspect": "look_fear",
+   "title": "Hell-red erosion: how violent?",
+   "question": "You want the eroding Park 'hell red and screaming'. The red-flash limit for photosensitivity conflicts. How violent?",
+   "options": [
+    {
+     "label": "Slow red ramp, no pulsing above 3 Hz",
+     "detail": "Safe, less frantic."
+    },
+    {
+     "label": "Pulsing allowed only with the setting off",
+     "detail": "More frantic; safety setting."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The erosion look.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_look_fear_2026-11-13.md section 4 d"
+   ],
+   "his_words": [
+    "item 54",
+    "item 55"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "look_fear-5",
+   "aspect": "look_fear",
+   "title": "Seizure warning: when?",
+   "question": "When does the photosensitivity warning show, and is there an effects-intensity setting? The director's flashing effects must not ship without it.",
+   "options": [
+    {
+     "label": "Every launch",
+     "detail": "A few seconds each time; no file."
+    },
+    {
+     "label": "First launch, then in Settings",
+     "detail": "Needs a saved flag."
+    },
+    {
+     "label": "First launch and whenever a strong effect ships",
+     "detail": "Needs version tracking."
+    },
+    {
+     "label": "Nothing until later",
+     "detail": "The director's flashing waits."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The front door's first steps and the director.",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_look_fear_2026-11-13.md section 4 e",
+    "loop/buildpath_frontdoor_onboarding_2026-11-13.md section 4 Q2"
+   ],
+   "his_words": [
+    "item 54"
+   ],
+   "same_as": [
+    "frontdoor_onboarding-q2"
+   ]
+  },
+  {
+   "id": "look_fear-6",
+   "aspect": "look_fear",
+   "title": "Jumpscare: on or off?",
+   "question": "You want a brutal jumpscare but 'not during testing, it will get old'. Is it off in dev and test builds and on for players, or release-only? Does 'testing' mean only your sessions?",
+   "options": [
+    {
+     "label": "A setting, off by default in dev builds",
+     "detail": "You can turn it on; players get it on."
+    },
+    {
+     "label": "On in release builds only",
+     "detail": "You never see it unless you run a release."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The jumpscare and its tuning.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_look_fear_2026-11-13.md section 4 f",
+    "loop/buildpath_sound_2026-11-13.md section 4 Q5"
+   ],
+   "his_words": [
+    "item 16",
+    "item 26"
+   ],
+   "same_as": [
+    "sound-q5"
+   ]
+  },
+  {
+   "id": "sound-1",
+   "aspect": "sound",
+   "title": "Does the good entity quiet the hunter?",
+   "question": "You said all sound quiets when a good entity is near. You also want the hunter's footsteps heard for fair ganks. Does the good entity's calm silence the hunter's thunder?",
+   "options": [
+    {
+     "label": "Duck everything, hunter included",
+     "detail": "Strongest feeling; the hunter is silent when the player is safest."
+    },
+    {
+     "label": "Duck all but the hunter's footsteps, to a floor",
+     "detail": "Fair, weaker."
+    },
+    {
+     "label": "Duck breathing and the field only",
+     "detail": "The hunter stays loud."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The footstep sound build (in flight).",
+   "when": "now",
+   "sources": [
+    "loop/buildpath_sound_2026-11-13.md section 4 Q1"
+   ],
+   "his_words": [
+    "item 26",
+    "item 178"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "sound-2",
+   "aspect": "sound",
+   "title": "What makes the hunter's sound?",
+   "question": "You said no home-made sounds. The scout read the licences, and its first suggestion is a recorded heavy footfall on top with our low thud kept underneath for the weight. Is recorded sound acceptable as the hunter's main voice?",
+   "options": [
+    {
+     "label": "Recorded footfalls, our thud underneath",
+     "detail": "A real impact with body. Free-licence recordings, and no new code library."
+    },
+    {
+     "label": "A synth engine only",
+     "detail": "Plaits (MIT licence). More control, less real than a recording."
+    },
+    {
+     "label": "Build both, pick by ear",
+     "detail": "One clip with both voices on the same run."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "the sound scout",
+   "blocks": "The hunter's new voice (E), and every other chaser's sound after it.",
+   "when": "now",
+   "sources": [
+    "loop/sound_sources_scout_2026-11-13.md:53-70",
+    "loop/buildpath_sound_2026-11-13.md section 4 Q2"
+   ],
+   "his_words": [
+    "item 90",
+    "item 181"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "sound-0",
+   "aspect": "sound",
+   "title": "Your own steps cover the hunter's. Which mix?",
+   "question": "Sprinting with the hunter 12 to 20 m behind, your own footsteps cover about half of its footfalls. E put three mixes in one 38-second clip: Downloads\\dz3-l192-review\\l192_three_ways_sprinting.mp4. Which lets you hear it coming without losing the thunder?",
+   "options": [
+    {
+     "label": "A, as built",
+     "detail": "7 of 14 footfalls clear your steps at 12 to 20 m."
+    },
+    {
+     "label": "B, your steps dip",
+     "detail": "Your steps drop as each hunter footfall lands. Measured, it barely changed anything."
+    },
+    {
+     "label": "C, the knock moved higher",
+     "detail": "10 of 14 clear your steps. Easier to hear, less like thunder."
+    },
+    {
+     "label": "Hear it again with the new voice",
+     "detail": "Recorded footfalls will replace the home-made sound, so A and C will both change."
+    }
+   ],
+   "recommended": 3,
+   "recommended_by": "the librarian (your item 181 replaces the home-made voice)",
+   "blocks": "The footsteps' final mix.",
+   "when": "soon",
+   "sources": [
+    "handback/p-l192-footsteps-E_2026-11-13.md:197-222"
+   ],
+   "his_words": [
+    "item 178",
+    "item 181"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "sound-7",
+   "aspect": "sound",
+   "title": "Where may recordings come from?",
+   "question": "Each source has its own terms. The scout read each licence page. Which pools are allowed?",
+   "options": [
+    {
+     "label": "Public domain only (CC0)",
+     "detail": "Kenney packs and CC0 Freesound items. No credits owed. The smallest pool."
+    },
+    {
+     "label": "Add the Sonniss game-audio bundles",
+     "detail": "Large and professional, no credits owed. One clause, about shipping the files as loose sound effects, gets confirmed first."
+    },
+    {
+     "label": "Also Freesound items that need credit",
+     "detail": "The widest pool. Needs a credits screen with a line per sound."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Choosing the actual recordings.",
+   "when": "soon",
+   "sources": [
+    "loop/sound_sources_scout_2026-11-13.md:37-47",
+    "loop/sound_sources_scout_2026-11-13.md:71"
+   ],
+   "his_words": [
+    "item 181"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "sound-8",
+   "aspect": "sound",
+   "title": "A GPL synth as an offline tool?",
+   "question": "Surge XT, Vital and others are GPL. Linking one into the game would put the game under the GPL, so that is out. Using one outside the game to design a sound, and shipping only the rendered audio, is a separate case. Allowed?",
+   "options": [
+    {
+     "label": "Yes, render offline and ship the audio",
+     "detail": "The GPL's own FAQ says a program's output is not covered by its licence."
+    },
+    {
+     "label": "No, keep the tools permissive too",
+     "detail": "MIT-licensed engines only, even offline."
+    },
+    {
+     "label": "Ask a lawyer first",
+     "detail": "Before anything made that way ships."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Which design tools the sound work may use.",
+   "when": "soon",
+   "sources": [
+    "loop/sound_sources_scout_2026-11-13.md:35",
+    "loop/sound_sources_scout_2026-11-13.md:72"
+   ],
+   "his_words": [
+    "item 181"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "sound-3",
+   "aspect": "sound",
+   "title": "Which sounds first?",
+   "question": "Which sounds fall short and go first? The sound handoff asks this; it was never asked.",
+   "options": [
+    {
+     "label": "The living sounds (feet, breath, voices)",
+     "detail": "The design pane says code does these worst."
+    },
+    {
+     "label": "The drones and hums",
+     "detail": "Code does these well."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Queue step 10; nothing is built before you answer. The handoff gives no option list; these are the two plainest readings.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_sound_2026-11-13.md section 4 Q2",
+    "loop/queue_dreamzone3_2026-11-12.md step 10"
+   ],
+   "his_words": [
+    "item 90"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "sound-4",
+   "aspect": "sound",
+   "title": "The binaural beat: default?",
+   "question": "You agreed to a quiet low theta binaural beat. Is it on by default at a low level with a settings toggle, off until chosen, or cut? It should claim no effect.",
+   "options": [
+    {
+     "label": "On, low, with a toggle",
+     "detail": "May invite an effect claim the evidence doesn't carry."
+    },
+    {
+     "label": "Off until chosen",
+     "detail": "Safe."
+    },
+    {
+     "label": "Cut",
+     "detail": "Removed."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The sound mix and settings.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_sound_2026-11-13.md section 4 Q3"
+   ],
+   "his_words": [
+    "item 26"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "sound-5",
+   "aspect": "sound",
+   "title": "What do eroding Parks sound like?",
+   "question": "You want 'screaming effects' in the eroding Park. A wail made of the field's own sound, or a human-like cry (the hardest thing to synthesise)?",
+   "options": [
+    {
+     "label": "A wail of the field's own sound",
+     "detail": "Easy to build."
+    },
+    {
+     "label": "A human-like cry",
+     "detail": "Hardest; depends on the sound source."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The erosion sound.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_sound_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 54"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "sound-6",
+   "aspect": "sound",
+   "title": "Adopt a new 3D audio library?",
+   "question": "Stereo panning confuses front and back. Adopting Steam Audio's HRTF is a new outside dependency (ask first).",
+   "options": [
+    {
+     "label": "Adopt Steam Audio's HRTF",
+     "detail": "Better front-back sense; new dependency."
+    },
+    {
+     "label": "Stay with stereo pan",
+     "detail": "No change."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Nothing; not blocking.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_sound_2026-11-13.md section 4 Q6"
+   ],
+   "his_words": [
+    "item 77"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "story_lore-1",
+   "aspect": "story_lore",
+   "title": "How does the father die?",
+   "question": "You ruled out the murder; the father dies an ordinary death while young. How is it shown?",
+   "options": [
+    {
+     "label": "A long illness",
+     "detail": "Fits the mother's hospital nights; heavier."
+    },
+    {
+     "label": "Sudden and ordinary",
+     "detail": "Fits 'never makes sense'."
+    },
+    {
+     "label": "Never stated, only marks",
+     "detail": "Cheapest."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The story docs and every narrative beat.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_story_lore_2026-11-13.md section 4 #1"
+   ],
+   "his_words": [
+    "item 170",
+    "item 114",
+    "item 108"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "story_lore-2",
+   "aspect": "story_lore",
+   "title": "Does the hospital door open?",
+   "question": "The notes say the hospital door is never opened; you put the father's watch behind it. Does it open?",
+   "options": [
+    {
+     "label": "It opens in chapter 4 after N Recognitions",
+     "detail": "Needs the stress count; three proposed."
+    },
+    {
+     "label": "It never opens",
+     "detail": "The watch is found elsewhere."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The story's later chapters.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_story_lore_2026-11-13.md section 4 #2"
+   ],
+   "his_words": [
+    "item 114"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "story_lore-3",
+   "aspect": "story_lore",
+   "title": "When is the Gateway named?",
+   "question": "When is the Gateway named in the game? You said not to tie it until many runs but also put the Gateway rips on the PC from night one.",
+   "options": [
+    {
+     "label": "Rips from run 1, names from chapter 2",
+     "detail": "Unexplained at first."
+    },
+    {
+     "label": "Nothing Gateway-named before chapter 2",
+     "detail": "Cheaper."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Story beats.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_story_lore_2026-11-13.md section 4 #3"
+   ],
+   "his_words": [
+    "item 26",
+    "item 103"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "story_lore-4",
+   "aspect": "story_lore",
+   "title": "Real names on screen?",
+   "question": "You allowed real references. Where do real names appear? Legal risk is not assessed.",
+   "options": [
+    {
+     "label": "Only in found documents",
+     "detail": "The memo, quoted."
+    },
+    {
+     "label": "Also the institute in the world",
+     "detail": "More direct."
+    },
+    {
+     "label": "Invented names throughout",
+     "detail": "Safest."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Lore text.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_story_lore_2026-11-13.md section 4 #4"
+   ],
+   "his_words": [
+    "item 84",
+    "item 174"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "story_lore-5",
+   "aspect": "story_lore",
+   "title": "The dark one's name?",
+   "question": "What is the dark one called? Four candidates stand open: the Echo, the Hollow, the Remainder, the Undertow. The build uses a placeholder.",
+   "options": [
+    {
+     "label": "Pick one now",
+     "detail": "Echo, Hollow, Remainder or Undertow."
+    },
+    {
+     "label": "Unnamed until chapter 5",
+     "detail": "No call needed until the reveal build."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The death reveal build.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_story_lore_2026-11-13.md section 4 #5",
+    "loop/buildpath_run_frame_2026-11-13.md section 4 Q8",
+    "loop/queue_dreamzone3_2026-11-12.md steps 10, 11"
+   ],
+   "his_words": [
+    "item 110",
+    "item 107"
+   ],
+   "same_as": [
+    "run_frame-q8"
+   ]
+  },
+  {
+   "id": "story_lore-6",
+   "aspect": "story_lore",
+   "title": "How is 'understanding' measured?",
+   "question": "What counts as understanding the story, and what is N for chapter gates?",
+   "options": [
+    {
+     "label": "Wins only",
+     "detail": "Simplest."
+    },
+    {
+     "label": "Wins plus Recognitions",
+     "detail": "Needs stress."
+    },
+    {
+     "label": "Wins plus story beats seen",
+     "detail": "Needs beat tracking."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Chapter gates and the PC's hidden site.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_story_lore_2026-11-13.md section 4 #6"
+   ],
+   "his_words": [
+    "item 26"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "story_lore-7",
+   "aspect": "story_lore",
+   "title": "Lore for each kind?",
+   "question": "Does each lesser chaser have its own lore? You said each entity is a manifestation of the kid's psyche with its own uncanniness. The sheets are marked invented.",
+   "options": [
+    {
+     "label": "One line per kind, shown as ledger text only",
+     "detail": "In the dream's own terms."
+    },
+    {
+     "label": "None",
+     "detail": "They stay unexplained."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Chaser bodies and story.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_story_lore_2026-11-13.md section 4 #7",
+    "loop/buildpath_entity_bodies_2026-11-13.md section 4 Q6"
+   ],
+   "his_words": [
+    "item 168",
+    "item 174"
+   ],
+   "same_as": [
+    "entity_bodies-q6"
+   ]
+  },
+  {
+   "id": "frontdoor_onboarding-1",
+   "aspect": "frontdoor_onboarding",
+   "title": "The game's name?",
+   "question": "What is the game called on its title and window? The repo is already Dreamzone 3.",
+   "options": [
+    {
+     "label": "Keep Dreamzone, drop '2: the world'",
+     "detail": "Nearly free."
+    },
+    {
+     "label": "A new title now",
+     "detail": "Every header, shortcut and exe name moves once."
+    },
+    {
+     "label": "A working title behind one constant",
+     "detail": "Real name later; one more rename."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The front door lap (queue step 12). The handoff advises avoiding real marks.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_frontdoor_onboarding_2026-11-13.md section 4 Q1",
+    "loop/queue_dreamzone3_2026-11-12.md step 12"
+   ],
+   "his_words": [],
+   "same_as": []
+  },
+  {
+   "id": "frontdoor_onboarding-2",
+   "aspect": "frontdoor_onboarding",
+   "title": "Where is difficulty chosen?",
+   "question": "You said brutal is chosen but first runs should be forgiving. Where is difficulty set?",
+   "options": [
+    {
+     "label": "Four levels on the title screen",
+     "detail": "Brutal always pickable; a hidden run-count easing must be shown or reads as rubber-banding."
+    },
+    {
+     "label": "Brutal locked until N runs",
+     "detail": "Cuts against your own brutal runs."
+    },
+    {
+     "label": "Chosen in the waking room",
+     "detail": "Needs the room first."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The front door.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_frontdoor_onboarding_2026-11-13.md section 4 Q3"
+   ],
+   "his_words": [
+    "item 28",
+    "item 132",
+    "item 35",
+    "item 64"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "frontdoor_onboarding-3",
+   "aspect": "frontdoor_onboarding",
+   "title": "Does a tutorial exist, and where?",
+   "question": "You described a first-run tutorial alongside the kid's first playthrough, with only one character now.",
+   "options": [
+    {
+     "label": "In-dream hints on first slide, ladder, Park",
+     "detail": "Off after the first win; medium size; partial."
+    },
+    {
+     "label": "Waits for the room",
+     "detail": "Nothing ships until the room does."
+    },
+    {
+     "label": "None; a door card and a Help page",
+     "detail": "Your idea not met."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Onboarding.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_frontdoor_onboarding_2026-11-13.md section 4 Q4"
+   ],
+   "his_words": [
+    "item 70",
+    "item 101"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "frontdoor_onboarding-4",
+   "aspect": "frontdoor_onboarding",
+   "title": "Russian text?",
+   "question": "You wanted all text Russian at a glance, English on focus, for the operator's story. With the operator set aside, how much text?",
+   "options": [
+    {
+     "label": "Found lore only",
+     "detail": "A few signs and the ledger."
+    },
+    {
+     "label": "Every text in the game",
+     "detail": "Large and hard on first-read clarity."
+    },
+    {
+     "label": "Parked",
+     "detail": "None."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "A string table and focus test.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_frontdoor_onboarding_2026-11-13.md section 4 Q5"
+   ],
+   "his_words": [
+    "item 100",
+    "item 101"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "tech_foundation-1",
+   "aspect": "tech_foundation",
+   "title": "Old runs after a change?",
+   "question": "Partly settled by the room on 11-13: each run record now carries the chase settings it was played with (A is building it), so a kept run replays the same after the chase is retuned. Still yours: a change that cannot sit behind a recorded setting, such as a generator bug fix, makes an old run replay differently. What happens to those runs?",
+   "options": [
+    {
+     "label": "Warn that the build differs, and pin a few chosen runs with their build",
+     "detail": "Cheapest, and honest about it."
+    },
+    {
+     "label": "Replay each old run on the build it was recorded with",
+     "detail": "Exact, at the cost of a build per replay."
+    },
+    {
+     "label": "Keep every old behaviour selectable in the code",
+     "detail": "Exact, and the code grows with every fix."
+    }
+   ],
+   "recommended": 0,
+   "recommended_by": "the tech handoff",
+   "blocks": "The build-differs warning and pinned runs, a lap of their own after A's record change.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_tech_foundation_2026-11-13.md section 4 #1",
+    "loop/procgen_buildpath_2026-11-13.md section 5 #6"
+   ],
+   "his_words": [
+    "item 148"
+   ],
+   "same_as": [
+    "procgen-6"
+   ]
+  },
+  {
+   "id": "tech_foundation-2",
+   "aspect": "tech_foundation",
+   "title": "How long to keep runs?",
+   "question": "Twenty runs with no pin lets a 285-second run fall out. How should kept runs work?",
+   "options": [
+    {
+     "label": "Pin runs over a time you name",
+     "detail": "You choose the time."
+    },
+    {
+     "label": "Keep 60 and drop under-5-second 'left' runs",
+     "detail": "Larger folder; about 0.7 MB per 4 minutes, unmeasured."
+    },
+    {
+     "label": "Leave",
+     "detail": "No change."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "The tech laps.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_tech_foundation_2026-11-13.md section 4 #2"
+   ],
+   "his_words": [
+    "item 148"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "tech_foundation-3",
+   "aspect": "tech_foundation",
+   "title": "Textures on a fresh copy?",
+   "question": "The assets folder is ignored and made by Blender. What does a fresh clone get?",
+   "options": [
+    {
+     "label": "Commit baked textures in LFS",
+     "detail": "About 4 maps, size unmeasured."
+    },
+    {
+     "label": "Keep generating",
+     "detail": "Needs Blender."
+    },
+    {
+     "label": "Let the game draw without them",
+     "detail": "No textures on a fresh copy."
+    }
+   ],
+   "recommended": null,
+   "recommended_by": null,
+   "blocks": "Fresh-clone setup. You said 'do all' to this question; the librarian's pick is not on disk.",
+   "when": "later",
+   "sources": [
+    "loop/buildpath_tech_foundation_2026-11-13.md section 4 #3"
+   ],
+   "his_words": [
+    "item 86"
+   ],
+   "same_as": []
+  },
+  {
+   "id": "tech_foundation-4",
+   "aspect": "tech_foundation",
+   "title": "How strict is the landing train?",
+   "question": "Merge a batch only when every test suite is green, or land the green branches and drop the red one? Unclear whether a batch may land without a pane watching.",
+   "options": [
+    {
+     "label": "All suites green or no merge",
+     "detail": "Slower."
+    },
+    {
+     "label": "Land green branches, drop the red one",
+     "detail": "The landing-train plan chooses this."
+    }
+   ],
+   "recommended": 1,
+   "recommended_by": "the landing train plan (librarian's plan), relayed by the tech_foundation handoff",
+   "blocks": "The landing train laps.",
+   "when": "soon",
+   "sources": [
+    "loop/buildpath_tech_foundation_2026-11-13.md section 4 #4"
+   ],
+   "his_words": [],
+   "same_as": []
+  }
+ ],
+ "answered": [
+  {
+   "title": "How the father's death was changed",
+   "answer": "No murder. The father dies an ordinary death while young; the story's weight is the hole left in the kid's life and grief too large to understand.",
+   "item": 170,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 170",
+    "loop/buildpath_story_lore_2026-11-13.md section 4 #1"
+   ]
+  },
+  {
+   "title": "Camera and physics on the player",
+   "answer": "Physics owns what you see: the eye rides a simulated head filtered toward today's springs, body reactions are physical, with a small inertia dial on reversals, off by default. Aim and root stay as they are.",
+   "item": 162,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 162",
+    "loop/buildpath_player_body_2026-11-13.md section 4 Q1"
+   ]
+  },
+  {
+   "title": "Hunter's cornering and every entity's shape",
+   "answer": "The hunter corners by the hunting-animal law in a humanoid body. Every entity is humanoid in nature with its own unique uncanniness.",
+   "item": 168,
+   "sources": [
+    "briefs/dreamzone2_the_game.md items 168-169",
+    "loop/buildpath_entity_bodies_2026-11-13.md section 4 Q1"
+   ]
+  },
+  {
+   "title": "Each kind's one trait",
+   "answer": "Hunter T1 only (greyhound cornering, head stays humanlike); sprinter T3 (galloping back flex); pack T4 (shared fixed rhythm); interceptor T2; crawler T4; stalker T2; charger T3. Lesser kinds take theirs when they get humanoid models.",
+   "item": 169,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 169",
+    "loop/buildpath_entity_bodies_2026-11-13.md section 4"
+   ]
+  },
+  {
+   "title": "Lean, facing and climbs",
+   "answer": "The lean is both, tilt first. While sliding, the hunter faces you. The climb uses Overgrowth's grips, procedural, no clips (this settles clips versus procedure for climbs).",
+   "item": 155,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 155",
+    "loop/buildpath_entity_bodies_2026-11-13.md section 4 Q3"
+   ]
+  },
+  {
+   "title": "First-person body picks",
+   "answer": "A shoulder sliver on the look-back, a loose fist at the top of the sprint swing, the leading leg shown in a slide.",
+   "item": 173,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 173",
+    "loop/buildpath_player_body_2026-11-13.md"
+   ]
+  },
+  {
+   "title": "Arm swing",
+   "answer": "Both: a bigger swing at speed and the arms riding more of the torso's twist. Your eye is the bar.",
+   "item": 176,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 176"
+   ]
+  },
+  {
+   "title": "Arm numbers: keep or you pick",
+   "answer": "You pick: variants are shown side by side (the measured one beside two pushed toward your description) before any landing; your eye is the bar for the look, the research is how it is built.",
+   "item": 180,
+   "sources": [
+    "briefs/dreamzone2_the_game.md items 177, 180",
+    "loop/buildpath_entity_bodies_2026-11-13.md section 4 Q5"
+   ]
+  },
+  {
+   "title": "When a run is lost and when it is saved",
+   "answer": "Caught before the timer: lose all points. Survive the timer: overtime where the evil god always catches you and the good god always saves you, run counts as a success with points kept plus the overtime bonus. Being consumed happens only before the timer.",
+   "item": 66,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 66",
+    "loop/buildpath_run_frame_2026-11-13.md section 1"
+   ]
+  },
+  {
+   "title": "Two currencies",
+   "answer": "Cash (spent at the PC on most things) and energy (spent in the meditation chair); the illicit site's rare trinkets cost a mix of both.",
+   "item": 67,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 67"
+   ]
+  },
+  {
+   "title": "Lost run still gives some global XP",
+   "answer": "A lost run gives crumbs of global XP compared with winning; energy comes from successful escapes and chests.",
+   "item": 69,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 69",
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #3"
+   ]
+  },
+  {
+   "title": "Luck and the Park's length",
+   "answer": "No sealed pieces. Luck does not touch a Park's length; it acts on chests only (more often, better loot, several things at once).",
+   "item": 124,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 124",
+    "loop/buildpath_meta_loop_2026-11-13.md section 4 #4"
+   ]
+  },
+  {
+   "title": "Park erosion start and name",
+   "answer": "Erosion starts 15 seconds after first entry, creeping about 3 m/s. The safe zones are called the Park.",
+   "item": 125,
+   "sources": [
+    "briefs/dreamzone2_the_game.md items 95, 125"
+   ]
+  },
+  {
+   "title": "How the surge is limited",
+   "answer": "Diminishing returns replace per-source cooldowns; the base surge is limited; abilities raise the limits. Surge is earned by overtakes fused with near misses.",
+   "item": 140,
+   "sources": [
+    "briefs/dreamzone2_the_game.md items 137-140"
+   ]
+  },
+  {
+   "title": "Kid's base outfit",
+   "answer": "The kid starts in your own regular clothing, no buff. The father's hoodie is a late-game unlock. (Which of the three design sheets is not yet picked; see the open call.)",
+   "item": 109,
+   "sources": [
+    "briefs/dreamzone2_the_game.md items 86, 109"
+   ]
+  },
+  {
+   "title": "Flashlight is not one of the six",
+   "answer": "You do not spawn with it; you find it in chests; it is unlocked early.",
+   "item": 40,
+   "sources": [
+    "briefs/dreamzone2_the_game.md items 36, 40",
+    "handback/p-l170-abilities-E_2026-11-12.md section 0 #4"
+   ]
+  },
+  {
+   "title": "Only one character is played",
+   "answer": "One playable character, made great: the kid. Other characters are set aside, not deleted.",
+   "item": 101,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 101"
+   ]
+  },
+  {
+   "title": "Father's things",
+   "answer": "Dad's watch is a trinket; his bomber a legendary jacket; his sunglasses a legendary accessory.",
+   "item": 123,
+   "sources": [
+    "briefs/dreamzone2_the_game.md items 114, 123"
+   ]
+  },
+  {
+   "title": "No out-of-body moments in the dream",
+   "answer": "You said there should be none in the dreamzone, since you are already out of your body.",
+   "item": 26,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 26",
+    "loop/buildpath_look_fear_2026-11-13.md section 4 a"
+   ]
+  },
+  {
+   "title": "Own sounds from scratch",
+   "answer": "No: use an open-source, high-quality synth or something beyond the native sound capabilities.",
+   "item": 181,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 181"
+   ]
+  },
+  {
+   "title": "Sprint peak",
+   "answer": "Top sprint speed about 10 m/s, earned by holding sprint and taking good lines, with the chasers scaled to match.",
+   "item": 81,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 81"
+   ]
+  },
+  {
+   "title": "Chaser counts and early runs",
+   "answer": "Count of chasers scales with base difficulty and story progression; the first few runs are forgiving.",
+   "item": 132,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 132"
+   ]
+  },
+  {
+   "title": "Lore depth",
+   "answer": "Surface play first; lore never forced, abundant for those who search, built on real research woven into a fictional frame.",
+   "item": 174,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 174"
+   ]
+  },
+  {
+   "title": "The dark one's name candidates",
+   "answer": "The four candidates were 'good for now'; the name stays open among them; the build uses a placeholder.",
+   "item": 110,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 110"
+   ]
+  },
+  {
+   "title": "The apartment and variety",
+   "answer": "Frozen. New structure goes into the hotel, school and hospital first.",
+   "item": 182,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 182"
+   ]
+  },
+  {
+   "title": "Who drafts designed pieces",
+   "answer": "The room drafts shape-only layouts, and you judge renders before any lands.",
+   "item": 182,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 182"
+   ]
+  },
+  {
+   "title": "More builder panes for the run",
+   "answer": "Two more.",
+   "item": 182,
+   "sources": [
+    "briefs/dreamzone2_the_game.md item 182"
+   ]
+  }
+ ],
+ "edited": "2026-11-13 by the librarian: world_gen-0, sound-0, sound-7, sound-8 added; sound-2 and tech_foundation-1 rewritten; world_gen-10 and world_gen-7 settled by item 182"
+}

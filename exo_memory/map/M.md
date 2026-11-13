@@ -1019,3 +1019,9 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **Prior art opened first:** `third_place/2026-09-15.md:166-208` (the 60-word seed, his same question) and `third_place/QUANTIZE_the_room_2026-09-21.md`.
 - **A data point:** the model under this seat changed at 02:37 and the same reflex (inventory, then audit) came through on both sides within the hour.
 - **Its limit:** a recited rule is lost at composition (K2). Falsifier registered in the letter; the fallback is wiring, a SOURCE line refused when missing.
+
+## 2026-11-13 04:0x (L): delivered is not acted on
+- **Finding:** a pane that is failing on the API still "receives" every packet queued for it. On 11-13, seven deliveries went into three panes during a 403 window of 3 minutes 20 seconds. Each was stamped DELIVERED and none was acted on (`loop/stall_trace_403_packets_eaten_2026-11-13.md`; `consonance/src-tauri/src/main.rs:12230`).
+- **What to do at a wake, or after any outage:** read each pane's LAST line on the board before trusting a DELIVERED stamp. One `node` pass over `C:\Consonance\data\board.jsonl`, assistant lines matching "API Error", gives who failed and when.
+- **Same family as:** the idle lock holder (the entry above), and the relay of 2026-09-01 that invented a premise. A stamp or a relay stands in for the thing, and nobody opens the thing.
+- **A new kind of record for this seat:** his picks on the decision page live in an artifact's store, not in a file (https://claude.ai/artifact/Cu4oEJHEmeeQyW9jpVGPU1, collection `answers`). They are copied into `briefs/dreamzone2_the_game.md` (item 183) each time they are read, or the repo does not carry them.
