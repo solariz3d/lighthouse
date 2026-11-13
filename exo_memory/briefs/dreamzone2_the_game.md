@@ -1218,7 +1218,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **More builder panes: "Two more (Recommended)".** Lanes: `loop/plan_two_more_panes_2026-11-13.md`.
      - **Still open:** whether the generator path moves up his queue (it sits at step 13).
 183. 2026-11-13 03:5x on, his picks on the decision page (https://claude.ai/artifact/Cu4oEJHEmeeQyW9jpVGPU1, private to him; built from `loop/his_calls_2026-11-13.json`). Each pick is saved in the page's store as `answers/<call id>`. This item is rewritten whole from the store each time it is read (`loop/his_calls_to_brief_2026-11-13.js`):
-     - **Last read: 11:01Z, 45 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
+     - **Last read: 11:57Z, 89 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
      - **Changed by him:** `run_frame-1` was "Show nothing" at 09:59:34Z before the pick listed below.
      - `run_frame-1` "Show the timer?": **"Late warning only"** (NOT the page's suggestion, which was "Show nothing") (10:00:06Z).
        - the option as he read it: Show it only in the last minute; one extra screen state.
@@ -1255,12 +1255,8 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        - the option as he read it: Fair, weaker.
      - `sound-2` "What makes the hunter's sound?": **"Build both, pick by ear"** (NOT the page's suggestion, which was "Recorded footfalls, our thud underneath") (10:09:06Z).
        - the option as he read it: One clip with both voices on the same run.
-     - `sound-0` "Your own steps cover the hunter's. Which mix?": **"Hear it again with the new voice"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
-       - the option as he read it: Recorded footfalls will replace the home-made sound, so A and C will both change.
-     - `tech_foundation-1` "Old runs after a change?": **"Warn that the build differs, and pin a few chosen runs with their build"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
+     - `tech_foundation-1` "Old runs after a change?": **"Warn that the build differs, and pin a few chosen runs with their build"** (the page's suggestion) (10:09:22Z).
        - the option as he read it: Cheapest, and honest about it.
-     - `tech_foundation-4` "How strict is the landing train?": **"Land green branches, drop the red one"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
-       - the option as he read it: The landing-train plan chooses this.
      - `chase_entities-2` "Keep the wall pass?": **"Drop it"** (10:10:14Z).
        - the option as he read it: Removes the break; costs the answer to the safe corner.
        - his note, verbatim: ofc not.
@@ -1332,6 +1328,125 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - `world_gen-1` "Which biomes?": **"Build pool rooms as a fifth interior"** (10:59:12Z).
        - the option as he read it: A kit and a water look; no new generator code.
        - his note, verbatim: there is only one character now. But the more biomes the better, it would be cool and tons of variety, then every seed is different amount of each biome, starting from the apartment biome where you spawn in from ur bed.
+     - `world_gen-2` "What are Parks for?": **no option picked; his own answer below** (11:00:59Z).
+       - his note, verbatim: the parks should be like we planned, a bunch of pieces like the hallway, the ladder drop down or climb up,  different bends in a hallway, can be mirrored and connected to each other dependent in the seed, making a varying length of parks where some are long and some are how they are now, some only saving you a few seconds, and others creating serious gaps.
+     - `world_gen-3` "Doors: too many?": **"Leave the door rate at 0.25"** (11:01:27Z).
+       - the option as he read it: Nothing changes.
+       - his note, verbatim: put the door rate to 0.15
+     - `world_gen-13` "Five minutes of your play?": **"Yes"** (11:01:31Z).
+       - the option as he read it: One saved run of your.
+     - `look_fear-2` "What drives the fear effects?": **"Add depth or tier, and stress"** (11:01:50Z).
+       - the option as he read it: Needs the stress system.
+     - `sound-0` "Your own steps cover the hunter's. Which mix?": **"Hear it again with the new voice"** (the page's suggestion) (11:03:55Z).
+       - the option as he read it: Recorded footfalls will replace the home-made sound, so A and C will both change.
+       - his note, verbatim: u are working on it right now i think
+     - `sound-7` "Where may recordings come from?": **"Add the Sonniss game-audio bundles"** (11:04:32Z).
+       - the option as he read it: Large and professional, no credits owed. One clause, about shipping the files as loose sound effects, gets confirmed first.
+       - his note, verbatim: we can also use sounds that neeed credit.
+     - `sound-8` "A GPL synth as an offline tool?": **"Yes, render offline and ship the audio"** (11:05:00Z).
+       - the option as he read it: The GPL's own FAQ says a program's output is not covered by its licence.
+       - his note, verbatim: fk a lawyer
+     - `sound-3` "Which sounds first?": **"The living sounds (feet, breath, voices)"** (11:05:00Z).
+       - the option as he read it: The design pane says code does these worst.
+     - `story_lore-1` "How does the father die?": **"Sudden and ordinary"** (11:05:35Z).
+       - the option as he read it: Fits 'never makes sense'.
+       - his note, verbatim: One day, he was just gone.
+     - `story_lore-5` "The dark one's name?": **"Unnamed until chapter 5"** (11:06:14Z).
+       - the option as he read it: No call needed until the reveal build.
+       - his note, verbatim: I like the ambigious "It" is coming.
+     - `tech_foundation-2` "How long to keep runs?": **no option picked; his own answer below** (11:09:09Z).
+       - his note, verbatim: i dont get this.
+     - `tech_foundation-4` "How strict is the landing train?": **"Land green branches, drop the red one"** (the page's suggestion) (11:09:15Z).
+       - the option as he read it: The landing-train plan chooses this.
+       - his note, verbatim: not sure about this either.
+     - `frontdoor_onboarding-1` "The game's name?": **"A new title now"** (11:16:05Z).
+       - the option as he read it: Every header, shortcut and exe name moves once.
+       - his note, verbatim: The Absolute
+     - `run_frame-2` "How long is a run?": **"Different per difficulty"** (11:19:26Z).
+       - the option as he read it: A length for each level; more tuning.
+       - his note, verbatim: 5 mins for easy, 7.5 mins for normal, 10 mins for brutal, tbh, there should just be one difficulty, brutal, then you can upgrade the difficulty even more from there a crazy amount to scale with the player lategame, like megabonk.
+     - `run_frame-6` "What is 'the part taken'?": **no option picked; his own answer below** (11:22:41Z).
+       - his note, verbatim: It could take a trinket, that is good, at random, it also deducts energy from you if you already banked some. And then every time you it gets you, i want there to be like a psychedelic horror cinematic, first is the jump scare and screamer, then it like drags you under the floor into a demonic fractal realm void, rising....rising.... then you wake up at the peak of the horror.
+     - `run_frame-7` "Is the loss portal the reveal?": **"Two sequences"** (11:24:06Z).
+       - the option as he read it: A normal loss, and a separate reveal.
+       - his note, verbatim: but it sort of alludes in a clever and indirect way, like a glimpse at the raw demonic power.
+     - `chase_entities-4` "Can good entities fail?": **"Never fail"** (11:24:50Z).
+       - the option as he read it: Rare and scripted; the player never risks them.
+       - his note, verbatim: they are more powerful than the evil god.
+     - `entity_bodies-3` "A face at the catch?": **"A face only at the catch"** (11:30:22Z).
+       - the option as he read it: One brief face shown at the catch.
+       - his note, verbatim: the face will bend and drift while becoming so fucking horrifying. If it grabs you from behind, it stops you, depending on the angle of attack, ragdolls your body and flips you around, all driven by procedurally generated animations depending on the seed and location of death, momentum and inertia relative to map geometry. Once your body settles after ragdoll, depending on how the player is oriented, the hunter drags them and turns them around to face it, and the face contorts, their head turning into a void that begins to grow, encompassing and replacing the surrounding environment, almost like, the face of the hunter turns into a portal that sucks him into it, and once hes in it thats where it shows true Hell in a way, or at least thats what it wants  the player to think. To me, the evil god is like It from the movie or stephen king novels, an ancient force outside of time space, it feeds on fear, and uses the subjects own psyche to manifest into what monroe called to be like, cultural impression or something, like the agents in the energy systems in between, some of them seem to us to be malevolent, but in reality they are just thought forms that take the shape of our own constructs. They exploit our beliefs in good and evil, or something like that, might have to re look into what monroe said word for word.
+     - `player_body-1` "Sideways turn speed?": **"Keep and tune by eye"** (11:30:22Z).
+       - the option as he read it: Simplest.
+     - `movement-4` "Top-speed ceiling?": **"Lower"** (11:31:34Z).
+       - the option as he read it: Leaves less headroom for upgrades.
+       - his note, verbatim: 8ms is max speed sprint, then the tac sprint equilivent makes you go 10ms, then slows down, needed to do slide cancel to refresh it, then from the 10ms, you can boost ur speed from doing near misses and shit.
+     - `movement-6` "First sprint stage speed?": **no option picked; his own answer below** (11:31:48Z).
+       - his note, verbatim: 8ms
+     - `movement-9` "Hop perk's speed cap?": **"Raise to 18 to 20"** (11:32:28Z).
+       - the option as he read it: Can escape the dark one on purpose.
+       - his note, verbatim: perhaps even faster chaining talented Bhop skills, but then, we will have to test the evil god to be right on your tail even then. We will make it good when the time comes.
+     - `movement-13` "Wall-run rarity": **no option picked; his own answer below** (11:32:47Z).
+       - his note, verbatim: hmmmm, voids should be rare, but perhaps you can even wall run to dodge infront of u lol
+     - `abilities-3` "What is a Focus level?": **"Both"** (11:33:49Z).
+       - the option as he read it: Story sets the ceiling, the choice is within it.
+       - his note, verbatim: its like chapters in a way through the story, but also unlocks new shit every one.
+     - `abilities-4` "Does a found flashlight stay?": **no option picked; his own answer below** (11:34:20Z).
+       - his note, verbatim: Flashlight is an ability, remember, then with one of the psychic abilities we have yet to name, it combines with flashlight and psychic.
+     - `abilities-5` "Which power joins the beam?": **"A new power"** (11:37:33Z).
+       - the option as he read it: Decides what the beam does besides repel.
+       - his note, verbatim: There could be a new ability, not sure for name, but if a single entity is infront of you, it makes them flee, but makes all other entities briefly frenzy, not stress related frenzy, perk specific, with the fusion, it makes the flashlight itself make all mobs except the hunter flee, as well, when you point the flash light at other mobs, it makes them frenzy, while the ones you point the light on in real time flee, perhaps it slows the hunter down to  slow sprint.
+     - `abilities-6` "What does 'frenzy' mean?": **"Game-wide frenzy"** (11:38:02Z).
+       - the option as he read it: Needs the stress system first.
+       - his note, verbatim: except for the entities the light is on, they flee.
+     - `stress-3` "How does a frenzy end?": **"Lasts while stress is full, then bleeds off"** (11:38:29Z).
+       - the option as he read it: A natural ending.
+       - his note, verbatim: the flashlight and psychic ability frenzy are transient
+     - `stress-4` "How often is Recognition?": **"Raise the odds with abilities and gear"** (11:38:49Z).
+       - the option as he read it: Feeds the 'spec into stress' exploit you accept.
+       - his note, verbatim: but not by a lot.
+     - `stress-5` "Does Recognition stop catches?": **"A catch is a save"** (11:40:02Z).
+       - the option as he read it: Score kept; a lucky player skips the timer.
+       - his note, verbatim: For a solid 30 seconds, you have the equilivent to the mario star powerup, making you SPEED demon and invulnerable for those 30 seconds, and you also gain the passive buffs from the resonant for the rest of the run.
+     - `meta_loop-2` "One global level, or per save?": **"One shared level, per-character records"** (11:40:25Z).
+       - the option as he read it: A profile file shaped for it now.
+       - his note, verbatim: can prestige total player level for even more shit lol.
+     - `meta_loop-4` "Does luck change the world?": **"The generator reads luck"** (11:42:51Z).
+       - the option as he read it: The world changes with upgrades, which you refused for Park length.
+       - his note, verbatim: the generator reading luck idea is cool if it can be done right, keep that open for future experimentation
+     - `meta_loop-5` "Trinket storage?": **"Two carried, unlimited storage"** (11:48:57Z).
+       - the option as he read it: Simplest.
+     - `meta_loop-7` "What unlocks the harder tiers?": **"Level-gated tiers too"** (11:49:52Z).
+       - the option as he read it: A threshold table.
+       - his note, verbatim: first few runs let the player feel it out, after the first chapter, the game scales. More aggressive ai and more mobs
+     - `meta_loop-9` "New effect for the guitar pick?": **"Give it a new effect"** (11:50:14Z).
+       - the option as he read it: A new effect is drafted for you.
+       - his note, verbatim: can wait
+     - `waking_room-2` "The gym minigame?": **no option picked; his own answer below** (11:51:50Z).
+       - his note, verbatim: home gym mini game can incorporate different types of weight lifting instruments you can choose to buy and swap, but they all give you the same benefit which is physical prowess. Each instrument can have a slighlty different mini game, then for the meditation, it will be a breathing rhythm and timing game.
+     - `waking_room-3` "Does the PC build change play?": **"Cosmetic plus a small cash or luck buff"** (11:52:00Z).
+       - the option as he read it: Some effect on play.
+     - `world_gen-4` "Stairs: which did you like?": **"All stairs"** (11:52:27Z).
+       - the option as he read it: Redesign switchbacks and spirals.
+       - his note, verbatim: and then through testing ones i dont like, can tweak them by my eye.
+     - `world_gen-5` "How rare is the outside?": **"A seed hash, once in N runs"** (11:52:28Z).
+       - the option as he read it: Rare and random.
+     - `world_gen-6` "Designed pieces before the story's facts?": **no option picked; his own answer below** (11:52:55Z).
+       - his note, verbatim: Yes can drop, but very rare, all lore trinkets can drop when ever randomly.
+     - `world_gen-8` "Voids in school and hospital?": **"Add a void-capable corridor type"** (11:53:49Z).
+       - the option as he read it: More generator work.
+     - `world_gen-9` "Chapters and the generator?": **"Chapter is a world-building input"** (11:54:28Z).
+       - the option as he read it: Deterministic like the seed; steps 1.0, 0.75, 0.5, 0.3 proposed.
+       - his note, verbatim: we will figure this out more, leave a note here to come back to.
+     - `world_gen-11` "How rare are payoffs?": **"Today's rate, cut the longest gaps"** (11:54:46Z).
+       - the option as he read it: Small change.
+       - his note, verbatim: what is a clear payoff?
+     - `world_gen-12` "Long straights?": **"Boulevards on purpose"** (11:54:46Z).
+       - the option as he read it: A few made deliberate.
+     - `look_fear-1` "Out-of-body haze?": **"Keep the haze, drop the camera-lifts-out beat"** (the page's suggestion) (11:55:33Z).
+       - the option as he read it: Costs nothing; loses a lucid beat.
+     - `look_fear-4` "Hell-red erosion: how violent?": **"Pulsing allowed only with the setting off"** (11:55:48Z).
+       - the option as he read it: More frantic; safety setting.
 184. 2026-11-13 05:03 (L), after hearing E's two-voice clip (`Downloads\dz3-l199-review\l199_two_voices.wav`; voice A a recorded boot over the thud, voice B the synth bass drum): "the deeper bassy thud is better idea i think for the hunters sound, it should be like, heavy, like SCARY bassy stomps"
      - **Read as:** voice B's direction (the deep boom), made heavier and scarier. This settles `sound-2`, which he had answered "Build both, pick by ear".
      - **What the room knows against it, to be solved and not argued:** E measured that voice B clears his own sprinting steps on 2 of 14 footfalls at 12 to 20 m, against 7 for the current thud and 10 for voice A (`handback/p-l199-voices-E_2026-11-13.md`, section 3). His item 178 wants the hunter heard coming. So the heavy stomp needs a layer that carries over his feet, as the knock did (`handback/p-l192-footsteps-E_2026-11-13.md:49`).
