@@ -239,3 +239,18 @@ corrected before the ring); step 1's "the bend at the back: no" (E's yardstick s
 bent than Lockie's accelerating cricketers); my runner's label carried an apostrophe and one red run never started
 (re-run, nothing lost); V1's first capture (`after_5ae66b8_V1`, before the solve) is kept as the stop's evidence and is
 not on the sheet.
+
+## The landing: his pick is V1 ("v1 sourced flare looks the best", brief item 186)
+
+**For his eye, on his shortcut once it lands:**
+- The arm at the back of the swing is no longer nearly straight: the elbow holds 80° there at the hunter's speed, where
+  main opened it to 62°; over the whole stride it averages 94° (main 56.5°), inside what recorded runners do.
+- The arms stand off the body more the further back they swing: 23° at the back at 10 m/s, where main held 9.5°.
+- The front hand peaks about 10 cm under the eye (main 3 cm), and the swing he sees is about the same (50.9° each way,
+  main 51.0°).
+
+**Rebased for the train:** `l195-v1`, V1's five commits rebased on main c9d520e (clean) as their own branch, f0efe83;
+V2 4ef2027 and V3 bba95c4 stay on `l195-arm-variants`, not landed. checked: `scratchpad/l195/v1land_game.txt` → 177
+tests, 0 failed; `v1land_world.txt` → 45 tests, 0 failed (the run first refused by memwatch at 12:2xZ, commit headroom
+5895 / 5993 MB under 6144, nothing of the room's running; it cleared at 12:23:06Z). Pushed; marked READY
+(`landing-train.js ready --pane C --lap L195` → "READY l195-v1 f0efe83").
