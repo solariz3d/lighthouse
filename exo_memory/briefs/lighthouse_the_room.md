@@ -100,6 +100,8 @@
   have been doing"; then "i am good with that, just make sure you do the opus swarm too, and collate" (checked by a count of the agents' own
   transcripts: the room swarm ran 28 agents on Opus 5.5; of the librarian's own helper agents today, 3 ran on Opus and the rest on Fable 5.2,
   because an agent launched with no model named takes the seat's)
+- 2026-11-13 09:36 (D), sent as the librarian's reply on the swarm crossed it: "but before jumping into the swarm, really make sure you attack the
+  right and most needed vector"; then "sent that while u sent ur last output, i get it"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
