@@ -164,6 +164,7 @@
 - [decided 32] Containers sometimes spawn in reprieves, giving "a solid second or two to look at it and click it". The theme is "mystical occult/scientific".
 - [decided 32] Trinkets: two equipped, passive buffs. Tiers: common, uncommon, rare, epic, resonant, each rarer to drop.
 - [decided 34] Rarer trinkets carry exotic, powerful buffs, not just a bigger number. Extras go to storage.
+- [decided 183, `meta_loop-8`, his correction of 2026-11-13] **Not all trinkets are strong.** His words: "not all trinkets are strong, they scale from common to resonant remember, their tier being how strong they are, but yes you can only equip two at a time if you find more on a run it gets put into storage, if you have none and find some, it equips for you that run and after unless changed." This reverses the librarian's reading "all strong" (`loop/buildpath_meta_loop_2026-11-13.md:64`). The line below that calls trinkets "the strong buffs" (51, 52) stands beside it; how the two fit together is not ruled.
 - [decided 34] Drops come mid-run from good entities, or from the good entity at the end of a run (like Darkest Dungeon's end-of-raid loot).
 - [decided 34] Waking with a new trinket plays an animation: first person in bed, taking the covers off, finding it in your hand.
 - [decided 47] Trinkets are lore items. Example: Dad's watch, a resonant item ("even though dad is gone, he trace lives on").

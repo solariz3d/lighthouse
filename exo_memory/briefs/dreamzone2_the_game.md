@@ -1218,7 +1218,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **More builder panes: "Two more (Recommended)".** Lanes: `loop/plan_two_more_panes_2026-11-13.md`.
      - **Still open:** whether the generator path moves up his queue (it sits at step 13).
 183. 2026-11-13 03:5x on, his picks on the decision page (https://claude.ai/artifact/Cu4oEJHEmeeQyW9jpVGPU1, private to him; built from `loop/his_calls_2026-11-13.json`). Each pick is saved in the page's store as `answers/<call id>`. This item is rewritten whole from the store each time it is read (`loop/his_calls_to_brief_2026-11-13.js`):
-     - **Last read: 10:31Z, 37 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
+     - **Last read: 11:01Z, 45 picks.** Of the 16 calls marked "needed now", 16 are answered. 102 calls are on the page.
      - **Changed by him:** `run_frame-1` was "Show nothing" at 09:59:34Z before the pick listed below.
      - `run_frame-1` "Show the timer?": **"Late warning only"** (NOT the page's suggestion, which was "Show nothing") (10:00:06Z).
        - the option as he read it: Show it only in the last minute; one extra screen state.
@@ -1255,8 +1255,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
        - the option as he read it: Fair, weaker.
      - `sound-2` "What makes the hunter's sound?": **"Build both, pick by ear"** (NOT the page's suggestion, which was "Recorded footfalls, our thud underneath") (10:09:06Z).
        - the option as he read it: One clip with both voices on the same run.
-     - `abilities-2` "Where are abilities bought?": **"Chair only"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
-       - the option as he read it: PC is for shop, builder and cheques; cheapest.
      - `sound-0` "Your own steps cover the hunter's. Which mix?": **"Hear it again with the new voice"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
        - the option as he read it: Recorded footfalls will replace the home-made sound, so A and C will both change.
      - `tech_foundation-1` "Old runs after a change?": **"Warn that the build differs, and pin a few chosen runs with their build"** (the page's suggestion, taken with its take-every-suggestion button) (10:09:22Z).
@@ -1307,5 +1305,30 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - `movement-8` "Base hop strength?": **"A little"** (10:28:49Z).
        - the option as he read it: About 10 to 25 percent of full; skilled players gain a bit.
        - his note, verbatim: 10% base, the end game upgraded perks will make it compound as fast as u can go.
-     - `movement-10` "What counts as a movement chain?": **"E or F: hops / near misses"** (10:29:31Z).
-       - the option as he read it: Needs hop perk or chase reporting.
+     - `movement-10` "What counts as a movement chain?": **"A: clean moves in a window"** (10:29:38Z).
+       - the option as he read it: Cheapest; the detector exists.
+     - `movement-11` "The somersault?": **"Full coupling"** (10:30:48Z).
+       - the option as he read it: Sim and chase talk each tick; large build.
+       - his note, verbatim: like i ssaid before, it should be player engaged, and the camera should follow where the players head is looking during it, following real locomotion telemetry.
+     - `movement-12` "Dive steers by view or run?": **"By the run"** (10:31:23Z).
+       - the option as he read it: Today's behaviour.
+       - his note, verbatim: the direction where it was engaged, unlike b hopping moving in the air, the summsault will be straight ability. no air turning.
+     - `abilities-2` "Where are abilities bought?": **"PC and chair"** (NOT the page's suggestion, which was "Chair only") (10:40:20Z).
+       - the option as he read it: Two screens to build and balance.
+     - `abilities-8` "Which six abilities, which three ultimates?": **"Use the cheapest first set"** (10:41:13Z).
+       - the option as he read it: Quick Start, Long Stride, Long Slide, Sure Feet, Aura, Overclock; ultimates Nimble, Flow, Carried. All small builds; leaves out the dive roll, somersault and shroud.
+       - his note, verbatim: we can tweak and brainstorm more about the abilities when the time comes naturally in my head.
+     - `stress-2` "Frenzy and fairness": **"Amend the rule"** (10:44:10Z).
+       - the option as he read it: Stress may feed one named frenzy scale; touches every fairness bar.
+       - his note, verbatim: the way I see it, there is a base difficulty that starts at the difficulty you start the run with. Then from there, it scales from the time survived, as well frenzy mode is taking even all of that and cranking it to 11. Overtime, your stress returns to normal the longer you survive the frenzy, when you realize youre living still, you begin to compose yourself, meaning the frenzy stops for that moment at least. I also has this idea just now some how some way, what if juking the hunter in a goofy way somehow tricking its pathing, has a tiny chance to trigger a frenzy just from frustration trying to get the player.
+     - `stress-6` "Meter shown or felt?": **"Felt only"** (10:44:40Z).
+       - the option as he read it: Screen and sound only.
+       - his note, verbatim: The sound could be the players breathing is more ragged, and also the psychedelic stress effects get worse and worse.
+     - `meta_loop-6` "When does cash arrive?": **"A cheque after every win"** (10:55:46Z).
+       - the option as he read it: One path, more story.
+       - his note, verbatim: you wake up, then within 20 seconds it comes from under ur door.
+     - `meta_loop-8` "Confirm the trinket ruling?": **no option picked; his own answer below** (10:58:13Z).
+       - his note, verbatim: not all trinkets are strong, they scale from common to resonant remember, their tier being how strong they are, but yes you can only equip two at a time if you find more on a run it gets put into storage, if you have none and find some, it equips for you that run and after unless changed.
+     - `world_gen-1` "Which biomes?": **"Build pool rooms as a fifth interior"** (10:59:12Z).
+       - the option as he read it: A kit and a water look; no new generator code.
+       - his note, verbatim: there is only one character now. But the more biomes the better, it would be cool and tons of variety, then every seed is different amount of each biome, starting from the apartment biome where you spawn in from ur bed.
