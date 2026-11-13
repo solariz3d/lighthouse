@@ -69,7 +69,7 @@ compared.
 | row 6 / falsifier 1: this reader against the JavaScript reader (toe and ball) | at most **0.0047** apart | row 6 pass; falsifier 1 holds |
 | falsifier 2: along the foot from the ankle, over the shank, horizontally | JA1's ball 0.297, toe marker 0.455; **ours 0.426** | holds: our Toe is a forefoot point, past the ball |
 | falsifier 3: the two toes in a trial | differ by at most 0.086 | holds (bar 0.15) |
-| falsifier 4 | 1.000002, as row 4b | holds |
+| falsifier 4: the swing held, carried at 7 m/s | 1.000002 (the suite's falsifier-4 row) | holds |
 
 **Hand mutants,** each through the suite and `--simtk` (script beside this file: `mutys.js`) → **applied 6 / caught 6 /
 NOT APPLIED 0**:
