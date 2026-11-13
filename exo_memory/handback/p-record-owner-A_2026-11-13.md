@@ -10,8 +10,6 @@
 - **L-only data, not in the repo:** the raw replay dumps and copies of his run files (scratchpad `replay/`: his play data, read-only copies), `arms182/` (the normal-level arm CSVs a1 to a5: copied to the evidence folder), `arms182_brutal/*_pairs.csv` (the control's slosh pairs, 150 KB each; the runs CSVs and tables are in the repo), the memory sampler `mem.jsonl`.
 
 
-Pane A (Sonnet 5.5 trial, machine L). The chair's ruling at 09:37Z (plan `exo_memory/loop/plan_13h_run_2026-11-13.md:36-65`, THE SWARM RETURNED, ruling 1): `game/world/run_record.{h,cpp}` has one owner, A, and one scheme; four first laps edit it (the chase flip, tech L1, the frame, the abilities). **This file is the design and its registration, written before any code.** Status: nothing built.
-
 ## The scheme (the ruling's, restated so it can be checked)
 - The text record gains `record_format = 1`. A text without it is format 0 (every record written so far).
 - Every later field is **named and optional**; a missing field means **the behaviour of the day it was missing**. No second version number anywhere.

@@ -1,0 +1,8 @@
+=== tip: 47d88d7 Lap R (L197): the run record has one version, carries the chasers' speed; chase/ vs origin/main: 
+=== build dz-chase 13:14:49
+lockrun: F5 diagnosis dz-chase build WALL 10 s, exit 0
+=== equivalence sweep 13:24:03
+main (no D673) md5 fa938de45995bd2d13b98ba28fae0c34, 22 lines
+d673 md5  fa938de45995bd2d13b98ba28fae0c34
+hawk(e0184ea base) md5 599ab2395194ded75d0d102f84b3195d   registered 599ab2395194ded75d0d102f84b3195d
+=== done 13:25:09

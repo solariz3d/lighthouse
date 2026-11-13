@@ -10,8 +10,6 @@
 - **L-only data, not in the repo:** the raw replay dumps and copies of his run files (scratchpad `replay/`: his play data, read-only copies), `arms182/` (the normal-level arm CSVs a1 to a5: copied to the evidence folder), `arms182_brutal/*_pairs.csv` (the control's slosh pairs, 150 KB each; the runs CSVs and tables are in the repo), the memory sampler `mem.jsonl`.
 
 
-Pane A (Sonnet 5.5 trial, machine L). The ruling (chair's 12:49Z, the librarian's): go to the source before guessing another bot; replay his run `run-20261113-082347` on the build it names, dump the tracks, find where he shuttles between walls and where he circles, report where the hunter was and what it did; the reactive shuttle's settings come from the record; he is asked only if the record shows no such stretch.
-
 ## What was done (checked)
 - **His run files were copied to scratch first and only the copies were read** (`game\runs\` was not written). The raw track dumps stay in scratch (his play data); this folder keeps the analysis outputs and the scripts.
 - **A scratch worktree at `e0184ea`** (the build all his runs of today name; `dreamzone-3-a-replay`, detached) with one extra file, `game/world/replay_dump.cpp` (kept here as `evidence/replay_dump.cpp`), built behind the lock BelowNormal. It calls `read_run` and `replay_run` (the same code `dz-world --replay-run` calls) and writes the player and every chaser every 0.1 s. (The full `dz-world` is not needed to dump tracks; I say so because the ruling named it.)
