@@ -120,6 +120,14 @@ const MUTANTS = [
   ['hold: the hold wait never gives up (no max wait)', SRC, 'if (waited >= maxWaitMs) { dropMyHold(); throw', 'if (false) { dropMyHold(); throw'],
   ['CLI: --exclusive is not passed to hold()', SRC, "hold({ cmd, exclusive: flags.includes('--exclusive') });", 'hold({ cmd });'],
   ['CLI: the exit code is not the program\'s', SRC, 'return r.status === null ? 1 : r.status;', 'return 0;'],
+  // L202, the idle-holder guard
+  ['idle guard: an idle holder is never named', SRC, 'if (now() - base.t >= idleWindowMs && s.cpu - base.cpu < idleCpuS) {', 'if (false) {'],
+  ['idle guard: an idle holder is named on every check, not once', SRC, '          idleNamed.add(key);\n', '\n'],
+  ['idle guard: a fault in the sampler escapes into the wait', SRC, "    } catch (_) { /* the guard only reports: a fault in it leaves the wait exactly as it was */ }", '    } finally {}'],
+  ['idle guard: only the direct child is sampled, not the whole tree', SRC, 'for (let i = 0; i < tree.length; i++) for (const k of kids.get(tree[i]) || []) if (k !== tree[i] && !tree.includes(k) && childOf(tree[i], k)) tree.push(k);', 'void kids;'],   // re-anchored for the stale-parent check (P, 11-13)
+  ['idle guard: the board line does not echo the MCP session', SRC, "const extra = sid ? { 'mcp-session-id': sid } : {};", 'const extra = {};'],
+  ['idle guard: a shrinking tree is measured across the fall (a busy holder whose child exited is named idle)', SRC, 'const kept = prev.length && s.cpu < prev[prev.length - 1].cpu ? [] : prev;', 'const kept = prev;'],
+  ['idle guard: a stale parent id is taken at its word (a stranger created before the holder is counted in its tree)', SRC, 'return a === null || b === null || b >= a; };', 'return true; };'],
 ];
 
 function tree() {
@@ -140,14 +148,16 @@ function run(dir) {
 
 function main() {
   require('./heavy-run.js').hold({ cmd: 'heavy-run.mutants' });   // ONE HEAVY RUNNER PER TREE
-  const onlyAt = process.argv.indexOf('--only'), only = onlyAt > 0 ? Number(process.argv[onlyAt + 1]) : null;
+  // --only N, or a range or list (--only 30-34, --only 1,5,9): a long set run in units, so its slot is yielded between them (L202).
+  const onlyAt = process.argv.indexOf('--only'), onlyArg = onlyAt > 0 ? String(process.argv[onlyAt + 1] || '') : '';
+  const only = onlyArg ? new Set(onlyArg.split(',').flatMap((p) => { const [a, b] = p.split('-').map(Number); return b ? Array.from({ length: b - a + 1 }, (_, k) => a + k) : [a]; })) : null;
   const read = (f) => fs.readFileSync(path.join(HERE, f), 'utf8').replace(/\r\n/g, '\n');
   const control = (() => { const d = tree(); try { return run(d); } finally { fs.rmSync(d, { recursive: true, force: true }); } })();
   console.log(`control (unmutated copy)                                        pass ${control.pass} fail ${control.fail}`);
   if (!(control.fail === 0 && control.pass > 0)) { console.log('CONTROL NOT GREEN - no mutant result means anything'); process.exitCode = 1; return; }
   let applied = 0, caught = 0, notApplied = 0;
   MUTANTS.forEach(([name, file, anchor, repl], i) => {
-    if (only != null && only !== i + 1) return;
+    if (only != null && !only.has(i + 1)) return;
     const src = read(file), hits = src.split(anchor).length - 1, label = `${String(i + 1).padStart(2)} ${name}`.padEnd(100);
     if (hits !== 1) { notApplied++; console.log(`${label} NOT APPLIED (anchor found ${hits} times)`); return; }
     applied++;
