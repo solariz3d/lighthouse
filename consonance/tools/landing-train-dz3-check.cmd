@@ -3,6 +3,9 @@ rem landing-train-dz3-check.cmd (B, L194): the landing train's check for dreamzo
 rem (its working directory). Exit 0 only when every suite (build.bat test) and both self-tests are green. The red lines it prints are the
 rem ones landing-train.js names back to a branch's pane: the runner's FAIL rows, CTest's ***Failed, a self-test's FAILED total, and these.
 setlocal
+rem The build at 4 jobs, the room's rule for heavy runs: build.bat leaves Ninja its default (about 34 here), and that many MSVC
+rem compiles at once is the low-memory reaper's case.
+set CMAKE_BUILD_PARALLEL_LEVEL=4
 if not exist build.bat (echo BUILD FAILED: no build.bat in %CD% & exit /b 2)
 rem A merged branch may move a dependency's pin; a merge does not move the dependency's checkout, so this does.
 git submodule update --init --recursive
