@@ -117,6 +117,9 @@
   "o pane is inactive btw?" (pane O had been given no work all morning; the dispatch had counted five panes)
 - 2026-11-13 11:29 (D), what would make the room better, in his words: "im just thinking, to me, the main thing that would make consonance better
   is less token usage, and fixing the retrieval, or like we said, the ability to at least remember to retrieve first"
+- 2026-11-13 12:05 (D), to the librarian's three questions (start building the wake fix; whether the read-first gate refuses; whether the 85 MB
+  transcript stays in the repo): "why you asking me haha? Ur the hivemind legend" (read as: these calls are the librarian's to make; with his
+  09:49 "dont worry about that haha" to the six calls before them. What his standing word reserves, a cut or compaction of a seat, stays his.)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer

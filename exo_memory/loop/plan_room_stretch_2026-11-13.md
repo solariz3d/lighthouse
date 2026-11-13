@@ -92,3 +92,34 @@ P ran the guard's 73 unrun mutants on D (73 of 73 caught; 101 of 101 rows) and i
 idle, with negative CPU figures, and posted both lines to the board (`handback/p-l202-check-P_2026-11-13.md`, section 4). A child
 that used CPU and exited leaves the sum (`heavy-run.js:442`, `:358-362`). 901d3c39 does not land. The fix is P's, red first on
 that case; another pane lands it.
+
+## RULED, 12:1x (the librarian, at his word of 12:05: "why you asking me haha? Ur the hivemind legend")
+
+Lap W is unparked. The builder's document is `loop/wake_level2_2026-11-13/00_lap_w_spec.md` with its second reader, read together with
+`00_critic.md` section 1 (four errors still standing, E1 to E4) and `01_probes_q1_q2.md`. The spec's ten calls, each as ruled:
+
+1. **Start Lap W: yes.** Order W5 (the receipt first), W1, W2 (its overdue item-6 score first), W3, W4.
+2. **The wake gate refuses, for the librarian seat only, on D.** Warnings reached no seat (1,783 rows), and this gate's form is its
+   content: a note opened whole is in the window. Its own check beside the lap's falsifier: at the next two wakes, was the first
+   dispatch made from an opened note. Other seats are not gated.
+3. **W2's room-side class: the librarian only.**
+4. **L's shelf:** not ruled; it needs one read of `gates_mode` on L first. Carried to the handoff.
+5. **The 25 KB margin between the light and strict shelves** is lowered to what W1 needs, named in the commit.
+6. **The 85 MB transcript stays where it is.** It is his, he asked for it there, and removing it from the tip would not take it out of
+   history or out of any pull that has not had it. From here no single file over 10 MB goes into this repository: the push gate
+   refuses one, red first on the commit that carried it (3de92e53). Large records go to the private repository that holds the key.
+7. **The model on resume:** the mechanism is built (a model named per seat in Consonance's config), and it ships EMPTY, which keeps
+   today's behaviour. Which seat runs which model week by week stays his to set.
+8. **Idle compaction: every seat's keep-warm ping moves before minute 54.** That stops compactions nobody gave a word for, which is
+   what his standing rule asks; no setting of his is changed.
+9. **A slash command typed into a seat is not activation** for keep-warm (C3).
+10. **No compaction is scheduled for any seat.** That class is his word per seat, and none was given.
+
+Corrections the builders carry from the critic and the probes: a restart inside the hour costs about one shelf a seat, not a rewrite
+(E1); the silence-bounded wait is not shown to fix the recorded case, so the receipt is built first and read at the next large
+catch-up (E2, Q4); the launch id is removed from the app's environment after it is read (E3); "no new tmp_pack created inside the
+launch window" (E4); a running session did not re-read a changed CLAUDE.md in print mode (Q1), so W1d is not built on; the
+compaction hook's output reaches a manual compaction's summary in both shapes (Q2).
+
+**Panes.** R, Rust and PowerShell (`main.rs`, `launch.ps1`): B, after the nav row and his pictures. H, hooks and node tests: P, after
+the render bench. The landing is a third pane's. One rebuild and one restart of Consonance at the end, with the queue counted first.
