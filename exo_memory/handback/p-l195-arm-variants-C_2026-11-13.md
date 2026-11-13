@@ -116,3 +116,40 @@ further. Checkable: re-run V1 with kArmTwistShare 1.0 and see the two rows retur
 - **The following camera still enters walls on the corner:** frames 0, 5-7, 9, 12-19 of the corner pass are in a wall or
   the floor; the hunter is clear in 1-4, 8, 10-11 and 20-23. The sheet shows frame 21. This is L180 lap 2's open fault
   (its frames 12 and 16), wider than it said there.
+
+## Step 3, resumed under the ruling (librarian, 64077ad0): the check, then a conflict the solve cannot meet for V2 and V3
+
+**The check is done, and it confirms the cause.** V1 (5ae66b8) built with kArmTwistShare 1.0 in place of 1.5, the
+constant changed only for that build and restored in an exit trap (`scratchpad/l195/check.sh`; checked: its log →
+"restored: model_rig.h equals HEAD"). checked: `scratchpad/l195/V1_twist1_game.txt` → 169 tests, 0 failed: the swing at
+F 0.88 / 1.12 / 1.36 is 20.1 / 23.6 / 26.9° each way, **exactly Bruening's fit**; the posed stand-off equals the law at
+both ends (15.2° front, 26.4° back, against the law's 15.2 and 26.4); the 10 m/s row reads 51.9° (law 49.3, bar 3).
+
+**The conflict, computed before building anything** (the pose's own geometry in node; it reproduces L191's posed
+51.0° at 10 m/s from atan2(sin 15°·sin 21.4° + sin 49.3°·cos 15°·cos 21.4°, cos 49.3°·cos 15°)):
+
+The two swing rows measure in **two different frames**:
+- `the_arms_swing_through_the_range_runners_were_measured_at` measures against the **chest's** forward: Bruening's own
+  frame (the humerus against the thorax). There only the arm's EXTRA turn (share 1.5 less the trunk's 1.0) carries the
+  stand-off into the swing.
+- `the_arms_swing_further_the_faster_the_body_runs` (L190's, amended at L191) measures in the **heading's** fore-aft plane,
+  where the trunk's whole turn counts too (1.5 x the thorax's twist).
+
+Solving the posed amplitude so the chest-frame swing is Bruening's (way 1, as ruled) gives, in the heading's frame:
+
+| | V1 (Otsuka's flare) | V2 (+10°) | V3 (+20°) |
+|---|---|---|---|
+| chest frame, F 1.36 and 10 m/s | 26.9, 49.3: **exact** | 26.9, 49.3: exact | 26.9, 49.3: exact |
+| heading frame, 10 m/s (law 49.3, bar 3) | 50.9 (passes) | **52.6 (over by 3.3)** | **54.5 (over by 5.2)** |
+
+So V1 passes every row under the solve. **V2 and V3 would break L190's heading-frame row**, because their larger flare
+is carried into the heading-frame swing by the trunk's own turn, which no solve in Bruening's frame removes. Building
+them would be the same stop again, so they are not built until this is ruled. The ways I can see:
+1. Measure L190's row against the chest's forward, as the F 1.36 row already does (a rule change of that row: way 3 for
+   that one row only, since Bruening's quantity is thorax-relative).
+2. Solve in the heading's frame instead: then the chest-frame row (Bruening's own frame) fails for V2 and V3.
+3. Build only V1 as the sourced variant, and make V2 and V3 "more flare" without crossing that row's 3°: about +4° of
+   flare at most (inferred from the same computation), which may not be the "more" his eye asked for.
+
+**Building now, as ruled:** the solve (way 1), and V1 under it, with the new row that holds the chest-frame property
+over the three variants' stand-offs.
