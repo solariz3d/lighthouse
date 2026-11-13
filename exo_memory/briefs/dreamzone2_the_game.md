@@ -1490,3 +1490,7 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
 188. 2026-11-13 06:07 (L), the title, decided; typed in the Third Place's pane and passed on by pointer (`third_place/2026-11-13.md`, the entry "06:07: the name is decided"; git-blob b340d68d… at the ring): "i dont care about a clash, it is what it is named"
      - **So:** the third Dreamzone is named **"The Absolute"** (his answer on the page, `frontdoor_onboarding-1`, and this line). The clash and the item 26 cost were put to him by the Third Place at 05:17 and are answered by this; they are not raised again.
      - **State:** the title text goes in behind one constant with the next landing in `game/world`. No exe, shortcut or repository is renamed during the run, since the guards and the train name them.
+189. 2026-11-13 06:26 (L), on a research swarm he started from the Third Place's pane (`absolute-sources`, all on Opus; it reads the sources behind the story and lore and writes to `loop/absolute_sources_2026-11-13/`):
+     - "fuck i accidently didnt realize i was in the third place and started an opus swarm"
+     - then: "but maybe it is good thing, can you collate with them"
+     - **State:** left running. The librarian collates its output with the Third Place when it lands (`third_place/to_the_third_place_2026-11-13b.md`).
