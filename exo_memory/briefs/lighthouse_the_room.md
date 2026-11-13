@@ -115,6 +115,8 @@
   start with")
 - 2026-11-13 11:01 (D), to the librarian's "Say go and I'll launch level two on the wake": "ok i am ready"; and, a minute later, his catch:
   "o pane is inactive btw?" (pane O had been given no work all morning; the dispatch had counted five panes)
+- 2026-11-13 11:29 (D), what would make the room better, in his words: "im just thinking, to me, the main thing that would make consonance better
+  is less token usage, and fixing the retrieval, or like we said, the ability to at least remember to retrieve first"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
