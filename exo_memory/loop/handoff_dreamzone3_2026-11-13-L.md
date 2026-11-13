@@ -41,6 +41,11 @@ items 183 to 190 are today's) and from each pane's "WHERE IT STOPS" section name
 - **Sound sources:** Sonniss and credited items allowed; a GPL synth may be used offline (`sound-7`, `sound-8`).
 - **The door rate goes to 0.15; pool rooms as a fifth interior; the generator's new structure moves up** (`world_gen-3`, `-1`, `-0`).
 
+## A request of his for D to build (item 191, 07:20)
+
+- "make the flashlight beam tighten button F". Today the beam tightens while a separate focus action is held (`game/world/stage.cpp:686-690`) and F turns the hand light on and off (`game/world/hud.cpp:355`). Proposed, ours, to confirm with him: a tap of F is on and off, holding F tightens. Small; red first; the controls list in `hud.cpp` changes with it.
+- **The timer wording: taken as 2, "It is coming" with the countdown** (his "2 is fine, its coming"). Confirm if in doubt; the other reading is that 2 answered where he tested the exploit.
+
 ## Open with him
 
 1. **The late timer's words:** "in 45.8 s it comes for you itself", or "It is coming 0:45.8". Both stills are on L only (below).
