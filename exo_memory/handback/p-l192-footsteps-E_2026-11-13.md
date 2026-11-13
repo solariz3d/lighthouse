@@ -175,3 +175,56 @@ the game's hunter keeps its clock, now with the knock and the force curve.
   checked on base and merge. Sound is outside the simulation, so they should not move.
 - **L185:** the head-row proof (`scratchpad/l185/mut5.sh`) has waited on the heavy-run lock since about 08:50Z. A's
   arms take it back to back. L185 1+2 land when the proof shows the row green on clean and red on the survivor.
+
+## 10. After the rulings (plan tail, 5db62002), written from 03:5x local
+
+**§6 done: Keller's plateau.** `l192-footsteps` **`9eca8db`**: the force rises to 2.5 BW at 6 m/s and stays there.
+The level row's curve is amended by name with the ruling's reason; its cells and bar are unchanged.
+checked: `audio_tests.exe` at 9eca8db → **86 tests, 0 failed**; level within 0.23 dB; 6.2 dB over the bed; timing
+worst 164 samples.
+
+**Two existing rows amended by name, for the reviewer:** `the_five_kinds_can_be_told_apart_by_measure` and
+`each_kind_sounds_as_it_is_described` (`audio/tests/voice_tests.cpp`).
+- **What failed:** with the plateau they went red. The hunter at 6 m/s read **3.2 starts a second for its 1.9
+  footfalls** on the 5 ms meter (bar: under 3).
+- **What causes it, measured with each change switched off:** the knock taken out gives 2.1; the sine not started from
+  zero gives 2.9. The knock's three harmonics, a fundamental apart, beat at the thud's pitch (about 46 Hz) whatever
+  their phases. That beat is how a low pitch reaches a small speaker, and the ear hears it as pitch, not as steps.
+- **The amendment:** both rows now read the hunter's starts over 25 ms, as `tests/audio_test_util.h:129-131` advises
+  for a low thud and the step-rate row already did. Their rules and bars are unchanged, and the hunter reads 1.9.
+- **Correction of §3:** the extra starts come mostly from the knock, not the thud's tail.
+
+**§5 done: two variants, rendered offline only (never committed), beside the build, sprinting.**
+- **Listen:** `C:\Users\zackn\Downloads\dz3-l192-review\l192_three_ways_sprinting.mp4`, 38 s. A is as built, B is the
+  threat duck (e), C is the knock above his feet (c).
+- **His steps' spectrum, measured** (`node tools\bands.js` on the no-hunter render; his steps plus the bed):
+  75-150 Hz −29.4, 150-300 −30.9, 300-600 −37.0, 600-1200 −39.1, 1200-2400 −39.5 dB.
+- **(c)** moves the knock to the thud's 15th to 17th harmonics, about 690 to 780 Hz at rest pitch: three harmonics a
+  fundamental apart, so it still beats at the low pitch.
+- **(e)** dips his steps as each hunter footfall's knock sounds. It reaches 0.8 off (about −14 dB) from 15 m in, eased
+  over 4 ms. Depth, range and ease are ours. A first setting (0.7 off, full only at 5 m) moved nothing, and this one,
+  the strongest tried, barely did. Overwatch's importance mix (Lawlor and Neumann, GDC 2016, "Play by Sound") is the
+  source, via a PC Gamer report of the talk, which is video.
+
+checked: `cd Downloads\dz3-l192-review\wav\var && node ..\..\tools\var\glimpse3.js`. Each hunter footfall at its
+landing, against everything else sounding in the same 60 ms. Shown as footfalls at or over / footfalls, with the median
+in dB:
+
+| band | variant | 20-28 m | 12-20 m | 6-12 m | 2-6 m |
+|---|---|---|---|---|---|
+| 600-1200 Hz | A as built | 8/14 (+3.8) | 7/14 (+0.1) | 7/10 (+8.0) | 8/9 (+14.4) |
+| 600-1200 Hz | B duck (e) | 8/14 (+3.8) | 7/14 (+0.8) | 7/10 (+8.0) | 9/9 (+14.4) |
+| 600-1200 Hz | **C knock up (c)** | **9/14 (+10.9)** | **10/14 (+6.4)** | 7/10 (+15.1) | 9/9 (+20.6) |
+| 150-600 Hz | A as built | 8/14 (+2.5) | 5/14 (−0.7) | 7/10 (+7.2) | 8/9 (+16.7) |
+| 150-600 Hz | C knock up (c) | 4/14 (−3.5) | 3/14 (−6.6) | 6/10 (+1.6) | 7/9 (+10.8) |
+
+- **Reading it:** a sound is heard where it clears its masker in some band. That reading is inferred, the usual
+  critical-band account, and is not checked by a listening test.
+  - **(c)** clears his steps in 600-1200 Hz for 10 of 14 footfalls at 12-20 m, against 7 for A.
+  - **(e), as ruled,** barely moves anything. The steps that mask a footfall are his own, already sounding when the
+    hunter's foot lands, and a duck that starts at the landing comes after their loud start.
+- inferred: a duck that starts just *before* each footfall would do better, since the mixer knows the phase. It is not
+  ruled, so it was not built.
+- **(c) costs** some of the "thunder": the knock is a higher thock over the same low thud. His ear decides.
+
+**Not changed:** the wiring still waits on C. L185's proof still waits on the lock.
