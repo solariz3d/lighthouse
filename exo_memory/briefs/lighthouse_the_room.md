@@ -104,6 +104,15 @@
   right and most needed vector"; then "sent that while u sent ur last output, i get it"
 - 2026-11-13 09:49 (D), after the librarian's reply on the render experiment, which ended by naming six room calls as still open: "dont worry
   about that haha" (which "that" he meant, the experiment or the six calls, was asked back in the same turn; not assumed)
+- 2026-11-13 10:39 (D), on the room swarm: "but have we figured out in plain english what it did to make consonance better"
+- 2026-11-13 10:51 (D), on the stop order that reached two panes late: "the 4. was mostly bc of me sending more information after the first input
+  being impatient and thinking too fast, so its more my fault there" (the librarian's answer, from the record: the order was its own over-reading,
+  and the lateness is the queue's, not his)
+- 2026-11-13 10:52 (D), an idea for how swarms are used: "damnit, perhaps we shiuld have used the swarm in a more direct way, i had this idea, we
+  use a swarm to figure out something to then use another swarm on that solution to find out even more, like, asimovs information is fractal"
+  (the line he points at, as quote sites give it and with no primary source found in one search: "I believe that scientific knowledge has fractal
+  properties, that no matter how much we learn, whatever is left, however small it may seem, is just as infinitely complex as the whole was to
+  start with")
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
