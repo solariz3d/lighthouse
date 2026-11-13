@@ -3157,3 +3157,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 17:0x local (D) · D675 item 2 registered before code: the yardstick's fastest toe over running speed, runner band 2.20–2.37, the toe/ball/ankle mapping and four falsifiers → `exo_memory/loop/registration_yardstick_toe_speed_E_2026-11-13.md`
 - The runner's ball (P1MT/P5MT midpoint) reads within 0.04 of the toe marker, the ankle 1.89–2.10, so the measure does not hang on where on the forefoot the joint sits, and a toe acting like an ankle would show. Ours: gait_pose carried at v with the phase at v·gait_phase_per_metre, as stage.cpp turns it.
 - **Carry:** read a cross-check point (the ball) and a control point (the ankle) beside any end-point measure, so the mapping is tested, not asserted.
+
+## 2026-11-13 17:0x local (D) · L1's rows against 613c9ba's --lean-film: every frame MET (at 1/144 s, follow pass only); manifest, pose.csv, --clip-step, all passes, the hunter refusal and both rows NOT MET → `exo_memory/handback/p-l185-refilm-E_2026-11-13.md` (addendum)
+- My film.js stood in for the manifest outside the tool; L1 builds it in the tool. Deletions of my own frames came before the chair's 23:00Z "delete nothing"; none since. New clip folders go on G:\consonance-scratch.
