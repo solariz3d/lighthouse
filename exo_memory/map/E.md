@@ -3141,3 +3141,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 16:0x local (D) · L205 LANDED: C's stomp fix on dreamzone-3 main d002b65, pushed (d8ef536..d002b65) → `exo_memory/handback/p-l205-landing-E_2026-11-13.md`
 - Suite 14/14, gym 26/26, world 51/52. The one red, the fall at terminal speed (1 wait, 14.5 ms), was named as load (C's corner captures held the other slot); a quiet re-read is owed. Scan clean, push gate allow, his clone untouched at 31d1c6d.
 - **Carry:** `git merge -F -` does not read stdin; write the message to a file first.
+
+## 2026-11-13 16:4x local (D) · D675 the recorded runner's fastest toe is 2.2–2.4 times its running speed at all four recorded speeds; the hunter's keyed toe is 2.8 → `exo_memory/handback/p-l185-toe-ratio-E_2026-11-13.md`
+- SimTK JA1, RTOE/LTOE 3D lab speed over the pelvis centre's speed: 2.37 / 2.21 / 2.25 / 2.20 at 3.53 / 5.19 / 6.97 / 9.47 m/s (10 Hz; within 0.04 to 25 Hz). The data has four running trials, not the ruling's five. The hunter's 30.67 / 11 = 2.8 (the 11 inferred, the chase speed named). My memory-based "near twice" was low by about a tenth.
+- **Carry:** a figure quoted from memory in a hand-back gets a reader run before it goes to the seat who acts on it.
