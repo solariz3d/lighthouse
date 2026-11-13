@@ -67,8 +67,9 @@ try {
   const args = [SCRIPT, "--write", "--trigger", String(payload.trigger || "auto")];
   if (payload.transcript_path) args.push("--transcript", String(payload.transcript_path));
   const out = execFileSync("py", args, { encoding: "utf8", timeout: 30000 });
-  // stdout from a PreCompact hook is surfaced with the compaction, so the instance on the
-  // far side reads the state of the tree it is about to inherit.
+  // stdout from a PreCompact hook goes to the SUMMARISER as instructions for the summary it writes, not to the seat
+  // (Lap W, W2; probe Q2, exo_memory/loop/wake_level2_2026-11-13/01_probes_q1_q2.md: a token in the hook's output
+  // reached the summary, as text the summariser followed). On a manual /compact it is also echoed to the seat.
   process.stdout.write(out);
 } catch {
   /* fail-open by construction — see the header */
