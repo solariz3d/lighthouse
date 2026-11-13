@@ -191,16 +191,18 @@ function build(payload, t) {
 
   const line = `[body] machine ${machine} · model ${modelText} · effort ${effortText} · context ${ctxText} · HEAD ${head || 'not readable'} · origin/main ${originText} · shelf ${shelfText} · source ${source}`;
   let text = line;
+  let noteAt = null;   // the wake gate's ruled bar: which dated note, and how many lines it had at this wake (its S at the next wake is that + 1)
   if (isLibrarianCwd(payload.cwd)) {
     const room = repo ? field(() => {
       const r = required(repo, machine, t), tp = thirdPlaceNewest(repo);
+      if (r.note) noteAt = field(() => { const l = fs.readFileSync(path.join(repo, r.note), 'utf8').replace(/\r\n/g, '\n').split('\n'); if (l.length && l[l.length - 1] === '') l.pop(); return { note: r.note, lines: l.length }; });
       const parts = [`newest note ${r.note || 'none'}`, `the Third Place's newest ${tp || 'none'}`,
         r.other ? `${r.other}'s newest handoffs ${r.handoffs.length ? r.handoffs.join(', ') : 'none'}` : 'the other machine not readable'];
       return `[room] at HEAD ${head || 'not readable'}: ${parts.join(' · ')}`;
     }) : null;
     text += '\n' + (room || '[room] not readable');
   }
-  return { text, src };
+  return { text, src, noteAt };
 }
 
 function ledger(row) {
@@ -215,9 +217,10 @@ function main() {
   const source = typeof payload.source === 'string' ? payload.source : null;
   const skip = process.env.CLAUDE_OVERSEER_RUN ? 'overseer run' : isFreshCwd(payload.cwd) ? 'fresh pane' : isThirdPlaceCwd(payload.cwd) ? 'third-place cwd' : null;
   if (skip) return ledger({ event: 'skipped', source, reason: skip });
-  const { text, src } = build(payload, now());
+  const { text, src, noteAt } = build(payload, now());
   process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: 'SessionStart', additionalContext: text } }));
-  ledger({ event: 'emitted', source, bytes: Buffer.byteLength(text), ms: Date.now() - t0, model_src: src.model, effort_src: src.effort, ctx_src: src.ctx });
+  ledger({ event: 'emitted', source, bytes: Buffer.byteLength(text), ms: Date.now() - t0, model_src: src.model, effort_src: src.effort, ctx_src: src.ctx,
+    ...(noteAt ? { session: payload.session_id || null, note: noteAt.note, note_lines: noteAt.lines } : {}) });   // read by wake-gate.js startLine()
 }
 
 module.exports = { build, required, thirdPlaceNewest, lastReply, originSynced, isLibrarianCwd, machineTag };
