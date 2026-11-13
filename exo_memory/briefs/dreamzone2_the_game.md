@@ -1338,3 +1338,6 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
      - **State:** routed to E as the next voice (a third, "heavy stomp"), with a source read first and the same measurement; a clip for his ear before anything lands.
 185. 2026-11-13 05:07 (L), on the decision page: "i am currently working on the extensive artifact answering them so it will be done soon"
      - **State:** 45 picks read at 11:01Z (item 183). The librarian reads the page's store again at each wake and does a full pass when he finishes: every pick copied, routed, and checked against his earlier rulings.
+186. 2026-11-13 05:53 (L), his pick of the hunter's arm variants (L195), typed in the Third Place's pane and passed on by pointer (`third_place/2026-11-13.md`, the entry "05:53: a line about the room's work, typed here"; git-blob 4ebf8d53… at the ring): "v1 sourced flare looks the best"
+     - **Read as:** V1, the sourced flare with the held elbow (dreamzone-3 `l195-arm-variants` e7b9508). Shown three amounts of flare after asking for more (item 180), he chose the one read from a source.
+     - **State:** routed to C to land V1 with its rows through the train. V2 and V3 are not landed.
