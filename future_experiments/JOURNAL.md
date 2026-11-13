@@ -48,3 +48,17 @@ digest) and says nothing about what is in it.
 
 - **Checked before committing, by count only:** no string shaped like an API key or token is in the transcript
   (one match for a key shape lies inside a run of base64 data). Nothing else in it was read.
+
+## 2026-11-13, 08:05 local (machine L): where the passphrase is now
+
+- **At whose word:** the keeper's, leaving with the laptop: he wants the desktop able to open the file without
+  carrying anything by hand, and does not need the passphrase kept hidden.
+- **Where:** the private repository `solariz3d/dreamride-omni`, file
+  `keys/lighthouse_future_experiments_passphrase_2026-11-13.txt` (commit `12d01ce`). Anyone with his GitHub login
+  can read it; nobody else can. It is not in this repository, because this one is public and the passphrase beside
+  the file would publish the transcript.
+- **To open the file on the desktop:** clone or pull `dreamride-omni`, then use the commands in the entry above with
+  `-pass file:C:/path/to/dreamride-omni/keys/lighthouse_future_experiments_passphrase_2026-11-13.txt`.
+- **If openssl says "bad decrypt":** the passphrase is the first line of that file, 35 characters (six groups of
+  five, joined by hyphens). A checkout that adds a carriage return to the line would break it; the folder carries a
+  `.gitattributes` to prevent that.
