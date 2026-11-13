@@ -1,0 +1,32 @@
+exploit search: level 1 (normal), 6 start phases a cell, up to 60 s a run, the hunter in at a corner with no head start; speed model: default
+policy         cells  not swept   runs    caught  exploits       near  wall hits
+shuttle           12          0     72    72/72          0          0          2
+react-shuttle     12          0     72    72/72          0          0          0
+circle            16          0     96    29/96          1         12         35
+figure-eight       8          0     48    13/48          0          8        145
+door-dance         8          0     48    40/48          0          1        645
+stair-juke         0          8      0     0/0           0          0          0
+exploit cells in all: 1 (near-exploits: 21)
+  near      circle radius 1.5 ccw speed 6: caught 2 of 6
+  near      circle radius 2.5 ccw speed 6: caught 1 of 6
+  near      circle radius 2.5 ccw speed 8: caught 1 of 6
+  near      circle radius 2.5 cw speed 6: caught 1 of 6
+  near      circle radius 2.5 cw speed 8: caught 1 of 6
+  near      circle radius 4.0 ccw speed 6: caught 1 of 6
+  EXPLOIT   circle radius 4.0 ccw speed 8: caught 0 of 6
+  near      circle radius 4.0 cw speed 6: caught 2 of 6
+  near      circle radius 4.0 cw speed 8: caught 1 of 6
+  near      circle radius 5.0 ccw speed 6: caught 1 of 6
+  near      circle radius 5.0 ccw speed 8: caught 1 of 6
+  near      circle radius 5.0 cw speed 6: caught 1 of 6
+  near      circle radius 5.0 cw speed 8: caught 1 of 6
+  near      figure-eight lobe 2.0 along x speed 6: caught 3 of 6
+  near      figure-eight lobe 2.0 along x speed 8: caught 1 of 6
+  near      figure-eight lobe 2.0 along z speed 6: caught 1 of 6
+  near      figure-eight lobe 2.0 along z speed 8: caught 3 of 6
+  near      figure-eight lobe 3.0 along x speed 6: caught 1 of 6
+  near      figure-eight lobe 3.0 along x speed 8: caught 2 of 6
+  near      figure-eight lobe 3.0 along z speed 6: caught 1 of 6
+  near      figure-eight lobe 3.0 along z speed 8: caught 1 of 6
+  near      door-dance spacing 5 ccw speed 8: caught 1 of 6
+lockrun: L182c blind check level 1 WALL 1 s, exit 0
