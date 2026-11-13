@@ -1,0 +1,505 @@
+  seed 152 done (17 s)
+  seed 151 done (23 s)
+  seed 153 done (29 s)
+  seed 154 done (35 s)
+  seed 156 done (50 s)
+  seed 155 done (54 s)
+  seed 157 done (62 s)
+  seed 158 done (74 s)
+  seed 159 done (74 s)
+  seed 160 done (90 s)
+  seed 161 done (95 s)
+  seed 162 done (96 s)
+  seed 163 done (111 s)
+  seed 164 done (121 s)
+  seed 165 done (128 s)
+  seed 166 done (137 s)
+  seed 167 done (141 s)
+  seed 168 done (147 s)
+  seed 170 done (162 s)
+  seed 169 done (169 s)
+  seed 171 done (170 s)
+  seed 172 done (179 s)
+  seed 173 done (180 s)
+  seed 175 done (195 s)
+  seed 174 done (205 s)
+  seed 176 done (219 s)
+  seed 177 done (220 s)
+  seed 179 done (232 s)
+  seed 178 done (235 s)
+  seed 180 done (241 s)
+  seed 181 done (254 s)
+  seed 182 done (257 s)
+  seed 183 done (261 s)
+  seed 185 done (270 s)
+  seed 184 done (290 s)
+  seed 186 done (298 s)
+  seed 187 done (307 s)
+  seed 188 done (309 s)
+  seed 190 done (323 s)
+  seed 191 done (338 s)
+  seed 189 done (342 s)
+  seed 193 done (354 s)
+  seed 192 done (355 s)
+  seed 195 done (364 s)
+  seed 194 done (366 s)
+  seed 197 done (373 s)
+  seed 196 done (377 s)
+  seed 198 done (386 s)
+  seed 200 done (404 s)
+  seed 199 done (418 s)
+  seed 201 done (420 s)
+  seed 203 done (432 s)
+  seed 202 done (442 s)
+  seed 204 done (446 s)
+  seed 205 done (460 s)
+  seed 206 done (467 s)
+  seed 207 done (470 s)
+  seed 209 done (489 s)
+  seed 208 done (495 s)
+  seed 210 done (500 s)
+  seed 211 done (504 s)
+  seed 213 done (515 s)
+  seed 212 done (516 s)
+  seed 214 done (532 s)
+  seed 215 done (550 s)
+  seed 217 done (560 s)
+  seed 216 done (560 s)
+  seed 218 done (576 s)
+  seed 219 done (582 s)
+  seed 220 done (598 s)
+  seed 221 done (614 s)
+  seed 223 done (622 s)
+  seed 222 done (628 s)
+  seed 224 done (632 s)
+  seed 225 done (639 s)
+  seed 226 done (644 s)
+  seed 228 done (649 s)
+  seed 229 done (661 s)
+  seed 227 done (664 s)
+  seed 231 done (675 s)
+  seed 230 done (678 s)
+  seed 232 done (693 s)
+  seed 233 done (704 s)
+  seed 234 done (705 s)
+  seed 236 done (718 s)
+  seed 235 done (719 s)
+  seed 237 done (729 s)
+  seed 239 done (738 s)
+  seed 238 done (742 s)
+  seed 240 done (746 s)
+  seed 242 done (757 s)
+  seed 241 done (761 s)
+  seed 243 done (765 s)
+  seed 244 done (785 s)
+  seed 245 done (792 s)
+  seed 246 done (801 s)
+  seed 247 done (806 s)
+  seed 248 done (814 s)
+  seed 249 done (823 s)
+  seed 251 done (831 s)
+  seed 250 done (833 s)
+  seed 253 done (849 s)
+  seed 254 done (862 s)
+  seed 252 done (864 s)
+  seed 255 done (876 s)
+  seed 256 done (877 s)
+  seed 257 done (889 s)
+  seed 258 done (891 s)
+  seed 260 done (901 s)
+  seed 261 done (917 s)
+  seed 259 done (917 s)
+  seed 263 done (934 s)
+  seed 262 done (934 s)
+  seed 265 done (944 s)
+  seed 264 done (949 s)
+  seed 266 done (958 s)
+  seed 267 done (962 s)
+  seed 268 done (968 s)
+  seed 269 done (975 s)
+  seed 270 done (976 s)
+  seed 271 done (984 s)
+  seed 272 done (995 s)
+  seed 273 done (1000 s)
+  seed 274 done (1001 s)
+  seed 275 done (1007 s)
+  seed 277 done (1024 s)
+  seed 276 done (1030 s)
+  seed 278 done (1035 s)
+  seed 279 done (1042 s)
+  seed 280 done (1046 s)
+  seed 281 done (1059 s)
+  seed 282 done (1060 s)
+  seed 283 done (1072 s)
+  seed 285 done (1084 s)
+  seed 284 done (1088 s)
+  seed 287 done (1093 s)
+  seed 286 done (1094 s)
+  seed 289 done (1100 s)
+  seed 288 done (1104 s)
+  seed 290 done (1112 s)
+  seed 291 done (1117 s)
+  seed 292 done (1125 s)
+  seed 293 done (1126 s)
+  seed 294 done (1132 s)
+  seed 295 done (1139 s)
+  seed 296 done (1143 s)
+  seed 298 done (1154 s)
+  seed 297 done (1155 s)
+  seed 299 done (1167 s)
+  seed 300 done (1210 s)
+sweep: seeds 151..300, arena 2 chunks each way, runs stopped at 300 s; default dials
+speed model ( line_clearance=0.6;look_ahead=3):
+ref_speed         8.000   the chasers' reference speed, metres per second; every row and dial is a multiple of it
+dist_per_km       0.050   share of top speed gained for each kilometre the player has covered
+dist_max          0.300   the most the distance can add, as a share of top speed
+straight_rate     0.050   share of top speed a chaser gains each second it runs straight at its top speed
+straight_max      0.200   the most a straight can add, as a share of top speed
+straight_turn     0.300   radians a second: it is running straight while it turns slower than this
+run_up_bleed      1.000   share of the run-up lost for every radian it turns
+turn_drag         0.200   share of its speed a chaser loses for every radian it turns
+corner_floor      1.000   least share of the braking a corner asks for that every chaser does before it (1: it never swings into a wall)
+wall_stand        0.000   scale on the seconds a chaser stands after meeting a wall head-on (0: it never stops dead)
+brake_scale       1.000   scale on every chaser's braking, metres per second squared (1: the rows and the hunter's dial as they are)
+hunter_start_bonus    0.170   added to the hunter's dial at the start of a run, and fading to nothing over hunter_bonus_fade_s: a fresh player's margin
+hunter_bonus_fade_s  600.000   seconds over which hunter_start_bonus fades away
+stairs_lift       1.000   share of a stairs leg's slope a chaser's step is lifted by (0: a flat step, which stalls at the foot of a steep flight)
+corner_floor_speed    0.000   L170 P3: the share of its top speed a corner may not take a chaser below (0: the chase as it is; 0.5 is NextBot's)
+slip_rate         0.000   L170 SLIP: per second, how fast a chaser's velocity follows its facing (0: it travels along its facing, as it does; 3 is NextBot's sideways friction)
+lead_range        0.000   L170 P1: metres; the hunter plans toward where the player will be, leading by lead_base_s plus its distance (to this many metres) over its speed (0: toward where they were seen)
+lead_base_s       0.500   L170 P1: seconds of lead before the distance is added (used only when lead_range is above 0)
+turn_law          0.000   L182: the turning law capping the turn rate at speed (0: none, as the chase is; 1: H1 human, Chang & Kram 2007 Eqn 5; 2: H2 hunting animal, sqrt(mu g R); 3: the hunter H2 and the lesser chasers H1)
+grip_mu           1.000   L182: H2's grip, as a multiple of g (1.0 is the friction bound; 1.33 is a press figure for a cheetah, unverified)
+line_clearance    0.600   L182: metres a corner's path is moved outward from the turn (0: the path as navigation finds it)
+look_ahead        3.000   L182: metres before a corner within which the aim blends toward the next leg (0: it aims at the next point)
+feeler_m          0.000   L182: metres the two wall feelers reach ahead, at plus and minus 40 degrees (0: none)
+feeler_push       0.500   L182: radians the aim is turned off a side whose feeler finds no mesh, at top speed
+sway              0.300   L182: metres of seeded sway in a chaser's line (D664's 0.30; 0 takes it out)
+scrape_ease       0.000   L182: 1 turns a scraped step's heading toward the slide at no more than the turn rate (0: the step's direction changes at once)
+refuse_brake      0.000   L182: 1 makes a refused step lose speed at the braking rate (0: the speed goes to zero in one tick)
+
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  line    150     9.6    15.9    21.1    38.6    58.8   112.5    300.0         3
+normal  flee    150    46.9   239.4   300.0   300.0   300.0   300.0    300.0       128
+normal  cutback  150     8.2    21.1    30.5    48.9    79.0   120.2    300.0         1
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  line       80%      13%          5%    0% |       91%           2%         1%         5% |          510
+normal  flee        5%       6%          1%    2% |       15%           0%         0%         0% |        10500
+normal  cutback     80%      16%          3%    0% |       90%           1%         1%         8% |          688
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  line   |      0.00        0%      0.06     0.02      0.00 |   0.00   0.00    0.00 |     1.90   0.18   0.00   1.10     0.00 |    0.36     0%       0%
+normal  flee   |      0.53       38%      0.00     0.00      0.00 |   0.00   0.05    0.16 |     1.82   0.82   0.27   2.63     0.00 |    0.03    24%       0%
+normal  cutback |      0.00        0%      0.09     0.03      0.00 |   0.00   0.00    0.00 |     2.00   0.27   0.01   1.51     0.00 |    0.26     0%       0%
+paired flee vs line (150 seeds): outlived it in 145, was outlived in 2, within half a second in 3; median of the ratio 7.07 (quartiles 4.33 to 11.70)
+paired cutback vs line (150 seeds): outlived it in 86, was outlived in 50, within half a second in 14; median of the ratio 1.17 (quartiles 0.83 to 2.08)
+
+the look-behind (corners of 60 degrees or more; chasers 4 to 15 m behind; chase/slosh.h)
+level   policy   pairs  overshoot   1 m up screen@100     @107.5     seen     slip
+normal  line       620      0.92m      48%      4.47%      3.90%      43%     2.8
+normal  flee       598      2.18m      61%     10.56%      9.23%      24%     2.8
+normal  cutback     629      1.55m      68%      7.36%      6.43%      37%     2.8
+
+where chasers caught on the world, per minute of chase
+level   policy minutes    wall hits scrape s
+                           head-on (ticks/240)   stalls   stood s
+normal  line    132.2       23.893    19.75   33.537     0.000   (totals: 3159 hits, 626776 scrape ticks, 4434 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 2161, 330601;  sprinter 825, 266718;  interceptor 173, 29457;
+normal  flee    703.8       16.545    64.39  178.932     0.000   (totals: 11644 hits, 10876173 scrape ticks, 125925 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 2938, 7719199;  sprinter 2489, 1940043;  interceptor 4704, 901632;  pack 1513, 315299;
+normal  cutback  160.1       22.866    23.95   46.876     0.000   (totals: 3661 hits, 920460 scrape ticks, 7505 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 2511, 501082;  sprinter 821, 372900;  interceptor 322, 43444;  pack 7, 3034;
+  stalls: line, run seed 155: 17 in 46 s; sprinter 17;
+  stalls: line, run seed 156: 38 in 86 s; sprinter 1; interceptor 37;
+  stalls: line, run seed 157: 22 in 63 s; hunter 4; sprinter 18;
+  stalls: line, run seed 158: 11 in 37 s; hunter 9; sprinter 2;
+  stalls: line, run seed 161: 345 in 78 s; hunter 266; sprinter 79;
+  stalls: line, run seed 163: 75 in 29 s; hunter 71; interceptor 4;
+  stalls: line, run seed 164: 45 in 35 s; sprinter 45;
+  stalls: line, run seed 166: 41 in 76 s; interceptor 41;
+  stalls: line, run seed 167: 186 in 73 s; hunter 170; sprinter 16;
+  stalls: line, run seed 168: 145 in 134 s; hunter 104; sprinter 41;
+  stalls: line, run seed 169: 346 in 92 s; hunter 314; sprinter 32;
+  stalls: line, run seed 171: 8 in 29 s; sprinter 8;
+  stalls: line, run seed 174: 24 in 52 s; hunter 1; sprinter 1; interceptor 22;
+  stalls: line, run seed 182: 167 in 54 s; hunter 167;
+  stalls: line, run seed 183: 20 in 45 s; sprinter 20;
+  stalls: line, run seed 187: 21 in 27 s; sprinter 21;
+  stalls: line, run seed 193: 49 in 101 s; hunter 1; sprinter 48;
+  stalls: line, run seed 196: 78 in 53 s; sprinter 78;
+  stalls: line, run seed 197: 23 in 34 s; hunter 1; sprinter 22;
+  stalls: line, run seed 200: 29 in 40 s; sprinter 29;
+  stalls: line, run seed 202: 21 in 59 s; hunter 1; sprinter 20;
+  stalls: line, run seed 204: 248 in 71 s; hunter 235; sprinter 13;
+  stalls: line, run seed 205: 40 in 186 s; hunter 2; sprinter 38;
+  stalls: line, run seed 207: 16 in 159 s; hunter 1; sprinter 11; interceptor 4;
+  stalls: line, run seed 209: 29 in 56 s; sprinter 29;
+  stalls: line, run seed 210: 201 in 114 s; hunter 179; sprinter 22;
+  stalls: line, run seed 215: 27 in 54 s; sprinter 27;
+  stalls: line, run seed 220: 20 in 51 s; sprinter 20;
+  stalls: line, run seed 226: 4 in 51 s; interceptor 4;
+  stalls: line, run seed 231: 9 in 91 s; hunter 1; sprinter 8;
+  stalls: line, run seed 232: 12 in 23 s; sprinter 12;
+  stalls: line, run seed 234: 49 in 54 s; sprinter 34; interceptor 15;
+  stalls: line, run seed 235: 3 in 20 s; sprinter 3;
+  stalls: line, run seed 238: 44 in 48 s; sprinter 44;
+  stalls: line, run seed 237: 44 in 300 s; sprinter 44;
+  stalls: line, run seed 239: 9 in 80 s; sprinter 9;
+  stalls: line, run seed 242: 243 in 91 s; hunter 223; sprinter 20;
+  stalls: line, run seed 244: 57 in 300 s; sprinter 30; interceptor 27;
+  stalls: line, run seed 246: 25 in 80 s; sprinter 6; interceptor 19;
+  stalls: line, run seed 247: 18 in 40 s; sprinter 18;
+  stalls: line, run seed 250: 22 in 46 s; hunter 1; sprinter 21;
+  stalls: line, run seed 252: 25 in 28 s; sprinter 25;
+  stalls: line, run seed 253: 28 in 142 s; sprinter 28;
+  stalls: line, run seed 257: 12 in 34 s; sprinter 12;
+  stalls: line, run seed 261: 44 in 50 s; hunter 7; sprinter 37;
+  stalls: line, run seed 268: 17 in 69 s; sprinter 17;
+  stalls: line, run seed 271: 11 in 113 s; sprinter 11;
+  stalls: line, run seed 272: 556 in 151 s; hunter 556;
+  stalls: line, run seed 275: 180 in 145 s; hunter 180;
+  stalls: line, run seed 278: 23 in 105 s; sprinter 23;
+  stalls: line, run seed 280: 19 in 57 s; sprinter 19;
+  stalls: line, run seed 284: 5 in 47 s; sprinter 5;
+  stalls: line, run seed 286: 3 in 116 s; interceptor 3;
+  stalls: line, run seed 292: 3 in 43 s; sprinter 3;
+  stalls: line, run seed 294: 7 in 98 s; sprinter 7;
+  stalls: line, run seed 295: 6 in 29 s; sprinter 6;
+  stalls: line, run seed 299: 531 in 157 s; hunter 468; sprinter 63;
+  stalls: line, run seed 300: 125 in 44 s; hunter 125;
+  stalls: flee, run seed 152: 916 in 300 s; hunter 831; sprinter 85;
+  stalls: flee, run seed 151: 847 in 300 s; hunter 783; sprinter 56; interceptor 4; pack 4;
+  stalls: flee, run seed 153: 899 in 300 s; hunter 851; sprinter 22; interceptor 26;
+  stalls: flee, run seed 154: 772 in 300 s; hunter 685; sprinter 58; interceptor 29;
+  stalls: flee, run seed 156: 746 in 300 s; hunter 561; sprinter 93; interceptor 75; pack 17;
+  stalls: flee, run seed 155: 807 in 233 s; hunter 678; sprinter 125; interceptor 4;
+  stalls: flee, run seed 157: 725 in 300 s; hunter 501; sprinter 132; interceptor 92;
+  stalls: flee, run seed 158: 1106 in 300 s; hunter 981; sprinter 64; interceptor 61;
+  stalls: flee, run seed 159: 1069 in 300 s; hunter 925; sprinter 80; interceptor 1; pack 63;
+  stalls: flee, run seed 160: 925 in 300 s; hunter 651; sprinter 178; interceptor 96;
+  stalls: flee, run seed 161: 898 in 300 s; hunter 764; sprinter 112; interceptor 21; pack 1;
+  stalls: flee, run seed 162: 781 in 300 s; hunter 773; sprinter 5; interceptor 3;
+  stalls: flee, run seed 163: 952 in 300 s; hunter 874; sprinter 26; interceptor 7; pack 45;
+  stalls: flee, run seed 164: 475 in 157 s; hunter 361; sprinter 71; interceptor 43;
+  stalls: flee, run seed 165: 775 in 300 s; hunter 654; sprinter 39; interceptor 59; pack 23;
+  stalls: flee, run seed 166: 889 in 300 s; hunter 742; sprinter 76; interceptor 71;
+  stalls: flee, run seed 167: 917 in 300 s; hunter 887; sprinter 26; interceptor 4;
+  stalls: flee, run seed 168: 343 in 300 s; hunter 239; sprinter 101; interceptor 3;
+  stalls: flee, run seed 170: 815 in 300 s; hunter 701; sprinter 15; interceptor 60; pack 39;
+  stalls: flee, run seed 169: 940 in 273 s; hunter 843; sprinter 48; interceptor 45; pack 4;
+  stalls: flee, run seed 171: 306 in 137 s; hunter 277; sprinter 26; interceptor 3;
+  stalls: flee, run seed 172: 1142 in 300 s; hunter 1049; sprinter 90; interceptor 3;
+  stalls: flee, run seed 173: 191 in 79 s; hunter 143; sprinter 48;
+  stalls: flee, run seed 175: 837 in 300 s; hunter 769; sprinter 47; interceptor 21;
+  stalls: flee, run seed 174: 1170 in 300 s; hunter 1047; sprinter 77; interceptor 7; pack 39;
+  stalls: flee, run seed 176: 798 in 300 s; hunter 720; sprinter 31; interceptor 17; pack 30;
+  stalls: flee, run seed 177: 959 in 300 s; hunter 898; sprinter 61;
+  stalls: flee, run seed 179: 444 in 300 s; hunter 333; sprinter 65; interceptor 46;
+  stalls: flee, run seed 178: 1227 in 300 s; hunter 972; sprinter 14; interceptor 115; pack 126;
+  stalls: flee, run seed 180: 904 in 300 s; hunter 821; sprinter 21; interceptor 2; pack 60;
+  stalls: flee, run seed 181: 812 in 300 s; hunter 655; sprinter 16; interceptor 115; pack 26;
+  stalls: flee, run seed 182: 957 in 300 s; hunter 868; sprinter 2; interceptor 87;
+  stalls: flee, run seed 183: 739 in 240 s; hunter 662; sprinter 15; interceptor 62;
+  stalls: flee, run seed 185: 904 in 300 s; hunter 718; sprinter 81; interceptor 49; pack 56;
+  stalls: flee, run seed 184: 958 in 300 s; hunter 785; sprinter 158; interceptor 15;
+  stalls: flee, run seed 186: 1056 in 300 s; hunter 792; sprinter 66; interceptor 130; pack 68;
+  stalls: flee, run seed 187: 835 in 300 s; hunter 728; sprinter 72; pack 35;
+  stalls: flee, run seed 188: 559 in 300 s; hunter 471; sprinter 6; interceptor 54; pack 28;
+  stalls: flee, run seed 190: 645 in 300 s; hunter 541; sprinter 100; pack 4;
+  stalls: flee, run seed 191: 735 in 300 s; hunter 609; sprinter 71; interceptor 40; pack 15;
+  stalls: flee, run seed 189: 764 in 290 s; hunter 667; sprinter 49; interceptor 48;
+  stalls: flee, run seed 193: 696 in 297 s; hunter 643; sprinter 17; interceptor 36;
+  stalls: flee, run seed 192: 1116 in 300 s; hunter 889; sprinter 88; interceptor 139;
+  stalls: flee, run seed 195: 1195 in 300 s; hunter 1109; sprinter 14; interceptor 64; pack 8;
+  stalls: flee, run seed 194: 911 in 300 s; hunter 733; sprinter 63; interceptor 76; pack 39;
+  stalls: flee, run seed 197: 434 in 127 s; hunter 434;
+  stalls: flee, run seed 196: 911 in 300 s; hunter 826; sprinter 61; interceptor 24;
+  stalls: flee, run seed 198: 969 in 300 s; hunter 785; sprinter 66; interceptor 39; pack 79;
+  stalls: flee, run seed 200: 708 in 300 s; hunter 569; sprinter 97; interceptor 21; pack 21;
+  stalls: flee, run seed 199: 1019 in 300 s; hunter 866; sprinter 77; interceptor 52; pack 24;
+  stalls: flee, run seed 201: 600 in 300 s; hunter 551; sprinter 25; interceptor 1; pack 23;
+  stalls: flee, run seed 203: 807 in 299 s; hunter 688; sprinter 114; interceptor 5;
+  stalls: flee, run seed 202: 1081 in 300 s; hunter 952; sprinter 112; interceptor 7; pack 10;
+  stalls: flee, run seed 204: 868 in 300 s; hunter 797; sprinter 57; interceptor 14;
+  stalls: flee, run seed 205: 993 in 300 s; hunter 914; sprinter 72; interceptor 7;
+  stalls: flee, run seed 206: 1018 in 300 s; hunter 898; sprinter 115; interceptor 5;
+  stalls: flee, run seed 207: 463 in 187 s; hunter 434; sprinter 29;
+  stalls: flee, run seed 209: 931 in 300 s; hunter 843; sprinter 42; interceptor 36; pack 10;
+  stalls: flee, run seed 208: 738 in 260 s; hunter 636; sprinter 39; interceptor 28; pack 35;
+  stalls: flee, run seed 210: 766 in 300 s; hunter 634; sprinter 119; interceptor 13;
+  stalls: flee, run seed 211: 559 in 300 s; hunter 475; sprinter 83; interceptor 1;
+  stalls: flee, run seed 213: 1168 in 300 s; hunter 1000; sprinter 102; pack 66;
+  stalls: flee, run seed 212: 823 in 300 s; hunter 713; sprinter 67; interceptor 43;
+  stalls: flee, run seed 214: 1124 in 300 s; hunter 936; sprinter 96; interceptor 92;
+  stalls: flee, run seed 215: 1220 in 300 s; hunter 1045; sprinter 78; interceptor 29; pack 68;
+  stalls: flee, run seed 217: 1037 in 300 s; hunter 839; sprinter 127; interceptor 71;
+  stalls: flee, run seed 216: 1143 in 300 s; hunter 1060; sprinter 66; interceptor 17;
+  stalls: flee, run seed 218: 1034 in 300 s; hunter 827; sprinter 59; interceptor 36; pack 112;
+  stalls: flee, run seed 219: 884 in 300 s; hunter 830; sprinter 42; interceptor 12;
+  stalls: flee, run seed 220: 872 in 300 s; hunter 757; sprinter 63; interceptor 52;
+  stalls: flee, run seed 221: 1076 in 300 s; hunter 929; sprinter 71; interceptor 3; pack 73;
+  stalls: flee, run seed 223: 932 in 300 s; hunter 858; sprinter 4; interceptor 49; pack 21;
+  stalls: flee, run seed 222: 844 in 277 s; hunter 679; sprinter 72; interceptor 39; pack 54;
+  stalls: flee, run seed 224: 930 in 300 s; hunter 869; sprinter 36; interceptor 25;
+  stalls: flee, run seed 225: 907 in 300 s; hunter 848; interceptor 57; pack 2;
+  stalls: flee, run seed 226: 1032 in 300 s; hunter 977; sprinter 22; interceptor 33;
+  stalls: flee, run seed 228: 121 in 47 s; hunter 121;
+  stalls: flee, run seed 229: 1097 in 300 s; hunter 1006; sprinter 33; interceptor 58;
+  stalls: flee, run seed 227: 1167 in 300 s; hunter 946; sprinter 112; interceptor 105; pack 4;
+  stalls: flee, run seed 231: 994 in 300 s; hunter 896; sprinter 43; interceptor 4; pack 51;
+  stalls: flee, run seed 230: 1022 in 300 s; hunter 911; sprinter 102; interceptor 9;
+  stalls: flee, run seed 232: 930 in 300 s; hunter 834; sprinter 46; interceptor 50;
+  stalls: flee, run seed 233: 1021 in 300 s; hunter 911; sprinter 28; interceptor 82;
+  stalls: flee, run seed 234: 829 in 300 s; hunter 760; interceptor 17; pack 52;
+  stalls: flee, run seed 236: 971 in 300 s; hunter 729; sprinter 135; interceptor 27; pack 80;
+  stalls: flee, run seed 235: 940 in 300 s; hunter 815; sprinter 106; pack 19;
+  stalls: flee, run seed 237: 859 in 300 s; hunter 784; sprinter 27; interceptor 48;
+  stalls: flee, run seed 239: 863 in 300 s; hunter 805; sprinter 48; interceptor 10;
+  stalls: flee, run seed 238: 869 in 300 s; hunter 678; sprinter 85; interceptor 12; pack 94;
+  stalls: flee, run seed 240: 1175 in 300 s; hunter 1063; sprinter 23; interceptor 89;
+  stalls: flee, run seed 242: 1298 in 300 s; hunter 1115; sprinter 66; interceptor 33; pack 84;
+  stalls: flee, run seed 241: 965 in 300 s; hunter 911; sprinter 44; interceptor 10;
+  stalls: flee, run seed 243: 821 in 300 s; hunter 806; sprinter 11; interceptor 4;
+  stalls: flee, run seed 244: 927 in 300 s; hunter 873; sprinter 15; interceptor 4; pack 35;
+  stalls: flee, run seed 245: 1158 in 300 s; hunter 1099; sprinter 59;
+  stalls: flee, run seed 246: 1024 in 300 s; hunter 937; sprinter 80; interceptor 7;
+  stalls: flee, run seed 247: 423 in 163 s; hunter 347; sprinter 25; interceptor 51;
+  stalls: flee, run seed 248: 164 in 77 s; hunter 139; sprinter 25;
+  stalls: flee, run seed 249: 945 in 300 s; hunter 808; sprinter 94; interceptor 21; pack 22;
+  stalls: flee, run seed 251: 622 in 300 s; hunter 593; sprinter 26; interceptor 3;
+  stalls: flee, run seed 250: 955 in 300 s; hunter 813; sprinter 78; interceptor 64;
+  stalls: flee, run seed 253: 970 in 300 s; hunter 745; sprinter 93; interceptor 132;
+  stalls: flee, run seed 254: 661 in 300 s; hunter 596; sprinter 12; interceptor 29; pack 24;
+  stalls: flee, run seed 252: 791 in 300 s; hunter 776; interceptor 11; pack 4;
+  stalls: flee, run seed 255: 981 in 300 s; hunter 819; sprinter 122; interceptor 40;
+  stalls: flee, run seed 256: 1018 in 300 s; hunter 910; sprinter 76; interceptor 31; pack 1;
+  stalls: flee, run seed 257: 843 in 300 s; hunter 741; sprinter 45; interceptor 44; pack 13;
+  stalls: flee, run seed 258: 512 in 300 s; hunter 479; sprinter 1; interceptor 32;
+  stalls: flee, run seed 260: 803 in 300 s; hunter 611; sprinter 49; interceptor 103; pack 40;
+  stalls: flee, run seed 261: 761 in 300 s; hunter 686; sprinter 70; interceptor 3; pack 2;
+  stalls: flee, run seed 259: 1187 in 300 s; hunter 1012; sprinter 175;
+  stalls: flee, run seed 262: 609 in 300 s; hunter 432; sprinter 105; interceptor 55; pack 17;
+  stalls: flee, run seed 263: 1002 in 300 s; hunter 865; sprinter 104; interceptor 32; pack 1;
+  stalls: flee, run seed 265: 559 in 300 s; hunter 498; sprinter 46; interceptor 15;
+  stalls: flee, run seed 264: 822 in 300 s; hunter 708; sprinter 40; interceptor 42; pack 32;
+  stalls: flee, run seed 266: 1119 in 300 s; hunter 1020; sprinter 17; interceptor 82;
+  stalls: flee, run seed 267: 546 in 145 s; hunter 517; sprinter 29;
+  stalls: flee, run seed 268: 984 in 300 s; hunter 891; interceptor 63; pack 30;
+  stalls: flee, run seed 269: 601 in 166 s; hunter 577; sprinter 24;
+  stalls: flee, run seed 270: 729 in 300 s; hunter 618; sprinter 93; pack 18;
+  stalls: flee, run seed 271: 1045 in 300 s; hunter 923; sprinter 90; interceptor 32;
+  stalls: flee, run seed 272: 713 in 300 s; hunter 665; sprinter 7; interceptor 16; pack 25;
+  stalls: flee, run seed 273: 989 in 300 s; hunter 782; sprinter 107; interceptor 100;
+  stalls: flee, run seed 274: 7 in 57 s; hunter 7;
+  stalls: flee, run seed 275: 132 in 102 s; hunter 132;
+  stalls: flee, run seed 277: 1138 in 300 s; hunter 985; sprinter 84; interceptor 61; pack 8;
+  stalls: flee, run seed 276: 1160 in 300 s; hunter 912; sprinter 182; interceptor 66;
+  stalls: flee, run seed 278: 745 in 300 s; hunter 672; sprinter 61; interceptor 12;
+  stalls: flee, run seed 279: 915 in 300 s; hunter 729; sprinter 69; interceptor 114; pack 3;
+  stalls: flee, run seed 280: 850 in 300 s; hunter 784; sprinter 40; interceptor 26;
+  stalls: flee, run seed 281: 997 in 300 s; hunter 964; sprinter 5; interceptor 21; pack 7;
+  stalls: flee, run seed 282: 762 in 300 s; hunter 652; sprinter 4; interceptor 106;
+  stalls: flee, run seed 283: 911 in 300 s; hunter 800; sprinter 4; interceptor 67; pack 40;
+  stalls: flee, run seed 285: 1158 in 300 s; hunter 1045; sprinter 57; interceptor 54; pack 2;
+  stalls: flee, run seed 284: 915 in 300 s; hunter 809; sprinter 52; interceptor 54;
+  stalls: flee, run seed 287: 34 in 81 s; hunter 34;
+  stalls: flee, run seed 286: 897 in 300 s; hunter 785; sprinter 57; interceptor 53; pack 2;
+  stalls: flee, run seed 289: 648 in 300 s; hunter 623; sprinter 17; interceptor 3; pack 5;
+  stalls: flee, run seed 288: 806 in 300 s; hunter 695; sprinter 19; interceptor 63; pack 29;
+  stalls: flee, run seed 290: 209 in 132 s; hunter 112; sprinter 97;
+  stalls: flee, run seed 291: 1040 in 300 s; hunter 943; sprinter 67; interceptor 30;
+  stalls: flee, run seed 292: 533 in 300 s; hunter 379; sprinter 110; interceptor 44;
+  stalls: flee, run seed 293: 863 in 300 s; hunter 760; sprinter 7; interceptor 96;
+  stalls: flee, run seed 294: 712 in 300 s; hunter 554; sprinter 136; interceptor 18; pack 4;
+  stalls: flee, run seed 295: 925 in 300 s; hunter 745; sprinter 97; interceptor 64; pack 19;
+  stalls: flee, run seed 296: 428 in 300 s; hunter 379; sprinter 48; pack 1;
+  stalls: flee, run seed 298: 714 in 300 s; hunter 535; sprinter 53; interceptor 115; pack 11;
+  stalls: flee, run seed 297: 968 in 300 s; hunter 859; sprinter 46; interceptor 63;
+  stalls: flee, run seed 299: 639 in 300 s; hunter 548; sprinter 42; interceptor 24; pack 25;
+  stalls: flee, run seed 300: 1066 in 300 s; hunter 980; sprinter 50; interceptor 35; pack 1;
+  stalls: cutback, run seed 152: 4 in 98 s; sprinter 4;
+  stalls: cutback, run seed 151: 23 in 43 s; sprinter 23;
+  stalls: cutback, run seed 156: 22 in 50 s; hunter 1; interceptor 21;
+  stalls: cutback, run seed 157: 4 in 49 s; hunter 4;
+  stalls: cutback, run seed 158: 8 in 76 s; hunter 4; interceptor 4;
+  stalls: cutback, run seed 159: 5 in 80 s; sprinter 5;
+  stalls: cutback, run seed 161: 860 in 209 s; hunter 781; sprinter 79;
+  stalls: cutback, run seed 162: 25 in 76 s; sprinter 25;
+  stalls: cutback, run seed 163: 922 in 215 s; hunter 802; sprinter 72; interceptor 48;
+  stalls: cutback, run seed 166: 15 in 110 s; sprinter 15;
+  stalls: cutback, run seed 168: 40 in 106 s; hunter 1; sprinter 39;
+  stalls: cutback, run seed 169: 430 in 122 s; hunter 429; interceptor 1;
+  stalls: cutback, run seed 171: 5 in 26 s; sprinter 5;
+  stalls: cutback, run seed 174: 23 in 47 s; hunter 1; interceptor 22;
+  stalls: cutback, run seed 182: 144 in 74 s; hunter 144;
+  stalls: cutback, run seed 187: 15 in 25 s; sprinter 15;
+  stalls: cutback, run seed 189: 18 in 56 s; sprinter 18;
+  stalls: cutback, run seed 193: 3 in 62 s; hunter 1; sprinter 2;
+  stalls: cutback, run seed 194: 62 in 131 s; hunter 51; sprinter 11;
+  stalls: cutback, run seed 197: 30 in 70 s; sprinter 30;
+  stalls: cutback, run seed 196: 12 in 54 s; sprinter 12;
+  stalls: cutback, run seed 200: 29 in 142 s; sprinter 29;
+  stalls: cutback, run seed 202: 11 in 26 s; sprinter 11;
+  stalls: cutback, run seed 204: 279 in 116 s; hunter 266; sprinter 13;
+  stalls: cutback, run seed 205: 577 in 300 s; hunter 410; sprinter 132; pack 35;
+  stalls: cutback, run seed 207: 7 in 49 s; sprinter 7;
+  stalls: cutback, run seed 209: 23 in 42 s; sprinter 23;
+  stalls: cutback, run seed 208: 99 in 175 s; sprinter 49; interceptor 50;
+  stalls: cutback, run seed 210: 574 in 194 s; hunter 495; sprinter 61; interceptor 18;
+  stalls: cutback, run seed 214: 20 in 58 s; sprinter 19; interceptor 1;
+  stalls: cutback, run seed 217: 32 in 106 s; sprinter 32;
+  stalls: cutback, run seed 218: 175 in 60 s; hunter 149; sprinter 26;
+  stalls: cutback, run seed 220: 20 in 88 s; sprinter 20;
+  stalls: cutback, run seed 223: 19 in 68 s; sprinter 19;
+  stalls: cutback, run seed 229: 9 in 62 s; sprinter 9;
+  stalls: cutback, run seed 231: 3 in 113 s; sprinter 3;
+  stalls: cutback, run seed 232: 12 in 23 s; sprinter 12;
+  stalls: cutback, run seed 233: 16 in 91 s; sprinter 16;
+  stalls: cutback, run seed 234: 44 in 97 s; interceptor 44;
+  stalls: cutback, run seed 235: 33 in 29 s; sprinter 33;
+  stalls: cutback, run seed 239: 43 in 48 s; sprinter 43;
+  stalls: cutback, run seed 238: 46 in 78 s; sprinter 46;
+  stalls: cutback, run seed 242: 32 in 76 s; sprinter 32;
+  stalls: cutback, run seed 246: 10 in 48 s; interceptor 10;
+  stalls: cutback, run seed 247: 6 in 25 s; sprinter 6;
+  stalls: cutback, run seed 250: 11 in 50 s; hunter 1; sprinter 10;
+  stalls: cutback, run seed 253: 50 in 62 s; sprinter 50;
+  stalls: cutback, run seed 252: 26 in 37 s; sprinter 26;
+  stalls: cutback, run seed 257: 91 in 105 s; sprinter 91;
+  stalls: cutback, run seed 258: 8 in 41 s; sprinter 8;
+  stalls: cutback, run seed 260: 4 in 25 s; sprinter 4;
+  stalls: cutback, run seed 261: 35 in 136 s; sprinter 35;
+  stalls: cutback, run seed 259: 10 in 123 s; sprinter 10;
+  stalls: cutback, run seed 262: 269 in 107 s; hunter 262; sprinter 7;
+  stalls: cutback, run seed 265: 18 in 162 s; sprinter 17; interceptor 1;
+  stalls: cutback, run seed 266: 19 in 65 s; sprinter 19;
+  stalls: cutback, run seed 268: 17 in 39 s; sprinter 17;
+  stalls: cutback, run seed 270: 58 in 120 s; sprinter 38; interceptor 20;
+  stalls: cutback, run seed 272: 872 in 232 s; hunter 872;
+  stalls: cutback, run seed 280: 19 in 90 s; sprinter 19;
+  stalls: cutback, run seed 281: 24 in 200 s; hunter 5; sprinter 19;
+  stalls: cutback, run seed 285: 28 in 95 s; hunter 1; sprinter 27;
+  stalls: cutback, run seed 292: 41 in 60 s; sprinter 41;
+  stalls: cutback, run seed 293: 945 in 217 s; hunter 736; sprinter 176; interceptor 33;
+  stalls: cutback, run seed 294: 54 in 179 s; sprinter 54;
+  stalls: cutback, run seed 295: 7 in 47 s; hunter 1; sprinter 6;
+  stalls: cutback, run seed 299: 37 in 38 s; hunter 3; sprinter 34;
+  stalls: cutback, run seed 300: 60 in 28 s; hunter 60;
+
+reprieves: 80 passages through and 0 back out the way in, in 57 of 450 runs; with the hunter out and a way to the player both times (70):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        4.6    10.5    13.8
+  and coming out: the lead                         6.5    10.6    13.4
+  lead gained                                     -1.4     0.1     2.7
+  way round, the generator's figure                8.1    11.0    14.7
+  way round on the mesh, the hunter's speeds       5.1     7.3    12.2
+  lead gained over the way round on the mesh     -0.20    0.01    0.42
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
+1210 s in all on 2 threads
+lockrun: L182 A arm a4 b151 WALL 1210 s, exit 0
