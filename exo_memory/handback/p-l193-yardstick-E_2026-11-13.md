@@ -179,7 +179,25 @@ C owns the fix; this is the number.
 
 ## 7. Hand mutants (prove it)
 
-**RUNNING, not done:** ten mutants, one at a time (`scratchpad/l193/mut193.sh`, each one's expected catch registered in the script before the run), queued behind B's landing train's exclusive hold (since 10:26:52Z). The result goes here, and the yardstick does not land until it does.
+Ten mutants, one at a time (`scratchpad/l193/mut193.sh`, each one's expected catch registered in the script before
+the run). Each run ends with a clean rebuild, and a check that `tools/yardstick` equals HEAD.
+
+- **First run, at b90eda9 (10 rows):** applied 10 / caught 8 / NOT APPLIED 0. checked: `scratchpad/l193/mut193.txt`.
+  - Caught: `knee_sign` (row 1), `abd_axis` and `elbow_supplement` (the arm row), `late_sign` (row 4), `nan_force` and
+    `missing_speed_fails` (row 10), `parent_axis` and `dir_local` (rows 5 and 6).
+  - **`cardan_order` SURVIVED:** our frames make the third angle 0, so swapping the order changed nothing any row
+    read. Fixed by row 12, which sets three angles at once and reads them back (`cardan_zxy` exposed for it).
+  - **`hand_dropped` did not build** (C4100, `hand` unused). A mutant that does not compile proves nothing, so it is
+    not counted as caught. It was replaced by `hand_dropped2`, which keeps `hand` in use.
+  - Clean rebuild 10 / 0; restored == HEAD.
+- **Rerun of the two, at 0b8a8d1 (12 rows):** applied 2 / caught 2 / NOT APPLIED 0. checked:
+  `scratchpad/l193/mut193b.txt`.
+  - `cardan_order` was caught by row 12 (`the_cardan_order_reads_back_three_angles_set_at_once`).
+  - `hand_dropped2` was caught by row 8 (`a_pose_in_a_world_handed_the_other_way_reads_the_same`).
+  - Clean rebuild 12 / 0; restored == HEAD.
+- **The eight caught at b90eda9 were not rerun at 0b8a8d1.** The whole set is now running again at 0b8a8d1
+  (`scratchpad/l193/mut193c.txt`), so the commit that lands has one count of its own. The yardstick does not land until
+  that count is in.
 
 ## 8. Corrections and slips (mine)
 
