@@ -1106,3 +1106,81 @@ test('D663 CLI: `heavy-run.js --run --exclusive --cmd <what> -- <program>` runs 
   const bad = spawnSync(process.execPath, [HELPER, '--run', '--cmd', 'x'], { env: cleanEnv({ CONSONANCE_DATA: d }), encoding: 'utf8', timeout: 30000 });
   assert.strictEqual(bad.status, 2); assert.match(bad.stderr, /usage/);
 });
+
+// L202 (B), the idle-holder guard (loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md): a slot held by a process tree that uses no
+// CPU is NAMED, by the runner waiting on it, and nothing else changes. Twice a wrapper's only child was an idle `cmd.exe C:/ ...`
+// (6 minutes on 11-12, 40 on 11-13) and the room ran on one slot in silence.
+function idleAttempt(d, opts) {
+  let t = 0; const base = Date.now(), logs = [], reports = [];
+  let r;
+  try {
+    r = { h: H.acquire({ cmd: 'waiter', dataDir: d, env: {}, maxWaitMs: opts.maxWaitMs, pollMs: 1000, now: () => base + t,
+      sleep: (ms) => { t += ms; if (opts.onTick) opts.onTick(t); }, log: (s) => logs.push(s), alive: () => true, identify: () => null,
+      idleSample: (pids) => opts.sample(pids, t), idleReport: (h, info) => reports.push({ h, info, t }) }) };
+  } catch (e) { r = { err: e }; }
+  return { ...r, logs, reports };
+}
+const idleLock = (d) => fs.writeFileSync(lockOf(d), JSON.stringify({ pid: 777, seat: 'eeee7777', cmd: 'build yardstick_tests', started: '2026-11-13T11:50:47.284Z', token: 'idle' }));
+
+test('L202 (RED FIRST) a holder whose whole process tree uses no CPU is named ONCE within the window, and the wait goes on as today', () => {
+  const d = tmp(); idleLock(d);
+  const r = idleAttempt(d, { maxWaitMs: 12 * 60 * 1000, sample: (pids) => new Map(pids.map((p) => [p, { cpu: 0.27, names: ['node.exe', 'cmd.exe'] }])) });
+  assert.strictEqual(r.err && r.err.code, 'HEAVY_RUN_TIMEOUT', 'it still waits and gives up exactly as before');
+  assert.strictEqual(r.reports.length, 1, 'named once, not every minute');
+  assert.strictEqual(r.reports[0].h.pid, 777);
+  assert.ok(r.reports[0].t <= H.IDLE_WINDOW_MS + 2 * H.IDLE_CHECK_MS, `named within the window and a check or two (at ${r.reports[0].t} ms)`);
+  assert.ok(r.reports[0].info.cpu < H.IDLE_CPU_S);
+  assert.deepStrictEqual(JSON.parse(fs.readFileSync(lockOf(d), 'utf8')).token, 'idle', 'the lock is untouched');
+});
+
+test('L202 a holder that is compiling (its tree uses CPU) is never named', () => {
+  const d = tmp(); idleLock(d);
+  // A's sweep measured 55 s of CPU in 30 s across node, cmd and dz-chase (12:35Z); even a hundredth of that is far from idle.
+  const r = idleAttempt(d, { maxWaitMs: 12 * 60 * 1000, sample: (pids, t) => new Map(pids.map((p) => [p, { cpu: 10 + t / 1000 * 0.5, names: ['node.exe', 'cmd.exe', 'cl.exe'] }])) });
+  assert.strictEqual(r.err && r.err.code, 'HEAVY_RUN_TIMEOUT');
+  assert.strictEqual(r.reports.length, 0);
+});
+
+test('L202 a guard that faults leaves the lock working exactly as today: the waiter still takes the slot when it frees', () => {
+  const d = tmp(); idleLock(d);
+  const r = idleAttempt(d, { maxWaitMs: 12 * 60 * 1000, sample: () => { throw new Error('CIM is not answering'); },
+    onTick: (t) => { if (t >= 8 * 60 * 1000 && fs.existsSync(lockOf(d))) fs.unlinkSync(lockOf(d)); } });
+  assert.ok(r.h, `it took the slot (${r.err && r.err.message})`);
+  assert.strictEqual(r.reports.length, 0);
+  r.h.release();
+});
+
+test('L202 the board line goes through the WAITING seat\'s own mount: initialize, the session echoed, then post_board with the text', async () => {
+  const d = tmp();
+  const seen = [];
+  const http = require('node:http');
+  const server = http.createServer((req, res) => {
+    let body = ''; req.on('data', (c) => { body += c; }); req.on('end', () => {
+      const m = JSON.parse(body); seen.push({ method: m.method, sid: req.headers['mcp-session-id'] || null, args: m.params && m.params.arguments });
+      res.setHeader('content-type', 'application/json'); if (m.method === 'initialize') res.setHeader('mcp-session-id', 's-1');
+      res.end(m.id === undefined ? '' : JSON.stringify({ jsonrpc: '2.0', id: m.id, result: {} }));
+    });
+  });
+  await new Promise((ok) => server.listen(0, '127.0.0.1', ok));
+  const url = `http://127.0.0.1:${server.address().port}/mcp/B`;
+  fs.writeFileSync(path.join(d, 'letters.json'), JSON.stringify({ 'pane-b-id': 'B' }));
+  fs.writeFileSync(path.join(d, 'mcp.consonance.B.json'), JSON.stringify({ mcpServers: { consonance: { type: 'http', url } } }));
+  assert.strictEqual(H.seatMountUrl({ dataDir: d, env: { CONSONANCE_PANE: 'pane-b-id' } }), url);
+  assert.strictEqual(H.seatMountUrl({ dataDir: d, env: {} }), null, 'no pane, no mount: the line goes to the log only');
+  await H.postBoardVia(url, 'heavy-run: IDLE HOLDER — a test');
+  server.close();
+  assert.deepStrictEqual(seen.map((s) => s.method), ['initialize', 'notifications/initialized', 'tools/call']);
+  assert.strictEqual(seen[2].sid, 's-1', 'the session id is echoed');
+  assert.deepStrictEqual(seen[2].args, { text: 'heavy-run: IDLE HOLDER — a test' });
+});
+
+test('L202 the sampler sums the holder\'s WHOLE tree: an idle node and cmd above a busy dz-chase read busy', () => {
+  // The chair's read at 12:32Z of A's sweep: cmd.exe 0.0 s, dz-chase.exe 131 s. A direct-child sampler would call that idle.
+  const ticks = (s) => String(Math.round(s * 1e7));
+  const rows = [`100|1|${ticks(0.1)}|node.exe`, `200|100|${ticks(0)}|cmd.exe`, `300|200|${ticks(131)}|dz-chase.exe`, `400|1|${ticks(9)}|other.exe`];
+  const run = () => ({ status: 0, stdout: rows.join('\r\n') });
+  const m = H.idleSampleTree([100], run, 'win32');
+  assert.ok(Math.abs(m.get(100).cpu - 131.1) < 0.01, `the tree's CPU (${m.get(100).cpu})`);
+  assert.deepStrictEqual(m.get(100).names.sort(), ['cmd.exe', 'dz-chase.exe', 'node.exe']);
+  assert.strictEqual(H.idleSampleTree([100], () => ({ status: 1, stdout: '' }), 'win32').size, 0, 'a failed query reads nothing, never idle');
+});

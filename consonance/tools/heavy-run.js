@@ -109,6 +109,18 @@ const POLL_MS = 2000;
 const SAY_EVERY_MS = 60 * 1000;
 const YOUNG_MS = 30 * 60 * 1000;         // D283: a lock younger than this is taken only when a SECOND method also says its holder is gone (the full suite took 1,570 s)
 const UNREADABLE_GRACE_MS = 10 * 1000;   // a lock being written this instant reads empty; only an OLD unreadable one is stale
+// L202 (B), THE IDLE-HOLDER GUARD (loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md). Twice a slot was held by a wrapper whose only
+// child was an idle `cmd.exe C:/ ...` (Git Bash had turned `cmd /c` into `cmd C:/`): 6 minutes on 11-12, 40 on 11-13, the room on one
+// slot and nobody told. A runner WAITING on a slot now samples each holder's WHOLE process tree once a minute and, when the tree has
+// used under IDLE_CPU_S of CPU over IDLE_WINDOW_MS, names it once: a log line and, through the waiting seat's own MCP mount, a board
+// line. It ONLY reports: it never stops a process, never releases or takes a lock, and a fault in it leaves the wait exactly as it was.
+// REGISTERED (12:35Z, B's sampler over the two live holders): real runs used 55-57 s (A's sweep: node, cmd, dz-chase) and 117-122 s
+// (C's: node, bash, world_app_tests) of tree CPU in every 30 s; the two stalls used 0 s in 6 min and 0.27 s in 40. The whole tree is
+// summed because a ctest or cmd parent idles while its children work (cmd.exe 0.0 s beside dz-chase.exe 131 s, the chair at 12:32Z).
+// 5 minutes is far inside the waiter's 30-minute give-up, and under 1 s in 5 minutes is three orders of magnitude below a real run.
+const IDLE_WINDOW_MS = 5 * 60 * 1000;
+const IDLE_CPU_S = 1.0;
+const IDLE_CHECK_MS = 60 * 1000;
 const DISK_WARN_BYTES = 50e9;            // D287: under this, warn
 const DISK_REFUSE_BYTES = 20e9;          // D287: under this, refuse to start
 
@@ -326,11 +338,70 @@ function resolveTree(cwd = process.cwd(), run = spawnSync, platform = process.pl
   return platform === 'win32' ? p.toLowerCase() : p;
 }
 
+// ── L202: the idle-holder guard's parts (see IDLE_WINDOW_MS). Each is replaceable in acquire() for the rows, and none can throw into it. ──
+/** pid -> { cpu (seconds, the whole tree's kernel + user time), names } for each pid asked, from ONE CIM query of every process. */
+function idleSampleTree(pids, run = spawnSync, platform = process.platform) {
+  const out = new Map();
+  if (platform !== 'win32' || !pids.length) return out;
+  const r = run('powershell', ['-NoProfile', '-NonInteractive', '-Command',
+    'Get-CimInstance Win32_Process | ForEach-Object { "{0}|{1}|{2}|{3}" -f $_.ProcessId, $_.ParentProcessId, ([double]$_.KernelModeTime + [double]$_.UserModeTime), $_.Name }'],
+  { encoding: 'utf8', timeout: 30000, windowsHide: true, maxBuffer: 1 << 26 });
+  if (!r || r.error || r.status !== 0) return out;
+  const procs = new Map(), kids = new Map();
+  for (const line of String(r.stdout || '').split(/\r?\n/)) {
+    const [pid, ppid, cpu, name] = line.split('|');
+    if (!pid) continue;
+    procs.set(Number(pid), { cpu: Number(cpu) / 1e7, name });
+    if (!kids.has(Number(ppid))) kids.set(Number(ppid), []);
+    kids.get(Number(ppid)).push(Number(pid));
+  }
+  for (const root of pids) {
+    if (!procs.has(root)) continue;
+    const tree = [root];
+    for (let i = 0; i < tree.length; i++) for (const k of kids.get(tree[i]) || []) if (k !== tree[i] && !tree.includes(k)) tree.push(k);
+    out.set(root, { cpu: tree.reduce((s, p) => s + procs.get(p).cpu, 0), names: [...new Set(tree.map((p) => procs.get(p).name))] });
+  }
+  return out;
+}
+/** The WAITING seat's own MCP mount (the app writes <data>/mcp.consonance.<letter>.json at each start), or null: then the log only. */
+function seatMountUrl({ dataDir, env = process.env }) {
+  try {
+    const pane = String(env.CONSONANCE_PANE || '').trim();
+    if (!pane || !dataDir) return null;
+    const letter = JSON.parse(fs.readFileSync(path.join(dataDir, 'letters.json'), 'utf8'))[pane];
+    if (!letter || !/^[A-Za-z0-9]+$/.test(letter)) return null;
+    const url = JSON.parse(fs.readFileSync(path.join(dataDir, `mcp.consonance.${letter}.json`), 'utf8')).mcpServers.consonance.url;
+    return /^http:\/\/127\.0\.0\.1:\d+\/mcp\/[A-Za-z0-9]+$/.test(url) ? url : null;   // loopback, the seat's own route, nothing else
+  } catch (_) { return null; }
+}
+/** post_board through that mount: the MCP handshake, then the one call. Each request gives up after 10 s. */
+async function postBoardVia(url, text) {
+  const head = { 'content-type': 'application/json', accept: 'application/json, text/event-stream' };
+  const send = async (body, extra = {}) => {
+    const r = await fetch(url, { method: 'POST', headers: { ...head, ...extra }, body: JSON.stringify(body), signal: AbortSignal.timeout(10000) });
+    await r.text();
+    return r;
+  };
+  const r1 = await send({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: '2025-03-26', capabilities: {}, clientInfo: { name: 'heavy-run', version: '1' } } });
+  const sid = r1.headers.get('mcp-session-id');
+  const extra = sid ? { 'mcp-session-id': sid } : {};
+  await send({ jsonrpc: '2.0', method: 'notifications/initialized' }, extra);
+  await send({ jsonrpc: '2.0', id: 2, method: 'tools/call', params: { name: 'post_board', arguments: { text } } }, extra);
+}
+/** Name an idle holder: one log line here, and a board line posted by a detached child (so the wait never blocks on the network). */
+function reportIdle(h, info, { log, dataDir, env = process.env, spawnFn = require('child_process').spawn }) {
+  const text = `heavy-run: IDLE HOLDER — ${describe(h)}: its whole process tree (${(info.names || []).join(', ') || '?'}) used ${info.cpu.toFixed(2)} s of CPU in the last ${Math.round(info.minutes)} min. A shell started as \`cmd C:/\` by Git Bash looks like this. Reported only: nothing is stopped or released (L202).`;
+  log(text);
+  const url = seatMountUrl({ dataDir, env });
+  if (url) spawnFn(process.execPath, [__filename, '--post-board', url, text], { detached: true, stdio: 'ignore', windowsHide: true }).unref();
+}
+
 function acquire({
   cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim, beforeTake,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
   alive = pidAlive, confirmGone = pidGone, identify = processIdentity, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
   writes, diskFree = freeBytes, diskTotal = janitorTotal, heavy, exclusive = false, holdMaxMs = HOLD_MAX_MS,
+  idleSample = idleSampleTree, idleReport, idleWindowMs = IDLE_WINDOW_MS, idleCpuS = IDLE_CPU_S,
 } = {}) {
   let dir = dataDir === undefined ? manifestDataDir() : dataDir;
   if (dataDir === undefined && !dir) { dir = appDefaultDataDir(); fs.mkdirSync(dir, { recursive: true }); }
@@ -350,6 +421,31 @@ function acquire({
   const token = crypto.randomUUID();
   const t0 = now();
   let said = -Infinity;
+  // L202: per holder (by token), its tree's CPU samples while we wait on it; a holder is named at most once per waiter.
+  let idleAt = -Infinity;
+  const idleSeen = new Map(), idleNamed = new Set();
+  const nameIdle = idleReport || ((h, info) => reportIdle(h, info, { log, dataDir: dir, env }));
+  const watchIdle = (holders) => {
+    try {
+      if (now() - idleAt < IDLE_CHECK_MS) return;
+      idleAt = now();
+      const cpu = idleSample(holders.map((h) => h.pid));
+      for (const h of holders) {
+        const s = cpu && cpu.get(h.pid), key = h.token || String(h.pid);
+        if (!s || idleNamed.has(key)) continue;
+        const samples = (idleSeen.get(key) || []).concat([{ t: now(), cpu: s.cpu }]);
+        // keep the newest sample at least a window old (the baseline) and everything after it
+        let b = 0;
+        for (let i = 0; i < samples.length; i++) if (now() - samples[i].t >= idleWindowMs) b = i;
+        idleSeen.set(key, samples.slice(b));
+        const base = samples[b];
+        if (now() - base.t >= idleWindowMs && s.cpu - base.cpu < idleCpuS) {
+          idleNamed.add(key);
+          nameIdle(h, { cpu: s.cpu - base.cpu, minutes: (now() - base.t) / 60000, names: s.names });
+        }
+      }
+    } catch (_) { /* the guard only reports: a fault in it leaves the wait exactly as it was */ }
+  };
   let tookOver = null;
   const disagreed = new Set();   // tokens whose liveness disagreement has been said once
   const probes = new Map();      // L124: token -> { at, id }, the last identity asked of the OS for that holder
@@ -538,6 +634,7 @@ function acquire({
       const many = named.length > 1;
       throw Object.assign(new Error(`heavy-run: gave up after ${mins(waited)} — ${many ? `${named.map(describe).join(' and ')} still hold the slots` : `${describe(named[0])} still holds ${heldBy[0].file}`}. Not running anyway: two heavy runs in one tree make both readings meaningless. Wait for ${many ? 'them' : 'it'}, or ask ${many ? 'those seats' : 'that seat'}.`), { code: 'HEAVY_RUN_TIMEOUT', holder: named[0], holders: named });
     }
+    watchIdle(named);
     if (now() - said >= SAY_EVERY_MS) {
       log(`heavy-run: waiting on ${named.map(describe).join(' and ')}${blockers.length ? (n === 1 ? ' — one heavy run at a time' : ' — it holds this tree') : ` — all ${n} slots are held`}`);
       said = now();
@@ -567,7 +664,7 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+module.exports = { IDLE_WINDOW_MS, IDLE_CPU_S, IDLE_CHECK_MS, idleSampleTree, seatMountUrl, postBoardVia, reportIdle, HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
 
 // D663: `node heavy-run.js --run [--exclusive] --cmd "<what>" -- <program> [args...]` runs one program under the lock (and the hold, with --exclusive) and exits
 // with its code. For a run that is not node (a Blender bake, a game run over 10 s, a timing session's own binary): GATES.md, "The heavy-run lock".
@@ -585,6 +682,11 @@ function runCli(argv, { spawn = spawnSync } = {}) {
 
 if (require.main === module && process.argv[2] === '--run') {
   process.exitCode = runCli(process.argv.slice(3));
+}
+
+// L202: the detached child reportIdle starts, so a waiter never waits on the network. It says nothing and fails quietly.
+if (require.main === module && process.argv[2] === '--post-board') {
+  postBoardVia(process.argv[3], process.argv[4]).catch(() => {});
 }
 
 if (require.main === module && process.argv[2] === '--profile') {
