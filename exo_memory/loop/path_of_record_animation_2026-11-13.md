@@ -135,3 +135,8 @@ chase plans items 205 and 206.
   happen.
 - **The second reader's matches are trusted only as far as I checked them** (four of the table's file-and-line cites). The pane that
   takes a lap opens both sides before it writes a line, and a mismatch is rung back.
+
+## State since this was written
+
+- **17:2x, L1:** pane E's `--lean-film` (dreamzone-3 `613c9ba`) already saves every drawn frame at the game's step, on the eased follow pass, from a warm-up, and prints the first frame's brightness (`handback/p-l185-refilm-E_2026-11-13.md`, the first addendum, E's table by line). Still L1's to build: a clip step, every pass, the manifest written by the tool, `pose.csv`, the refusal of a pass that hides the hunter, and the two rows.
+- **17:2x, L12:** the fair re-film is before him (the page of game brief item 216, version 4). His eye on it is what L12 waits for, with the cost read.
