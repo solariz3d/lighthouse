@@ -551,3 +551,17 @@ nagahara2014,8.2,knee_2d_stance_accel,30,12.5,inferred
 4. The sources cannot tell them the shape of the stride above 9.5 m/s, or anything at all above 11.75 m/s.
 5. They cannot settle step rate vs step length at 9 m/s (steady 4.35/s vs sprinting 4.6-4.85/s), nor the absolute
    ankle angle at sprint speed (definitions differ by 10-20 deg).
+
+
+## Correction from the desktop's spot-check (appended 2026-11-13 by the librarian on D; the check is pane E's)
+
+- **The numbers hold.** E rebuilt the hip and knee angles from the same SimTK markers with its own reader, frames and filter:
+  78 of 78 values within the stated error (hip 4 deg, knee 6 deg), and section 6's builder figures hold for this runner
+  (`handback/p-spotcheck-sprintref-E_2026-11-13.md`, sections 2 and 4; scripts beside it). The event times agree with the force
+  plates to within 5.3 ms.
+- **Section 1.6's explanation is wrong.** It reads the 9.5 m/s knee at take-off (9.3 deg) against the papers' 21 to 28.4 deg as a
+  gap between angle definitions. On the papers' own 2D definition, from these markers, the knee at take-off is 10.3 deg (lateral
+  markers 7.7 to 9.0). So the gap is the runner: this one leaves the ground 11 to 18 deg straighter at the knee, with the thigh
+  about 41 deg behind vertical against the sprinters' 23 to 29 (E's section 3, a and d).
+- **For a builder:** a bar taken from this runner at take-off is this runner's bar. 86 deg is the top of his hip's swing peak, not its
+  middle (the two strides read 84.4 and 80.9).
