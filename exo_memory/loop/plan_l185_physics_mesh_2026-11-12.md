@@ -43,3 +43,16 @@
   - (b) with `camera_effects` 0 the eye equals today's to the millimetre;
   - (c) the aim equals the input every tick;
   - (d) the K3 dial at 0 changes nothing.
+
+## Amendment, 2026-11-13 10:5x (D, the librarian, as this plan's author): layer 2's mechanism changes from motors to the soft keyframe
+
+- **Why:** E built layer 2 on Jolt's swing-twist motors and stopped red, as registered (`handback/p-l185-step4-E_2026-11-13.md`). The trunk,
+  shoulders and elbows follow the hunter's sprint; the forearm and hand do not, at any setting that stays stable (wrists 0.21 to 0.32 m
+  off, hands 0.45 to 0.61 m; three times the stiffness is unstable). Three causes were found and fixed first, and seven others ruled out by
+  measurement (its sections 2 and 3).
+- **Ruled, E's option (a):** the whole upper body is driven by Jolt's soft-keyframe method (`SoftKeyframedRigTest.cpp:40-91`, already a
+  source of this plan for layer 3), with the per-bone strength as a blend between the keyframe's velocity and the body's own (Overgrowth's
+  weights, the source line 13 names). The reaction of layer 3 becomes a drop of that same strength.
+- **Unchanged:** every registered row and bar (R4.0 to R4.6, R5.1 to R5.3). The mechanism is named as changed in the code and the hand-back.
+- **Its falsifier, E's own words made the rule:** if (a) cannot give R4.4's follow-through at a strength that also passes R4.3, that is the
+  registered unwelcome outcome met by the second mechanism, and step 4 stops there (option (c)): the keyed ragdoll stays as it is on main.
