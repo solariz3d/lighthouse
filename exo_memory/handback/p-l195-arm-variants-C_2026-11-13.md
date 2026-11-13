@@ -155,3 +155,14 @@ them would be the same stop again, so they are not built until this is ruled. Th
 
 **Building now, as ruled:** the solve (way 1), and V1 under it, with the new row that holds the chest-frame property
 over the three variants' stand-offs.
+
+### A correction to step 1, from E's yardstick (L193, `p-l193-yardstick-E_2026-11-13.md:117-127`, 0a61af1b)
+
+Step 1 above says **"The bend at the back: no"**, from Lockie's accelerating cricketers (rear arm open to 45-52°) and
+Bruening's range extended. E's yardstick measures the elbow's **mean over the whole stride** in CMU's motion-capture
+runners at 2.67-4.15 m/s: **103°** (sd 10.4 over 25 clips; the three runners 93, 118 and 108°, sd 12.4 between them),
+where main posed 56-58° (`Downloads\dz3-l193-review\table_arms_b90eda9.txt`). A mean of 103° over the stride cannot
+come from an arm that opens to 45-52° at the back. So **the steady runners agree with his "more bend" across the
+stride**, and the accelerating cricketers are the case that opens. Step 1's "no" holds for Lockie's data only. It
+rests on three runners, so it is shown to him on the sheet, not tuned to blind. CMU's swing also sits further back
+than ours (-34.4°/+7.8° against main's -22°/+25°); that too goes on the sheet as a number, not into the pose.
