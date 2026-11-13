@@ -135,6 +135,10 @@
   should do one more swarm run on the next phase we get or are guided towards"
 - 2026-11-13 14:46 (D), a minute later, as the librarian was writing that swarm's plan: "hold off for a minute though until we get more shit" (not
   launched; the candidate aim is in `librarian/2026-11-13.md`, the entry that records these two lines)
+- 2026-11-13 14:49 (D), to the librarian: "I have a better idea, spend the last of our usage on an all out swarm to create not just an animation
+  system for the hunter, but a system that will helps us make very elegant animations for the rest of the entities and even the player character.
+  We can do all the research of real open source shit and real techniques. you got the planning better than I do" (whole in the game brief, item
+  218; the plan is `loop/plan_animation_system_swarm_2026-11-13.md`. The last sentence hands the planning to this seat, as his 12:05 word did.)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
