@@ -360,3 +360,27 @@ Each plan is one storey seen from above, north up, cut a metre above the floor.
 - **yellow dots (#ffd400):** lamps.
 - **Lines between cells:** dark green, stairs; magenta, a ladder; orange, a climb; blue, a drop (its dot is where it lands); green (#008838), the way through a Park.
 - **faint white lines:** chunk borders, every 36 m.
+
+## D, 2026-11-13 ~18:0xZ (D675): the nav row re-registered and green on all 16 draws; A's reach fix merged
+
+- **Branch `gen-lap2-kit` local `28c6879`**, NOT pushed, tree clean. On top of `e2a7ed8`:
+  - **`cac177b`, a MERGE** (not a cherry-pick) of A's `a-kit-told` `dcbfd3c`, no conflict. `chase/run.cpp` and `chase/tests/proof_tests.cpp` come over
+    unedited (checked: `git diff a-kit-told HEAD` on the two files is empty).
+  - **`28c6879`**, the row and the CHANGELOG.
+- **The row** (`nav/tests/path_tests.cpp` `the_way_there_is_about_as_quick_as_the_way_back`), re-registered by name with the ruling's reasons in
+  its comment (lighthouse `librarian/2026-11-13.md:475`): seeds 1 to 8, the kit off and on, and on every draw the worst pair under **0.30** (was
+  0.20), the mean under **1.5 %** (NEW), fewer than one pair in twenty over 5 %, more than 2,000 pairs. Nav's code is untouched.
+- **I agree with both bars for these 16 draws:** the largest worst is 22.9 % (7.1 points under 0.30), the largest mean 1.02 %, the largest share
+  over 5 % 3.53 %, the fewest pairs 2,925. **One cost:** the row now runs 16 draws instead of one, so `nav_tests` takes longer. inferred: about two
+  to three minutes more, from the scratch run's time; not measured on its own.
+- **Proven** (my scratchpad `d665b\d11_*.txt`, under the ordinary lock, hidden, BelowNormal):
+  - **every check fires:** with its bars set below what was observed (worst 0.15, mean 0.85 %, over-5 % 2.5 %), the row went red 21 times: worst
+    on 5 draws, mean on 8, over-5 % on 8;
+  - **as registered, green on all 16 draws**, and its printed numbers reproduce the seed table exactly, draw for draw (`d10_seeds.txt` against
+    `d11_row.txt`).
+- **The whole suite at `28c6879`'s content: 13 of 14 suites pass** (774 s). Nav is green, and the reach row is green with A's fix. The only red
+  is **chase's sprinter row, A's**. dz-gym --selftest **26 of 26**; dz-world --selftest **51 of 52**: the tell's sound (0.0909 against 0.1036),
+  E's question.
+- CHANGELOG: says the worst bar moved from 0.20 to 0.30 and why, and that the mean bar is new; and names A's fix, merged.
+
+NEXT: the librarian reads this when it arrives; B goes on to his first-person pictures and the play folder (the chair's item 209 packet).
