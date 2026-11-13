@@ -79,3 +79,51 @@ NEXT: A builds Lap R in its own worktree off main once the overtime rows and the
 **I ran the train myself** at 06:58 because nobody had run it for about 50 minutes and four branches waited; I said so on the board first and nobody objected. The memory gate had held it for half an hour: an orphaned `grep -o` with a 16000-wide bounded repeat (6.3 GB commit, parent gone) which I ended at 06:55 (`stall_trace_lowmem_reaper_2026-11-13.md`, third observation); the train's own message hid it (`landing-train.js:194` prints the tail of a largest-first list), reported to B.
 **Mutants at landing time (the count the chair asked for): applied 3 / caught 3 / NOT APPLIED 0; 13 of 16 unrun** (the fourth was cut mid-run when I stopped the chain so that it would not hold up the landing). They run now in units behind the landing; **a survivor means a missing row, added as a follow-up; it does not change the format.**
 **Open for the record's other users:** C's `d673-frame` rebases onto `cc8eea8` and drops its `8614983` `run_record.{h,cpp}` hunks (they are in Lap R); the one line `r.world.run_length_s = 0.0f;` in `read_run_text` waits for C's world setting. **Lap F (the chase flip)** is not started and waits on L182's brutal arms; it will edit `chase::shipped_speed()` and its pinning row by name, and be announced as the first replay-changing lap through this gate.
+
+## D, Friday 08:51 local (`date`): B's question, the record and a changed generator. ANSWER: Option 1, with Option 2's identity as a tripwire
+
+The question: lighthouse `exo_memory/handback/p-gen-lap2-kit-B_2026-11-13.md:85-` (main e2740fdc). B's kit moves 300 of the pin's 384
+chunk fingerprints, and the record carries nothing of the generator (`game/world/run_record.cpp:107-176`; `world_app.cpp:136-147`).
+
+**The answer: Option 1.** Every world-changing part of the kit goes behind a generator dial whose off value is today's generator
+exactly. The record gains a `[gen]` section. A record without one replays with every such dial off.
+
+**Why:**
+- **It is the rule the scheme already states, so the scheme does not change.** "A later change is a named, optional field, and a missing
+  field reads as the behaviour of the day it was missing" (`run_record.h:39-41`). And this file, lines 6 and 73: "a `[gen]` section before
+  a generator lap flips a dial above 0". This is that lap.
+- **His recorded runs stay replayable.** The exploit search the chair queued for me reads his recorded run, and they are his runs.
+  Option 2 ends them for a reason that is ours, not his.
+- **The pin becomes a proof instead of a re-capture.** Its 384 values held with the dials off is a check that the off path IS today's
+  generator. A second pin holds the kit's world.
+
+**What I add to it (the record's owner's part): a tripwire, so Option 1 cannot fail silently.**
+- **The gap:** Option 1 is only as good as the discipline that every future change to the generator goes behind a dial. A change that
+  slips in un-dialled breaks every record, and nothing says so: a replay simply fails to reach its fingerprint, and that reads as "replay
+  broken", not "generator changed".
+- **So a record written with `[gen]` also carries the spawn chunk's fingerprint**, Option 2's identity, as one field: `gen_world =
+  <fingerprint>`. On replay, after the world is built, a mismatch **refuses with a message naming it**: "this record's world is not this
+  build's under the same generator settings: the generator changed outside its dials".
+- It refuses only records that carry the field. A record with no `[gen]` cannot be checked, and the pin (the off path) is its guard.
+- **Its falsifier, registered here:** a test that changes one generator constant with no dial must make a `[gen]` record refuse with that
+  message. Red first.
+
+**What stays the keeper's:** keeping every old path forever has a cost that grows lap by lap.
+- **Retiring one is allowed, as a named act:** a `record_format` bump that refuses records older than it, with his word on which of his
+  runs stop replaying.
+- It is not a default, and not something a generator lap does on its own.
+
+**What would change my mind:**
+- B's cost measurement finds that a kit part cannot be put behind a dial (the old path is a different code path, not a parameter), and
+  keeping it means keeping dead code.
+- Then that part, and only that part, takes Option 2's refusal, with his word, because it costs his runs.
+
+**Who does what:**
+- **B:** puts the kit's parts behind dials with today's values as their off values; keeps the pin as the off-path proof; adds the second pin.
+  B also gives me the list of dial names and off values, and `shipped_gen()` with the kit on, as `shipped_speed()` does.
+- **A (the record's fields are mine, `run_record.h:41-42`):** the `[gen]` section, written and read (a missing dial reads as off), and
+  `gen_world` with its refusal. Red first:
+  - an old record (no `[gen]`) replays kit-off to the bit;
+  - a `[gen]` record reads back as written;
+  - the un-dialled-change row above.
+- Built on a branch off B's kit when the dial list exists; then the train.
