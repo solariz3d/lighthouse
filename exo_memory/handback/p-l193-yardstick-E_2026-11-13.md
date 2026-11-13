@@ -322,3 +322,13 @@ and re-run this table. The lag should shrink by about the same amount, or this i
 - the foot's time down.
 
 The hip needs only its timing.
+
+## 11. Ready to land (06:4x local)
+
+- **Rebased onto main c9d520e:** 0b8a8d1 → d7b7fdf, fbe5aaa → 26d4c72. checked: `git diff 0b8a8d1 d7b7fdf -- tools/` and
+  `git diff fbe5aaa 26d4c72 -- tools/` → 0 lines each, so the ten-of-ten mutant count (§7) holds for the landing commit.
+- **The CHANGELOG entry:** c7c3105, under Added. It corrects my own runner count: the tool counts 31 / 39 / 31 runners
+  at the three speeds, not the "28" I first wrote.
+- **READY on B's landing train:** `l193-yardstick` c7c3105, marked 12:44:28Z, fourth in the queue. Also pushed to origin
+  (checked: `git ls-remote origin l193-yardstick` → c7c3105). The train runs the full suite before it lands.
+- **The review packet** for his eye is at the top of this file.
