@@ -140,3 +140,14 @@ Opened: briefs/dreamzone2_the_game.md, the game repo at 04f3882 (read-only git a
 (e) Coverage: all 30 assigned items (1, 4, 5, 6, 7, 8, 11, 14, 17, 26, 28, 29, 36, 54, 55, 56, 74, 80, 82, 89, 91, 93, 94, 95, 124, 125, 126, 148, 149, 179) appear in section 1 and the document says none were skipped; confirmed. Items 28, 29 and 36 are thin (29 and the outside only reach lap 6).
 
 Totals: 41 checks, 31 ok, 3 WRONG (origin/main direction, gen.h line numbers, l189 "229 all wide-well" marked read), 1 could not check (15-stage pipeline), 6 minor line offsets or notes.
+
+## Amendment, 2026-11-13 11:4x (D, the librarian): his item 204 changes Laps 2 and 4
+
+- **His words** are game brief item 204 (11:37): the biomes "still need their own isolated or indepedent function within the proc gen"; a real
+  classroom now and then in the school; in the hotel a whole guest room (a washroom to one side as the dead end, beds in the main room, a way
+  out at the far end); "it isnt to be wholey structured as such, there still needs to be an uncanny element to it".
+- **What it changes here:** Lap 4 says designed pieces per biome "ride the same table". By his word each biome gets a piece function of its
+  own on top of the shared skeleton, not only rows in one table. Lap 2's first authored piece, the pass-through hall, has a named second and
+  third candidate: the hotel guest room and the school classroom, each at a low rate and each with one broken rule (scout 05, technique E).
+- **Not decided here:** how far "independent" goes (a function per biome over one lattice, or a lattice per biome). That is the question his
+  parked swarm on shapes and primitives per biome (item 201) is for.
