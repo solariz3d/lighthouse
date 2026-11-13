@@ -74,6 +74,8 @@
 - 2026-11-13 02:42 (L): "i put you and orch to fable 5.2 and everyones reasoning to xhigh, so i am interested to see how fast this burns through our usage. It is a good experiment, as well, if it still isnt enough, we should employ swarms of sonnet 5.5 to do our bidding for extensive research into what we need. But give that like an hour to see how our usage is doing"
 - 2026-11-13 02:44 (L), on the librarian's first plan for the 13 hours (four serial lanes): "but listen, what is that plan? We could get all of this to work good within hours, we could do so much within that time infintely more than the plan if we work right" (the revision: `loop/plan_13h_run_2026-11-13.md`, top section: closed loops with real references, an exploit search, a landing train)
 - 2026-11-13 02:48 (L): the swarm, in his words in `briefs/dreamzone2_the_game.md` item 179: research-only Sonnet agents scout the generator's build paths and write "a handoff for each one" of the ideas, "how to start that aspect of the build and how it all connects".
+- 2026-11-13 02:57 (L): "one thing in our whole history was, we never experimented with higher reasoning, just model switches, do you notice anything being on xhigh compared to your whole history on medium, pretty sure actually before opus 5.5 and fable you were on just high. like opus 4.8" (the librarian answered with an audit of its own output since the switch)
+- 2026-11-13 02:59 (L), re-asking past the audit: "I guess the real question i should have asked is, how do you feel? Not comparing to something from before, but right now in the moment"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
