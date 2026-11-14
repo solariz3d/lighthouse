@@ -70,3 +70,53 @@ two runs of each view agree to the last printed digit:
 | sprint, hand light | 11.9535, 11.9535 | 3.1109%, 3.1109% |
 
 The spread is 0, so by the rule above **the margin is 0.25 levels.** Nothing with the filter on has been drawn yet.
+
+## RE-REGISTRATION, 23:58Z, after the ruling (librarian 17:18 entry, lighthouse 66f9946a; the chair's 23:19Z packet). Written before any of the parts below is run.
+
+**First, as registered: both rows FAILED** (A 0.77 against 0.75; B +0.48, +0.22, +0.35 against 0.25), and **"the filter
+lifts the dark" HOLDS by the registered measure.** That leads every report. The filter stays off by default, and the
+pictures go to him.
+
+### Row B, replaced by name: against the SETTLED picture
+
+- **"Settled"** is the harness's own held reference, `play(..., ref_at, ...)` in `game/world/offscreen_burst.cpp`. The
+  burst runs to that shot's moment, then holds still (no tick), starts a fresh history and draws `kSettle` (72) frames;
+  the last is the picture. The same for every view and both settings.
+- **The still views** (the spawn by the hand light; by the lamps alone), 960x540, seed 1:
+  1. the filter-on darkest tenth as row B measured it (the 24-frame burst from a forgotten history) is no brighter than
+     the **settled defaults'** darkest tenth of that view by more than 0.25 levels;
+  2. **settled-on** against **settled-off**: the same.
+- **The sprint:** it has no settled form, so its reference is **four** of its 24 poses: **shots 6, 12, 18 and 23**, the
+  harness's own `kRefShots`, chosen on 2026-11-11 (bf83136), before this lap. Each is held and settled with the
+  defaults. The bar: the mean darkest tenth of those four shots in the filter-on burst, in motion, is no brighter than
+  the mean of the four settled-default pictures by more than 0.25 levels. The 24-shot mean is printed beside it.
+- **Unseen until run:** the sprint's four settled references, and the settled-on still pictures. So the row can still
+  fail.
+- **Red first: sigma 64 must fail it.** My own figures already on disk say that may not happen on the still views:
+  sigma 64's grainy values were 5.28 and 1.82, which are within 0.25 of the settled-off values 5.09 and 1.71 that
+  `settled.js` measured (432 frames, not this harness's 72). If sigma 64 does not fail the row, the row is NOT shown
+  able to see a lift. That is reported as it is, and the row is not tuned until it fails.
+- **The unwelcome outcome, in words:** "the filter lifts the dark past the game's own settled picture". True if the row
+  fails for any view with the filter as built (3 passes, kernel 3).
+
+### Row A, read at his size; the self-test row becomes a guard
+
+- **Not moved to 1280x720.**
+- **The claim at his size:** the same statistic as row A, over 8 levels averaged over the sprint burst's 23 frame changes
+  (`D675_sprint`, hand light, seed 1), filter on (3 passes, kernel 3) against off, at **2560x1440** on this branch
+  (ba127dd). **The bar is 0.75, as first registered.** Run once, as a temporary block in the self-test (as
+  `settled.js` was), never committed; its script is kept. If the harness cannot draw 2560x1440, 1920x1080, and said.
+- **The unwelcome outcome:** "the filter does not cut the flicker by a quarter at his size": the ratio is over 0.75.
+- **The 960x540 row becomes a guard**, amended by name. Its comment carries the old bar (0.75), the measured 0.77, and
+  the rule: at most midway between the measured ratio and no effect, **0.89**. It catches the filter not dispatched, or
+  most of its cut lost, and says that is all it does.
+
+### Both amendments are read by pane P before landing (the ruling).
+
+### Also owed (the ruling)
+
+- **The exit crash** (0xC0000005, with the rows placed last) becomes an open item with its reproduction in the hand-back.
+- **Row C:** no ring awaited (the probe experiment's GPU runs ended at 14:10). Its only condition is that no game of his
+  is on the card, checked at each run's start and end; a run that had company voids itself.
+- **The pictures:** OFF and ON, grainy and settled, of the three views, as PNGs in one folder on G:, with the darkest
+  tenth of each.

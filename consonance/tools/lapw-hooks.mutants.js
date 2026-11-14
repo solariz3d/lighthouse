@@ -47,18 +47,27 @@ const MUTANTS = [
   ['required (W4 copy): the other machine is this one', GATE, "const other = machine === 'D' ? 'L' : machine === 'L' ? 'D' : null;", "const other = machine === 'D' ? 'D' : machine === 'L' ? 'L' : null;"],
   ['required (W4 copy): every date\'s handoffs, not the newest', GATE, 'handoffs: offs.filter((x) => x.m[1] === newest)', 'handoffs: offs.filter(() => true)'],
   // ---- W4, the wake gate ----
-  ['gate: a Read with offset or limit counts as whole', GATE, ' && i.offset == null && i.limit == null', ''],
+  // (re-pointed for the ruled bar, pane P, 2026-11-13: the gate now counts the lines a call RETURNED; these rows break that code)
+  ['gate (the ruled bar): any Read with no limit covers the whole file again (the old form)', GATE, "    for (const l of res.split('\\n')) { const m = /^\\s*(\\d+)\\t/.exec(l); if (m) out.add(Number(m[1])); }", '    if (i.limit == null) for (let k = 1; k <= (fileLines || []).length; k++) out.add(k);'],
   ['gate: a stage after the cat is allowed', GATE, "if (seg.includes('|') || ", 'if ('],
   ['gate: a stdout redirect is allowed', GATE, "/(^|[^2&])>/.test(seg) || ", ''],
-  ['gate: -TotalCount / -Head / -Tail are allowed', GATE, 'if (w.some((x) => PARTIAL_FLAGS.test(x))) continue;', ''],
-  ['gate: a persisted-output preview counts', GATE, ' || String(call.result).includes(PERSISTED)', ''],
-  ['gate: an errored call counts', GATE, '!call.done || call.err ||', '!call.done ||'],
-  ['gate: a call with no result yet counts', GATE, 'if (!call || !call.done || call.err', 'if (!call || call.err'],
+  ['gate: -TotalCount / -Head / -Tail are allowed', GATE, ' || w.some((x) => PARTIAL_FLAGS.test(x))', ''],
+  ['gate: a persisted-output preview counts', GATE, '  if (res.includes(PERSISTED)) return out;\n', ''],
+  ['gate: an errored call counts', GATE, '  if (!call || call.err) return out;', '  if (!call) return out;'],
+  // (was 'a call with no result yet counts' on `!call.done`, which SURVIVED as an equivalent mutant: a call with no result has an empty result and
+  // returns no lines by construction, so the check was removed; the row "an errored Read, or a call whose result is not on disk yet" still holds it)
+  ['gate (the ruled bar): S ignored, the whole note always', GATE, 'start: rel === r.note ? startLine(dir, payload.session_id, rel, w && w.t, lines.length) : 1', 'start: 1'],
+  ['gate (the ruled bar): the 10 s window removed (this wake\'s own row read as the previous)', GATE, 'const cut = Date.parse(wakeT) - 10000;', 'const cut = Infinity;'],
+  ['gate (the ruled bar): the session match removed', GATE, 'r.session === session && ', ''],
+  ['gate (the ruled bar): the note match removed', GATE, ' && r.note === note && ', ' && '],
+  ['gate (the ruled bar): a cut cat counted (its result lines, not the file\'s lines it holds)', GATE, '  for (let k = 1; k <= best; k++) out.add(k);', '  for (let k = 1; k <= Math.max(best, got.length); k++) out.add(k);'],
+  ['gate (the ruled bar): N from the ledger, not the file (a note that shrank is not caught)', GATE, '  if (!prev || prev.note_lines > n) return 1;', '  if (!prev) return 1;'],
+  ['gate (the ruled bar): lines a Read returned from ANOTHER file count', GATE, "    if (!names(i.file_path, rel)) return out;\n", ''],
+  ['body (the ruled bar): the librarian\'s row records no note and no line count', BODY, '...(noteAt ? { session: payload.session_id || null, note: noteAt.note, note_lines: noteAt.lines } : {})', '...({})'],
   ['gate: backslash paths are not normalised', GATE, ".replace(/\\\\/g, '/').replace(/\\/+/g, '/')", ".replace(/\\/+/g, '/')"],
   // (was 'a compact wake counts opens before it' on `w.kind === 'compact' ? [] :`, which SURVIVED as an equivalent mutant: that window holds no call
   // on a compact wake by construction, so the branch was removed; this row breaks what does decide it, the last compaction's index)
   ['gate: the last compaction is not tracked (a resume counts opens the summary dropped)', GATE, '    if (r.wake === \'compact\') { if (!r.hook) lastCompact = i;', "    if (r.wake === 'compact') {"],
-  ['gate: a resume\'s earlier open counts though the file changed since', GATE, ' && (mt == null || (c.t && mt < Date.parse(c.t)))', ''],
   ['gate: every ring is gated, not only the first', GATE, 'if (after.some((r) => r.name === GATED_TOOL && r.done && !r.err', 'if (false && after.some((r) => r.name === GATED_TOOL && r.done && !r.err'],
   ['gate: a refused first ring counts as delivered', GATE, 'r.name === GATED_TOOL && r.done && !r.err && ', 'r.name === GATED_TOOL && r.done && '],
   ['gate: [interrupt] does not pass', GATE, 'if (/\\[interrupt\\]/i.test(String(text)))', 'if (false)'],

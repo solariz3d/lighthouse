@@ -3160,3 +3160,15 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-13 17:0x local (D) · L1's rows against 613c9ba's --lean-film: every frame MET (at 1/144 s, follow pass only); manifest, pose.csv, --clip-step, all passes, the hunter refusal and both rows NOT MET → `exo_memory/handback/p-l185-refilm-E_2026-11-13.md` (addendum)
 - My film.js stood in for the manifest outside the tool; L1 builds it in the tool. Deletions of my own frames came before the chair's 23:00Z "delete nothing"; none since. New clip folders go on G:\consonance-scratch.
+
+## 2026-11-13 17:1x local (D) · film-base 4644c95 and l185-skeleton (as l185-skeleton-steps45, 1b690fd) pushed to dreamzone-3's private remote, scan 0, gate allow; main untouched → `exo_memory/handback/p-l185-refilm-E_2026-11-13.md` (push addendum)
+- The remote's own l185-skeleton is my 11-12 step-2 WIP (b226b95), diverged; I pushed under a new name rather than force it.
+- **Carry:** before pushing a branch, `git ls-remote` its name; a diverged branch of the same name goes up under a new name, never forced.
+
+## 2026-11-13 17:3x local (D) · D675 the yardstick's fastest toe over running speed is green; the hunter's gait_pose reads above one runner (JA1) at all four of JA1's speeds at every cut-off, and ~2.2 at 11 m/s, so the game's 2.8 is not this law on a straight → `exo_memory/handback/p-d675-yardstick-toe-E_2026-11-13.md`
+- dreamzone-3 yardstick-toe-e 704774c (local; red 0922b4b). 20/20; C++ reader within 0.0047 of the JS reader; mutants 6/6. The second reader caught its own first bug: the float form's "not seen" (65535.0) read as a point at the origin gave a toe at 63x.
+- **Carry:** in a C3D float file the fourth word holds the 16-bit residual word as a float; read it as int16, never as "float < 0".
+
+## 2026-11-13 17:4x local (D) · D675 AMENDMENT 3: compared at the marker's place, the hunter's gait law reads above one runner (JA1) at 3.53 and 5.19 only; at 6.97 the 10 Hz margin is +0.09 → `exo_memory/handback/p-d675-yardstick-toe-E_2026-11-13.md` (addendum 23:4xZ)
+- yardstick-toe-e 0eabefc pushed (red e5d435c); 23/23; C's figures reproduced within 0.0195. "The joint was the whip" held: my all-four-speeds sentence was the joint's longer lever.
+- **Carry:** a mutant that does not build is not a catch; re-make it so it compiles, and count it apart.

@@ -1,0 +1,15 @@
+the runner: toe over running speed 2.20 to 2.37: one runner (JA1), 4 trials (Dorn, Schache & Pandy 2012), not a population's spread
+
+m/s    runner toe marker (ball) 10/15/25 ours at the marker   ours toe joint (beside) runner ankle / ours ankle     ours unfiltered: marker, joint, ankle (beside) whips? 
+3.53   2.37/2.37/2.37 (2.36/2.35/2.35)     2.66/2.66/2.66       2.85/2.85/2.86       2.09/2.10/2.10 vs 2.33/2.34/2.34    2.66 2.86 2.34   WHIPS
+5.19   2.21/2.21/2.22 (2.18/2.17/2.18)     2.52/2.54/2.54       2.67/2.69/2.69       1.93/1.93/1.93 vs 2.11/2.13/2.13    2.54 2.69 2.13   WHIPS
+6.97   2.25/2.26/2.26 (2.25/2.25/2.25)     2.34/2.37/2.38       2.47/2.51/2.52       1.97/1.97/1.96 vs 1.97/2.00/2.01    2.38 2.52 2.01   no
+9.47   2.20/2.24/2.24 (2.20/2.24/2.23)     2.19/2.24/2.26       2.31/2.37/2.38       1.89/1.92/1.92 vs 1.87/1.90/1.92    2.26 2.39 1.92   no
+9.00   (no runner at this speed)       2.21/2.25/2.26       2.33/2.38/2.39       ours ankle 1.87/1.91/1.92      2.27 2.39 1.92   -
+11.00  NOT COVERED                     2.08/2.13/2.15       2.18/2.24/2.26       ours ankle 1.78/1.82/1.83      2.15 2.27 1.84   NOT COVERED
+12.60  NOT COVERED                     1.98/2.03/2.05       2.08/2.14/2.16       ours ankle 1.71/1.75/1.77      2.06 2.17 1.77   NOT COVERED
+
+falsifier 2 (the mapping): along the foot from the ankle, over the shank: the runner's ball 0.297, toe marker 0.455; ours (Toe) 0.426: holds
+falsifier 3 (one runner is not a band): the two toes differ by at most 0.086 in a trial: holds
+falsifier 1 (two readers): this reader against the JavaScript reader, at most 0.0047 apart: holds
+row 6 (within 0.01 of the JavaScript reader's toe and ball): pass

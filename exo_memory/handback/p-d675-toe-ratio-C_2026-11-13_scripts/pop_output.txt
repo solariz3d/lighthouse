@@ -1,0 +1,59 @@
+heavy-run: WARNING: C:\ has 27.2 GB free, under 50 GB; run node consonance/tools/janitor.js
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+run: holding the lock at 2026-11-13T23:40:15.365Z; starting toe-pop
+    22 bodies, 21 constraints
+ok    the_hunters_ragdoll_has_a_body_for_every_joint
+    2880 steps: the bodies off their key by at most 0.000010 m and 0.0000 deg;
+    off the drawn pose by at most 0.001 m, the largest stretch above a joint 0.000 m (HandR), and at most 0.0013 m past it (HipL)
+ok    hard_keyed_every_body_is_where_the_key_put_it_and_off_the_drawn_pose_only_by_the_stretch
+ok    the_ragdoll_reads_back_the_same_bits_every_time
+    the head body's roll off the drawn head's at most 0.040 deg; the drawn head turned up to 57.2 deg off the body
+ok    the_hunters_head_body_turns_with_its_look
+    run-up to 9 (straight)     fastest toe 21.24 m/s one tick back (21.23 centred), ToeL at 13.963 s; the hunter then 8.87 m/s, turning 0 deg/s: ratio 2.393; the most toe over speed here at 3 m/s or more 3.194 (at 4.51 m/s)
+    wide turn, 90 deg in 1 s   fastest toe 23.54 m/s one tick back (8.09 centred), ToeL at 3.904 s; the hunter then 9.00 m/s, turning 90 deg/s: ratio 2.615; the most toe over speed here at 3 m/s or more 2.615 (at 9.00 m/s)
+    9 m/s (straight)           fastest toe 23.39 m/s one tick back (8.01 centred), ToeR at 37.421 s; the hunter then 9.00 m/s, turning 0 deg/s: ratio 2.598; the most toe over speed here at 3 m/s or more 2.598 (at 9.00 m/s)
+    braking to 4 (straight)    fastest toe 21.86 m/s one tick back (5.91 centred), ToeL at 17.017 s; the hunter then 8.85 m/s, turning 0 deg/s: ratio 2.470; the most toe over speed here at 3 m/s or more 2.860 (at 4.00 m/s)
+    hairpin, 180 deg in 1 s    fastest toe 11.98 m/s one tick back (11.97 centred), ToeR at 51.071 s; the hunter then 4.00 m/s, turning -180 deg/s: ratio 2.996; the most toe over speed here at 3 m/s or more 2.996 (at 4.00 m/s)
+    sprint to 11 (straight)    fastest toe 30.67 m/s one tick back (13.74 centred), ToeR at 19.933 s; the hunter then 11.00 m/s, turning 0 deg/s: ratio 2.788; the most toe over speed here at 3 m/s or more 3.520 (at 4.53 m/s)
+    the stop (straight)        fastest toe 30.41 m/s one tick back (13.42 centred), ToeR at 9.542 s; the hunter then 10.50 m/s, turning 0 deg/s: ratio 2.897; the most toe over speed here at 3 m/s or more 2.897 (at 10.50 m/s)
+    over the 60 s: the fastest toe 30.67 m/s one tick back
+ok    zz_probe_toe_split
+    held 3.53 m/s          ticks with a toe pop over 2 cm: 0; the largest 0.4 cm (ToeR moved 1.2 cm in that tick), at 4.629 s, the hunter 3.53 m/s, phase 4.711 rad, the toe 0.060 m up; the fastest toe centred over two ticks 10.08 m/s
+      tick -2: toe y 0.081, 0.714 m ahead of its hip; ankle y 0.107, 0.477 ahead; the hip 1.109 up
+      tick -1: toe y 0.071, 0.705 m ahead of its hip; ankle y 0.099, 0.468 ahead; the hip 1.105 up
+      tick +0: toe y 0.060, 0.694 m ahead of its hip; ankle y 0.091, 0.457 ahead; the hip 1.101 up
+      tick +1: toe y 0.055, 0.682 m ahead of its hip; ankle y 0.091, 0.446 ahead; the hip 1.105 up
+      tick +2: toe y 0.051, 0.668 m ahead of its hip; ankle y 0.091, 0.432 ahead; the hip 1.110 up
+    held 5.19 m/s          ticks with a toe pop over 2 cm: 0; the largest 0.9 cm (ToeL moved 1.9 cm in that tick), at 1.550 s, the hunter 5.19 m/s, phase 1.572 rad, the toe -0.014 m up; the fastest toe centred over two ticks 13.98 m/s
+      tick -2: toe y 0.018, 0.642 m ahead of its hip; ankle y 0.102, 0.418 ahead; the hip 1.123 up
+      tick -1: toe y 0.005, 0.623 m ahead of its hip; ankle y 0.096, 0.403 ahead; the hip 1.120 up
+      tick +0: toe y -0.014, 0.601 m ahead of its hip; ankle y 0.091, 0.386 ahead; the hip 1.118 up
+      tick +1: toe y -0.013, 0.583 m ahead of its hip; ankle y 0.090, 0.368 ahead; the hip 1.118 up
+      tick +2: toe y -0.018, 0.563 m ahead of its hip; ankle y 0.090, 0.349 ahead; the hip 1.118 up
+    held 6.97 m/s          ticks with a toe pop over 2 cm: 0; the largest 0.6 cm (ToeR moved 1.8 cm in that tick), at 5.367 s, the hunter 6.97 m/s, phase 4.709 rad, the toe -0.010 m up; the fastest toe centred over two ticks 17.57 m/s
+      tick -2: toe y 0.026, 0.681 m ahead of its hip; ankle y 0.111, 0.458 ahead; the hip 1.111 up
+      tick -1: toe y 0.007, 0.657 m ahead of its hip; ankle y 0.101, 0.437 ahead; the hip 1.107 up
+      tick +0: toe y -0.010, 0.633 m ahead of its hip; ankle y 0.092, 0.417 ahead; the hip 1.103 up
+      tick +1: toe y -0.017, 0.603 m ahead of its hip; ankle y 0.091, 0.390 ahead; the hip 1.104 up
+      tick +2: toe y -0.017, 0.574 m ahead of its hip; ankle y 0.095, 0.363 ahead; the hip 1.105 up
+    held 9.47 m/s          ticks with a toe pop over 2 cm: 19; the largest 7.1 cm (ToeL moved 12.3 cm in that tick), at 1.354 s, the hunter 9.47 m/s, phase 3.151 rad, the toe -0.017 m up; the fastest toe centred over two ticks 22.63 m/s
+      tick -2: toe y -0.017, -0.672 m ahead of its hip; ankle y 0.220, -0.640 ahead; the hip 1.057 up
+      tick -1: toe y -0.017, -0.728 m ahead of its hip; ankle y 0.216, -0.676 ahead; the hip 1.057 up
+      tick +0: toe y -0.017, -0.643 m ahead of its hip; ankle y 0.212, -0.712 ahead; the hip 1.057 up
+      tick +1: toe y -0.008, -0.700 m ahead of its hip; ankle y 0.228, -0.738 ahead; the hip 1.059 up
+      tick +2: toe y 0.010, -0.743 m ahead of its hip; ankle y 0.249, -0.756 ahead; the hip 1.062 up
+    held 11.00 m/s         ticks with a toe pop over 2 cm: 20; the largest 7.1 cm (ToeL moved 12.7 cm in that tick), at 5.367 s, the hunter 11.00 m/s, phase 3.151 rad, the toe -0.017 m up; the fastest toe centred over two ticks 24.94 m/s
+      tick -2: toe y -0.017, -0.666 m ahead of its hip; ankle y 0.220, -0.637 ahead; the hip 1.055 up
+      tick -1: toe y -0.017, -0.726 m ahead of its hip; ankle y 0.216, -0.675 ahead; the hip 1.056 up
+      tick +0: toe y -0.017, -0.644 m ahead of its hip; ankle y 0.212, -0.712 ahead; the hip 1.056 up
+      tick +1: toe y -0.007, -0.703 m ahead of its hip; ankle y 0.229, -0.740 ahead; the hip 1.058 up
+      tick +2: toe y 0.012, -0.748 m ahead of its hip; ankle y 0.251, -0.759 ahead; the hip 1.061 up
+    R4.5's 60 s drive      ticks with a toe pop over 2 cm: 106; the largest 7.1 cm (ToeR moved 12.7 cm in that tick), at 9.542 s, the hunter 10.50 m/s, phase 0.011 rad, the toe -0.017 m up; the fastest toe centred over two ticks 24.94 m/s
+      tick -2: toe y -0.017, 0.006 m ahead of its hip; ankle y 0.220, -0.000 ahead; the hip 1.056 up
+      tick -1: toe y -0.017, 0.006 m ahead of its hip; ankle y 0.216, -0.000 ahead; the hip 1.056 up
+      tick +0: toe y -0.017, 0.006 m ahead of its hip; ankle y 0.212, 0.000 ahead; the hip 1.057 up
+      tick +1: toe y -0.007, 0.006 m ahead of its hip; ankle y 0.229, 0.000 ahead; the hip 1.059 up
+      tick +2: toe y 0.012, 0.006 m ahead of its hip; ankle y 0.251, 0.000 ahead; the hip 1.062 up
+ok    zz_probe_toe_pop
+6 tests, 0 failed
+run: done at 2026-11-13T23:40:15.806Z, exit 0

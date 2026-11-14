@@ -9,6 +9,69 @@ is its first measure of an end point's SPEED.
 Base: dreamzone-3 main `b08f25e`. The yardstick is as landed; checked: `git log FETCH_HEAD -- tools/yardstick` → the
 last change to it is `26d4c72`. Branch: `yardstick-toe-e`, a new worktree. Nothing of `l185-skeleton` is in it.
 
+## 0. Amendments by name, ruled 2026-11-13 23:16Z (the chair, D675: "GO, WITH TWO AMENDMENTS"), written before any code
+
+**AMENDMENT 1, LIKE FOR LIKE.**
+- Ours is compared with the runner ONLY AT THE SAME CUT-OFF: ours at 10 Hz against the runner at 10 Hz, and so on.
+- The UNFILTERED reading of ours is printed BESIDE and NEVER COMPARED. A filter lowers a peak, so an unfiltered pose
+  against a filtered marker reads high by construction.
+- The unwelcome outcome "the gait law itself whips" (section 7) is read at EACH of the three cut-offs. It holds ONLY IF
+  ALL THREE exceed the runner's figure at the same speed by more than 0.1.
+- Sections 1, 4 and 7 below are amended to this.
+
+**AMENDMENT 2, ONE RUNNER IS SAID WHEREVER THE BAND IS PRINTED.**
+- 2.20 to 2.37 is FOUR TRIALS OF ONE RUNNER (JA1), not a population's range.
+- The tool prints "one runner (JA1)" beside the band. The hand-back, and anything passed to C or to him, says so.
+- NO sentence of the form "outside the human range" is drawn from it.
+- Where this document says "the runner's band" below, read "one runner's (JA1) four trials".
+
+**Also ruled:** the new worktree's build tree goes on `G:\consonance-scratch`.
+
+## 0b. AMENDMENT 3 by name, ruled 2026-11-13 23:43Z (the chair, D675 item 1), written before its code
+
+**Why.** C measured where the hunter's toe JOINT sits against the runner's toe marker
+(`handback/p-d675-toe-ratio-C_2026-11-13.md:25-26`, lighthouse `3f111619`):
+- the joint is 0.213 m forward and 0.108 m down from the ankle, 0.239 m from it;
+- the marker is 0.193–0.196 m forward and 0.044 m down, 0.200 m from it.
+
+So the joint is about a fifth farther out on the lever. My falsifier 2 checked only the horizontal reach, and passed
+(0.426 against the ball's 0.297). It could not see the joint being 6 cm lower and 4 cm farther out than the marker.
+
+**The amendment.**
+- **The compared point** is the hunter's point at the marker's own place on the foot, C's construction (`:34`): in the
+  standing (rest) pose, 0.195 m forward and 0.044 m down from the Ankle joint.
+  - It is held in the foot's frame: `u` along Ankle to Toe, and `n`, the perpendicular in the foot's plane about the
+    side axis.
+  - It is carried with each pose: `P = Ankle + a·u + b·n`, with `a` and `b` fixed from the rest pose.
+- **The side axis:** the pose's `right`; in the rest pose, HipL to HipR. Forward is `right × up`.
+- **The toe joint** is printed beside, never compared (as the unfiltered reading is, under AMENDMENT 1).
+- **The verdict:** "the gait law itself whips" is read from the compared point, at each cut-off, all three, as under
+  AMENDMENT 1.
+- **C's figures at the marker's place,** 15 Hz: 2.66, 2.54, 2.38 and 2.26 at 3.53, 5.19, 6.97 and 9.47 m/s. By them the
+  outcome holds at three speeds and not at 9.47.
+
+**New rows, red before the code:**
+9. **The compared point stands where it was put:**
+   - in the hunter's rest pose it sits 0.195 m forward and 0.044 m down from the Ankle, within 1 mm;
+   - in a foot turned 30° about the side axis it keeps its distance from the Ankle (within 0.1 mm) and its angle to
+     Ankle–Toe (within 0.01°), so it is carried rigidly with the foot.
+10. **Two seats' constructions agree:** ours at the compared point, 15 Hz, reads C's 2.66, 2.54, 2.38 and 2.26 within
+    0.03 at the four speeds.
+11. **The verdict is taken from the compared point, not the joint:** `compared(r)` returns the marker point's ratios.
+    For a reading where the joint is over the runner by more than 0.1 and the marker point is not, "whips" is false.
+
+**New hand mutants,** each must turn a row red:
+- the compared point fixed in the world's axes, not the foot's (row 9);
+- "down" taken as up (row 9);
+- the verdict taken from the joint (row 11).
+
+**Falsifier 5:** this amendment's construction is wrong if row 10 misses, that is if two seats building the same point
+from the same words disagree by more than 0.03. Then neither figure is yet a measurement.
+
+**Unwelcome outcome, said before the run:** "the joint was the whip". The compared point reads inside 0.1 of JA1 at more
+speeds than the joint did. Then part of what was reported as the gait law whipping (my hand-back of 17:3x) was the joint's
+longer lever, and the hand-back's sentence is corrected by this run.
+
 ## 1. The measure
 
 For a body running straight at a steady speed:
@@ -21,7 +84,9 @@ Both bodies are read the same way:
 - velocity is the central difference of position;
 - it is read at three cut-offs of the same zero-lag filter (a 2nd-order Butterworth run forward and back) at 10, 15 and
   25 Hz, and also unfiltered for ours;
-- the fastest of either toe counts.
+- the fastest of either toe counts;
+- (AMENDMENT 1) ours is compared with the runner only at the same cut-off; ours unfiltered is printed beside and never
+  compared.
 
 ## 2. The reference
 
@@ -47,7 +112,7 @@ Both bodies are read the same way:
 | 6.97 | 2.25 | 2.26 | 2.26 |
 | 9.47 | 2.20 | 2.24 | 2.24 |
 
-  The band is **2.20 to 2.37** across speeds and cut-offs.
+  The band is **2.20 to 2.37** across speeds and cut-offs: **one runner (JA1), four trials** (AMENDMENT 2).
 
 ## 3. Ours, and how the toe joint maps to the marker
 
@@ -73,6 +138,9 @@ Both bodies are read the same way:
 
 - One table: for each speed, the runner's toe, ball and ankle ratios and ours, at the three cut-offs, with the runner's
   band beside them.
+  - Each of ours is set against the runner's at the same cut-off only (AMENDMENT 1).
+  - Ours unfiltered is in its own column, headed "beside, not compared".
+  - The band's line reads "2.20 to 2.37, one runner (JA1), four trials" (AMENDMENT 2).
 - The speed at which ours peaks.
 - Which toe peaks, and at which point of the stride.
 
@@ -93,6 +161,12 @@ pass or fail (section 5).
 6. **The runner, when the data is present** (`--simtk <dir>`, NOT MEASURED when absent, never a pass):
    - the C++ reader's toe ratios equal `toe.js`'s table above within 0.01 at every speed and cut-off;
    - the ball within 0.01 of the ball figures above.
+7. **(AMENDMENT 1) The whip verdict needs all three cut-offs:**
+   - ours above the runner by more than 0.1 at 10 and 15 Hz but not at 25 Hz gives no "whips";
+   - above at all three gives "whips";
+   - ours unfiltered far above with the three filtered inside gives no "whips".
+8. **(AMENDMENT 2) The band's printed line names one runner:** the table's band line contains "one runner (JA1)" and
+   does not contain "human range".
 
 **Hand mutants** (prove it), each must turn a row red:
 - the C3D scale factor ignored;
@@ -117,8 +191,9 @@ pass or fail (section 5).
 ## 7. The unwelcome outcomes, in the words that would make them true
 
 - **"The gait law itself whips":** `gait_pose` on a straight at the runner's speeds reads more than 0.1 above the
-  runner's figure at the same speed. Then the hunter's 2.8 is not a ragdoll or chase artefact; it is in the procedural
-  gait, and on main.
+  runner's figure at the same speed, at the same cut-off, AT EACH OF 10, 15 AND 25 Hz (AMENDMENT 1: it holds only if all
+  three exceed; ours unfiltered does not count). Then the hunter's 2.8 is not a ragdoll or chase artefact; it is in the
+  procedural gait, and on main. Said as "above one runner (JA1)", never as "outside the human range" (AMENDMENT 2).
 - **"The yardstick cannot see the whip":** `gait_pose` reads inside the runner's band at every covered speed. Then the
   2.8 comes from something the yardstick does not draw: the chase's lean, the eased pose, the keyed foot in the chase's
   turns, or the speed at the peak's tick not being 11. In that case this measure, as registered, cannot answer C's

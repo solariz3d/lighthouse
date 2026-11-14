@@ -214,3 +214,23 @@ test('W3 pinned copies: machineTag is state-sync.js\'s, and the D273 dirs block 
   assert.strictEqual(fn(mine), fn(text('consonance/tools/state-sync.js')));
   assert.strictEqual(block(mine), block(text('consonance/hooks/sessionstart-state.js')));
 });
+
+// ── The wake gate's ruled bar (plan_room_stretch_2026-11-13.md:215; registered in handback/p-wakegate-S-register-P_2026-11-13.md; pane P) ──
+// At each librarian wake this hook records which dated note it named and how many lines it had, with the session: the gate's S at the next wake
+// is that count plus one. A build seat's row carries none of the three.
+test('WG-BAR the librarian\'s row records the session, the dated note it named, and the note\'s line count at this wake', () => {
+  const repo = repoAt({ commitAt: '2026-11-11T18:00:00-06:00', syncedAt: '2026-11-11T23:32:51-06:00' });
+  const f = path.join(repo.dir, 'exo_memory', 'librarian', '2026-11-13.md'); fs.mkdirSync(path.dirname(f), { recursive: true });
+  fs.writeFileSync(f, Array.from({ length: 542 }, (_, i) => `line ${i + 1}`).join('\n') + '\n');
+  const w = wake({ repo, cwd: seat('librarian'), payload: { session_id: 'sess-lib-1', source: 'compact' } });
+  const row = JSON.parse(fs.readFileSync(path.join(w.data, 'sessionstart-body.jsonl'), 'utf8').trim().split('\n').pop());
+  assert.strictEqual(row.session, 'sess-lib-1');
+  assert.strictEqual(row.note, 'exo_memory/librarian/2026-11-13.md');
+  assert.strictEqual(row.note_lines, 542, 'the same count wc -l gives for a note that ends in a newline');
+});
+test('WG-BAR a build seat\'s row carries no note fields', () => {
+  const w = wake({ payload: { session_id: 'sess-x' } });
+  const row = JSON.parse(fs.readFileSync(path.join(w.data, 'sessionstart-body.jsonl'), 'utf8').trim().split('\n').pop());
+  assert.strictEqual(row.note, undefined);
+  assert.strictEqual(row.note_lines, undefined);
+});

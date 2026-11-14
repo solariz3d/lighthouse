@@ -23,6 +23,7 @@ const MUTANTS = [
   ['-Check reports a held entry as DECLARED, NOT REGISTERED', SRC, 'if ($heldLeaf.ContainsKey($lf)) { $heldReg +=', 'if ($false) { $heldReg +='],
   ['HoldUntil ignored (an endless hold)', SRC, 'if ($row.HoldUntil) { $expired =', 'if ($false) { $expired ='],
   ['the clock seam ignored (today is always the real day)', SRC, 'if ($env:CONSONANCE_INSTALL_NOW) { $today =', 'if ($false) { $today ='],
+  ['a dated hold is counted as a two-way conflict again (the summary tells the reader to drop it)', SRC, "else { $heldDated += (\"{0}{1}\" -f (Split-Path -Leaf $f.To), $(if ($hold.Until) { \" until $($hold.Until)\" } else { '' })) }", 'else { $held++ }'],
   ['an expired hold lets the run write', SRC, '  if ($hold) {\n    Write-Host (Format-Hold $f.To $hold)', '  if ($hold -and -not $hold.Expired) {\n    Write-Host (Format-Hold $f.To $hold)'],
 ];
 
