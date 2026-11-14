@@ -70,10 +70,17 @@ const MUTANTS = [
   ['exit 3: the log leaves out the re-read', SRC,
     "rows, ...(reread ? { reread } : {}) });", "rows });"],
   ['dreamzone-3 check: the exit-3 test after "errorlevel 1" (it never fires)', CHECK,
-    "if %ERRORLEVEL% EQU 3 (echo SELFTEST MACHINE-BOUND: dz-world & exit /b 3)\nif errorlevel 1 (echo SELFTEST RED: dz-world & exit /b 1)",
-    "if errorlevel 1 (echo SELFTEST RED: dz-world & exit /b 1)\nif %ERRORLEVEL% EQU 3 (echo SELFTEST MACHINE-BOUND: dz-world & exit /b 3)"],
+    "if %ERRORLEVEL% EQU 3 (echo SELFTEST MACHINE-BOUND: dz-world & exit /b 3)\nif not %ERRORLEVEL% EQU 0 (echo SELFTEST RED: dz-world & exit /b 1)",
+    "if not %ERRORLEVEL% EQU 0 (echo SELFTEST RED: dz-world & exit /b 1)\nif %ERRORLEVEL% EQU 3 (echo SELFTEST MACHINE-BOUND: dz-world & exit /b 3)"],
   ['dreamzone-3 check: "3 or more" instead of exactly 3 (an exit of 4 or a crash code reads as machine-bound)', CHECK,
     "if %ERRORLEVEL% EQU 3 (", "if errorlevel 3 ("],
+  // Amendment 3 (the chair's ruling of 04:07Z): "if errorlevel 1" is false for a crash code (negative as a signed int).
+  ['dreamzone-3 check: the old "if errorlevel 1" on all three red lines (a crashing suite or self-test reads CHECK GREEN)', CHECK,
+    "call \"%CD%\\build.bat\" test\nif not %ERRORLEVEL% EQU 0 (echo SUITES RED & exit /b 1)\nbuild\\bin\\dz-gym.exe --selftest\nif not %ERRORLEVEL% EQU 0 (echo SELFTEST RED: dz-gym & exit /b 1)\nbuild\\bin\\dz-world.exe --selftest\nrem Its exit 3 means its ONLY reds are machine-bound (dreamzone-3 modes.h selftest_exit_code); landing-train.js reads that once more in the\nrem same hold. An EXACT 3 and first: \"if errorlevel 3\" is true for 3 or more, and the red line below would take a 3 as an ordinary red.\nif %ERRORLEVEL% EQU 3 (echo SELFTEST MACHINE-BOUND: dz-world & exit /b 3)\nif not %ERRORLEVEL% EQU 0 (echo SELFTEST RED: dz-world & exit /b 1)",
+    "call \"%CD%\\build.bat\" test\nif errorlevel 1 (echo SUITES RED & exit /b 1)\nbuild\\bin\\dz-gym.exe --selftest\nif errorlevel 1 (echo SELFTEST RED: dz-gym & exit /b 1)\nbuild\\bin\\dz-world.exe --selftest\nrem Its exit 3 means its ONLY reds are machine-bound (dreamzone-3 modes.h selftest_exit_code); landing-train.js reads that once more in the\nrem same hold. An EXACT 3 and first: \"if errorlevel 3\" is true for 3 or more, and the red line below would take a 3 as an ordinary red.\nif %ERRORLEVEL% EQU 3 (echo SELFTEST MACHINE-BOUND: dz-world & exit /b 3)\nif errorlevel 1 (echo SELFTEST RED: dz-world & exit /b 1)"],
+  ['dreamzone-3 check: the old "if errorlevel 1" on the suites line alone', CHECK, "if not %ERRORLEVEL% EQU 0 (echo SUITES RED & exit /b 1)", "if errorlevel 1 (echo SUITES RED & exit /b 1)"],
+  ['dreamzone-3 check: the old "if errorlevel 1" on the gym line alone', CHECK, "if not %ERRORLEVEL% EQU 0 (echo SELFTEST RED: dz-gym & exit /b 1)", "if errorlevel 1 (echo SELFTEST RED: dz-gym & exit /b 1)"],
+  ['dreamzone-3 check: the old "if errorlevel 1" on the world line alone', CHECK, "if not %ERRORLEVEL% EQU 0 (echo SELFTEST RED: dz-world & exit /b 1)", "if errorlevel 1 (echo SELFTEST RED: dz-world & exit /b 1)"],
 ];
 
 function tree() {
