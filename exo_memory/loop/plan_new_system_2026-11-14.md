@@ -79,3 +79,22 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
   in corridors about 3 m wide, so the new root still brakes before a tight bend (`:98-102`); and in tonight's single traces the
   grip law's hunter took about 59 s to catch a bot the old one caught in 23.6 s, so M5 is real work
   (`librarian/2026-11-14.laptop.md`, "07:0x: A's seven traces").
+
+## AMENDED 12:2x on 2026-11-14 (D), by the librarian, from M1 and from his words after playing (game brief item 223)
+
+- **M1 is back** (`handback/p-m1-root-law-A_2026-11-14.md`): the body holds grip and never re-points; switched on as it stands it
+  meets walls more (9 head-on ticks against 6) and catches later. The switch stays off.
+- **M2 is now the speed plan ahead of that body,** before any old rule is retired: `loop/packet_m2_speed_plan_A_2026-11-14.md`.
+- **His specification for corners, in his words:** "anything like 45 degrees under is like smooth banking turns"; "90 degree turns
+  for sure tons of slow down, or they could like full speed into the wall to slow down instead"; "still losing some speed but not
+  all of it". So wall contact at a hard corner is allowed, and the bar the room had put on wall contact is withdrawn as a bar. M3
+  (the world pushes back) and B6 (hands and feet meet the walls) are what make that contact look like a body and not a stop.
+- **A new lap, after the corners: the weave on long straights.** His words: "it will launch the line perfectly straight at you ...
+  theres no like variance"; "wind back in forth in like an animal"; "since they have the speed buff, they can afford to take an
+  indirect line to the runner. Weaving left and right a little over long straights." To register when it is packeted: it spends only
+  the speed the hunter has in hand (the closing rate stays positive); it happens on straights long enough to show it; it never puts
+  the hunter into a wall; with the root on it is a sideways force, so the lean of B1 banks with it. Prior art that is not this: the
+  sway of the aim since D664 (the `sway` setting in `chase/speed.h`). No source is read for it yet; it is his design and is marked so.
+- **A hole in this plan, found at M2:** the sprinter row cannot be re-registered "under the new root" (M2 above), because the
+  sprinter is a lesser chaser and the root is the hunter alone. It is ruled when the mesh query of M2 exists.
+- **Corrected by his next line, 12:15:** "i think 45 is too generous right, what am i thinking like half that". The gentle bend is about 22 degrees or less; 45 is a middle band that loses some speed.

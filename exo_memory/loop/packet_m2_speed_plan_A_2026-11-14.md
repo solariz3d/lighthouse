@@ -90,3 +90,44 @@ process list before every build and every run, wait while his game is up, never 
 `G:\consonance-scratch`. Push `a-m1-root` to the game's private remote by its literal name before you start, so M1 is not on D
 alone. Commit by named paths. His words stay out of the game's repository. Hand-back as a file, rung to the librarian as a
 pointer, each state claim marked checked or inferred.
+
+## AMENDED 12:2x, at his words of 12:13 after playing (game brief item 223). Where this section disagrees with the packet above, this section holds
+
+**His words (verbatim):** "It just needs to learn to carry momentum around corners better in some instances while still losing some
+speed but not all of it, like 90 degree turns for sure tons of slow down, or they could like full speed into the wall to slow down
+instead like how the physics proc gen animations should just be, but then anything like 45 degrees under is like smooth banking turns"
+
+**What they change. The wall is not a failure.** At a hard corner he allows the body to carry its speed into the wall and let the wall
+take it. So:
+
+- **W1 is no longer a bar.** Head-on wall ticks and contacts are REPORTED, split by the size of the corner (45 degrees or less;
+  between; about 90 and over), root off and on. The falsifier that fired in M1 stays recorded as fired; it was the room's bar, not his.
+- **G1, red first where it is red, the gentle bend:** at every bend of 45 degrees or less on the ten routes, and on two scripted
+  bends (30 and 45 degrees) entered at chase speed: no wall tick, and the lowest speed through the bend is at least 0.8 of the lesser
+  of the entry speed and the speed grip allows for the room there. This is his "smooth banking turns".
+- **H1, the hard corner, his "losing some speed but not all of it":** at a corner of about 90 degrees the speed may fall a long way,
+  by braking or by the wall. Registered before the run, with your number and its reason: a floor the speed does not go under through
+  the corner and after the wall; and the heading never turns on the spot (the re-point reading of M1 stays at zero).
+- **H2, running again after a wall:** from the first wall tick, the time until it is back to half of its chase speed along the
+  corridor. Register the bar from what the old body does on the same corners today, and print both.
+- **Both ways at the hard corner, for his eye, not chosen by a bar:** (a) the plan brakes for every corner it reads; (b) the plan
+  brakes only as far as the bend can be made and lets the wall take the rest. Print the time over the ten routes, the wall contacts
+  and the lowest speeds for each, and film the same 90 degree corner both ways (step 2 makes the film possible). He picks.
+- **W2 and W3 stand,** W3 now read with G1 and H1 (the 0.8 belongs to G1; at a hard corner the floor of H1 is the bar).
+- **"Wrong if it crawls" stands:** the total time over the ten routes with the root on is over 1.25 times that of today.
+- **Not in this lap, recorded in the plan of record as its own lap:** the weave on long straights that he describes in the same
+  message. Do not build it here.
+
+### CORRECTED 12:2x by his next line (12:15): the gentle bend is about 22 degrees, not 45
+
+**His words (verbatim):** "i think 45 is too generous right, what am i thinking like half that"
+
+- **G1 reads at about 22 degrees or less** (half of 45), not at 45. The two scripted gentle bends are 15 and 22 degrees.
+- **A middle band, new, G2:** a scripted bend of 45 degrees at the same entry speed loses some speed and is not a hard corner. No
+  bar on its size; the row is the ORDER: the lowest speed through the bend does not rise as the bend grows (15, 22, 45, 90 degrees,
+  same entry speed, same room), and 45 sits between 22 and 90. Print the four.
+- **This is his choice of feel, and it asks for more slowing than grip alone would.** By arithmetic that is mine and not run: on
+  the widest line through a corridor about 3 m wide, grip 1.0 at 9.2 m/s (a radius of about 8.6 m) could carry most of a 45 degree
+  bend. So the plan slows for the middle band because he asks it to, not because the body cannot hold it. Say in the hand-back what
+  the body could have carried at each of the four bends, beside what the plan asked.
+- H1, H2, the two ways at a 90 degree corner, W2, W3 and "wrong if it crawls" are unchanged.
