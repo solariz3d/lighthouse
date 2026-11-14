@@ -168,6 +168,7 @@
 - 2026-11-14 12:20 (D), to the librarian, while testing the game: "since when could you guys headlessly just do your own shit on my pc? Iknow its bbeen happening for a while, but when did it get implemented into claude code" (Answered from the tool's own changelog and its release dates, fetched that minute, and from the room's own rules; the dates are in `librarian/2026-11-14.md`, "12:2x: since when".)
 - 2026-11-14 12:27 (D), rephrasing the line above after the librarian answered with the history of the tool: "I more so meant like, go into a game and take screen shots and test like a human would" (Answered: no seat does that here; the game films itself through its own modes with no window, bots and replays do the playing, and a seat reads the saved pictures. `librarian/2026-11-14.md`, "12:3x".)
 - 2026-11-14 12:30 (D), the next line: "well how did u get the test runs" (Answered from his own clone: the game records each run he plays as a text file and an input file in `game/runs`, 20 kept, the newest his own of 12:06 that day; a replay feeds the inputs back in with no window; the counts come from bots.)
+- 2026-11-14 13:12 (D), to the librarian: "im gonna play star citizen ok? its ok keep doing what u do hopefully it doesnt mess wit u" (The room keeps working. What changes while it is on the card: no frame-time figure is taken, by the rule of 11-13; film jobs share the card with it.)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
