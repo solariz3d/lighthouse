@@ -1055,3 +1055,8 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 ## 2026-11-14 01:5x (L): an insert into a brief goes after the entry's last line
 - **Finding:** two lines of his words I added at 00:36 and 00:52 split his 23:23 order mid-quote in `briefs/lighthouse_the_room.md`; the brief then read as if his order ended at "so i can access". Found only because the next insert looked at the lines around it.
 - **The check:** before inserting, print the target line and the five after it; insert after the last line that is indented under the entry.
+
+## 2026-11-14 04:1x (L): the wake line cannot see a machine-suffixed note
+- **Finding:** `consonance/hooks/sessionstart-body.js:127` picks this seat's newest note with a pattern for a plain date and .md. On L after tonight's restart it named `librarian/2026-11-14.md` (the desktop's, 42 lines) while the night's notes were in `2026-11-14.laptop.md`. The wake gate holds the seat to the same list. Every `.desktop.md` and `.laptop.md` note since August is outside it.
+- **Until it is fixed:** when two machines write on one date, the suffixed file gets a pointer line in the plain one. Or name the day's file plainly on the machine that woke first and suffix the other.
+- **And:** a restart costs the conversation plus the rebuilt intake again (324,586 on the first call against 255,872 before it). Count the intake when estimating a restart.
