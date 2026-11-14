@@ -2,7 +2,9 @@
 
 Pane A on D, ledger D676, packet `loop/packet_m1_root_law_A_2026-11-14.md`. Written 2026-11-14 ~11:2x local, before any line of
 the root was written. Code read at the game's main `e091beb` (worktree `G:\consonance-scratch\a-m1-dz3`, branch `a-m1-root`); the
-packet's line numbers were read at 99b6045 and still match at e091beb (checked: `chase/chaser.cpp` read whole, 584 lines).
+packet's line numbers were read at 99b6045; **at e091beb the same rules sit lower** (checked: `chase/chaser.cpp` read whole, 584
+lines, and `git show 99b6045:chase/chaser.cpp` grepped). Both are given below. *(Correction: the first commit of this page,
+29bdc58b, said they "still match"; that was written before the grep and was wrong.)*
 
 ## The switch
 - A new speed-model field, `root_law` (chase/speed.h): **0, the default, is the chase as it is; 1 makes the HUNTER a mass under a grip
@@ -43,14 +45,14 @@ What it keeps from today's step: the path following (which point it heads for, l
 Plain float arithmetic: `+ − × ÷`, `sqrt` (correctly rounded by IEEE 754) and the chase's own `det_sin`, `det_cos`, `det_atan2`.
 No `pow`, no physics library. Deterministic on one build and across machines with the same compiler settings, like the rest of the chase.
 
-## Which old rules the hunter stops using with the switch on (line numbers at e091beb, equal to 99b6045's)
-- `chase/chaser.cpp:331-343`, the cap while facing away (a speed whose turning circle reaches the aim): replaced by step 3, where a
+## Which old rules the hunter stops using with the switch on (line numbers at e091beb; the packet's, at 99b6045, in brackets)
+- `chase/chaser.cpp:411-420` (`:331-343`), the cap while facing away (a speed whose turning circle reaches the aim): replaced by step 3, where a
   sideways aim asks for braking through the acceleration itself.
-- `:351-358`, the rate-limited heading (`turn_rate(now, speed)`, the `turn_fast`/`turn_slow` blend and the L182 turning laws):
+- `:426-437` (`:351-358`), the rate-limited heading (`turn_rate(now, speed)`, the `turn_fast`/`turn_slow` blend and the L182 turning laws):
   replaced by step 4's grip-limited turn.
-- `:369-372`, the turn drag (`turn_drag`, a share of speed lost per radian): not applied; a turn costs speed only through the braking
+- `:448-451` (`:369-372`), the turn drag (`turn_drag`, a share of speed lost per radian): not applied; a turn costs speed only through the braking
   step 3 asks for. **The run-up's bleed on that line is kept** (it is the speed model's run-up, not the turning law).
-- `corner_speed` and `speed_for_radius` (`:47-58`, `:236-242`; the packet's `:174-180` is `corner_speed` at 99b6045): replaced by
+- `corner_speed` and `speed_for_radius` (`:236-242` and `:47-58`; at 99b6045 `:174-180` and `:47-58`): replaced by
   step 2's `sqrt(μ g R)`. `kCornerRoom` itself is kept.
 - Kept for every other body and for the hunter with the switch off: all of them, unchanged.
 
@@ -86,6 +88,6 @@ No `pow`, no physics library. Deterministic on one build and across machines wit
   of the ten L170 corner routes that arrives with the switch off does not arrive with it on.
 - **R4:** falsified if two runs with the root on, same seed and settings, differ in any fingerprint.
 - **R5:** reported only.
-- **The law is wrong** (the answer the packet allows) if R1 cannot be met without the planner braking it there (that is, if the
-  grip limit alone puts it into walls on the L170 routes more than today: head-on wall hits above 1.25 times today's on those routes,
-  the margin I registered for the corner-room lap).
+- **This law is wrong for the game** (an answer the packet allows) if, on the ten L170 corner routes, its head-on wall hits are
+  above 1.25 times today's (the margin I registered for the corner-room lap): grip without a better planner would then put the
+  hunter into walls.
