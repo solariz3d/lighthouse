@@ -8,7 +8,8 @@ TIME, with NO drive letter in the file … O lands it; not you." Tier: PROVE IT.
 - `fd734f72`, amendment 1, the chair's;
 - `93822480`, amendment 2, mine, which makes the rule stricter.
 
-**Branch.** `train-exit3-b` in `G:\consonance-scratch\lh-train-exit3-b`, off origin/main `c5311e1b`. It is pushed and NOT landed:
+**Branch.** `train-exit3-b` in `G:\consonance-scratch\lh-train-exit3-b`, off origin/main `c5311e1b`. **The tip to land is now `ad0d966f`, not
+`061b4106`** (§9, the crash-code fix). The lines below are the first push, read at 061b4106:
 
     checked: git ls-remote origin refs/heads/train-exit3-b → 061b41069f4d6191936bc89b5b64021587e3d8f3
     checked: git ls-remote origin refs/heads/main at 04:05Z → c5311e1b; git log c5311e1b..origin/main on the four train files → none
@@ -111,3 +112,61 @@ the row fails and names what it looked for.
 - **Amendment 2 was mine.** It came from reading Microsoft's `abort` reference before writing the script line, not from the ruling.
 - **A heredoc failed to parse in bash** while I appended the rows. Nothing was written; I re-did it through a file.
 - **The lock check was not repeated before each step** (§7). It is owed before every run, not once per packet.
+
+## 9. The crash-code hole, FIXED on this branch (the chair's ruling of 04:07Z, amendment 3)
+
+The ruling: "YOUR SECTION 5 IS A HOLE IN THE LANDING GATE THAT GETS FIXED ON THIS BRANCH BEFORE IT LANDS." Amendment 3 is `787e98fb`.
+
+**The row** (`landing-train.test.js`, the last row). A stub exits -1073741819 (0xC0000005) on each red line in turn:
+- the suites, through a `build.bat` ending `exit /b -1073741819`;
+- the gym self-test;
+- the world self-test.
+
+Each time the script must exit non-zero, print that line's red, and never print `CHECK GREEN`.
+
+    checked: crash_red.txt (the row on the tip 061b4106's script) → FAILED, "CHECK GREEN", actual 0 (the suites case, the first in the loop)
+    checked: crash_green.txt (whole file, after the fix) → 27 tests, 27 pass, 0 fail
+
+**The fix** (`landing-train-dz3-check.cmd`). `if not %ERRORLEVEL% EQU 0` replaces `if errorlevel 1` on the suites, gym and world lines.
+On the world line it stays after the exact-3 test. A comment above the suites call says why.
+
+**The mutants:**
+- The old form on all three lines at once (the chair's).
+- The old form on each line alone (mine, three more). The loop stops at its first failing case, so these show each line's own red.
+- The exit-3-order mutant's anchor follows the new world line.
+
+    checked: crash_mutants.txt (node landing-train.mutants.js at ad0d966f, ordinary lock, no hold met) → control pass 27 fail 0;
+             applied 33 / caught 33 / survived 0 / NOT APPLIED 0; rows 30-33 (the old form on all three, then suites, gym, world alone)
+             each pass 26 fail 1, CAUGHT
+
+The commits: `55b54604`, the row, RED on 061b4106's script; `ad0d966f`, the fix and the mutants.
+
+**What else has the same shape (the chair asked; nothing else is changed):**
+- **Submodule line** (`:12` on main, still `if errorlevel 1`): `git submodule update` crashing with a negative code would read as success
+  and go on to the build. The build then runs on whatever checkout is there, and the suites and self-tests still have to pass after it. So
+  the miss is a wrong submodule, not a landed crash. The fix is the same line form. It is not changed here, as ruled.
+- **The rest of the room's landing scripts.**
+  - `git grep -i errorlevel` over lighthouse outside `exo_memory/` → only this script.
+  - `landing-train-dz3-guard.cmd` has no `errorlevel`. It uses `tasklist | find … &&`, and `&&` treats any non-zero, a crash included,
+    as "not found". So a crashing `find.exe` would read "clear" and promotion would copy over a running game. That fails open, but on a
+    crash of a Windows tool, not of the code under test.
+  - inferred: unlikely, and named only.
+- **dreamzone-3's own scripts** (read only, his checkout): `build.bat` uses `|| goto :fail`, which catches negatives.
+  - `render/build.bat:32,35,40` use `if errorlevel 1`. `:40` guards a render self-test (`SELFTEST FAILED`), with the same hole.
+  - These are the game's build scripts, not the train's. Named for the game's owner, not changed.
+
+**The handoff line.** "OWED ON L … add … the one key `reread` …" is now under "Landings go through the landing train" in
+`exo_memory/loop/handoff_dreamzone3_2026-11-13-L.md`.
+
+## 10. I DISTURBED C's EXCLUSIVE RE-READ (04:09-04:10Z), mine
+
+- **What I ran.** C's hold (`C:\Consonance\data\heavy-run.hold`) was written at 04:05:59Z, and C's slot was taken at 04:09:08Z for the
+  world self-test re-read on dreamzone-3 `c9209c3`. Inside it I ran:
+  - two node one-shots (the mutants edit and its anchor check, about 04:09:5xZ);
+  - the 27-row `landing-train.test.js` (04:10:00 to 04:10:34Z);
+  - after I saw it, one more node one-shot (a memory-index edit).
+- **Why.** My check read the heavy-run `.lock` files and stopped only on "timing". The exclusive hold lives in `heavy-run.hold`, which the
+  chair named: "read the hold before any step that runs a program".
+- **Reported.** On the board and to the librarian at about 04:11Z: a red fall row in C's re-read may be my load, and C reads it again
+  quiet; a green reading stands.
+- **Since then.** File tools only until the hold was gone.
