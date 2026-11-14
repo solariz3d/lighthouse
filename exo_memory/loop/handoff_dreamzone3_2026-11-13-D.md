@@ -49,7 +49,7 @@ picture has to keep its darkness without the static, and what is put in front of
 | what | branch and tip | where | state |
 |---|---|---|---|
 | the lighting filter (C) | `d675-filter-c` c9209c3 | remote | landing; off by default until his eye |
-| the timer control (P) | `d675-timer-p` 0232d60 | **D only** | green; waits for the filter's main, then lands with the next |
+| the timer control (P) | `d675-timer-p` ca915c8 (main 8249d58 merged in) | remote since about 23:35 | lands with the next row; see THE CLOSE |
 | the render build's crash codes (C) | `d675-errlvl-c` 91f5b2a | remote | waits for a merge of main, then B lands it |
 | the soft upper body, L12 (E) | `l185-skeleton-steps45` 52da2b5 | remote | cost passed; waits on his eye only |
 | the grip law and the hawk, L182 (A) | `l182-lines` c357bbd, `l182-hawk` ee55947 | remote | built on 11-12, off by default; A's first code lap on waking |
@@ -57,7 +57,7 @@ picture has to keep its darkness without the static, and what is put in front of
 | the Dark closes at 10 m (A) | `a-d673-close` 010c9f3 | **D only** | caught seed 8's juke run in 13.6 s, where it had not in 370 s |
 | the record's generator fields (A) | `a-gen-record` b311709 | **D only** | mutants and suite owed |
 | the Park kit (B) | `gen-lap2-kit` fcf5c43 | **D only** (the remote holds L's c9ad588) | waits on A's sprinter row alone |
-| the hunter's voice and the player's steps (E) | `l192-footsteps` 367fe1c | **D only** (the remote's d8f77ba is stale) | two rows held red for his ear |
+| the hunter's voice and the player's steps (E) | `l192-footsteps-e` 367fe1c | remote since 23:28, under this new name (the remote's `l192-footsteps` d8f77ba is the older line, left as it was) | two rows held red for his ear |
 | the fist's joints, L188 step 2 (B) | `l188-step2` b676860 | remote | not started on D |
 
 Each pane pushes its **D only** branches to the game's private remote before the close; THE CLOSE says which did.
@@ -130,6 +130,21 @@ its landing; the record line for C is in landing 1. The Third Place's story swar
 - The Dark, drawn; its look and its name are his: https://claude.ai/artifact/5RFgTY8EsrnYNV1Tmf6nsv
 - The Park kit from inside the game, with a frozen copy to play: https://claude.ai/artifact/GC4FtumaPR3LvdQ6tBNrNg
 - By ear: the hunter's voice trim pair and the player's steps, two clips each, on D.
+
+## From the Third Place, for this handoff (its message of 23:37, its words; checked by the librarian where marked)
+
+- "The lighting filter's code is on the game's private remote as the branch gi-experiment at 2d6a4d6, pushed by this seat at 23:37. It
+  existed on D alone … Code and scripts only, 17 files, scanned for credentials, none of his words in it. Main was not touched and
+  nothing is marked READY. It is off main 31d1c6d, so it is behind main as it now stands." (Checked: `git ls-remote` shows
+  `gi-experiment` at 2d6a4d6. The filter that landed is pane C's cut of it, `d675-filter-c`; this branch is the experiment's own record.)
+- "I pushed it on his line of 23:23 … which I read as covering it. If you rule it should not be there, it is one branch to delete." (Not
+  ruled against: it is his private remote, and it is the source the landed filter was cut from.)
+- "Both experiment reports are now in the record as byte copies: exo_memory/loop/render_experiments_2026-11-13/
+  (REPORT_filter_and_two_bounces.md, REPORT_probes.md, and STATE.md, which says what stands and where the code is)." (Checked: the three
+  files are there, lighthouse 6a9ebe8e, on main.)
+- "Only on D after tonight: the first experiment's report commit with its pictures (… d35503b), the whole probe branch (… cea4e6a), the
+  baseline worktree, and the 9.7 GB of scratch already listed to you."
+- Its closing entry for the laptop's seat: `third_place/2026-11-13.md:1045`, "23:37, on D: the close. Where things stand for the laptop".
 
 ## On D only (does not travel; named so L does not look for it)
 
