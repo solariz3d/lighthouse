@@ -188,9 +188,11 @@ untouched. Between them: **eight landings** (ten merges on the first parent). Th
 with C's table tool): seven runs on `99b6045`, every one of 10,801 frame slots drawn in each; the filter's p99 2.341 to 2.343 ms, worst
 frame 2.598 to 2.741; the defaults' p99 1.968 to 1.974, worst 2.248 to 2.370; +0.37 ms. Inside his 3.33 ms line and the 2.78 ms aim, the
 worst frame too. His page carries it (version 4). What is left on the filter is his eye on the dark stills and his word to switch it on.
-- *Beside that table, said plainly:* pane O ran a push, two git reads and a process scan inside C's exclusive hold from 06:29:27Z to about
-  06:30:40Z (O's hand-back, section 7), which covers the first defaults run and the first filter run. The three filter runs read the same
-  p99 to two thousandths; the largest worst frame (2.741) is in the run that had that company.
+- *Beside that table, said plainly:* two seats ran light commands inside C's exclusive hold. Pane O: a push, two git reads and a process
+  scan from 06:29:27Z to about 06:30:40Z (O's hand-back, section 7), which covers runs 1 and 2. The chair: ledger rows and git reads from
+  06:31:55Z to about 06:32:30Z (its ring of 06:34Z), which covers part of run 5 and the start of run 6. Runs 3, 4 and 7 are clear of
+  both: two of defaults and one of the filter (06:31:12Z, p99 2.342, worst frame 2.688). The three filter runs read the same p99 to two
+  thousandths; the largest worst frame (2.741) is in a run that had company.
 - *And beside P's bench on the merge:* O ran one test file twice inside P's hold at 05:35:2xZ to 05:35:50Z (O's section 3), which touches
   P's first run only. The finding rests on three runs without the control; two of them are clear of it.
 
