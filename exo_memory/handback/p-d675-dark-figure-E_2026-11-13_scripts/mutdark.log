@@ -1,0 +1,18 @@
+﻿node : heavy-run: WARNING: C:\ has 25.7 GB free, under 50 GB; run node consonance/tools/janitor.js
+At line:3 char:1
++ node C:\Users\nname\Desktop\lighthouse\consonance\tools\heavy-run.js  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (heavy-run: WARN...ools/janitor.js:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+dark_matched_as_hunter: expected red, got FAIL (as expected)
+    FAIL  in overtime, every chaser pose has a drawn figure (the Dark included): seed 1: 3689 overtime frames drawn, a Dark posed in 3688; dark undrawn in 3688 of them
+dark_never_loaded (the red state): expected red, got FAIL (as expected)
+    FAIL  in overtime, every chaser pose has a drawn figure (the Dark included): seed 1: 3689 overtime frames drawn, a Dark posed in 3688; dark undrawn in 3688 of them
+red state + the undrawn count not incremented: expected false-green, got ok (as expected)
+    ok    in overtime, every chaser pose has a drawn figure (the Dark included): seed 1: 3689 overtime frames drawn, a Dark posed in 3688; every pose drawn
+dark posed every frame, out or not (Addition 1): expected red, got FAIL (as expected)
+    FAIL  while no Dark is out, the stage neither poses nor draws the Dark's model: seed 1: 674 frames before the timer drawn, 0 Dark poses given in them; the Dark's model posed 674 times and its palette set 674 times there
+clean rebuild: built
+applied 4 / as expected 4 / NOT APPLIED 0

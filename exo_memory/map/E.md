@@ -3180,3 +3180,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 20:0x local (D) · D675 cost reads: the soft upper body adds no GPU frame time (p99 1.975–1.983 ms against base 1.976–1.984; gate 3.33 passed) and 24.9 µs a ragdoll step on the CPU; the Dark away costs nothing (branch 0.037 ms faster, unexplained); every run drew 96–97% of paced, already at d002b65 → `exo_memory/handback/p-d675-timing-E_2026-11-13.md`
 - Repeats after the librarian's sweep (01:56–02:04Z), clean of company, no game by path. The first sessions kept beside, labelled. l185-skeleton-steps45 pushed 1b690fd..52da2b5.
 - **Carry:** a launcher is not a game: check games by install path, not by name; and a pace rule that voids every run is measuring the build, not the company.
+
+## 2026-11-13 20:3x local (D) · D675 the Dark is drawn in the hunter's shape: red 52/53 → green 54/54 from the stage's own count; away it is neither posed nor drawn (674 frames) and costs nothing measurable; 20 kept runs unchanged → `exo_memory/handback/p-d675-dark-figure-E_2026-11-13.md`
+- dreamzone-3 dark-figure-e c598d2e (fix 1653150, red 124adaa), local; mutants 4/4 as expected; capture on G: (before 1 of 2 poses drawn, after 2 of 2). It reads as a black silhouette: drawn is not seen, his call.
+- **Carry:** a row that reads an instrument needs a mutant that breaks the instrument and shows the row going falsely green.

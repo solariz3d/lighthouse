@@ -1,0 +1,2 @@
+  FAIL  in overtime, every chaser pose has a drawn figure (the Dark included): seed 1: 3689 overtime frames drawn, a Dark posed in 3688; dark undrawn in 3688 of them
+selftest: FAILED (52 of 53 checks passed)
