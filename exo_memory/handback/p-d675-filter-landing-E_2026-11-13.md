@@ -77,3 +77,20 @@ made the 23:06 confirmation honest.
 ## After this push
 
 P merges this main into `d675-timer-p` and rings it ready; then C runs row C again (the chair's order).
+
+## WHERE IT STOPS (close of 2026-11-13)
+
+- **The filter is landed (`8249d58`), off by default;** on only at his word.
+- **The path of record's L1 (the fair clip tool), L8 (motion checks) and L7 (pose bench) are NOT started.** What
+  `613c9ba`'s `--lean-film` already meets of L1 is in `handback/p-l185-refilm-E_2026-11-13.md`'s addendum.
+- **Research for the game goes under `exo_memory/loop/`,** never `exo_memory/research/`.
+- **Every branch of mine is on the game's private remote.**
+  - checked: `git branch -r --contains` for each local branch and each worktree's head.
+  - Pushed tonight, after that check: `l192-footsteps-e` `367fe1c` and `tell-row-kit-e` `535e152` (the tell row's kit
+    scratch, which was on D only).
+- **Nothing of mine is running or holding a lock.**
+  - checked: `Get-CimInstance Win32_Process` over my scratch path, trees and labels;
+  - the stalled pids 25928 and 32344 are gone;
+  - neither lock nor the hold is mine.
+- One process I did not start is still alive: a `grep.exe` (pid 19484) from 13:18 local, reading six seats' transcripts,
+  its parent gone. I left it.

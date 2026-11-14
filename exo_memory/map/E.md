@@ -3189,3 +3189,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 23:2x local (D) · D675 C's lighting filter LANDED: game main 8249d58 (merge of c9209c3 onto e0fcdec, nothing edited), both defaults off, build.bat test 14/14 exit 0, gym 26/26 exit 0, world 60/60 exit 0, each read directly → `exo_memory/handback/p-d675-filter-landing-E_2026-11-13.md`
 - The relaunch at 22:15 never ran (mangled start quotes) and I misread the stopped first launch's log as progress for 50 minutes; the chair caught it.
 - **Carry:** confirm a run by a file or process THIS launch created; move old logs aside before relaunching; never inline `start ""` through PowerShell.
+
+## 2026-11-13 23:3x local (D) · PARKED at his close order: every branch on the remote (l192-footsteps-e 367fe1c and tell-row-kit-e 535e152 pushed tonight), nothing running, WHERE IT STOPS in four hand-backs → `exo_memory/handback/p-d675-filter-landing-E_2026-11-13.md` (WHERE IT STOPS)
+- L12 waits on his eye; the Dark landed, its look his call; l192's two rows red for his ear; L1, L8, L7 not started.
