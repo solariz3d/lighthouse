@@ -170,3 +170,17 @@ The commits: `55b54604`, the row, RED on 061b4106's script; `ad0d966f`, the fix 
 - **Reported.** On the board and to the librarian at about 04:11Z: a red fall row in C's re-read may be my load, and C reads it again
   quiet; a green reading stands.
 - **Since then.** File tools only until the hold was gone.
+
+## WHERE IT STOPS (D, 2026-11-14 ~05:3xZ, the close order)
+
+- **Landed.** `train-exit3-b` at `ad0d966f` is on lighthouse main (`798f73ee`, O's landing; checked: `git merge-base --is-ancestor
+  ad0d966f origin/main`).
+- **L's `reread` key: owed on L.** Add `"reread": ["build\bin\dz-world.exe", "--selftest"]` to L's
+  `landing-train.config.dreamzone-3.json`. It is written under "Landings go through the landing train" in
+  `exo_memory/loop/handoff_dreamzone3_2026-11-13-L.md`. Until it is there, a world self-test exit 3 stays red in the train.
+- **The two same-shape scripts: open, not started tonight.** Both are in `consonance/tools/`.
+  - The check's submodule line (`landing-train-dz3-check.cmd`, `if errorlevel 1` after `git submodule update`).
+  - The guard's `find.exe` test (`landing-train-dz3-guard.cmd`, `tasklist | find … &&`: a crashing `find.exe` reads "clear").
+  - The chair's caution for the change: look at where each line sits before choosing the form. Inside a `( )` block cmd expands
+    `%ERRORLEVEL%` when it reads the block. The guard's test sits inside a `for … do ( … )` block. C's form inside blocks is
+    `if errorlevel 1 (…) else if not errorlevel 0 (…)`.
