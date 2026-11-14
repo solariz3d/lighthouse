@@ -140,6 +140,13 @@
   We can do all the research of real open source shit and real techniques. you got the planning better than I do" (whole in the game brief, item
   218; the plan is `loop/plan_animation_system_swarm_2026-11-13.md`. The last sentence hands the planning to this seat, as his 12:05 word did.)
 - 2026-11-13 16:43 (D), to the chair, as relayed in the chair's ring to the librarian (ledger D675; not in a file the librarian could open): "why does c have 26g?" (The chair measured the whole of C: for him with a list-only walk; the room's share came to about 133 GB of 905 used. The librarian's list for his one decision is in `librarian/2026-11-13.md`, 17:0x.)
+- 2026-11-13 23:19 (D), to the librarian, his first typed line to this seat since 15:39, arriving while the seat was re-reading its whole day
+  after a compaction: "holy shit been working the whole time?" (Yes: the panes and this seat ran from 15:39 to then without a word from him;
+  what it produced is in `librarian/2026-11-13.md` from "16:47" on and in tonight's two handoffs, `loop/handoff_*_2026-11-13-D.md`.)
+- 2026-11-13 23:23 (D), to the librarian, the order for the close: "can you when done all work, push and commit it all so i can access
+  everything on laptop at work? Lighthouse and dreamzone 3 handoffs. Then after all is done, close consonance and turn off pc. sound good?"
+  (Taken as: the work already in flight finishes and lands, nothing new is started, every branch and note reaches its remote, the two
+  handoffs get their close, and only then the app is closed and the machine shut down. The close is recorded in THE CLOSE of each handoff.)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
