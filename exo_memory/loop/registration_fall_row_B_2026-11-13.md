@@ -16,11 +16,18 @@ with its QUIET READ a NAMED STEP of a landing." Tier: PROVE IT.
     `move.max_fall_speed` (45 m/s), paced in real time at 360 Hz (`Pacer`).
 - **The same form, one section up:** :469-470, "no tick had to wait for a chunk at three times sprint speed" (the flight). It is named
   here and NOT changed by this lap. It has not been seen red today; if it is, it is the same class.
-- **Its red today, three times:**
-  - A's kit suite, 15:23;
-  - E's stomp landing, 16:04;
-  - my yardstick landing, 23:50Z: 1 wait, 86.6 ms over 920 chunks, with C's world self-test running beside.
-  - Each time a quiet re-read was owed, and none was made.
+- **Its record today** (CORRECTED at the chair's 00:18Z message, from the librarian's corrected count; the order's "three landings,
+  none re-read" was loose):
+  - **red under load in three RUNS:**
+    - A's suite on the kit branch, 15:23 (a branch suite, not a landing);
+    - E's stomp landing, 16:04;
+    - my yardstick landing, 23:50Z: 1 wait, 86.6 ms over 920 chunks, with C's world self-test running beside.
+  - **green in landings between them:**
+    - A's landing of the run frame, 15:41 (52 of 52);
+    - C's tell-row landing, 16:41 (52 of 52).
+  - My kit run (fcf5c43, 22:03Z) also read it green (53 of 53).
+  - So the row moves WITH THE MACHINE'S LOAD AND NOT WITH THE CODE. The quiet read owed is for MY landing only (796c16f); section 4's
+    first step is that read.
 
 ## 1. The choice: (2), MACHINE-BOUND, with the part that CAN be counted kept as a count row
 
