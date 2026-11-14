@@ -39,3 +39,5 @@ the session-child form that the installer's header says died on 2026-08-18.
 BASE: none (no repository changed)
 SOURCES: Get-ScheduledTask "Consonance Head Watch"; find C:\Consonance ~/.consonance -iname "*head-watch*"; grep over ~/.claude/projects/*/*.jsonl; consonance/tools/head-watch.js:1-40; dev/headwatch/install_headwatch.ps1:1-71; consonance/state-manifest.json:85-88; exo_memory/handback/p-gen-lap2-kit-B_2026-11-13.md:58; exo_memory/handback/p-d454-install-E_2026-10-24.md:81
 NEXT: librarian carry the line into the room-stretch question on what the 3,000 characters carry when this is read
+
+**Correction, 01:17Z:** my ring of 01:15Z said I was waiting on O's landing of sb-subject-p. It had already landed, as part of c5311e1b at 00:44Z (the chair checked it against origin main). I did not run `git merge-base --is-ancestor` before saying it.
