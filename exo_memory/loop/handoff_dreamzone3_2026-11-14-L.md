@@ -52,6 +52,11 @@ tonight did not touch is not repeated.
 
 ## PICK UP HERE (D), in this order, one pane at a time
 
+**FIRST, AND OVER THE NUMBERED LIST BELOW: at 07:05 he said "i said plan and build the new system". The plan of record is
+`loop/plan_new_system_2026-11-14.md`.** After item 1 (pull and build), the desktop starts its lap M1 (pane A, the root law, red
+first) and then B1 (pane C, the lean from the root's own acceleration). Item 3 below (the corner-room lap) is STOPPED by that
+plan: it patches the rule the new root replaces. Item 4 is B1. Do not ask him again whether to build it.
+
 1. Pull both repositories. Build the game at main on D.
 2. **His play of the six settings.** THE CLOSE says whether the launch argument landed and gives the lines. If it did not land,
    pane A lands its pushed branch first.
