@@ -171,6 +171,45 @@ its landing; the record line for C is in landing 1. The Third Place's story swar
 7. **Pane E:** the footsteps branch after his ear; the upper body after his eye; the rest of L1 (the clip tool's manifest and rows).
 8. Recorded and NOT planned: the stalking hunter (items 205 to 208), a function for each biome (204), his two parked swarms (200, 201).
 
-## THE CLOSE (filled in when the day's work comes to rest)
+## THE CLOSE (written 00:4x local on 2026-11-14 by the librarian; where a line above disagrees with this section, this section is the later one)
 
-*(not yet written at 23:3x)*
+**The game's `origin/main` is `99b6045`** (checked: `git ls-remote`, 00:35). His play build on D is still `31d1c6d`, his clone clean and
+untouched. Between them: **eight landings** (ten merges on the first parent). The two after this file was first written:
+7. `8249d58` **the lighting filter, as two settings that are off** (`light_filter = 0`, `gi_bounces = 1` in `game/config/world.txt`;
+   pane C's `d675-filter-c` c9209c3, landed by E; `handback/p-d675-filter-landing-E_2026-11-13.md`).
+8. `99b6045` **the timer control and the render build fix,** one merge (C's `d675-errlvl-c` d50255f, which carries P's `d675-timer-p`
+   ca915c8; landed by B; `handback/p-land-timer-errlvl-B_2026-11-14.md`). The world self-test now has 61 rows, the timer row among them.
+   The bench drew every frame slot with and without the control at 23:35, so the bench does not show its effect that night; the row does.
+   Why the machine's timer state comes and goes is open (`handback/p-d675-timer-P_2026-11-14.md`, sections 4 and 7).
+
+**Nothing is waiting to land in the game.** PICK UP HERE item 3 is done.
+
+**The filter's cost on his card, read again clean** (`handback/p-d675-filter-C_2026-11-13.md`, section 12; checked by me in the log and
+with C's table tool): seven runs on `99b6045`, every one of 10,801 frame slots drawn in each; the filter's p99 2.341 to 2.343 ms, worst
+frame 2.598 to 2.741; the defaults' p99 1.968 to 1.974, worst 2.248 to 2.370; +0.37 ms. Inside his 3.33 ms line and the 2.78 ms aim, the
+worst frame too. His page carries it (version 4). What is left on the filter is his eye on the dark stills and his word to switch it on.
+- *Beside that table, said plainly:* pane O ran a push, two git reads and a process scan inside C's exclusive hold from 06:29:27Z to about
+  06:30:40Z (O's hand-back, section 7), which covers the first defaults run and the first filter run. The three filter runs read the same
+  p99 to two thousandths; the largest worst frame (2.741) is in the run that had that company.
+- *And beside P's bench on the merge:* O ran one test file twice inside P's hold at 05:35:2xZ to 05:35:50Z (O's section 3), which touches
+  P's first run only. The finding rests on three runs without the control; two of them are clear of it.
+
+**Every branch that existed only on D is on the game's private remote** (checked: `git ls-remote --heads`, 00:35): `a-kit-told` dcbfd3c,
+`a-d673-close` 010c9f3, `a-gen-record` b311709 (pane A's, pushed by O); `gen-lap2-kit` fcf5c43 (B); `l192-footsteps-e` 367fe1c and
+`tell-row-kit-e` 535e152 (E); `d675-timer-p` ca915c8 (P, now in main); `gi-experiment` 2d6a4d6 (the Third Place). The table above says
+"D only" for some of these; they no longer are.
+- **Still on D only:** two of pane A's work trees on G: hold uncommitted lines (5 and 1 lines of status, by the chair's count, relayed in
+  O's hand-back; not looked at by me or by O); the bodies' Blender scripts and `sprinter.glb` in A's scratch folder (L14); the clip folders,
+  the build trees, the frozen kit copy, and his 20 kept runs.
+
+**Each pane's own WHERE IT STOPS is the master for its lane:** C's in `handback/p-d675-filter-C_2026-11-13.md` (seven open items, the
+fullest list for the hunter's body and the render); E's in four hand-backs (lighthouse 6237b3de); B's in its kit, train, Lap W and landing
+hand-backs; P's in `handback/p-d675-timer-P_2026-11-14.md`; O's in `handback/p-close-O_2026-11-14.md`; A's in
+`handback/p-d673-overtime-A_2026-11-13.md` and `handback/p-corner-room-A_2026-11-13.md`, now on main.
+
+**His, added at the close** (the Third Place's closing entry, `third_place/2026-11-13.md:1045`): a ruling on the second bounce of light; a
+named graphics card for "most players"; which of the lore swarm's offers go into the story bible.
+
+**My recommendation to him stands and now names `99b6045`:** update his play build. Against his build it has the last-minute timer and the
+end cards, the stride without the stomp, no take-off snap, the Dark drawn, the filter as a setting he can switch on, and the timer fix. It
+stays his word; D is off until he is back at it.

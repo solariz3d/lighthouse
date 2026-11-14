@@ -151,6 +151,56 @@ pane's WHERE IT STOPS was read by 09:42; `-Check` on D was run by P at 09:00.
 6. When he answers on the disk: one pane does the move, runs `consonance/tools/janitor.js` to its end first and adds what it lists.
 7. The room-stretch questions above, largest recorded cost first.
 
-## THE CLOSE (filled in when the day's work comes to rest)
+## THE CLOSE (written 00:4x local on 2026-11-14 by the librarian; where a line above disagrees with this section, this section is the later one)
 
-*(not yet written at 23:3x)*
+**His order, 23:23:** "can you when done all work, push and commit it all so i can access everything on laptop at work? Lighthouse and
+dreamzone 3 handoffs. Then after all is done, close consonance and turn off pc. sound good?"
+
+**Where lighthouse is.** `origin/main` carries the whole day and this file. The note's last entry (`librarian/2026-11-14.md`) records the
+push that carried this section, read back from the remote; one more commit follows it, that entry itself. One branch beside main on
+origin: `idle-pulse-p` 69ee056b (P's Lap 1 on the lock, begun, NOT ready).
+
+**What landed on lighthouse after this file was first written (pane O; `handback/p-close-O_2026-11-14.md`, read whole):**
+- `heavy-run.js --status` is on main (merge d1dba158). The rule from now: `node consonance/tools/heavy-run.js --status && <run>`, in one
+  call, before any run; exit 1 means run nothing. O's suite on the landing tree: cargo 1,219 passed, 0 failed, 7 ignored; js-suite 197
+  green and 1 failed, `second-vantage.test.js`, which passes alone (43 of 43) on the tree with and without the change. It uses one temp
+  cell shared by every run on the machine (`second-vantage.js:131`), so it joins the load-sensitive list (note of 11-13, 15:32).
+- Pane A's whole day of hand-backs is merged (0a04c67b; 62 files, all under `exo_memory/`). PICK UP HERE item 4 is done.
+- The Third Place's two render reports and its closing entry (6a9ebe8e; `third_place/2026-11-13.md:1045`).
+- P's two laps on the lock: registered, ruled GO with five amendments (note of 11-13, 23:16). Lap 1 is the origin branch above; still owed
+  on it: the hand mutants, the hook's timing on the live store before and after, portable-paths. Lap 2 is not begun.
+
+**Every seat on D at the close:** E, P, B, C and O parked with nothing running, no waiter and no lock (each one's WHERE IT STOPS is in
+its hand-back); A idle since the afternoon, its notes merged and its three game branches pushed for it by O; the Third Place closed its
+sitting; the chair pushed. The librarian closed last.
+
+**Found during the close, for the room stretch (each with its place in the notes):**
+1. **A waiter that holds no lock is invisible to every instrument.** Pane C's watcher for its last run waited 31 minutes on a test that
+   could never pass (it looked in one file for a constant that lives in two others). It was found by a seat looking, after another seat's
+   ring happened to give it a turn (`librarian/2026-11-14.md`, 00:28). The fourth of one family in two days.
+2. **Reading a hold is not obeying it.** Six times on 11-13 a careful seat ran something inside another seat's exclusive timing hold
+   (P once, E once, B twice, O twice; each named by the seat that did it). `--status` now answers "is anything held"; the next step is that
+   a pane's own scripts stop on it.
+3. **The push gate reads the command before the shell expands it.** Three branches pushed in one loop through a variable were logged as
+   `HEAD` and not scanned (O's hand-back, section 4). Push a branch by its literal name, one command each.
+4. **A unit, twice in one night, mine:** `df`'s "19G" and "481G" count in units of 2^30; the lock's floor is in 10^9. P's next note prints
+   the free space in the tool's own unit.
+5. **The gate asks for the NEWEST dated note.** A close that runs past midnight starts a new short file, and the next wake is asked to
+   read that one. Tonight's new file opens by pointing back.
+6. **A count from memory, again:** "twenty runs" for a registered seven, carried by me through three rings.
+
+**Waiting on him, added at the close:**
+- 25 MB of the game's world pictures from 11-11 sit untracked in this public repository
+  (`exo_memory/handback/p-d658-school-B_2026-11-11_evidence/`). Whether they go in is his call. Pane B found them and left them.
+- Three items the Third Place lists as his (its closing entry): a ruling on the second bounce of light; a named graphics card for "most
+  players"; which of the lore swarm's offers go into the story bible.
+
+**The close itself.** The app closes from its window only when every seat is idle; otherwise it asks for a click. A Windows shutdown goes
+through the app's own path and ends every seat with no click. No stick folder exists on any drive, so the close saves nothing. A script
+outside the app (`C:\Consonance\staged\close-2026-11-13\close-and-shutdown.ps1`, started with no window by a one-time scheduled task;
+dry run passed at 23:33, note of 11-13) waits a minute, waits for any live holder of the lock, asks the window to close once, removes its
+own task and runs Windows' shutdown with a minute's notice. Its log, `close.log` beside it, is on D only. **If this section is on
+origin, everything above it was pushed before the script was armed.**
+
+**On the next launch of D:** the launcher rebuilds the app (pane R's half of Lap W goes live), every seat wakes cold, and this seat's first
+ring is refused until it has read the newest note and L's newest handoffs. Lap W's falsifier counts its two wakes from that launch.
