@@ -1,0 +1,127 @@
+diff --git a/game/model_rig.cpp b/game/model_rig.cpp
+index 15904e2..15af702 100644
+--- a/game/model_rig.cpp
++++ b/game/model_rig.cpp
+@@ -579,7 +579,15 @@ Vec3 tilted(Vec3 d, Vec3 right, Vec3 fwd, float lean, float pitch) {
+ 
+ void KineticChain::reset(float lean, float pitch) {
+   drawn.on = true;
+-  drawn.trunk_lean = kBankTrunkShare * lean;
++  static const float kShare = [] {
++    char* e = nullptr;
++    size_t n = 0;
++    float v = kBankTrunkShare;
++    if (_dupenv_s(&e, &n, "DZ_TRUNK_SHARE") == 0 && e) v = static_cast<float>(std::atof(e));
++    std::free(e);
++    return v;
++  }();
++  drawn.trunk_lean = kShare * lean;
+   drawn.trunk_pitch = kPitchTrunkShare * pitch;
+   drawn.head_lean = kBankHeadShare * lean;
+   drawn.head_pitch = kPitchHeadShare * pitch;
+@@ -592,7 +600,15 @@ void KineticChain::step(float lean, float pitch, float dt) {
+     return;
+   }
+   if (dt <= 0.0f) return;
+-  spring_step(drawn.trunk_lean, rate[0], kBankTrunkShare * lean, kTrunkFollowTime, dt);
++  static const float kShare = [] {
++    char* e = nullptr;
++    size_t n = 0;
++    float v = kBankTrunkShare;
++    if (_dupenv_s(&e, &n, "DZ_TRUNK_SHARE") == 0 && e) v = static_cast<float>(std::atof(e));
++    std::free(e);
++    return v;
++  }();
++  spring_step(drawn.trunk_lean, rate[0], kShare * lean, kTrunkFollowTime, dt);
+   spring_step(drawn.trunk_pitch, rate[1], kPitchTrunkShare * pitch, kTrunkFollowTime, dt);
+   spring_step(drawn.head_lean, rate[2], kBankHeadShare * lean, kHeadFollowTime, dt);
+   spring_step(drawn.head_pitch, rate[3], kPitchHeadShare * pitch, kHeadFollowTime, dt);
+@@ -602,7 +618,15 @@ ChainPose chain_pose(float lean, float pitch, float look, float phase, float run
+   ChainPose c;
+   c.pelvis_lean = kBankPelvisShare * lean;
+   c.pelvis_pitch = kPitchPelvisShare * pitch;
+-  c.trunk_lean = follow.on ? follow.trunk_lean : kBankTrunkShare * lean;
++  static const float kShare = [] {
++    char* e = nullptr;
++    size_t n = 0;
++    float v = kBankTrunkShare;
++    if (_dupenv_s(&e, &n, "DZ_TRUNK_SHARE") == 0 && e) v = static_cast<float>(std::atof(e));
++    std::free(e);
++    return v;
++  }();
++  c.trunk_lean = follow.on ? follow.trunk_lean : kShare * lean;
+   c.trunk_pitch = follow.on ? follow.trunk_pitch : kPitchTrunkShare * pitch;
+   c.head_lean = follow.on ? follow.head_lean : kBankHeadShare * lean;
+   c.head_pitch = follow.on ? follow.head_pitch : kPitchHeadShare * pitch;
+diff --git a/game/world/offscreen_models.cpp b/game/world/offscreen_models.cpp
+index f953d86..806943a 100644
+--- a/game/world/offscreen_models.cpp
++++ b/game/world/offscreen_models.cpp
+@@ -425,9 +425,21 @@ int run_capture_lean(const Options& options, const std::string& run_txt, const s
+     return c;
+   };
+ 
++  // TEMPORARY (the trunk-share clip): the camera a quarter of a second ahead of the hunter on its own trail, looking back.
++  const auto ahead_at = [&](size_t i) {
++    const size_t k = std::min(i + 36, seen.size() - 1);
++    Camera c;
++    c.position = seen[k].pos + Vec3{0, 1.4f, 0};
++    const Vec3 target = seen[i].pos + Vec3{0, 1.1f, 0};
++    c.forward = normalize_or(target - c.position, Vec3{-std::sin(seen[i].heading), 0, -std::cos(seen[i].heading)});
++    c.up = {0, 1, 0};
++    c.fovYDegrees = 60.0f;
++    return c;
++  };
+   int rc = 0;
+-  for (int pass = 0; pass < 4; ++pass) {
+-    const bool eased = pass % 2 == 1, behind = pass >= 2;
++  for (int pass = 0; pass < 5; ++pass) {
++    const bool ahead = pass == 4;
++    const bool eased = pass % 2 == 1 || ahead, behind = pass >= 2 && !ahead;
+     std::unique_ptr<WorldApp> app = make_app();
+     app->set_ease_poses(eased);
+     if (behind) app->staged_look_back = 1.0f;   // the player's own look-behind, held through the run
+@@ -456,7 +468,7 @@ int run_capture_lean(const Options& options, const std::string& run_txt, const s
+       for (const Stretch& s : stretches) {
+         // Drawn from half a second before the stretch, so the picture's history is settled; kept 12 frames a second.
+         if (i + 72 < s.from || i >= s.from + span) continue;
+-        stage->staged_camera = camera_at(*app, i);
++        stage->staged_camera = ahead ? ahead_at(i) : camera_at(*app, i);
+         stage->staged_view = !behind;
+         if (!stage->draw(*app, kStepSeconds, stats)) {
+           std::fprintf(stderr, "dz-world: %s\n", r.LastError().c_str());
+@@ -464,12 +476,33 @@ int run_capture_lean(const Options& options, const std::string& run_txt, const s
+           break;
+         }
+         if (i < s.from || (i - s.from) % 12 != 0) continue;
++        {
++          const dz::world::StreamStats st = app->streamer().stats();
++          {   // the hunter's speed, and the radius of the circle through where it was 0.5 s before, now, and 0.5 s after
++            const Vec3 a = flat(seen[i >= 72 ? i - 72 : 0].pos), b = flat(seen[i].pos), c = flat(seen[std::min(i + 72, seen.size() - 1)].pos);
++            const float ab = length(b - a), bc = length(c - b), ca = length(a - c);
++            const Vec3 x = cross(b - a, c - a);
++            const float area2 = length(x);
++            const float radius = area2 > 1e-4f ? ab * bc * ca / (2.0f * area2) : 1e9f;
++            float lean = 0.0f;   // the lean the hunter is drawn with this frame (the chase's, eased or not as this pass is)
++            for (const ChaserPose& p : poses)
++              if (p.kind == chase::Kind::Hunter && p.gait == chase::Gait::Mesh) lean = p.lean;
++            const float asked = std::atan(seen[i].speed * seen[i].speed / (9.81f * radius));
++            std::printf("diag %s %02d: hunter %.2f m/s, bend radius %.2f m, lateral %.2f m/s2; lean asked %.1f deg, drawn %.1f (hips %.1f)\n",
++                        s.name, static_cast<int>((i - s.from) / 12), static_cast<double>(seen[i].speed), static_cast<double>(radius),
++                        static_cast<double>(seen[i].speed * seen[i].speed / radius), static_cast<double>(asked * 57.2958f),
++                        static_cast<double>(lean * 57.2958f), static_cast<double>(lean * kBankPelvisShare * 57.2958f));
++          }
++          std::printf("diag %s %s %s %02d: queued %d building %d loaded %d drawn %lld lamps %d\n", s.name, eased ? "eased" : "chase",
++                      behind ? "behind" : "follow", static_cast<int>((i - s.from) / 12), static_cast<int>(st.queued), static_cast<int>(st.building),
++                      static_cast<int>(st.loaded), static_cast<long long>(stage->chunks_drawn()), static_cast<int>(stage->lamps()));
++        }
+         if (!r.ReadFrame(img, false, &err)) {
+           std::fprintf(stderr, "capture-lean: %s\n", err.c_str());
+           rc = 1;
+           break;
+         }
+-        const std::string path = out_dir + "/" + format("lean_%s_%s_%s_%02d.png", s.name, eased ? "eased" : "chase", behind ? "behind" : "follow",
++        const std::string path = out_dir + "/" + format("lean_%s_%s_%s_%02d.png", s.name, eased ? "eased" : "chase", ahead ? "ahead" : behind ? "behind" : "follow",
+                                                          static_cast<int>((i - s.from) / 12));
+         if (!WritePng(path.c_str(), img.rgba8.data(), img.width, img.height, img.width * 4)) {
+           std::fprintf(stderr, "capture-lean: cannot write %s\n", path.c_str());
