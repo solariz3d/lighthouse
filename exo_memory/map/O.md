@@ -490,3 +490,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-14: pane R's half of Lap W, with B's relabel fix and P's state-block clip, landed and pushed as c5311e1b. The shelf's newest-first test is red on main itself, because today's dated loop/ SUBFOLDER is the newest entry and the shelf does not carry it.** Its line is identical on main without pane R, on B's first tip and on the landing. Could be wrong if a second cause hides behind the same assertion, but no Rust changed on main between the base read and the landing.
 → `exo_memory/handback/p-land-r-O_2026-11-13.md`
+
+**2026-11-14: fall-row-b and dark-figure-e landed on the game's main as e0fcdec; the merged world self-test reads 57/57 and exits 0, so the exit-3 re-read was not needed.** A queued runner that waits on a hold can start its build in the seconds after the hold ends: my second stop came after CMake had begun. Could be wrong that nothing of it survived, but a search by tree and label found no process.
+→ `exo_memory/handback/p-land-fall-dark-O_2026-11-14.md`
