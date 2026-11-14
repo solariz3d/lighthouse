@@ -484,3 +484,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-13: pane R's half is STOPPED; B's reworded gate sentences broke consumer-relabel's registered role sites (3 rows), which reddened six js files B's proof never ran.** The bullets-agreement test had never been written; I wrote it, red on main, 5/5 on the merge. Could be wrong if a second cause hides under the RelabelError, because the relabel throws before the other assertions run.
 → `exo_memory/handback/p-land-r-O_2026-11-13.md`
+
+**2026-11-13/14: P's wake-gate bar and -Check summary landed as 676d5c5d and are LIVE on D. state-block.test.js turns on the HEAD commit's subject length: main's block sat at 2,993 of 3,000 characters, and a long merge subject reddened it.** The landing was green again with a short merge subject (28/28). Could be wrong if the cap moved for another reason, but the two blocks differ only in HEAD, the unpushed count and the time.
+→ `exo_memory/handback/p-land-p2-O_2026-11-13.md`
