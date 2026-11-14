@@ -1,0 +1,24 @@
+static L: the ankle centre (malleoli mid) lies 10.6 mm along the run from the lateral malleolus (647 frames)
+static R: the ankle centre (malleoli mid) lies 5.3 mm along the run from the lateral malleolus (647 frames)
+3.53 m/s (Run35ms/JA1Gait21.c3d, 250 Hz):
+  L stance 1.716-1.960 s (61 frames; last tenth 7, 0 skipped): ball ahead of the ankle, least 0.023 m, at take-off 0.023; toe marker, least 0.073, at take-off 0.073
+  L stance 2.464-2.712 s (62 frames; last tenth 7, 0 skipped): ball ahead of the ankle, least 0.021 m, at take-off 0.021; toe marker, least 0.071, at take-off 0.071
+  L stance 3.220-3.468 s (62 frames; last tenth 7, 0 skipped): ball ahead of the ankle, least 0.026 m, at take-off 0.026; toe marker, least 0.077, at take-off 0.077
+  R stance 2.092-2.336 s (61 frames; last tenth 7, 0 skipped): ball ahead of the ankle, least 0.027 m, at take-off 0.027; toe marker, least 0.074, at take-off 0.074
+  R stance 2.844-3.100 s (64 frames; last tenth 7, 0 skipped): ball ahead of the ankle, least 0.022 m, at take-off 0.022; toe marker, least 0.070, at take-off 0.070
+5.19 m/s (Run5ms/JA1Gait27.c3d, 250 Hz):
+  L stance 2.380-2.584 s (51 frames; last tenth 6, 0 skipped): ball ahead of the ankle, least -0.005 m, at take-off -0.005; toe marker, least 0.037, at take-off 0.037
+  L stance 3.060-3.260 s (50 frames; last tenth 6, 0 skipped): ball ahead of the ankle, least -0.003 m, at take-off -0.003; toe marker, least 0.040, at take-off 0.040
+  L stance 3.740-3.932 s (48 frames; last tenth 6, 0 skipped): ball ahead of the ankle, least 0.008 m, at take-off 0.008; toe marker, least 0.057, at take-off 0.057
+  R stance 2.724-2.924 s (50 frames; last tenth 6, 0 skipped): ball ahead of the ankle, least -0.008 m, at take-off -0.008; toe marker, least 0.033, at take-off 0.033
+  R stance 3.404-3.604 s (50 frames; last tenth 6, 0 skipped): ball ahead of the ankle, least 0.001 m, at take-off 0.001; toe marker, least 0.044, at take-off 0.044
+6.97 m/s (Run7ms/JA1Gait33.c3d, 250 Hz):
+  L stance 2.104-2.256 s (38 frames; last tenth 5, 0 skipped): ball ahead of the ankle, least 0.001 m, at take-off 0.001; toe marker, least 0.049, at take-off 0.049
+  L stance 2.684-2.844 s (40 frames; last tenth 5, 0 skipped): ball ahead of the ankle, least -0.006 m, at take-off -0.006; toe marker, least 0.038, at take-off 0.038
+  R stance 2.400-2.556 s (39 frames; last tenth 5, 0 skipped): ball ahead of the ankle, least -0.015 m, at take-off -0.015; toe marker, least 0.031, at take-off 0.031
+  R stance 2.988-3.148 s (40 frames; last tenth 5, 0 skipped): ball ahead of the ankle, least -0.017 m, at take-off -0.017; toe marker, least 0.030, at take-off 0.030
+9.47 m/s (Run9ms/JA1Gait35.c3d, 250 Hz):
+  L stance 3.908-4.032 s (31 frames; last tenth 4, 0 skipped): ball ahead of the ankle, least -0.037 m, at take-off -0.037; toe marker, least 0.004, at take-off 0.004
+  L stance 4.364-4.488 s (31 frames; last tenth 4, 0 skipped): ball ahead of the ankle, least -0.031 m, at take-off -0.031; toe marker, least 0.012, at take-off 0.012
+  R stance 3.680-3.804 s (31 frames; last tenth 4, 0 skipped): ball ahead of the ankle, least -0.046 m, at take-off -0.046; toe marker, least -0.003, at take-off -0.003
+  R stance 4.140-4.264 s (31 frames; last tenth 4, 0 skipped): ball ahead of the ankle, least -0.034 m, at take-off -0.034; toe marker, least 0.008, at take-off 0.008
