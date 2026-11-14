@@ -156,3 +156,37 @@ over 2 commits, push gate allow 02:41:23Z):
 
 These are light on the processor but not nothing on the disk. My heavy runs (the builds, the self-test) waited for the hold
 under heavy-run.
+
+## Addendum (03:0xZ): the clip filmed again from the landed main, for his eye
+
+Ruling: the chair's 02:33Z item 2 and 02:58Z.
+
+**The clip:** `G:\consonance-scratch\e-dark-film-landed\`.
+- `the_dark_before_after_144fps.mp4`: side by side, before on the left;
+- `the_dark_before_full_144fps.mp4`;
+- `the_dark_after_full_144fps.mp4`.
+- The frames are beside them in `base\` and `branch\`.
+- checked: ffmpeg decode → **288 frames each, written at 144 frames a second.** The mp4s' metadata names both commits.
+
+| side | commit filmed (the exe's own stamp at capture, then rebuilt clean) | |
+|---|---|---|
+| before (left) | `ba2755462db5326441d84cd4945b224b802708af` (+ the temporary capture block) | main just before the Dark: the pop fix and the toe measure in, no figure |
+| after (right) | `e0fcdec40a7029965889b4e269cef13b41e9a7a6` (+ the temporary capture block) | the landed main, the Dark drawn |
+
+- **The before side is `ba27554`, not `81eb524`.** It is the Dark merge's first parent, and differs from `81eb524` only by
+  the fall row (no picture change), as the chair checked. Neither side is older than a fix he has been shown.
+- **The same run and camera as before** (`otdark.js`): O's seed 1, a flee bot with a 45 s timer, filmed from 53.01 s, a
+  camera 4 m behind the Dark on its trail where a wall is between.
+  - The Dark was out throughout, the view unblocked in 248 of 288 frames.
+  - The stage drew 1 figure of 2 poses before, 2 of 2 after.
+  - 254 of 288 frames differ.
+- **Lit from the first frame:** every frame drawn after a 3 s warm-up.
+  - The first kept frame's luma is 18.3 (video black is 16) on both sides, and the mean is about 35. The clip opens in the
+    dark stretch of the corridor, by the place's own light.
+- **The card's other users:**
+  - **Not recorded at the capture's start;** I launched it before the chair's word and did not read the card first.
+  - Read once inside it (02:58:37Z) and once after (02:58:44Z): 0% utilisation both times, no game by path. Riot's
+    background service and crash handler and the Steam client were present, as all evening.
+
+**The finding put to him, his call** (drawn is not seen). The Dark is a **black silhouette**: visible against the lit
+corridor, near invisible in the dark stretch. Its look stays his; nothing is changed for it.
