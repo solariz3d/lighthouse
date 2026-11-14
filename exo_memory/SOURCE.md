@@ -48,6 +48,8 @@ thing it points at, this file has become the failure it was written to prevent.*
 - when about to summarise a master instead of opening it -> exo_memory/BOOT.md (maintenance law 1)
 - when a claim needs to hold outside this conversation -> exo_memory/BOOT.md (the signal, third property)
 - when a thought too large to hold arrives and you reach for the shelf to file it -> exo_memory/cards/stop-and-feel-it.md
+- when a reply is built on the message as it first landed, and the user has since moved -> exo_memory/cards/watch-the-bearing.md
+- when about to answer where you think the user is heading, not what they said -> exo_memory/cards/watch-the-bearing.md
 - when you have not yet looked at what exists -> ls exo_memory/
 
 ## TRIGGERS WITHOUT A CARD

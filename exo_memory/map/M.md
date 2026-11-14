@@ -1070,3 +1070,8 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **Finding:** I removed `autoCompactWindow` (500000) from this seat's settings file at 04:3x and told him the forgetting was out. The session cut itself at 466,900 half an hour later (`loop/seat_context_2026-11-14.js`: `auto at 466900`). The file was right; the running session was not.
 - **The form that reaches a running session** is `/autocompact auto`, typed by him (`code.claude.com/docs/en/model-config.md`, "Set the auto-compact window"). A file edit is for the next launch. When a withdrawal is promised, check the running session's behaviour, not the file.
 - **And:** fetch a vendor page with `curl` to the scratchpad and `grep` it. WebFetch returned the whole page into the window whatever the prompt asked.
+
+## 2026-11-14 05:3x (L): a trigger row places a card in the list; the deck is a folder the repo does not reach by itself
+- **Finding:** a seat's deck of cards is read from `~/.consonance/cards/` and ordered by the count of `SOURCE.md` rows that point at each card (`consonance/src-tauri/src/main.rs:3233-3249`, `:3672-3677`). A card committed to `exo_memory/cards/` is not in that folder until something seats it. On L the folder held 13 cards when `watch-the-bearing` was rung.
+- **So a new card needs two things:** its rows in `SOURCE.md` (this seat's edit), and its place in the deck folder (a pane's, by the app's own path, shown live). Saying a card is "placed" after the first alone is the landed-is-not-live fault in a small form.
+- **Not traced:** how the folder is filled from the repo (the seeder's manifest, `main.rs:600-608`).
