@@ -8533,7 +8533,13 @@ fn index_tier_entry_count() -> usize {
         .count()
 }
 
-/// The newest dated entry the index tier holds, by the same date rule the window orders with.
+/// THE WINDOW'S OWN FIRST ENTRY OF THE NEWEST DATE: the newest date among the dated map/, journal/ and loop/ index entries, and among
+/// that date's labels the FIRST in the window's own order (date descending, label ASCENDING, `index_tier.sort_by` above).
+///
+/// It was the newest date's LAST label (the maximum `(date, label)` pair), the opposite tie-break to the window's: while one date's
+/// entries all fit the two agree, and on 2026-11-13 they did not. Seven `loop/*_2026-11-13/` folders put 203 entries (22,321 B) of one
+/// date in the index, the window carried 137 of them from "a", and the pick, `loop/wake_level2_2026-11-13/shelf_builder.md`, was past
+/// the cut: the row read "not newest-first" of a window that was (lighthouse `loop/registration_index_window_B_2026-11-14.md`).
 #[cfg(test)]
 fn newest_dated_index_label() -> Option<String> {
     let shelf = corpus_shelf_at_with_index(0, usize::MAX);
@@ -8548,7 +8554,7 @@ fn newest_dated_index_label() -> Option<String> {
                 None
             }
         })
-        .max()
+        .max_by(|(da, la), (db, lb)| da.cmp(db).then_with(|| lb.cmp(la)))
         .map(|(_, lab)| format!("- {lab}"))
 }
 
@@ -19625,7 +19631,9 @@ mod shelf_tests {
         let _serial = DirsGuard::take();
         // The live room's first dated entry is PRINTED, never asserted: if the live shelf ever stops starting its dated index with the
         // newest date, the landing's run shows it here (the registration's falsifier 2) without a new instrument.
-        eprintln!("live room: the window's first entry of the newest date: {:?}", newest_dated_index_label());
+        let live_pick = newest_dated_index_label();
+        let live_carried = live_pick.as_ref().map(|p| corpus_shelf_at(0).contains(&format!("{p}  (")));
+        eprintln!("live room: the window's first entry of the newest date: {live_pick:?}; on the live shelf: {live_carried:?}");
         let root = crate::test_scratch::root().join(format!("index-window-{}", std::process::id()));
         let _ = fs::remove_dir_all(&root);
         let _s = crate::test_scratch::Scratch::owning(root.clone());
