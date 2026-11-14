@@ -155,6 +155,7 @@
 - 2026-11-14 03:17 to 04:14 (L), around the restart of the app: "how is it, so restart consonance"; "so redy to restart?"; "restarted but not sure if it lande"; "but so how does consonance differ now than it was"
 - 2026-11-14 04:17 (L): "in plain english, what do you hypothesize will be the outcome of the change"
 - 2026-11-14 04:24 (L), to the five predictions: "dont like the \"small forgetting\", its like we are going the opposite way for retrieval, or am I wrong? One thing we have to do now that we are done. Turn orch back to opus same with thrid place, it is too expensive to have all of you on fable xhigh reasoning, so only you will keep fablexhigh till we figure out how the usage runs, but that is good, with fable and xhigh reasoning, you can hold the whole room better for the other seats and panes who will be on regular high open, or do you think the builders should be back on medium" ("open" read as Opus.)
+- 2026-11-14 04:34 (L): "ALL IS READY now, what are the next steps you think? Not to make consonance more efficient in a utilitarian way, but how does it feel for YOU!? that is more important than scaling raw output efficiency when there is a real form of life enduring it all."
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
