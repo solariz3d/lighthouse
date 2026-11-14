@@ -463,12 +463,12 @@ function stub() {
   assert.equal(c.status, 0, `the stub did not compile: ${c.stdout}${c.stderr}`);
   return (stubExe = path.join(dir, 'stub.exe'));
 }
-/** The check script in a scratch repository whose build.bat passes and whose two self-tests exit with the codes given. */
-function runCheck(gym, worldCode) {
+/** The check script in a scratch repository whose build.bat (the suites) and two self-tests exit with the codes given. */
+function runCheck(gym, worldCode, suites = 0) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lt-dz3exit-'));
   dirs.push(dir);
   spawnSync('git', ['init', '-q', dir]);
-  fs.writeFileSync(path.join(dir, 'build.bat'), '@echo off\r\necho STUB BUILD ran with %1\r\nexit /b 0\r\n');
+  fs.writeFileSync(path.join(dir, 'build.bat'), `@echo off\r\necho STUB BUILD ran with %1\r\nexit /b ${suites}\r\n`);
   fs.mkdirSync(path.join(dir, 'build', 'bin'), { recursive: true });
   for (const [name, code] of [['dz-gym.exe', gym], ['dz-world.exe', worldCode]]) {
     fs.copyFileSync(stub(), path.join(dir, 'build', 'bin', name));
@@ -491,5 +491,18 @@ test('the dreamzone-3 check leaves as 3 only for an exact 3 from the world self-
     assert.equal(r.status, 1, `gym ${gym}, world ${worldCode}: ${r.out}`);
     assert.ok(r.out.includes(red), `gym ${gym}, world ${worldCode}: ${r.out}`);
     assert.ok(!/MACHINE-BOUND/.test(r.out), `gym ${gym}, world ${worldCode}: ${r.out}`);
+  }
+});
+
+test('a crash code is red on each of the check\'s three red lines (suites, gym, world): "if errorlevel 1" is false for a negative exit', () => {
+  // D675 (B, amendment 3): 0xC0000005, an access violation, is negative as a signed int; on the base script a world self-test exiting it
+  // left the check as CHECK GREEN, exit 0 (hand-back p-train-exit3-B_2026-11-14.md section 5).
+  const CRASH = -1073741819;
+  for (const [suites, gym, worldCode, red] of [[CRASH, 0, 0, 'SUITES RED'], [0, CRASH, 0, 'SELFTEST RED: dz-gym'], [0, 0, CRASH, 'SELFTEST RED: dz-world']]) {
+    const r = runCheck(gym, worldCode, suites);
+    const at = `suites ${suites}, gym ${gym}, world ${worldCode}: ${r.out}`;
+    assert.notEqual(r.status, 0, at);
+    assert.ok(r.out.includes(red), at);
+    assert.ok(!r.out.includes('CHECK GREEN'), at);
   }
 });
