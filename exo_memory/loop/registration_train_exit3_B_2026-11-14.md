@@ -137,6 +137,29 @@ Both changes make the rule stricter. A 3 that is not the self-test's own is read
   `CHECK GREEN`. I will check it with a stub that exits with a negative code and report the result in the hand-back. The line is not
   changed here, because the ruling keeps it "as it is".
 
+## Amendment 3 (the chair's ruling of 04:07Z, written in before any code): a crash code is red on every line
+
+The ruling: "YOUR SECTION 5 IS A HOLE IN THE LANDING GATE THAT GETS FIXED ON THIS BRANCH BEFORE IT LANDS … 2. A ROW, RED ON THE BRANCH'S
+OWN TIP: a stub exiting with a CRASH CODE makes the script exit NON-ZERO, for EACH of the three red lines (suites, gym, world). 3. THE FIX:
+"if not %ERRORLEVEL% EQU 0" in place of "if errorlevel 1", AFTER the exact-3 test. 4. ONE MORE MUTANT: the old form restored."
+
+**The hole, measured on the base script (hand-back §5):** a world self-test stub exiting 0xC0000005 left the script as `CHECK GREEN`, exit
+0. `if errorlevel 1` means "1 or more", and a Windows crash code is negative as a signed int.
+
+**The row.** It runs on the branch's tip, red first. For each red line, a stub exits -1073741819 (0xC0000005) and the script must exit
+non-zero and print that line's red:
+- the suites, through a `build.bat` that ends `exit /b -1073741819`;
+- the gym, through `dz-gym.exe`;
+- the world, through `dz-world.exe`.
+
+**The fix.** `if not %ERRORLEVEL% EQU 0 (… & exit /b 1)` replaces `if errorlevel 1` on the suites, gym and world lines. On the world line
+it stays AFTER the exact-3 test.
+
+**The mutant.** The old form, `if errorlevel 1`, restored on all three lines at once.
+
+**Not changed (the ruling: "fix only this script on this branch"):** the submodule line, `:12` on main, has the same shape. It is reported,
+not changed.
+
 ## 6. My bias
 
 I wrote the exit-3 contract and proposed this re-read, so I have a stake in it being needed. That is why falsifier 2 is written to fire on
