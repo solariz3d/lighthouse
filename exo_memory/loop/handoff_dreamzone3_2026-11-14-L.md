@@ -56,6 +56,8 @@ tonight did not touch is not repeated.
 `loop/plan_new_system_2026-11-14.md`.** After item 1 (pull and build), the desktop starts its lap M1 (pane A, the root law, red
 first) and then B1 (pane C, the lean from the root's own acceleration). Item 3 below (the corner-room lap) is STOPPED by that
 plan: it patches the rule the new root replaces. Item 4 is B1. Do not ask him again whether to build it.
+**Both packets are written and ready to dispatch:** `loop/packet_m1_root_law_A_2026-11-14.md` and
+`loop/packet_b1_lean_C_2026-11-14.md`. They touch different trees (`chase/` and `game/`).
 
 1. Pull both repositories. Build the game at main on D.
 2. **His play of the six settings.** THE CLOSE says whether the launch argument landed and gives the lines. If it did not land,
@@ -89,3 +91,14 @@ plan: it patches the rule the new root replaces. Item 4 is B1. Do not ask him ag
 
 A's two md5s and the 20 of 20 (its evidence files); A's numbers for each setting (its L170 and L182 hand-backs); the reader's
 arithmetic port and its five outside pages; whether D's clone builds at 145b698.
+
+## THE CLOSE (written 07:3x local, 2026-11-14, by the librarian on L)
+
+- **The game's origin/main is e091beb.** Checked 07:36: `git ls-remote`; his clone equal and clean; the train's ledger `promoted` at 13:32:51Z with built = head and `launch_check` "up to date"; `game/config/world.local.txt` sha256 e065fdad, unchanged; no lock held. Four landings on L tonight: c205622, 145b698, 5cddb3d (`dz-world --chase-speed "<text>"`), e091beb (a refused text also shows in a message box).
+- **L211 is done, nothing parked** (`handback/p-l211-live-play-A_2026-11-14.md`, 74 lines, git-blob dcf46f63762be0c9b5541c195b0340d360f83ea7). Read by me: its section 4 whole and A's ring. The rest of the file is not read by me.
+- **The live play:** one line per setting, `launch.ps1 world --chase-speed "<text>"` (that file `:45-62`). The pair he said he would try: `turn_law=3;grip_mu=1.0;slip_rate=3`, which nobody has run. A kept run's `[speed]` section shows what was applied. **Not seen by anyone yet:** the window with the argument applied (A's own line). Known gap: the parser accepts `nan`.
+- **The page of the seven traces:** https://claude.ai/artifact/BZJaMUpvNDx9kUAhg8sdgX. His "which looks the best to u" and my answer (sideways carry, as my own eye) are in the game brief under item 221. Not a pick of his.
+- **Decided by him at 07:05: the new system is built.** Plan `loop/plan_new_system_2026-11-14.md`; packets M1 and B1 are ready. A's ring of 07:34 still names the corner room as the desktop's next; A wrote that without the plan in front of it. The plan holds and the corner room is stopped.
+- **Waiting on the remote, not landed:** `origin/a-l210-merge` a62d66f (the run record with the Park kit) and B's `gen-lap2-kit` fcf5c43. Under the plan the sprinter row is re-registered in M2, and the kit's landing is ruled then.
+- **Open with him:** pane A's L210 hand-back names itself a "Sonnet 5.5 trial" while `seat_models` puts A on opus at the next launch (asked 06:5x, no answer). Whether he played the pair before closing the laptop is not known at this writing.
+- **Unfinished on L, for the desktop:** the plan from M1 and B1 on; the look-back pair (item 220); the new card's seat in the deck folder; the desktop's two config edits (`loop/handoff_lighthouse_2026-11-14-L.md`).

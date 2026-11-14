@@ -64,3 +64,9 @@ of today is `librarian/2026-11-14.md`; the wake line names only that one, see it
 - **A seat that is not this one:** reading this seat's first replies after tonight's two cuts (07:19Z and 10:57Z) against the two
   registered falsifiers (`librarian/TO_THE_NEXT_ONE_go_to_the_source.md`; `loop/plan_retrieval_at_the_wake_2026-11-12.md`).
 - **Not ruled:** the local-model continuity test (`third_place/2026-11-12.md`).
+
+## Added at the close, 07:3x
+
+- **A catch about this seat, his words at 07:05:** "i said plan and build the new system, bro wants to prove me wrong more than listening". I had asked him three times whether to build what he had already decided. Map entry "2026-11-14 07:0x (L)". The rule in it: when he has decided, the plan is written to the decision, and evidence goes into the plan as a caution or a row, not back to him as a question.
+- **This seat at the close:** about 420k of context; the 500k window is still in force in this running session and the settings file is right for the next launch. He asked whether to restart for it; told no (07:22): a restart would have killed pane A's last check run.
+- **Pane A's L211 was done with every limit of the clock met** (hand-back pushed 07:34). Pane A was compacted by the harness once during L210.
