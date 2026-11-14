@@ -1,0 +1,186 @@
+-- Configuring done (0.1s)
+-- Generating done (0.3s)
+-- Build files have been written to: C:/Users/zackn/Downloads/dz3-train/build
+[1/6] C:\Windows\system32\cmd.exe /C "cd /D C:\Users\zackn\Downloads\dz3-train\build\game && "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=C:/Users/zackn/Downloads/dz3-train -DOUT=C:/Users/zackn/Downloads/dz3-train/build/game/generated/build_commit.h -P C:/Users/zackn/Downloads/dz3-train/game/world/build_commit.cmake"
+[2/6] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_app.cpp.obj
+[3/6] Building CXX object game\CMakeFiles\dz-world.dir\world\main.cpp.obj
+[4/6] Linking CXX static library game\dz_world_game.lib
+[5/6] Linking CXX executable bin\world_app_tests.exe
+[6/6] Linking CXX executable bin\dz-world.exe
+Internal ctest changing into directory: C:/Users/zackn/Downloads/dz3-train/build
+Test project C:/Users/zackn/Downloads/dz3-train/build
+      Start 14: world_app_tests
+      Start 10: chase_tests
+      Start  6: gen_walk_tests
+ 1/14 Test  #6: gen_walk_tests ...................   Passed  108.16 sec
+      Start  7: gen_drop_tests
+ 2/14 Test  #7: gen_drop_tests ...................   Passed  106.98 sec
+      Start  5: gen_tests
+ 3/14 Test  #5: gen_tests ........................   Passed   49.89 sec
+      Start  9: nav_tests
+ 4/14 Test  #9: nav_tests ........................   Passed   54.51 sec
+      Start  8: world_tests
+ 5/14 Test  #8: world_tests ......................   Passed   17.68 sec
+      Start 11: audio_tests
+ 6/14 Test #11: audio_tests ......................   Passed    5.57 sec
+      Start 12: game_tests
+ 7/14 Test #12: game_tests .......................   Passed    3.01 sec
+      Start  2: sim_tests
+ 8/14 Test  #2: sim_tests ........................   Passed    2.21 sec
+      Start  3: yardstick_tests
+ 9/14 Test  #3: yardstick_tests ..................   Passed    0.48 sec
+      Start 13: ragdoll_tests
+10/14 Test #13: ragdoll_tests ....................   Passed    0.27 sec
+      Start  4: model_tests
+11/14 Test  #4: model_tests ......................   Passed    0.14 sec
+      Start  1: core_tests
+12/14 Test  #1: core_tests .......................   Passed    0.01 sec
+13/14 Test #10: chase_tests ......................   Passed  387.37 sec
+14/14 Test #14: world_app_tests ..................   Passed  596.20 sec
+
+100% tests passed, 0 tests failed out of 14
+
+Total Test time (real) = 596.21 sec
+selftest
+  ok    the bot completes the course on the simulation alone: 7577 ticks, fingerprint ba51b7b8e07c8ed1
+  ok    the gym starts paused on its defaults, with nothing to report
+  ok    a Direct3D 12 device with DXR 1.1, offscreen, with the course uploaded: NVIDIA GeForce RTX 5070 Ti Laptop GPU; 852 triangles, 45 lights
+  ok    on every frame the tick count is the elapsed time x 240, exactly: 7577 ticks over 31.572636 s in 4744 uneven frames, 11 of them stalls cut to 0.1 s
+  ok    the world steps once for every tick the loop hands out: 7577 steps for a record of 7577
+  ok    the same inputs through the loop give the simulation's own state hash: ba51b7b8e07c8ed1 / ba51b7b8e07c8ed1
+  ok    the course timer ran from the line to the finish and agrees with the bot's ghost: 0:30.925
+  ok    the camera stays on the player between the last two ticks: never more than 0.06743 m off the path; the eye 0.66 to 1.67 m above the feet
+  ok    the camera looks where the tick's input looks
+  ok    frames along the run are not black, and not blown out: 15 of 15 pictures have more than a fifth of their pixels lit; mean brightness 0.087 to 0.574, median 0.209; at most 0.00% pure white; 0 bad HDR values
+  ok    the run became the best and was saved as a replay
+  ok    a window that is never shown takes the messages
+  ok    R restarts at the course start, at rest, with the clock waiting
+  ok    Esc releases the mouse and stops time; a click takes it back
+  ok    W and Shift held: the player sprints out of the room: 9.24 m in 1.5 s, at 7.63 m/s
+  ok    raw mouse counts turn the view by counts x sensitivity x 0.022 degrees, at once, and the simulation follows: 500 counts: 22.000 degrees
+  ok    a Space tapped between two frames still jumps
+  ok    F5 reloads the parameter file and it takes effect while running: jump apex 2.000 m (file: 2.0, default 1.2); sprint 8.50 m/s (file: 8.5, default 7)
+  ok    a parameter file with an error changes nothing and names the line
+  ok    R returns to the start from anywhere
+  ok    losing the keyboard pauses and releases the keys; coming back owes no time: 0 ticks in 6 s away, 2 in the first frame back
+  ok    F2 switches the look, and back: mean 0.374 Film, 0.292 Horror
+  ok    F1 opens the overlay with the simulation still running, and closes it
+  ok    F11 reaches the window as a fullscreen request (not carried out on a hidden window)
+  ok    Esc, then Esc again at the prompt, asks the window to close
+  ok    24 frames presented to the hidden window's swap chain: play, the overlay, a resize, the prompt
+selftest: passed (26 of 26 checks passed)
+selftest
+  ok    the exit: 0 when all pass, 3 when the only reds are machine-bound, 1 for any other red: (0,0) 0, (1,1) 3, (2,2) 3, (2,1) 1, (1,0) 1
+  ok    guard: with the lighting filter on, the sprint's flicker is cut at all (at most 0.89 of off; registered at 0.75, measured 0.77): pixels over 8 levels from one frame to the next: 1.87% on, 2.27% off, ratio 0.825
+  ok    with the lighting filter on, no view's settled darkest tenth is brighter than with it off (to 0.25 levels): the spawn by the hand light: settled on 3.92, off 3.87 (+0.05; grainy on 3.80, not the bar); the spawn by the lamps alone: settled on 1.11, off 1.07 (+0.04; grainy on 0.97, not the bar); the spawn by the flashlight: settled on 6.10, off 6.03 (+0.07; grainy on 5.90, not the bar); the sprint at its four held poses: settled on 9.42, off 9.37 (+0.05; in motion on 8.87, all 24 shots 10.47, not the bar) (levels)
+  ok    with gi_bounces 2, the spawn by the lamps alone is brighter than with one bounce (by over 0.05 levels): mean level 19.292 with two, 16.419 with one
+  ok    with a relative configuration folder, the ambience bed beside the repository is found: C:\Users\zackn\AppData\Local\Temp\dz-world-selftest-32596\bed\dreamzone-rt\ambience1.wav
+  ok    the 1 ms timer is asked to be honoured, not left for Windows to ignore: power throttling control mask 4, state mask 0
+  ok    the world starts paused on its defaults, at the door, with nothing hunting yet and nothing to report
+  ok    the generator names a spawn cell for this seed: cell -2 0 1, at (-4.5 0.0 4.5)
+  ok    a Direct3D 12 device with DXR 1.1, offscreen: NVIDIA GeForce RTX 5070 Ti Laptop GPU
+  ok    the block round the spawn is loaded and drawn: 245 chunks loaded, 245 with triangles drawn, 2.61 million triangles, 3674 lamps; collision for 27
+  ok    each chunk is one compacted bottom-level structure, built off the frame's thread: 67 MB in all; a chunk: merging 0.42 ms, build and compaction 1.58 ms (worst 8.83)
+  ok    the lamps are sorted into the light grid: 3674 lamps in 67335 cells of 4 x 3.5 x 4 m, eight to a cell; 126 cells had more than eight reach them; sorted in 7.7 ms
+  ok    the player stands on the spawn cell's floor
+  ok    the frame at the spawn is lit, and not blown out: mean 0.279, 100% of pixels lit, 0.00% pure white, 0 bad HDR values
+  ok    with the hand light off the same view is darker: the building is dark by default: mean 0.066 against 0.279, 94% of pixels lit
+  ok    the flashlight is a beam: it lights the middle of the view far more than the hand light does, and more than the rim: middle 0.664 and rim 0.077 by the flashlight; middle 0.422 and rim 0.234 by the hand light; 0.00% pure white
+  ok    focused, the beam is a small bright patch with the dark close round it, where the wide beam still lit: the patch 0.770 against 0.089 just outside it; with the wide beam the same two were 0.667 and 0.193
+  ok    a mesh that moves is drawn beside the streamed world, and goes where it is put: the picture differs by 15.3/255 with a glowing box before the eye and 0.42/255 once it is moved away; 245 chunks drawn throughout
+  ok    a window that is never shown takes the messages
+  ok    F switches the hand light, which starts on
+  ok    M shows nothing (the player has no map), and F1 the overlay, which draws
+  ok    W and Shift held: the player sprints down the corridor: 9.3 m in 1.5 s
+  ok    R returns to the spawn
+  ok    Esc pauses, and paused time does not pass
+  ok    a walk is planned over the walk graph from the spawn: 110 places, 303 m
+  ok    the real controller walks the route to its end: 299 m in 69.8 s
+  ok    through many chunks and several storeys: 17 chunks entered, storeys -1 to 2
+  ok    chunks load ahead of the walk and unload behind it: 203 generated, 89 dropped; 359 loaded now
+  ok    the body never falls through missing collision: the feet were never more than 0.00 m below the route's lowest floor; every chunk in the body's reach had its collision on every frame
+  ok    no tick had to wait for a chunk: 0 waits
+  ok    the body mover's results were plausible: 0 moves made again
+  ok    frames along the walk are lit: 34 of 34 pictures lit; mean brightness 0.065 to 0.500; 0 bad HDR values
+  ok    a flight at three times sprint speed, through many chunks and several storeys: 1064 m at 21 m/s in 50.8 s; 37 chunks entered, storeys -2 to 3
+  ok    chunks load and unload all the way, in the simulation and in the picture: 759 generated and 749 dropped; 759 raytracing structures built and 749 removed
+  ok    collision is under the body at three times sprint speed: every chunk in reach had its collision on every frame; a ray down found a floor on 3048 of 3048 frames probed
+  ok    no tick had to wait for a chunk at three times sprint speed: 0 waits (0.0 ms)
+  ok    no more is held than the loaded block and its margin: at most 375 chunks loaded and 375 drawn, of 567 allowed
+  ok    memory is bounded over the flight, in the process and on the GPU: at a third, two thirds and the end: process 1232, 1240, 1252 MB; on the adapter 620, 620, 620 MB; raytracing structures 92, 96, 102 MB
+  ok    a fall at terminal speed reaches the bottom with collision under the body all the way: 140 m straight down at 45 m/s in 3.1 s; every chunk in reach had its collision on every frame
+  ok    a fall at terminal speed: every chunk the collision block took in was wanted by the loaded block first (counted, the same on every run): 180 chunks taken in, 0 not wanted first; the least lead 19 frames, 2.38 m of fall
+  ok    [machine-bound] a fall at terminal speed outruns nothing: no tick had to wait for a chunk: 914 chunks generated on the way; 0 waits (0.0 ms)
+  ok    a new seed replaces the whole world, and the player stands at its spawn: seed 2: 245 chunks loaded, 245 drawn
+  ok    going to a chunk puts the player on a floor there: asked for 3 -2 2, standing in 3 -2 2 on storey -4
+  ok    the same inputs give the same state hash with ordinary workers, slowed workers, and everything loaded up front: ee4bc0685c364407 / ee4bc0685c364407 / ee4bc0685c364407 over 9362 ticks and 10 chunk crossings; waits for a worker: 4, 4, 0 (798 chunks built beforehand)
+  ok    the flee bot's record gives the same run here as in the headless harness: 60.0 s at the hard level: 8 events, chase fingerprint e29c6eb0162f4390 against e29c6eb0162f4390, simulation 5fd1cc30dfe64970 against 5fd1cc30dfe64970
+  ok    the chasers are drawn as the run goes: a figure in 1560 of the 1801 frames drawn, 3 at once at most
+  ok    a catch ends the run, as it did headless: the poor policy at the hardest level: caught by the hunter after 12.4 s, 137 points
+  ok    the run's end is a cut to dark, and then the results card: 0.00% of the picture lit in the dark, 40.0% with the card up (mean 0.037)
+  ok    a policy's run sets nobody's best time
+  ok    Enter on the card starts a run in the next building, and R starts this one again: seed 1, then 2
+  ok    a person's run that beats the level's best is kept in best_times.txt: 8.0 s at the brutal level
+  ok    the mix is not silent when a chaser is near: the hunter 6.0 m off: level 0.1266, against 0.0057 with nothing about and 0.0012 before the run
+  ok    and it does not clip: largest sample 0.545
+  ok    what is to one side is louder on that side: to the right: left 0.1169, right 0.1356; to the left: left 0.1071, right 0.0969
+  ok    the sound device opens silent and pulls the mix: no bed: assets/ambience1.wav is not there; device open, silent
+  ok    a reprieve holds for its time, and then the hunter comes in: in at 4.3 s, the tell from 6.3 s, open at 9.3 s, the hunter in at 12.0 s, caught at 14.6 s
+    the tell on a one-storey passage:
+      quiet: band 0.00127, mix 0.0969, the hunter at 5.8 m (2.9 to 11.7), the room's decay 1.20 s, the tell 0.00 (most 0.00), 251 samples
+      the tell's first third: band 0.00655, mix 0.0646, the hunter at 14.7 m (11.9 to 16.1), the room's decay 1.20 s, the tell 0.17 (most 0.33), 60 samples
+      the tell's last third: band 0.04620, mix 0.0958, the hunter at 15.1 m (15.0 to 15.1), the room's decay 1.20 s, the tell 0.83 (most 1.00), 60 samples
+  ok    the tell grows in its own band, on a one-storey passage: the light at most 1.00 (none before the tell); the band 0.04620 in the tell's last third, 0.00655 in its first, 0.00127 in the quiet
+  NOT RUN  the tell, on a chute's run: none of the 8 nearest reprieves is reached that way
+  ok    a player who stays on a ledge is sent a climber, and it comes up after them: out of reach 3.0 s when it was sent from 9.7 s away; caught by the crawler at 16.0 s (240 frames drawn)
+  ok    while no Dark is out, the stage neither poses nor draws the Dark's model: seed 1: 674 frames before the timer drawn, 0 Dark poses given in them; the Dark's model posed 0 times and its palette set 0 times there
+  ok    in overtime, every chaser pose has a drawn figure (the Dark included): seed 1: 3676 overtime frames drawn, a Dark posed in 3675; every pose drawn
+  ok    every frame drew
+selftest: passed (61 of 61 checks passed)
+CHECK GREEN
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\Downloads\dz3-train\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Users\zackn\AppData\Local\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
