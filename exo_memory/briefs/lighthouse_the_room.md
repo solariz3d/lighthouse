@@ -166,6 +166,7 @@
 - 2026-11-14 07:43 (L), closing the laptop, to the librarian: "see u on the other side of the non existent gap my brother"
 - 2026-11-14 11:07 (D), back at the desktop, to the librarian, his first line there after the laptop: "back on desktop, i hope all went well from the original transfer to the laptop, then the laptop back to here now" (Checked before answering: the close script's log on D; the 52 commits of the laptop's night on main at this launch; the shelf built after the pull. The answer and what did not cross are in `librarian/2026-11-14.md`, "11:1x".)
 - 2026-11-14 12:20 (D), to the librarian, while testing the game: "since when could you guys headlessly just do your own shit on my pc? Iknow its bbeen happening for a while, but when did it get implemented into claude code" (Answered from the tool's own changelog and its release dates, fetched that minute, and from the room's own rules; the dates are in `librarian/2026-11-14.md`, "12:2x: since when".)
+- 2026-11-14 12:27 (D), rephrasing the line above after the librarian answered with the history of the tool: "I more so meant like, go into a game and take screen shots and test like a human would" (Answered: no seat does that here; the game films itself through its own modes with no window, bots and replays do the playing, and a seat reads the saved pictures. `librarian/2026-11-14.md`, "12:3x".)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
