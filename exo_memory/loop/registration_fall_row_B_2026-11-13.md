@@ -1,0 +1,109 @@
+# Registration: the world self-test's "a fall at terminal speed" row (pane B, D, 2026-11-14 00:3xZ, before any code)
+
+Ruling: the chair's D675 order of 00:17Z: "REGISTER WHICH OF TWO, BEFORE ANY CODE: (1) THE ROW READS WHAT IT GUARDS … in COUNTED
+CHUNKS AGAINST DISTANCE FALLEN, not in waits by the clock. Red first on a generator made to lag; green on main; and it must still fail
+when the generator truly falls behind. (2) OR, IF IT CANNOT BE SAID IN COUNTS: the row is DECLARED MACHINE-BOUND, as actors.evidence is,
+with its QUIET READ a NAMED STEP of a landing." Tier: PROVE IT.
+
+**Base:** dreamzone-3 remote main `796c16f` (my `git ls-remote` at 00:2xZ). **Branch:** `fall-row-b`, worktree
+`G:\consonance-scratch\b-fall-row`, the build tree on G:.
+
+## 0. Where the row is (a correction to the order's file name)
+
+- The row is in **`game/world/selftest.cpp`, section 4b, lines 490-525**, not in `selftest_run.cpp`.
+  - The check is at :520-524: `done && fell > depth - 1.0f && reach_misses == 0 && st.sync_waits == before.sync_waits`.
+  - The row is named "a fall at terminal speed outruns nothing: no tick had to wait for a chunk". The fall is 140 m at
+    `move.max_fall_speed` (45 m/s), paced in real time at 360 Hz (`Pacer`).
+- **The same form, one section up:** :469-470, "no tick had to wait for a chunk at three times sprint speed" (the flight). It is named
+  here and NOT changed by this lap. It has not been seen red today; if it is, it is the same class.
+- **Its red today, three times:**
+  - A's kit suite, 15:23;
+  - E's stomp landing, 16:04;
+  - my yardstick landing, 23:50Z: 1 wait, 86.6 ms over 920 chunks, with C's world self-test running beside.
+  - Each time a quiet re-read was owed, and none was made.
+
+## 1. The choice: (2), MACHINE-BOUND, with the part that CAN be counted kept as a count row
+
+**Why not (1).** The stream keeps two kinds of decision apart, by design (`world/stream.h:9-14`):
+- "**What is wanted** is decided at tick boundaries from the player's position alone ... That is the same on every run."
+- "**What is ready** depends on how fast the workers are, and differs from run to run."
+
+`sync_waits` counts the second kind: a tick whose collision chunk the workers had not finished. "The workers keep ahead of a fall" is
+therefore a race between worker throughput and a fall paced by the wall clock. Any count of chunks READY ahead of the player moves with
+the machine's load exactly as the waits do, so it flakes the same way. Any count that is the same on every run (what is WANTED ahead)
+comes from position alone, so it cannot see a slow generator. (1) asks for both at once: no flake under load, and red when the generator
+truly lags. Counts cannot give both. (Section 4 tests this claim before anything is built on it.)
+
+**What (2) is, concretely** [ours; each piece red first where a row can see it]:
+
+1. **The row splits in two.**
+   - **(a) "the wanted block leads the collision block all the way down"**, in COUNTS, the same on every run. At every tick of the
+     fall, each chunk in the collision block was WANTED (it entered the loaded block) at least N ticks earlier. N is printed and
+     measured on main before any bar is set. This guards what the code controls (`load_radius_v`, `collide_radius_v`, the margins,
+     `follow_centre`), whatever the machine. It does NOT claim the workers finish in time.
+     - Red first: on a streamer whose loaded block does not lead (`load_radius_v` set equal to `collide_radius_v` in a test-only
+       params copy), it must go red.
+   - **(b) the existing check, unchanged in what it reads** (`sync_waits == before.sync_waits`), MARKED MACHINE-BOUND.
+     - Its line says so ("MACHINE-BOUND: a red under load is re-read quiet before it counts").
+     - The self-test's summary counts a machine-bound red apart from the others.
+2. **The exit.** When the ONLY reds are machine-bound, `dz-world --selftest` exits **3**, not 1, and prints
+   `selftest: machine-bound red only: re-read quiet (…)`. Any other red still exits 1. A green run still exits 0.
+3. **The named landing step, the quiet read.**
+   - On exit 3, the lander re-runs `dz-world --selftest` ONCE under the EXCLUSIVE hold (a quiet window: no other heavy run, no game, no
+     bench), and names it in the hand-back: "quiet read: …".
+   - Green there: it lands, with both readings named. Red there: it is the landing's own, as any red.
+   - Where it is written: dreamzone-3's own words on its checks (`tools/` or the README section that lists the self-test, whichever
+     names `--selftest` today, found before code), and one line in the order to the lander. BUILDING.md and the landing train are not
+     my files: the line for them goes to the librarian, to route.
+   - The landing train's `failingRows` reads a self-test's FAILED total. Whether it should treat exit 3 as "re-read quiet" is the
+     train's owner's call, named in the hand-back, not built here.
+
+## 2. Its tests, registered red before the code
+
+- **(a) leads:** green on main; red on the test-only streamer whose loaded block does not lead (above).
+- **(b) marked:** with `worker_delay_ms` (the stream's own "slow machine" seam, `stream.h`) set so the workers lag, the fall row is red
+  AND marked machine-bound, and the self-test exits 3, not 1, when it is the only red.
+- **Any other red still exits 1:** a deliberately failed ordinary check alongside gives 1.
+- **The marking cannot hide a non-timing failure:** with `reach_misses > 0` or `fell` short, the fall row is NOT machine-bound (only the
+  `sync_waits` clause is), so it exits 1.
+- **Hand mutants**, each must turn a row red:
+  - the machine-bound mark applied to the whole fall row, not the waits clause alone;
+  - exit 3 returned whenever any machine-bound row is red, even with an ordinary red beside it;
+  - (a)'s lead read from what is READY, not what is WANTED.
+
+## 3. What would show the choice wrong (falsifiers, before the run)
+
+1. **"It could be said in counts."** (2) is wrong if a count exists that is the same on every run AND goes red when the workers truly
+   lag. Section 4's experiment is the test.
+2. **"The quiet read is red on main."** If the quiet read on main at `796c16f`, made before any code, shows waits > 0, then the
+   generator truly falls behind a terminal fall on D. The row is right to be red, and (2) would only hide it. Then I stop, and the
+   finding goes to the librarian as the unwelcome outcome below.
+3. **Degenerating, registered in advance:** if three landings on, a landing reports a fall-row red WITHOUT a named quiet read, the
+   declaration is "owed and none made" in a new coat. It is then the wrong fix, and the step must become a gate (the train's), not a line.
+
+## 4. The experiment, before code (on main `796c16f`, the build tree on G:)
+
+- **Quiet read now:** `dz-world --selftest` once under the exclusive hold → the fall row's waits on a quiet D. (Falsifier 2.)
+- **Counts against a lagging generator:** the same fall at `worker_delay_ms` 0 and at a delay that produces waits, in a throwaway
+  harness on the branch.
+  - Printed for each: the waits; the WANTED lead in ticks (min over the fall); the READY lead in storeys (min over the fall).
+  - Expected [ours]: WANTED lead equal at both, READY lead and waits moving together.
+  - If the READY lead moved while the waits did NOT (or the reverse), a count would be telling something the clock does not, and
+    falsifier 1 is in play.
+
+## 5. The unwelcome outcome, in the words that would make it true
+
+"**The generator cannot keep ahead of a terminal fall on this machine even when it is quiet**": the quiet read on main shows waits.
+Then there is nothing machine-bound to declare. The fall is faster than the workers, and that is a finding about the game, for him and
+C, not a test to soften.
+
+## 6. My bias
+
+I landed the run whose red I named as load, on an inference that the overlap was real (`p-land-yardstick-B_2026-11-13.md`, "inferred").
+I would like (2) to be right, because it agrees with that call. Falsifier 2 and the quiet read are the guard, and they run first.
+
+## 7. Not in this lap
+
+- The flight row (:469-470), unless section 4 shows it is the same thing.
+- Any change to the stream's radii, the generator or the fall speed.
+- The landing train and BUILDING.md (routed, not edited).
