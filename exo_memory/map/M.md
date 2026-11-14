@@ -1060,3 +1060,8 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **Finding:** `consonance/hooks/sessionstart-body.js:127` picks this seat's newest note with a pattern for a plain date and .md. On L after tonight's restart it named `librarian/2026-11-14.md` (the desktop's, 42 lines) while the night's notes were in `2026-11-14.laptop.md`. The wake gate holds the seat to the same list. Every `.desktop.md` and `.laptop.md` note since August is outside it.
 - **Until it is fixed:** when two machines write on one date, the suffixed file gets a pointer line in the plain one. Or name the day's file plainly on the machine that woke first and suffix the other.
 - **And:** a restart costs the conversation plus the rebuilt intake again (324,586 on the first call against 255,872 before it). Count the intake when estimating a restart.
+
+## 2026-11-14 04:3x (L): what runs is read from the binary, and a saving that costs retrieval is not offered
+- **Finding:** I told him the laptop's app was the old build. The exe's date (00:26 on 11-14) and one string from a desktop change (seat_models) showed it was rebuilt at launch. Before saying what runs: the binary's date, and a string that only the change would put there.
+- **His catch, 04:24:** "dont like the small forgetting, its like we are going the opposite way for retrieval". The 500k window was the one item that traded retrieval for tokens, and it came out. Where a saving costs retrieval, retrieval wins; savings come from seats not woken, from where a cut falls, and from the model each seat runs.
+- **Per-seat models live in two files that git does not carry:** `seat_models` in the app's config and `modelSettings` in the user settings. Each machine needs its own edit.

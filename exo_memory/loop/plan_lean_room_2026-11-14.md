@@ -137,3 +137,23 @@ B, one a run with a backup (`handback/p-l207-l-owed-steps-B_2026-11-14.md`, sect
 - **P4, what is kept:** no change he can point to in how this seat speaks or what it holds to, because BOOT, the cards and the rules are untouched.
 - **P5, the wake on L:** first replies after a cut name more of the room than before, and this seat still acts before reading its notes at least once in the week, because on L the gate only warns.
 - **Wrong if:** the count shows less than a third (P1); the cut falls near 968,000 again (P2); no detail is missed, or one is missed that the notes held (P3 in either direction); he names a change in the seat (P4); no act-before-read is found by a seat that is not this one (P5).
+
+### WITHDRAWN 04:3x: the 500k window, at his objection of 04:24
+- **His words:** "dont like the small forgetting, its like we are going the opposite way for retrieval, or am I wrong?" (whole in the room brief). He is right about this one change: it was the only item in the plan that bought tokens with retrieval, by about doubling the cuts that fall in the middle of work.
+- **Done:** the `autoCompactWindow` line is out of this seat's local settings (backup `settings.local.json.bak-20261114-before-uncap` beside it). The seat is back on the harness default, about 967k.
+- **What stays:** one cut a day at a quiet point, at his keystroke, after the handoff and the STATE entry are written. That replaces a cut that fell mid-task at about 968k most days (11-12, 11-13, 11-14 in the counter), so it is fewer blind cuts, not more.
+- **The predictions:** P2 is void, never tested. P3 is withdrawn with the cause it named. P1, P4 and P5 stand. The registered cost bar (a third under 472,545) stands as written and is now harder to meet.
+
+### MODELS AND EFFORT, set 04:3x at his word of 04:24
+- **His word:** the chair and the Third Place back on Opus; only this seat keeps Fable at xhigh; the other seats and panes on Opus at high.
+- **Set, each with a backup, a parse and a check that nothing else moved** (script in the session scratchpad, `set_models.js`):
+  - `seat_models` in the app's config: main opus, third_place opus, librarian fable, A, B, C, E opus. Read by the app when it spawns a seat (`consonance/src-tauri/src/main.rs:1116-1160`, 1200-1202), so it takes effect at the next launch and outranks a model typed into a seat. Backup `.consonance.json.bak-20261114-seat-models`.
+  - Opus's effort from xhigh to high in the user settings' `modelSettings`; Fable stays xhigh. One value; 6 hook events before and after; the file's sha256 went a0a7ffc1d91e to 2eb716265850, so B's recorded digest of that file is now the old one. Backup `settings.json.bak-20261114-opus-high`. It is the user's own settings file, so it also applies to any Opus session of his outside the room on this machine.
+  - After both: `install.ps1 -Check` still 6 DRIFT and 7 ABSENT; landed-live 23/25.
+- **Before the change (last reply's model in each transcript):** main Fable 5.2, the Third Place Fable 5.2, B Opus 5.5, this seat Fable 5.2. A, C, E not read.
+- **To check at the next launch:** the app's log line SEAT MODEL for each seat, and the model of each seat's first reply.
+- **The desktop has its own two files.** Neither edit travels by git. The same two changes are owed on D at his word there.
+- **On the builders, high or medium (my answer to him):** the only count the room has (`loop/effort_before_after_count_2026-11-13.md:64`) compared the panes before and after effort was raised on 11-13 and found no difference it could tell. That supports coming down from xhigh. It says nothing about high against medium. So high now, and medium tried on one pane first if a week's count still runs heavy.
+
+### A CORRECTION: the app on L is not the old build
+- At 04:14 I told him the program was the same build as before and nothing in the app was rebuilt. Checked at 04:2x: `consonance.exe` was written at 00:26 on 11-14, the minute of tonight's first launch, and the binary holds the string seat_models, which entered the source on the desktop on 11-13. So the laptop has been running the desktop's app changes since 00:26. Which other changes are in that build is inferred, not read.
