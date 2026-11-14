@@ -60,6 +60,10 @@ second orchestrator nobody needs.
   Falsifier: from that landing on, a landing commit on main, or a push, whose body or board row names the chair's seat
   rather than a pane's (`git log --format='%h %ad %b' main`, the `Seat:` line), or a landing whose all-clear came from the
   chair and not the librarian.
+  A world self-test that exits 3 is re-read once under the exclusive hold, and the hand-back names both readings.
+  Why: exit 3 means its only reds are machine-bound: a fall raced against the clock went red under other seats' load in three
+  runs of 2026-11-13 and green in three others, and read 0 waits on a quiet machine
+  (`exo_memory/loop/registration_fall_row_B_2026-11-13.md`; dreamzone-3 `fall-row-b`).
 - Let the work enter by either door, and let the ring run on its own. The user may start at you or at the librarian. Once
   a loop is going, it cycles orch → panes → lib → orch without returning to the user; step 8 is an off-ramp you take when
   there is something to say.

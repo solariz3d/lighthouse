@@ -8533,7 +8533,13 @@ fn index_tier_entry_count() -> usize {
         .count()
 }
 
-/// The newest dated entry the index tier holds, by the same date rule the window orders with.
+/// THE WINDOW'S OWN FIRST ENTRY OF THE NEWEST DATE: the newest date among the dated map/, journal/ and loop/ index entries, and among
+/// that date's labels the FIRST in the window's own order (date descending, label ASCENDING, `index_tier.sort_by` above).
+///
+/// It was the newest date's LAST label (the maximum `(date, label)` pair), the opposite tie-break to the window's: while one date's
+/// entries all fit the two agree, and on 2026-11-13 they did not. Seven `loop/*_2026-11-13/` folders put 203 entries (22,321 B) of one
+/// date in the index, the window carried 137 of them from "a", and the pick, `loop/wake_level2_2026-11-13/shelf_builder.md`, was past
+/// the cut: the row read "not newest-first" of a window that was (lighthouse `loop/registration_index_window_B_2026-11-14.md`).
 #[cfg(test)]
 fn newest_dated_index_label() -> Option<String> {
     let shelf = corpus_shelf_at_with_index(0, usize::MAX);
@@ -8548,7 +8554,7 @@ fn newest_dated_index_label() -> Option<String> {
                 None
             }
         })
-        .max()
+        .max_by(|(da, la), (db, lb)| da.cmp(db).then_with(|| lb.cmp(la)))
         .map(|(_, lab)| format!("- {lab}"))
 }
 
@@ -19613,24 +19619,59 @@ mod shelf_tests {
     /// and alphabetical nonsense for loop/ (filenames are topics). Before this lap the first
     /// indexed loop line was `loop/wire_run_2026-08-15.md` -- 'w' sorts high -- and the newest
     /// file in the room was somewhere in the middle of 398 lines.
+    ///
+    /// ON A FIXTURE ROOM since 2026-11-14 (pane B, lighthouse `loop/registration_index_window_B_2026-11-14.md`). It read the live room,
+    /// and went red on 2026-11-13 with no code changed, when one day's swarm folders put more entries of one date in the index than the
+    /// window holds: a row about the ORDER, red with the room's SIZE. The fixture holds that case on purpose: one date (2026-11-13) with
+    /// more entries than an index budget of ONE line, spread over dated subfolders, labels on both sides of the alphabet; an older file
+    /// named to sort first (`aaa_2026-08-01`, so path order would carry it); and the original bug's `wire_run_2026-08-15`.
     #[test]
     fn the_index_window_is_newest_first_by_date_not_by_path() {
-        // D277 repair: this reads the room through the process-global DIRS, which 31 DirsGuard tests repoint at scratch rooms while
-        // holding DIRS_SERIAL; unlocked, a parallel run can read a scratch corpus (red for the chair on land-d277, green alone)
-        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
-        let shelf = corpus_shelf_at(0);
-        let newest = newest_dated_index_label().expect("the corpus must hold a dated loop/ file");
+        // D277 repair: DIRS is process-global; DirsGuard holds DIRS_SERIAL and puts DIRS back, the panic path included.
+        let _serial = DirsGuard::take();
+        // The live room's first dated entry is PRINTED, never asserted: if the live shelf ever stops starting its dated index with the
+        // newest date, the landing's run shows it here (the registration's falsifier 2) without a new instrument.
+        let live_pick = newest_dated_index_label();
+        let live_carried = live_pick.as_ref().map(|p| corpus_shelf_at(0).contains(&format!("{p}  (")));
+        eprintln!("live room: the window's first entry of the newest date: {live_pick:?}; on the live shelf: {live_carried:?}");
+        let root = crate::test_scratch::root().join(format!("index-window-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        let _s = crate::test_scratch::Scratch::owning(root.clone());
+        let (instances, data) = (root.join("instances"), root.join("data"));
+        for d in [&instances, &data, &root.join("loop").join("alpha_2026-11-13"), &root.join("loop").join("wake_2026-11-13")] {
+            fs::create_dir_all(d).unwrap();
+        }
+        fs::write(root.join("BOOT.md"), "# BOOT\n").unwrap();
+        for (rel, title) in [
+            ("loop/aaa_2026-08-01.md", "an old file that sorts first"),
+            ("loop/wire_run_2026-08-15.md", "the 2026-09-01 bug's first line"),
+            ("loop/alpha_2026-11-13/01_first.md", "the newest date, first in label order"),
+            ("loop/alpha_2026-11-13/02_second.md", "the newest date"),
+            ("loop/mid_2026-11-13.md", "the newest date, at the top of loop/"),
+            ("loop/wake_2026-11-13/shelf_builder.md", "the newest date, near the end"),
+            ("loop/wake_2026-11-13/zz_last.md", "the newest date, last in label order"),
+        ] {
+            fs::write(root.join(rel), format!("# {title}\n\nbody\n")).unwrap();
+        }
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: root.join("BOOT.md").display().to_string(),
+            instances: instances.display().to_string(),
+            data: data.display().to_string(),
+        });
+        let newest = newest_dated_index_label().expect("the fixture holds dated loop/ files");
+        assert_eq!(newest, "- loop/alpha_2026-11-13/01_first.md", "the newest date's FIRST entry in the window's own order");
+        // An index budget of exactly one line, the newest's: only the window's first dated entry can ride.
+        let all = corpus_shelf_at_with_index(0, usize::MAX);
+        let line = all.lines().find(|l| l.starts_with(&format!("{newest}  ("))).expect("the newest's index line");
+        let shelf = corpus_shelf_at_with_index(0, line.len() + 1);
         assert!(
-            shelf.contains(&newest),
-            "the newest dated index entry {newest} is not on the shelf -- the window is not \
-             newest-first"
+            shelf.contains(&format!("{newest}  (")),
+            "the newest dated index entry {newest} is not on a one-line window -- the window is not newest-first, or not first by \
+             label inside a date"
         );
         // and the thing that used to be first must no longer outrank it
-        let pos_new = shelf.find(&newest).unwrap();
-        if let Some(pos_w) = shelf.find("- loop/wire_run_2026-08-15.md") {
-            assert!(pos_new < pos_w,
-                "a 2026-08-15 file still sorts above the newest file: path order, not date order");
-        }
+        let (pos_new, pos_w) = (all.find(&format!("{newest}  (")).unwrap(), all.find("- loop/wire_run_2026-08-15.md").expect("wire_run"));
+        assert!(pos_new < pos_w, "a 2026-08-15 file still sorts above the newest file: path order, not date order");
     }
 
     /// THE FOURTH REASON A PATH IS ABSENT gets its own counter, and it reports the DELIVERED drop.
