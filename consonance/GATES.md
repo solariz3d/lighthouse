@@ -327,7 +327,10 @@ landing window 14 minutes before the word reached it. A file every runner reads 
 **What.** `node consonance/tools/heavy-run.js --status` prints the holder of the exclusive hold and of each slot (seat, pid, command,
 since), judged by the same rules `--run` applies: a dead holder, a young lock's second witness, a reused pid, a hold past 90 minutes,
 the caller's own hold. It reads only: it takes no slot, moves or writes no file and posts nothing. **It exits 1 while an exclusive
-hold stands**, 0 when none does (slots may still be held), and 2 when it cannot read the data dir.
+hold stands, or while a live slot of another run names a timing session,** and prints a `GATE: exit 1 — …` line saying which; 0
+otherwise (slots may still be held); 2 when it cannot read the data dir. A command names a timing session when the word "timing" (any
+case) is left after every "not a timing …" phrase is taken out: "TIMING SESSION", "TIMING MEASURE" and "PACING CHECK (TIMING)" count,
+"(not a timing session)" does not.
 
 **Run it before any run, light or heavy, and run nothing while it exits 1:**
 

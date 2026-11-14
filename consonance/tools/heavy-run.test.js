@@ -1305,6 +1305,28 @@ test('STATUS a hold past the maximum is reported as ignored, as --run ignores it
   assert.match(r.stdout, /EXCLUSIVE HOLD: IGNORED/);
 });
 
+// The chair's condition (04:41Z): COMMITTEE.md's rule is "while a lock's cmd names a timing session, run nothing", and B's slip of 04:10Z was a
+// hand-read that stopped on that word. A live slot whose command names one gates exactly as a hold does, and the output says why.
+test('STATUS (RED FIRST) a live slot whose command NAMES A TIMING SESSION exits 1 and says why; "(not a timing session)" does not', () => {
+  const run = (cmd, extra = {}) => {
+    const d = tmp();
+    writeJson(lockOf(d), { pid: process.pid, seat: '0845a868', cmd, started: new Date().toISOString(), token: 't-slot' });
+    return status(d, extra);
+  };
+  for (const cmd of ['P D675 TIMING SESSION: the timer control', 'P D675 TIMING MEASURE: Sleep(1) overshoot', 'C D675 PACING CHECK (TIMING), three builds', 'a timing session, lower case']) {
+    const r = run(cmd);
+    assert.strictEqual(r.status, 1, `"${cmd}": exit ${r.status}\n${r.stdout}`);
+    assert.match(r.stdout, /GATE: exit 1 .*slot 1 .*names a timing session/, `"${cmd}": the output says why`);
+  }
+  for (const cmd of ['E LANDING d675-filter-c: build.bat test (not a timing session)', 'js-suite']) {
+    const r = run(cmd);
+    assert.strictEqual(r.status, 0, `"${cmd}": exit ${r.status}\n${r.stdout}`);
+    assert.doesNotMatch(r.stdout, /GATE: exit 1/);
+  }
+  const mine = run('P D675 TIMING SESSION: my own', { [H.TOKEN_ENV]: 't-slot' });
+  assert.strictEqual(mine.status, 0, 'inside the session\'s own run (its token) the slot does not gate its own children');
+});
+
 test('STATUS inside the holder\'s own run (its token in the environment) the hold is its own and does not fail the gate', () => {
   const d = tmp();
   writeJson(holdOf(d), { pid: process.pid, seat: 'me', cmd: 'my session', exclusive: true, started: new Date().toISOString(), token: 'my-token' });

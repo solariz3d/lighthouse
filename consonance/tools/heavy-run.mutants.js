@@ -130,7 +130,9 @@ const MUTANTS = [
   ['idle guard: a stale parent id is taken at its word (a stranger created before the holder is counted in its tree)', SRC, 'return a === null || b === null || b >= a; };', 'return true; };'],
   // D675, --status (P, 11-14): read only, the same holder rules as --run, non-zero while a hold stands
   ['status: the hold file is not read (a hold with no lock reads all clear)', SRC, 'const hf = path.join(dir, HOLD_NAME), hh = readLock(hf);', 'const hf = path.join(dir, HOLD_NAME), hh = null;'],
-  ['status: exits 0 while a hold stands', SRC, "code: s.holdStands ? 1 : 0 };", 'code: 0 };'],
+  ['status: exits 0 while a hold stands (the gate never closes)', SRC, "code: why.length ? 1 : 0 };", 'code: 0 };'],   // re-anchored for the timing-session gate (P, 11-14)
+  ['status: a live slot naming a timing session does not gate', SRC, '    if (x.timing) out.timingSlots.push(k);\n', ''],
+  ['status: "(not a timing session)" counts as one', SRC, ".replace(/\\bnot an? timing\\b/gi, '')", ''],
   ['status: a dead old holder reads held', SRC, "if (age !== null && age >= YOUNG_MS) return { state: 'free', stale: 'dead' };", "if (age !== null && age >= YOUNG_MS) return { state: 'held' };"],
   ['status: a young dead holder is freed without the second witness', SRC, "return confirmGone(h.pid) === true ? { state: 'free', stale: 'dead' }", "return true ? { state: 'free', stale: 'dead' }"],
   ['status: a reused pid reads held', SRC, "    if (hasIdentity(h) && !sameHolder(h, identify(h.pid))) return { state: 'free', stale: 'pid_reused' };\n", ''],

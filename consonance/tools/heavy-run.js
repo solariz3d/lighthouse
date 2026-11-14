@@ -704,11 +704,15 @@ function status({ dataDir, env = process.env, slots, alive = pidAlive, confirmGo
     if (hasIdentity(h) && !sameHolder(h, identify(h.pid))) return { state: 'free', stale: 'pid_reused' };
     return { state: 'held' };
   };
-  const out = { dir, slots: [], hold: null, holdStands: false };
+  const out = { dir, slots: [], hold: null, holdStands: false, timingSlots: [] };
   for (let k = 1; k <= MAX_SLOTS; k++) {
     const file = slotFile(dir, k), h = readLock(file);
     if (h === null && k > n) continue;   // the slots above the count are shown only when a lock sits in one (a runner told to use fewer still honours it)
-    out.slots.push({ k, holder: h, ...judge(file, h) });
+    const x = { k, holder: h, ...judge(file, h) };
+    // COMMITTEE.md: "while a lock's cmd names a timing session, run nothing". A live slot of another run that names one gates like a hold.
+    x.timing = x.state === 'held' && namesTimingSession(h.cmd) && !(h.token && h.token === env[TOKEN_ENV]);
+    if (x.timing) out.timingSlots.push(k);
+    out.slots.push(x);
   }
   const hf = path.join(dir, HOLD_NAME), hh = readLock(hf);
   const hj = judge(hf, hh);
@@ -723,7 +727,14 @@ function status({ dataDir, env = process.env, slots, alive = pidAlive, confirmGo
   return out;
 }
 
-/** The --status report: one line for the hold, one per slot. Returns { text, code }: code 1 while an exclusive hold stands, else 0. */
+/** A command NAMES A TIMING SESSION when the word "timing" (any case) is left after every "not a timing …" phrase is taken out. Counted:
+ *  "TIMING SESSION", "TIMING MEASURE", "PACING CHECK (TIMING)". Not counted: "(not a timing session)", a command without the word. */
+function namesTimingSession(cmd) {
+  return /\btiming\b/i.test(String(cmd || '').replace(/\bnot an? timing\b/gi, ''));
+}
+
+/** The --status report: one line for the hold, one per slot, and a GATE line saying why when the exit is 1. Returns { text, code }: code 1
+ *  while an exclusive hold stands or a live slot of another run names a timing session, else 0. */
 function statusReport(s) {
   const who = (h) => (h && !h.unreadable ? describe(h) : `an unreadable file (${h && h.unreadable})`);
   const H = s.hold;
@@ -738,7 +749,11 @@ function statusReport(s) {
     else if (x.state === 'writing') lines.push(`  slot ${x.k}: being claimed this instant (unreadable, young)`);
     else lines.push(`  slot ${x.k}: free${x.stale ? ` (a stale lock, ${x.stale}: ${who(x.holder)}; the next runner takes it over)` : ''}`);
   }
-  return { text: lines.join('\n') + '\n', code: s.holdStands ? 1 : 0 };
+  const why = [];
+  if (s.holdStands) why.push('an exclusive hold stands');
+  for (const k of s.timingSlots || []) why.push(`slot ${k} names a timing session`);
+  if (why.length) lines.push(`  GATE: exit 1 — ${why.join('; ')}. Run nothing, light or heavy.`);
+  return { text: lines.join('\n') + '\n', code: why.length ? 1 : 0 };
 }
 
 module.exports = { status, statusReport, IDLE_WINDOW_MS, IDLE_CPU_S, IDLE_CHECK_MS, idleSampleTree, seatMountUrl, postBoardVia, reportIdle, HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
