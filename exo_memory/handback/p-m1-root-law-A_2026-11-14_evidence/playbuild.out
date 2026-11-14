@@ -1,0 +1,10 @@
+heavy-run status (C:\Consonance\data), read only:
+  EXCLUSIVE HOLD: none
+  slot 1: free
+  slot 2: free
+
+heavy-run: WARNING: C:\ has 21.5 GB free, under 50 GB; run node consonance/tools/janitor.js
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+repo C:\Users\nname\Desktop\dreamzone-3 bat C:\Users\nname\Desktop\dreamzone-3\build.bat exists [33mtrue[39m
+build.bat exit 0, error none, wall 20 s, log C:\Users\nname\Desktop\dreamzone-3\build\launch-build.log
+stamp written with start time 2026-11-14T17:14:14.122Z
