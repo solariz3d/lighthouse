@@ -99,8 +99,14 @@ In `handback/p-d675-timing-E_2026-11-13.md` section 2.
 - The camera's view of the Dark was unblocked in **248 of 288** frames on each side; the Dark was out throughout.
 - **The stage's count at the first kept frame:** before, **1 figure of 2 poses** (the Dark undrawn); after, **2 of 2**.
 - 254 of 288 frames differ between the sides.
-- **Rule A:** before is main's game as of `b08f25e`. Main is now `81eb524`, whose newer commits (the run frame, the pop fix,
-  the yardstick) are not in either side. His play build is `31d1c6d`.
+- **Rule A:** before is main's game as of `b08f25e`. Main is now `81eb524`.
+  - ~~whose newer commits (the run frame, the pop fix, the yardstick) are not in either side~~
+  - **Corrected (the chair, 02:33Z; checked: `git merge-base --is-ancestor 7500a26 b08f25e` → yes, and
+    `git log --first-parent b08f25e..origin/main` → `796c16f`, `81eb524`):** the run frame is INSIDE `b08f25e`. Missing
+    from both sides are the toe-speed measure (`796c16f`) and **the pop fix (`81eb524`)**. Both sides therefore carry the
+    take-off snap he has been shown fixed.
+  - This clip is filmed again from the landed main after O's landing.
+  - His play build is `31d1c6d`.
 
 **Falsifier 1 holds,** looked at, frame 200 side by side: the before side is an empty corridor, the after side has the
 Dark running there in the hunter's shape.
