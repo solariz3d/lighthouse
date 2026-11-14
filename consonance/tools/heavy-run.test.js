@@ -1227,3 +1227,88 @@ test('L202 (RED FIRST) a stranger carrying the holder\'s pid as a stale parent i
   const same = H.idleSampleTree([100], () => ({ status: 0, stdout: [`100|1|${ticks(0)}|node.exe|2000`, `200|100|${ticks(7)}|dz-chase.exe|2000`].join('\r\n') }), 'win32');
   assert.ok(Math.abs(same.get(100).cpu - 7) < 0.01, `a child created at its parent's own time counts (${same.get(100).cpu} s)`);
 });
+
+// D675 (P, the chair's packet of 04:12Z): `--status`. Four seats today read the three files by hand and missed one, each time running beside
+// another seat's exclusive hold. The status names the holder of each slot and of the hold from the same files and the same holder rules
+// --run uses, writes nothing, and exits non-zero while a hold stands, so a script can gate on it.
+const status = (d, extra = {}) => spawnSync(process.execPath, [HELPER, '--status'], { env: cleanEnv({ CONSONANCE_DATA: d, ...extra }), encoding: 'utf8', windowsHide: true });
+const writeJson = (f, o) => fs.writeFileSync(f, JSON.stringify(o));   // holdOf is the literal-name helper above (:939)
+const snapshot = (d) => fs.readdirSync(d).sort().map((n) => `${n} ${fs.statSync(path.join(d, n)).mtimeMs} ${fs.readFileSync(path.join(d, n), 'utf8')}`);
+
+test('STATUS (RED FIRST) a HOLD FILE and NO LOCK: it names the hold\'s holder and exits non-zero', () => {
+  const d = tmp();
+  writeJson(holdOf(d), { pid: process.pid, seat: '0845a868', cmd: 'C TIMING SESSION row C', exclusive: true, started: new Date().toISOString(), token: 't-hold' });
+  const r = status(d);
+  assert.notStrictEqual(r.status, 0, `exit ${r.status}: a standing hold must not read as all clear\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /EXCLUSIVE HOLD: STANDS/);
+  assert.match(r.stdout, new RegExp(`0845a868 pid ${process.pid} \\(C TIMING SESSION row C, since `), 'the seat, pid, command and since');
+  assert.match(r.stdout, /slot 1: free/, 'and the lock files that are absent read free');
+});
+
+test('STATUS nothing held: every slot free, no hold, exit 0', () => {
+  const r = status(tmp());
+  assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /EXCLUSIVE HOLD: none/);
+  assert.match(r.stdout, /slot 1: free/);
+  assert.match(r.stdout, /slot 2: free/);
+});
+
+test('STATUS a live run in a slot is named, and a slot alone does not fail the gate (exit 0)', () => {
+  const d = tmp();
+  writeJson(path.join(d, 'heavy-run.2.lock'), { pid: process.pid, seat: '12fb81f6', cmd: 'js-suite', started: new Date().toISOString(), token: 't2' });
+  const r = status(d);
+  assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, new RegExp(`slot 2: held by 12fb81f6 pid ${process.pid} \\(js-suite, since `));
+  assert.match(r.stdout, /slot 1: free/);
+});
+
+test('STATUS writes nothing: a stale lock and a stale hold that --run would move aside are left exactly as they were', () => {
+  const d = tmp();
+  const old = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+  writeJson(lockOf(d), { pid: 424242, seat: 'gone', cmd: 'old run', started: old, token: 't-old' });
+  writeJson(holdOf(d), { pid: 424243, seat: 'gone', cmd: 'old hold', exclusive: true, started: old, token: 't-oldhold' });
+  const before = snapshot(d);
+  const r = H.status({ dataDir: d, env: {}, alive: () => false });
+  assert.deepStrictEqual(snapshot(d), before, 'no file moved, removed, created or rewritten');
+  assert.strictEqual(r.holdStands, false, 'a dead hold does not stand, as --run would take it over');
+});
+
+// The same holder rules as --run: each case is judged by status() and by acquire() with the same witnesses, and they must agree.
+function agree(name, lock, wit) {
+  test(`STATUS agrees with --run: ${name}`, () => {
+    const d1 = tmp(), d2 = tmp();
+    writeJson(lockOf(d1), lock); writeJson(lockOf(d2), lock);
+    const base = Date.parse(lock.started || '2026-11-14T04:00:00Z');
+    const s = H.status({ dataDir: d1, env: {}, now: () => base + wit.ageMs, ...wit.fns });
+    let took;
+    try {
+      const h = H.acquire({ cmd: 'x', dataDir: d2, env: {}, slots: 1, tree: 't', maxWaitMs: 0, pollMs: 1, now: () => base + wit.ageMs, sleep: () => {}, log: () => {}, diskFree: () => 1e12, ...wit.fns });
+      took = true; h.release();
+    } catch (e) { if (e.code !== 'HEAVY_RUN_TIMEOUT') throw e; took = false; }
+    assert.strictEqual(s.slots[0].state === 'free', took, `status reads slot 1 ${s.slots[0].state}; --run ${took ? 'takes it' : 'waits'}`);
+    assert.strictEqual(s.slots[0].state, wit.want);
+  });
+}
+const L = (o) => ({ pid: 4242, seat: 's', cmd: 'c', started: '2026-11-14T04:00:00Z', token: 'tk', ...o });
+agree('a live holder is held', L(), { ageMs: 60000, fns: { alive: () => true }, want: 'held' });
+agree('a dead OLD holder reads free', L(), { ageMs: H.YOUNG_MS + 60000, fns: { alive: () => false, confirmGone: () => { throw new Error('not asked'); } }, want: 'free' });
+agree('a dead YOUNG holder that tasklist still sees running is held', L(), { ageMs: 60000, fns: { alive: () => false, confirmGone: () => false }, want: 'held' });
+agree('a dead YOUNG holder the second method cannot judge is held', L(), { ageMs: 60000, fns: { alive: () => false, confirmGone: () => null }, want: 'held' });
+agree('a dead YOUNG holder both methods call gone reads free', L(), { ageMs: 60000, fns: { alive: () => false, confirmGone: () => true }, want: 'free' });
+agree('a live pid now running another program (reused) reads free', L({ image: 'node.exe', holder_start: '2026-11-14T03:59:00.000Z' }), { ageMs: 60000, fns: { alive: () => true, identify: () => ({ image: 'chrome.exe', start: Date.parse('2026-11-14T04:00:30Z') }) }, want: 'free' });
+
+test('STATUS a hold past the maximum is reported as ignored, as --run ignores it, and does not fail the gate', () => {
+  const d = tmp();
+  writeJson(holdOf(d), { pid: process.pid, seat: 'x', cmd: 'forgotten', exclusive: true, started: new Date(Date.now() - H.HOLD_MAX_MS - 60000).toISOString(), token: 't' });
+  const r = status(d);
+  assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /EXCLUSIVE HOLD: IGNORED/);
+});
+
+test('STATUS inside the holder\'s own run (its token in the environment) the hold is its own and does not fail the gate', () => {
+  const d = tmp();
+  writeJson(holdOf(d), { pid: process.pid, seat: 'me', cmd: 'my session', exclusive: true, started: new Date().toISOString(), token: 'my-token' });
+  const r = status(d, { [H.TOKEN_ENV]: 'my-token' });
+  assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /EXCLUSIVE HOLD: yours/);
+});

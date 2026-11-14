@@ -322,6 +322,20 @@ landing window 14 minutes before the word reached it. A file every runner reads 
   and the short `dz-world` runs did not, which is how unlocked load reached P's window.
 - **Not in scope:** a process watcher.
 
+### Who holds what: `--status` (D675)
+
+**What.** `node consonance/tools/heavy-run.js --status` prints the holder of the exclusive hold and of each slot (seat, pid, command,
+since), judged by the same rules `--run` applies: a dead holder, a young lock's second witness, a reused pid, a hold past 90 minutes,
+the caller's own hold. It reads only: it takes no slot, moves or writes no file and posts nothing. **It exits 1 while an exclusive
+hold stands**, 0 when none does (slots may still be held), and 2 when it cannot read the data dir.
+
+**Run it before any run, light or heavy, and run nothing while it exits 1:**
+
+    node consonance/tools/heavy-run.js --status && <your run>
+
+**Why.** On 2026-11-13 and 11-14 five runs went beside another seat's exclusive hold, each after the three files were read by hand
+and one was missed. The case a by-hand read misses is a hold file with no lock file; it is the status's first row.
+
 **To change it:** `HOLD_MAX_MS` in `consonance/tools/heavy-run.js`. A hold whose run is over can be removed by hand; the IGNORING line and
 the wait's exit-3 message name its file.
 

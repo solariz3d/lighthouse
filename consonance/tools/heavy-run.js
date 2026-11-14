@@ -680,7 +680,68 @@ function hold(opts = {}) {
   return h;
 }
 
-module.exports = { IDLE_WINDOW_MS, IDLE_CPU_S, IDLE_CHECK_MS, idleSampleTree, seatMountUrl, postBoardVia, reportIdle, HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+/** D675: who holds each slot and the exclusive hold, READ ONLY. It judges each file by the rules --run applies (takeIfStale and foreignHold in acquire():
+ *  dead, a young lock's second witness, a reused pid, an unreadable file's grace, a hold past the maximum, the caller's own hold), but moves, writes and
+ *  posts nothing, and takes no slot. `free` means a runner would find the slot free or take it over. The rows that pin it to acquire() are "STATUS agrees
+ *  with --run" in heavy-run.test.js. */
+function status({ dataDir, env = process.env, slots, alive = pidAlive, confirmGone = pidGone, identify = processIdentity, now = () => Date.now(), holdMaxMs = HOLD_MAX_MS } = {}) {
+  const dir = dataDir === undefined ? (manifestDataDir() || appDefaultDataDir()) : dataDir;
+  if (!dir) throw Object.assign(new Error('heavy-run: no data dir (CONSONANCE_DATA unset and ~/.consonance.json has no data_dir)'), { code: 'HEAVY_RUN_NO_DATA' });
+  const n = slotCount(slots !== undefined ? slots : profile({ env: process.env }).values.slots);
+  // One file, judged: 'held' (a live holder), 'free' (absent, or a runner would take it over: stale, with the reason), 'writing' (unreadable and young).
+  const judge = (file, h) => {
+    if (h === null) return { state: 'free' };
+    if (h.unreadable) {
+      let age;
+      try { age = now() - fs.statSync(file).mtimeMs; } catch (_) { return { state: 'free' }; }
+      return age > UNREADABLE_GRACE_MS ? { state: 'free', stale: 'unreadable' } : { state: 'writing' };
+    }
+    if (!alive(h.pid)) {
+      const age = ageOf(h, now());
+      if (age !== null && age >= YOUNG_MS) return { state: 'free', stale: 'dead' };
+      return confirmGone(h.pid) === true ? { state: 'free', stale: 'dead' } : { state: 'held', note: 'kill(0) reads it dead, the second method does not' };
+    }
+    if (hasIdentity(h) && !sameHolder(h, identify(h.pid))) return { state: 'free', stale: 'pid_reused' };
+    return { state: 'held' };
+  };
+  const out = { dir, slots: [], hold: null, holdStands: false };
+  for (let k = 1; k <= MAX_SLOTS; k++) {
+    const file = slotFile(dir, k), h = readLock(file);
+    if (h === null && k > n) continue;   // the slots above the count are shown only when a lock sits in one (a runner told to use fewer still honours it)
+    out.slots.push({ k, holder: h, ...judge(file, h) });
+  }
+  const hf = path.join(dir, HOLD_NAME), hh = readLock(hf);
+  const hj = judge(hf, hh);
+  if (hh === null) out.hold = { state: 'none' };
+  else if (hh.token && hh.token === env[TOKEN_ENV]) out.hold = { state: 'yours', holder: hh };
+  else if (hj.state === 'free') out.hold = { state: 'stale', holder: hh, stale: hj.stale };
+  else {
+    const age = ageOf(hh, now());
+    if (age !== null && age > holdMaxMs) out.hold = { state: 'ignored', holder: hh, age_ms: age };
+    else { out.hold = { state: 'stands', holder: hh, note: hj.note }; out.holdStands = true; }
+  }
+  return out;
+}
+
+/** The --status report: one line for the hold, one per slot. Returns { text, code }: code 1 while an exclusive hold stands, else 0. */
+function statusReport(s) {
+  const who = (h) => (h && !h.unreadable ? describe(h) : `an unreadable file (${h && h.unreadable})`);
+  const H = s.hold;
+  const lines = [`heavy-run status (${s.dir}), read only:`];
+  if (H.state === 'none') lines.push('  EXCLUSIVE HOLD: none');
+  else if (H.state === 'stands') lines.push(`  EXCLUSIVE HOLD: STANDS — ${who(H.holder)}. Run nothing, light or heavy, until it is gone.${H.note ? ` (${H.note})` : ''}`);
+  else if (H.state === 'yours') lines.push(`  EXCLUSIVE HOLD: yours — ${who(H.holder)}; this run is its holder or the holder's child`);
+  else if (H.state === 'ignored') lines.push(`  EXCLUSIVE HOLD: IGNORED by runners — ${who(H.holder)} is ${mins(H.age_ms)} old, past the ${mins(HOLD_MAX_MS)} maximum`);
+  else lines.push(`  EXCLUSIVE HOLD: stale (${H.stale}) — ${who(H.holder)}; the next runner takes it over`);
+  for (const x of s.slots) {
+    if (x.state === 'held') lines.push(`  slot ${x.k}: held by ${who(x.holder)}${x.note ? ` (${x.note})` : ''}`);
+    else if (x.state === 'writing') lines.push(`  slot ${x.k}: being claimed this instant (unreadable, young)`);
+    else lines.push(`  slot ${x.k}: free${x.stale ? ` (a stale lock, ${x.stale}: ${who(x.holder)}; the next runner takes it over)` : ''}`);
+  }
+  return { text: lines.join('\n') + '\n', code: s.holdStands ? 1 : 0 };
+}
+
+module.exports = { status, statusReport, IDLE_WINDOW_MS, IDLE_CPU_S, IDLE_CHECK_MS, idleSampleTree, seatMountUrl, postBoardVia, reportIdle, HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
 
 // D663: `node heavy-run.js --run [--exclusive] --cmd "<what>" -- <program> [args...]` runs one program under the lock (and the hold, with --exclusive) and exits
 // with its code. For a run that is not node (a Blender bake, a game run over 10 s, a timing session's own binary): GATES.md, "The heavy-run lock".
@@ -698,6 +759,18 @@ function runCli(argv, { spawn = spawnSync } = {}) {
 
 if (require.main === module && process.argv[2] === '--run') {
   process.exitCode = runCli(process.argv.slice(3));
+}
+
+// D675: `node consonance/tools/heavy-run.js --status` — who holds each slot and the exclusive hold, read only; exits 1 while a hold stands, 2 when it cannot read.
+if (require.main === module && process.argv[2] === '--status') {
+  try {
+    const r = statusReport(status());
+    process.stdout.write(r.text);
+    process.exitCode = r.code;
+  } catch (e) {
+    process.stderr.write(`heavy-run --status: ${e.message}\n`);
+    process.exitCode = 2;
+  }
 }
 
 // L202: the detached child reportIdle starts, so a waiter never waits on the network. It says nothing and fails quietly.
