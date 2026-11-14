@@ -53,6 +53,27 @@ const MUTANTS = [
     "    if (e && e.code === 'HEAVY_RUN_TIMEOUT') return", "    if (false) return"],
   ['privacy: a refusal by the privacy scan is ignored (an email address or account path is pushed)', SRC, '  if (!priv.ok) {', '  if (false) {'],
   ['failingRows: a command cmd could not run is not named', SRC, '|is not recognized as an internal or external command/', '/'],
+  // D675 (B): the world self-test's exit 3, read again once inside the same hold (registration_train_exit3_B_2026-11-14.md and its amendments).
+  ['exit 3: ANY red carrying the machine-bound summary is read again (an ordinary red laundered by a second try)', SRC,
+    "    if (r.code !== 3 || !MACHINE_BOUND_SUMMARY.test(r.text)) return { green: false, failing: first };",
+    "    if (r.code === 0 || !MACHINE_BOUND_SUMMARY.test(r.text)) return { green: false, failing: first };"],
+  ['exit 3: counted green when no reread is configured', SRC,
+    "    if (!cfg.reread || !cfg.reread.length) return { green: false, failing: first };",
+    "    if (!cfg.reread || !cfg.reread.length) return { green: true, failing: [] };"],
+  ['exit 3: the hold is released before the re-read (the second reading is not a quiet one)', SRC,
+    "    const r2 = run(cfg.reread, cfg.worktree, { logFile, env });",
+    "    if (h && h.release) { h.release(); h = null; }\n    const r2 = run(cfg.reread, cfg.worktree, { logFile, env });"],
+  ['exit 3: the summary line is not required (abort()\'s 3 is read again as machine-bound)', SRC,
+    "if (r.code !== 3 || !MACHINE_BOUND_SUMMARY.test(r.text))", "if (r.code !== 3)"],
+  ['exit 3: the board line leaves out the re-read', SRC,
+    "  for (const x of r.rereads || []) parts.push(", "  for (const x of []) parts.push("],
+  ['exit 3: the log leaves out the re-read', SRC,
+    "rows, ...(reread ? { reread } : {}) });", "rows });"],
+  ['dreamzone-3 check: the exit-3 test after "errorlevel 1" (it never fires)', CHECK,
+    "if %ERRORLEVEL% EQU 3 (echo SELFTEST MACHINE-BOUND: dz-world & exit /b 3)\nif errorlevel 1 (echo SELFTEST RED: dz-world & exit /b 1)",
+    "if errorlevel 1 (echo SELFTEST RED: dz-world & exit /b 1)\nif %ERRORLEVEL% EQU 3 (echo SELFTEST MACHINE-BOUND: dz-world & exit /b 3)"],
+  ['dreamzone-3 check: "3 or more" instead of exactly 3 (an exit of 4 or a crash code reads as machine-bound)', CHECK,
+    "if %ERRORLEVEL% EQU 3 (", "if errorlevel 3 ("],
 ];
 
 function tree() {

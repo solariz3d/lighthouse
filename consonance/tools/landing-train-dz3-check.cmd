@@ -1,6 +1,7 @@
 @echo off
 rem landing-train-dz3-check.cmd (B, L194): the landing train's check for dreamzone-3, run by landing-train.js in the train's own worktree
-rem (its working directory). Exit 0 only when every suite (build.bat test) and both self-tests are green. The red lines it prints are the
+rem (its working directory). Exit 0 only when every suite (build.bat test) and both self-tests are green; exit 3 only when everything else
+rem is green and the world self-test's only reds are machine-bound (D675, B: the train re-reads that once). The red lines it prints are the
 rem ones landing-train.js names back to a branch's pane: the runner's FAIL rows, CTest's ***Failed, a self-test's FAILED total, and these.
 setlocal
 rem The build at 4 jobs, the room's rule for heavy runs: build.bat leaves Ninja its default (about 34 here), and that many MSVC
@@ -17,6 +18,9 @@ if errorlevel 1 (echo SUITES RED & exit /b 1)
 build\bin\dz-gym.exe --selftest
 if errorlevel 1 (echo SELFTEST RED: dz-gym & exit /b 1)
 build\bin\dz-world.exe --selftest
+rem Its exit 3 means its ONLY reds are machine-bound (dreamzone-3 modes.h selftest_exit_code); landing-train.js reads that once more in the
+rem same hold. An EXACT 3 and first: "if errorlevel 3" is true for 3 or more, and "if errorlevel 1" would take a 3 as an ordinary red.
+if %ERRORLEVEL% EQU 3 (echo SELFTEST MACHINE-BOUND: dz-world & exit /b 3)
 if errorlevel 1 (echo SELFTEST RED: dz-world & exit /b 1)
 echo CHECK GREEN
 exit /b 0
