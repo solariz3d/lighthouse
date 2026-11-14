@@ -1,0 +1,13 @@
+heavy-run: WARNING: C:\ has 28.6 GB free, under 50 GB; run node consonance/tools/janitor.js
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+run: holding the lock at 2026-11-13T23:20:36.075Z; starting ot-capture
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones
+overtime: seed 1, the timer 45 s, the Dark first posed at 45.00 s; now 47.00 s, phase 2, overtime 1
+capture: G:/consonance-scratch/c-d675-filter/overtime/ot_01_players_view.png  overtime, the player's own view
+overtime: 3 poses, the stage drew 2 figures (the hunter's model counts as one)
+  pose id 1 kind hunter (0): feet (-51.50 -3.46 50.26), 50.01 m from the player, slots for its kind 1
+  pose id 3 kind sprinter (1): feet (-55.11 -3.46 43.03), 57.72 m from the player, slots for its kind 6
+  pose id 4 kind dark (7): feet (5.16 -3.46 105.96), 29.80 m from the player, slots for its kind 0
+capture: G:/consonance-scratch/c-d675-filter/overtime/ot_02_looking_at_the_dark.png  looking at the Dark, yaw 0.817 pitch 0.099, 29.59 m along the floor
+overtime: looking at it, the stage drew 2 figures of 3 poses
+run: done at 2026-11-13T23:20:51.158Z, exit 0
