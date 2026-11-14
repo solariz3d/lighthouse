@@ -3172,3 +3172,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 17:4x local (D) · D675 AMENDMENT 3: compared at the marker's place, the hunter's gait law reads above one runner (JA1) at 3.53 and 5.19 only; at 6.97 the 10 Hz margin is +0.09 → `exo_memory/handback/p-d675-yardstick-toe-E_2026-11-13.md` (addendum 23:4xZ)
 - yardstick-toe-e 0eabefc pushed (red e5d435c); 23/23; C's figures reproduced within 0.0195. "The joint was the whip" held: my all-four-speeds sentence was the joint's longer lever.
 - **Carry:** a mutant that does not build is not a catch; re-make it so it compiles, and count it apart.
+
+## 2026-11-13 19:2x local (D) · L185 R4.5 and R5.3 hold their first registered bar (30 m/s, every body) with C's pop fix merged: 28.60 and 25.59 m/s; the soft-keyed amendment is superseded → `exo_memory/handback/p-l185-bar-restored-E_2026-11-13.md`
+- dreamzone-3 l185-steps45-pop 52da2b5 (merge aafb97a of main 81eb524 into 1b690fd), local. On d002b65 the keyed toes read 30.67 and 30.41: the take-off pop.
+- **Carry:** an amendment made to pass a bar should name what it is waiting on, so that it comes out by name when that lands.
