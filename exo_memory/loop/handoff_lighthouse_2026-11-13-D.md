@@ -126,8 +126,15 @@ pane's WHERE IT STOPS was read by 09:42; `-Check` on D was run by P at 09:00.
 
 ## Waiting on him (room)
 
-- **The disk, one yes or no:** move 44.4 GB of finished work from C: to G:, byte-checked, nothing deleted. The list: note, 17:02 and 17:09
-  (B's 2.5 GB). **C: read 19 GB free of 931 at 23:2x (`df`), under the 20 GB at which the lock refuses every new heavy run.** No seat deletes anything (`consonance/src-tauri/brief/BUILDING.md:201-203`).
+- **The disk, one yes or no:** move 44.4 GB of finished work off C:, byte-checked, nothing deleted. The list: note, 17:02 and 17:09
+  (B's 2.5 GB). No seat deletes or moves anything without it (`consonance/src-tauri/brief/BUILDING.md:201-203`).
+  - **Where C: stands, in the lock's own unit:** 20,282,216,448 bytes free at 23:31, which is 20.28 GB; the lock refuses under 20e9
+    bytes (`consonance/tools/heavy-run.js:130`). So C: is 0.28 GB above the point where a run that writes to C: is refused. The guard reads
+    only the drives a run writes to (:146-157), so a run from a tree on G: is not stopped by C:.
+  - **A wrong line of mine, sent to him and to the chair at 23:2x and corrected at 23:3x:** "under the floor, so the last two landings
+    cannot run". I had read `df`'s "19G", which is in units of 2^30 bytes, against a floor in units of 10^9.
+  - **The move's natural target is the room's own archive folder,** `archive_dir` in `~/.consonance.json`, which is on Z: (894 GB free).
+    My list said G: without opening the config.
 - The encrypted transcript in `future_experiments/` is unopened; asked twice, unanswered. It stays unopened without his word.
 - The rebrand he named today ("consonance, rebranded I M A G I N E"): who it is for is not yet talked through.
 - What he clicked before "windows couldnt find something error" (15:39).
