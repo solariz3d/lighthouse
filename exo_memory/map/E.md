@@ -3184,3 +3184,4 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 20:3x local (D) · D675 the Dark is drawn in the hunter's shape: red 52/53 → green 54/54 from the stage's own count; away it is neither posed nor drawn (674 frames) and costs nothing measurable; 20 kept runs unchanged → `exo_memory/handback/p-d675-dark-figure-E_2026-11-13.md`
 - dreamzone-3 dark-figure-e c598d2e (fix 1653150, red 124adaa), local; mutants 4/4 as expected; capture on G: (before 1 of 2 poses drawn, after 2 of 2). It reads as a black silhouette: drawn is not seen, his call.
 - **Carry:** a row that reads an instrument needs a mutant that breaks the instrument and shows the row going falsely green.
+- 02:4xZ addendum: main 81eb524 merged into dark-figure-e (CHANGELOG both kept), C's note 1 taken (the models label), note 2 declined (the row fails by name; a box is a look); merged self-test 54/54; tip 7bc9f3c pushed.

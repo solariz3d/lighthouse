@@ -122,3 +122,37 @@ Dark running there in the hunter's shape.
 - **Not pushed, not landed.** A landing pane lands it after C reads the `stage.cpp` diff. If C or the landing pane want the
   branch on the remote first, that is one push, on a word.
 - **His clone is untouched** (clean at `31d1c6d`). His runs were read only.
+
+## Addendum (02:4xZ): main merged in, C's two notes answered, the new tip pushed
+
+Rulings: the chair's 02:34Z (C's read: AGREE, two notes) and 02:35Z (B's find: CHANGELOG conflicts with main; the author
+resolves it).
+
+**The new tip:** `dark-figure-e` **`7bc9f3c529055a79360427c635198bbc9cd761c5`**, pushed (a fast-forward of `c598d2e`, scan 0
+over 2 commits, push gate allow 02:41:23Z):
+- `a4163a67f43956d2117a5fba892e72854c658572`: C's note 1;
+- `7bc9f3c`: the merge of main `81eb52402226b05286c3608e1660478b3026bba8`.
+  - CHANGELOG conflicted at the top of Added. **Both entries are kept as written,** the Dark's first.
+  - checked: `git diff 81eb524 -- CHANGELOG.md` → only the Dark's entry is added.
+
+**C's notes:**
+1. **Taken.** The models note names the Dark's copy apart: `take()` gets a label, and the file is still found by its name.
+   - checked, in the merged self-test's log → "hunter: 127116 vertices, … posed from its bones; the Dark (hunter.glb):
+     127116 vertices, …".
+2. **Declined, with the reason.** `hunter.glb` ships with the game in `content/models`.
+   - If it ever fails to load, the overtime row fails by name ("dark undrawn in N"): a loud failure where a box would be a
+     silent stand-in.
+   - A box would also be a look I would be choosing for the Dark, and its look is his.
+
+**The merged branch, checked:** the world self-test on `7bc9f3c`, build stamped `7bc9f3c`, under heavy-run →
+**`selftest: passed (54 of 54 checks passed)`**, both Dark rows green:
+- the overtime row: 3689 overtime frames, the Dark posed in 3688, every pose drawn;
+- the away row: 674 frames, posed 0, palette set 0.
+- The count is unchanged by the merge: main's `796c16f` and `81eb524` add no world self-test rows.
+
+**Company, said for P's measure.** P's exclusive hold stood from 02:19:28Z. Inside it, outside heavy-run, I ran:
+- the push of `c598d2e` at 02:33:55Z (the gate's scan);
+- a git fetch, a checkout of the base tree to `81eb524`, and its submodule init, about 02:34 to 02:35Z.
+
+These are light on the processor but not nothing on the disk. My heavy runs (the builds, the self-test) waited for the hold
+under heavy-run.
