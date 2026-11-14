@@ -117,6 +117,26 @@ where the compiler is absent."
 - **In this file:** §3 first gave the compiler's path with its drive letter. That is reworded in place, and no drive letter remains for
   it here. Before the commit, `portable-paths.js` is run over the test file and this registration.
 
+## Amendment 2 (pane B, before any code): a 3 counts only when it is exactly 3 AND the self-test said why
+
+Both changes make the rule stricter. A 3 that is not the self-test's own is read as an ordinary red, which is today's reading.
+
+- **Exactly 3, not "3 or more".** `if errorlevel 3` is true for 3 OR MORE. Exit 4, 255, or any positive crash code would then leave the
+  script as "machine-bound" and get a re-read.
+  - The script tests `if %ERRORLEVEL% EQU 3` instead, still before `if errorlevel 1`.
+  - A new script row: a world stub exiting 4 leaves as 1, not 3.
+- **A crash can exit 3 too.** The MSVC runtime's `abort()` "calls `_exit` to terminate the process with exit code 3" when the Windows
+  error-reporting handler is not invoked (Microsoft Learn, C runtime reference, `abort`, read 2026-11-14). `std::terminate` ends in
+  `abort()`, so an uncaught exception in `dz-world` can exit 3 with no machine-bound row at all.
+  - So `check()` treats a 3 as machine-bound only when the first reading's output also carries the self-test's own summary,
+    `selftest: machine-bound red only` (`selftest.cpp:653`). Without it, a 3 is red and nothing is re-read.
+  - A new train row: the stand-in exits 3 without that line → red, and the re-read is NOT run.
+  - A sixth mutant: drop the summary-line requirement.
+- **Found, not fixed (outside this ruling):** `if errorlevel 1` is false for a NEGATIVE exit code, and a Windows crash code such as an
+  access violation is negative as a signed int. inferred: a `dz-world --selftest` that crashes that way leaves the script as
+  `CHECK GREEN`. I will check it with a stub that exits with a negative code and report the result in the hand-back. The line is not
+  changed here, because the ruling keeps it "as it is".
+
 ## 6. My bias
 
 I wrote the exit-3 contract and proposed this re-read, so I have a stake in it being needed. That is why falsifier 2 is written to fire on
