@@ -3176,3 +3176,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-13 19:2x local (D) · L185 R4.5 and R5.3 hold their first registered bar (30 m/s, every body) with C's pop fix merged: 28.60 and 25.59 m/s; the soft-keyed amendment is superseded → `exo_memory/handback/p-l185-bar-restored-E_2026-11-13.md`
 - dreamzone-3 l185-steps45-pop 52da2b5 (merge aafb97a of main 81eb524 into 1b690fd), local. On d002b65 the keyed toes read 30.67 and 30.41: the take-off pop.
 - **Carry:** an amendment made to pass a bar should name what it is waiting on, so that it comes out by name when that lands.
+
+## 2026-11-13 20:0x local (D) · D675 cost reads: the soft upper body adds no GPU frame time (p99 1.975–1.983 ms against base 1.976–1.984; gate 3.33 passed) and 24.9 µs a ragdoll step on the CPU; the Dark away costs nothing (branch 0.037 ms faster, unexplained); every run drew 96–97% of paced, already at d002b65 → `exo_memory/handback/p-d675-timing-E_2026-11-13.md`
+- Repeats after the librarian's sweep (01:56–02:04Z), clean of company, no game by path. The first sessions kept beside, labelled. l185-skeleton-steps45 pushed 1b690fd..52da2b5.
+- **Carry:** a launcher is not a game: check games by install path, not by name; and a pace rule that voids every run is measuring the build, not the company.

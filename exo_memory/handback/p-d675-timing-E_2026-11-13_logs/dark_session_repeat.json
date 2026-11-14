@@ -1,0 +1,17 @@
+{
+  "name": "D675 the Dark: frame time with the Dark away (defaults, 2560x1440), base against branch (REPEAT after the librarian's sweep ended at 01:45:46Z; frames drawn of paced reported, not a void)",
+  "out": "G:/consonance-scratch/e-bench-dark/repeat",
+  "config": "G:/consonance-scratch/e-bench-dark/cfg",
+  "arms": {
+    "base": {
+      "tree": "G:/consonance-scratch/dz3-e-yardstick",
+      "commit": "0eabefc9af10db76e38b3c38e60b616404e28d42"
+    },
+    "branch": {
+      "tree": "G:/consonance-scratch/dz3-e-dark",
+      "commit": "16531504abd83d4c9fb2b2c7de490c5ba3836543"
+    }
+  },
+  "rounds": 3,
+  "pace_voids": false
+}

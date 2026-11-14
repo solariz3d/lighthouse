@@ -1,0 +1,31 @@
+{
+  "name": "L185 steps 4-5: the soft upper body's frame cost (R4.7 and one frame-time read), base against branch (REPEAT after the librarian's sweep ended at 01:45:46Z; frames drawn of paced reported, not a void)",
+  "out": "G:/consonance-scratch/e-bench-l185/repeat",
+  "config": "G:/consonance-scratch/e-bench-l185/cfg",
+  "arms": {
+    "base": {
+      "tree": "C:/Users/nname/Desktop/worktrees/dz3-e-land",
+      "commit": "4644c95ec907c4abaaf2bc8b7bcb0c71404dddd6"
+    },
+    "branch": {
+      "tree": "C:/Users/nname/Desktop/worktrees/dz3-e-l185",
+      "commit": "1b690fd32063f11cd0f7d5352f23178a788f0280"
+    }
+  },
+  "pre": [
+    {
+      "label": "R4.7",
+      "exe": "C:/Users/nname/Desktop/worktrees/dz3-e-l185/build/bin/ragdoll_tests.exe",
+      "args": [
+        "r4_7"
+      ],
+      "cwd": "C:/Users/nname/Desktop/worktrees/dz3-e-l185",
+      "env": {
+        "DZ_BENCH": "1"
+      },
+      "grep": "us a step|^ok|^FAIL|tests,"
+    }
+  ],
+  "rounds": 3,
+  "pace_voids": false
+}

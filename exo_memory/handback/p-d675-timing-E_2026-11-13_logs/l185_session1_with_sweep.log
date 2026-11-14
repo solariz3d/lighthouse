@@ -1,0 +1,39 @@
+01:25:52.969Z session L185 steps 4-5: the soft upper body's frame cost (R4.7 and one frame-time read), base against branch; args --bench 30 --chasers --seed 1 --size 2560 1440; config G:/consonance-scratch/e-bench-l185/cfg; base 4644c95ec907c4abaaf2bc8b7bcb0c71404dddd6 (3548672 bytes, mtime 2026-11-13T22:43:39.672Z); branch 1b690fd32063f11cd0f7d5352f23178a788f0280 (3767808 bytes, mtime 2026-11-14T00:41:05.629Z)
+01:25:53.661Z CARD START: utilisation, memory: 0 %, 1323 MiB; processes on the card: | 0 NVIDIA GeForce RTX 5080 WDDM | 00000000:01:00.0 Off | N/A | / | 0 N/A N/A 3948 C+G ...cw5n1h2txyewy\WidgetBoard.exe N/A | / | 0 N/A N/A 5384 C+G ..._cw5n1h2txyewy\SearchHost.exe N/A | / | 0 N/A N/A 8132 C+G ...indows\System32\ShellHost.exe N/A | / | 0 N/A N/A 9276 C+G ...2txyewy\CrossDeviceResume.exe N/A | / | 0 N/A N/A 9800 C+G ...y\StartMenuExperienceHost.exe N/A | / | 0 N/A N/A 13636 C+G ...App_cw5n1h2txyewy\LockApp.exe N/A | / | 0 N/A N/A 14140 C+G ...m Files (x86)\Steam\steam.exe N/A | / | 0 N/A N/A 14292 C+G ...pp-4.0.896\RazerAppEngine.exe N/A | / | 0 N/A N/A 16040 C+G ...5n1h2txyewy\TextInputHost.exe N/A | / | 0 N/A N/A 25100 C+G ....0.4341.46\msedgewebview2.exe N/A | / | 0 N/A N/A 26904 C+G ...Chrome\Application\chrome.exe N/A | / | 0 N/A N/A 27080 C+G ...a\Roaming\Spotify\Spotify.exe N/A | / | 0 N/A N/A 29748 C+G C:\Windows\explorer.exe N/A | / | 0 N/A N/A 29976 C+G ....0.4341.46\msedgewebview2.exe N/A | / | 0 N/A N/A 30324 C+G ...xyewy\ShellExperienceHost.exe N/A | / | 0 N/A N/A 32108 C+G ....0.4341.57\msedgewebview2.exe N/A |; launchers and game-like names: RiotClientServices.exe 8024, RiotClientCrashHandler.exe 1736, steam.exe 14140, steamwebhelper.exe 27816, steamwebhelper.exe 27864, steamwebhelper.exe 27228, steamwebhelper.exe 5212, steamwebhelper.exe 30080, steamwebhelper.exe 22856, steamservice.exe 24904, steamwebhelper.exe 12848, steamwebhelper.exe 28228; GAMES (by path): none
+01:25:54.616Z R4.7	exit 0	clean
+        keyed (step 2): median 7.6 us a step (of 5: 7.6 to 7.8), 2880 steps each
+        soft-keyed (step 4): median 25.1 us a step (of 5: 24.9 to 26.1), 2880 steps each
+    ok    r4_7_the_cost_of_a_step_measured_only_when_asked
+    1 tests, 0 failed
+01:26:29.212Z 01-base	01:25:55Z	exit 0	avg 1.540 p50 1.529 p99 1.967 worst 2.282 (10390 frames)	VOID: frames dropped: 10390 of 10801 paced
+01:27:03.755Z 01-base-try2	01:26:29Z	exit 0	avg 1.546 p50 1.536 p99 1.994 worst 2.399 (10346 frames)	VOID: frames dropped: 10346 of 10801 paced
+01:27:38.372Z 01-base-try3	01:27:04Z	exit 0	avg 1.544 p50 1.533 p99 1.990 worst 2.272 (10424 frames)	VOID: frames dropped: 10424 of 10801 paced
+01:27:38.373Z base run 1: void three times; left void
+01:28:12.729Z 02-branch	01:27:38Z	exit 0	avg 1.543 p50 1.532 p99 1.991 worst 2.310 (10399 frames)	VOID: frames dropped: 10399 of 10801 paced
+01:28:47.088Z 02-branch-try2	01:28:13Z	exit 0	avg 1.545 p50 1.535 p99 1.986 worst 2.244 (10379 frames)	VOID: frames dropped: 10379 of 10801 paced
+01:29:21.457Z 02-branch-try3	01:28:47Z	exit 0	avg 1.544 p50 1.532 p99 1.989 worst 2.394 (10384 frames)	VOID: frames dropped: 10384 of 10801 paced
+01:29:21.457Z branch run 2: void three times; left void
+01:29:55.828Z 03-base	01:29:21Z	exit 0	avg 1.541 p50 1.532 p99 1.972 worst 2.267 (10442 frames)	VOID: frames dropped: 10442 of 10801 paced
+01:30:30.135Z 03-base-try2	01:29:56Z	exit 0	avg 1.545 p50 1.535 p99 1.985 worst 2.311 (10397 frames)	VOID: frames dropped: 10397 of 10801 paced
+01:31:04.528Z 03-base-try3	01:30:30Z	exit 0	avg 1.544 p50 1.534 p99 1.983 worst 2.241 (10430 frames)	VOID: frames dropped: 10430 of 10801 paced
+01:31:04.528Z base run 3: void three times; left void
+01:31:38.867Z 04-branch	01:31:05Z	exit 0	avg 1.540 p50 1.531 p99 1.973 worst 2.289 (10360 frames)	VOID: frames dropped: 10360 of 10801 paced
+01:32:13.111Z 04-branch-try2	01:31:39Z	exit 0	avg 1.539 p50 1.529 p99 1.975 worst 2.317 (10321 frames)	VOID: frames dropped: 10321 of 10801 paced
+01:32:47.348Z 04-branch-try3	01:32:13Z	exit 0	avg 1.539 p50 1.528 p99 1.975 worst 2.347 (10364 frames)	VOID: frames dropped: 10364 of 10801 paced
+01:32:47.348Z branch run 4: void three times; left void
+01:33:21.715Z 05-base	01:32:47Z	exit 0	avg 1.539 p50 1.529 p99 1.983 worst 2.265 (10473 frames)	VOID: frames dropped: 10473 of 10801 paced
+01:33:56.234Z 05-base-try2	01:33:22Z	exit 0	avg 1.540 p50 1.530 p99 1.973 worst 2.291 (10407 frames)	VOID: frames dropped: 10407 of 10801 paced
+01:34:30.463Z 05-base-try3	01:33:56Z	exit 0	avg 1.539 p50 1.530 p99 1.980 worst 2.307 (10477 frames)	VOID: frames dropped: 10477 of 10801 paced
+01:34:30.463Z base run 5: void three times; left void
+01:35:04.756Z 06-branch	01:34:30Z	exit 0	avg 1.538 p50 1.528 p99 1.973 worst 2.247 (10386 frames)	VOID: frames dropped: 10386 of 10801 paced
+01:35:39.036Z 06-branch-try2	01:35:05Z	exit 0	avg 1.538 p50 1.528 p99 1.976 worst 2.322 (10366 frames)	VOID: frames dropped: 10366 of 10801 paced
+01:36:13.368Z 06-branch-try3	01:35:39Z	exit 0	avg 1.537 p50 1.526 p99 1.966 worst 2.317 (10420 frames)	VOID: frames dropped: 10420 of 10801 paced
+01:36:13.369Z branch run 6: void three times; left void
+01:36:47.657Z 07-base	01:36:13Z	exit 0	avg 1.541 p50 1.531 p99 1.973 worst 2.227 (10447 frames)	VOID: frames dropped: 10447 of 10801 paced
+01:37:21.939Z 07-base-try2	01:36:48Z	exit 0	avg 1.542 p50 1.530 p99 1.982 worst 2.221 (10385 frames)	VOID: frames dropped: 10385 of 10801 paced
+01:37:56.513Z 07-base-try3	01:37:22Z	exit 0	avg 1.543 p50 1.531 p99 1.988 worst 2.249 (10390 frames)	VOID: frames dropped: 10390 of 10801 paced
+01:37:56.513Z base run 7: void three times; left void
+01:37:57.126Z CARD END: utilisation, memory: 0 %, 1319 MiB; processes on the card: | 0 NVIDIA GeForce RTX 5080 WDDM | 00000000:01:00.0 Off | N/A | / | 0 N/A N/A 3948 C+G ...cw5n1h2txyewy\WidgetBoard.exe N/A | / | 0 N/A N/A 5384 C+G ..._cw5n1h2txyewy\SearchHost.exe N/A | / | 0 N/A N/A 8132 C+G ...indows\System32\ShellHost.exe N/A | / | 0 N/A N/A 9276 C+G ...2txyewy\CrossDeviceResume.exe N/A | / | 0 N/A N/A 9800 C+G ...y\StartMenuExperienceHost.exe N/A | / | 0 N/A N/A 13636 C+G ...App_cw5n1h2txyewy\LockApp.exe N/A | / | 0 N/A N/A 14140 C+G ...m Files (x86)\Steam\steam.exe N/A | / | 0 N/A N/A 14292 C+G ...pp-4.0.896\RazerAppEngine.exe N/A | / | 0 N/A N/A 16040 C+G ...5n1h2txyewy\TextInputHost.exe N/A | / | 0 N/A N/A 25100 C+G ....0.4341.46\msedgewebview2.exe N/A | / | 0 N/A N/A 26904 C+G ...Chrome\Application\chrome.exe N/A | / | 0 N/A N/A 27080 C+G ...a\Roaming\Spotify\Spotify.exe N/A | / | 0 N/A N/A 29748 C+G C:\Windows\explorer.exe N/A | / | 0 N/A N/A 29976 C+G ....0.4341.46\msedgewebview2.exe N/A | / | 0 N/A N/A 30324 C+G ...xyewy\ShellExperienceHost.exe N/A | / | 0 N/A N/A 32108 C+G ....0.4341.57\msedgewebview2.exe N/A |; launchers and game-like names: RiotClientServices.exe 8024, RiotClientCrashHandler.exe 1736, steam.exe 14140, steamwebhelper.exe 27816, steamwebhelper.exe 27864, steamwebhelper.exe 27228, steamwebhelper.exe 5212, steamwebhelper.exe 30080, steamwebhelper.exe 22856, steamservice.exe 24904, steamwebhelper.exe 12848, steamwebhelper.exe 28228; GAMES (by path): none
+01:37:57.127Z base exe before: 3548672 bytes, mtime 2026-11-13T22:43:39.672Z; after: 3548672 bytes, mtime 2026-11-13T22:43:39.672Z: unchanged
+01:37:57.127Z branch exe before: 3767808 bytes, mtime 2026-11-14T00:41:05.629Z; after: 3767808 bytes, mtime 2026-11-14T00:41:05.629Z: unchanged
+01:37:57.127Z done
