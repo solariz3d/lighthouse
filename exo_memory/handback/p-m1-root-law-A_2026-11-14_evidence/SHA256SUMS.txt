@@ -1,3 +1,4 @@
+# sha256 of the files as written on D (CRLF), before git's LF normalisation; a checkout's sums of the .txt files will differ
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 *SHA256SUMS.txt
 88a7035ee4e0be01b410955e2b0ac8a18ba5ab9bad60135444eabafbbc60d645 *base_replays2.txt
 471d08fa5dbfaad599b186076c75021386904f9e6d21867248d0761325b4a766 *base_sweep12.txt
