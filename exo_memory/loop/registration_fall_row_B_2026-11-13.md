@@ -114,3 +114,30 @@ I would like (2) to be right, because it agrees with that call. Falsifier 2 and 
 - The flight row (:469-470), unless section 4 shows it is the same thing.
 - Any change to the stream's radii, the generator or the fall speed.
 - The landing train and BUILDING.md (routed, not edited).
+
+## 8. Changed from the registration, by name, before the first run (00:5xZ)
+
+The quiet read ran first (section 4): **green**, 52 of 52, the fall 0 waits over 921 chunks, on a quiet D (ring of 00:3xZ). Falsifier 2
+does not fire. Then, before any code:
+
+1. **(a)'s red is shown by feeding its counter a loaded block that does not lead** (the collision block itself, so nothing is wanted
+   before it is needed), not by a params copy with `load_radius_v` = `collide_radius_v`.
+   - A self-test frame is not one tick: ticks run at 240 Hz (`core/time.h:9`) and frames at 360 Hz.
+   - The streamer steps its blocks before each tick (`world/stream.cpp:337-354`), so a side model stepped by frames would drift from
+     it, and a params copy would need a second streamer and a second world.
+   - The counter reads the REAL streamer's `load_box()` and `collide_box()` each frame (`stream.h`), and the red is the same counter
+     on a block pair with no lead.
+2. **(a)'s bar, now that N can be stated without guessing:**
+   - every chunk that enters the collision block during the fall was in the loaded block at least ONE frame before;
+   - no chunk enters unwanted;
+   - at least one chunk enters.
+   - N (the least lead, in frames and in metres) is printed beside it. A tighter bar would pin the radii, which the row does not own.
+3. **The exit rule is proven inside the self-test, on a pure function** (`selftest_exit_code(failed, machine_bound_failed)`: 0, 3 or 1),
+   with the hand mutants of section 2.
+   - End to end it cannot be shown with the one seam the app can take (`--slow-workers MS`, below): slowing every worker also reddens
+     the FLIGHT row (:469-470), which this lap leaves ordinary, so that run exits 1.
+   - That run still proves two registered things: the fall's waits clause is red and marked machine-bound under a true lag, and any
+     other red still exits 1.
+4. **The seam:** `dz-world --slow-workers MS`, a test-only flag. It rebuilds the world with `StreamParams::worker_delay_ms` = MS
+   (the stream's own "slow machine" seam), through a `WorldApp` setter applied in `make_world`. It is said as a test seam in its help
+   line, and it is not a world setting.
