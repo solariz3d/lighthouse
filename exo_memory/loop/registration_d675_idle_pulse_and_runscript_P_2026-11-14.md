@@ -125,3 +125,30 @@ Then the file's whole test file, and the new rows through the harness with `--on
 **The line to place when it lands:**
 `node consonance/tools/heavy-run.js --run --cmd "<what>" --priority belownormal -- <file.cmd> [args]`, with `--exclusive` for a timing
 session or a landing's quiet window. It is preceded by `--status` as already ruled.
+
+## AMENDMENTS, ruled GO with five (the librarian's entry of 23:16 local, `exo_memory/librarian/2026-11-13.md:1437-1460`, 50c20dc1; the chair's 05:17Z message). Written here by name, before code.
+
+1. **Lap 1 names BOTH readers and proves the line through the hook's own call shape.**
+   - On D the registered prompt hook is `~/.claude/shell/hooks/userprompt-submit.js`, byte-equal to the repo's
+     `dev/shell/hooks/userprompt-submit.js`. It spawns `chain-status.js` at :263-265 with a 3,000 ms limit and keeps ONLY THE FIRST LINE
+     of the output (:268).
+   - On L it is `dev/shell/hooks/userprompt_pulse.py:322`, which also keeps the first line.
+   - **MY ERROR, corrected:** this registration named only the Python hook, as if it were D's.
+   - The row: on the 04:22Z fixture, the reader is spawned as the JS hook spawns it, and the line must be in the FIRST line of its output.
+     A line carried only by a second output line would be green in `line()` and invisible in every pane.
+2. **Lap 1's run-time measure goes through D's hook on the live store, before and after.**
+   - `node ~/.claude/shell/hooks/userprompt-submit.js` with the hook's stdin, timed, several runs each, against the hook's 3,000 ms.
+3. **Lap 1's fixture holds no literal drive path.**
+   - The guard row copied from the live board carries none (its text is the holder's description and the guard's sentence).
+   - Any path the fixture needs is built at run time from the temp dir. Checked with `portable-paths.js` before the hand-back.
+4. **Lap 2's `--priority` accepts only `belownormal` and `idle`.**
+   - Any other value is REFUSED with exit 2 and a line saying why: CreateProcessW (`dwCreationFlags`) gives a child its creator's class
+     only for IDLE and BELOW_NORMAL; any other creator class gives the child NORMAL.
+   - One row.
+5. **Lap 2's metacharacter refusal covers the RESOLVED SCRIPT PATH as well as the arguments.**
+   - The usage text names the limit it cannot remove: **Git Bash rewrites an argument that begins with a slash before node sees it**
+     (`loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md:11`). So a script's own switches go as words or with a dash, never `/x`.
+
+**Also carried from C's fix, for any batch line I write (the chair's 05:17Z note):** inside a `( … )` block, cmd expands `%ERRORLEVEL%`
+when it READS the block. So a line there reads the code from before the block's program ran. Inside a block, use `if errorlevel 1 (…)`.
+Lap 2's own `cmd.exe` line is `/d /s /c ""<path>" <args>"`, with no block, and passes the script's code straight through.
