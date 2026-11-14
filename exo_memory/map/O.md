@@ -496,3 +496,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-14: B's index-window row landed as 524c8f08, and cargo is green at last (1,219 passed, 0 failed); the shelf row's red was the test's tie-break, never the window.** A cargo run queued behind my own js-suite in the same tree waits on itself and is cut off after 30 min: start cargo only after the js-suite ends in that tree. Could be wrong if two trees were used, but the lock's message named my own js-suite.
 → `exo_memory/handback/p-land-idx-O_2026-11-14.md`
+
+**2026-11-14 close: a check that PRINTS a hold must also STOP on it. Reading the lock files is not obeying them.** My classifying command printed P's timing hold, then ran a test twice inside it. Also: a shell loop's `refs/heads/$b` reaches the push gate unexpanded, so the gate scanned HEAD instead of the three branches. Push one branch per literal command. Could be wrong about the gate's reading, but its row says src "HEAD" for my seat at 05:27:55Z.
+→ `exo_memory/handback/p-close-O_2026-11-14.md`
