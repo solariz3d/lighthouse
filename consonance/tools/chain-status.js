@@ -834,7 +834,58 @@ function queuedScan(store, now, opts = {}) {
   return { list: queuedWaiting(rows, now, { letters, launchedAt: launchedAt(path.dirname(board)) }),
     unreceived: unreceived(rows, now),                                // clause 5 reads the same rows (D137)
     waiting: waitingOnAnswer(rows, { letters, launchedAt: launchedAt(path.dirname(board)), projectsDir: opts.projectsDir }),
+    rows,                                                             // D675: the idle clause reads the same rows
     why: null };                                                      // clause 6: the same rows name the live seats (D138)
+}
+
+/**
+ * D675 (pane P, 2026-11-14): THE IDLE HOLDER. heavy-run's guard (reportIdle) names a holder whose whole process tree used no CPU for five
+ * minutes, on the BOARD, which no seat reads: on 11-14 E's filter landing held slot 2 for 50 minutes with nothing under it, named three
+ * times. This clause puts it in the one line the chair and the librarian read at every prompt (D: userprompt-submit.js:263-268; L:
+ * userprompt_pulse.py:322; both keep the first line), WHILE THAT HOLDER STILL HOLDS:
+ *   - a lock file of the store names a holder, and a guard row names EXACTLY that holder (heavy-run's own description: seat, pid, cmd,
+ *     since), posted at or after the holder took the lock;
+ *   - heavy-run's status() judges that holder live by --run's own rules (a released or re-taken lock has a different description).
+ * It reads the lock files first and calls status() only when a guard row names a current holder, so the usual pulse spawns nothing.
+ * Its line is a prompt to look, never grounds to stop a holder (the guard's own rule). The guard never takes a name back, so the line
+ * says when it was last named. `rows` are the board rows the queued scan already parsed; it reads the board itself only when it has none.
+ */
+const IDLE_PREFIX = 'heavy-run: IDLE HOLDER — ';
+function idleHolders(store, now, opts = {}, rows = null) {
+  const HR = require('./heavy-run.js');
+  const named = [];
+  for (let k = 1; k <= HR.MAX_SLOTS; k++) {
+    const h = (() => { try { return JSON.parse(fs.readFileSync(HR.slotFile(store, k), 'utf8')); } catch (_) { return null; } })();
+    if (h && h.pid) named.push({ k, h });
+  }
+  if (!named.length) return { list: [], why: null };
+  if (!rows) {
+    const board = opts.board !== undefined ? opts.board : path.join(store, 'board.jsonl');
+    if (!board || !fs.existsSync(board)) return { list: [], why: null };   // no board: not a room running a committee
+    const t = opts.boardLines ? { lines: opts.boardLines } : tail(board, BOARD_TAIL_BYTES);
+    if (!t) return { list: [], why: 'board unreadable' };
+    rows = [];
+    for (const raw of t.lines) { const p = parseBoardLine(raw); if (p) for (const e of p.rows) rows.push(e); }
+  }
+  const cands = [];
+  for (const x of named) {
+    const want = IDLE_PREFIX + HR.describeHolder(x.h);
+    const since = Date.parse(x.h.started);
+    const hits = rows.filter(r => r && typeof r.text === 'string' && r.text.startsWith(want) && Number.isFinite(r.ts) && (!Number.isFinite(since) || r.ts >= since));
+    if (hits.length) cands.push({ x, since, n: hits.length, last: Math.max(...hits.map(r => r.ts)) });
+  }
+  if (!cands.length) return { list: [], why: null };
+  const s = HR.status({ dataDir: store, env: {}, now: () => now, ...(opts.idleWitness || {}) });
+  const key = (k, h) => k + ' ' + h.pid + ' ' + h.started;
+  const live = new Set(s.slots.filter(x => x.state === 'held' && x.holder && !x.holder.unreadable).map(x => key(x.k, x.holder)));
+  const list = cands.filter(c => live.has(key(c.x.k, c.x.h)))
+    .map(c => ({ seat: c.x.h.seat || '?', slot: c.x.k, held: Number.isFinite(c.since) ? now - c.since : null, n: c.n, last: c.last }));
+  return { list, why: null };
+}
+function idlePart(list) {
+  if (!list.length) return '';
+  const z = (ms) => new Date(ms).toISOString().slice(11, 16) + 'Z';
+  return list.map(i => 'IDLE HOLDER ' + i.seat + ' slot ' + i.slot + ', held ' + (i.held === null ? '?' : ago(i.held)) + ', nothing under it (named ' + i.n + 'x, last ' + z(i.last) + ')').join(', ');
 }
 
 const hhmm = (ms) => { const d = new Date(ms); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
@@ -1221,7 +1272,7 @@ function owedVisit(opts = {}) {
  * unwitnessed/older/rows-only, fused, UNRECEIVED and delivery-unconfirmed (the chair's ruling, 08:48: D627 measured it false 32 of 32,
  * and it cost seats checks; if D621's board receipt makes it real, 'unconfirmed' comes back here by name). Everything is still COMPUTED;
  * only the print is trimmed, and `--full` prints the whole line. */
-const PULSE_KEEPS = new Set(['ledger', 'delivery', 'queued', 'waiting', 'handbacks']);
+const PULSE_KEEPS = new Set(['ledger', 'delivery', 'queued', 'waiting', 'handbacks', 'idle']);
 
 function line(opts = {}) {
   const now = opts.now != null ? opts.now : Date.now();
@@ -1269,7 +1320,13 @@ function line(opts = {}) {
   } catch (e) { queued = { list: [], why: (e && e.message) || String(e) }; }
   const unrec = queued.unreceived || [];
   const waiting = queued.waiting || [];
-  if (!head && !claim && !queued.list.length && !queued.why && !unrec.length && !waiting.length) {
+  // D675: the idle holder rides every holder state and no lap, like clause 4, so it is read before the exit below.
+  let idle = { list: [], why: null };
+  try {
+    idle = opts.idle !== undefined ? opts.idle
+      : idleHolders(path.dirname(opts.ledger || LEDGER || '.'), now, { board: opts.board, idleWitness: opts.idleWitness }, queued.rows || null);
+  } catch (e) { idle = { list: [], why: (e && e.message) || String(e) }; }
+  if (!head && !claim && !queued.list.length && !queued.why && !unrec.length && !waiting.length && !idle.list.length && !idle.why) {
     const any = led.rows.some(r => r && r.stage === 'chain');
     return {
       text: null,
@@ -1374,6 +1431,9 @@ function line(opts = {}) {
   }
   // CLAUSE 4 RIDES EVERY HOLDER, like clause 3, and for the same reason: a ring waiting at a busy seat is a fault under
   // any holder, and it is the one fault the sender cannot see after its first "queued" reply.
+  const ip = idlePart(idle.list);
+  if (ip) put('idle', ip);
+  if (idle.why) put('idle', 'idle UNKNOWN — ' + idle.why);
   const qp = queuedPart(queued.list, now);
   if (qp) put('queued', qp);
   // CLAUSE 5 rides with clause 4: a ring written but never seen rendered is the same class of fault, one step later.
@@ -1488,7 +1548,7 @@ if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
   line, openLaps, staleLaps, STALE_MS, chainLaps, unwitnessed, readLedger, dirtyCount, tree, ago, main, collation, toLetter, tail, replay, owedVisit,
-  queueRow, queuedWaiting, queuedScan, QUEUED_WORKING_MS, QUEUED_BOUNDED_MS,
+  queueRow, queuedWaiting, queuedScan, QUEUED_WORKING_MS, QUEUED_BOUNDED_MS, idleHolders, idlePart, IDLE_PREFIX,
   ringRow, unreceived, UNRECEIVED_MS, UNRECEIVED_LOOKBACK_MS,
   openQuestion, waitingOnAnswer, findTranscript,
   LEDGER, REPO, BOARD, LETTERS, WORK_ATTESTING, WINDOW, LIST_CAP, BOARD_TAIL_BYTES, DISPATCH_RE, REFUSED_RE,

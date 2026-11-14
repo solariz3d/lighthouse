@@ -1892,3 +1892,97 @@ test('D633 (the chair, 08:48) the trimmed pulse DROPS delivery-unconfirmed; it s
   assert.match(trim, /handbacks 1 of 2 \(owing B\)/, 'the count beside it is still printed: ' + trim);
   s.cleanup();
 });
+
+// ---------------------------------------------------------------- D675: the idle holder in the pulse (P, 2026-11-14)
+// The guard in heavy-run.js names a holder whose whole tree used no CPU for five minutes, on the BOARD, which no seat reads: on 11-14 E's
+// filter landing held slot 2 for 50 minutes with nothing under it, named three times. This clause puts it in the one line the chair and the
+// librarian read at every prompt, from the lock files and the guard's own rows, while that holder still holds. Its line is a prompt to look,
+// never grounds to stop a holder (the guard's own rule).
+const HR = require('./heavy-run.js');
+// The guard's row of 2026-11-14T04:21:30Z, copied verbatim from the live board (no drive path in it). E's slot-2 lock file is gone; its record
+// here is rebuilt from the row's own description of it (seat, pid, cmd, since).
+const E_CMD = 'dreamzone-3 E LANDING d675-filter-c c9209c3 on main e0fcdec (merge 8249d58): build.bat test + dz-gym and dz-world self-tests at BelowNormal, each exit read directly (not a timing session)';
+const E_STARTED = '2026-11-14T04:15:14.039Z';
+const GUARD_ROW = { pane: 'P', role: 'committee', ts: 1794630090151, ts_source: 'push',
+  text: 'heavy-run: IDLE HOLDER — a2122153 pid 25928 (' + E_CMD + ', since ' + E_STARTED + '): its whole process tree (node.exe, cmd.exe) used 0.00 s of CPU in the last 5 min. An idle shell that Git Bash started with its `cmd /c` rewritten into a drive argument looks like this. Reported only: nothing is stopped or released (L202).' };
+const E_LOCK = { pid: 25928, seat: 'a2122153', cmd: E_CMD, started: E_STARTED, token: 'e-landing' };
+const AT_0422 = Date.parse('2026-11-14T04:22:00Z');
+const ALIVE_THEN = { alive: () => true, identify: () => null };   // the holder as it was at 04:22Z: alive (the pid is gone now)
+function idleStore({ board = [GUARD_ROW], lock2 = E_LOCK } = {}) {
+  const fx = fixture([]);
+  if (board !== null) fs.writeFileSync(path.join(fx.dir, 'board.jsonl'), board.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  if (lock2) fs.writeFileSync(path.join(fx.dir, 'heavy-run.2.lock'), JSON.stringify(lock2));
+  return fx;
+}
+const idleLine = (fx, extra = {}) => mod().line({ ledger: fx.ledger, now: AT_0422, dirty: 0, handbacks: [], idleWitness: ALIVE_THEN, blindState: () => ({ blind: false }), ...extra });
+
+test('IDLE HOLDER (RED FIRST): the pulse built from the 04:21:30Z guard row and E\'s slot-2 lock at 04:22Z carries the holder, with no lap open', () => {
+  const fx = idleStore();
+  try {
+    const r = idleLine(fx);
+    assert.ok(r.text, 'the line must not be empty: ' + JSON.stringify(r));
+    assert.match(r.text, /IDLE HOLDER a2122153 slot 2, held 7m, nothing under it \(named 1x, last 04:21Z\)/);
+  } finally { fx.cleanup(); }
+});
+
+test('IDLE HOLDER rides the trimmed pulse (the CLI\'s default), not only --full', () => {
+  const fx = idleStore();
+  try { assert.match(idleLine(fx, { trim: true }).text || '', /IDLE HOLDER a2122153 slot 2/); } finally { fx.cleanup(); }
+});
+
+test('IDLE HOLDER through the hook\'s own call shape: the reader spawned as userprompt-submit.js spawns it, its FIRST line carries the holder', () => {
+  // dev/shell/hooks/userprompt-submit.js:263-268 on D (and userprompt_pulse.py:322 on L): `node chain-status.js`, 3,000 ms, first line kept.
+  // A spawned reader judges liveness for real, so the holder is this test process, described and named by the guard's own code.
+  const fx = fixture([]);
+  try {
+    const lock = { pid: process.pid, seat: 'a2122153', cmd: 'E LANDING (hook-shape row)', started: new Date(Date.now() - 7 * 60000).toISOString(), token: 'hook' };
+    let text = '';
+    HR.reportIdle(lock, { cpu: 0, minutes: 5, names: ['node.exe', 'cmd.exe'] }, { log: (s) => { text = s; }, dataDir: fx.dir, env: {} });
+    assert.ok(text.startsWith('heavy-run: IDLE HOLDER — '), 'the guard\'s own sentence');
+    fs.writeFileSync(path.join(fx.dir, 'board.jsonl'), JSON.stringify({ pane: 'P', role: 'committee', ts: Date.now() - 60000, text }) + '\n');
+    fs.writeFileSync(path.join(fx.dir, 'heavy-run.lock'), JSON.stringify(lock));
+    const r = spawnSync(NODE, [READER], { encoding: 'utf8', timeout: 3000, env: { ...process.env, CONSONANCE_DATA: fx.dir, LAP_LEDGER: fx.ledger } });
+    const first = (r.stdout || '').trim().split(String.fromCharCode(10))[0];
+    assert.match(first, /IDLE HOLDER a2122153 slot 1, held 7m, nothing under it \(named 1x, last \d\d:\d\dZ\)/, 'stdout: ' + r.stdout + ' stderr: ' + r.stderr);
+  } finally { fx.cleanup(); }
+});
+
+test('IDLE HOLDER: a released lock gets no line', () => {
+  const fx = idleStore({ lock2: null });
+  try { assert.doesNotMatch(idleLine(fx).text || '', /IDLE HOLDER/); } finally { fx.cleanup(); }
+});
+
+test('IDLE HOLDER: a lock re-taken by another run, even on the same pid, gets no line', () => {
+  const fx = idleStore({ lock2: { ...E_LOCK, cmd: 'B js-suite', started: '2026-11-14T04:20:00.000Z', token: 'other' } });
+  try { assert.doesNotMatch(idleLine(fx).text || '', /IDLE HOLDER/); } finally { fx.cleanup(); }
+});
+
+test('IDLE HOLDER: a guard row from before the holder took the lock does not count', () => {
+  const fx = idleStore({ board: [{ ...GUARD_ROW, ts: Date.parse(E_STARTED) - 1000 }] });
+  try { assert.doesNotMatch(idleLine(fx).text || '', /IDLE HOLDER/); } finally { fx.cleanup(); }
+});
+
+test('IDLE HOLDER: a live holder the guard never named gets no line', () => {
+  const fx = idleStore({ board: [{ pane: 'C', role: 'committee', ts: AT_0422 - 1000, text: 'an ordinary board row' }] });
+  try { assert.doesNotMatch(idleLine(fx).text || '', /IDLE HOLDER/); } finally { fx.cleanup(); }
+});
+
+test('IDLE HOLDER: a holder that is gone now (dead, old enough to need no second witness) gets no line', () => {
+  const fx = idleStore();
+  try { assert.doesNotMatch(idleLine(fx, { now: Date.parse(E_STARTED) + HR.YOUNG_MS + 60000, idleWitness: { alive: () => false } }).text || '', /IDLE HOLDER/); } finally { fx.cleanup(); }
+});
+
+test('IDLE HOLDER counts every naming of the same holder and gives the newest time', () => {
+  const fx = idleStore({ board: [GUARD_ROW, { ...GUARD_ROW, pane: 'C', ts: GUARD_ROW.ts + 20000 }] });
+  try { assert.match(idleLine(fx).text || '', /named 2x, last 04:21Z/); } finally { fx.cleanup(); }
+});
+
+test('IDLE HOLDER: a failure inside the clause is said, never silence (idle UNKNOWN)', () => {
+  // (A directory named board.jsonl was the first fixture here: on Windows it stats as size 0 and reads as an EMPTY board, not an error,
+  // so it could not make the read fail. The holder judgment throwing is a failure the clause really meets.)
+  const fx = idleStore();
+  try {
+    const r = idleLine(fx, { idleWitness: { alive: () => { throw new Error('the liveness probe failed'); } } });
+    assert.match(r.text || '', /idle UNKNOWN — the liveness probe failed/);
+  } finally { fx.cleanup(); }
+});

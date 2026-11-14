@@ -756,7 +756,7 @@ function statusReport(s) {
   return { text: lines.join('\n') + '\n', code: why.length ? 1 : 0 };
 }
 
-module.exports = { status, statusReport, IDLE_WINDOW_MS, IDLE_CPU_S, IDLE_CHECK_MS, idleSampleTree, seatMountUrl, postBoardVia, reportIdle, HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+module.exports = { describeHolder: describe, status, statusReport, IDLE_WINDOW_MS, IDLE_CPU_S, IDLE_CHECK_MS, idleSampleTree, seatMountUrl, postBoardVia, reportIdle, HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
 
 // D663: `node heavy-run.js --run [--exclusive] --cmd "<what>" -- <program> [args...]` runs one program under the lock (and the hold, with --exclusive) and exits
 // with its code. For a run that is not node (a Blender bake, a game run over 10 s, a timing session's own binary): GATES.md, "The heavy-run lock".
