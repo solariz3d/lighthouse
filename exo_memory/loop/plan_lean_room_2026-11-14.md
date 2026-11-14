@@ -119,3 +119,13 @@ your plan before acting". In `briefs/lighthouse_the_room.md`.
 
 **Also put to him with this plan (it changes what every seat on L runs, not only this one):** the seven owed file syncs on L, by
 B, one a run with a backup (`handback/p-l207-l-owed-steps-B_2026-11-14.md`, section 4).
+
+### STARTED 02:3x, at his "go, and yes to all" (02:17)
+- **The window line is set:** `C:\Consonance\instances\librarian\.claude\settings.local.json` now holds `"autoCompactWindow": 500000` (a number). Backup beside it: `settings.local.json.bak-20261114-before-500k`. To undo: remove the line or restore the backup.
+- **Why the 11-11 line never held:** it was written as the string `"850k"`. The vendor's settings reference gives the key as a number of tokens, 100000 to 1000000, valid in any settings file, the local one included (read by one reader from the vendor's pages, not by me; its report is in the session, not on disk). The counter below shows the two automatic cuts since then at 977,314 and 968,752. That the string was the cause is inferred, not shown.
+- **No override in the way:** `CLAUDE_CODE_AUTO_COMPACT_WINDOW` is unset in this seat, and `main.rs` names neither it nor the flag (grep, 0 lines).
+- **Not documented:** whether a change to this key reaches a session that is already running. So the line is proved only by the next cut.
+- **The instrument:** `node exo_memory/loop/seat_context_2026-11-14.js [--seat librarian] [--since <ISO time>]`. It prints calls, first, median, largest and last context, and each cut with its trigger and the tokens before it (from the transcript's own boundary rows). Numbers only.
+- **Baseline, one run at 02:3x:** since 2026-11-11T07:30Z, 1,162 calls, median 509,806, largest 966,635; cuts: 11-12 08:31Z manual at 951,245; 11-13 09:45Z auto at 977,314; 11-14 07:19Z auto at 968,752. Since tonight's cut: 37 calls, median 185,735, last 233,475.
+- **The line holds if** the next automatic cut the counter prints falls near 500,000. **It is not holding if** a call's context passes 550,000 with no cut; then it is read again after the next launch, and after that the launch flag is the next form (it needs the app, so a pane and his word).
+- **The trial ends 2026-11-21.** The two registered failure lines above stand as written; the bar stays 472,545.
