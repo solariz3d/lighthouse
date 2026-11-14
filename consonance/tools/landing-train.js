@@ -15,6 +15,9 @@
 //   worktree   the train's own worktree of that repo (`git worktree add <dir> --detach`); the train builds only here
 //   base       'main'; remote 'origin'
 //   check      [program, ...args]: run in the worktree, exit 0 = green (dreamzone-3: build.bat test, then both self-tests)
+//   reread     [program, ...args] or absent: when `check` exits 3 AND its output carries the world self-test's "selftest: machine-bound red only"
+//              line, this runs ONCE more inside the same hold; exit 0 there is green, with both readings kept in the result, the log and the
+//              board line. Absent: a 3 is red. dreamzone-3: ["build\\bin\\dz-world.exe", "--selftest"] (D675, B)
 //   gate       [program, ...args] or null: the memory gate, exit 0 = enough memory (memwatch --gate); retried for gate_wait_s
 //   guard      [program, ...args] or null: exit 0 = a GAME IS RUNNING (dzrunning.cmd's sense); promotion waits while it does
 //   promote    null, or { files: [rel, ...] or dirs, stamp: rel, stamp_text, launch_check: [program, ...args] or null,
@@ -104,10 +107,20 @@ function failingRows(text) {
   const out = [];
   for (const line of String(text || '').split(/\r?\n/)) {
     const l = line.trim();
-    if (/^FAIL\b|\*\*\*Failed|CHECK(_[A-Z]+)? failed|tests failed|selftest: FAILED|SELFTEST RED|SUITES RED|BUILD FAILED|error C\d+|: error\b|is not recognized as an internal or external command/.test(l)) out.push(l.slice(0, 240));
+    if (/^FAIL\b|\*\*\*Failed|CHECK(_[A-Z]+)? failed|tests failed|selftest: FAILED|selftest: machine-bound red only|SELFTEST RED|SELFTEST MACHINE-BOUND|SUITES RED|BUILD FAILED|error C\d+|: error\b|is not recognized as an internal or external command/.test(l)) out.push(l.slice(0, 240));
     if (out.length >= 20) break;
   }
   return out;
+}
+
+// The world self-test's own summary when its ONLY reds are machine-bound (dreamzone-3 selftest.cpp). An exit of 3 counts as that only when this
+// line is in the output too: the MSVC runtime's abort() also exits 3 (registration_train_exit3_B_2026-11-14.md, amendment 2).
+const MACHINE_BOUND_SUMMARY = /^selftest: machine-bound red only\b/m;
+/** What a reading said, for the record: its own selftest summary lines, else its last line. */
+function readingOf(text) {
+  const lines = String(text || '').split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  const s = lines.filter((l) => /^selftest: /.test(l));
+  return (s.length ? s.join(' | ') : (lines[lines.length - 1] || '(no output)')).slice(0, 240);
 }
 
 // ── the push gate, called from here because the hook does not see a script's push (push-gate.js: "NOT CAUGHT ... a push run inside a script") ──
@@ -202,8 +215,20 @@ function check(cfg, { hold, logFile, say }) {
     throw e;
   }
   try {
-    const r = run(cfg.check, cfg.worktree, { logFile, env: h && h.env ? h.env : process.env });
-    return { green: r.code === 0, failing: r.code === 0 ? [] : failingRows(r.text).concat(failingRows(r.text).length ? [] : [`(exit ${r.code}; no failing row named in the output)`]) };
+    const env = h && h.env ? h.env : process.env;
+    const r = run(cfg.check, cfg.worktree, { logFile, env });
+    if (r.code === 0) return { green: true, failing: [] };
+    const first = failingRows(r.text).concat(failingRows(r.text).length ? [] : [`(exit ${r.code}; no failing row named in the output)`]);
+    // D675 (B): an exit of 3 WITH the world self-test's machine-bound summary is read again ONCE, here, inside the same hold, by the one command
+    // `cfg.reread` names. A second reading of 0 is green and keeps both readings; anything else is red with both named. No `reread` configured:
+    // a 3 stays red. Any other red is never read again.
+    if (r.code !== 3 || !MACHINE_BOUND_SUMMARY.test(r.text)) return { green: false, failing: first };
+    if (!cfg.reread || !cfg.reread.length) return { green: false, failing: first };
+    say(`machine-bound red only (exit 3); reading it once more in the same hold: ${first.join(' | ').slice(0, 160)}`);
+    const r2 = run(cfg.reread, cfg.worktree, { logFile, env });
+    const reread = { first, second: readingOf(r2.text), code: r2.code };
+    if (r2.code === 0) return { green: true, failing: [], reread };
+    return { green: false, failing: [`first reading (exit 3): ${first.join(' | ')}`, `second reading (exit ${r2.code}): ${reread.second}`], reread };
   } finally { if (h && h.release) h.release(); }
 }
 
@@ -212,7 +237,7 @@ function runTrain(cfg, opts = {}) {
   const data = opts.data || dataDir();
   const say = opts.say || ((s) => process.stderr.write(`landing-train: ${s}\n`));
   const hold = opts.hold === undefined ? defaultHold : opts.hold;
-  const result = { landed: [], named: [], pushed: null, promoted: null, stopped: null, attempts: 0 };
+  const result = { landed: [], named: [], rereads: [], pushed: null, promoted: null, stopped: null, attempts: 0 };
   const base = cfg.base || 'main', remote = cfg.remote || 'origin';
 
   const marker = readMarker(data);
@@ -241,7 +266,7 @@ function runTrain(cfg, opts = {}) {
       const c = check(cfg, { hold, logFile, say });
       if (c.gated) { result.stopped = c.failing[0]; return result; }
       if (c.green) {
-        const landed = land(cfg, data, { baseSha, rows: merged, say, result });
+        const landed = land(cfg, data, { baseSha, rows: merged, say, result, reread: c.reread });
         if (!landed) return result;
         ready = without(readReady(data), merged);   // the landing step already wrote it
         landedThisPass = true;
@@ -269,7 +294,7 @@ function runTrain(cfg, opts = {}) {
 function readMarker(data) { try { return JSON.parse(fs.readFileSync(path.join(data, MARK_NAME), 'utf8')); } catch (_) { return null; } }
 
 /** The landing: scan, fast-forward main, push, verify, then the READY list and the log. Nothing before this step changes main or the list. */
-function land(cfg, data, { baseSha, rows, say, result }) {
+function land(cfg, data, { baseSha, rows, say, result, reread }) {
   const base = cfg.base || 'main', remote = cfg.remote || 'origin';
   const trainSha = sha(cfg.worktree, 'HEAD');
   if (sha(cfg.repo, base) !== baseSha) { result.stopped = `main moved under the train (was ${baseSha.slice(0, 7)}); nothing landed`; return false; }
@@ -293,9 +318,10 @@ function land(cfg, data, { baseSha, rows, say, result }) {
   result.pushed = push.code === 0 && remoteSha === trainSha;
   if (!result.pushed) { result.stopped = `pushed? no: git said ${(push.err || push.out).slice(0, 200)}; the remote reads ${remoteSha.slice(0, 7)}. main is at ${trainSha.slice(0, 7)} locally; the marker stays for 'reconcile'`; return false; }
   writeReady(data, without(readReady(data), rows));
-  appendLog(data, { event: 'landed', sha: trainSha, base: baseSha, rows });
+  appendLog(data, { event: 'landed', sha: trainSha, base: baseSha, rows, ...(reread ? { reread } : {}) });
   fs.rmSync(path.join(data, MARK_NAME), { force: true });
   result.landed.push(...rows);
+  if (reread) (result.rereads = result.rereads || []).push({ rows, ...reread });
   result.sha = trainSha;
   if (cfg.promote) { try { result.staged = stage(cfg, trainSha); } catch (e) { result.staged = null; say(`NOT staged for promotion: ${e.message}`); appendLog(data, { event: 'not-staged', sha: trainSha, error: e.message }); } }
   say(`landed ${rows.map((r) => r.branch).join(', ')} as ${trainSha.slice(0, 7)}; ${remote}/${base} reads ${remoteSha.slice(0, 7)}`);
@@ -404,6 +430,7 @@ function boardLine(r, base = 'main') {
   const parts = [r.landed.length
     ? `landing train: landed ${r.landed.map(who).join(', ')} as ${base} ${String(r.sha || '?').slice(0, 7)}, ${r.pushed ? 'pushed and read back' : 'NOT pushed'}`
     : 'landing train: nothing landed'];
+  for (const x of r.rereads || []) parts.push(`green on a machine-bound re-read (${x.rows.map((y) => y.branch).join(', ')}): first ${x.first.join(' | ')}; second ${x.second}`);
   for (const n of r.named) parts.push(`sent back ${who(n.row)}: ${n.reason}: ${(n.files || n.failing || []).slice(0, 3).join('; ')}`);
   return parts.join('. ');
 }
@@ -434,7 +461,7 @@ function main(argv) {
     const logDir = flag('--log-dir');
     if (logDir) fs.mkdirSync(logDir, { recursive: true });
     const r = runTrain(cfg, { data, logDir, waitPromote: argv.includes('--wait-promote') });
-    console.log(JSON.stringify({ landed: r.landed.map((x) => x.branch), sha: r.sha || null, named: r.named.map((n) => ({ branch: n.row.branch, reason: n.reason, files: n.files, failing: n.failing })), pushed: r.pushed, promoted: r.promoted, stopped: r.stopped, attempts: r.attempts }));
+    console.log(JSON.stringify({ landed: r.landed.map((x) => x.branch), sha: r.sha || null, named: r.named.map((n) => ({ branch: n.row.branch, reason: n.reason, files: n.files, failing: n.failing })), rereads: (r.rereads || []).map((x) => ({ branches: x.rows.map((y) => y.branch), first: x.first, second: x.second })), pushed: r.pushed, promoted: r.promoted, stopped: r.stopped, attempts: r.attempts }));
     const line = boardLine(r, cfg.base || 'main');
     if (line) console.log(`BOARD: ${line}`);
     return r.stopped ? 1 : 0;
