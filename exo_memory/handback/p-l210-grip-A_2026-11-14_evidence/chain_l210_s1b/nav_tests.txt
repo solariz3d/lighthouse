@@ -1,0 +1,76 @@
+heavy-run: waiting on 6fe15f0a pid 27756 (A L161 L210 s2b base build, since 2026-11-14T12:18:49.403Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 14500 (A L161 L210 s2b base replays, since 2026-11-14T12:18:56.711Z) — it holds this tree
+heavy-run: waiting on 6fe15f0a pid 14500 (A L161 L210 s2b base replays, since 2026-11-14T12:18:56.711Z) — it holds this tree
+  33 tiles rebuilt alone, each equal to the one built in its range
+ok    a_tile_built_alone_equals_the_same_tile_built_in_a_range
+ok    a_different_seed_or_a_different_body_gives_a_different_tile
+ok    the_body_is_the_one_the_simulation_moves
+ok    settings_that_cannot_work_are_refused_and_nothing_builds_to_nothing
+  69668 points on the mesh: 0 with no floor (the mesh is at most 0.254 m from its floor), 0 with a surface inside the body; the nearest any surface comes to the body's axis is 0.302 m
+ok    the_mesh_stands_on_floors_and_keeps_the_body_clear_of_every_surface
+  60852 polygon corners and centres beside 22 reprieves: 0 in mass, 0 in a reprieve
+ok    nothing_is_meshed_inside_a_reprieve_or_inside_mass
+  4205 polygons: the largest piece of floor is 6.00 m across, the largest piece of stair 3.95 m
+ok    no_polygon_of_floor_is_larger_than_a_patch
+  build: 67 ms a tile on one thread (most 83), 584 polygons and 101779 bytes a tile; adding a tile to the world: at most 0.112 ms
+ok    build_time_and_size_are_recorded
+  6 tiles built both ways, 5 of them byte for byte the same; 99402 boxes were taken whole and 40 triangles belonged to none
+ok    a_box_taken_whole_builds_the_tile_its_twelve_triangles_build
+  apartment: 24 blocks, 37197 nodes, 1831185 reachability questions, 3791 path searches;
+    broken 0, leaked 0, path disagreements 0, nodes with no mesh 0; seams joined 488 edges, unjoined 0 voxels; bad links 0
+ok    the_mesh_joins_exactly_what_the_graph_joins_in_the_apartments
+  hotel: 12 blocks, 23909 nodes, 1182232 reachability questions, 1898 path searches;
+    broken 0, leaked 0, path disagreements 0, nodes with no mesh 0; seams joined 166 edges, unjoined 0 voxels; bad links 0
+ok    the_mesh_joins_exactly_what_the_graph_joins_in_the_hotel
+  natural biomes: 6 blocks, 10816 nodes, 529779 reachability questions, 940 path searches;
+    broken 0, leaked 0, path disagreements 0, nodes with no mesh 0; seams joined 119 edges, unjoined 0 voxels; bad links 0
+ok    the_mesh_joins_exactly_what_the_graph_joins_where_biomes_meet
+  hunter paths: 19 used a ladder, 22 a drop. lesser chasers: 5801 paths unchanged; denied a move the hunter used: 82 slower, 0 gone, 0 the same time, 0 quicker; 0 wrong
+ok    denying_a_move_changes_only_the_paths_that_used_it
+  walkers' paths between tiles: 432 across a face, 432 across an edge, 144 corner to corner; 576 of them between storeys of stacked tiles; 0 failed
+ok    paths_cross_chunk_borders_sideways_upward_and_cornerwise
+  35014 walk and stair edges walked end to end: 0 not walked directly; 5 bent, the worst running 1.11 m over its edge
+ok    every_walk_and_stair_edge_is_walked_directly
+  796 complete paths checked: 596 over stairs, 0 by a ladder, 16 by a drop
+ok    a_path_adds_up
+  436 stair edges walked up or down, 0 wrong
+ok    a_flight_of_stairs_is_travelled_as_stairs
+  24 of 24 ladder edges and 69 of 72 drop edges taken as the quickest way between their own ends, 0 wrong
+ok    a_ladder_and_a_drop_are_crossed_as_what_they_are
+  631 of 632 climb edges taken by the crawler as the quickest way between their own ends, 0 wrong
+ok    a_climb_is_a_link_that_only_a_chaser_allowed_to_climb_is_given
+  2943 pairs walked both ways: the slower way is 0.96% slower on average, more than 2% slower in 471, more than 5% in 104, 22.9% at the worst
+    C:\Users\zackn\Downloads\dreamzone-3-a-l210\nav\tests\path_tests.cpp(234): CHECK failed: worst < 0.20
+FAIL  the_way_there_is_about_as_quick_as_the_way_back
+  600 pairs: 598 with a way (the same length and time both ways of asking), 2 with none; on a budget of 24 polygons 585 gave up
+ok    the_way_round_is_the_path_without_the_path
+ok    a_search_that_runs_out_says_so
+  796 places on the mesh found where they stand; 3 inside mass and 4 inside reprieves found nothing
+ok    nearest_is_on_the_mesh_or_nothing
+  20000 points: 14710 with mesh within reach, 5290 with none, 0 answered from beyond it; 0 paths from or to a point with no mesh near
+ok    nearest_never_answers_from_beyond_its_reach
+ok    tiles_leave_and_come_back_in_any_order
+  9 tiles (108 m square, two storeys), 3000 random pairs, 46 polygons a path: find_path 41.6 us (most 607), way_round 35.2 us, nearest 0.29 us
+ok    query_times_are_recorded
+  26 reprieves (158 reprieve edges in the graph): 2181 paths, 1610352 points along them, 0 inside a reprieve; mouth to mouth 208 went round and 0 had no way round inside the block
+ok    no_path_ever_crosses_a_reprieve
+    seed 31 duct (-5 0 6)-(-5 1 6): generator 11.62 s, joined graph 13.92 s, mesh 12.04 s (-1.87 s, x0.865), 105.0 m
+    seed 31 duct (-5 1 12)-(-9 0 11): generator 9.40 s, joined graph 11.26 s, mesh 9.56 s (-1.70 s, x0.849), 82.9 m
+    seed 32 duct (19 0 -6)-(19 1 -6): generator 7.66 s, joined graph 9.18 s, mesh 7.07 s (-2.11 s, x0.770), 60.6 m
+    seed 32 duct (1 1 6)-(-5 0 5): generator 9.06 s, joined graph 10.85 s, mesh 9.02 s (-1.83 s, x0.831), 77.8 m
+    seed 32 duct (19 0 0)-(19 1 0): generator 7.66 s, joined graph 9.18 s, mesh 7.21 s (-1.97 s, x0.785), 61.6 m
+    seed 32 duct (13 0 12)-(13 1 12): generator 7.66 s, joined graph 9.18 s, mesh 7.55 s (-1.63 s, x0.823), 64.7 m
+    seed 33 duct (1 0 0)-(1 1 0): generator 8.76 s, joined graph 10.49 s, mesh 9.89 s (-0.60 s, x0.943), 85.7 m
+    seed 33 duct (13 0 12)-(13 1 12): generator 7.38 s, joined graph 8.83 s, mesh 7.13 s (-1.70 s, x0.807), 61.2 m
+    seed 34 duct (-5 0 -6)-(-5 1 -6): generator 7.34 s, joined graph 8.79 s, mesh 6.83 s (-1.96 s, x0.777), 58.2 m
+    seed 34 duct (-5 0 0)-(-5 1 0): generator 7.50 s, joined graph 8.98 s, mesh 7.26 s (-1.72 s, x0.808), 62.0 m
+  10 reprieves measured (179 skipped: window not inside the block; 0 capped). mesh / graph: least 0.770, median 0.823, mean 0.826, most 0.943; mesh - graph: -2.11 to -0.60 s; the quickest way round on the mesh is 6.83 s
+ok    reprieve_detours_on_the_mesh_agree_with_the_generator
+  11 reprieve regions and 4 ladder and 5 drop ways agree with the graph; 3 ladders inside reprieves listed by the scene, none kept; 589 searches (588 complete) answered alike
+ok    the_scenes_own_regions_and_traversals_build_the_same_navigation
+ok    a_tile_becomes_usable_at_its_tick_and_not_before
+  408 paths asked over 300 ticks, 223 complete. waits: in real time with 8 workers 0 (0 ms); flat out 7 (281 ms); one slow worker 10 (1390 ms); shuffled 2 and 6
+ok    the_same_requests_give_the_same_paths_whatever_the_workers_do
+ok    a_different_latency_is_a_different_run
+32 tests, 1 failed
+lockrun: L210 s1b nav_tests WALL 55 s, exit 1

@@ -1,0 +1,17 @@
+    75.0 s of the flee bot's run: 12 events, chase fingerprint c5fb2b3e0165f6d1 and simulation fingerprint 87bb91eb43102d0e in both
+ok    a_record_of_the_flee_bots_inputs_gives_the_same_run_in_the_app_as_in_the_headless_harness
+ok    a_run_caught_by_an_interceptor_names_it_in_its_record_and_in_its_replay
+ok    a_run_record_reads_back_as_it_was_written_to_the_bit
+ok    an_old_text_with_no_record_format_and_no_speed_section_still_reads_as_format_0_and_plays_to_the_same_fingerprints
+ok    a_new_record_text_says_its_format_before_every_other_key_and_lists_every_speed_field_and_reads_back_to_the_bit
+ok    a_run_played_with_another_speed_model_replays_to_its_fingerprints_from_its_record_and_does_not_without_it
+ok    a_new_run_begins_with_the_shipped_speed_model_and_its_record_names_it
+ok    an_old_record_without_the_timer_reads_with_no_timer_and_replays_to_its_own_fingerprints
+    a new run's record: gen_world 445410b473f81201; the kit's world and the world before it have spawn fingerprints 16777b01f937ac48 and dcca428a82201b35
+ok    a_new_record_says_the_generator_it_was_played_in
+    a run played before the kit, its record without [gen]: replayed to its fingerprints, 13000 ticks
+ok    a_record_with_no_gen_section_replays_in_the_generator_before_the_kit
+    the same record with its world's fingerprint changed: "this record's world is not this build's under the same generator settings: the generator changed outside its dials", 0 ticks played
+ok    a_record_whose_world_is_not_this_builds_is_refused_by_name
+11 tests, 0 failed
+lockrun: L210 s1 rows record WALL 101 s, exit 0

@@ -1,0 +1,22 @@
+run-20261112-125337.txt      build d0c1aba ticks  29621 SAME
+run-20261113-080629.txt      build e0184ea ticks  75016 SAME
+run-20261113-081208.txt      build e0184ea ticks  53192 SAME
+run-20261113-081603.txt      build e0184ea ticks   8533 SAME
+run-20261113-081647.txt      build e0184ea ticks  15683 SAME
+run-20261113-081801.txt      build e0184ea ticks   3622 SAME
+run-20261113-081820.txt      build e0184ea ticks  41299 SAME
+run-20261113-082127.txt      build e0184ea ticks   8895 SAME
+run-20261113-082207.txt      build e0184ea ticks   3628 SAME
+run-20261113-082233.txt      build e0184ea ticks    219 SAME
+run-20261113-082233_2.txt    build e0184ea ticks    390 SAME
+run-20261113-082235.txt      build e0184ea ticks    135 SAME
+run-20261113-082236.txt      build e0184ea ticks     94 SAME
+run-20261113-082236_2.txt    build e0184ea ticks  16260 SAME
+run-20261113-082347.txt      build e0184ea ticks  43387 SAME
+run-20261113-102803.txt      build 682e699 ticks   2072 SAME
+run-20261113-134544.txt      build 31d1c6d ticks   4381 SAME
+run-20261113-134605.txt      build 31d1c6d ticks   3102 SAME
+run-20261113-134701.txt      build 31d1c6d ticks   7086 SAME
+run-20261114-104139.txt      build 99b6045 ticks  19718 SAME
+replay_check: 20 runs, 20 same, 0 different, 0 unreadable
+lockrun: L210 s2b tip replays WALL 127 s, exit 0
