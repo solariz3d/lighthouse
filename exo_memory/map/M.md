@@ -1051,3 +1051,7 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 ## 2026-11-14 00:2x (L): how to tell whether the other machine closed out
 - **Finding:** the two repositories' last push times are the instrument. On 11-13 the game's main was pushed at 23:44 and the room's at 23:08, with no `handoff_*-D.md` and no `WHERE IT STOPS (D` sections. A room repo that is behind the game repo means the other machine's notes, hand-backs and any handoff are still on its disk.
 - **The check, one line each:** `git fetch` both; compare `git log -1 --format=%ad` of each origin/main; `ls exo_memory/loop | grep handoff` for the day; `grep -l "WHERE IT STOPS (" exo_memory/handback/*.md`.
+
+## 2026-11-14 01:5x (L): an insert into a brief goes after the entry's last line
+- **Finding:** two lines of his words I added at 00:36 and 00:52 split his 23:23 order mid-quote in `briefs/lighthouse_the_room.md`; the brief then read as if his order ended at "so i can access". Found only because the next insert looked at the lines around it.
+- **The check:** before inserting, print the target line and the five after it; insert after the last line that is indented under the entry.
