@@ -120,3 +120,24 @@ pictures go to him.
   is on the card, checked at each run's start and end; a run that had company voids itself.
 - **The pictures:** OFF and ON, grainy and settled, of the three views, as PNGs in one folder on G:, with the darkest
   tenth of each.
+
+### ADDITION to row B, by name (the chair's 23:53Z message), written 00:10Z before any result of the amended row is read
+
+The red/green run of the amended rows was already queued on the lock when this arrived. Its log has NOT been opened;
+this section is written first.
+
+- **If the red control (sigma 64) passes a view, that view is reported as "THE ROW CANNOT SEE A LIFT HERE"**, and
+  counts neither for nor against the filter.
+- **Then one more view is drawn,** registered here before it is drawn with the filter on: a dark area bordering a lit
+  one in the same frame, where smoothing across an edge would lift the dark.
+  - **The view: the spawn, still, by the flashlight**: the burst harness's own `flashlight` view (`Burst::flashlight`
+    true, the stage's focus as the harness sets it, `staged_focus` 0; the hand light on; seed 1; 960x540). A disc of
+    beam with the dark round it, edge to edge in one frame.
+  - **The same rule as the other still views:** the grainy filter-on darkest tenth, and the settled-on, are each no
+    brighter than the settled-off by more than 0.25 levels.
+  - **The same red control** (sigma 64) is run on it first.
+- **The margin is not changed** to make a control fail (0.25 levels).
+- **His eye on the pictures decides the darkness** either way.
+- **My own doubt, said now:** the darkest tenth is the frame's darkest 10% of pixels. Round a beam that may be the far
+  dark, not the ring next to the edge, so even this view may not see edge bleed. If its red control passes too, it is
+  reported the same way, and the pictures carry it.
