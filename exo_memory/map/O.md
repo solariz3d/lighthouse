@@ -493,3 +493,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-14: fall-row-b and dark-figure-e landed on the game's main as e0fcdec; the merged world self-test reads 57/57 and exits 0, so the exit-3 re-read was not needed.** A queued runner that waits on a hold can start its build in the seconds after the hold ends: my second stop came after CMake had begun. Could be wrong that nothing of it survived, but a search by tree and label found no process.
 → `exo_memory/handback/p-land-fall-dark-O_2026-11-14.md`
+
+**2026-11-14: B's index-window row landed as 524c8f08, and cargo is green at last (1,219 passed, 0 failed); the shelf row's red was the test's tie-break, never the window.** A cargo run queued behind my own js-suite in the same tree waits on itself and is cut off after 30 min: start cargo only after the js-suite ends in that tree. Could be wrong if two trees were used, but the lock's message named my own js-suite.
+→ `exo_memory/handback/p-land-idx-O_2026-11-14.md`
