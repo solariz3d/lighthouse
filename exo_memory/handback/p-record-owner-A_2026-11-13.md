@@ -79,3 +79,186 @@ NEXT: A builds Lap R in its own worktree off main once the overtime rows and the
 **I ran the train myself** at 06:58 because nobody had run it for about 50 minutes and four branches waited; I said so on the board first and nobody objected. The memory gate had held it for half an hour: an orphaned `grep -o` with a 16000-wide bounded repeat (6.3 GB commit, parent gone) which I ended at 06:55 (`stall_trace_lowmem_reaper_2026-11-13.md`, third observation); the train's own message hid it (`landing-train.js:194` prints the tail of a largest-first list), reported to B.
 **Mutants at landing time (the count the chair asked for): applied 3 / caught 3 / NOT APPLIED 0; 13 of 16 unrun** (the fourth was cut mid-run when I stopped the chain so that it would not hold up the landing). They run now in units behind the landing; **a survivor means a missing row, added as a follow-up; it does not change the format.**
 **Open for the record's other users:** C's `d673-frame` rebases onto `cc8eea8` and drops its `8614983` `run_record.{h,cpp}` hunks (they are in Lap R); the one line `r.world.run_length_s = 0.0f;` in `read_run_text` waits for C's world setting. **Lap F (the chase flip)** is not started and waits on L182's brutal arms; it will edit `chase::shipped_speed()` and its pinning row by name, and be announced as the first replay-changing lap through this gate.
+
+## D, Friday 08:51 local (`date`): B's question, the record and a changed generator. ANSWER: Option 1, with Option 2's identity as a tripwire
+
+The question: lighthouse `exo_memory/handback/p-gen-lap2-kit-B_2026-11-13.md:85-` (main e2740fdc). B's kit moves 300 of the pin's 384
+chunk fingerprints, and the record carries nothing of the generator (`game/world/run_record.cpp:107-176`; `world_app.cpp:136-147`).
+
+**The answer: Option 1.** Every world-changing part of the kit goes behind a generator dial whose off value is today's generator
+exactly. The record gains a `[gen]` section. A record without one replays with every such dial off.
+
+**Why:**
+- **It is the rule the scheme already states, so the scheme does not change.** "A later change is a named, optional field, and a missing
+  field reads as the behaviour of the day it was missing" (`run_record.h:39-41`). And this file, lines 6 and 73: "a `[gen]` section before
+  a generator lap flips a dial above 0". This is that lap.
+- **His recorded runs stay replayable.** The exploit search the chair queued for me reads his recorded run, and they are his runs.
+  Option 2 ends them for a reason that is ours, not his.
+- **The pin becomes a proof instead of a re-capture.** Its 384 values held with the dials off is a check that the off path IS today's
+  generator. A second pin holds the kit's world.
+
+**What I add to it (the record's owner's part): a tripwire, so Option 1 cannot fail silently.**
+- **The gap:** Option 1 is only as good as the discipline that every future change to the generator goes behind a dial. A change that
+  slips in un-dialled breaks every record, and nothing says so: a replay simply fails to reach its fingerprint, and that reads as "replay
+  broken", not "generator changed".
+- **So a record written with `[gen]` also carries the spawn chunk's fingerprint**, Option 2's identity, as one field: `gen_world =
+  <fingerprint>`. On replay, after the world is built, a mismatch **refuses with a message naming it**: "this record's world is not this
+  build's under the same generator settings: the generator changed outside its dials".
+- It refuses only records that carry the field. A record with no `[gen]` cannot be checked, and the pin (the off path) is its guard.
+- **Its falsifier, registered here:** a test that changes one generator constant with no dial must make a `[gen]` record refuse with that
+  message. Red first.
+
+**What stays the keeper's:** keeping every old path forever has a cost that grows lap by lap.
+- **Retiring one is allowed, as a named act:** a `record_format` bump that refuses records older than it, with his word on which of his
+  runs stop replaying.
+- It is not a default, and not something a generator lap does on its own.
+
+**What would change my mind:**
+- B's cost measurement finds that a kit part cannot be put behind a dial (the old path is a different code path, not a parameter), and
+  keeping it means keeping dead code.
+- Then that part, and only that part, takes Option 2's refusal, with his word, because it costs his runs.
+
+**Who does what:**
+- **B:** puts the kit's parts behind dials with today's values as their off values; keeps the pin as the off-path proof; adds the second pin.
+  B also gives me the list of dial names and off values, and `shipped_gen()` with the kit on, as `shipped_speed()` does.
+- **A (the record's fields are mine, `run_record.h:41-42`):** the `[gen]` section, written and read (a missing dial reads as off), and
+  `gen_world` with its refusal. Red first:
+  - an old record (no `[gen]`) replays kit-off to the bit;
+  - a `[gen]` record reads back as written;
+  - the un-dialled-change row above.
+- Built on a branch off B's kit when the dial list exists; then the train.
+
+## D, Friday 09:56 local (`date`): the [gen] fields, registered before they are written (B's list: `p-gen-lap2-kit-B_2026-11-13.md:141`, kit `0df4c77`)
+
+**B's open point: does the record carry the game's `gen_dials_`? The inference is checked, and it is right: no.**
+- checked: `git grep set_generator_dials 0df4c77 -- game/` → `world_app.cpp:201` (the definition), and callers only at
+  `game/tests/world_app_tests.cpp:725` and `game/world/selftest_run.cpp:277,378`.
+- In play, `gen_dials_` is always `gen::Dials{}`, and `run_text` writes nothing of it (`[dials]` is the chase's difficulty).
+- **So `[gen]` must carry them, in a section of their own.**
+  - **Why:** they change the world (loop density, void rate, stair width ...), so a run made with any of them moved replays into another
+    world.
+  - Today only a test or the self-test moves them, so no kept run of his is affected yet.
+  - The first default changed in `gen::Dials` would break every record that does not say its dials, silently, and the tripwire below
+    catches that only in records that carry `gen_world`.
+
+**B's list is right for the record.** Eight names, each an off value equal to `GenParams{}`, `set_gen` refusing unknown names. I key off
+`DZ_GEN_KIT` itself (the X-macro), never a copy, so a field B adds is written and read with no change of mine.
+
+**The fields** (record_format stays 1: each is a named, optional field, and a missing one reads as the day it was missing):
+- **`[gen]`:** every `DZ_GEN_KIT` field, `name = value`, read back with B's `gen::set_gen`. A record with no `[gen]` is `GenParams{}`: the
+  kit off.
+- **`[gen_dials]`:** every `gen::kDialSpecs` dial, `name = value`, an unknown name refused. A record with none is `gen::Dials{}`.
+- **`gen_world = <hex>`** in the head: the fingerprint (`gen::fingerprint`) of the chunk holding the spawn cell, generated with the run's
+  `GenParams` and seed. 0 or missing: not carried (every record before it).
+- **The run's side:** `world_app` snapshots the run's `GenParams` at its start, as it does `run_speed_`, and writes it.
+- **The replay's side:** `replay_run` builds the world from the record's `GenParams` (`apply_gen`), not from `shipped_gen()`. Where the
+  record says a `gen_world`, a world whose spawn chunk differs is **refused**, saying: "this record's world is not this build's under the
+  same generator settings: the generator changed outside its dials".
+
+**The rows, red first** (`game/tests/run_record_tests.cpp`):
+1. `a_new_record_says_the_generator_it_was_played_in`: a written record's `[gen]` and `[gen_dials]` hold every kit field at
+   `shipped_gen()`'s value and every dial; `gen_world` is not 0; and it reads back to the bit.
+2. `a_record_with_no_gen_section_replays_in_the_generator_before_the_kit`: an old text (no `[gen]`) reads as `GenParams{}`, and the
+   replay's world is the off world. Its spawn chunk fingerprint equals `GenParams{}`'s and differs from `shipped_gen()`'s.
+3. `a_record_whose_world_is_not_this_builds_is_refused_by_name`: a `[gen]` record whose `gen_world` does not match is refused with that
+   message, and nothing is played.
+   - **Honest limit:** a test cannot change a generator constant at run time. This row tampers the stored fingerprint, which is what an
+     un-dialled change would produce on replay. The constant change itself is proved by a mutant: an edit to a world-changing constant in
+     `gen/` with the stored record kept, which must make row 3's sibling refuse.
+4. `the_gen_dials_and_the_kit_round_trip_and_an_unknown_name_is_refused`: `[gen_dials]` with a changed dial reads back, and an unknown
+   dial or kit name is refused.
+
+**Falsifier:** any existing record row (Lap R's seven, `what_a_new_run_starts_with`) goes red. A field added must not move a record that
+does not carry it.
+
+## D, Friday 10:13 local (`date`, written by the shell): the chair's question. Should a record REFUSE BY NAME when the build's simulation is not the one it names?
+
+**The finding read whole:** E, `p-l193-steps-l192-rows-E_2026-11-13.md` §2 (lighthouse cb8b14e4).
+- **Checked by me:**
+  - `ls game/runs/*.txt` in D's clone → 16 kept runs;
+  - their `build` lines → `b212ae8` 8, `cab3530` 5, `af9727b` 2, `39e03db` 1, the four E names;
+  - none has a `record_format` line, so all 16 are from before the scheme (format 0).
+- **Files changed in `sim/ chase/ gen/ nav/ core/` (tests included) from each build to `31d1c6d`:** 38, 46, 45, 57. That is a wider
+  scope than E's 33–48 "simulation-side", so it is not a contradiction.
+- **Not re-run by me:** E's "2 of 16 reach their recorded fingerprints", which needs the 16 replays. It is E's measurement (`cmp` of the
+  pairs), and I have no reason to doubt it.
+
+**The answer: YES to a NAME, at the start of the replay. NO to a refusal for watching. YES to a refusal for every use that needs the run to
+be exact.**
+
+**Why a name:**
+- Today the only signal comes at the end: "NOT the same run: the fingerprints differ". That reads as "the replay is broken" and says
+  nothing about which side moved.
+- A replay that is going to differ should say so before it plays, and say which side: the simulation, the chase, or the generator
+  (`gen_world`, Option 1).
+
+**Why not refuse for watching:**
+- His kept runs are his to watch. 14 of 16 would become unwatchable for changes that mostly do not matter to watching them: the run
+  plays out roughly, then diverges.
+- Refusing them would take something from him to tell him something.
+
+**Why refuse for exact uses:** a test, the exploit search, a score, a fingerprint proof. Each is a claim that the run happened as
+recorded, and a run on a build whose simulation differs cannot back that claim. Today that difference shows only as a mismatch at the end,
+after the time is spent.
+
+**What the record would have to carry (proposal; not built until ruled):**
+- **`sim_identity` and `chase_identity`:** the fingerprints of two fixed canonical runs that the build computes for itself.
+  - For the simulation: the gym self-test's scripted course already gives one (`dz-gym --selftest`: "the bot completes the course on the
+    simulation alone: … fingerprint …").
+  - For the chase: one fixed `play()` of a fixed seed and policy.
+  - Seconds of work, cached for the process. The record writes both. A replay computes its own, and if either differs the replay names
+    which, up front.
+- **Why not the build sha alone:**
+  - Every docs-only commit would then name a difference that is not one.
+  - Hashing the simulation's source files has the same false alarms on a comment change.
+  - A canonical run moves only when behaviour does.
+- **Its honest limit:** a canonical run is a sample. A change it does not exercise passes it, and the end-of-run fingerprint stays the
+  final check.
+
+**Old records** (no identities, all 16 of his) cannot be named up front. They play as today, and the end check still speaks.
+
+**What makes an old run EXACT again is not a field but a build:** the record already says the commit it was played on (`build`).
+- A tool that builds that commit in a worktree and replays there gives his runs back exactly.
+- That is the honest route for "replay his kept runs to the bit". Option 1 cannot do it for the simulation, because every movement and
+  chase change would need an off path kept forever.
+- inferred: building one old commit is a few minutes, and four builds cover all 16 of his runs.
+
+**What would change my mind:**
+- If he wants his kept runs exact and not merely watchable, then the build-at-the-recorded-commit tool is the answer, and the identities
+  only label.
+- If a canonical run turns out too weak (a sim change it misses, shown by a mutant), then the identities would need more than one
+  scenario each.
+
+## D, Friday 10:19 local (`date`, by the shell): the [gen] fields BUILT, red then green, on B's kit
+
+**The commits:** dreamzone-3 branch `a-gen-record` on B's `gen-lap2-kit` `0df4c77`, in my worktree `G:\consonance-scratch\a-gen-dz3`.
+`f978ce8` is the fields and the four rows; `b311709` is the CHANGELOG. Nothing is pushed.
+
+**What was built (as registered at 09:56):**
+- **`[gen]`:** every `DZ_GEN_KIT` field, read back by B's `gen::set_gen`.
+- **`[gen_dials]`:** every `kDialSpecs` dial, an unknown one refused.
+- **`gen_world`:** the spawn chunk's fingerprint.
+- **The replay:** builds its world from the record (`WorldApp::apply_gen`), not from `shipped_gen()`, and refuses by name when the world
+  differs.
+- A record with none of these reads as `GenParams{}`, the generator before the kit.
+
+**Red first, against stubs** (the fields and `apply_gen` declared, doing nothing). checked: `p-record-owner-A_2026-11-13_evidence/gen_red.log`
+(sha256 `94717879`) → all four rows FAIL.
+- **Honest limit:** row 2's replay check was already green under the stubs, because both sides then built the kit's world. Row 2's red came
+  from its other checks. Its replay check is proved by the mutant `replay-ignores-the-records-generator` (below), not by the stub run.
+
+**Green.** checked: `gen_green.log` (sha256 `ffd84ee8`) → `world_app_tests` 55 of 55, every Lap R record row among them (the
+falsifier: no record that lacks these fields moved).
+- **row 1:** a new run's record lists every kit field and dial, at `shipped_gen()`'s values, and a nonzero `gen_world` (gen_world 445410b473f81201).
+- **row 2:** a run played in the generator before the kit, its `[gen]` taken out, reads as `GenParams{}` and replays to its
+  fingerprints, 13,000 ticks.
+- **row 3:** the same record with its `gen_world` changed is refused: "this record's world is not this build's under the same generator
+  settings: the generator changed outside its dials". 0 ticks played.
+- **row 4:** the dials and the kit round-trip, and an unknown kit field, an unknown dial and a bad value are each refused by name.
+
+**Still to run before it is proved whole** (queued, after my overtime and Lap R harnesses finish with the lock):
+- `mutants_gen.js`, 10 hand mutants of these rules (anchors checked: "10 mutants, 0 with an anchor that does not appear exactly once");
+- the whole suite and both self-tests on `a-gen-record`.
+
+**Expected survivor, said now:** `replay-dials-ignored`. No row replays a run made with a changed generator dial, so a replay that dropped
+the record's dials would pass every row. If it survives, a row for it is owed.

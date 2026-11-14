@@ -1,0 +1,129 @@
+selftest
+  ok    with a relative configuration folder, the ambience bed beside the repository is found: C:\Users\nname\AppData\Local\Temp\dz-world-selftest-21940\bed\dreamzone-rt\ambience1.wav
+  ok    the world starts paused on its defaults, at the door, with nothing hunting yet and nothing to report
+  ok    the generator names a spawn cell for this seed: cell -2 0 1, at (-4.5 0.0 4.5)
+  ok    a Direct3D 12 device with DXR 1.1, offscreen: NVIDIA GeForce RTX 5080
+  ok    the block round the spawn is loaded and drawn: 245 chunks loaded, 245 with triangles drawn, 2.61 million triangles, 3674 lamps; collision for 27
+  ok    each chunk is one compacted bottom-level structure, built off the frame's thread: 67 MB in all; a chunk: merging 0.27 ms, build and compaction 0.51 ms (worst 0.87)
+  ok    the lamps are sorted into the light grid: 3674 lamps in 67335 cells of 4 x 3.5 x 4 m, eight to a cell; 126 cells had more than eight reach them; sorted in 3.0 ms
+  ok    the player stands on the spawn cell's floor
+  ok    the frame at the spawn is lit, and not blown out: mean 0.279, 100% of pixels lit, 0.00% pure white, 0 bad HDR values
+  ok    with the hand light off the same view is darker: the building is dark by default: mean 0.066 against 0.279, 94% of pixels lit
+  ok    the flashlight is a beam: it lights the middle of the view far more than the hand light does, and more than the rim: middle 0.664 and rim 0.077 by the flashlight; middle 0.422 and rim 0.234 by the hand light; 0.00% pure white
+  ok    focused, the beam is a small bright patch with the dark close round it, where the wide beam still lit: the patch 0.770 against 0.089 just outside it; with the wide beam the same two were 0.667 and 0.193
+  ok    a mesh that moves is drawn beside the streamed world, and goes where it is put: the picture differs by 15.3/255 with a glowing box before the eye and 0.42/255 once it is moved away; 245 chunks drawn throughout
+  ok    a window that is never shown takes the messages
+  ok    F switches the hand light, which starts on
+  ok    M shows nothing (the player has no map), and F1 the overlay, which draws
+  ok    W and Shift held: the player sprints down the corridor: 9.3 m in 1.5 s
+  ok    R returns to the spawn
+  ok    Esc pauses, and paused time does not pass
+  ok    a walk is planned over the walk graph from the spawn: 110 places, 303 m
+  ok    the real controller walks the route to its end: 299 m in 69.8 s
+  ok    through many chunks and several storeys: 17 chunks entered, storeys -1 to 2
+  ok    chunks load ahead of the walk and unload behind it: 203 generated, 89 dropped; 359 loaded now
+  ok    the body never falls through missing collision: the feet were never more than 0.00 m below the route's lowest floor; every chunk in the body's reach had its collision on every frame
+  ok    no tick had to wait for a chunk: 0 waits
+  ok    the body mover's results were plausible: 0 moves made again
+  ok    frames along the walk are lit: 34 of 34 pictures lit; mean brightness 0.065 to 0.500; 0 bad HDR values
+  ok    a flight at three times sprint speed, through many chunks and several storeys: 1064 m at 21 m/s in 50.8 s; 37 chunks entered, storeys -2 to 3
+  ok    chunks load and unload all the way, in the simulation and in the picture: 759 generated and 749 dropped; 759 raytracing structures built and 749 removed
+  ok    collision is under the body at three times sprint speed: every chunk in reach had its collision on every frame; a ray down found a floor on 3048 of 3048 frames probed
+  ok    no tick had to wait for a chunk at three times sprint speed: 0 waits (0.0 ms)
+  ok    no more is held than the loaded block and its margin: at most 375 chunks loaded and 375 drawn, of 567 allowed
+  ok    memory is bounded over the flight, in the process and on the GPU: at a third, two thirds and the end: process 1193, 1201, 1212 MB; on the adapter 570, 570, 570 MB; raytracing structures 92, 96, 102 MB
+  ok    a fall at terminal speed outruns nothing: no tick had to wait for a chunk: 140 m straight down at 45 m/s in 3.1 s, 916 chunks generated on the way; 0 waits (0.0 ms)
+  ok    a new seed replaces the whole world, and the player stands at its spawn: seed 2: 245 chunks loaded, 245 drawn
+  ok    going to a chunk puts the player on a floor there: asked for 3 -2 2, standing in 3 -2 2 on storey -4
+  ok    the same inputs give the same state hash with ordinary workers, slowed workers, and everything loaded up front: ee4bc0685c364407 / ee4bc0685c364407 / ee4bc0685c364407 over 9362 ticks and 10 chunk crossings; waits for a worker: 4, 4, 0 (798 chunks built beforehand)
+  ok    the flee bot's record gives the same run here as in the headless harness: 60.0 s at the hard level: 8 events, chase fingerprint e29c6eb0162f4390 against e29c6eb0162f4390, simulation 5fd1cc30dfe64970 against 5fd1cc30dfe64970
+  ok    the chasers are drawn as the run goes: a figure in 1560 of the 1801 frames drawn, 3 at once at most
+  ok    a catch ends the run, as it did headless: the poor policy at the hardest level: caught by the hunter after 12.4 s, 137 points
+  ok    the run's end is a cut to dark, and then the results card: 0.00% of the picture lit in the dark, 37.3% with the card up (mean 0.036)
+  ok    a policy's run sets nobody's best time
+  ok    Enter on the card starts a run in the next building, and R starts this one again: seed 1, then 2
+  ok    a person's run that beats the level's best is kept in best_times.txt: 8.0 s at the brutal level
+  ok    the mix is not silent when a chaser is near: the hunter 6.0 m off: level 0.1266, against 0.0057 with nothing about and 0.0012 before the run
+  ok    and it does not clip: largest sample 0.545
+  ok    what is to one side is louder on that side: to the right: left 0.1169, right 0.1356; to the left: left 0.1071, right 0.0969
+  ok    the sound device opens silent and pulls the mix: no bed: assets/ambience1.wav is not there; device open, silent
+  ok    a reprieve holds for its time, and then the hunter comes in: in at 4.3 s, the tell from 6.3 s, open at 9.3 s, the hunter in at 12.0 s, caught at 14.6 s
+  ok    its tell is a light that was not there and a sound that grows: the light at most 1.00 (none before the tell); the mix 0.1372 in the last third of the tell against 0.0923 in the second before it
+  ok    a player who stays on a ledge is sent a climber, and it comes up after them: out of reach 3.0 s when it was sent from 9.7 s away; caught by the crawler at 16.0 s (240 frames drawn)
+  ok    every frame drew
+selftest: passed (52 of 52 checks passed)
+ok    world_settings_text_sets_a_subset_and_leaves_the_rest
+ok    world_settings_errors_name_the_line_and_change_nothing
+ok    world_settings_written_and_read_back_are_the_same
+ok    the_shipped_world_file_is_the_defaults_as_the_code_writes_them
+ok    the_shipped_world_file_leaves_start_biome_off
+ok    start_biome_makes_the_world_one_biome_and_refuses_an_unbuilt_one
+ok    the_world_starts_paused_at_the_generators_spawn_with_the_hand_light_on
+ok    f_switches_the_hand_light_and_m_does_nothing
+ok    a_new_seed_is_another_building_entered_at_its_spawn
+ok    going_to_a_chunk_stands_the_player_on_a_floor_in_it_and_respawn_returns
+ok    the_world_file_is_read_and_a_bad_one_is_reported_not_obeyed
+ok    a_run_begins_at_the_door_on_the_first_tick_of_play_and_the_hunter_comes_after_the_head_start
+    75.0 s of the flee bot's run: 14 events, chase fingerprint c22b6bf0a1806986 and simulation fingerprint 49da0622487a7385 in both
+ok    a_record_of_the_flee_bots_inputs_gives_the_same_run_in_the_app_as_in_the_headless_harness
+ok    a_catch_ends_the_run_with_a_cut_to_dark_and_then_its_results_and_a_bots_run_sets_no_best
+ok    a_persons_run_sets_the_levels_best_time_and_enter_and_r_start_the_next
+ok    a_best_times_file_with_a_mistake_is_reported_and_not_obeyed
+ok    the_level_is_chosen_with_the_keys_1_to_4_before_a_run_and_never_under_its_feet
+ok    a_dial_changed_while_running_reaches_the_run_and_the_run_no_longer_counts
+ok    frozen_chasers_stand_still_and_removed_chasers_leave_no_run
+ok    going_to_a_chunk_by_hand_ends_the_run
+ok    the_placeholder_figures_differ_in_outline_and_are_about_the_size_of_a_person
+ok    without_the_flashlight_the_hand_holds_one_small_light_that_shines_every_way
+ok    the_lights_in_the_hand_are_not_shadowed_by_the_players_own_body
+ok    with_the_hand_light_switched_off_there_is_no_light_at_all_flashlight_or_not
+ok    the_flashlight_is_a_beam_along_the_view_with_the_first_games_cone
+ok    focus_narrows_the_beam_to_three_and_seven_degrees_doubles_it_and_sends_it_far
+ok    the_focus_eases_most_of_the_way_in_a_tenth_of_a_second_and_never_leaves_zero_to_one
+ok    the_flashlight_is_not_carried_by_default_and_the_setting_puts_it_in_the_hand
+ok    a_body_standing_on_a_floor_under_a_void_two_storeys_up_or_more_is_not_killed_as_fallen
+    void cell (4 1 -22): the run ended after 3.2 s, fell 1, caught 0
+ok    a_body_that_falls_into_a_void_ends_the_run_with_that_cause
+    328 room cells, 549 corridor cells: a room's decay 0.38 s (median), a corridor's 0.61 s
+ok    in_the_apartment_a_room_is_heard_short_and_damped_and_a_corridor_longer
+    apartment: room 0.35, corridor 0.12, open 0.06, damp 4200 Hz, wet 0.35
+    hotel: room 0.40, corridor 0.25, open 0.08, damp 3800 Hz, wet 0.30
+    school: room 0.10, corridor 0.08, open 0.06, damp 6000 Hz, wet 0.40
+    hospital: room 0.15, corridor 0.08, open 0.05, damp 6500 Hz, wet 0.40
+ok    every_built_biome_is_heard_by_a_row_of_its_own
+    2 seeds x 9 apartment chunks: 303 fixtures, 53 dark; 0 dark not heard ticking once, 0 lit ticking
+ok    a_dead_lamp_is_dead_in_the_picture_and_in_the_sound
+    9600 ticks: simulation 317d50f7de10c20c and chase 8500ddfc8ac1b60e with the feet on the floor and off
+ok    feet_set_on_the_floor_change_nothing_in_the_simulation_or_the_chase
+    the flee bot, seed 1, brutal, as the chase gives it (the control): 52.0 s of the hunter, 15.3 s of it straight; 21 sign changes there (1.37 a second); the lean at most
+    77.3 degrees, changing at most 9664 degrees a second; the look at most 1080 degrees a second
+    the flee bot, seed 1, brutal, eased: 52.0 s of the hunter, 15.3 s of it straight; 3 sign changes there (0.20 a second); the lean at most
+    31.6 degrees, changing at most 337 degrees a second; the look at most 958 degrees a second
+    over seeds 1-24 of the flee bot at brutal, eased: 13 of 24 draws hold 300 degrees a second (the form needs 8);
+    the worst draw 425.0 degrees a second (the ceiling 600)
+ok    the_hunters_drawn_lean_eases_into_a_turn_and_does_not_rock_on_a_straight
+    PENDING L182, the flee bot, seed 1, brutal: 3 sign changes on 15.3 s of straights (0.20 a second; L182's bar 0.5)
+ok    the_hunters_drawn_lean_on_a_straight_pending_L182
+    the flee bot, seed 1, brutal: 29 corners; the drawn lean's peak comes, from the turn rate's peak: +0.15 +0.08 +0.08 +0.17 +0.09 +0.09 +0.08 +0.03 +0.05 +0.09 +0.08 -0.01 +0.06 +0.12 +0.10 +0.04 +0.11 +0.17 +0.10 +0.67 +0.24 +0.09 +0.63 -0.52 +0.16 +0.10 -1.00 +0.08 -0.04 s; median +0.09 s
+ok    the_hunters_lean_peaks_at_or_before_its_turn_does
+    the flee bot, seed 1, brutal: the look turns at most 958 degrees a second; its rate steps at most 185 degrees a second in one frame (at 31.44 s)
+ok    the_hunters_head_turns_with_eased_ends_and_no_step_in_its_rate
+ok    a_run_that_ends_is_written_to_the_runs_folder_and_replays_from_it_to_the_same_fingerprints
+ok    a_run_caught_by_an_interceptor_names_it_in_its_record_and_in_its_replay
+ok    a_run_record_reads_back_as_it_was_written_to_the_bit
+ok    only_the_last_20_runs_are_kept
+ok    a_read_only_app_writes_no_run
+ok    world_local_txt_is_read_over_world_txt_and_its_settings_are_never_saved_into_world_txt
+ok    the_shipped_world_txt_keeps_the_design_default_of_no_flashlight
+ok    an_old_text_with_no_record_format_and_no_speed_section_still_reads_as_format_0_and_plays_to_the_same_fingerprints
+ok    a_new_record_text_says_its_format_before_every_other_key_and_lists_every_speed_field_and_reads_back_to_the_bit
+ok    a_newer_format_an_unknown_speed_field_and_a_bad_speed_value_are_each_refused_and_name_why
+ok    a_run_played_with_another_speed_model_replays_to_its_fingerprints_from_its_record_and_does_not_without_it
+ok    a_new_run_begins_with_the_shipped_speed_model_and_its_record_names_it
+ok    a_saved_run_and_its_kept_points_round_trip_and_a_text_without_kept_points_reads_as_none
+51 tests, 0 failed
+    9600 ticks untimed and 9600 timed at 40 s: the first that differs is 9600
+ok    with_the_timer_unreached_a_timed_run_is_the_untimed_run_tick_for_tick
+1 tests, 0 failed
+textures: flat colours: C:\Users\nname\AppData\Local\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones

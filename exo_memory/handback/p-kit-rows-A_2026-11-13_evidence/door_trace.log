@@ -1,0 +1,563 @@
+-- Configuring done (0.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: G:/consonance-scratch/a-gen-dz3/build
+[1/23] C:\WINDOWS\system32\cmd.exe /C "cd /D G:\consonance-scratch\a-gen-dz3\build\game && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=G:/consonance-scratch/a-gen-dz3 -DOUT=G:/consonance-scratch/a-gen-dz3/build/game/generated/build_commit.h -P G:/consonance-scratch/a-gen-dz3/game/world/build_commit.cmake"
+[2/23] Building CXX object game\CMakeFiles\dz-world.dir\world\sound.cpp.obj
+[3/23] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\world_app_tests.cpp.obj
+[4/23] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\overtime_tests.cpp.obj
+[5/23] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\run_record_tests.cpp.obj
+[6/23] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\diag_door.cpp.obj
+[7/23] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_models.cpp.obj
+[8/23] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_run.cpp.obj
+[9/23] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen.cpp.obj
+[10/23] Building CXX object game\CMakeFiles\dz_world_game.dir\world\run_record.cpp.obj
+[11/23] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_burst.cpp.obj
+[12/23] Linking CXX executable bin\chase_tests.exe
+[13/23] Building CXX object game\CMakeFiles\dz-world.dir\world\stage.cpp.obj
+[14/23] Building CXX object game\CMakeFiles\dz-world.dir\world\main.cpp.obj
+[15/23] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_app.cpp.obj
+[16/23] Building CXX object game\CMakeFiles\dz-world.dir\world\hud.cpp.obj
+[17/23] Linking CXX static library game\dz_world_game.lib
+[18/23] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest.cpp.obj
+[19/23] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest_run.cpp.obj
+[20/23] Linking CXX executable bin\world_app_tests.exe
+[21/23] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_fpbody.cpp.obj
+[22/23] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_look.cpp.obj
+[23/23] Linking CXX executable bin\dz-world.exe
+CASE seed 3 k 14 player (4.50 -3.48 49.50) node kind 3
+  t   9.00 d  7.89 pos (6.02 -3.46 41.76) hd   15.6 spd  9.83 turn   16.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.05 d  7.45 pos (6.15 -3.46 42.23) hd   16.2 spd  9.84 turn    9.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.10 d  7.03 pos (6.29 -3.46 42.70) hd   16.6 spd  9.86 turn    5.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.15 d  6.61 pos (6.43 -3.46 43.18) hd   16.8 spd  9.88 turn    3.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.20 d  6.21 pos (6.58 -3.46 43.65) hd   16.9 spd  9.90 turn    1.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.25 d  5.82 pos (6.72 -3.46 44.12) hd   17.0 spd  9.92 turn    1.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.30 d  5.44 pos (6.87 -3.46 44.60) hd   17.0 spd  9.95 turn    0.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.35 d  5.09 pos (7.01 -3.46 45.08) hd   17.1 spd  9.97 turn    0.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.40 d  4.77 pos (7.15 -3.46 45.54) hd   14.9 spd  9.25 turn  -89.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (7.03 -3.46 45.11) -> (6.46 -3.46 46.01) -> (6.26 -3.46 46.26) see 0
+  t   9.45 d  4.47 pos (7.24 -3.46 45.97) hd    7.6 spd  8.33 turn -181.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (7.03 -3.46 45.11) -> (6.46 -3.46 46.01) -> (6.26 -3.46 46.26) see 0
+  t   9.50 d  4.18 pos (7.25 -3.46 46.36) hd   -2.0 spd  7.36 turn -200.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (7.03 -3.46 45.11) -> (6.46 -3.46 46.01) -> (6.26 -3.46 46.26) see 0
+  t   9.55 d  3.90 pos (7.21 -3.46 46.69) hd  -12.5 spd  6.40 turn -218.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/4 -> (6.46 -3.46 46.01) -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.60 d  3.64 pos (7.11 -3.46 46.97) hd  -24.0 spd  5.56 turn -237.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.65 d  3.36 pos (6.97 -3.46 47.22) hd  -35.7 spd  5.78 turn -231.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.70 d  3.07 pos (6.77 -3.46 47.44) hd  -47.1 spd  6.00 turn -226.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.75 d  2.77 pos (6.53 -3.46 47.62) hd  -58.3 spd  6.21 turn -220.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.77 d  2.68 pos (6.46 -3.46 47.67) hd  -61.9 spd  6.01 turn -218.4 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.77 d  2.67 pos (6.46 -3.46 47.68) hd  -62.9 spd  5.75 turn -222.4 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.78 d  2.67 pos (6.46 -3.46 47.69) hd  -63.8 spd  5.50 turn -227.3 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.78 d  2.66 pos (6.46 -3.46 47.70) hd  -64.8 spd  5.26 turn -232.7 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.78 d  2.65 pos (6.46 -3.46 47.71) hd  -65.8 spd  5.02 turn -238.1 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.79 d  2.65 pos (6.46 -3.46 47.72) hd  -66.8 spd  4.78 turn -243.6 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.79 d  2.64 pos (6.46 -3.46 47.73) hd  -67.8 spd  4.56 turn -249.0 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.80 d  2.64 pos (6.46 -3.46 47.73) hd  -68.9 spd  4.33 turn -254.3 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.80 d  2.64 pos (6.46 -3.46 47.74) hd  -70.0 spd  4.12 turn -259.4 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.85 d  2.61 pos (6.46 -3.46 47.78) hd  -81.1 spd  2.08 turn -168.9 mode pursue gait 0 blk 7 scr 1 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.90 d  2.61 pos (6.46 -3.46 47.78) hd  -94.9 spd  0.82 turn -340.2 mode pursue gait 0 blk 12 scr 1 hit 0 leg 0/6 -> (6.46 -3.46 47.78) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t   9.95 d  2.61 pos (6.46 -3.46 47.77) hd -112.0 spd  0.66 turn -344.7 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/6 -> (6.46 -3.46 47.78) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t  10.00 d  2.63 pos (6.46 -3.46 47.76) hd -129.2 spd  0.73 turn -343.4 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/6 -> (6.46 -3.46 47.78) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t  10.05 d  2.65 pos (6.46 -3.46 47.72) hd -146.3 spd  0.92 turn -339.1 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/6 -> (6.46 -3.46 47.78) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t  10.10 d  2.68 pos (6.46 -3.46 47.67) hd -161.7 spd  1.22 turn -241.7 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/6 -> (6.46 -3.46 47.78) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t  10.15 d  2.73 pos (6.46 -3.46 47.61) hd -170.4 spd  1.59 turn -127.2 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/6 -> (6.46 -3.46 47.78) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t  10.20 d  2.79 pos (6.46 -3.46 47.52) hd -174.9 spd  2.00 turn  -67.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/6 -> (6.46 -3.46 47.78) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t  10.25 d  2.87 pos (6.46 -3.46 47.40) hd -177.3 spd  2.43 turn  -35.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (6.46 -3.46 47.78) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t  10.30 d  2.97 pos (6.46 -3.46 47.27) hd -178.6 spd  2.88 turn  -18.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (6.46 -3.46 47.78) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t  10.35 d  3.09 pos (6.46 -3.46 47.12) hd -177.6 spd  3.02 turn   90.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/6 -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  10.40 d  3.19 pos (6.46 -3.46 46.99) hd -168.1 spd  2.25 turn  277.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/6 -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  10.45 d  3.25 pos (6.43 -3.46 46.89) hd -154.5 spd  2.06 turn  240.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/6 -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  10.50 d  3.29 pos (6.37 -3.46 46.80) hd -139.5 spd  2.14 turn  310.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) see 0
+  t  10.55 d  3.30 pos (6.29 -3.46 46.73) hd -124.4 spd  2.13 turn  275.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) see 0
+  t  10.60 d  3.29 pos (6.20 -3.46 46.68) hd -111.4 spd  2.26 turn  245.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/6 -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) -> (2.62 -3.46 47.51) see 0
+  t  10.65 d  3.26 pos (6.08 -3.46 46.65) hd -101.0 spd  2.63 turn  184.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/6 -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) -> (2.62 -3.46 47.51) see 0
+  t  10.70 d  3.21 pos (5.94 -3.46 46.63) hd  -90.2 spd  2.96 turn  197.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 4/6 -> (5.81 -3.46 46.66) -> (2.62 -3.46 47.51) see 0
+  t  10.75 d  3.13 pos (5.78 -3.46 46.64) hd  -83.0 spd  3.34 turn  108.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 4/6 -> (5.81 -3.46 46.66) -> (2.62 -3.46 47.51) see 0
+  t  10.80 d  3.04 pos (5.61 -3.46 46.67) hd  -78.9 spd  3.74 turn   60.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 4/6 -> (5.81 -3.46 46.66) -> (2.62 -3.46 47.51) see 0
+  t  10.85 d  2.93 pos (5.41 -3.46 46.72) hd  -76.5 spd  3.97 turn   65.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  10.90 d  2.83 pos (5.25 -3.46 46.77) hd  -68.6 spd  3.17 turn  237.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  10.95 d  2.74 pos (5.13 -3.46 46.83) hd  -54.1 spd  2.33 turn  304.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.00 d  2.66 pos (5.06 -3.46 46.90) hd  -38.4 spd  1.52 turn  323.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.05 d  2.60 pos (5.03 -3.46 46.95) hd  -21.9 spd  1.19 turn  332.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.10 d  2.54 pos (5.01 -3.46 47.01) hd   -5.2 spd  1.19 turn  332.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.15 d  2.49 pos (5.02 -3.46 47.07) hd   11.4 spd  1.19 turn  332.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.20 d  2.44 pos (5.04 -3.46 47.12) hd   28.0 spd  1.19 turn  332.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.25 d  2.39 pos (5.08 -3.46 47.18) hd   44.5 spd  1.48 turn  326.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.30 d  2.36 pos (5.15 -3.46 47.23) hd   60.6 spd  1.84 turn  318.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.45 -3.46 46.71) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.35 d  2.36 pos (5.24 -3.46 47.26) hd   76.3 spd  1.89 turn  314.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/9 -> (5.21 -3.46 47.25) -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) see 0
+  t  11.40 d  2.38 pos (5.32 -3.46 47.27) hd   92.4 spd  1.59 turn  323.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/9 -> (5.21 -3.46 47.25) -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) see 0
+  t  11.45 d  2.42 pos (5.40 -3.46 47.25) hd  108.5 spd  1.59 turn  323.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/9 -> (5.21 -3.46 47.25) -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) see 0
+  t  11.50 d  2.48 pos (5.47 -3.46 47.22) hd  124.7 spd  1.59 turn  323.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/9 -> (5.21 -3.46 47.25) -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) see 0
+  t  11.55 d  2.55 pos (5.52 -3.46 47.16) hd  140.9 spd  1.60 turn  323.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/9 -> (5.21 -3.46 47.25) -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) see 0
+  t  11.60 d  2.62 pos (5.54 -3.46 47.10) hd  156.2 spd  1.28 turn  249.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/9 -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.65 d  2.68 pos (5.55 -3.46 47.03) hd  163.1 spd  1.65 turn   45.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/9 -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.70 d  2.77 pos (5.56 -3.46 46.94) hd  160.0 spd  2.03 turn -153.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/9 -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.75 d  2.84 pos (5.56 -3.46 46.87) hd  148.1 spd  0.11 turn -241.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/9 -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.80 d  2.85 pos (5.57 -3.46 46.86) hd  139.1 spd  0.54 turn -139.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/9 -> (5.56 -3.46 46.86) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.85 d  2.89 pos (5.59 -3.46 46.83) hd  133.8 spd  0.98 turn  -83.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/8 -> (5.58 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  11.90 d  2.94 pos (5.64 -3.46 46.79) hd  128.8 spd  1.41 turn -169.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) -> (6.26 -3.46 46.71) see 0
+  t  11.95 d  3.01 pos (5.71 -3.46 46.74) hd  118.7 spd  1.81 turn -175.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) -> (6.26 -3.46 46.71) see 0
+  t  12.00 d  3.09 pos (5.78 -3.46 46.69) hd  110.2 spd  2.14 turn -203.8 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/8 -> (6.01 -3.46 46.66) -> (6.26 -3.46 46.71) -> (6.46 -3.46 46.96) see 0
+  t  12.05 d  3.17 pos (5.89 -3.46 46.65) hd   97.8 spd  2.44 turn -224.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/8 -> (6.01 -3.46 46.66) -> (6.26 -3.46 46.71) -> (6.46 -3.46 46.96) see 0
+  t  12.10 d  3.24 pos (6.02 -3.46 46.64) hd   88.1 spd  2.79 turn -175.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/8 -> (6.01 -3.46 46.66) -> (6.26 -3.46 46.71) -> (6.46 -3.46 46.96) see 0
+  t  12.15 d  3.28 pos (6.14 -3.46 46.66) hd   75.4 spd  2.42 turn -304.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/8 -> (6.26 -3.46 46.71) -> (6.46 -3.46 46.96) -> (6.46 -3.46 52.01) see 0
+  t  12.20 d  3.30 pos (6.25 -3.46 46.71) hd   60.6 spd  2.41 turn -272.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/8 -> (6.26 -3.46 46.71) -> (6.46 -3.46 46.96) -> (6.46 -3.46 52.01) see 0
+  t  12.25 d  3.29 pos (6.35 -3.46 46.78) hd   48.2 spd  2.31 turn -273.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 4/8 -> (6.46 -3.46 46.96) -> (6.46 -3.46 52.01) -> (6.16 -3.46 52.31) see 0
+  t  12.30 d  3.26 pos (6.43 -3.46 46.87) hd   33.1 spd  2.63 turn -299.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 4/8 -> (6.46 -3.46 46.96) -> (6.46 -3.46 52.01) -> (6.16 -3.46 52.31) see 0
+  t  12.35 d  3.20 pos (6.48 -3.46 46.99) hd   18.2 spd  2.46 turn -301.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.40 d  3.13 pos (6.50 -3.46 47.09) hd    2.6 spd  1.65 turn -320.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.45 d  3.08 pos (6.49 -3.46 47.16) hd  -13.8 spd  1.19 turn -332.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.50 d  3.02 pos (6.47 -3.46 47.21) hd  -30.4 spd  1.19 turn -332.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.55 d  2.98 pos (6.46 -3.46 47.26) hd  -47.1 spd  1.16 turn -333.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.60 d  2.96 pos (6.46 -3.46 47.29) hd  -63.8 spd  1.04 turn -335.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.65 d  2.95 pos (6.46 -3.46 47.30) hd  -80.7 spd  0.77 turn -341.6 mode pursue gait 0 blk 4 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.70 d  2.95 pos (6.46 -3.46 47.30) hd  -97.9 spd  0.55 turn -347.1 mode pursue gait 0 blk 16 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.75 d  2.95 pos (6.46 -3.46 47.29) hd -115.3 spd  0.56 turn -347.1 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.80 d  2.97 pos (6.46 -3.46 47.28) hd -132.6 spd  0.70 turn -344.2 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 46.94) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.85 d  2.99 pos (6.46 -3.46 47.24) hd -148.1 spd  0.93 turn -339.1 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/6 -> (6.46 -3.46 47.26) -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) see 0
+  t  12.90 d  3.03 pos (6.46 -3.46 47.19) hd -162.7 spd  1.24 turn -210.2 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/6 -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  12.95 d  3.08 pos (6.46 -3.46 47.12) hd -167.7 spd  1.63 turn   -5.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/6 -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  13.00 d  3.15 pos (6.46 -3.46 47.03) hd -162.6 spd  1.99 turn  182.9 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/6 -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  13.05 d  3.22 pos (6.45 -3.46 46.93) hd -153.6 spd  2.29 turn  173.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/6 -> (6.46 -3.46 46.96) -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) see 0
+  t  13.10 d  3.27 pos (6.39 -3.46 46.83) hd -143.8 spd  2.26 turn  269.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) see 0
+  t  13.15 d  3.29 pos (6.31 -3.46 46.75) hd -128.8 spd  2.25 turn  278.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) see 0
+  t  13.20 d  3.30 pos (6.27 -3.46 46.72) hd -116.9 spd  0.19 turn  193.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (6.26 -3.46 46.71) -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) see 0
+  t  13.25 d  3.29 pos (6.25 -3.46 46.71) hd -108.7 spd  0.63 turn  168.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/6 -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.30 d  3.28 pos (6.21 -3.46 46.70) hd -102.4 spd  1.06 turn   98.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/6 -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.35 d  3.26 pos (6.14 -3.46 46.68) hd  -98.6 spd  1.50 turn   61.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/4 -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.40 d  3.23 pos (6.06 -3.46 46.67) hd  -96.0 spd  1.94 turn   48.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/4 -> (6.01 -3.46 46.66) -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.45 d  3.19 pos (5.95 -3.46 46.66) hd  -90.1 spd  2.34 turn  116.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.50 d  3.13 pos (5.82 -3.46 46.66) hd  -85.8 spd  2.76 turn   63.4 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/4 -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.55 d  3.06 pos (5.67 -3.46 46.68) hd  -83.5 spd  3.19 turn   34.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.60 d  2.98 pos (5.50 -3.46 46.70) hd  -82.2 spd  3.63 turn   18.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.65 d  2.89 pos (5.31 -3.46 46.73) hd  -81.6 spd  4.08 turn   10.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.70 d  2.81 pos (5.10 -3.46 46.76) hd  -81.2 spd  4.53 turn    5.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.75 d  2.73 pos (4.86 -3.46 46.80) hd  -81.0 spd  4.98 turn    3.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.80 d  2.66 pos (4.60 -3.46 46.84) hd  -80.9 spd  5.43 turn    1.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (5.81 -3.46 46.66) -> (0.46 -3.46 47.51) see 0
+  t  13.85 d  2.62 pos (4.35 -3.46 46.88) hd  -78.0 spd  4.87 turn  126.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  13.90 d  2.58 pos (4.14 -3.46 46.95) hd  -67.5 spd  4.00 turn  265.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  13.95 d  2.52 pos (3.98 -3.46 47.03) hd  -53.7 spd  3.13 turn  286.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.00 d  2.45 pos (3.89 -3.46 47.13) hd  -38.8 spd  2.28 turn  305.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.05 d  2.39 pos (3.84 -3.46 47.20) hd  -23.0 spd  1.48 turn  324.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.10 d  2.34 pos (3.83 -3.46 47.26) hd   -6.5 spd  1.19 turn  332.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.15 d  2.28 pos (3.83 -3.46 47.32) hd   10.1 spd  1.19 turn  332.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.20 d  2.22 pos (3.85 -3.46 47.38) hd   26.7 spd  1.35 turn  329.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.25 d  2.14 pos (3.89 -3.46 47.44) hd   43.0 spd  1.72 turn  320.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.30 d  2.07 pos (3.97 -3.46 47.50) hd   58.8 spd  2.07 turn  312.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (4.56 -3.46 46.84) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.35 d  2.03 pos (4.07 -3.46 47.51) hd   74.3 spd  2.28 turn  307.9 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (3.97 -3.46 47.50) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.40 d  2.01 pos (4.19 -3.46 47.51) hd   89.5 spd  2.58 turn  301.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (3.97 -3.46 47.50) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.45 d  2.01 pos (4.33 -3.46 47.49) hd  102.9 spd  2.90 turn  213.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (3.97 -3.46 47.50) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.50 d  2.05 pos (4.47 -3.46 47.45) hd  111.0 spd  3.27 turn  123.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (3.97 -3.46 47.50) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.55 d  2.13 pos (4.63 -3.46 47.38) hd  115.6 spd  3.67 turn   72.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (3.97 -3.46 47.50) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.60 d  2.23 pos (4.81 -3.46 47.29) hd  118.4 spd  4.09 turn   44.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (3.97 -3.46 47.50) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.65 d  2.37 pos (4.99 -3.46 47.18) hd  120.2 spd  4.52 turn   28.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (3.97 -3.46 47.50) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.70 d  2.54 pos (5.20 -3.46 47.06) hd  121.4 spd  4.96 turn   19.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (3.97 -3.46 47.50) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.75 d  2.74 pos (5.42 -3.46 46.92) hd  122.2 spd  5.28 turn   15.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (3.97 -3.46 47.50) -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) see 0
+  t  14.80 d  2.93 pos (5.62 -3.46 46.79) hd  123.0 spd  4.56 turn    3.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/5 -> (5.81 -3.46 46.66) -> (6.01 -3.46 46.66) -> (6.26 -3.46 46.71) see 0
+  t  14.85 d  3.11 pos (5.80 -3.46 46.68) hd  118.7 spd  3.78 turn -161.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/5 -> (6.01 -3.46 46.66) -> (6.26 -3.46 46.71) -> (6.88 -3.46 47.41) see 0
+  t  14.90 d  3.23 pos (5.95 -3.46 46.61) hd  106.4 spd  2.93 turn -290.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/5 -> (6.01 -3.46 46.66) -> (6.26 -3.46 46.71) -> (6.88 -3.46 47.41) see 0
+  t  14.95 d  3.31 pos (6.07 -3.46 46.59) hd   91.3 spd  2.29 turn -307.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (6.26 -3.46 46.71) -> (6.88 -3.46 47.41) see 0
+  t  15.00 d  3.35 pos (6.19 -3.46 46.61) hd   76.1 spd  2.61 turn -300.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (6.26 -3.46 46.71) -> (6.88 -3.46 47.41) see 0
+  t  15.05 d  3.38 pos (6.32 -3.46 46.66) hd   61.3 spd  2.92 turn -293.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (6.26 -3.46 46.71) -> (6.88 -3.46 47.41) see 0
+  t  15.10 d  3.37 pos (6.45 -3.46 46.75) hd   48.8 spd  3.24 turn -203.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (6.26 -3.46 46.71) -> (6.88 -3.46 47.41) see 0
+  t  15.15 d  3.34 pos (6.56 -3.46 46.87) hd   40.6 spd  3.60 turn -135.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (6.26 -3.46 46.71) -> (6.88 -3.46 47.41) see 0
+  t  15.20 d  3.30 pos (6.68 -3.46 47.02) hd   34.9 spd  3.98 turn -101.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (6.26 -3.46 46.71) -> (6.88 -3.46 47.41) see 0
+  t  15.25 d  3.25 pos (6.79 -3.46 47.20) hd   30.1 spd  4.27 turn  -83.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 4/5 -> (6.88 -3.46 47.41) see 0
+  t  15.30 d  3.20 pos (6.89 -3.46 47.37) hd   29.8 spd  3.55 turn   57.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.35 d  3.18 pos (6.97 -3.46 47.50) hd   37.5 spd  2.76 turn  236.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.40 d  3.19 pos (7.05 -3.46 47.58) hd   52.4 spd  1.93 turn  313.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.45 d  3.22 pos (7.12 -3.46 47.62) hd   68.5 spd  1.19 turn  332.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.50 d  3.26 pos (7.18 -3.46 47.63) hd   85.1 spd  1.32 turn  330.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.55 d  3.33 pos (7.25 -3.46 47.63) hd  101.4 spd  1.69 turn  321.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.60 d  3.42 pos (7.34 -3.46 47.59) hd  117.3 spd  2.04 turn  313.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.65 d  3.53 pos (7.43 -3.46 47.53) hd  132.7 spd  2.38 turn  305.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.70 d  3.65 pos (7.51 -3.46 47.43) hd  147.8 spd  2.70 turn  298.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.75 d  3.78 pos (7.57 -3.46 47.30) hd  161.7 spd  3.02 turn  229.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.86 -3.46 47.32) -> (7.60 -3.46 45.34) see 0
+  t  15.80 d  3.90 pos (7.61 -3.46 47.14) hd  170.3 spd  3.38 turn  131.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.59 -3.46 47.22) -> (7.60 -3.46 45.34) see 0
+  t  15.85 d  4.03 pos (7.63 -3.46 46.96) hd  175.3 spd  3.77 turn   76.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.59 -3.46 47.22) -> (7.60 -3.46 45.34) see 0
+  t  15.90 d  4.16 pos (7.64 -3.46 46.76) hd  178.2 spd  4.19 turn   45.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.59 -3.46 47.22) -> (7.60 -3.46 45.34) see 0
+  t  15.95 d  4.31 pos (7.64 -3.46 46.54) hd  180.0 spd  4.62 turn   28.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.59 -3.46 47.22) -> (7.60 -3.46 45.34) see 0
+  t  16.00 d  4.48 pos (7.64 -3.46 46.30) hd -178.9 spd  5.06 turn   18.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.59 -3.46 47.22) -> (7.60 -3.46 45.34) see 0
+  t  16.05 d  4.67 pos (7.63 -3.46 46.04) hd -178.1 spd  5.50 turn   13.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.59 -3.46 47.22) -> (7.60 -3.46 45.34) see 0
+  t  16.10 d  4.88 pos (7.62 -3.46 45.75) hd -177.5 spd  5.94 turn   11.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.59 -3.46 47.22) -> (7.60 -3.46 45.34) see 0
+  t  16.15 d  5.11 pos (7.61 -3.46 45.45) hd -177.2 spd  5.91 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (7.60 -3.46 45.34) see 0
+  t  16.20 d  5.32 pos (7.59 -3.46 45.17) hd -177.2 spd  5.20 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (7.60 -3.46 45.34) see 0
+  t  16.25 d  5.51 pos (7.58 -3.46 44.93) hd -177.2 spd  4.49 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (7.60 -3.46 45.34) see 0
+  t  16.30 d  5.68 pos (7.57 -3.46 44.73) hd -175.1 spd  3.76 turn  111.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.35 d  5.80 pos (7.54 -3.46 44.56) hd -164.8 spd  2.93 turn  287.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.40 d  5.87 pos (7.49 -3.46 44.45) hd -149.8 spd  2.10 turn  310.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.45 d  5.90 pos (7.44 -3.46 44.38) hd -133.7 spd  1.30 turn  328.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.50 d  5.91 pos (7.39 -3.46 44.35) hd -117.1 spd  1.19 turn  332.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.55 d  5.90 pos (7.34 -3.46 44.33) hd -100.5 spd  1.19 turn  332.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.60 d  5.87 pos (7.28 -3.46 44.33) hd  -83.9 spd  1.19 turn  332.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.65 d  5.83 pos (7.22 -3.46 44.34) hd  -67.3 spd  1.23 turn  332.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.70 d  5.77 pos (7.16 -3.46 44.38) hd  -50.9 spd  1.60 turn  323.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.75 d  5.68 pos (7.10 -3.46 44.45) hd  -34.9 spd  1.96 turn  315.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (7.58 -3.46 44.86) -> (7.60 -3.46 45.34) see 0
+  t  16.80 d  5.57 pos (7.05 -3.46 44.54) hd  -19.4 spd  2.30 turn  307.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  16.85 d  5.46 pos (7.03 -3.46 44.67) hd   -4.2 spd  2.62 turn  300.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  16.90 d  5.33 pos (7.03 -3.46 44.81) hd    7.3 spd  2.97 turn  170.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  16.95 d  5.21 pos (7.06 -3.46 44.96) hd   13.5 spd  3.36 turn   91.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.00 d  5.09 pos (7.11 -3.46 45.13) hd   16.8 spd  3.77 turn   48.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.05 d  4.96 pos (7.17 -3.46 45.32) hd   18.5 spd  4.21 turn   25.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.10 d  4.82 pos (7.25 -3.46 45.54) hd   19.4 spd  4.65 turn   12.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.15 d  4.68 pos (7.33 -3.46 45.77) hd   19.8 spd  5.10 turn    5.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.20 d  4.54 pos (7.42 -3.46 46.02) hd   19.9 spd  5.55 turn    2.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.25 d  4.41 pos (7.52 -3.46 46.29) hd   20.0 spd  6.01 turn    0.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.09 -3.46 44.46) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.30 d  4.27 pos (7.63 -3.46 46.58) hd   20.0 spd  6.47 turn    0.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.52 -3.46 46.29) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.35 d  4.16 pos (7.74 -3.46 46.90) hd   20.0 spd  6.92 turn    0.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.52 -3.46 46.29) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.40 d  4.06 pos (7.86 -3.46 47.23) hd   20.1 spd  7.14 turn    0.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.52 -3.46 46.29) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.45 d  3.99 pos (7.98 -3.46 47.55) hd   20.1 spd  6.43 turn    0.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.52 -3.46 46.29) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.50 d  3.95 pos (8.08 -3.46 47.84) hd   20.1 spd  5.73 turn    0.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.52 -3.46 46.29) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.55 d  3.94 pos (8.17 -3.46 48.09) hd   20.1 spd  5.02 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.52 -3.46 46.29) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 0
+  t  17.60 d  3.94 pos (8.25 -3.46 48.30) hd   20.1 spd  4.31 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.52 -3.46 46.29) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 1
+  t  17.65 d  3.95 pos (8.32 -3.46 48.49) hd   20.1 spd  3.60 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.52 -3.46 46.29) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 1
+  t  17.70 d  3.97 pos (8.38 -3.46 48.64) hd   20.1 spd  2.90 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (7.52 -3.46 46.29) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 1
+  t  17.75 d  3.99 pos (8.42 -3.46 48.76) hd   20.1 spd  2.19 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (8.41 -3.46 48.74) -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) see 1
+  t  17.80 d  4.01 pos (8.46 -3.46 48.86) hd   23.1 spd  2.33 turn  145.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/6 -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) -> (9.16 -3.46 49.31) see 1
+  t  17.85 d  4.05 pos (8.51 -3.46 48.97) hd   30.8 spd  2.69 turn  129.8 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/6 -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) -> (9.16 -3.46 49.31) see 1
+  t  17.90 d  4.09 pos (8.57 -3.46 49.09) hd   37.5 spd  2.94 turn  123.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/6 -> (8.51 -3.46 49.01) -> (8.81 -3.46 49.31) -> (9.16 -3.46 49.31) see 1
+  t  17.95 d  4.18 pos (8.67 -3.46 49.20) hd   44.3 spd  2.84 turn  189.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (8.81 -3.46 49.31) -> (9.16 -3.46 49.31) -> (9.41 -3.46 49.11) see 1
+  t  18.00 d  4.27 pos (8.76 -3.46 49.28) hd   58.0 spd  2.34 turn  306.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (8.81 -3.46 49.31) -> (9.16 -3.46 49.31) -> (9.41 -3.46 49.11) see 1
+  t  18.05 d  4.37 pos (8.86 -3.46 49.33) hd   72.7 spd  2.28 turn  264.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (8.81 -3.46 49.31) -> (9.16 -3.46 49.31) -> (9.41 -3.46 49.11) see 1
+  t  18.10 d  4.48 pos (8.97 -3.46 49.35) hd   85.9 spd  2.33 turn  307.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/6 -> (9.16 -3.46 49.31) -> (9.41 -3.46 49.11) -> (9.68 -3.46 48.46) see 1
+  t  18.15 d  4.60 pos (9.10 -3.46 49.34) hd  101.1 spd  2.47 turn  303.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/6 -> (9.16 -3.46 49.31) -> (9.41 -3.46 49.11) -> (9.68 -3.46 48.46) see 1
+  t  18.20 d  4.71 pos (9.21 -3.46 49.30) hd  114.5 spd  2.35 turn  237.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/6 -> (9.16 -3.46 49.31) -> (9.41 -3.46 49.11) -> (9.68 -3.46 48.46) see 1
+  t  18.25 d  4.81 pos (9.31 -3.46 49.24) hd  127.8 spd  2.06 turn  310.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.30 d  4.87 pos (9.36 -3.46 49.19) hd  143.8 spd  1.26 turn  329.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.35 d  4.90 pos (9.39 -3.46 49.13) hd  160.4 spd  1.19 turn  332.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.40 d  4.93 pos (9.41 -3.46 49.11) hd  177.5 spd  0.15 turn  357.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.45 d  4.93 pos (9.41 -3.46 49.10) hd -164.9 spd  0.56 turn  347.9 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.50 d  4.94 pos (9.42 -3.46 49.07) hd -147.7 spd  0.87 turn  340.4 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.55 d  4.94 pos (9.42 -3.46 49.03) hd -130.8 spd  0.97 turn  337.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.60 d  4.94 pos (9.42 -3.46 49.01) hd -113.9 spd  0.85 turn  340.1 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.65 d  4.95 pos (9.42 -3.46 49.00) hd  -99.9 spd  0.64 turn  207.2 mode pursue gait 0 blk 9 scr 1 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.70 d  4.95 pos (9.42 -3.46 49.00) hd  -92.5 spd  0.50 turn  109.1 mode pursue gait 0 blk 21 scr 1 hit 0 leg 1/3 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.75 d  4.95 pos (9.42 -3.46 49.00) hd  -86.6 spd  0.47 turn  188.2 mode pursue gait 0 blk 6 scr 1 hit 0 leg 1/4 -> (9.41 -3.46 49.11) -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.80 d  4.94 pos (9.42 -3.46 49.01) hd  -71.8 spd  0.52 turn  348.3 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/4 -> (9.41 -3.46 49.11) -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.85 d  4.94 pos (9.42 -3.46 49.03) hd  -57.4 spd  0.65 turn  207.9 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/4 -> (9.41 -3.46 49.11) -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.90 d  4.94 pos (9.42 -3.46 49.05) hd  -50.6 spd  0.83 turn   86.9 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/4 -> (9.41 -3.46 49.11) -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  18.95 d  4.93 pos (9.41 -3.46 49.08) hd  -48.4 spd  1.01 turn   11.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/4 -> (9.41 -3.46 49.11) -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  19.00 d  4.91 pos (9.40 -3.46 49.12) hd  -49.2 spd  1.26 turn  -28.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/4 -> (9.41 -3.46 49.11) -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  19.05 d  4.85 pos (9.34 -3.46 49.17) hd  -50.8 spd  1.70 turn  -71.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  19.10 d  4.77 pos (9.26 -3.46 49.23) hd  -59.8 spd  2.10 turn -269.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/4 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  19.15 d  4.68 pos (9.18 -3.46 49.30) hd  -72.6 spd  2.36 turn -196.2 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/4 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  19.20 d  4.56 pos (9.06 -3.46 49.33) hd  -79.8 spd  2.73 turn -106.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (9.16 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  19.25 d  4.42 pos (8.91 -3.46 49.35) hd  -83.7 spd  3.14 turn  -58.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.30 d  4.25 pos (8.75 -3.46 49.37) hd  -85.8 spd  3.58 turn  -31.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.35 d  4.06 pos (8.56 -3.46 49.38) hd  -87.0 spd  4.02 turn  -17.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.40 d  3.84 pos (8.34 -3.46 49.39) hd  -87.6 spd  4.47 turn   -9.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.45 d  3.61 pos (8.11 -3.46 49.40) hd  -88.0 spd  4.92 turn   -5.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.50 d  3.35 pos (7.85 -3.46 49.41) hd  -88.2 spd  5.37 turn   -3.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.55 d  3.07 pos (7.57 -3.46 49.42) hd  -88.3 spd  5.83 turn   -1.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.60 d  2.77 pos (7.26 -3.46 49.42) hd  -88.4 spd  6.29 turn   -1.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.65 d  2.44 pos (6.94 -3.46 49.43) hd  -88.4 spd  6.74 turn   -0.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.70 d  2.09 pos (6.59 -3.46 49.44) hd  -88.4 spd  7.20 turn   -0.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (9.01 -3.46 49.34) -> (4.50 -3.46 49.50) see 1
+  t  19.75 d  1.72 pos (6.22 -3.46 49.45) hd  -88.4 spd  7.66 turn   -0.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.53 -3.46 49.45) -> (4.50 -3.46 49.50) see 1
+  t  19.80 d  1.32 pos (5.82 -3.46 49.46) hd  -88.4 spd  8.12 turn   -0.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.53 -3.46 49.45) -> (4.50 -3.46 49.50) see 1
+  t  19.85 d  0.90 pos (5.40 -3.46 49.48) hd  -88.5 spd  8.58 turn   -0.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (6.53 -3.46 49.45) -> (4.50 -3.46 49.50) see 1
+END seed 3 k 14 over 1 at 19.85 s by hunter
+CASE seed 9 k 5 player (-40.50 -6.98 -43.50) node kind 3
+  t  21.05 d  7.87 pos (-34.25 -6.96 -38.73) hd -136.1 spd  5.98 turn   -2.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/7 -> (-33.49 -6.96 -37.99) -> (-35.74 -6.96 -40.29) -> (-36.29 -6.96 -40.74) see 0
+  t  21.10 d  7.56 pos (-34.46 -6.96 -38.95) hd -136.2 spd  6.44 turn   -1.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/7 -> (-33.49 -6.96 -37.99) -> (-35.74 -6.96 -40.29) -> (-36.29 -6.96 -40.74) see 0
+  t  21.15 d  7.23 pos (-34.69 -6.96 -39.19) hd -136.3 spd  6.89 turn   -1.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/7 -> (-33.49 -6.96 -37.99) -> (-35.74 -6.96 -40.29) -> (-36.29 -6.96 -40.74) see 0
+  t  21.20 d  6.88 pos (-34.94 -6.96 -39.45) hd -136.7 spd  6.95 turn  -41.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.25 d  6.57 pos (-35.15 -6.96 -39.69) hd -142.3 spd  6.12 turn -172.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.30 d  6.29 pos (-35.31 -6.96 -39.95) hd -153.1 spd  5.96 turn -223.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.35 d  6.05 pos (-35.41 -6.96 -40.23) hd -164.3 spd  5.97 turn -223.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.40 d  5.85 pos (-35.46 -6.96 -40.52) hd -175.4 spd  5.98 turn -222.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.45 d  5.71 pos (-35.46 -6.96 -40.82) hd  173.5 spd  5.99 turn -222.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.50 d  5.64 pos (-35.39 -6.96 -41.11) hd  162.3 spd  6.01 turn -222.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.55 d  5.64 pos (-35.27 -6.96 -41.39) hd  151.5 spd  6.02 turn -200.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.60 d  5.73 pos (-35.11 -6.96 -41.57) hd  142.9 spd  5.19 turn -133.7 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.65 d  5.87 pos (-34.95 -6.96 -41.58) hd  140.5 spd  4.13 turn   24.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (-34.86 -6.96 -39.36) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.70 d  5.92 pos (-34.90 -6.96 -41.59) hd  145.0 spd  0.25 turn   94.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/7 -> (-34.74 -6.96 -41.74) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.75 d  5.93 pos (-34.88 -6.96 -41.59) hd  148.7 spd  0.57 turn   63.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/7 -> (-34.74 -6.96 -41.74) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.80 d  5.95 pos (-34.86 -6.96 -41.62) hd  151.4 spd  0.99 turn   49.2 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/7 -> (-34.74 -6.96 -41.74) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.85 d  5.97 pos (-34.82 -6.96 -41.66) hd  154.0 spd  1.38 turn   56.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/7 -> (-34.74 -6.96 -41.74) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.90 d  6.01 pos (-34.76 -6.96 -41.71) hd  157.4 spd  1.72 turn   84.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/7 -> (-34.74 -6.96 -41.74) -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) see 0
+  t  21.95 d  6.03 pos (-34.72 -6.96 -41.79) hd  163.6 spd  2.07 turn  192.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/7 -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.00 d  6.02 pos (-34.70 -6.96 -41.90) hd  171.2 spd  2.47 turn  113.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/7 -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.05 d  6.00 pos (-34.68 -6.96 -42.03) hd  175.4 spd  2.89 turn   62.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/7 -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.10 d  5.97 pos (-34.67 -6.96 -42.19) hd  177.6 spd  3.33 turn   34.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/7 -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.15 d  5.94 pos (-34.67 -6.96 -42.37) hd  178.9 spd  3.77 turn   19.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/7 -> (-34.69 -6.96 -41.99) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.20 d  5.91 pos (-34.67 -6.96 -42.57) hd  179.6 spd  4.22 turn   10.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (-34.67 -6.96 -42.40) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.25 d  5.88 pos (-34.67 -6.96 -42.79) hd -180.0 spd  4.67 turn    6.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (-34.67 -6.96 -42.40) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.30 d  5.85 pos (-34.67 -6.96 -43.04) hd -179.7 spd  5.13 turn    3.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (-34.67 -6.96 -42.40) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.35 d  5.83 pos (-34.67 -6.96 -43.31) hd -179.6 spd  5.58 turn    2.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (-34.67 -6.96 -42.40) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.40 d  5.83 pos (-34.67 -6.96 -43.60) hd -179.5 spd  6.04 turn    1.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (-34.67 -6.96 -42.40) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.45 d  5.84 pos (-34.67 -6.96 -43.91) hd -179.5 spd  6.50 turn    0.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (-34.67 -6.96 -42.40) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.50 d  5.87 pos (-34.68 -6.96 -44.25) hd -179.4 spd  6.96 turn    0.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (-34.67 -6.96 -42.40) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.55 d  5.92 pos (-34.68 -6.96 -44.61) hd -179.4 spd  7.42 turn    0.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (-34.67 -6.96 -42.40) -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) see 0
+  t  22.60 d  6.00 pos (-34.69 -6.96 -44.99) hd -179.3 spd  7.30 turn   10.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/4 -> (-34.69 -6.96 -45.19) -> (-34.99 -6.96 -45.49) -> (-35.44 -6.96 -45.94) see 0
+  t  22.65 d  6.08 pos (-34.70 -6.96 -45.33) hd -175.4 spd  6.50 turn  136.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  22.70 d  6.13 pos (-34.75 -6.96 -45.62) hd -165.4 spd  5.58 turn  230.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  22.75 d  6.14 pos (-34.84 -6.96 -45.86) hd -153.3 spd  4.65 turn  251.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  22.80 d  6.10 pos (-34.95 -6.96 -46.03) hd -140.2 spd  3.75 turn  272.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  22.85 d  6.04 pos (-35.07 -6.96 -46.15) hd -126.0 spd  2.88 turn  292.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  22.90 d  5.97 pos (-35.18 -6.96 -46.20) hd -110.9 spd  2.04 turn  311.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  22.95 d  5.91 pos (-35.25 -6.96 -46.22) hd  -94.8 spd  1.24 turn  330.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  23.00 d  5.85 pos (-35.31 -6.96 -46.22) hd  -78.2 spd  1.19 turn  332.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  23.05 d  5.80 pos (-35.37 -6.96 -46.20) hd  -61.6 spd  1.23 turn  332.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  23.10 d  5.72 pos (-35.43 -6.96 -46.15) hd  -45.2 spd  1.60 turn  324.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  23.15 d  5.64 pos (-35.48 -6.96 -46.08) hd  -29.2 spd  1.96 turn  315.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.20 d  5.57 pos (-35.52 -6.96 -45.98) hd  -13.6 spd  2.31 turn  307.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.25 d  5.50 pos (-35.53 -6.96 -45.86) hd    1.6 spd  2.63 turn  300.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.30 d  5.47 pos (-35.50 -6.96 -45.72) hd   16.4 spd  2.95 turn  293.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.35 d  5.47 pos (-35.44 -6.96 -45.58) hd   30.9 spd  3.25 turn  286.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.40 d  5.53 pos (-35.34 -6.96 -45.49) hd   45.0 spd  3.17 turn  270.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.45 d  5.64 pos (-35.22 -6.96 -45.49) hd   53.7 spd  2.84 turn   97.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.50 d  5.75 pos (-35.10 -6.96 -45.49) hd   55.5 spd  2.77 turn   -8.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.55 d  5.86 pos (-34.99 -6.96 -45.49) hd   52.9 spd  2.53 turn  -86.7 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.60 d  5.86 pos (-34.98 -6.96 -45.48) hd   49.2 spd  0.40 turn  -56.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/14 -> (-35.46 -6.96 -46.11) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.65 d  5.88 pos (-34.96 -6.96 -45.46) hd   47.2 spd  0.86 turn  -31.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/14 -> (-34.98 -6.96 -45.48) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.70 d  5.90 pos (-34.92 -6.96 -45.43) hd   45.9 spd  1.31 turn  -19.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/14 -> (-34.98 -6.96 -45.48) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.75 d  5.94 pos (-34.87 -6.96 -45.37) hd   45.2 spd  1.37 turn  -13.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/14 -> (-34.98 -6.96 -45.48) -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) see 0
+  t  23.80 d  5.97 pos (-34.82 -6.96 -45.32) hd   40.6 spd  1.61 turn -182.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  23.85 d  6.01 pos (-34.76 -6.96 -45.26) hd   28.2 spd  1.96 turn -238.9 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  23.90 d  6.05 pos (-34.69 -6.96 -45.19) hd   17.3 spd  2.17 turn -211.4 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  23.95 d  6.05 pos (-34.67 -6.96 -45.09) hd    8.1 spd  1.72 turn -157.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/14 -> (-34.69 -6.96 -45.19) -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) see 0
+  t  24.00 d  6.02 pos (-34.67 -6.96 -45.00) hd   -4.0 spd  2.02 turn -314.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/14 -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) see 0
+  t  24.05 d  5.98 pos (-34.69 -6.96 -44.89) hd  -19.1 spd  2.36 turn -268.8 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/14 -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) see 0
+  t  24.10 d  5.97 pos (-34.69 -6.96 -44.84) hd  -30.6 spd  0.23 turn -180.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/14 -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) see 0
+  t  24.15 d  5.95 pos (-34.70 -6.96 -44.83) hd  -37.4 spd  0.66 turn -103.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/7 -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) see 0
+  t  24.20 d  5.92 pos (-34.73 -6.96 -44.79) hd  -41.3 spd  1.10 turn  -60.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/7 -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) see 0
+  t  24.25 d  5.86 pos (-34.77 -6.96 -44.74) hd  -43.7 spd  1.55 turn  -38.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/7 -> (-34.69 -6.96 -44.84) -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) see 0
+  t  24.30 d  5.79 pos (-34.83 -6.96 -44.68) hd  -46.4 spd  2.00 turn -114.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/7 -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.35 d  5.69 pos (-34.92 -6.96 -44.61) hd  -57.4 spd  2.36 turn -306.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/7 -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.40 d  5.62 pos (-34.98 -6.96 -44.54) hd  -71.6 spd  0.08 turn -236.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/7 -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.45 d  5.61 pos (-34.99 -6.96 -44.54) hd  -80.2 spd  0.50 turn -128.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/7 -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.50 d  5.57 pos (-35.03 -6.96 -44.53) hd  -84.9 spd  0.95 turn  -70.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/7 -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.55 d  5.51 pos (-35.09 -6.96 -44.53) hd  -87.5 spd  1.40 turn  -39.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/7 -> (-34.99 -6.96 -44.54) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.60 d  5.43 pos (-35.17 -6.96 -44.53) hd  -89.0 spd  1.85 turn  -22.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-35.16 -6.96 -44.53) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.65 d  5.33 pos (-35.27 -6.96 -44.53) hd  -89.9 spd  2.30 turn  -13.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-35.16 -6.96 -44.53) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.70 d  5.20 pos (-35.40 -6.96 -44.53) hd  -90.4 spd  2.76 turn   -8.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-35.16 -6.96 -44.53) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.75 d  5.05 pos (-35.55 -6.96 -44.53) hd  -90.8 spd  3.22 turn   -6.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-35.16 -6.96 -44.53) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.80 d  4.88 pos (-35.73 -6.96 -44.53) hd  -91.0 spd  3.67 turn   -5.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (-35.16 -6.96 -44.53) -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) see 0
+  t  24.85 d  4.70 pos (-35.92 -6.96 -44.54) hd  -93.4 spd  4.10 turn  -54.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/5 -> (-35.99 -6.96 -44.54) -> (-36.29 -6.96 -44.59) -> (-36.49 -6.96 -44.84) see 0
+  t  24.90 d  4.50 pos (-36.13 -6.96 -44.55) hd  -97.4 spd  4.01 turn -133.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/5 -> (-36.29 -6.96 -44.59) -> (-36.49 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  24.95 d  4.34 pos (-36.30 -6.96 -44.59) hd -108.6 spd  3.16 turn -286.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/5 -> (-36.29 -6.96 -44.59) -> (-36.49 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.00 d  4.23 pos (-36.43 -6.96 -44.65) hd -123.3 spd  2.89 turn -294.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (-36.49 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.05 d  4.15 pos (-36.55 -6.96 -44.75) hd -137.8 spd  3.20 turn -287.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (-36.49 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.10 d  4.10 pos (-36.64 -6.96 -44.89) hd -152.0 spd  3.49 turn -280.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.61 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.15 d  4.11 pos (-36.70 -6.96 -45.06) hd -165.8 spd  3.77 turn -258.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.61 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.20 d  4.16 pos (-36.73 -6.96 -45.26) hd -175.5 spd  4.10 turn -151.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.61 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.25 d  4.25 pos (-36.74 -6.96 -45.47) hd  178.7 spd  4.47 turn  -91.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.61 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.30 d  4.38 pos (-36.72 -6.96 -45.71) hd  175.1 spd  4.88 turn  -57.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.61 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.35 d  4.53 pos (-36.69 -6.96 -45.96) hd  172.8 spd  5.30 turn  -37.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.61 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.40 d  4.72 pos (-36.66 -6.96 -46.23) hd  171.2 spd  5.73 turn  -27.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.61 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.45 d  4.93 pos (-36.61 -6.96 -46.53) hd  169.9 spd  6.16 turn  -25.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.61 -6.96 -44.84) -> (-36.53 -6.96 -46.90) see 0
+  t  25.50 d  5.17 pos (-36.55 -6.96 -46.83) hd  169.2 spd  6.02 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-36.53 -6.96 -46.90) see 0
+  t  25.55 d  5.39 pos (-36.50 -6.96 -47.11) hd  169.2 spd  5.31 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-36.53 -6.96 -46.90) see 0
+  t  25.60 d  5.56 pos (-36.49 -6.96 -47.35) hd  170.7 spd  4.51 turn   91.4 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  25.65 d  5.70 pos (-36.49 -6.96 -47.55) hd  179.7 spd  3.65 turn  257.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  25.70 d  5.80 pos (-36.51 -6.96 -47.71) hd -166.0 spd  2.78 turn  294.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  25.75 d  5.85 pos (-36.55 -6.96 -47.82) hd -150.8 spd  1.94 turn  314.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  25.80 d  5.87 pos (-36.60 -6.96 -47.88) hd -134.6 spd  1.19 turn  332.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  25.85 d  5.86 pos (-36.64 -6.96 -47.91) hd -117.9 spd  1.19 turn  332.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  25.90 d  5.84 pos (-36.70 -6.96 -47.93) hd -101.3 spd  1.19 turn  332.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  25.95 d  5.80 pos (-36.77 -6.96 -47.93) hd  -84.8 spd  1.54 turn  325.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  26.00 d  5.73 pos (-36.85 -6.96 -47.91) hd  -68.8 spd  1.91 turn  317.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  26.05 d  5.63 pos (-36.94 -6.96 -47.86) hd  -53.2 spd  2.25 turn  309.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.49 -6.96 -47.22) -> (-38.13 -6.96 -40.16) see 0
+  t  26.10 d  5.51 pos (-37.03 -6.96 -47.77) hd  -37.9 spd  2.58 turn  301.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.96 -6.96 -47.85) -> (-38.13 -6.96 -40.16) see 0
+  t  26.15 d  5.37 pos (-37.10 -6.96 -47.65) hd  -24.0 spd  2.91 turn  224.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.96 -6.96 -47.85) -> (-38.13 -6.96 -40.16) see 0
+  t  26.20 d  5.23 pos (-37.15 -6.96 -47.51) hd  -15.9 spd  3.28 turn  119.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.96 -6.96 -47.85) -> (-38.13 -6.96 -40.16) see 0
+  t  26.25 d  5.07 pos (-37.19 -6.96 -47.34) hd  -11.6 spd  3.69 turn   63.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.96 -6.96 -47.85) -> (-38.13 -6.96 -40.16) see 0
+  t  26.30 d  4.90 pos (-37.22 -6.96 -47.14) hd   -9.3 spd  4.12 turn   32.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.96 -6.96 -47.85) -> (-38.13 -6.96 -40.16) see 0
+  t  26.35 d  4.72 pos (-37.26 -6.96 -46.93) hd   -8.2 spd  4.57 turn   16.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.96 -6.96 -47.85) -> (-38.13 -6.96 -40.16) see 0
+  t  26.40 d  4.53 pos (-37.29 -6.96 -46.69) hd   -7.6 spd  5.02 turn    7.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.96 -6.96 -47.85) -> (-38.13 -6.96 -40.16) see 0
+  t  26.45 d  4.32 pos (-37.32 -6.96 -46.43) hd   -7.4 spd  5.47 turn    2.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.96 -6.96 -47.85) -> (-38.13 -6.96 -40.16) see 0
+  t  26.50 d  4.11 pos (-37.36 -6.96 -46.15) hd   -7.4 spd  5.93 turn    0.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-36.96 -6.96 -47.85) -> (-38.13 -6.96 -40.16) see 0
+  t  26.55 d  3.88 pos (-37.40 -6.96 -45.84) hd   -7.4 spd  6.40 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  26.60 d  3.66 pos (-37.44 -6.96 -45.51) hd   -7.4 spd  6.86 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  26.65 d  3.44 pos (-37.49 -6.96 -45.16) hd   -7.4 spd  7.32 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  26.70 d  3.23 pos (-37.54 -6.96 -44.78) hd   -7.4 spd  7.78 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  26.75 d  3.04 pos (-37.59 -6.96 -44.38) hd   -7.4 spd  8.24 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  26.80 d  2.90 pos (-37.64 -6.96 -43.96) hd   -7.4 spd  8.70 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  26.85 d  2.80 pos (-37.70 -6.96 -43.52) hd   -7.4 spd  9.09 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  26.90 d  2.78 pos (-37.76 -6.96 -43.07) hd   -7.4 spd  9.11 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  26.95 d  2.83 pos (-37.82 -6.96 -42.62) hd   -7.4 spd  9.14 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  27.00 d  2.95 pos (-37.87 -6.96 -42.16) hd   -7.4 spd  9.16 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.40 -6.96 -45.87) -> (-38.13 -6.96 -40.16) see 0
+  t  27.05 d  3.13 pos (-37.93 -6.96 -41.71) hd   -7.4 spd  9.18 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.91 -6.96 -41.86) -> (-38.13 -6.96 -40.16) see 0
+  t  27.10 d  3.37 pos (-37.99 -6.96 -41.25) hd   -7.4 spd  9.21 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.91 -6.96 -41.86) -> (-38.13 -6.96 -40.16) see 0
+  t  27.15 d  3.65 pos (-38.05 -6.96 -40.79) hd   -7.4 spd  9.23 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-37.91 -6.96 -41.86) -> (-38.13 -6.96 -40.16) see 0
+  t  27.20 d  3.96 pos (-38.11 -6.96 -40.34) hd   -7.4 spd  9.19 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.13 -6.96 -40.16) see 0
+  t  27.25 d  4.29 pos (-38.17 -6.96 -39.90) hd   -7.4 spd  8.48 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.13 -6.96 -40.16) see 0
+  t  27.30 d  4.61 pos (-38.22 -6.96 -39.50) hd   -7.4 spd  7.77 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.13 -6.96 -40.16) see 0
+  t  27.35 d  4.91 pos (-38.27 -6.96 -39.13) hd   -7.4 spd  7.06 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.13 -6.96 -40.16) see 0
+  t  27.40 d  5.18 pos (-38.31 -6.96 -38.80) hd   -7.4 spd  6.34 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.13 -6.96 -40.16) see 0
+  t  27.45 d  5.44 pos (-38.35 -6.96 -38.51) hd   -7.4 spd  5.63 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.13 -6.96 -40.16) see 0
+  t  27.50 d  5.67 pos (-38.38 -6.96 -38.25) hd   -7.4 spd  4.92 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.13 -6.96 -40.16) see 0
+  t  27.55 d  5.86 pos (-38.41 -6.96 -38.02) hd   -8.9 spd  4.19 turn  -94.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  27.60 d  6.02 pos (-38.45 -6.96 -37.84) hd  -18.2 spd  3.35 turn -265.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  27.65 d  6.12 pos (-38.52 -6.96 -37.71) hd  -32.8 spd  2.50 turn -301.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  27.70 d  6.18 pos (-38.54 -6.96 -37.64) hd  -48.5 spd  1.35 turn -326.7 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  27.75 d  6.21 pos (-38.54 -6.96 -37.60) hd  -65.2 spd  1.03 turn -336.2 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  27.80 d  6.23 pos (-38.54 -6.96 -37.59) hd  -82.2 spd  0.75 turn -342.3 mode pursue gait 0 blk 5 scr 1 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  27.85 d  6.22 pos (-38.54 -6.96 -37.59) hd  -99.5 spd  0.55 turn -347.3 mode pursue gait 0 blk 17 scr 1 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  27.90 d  6.22 pos (-38.54 -6.96 -37.60) hd -116.9 spd  0.58 turn -347.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  27.95 d  6.20 pos (-38.54 -6.96 -37.62) hd -134.1 spd  0.73 turn -343.8 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  28.00 d  6.16 pos (-38.54 -6.96 -37.66) hd -151.2 spd  0.97 turn -338.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/2 -> (-38.39 -6.96 -38.15) -> (-38.13 -6.96 -40.16) see 0
+  t  28.05 d  6.11 pos (-38.54 -6.96 -37.71) hd -167.6 spd  1.29 turn -287.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/2 -> (-38.54 -6.96 -37.66) -> (-38.13 -6.96 -40.16) see 0
+  t  28.10 d  6.04 pos (-38.54 -6.96 -37.79) hd -178.0 spd  1.69 turn -154.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.54 -6.96 -37.66) -> (-38.13 -6.96 -40.16) see 0
+  t  28.15 d  5.95 pos (-38.53 -6.96 -37.88) hd  176.4 spd  2.12 turn  -84.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.54 -6.96 -37.66) -> (-38.13 -6.96 -40.16) see 0
+  t  28.20 d  5.85 pos (-38.52 -6.96 -38.00) hd  173.3 spd  2.55 turn  -46.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.54 -6.96 -37.66) -> (-38.13 -6.96 -40.16) see 0
+  t  28.25 d  5.72 pos (-38.50 -6.96 -38.14) hd  171.6 spd  3.00 turn  -26.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.54 -6.96 -37.66) -> (-38.13 -6.96 -40.16) see 0
+  t  28.30 d  5.58 pos (-38.48 -6.96 -38.30) hd  170.6 spd  3.45 turn  -15.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.54 -6.96 -37.66) -> (-38.13 -6.96 -40.16) see 0
+  t  28.35 d  5.42 pos (-38.45 -6.96 -38.48) hd  170.0 spd  3.90 turn   -8.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.54 -6.96 -37.66) -> (-38.13 -6.96 -40.16) see 0
+  t  28.40 d  5.25 pos (-38.41 -6.96 -38.68) hd  169.7 spd  4.36 turn   -5.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.54 -6.96 -37.66) -> (-38.13 -6.96 -40.16) see 0
+  t  28.45 d  5.06 pos (-38.37 -6.96 -38.91) hd  169.5 spd  4.82 turn   -3.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.54 -6.96 -37.66) -> (-38.13 -6.96 -40.16) see 0
+  t  28.50 d  4.86 pos (-38.32 -6.96 -39.16) hd  169.4 spd  5.28 turn   10.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.33 -6.96 -39.14) -> (-38.41 -6.96 -40.06) see 0
+  t  28.55 d  4.64 pos (-38.28 -6.96 -39.42) hd  174.0 spd  5.05 turn  159.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.33 -6.96 -39.14) -> (-38.41 -6.96 -40.06) see 0
+  t  28.60 d  4.44 pos (-38.28 -6.96 -39.65) hd -176.4 spd  4.18 turn  183.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.33 -6.96 -39.14) -> (-38.41 -6.96 -40.06) see 0
+  t  28.65 d  4.27 pos (-38.31 -6.96 -39.83) hd -167.8 spd  3.36 turn  164.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.33 -6.96 -39.14) -> (-38.41 -6.96 -40.06) see 0
+  t  28.70 d  4.13 pos (-38.34 -6.96 -39.98) hd -163.7 spd  2.60 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  28.75 d  4.02 pos (-38.38 -6.96 -40.08) hd -163.7 spd  1.89 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  28.80 d  3.95 pos (-38.40 -6.96 -40.15) hd -163.7 spd  1.18 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  28.85 d  3.91 pos (-38.41 -6.96 -40.19) hd -163.7 spd  0.46 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  28.90 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  28.95 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.00 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.05 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.10 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.15 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.20 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.25 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.30 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.35 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.40 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.45 d  3.91 pos (-38.41 -6.96 -40.20) hd -163.7 spd  0.00 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.41 -6.96 -40.06) see 0
+  t  29.50 d  3.90 pos (-38.41 -6.96 -40.20) hd -165.9 spd  0.27 turn -130.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  29.55 d  3.88 pos (-38.41 -6.96 -40.23) hd -172.0 spd  0.72 turn  -90.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  29.60 d  3.84 pos (-38.42 -6.96 -40.28) hd -175.2 spd  1.17 turn  -47.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  29.65 d  3.78 pos (-38.42 -6.96 -40.35) hd -177.0 spd  1.63 turn  -25.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  29.70 d  3.70 pos (-38.43 -6.96 -40.44) hd -177.9 spd  2.08 turn  -13.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  29.75 d  3.60 pos (-38.43 -6.96 -40.56) hd -178.4 spd  2.54 turn   -7.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  29.80 d  3.48 pos (-38.44 -6.96 -40.70) hd -178.6 spd  3.00 turn   -3.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  29.85 d  3.35 pos (-38.44 -6.96 -40.86) hd -178.8 spd  3.46 turn   -2.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  29.90 d  3.20 pos (-38.44 -6.96 -41.04) hd -178.9 spd  3.92 turn   -1.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  29.95 d  3.04 pos (-38.45 -6.96 -41.25) hd -178.9 spd  4.38 turn   -0.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.41 -6.96 -40.20) -> (-38.54 -6.96 -46.18) see 0
+  t  30.00 d  2.87 pos (-38.45 -6.96 -41.48) hd -178.9 spd  4.85 turn   -0.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.45 -6.96 -41.27) -> (-38.54 -6.96 -46.18) see 0
+  t  30.05 d  2.70 pos (-38.46 -6.96 -41.74) hd -178.9 spd  5.31 turn   -0.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.45 -6.96 -41.27) -> (-38.54 -6.96 -46.18) see 0
+  t  30.10 d  2.52 pos (-38.46 -6.96 -42.02) hd -178.9 spd  5.77 turn   -0.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.45 -6.96 -41.27) -> (-38.54 -6.96 -46.18) see 0
+  t  30.15 d  2.35 pos (-38.47 -6.96 -42.32) hd -178.9 spd  6.23 turn   -0.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.45 -6.96 -41.27) -> (-38.54 -6.96 -46.18) see 0
+  t  30.20 d  2.20 pos (-38.47 -6.96 -42.64) hd -179.0 spd  6.70 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.45 -6.96 -41.27) -> (-38.54 -6.96 -46.18) see 0
+  t  30.25 d  2.08 pos (-38.48 -6.96 -42.99) hd -179.0 spd  7.16 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.45 -6.96 -41.27) -> (-38.54 -6.96 -46.18) see 0
+  t  30.30 d  2.02 pos (-38.49 -6.96 -43.36) hd -179.0 spd  7.62 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.45 -6.96 -41.27) -> (-38.54 -6.96 -46.18) see 0
+  t  30.35 d  2.02 pos (-38.49 -6.96 -43.75) hd -179.0 spd  8.08 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.45 -6.96 -41.27) -> (-38.54 -6.96 -46.18) see 0
+  t  30.40 d  2.11 pos (-38.50 -6.96 -44.17) hd -179.0 spd  8.55 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.45 -6.96 -41.27) -> (-38.54 -6.96 -46.18) see 0
+  t  30.45 d  2.28 pos (-38.51 -6.96 -44.61) hd -179.0 spd  9.01 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.51 -6.96 -44.50) -> (-38.54 -6.96 -46.18) see 0
+  t  30.50 d  2.53 pos (-38.52 -6.96 -45.07) hd -179.0 spd  9.12 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.51 -6.96 -44.50) -> (-38.54 -6.96 -46.18) see 0
+  t  30.55 d  2.83 pos (-38.53 -6.96 -45.52) hd -179.0 spd  9.14 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-38.51 -6.96 -44.50) -> (-38.54 -6.96 -46.18) see 0
+  t  30.60 d  3.16 pos (-38.53 -6.96 -45.98) hd -179.0 spd  9.10 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.54 -6.96 -46.18) see 0
+  t  30.65 d  3.51 pos (-38.54 -6.96 -46.41) hd -179.0 spd  8.39 turn    0.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/2 -> (-38.54 -6.96 -46.18) see 0
+  t  30.70 d  3.85 pos (-38.54 -6.96 -46.81) hd -179.0 spd  7.67 turn    0.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/2 -> (-38.54 -6.96 -46.18) see 0
+  t  30.75 d  4.17 pos (-38.54 -6.96 -47.18) hd -179.0 spd  6.96 turn    0.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/2 -> (-38.54 -6.96 -46.18) see 0
+  t  30.80 d  4.46 pos (-38.54 -6.96 -47.51) hd -179.0 spd  6.25 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.54 -6.96 -46.18) see 0
+  t  30.85 d  4.73 pos (-38.54 -6.96 -47.80) hd -179.0 spd  5.53 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.54 -6.96 -46.18) see 0
+  t  30.90 d  4.96 pos (-38.54 -6.96 -48.06) hd -179.0 spd  4.82 turn    0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/2 -> (-38.54 -6.96 -46.18) see 0
+  t  30.95 d  5.16 pos (-38.54 -6.96 -48.28) hd -177.4 spd  4.08 turn   95.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.00 d  5.32 pos (-38.57 -6.96 -48.46) hd -168.0 spd  3.25 turn  267.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.05 d  5.43 pos (-38.61 -6.96 -48.59) hd -153.3 spd  2.40 turn  303.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.10 d  5.49 pos (-38.67 -6.96 -48.67) hd -137.6 spd  1.58 turn  322.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.15 d  5.51 pos (-38.72 -6.96 -48.71) hd -121.0 spd  1.19 turn  332.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.20 d  5.51 pos (-38.77 -6.96 -48.73) hd -104.4 spd  1.19 turn  332.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.25 d  5.50 pos (-38.83 -6.96 -48.74) hd  -87.7 spd  1.19 turn  332.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.30 d  5.47 pos (-38.89 -6.96 -48.73) hd  -71.2 spd  1.42 turn  328.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.35 d  5.41 pos (-38.96 -6.96 -48.69) hd  -55.0 spd  1.79 turn  320.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.40 d  5.32 pos (-39.04 -6.96 -48.62) hd  -39.2 spd  2.14 turn  311.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/3 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.45 d  5.24 pos (-39.08 -6.96 -48.54) hd  -23.3 spd  1.57 turn  324.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/5 -> (-38.84 -6.96 -48.49) -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) see 0
+  t  31.50 d  5.18 pos (-39.10 -6.96 -48.49) hd   -7.1 spd  1.31 turn  328.6 mode pursue gait 0 blk 3 scr 1 hit 0 leg 1/5 -> (-38.84 -6.96 -48.49) -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) see 0
+  t  31.55 d  5.18 pos (-39.10 -6.96 -48.49) hd    9.8 spd  0.75 turn  342.4 mode pursue gait 0 blk 15 scr 1 hit 0 leg 1/5 -> (-38.84 -6.96 -48.49) -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) see 0
+  t  31.60 d  5.18 pos (-39.09 -6.96 -48.49) hd   27.0 spd  0.68 turn  344.7 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/5 -> (-38.84 -6.96 -48.49) -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) see 0
+  t  31.65 d  5.19 pos (-39.07 -6.96 -48.49) hd   44.0 spd  0.79 turn  310.1 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/5 -> (-38.84 -6.96 -48.49) -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) see 0
+  t  31.70 d  5.20 pos (-39.03 -6.96 -48.49) hd   54.7 spd  1.01 turn  148.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/5 -> (-38.84 -6.96 -48.49) -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) see 0
+  t  31.75 d  5.21 pos (-38.98 -6.96 -48.49) hd   59.4 spd  1.27 turn   53.4 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/5 -> (-38.84 -6.96 -48.49) -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) see 0
+  t  31.80 d  5.23 pos (-38.92 -6.96 -48.49) hd   60.2 spd  1.54 turn  -10.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/5 -> (-38.84 -6.96 -48.49) -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) see 0
+  t  31.85 d  5.25 pos (-38.85 -6.96 -48.49) hd   58.2 spd  1.76 turn  -66.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/5 -> (-38.84 -6.96 -48.49) -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) see 0
+  t  31.90 d  5.23 pos (-38.76 -6.96 -48.44) hd   54.6 spd  2.17 turn  -80.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/4 -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  31.95 d  5.19 pos (-38.67 -6.96 -48.36) hd   45.4 spd  2.46 turn -271.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/4 -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  32.00 d  5.16 pos (-38.59 -6.96 -48.29) hd   31.1 spd  0.00 turn -273.3 mode pursue gait 0 blk 1 scr 1 hit 0 leg 1/4 -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  32.05 d  5.15 pos (-38.59 -6.96 -48.28) hd   21.1 spd  0.45 turn -153.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/4 -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  32.10 d  5.13 pos (-38.58 -6.96 -48.25) hd   15.3 spd  0.90 turn  -90.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/4 -> (-38.59 -6.96 -48.29) -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  32.15 d  5.08 pos (-38.56 -6.96 -48.19) hd    9.8 spd  1.34 turn -115.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  32.20 d  5.01 pos (-38.55 -6.96 -48.12) hd    5.5 spd  1.78 turn  -64.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  32.25 d  4.92 pos (-38.54 -6.96 -48.02) hd    3.1 spd  2.22 turn  -37.9 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/4 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  32.30 d  4.81 pos (-38.53 -6.96 -47.89) hd    1.6 spd  2.67 turn  -23.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  32.35 d  4.68 pos (-38.53 -6.96 -47.75) hd    0.7 spd  3.12 turn  -14.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (-38.54 -6.96 -47.99) -> (-38.54 -6.96 -46.71) see 0
+  t  32.40 d  4.54 pos (-38.53 -6.96 -47.59) hd   -1.6 spd  2.88 turn -116.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.45 d  4.43 pos (-38.54 -6.96 -47.47) hd  -12.5 spd  2.06 turn -306.2 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.50 d  4.36 pos (-38.54 -6.96 -47.40) hd  -28.7 spd  1.18 turn -332.1 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.55 d  4.32 pos (-38.54 -6.96 -47.35) hd  -45.3 spd  1.16 turn -333.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.60 d  4.29 pos (-38.54 -6.96 -47.31) hd  -62.0 spd  1.07 turn -335.4 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.65 d  4.28 pos (-38.54 -6.96 -47.30) hd  -78.9 spd  0.81 turn -341.1 mode pursue gait 0 blk 3 scr 1 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.70 d  4.27 pos (-38.54 -6.96 -47.30) hd  -96.2 spd  0.57 turn -346.9 mode pursue gait 0 blk 15 scr 1 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.75 d  4.28 pos (-38.54 -6.96 -47.31) hd -113.5 spd  0.56 turn -347.3 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.80 d  4.30 pos (-38.54 -6.96 -47.32) hd -130.9 spd  0.69 turn -344.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.85 d  4.33 pos (-38.54 -6.96 -47.35) hd -148.0 spd  0.92 turn -339.7 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.53 -6.96 -47.68) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.90 d  4.37 pos (-38.54 -6.96 -47.40) hd -162.8 spd  1.24 turn -227.0 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.54 -6.96 -47.36) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  32.95 d  4.43 pos (-38.54 -6.96 -47.48) hd -170.9 spd  1.62 turn -119.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.54 -6.96 -47.36) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  33.00 d  4.52 pos (-38.54 -6.96 -47.57) hd -175.2 spd  2.05 turn  -62.9 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/10 -> (-38.54 -6.96 -47.36) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  33.05 d  4.62 pos (-38.54 -6.96 -47.68) hd -177.5 spd  2.49 turn  -33.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/10 -> (-38.54 -6.96 -47.36) -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) see 0
+  t  33.10 d  4.74 pos (-38.54 -6.96 -47.82) hd -177.5 spd  2.94 turn   45.8 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/10 -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) -> (-38.84 -6.96 -48.49) see 0
+  t  33.15 d  4.89 pos (-38.54 -6.96 -47.98) hd -175.2 spd  3.37 turn   52.1 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/10 -> (-38.54 -6.96 -47.99) -> (-38.59 -6.96 -48.29) -> (-38.84 -6.96 -48.49) see 0
+  t  33.20 d  5.03 pos (-38.56 -6.96 -48.14) hd -170.7 spd  3.10 turn  158.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/10 -> (-38.59 -6.96 -48.29) -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) see 0
+  t  33.25 d  5.14 pos (-38.59 -6.96 -48.27) hd -158.1 spd  2.26 turn  307.1 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/10 -> (-38.59 -6.96 -48.29) -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) see 0
+  t  33.30 d  5.20 pos (-38.63 -6.96 -48.36) hd -143.2 spd  1.89 turn  268.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/10 -> (-38.59 -6.96 -48.29) -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) see 0
+  t  33.35 d  5.25 pos (-38.71 -6.96 -48.43) hd -127.7 spd  2.24 turn  309.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.40 d  5.27 pos (-38.81 -6.96 -48.49) hd -112.5 spd  2.57 turn  289.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.45 d  5.26 pos (-38.94 -6.96 -48.53) hd -102.0 spd  2.94 turn  154.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.50 d  5.24 pos (-39.10 -6.96 -48.55) hd  -96.4 spd  3.34 turn   83.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.55 d  5.21 pos (-39.28 -6.96 -48.57) hd  -93.3 spd  3.76 turn   45.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.60 d  5.18 pos (-39.48 -6.96 -48.57) hd  -91.7 spd  4.20 turn   25.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.65 d  5.14 pos (-39.70 -6.96 -48.58) hd  -90.7 spd  4.65 turn   14.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.70 d  5.11 pos (-39.94 -6.96 -48.58) hd  -90.2 spd  5.11 turn    8.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.75 d  5.09 pos (-40.21 -6.96 -48.58) hd  -89.8 spd  5.57 turn    5.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.80 d  5.08 pos (-40.50 -6.96 -48.58) hd  -89.6 spd  6.03 turn    3.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/8 -> (-38.84 -6.96 -48.49) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.85 d  5.09 pos (-40.82 -6.96 -48.58) hd  -89.5 spd  6.49 turn    2.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.90 d  5.11 pos (-41.15 -6.96 -48.57) hd  -89.4 spd  6.95 turn    1.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  33.95 d  5.17 pos (-41.51 -6.96 -48.57) hd  -89.4 spd  7.41 turn    1.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.00 d  5.25 pos (-41.90 -6.96 -48.56) hd  -89.3 spd  7.88 turn    1.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.05 d  5.37 pos (-42.30 -6.96 -48.56) hd  -89.2 spd  8.34 turn    1.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.10 d  5.52 pos (-42.73 -6.96 -48.55) hd  -89.1 spd  8.80 turn    2.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.15 d  5.71 pos (-43.18 -6.96 -48.54) hd  -89.0 spd  9.12 turn    2.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.20 d  5.93 pos (-43.63 -6.96 -48.54) hd  -88.9 spd  8.59 turn    1.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.25 d  6.15 pos (-44.04 -6.96 -48.53) hd  -88.9 spd  7.87 turn    0.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.30 d  6.37 pos (-44.41 -6.96 -48.52) hd  -88.8 spd  7.16 turn    0.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-40.63 -6.96 -48.58) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.35 d  6.57 pos (-44.75 -6.96 -48.51) hd  -88.8 spd  6.44 turn    0.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-44.44 -6.96 -48.52) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.40 d  6.77 pos (-45.05 -6.96 -48.51) hd  -88.8 spd  5.73 turn    0.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-44.44 -6.96 -48.52) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.45 d  6.95 pos (-45.32 -6.96 -48.50) hd  -88.8 spd  5.01 turn    0.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-44.44 -6.96 -48.52) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.50 d  7.11 pos (-45.55 -6.96 -48.50) hd  -88.8 spd  4.30 turn    0.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-44.44 -6.96 -48.52) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.55 d  7.24 pos (-45.75 -6.96 -48.49) hd  -88.8 spd  3.58 turn    0.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/6 -> (-44.44 -6.96 -48.52) -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) see 0
+  t  34.60 d  7.36 pos (-45.91 -6.96 -48.49) hd  -86.0 spd  3.03 turn  133.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/6 -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) -> (-46.34 -6.96 -47.99) see 0
+  t  34.65 d  7.45 pos (-46.04 -6.96 -48.49) hd  -74.4 spd  2.18 turn  295.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/6 -> (-46.04 -6.96 -48.49) -> (-46.29 -6.96 -48.29) -> (-46.34 -6.96 -47.99) see 0
+  t  34.70 d  7.50 pos (-46.14 -6.96 -48.44) hd  -60.8 spd  2.20 turn  310.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (-46.29 -6.96 -48.29) -> (-46.34 -6.96 -47.99) -> (-46.29 -6.96 -47.74) see 0
+  t  34.75 d  7.52 pos (-46.23 -6.96 -48.38) hd  -45.3 spd  2.22 turn  309.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/6 -> (-46.29 -6.96 -48.29) -> (-46.34 -6.96 -47.99) -> (-46.29 -6.96 -47.74) see 0
+  t  34.80 d  7.52 pos (-46.29 -6.96 -48.29) hd  -30.2 spd  2.22 turn  278.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/5 -> (-46.29 -6.96 -48.29) -> (-46.34 -6.96 -47.99) -> (-46.29 -6.96 -47.74) see 0
+  t  34.85 d  7.49 pos (-46.34 -6.96 -48.19) hd  -16.9 spd  2.24 turn  296.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/5 -> (-46.34 -6.96 -47.99) -> (-46.29 -6.96 -47.74) -> (-43.31 -6.96 -38.65) see 1
+  t  34.90 d  7.43 pos (-46.36 -6.96 -48.07) hd   -4.7 spd  2.61 turn  209.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/5 -> (-46.34 -6.96 -47.99) -> (-46.29 -6.96 -47.74) -> (-43.31 -6.96 -38.65) see 1
+  t  34.95 d  7.34 pos (-46.35 -6.96 -47.93) hd    4.8 spd  2.72 turn  174.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (-46.29 -6.96 -47.74) -> (-43.31 -6.96 -38.65) see 1
+  t  35.00 d  7.24 pos (-46.33 -6.96 -47.79) hd   11.2 spd  3.12 turn   95.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (-46.29 -6.96 -47.74) -> (-43.31 -6.96 -38.65) see 1
+  t  35.05 d  7.11 pos (-46.29 -6.96 -47.63) hd   14.7 spd  3.54 turn   53.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (-46.29 -6.96 -47.74) -> (-43.31 -6.96 -38.65) see 1
+  t  35.10 d  6.97 pos (-46.24 -6.96 -47.44) hd   16.7 spd  3.98 turn   30.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (-46.29 -6.96 -47.74) -> (-43.31 -6.96 -38.65) see 1
+  t  35.15 d  6.80 pos (-46.18 -6.96 -47.24) hd   17.8 spd  4.43 turn   17.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (-46.29 -6.96 -47.74) -> (-43.31 -6.96 -38.65) see 1
+  t  35.20 d  6.62 pos (-46.11 -6.96 -47.02) hd   18.5 spd  4.88 turn    9.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (-46.29 -6.96 -47.74) -> (-43.31 -6.96 -38.65) see 1
+  t  35.25 d  6.42 pos (-46.02 -6.96 -46.78) hd   18.8 spd  5.34 turn    5.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (-46.29 -6.96 -47.74) -> (-43.31 -6.96 -38.65) see 1
+  t  35.30 d  6.21 pos (-45.93 -6.96 -46.51) hd   20.5 spd  5.77 turn   88.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.35 d  5.98 pos (-45.81 -6.96 -46.24) hd   28.7 spd  6.06 turn  223.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.40 d  5.71 pos (-45.63 -6.96 -45.99) hd   39.7 spd  6.29 turn  218.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.45 d  5.40 pos (-45.40 -6.96 -45.77) hd   50.4 spd  6.52 turn  194.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.50 d  5.08 pos (-45.13 -6.96 -45.57) hd   57.6 spd  6.81 turn  109.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.55 d  4.73 pos (-44.83 -6.96 -45.40) hd   61.6 spd  7.18 turn   61.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.60 d  4.36 pos (-44.50 -6.96 -45.23) hd   63.9 spd  7.58 turn   35.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.65 d  3.97 pos (-44.15 -6.96 -45.06) hd   65.2 spd  8.01 turn   20.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.70 d  3.56 pos (-43.77 -6.96 -44.89) hd   66.0 spd  8.46 turn   11.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.75 d  3.12 pos (-43.37 -6.96 -44.72) hd   66.5 spd  8.91 turn    7.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-45.99 -6.96 -46.67) -> (-40.50 -6.96 -43.50) see 1
+  t  35.80 d  2.67 pos (-42.96 -6.96 -44.54) hd   66.7 spd  9.13 turn    4.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-43.34 -6.96 -44.70) -> (-40.50 -6.96 -43.50) see 1
+  t  35.85 d  2.21 pos (-42.54 -6.96 -44.36) hd   66.9 spd  9.15 turn    2.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-43.34 -6.96 -44.70) -> (-40.50 -6.96 -43.50) see 1
+  t  35.90 d  1.75 pos (-42.11 -6.96 -44.18) hd   67.0 spd  9.17 turn    1.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-43.34 -6.96 -44.70) -> (-40.50 -6.96 -43.50) see 1
+  t  35.95 d  1.29 pos (-41.69 -6.96 -44.00) hd   67.1 spd  9.20 turn    1.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-43.34 -6.96 -44.70) -> (-40.50 -6.96 -43.50) see 1
+END seed 9 k 5 over 1 at 36.00 s by hunter
+ok    diag_door_trace
+1 tests, 0 failed
+    10 of 10 players standing 30 to 110 m from the door were reached; the slowest took 2.68 times the planned time
+    G:\consonance-scratch\a-gen-dz3\chase\tests\proof_tests.cpp(241): CHECK failed: worst_ratio < 2.5f
+FAIL  the_hunter_always_reaches_a_player_who_stands_still_in_connected_space
+1 tests, 1 failed
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.

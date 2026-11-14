@@ -1,0 +1,103 @@
+-- Configuring done (0.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: G:/consonance-scratch/a-gen-dz3/build
+[1/20] C:\WINDOWS\system32\cmd.exe /C "cd /D G:\consonance-scratch\a-gen-dz3\build\game && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=G:/consonance-scratch/a-gen-dz3 -DOUT=G:/consonance-scratch/a-gen-dz3/build/game/generated/build_commit.h -P G:/consonance-scratch/a-gen-dz3/game/world/build_commit.cmake"
+[2/20] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_look.cpp.obj
+[3/20] Building CXX object game\CMakeFiles\dz-world.dir\world\hud.cpp.obj
+[4/20] Building CXX object game\CMakeFiles\dz_world_game.dir\world\run_record.cpp.obj
+[5/20] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_app.cpp.obj
+[6/20] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_models.cpp.obj
+[7/20] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\run_record_tests.cpp.obj
+[8/20] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\world_app_tests.cpp.obj
+[9/20] Building CXX object game\CMakeFiles\dz-world.dir\world\sound.cpp.obj
+[10/20] Linking CXX static library game\dz_world_game.lib
+[11/20] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_run.cpp.obj
+[12/20] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest_run.cpp.obj
+[13/20] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_fpbody.cpp.obj
+[14/20] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_burst.cpp.obj
+[15/20] Building CXX object game\CMakeFiles\dz-world.dir\world\main.cpp.obj
+[16/20] Building CXX object game\CMakeFiles\dz-world.dir\world\stage.cpp.obj
+[17/20] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen.cpp.obj
+[18/20] Linking CXX executable bin\world_app_tests.exe
+[19/20] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest.cpp.obj
+[20/20] Linking CXX executable bin\dz-world.exe
+ok    world_settings_text_sets_a_subset_and_leaves_the_rest
+ok    world_settings_errors_name_the_line_and_change_nothing
+ok    world_settings_written_and_read_back_are_the_same
+ok    the_shipped_world_file_is_the_defaults_as_the_code_writes_them
+ok    the_shipped_world_file_leaves_start_biome_off
+ok    start_biome_makes_the_world_one_biome_and_refuses_an_unbuilt_one
+ok    the_world_starts_paused_at_the_generators_spawn_with_the_hand_light_on
+ok    f_switches_the_hand_light_and_m_does_nothing
+ok    a_new_seed_is_another_building_entered_at_its_spawn
+ok    going_to_a_chunk_stands_the_player_on_a_floor_in_it_and_respawn_returns
+ok    the_world_file_is_read_and_a_bad_one_is_reported_not_obeyed
+ok    a_run_begins_at_the_door_on_the_first_tick_of_play_and_the_hunter_comes_after_the_head_start
+    75.0 s of the flee bot's run: 12 events, chase fingerprint c5fb2b3e0165f6d1 and simulation fingerprint 87bb91eb43102d0e in both
+ok    a_record_of_the_flee_bots_inputs_gives_the_same_run_in_the_app_as_in_the_headless_harness
+ok    a_catch_ends_the_run_with_a_cut_to_dark_and_then_its_results_and_a_bots_run_sets_no_best
+ok    a_persons_run_sets_the_levels_best_time_and_enter_and_r_start_the_next
+ok    a_best_times_file_with_a_mistake_is_reported_and_not_obeyed
+ok    the_level_is_chosen_with_the_keys_1_to_4_before_a_run_and_never_under_its_feet
+ok    a_dial_changed_while_running_reaches_the_run_and_the_run_no_longer_counts
+ok    frozen_chasers_stand_still_and_removed_chasers_leave_no_run
+ok    going_to_a_chunk_by_hand_ends_the_run
+ok    the_placeholder_figures_differ_in_outline_and_are_about_the_size_of_a_person
+ok    without_the_flashlight_the_hand_holds_one_small_light_that_shines_every_way
+ok    the_lights_in_the_hand_are_not_shadowed_by_the_players_own_body
+ok    with_the_hand_light_switched_off_there_is_no_light_at_all_flashlight_or_not
+ok    the_flashlight_is_a_beam_along_the_view_with_the_first_games_cone
+ok    focus_narrows_the_beam_to_three_and_seven_degrees_doubles_it_and_sends_it_far
+ok    the_focus_eases_most_of_the_way_in_a_tenth_of_a_second_and_never_leaves_zero_to_one
+ok    the_flashlight_is_not_carried_by_default_and_the_setting_puts_it_in_the_hand
+ok    a_body_standing_on_a_floor_under_a_void_two_storeys_up_or_more_is_not_killed_as_fallen
+    void cell (4 1 -22): the run ended after 3.2 s, fell 1, caught 0
+ok    a_body_that_falls_into_a_void_ends_the_run_with_that_cause
+    327 room cells, 551 corridor cells: a room's decay 0.39 s (median), a corridor's 0.61 s
+ok    in_the_apartment_a_room_is_heard_short_and_damped_and_a_corridor_longer
+    apartment: room 0.35, corridor 0.12, open 0.06, damp 4200 Hz, wet 0.35
+    hotel: room 0.40, corridor 0.25, open 0.08, damp 3800 Hz, wet 0.30
+    school: room 0.10, corridor 0.08, open 0.06, damp 6000 Hz, wet 0.40
+    hospital: room 0.15, corridor 0.08, open 0.05, damp 6500 Hz, wet 0.40
+ok    every_built_biome_is_heard_by_a_row_of_its_own
+    2 seeds x 9 apartment chunks: 297 fixtures, 53 dark; 0 dark not heard ticking once, 0 lit ticking
+ok    a_dead_lamp_is_dead_in_the_picture_and_in_the_sound
+    9600 ticks: simulation 001528f21e545e96 and chase d680af7c9f149cb5 with the feet on the floor and off
+ok    feet_set_on_the_floor_change_nothing_in_the_simulation_or_the_chase
+    the flee bot, seed 1, brutal, as the chase gives it (the control): 52.0 s of the hunter, 12.6 s of it straight; 11 sign changes there (0.88 a second); the lean at most
+    75.3 degrees, changing at most 7277 degrees a second; the look at most 1080 degrees a second
+    the flee bot, seed 1, brutal, eased: 52.0 s of the hunter, 12.6 s of it straight; 3 sign changes there (0.24 a second); the lean at most
+    23.1 degrees, changing at most 234 degrees a second; the look at most 970 degrees a second
+    over seeds 1-24 of the flee bot at brutal, eased: 15 of 24 draws hold 300 degrees a second (the form needs 8);
+    the worst draw 418.4 degrees a second (the ceiling 600)
+ok    the_hunters_drawn_lean_eases_into_a_turn_and_does_not_rock_on_a_straight
+    PENDING L182, the flee bot, seed 1, brutal: 3 sign changes on 12.6 s of straights (0.24 a second; L182's bar 0.5)
+ok    the_hunters_drawn_lean_on_a_straight_pending_L182
+    the flee bot, seed 1, brutal: 28 corners; the drawn lean's peak comes, from the turn rate's peak: +0.15 +0.08 +0.08 +0.17 +0.09 +0.11 +0.90 +0.06 +0.23 -0.10 +0.10 +0.07 +0.28 -0.23 +0.08 +0.00 +0.08 +0.08 +0.08 +0.07 +0.03 +0.06 +0.16 +0.08 +0.11 +0.09 +0.06 +0.10 s; median +0.08 s
+ok    the_hunters_lean_peaks_at_or_before_its_turn_does
+    the flee bot, seed 1, brutal: the look turns at most 970 degrees a second; its rate steps at most 173 degrees a second in one frame (at 18.15 s)
+ok    the_hunters_head_turns_with_eased_ends_and_no_step_in_its_rate
+ok    a_run_that_ends_is_written_to_the_runs_folder_and_replays_from_it_to_the_same_fingerprints
+ok    a_run_caught_by_an_interceptor_names_it_in_its_record_and_in_its_replay
+ok    a_run_record_reads_back_as_it_was_written_to_the_bit
+ok    only_the_last_20_runs_are_kept
+ok    a_read_only_app_writes_no_run
+ok    world_local_txt_is_read_over_world_txt_and_its_settings_are_never_saved_into_world_txt
+ok    the_shipped_world_txt_keeps_the_design_default_of_no_flashlight
+ok    an_old_text_with_no_record_format_and_no_speed_section_still_reads_as_format_0_and_plays_to_the_same_fingerprints
+ok    a_new_record_text_says_its_format_before_every_other_key_and_lists_every_speed_field_and_reads_back_to_the_bit
+ok    a_newer_format_an_unknown_speed_field_and_a_bad_speed_value_are_each_refused_and_name_why
+ok    a_run_played_with_another_speed_model_replays_to_its_fingerprints_from_its_record_and_does_not_without_it
+ok    a_new_run_begins_with_the_shipped_speed_model_and_its_record_names_it
+ok    a_saved_run_and_its_kept_points_round_trip_and_a_text_without_kept_points_reads_as_none
+    a new run's record: gen_world 445410b473f81201; the kit's world and the world before it have spawn fingerprints 16777b01f937ac48 and dcca428a82201b35
+ok    a_new_record_says_the_generator_it_was_played_in
+    a run played before the kit, its record without [gen]: replayed to its fingerprints, 13000 ticks
+ok    a_record_with_no_gen_section_replays_in_the_generator_before_the_kit
+    the same record with its world's fingerprint changed: "this record's world is not this build's under the same generator settings: the generator changed outside its dials", 0 ticks played
+ok    a_record_whose_world_is_not_this_builds_is_refused_by_name
+    refused: "[gen]: 'no_such_kit_field' is not a generator kit field"; "line 254: unknown generator dial 'no_such_dial'"; "line 253: not a number"
+ok    the_gen_dials_and_the_kit_round_trip_and_an_unknown_name_is_refused
+55 tests, 0 failed
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.

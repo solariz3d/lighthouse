@@ -1,0 +1,422 @@
+-- The CXX compiler identification is MSVC 19.44.35228.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (1.0s)
+-- Generating done (0.1s)
+-- Build files have been written to: G:/consonance-scratch/a-gen-dz3/build
+[1/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastAssert.cpp.obj
+[2/368] Building CXX object third_party\CMakeFiles\Detour.dir\recastnavigation\Detour\Source\DetourAssert.cpp.obj
+[3/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastAlloc.cpp.obj
+[4/368] Building CXX object third_party\CMakeFiles\Detour.dir\recastnavigation\Detour\Source\DetourCommon.cpp.obj
+[5/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\Recast.cpp.obj
+[6/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastFilter.cpp.obj
+[7/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastRasterization.cpp.obj
+[8/368] Building CXX object third_party\CMakeFiles\Detour.dir\recastnavigation\Detour\Source\DetourAlloc.cpp.obj
+[9/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastLayers.cpp.obj
+[10/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastArea.cpp.obj
+[11/368] Building CXX object third_party\CMakeFiles\Detour.dir\recastnavigation\Detour\Source\DetourNode.cpp.obj
+[12/368] Building CXX object third_party\CMakeFiles\Detour.dir\recastnavigation\Detour\Source\DetourNavMeshBuilder.cpp.obj
+[13/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastRegion.cpp.obj
+[14/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastMeshDetail.cpp.obj
+[15/368] Building CXX object third_party\CMakeFiles\Detour.dir\recastnavigation\Detour\Source\DetourNavMesh.cpp.obj
+[16/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastMesh.cpp.obj
+[17/368] Building CXX object third_party\CMakeFiles\Recast.dir\recastnavigation\Recast\Source\RecastContour.cpp.obj
+[18/368] Building CXX object third_party\CMakeFiles\Detour.dir\recastnavigation\Detour\Source\DetourNavMeshQuery.cpp.obj
+[19/368] Building CXX object sim\CMakeFiles\dz_sim.dir\run.cpp.obj
+[20/368] Building CXX object sim\CMakeFiles\dz_sim.dir\bot.cpp.obj
+[21/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\cmake_pch.cxx.obj
+[22/368] Building CXX object sim\CMakeFiles\dz_sim.dir\params.cpp.obj
+[23/368] Building CXX object gen\CMakeFiles\dz_gen.dir\src\biome.cpp.obj
+[24/368] Building CXX object gen\CMakeFiles\dz_gen.dir\src\layout.cpp.obj
+[25/368] Building CXX object gen\CMakeFiles\dz_gen.dir\src\graph.cpp.obj
+[26/368] Building CXX object sim\CMakeFiles\dz_sim.dir\world.cpp.obj
+[27/368] Building CXX object sim\CMakeFiles\dz_sim.dir\scene_build.cpp.obj
+[28/368] Building CXX object sim\CMakeFiles\dz_sim.dir\replay.cpp.obj
+[29/368] Building CXX object gen\CMakeFiles\dz_gen.dir\src\voids.cpp.obj
+[30/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\AABBTree\AABBTreeBuilder.cpp.obj
+[31/368] Building CXX object sim\CMakeFiles\dz_sim.dir\gym.cpp.obj
+[32/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\IssueReporting.cpp.obj
+[33/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Compute\ComputeSystem.cpp.obj
+[34/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\JobSystemSingleThreaded.cpp.obj
+[35/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\JobSystemWithBarrier.cpp.obj
+[36/368] Building CXX object gen\CMakeFiles\dz_gen.dir\src\measure.cpp.obj
+[37/368] Building CXX object sim\CMakeFiles\dz_sim.dir\physics.cpp.obj
+[38/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\LinearCurve.cpp.obj
+[39/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\Color.cpp.obj
+[40/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\Factory.cpp.obj
+[41/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\JobSystemThreadPool.cpp.obj
+[42/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\RTTI.cpp.obj
+[43/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\Memory.cpp.obj
+[44/368] Linking CXX static library third_party\Recast.lib
+[45/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\StringTools.cpp.obj
+[46/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\TickCounter.cpp.obj
+[47/368] Building CXX object gen\CMakeFiles\dz_gen.dir\src\emit.cpp.obj
+[48/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\Semaphore.cpp.obj
+[49/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Math\Vec3.cpp.obj
+[50/368] Building CXX object nav\CMakeFiles\dz_nav.dir\voxels.cpp.obj
+[51/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Geometry\Indexify.cpp.obj
+[52/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Geometry\ConvexHullBuilder2D.cpp.obj
+[53/368] Building CXX object gen\CMakeFiles\dz_gen.dir\src\route_profile.cpp.obj
+[54/368] Linking CXX static library third_party\Detour.lib
+[55/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Core\Profiler.cpp.obj
+[56/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\ObjectStream\SerializableObject.cpp.obj
+[57/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Geometry\OrientedBox.cpp.obj
+[58/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Geometry\ConvexHullBuilder.cpp.obj
+[59/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Body\MotionProperties.cpp.obj
+[60/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Body\MassProperties.cpp.obj
+[61/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Body\Body.cpp.obj
+[62/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Body\BodyCreationSettings.cpp.obj
+[63/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\BroadPhase\BroadPhase.cpp.obj
+[64/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Character\CharacterBase.cpp.obj
+[65/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Body\BodyManager.cpp.obj
+[66/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Body\BodyInterface.cpp.obj
+[67/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Character\Character.cpp.obj
+[68/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\BroadPhase\BroadPhaseQuadTree.cpp.obj
+[69/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\CollideSphereVsTriangles.cpp.obj
+[70/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\BroadPhase\BroadPhaseBruteForce.cpp.obj
+[71/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\CollisionGroup.cpp.obj
+[72/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\BroadPhase\QuadTree.cpp.obj
+[73/368] Building CXX object nav\CMakeFiles\dz_nav.dir\build.cpp.obj
+[74/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Character\CharacterVirtual.cpp.obj
+[75/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\GroupFilter.cpp.obj
+[76/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\GroupFilterTable.cpp.obj
+[77/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\CastSphereVsTriangles.cpp.obj
+[78/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\CollisionDispatch.cpp.obj
+[79/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\CollideConvexVsTriangles.cpp.obj
+[80/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\NarrowPhaseStats.cpp.obj
+[81/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\PhysicsMaterial.cpp.obj
+[82/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\PhysicsMaterialSimple.cpp.obj
+[83/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\CastConvexVsTriangles.cpp.obj
+[84/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\EstimateCollisionResponse.cpp.obj
+[85/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\EmptyShape.cpp.obj
+[86/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\BoxShape.cpp.obj
+[87/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\DecoratedShape.cpp.obj
+[88/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\CompoundShape.cpp.obj
+[89/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\OffsetCenterOfMassShape.cpp.obj
+[90/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\CapsuleShape.cpp.obj
+[91/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\ManifoldBetweenTwoFaces.cpp.obj
+[92/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\PlaneShape.cpp.obj
+[93/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\NarrowPhaseQuery.cpp.obj
+[94/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\RotatedTranslatedShape.cpp.obj
+[95/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\ScaledShape.cpp.obj
+[96/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\CylinderShape.cpp.obj
+[97/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\ConvexHullShape.cpp.obj
+[98/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\MutableCompoundShape.cpp.obj
+[99/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\SphereShape.cpp.obj
+[100/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\ConvexShape.cpp.obj
+[101/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\TaperedCapsuleShape.cpp.obj
+[102/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\ConeConstraint.cpp.obj
+[103/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\TriangleShape.cpp.obj
+[104/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\TransformedShape.cpp.obj
+[105/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\ConstraintManager.cpp.obj
+[106/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\Constraint.cpp.obj
+[107/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\Shape.cpp.obj
+[108/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\TaperedCylinderShape.cpp.obj
+[109/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\DistanceConstraint.cpp.obj
+[110/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\FixedConstraint.cpp.obj
+[111/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\GearConstraint.cpp.obj
+[112/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\PathConstraintPath.cpp.obj
+[113/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\MotorSettings.cpp.obj
+[114/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\PathConstraintPathHermite.cpp.obj
+[115/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\DeterminismLog.cpp.obj
+[116/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\PulleyConstraint.cpp.obj
+[117/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\RackAndPinionConstraint.cpp.obj
+[118/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\PointConstraint.cpp.obj
+[119/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\HingeConstraint.cpp.obj
+[120/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\PathConstraint.cpp.obj
+[121/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\SliderConstraint.cpp.obj
+[122/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\SpringSettings.cpp.obj
+[123/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Hair\HairShaders.cpp.obj
+[124/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\SwingTwistConstraint.cpp.obj
+[125/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\TwoBodyConstraint.cpp.obj
+[126/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Hair\RegisterHair.cpp.obj
+[127/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\StaticCompoundShape.cpp.obj
+[128/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\IslandBuilder.cpp.obj
+[129/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Hair\Hair.cpp.obj
+[130/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\HeightFieldShape.cpp.obj
+[131/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Collision\Shape\MeshShape.cpp.obj
+[132/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\SixDOFConstraint.cpp.obj
+[133/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\LargeIslandSplitter.cpp.obj
+[134/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Constraints\ContactConstraintManager.cpp.obj
+[135/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\SoftBody\SoftBodyCreationSettings.cpp.obj
+[136/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\VehicleAntiRollBar.cpp.obj
+[137/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\PhysicsScene.cpp.obj
+[138/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\StateRecorderImpl.cpp.obj
+[139/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\PhysicsUpdateContext.cpp.obj
+[140/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\VehicleController.cpp.obj
+[141/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Hair\HairSettings.cpp.obj
+[142/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\VehicleEngine.cpp.obj
+[143/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Ragdoll\Ragdoll.cpp.obj
+[144/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\MotorcycleController.cpp.obj
+[145/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Renderer\DebugRenderer.cpp.obj
+[146/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\SoftBody\SoftBodyShape.cpp.obj
+[147/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\SoftBody\SoftBodyMotionProperties.cpp.obj
+[148/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\VehicleDifferential.cpp.obj
+[149/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\TrackedVehicleController.cpp.obj
+[150/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\VehicleTrack.cpp.obj
+[151/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\VehicleCollisionTester.cpp.obj
+[152/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\VehicleConstraint.cpp.obj
+[153/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\Wheel.cpp.obj
+[154/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Renderer\DebugRendererRecorder.cpp.obj
+[155/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\VehicleTransmission.cpp.obj
+[156/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Renderer\DebugRendererSimple.cpp.obj
+[157/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Renderer\DebugRendererPlayback.cpp.obj
+[158/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Skeleton\SkeletonPose.cpp.obj
+[159/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\TriangleSplitter\TriangleSplitterMean.cpp.obj
+[160/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\PhysicsSystem.cpp.obj
+[161/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\TriangleSplitter\TriangleSplitterBinning.cpp.obj
+[162/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Skeleton\SkeletalAnimation.cpp.obj
+[163/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Skeleton\Skeleton.cpp.obj
+[164/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Skeleton\SkeletonMapper.cpp.obj
+[165/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\SoftBody\SoftBodySharedSettings.cpp.obj
+[166/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\RegisterTypes.cpp.obj
+[167/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\TriangleSplitter\TriangleSplitter.cpp.obj
+[168/368] Building CXX object third_party\JoltPhysics\CMakeFiles\Jolt.dir\__\Jolt\Physics\Vehicle\WheeledVehicleController.cpp.obj
+[169/368] Building CXX object third_party\CMakeFiles\cgltf.dir\cgltf_impl.cpp.obj
+[170/368] Building CXX object render\CMakeFiles\dz_imgui.dir\third_party\imgui\imgui_draw.cpp.obj
+[171/368] Building CXX object render\CMakeFiles\dz_imgui.dir\third_party\imgui\imgui_impl_win32.cpp.obj
+[172/368] Building CXX object render\CMakeFiles\dz_imgui.dir\third_party\imgui\imgui_tables.cpp.obj
+[173/368] Building CXX object render\CMakeFiles\dz_imgui.dir\third_party\imgui\imgui_impl_dx12.cpp.obj
+[174/368] Building CXX object nav\CMakeFiles\dz_nav.dir\world.cpp.obj
+[175/368] Building CXX object nav\CMakeFiles\dz_nav.dir\pool.cpp.obj
+[176/368] Building CXX object nav\CMakeFiles\dz_nav.dir\stream.cpp.obj
+[177/368] Building CXX object gen\CMakeFiles\dz_gen_walk.dir\src\walk_proof.cpp.obj
+[178/368] Linking CXX static library gen\dz_gen.lib
+[179/368] Building CXX object nav\CMakeFiles\dz_nav_gen.dir\gen_adapter.cpp.obj
+[180/368] Building CXX object chase\CMakeFiles\dz_chase.dir\chaser.cpp.obj
+[181/368] Building CXX object gen\CMakeFiles\dz_gen_walk.dir\src\drop_proof.cpp.obj
+[182/368] Building CXX object render\CMakeFiles\dz_imgui.dir\third_party\imgui\imgui_widgets.cpp.obj
+[183/368] Building CXX object chase\CMakeFiles\dz_chase.dir\archetype.cpp.obj
+[184/368] Building CXX object chase\CMakeFiles\dz_chase.dir\speed.cpp.obj
+[185/368] Building CXX object chase\CMakeFiles\dz_chase.dir\dials.cpp.obj
+[186/368] Building CXX object render\CMakeFiles\dz_imgui.dir\third_party\imgui\imgui.cpp.obj
+[187/368] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\play.cpp.obj
+[188/368] Building CXX object world\CMakeFiles\dz_world.dir\walk.cpp.obj
+[189/368] Building CXX object world\CMakeFiles\dz_world.dir\route.cpp.obj
+[190/368] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\bots.cpp.obj
+[191/368] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\slosh.cpp.obj
+[192/368] Building CXX object game\CMakeFiles\dz_game.dir\bindings.cpp.obj
+[193/368] Building CXX object chase\CMakeFiles\dz_chase.dir\run.cpp.obj
+[194/368] Building CXX object game\CMakeFiles\dz_game.dir\app.cpp.obj
+[195/368] Building CXX object game\CMakeFiles\dz_game.dir\body.cpp.obj
+[196/368] Building CXX object model\CMakeFiles\dz_model.dir\model.cpp.obj
+[197/368] Linking CXX static library third_party\cgltf.lib
+[198/368] Linking CXX static library nav\dz_nav.lib
+[199/368] Building CXX object game\CMakeFiles\dz_game.dir\params_table.cpp.obj
+[200/368] Building CXX object game\CMakeFiles\dz_game.dir\ghost.cpp.obj
+[201/368] Linking CXX static library third_party\JoltPhysics\Jolt.lib
+[202/368] Building CXX object game\CMakeFiles\dz_game.dir\camera.cpp.obj
+[203/368] Building CXX object world\CMakeFiles\dz_world.dir\stream.cpp.obj
+[204/368] Building CXX object game\CMakeFiles\dz_game.dir\session.cpp.obj
+[205/368] Building CXX object game\CMakeFiles\dz_game.dir\input.cpp.obj
+[206/368] Building CXX object game\CMakeFiles\dz_game.dir\settings.cpp.obj
+[207/368] Building CXX object game\CMakeFiles\dz_game.dir\body_figure.cpp.obj
+[208/368] Building CXX object chase\CMakeFiles\dz_chase_world.dir\streamed.cpp.obj
+[209/368] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\arena.cpp.obj
+[210/368] Building CXX object game\CMakeFiles\dz_game.dir\skeleton.cpp.obj
+[211/368] Building CXX object game\CMakeFiles\dz_game.dir\course.cpp.obj
+[212/368] Building CXX object game\CMakeFiles\dz_game.dir\model_rig.cpp.obj
+[213/368] Linking CXX static library render\dz_imgui.lib
+[214/368] Building CXX object game\CMakeFiles\dz_game.dir\shell.cpp.obj
+[215/368] Building CXX object tests\CMakeFiles\dz_test.dir\dz_test_main.cpp.obj
+[216/368] Building CXX object core\CMakeFiles\core_tests.dir\tests\core_tests.cpp.obj
+[217/368] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\joint_angles.cpp.obj
+[218/368] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\acclaim.cpp.obj
+[219/368] Building CXX object audio\CMakeFiles\dz_audio.dir\wav.cpp.obj
+[220/368] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\player.cpp.obj
+[221/368] Linking CXX static library nav\dz_nav_gen.lib
+[222/368] C:\WINDOWS\system32\cmd.exe /C "cd /D G:\consonance-scratch\a-gen-dz3\build\game && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=G:/consonance-scratch/a-gen-dz3 -DOUT=G:/consonance-scratch/a-gen-dz3/build/game/generated/build_commit.h -P G:/consonance-scratch/a-gen-dz3/game/world/build_commit.cmake"
+[223/368] Linking CXX static library sim\dz_sim.lib
+[224/368] Linking CXX static library model\dz_model.lib
+[225/368] Building CXX object audio\CMakeFiles\dz_audio.dir\mixer.cpp.obj
+[226/368] Building CXX object audio\CMakeFiles\dz_audio.dir\device.cpp.obj
+[227/368] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\sheet.cpp.obj
+[228/368] Building CXX object game\CMakeFiles\dz_game.dir\textfile.cpp.obj
+[229/368] dxc BloomUpCS
+[230/368] dxc TaaCS
+[231/368] dxc BloomDownCS
+[232/368] Building CXX object game\CMakeFiles\dz_ragdoll.dir\ragdoll.cpp.obj
+[233/368] dxc TraceCS
+[234/368] dxc TonemapPS
+[235/368] dxc SkinCS
+[236/368] dxc FullscreenVS
+[237/368] Linking CXX static library tests\dz_test.lib
+[238/368] Linking CXX static library gen\dz_gen_walk.lib
+[239/368] Linking CXX static library chase\dz_chase.lib
+[240/368] Linking CXX static library world\dz_world.lib
+[241/368] Linking CXX static library game\dz_game.lib
+[242/368] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\reference.cpp.obj
+[243/368] Building CXX object game\CMakeFiles\dz_world_game.dir\world\beam.cpp.obj
+[244/368] Building CXX object render\CMakeFiles\dz_render.dir\src\dds.cpp.obj
+[245/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\slide_tests.cpp.obj
+[246/368] Building CXX object game\CMakeFiles\dz_world_game.dir\world\figures.cpp.obj
+[247/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\ground_tests.cpp.obj
+[248/368] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_settings.cpp.obj
+[249/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\vault_mantle_tests.cpp.obj
+[250/368] Building CXX object render\CMakeFiles\dz_render.dir\src\png.cpp.obj
+[251/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\jump_tests.cpp.obj
+[252/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\wall_tests.cpp.obj
+[253/368] Building CXX object game\CMakeFiles\dz_world_game.dir\world\acoustics.cpp.obj
+[254/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\dive_landing_tests.cpp.obj
+[255/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\params_tests.cpp.obj
+[256/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\determinism_tests.cpp.obj
+[257/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\piece_tests.cpp.obj
+[258/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\ladder_tests.cpp.obj
+[259/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\collision_tests.cpp.obj
+[260/368] Linking CXX static library chase\dz_chase_arena.lib
+[261/368] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\gym_tests.cpp.obj
+[262/368] Building CXX object tools\CMakeFiles\dz-sim.dir\dz-sim\main.cpp.obj
+[263/368] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_app.cpp.obj
+[264/368] Building CXX object render\CMakeFiles\dz_render.dir\src\renderer.cpp.obj
+[265/368] Building CXX object tools\CMakeFiles\dz-yardstick.dir\yardstick\main.cpp.obj
+[266/368] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\dial_tests.cpp.obj
+[267/368] Building CXX object tools\CMakeFiles\yardstick_tests.dir\yardstick\yardstick_tests.cpp.obj
+[268/368] Building CXX object game\CMakeFiles\dz_world_game.dir\world\run_record.cpp.obj
+[269/368] Building CXX object model\CMakeFiles\model_tests.dir\tests\model_tests.cpp.obj
+[270/368] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\geometry_tests.cpp.obj
+[271/368] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\void_tests.cpp.obj
+[272/368] Building CXX object gen\CMakeFiles\dz-gen.dir\tools\dz-gen\plan.cpp.obj
+[273/368] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\stair_tests.cpp.obj
+[274/368] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\range_tests.cpp.obj
+[275/368] Building CXX object gen\CMakeFiles\gen_walk_tests.dir\tests\walk_tests.cpp.obj
+[276/368] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\pin_tests.cpp.obj
+[277/368] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\layout_tests.cpp.obj
+[278/368] Building CXX object world\CMakeFiles\world_tests.dir\tests\coords_tests.cpp.obj
+[279/368] Linking CXX static library tools\dz_yardstick.lib
+[280/368] Building CXX object render\CMakeFiles\dz-view.dir\view\test_scene.cpp.obj
+[281/368] Building CXX object world\CMakeFiles\world_tests.dir\tests\route_tests.cpp.obj
+[282/368] Building CXX object gen\CMakeFiles\gen_drop_tests.dir\tests\drop_tests.cpp.obj
+[283/368] Linking CXX static library chase\dz_chase_world.lib
+[284/368] Building CXX object chase\CMakeFiles\dz-chase.dir\tools\dz-chase\image.cpp.obj
+[285/368] Building CXX object gen\CMakeFiles\dz-gen.dir\tools\dz-gen\main.cpp.obj
+[286/368] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\body_tests.cpp.obj
+[287/368] Linking CXX static library render\dz_render.lib
+[288/368] Building CXX object nav\CMakeFiles\dz-nav.dir\tools\dz-nav\image.cpp.obj
+[289/368] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\stream_tests.cpp.obj
+[290/368] Building CXX object nav\CMakeFiles\dz-nav.dir\tools\dz-nav\main.cpp.obj
+[291/368] Building CXX object render\CMakeFiles\dz-view.dir\view\main.cpp.obj
+[292/368] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\connect_tests.cpp.obj
+[293/368] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\build_tests.cpp.obj
+[294/368] Building CXX object world\CMakeFiles\world_tests.dir\tests\stream_tests.cpp.obj
+[295/368] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\reprieve_tests.cpp.obj
+[296/368] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\rule_tests.cpp.obj
+[297/368] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\stay_tests.cpp.obj
+[298/368] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\path_tests.cpp.obj
+[299/368] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\proof_tests.cpp.obj
+[300/368] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\speed_tests.cpp.obj
+[301/368] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\pursuit_tests.cpp.obj
+[302/368] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\feel_tests.cpp.obj
+[303/368] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\overtime_tests.cpp.obj
+[304/368] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\streamed_tests.cpp.obj
+[305/368] Building CXX object chase\CMakeFiles\dz-chase.dir\tools\dz-chase\main.cpp.obj
+[306/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\settings_tests.cpp.obj
+[307/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\input_tests.cpp.obj
+[308/368] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\device_tests.cpp.obj
+[309/368] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\room_tests.cpp.obj
+[310/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\loop_tests.cpp.obj
+[311/368] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\voice_tests.cpp.obj
+[312/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\ghost_tests.cpp.obj
+[313/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\camera_tests.cpp.obj
+[314/368] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\mix_tests.cpp.obj
+[315/368] Linking CXX static library audio\dz_audio.lib
+[316/368] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\bed_tests.cpp.obj
+[317/368] Building CXX object game\CMakeFiles\ragdoll_tests.dir\tests\ragdoll_tests.cpp.obj
+[318/368] Building CXX object game\CMakeFiles\dz-gym.dir\gym\hud.cpp.obj
+[319/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\body_tests.cpp.obj
+[320/368] Building CXX object game\CMakeFiles\dz-gym.dir\gym\window.cpp.obj
+[321/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\app_tests.cpp.obj
+[322/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\session_tests.cpp.obj
+[323/368] Building CXX object game\CMakeFiles\dz-gym.dir\gym\offscreen.cpp.obj
+[324/368] Building CXX object game\CMakeFiles\dz-gym.dir\gym\stage.cpp.obj
+[325/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\skeleton_tests.cpp.obj
+[326/368] Building CXX object game\CMakeFiles\game_tests.dir\tests\model_rig_tests.cpp.obj
+[327/368] Building CXX object game\CMakeFiles\dz-gym.dir\gym\main.cpp.obj
+[328/368] Building CXX object game\CMakeFiles\dz-gym.dir\gym\body_capture.cpp.obj
+[329/368] Building CXX object game\CMakeFiles\dz-gym.dir\gym\selftest.cpp.obj
+[330/368] Linking CXX static library game\dz_ragdoll.lib
+[331/368] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\run_record_tests.cpp.obj
+[332/368] Building CXX object game\CMakeFiles\dz-world.dir\world\main.cpp.obj
+[333/368] Building CXX object game\CMakeFiles\dz-world.dir\gym\window.cpp.obj
+[334/368] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\world_app_tests.cpp.obj
+[335/368] Building CXX object game\CMakeFiles\dz-world.dir\world\stage.cpp.obj
+[336/368] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_models.cpp.obj
+[337/368] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_look.cpp.obj
+[338/368] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen.cpp.obj
+[339/368] Linking CXX static library game\dz_world_game.lib
+[340/368] Building CXX object game\CMakeFiles\dz-world.dir\world\sound.cpp.obj
+[341/368] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_burst.cpp.obj
+[342/368] Linking CXX executable bin\sim_tests.exe
+[343/368] Linking CXX executable bin\core_tests.exe
+[344/368] Linking CXX executable bin\model_tests.exe
+[345/368] Linking CXX executable bin\dz-sim.exe
+[346/368] Linking CXX executable bin\yardstick_tests.exe
+[347/368] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_run.cpp.obj
+[348/368] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_fpbody.cpp.obj
+[349/368] Building CXX object game\CMakeFiles\dz-world.dir\world\hud.cpp.obj
+[350/368] Linking CXX executable bin\dz-gen.exe
+[351/368] Linking CXX executable bin\dz-yardstick.exe
+[352/368] Linking CXX executable bin\dz-nav.exe
+[353/368] Linking CXX executable bin\dz-view.exe
+[354/368] Linking CXX executable bin\gen_walk_tests.exe
+[355/368] Linking CXX executable bin\gen_drop_tests.exe
+[356/368] Linking CXX executable bin\chase_tests.exe
+[357/368] Linking CXX executable bin\nav_tests.exe
+[358/368] Linking CXX executable bin\dz-chase.exe
+[359/368] Linking CXX executable bin\world_tests.exe
+[360/368] Linking CXX executable bin\audio_tests.exe
+[361/368] Linking CXX executable bin\gen_tests.exe
+[362/368] Linking CXX executable bin\ragdoll_tests.exe
+[363/368] Linking CXX executable bin\game_tests.exe
+[364/368] Linking CXX executable bin\dz-gym.exe
+[365/368] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest_run.cpp.obj
+[366/368] Linking CXX executable bin\world_app_tests.exe
+[367/368] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest.cpp.obj
+[368/368] Linking CXX executable bin\dz-world.exe
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(517): CHECK failed: contains(text, "\n[gen]\n") && contains(text, "\n[gen_dials]\n") && contains(text, "\ngen_world")
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(520): CHECK failed: gen_at != std::string::npos && text.find("\n" "chutes" " = ", gen_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(520): CHECK failed: gen_at != std::string::npos && text.find("\n" "buy_rule" " = ", gen_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(520): CHECK failed: gen_at != std::string::npos && text.find("\n" "path_factor" " = ", gen_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(520): CHECK failed: gen_at != std::string::npos && text.find("\n" "hunter_walk" " = ", gen_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(520): CHECK failed: gen_at != std::string::npos && text.find("\n" "hunter_stairs" " = ", gen_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(520): CHECK failed: gen_at != std::string::npos && text.find("\n" "hunter_ladder" " = ", gen_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(520): CHECK failed: gen_at != std::string::npos && text.find("\n" "hunter_drop" " = ", gen_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(520): CHECK failed: gen_at != std::string::npos && text.find("\n" "door_rate" " = ", gen_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(523): CHECK failed: dials_at != std::string::npos && text.find("\n" + std::string(d.name) + " = ", dials_at) != std::string::npos
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(527): CHECK failed: same_gen(rec.gen, played)
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(528): CHECK failed: !same_gen(rec.gen, gen::GenParams{})
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(529): CHECK failed: rec.gen_world != 0 && rec.gen_world == world_fingerprint(app.gen_params())
+    a new run's record: gen_world 0000000000000000; the kit's world and the world before it have spawn fingerprints 0000000000000000 and 0000000000000000
+FAIL  a_new_record_says_the_generator_it_was_played_in
+1 tests, 1 failed
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(546): CHECK failed: same_gen(app.gen_params(), gen::GenParams{})
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(557): CHECK failed: world_fingerprint(gen::GenParams{}) != world_fingerprint(gen::shipped_gen())
+    a run played before the kit, its record without [gen]: replayed to its fingerprints, 3236 ticks
+FAIL  a_record_with_no_gen_section_replays_in_the_generator_before_the_kit
+1 tests, 1 failed
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(583): CHECK failed: moved.gen_world == (rec.gen_world ^ 1ull)
+    the same record with its world's fingerprint changed: "", 3236 ticks played
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(587): CHECK failed: contains(r.error, "the generator changed outside its dials")
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(588): CHECK_EQ failed: r.ticks = 3236, 0u = 0
+FAIL  a_record_whose_world_is_not_this_builds_is_refused_by_name
+1 tests, 1 failed
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(602): CHECK failed: same_gen(back.gen, rec.gen) && back.gen_world == rec.gen_world
+    refused: ""; ""; ""
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(610): CHECK failed: contains(e1, "no_such_kit_field")
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(611): CHECK failed: contains(e2, "no_such_dial")
+    G:\consonance-scratch\a-gen-dz3\game\tests\run_record_tests.cpp(612): CHECK failed: !e3.empty()
+FAIL  the_gen_dials_and_the_kit_round_trip_and_an_unknown_name_is_refused
+1 tests, 1 failed
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.

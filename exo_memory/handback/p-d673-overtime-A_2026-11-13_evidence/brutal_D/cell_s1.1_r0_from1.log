@@ -1,0 +1,89 @@
+sweep: seeds 1..20, arena 2 chunks each way, runs stopped at 400 s; dials: head_start_s=1000 lesser_max=0 dark_speed_start=1.1 dark_speed_rise=0
+speed model (default):
+ref_speed         8.000   the chasers' reference speed, metres per second; every row and dial is a multiple of it
+dist_per_km       0.050   share of top speed gained for each kilometre the player has covered
+dist_max          0.300   the most the distance can add, as a share of top speed
+straight_rate     0.050   share of top speed a chaser gains each second it runs straight at its top speed
+straight_max      0.200   the most a straight can add, as a share of top speed
+straight_turn     0.300   radians a second: it is running straight while it turns slower than this
+run_up_bleed      1.000   share of the run-up lost for every radian it turns
+turn_drag         0.200   share of its speed a chaser loses for every radian it turns
+corner_floor      1.000   least share of the braking a corner asks for that every chaser does before it (1: it never swings into a wall)
+wall_stand        0.000   scale on the seconds a chaser stands after meeting a wall head-on (0: it never stops dead)
+brake_scale       1.000   scale on every chaser's braking, metres per second squared (1: the rows and the hunter's dial as they are)
+hunter_start_bonus    0.170   added to the hunter's dial at the start of a run, and fading to nothing over hunter_bonus_fade_s: a fresh player's margin
+hunter_bonus_fade_s  600.000   seconds over which hunter_start_bonus fades away
+stairs_lift       1.000   share of a stairs leg's slope a chaser's step is lifted by (0: a flat step, which stalls at the foot of a steep flight)
+corner_floor_speed    0.000   L170 P3: the share of its top speed a corner may not take a chaser below (0: the chase as it is; 0.5 is NextBot's)
+slip_rate         0.000   L170 SLIP: per second, how fast a chaser's velocity follows its facing (0: it travels along its facing, as it does; 3 is NextBot's sideways friction)
+lead_range        0.000   L170 P1: metres; the hunter plans toward where the player will be, leading by lead_base_s plus its distance (to this many metres) over its speed (0: toward where they were seen)
+lead_base_s       0.500   L170 P1: seconds of lead before the distance is added (used only when lead_range is above 0)
+
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+brutal  flee     20    87.4   105.9   354.9   400.0   400.0   400.0    400.0        15
+brutal  line     20    37.2    40.3    44.5    51.0    56.6    64.4     74.6         0
+brutal  juke     20    38.8    40.7    41.4    44.1    49.7    57.1     63.7         0
+
+overtime (timer at 30 s), seconds of overtime survived by the runs that reached it
+level   policy  runs reached     min  median     p90     max   >90 s  stopped  saved
+brutal  flee      20      20    57.4   370.0   370.0   370.0      17       15      5
+brutal  line      20      20     7.2    21.0    34.4    44.6       0        0     20
+brutal  juke      20      20     8.8    14.1    27.1    33.7       0        0     20
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+brutal  flee        0%       0%          0%    0% |       25%           0%         0%         0% |        28125
+brutal  line        0%       0%          0%    0% |       85%           5%         0%        10% |         1948
+brutal  juke        0%       0%          0%    0% |       95%           0%         0%         5% |         1429
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+brutal  flee   |      1.00       55%      0.00     0.00      0.00 |   0.00   0.03    0.09 |     0.00   0.00   0.00   0.00     0.00 |    0.00    10%       0%
+brutal  line   |      0.00        0%      0.10     0.05      0.00 |   0.00   0.00    0.00 |     0.00   0.00   0.00   0.00     0.00 |    0.00     0%       0%
+brutal  juke   |      0.00        0%      0.05     0.00      0.00 |   0.00   0.00    0.00 |     0.00   0.00   0.00   0.00     0.00 |    0.00     0%       0%
+paired line vs flee (20 seeds): outlived it in 0, was outlived in 20, within half a second in 0; median of the ratio 0.14 (quartiles 0.12 to 0.25)
+paired juke vs flee (20 seeds): outlived it in 0, was outlived in 20, within half a second in 0; median of the ratio 0.12 (quartiles 0.11 to 0.29)
+
+where chasers caught on the world, per minute of chase
+level   policy minutes    wall hits scrape s
+                           head-on (ticks/240)   stalls   stood s
+brutal  flee    110.9       12.421     3.02    0.000     0.000   (totals: 1377 hits, 80399 scrape ticks, 0 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  dark 1377, 80399;
+brutal  line     17.2        3.314     1.03    0.000     0.000   (totals: 57 hits, 4239 scrape ticks, 0 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  dark 57, 4239;
+brutal  juke     15.5        4.062     1.04    0.000     0.000   (totals: 63 hits, 3864 scrape ticks, 0 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  dark 63, 3864;
+
+reprieves: 20 passages through and 0 back out the way in, in 11 of 60 runs; with the hunter out and a way to the player both times (0):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        0.0     0.0     0.0
+  and coming out: the lead                         0.0     0.0     0.0
+  lead gained                                      0.0     0.0     0.0
+  way round, the generator's figure                0.0     0.0     0.0
+  way round on the mesh, the hunter's speeds       0.0     0.0     0.0
+  lead gained over the way round on the mesh      0.00    0.00    0.00
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
+48 s in all on 2 threads
+  seed 2 done (4 s)
+  seed 1 done (5 s)
+  seed 3 done (9 s)
+  seed 4 done (11 s)
+  seed 5 done (14 s)
+  seed 6 done (15 s)
+  seed 8 done (18 s)
+  seed 7 done (18 s)
+  seed 9 done (20 s)
+  seed 10 done (22 s)
+  seed 11 done (24 s)
+  seed 12 done (28 s)
+  seed 13 done (29 s)
+  seed 14 done (34 s)
+  seed 15 done (35 s)
+  seed 17 done (38 s)
+  seed 16 done (39 s)
+  seed 19 done (43 s)
+  seed 18 done (43 s)
+  seed 20 done (48 s)

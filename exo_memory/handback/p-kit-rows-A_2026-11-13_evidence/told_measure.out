@@ -1,0 +1,29 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+== none
+seed 3 case k 14: caught 1 at 19.85 s
+seed 9 case k 5: caught 1 at 36.00 s
+the hunter near where it was sent, without sight, a quarter of a second: 7 times; its aim the player's own place within a second: 0
+FAIL  a_hunter_near_where_it_was_sent_that_cannot_see_the_player_is_told_exactly
+10 of 10 players standing 30 to 110 m from the door were reached; the slowest took 2.68 times the planned time
+FAIL  the_hunter_always_reaches_a_player_who_stands_still_in_connected_space
+== opt2
+seed 3 case k 14: caught 1 at 11.01 s
+seed 9 case k 5: caught 1 at 27.52 s
+the hunter near where it was sent, without sight, a quarter of a second: 2 times; its aim the player's own place within a second: 2
+ok    a_hunter_near_where_it_was_sent_that_cannot_see_the_player_is_told_exactly
+10 of 10 players standing 30 to 110 m from the door were reached; the slowest took 1.73 times the planned time
+ok    the_hunter_always_reaches_a_player_who_stands_still_in_connected_space
+== opt1
+seed 3 case k 14: caught 1 at 19.85 s
+seed 9 case k 5: caught 1 at 19.93 s
+the hunter near where it was sent, without sight, a quarter of a second: 3 times; its aim the player's own place within a second: 0
+FAIL  a_hunter_near_where_it_was_sent_that_cannot_see_the_player_is_told_exactly
+10 of 10 players standing 30 to 110 m from the door were reached; the slowest took 2.68 times the planned time
+FAIL  the_hunter_always_reaches_a_player_who_stands_still_in_connected_space
+== opt1+opt2
+seed 3 case k 14: caught 1 at 11.01 s
+seed 9 case k 5: caught 1 at 19.93 s
+the hunter near where it was sent, without sight, a quarter of a second: 1 times; its aim the player's own place within a second: 1
+ok    a_hunter_near_where_it_was_sent_that_cannot_see_the_player_is_told_exactly
+10 of 10 players standing 30 to 110 m from the door were reached; the slowest took 1.73 times the planned time
+ok    the_hunter_always_reaches_a_player_who_stands_still_in_connected_space

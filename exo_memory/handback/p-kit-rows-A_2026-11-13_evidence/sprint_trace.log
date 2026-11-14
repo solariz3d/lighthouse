@@ -1,0 +1,411 @@
+-- Configuring done (0.1s)
+-- Generating done (0.3s)
+-- Build files have been written to: G:/consonance-scratch/a-gen-dz3/build
+[1/88] Building CXX object gen\CMakeFiles\dz_gen.dir\src\voids.cpp.obj
+[2/88] Building CXX object gen\CMakeFiles\dz_gen.dir\src\graph.cpp.obj
+[3/88] Building CXX object chase\CMakeFiles\dz_chase.dir\dials.cpp.obj
+[4/88] Building CXX object gen\CMakeFiles\dz_gen.dir\src\biome.cpp.obj
+[5/88] Building CXX object gen\CMakeFiles\dz_gen.dir\src\layout.cpp.obj
+[6/88] Building CXX object world\CMakeFiles\dz_world.dir\walk.cpp.obj
+[7/88] Building CXX object gen\CMakeFiles\dz_gen_walk.dir\src\drop_proof.cpp.obj
+[8/88] Building CXX object gen\CMakeFiles\dz_gen_walk.dir\src\walk_proof.cpp.obj
+[9/88] Building CXX object world\CMakeFiles\dz_world.dir\route.cpp.obj
+[10/88] Building CXX object gen\CMakeFiles\dz_gen.dir\src\route_profile.cpp.obj
+[11/88] Building CXX object nav\CMakeFiles\dz_nav_gen.dir\gen_adapter.cpp.obj
+[12/88] Building CXX object gen\CMakeFiles\dz_gen.dir\src\emit.cpp.obj
+[13/88] Building CXX object world\CMakeFiles\dz_world.dir\stream.cpp.obj
+[14/88] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\bots.cpp.obj
+[15/88] Building CXX object chase\CMakeFiles\dz_chase.dir\run.cpp.obj
+[16/88] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\play.cpp.obj
+[17/88] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\layout_tests.cpp.obj
+[18/88] Building CXX object gen\CMakeFiles\dz_gen.dir\src\measure.cpp.obj
+[19/88] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\stair_tests.cpp.obj
+[20/88] Building CXX object gen\CMakeFiles\dz-gen.dir\tools\dz-gen\plan.cpp.obj
+[21/88] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\void_tests.cpp.obj
+[22/88] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\arena.cpp.obj
+[23/88] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\geometry_tests.cpp.obj
+[24/88] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\slosh.cpp.obj
+[25/88] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\pin_tests.cpp.obj
+[26/88] Building CXX object gen\CMakeFiles\gen_drop_tests.dir\tests\drop_tests.cpp.obj
+[27/88] Building CXX object gen\CMakeFiles\gen_walk_tests.dir\tests\walk_tests.cpp.obj
+[28/88] Building CXX object chase\CMakeFiles\dz_chase_world.dir\streamed.cpp.obj
+[29/88] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\range_tests.cpp.obj
+[30/88] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\dial_tests.cpp.obj
+[31/88] C:\WINDOWS\system32\cmd.exe /C "cd /D G:\consonance-scratch\a-gen-dz3\build\game && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=G:/consonance-scratch/a-gen-dz3 -DOUT=G:/consonance-scratch/a-gen-dz3/build/game/generated/build_commit.h -P G:/consonance-scratch/a-gen-dz3/game/world/build_commit.cmake"
+[32/88] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\connect_tests.cpp.obj
+[33/88] Building CXX object world\CMakeFiles\world_tests.dir\tests\route_tests.cpp.obj
+[34/88] Building CXX object gen\CMakeFiles\dz-gen.dir\tools\dz-gen\main.cpp.obj
+[35/88] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\path_tests.cpp.obj
+[36/88] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\reprieve_tests.cpp.obj
+[37/88] Building CXX object world\CMakeFiles\world_tests.dir\tests\stream_tests.cpp.obj
+[38/88] Linking CXX static library gen\dz_gen.lib
+[39/88] Building CXX object world\CMakeFiles\world_tests.dir\tests\coords_tests.cpp.obj
+[40/88] Linking CXX static library chase\dz_chase.lib
+[41/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\body_tests.cpp.obj
+[42/88] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\stream_tests.cpp.obj
+[43/88] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\build_tests.cpp.obj
+[44/88] Building CXX object nav\CMakeFiles\dz-nav.dir\tools\dz-nav\main.cpp.obj
+[45/88] Building CXX object game\CMakeFiles\dz_world_game.dir\world\acoustics.cpp.obj
+[46/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\proof_tests.cpp.obj
+[47/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\rule_tests.cpp.obj
+[48/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\overtime_tests.cpp.obj
+[49/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\feel_tests.cpp.obj
+[50/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\stay_tests.cpp.obj
+[51/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\diag_sprint.cpp.obj
+[52/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\pursuit_tests.cpp.obj
+[53/88] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_app.cpp.obj
+[54/88] Linking CXX static library world\dz_world.lib
+[55/88] Building CXX object chase\CMakeFiles\dz-chase.dir\tools\dz-chase\main.cpp.obj
+[56/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\speed_tests.cpp.obj
+[57/88] Building CXX object game\CMakeFiles\dz_world_game.dir\world\run_record.cpp.obj
+[58/88] Building CXX object game\CMakeFiles\dz-world.dir\world\sound.cpp.obj
+[59/88] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\run_record_tests.cpp.obj
+[60/88] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\streamed_tests.cpp.obj
+[61/88] Linking CXX static library nav\dz_nav_gen.lib
+[62/88] Linking CXX static library gen\dz_gen_walk.lib
+[63/88] Building CXX object game\CMakeFiles\dz-world.dir\world\stage.cpp.obj
+[64/88] Building CXX object game\CMakeFiles\dz-world.dir\world\hud.cpp.obj
+[65/88] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\world_app_tests.cpp.obj
+[66/88] Building CXX object game\CMakeFiles\dz-world.dir\world\main.cpp.obj
+[67/88] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_look.cpp.obj
+[68/88] Linking CXX static library chase\dz_chase_arena.lib
+[69/88] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_fpbody.cpp.obj
+[70/88] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen.cpp.obj
+[71/88] Linking CXX executable bin\world_tests.exe
+[72/88] Linking CXX executable bin\dz-nav.exe
+[73/88] Linking CXX executable bin\gen_tests.exe
+[74/88] Linking CXX executable bin\dz-gen.exe
+[75/88] Linking CXX executable bin\gen_drop_tests.exe
+[76/88] Linking CXX executable bin\gen_walk_tests.exe
+[77/88] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest_run.cpp.obj
+[78/88] Linking CXX executable bin\nav_tests.exe
+[79/88] Linking CXX static library chase\dz_chase_world.lib
+[80/88] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_models.cpp.obj
+[81/88] Linking CXX static library game\dz_world_game.lib
+[82/88] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_run.cpp.obj
+[83/88] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_burst.cpp.obj
+[84/88] Linking CXX executable bin\chase_tests.exe
+[85/88] Linking CXX executable bin\dz-chase.exe
+[86/88] Linking CXX executable bin\world_app_tests.exe
+[87/88] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest.cpp.obj
+[88/88] Linking CXX executable bin\dz-world.exe
+ROUTE seed 4: 79.3 m, 9 path points; careless 9.66 s, careful 10.82 s
+  PT 0 (-61.50 -22.50)
+  PT 1 (-61.34 -20.84)
+  PT 2 (-61.04 -20.54)
+  PT 3 (-47.99 -17.99)
+  PT 4 (-45.44 -11.74)
+  PT 5 (-45.19 -11.54)
+  PT 6 (0.01 -11.54)
+  PT 7 (0.26 -11.59)
+  PT 8 (10.50 -16.50)
+  s   0.0 m  careless t   0.00 v  0.03 scr    0 hit 0 (-61.5 -22.5) | careful t   0.00 v  0.03 scr    0 hit 0 (-61.5 -22.5) | gap +0.00 s (+0.00)
+  s   1.0 m  careless t   0.58 v  3.48 scr    0 hit 0 (-61.4 -21.5) | careful t   0.58 v  3.48 scr    0 hit 0 (-61.4 -21.5) | gap +0.00 s (+0.00)
+  s   2.0 m  careless t   0.82 v  4.89 scr    2 hit 0 (-61.2 -20.5) | careful t   1.10 v  2.02 scr   12 hit 0 (-61.1 -20.6) | gap +0.28 s (+0.28)
+  s   3.0 m  careless t   1.00 v  5.99 scr    2 hit 0 (-60.6 -19.8) | careful t   1.44 v  3.96 scr   23 hit 0 (-60.1 -20.3) | gap +0.44 s (+0.16)
+  s   4.0 m  careless t   1.15 v  6.91 scr    2 hit 0 (-59.6 -19.5) | careful t   1.65 v  5.26 scr   23 hit 0 (-59.2 -20.1) | gap +0.50 s (+0.06)
+  s   5.0 m  careless t   1.29 v  7.74 scr    2 hit 0 (-58.6 -19.3) | careful t   1.83 v  6.29 scr   23 hit 0 (-58.2 -19.9) | gap +0.53 s (+0.03)
+  s   6.0 m  careless t   1.42 v  8.49 scr    2 hit 0 (-57.6 -19.2) | careful t   1.98 v  7.19 scr   23 hit 0 (-57.2 -19.7) | gap +0.56 s (+0.02)
+  s   7.0 m  careless t   1.53 v  9.16 scr    2 hit 0 (-56.6 -19.1) | careful t   2.11 v  7.99 scr   23 hit 0 (-56.2 -19.5) | gap +0.58 s (+0.02)
+  s   8.0 m  careless t   1.63 v  9.79 scr    2 hit 0 (-55.6 -18.9) | careful t   2.22 v  8.69 scr   23 hit 0 (-55.3 -19.3) | gap +0.59 s (+0.01)
+  s   9.0 m  careless t   1.73 v 10.15 scr    2 hit 0 (-54.7 -18.8) | careful t   2.34 v  9.36 scr   23 hit 0 (-54.3 -19.1) | gap +0.60 s (+0.01)
+  s  10.0 m  careless t   1.83 v 10.15 scr    2 hit 0 (-53.6 -18.7) | careful t   2.44 v  9.99 scr   23 hit 0 (-53.3 -18.9) | gap +0.61 s (+0.00)
+  s  11.0 m  careless t   1.93 v 10.15 scr    2 hit 0 (-52.7 -18.5) | careful t   2.54 v 10.15 scr   23 hit 0 (-52.3 -18.7) | gap +0.61 s (+0.00)
+  s  12.0 m  careless t   2.03 v 10.14 scr   20 hit 0 (-51.7 -18.5) | careful t   2.64 v 10.15 scr   23 hit 0 (-51.3 -18.5) | gap +0.61 s (-0.00)
+  s  13.0 m  careless t   2.13 v 10.15 scr   40 hit 0 (-50.7 -18.5) | careful t   3.11 v  2.53 scr   29 hit 0 (-50.3 -18.4) | gap +0.98 s (+0.37)
+  s  14.0 m  careless t   2.23 v 10.15 scr   40 hit 0 (-49.7 -18.3) | careful t   3.40 v  4.30 scr   29 hit 0 (-49.4 -18.2) | gap +1.17 s (+0.20)
+  s  15.0 m  careless t   2.33 v 10.15 scr   40 hit 0 (-48.7 -18.1) | careful t   3.61 v  5.53 scr   29 hit 0 (-48.4 -18.1) | gap +1.28 s (+0.11)
+  s  16.0 m  careless t   2.42 v 10.15 scr   40 hit 0 (-47.7 -17.9) | careful t   3.78 v  6.28 scr   29 hit 0 (-47.4 -17.8) | gap +1.35 s (+0.07)
+  s  17.0 m  careless t   2.53 v 10.15 scr   40 hit 0 (-46.7 -17.6) | careful t   3.93 v  7.18 scr   29 hit 0 (-46.7 -17.1) | gap +1.40 s (+0.05)
+  s  18.0 m  careless t   2.62 v 10.15 scr   40 hit 0 (-45.9 -17.2) | careful t   4.06 v  7.95 scr   29 hit 0 (-46.2 -16.2) | gap +1.44 s (+0.03)
+  s  19.0 m  careless t   2.78 v  5.07 scr   69 hit 0 (-45.5 -16.4) | careful t   4.18 v  8.68 scr   29 hit 0 (-46.0 -15.2) | gap +1.40 s (-0.04)
+  s  20.0 m  careless t   3.01 v  5.12 scr  123 hit 0 (-45.5 -15.4) | careful t   4.29 v  8.49 scr   29 hit 0 (-45.8 -14.3) | gap +1.28 s (-0.11)
+  s  21.0 m  careless t   3.19 v  6.18 scr  166 hit 0 (-45.5 -14.4) | careful t   4.43 v  6.89 scr   29 hit 0 (-45.7 -13.3) | gap +1.24 s (-0.05)
+  s  22.0 m  careless t   3.34 v  7.07 scr  202 hit 0 (-45.5 -13.4) | careful t   4.59 v  4.89 scr   29 hit 0 (-45.5 -12.3) | gap +1.25 s (+0.02)
+  s  23.0 m  careless t   3.47 v  7.86 scr  234 hit 0 (-45.5 -12.4) | careful t   4.87 v  3.63 scr   38 hit 0 (-45.2 -11.4) | gap +1.40 s (+0.14)
+  s  24.0 m  careless t   3.59 v  8.57 scr  247 hit 0 (-45.4 -11.4) | careful t   5.10 v  5.01 scr   38 hit 0 (-44.3 -11.1) | gap +1.50 s (+0.11)
+  s  25.0 m  careless t   3.70 v  9.25 scr  247 hit 0 (-45.1 -10.5) | careful t   5.28 v  6.08 scr   38 hit 0 (-43.3 -11.1) | gap +1.57 s (+0.07)
+  s  26.0 m  careless t   3.81 v  9.87 scr  247 hit 0 (-44.6 -9.6) | careful t   5.43 v  7.01 scr   38 hit 0 (-42.2 -11.1) | gap +1.62 s (+0.05)
+  s  27.0 m  careless t   3.99 v  5.13 scr  287 hit 0 (-43.6 -9.5) | careful t   5.56 v  7.81 scr   38 hit 0 (-41.3 -11.1) | gap +1.57 s (-0.05)
+  s  28.0 m  careless t   4.18 v  5.82 scr  327 hit 0 (-42.6 -9.5) | careful t   5.69 v  8.56 scr   38 hit 0 (-40.2 -11.1) | gap +1.50 s (-0.07)
+  s  29.0 m  careless t   4.34 v  6.77 scr  327 hit 0 (-41.6 -9.5) | careful t   5.80 v  9.23 scr   38 hit 0 (-39.2 -11.1) | gap +1.46 s (-0.05)
+  s  30.0 m  careless t   4.48 v  7.62 scr  327 hit 0 (-40.6 -9.6) | careful t   5.90 v  9.86 scr   38 hit 0 (-38.2 -11.1) | gap +1.42 s (-0.04)
+  s  31.0 m  careless t   4.61 v  8.37 scr  327 hit 0 (-39.6 -9.6) | careful t   6.00 v 10.15 scr   38 hit 0 (-37.2 -11.1) | gap +1.40 s (-0.03)
+  s  32.0 m  careless t   4.72 v  9.04 scr  327 hit 0 (-38.6 -9.7) | careful t   6.10 v 10.15 scr   38 hit 0 (-36.3 -11.1) | gap +1.38 s (-0.02)
+  s  33.0 m  careless t   4.83 v  9.69 scr  327 hit 0 (-37.6 -9.7) | careful t   6.20 v 10.15 scr   38 hit 0 (-35.2 -11.1) | gap +1.37 s (-0.01)
+  s  34.0 m  careless t   4.93 v 10.15 scr  327 hit 0 (-36.6 -9.7) | careful t   6.30 v 10.15 scr   38 hit 0 (-34.2 -11.1) | gap +1.37 s (+0.00)
+  s  35.0 m  careless t   5.03 v 10.15 scr  327 hit 0 (-35.6 -9.8) | careful t   6.40 v 10.15 scr   38 hit 0 (-33.3 -11.2) | gap +1.37 s (-0.00)
+  s  36.0 m  careless t   5.12 v 10.15 scr  327 hit 0 (-34.7 -9.8) | careful t   6.50 v 10.15 scr   38 hit 0 (-32.2 -11.2) | gap +1.37 s (+0.00)
+  s  37.0 m  careless t   5.22 v 10.15 scr  327 hit 0 (-33.6 -9.9) | careful t   6.60 v 10.15 scr   38 hit 0 (-31.2 -11.2) | gap +1.37 s (+0.00)
+  s  38.0 m  careless t   5.32 v 10.15 scr  327 hit 0 (-32.7 -9.9) | careful t   6.69 v 10.15 scr   38 hit 0 (-30.3 -11.2) | gap +1.37 s (+0.00)
+  s  39.0 m  careless t   5.42 v 10.15 scr  327 hit 0 (-31.7 -10.0) | careful t   6.79 v 10.15 scr   38 hit 0 (-29.2 -11.2) | gap +1.37 s (+0.00)
+  s  40.0 m  careless t   5.52 v 10.15 scr  327 hit 0 (-30.6 -10.0) | careful t   6.89 v 10.15 scr   38 hit 0 (-28.3 -11.2) | gap +1.37 s (-0.00)
+  s  41.0 m  careless t   5.62 v 10.15 scr  327 hit 0 (-29.7 -10.1) | careful t   6.99 v 10.15 scr   38 hit 0 (-27.2 -11.3) | gap +1.37 s (+0.00)
+  s  42.0 m  careless t   5.72 v 10.15 scr  327 hit 0 (-28.7 -10.1) | careful t   7.09 v 10.15 scr   38 hit 0 (-26.2 -11.3) | gap +1.37 s (+0.00)
+  s  43.0 m  careless t   5.82 v 10.15 scr  327 hit 0 (-27.6 -10.1) | careful t   7.18 v 10.15 scr   38 hit 0 (-25.3 -11.3) | gap +1.37 s (-0.00)
+  s  44.0 m  careless t   5.91 v 10.15 scr  327 hit 0 (-26.7 -10.2) | careful t   7.28 v 10.15 scr   38 hit 0 (-24.2 -11.3) | gap +1.37 s (+0.00)
+  s  45.0 m  careless t   6.01 v 10.15 scr  327 hit 0 (-25.7 -10.2) | careful t   7.38 v 10.15 scr   38 hit 0 (-23.2 -11.3) | gap +1.37 s (+0.00)
+  s  46.0 m  careless t   6.11 v 10.15 scr  327 hit 0 (-24.6 -10.3) | careful t   7.48 v 10.15 scr   38 hit 0 (-22.3 -11.3) | gap +1.37 s (-0.00)
+  s  47.0 m  careless t   6.21 v 10.15 scr  327 hit 0 (-23.7 -10.3) | careful t   7.58 v 10.15 scr   38 hit 0 (-21.2 -11.3) | gap +1.37 s (+0.00)
+  s  48.0 m  careless t   6.31 v 10.15 scr  327 hit 0 (-22.7 -10.4) | careful t   7.68 v 10.15 scr   38 hit 0 (-20.2 -11.4) | gap +1.37 s (+0.00)
+  s  49.0 m  careless t   6.41 v 10.15 scr  327 hit 0 (-21.6 -10.4) | careful t   7.78 v 10.15 scr   38 hit 0 (-19.3 -11.4) | gap +1.37 s (-0.00)
+  s  50.0 m  careless t   6.50 v 10.15 scr  327 hit 0 (-20.7 -10.5) | careful t   7.88 v 10.15 scr   38 hit 0 (-18.2 -11.4) | gap +1.37 s (+0.00)
+  s  51.0 m  careless t   6.60 v 10.15 scr  327 hit 0 (-19.7 -10.6) | careful t   7.97 v 10.15 scr   38 hit 0 (-17.2 -11.4) | gap +1.37 s (+0.00)
+  s  52.0 m  careless t   6.70 v 10.15 scr  327 hit 0 (-18.6 -10.6) | careful t   8.07 v 10.15 scr   38 hit 0 (-16.3 -11.4) | gap +1.37 s (-0.00)
+  s  53.0 m  careless t   6.80 v 10.15 scr  327 hit 0 (-17.7 -10.7) | careful t   8.17 v 10.15 scr   38 hit 0 (-15.2 -11.4) | gap +1.37 s (+0.00)
+  s  54.0 m  careless t   6.90 v 10.15 scr  327 hit 0 (-16.7 -10.7) | careful t   8.27 v 10.15 scr   38 hit 0 (-14.3 -11.4) | gap +1.37 s (-0.00)
+  s  55.0 m  careless t   7.00 v 10.15 scr  327 hit 0 (-15.7 -10.8) | careful t   8.37 v 10.15 scr   38 hit 0 (-13.3 -11.4) | gap +1.37 s (+0.00)
+  s  56.0 m  careless t   7.10 v 10.15 scr  327 hit 0 (-14.7 -10.9) | careful t   8.47 v 10.15 scr   38 hit 0 (-12.2 -11.4) | gap +1.37 s (-0.00)
+  s  57.0 m  careless t   7.20 v 10.15 scr  327 hit 0 (-13.7 -10.9) | careful t   8.56 v 10.15 scr   38 hit 0 (-11.3 -11.4) | gap +1.37 s (-0.00)
+  s  58.0 m  careless t   7.29 v 10.15 scr  327 hit 0 (-12.7 -11.0) | careful t   8.66 v 10.15 scr   38 hit 0 (-10.2 -11.4) | gap +1.37 s (+0.00)
+  s  59.0 m  careless t   7.39 v 10.15 scr  327 hit 0 (-11.7 -11.0) | careful t   8.76 v 10.15 scr   38 hit 0 (-9.2 -11.4) | gap +1.37 s (-0.00)
+  s  60.0 m  careless t   7.49 v 10.15 scr  327 hit 0 (-10.7 -11.1) | careful t   8.86 v 10.15 scr   38 hit 0 (-8.3 -11.4) | gap +1.37 s (-0.00)
+  s  61.0 m  careless t   7.59 v 10.15 scr  327 hit 0 (-9.7 -11.1) | careful t   8.96 v 10.15 scr   38 hit 0 (-7.2 -11.4) | gap +1.37 s (+0.00)
+  s  62.0 m  careless t   7.69 v 10.15 scr  327 hit 0 (-8.7 -11.2) | careful t   9.06 v 10.15 scr   38 hit 0 (-6.2 -11.4) | gap +1.37 s (+0.00)
+  s  63.0 m  careless t   7.79 v 10.15 scr  327 hit 0 (-7.7 -11.2) | careful t   9.15 v 10.15 scr   38 hit 0 (-5.3 -11.4) | gap +1.37 s (-0.00)
+  s  64.0 m  careless t   7.88 v 10.15 scr  327 hit 0 (-6.7 -11.2) | careful t   9.25 v 10.15 scr   38 hit 0 (-4.2 -11.4) | gap +1.37 s (+0.00)
+  s  65.0 m  careless t   7.98 v 10.15 scr  327 hit 0 (-5.7 -11.3) | careful t   9.35 v 10.15 scr   38 hit 0 (-3.2 -11.4) | gap +1.37 s (+0.00)
+  s  66.0 m  careless t   8.08 v 10.15 scr  327 hit 0 (-4.7 -11.3) | careful t   9.45 v 10.15 scr   38 hit 0 (-2.3 -11.5) | gap +1.37 s (-0.00)
+  s  67.0 m  careless t   8.18 v 10.15 scr  327 hit 0 (-3.7 -11.4) | careful t   9.55 v 10.08 scr   38 hit 0 (-1.2 -11.5) | gap +1.37 s (+0.00)
+  s  68.0 m  careless t   8.28 v 10.15 scr  327 hit 0 (-2.7 -11.4) | careful t   9.65 v  8.83 scr   38 hit 0 (-0.3 -11.5) | gap +1.38 s (+0.00)
+  s  69.0 m  careless t   8.38 v 10.15 scr  327 hit 0 (-1.7 -11.5) | careful t   9.77 v  8.93 scr   39 hit 0 (0.7 -11.6) | gap +1.40 s (+0.02)
+  s  70.0 m  careless t   8.48 v 10.15 scr  327 hit 0 (-0.7 -11.5) | careful t   9.88 v  9.58 scr   39 hit 0 (1.7 -11.9) | gap +1.40 s (+0.01)
+  s  71.0 m  careless t   8.57 v 10.15 scr  327 hit 0 (0.3 -11.6) | careful t   9.98 v 10.15 scr   39 hit 0 (2.6 -12.3) | gap +1.40 s (+0.00)
+  s  72.0 m  careless t   8.67 v 10.15 scr  327 hit 0 (1.3 -11.7) | careful t  10.08 v 10.15 scr   39 hit 0 (3.5 -12.8) | gap +1.41 s (+0.00)
+  s  73.0 m  careless t   8.77 v 10.15 scr  327 hit 0 (2.3 -12.0) | careful t  10.18 v 10.15 scr   39 hit 0 (4.4 -13.3) | gap +1.41 s (+0.00)
+  s  74.0 m  careless t   8.87 v 10.15 scr  327 hit 0 (3.2 -12.4) | careful t  10.27 v 10.15 scr   39 hit 0 (5.3 -13.7) | gap +1.40 s (-0.00)
+  s  75.0 m  careless t   8.97 v 10.15 scr  327 hit 0 (4.0 -12.9) | careful t  10.38 v 10.15 scr   39 hit 0 (6.2 -14.2) | gap +1.41 s (+0.00)
+  s  76.0 m  careless t   9.07 v 10.15 scr  327 hit 0 (4.9 -13.4) | careful t  10.47 v 10.15 scr   39 hit 0 (7.0 -14.7) | gap +1.40 s (-0.00)
+  s  77.0 m  careless t   9.17 v 10.15 scr  327 hit 0 (5.8 -13.9) | careful t  10.57 v 10.15 scr   39 hit 0 (7.9 -15.1) | gap +1.40 s (-0.00)
+  s  78.0 m  careless t   9.26 v 10.15 scr  327 hit 0 (6.7 -14.3) | careful t  10.67 v 10.15 scr   39 hit 0 (8.8 -15.6) | gap +1.41 s (+0.00)
+  s  79.0 m  careless t   9.36 v 10.15 scr  327 hit 0 (7.5 -14.8) | careful t  10.77 v 10.15 scr   39 hit 0 (9.7 -16.1) | gap +1.40 s (-0.00)
+ROUTE seed 5: 71.4 m, 11 path points; careless 11.01 s, careful 12.04 s
+  PT 0 (-55.50 -106.50)
+  PT 1 (-55.34 -104.84)
+  PT 2 (-55.04 -104.54)
+  PT 3 (-41.84 -103.34)
+  PT 4 (-37.99 -102.49)
+  PT 5 (-37.74 -102.29)
+  PT 6 (-37.29 -101.74)
+  PT 7 (-37.04 -101.54)
+  PT 8 (-2.84 -101.54)
+  PT 9 (-0.19 -102.49)
+  PT 10 (13.50 -103.50)
+  s   0.0 m  careless t   0.00 v  0.03 scr    0 hit 0 (-55.5 -106.5) | careful t   0.00 v  0.03 scr    0 hit 0 (-55.5 -106.5) | gap +0.00 s (+0.00)
+  s   1.0 m  careless t   0.58 v  3.48 scr    0 hit 0 (-55.4 -105.5) | careful t   0.58 v  3.48 scr    0 hit 0 (-55.4 -105.5) | gap +0.00 s (+0.00)
+  s   2.0 m  careless t   0.82 v  4.89 scr    2 hit 0 (-55.2 -104.5) | careful t   1.10 v  2.02 scr   12 hit 0 (-55.1 -104.6) | gap +0.28 s (+0.28)
+  s   3.0 m  careless t   1.00 v  5.99 scr    2 hit 0 (-54.6 -103.8) | careful t   1.70 v  3.32 scr   26 hit 0 (-54.1 -104.4) | gap +0.70 s (+0.42)
+  s   4.0 m  careless t   1.15 v  6.91 scr    2 hit 0 (-53.6 -103.5) | careful t   1.94 v  4.79 scr   26 hit 0 (-53.1 -104.3) | gap +0.79 s (+0.09)
+  s   5.0 m  careless t   1.29 v  7.74 scr    2 hit 0 (-52.6 -103.4) | careful t   2.13 v  5.92 scr   26 hit 0 (-52.1 -104.2) | gap +0.84 s (+0.05)
+  s   6.0 m  careless t   1.42 v  8.49 scr    2 hit 0 (-51.6 -103.4) | careful t   2.28 v  6.84 scr   26 hit 0 (-51.2 -104.1) | gap +0.87 s (+0.03)
+  s   7.0 m  careless t   1.53 v  9.16 scr    2 hit 0 (-50.6 -103.4) | careful t   2.42 v  7.67 scr   26 hit 0 (-50.2 -104.0) | gap +0.89 s (+0.02)
+  s   8.0 m  careless t   1.63 v  9.79 scr    2 hit 0 (-49.6 -103.4) | careful t   2.55 v  8.42 scr   26 hit 0 (-49.2 -103.9) | gap +0.91 s (+0.02)
+  s   9.0 m  careless t   1.73 v 10.15 scr    2 hit 0 (-48.6 -103.4) | careful t   2.66 v  9.12 scr   26 hit 0 (-48.1 -103.8) | gap +0.93 s (+0.02)
+  s  10.0 m  careless t   1.83 v 10.15 scr    2 hit 0 (-47.6 -103.4) | careful t   2.77 v  9.74 scr   26 hit 0 (-47.2 -103.8) | gap +0.93 s (+0.00)
+  s  11.0 m  careless t   1.93 v 10.15 scr    2 hit 0 (-46.6 -103.3) | careful t   2.87 v 10.15 scr   26 hit 0 (-46.2 -103.7) | gap +0.94 s (+0.00)
+  s  12.0 m  careless t   2.03 v 10.15 scr    2 hit 0 (-45.6 -103.3) | careful t   2.97 v 10.15 scr   26 hit 0 (-45.1 -103.6) | gap +0.94 s (+0.00)
+  s  13.0 m  careless t   2.13 v 10.15 scr    2 hit 0 (-44.6 -103.3) | careful t   3.06 v 10.15 scr   26 hit 0 (-44.2 -103.5) | gap +0.93 s (-0.00)
+  s  14.0 m  careless t   2.22 v 10.15 scr    2 hit 0 (-43.6 -103.3) | careful t   3.16 v 10.15 scr   26 hit 0 (-43.2 -103.4) | gap +0.94 s (+0.00)
+  s  15.0 m  careless t   2.33 v 10.15 scr    2 hit 0 (-42.6 -103.3) | careful t   3.26 v 10.15 scr   26 hit 0 (-42.1 -103.4) | gap +0.94 s (+0.00)
+  s  16.0 m  careless t   2.42 v 10.15 scr    4 hit 0 (-41.6 -103.3) | careful t   3.36 v 10.15 scr   26 hit 0 (-41.2 -103.3) | gap +0.93 s (-0.00)
+  s  17.0 m  careless t   2.52 v 10.15 scr    4 hit 0 (-40.6 -103.3) | careful t   3.46 v 10.15 scr   26 hit 0 (-40.2 -103.1) | gap +0.94 s (+0.00)
+  s  18.0 m  careless t   2.62 v 10.15 scr    4 hit 0 (-39.6 -103.1) | careful t   3.55 v 10.15 scr   26 hit 0 (-39.2 -102.8) | gap +0.93 s (-0.00)
+  s  19.0 m  careless t   2.72 v 10.15 scr    4 hit 0 (-38.7 -102.8) | careful t   3.65 v 10.11 scr   26 hit 0 (-38.3 -102.6) | gap +0.93 s (+0.00)
+  s  20.0 m  careless t   2.82 v 10.15 scr    4 hit 0 (-37.8 -102.4) | careful t   3.76 v  8.86 scr   26 hit 0 (-37.3 -102.3) | gap +0.94 s (+0.01)
+  s  21.0 m  careless t   3.83 v  2.30 scr   91 hit 1 (-37.2 -101.7) | careful t   5.29 v  2.08 scr  177 hit 1 (-36.9 -101.5) | gap +1.47 s (+0.52)
+  s  22.0 m  careless t   4.14 v  4.18 scr   91 hit 1 (-36.3 -101.4) | careful t   5.62 v  4.03 scr  177 hit 1 (-35.9 -101.5) | gap +1.48 s (+0.01)
+  s  23.0 m  careless t   4.35 v  5.43 scr   91 hit 1 (-35.3 -101.4) | careful t   5.83 v  5.33 scr  177 hit 1 (-34.9 -101.5) | gap +1.49 s (+0.01)
+  s  24.0 m  careless t   4.51 v  6.43 scr   91 hit 1 (-34.3 -101.4) | careful t   6.00 v  6.35 scr  177 hit 1 (-33.9 -101.5) | gap +1.49 s (+0.00)
+  s  25.0 m  careless t   4.66 v  7.30 scr   91 hit 1 (-33.3 -101.4) | careful t   6.15 v  7.23 scr  177 hit 1 (-32.9 -101.5) | gap +1.49 s (+0.00)
+  s  26.0 m  careless t   4.79 v  8.08 scr   91 hit 1 (-32.3 -101.4) | careful t   6.28 v  8.03 scr  177 hit 1 (-31.9 -101.5) | gap +1.50 s (+0.00)
+  s  27.0 m  careless t   4.91 v  8.80 scr   91 hit 1 (-31.3 -101.5) | careful t   6.40 v  8.73 scr  177 hit 1 (-30.9 -101.5) | gap +1.49 s (-0.00)
+  s  28.0 m  careless t   5.02 v  9.45 scr   91 hit 1 (-30.3 -101.5) | careful t   6.51 v  9.40 scr  177 hit 1 (-29.9 -101.5) | gap +1.50 s (+0.00)
+  s  29.0 m  careless t   5.12 v 10.08 scr   91 hit 1 (-29.3 -101.5) | careful t   6.61 v 10.00 scr  177 hit 1 (-28.9 -101.5) | gap +1.49 s (-0.00)
+  s  30.0 m  careless t   5.22 v 10.15 scr   91 hit 1 (-28.3 -101.5) | careful t   6.71 v 10.15 scr  177 hit 1 (-27.9 -101.5) | gap +1.50 s (+0.00)
+  s  31.0 m  careless t   5.32 v 10.15 scr   91 hit 1 (-27.3 -101.4) | careful t   6.81 v 10.15 scr  177 hit 1 (-26.9 -101.5) | gap +1.50 s (+0.00)
+  s  32.0 m  careless t   5.42 v 10.15 scr   91 hit 1 (-26.3 -101.4) | careful t   6.91 v 10.15 scr  177 hit 1 (-25.9 -101.5) | gap +1.49 s (-0.00)
+  s  33.0 m  careless t   5.51 v 10.15 scr   91 hit 1 (-25.3 -101.4) | careful t   7.01 v 10.15 scr  177 hit 1 (-24.9 -101.5) | gap +1.50 s (+0.00)
+  s  34.0 m  careless t   5.61 v 10.15 scr   91 hit 1 (-24.3 -101.4) | careful t   7.11 v 10.15 scr  177 hit 1 (-23.9 -101.5) | gap +1.50 s (-0.00)
+  s  35.0 m  careless t   5.71 v 10.15 scr   91 hit 1 (-23.3 -101.4) | careful t   7.20 v 10.15 scr  177 hit 1 (-22.9 -101.5) | gap +1.50 s (+0.00)
+  s  36.0 m  careless t   5.81 v 10.15 scr   91 hit 1 (-22.3 -101.4) | careful t   7.30 v 10.15 scr  188 hit 1 (-21.9 -101.5) | gap +1.50 s (+0.00)
+  s  37.0 m  careless t   5.91 v 10.15 scr   91 hit 1 (-21.3 -101.4) | careful t   7.40 v 10.15 scr  212 hit 1 (-20.9 -101.5) | gap +1.50 s (+0.00)
+  s  38.0 m  careless t   6.00 v 10.15 scr   91 hit 1 (-20.3 -101.4) | careful t   7.50 v 10.15 scr  213 hit 1 (-19.9 -101.5) | gap +1.50 s (+0.00)
+  s  39.0 m  careless t   6.10 v 10.15 scr   91 hit 1 (-19.3 -101.4) | careful t   7.60 v 10.15 scr  213 hit 1 (-18.9 -101.6) | gap +1.50 s (+0.00)
+  s  40.0 m  careless t   6.20 v 10.15 scr   91 hit 1 (-18.3 -101.4) | careful t   7.70 v 10.15 scr  218 hit 1 (-17.9 -101.5) | gap +1.50 s (-0.00)
+  s  41.0 m  careless t   6.30 v 10.15 scr   91 hit 1 (-17.3 -101.4) | careful t   7.80 v 10.15 scr  218 hit 1 (-16.9 -101.5) | gap +1.50 s (+0.00)
+  s  42.0 m  careless t   6.40 v 10.15 scr   91 hit 1 (-16.3 -101.4) | careful t   7.90 v 10.15 scr  218 hit 1 (-15.9 -101.5) | gap +1.50 s (+0.00)
+  s  43.0 m  careless t   6.50 v 10.15 scr   91 hit 1 (-15.3 -101.4) | careful t   8.00 v 10.15 scr  218 hit 1 (-14.9 -101.5) | gap +1.50 s (+0.00)
+  s  44.0 m  careless t   6.60 v 10.15 scr   91 hit 1 (-14.3 -101.4) | careful t   8.09 v 10.15 scr  218 hit 1 (-13.9 -101.5) | gap +1.50 s (-0.00)
+  s  45.0 m  careless t   6.70 v 10.15 scr   91 hit 1 (-13.3 -101.4) | careful t   8.19 v 10.15 scr  218 hit 1 (-12.9 -101.5) | gap +1.50 s (+0.00)
+  s  46.0 m  careless t   6.80 v 10.15 scr   91 hit 1 (-12.3 -101.4) | careful t   8.29 v 10.15 scr  218 hit 1 (-11.9 -101.5) | gap +1.49 s (-0.00)
+  s  47.0 m  careless t   6.89 v 10.15 scr   91 hit 1 (-11.3 -101.5) | careful t   8.39 v 10.15 scr  218 hit 1 (-10.9 -101.5) | gap +1.50 s (+0.00)
+  s  48.0 m  careless t   6.99 v 10.15 scr   91 hit 1 (-10.3 -101.5) | careful t   8.49 v 10.15 scr  218 hit 1 (-9.9 -101.5) | gap +1.50 s (+0.00)
+  s  49.0 m  careless t   7.09 v 10.15 scr   91 hit 1 (-9.3 -101.5) | careful t   8.58 v 10.15 scr  218 hit 1 (-8.9 -101.5) | gap +1.50 s (-0.00)
+  s  50.0 m  careless t   7.19 v 10.15 scr  102 hit 1 (-8.3 -101.5) | careful t   8.68 v 10.15 scr  218 hit 1 (-7.9 -101.5) | gap +1.50 s (+0.00)
+  s  51.0 m  careless t   7.29 v 10.15 scr  109 hit 1 (-7.3 -101.6) | careful t   8.78 v 10.15 scr  218 hit 1 (-6.9 -101.5) | gap +1.50 s (+0.00)
+  s  52.0 m  careless t   7.82 v  2.95 scr  125 hit 1 (-6.3 -101.5) | careful t   8.88 v 10.15 scr  218 hit 1 (-5.9 -101.5) | gap +1.06 s (-0.44)
+  s  53.0 m  careless t   8.09 v  4.55 scr  125 hit 1 (-5.3 -101.5) | careful t   8.98 v 10.15 scr  218 hit 1 (-4.9 -101.5) | gap +0.89 s (-0.17)
+  s  54.0 m  careless t   8.28 v  5.72 scr  125 hit 1 (-4.3 -101.5) | careful t   9.08 v 10.15 scr  218 hit 1 (-3.9 -101.5) | gap +0.80 s (-0.10)
+  s  55.0 m  careless t   8.45 v  6.70 scr  125 hit 1 (-3.3 -101.5) | careful t   9.18 v 10.00 scr  218 hit 1 (-2.9 -101.5) | gap +0.73 s (-0.07)
+  s  56.0 m  careless t   8.58 v  7.52 scr  126 hit 1 (-2.3 -101.6) | careful t   9.28 v  8.70 scr  218 hit 1 (-1.9 -101.6) | gap +0.70 s (-0.03)
+  s  57.0 m  careless t   8.71 v  8.30 scr  126 hit 1 (-1.4 -101.9) | careful t   9.41 v  7.47 scr  218 hit 1 (-1.0 -101.9) | gap +0.70 s (-0.00)
+  s  58.0 m  careless t   8.82 v  8.97 scr  126 hit 1 (-0.5 -102.3) | careful t   9.85 v  1.79 scr  260 hit 1 (-0.2 -102.5) | gap +1.03 s (+0.33)
+  s  59.0 m  careless t   9.35 v  2.89 scr  140 hit 1 (0.5 -102.5) | careful t  10.44 v  3.44 scr  264 hit 1 (0.8 -102.6) | gap +1.09 s (+0.06)
+  s  60.0 m  careless t   9.62 v  4.52 scr  140 hit 1 (1.5 -102.6) | careful t  10.68 v  4.89 scr  264 hit 1 (1.8 -102.7) | gap +1.06 s (-0.03)
+  s  61.0 m  careless t   9.82 v  5.69 scr  140 hit 1 (2.5 -102.7) | careful t  10.86 v  5.99 scr  264 hit 1 (2.8 -102.7) | gap +1.05 s (-0.01)
+  s  62.0 m  careless t   9.98 v  6.67 scr  140 hit 1 (3.5 -102.8) | careful t  11.02 v  6.92 scr  264 hit 1 (3.8 -102.8) | gap +1.04 s (-0.01)
+  s  63.0 m  careless t  10.12 v  7.49 scr  140 hit 1 (4.5 -102.9) | careful t  11.15 v  7.74 scr  264 hit 1 (4.8 -102.9) | gap +1.04 s (+0.00)
+  s  64.0 m  careless t  10.25 v  8.27 scr  140 hit 1 (5.5 -102.9) | careful t  11.27 v  8.47 scr  264 hit 1 (5.8 -103.0) | gap +1.03 s (-0.01)
+  s  65.0 m  careless t  10.36 v  8.97 scr  140 hit 1 (6.5 -103.0) | careful t  11.39 v  9.17 scr  264 hit 1 (6.8 -103.1) | gap +1.03 s (+0.00)
+  s  66.0 m  careless t  10.47 v  9.62 scr  140 hit 1 (7.5 -103.1) | careful t  11.50 v  9.79 scr  264 hit 1 (7.8 -103.1) | gap +1.02 s (-0.00)
+  s  67.0 m  careless t  10.57 v 10.15 scr  140 hit 1 (8.5 -103.2) | careful t  11.60 v 10.15 scr  264 hit 1 (8.8 -103.2) | gap +1.03 s (+0.00)
+  s  68.0 m  careless t  10.67 v 10.15 scr  140 hit 1 (9.4 -103.2) | careful t  11.69 v 10.15 scr  264 hit 1 (9.8 -103.3) | gap +1.02 s (-0.00)
+  s  69.0 m  careless t  10.77 v 10.15 scr  140 hit 1 (10.5 -103.3) | careful t  11.79 v 10.15 scr  264 hit 1 (10.8 -103.3) | gap +1.03 s (+0.00)
+  s  70.0 m  careless t  10.87 v 10.15 scr  140 hit 1 (11.5 -103.4) | careful t  11.89 v 10.15 scr  264 hit 1 (11.8 -103.4) | gap +1.02 s (-0.00)
+  s  71.0 m  careless t  10.96 v 10.15 scr  140 hit 1 (12.4 -103.4) | careful t  11.99 v 10.15 scr  264 hit 1 (12.8 -103.5) | gap +1.03 s (+0.00)
+ROUTE seed 8: 77.1 m, 20 path points; careless 27.95 s, careful 13.63 s
+  PT 0 (-94.50 -31.50)
+  PT 1 (-82.99 -30.49)
+  PT 2 (-82.74 -30.29)
+  PT 3 (-82.29 -29.74)
+  PT 4 (-82.04 -29.54)
+  PT 5 (-75.19 -25.69)
+  PT 6 (-68.84 -24.49)
+  PT 7 (-68.59 -24.29)
+  PT 8 (-66.49 -14.84)
+  PT 9 (-65.59 -12.29)
+  PT 10 (-63.49 -2.84)
+  PT 11 (-60.29 0.41)
+  PT 12 (-57.19 3.46)
+  PT 13 (-47.84 5.51)
+  PT 14 (-47.59 5.71)
+  PT 15 (-45.49 10.01)
+  PT 16 (-45.19 10.31)
+  PT 17 (-44.84 10.31)
+  PT 18 (-44.54 10.01)
+  PT 19 (-43.50 7.50)
+  s   0.0 m  careless t   0.00 v  0.03 scr    0 hit 0 (-94.5 -31.5) | careful t   0.00 v  0.03 scr    0 hit 0 (-94.5 -31.5) | gap +0.00 s (+0.00)
+  s   1.0 m  careless t   0.58 v  3.48 scr    0 hit 0 (-93.6 -31.2) | careful t   0.58 v  3.48 scr    0 hit 0 (-93.6 -31.2) | gap +0.00 s (+0.00)
+  s   2.0 m  careless t   0.82 v  4.90 scr    0 hit 0 (-92.6 -31.2) | careful t   0.82 v  4.90 scr    0 hit 0 (-92.6 -31.2) | gap +0.00 s (+0.00)
+  s   3.0 m  careless t   1.00 v  6.00 scr    0 hit 0 (-91.6 -31.1) | careful t   1.00 v  6.00 scr    0 hit 0 (-91.6 -31.1) | gap +0.00 s (+0.00)
+  s   4.0 m  careless t   1.15 v  6.93 scr    0 hit 0 (-90.6 -31.0) | careful t   1.15 v  6.93 scr    0 hit 0 (-90.6 -31.0) | gap +0.00 s (+0.00)
+  s   5.0 m  careless t   1.29 v  7.75 scr    0 hit 0 (-89.6 -31.0) | careful t   1.29 v  7.75 scr    0 hit 0 (-89.6 -31.0) | gap +0.00 s (+0.00)
+  s   6.0 m  careless t   1.41 v  8.48 scr    0 hit 0 (-88.6 -30.9) | careful t   1.41 v  8.48 scr    0 hit 0 (-88.6 -30.9) | gap +0.00 s (+0.00)
+  s   7.0 m  careless t   1.53 v  9.18 scr    0 hit 0 (-87.6 -30.8) | careful t   1.53 v  9.18 scr    0 hit 0 (-87.6 -30.8) | gap +0.00 s (+0.00)
+  s   8.0 m  careless t   1.63 v  9.80 scr    0 hit 0 (-86.6 -30.8) | careful t   1.63 v  9.80 scr    0 hit 0 (-86.6 -30.8) | gap +0.00 s (+0.00)
+  s   9.0 m  careless t   1.73 v 10.15 scr    0 hit 0 (-85.6 -30.7) | careful t   1.73 v 10.15 scr    0 hit 0 (-85.6 -30.7) | gap +0.00 s (+0.00)
+  s  10.0 m  careless t   1.83 v 10.15 scr    0 hit 0 (-84.6 -30.6) | careful t   1.83 v 10.15 scr    0 hit 0 (-84.6 -30.6) | gap +0.00 s (+0.00)
+  s  11.0 m  careless t   1.93 v 10.15 scr    0 hit 0 (-83.6 -30.5) | careful t   1.93 v  9.14 scr    0 hit 0 (-83.6 -30.5) | gap +0.00 s (+0.00)
+  s  12.0 m  careless t   2.03 v 10.15 scr    0 hit 0 (-82.6 -30.4) | careful t   2.38 v  2.18 scr   20 hit 0 (-82.7 -30.2) | gap +0.35 s (+0.34)
+  s  13.0 m  careless t   2.15 v  8.56 scr   18 hit 0 (-81.6 -30.5) | careful t   2.70 v  4.03 scr   23 hit 0 (-82.0 -29.5) | gap +0.55 s (+0.20)
+  s  14.0 m  careless t   2.29 v  6.75 scr   52 hit 0 (-80.6 -30.5) | careful t   2.91 v  5.33 scr   23 hit 0 (-81.2 -29.0) | gap +0.62 s (+0.07)
+  s  15.0 m  careless t   2.64 v  1.81 scr  137 hit 0 (-79.7 -30.5) | careful t   3.08 v  6.35 scr   23 hit 0 (-80.3 -28.5) | gap +0.44 s (-0.18)
+  s  16.0 m  careless t   4.29 v  0.73 scr  533 hit 0 (-78.7 -30.5) | careful t   3.23 v  7.23 scr   23 hit 0 (-79.4 -28.0) | gap -1.06 s (-1.50)
+  s  17.0 m  careless t   7.28 v  0.54 scr 1250 hit 0 (-77.7 -30.5) | careful t   3.36 v  8.03 scr   23 hit 0 (-78.5 -27.6) | gap -3.92 s (-2.85)
+  s  18.0 m  careless t  12.84 v  0.40 scr 2585 hit 0 (-76.7 -30.5) | careful t   3.48 v  8.73 scr   23 hit 0 (-77.7 -27.1) | gap -9.36 s (-5.45)
+  s  19.0 m  careless t  27.95 v  0.31 scr 6212 hit 0 (-75.7 -30.5) | careful t   3.59 v  9.40 scr   23 hit 0 (-76.8 -26.6) | gap -24.36 s (-15.00)
+ROUTE seed 8: 77.5 m, 21 path points; careless 12.45 s, careful 13.25 s
+  PT 0 (49.50 16.50)
+  PT 1 (41.81 17.51)
+  PT 2 (41.56 17.71)
+  PT 3 (41.51 18.01)
+  PT 4 (41.51 21.16)
+  PT 5 (42.41 23.71)
+  PT 6 (42.46 24.01)
+  PT 7 (42.46 27.16)
+  PT 8 (41.56 29.71)
+  PT 9 (41.51 30.01)
+  PT 10 (41.51 39.16)
+  PT 11 (41.71 39.41)
+  PT 12 (45.16 41.51)
+  PT 13 (45.41 41.71)
+  PT 14 (45.46 42.01)
+  PT 15 (45.46 69.16)
+  PT 16 (45.26 69.41)
+  PT 17 (41.81 71.51)
+  PT 18 (41.56 71.71)
+  PT 19 (41.51 72.01)
+  PT 20 (40.50 82.50)
+  s   0.0 m  careless t   0.00 v  0.03 scr    0 hit 0 (49.5 16.5) | careful t   0.00 v  0.03 scr    0 hit 0 (49.5 16.5) | gap +0.00 s (+0.00)
+  s   1.0 m  careless t   0.58 v  3.48 scr    0 hit 0 (48.6 16.8) | careful t   0.58 v  3.48 scr    0 hit 0 (48.6 16.8) | gap +0.00 s (+0.00)
+  s   2.0 m  careless t   0.82 v  4.90 scr    0 hit 0 (47.6 16.9) | careful t   0.82 v  4.90 scr    0 hit 0 (47.6 16.9) | gap +0.00 s (+0.00)
+  s   3.0 m  careless t   1.00 v  6.00 scr    0 hit 0 (46.6 17.0) | careful t   1.00 v  6.00 scr    0 hit 0 (46.6 17.0) | gap +0.00 s (+0.00)
+  s   4.0 m  careless t   1.15 v  6.93 scr    0 hit 0 (45.6 17.1) | careful t   1.15 v  6.93 scr    0 hit 0 (45.6 17.1) | gap +0.00 s (+0.00)
+  s   5.0 m  careless t   1.29 v  7.75 scr    0 hit 0 (44.6 17.2) | careful t   1.29 v  7.75 scr    0 hit 0 (44.6 17.2) | gap +0.00 s (+0.00)
+  s   6.0 m  careless t   1.41 v  8.48 scr    0 hit 0 (43.6 17.3) | careful t   1.42 v  7.25 scr    0 hit 0 (43.6 17.3) | gap +0.01 s (+0.01)
+  s   7.0 m  careless t   1.53 v  9.18 scr    0 hit 0 (42.6 17.4) | careful t   1.58 v  5.35 scr    0 hit 0 (42.6 17.4) | gap +0.05 s (+0.04)
+  s   8.0 m  careless t   1.63 v  9.80 scr    1 hit 0 (41.6 17.5) | careful t   1.84 v  2.18 scr    4 hit 0 (41.6 17.6) | gap +0.21 s (+0.16)
+  s   9.0 m  careless t   1.73 v 10.15 scr    1 hit 0 (40.6 17.7) | careful t   2.31 v  3.37 scr    4 hit 0 (41.5 18.5) | gap +0.58 s (+0.37)
+  s  10.0 m  careless t   1.83 v 10.15 scr    1 hit 0 (39.7 18.1) | careful t   2.55 v  4.82 scr    4 hit 0 (41.5 19.5) | gap +0.72 s (+0.15)
+  s  11.0 m  careless t   2.88 v  2.86 scr   48 hit 1 (39.7 18.8) | careful t   2.74 v  5.94 scr    4 hit 0 (41.5 20.5) | gap -0.15 s (-0.87)
+  s  12.0 m  careless t   3.16 v  4.51 scr   48 hit 1 (40.3 19.6) | careful t   2.89 v  6.87 scr    6 hit 0 (41.5 21.5) | gap -0.27 s (-0.12)
+  s  13.0 m  careless t   3.35 v  5.68 scr   48 hit 1 (41.0 20.4) | careful t   3.03 v  7.69 scr    6 hit 0 (41.8 22.5) | gap -0.33 s (-0.06)
+  s  14.0 m  careless t   3.52 v  6.66 scr   48 hit 1 (41.6 21.2) | careful t   3.15 v  8.41 scr    6 hit 0 (42.2 23.4) | gap -0.36 s (-0.04)
+  s  15.0 m  careless t   3.66 v  7.51 scr   48 hit 1 (42.0 22.1) | careful t   3.67 v  2.78 scr   40 hit 0 (42.5 24.3) | gap +0.02 s (+0.38)
+  s  16.0 m  careless t   3.78 v  8.26 scr   48 hit 1 (42.3 23.1) | careful t   3.95 v  4.43 scr   40 hit 0 (42.5 25.3) | gap +0.17 s (+0.15)
+  s  17.0 m  careless t   3.90 v  8.96 scr   48 hit 1 (42.5 24.1) | careful t   4.15 v  5.63 scr   40 hit 0 (42.5 26.3) | gap +0.25 s (+0.08)
+  s  18.0 m  careless t   4.01 v  9.61 scr   48 hit 1 (42.6 25.1) | careful t   4.31 v  6.60 scr   42 hit 0 (42.5 27.3) | gap +0.30 s (+0.05)
+  s  19.0 m  careless t   4.11 v 10.15 scr   48 hit 1 (42.5 26.1) | careful t   4.45 v  7.45 scr   42 hit 0 (42.2 28.3) | gap +0.35 s (+0.04)
+  s  20.0 m  careless t   4.21 v 10.15 scr   48 hit 1 (42.5 27.1) | careful t   4.58 v  8.23 scr   42 hit 0 (41.8 29.2) | gap +0.38 s (+0.03)
+  s  21.0 m  careless t   4.30 v 10.15 scr   48 hit 1 (42.3 28.0) | careful t   5.06 v  2.36 scr   79 hit 0 (41.5 30.2) | gap +0.76 s (+0.38)
+  s  22.0 m  careless t   4.40 v 10.15 scr   48 hit 1 (42.0 29.0) | careful t   5.37 v  4.19 scr   79 hit 0 (41.5 31.2) | gap +0.96 s (+0.20)
+  s  23.0 m  careless t   4.50 v  9.86 scr   56 hit 1 (41.5 29.8) | careful t   5.57 v  5.44 scr   79 hit 0 (41.5 32.2) | gap +1.07 s (+0.11)
+  s  24.0 m  careless t   4.60 v 10.15 scr   56 hit 1 (41.0 30.7) | careful t   5.75 v  6.46 scr   79 hit 0 (41.5 33.2) | gap +1.14 s (+0.07)
+  s  25.0 m  careless t   4.70 v 10.15 scr   56 hit 1 (40.6 31.6) | careful t   5.89 v  7.31 scr   79 hit 0 (41.5 34.2) | gap +1.18 s (+0.04)
+  s  26.0 m  careless t   4.80 v 10.15 scr   56 hit 1 (40.3 32.6) | careful t   6.02 v  8.11 scr   79 hit 0 (41.5 35.2) | gap +1.22 s (+0.03)
+  s  27.0 m  careless t   4.90 v 10.15 scr   56 hit 1 (40.2 33.6) | careful t   6.14 v  8.81 scr   79 hit 0 (41.5 36.2) | gap +1.24 s (+0.02)
+  s  28.0 m  careless t   5.00 v 10.15 scr   56 hit 1 (40.3 34.6) | careful t   6.25 v  8.46 scr   79 hit 0 (41.5 37.2) | gap +1.25 s (+0.01)
+  s  29.0 m  careless t   5.10 v 10.15 scr   56 hit 1 (40.5 35.6) | careful t   6.38 v  6.91 scr   79 hit 0 (41.5 38.2) | gap +1.28 s (+0.03)
+  s  30.0 m  careless t   5.20 v 10.15 scr   56 hit 1 (40.7 36.5) | careful t   6.55 v  4.86 scr   83 hit 0 (41.5 39.2) | gap +1.35 s (+0.08)
+  s  31.0 m  careless t   5.30 v 10.15 scr   56 hit 1 (41.0 37.5) | careful t   6.75 v  5.66 scr   83 hit 0 (41.9 40.1) | gap +1.45 s (+0.10)
+  s  32.0 m  careless t   5.39 v 10.15 scr   56 hit 1 (41.3 38.4) | careful t   6.91 v  6.63 scr   83 hit 0 (42.7 40.6) | gap +1.52 s (+0.07)
+  s  33.0 m  careless t   5.49 v 10.15 scr   56 hit 1 (41.6 39.4) | careful t   7.05 v  7.32 scr   83 hit 0 (43.6 41.0) | gap +1.56 s (+0.04)
+  s  34.0 m  careless t   5.59 v 10.15 scr   56 hit 1 (42.0 40.3) | careful t   7.21 v  5.42 scr   83 hit 0 (44.6 41.3) | gap +1.62 s (+0.06)
+  s  35.0 m  careless t   5.69 v 10.15 scr   56 hit 1 (42.5 41.1) | careful t   7.46 v  2.47 scr   84 hit 0 (45.5 41.7) | gap +1.77 s (+0.15)
+  s  36.0 m  careless t   5.82 v  6.50 scr   78 hit 1 (43.3 41.5) | careful t   7.80 v  3.97 scr   84 hit 0 (45.6 42.7) | gap +1.97 s (+0.20)
+  s  37.0 m  careless t   6.01 v  5.91 scr  123 hit 1 (44.3 41.5) | careful t   8.01 v  5.27 scr   84 hit 0 (45.6 43.7) | gap +2.00 s (+0.03)
+  s  38.0 m  careless t   6.17 v  6.83 scr  154 hit 1 (45.3 41.5) | careful t   8.18 v  6.30 scr   84 hit 0 (45.6 44.7) | gap +2.01 s (+0.01)
+  s  39.0 m  careless t   6.31 v  7.65 scr  154 hit 1 (46.3 41.8) | careful t   8.33 v  7.20 scr   84 hit 0 (45.6 45.7) | gap +2.02 s (+0.01)
+  s  40.0 m  careless t   6.43 v  8.40 scr  154 hit 1 (47.1 42.3) | careful t   8.46 v  7.97 scr   84 hit 0 (45.6 46.7) | gap +2.03 s (+0.00)
+  s  41.0 m  careless t   6.57 v  7.05 scr  171 hit 1 (47.5 43.2) | careful t   8.58 v  8.70 scr   84 hit 0 (45.6 47.7) | gap +2.02 s (-0.01)
+  s  42.0 m  careless t   6.72 v  6.77 scr  209 hit 1 (47.5 44.2) | careful t   8.70 v  9.37 scr   84 hit 0 (45.6 48.7) | gap +1.97 s (-0.05)
+  s  43.0 m  careless t   6.87 v  7.61 scr  220 hit 1 (47.5 45.2) | careful t   8.80 v 10.00 scr   84 hit 0 (45.5 49.7) | gap +1.93 s (-0.04)
+  s  44.0 m  careless t   6.99 v  8.36 scr  220 hit 1 (47.4 46.2) | careful t   8.90 v 10.15 scr   84 hit 0 (45.5 50.7) | gap +1.90 s (-0.03)
+  s  45.0 m  careless t   7.10 v  9.04 scr  220 hit 1 (47.4 47.2) | careful t   9.00 v 10.15 scr   84 hit 0 (45.5 51.7) | gap +1.89 s (-0.01)
+  s  46.0 m  careless t   7.21 v  9.69 scr  220 hit 1 (47.3 48.2) | careful t   9.10 v 10.15 scr   84 hit 0 (45.5 52.7) | gap +1.88 s (-0.01)
+  s  47.0 m  careless t   7.31 v 10.15 scr  220 hit 1 (47.2 49.2) | careful t   9.19 v 10.15 scr   84 hit 0 (45.5 53.7) | gap +1.88 s (-0.00)
+  s  48.0 m  careless t   7.41 v 10.15 scr  220 hit 1 (47.1 50.2) | careful t   9.29 v 10.15 scr   84 hit 0 (45.5 54.7) | gap +1.88 s (+0.00)
+  s  49.0 m  careless t   7.51 v 10.15 scr  220 hit 1 (47.1 51.2) | careful t   9.39 v 10.15 scr   84 hit 0 (45.5 55.7) | gap +1.88 s (+0.00)
+  s  50.0 m  careless t   7.61 v 10.15 scr  220 hit 1 (47.0 52.2) | careful t   9.49 v 10.15 scr   84 hit 0 (45.5 56.7) | gap +1.88 s (-0.00)
+  s  51.0 m  careless t   7.71 v 10.15 scr  220 hit 1 (46.9 53.2) | careful t   9.59 v 10.15 scr   84 hit 0 (45.5 57.7) | gap +1.88 s (-0.00)
+  s  52.0 m  careless t   7.80 v 10.15 scr  220 hit 1 (46.8 54.1) | careful t   9.68 v 10.15 scr   84 hit 0 (45.5 58.7) | gap +1.88 s (+0.00)
+  s  53.0 m  careless t   7.90 v 10.15 scr  220 hit 1 (46.7 55.2) | careful t   9.78 v 10.15 scr   84 hit 0 (45.5 59.7) | gap +1.88 s (+0.00)
+  s  54.0 m  careless t   8.00 v 10.15 scr  220 hit 1 (46.6 56.2) | careful t   9.88 v 10.15 scr   84 hit 0 (45.5 60.7) | gap +1.88 s (-0.00)
+  s  55.0 m  careless t   8.10 v 10.15 scr  220 hit 1 (46.6 57.1) | careful t   9.98 v 10.15 scr   84 hit 0 (45.5 61.7) | gap +1.88 s (+0.00)
+  s  56.0 m  careless t   8.20 v 10.15 scr  220 hit 1 (46.5 58.1) | careful t  10.08 v 10.15 scr   84 hit 0 (45.5 62.7) | gap +1.88 s (+0.00)
+  s  57.0 m  careless t   8.30 v 10.15 scr  220 hit 1 (46.4 59.1) | careful t  10.18 v 10.15 scr   84 hit 0 (45.5 63.7) | gap +1.88 s (+0.00)
+  s  58.0 m  careless t   8.40 v 10.15 scr  220 hit 1 (46.3 60.1) | careful t  10.27 v 10.15 scr   84 hit 0 (45.5 64.7) | gap +1.88 s (-0.00)
+  s  59.0 m  careless t   8.50 v 10.15 scr  220 hit 1 (46.2 61.1) | careful t  10.38 v 10.15 scr   84 hit 0 (45.5 65.7) | gap +1.88 s (+0.00)
+  s  60.0 m  careless t   8.59 v 10.15 scr  220 hit 1 (46.1 62.1) | careful t  10.48 v  9.11 scr   84 hit 0 (45.5 66.7) | gap +1.89 s (+0.01)
+  s  61.0 m  careless t   8.69 v 10.15 scr  220 hit 1 (46.0 63.1) | careful t  10.60 v  7.71 scr   84 hit 0 (45.5 67.7) | gap +1.90 s (+0.02)
+  s  62.0 m  careless t   8.79 v 10.15 scr  220 hit 1 (45.9 64.1) | careful t  10.74 v  5.96 scr   84 hit 0 (45.5 68.7) | gap +1.95 s (+0.05)
+  s  63.0 m  careless t   8.89 v 10.15 scr  220 hit 1 (45.8 65.1) | careful t  10.94 v  5.18 scr   87 hit 0 (45.3 69.7) | gap +2.05 s (+0.10)
+  s  64.0 m  careless t   8.99 v 10.15 scr  220 hit 1 (45.7 66.1) | careful t  11.11 v  6.23 scr   87 hit 0 (44.7 70.4) | gap +2.12 s (+0.07)
+  s  65.0 m  careless t   9.09 v 10.15 scr  220 hit 1 (45.6 67.1) | careful t  11.26 v  7.13 scr   87 hit 0 (43.8 70.8) | gap +2.18 s (+0.05)
+  s  66.0 m  careless t   9.18 v 10.15 scr  220 hit 1 (45.5 68.1) | careful t  11.40 v  6.58 scr   87 hit 0 (42.8 71.2) | gap +2.22 s (+0.05)
+  s  67.0 m  careless t   9.28 v 10.15 scr  220 hit 1 (45.5 69.1) | careful t  11.58 v  4.43 scr   87 hit 0 (41.9 71.5) | gap +2.30 s (+0.08)
+  s  68.0 m  careless t   9.38 v 10.15 scr  220 hit 1 (45.3 70.1) | careful t  11.90 v  3.42 scr   89 hit 0 (41.3 72.2) | gap +2.51 s (+0.21)
+  s  69.0 m  careless t   9.48 v 10.15 scr  220 hit 1 (45.1 71.0) | careful t  12.14 v  4.87 scr   89 hit 0 (41.2 73.2) | gap +2.66 s (+0.15)
+  s  70.0 m  careless t  10.48 v  2.32 scr  283 hit 2 (44.4 71.5) | careful t  12.32 v  5.97 scr   89 hit 0 (41.1 74.2) | gap +1.85 s (-0.81)
+  s  71.0 m  careless t  10.78 v  4.17 scr  283 hit 2 (43.4 71.5) | careful t  12.48 v  6.90 scr   89 hit 0 (41.0 75.2) | gap +1.69 s (-0.15)
+  s  72.0 m  careless t  10.99 v  5.42 scr  283 hit 2 (42.4 71.5) | careful t  12.61 v  7.72 scr   89 hit 0 (40.9 76.2) | gap +1.62 s (-0.07)
+  s  73.0 m  careless t  11.16 v  6.45 scr  285 hit 2 (41.4 71.6) | careful t  12.74 v  8.47 scr   89 hit 0 (40.9 77.2) | gap +1.57 s (-0.05)
+  s  74.0 m  careless t  11.30 v  7.30 scr  285 hit 2 (40.5 72.0) | careful t  12.85 v  9.15 scr   89 hit 0 (40.8 78.2) | gap +1.55 s (-0.03)
+  s  75.0 m  careless t  11.44 v  8.10 scr  285 hit 2 (39.8 72.7) | careful t  12.95 v  9.77 scr   89 hit 0 (40.7 79.2) | gap +1.52 s (-0.03)
+  s  76.0 m  careless t  11.56 v  8.09 scr  298 hit 2 (39.5 73.6) | careful t  13.05 v 10.15 scr   89 hit 0 (40.7 80.2) | gap +1.49 s (-0.02)
+  s  77.0 m  careless t  11.69 v  8.33 scr  328 hit 2 (39.5 74.6) | careful t  13.15 v 10.15 scr   89 hit 0 (40.6 81.2) | gap +1.47 s (-0.03)
+  s  78.0 m  careless t  11.80 v  9.03 scr  334 hit 2 (39.5 75.6) | careful t  13.25 v 10.15 scr   89 hit 0 (40.5 82.2) | gap +1.45 s (-0.02)
+ok    diag_sprint_trace
+1 tests, 0 failed
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
