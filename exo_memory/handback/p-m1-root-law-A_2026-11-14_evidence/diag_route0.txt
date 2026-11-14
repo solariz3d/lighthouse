@@ -1,0 +1,11 @@
+  today: top 8.00 brake 14.0; path 9 points
+  ROOT: top 8.00 brake 14.0; path 9 points
+    hit at t 4.112 s pos (-36.49, -63.02) leg 3; the 0.5 s before (every 0.1 s): [v 8.82 w -0.01 lat -0.1 leg 2] [v 8.86 w -0.01 lat -0.1 leg 2] [v 8.75 w -0.53 lat -4.6 leg 3] [v 8.50 w -1.15 lat -9.8 leg 3] [v 7.60 w -1.29 lat -9.8 leg 3] [v 5.65 w -1.65 lat -9.8 leg 3]  next turn 10 deg, legs 2.70 / 0.30 m
+    hit at t 4.117 s pos (-36.49, -63.01) leg 3; the 0.5 s before (every 0.1 s): [v 8.82 w -0.01 lat -0.1 leg 2] [v 8.86 w -0.01 lat -0.1 leg 2] [v 8.73 w -0.59 lat -5.2 leg 3] [v 8.49 w -1.15 lat -9.8 leg 3] [v 7.54 w -1.30 lat -9.8 leg 3] [v 5.31 w -1.74 lat -9.7 leg 3]  next turn 10 deg, legs 2.70 / 0.30 m
+    hit at t 4.121 s pos (-36.49, -63.01) leg 3; the 0.5 s before (every 0.1 s): [v 8.83 w -0.01 lat -0.1 leg 2] [v 8.86 w -0.01 lat -0.1 leg 2] [v 8.72 w -0.65 lat -5.7 leg 3] [v 8.49 w -1.16 lat -9.8 leg 3] [v 7.49 w -1.31 lat -9.8 leg 3] [v 5.00 w -1.84 lat -9.7 leg 3]  next turn 10 deg, legs 2.70 / 0.30 m
+    hit at t 4.125 s pos (-36.49, -63.00) leg 3; the 0.5 s before (every 0.1 s): [v 8.83 w -0.01 lat -0.1 leg 2] [v 8.87 w -0.01 lat -0.1 leg 2] [v 8.71 w -0.71 lat -6.2 leg 3] [v 8.48 w -1.16 lat -9.8 leg 3] [v 7.43 w -1.32 lat -9.8 leg 3] [v 4.70 w -1.94 lat -9.6 leg 3]  next turn 10 deg, legs 2.70 / 0.30 m
+    hit at t 4.129 s pos (-36.49, -62.99) leg 3; the 0.5 s before (every 0.1 s): [v 8.83 w -0.01 lat -0.1 leg 2] [v 8.87 w -0.01 lat -0.1 leg 2] [v 8.70 w -0.77 lat -6.7 leg 3] [v 8.46 w -1.16 lat -9.8 leg 3] [v 7.37 w -1.33 lat -9.8 leg 3] [v 4.41 w -2.05 lat -9.5 leg 3]  next turn 10 deg, legs 2.70 / 0.30 m
+    hit at t 4.133 s pos (-36.49, -62.98) leg 3; the 0.5 s before (every 0.1 s): [v 8.83 w -0.01 lat -0.1 leg 2] [v 8.87 w -0.01 lat -0.1 leg 2] [v 8.68 w -0.82 lat -7.2 leg 3] [v 8.45 w -1.16 lat -9.8 leg 3] [v 7.31 w -1.34 lat -9.8 leg 3] [v 4.16 w -2.17 lat -9.5 leg 3]  next turn 10 deg, legs 2.70 / 0.30 m
+    hit at t 4.138 s pos (-36.49, -62.97) leg 3; the 0.5 s before (every 0.1 s): [v 8.83 w -0.01 lat -0.1 leg 2] [v 8.87 w -0.01 lat -0.1 leg 2] [v 8.67 w -0.88 lat -7.7 leg 3] [v 8.43 w -1.16 lat -9.8 leg 3] [v 7.25 w -1.35 lat -9.8 leg 3] [v 3.93 w -2.29 lat -9.5 leg 3]  next turn 10 deg, legs 2.70 / 0.30 m
+ok    zz_diag_m1_route0_walls
+1 tests, 0 failed

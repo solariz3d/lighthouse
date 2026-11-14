@@ -1,0 +1,28 @@
+    route 0: today walked (8.3 s, 0 hits); slip 3 walked; grip root walked (8.3 s, 0 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    route 1: today walked (9.2 s, 0 hits); slip 3 walked; grip root walked (9.2 s, 0 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    route 2: today walked (9.5 s, 0 hits); slip 3 walked; grip root walked (9.5 s, 0 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    route 3: today walked (6.7 s, 0 hits); slip 3 walked; grip root walked (6.7 s, 0 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    route 4: today walked (6.3 s, 0 hits); slip 3 walked; grip root walked (6.3 s, 0 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    route 5: today walked (5.8 s, 0 hits); slip 3 walked; grip root walked (5.8 s, 0 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    route 6: today walked (5.6 s, 0 hits); slip 3 walked; grip root walked (5.6 s, 0 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    route 7: today walked (10.8 s, 6 hits); slip 3 walked; grip root walked (10.8 s, 6 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    route 8: today walked (6.6 s, 0 hits); slip 3 STOPPED; grip root walked (6.6 s, 0 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    route 9: today walked (8.5 s, 0 hits); slip 3 walked; grip root walked (8.5 s, 0 hits, 0.2 m short, peak sideways 0.00 m/s^2)
+    walked to the end: today 10, grip root 10 of 10; slip 3 stopped on 1, of which the grip root walked 1; root ticks 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(584): CHECK failed: root_ticks > 0
+FAIL  m1_the_grip_root_walks_every_corner_route_the_chase_walks_today_including_where_slip_stalled
+    head-on wall hits on 10 routes: today 6, grip root 6 (bar 7.50)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(603): CHECK failed: root_ticks > 0
+FAIL  m1_the_grip_root_meets_walls_head_on_no_more_than_a_quarter_more_than_today_on_the_corner_routes
+ok    the_root_switch_is_off_by_default_and_takes_only_0_or_1
+    told 9 m/s   : peak sideways 31.10 m/s^2 (grip 9.81); peak step in turn rate 0.1800 rad/s a tick; peak re-point 0.000000 rad; widest off the path 0.10 m; slowest 9.00 m/s; through yes
+    told 5.42 m/s: peak sideways 12.58 m/s^2 (grip 9.81); peak step in turn rate 0.2385 rad/s a tick; peak re-point 0.000000 rad; widest off the path 0.04 m; slowest 5.42 m/s; through yes
+    G:\consonance-scratch\a-m1-dz3\chase\tests\root_tests.cpp(141): CHECK failed: r->peak_lat <= mu * kG * 1.0001f
+    G:\consonance-scratch\a-m1-dz3\chase\tests\root_tests.cpp(142): CHECK failed: r->peak_turn_step <= 0.1f
+    G:\consonance-scratch\a-m1-dz3\chase\tests\root_tests.cpp(141): CHECK failed: r->peak_lat <= mu * kG * 1.0001f
+    G:\consonance-scratch\a-m1-dz3\chase\tests\root_tests.cpp(142): CHECK failed: r->peak_turn_step <= 0.1f
+FAIL  the_grip_root_takes_a_3_m_corner_from_9_m_s_at_no_more_than_grip_and_its_turn_has_no_step
+    seed 5, flee, normal, 90 s: off not caught at 90.00 s, chase 8a76f88756bd4716; on not caught at 90.00 s, chase 8a76f88756bd4716 / 8a76f88756bd4716, sim d68547494653258b / d68547494653258b
+    G:\consonance-scratch\a-m1-dz3\chase\tests\root_tests.cpp(163): CHECK failed: on1.chase_hash != off.chase_hash
+FAIL  the_grip_root_plays_the_same_run_twice_to_the_same_fingerprints_and_is_not_the_old_chase
+5 tests, 4 failed
