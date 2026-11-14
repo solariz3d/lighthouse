@@ -1,0 +1,14 @@
+﻿node : heavy-run: WARNING: C:\ has 20.9 GB free, under 50 GB; run node consonance/tools/janitor.js
+At line:2 char:1
++ node C:\Users\nname\Desktop\lighthouse\consonance\tools\heavy-run.js  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (heavy-run: WARN...ools/janitor.js:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+EXIT submodules 0
+EXIT build.bat-test 0
+EXIT dz-gym-selftest 0
+EXIT dz-world-selftest 0
+DONE
+LANDFILTER-WRAPPER-EXIT 0

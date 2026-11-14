@@ -1,0 +1,27 @@
+  ok    the bot completes the course on the simulation alone: 7577 ticks, fingerprint ba51b7b8e07c8ed1
+  ok    the gym starts paused on its defaults, with nothing to report
+  ok    a Direct3D 12 device with DXR 1.1, offscreen, with the course uploaded: NVIDIA GeForce RTX 5080; 852 triangles, 45 lights
+  ok    on every frame the tick count is the elapsed time x 240, exactly: 7577 ticks over 31.572636 s in 4744 uneven frames, 11 of them stalls cut to 0.1 s
+  ok    the world steps once for every tick the loop hands out: 7577 steps for a record of 7577
+  ok    the same inputs through the loop give the simulation's own state hash: ba51b7b8e07c8ed1 / ba51b7b8e07c8ed1
+  ok    the course timer ran from the line to the finish and agrees with the bot's ghost: 0:30.925
+  ok    the camera stays on the player between the last two ticks: never more than 0.06743 m off the path; the eye 0.66 to 1.67 m above the feet
+  ok    the camera looks where the tick's input looks
+  ok    frames along the run are not black, and not blown out: 15 of 15 pictures have more than a fifth of their pixels lit; mean brightness 0.087 to 0.574, median 0.209; at most 0.00% pure white; 0 bad HDR values
+  ok    the run became the best and was saved as a replay
+  ok    a window that is never shown takes the messages
+  ok    R restarts at the course start, at rest, with the clock waiting
+  ok    Esc releases the mouse and stops time; a click takes it back
+  ok    W and Shift held: the player sprints out of the room: 9.24 m in 1.5 s, at 7.63 m/s
+  ok    raw mouse counts turn the view by counts x sensitivity x 0.022 degrees, at once, and the simulation follows: 500 counts: 22.000 degrees
+  ok    a Space tapped between two frames still jumps
+  ok    F5 reloads the parameter file and it takes effect while running: jump apex 2.000 m (file: 2.0, default 1.2); sprint 8.50 m/s (file: 8.5, default 7)
+  ok    a parameter file with an error changes nothing and names the line
+  ok    R returns to the start from anywhere
+  ok    losing the keyboard pauses and releases the keys; coming back owes no time: 0 ticks in 6 s away, 2 in the first frame back
+  ok    F2 switches the look, and back: mean 0.374 Film, 0.292 Horror
+  ok    F1 opens the overlay with the simulation still running, and closes it
+  ok    F11 reaches the window as a fullscreen request (not carried out on a hidden window)
+  ok    Esc, then Esc again at the prompt, asks the window to close
+  ok    24 frames presented to the hidden window's swap chain: play, the overlay, a resize, the prompt
+selftest: passed (26 of 26 checks passed)

@@ -1,0 +1,16 @@
+ 1/14 Test  #1: core_tests .......................   Passed    0.15 sec
+ 2/14 Test  #4: model_tests ......................   Passed    0.25 sec
+ 3/14 Test  #3: yardstick_tests ..................   Passed    0.41 sec
+ 4/14 Test  #2: sim_tests ........................   Passed    1.80 sec
+ 5/14 Test  #5: gen_tests ........................   Passed   39.82 sec
+ 6/14 Test  #8: world_tests ......................   Passed   15.14 sec
+ 7/14 Test  #6: gen_walk_tests ...................   Passed   93.84 sec
+ 8/14 Test  #7: gen_drop_tests ...................   Passed   94.89 sec
+ 9/14 Test #11: audio_tests ......................   Passed    6.07 sec
+10/14 Test  #9: nav_tests ........................   Passed   49.09 sec
+11/14 Test #13: ragdoll_tests ....................   Passed    0.29 sec
+12/14 Test #12: game_tests .......................   Passed    2.94 sec
+13/14 Test #10: chase_tests ......................   Passed  299.28 sec
+14/14 Test #14: world_app_tests ..................   Passed  437.73 sec
+100% tests passed, 0 tests failed out of 14
+Total Test time (real) = 542.53 sec

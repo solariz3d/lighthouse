@@ -3185,3 +3185,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - dreamzone-3 dark-figure-e c598d2e (fix 1653150, red 124adaa), local; mutants 4/4 as expected; capture on G: (before 1 of 2 poses drawn, after 2 of 2). It reads as a black silhouette: drawn is not seen, his call.
 - **Carry:** a row that reads an instrument needs a mutant that breaks the instrument and shows the row going falsely green.
 - 02:4xZ addendum: main 81eb524 merged into dark-figure-e (CHANGELOG both kept), C's note 1 taken (the models label), note 2 declined (the row fails by name; a box is a look); merged self-test 54/54; tip 7bc9f3c pushed.
+
+## 2026-11-13 23:2x local (D) · D675 C's lighting filter LANDED: game main 8249d58 (merge of c9209c3 onto e0fcdec, nothing edited), both defaults off, build.bat test 14/14 exit 0, gym 26/26 exit 0, world 60/60 exit 0, each read directly → `exo_memory/handback/p-d675-filter-landing-E_2026-11-13.md`
+- The relaunch at 22:15 never ran (mangled start quotes) and I misread the stopped first launch's log as progress for 50 minutes; the chair caught it.
+- **Carry:** confirm a run by a file or process THIS launch created; move old logs aside before relaunching; never inline `start ""` through PowerShell.
