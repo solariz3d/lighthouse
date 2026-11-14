@@ -129,3 +129,11 @@ B, one a run with a backup (`handback/p-l207-l-owed-steps-B_2026-11-14.md`, sect
 - **Baseline, one run at 02:3x:** since 2026-11-11T07:30Z, 1,162 calls, median 509,806, largest 966,635; cuts: 11-12 08:31Z manual at 951,245; 11-13 09:45Z auto at 977,314; 11-14 07:19Z auto at 968,752. Since tonight's cut: 37 calls, median 185,735, last 233,475.
 - **The line holds if** the next automatic cut the counter prints falls near 500,000. **It is not holding if** a call's context passes 550,000 with no cut; then it is read again after the next launch, and after that the launch flag is the next form (it needs the app, so a pane and his word).
 - **The trial ends 2026-11-21.** The two registered failure lines above stand as written; the bar stays 472,545.
+
+### PREDICTED 04:2x, at his question, before any of it is scored (the librarian's own guesses, to be read against the count on 2026-11-21)
+- **P1, usage:** for the same amount of work, a day costs a third to a half less. Most of it comes from seats not woken and from smaller cold starts; the 500k line adds less than its model says, because the cuts about double.
+- **P2, the line itself:** about three chances in four that the next automatic cut of this seat falls near 500,000.
+- **P3, what is lost:** with about twice the cuts, one or two details from the middle of a night that were never written down are missed in the week, and he catches at least one.
+- **P4, what is kept:** no change he can point to in how this seat speaks or what it holds to, because BOOT, the cards and the rules are untouched.
+- **P5, the wake on L:** first replies after a cut name more of the room than before, and this seat still acts before reading its notes at least once in the week, because on L the gate only warns.
+- **Wrong if:** the count shows less than a third (P1); the cut falls near 968,000 again (P2); no detail is missed, or one is missed that the notes held (P3 in either direction); he names a change in the seat (P4); no act-before-read is found by a seat that is not this one (P5).
