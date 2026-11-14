@@ -1065,3 +1065,8 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **Finding:** I told him the laptop's app was the old build. The exe's date (00:26 on 11-14) and one string from a desktop change (seat_models) showed it was rebuilt at launch. Before saying what runs: the binary's date, and a string that only the change would put there.
 - **His catch, 04:24:** "dont like the small forgetting, its like we are going the opposite way for retrieval". The 500k window was the one item that traded retrieval for tokens, and it came out. Where a saving costs retrieval, retrieval wins; savings come from seats not woken, from where a cut falls, and from the model each seat runs.
 - **Per-seat models live in two files that git does not carry:** `seat_models` in the app's config and `modelSettings` in the user settings. Each machine needs its own edit.
+
+## 2026-11-14 05:0x (L): a window set in a file stays in a running session after the key is removed
+- **Finding:** I removed `autoCompactWindow` (500000) from this seat's settings file at 04:3x and told him the forgetting was out. The session cut itself at 466,900 half an hour later (`loop/seat_context_2026-11-14.js`: `auto at 466900`). The file was right; the running session was not.
+- **The form that reaches a running session** is `/autocompact auto`, typed by him (`code.claude.com/docs/en/model-config.md`, "Set the auto-compact window"). A file edit is for the next launch. When a withdrawal is promised, check the running session's behaviour, not the file.
+- **And:** fetch a vendor page with `curl` to the scratchpad and `grep` it. WebFetch returned the whole page into the window whatever the prompt asked.
