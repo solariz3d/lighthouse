@@ -56,11 +56,28 @@ function world() {
   git(repo, 'add', '-A'); git(repo, 'commit', '-q', '-m', 'base'); git(repo, 'push', '-q', 'origin', 'main');
   git(repo, 'worktree', 'add', '-q', '--detach', wt, 'main');
   const checkJs = path.join(root, 'check.js');
+  // ORDER records each run of the check and the re-read, and the hold stand-in writes its acquire and release there too, so a row can read
+  // whether the re-read ran and whether it ran inside the hold. MB3: the world self-test's machine-bound red, its own lines and exit 3
+  // (dreamzone-3 modes.h:102, selftest.cpp:653, and the check script's line). MB1: the same summary line with an exit of 1. CRASH3: an
+  // exit of 3 WITHOUT that summary line, as the MSVC runtime's abort() exits 3 (registration amendment 2).
+  const order = path.join(root, 'order.log');
+  const mb = `console.log('  FAIL  [machine-bound] the fall: 9 waits'); console.log('selftest: machine-bound red only: re-read once under the exclusive hold before it counts (54 of 55 checks passed; 1 machine-bound red)');`;
   fs.writeFileSync(checkJs, `const fs=require('fs'),p=require('path');
+fs.appendFileSync(${JSON.stringify(order)}, 'check\\n');
 if (process.env.LT_SLOW) { fs.writeFileSync(process.env.LT_SLOW, 'started'); const t=Date.now(); while (Date.now()-t < 60000) {} }
 fs.mkdirSync('build/bin',{recursive:true}); fs.writeFileSync('build/bin/app.bin', require('child_process').execSync('git rev-parse HEAD').toString());
 if (fs.existsSync('RED')) { console.log('FAIL the_red_row'); process.exit(1); }
+if (fs.existsSync('MB3')) { ${mb} console.log('SELFTEST MACHINE-BOUND: dz-world'); process.exit(3); }
+if (fs.existsSync('MB1')) { ${mb} process.exit(1); }
+if (fs.existsSync('CRASH3')) { console.log('the world self-test stopped'); process.exit(3); }
 console.log('all green');`);
+  // The re-read stand-in: exits with the code in reread.code (0 when there is none), printing what the world self-test prints for it.
+  const rereadJs = path.join(root, 'reread.js');
+  fs.writeFileSync(rereadJs, `const fs=require('fs');
+fs.appendFileSync(${JSON.stringify(order)}, 'reread\\n');
+let c=0; try { c=+fs.readFileSync(${JSON.stringify(path.join(root, 'reread.code'))}, 'utf8'); } catch (_) {}
+if (c === 0) console.log('selftest: passed (55 of 55 checks passed)'); else { ${mb.replace('9 waits', '12 waits')} }
+process.exit(c);`);
   const guardJs = path.join(root, 'guard.js');
   fs.writeFileSync(guardJs, `const f=${JSON.stringify(path.join(root, 'game.pid'))}; let pid=0; try{pid=+require('fs').readFileSync(f,'utf8')}catch(_){}
 let alive=false; if(pid){try{process.kill(pid,0);alive=true}catch(e){alive=e.code==='EPERM'}} process.exit(alive?0:1);`);
@@ -70,8 +87,13 @@ let alive=false; if(pid){try{process.kill(pid,0);alive=true}catch(e){alive=e.cod
     guard: [process.execPath, guardJs], guard_poll_ms: 200,
     promote: { files: ['build/bin'], stamp: 'build/launch.stamp', stamp_text: 'built for the launcher by the landing train' },
   };
-  return { root, origin, repo, wt, data, cfg };
+  return { root, origin, repo, wt, data, cfg, order, reread: [process.execPath, rereadJs] };
 }
+/** What ran, in order: 'check', 'reread', and the hold stand-in's 'acquire' and 'release'. */
+const readOrder = (w) => { try { return fs.readFileSync(w.order, 'utf8').split('\n').filter(Boolean); } catch (_) { return []; } };
+/** A hold stand-in that records its acquire and release beside the runs. */
+const recordingHold = (w) => () => { fs.appendFileSync(w.order, 'acquire\n'); return { env: process.env, release: () => fs.appendFileSync(w.order, 'release\n') }; };
+const readLog = (w) => fs.readFileSync(path.join(w.data, T.LOG_NAME), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 /** A branch off main in the main checkout with one file written; returns its READY row. */
 function branch(w, name, file, text) {
   git(w.repo, 'checkout', '-q', '-b', name, 'main');
@@ -335,4 +357,139 @@ test('failingRows names dreamzone-3\'s own red lines: CHECK_NEAR and CHECK_EQ (t
     'body_tests.cpp(90): CHECK_EQ failed: n = 1, m = 3',
     'selftest: FAILED (1 of 52 checks passed)',
   ]);
+});
+
+// ── THE WORLD SELF-TEST'S EXIT 3 (registration exo_memory/loop/registration_train_exit3_B_2026-11-14.md, with its two amendments) ──
+// dreamzone-3's `dz-world --selftest` exits 3 when its ONLY reds are machine-bound (a fall raced against the clock: fall-row-b). The train
+// re-reads that once, inside the same exclusive hold; a green second reading lands, with both readings kept.
+
+test('a machine-bound red is read again once: a green second reading lands, and the result, the log and the board line name both readings', () => {
+  const w = world();
+  T.writeReady(w.data, [branch(w, 'mb', 'MB3', 'machine-bound\n')]);
+  const r = T.runTrain({ ...w.cfg, reread: w.reread }, { hold: recordingHold(w), say: () => {}, data: w.data });
+  assert.equal(r.stopped, null);
+  assert.deepEqual(r.landed.map((x) => x.branch), ['mb'], 'the branch landed on its second reading');
+  assert.equal(r.rereads.length, 1);
+  assert.ok(r.rereads[0].first.some((l) => l.includes('FAIL  [machine-bound] the fall: 9 waits')), `the first reading: ${JSON.stringify(r.rereads[0].first)}`);
+  assert.match(r.rereads[0].second, /selftest: passed \(55 of 55/);
+  const landed = readLog(w).filter((e) => e.event === 'landed');
+  assert.equal(landed.length, 1);
+  assert.ok(landed[0].reread && landed[0].reread.first.length && /passed/.test(landed[0].reread.second), 'the log keeps both readings');
+  const line = T.boardLine(r);
+  assert.match(line, /landed mb /);
+  assert.match(line, /machine-bound re-read/);
+  assert.match(line, /the fall: 9 waits/);
+  assert.match(line, /selftest: passed/);
+});
+
+test('a machine-bound red read twice is the branch\'s red: not landed, and named with both readings', () => {
+  const w = world();
+  fs.writeFileSync(path.join(w.root, 'reread.code'), '3');
+  T.writeReady(w.data, [branch(w, 'mb', 'MB3', 'machine-bound\n')]);
+  const r = T.runTrain({ ...w.cfg, reread: w.reread }, { hold: recordingHold(w), say: () => {}, data: w.data });
+  assert.deepEqual(r.landed, []);
+  assert.deepEqual(r.named.map((n) => [n.row.branch, n.reason]), [['mb', 'red alone on main']]);
+  const f = r.named[0].failing;
+  assert.ok(f.some((l) => /^first reading \(exit 3\):.*the fall: 9 waits/.test(l)), JSON.stringify(f));
+  assert.ok(f.some((l) => /^second reading \(exit 3\):.*machine-bound red only/.test(l)), JSON.stringify(f));
+  assert.notEqual(git(w.origin, 'rev-parse', 'main'), git(w.repo, 'rev-parse', 'mb'));
+});
+
+test('with no re-read configured, a machine-bound red stays red and nothing is run again', () => {
+  const w = world();
+  T.writeReady(w.data, [branch(w, 'mb', 'MB3', 'machine-bound\n')]);
+  const r = T.runTrain(w.cfg, { hold: recordingHold(w), say: () => {}, data: w.data });
+  assert.deepEqual(r.landed, []);
+  assert.deepEqual(r.named.map((n) => n.row.branch), ['mb']);
+  assert.ok(!readOrder(w).includes('reread'), `ran: ${readOrder(w).join(', ')}`);
+});
+
+test('an exit of 1 is an ordinary red, even with the machine-bound summary in its output: it is never read again', () => {
+  const w = world();
+  T.writeReady(w.data, [branch(w, 'red1', 'MB1', 'red\n')]);
+  const r = T.runTrain({ ...w.cfg, reread: w.reread }, { hold: recordingHold(w), say: () => {}, data: w.data });
+  assert.deepEqual(r.landed, []);
+  assert.deepEqual(r.named.map((n) => n.row.branch), ['red1']);
+  assert.ok(!readOrder(w).includes('reread'), `ran: ${readOrder(w).join(', ')}`);
+});
+
+test('an exit of 3 without the self-test\'s machine-bound summary (abort() also exits 3) is red, and it is never read again', () => {
+  const w = world();
+  T.writeReady(w.data, [branch(w, 'crash', 'CRASH3', 'crash\n')]);
+  const r = T.runTrain({ ...w.cfg, reread: w.reread }, { hold: recordingHold(w), say: () => {}, data: w.data });
+  assert.deepEqual(r.landed, []);
+  assert.deepEqual(r.named.map((n) => n.row.branch), ['crash']);
+  assert.ok(!readOrder(w).includes('reread'), `ran: ${readOrder(w).join(', ')}`);
+});
+
+test('the re-read runs inside the same exclusive hold as the check: one acquire, then the check, the re-read, one release', () => {
+  const w = world();
+  T.writeReady(w.data, [branch(w, 'mb', 'MB3', 'machine-bound\n')]);
+  T.runTrain({ ...w.cfg, reread: w.reread }, { hold: recordingHold(w), say: () => {}, data: w.data });
+  assert.deepEqual(readOrder(w), ['acquire', 'check', 'reread', 'release']);
+});
+
+test('failingRows names the world self-test\'s machine-bound summary and the check script\'s line for it', () => {
+  const out = [
+    '  ok    the frame',
+    '  FAIL  [machine-bound] the fall: 9 waits',
+    'selftest: machine-bound red only: re-read once under the exclusive hold before it counts (54 of 55 checks passed; 1 machine-bound red)',
+    'SELFTEST MACHINE-BOUND: dz-world',
+  ].join('\n');
+  assert.deepEqual(T.failingRows(out), [
+    'FAIL  [machine-bound] the fall: 9 waits',
+    'selftest: machine-bound red only: re-read once under the exclusive hold before it counts (54 of 55 checks passed; 1 machine-bound red)',
+    'SELFTEST MACHINE-BOUND: dz-world',
+  ]);
+});
+
+// The dreamzone-3 check script, driven by stub programs where its self-tests stand. The stubs are compiled for these rows by the .NET
+// Framework's C# compiler, found from the machine's system root at run time (registration amendment 1); where it is absent the row FAILS
+// and says what it looked for, it does not skip. A stub prints its name and exits with the code in "<its own path>.code".
+let stubExe = null;
+function stub() {
+  if (stubExe) return stubExe;
+  const root = process.env.SystemRoot;
+  assert.ok(root, 'SystemRoot is not set: the C# compiler for the stub self-tests cannot be found');
+  const csc = path.join(root, 'Microsoft.NET', 'Framework64', 'v4.0.30319', 'csc.exe');
+  assert.ok(fs.existsSync(csc), `no C# compiler at ${csc}: the stub self-tests cannot be built`);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lt-stub-'));
+  dirs.push(dir);
+  fs.writeFileSync(path.join(dir, 'stub.cs'), `class P { static int Main(string[] a) {
+  string me = System.Reflection.Assembly.GetEntryAssembly().Location;
+  System.Console.WriteLine("stub " + System.IO.Path.GetFileName(me) + " " + string.Join(" ", a));
+  return int.Parse(System.IO.File.ReadAllText(me + ".code").Trim()); } }`);
+  const c = spawnSync(csc, ['/nologo', `/out:${path.join(dir, 'stub.exe')}`, path.join(dir, 'stub.cs')], { encoding: 'utf8', windowsHide: true });
+  assert.equal(c.status, 0, `the stub did not compile: ${c.stdout}${c.stderr}`);
+  return (stubExe = path.join(dir, 'stub.exe'));
+}
+/** The check script in a scratch repository whose build.bat passes and whose two self-tests exit with the codes given. */
+function runCheck(gym, worldCode) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lt-dz3exit-'));
+  dirs.push(dir);
+  spawnSync('git', ['init', '-q', dir]);
+  fs.writeFileSync(path.join(dir, 'build.bat'), '@echo off\r\necho STUB BUILD ran with %1\r\nexit /b 0\r\n');
+  fs.mkdirSync(path.join(dir, 'build', 'bin'), { recursive: true });
+  for (const [name, code] of [['dz-gym.exe', gym], ['dz-world.exe', worldCode]]) {
+    fs.copyFileSync(stub(), path.join(dir, 'build', 'bin', name));
+    fs.writeFileSync(path.join(dir, 'build', 'bin', `${name}.code`), String(code));
+  }
+  const r = spawnSync('cmd', ['/c', path.join(__dirname, 'landing-train-dz3-check.cmd')], { cwd: dir, encoding: 'utf8', windowsHide: true });
+  return { status: r.status, out: `${r.stdout}${r.stderr}` };
+}
+
+test('the dreamzone-3 check passes the world self-test\'s exit 3 through as 3, and says so', () => {
+  const r = runCheck(0, 3);
+  assert.match(r.out, /stub dz-world\.exe --selftest/, r.out);
+  assert.match(r.out, /SELFTEST MACHINE-BOUND: dz-world/, r.out);
+  assert.equal(r.status, 3, r.out);
+});
+
+test('the dreamzone-3 check leaves as 3 only for an exact 3 from the world self-test: its 1 or 4, and the gym\'s 3, leave as 1', () => {
+  for (const [gym, worldCode, red] of [[0, 1, 'SELFTEST RED: dz-world'], [0, 4, 'SELFTEST RED: dz-world'], [3, 0, 'SELFTEST RED: dz-gym']]) {
+    const r = runCheck(gym, worldCode);
+    assert.equal(r.status, 1, `gym ${gym}, world ${worldCode}: ${r.out}`);
+    assert.ok(r.out.includes(red), `gym ${gym}, world ${worldCode}: ${r.out}`);
+    assert.ok(!/MACHINE-BOUND/.test(r.out), `gym ${gym}, world ${worldCode}: ${r.out}`);
+  }
 });
