@@ -1,0 +1,21 @@
+exit code 0:
+  top level, old "if errorlevel 1": success 
+  top level, asked "if not %ERRORLEVEL% EQU 0": success 
+  top level, mine: success 
+  in a block, old: success 
+  in a block, asked: success 
+  in a block, mine: success 
+exit code 1:
+  top level, old "if errorlevel 1": FAIL 
+  top level, asked "if not %ERRORLEVEL% EQU 0": FAIL 
+  top level, mine: FAIL 
+  in a block, old: FAIL 
+  in a block, asked: success 
+  in a block, mine: FAIL 
+exit code -1073741819:
+  top level, old "if errorlevel 1": success 
+  top level, asked "if not %ERRORLEVEL% EQU 0": FAIL 
+  top level, mine: FAIL 
+  in a block, old: success 
+  in a block, asked: success 
+  in a block, mine: FAIL 
