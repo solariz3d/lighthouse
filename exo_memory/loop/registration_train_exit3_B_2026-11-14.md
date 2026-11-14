@@ -74,8 +74,9 @@ release and run, in order.
 - **Inside the hold:** the hold stand-in's record reads acquire, check, re-read, release. There is one hold, not two, and the re-read is
   not outside it.
 - **The check script itself:** `landing-train-dz3-check.cmd` is run in a scratch dir holding a stub `build.bat` that exits 0, and stub
-  `build\bin\dz-gym.exe` and `build\bin\dz-world.exe`. The stubs are compiled for the row by the .NET Framework's own
-  `C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe` (present on D, checked by `ls`) and exit with a code the row chooses.
+  `build\bin\dz-gym.exe` and `build\bin\dz-world.exe`. The stubs are compiled for the row by the .NET Framework's own C# compiler,
+  `csc.exe` under the Windows folder's `Microsoft.NET\Framework64\v4.0.30319` (present on D, checked by `ls`), and exit with a code the
+  row chooses. Its path is built at run time from the machine's system root (amendment 1 below).
   - When the world stub exits 3, the script exits 3 and prints `SELFTEST MACHINE-BOUND`. Red today: it exits 1.
   - When the world stub exits 1, the script still exits 1 with `SELFTEST RED: dz-world`.
   - When the gym stub exits 3, the script exits 1: only the world self-test can produce a 3.
@@ -103,6 +104,18 @@ I will report them as applied / caught / NOT APPLIED.
 
 - No change to `dz-world`, the hold, the push gate or the privacy scan.
 - No other repository gets a re-read until its config names one.
+
+## Amendment 1 (the chair's ruling of 03:16Z, written in before any code): no drive letter for the compiler
+
+The ruling: "THE ROW THAT COMPILES ITS STUB PROGRAMS NAMES THE COMPILER BY A LITERAL DRIVE PATH … BUILD THE PATH FROM THE MACHINE'S
+SYSTEM ROOT AT RUN TIME, with NO drive letter in the file (the test file or the registration). THE ROW STILL FAILS, AND DOES NOT SKIP,
+where the compiler is absent."
+
+- **In the test:** the compiler's path is `path.join(process.env.SystemRoot, 'Microsoft.NET', 'Framework64', 'v4.0.30319', 'csc.exe')`.
+  - When `SystemRoot` is unset, or the file is not there, the row fails and names what it looked for. It does not skip.
+  - The test file carries no drive letter for it.
+- **In this file:** §3 first gave the compiler's path with its drive letter. That is reworded in place, and no drive letter remains for
+  it here. Before the commit, `portable-paths.js` is run over the test file and this registration.
 
 ## 6. My bias
 
