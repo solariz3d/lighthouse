@@ -141,3 +141,28 @@ this section is written first.
 - **My own doubt, said now:** the darkest tenth is the frame's darkest 10% of pixels. Round a beam that may be the far
   dark, not the ring next to the edge, so even this view may not see edge bleed. If its red control passes too, it is
   reported the same way, and the pictures carry it.
+
+### P's seven lines, taken by name (pane P's read, `handback/p-filter-read-P_2026-11-13.md`, dated 23:54Z; the chair's 23:55Z message). Written 00:12Z, before any result of the amended rows is opened. They bind every run, including the one already queued.
+
+1. **Row B, the still views: the bar is SETTLED-ON against SETTLED-OFF, 0.25 levels.** The grainy-on against
+   settled-off figure is printed beside it and is NOT the bar: grain pulls the darkest tenth 0.30 to 0.57 levels low, so
+   that comparison can pass a real lift of that size.
+2. **Row B, the sprint:** the four `kRefShots` poses (6, 12, 18, 23) are held and settled with the filter ON as well. The
+   bar is the mean of the four settled-on against the mean of the four settled-off, 0.25. The in-motion mean is printed
+   beside it, NOT the bar.
+3. **The red control is judged per comparison.** A view counts as one where the row can see a lift only when sigma 64
+   FAILS that view's settled-on against settled-off comparison. A view whose control passes is reported as "the row
+   cannot see a lift here", and counts neither for nor against the filter. A control that passes the grainy comparison
+   only says the grainy part is blind, and that is said.
+4. **Row B's comment carries the old rule** (grainy on against grainy off, 0.25) **and its measured fail** (+0.48,
+   +0.22, +0.35).
+5. **Row A: one red run at 2560x1440** (the passes not dispatched) must FAIL 0.75 there. Then the row at his size is
+   shown able to fail.
+6. **The 960x540 guard at 0.89 stands** as written.
+7. **The edge view** (the flashlight still, registered above) gets its own red control and the settled-on against
+   settled-off comparison. I draw it in every run, so it is never chosen after a result; it counts under line 3 like
+   the others.
+
+**What this does to the run already queued:** that run was built before these lines. Its code's bar for the still views
+was the grainy-and-settled pair, and it had no settled-on for the sprint. It is read for what it measured. The row is
+then rebuilt to these lines and run again, red then green; that rerun is the one that counts.
