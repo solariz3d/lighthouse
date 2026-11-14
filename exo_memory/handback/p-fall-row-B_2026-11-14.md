@@ -34,7 +34,7 @@ Falsifier 2 did not fire: the generator keeps ahead of a terminal fall on a quie
 - **The exit** (`modes.h`): `selftest_exit_code(failed, machine_bound_failed)` gives **0** when all pass, **3** when the ONLY reds are
   machine-bound, and **1** for any other red. On 3 the summary line says "machine-bound red only: re-read once under the exclusive hold
   before it counts". A row at the self-test's start checks the rule on five fixed pairs.
-- **The seam:** `dz-world --slow-workers MS` (`main.rs`'s Options, `WorldApp::set_worker_delay_for_tests`), which rebuilds the world
+- **The seam:** `dz-world --slow-workers MS` (`game/world/main.cpp` parses it into `modes.h`'s Options; `WorldApp::set_worker_delay_for_tests`), which rebuilds the world
   with `StreamParams::worker_delay_ms`. Its help line says it is a test seam, and it is not a world setting.
 
 ## 3. The proof
