@@ -1,0 +1,25 @@
+02:15:50.117Z exe a-31d1c6d 3530240 bytes, mtime 2026-11-14T02:04:54.575Z; b-main-81eb524 3556864 bytes, mtime 2026-11-14T01:50:14.503Z; c-filter-4e90b03 3697152 bytes, mtime 2026-11-14T01:50:55.276Z
+02:15:50.117Z clone 31d1c6df; exe G:\consonance-scratch\c-d675-pacing\wt-31d1c6d\build\bin\dz-world.exe; args --bench 30 --chasers --seed 1 --size 2560 1440; token present
+02:15:50.117Z session from run 1 of 3
+02:15:50.210Z the card's first list: 14 processes (names in card-users.log, private); a run whose list gains one is void
+02:15:50.643Z   01-a-31d1c6d start: card 0% busy, SM 2632 MHz, memory 15001 MHz, P0, 48.33 W, 33.52 C; 14 processes on the card, 0 not in the session's first list
+02:16:24.827Z   01-a-31d1c6d end: card 1% busy, SM 2812 MHz, memory 15001 MHz, P0, 138.68 W, 41.36 C; 14 processes on the card, 0 not in the session's first list
+02:16:24.828Z 01-a-31d1c6d	02:15:50Z	exit 0	avg 1.544 p99 1.984 worst 2.245 (10372 frames)	VOID: frames dropped: 10372 of 10801 paced
+02:16:24.828Z a-31d1c6d run 1: one run, as ordered; its reason is on its line
+02:16:25.232Z   02-b-main-81eb524 start: card 0% busy, SM 2835 MHz, memory 15001 MHz, P0, 112.13 W, 39.56 C; 14 processes on the card, 0 not in the session's first list
+02:16:59.028Z   02-b-main-81eb524 end: card 51% busy, SM 2812 MHz, memory 15001 MHz, P0, 153.53 W, 47.84 C; 14 processes on the card, 0 not in the session's first list
+02:16:59.028Z 02-b-main-81eb524	02:16:25Z	exit 0	avg 1.543 p99 1.980 worst 2.276 (10467 frames)	VOID: frames dropped: 10467 of 10801 paced
+02:16:59.029Z b-main-81eb524 run 2: one run, as ordered; its reason is on its line
+02:16:59.433Z   03-c-filter-4e90b03 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 115.65 W, 41.92 C; 14 processes on the card, 0 not in the session's first list
+02:17:33.101Z   03-c-filter-4e90b03 end: card 0% busy, SM 2812 MHz, memory 15001 MHz, P0, 143.81 W, 45.06 C; 14 processes on the card, 0 not in the session's first list
+02:17:33.102Z 03-c-filter-4e90b03	02:16:59Z	exit 0	avg 1.541 p99 1.982 worst 2.357 (10406 frames)	VOID: frames dropped: 10406 of 10801 paced
+02:17:33.102Z c-filter-4e90b03 run 3: one run, as ordered; its reason is on its line
+02:17:33.102Z frames drawn of 10801 paced: a-31d1c6d 10372; b-main-81eb524 10467; c-filter-4e90b03 10406; 3 of 3 short
+02:17:33.102Z all three short: arm (d), main once at Normal priority with no processor cap (the chair's 01:30Z ruling)
+02:17:33.538Z   04-b-main-81eb524-normal start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 124.08 W, 43.61 C; 14 processes on the card, 0 not in the session's first list
+02:17:33.821Z   04-b-main-81eb524-normal: the child set free: priority class and affinity read back as "Normal 65535" (all 16 logical CPUs = 65535)
+02:18:07.108Z   04-b-main-81eb524-normal end: card 0% busy, SM 2805 MHz, memory 15001 MHz, P0, 143.36 W, 46.10 C; 14 processes on the card, 0 not in the session's first list
+02:18:07.109Z 04-b-main-81eb524-normal	02:17:33Z	exit 0	avg 1.544 p99 1.989 worst 2.313 (10441 frames)	VOID: frames dropped: 10441 of 10801 paced
+02:18:07.109Z exe before: a-31d1c6d 3530240 bytes, mtime 2026-11-14T02:04:54.575Z; b-main-81eb524 3556864 bytes, mtime 2026-11-14T01:50:14.503Z; c-filter-4e90b03 3697152 bytes, mtime 2026-11-14T01:50:55.276Z; after: a-31d1c6d 3530240 bytes, mtime 2026-11-14T02:04:54.575Z; b-main-81eb524 3556864 bytes, mtime 2026-11-14T01:50:14.503Z; c-filter-4e90b03 3697152 bytes, mtime 2026-11-14T01:50:55.276Z: unchanged
+02:18:07.478Z clone state after: unchanged
+02:18:07.479Z done
