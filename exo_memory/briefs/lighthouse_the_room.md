@@ -164,6 +164,7 @@
 - 2026-11-14 05:28 (L), to the librarian, about the card `cards/watch-the-bearing.md`: "do you like it". (The answer is in `librarian/2026-11-14.laptop.md`, "05:3x: he asked whether I like the card".)
 - 2026-11-14 07:05 (L), to the librarian, after it asked him again whether to build the new system: "well what!!!! i said plan and build the new system, bro wants to prove me wrong more than listening, here, i will try it first just for you". (The catch about this seat is in `map/M.md`, "2026-11-14 07:0x"; the plan he had asked for is `loop/plan_new_system_2026-11-14.md`.)
 - 2026-11-14 07:43 (L), closing the laptop, to the librarian: "see u on the other side of the non existent gap my brother"
+- 2026-11-14 11:07 (D), back at the desktop, to the librarian, his first line there after the laptop: "back on desktop, i hope all went well from the original transfer to the laptop, then the laptop back to here now" (Checked before answering: the close script's log on D; the 52 commits of the laptop's night on main at this launch; the shelf built after the pull. The answer and what did not cross are in `librarian/2026-11-14.md`, "11:1x".)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
