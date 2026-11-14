@@ -86,7 +86,11 @@ function repoSection() {
   if (isRepo && !hasUpstream) lines.push('no origin/main here yet (a history with no remote): nothing to count as unpushed');
   else if (unpushed === null) lines.push('FAILED: git rev-list did not run here');
   else lines.push(unpushed + ' commit(s) unpushed');
-  return { title: 'repo', cmd: 'git log -1 --format="%h %s"; git status --short', lines };
+  const section = { title: 'repo', cmd: 'git log -1 --format="%h %s"; git status --short', lines };
+  // D675 (pane P): render() clips this subject when the block would pass the cap; `subject` names the line and what it quoted
+  const sp = head === null ? -1 : head.indexOf(' ');
+  if (sp > 0) section.subject = { line: 0, sha: head.slice(0, sp), text: head.slice(sp + 1) };
+  return section;
 }
 
 function journalSection() {
@@ -309,14 +313,34 @@ function clock() { const e = process.env.STATE_BLOCK_NOW; const t = e ? new Date
 function render(sections, opts = {}) {
   const secs = sections || [repoSection(), journalSection(), instrumentSection(), sourceSection(), nameSection(), liveSection()];
   const st = stampOf(opts.now || clock());
-  const parts = ['[state-block: machine-generated, regenerate with `node consonance/tools/state-block.js`]'];
-  parts.push(st.line);
-  for (const s of secs) {
-    parts.push('');
-    parts.push(s.title.toUpperCase() + (AS_OF.has(s.title) ? '  as of ' + st.hhmm : '') + '  (check: ' + s.cmd + ')');
-    for (const l of s.lines) parts.push('  ' + l);
+  const build = (ss) => {
+    const parts = ['[state-block: machine-generated, regenerate with `node consonance/tools/state-block.js`]'];
+    parts.push(st.line);
+    for (const s of ss) {
+      parts.push('');
+      parts.push(s.title.toUpperCase() + (AS_OF.has(s.title) ? '  as of ' + st.hhmm : '') + '  (check: ' + s.cmd + ')');
+      for (const l of s.lines) parts.push('  ' + l);
+    }
+    return parts.join('\n');
+  };
+  let text = build(secs);
+  // D675 (pane P, 2026-11-14): HEAD's subject is the one line whose length the room does not control. Printed
+  // whole, a long one pushed the block past the cap and LIVE, the last section, was cut at real wakes. So when
+  // the block is over, the subject gives up exactly the overflow, marked; anything else over still truncates below.
+  const ri = secs.findIndex((s) => s && s.subject);
+  if (text.length > CAP && ri >= 0) {
+    const sub = secs[ri].subject;
+    const chars = Array.from(sub.text);
+    const mark = '... [subject clipped, ' + chars.length + ' chars in full]';
+    const keep = Math.max(0, chars.length - (text.length - CAP) - mark.length);
+    if (keep < chars.length) {
+      const lines = secs[ri].lines.slice();
+      lines[sub.line] = 'HEAD ' + sub.sha + ' ' + chars.slice(0, keep).join('') + mark;
+      const clipped = secs.slice();
+      clipped[ri] = { ...secs[ri], lines };
+      text = build(clipped);
+    }
   }
-  let text = parts.join('\n');
   let truncated = false;
   if (text.length > CAP) {
     truncated = true;

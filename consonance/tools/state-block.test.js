@@ -185,6 +185,46 @@ test('the real block fits under the cap today — a generator that always trunca
   assert.ok(r.chars > 200, 'and it must not be empty');
 });
 
+/* D675 (pane P, 2026-11-14): the block printed HEAD's WHOLE subject under a 3000-character cap. Main sat at
+ * 2,991-2,993 with a short subject, so a longer one cut the block from the end and LIVE, the last section,
+ * fell off at real wakes. The fixture: a HEAD with a 200-character subject, its REPO section rendered with
+ * the live repo's other sections, so the cap is as near as it is at a wake. */
+const LONG_SUBJECT = 'state block fixture subject ' + 'x'.repeat(172);
+function longHeadRepoSection() {
+  const d = require('./scratch.js').mkdtemp('sb-longhead-');
+  const g = (...a) => cp.execFileSync('git', a, { cwd: d, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  g('init', '-q');
+  g('-c', 'user.name=fixture', '-c', 'user.email=fixture@test', 'commit', '-q', '--allow-empty', '-m', LONG_SUBJECT);
+  g('update-ref', 'refs/remotes/origin/main', 'HEAD');   // a checkout's shape at a wake: "0 commit(s) unpushed", not the no-remote line
+  const out = cp.execFileSync(process.execPath, ['-e', 'process.stdout.write(JSON.stringify(require(process.argv[1]).repoSection()))',
+    require.resolve('./state-block.js')], { env: { ...process.env, STATE_BLOCK_REPO: d }, encoding: 'utf8', windowsHide: true });
+  return JSON.parse(out);
+}
+function wakeSections(repo) {
+  return [repo, sb.journalSection(), sb.instrumentSection(), sb.sourceSection(), sb.nameSection(), sb.liveSection()];
+}
+
+test('a 200-character HEAD subject does not cut the block: LIVE stays, the cap holds, the subject is clipped with a mark', () => {
+  assert.strictEqual(LONG_SUBJECT.length, 200);
+  const r = sb.render(wakeSections(longHeadRepoSection()));
+  assert.strictEqual(r.truncated, false, `the block was truncated (${r.chars} chars)`);
+  assert.ok(r.chars <= sb.CAP, `rendered ${r.chars} chars over the ${sb.CAP} cap`);
+  assert.match(r.text, /^LIVE\b/m, 'the LIVE section must survive');
+  assert.match(r.text, /tail -1 .*head-watch/, 'LIVE keeps its check');
+  const head = r.text.split('\n').find((l) => /^\s+HEAD /.test(l));
+  assert.ok(head, 'the HEAD line is still printed');
+  assert.ok(!head.includes(LONG_SUBJECT), 'the whole 200-character subject is not printed');
+  assert.ok(head.includes('state block fixture'), 'the subject is clipped, not dropped');
+  assert.match(head, /\[subject clipped, 200 chars in full\]$/, 'the clip carries a mark naming the full length');
+});
+
+test('a subject that fits is printed whole and unmarked', () => {
+  const r = sb.render(wakeSections(sb.repoSection()));
+  const head = r.text.split('\n').find((l) => /^\s+HEAD /.test(l));
+  assert.ok(head.endsWith(headSubject(LIVE_REPO)), 'the live subject is printed whole');
+  assert.doesNotMatch(r.text, /subject clipped/);
+});
+
 test('a failed command is REPORTED, never omitted', () => {
   // The first version of this test called journalSection() against the real repo and asserted only
   // that it returned some lines — it never forced a failure, so it was green over nothing, in the
