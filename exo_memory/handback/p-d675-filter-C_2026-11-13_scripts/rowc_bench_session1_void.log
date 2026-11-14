@@ -1,0 +1,98 @@
+00:50:35.559Z exe 3697152 bytes, mtime 2026-11-14T00:50:17.766Z
+00:50:35.559Z clone 4e90b030; exe C:\Users\nname\Desktop\worktrees\dz3-filter-c\build\bin\dz-world.exe; args --bench 30 --chasers --seed 1 --size 2560 1440; token present
+00:50:35.560Z session from run 1 of 7
+00:50:35.625Z the card's first list: 14 processes (names in card-users.log, private); a run whose list gains one is void
+00:50:36.043Z   01-defaults start: card 0% busy, SM 2625 MHz, memory 15001 MHz, P0, 48.33 W, 43.32 C; 14 processes on the card, 0 not in the session's first list
+00:51:09.871Z   01-defaults end: card 51% busy, SM 2805 MHz, memory 15001 MHz, P0, 159.69 W, 55.20 C; 14 processes on the card, 0 not in the session's first list
+00:51:09.872Z   01-defaults clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+00:51:09.872Z 01-defaults	00:50:35Z	exit 0	avg 1.546 p99 1.987 worst 2.287 (10363 frames)	VOID: frames dropped: 10363 of 10801 paced
+00:51:10.321Z   01-defaults-try2 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 111.62 W, 47.34 C; 14 processes on the card, 0 not in the session's first list
+00:51:44.177Z   01-defaults-try2 end: card 51% busy, SM 2805 MHz, memory 15001 MHz, P0, 157.68 W, 52.45 C; 14 processes on the card, 0 not in the session's first list
+00:51:44.177Z   01-defaults-try2 clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+00:51:44.178Z 01-defaults-try2	00:51:10Z	exit 0	avg 1.545 p99 1.990 worst 2.336 (10416 frames)	VOID: frames dropped: 10416 of 10801 paced
+00:51:44.642Z   01-defaults-try3 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 115.71 W, 46.47 C; 14 processes on the card, 0 not in the session's first list
+00:52:18.585Z   01-defaults-try3 end: card 28% busy, SM 2805 MHz, memory 15001 MHz, P0, 154.24 W, 50.65 C; 14 processes on the card, 0 not in the session's first list
+00:52:18.585Z   01-defaults-try3 clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+00:52:18.586Z 01-defaults-try3	00:51:44Z	exit 0	avg 1.546 p99 1.975 worst 2.349 (10304 frames)	VOID: frames dropped: 10304 of 10801 paced
+00:52:18.586Z defaults run 1: void three times; left void
+00:52:18.989Z   02-filter start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 105.89 W, 45.79 C; 14 processes on the card, 0 not in the session's first list
+00:52:53.010Z   02-filter end: card 1% busy, SM 2797 MHz, memory 15001 MHz, P0, 189.82 W, 51.16 C; 14 processes on the card, 0 not in the session's first list
+00:52:53.010Z   02-filter clocks over the run (16 samples): SM 2730-2797 MHz, memory 15001-15001 MHz, states P0
+00:52:53.011Z 02-filter	00:52:18Z	exit 0	avg 1.893 p99 2.324 worst 2.662 (10418 frames)	VOID: frames dropped: 10418 of 10801 paced
+00:52:53.432Z   02-filter-try2 start: card 0% busy, SM 2820 MHz, memory 15001 MHz, P0, 149.74 W, 48.01 C; 14 processes on the card, 0 not in the session's first list
+00:53:27.372Z   02-filter-try2 end: card 22% busy, SM 2797 MHz, memory 15001 MHz, P0, 190.62 W, 53.21 C; 14 processes on the card, 0 not in the session's first list
+00:53:27.372Z   02-filter-try2 clocks over the run (16 samples): SM 2632-2797 MHz, memory 15001-15001 MHz, states P0
+00:53:27.373Z 02-filter-try2	00:52:53Z	exit 0	avg 1.894 p99 2.335 worst 2.705 (10474 frames)	VOID: frames dropped: 10474 of 10801 paced
+00:53:27.777Z   02-filter-try3 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 124.99 W, 48.10 C; 14 processes on the card, 0 not in the session's first list
+00:54:01.681Z   02-filter-try3 end: card 64% busy, SM 2797 MHz, memory 15001 MHz, P0, 199.66 W, 60.64 C; 14 processes on the card, 0 not in the session's first list
+00:54:01.682Z   02-filter-try3 clocks over the run (16 samples): SM 2782-2797 MHz, memory 15001-15001 MHz, states P0
+00:54:01.682Z 02-filter-try3	00:53:27Z	exit 0	avg 1.895 p99 2.338 worst 2.678 (10447 frames)	VOID: frames dropped: 10447 of 10801 paced
+00:54:01.682Z filter run 2: void three times; left void
+00:54:02.083Z   03-defaults start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 149.83 W, 48.74 C; 14 processes on the card, 0 not in the session's first list
+00:54:35.933Z   03-defaults end: card 54% busy, SM 2805 MHz, memory 15001 MHz, P0, 158.19 W, 52.76 C; 14 processes on the card, 0 not in the session's first list
+00:54:35.933Z   03-defaults clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+00:54:35.933Z 03-defaults	00:54:01Z	exit 0	avg 1.543 p99 1.973 worst 2.357 (10344 frames)	VOID: frames dropped: 10344 of 10801 paced
+00:54:36.352Z   03-defaults-try2 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 112.55 W, 46.33 C; 14 processes on the card, 0 not in the session's first list
+00:55:10.304Z   03-defaults-try2 end: card 0% busy, SM 2805 MHz, memory 15001 MHz, P0, 142.99 W, 47.98 C; 14 processes on the card, 0 not in the session's first list
+00:55:10.304Z   03-defaults-try2 clocks over the run (16 samples): SM 2647-2805 MHz, memory 15001-15001 MHz, states P0
+00:55:10.305Z 03-defaults-try2	00:54:36Z	exit 0	avg 1.540 p99 1.985 worst 2.223 (10441 frames)	VOID: frames dropped: 10441 of 10801 paced
+00:55:10.707Z   03-defaults-try3 start: card 0% busy, SM 2820 MHz, memory 15001 MHz, P0, 121.42 W, 46.38 C; 14 processes on the card, 0 not in the session's first list
+00:55:44.429Z   03-defaults-try3 end: card 49% busy, SM 2805 MHz, memory 15001 MHz, P0, 156.57 W, 53.15 C; 14 processes on the card, 0 not in the session's first list
+00:55:44.429Z   03-defaults-try3 clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+00:55:44.430Z 03-defaults-try3	00:55:10Z	exit 0	avg 1.543 p99 1.979 worst 2.313 (10328 frames)	VOID: frames dropped: 10328 of 10801 paced
+00:55:44.430Z defaults run 3: void three times; left void
+00:55:44.833Z   04-filter start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 110.38 W, 45.77 C; 14 processes on the card, 0 not in the session's first list
+00:56:18.567Z   04-filter end: card 0% busy, SM 2797 MHz, memory 15001 MHz, P0, 178.67 W, 50.06 C; 14 processes on the card, 0 not in the session's first list
+00:56:18.567Z   04-filter clocks over the run (16 samples): SM 2632-2797 MHz, memory 15001-15001 MHz, states P0
+00:56:18.568Z 04-filter	00:55:44Z	exit 0	avg 1.890 p99 2.322 worst 2.596 (10461 frames)	VOID: frames dropped: 10461 of 10801 paced
+00:56:18.990Z   04-filter-try2 start: card 0% busy, SM 2812 MHz, memory 15001 MHz, P0, 152.38 W, 48.35 C; 14 processes on the card, 0 not in the session's first list
+00:56:52.893Z   04-filter-try2 end: card 53% busy, SM 2797 MHz, memory 15001 MHz, P0, 194.48 W, 58.46 C; 14 processes on the card, 0 not in the session's first list
+00:56:52.893Z   04-filter-try2 clocks over the run (16 samples): SM 2655-2797 MHz, memory 15001-15001 MHz, states P0
+00:56:52.893Z 04-filter-try2	00:56:18Z	exit 0	avg 1.892 p99 2.336 worst 2.631 (10467 frames)	VOID: frames dropped: 10467 of 10801 paced
+00:56:53.314Z   04-filter-try3 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 134.27 W, 48.21 C; 14 processes on the card, 0 not in the session's first list
+00:57:27.228Z   04-filter-try3 end: card 61% busy, SM 2797 MHz, memory 15001 MHz, P0, 202.23 W, 59.41 C; 14 processes on the card, 0 not in the session's first list
+00:57:27.228Z   04-filter-try3 clocks over the run (16 samples): SM 2730-2797 MHz, memory 15001-15001 MHz, states P0
+00:57:27.229Z 04-filter-try3	00:56:53Z	exit 0	avg 1.893 p99 2.335 worst 2.636 (10447 frames)	VOID: frames dropped: 10447 of 10801 paced
+00:57:27.229Z filter run 4: void three times; left void
+00:57:27.648Z   05-defaults start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 133.54 W, 48.46 C; 14 processes on the card, 0 not in the session's first list
+00:58:01.502Z   05-defaults end: card 50% busy, SM 2805 MHz, memory 15001 MHz, P0, 157.32 W, 52.90 C; 14 processes on the card, 0 not in the session's first list
+00:58:01.502Z   05-defaults clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+00:58:01.503Z 05-defaults	00:57:27Z	exit 0	avg 1.543 p99 1.982 worst 2.290 (10387 frames)	VOID: frames dropped: 10387 of 10801 paced
+00:58:01.905Z   05-defaults-try2 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 115.13 W, 46.55 C; 14 processes on the card, 0 not in the session's first list
+00:58:35.833Z   05-defaults-try2 end: card 11% busy, SM 2812 MHz, memory 15001 MHz, P0, 149.21 W, 49.22 C; 14 processes on the card, 0 not in the session's first list
+00:58:35.834Z   05-defaults-try2 clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+00:58:35.834Z 05-defaults-try2	00:58:01Z	exit 0	avg 1.542 p99 1.974 worst 2.331 (10402 frames)	VOID: frames dropped: 10402 of 10801 paced
+00:58:36.240Z   05-defaults-try3 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 121.57 W, 46.30 C; 14 processes on the card, 0 not in the session's first list
+00:59:10.145Z   05-defaults-try3 end: card 4% busy, SM 2812 MHz, memory 15001 MHz, P0, 148.75 W, 49.05 C; 14 processes on the card, 0 not in the session's first list
+00:59:10.145Z   05-defaults-try3 clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+00:59:10.146Z 05-defaults-try3	00:58:36Z	exit 0	avg 1.543 p99 1.981 worst 2.293 (10366 frames)	VOID: frames dropped: 10366 of 10801 paced
+00:59:10.146Z defaults run 5: void three times; left void
+00:59:10.583Z   06-filter start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 101.06 W, 45.68 C; 14 processes on the card, 0 not in the session's first list
+00:59:44.587Z   06-filter end: card 0% busy, SM 2812 MHz, memory 15001 MHz, P0, 177.03 W, 50.06 C; 14 processes on the card, 0 not in the session's first list
+00:59:44.588Z   06-filter clocks over the run (16 samples): SM 2632-2797 MHz, memory 15001-15001 MHz, states P0
+00:59:44.588Z 06-filter	00:59:10Z	exit 0	avg 1.891 p99 2.319 worst 2.657 (10455 frames)	VOID: frames dropped: 10455 of 10801 paced
+00:59:45.038Z   06-filter-try2 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 139.93 W, 47.93 C; 14 processes on the card, 0 not in the session's first list
+01:00:18.804Z   06-filter-try2 end: card 52% busy, SM 2797 MHz, memory 15001 MHz, P0, 199.89 W, 59.69 C; 14 processes on the card, 0 not in the session's first list
+01:00:18.804Z   06-filter-try2 clocks over the run (16 samples): SM 2632-2797 MHz, memory 15001-15001 MHz, states P0
+01:00:18.805Z 06-filter-try2	00:59:44Z	exit 0	avg 1.892 p99 2.330 worst 2.632 (10449 frames)	VOID: frames dropped: 10449 of 10801 paced
+01:00:19.227Z   06-filter-try3 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 141.79 W, 48.55 C; 14 processes on the card, 0 not in the session's first list
+01:00:52.988Z   06-filter-try3 end: card 20% busy, SM 2797 MHz, memory 15001 MHz, P0, 194.72 W, 53.18 C; 14 processes on the card, 0 not in the session's first list
+01:00:52.988Z   06-filter-try3 clocks over the run (16 samples): SM 2632-2797 MHz, memory 15001-15001 MHz, states P0
+01:00:52.988Z 06-filter-try3	01:00:19Z	exit 0	avg 1.894 p99 2.343 worst 2.576 (10422 frames)	VOID: frames dropped: 10422 of 10801 paced
+01:00:52.989Z filter run 6: void three times; left void
+01:00:53.396Z   07-defaults start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 129.03 W, 48.23 C; 14 processes on the card, 0 not in the session's first list
+01:01:27.178Z   07-defaults end: card 13% busy, SM 2812 MHz, memory 15001 MHz, P0, 150.26 W, 49.81 C; 14 processes on the card, 0 not in the session's first list
+01:01:27.178Z   07-defaults clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+01:01:27.178Z 07-defaults	01:00:53Z	exit 0	avg 1.542 p99 1.980 worst 2.294 (10423 frames)	VOID: frames dropped: 10423 of 10801 paced
+01:01:27.597Z   07-defaults-try2 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 118.71 W, 46.72 C; 14 processes on the card, 0 not in the session's first list
+01:02:01.333Z   07-defaults-try2 end: card 50% busy, SM 2805 MHz, memory 15001 MHz, P0, 156.87 W, 53.32 C; 14 processes on the card, 0 not in the session's first list
+01:02:01.333Z   07-defaults-try2 clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+01:02:01.333Z 07-defaults-try2	01:01:27Z	exit 0	avg 1.541 p99 1.972 worst 2.314 (10408 frames)	VOID: frames dropped: 10408 of 10801 paced
+01:02:01.738Z   07-defaults-try3 start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 119.74 W, 46.19 C; 14 processes on the card, 0 not in the session's first list
+01:02:35.495Z   07-defaults-try3 end: card 26% busy, SM 2805 MHz, memory 15001 MHz, P0, 153.31 W, 50.45 C; 14 processes on the card, 0 not in the session's first list
+01:02:35.495Z   07-defaults-try3 clocks over the run (16 samples): SM 2632-2805 MHz, memory 15001-15001 MHz, states P0
+01:02:35.496Z 07-defaults-try3	01:02:01Z	exit 0	avg 1.541 p99 1.974 worst 2.306 (10402 frames)	VOID: frames dropped: 10402 of 10801 paced
+01:02:35.496Z defaults run 7: void three times; left void
+01:02:35.496Z exe before: 3697152 bytes, mtime 2026-11-14T00:50:17.766Z; after: 3697152 bytes, mtime 2026-11-14T00:50:17.766Z: unchanged
+01:02:35.619Z clone state after: unchanged
+01:02:35.619Z done
