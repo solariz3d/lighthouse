@@ -19,14 +19,16 @@ const { spawnSync } = require('node:child_process');
 const REPO = path.resolve(__dirname, '..', '..');
 const tmp = require('../../consonance/tools/scratch.js').mkdtemp('installholds-');
 let seq = 0;
-function mkRepo() {
+function mkRepo(mutate) {
   const root = path.join(tmp, 'repo' + (++seq));
   for (const rel of ['dev/shell/lib', 'dev/shell/hooks', 'consonance/hooks', 'dev/shell']) {
     const from = path.join(REPO, ...rel.split('/')), to = path.join(root, ...rel.split('/'));
     fs.mkdirSync(to, { recursive: true });
     for (const e of fs.readdirSync(from, { withFileTypes: true })) if (e.isFile() && (rel !== 'dev/shell' || /\.(ps1|py|js)$/.test(e.name))) fs.copyFileSync(path.join(from, e.name), path.join(to, e.name));
   }
-  return { root, script: path.join(root, 'dev', 'shell', 'install.ps1') };
+  const script = path.join(root, 'dev', 'shell', 'install.ps1');
+  if (mutate) fs.writeFileSync(script, mutate(fs.readFileSync(script, 'utf8')));   // the copy only, as install-only.test.js does
+  return { root, script };
 }
 function mkHome() {
   const home = path.join(tmp, 'home' + (++seq));
@@ -101,4 +103,33 @@ test('I7 every Lib row says which hooks need it (By), and each named hook is a $
     assert.ok(typeof f.By === 'string' && f.By.trim(), `${f.To} has By`);
     for (const b of f.By.split(',').map((x) => x.trim().toLowerCase())) assert.ok(leaves.has(b), `${f.To}: By names ${b}, which is a $files row`);
   }
+});
+
+// ── THE SUMMARY LINE (the librarian's ruling, librarian/2026-11-13.md, 4a871545; pane P, 2026-11-13) ──
+// I7 counted a dated hold in the same `$held` as a real two-way conflict, so -Check's summary printed the conflict's wording ("a real two-way
+// conflict this script refuses to decide" / "Resolve by hand, then drop Hold from the manifest entry") for K3's two dated holds on D, which
+// reads as an instruction to drop them. Two counters, two lines.
+const swapOnce = (body, a, b) => { if (body.split(a).length !== 2) throw new Error('fixture anchor not once: ' + a.slice(0, 60)); return body.replace(a, b); };
+const ONE_DATED = (body) => swapOnce(body, "To = 'carrier-drift-watch.js';\n     Hold = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:167 - K3, off D'; HoldOn = @('D'); HoldUntil = '2026-11-27' }",
+  "To = 'carrier-drift-watch.js' }");
+const PLUS_CONFLICT = (body) => swapOnce(ONE_DATED(body), "To = 'hooks\\session-end.js' }", "To = 'hooks\\session-end.js'; Hold = $true }");
+
+test('SUMMARY (RED FIRST) one dated hold and no conflict: the summary names the dated hold with its date, and says nothing of a conflict or of dropping Hold', { skip }, () => {
+  const repo = mkRepo(ONE_DATED), home = mkHome();
+  const r = run(repo, home, ['-Check'], 'D', '2026-11-13T12:00:00');
+  assert.match(r.out, /1 file\(s\) HELD BY A DATED HOLD/, r.out.slice(-1200));
+  assert.match(r.out, /dispatch-gate\.js until 2026-11-27/);
+  assert.doesNotMatch(r.out, /two-way conflict this script refuses/);
+  assert.doesNotMatch(r.out, /Resolve by hand/);
+});
+
+test('SUMMARY one of each: two lines, each with its own count', { skip }, () => {
+  const repo = mkRepo(PLUS_CONFLICT), home = mkHome();
+  const dst = path.join(home, '.claude', 'shell', 'hooks', 'session-end.js');   // an installed copy that differs: the two-way conflict
+  fs.mkdirSync(path.dirname(dst), { recursive: true }); fs.writeFileSync(dst, '// a copy changed on this machine\n');
+  const r = run(repo, home, ['-Check'], 'D', '2026-11-13T12:00:00');
+  assert.match(r.out, /HOLD\s+hooks\\session-end\.js\s+two-way conflict/, 'the conflict row itself');
+  assert.match(r.out, /1 file\(s\) HELD - a real two-way conflict this script refuses to decide\./);
+  assert.match(r.out, /Resolve by hand, then drop Hold from the manifest entry\./);
+  assert.match(r.out, /1 file\(s\) HELD BY A DATED HOLD/);
 });
