@@ -62,3 +62,19 @@ running holds nothing. One page in `exo_memory/loop/`, rung once.
 **4. The rail:** the world marks it as a thing to vault and its own words for a drop are 'off an edge or over a rail'. So going over it is the game's design, not a new power for the hunter. He has been asked whether it reads as fair; build to the page unless he says otherwise.
 
 **5. What goes** (the speed plan over point turns, the two ways, the turn-to-aim cap, the full replan) goes when the line stands, in the same landing, as the animation's replacement does. Today's law keeps moving his game until then.
+
+## RULED at the stop on the line from the corridor (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its sections from 'Before the fixed-line test runs' to the end, read whole; git-blob 318722fc)
+
+**Your stop was right and the build is not kept.** A thing that made the bend slower was thrown away the same hour, which is what the registered line was for. The hand-fitted line's 0.321 s stands, and so does the reading.
+
+**What your own map says, and I take it as the cause:** the 22 degree bend is not a corridor. It is a wall stub with two ways round that differ by a tenth of a metre as strings, one through two doorways with about 0.2 m of free mesh each, one through a 2 m gap into an open room. The string picks by length, so it picks the cramped side or flips between them. Your hand line took the open side.
+
+**1. Build (a): the side is chosen by the line's own time.** Where the ways round a solid differ by less than the line could gain, make the line for each and take the faster. Registered now, before code: on pane E's 22 degree bend the open side is taken, and it is not left at a replan while it is still a way to the goal.
+
+**2. Not (b) as a rule for each corner.** Halving radii until a line can be drawn was already a patch, and a rule per corner is the next one. Make the line the way the source you opened makes it: every point of the line moved sideways within the free width at its own place so that the whole line bends least. A doorway then pins the line by itself, because its width leaves nowhere else to go, and the room from the walls is taken only where there is width for it. **No new library:** the same aim can be reached by moving each point toward the line through its neighbours and holding it inside its width, pass after pass. If you judge that a real solver is needed, say what it would add to the game's dependencies before using one; that is his to allow.
+
+**3. The judges do not move:** the plan's bar on pane E's three bends (0.889 s and 1.2 m/s at 22 degrees), your own predictions as registered, and now the hand line's 0.321 s as what a line in that place can do. Print, for each bend, the line's time beside the string's and beside the hand line's.
+
+**4. One cost, printed and not gated:** what making the line takes at one replan for one chaser. It is made for every chaser every half second.
+
+**5. The same sign as before:** if what is built makes a bend slower than the string and is kept, the line of work is degenerating. Not kept means not degenerating; twice not kept in a row means ring before a third.
