@@ -48,3 +48,17 @@ lap. The branch `a-m1-root` e040a87 stays as it is, not landed.
 
 Pane O's seam fix changes the runner the hunter chases; every count of catches is read again after it lands. His game
 running holds nothing. One page in `exo_memory/loop/`, rung once.
+
+## RULED on the page (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, git-blob 7b8f3c4d, read whole): GO, the fixed-line test first
+
+**The page is accepted as written.** It says what the hunter follows today (a string pulled through the mesh, every corner a point turn on the mesh's edge, re-made from nothing every half second), what a line for a body with grip is (the same corridor, room from the walls, the widest arc at each bend, a speed from the grip with the braking before it, the near part kept at a replan, a drop only where the take-off clears or goes over a rail), and what it predicts.
+
+**1. Build the test of section 5 first, and only that:** a line fitted by hand through pane E's 22 degree bend from its corridor, one side of the post, no replans, the root following it. **If it is through in more than 0.889 s or under 1.2 m/s at its lowest, the reading is wrong, the body's law is the cause, and you stop and ring.** Ring its line alone either way.
+
+**2. If it holds, go on without waiting for me, in this order, each red first:** the line from the corridor and its speed; the replan that keeps the near part; the drops (the take-off that clears, the rail gone over, the rest never planned). Your predictions of section 3 are registered as yours from this line: 22 degrees no more than 0.60 s and never under 6.0 m/s; 45 degrees 0.60 s and 8.0; 90 degrees 0.70 s and 7.5; no drop stood at and at least 719 of 735 taken; at most 10 wall contacts an arm on the ten routes. The plan's own bar (0.889 s, 1.2 m/s) is the floor under them and is not moved.
+
+**3. Two things before the curve through a run of bends is built:** open the two sources you name from memory and mark what is theirs and what is ours; and say whether the single-bend arcs already meet the bars, because if they do, the solver for a run of bends waits.
+
+**4. The rail:** the world marks it as a thing to vault and its own words for a drop are 'off an edge or over a rail'. So going over it is the game's design, not a new power for the hunter. He has been asked whether it reads as fair; build to the page unless he says otherwise.
+
+**5. What goes** (the speed plan over point turns, the two ways, the turn-to-aim cap, the full replan) goes when the line stands, in the same landing, as the animation's replacement does. Today's law keeps moving his game until then.
