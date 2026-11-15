@@ -3192,3 +3192,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-13 23:3x local (D) · PARKED at his close order: every branch on the remote (l192-footsteps-e 367fe1c and tell-row-kit-e 535e152 pushed tonight), nothing running, WHERE IT STOPS in four hand-backs → `exo_memory/handback/p-d675-filter-landing-E_2026-11-13.md` (WHERE IT STOPS)
 - L12 waits on his eye; the Dark landed, its look his call; l192's two rows red for his ear; L1, L8, L7 not started.
+
+## 2026-11-14 20:5x local (D) · D677 E1: one pose, two cameras is GREEN on his runs (no second rig; joints, palette and eye 0 apart), and the pair film plays a chaser live, the chase's own to the bit; L12 adds no GPU frame time (p99 1.989–1.995 against 1.988–2.001) → `exo_memory/handback/p-d677-e1-E_2026-11-14.md`
+- dreamzone-3 e1-two-cameras-e 45d299a pushed; self-test 63/63; mutants 5/5 (R2's 1 cm caught); his 20 runs identical on base and branch. The body ignores view pitch: looking down, the legs barely show (for C's body laps).
+- **Carry:** `--pair-near` pairs two models only while their chases stay together; under a model that diverges the chase, film each at its own sharpest turn. And in Git Bash run `cmd.exe /d /c` under `MSYS_NO_PATHCONV=1`, or it runs nothing and exits 0.
