@@ -74,3 +74,17 @@ casts from 0.5 m behind each untaken drop's foot toward its landing, through the
 The lowest clear height is 1.10 m for 19 and 1.20 m for 147. None is a higher wall with an opening, none has no opening by 2.5 m, and none
 is clear at the feet. Section 3's prediction ("at least 150 are rails", committed in 742e346a before this read) is met at 166. inferred: they
 are the generator's rails (`kSurfaceRail | kSurfaceVault`); the casts read heights, not surface flags.
+
+## Before the fixed-line test runs (2026-11-15 ~08:25 local): what the map of the 22 degree bend shows
+checked: `page_m_line_A_2026-11-15_evidence/l_map.txt` (the walkable mesh in 0.25 m cells around the bend, a scratch row; today's string path
+printed beside it). **The bend is not a 5.1 m corridor.** It is an L-shaped wall stub (the "post"), and there are two near-equal ways round it:
+- **south** (today's string): through a doorway in the wall at x -75 (free mesh only about z 40.4 to 40.6) and 2.2 m on a doorway in the wall
+  at z 42 (free only about x -76.75 to -76.5). A line through both needs about a 2 m radius.
+- **north:** from the doorway at x -72 (free about z 40.4 to 40.6), up through a gap about 2 m wide (x -74.5 to -72.5 at z 42) into the open
+  room (z 42.5 to 47.5), then straight to the target. As strings: north about 15.7 m, south about 15.8 m, which is why replans flip.
+**Correction to section 3:** the 22 degree arc (218 m) used E's "corridor across 5.1 m", which does not see the doors. It is withdrawn as
+arithmetic. The registered prediction (no more than 0.60 s, never under 6.0 m/s) stands as registered.
+**The line the test lays (by hand, chosen now):** north of the post. The string from the door to the doorway at x -72, then an arc through the
+doorway and the gap of radius about 5 m (inferred from the map: grip speed about 7 m/s), then a left arc in the open room toward the target,
+then straight to it. Every sample is checked on the mesh by the test itself; the radii are set by hand from the map until every sample is on
+it, and are printed. The test runs in the chase's arena at gen seed 1 (the scripted bends row's stand-in for E's staging), no replans, both ways.
