@@ -98,3 +98,22 @@ checked: `page_m_line_A_2026-11-15_evidence/ln_test.txt`, dreamzone-3 branch `a-
 - **My prediction, half met:** time no more than 0.60 s is met; never under 6.0 m/s is **not met** (5.76). inferred: the root's speed plan
   reads the 4.6 m arc as tighter than it is (grip on 4.6 m is 6.72 m/s); not read yet.
 - In the chase's arena at gen seed 1 (the scripted bends row's stand-in for E's staging), not in E's staging itself.
+
+## Ruling item 3: the sources opened, and whether single-bend arcs meet the bars (2026-11-15 ~08:45 local)
+- **Heilmeier et al., "Minimum curvature trajectory planning and control for an autonomous race car", Vehicle System Dynamics 58(10), DOI
+  10.1080/00423114.2019.1631455.** The article's own text was not reachable (TUM's repository answered with a bot check). Read instead: the
+  arXiv paper 2309.09186 (sections I-B and III-D: "Heilmeier et al. extend the idea to a quadratic programming (QP) formulation with
+  improvements to the curvature calculation"; its decision variables are "the lateral movements of individual discretization points"; the
+  objective a sum of squared curvatures), and TUM's implementation (github TUMFTM/global_racetrajectory_optimization, LGPL-3.0: the track is
+  a reference line with widths to the right and left along normals; "Minimum curvature (with or without iterative call)"). **Theirs:** a QP on
+  lateral offsets along the reference line's normals, minimising squared curvature within the track's widths. **Ours:** applying it to a nav
+  corridor, and the room (0.35 m radius + 0.2 m) taken off the widths. Its code is LGPL: the idea only, nothing copied.
+- **Braghin et al., "Race driver model", Computers and Structures 86 (2008) 1503-1516.** Full text restricted; the abstract and citing papers
+  only: the racing line is a compromise between the shortest path and the least-curvature path. **Theirs:** that compromise. Nothing else
+  from it is used.
+- **Lipp and Boyd, "Minimum-time speed optimisation over a fixed path", International Journal of Control 87(6) (2014) 1297-1311.** Its text
+  was not reachable (Stanford's pages refused the certificate). **Ours until read:** the speed along a fixed line from the friction circle with
+  a backward pass for braking and a forward pass for acceleration (the root already does this over its path, M2).
+- **Do single-bend arcs already meet the bars?** On E's 22 degree bend, yes: the fixed line is two single-bend arcs (4.6 m and 8 m) and is
+  through in 0.321 s at no less than 5.76 m/s. So, as ruled, **the solver for a run of bends waits**; the line from the corridor is built as
+  one widest arc at each bend first, and the 45 and 90 degree bends say whether that is enough.
