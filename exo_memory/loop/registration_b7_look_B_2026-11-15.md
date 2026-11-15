@@ -100,3 +100,49 @@ packet's "check it" by the chair's word of 04:48Z. Base: dreamzone-3 main `60341
 ## 6. My bias
 
 The WIP is mine, and I want its numbers to hold. Row 1's bar (3 ticks) is the swarm's, not mine.
+
+## 7. Row 1 split into the law's three rows (the chair's ruling of 07:11:48Z; registered before any of them runs)
+
+**The ruling.** The law stays. Row 1 becomes the three things the law does, read on his seven kept runs of 2026-11-14 (copies in
+`G:\consonance-scratch\b-lookback-runs`) by `dz-world --look-check`. The chair's words for each row are kept as given; my
+operational reading is given beside each one.
+
+**Shared by all three, unchanged from 4afa6b6:**
+- **A quick turn:** a run of ticks where the view's yaw rate is at least 3 rad/s.
+- **Its window:** from its first quick tick to 40 ticks after its last.
+- **Its lag:** the shoulders' peak tick less the view's peak tick.
+- **The shoulders' yaw:** read from the drawn ShoulderL→ShoulderR line.
+
+1. **THE SPRING.** "On turns that begin with the shoulders within 2 degrees of the view and that do not reach the limit, the shoulders'
+   peak is at least 3 ticks after the view's. Red on main."
+   - **Under it:** at the tick before the turn's first quick tick, |shoulders − view| ≤ 2 degrees; and over the window, the shoulders
+     never trail the view by 50 degrees less 0.01 rad or more (the existing "at the limit" test).
+   - **Asserted:** every such turn has a lag ≥ 3 ticks.
+   - **Red on main:** the same check with the law off (`--look-check-off`, body_look = 0). Row 4 pins that body as main's to the
+     digest. With the law off the shoulders are the view's, so the lag is 0 on every turn.
+2. **THE LIMIT.** "The chest is never more than 50 degrees behind the view, and the hips never more than 45."
+   - **Asserted, on every tick of the run:** |the law's chest − view| ≤ 50 degrees + 1e-3 rad, and |drawn hips − view| ≤ 45 degrees +
+     1e-3 rad (as 4afa6b6 reads them).
+3. **THE FOLLOWER.** "At every tick of every quick turn, whatever came before it, the shoulders turn toward where the view is, or not
+   at all. Never away from it."
+   - **On every tick k of every turn's window:** let d be the shoulders' change, wrap(s[k] − s[k−1]), and g the gap, wrap(view[k] −
+     s[k−1]).
+   - **Asserted:** the tick moves AWAY when d·sign(g) < −1e-4 rad (0.0057 degrees, the band for "not at all"). The count of such ticks
+     is 0.
+   - **Printed:** the count of ticks judged.
+
+**Printed first, before any verdict:** how many of the 864 turns fall under each row. All 864 fall under rows 2 and 3, so the count that
+moves is row 1's.
+
+**The unwelcome outcomes, named now:**
+- **The chair's:** if fewer than a third (fewer than 288 of 864) fall under row 1, the spring is barely tested on his play. I ring then,
+  before going on.
+- **Mine, a prediction, from the law's code:** row 3 may go RED. The chest's spring carries a velocity (`chest_rate`,
+  `game/body_look.cpp:40-43`). When the view reverses and crosses back past the shoulders, that velocity carries them on, away from
+  the view, for a few ticks before it turns. If row 3 is red, I print where it fails (reversal or not) and ring. I do not tune the
+  spring, which is NOT TAKEN by the ruling.
+
+**Not taken (the ruling):** a slower spring, no limit, or stopping the lap.
+
+**Where it runs:** the gym bot's row in body_tests stays the report the 06:06Z ruling made it, with the limit asserted. The three rows
+are read by `--look-check` on his runs.
