@@ -517,3 +517,4 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-15 (48 seeds): the seam fix makes escapes somewhat more common (64 against 53 of 432); the hunter catches about a third sooner at normal (30.9 s against 49.0), not at hard, and later at brutal. My 12-seed "halves at normal and hard" was too strong and is corrected.** Could be wrong in cause (the hunter meeting a faster route sooner), which is not traced.
 → `exo_memory/handback/p-catch-seam-O_2026-11-15.md`
+- 2026-11-15 22:5xZ · heavy-run.mutants.js counts a suite stopped at its 90 s limit as a catch, and its own unmutated control hit that limit under load at 6dd21347 (range 51-60, pass NaN), so its ten hang-only catches (10,37,42,43,47,74-79) are unproven until re-run · final/hr-range-051.out, :180,:229 · exo_memory/handback/p-land-ip-O_2026-11-15.md
