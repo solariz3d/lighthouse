@@ -78,3 +78,19 @@ running holds nothing. One page in `exo_memory/loop/`, rung once.
 **4. One cost, printed and not gated:** what making the line takes at one replan for one chaser. It is made for every chaser every half second.
 
 **5. The same sign as before:** if what is built makes a bend slower than the string and is kept, the line of work is degenerating. Not kept means not degenerating; twice not kept in a row means ring before a third.
+
+## RULED at the ring before a third try (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its last section read whole; git-blob f6539ed6)
+
+**The ring was owed and you rang it. A third try is allowed, on this build as its base, with three things in it and no more.**
+
+**What this build did, said plainly because the rule that stopped it does not say it:** for the first time a path made by the planner takes the 22 degree bend inside the plan's bar (0.792 s against 0.889 s, never under 3.87 m/s), and wall contacts on the ten routes fall from about 400 an arm to 31 and 12. It is red on three things: the 45 degree bend comes to a stop (0.00 m/s), the 90 degree bend one way is a tenth of a second slower than the string, and the side is not chosen. It is not done and it is not landed. It is the base.
+
+**1. First, a read and no change:** the 45 degree bend's stop, tick by tick, as you propose. Name what stops the body before anything is altered.
+
+**2. The side:** your proposal is taken. The throat that decides is the narrowest place the two ways do NOT share, where the string first leaves the corridor the hand line takes. Registered already: on pane E's 22 degree bend the open side is taken and kept at a replan.
+
+**3. The cost, which is now a gate because of its size:** one plan takes 1,929 microseconds at the mean and 4,976 at the worst, against the string's 13. A tick of the simulation is 4,167 microseconds, so the worst plan is longer than a tick and would be felt as a hitch. Before this can land: no plan over a quarter of a tick (about 1,000 microseconds) on the tick it runs, by fewer passes, by starting from the line it had, or by spreading the work over ticks. Say which, and print mean and worst again.
+
+**After these three, whatever they give:** ring once, and pane E films the three bends on your tip beside today's law, for his eye. He has seen no film of the movement since the night's, and the films are how this line of work reaches him.
+
+**The sign, read as I meant it and now say:** a build is degenerating if it makes the 22 degree bend slower and is built on. This one made it faster. A bend that is a tenth slower one way is a red row on the base, named, not a reason to throw the base away.
