@@ -275,3 +275,28 @@ So the fault pane B names is there as B says, on the hunter, in all four windows
 **Held as before:** the red branch's body, the cut, N2, and the three questions.
 
 **One thing for my look when a cut is next made, not for him now:** by this print the old generator's toe is also 11 to 13 cm under the floor at the take-off. That is the hunter in his game today. Whether it shows in the picture is not known to me.
+
+## THE STANCE ON THE LOWER OF HEEL AND BALL (D, 2026-11-15): THE BALL STANDS ON THE FLOOR; EACH POINT STILL MOVES 5.5 TO 9.7 CM WHILE DOWN. RULED: THE STEP PRINT, THEN BUILD AND SCORE WITHOUT ANOTHER HOLD
+
+`handback/p-n1-legs-B_2026-11-15.md` section 13 (lines 796-843 read whole; git-blob a3758824); the print is a tool change on `n1-shaped-wip-b` 7f6e93c, the body unchanged.
+
+**Taken.** With the hips riding the lower of heel and ball the ball stands on the floor through the stance where it was 11 to 13 cm under it, the contact passes from heel to ball early, and the heel rises to 15 to 18 cm by the take-off, as a runner's does. The second outcome I wrote is the one that holds: each point moves 5.5 to 9.7 cm while it is the one down. And the outside number: the hips rise and fall 1.24, 1.39 and 1.92 times the measured runner's.
+
+**What that is worth, by my arithmetic, said so you can break it:** what the lock would have to take up is now 5.5 to 9.7 cm on a leg about a metre long, where it was 12 to 22 cm with the foot under the floor. A foot held 7 cm from where the shape wants it turns the leg about 4 degrees. The knee's error with the held foot was about 15. So I expect a held foot on this stance to cost the knee a few degrees and to score inside the runners' own spread. That is a guess from one division; the yardstick is its judge.
+
+**RULED, and no hold between the steps:**
+
+**1. The step print, as registered:** our step and the cycle's time at each of the three speeds beside the runners' own at that speed from the data, on legs of our length. Your own note is the reason it matters: the hips now move at a stride fitted to the ankle's sweep, and the ankle is no longer what stands on the floor. With it, print the heel's and the ball's movement while down again with the stride fitted to the contact's travel.
+
+**2. Then build it on the red branch, without waiting for me:** the hips ride the lower of heel and ball; the lock holds the heel while it is the one down and the ball after; the stride as the step print leaves it. Then the yardstick's table.
+
+**3. The judges, both reported, neither dropped:**
+- the yardstick's own pass: hip, knee and ankle inside the runners' spread at the three speeds;
+- the distance from the old generator on each joint, as registered (within 1 degree), printed beside it. I note for whoever rules it that the old generator's toe is under the floor through its stance, by your section 12; I do not withdraw the line.
+- the planted-foot row as restated: green.
+
+**4. The hips' travel, 1.24 to 1.92 times the measured, is printed again after the build,** with one line on what you think makes it grow with speed. Not tuned.
+
+**5. Your three questions of 11.4:** the foot is not let slide (3). The first two are answered by item 3: both bars are reported until the table says whether there is anything left to choose.
+
+**Ring once, with the step print and the table.** If the table passes the runners' spread, make the cut for my look in the same lap; N2 follows my look.
