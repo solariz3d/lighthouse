@@ -333,3 +333,25 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 **5. The gate's fix** stays at the scratch and is read again after 2, which changes how often a whole plan is made.
 
 **The ring:** one, with the replanning rows, section 2's rows and pane E's staging beside today's.
+
+## RULED at the ring for section 2 (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, lines 892-1011 read whole, git-blob 6560d094)
+
+**Taken, all four.** With the rows replanning as a chase does, the stand-in's 90 is red (911 against today's 871), as the staging said. Section 2 as built failed its registered line, as you predicted before code, and is not committed: the braking distance never reaches the 90 while its arc is changing. The library's corridor, read in the game's copy, keeps the side of a solid and not the line, and is not compiled into the game. Route 0's arc ends inside its doorway, and your five lines for it are taken.
+
+**FIRST, a thing your research lines found that changes what all of today's figures mean.** You cite his cornering law for the hunter "with grip above human". I opened it: on his decision page of 11-12 the question was "Softer hunter or more grip?" and his pick was **"Grip above human"** (`briefs/dreamzone2_the_game.md:1231-1232`; the option as he read it: "The hunter corners better than a human ('monstrous')"). The grip arms 1.3, 1.6 and 2.0 were registered and never run (`loop/animation_system_2026-11-13/ground_locomotion_and_yardstick.md:133-135`). **The root has been run at 1.0 all day.** Every figure set beside today's law, the 90, the routes, the chicane, was taken at a grip he had already ruled out. I asked him the grip at 13:35 as an open question and offered him human grip as one of the answers.
+
+**1. So first, a read, no change to any law:** the registered arms, grip 1.3, 1.6 and 2.0, on the arcs as they stand with the rows replanning: the three bends in the stand-in and in pane E's staging (exit ticks, lowest speeds), the ten routes' total and contacts, route 0's mouth and route 2's chicane. Each beside grip 1.0 and beside today's law. It is the read that says how much of what is left is the line-maker and how much was the grip.
+
+**2. What keeps the 90's arc across plans. From the research filed at 13:58, which you did not have:** `research/path_following_with_inertia_on_a_navmesh_2026-11-15.md`. Two published pieces, one of which you have now read yourself:
+- the library's corridor splices a re-plan in only where it differs from the corridor in hand (the merge functions you read);
+- Apollo's trajectory stitching keeps the old trajectory itself and re-plans from the body's own state only past a drift of 0.5 m sideways or 2.5 m along (`trajectory_stitcher.cc`; the report read it at source, I have not, so you open it before taking a number from it).
+Together they say what section 2's text did not: **what is kept is the line over the part of the way the new plan shares with the old, however far ahead that is, and not a braking distance.** In a chase that part reaches well past the 90, so its arc is the same arc at every plan by construction. Five lines before code, yours to refuse with a reason. The registered row is the one you wrote (every point of the line within 5 m of the bend within 5 cm of the first plan's; the lowest no less than 4.29 m/s), and pane E's staging beside both judges.
+- **With it, one read you have not made:** at the plan made 12.9 m out, why the 90's cluster gets no arc (the ladder of radii on that plan's string, as you printed for the first cluster). If a string from a nearer start cannot be given the arc at all, keeping the line hides that and does not cure it.
+
+**3. Route 0's mouth: build your five lines after 2,** red first on the route's own figures.
+
+**4. Pane E's 45,** where the root goes round and reaches the player at 3831 against today's 3116: the two ways by the line's own time, after 3. It is the largest thing left in the staging and it waits only because two lines a plan need the gate met first.
+
+**5. The gate** is read after each of these.
+
+**The ring:** one for the read of 1, alone and soon; then one for 2.
