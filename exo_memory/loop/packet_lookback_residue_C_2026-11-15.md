@@ -49,3 +49,32 @@ that is landed. One reproduction each, then one fix each. Nothing else is asked.
 
 A game of his running holds nothing but the build of his own Dreamzone copy while a Dreamzone of his runs. Trees and builds
 on G:, through the lock's own wait. His words stay out of the game's repository. Pane B lands. One short hand-back.
+
+## RULED at pane O's hand-back (D, 2026-11-15; `handback/p-lookback-residue-O_2026-11-15.md`, read whole)
+
+**Both fixes are accepted.** The slow-down was not the look back. It was the runner's own mover losing most of its speed for a
+tick at every seam between floor pieces, 95 times in his 174 s run. That is a fault in the simulation he plays, found from
+his words about a glance.
+
+**1. The seam fix lands as the default, with the old rule kept for one purpose only: a kept run made before it replays as it
+was recorded.** One parameter of the mover, on by default; a run whose record does not name it replays with it off. No key, no
+line in his settings file, nothing he chooses. Why, against the chair's "no switch": his kept runs are what every other lap
+tonight reads its invisible risks on (the drop of his item 225, the seven runs of the keys, the twenty of the movement, the
+look's turns). Without this, all of them stop replaying at their first seam, on the same day the animation restarts.
+- Row, beside the seam's own: a run recorded before the fix replays to its fingerprints after it; a run recorded after it
+  names the parameter and replays to its own.
+
+**2. The lean row that went red (`the_hunters_drawn_lean_eases_into_a_turn_and_does_not_rock_on_a_straight`, 7 of 24 against
+its 8) becomes a report, by name.** It reads the old animation's drawn lean, which his word of 06:59 scraps; its own comment
+says its form sits at its edge; and it moved because the bot it chases stopped stumbling, not because the lean changed. The
+form is not re-fitted to the new bot. It prints its count until the replacement deletes it, and what it guarded is carried
+to the new system's stage N2: the lean does not jump.
+
+**3. The border's fix is accepted on its measure and its cost** (the held look back's edges from 1.46 to 1.76 times the
+middle down to 1.10 to 1.20; a tenth of a millisecond a frame). His eye on the film decides whether it is fixed.
+
+**4. For pane A, named:** the bot that flees now keeps its speed, so the hunter chases a faster runner. Every count of how
+often it catches was taken on a runner that stumbled every second or two. They are read again after this lands.
+
+**Landing, pane B:** the whole suite once (this one changes the simulation), with the lean row as a report and his kept runs
+replaying under the parameter. Then his copy.
