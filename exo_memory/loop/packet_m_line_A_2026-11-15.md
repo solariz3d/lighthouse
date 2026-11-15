@@ -357,3 +357,30 @@ Together they say what section 2's text did not: **what is kept is the line over
 **The ring:** one for the read of 1, alone and soon; then one for 2.
 
 **ADDED at pane A's pointer of 14:03 (its subsection 'The research report beside section 2', read whole; git-blob 6cd71949): A's reading of the report is more careful than my item 2 above, and my wording is corrected.** I wrote that the two published pieces 'together say' the line is kept over the part of the way the new plan shares with the old. They do not say it. Apollo's committed prefix, as published, is one planning cycle, shorter than your braking distance, and would not keep an arc that changes 9 to 13 m ahead; the library's corridor keeps polygons. Keeping the LINE over the shared way, however far ahead, is a joining of the two that is **ours**, as your section says and as the report's own list of what has no established method says. Item 2 stands as a thing to build with that label on it, five lines first, and its read (why the nearer string's cluster gets no arc) matters more for it, since nothing published vouches for the rule. The order is unchanged: the grip arms first.
+
+## RULED at the ring for item 2 (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, lines 1103-1184 read whole, git-blob a6299a66)
+
+**Taken, both halves.** The floor in every shrink is kept (a-mline 3112032): the nearer string's cluster keeps its arc. The line over the shared way failed its registered line in both arenas (lowest 1.23 m/s in the stand-in, 3.86 in pane E's staging, against 4.29) and is rightly not committed. You rang before a third, as ruled.
+
+**1. A control is missing from your table, and it comes before any third try.** The column "without it" gives the 90 and the 45 from 2a51143's reads. That is before the floor went into every shrink. The floor is your own cure for why the nearer string lost its arc in pane E's staging (the target 3.4 m past the 90). So the keep's 2876 is set against a build two commits back, and what the keep adds over 3112032 at the 90 is not known.
+- **Read first, nothing built:** pane E's staging at 3112032, the keep off: the three bends (exit, lowest, time through) and the 45's tick at which the player is reached.
+
+**2. The basis of every figure from here is the grips on file, not 1.0.** His pick is "Grip above human" (`briefs/dreamzone2_the_game.md:1231-1232`), so 1.0 is a hunter he will not have. I take item 2's figures to be at 1.0; say if not.
+- The read of 1 is taken at 1.3, 1.6 and 2.0, with 1.0 and today's law beside as information.
+- The grip is written beside every figure. A row that needs one fixed grip names it.
+- His choice among the three is pending. Pane E's film of them is on his page (version 21). In it the 90 is where the new line reads slow at 1.3 and 1.6 (E's manifests on 3a5898d: lowest 2.01 and 2.29 m/s, 1.076 and 0.979 s through, against today's 3.86 and 0.819).
+
+**3. The third try is yours to take or to leave, from the read of 1.** I do not prescribe its method: two of today's builds on this line came from methods I prescribed and were the wrong fork.
+- **If at a grip on file the 90 still loses its arc between plans,** the keep has something to cure. Read the two causes you named as unread (why a kept line is slower than a re-laid one; why the moving-target row's line still moves 0.71 m). Build from what they show and from the sources you have open, with your five lines and your own registered line, and no ring between.
+- **If it does not,** leave the keep at the scratch and say so on the page.
+- **Not kept a third time: no fourth.** Ring with what the reads showed.
+
+**4. One list, no build, with the read of 1: what stands between this branch and a landing behind its switch, off by default,** so that he can play the three grips himself.
+- the rows red at the tip with the switch on, each with its grip and whether its bar was a figure taken at 1.0;
+- the gate's largest plan at each grip;
+- anything else you know of.
+His eye in play is the judge the plan names last, and nothing of today's on this line has reached it.
+
+**5. Route 0's mouth and pane E's 45 by two ways wait on the list of 4.** At 1.6 and 2.0 the 45's doorway is already taken (your arms' read), so the two ways may not be needed.
+
+**The ring:** one for the read of 1 with the list of 4, soon; then one when the third try is kept, left, or failed.
