@@ -503,3 +503,32 @@ The old generator is not a bar and is not printed as one.
 **The open candidates (pane A's evaluation, `loop/eval_open_systems_A_2026-11-15.md`, git-blob 9d6ae95b, read whole):** none can be filmed today without a call of his and none reaches the hunter's speed; Overgrowth's animations are not open and its rules are already in use here. The evaluation's hold on the upper body is lifted by this section. His calls from it are put to him in plain words (the 1.47 GB of open recordings first; the rest only if he wants to see them).
 
 **It failed on his terms if** the next film of the new system still shows legs under a body that does not move with them. **It failed as a plan if** a later section cuts the body into stages by part again.
+
+## THE EVALUATION's ANSWER (D, 2026-11-15 16:5x; both panes' files read whole): NO OPEN SYSTEM HANDS OVER A WHOLE BODY OR A BACKWARDS WALK; WHAT EXISTS IS A METHOD, A FOOT SOLVER AND RECORDINGS
+
+(`loop/eval_open_systems_A_2026-11-15.md`, git-blob 9d6ae95b; `loop/eval_rbfx_and_locomotion_system_B_2026-11-15.md`, git-blob 5af3ff75. Each licence below was opened by the pane named; none by the librarian.)
+
+| what exists | licence, opened by | what it gives | what it does not |
+|---|---|---|---|
+| Johansen's Locomotion System | MPL-2.0 for the code (pane B); its demo characters and cycles are Unity-only and cannot come here | the whole stepping method: footprints along a circle in a turn, a footbase between them, heel or toe as pivot, the hips' height, parking the legs to stop and start | a backwards walk without a backward cycle to blend; the upper body ("only controls the legs"); anything past its data's speed |
+| rbfx's IK module | MIT (pane B) | a C++ toe-first leg and foot solver with ground recovery, and sticky foot targets | any stepping at all |
+| Overgrowth | Apache-2.0 for the code (pane A); its animations and data are not open | a shipped procedural character's rules, already read whole and in use here | its key poses; a recorded backwards walk |
+| Holden's Motion-Matching | MIT for the code (pane A); its bundled data cannot ship | a whole matching controller | motion for a body or a speed that was not recorded |
+| Esoterica | MIT (pane A) | graph nodes that warp and blend clips | any clips, any locomotion |
+| **100STYLE** | CC BY 4.0, a sold game allowed with credit (pane A) | **recorded walks and runs forwards, backwards and sideways, with idles and transitions** | the hunter's speed; more than one performer |
+| CMU | usable in sold products, not resold as data (pane A) | running clips to 4.15 m/s, walks, some backwards and turning clips | the same |
+
+**Read together:** the stepping method is Johansen's and the room already carries parts of it; the linked body is his own design from the first game, built today; the one thing missing that someone else has is **a recorded cycle that goes backwards and sideways**, which is what the bugged backwards walk lacks.
+
+**So the base is ours, with three things taken from outside if he says yes to each:**
+1. **The open recordings (100STYLE, 1.47 GB; CMU's backwards and turning clips):** the source cycles for travel that is not forwards. *His call: the download and the credit line.*
+2. **Johansen's method, written fresh in `game/anim/` from the thesis and the reading already done** (way (a) of pane B's file). No file of his is ported, so nothing of the game has to be published. *His call only if he would rather port the files under MPL-2.0, which means publishing those files.*
+3. **rbfx's leg solver's maths, ported under MIT** with its notice in the game's third-party list, if pane B judges it better than the two-bone solve it has. *His call: the licence line.*
+
+**Not asked of him:** buying Overgrowth, installing raylib, Unity or a newer Visual Studio. None is needed to take what is useful.
+
+**THE WORK NOW:**
+- **One body, one branch.** Pane A merges dreamzone-3 `n1-shaped-wip-b` f36e66b (the first tick: the new system draws the runner from its first frame and off its feet) into `a-chain`, so that the next film starts at frame 0 with no old pose.
+- **Pane B, the downward half, on that tip:** the pelvis's turn with the stride drawn into the legs' plan (pane A's measure and the many-runner range are its sources); the legs in a turn by Johansen's method (the footprint along a circle, its orientation kept once placed, the swing bent through its mid-flight point); his turn test goes green or says why not. The backwards and sideways step waits for the recordings, or for his no.
+- **Pane A:** what he says of the whole-body film first; the hunter's arms if he names them.
+- **Pane E:** the next film when either half changes what is seen.
