@@ -12,8 +12,9 @@ and stays recorded as fired.** The row is amended by name to a report (below).
 
 ## The result in eight lines
 1. **`a-m1-root` was pushed to the game's remote by name before M2 started** (`96d0336`, credential gate "allow", privacy scan 0 found,
-   read back). M2's commits are on it locally: `23d63ac`, `ab096e4`, `ae374ef`, `4e66b99`, `85eb3f8`, `0ba17ea` (pushed at the end of this
-   hand-back, below).
+   read back). M2's commits on it: `23d63ac`, `ab096e4`, `ae374ef`, `4e66b99`, `85eb3f8`, `0ba17ea`, **pushed at 18:5x by name**
+   (credential gate "allow", privacy scan 0 found; checked: `git ls-remote origin refs/heads/a-m1-root` → `0ba17ea397bb8d5af96ca4d4b8d8ce0449c1ec8f`).
+   Pane B lands it; I do not.
 2. **R1 re-registered as ruled** (`23d63ac`): red on today's rule (3.167 and 2.529 times the law's bound), green on the law (0.999 of it).
 3. **`nav::Query::open_along`, a nav-only commit with its own row** (`ab096e4`): red on a stub; a diagonal ray grazing a polygon corner stopped
    short in 8 of 1,598 rays and the query now casts on past it; nav_tests 33 of 33. **B can read that one commit.**
