@@ -373,3 +373,21 @@ The old generator is not a bar and is not printed as one.
 - **After pane B's ring,** the new system's remaining work is split into parts with a pane named for each (his rule of 2026-10-09), in this plan, before anything is dispatched.
 
 **It failed if** a later lap films, measures or tunes the old animation system, or sets it beside the new one, before he says otherwise.
+
+## HIS WORD OF 15:10 (D, 2026-11-15; game brief item 242): EVERYTHING LEARNT FROM THE FIRST ITERATION IS USED
+
+**His words:** "but it is good to still use everything we learnt from the first iteration of the animation system we tried".
+
+**The line it draws, with the section above:**
+- **Not done:** building on the first iteration's code, calling its functions, filming its body, setting it beside the new one, scoring against it.
+- **Done, and owed:** using what it taught. Three kinds, each written as a lesson with where it is on file:
+  1. **what it got right, and why** (for one: its straight run scores inside the measured runners' spread at hip, knee and ankle, because the measured shape draws the leg; the yardstick's table, this plan's earlier sections);
+  2. **what it got wrong, and why** (for some: the ankle held at standing height drives the toe 11 to 13 cm under the floor; a stance foot that slides; legs that land as on a straight while the body turns, his item 238; an elbow that moves 26.5 degrees where a sprinter's moves 83, his item 239; a lean computed each tick and then discarded, `loop/handoff_dreamzone3_2026-11-14-L.md:37-39`);
+  3. **his own verdicts on it** (his items 153, 168, 180, 186, 218, 220, 221, 231, 233, 235 to 239, and `loop/animation_system_2026-11-13/ground_his_words.md`).
+- **A lesson is not the old code and not the old number.** A number of the first iteration that was set by eye and marked "ours" comes over only with the reason it was right (a source, a measure, or his pick), and is then cited to that reason.
+
+**This amends the section of 13:42** (the withdrawal of 'carry the measured method over whole'): the order to carry the old method over as code and as a bar stays withdrawn. What that method taught about turning the measured curves into a leg is a lesson of kind 1 and may be used as one.
+
+**Owed before any stage's page is written: one lessons sheet,** `loop/lessons_first_iteration_2026-11-15.md`, from the shelf (the 11-13 research folder, pane B's hand-back sections 6 to 16, pane E's four sheets' lists of what is not carried over, his items above). Each line: the lesson, its kind, the stage it bears on (N1 to N5), its path and line. What is not on file is said.
+
+**It failed if** a fault of the first iteration that is on the sheet is built again in the new system, or a thing the first got right is found again by trial.

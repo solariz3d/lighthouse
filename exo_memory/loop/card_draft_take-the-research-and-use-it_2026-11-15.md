@@ -14,6 +14,8 @@ metadata:
 - 11-15 13:28: "are you doing it from scratch instead if referencing research new and old?"
 - 11-15 13:36: "we must do a card for this i think. You have ignored me like three times now when i have said to scrap the old build for a new system, like why?"
 - 11-15 13:37: "always take relevant research and use it"
+- 11-15 15:03: "well stop working on the old one completely for now wtf"
+- 11-15 15:10: "but it is good to still use everything we learnt from the first iteration of the animation system we tried"
 
 ## The failure this card catches
 
@@ -31,8 +33,9 @@ Seen on 2026-11-15, each in `librarian/2026-11-15.md`:
 
 1. **When he has decided, the plan is written to the decision.** No test of whether. Evidence goes into the plan as a caution or a row, not back to him as a question.
 2. **The new thing is built from research:** measured data, published methods, open-source code, each with its path or address beside the line it supports. Before a method or a number is invented, the shelf is searched, then outside. "Not on file" is said plainly and then looked up.
-3. **The old thing is neither source nor judge.** The judge is the measure that stands outside both (real runners, the plan's own bar) and his eye. The old thing's figures may be printed beside a result; they are never the bar.
-4. **A citation is opened beside the sentence it supports,** in the turn that sentence is written.
+3. **The old thing is not built on, not the judge, and not shown.** The judge is the measure that stands outside both (real runners, the plan's own bar) and his eye. Nothing is filmed with the old thing or set beside the new one for him.
+4. **What was learnt from the old thing is used, all of it.** What it got right and why, what it got wrong and why, and his own verdicts on it, each written down as a lesson with its path. A lesson is not the old code and not the old number.
+5. **A citation is opened beside the sentence it supports,** in the turn that sentence is written.
 
 **Tell:** am I reaching for the old build because it is the only thing here with numbers on it?
 
