@@ -611,7 +611,10 @@ test('APP RULE (D454): with CONSONANCE_DATA unset and data_dir empty or absent, 
     const h = tmp(); if (cfg) fs.writeFileSync(path.join(h, '.consonance.json'), JSON.stringify(cfg));
     const env = cleanEnv({ USERPROFILE: h, HOME: h }); delete env.CONSONANCE_DATA;
     const def = path.join(h, '.consonance');
-    const c = spawn(process.execPath, ['-e', `const fs=require('fs');require(${JSON.stringify(HELPER)}).hold({cmd:'app rule'});const l=fs.existsSync(${JSON.stringify(def)})?fs.readdirSync(${JSON.stringify(def)}).filter((n)=>/^heavy-run(\\.\\d+)?\\.lock$/.test(n)):[];console.log(l.length?'LOCKED':'NOLOCK');console.log('RAN')`], { env, stdio: ['ignore', 'pipe', 'pipe'] });
+    // AMENDED 2026-11-15 (P, D677): the row takes its own disk reading (diskFree), as the D287 disk rows do. It tests where the data dir
+    // lands, not the disk, and with the real reading it went red on every tree while this machine's C: was under the 20 GB floor (O's
+    // landing, p-land-ip-O_2026-11-15.md). The disk guard keeps its own rows above.
+    const c = spawn(process.execPath, ['-e', `const fs=require('fs');require(${JSON.stringify(HELPER)}).hold({cmd:'app rule',diskFree:()=>1e12});const l=fs.existsSync(${JSON.stringify(def)})?fs.readdirSync(${JSON.stringify(def)}).filter((n)=>/^heavy-run(\\.\\d+)?\\.lock$/.test(n)):[];console.log(l.length?'LOCKED':'NOLOCK');console.log('RAN')`], { env, stdio: ['ignore', 'pipe', 'pipe'] });
     const r = await done(c);
     assert.strictEqual(r.code, 0, JSON.stringify(cfg) + ': ' + r.err); assert.match(r.out, /RAN/); assert.match(r.out, /LOCKED/, 'the lock is under the default data dir: ' + r.out + r.err);
   }
@@ -1355,7 +1358,9 @@ function script(dirName = 'scripts', fileName = 'job.cmd') {
 }
 const runScript = (args, extraEnv = {}) => {
   const t0 = Date.now();
-  const r = spawnSync(process.execPath, [HELPER, '--run', ...args], { env: cleanEnv({ CONSONANCE_DATA: tmp(), ...extraEnv }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
+  // cwd: a temp dir on the scratch drive, where these runs write. The disk guard reads the cwd, and from the worktree on C: these rows went
+  // red whenever C: was under the floor (P, D677).
+  const r = spawnSync(process.execPath, [HELPER, '--run', ...args], { cwd: tmp(), env: cleanEnv({ CONSONANCE_DATA: tmp(), ...extraEnv }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
   return { ...r, ms: Date.now() - t0 };
 };
 
@@ -1365,7 +1370,11 @@ test('RUN A SCRIPT (RED FIRST): a .cmd given to --run with --priority belownorma
   assert.strictEqual(r.status, 7, `the script's own exit code\n${r.stdout}${r.stderr}`);
   assert.match(r.stdout, /ran word/);
   assert.match(r.stdout, /prio=10\b/, 'a node the script starts runs below normal (os.getPriority 10)');
-  assert.ok(r.ms < 5000, `it finished in ${r.ms} ms: an idle shell holding the lock would not`);
+  // AMENDED 2026-11-15 (P, D677): the bound was 5,000 ms and read 7,127 ms with two game builds holding both slots (O's landing). An idle
+  // shell never finishes: runScript's spawnSync kills it at 60,000 ms with a null status. 30,000 ms is half that and four times the slowest
+  // finish measured under load, so it still tells a finish from the hang on a busy machine.
+  assert.notStrictEqual(r.signal, 'SIGTERM', 'it was not killed at the 60 s timeout');
+  assert.ok(r.ms < 30000, `it finished in ${r.ms} ms: an idle shell holding the lock would not`);
 });
 
 test('RUN A SCRIPT: --priority idle is the other class a child keeps', () => {
@@ -1412,7 +1421,7 @@ test('RUN A SCRIPT: a cmd metacharacter in an argument or in the script\'s path 
 test('RUN A SCRIPT: under --exclusive the hold is written for the run and gone after it', () => {
   const s = script();
   const d = tmp();
-  const r = spawnSync(process.execPath, [HELPER, '--run', '--exclusive', '--cmd', 'excl script', '--', s.file, 'x'], { env: cleanEnv({ CONSONANCE_DATA: d }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
+  const r = spawnSync(process.execPath, [HELPER, '--run', '--exclusive', '--cmd', 'excl script', '--', s.file, 'x'], { cwd: d, env: cleanEnv({ CONSONANCE_DATA: d }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
   assert.strictEqual(r.status, 7, r.stdout + r.stderr);
   assert.ok(!fs.existsSync(holdOf(d)), 'no hold left behind');
 });
@@ -1426,7 +1435,7 @@ test('RUN A SCRIPT: the usage line names the Git Bash limit it cannot remove', (
 
 // D675 lock lap, part 3: A PAUSE HELD AS THE EXCLUSIVE HOLD. On 11-14 at 13:22 the chair paused the panes by message; one sat queued
 // across a compaction and a build ran at 13:27 while he played, after asking the lock. A pause written as the hold stops that run there.
-const cliIn = (d, args, extra = {}) => spawnSync(process.execPath, [HELPER, ...args], { env: cleanEnv({ CONSONANCE_DATA: d, ...extra }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
+const cliIn = (d, args, extra = {}) => spawnSync(process.execPath, [HELPER, ...args], { cwd: d, env: cleanEnv({ CONSONANCE_DATA: d, ...extra }), encoding: 'utf8', windowsHide: true, timeout: 60000 });   // cwd on the scratch drive (D677)
 const sleepMs = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 function untilGone(pid, ms = 10000) { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (!H.pidAlive(pid)) return true; sleepMs(100); } return false; }
 
