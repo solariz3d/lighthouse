@@ -3214,3 +3214,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Carry:** before saying "unchanged", diff every row of the old table against the new; one moved time hid in "everything else".
 
 ## 2026-11-15 03:1x local (D) · D677: B's B7 films made into four labelled clips for his eye (flicks off beside on, the look down three ways; real time and 3x slower) → `exo_memory/handback/p-d677-b7clips-E_2026-11-15.md`
+
+## 2026-11-15 06:4x local (D) · D677: E3's keys F6-F9 and --world pushed (d3a5041); pane C's 77-minute hunter film hang was an end-hash loop waiting on a record that an ended run could never finish (fixed 95b3406, reproduced 360 s against 65 s); his flicks and look down filmed old beside new from a camera fixed to the travel, lit; two streaming rows tagged machine-bound → `exo_memory/handback/p-d677-e3e4-E_2026-11-15.md`
+- With body_look on and view_on_head off, E1's row is RED: the camera leaves the drawn eye by up to 0.155 m.
+- **Carry:** a loop that waits for a record to finish must also stop when the run has ended; and in PowerShell take $p.Handle before WaitForExit, or the exit code is empty.
