@@ -1,0 +1,4 @@
+    told 9 m/s   : peak sideways 9.81 m/s^2 (grip 9.81); peak step in sideways acceleration 0.5612 m/s^2 a tick, 0.999 of the law's bound; on its feet 0 ticks, 0.000 of its ease; turn-rate step 0.1043 rad/s a tick (M1's bar 0.1); peak re-point 0.000000 rad; widest off the path 0.78 m; slowest 2.64 m/s; through yes
+    told 5.42 m/s: peak sideways 9.81 m/s^2 (grip 9.81); peak step in sideways acceleration 0.5110 m/s^2 a tick, 0.999 of the law's bound; on its feet 0 ticks, 0.000 of its ease; turn-rate step 0.0960 rad/s a tick (M1's bar 0.1); peak re-point 0.000000 rad; widest off the path 0.08 m; slowest 5.22 m/s; through yes
+ok    the_grip_root_takes_a_3_m_corner_from_9_m_s_at_no_more_than_grip_and_its_turn_has_no_step
+1 tests, 0 failed

@@ -1,0 +1,5 @@
+  2400 rays from 300 places: 0 reached 6 m, 2400 met the edge (longest 0.00 m); on the flat 0, of which 5 cm short on the mesh 0 and 25 cm beyond off it 0; 0 on a slope or step
+    G:\consonance-scratch\a-m1-dz3\nav\tests\path_tests.cpp(399): CHECK failed: edges > 100 && open > 100
+    G:\consonance-scratch\a-m1-dz3\nav\tests\path_tests.cpp(400): CHECK failed: beyond_checked > 100
+FAIL  open_along_is_the_free_distance_to_the_mesh_edge_and_no_further
+1 tests, 1 failed
