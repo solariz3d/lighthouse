@@ -168,3 +168,13 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
 - **It lands behind a switch, off,** by the night's rule. The code moves out of the stage first, so the rows can be run red.
 - **With it, the lean's two follow-ups ruled at B1b:** the wall read ahead along the body's velocity, for every body; and the player's lean smoothed over one step of its own stride, read from the clock. Both under `body_lean`.
 - **One bar changed by name before any run:** the frame-rate row's 1e-6 rad (the scout's) is 1e-4, because a float near 6.28 resolves about 5e-7.
+
+## AMENDED 2026-11-15 (D), by the librarian, at his word of 03:22 (game brief item 229): the runner's body from outside is a view of its own
+
+- **His words:** "the runner body follows the look is sort of bugged when l ooking from third person, in reality the player wouldnt see the bug unless shadows which is still possible, so i want to make the runners animation perfect, since we might do peer to peer multiplayer in the end"
+- **What was wrong in this plan:** point 3 of "AMENDED 18:5x" asks that first person and outside be the same joints at the same tick, and pane E's row holds that. It never asked whether the pose looks right from outside. The look law passed every row and looks wrong to him from outside.
+- **From this section on, every lap that draws the runner's body is judged from outside for itself:** a film with the outside camera fixed for both passes (not turning with the body) and lit, old beside new; and at least one row that reads the pose as an outside eye would (where the head, chest, hips and arms are against each other and against the travel), not only what the first-person view shows.
+- **The look law (B7) is reopened.** Landed off; not done.
+- **The runner's laps of the path of record move ahead of the lesser kinds' bodies:** the slide leg, the feet through turns and stairs, the hands on walls, the fingers, the climb (L18, L22, L24, L25, L26), each with its outside film.
+- **Multiplayer is a "might", and it is not planned here.** One thing is kept in view for it: another player's body would be drawn from a few numbers sent over (where it is, how it moves, where it looks), so the body laws stay what they are today, functions of the simulation's state and the look, with no hidden state that could not be sent or rebuilt.
+- **Registered:** this amendment failed if the next lap on the runner's body goes to him with no fixed-camera outside film, or is called done on first-person rows alone.
