@@ -83,6 +83,10 @@ const MUTANTS = [
   ['push: large files are never collected', PUSH, '    for (const b of big) large.push({ ...b, repo: t.dir, remote });\n', ''],
   ['push: the remote\'s own files are counted again', PUSH, 'const big = largeFiles(t.dir, src, [`--remotes=${remote}`]);', "const big = largeFiles(t.dir, src, ['--remotes=no-such-remote']);"],
   ['push: a key refusal\'s own text is dropped when a large file is also found', PUSH, '[d.found.length ? reasonOf(d.found) : null,', '[null,'],
+  // D677 (P, 2026-11-15): the gate FAILS CLOSED on a push it cannot scan
+  ['push: an error in the scan passes the push again (fails open)', PUSH, "  if (d.decision === 'allow-error') d = { ...d, decision: 'deny-error' };\n", ''],
+  ['push: a deny-error is recorded but not refused', PUSH, "  if (d.decision === 'deny-error') return emitDeny(errorReasonOf(d.error, d.dir));\n", ''],
+  ['push: a throw in the scan passes the push', PUSH, "return emitDeny(errorReasonOf('the gate itself failed: ' + msg)); }", 'return process.exit(0); }'],
   ['push: the ledger does not record the large files', PUSH, ', ...(d.large && d.large.length ? { large: d.large.slice(0, 50).map((b) => ({ file: b.file, bytes: b.bytes, blob: b.blob })) } : {})', ''],
 ];
 

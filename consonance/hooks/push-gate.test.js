@@ -133,12 +133,37 @@ test('pass: a heredoc that only MENTIONS git push is not a push', () => {
   fs.writeFileSync(path.join(work, 'x.txt'), `${FAKE_VCK}\n`); git(work, 'add', 'x.txt'); git(work, 'commit', '-q', '-m', 'x');
   assert.equal(runHook(push(work, "cat > notes.md <<'EOF'\nthen git push\nEOF"), data).out, '', 'the heredoc body is text, not a command');
 });
-test('fails OPEN: not a git repo, no base to diff, a malformed payload, another tool: allowed with no output', () => {
+// AMENDED 2026-11-15 (P, D677, the chair's order of 13:43Z): this row read "fails OPEN: not a git repo …". The gate let pane O's push
+// through UNSCANNED on that error; a push gate FAILS CLOSED. A push it cannot scan is now refused with the reason; what is not a push (a
+// malformed payload, another tool) still passes, since there is nothing to gate.
+test('FAILS CLOSED (RED FIRST): a push the gate cannot scan (not a git repo) is REFUSED, saying why; a malformed payload and another tool still pass', () => {
   const data = tmp('pgd-'), plain = tmp('pgp-');
-  assert.equal(runHook(push(plain), data).out, '', 'not a repo');
-  assert.equal(runHook('{not json', data).out, '');
-  assert.equal(runHook({ tool_name: 'Read', tool_input: { file_path: 'git push' } }, data).out, '');
+  const r = runHook(push(plain), data);
+  assert.ok(r.deny, 'a push from a directory that is not a repository is refused: ' + r.out);
+  assert.match(r.reason, /could not scan this push \(not a git repo/);
+  assert.match(r.reason, /a gate that cannot look does not pass it/);
+  assert.match(fs.readFileSync(path.join(data, G.LEDGER), 'utf8'), /"decision":"deny-error"/, 'the ledger says the refusal was for an error');
+  assert.equal(runHook('{not json', data).out, '', 'a malformed payload is not a push');
+  assert.equal(runHook({ tool_name: 'Read', tool_input: { file_path: 'git push' } }, data).out, '', 'another tool is not a push');
   assert.ok(!fs.readFileSync(path.join(data, G.LEDGER), 'utf8').includes(FAKE_VCK));
+});
+test('FAILS CLOSED: a throw inside the gate on a push (a cwd that is not a path) refuses the push, saying the gate itself failed', () => {
+  const data = tmp('pgd-');
+  const r = runHook({ tool_name: 'Bash', tool_input: { command: 'git push' }, cwd: 42, session_id: 'test' }, data);
+  assert.ok(r.deny, 'refused: ' + r.out);
+  assert.match(r.reason, /could not scan this push \(the gate itself failed: /);
+});
+test('FAILS CLOSED: a git call that fails inside the scan (the remote-tracking refs unreadable) refuses the push, saying why', () => {
+  const { work } = repo(), data = tmp('pgd-');
+  fs.writeFileSync(path.join(work, 'notes.md'), 'x\n'); git(work, 'add', 'notes.md'); git(work, 'commit', '-q', '-m', 'notes');
+  const r = runHook(push(work, 'git push origin no-such-branch-or-ref:main'), data);
+  assert.ok(r.deny || r.out === '', 'a source that does not resolve falls back to HEAD and is scanned, or refused: never passed unscanned');
+  // the gate's own error path, forced: a repository whose objects cannot be read
+  const broken = tmp('pgb-'); git(broken, 'init', '-q'); fs.writeFileSync(path.join(broken, '.git', 'HEAD'), 'ref: refs/heads/main\n');
+  fs.writeFileSync(path.join(broken, '.git', 'refs', 'heads', 'main'), '0123456789abcdef0123456789abcdef01234567\n');
+  const b = runHook(push(broken), data);
+  assert.ok(b.deny, 'a scan that cannot read the history is refused: ' + b.out);
+  assert.match(b.reason, /could not scan this push \(git (log|rev-list) failed/);
 });
 test('a command that is not a push is ignored: no scan, no row', () => {
   const { work } = repo(), data = tmp('pgd-');
