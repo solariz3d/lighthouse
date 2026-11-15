@@ -3251,3 +3251,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Carry:** before encoding a cut, look at its first frames: a picture can carry the last pose of whatever drew before it.
 - 16:0x local: the N2 sheet's pelvis-turn row corrected (pane A at source: Perpiñá's 6.5 deg is pelvic tilt, no thorax figure; the 14.28 is Ford 2013, abstract); the lessons sheet gains the line.
 - 16:1x local: the N2 sheet takes pane A's measures (Perpiñá's pelvic rotation 9.96-16.13 deg read at source; Dorn JA1 pelvis/thorax turn, the thorax opposed and a quarter stride late, the trunk lean and the hand's path by speed); three not-on-file lines answered.
+
+## 2026-11-15 16:3x local (D) · D677 pane A's kinetic chain (a-chain 8565c61) filmed alone, whole body, all six stations, every clip from frame 48 (the arms settle out of the old crouch through 24); new system on by a copied config, as B's cut → `exo_memory/handback/p-d677-wholebody-alone-E_2026-11-15.md`
+- **Carry:** --world does nothing offscreen; switch the new system on for a film by a copied config with new_animation = 1.
