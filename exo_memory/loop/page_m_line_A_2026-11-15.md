@@ -423,3 +423,61 @@ place on it narrower than 1 m, the way's turn there 1 m either side, and the squ
 5. **What would show it wrong (registered in the ruling):** with it the root passes pane E's 45 degree bend or reaches the player there sooner than
    tick 3669; and the side row at the 22 stays green, since the south way turns at both its doorways. **If the 22 goes back through the doorways,
    the turn's measure is wrong.** Also printed: the ten routes' total time beside the solve's (85.62 / 80.70 s) and today's (77.11).
+
+## The release and the energy check (the ruling at the ring for the solve, git-blob 366fb4cd, items 1, 2 and 4): built, and the fork read
+
+**Built:** dreamzone-3 `a-mline` `3845cd8` (pushed, read back), red first at `e8de106`. After each solve with nothing past a bound, the held
+offset whose slope `(A a - b)_i` points most steeply back inside its bounds is released, one at a time (the active set's own guard against
+flipping; no pair flipped), and the solve runs again; the rounds are capped at 400 times the effort and the cap was not reached.
+`registration_release.md` beside this page.
+
+**1. The energy check (registered by the ruling: the solve's is higher): CONFIRMED.**
+checked: `r3_rows_red.txt` (e8de106) and `r3_rows.txt` (3845cd8), the energy row → the figures below.
+
+| bend | b2fc99d's solve (red, e8de106) | the release | the passes' at 600,000 | held asking to be let go (red / release) | rounds |
+|---|---|---|---|---|---|
+| 22 | 0.141053 | **0.017395** | 0.017703 | 21 / **0** | 50 |
+| 45 | 0.034271 | **0.020689** | 0.022620 | 2 / **0** | 65 |
+| 90 | 0.059555 | **0.042586** | 0.043459 | 5 / **0** | 8 |
+
+The solve stopped well short (on the 22, eight times the passes' energy); with the release it is under the passes' on all three. Both rows green.
+
+**2. The release's other rows** (`r3_rows.txt`, `r3_m3.txt`, `r3_chase_tests.txt`):
+- the gate: one plan_to, 15 plans, mean 526 us, largest 766 us: green (bar 1,000).
+- check 2 restated (item 4: the slide holds before and after the tick, |wanted - current| at least 0.1 m/s): way (b) 0 of 159 under 0.9,
+  way (a) 0 of 195: green. On e8de106 also 0 under (598 / 135 ticks), so the restatement alone turned it, not the release; inferred from
+  the two runs, the tick read on the solve was the slide's last.
+- the tick-773 row: 72 sliding ticks, 0 under: green.
+- the 22's side row: 10 replans, 1 crossing of z 42 in the open gap, 0 ticks within 0.3 m of the doorway: green.
+- whole suite: chase 118, 5 failed (the routes' contact row, 11 / 11 against 10; the 22-or-less row; the drop row; the corridor line's bar
+  row; the dense row: all red at b2fc99d too, and m2_h1 and both m3c rows red there are green now); nav 34, 0 failed; off means off: 12-seed
+  md5 `fa938de45995bd2d13b98ba28fae0c34`, 18 of D's 20 kept runs SAME (the same two cab3530 runs DIFFERENT).
+
+**The bends** (stand-in, exit tick from the start; today's law the control):
+
+| bend | today | the solve b2fc99d, way (b) / (a) | the release, way (b) / (a) |
+|---|---|---|---|
+| 22 | 0.637 s, 724 | 0.271 s, 669 | **0.296 / 0.300 s, 686 / 687**, lowest 6.87 / 6.85 |
+| 45 | 1.296 s, 1103 | 0.458 / 0.467 s, 787 / 789 | **0.446 / 0.450 s, 801 / 802**, lowest 8.11 / 7.56 (way (a) 1 contact) |
+| 90 | 0.846 s, 871 | 1.108 / 0.917 s, 955 / 909 | **0.933 / 0.804 s, 915 / 884**, lowest 2.10 / 3.48 |
+
+**The 90's radius** (`dr_prints.txt`, the scratch print on 3845cd8, removed after): least radius over the whole path **1.27 m** (the solve's
+0.74 m), 0.23 m from the bend's point; slowest tick within 6 m, tick 838: the body 2.10 m/s, the plan 2.49 m/s (the solve's 1.65 / 2.38). The 22's
+least radius 1.67 m (was 0.80), the 45's 1.22 m (was 1.21).
+
+**The routes:** the ten routes' total time way (b) **78.72 s**, way (a) **77.87 s** (today 77.11; the one law 82.17 / 78.41; the solve
+85.62 / 80.70). checked: `r3_chase_tests.txt`, "the ten routes' total time".
+
+**3. The fork, as registered:** "if the 90 is taken in no more than today's 0.846 s and the ten routes are no slower than the one law's 82.17 and
+78.41 s, the least-bending line stays." The routes: met on both ways. **The 90: met on way (a), 0.804 s; NOT met on way (b), the root's own arm,
+0.933 s, 0.087 s over.** I read the condition as not met (way (b) is the arm the line was built for), so as registered **the least-bending line on
+the string's normals is not the line-maker for this world, and the next build is straights and the widest arc at each bend, the side chosen by
+the price.** What would change that reading: a ruling that way (a) (corner_feel) is the arm judged. The degeneration stop does not fire (the 22
+is 0.296 s, under 0.642, and the side is shut).
+
+**What it shows:** at the true least, the line stays least-squares, and the 90's tightest place still sits 0.23 m from the point. The radius
+grew from 0.74 to 1.27 m and the time fell 1.108 to 0.933 s, but way (b) still lowers to 2.10 m/s there, while the 6 m hand line of `h90.txt`
+took 0.575 s at 5.52. Braghin's compromise, measured a second time.
+
+**Next, in the ruling's order:** the price's code (the turn price, the five lines above; set aside at the scratch, not committed), its own ring;
+then the build the fork names.
