@@ -1,0 +1,86 @@
+  FROM (-32.91 -26.24), 21.38 m from the 90's apex: the string (-32.91 -26.24) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.29 -34.04); corridor 21 polygons
+ARC bend (-11.99 -26.54)..(-11.54 -26.84), 3 corners, turn 89.2 deg, k -1, legs 20.92 / 3.15, x (-11.54 -26.54); free out from the first corner along the bisector 3.61 m, so w 2.57 and the bound 9.12 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.00 0.30), out (0.30 0.00): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: fails; centre (0.00 0.00), tangent in (0.01 0.50), out (0.50 0.00): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.23 -27.22), tangent in (-12.21 -26.22), out (-11.23 -27.22) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-12.94 -27.93), tangent in (-12.91 -25.93), out (-10.94 -27.93) at (0.00 0.00)
+ARC   r  3.00: HOLDS; centre (-13.65 -28.63), tangent in (-13.61 -25.63), out (-10.65 -28.63) at (0.00 0.00)
+ARC   r  4.00: HOLDS; centre (-14.37 -29.33), tangent in (-14.31 -25.33), out (-10.37 -29.33) at (0.00 0.00)
+ARC   r  5.00: HOLDS; centre (-15.08 -30.03), tangent in (-15.01 -25.03), out (-10.08 -30.03) at (0.00 0.00)
+ARC   r  6.00: HOLDS; centre (-15.79 -30.74), tangent in (-15.70 -24.74), out (-9.79 -30.74) at (0.00 0.00)
+ARC   r  7.00: fails; centre (-16.50 -31.44), tangent in (-16.40 -24.44), out (-9.50 -31.44): the tangent point in off the mesh at (-16.40 -24.44)
+ARC   r  8.00: fails; centre (-17.21 -32.14), tangent in (-17.10 -24.14), out (-9.21 -32.14): the tangent point in off the mesh at (-17.10 -24.14)
+ARC   r 10.00: fails; centre (-18.64 -33.55), tangent in (-18.50 -23.55), out (-8.64 -33.55): the tangent point out off the mesh at (-8.64 -33.55)
+ARC bend (-11.54 -29.99)..(-11.59 -30.29), 2 corners, turn 24.4 deg, k -1, legs 3.15 / 4.12, x (-11.54 -30.18); free out from the first corner along the bisector 2.18 m, so w 2.13 and the bound 94.41 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.30 0.00), out (0.27 -0.12): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: HOLDS; centre (-11.81 -30.12), tangent in (-11.31 -30.12), out (-11.35 -30.33) at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.34 -30.00), tangent in (-11.34 -30.00), out (-11.43 -30.42) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-13.32 -29.79), tangent in (-11.32 -29.79), out (-11.50 -30.62) at (0.00 0.00)
+ARC   r  3.00: fails; centre (-14.30 -29.58), tangent in (-11.30 -29.58), out (-11.56 -30.82): short of room at (-12.42 -32.70)
+ARC   r  4.00: fails; centre (-15.27 -29.37), tangent in (-11.27 -29.37), out (-11.63 -31.02): short of room at (-12.39 -32.69)
+ARC   r  5.00: fails; centre (-16.25 -29.16), tangent in (-11.25 -29.16), out (-11.70 -31.22): short of room at (-12.36 -32.68)
+ARC   r  6.00: fails; centre (-17.23 -28.95), tangent in (-11.23 -28.95), out (-11.77 -31.43): short of room at (-12.33 -32.68)
+ARC   r  7.00: fails; centre (-18.21 -28.73), tangent in (-11.21 -28.73), out (-11.83 -31.63): a sample off the mesh at (-12.31 -32.67)
+ARC   r  8.00: fails; centre (-19.19 -28.52), tangent in (-11.19 -28.52), out (-11.90 -31.83): a sample off the mesh at (-12.28 -32.66)
+ARC   r 10.00: fails; centre (-21.14 -28.10), tangent in (-11.14 -28.10), out (-12.03 -32.23): a sample off the mesh at (-12.22 -32.65)
+ARC pair 1-2 fails: (-11.99 -26.54) arc r 6.34 k -1 / (-11.54 -29.99) arc r 2.02 k -1
+ARC final: [(-32.91 -26.24) end r 0.00] [(-11.99 -26.54)+cluster arc r 3.58] [(-13.29 -34.04) end r 0.00]
+  arcs 1: [r 3.58 centre (-13.95 -29.14)]; runs to the solve 0
+  FROM (-24.38 -25.98), 12.87 m from the 90's apex: the string (-24.38 -25.98) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.29 -34.04); corridor 18 polygons
+ARC bend (-11.99 -26.54)..(-11.54 -26.84), 3 corners, turn 87.4 deg, k -1, legs 12.41 / 3.15, x (-11.54 -26.56); free out from the first corner along the bisector 3.57 m, so w 2.58 and the bound 9.51 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.01 0.30), out (0.30 0.00): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: fails; centre (0.00 0.00), tangent in (0.02 0.50), out (0.50 0.00): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.23 -27.22), tangent in (-12.18 -26.22), out (-11.23 -27.22) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-12.96 -27.91), tangent in (-12.87 -25.92), out (-10.96 -27.91) at (0.00 0.00)
+ARC   r  3.00: HOLDS; centre (-13.68 -28.61), tangent in (-13.54 -25.61), out (-10.68 -28.61) at (0.00 0.00)
+ARC   r  4.00: HOLDS; centre (-14.40 -29.30), tangent in (-14.22 -25.30), out (-10.40 -29.30) at (0.00 0.00)
+ARC   r  5.00: HOLDS; centre (-15.13 -29.99), tangent in (-14.90 -24.99), out (-10.13 -29.99) at (0.00 0.00)
+ARC   r  6.00: fails; centre (-15.85 -30.68), tangent in (-15.58 -24.69), out (-9.85 -30.68): short of room at (-18.06 -24.57)
+ARC   r  7.00: fails; centre (-16.57 -31.37), tangent in (-16.26 -24.38), out (-9.57 -31.37): the tangent point in off the mesh at (-16.26 -24.38)
+ARC   r  8.00: fails; centre (-17.29 -32.06), tangent in (-16.93 -24.07), out (-9.29 -32.06): the tangent point in off the mesh at (-16.93 -24.07)
+ARC   r 10.00: fails; centre (-18.74 -33.44), tangent in (-18.29 -23.45), out (-8.74 -33.44): the tangent point in off the mesh at (-18.29 -23.45)
+ARC bend (-11.54 -29.99)..(-11.59 -30.29), 2 corners, turn 24.4 deg, k -1, legs 3.15 / 4.12, x (-11.54 -30.18); free out from the first corner along the bisector 2.18 m, so w 2.13 and the bound 94.41 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.30 0.00), out (0.27 -0.12): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: HOLDS; centre (-11.81 -30.12), tangent in (-11.31 -30.12), out (-11.35 -30.33) at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.34 -30.00), tangent in (-11.34 -30.00), out (-11.43 -30.42) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-13.32 -29.79), tangent in (-11.32 -29.79), out (-11.50 -30.62) at (0.00 0.00)
+ARC   r  3.00: fails; centre (-14.30 -29.58), tangent in (-11.30 -29.58), out (-11.56 -30.82): short of room at (-12.42 -32.70)
+ARC   r  4.00: fails; centre (-15.27 -29.37), tangent in (-11.27 -29.37), out (-11.63 -31.02): short of room at (-12.39 -32.69)
+ARC   r  5.00: fails; centre (-16.25 -29.16), tangent in (-11.25 -29.16), out (-11.70 -31.22): short of room at (-12.36 -32.68)
+ARC   r  6.00: fails; centre (-17.23 -28.95), tangent in (-11.23 -28.95), out (-11.77 -31.43): short of room at (-12.33 -32.68)
+ARC   r  7.00: fails; centre (-18.21 -28.73), tangent in (-11.21 -28.73), out (-11.83 -31.63): a sample off the mesh at (-12.31 -32.67)
+ARC   r  8.00: fails; centre (-19.19 -28.52), tangent in (-11.19 -28.52), out (-11.90 -31.83): a sample off the mesh at (-12.28 -32.66)
+ARC   r 10.00: fails; centre (-21.14 -28.10), tangent in (-11.14 -28.10), out (-12.03 -32.23): a sample off the mesh at (-12.22 -32.65)
+ARC pair 1-2 fails: (-11.99 -26.54) arc r 5.93 k -1 / (-11.54 -29.99) arc r 2.02 k -1
+ARC final: [(-24.38 -25.98) end r 0.00] [(-11.99 -26.54)+cluster arc r 3.60] [(-13.29 -34.04) end r 0.00]
+  arcs 1: [r 3.60 centre (-14.00 -29.13)]; runs to the solve 0
+  FROM (-19.78 -25.67), 8.32 m from the 90's apex: the string (-19.78 -25.67) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.29 -34.04); corridor 14 polygons
+ARC bend (-11.99 -26.54)..(-11.54 -26.84), 3 corners, turn 83.6 deg, k -1, legs 7.84 / 3.15, x (-11.54 -26.59); free out from the first corner along the bisector 3.50 m, so w 2.60 and the bound 10.42 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.03 0.30), out (0.30 0.00): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: fails; centre (0.00 0.00), tangent in (0.06 0.50), out (0.50 0.00): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.24 -27.21), tangent in (-12.13 -26.22), out (-11.24 -27.21) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-12.99 -27.88), tangent in (-12.76 -25.90), out (-10.99 -27.88) at (0.00 0.00)
+ARC   r  3.00: HOLDS; centre (-13.73 -28.55), tangent in (-13.40 -25.57), out (-10.73 -28.55) at (0.00 0.00)
+ARC   r  4.00: HOLDS; centre (-14.48 -29.22), tangent in (-14.04 -25.24), out (-10.48 -29.22) at (0.00 0.00)
+ARC   r  5.00: fails; centre (-15.22 -29.89), tangent in (-14.67 -24.92), out (-10.22 -29.89): short of room at (-18.08 -24.54)
+ARC   r  6.00: fails; centre (-15.97 -30.55), tangent in (-15.31 -24.59), out (-9.97 -30.55): short of room at (-18.47 -24.24)
+ARC   r  7.00: fails; centre (-16.71 -31.22), tangent in (-15.94 -24.26), out (-9.71 -31.22): the tangent point in off the mesh at (-15.94 -24.26)
+ARC   r  8.00: fails; centre (-17.46 -31.89), tangent in (-16.58 -23.94), out (-9.46 -31.89): the tangent point in off the mesh at (-16.58 -23.94)
+ARC   r 10.00: fails; centre (-18.95 -33.22), tangent in (-17.84 -23.28), out (-8.95 -33.22): the tangent point in off the mesh at (-17.84 -23.28)
+ARC bend (-11.54 -29.99)..(-11.59 -30.29), 2 corners, turn 24.4 deg, k -1, legs 3.15 / 4.12, x (-11.54 -30.18); free out from the first corner along the bisector 2.18 m, so w 2.13 and the bound 94.41 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.30 0.00), out (0.27 -0.12): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: HOLDS; centre (-11.81 -30.12), tangent in (-11.31 -30.12), out (-11.35 -30.33) at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.34 -30.00), tangent in (-11.34 -30.00), out (-11.43 -30.42) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-13.32 -29.79), tangent in (-11.32 -29.79), out (-11.50 -30.62) at (0.00 0.00)
+ARC   r  3.00: fails; centre (-14.30 -29.58), tangent in (-11.30 -29.58), out (-11.56 -30.82): short of room at (-12.42 -32.70)
+ARC   r  4.00: fails; centre (-15.27 -29.37), tangent in (-11.27 -29.37), out (-11.63 -31.02): short of room at (-12.39 -32.69)
+ARC   r  5.00: fails; centre (-16.25 -29.16), tangent in (-11.25 -29.16), out (-11.70 -31.22): short of room at (-12.36 -32.68)
+ARC   r  6.00: fails; centre (-17.23 -28.95), tangent in (-11.23 -28.95), out (-11.77 -31.43): short of room at (-12.33 -32.68)
+ARC   r  7.00: fails; centre (-18.21 -28.73), tangent in (-11.21 -28.73), out (-11.83 -31.63): a sample off the mesh at (-12.31 -32.67)
+ARC   r  8.00: fails; centre (-19.19 -28.52), tangent in (-11.19 -28.52), out (-11.90 -31.83): a sample off the mesh at (-12.28 -32.66)
+ARC   r 10.00: fails; centre (-21.14 -28.10), tangent in (-11.14 -28.10), out (-12.03 -32.23): a sample off the mesh at (-12.22 -32.65)
+ARC pair 1-2 fails: (-11.99 -26.54) arc r 4.75 k -1 / (-11.54 -29.99) arc r 2.02 k -1
+ARC final: [(-19.78 -25.67) end r 0.00] [(-11.99 -26.54)+cluster arc r 3.66] [(-13.29 -34.04) end r 0.00]
+  arcs 1: [r 3.66 centre (-14.11 -29.11)]; runs to the solve 0
+ok    diag_near_the_90s_cluster_from_nearer_starts
+1 tests, 0 failed

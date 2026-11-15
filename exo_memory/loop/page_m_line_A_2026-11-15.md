@@ -1099,3 +1099,51 @@ beside 1.0 and today's law. His pick on 11-12 was "Grip above human" (`briefs/dr
 - **Route 2's chicane** is behind today's at every grip up to 2.0 (900 against 868 at best); its lowest rises from 2.49 to 5.95 m/s with grip.
 - **Grip 1.6 is not monotone either:** the 22's lowest drops to 3.43 m/s in the staging, against 7 to 9 at the other grips. Not read further.
 - **Not changed:** any law, any dial default, any bar. Which number is his.
+
+## What keeps the 90's arc (the ring for section 2, item 2): Apollo opened at source, the read of the nearer string, then five lines before code
+
+**Apollo, opened at source by me:**
+- `modules/planning/planning_base/common/trajectory_stitcher.cc` and `planning_base/gflags/planning_gflags.cc`, master.
+- **Thresholds:** `replan_lateral_distance_threshold` 0.5, `replan_longitudinal_distance_threshold` 2.5, `replan_time_threshold` 7.0,
+  `trajectory_stitching_preserved_length` 20 points, `planning_loop_rate` 10.
+- **The kept stretch** runs from the matched point (the lesser of the time-matched and position-matched indices) less 20 points, to the
+  current time plus one planning cycle (`forward_rel_time = current_timestamp - header_time + planning_cycle_time`). Every check that fails
+  returns `ComputeReinitStitchingTrajectory`: one point from the vehicle's state.
+- **So Apollo keeps a short committed prefix, not the shared way.** The library's corridor splice (polygons) is the closer model for "the line
+  over the part of the way the new plan shares with the old". Apollo gives the drift gate and its numbers.
+
+**The read the ruling asked for: why the 90's cluster gets no arc on the nearer string.**
+- checked: `nr_near.txt` (the stand-in) and `ne_e90.txt` (pane E's staging, the ladder switched on for the plans 7 to 14 m out; scratch hooks
+  `near_law.js`, `near_row.js`, `near_e.js`, removed or in the throwaway tree).
+- **In the stand-in the nearer strings keep all 7 points.** From E's 12.9 m and 8.3 m positions the cluster keeps its arc (merged, r 3.60 and
+  3.66 m), so the stand-in does not reproduce it.
+- **In pane E's staging the target has moved.**
+  - At tick 2372 the string is (-24.38 -25.95) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) **(-11.28 -30.18)**: it ENDS 3.36 m past the
+    cluster, at the staged target (the player, who walks).
+  - Earlier plans ended at (-13.49 -34.59), past the 90's second cluster.
+  - The stand-in's row plans to a fixed target, so it never meets this.
+- **On that string the cluster CAN be given an arc.** The ladder holds from 1 to 6 m (82.9 degrees), and its widest is 5.98 m. At 8.5 m out
+  (76.1 degrees) it holds from 1 to 4 m, widest 4.16 m.
+- **It gets none because of my code, a third time the same departure.** A 5.98 m arc cannot end before the target 3.36 m on, so the pair
+  (cluster, end) fails and line 4 shrinks the bend against the end. That shrink still uses the fixed 0.3 m floor (`if (r0 <= kArcMin * 1.001 ||
+  !fits(kArcMin))`). A cluster has no centre at 0.3 m, so the bend goes to the solve. The floor fixed at 2a51143 went into `arc_widest` only,
+  not into the shrink paths (line 4's, and line 1's S pair).
+- **So keeping the line alone would hide this, not cure it,** as the ruling says. The cure is the floor in every shrink.
+
+**Five lines before code:**
+1. **The floor in every shrink** (line 1's S pair and line 4's end): the least radius at which the bend's centre exists, found first, as in
+   `arc_widest` since 2a51143. A cluster shrunk against a near target keeps an arc down to its own least radius.
+2. **What is kept is the line over the shared way, by polygons** (the library's splice, read at source in the game's copy). At a replan, walk
+   the new plan's corridor and the old plan's corridor from the body's polygon. The shared way is their common run of polygons. The old line
+   is kept up to its last point inside that run (each line point is given its polygon by a nearest query). This is ours: the report finds no
+   published method for a kept line through branching rooms.
+3. **Beyond the shared way,** the new string from that point to the target, with arcs on it, is joined to the kept line. If the target moved
+   inside the shared way (the new corridor all shared), the old line is cut at its point nearest the new target and finished straight to it.
+4. **The drift gate, from Apollo at source:** if the body is more than 0.5 m sideways from its line, or the line was laid more than 7.0 s ago,
+   plan from the body in full. Apollo's 2.5 m along is not used, because our line has no times to be early or late against.
+5. **What would show it wrong:** the registered row (every point of the line within 5 m of the 90 within 5 cm of the first plan's; the lowest
+   no less than 4.29 m/s) and pane E's staging (the arc at the 90 the same at every plan; reported against the plan's bar with today's beside
+   it).
+   - **My prediction:** in E's staging the 90 keeps the first plan's merged arc, the lowest rises from 1.69 m/s to at least 3.0, and the exit
+     comes before today's 2848. I am least sure of the exit, because the target ends 3.4 m past the bend and the line must finish to it.
+   - **If the arc changes between plans, the polygon match is wrong,** and that is printed.
