@@ -289,3 +289,27 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 **5. Then a film for him.** When 3 shows the 90 leaving no later than today's in pane E's staging, pane E films it, today's law beside the arcs. It is the corner I held back from his page at 10:33.
 
 **The ring:** one, with 1 to 3.
+
+## RULED at the ring after the third try (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, lines 708-799 read whole, git-blob 96335ca0)
+
+**Taken, all three, and each stop was right.** The gate's fix meets the gate and fired your own line by a tenth of a second, so it is not committed. My guess about the routes is broken by your print: the three routes where the width price changes the way are the ones the arcs win, and the three that lose run on today's string exactly. And in pane E's staging the 90 leaves 88 ticks after today's, the reverse of the stand-in, so there is no film.
+
+**What I take from the three together.** The stand-in said all three bends were met; the staging, where the plan's bar was written, says one of three. A row in the stand-in is a row about the stand-in. From here the staging is read with every build of the line, not after it.
+
+**Two reads, no change, in this order. Nothing is built before them.**
+
+**1. Pane E's 90: why the same crossroads gives 864 against 871 in the stand-in and 2936 against 2848 in the staging.** For every plan the hunter makes from the staged run's door to the 90's exit gate, print the tick, the body's distance from the bend, the arc laid at the 90 (its radius, merged or not), and where the plan's stretch starts.
+- **My guess, registered so it can be broken, as the last one was:** the arc at the 90 shrinks as the body nears it, because each plan starts at the body as a point with no heading, and a bend near a start is shrunk against that start (your line 4; route 0's first bend lost 110 ticks 2 m from its start). Your page's own section 2 has the cure and it was never built: the line within the body's braking distance is kept and only the part beyond it is planned again.
+- **If the radius does not shrink with the plans,** the guess is wrong, and the print will show what differs between the two runs of that bend.
+
+**2. The corridor mouths (routes 0 and 2, where the gap opens):** for each, the arc laid and the body's lowest speed there; then a line by hand through it in the stand-in, as at the 22 and the 90, as the judge of what the place allows.
+- **If a hand line beats today's time there,** the fitter is the gap (you name where: an arc centred on the bisector where the two legs differ in width is my first suspect, yours to confirm or drop).
+- **If no hand line does,** it is the place and the body's grip at 1.0. Then it is not the line-maker's to win. How much grip the hunter has is his. Asked on 11-12 how the hunter corners he chose the hunting-animal law, "but believe it should still be humanoid in a way" (game brief item 168); no number for its grip was ever set. It goes to him with the figures.
+
+**3. The gate's fix stays at the scratch.** It holds the gate; your line fired at a tenth of a second in 78. It is read again after 1 and 2, since either may change what a judge samples.
+
+**4. What I am withdrawing as a judge, by name, because it was mine and it set the wrong two things against each other.** At the release I registered for the arcs "each bend's exit no later than today's" and "the ten routes no more than today's 77.11 s". Today's law has no mass; the root has one, at a grip of 1.0 that he has not yet set. Where the place gives a wide line the root wins, as the 22 and the 45 show. Where it does not, a body with mass at that grip cannot, and no line cures that. The plan's own bar stands and is the judge: on pane E's three bends never under 1.2 m/s, and through the 22 in no more than 0.889 s. Today's times stay printed beside every figure, as a comparison and not as a bar. The routes' total and each bend's exit are reported the same way.
+
+**5. Pane E's 45,** where the root goes round and reaches the player 2.2 s after today's: the two ways by the line's own time are for that, and they wait for 1 and 2.
+
+**The ring:** one, with both reads.
