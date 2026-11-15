@@ -70,3 +70,47 @@ SOURCES: G:\consonance-scratch\o-look\catch-shipped_runs.csv
 SOURCES: G:\consonance-scratch\o-look\catch-old_runs.csv
 SOURCES: G:\consonance-scratch\o-look\catchtable.out
 NEXT: librarian route the catch table to pane A's catch-rate work when this is read; O goes back to the lock lap
+
+## THE LARGER READ: 48 seeds at normal, hard and brutal, with what ended each run (the chair's 19:45Z order; nothing changed)
+- **What ran:** the same sweep, `--seeds 48 --levels 1,2,3`, the three bots, shipped and `--move "riser_keeps_speed=0"`, each through heavy-run's lock.
+  - checked: `catch48-shipped.out` exit 0 (520 s); `catch48-old.out` exit 0 (305 s); 432 runs each.
+  - The CSVs' `move` column confirms each rule.
+- **The table:** `catch48table.js` (`G:\consonance-scratch\o-look\catch48table.out`).
+  - "Median" is over the caught runs.
+  - Each chaser's catches come from the CSV's own `by` column, with the median time of that kind's catches.
+
+| level | | never caught | median to a catch | hunter: catches @ median | sprinter | interceptor | pack |
+|---|---|---|---|---|---|---|---|
+| normal | **shipped** | **34 of 144** | **34.2 s** | **84 @ 30.9 s** | 22 @ 52.2 | 2 @ 104.0 | 2 @ 277.8 |
+| normal | old rule | 29 of 144 | 49.2 s | 84 @ 49.0 s | 29 @ 51.7 | 2 @ 144.3 | 0 |
+| hard | **shipped** | **22 of 144** | **45.7 s** | **91 @ 32.8 s** | 14 @ 50.4 | 14 @ 51.3 | 3 @ 160.8 |
+| hard | old rule | 17 of 144 | 46.2 s | 87 @ 42.0 s | 15 @ 46.2 | 17 @ 43.5 | 8 @ 185.0 |
+| brutal | **shipped** | **8 of 144** | **38.5 s** | **91 @ 42.5 s** | 13 @ 40.6 | 16 @ 33.0 | 16 @ 40.2 |
+| brutal | old rule | 7 of 144 | 33.3 s | 98 @ 35.0 s | 7 @ 38.4 | 17 @ 24.9 | 15 @ 64.7 |
+| **all three** | **shipped** | **64 of 432** | **40.0 s** | **266 @ 32.5 s** | 49 @ 51.2 | 32 @ 42.3 | 21 @ 54.9 |
+| all three | old rule | 53 of 432 | 42.9 s | 269 @ 40.9 s | 51 @ 46.2 | 36 @ 32.3 | 23 @ 140.7 |
+
+- **The bots one at a time** (from `catch48table.out`):
+  - **normal:**
+    - line: never 2/48 against 0; median 28.5 against 39.7 s; hunter 37 @ 22.5 against 34 @ 29.8.
+    - flee: never 32/48 against 29.
+    - cutback: never 0 both; median 34.2 against 46.5; hunter 37 @ 31.1 against 37 @ 46.3.
+  - **hard:**
+    - line: never 1/48 against 0; median 28.7 against 32.5.
+    - flee: never 21/48 against 17.
+    - cutback: median 39.2 against 33.7.
+  - **brutal:**
+    - line: never 2/48 against 0; median 21.8 against 22.7.
+    - flee: never 6/48 against 7; median 159.4 against 189.8.
+    - cutback: median 32.9 against 27.5.
+- **What the 48 seeds say:**
+  - **The bots are never caught somewhat more often with the fix: 64 of 432 (14.8%) against 53 (12.3%).** It is the same way at every level (normal 34/29, hard 22/17, brutal 8/7), mostly the fleeing bot.
+  - **"Caught sooner" holds at NORMAL only:** the median to a catch is 34.2 s against 49.2, about a third sooner, not half.
+    - **Its cause is the hunter:** it makes the same number of catches (84 and 84) and makes them sooner (30.9 s against 49.0). That is true for the line and the cutback bots alike. Sprinters make fewer catches (22 against 29).
+    - inferred, not traced: a bot that no longer stumbles runs its route faster, and so meets the hunter's line sooner. Nothing here says where on the route.
+  - **At HARD the median does not move** (45.7 against 46.2). The hunter's own catches are still sooner (32.8 against 42.0), but its share is balanced by the interceptors' and packs' later and fewer catches.
+  - **At BRUTAL the catches come LATER with the fix** (38.5 against 33.3), the hunter's too (42.5 against 35.0). Fewer interceptor catches are early (33.0 against 24.9).
+- **CORRECTION to my 12-seed reading above:** "at normal and hard, the median time to a catch about HALVES" was too strong.
+  - On 48 seeds: normal comes **about a third sooner** (34.2 against 49.2); hard **does not move** (45.7 against 46.2); brutal comes **later**.
+  - The 12-seed hard cell (30.9 against 50.1) was the small sample.
+- **Still 48 seeds a cell,** so a few runs in a cell are within what another seed set could move. The two readings that hold at every level are the extra escapes (the flee bot) and the hunter's sooner catches at normal and hard.

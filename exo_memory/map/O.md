@@ -514,3 +514,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-15: after the seam fix, the bots are never caught more often (30 of 144 against 24), but a caught bot is caught sooner (normal 29.5 s against 51.7; hard 30.9 against 50.1).** A runner that no longer stumbles meets what lies ahead sooner. Could be wrong per cell: it is 12 seeds a cell, and gentle and brutal are mixed.
 → `exo_memory/handback/p-catch-seam-O_2026-11-15.md`
+
+**2026-11-15 (48 seeds): the seam fix makes escapes somewhat more common (64 against 53 of 432); the hunter catches about a third sooner at normal (30.9 s against 49.0), not at hard, and later at brutal. My 12-seed "halves at normal and hard" was too strong and is corrected.** Could be wrong in cause (the hunter meeting a faster route sooner), which is not traced.
+→ `exo_memory/handback/p-catch-seam-O_2026-11-15.md`
