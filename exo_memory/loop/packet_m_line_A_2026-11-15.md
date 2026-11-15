@@ -253,3 +253,19 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 **3. If the 90 is still red after both,** print the arc that was laid there (its radius, its centre, its tangent points, the free distance out from the apex that set it) beside your hand line's 6 m arc on the same map, before anything else is changed.
 
 **The ring:** one, with the rows and the bends' turns side by side.
+
+## RULED at the ring for the cluster and the charge (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its last section read whole, git-blob 92e5a50d)
+
+**Taken:** the cluster, with its check green against a measure that is not the fitter's (the 90 at 89.2 degrees, the string across it 89.2, pane E's tool 88.9); the charge, in as your line 1 says, with your note that nothing on these bends tests it apart; the gate (820 microseconds at the largest).
+
+**The ring before a third was owed and is the right one. The third try is allowed, and it is one thing.** Your ladder is the evidence, and it is the judge's own: at the 90 radii of 1 to 6 m hold, and at 6 m the centre is 0.16 m from your hand line's. No arc is laid because the search gives up when a fixed least radius of 0.3 m fails, and for a bend of three corners spread over half a metre no centre exists that small. That is a floor in the code, as you say, and not the rule of line 2. It came in with the cluster, which my ruling ordered; a bend of several corners has a least radius of its own.
+
+**1. The fix, red first:** the search's floor is the least radius at which the bend's centre exists, found first; then the widest that holds, as line 2 says.
+
+**2. Registered now:** at the 90 an arc is laid, its radius at least 5 m and its centre within 0.3 m of your hand line's; the 90's exit no later than today's 871 (your own prediction: 856). The rows as before.
+
+**3. One thing in your table that is not explained and is printed with it:** the 22's exit went from 677 to 717 with the cluster (the release: 686). For each of the three bends print the arcs laid, each one's radius, and the runs sent to the solve.
+
+**4. If the 90 is red after this,** stop and ring with the arc laid beside the hand line's, as now. I do not rule a fourth from here.
+
+**The sign, as you read it:** not fired. The 22 keeps the open side at 0.300 s.
