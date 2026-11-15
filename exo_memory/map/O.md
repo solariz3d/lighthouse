@@ -505,3 +505,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-15: B's body-follows-look (off by default) landed on the game's main as 6cd2627 (14/14, world 64/64, gym 26/26), and his clone was built from it. `launch.ps1 -Check` judges by its OWN stamp (build\launch.stamp), which a direct build.bat never writes, so it reads "build needed" right after a good build.** Could be wrong if the launcher also reads ninja's state, but its code compares only that stamp's time.
 → `exo_memory/handback/p-land-b7-O_2026-11-15.md`
+
+**2026-11-15: E3 (the picture switches by key) landed on the game's main as 48ad21d on its build and named rows, at his word of 03:45; his seven runs replayed the same to the bit with 56-828 flips each; his copy built "up to date". An incremental build of his one copy is NOT a heavy run (COMMITTEE.md:93-95): run it directly at BelowNormal, never queued behind suites.** Could be wrong for a cold build, which can run for minutes, but this one took 29 s.
+→ `exo_memory/handback/p-land-e3-O_2026-11-15.md`
