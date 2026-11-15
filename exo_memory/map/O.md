@@ -511,3 +511,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-15: the look back's split-second slow-down is the SIMULATION losing about 63% of the speed in one tick at the floor's millimetre seams (a step up counted only above 5 mm), not the glance or the frames; the border while looking back is new picture entering at every edge as the view recedes.** Both are fixed on look-residue-o 26830ba. The seam fix moves the hunter-lean row's 8-of-24 form from 13 to 7, through a faster flee bot, so it needs a ruling. Could be wrong that he felt the seams and not something else, but his inputs were steady through every dip.
 → `exo_memory/handback/p-lookback-residue-O_2026-11-15.md`
+
+**2026-11-15: after the seam fix, the bots are never caught more often (30 of 144 against 24), but a caught bot is caught sooner (normal 29.5 s against 51.7; hard 30.9 against 50.1).** A runner that no longer stumbles meets what lies ahead sooner. Could be wrong per cell: it is 12 seeds a cell, and gentle and brutal are mixed.
+→ `exo_memory/handback/p-catch-seam-O_2026-11-15.md`
