@@ -704,3 +704,27 @@ narrower than the room asked, and a cluster's arc there would have to pass it.
 branch's law (3845cd8), and the arcs stay behind `line_arcs` at 2a51143. The degeneration line does not fire (the 22 keeps the open side at
 0.300 s). Not built and not proposed as a fourth: the rule two bends would need so that the wider arc is kept and the lesser bend is taken
 after it.
+
+## After the third try (the ruling at the third try's ring, git-blob 5c4a3ba5): 1. the gate, by parts, then the fix registered before code
+
+**The plan's cost by parts with the arcs on** (`gp_parts.txt`: a scratch timing row on 2a51143's law, removed after; five plans a bend):
+
+| bend | find_path | root_arcs (making the bends / the close-pair loop / the rest) | corner_rooms | drop_takeoffs | judges a plan | room samples a plan | plan_to mean / largest |
+|---|---|---|---|---|---|---|---|
+| 22 | 9 us | 408 us (190 / 1 / 216, the rest is the solve's run) | 81 us | 1 us | 13 | 273 | 479 / 496 us |
+| 45 | 5 us | 578 us (582 / 6 / about 0) | 64 us | 0 us | 22 | 839 | 671 / 797 us |
+| 90 | 6 us | **1099 us (586 / 505 / 8)** | 50 us | 0 us | 33 | **1803** | **1148 / 1184 us** |
+
+**Where it goes:** the room samples. Each one costs three nearest-polygon lookups and two raycasts (`arc_room`: a `nearest`, then `open_along`
+either side, each with its own lookup and ray, `nav/world.cpp:480`). At the 90 a judge takes about 55 samples, and about 48 of them are the
+half-legs: the leg in is 20.9 m, so half of it is 42 samples at 0.25 m. The close-pair loop's 505 us is the merged bend's own radius search,
+the same half-leg again.
+
+**The fix, registered before code:** the straights a judge checks (the half of each leg beside the arc) are sampled every 0.5 m; the arc itself
+stays at 0.25 m. Line 2's rule (the room on its own arc and half of each leg) is unchanged; only how densely the straight halves are read. It
+can move a radius where a wall pokes into a straight between two samples, so it is judged by the rows, not assumed harmless.
+- **Registered:** the gate row's largest under 1,000 us (it is red at 2a51143: 1571 us, and 1144 in the whole suite's run). Expected about
+  half the 90's samples.
+- **And no row worse than 2a51143's:** exits 717 / 788 / 864, routes 78.32 s, contacts 9, the cluster and charge rows green.
+- **What would show it wrong:** a row worse, or a judge that now passes a radius whose straight crosses the mesh's edge (the dense row's tight
+  count printed beside it).

@@ -1,0 +1,5 @@
+    22 degrees, a plan's mean over 5: find_path 9 us; root_arcs 408 us (making the bends 190, the close-pair loop 1, the rest 216); corner_rooms 81 us; drop_takeoffs 1 us; the line 126 points; judges 13 and room samples 273 a plan; plan_to whole 479 us mean, 496 largest
+    45 degrees, a plan's mean over 5: find_path 5 us; root_arcs 578 us (making the bends 582, the close-pair loop 6, the rest -10); corner_rooms 64 us; drop_takeoffs 0 us; the line 135 points; judges 22 and room samples 839 a plan; plan_to whole 671 us mean, 797 largest
+    90 degrees, a plan's mean over 5: find_path 6 us; root_arcs 1099 us (making the bends 586, the close-pair loop 505, the rest 8); corner_rooms 50 us; drop_takeoffs 0 us; the line 124 points; judges 33 and room samples 1803 a plan; plan_to whole 1148 us mean, 1184 largest
+ok    diag_gate_parts_one_plan_with_the_arcs
+1 tests, 0 failed
