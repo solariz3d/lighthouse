@@ -597,3 +597,57 @@ before any bend is shrunk against an end (that is line 1 as written, and the cod
 metre of each other merged into one bend before any radius is judged. Either is a fix to the build against its own five lines, not a tune of a
 constant; I have not made it because the ruling says the place is printed before anything is tuned. The gate (1393 us) is the radius search
 on those large isolated radii; the merge would also take most of it away (inferred).
+
+## The cluster and the charge (the ruling at the arcs' ring, git-blob 310e0016): both built, red first; the 90 still red; its place printed. Twice not kept: a ring before a third
+
+dreamzone-3 `a-mline`: red **e63c1ed**, the cluster **928b33e**, the charge **735abd1** (pushed, read back). checked: `cl_rows_red.txt` (on
+a7164cf), `cl_rows.txt` (the cluster), `ch_rows.txt` (the charge), `d2_place.txt` (the 90's print, scratch, not committed).
+
+**The cluster's check: green.** The bends' turns beside the string's turn across each between 3 m chords (red first: 1 / 1 / 3 same-way pairs
+within 0.35 m at the 22 / 45 / 90; the 90's corners alone 10.5, 40.0, 38.7, 9.5, 14.9 degrees, the string across the first 79.8):
+
+| bend | its corners | its turn | the string across it (3 m chords) | pane E's tool |
+|---|---|---|---|---|
+| 22, first | (-71.99 40.66) to (-72.29 40.71) | 29.8 | 29.8 | 22.0 (its own path and point) |
+| 22, second (the S) | (-74.84 42.46) | 16.8 | 16.8 | |
+| 45, first | (-27.19 77.51) to (-27.44 77.71) | 61.0 | 61.0 | 45.0 (its own path and point) |
+| 45, second | (-29.99 82.31) | 14.3 | 14.3 | |
+| 90, first | (-11.99 -26.54) to (-11.54 -26.84), 3 corners | **89.2** | 89.2 | **88.9** |
+| 90, second | (-11.54 -29.99) to (-11.59 -30.29) | 24.4 | 24.4 | |
+
+The cluster limit is the mesh's own: `sim::MoveParams::body_radius`, 0.35 m, which `nav/build.cpp:236` and `:529` erode the mesh by.
+
+**The charge: its row had no red of its own.** Red at e63c1ed (an end shrank a bend beside a same-way bend 0 / 1 / 4 times), it went green with
+the cluster alone (0 / 0 / 0), before the charge was built; the charge is in as line 1 says, and nothing on pane E's bends tests it apart.
+
+**The arcs' rows** (way (b), stand-in, the width price in):
+
+| row | bar | a7164cf | the cluster | the charge |
+|---|---|---|---|---|
+| 22 exit tick | 724 | 677 | 717 | **717** |
+| 45 exit tick | 1103 | 801 | 801 | **801** |
+| 90 exit tick | 871 | 948 | 915 | **915, RED** (0 arcs) |
+| ten routes | 77.11 s | 79.71 s | 79.44 s | **79.01 s, RED** |
+| route contacts | 10 | 11 | 12 | **11, RED** |
+| one plan, largest | 1,000 us | 1393 us | 844 us | **820 us** (mean 502) |
+
+Whole suite with both: chase 123, 7 failed (the five red at 3845cd8, and the arcs' bends and routes rows); nav 34, 0 failed; off means off md5
+`fa938de45995bd2d13b98ba28fae0c34`, 18 SAME; the 22's side row green with the switch off. My predictions: the 22 and 45 at or before 686 and
+801 (717: not met; 801: met); the 90 at or before 856: not met.
+
+**The 90, as ruled (item 3): the arc laid there, beside the hand line's.** No arc is laid there. The print:
+- The cluster: 3 corners, 89.2 degrees, legs 20.92 m in and 3.15 m out; free distance out from its first corner along the bisector 3.61 m, so
+  w 2.57 m and the width bound 9.12 m.
+- **The judge at a ladder of radii: 0.3 and 0.5 m FAIL ("no centre keeps every corner inside"); 1, 2, 3, 4, 5 and 6 m HOLD; 7 and 8 m fail
+  (the tangent point in off the mesh); 10 m fails (the tangent point out).** At 6 m: centre (-15.79 -30.74), tangent in (-15.70 -24.74), out
+  (-9.79 -30.74). **The hand line's 6 m arc: centre (-15.70 -30.60), from (-15.70 -24.60) to (-9.70 -30.60).** The centres are 0.16 m apart;
+  on the map the two arcs run side by side, a cell apart at most.
+- **Why none is laid: my `arc_widest` gives up when its least radius (0.3 m) fails.** For one corner a centre exists at any radius past the
+  room; for a cluster of three corners spread over half a metre, none exists at 0.3 m (the circle less the room must hold all three). So the
+  cluster, which holds from 1 to 6 m, is sent to the solve before its widest is searched. The 90's second cluster the same (0.3 fails; 0.5 to
+  2 m hold). This is the code's floor, not line 2's rule, and it came with the cluster: a7164cf never had a multi-corner bend at creation.
+- **Not changed, as the ruling says.** The fix I would make: the search's floor is the least radius at which the bend's centre exists (found
+  first), not the fixed 0.3 m. Inferred, not run: with it the 90 lays about a 6 m arc, the hand line's, which took the 90 in 0.575 s (exit 856).
+
+**Twice not kept in a row (a7164cf, then 928b33e and 735abd1): I ring before a third, by the night's rule.** The degeneration line does not
+fire: the 22 keeps the open side and is 0.300 s, under 0.642.
