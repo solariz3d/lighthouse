@@ -1,0 +1,6 @@
+M3D today: replans 150 (compared 150); flips with the solid within 0.5 m 0, 1.0 m 0, 2.0 m 0
+M3D way (b): replans 166 (compared 166); flips with the solid within 0.5 m 0, 1.0 m 0, 2.0 m 1
+M3D way (a): replans 162 (compared 162); flips with the solid within 0.5 m 0, 1.0 m 0, 2.0 m 1
+ok    m3d_scratch_count_on_the_routes
+1 tests, 0 failed
+M3D at exit: replans 162 (compared 162); flips with the solid within 0.5 m 0, 1.0 m 0, 2.0 m 1

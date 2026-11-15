@@ -1,0 +1,12 @@
+DIAG unbraked: tick 1826 speed 0.210->0.248 slide_after 0.000 slide_brake 0 branch 1 along -0.763
+DIAG unbraked: tick 1820 speed 0.483->0.520 slide_after 0.000 slide_brake 0 branch 1 along -0.961
+DIAG unbraked: tick 455 speed 0.618->0.649 slide_after 0.000 slide_brake 0 branch 1 along -0.006
+DIAG unbraked: tick 906 speed 0.276->0.314 slide_after 0.000 slide_brake 0 branch 1 along -0.922
+    way (b)  : 543 sliding ticks with the aim behind along the wall and the turn into it; not braking 4; turned about by hand 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1423): CHECK failed: unbraked == 0
+DIAG unbraked: tick 1819 speed 0.387->0.425 slide_after 0.000 slide_brake 0 branch 1 along -0.949
+DIAG unbraked: tick 904 speed 0.266->0.303 slide_after 0.000 slide_brake 0 branch 1 along -0.916
+    way (a)  : 167 sliding ticks with the aim behind along the wall and the turn into it; not braking 2; turned about by hand 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1423): CHECK failed: unbraked == 0
+FAIL  m3c_along_a_wall_with_the_aim_behind_the_body_brakes_at_its_grip_and_leaves_the_other_way
+1 tests, 1 failed

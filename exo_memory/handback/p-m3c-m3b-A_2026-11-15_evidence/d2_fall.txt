@@ -1,0 +1,5 @@
+    the hunter on the root: 735 drop links, 735 taken; swept fall meeting a solid 0; landed at the link's landing 565, elsewhere on the mesh 166, put back 4; descended while held 0; off free fall by more than 2 cm 0; down quicker than free fall 166; speed 0 without a wall 0, a wall took the flat speed 166; landing speed off the take-off by more than 10 % 0; landed off the mesh 0
+DIAG never went free (seconds_down 0, not put back) 166; of them counted quicker than free fall 166
+    G:\consonance-scratch\a-m1-dz3\chase\tests\fall_tests.cpp(150): CHECK failed: n.held_descent == 0 && n.shape_off == 0 && n.too_quick == 0
+FAIL  m3b_every_drop_of_twelve_worlds_is_a_fall_that_meets_no_solid
+1 tests, 1 failed
