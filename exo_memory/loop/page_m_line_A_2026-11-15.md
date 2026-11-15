@@ -208,3 +208,37 @@ root chaser, **mean 932 us, largest 1767 us** (base 1946 / 4418). **The gate (10
 
 **For pane E's films beside today's law:** the tip 1cdce20 at the three bends (it is the faster of the two there). If the films are to show
 the fewest wall touches between the bends, the base cb9049c instead. Both are on `a-mline`.
+
+## After the third try's ruling (git-blob 121179e1): the correction taken, the 45 degree cause, and the side in five lines before code
+
+**The correction, taken:** in the stand-in today's law takes the 22 degree bend in 0.642 s (lowest 3.94); the line's 0.792 s is 0.15 s slower,
+not inside the bar. My table's "bar met" is withdrawn with the librarian's sentence. The base is cb9049c (dreamzone-3 a-mline 3f0cf4f puts
+its law back; the third try's two levers are out).
+
+**The 45 degree cause, named (no change; `r45b.txt`, the base law):** a wall contact at ticks 773 to 774 set the slide along the wall at
+-128.7 degrees while the aim was +58: about 187 degrees off, almost exactly behind. The corrected slide law turns the velocity the short way
+toward the aim at its allowed rate, and every tick the short way is "decreasing" (the velocity is nearly opposite the aim and the aim drifts
+from +58 to +44), so the velocity sweeps -129 to -180 to +166, **away from** the wall (its outward side about +141 degrees). The brake fires
+only when the turn points into a wall, so for about 70 ticks the body turns nearly 180 degrees at the creep speed instead of braking; it brakes
+from tick 841 (when the turn at last points into the wall), rests at tick 871 and reverses. The heading eases after the velocity, which is why
+against the aim it looks like the long way round. **A fault of the slide law, not of the line:** with the aim more than 90 degrees behind the
+velocity, a turn at grip is the slow way and braking to rest and leaving toward the aim is the fast one. Mine to fix, red first, after the side.
+
+**The side, five lines (the ruling's reading taken: price the squeeze in the one search; the old law's search untouched):**
+1. **How:** a root body's own search prices each opening it crosses: crossing from one polygon to the next through a shared edge narrower than
+   1.0 m adds the time a body with grip loses there, written as metres at its top speed, so the one search returns the open side whenever the
+   squeezes on the other cost more than the extra length. No second search and no comparison; the throat and avoid-list code of cb9049c goes.
+2. **The unit:** the portal, the edge two polygons of the eroded mesh share, its length the opening's free width. Detour's header documents
+   `getCost` as the cost across the current polygon to its portal into `nextRef` (`DetourNavMeshQuery.h:62-79`), and the current polygon's
+   link to `nextRef` names that edge, so the filter can read the width there (scaled by the link's part of the edge at a tile's border).
+3. **The price (ours):** `(v - v_w)^2 (1/(2b) + 1/(2a)) / v` seconds, times `v` for metres, with `v` the top speed, `b = min(brake, mu g)`, `a` the
+   acceleration, and `v_w = min(v, sqrt(mu g max(w, 0.1)))` (a body cannot swing wider than the opening where the way turns there). It is carried
+   by a new `nav::Profile` field that is zero (off) for today's law; only `profile_of` for a body on the root sets it.
+4. **What it costs a plan:** a link walk for each polygon the search expands, in the one search; the string's 13 us stays about the same, and the
+   line's relaxation remains the cost the gate is about.
+5. **What would show it wrong:** with the open side taken, the 22 degree bend in the stand-in is still over today's 0.642 s (registered by the
+   ruling: then the line-maker is the cause); or the price sends a root body round straight doorways it could pass at speed (the ten routes'
+   bend times worse than the base cb9049c's by more than 5 per cent).
+
+**The bends row (ruling item 2), by name before it runs:** today's law runs through the same three bends in the same arena beside the line; the
+bar at each bend is today's time there; the 0.889 s constant leaves the row.
