@@ -53,3 +53,12 @@ its lean lap. Any change in `chase/`. `game/config/world.local.txt`: his, not ed
 `node consonance/tools/heavy-run.js --status` before any run; no build while the game runs (he is testing today: read the
 process list first, and wait, not kill). Trees and builds on `G:\consonance-scratch`. Commit by named paths. His words stay out
 of the game's repository. Hand-back as a file, rung to the librarian as a pointer, each state claim marked checked or inferred.
+
+## AMENDED 18:5x on 2026-11-14 (D): ruled without his answer, as a default he can flip
+
+- **Why it is ruled now.** The question (is the mouse moving when the look back hitches) was put to him four times from 12:0x and not answered. At 18:43 he said "continue all work" (game brief item 227) and went to sleep. The game's own rule gives the default: `game/config/bindings.txt:15`, "the view only: the run carries on ahead". A setting makes it his to flip.
+- **Build.** While the glance is held, mouse movement turns the view only. The run keeps the heading it had when the glance began. On release the view returns to the run's heading, as today. One setting chooses between this and today's behaviour; the default is the view only. Name the setting in the hand-back.
+- **Red first.** A scripted sprint at top speed with a one-second glance, during which the mouse turns 30 degrees: the run's path and speed are the same, tick for tick, as the same sprint with no glance and no mouse movement. By your own reading it is red today (`game/shell.cpp:76-78`, `:185-186`; `game/input.cpp:71`; `handback/p-d676-lookback-B_2026-11-14.md`). Print it.
+- **The second suspect is measured, not fixed.** A frame over 100 ms while the view is turned is counted as 100 ms (`game/loop.h`). Put a count of such frames in the run record, so that his next hitch names itself.
+- **What else moved: nothing.** A kept run records the tick's input and not the glance, so his kept runs replay the same. Show it.
+- Tier: check it, with the one row. Pane O lands it.
