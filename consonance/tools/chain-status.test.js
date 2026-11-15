@@ -1943,7 +1943,7 @@ test('IDLE HOLDER through the hook\'s own call shape: the reader spawned as user
     fs.writeFileSync(path.join(fx.dir, 'heavy-run.lock'), JSON.stringify(lock));
     const r = spawnSync(NODE, [READER], { encoding: 'utf8', timeout: 3000, env: { ...process.env, CONSONANCE_DATA: fx.dir, LAP_LEDGER: fx.ledger } });
     const first = (r.stdout || '').trim().split(String.fromCharCode(10))[0];
-    assert.match(first, /IDLE HOLDER a2122153 slot 1, held 7m, nothing under it \(named 1x, last \d\d:\d\dZ\)/, 'stdout: ' + r.stdout + ' stderr: ' + r.stderr);
+    assert.match(first, /IDLE HOLDER a2122153 slot 1, held 7m, nothing under it \(named 1x, last [0-9]{2}:[0-9]{2}Z\)/, 'stdout: ' + r.stdout + ' stderr: ' + r.stderr);
   } finally { fx.cleanup(); }
 });
 
