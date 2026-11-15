@@ -171,3 +171,25 @@ So the fault pane B names is there as B says, on the hunter, in all four windows
 - **So, before N2's cut:** run the yardstick on the new legs' straight run at its three speeds and print hip, knee and ankle beside the old generator's score. Where a number in `body_row.h` stands for something those curves give (the knee's fold through the swing, the knee at take-off, the hip's range), take it from the curves and write the source beside it. The curves are data and are his research; the rule against the old pose functions in `game/anim/` stands.
 - **Registered now:** on the yardstick the new legs' knee and ankle are no worse than the old generator's at 2.5 to 4.5 m/s, or the difference is printed and said to him. His good word of 06:10 ("starting to look decently human good running") was said of the body drawn from those curves, so that body is the floor the new one must not fall under. **Unwelcome, named now:** the new legs score worse, and the gait plan's swing has to be re-shaped from the curves before the trunk and arms are stood on it.
 - **Not put to him as a stage** while the hunter's leg is out behind. Pane E's clips of this stage are made from the cut after the swing's fix, not from v4.
+
+## THE YARDSTICK ON THE NEW LEGS (D, 2026-11-15): EVERY JOINT FAILS AT EVERY SPEED AND THE OLD GENERATOR PASSES THEM ALL. THE REGISTERED LINE FIRED; THE RE-SHAPE FROM THE CURVES IS THE PLAN; (c) RULED
+
+`handback/p-n1-legs-B_2026-11-15.md` section 7 (lines 303-400 read whole; git-blob 6a28e0b5); branch `n1-legs-b` eec7f10.
+
+**By pane B, on Fukuchi's runners, RMS in degrees over the runners' own spread:**
+
+| m/s | the old generator: hip / knee / ankle | the new legs: hip / knee / ankle |
+|---|---|---|
+| 2.5 | 2.4 of 5.2 / 3.1 of 7.6 / 2.0 of 5.1, all pass | 15.9 / 20.7 / 41.6, all fail |
+| 3.5 | 2.6 of 5.3 / 2.6 of 8.0 / 1.3 of 5.8, all pass | 19.0 / 22.6 / 44.9, all fail |
+| 4.5 | 3.2 of 6.6 / 3.7 of 9.4 / 2.7 of 5.7, all pass | 23.0 / 26.3 / 49.1, all fail |
+
+**The line registered at the last ruling fired, and its unwelcome case is the one that holds:** the new legs score worse, and the swing is re-shaped from the curves before the trunk and arms are stood on it. Pane B says of its own numbers that every failing one is a number or a rule it marked "ours". He is told the difference in plain words, as the line says.
+
+**Ruled:**
+- **(a) and (b) go on as B wrote them:** the running leg's hip and knee through the swing from the measured shapes on the gait plan's clock, blended onto the planned landing; the foot pitched by the shapes' ankle. The shapes are restated in `game/anim/` as numbers with their source; no old function is called. That is his research used inside the new system, which is what he asked for three times.
+- **One thing (a) and (b) do not cover, and its measure is on file too:** B's own list has "the knee never bends in stance" (0 where the runners bend 21). In stance the foot is held and the knee is whatever the hips' height over it makes it. The measured pelvis travel by speed is on file (`loop/animation_system_2026-11-13/ground_locomotion_and_yardstick.md:107-108`, Dorn's runner: 103.3, 86.3, 63.2, 47.2 mm at 3.53, 5.19, 6.97, 9.47 m/s). So the stance knee comes from lowering the hips by that travel, in place of the sink numbers marked ours. B's to place; named so it is not found by the next score.
+- **(c), the row, changed by name before any run, because as it reads it would fail a correct foot.** `a_planted_foot_of_the_new_systems_body_holds_where_it_landed_until_it_lifts` reads the ankle. A runner's heel rises in late stance while the ball of the foot stays down, so the ankle of a correctly planted foot moves. What the row is for is that nothing on the floor slides. Restated: **each of the heel and the toe moves no more than 1 cm in the world for as long as it is itself on the floor; and from strike to lift at least one of them is on the floor.** Each point is read on its own, so the reading never jumps from heel to toe. "On the floor" is a height B states. **Its control first:** the restated row is run on the lock taken out, where the old reading showed 0.41 and 0.55 m, and must be red there before its green means anything. Then (c) is built.
+- **The judge of this stage is the yardstick's table, re-printed after (a), (b) and (c), beside the old generator's.** The registered line stands as written: no worse than the old generator on knee and ankle at 2.5 to 4.5 m/s, or the difference is said to him again.
+- **Not looked at by me:** cut v12. Nothing is accepted on it and it is superseded by the re-shape; I look at the cut that follows the re-score.
+- **N2's cut waits for the re-score.** The trunk and arms are not stood on legs that fail every joint.
