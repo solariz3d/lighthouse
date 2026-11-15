@@ -129,3 +129,10 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
 - **A corner's room, a third reading:** pane A's `room` is neither the width limit nor the leg limit; it is the clearance along the corner's outer bisector, set where the leg's length goes. On route 0's short legs it is the generous one. Named for the lap that follows M3; not changed tonight.
 - **The Park kit stays held:** on the root the sprinter row cannot say what it says today (care is not something the root reads), so it cannot rule the kit.
 - **Catch power with every kind on the root, reported, nothing tuned to it:** of 96 seeds the fleeing bot is never caught in 64 at normal (main 58) and 0 at brutal (main 2).
+
+## AMENDED at the collation of E1 (D, the night of 2026-11-14; `handback/p-d677-e1-E_2026-11-14.md`)
+
+- **Point 3 of "AMENDED 18:5x" holds today and is now a row:** the player's body is one pose seen by two cameras. Pane E read one pose call and no second rig, and its row compares what the two views drew (0 difference over 77,238 joint pairs on a kept run; five mutants caught). Branch `e1-two-cameras-e` 45d299a; pane B lands it after the look back is on main.
+- **A lap this found, added to the body's list for every body: the body follows the look.** The view's pitch does not reach the body today, so looking down bends nothing. One function spreads a look over neck, chest and hips for any body: the player looking down at his own legs (his item 159), a chaser's head on its target. It is laps L19 and L23 of the path of record made one, and it comes after B1. Owner named when a pane is free.
+- **The film tool exists and is not yet fit for his eye:** dark outside frames, and no way to put two laws through the same corner. Packet E2: `loop/packet_e2_films_for_his_eye_E_2026-11-14.md`.
+- **L12 (B5 above):** its cost reading is in and shows nothing on the card. It may land tonight behind its switch, off, if off draws exactly as main does; pane E says whether it has one.
