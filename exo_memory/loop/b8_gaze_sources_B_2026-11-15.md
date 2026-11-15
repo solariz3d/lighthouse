@@ -65,3 +65,56 @@ own feet, standing or moving.
   remove, by the packet's step 3, after the look of step 1.
 - **The arms are passive from below,** so the law's "arms turn with the chest as one piece" is the opposite of a passive swing, and is a
   candidate for "an arm stands out level from the body". That would be a change to the law's shape, said before the code.
+
+## 5. How games that draw one body for both views handle first person (the packet's narrow read, its amended last section)
+
+Read by one research agent pane B sent at 05:3x local. READ means the page was opened, through a fetch tool that summarises, so the
+wording is close but not always verbatim. SECONDARY means a search snippet only.
+
+**What the camera rides on, and the run's bob:**
+
+| claim | game or engine | source | status |
+|---|---|---|---|
+| camera parented to the motion-captured head looked poor; an aim constraint to a point ~15 m ahead was better but dull; final: the camera hand-animated to show the feeling of movement, not the body's real movement | Mirror's Edge (DICE) | slides "Creating first person movement for Mirror's Edge", slides 20, 22, 24, 25 notes (slideshare 3151885) | READ |
+| head-mounted camera was "like controlling a bobble head"; counter-rotating the eyes removed ~80 % of the bounce but failed in tight spaces and strafing; final: hold the head steady while the body moves, as birds do | Star Citizen | Kotaku, "Star Citizen's first-person view is based on birds" | READ |
+| the stabiliser is needed because first and third person share one character | Star Citizen | GamersNexus, Sean Tracy interview part 2 | READ |
+| camera on the head, driven by the body's animation; bob fought in the animation (cycles kept "as steady as possible") and a head aim constraint to a far point | UE4 sample (Froyok) | Game Developer, "True first person camera in Unreal Engine 4" | READ |
+| a dozen or more iterations on camera wobble, interpolation per situation | Dying Light | PlayStation Blog, 2014-12-04 | READ |
+
+**What is hidden from the player's own view:**
+
+| claim | game or engine | source | status |
+|---|---|---|---|
+| a first-person primitive casts no shadow; a world copy hidden from its owner ("Owner No See") casts the shadow and shows in reflections | UE5 | "First Person Rendering", "First Person Primitive Type" | READ |
+| `ShadowsOnly`: casts shadows, otherwise invisible: the way to keep a hidden head's shadow | Unity | ShadowCastingMode.ShadowsOnly | READ |
+| the third-person rig was used for the shadows | Mirror's Edge | DICE slides, slide 37 notes | READ |
+
+**How the body is animated for both views:**
+
+| claim | game or engine | source | status |
+|---|---|---|---|
+| a dedicated first-person mesh (arms, hands) | Mirror's Edge | DICE slides 28, 35 | READ |
+| "a fire animation in third is the same as first": one shared system | Star Citizen | GamersNexus | READ |
+| a first-person mode keeping motion matching, foot placement and vaulting, with procedural look and aim | UE Game Animation Sample + FocalRig | 80.lv (the plugin vendor's own claim) | READ |
+
+**How the look is shared:**
+
+| claim | game or engine | source | status |
+|---|---|---|---|
+| look-at has separate 0-1 weights for body, head and eyes, plus a clamp | Unity | Animator.SetLookAtWeight | READ |
+| aim offsets additive in mesh space; full yaw standing, or pitch only with the actor's rotation carrying yaw | UE | "Aim Offset" | READ |
+| look split between torso and head (`dialogue_torso_control`, `dialogue_head_control`) | Overgrowth (open source) | aschar.as, first 100k of 580k characters | READ |
+
+**Not found:**
+- Tarkov's and Arma 3's camera setups.
+- Overgrowth's first-person camera (`ApplyCameraControls` not in the part read).
+- Any source with real per-bone look splits.
+- A GDC talk on the true first-person body (the Vault page needs a login).
+
+**What it means here (mine):**
+- No shipped game keeps a raw camera on the head bone of a body drawn from motion; each steadies the camera apart from the head.
+- This game today does the reverse, hanging the body from the camera (`Body::pose`). That is the first-person-only design the
+  librarian named.
+- **Drawing the runner by a real gait (the first film) and then steadying the camera apart from its head is the shape the shipped
+  games converge on** (Star Citizen most closely, sharing one body for both views). This is a reading, not yet a decision; the film
+  comes first.
