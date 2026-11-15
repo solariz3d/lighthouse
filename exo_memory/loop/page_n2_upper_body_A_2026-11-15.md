@@ -254,3 +254,88 @@ Each is printed beside the film as ours, and none is tuned by eye before he has 
    - the hand's path toward the midline, from the CMU clips;
    - Perpiñá-Martínez 2023's speed for its 6.5 / 14.28 deg, read at source.
 4. **Then the build,** with the rows of section 4 red first where a number can be red.
+
+---
+
+## The "before code" list, worked (the plan's section of 15:50, hash-object 8b53f735)
+
+**The seams:** proposed in writing for pane B's answer, `loop/n2_seams_with_n1_A_2026-11-15.md` (git-blob 2580a214).
+- **Seam 1:** N1 draws the pelvis's turn, measured from its own runners.
+- **Seam 2:** N2 computes the lean, N1 carries it in the feet and pelvis, and N2 draws everything above the pelvis in space.
+- **B's answer is not in yet.** The seams are not settled until it is, and no code begins before.
+
+### A correction to section 2.2 (and to E's sheet, :78), found by reading Perpiñá-Martínez 2023 at source
+
+Read at PMC9961938, its Methods, Table 2 and Abstract (the CEU repository's PDF link redirected to a localhost address and was not
+followed).
+- **The 6.5 deg is pelvic TILT,** male, at the fast level: "The kinematic range in males was 5.92°–6.50°, according to tilt".
+- **Its pelvic ROTATION is a whole range of 9.96 to 16.13 deg** by sex and speed: males 10.64 / 9.96 / 13.60, females 13.21 / 15.74 /
+  16.13, at slow / medium / fast.
+- **Its speeds:** self-selected, slow about 8.75-9.98 km/h, fast above 11.71 (males) or 10.11 (females) km/h, so about 2.4 to 3.3 m/s and
+  up.
+- **Its size and instrument:** 101 runners, one IMU at S1.
+- **It reports NO thorax figure;** 14.28 is not in it. So page 2.2's "pelvis 6.5 deg each way, thorax 14.28 deg each way (Perpiñá-Martínez
+  2023, Table 1)" is wrong as attributed. The thorax figure must be Ford 2013's, unread by me.
+- **The measure below replaces both** as the source for N2. Perpiñá-Martínez's pelvic rotation range stays as a many-runner check at its
+  slower speeds.
+
+### The three measures, from Dorn, Schache & Pandy 2012's markers
+
+Subject JA1, the SimTK package at `G:\consonance-scratch\simtk_ja1`, MIT as recorded by the sprint reference.
+- **One runner, two strides a trial** (one at 7.00 m/s), each from the file's own right Foot Strike events.
+- **Method:** `n2_measure.js` beside this page, a C3D reader written from the format's layout, so anyone can re-run it. Output:
+  `n2_measure.txt`.
+- **Axes:** running is +Y and vertical +Z, the sprint reference's reading of this package.
+
+**1. The trunk's forward lean by speed** (the SACR-to-C7 line against the vertical, less its standing lean of 4.72 deg, the static trial
+JA1Static05, 647 frames):
+
+| speed | mean lean over the stride, less standing | its swing over the stride (raw) |
+|---|---|---|
+| 3.56 m/s | 6.5 / 6.0 deg | 7.7 to 15.3 deg |
+| 5.20 m/s | 6.1 / 5.6 | 6.7 to 15.5 |
+| 7.00 m/s | 4.8 | 5.7 to 15.2 |
+| 9.49 m/s | 11.9 / 10.7 | 9.6 to 21.3 |
+
+The lean rises and falls twice a stride, most near 10-15% and 60-70%, least near 30-40% and 80-90%.
+- **N2 draws the mean by speed and leaves the swing to the stride.** The swing is ours to draw or not, said here.
+- This replaces "zero until measured" (page 2.3). Below 3.56 m/s, the CMU clips would extend it; they are not on this disk and were not
+  fetched.
+
+**2. The hand's path toward the midline** (the wrist marker's distance from the trunk's midline, the mean of SACR and C7 across, + on its own
+side):
+- **The wrist never crosses the midline at any speed.** Right wrist, closest: 17.3 / 16.9 cm at 3.56 m/s, 16.5 / 17.2 at 5.20, 11.6 at 7.00,
+  12.2 / 13.3 at 9.49, always near 30-40% of the stride (the forward swing). Farthest: 30 to 35 cm. The left wrist is the same, at its own
+  half-cycle (9.2 to 17.7 cm closest).
+- **For his "hands reach forward" falsifier:** the wrist's reach ahead of C7 at most is 28.6 / 28.7 cm (3.56), 29.9 / 30.9 (5.20), 45.3
+  (7.00), 45.3 / 44.6 (9.49). Behind, it goes to -16 to -43 cm.
+- **This is the hand's measured path:** N2's arm is solved so the wrist follows it. A drawn wrist that stays forward of C7 through the stride,
+  or crosses the midline, is wrong by this measure.
+
+**3. The pelvis's and the thorax's turn about the vertical** (the RASI-LASI and RSH-LSH lines in the ground plane, each less its stride mean):
+
+| speed | pelvis, whole range | thorax, whole range | thorax / pelvis | the thorax against the pelvis |
+|---|---|---|---|---|
+| 3.56 m/s | 7.7 / 8.0 deg | 16.2 / 15.7 | 2.11 / 1.97 | opposed, about 32-38% of the stride later |
+| 5.20 m/s | 11.1 / 11.6 | 15.1 / 13.7 | 1.36 / 1.19 | opposed, 25-29% later |
+| 7.00 m/s | 16.1 | 14.6 | 0.90 | opposed, 23% later |
+| 9.49 m/s | 26.9 / 22.7 | 12.4 / 9.6 | 0.46 / 0.42 | opposed, 26-28% later |
+
+- **The thorax turns opposite the pelvis and LAGS it by about a quarter of a stride,** 85 to 115 deg of the cycle.
+  - **That signs Pontzer's unsigned 93.9 deg,** which page 2.2 and section 3, item 2 had marked ours.
+  - The best-fit routine reported 3.56 m/s (both strides) and 9.49 m/s stride 1 as "in step" at a shift of 88% and 76%. That is the same
+    opposed curve half a stride on (38% and 26%), so every stride reads opposed.
+- **The pelvis's turn grows with speed, and the thorax's stays near 10 to 16 deg,** so the ratio falls from about 2 to under 0.5. One runner.
+  - Perpiñá-Martínez's many-runner pelvic rotation, 10 to 16 deg at 2.4-3.3 m/s and up, is larger than this runner's 8 deg at 3.56 m/s.
+  - So the pelvis's size is the one figure here to take from many runners where they exist (Fukuchi's 28, seam 1) before this one runner.
+- **What N2 builds from it:** the thorax's counter-turn on N1's pelvis, at the measured ratio and lag by speed. If seam 1 goes N2's way
+  instead, the pelvis's turn comes from Fukuchi's runners at 2.5-4.5 m/s and this runner above.
+
+**What page 3 still calls ours, after these measures:**
+- the lean's share past Churchill's one bend;
+- the arm targets between 4.15 and 5.20 m/s (now 3.56 to 5.20 from one runner) and past 9.49;
+- the look's split;
+- the planted-foot joint with the lean (seam 2);
+- breath's sizes.
+
+The sign of the pelvis-to-thorax phase is no longer ours; it is measured, n = 1.
