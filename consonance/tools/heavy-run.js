@@ -100,6 +100,14 @@ const appDefaultDataDir = () => path.join(process.env.USERPROFILE || require('os
 const LOCK_NAME = 'heavy-run.lock';   // slot 1; slot k is heavy-run.k.lock (D286)
 const HOLD_NAME = 'heavy-run.hold';   // D663: the exclusive hold
 const HOLD_MAX_MS = 90 * 60 * 1000;   // D663: a hold older than this is ignored, loudly
+// D675: A PAUSE is an exclusive hold that holds no slot and carries its own length (`max_ms`), so it can outlast a long game. Its length is
+// capped here, and a dead pause holder is stale like any other (a pause can never park the room after its holder is gone).
+const PAUSE_MAX_MS = 12 * 60 * 60 * 1000;
+const PAUSE_DEFAULT_MIN = 180;
+/** How long a hold binds before runners ignore it: its own max_ms (a pause, capped at PAUSE_MAX_MS), else the hold maximum. */
+function holdLimitMs(h, holdMaxMs = HOLD_MAX_MS) {
+  return h && Number.isFinite(h.max_ms) && h.max_ms > 0 ? Math.min(h.max_ms, PAUSE_MAX_MS) : holdMaxMs;
+}
 const DEFAULT_SLOTS = 2;
 const MAX_SLOTS = 8;
 const NON_GIT_TREE = '(not in a git tree)';
@@ -164,6 +172,8 @@ const PROFILE_FIELDS = {
   concurrency: { env: 'CONSONANCE_HEAVY_CONCURRENCY', parse: (v) => (/^[0-9]+$/.test(String(v).trim()) && Number(v) >= 1 && Number(v) <= 64 ? Number(v) : undefined) },
   slots: { env: 'CONSONANCE_HEAVY_SLOTS', parse: (v) => (/^[0-9]+$/.test(String(v).trim()) && Number(v) >= 1 && Number(v) <= MAX_SLOTS ? Number(v) : undefined) },
   timing: { env: 'CONSONANCE_HEAVY_TIMING', parse: (v) => (v === true || /^(1|true)$/i.test(String(v).trim()) ? true : v === false || /^(0|false)$/i.test(String(v).trim()) ? false : undefined) },
+  // D675: more names for --wait-game ("a game of his"): a list in the file, or comma-separated in the env.
+  games: { env: 'CONSONANCE_HEAVY_GAMES', parse: (v) => { const a = (Array.isArray(v) ? v : String(v).split(',')).map((x) => String(x).trim()).filter(Boolean); return a.length ? a : undefined; } },
 };
 /** This machine's heavy-run profile: { values, source, ignored }. File first, then each field's env var over it. Never throws; unusable input is an empty profile. */
 function profile({ file, env = process.env } = {}) {
@@ -411,7 +421,7 @@ function acquire({
   cmd, dataDir, env = process.env, slots, tree, onClaim, beforeClaim, beforeTake,
   maxWaitMs = Number(process.env.CONSONANCE_HEAVY_WAIT_MS) || MAX_WAIT_MS, pollMs = POLL_MS,
   alive = pidAlive, confirmGone = pidGone, identify = processIdentity, log = (s) => process.stderr.write(s + '\n'), now = () => Date.now(), sleep = sleepSync,
-  writes, diskFree = freeBytes, diskTotal = janitorTotal, heavy, exclusive = false, holdMaxMs = HOLD_MAX_MS,
+  writes, diskFree = freeBytes, diskTotal = janitorTotal, heavy, exclusive = false, holdMaxMs = HOLD_MAX_MS, holdOnly = false, pauseMs,
   idleSample = idleSampleTree, idleReport, idleWindowMs = IDLE_WINDOW_MS, idleCpuS = IDLE_CPU_S,
 } = {}) {
   let dir = dataDir === undefined ? manifestDataDir() : dataDir;
@@ -533,7 +543,7 @@ function acquire({
   // over); { h, ignored } = another run's hold, ignored when past holdMaxMs (said once per hold).
   const holdFile = path.join(dir, HOLD_NAME);
   const ignoredHolds = new Set();
-  let myHold = false, saidHold = false, holdTookOver = null;
+  let myHold = false, saidHold = false, holdTookOver = null, myHoldRec = null;
   function foreignHold() {
     for (let i = 0; i < 3; i++) {
       const h = readLock(holdFile);
@@ -542,10 +552,10 @@ function acquire({
       const before = tookOver;
       if (takeIfStale(holdFile, 'hold', h)) { holdTookOver = tookOver; tookOver = before; continue; }   // a stale hold, taken over by the lock's own rules and logged
       const hAge = ageOf(h, now());
-      if (hAge !== null && hAge > holdMaxMs) {
+      if (hAge !== null && hAge > holdLimitMs(h, holdMaxMs)) {
         if (!ignoredHolds.has(h.token)) {
           ignoredHolds.add(h.token);
-          log(`heavy-run: IGNORING the exclusive hold by ${describe(h)}: it is ${mins(hAge)} old, past the ${mins(holdMaxMs)} maximum, so it no longer parks the room. If its run is over, remove ${holdFile}`);
+          log(`heavy-run: IGNORING the exclusive hold by ${describe(h)}: it is ${mins(hAge)} old, past the ${mins(holdLimitMs(h, holdMaxMs))} maximum, so it no longer parks the room. If its run is over, remove ${holdFile}`);
         }
         return { h, ignored: true };
       }
@@ -576,10 +586,14 @@ function acquire({
       try { hfd = fs.openSync(holdFile, 'wx'); } catch (e) { if (e.code === 'EEXIST') continue; throw e; }
       const hrec = { pid: process.pid, seat: seatName(env), cmd, exclusive: true, tree: myTree, started: new Date(now()).toISOString(), token, image: self.image, holder_start: self.holder_start };
       if (holdTookOver) hrec.took_over = holdTookOver;
+      if (pauseMs) { hrec.pause = true; hrec.max_ms = pauseMs; }   // D675: a pause, honoured for max_ms instead of HOLD_MAX_MS (holdLimitMs)
       try { fs.writeSync(hfd, JSON.stringify(hrec)); } finally { fs.closeSync(hfd); }
       myHold = true;
+      myHoldRec = hrec;
       break;
     }
+    // D675: a pause holds the hold and NO slot: runs already in a slot finish, every new one waits on the hold.
+    if (holdOnly) return { file: holdFile, slot: 0, reentrant: false, holder: myHoldRec, release() { dropMyHold(); } };
   }
   // An exclusive holder waits for EVERY other run (any tree, any seat); everyone else by the slot rules.
   const blocksMe = (h) => exclusive || blocks(h);
@@ -721,7 +735,7 @@ function status({ dataDir, env = process.env, slots, alive = pidAlive, confirmGo
   else if (hj.state === 'free') out.hold = { state: 'stale', holder: hh, stale: hj.stale };
   else {
     const age = ageOf(hh, now());
-    if (age !== null && age > holdMaxMs) out.hold = { state: 'ignored', holder: hh, age_ms: age };
+    if (age !== null && age > holdLimitMs(hh, holdMaxMs)) out.hold = { state: 'ignored', holder: hh, age_ms: age, limit_ms: holdLimitMs(hh, holdMaxMs) };
     else { out.hold = { state: 'stands', holder: hh, note: hj.note }; out.holdStands = true; }
   }
   return out;
@@ -740,9 +754,9 @@ function statusReport(s) {
   const H = s.hold;
   const lines = [`heavy-run status (${s.dir}), read only:`];
   if (H.state === 'none') lines.push('  EXCLUSIVE HOLD: none');
-  else if (H.state === 'stands') lines.push(`  EXCLUSIVE HOLD: STANDS — ${who(H.holder)}. Run nothing, light or heavy, until it is gone.${H.note ? ` (${H.note})` : ''}`);
+  else if (H.state === 'stands') lines.push(`  EXCLUSIVE HOLD: STANDS — ${who(H.holder)}. Run nothing, light or heavy, until it is gone.${H.holder && H.holder.pause ? ` A pause: it binds until ${pauseEnd(H.holder)}; it ends with node consonance/tools/heavy-run.js --resume.` : ''}${H.note ? ` (${H.note})` : ''}`);
   else if (H.state === 'yours') lines.push(`  EXCLUSIVE HOLD: yours — ${who(H.holder)}; this run is its holder or the holder's child`);
-  else if (H.state === 'ignored') lines.push(`  EXCLUSIVE HOLD: IGNORED by runners — ${who(H.holder)} is ${mins(H.age_ms)} old, past the ${mins(HOLD_MAX_MS)} maximum`);
+  else if (H.state === 'ignored') lines.push(`  EXCLUSIVE HOLD: IGNORED by runners — ${who(H.holder)} is ${mins(H.age_ms)} old, past the ${mins(H.limit_ms || HOLD_MAX_MS)} maximum`);
   else lines.push(`  EXCLUSIVE HOLD: stale (${H.stale}) — ${who(H.holder)}; the next runner takes it over`);
   for (const x of s.slots) {
     if (x.state === 'held') lines.push(`  slot ${x.k}: held by ${who(x.holder)}${x.note ? ` (${x.note})` : ''}`);
@@ -756,20 +770,171 @@ function statusReport(s) {
   return { text: lines.join('\n') + '\n', code: why.length ? 1 : 0 };
 }
 
-module.exports = { describeHolder: describe, status, statusReport, IDLE_WINDOW_MS, IDLE_CPU_S, IDLE_CHECK_MS, idleSampleTree, seatMountUrl, postBoardVia, reportIdle, HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
+module.exports = { describeHolder: describe, status, statusReport, gamesIn, readProcesses, holdLimitMs, PAUSE_MAX_MS, runCli,IDLE_WINDOW_MS, IDLE_CPU_S, IDLE_CHECK_MS, idleSampleTree, seatMountUrl, postBoardVia, reportIdle, HOLD_NAME, HOLD_MAX_MS, runCli, acquire, hold, cpuMask, spreadMask, coreMasks, applyCap, profile, pidAlive, pidGone, processIdentity, sameHolder, START_TOLERANCE_MS, IDENTITY_RECHECK_MS, slotCount, slotFile, resolveTree, checkDisk, writePaths, freeBytes, LOCK_NAME, TOKEN_ENV, MAX_WAIT_MS, YOUNG_MS, DEFAULT_SLOTS, MAX_SLOTS, NON_GIT_TREE, DISK_WARN_BYTES, DISK_REFUSE_BYTES };
 
 // D663: `node heavy-run.js --run [--exclusive] --cmd "<what>" -- <program> [args...]` runs one program under the lock (and the hold, with --exclusive) and exits
 // with its code. For a run that is not node (a Blender bake, a game run over 10 s, a timing session's own binary): GATES.md, "The heavy-run lock".
-function runCli(argv, { spawn = spawnSync } = {}) {
+// D675 (P): A SCRIPT IS STARTED BY heavy-run ITSELF. Three times (11-12 B, 6 min; 11-13 E, 40 min; 11-14 E, 50 min) a hand-made launch line left
+// an idle shell holding the lock: Git Bash rewrote `cmd /c` into a drive argument, and on 11-14 a `start` line carried a broken title quote
+// (loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md). A .cmd or .bat given to --run is started here: cmd.exe from an ARGUMENT LIST,
+// `/d /s /c ""<path>" <args>"`, no shell between. An argument or path carrying a cmd metacharacter is REFUSED, never quoted around: a quoting
+// rule for cmd is where those lines broke. --priority is set on THIS process before anything starts, so all it starts is created at it;
+// a child keeps only below normal and idle of its creator's class (CreateProcessW, dwCreationFlags), so those are the two accepted.
+const SCRIPT_RE = /\.(cmd|bat)$/i;
+const CMD_META = /[&|<>^%"]/;
+const PRIORITIES = { belownormal: 'PRIORITY_BELOW_NORMAL', idle: 'PRIORITY_LOW' };
+const RUN_USAGE = 'heavy-run: usage: node heavy-run.js --run [--exclusive] [--priority belownormal|idle] --cmd "<what>" -- <program|script.cmd> [args...]\n'
+  + '  A .cmd or .bat is started by heavy-run itself, from an argument list: never compose `start ... cmd /c ...` by hand.\n'
+  + '  --priority is set before anything starts, so all the run starts inherits it.\n'
+  + '  From Git Bash, an argument that begins with a slash is rewritten into a path before node sees it: pass a script\'s own switches as words or with a dash.\n';
+function runCli(argv, { spawn = spawnSync, setPriority = (p) => require('os').setPriority(0, p) } = {}) {
   const dd = argv.indexOf('--');
   const flags = dd < 0 ? argv : argv.slice(0, dd), prog = dd < 0 ? [] : argv.slice(dd + 1);
   const ci = flags.indexOf('--cmd');
   const cmd = ci >= 0 ? flags[ci + 1] : undefined;
-  if (!prog.length || !cmd) { process.stderr.write('heavy-run: usage: node heavy-run.js --run [--exclusive] --cmd "<what>" -- <program> [args...]\n'); return 2; }
+  if (!prog.length || !cmd) { process.stderr.write(RUN_USAGE); return 2; }
+  const pi = flags.indexOf('--priority');
+  const prio = pi >= 0 ? flags[pi + 1] : undefined;
+  if (pi >= 0 && !Object.prototype.hasOwnProperty.call(PRIORITIES, prio)) {
+    process.stderr.write(`heavy-run: --priority takes belownormal or idle, got "${prio === undefined ? '' : prio}". A child keeps only those two classes of the process that creates it (CreateProcessW, dwCreationFlags), so no other would reach what the run starts. Not running.\n`);
+    return 2;
+  }
+  let program = prog[0], args = prog.slice(1), opts = { stdio: 'inherit', windowsHide: true };
+  if (SCRIPT_RE.test(prog[0])) {
+    const file = path.resolve(prog[0]);
+    if (CMD_META.test(file)) { process.stderr.write(`heavy-run: refused: a cmd metacharacter (& | < > ^ % ") in the script path ${file}. Not running.\n`); return 2; }
+    const bad = args.findIndex((a) => CMD_META.test(a));
+    if (bad >= 0) { process.stderr.write(`heavy-run: refused: a cmd metacharacter (& | < > ^ % ") in argument ${bad + 1} for ${path.basename(file)}. It is never quoted around; pass it another way. Not running.\n`); return 2; }
+    if (!fs.existsSync(file)) { process.stderr.write(`heavy-run: no such script: ${file}. Not running.\n`); return 2; }
+    const q = (a) => (a === '' || /[\s()]/.test(a) ? `"${a}"` : a);
+    program = process.env.ComSpec || 'cmd.exe';
+    args = ['/d', '/s', '/c', `""${file}"${args.length ? ' ' + args.map(q).join(' ') : ''}"`];
+    opts = { ...opts, windowsVerbatimArguments: true };
+  }
+  if (prio !== undefined) {
+    try { setPriority(require('os').constants.priority[PRIORITIES[prio]]); }
+    catch (e) { process.stderr.write(`heavy-run: --priority ${prio} could not be set (${e.message}). Not running.\n`); return 2; }
+  }
   hold({ cmd, exclusive: flags.includes('--exclusive') });
-  const r = spawn(prog[0], prog.slice(1), { stdio: 'inherit', windowsHide: true });
+  const r = spawn(program, args, opts);
   if (r.error) { process.stderr.write(`heavy-run: could not start ${prog[0]}: ${r.error.message}\n`); return 2; }
   return r.status === null ? 1 : r.status;
+}
+
+// D675 (P): A PAUSE HELD AS THE EXCLUSIVE HOLD. On 11-14 the chair paused the panes by message at 13:22; one message sat queued across a
+// compaction and that pane built and ran a test at 13:27 while he played, after asking the lock. Written as the hold, a pause stops such a
+// run there. `--pause --cmd "<why>" [--minutes N]` starts a detached holder that takes the hold by acquire()'s own path (holdOnly: no slot,
+// so runs already in a slot finish) and keeps it until --resume or N minutes; `--resume` ends a pause and nothing else.
+const pauseEnd = (h) => { const s = Date.parse(h && h.started); return Number.isFinite(s) ? new Date(s + holdLimitMs(h)).toISOString() : '?'; };
+const holdPath = () => path.join(manifestDataDir() || appDefaultDataDir(), HOLD_NAME);
+function pauseCli(argv, { spawnFn = require('child_process').spawn, wait = 15000 } = {}) {
+  const ci = argv.indexOf('--cmd'), cmd = ci >= 0 ? argv[ci + 1] : undefined;
+  const mi = argv.indexOf('--minutes'), minutes = mi >= 0 ? Number(argv[mi + 1]) : PAUSE_DEFAULT_MIN;
+  if (!cmd || !(Number.isFinite(minutes) && minutes > 0 && minutes * 60000 <= PAUSE_MAX_MS)) {
+    process.stderr.write(`heavy-run: usage: node heavy-run.js --pause --cmd "<why>" [--minutes N]   (N above 0 and at most ${PAUSE_MAX_MS / 60000}; default ${PAUSE_DEFAULT_MIN}). Not paused.\n`);
+    return 2;
+  }
+  const env = { ...process.env }; delete env[TOKEN_ENV];   // the holder is never "nested" in the caller's run
+  const child = spawnFn(process.execPath, [__filename, '--pause-holder', String(Math.round(minutes * 60000)), cmd], { detached: true, stdio: 'ignore', windowsHide: true, env });
+  child.unref();
+  const file = holdPath(), t0 = Date.now();
+  while (Date.now() - t0 < wait) {
+    const h = readLock(file);
+    if (h && h.pause && h.pid === child.pid) {
+      process.stdout.write(`PAUSED — ${describe(h)}. Every new heavy run waits; runs already in a slot finish. It binds until ${pauseEnd(h)}, or until node consonance/tools/heavy-run.js --resume.\n`);
+      return 0;
+    }
+    if (h && h.pid !== child.pid && Date.now() - t0 > 2000) {
+      process.stdout.write(`PAUSE WAITING behind the exclusive hold by ${describe(h)}: its holder, pid ${child.pid}, takes the hold when that one is gone. New runs wait on that hold meanwhile.\n`);
+      return 0;
+    }
+    if (!pidAlive(child.pid)) { process.stderr.write(`heavy-run --pause: its holder, pid ${child.pid}, exited without writing the hold. Not paused.\n`); return 2; }
+    sleepSync(100);
+  }
+  process.stderr.write(`heavy-run --pause: no hold written in ${wait / 1000} s by holder pid ${child.pid}. Check with --status.\n`);
+  return 2;
+}
+function pauseHolder(argv) {
+  const ms = Number(argv[0]), cmd = argv[1];
+  const h = acquire({ cmd: 'PAUSE: ' + cmd, exclusive: true, holdOnly: true, pauseMs: ms, maxWaitMs: ms, diskFree: () => Infinity, log: () => {} });
+  const t0 = Date.now(), token = h.holder.token;
+  process.on('exit', () => { h.release(); });
+  const tick = setInterval(() => {
+    const cur = readLock(h.file);
+    if (!cur || cur.token !== token || Date.now() - t0 >= ms) { clearInterval(tick); process.exit(0); }   // resumed, replaced, or its time is up
+  }, 1000);
+}
+function resumeCli({ wait = 10000 } = {}) {
+  const file = holdPath(), h = readLock(file);
+  if (h === null) { process.stdout.write('heavy-run --resume: no exclusive hold stands; nothing to resume.\n'); return 0; }
+  if (h.unreadable) { process.stderr.write(`heavy-run --resume: the hold file cannot be read (${h.unreadable}); left alone.\n`); return 2; }
+  if (!h.pause) { process.stderr.write(`heavy-run --resume: the exclusive hold is not a pause (${describe(h)}); it is left alone. A timing session or a landing ends with its own run.\n`); return 2; }
+  const again = readLock(file);
+  if (!again || again.token !== h.token) { process.stderr.write('heavy-run --resume: the hold changed while it was read; nothing removed. Run --status.\n'); return 2; }
+  fs.unlinkSync(file);
+  const t0 = Date.now();
+  while (pidAlive(h.pid) && Date.now() - t0 < wait) sleepSync(100);
+  process.stdout.write(`RESUMED — the pause by ${describe(h)} is removed${pidAlive(h.pid) ? `; its holder pid ${h.pid} is still alive after ${wait / 1000} s and holds nothing` : `; its holder pid ${h.pid} has exited`}.\n`);
+  return 0;
+}
+
+// D675 (P): ONE COMMAND THAT WAITS FOR HIS GAME. On 11-14 three panes each wrote a wait (dz-world, dz-gym and acs; dz-world alone; the list
+// by hand) and none saw Star Citizen. `--wait-game [--max-minutes N]` reads the process list every 30 s and waits while a game of his runs;
+// it only reads, and never closes anything. A game of his: StarCitizen and acs whatever their window; dz-world, dz-gym and dz-view only
+// with a visible main window (his play has one, the panes' offscreen runs do not); anything under steamapps\common with a visible window;
+// and the names in the heavy profile's `games` field. The RSI Launcher and Steam itself match none of these (no game name, not under steamapps/common).
+const GAME_NAMES = ['starcitizen', 'acs'];
+const WINDOWED_GAMES = ['dz-world', 'dz-gym', 'dz-view'];
+const exeName = (n) => String(n || '').trim().toLowerCase().replace(/\.exe$/, '');
+/** The games of his among process rows { pid, name, win, path }: [{ pid, name, path }]. */
+function gamesIn(rows, extra = []) {
+  const named = new Set([...GAME_NAMES, ...extra.map(exeName)]);
+  return rows.filter((r) => {
+    const n = exeName(r.name);
+    if (!n) return false;
+    if (named.has(n)) return true;
+    if (WINDOWED_GAMES.includes(n)) return Boolean(r.win);
+    return Boolean(r.win) && /[\\/]steamapps[\\/]common[\\/]/i.test(String(r.path || ''));
+  }).map((r) => ({ pid: r.pid, name: r.name, path: r.path }));
+}
+/** This machine's processes as rows, or null when they cannot be read (never an empty "clear"). CONSONANCE_PROC_LIST is a test seam: a
+ *  file of `pid|name|win|path` lines, as STATE_BLOCK_REPO is the state block's. */
+function readProcesses(env = process.env, run = spawnSync) {
+  let text;
+  if (env.CONSONANCE_PROC_LIST) { try { text = fs.readFileSync(env.CONSONANCE_PROC_LIST, 'utf8'); } catch (_) { return null; } }
+  else {
+    if (process.platform !== 'win32') return null;
+    let r; try {
+      r = run('powershell', ['-NoProfile', '-NonInteractive', '-Command', "Get-Process | ForEach-Object { '' + $_.Id + '|' + $_.ProcessName + '|' + [int]($_.MainWindowHandle -ne 0) + '|' + $_.Path }"],
+        { encoding: 'utf8', timeout: 25000, windowsHide: true, maxBuffer: 1 << 24 });
+    } catch (_) { return null; }
+    if (!r || r.error || r.status !== 0 || typeof r.stdout !== 'string') return null;
+    text = r.stdout;
+  }
+  const rows = [];
+  for (const line of text.split(/\r?\n/)) {
+    const p = line.split('|');
+    if (p.length < 3 || !p[1].trim()) continue;
+    rows.push({ pid: Number(p[0]), name: p[1].trim(), win: p[2].trim() === '1', path: p.slice(3).join('|').trim() });
+  }
+  return rows.length ? rows : null;   // a machine always has processes: an empty read is a failed read
+}
+function waitGameCli(argv, { env = process.env, now = () => Date.now(), sleep = sleepSync } = {}) {
+  const mi = argv.indexOf('--max-minutes'), maxMin = mi >= 0 ? Number(argv[mi + 1]) : 240;
+  if (!(Number.isFinite(maxMin) && maxMin > 0)) { process.stderr.write('heavy-run: usage: node heavy-run.js --wait-game [--max-minutes N]\n'); return 2; }
+  const poll = Number(env.CONSONANCE_GAME_POLL_MS) > 0 ? Number(env.CONSONANCE_GAME_POLL_MS) : 30000;
+  const extra = profile({ env }).values.games || [];
+  const t0 = now(), named = new Set();
+  const span = (ms) => (ms < 90000 ? `${Math.round(ms / 1000)} s` : mins(ms));
+  for (;;) {
+    const rows = readProcesses(env);
+    if (!rows) { process.stderr.write('heavy-run --wait-game: the process list could not be read, so it cannot say no game is running. Not clear.\n'); return 2; }
+    const games = gamesIn(rows, extra);
+    if (!games.length) { process.stdout.write(`heavy-run --wait-game: no game of his running${named.size ? ` (waited ${span(now() - t0)})` : ''}.\n`); return 0; }
+    for (const g of games) if (!named.has(g.pid)) { named.add(g.pid); process.stdout.write(`GAME: ${g.name} pid ${g.pid} — waiting; nothing is closed.\n`); }
+    if (now() - t0 >= maxMin * 60000) { process.stdout.write(`heavy-run --wait-game: gave up after ${span(now() - t0)}: ${games.map((g) => g.name).join(', ')} still running.\n`); return 3; }
+    sleep(poll);
+  }
 }
 
 if (require.main === module && process.argv[2] === '--run') {
@@ -787,6 +952,12 @@ if (require.main === module && process.argv[2] === '--status') {
     process.exitCode = 2;
   }
 }
+
+// D675: the pause, its holder, the resume, and the game wait (see above).
+if (require.main === module && process.argv[2] === '--pause') process.exitCode = pauseCli(process.argv.slice(3));
+if (require.main === module && process.argv[2] === '--pause-holder') pauseHolder(process.argv.slice(3));
+if (require.main === module && process.argv[2] === '--resume') process.exitCode = resumeCli();
+if (require.main === module && process.argv[2] === '--wait-game') process.exitCode = waitGameCli(process.argv.slice(3));
 
 // L202: the detached child reportIdle starts, so a waiter never waits on the network. It says nothing and fails quietly.
 if (require.main === module && process.argv[2] === '--post-board') {

@@ -1334,3 +1334,228 @@ test('STATUS inside the holder\'s own run (its token in the environment) the hol
   assert.strictEqual(r.status, 0, r.stdout + r.stderr);
   assert.match(r.stdout, /EXCLUSIVE HOLD: yours/);
 });
+
+// D675 lock lap, part 2 (P, 2026-11-15): --run takes a .cmd or .bat itself, with --priority. Three times (11-12 B, 11-13 E, 11-14 E) a
+// hand-made launch line left an idle shell holding the lock: `cmd /c` rewritten by Git Bash into a drive argument, and on 11-14 a `start`
+// line with a broken title quote. heavy-run now starts the script from an argument list, so no pane composes such a line again.
+const SCRIPT_BODY = (marker) => [
+  '@echo off',
+  'echo ran %1',
+  `echo touched> "${marker}"`,
+  'node -e "console.log(\'prio=\'+require(\'os\').getPriority())"',
+  'exit /b 7',
+].join('\r\n') + '\r\n';
+function script(dirName = 'scripts', fileName = 'job.cmd') {
+  const d = path.join(tmp(), dirName);
+  fs.mkdirSync(d, { recursive: true });
+  const marker = path.join(d, 'marker.txt');
+  const file = path.join(d, fileName);
+  fs.writeFileSync(file, SCRIPT_BODY(marker));
+  return { file, marker };
+}
+const runScript = (args, extraEnv = {}) => {
+  const t0 = Date.now();
+  const r = spawnSync(process.execPath, [HELPER, '--run', ...args], { env: cleanEnv({ CONSONANCE_DATA: tmp(), ...extraEnv }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
+  return { ...r, ms: Date.now() - t0 };
+};
+
+test('RUN A SCRIPT (RED FIRST): a .cmd given to --run with --priority belownormal runs, exits with its own code, quickly, and what it starts is below normal', () => {
+  const s = script();
+  const r = runScript(['--priority', 'belownormal', '--cmd', 'a script', '--', s.file, 'word']);
+  assert.strictEqual(r.status, 7, `the script's own exit code\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /ran word/);
+  assert.match(r.stdout, /prio=10\b/, 'a node the script starts runs below normal (os.getPriority 10)');
+  assert.ok(r.ms < 5000, `it finished in ${r.ms} ms: an idle shell holding the lock would not`);
+});
+
+test('RUN A SCRIPT: --priority idle is the other class a child keeps', () => {
+  const s = script();
+  const r = runScript(['--priority', 'idle', '--cmd', 'a script', '--', s.file, 'w']);
+  assert.match(r.stdout, /prio=19\b/, r.stdout + r.stderr);
+});
+
+test('RUN A SCRIPT: any other --priority is refused, exit 2, with why, and nothing runs', () => {
+  const s = script();
+  for (const p of ['normal', 'high', 'BelowNormal ', '']) {
+    const r = runScript(['--priority', p, '--cmd', 'a script', '--', s.file, 'w']);
+    assert.strictEqual(r.status, 2, `"${p}": exit ${r.status}`);
+    assert.match(r.stderr, /--priority takes belownormal or idle/);
+  }
+  assert.ok(!fs.existsSync(s.marker), 'the script never started');
+});
+
+test('RUN A SCRIPT: a path with spaces, and one written with forward slashes, both run', () => {
+  const a = script('with space', 'my job.cmd');
+  const r1 = runScript(['--cmd', 'spaces', '--', a.file, 'x']);
+  assert.strictEqual(r1.status, 7, r1.stdout + r1.stderr);
+  const b = script();
+  const r2 = runScript(['--cmd', 'slashes', '--', b.file.replace(/\\/g, '/'), 'y']);
+  assert.strictEqual(r2.status, 7, r2.stdout + r2.stderr);
+  assert.match(r2.stdout, /ran y/);
+});
+
+test('RUN A SCRIPT: a cmd metacharacter in an argument or in the script\'s path is refused, exit 2, and the script never starts', () => {
+  const s = script();
+  for (const bad of ['a&b', 'a|b', 'a>b', 'a<b', 'a^b', '%PATH%', 'say "hi"']) {
+    const r = runScript(['--cmd', 'meta', '--', s.file, bad]);
+    assert.strictEqual(r.status, 2, `"${bad}": exit ${r.status}`);
+    assert.match(r.stderr, /cmd metacharacter/);
+  }
+  assert.ok(!fs.existsSync(s.marker), 'no argument reached the script');
+  const p = script('a&b', 'job.cmd');
+  const r = runScript(['--cmd', 'meta path', '--', p.file]);
+  assert.strictEqual(r.status, 2);
+  assert.match(r.stderr, /cmd metacharacter.*script path/);
+  assert.ok(!fs.existsSync(p.marker));
+});
+
+test('RUN A SCRIPT: under --exclusive the hold is written for the run and gone after it', () => {
+  const s = script();
+  const d = tmp();
+  const r = spawnSync(process.execPath, [HELPER, '--run', '--exclusive', '--cmd', 'excl script', '--', s.file, 'x'], { env: cleanEnv({ CONSONANCE_DATA: d }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
+  assert.strictEqual(r.status, 7, r.stdout + r.stderr);
+  assert.ok(!fs.existsSync(holdOf(d)), 'no hold left behind');
+});
+
+test('RUN A SCRIPT: the usage line names the Git Bash limit it cannot remove', () => {
+  const r = spawnSync(process.execPath, [HELPER, '--run'], { env: cleanEnv({ CONSONANCE_DATA: tmp() }), encoding: 'utf8', windowsHide: true });
+  assert.strictEqual(r.status, 2);
+  assert.match(r.stderr, /--priority belownormal\|idle/);
+  assert.match(r.stderr, /begins with a slash/);
+});
+
+// D675 lock lap, part 3: A PAUSE HELD AS THE EXCLUSIVE HOLD. On 11-14 at 13:22 the chair paused the panes by message; one sat queued
+// across a compaction and a build ran at 13:27 while he played, after asking the lock. A pause written as the hold stops that run there.
+const cliIn = (d, args, extra = {}) => spawnSync(process.execPath, [HELPER, ...args], { env: cleanEnv({ CONSONANCE_DATA: d, ...extra }), encoding: 'utf8', windowsHide: true, timeout: 60000 });
+const sleepMs = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+function untilGone(pid, ms = 10000) { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (!H.pidAlive(pid)) return true; sleepMs(100); } return false; }
+
+test('PAUSE (RED FIRST): --pause writes the hold; --status exits 1 naming it; a run waits and gives up without running; --resume ends it and its holder', () => {
+  const d = tmp();
+  let holder = null;
+  try {
+    const p = cliIn(d, ['--pause', '--cmd', 'his game', '--minutes', '5']);
+    assert.strictEqual(p.status, 0, p.stdout + p.stderr);
+    assert.match(p.stdout, /PAUSED/);
+    const h = JSON.parse(fs.readFileSync(holdOf(d), 'utf8'));
+    holder = h.pid;
+    assert.strictEqual(h.pause, true);
+    assert.strictEqual(h.max_ms, 5 * 60000);
+    assert.match(h.cmd, /PAUSE: his game/);
+    const st = cliIn(d, ['--status']);
+    assert.strictEqual(st.status, 1, st.stdout);
+    assert.match(st.stdout, /EXCLUSIVE HOLD: STANDS — .*PAUSE: his game/);
+    const marker = path.join(d, 'ran.txt');
+    const run = cliIn(d, ['--run', '--cmd', 'a build', '--', process.execPath, '-e', `require('fs').writeFileSync(${JSON.stringify(marker)}, 'x')`], { CONSONANCE_HEAVY_WAIT_MS: '1500' });
+    assert.strictEqual(run.status, 3, 'the run waited on the pause and gave up: ' + run.stderr);
+    assert.match(run.stderr, /waiting on an exclusive hold by .*PAUSE: his game/);
+    assert.ok(!fs.existsSync(marker), 'the program never ran');
+    const res = cliIn(d, ['--resume']);
+    assert.strictEqual(res.status, 0, res.stdout + res.stderr);
+    assert.match(res.stdout, /RESUMED/);
+    assert.ok(!fs.existsSync(holdOf(d)), 'the hold is gone');
+    assert.ok(untilGone(holder), `the pause's holder pid ${holder} exited`);
+    assert.strictEqual(cliIn(d, ['--status']).status, 0);
+  } finally { if (holder && H.pidAlive(holder)) { try { process.kill(holder); } catch (_) {} } }
+});
+
+test('PAUSE: --resume refuses a hold that is not a pause (a timing session), exit 2, and leaves it', () => {
+  const d = tmp();
+  writeJson(holdOf(d), { pid: process.pid, seat: 'c', cmd: 'C TIMING SESSION row C', exclusive: true, started: new Date().toISOString(), token: 't' });
+  const r = cliIn(d, ['--resume']);
+  assert.strictEqual(r.status, 2, r.stdout + r.stderr);
+  assert.match(r.stderr, /not a pause/);
+  assert.ok(fs.existsSync(holdOf(d)), 'the timing session\'s hold is untouched');
+});
+
+test('PAUSE: --minutes past 720, or not a positive number, is refused with exit 2 and no hold', () => {
+  for (const m of ['721', '0', 'abc']) {
+    const d = tmp();
+    const r = cliIn(d, ['--pause', '--cmd', 'x', '--minutes', m]);
+    assert.strictEqual(r.status, 2, `--minutes ${m}: exit ${r.status}`);
+    assert.ok(!fs.existsSync(holdOf(d)));
+  }
+});
+
+test('PAUSE: a hold with max_ms binds past the 90-minute rule until max_ms, then is ignored; --status reads it the same way', () => {
+  const base = Date.parse('2026-11-14T13:22:00Z');
+  const rec = { pid: 4242, seat: 'chair', cmd: 'PAUSE: his game', exclusive: true, pause: true, max_ms: 3 * 3600000, started: new Date(base).toISOString(), token: 'pause' };
+  const at = (ms) => {
+    const d = tmp();
+    writeJson(holdOf(d), rec);
+    let err = null, h = null;
+    try { h = H.acquire({ cmd: 'x', dataDir: d, env: {}, tree: 't', maxWaitMs: 0, pollMs: 1, now: () => base + ms, sleep: () => {}, log: () => {}, diskFree: () => 1e12, alive: () => true }); h.release(); }
+    catch (e) { err = e; }
+    const s = H.status({ dataDir: d, env: {}, now: () => base + ms, alive: () => true });
+    return { binds: !!(err && err.code === 'HEAVY_RUN_TIMEOUT'), state: s.hold.state };
+  };
+  assert.deepStrictEqual(at(2 * 3600000), { binds: true, state: 'stands' }, 'two hours in, past HOLD_MAX_MS, the pause still binds');
+  assert.deepStrictEqual(at(4 * 3600000), { binds: false, state: 'ignored' }, 'past its own max_ms it is ignored');
+});
+
+test('PAUSE: a max_ms above 12 hours is capped at 12 hours by the readers', () => {
+  const base = Date.parse('2026-11-14T13:22:00Z');
+  const d = tmp();
+  writeJson(holdOf(d), { pid: 4242, seat: 'x', cmd: 'PAUSE: forever', exclusive: true, pause: true, max_ms: 100 * 3600000, started: new Date(base).toISOString(), token: 'p' });
+  assert.strictEqual(H.status({ dataDir: d, env: {}, now: () => base + 13 * 3600000, alive: () => true }).hold.state, 'ignored');
+});
+
+test('PAUSE: a dead pause holder does not park the room (stale, as any dead holder)', () => {
+  const d = tmp();
+  writeJson(holdOf(d), { pid: 424242, seat: 'x', cmd: 'PAUSE: his game', exclusive: true, pause: true, max_ms: 3 * 3600000, started: new Date(Date.now() - 2 * 3600000).toISOString(), token: 'p' });
+  assert.strictEqual(cliIn(d, ['--status']).status, 0);
+});
+
+// D675 lock lap, part 4: ONE COMMAND THAT WAITS FOR HIS GAME. Three panes wrote their own waits on 11-14 and none saw Star Citizen.
+const ROWS = {
+  sc: { pid: 27640, name: 'StarCitizen', win: false, path: '/Roberts Space Industries/StarCitizen/LIVE/Bin64/StarCitizen.exe' },
+  launcher: { pid: 3176, name: 'RSI Launcher', win: false, path: '/Robert Space Industries/RSI Launcher/RSI Launcher.exe' },
+  paneWorld: { pid: 9556, name: 'dz-world', win: false, path: '/consonance-scratch/p-d675-timer/build/bin/dz-world.exe' },
+  hisWorld: { pid: 1200, name: 'dz-world', win: true, path: '/Users/x/Desktop/dreamzone-3/build/bin/dz-world.exe' },
+  acs: { pid: 3000, name: 'acs', win: false, path: '/SteamLibrary/steamapps/common/assettocorsa/acs.exe' },
+  steamTool: { pid: 4000, name: 'wallpaper64', win: false, path: '/SteamLibrary/steamapps/common/wallpaper_engine/wallpaper64.exe' },
+  steamGame: { pid: 5000, name: 'SomeGame', win: true, path: '/SteamLibrary/steamapps/common/Some Game/SomeGame.exe' },
+  steam: { pid: 6000, name: 'steam', win: true, path: '/Program Files (x86)/Steam/steam.exe' },
+};
+test('GAME WAIT (RED FIRST): the rule names Star Citizen, acs, his windowed dz-world and a windowed Steam game, and nothing else', () => {
+  assert.strictEqual(typeof H.gamesIn, 'function', 'heavy-run exports the rule');
+  const names = (rows, extra) => H.gamesIn(rows, extra).map((g) => g.pid).sort();
+  assert.deepStrictEqual(names(Object.values(ROWS)), [1200, 3000, 5000, 27640].sort());
+  assert.deepStrictEqual(names([ROWS.launcher, ROWS.paneWorld, ROWS.steamTool, ROWS.steam]), [], 'the launcher, a pane\'s offscreen run, a windowless Steam tool, Steam itself');
+  assert.deepStrictEqual(names([{ pid: 7, name: 'Factorio', win: false, path: '/x/Factorio.exe' }], ['factorio.exe']), [7], 'a name from the profile\'s games field counts');
+});
+
+const procList = (rows) => { const f = path.join(tmp(), 'procs.txt'); fs.writeFileSync(f, rows.map((r) => [r.pid, r.name, r.win ? 1 : 0, r.path].join('|')).join('\n') + '\n'); return f; };
+test('GAME WAIT: with Star Citizen up it waits, names it, closes nothing, and gives up at its maximum with exit 3', () => {
+  const r = cliIn(tmp(), ['--wait-game', '--max-minutes', '0.002'], { CONSONANCE_PROC_LIST: procList([ROWS.sc, ROWS.launcher]), CONSONANCE_GAME_POLL_MS: '40' });
+  assert.strictEqual(r.status, 3, r.stdout + r.stderr);
+  assert.match(r.stdout, /GAME: StarCitizen pid 27640/);
+  assert.strictEqual((r.stdout.match(/GAME: StarCitizen/g) || []).length, 1, 'named once');
+});
+
+test('GAME WAIT: with no game up it exits 0 at once', () => {
+  const r = cliIn(tmp(), ['--wait-game'], { CONSONANCE_PROC_LIST: procList([ROWS.launcher, ROWS.paneWorld]), CONSONANCE_GAME_POLL_MS: '40' });
+  assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /no game of his running/);
+});
+
+test('GAME WAIT: an unreadable process list is exit 2, never "clear" — a missing list and an EMPTY one alike', () => {
+  const r = cliIn(tmp(), ['--wait-game'], { CONSONANCE_PROC_LIST: path.join(tmp(), 'no-such-list.txt'), CONSONANCE_GAME_POLL_MS: '40' });
+  assert.strictEqual(r.status, 2, r.stdout + r.stderr);
+  assert.doesNotMatch(r.stdout, /no game of his running/);
+  // A machine always has processes, so an empty read is a failed read (mutant row 129 survived until this half was added, 11-15).
+  const empty = cliIn(tmp(), ['--wait-game'], { CONSONANCE_PROC_LIST: procList([]), CONSONANCE_GAME_POLL_MS: '40' });
+  assert.strictEqual(empty.status, 2, 'an empty list: ' + empty.stdout + empty.stderr);
+  assert.doesNotMatch(empty.stdout, /no game of his running/);
+});
+
+test('GAME WAIT: a game that ends while it waits releases the wait with exit 0', () => {
+  const f = procList([ROWS.sc]);
+  const child = spawn(process.execPath, [HELPER, '--wait-game', '--max-minutes', '1'], { env: cleanEnv({ CONSONANCE_DATA: tmp(), CONSONANCE_PROC_LIST: f, CONSONANCE_GAME_POLL_MS: '40' }), windowsHide: true });
+  let out = '';
+  child.stdout.on('data', (b) => { out += b; });
+  return new Promise((resolve, reject) => {
+    setTimeout(() => fs.writeFileSync(f, [ROWS.launcher].map((r) => [r.pid, r.name, 0, r.path].join('|')).join('\n') + '\n'), 300);
+    child.on('close', (code) => { try { assert.strictEqual(code, 0, out); assert.match(out, /GAME: StarCitizen/); assert.match(out, /no game of his running/); resolve(); } catch (e) { reject(e); } });
+  });
+});

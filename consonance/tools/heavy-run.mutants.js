@@ -108,7 +108,7 @@ const MUTANTS = [
   ['hold: a stale hold is never taken over', SRC, "if (takeIfStale(holdFile, 'hold', h)) {", 'if (false) {'],
   ['hold: the hold\'s takeover is recorded in the slot lock, not the hold', SRC, "if (takeIfStale(holdFile, 'hold', h)) { holdTookOver = tookOver; tookOver = before; continue; }", "if (takeIfStale(holdFile, 'hold', h)) { continue; }"],
   ['hold: the max-age warning is skipped (ignored in silence)', SRC, 'log(`heavy-run: IGNORING the exclusive hold by', 'void (`heavy-run: IGNORING the exclusive hold by'],
-  ['hold: a hold past the maximum still binds (never ignored)', SRC, 'if (hAge !== null && hAge > holdMaxMs) {', 'if (false) {'],
+  ['hold: a hold past the maximum still binds (never ignored)', SRC, 'if (hAge !== null && hAge > holdLimitMs(h, holdMaxMs)) {', 'if (false) {'],   // re-anchored for the pause's max_ms (P, 11-15)
   ['hold: HOLD_MAX_MS is one minute', SRC, 'const HOLD_MAX_MS = 90 * 60 * 1000;', 'const HOLD_MAX_MS = 60 * 1000;'],
   ['hold: an exclusive runner does not wait for other trees', SRC, 'const blocksMe = (h) => exclusive || blocks(h);', 'const blocksMe = (h) => blocks(h);'],
   ['hold: a non-exclusive runner writes the hold', SRC, '  if (exclusive) {\n    for (;;) {\n      const f = foreignHold();', '  if (true) {\n    for (;;) {\n      const f = foreignHold();'],
@@ -137,8 +137,33 @@ const MUTANTS = [
   ['status: a young dead holder is freed without the second witness', SRC, "return confirmGone(h.pid) === true ? { state: 'free', stale: 'dead' }", "return true ? { state: 'free', stale: 'dead' }"],
   ['status: a reused pid reads held', SRC, "    if (hasIdentity(h) && !sameHolder(h, identify(h.pid))) return { state: 'free', stale: 'pid_reused' };\n", ''],
   ['status: the caller\'s own hold fails its gate', SRC, 'else if (hh.token && hh.token === env[TOKEN_ENV]) out.hold', 'else if (false) out.hold'],
-  ['status: a hold past the maximum still stands', SRC, 'if (age !== null && age > holdMaxMs) out.hold', 'if (false) out.hold'],
+  ['status: a hold past the maximum still stands', SRC, 'if (age !== null && age > holdLimitMs(hh, holdMaxMs)) out.hold', 'if (false) out.hold'],   // re-anchored for the pause's max_ms (P, 11-15)
   ['status: a slot\'s holder is not named', SRC, "lines.push(`  slot ${x.k}: held by ${who(x.holder)}", "lines.push(`  slot ${x.k}: held by ${'?'}"],
+  // D675 lock lap (P, 11-15): --run takes a .cmd or .bat and --priority itself
+  ['run: --priority is never set (what the run starts runs at normal)', SRC, "    try { setPriority(require('os').constants.priority[PRIORITIES[prio]]); }", '    try { void PRIORITIES; }'],
+  ['run: any --priority value is accepted', SRC, 'if (pi >= 0 && !Object.prototype.hasOwnProperty.call(PRIORITIES, prio)) {', 'if (false) {'],
+  ['run: a script is spawned directly, not through cmd.exe', SRC, '  if (SCRIPT_RE.test(prog[0])) {', '  if (false) {'],
+  // NOT A ROW: dropping /s from the cmd.exe line survived (11-15) and is an EQUIVALENT mutant. Without /s, cmd keeps quotes only when the
+  // line holds exactly two quote characters; this line always holds at least four (""<path>" ...), so cmd strips the outer pair either way.
+  ['run: a metacharacter in an argument reaches the script', SRC, 'const bad = args.findIndex((a) => CMD_META.test(a));', 'const bad = -1;'],
+  ['run: a metacharacter in the script path passes', SRC, '    if (CMD_META.test(file)) {', '    if (false) {'],
+  ['run: the usage no longer names the Git Bash limit', SRC, 'an argument that begins with a slash is rewritten', 'an argument is rewritten'],
+  // D675: the pause held as the exclusive hold
+  ['pause: max_ms is ignored (a pause dies at the 90-minute rule)', SRC, 'return h && Number.isFinite(h.max_ms) && h.max_ms > 0 ? Math.min(h.max_ms, PAUSE_MAX_MS) : holdMaxMs;', 'return holdMaxMs;'],
+  ['pause: no 12-hour cap on max_ms', SRC, 'Math.min(h.max_ms, PAUSE_MAX_MS)', 'h.max_ms'],
+  ['pause: the record carries neither pause nor max_ms', SRC, 'if (pauseMs) { hrec.pause = true; hrec.max_ms = pauseMs; }', ''],
+  ['pause: holdOnly takes a slot like any run', SRC, '    if (holdOnly) return { file: holdFile', '    if (false) return { file: holdFile'],
+  ['pause: --minutes is not checked', SRC, 'if (!cmd || !(Number.isFinite(minutes) && minutes > 0 && minutes * 60000 <= PAUSE_MAX_MS)) {', 'if (!cmd) {'],
+  ['resume: a hold that is not a pause is removed too', SRC, '  if (!h.pause) {', '  if (false) {'],
+  ['resume: the holder never sees its hold gone', SRC, 'if (!cur || cur.token !== token || Date.now() - t0 >= ms)', 'if (Date.now() - t0 >= ms)'],
+  // D675: one command that waits for his game
+  ['game: Star Citizen is not a game', SRC, "const GAME_NAMES = ['starcitizen', 'acs'];", "const GAME_NAMES = ['acs'];"],
+  ['game: a windowless dz-world (a pane\'s offscreen run) counts', SRC, 'if (WINDOWED_GAMES.includes(n)) return Boolean(r.win);', 'if (WINDOWED_GAMES.includes(n)) return true;'],
+  ['game: a windowless Steam tool counts', SRC, '    return Boolean(r.win) && /', '    return true && /'],
+  ['game: the profile\'s names are ignored', SRC, 'const named = new Set([...GAME_NAMES, ...extra.map(exeName)]);', 'const named = new Set([...GAME_NAMES]);'],
+  ['game: an unreadable process list is not refused', SRC, "    if (!rows) { process.stderr.write('heavy-run --wait-game: the process list", "    if (false) { process.stderr.write('heavy-run --wait-game: the process list"],
+  ['game: an empty read counts as a list', SRC, 'return rows.length ? rows : null;', 'return rows;'],
+  ['game: the wait never gives up', SRC, 'if (now() - t0 >= maxMin * 60000) {', 'if (false) {'],
 ];
 
 function tree() {
