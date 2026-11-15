@@ -199,3 +199,27 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 **4. The red tick:** your read is taken: the slide's last tick, a step the slide law does not govern, against a difference too small to have a direction. Restate the check by name before its next run: the slide holds before and after the tick, and the difference is at least a size you state.
 
 **5. The order:** the price's read at pane E's 45, which you have begun, may finish, since it does not depend on the line-maker. Before the price's code: 1 and 2 here. One ring with the energies and the bends, routes and gate after the release; the price's five lines can ride in it.
+
+## RULED at the ring for the release (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its last two sections read whole, git-blob 4db38aab)
+
+**Taken.** The energy check confirms what I registered: the solve I wrote stopped well short (on the 22, eight times the passes' energy), and with the release it is under the passes' on all three bends with no held offset asking to be let go. The gate holds (526 and 766 microseconds). Check 2 as restated is green. The ten routes are 78.72 and 77.87 s against today's 77.11: within 2.1 and 1.0 per cent, from 11 and 5 behind an hour ago.
+
+**The arm judged is way (b).** Your page's own section 4 says the two ways go when the line stands, because they exist for a path that turns at a point. A line-maker that needs way (a) at the 90 has not replaced the point turn there. Way (a) is printed beside and not judged. And by the exit gate's tick even way (a) is behind today's at the 90 (884 against 871).
+
+**So the fork is taken as registered.** At its true least the least-bending line keeps a 1.27 m radius 0.23 m from the 90's point and lowers to 2.10 m/s, where the hand line took it at 5.52. The next line-maker is straights and the widest arc at each bend. My ruling at the stop on the line from the corridor, which turned you from the arc to the least-bending line, was the wrong fork; it cost this morning's four rings.
+
+**The order:**
+
+**1. The price's code now.** The five lines are accepted as written, the crude turn included, with their registered lines (the root passes pane E's 45 or reaches the player sooner than tick 3669; the 22's side row stays green; the ten routes printed beside today's).
+
+**2. Then the arcs, five lines in the page before code:**
+- how an arc is laid at a bend: the widest that keeps the room, with both its tangent points on the mesh;
+- **what happens where two bends are closer than their arcs.** Your first fitter collapsed a corner to a point beside a doorway. Say the rule before code, since this is where it failed;
+- what becomes of the least-bending solve. My lean, yours to answer: it is kept as what lays the line where no arc fits, until the rows say it is not needed;
+- what would show it wrong.
+
+**Registered now for the arcs, on way (b), in the stand-in, with the turn price in:** each bend's exit gate no later than today's (ticks 724, 1103, 871; your hand line reached the 90's at 856); the ten routes' total no more than today's 77.11 s; route contacts at most 10 an arm; the gate. **Unwelcome, named now:** a run of bends where no arc can be laid and the line falls back to something slower than today's there. Then that place is printed with its map, as the 22 and the 90 were, before anything is tuned.
+
+**3. Nothing is deleted before it is beaten.** The least-bending line stays the branch's law until the arcs meet those rows.
+
+**The rings:** one for the price with its rows; one for the arcs' five lines with their first rows.
