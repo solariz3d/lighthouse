@@ -922,3 +922,90 @@ The hand lines run through the openings' middles, each corner filleted as wide a
      only what is near the body, and the 90's arc is not near it when it changes.**
    - If that comes true, the cause is how a string from a moving start is clustered at the 90 (the falsifier the ruling named), and that is
      printed.
+
+### The corridor the game's own library ships (the chair's pointer at 13:50): read in the game's copy
+
+checked: `third_party/recastnavigation/DetourCrowd/Include/DetourPathCorridor.h` and `Source/DetourPathCorridor.cpp:158-210, :239-476` in
+dreamzone-3's submodule (6dc1667f); `third_party/recast.cmake:4-6` says DetourCrowd is **not compiled** ("three libraries nothing here uses").
+- **What it does:** `dtPathCorridor` keeps a corridor of **polygons** across frames. `movePosition` and `moveTargetPosition` slide the start and
+  the target inside it by local mesh queries, "shorted or lengthened in order to remain valid". `optimizePathVisibility` (a visibility shortcut
+  toward a point ahead) and `optimizePathTopology` (a local area search, "partial replanning") re-optimise it locally, called "periodically".
+  A full search is only needed when a local move cannot follow ("compare the desired and resulting polygon references").
+- **Which part of section 2 it already is:** the second half. A corridor kept between plans and moved only locally never takes the other side of
+  a solid unless the local moves fail, which is section 2's "only if the old side is no longer a way", at the level of polygons.
+- **What it does not give:** the first half, a LINE kept across plans. `findCorners` "performs essentially the same function as
+  `dtNavMeshQuery::findStraightPath`" from the current position on every call. So the string is re-pulled from a moving start every time, and
+  that is where the 90's cluster lost its arc (read 1). Our line is laid on that string, so the corridor alone would not keep the 90's arc.
+- **The order of my work, said plainly:** I built section 2 before this pointer arrived (the chair's 13:35 ruling said build it), so this read
+  sits beside its result rather than before its design.
+
+### Section 2's results (built as the five lines above; NOT committed, kept at the scratch as `arcs_law/chaser_s2.cpp`; `section2_law.js`)
+
+checked: `s2_rows.txt`, `s2_line_rows.txt`, `s2_chase_tests.txt`; E's staging `s2e_{22,45,90}_{today,arcs}.txt`, `s2e_90_plans.txt`.
+- **My prediction before code came true: the registered line FAILS.** In the stand-in with replans, the line within 5 m of the 90 lies 0.01 /
+  0.04 / 0.09 / **0.86** / 0.87 m from the first plan's at 20.3 / 17.0 / 12.9 / 8.8 / 4.6 m out (without section 2: 0.00 / 0.02 / 0.04 /
+  0.10 / 0.86). The lowest is **2.18 m/s** against the registered 4.29.
+- **The braking distance (about 4.3 m at 9.2 m/s) never reaches the 90 while the arc is still changing.** So section 2 keeps the stretch near
+  the body, and the 90 is re-strung from the keep point as before.
+- The stand-in's arcs rows with section 2: 22 exit 713, 45 789, 90 **921** (911 without it); routes 78.32 s; contacts 9; the gate largest
+  **1749 us** (the whole suite's run 1347): red. Whole suite 125, 10 failed (the five red at 3845cd8 and five arcs rows); nav 34, 0 failed;
+  off means off md5 `fa938de45995bd2d13b98ba28fae0c34`, 18 SAME; the 22's side row green.
+- **Pane E's staging with section 2,** each against the plan's bar (never under 1.2 m/s; the 22 in no more than 0.889 s) and today's law
+  beside it:
+
+| bend | the arcs with section 2 | the plan's bar | today's law (information) |
+|---|---|---|---|
+| 22 | exit 2699, through 0.451 s, lowest 6.83 | **met** | exit 2781 (0.889 s) |
+| 45 | never through the entry gate (round the north); the player reached at 3831 | **not taken** | exit 2888; the player at 3116 |
+| 90 | exit 2926, through 1.035 s, lowest 2.16 | **met** (1.2) | exit 2848 (0.819 s) |
+
+  Without section 2 (2a51143): 22 at 2704, 90 at 2936, the 45's player at 3655.
+- **The E print's limit:** the hook (`plan_read.js`) prints the arcs of a fresh plan from the body, not the plan section 2 keeps. So in pane
+  E's staging the registered "same arc at every plan" is not measured by it; the stand-in row, which reads the plan the body actually has, is
+  the measure, and it fails.
+
+### Route 0's mouth: where the 0.77 m arc meets the doorway (item 3; `r3_mouth0.txt`, `mouth0_read.js`; on 3a5898d's law, with replans)
+
+- **The string** from the start: (-35.99 -62.54) (-16.99 -62.54) (-16.69 -62.84) (-16.50 -70.50). It has two corners 0.42 m apart, turning
+  45.0 and 43.6 degrees. They are merged into **one arc, r 0.77 m, centre (-17.20 -63.06)**.
+- **The doorway**, from the map row by row: free mesh at z -62.75 from about x -16.8 to -16.25, at -63.0 from -16.70 to about -16.25, and at
+  -63.25 from -16.75 to about -16.25. So it is about 0.5 m wide, centred near x -16.5. (The scan's upper figure, -14.50, is the next room past
+  a wall, as the map shows.)
+- **The line meets the doorway centred:** it crosses z -62.75 / -63.0 / -63.25 at x -16.51 / -16.45 / -16.44.
+- **But the arc is still turning inside the doorway.** Its south tangent point is at about (-16.43 -63.06): the turn ends inside the doorway,
+  not before it.
+- **The body crosses 0.1 m east of the line** (x -16.34 at z -63.0). It touches the east jamb twice, at ticks 736 and 737 at (-16.34 -62.91),
+  the wall's outward side (-0.96 -0.29), speed 3.38 to 2.79. Its lowest within 2 m is **2.55 m/s**.
+- **inferred from the numbers:** 3.38 m/s is above what grip 1.0 holds on 0.77 m (sqrt(9.81 x 0.77) = 2.75 m/s), so the body runs wide of the
+  arc, to the outside of the turn, which is the east jamb.
+- **With replans this run reaches the end in 4.22 s;** the 0.01 m/s near-stop was the one-plan run's. Today's law takes 4.19 s and the 1 m
+  hand line 4.13 s, both from read 2, planned once.
+
+**The fix, in five lines (not built):**
+1. **Where it fails:** a bend whose out leg runs through an opening narrower than the body can turn in. The arc there must END before the
+   opening, so the body enters it straight on the opening's centre line, as the 1 m hand line does (its arc ends at z -62.6, the doorway's
+   mouth).
+2. **How:** for each bend, find the first point along the out leg, within the arc's reach, where the free width is under twice the room. If
+   there is one, the arc is laid tangent to the in leg and to the opening's centre line, with its out-tangent point at the opening's near edge.
+   Its radius is the widest that keeps the room, as line 2 says. The same at the in side for an opening on the in leg.
+3. **This is the librarian's suspect, made specific:** the arc centred on the bisector is wrong where the legs differ in width. The narrower
+   leg should fix the tangent point; the bisector should not fix the centre.
+4. **The speed into it is the plan's,** unchanged: on a 1 m arc grip 1.0 holds about 3.1 m/s. The hand line's lowest there is 3.12.
+5. **What would show it wrong:** route 0's mouth with it is no faster to the end than the 1 m hand line's 4.13 s within 0.05 s, or still
+   touches the jamb; and the dense row's tight count rises.
+
+**Route 2's chicane** went to him with the chair's ruling (item 4); nothing of mine is owed there.
+
+**The gate's fix (item 5):** not read again. Section 2 is not kept, and the rows' replanning changed only `run_bend`. The gate row (`plan_to`
+directly) and the routes row (`walk`, one plan) are the same rows on the same law, so a judge samples exactly what it did.
+
+**Research for the next design** (the chair's 13:43 pointer, searched in `exo_memory/research/` and `exo_memory/loop/animation_system_2026-11-13/`):
+- **His cornering law for the hunter is the hunting-animal H2, `min(V_o, sqrt(mu g R))`, with grip "above human"**
+  (`animation_system_2026-11-13/ground_locomotion_and_yardstick.md:118-135`; `ground_his_words.md:406-418`). 1.33 is a cheetah press figure,
+  and greyhound cornering is the hunter's one cue. The root runs at mu 1.0, so the chicane's grip question has his stated direction behind it,
+  but no number.
+- **Grip arms mu 1.3, 1.6 and 2.0 were registered and never run** (`ground_locomotion_and_yardstick.md:133-135`).
+- **The racing line minimises time, which is not the equilibrium line** (`research/t180_be_like_water_2026-09-28.md:36`). That is Braghin's
+  point again: it is why the least-bending line lost to the arcs.
+- **DetourPathCorridor**, read above.
+- The fifth research report, on following a path with inertia, is coming and was not waited for.

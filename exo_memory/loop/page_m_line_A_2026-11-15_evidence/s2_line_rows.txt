@@ -1,0 +1,80 @@
+    today    : wall contacts above 0.3 m/s 0, head-on ticks 6
+    way (b)  : wall contacts above 0.3 m/s 11, head-on ticks 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1419): CHECK failed: contacts <= 10
+    way (a)  : wall contacts above 0.3 m/s 11, head-on ticks 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1419): CHECK failed: contacts <= 10
+FAIL  mline_on_the_ten_routes_the_root_touches_a_wall_at_most_ten_times_an_arm
+    the ten routes, way (b) with the arcs: total 78.32 s against today's 77.11 s; wall contacts above 0.3 m/s 9, head-on ticks 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1442): CHECK failed: arcs <= today
+FAIL  mline_arcs_on_the_ten_routes_way_b_is_no_slower_than_today_and_touches_a_wall_at_most_ten_times
+    the line: 127 samples every 0.25 m; R1 4.6 m, LB 0.8 m, R2 8.0 m; samples off the mesh 0
+    way (b) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+    way (a) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+ok    mline_a_fixed_line_north_of_the_post_takes_e_22_degree_bend_within_the_plans_bar
+    22 degrees, today   : to the end; entry 8.60, lowest 3.94 m/s, 0.637 s between the gates, exit gate at tick 724 from the start; contacts 0, head-on 0 (the control)
+    22 degrees, way (b) : to the end; entry 7.29, lowest 7.22 m/s, 0.271 s between the gates (passed 1.60 m from the point); contacts 2, head-on 0; prediction (0.60 s, 6.0 m/s) met; today's law here 0.637 s; exit gate at tick 670 from the start (today's 724)
+    22 degrees, way (a) : to the end; entry 7.29, lowest 7.22 m/s, 0.271 s between the gates (passed 1.60 m from the point); contacts 2, head-on 0; prediction (0.60 s, 6.0 m/s) met; today's law here 0.637 s; exit gate at tick 670 from the start (today's 724)
+    45 degrees, today   : to the end; entry 8.75, lowest 0.71 m/s, 1.288 s between the gates, exit gate at tick 978 from the start; contacts 0, head-on 6 (the control)
+    45 degrees, way (b) : to the end; entry 8.64, lowest 7.57 m/s, 0.454 s between the gates (passed 0.64 m from the point); contacts 0, head-on 0; prediction (0.60 s, 8.0 m/s) NOT met; today's law here 1.288 s; exit gate at tick 792 from the start (today's 978)
+    45 degrees, way (a) : to the end; entry 8.64, lowest 7.04 m/s, 0.463 s between the gates (passed 0.64 m from the point); contacts 0, head-on 0; prediction (0.60 s, 8.0 m/s) NOT met; today's law here 1.288 s; exit gate at tick 794 from the start (today's 978)
+    90 degrees, today   : to the end; entry 7.48, lowest 3.46 m/s, 0.846 s between the gates, exit gate at tick 871 from the start; contacts 0, head-on 0 (the control)
+    90 degrees, way (b) : to the end; entry 7.06, lowest 2.44 m/s, 0.913 s between the gates (passed 0.15 m from the point); contacts 0, head-on 0; prediction (0.70 s, 7.5 m/s) NOT met; today's law here 0.846 s; exit gate at tick 909 from the start (today's 871)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(233): CHECK failed: r.secs <= today.secs
+    90 degrees, way (a) : to the end; entry 7.06, lowest 3.30 m/s, 0.837 s between the gates (passed 0.12 m from the point); contacts 0, head-on 0; prediction (0.70 s, 7.5 m/s) NOT met; today's law here 0.846 s; exit gate at tick 891 from the start (today's 871)
+FAIL  mline_the_line_from_the_corridor_takes_e_three_bends_within_the_plans_bar
+    22 degrees: 125 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(269): CHECK failed: tight == 0
+    45 degrees: 133 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(269): CHECK failed: tight == 0
+    90 degrees: 121 points; legs over 0.3 m 1; points with under 0.18 m of room on a side 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(268): CHECK failed: gaps == 0
+FAIL  mline_the_line_is_dense_and_keeps_its_room_from_the_mesh_edge
+    replans 10; crossings of z 42 within the open gap 1; ticks within 0.3 m of the doorway at x -75 0; arrived yes
+ok    mline_at_e_22_degree_bend_the_open_side_is_taken_and_not_left_at_a_replan
+    one plan_to for one root chaser: 15 plans, mean 730 us, largest 1018 us (made for every chaser every 0.5 s)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(331): CHECK failed: worst <= 1000.0
+FAIL  mline_the_cost_of_one_line_at_one_replan_is_printed
+    22 degrees: 125 samples; the solve's energy 0.017395, the passes' at 600,000 0.017703; held offsets asking to be let go 0; rounds 50
+    45 degrees: 133 samples; the solve's energy 0.020689, the passes' at 600,000 0.022620; held offsets asking to be let go 0; rounds 65
+    90 degrees: 121 samples; the solve's energy 0.042586, the passes' at 600,000 0.043459; held offsets asking to be let go 0; rounds 8
+ok    mline_the_line_is_at_its_least_by_its_energy_against_the_passes_and_no_held_offset_asks_to_be_let_go
+    22 degrees, way (b) with the arcs: to the end; entry 5.69, lowest 5.69 m/s, 0.325 s between the gates (passed 1.76 m from the point); contacts 0, head-on 0; exit gate at tick 713 (today's 724, 0.637 s); arcs 1, merged 0, S pairs 0, runs by the least-bending solve 1 (the first printed below), tangent points off the mesh 0
+      the first run by the least-bending solve at (-65.35 40.18)
+    45 degrees, way (b) with the arcs: to the end; entry 8.76, lowest 5.96 m/s, 0.496 s between the gates (passed 0.24 m from the point); contacts 0, head-on 0; exit gate at tick 789 (today's 978, 1.288 s); arcs 2, merged 0, S pairs 1, runs by the least-bending solve 0, tangent points off the mesh 0
+    90 degrees, way (b) with the arcs: to the end; entry 6.83, lowest 2.04 m/s, 1.008 s between the gates (passed 0.20 m from the point); contacts 0, head-on 0; exit gate at tick 921 (today's 871, 0.846 s); arcs 1, merged 1, S pairs 0, runs by the least-bending solve 0, tangent points off the mesh 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(426): CHECK failed: r.exit_tick <= today.exit_tick
+FAIL  mline_arcs_on_way_b_each_of_e_three_bends_exits_no_later_than_today
+    one plan_to for one root chaser with the arcs: 15 plans, mean 798 us, largest 1443 us
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(457): CHECK failed: worst <= 1000.0
+FAIL  mline_arcs_one_plan_with_the_arcs_is_under_a_thousand_microseconds
+    22 degrees, bend 0 at (-71.99 40.66) to (-72.29 40.71): its turn 29.8 degrees; the string across it between 3 m chords 29.8 degrees
+    22 degrees, bend 1 at (-74.84 42.46) to (-74.84 42.46): its turn 16.8 degrees; the string across it between 3 m chords 16.8 degrees
+    22 degrees: 2 bends; consecutive bends turning the same way within 0.35 m 0
+    45 degrees, bend 0 at (-27.19 77.51) to (-27.44 77.71): its turn 61.0 degrees; the string across it between 3 m chords 61.0 degrees
+    45 degrees, bend 1 at (-29.99 82.31) to (-29.99 82.31): its turn 14.3 degrees; the string across it between 3 m chords 14.3 degrees
+    45 degrees: 2 bends; consecutive bends turning the same way within 0.35 m 0
+    90 degrees, bend 0 at (-11.99 -26.54) to (-11.54 -26.84): its turn 89.2 degrees; the string across it between 3 m chords 89.2 degrees
+    90 degrees, bend 1 at (-11.54 -29.99) to (-11.59 -30.29): its turn 24.4 degrees; the string across it between 3 m chords 24.4 degrees
+    90 degrees: 2 bends; consecutive bends turning the same way within 0.35 m 0
+ok    mline_arcs_a_bend_is_a_cluster_and_its_turn_is_the_strings_across_it
+    22 degrees: an end shrank a bend beside a same-way bend 0 times; merged 0, S pairs 0, runs by the solve 1, arcs 1
+    45 degrees: an end shrank a bend beside a same-way bend 0 times; merged 0, S pairs 1, runs by the solve 0, arcs 2
+    90 degrees: an end shrank a bend beside a same-way bend 0 times; merged 1, S pairs 0, runs by the solve 0, arcs 1
+ok    mline_arcs_no_end_shrinks_a_bend_beside_a_bend_turning_the_same_way
+    22 degrees: 1 arcs laid: r 7.30 m centre (-77.95 36.09); 1 runs to the solve: at (-65.35 40.18)
+    45 degrees: 2 arcs laid: r 1.25 m centre (-26.76 78.48); r 8.75 m centre (-36.89 77.27); 0 runs to the solve
+    90 degrees: 1 arcs laid: r 3.58 m centre (-13.95 -29.14); 0 runs to the solve
+      the 90's arc 0: r 3.58 m, its centre 2.28 m from the hand line's
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(606): CHECK failed: met
+FAIL  mline_arcs_the_90_lays_an_arc_of_at_least_5_m_centred_within_0_3_m_of_the_hand_lines
+    plan at tick 0: the body 21.38 m from the bend
+    plan at tick 120: the body 20.27 m from the bend; its line within 5 m of the bend (45 points) lies at most 0.01 m from the first plan's
+    plan at tick 240: the body 16.99 m from the bend; its line within 5 m of the bend (45 points) lies at most 0.04 m from the first plan's
+    plan at tick 360: the body 12.94 m from the bend; its line within 5 m of the bend (45 points) lies at most 0.09 m from the first plan's
+    plan at tick 480: the body 8.80 m from the bend; its line within 5 m of the bend (43 points) lies at most 0.86 m from the first plan's
+    plan at tick 600: the body 4.63 m from the bend; its line within 5 m of the bend (44 points) lies at most 0.87 m from the first plan's
+    6 plans before the bend; its line within 5 m of the bend lay at most 0.87 m from the first plan's; the lowest between the 2 m gates 2.18 m/s (the one-plan figure 4.29)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(669): CHECK failed: moved <= 0.05f
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(670): CHECK failed: lowest >= 4.29f
+FAIL  mline_arcs_with_replans_the_90s_line_at_the_bend_is_the_same_at_every_plan
+14 tests, 9 failed
