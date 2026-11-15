@@ -1147,3 +1147,38 @@ beside 1.0 and today's law. His pick on 11-12 was "Grip above human" (`briefs/dr
    - **My prediction:** in E's staging the 90 keeps the first plan's merged arc, the lowest rises from 1.69 m/s to at least 3.0, and the exit
      comes before today's 2848. I am least sure of the exit, because the target ends 3.4 m past the bend and the line must finish to it.
    - **If the arc changes between plans, the polygon match is wrong,** and that is printed.
+
+### Item 2, built: the floor in every shrink KEPT; the line over the shared way NOT kept (its registered line fails). Twice not kept in a row: a ring before a third
+
+**What is on the branch:** dreamzone-3 `a-mline`, pushed and read back at **3112032**.
+- **Red first at e20e7ad,** two rows:
+  - the near-target row: from E's 12.9 m position to its moved target, the 90 keeps an arc and sends nothing to the solve;
+  - the moving-target row: with replans and the target moved at the third plan, the line within 5 m of the 90 stays within 5 cm.
+- **The floor in every shrink at 3112032:** line 1's S pair and line 4's end shrink start at the bend's least radius (`arc_least`), as
+  `arc_widest` has since 2a51143. The near-target row is green: one arc at the 90, r 2.73 m, nothing to the solve (`fs_rows.txt`). The
+  other rows: the 90 exits at 904, lowest 2.60; routes 78.22 s; contacts 9.
+
+**The line over the shared way (lines 2 to 4), NOT committed; kept at the scratch** (`arcs_law/chaser_keep.cpp` and `.h`; `keep_law.js`):
+- checked: `kp_line_rows.txt`, `kp_chase_tests.txt`, `kpe_{22,45,90}_{today,arcs}.txt`, `kpe_90_plans.txt`.
+- **The stand-in, fixed target:** the line is kept exactly (within 0.01 m at every plan; it moved 0.96 m before). **But the 90 is worse:** lowest
+  **1.23 m/s** (registered no less than 4.29), exit **1137** (904 without it), 2 contacts, 1.904 s between the gates. **Not read:** why a kept
+  line is slower than a re-laid one. My inference, not checked: each plan's path starts at the body and joins the kept line with a kink, and
+  the speed plan reads that join as a corner.
+- **The stand-in, moving target:** the line still moves **0.71 m.** **Not read:** whether the corridor match failed (a full plan) or the cut to
+  the moved target changed the line.
+- **Pane E's staging** (the plan's bar, with today's law beside it as information):
+
+| bend | the keep | without it (3112032's law; for the 90 and 45, 2a51143's reads) | today's law | the plan's bar |
+|---|---|---|---|---|
+| 22 | exit 2748 (0.500 s, lowest 5.15) | 2704 | 2781 | met |
+| 45 | never through the gate; the player at 3494 | the player at 3655 | the player at 3116 | not taken |
+| 90 | exit **2876** (0.917 s, lowest **3.86**) | 2936 (lowest 1.69) | 2848 | met (1.2) |
+
+  - **In E's staging every plan through the 90 was a kept one** (kept plans 1 to 8 in `kpe_90_plans.txt`).
+  - The hunter's own line within 5 m of the apex lies 0.00 m from the first plan's for three plans, then 0.60 to 0.65 m from tick 2372, when
+    the target moves inside the shared way. inferred: the cut to the moved target (the line finished straight from its point nearest the
+    target) is what moves, not the arc. The measure does not separate the two.
+  - **The registered line fails in E too:** the lowest is 3.86 against 4.29.
+- **Whole suite with the keep:** chase 127, 12 failed (the two outside M-line red before, ten M-line rows); nav 34, 0 failed; off means off
+  md5 `fa938de45995bd2d13b98ba28fae0c34`, 18 SAME; the gate with the arcs largest 1164 us in the whole suite's run (1650 in the rows' run).
+- **Twice not kept in a row** (section 2, then this line): **I ring before a third**, by the night's rule. Nothing further built.
