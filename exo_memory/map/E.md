@@ -3208,3 +3208,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-15 00:0x local (D) · D677: every capture that replays a run now takes a world setting its record does not name from the launch's config (the timer excepted); red on a stub, green with 71/71 world_app_tests and 63/63 self-test → `exo_memory/handback/p-d677-e2-E_2026-11-14.md` (addendum 06:0xZ)
 - replay-world-e 2981be1 pushed (lands after l12-switch-e 15cddbc, which carries CHANGELOG.md merge=union).
 - **Carry:** a record keeps what its build knew; a replay must say, field by field, which side a newer field comes from.
+
+## 2026-11-15 00:4x local (D) · D677 step 4: on A's M3 (aad376b) the root laws no longer stand dead at the 22-degree bend (0.54 and 0.87 m/s) but still miss both bars there (under 1.2 m/s; 2.05 and 2.16 s against 0.889) and at 45 degrees (0.58, 0.65); 90 degrees passes → `exo_memory/handback/p-d677-e2-E_2026-11-14.md` (addendum 06:4xZ)
+- Nine films, 27/27 rows GREEN, the same three bends; local build ff6151c; clips in G:\consonance-scratch\e2-film-m3.
+- **Carry:** before saying "unchanged", diff every row of the old table against the new; one moved time hid in "everything else".
