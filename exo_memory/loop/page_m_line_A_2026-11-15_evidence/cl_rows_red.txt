@@ -1,0 +1,40 @@
+    the ten routes, way (b) with the arcs: total 79.71 s against today's 77.11 s; wall contacts above 0.3 m/s 11, head-on ticks 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1442): CHECK failed: arcs <= today
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1443): CHECK failed: contacts <= 10
+FAIL  mline_arcs_on_the_ten_routes_way_b_is_no_slower_than_today_and_touches_a_wall_at_most_ten_times
+    22 degrees, way (b) with the arcs: to the end; entry 6.21, lowest 5.87 m/s, 0.300 s between the gates (passed 1.58 m from the point); contacts 2, head-on 0; exit gate at tick 677 (today's 724, 0.637 s); arcs 1, merged 0, S pairs 1, runs by the least-bending solve 1 (the first printed below), tangent points off the mesh 0
+      the first run by the least-bending solve at (-78.57 44.57)
+    45 degrees, way (b) with the arcs: to the end; entry 8.58, lowest 7.99 m/s, 0.446 s between the gates (passed 0.65 m from the point); contacts 0, head-on 0; exit gate at tick 801 (today's 1103, 1.296 s); arcs 1, merged 0, S pairs 0, runs by the least-bending solve 1 (the first printed below), tangent points off the mesh 0
+      the first run by the least-bending solve at (-17.48 75.67)
+    90 degrees, way (b) with the arcs: to the end; entry 6.98, lowest 1.71 m/s, 1.067 s between the gates (passed 0.19 m from the point); contacts 0, head-on 0; exit gate at tick 948 (today's 871, 0.846 s); arcs 1, merged 0, S pairs 0, runs by the least-bending solve 1 (the first printed below), tangent points off the mesh 0
+      the first run by the least-bending solve at (-20.18 -24.61)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(422): CHECK failed: r.exit_tick <= today.exit_tick
+FAIL  mline_arcs_on_way_b_each_of_e_three_bends_exits_no_later_than_today
+    one plan_to for one root chaser with the arcs: 15 plans, mean 1439 us, largest 1902 us
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(453): CHECK failed: worst <= 1000.0
+FAIL  mline_arcs_one_plan_with_the_arcs_is_under_a_thousand_microseconds
+    22 degrees, bend 0 at (-71.99 40.66) to (-71.99 40.66): its turn 4.8 degrees; the string across it between 3 m chords 27.3 degrees (other corners inside the chords: not judged)
+    22 degrees, bend 1 at (-72.29 40.71) to (-72.29 40.71): its turn 25.0 degrees; the string across it between 3 m chords 29.3 degrees (other corners inside the chords: not judged)
+    22 degrees, bend 2 at (-74.84 42.46) to (-74.84 42.46): its turn 16.8 degrees; the string across it between 3 m chords 16.8 degrees
+    22 degrees: 3 bends; consecutive bends turning the same way within 0.35 m 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(538): CHECK failed: close_same_way == 0
+    45 degrees, bend 0 at (-27.19 77.51) to (-27.19 77.51): its turn 38.7 degrees; the string across it between 3 m chords 58.7 degrees (other corners inside the chords: not judged)
+    45 degrees, bend 1 at (-27.44 77.71) to (-27.44 77.71): its turn 22.3 degrees; the string across it between 3 m chords 57.1 degrees (other corners inside the chords: not judged)
+    45 degrees, bend 2 at (-29.99 82.31) to (-29.99 82.31): its turn 14.3 degrees; the string across it between 3 m chords 14.3 degrees
+    45 degrees: 3 bends; consecutive bends turning the same way within 0.35 m 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(538): CHECK failed: close_same_way == 0
+    90 degrees, bend 0 at (-11.99 -26.54) to (-11.99 -26.54): its turn 10.5 degrees; the string across it between 3 m chords 79.8 degrees (other corners inside the chords: not judged)
+    90 degrees, bend 1 at (-11.74 -26.59) to (-11.74 -26.59): its turn 40.0 degrees; the string across it between 3 m chords 84.4 degrees (other corners inside the chords: not judged)
+    90 degrees, bend 2 at (-11.54 -26.84) to (-11.54 -26.84): its turn 38.7 degrees; the string across it between 3 m chords 83.4 degrees (other corners inside the chords: not judged)
+    90 degrees, bend 3 at (-11.54 -29.99) to (-11.54 -29.99): its turn 9.5 degrees; the string across it between 3 m chords 22.9 degrees (other corners inside the chords: not judged)
+    90 degrees, bend 4 at (-11.59 -30.29) to (-11.59 -30.29): its turn 14.9 degrees; the string across it between 3 m chords 23.4 degrees (other corners inside the chords: not judged)
+    90 degrees: 5 bends; consecutive bends turning the same way within 0.35 m 3
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(538): CHECK failed: close_same_way == 0
+FAIL  mline_arcs_a_bend_is_a_cluster_and_its_turn_is_the_strings_across_it
+    22 degrees: an end shrank a bend beside a same-way bend 0 times; merged 0, S pairs 1, runs by the solve 1, arcs 1
+    45 degrees: an end shrank a bend beside a same-way bend 1 times; merged 0, S pairs 0, runs by the solve 1, arcs 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(562): CHECK failed: rep.end_beside_same_way == 0
+    90 degrees: an end shrank a bend beside a same-way bend 4 times; merged 0, S pairs 0, runs by the solve 1, arcs 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(562): CHECK failed: rep.end_beside_same_way == 0
+FAIL  mline_arcs_no_end_shrinks_a_bend_beside_a_bend_turning_the_same_way
+5 tests, 5 failed

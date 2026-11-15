@@ -499,3 +499,22 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-14 close: a check that PRINTS a hold must also STOP on it. Reading the lock files is not obeying them.** My classifying command printed P's timing hold, then ran a test twice inside it. Also: a shell loop's `refs/heads/$b` reaches the push gate unexpanded, so the gate scanned HEAD instead of the three branches. Push one branch per literal command. Could be wrong about the gate's reading, but its row says src "HEAD" for my seat at 05:27:55Z.
 → `exo_memory/handback/p-close-O_2026-11-14.md`
+
+**2026-11-15: B's look back landed on the game's main as 781515b (14/14, world 61/61, gym 26/26); his clone was fast-forwarded and NOT built, because C: is under the lock's floor. The lock lap's mutant control cannot go green while C: is under 20 GB: its D454 row puts a lock on C:.** The harness's control never names its red row, so reproduce it with TAP under a held slot (S\landIp\control.js). Could be wrong if the harness's one red was row 118 and not 52, but both fail under tonight's disk and load.
+→ `exo_memory/handback/p-land-lb-O_2026-11-15.md`; `exo_memory/handback/p-land-ip-O_2026-11-15.md`
+
+**2026-11-15: B's body-follows-look (off by default) landed on the game's main as 6cd2627 (14/14, world 64/64, gym 26/26), and his clone was built from it. `launch.ps1 -Check` judges by its OWN stamp (build\launch.stamp), which a direct build.bat never writes, so it reads "build needed" right after a good build.** Could be wrong if the launcher also reads ninja's state, but its code compares only that stamp's time.
+→ `exo_memory/handback/p-land-b7-O_2026-11-15.md`
+
+**2026-11-15: E3 (the picture switches by key) landed on the game's main as 48ad21d on its build and named rows, at his word of 03:45; his seven runs replayed the same to the bit with 56-828 flips each; his copy built "up to date". An incremental build of his one copy is NOT a heavy run (COMMITTEE.md:93-95): run it directly at BelowNormal, never queued behind suites.** Could be wrong for a cold build, which can run for minutes, but this one took 29 s.
+→ `exo_memory/handback/p-land-e3-O_2026-11-15.md`
+
+**2026-11-15: the look back's split-second slow-down is the SIMULATION losing about 63% of the speed in one tick at the floor's millimetre seams (a step up counted only above 5 mm), not the glance or the frames; the border while looking back is new picture entering at every edge as the view recedes.** Both are fixed on look-residue-o 26830ba. The seam fix moves the hunter-lean row's 8-of-24 form from 13 to 7, through a faster flee bot, so it needs a ruling. Could be wrong that he felt the seams and not something else, but his inputs were steady through every dip.
+→ `exo_memory/handback/p-lookback-residue-O_2026-11-15.md`
+
+**2026-11-15: after the seam fix, the bots are never caught more often (30 of 144 against 24), but a caught bot is caught sooner (normal 29.5 s against 51.7; hard 30.9 against 50.1).** A runner that no longer stumbles meets what lies ahead sooner. Could be wrong per cell: it is 12 seeds a cell, and gentle and brutal are mixed.
+→ `exo_memory/handback/p-catch-seam-O_2026-11-15.md`
+
+**2026-11-15 (48 seeds): the seam fix makes escapes somewhat more common (64 against 53 of 432); the hunter catches about a third sooner at normal (30.9 s against 49.0), not at hard, and later at brutal. My 12-seed "halves at normal and hard" was too strong and is corrected.** Could be wrong in cause (the hunter meeting a faster route sooner), which is not traced.
+→ `exo_memory/handback/p-catch-seam-O_2026-11-15.md`
+- 2026-11-15 22:5xZ · heavy-run.mutants.js counts a suite stopped at its 90 s limit as a catch, and its own unmutated control hit that limit under load at 6dd21347 (range 51-60, pass NaN), so its ten hang-only catches (10,37,42,43,47,74-79) are unproven until re-run · final/hr-range-051.out, :180,:229 · exo_memory/handback/p-land-ip-O_2026-11-15.md

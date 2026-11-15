@@ -1,0 +1,92 @@
+M3D flip run tick 7661: body (-37.79 -15.46) old point (-38.24 -15.49) solid (-38.16 -15.48) 0.36 m from the body
+M3D flip run tick 5209: body (-20.43 2.09) old point (-21.14 1.62) solid (-21.01 1.71) 0.69 m from the body
+M3D flip run tick 10893: body (-92.34 62.16) old point (-91.63 63.04) solid (-91.74 62.91) 0.97 m from the body
+M3D flip run tick 28936: body (-15.52 77.10) old point (-16.29 77.71) solid (-16.22 77.66) 0.90 m from the body
+M3D flip run tick 30617: body (38.15 80.33) old point (37.66 81.16) solid (37.70 81.09) 0.88 m from the body
+M3D flip run tick 52618: body (38.31 -63.66) old point (37.83 -63.36) solid (37.90 -63.40) 0.48 m from the body
+sweep: seeds 1..12, arena 2 chunks each way, runs stopped at 300 s; default dials
+speed model ( root_law=1):
+ref_speed         8.000   the chasers' reference speed, metres per second; every row and dial is a multiple of it
+dist_per_km       0.050   share of top speed gained for each kilometre the player has covered
+dist_max          0.300   the most the distance can add, as a share of top speed
+straight_rate     0.050   share of top speed a chaser gains each second it runs straight at its top speed
+straight_max      0.200   the most a straight can add, as a share of top speed
+straight_turn     0.300   radians a second: it is running straight while it turns slower than this
+run_up_bleed      1.000   share of the run-up lost for every radian it turns
+turn_drag         0.200   share of its speed a chaser loses for every radian it turns
+corner_floor      1.000   least share of the braking a corner asks for that every chaser does before it (1: it never swings into a wall)
+wall_stand        0.000   scale on the seconds a chaser stands after meeting a wall head-on (0: it never stops dead)
+brake_scale       1.000   scale on every chaser's braking, metres per second squared (1: the rows and the hunter's dial as they are)
+hunter_start_bonus    0.170   added to the hunter's dial at the start of a run, and fading to nothing over hunter_bonus_fade_s: a fresh player's margin
+hunter_bonus_fade_s  600.000   seconds over which hunter_start_bonus fades away
+stairs_lift       1.000   share of a stairs leg's slope a chaser's step is lifted by (0: a flat step, which stalls at the foot of a steep flight)
+corner_floor_speed    0.000   L170 P3: the share of its top speed a corner may not take a chaser below (0: the chase as it is; 0.5 is NextBot's)
+slip_rate         0.000   L170 SLIP: per second, how fast a chaser's velocity follows its facing (0: it travels along its facing, as it does; 3 is NextBot's sideways friction)
+lead_range        0.000   L170 P1: metres; the hunter plans toward where the player will be, leading by lead_base_s plus its distance (to this many metres) over its speed (0: toward where they were seen)
+lead_base_s       0.500   L170 P1: seconds of lead before the distance is added (used only when lead_range is above 0)
+turn_law          0.000   L182: the turning law capping the turn rate at speed (0: none, as the chase is; 1: H1 human, Chang & Kram 2007 Eqn 5; 2: H2 hunting animal, sqrt(mu g R); 3: the hunter H2 and the lesser chasers H1)
+grip_mu           1.000   L182: H2's grip, as a multiple of g (1.0 is the friction bound; 1.3 is Wilson et al. 2013's derived lower bound for wild cheetahs' brief lateral peaks, read in full: not a measured friction and not for a body this size; 2.0 is ouline_clearance    0.000   L182: metres a corner's path is moved outward from the turn (0: the path as navigation finds it)
+look_ahead        0.000   L182: metres before a corner within which the aim blends toward the next leg (0: it aims at the next point)
+feeler_m          0.000   L182: metres the two wall feelers reach ahead, at plus and minus 40 degrees (0: none)
+feeler_push       0.500   L182: radians the aim is turned off a side whose feeler finds no mesh, at top speed
+sway              0.300   L182: metres of seeded sway in a chaser's line (D664's 0.30; 0 takes it out)
+scrape_ease       0.000   L182: 1 turns a scraped step's heading toward the slide at no more than the turn rate (0: the step's direction changes at once)
+refuse_brake      0.000   L182: 1 makes a refused step lose speed at the braking rate (0: the speed goes to zero in one tick)
+root_law          1.000   M1: 1 makes the hunter a mass under a grip limit: its sideways acceleration never above grip_mu g, its heading its direction of travel (chase/SPEED_MODEL.md, M1; 0: the chase as it is; the other chasers never)
+root_kinds        0.000   M2b: which kinds the grip root steps, one bit each by their number in chase::Kind (Hunter 1, Sprinter 2, Interceptor 4, Pack 8, Crawler 64, Dark 128; the hunter is also root_law's); 0: none
+corner_feel       0.000   M2, with root_law 1: 0 brakes only as far as grip can make a bend on the room the mesh leaves, and lets the wall take the rest; 1 also slows for the bend's size: free to 22 degrees, then down to 0.30 of top at 90 (chase/SPEED_MOD
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  line     12    15.7    17.8    21.7    51.9    61.6    69.7    109.6         0
+normal  flee     12    71.3   164.3   273.1   300.0   300.0   300.0    300.0         9
+normal  cutback   12    17.5    24.3    34.2    43.5    51.5    57.3     82.6         0
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  line       75%      25%          0%    0% |       92%           8%         0%         0% |          744
+normal  flee       17%       8%          0%    0% |       25%           0%         0%         0% |        10500
+normal  cutback     58%      42%          0%    0% |       75%           8%         0%        17% |          593
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  line   |      0.00        0%      0.25     0.08      0.00 |   0.00   0.00    0.00 |     1.75   0.10   0.00   0.82     0.00 |    0.52     0%       0%
+normal  flee   |      0.33       33%      0.00     0.00      0.00 |   0.00   0.02    0.10 |     1.92   0.67   0.31   2.50     0.00 |    0.08     5%       0%
+normal  cutback |      0.00        0%      0.17     0.08      0.00 |   0.00   0.00    0.00 |     2.17   0.00   0.00   1.14     0.00 |    0.23     0%       0%
+paired flee vs line (12 seeds): outlived it in 12, was outlived in 0, within half a second in 0; median of the ratio 5.85 (quartiles 4.34 to 10.97)
+paired cutback vs line (12 seeds): outlived it in 6, was outlived in 5, within half a second in 1; median of the ratio 1.06 (quartiles 0.67 to 1.99)
+
+where chasers caught on the world, per minute of chase
+level   policy minutes    wall hits scrape s
+                           head-on (ticks/240)   stalls   stood s
+normal  line      9.7        7.732     3.03    0.000     0.000   (totals: 75 hits, 7060 scrape ticks, 0 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 10, 1130;  sprinter 65, 5519;  interceptor 0, 411;
+normal  flee     52.1        7.892     5.76    0.000     0.000   (totals: 411 hits, 71980 scrape ticks, 0 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 56, 11691;  sprinter 223, 42769;  interceptor 86, 12554;  pack 46, 4966;
+normal  cutback    8.8        7.301     3.12    0.000     0.000   (totals: 64 hits, 6559 scrape ticks, 0 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 10, 930;  sprinter 54, 5629;
+
+reprieves: 4 passages through and 0 back out the way in, in 4 of 36 runs; with the hunter out and a way to the player both times (3):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        5.1     8.8    10.1
+  and coming out: the lead                         9.4     9.9    10.0
+  lead gained                                     -0.1     1.2     4.3
+  way round, the generator's figure               10.0    11.2    12.2
+  way round on the mesh, the hunter's speeds       5.5     6.1     7.1
+  lead gained over the way round on the mesh     -0.01    0.23    0.60
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
+72 s in all on 1 threads
+M3D at exit: replans 9026 (compared 8990); flips with the solid within 0.5 m 14, 1.0 m 77, 2.0 m 137
+  seed 1 done (7 s)
+  seed 2 done (13 s)
+  seed 3 done (22 s)
+  seed 4 done (29 s)
+  seed 5 done (34 s)
+  seed 6 done (40 s)
+  seed 7 done (44 s)
+  seed 8 done (48 s)
+  seed 9 done (54 s)
+  seed 10 done (58 s)
+  seed 11 done (62 s)
+  seed 12 done (72 s)

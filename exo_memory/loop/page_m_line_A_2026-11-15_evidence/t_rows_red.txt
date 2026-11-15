@@ -1,0 +1,35 @@
+    today    : wall contacts above 0.3 m/s 0, head-on ticks 6
+    way (b)  : wall contacts above 0.3 m/s 31, head-on ticks 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1439): CHECK failed: contacts <= 10
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1440): CHECK failed: head_on == 0
+    way (a)  : wall contacts above 0.3 m/s 12, head-on ticks 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1439): CHECK failed: contacts <= 10
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1440): CHECK failed: head_on == 0
+FAIL  mline_on_the_ten_routes_the_root_touches_a_wall_at_most_ten_times_an_arm
+    the line: 127 samples every 0.25 m; R1 4.6 m, LB 0.8 m, R2 8.0 m; samples off the mesh 0
+    way (b) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+    way (a) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+ok    mline_a_fixed_line_north_of_the_post_takes_e_22_degree_bend_within_the_plans_bar
+    22 degrees, way (b) : to the end; entry 7.51, lowest 3.87 m/s, 0.792 s between the gates (passed 0.01 m from the point); contacts 0, head-on 0; prediction (0.60 s, 6.0 m/s) NOT met; the string (4d0105b, way (b)) 1.029 s, 1.78; the hand line (22 degrees) 0.321 s
+    22 degrees, way (a) : to the end; entry 7.51, lowest 3.87 m/s, 0.792 s between the gates (passed 0.01 m from the point); contacts 0, head-on 0; prediction (0.60 s, 6.0 m/s) NOT met; the string (4d0105b, way (b)) 1.029 s, 1.78; the hand line (22 degrees) 0.321 s
+    45 degrees, way (b) : to the end; entry 8.44, lowest 0.00 m/s, 1.908 s between the gates (passed 0.06 m from the point); contacts 4, head-on 1; prediction (0.60 s, 8.0 m/s) NOT met; the string (4d0105b, way (b)) 2.179 s, 0.22; the hand line (22 degrees) 0.321 s
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(217): CHECK failed: r.lowest >= 1.2f
+    45 degrees, way (a) : to the end; entry 8.37, lowest 0.00 m/s, 1.846 s between the gates (passed 0.05 m from the point); contacts 3, head-on 0; prediction (0.60 s, 8.0 m/s) NOT met; the string (4d0105b, way (b)) 2.179 s, 0.22; the hand line (22 degrees) 0.321 s
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(217): CHECK failed: r.lowest >= 1.2f
+    90 degrees, way (b) : to the end; entry 7.68, lowest 1.48 m/s, 1.183 s between the gates (passed 0.30 m from the point); contacts 0, head-on 0; prediction (0.70 s, 7.5 m/s) NOT met; the string (4d0105b, way (b)) 1.079 s, 1.80; the hand line (22 degrees) 0.321 s
+    90 degrees, way (a) : to the end; entry 7.27, lowest 2.40 m/s, 0.967 s between the gates (passed 0.16 m from the point); contacts 0, head-on 0; prediction (0.70 s, 7.5 m/s) NOT met; the string (4d0105b, way (b)) 1.079 s, 1.80; the hand line (22 degrees) 0.321 s
+FAIL  mline_the_line_from_the_corridor_takes_e_three_bends_within_the_plans_bar
+    22 degrees: 126 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(253): CHECK failed: tight == 0
+    45 degrees: 130 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(253): CHECK failed: tight == 0
+    90 degrees: 121 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 0
+FAIL  mline_the_line_is_dense_and_keeps_its_room_from_the_mesh_edge
+    replans 9; crossings of z 42 within the open gap 0; ticks within 0.3 m of the doorway at x -75 26; arrived yes
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(285): CHECK failed: gap_cross >= 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(286): CHECK failed: near_door == 0
+FAIL  mline_at_e_22_degree_bend_the_open_side_is_taken_and_not_left_at_a_replan
+    one plan_to for one root chaser: 15 plans, mean 1946 us, largest 4418 us (made for every chaser every 0.5 s)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(315): CHECK failed: worst <= 1000.0
+FAIL  mline_the_cost_of_one_line_at_one_replan_is_printed
+6 tests, 5 failed

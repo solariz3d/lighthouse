@@ -1,0 +1,8 @@
+film-corner: looked at 1 worlds from seed 1: 2160 node pairs, 2080 walk-only paths, 8353 bends, 1293 kept, 3.2 s
+M3D flip run tick 2848: body (-26.30 77.28) old point (-25.66 78.03) solid (-25.74 77.94) 0.86 m from the body
+film-corner: the bend: 45.0 degrees (the path's turn between its 3 m chords in and out) at (-25.04, 10.54, 77.51) in the world of seed 1; the corridor across it 3.0 m; clean path 22.2 m before it and 10.6 m after; the staged run's door 21.5 m before it at (-3.54, 10.54, 77.51), the target's walk to 10.1 m after it at (-32.19, 10.54, 84.65)
+TICKREAD gates: entry frame 1591 tick 2653 speed 9.295, exit frame 1796 tick 2994, through 1.424 s; apex -25.04 10.54 77.51
+TICKREAD lowest 0.217 at frame 1690 tick 2818 pos -26.22 10.54 77.32
+M3D flip run tick 2848: body (-26.30 77.28) old point (-25.66 78.03) solid (-25.74 77.94) 0.86 m from the body
+M3D E bend: replans 11 (compared 10); flips with the solid within 0.5 m 0, 1.0 m 1, 2.0 m 1
+M3D at exit: replans 11 (compared 10); flips with the solid within 0.5 m 0, 1.0 m 1, 2.0 m 1

@@ -1,0 +1,21 @@
+run-20261112-202912.txt      build cab3530 ticks   4753 DIFFERENT sim a22a09d3babb30c4 chase 58cc690b150edaf7
+run-20261112-202937.txt      build cab3530 ticks  22183 DIFFERENT sim 29dfefa57348ab3b chase 8e0ba7c6b7a3249d
+run-20261112-204506.txt      build cab3530 ticks  19549 SAME sim e4cff18c6439e512 chase 10ccb206c3c8ae9e
+run-20261113-192209.txt      build 31d1c6d ticks  10165 SAME sim 506b0b984ae11d85 chase 50d1f0536ea5a59e
+run-20261113-193734.txt      build 31d1c6d ticks   5590 SAME sim b30408066be483e7 chase 3d0beebf7afcc140
+run-20261113-193807.txt      build 31d1c6d ticks   2298 SAME sim 55baa9bfe43b3ee4 chase 4e8f6a50e7ab5a6f
+run-20261113-193820.txt      build 31d1c6d ticks  52137 SAME sim eea1321d336cdd5d chase 58bcdb4018a781a4
+run-20261113-194208.txt      build 31d1c6d ticks  39280 SAME sim c0c11844b5c9d5b8 chase b7dafb4ee37f8bbf
+run-20261113-194456.txt      build 31d1c6d ticks  35277 SAME sim d461d6e3e22a86c2 chase caaf355605af3c88
+run-20261113-194729.txt      build 31d1c6d ticks  60732 SAME sim 6f4c7d200526b2f7 chase ee10b02a4fb73e8c
+run-20261113-195147.txt      build 31d1c6d ticks  21866 SAME sim c4ff275b3f20d313 chase 5dd247ac64f64fe3
+run-20261113-195326.txt      build 31d1c6d ticks  69831 SAME sim 60e04bee3e5b05ff chase 787096c8af087fa9
+run-20261113-195826.txt      build 31d1c6d ticks    351 SAME sim e834b8890c964d73 chase 01a6362c494b4b94
+run-20261113-222640.txt      build 31d1c6d ticks  13157 SAME sim 9acc4e386e8b39ba chase c7952f55a6a7153e
+run-20261113-222741.txt      build 31d1c6d ticks  73544 SAME sim deb43ee581596de7 chase 9fc99c7b24864300
+run-20261113-223302.txt      build 31d1c6d ticks   8488 SAME sim aec388d146d7ae69 chase 7e468650318ca65a
+run-20261113-223345.txt      build 31d1c6d ticks  56597 SAME sim 2c4042c9f44c2727 chase a7d69bd0db5b7ec9
+run-20261113-223750.txt      build 31d1c6d ticks  38554 SAME sim 8ed0a8041ca56e08 chase dd72739b9dd10938
+run-20261113-224044.txt      build 31d1c6d ticks   8388 SAME sim 96f6809482755e7d chase c1b973d533bbf2c5
+run-20261113-224125.txt      build 31d1c6d ticks  18370 SAME sim 3ac30088a27c4078 chase f07782a502013e6d
+replay_check: 20 runs, 18 same, 2 different, 0 unreadable

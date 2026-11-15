@@ -1,0 +1,24 @@
+    way (b)  : no contact on the ten routes
+    way (a)  : no contact on the ten routes
+ok    m3c_read_what_holds_the_body_after_a_wall
+    way (b)  : 30 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 30, of which kept 0.8 along the wall 30 (worst 0.996); square 0
+    way (b)  : the sliding velocity turned at most 1.750 of its grip in a tick with no new contact
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1360): CHECK failed: slide_grip <= 1.001f
+    way (a)  : 5 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 5, of which kept 0.8 along the wall 5 (worst 0.996); square 0
+    way (a)  : the sliding velocity turned at most 1.413 of its grip in a tick with no new contact
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1360): CHECK failed: slide_grip <= 1.001f
+FAIL  m3c_a_step_the_mesh_snaps_short_is_a_contact_that_keeps_the_speed_along_the_wall
+    way (b)  : 118 sliding ticks over 20 degrees off the aim; with the acceleration along (wanted - current) under 0.9 of grip 54 (least -0.156 of what grip allows there, -0.156 of grip); (the turn-cap count is no longer read: 0)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1392): CHECK failed: under == 0
+    way (a)  : 15 sliding ticks over 20 degrees off the aim; with the acceleration along (wanted - current) under 0.9 of grip 15 (least -0.046 of what grip allows there, -0.046 of grip); (the turn-cap count is no longer read: 0)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1392): CHECK failed: under == 0
+FAIL  m3c_far_off_the_aim_a_sliding_velocity_turns_toward_it_at_its_grip
+    way (b)  : 53 sliding ticks with the aim behind; with the acceleration along (wanted - current) under 0.9 of grip 1; turned about by hand 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1420): CHECK failed: unbraked == 0
+    way (a)  : 0 sliding ticks with the aim behind; with the acceleration along (wanted - current) under 0.9 of grip 0; turned about by hand 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1419): CHECK failed: behind > 0
+FAIL  m3c_along_a_wall_with_the_aim_behind_the_body_brakes_at_its_grip_and_leaves_the_other_way
+    from tick 773's state: 90 sliding ticks off the aim; with the acceleration along (wanted - current) under 0.9 of what grip allows 58 (least 0.625 of it)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1497): CHECK failed: under == 0
+FAIL  m3c_from_the_45_degree_bends_tick_773_a_slide_with_the_aim_behind_accelerates_toward_the_wanted_velocity
+5 tests, 4 failed

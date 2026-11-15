@@ -1,0 +1,101 @@
+film-corner: looked at 1 worlds from seed 1: 2160 node pairs, 2080 walk-only paths, 8353 bends, 1293 kept, 2.7 s
+STRING tick 2015: (-32.91 -26.24) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.49 -34.59)
+PLAN tick 2015: body (-32.91 -26.24) 21.38 m from the 90's apex, speed 0.00, heading 0.0 deg; the stretch starts (-32.91 -26.24); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.32 centre (-13.73 -28.99) 2.54 m from the hand line's]
+STRING tick 2134: (-32.02 -26.16) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.49 -34.59)
+PLAN tick 2134: body (-32.02 -26.16) 20.49 m from the 90's apex, speed 4.11, heading 93.2 deg; the stretch starts (-32.02 -26.16); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.32 centre (-13.73 -28.99) 2.54 m from the hand line's]
+STRING tick 2253: (-28.86 -26.07) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.49 -34.59)
+PLAN tick 2253: body (-28.86 -26.07) 17.34 m from the 90's apex, speed 8.55, heading 88.4 deg; the stretch starts (-28.86 -26.07); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.33 centre (-13.74 -28.99) 2.53 m from the hand line's]
+STRING tick 2372: (-24.38 -25.95) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.28 -30.18)
+ARC bend (-11.99 -26.54)..(-11.54 -26.84), 3 corners, turn 82.9 deg, k -1, legs 12.41 / 3.36, x (-11.56 -26.56); free out from the first corner along the bisector 3.67 m, so w 2.75 and the bound 11.18 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.01 0.30), out (0.30 0.02): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: fails; centre (0.00 0.00), tangent in (0.02 0.50), out (0.50 0.04): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.21 -27.23), tangent in (-12.17 -26.23), out (-11.22 -27.15) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-12.91 -27.95), tangent in (-12.82 -25.95), out (-10.92 -27.80) at (0.00 0.00)
+ARC   r  3.00: HOLDS; centre (-13.61 -28.67), tangent in (-13.47 -25.67), out (-10.62 -28.44) at (0.00 0.00)
+ARC   r  4.00: HOLDS; centre (-14.31 -29.39), tangent in (-14.12 -25.39), out (-10.32 -29.08) at (0.00 0.00)
+ARC   r  5.00: HOLDS; centre (-15.00 -30.11), tangent in (-14.77 -25.11), out (-10.02 -29.72) at (0.00 0.00)
+ARC   r  6.00: HOLDS; centre (-15.70 -30.82), tangent in (-15.42 -24.83), out (-9.72 -30.36) at (0.00 0.00)
+ARC   r  7.00: fails; centre (-16.40 -31.54), tangent in (-16.07 -24.55), out (-9.42 -31.00): the tangent point out off the mesh at (-9.42 -31.00)
+ARC   r  8.00: fails; centre (-17.09 -32.26), tangent in (-16.72 -24.27), out (-9.12 -31.64): the tangent point in off the mesh at (-16.72 -24.27)
+ARC   r 10.00: fails; centre (-18.49 -33.69), tangent in (-18.01 -23.70), out (-8.52 -32.93): the tangent point in off the mesh at (-18.01 -23.70)
+ARC pair 1-2 fails: (-11.99 -26.54) arc r 5.98 k -1 / (-11.28 -30.18) end r 0.00 k 1
+ARC final: [(-24.38 -25.95) end r 0.00] [(-11.99 -26.54) solve's r 0.00] [(-11.74 -26.59) solve's r 0.00] [(-11.54 -26.84) solve's r 0.00] [(-11.28 -30.18) end r 0.00]
+PLAN tick 2372: body (-24.38 -25.95) 12.87 m from the 90's apex, speed 9.22, heading 88.4 deg; the stretch starts (-24.38 -25.95); string 5 points; arcs 0, merged 0, S pairs 0, runs to the solve 1: [solve at (-15.88 -24.91)]
+STRING tick 2491: (-19.89 -25.22) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.28 -30.18)
+ARC bend (-11.99 -26.54)..(-11.54 -26.84), 3 corners, turn 76.1 deg, k -1, legs 8.01 / 3.36, x (-11.56 -26.61); free out from the first corner along the bisector 3.52 m, so w 2.77 and the bound 13.24 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.05 0.30), out (0.30 0.02): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: fails; centre (0.00 0.00), tangent in (0.08 0.49), out (0.50 0.04): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.22 -27.22), tangent in (-12.06 -26.24), out (-11.23 -27.15) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-12.97 -27.90), tangent in (-12.64 -25.93), out (-10.97 -27.75) at (0.00 0.00)
+ARC   r  3.00: HOLDS; centre (-13.71 -28.58), tangent in (-13.21 -25.62), out (-10.72 -28.35) at (0.00 0.00)
+ARC   r  4.00: HOLDS; centre (-14.44 -29.25), tangent in (-13.79 -25.31), out (-10.46 -28.95) at (0.00 0.00)
+ARC   r  5.00: fails; centre (-15.18 -29.93), tangent in (-14.36 -25.00), out (-10.20 -29.55): a sample off the mesh at (-18.31 -24.34)
+ARC   r  6.00: fails; centre (-15.92 -30.61), tangent in (-14.93 -24.69), out (-9.94 -30.14): a sample off the mesh at (-18.42 -24.10)
+ARC   r  7.00: fails; centre (-16.66 -31.28), tangent in (-15.51 -24.38), out (-9.68 -30.74): the tangent point in off the mesh at (-15.51 -24.38)
+ARC   r  8.00: fails; centre (-17.40 -31.96), tangent in (-16.08 -24.06), out (-9.42 -31.34): the tangent point in off the mesh at (-16.08 -24.06)
+ARC   r 10.00: fails; centre (-18.87 -33.31), tangent in (-17.23 -23.44), out (-8.90 -32.54): the tangent point in off the mesh at (-17.23 -23.44)
+ARC pair 1-2 fails: (-11.99 -26.54) arc r 4.16 k -1 / (-11.28 -30.18) end r 0.00 k 1
+ARC final: [(-19.89 -25.22) end r 0.00] [(-11.99 -26.54) solve's r 0.00] [(-11.74 -26.59) solve's r 0.00] [(-11.54 -26.84) solve's r 0.00] [(-11.28 -30.18) end r 0.00]
+PLAN tick 2491: body (-19.89 -25.22) 8.51 m from the 90's apex, speed 9.25, heading 81.1 deg; the stretch starts (-19.89 -25.22); string 5 points; arcs 0, merged 0, S pairs 0, runs to the solve 1: [solve at (-13.77 -25.39)]
+STRING tick 2610: (-15.40 -25.26) (-11.74 -26.59) (-11.54 -26.84) (-11.28 -30.18)
+PLAN tick 2610: body (-15.40 -25.26) 4.18 m from the 90's apex, speed 8.25, heading 98.9 deg; the stretch starts (-15.40 -25.26); string 4 points; arcs 0, merged 0, S pairs 0, runs to the solve 1: [solve at (-11.67 -26.49)]
+STRING tick 2729: (-11.69 -26.56) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-12.49 -32.84) (-12.49 -35.99) (-12.49 -36.57)
+PLAN tick 2729: body (-11.69 -26.56) 0.32 m from the 90's apex, speed 6.98, heading 117.3 deg; the stretch starts (-11.69 -26.56); string 7 points; arcs 1, merged 0, S pairs 1, runs to the solve 1: [r 0.30 centre (-11.63 -26.86) 5.52 m from the hand line's] [solve at (-11.97 -31.45)]
+STRING tick 2848: (-10.62 -27.86) (-12.49 -32.84) (-12.49 -35.99) (-12.49 -36.57)
+PLAN tick 2848: body (-10.62 -27.86) 1.37 m from the 90's apex, speed 2.18, heading -148.7 deg; the stretch starts (-10.62 -27.86); string 4 points; arcs 0, merged 0, S pairs 0, runs to the solve 1: [solve at (-12.26 -31.89)]
+STRING tick 2967: (-11.25 -29.49) (-11.59 -30.29) (-13.49 -34.59)
+PLAN tick 2967: body (-11.25 -29.49) 2.66 m from the 90's apex, speed 5.55, heading -161.3 deg; the stretch starts (-11.25 -29.49); string 3 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 1.95 centre (-13.19 -29.59) 2.71 m from the hand line's]
+STRING tick 3086: (-12.74 -32.98) (-12.81 -39.08)
+PLAN tick 3086: body (-12.74 -32.98) 6.26 m from the 90's apex, speed 9.02, heading -155.0 deg; the stretch starts (-12.74 -32.98); string 2 points; arcs 0, merged 0, S pairs 0, runs to the solve 0:
+film-corner: the bend: 88.9 degrees (the path's turn between its 3 m chords in and out) at (-11.54, 10.54, -26.84) in the world of seed 1; the corridor across it 4.4 m; clean path 60.4 m before it and 8.1 m after; the staged run's door 21.5 m before it at (-32.91, 10.54, -26.24), the target's walk to 7.6 m after it at (-13.29, 10.54, -34.04)
+TICKREAD gates: entry frame 1600 tick 2668 speed 7.674, exit frame 1761 tick 2936, through 1.118 s; apex -11.54 10.54 -26.84
+TICKREAD lowest 1.690 at frame 1697 tick 2829 pos -10.56 10.54 -27.72
+STRING tick 2015: (-32.91 -26.24) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.49 -34.59)
+PLAN tick 2015: body (-32.91 -26.24) 21.38 m from the 90's apex, speed 0.00, heading 0.0 deg; the stretch starts (-32.91 -26.24); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.32 centre (-13.73 -28.99) 2.54 m from the hand line's]
+STRING tick 2134: (-32.02 -26.16) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.49 -34.59)
+PLAN tick 2134: body (-32.02 -26.16) 20.49 m from the 90's apex, speed 4.11, heading 93.2 deg; the stretch starts (-32.02 -26.16); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.32 centre (-13.73 -28.99) 2.54 m from the hand line's]
+STRING tick 2253: (-28.86 -26.07) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.49 -34.59)
+PLAN tick 2253: body (-28.86 -26.07) 17.34 m from the 90's apex, speed 8.55, heading 88.4 deg; the stretch starts (-28.86 -26.07); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.33 centre (-13.74 -28.99) 2.53 m from the hand line's]
+STRING tick 2372: (-24.38 -25.95) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.28 -30.18)
+ARC bend (-11.99 -26.54)..(-11.54 -26.84), 3 corners, turn 82.9 deg, k -1, legs 12.41 / 3.36, x (-11.56 -26.56); free out from the first corner along the bisector 3.67 m, so w 2.75 and the bound 11.18 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.01 0.30), out (0.30 0.02): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: fails; centre (0.00 0.00), tangent in (0.02 0.50), out (0.50 0.04): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.21 -27.23), tangent in (-12.17 -26.23), out (-11.22 -27.15) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-12.91 -27.95), tangent in (-12.82 -25.95), out (-10.92 -27.80) at (0.00 0.00)
+ARC   r  3.00: HOLDS; centre (-13.61 -28.67), tangent in (-13.47 -25.67), out (-10.62 -28.44) at (0.00 0.00)
+ARC   r  4.00: HOLDS; centre (-14.31 -29.39), tangent in (-14.12 -25.39), out (-10.32 -29.08) at (0.00 0.00)
+ARC   r  5.00: HOLDS; centre (-15.00 -30.11), tangent in (-14.77 -25.11), out (-10.02 -29.72) at (0.00 0.00)
+ARC   r  6.00: HOLDS; centre (-15.70 -30.82), tangent in (-15.42 -24.83), out (-9.72 -30.36) at (0.00 0.00)
+ARC   r  7.00: fails; centre (-16.40 -31.54), tangent in (-16.07 -24.55), out (-9.42 -31.00): the tangent point out off the mesh at (-9.42 -31.00)
+ARC   r  8.00: fails; centre (-17.09 -32.26), tangent in (-16.72 -24.27), out (-9.12 -31.64): the tangent point in off the mesh at (-16.72 -24.27)
+ARC   r 10.00: fails; centre (-18.49 -33.69), tangent in (-18.01 -23.70), out (-8.52 -32.93): the tangent point in off the mesh at (-18.01 -23.70)
+ARC pair 1-2 fails: (-11.99 -26.54) arc r 5.98 k -1 / (-11.28 -30.18) end r 0.00 k 1
+ARC final: [(-24.38 -25.95) end r 0.00] [(-11.99 -26.54) solve's r 0.00] [(-11.74 -26.59) solve's r 0.00] [(-11.54 -26.84) solve's r 0.00] [(-11.28 -30.18) end r 0.00]
+PLAN tick 2372: body (-24.38 -25.95) 12.87 m from the 90's apex, speed 9.22, heading 88.4 deg; the stretch starts (-24.38 -25.95); string 5 points; arcs 0, merged 0, S pairs 0, runs to the solve 1: [solve at (-15.88 -24.91)]
+STRING tick 2491: (-19.89 -25.22) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.28 -30.18)
+ARC bend (-11.99 -26.54)..(-11.54 -26.84), 3 corners, turn 76.1 deg, k -1, legs 8.01 / 3.36, x (-11.56 -26.61); free out from the first corner along the bisector 3.52 m, so w 2.77 and the bound 13.24 m
+ARC   r  0.30: fails; centre (0.00 0.00), tangent in (0.05 0.30), out (0.30 0.02): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  0.50: fails; centre (0.00 0.00), tangent in (0.08 0.49), out (0.50 0.04): no centre keeps every corner inside at (0.00 0.00)
+ARC   r  1.00: HOLDS; centre (-12.22 -27.22), tangent in (-12.06 -26.24), out (-11.23 -27.15) at (0.00 0.00)
+ARC   r  2.00: HOLDS; centre (-12.97 -27.90), tangent in (-12.64 -25.93), out (-10.97 -27.75) at (0.00 0.00)
+ARC   r  3.00: HOLDS; centre (-13.71 -28.58), tangent in (-13.21 -25.62), out (-10.72 -28.35) at (0.00 0.00)
+ARC   r  4.00: HOLDS; centre (-14.44 -29.25), tangent in (-13.79 -25.31), out (-10.46 -28.95) at (0.00 0.00)
+ARC   r  5.00: fails; centre (-15.18 -29.93), tangent in (-14.36 -25.00), out (-10.20 -29.55): a sample off the mesh at (-18.31 -24.34)
+ARC   r  6.00: fails; centre (-15.92 -30.61), tangent in (-14.93 -24.69), out (-9.94 -30.14): a sample off the mesh at (-18.42 -24.10)
+ARC   r  7.00: fails; centre (-16.66 -31.28), tangent in (-15.51 -24.38), out (-9.68 -30.74): the tangent point in off the mesh at (-15.51 -24.38)
+ARC   r  8.00: fails; centre (-17.40 -31.96), tangent in (-16.08 -24.06), out (-9.42 -31.34): the tangent point in off the mesh at (-16.08 -24.06)
+ARC   r 10.00: fails; centre (-18.87 -33.31), tangent in (-17.23 -23.44), out (-8.90 -32.54): the tangent point in off the mesh at (-17.23 -23.44)
+ARC pair 1-2 fails: (-11.99 -26.54) arc r 4.16 k -1 / (-11.28 -30.18) end r 0.00 k 1
+ARC final: [(-19.89 -25.22) end r 0.00] [(-11.99 -26.54) solve's r 0.00] [(-11.74 -26.59) solve's r 0.00] [(-11.54 -26.84) solve's r 0.00] [(-11.28 -30.18) end r 0.00]
+PLAN tick 2491: body (-19.89 -25.22) 8.51 m from the 90's apex, speed 9.25, heading 81.1 deg; the stretch starts (-19.89 -25.22); string 5 points; arcs 0, merged 0, S pairs 0, runs to the solve 1: [solve at (-13.77 -25.39)]
+STRING tick 2610: (-15.40 -25.26) (-11.74 -26.59) (-11.54 -26.84) (-11.28 -30.18)
+PLAN tick 2610: body (-15.40 -25.26) 4.18 m from the 90's apex, speed 8.25, heading 98.9 deg; the stretch starts (-15.40 -25.26); string 4 points; arcs 0, merged 0, S pairs 0, runs to the solve 1: [solve at (-11.67 -26.49)]
+STRING tick 2729: (-11.69 -26.56) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-12.49 -32.84) (-12.49 -35.99) (-12.49 -36.57)
+PLAN tick 2729: body (-11.69 -26.56) 0.32 m from the 90's apex, speed 6.98, heading 117.3 deg; the stretch starts (-11.69 -26.56); string 7 points; arcs 1, merged 0, S pairs 1, runs to the solve 1: [r 0.30 centre (-11.63 -26.86) 5.52 m from the hand line's] [solve at (-11.97 -31.45)]
+STRING tick 2848: (-10.62 -27.86) (-12.49 -32.84) (-12.49 -35.99) (-12.49 -36.57)
+PLAN tick 2848: body (-10.62 -27.86) 1.37 m from the 90's apex, speed 2.18, heading -148.7 deg; the stretch starts (-10.62 -27.86); string 4 points; arcs 0, merged 0, S pairs 0, runs to the solve 1: [solve at (-12.26 -31.89)]
+STRING tick 2967: (-11.25 -29.49) (-11.59 -30.29) (-13.49 -34.59)
+PLAN tick 2967: body (-11.25 -29.49) 2.66 m from the 90's apex, speed 5.55, heading -161.3 deg; the stretch starts (-11.25 -29.49); string 3 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 1.95 centre (-13.19 -29.59) 2.71 m from the hand line's]
+STRING tick 3086: (-12.74 -32.98) (-12.81 -39.08)
+PLAN tick 3086: body (-12.74 -32.98) 6.26 m from the 90's apex, speed 9.02, heading -155.0 deg; the stretch starts (-12.74 -32.98); string 2 points; arcs 0, merged 0, S pairs 0, runs to the solve 0:
+M3D E bend: replans 0 (compared 0); flips with the solid within 0.5 m 0, 1.0 m 0, 2.0 m 0

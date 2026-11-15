@@ -1,0 +1,5 @@
+    passes 600: the line in 1392 us; the corner's least radius within 3 m 0.90 m; the greatest offset from the string 0.34 m; the bend 1.183 s, lowest 1.48 m/s, exit gate at tick 954 (today's law 0.846 s, tick 871)
+    passes 60000: the line in 120004 us; the corner's least radius within 3 m 1.19 m; the greatest offset from the string 0.91 m; the bend 0.867 s, lowest 3.14 m/s, exit gate at tick 890 (today's law 0.846 s, tick 871)
+    passes 600000: the line in 1225014 us; the corner's least radius within 3 m 1.21 m; the greatest offset from the string 1.02 m; the bend 0.908 s, lowest 2.74 m/s, exit gate at tick 902 (today's law 0.846 s, tick 871)
+ok    diag_passes_the_90_degree_bend_at_more_passes
+1 tests, 0 failed

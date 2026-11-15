@@ -1,0 +1,808 @@
+ok    the_score_is_time_survived_and_worth_more_the_longer_the_run
+ok    every_dial_starts_where_it_says_moves_as_it_says_and_stops_at_its_limit
+ok    dial_text_is_read_or_refused_whole
+ok    three_archetypes_and_the_climber_are_built_and_the_rest_are_named
+ok    a_faster_body_must_take_a_corner_slower_and_a_sharper_corner_slower_still
+    seed 1: 12 routes, the careful body sooner on 11
+    seed 2: 12 routes, the careful body sooner on 11
+    seed 3: 12 routes, the careful body sooner on 11
+    seed 4: 12 routes, the careful body sooner on 8
+    seed 5: 12 routes, the careful body sooner on 12
+    seed 6: 12 routes, the careful body sooner on 11
+    seed 7: 12 routes, the careful body sooner on 12
+    seed 8: 12 routes, the careful body sooner on 9
+    96 routes with three corners or more over seeds 1-8: the body that never brakes for one met the mesh's edge for longer on 91 and was the slower on 85; it met a wall head-on 139 times against 44, and took 1240.2 s in all against 1046.4 s
+ok    a_sprinter_that_does_not_brake_for_corners_meets_the_walls_and_one_that_does_gets_there_sooner
+    the sprinter is planned first by a quarter or more on 10 of 10 level routes; up 6 flights its best speed along the stairs was 4.50 m/s (its flat speed is 10.15, the player's sprint 7.00)
+ok    a_sprinter_wins_the_straight_and_loses_the_stairs
+    6 drops and 4 ladders the hunter's quickest way uses: it crossed 10 and was off the mesh for 0 ticks after; the others were planned a denied link 0 times and took one 0 times in 10 walks
+ok    a_chaser_takes_only_the_links_its_kind_may
+    on the root, main's world: 96 routes; hot scraped more on 0, careful sooner on 0, the same time on 96; head-on 1 against 1; 989.2 s against 989.2 s
+ok    m2b_the_sprinter_row_printed_with_the_sprinter_on_the_root
+ok    a_lesser_chaser_that_never_senses_the_player_gives_up_after_its_time_to_look
+ok    a_lesser_chaser_loses_the_player_a_set_time_after_its_last_contact
+ok    a_sprinting_player_is_heard_through_a_wall_and_a_walking_one_is_not
+ok    the_interceptor_aims_ahead_of_the_player_and_keeps_the_place_it_chose
+ok    the_hunter_knows_where_the_player_is_as_precisely_as_its_dial_says
+ok    a_chaser_is_never_caught_up_with_by_a_wall_it_cannot_see_through
+ok    a_sprint_is_muffled_by_a_wall
+ok    the_director_spawns_nothing_where_every_site_is_in_sight
+ok    a_player_more_than_a_metre_above_a_chaser_is_out_of_its_reach
+    default world, brutal, 150 s: 165378 chaser ticks (165378 on the mesh, 0 on links); off the mesh 0 (worst 0.00001 m), in a reprieve 0, through geometry 0, over its speed 0 in a tick (worst 0.000 m/s over) and 0 over a second, over its turn rate 0, off its link 0, a denied link 0, wrong top speed 0
+    lesser chasers spawned: sprinter 7, interceptor 7, pack 7 (bodies)
+    world thick with reprieves, hard, 240 s: 134825 chaser ticks (134825 on the mesh, 0 on links); off the mesh 0 (worst 0.00001 m), in a reprieve 0, through geometry 0, over its speed 0 in a tick (worst 0.000 m/s over) and 0 over a second, over its turn rate 0, off its link 0, a denied link 0, wrong top speed 0
+    the player went into 1 reprieves in that time, and lesser chasers were lost at a mouth 0 times
+    of run seeds 1 to 24, 21 went into at least 2 reprieves (the bar is 17)
+ok    a_chaser_stays_on_the_mesh_out_of_geometry_out_of_reprieves_and_inside_its_limits
+    10 of 10 players standing 30 to 110 m from the door were reached; the slowest took 1.87 times the planned time
+ok    the_hunter_always_reaches_a_player_who_stands_still_in_connected_space
+    a reprieve 24 m long: the generator's way round 5.1 s (at 7 m/s), the mesh's 3.5 s at the hunter's 9.00 m/s; it stood 2.0 s at the mouth, took 4.6 s to go round, and when the player came back out it was 3.4 s away and took 5.2 s to arrive
+ok    the_hunter_stops_at_a_reprieves_mouth_goes_round_and_its_detour_is_the_players_lead
+    the hunter stood 1.90 m from a player 0.4 m inside the mouth, with a reach of 3.5 m, for 40 s; out of the mouth they were caught after 4.3 s
+ok    a_player_just_inside_a_reprieves_mouth_cannot_be_caught
+    the sprinter gave up 1.1 s after its last contact, with the player 3.7 m inside
+ok    a_lesser_chaser_loses_the_player_at_a_reprieves_mouth
+    climb-out 1: the way round planned from the dead end 3.6 s; the lead as the player landed 3.6 s (1.1 s as the crow flies); caught 4.8 s later
+    climb-out 2: the way round planned from the dead end 3.7 s; the lead as the player landed 3.7 s (1.0 s as the crow flies); caught 4.8 s later
+    climb-out 3: the way round planned from the dead end 3.5 s; the lead as the player landed 3.5 s (1.3 s as the crow flies); caught 4.6 s later
+    climb-out 4: the way round planned from the dead end 3.6 s; the lead as the player landed 3.5 s (1.0 s as the crow flies); caught 4.7 s later
+ok    a_climb_out_of_a_dead_end_makes_the_hunter_go_round
+    45 spawns in 300 s: in sight 0, closer than the dial 0, with no way to the player 0; the nearest was 0.2 s over the dial and 25 m off
+ok    the_director_never_spawns_in_sight_or_closer_than_its_travel_time
+    seed 5: 6 turns: sprinter interceptor pack sprinter interceptor pack
+    seed 6: 7 turns: sprinter interceptor pack sprinter interceptor pack sprinter
+    seed 7: 7 turns: sprinter interceptor pack sprinter interceptor pack sprinter
+ok    with_kinds_in_turn_the_lesser_chasers_come_sprinter_interceptor_pack_in_turn
+    420 s on hard: 6 peaks, 5 reliefs, the shortest finished relief 14.3 s; 0 lesser chasers spawned during a relief
+ok    the_director_builds_to_a_peak_and_then_gives_relief
+    75 s on hard, 15 events, 4 lesser chasers: chase 86011a2a728ce886, simulation 6317dd336000317d, four times over
+ok    the_same_seed_and_inputs_give_the_same_chase
+    streamed, hard, 60 s: 36478 chaser ticks (36478 on the mesh, 0 on links); off the mesh 0 (worst 0.00000 m), in a reprieve 0, through geometry 0, over its speed 0 in a tick (worst 0.000 m/s over) and 0 over a second, over its turn rate 0, off its link 0, a denied link 0, wrong top speed 0
+    60 s on hard, 41 tiles streamed in, 13 events: chase d921f58f05b618f8 all four times; tiles waited for at their tick: 41 with one worker, 24 with six, 21 with six that dawdle (a headless run goes many times faster than the clock, so the workers are behind it)
+ok    streamed_navigation_gives_the_same_chase_whatever_the_workers_do
+    run seed 1: still 8.0 s, line 44.5 s, flee 360.9 s
+    run seed 2: still 8.0 s, line 19.8 s, flee 149.5 s
+    run seed 3: still 8.0 s, line 52.5 s, flee 289.2 s
+ok    the_three_policies_end_as_they_should
+    at (-68.53 10.50 86.72): nearest (-23 3 28 s0)
+    at (93.47 3.50 -57.24): nearest (31 1 -20 s0)
+ok    the_node_nearest_the_player_is_on_the_floor_under_their_feet_not_through_a_wall
+    a reprieve 24 m long: the tell from 14.0 s, open at 20.0 s; the hunter came in 0.0 s later from 12.0 m along it and caught a player who stood still 2.0 s after that
+ok    a_reprieve_holds_for_its_time_gives_its_tell_and_then_the_hunter_comes_in
+ok    stepping_out_of_a_reprieve_and_in_again_does_not_wind_its_time_back
+ok    the_hunter_walks_out_of_a_reprieve_the_player_has_left_and_is_on_the_mesh_again
+    ledge 1: out of reach for 14.0 s when the climber was sent from 21.4 s of its travel away; it went up the ledge and caught a player who stayed 23.9 s later
+    ledge 2: out of reach for 12.0 s when the climber was sent from 8.7 s of its travel away; it went up the ledge and caught a player who stayed 9.9 s later
+ok    a_player_who_stays_on_a_ledge_is_sent_a_climber_and_one_who_moves_on_is_not
+ok    a_player_hanging_on_a_ladder_is_out_of_the_hunters_reach_and_in_the_climbers
+    left 71 m behind, the hunter was 8.6 s off the mesh and caught a standing player 4.7 s after stepping back onto it
+ok    a_hunter_left_behind_by_the_stage_comes_on_without_the_mesh_and_steps_back_onto_it
+ok    the_speed_model_is_set_from_text_and_legacy_is_the_old_chase
+ok    the_chasers_have_their_own_reference_speed_and_the_players_sprint_does_not_move_it
+    covered 3000 m: hunter's top speed 8.400 at 500 m, 8.800 at 1000 m, 9.200 at 3000 m (cap 15%)
+ok    top_speed_grows_with_the_ground_the_player_has_covered_and_stops_at_its_cap
+    a straight of 69 m: peak 9.12 m/s with the model (top 7.60, run-up cap 9.12), 6.65 without it; 8.4 s against 10.7 s
+ok    the_longer_the_straight_the_more_speed_and_a_turn_takes_it_back
+    the circle at top speed: hunter 2.90 m (top 7.60), interceptor 1.65 m (top 7.20), sprinter 7.38 m (top 11.60)
+    12 routes of three corners or more: the tightest circle followed at 80% of top speed 1.73 m; at its 18 corners of 45 deg or more it lost 77% of the speed it came in at, at its slowest; (the old measure: its speed at the corners' points 30% under top with the model, 35% without); 131.6 s in all against 144.2 s
+ok    a_turn_costs_speed_and_the_hunter_cannot_turn_on_a_dime
+    12 routes: a sprinter that does not brake for corners met a wall head-on 16 times and stood 8.0 s after them with the old body, and 68 times and 0.0 s with the model's
+ok    a_chaser_is_never_stood_still_by_a_wall_but_a_body_built_the_old_way_is
+ok    the_interceptor_is_the_nimble_one_a_lower_top_speed_and_the_tightest_turn
+    today 7 / 10 over 8 s, chasers' reference 8:
+       seconds    player    hunter    metres   ratio
+            10     10.00      9.03        89    0.90
+            30     10.00      9.18       289    0.92
+            60     10.00      9.41       590    0.94
+           120     10.00      9.88      1190    0.99
+           300     10.00     11.36      2989    1.14
+           600     10.00     14.03      5989    1.40
+          1200     10.00     15.60     11991    1.56
+      the hunter overtakes the player at 135 s
+    before D657: 7 / 8.75 over 8 s, reference 7:
+       seconds    player    hunter    metres   ratio
+            10      8.75      7.90        81    0.90
+            30      8.75      8.02       256    0.92
+            60      8.75      8.21       519    0.94
+           120      8.75      8.59      1044    0.98
+           300      8.75      9.78      2618    1.12
+           600      8.75     11.93      5243    1.36
+          1200      8.75     13.65     10495    1.56
+      the hunter overtakes the player at 145 s
+    recommended 6 / 9 over 4 s, reference 7:
+       seconds    player    hunter    metres   ratio
+            10      9.00      7.90        83    0.88
+            30      9.00      8.02       263    0.89
+            60      9.00      8.21       534    0.91
+           120      9.00      8.60      1074    0.96
+           300      9.00      9.81      2693    1.09
+           600      9.00     12.00      5393    1.33
+          1200      9.00     13.65     10795    1.52
+      the hunter overtakes the player at 181 s
+ok    the_player_is_a_little_faster_at_first_and_the_hunter_overtakes_at_both_sets_of_movement_numbers
+    run seed 1: chase 4aed318053233876 / 4aed318053233876, simulation 25b0c78115dcb64e / 25b0c78115dcb64e, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 120.0 s
+    run seed 2: chase aa849db0b2594817 / aa849db0b2594817, simulation 09c68428c71a03ca / 09c68428c71a03ca, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 120.0 s
+    run seed 3: chase 9d18a73547a80f68 / 9d18a73547a80f68, simulation 2da21227079d794a / 2da21227079d794a, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 120.0 s
+ok    lamps_do_not_move_the_chase
+ok    what_a_new_run_starts_with_is_the_default_model_until_the_flip_and_the_model_accepts_it
+    hunter: 66 corners; the second after one held dead straight (under 1 deg/s) 14% of the time (median); 10 of 10 routes walked to the end
+    sprinter: 66 corners; the second after one held dead straight (under 1 deg/s) 16% of the time (median); 10 of 10 routes walked to the end
+    interceptor: 65 corners; the second after one held dead straight (under 1 deg/s) 18% of the time (median); 10 of 10 routes walked to the end
+    pack: 66 corners; the second after one held dead straight (under 1 deg/s) 14% of the time (median); 10 of 10 routes walked to the end
+ok    after_a_corner_the_line_bends_and_is_never_held_dead_straight
+    hunter: turns that stop dead (over 60 deg/s to under 5 deg/s in one tick): 0; the largest change of turn rate in one tick 18.8 deg/s
+    sprinter: turns that stop dead (over 60 deg/s to under 5 deg/s in one tick): 0; the largest change of turn rate in one tick 15.6 deg/s
+    interceptor: turns that stop dead (over 60 deg/s to under 5 deg/s in one tick): 0; the largest change of turn rate in one tick 18.7 deg/s
+    pack: turns that stop dead (over 60 deg/s to under 5 deg/s in one tick): 0; the largest change of turn rate in one tick 18.8 deg/s
+ok    the_turn_eases_in_and_out_and_never_stops_dead
+    route 0: the sway takes it at most 0.45 m off the line it runs without one; the two stop 0.03 m apart
+    route 1: the sway takes it at most 0.10 m off the line it runs without one; the two stop 0.00 m apart
+    route 2: the sway takes it at most 0.08 m off the line it runs without one; the two stop 0.00 m apart
+    route 3: the sway takes it at most 0.08 m off the line it runs without one; the two stop 0.00 m apart
+    route 4: the sway takes it at most 0.10 m off the line it runs without one; the two stop 0.00 m apart
+    route 5: the sway takes it at most 0.28 m off the line it runs without one; the two stop 0.02 m apart
+ok    the_wander_is_seeded_small_and_gone_at_the_end
+    the head is within 10 deg of the player at tick 17; the body (turning at 2 rad/s) at tick 167
+ok    the_head_turns_to_the_player_before_the_body
+ok    the_levers_are_off_by_default_and_named_as_fields
+ok    with_slip_off_the_fingerprint_does_not_read_the_velocity
+      a route not walked to the end: 30.1 m short after 28800 ticks, 6 wall hits
+    corners 10 / 10 / 12; swing to the outside in the second after a corner (median): off 0.12 m, rate 3 1.50 m, rate 12 0.55 m; seconds with the facing 15 degrees or more off the travel: 0.00 / 0.41 / 0.22; routes walked to the end 10 / 9 / 10 of 10
+ok    slip_carries_a_chaser_wide_of_a_corner_and_its_facing_leads_its_travel
+    lowest speed within a second of a corner, share of top (median over 11 corners): off 0.18, floor 0.5 0.50; routes walked 10 / 10 of 10
+ok    the_corner_floor_keeps_a_chaser_above_its_share_of_top_speed
+ok    the_hunter_leads_a_runner_by_a_base_time_plus_its_distance_and_never_through_them
+ok    the_slosh_scorer_reads_a_swing_wide_of_the_runners_corner_and_not_a_chaser_that_follows
+ok    the_slosh_scorer_has_a_sampling_floor_of_a_third_of_a_metre_when_the_corner_falls_between_samples
+    median slip over 715 samples of no-sideslip walks: centred 0.03 deg, forward 0.11 deg
+ok    the_centred_slip_of_a_chaser_with_no_sideslip_reads_under_three_degrees
+    at a corner (median over 10 / 11 corners), within a second either side:
+      control  : sharpest turn 276 deg/s at 4.2 m/s (lateral 19.8 m/s^2); 27 % of the corner above Chang & Kram's Eqn 5 speed for its radius; worst point 1.47 times it
+      floor 0.5: sharpest turn 256 deg/s at 4.7 m/s (lateral 21.2 m/s^2); 33 % of the corner above Chang & Kram's Eqn 5 speed for its radius; worst point 1.51 times it
+      (cross-check against Table 1 itself: control 23 % above it, floor 0.5 32 %)
+ok    p3_turn_rate_at_speed_against_the_cited_curve_limit_is_reported
+ok    the_centred_slip_reads_a_turning_body_with_no_sideslip_as_zero_where_a_forward_one_reads_ten_degrees
+    at 4.2 m/s (straight speed 8.0): the body turns 266 deg/s; H1 allows 97 deg/s (radius 2.48 m), H2 134 deg/s (radius 1.80 m)
+ok    l182_dials_are_off_by_default_and_the_turning_law_caps_the_turn_at_speed
+    control   : 10 of 10 routes walked to the end, 77 s in all, 6 head-on wall hits
+    turn_law=1: 10 of 10 routes walked to the end, 87 s in all, 10 head-on wall hits
+    turn_law=3: 10 of 10 routes walked to the end, 87 s in all, 10 head-on wall hits
+    feelers   : 10 of 10 routes walked to the end, 80 s in all, 8 head-on wall hits
+    line      : 10 of 10 routes walked to the end, 84 s in all, 15 head-on wall hits
+    sway=0    : 10 of 10 routes walked to the end, 77 s in all, 6 head-on wall hits
+    ease      : 10 of 10 routes walked to the end, 76 s in all, 6 head-on wall hits
+    all       : 10 of 10 routes walked to the end, 90 s in all, 14 head-on wall hits
+ok    l182_the_lines_still_get_where_they_are_going_and_what_each_does_to_walls_is_reported
+      control   : sharpest turn 276 deg/s at 4.2 m/s; 27 % of the corner above Eqn 5; worst point 1.47 times it
+      turn_law=1: sharpest turn 239 deg/s at 2.5 m/s; 2 % of the corner above Eqn 5; worst point 1.04 times it
+      turn_law=3: sharpest turn 239 deg/s at 2.5 m/s; 2 % of the corner above Eqn 5; worst point 1.04 times it
+ok    l182_the_law_brings_the_turn_at_speed_inside_chang_and_kram
+    clearance 0.6: 10 paths, 42 points moved, the most by 0.60 m
+ok    l182_the_line_moves_a_corner_outward_by_no_more_than_its_clearance_and_keeps_it_on_the_mesh
+    route 0: today walked (8.3 s, 0 hits); slip 3 walked; grip root walked (9.0 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 1: today walked (9.2 s, 0 hits); slip 3 walked; grip root walked (9.7 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 2: today walked (9.5 s, 0 hits); slip 3 walked; grip root walked (11.1 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 3: today walked (6.7 s, 0 hits); slip 3 walked; grip root walked (7.1 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 4: today walked (6.3 s, 0 hits); slip 3 walked; grip root walked (5.9 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 5: today walked (5.8 s, 0 hits); slip 3 walked; grip root walked (6.0 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 6: today walked (5.6 s, 0 hits); slip 3 walked; grip root walked (6.3 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 7: today walked (10.8 s, 6 hits); slip 3 walked; grip root walked (10.8 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 8: today walked (6.6 s, 0 hits); slip 3 STOPPED; grip root walked (6.5 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 9: today walked (8.5 s, 0 hits); slip 3 walked; grip root walked (8.7 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    walked to the end: today 10, grip root 10 of 10; slip 3 stopped on 1, of which the grip root walked 1; root ticks 19445
+ok    m1_the_grip_root_walks_every_corner_route_the_chase_walks_today_including_where_slip_stalled
+    today    : 77.11 s over the routes; head-on ticks (contacts) at bends <=22: 6 (1), 22-67: 0 (0), >=67: 0 (0)
+    way (b)  : 81.02 s over the routes; head-on ticks (contacts) at bends <=22: 0 (0), 22-67: 0 (0), >=67: 0 (0)
+    way (a)  : 77.74 s over the routes; head-on ticks (contacts) at bends <=22: 0 (0), 22-67: 0 (0), >=67: 0 (0)
+ok    m1_w1_wall_contacts_on_the_corner_routes_are_reported_by_bend_no_longer_a_bar
+      point 0 (-64.50, -67.50): 28.37 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 1 (-64.43, -67.28): 28.26 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 2 (-64.35, -67.06): 28.15 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 3 (-64.27, -66.84): 28.04 m from the contact, room 5.62 m, grip speed 8.00 m/s
+      point 4 (-64.19, -66.62): 27.93 m from the contact, room 4.93 m, grip speed 8.00 m/s
+      point 5 (-64.10, -66.41): 27.82 m from the contact, room 4.34 m, grip speed 8.00 m/s
+      point 6 (-64.00, -66.20): 27.69 m from the contact, room 3.84 m, grip speed 8.00 m/s
+      point 7 (-63.88, -66.01): 27.55 m from the contact, room 3.41 m, grip speed 8.00 m/s
+      point 8 (-63.74, -65.82): 27.40 m from the contact, room 3.23 m, grip speed 7.79 m/s
+      point 9 (-63.57, -65.62): 27.21 m from the contact, room 3.48 m, grip speed 7.93 m/s
+      point 10 (-63.42, -65.50): 27.04 m from the contact, room 3.97 m, grip speed 8.00 m/s
+      point 11 (-63.22, -65.42): 26.84 m from the contact, room 4.59 m, grip speed 8.00 m/s
+      point 12 (-62.95, -65.36): 26.57 m from the contact, room 5.56 m, grip speed 8.00 m/s
+      point 13 (-62.71, -65.31): 26.32 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 14 (-62.46, -65.28): 26.07 m from the contact, room 2.12 m, grip speed 7.15 m/s
+      point 15 (-62.21, -65.26): 25.82 m from the contact, room 1.97 m, grip speed 7.41 m/s
+      point 16 (-61.96, -65.25): 25.57 m from the contact, room 1.93 m, grip speed 7.98 m/s
+      point 17 (-61.71, -65.25): 25.32 m from the contact, room 1.90 m, grip speed 8.00 m/s
+      point 18 (-61.46, -65.25): 25.07 m from the contact, room 1.99 m, grip speed 8.00 m/s
+      point 19 (-61.21, -65.25): 24.82 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 20 (-60.96, -65.25): 24.57 m from the contact, room 2.09 m, grip speed 8.00 m/s
+      point 21 (-60.71, -65.25): 24.32 m from the contact, room 1.86 m, grip speed 8.00 m/s
+      point 22 (-60.46, -65.25): 24.07 m from the contact, room 1.85 m, grip speed 8.00 m/s
+      point 23 (-60.21, -65.25): 23.82 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 24 (-59.96, -65.25): 23.57 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 25 (-59.71, -65.24): 23.33 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 26 (-59.46, -65.23): 23.08 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 27 (-59.21, -65.21): 22.83 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 28 (-58.96, -65.19): 22.58 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 29 (-58.71, -65.18): 22.33 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 30 (-58.47, -65.16): 22.08 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 31 (-58.22, -65.13): 21.83 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 32 (-57.97, -65.11): 21.58 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 33 (-57.72, -65.09): 21.33 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 34 (-57.47, -65.07): 21.08 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 35 (-57.22, -65.04): 20.83 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 36 (-56.98, -65.02): 20.58 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 37 (-56.73, -65.00): 20.33 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 38 (-56.48, -64.98): 20.08 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 39 (-56.23, -64.95): 19.83 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 40 (-55.98, -64.93): 19.59 m from the contact, room 1.53 m, grip speed 8.00 m/s
+      point 41 (-55.73, -64.91): 19.34 m from the contact, room 1.51 m, grip speed 8.00 m/s
+      point 42 (-55.48, -64.89): 19.09 m from the contact, room 1.49 m, grip speed 8.00 m/s
+      point 43 (-55.24, -64.87): 18.84 m from the contact, room 1.47 m, grip speed 8.00 m/s
+      point 44 (-54.99, -64.85): 18.59 m from the contact, room 1.44 m, grip speed 8.00 m/s
+      point 45 (-54.74, -64.83): 18.34 m from the contact, room 1.42 m, grip speed 8.00 m/s
+      point 46 (-54.49, -64.81): 18.09 m from the contact, room 1.40 m, grip speed 8.00 m/s
+      point 47 (-54.24, -64.78): 17.84 m from the contact, room 1.38 m, grip speed 8.00 m/s
+      point 48 (-53.99, -64.76): 17.59 m from the contact, room 1.36 m, grip speed 8.00 m/s
+      point 49 (-53.75, -64.74): 17.34 m from the contact, room 1.34 m, grip speed 8.00 m/s
+      point 50 (-53.50, -64.72): 17.09 m from the contact, room 1.32 m, grip speed 8.00 m/s
+      point 51 (-53.25, -64.70): 16.84 m from the contact, room 1.30 m, grip speed 8.00 m/s
+      point 52 (-53.00, -64.68): 16.59 m from the contact, room 1.28 m, grip speed 8.00 m/s
+      point 53 (-52.75, -64.66): 16.34 m from the contact, room 1.26 m, grip speed 8.00 m/s
+      point 54 (-52.50, -64.64): 16.09 m from the contact, room 1.23 m, grip speed 8.00 m/s
+      point 55 (-52.25, -64.62): 15.85 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 56 (-52.01, -64.60): 15.60 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 57 (-51.76, -64.58): 15.35 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 58 (-51.51, -64.55): 15.10 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 59 (-51.26, -64.53): 14.85 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 60 (-51.01, -64.51): 14.60 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 61 (-50.76, -64.49): 14.35 m from the contact, room 1.09 m, grip speed 8.00 m/s
+      point 62 (-50.52, -64.47): 14.10 m from the contact, room 1.25 m, grip speed 8.00 m/s
+      point 63 (-50.27, -64.45): 13.85 m from the contact, room 3.50 m, grip speed 8.00 m/s
+      point 64 (-50.02, -64.43): 13.60 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 65 (-49.77, -64.41): 13.35 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 66 (-49.52, -64.39): 13.10 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 67 (-49.27, -64.37): 12.85 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 68 (-49.02, -64.35): 12.60 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 69 (-48.78, -64.32): 12.36 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 70 (-48.53, -64.30): 12.11 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 71 (-48.28, -64.28): 11.86 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 72 (-48.03, -64.26): 11.61 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 73 (-47.78, -64.24): 11.36 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 74 (-47.53, -64.22): 11.11 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 75 (-47.29, -64.20): 10.86 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 76 (-47.04, -64.18): 10.61 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 77 (-46.79, -64.16): 10.36 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 78 (-46.54, -64.14): 10.11 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 79 (-46.29, -64.12): 9.86 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 80 (-46.04, -64.10): 9.61 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 81 (-45.79, -64.08): 9.36 m from the contact, room 3.66 m, grip speed 8.00 m/s
+      point 82 (-45.55, -64.06): 9.11 m from the contact, room 1.74 m, grip speed 8.00 m/s
+      point 83 (-45.30, -64.04): 8.87 m from the contact, room 1.59 m, grip speed 8.00 m/s
+      point 84 (-45.05, -64.01): 8.62 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 85 (-44.80, -63.99): 8.37 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 86 (-44.55, -63.97): 8.12 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 87 (-44.30, -63.94): 7.87 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 88 (-44.06, -63.92): 7.62 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 89 (-43.81, -63.90): 7.37 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 90 (-43.56, -63.87): 7.12 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 91 (-43.31, -63.85): 6.87 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 92 (-43.06, -63.83): 6.62 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 93 (-42.81, -63.81): 6.37 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 94 (-42.57, -63.79): 6.12 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 95 (-42.32, -63.77): 5.88 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 96 (-42.07, -63.76): 5.63 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 97 (-41.82, -63.75): 5.38 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 98 (-41.57, -63.75): 5.13 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 99 (-41.32, -63.75): 4.88 m from the contact, room 1.88 m, grip speed 8.00 m/s
+      point 100 (-41.07, -63.75): 4.64 m from the contact, room 1.88 m, grip speed 8.00 m/s
+      point 101 (-40.82, -63.75): 4.39 m from the contact, room 1.88 m, grip speed 8.00 m/s
+      point 102 (-40.57, -63.75): 4.14 m from the contact, room 1.88 m, grip speed 8.00 m/s
+      point 103 (-40.32, -63.75): 3.90 m from the contact, room 1.89 m, grip speed 8.00 m/s
+      point 104 (-40.07, -63.75): 3.65 m from the contact, room 1.89 m, grip speed 8.00 m/s
+      point 105 (-39.82, -63.74): 3.40 m from the contact, room 1.91 m, grip speed 8.00 m/s
+      point 106 (-39.57, -63.72): 3.16 m from the contact, room 1.93 m, grip speed 8.00 m/s
+      point 107 (-39.32, -63.70): 2.91 m from the contact, room 1.96 m, grip speed 8.00 m/s
+      point 108 (-39.07, -63.66): 2.66 m from the contact, room 2.01 m, grip speed 8.00 m/s
+      point 109 (-38.81, -63.60): 2.39 m from the contact, room 2.07 m, grip speed 8.00 m/s
+      point 110 (-38.56, -63.53): 2.13 m from the contact, room 2.14 m, grip speed 8.00 m/s
+      point 111 (-38.33, -63.45): 1.89 m from the contact, room 2.22 m, grip speed 8.00 m/s
+      point 112 (-38.10, -63.36): 1.65 m from the contact, room 2.32 m, grip speed 8.00 m/s
+      point 113 (-37.88, -63.25): 1.41 m from the contact, room 2.43 m, grip speed 8.00 m/s
+      point 114 (-37.66, -63.14): 1.17 m from the contact, room 2.54 m, grip speed 8.00 m/s
+      point 115 (-37.44, -63.03): 0.95 m from the contact, room 4.79 m, grip speed 8.00 m/s
+      point 116 (-37.22, -62.91): 0.73 m from the contact, room 5.76 m, grip speed 8.00 m/s
+      point 117 (-37.00, -62.79): 0.56 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 118 (-36.78, -62.68): 0.44 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 119 (-36.55, -62.57): 0.45 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 120 (-36.32, -62.47): 0.57 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 121 (-36.16, -62.41): 0.69 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 122 (-36.00, -62.38): 0.81 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 123 (-35.74, -62.35): 1.00 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 124 (-35.49, -62.34): 1.20 m from the contact, room 5.20 m, grip speed 8.00 m/s
+      point 125 (-35.25, -62.34): 1.42 m from the contact, room 5.00 m, grip speed 8.00 m/s
+      point 126 (-35.00, -62.34): 1.64 m from the contact, room 4.98 m, grip speed 8.00 m/s
+      point 127 (-34.75, -62.34): 1.86 m from the contact, room 4.97 m, grip speed 8.00 m/s
+      point 128 (-34.51, -62.35): 2.09 m from the contact, room 4.97 m, grip speed 8.00 m/s
+      point 129 (-34.26, -62.36): 2.33 m from the contact, room 4.97 m, grip speed 8.00 m/s
+      point 130 (-34.01, -62.37): 2.56 m from the contact, room 4.97 m, grip speed 8.00 m/s
+      point 131 (-33.77, -62.38): 2.80 m from the contact, room 4.98 m, grip speed 8.00 m/s
+      point 132 (-33.52, -62.39): 3.04 m from the contact, room 4.98 m, grip speed 8.00 m/s
+      point 133 (-33.27, -62.39): 3.28 m from the contact, room 4.99 m, grip speed 8.00 m/s
+      point 134 (-33.03, -62.40): 3.52 m from the contact, room 4.99 m, grip speed 8.00 m/s
+      point 135 (-32.78, -62.40): 3.76 m from the contact, room 4.99 m, grip speed 8.00 m/s
+      point 136 (-32.53, -62.40): 4.00 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 137 (-32.29, -62.40): 4.25 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 138 (-32.04, -62.40): 4.49 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 139 (-31.79, -62.40): 4.74 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 140 (-31.55, -62.40): 4.98 m from the contact, room 5.00 m, grip speed 8.00 m/s
+      point 141 (-31.30, -62.40): 5.23 m from the contact, room 5.00 m, grip speed 8.00 m/s
+      point 142 (-31.05, -62.40): 5.47 m from the contact, room 5.00 m, grip speed 8.00 m/s
+      point 143 (-30.81, -62.41): 5.72 m from the contact, room 5.00 m, grip speed 8.00 m/s
+      point 144 (-30.56, -62.41): 5.96 m from the contact, room 5.00 m, grip speed 8.00 m/s
+      point 145 (-30.31, -62.41): 6.21 m from the contact, room 5.00 m, grip speed 8.00 m/s
+      point 146 (-30.07, -62.42): 6.45 m from the contact, room 5.01 m, grip speed 8.00 m/s
+      point 147 (-29.82, -62.42): 6.70 m from the contact, room 5.06 m, grip speed 8.00 m/s
+      point 148 (-29.57, -62.43): 6.94 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 149 (-29.33, -62.44): 7.19 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 150 (-29.08, -62.45): 7.43 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 151 (-28.83, -62.46): 7.68 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 152 (-28.58, -62.46): 7.92 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 153 (-28.34, -62.47): 8.17 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 154 (-28.09, -62.47): 8.42 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 155 (-27.84, -62.47): 8.66 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 156 (-27.60, -62.47): 8.91 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 157 (-27.35, -62.47): 9.16 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 158 (-27.10, -62.46): 9.40 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 159 (-26.86, -62.46): 9.65 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 160 (-26.61, -62.46): 9.90 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 161 (-26.36, -62.45): 10.14 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 162 (-26.12, -62.45): 10.39 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 163 (-25.87, -62.44): 10.64 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 164 (-25.62, -62.44): 10.88 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 165 (-25.38, -62.43): 11.13 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 166 (-25.13, -62.43): 11.38 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 167 (-24.88, -62.43): 11.62 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 168 (-24.64, -62.42): 11.87 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 169 (-24.39, -62.42): 12.11 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 170 (-24.14, -62.42): 12.36 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 171 (-23.90, -62.42): 12.61 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 172 (-23.65, -62.42): 12.85 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 173 (-23.40, -62.42): 13.10 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 174 (-23.16, -62.42): 13.35 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 175 (-22.91, -62.42): 13.59 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 176 (-22.66, -62.42): 13.84 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 177 (-22.42, -62.42): 14.09 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 178 (-22.17, -62.42): 14.33 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 179 (-21.92, -62.42): 14.58 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 180 (-21.68, -62.42): 14.83 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 181 (-21.43, -62.42): 15.07 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 182 (-21.18, -62.42): 15.32 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 183 (-20.94, -62.41): 15.57 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 184 (-20.69, -62.40): 15.81 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 185 (-20.44, -62.39): 16.06 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 186 (-20.20, -62.37): 16.31 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 187 (-19.95, -62.35): 16.56 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 188 (-19.70, -62.32): 16.80 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 189 (-19.46, -62.29): 17.05 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 190 (-19.21, -62.26): 17.30 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 191 (-18.96, -62.23): 17.55 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 192 (-18.71, -62.20): 17.79 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 193 (-18.47, -62.17): 18.04 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 194 (-18.22, -62.16): 18.29 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 195 (-17.97, -62.16): 18.54 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 196 (-17.73, -62.19): 18.78 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 197 (-17.48, -62.23): 19.03 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 198 (-17.23, -62.31): 19.27 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 199 (-16.95, -62.43): 19.55 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 200 (-16.73, -62.58): 19.76 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 201 (-16.58, -62.79): 19.92 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 202 (-16.46, -63.08): 20.03 m from the contact, room 0.90 m, grip speed 3.38 m/s
+      point 203 (-16.39, -63.32): 20.10 m from the contact, room 0.90 m, grip speed 3.54 m/s
+      point 204 (-16.35, -63.57): 20.15 m from the contact, room 0.90 m, grip speed 3.75 m/s
+      point 205 (-16.33, -63.82): 20.17 m from the contact, room 0.90 m, grip speed 4.03 m/s
+      point 206 (-16.34, -64.07): 20.18 m from the contact, room 0.98 m, grip speed 4.58 m/s
+      point 207 (-16.35, -64.31): 20.18 m from the contact, room 0.98 m, grip speed 5.06 m/s
+      point 208 (-16.38, -64.56): 20.17 m from the contact, room 1.00 m, grip speed 5.73 m/s
+      point 209 (-16.42, -64.81): 20.15 m from the contact, room 1.02 m, grip speed 6.67 m/s
+      point 210 (-16.45, -65.06): 20.14 m from the contact, room 1.05 m, grip speed 8.00 m/s
+      point 211 (-16.48, -65.31): 20.14 m from the contact, room 1.08 m, grip speed 8.00 m/s
+      point 212 (-16.52, -65.55): 20.13 m from the contact, room 1.11 m, grip speed 8.00 m/s
+      point 213 (-16.54, -65.80): 20.14 m from the contact, room 1.14 m, grip speed 8.00 m/s
+      point 214 (-16.56, -66.05): 20.15 m from the contact, room 1.05 m, grip speed 8.00 m/s
+      point 215 (-16.58, -66.30): 20.18 m from the contact, room 1.04 m, grip speed 8.00 m/s
+      point 216 (-16.59, -66.55): 20.21 m from the contact, room 1.02 m, grip speed 8.00 m/s
+      point 217 (-16.60, -66.79): 20.25 m from the contact, room 1.02 m, grip speed 8.00 m/s
+      point 218 (-16.60, -67.04): 20.29 m from the contact, room 1.02 m, grip speed 8.00 m/s
+      point 219 (-16.60, -67.29): 20.34 m from the contact, room 1.02 m, grip speed 8.00 m/s
+      point 220 (-16.59, -67.53): 20.40 m from the contact, room 1.02 m, grip speed 8.00 m/s
+      point 221 (-16.59, -67.78): 20.46 m from the contact, room 1.03 m, grip speed 8.00 m/s
+      point 222 (-16.58, -68.03): 20.53 m from the contact, room 1.04 m, grip speed 8.00 m/s
+      point 223 (-16.57, -68.28): 20.60 m from the contact, room 1.05 m, grip speed 8.00 m/s
+      point 224 (-16.56, -68.52): 20.67 m from the contact, room 1.06 m, grip speed 8.00 m/s
+      point 225 (-16.55, -68.77): 20.75 m from the contact, room 1.06 m, grip speed 8.00 m/s
+      point 226 (-16.54, -69.02): 20.83 m from the contact, room 1.07 m, grip speed 8.00 m/s
+      point 227 (-16.54, -69.26): 20.91 m from the contact, room 1.08 m, grip speed 8.00 m/s
+      point 228 (-16.53, -69.51): 20.99 m from the contact, room 1.09 m, grip speed 8.00 m/s
+      point 229 (-16.52, -69.76): 21.08 m from the contact, room 1.10 m, grip speed 8.00 m/s
+      point 230 (-16.51, -70.01): 21.16 m from the contact, room 1.10 m, grip speed 8.00 m/s
+      point 231 (-16.51, -70.25): 21.25 m from the contact, room 1.28 m, grip speed 8.00 m/s
+      point 232 (-16.50, -70.50): 21.34 m from the contact, room 0.90 m, grip speed 8.00 m/s
+    route 0's corner: slowest grip speed inside 3 m 8.00 m/s; entered at 8.82 m/s (its plan asked 8.82); head-on ticks within 3 m 0; walked to the end in 8.97 s
+    as it arrives (its top with its run-up), grip allows 8.82 m/s there
+ok    m2_w2_the_grip_root_brakes_in_time_for_route_0s_corner_and_does_not_meet_its_wall
+    today     route 0: 1 corners, lowest at them and after walls 2.16 m/s
+    today     route 1: 1 corners, lowest at them and after walls 1.19 m/s  UNDER 1.2
+    today     route 2: 2 corners, lowest at them and after walls 1.19 m/s  UNDER 1.2
+    today     route 3: 1 corners, lowest at them and after walls 5.57 m/s
+    today     route 4: 1 corners, lowest at them and after walls 1.44 m/s
+    today     route 5: 1 corners, lowest at them and after walls 3.39 m/s
+    today     route 6: 1 corners, lowest at them and after walls 4.36 m/s
+    today     route 7: 2 corners, lowest at them and after walls 0.73 m/s  UNDER 1.2
+    today     route 8: 1 corners, lowest at them and after walls 1.33 m/s
+    today     route 9: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    today    : 12 corners on 10 routes; routes under 1.2 m/s 4; lowest 0.00 m/s; largest re-point 0.000000 rad
+    way (b)   route 0: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (b)   route 1: 2 corners, lowest at them and after walls 1.49 m/s
+    way (b)   route 2: 2 corners, lowest at them and after walls 1.36 m/s
+    way (b)   route 3: 1 corners, lowest at them and after walls 4.19 m/s
+    way (b)   route 4: 1 corners, lowest at them and after walls 1.43 m/s
+    way (b)   route 5: 1 corners, lowest at them and after walls 3.75 m/s
+    way (b)   route 6: 1 corners, lowest at them and after walls 1.51 m/s
+    way (b)   route 7: 2 corners, lowest at them and after walls 1.56 m/s
+    way (b)   route 8: 1 corners, lowest at them and after walls 2.09 m/s
+    way (b)   route 9: 2 corners, lowest at them and after walls 1.64 m/s
+    way (b)  : 14 corners on 10 routes; routes under 1.2 m/s 1; lowest 0.00 m/s; largest re-point 0.000000 rad
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(868): CHECK failed: under == 0
+    way (a)   route 0: 1 corners, lowest at them and after walls 2.56 m/s
+    way (a)   route 1: 2 corners, lowest at them and after walls 2.37 m/s
+    way (a)   route 2: 2 corners, lowest at them and after walls 2.60 m/s
+    way (a)   route 3: 1 corners, lowest at them and after walls 3.89 m/s
+    way (a)   route 4: 1 corners, lowest at them and after walls 2.41 m/s
+    way (a)   route 5: 1 corners, lowest at them and after walls 3.76 m/s
+    way (a)   route 6: 1 corners, lowest at them and after walls 2.61 m/s
+    way (a)   route 7: 2 corners, lowest at them and after walls 2.29 m/s
+    way (a)   route 8: 1 corners, lowest at them and after walls 2.71 m/s
+    way (a)   route 9: 2 corners, lowest at them and after walls 2.80 m/s
+    way (a)  : 14 corners on 10 routes; routes under 1.2 m/s 0; lowest 2.29 m/s; largest re-point 0.000000 rad
+FAIL  m2_h1_at_a_hard_corner_and_after_a_wall_the_grip_root_never_loses_all_its_speed_nor_turns_on_the_spot
+    today     route 0 point 3, 14 degrees: entry 8.64, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+    today     route 0 point 5, 18 degrees: entry 8.86, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+    today     route 1 point 7, 11 degrees: entry 9.23, grip 8.00, lowest 1.19 m/s, 0 head-on ticks
+    today     route 7 point 6, 6 degrees: entry 8.33, grip 8.00, lowest 0.73 m/s, 6 head-on ticks
+    today    : 6 bends of 5 to 22 degrees; with a head-on tick 1; under 0.8 of what they could keep 4
+    way (b)   route 0 point 108, 21 degrees: entry 8.56, grip 8.00, lowest 5.32 m/s, 0 head-on ticks
+    way (b)  : 4 bends of 5 to 22 degrees; with a head-on tick 0; under 0.8 of what they could keep 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(906): CHECK failed: bends >= 5
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(908): CHECK failed: slow == 0
+    way (a)   route 0 point 108, 21 degrees: entry 8.56, grip 8.00, lowest 5.28 m/s, 0 head-on ticks
+    way (a)  : 4 bends of 5 to 22 degrees; with a head-on tick 0; under 0.8 of what they could keep 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(906): CHECK failed: bends >= 5
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(908): CHECK failed: slow == 0
+FAIL  m2_g1_on_the_routes_a_bend_of_22_degrees_or_less_is_taken_without_a_wall_and_keeps_its_speed
+    stub (stands 2 s): 0 contacts, 0 over the bar, worst 0.00 of it
+    today    : 1 contacts, 1 over the bar, worst 41.02 of it
+    way (b)  : 0 contacts, 0 over the bar, worst 0.00 of it
+    way (a)  : 0 contacts, 0 over the bar, worst 0.00 of it
+ok    m2_h2_after_a_wall_the_grip_root_is_running_again_as_soon_as_its_own_gain_allows
+    the ten routes' total time: today 77.11 s, way (b) 81.02 s (1.051 times; bar 1.25)
+    the ten routes' total time: today 77.11 s, way (a) 77.74 s (1.008 times; bar 1.25)
+ok    m2_the_grip_root_does_not_crawl_the_corner_routes
+    scripted (w 3, legs 30)  15.0 deg: width limit    350.7 m, leg limit   227.9 m (leg 30.00), plan's formula    22.8 m; grip on the lesser 9.20 m/s (top 9.2)
+    scripted (w 3, legs 30)  22.0 deg: width limit    163.3 m, leg limit   154.3 m (leg 30.00), plan's formula    15.4 m; grip on the lesser 9.20 m/s (top 9.2)
+    scripted (w 3, legs 30)  45.0 deg: width limit     39.4 m, leg limit    72.4 m (leg 30.00), plan's formula     7.2 m; grip on the lesser 9.20 m/s (top 9.2)
+    scripted (w 3, legs 30)  90.0 deg: width limit     10.2 m, leg limit    30.0 m (leg 30.00), plan's formula     3.0 m; grip on the lesser 9.20 m/s (top 9.2)
+    route 0 point 3         13.6 deg: width limit    307.9 m, leg limit    22.6 m (leg 2.70), plan's formula    18.2 m; grip on the lesser 9.20 m/s (top 9.2)
+    route 0 point 4          6.1 deg: width limit   4221.9 m, leg limit     5.7 m (leg 0.30), plan's formula   112.4 m; grip on the lesser 7.48 m/s (top 9.2)
+    route 0 point 5         18.4 deg: width limit    464.7 m, leg limit     1.9 m (leg 0.30), plan's formula    37.0 m; grip on the lesser 4.29 m/s (top 9.2)
+ok    m2c_the_two_limits_of_a_corners_radius_are_printed_beside_the_plans_formula
+    today    : 5 ticks at 0 m/s; 5 falls to 0 from above 0.3 m/s: a refused step 5, a head-on wall 0, off the mesh 0, none of these 0
+    way (b)  : 1 ticks at 0 m/s; 0 falls to 0 from above 0.3 m/s: a refused step 0, a head-on wall 0, off the mesh 0, none of these 0
+    way (a)  : 0 ticks at 0 m/s; 0 falls to 0 from above 0.3 m/s: a refused step 0, a head-on wall 0, off the mesh 0, none of these 0
+ok    m3_read_where_the_speed_falls_to_zero_on_the_corner_routes
+    way (b)  : the ten routes' fingerprint d4d5c9c523bfce72 (at 3c57cf7: f99a18a99e8e6cfb); the ten routes' time 81.02 s
+    way (a)  : the ten routes' fingerprint ebd86997907edecc (at 3c57cf7: 14b68c2e037b78ec); the ten routes' time 77.74 s
+ok    m2b_the_hunter_on_the_root_walks_the_ten_routes_to_the_same_fingerprint_as_before_every_kind_could_take_it
+    sprinter off the root: 10 of 10 routes walked, 75.59 s in all, 0 head-on wall ticks, peak sideways 0.00 m/s^2
+    sprinter on the root : 10 of 10 routes walked, 78.76 s in all, 0 head-on wall ticks, peak sideways 9.81 m/s^2
+ok    m2b_the_sprinter_on_the_root_walks_the_ten_routes_reported
+    a kind of its own row (grip 0.8): off the root 10 of 10 routes, on it 10; peak sideways 7.85 m/s^2 against its grip 7.85; root ticks 20555
+ok    m2b_a_new_kind_is_a_row_and_takes_the_root_by_its_numbers_alone
+    seed  1: 66 drop links, 66 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  2: 29 drop links, 29 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  3: 76 drop links, 76 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  4: 89 drop links, 89 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  5: 56 drop links, 56 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  6: 68 drop links, 68 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  7: 45 drop links, 45 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  8: 62 drop links, 62 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  9: 47 drop links, 47 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed 10: 85 drop links, 85 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed 11: 60 drop links, 60 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed 12: 52 drop links, 52 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    12 worlds: 735 drop links, 735 whose straight line meets a solid (100 %)
+ok    m3b_read_how_many_drop_links_have_a_straight_line_through_solid
+    way (b)  : 31 contacts above 0.3 m/s; stopped dead without a contact 0; at a slant 31, of which kept 0.8 of the speed along the edge 31 (worst 0.996); within 30 degrees of square 0
+    way (a)  : 6 contacts above 0.3 m/s; stopped dead without a contact 0; at a slant 6, of which kept 0.8 of the speed along the edge 6 (worst 0.996); within 30 degrees of square 0
+ok    m3a_a_refused_step_is_a_contact_that_keeps_the_speed_along_the_edge
+    today    : 5 falls to 0 m/s from above 0.3: at a square contact 0, otherwise 5
+    way (b)  : 0 falls to 0 m/s from above 0.3: at a square contact 0, otherwise 0
+    way (a)  : 0 falls to 0 m/s from above 0.3: at a square contact 0, otherwise 0
+ok    m3a_the_root_falls_to_zero_only_at_a_square_contact
+    route 0 point 3: chord turn 13.6 degrees; total turn within 3.3 m 14.6 degrees: gentle
+    route 0 point 5: chord turn 18.4 degrees; total turn within 3.3 m 19.4 degrees: gentle
+    route 1 point 6: chord turn 5.4 degrees; total turn within 3.3 m 5.4 degrees: gentle
+    route 1 point 7: chord turn 10.7 degrees; total turn within 3.3 m 10.7 degrees: gentle
+    route 4 point 1: chord turn 8.1 degrees; total turn within 3.3 m 6.5 degrees: gentle
+    route 6 point 6: chord turn 15.1 degrees; total turn within 3.3 m 15.1 degrees: gentle
+    route 7 point 6: chord turn 5.6 degrees; total turn within 3.3 m 1.9 degrees: gentle
+ok    m3a_g1s_gentle_bend_rule_read_at_each_route_bend
+    the 22 degree bend: its point is on this arena's mesh
+      today    : walked to the end; entry 8.59 m/s, lowest 3.94, 0.642 s between the gates; head-on ticks 0, refused steps 0 (passed 0.01 m from the point)
+      way (b)  : walked to the end; entry 6.10 m/s, lowest 6.10, 0.321 s between the gates; head-on ticks 0, refused steps 0 (passed 1.68 m from the point)
+      way (b)  : the sliding velocity turned at most 0.000 of its grip in a tick with no new contact
+      way (a)  : walked to the end; entry 6.10 m/s, lowest 6.10, 0.321 s between the gates; head-on ticks 0, refused steps 0 (passed 1.68 m from the point)
+      way (a)  : the sliding velocity turned at most 0.000 of its grip in a tick with no new contact
+    the 45 degree bend: its point is on this arena's mesh
+      today    : walked to the end; entry 8.75 m/s, lowest 0.71, 1.292 s between the gates; head-on ticks 5, refused steps 0 (passed 0.01 m from the point)
+      way (b)  : walked to the end; entry 8.74 m/s, lowest 6.32, 0.492 s between the gates; head-on ticks 0, refused steps 0 (passed 0.17 m from the point)
+      way (b)  : the sliding velocity turned at most 0.296 of its grip in a tick with no new contact
+      way (a)  : walked to the end; entry 8.74 m/s, lowest 5.93, 0.500 s between the gates; head-on ticks 0, refused steps 0 (passed 0.17 m from the point)
+      way (a)  : the sliding velocity turned at most 0.296 of its grip in a tick with no new contact
+    the 90 degree bend: its point is on this arena's mesh
+      today    : walked to the end; entry 7.45 m/s, lowest 3.55, 0.837 s between the gates; head-on ticks 0, refused steps 0 (passed 0.14 m from the point)
+      way (b)  : walked to the end; entry 7.68 m/s, lowest 1.46, 1.200 s between the gates; head-on ticks 0, refused steps 0 (passed 0.30 m from the point)
+      way (b)  : the sliding velocity turned at most 0.000 of its grip in a tick with no new contact
+      way (a)  : walked to the end; entry 7.26 m/s, lowest 2.37, 0.971 s between the gates; head-on ticks 0, refused steps 0 (passed 0.17 m from the point)
+      way (a)  : the sliding velocity turned at most 0.000 of its grip in a tick with no new contact
+ok    m3_the_three_filmed_bends_are_taken_without_a_stop
+    way (b)  : no contact on the ten routes
+    way (a)  : no contact on the ten routes
+ok    m3c_read_what_holds_the_body_after_a_wall
+    way (b)  : 30 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 30, of which kept 0.8 along the wall 30 (worst 0.996); square 0
+    way (b)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+    way (a)  : 5 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 5, of which kept 0.8 along the wall 5 (worst 0.996); square 0
+    way (a)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+ok    m3c_a_step_the_mesh_snaps_short_is_a_contact_that_keeps_the_speed_along_the_wall
+    way (b)  : 63 sliding ticks over 20 degrees off the aim; under 0.9 of the allowed rate 0 (least 1.000 of it, 0.725 of pure grip); the body's own turn cap binding on 17 of them
+    way (a)  : 15 sliding ticks over 20 degrees off the aim; under 0.9 of the allowed rate 0 (least 1.000 of it, 1.000 of pure grip); the body's own turn cap binding on 0 of them
+ok    m3c_far_off_the_aim_a_sliding_velocity_turns_toward_it_at_its_grip
+    way (b)  : 53 sliding ticks with the aim behind along the wall and the turn into it; not braking 0; turned about by hand 0
+    way (a)  : 0 sliding ticks with the aim behind along the wall and the turn into it; not braking 0; turned about by hand 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1419): CHECK failed: behind > 0
+FAIL  m3c_along_a_wall_with_the_aim_behind_the_body_brakes_at_its_grip_and_leaves_the_other_way
+    today    : wall contacts above 0.3 m/s 0, head-on ticks 6
+    way (b)  : wall contacts above 0.3 m/s 31, head-on ticks 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1439): CHECK failed: contacts <= 10
+    way (a)  : wall contacts above 0.3 m/s 6, head-on ticks 0
+FAIL  mline_on_the_ten_routes_the_root_touches_a_wall_at_most_ten_times_an_arm
+    the hunter on the root: 735 drop links, 735 taken; swept fall meeting a solid 0; landed at the link's landing 565, elsewhere on the mesh 166, put back 4; descended while held 0; off free fall by more than 2 cm 0; down quicker than free fall 166; speed 0 without a wall 0, a wall took the flat speed 166; landing speed off the take-off by more than 10 % 0; landed off the mesh 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\fall_tests.cpp(147): CHECK failed: n.held_descent == 0 && n.shape_off == 0 && n.too_quick == 0
+FAIL  m3b_every_drop_of_twelve_worlds_is_a_fall_that_meets_no_solid
+    the sprinter on the root: 735 drop links, 735 taken; swept fall meeting a solid 0; landed at the link's landing 565, elsewhere on the mesh 166, put back 4; descended while held 0; off free fall by more than 2 cm 0; down quicker than free fall 166; speed 0 without a wall 0, a wall took the flat speed 166; landing speed off the take-off by more than 10 % 0; landed off the mesh 0
+ok    m3b_the_sprinter_on_the_root_falls_the_same_way
+    the line: 127 samples every 0.25 m; R1 4.6 m, LB 0.8 m, R2 8.0 m; samples off the mesh 0
+    way (b) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+    way (a) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+ok    mline_a_fixed_line_north_of_the_post_takes_e_22_degree_bend_within_the_plans_bar
+    22 degrees, today   : to the end; entry 8.60, lowest 3.94 m/s, 0.637 s between the gates; contacts 0, head-on 0 (the control)
+    22 degrees, way (b) : to the end; entry 6.12, lowest 6.12 m/s, 0.321 s between the gates (passed 1.67 m from the point); contacts 0, head-on 0; prediction (0.60 s, 6.0 m/s) met; today's law here 0.637 s; the hand line (22 degrees) 0.321 s
+    22 degrees, way (a) : to the end; entry 6.12, lowest 6.12 m/s, 0.321 s between the gates (passed 1.67 m from the point); contacts 0, head-on 0; prediction (0.60 s, 6.0 m/s) met; today's law here 0.637 s; the hand line (22 degrees) 0.321 s
+    45 degrees, today   : to the end; entry 8.40, lowest 0.71 m/s, 1.296 s between the gates; contacts 0, head-on 4 (the control)
+    45 degrees, way (b) : to the end; entry 8.74, lowest 6.33 m/s, 0.492 s between the gates (passed 0.17 m from the point); contacts 0, head-on 0; prediction (0.60 s, 8.0 m/s) NOT met; today's law here 1.296 s; the hand line (22 degrees) 0.321 s
+    45 degrees, way (a) : to the end; entry 8.74, lowest 5.94 m/s, 0.500 s between the gates (passed 0.17 m from the point); contacts 0, head-on 0; prediction (0.60 s, 8.0 m/s) NOT met; today's law here 1.296 s; the hand line (22 degrees) 0.321 s
+    90 degrees, today   : to the end; entry 7.48, lowest 3.46 m/s, 0.846 s between the gates; contacts 0, head-on 0 (the control)
+    90 degrees, way (b) : to the end; entry 7.68, lowest 1.48 m/s, 1.183 s between the gates (passed 0.30 m from the point); contacts 0, head-on 0; prediction (0.70 s, 7.5 m/s) NOT met; today's law here 0.846 s; the hand line (22 degrees) 0.321 s
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(226): CHECK failed: r.secs <= today.secs
+    90 degrees, way (a) : to the end; entry 7.27, lowest 2.40 m/s, 0.967 s between the gates (passed 0.16 m from the point); contacts 0, head-on 0; prediction (0.70 s, 7.5 m/s) NOT met; today's law here 0.846 s; the hand line (22 degrees) 0.321 s
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(226): CHECK failed: r.secs <= today.secs
+FAIL  mline_the_line_from_the_corridor_takes_e_three_bends_within_the_plans_bar
+    22 degrees: 125 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(262): CHECK failed: tight == 0
+    45 degrees: 133 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(262): CHECK failed: tight == 0
+    90 degrees: 121 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 0
+FAIL  mline_the_line_is_dense_and_keeps_its_room_from_the_mesh_edge
+    replans 8; crossings of z 42 within the open gap 1; ticks within 0.3 m of the doorway at x -75 0; arrived yes
+ok    mline_at_e_22_degree_bend_the_open_side_is_taken_and_not_left_at_a_replan
+    one plan_to for one root chaser: 15 plans, mean 1540 us, largest 1690 us (made for every chaser every 0.5 s)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(324): CHECK failed: worst <= 1000.0
+FAIL  mline_the_cost_of_one_line_at_one_replan_is_printed
+    9600 ticks untimed and 9600 timed at 40 s: the first that differs is 9600
+ok    with_the_timer_unreached_a_timed_run_is_the_untimed_run_tick_for_tick
+    timer 30 s: overtime at the timer 1, before it 0; sent after it: 1 dark, 0 others; the run ended at 93.9 s, saved 1
+ok    at_the_timer_the_run_goes_into_overtime_and_only_the_dark_one_is_sent
+    4 seeds, timer 25 s, clear 12 s: 4 reached overtime with 8 others about; ticks with one left after the clear 0; taken out in view 0; caught in overtime by another 0
+ok    in_overtime_the_others_walk_off_out_of_sight_and_are_gone_by_the_clear
+    timer 20 s: the dark one first stood 39.6 m off, in view 0; the run ended at 93.5 s, caught by the dark, saved 1, kept 5133 of 5133
+ok    the_dark_one_comes_from_out_of_sight_behind_and_a_catch_by_it_is_the_save
+    the juke bot on seed 8, timer 30 s: caught by the dark after 13.6 s of overtime
+ok    the_dark_one_closes_on_a_player_who_jukes_close_to_it
+    a still player, timer 600 s: caught at 8.0 s by the hunter, saved 0, kept 0 of 85
+ok    a_catch_before_the_timer_keeps_nothing
+    a player inside a reprieve that holds for 1000 s, timer 5 s: held before the timer 1 (997 s left); open after it 1; the run ended 1 at 9.6 s, caught by the dark, saved 1
+    a Park entered 0.5 s into overtime: in it 1, open on entry 1, 0 s of hold left
+ok    in_overtime_every_park_stops_protecting_and_no_park_cell_refuses_the_dark_one
+    timer 3 s: a fall at 2 s saved 0; a fall at 4 s (over before it 0) saved 1, kept 83 of 83
+ok    a_fall_into_a_void_in_overtime_is_the_save_and_before_it_is_not
+    timer 60 s, 70 s survived: the score 1900.0 against 900.0 (the first minute) + 5 x 20.00 a second x 10 s = 1900.0
+ok    overtime_pays_its_multiple_of_the_rate_the_run_had_at_the_timer
+ok    the_root_switch_is_off_by_default_and_takes_only_0_or_1
+    told 9 m/s   : peak sideways 9.81 m/s^2 (grip 9.81); peak step in sideways acceleration 0.5612 m/s^2 a tick, 0.999 of the law's bound; on its feet 0 ticks, 0.000 of its ease; turn-rate step 0.1043 rad/s a tick (M1's bar 0.1); peak re-point 0.000000 rad; widest off the path 0.78 m; slowest 2.64 m/s; through yes
+    told 5.42 m/s: peak sideways 9.81 m/s^2 (grip 9.81); peak step in sideways acceleration 0.5110 m/s^2 a tick, 0.999 of the law's bound; on its feet 0 ticks, 0.000 of its ease; turn-rate step 0.0960 rad/s a tick (M1's bar 0.1); peak re-point 0.000000 rad; widest off the path 0.08 m; slowest 5.22 m/s; through yes
+ok    the_grip_root_takes_a_3_m_corner_from_9_m_s_at_no_more_than_grip_and_its_turn_has_no_step
+    seed 5, flee, normal, 90 s: off not caught at 90.00 s, chase 8a76f88756bd4716; on not caught at 90.00 s, chase 8f4ff7205403c770 / 8f4ff7205403c770, sim 3b4c06d500c0ac62 / 3b4c06d500c0ac62
+ok    the_grip_root_plays_the_same_run_twice_to_the_same_fingerprints_and_is_not_the_old_chase
+    way (b), 15 degrees: entry 9.20 m/s, lowest 9.19, the plan asked 9.20, grip allows 9.20 on a 3 m room; through yes
+    way (b), 22 degrees: entry 9.20 m/s, lowest 9.18, the plan asked 9.20, grip allows 9.20 on a 3 m room; through yes
+    way (b), 45 degrees: entry 9.20 m/s, lowest 7.54, the plan asked 7.50, grip allows 8.43 on a 3 m room; through yes
+    way (b), 90 degrees: entry 9.20 m/s, lowest 2.03, the plan asked 1.20, grip allows 5.42 on a 3 m room; through yes
+    way (a), 15 degrees: entry 9.20 m/s, lowest 9.19, the plan asked 9.20, grip allows 9.20 on a 3 m room; through yes
+    way (a), 22 degrees: entry 9.20 m/s, lowest 9.18, the plan asked 9.20, grip allows 9.20 on a 3 m room; through yes
+    way (a), 45 degrees: entry 9.20 m/s, lowest 7.53, the plan asked 7.45, grip allows 8.43 on a 3 m room; through yes
+    way (a), 90 degrees: entry 9.20 m/s, lowest 1.45, the plan asked 1.20, grip allows 5.42 on a 3 m room; through yes
+ok    m2_g1_g2_a_scripted_bend_keeps_its_speed_to_22_degrees_and_loses_more_as_it_grows
+      15 deg t 2.750 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 2.800 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 2.850 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 2.900 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 2.950 s: aim 3.30 m at   1.5 deg, pull to it   1.33 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.000 s: aim 3.29 m at   2.2 deg, pull to it   2.01 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.050 s: aim 3.28 m at   2.5 deg, pull to it   2.25 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      15 deg t 3.100 s: aim 3.27 m at   2.5 deg, pull to it   2.22 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      15 deg t 3.150 s: aim 3.26 m at   2.3 deg, pull to it   2.07 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      15 deg t 3.200 s: aim 3.24 m at   2.0 deg, pull to it   1.85 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      15 deg t 3.250 s: aim 3.13 m at   1.7 deg, pull to it   1.56 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      15 deg t 3.300 s: aim 3.28 m at   1.6 deg, pull to it   1.43 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      15 deg t 3.350 s: aim 3.30 m at   1.4 deg, pull to it   1.21 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.400 s: aim 3.30 m at   1.1 deg, pull to it   1.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.450 s: aim 3.29 m at   0.9 deg, pull to it   0.82 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.500 s: aim 3.31 m at   0.8 deg, pull to it   0.67 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.550 s: aim 3.30 m at   0.6 deg, pull to it   0.55 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.600 s: aim 3.31 m at   0.5 deg, pull to it   0.45 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.650 s: aim 3.31 m at   0.4 deg, pull to it   0.37 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.700 s: aim 3.31 m at   0.3 deg, pull to it   0.30 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.750 s: aim 3.31 m at   0.3 deg, pull to it   0.24 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.800 s: aim 3.31 m at   0.2 deg, pull to it   0.20 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.850 s: aim 3.31 m at   0.2 deg, pull to it   0.16 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.900 s: aim 3.31 m at   0.1 deg, pull to it   0.13 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.950 s: aim 3.31 m at   0.1 deg, pull to it   0.11 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 4.000 s: aim 3.31 m at   0.1 deg, pull to it   0.09 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 4.050 s: aim 3.31 m at   0.1 deg, pull to it   0.07 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 4.100 s: aim 3.31 m at   0.1 deg, pull to it   0.06 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 4.150 s: aim 3.31 m at   0.1 deg, pull to it   0.05 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 4.200 s: aim 3.31 m at   0.0 deg, pull to it   0.04 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 4.250 s: aim 3.31 m at   0.0 deg, pull to it   0.03 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 4.300 s: aim 3.31 m at   0.0 deg, pull to it   0.03 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+    15 degrees: entry 9.20, lowest 9.19, the plan's least 9.20
+      22 deg t 2.750 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 2.800 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 2.850 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 2.900 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 2.950 s: aim 3.28 m at   2.2 deg, pull to it   1.95 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.000 s: aim 3.26 m at   3.3 deg, pull to it   2.96 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      22 deg t 3.050 s: aim 3.24 m at   3.7 deg, pull to it   3.32 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      22 deg t 3.100 s: aim 3.22 m at   3.6 deg, pull to it   3.30 m/s^2 (grip 9.81), plan 9.20, speed 9.18
+      22 deg t 3.150 s: aim 3.21 m at   3.4 deg, pull to it   3.10 m/s^2 (grip 9.81), plan 9.20, speed 9.18
+      22 deg t 3.200 s: aim 3.16 m at   3.0 deg, pull to it   2.76 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      22 deg t 3.250 s: aim 2.98 m at   2.3 deg, pull to it   2.30 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      22 deg t 3.300 s: aim 3.25 m at   2.5 deg, pull to it   2.30 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      22 deg t 3.350 s: aim 3.16 m at   2.0 deg, pull to it   1.84 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      22 deg t 3.400 s: aim 3.29 m at   1.7 deg, pull to it   1.54 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      22 deg t 3.450 s: aim 3.30 m at   1.4 deg, pull to it   1.24 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      22 deg t 3.500 s: aim 3.30 m at   1.1 deg, pull to it   1.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.550 s: aim 3.29 m at   0.9 deg, pull to it   0.80 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.600 s: aim 3.31 m at   0.7 deg, pull to it   0.65 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.650 s: aim 3.31 m at   0.6 deg, pull to it   0.52 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.700 s: aim 3.31 m at   0.5 deg, pull to it   0.42 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.750 s: aim 3.31 m at   0.4 deg, pull to it   0.34 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.800 s: aim 3.31 m at   0.3 deg, pull to it   0.28 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.850 s: aim 3.31 m at   0.3 deg, pull to it   0.22 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.900 s: aim 3.31 m at   0.2 deg, pull to it   0.18 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.950 s: aim 3.31 m at   0.2 deg, pull to it   0.15 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 4.000 s: aim 3.31 m at   0.1 deg, pull to it   0.12 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 4.050 s: aim 3.31 m at   0.1 deg, pull to it   0.10 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 4.100 s: aim 3.31 m at   0.1 deg, pull to it   0.08 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 4.150 s: aim 3.31 m at   0.1 deg, pull to it   0.06 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 4.200 s: aim 3.31 m at   0.1 deg, pull to it   0.05 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 4.250 s: aim 3.31 m at   0.0 deg, pull to it   0.04 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 4.300 s: aim 3.31 m at   0.0 deg, pull to it   0.04 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+    22 degrees: entry 9.20, lowest 9.18, the plan's least 9.20
+      45 deg t 2.750 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 2.800 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 2.850 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 2.900 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 2.950 s: aim 3.20 m at   4.6 deg, pull to it   4.28 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      45 deg t 3.000 s: aim 3.10 m at   7.8 deg, pull to it   7.35 m/s^2 (grip 9.81), plan 9.20, speed 9.17
+      45 deg t 3.050 s: aim 3.03 m at  10.3 deg, pull to it   9.82 m/s^2 (grip 9.81), plan 9.12, speed 9.12
+      45 deg t 3.100 s: aim 2.88 m at  11.6 deg, pull to it  10.93 m/s^2 (grip 9.81), plan 8.38, speed 8.82
+      45 deg t 3.150 s: aim 2.71 m at  12.2 deg, pull to it  11.13 m/s^2 (grip 9.81), plan 7.93, speed 8.41
+      45 deg t 3.200 s: aim 2.51 m at  12.1 deg, pull to it  10.83 m/s^2 (grip 9.81), plan 7.66, speed 8.02
+      45 deg t 3.250 s: aim 2.23 m at  11.1 deg, pull to it  10.42 m/s^2 (grip 9.81), plan 7.52, speed 7.73
+      45 deg t 3.300 s: aim 2.64 m at  13.0 deg, pull to it   9.78 m/s^2 (grip 9.81), plan 7.59, speed 7.57
+      45 deg t 3.350 s: aim 2.61 m at  11.9 deg, pull to it   9.05 m/s^2 (grip 9.81), plan 7.87, speed 7.56
+      45 deg t 3.400 s: aim 2.79 m at  10.8 deg, pull to it   8.11 m/s^2 (grip 9.81), plan 8.56, speed 7.82
+      45 deg t 3.450 s: aim 2.96 m at   9.1 deg, pull to it   7.22 m/s^2 (grip 9.81), plan 9.20, speed 8.27
+      45 deg t 3.500 s: aim 3.11 m at   7.0 deg, pull to it   5.85 m/s^2 (grip 9.81), plan 9.20, speed 8.66
+      45 deg t 3.550 s: aim 3.20 m at   4.6 deg, pull to it   3.92 m/s^2 (grip 9.81), plan 9.20, speed 8.90
+      45 deg t 3.600 s: aim 3.25 m at   2.6 deg, pull to it   2.29 m/s^2 (grip 9.81), plan 9.20, speed 9.03
+      45 deg t 3.650 s: aim 3.28 m at   1.4 deg, pull to it   1.28 m/s^2 (grip 9.81), plan 9.20, speed 9.11
+      45 deg t 3.700 s: aim 3.29 m at   0.7 deg, pull to it   0.67 m/s^2 (grip 9.81), plan 9.20, speed 9.15
+      45 deg t 3.750 s: aim 3.30 m at   0.3 deg, pull to it   0.30 m/s^2 (grip 9.81), plan 9.20, speed 9.17
+      45 deg t 3.800 s: aim 3.30 m at   0.1 deg, pull to it   0.09 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      45 deg t 3.850 s: aim 3.31 m at   0.0 deg, pull to it   0.03 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      45 deg t 3.900 s: aim 3.31 m at   0.1 deg, pull to it   0.09 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 3.950 s: aim 3.31 m at   0.1 deg, pull to it   0.11 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 4.000 s: aim 3.31 m at   0.1 deg, pull to it   0.12 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 4.050 s: aim 3.31 m at   0.1 deg, pull to it   0.11 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 4.100 s: aim 3.31 m at   0.1 deg, pull to it   0.10 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 4.150 s: aim 3.31 m at   0.1 deg, pull to it   0.09 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 4.200 s: aim 3.31 m at   0.1 deg, pull to it   0.08 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 4.250 s: aim 3.31 m at   0.1 deg, pull to it   0.07 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 4.300 s: aim 3.31 m at   0.1 deg, pull to it   0.06 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 4.350 s: aim 3.31 m at   0.1 deg, pull to it   0.05 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+    45 degrees: entry 9.20, lowest 7.54, the plan's least 7.50
+      90 deg t 2.750 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 2.800 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 2.850 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 2.900 s: aim 3.31 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 2.950 s: aim 2.91 m at   7.6 deg, pull to it   7.70 m/s^2 (grip 9.81), plan 9.17, speed 9.18
+      90 deg t 3.000 s: aim 2.53 m at  12.6 deg, pull to it  13.28 m/s^2 (grip 9.81), plan 7.52, speed 8.69
+      90 deg t 3.050 s: aim 2.17 m at  15.5 deg, pull to it  15.97 m/s^2 (grip 9.81), plan 6.31, speed 7.99
+      90 deg t 3.100 s: aim 1.86 m at  18.0 deg, pull to it  18.01 m/s^2 (grip 9.81), plan 5.43, speed 7.29
+      90 deg t 3.150 s: aim 1.54 m at  18.8 deg, pull to it  18.46 m/s^2 (grip 9.81), plan 4.85, speed 6.59
+      90 deg t 3.200 s: aim 1.29 m at  20.9 deg, pull to it  19.65 m/s^2 (grip 9.81), plan 4.21, speed 5.90
+      90 deg t 3.250 s: aim 1.00 m at  18.7 deg, pull to it  17.85 m/s^2 (grip 9.81), plan 3.90, speed 5.20
+      90 deg t 3.300 s: aim 0.68 m at  11.3 deg, pull to it  12.39 m/s^2 (grip 9.81), plan 4.12, speed 4.60
+      90 deg t 3.350 s: aim 0.43 m at   6.0 deg, pull to it   9.73 m/s^2 (grip 9.81), plan 4.48, speed 4.46
+      90 deg t 3.400 s: aim 0.18 m at   1.0 deg, pull to it   4.21 m/s^2 (grip 9.81), plan 6.41, speed 4.58
+      90 deg t 3.450 s: aim 1.52 m at  52.7 deg, pull to it  18.68 m/s^2 (grip 9.81), plan 3.06, speed 4.17
+      90 deg t 3.500 s: aim 1.27 m at  56.7 deg, pull to it  16.42 m/s^2 (grip 9.81), plan 2.73, speed 3.47
+      90 deg t 3.550 s: aim 1.01 m at  57.3 deg, pull to it  13.28 m/s^2 (grip 9.81), plan 2.43, speed 2.77
+      90 deg t 3.600 s: aim 0.99 m at  50.6 deg, pull to it   7.60 m/s^2 (grip 9.81), plan 2.50, speed 2.17
+      90 deg t 3.650 s: aim 0.98 m at  39.8 deg, pull to it   5.40 m/s^2 (grip 9.81), plan 2.74, speed 2.03
+      90 deg t 3.700 s: aim 0.96 m at  27.9 deg, pull to it   4.83 m/s^2 (grip 9.81), plan 3.17, speed 2.26
+      90 deg t 3.750 s: aim 0.93 m at  16.4 deg, pull to it   4.27 m/s^2 (grip 9.81), plan 4.03, speed 2.70
+      90 deg t 3.800 s: aim 1.01 m at   2.5 deg, pull to it   0.84 m/s^2 (grip 9.81), plan 9.20, speed 3.15
+      90 deg t 3.850 s: aim 1.13 m at   8.1 deg, pull to it   3.15 m/s^2 (grip 9.81), plan 6.28, speed 3.60
+      90 deg t 3.900 s: aim 1.43 m at  14.7 deg, pull to it   5.70 m/s^2 (grip 9.81), plan 5.26, speed 4.05
+      90 deg t 3.950 s: aim 1.60 m at  14.3 deg, pull to it   6.13 m/s^2 (grip 9.81), plan 5.64, speed 4.50
+      90 deg t 4.000 s: aim 1.76 m at  10.9 deg, pull to it   5.19 m/s^2 (grip 9.81), plan 6.75, speed 4.95
+      90 deg t 4.050 s: aim 1.93 m at   7.1 deg, pull to it   3.69 m/s^2 (grip 9.81), plan 8.73, speed 5.40
+      90 deg t 4.100 s: aim 2.09 m at   3.2 deg, pull to it   1.79 m/s^2 (grip 9.81), plan 9.20, speed 5.85
+      90 deg t 4.150 s: aim 2.25 m at   1.2 deg, pull to it   0.75 m/s^2 (grip 9.81), plan 9.20, speed 6.30
+      90 deg t 4.200 s: aim 2.42 m at   0.6 deg, pull to it   0.36 m/s^2 (grip 9.81), plan 9.20, speed 6.75
+      90 deg t 4.250 s: aim 2.58 m at   0.2 deg, pull to it   0.17 m/s^2 (grip 9.81), plan 9.20, speed 7.20
+      90 deg t 4.300 s: aim 2.74 m at   0.1 deg, pull to it   0.08 m/s^2 (grip 9.81), plan 9.20, speed 7.65
+      90 deg t 4.350 s: aim 2.90 m at   0.0 deg, pull to it   0.03 m/s^2 (grip 9.81), plan 9.20, speed 8.10
+      90 deg t 4.400 s: aim 3.06 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 8.54
+      90 deg t 4.450 s: aim 3.18 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 8.86
+      90 deg t 4.500 s: aim 3.24 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.02
+      90 deg t 4.550 s: aim 3.28 m at   0.0 deg, pull to it   0.02 m/s^2 (grip 9.81), plan 9.20, speed 9.10
+      90 deg t 4.600 s: aim 3.29 m at   0.0 deg, pull to it   0.02 m/s^2 (grip 9.81), plan 9.20, speed 9.15
+      90 deg t 4.650 s: aim 3.30 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.17
+      90 deg t 4.700 s: aim 3.31 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      90 deg t 4.750 s: aim 3.31 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      90 deg t 4.800 s: aim 3.31 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 4.850 s: aim 3.31 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 4.900 s: aim 3.31 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+    90 degrees: entry 9.20, lowest 2.03, the plan's least 1.20
+ok    m2c_r0_what_the_cap_on_the_turn_to_the_aim_reads_through_a_scripted_bend
+    the scripted bends' fingerprint b376f9cd1d75653e
+ok    m2b_the_hunter_on_the_root_takes_the_scripted_bends_as_before_every_kind_could_take_it
+ok    m2b_each_kind_is_put_on_the_root_by_its_own_switch_and_every_kind_is_off_by_default
+    sprinter told 9 m/s   : peak sideways 9.81 m/s^2; step 0.5616, 0.999 of the law's bound; feet 0.000; re-point 0.000000; widest 0.90 m; through yes
+    sprinter told 5.42 m/s: peak sideways 9.81 m/s^2; step 0.5110, 0.999 of the law's bound; feet 0.000; re-point 0.000000; widest 0.08 m; through yes
+ok    m2b_the_sprinter_on_the_root_takes_the_3_m_corner_within_the_laws_bounds
+    seed 5, flee, normal, 90 s: off chase 8a76f88756bd4716; sprinter on the root 7a45fe381369afe2 / 7a45fe381369afe2
+ok    m2b_a_run_with_only_the_sprinter_on_the_root_is_not_the_old_chase_and_plays_the_same_twice
+    70.0 s of chase, 13 events, 174 tiles asked for and 42 let go; tiles waited for at their tick: 136, 174 with slow workers, 103 with ragged ones
+ok    the_streamed_world_gives_the_same_chase_whatever_the_workers_do
+ok    a_record_of_the_policys_inputs_plays_back_to_the_same_chase
+    293 m run in 32.2 s over 7 positions of the tile block; at most 105 tiles held, 165 asked for, 66 let go; 10423 looks at a chaser, 0 ticks with the player in a reprieve
+ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone
+    103 reprieves and 402 dead ends (383 with a way out for the player) known to the run six seconds in
+ok    the_streamed_world_tells_the_run_of_its_reprieves_and_dead_ends
+    3 turns in 20.0 s: sprinter interceptor pack
+ok    the_streamed_chase_takes_kinds_in_turn_as_the_fixed_arena_does
+117 tests, 8 failed

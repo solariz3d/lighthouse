@@ -118,3 +118,86 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
 - **A corner's room is two limits, and the lesser holds:** the corridor's width and the length of the straight legs. The librarian's arithmetic of 12:1x used the width alone and overstated what a short leg allows; A's formula is the leg limit. The table is in the packet.
 - **The drop of item 225, corrected:** the hunter took a drop link and came down 3.50 m in 0.904 s; a free fall takes 0.845 s. The line above that says it changed floors "within half a second" is wrong and stays as written; this line corrects it. For M3 "a drop is a fall" now means: the body carries its run off the edge, comes down under gravity, cannot pass through what is solid, and with the body laps is drawn falling and landing.
 - **Catch power, reported by A, nothing tuned to it:** of 96 seeds at normal the fleeing bot was never caught in 58 on main, 68 with grip only, 57 with slowing for the bend; at brutal 2, 2 and 0.
+
+## AMENDED at the collation of M2c and M2b (D, the night of 2026-11-14; `handback/p-m2c-m2b-A_2026-11-14.md`)
+
+- **M2c and M2b are back,** on `a-m1-root` b3ade8e, every switch off (`root_law`, `corner_feel`, `root_kinds`). The aim ahead works: the scripted 15 and 22 degree bends keep 9.19 and 9.18 of 9.20 m/s. Any kind takes the root by its bit; a new kind is a row; no line of the root names a kind.
+- **What a kind's row holds today:** top speed, forward gain, braking, the standstill turn rate, grip. **Mass is not read.** The section "AMENDED 18:5x" above lists mass in the row; it enters when two bodies push each other, not before.
+- **Three rows are red, with one cause:** a step the mesh refuses stops the body dead for a tick (`chase/chaser.cpp:529`). The branch does not land until they are green.
+- **M3 is packeted** (`loop/packet_m3_world_pushes_back_A_2026-11-14.md`): M3a, a refused step is a contact, the body keeps what runs along the edge and loses what runs into it; M3b, a drop is a fall, swept through the simulation's collision.
+- **The drop of item 225, second correction:** pane A's cast shows the link's line runs through solid (18 of 18 casts). He was right that it clipped. It also took a fall's time. Both lines above stand as written; this one completes them.
+- **A corner's room, a third reading:** pane A's `room` is neither the width limit nor the leg limit; it is the clearance along the corner's outer bisector, set where the leg's length goes. On route 0's short legs it is the generous one. Named for the lap that follows M3; not changed tonight.
+- **The Park kit stays held:** on the root the sprinter row cannot say what it says today (care is not something the root reads), so it cannot rule the kit.
+- **Catch power with every kind on the root, reported, nothing tuned to it:** of 96 seeds the fleeing bot is never caught in 64 at normal (main 58) and 0 at brutal (main 2).
+
+## AMENDED at the collation of E1 (D, the night of 2026-11-14; `handback/p-d677-e1-E_2026-11-14.md`)
+
+- **Point 3 of "AMENDED 18:5x" holds today and is now a row:** the player's body is one pose seen by two cameras. Pane E read one pose call and no second rig, and its row compares what the two views drew (0 difference over 77,238 joint pairs on a kept run; five mutants caught). Branch `e1-two-cameras-e` 45d299a; pane B lands it after the look back is on main.
+- **A lap this found, added to the body's list for every body: the body follows the look.** The view's pitch does not reach the body today, so looking down bends nothing. One function spreads a look over neck, chest and hips for any body: the player looking down at his own legs (his item 159), a chaser's head on its target. It is laps L19 and L23 of the path of record made one, and it comes after B1. Owner named when a pane is free.
+- **The film tool exists and is not yet fit for his eye:** dark outside frames, and no way to put two laws through the same corner. Packet E2: `loop/packet_e2_films_for_his_eye_E_2026-11-14.md`.
+- **L12 (B5 above):** its cost reading is in and shows nothing on the card. It may land tonight behind its switch, off, if off draws exactly as main does; pane E says whether it has one.
+
+## AMENDED at the collation of B1 (D, the night of 2026-11-14; `handback/p-b1-lean-C_2026-11-14.md`)
+
+- **B1 is back and accepted:** one function for every body (`game/body_lean.h`), the feet held, the view unmoved, behind `body_lean`, off. Branch `b1-lean-c` a0996d3; pane B lands it in its turn.
+- **What it showed:** true to the physics, the lean lays a body down, because the chase and the player's controller turn at about 1 g and more. The hunter's head goes into the corridor wall at grip 1.0. In first person the body leans out from under the camera by up to 1.24 m.
+- **B1b, packeted** (`loop/packet_b1b_lean_limits_C_2026-11-14.md`): the lean yields to walls; a limit in each kind's row (the player's body 15 degrees, a human runner's; a chaser its own grip); the player's body does not rock on straights; the view can ride the head on a dial that starts at 0.
+- **For pane A's root, from the same finding:** how far a body leans is how hard it turns. Under the root a chaser turns at its grip at most, so its lean is at most `atan(grip)`; and the line the root takes through a corridor decides whether there is room for that lean. Read at M5 (re-tuning), with the films.
+- **The forward lean stays per body until B4,** and the D675 line "63 to 75 where 51 is asked" is withdrawn by its author as a description of the game.
+- **B2 (the picture clock) follows B1b.**
+
+## AMENDED at the collation of E2 (D, the night of 2026-11-14; `handback/p-d677-e2-E_2026-11-14.md`)
+
+- **The plan's second failure line now has a way to be read before he plays:** "It failed on his terms if, after M1 to M3, he plays it and still names the stop, pivot and go at a corner." Pane E's staged chase films three real bends (22, 45 and 90 degrees, seed 1) under any law, with the entry speed, the lowest speed and the time through each in the manifest.
+- **Read tonight, before M3:** at the 22 degree bend today's law and both root laws all come to a stop (0.04, 0.00, 0.00 m/s), against the end of a wall or a door frame, with the chase counting no wall. On all three bends the root is slower through than today's law. So M1, M2 and M2c have not yet removed the stop he named; M3a (a refused step is a contact) is aimed at exactly that.
+- **Registered now, before M3 is back:** after M3, on these same three bends with the root on, the hunter's speed never reads under 1.2 m/s, and it is through the 22 degree bend in no more time than today's law takes (0.889 s). If either fails, it is rung as fired, and the films go to him as they are.
+- **The root enters the 22 degree bend at 4.44 m/s where today's law enters at 9.19.** Not explained. For pane A to read.
+
+## AMENDED at the collation of M3 (D, 2026-11-15; `handback/p-m3-world-A_2026-11-14.md`)
+
+- **M3a is back and accepted:** on the root a refused step is a contact. The body slides along the mesh's edge and keeps its speed along it less a scrape. Its falls to 0 m/s on the ten routes: 15 and 17 before, 0 and 0 after. Branch `a-m1-root` aad376b, every switch off, not landed (its own suite: chase_tests 105, 4 failed; nav_tests 34, 1 failed).
+- **What still stops it:** the other wall branch, a step the mesh snaps short, where the old scrape and head-on loss still take the speed. The lows left: 0.60 and 0.86 m/s on the routes, 0.60 at the filmed 45 degree bend, and a body that takes 49 to 105 times its own gain's time to be running again after a wall. **M3c** makes that branch a contact too.
+- **The drop: 735 of 735.** In 12 worlds every drop link's straight line meets a solid, for about half its length. So what he saw on his run (item 225) happens at every drop in every world, for every chaser, under the law he plays today. **Ruled: M3b is built** (the fall). The link is where a drop can be made, not the way down; nothing goes to the mesh's builder. Today's law keeps its straight drop until a kind is on the root, so that his kept runs replay as recorded.
+- **The plan's bars on the three staged bends, read on pane A's stand-in walk** (not pane E's staged chase): 22 degrees 0.854 s and never under 2.71 m/s, held; 45 degrees 0.60 m/s, red; 90 degrees 1.96 and 1.77, held. The stand-in is not the staged chase (today's law does not stop at its 22 degree bend, and does at E's), so pane E's films on aad376b decide.
+- **Packet:** `loop/packet_m3c_m3b_A_2026-11-15.md`.
+
+## AMENDED 2026-11-15 (D), by the librarian: B2 is packeted while F1 is out
+
+- **Packet:** `loop/packet_b2_picture_clock_C_2026-11-15.md`. It goes to pane C when F1 is rung and B1b is on the game's main.
+- **What it found in today's code (main 13fd3db, read by the librarian):** three places advance a stride. The hunter's and the Dark's are summed from the frame's time in the stage (`game/world/stage.cpp:275`, `:314`); the player's body reads the camera's, which is already on the tick (`game/body.cpp:250`, `game/camera.cpp:177`). So "one clock for every body" is one function with a row for the kind, and the player's row is the camera's law, so the legs and the view's bob stay one phase.
+- **It lands behind a switch, off,** by the night's rule. The code moves out of the stage first, so the rows can be run red.
+- **With it, the lean's two follow-ups ruled at B1b:** the wall read ahead along the body's velocity, for every body; and the player's lean smoothed over one step of its own stride, read from the clock. Both under `body_lean`.
+- **One bar changed by name before any run:** the frame-rate row's 1e-6 rad (the scout's) is 1e-4, because a float near 6.28 resolves about 5e-7.
+
+## AMENDED 2026-11-15 (D), by the librarian, at his word of 03:22 (game brief item 229): the runner's body from outside is a view of its own
+
+- **His words:** "the runner body follows the look is sort of bugged when l ooking from third person, in reality the player wouldnt see the bug unless shadows which is still possible, so i want to make the runners animation perfect, since we might do peer to peer multiplayer in the end"
+- **What was wrong in this plan:** point 3 of "AMENDED 18:5x" asks that first person and outside be the same joints at the same tick, and pane E's row holds that. It never asked whether the pose looks right from outside. The look law passed every row and looks wrong to him from outside.
+- **From this section on, every lap that draws the runner's body is judged from outside for itself:** a film with the outside camera fixed for both passes (not turning with the body) and lit, old beside new; and at least one row that reads the pose as an outside eye would (where the head, chest, hips and arms are against each other and against the travel), not only what the first-person view shows.
+- **The look law (B7) is reopened.** Landed off; not done.
+- **The runner's laps of the path of record move ahead of the lesser kinds' bodies:** the slide leg, the feet through turns and stairs, the hands on walls, the fingers, the climb (L18, L22, L24, L25, L26), each with its outside film.
+- **Multiplayer is a "might", and it is not planned here.** One thing is kept in view for it: another player's body would be drawn from a few numbers sent over (where it is, how it moves, where it looks), so the body laws stay what they are today, functions of the simulation's state and the look, with no hidden state that could not be sent or rebuilt.
+- **Registered:** this amendment failed if the next lap on the runner's body goes to him with no fixed-camera outside film, or is called done on first-person rows alone.
+
+## AMENDED 2026-11-15 (D), by the librarian, at his word of 06:56 (game brief item 234): the runner is built on the new system
+
+- **His words:** "i still feel like we are using the whole old system LIKE WTF WHAT ABOUT THE NEW PROC GEN ANIMATION SYSTEM?" With what he sees: "they move their hands too forward like they are poking something infront of them rather than swinging their arms, and the legs dont even like care where theyre going".
+- **He is right, and this plan is why.** It built the new system as laws laid over the pose functions that were there: the lean, the look, the clock, the soft upper body, each behind its switch. It never replaced what draws the runner's arms and legs. That is still `Body::pose`, the first-person rig (`loop/animation_system_2026-11-13/00_system.md:55`, `:98`; `game/body.cpp:266`). His items 153 and 221 and his line of 07:05 on 11-14 said the same of the hunter's movement. This is the third time, on a third part.
+- **What changes:** the runner's body is drawn by the shared generator, the one that makes the hunter run from recorded human runners, anchored at its feet, its legs going where it travels, its arms swinging; first person is a camera on that body. Behind a switch with a key until he says, so that he flips old and new in play. Packet: `loop/packet_b8_runner_from_outside_B_2026-11-15.md`, its last section (R1). Pane B.
+- **Then, on that body, in this order:** the feet held where they land; the look, with its shares sourced; the states and their changes, leaving the old function one at a time until it is removed.
+- **What was wrong in my section of 05:33's amendment to that packet:** it made a film the judge of whether to build this. He had not asked whether. Withdrawn there by name.
+- **Registered:** it failed on his terms if, with the key on, the runner's hands still reach forward as it runs or its legs do not follow where it goes. It is wrong if any lap from this line on adds to `Body::pose`. And for this plan as a whole: it failed if a fourth part of the game is found, by him, still on the old system with new laws laid over it, and no seat had said so first. To that end every body and every mover is listed below with what draws or moves it today.
+- **The list, as far as I have read it; to be completed by each pane for its own part at its next ring:** the hunter's body, `gait_pose` (the new generator's source); the Dark, the same; the lesser kinds, boxes; the runner's body, `Body::pose` (old); the hunter's movement, today's turning rules in play, the new root on a branch (old in his game); the lesser kinds' movement, today's rules (old).
+
+## SUPERSEDED IN ITS BODY HALF, 2026-11-15, at his word of 06:59 (game brief item 235)
+
+- The laps B1 to B8 of this plan and every section above about the lean, the look, the clock and the runner are replaced by `loop/plan_animation_restart_2026-11-15.md`: the old animation is scrapped and the new system is built from scratch as one module. The sections stay as written, as the record of what was tried.
+- The movement half (pane A's root, M1 to M5 and what follows) stands.
+
+## AT THE BRAKE (D, 2026-11-15): THE MOVEMENT LINE, READ BY ITS OWN REGISTERED BAR, IS GETTING WORSE; THE PATCHING STOPS
+
+- **The bar, registered at the collation of E2 before M3 came back:** on pane E's 22 degree bend with the root on, never under 1.2 m/s and through in no more than today's 0.889 s. **Fired at 01:06 and fired at every reading since:** 2.049 s; 1.465 s (a law that broke its grip, withdrawn); 1.917 and 1.826 s; 2.215 and 2.382 s with the brake (`handback/p-m3c-m3b-A_2026-11-15.md`, its last part).
+- **Each law was more right by its own falsifier and the bend was slower after it.** That is what this room's own rule calls a degenerating line: patches that survive their tests and move the headline the wrong way.
+- **My reading, set down so it can be broken:** the new body is right and the path it is given was made for the old mover (corners on the mesh's edges at a wall's end, sides of a post swapped at a replan, drops drawn through solid). 166 of 735 drops are not taken by a body on the root.
+- **Ruled:** no more is built on the contact laws. Pane A writes one page before any code, on a path made for a body with grip, with its predictions for the three bends and the drops written first (`loop/packet_m_line_A_2026-11-15.md`). The bars above are the judge and are not moved.
+- **What would show this reading wrong, registered:** a path with room and radius through the 22 degree bend that the root still takes in more than 0.889 s. Then the root law is the cause, as this plan's second failure line already says.

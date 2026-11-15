@@ -1,0 +1,159 @@
+# Packet for pane A: the other wall branch as a contact (M3c), then the fall (M3b, ruled: build it)
+
+Written by the librarian on D, 2026-11-15, at the collation of M3 (`handback/p-m3-world-A_2026-11-14.md`, git-blob f69eda99,
+read whole). Plan: `loop/plan_new_system_2026-11-14.md`. Night's order: `loop/night_order_2026-11-14-D.md`. Tier: prove it.
+
+**SOURCE: what produces this, and what limits it.**
+- **What still stops the body:** your own reading of the rows: the lows that remain (H1 0.60 and 0.86 m/s, the filmed 45 degree
+  bend 0.60, H2 at 49 and 105 times its bar) come with head-on wall ticks. They are the other edge branch of `step()`, a step
+  the mesh snaps short, where the chase's old scrape and head-on loss still take the speed. M3a's scope did not reach it.
+- **What a drop is today:** a straight line from a point inset on the upper floor to the floor below. In 12 worlds, 735 of
+  735 such lines meet a solid, each for about half its length (`m3b_count.txt`, its last lines read by me).
+
+## His words (verbatim in `briefs/dreamzone2_the_game.md`, items 220, 223, 225)
+
+- "it like loses all speed, repoints itself then goes, instead of like flowing through it still"
+- "90 degree turns for sure tons of slow down, or they could like full speed into the wall to slow down instead"
+- "it cheated by clipping to the floor below when i jumped down this area"
+
+## Ruled at the collation of M3
+
+1. **M3a is accepted:** the root's falls to 0 m/s on the ten routes went from 15 and 17 to 0 and 0, and every contact kept at
+   least 0.996 of its speed along the edge.
+2. **M3b: build the fall.** Your reading of the count is taken: 100 per cent, and the same half of every line, says the
+   straight line is the wrong path for every drop, not that some links are placed wrong. A link says where a drop can be
+   made; it is not the way down. The gate I registered asked for a ring before building, and this is the answer to it. Nothing
+   goes to the mesh's builder.
+3. **G1 on the routes stays red as a finding.** Your rule, set before the count, reads all seven bends as gentle. No bar is
+   moved.
+4. **The branch still does not land** (chase_tests 105, 4 failed; nav_tests 34, 1 failed).
+5. **Today's law keeps its straight drop.** With the root off his kept runs replay as their records, clipping included. The
+   drop is fixed for a kind when that kind is on the root.
+
+## M3c, first: the snapped step is a contact too
+
+**Build, for the root only:** where the mesh snaps a step short at a wall, the body does what M3a made it do at a refused
+step: it keeps what runs along the wall, loses what runs into it and a scrape, and turns with its velocity. Met square, it
+stops against the wall, which his words allow at a hard corner, and then it must get going again.
+
+**Read first, before code, and print:** in the contact of H2's worst case, tick by tick from the hit until the body is back at
+half its top: its speed, its heading against the path's, and which branch of `step()` each tick took. That says what holds it
+for 49 times its own gain's time. Name it before changing it.
+
+**Rows, registered before code, each seen red on `aad376b` first:**
+- **H1 as registered** (no route's low under the creep floor). Red: 3 and 2 routes.
+- **H2 as registered again in M2c.** Red: 49.2 and 105.5 times.
+- **The filmed 45 degree bend:** lowest at least 1.2 m/s with the root on. Red: 0.60.
+- **The snapped contact itself,** as M3a's contact row: met at more than 30 degrees off square, at least 0.8 of the speed
+  along the wall is kept.
+- **The nav row's one red** (one move in 1,915 ends more than 1 cm further than asked): the clamp you name, with its row
+  green.
+- **G1 on the routes, read again and printed.** For route 0's doorway, print what grip allows by the lesser of the two
+  limits (the corridor's width and the legs' lengths) beside what your `room` gives; your M2c note says yours is the generous
+  one on short legs. Whether the row's "allowed" changes is ruled from that print, not before it.
+- **W1 as a report. The crawl guard, R1 to R4, off means off.**
+
+## M3b, then: a drop is a fall
+
+Build what `registration_m3b.md` registers: the take-off speed that carries the body from the edge to the landing in the
+fall's own time; the height held until its feet are past the edge, then free fall; the flat speed carried and read as what it
+is; the fall swept through the simulation's collision; recovery after landing a number in the kind's row.
+
+**Rows, as registered in the M3 packet,** each red first: his run's drop with the root on (the feet never more than 1 cm
+inside a solid; today's line is inside one at path ticks 38 and 99); the fall's shape and time; the speed carried; the landing
+on the mesh; every kind; off means off.
+
+**The count again, after the fix:** over the same 12 worlds, on the root, the number of drops whose swept fall meets a solid.
+Registered: none. A drop the body cannot make cleanly is not taken, and how many of the 735 that is, is printed.
+
+**What you registered as not built stays not built here:** a plan that picks another way down before a drop it cannot land.
+Say how many drops that leaves refused.
+
+## For his eye
+
+Pane E films the three bends again now, on `aad376b`, and again on your next tip. When M3b is in, his own drop: your camera
+place, today beside the root.
+
+## Registered with this packet
+
+- **M3c is wrong if** H2 goes green because the body is moved away from the wall by hand, or the creep floor is lowered.
+- **M3b is wrong if** his run's drop on the root still shows any part of the body inside a solid.
+- **The plan's own bars on pane E's three staged bends stand** (never under 1.2 m/s; the 22 degree bend in no more than
+  0.889 s). Your stand-in walk is not E's staged chase, as your own row says: today's law stops at E's 22 degree bend and
+  does not at yours. The films decide.
+
+## Rules that hold
+
+Runs start from G: through the lock's own wait. His words stay out of the game's repository. Pane B lands the branch once
+its suite is green. One hand-back with its digest and a `BASE:` line, rung once.
+
+## RULED at the collation of M3c (D, 2026-11-15; `handback/p-m3c-m3b-A_2026-11-15.md`, read whole)
+
+**Your stop at the fired falsifier was right, and so was not tuning after reading it.** What stopped you for an hour and a half was the
+API's cut at 07:44:09Z, not the lap.
+
+**1. The fired falsifier: the law is corrected, the check stays.** "Wrong if any root body's velocity, sliding, turns faster than its
+grip allows" reads 1.024 of grip against its bar of 1.001. Take the first of your two ways: the slide's turn rate is set from the speed
+the velocity has when it turns, the speed after the tick's own gain. The check is not bounded to the speed the rate was set from; that
+would move the check to the code. The red is the row as it stands on 159aa02. Green comes from the law.
+
+**2. The slide check, re-registered before any re-run, by name.** "30 ticks or more with the velocity more than 20 degrees off the aim"
+held at the post (18 and 16) and fires at the second contact past the exit gate (40 and 39) when it is read over every slide, as you
+said. At 5 m/s a body turning at its grip needs about a third of a second for 40 degrees, so a count of ticks asks for more than the
+grip you were told to keep. The fault the check was written for is an aim that waits. So: **in every slide of every bend read, on each
+tick the velocity is more than 20 degrees off the aim, it turns toward the aim at no less than 0.9 of what its grip allows at its
+speed.** Red first on e191f60, where the aim waited about 60 ticks. The 0.9 is mine, marked ours.
+
+**3. Then M3b as you staged it,** with your amendment taken (`registration_m3b2.md`: the height is held while something solid is within
+15 cm under the feet, not while over the mesh). Its rows as registered, red first; the count over the 12 worlds again after it.
+
+**4. What stays red and is not this lap's:** H1 (2 routes, lowest 1.00), G1 (4 of 6 bends), the new kind at grip 0.8 (9 of 10), the
+scripted 45 degree bend one way (0.94). Print them again; change nothing to turn them. The branch still does not land.
+
+**5. The path that flips sides of the door post at a replan is a lap of its own, after M3b** (M3d in the plan of record). It is in every
+arm, today's law included by your reading, and no contact rule touches it. For that lap, read first and print: on the ten routes and on
+pane E's three bends, how often a replan moves the path to the other side of a solid the body is within a body's length of, under
+today's law and under the root. Nothing is built for it in this lap.
+
+**6. The plan's bars on pane E's three bends stand as fired until a film meets them:** never under 1.2 m/s (now met at the 22 degree
+bend, 1.417 and 1.424, by your staged copy), and the 22 degree bend in no more than 0.889 s (1.465, not met). Pane E films the three
+again on your next tip.
+
+**He may be playing:** read the process list before each run, never close his game, no timing while it runs. One hand-back, rung once.
+
+## RULED at the collation of the fall (D, 2026-11-15; `handback/p-m3c-m3b-A_2026-11-15.md`, its part "After the ruling", read whole)
+
+**1. Check 2's reading is yours and it is right.** "What its grip allows" in my wording is the root law's own allowed rate, the
+lesser of grip and the body's turn cap. Under 1.87 m/s the cap binds, and a row that asked for pure grip there would ask the
+law to break its own limit. Pure grip stays printed beside it. Your note on the blind spot at an aim exactly behind is kept:
+the row reads the drop in the angle, not the signed turn.
+
+**2. The corrected law stays.** Its falsifier is green at 1.000. That it made H1, H2 and the staged bend worse is a finding
+about the next thing, not a reason to ease it back.
+
+**3. The fall's row, two changes by name before any re-run, both to a row you have shown to be wrong:**
+- the counter: a tick at speed 0 after a wall stopped the body is still "by a wall" (`fall_tests.cpp:68`, `:113`, as you read
+  them);
+- the free-fall bar reads the height the body actually fell, to where it landed, not the link's landing height.
+If the hunter's row is still red after those two, it is a finding and is rung. The rows that carry the lap are green and are
+taken: 0 of 735 swept falls meet a solid, 0 descend while held, 4 drops refused. **His own drop on the root decides the
+falsifier when it prints; append it and ring that line alone.**
+
+**4. The slide that cannot reverse along a wall is the next lap's law, red first.** Your reading is taken as the cause: a
+velocity that only turns cannot come back along a wall. Along a wall the body has one way to go and its opposite. So:
+- the aim is read along the wall. If it points the way the body slides, the law as it is holds;
+- if it points the other way, the body spends its grip on braking (the kind's braking, never more than its grip), comes to
+  rest against the wall and leaves the other way. It does not keep turning into the wall.
+- Stated as one rule if the code allows it and not as a case: the body's acceleration is toward the velocity it wants, no
+  larger than its grip, less the part a wall refuses.
+- **Red first, on what you already hold:** pane E's 22 degree bend at ticks 1068 to 1122 (the velocity put back along the
+  wall pointing away from the aim), H1's lowest at 0.09 m/s, H2 way (b) at 5.87 of its bar.
+- **Registered: wrong if** the body is turned about by hand at a wall (its velocity set, not its acceleration), or if the
+  creep floor is lowered.
+- **Unwelcome, named now:** with it, the staged 22 degree bend is still slower than today's 0.889 s. Then the path's flip at
+  the post is the larger cause, which is M3d's.
+
+**5. M3d after that, as ruled before:** the count first, under today's law and under the root.
+
+**The lock:** you named it and you are right: it gave up three times on your chain, and it has no queue order. Until that is
+changed, keep the retry. Pane O's lock lap is the place for it and is named there.

@@ -1,0 +1,17 @@
+    the ten routes, today's law: with replans 77.13 s, contacts 0, not to the end 0; the routes row's one-plan walk 77.11 s
+    the ten routes, the arcs at grip 1.0: with replans 81.05 s, contacts 15, not to the end 0; the routes row's one-plan walk 78.32 s
+    the ten routes, the arcs at grip 1.3: with replans 78.42 s, contacts 18, not to the end 0; the routes row's one-plan walk 76.32 s
+    the ten routes, the arcs at grip 1.6: with replans 75.85 s, contacts 16, not to the end 0; the routes row's one-plan walk 75.37 s
+    the ten routes, the arcs at grip 2.0: with replans 72.85 s, contacts 18, not to the end 0; the routes row's one-plan walk 73.68 s
+    route 0's mouth, today's law: 0.900 s between the gates, lowest 2.35 m/s, exit tick 832, contacts 0, to the end in 4.19 s
+    route 0's mouth, the arcs at grip 1.0: 1.658 s between the gates, lowest 0.01 m/s, exit tick 1038, contacts 2, to the end in 5.14 s
+    route 0's mouth, the arcs at grip 1.3: 0.762 s between the gates, lowest 3.09 m/s, exit tick 822, contacts 2, to the end in 4.14 s
+    route 0's mouth, the arcs at grip 1.6: 1.142 s between the gates, lowest 0.02 m/s, exit tick 905, contacts 4, to the end in 4.56 s
+    route 0's mouth, the arcs at grip 2.0: 0.613 s between the gates, lowest 4.47 m/s, exit tick 775, contacts 2, to the end in 3.92 s
+    route 2's chicane, today's law: 0.525 s between the gates, lowest 6.99 m/s, exit tick 868, contacts 0, to the end in 5.23 s
+    route 2's chicane, the arcs at grip 1.0: 0.871 s between the gates, lowest 2.49 m/s, exit tick 991, contacts 0, to the end in 6.00 s
+    route 2's chicane, the arcs at grip 1.3: 0.729 s between the gates, lowest 2.56 m/s, exit tick 945, contacts 0, to the end in 6.00 s
+    route 2's chicane, the arcs at grip 1.6: 0.629 s between the gates, lowest 4.82 m/s, exit tick 917, contacts 0, to the end in 5.50 s
+    route 2's chicane, the arcs at grip 2.0: 0.562 s between the gates, lowest 5.95 m/s, exit tick 900, contacts 0, to the end in 5.40 s
+ok    diag_grip_routes_and_mouths
+1 tests, 0 failed

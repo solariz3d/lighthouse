@@ -1,0 +1,9 @@
+-- Configuring done (0.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: G:/consonance-scratch/a-m1-dz3/build
+[1/4] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\fall_tests.cpp.obj
+[2/4] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\line_tests.cpp.obj
+[3/4] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\feel_tests.cpp.obj
+[4/4] Linking CXX executable bin\chase_tests.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
