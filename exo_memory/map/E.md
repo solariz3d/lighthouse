@@ -3246,3 +3246,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Carry:** before writing "not on file", grep the sprint reference too; the yardstick's 4.15 m/s is not the room's limit.
 
 ## 2026-11-15 15:3x local (D) · D677 the lessons sheet of the first iteration, from the shelf only: his verdicts (153 to 242), then per stage what it got right (the measured straight run, Bruening and the V1 flare, the lean's ease, the soft upper body) and wrong (the angle score hid a 12-22 cm slide, the ankle held down sank the toe 11-13 cm, the straight-line stride in turns, the elbow at 26.5 of a sprinter's 83 deg, the lean discarded) → `exo_memory/loop/lessons_first_iteration_2026-11-15.md`
+
+## 2026-11-15 15:5x local (D) · D677 pane B's new legs (c6e3a5f) encoded alone for his page, every clip from frame 24 (the runner carries the old pose to frame 4 and a smear of it to 16); the frame-0 encode set aside → `exo_memory/handback/p-d677-newlegs-alone-E_2026-11-15.md`
+- **Carry:** before encoding a cut, look at its first frames: a picture can carry the last pose of whatever drew before it.
