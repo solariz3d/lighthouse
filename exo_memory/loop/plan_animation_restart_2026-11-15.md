@@ -255,3 +255,23 @@ So the fault pane B names is there as B says, on the hunter, in all four windows
 3. The foot is not let slide. The held foot is what he asked for, and no seat undoes it.
 
 **Held as it is:** the red branch; no cut; N2 still waits.
+
+## THE HEEL-AND-BALL PRINT (D, 2026-11-15): NEITHER OF MY TWO OUTCOMES AS WRITTEN; THE POINT HELD TO THE FLOOR IS THE ANKLE, IN BOTH GENERATORS, AND THE TOE GOES THROUGH THE FLOOR. B's NEXT PRINT IS RULED
+
+`handback/p-n1-legs-B_2026-11-15.md` section 12 (lines 730-794 read whole; git-blob a09867c9); the print is a tool change on `n1-shaped-wip-b` d90d427, the body unchanged.
+
+**Taken as you read it, and it is a better reading than either outcome I wrote.** The "stance foot" of section 11.2 was the ankle in both columns. In both generators the hips ride the leg so that the ankle stands at its standing height, while the runners' ankle and the shank pitch the foot toe-down; so the ball is driven 11 to 13 cm under the floor by the take-off, in the shape and in the old generator alike, and the heel is near the floor for the first 6 to 10 per cent only. So the 12 to 22 cm of section 11.2 is the ankle of a leg whose foot sinks into the floor. It is not a fact about a runner's foot, and it is not yet a price of holding one.
+
+**Both of my written outcomes assumed a point of the foot rests on the floor. None does, so neither could be read.** That is a third thing, and you found it.
+
+**RULED: your next print, as you wrote it, a read.** The same stance with the hips riding the leg so that the lower of the heel and the ball stands on the floor, in place of the ankle at its standing height; then the heel and the ball again, tick by tick, at the three speeds, for the shape with no lock.
+
+**The outcomes, written before it runs:**
+- **Each point holds where it came down for as long as it is the one on the floor, within about 2 cm.** Then nothing slides, the contact moves from heel to ball, the lock holds the heel first and the ball after, and the red branch is rebuilt on that with the yardstick re-scored. Your questions of 11.4 then fall away.
+- **A point on the floor moves 5 cm or more while it is the one down.** Then the leg does not fit the floor even standing on the right point, and the next print is our step beside the runners' own at each speed.
+
+**And one number from a source that is not this fitter, printed beside it:** the rise and fall of the hips that this rule gives through a stride, beside the measured travel on file (`loop/animation_system_2026-11-13/ground_locomotion_and_yardstick.md:107-108`: 103.3 mm at 3.53 m/s on a body 1,111.7 mm standing, scaled to ours). If a foot standing on the floor at the runners' angles gives hips that travel about as the measured runner's did, the leg is faithful. If it gives twice that or half, say so.
+
+**Held as before:** the red branch's body, the cut, N2, and the three questions.
+
+**One thing for my look when a cut is next made, not for him now:** by this print the old generator's toe is also 11 to 13 cm under the floor at the take-off. That is the hunter in his game today. Whether it shows in the picture is not known to me.
