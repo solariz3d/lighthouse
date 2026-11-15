@@ -352,3 +352,48 @@ solver will say.
 - `t45_trace.txt` prints one "nearest to the apex" line for each candidate bend the tool tried: **11.08 m is pane E's 45 degree apex
   (-25.04, 77.51)**, which the root hunter never comes near; **0.05 m is the substitute bend the tool took next (-63.19, 5.51)**. The section's
   "about 11 m" is the first; the file's last line is the second.
+
+## The ring for the passes check's ruling (git-blob d6f36223): the direct solve, its two prints, the red tick, the brake row withdrawn
+dreamzone-3 `a-mline` pushed and read back at **b2fc99dad4eba5b42048fec067a56c0baa3f5ee0** (red first aa518ec; the routes' brake row withdrawn
+c86d5ab; the solve b2fc99d). Registered: `registration_banded_solve.md`. checked `b2_rows_red.txt`, `b2_rows.txt`, `b2_chase_tests.txt`.
+
+**1. The solve:**
+- **the line at its least:** ten times the effort moves it **0.0000 m** on all three bends (red on the passes: 0.23 to 0.33 m): green.
+- **the gate:** one plan_to **mean 372 us, largest 596 us** (was 1618 / 1770): green.
+- bends, today's law beside, exit tick from the common start:
+
+| bend | today's law | the solve, way (b) / (a) | the one law 6b4c015 |
+|---|---|---|---|
+| 22 degrees | 0.637 s, exit 724 | **0.271 s, lowest 6.51 / 6.38, exit 669** | 0.321 s, exit 697 |
+| 45 degrees | 1.296 s, exit 1103 | **0.458 / 0.467 s, lowest 7.81 / 7.23, exit 787 / 789** | 0.492 / 0.500 s, exit 789 / 791 |
+| 90 degrees | 0.846 s, exit 871 | **1.108 / 0.917 s, lowest 1.65 / 2.43, exit 955 / 909: slower than today** | 1.183 / 0.967 s, exit 954 / 903 |
+
+- **Registered and not met:** the 90 degree bend no slower than today's 0.846 s. The unwelcome case I named holds: the least-bending line is
+  not the hand line (0.575 s).
+- **Worse than the one law:** route contacts 12 / 5 (were 9 / 4; the routes row red again); the ten routes 85.62 / 80.70 s (were 82.17 /
+  78.41; today 77.11); the 22 degree line has 2 legs over 0.3 m and 3 points short of room (the room row).
+- the side row green. Whole suite 119, 8 failed; nav 34, 0 failed; off means off md5 fa938de4..., 18 SAME.
+
+**The two prints (`ds_prints.txt`, the solve's law):**
+
+| bend | the line's least radius over the whole path | where | the slowest tick within 6 m: the body / the plan |
+|---|---|---|---|
+| 22 degrees | 0.80 m | 1.95 m from the bend's point | 3.74 / 3.61 m/s |
+| 45 degrees | 1.21 m | 2.38 m from it | 2.77 / 3.07 m/s |
+| 90 degrees | **0.74 m** | **0.12 m from it** | **1.65 / 2.38 m/s** |
+
+**What they say about 60,000 against 600,000 passes (inferred, not checked):** nearer the energy's least, the line is slower at the 90 because
+the least of the summed squared curvature is not the least time. Speed is set by the tightest place, and the least-squares line spreads its
+bending but keeps a 0.74 m radius 0.12 m from the 90's point, where the bounds pin it at the inner corner. Braghin's compromise (shortest
+against least curvature) names this. The following loses some as well: at the slowest tick the body is 0.73 m/s under the plan.
+
+**2. The red tick of check 2, read (`ds_red_solve.txt`, the solve's run; the slide law is the same at 6b4c015, whose own build could not be made
+with the current header):** at the red tick (wanted - current) is tiny, (-0.005, 0.007) m/s, while the velocity changed by 0.033 m/s in the
+tick, **7.9 m/s^2, under grip**, about 120 degrees from that dv; touched 0, a clean step. **Neither of the ruling's two cases:** the wall's
+refusal is not in it and the law did not break grip. inferred, not checked (the print lacks the slide after the tick): it is the slide's last
+tick. The heading met the velocity within 3 degrees, the slide cleared, and the plain root law stepped the body. The measure requires a slide
+only before the tick, so it read a step the slide law did not govern, against a dv too small to have a direction.
+
+**3. The routes' brake row** is withdrawn by name (c86d5ab); the row from tick 773's state is the brake's row.
+
+**Next, as ruled:** the price, its own ring: a read of both laws' routes at pane E's 45 degree staging, then five lines, then code.

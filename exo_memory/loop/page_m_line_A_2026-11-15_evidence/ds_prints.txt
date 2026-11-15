@@ -1,0 +1,5 @@
+    22 degrees: the line's least radius over the whole path 0.80 m at (-74.79 42.57) (1.95 m from the bend's point); the slowest tick within 6 m of the bend 725 at (-76.07 43.04): the body 3.74 m/s, the plan 3.61 m/s
+    45 degrees: the line's least radius over the whole path 1.21 m at (-27.42 77.48) (2.38 m from the bend's point); the slowest tick within 6 m of the bend 883 at (-28.72 78.45): the body 2.77 m/s, the plan 3.07 m/s
+    90 degrees: the line's least radius over the whole path 0.74 m at (-11.42 -26.81) (0.12 m from the bend's point); the slowest tick within 6 m of the bend 845 at (-10.59 -27.83): the body 1.65 m/s, the plan 2.38 m/s
+ok    diag_solve_the_90s_least_radius_and_the_slowest_tick
+1 tests, 0 failed
