@@ -3204,3 +3204,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-14 23:2x local (D) · D677 E2 steps 1-3: e2-films-e merged with main (6b07814, rung); L12's switch soft_upper_body (off) draws the hunter byte for byte as main does on his run's 288-frame corner, on differs at every frame; a two-body camera frames the sprinter beside the hunter → `exo_memory/handback/p-d677-e2-E_2026-11-14.md` (addendum 05:2xZ)
 - l12-switch-e 8c4f715 and e2-two-body-e 6cbd665 pushed. The pair film had replayed the record's world settings, so the first "on" was main's: a control that cannot fail proves nothing.
 - **Carry:** a film's control must be shown to differ before its equality counts; and a "framed" count by rays is an upper bound, not frames seen.
+
+## 2026-11-15 00:0x local (D) · D677: every capture that replays a run now takes a world setting its record does not name from the launch's config (the timer excepted); red on a stub, green with 71/71 world_app_tests and 63/63 self-test → `exo_memory/handback/p-d677-e2-E_2026-11-14.md` (addendum 06:0xZ)
+- replay-world-e 2981be1 pushed (lands after l12-switch-e 15cddbc, which carries CHANGELOG.md merge=union).
+- **Carry:** a record keeps what its build knew; a replay must say, field by field, which side a newer field comes from.
