@@ -1,0 +1,43 @@
+    today    : wall contacts above 0.3 m/s 0, head-on ticks 6
+    way (b)  : wall contacts above 0.3 m/s 13, head-on ticks 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1418): CHECK failed: contacts <= 10
+    way (a)  : wall contacts above 0.3 m/s 16, head-on ticks 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1418): CHECK failed: contacts <= 10
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1419): CHECK failed: head_on == 0
+FAIL  mline_on_the_ten_routes_the_root_touches_a_wall_at_most_ten_times_an_arm
+    the line: 127 samples every 0.25 m; R1 4.6 m, LB 0.8 m, R2 8.0 m; samples off the mesh 0
+    way (b) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+    way (a) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+ok    mline_a_fixed_line_north_of_the_post_takes_e_22_degree_bend_within_the_plans_bar
+    22 degrees, today   : to the end; entry 8.60, lowest 3.94 m/s, 0.637 s between the gates, exit gate at tick 724 from the start; contacts 0, head-on 0 (the control)
+    22 degrees, way (b) : to the end; entry 7.45, lowest 3.92 m/s, 0.792 s between the gates (passed 0.01 m from the point); contacts 0, head-on 0; prediction (0.60 s, 6.0 m/s) NOT met; today's law here 0.637 s; exit gate at tick 772 from the start (today's 724)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(228): CHECK failed: r.secs <= today.secs
+    22 degrees, way (a) : to the end; entry 7.45, lowest 3.92 m/s, 0.792 s between the gates (passed 0.01 m from the point); contacts 0, head-on 0; prediction (0.60 s, 6.0 m/s) NOT met; today's law here 0.637 s; exit gate at tick 772 from the start (today's 724)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(228): CHECK failed: r.secs <= today.secs
+    45 degrees, today   : to the end; entry 8.40, lowest 0.71 m/s, 1.296 s between the gates, exit gate at tick 1103 from the start; contacts 0, head-on 4 (the control)
+    45 degrees, way (b) : to the end; entry 8.46, lowest 1.20 m/s, 1.163 s between the gates (passed 0.04 m from the point); contacts 2, head-on 1; prediction (0.60 s, 8.0 m/s) NOT met; today's law here 1.296 s; exit gate at tick 970 from the start (today's 1103)
+    45 degrees, way (a) : to the end; entry 8.46, lowest 1.24 m/s, 1.133 s between the gates (passed 0.04 m from the point); contacts 2, head-on 0; prediction (0.60 s, 8.0 m/s) NOT met; today's law here 1.296 s; exit gate at tick 963 from the start (today's 1103)
+    90 degrees, today   : to the end; entry 7.48, lowest 3.46 m/s, 0.846 s between the gates, exit gate at tick 871 from the start; contacts 0, head-on 0 (the control)
+    90 degrees, way (b) : to the end; entry 7.19, lowest 2.10 m/s, 0.933 s between the gates (passed 0.17 m from the point); contacts 0, head-on 0; prediction (0.70 s, 7.5 m/s) NOT met; today's law here 0.846 s; exit gate at tick 915 from the start (today's 871)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(228): CHECK failed: r.secs <= today.secs
+    90 degrees, way (a) : to the end; entry 7.19, lowest 3.48 m/s, 0.804 s between the gates (passed 0.12 m from the point); contacts 0, head-on 0; prediction (0.70 s, 7.5 m/s) NOT met; today's law here 0.846 s; exit gate at tick 884 from the start (today's 871)
+FAIL  mline_the_line_from_the_corridor_takes_e_three_bends_within_the_plans_bar
+    22 degrees: 126 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(264): CHECK failed: tight == 0
+    45 degrees: 130 points; legs over 0.3 m 0; points with under 0.18 m of room on a side 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(264): CHECK failed: tight == 0
+    90 degrees: 121 points; legs over 0.3 m 1; points with under 0.18 m of room on a side 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(263): CHECK failed: gaps == 0
+FAIL  mline_the_line_is_dense_and_keeps_its_room_from_the_mesh_edge
+    replans 9; crossings of z 42 within the open gap 0; ticks within 0.3 m of the doorway at x -75 26; arrived yes
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(296): CHECK failed: gap_cross >= 1
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(297): CHECK failed: near_door == 0
+FAIL  mline_at_e_22_degree_bend_the_open_side_is_taken_and_not_left_at_a_replan
+    one plan_to for one root chaser: 15 plans, mean 605 us, largest 1090 us (made for every chaser every 0.5 s)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(326): CHECK failed: worst <= 1000.0
+FAIL  mline_the_cost_of_one_line_at_one_replan_is_printed
+    22 degrees: 126 samples; the solve's energy 0.028743, the passes' at 600,000 0.029016; held offsets asking to be let go 0; rounds 71
+    45 degrees: 130 samples; the solve's energy 0.038538, the passes' at 600,000 0.040703; held offsets asking to be let go 0; rounds 97
+    90 degrees: 121 samples; the solve's energy 0.042586, the passes' at 600,000 0.043459; held offsets asking to be let go 0; rounds 8
+ok    mline_the_line_is_at_its_least_by_its_energy_against_the_passes_and_no_held_offset_asks_to_be_let_go
+7 tests, 5 failed
