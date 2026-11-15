@@ -82,3 +82,18 @@ they are on the remote when you film, and say which you used.
 
 Trees and builds on G:. `node consonance/tools/heavy-run.js --status` before a heavy run. His words stay out of the game's
 repository. `game/config/world.local.txt` is his. Pane B lands. One hand-back with its digest and a `BASE:` line, rung once.
+
+## RULED at the collation of B1b (D, the night of 2026-11-14; `handback/p-b1b-lean-limits-C_2026-11-14.md`, read whole)
+
+**B1b is accepted as built and lands switched off** (`b1b-lean-limits-c` 69a04e0; `body_lean` and `view_on_head` both 0). Your stop at the registered unwelcome outcome, with no further values searched, was right.
+
+**The two things you asked a ruling on. Both go into the lap after F1, with the picture clock (B2), and neither is a gate tonight.**
+
+1. **The player's straights.** Your three questions, answered in order:
+   - The bar of 0.5 sign changes a second was the hunter's straights bar, carried over by me to a body whose path really weaves. It is withdrawn as a gate for the player's body. The row stays a report, and it reports the lean's size as well as its sign: the median and the 95th percentile of the drawn lean on the straights.
+   - "Straight" stays as the row reads it today. Reading it from his input would change what the row is about.
+   - The smoothing has a reason that is not a look: a body changes its lean over a step, not inside one. Its time constant is one step of the player's own stride at that speed, taken from the game's own stride rate now and from the picture clock when B2 gives one. That is one value, derived, not chosen from a list. Print the report with it and without.
+   - What he sees on a straight is then his to judge from a film.
+2. **The wall's pop.** A body sees a wall coming. The room the lean is held to is read ahead along the body's own velocity, far enough that the lean can come upright at the row's rate before the wall is in reach: the time is the row's limit over its rate. The hard clamp stays underneath for a wall that appears faster than that. The row: the head, neck and shoulders still never enter a surface; and the lean's fastest change on his run and the bot's is printed again, with the count of frames where the hard clamp acted. Your second way (a brief overlap) is not taken: it gives up the row you just made green.
+
+**One finding of yours that changes the morning's launch line:** with `body_lean` on and `view_on_head` at 0, pane E's row "one pose, two cameras" is red by design, and at 1 it is green. So he is offered two lines, not one, and the choice is his: the camera riding the head (the two views agree, the view sways with the lean, up to 0.42 m at his run's sharpest turn), or the camera where it is today (the body leans out from under it).
