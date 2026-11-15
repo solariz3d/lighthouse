@@ -361,3 +361,14 @@ The old generator is not a bar and is not printed as one.
 - the old build's elbow numbers (mean 90 degrees and the rest) are in the sheet's list of what is not carried over (`:149`).
 
 **For the arms' stage, registered now:** the sheet gains a line for the elbow's range at a sprint from a source (measured data or a published method), found before the stage's page is written. At N2's film the elbow's own range is printed beside that source's. **It failed on his terms if,** at N2's film, the elbows still do not read as swinging.
+
+## AT HIS WORD OF 15:03 (D, 2026-11-15; game brief items 240 and 241): NOTHING MORE WITH THE OLD ANIMATION; THE NEW LEGS ARE FILMED ALONE
+
+**His words:** 14:59 "but isnt that still the old animation system?? what  about the new one?"; 15:03 "well stop working on the old one completely for now wtf".
+
+- **No film, clip, measure or comparison is made with the old animation system from here.** The old body is not set beside the new one in any film for him. This replaces "old beside new" wherever this plan or a packet says it for a cut; the earlier sections keep their words as the trace.
+- **When pane B rings its rebuild, pane E films the newest cut of the new legs alone,** on the course. It goes on his page whether or not the score passes.
+- **The hunter's path and grip line is parked** (`loop/packet_m_line_A_2026-11-15.md`, its last section).
+- **After pane B's ring,** the new system's remaining work is split into parts with a pane named for each (his rule of 2026-10-09), in this plan, before anything is dispatched.
+
+**It failed if** a later lap films, measures or tunes the old animation system, or sets it beside the new one, before he says otherwise.

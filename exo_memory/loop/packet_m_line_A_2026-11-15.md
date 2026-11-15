@@ -394,3 +394,15 @@ His eye in play is the judge the plan names last, and nothing of today's on this
 - **Pane E films the 90 again on 3112032,** the three grips beside today's, the same pinned camera, so that his eye sees whether the floor fix changed what he saw. Its manifests are also the keep-off figures of item 1 for the 90.
 - **It failed on his terms if,** at the next film of the right angle, the hunter still goes wide and loses its speed.
 - **Your ring's own ask (how the body is joined back onto the kept line), from the shelf and not from me:** in the published followers the body is not joined back by a planned stretch at all. Reynolds projects the body's future position onto the path, and inside the path's radius "no corrective steering is required" (`research/path_following_with_inertia_on_a_navmesh_2026-11-15.md:57`, the agent's read). Pure pursuit steers at a point ahead on the line (`:58`). Apollo's stitched trajectory starts at the matched point on the old one and plans from the body only past its drift gate (`:64`, and your own read at source). If your read of the kink shows the join is a planned stretch from the body, these are the forms to set it beside. Whether the root's follower already does one of them is yours to say.
+
+## PARKED at his word of 15:03 (D, 2026-11-15; game brief item 241)
+
+**His words:** "well stop working on the old one completely for now wtf". He had just learned that the body in the grip film is the old animation system.
+
+**For this line of work: it is parked for now.**
+- Commit what you have of section 17's read and of the landing list as they stand, on your page. Ring once with where it stands. Build nothing further.
+- No film of this line is made while the only body that can be drawn on the hunter is the old one.
+- Nothing is deleted or reverted. The scratch is kept as it is.
+- It resumes at his word, or when the new body can be drawn on the hunter.
+
+**Why parked and not only un-filmed:** my reading, said to him as mine: everything this line would bring him next (the re-film, a landing to play the grips) reaches his eye wearing the old body.
