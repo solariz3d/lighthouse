@@ -1,0 +1,5 @@
+    today    : 5 ticks at 0 m/s; 5 falls to 0 from above 0.3 m/s: a refused step 5, a head-on wall 0, off the mesh 0, none of these 0
+    way (b)  : 15 ticks at 0 m/s; 15 falls to 0 from above 0.3 m/s: a refused step 15, a head-on wall 0, off the mesh 0, none of these 0
+    way (a)  : 17 ticks at 0 m/s; 17 falls to 0 from above 0.3 m/s: a refused step 17, a head-on wall 0, off the mesh 0, none of these 0
+ok    m3_read_where_the_speed_falls_to_zero_on_the_corner_routes
+1 tests, 0 failed
