@@ -3218,3 +3218,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-15 06:4x local (D) · D677: E3's keys F6-F9 and --world pushed (d3a5041); pane C's 77-minute hunter film hang was an end-hash loop waiting on a record that an ended run could never finish (fixed 95b3406, reproduced 360 s against 65 s); his flicks and look down filmed old beside new from a camera fixed to the travel, lit; two streaming rows tagged machine-bound → `exo_memory/handback/p-d677-e3e4-E_2026-11-15.md`
 - With body_look on and view_on_head off, E1's row is RED: the camera leaves the drawn eye by up to 0.155 m.
 - **Carry:** a loop that waits for a record to finish must also stop when the run has ended; and in PowerShell take $p.Handle before WaitForExit, or the exit code is empty.
+
+## 2026-11-15 07:4x local (D) · D677: the set course for the new animation system filmed "before": six stations in seed 1 (straight and turn, sidestep, backwards, stop and start, stair, doorway), the runner and the hunter, a camera fixed to the travel, lit; the doorway's duck parked unbuilt → `exo_memory/handback/p-d677-course-E_2026-11-15.md`
+- e6-course-e 52db98d pushed; the whole course G:\consonance-scratch\course-before\the_course_before_144fps.mp4.
+- **Carry:** a fresh tree on G: has no generated textures (assets/textures is ignored by git): copy them in before any film for his eye, or it is flat colours.
