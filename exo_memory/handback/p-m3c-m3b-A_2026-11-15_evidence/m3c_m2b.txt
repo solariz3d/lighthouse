@@ -1,0 +1,20 @@
+    on the root, main's world: 96 routes; hot scraped more on 0, careful sooner on 0, the same time on 96; head-on 25 against 25; 1453.5 s against 1453.5 s
+ok    m2b_the_sprinter_row_printed_with_the_sprinter_on_the_root
+    way (b)  : the ten routes' fingerprint badb2d59a333f798 (at 3c57cf7: f99a18a99e8e6cfb); the ten routes' time 100.28 s
+    way (a)  : the ten routes' fingerprint a974d68e7ab2a78d (at 3c57cf7: 14b68c2e037b78ec); the ten routes' time 96.28 s
+ok    m2b_the_hunter_on_the_root_walks_the_ten_routes_to_the_same_fingerprint_as_before_every_kind_could_take_it
+    sprinter off the root: 10 of 10 routes walked, 75.59 s in all, 0 head-on wall ticks, peak sideways 0.00 m/s^2
+    sprinter on the root : 9 of 10 routes walked, 99.03 s in all, 2 head-on wall ticks, peak sideways 9.81 m/s^2
+ok    m2b_the_sprinter_on_the_root_walks_the_ten_routes_reported
+    a kind of its own row (grip 0.8): off the root 10 of 10 routes, on it 9; peak sideways 7.85 m/s^2 against its grip 7.85; root ticks 24289
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1042): CHECK failed: lost == 0
+FAIL  m2b_a_new_kind_is_a_row_and_takes_the_root_by_its_numbers_alone
+    the scripted bends' fingerprint b376f9cd1d75653e
+ok    m2b_the_hunter_on_the_root_takes_the_scripted_bends_as_before_every_kind_could_take_it
+ok    m2b_each_kind_is_put_on_the_root_by_its_own_switch_and_every_kind_is_off_by_default
+    sprinter told 9 m/s   : peak sideways 9.81 m/s^2; step 0.5616, 0.999 of the law's bound; feet 0.000; re-point 0.000000; widest 0.90 m; through yes
+    sprinter told 5.42 m/s: peak sideways 9.81 m/s^2; step 0.5110, 0.999 of the law's bound; feet 0.000; re-point 0.000000; widest 0.08 m; through yes
+ok    m2b_the_sprinter_on_the_root_takes_the_3_m_corner_within_the_laws_bounds
+    seed 5, flee, normal, 90 s: off chase 8a76f88756bd4716; sprinter on the root 01310fb08a985e55 / 01310fb08a985e55
+ok    m2b_a_run_with_only_the_sprinter_on_the_root_is_not_the_old_chase_and_plays_the_same_twice
+8 tests, 1 failed
