@@ -193,3 +193,11 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
 
 - The laps B1 to B8 of this plan and every section above about the lean, the look, the clock and the runner are replaced by `loop/plan_animation_restart_2026-11-15.md`: the old animation is scrapped and the new system is built from scratch as one module. The sections stay as written, as the record of what was tried.
 - The movement half (pane A's root, M1 to M5 and what follows) stands.
+
+## AT THE BRAKE (D, 2026-11-15): THE MOVEMENT LINE, READ BY ITS OWN REGISTERED BAR, IS GETTING WORSE; THE PATCHING STOPS
+
+- **The bar, registered at the collation of E2 before M3 came back:** on pane E's 22 degree bend with the root on, never under 1.2 m/s and through in no more than today's 0.889 s. **Fired at 01:06 and fired at every reading since:** 2.049 s; 1.465 s (a law that broke its grip, withdrawn); 1.917 and 1.826 s; 2.215 and 2.382 s with the brake (`handback/p-m3c-m3b-A_2026-11-15.md`, its last part).
+- **Each law was more right by its own falsifier and the bend was slower after it.** That is what this room's own rule calls a degenerating line: patches that survive their tests and move the headline the wrong way.
+- **My reading, set down so it can be broken:** the new body is right and the path it is given was made for the old mover (corners on the mesh's edges at a wall's end, sides of a post swapped at a replan, drops drawn through solid). 166 of 735 drops are not taken by a body on the root.
+- **Ruled:** no more is built on the contact laws. Pane A writes one page before any code, on a path made for a body with grip, with its predictions for the three bends and the drops written first (`loop/packet_m_line_A_2026-11-15.md`). The bars above are the judge and are not moved.
+- **What would show this reading wrong, registered:** a path with room and radius through the 22 degree bend that the root still takes in more than 0.889 s. Then the root law is the cause, as this plan's second failure line already says.
