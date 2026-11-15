@@ -66,3 +66,11 @@ down at the start and the end. It lands nothing.
 - One switch for anything new, off by default; here nothing new is drawn, so none is expected.
 - Pane B lands it. The hand-back is one file under `exo_memory/handback/`, its digest in the ring with the function named, a
   `BASE:` line for each repository changed, and a map line.
+
+## AMENDED 19:1x on 2026-11-14 (D): the pair film must also film a live chaser, and that form comes first
+
+- **Why.** Pane A's M2 could not film the same corner under two speed models: `--capture-corner` stages a scripted hunter on a fixed curve at 6 m/s (`game/world/offscreen_models.cpp`), and no offscreen mode films a live chaser at a corner, so `--chase-speed` changes no frame there (`handback/p-m2-speed-plan-A_2026-11-14.md:116-120`, read by me). Every film of old beside new that he is owed in the morning needs this.
+- **R3 gains a form, built first:** the tool steps a live `chase::Chaser` of a named kind through a real corner (a route of pane A's, or a window of a kept run), under a speed model given as `--chase-speed "<text>"`, and poses and films the figure from it, with the same manifest and joint table. Two runs with two models give the two sides of a pair.
+- **Its row:** the filmed chaser's positions are the chase's own for those ticks (print the largest difference), and with no model given the film is the same as today's chase to the bit.
+- **Order in this wake now:** R0 and R1 as written; then this form of R3; then R2 and the first-person pair; then the cost reading of L12.
+- Pane A names the exact routes and model lines in its next hand-back; until then use route 0 of the ten corner routes with `root_law=1` on a build of `a-m1-root` 0ba17ea, which is on the remote.
