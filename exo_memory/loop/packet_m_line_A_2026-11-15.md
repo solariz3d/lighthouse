@@ -313,3 +313,5 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 **5. Pane E's 45,** where the root goes round and reaches the player 2.2 s after today's: the two ways by the line's own time are for that, and they wait for 1 and 2.
 
 **The ring:** one, with both reads.
+
+**ITEM 4 ABOVE IS HELD BY THE CHAIR (13:23, D) AND IS NOT TAKEN.** The chair sent this ruling as written with that one change: the bars I withdrew are not withdrawn. Whether the new hunter may be slower than today's is a call about how the game feels, and it is his. It is put to him. Until he answers, report against both: the plan's bar, and each bend's exit and the routes' total beside today's. The chair is right; I withdrew a bar of mine in the ring where it was failing.
