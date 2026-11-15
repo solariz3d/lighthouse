@@ -3212,3 +3212,5 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-15 00:4x local (D) · D677 step 4: on A's M3 (aad376b) the root laws no longer stand dead at the 22-degree bend (0.54 and 0.87 m/s) but still miss both bars there (under 1.2 m/s; 2.05 and 2.16 s against 0.889) and at 45 degrees (0.58, 0.65); 90 degrees passes → `exo_memory/handback/p-d677-e2-E_2026-11-14.md` (addendum 06:4xZ)
 - Nine films, 27/27 rows GREEN, the same three bends; local build ff6151c; clips in G:\consonance-scratch\e2-film-m3.
 - **Carry:** before saying "unchanged", diff every row of the old table against the new; one moved time hid in "everything else".
+
+## 2026-11-15 03:1x local (D) · D677: B's B7 films made into four labelled clips for his eye (flicks off beside on, the look down three ways; real time and 3x slower) → `exo_memory/handback/p-d677-b7clips-E_2026-11-15.md`
