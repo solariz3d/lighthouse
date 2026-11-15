@@ -207,3 +207,53 @@ printed beside them.
 **Then:** merge main ae74f0c into b7-look-b (697570d), and the rest of the lap.
 - **The films include a burst of his own flicks from a kept run:** the law off beside on, first person beside outside.
 - Pane O lands it; body_look stays off.
+
+## 9. The chair's ruling of 08:37:19Z: row 3 on the law's own chest, and the rest of the lap (registered before any of it runs)
+
+**The check (the chair's words):** "the same row on the LAW'S OWN chest yaw … on the law's chest, a growth over 0.0001 degrees counts.
+None is expected."
+- **The law's chest:** `BodyLook::chest`, the state `Body` steps each tick, read after each tick through a read-only accessor added
+  for it. Its carried rate is `BodyLook::chest_rate`.
+- **Away:** as in §8, d·sign(g) < −1e-4 rad. Here d is the law's chest change over the tick, and g is the view now less the law's
+  chest the tick before.
+- **Growth:**
+  - when the tick before moved the same way: |d now| − |d before|;
+  - when it moved the other way or not at all: |d now|.
+  - **A growth over 0.0001 degrees counts.** No band is added after the result.
+- **Outcome 2:** if no tick counts, the 15 are the drawn pose's own movement. Row 3 then reads the law's chest, with the drawn
+  shoulders' row (law off, main's) printed beside it.
+- **Outcome 3:** if any counts, it is a fault in the law's step. I RING AT ONCE, printing for each counting tick:
+  - the view at the tick before and at the tick;
+  - the chest;
+  - the carried rate.
+
+**The rest of the lap, now (§5 of the hand-back), and how each is read:**
+
+- **The collar's share** (packet row 2, the picture). A looking-down moment is added to `--capture-fpbody`: 60 degrees down, standing
+  and moving forward at a run, each drawn with the body and without it. It prints:
+  - the cover over the whole picture, its middle half and its bottom quarter (L174's measure, `cover()`);
+  - each toe in or out of the view;
+  - the camera's distance from the drawn eye.
+  It is drawn three ways, by config folders on G::
+  - **main:** body_look 0, view_on_head 0;
+  - **the lap:** body_look 1, view_on_head 1;
+  - **what he sees if he turns only the look on:** body_look 1, view_on_head 0.
+  The packet's row: with the camera riding the eye, the cover of the bottom quarter falls against main, and the toes come into the
+  view. Red on main if the toes are out there. It is printed, not asserted. The cover counts the whole body, so "the collar's share" is
+  read as the bottom quarter's cover, said so beside it.
+- **The pair check** (packet row 6): `--pair-check` on his run 185333 with body_look 1 and view_on_head 1. Green as `--pair-check`
+  defines it; the camera-to-drawn-eye bound (0.001 m) is expected to hold with the camera on the drawn eye.
+- **The films, for his eye** (`--capture-pair`, first person beside outside, the law off beside on):
+  - a burst of HIS OWN FLICKS from a kept run: a window round merged turns that reach the 50-degree limit, chosen from the look-check's
+    printed ticks;
+  - and, if his kept runs have one, a stretch looking 45 degrees or more down while moving. The look-check prints the longest such
+    stretch.
+  - Where no such stretch exists, the looking-down stills above stand in, and I say so.
+  - E's film light lights only the corner film, so these films go without it.
+- **The hand mutants (§3 of this file), each applied, built and reverted by a script that counts applied / caught / NOT APPLIED.** The
+  row expected to catch each:
+  1. the law's spring removed (the chest = the look): the twist, on his run 185333;
+  2. the hips' limit removed: the limit row on his run 184242 (strafing), and body_tests row 1's hips assert;
+  3. the switch ignored (always on): body_tests row 4, the look off is main's to the bit;
+  4. the chaser's caller reverting to `kLookChestShare`: **no row reads a chaser's look today**, so it is expected NOT to be caught. If
+     it survives, it is reported as surviving, not hidden.
