@@ -59,3 +59,30 @@ to be seen failing first. It is judged by a look from outside, yours and then hi
 His game running holds nothing but the build of his own Dreamzone copy while a Dreamzone of his runs. No frame-time figure
 while a game of his is up. Trees and builds on G:, through the lock's own wait. His words stay out of the game's repository.
 One short hand-back: what you named, what you read, what you changed, where the film is.
+
+## AMENDED at his word of 05:33 (game brief item 231): one film comes first, before step 1
+
+**His words:** "the runner just doesnt look like a natural body moving, its buggy and glitchy, i feel like we might need to do
+another pass on human biomechanics or whatever tf open source proc gen we could learn from"
+
+**What produces it, read by me:** the runner's body is not drawn the way the hunter's is. The hunter's run is `gait_pose`,
+"built from recorded runners' curves" (`loop/animation_system_2026-11-13/00_system.md:53-55`; `game/world/stage.cpp:286` at
+48ad21d). The runner's is `Body::pose`, "hung from the camera's eye" (`00_system.md:55`, `:98`; `game/body.cpp:266`). The
+design chose that when first person was the only view that counted.
+
+**So, first, an experiment for his eye, nothing landed and nothing kept if it does not serve:**
+- On one of his kept runs, draw the runner's model with the hunter's generator: `gait_pose` on the runner's own rest
+  skeleton, at the runner's feet, with its heading, speed and the stride phase the camera already keeps. The shared lean on
+  top if it is to hand. Nothing else.
+- Film it from a fixed outside camera, lit and labelled as lit, beside the runner as it is today, same run, same stretch: a
+  straight sprint, a turn, a stop and a start. And the first-person view from that body's eye beside today's.
+- This is a scratch edit for a film, as your floor experiment was. No row, no switch, no branch to land.
+- **Named before it is made, so the film cannot be read to taste afterwards:** if the runner drawn this way looks like a
+  person running, the runner's generator is what changes and the look law is built on that body. If it does not, the
+  generator is not the cause and the reading pass he names is the next step.
+
+**Then steps 1 to 4 above, on whichever body his eye picks.**
+
+**A narrow read rides with this lap, one reader, not a swarm:** the first pass held these only second-hand
+(`scout_player_first_person.md:289`, `:307`): how games that draw one body for both views handle first person (what the eye
+rides on, how the head is steadied, what is hidden); and how eyes, head, chest and hips share a look. Cite each page opened.
