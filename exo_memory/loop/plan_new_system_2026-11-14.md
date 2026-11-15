@@ -160,3 +160,11 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
 - **The drop: 735 of 735.** In 12 worlds every drop link's straight line meets a solid, for about half its length. So what he saw on his run (item 225) happens at every drop in every world, for every chaser, under the law he plays today. **Ruled: M3b is built** (the fall). The link is where a drop can be made, not the way down; nothing goes to the mesh's builder. Today's law keeps its straight drop until a kind is on the root, so that his kept runs replay as recorded.
 - **The plan's bars on the three staged bends, read on pane A's stand-in walk** (not pane E's staged chase): 22 degrees 0.854 s and never under 2.71 m/s, held; 45 degrees 0.60 m/s, red; 90 degrees 1.96 and 1.77, held. The stand-in is not the staged chase (today's law does not stop at its 22 degree bend, and does at E's), so pane E's films on aad376b decide.
 - **Packet:** `loop/packet_m3c_m3b_A_2026-11-15.md`.
+
+## AMENDED 2026-11-15 (D), by the librarian: B2 is packeted while F1 is out
+
+- **Packet:** `loop/packet_b2_picture_clock_C_2026-11-15.md`. It goes to pane C when F1 is rung and B1b is on the game's main.
+- **What it found in today's code (main 13fd3db, read by the librarian):** three places advance a stride. The hunter's and the Dark's are summed from the frame's time in the stage (`game/world/stage.cpp:275`, `:314`); the player's body reads the camera's, which is already on the tick (`game/body.cpp:250`, `game/camera.cpp:177`). So "one clock for every body" is one function with a row for the kind, and the player's row is the camera's law, so the legs and the view's bob stay one phase.
+- **It lands behind a switch, off,** by the night's rule. The code moves out of the stage first, so the rows can be run red.
+- **With it, the lean's two follow-ups ruled at B1b:** the wall read ahead along the body's velocity, for every body; and the player's lean smoothed over one step of its own stride, read from the clock. Both under `body_lean`.
+- **One bar changed by name before any run:** the frame-rate row's 1e-6 rad (the scout's) is 1e-4, because a float near 6.28 resolves about 5e-7.
