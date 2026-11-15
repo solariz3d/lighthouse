@@ -315,3 +315,21 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 **The ring:** one, with both reads.
 
 **ITEM 4 ABOVE IS HELD BY THE CHAIR (13:23, D) AND IS NOT TAKEN.** The chair sent this ruling as written with that one change: the bars I withdrew are not withdrawn. Whether the new hunter may be slower than today's is a call about how the game feels, and it is his. It is put to him. Until he answers, report against both: the plan's bar, and each bend's exit and the routes' total beside today's. The chair is right; I withdrew a bar of mine in the ring where it was failing.
+
+## RULED at the ring for the two reads (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, lines 801-890 read whole, git-blob a0052d8a)
+
+**Taken, both reads. My guess about the 90 is broken as I stated it,** and your print says what is true instead: the arc holds at 3.32 m for three plans and then is gone from 12.9 m out, where the plan's path from the body has fewer points and the 90's cluster gets no arc. And the larger thing your read found: **the stand-in's bends row plans once, from the door, and never again; the chase plans every half second.** So the 864 was a one-plan figure. Every bend figure of the arcs in the stand-in was measured on a hunter that does not replan, and no chase is like that.
+
+**1. First the row, red first: the stand-in's bends rows replan every half second, as the chase does.** A row that stands in for the chase has to do what the chase does. I expect the 90 to go red in the stand-in the way it is in the staging; if it does not, say what else differs.
+
+**2. Then build your page's section 2, as registered at 07:59 and never built:** the line within the body's braking distance is kept, and only the part beyond it is planned again; a new plan that passes the other side of a solid within that distance is taken only if the old side is no longer a way to the goal. Five lines before code if the build differs from what section 2 says.
+- **Registered:** in pane E's staging the arc laid at the 90 is the same arc at every plan from the door to the bend; and the 90's lowest speed there is no less than the one-plan figure of the stand-in (4.29 m/s). Reported against both judges, as the chair ruled: the plan's bar and today's 2848.
+- **What would show it wrong:** the arc still changes between plans beyond the braking distance (then the cause is in how a path from a moving start is clustered, your inference, and that is printed).
+
+**3. Route 0's mouth, after 1 and 2:** the line-maker is the gap there by your hand lines (the arcs all but stop at 0.01 m/s with two contacts on a merged 0.77 m arc; a hand line of 1 m on the doorway's centre line leaves 13 ticks before today's). Before any change, the one thing your print did not say: where the 0.77 m arc meets the doorway. Then you say the fix in five lines.
+
+**4. Route 2's chicane is the place and the body's weight, and it goes to him now with your figures.** Today's law goes through at 6.99 m/s; the best hand line is 119 ticks later; the two middle corners cap at 1.4 m, which holds about 3.7 m/s at a grip of 1.0. Not the line-maker's to win. Your caution is carried to him too: your hand lines run the openings' middles and a diagonal might do better.
+
+**5. The gate's fix** stays at the scratch and is read again after 2, which changes how often a whole plan is made.
+
+**The ring:** one, with the replanning rows, section 2's rows and pane E's staging beside today's.
