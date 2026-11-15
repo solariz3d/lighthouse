@@ -508,3 +508,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-15: E3 (the picture switches by key) landed on the game's main as 48ad21d on its build and named rows, at his word of 03:45; his seven runs replayed the same to the bit with 56-828 flips each; his copy built "up to date". An incremental build of his one copy is NOT a heavy run (COMMITTEE.md:93-95): run it directly at BelowNormal, never queued behind suites.** Could be wrong for a cold build, which can run for minutes, but this one took 29 s.
 → `exo_memory/handback/p-land-e3-O_2026-11-15.md`
+
+**2026-11-15: the look back's split-second slow-down is the SIMULATION losing about 63% of the speed in one tick at the floor's millimetre seams (a step up counted only above 5 mm), not the glance or the frames; the border while looking back is new picture entering at every edge as the view recedes.** Both are fixed on look-residue-o 26830ba. The seam fix moves the hunter-lean row's 8-of-24 form from 13 to 7, through a faster flee bot, so it needs a ruling. Could be wrong that he felt the seams and not something else, but his inputs were steady through every dip.
+→ `exo_memory/handback/p-lookback-residue-O_2026-11-15.md`
