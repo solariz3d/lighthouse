@@ -136,3 +136,12 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
 - **A lap this found, added to the body's list for every body: the body follows the look.** The view's pitch does not reach the body today, so looking down bends nothing. One function spreads a look over neck, chest and hips for any body: the player looking down at his own legs (his item 159), a chaser's head on its target. It is laps L19 and L23 of the path of record made one, and it comes after B1. Owner named when a pane is free.
 - **The film tool exists and is not yet fit for his eye:** dark outside frames, and no way to put two laws through the same corner. Packet E2: `loop/packet_e2_films_for_his_eye_E_2026-11-14.md`.
 - **L12 (B5 above):** its cost reading is in and shows nothing on the card. It may land tonight behind its switch, off, if off draws exactly as main does; pane E says whether it has one.
+
+## AMENDED at the collation of B1 (D, the night of 2026-11-14; `handback/p-b1-lean-C_2026-11-14.md`)
+
+- **B1 is back and accepted:** one function for every body (`game/body_lean.h`), the feet held, the view unmoved, behind `body_lean`, off. Branch `b1-lean-c` a0996d3; pane B lands it in its turn.
+- **What it showed:** true to the physics, the lean lays a body down, because the chase and the player's controller turn at about 1 g and more. The hunter's head goes into the corridor wall at grip 1.0. In first person the body leans out from under the camera by up to 1.24 m.
+- **B1b, packeted** (`loop/packet_b1b_lean_limits_C_2026-11-14.md`): the lean yields to walls; a limit in each kind's row (the player's body 15 degrees, a human runner's; a chaser its own grip); the player's body does not rock on straights; the view can ride the head on a dial that starts at 0.
+- **For pane A's root, from the same finding:** how far a body leans is how hard it turns. Under the root a chaser turns at its grip at most, so its lean is at most `atan(grip)`; and the line the root takes through a corridor decides whether there is room for that lean. Read at M5 (re-tuning), with the films.
+- **The forward lean stays per body until B4,** and the D675 line "63 to 75 where 51 is asked" is withdrawn by its author as a description of the game.
+- **B2 (the picture clock) follows B1b.**
