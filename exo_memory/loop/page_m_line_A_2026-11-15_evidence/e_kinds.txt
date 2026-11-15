@@ -1,0 +1,4 @@
+    untaken drops 166: a low wall (clear at 1.2 m or lower) 166; a higher wall with an opening above (clear by 2.5 m) 0; no opening by 2.5 m 0; clear even at the feet 0
+    the lowest clear height: 0.05 m: 0; 0.30 m: 0; 0.60 m: 0; 0.90 m: 0; 1.00 m: 0; 1.10 m: 19; 1.20 m: 147; 1.40 m: 0; 1.60 m: 0; 1.80 m: 0; 2.10 m: 0; 2.50 m: 0;
+ok    m3e_scratch_the_untaken_drops_by_kind
+1 tests, 0 failed
