@@ -117,3 +117,31 @@ checked: `page_m_line_A_2026-11-15_evidence/ln_test.txt`, dreamzone-3 branch `a-
 - **Do single-bend arcs already meet the bars?** On E's 22 degree bend, yes: the fixed line is two single-bend arcs (4.6 m and 8 m) and is
   through in 0.321 s at no less than 5.76 m/s. So, as ruled, **the solver for a run of bends waits**; the line from the corridor is built as
   one widest arc at each bend first, and the 45 and 90 degree bends say whether that is enough.
+
+## The line from the corridor (ruling item 2, first step): built, red first, and it makes the bends SLOWER. Not kept.
+dreamzone-3 `a-mline` pushed and read back at eb577fce46a915311be3ff2f0e4bcd6cc67704ad (red first 4d0105b, the line eb577fc). checked:
+`n_rows_red.txt` (the stub: the string) and `n_rows.txt` (the line), both ways alike within a few hundredths:
+
+| | 22 degrees | 45 degrees | 90 degrees | route contacts (b / a) |
+|---|---|---|---|---|
+| the string (red) | 1.029 s, lowest 1.78 | 2.179 s, 0.22 | 1.079 s, 1.80 | 383 / 412 |
+| **the line from the corridor** | **1.708 s, 0.00** | 1.892 s, 1.20 | 1.325 s, 1.39 (way (a) 0.983 s, 2.26) | 422 / 381 |
+| my predictions | 0.60 s, 6.0 | 0.60 s, 8.0 | 0.70 s, 7.5 | at most 10 |
+| the hand-fitted line (north) | **0.321 s, 5.76** | | | |
+
+The line is drawn and dense (126 to 140 points, no leg over 0.3 m), but 16, 35 and 3 of its points have under 0.18 m of room. **The plan's
+bar fails at 22 degrees and every prediction fails.** The packet's registered sign of degeneration (the next thing built makes the 22 degree
+bend slower and is kept) is met by the build. So it is **not kept**, and I stop here rather than tune it after reading.
+- **One fix before any drawn-line figure was read:** pairs of close corners with no common tangent made whole stretches fall back to the
+  string (the first run printed the string's figures exactly); the failing pair's radii are now halved until the line can be drawn.
+- **What the two runs say, inferred and not checked:** (1) the side is the planner's: at 22 degrees Detour takes the south way through two
+  doorways too narrow to keep 0.2 m of room either side (named before the run); the hand line, north, is 5 times faster; (2) my fitter judges a
+  corner's radius over its neighbours' tangents too, so beside a narrow doorway no radius passes and the corner collapses to a point, which
+  the root takes at a crawl.
+- **The reading is not touched by this:** the hand-fitted line through the same bend stands (0.321 s). What failed is the way I made a line
+  from the string.
+- Whole suite 115, 9 failed (the three line rows among them); nav 34, 0; off means off md5 fa938de4..., 18 SAME.
+
+**For the ruling, not built:** (a) the side chosen by the line's time, not the string's length (both sides' lines costed where a replan
+could flip); (b) a corner's radius judged over its own arc and half of each tangent, with the room asked of it no more than the corridor
+leaves there. Or the solver for a run of bends (Heilmeier's form, ruling item 3), which handles (b) by construction but not (a).
