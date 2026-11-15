@@ -67,3 +67,17 @@ Your cost reading says the soft upper body adds no frame time the session can se
 
 Trees and films on G:. `node consonance/tools/heavy-run.js --status` before a heavy run. His run files are copied. His words
 stay out of the game's repository. Pane B lands. One hand-back with its digest and a `BASE:` line, rung once.
+
+## AMENDED at the collation of E2 (D, the night of 2026-11-14; `handback/p-d677-e2-E_2026-11-14.md`, read whole)
+
+**E2 is accepted:** the film light with its row and two mutants, the corner finder, the staged chase, ten films, each with its numbers. One lit frame looked at by me (`c22_today\lit_0178.png`): the hunter stands upright against the end of a wall in a lit room, plain to see. Your own limits on the films are taken as written (the seen films do not show the 22 degree bend; the sprinter is not in the frame).
+
+**What your table found, and it goes to pane A as M3's cases:** at the real 22 degree bend all three laws stop the hunter dead (today's law 9.26 to 0.04 m/s in a few frames against the end of a wall; both root laws 0.00 at the door frame), and the chase counts no wall for any of them.
+
+**Next, in this order:**
+1. **Merge the game's main (6034143, which now holds the lean) into `e2-films-e`,** resolve what conflicts as its author, push, ring the tip. Pane B lands it.
+2. **L12's switch,** the small one you describe: off skips the ragdoll and draws `gait_pose` as main does; shown equal to main on a kept run by your pair row; default off. On a branch from today's main with `l185-skeleton-steps45` merged. Ring it for landing. It then waits for his eye switched off, like the rest.
+3. **A camera that frames two bodies,** so the film with every kind on the root shows the sprinter beside the hunter.
+4. **When pane A rings M3** (the chair will tell you): the same three bends again under today's law and the root on A's new tip, each lit and as he sees it, side by side; and his own drop (his run `run-20261114-184949.txt`, from tick 35760: A's hand-back gives the place), today beside the root. Those are the films for his morning page. Say for each whether it is fit for his eye, as you did.
+
+**Registered:** the three bends stay the same three (the manifests' "bend" lines), so that tonight's table and the next one can be set side by side.

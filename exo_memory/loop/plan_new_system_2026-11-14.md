@@ -145,3 +145,10 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
 - **For pane A's root, from the same finding:** how far a body leans is how hard it turns. Under the root a chaser turns at its grip at most, so its lean is at most `atan(grip)`; and the line the root takes through a corridor decides whether there is room for that lean. Read at M5 (re-tuning), with the films.
 - **The forward lean stays per body until B4,** and the D675 line "63 to 75 where 51 is asked" is withdrawn by its author as a description of the game.
 - **B2 (the picture clock) follows B1b.**
+
+## AMENDED at the collation of E2 (D, the night of 2026-11-14; `handback/p-d677-e2-E_2026-11-14.md`)
+
+- **The plan's second failure line now has a way to be read before he plays:** "It failed on his terms if, after M1 to M3, he plays it and still names the stop, pivot and go at a corner." Pane E's staged chase films three real bends (22, 45 and 90 degrees, seed 1) under any law, with the entry speed, the lowest speed and the time through each in the manifest.
+- **Read tonight, before M3:** at the 22 degree bend today's law and both root laws all come to a stop (0.04, 0.00, 0.00 m/s), against the end of a wall or a door frame, with the chase counting no wall. On all three bends the root is slower through than today's law. So M1, M2 and M2c have not yet removed the stop he named; M3a (a refused step is a contact) is aimed at exactly that.
+- **Registered now, before M3 is back:** after M3, on these same three bends with the root on, the hunter's speed never reads under 1.2 m/s, and it is through the 22 degree bend in no more time than today's law takes (0.889 s). If either fails, it is rung as fired, and the films go to him as they are.
+- **The root enters the 22 degree bend at 4.44 m/s where today's law enters at 9.19.** Not explained. For pane A to read.
