@@ -1,0 +1,3 @@
+  2400 rays from 300 places: 791 reached 6 m, 1609 met the edge (longest 5.98 m); on the flat 1586, of which 5 cm short on the mesh 1586 and 25 cm beyond off it 1586; 23 on a slope or step
+ok    open_along_is_the_free_distance_to_the_mesh_edge_and_no_further
+1 tests, 0 failed

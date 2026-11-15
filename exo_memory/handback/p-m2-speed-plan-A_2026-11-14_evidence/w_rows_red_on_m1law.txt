@@ -1,0 +1,43 @@
+      point 0 (-64.50, -67.50): 28.37 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 1 (-63.44, -65.74): 27.08 m from the contact, room 4.03 m, grip speed 8.00 m/s
+      point 2 (-63.19, -65.54): 26.82 m from the contact, room 4.71 m, grip speed 8.00 m/s
+      point 3 (-38.84, -63.49): 2.39 m from the contact, room 2.17 m, grip speed 8.00 m/s
+      point 4 (-36.29, -62.59): 0.48 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 5 (-35.99, -62.54): 0.70 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 6 (-16.99, -62.54): 19.51 m from the contact, room 6.00 m, grip speed 7.91 m/s
+      point 7 (-16.69, -62.84): 19.80 m from the contact, room 6.00 m, grip speed 7.83 m/s
+      point 8 (-16.50, -70.50): 21.34 m from the contact, room 0.90 m, grip speed 8.00 m/s
+    route 0's corner: slowest grip speed inside 3 m 8.00 m/s; entered at 8.87 m/s (its plan asked 0.00); head-on ticks within 3 m 7; walked to the end in 8.62 s
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(650): CHECK failed: near_hits == 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(651): CHECK failed: entry <= 1.05f * allowed
+FAIL  m2_w2_the_grip_root_brakes_in_time_for_route_0s_corner_and_does_not_meet_its_wall
+    route 0 corner 0 (point 7, room 6.00 m, at 7.12 s of 8.26 s) root off: lowest 2.16 m/s, grip allows 7.83, UNDER 0.8
+    route 0 corner 0 (point 7, room 6.00 m, at 7.03 s of 8.62 s) root on : lowest 0.92 m/s, grip allows 7.83, UNDER 0.8
+    route 1 corner 0 (point 8, room 3.72 m, at 7.71 s of 9.21 s) root off: lowest 1.19 m/s, grip allows 6.56, UNDER 0.8
+    route 1 corner 0 (point 8, room 3.72 m, at 7.35 s of 8.78 s) root on : lowest 1.96 m/s, grip allows 6.56, UNDER 0.8
+    route 2 corner 0 (point 7, room 3.38 m, at 5.96 s of 9.49 s) root off: lowest 1.19 m/s, grip allows 6.57, UNDER 0.8
+    route 2 corner 1 (point 11, room 6.00 m, at 8.78 s of 9.49 s) root off: lowest 4.67 m/s, grip allows 8.00, UNDER 0.8
+    route 2 corner 0 (point 7, room 3.38 m, at 6.62 s of 10.62 s) root on : lowest 0.77 m/s, grip allows 6.57, UNDER 0.8
+    route 2 corner 1 (point 11, room 6.00 m, at 9.68 s of 10.62 s) root on : lowest 4.48 m/s, grip allows 8.00, UNDER 0.8
+    route 3 corner 0 (point 7, room 3.53 m, at 5.92 s of 6.67 s) root off: lowest 2.87 m/s, grip allows 6.30, UNDER 0.8
+    route 3 corner 0 (point 7, room 3.53 m, at 6.70 s of 8.04 s) root on : lowest 0.00 m/s, grip allows 6.30, UNDER 0.8
+    route 4 corner 0 (point 10, room 2.60 m, at 4.82 s of 6.26 s) root off: lowest 1.44 m/s, grip allows 4.56, UNDER 0.8
+    route 4 corner 0 (point 10, room 2.60 m, at 5.33 s of 6.95 s) root on : lowest 0.00 m/s, grip allows 4.56, UNDER 0.8
+    route 5 corner 0 (point 2, room 2.69 m, at 0.89 s of 5.80 s) root off: lowest 0.04 m/s, grip allows 5.78, UNDER 0.8
+    route 5 corner 0 (point 2, room 2.69 m, at 1.17 s of 6.16 s) root on : lowest 0.00 m/s, grip allows 5.78, UNDER 0.8
+    route 6 corner 0 (point 4, room 3.28 m, at 3.29 s of 5.55 s) root off: lowest 4.36 m/s, grip allows 6.78, UNDER 0.8
+    route 6 corner 0 (point 4, room 3.28 m, at 3.48 s of 5.94 s) root on : lowest 4.31 m/s, grip allows 6.78, UNDER 0.8
+    route 7 corner 0 (point 2, room 3.16 m, at 5.31 s of 10.81 s) root off: lowest 3.96 m/s, grip allows 6.26, UNDER 0.8
+    route 7 corner 1 (point 7, room 6.00 m, at 8.75 s of 10.81 s) root off: lowest 3.09 m/s, grip allows 8.00, UNDER 0.8
+    route 7 corner 0 (point 2, room 3.16 m, at 5.30 s of 11.64 s) root on : lowest 4.01 m/s, grip allows 6.26, UNDER 0.8
+    route 7 corner 1 (point 7, room 6.00 m, at 9.42 s of 11.64 s) root on : lowest 0.00 m/s, grip allows 8.00, UNDER 0.8
+    route 8 corner 0 (point 3, room 3.19 m, at 2.74 s of 6.60 s) root off: lowest 1.33 m/s, grip allows 6.29, UNDER 0.8
+    route 8 corner 0 (point 3, room 3.19 m, at 2.83 s of 6.85 s) root on : lowest 0.79 m/s, grip allows 6.29, UNDER 0.8
+    route 9 corner 0 (point 3, room 3.40 m, at 3.01 s of 8.46 s) root off: lowest 0.00 m/s, grip allows 6.45, UNDER 0.8
+    route 9 corner 0 (point 3, room 3.40 m, at 3.09 s of 8.48 s) root on : lowest 3.01 m/s, grip allows 6.45, UNDER 0.8
+    corners at or above 0.8 of grip's speed: root off 0 of 12, root on 0 of 12
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(684): CHECK failed: met[1] == corners[1]
+FAIL  m2_w3_at_every_corner_the_grip_root_keeps_at_least_0_8_of_what_grip_allows_there
+    the ten routes' total time: today 77.11 s, grip root 82.07 s (1.064 times; bar 1.25)
+ok    m2_the_grip_root_does_not_crawl_the_corner_routes
+3 tests, 2 failed
