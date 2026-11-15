@@ -86,3 +86,34 @@ design chose that when first person was the only view that counted.
 **A narrow read rides with this lap, one reader, not a swarm:** the first pass held these only second-hand
 (`scout_player_first_person.md:289`, `:307`): how games that draw one body for both views handle first person (what the eye
 rides on, how the head is steadied, what is hidden); and how eyes, head, chest and hips share a look. Cite each page opened.
+
+## DECIDED at his word of 06:56 (game brief item 234): the runner is built on the new system. The film is the first step of the build, not a test
+
+**His words:** "also so when the runner runs, they move their hands too forward like they are poking something infront of them
+rather than swinging their arms, and the legs dont even like care where theyre going ,i still feel like we are using the whole
+old system LIKE WTF WHAT ABOUT THE NEW PROC GEN ANIMATION SYSTEM?"
+
+**He is right, and the section above this one was the wrong weight.** It set a film to decide whether the runner's generator
+changes. He has decided. What he describes is `Body::pose` exactly: hands held where the view can see them, legs hung under the
+eye. Both lines of that section that begin "If the runner drawn this way" are withdrawn.
+
+**R1, now, from the scratch build you already have:**
+- Behind one switch, off, with a key in pane E's list: the runner's body is drawn by the shared generator. `gait_pose` on the
+  runner's own rest skeleton, anchored at its feet where the simulation has them, its heading the way it travels, its stride
+  from the clock that is now on main, its arms and legs from the generator's own curves, the shared lean on top.
+- While it runs, walks or stands, nothing comes from `Body::pose`. For the states the generator has no pose for yet (say
+  which: the slide, the ladder, the climb, the fall), today's pose stays and the change between the two is eased.
+- First person with it on: the camera rides that body's eye, position only. Say what he then sees of his own arms.
+- **Rows, only for what a look cannot show:** with the switch off every pose is main's; his kept runs replay the same with it
+  on; one pose, two cameras is green with it on.
+- **Judged by a look:** the film as asked above (fixed outside camera, lit, the runner today beside the runner on the
+  generator: a sprint, a turn, a stop and a start), and his own eye in play with the key.
+
+**Then, each its own lap, each on the new body:** the feet held where they land and the legs through turns; the look, reopened,
+with its shares sourced; the states and their changes, leaving `Body::pose` one at a time. When the last state has left it,
+`Body::pose` is removed.
+
+**Registered:**
+- **It failed on his terms if,** with the key on, the runner's hands still reach forward as it runs, or its legs do not follow
+  where it goes.
+- **It is wrong if** any lap from this line on adds to `Body::pose`.
