@@ -3200,3 +3200,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-14 22:4x local (D) · D677 E2: at a real 22-degree bend of seed 1's world the hunter stops dead against the wall's end or the door frame under today's law and both of A's root laws (lowest 0.04, 0.00, 0.00 m/s), and the chase counts no head-on wall meeting for it; the film light is held out of play by a row; L12 has no off that draws as main does → `exo_memory/handback/p-d677-e2-E_2026-11-14.md`
 - dreamzone-3 e2-films-e 64c193c pushed; self-test 64/64; mutants 2/2; his 20 runs identical to e091beb; 23 labelled clips in G:\consonance-scratch\e2-film.
 - **Carry:** a staged lesser chaser with no head start catches the target before the hunter leaves the door; and write editing scripts' C strings with the Edit tool, never through a shell's quoting.
+
+## 2026-11-14 23:2x local (D) · D677 E2 steps 1-3: e2-films-e merged with main (6b07814, rung); L12's switch soft_upper_body (off) draws the hunter byte for byte as main does on his run's 288-frame corner, on differs at every frame; a two-body camera frames the sprinter beside the hunter → `exo_memory/handback/p-d677-e2-E_2026-11-14.md` (addendum 05:2xZ)
+- l12-switch-e 8c4f715 and e2-two-body-e 6cbd665 pushed. The pair film had replayed the record's world settings, so the first "on" was main's: a control that cannot fail proves nothing.
+- **Carry:** a film's control must be shown to differ before its equality counts; and a "framed" count by rays is an upper bound, not frames seen.
