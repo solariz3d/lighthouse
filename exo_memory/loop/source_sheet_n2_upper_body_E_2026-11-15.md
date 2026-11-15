@@ -76,7 +76,11 @@ All four of the librarian's 2026-11-15 reports are in. Code rows give the licenc
 | rule and numbers | source | on file | read at source |
 |---|---|---|---|
 | The thorax turns with the stride: 14.28 deg each way | Ford et al. 2013, Med Sci Sports Exerc 45(6) | ground_sources_read.md:209 | abstract only. NOT from Perpiñá-Martínez 2023 |
-| ~~The pelvis turns 6.5 deg each way~~ CORRECTED 2026-11-15 (pane A, read at source): Perpiñá-Martínez 2023's 6.5 deg is PELVIC TILT, not the pelvis's turn, and the paper has NO thorax figure. The first iteration's pelvis twist (`kPelvisTwistAmp`) took a tilt for a turn | Perpiñá-Martínez et al. 2023, IJERPH 20(4):3631, PMC9961938 | ground_sources_read.md:208 (the misreading); the librarian's ring of 22:00Z | read at source by pane A; the earlier row was the record's reader, wrong |
+| ~~The pelvis turns 6.5 deg each way~~ CORRECTED 2026-11-15: Perpiñá-Martínez 2023's 6.5 deg is PELVIC TILT (males 5.92-6.50 deg), not the pelvis's turn, and the paper has NO thorax figure. The first iteration's pelvis twist (`kPelvisTwistAmp`) took a tilt for a turn | Perpiñá-Martínez et al. 2023, IJERPH 20(4):3631, PMC9961938 | `loop/page_n2_upper_body_A_2026-11-15.md:267-280`; ground_sources_read.md:208 (the misreading) | read at source by pane A |
+| **The pelvis's turn about the vertical, many runners:** a whole range of 9.96 to 16.13 deg by sex and speed (males 10.64 / 9.96 / 13.60, females 13.21 / 15.74 / 16.13, slow / medium / fast); self-selected speeds of about 2.4 to 3.3 m/s and up; 101 runners, one IMU at S1 | Perpiñá-Martínez et al. 2023, Table 2, PMC9961938 | `loop/page_n2_upper_body_A_2026-11-15.md:271-276` | read at source by pane A |
+| **The pelvis's and the thorax's turn by speed, one runner, from the raw markers** (RASI-LASI and RSH-LSH lines, whole range less the stride mean): pelvis 7.7-8.0 / 11.1-11.6 / 16.1 / 22.7-26.9 deg, thorax 15.7-16.2 / 13.7-15.1 / 14.6 / 9.6-12.4 deg at 3.56 / 5.20 / 7.00 / 9.49 m/s. The pelvis's turn grows with speed while the thorax's stays near 10-16, so thorax over pelvis falls from about 2 to under 0.5. The thorax turns OPPOSITE the pelvis and LAGS it by about a quarter of a stride (85-115 deg of the cycle), which signs Pontzer's unsigned 93.9 | Dorn, Schache & Pandy 2012, SimTK JA1 (MIT as recorded), measured by pane A with `n2_measure.js` (output `n2_measure.txt`) | `loop/page_n2_upper_body_A_2026-11-15.md:282-332` | pane A's own measure from the data, re-runnable; one runner; at 3.56 m/s it turns the pelvis less (8 deg) than Perpiñá-Martínez's runners (10-16) |
+| **The trunk's forward lean by speed, one runner** (SACR-to-C7 against the vertical, less standing 4.72 deg): mean 6.0-6.5 / 5.6-6.1 / 4.8 / 10.7-11.9 deg at 3.56 / 5.20 / 7.00 / 9.49 m/s; it rises and falls twice a stride | Dorn JA1, measured by pane A | `loop/page_n2_upper_body_A_2026-11-15.md:290-301` | pane A's own measure; one runner |
+| **The hand's path, one runner:** the wrist never crosses the trunk's midline at any speed (closest 11.6-17.3 cm); its reach ahead of C7 at most 28.6-30.9 cm to 5.20 m/s and 44.6-45.3 cm at 7.00-9.49; behind, to -16 to -43 cm | Dorn JA1, measured by pane A | `loop/page_n2_upper_body_A_2026-11-15.md:305-313` | pane A's own measure; the measure for N2's "hands reach forward" falsifier |
 | The thorax turns opposite the pelvis. Arm-to-trunk coordination is more out of phase walking, more in phase running, where the arm swing is larger. No degree figures could be verified | UMass thesis; Meyns 2013 review (doi 10.1016/j.gaitpost.2013.02.006) | R-tech:49 | agent, snippet (thesis); not opened (Meyns) |
 | Pelvis-to-shoulder phase difference: running control 93.9 +-60.9 deg; walking control 149.2 +-41.5; 0 = peaks together, 180 = opposite | Pontzer et al. 2009, J Exp Biol 212:523 | S-head:77-80 | reader, whole; WRONG as "the shoulders lag": unsigned, at most 180; DOWNGRADED: 93.9 printed for two cells and at odds with the text |
 | Trunk forward lean in a hard start: upper trunk 34 +-8 deg to the horizontal at touchdown, 44 +-8 at toe-off (56 and 46 from vertical); the body 2 deg at touchdown, 43 at toe-off; 14 sprinters, the first four steps from blocks | King, Burnie, Nagahara & Bezodis 2022, J Sports Sci (CC BY 4.0), Table 3 | S-turn:143-159 | reader, whole; DOWNGRADED: four-step means; at toe-off 46 against 43 is inside an SD of 8 |
@@ -97,11 +101,12 @@ All four of the librarian's 2026-11-15 reports are in. Code rows give the licenc
 | Galloping back flex (T3: sprinter, charger): the trunk folds and extends each stride | Schilling & Hackert 2006 | G-loco:157 | abstract |
 
 **Not on file for the trunk:**
-- **The trunk's steady forward lean at a run, by speed.** No source in anything read. The sprint reference folder
-  (`loop/sprint_reference_2026-11-13/`, Dorn's runner) was not opened for this sheet.
-- **How far the pelvis turns with the stride, from any source.** The 6.5 deg once used for it is pelvic tilt (row above).
-- **The counter-twist's size above treadmill speeds.**
-- **A signed pelvis-to-shoulder timing.**
+- ~~The trunk's steady forward lean at a run, by speed~~ ANSWERED for one runner on pane A's page (Dorn JA1, row above); from
+  many runners it is still not on file.
+- ~~How far the pelvis turns with the stride~~ ANSWERED 2026-11-15 on pane A's page: Perpiñá-Martínez's 101 runners and Dorn's
+  runner by speed (rows above).
+- ~~The counter-twist's size above treadmill speeds~~ and ~~a signed pelvis-to-shoulder timing~~: ANSWERED for one runner to
+  9.49 m/s (Dorn JA1, pane A's measure, rows above). From many runners above about 3.3 m/s it is still not on file.
 - **The trunk in a stop, in degrees.**
 - **The data that would give these:** Schreiber & Moissenet 2019 (CC BY 4.0, 52 full-body markers with trunk and arms, walking
   only up to fast) and Reznick 2021 (starts and stops; its data licence is unconfirmed) (R-data:15, :18).
