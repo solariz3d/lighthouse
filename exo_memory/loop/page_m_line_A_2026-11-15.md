@@ -728,3 +728,70 @@ can move a radius where a wall pokes into a straight between two samples, so it 
 - **And no row worse than 2a51143's:** exits 717 / 788 / 864, routes 78.32 s, contacts 9, the cluster and charge rows green.
 - **What would show it wrong:** a row worse, or a judge that now passes a radius whose straight crosses the mesh's edge (the dense row's tight
   count printed beside it).
+
+### 1. The gate's fix: the gate holds, but its own registered line fires (the routes 0.10 s worse). Not committed
+
+The fix as registered above (`gate_law.js` beside this page; kept at the scratch as `arcs_law/chaser_gate.cpp`, **not committed**; the tree
+is back at 2a51143). checked: `gt_rows.txt`, and the whole suite's run:
+- **the gate row green:** one plan with the arcs mean 569 us, **largest 934 us** (the whole suite's run: 584 / 862 us). Red at 2a51143: 1571 /
+  1144.
+- exits 717 / 788 / 864 (unchanged), contacts 9 (unchanged), the cluster and charge rows green, the 90's arc row red as before (3.58 m).
+- **the ten routes 78.42 s against 2a51143's 78.32 s: 0.10 s worse.** I registered "no row worse than 2a51143's", so **its falsifier fires:**
+  the coarser half-legs moved a line somewhere on the routes. Not traced, not tuned. The gate holds with it; the line is not the same.
+- whole suite 124, 7 failed (the five red at 3845cd8; the arcs' routes row and the 90's arc row); nav 34, 0 failed; off means off md5
+  `fa938de45995bd2d13b98ba28fae0c34`, 18 SAME.
+
+### 2. The routes' read (on 2a51143's law): the registered guess is BROKEN; the loss is at bends on the same string
+
+checked: `rd_routes.txt` (a scratch row on 2a51143, removed after). Each route: today's time beside the arcs' (way (b)), and each law's
+searched string (today's, no price; the root's, the width price):
+
+| route | today | the arcs | gap | the root's string vs today's | the arcs' contacts |
+|---|---|---|---|---|---|
+| 0 | 8.26 s | 9.55 s | **+1.29** | the same (0.00 m apart) | 4 |
+| 1 | 9.21 | 9.12 | -0.09 | **differs** (65.2 against 63.3 m, up to 3.71 m apart) | 0 |
+| 2 | 9.49 | 10.24 | **+0.75** | the same | 0 |
+| 3 | 6.67 | 6.72 | +0.05 | the same | 2 |
+| 4 | 6.26 | 5.95 | -0.30 | **differs** (40.8 against 41.3 m, up to 1.76 m) | 2 |
+| 5 | 5.80 | 5.98 | +0.19 | the same | 0 |
+| 6 | 5.55 | 5.80 | **+0.24** | the same | 0 |
+| 7 | 10.81 | 10.23 | -0.58 | **differs** (76.7 against 75.1 m, up to 2.12 m) | 0 |
+| 8 | 6.60 | 6.33 | -0.27 | the same | 1 |
+| 9 | 8.46 | 8.40 | -0.06 | the same | 0 |
+| total | 77.11 | 78.32 | **+1.21** | | |
+
+**The registered guess, "most of the 1.2 s is where the width price sends the root round an opening it could pass": BROKEN.** On the three
+routes where the width price changes the way (1, 4, 7), the arcs are faster (-0.09, -0.30, -0.58 s: -0.97 s together). The three that lose
+most (0, 2, 6: +2.28 s together) run on today's string exactly. So, as ruled, the place the print names is the next thing and the two ways
+wait.
+
+**Where the gap opens on the three worst** (the gap in ticks, arcs minus today, at each metre of today's string; the map at the place it grows
+fastest over 3 m, in `rd_routes.txt`):
+- **route 0 (+1.29 s):** twice. **+110 ticks in its first 3 m**, at a bend of about 50 degrees 2 m from its start ((-63.44 -65.74) to
+  (-63.19 -65.54)). Then **+219 ticks from 49 to 52 m, at its last bend**: from an open room along z -62.5 into a corridor about 1 m wide going
+  south at x -16.5 ((-16.99 -62.54) to (-16.69 -62.84)). On the map the arcs swing north into the room and enter the corridor's mouth on its west
+  side, where today's law runs its east side; route 0 has 4 of the arcs' contacts.
+- **route 2 (+0.75 s): +145 ticks from 25 to 28 m**, at the bend from east into a corridor going north ((39.16 -63.49) to (39.41 -63.29)); on
+  the map the arcs cut the corner from the open floor into the corridor's west side, and today's law takes its middle.
+- **route 6 (+0.24 s): +43 ticks from 23 to 26 m**, at the bend west out of a corridor ((-50.54 -11.99) to (-50.84 -11.54)).
+- **inferred, not checked:** all three are bends from open floor into a narrow corridor (or out of one), where the widest arc that keeps the
+  room on its own arc and half-legs has to end inside the corridor; and route 0's first is a bend 2 m from an end, which line 4 shrinks against
+  that end.
+
+### 3. Pane E's staging, numbers only (on 2a51143's law, E's tool, ticks from the common start)
+
+checked: `e3_22_today.txt`, `e3_22_arcs.txt`, `e3_45_*`, `e3_90_*` (pane E's tool in a-m3c-e22 with a-mline's chaser, speed and nav/world.cpp
+copied in by content; `--chase-speed "root_law=1;line_arcs=1"` for the arcs).
+
+| bend | today: exit tick (through) | the arcs: exit tick (through, lowest) |
+|---|---|---|
+| 22 | 2781 (0.889 s) | **2704** (0.465 s, 7.06 m/s): earlier |
+| 45 | 2888 (0.903 s) | **never through the entry gate** (the root goes round the north, as at the release) |
+| 90 | 2848 (0.819 s) | **2936** (1.118 s, 1.69 m/s): **88 ticks later** |
+
+**At pane E's 45, the tick each law reaches the player** (the last tick the trace moves, beside the player at (-31.86 86.42)): **today 3116,
+the arcs 3655** (539 ticks, 2.2 s later; the release read 3669). Here the width price's way round the north is the loss, the reverse of the
+stand-in's routes.
+
+**So pane E does not film the 90 (ruling item 5):** in E's staging the arcs leave the 90 at 2936, after today's 2848. The stand-in said 864
+against 871; E's staging says the opposite, as it did for the 90 at the release (stand-in 0.933 / E 0.972 against 0.846 / 0.819).
