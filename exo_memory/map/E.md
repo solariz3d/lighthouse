@@ -3226,3 +3226,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-15 10:4x local (D) · D677 the 22 degree bend filmed, today beside the M-line on a-mline 4b03985: today 0.889 s (lowest 0.04 m/s), the line 0.486 s (never under 5.47), 0 frames hidden; the 90 filmed before its cut, kept, not for his page → `exo_memory/handback/p-d677-mline-bends-E_2026-11-15.md`
 - Film tree dz3-e-mline b1b3aeb (local): the lit pass from a fixed camera; a 90 in a corridor needs a place in the room, the outer corner aimed at the chests.
 - **Carry:** look at a frame before encoding; three of four camera choices here failed only to the eye.
+
+## 2026-11-15 13:5x local (D) · D677 the source sheet for N2 (trunk, arms, head, lean) from the 2026-11-13 folder and B8: each part's rules, numbers, path:line and source status, and what is not on file; the librarian's four reports not yet in research/ → `exo_memory/loop/source_sheet_n2_upper_body_E_2026-11-15.md`
+- Nothing on file explains the hands reaching forward except B8's reading that the arms turn with the chest; no head, arm or lean data above ~4 m/s but single points.
+- **Carry:** a sheet repeats the record's source marks and second readers' verdicts beside each number, so a builder sees which numbers are first game or ours.
