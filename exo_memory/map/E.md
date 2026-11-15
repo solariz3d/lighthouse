@@ -3249,3 +3249,4 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-15 15:5x local (D) · D677 pane B's new legs (c6e3a5f) encoded alone for his page, every clip from frame 24 (the runner carries the old pose to frame 4 and a smear of it to 16); the frame-0 encode set aside → `exo_memory/handback/p-d677-newlegs-alone-E_2026-11-15.md`
 - **Carry:** before encoding a cut, look at its first frames: a picture can carry the last pose of whatever drew before it.
+- 16:0x local: the N2 sheet's pelvis-turn row corrected (pane A at source: Perpiñá's 6.5 deg is pelvic tilt, no thorax figure; the 14.28 is Ford 2013, abstract); the lessons sheet gains the line.

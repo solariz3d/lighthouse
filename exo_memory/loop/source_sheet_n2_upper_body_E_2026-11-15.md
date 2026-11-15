@@ -75,7 +75,8 @@ All four of the librarian's 2026-11-15 reports are in. Code rows give the licenc
 
 | rule and numbers | source | on file | read at source |
 |---|---|---|---|
-| The hips and shoulders counter-turn with the stride: pelvis 6.5 deg each way, thorax 14.28 deg each way | Perpiñá-Martínez 2023, Table 1; Ford 2013 | 00_system.md:147 (ground_sources_read.md:208-209) | Perpiñá: the record's reader; Ford: abstract |
+| The thorax turns with the stride: 14.28 deg each way | Ford et al. 2013, Med Sci Sports Exerc 45(6) | ground_sources_read.md:209 | abstract only. NOT from Perpiñá-Martínez 2023 |
+| ~~The pelvis turns 6.5 deg each way~~ CORRECTED 2026-11-15 (pane A, read at source): Perpiñá-Martínez 2023's 6.5 deg is PELVIC TILT, not the pelvis's turn, and the paper has NO thorax figure. The first iteration's pelvis twist (`kPelvisTwistAmp`) took a tilt for a turn | Perpiñá-Martínez et al. 2023, IJERPH 20(4):3631, PMC9961938 | ground_sources_read.md:208 (the misreading); the librarian's ring of 22:00Z | read at source by pane A; the earlier row was the record's reader, wrong |
 | The thorax turns opposite the pelvis. Arm-to-trunk coordination is more out of phase walking, more in phase running, where the arm swing is larger. No degree figures could be verified | UMass thesis; Meyns 2013 review (doi 10.1016/j.gaitpost.2013.02.006) | R-tech:49 | agent, snippet (thesis); not opened (Meyns) |
 | Pelvis-to-shoulder phase difference: running control 93.9 +-60.9 deg; walking control 149.2 +-41.5; 0 = peaks together, 180 = opposite | Pontzer et al. 2009, J Exp Biol 212:523 | S-head:77-80 | reader, whole; WRONG as "the shoulders lag": unsigned, at most 180; DOWNGRADED: 93.9 printed for two cells and at odds with the text |
 | Trunk forward lean in a hard start: upper trunk 34 +-8 deg to the horizontal at touchdown, 44 +-8 at toe-off (56 and 46 from vertical); the body 2 deg at touchdown, 43 at toe-off; 14 sprinters, the first four steps from blocks | King, Burnie, Nagahara & Bezodis 2022, J Sports Sci (CC BY 4.0), Table 3 | S-turn:143-159 | reader, whole; DOWNGRADED: four-step means; at toe-off 46 against 43 is inside an SD of 8 |
@@ -98,6 +99,7 @@ All four of the librarian's 2026-11-15 reports are in. Code rows give the licenc
 **Not on file for the trunk:**
 - **The trunk's steady forward lean at a run, by speed.** No source in anything read. The sprint reference folder
   (`loop/sprint_reference_2026-11-13/`, Dorn's runner) was not opened for this sheet.
+- **How far the pelvis turns with the stride, from any source.** The 6.5 deg once used for it is pelvic tilt (row above).
 - **The counter-twist's size above treadmill speeds.**
 - **A signed pelvis-to-shoulder timing.**
 - **The trunk in a stop, in degrees.**
