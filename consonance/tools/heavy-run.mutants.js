@@ -182,13 +182,35 @@ function run(dir) {
   return { pass: n('pass'), fail: n('fail'), hung: r.status === null || !Number.isFinite(n('pass')) };
 }
 
+// D677 (P): STRAY PAUSE HOLDERS. A mutated suite can start a DETACHED `--pause-holder` (heavy-run --pause) that its tests never resume:
+// the mutant "pause: --minutes is not checked" lets 721 through, and the holder lives up to 12 hours. Removing the copy does not stop it
+// (O found pid 27876 alive after its copy was gone, 11-15). So after each suite, and before its copy is removed, every pause holder whose
+// script lies in that copy is stopped by its own pid, never a tree kill, and the row says so. An unreadable process list is said, never silent.
+function strayHolders(dir) {
+  if (process.platform !== 'win32') return [];
+  const r = spawnSync('powershell', ['-NoProfile', '-NonInteractive', '-Command',
+    "Get-CimInstance Win32_Process -Filter \"Name = 'node.exe'\" | ForEach-Object { '' + $_.ProcessId + '|' + $_.CommandLine }"],
+  { encoding: 'utf8', timeout: 30000, windowsHide: true });
+  if (!r || r.error || r.status !== 0 || typeof r.stdout !== 'string') return null;
+  const script = path.join(dir, 'tools', SRC).toLowerCase();
+  return r.stdout.split(/\r?\n/).map((l) => { const i = l.indexOf('|'); return { pid: Number(l.slice(0, i)), cmd: l.slice(i + 1) }; })
+    .filter((p) => Number.isInteger(p.pid) && p.pid > 0 && p.cmd.toLowerCase().includes(script) && p.cmd.includes('--pause-holder'));
+}
+function stopStrays(dir) {
+  const found = strayHolders(dir);
+  if (found === null) return '   strays UNKNOWN: the process list could not be read';
+  if (!found.length) return '';
+  const said = found.map((p) => { try { process.kill(p.pid); return String(p.pid); } catch (e) { return `${p.pid} (${e.code})`; } });
+  return `   stopped ${found.length} stray pause holder(s) the suite left under its copy: pid ${said.join(', ')}`;
+}
+
 function main() {
   require('./heavy-run.js').hold({ cmd: 'heavy-run.mutants' });   // ONE HEAVY RUNNER PER TREE
   // --only N, or a range or list (--only 30-34, --only 1,5,9): a long set run in units, so its slot is yielded between them (L202).
   const onlyAt = process.argv.indexOf('--only'), onlyArg = onlyAt > 0 ? String(process.argv[onlyAt + 1] || '') : '';
   const only = onlyArg ? new Set(onlyArg.split(',').flatMap((p) => { const [a, b] = p.split('-').map(Number); return b ? Array.from({ length: b - a + 1 }, (_, k) => a + k) : [a]; })) : null;
   const read = (f) => fs.readFileSync(path.join(HERE, f), 'utf8').replace(/\r\n/g, '\n');
-  const control = (() => { const d = tree(); try { return run(d); } finally { fs.rmSync(d, { recursive: true, force: true }); } })();
+  const control = (() => { const d = tree(); try { return run(d); } finally { const s = stopStrays(d); if (s) console.log(s); fs.rmSync(d, { recursive: true, force: true }); } })();
   console.log(`control (unmutated copy)                                        pass ${control.pass} fail ${control.fail}`);
   if (!(control.fail === 0 && control.pass > 0)) { console.log('CONTROL NOT GREEN - no mutant result means anything'); process.exitCode = 1; return; }
   let applied = 0, caught = 0, notApplied = 0;
@@ -202,7 +224,7 @@ function main() {
       fs.writeFileSync(path.join(d, 'tools', file), src.replace(anchor, () => repl));
       const r = run(d), ok = r.fail > 0 || r.hung; if (ok) caught++;   // a suite that hangs or crashes on the mutant has caught it: a waiter stuck behind a dead holder is the failure itself
       console.log(`${label} pass ${r.pass} fail ${r.fail}  ${ok ? (r.hung ? 'CAUGHT (the suite hung or crashed)' : 'CAUGHT') : 'SURVIVED'}`);
-    } finally { fs.rmSync(d, { recursive: true, force: true }); }
+    } finally { const s = stopStrays(d); if (s) console.log(s); fs.rmSync(d, { recursive: true, force: true }); }
   });
   console.log(`\n${applied} applied · ${caught} caught · ${applied - caught} survived · ${notApplied} NOT APPLIED`);
   if (applied - caught > 0 || notApplied > 0) process.exitCode = 1;
