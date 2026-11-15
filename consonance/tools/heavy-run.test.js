@@ -14,9 +14,37 @@ process.env.CONSONANCE_CONFIG = path.join(require('node:os').tmpdir(), 'no-such-
 const H = require('./heavy-run.js');
 const HELPER = path.join(__dirname, 'heavy-run.js');
 
+// D677 (pane P, 2026-11-15): ONE parent folder per run, `heavy-run-XXXXXX` under the scratch root (the prefix the janitor matches), holding
+// its owner's pid; each row's folder is a numbered folder inside it. A run that is KILLED (the mutant harness's ranges are) runs no exit
+// handler, and the old one-top-level-folder-per-row left 4,566 of them on G:. Now a killed run leaves one parent, and the next run's load
+// removes every parent whose owner pid is dead (`sweepDead`). A parent with no owner file, or an owner that is alive, is never touched:
+// several runs share the root (the mutant ranges run concurrently), and what is not provably dead is left to the janitor's two-day rule.
+const OWNER = 'heavy-run-owner.pid';
 const dirs = [];
-function tmp() { const d = require('./scratch.js').mkdtemp('heavy-run-'); dirs.push(d); return d; }
-process.on('exit', () => { for (const d of dirs) { try { fs.rmSync(d, { recursive: true, force: true }); } catch (_) {} } });
+let parentDir = null, rows = 0;
+function alive(pid) { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } }   // ESRCH: no such process
+function sweepDead(root, isAlive = alive) {
+  const gone = [];
+  let names;
+  try { names = fs.readdirSync(root); } catch (e) { if (e.code === 'ENOENT') return gone; throw e; }
+  for (const n of names) {
+    if (!/^heavy-run-[A-Za-z0-9]{6}$/.test(n)) continue;
+    let pid;
+    try { pid = Number(fs.readFileSync(path.join(root, n, OWNER), 'utf8').trim()); } catch (e) { if (e.code === 'ENOENT' || e.code === 'ENOTDIR') continue; throw e; }
+    if (!Number.isInteger(pid) || pid <= 0 || pid === process.pid || isAlive(pid)) continue;
+    try { fs.rmSync(path.join(root, n), { recursive: true, force: true }); gone.push(n); } catch (e) { if (e.code !== 'EBUSY' && e.code !== 'EPERM') throw e; }   // held open: the next run
+  }
+  return gone;
+}
+function parent() {
+  if (parentDir) return parentDir;
+  parentDir = require('./scratch.js').mkdtemp('heavy-run-');
+  fs.writeFileSync(path.join(parentDir, OWNER), String(process.pid));
+  sweepDead(path.dirname(parentDir));
+  return parentDir;
+}
+function tmp() { const d = path.join(parent(), `r${++rows}`); fs.mkdirSync(d); dirs.push(d); return d; }
+process.on('exit', () => { for (const d of [...dirs, parentDir].filter(Boolean)) { try { fs.rmSync(d, { recursive: true, force: true }); } catch (_) {} } });
 
 const cleanEnv = (extra = {}) => { const e = { ...process.env }; delete e[H.TOKEN_ENV]; delete e.CONSONANCE_PANE; return { ...e, ...extra }; };
 const lockOf = (d) => path.join(d, H.LOCK_NAME);
@@ -1333,4 +1361,29 @@ test('STATUS inside the holder\'s own run (its token in the environment) the hol
   const r = status(d, { [H.TOKEN_ENV]: 'my-token' });
   assert.strictEqual(r.status, 0, r.stdout + r.stderr);
   assert.match(r.stdout, /EXCLUSIVE HOLD: yours/);
+});
+
+// D677 (pane P, 2026-11-15): a run killed before its exit (the mutant harness's ranges are) runs no exit handler, so it left one heavy-run-*
+// folder per row in the scratch root (4,566 on G: at 16:45). These rows pin the cure: one parent per run that names its owner, and a sweep at
+// load of the parents whose owner is dead.
+test('tmp(): every row\'s folder sits inside ONE parent per run, and the parent names this process as its owner', () => {
+  const a = tmp(), b = tmp();
+  assert.notStrictEqual(a, b);
+  assert.strictEqual(path.dirname(a), path.dirname(b), 'one parent per run, not one top-level folder per row');
+  assert.match(path.basename(path.dirname(a)), /^heavy-run-[A-Za-z0-9]{6}$/, 'the parent keeps the prefix the janitor matches');
+  assert.strictEqual(fs.readFileSync(path.join(path.dirname(a), OWNER), 'utf8').trim(), String(process.pid));
+});
+
+test('a killed run\'s parent is removed by the next run; a live owner\'s, an unowned and an unprefixed folder are kept', () => {
+  const root = tmp();
+  const dead = spawnSync(process.execPath, ['-e', ''], { windowsHide: true }).pid;   // a pid that has exited
+  const mk = (n, owner) => {
+    fs.mkdirSync(path.join(root, n, 'r1'), { recursive: true });
+    fs.writeFileSync(path.join(root, n, 'r1', 'heavy-run.lock'), '{}');
+    if (owner !== undefined) fs.writeFileSync(path.join(root, n, OWNER), String(owner));
+  };
+  mk('heavy-run-dead01', dead); mk('heavy-run-live01', process.pid); mk('heavy-run-nown01'); mk('heavy-run-junk01', 'not a pid'); mk('other-dead01', dead);
+  assert.deepStrictEqual(sweepDead(root), ['heavy-run-dead01']);
+  assert.ok(!fs.existsSync(path.join(root, 'heavy-run-dead01')), 'the dead owner\'s parent is gone, with what was in it');
+  for (const n of ['heavy-run-live01', 'heavy-run-nown01', 'heavy-run-junk01', 'other-dead01']) assert.ok(fs.existsSync(path.join(root, n)), n + ' must be kept');
 });
