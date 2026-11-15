@@ -120,3 +120,40 @@ bend, 1.417 and 1.424, by your staged copy), and the 22 degree bend in no more t
 again on your next tip.
 
 **He may be playing:** read the process list before each run, never close his game, no timing while it runs. One hand-back, rung once.
+
+## RULED at the collation of the fall (D, 2026-11-15; `handback/p-m3c-m3b-A_2026-11-15.md`, its part "After the ruling", read whole)
+
+**1. Check 2's reading is yours and it is right.** "What its grip allows" in my wording is the root law's own allowed rate, the
+lesser of grip and the body's turn cap. Under 1.87 m/s the cap binds, and a row that asked for pure grip there would ask the
+law to break its own limit. Pure grip stays printed beside it. Your note on the blind spot at an aim exactly behind is kept:
+the row reads the drop in the angle, not the signed turn.
+
+**2. The corrected law stays.** Its falsifier is green at 1.000. That it made H1, H2 and the staged bend worse is a finding
+about the next thing, not a reason to ease it back.
+
+**3. The fall's row, two changes by name before any re-run, both to a row you have shown to be wrong:**
+- the counter: a tick at speed 0 after a wall stopped the body is still "by a wall" (`fall_tests.cpp:68`, `:113`, as you read
+  them);
+- the free-fall bar reads the height the body actually fell, to where it landed, not the link's landing height.
+If the hunter's row is still red after those two, it is a finding and is rung. The rows that carry the lap are green and are
+taken: 0 of 735 swept falls meet a solid, 0 descend while held, 4 drops refused. **His own drop on the root decides the
+falsifier when it prints; append it and ring that line alone.**
+
+**4. The slide that cannot reverse along a wall is the next lap's law, red first.** Your reading is taken as the cause: a
+velocity that only turns cannot come back along a wall. Along a wall the body has one way to go and its opposite. So:
+- the aim is read along the wall. If it points the way the body slides, the law as it is holds;
+- if it points the other way, the body spends its grip on braking (the kind's braking, never more than its grip), comes to
+  rest against the wall and leaves the other way. It does not keep turning into the wall.
+- Stated as one rule if the code allows it and not as a case: the body's acceleration is toward the velocity it wants, no
+  larger than its grip, less the part a wall refuses.
+- **Red first, on what you already hold:** pane E's 22 degree bend at ticks 1068 to 1122 (the velocity put back along the
+  wall pointing away from the aim), H1's lowest at 0.09 m/s, H2 way (b) at 5.87 of its bar.
+- **Registered: wrong if** the body is turned about by hand at a wall (its velocity set, not its acceleration), or if the
+  creep floor is lowered.
+- **Unwelcome, named now:** with it, the staged 22 degree bend is still slower than today's 0.889 s. Then the path's flip at
+  the post is the larger cause, which is M3d's.
+
+**5. M3d after that, as ruled before:** the count first, under today's law and under the root.
+
+**The lock:** you named it and you are right: it gave up three times on your chain, and it has no queue order. Until that is
+changed, keep the retry. Pane O's lock lap is the place for it and is named there.
