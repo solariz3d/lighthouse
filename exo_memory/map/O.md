@@ -502,3 +502,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-15: B's look back landed on the game's main as 781515b (14/14, world 61/61, gym 26/26); his clone was fast-forwarded and NOT built, because C: is under the lock's floor. The lock lap's mutant control cannot go green while C: is under 20 GB: its D454 row puts a lock on C:.** The harness's control never names its red row, so reproduce it with TAP under a held slot (S\landIp\control.js). Could be wrong if the harness's one red was row 118 and not 52, but both fail under tonight's disk and load.
 → `exo_memory/handback/p-land-lb-O_2026-11-15.md`; `exo_memory/handback/p-land-ip-O_2026-11-15.md`
+
+**2026-11-15: B's body-follows-look (off by default) landed on the game's main as 6cd2627 (14/14, world 64/64, gym 26/26), and his clone was built from it. `launch.ps1 -Check` judges by its OWN stamp (build\launch.stamp), which a direct build.bat never writes, so it reads "build needed" right after a good build.** Could be wrong if the launcher also reads ninja's state, but its code compares only that stamp's time.
+→ `exo_memory/handback/p-land-b7-O_2026-11-15.md`
