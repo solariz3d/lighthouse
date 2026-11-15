@@ -391,3 +391,5 @@ The old generator is not a bar and is not printed as one.
 **Owed before any stage's page is written: one lessons sheet,** `loop/lessons_first_iteration_2026-11-15.md`, from the shelf (the 11-13 research folder, pane B's hand-back sections 6 to 16, pane E's four sheets' lists of what is not carried over, his items above). Each line: the lesson, its kind, the stage it bears on (N1 to N5), its path and line. What is not on file is said.
 
 **It failed if** a fault of the first iteration that is on the sheet is built again in the new system, or a thing the first got right is found again by trial.
+
+**THE LESSONS SHEET IS WRITTEN (pane E, rung 15:16):** `loop/lessons_first_iteration_2026-11-15.md`, 140 lines, git-blob f3c204da. Read whole by the librarian; four of its citations opened at their source lines and found as cited. It sorts each lesson as RIGHT, WRONG or HIS, by stage (N1 to N5 and the method), keeps the new system's own first-build lessons apart (NEW-N1), and ends with what is not on file. **It is read before any stage's page is written, and a stage's page says which of its lessons it used.**
