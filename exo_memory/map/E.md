@@ -3230,3 +3230,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-15 13:5x local (D) · D677 the source sheet for N2 (trunk, arms, head, lean) from the 2026-11-13 folder and B8: each part's rules, numbers, path:line and source status, and what is not on file; the librarian's four reports not yet in research/ → `exo_memory/loop/source_sheet_n2_upper_body_E_2026-11-15.md`
 - Nothing on file explains the hands reaching forward except B8's reading that the arms turn with the chest; no head, arm or lean data above ~4 m/s but single points.
 - **Carry:** a sheet repeats the record's source marks and second readers' verdicts beside each number, so a builder sees which numbers are first game or ours.
+
+## 2026-11-15 14:0x local (D) · D677 the N2 source sheet re-cut to research only (his 13:37 "always take relevant research and use it"; the old build scrapped at 13:36): old-build constants moved to "what not to carry over" per part; the two 2026-11-15 research reports added → `exo_memory/loop/source_sheet_n2_upper_body_E_2026-11-15.md`
+- The techniques report found no public game rule for leaning into acceleration (atan(a/g) is physics) and no verifiable arm or trunk degree figures; the data report says measure targets from open datasets.
