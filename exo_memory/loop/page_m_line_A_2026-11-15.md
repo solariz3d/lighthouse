@@ -315,3 +315,40 @@ the 03:28 turning check withdrawn by name), and a row from the base's 45 degree 
 **Next, without waiting, as ruled:** the slide's steering as one law (accelerate along wanted minus current, no larger than grip, less what the
 wall refuses; the brake case goes into it), then the cost (keep the line between plans; a cold line spread over ticks by a count), with the bends
 row printing the exit gate's tick from the common start. The 90 degree line-maker gap is named and not built in this lap.
+
+## The ring for the two reads' ruling (git-blob 4cc57b7f): the slide's one law, the passes check, and E's 45 squared
+
+**The slide's steering as one law** (dreamzone-3 `a-mline` 6b4c015; registered `registration_slide_one_law.md`; red first 1851018 / 3a904ac).
+checked `o_m3.txt`, `o_rows.txt`, `o_chase_tests.txt`:
+- **from the 45 degree bend's tick 773 (the base's state): 0 of 72 ticks under 0.9 of grip along (wanted - current), least 1.000** (red: 58 of
+  90): green.
+- check 2 restated: way (a) 0 of 78; **way (b) 1 of 254 (least -1.632): red by one tick**, not read yet.
+- the brake row: way (b) 0 of 49; way (a) has no aim-behind tick at all (red by its own rule).
+- the grip falsifier, its measure restated by name: 1.000. Turned about by hand: 0.
+- **route contacts 9 and 4** (were 31 and 6): the routes row green. The ten routes 82.17 / 78.41 s (were 81.02 / 77.74; today 77.11): the line is
+  still slower over whole routes, by 6.6 and 1.7 per cent.
+- bends, with the exit gate's tick from the common start: 22 degrees 0.321 s, exit tick **697 against today's 724**; 45 degrees 0.492 / 0.500 s,
+  **789 / 791 against 1103**; 90 degrees 1.183 / 0.967 s, **954 / 903 against 871**.
+- whole suite 118, 8 failed; nav 34, 0 failed; off means off md5 fa938de4..., 18 SAME.
+
+**The passes check (no change; `pc.txt`, a scratch row: bend_least at 1, 100 and 1000 times its passes on the 90 degree bend, way (b)):**
+
+| passes | the line made in | the corner's least radius (within 3 m) | the greatest offset from the string | the bend | exit tick |
+|---|---|---|---|---|---|
+| 600 (as built) | 1,392 us | 0.90 m | 0.34 m | 1.183 s, lowest 1.48 | 954 |
+| 60,000 | 120,004 us | 1.19 m | 0.91 m | **0.867 s**, lowest 3.14 | 890 |
+| 600,000 | 1,225,014 us | 1.21 m | 1.02 m | 0.908 s, lowest 2.74 | 902 |
+
+**The line moves with the passes: the librarian's reading holds and mine (the normals fan) is not what limits it here.** The line was never at
+its minimum: 600 passes leave it 0.34 m off the string, 600,000 leave it 1.02 m off and still moving. Even then its corner is about 1.2 m and its
+time 0.87 to 0.91 s, against today's 0.846 and the hand line's 0.575. **So, as ruled, the 90 degree gap and the cost are one cause, the solver**,
+and the cost's lever becomes a direct banded solve with the widths as bounds. Note for the solver's registration: at 600,000 passes the corner
+is 1.2 m where the hand line's is 6 m, so whether the least-bending line under these widths reaches the hand line is not shown by this; the
+solver will say.
+
+**E's 45 degree staging, squared:**
+- the like-for-like figure, the tick each law reaches the player from the same start (`t45_today_trace.txt`, `t45_trace.txt`): **today's law
+  3116, the root 3669**: the root reaches him 553 ticks (2.3 s) later there.
+- `t45_trace.txt` prints one "nearest to the apex" line for each candidate bend the tool tried: **11.08 m is pane E's 45 degree apex
+  (-25.04, 77.51)**, which the root hunter never comes near; **0.05 m is the substitute bend the tool took next (-63.19, 5.51)**. The section's
+  "about 11 m" is the first; the file's last line is the second.
