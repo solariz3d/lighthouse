@@ -347,3 +347,17 @@ The old generator is not a bar and is not printed as one.
 - **a planted foot stays where it landed while the body turns over it,** neither sliding nor swivelling on the floor; the foot's own facing at landing is along the travel there.
 
 **Registered now, so the look has something to fail:** on the course's turn, the line through a foot's landings follows the curve the hips travelled (each landing no further from that curve's own side than on the straight); a planted foot turns on the floor by no more than a few degrees while it is down (the builder states the bar from a source or marks it ours); and the inside and outside steps are printed side by side. **It failed on his terms if,** at the cut, the legs in the turn still read as a straight run being steered.
+
+## HIS WORDS ON THE ELBOWS, 14:53 (D, 2026-11-15; game brief item 239): A TEST FOR THE ARMS' STAGE (N2)
+
+**His words, after watching the grip film:** "also i swear the elbows dont swing lol". His earlier word on the same joint, item 180: "the elbows should be flared out more ... there needs to be more bend in the elbow when swinging".
+
+**What the film's own joints say, measured by the librarian** (`pose.csv` of four of pane E's films, the lit pass; the script is `dz3night\elbows.js` in the librarian's scratchpad): the elbow angle runs between 73.5 and 100.0 degrees, a range of 26.5, identical on both arms and in all four films; the upper arm swings 91 to 95 degrees front to back at the shoulder. The body is the old build's.
+
+**What is on file for it** (pane E's sheet, `loop/source_sheet_n2_upper_body_E_2026-11-15.md`, section 2):
+- the elbow's range grows with speed, 21.68 F^0.718 degrees, measured only up to Froude 1.36 (`:119`); the hunter runs near 3.4;
+- one sprinter at 9 m/s swings the arm about 120 degrees (`:138`);
+- **no elbow range above 4.15 m/s is on file** (`:141`), so what a sprinter's elbow does is a thing to find before the arms are built, not to guess;
+- the old build's elbow numbers (mean 90 degrees and the rest) are in the sheet's list of what is not carried over (`:149`).
+
+**For the arms' stage, registered now:** the sheet gains a line for the elbow's range at a sprint from a source (measured data or a published method), found before the stage's page is written. At N2's film the elbow's own range is printed beside that source's. **It failed on his terms if,** at N2's film, the elbows still do not read as swinging.
