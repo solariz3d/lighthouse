@@ -888,3 +888,37 @@ The hand lines run through the openings' middles, each corner filleted as wide a
 - My hand lines are lane-middle polylines, not the best line. A diagonal through the room might do better, and that is not shown.
 
 **The gate's fix (item 3):** not read again. Nothing was built, so a judge samples exactly what it did before.
+
+## Section 2, built (the ruling at the ring for the two reads, git-blob 1a5b2e86): the replanning rows red first, then five lines before code
+
+**The rows, red first** (dreamzone-3 `a-mline` **3a5898d**, on 2a51143's law; `rp_rows_red.txt`, `rp_row2_red.txt`):
+- **The stand-in's bends rows now replan every half second** (`run_bend`, amended by name). The arcs' 90 now exits at **tick 911**. It was 864
+  when planned once; today's law is at 871. Its lowest is 2.02 m/s. The arcs' 22 is at 676 and the 45 at 789. Today's law's own 45 moves to
+  978 (1103 planned once). **The chair's expectation holds: the 90 goes red in the stand-in, as in the staging.**
+- **Section 2's row (red):** with replans, at every plan from pane E's 90 door until the body is within 2 m of the bend, every point of the line
+  within 5 m of the bend must lie within 5 cm of the first plan's line, and the lowest between the bend's 2 m gates must be no less than 4.29 m/s.
+  On 2a51143 the line lies 0.00 / 0.02 / 0.04 / 0.10 / **0.86 m** from the first plan's at 20.3 / 17.0 / 12.9 / 8.8 / 4.6 m out, and the
+  lowest is **1.85 m/s**.
+- **A correction made before this commit:** the row's first measure was the line's one point nearest the bend. It barely moved (0.01 m), even
+  at plans where pane E's print shows the arc gone, because a least-bending line passes near the corner too. It was replaced, before the red
+  was committed, by the distance of the whole line within 5 m of the bend.
+
+**Section 2 as built differs from its text in four guards, so five lines first:**
+1. **Kept:** at a replan of a root body with the arcs on, the current line from the body to the point a braking distance ahead along it is
+   kept. The braking distance is `v^2 / (2 min(brake, grip_mu g))`: at 9.2 m/s and grip 1.0 that is 4.3 m. Below one sample (0.25 m) of it,
+   nothing is kept.
+2. **Planned again:** only beyond that point: the search from the keep point to the goal, and the arcs on what it returns. The line is the
+   body, then the kept stretch, then the new line.
+3. **The other side of a solid is never taken within that distance**, because that stretch is the old line itself. If there is no way on from
+   the keep point (the search fails), **the old side is no longer a way**, and the plan is made from the body as now.
+4. **Guards (mine, not in section 2):**
+   - a link inside the kept stretch, or the body more than 0.5 m off its line, means a plan from the body as now;
+   - if the old line ends inside the braking distance, the plan is made from the body as now;
+   - with `line_arcs` 0 nothing changes, so the least-bending law is untouched.
+5. **What would show it wrong:** registered by the ruling, in pane E's staging, the arc at the 90 the same at every plan from the door to the
+   bend, and its lowest no less than 4.29 m/s; reported against both judges. Also the stand-in's section 2 row.
+   - **My prediction, before code: the registered "same arc" FAILS.** From 12.9 m out the braking distance (about 4.3 m) does not reach the 90,
+     so the 90 is re-strung from a keep point about 8 m before it, and pane E's print says such strings lose the 90's arc. **Section 2 keeps
+     only what is near the body, and the 90's arc is not near it when it changes.**
+   - If that comes true, the cause is how a string from a moving start is clustered at the 90 (the falsifier the ruling named), and that is
+     printed.
