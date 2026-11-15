@@ -300,3 +300,37 @@ So the fault pane B names is there as B says, on the hunter, in all four windows
 **5. Your three questions of 11.4:** the foot is not let slide (3). The first two are answered by item 3: both bars are reported until the table says whether there is anything left to choose.
 
 **Ring once, with the step print and the table.** If the table passes the runners' spread, make the cut for my look in the same lap; N2 follows my look.
+
+## THE FIFTH SCORE (D, 2026-11-15): WORSE AGAIN, ROWS RED. NO MORE PIECES ON THIS BUILD. THE PUBLISHED METHOD IS READ WHOLE AND N1's LEGS ARE REBUILT FROM IT; THE JUDGES COME FROM THE RESEARCH ON FILE
+
+`handback/p-n1-legs-B_2026-11-15.md` sections 14 and 15 (lines 845-998 read whole; git-blob 2bb8d8b2); the red branch `n1-shaped-wip-b` ee165fc. His words that govern this section, game brief items 236 and 237: "are you doing it from scratch instead if referencing research new and old?", "should be everything open source we can access for proc gen animationn techniques etc", "always take relevant research and use it".
+
+**Taken:** the step print from the runners' own force files (step 0.933, 1.234 and 1.500 m at the three speeds; a second source, the research report filed today, gives 0.93, 1.23 and 1.48 from the paper's own table, so two readings agree). The table: 5.2 / 14.8 / 10.3, 7.3 / 19.5 / 10.8, 13.9 / 29.3 / 12.5; it fails the runners' spread on 8 of 9; both rows red; no cut, as ruled. And your section 15, which did the thing his words ask: you searched the shelf for each thing your prints had found, and most of it was there.
+
+**Five scores, and the knee reads 20.7, 12.3, 16.3, 14.4, 14.8 at 2.5 m/s, with 29.3 at 4.5 now.** Each build added a part and the next score was no better. Every one of those parts was ordered by me, one ring at a time. That way of working stops here.
+
+**What the shelf says about the judge, which I had not opened** (`loop/animation_system_2026-11-13/scout_evaluation.md:3-6`, `:142-143`, `:259-261`):
+- "The room scores joint ANGLES against recorded runners ... but has no check that a foot stays put ... or that it does not sink into the floor; those are the measures the research uses most."
+- "no simple number agrees with people much above chance ...; numbers catch defects, his eye judges."
+- the measures it proposed: a foot's travel over one contact no more than 20 mm; the lowest foot joint no more than 5 mm under the floor while down.
+- and its second reader, from the one study that compared: "a simple approach of lengthening limbs was preferred to a more complex approach using IK fixes and trajectory smoothing".
+I made the joint angles the only judge, and for half a day the bar was the old generator. The research's order is the other way: the foot on the floor first, the angles as a check for defects, his eye last and above both.
+
+**RULED:**
+
+**1. Nothing more is built on the red branch.** It stays where it is, with its two candidates named (the leg's proportions; the early timing) and not chased on this build.
+
+**2. Two reads, then one page, by you:**
+- **A print of proportions:** thigh, shin, foot and hip height over standing height for the runner's body and for the hunter's, beside the same ratios of the runners the data came from (from the dataset's own markers if it gives them, else the published human proportions, said which). It says which of our two bodies the runners' angles can be asked of at all.
+- **The published method read whole, at source, each cited by file and line or page where it is used:** Johansen 2009 and its `LegAnimator.cs` (a leg driven from a source cycle through foot paths between predicted footprints, the foot rolled between heel and toe, the hips' height from each leg's reach); Kovar, Schreiner and Gleicher 2002 (heel and ball as separate plants; the root moved the least that makes the ankles reachable; legs stretched a little before the knee is forced); Holden's lock as you have it in section 15; and rbfx's `IKLegSolver.cpp` and `IKStickTargets.cpp` for a C++ form. The index to them is `research/running_foot_contact_and_foot_planting_2026-11-15.md` and `research/open_source_procedural_animation_code_census_2026-11-15.md`; both are agents' reports and nothing in them is taken without the source opened.
+- **The page:** the pipeline for a running and walking leg taken from those sources, part by part with its source beside it; what of ours already is that part (the gait plan's clock and footprints, the lock, the hips' rule) and what is not; what the source cycle is (the measured runners' curves, the dataset itself); and what would show it wrong.
+
+**3. The judges, from the shelf, all reported:**
+- the feet, over the whole course: no point of a foot travels more than 20 mm while it is down, and none is more than 5 mm under the floor (`scout_evaluation.md:142-143`); the planted-foot row as restated is the first of these already;
+- the yardstick's bands, as a check for defects, with its early-or-late column printed, on the body whose proportions the first read says can be asked;
+- then the cut, my look at every station, and his eye.
+The old generator is not a bar and is not printed as one.
+
+**4. Then build from the page without waiting for me.** I read the page when it is rung; I do not rule it part by part. One ring with the page and its first rows.
+
+**The lock you were rebuilding to Holden's lines** goes into the page's build, not onto the red branch.
