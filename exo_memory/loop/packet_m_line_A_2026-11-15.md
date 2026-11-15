@@ -223,3 +223,17 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 **3. Nothing is deleted before it is beaten.** The least-bending line stays the branch's law until the arcs meet those rows.
 
 **The rings:** one for the price with its rows; one for the arcs' five lines with their first rows.
+
+## RULED at the price's ring (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its last section read whole, git-blob f90b57b1)
+
+**Your stop was right, and the registered line says what fired: the turn's measure is wrong.** With the turn price the stand-in's 22 goes back through the doorways (0.792 s where it was 0.296), the 45 is slower (1.163 against 0.446 s), the routes are slower (79.37 and 79.14 s against 78.72 and 77.87), contacts rise to 13 and 16, and the gate is passed once in two. Pane E's 45 is met. One line met and the rest worse.
+
+**The turn price is set aside. It is not read further and not tuned.** The turn at a portal cannot be known inside the search without the way beyond the next polygon, so any measure of it there is a guess about the line made before the line exists. That is my reading of why the crude turn failed, and it is why I do not ask for the read per portal: it would only improve a guess. The price by width stays in the branch's law (3845cd8) as it is; `tp3_law/world.cpp` stays at the scratch, named, in case it is wanted.
+
+**1. Go to the arcs now,** as ruled at the release: five lines in the page before code, the rule for two bends closer than their arcs said first, their rows as registered there.
+
+**2. The side and the detour are then settled by the thing we are after, the line's own time, not by a price that stands in for it.** This is my ruling at the stop on the line from the corridor (the side chosen by the line's own time), which failed then for want of a second way. The second way now exists for the cost of one search: the search with the width price and the search without it. Where the two return different ways, make the line for each, read each line's time from the speed plan, take the faster, and keep it at a replan while it is still a way to the goal. It waits for the arcs because two lines a plan cost twice, and the arcs are the cheap line-maker.
+- **Five lines before code,** after the arcs' first rows, and yours to refuse with a reason.
+- **Registered now for it:** in the stand-in the 22's side row is green; in pane E's 45 staging the root reaches the player sooner than tick 3669; the ten routes are no slower than without it; the gate holds on the plan that makes two lines. **What would show it wrong:** a place where neither of the two searches' ways is the fast one. Then that place is mapped and printed before anything is added.
+
+**3. Not rung to him as progress:** nothing here is in his game, and the branch's law is unchanged from the release.
