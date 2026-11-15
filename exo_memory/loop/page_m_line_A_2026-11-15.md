@@ -283,3 +283,35 @@ aim-behind slide way (a) and is red by its own rule that a row seeing nothing is
 **What is open, named:** the 90 degree bend (slower than today in both arenas); the cost gate; the slide law's fault at a velocity nearly
 opposite the aim; the 45 degree staging comparison (where does the root hunter go at E's 45 degree bend). **No film:** the 90 degree bend would
 show him a hunter slower than today's.
+
+## The ring for the side's ruling (git-blob 4742072e): the two reads and the slide law's red row
+
+**Read 1, the 90 degree bend (no change; `r90.txt`, `h90.txt`, scratch rows):**
+- **The place:** a crossroads. An east-west corridor with about 2 m of free mesh (z -26.5 to -24.5) crosses a north-south one with about 2 m
+  (x -11.5 to -9.5); south of it the way widens into a small room (z -30.5 to -32.5) and jogs west into a corridor at x -14.5 to -12.5 to the
+  target. Today's string turns at a point on the inner corner, (-11.75, -26.75).
+- **The line (4b03985) hugs the inner side:** it runs at z about -26.42 with 0.20 to 0.40 m of room, and at the corner its radius is about
+  0.9 m (the line's points within 8 m and the radius at the body, tick by tick). The plan asks 2.0 to 2.5 m/s there and the body falls from
+  8.6 to 1.48 m/s at about tick 820, beside the inner corner, untouched. inferred, not checked: the relaxation moves each point only along its
+  normal from the string, and at the string's corner those normals fan, so the line cannot swing wide into the crossroads.
+- **A hand line, the judge of the place:** the corridor's north side, a right arc tangent to it and to the south corridor's east side (room 0.2 m),
+  then straights through the small room to the target, every sample on the mesh, the root following it with no replans:
+  R 5.0 m: 0.679 s, lowest 4.94; **R 6.0 m: 0.575 s, lowest 5.52, no contact**; R 6.5 m: 0.588 s, lowest 5.61, 1 contact. Today's law here
+  0.846 s. **The registered line does not fire: a hand line beats today's time, so the place allows it and the line-maker is the gap**, at the
+  corner, where it keeps a 0.9 m radius on the inner side and the hand line swings 6 m wide through the crossroads.
+
+**Read 2, where the root hunter goes at pane E's 45 degree bend (`t45_trace.txt`, E's staging, `--chase-speed "root_law=1"`):** from the door
+(-3.54, 77.51) it goes **north** (z 77 to 91), then west along a northern corridor (z about 89 to 88) at up to 9.35 m/s, and reaches the
+player at (-31.86, 86.42) at tick 3669, where the run ends. It is never nearer the 45 degree apex than about 11 m. inferred, not checked: the
+squeeze price sent it round the north way; E's 45 degree bend is not on its route at all.
+
+**The slide law's red row (`sr_rows.txt`, dreamzone-3 a-mline 1851018, on the tip's law 4b03985):** check 2 and the brake row restated by
+name to the ruling's wording (the acceleration along wanted minus current, no less than 0.9 of what grip allows, less what the wall refuses;
+the 03:28 turning check withdrawn by name), and a row from the base's 45 degree bend at tick 773 (the body set as it stood):
+- check 2: way (b) 54 of 118 sliding ticks under 0.9 (least -0.156); way (a) 15 of 15: **red**.
+- the brake row: way (b) 1 of 53 under; way (a) no aim-behind tick at all: **red** (by the row's own rule).
+- from tick 773's state: 58 of 90 ticks under (least 0.625): **red**.
+
+**Next, without waiting, as ruled:** the slide's steering as one law (accelerate along wanted minus current, no larger than grip, less what the
+wall refuses; the brake case goes into it), then the cost (keep the line between plans; a cold line spread over ticks by a count), with the bends
+row printing the exit gate's tick from the common start. The 90 degree line-maker gap is named and not built in this lap.
