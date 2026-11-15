@@ -119,3 +119,33 @@ only the straight run from 2.5 to 4.5 m/s; everything else in N1 is judged on th
 
 **The rows stand as B wrote them:** a planted foot moves at most 1 cm from strike to lift; his kept runs replay the same with
 it on; no old pose function is named in `game/anim/`.
+
+## N1's FIRST CUT, LOOKED AT FROM OUTSIDE BY THE LIBRARIAN (D, 2026-11-15): NOT ACCEPTED, TWO FAULTS, ONE OF THEM FROM MY OWN CHANGE
+
+`handback/p-n1-legs-B_2026-11-15.md`; branch `n1-legs-b` 6095216; the frames in `G:\consonance-scratch\course-after`.
+
+**What holds, by pane B:** a planted foot does not slide (0.0000 m over 48 and 42 landings, red first at 0.41 and 0.55 m);
+his seven kept runs replay the same with the new system on; no old pose function is named in `game/anim/`.
+
+**What I saw in the after-frames, which no row reads:**
+1. **The runner going backwards is a plank.** `backwards\runner_0120` to `_0165`, every fifth frame: the whole body tilted
+   about 25 to 30 degrees from upright, both feet together and ahead in the travel, held through all ten.
+2. **The hunter's leg flies out sideways.** `sidestep\hunter_0150` to `_0185`: one leg held straight out to the side, about
+   level, for about a quarter of a second, then swung down.
+
+**The first suspect is my change 1 to pane B's design, and the arithmetic I gave for it was for the wrong body.** I had the
+foothold take half the acceleration times the time squared, and wrote "0.2 m at a turn of 1 g". The game's mover does not
+accelerate at 1 g. Pane O read his run's own ground acceleration as about 0.33 m/s a tick, which is about 79 m/s², eight
+times gravity; over a fifth of a second that term is about 1.6 m. So at every start, stop and sidestep the foothold is
+thrown far past where a leg can reach.
+
+**Ruled:**
+- **The acceleration that places a foot is no more than the body's own grip allows** (the kind's grip times g), whatever
+  the simulation's mover does. Or the term is dropped and the turn on the course judges it. Pane B prints, on the course, how
+  far each foothold lands from where the hip is at the strike, beside the leg's reach, and chooses from that print.
+- **Two things every stage keeps from here, said as what a look expects:** the hips stay between the feet and the body
+  stays upright unless a law leans it; and a foot is never sent further than the leg can reach from where the hip will be.
+- **Pane B looks at every station of both bodies before it rings a stage.** Its own look named the straight only.
+- **This comes before N2.** My change 4 ("straight on to N2") is amended by this: the legs are the ground the rest stands
+  on.
+- **The first cut is not put to him as a stage.** He is told what it shows and that the frames are there if he wants them.
