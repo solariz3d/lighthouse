@@ -589,8 +589,8 @@ committed; the law built after it is byte-equal to a7164cf's):
   two bends turning the same way are **merged**; none of the 90's five same-way corners ever reached that rule. The 45 the same (its 38.7 and
   22.3 deg to the solve; one arc of 8.75 m after them); the 22 met the S rule once, then the same cascade.
 - **The map of the 90** (in `da_place.txt`, 0.25 m cells): the arcs' line and the release's coincide but for a few centimetres; both turn the
-  corner in the 1.2 m gap at x -11.5 between the wall ending at z -26.75 and the doorway's jamb; the open room to the north (z -24.5 to -26.5) is
-  where a wide arc could swing.
+  corner into the corridor south, free mesh x -11.5 to -9.5 at z -26.75 (counted from the map row: about 2 m; a first draft of this line said
+  1.2 m from the eye and is corrected here); the open room to the north (z -24.5 to -26.5) is where a wide arc could swing.
 
 **What I would change, not built (the ruling's):** the sweep failure charged to the arc and its next neighbour, so a same-way cluster is merged
 before any bend is shrunk against an end (that is line 1 as written, and the code's departure from it); or the string's corners within a
