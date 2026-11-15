@@ -474,3 +474,32 @@ The old generator is not a bar and is not printed as one.
 **His, and asked in plain words with the candidates in front of him:** which base, or none; and yes to each licence before a line of it enters the game.
 
 **It failed if** code from any of these is copied into the game's tree before he has said yes to its licence, or if the room goes on writing by hand a part that a chosen base already has.
+
+## HIS WORD OF 16:02 (D, 2026-11-15; game brief items 156 and 245): KINETIC LINKING. THE NEW SYSTEM IS ONE LINKED BODY, AND THE STAGES BY BODY PART ARE WITHDRAWN
+
+**His words, 16:02:** "i just dont get it, why are the legs done but the rest isnt? its in the research and I have even said, the way the proc gen system of animation works shoult utilize kinetic linking."
+**His words, 11-12 (item 156):** "kinetic linking, making the whole body work as one. We need to make that but better for all entities and even the player character".
+
+**What was wrong in this plan, by name.** Its stages N1 to N5 cut the body by part, gave the legs to one pane, and held the trunk, arms and head behind "no code until he has seen the legs". Nothing in this file, in the lessons sheet or in N2's page says kinetic, item 156 or L181 (checked by grep, 16:0x). His decision of 11-12, its plan (`loop/plan_l181_kinetic_chain_2026-11-12.md`) and its model (his first game's [KINETICS], dreamzone-rt `src/main.cpp` at 9d98b64, :6605) were left out of the restart. **Withdrawn: the stage N2 as a stage, its gate, and the two "seams" between N1 and N2.** A linked body has no seam there.
+
+**THE BODY, as one chain (L181's eight points stand, each with its source; today's measures fill what L181 had to leave open):**
+- **The feet hold the ground and the pelvis rides the planted legs.** That part exists: dreamzone-3 `n1-shaped-wip-b` c6e3a5f (the planted-foot rows; the pelvis's height and tilt from the measured runners).
+- **Every segment is mounted on its parent and is moved by it:** pelvis, then spine, neck and head upward; pelvis, then thighs, shins and feet downward; shoulders, then arms, from the chest. A motion of the pelvis reaches the head and the hands through the chain, late and smaller, by a spring at each link.
+- **What travels along it, each from a source:**
+  - the pelvis's turn with the stride and the thorax's counter-turn, a quarter of a stride later (pane A's measure from Dorn's markers; Perpiñá-Martínez 2023's many-runner range for the pelvis). L181's point 5 asked for exactly this source;
+  - the arms swung from the shoulders' motion and not driven on their own (Pontzer 2009: powered from below), with the measured sprinter's elbow and wrist path as what the result is set beside (`loop/sprint_reference_2026-11-13/00_reference.md:158-166`; pane A's page);
+  - the bank shared down the chain and countered at the head (his first game's shares; Overgrowth's, `movementobject.cpp:2680-2685`), as angles in space so that nothing is counted twice;
+  - the look shared up the chain, head first (his item 163);
+  - the follow-through: each link's spring by half-life (Holden's `spring.h`, MIT; Overgrowth's half-lives).
+- **One function for every body with a model, and the player's** (L181's point 8; his "for all entities and even the player character").
+
+**L181's own tests carry over, red first:** a scripted pelvis bank reaches chest, neck and head by their registered shares; pelvis and thorax turn opposite over a stride with the measured lag; after a step change in the pelvis the head's lag peaks after the chest's. With them today's judges: the feet's rows unmoved by anything above them, the elbow's range and the wrist's path beside the sprinter's.
+
+**WHO, now (this replaces item 5 of the section of 15:2x and the holds of 15:54 on the upper body):**
+- **Pane A builds the chain from the pelvis up, now,** in `game/anim/` on a branch from c6e3a5f. Its page and its measures are the chain's numbers; its seams file is withdrawn as a seam and kept as the statement of what the pelvis's frame hands upward. L181 and the first game's block at 9d98b64 are read whole first. No old pose function is called (the first iteration's `kinetic_chain` is read for what it taught, by the lessons sheet's rule).
+- **Pane B keeps the downward half:** the pelvis's turn drawn into the legs' plan, the legs in a turn, the backwards step, the first tick. Its evaluation ring (rbfx, Johansen) comes first.
+- **Pane E films the whole body as soon as the chain moves at all,** crude or not, for his new page.
+
+**The open candidates (pane A's evaluation, `loop/eval_open_systems_A_2026-11-15.md`, git-blob 9d6ae95b, read whole):** none can be filmed today without a call of his and none reaches the hunter's speed; Overgrowth's animations are not open and its rules are already in use here. The evaluation's hold on the upper body is lifted by this section. His calls from it are put to him in plain words (the 1.47 GB of open recordings first; the rest only if he wants to see them).
+
+**It failed on his terms if** the next film of the new system still shows legs under a body that does not move with them. **It failed as a plan if** a later section cuts the body into stages by part again.
