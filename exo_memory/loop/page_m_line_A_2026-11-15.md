@@ -556,3 +556,44 @@ touched until the arcs meet the rows (ruling item 3). The width price stays in t
 **The rows, red first** (the arcs switched on and stubbed to the least-bending line, so each is red where the release is): the three bends'
 exit ticks against today's; the routes' total against 77.11 s and contacts at most 10; the gate; the arcs' own count (arcs, merged, S pairs,
 fallback runs with their places, tangent points off the mesh).
+
+## The arcs' first rows (as five-lined above): RED; the 90 slower than today's, so the place is printed with its map. Not kept.
+
+dreamzone-3 `a-mline` **a7164cf** (pushed, read back; red first at **5d380d8**, the rows on a stub returning the release's line). Behind
+`line_arcs` (0 by default): the least-bending line stays the branch's law. checked: `page_m_line_A_2026-11-15_evidence/ar_rows_red.txt` (the
+stub) and `ar_rows.txt` (the arcs).
+
+| row (way (b), stand-in, the width price in) | the bar | stub (the release) | the arcs |
+|---|---|---|---|
+| 22 exit tick | 724 | 686 | **677** (0.300 s, lowest 5.87, 2 contacts) |
+| 45 exit tick | 1103 | 801 | **801** (0.446 s, lowest 7.99) |
+| 90 exit tick | 871 | 915 | **948, RED** (1.067 s, lowest 1.71) |
+| ten routes' total | 77.11 s | 78.72 s | **79.71 s, RED** |
+| route contacts | 10 | 11 | **11, RED** |
+| one plan, largest | 1,000 us | 694 us (mean 498) | **1393 us, RED** (mean 1106) |
+| arcs a bend / runs by the solve / tangent points off the mesh | >= 1 / printed / 0 | 0 / 0 / 0 | 1 / 1 / 0 on each bend |
+
+Whole suite: chase 121, 8 failed (the five red at 3845cd8 and the three arcs rows); nav 34, 0 failed; off means off md5
+`fa938de45995bd2d13b98ba28fae0c34`, 18 SAME. The line rows with the switch off are the release's (the 22's side row green).
+
+**The unwelcome case met at the 90, so the place, printed before anything is tuned** (`da_place.txt`: a scratch print in the law, gated, not
+committed; the law built after it is byte-equal to a7164cf's):
+- **The string splits one bend into a cluster.** At each of E's bends Detour's corners come in twos and threes 0.25 to 0.32 m apart: the 90 is
+  (-11.99 -26.54) 10.5 deg, (-11.74 -26.59) 40.0 deg, (-11.54 -26.84) 38.7 deg, then (-11.54 -29.99) 9.5 deg and (-11.59 -30.29) 14.9 deg; the
+  45 is 38.7 and 22.3 deg 0.32 m apart; the 22 is 4.8 and 25.0 deg 0.30 m apart, then 16.8 deg the other way (an S).
+- **Each corner judged alone gets a large radius** over its own small turn and 0.12 to 0.16 m half-legs (the 90's: 26.4, 7.5, 7.1, 28.8 and
+  2.6 m), so neighbours 0.3 m apart overlap and no pair can be drawn.
+- **Then my code, not line 1, sends them to the solve.** An arc whose sweep runs backwards is charged by `arc_build` to the pair (the element
+  before, the arc). At the start of a stretch that is (the end, the bend), so line 4's rule shrinks the bend against the end, it fails at
+  0.3 m, it goes to the solve, and the next corner meets the same: the 90 ends as four corners by the solve and one arc of 0.31 m. Line 1 says
+  two bends turning the same way are **merged**; none of the 90's five same-way corners ever reached that rule. The 45 the same (its 38.7 and
+  22.3 deg to the solve; one arc of 8.75 m after them); the 22 met the S rule once, then the same cascade.
+- **The map of the 90** (in `da_place.txt`, 0.25 m cells): the arcs' line and the release's coincide but for a few centimetres; both turn the
+  corner in the 1.2 m gap at x -11.5 between the wall ending at z -26.75 and the doorway's jamb; the open room to the north (z -24.5 to -26.5) is
+  where a wide arc could swing.
+
+**What I would change, not built (the ruling's):** the sweep failure charged to the arc and its next neighbour, so a same-way cluster is merged
+before any bend is shrunk against an end (that is line 1 as written, and the code's departure from it); or the string's corners within a
+metre of each other merged into one bend before any radius is judged. Either is a fix to the build against its own five lines, not a tune of a
+constant; I have not made it because the ruling says the place is printed before anything is tuned. The gate (1393 us) is the radius search
+on those large isolated radii; the merge would also take most of it away (inferred).
