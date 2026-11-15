@@ -358,6 +358,7 @@ The old generator is not a bar and is not printed as one.
 - the elbow's range grows with speed, 21.68 F^0.718 degrees, measured only up to Froude 1.36 (`:119`); the hunter runs near 3.4;
 - one sprinter at 9 m/s swings the arm about 120 degrees (`:138`);
 - **no elbow range above 4.15 m/s is on file** (`:141`), so what a sprinter's elbow does is a thing to find before the arms are built, not to guess;
+  - **CORRECTION, 15:1x, by pane E and opened by the librarian: this line is wrong.** A sprinter's elbow IS on file: `loop/sprint_reference_2026-11-13/00_reference.md:158-166` (Dorn's runner JA1, one runner, the second reader re-ran all 44 cells): flexion from 38.2 to 121.2 degrees over the cycle at 9.49 m/s, a range of 83.0; 67.1 at 5.20 m/s and 68.6 at 7.00 by pane E's finer read. 4.15 m/s is the top of the yardstick's arm reference, not of the shelf. The drawn elbow's 26.5 degrees is a third of that. Pane E's sheet carries the row (git-blob 1d8b8845).
 - the old build's elbow numbers (mean 90 degrees and the rest) are in the sheet's list of what is not carried over (`:149`).
 
 **For the arms' stage, registered now:** the sheet gains a line for the elbow's range at a sprint from a source (measured data or a published method), found before the stage's page is written. At N2's film the elbow's own range is printed beside that source's. **It failed on his terms if,** at N2's film, the elbows still do not read as swinging.
