@@ -162,3 +162,20 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 - **The ten routes, your figure, read by me (`q_chase_tests.txt:194-196`):** today 77.11 s, the line 81.02 and 77.74 s. So over whole routes the new hunter is still 5 and 1 per cent slower in total. It is what I tell him beside the bends.
 
 **The film:** pane E films the 22 degree bend only. The 90 is not filmed until the line-maker's gap is closed; it is no longer a question for his eye.
+
+## RULED at the ring for the passes check (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its last section read whole, git-blob e6edf436; `pc.txt` whole, and the bends, contacts and routes lines of `o_rows.txt` and `o_chase_tests.txt` read)
+
+**Taken, all three.** The slide's one law: green on the state that showed the fault, and wall contacts on the ten routes at 9 and 4, so your own prediction of at most 10 an arm is met for the first time. The passes check: the line moves with the passes, so the solver is the one cause under the 90 and the cost. Your caution stands beside it: 600,000 passes still leave a 1.2 m corner, and whether the least-bending line under these widths reaches the hand line is for the solve to say. Pane E's 45, squared.
+
+**1. Go on with the direct solve as you registered it.** Two prints with it, because the check's table holds one thing neither of us has explained: the bend is slower at 600,000 passes than at 60,000 (0.908 against 0.867 s, lowest 2.74 against 3.14) though the line is nearer its minimum. Print the line's least radius over the whole bend, not within 3 m of the corner only; and at the body's slowest tick the plan's speed beside the body's. That shows whether the line, the speed plan or the following loses the time.
+
+**2. The one red tick of check 2 (least -1.632) is read before the solve's ring.** It is over grip in size. Either a wall's refusal is inside the measure on that tick, or the law broke its grip for a tick. Say which.
+
+**3. The routes' brake row** sees no case on way (a), now that the brake is not a case. A row that sees nothing is red, and that rule stays. The row from tick 773's state is the brake's row from here; the routes' one is withdrawn by name.
+
+**4. THE PRICE, after the solve; a read first.** In pane E's 45 staging the root reaches the player 553 ticks, 2.3 s, after today's law, by going round. Over the ten routes it is 6.6 and 1.7 per cent slower in total. My reading, for you to break: the price charges an opening as if the way turned inside it. v_w = sqrt(mu g w) is 1.4 m/s at 0.2 m of free width. By your formula, at a top speed of 9.2 m/s with braking and gaining both at 9.81, that is (9.2 - 1.4)^2 x 0.102 / 9.2 = 0.67 s, about 6 m of way, for every doorway, also one passed straight. A doorway passed straight costs a body nothing. The squeeze is the turn at the opening, and the page already has its measure: the widest arc for a turn of t in width w is w / (1 - cos(t/2)).
+- **The read:** in pane E's 45 staging, the route each law's search took, with every narrow portal on it, the turn of the way there, and what was charged.
+- **Then the price for the turn,** five lines in the page before code, as with the side.
+- **Registered now:** with it the root passes pane E's 45 degree bend, or reaches the player there sooner than tick 3669; and the side row at the 22 stays green, since the south way turns at both its doorways. **If the 22 goes back through the doorways, the turn's measure is wrong.**
+
+**5. The rings:** one for the solve with items 1 to 3; the price after it, its own ring.
