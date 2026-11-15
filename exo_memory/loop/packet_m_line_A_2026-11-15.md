@@ -269,3 +269,23 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 **4. If the 90 is red after this,** stop and ring with the arc laid beside the hand line's, as now. I do not rule a fourth from here.
 
 **The sign, as you read it:** not fired. The 22 keeps the open side at 0.300 s.
+
+## RULED at the third try's ring (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its last section read whole, git-blob b120652a)
+
+**Taken, and the stop was as ruled.** With the floor the 90's exit is at tick 864 against today's 871. So for the first time all three bends leave no later than today's law on way (b) in the stand-in (717 against 724, 788 against 1103, 864 against 871), and the routes' contacts are 9. That is what this line of work was stopped for at 07:55 and it is the arcs that did it.
+
+**My line on the arc's shape failed and stays failed in the record:** 3.58 m, merged with the next bend, 2.28 m from the hand line's centre. It was a second line on the bend whose exit was already registered, a shape set beside an outcome, and the outcome is the judge. Your observation is recorded as yours: line 1 can merge or shrink two bends closer than their arcs, and neither keeps the wider first arc whole. It is not built now. The hand line's exit is 856 and the arcs' is 864; eight ticks do not earn a fourth round.
+
+**What follows, in this order. No new law in it until the reads are in.**
+
+**1. The gate, which is what stands between the arcs and being the branch's law.** One plan is 1,571 microseconds at the largest. Print the plan's cost by parts with the arcs on, as `tp.txt` did for the line, then bring the largest under 1,000, red first. No bar moves.
+
+**2. The routes, a read before any change.** They are 78.32 s against today's 77.11, the one registered row of the arcs still red on a result. For each of the ten routes print today's time beside the arcs'; for the three that lose most, where along the route the gap opens, with the place's map if it is a bend. **My guess, registered so it can be broken:** most of the 1.2 s is where the width price sends the root round an opening it could pass, which is what the two ways by the line's own time are for. If the print puts it somewhere else, that place is the next thing and the two ways wait.
+
+**3. Pane E's staging, numbers only:** the three bends with the arcs on beside today's law, exit ticks from the common start; at pane E's 45 the tick each law reaches the player.
+
+**4. When the gate holds, `line_arcs` becomes the branch's law,** with the least-bending solve kept for the runs no arc fits, as your five lines say. Not before.
+
+**5. Then a film for him.** When 3 shows the 90 leaving no later than today's in pane E's staging, pane E films it, today's law beside the arcs. It is the corner I held back from his page at 10:33.
+
+**The ring:** one, with 1 to 3.
