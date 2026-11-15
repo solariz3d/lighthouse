@@ -1009,3 +1009,30 @@ directly) and the routes row (`walk`, one plan) are the same rows on the same la
   point again: it is why the least-bending line lost to the arcs.
 - **DetourPathCorridor**, read above.
 - The fifth research report, on following a path with inertia, is coming and was not waited for.
+
+### The research report beside section 2 (`exo_memory/research/path_following_with_inertia_on_a_navmesh_2026-11-15.md`, read whole at 14:03)
+
+The chair's 13:59 pointer reached me after section 2 was built and rung, so this sits beside it, not before it. The report's marks are kept:
+**[read]** means the agent opened the source, **[snippet]** means it did not.
+- **The corridor:** the report and my read of the game's copy agree. `findCorners` re-strings from the current position every call, and the
+  corridor keeps polygons, not a line. Its line 83: "Detour's corridor keeps the polygon list stable but the corner string is recomputed every
+  frame; Apollo keeps the geometric trajectory stable" [read, the corridor sources and `trajectory_stitcher.cc`].
+- **Apollo's stitching** (report :64) [read]: it keeps the old trajectory from the matched point minus 20 points up to the current time plus
+  one planning cycle (10 Hz), and replans from that point's end. It replans from the vehicle's own state only past 0.5 m sideways, 2.5 m along
+  or 7 s.
+  - **Set beside my section 2:** the same form, a committed prefix and a hysteresis gate. My gate (0.5 m off the line) is Apollo's sideways
+    figure. My prefix is the braking distance; Apollo's is one planning cycle, shorter still.
+  - **So Apollo's rule, taken as published, would not keep the 90's arc either.** The arc changes 9 to 13 m ahead, beyond any committed prefix
+    of that kind.
+- **A line kept whole through a bend that lies further ahead than the committed prefix is OURS:** the report finds no established method for "a
+  curvature- and grip-bounded line combined with a navmesh corridor in branching open rooms" (:89).
+- **The speed along a fixed line** (:51-52) [read]: TUM `calc_vel_profile` and Kapania, Subosits & Gerdes eqs. 4-6 give the cap
+  `sqrt(mu g / |kappa|)` with a forward and a backward pass, TUM's under a friction ellipse
+  `ax_avail = ax_max (1 - (ay_used/ay_max)^2)^(1/2)`. The root's speed plan already has the cap and both passes (M2); **whether it uses a
+  friction ellipse or a box is not read here.**
+- **The width threshold** (:45), every corridor at least about 1.505 turning radii wide admitting a unit-curvature traversal (Bereg &
+  Kirkpatrick 2005): **[snippet], so not used until opened**, as the chair says.
+- **The turn price:** `getCost` is handed the previous, current and next polygons (:34) [read]. My turn price used `pa`, `pb` and the next
+  polygon's centre, which is crude, not impossible; the librarian's 11:56 sentence is corrected by the report. The set-aside stands until the
+  two ways by the line's own time are tried.
+- **A route cost that prices corner speed** (:90) is OURS: no established method.
