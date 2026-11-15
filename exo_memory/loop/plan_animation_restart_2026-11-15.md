@@ -441,3 +441,35 @@ The old generator is not a bar and is not printed as one.
   1. **Pane B: the legs in a turn** (his item 238; section 18.2 red; Johansen's footprint along a circle, a footprint's orientation kept once placed, the swing bent through its mid-flight point, as B read them at source). With it the runner's first frames (the old pose) traced and fixed, and the next cut's camera seeing the feet through the bend.
   2. **Pane A: N2.** The page's own "before code" list starts now: the two seams settled with pane B, and the three things measured from data. **Its code may begin once those are done:** he has the legs' film on his page since 15:55, and what he has said of the new system so far asks for the parts that differ, which is what N2 builds. If he says more of the legs before then, the page is turned by it first.
 - **The line of 15:2x ("it failed if N2's code is begun before he has seen the legs move") is kept in this form:** the film is in front of him; whether he has played it is not known to any seat, so pane A's ring before its first code says what he has said by then.
+
+## HIS WORD OF 15:54 (D, 2026-11-15; game brief item 244): 'open source gems that already exist which we can then modify'. AN EVALUATION OF EXISTING SYSTEMS COMES BEFORE ANY MORE IS BUILT BY HAND
+
+**His words:** "backwards walking is bugged, i swear, there has to be open source gems that already exist which we can then modify?"
+
+**What it changes.** Since 11-12 the room has worked under his item 150: "research open source alternatives, not to use, but to learn from". So each system was read for its method and written again by hand, one part a lap. His word today is to take what exists and modify it. **Which of the two he means from here is his to say; this section is written so that work can start on the part that does not need his answer.**
+
+**The backwards walk is the case in point.** The new legs have one measured shape, a forward run, and it is drawn for travel in any direction; the knee lifts in front while the body goes back (looked at by the librarian, the cut's `backwards` station). The existing walkers answer this by construction: Johansen's blends example cycles by the direction of travel; motion matching picks recorded motion.
+
+**THE EVALUATION (a read and a run; nothing enters the game's tree):**
+
+| candidate | licence, as the census or the shelf reports it | what it is | pane |
+|---|---|---|---|
+| rbfx's IK module | MIT, C++ | leg, arm, spine, head and limb solvers; foot locking with staggered release | B (it has read two of its files at source) |
+| Johansen's Locomotion System | MPL-2.0 (file-level copyleft), C# | the most complete planted-foot walker in one file; blends example cycles in any direction; footprints along a circle in a turn | B (it has read the thesis and the code) |
+| Overgrowth | Apache-2.0, C++ and AngelScript | a shipped game's whole procedural character: a few key poses, springs, lean, IK, ragdoll | A |
+| Holden's Motion-Matching | MIT, C++; its bundled data LAFAN1 is CC BY-NC-ND and cannot ship | a whole motion-matching controller with inertialization and foot locking | A |
+| Esoterica | MIT, C++ | an animation graph with foot IK, orientation and target warping, powered ragdoll | A, the licence and the three nodes only |
+| open motion data for a matching or blending base | 100STYLE CC BY 4.0; CMU "free for all uses" | recorded walks and runs forwards, backwards and sideways | A, with Holden's |
+
+**For each, from the source and not from the census:**
+1. the licence file, opened, and what it asks of a game that is sold and whose own repository is private;
+2. whether it builds and runs here as it comes, and what it needs that is not in the repository (assets, data), with that licence too;
+3. **its own demo filmed moving** where it runs: walking backwards, a turn, a stop and a start. These go on his page as the candidates. Nothing of our old body is in them;
+4. what taking it would mean: which files, how it meets Jolt and the simulation's tick, what of today's work it keeps (the measured runners, the planted-foot rows, the lessons sheet) and what it replaces;
+5. what it would not give him (for one: no open recording reaches the hunter's speed, `loop/animation_system_2026-11-13/scout_motion_matching.md:1-3`).
+
+**Held until he has chosen a base:** N2's code (pane A's page stands as the list of what the upper body must do, whichever base draws it); the legs' turn built by hand. **Not held:** the trace of the old pose in the runner's first frames; the tests of today (the feet's judges, his turn test, the yardstick), which judge any base.
+
+**His, and asked in plain words with the candidates in front of him:** which base, or none; and yes to each licence before a line of it enters the game.
+
+**It failed if** code from any of these is copied into the game's tree before he has said yes to its licence, or if the room goes on writing by hand a part that a chosen base already has.
