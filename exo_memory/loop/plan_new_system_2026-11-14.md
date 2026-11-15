@@ -118,3 +118,14 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
 - **A corner's room is two limits, and the lesser holds:** the corridor's width and the length of the straight legs. The librarian's arithmetic of 12:1x used the width alone and overstated what a short leg allows; A's formula is the leg limit. The table is in the packet.
 - **The drop of item 225, corrected:** the hunter took a drop link and came down 3.50 m in 0.904 s; a free fall takes 0.845 s. The line above that says it changed floors "within half a second" is wrong and stays as written; this line corrects it. For M3 "a drop is a fall" now means: the body carries its run off the edge, comes down under gravity, cannot pass through what is solid, and with the body laps is drawn falling and landing.
 - **Catch power, reported by A, nothing tuned to it:** of 96 seeds at normal the fleeing bot was never caught in 58 on main, 68 with grip only, 57 with slowing for the bend; at brutal 2, 2 and 0.
+
+## AMENDED at the collation of M2c and M2b (D, the night of 2026-11-14; `handback/p-m2c-m2b-A_2026-11-14.md`)
+
+- **M2c and M2b are back,** on `a-m1-root` b3ade8e, every switch off (`root_law`, `corner_feel`, `root_kinds`). The aim ahead works: the scripted 15 and 22 degree bends keep 9.19 and 9.18 of 9.20 m/s. Any kind takes the root by its bit; a new kind is a row; no line of the root names a kind.
+- **What a kind's row holds today:** top speed, forward gain, braking, the standstill turn rate, grip. **Mass is not read.** The section "AMENDED 18:5x" above lists mass in the row; it enters when two bodies push each other, not before.
+- **Three rows are red, with one cause:** a step the mesh refuses stops the body dead for a tick (`chase/chaser.cpp:529`). The branch does not land until they are green.
+- **M3 is packeted** (`loop/packet_m3_world_pushes_back_A_2026-11-14.md`): M3a, a refused step is a contact, the body keeps what runs along the edge and loses what runs into it; M3b, a drop is a fall, swept through the simulation's collision.
+- **The drop of item 225, second correction:** pane A's cast shows the link's line runs through solid (18 of 18 casts). He was right that it clipped. It also took a fall's time. Both lines above stand as written; this one completes them.
+- **A corner's room, a third reading:** pane A's `room` is neither the width limit nor the leg limit; it is the clearance along the corner's outer bisector, set where the leg's length goes. On route 0's short legs it is the generous one. Named for the lap that follows M3; not changed tonight.
+- **The Park kit stays held:** on the root the sprinter row cannot say what it says today (care is not something the root reads), so it cannot rule the kit.
+- **Catch power with every kind on the root, reported, nothing tuned to it:** of 96 seeds the fleeing bot is never caught in 64 at normal (main 58) and 0 at brutal (main 2).
