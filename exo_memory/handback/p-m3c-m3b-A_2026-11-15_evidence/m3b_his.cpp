@@ -10,6 +10,7 @@
 
 #include "chase/archetype.h"
 #include "chase/chaser.h"
+#include "core/det_math.h"
 #include "game/world/run_record.h"
 #include "game/world/world_app.h"
 

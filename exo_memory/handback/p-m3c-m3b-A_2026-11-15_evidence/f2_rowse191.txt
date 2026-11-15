@@ -1,0 +1,14 @@
+    way (b)  : no contact on the ten routes
+    way (a)  : no contact on the ten routes
+ok    m3c_read_what_holds_the_body_after_a_wall
+    way (b)  : 196 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 191, of which kept 0.8 along the wall 191 (worst 0.996); square 5
+    way (b)  : the sliding velocity turned at most 0.000 of its grip in a tick with no new contact
+    way (a)  : 234 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 231, of which kept 0.8 along the wall 231 (worst 0.996); square 3
+    way (a)  : the sliding velocity turned at most 0.000 of its grip in a tick with no new contact
+ok    m3c_a_step_the_mesh_snaps_short_is_a_contact_that_keeps_the_speed_along_the_wall
+    way (b)  : 4106 sliding ticks over 20 degrees off the aim; under 0.9 of the allowed rate 4106 (least 0.000 of it, 0.000 of pure grip); the body's own turn cap binding on 960 of them
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1370): CHECK failed: under == 0
+    way (a)  : 3377 sliding ticks over 20 degrees off the aim; under 0.9 of the allowed rate 3377 (least 0.000 of it, 0.000 of pure grip); the body's own turn cap binding on 589 of them
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1370): CHECK failed: under == 0
+FAIL  m3c_far_off_the_aim_a_sliding_velocity_turns_toward_it_at_its_grip
+3 tests, 1 failed

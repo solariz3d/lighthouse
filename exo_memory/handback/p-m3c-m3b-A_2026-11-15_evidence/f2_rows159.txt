@@ -1,0 +1,17 @@
+    way (b)  : the worst contact, route 0, from tick 2415 (10.062 s) to back at half its top at tick 2415 (10.062 s), 0.0 times its bar
+      t  10.062 s: speed  4.15, heading   27.5 deg off the path (1.85 m from it), branch 3, head-on 1, at (-14.71, -67.81)
+    way (a)  : no contact on the ten routes
+ok    m3c_read_what_holds_the_body_after_a_wall
+    way (b)  : 822 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 819, of which kept 0.8 along the wall 819 (worst 0.996); square 3
+    way (b)  : the sliding velocity turned at most 1.024 of its grip in a tick with no new contact
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1338): CHECK failed: slide_grip <= 1.001f
+    way (a)  : 659 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 656, of which kept 0.8 along the wall 656 (worst 0.996); square 3
+    way (a)  : the sliding velocity turned at most 1.024 of its grip in a tick with no new contact
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1338): CHECK failed: slide_grip <= 1.001f
+FAIL  m3c_a_step_the_mesh_snaps_short_is_a_contact_that_keeps_the_speed_along_the_wall
+    way (b)  : 2983 sliding ticks over 20 degrees off the aim; under 0.9 of the allowed rate 1851 (least -0.948 of it, -0.249 of pure grip); the body's own turn cap binding on 951 of them
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1370): CHECK failed: under == 0
+    way (a)  : 1655 sliding ticks over 20 degrees off the aim; under 0.9 of the allowed rate 1033 (least -0.948 of it, -0.134 of pure grip); the body's own turn cap binding on 287 of them
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1370): CHECK failed: under == 0
+FAIL  m3c_far_off_the_aim_a_sliding_velocity_turns_toward_it_at_its_grip
+3 tests, 2 failed
