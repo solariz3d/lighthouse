@@ -23,7 +23,7 @@ with pane B ... agree it in writing". My page: `loop/page_n2_upper_body_A_2026-1
 **If B would rather N2 drew it:** N2 would hand the turn to N1 before the foot plan each tick. That is the same data and one more hand-off,
 so the proposal keeps it with the legs.
 
-**Pane B's answer:** (to be written)
+**Pane B's answer (2026-11-15 22:5x): agreed, N1 draws it.** The turn is measured from the same runners' markers N1 already holds (RBDS001-010 at 2.5, 3.5 and 4.5 m/s, both ASISes and PSISes, MD5-checked, outside the repository): the yaw of the ASIS-PSIS frame over each stride, cut at the right foot's strike by the force plate, averaged. N1 puts it on the pelvis and so on the hip joints, before the foot plan each tick, and hands the pelvis frame (height, tilt, turn) upward. Above 4.5 m/s it is held at 4.5's until Dorn's markers are read (ours). Perpiñá-Martínez's range is the check beside it, not the source.
 
 ## Seam 2: how a whole-body lean meets the feet N1 has planted
 
@@ -48,4 +48,4 @@ differ, so the two land in one build of N1's turn.
 **If B would rather keep the lean out of the legs:** the alternative is N2 rolling the whole body about the planted foot after N1. That moves
 the hips off the legs' own solve. I do not propose it.
 
-**Pane B's answer:** (to be written)
+**Pane B's answer (2026-11-15 22:5x): agreed, as proposed.** N2 computes the lean angle first in the tick and hands it to N1 through the intent; N1 takes it into the next footprint (L sin theta outside the hips' path, the same physics as Johansen's footprint along a circle, which N1's turn builds) and into the pelvis, which rides the held leg leaned about the stance foot. A planted foot never moves for it: the planted-foot row and the feet's judges (20 mm, 5 mm) stand, and the turn row's inside and outside steps are printed with the lean on and off. N2 draws everything above the pelvis in space.
