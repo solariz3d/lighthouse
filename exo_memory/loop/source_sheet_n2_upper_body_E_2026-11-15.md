@@ -34,6 +34,10 @@ After each table come what is NOT on file and what not to carry over.
 **Read whole:**
 - `research/procedural_animation_techniques_open_materials_2026-11-15.md` (R-tech)
 - `research/open_locomotion_data_and_numbers_2026-11-15.md` (R-data)
+- `research/open_source_procedural_animation_code_census_2026-11-15.md` (R-code). Its cautions: its "[read]" is a
+  summarising fetch, not a line-by-line reading; three repositories have no licence (read only, never copied); Unity's
+  Animation Rigging is for Unity projects only; Flax is under its own EULA (R-code:7-9).
+- `research/running_foot_contact_and_foot_planting_2026-11-15.md` (R-foot), its upper-body lines only (:1-60, :95-140)
 - `loop/animation_system_2026-11-13/`:
   - `scout_upper_body_and_gaze.md` (S-head)
   - `scout_turning_and_transients.md` (S-turn)
@@ -48,7 +52,7 @@ After each table come what is NOT on file and what not to carry over.
 
 The 2026-11-13 folder's file names are given without their folder.
 
-**A fourth report, a census of open-source code, is to come.** Its rows go in when it is rung.
+All four of the librarian's 2026-11-15 reports are in. Code rows give the licence beside the source.
 
 **His words that govern N2** (as quoted at the lines given; brief = `exo_memory/briefs/dreamzone2_the_game.md`):
 
@@ -78,6 +82,12 @@ The 2026-11-13 folder's file names are given without their folder.
 | Pelvis ranges and trunk lean in acceleration or braking | none found | R-data:70 | the agent found no numbers |
 | In a hard stop, a "more upright and posterior trunk" comes with more braking force on the penultimate foot contact | Jones et al., in Harper et al. 2022, Sports Med (CC BY 4.0), Table 1 | S-turn:173-176 | reader, whole; UNSUPPORTED as a trunk-against-body comparison: no angle given |
 | The centre of mass moves vertically 7.2 cm at 3.5 m/s and 7.8 cm at 4.9 m/s running (difference not significant); about 5 cm walking | ISBS conference paper; J Biomech 2014 | R-data:66-68 | agent, snippet; a consumer source disagrees, unsettled |
+| The trunk's vertical travel: a C7 (base of the neck) marker oscillates 9.4 +-1.8 cm at preferred speeds of about 8.9 to 12.9 km/h; near the walk-run speed the centre of mass drops 0.073 m in the first half of stance; it is lowered from walking to running to sprinting (no number) | Smith et al. 2022, PLoS One; Lee & Farley 1998; Novacheck 1998 | R-foot:48-51 | Smith: agent, opened; Lee & Farley: snippet of the abstract; Novacheck: opened through a text proxy |
+| The pelvis's height is solved from the stance leg, not authored: run the measured leg angles up from the planted point; where a target is out of reach, move the root the least distance, smoothed; in flight carry the pelvis ballistically (about 1.0 to 1.8 cm of rise for 92 to 122 ms of flight); check it against 7 to 9 cm of oscillation | Kovar et al. 2002; Johansen 2009 thesis; Patoz 2022 (the flight times) | R-foot:100-107 | the agent's synthesis of sources it opened; the 1.0-1.8 cm is inferred |
+| A spine solver: the chain bends up to a set angle per joint, with a weight curve along the chain and a twist | rbfx `Source/Urho3D/IK/IKSpineSolver.cpp` (MIT, C++) | R-code:21-24 | agent, fetched (summarised) |
+| A damped spring stepped exactly whatever the time step: implicit Euler with denominator 1 + 2 h zeta omega + h^2 omega^2, half-life and critically damped wrappers, a quaternion spring that flips its target into the same hemisphere. The census names it as the base for "a few key poses plus springs", trunk lean and arm swing. It answers the gap S-og:313-317 left: Overgrowth's second-order springs do not convert to 240 Hz by changing dt | unity-cj-lib `NumericSpring.cs` (MIT, C#) | R-code:76, :89 | agent, fetched (summarised) |
+| A transform that trails its parent: weight (1 - damp)^2, stepped at a fixed 60 Hz substep so it does not depend on frame rate | Unity Animation Rigging `DampedTransformJob.cs` | R-code:33 | agent, fetched; Unity Companion License (Unity projects only): the idea may be read, the code not used |
+| Procedural breathing beyond Overgrowth's | none found | R-code:96 | the census looked for it |
 | Breath: rate 0.9 + 4.0 x speed ratio rad/s, capped at 5; amount 0.5 to 1; chest 0.01 up and 0.01 forward, turned 0.05 rad; neck 0.005; shoulders 0.002; rising half-life 0.58 s at full speed, falling 5.8 s at rest | Overgrowth, `aschar.as:2086-2127, :2334-2339` (Apache-2.0) | S-head:159-162; S-og:80, :97 | reader, whole (code); the units read as metres is inferred |
 | Breathing locks to the stride: 11 of 14 runners coupled, 2 strides a breath the most common; also 2.5, 3, 4 or none | Daley, Bramble & Carrier 2013, PLoS ONE (CC BY) | S-head:130-134 | reader, whole; DOWNGRADED: "stride" may be a step; treadmill at 2.6 m/s |
 | The spine counter-twists when the legs run in a direction other than the body faces: a distribution weight puts all of it on the first spine bone at 1, none on the top bone at 0; threshold 90 deg | Unreal Engine, Orientation Warping docs | R-tech:34 | agent, opened |
@@ -117,6 +127,11 @@ The 2026-11-13 folder's file names are given without their folder.
 | Arms as particles: elbow and wrist carried by the body's velocity with drag 0.92 a frame (velocity drag 10 s^-1), pulled to the keyed arm by mix(0.9, 0.97, loose), loose = 1 - speed / max - threat; pull half-life 0.055 s at full speed, 0.19 s standing | Overgrowth, `movementobject.cpp:1769-1788` (Apache-2.0) | S-og:77, :96 | reader, whole (code); DOWNGRADED: loose is also 0 in combat, 0.7 in the air |
 | A ragdoll is driven toward the animated pose by impulses or motors, still collidable; per frame: animation, then foot and hand IK, ragdoll, aim, skin; the animated pose must not break the constraint limits | Just Cause 2, Fuller & Nilsson, CEDEC 2010 | R-tech:59 | agent, opened (N5) |
 | Hands are constrained like feet; the root is put in the intersection of four spheres | Kovar, Schreiner & Gleicher 2002, section 6 | R-tech:67 | agent, opened (N3: hands meeting a wall) |
+| Arm and limb IK, open-source: an arm solver (rbfx `IKArmSolver.cpp`, `IKLimbSolver.cpp`, MIT, C++); analytic two-bone IK by the law of cosines with a pole and a maximum angle (Babylon.js `boneIKController.ts`, Apache-2.0); constrained FABRIK with cone and hinge limits (caliko, MIT) | rbfx; Babylon.js; caliko | R-code:20-21, :35 | rbfx's arm solver: listing only; Babylon and caliko: agent, fetched (summarised) |
+| Pose following for a physical arm, independent of mass and time step: stiffness k = m alpha / dt^2, damping d = zeta 2 sqrt(k m), maximum force = maximum acceleration x mass | Hairibar.Ragdoll `AnimationMatching.cs` (MIT, C#) | R-code:62, :87 | agent, fetched (summarised) (N5) |
+| Strength after a hit: it drops at 1 a second on contact and comes back at 0.05 a second; gains lerped from a 0.1 floor | ActiveRagdoll `SlaveController.cs` (MIT, C#) | R-code:63, :88 | agent, fetched (summarised) (N5) |
+| Stable PD for a powered ragdoll at high gains: solve (M + h Kd) a = Kp e + Kd e' - C, then tau = Kp e + Kd (e' - h a) | DeepMimic `ImpPDController.cpp` (MIT, C++; the PD needs no learning) | R-code:60, :85 | agent, fetched (summarised) (N5) |
+| Secondary motion: Verlet with world and parent-relative velocity damped apart; collision, angle elasticity, length elasticity and an angle-limit cone, in that order; the result slerped back onto the animated pose by a blend | JigglePhysics `JiggleJobSimulate.cs` (MIT, C#) | R-code:74, :90 | agent, fetched (summarised) (N5) |
 | Arm reference data, running: 25 CMU clips, three runners, 2.67 to 4.15 m/s, "free for all uses". Bars on file: elbow mean within 12.4 deg, shoulder ends within 3.7 / 7.0 | CMU Graphics Lab | G-loco:196-204, :230; R-data:41 | the record's reader; "the arm figures rest on three runners, so they are weak" |
 | Arm reference data, walking with arms: 50 adults, 0 to fast, 52 markers | Schreiber & Moissenet 2019 (CC BY 4.0, figshare 10.6084/m9.figshare.7734767) | R-data:15 | agent, opened (the record); joint angles to be computed |
 | Arms backwards and sideways: 100STYLE, 100 styles, forward, backward and sidestep walks and runs, 28 bones, one performer | Mason, 100STYLE (CC BY 4.0, commercial with credit) | R-data:24 | agent, opened |
@@ -149,6 +164,9 @@ The 2026-11-13 folder's file names are given without their folder.
 | Decide the head's position and rotation first, then solve the neck; put the neck's rotation axis as far forward on the head as possible; lower the head and body when ceiling sensors trigger | The Last Guardian, Tanaka CEDEC 2017 | R-tech:51 | agent, opened |
 | A look-at sets a frame, so a nod still works on top of it; soft joint limits damp it as the target goes behind | Spore, Hecker et al. 2008 | R-tech:52 | agent, opened |
 | A look-at has separate weights for body, head and eyes, plus a clamp (0.5 = half the range, 180 deg); no defaults given | Unity, Animator.SetLookAtWeight | R-tech:50; B8:104 | agent, opened |
+| The neck and the head each take half of a look's rotation, clamped to +-80 deg and slerped | runevision LocomotionSystem `HeadLookController.cs` (MPL-2.0: file-level copyleft, so a copied file stays MPL) | R-code:42-47 | agent, fetched (summarised) |
+| A humanoid's head and eye look-at with maximum angles and speeds | Wicked Engine `wiScene_Components.h`, HumanoidComponent (MIT, C++) | R-code:30 | agent, the header only |
+| A head solver | rbfx `IKHeadSolver.cpp` (MIT, C++) | R-code:21 | listing only, not opened |
 | The chest takes 0.35 of the look while moving (0.5 in a fighting stance, 0 off the ground); its turn split half about the top of the abdomen and half about its bottom; clamps chest 1.0 rad, head 0.91 rad past the chest, pitch 0.8 rad; head rate 15 rad/s | Overgrowth, `aschar.as:4358-4392`, `movementobject.cpp:2227-2439` (Apache-2.0) | S-head:143-150 | reader, whole (code); DOWNGRADED: 0.35 is a floor in max(), not a measurement |
 | Look springs per 120 Hz frame: chest damping 0.93, stiffness 0.5; head 0.9 and 0.8 (continuous: chest omega 7.7, zeta 0.56; head omega 9.8, zeta 0.64); the head leads the chest | Overgrowth, `aschar.as:14162-14165` | S-head:151-155; S-og:93-95 | reader, whole; DOWNGRADED: true only with idle_look_amount 0; an idle AI's chest gets 0.99 / 0.03 |
 | The look spread down the spine: head 1, upper spine 0.65, chest 0.4225 | ozz-animation, `sample_look_at.cc:468` (MIT) | S-head:35-36, :165-166 | reader, whole; DOWNGRADED: a sample's slider default, not a measurement |
@@ -189,6 +207,9 @@ The 2026-11-13 folder's file names are given without their folder.
 | The lean's ease: target from velocity and low-passed acceleration, half-lives 0.1126 s and 0.0548 s (0.95 and 0.9 a frame at 120 Hz); 0 off the feet | Overgrowth, `aschar.as:7921-7940` (Apache-2.0) | 00_system.md:150 (ground_sources_read.md:34-38) | the record's reader, code |
 | The whole body tilts about the frame's centre of mass, every joint together | Overgrowth, `aschar.as:13922-13934` | S-og:65 | reader, whole (code) |
 | The body's pivot moves between the centre of mass (0) and the feet (1) | Unity, Animator.feetPivotActive | R-tech:37 | agent, opened |
+| A semi-procedural walker's body: ground-hug and acceleration tilt, with the hips' height combined from each leg's desired and maximum reach | runevision LocomotionSystem `LegAnimator.cs` (MPL-2.0); Johansen 2009 thesis | R-code:42-45, :81; R-foot:107 | agent, fetched (summarised); the thesis through a text proxy. The tilt's law is not given in the summary |
+| A rotation correction slerped in across a window of the clip, the root's motion re-chained after it | Esoterica `Animation_RuntimeGraphNode_OrientationWarp.cpp` (MIT, C++) | R-code:25-27 | agent, fetched (summarised) |
+| Balance by the centre of mass: its offset d from the stance foot and its velocity v, in a frame that turns with the heading, feed the swing target; the hips share the torque by the stance foot's weight | cartwheel-3d `SimBiController.cpp` (Apache-2.0, C++; Coros et al. 2010) | R-code:59, :84 | agent, fetched (summarised) (physics control; N5's) |
 | What a large lean costs in space: the feet sit L sin(theta) outside the path; the hips drop L(1 - cos theta); with L = 1.196 m (the hunter model's hip), 45 deg is 0.85 m out and 0.35 m lower | geometry | S-turn:233-235 (worked there at 0.984 m); 00_system.md:194 for 1.196 m | arithmetic, mine at 1.196 m |
 | Rolling the whole body about its feet and then adding a trunk share about the pelvis counts the trunk twice (1.89 theta); the shares have to be set in space | the second reader's catch | S-turn:442-444; 00_system.md:266 | reasoning |
 | The player's world does not fall at 9.81: it rises at 23.4 m/s^2 and falls at 37.5, so which g the player's lean uses is a choice not yet made | game physics (`sim/params.h:59-61`) | 00_system.md:237-240 | code read |
@@ -240,4 +261,5 @@ literature** (R-data:9). Open datasets with the upper body, and their licences (
   - `00_build_path.md`
   - `ground_sources_read.md`
 - The sprint reference, `loop/sprint_reference_2026-11-13/`.
-- The fourth research report, the census of open-source code, when the librarian files it.
+- The four reports' other topics: feet, IK, transitions, traversal and creatures. They are the legs' (N1), the world's (N3)
+  and the states' (N4).

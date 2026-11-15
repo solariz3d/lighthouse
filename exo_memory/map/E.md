@@ -3233,3 +3233,4 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-15 14:0x local (D) · D677 the N2 source sheet re-cut to research only (his 13:37 "always take relevant research and use it"; the old build scrapped at 13:36): old-build constants moved to "what not to carry over" per part; the two 2026-11-15 research reports added → `exo_memory/loop/source_sheet_n2_upper_body_E_2026-11-15.md`
 - The techniques report found no public game rule for leaning into acceleration (atan(a/g) is physics) and no verifiable arm or trunk degree figures; the data report says measure targets from open datasets.
+- 14:1x local: the code census and the foot-contact report added (all four 2026-11-15 reports in): spine, arm, head-look code with licences; C7 oscillation 9.4 cm; the pelvis solved from the stance leg; unity-cj-lib's exact spring fills the 240 Hz second-order gap S-og left.
