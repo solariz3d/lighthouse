@@ -116,7 +116,13 @@ function journalSection() {
 
 /* The instrument list. This is the name's ground, so it is generated from git and never hand-kept.
  * Sorted by first-commit date so the list reads as a record of construction, not an inventory. */
-function instrumentSection(limit = 12) {
+/* THE NEWEST LIST IS 7, a stopgap (D677, the librarian's ruling of 02:29Z, 2026-11-15; pane P). On 11-14 the watch-the-bearing card's
+ * triggers pushed the block past its 3,000 cap and LIVE was cut at wakes. The cap, the triggers, NAME and LIVE are not touched; this list
+ * gives the room back, because its section prints the command that regenerates it, so a dropped name is one command away. 7 is the longest
+ * length at which the real block and a typical wake (a 74-character subject, a clean tree, nothing unpushed) both fit with the subject
+ * printed whole: 8 fits the real block (2,978) but not that wake. At 7 the typical wake reads 2,995, so the next cue breaks it again; what
+ * the 3,000 characters should carry stays the room stretch's question (exo_memory/handback/p-d677-reds-P_2026-11-15.md). */
+function instrumentSection(limit = 7) {
   const out = sh('git', ['ls-files', 'consonance/tools/*.js', 'consonance/hooks/*.js']);
   if (out === null) return { title: 'instruments', cmd: 'git ls-files consonance/tools/*.js', lines: ['FAILED: git ls-files did not run here'] };
   const files = out.split('\n').filter((f) => f && !/\.test\.js$/.test(f));

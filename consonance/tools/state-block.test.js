@@ -179,6 +179,18 @@ test('an under-cap block is NOT marked truncated — the flag must discriminate'
   assert.doesNotMatch(r.text, /TRUNCATED/);
 });
 
+test('the real block ends with its last section WHOLE — the cap never cuts LIVE, the section a waking seat reads last', () => {
+  // D677: on 11-14 the block passed its cap and LIVE was cut to "LIVE  a". The truncation marker is loud, but a block can also be cut
+  // and stay under-length-looking, so this row reads the end itself: every line of the last section, in order, ends the block.
+  const secs = [sb.repoSection(), sb.journalSection(), sb.instrumentSection(), sb.sourceSection(), sb.nameSection(), sb.liveSection()];
+  const r = sb.render(secs);
+  const last = secs[secs.length - 1];
+  assert.strictEqual(last.title, 'live', 'LIVE is the last section');
+  const tail = last.lines.map((l) => '  ' + l).join('\n');
+  assert.ok(r.text.endsWith(tail), 'the block ends with every line of LIVE:\n' + r.text.slice(-300));
+  assert.match(r.text, /^LIVE\b.*\(check: tail -1 /m, 'and LIVE keeps its title and its check');
+});
+
 test('the real block fits under the cap today — a generator that always truncates is broken', () => {
   const r = sb.render();
   assert.strictEqual(r.truncated, false, `live block is ${r.chars} chars, over the ${sb.CAP} cap`);
