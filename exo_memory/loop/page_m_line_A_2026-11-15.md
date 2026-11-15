@@ -651,3 +651,56 @@ Whole suite with both: chase 123, 7 failed (the five red at 3845cd8, and the arc
 
 **Twice not kept in a row (a7164cf, then 928b33e and 735abd1): I ring before a third, by the night's rule.** The degeneration line does not
 fire: the 22 keeps the open side and is 0.300 s, under 0.642.
+
+## The floor, the third try (the ruling at the ring for the cluster and the charge, git-blob 968f58bc): built; the 90's exit MET, its arc RED. Stopped, as ruled
+
+dreamzone-3 `a-mline`: red **25bd7db**, the floor **2a51143** (pushed, read back). checked: `fl_rows_red.txt` (on 735abd1), `fl_rows.txt`,
+`d3_place.txt` (the 90's print, scratch, not committed; the law after it byte-equal to 2a51143's).
+
+**The registered lines:**
+- **the 90's exit no later than 871: MET, tick 864** (0.767 s between the gates, lowest 4.29 m/s, 2 contacts; my prediction 856: not met).
+- **an arc at the 90 of at least 5 m, its centre within 0.3 m of the hand line's: FAILED.** One arc is laid: **r 3.58 m, centre (-13.95
+  -29.14), 2.28 m from the hand line's (-15.70 -30.60).**
+
+**The rows** (way (b), stand-in, width price in):
+
+| row | bar | the charge 735abd1 | the floor 2a51143 |
+|---|---|---|---|
+| 22 exit tick | 724 | 717 | 717 |
+| 45 exit tick | 1103 | 801 | **788** |
+| 90 exit tick | 871 | 915 | **864** |
+| the 90's arc | >= 5 m, within 0.3 m | none | **3.58 m, 2.28 m off: RED** |
+| ten routes | 77.11 s | 79.01 s | **78.32 s: RED** |
+| route contacts | 10 | 11 | **9** |
+| one plan, largest | 1,000 us | 820 us | **1571 us: RED** (mean 792; the whole suite's run 765 / 1144 us) |
+
+Whole suite: chase 124, 8 failed (the five red at 3845cd8; the arcs' routes, gate and 90-arc rows); nav 34, 0 failed; off means off md5
+`fa938de45995bd2d13b98ba28fae0c34`, 18 SAME; the 22's side row green with the switch off.
+
+**Each bend's arcs and runs (item 3), from `fl_rows.txt`:**
+- **22:** one arc, r 7.30 m, centre (-77.95 36.09): the S bend (16.8 degrees); **its first cluster (29.8 degrees, the doorway at x -72) to the
+  solve**, the run's midpoint (-65.35 40.18).
+- **45:** two arcs, r 1.25 m centre (-26.76 78.48) and r 8.75 m centre (-36.89 77.27); none to the solve (one S pair shrunk together).
+- **90:** one arc, r 3.58 m centre (-13.95 -29.14) (a merged bend); none to the solve.
+
+**The 22's 677 to 717, as far as the prints go.** At a7164cf the 22's line was an arc of 0.30 m at its 4.8 degree corner with the 25.0 degree
+corner and the S bend sent to the solve (`da_place.txt`, "ARC final"). With the cluster, the 4.8 and 25.0 degree corners are one bend of
+29.8 degrees, sent to the solve, and the S bend gets its own 7.30 m arc. So the solve now lays the stretch from the door through the doorway
+cluster, and an arc lays the S. **Inferred, not checked:** the 40 ticks are the difference between those two lines through the doorway. The
+ladder was printed for the 90 only, so why the 22's cluster gets no arc is not printed. A doorway of about 0.2 m free (the page's 22 map) is
+narrower than the room asked, and a cluster's arc there would have to pass it.
+
+**The 90's arc, beside the hand line's (item 4; `d3_place.txt`, the map at 0.25 m):**
+- The first cluster (89.2 degrees) alone: its widest is now **6.34 m** (the ladder: 1 to 6 m hold, 7 m fails on its tangent point in). The
+  second cluster (24.4 degrees, 3.15 m on): widest 2.02 m (3 m fails short of room at (-12.42 -32.70)).
+- **Then line 1 merges them:** with a 6.34 m arc the first's tangent point out lies past the second's corners, so the two are closer than
+  their arcs and turn the same way. One bend of 113.6 degrees, whose widest is 3.58 m. On the map the line ('o') swings north only to z -25.5
+  and turns early and tight, while the hand line ('h') and our 6 m arc ('a') run side by side to the east wall.
+- **What the hand line does that line 1 cannot:** it keeps the 6 m arc for the 90 and takes the second turn after it, down the west of the
+  small room, at its own speed. Line 1 has two answers to two bends closer than their arcs, merge or shrink, and neither keeps the wider
+  first arc whole.
+
+**Stopped, as ruled: "If the 90 is red after this, stop and ring … I do not rule a fourth from here."** The least-bending line stays the
+branch's law (3845cd8), and the arcs stay behind `line_arcs` at 2a51143. The degeneration line does not fire (the 22 keeps the open side at
+0.300 s). Not built and not proposed as a fourth: the rule two bends would need so that the wider arc is kept and the lesser bend is taken
+after it.
