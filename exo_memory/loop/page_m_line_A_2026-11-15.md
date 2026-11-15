@@ -797,3 +797,94 @@ stand-in's routes.
 **So pane E does not film the 90 (ruling item 5):** in E's staging the arcs leave the 90 at 2936, after today's 2848. The stand-in said 864
 against 871; E's staging says the opposite. (E's staging also put the line behind today's at the 90 on 4b03985: 1.319 / 0.972 s against
 0.819. A first draft of this line called those figures the release's; they are 4b03985's, corrected before the ring.)
+
+## The two reads after the third try (the ruling at the ring after the third try, git-blob a69b4210): nothing built
+
+Both reads are on a-mline 2a51143's law; the gate's fix stays at the scratch. They are scratch prints only, removed after; the E tree is a throwaway.
+**Reported against both, as ruled (item 4):** the plan's bar (on pane E's three bends never under 1.2 m/s; the 22 in no more than 0.889 s) and
+today's law beside it, until he answers whether the new hunter may be slower than today's.
+
+### Read 1: pane E's 90, plan by plan (`r1_e90_plans.txt`; the hook `plan_read.js` in the E tree's `Run::replan`)
+
+Every plan the root hunter made from the staged door to past the 90 (the arcs, way (b)). The 90's apex is (-11.54 -26.84) and the hand line's
+centre (-15.70 -30.60):
+
+| tick | from the apex | speed | the plan's path | at the 90 |
+|---|---|---|---|---|
+| 2015 | 21.4 m | 0.00 | 7 points | one arc, **r 3.32 m, merged**, centre 2.54 m from the hand line's |
+| 2134 | 20.5 m | 4.11 | 7 points | the same, r 3.32 m merged |
+| 2253 | 17.3 m | 8.55 | 7 points | the same, r 3.33 m merged |
+| **2372** | **12.9 m** | 9.22 | **5 points** | **no arc: the 90 laid by the solve** (its run at (-15.88 -24.91)) |
+| 2491 | 8.5 m | 9.25 | 5 points | no arc: by the solve |
+| 2610 | 4.2 m | 8.25 | 4 points | no arc: by the solve |
+| 2729 | 0.3 m | 6.98 | 7 points | an arc of r 0.30 m (an S pair shrunk) and a run by the solve |
+| 2848 | 1.4 m past | 2.18 | 4 points | by the solve |
+
+The exit gate is at tick 2936 (lowest 1.69 m/s at tick 2829); today's law's is 2848.
+
+- **The registered guess, "the arc at the 90 shrinks as the body nears it, because each plan starts at the body as a point with no heading":
+  BROKEN as stated.** The arc does not shrink as the body nears. It holds at 3.32 m for three plans, then **disappears from 12.9 m out**, where
+  the plan's path from the body has 5 points instead of 7. From there on the solve lays the 90. The body arrives at 8 to 9 m/s on the solve's
+  line and drops to 1.69 m/s. 12.9 m is far beyond a start-shrink (line 4).
+- **What differs between the two runs of the bend: the stand-in's bends row plans once.** `run_bend` calls `plan_to` once, from the door, and
+  never again, so it lays the 3.58 m merged arc and keeps it to the end. **Pane E's staging replans every 0.5 s**, and from 12.9 m every new
+  plan lays the 90 by the solve. So the stand-in's 864 is a one-plan figure, and the staging's 2936 is the replanned one.
+- **inferred, not checked:** the 5-point path from 12.9 m has a different cluster at the 90 (a corner of the 3-corner chamfer drops out as the
+  start moves), and that cluster gets no arc, so the solve takes it. The page's section 2 cure (keep the line within the braking distance and
+  plan only beyond it) would keep the 3.32 m arc here. It was never built.
+- **Against both judges:** the plan's bar at the 90 is **met** (lowest 1.69 m/s, bar 1.2). Against today's law it is 88 ticks later.
+
+### Read 2: the corridor mouths, with hand lines as the judge (`r2_mouths.txt`, `r2_map.txt`, `r2_chicane.txt`; the stand-in's apartment arena)
+
+Each run starts on the route's own string, about 20 m before the mouth, and goes to a target past it; the gates are 2 m round the mouth's
+corner.
+- **A first run of this read is void.** It gave every point E's floor height (10.54 m) in an arena whose floor is at -7.0 and -3.5 m. The
+  heights are now the route's own string's.
+- Route 2's first hand lines went off the mesh at the route's start, so its map was printed before a line was built.
+
+**Route 0's last bend** (east along the room's south side, then south through a doorway of about 0.5 m of free mesh into a corridor):
+
+| line | between the gates | lowest | exit tick | contacts | to the route's end |
+|---|---|---|---|---|---|
+| today's law | 0.900 s | 2.35 m/s | 832 | 0 | 4.19 s |
+| the arcs | **1.808 s** | **0.01 m/s** | 1052 | 2 | 5.15 s |
+| hand line R 1.0 m | 0.863 s | 3.12 | **819** | 0 | **4.13 s** |
+| hand line R 1.5 m | 0.854 s | 3.42 | **826** | 0 | **4.15 s** |
+| hand line R 2.0 m | 0.825 s | 3.84 | 833 | 0 | **4.17 s** |
+| hand line R 3.0 m | 0.700 s | 4.66 | 847 | 0 | 4.22 s |
+| hand line R 4.0 m | 0.575 s | 5.58 | 859 | 0 | 4.27 s |
+
+- **Every hand line is on the mesh** (0 points off), and **a hand line beats today's here**: R 1.0 and 1.5 m by the exit tick and to the end,
+  R 2.0 m to the end. **So the line-maker is the gap at route 0.**
+- **The arcs lay one arc there, r 0.77 m, merged.** The bend's two corners are 0.42 m apart, so not one cluster, but they are closer than
+  their arcs and turn the same way. The centre is at (-17.20 -63.06), and the body all but stops (0.01 m/s, 2 contacts).
+- Wider hand lines are faster through the gates but later to the exit, because they swing north earlier.
+- **The librarian's suspect ("an arc centred on the bisector where the two legs differ in width") is neither confirmed nor dropped.** The two
+  legs here do differ (an open room, then a doorway of about 0.5 m of free mesh), but the print does not say where the 0.77 m arc meets the
+  doorway. inferred: the near-stop is the contacts at the doorway, which a 1 m hand line on the doorway's centre line does not make.
+
+**Route 2's corridor mouth is a chicane** (from its map):
+- the east-west corridor (z -66.5 and south) ends at x 35.5;
+- a 2 m gap leads north (x 33.5 to 35.5) into a room 2 m deep (z -63.5 to -65.5);
+- the corridor north is at x 39.5 to 41.5.
+
+The hand lines run through the openings' middles, each corner filleted as wide as its legs allow, under a cap:
+
+| line | between the gates | lowest | exit tick | contacts | to the corridor's top |
+|---|---|---|---|---|---|
+| today's law | **0.525 s** | **6.99 m/s** | **868** | 0 | **5.23 s** |
+| the arcs | 0.963 s | 2.72 m/s | 1088 | 4 | 6.20 s |
+| hand line cap 0.5 m (fillets 0.5) | 0.967 s | 3.04 | 1142 | 0 | 6.48 s |
+| hand line cap 1.0 m (fillets 1.0) | 0.904 s | 3.40 | 1066 | 0 | 6.15 s |
+| hand line cap 2.0 m (fillets 2.0, 1.4, 1.4, 2.0, 2.0) | 0.817 s | 4.25 | 1002 | 0 | 5.88 s |
+| hand line cap 2.5 m (fillets 2.5, 1.4, 1.4, 2.5, 2.5) | 0.758 s | 4.69 | 987 | 0 | 5.82 s |
+
+- **All the hand lines are on the mesh, and no hand line beats today's here.** The best is 119 ticks later to the exit.
+- **So it is the place and the body's grip at 1.0:** a chicane of 2 m openings, whose two middle corners cap at 1.4 m. At grip 1.0 a 1.4 m
+  radius holds about 3.7 m/s; today's law, with no mass, goes through at 6.99 m/s. As ruled, this is not the line-maker's to win: **it goes to
+  him with these figures.**
+- From cap 1.0 m up, the hand lines also beat the arcs, by 22 to 101 ticks, so the line-maker loses time here too (the 0.5 m cap does not:
+  1142 against 1088).
+- My hand lines are lane-middle polylines, not the best line. A diagonal through the room might do better, and that is not shown.
+
+**The gate's fix (item 3):** not read again. Nothing was built, so a judge samples exactly what it did before.
