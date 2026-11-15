@@ -1182,3 +1182,53 @@ beside 1.0 and today's law. His pick on 11-12 was "Grip above human" (`briefs/dr
 - **Whole suite with the keep:** chase 127, 12 failed (the two outside M-line red before, ten M-line rows); nav 34, 0 failed; off means off
   md5 `fa938de45995bd2d13b98ba28fae0c34`, 18 SAME; the gate with the arcs largest 1164 us in the whole suite's run (1650 in the rows' run).
 - **Twice not kept in a row** (section 2, then this line): **I ring before a third**, by the night's rule. Nothing further built.
+
+## PARKED at his word of 15:03: the read and the landing list as they stand (the ruling at the ring for item 2, git-blob 90a7afff; the park, f45e2cef)
+
+His word (game brief item 241, by the chair): "well stop working on the old one completely for now wtf". **Nothing further is built.**
+
+**What I stopped.** My chain for the read of item 1 was stopped by its own pid (lock holder 30524, its chain 8480 and their children) at
+21:06Z, in the middle of the whole chase suite. Its lock slot is free; the next runner takes the stale entry over. Nothing was deleted or
+reverted.
+- **The game tree** is at a-mline **3112032** (pushed). It has no content change; `line_tests.cpp` shows as modified for its line endings only,
+  checked with `git diff`: 0 changed lines.
+- **The keep** stays at the scratch: `arcs_law/chaser_keep.cpp` and `.h`.
+- **Pane E's throwaway tree** (a-m3c-e22) carries scratch hooks and copies of the law, as it has all day.
+
+**The read of item 1 (pane E's staging at 3112032, keep off, grips 1.3, 1.6 and 2.0, with the wide figure at the 90): NOT TAKEN.** The run
+stopped before E's staging. The nearest figures on file are the grip arms on 3a5898d, two commits before the floor in every shrink
+(`gr_e*.txt`, section "The grip arms"):
+- **E's 90:** 2916 / 2891 / 2838 at grips 1.3 / 1.6 / 2.0, against today's 2848. Lowest 2.01 / 2.29 / 3.53 m/s.
+- **No wide figure exists yet;** its hook (`e_wide_hook.js`) is written and unrun.
+
+**The gate by grip: VOID.** `wd_gate.txt` gave a largest of 3736 / 4735 / 3637 / 3197 us at grips 1.0 / 1.3 / 1.6 / 2.0. That is 2 to 4 times
+every earlier gate read of the same plans (820 to 1749 us). It was taken while he was in Star Citizen ("no frame-time figure while he plays",
+the chair at 14:58) and while another seat's full rebuild held the other lock slot. It is filed as void, not as a figure.
+
+**The landing list: what stands between a-mline and a landing behind its switch, off by default** (no build; each item checked as written):
+1. **A ruling.** The packet says "branches a-m1-root and a-mline DO NOT LAND". a-mline is built on a-m1-root, so landing it lands the root's
+   laws too (M1 to M3c, the slide, the fall, the brake): `git log origin/main...a-mline`, 141 commits.
+2. **A merge with main.** a-mline is 86 commits behind origin/main and 55 ahead (merge base 32b9126; `git rev-list --count`). It touches
+   22 files, +4219 and -557, including `chase/chaser.cpp` (+1018) and `chase/tests/feel_tests.cpp` (about 2,000 lines changed).
+3. **The red rows at the tip with the switch on.**
+   - 3112032's M-line rows (`fs_rows.txt`; every one at grip 1.0, the speed model's default, since none sets a grip). Ten red:
+     - the arcs' bends: the 90's exit 904 against today's 871. The bar is today's law, withdrawn as a judge at 13:23 and 13:43.
+     - the arcs' routes: 78.22 s against 77.11. Bar: today's law, withdrawn.
+     - the arcs' gate: 1187 us against 1,000. Bar: a figure at grip 1.0.
+     - the 90's arc at least 5 m by the hand line's. Its arc row failed and stays failed, the librarian's line.
+     - section 2's fixed-target row: 0.96 m, lowest 2.57 against 4.29. 4.29 is a one-plan figure at grip 1.0.
+     - the moving-target row: 0.71 m.
+     - the routes' contacts: 9 to 11 against 10, at grip 1.0.
+     - the least-bending line's own rows: the corridor bar row, the dense row, the cost row.
+   - **Two root rows outside M-line were red in every whole suite today:** `m2_g1` (the 22-or-less row) and `m3b` (the drop row). The whole
+     suite at 3112032 itself was not run: it was the run stopped.
+   - **Every arcs row is at grip 1.0, and he has ruled grip 1.0 out** ("Grip above human"). So each bar taken at 1.0 needs restating at the
+     grip he picks.
+4. **The gate's largest plan at each grip: not measured** (the read above is void). Taken in a quiet window at 3112032: 1187 us at grip 1.0.
+5. **The game's own suites have not run on this branch** (`world_app_tests`, `run_record_tests`, the selftests). The speed model gained
+   `line_arcs`, and the run record writes every field, so those rows are owed.
+6. **The documents:** `line_arcs` is in neither `chase/SPEED_MODEL.md` (0 mentions) nor `CHANGELOG.md`.
+7. **What holds today:** off means off, the 12-seed md5 `fa938de45995bd2d13b98ba28fae0c34` and 18 of D's 20 kept runs SAME on every build
+   today; nav 34, 0 failed.
+8. **To play the three grips** he would launch with `--chase-speed "root_law=1;line_arcs=1;grip_mu=1.3"` (and 1.6, 2.0). That is
+   `dz-world --chase-speed`, L211 on main, so it needs nothing new once the branch is merged.
