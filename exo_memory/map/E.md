@@ -3237,3 +3237,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-15 14:3x local (D) · D677 three more source sheets in the N2 form, research only (old build under "not carried over", the sim's own numbers apart): N3 the world, N4 the states, N5 the picture's physics → `exo_memory/loop/source_sheet_n3_world_E_2026-11-15.md`, `source_sheet_n4_states_E_2026-11-15.md`, `source_sheet_n5_physics_E_2026-11-15.md`
 - Not on file for any: a measured human duck, landing angles above 1.03 m, a ladder gait, a sourced half-life for a stop from speed, a hunter rise with a forward centre of mass, a per-ragdoll cost.
+
+## 2026-11-15 14:5x local (D) · D677 the grip film: 90 at grips 1.3/1.6/2.0 beside today from one room camera (2.0 alone sooner, 0.764 against 0.819 s); 45 at 1.6/2.0 beside today from one offset (0.52/0.51 against 0.90 s); at 1.3 the hunter misses the 45's doorway, so its clip is one panel of another bend → `exo_memory/handback/p-d677-grip-film-E_2026-11-15.md`
+- Film tree e8-grip-film-e ca8b7c6 (local): one camera pinned across films set side by side.
+- **Carry:** before pairing two films, check their manifests name the same bend; a camera that will not serve both halves may be two different places.
