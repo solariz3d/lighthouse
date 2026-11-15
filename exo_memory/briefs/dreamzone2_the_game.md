@@ -1975,3 +1975,4 @@ Nothing was played by a person on 11-10. The list of what only he can judge is i
   - **Not run:** how often each grip catches the player. Pane O's tree at 3112032 and its two runner scripts are on G: (`dz3-o-mline`).
   - **His, when it resumes:** the grip number (1.3, 1.6 or 2.0), to be shown on the new body.
   - **It resumes at his word, or when the new body can be drawn on the hunter.**
+  - **CORRECTION to the landing list's first item as I relayed it to the chair (15:1x):** the packet's own words are 'The branch `a-m1-root` e040a87 stays as it is, not landed' (`loop/packet_m_line_A_2026-11-15.md:25`). The sentence pane A quotes in capitals is not in the packet. So no ruling on file forbids the landing; what a landing needs is decided when the line resumes.
