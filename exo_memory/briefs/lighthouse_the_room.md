@@ -198,6 +198,7 @@
   - **What goes on while he plays:** every lap, every build and suite, films included, hidden and at low priority as always. His copy of Dreamzone may be fast-forwarded and built while he plays another game; only a Dreamzone of his, running from his own copy, holds that step.
   - **What still does not run while a game of his is up, and why it is not a pause:** frame-time figures. His game would be in the measurement, so the number would be wrong. They are taken later.
   - **If the two do not fit on the machine, that is a fault of the room to find and fix** (which run, which resource), not a rule for him to play around.
+- 2026-11-15 06:54 (D), to the librarian's report that his copy was built with the batch in it: "i dont get it" (Taken as: the report itself was not readable to him. It spoke of a batch, a stride clock, streaming checks, a ruling and a compaction. Answered in plain words: what is in his game and which key shows it, what is still being worked on, and the one thing asked of him said as what it is. Which part he meant is asked in one line.)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
