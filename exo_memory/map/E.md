@@ -3254,3 +3254,5 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-15 16:3x local (D) · D677 pane A's kinetic chain (a-chain 8565c61) filmed alone, whole body, all six stations, every clip from frame 48 (the arms settle out of the old crouch through 24); new system on by a copied config, as B's cut → `exo_memory/handback/p-d677-wholebody-alone-E_2026-11-15.md`
 - **Carry:** --world does nothing offscreen; switch the new system on for a film by a copied config with new_animation = 1.
+
+## 2026-11-15 17:5x local (D) · D677 100STYLE fetched (Zenodo 8127870, MD5 matched) into its own G: folder, CC BY 4.0 with the credit "The 100STYLE Dataset - Ian Mason" quoted at source; 400 backward and sideways clips listed with lengths and measured root speeds; one backward walk (Neutral_BW 500-800, 0.66 m/s) filmed on its own skeleton as the recording → `exo_memory/handback/p-d677-100style-E_2026-11-15.md`
