@@ -171,3 +171,40 @@ dreamzone-3 `a-mline` pushed and read back at cb9049c732a90534d3f3a36fc672adbcf5
 **For the ruling, not built:** the side's throat taken as the narrowest place on the string that the two ways do NOT share (where the
 string first leaves the corridor the hand line takes), not the narrowest overall; and the 45 degree bend's stop read tick by tick before
 anything else is changed.
+
+## The third try (the ruling at the ring before a third try, git-blob 7a82accd): the 45 degree read, the unshared throat, the cost
+dreamzone-3 `a-mline` pushed and read back at **1cdce2076e0d781d64191ab10631ed0b23bc0470** (the tip; the base cb9049c; red first e2b7fb4, the
+cost row made a gate by name). Registered before code: `registration_third_try.md`. checked `t_rows_red.txt` (the base) and `t_rows.txt`.
+
+**1. The 45 degree read (no change, `r45.txt`):** the body stops by the brake's reversal. It is sliding with its velocity pointing away from
+the aim (heading -86 swinging to -176 while the aim is +44 to +20); the brake from tick 841 brings it to rest at tick 871 (`slide_brake` 2)
+and it creeps off the other way at 0.04 to 1.14 m/s, moving about 0.2 m in 60 ticks. It is 0.66 m off a line whose bend there has a
+0.84 m radius at the minimum room (0.20 m), where the plan asks the creep speed. inferred: the contact that set the slide is before the
+printed window, at a narrow, sharp place the line is pinned through.
+
+**2. The side by the unshared throat: NOT achieved.** The body still goes through the doorway at x -75 (26 ticks within 0.3 m of it, 0
+crossings of the open gap). inferred, not checked: a polygon under the doorway at x -75 also spans part of the room the open side crosses,
+so the avoiding search's way round still passes one of the avoided polygons and the throat is skipped as shared; polygons are too coarse a
+unit for "the place the two ways do not share".
+
+**3. The cost (levers: over-relaxation 1.8 with a stop at 1 mm, at most 200 passes; the line over the first 30 m only):** one plan_to for one
+root chaser, **mean 932 us, largest 1767 us** (base 1946 / 4418). **The gate (1000 us) FAILS at the largest.** Where it went before
+(`tp.txt`): the relaxation about 1200 us of a line's 1400 to 1500, the widths 160 to 240, the search 5 to 11.
+
+| | the base cb9049c | the tip 1cdce20 | the string | the hand line |
+|---|---|---|---|---|
+| 22 degrees (way b) | 0.792 s, 3.87 | **0.792 s, 3.92** | 1.029 s, 1.78 | 0.321 s, 5.76 |
+| 45 degrees (b / a) | 1.908 / 1.846 s, 0.00 | 1.837 / 1.842 s, **0.00** | 2.179 / 2.183 s | |
+| 90 degrees (b / a) | 1.183 / 0.967 s | 1.108 / 0.942 s | 1.079 / 1.042 s | |
+| route contacts (b / a) | 31 / 12 | **82 / 44** | 383 / 412 | |
+| plan cost, mean / largest | 1946 / 4418 us | **932 / 1767 us** | 13 us | |
+
+- No bend is slower than the base (my registered 5 per cent bar holds). The 22 degree bend stays inside the plan's bar.
+- **Worse than the base:** route contacts (82 and 44 against 31 and 12), the brake row (2 aim-behind ticks not braking against 0), the new
+  kind (9 of 10 routes on the root against 10). inferred: the line converges less with fewer passes, and a line that ends at 30 m turns to
+  the string there, which is where these come from.
+- Whole suite 117, 12 failed (the base's 9, plus the new kind, the brake row and the cost gate); nav 34, 0 failed; off means off md5
+  fa938de4..., 18 SAME and the same 2 cab3530 runs DIFFERENT.
+
+**For pane E's films beside today's law:** the tip 1cdce20 at the three bends (it is the faster of the two there). If the films are to show
+the fewest wall touches between the bends, the base cb9049c instead. Both are on `a-mline`.
