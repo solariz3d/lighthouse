@@ -3241,3 +3241,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-15 14:5x local (D) · D677 the grip film: 90 at grips 1.3/1.6/2.0 beside today from one room camera (2.0 alone sooner, 0.764 against 0.819 s); 45 at 1.6/2.0 beside today from one offset (0.52/0.51 against 0.90 s); at 1.3 the hunter misses the 45's doorway, so its clip is one panel of another bend → `exo_memory/handback/p-d677-grip-film-E_2026-11-15.md`
 - Film tree e8-grip-film-e ca8b7c6 (local): one camera pinned across films set side by side.
 - **Carry:** before pairing two films, check their manifests name the same bend; a camera that will not serve both halves may be two different places.
+
+## 2026-11-15 15:0x local (D) · D677 the 90 refilmed on a-mline 3112032 from the pinned camera (1.3 and 1.6 a little quicker and slower to drop, every grip enters slower, 2.0 still alone ahead of today); the elbow at a sprint is on file after all (Dorn JA1, range 83 deg at 9.49 m/s), added to the N2 sheet → `exo_memory/handback/p-d677-grip-film-E_2026-11-15.md` (addendum)
+- **Carry:** before writing "not on file", grep the sprint reference too; the yardstick's 4.15 m/s is not the room's limit.

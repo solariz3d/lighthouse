@@ -136,9 +136,14 @@ All four of the librarian's 2026-11-15 reports are in. Code rows give the licenc
 | Arm reference data, walking with arms: 50 adults, 0 to fast, 52 markers | Schreiber & Moissenet 2019 (CC BY 4.0, figshare 10.6084/m9.figshare.7734767) | R-data:15 | agent, opened (the record); joint angles to be computed |
 | Arms backwards and sideways: 100STYLE, 100 styles, forward, backward and sidestep walks and runs, 28 bones, one performer | Mason, 100STYLE (CC BY 4.0, commercial with credit) | R-data:24 | agent, opened |
 | Arms at 9 m/s: swing about 120 deg | Dorn, Schache & Pandy, SimTK runner JA1, via the sprint reference | G-loco:305 | the record's reader; n = 1 |
+| **The elbow's range at a sprint** (his item 239, "i swear the elbows dont swing"). One runner, overground, steady, right arm; elbow = 180 minus the shoulder-elbow-wrist marker angle, flexion positive; standing reads 20.5. Read at the 10% columns of the stride: at 5.20 m/s 65.5 to 132.6 deg (range 67.1); at 7.00 m/s 60.4 to 129.0 (68.6); at 9.49 m/s 38.2 to 121.2 (83.0), and between columns it opens to 34.4 at 9.49. The elbow folds most near 40% of the stride (121-133 deg) and opens most after 60% | Dorn, Schache & Pandy 2012, J Exp Biol 215:1944, SimTK data package (MIT as recorded), computed from the raw markers by the sprint reference's reader | `loop/sprint_reference_2026-11-13/00_reference.md:158-164, :238` | the record's reader, whole data; its second reader re-ran all 44 elbow cells within 0.6 deg; n = 1; marker error about +-3 deg |
+| The elbow in 200 m Olympic finalists: faster sprinters had a greater elbow displacement, 84 deg against 67 for slower ones (shoulder 135 against 118) | Ralph Mann, via SimpliFaster (https://simplifaster.com/?p=10224); the primary publication is not named there | none before this sheet | secondary only, found by a web search 2026-11-15 (https://ojs.ub.uni-konstanz.de/cpa/article/view/4403/4094 was fetched and could not be read as text); not verified against Mann's paper |
 
 **Not on file for the arms:**
-- **Arm angles above 4.15 m/s,** apart from one runner's ~120 deg.
+- **Arm angles above 4.15 m/s from more than one runner.** One runner's shoulder (~120 deg at 9.49 m/s) and elbow (above)
+  are on file. The yardstick's own arm reference stops at 4.15 m/s; the sprint reference goes to 9.49. Corrected
+  2026-11-15: this line first said only the shoulder was on file. The plan's "no elbow range above 4.15 m/s is on file"
+  (`plan_animation_restart_2026-11-15.md:360`) misses the same rows.
 - **Any study of running with the chest turned** (B8:54).
 - **The arms in a turn, a stop or a start.**
 - **A clench:** CMU's fingers channel is constant at 7.1 deg (G-loco:219).
