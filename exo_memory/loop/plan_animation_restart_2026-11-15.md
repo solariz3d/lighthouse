@@ -149,3 +149,25 @@ thrown far past where a leg can reach.
 - **This comes before N2.** My change 4 ("straight on to N2") is amended by this: the legs are the ground the rest stands
   on.
 - **The first cut is not put to him as a stage.** He is told what it shows and that the frames are there if he wants them.
+
+## N1's CUT v10, LOOKED AT FROM OUTSIDE BY THE LIBRARIAN (D, 2026-11-15): THE DOORWAY IS FIXED; THE HUNTER's LEG STRAIGHT OUT BEHIND IS PLAIN; AND THE SWING IS BEING TUNED BY EYE WHILE ITS MEASURE IS ON FILE
+
+`handback/p-n1-legs-B_2026-11-15.md` section 6 (lines 211-301 read whole; git-blob 911249fc); branch `n1-legs-b` 14436c7; frames in `G:\consonance-scratch\course-after-v10`.
+
+**What I saw, three grids of ten frames (the scratchpad's `dz3night\v10_*.png`):**
+1. **The runner through the doorway, frames 282 to 300:** a running stride, one knee bent and the other leg folding, upright, no splay. The fault of the last cut is gone.
+2. **The hunter on the straight, 262 to 278 and 352 to 368:** one leg held long and straight behind it, near a split, through every frame of the first window and three of the second.
+3. **The hunter at the stop and start, 112 to 128 and 472 to 488:** standing upright with one leg lifted straight out behind, foot off the floor, through all ten frames.
+So the fault pane B names is there as B says, on the hunter, in all four windows.
+
+**Ruled:**
+- **Go on with the swing in the body's frame,** as you are. The lag's size is the mover's own (about eight times g, your figure), and no step can keep up with that in the world's frame.
+- **The floor amended by name (200 to 100 ticks) is taken:** the rule the row reads did not change and holds.
+- **THE SURFACING, and it is the thing he has said three times** (game brief items 153, 218, 221): since the last cut six commits set the run's swing by numbers that are "all ours", cut after cut by eye (the heel's fold, where a foot lands, the sink, the trailing reach). **The run's leg is on file, measured, with a tool that scores a drawn body against it:**
+  - `loop/animation_system_2026-11-13/ground_locomotion_and_yardstick.md:188-196`: `tools/yardstick` on main scores hip, knee and ankle against Fukuchi and Duarte 2017 at 2.5, 3.5 and 4.5 m/s (31, 39 and 31 runners), as RMS over the runners' own spread.
+  - `:95`: the old generator's score: every joint passes at every speed, knee and ankle 0.2 to 0.5 of the spread.
+  - `:104-111`: past 4.5 m/s, Dorn's runner's hip, knee and ankle at 3.5 to 9.5 m/s, and the take-off knee (15 degrees).
+  - Your own design names it for the straight run (`loop/design_n1_legs_B_2026-11-15.md:66`, `:89-90`). Your hand-back names no run of it.
+- **So, before N2's cut:** run the yardstick on the new legs' straight run at its three speeds and print hip, knee and ankle beside the old generator's score. Where a number in `body_row.h` stands for something those curves give (the knee's fold through the swing, the knee at take-off, the hip's range), take it from the curves and write the source beside it. The curves are data and are his research; the rule against the old pose functions in `game/anim/` stands.
+- **Registered now:** on the yardstick the new legs' knee and ankle are no worse than the old generator's at 2.5 to 4.5 m/s, or the difference is printed and said to him. His good word of 06:10 ("starting to look decently human good running") was said of the body drawn from those curves, so that body is the floor the new one must not fall under. **Unwelcome, named now:** the new legs score worse, and the gait plan's swing has to be re-shaped from the curves before the trunk and arms are stood on it.
+- **Not put to him as a stage** while the hunter's leg is out behind. Pane E's clips of this stage are made from the cut after the swing's fix, not from v4.
