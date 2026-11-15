@@ -146,3 +146,64 @@ moves is row 1's.
 
 **Where it runs:** the gym bot's row in body_tests stays the report the 06:06Z ruling made it, with the limit asserted. The three rows
 are read by `--look-check` on his runs.
+
+## 8. The chair's ruling of 08:16:51Z: the peak measure withdrawn, two prints, the twist, the guard, row 3 restated (registered before any runs)
+
+**Withdrawn:** the peak-timing measure, as the swarm's row and as row 1 of §7. It reads late on a body with no lag. The 755 of
+4afa6b6 and the 106 of 106 of 697570d are set aside; neither is claimed. The spring row of §7 is withdrawn with it. The limit of §7
+(row 2) stands.
+
+Everything below is read by `dz-world --look-check` / `--look-check-off` on his seven kept runs (copies in
+`G:\consonance-scratch\b-lookback-runs`), **the law off first, then on, run by run**.
+- **The shoulders' yaw** is the drawn ShoulderL→ShoulderR line, as before. **The chest** in the rows below is that drawn yaw, so that
+  the law off has a reading.
+- **A quick run:** a maximal run of ticks whose view yaw rate is at least 3 rad/s.
+
+**P1, turn lengths and gaps (printed, not judged):** for every quick run, its length in ticks and the gap in ticks to the next quick
+run's first tick. Summed: the count of quick runs, and the count of gaps under 40 ticks, with the median gap.
+
+**P2, main's late peaks (printed, not judged):** with the law off, and on the turns of §7, for those the withdrawn measure called late:
+how many have the shoulders' peak after the turn's last quick tick.
+
+**THE AGREEMENT RULE, set now:** the librarian's reading "agrees" when BOTH hold:
+- at least a quarter of all gaps in P1 are under 40 ticks;
+- more than half of main's late turns in P2 have their peak after the last quick tick.
+
+If it agrees, **a turn is quick runs whose gaps are each under 40 ticks, merged**. The turn runs from the first run's first tick to the
+last run's last tick, and its window to 40 ticks past that. If it does not agree, a turn is one quick run with its 40-tick window, as
+in §7. The counts are printed both ways, and **the rows' verdicts below are read on the segmentation the rule picks**; the other is
+printed beside them.
+
+**T, THE TWIST (the row that reads his words).** In every turn:
+- the chest's largest angle from the view over the turn's window (max |shoulders − view|) is **at least min(¼ × the view's turn, 10
+  degrees)**, where the view's turn is the largest |view − view at the tick before the turn's first quick tick| over its quick ticks;
+- **or the chest is at its limit** (the window's largest angle ≥ 50 degrees less 0.01 rad, the §7 test).
+- **The quarter and the 10 degrees are the librarian's, marked ours.**
+- **Control, printed first:** with the law off, the chest's largest angle from the view over every turn of every run; it must read 0.0
+  degrees (to 0.05).
+- **Failing turns** are printed with their starting gap (|shoulders − view| at the tick before) and the chest's rate there (the
+  shoulders' yaw change into that tick, deg/s). Nothing is tuned to them.
+
+**G, THE GUARD (green on main):**
+- **When:** at every tick where the view has stayed within 1 degree of its present yaw for the previous 94 ticks. Ninety-four is six
+  of the spring's own time constant: tau = 1/omega = chest_follow / 2 = 0.065 s (`game/body_look.cpp:40`), so 6 tau = 0.39 s = 93.6
+  ticks at 1/240 s, rounded up.
+- **Asserted:** the chest (drawn shoulders) is within 2 degrees of the view.
+- **Printed:** the ticks judged and the worst.
+- Read with the law off and on; the law off must be green.
+
+**R3, ROW 3 RESTATED.** The §7 wording ("never away") contradicts the spring; it stays red in the record and is not judged again.
+- **New wording:** on every tick of a turn's window where the shoulders move away from the view (as in §7: d·sign(g) < −1e-4 rad), they
+  move away by LESS than on the tick before. That means the shoulders moved the same way on the tick before, and |d now| < |d before|.
+- **An away tick whose tick before moved the other way or not at all, or moved less, counts as GROWING.**
+- **Printed:** the largest whole excursion away at one reversal (the sum of |d| over a consecutive run of away ticks), and the count of
+  growing ticks.
+- **THE UNWELCOME OUTCOME, NAMED NOW (the chair's):** an away motion that grows. For instance, on the tick the limit lets go, the
+  carried rate is stale: `game/body_look.cpp:45` clamps the chest at the limit but leaves `chest_rate` as it was. That is a fault in the
+  law. **If any tick grows, I ring at once** with the ticks printed, before going on.
+
+**Kept:** row 2, the limit (chest 50, hips 45).
+
+**Then:** merge main ae74f0c into b7-look-b (697570d), and the rest of the lap.
+- **The films include a burst of his own flicks from a kept run:** the law off beside on, first person beside outside.
+- Pane O lands it; body_look stays off.
