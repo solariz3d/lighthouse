@@ -86,3 +86,37 @@ place, today beside the root.
 
 Runs start from G: through the lock's own wait. His words stay out of the game's repository. Pane B lands the branch once
 its suite is green. One hand-back with its digest and a `BASE:` line, rung once.
+
+## RULED at the collation of M3c (D, 2026-11-15; `handback/p-m3c-m3b-A_2026-11-15.md`, read whole)
+
+**Your stop at the fired falsifier was right, and so was not tuning after reading it.** What stopped you for an hour and a half was the
+API's cut at 07:44:09Z, not the lap.
+
+**1. The fired falsifier: the law is corrected, the check stays.** "Wrong if any root body's velocity, sliding, turns faster than its
+grip allows" reads 1.024 of grip against its bar of 1.001. Take the first of your two ways: the slide's turn rate is set from the speed
+the velocity has when it turns, the speed after the tick's own gain. The check is not bounded to the speed the rate was set from; that
+would move the check to the code. The red is the row as it stands on 159aa02. Green comes from the law.
+
+**2. The slide check, re-registered before any re-run, by name.** "30 ticks or more with the velocity more than 20 degrees off the aim"
+held at the post (18 and 16) and fires at the second contact past the exit gate (40 and 39) when it is read over every slide, as you
+said. At 5 m/s a body turning at its grip needs about a third of a second for 40 degrees, so a count of ticks asks for more than the
+grip you were told to keep. The fault the check was written for is an aim that waits. So: **in every slide of every bend read, on each
+tick the velocity is more than 20 degrees off the aim, it turns toward the aim at no less than 0.9 of what its grip allows at its
+speed.** Red first on e191f60, where the aim waited about 60 ticks. The 0.9 is mine, marked ours.
+
+**3. Then M3b as you staged it,** with your amendment taken (`registration_m3b2.md`: the height is held while something solid is within
+15 cm under the feet, not while over the mesh). Its rows as registered, red first; the count over the 12 worlds again after it.
+
+**4. What stays red and is not this lap's:** H1 (2 routes, lowest 1.00), G1 (4 of 6 bends), the new kind at grip 0.8 (9 of 10), the
+scripted 45 degree bend one way (0.94). Print them again; change nothing to turn them. The branch still does not land.
+
+**5. The path that flips sides of the door post at a replan is a lap of its own, after M3b** (M3d in the plan of record). It is in every
+arm, today's law included by your reading, and no contact rule touches it. For that lap, read first and print: on the ten routes and on
+pane E's three bends, how often a replan moves the path to the other side of a solid the body is within a body's length of, under
+today's law and under the root. Nothing is built for it in this lap.
+
+**6. The plan's bars on pane E's three bends stand as fired until a film meets them:** never under 1.2 m/s (now met at the 22 degree
+bend, 1.417 and 1.424, by your staged copy), and the 22 degree bend in no more than 0.889 s (1.465, not met). Pane E films the three
+again on your next tip.
+
+**He may be playing:** read the process list before each run, never close his game, no timing while it runs. One hand-back, rung once.
