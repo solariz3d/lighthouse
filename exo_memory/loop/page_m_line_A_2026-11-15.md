@@ -1036,3 +1036,66 @@ The chair's 13:59 pointer reached me after section 2 was built and rung, so this
   polygon's centre, which is crude, not impossible; the librarian's 11:56 sentence is corrected by the report. The set-aside stands until the
   two ways by the line's own time are tried.
 - **A route cost that prices corner speed** (:90) is OURS: no established method.
+
+## The grip arms, a read with no law changed (the ruling at the ring for section 2, git-blob 82cb7b9e, item 1)
+
+The arms registered and never run (`loop/animation_system_2026-11-13/ground_locomotion_and_yardstick.md:133-135`): grip 1.3, 1.6 and 2.0,
+beside 1.0 and today's law. His pick on 11-12 was "Grip above human" (`briefs/dreamzone2_the_game.md:1231-1232`, opened by the chair).
+- **The law:** the arcs as they stand, a-mline 3a5898d (2a51143's law), `root_law=1;line_arcs=1;grip_mu=G`. The hunter's own row sets no grip
+  (`chase/archetype.h:58`), so the speed model's `grip_mu` is its grip (`chase/chaser.cpp:207`).
+- **Grip also scales the width price** (`profile_of`, `squeeze_mu_g = grip_mu g`, `chaser.cpp:230`), so a higher grip changes which way the
+  search takes.
+- **checked:** `gr_bends.txt`, `gr_routes.txt` (scratch rows, removed after) and `gr_e{22,45,90}_{today,g1.0,g1.3,g1.6,g2.0}.txt` (pane E's
+  tool in a-m3c-e22, with 3a5898d's law copied in).
+- **The judges, as the chair's 13:43 note set them:** the plan's bar (on E's three bends never under 1.2 m/s; the 22 in no more than 0.889 s).
+  Today's law is printed beside every figure as information.
+
+**Pane E's staging (exit tick from the common start; through, lowest):**
+
+| bend | today's law | grip 1.0 | grip 1.3 | grip 1.6 | grip 2.0 | the plan's bar |
+|---|---|---|---|---|---|---|
+| 22 | 2781 (0.889 s, 0.04) | 2704 (0.465 s, 7.06) | 2674 (0.410, 8.24) | 2704 (0.569, 3.43) | **2663** (0.417, 8.89) | met at every grip |
+| 45 | 2888 (0.903 s, 2.83) | never through: round the north | never through | **2728** (0.521, 6.78) | **2704** (0.507, 7.60) | taken only at 1.6 and 2.0 |
+| 45: the player reached | 3116 | 3655 | 3762 | **3024** | **2943** | |
+| 90 | 2848 (0.819 s, 3.86) | 2936 (1.118, 1.69) | 2916 (1.076, 2.01) | 2891 (0.979, 2.29) | **2838** (0.764, 3.53) | met at every grip |
+
+**The stand-in's three bends (`run_bend`, which now replans):**
+
+| bend | today's law | grip 1.0 | grip 1.3 | grip 1.6 | grip 2.0 |
+|---|---|---|---|---|---|
+| 22 | 724 (0.637 s, 3.94) | 676 (0.292, 6.81) | 656 (0.267, 6.65, 1 contact) | 651 (0.271, 5.90, 2) | 651 (0.275, 7.51, 2) |
+| 45 | 978 (1.288 s, 0.71) | 789 (0.496, 5.90) | 784 (0.475, 6.99) | 781 (0.463, 7.68) | 779 (0.454, 8.29) |
+| 90 | 871 (0.846 s, 3.46) | 911 (0.971, 2.02) | 916 (1.004, 2.11) | 896 (0.925, 2.50) | **850** (0.733, 3.86) |
+
+**The ten routes, with a replan every half second** (and the routes row's own one-plan walk beside it):
+
+| arm | with replans | contacts | one plan |
+|---|---|---|---|
+| today's law | 77.13 s | 0 | 77.11 s |
+| grip 1.0 | 81.05 s | 15 | 78.32 s |
+| grip 1.3 | 78.42 s | 18 | 76.32 s |
+| grip 1.6 | **75.85 s** | 16 | 75.37 s |
+| grip 2.0 | **72.85 s** | 18 | 73.68 s |
+
+**The two places, with replans** (between the 2 m gates, lowest, exit tick, contacts, to the end):
+
+| place | today's law | grip 1.0 | grip 1.3 | grip 1.6 | grip 2.0 |
+|---|---|---|---|---|---|
+| route 0's mouth | 0.900 s, 2.35, 832, 0, 4.19 s | 1.658 s, **0.01**, 1038, 2, 5.14 s | 0.762 s, 3.09, **822**, 2, 4.14 s | 1.142 s, **0.02**, 905, 4, 4.56 s | 0.613 s, 4.47, **775**, 2, **3.92 s** |
+| route 2's chicane | 0.525 s, 6.99, **868**, 0, 5.23 s | 0.871 s, 2.49, 991, 0, 6.00 s | 0.729 s, 2.56, 945, 0, 6.00 s | 0.629 s, 4.82, 917, 0, 5.50 s | 0.562 s, 5.95, 900, 0, 5.40 s |
+
+**What the read says (inferred from the tables, not more):**
+- **How much was the grip:**
+  - At grip 2.0 the arcs beat today's law at every bend in both arenas. The 90, the one bend still behind at 1.0, comes in 10 ticks ahead
+    in the staging (2838 against 2848) and 21 ahead in the stand-in.
+  - The ten routes, with replans, go from 3.9 s slower than today's at 1.0 to 4.3 s faster at 2.0.
+  - **E's 45, the largest thing left, is a grip question as much as a route question:** from grip 1.6 the width price lets the search take
+    the doorway, and the root reaches the player 92 and 173 ticks before today's law.
+- **How much is the line-maker:**
+  - Route 0's mouth stalls (0.01 and 0.02 m/s) at grips 1.0 and 1.6 but not at 1.3 or 2.0, so the stall is not monotone in grip. inferred:
+    it is the arc ending inside the doorway (the five lines filed above), met or missed by how fast the body arrives.
+  - Contacts on the routes stay at 15 to 18 at every grip.
+  - With replans the routes at grip 1.0 are 2.7 s slower than with one plan (81.05 against 78.32); at grip 2.0 they are 0.8 s faster.
+- **Route 2's chicane** is behind today's at every grip up to 2.0 (900 against 868 at best); its lowest rises from 2.49 to 5.95 m/s with grip.
+- **Grip 1.6 is not monotone either:** the 22's lowest drops to 3.43 m/s in the staging, against 7 to 9 at the other grips. Not read further.
+- **Not changed:** any law, any dial default, any bar. Which number is his.
