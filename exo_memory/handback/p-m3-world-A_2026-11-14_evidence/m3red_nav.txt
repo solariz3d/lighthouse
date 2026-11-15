@@ -1,0 +1,6 @@
+  moves into the open ending where asked 0; moves against an edge 0, of which slid along it 0; off the mesh 2400; further than asked 0
+    G:\consonance-scratch\a-m1-dz3\nav\tests\path_tests.cpp(450): CHECK failed: off_mesh == 0 && longer == 0
+    G:\consonance-scratch\a-m1-dz3\nav\tests\path_tests.cpp(451): CHECK failed: open > 50 && edges > 100
+    G:\consonance-scratch\a-m1-dz3\nav\tests\path_tests.cpp(452): CHECK failed: slid * 2 > edges
+FAIL  move_along_ends_on_the_mesh_and_slides_along_an_edge_it_meets
+1 tests, 1 failed

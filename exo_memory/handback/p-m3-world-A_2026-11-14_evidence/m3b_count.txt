@@ -1,0 +1,15 @@
+    seed  1: 66 drop links, 66 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  2: 29 drop links, 29 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  3: 76 drop links, 76 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  4: 89 drop links, 89 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  5: 56 drop links, 56 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  6: 68 drop links, 68 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  7: 45 drop links, 45 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  8: 62 drop links, 62 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  9: 47 drop links, 47 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed 10: 85 drop links, 85 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed 11: 60 drop links, 60 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed 12: 52 drop links, 52 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    12 worlds: 735 drop links, 735 whose straight line meets a solid (100 %)
+ok    m3b_read_how_many_drop_links_have_a_straight_line_through_solid
+1 tests, 0 failed

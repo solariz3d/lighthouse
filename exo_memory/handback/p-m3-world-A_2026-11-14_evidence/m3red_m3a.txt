@@ -1,0 +1,20 @@
+    way (b)  : 15 contacts above 0.3 m/s; stopped dead without a contact 15; at a slant 0, of which kept 0.8 of the speed along the edge 0 (worst 0.000); within 30 degrees of square 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1113): CHECK failed: stopped == 0
+    way (a)  : 17 contacts above 0.3 m/s; stopped dead without a contact 17; at a slant 0, of which kept 0.8 of the speed along the edge 0 (worst 0.000); within 30 degrees of square 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1113): CHECK failed: stopped == 0
+FAIL  m3a_a_refused_step_is_a_contact_that_keeps_the_speed_along_the_edge
+    today    : 5 falls to 0 m/s from above 0.3: at a square contact 0, otherwise 5
+    way (b)  : 15 falls to 0 m/s from above 0.3: at a square contact 0, otherwise 15
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1138): CHECK failed: other == 0
+    way (a)  : 17 falls to 0 m/s from above 0.3: at a square contact 0, otherwise 17
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1138): CHECK failed: other == 0
+FAIL  m3a_the_root_falls_to_zero_only_at_a_square_contact
+    route 0 point 3: chord turn 13.6 degrees; total turn within 3.3 m 14.6 degrees: gentle
+    route 0 point 5: chord turn 18.4 degrees; total turn within 3.3 m 19.4 degrees: gentle
+    route 1 point 6: chord turn 5.4 degrees; total turn within 3.3 m 5.4 degrees: gentle
+    route 1 point 7: chord turn 10.7 degrees; total turn within 3.3 m 10.7 degrees: gentle
+    route 4 point 1: chord turn 8.1 degrees; total turn within 3.3 m 6.5 degrees: gentle
+    route 6 point 6: chord turn 15.1 degrees; total turn within 3.3 m 15.1 degrees: gentle
+    route 7 point 6: chord turn 5.6 degrees; total turn within 3.3 m 1.9 degrees: gentle
+ok    m3a_g1s_gentle_bend_rule_read_at_each_route_bend
+3 tests, 2 failed
