@@ -88,3 +88,13 @@ arithmetic. The registered prediction (no more than 0.60 s, never under 6.0 m/s)
 doorway and the gap of radius about 5 m (inferred from the map: grip speed about 7 m/s), then a left arc in the open room toward the target,
 then straight to it. Every sample is checked on the mesh by the test itself; the radii are set by hand from the map until every sample is on
 it, and are printed. The test runs in the chase's arena at gen seed 1 (the scripted bends row's stand-in for E's staging), no replans, both ways.
+
+## The fixed-line test (ruling item 1): THE READING HOLDS
+checked: `page_m_line_A_2026-11-15_evidence/ln_test.txt`, dreamzone-3 branch `a-mline` 6f7279a (the test committed before it ran; off e040a87),
+`chase_tests mline_a_fixed_line_north_of_the_post_takes_e_22_degree_bend_within_the_plans_bar`, 1 test, 0 failed:
+- the line: 127 samples every 0.25 m (R1 4.6 m, LB 0.8 m, R2 8.0 m), **0 off the mesh**.
+- **way (b) and way (a) alike: 0.321 s between the gates (the plan's bar 0.889 s), lowest 5.76 m/s (bar 1.2), 0 contacts, 0 head-on ticks,
+  peak sideways 9.81 m/s^2 (its grip)**, walked to the end, passing 1.60 m from the bend's point.
+- **My prediction, half met:** time no more than 0.60 s is met; never under 6.0 m/s is **not met** (5.76). inferred: the root's speed plan
+  reads the 4.6 m arc as tighter than it is (grip on 4.6 m is 6.72 m/s); not read yet.
+- In the chase's arena at gen seed 1 (the scripted bends row's stand-in for E's staging), not in E's staging itself.

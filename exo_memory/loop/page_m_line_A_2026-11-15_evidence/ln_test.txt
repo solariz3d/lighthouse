@@ -1,0 +1,5 @@
+    the line: 127 samples every 0.25 m; R1 4.6 m, LB 0.8 m, R2 8.0 m; samples off the mesh 0
+    way (b) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+    way (a) : walked to the end; entry 5.76 m/s, lowest 5.76 m/s, 0.321 s between the gates (passed 1.60 m from the bend's point); contacts 0, head-on 0, peak sideways 9.81 m/s^2; the page's prediction (0.60 s, 6.0 m/s) NOT met
+ok    mline_a_fixed_line_north_of_the_post_takes_e_22_degree_bend_within_the_plans_bar
+1 tests, 0 failed
