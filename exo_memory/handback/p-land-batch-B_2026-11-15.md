@@ -76,16 +76,17 @@ opened and closed, and the hold was released unread. The second used `cmd //c`. 
 
 ## 4. HIS COPY BUILT AT 564ce1f, nothing launched
 
-Built as launch.ps1 builds it, by `G:consonance-scratch-his-build.ps1` (the launcher's own -Check reason, build.bat into
-`buildlaunch-build.log`, the stamp at the build's start), under the lock with his clone as the tree. Its check now holds only for a
-dz-world or dz-gym of his from that folder (the chair's 09:56:52Z rule). My B8 film had taken slot 1 at 12:45:27Z, just before this build
-reached the lock; I stopped the film by its handles (start times checked) so his build went first. The film runs again later.
+**How:** as launch.ps1 builds it, by `G:\consonance-scratch\b-his-build.ps1`: the launcher's own -Check reason, build.bat into
+`build\launch-build.log`, and the stamp at the build's start. It ran under the lock with his clone as the tree.
+- **What holds it:** only a dz-world or dz-gym of his from that folder (the chair's 09:56:52Z rule).
+- **The order:** my B8 film had taken slot 1 at 12:45:27Z, just before this build reached the lock. I stopped the film by its handles,
+  start times checked, so his build went first. The film runs again later.
 
-    checked: G:consonance-scratch-his-build-out.txt → "before: build needed: gameworldworld_settings.h is newer than the last build";
+    checked: G:\consonance-scratch\b-his-build-out.txt → "before: build needed: game\world\world_settings.h is newer than the last build";
              "build.bat exit 0, started 2026-11-15T12:47:11.2636416Z, ended …12:48:24.6277676Z"; "stamp written: 2026-11-15T12:47:11.2636416Z"
-    checked: buildindz-world.exe → contains "564ce1f46515cd4351bd135dc29225c063c4439a", written 12:48:24Z
+    checked: build\bin\dz-world.exe → contains "564ce1f46515cd4351bd135dc29225c063c4439a", written 12:48:24Z
     checked: launch.ps1 world -Check → "up to date", exit 0; launch.ps1 gym -Check → "up to date", exit 0
-    checked: no dz-world or dz-gym from Desktopdreamzone-3 afterwards. NOTHING LAUNCHED.
+    checked: no dz-world or dz-gym from Desktop\dreamzone-3 afterwards. NOTHING LAUNCHED.
 
-**His copy now:** main 564ce1f, every switch at its default (off): main as played plus the chaser row (a self-test only) and C's
-stride clock behind stride_clock (off).
+**His copy now:** main 564ce1f, every switch at its default (off). That is main as played, plus the chaser row (a self-test only) and
+C's stride clock behind stride_clock (off).
