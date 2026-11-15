@@ -1,0 +1,5 @@
+    22 degrees: 126 samples; per plan (mean of 5): find_path 11 us, root_line 1472 us (of it the widths, 126 x 2 open_along, about 216 us), the whole plan_to 2116 us
+    45 degrees: 130 samples; per plan (mean of 5): find_path 10 us, root_line 1533 us (of it the widths, 130 x 2 open_along, about 241 us), the whole plan_to 1808 us
+    90 degrees: 121 samples; per plan (mean of 5): find_path 5 us, root_line 1367 us (of it the widths, 121 x 2 open_along, about 163 us), the whole plan_to 1585 us
+ok    diag_timeparts_where_one_plan_goes
+1 tests, 0 failed
