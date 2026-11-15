@@ -393,3 +393,33 @@ The old generator is not a bar and is not printed as one.
 **It failed if** a fault of the first iteration that is on the sheet is built again in the new system, or a thing the first got right is found again by trial.
 
 **THE LESSONS SHEET IS WRITTEN (pane E, rung 15:16):** `loop/lessons_first_iteration_2026-11-15.md`, 140 lines, git-blob f3c204da. Read whole by the librarian; four of its citations opened at their source lines and found as cited. It sorts each lesson as RIGHT, WRONG or HIS, by stage (N1 to N5 and the method), keeps the new system's own first-build lessons apart (NEW-N1), and ends with what is not on file. **It is read before any stage's page is written, and a stage's page says which of its lessons it used.**
+
+## SECTION 17 READ (D, 2026-11-15 15:2x): THE REBUILD FROM RESEARCH PASSES THE RUNNERS' SPREAD AND ITS FEET ROWS ARE GREEN. THE CUT IS MADE NOW, OF THE NEW LEGS ALONE. THE SPLIT OF WHAT IS LEFT
+
+(`handback/p-n1-legs-B_2026-11-15.md`, section 17, lines 1049 to 1200 read whole, git-blob 2671734c; `G:\consonance-scratch\b-n1q-out\yardstick.txt` and `rows.txt` read by the librarian before the folder was re-made; dreamzone-3 `n1-shaped-wip-b` c15f071, local.)
+
+**Taken, whole.** The running leg is built from the measured runners and three published methods, each with its source beside the line, and nothing of the old build is called. Its table is inside the runners' spread at every joint and speed; a planted heel or toe moves at most 0.0070 m (the research's bar is 20 mm); the control is red with the lock taken out.
+
+**For pane B, first, because older sends reach you after this build: the rulings of 13:47 and 13:51 crossed your rebuild.** Where they say "nothing more is built on the red branch" and "one page before the build", section 17 has overtaken them: the rebuild exists, it is what they asked for, and it stands. **Go on from c15f071.** What stays in force from them: the judges (the feet first, then the bands, then the cut and his eye) and the print of proportions.
+
+**1. The cut, now.** The course on c15f071, the new system's two bodies **alone**: no old body in any frame, no "before" row, no figure of the old generator on the film or in its manifest (the plan's section of 15:03). Lit, from outside, as the earlier cuts were. Pane E encodes it: the straight, the turn, the stop and start, the doorway, the walk backwards, each at real speed and slower. It goes on his page whether or not it reads well.
+- **Printed with the cut,** each over the whole course: the greatest travel of a heel or toe while down (bar 20 mm) and the lowest point of a foot under the floor (bar 5 mm), `loop/animation_system_2026-11-13/scout_evaluation.md:142-143`.
+- **In the turn, his test** (the section of 14:08): the landings' line against the hips' curve, the inside and outside steps side by side, and how far a planted foot turns on the floor.
+
+**2. The two changes to the judge (17.3), read as you asked, with that in mind.**
+- **The cut:** on the final build the old cut and the new are 0.02 to 0.03 of the cycle apart (`yardstick.txt` :44, :110, :172, read by me). The pass does not hang on it.
+- **The zero:** it is the change that moved the knee (our standing body is crouched 11.7 degrees against its rest). Your ground is the dataset's own pipeline and the runners' standing trials (-0.2 degrees, sd 5.2, 39 runners). I have not opened the pipeline file.
+- **One check of the judge that needs no body of ours,** added as a row of the yardstick's own tests, red first: one runner's own trial scored against the others under the new cut and zero falls inside the spread; the same trial with the knee shifted by 11.7 degrees fails. A judge changed after a failing table earns a control of its own. No hold: it is built beside the cut.
+
+**3. The step is the thing his eye may catch.** About 1.1 m at 3.5 m/s where the runners' stride scaled to our body gives 1.69 m, so the legs turn over about 1.5 times as fast. You named it before the film, unexplained. It is said to him beside the clip in plain words. **Your next after the cut is the print of proportions** (our thigh, shin and foot against hip height beside the runners'), which bears on why our stance covers less ground; then the standing and walking crouch you named in 17.8.
+
+**4. The world self-test's one machine-bound red** (builds pending after a new seed) was read while he plays and another seat ran. It is not N1's and is not judged from that read; the landing's run in a quiet window decides.
+
+**5. THE SPLIT of what is left of the new system (his rule of 2026-10-09: every part named, a pane for each):**
+- **Pane B, the legs (N1):** the cut; the judge's control; the proportions and the step; the legs in a turn; the standing crouch. Push `n1-shaped-wip-b` so that another pane can branch from it.
+- **Pane E:** the clips of the cut for his page. Nothing with the old body.
+- **Pane A (its path line is parked), the trunk, arms and head (N2), the page only for now:** read `loop/lessons_first_iteration_2026-11-15.md` and `loop/source_sheet_n2_upper_body_E_2026-11-15.md` whole, the sources they name at source, and write N2's page: what is built, from which source, with which judge (for the elbow: 38.2 to 121.2 degrees at 9.49 m/s, one runner, `loop/sprint_reference_2026-11-13/00_reference.md:158-166`; his items 180, 186 and 239). **No code until he has seen the legs' film,** so that what he says of the legs can turn the page before anything is built on it.
+- **A landing pane, after his look:** N1 onto main behind its own switch, off by default, so that he can play it.
+- **Not started and not dispatched:** N3 (the world), N4 (the states), N5 (the picture's physics). Their sheets are written. Each starts when the stage before it has been seen by him.
+
+**It failed if** the cut carries the old body in any frame, or if N2's code is begun before he has seen the legs move.
