@@ -237,3 +237,19 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 - **Registered now for it:** in the stand-in the 22's side row is green; in pane E's 45 staging the root reaches the player sooner than tick 3669; the ten routes are no slower than without it; the gate holds on the plan that makes two lines. **What would show it wrong:** a place where neither of the two searches' ways is the fast one. Then that place is mapped and printed before anything is added.
 
 **3. Not rung to him as progress:** nothing here is in his game, and the branch's law is unchanged from the release.
+
+## RULED at the arcs' ring (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its last two sections read whole, git-blob 5bc5a812)
+
+**The five lines are taken, and the stop with the place printed is what the unwelcome line asked for.** The rows are red (the 90 at tick 948 against 871, the routes 79.71 s, the plan 1,393 microseconds) and nothing was tuned. The print says why in one sentence of yours: the string splits one bend into a cluster, and no cluster ever reached the rule that merges it.
+
+**What the cluster is, as I read your print, and it decides which of your two changes comes first.** The mesh is the floor worn back by the body's radius, so every wall corner in it is a short chamfer of two or three vertices a cell apart (0.25 to 0.32 m in your print), and the string turns at each. A bend in this world is a wall corner. The string shows it as a cluster. So this is not a special case at pane E's three bends; it is every bend there is.
+
+**1. Both of your changes, in this order, each red first:**
+- **First, a bend is a cluster:** consecutive corners of the string that turn the same way and lie no further apart than the body's radius on the mesh (the mesh's own number, 0.35 m, your page's line 9: `nav/build.cpp:529`, `nav/nav.h:62`; not a metre by eye) are one bend, with their summed turn, before any radius is judged. **Its check, from a source that is not the fitter:** the merged bend's turn equals the string's turn measured across it between chords either side, which is how pane E's film tool measures a bend (88.9 degrees at the 90; your five corners' first three sum to 89.2). Print the two side by side for each bend.
+- **Then the charge:** a backwards sweep is charged to the arc and its next neighbour, so that two true bends closer than their arcs meet line 1's merge before either is shrunk against an end. That is your line 1 as written; the code departed from it.
+
+**2. The rows stay as registered,** with your own predictions beside them (the 90's exit at or before 856; the 22 and 45 at or before 686 and 801). The gate stays; you infer the merge takes most of the 1,393 away, and the row will say.
+
+**3. If the 90 is still red after both,** print the arc that was laid there (its radius, its centre, its tangent points, the free distance out from the apex that set it) beside your hand line's 6 m arc on the same map, before anything else is changed.
+
+**The ring:** one, with the rows and the bends' turns side by side.
