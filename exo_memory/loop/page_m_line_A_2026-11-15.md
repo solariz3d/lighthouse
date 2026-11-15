@@ -773,7 +773,8 @@ fastest over 3 m, in `rd_routes.txt`):
   side, where today's law runs its east side; route 0 has 4 of the arcs' contacts.
 - **route 2 (+0.75 s): +145 ticks from 25 to 28 m**, at the bend from east into a corridor going north ((39.16 -63.49) to (39.41 -63.29)); on
   the map the arcs cut the corner from the open floor into the corridor's west side, and today's law takes its middle.
-- **route 6 (+0.24 s): +43 ticks from 23 to 26 m**, at the bend west out of a corridor ((-50.54 -11.99) to (-50.84 -11.54)).
+- **route 6 (+0.24 s): +43 ticks from 23 to 26 m**, at the bend ((-50.54 -11.99) to (-50.84 -11.54)) where the string turns west toward
+  (-63.29 -9.44); its map is in the file and was not read for this line (a first draft called it a corridor's mouth, unread; corrected).
 - **inferred, not checked:** all three are bends from open floor into a narrow corridor (or out of one), where the widest arc that keeps the
   room on its own arc and half-legs has to end inside the corridor; and route 0's first is a bend 2 m from an end, which line 4 shrinks against
   that end.
@@ -794,4 +795,5 @@ the arcs 3655** (539 ticks, 2.2 s later; the release read 3669). Here the width 
 stand-in's routes.
 
 **So pane E does not film the 90 (ruling item 5):** in E's staging the arcs leave the 90 at 2936, after today's 2848. The stand-in said 864
-against 871; E's staging says the opposite, as it did for the 90 at the release (stand-in 0.933 / E 0.972 against 0.846 / 0.819).
+against 871; E's staging says the opposite. (E's staging also put the line behind today's at the 90 on 4b03985: 1.319 / 0.972 s against
+0.819. A first draft of this line called those figures the release's; they are 4b03985's, corrected before the ring.)
