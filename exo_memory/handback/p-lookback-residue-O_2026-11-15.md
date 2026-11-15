@@ -113,3 +113,23 @@ SOURCES: G:\consonance-scratch\o-look\lean-main.out
 SOURCES: G:\consonance-scratch\o-look-suite\build-test.out
 SOURCES: C:\Consonance\data\push-gate.jsonl
 NEXT: librarian rule the seam fix's landing (switch or not; the lean row's form; his kept runs' replays) when this is read; B lands look-residue-o on that ruling; O goes back to the lock lap
+
+## AS RULED (the packet's "RULED" section, git-blob 87d2c733): the two changes, pushed — look-residue-o at **59d4a2272bb8c178cf8e8fa6847b55d6d88ff0b4**
+- **1. The seam fix is the default; one parameter keeps kept runs replaying.**
+  - `riser_keeps_speed` is in `DZ_MOVE_PARAMS` (`sim/params.h`), 1 by default. `sim/world.cpp` applies the rule only when it is 1.
+  - `read_run` (`game/world/run_record.cpp`) reads a record that does not name it as 0, the rule it was played with, as `run_length_s` already does for the timer. No key, and nothing in his settings file. New records name it (`write_params` writes every parameter).
+  - **The row** (`run_record_tests.cpp`, `a_run_recorded_before_the_seam_fix_replays_to_its_fingerprints_and_one_recorded_after_names_the_parameter`):
+    - checked: **red first**, with the reader's line taken out (`G:\consonance-scratch\o-look\prow-red.out`): `rb.params.riser_keeps_speed == 0.0f` failed and **`old_again.same` failed** (the old run did not replay), and the control's two checks failed too.
+    - checked: with it back → **ok** (`prow-green.out`).
+    - The control in the row (a new run with its line struck parts from its fingerprints) shows the runs meet seams, so the replay is not a vacuous pass.
+- **2. The old lean row's 8-of-24 form is a REPORT, by name** (`world_app_tests.cpp`, an AMENDED comment with the ruling and the reason). Its 600 ceiling and its peak stay checks.
+  - Its last count is 7 of 24 (worst 475.8) on 01746da. This commit changes no simulation at the default, so it is unchanged. ctest prints a passing row's output only on failure, so the suite below does not show it.
+- **The suite on 59d4a22's tree** (`G:\consonance-scratch\o-look-suite\`):
+  - checked: `build.bat test` → **exit 0, "100% tests passed, 0 tests failed out of 14"**;
+  - checked: `dz-world --selftest` → **exit 0, 64 of 64**;
+  - checked: `dz-gym --selftest` → **exit 0, 26 of 26**.
+- **The CHANGELOG entry** now says old runs replay under the parameter, and names the lean row's report.
+- **The push:**
+  - checked: my own scan of `26830ba..59d4a22` → 1 commit, 91 added lines, total 0; 0 key-shaped; 0 private terms; none of his words.
+  - checked: pushed by its literal ref → `26830ba..59d4a22`; push-gate → **allow, src refs/heads/look-residue-o, 14:09:32Z: the gate scanned it this time.**
+  - **The earlier push (26830ba) the gate let through unscanned** ("not a git repo", from my `$T`) is named above. Pane P's fail-closed fix rides the lock lap.
