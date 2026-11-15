@@ -426,6 +426,26 @@ test('a missing SOURCE.md FAILS LOUDLY rather than emitting an empty table', () 
   assert.match(src, /FAILED: no trigger rows parsed/, 'an unparseable file must be reported too');
 });
 
+test('grouped by target, NO trigger is lost: every trigger in SOURCE.md is in the section verbatim, on the line that ends with its target', () => {
+  // P, 2026-11-15: the rows are grouped by target to give back the characters the watch-the-bearing card added. The triggers are the
+  // room's cues and are not trimmed without the continuity test, so this row holds the grouping to "layout only".
+  const src = fs.readFileSync(path.join(LIVE_REPO, 'exo_memory', 'SOURCE.md'), 'utf8').split('\n');
+  const start = src.findIndex((l) => /^##\s+TRIGGERS\s*$/.test(l));
+  const want = [];
+  for (let i = start + 1; i < src.length && !/^##\s/.test(src[i]); i++) {
+    const m = src[i].match(/^- when (.+?) -> (.+?)\s*$/);
+    const t = m && m[2].trim();
+    if (m) want.push({ when: m[1].trim(), target: /\.md$/.test(t) ? t.replace(/^exo_memory\//, '').replace(/^cards\//, '').replace(/\.md$/, '') : t });
+  }
+  assert.ok(want.length >= 10, 'the source rows were read: ' + want.length);
+  const rows = sb.sourceSection().lines.filter((l) => l.startsWith('  '));
+  for (const w of want) {
+    const line = rows.find((l) => l.endsWith(' -> ' + w.target) && l.includes(w.when));
+    assert.ok(line, `"${w.when}" -> ${w.target} is not on its target's line`);
+  }
+  assert.strictEqual(rows.length, new Set(want.map((w) => w.target)).size, 'one line per target');
+});
+
 test('every rendered trigger is a when -> target pair', () => {
   const sec = sb.sourceSection();
   const rows = sec.lines.filter((l) => l.startsWith('  '));

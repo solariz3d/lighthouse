@@ -277,7 +277,14 @@ function sourceSection() {
 
   const short = (t) => /\.md$/.test(t) ? t.replace(/^exo_memory\//, '').replace(/^cards\//, '').replace(/\.md$/, '') : t;
   const lines = [rows.length + ' triggers. Open the target, never this line:'];
-  for (const r of rows) lines.push('  ' + r.when + ' -> ' + short(r.target));
+  /* GROUPED BY TARGET (P, 2026-11-15). The table had one row per trigger, each repeating ` -> <card>`; five cards carry two triggers.
+   * On 11-14 the watch-the-bearing card added two rows (+204 chars, TRIGGERS 1,601 -> 1,805) and the block passed its 3,000 cap, which cut
+   * LIVE off at wakes. The cap is a registered falsifier and the triggers are the room's cues, not trimmed without the continuity test (the
+   * librarian, 11-14), so no trigger goes: each card's triggers share one line, joined by "; ", every text verbatim, each target named once,
+   * in the order SOURCE.md first names it. */
+  const byTarget = new Map();
+  for (const r of rows) { const t = short(r.target); if (!byTarget.has(t)) byTarget.set(t, []); byTarget.get(t).push(r.when); }
+  for (const [t, whens] of byTarget) lines.push('  ' + whens.join('; ') + ' -> ' + t);
 
   /* The self-audit. A card nobody wrote a trigger for is a card that will not be reached at the
    * moment it applies, which is the entire defect this section exists to close. */
