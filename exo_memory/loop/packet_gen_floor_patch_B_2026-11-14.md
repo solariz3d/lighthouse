@@ -82,3 +82,26 @@ randomness"); the count is what a later lap would turn up. No change is made her
 - The lander is named by the chair; B does not land its own fix.
 - The hand-back: one file under `exo_memory/handback/`, its digest in the ring with the function named, a `BASE:` line for
   each repository changed, and a map line.
+
+## AMENDED at R1 green (D, the night of 2026-11-14; `handback/p-d677-floor-r0-B_2026-11-14.md`, read whole)
+
+**The registered unwelcome outcome happened, and the stop was right.** One slab is under the point, nothing overlaps within 3 m, and one triangle is drawn there. "Two solids in one place" is refuted for the generator. R2 to R4 above are withdrawn; they rested on R1 red. The sweep's 36 m is still a gap in that row, and it is not this fault's cause.
+
+**SOURCE, read again: what produces the dark patch is not known, and four things could.** Each is named with what it predicts, so that the next read can tell them apart.
+
+- **H1, a real shadow.** Something solid stands between the room's lights and that part of the floor. Seen by me in pane C's pictures: a lowered band of ceiling crosses the room, and your R0 prints 2.4 m ceilings in the row z = 0 against 2.7 m beside it. Predicts: a point inside the patch has no clear line to any light, a point outside has one, and one named solid blocks the first.
+- **H2, no light is given to that place.** Lights carry a range (`render/shaders/dz.hlsl:395`, "in range or not"). Predicts: every light is out of range of the patch's points, or is not in the list the renderer is handed for that chunk.
+- **H3, the secondary rays start inside the floor.** They leave the surface from a fixed 1 cm and 2 cm off it with no minimum distance (`dz.hlsl:388`, `:501`; `TMin = 0.0` at `:127`, `:264`, `:511`). Predicts: the blocker of a patch pixel's shadow ray is the slab itself.
+- **H4, the surface's own data is wrong there.** A streamed chunk keeps no vertices on the card after its structure is built (`dz.hlsl:70`). Predicts: the normal or the material the shader reads differs inside the patch.
+- **One thing already against "it is the long triangle's end":** at z = -1.74 that triangle's long edge is at x = -42.25, running nearly along z (3 m across in 32.8 m). The patch in pane C's pictures has an edge that crosses the floor at a clear angle. Not measured from the pictures; said as what I see.
+
+**What to do now, read only, on the processor, in your own ground (the generator's scene and the simulation's solids):**
+1. **The patch's outline on the floor.** From pane C's held view (his run `run-20261114-185333` at 11.00 s; C's capture scripts are in `G:\consonance-scratch\c-d676\`, `block26.js` and its two siblings, never committed) or from its pictures in his Downloads folder: the outline's corners in world x and z, as well as they can be read, with how they were read.
+2. **The lights.** Every light the generator gives within reach of the patch: place, kind, range, the chunk that owns it.
+3. **The lines of sight.** For points inside the outline and points just outside it, at floor height: the segment to each light cast through the simulation's solids. Print which solid blocks each. Then say which of H1 and H2 the numbers fit, or neither.
+4. **If it is H1,** say what the solid is and which generator rule puts it and the lights there. That is then a question of how the room is lit, and it goes to him with one picture: it is a shadow the game means, drawn with a hard edge.
+5. **If it is neither,** ring: H3 and H4 are the renderer's, and pane C takes them with your outline and light list as its start.
+
+**Item 224, his hall, in the same wake, read only,** as the packet says above.
+
+**Registered:** this read is wrong if it names a cause from fewer than three points inside the outline and three outside it.
