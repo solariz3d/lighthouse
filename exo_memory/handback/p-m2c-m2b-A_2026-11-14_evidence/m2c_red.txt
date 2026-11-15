@@ -1,0 +1,315 @@
+      point 0 (-64.50, -67.50): 28.37 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 1 (-63.44, -65.74): 27.08 m from the contact, room 4.03 m, grip speed 8.00 m/s
+      point 2 (-63.19, -65.54): 26.82 m from the contact, room 4.71 m, grip speed 8.00 m/s
+      point 3 (-38.84, -63.49): 2.39 m from the contact, room 2.17 m, grip speed 8.00 m/s
+      point 4 (-36.29, -62.59): 0.48 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 5 (-35.99, -62.54): 0.70 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 6 (-16.99, -62.54): 19.51 m from the contact, room 6.00 m, grip speed 7.91 m/s
+      point 7 (-16.69, -62.84): 19.80 m from the contact, room 6.00 m, grip speed 7.83 m/s
+      point 8 (-16.50, -70.50): 21.34 m from the contact, room 0.90 m, grip speed 8.00 m/s
+    route 0's corner: slowest grip speed inside 3 m 8.00 m/s; entered at 8.87 m/s (its plan asked 8.90); head-on ticks within 3 m 0; walked to the end in 8.97 s
+    as it arrives (its top with its run-up), grip allows 8.90 m/s there
+ok    m2_w2_the_grip_root_brakes_in_time_for_route_0s_corner_and_does_not_meet_its_wall
+    today     route 0: 1 corners, lowest at them and after walls 2.16 m/s
+    today     route 1: 1 corners, lowest at them and after walls 1.19 m/s  UNDER 1.2
+    today     route 2: 2 corners, lowest at them and after walls 1.19 m/s  UNDER 1.2
+    today     route 3: 1 corners, lowest at them and after walls 5.57 m/s
+    today     route 4: 1 corners, lowest at them and after walls 1.44 m/s
+    today     route 5: 1 corners, lowest at them and after walls 3.39 m/s
+    today     route 6: 1 corners, lowest at them and after walls 4.36 m/s
+    today     route 7: 2 corners, lowest at them and after walls 0.73 m/s  UNDER 1.2
+    today     route 8: 1 corners, lowest at them and after walls 1.33 m/s
+    today     route 9: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    today    : 12 corners on 10 routes; routes under 1.2 m/s 4; lowest 0.00 m/s; largest re-point 0.000000 rad
+    way (b)   route 0: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (b)   route 1: 1 corners, lowest at them and after walls 3.55 m/s
+    way (b)   route 2: 2 corners, lowest at them and after walls 2.98 m/s
+    way (b)   route 3: 1 corners, lowest at them and after walls 0.75 m/s  UNDER 1.2
+    way (b)   route 4: 1 corners, lowest at them and after walls 1.74 m/s
+    way (b)   route 5: 1 corners, lowest at them and after walls 4.90 m/s
+    way (b)   route 6: 1 corners, lowest at them and after walls 4.88 m/s
+    way (b)   route 7: 2 corners, lowest at them and after walls 3.77 m/s
+    way (b)   route 8: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (b)   route 9: 1 corners, lowest at them and after walls 4.33 m/s
+    way (b)  : 12 corners on 10 routes; routes under 1.2 m/s 3; lowest 0.00 m/s; largest re-point 0.000000 rad
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(803): CHECK failed: under == 0
+    way (a)   route 0: 1 corners, lowest at them and after walls 1.79 m/s
+    way (a)   route 1: 1 corners, lowest at them and after walls 1.39 m/s
+    way (a)   route 2: 2 corners, lowest at them and after walls 1.24 m/s
+    way (a)   route 3: 1 corners, lowest at them and after walls 4.08 m/s
+    way (a)   route 4: 1 corners, lowest at them and after walls 1.83 m/s
+    way (a)   route 5: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (a)   route 6: 1 corners, lowest at them and after walls 3.86 m/s
+    way (a)   route 7: 2 corners, lowest at them and after walls 2.97 m/s
+    way (a)   route 8: 1 corners, lowest at them and after walls 1.44 m/s
+    way (a)   route 9: 1 corners, lowest at them and after walls 2.92 m/s
+    way (a)  : 12 corners on 10 routes; routes under 1.2 m/s 1; lowest 0.00 m/s; largest re-point 0.000000 rad
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(803): CHECK failed: under == 0
+FAIL  m2_h1_at_a_hard_corner_and_after_a_wall_the_grip_root_never_loses_all_its_speed_nor_turns_on_the_spot
+    today     route 0 point 3, 14 degrees: entry 8.64, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+    today     route 0 point 5, 18 degrees: entry 8.86, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+    today     route 1 point 7, 11 degrees: entry 9.23, grip 8.00, lowest 1.19 m/s, 0 head-on ticks
+    today     route 7 point 6, 6 degrees: entry 8.33, grip 8.00, lowest 0.73 m/s, 6 head-on ticks
+    today    : 6 bends of 5 to 22 degrees; with a head-on tick 1; under 0.8 of what they could keep 4
+    way (b)   route 0 point 3, 14 degrees: entry 8.52, grip 8.00, lowest 2.73 m/s, 0 head-on ticks
+    way (b)   route 0 point 5, 18 degrees: entry 8.75, grip 8.00, lowest 2.73 m/s, 0 head-on ticks
+    way (b)   route 1 point 7, 11 degrees: entry 9.21, grip 8.00, lowest 3.55 m/s, 0 head-on ticks
+    way (b)  : 6 bends of 5 to 22 degrees; with a head-on tick 0; under 0.8 of what they could keep 3
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(843): CHECK failed: slow == 0
+    way (a)   route 0 point 3, 14 degrees: entry 8.52, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+    way (a)   route 0 point 5, 18 degrees: entry 8.81, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+    way (a)   route 1 point 7, 11 degrees: entry 9.21, grip 8.00, lowest 1.39 m/s, 0 head-on ticks
+    way (a)  : 6 bends of 5 to 22 degrees; with a head-on tick 0; under 0.8 of what they could keep 3
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(843): CHECK failed: slow == 0
+FAIL  m2_g1_on_the_routes_a_bend_of_22_degrees_or_less_is_taken_without_a_wall_and_keeps_its_speed
+    stub (stands 2 s): 2 contacts, 2 over the bar, worst 4.17 of it
+    today    : 1 contacts, 1 over the bar, worst 41.02 of it
+    way (b)  : 2 contacts, 1 over the bar, worst 20.04 of it
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(888): CHECK failed: r.over == 0
+    way (a)  : 0 contacts, 0 over the bar, worst 0.00 of it
+FAIL  m2_h2_after_a_wall_the_grip_root_is_running_again_as_soon_as_its_own_gain_allows
+    the ten routes' total time: today 77.11 s, way (b) 80.93 s (1.049 times; bar 1.25)
+    the ten routes' total time: today 77.11 s, way (a) 82.03 s (1.064 times; bar 1.25)
+ok    m2_the_grip_root_does_not_crawl_the_corner_routes
+    scripted (w 3, legs 30)  15.0 deg: width limit    350.7 m, leg limit   227.9 m (leg 30.00), plan's formula    22.8 m; grip on the lesser 9.20 m/s (top 9.2)
+    scripted (w 3, legs 30)  22.0 deg: width limit    163.3 m, leg limit   154.3 m (leg 30.00), plan's formula    15.4 m; grip on the lesser 9.20 m/s (top 9.2)
+    scripted (w 3, legs 30)  45.0 deg: width limit     39.4 m, leg limit    72.4 m (leg 30.00), plan's formula     7.2 m; grip on the lesser 9.20 m/s (top 9.2)
+    scripted (w 3, legs 30)  90.0 deg: width limit     10.2 m, leg limit    30.0 m (leg 30.00), plan's formula     3.0 m; grip on the lesser 9.20 m/s (top 9.2)
+    route 0 point 3         13.6 deg: width limit    307.9 m, leg limit    22.6 m (leg 2.70), plan's formula    18.2 m; grip on the lesser 9.20 m/s (top 9.2)
+    route 0 point 4          6.1 deg: width limit   4221.9 m, leg limit     5.7 m (leg 0.30), plan's formula   112.4 m; grip on the lesser 7.48 m/s (top 9.2)
+    route 0 point 5         18.4 deg: width limit    464.7 m, leg limit     1.9 m (leg 0.30), plan's formula    37.0 m; grip on the lesser 4.29 m/s (top 9.2)
+ok    m2c_the_two_limits_of_a_corners_radius_are_printed_beside_the_plans_formula
+    way (b), 15 degrees: entry 9.20 m/s, lowest 4.64, the plan asked 1.25, grip allows 9.20 on a 3 m room; through yes
+    way (b), 22 degrees: entry 9.20 m/s, lowest 2.79, the plan asked 1.20, grip allows 9.20 on a 3 m room; through yes
+    way (b), 45 degrees: entry 9.20 m/s, lowest 1.57, the plan asked 1.20, grip allows 8.43 on a 3 m room; through yes
+    way (b), 90 degrees: entry 9.20 m/s, lowest 1.33, the plan asked 1.20, grip allows 5.42 on a 3 m room; through yes
+    G:\consonance-scratch\a-m1-dz3\chase\tests\root_tests.cpp(274): CHECK failed: r[i].lowest >= 0.8f * std::min(r[i].entry, r[i].grip)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\root_tests.cpp(274): CHECK failed: r[i].lowest >= 0.8f * std::min(r[i].entry, r[i].grip)
+    way (a), 15 degrees: entry 9.20 m/s, lowest 4.64, the plan asked 1.25, grip allows 9.20 on a 3 m room; through yes
+    way (a), 22 degrees: entry 9.20 m/s, lowest 2.79, the plan asked 1.20, grip allows 9.20 on a 3 m room; through yes
+    way (a), 45 degrees: entry 9.20 m/s, lowest 1.49, the plan asked 1.20, grip allows 8.43 on a 3 m room; through yes
+    way (a), 90 degrees: entry 9.20 m/s, lowest 1.43, the plan asked 2.20, grip allows 5.42 on a 3 m room; through yes
+    G:\consonance-scratch\a-m1-dz3\chase\tests\root_tests.cpp(274): CHECK failed: r[i].lowest >= 0.8f * std::min(r[i].entry, r[i].grip)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\root_tests.cpp(274): CHECK failed: r[i].lowest >= 0.8f * std::min(r[i].entry, r[i].grip)
+FAIL  m2_g1_g2_a_scripted_bend_keeps_its_speed_to_22_degrees_and_loses_more_as_it_grows
+      15 deg t 2.750 s: aim 0.72 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 2.800 s: aim 0.26 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 2.850 s: aim 0.80 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 2.900 s: aim 0.34 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 2.950 s: aim 0.88 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.000 s: aim 0.42 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.050 s: aim 0.96 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.100 s: aim 0.50 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.150 s: aim 1.04 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.200 s: aim 0.58 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      15 deg t 3.250 s: aim 1.11 m at  13.4 deg, pull to it  33.83 m/s^2 (grip 9.81), plan 4.86, speed 8.97
+      15 deg t 3.300 s: aim 0.70 m at  19.6 deg, pull to it  66.69 m/s^2 (grip 9.81), plan 3.19, speed 8.27
+      15 deg t 3.350 s: aim 0.34 m at  37.1 deg, pull to it 205.17 m/s^2 (grip 9.81), plan 1.67, speed 7.57
+      15 deg t 3.400 s: aim 0.97 m at  18.4 deg, pull to it  31.27 m/s^2 (grip 9.81), plan 3.88, speed 6.87
+      15 deg t 3.450 s: aim 0.66 m at  22.0 deg, pull to it  44.04 m/s^2 (grip 9.81), plan 2.94, speed 6.17
+      15 deg t 3.500 s: aim 0.40 m at  31.5 deg, pull to it  80.30 m/s^2 (grip 9.81), plan 1.93, speed 5.47
+      15 deg t 3.550 s: aim 1.09 m at   2.2 deg, pull to it   1.84 m/s^2 (grip 9.81), plan 9.20, speed 5.15
+      15 deg t 3.600 s: aim 0.82 m at   0.7 deg, pull to it   0.88 m/s^2 (grip 9.81), plan 9.20, speed 5.60
+      15 deg t 3.650 s: aim 0.53 m at   1.0 deg, pull to it   2.40 m/s^2 (grip 9.81), plan 9.20, speed 6.05
+      15 deg t 3.700 s: aim 1.21 m at   8.6 deg, pull to it  10.19 m/s^2 (grip 9.81), plan 6.30, speed 6.41
+      15 deg t 3.750 s: aim 0.90 m at   8.7 deg, pull to it  12.42 m/s^2 (grip 9.81), plan 5.41, speed 6.05
+      15 deg t 3.800 s: aim 0.61 m at   7.4 deg, pull to it  13.23 m/s^2 (grip 9.81), plan 4.84, speed 5.58
+      15 deg t 3.850 s: aim 0.35 m at   7.7 deg, pull to it  18.99 m/s^2 (grip 9.81), plan 3.59, speed 4.93
+      15 deg t 3.900 s: aim 1.11 m at   1.1 deg, pull to it   0.80 m/s^2 (grip 9.81), plan 9.20, speed 4.91
+      15 deg t 3.950 s: aim 0.85 m at   1.2 deg, pull to it   1.33 m/s^2 (grip 9.81), plan 9.20, speed 5.36
+      15 deg t 4.000 s: aim 0.58 m at   0.6 deg, pull to it   1.16 m/s^2 (grip 9.81), plan 9.20, speed 5.81
+      15 deg t 4.050 s: aim 0.28 m at   0.4 deg, pull to it   2.18 m/s^2 (grip 9.81), plan 9.20, speed 6.26
+      15 deg t 4.100 s: aim 0.95 m at   0.8 deg, pull to it   1.33 m/s^2 (grip 9.81), plan 9.20, speed 6.71
+      15 deg t 4.150 s: aim 0.61 m at   0.5 deg, pull to it   1.58 m/s^2 (grip 9.81), plan 9.20, speed 7.16
+      15 deg t 4.200 s: aim 1.24 m at   0.1 deg, pull to it   0.09 m/s^2 (grip 9.81), plan 9.20, speed 7.61
+      15 deg t 4.250 s: aim 0.85 m at   0.1 deg, pull to it   0.17 m/s^2 (grip 9.81), plan 9.20, speed 8.06
+      15 deg t 4.300 s: aim 0.44 m at   0.1 deg, pull to it   0.35 m/s^2 (grip 9.81), plan 9.20, speed 8.51
+      15 deg t 4.350 s: aim 1.00 m at   0.1 deg, pull to it   0.29 m/s^2 (grip 9.81), plan 9.20, speed 8.83
+      15 deg t 4.400 s: aim 0.56 m at   0.1 deg, pull to it   0.51 m/s^2 (grip 9.81), plan 9.20, speed 9.01
+      15 deg t 4.450 s: aim 1.10 m at   0.0 deg, pull to it   0.02 m/s^2 (grip 9.81), plan 9.20, speed 9.10
+      15 deg t 4.500 s: aim 0.65 m at   0.0 deg, pull to it   0.03 m/s^2 (grip 9.81), plan 9.20, speed 9.15
+      15 deg t 4.550 s: aim 1.19 m at   0.0 deg, pull to it   0.06 m/s^2 (grip 9.81), plan 9.20, speed 9.17
+      15 deg t 4.600 s: aim 0.73 m at   0.0 deg, pull to it   0.09 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+      15 deg t 4.650 s: aim 0.27 m at   0.0 deg, pull to it   0.34 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+    15 degrees: entry 9.20, lowest 4.64, the plan's least 1.25
+      22 deg t 2.750 s: aim 0.72 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 2.800 s: aim 0.26 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 2.850 s: aim 0.80 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 2.900 s: aim 0.34 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 2.950 s: aim 0.88 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.000 s: aim 0.42 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.050 s: aim 0.96 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.100 s: aim 0.50 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.150 s: aim 1.04 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.200 s: aim 0.58 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      22 deg t 3.250 s: aim 1.11 m at  19.7 deg, pull to it  49.43 m/s^2 (grip 9.81), plan 4.02, speed 8.97
+      22 deg t 3.300 s: aim 0.71 m at  29.4 deg, pull to it  95.43 m/s^2 (grip 9.81), plan 2.67, speed 8.27
+      22 deg t 3.350 s: aim 0.41 m at  53.1 deg, pull to it 228.52 m/s^2 (grip 9.81), plan 1.58, speed 7.57
+      22 deg t 3.400 s: aim 1.03 m at  31.9 deg, pull to it  49.02 m/s^2 (grip 9.81), plan 3.10, speed 6.87
+      22 deg t 3.450 s: aim 0.77 m at  39.8 deg, pull to it  64.68 m/s^2 (grip 9.81), plan 2.42, speed 6.17
+      22 deg t 3.500 s: aim 0.56 m at  53.3 deg, pull to it  86.98 m/s^2 (grip 9.81), plan 1.86, speed 5.47
+      22 deg t 3.550 s: aim 0.45 m at  74.3 deg, pull to it 100.58 m/s^2 (grip 9.81), plan 1.51, speed 4.77
+      22 deg t 3.600 s: aim 0.98 m at  17.3 deg, pull to it  11.25 m/s^2 (grip 9.81), plan 4.02, speed 4.28
+      22 deg t 3.650 s: aim 0.78 m at  14.2 deg, pull to it  10.48 m/s^2 (grip 9.81), plan 3.95, speed 4.07
+      22 deg t 3.700 s: aim 0.58 m at  10.8 deg, pull to it  10.10 m/s^2 (grip 9.81), plan 3.91, speed 3.96
+      22 deg t 3.750 s: aim 0.39 m at   8.7 deg, pull to it  11.57 m/s^2 (grip 9.81), plan 3.54, speed 3.83
+      22 deg t 3.800 s: aim 1.16 m at  25.0 deg, pull to it   9.30 m/s^2 (grip 9.81), plan 3.67, speed 3.56
+      22 deg t 3.850 s: aim 1.01 m at  29.7 deg, pull to it  10.69 m/s^2 (grip 9.81), plan 3.16, speed 3.27
+      22 deg t 3.900 s: aim 0.87 m at  29.5 deg, pull to it  10.01 m/s^2 (grip 9.81), plan 2.95, speed 2.96
+      22 deg t 3.950 s: aim 0.75 m at  24.6 deg, pull to it   8.81 m/s^2 (grip 9.81), plan 2.96, speed 2.80
+      22 deg t 4.000 s: aim 0.62 m at  18.8 deg, pull to it   8.22 m/s^2 (grip 9.81), plan 3.06, speed 2.81
+      22 deg t 4.050 s: aim 0.48 m at  13.0 deg, pull to it   7.93 m/s^2 (grip 9.81), plan 3.23, speed 2.92
+      22 deg t 4.100 s: aim 0.33 m at   9.4 deg, pull to it   9.06 m/s^2 (grip 9.81), plan 3.16, speed 3.04
+      22 deg t 4.150 s: aim 1.17 m at  10.7 deg, pull to it   3.29 m/s^2 (grip 9.81), plan 5.54, speed 3.25
+      22 deg t 4.200 s: aim 1.00 m at  12.7 deg, pull to it   5.91 m/s^2 (grip 9.81), plan 4.71, speed 3.70
+      22 deg t 4.250 s: aim 0.81 m at  10.5 deg, pull to it   7.43 m/s^2 (grip 9.81), plan 4.66, speed 4.08
+      22 deg t 4.300 s: aim 0.60 m at   6.9 deg, pull to it   7.81 m/s^2 (grip 9.81), plan 4.93, speed 4.42
+      22 deg t 4.350 s: aim 0.37 m at   5.7 deg, pull to it  10.86 m/s^2 (grip 9.81), plan 4.31, speed 4.52
+      22 deg t 4.400 s: aim 1.15 m at   1.5 deg, pull to it   0.95 m/s^2 (grip 9.81), plan 9.20, speed 4.55
+      22 deg t 4.450 s: aim 0.91 m at   1.4 deg, pull to it   1.28 m/s^2 (grip 9.81), plan 9.20, speed 5.00
+      22 deg t 4.500 s: aim 0.65 m at   0.6 deg, pull to it   0.93 m/s^2 (grip 9.81), plan 9.20, speed 5.45
+      22 deg t 4.550 s: aim 0.37 m at   0.4 deg, pull to it   1.19 m/s^2 (grip 9.81), plan 9.20, speed 5.90
+      22 deg t 4.600 s: aim 1.06 m at   0.5 deg, pull to it   0.69 m/s^2 (grip 9.81), plan 9.20, speed 6.35
+      22 deg t 4.650 s: aim 0.73 m at   0.3 deg, pull to it   0.67 m/s^2 (grip 9.81), plan 9.20, speed 6.80
+      22 deg t 4.700 s: aim 0.38 m at   0.3 deg, pull to it   1.19 m/s^2 (grip 9.81), plan 9.20, speed 7.25
+      22 deg t 4.750 s: aim 1.01 m at   0.0 deg, pull to it   0.09 m/s^2 (grip 9.81), plan 9.20, speed 7.70
+      22 deg t 4.800 s: aim 0.62 m at   0.0 deg, pull to it   0.13 m/s^2 (grip 9.81), plan 9.20, speed 8.15
+      22 deg t 4.850 s: aim 1.20 m at   0.1 deg, pull to it   0.13 m/s^2 (grip 9.81), plan 9.20, speed 8.60
+      22 deg t 4.900 s: aim 0.76 m at   0.0 deg, pull to it   0.17 m/s^2 (grip 9.81), plan 9.20, speed 8.88
+      22 deg t 4.950 s: aim 0.31 m at   0.1 deg, pull to it   0.55 m/s^2 (grip 9.81), plan 9.20, speed 9.03
+      22 deg t 5.000 s: aim 0.86 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.11
+      22 deg t 5.050 s: aim 0.40 m at   0.0 deg, pull to it   0.02 m/s^2 (grip 9.81), plan 9.20, speed 9.15
+    22 degrees: entry 9.20, lowest 2.79, the plan's least 1.20
+      45 deg t 2.750 s: aim 0.72 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 2.800 s: aim 0.26 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 2.850 s: aim 0.80 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 2.900 s: aim 0.34 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 2.950 s: aim 0.88 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 3.000 s: aim 0.42 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 3.050 s: aim 0.96 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 3.100 s: aim 0.50 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 3.150 s: aim 1.04 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      45 deg t 3.200 s: aim 0.58 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 8.85, speed 9.13
+      45 deg t 3.250 s: aim 1.09 m at  40.2 deg, pull to it  91.13 m/s^2 (grip 9.81), plan 2.88, speed 8.72
+      45 deg t 3.300 s: aim 0.81 m at  57.8 deg, pull to it 135.70 m/s^2 (grip 9.81), plan 2.17, speed 8.02
+      45 deg t 3.350 s: aim 0.68 m at  82.4 deg, pull to it 159.01 m/s^2 (grip 9.81), plan 1.83, speed 7.32
+      45 deg t 3.400 s: aim 0.71 m at 107.5 deg, pull to it 125.80 m/s^2 (grip 9.81), plan 1.20, speed 6.62
+      45 deg t 3.450 s: aim 1.28 m at  72.7 deg, pull to it  53.31 m/s^2 (grip 9.81), plan 2.56, speed 5.92
+      45 deg t 3.500 s: aim 1.21 m at  80.2 deg, pull to it  45.23 m/s^2 (grip 9.81), plan 2.46, speed 5.22
+      45 deg t 3.550 s: aim 1.18 m at  86.1 deg, pull to it  35.32 m/s^2 (grip 9.81), plan 2.41, speed 4.52
+      45 deg t 3.600 s: aim 1.18 m at  89.6 deg, pull to it  25.58 m/s^2 (grip 9.81), plan 2.40, speed 3.82
+      45 deg t 3.650 s: aim 1.18 m at  90.1 deg, pull to it  17.19 m/s^2 (grip 9.81), plan 1.20, speed 3.12
+      45 deg t 3.700 s: aim 1.53 m at  45.9 deg, pull to it   6.15 m/s^2 (grip 9.81), plan 3.23, speed 2.54
+      45 deg t 3.750 s: aim 1.43 m at  37.9 deg, pull to it   5.40 m/s^2 (grip 9.81), plan 3.38, speed 2.52
+      45 deg t 3.800 s: aim 1.32 m at  30.0 deg, pull to it   5.48 m/s^2 (grip 9.81), plan 3.60, speed 2.71
+      45 deg t 3.850 s: aim 1.20 m at  23.0 deg, pull to it   5.90 m/s^2 (grip 9.81), plan 3.87, speed 3.03
+      45 deg t 3.900 s: aim 1.04 m at  16.9 deg, pull to it   6.36 m/s^2 (grip 9.81), plan 4.19, speed 3.41
+      45 deg t 3.950 s: aim 0.87 m at  11.7 deg, pull to it   6.70 m/s^2 (grip 9.81), plan 4.59, speed 3.83
+      45 deg t 4.000 s: aim 0.67 m at   7.3 deg, pull to it   6.83 m/s^2 (grip 9.81), plan 5.08, speed 4.28
+      45 deg t 4.050 s: aim 0.45 m at   5.3 deg, pull to it   8.73 m/s^2 (grip 9.81), plan 4.90, speed 4.63
+      45 deg t 4.100 s: aim 1.09 m at  55.7 deg, pull to it  29.50 m/s^2 (grip 9.81), plan 2.54, speed 4.34
+      45 deg t 4.150 s: aim 0.99 m at  65.6 deg, pull to it  25.27 m/s^2 (grip 9.81), plan 2.31, speed 3.64
+      45 deg t 4.200 s: aim 0.93 m at  70.2 deg, pull to it  18.31 m/s^2 (grip 9.81), plan 2.20, speed 2.94
+      45 deg t 4.250 s: aim 0.88 m at  67.7 deg, pull to it  11.15 m/s^2 (grip 9.81), plan 2.16, speed 2.24
+      45 deg t 4.300 s: aim 0.84 m at  59.5 deg, pull to it   6.53 m/s^2 (grip 9.81), plan 2.18, speed 1.75
+      45 deg t 4.350 s: aim 0.79 m at  46.9 deg, pull to it   4.60 m/s^2 (grip 9.81), plan 2.30, speed 1.57
+      45 deg t 4.400 s: aim 0.72 m at  33.4 deg, pull to it   4.42 m/s^2 (grip 9.81), plan 2.54, speed 1.73
+      45 deg t 4.450 s: aim 0.64 m at  21.9 deg, pull to it   4.84 m/s^2 (grip 9.81), plan 2.90, speed 2.07
+      45 deg t 4.500 s: aim 0.53 m at  12.6 deg, pull to it   5.05 m/s^2 (grip 9.81), plan 3.46, speed 2.52
+      45 deg t 4.550 s: aim 0.40 m at   7.0 deg, pull to it   5.26 m/s^2 (grip 9.81), plan 4.00, speed 2.97
+      45 deg t 4.600 s: aim 1.19 m at  29.1 deg, pull to it   9.13 m/s^2 (grip 9.81), plan 3.46, speed 3.32
+      45 deg t 4.650 s: aim 1.05 m at  34.1 deg, pull to it   9.90 m/s^2 (grip 9.81), plan 3.03, speed 3.02
+      45 deg t 4.700 s: aim 0.93 m at  33.6 deg, pull to it   8.98 m/s^2 (grip 9.81), plan 2.88, speed 2.73
+      45 deg t 4.750 s: aim 0.82 m at  27.8 deg, pull to it   7.85 m/s^2 (grip 9.81), plan 2.93, speed 2.62
+      45 deg t 4.800 s: aim 0.70 m at  21.2 deg, pull to it   7.42 m/s^2 (grip 9.81), plan 3.08, speed 2.69
+      45 deg t 4.850 s: aim 0.57 m at  14.8 deg, pull to it   7.27 m/s^2 (grip 9.81), plan 3.30, speed 2.86
+      45 deg t 4.900 s: aim 0.42 m at   9.6 deg, pull to it   7.58 m/s^2 (grip 9.81), plan 3.52, speed 3.11
+      45 deg t 4.950 s: aim 0.26 m at   7.8 deg, pull to it  10.55 m/s^2 (grip 9.81), plan 3.09, speed 3.20
+      45 deg t 5.000 s: aim 1.09 m at  12.9 deg, pull to it   5.23 m/s^2 (grip 9.81), plan 4.88, speed 3.60
+      45 deg t 5.050 s: aim 0.90 m at  13.1 deg, pull to it   7.86 m/s^2 (grip 9.81), plan 4.41, speed 3.97
+      45 deg t 5.100 s: aim 0.70 m at   9.7 deg, pull to it   8.20 m/s^2 (grip 9.81), plan 4.52, speed 4.15
+      45 deg t 5.150 s: aim 0.49 m at   7.0 deg, pull to it   9.14 m/s^2 (grip 9.81), plan 4.46, speed 4.31
+      45 deg t 5.200 s: aim 0.28 m at   6.7 deg, pull to it  14.40 m/s^2 (grip 9.81), plan 3.44, speed 4.13
+      45 deg t 5.250 s: aim 1.06 m at   2.7 deg, pull to it   1.74 m/s^2 (grip 9.81), plan 9.20, speed 4.50
+      45 deg t 5.300 s: aim 0.83 m at   1.5 deg, pull to it   1.54 m/s^2 (grip 9.81), plan 9.20, speed 4.95
+      45 deg t 5.350 s: aim 0.57 m at   0.7 deg, pull to it   1.20 m/s^2 (grip 9.81), plan 9.20, speed 5.40
+      45 deg t 5.400 s: aim 0.29 m at   0.5 deg, pull to it   1.85 m/s^2 (grip 9.81), plan 9.20, speed 5.85
+      45 deg t 5.450 s: aim 0.99 m at   0.4 deg, pull to it   0.55 m/s^2 (grip 9.81), plan 9.20, speed 6.30
+      45 deg t 5.500 s: aim 0.66 m at   0.2 deg, pull to it   0.56 m/s^2 (grip 9.81), plan 9.20, speed 6.75
+      45 deg t 5.550 s: aim 0.32 m at   0.2 deg, pull to it   1.20 m/s^2 (grip 9.81), plan 9.20, speed 7.20
+      45 deg t 5.600 s: aim 0.95 m at   0.1 deg, pull to it   0.13 m/s^2 (grip 9.81), plan 9.20, speed 7.65
+      45 deg t 5.650 s: aim 0.55 m at   0.0 deg, pull to it   0.19 m/s^2 (grip 9.81), plan 9.20, speed 8.10
+      45 deg t 5.700 s: aim 1.14 m at   0.0 deg, pull to it   0.11 m/s^2 (grip 9.81), plan 9.20, speed 8.55
+      45 deg t 5.750 s: aim 0.70 m at   0.0 deg, pull to it   0.15 m/s^2 (grip 9.81), plan 9.20, speed 8.86
+      45 deg t 5.800 s: aim 0.26 m at   0.1 deg, pull to it   0.62 m/s^2 (grip 9.81), plan 9.20, speed 9.02
+    45 degrees: entry 9.20, lowest 1.57, the plan's least 1.20
+      90 deg t 2.750 s: aim 0.72 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 2.800 s: aim 0.26 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 2.850 s: aim 0.80 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 2.900 s: aim 0.34 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.20, speed 9.20
+      90 deg t 2.950 s: aim 0.88 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 9.17, speed 9.20
+      90 deg t 3.000 s: aim 0.42 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 8.59, speed 9.02
+      90 deg t 3.050 s: aim 0.98 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 7.99, speed 8.65
+      90 deg t 3.100 s: aim 0.55 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 7.38, speed 8.17
+      90 deg t 3.150 s: aim 1.16 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 7.05, speed 7.66
+      90 deg t 3.200 s: aim 0.78 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 6.43, speed 7.20
+      90 deg t 3.250 s: aim 0.44 m at   0.0 deg, pull to it   0.00 m/s^2 (grip 9.81), plan 5.80, speed 6.66
+      90 deg t 3.300 s: aim 1.01 m at  83.0 deg, pull to it  72.80 m/s^2 (grip 9.81), plan 2.23, speed 6.02
+      90 deg t 3.350 s: aim 1.01 m at  96.4 deg, pull to it  57.45 m/s^2 (grip 9.81), plan 1.20, speed 5.32
+      90 deg t 3.400 s: aim 1.05 m at 104.7 deg, pull to it  41.57 m/s^2 (grip 9.81), plan 1.20, speed 4.62
+      90 deg t 3.450 s: aim 1.11 m at 109.0 deg, pull to it  28.38 m/s^2 (grip 9.81), plan 1.20, speed 3.92
+      90 deg t 3.500 s: aim 1.17 m at 109.7 deg, pull to it  18.29 m/s^2 (grip 9.81), plan 1.20, speed 3.22
+      90 deg t 3.550 s: aim 1.22 m at 106.5 deg, pull to it  10.89 m/s^2 (grip 9.81), plan 1.20, speed 2.52
+      90 deg t 3.600 s: aim 1.24 m at  98.7 deg, pull to it   6.09 m/s^2 (grip 9.81), plan 1.20, speed 1.91
+      90 deg t 3.650 s: aim 1.25 m at  86.5 deg, pull to it   4.06 m/s^2 (grip 9.81), plan 2.47, speed 1.57
+      90 deg t 3.700 s: aim 1.23 m at  71.8 deg, pull to it   3.05 m/s^2 (grip 9.81), plan 2.52, speed 1.40
+      90 deg t 3.750 s: aim 1.20 m at  56.7 deg, pull to it   2.47 m/s^2 (grip 9.81), plan 2.66, speed 1.34
+      90 deg t 3.800 s: aim 1.15 m at  41.3 deg, pull to it   2.81 m/s^2 (grip 9.81), plan 2.93, speed 1.60
+      90 deg t 3.850 s: aim 1.08 m at  28.1 deg, pull to it   3.53 m/s^2 (grip 9.81), plan 3.35, speed 2.05
+      90 deg t 3.900 s: aim 0.97 m at  18.0 deg, pull to it   3.83 m/s^2 (grip 9.81), plan 3.93, speed 2.50
+      90 deg t 3.950 s: aim 0.84 m at   9.5 deg, pull to it   3.31 m/s^2 (grip 9.81), plan 5.01, speed 2.95
+      90 deg t 4.000 s: aim 0.69 m at   3.3 deg, pull to it   1.90 m/s^2 (grip 9.81), plan 7.58, speed 3.40
+      90 deg t 4.050 s: aim 0.51 m at   1.1 deg, pull to it   1.13 m/s^2 (grip 9.81), plan 7.30, speed 3.85
+      90 deg t 4.100 s: aim 0.30 m at   0.6 deg, pull to it   1.23 m/s^2 (grip 9.81), plan 6.99, speed 4.30
+      90 deg t 4.150 s: aim 1.03 m at  69.3 deg, pull to it  27.00 m/s^2 (grip 9.81), plan 2.32, speed 3.79
+      90 deg t 4.200 s: aim 0.97 m at  73.4 deg, pull to it  19.56 m/s^2 (grip 9.81), plan 2.23, speed 3.09
+      90 deg t 4.250 s: aim 0.93 m at  71.3 deg, pull to it  12.21 m/s^2 (grip 9.81), plan 2.19, speed 2.39
+      90 deg t 4.300 s: aim 0.89 m at  64.0 deg, pull to it   7.01 m/s^2 (grip 9.81), plan 2.20, speed 1.83
+      90 deg t 4.350 s: aim 0.84 m at  51.9 deg, pull to it   4.60 m/s^2 (grip 9.81), plan 2.29, speed 1.56
+      90 deg t 4.400 s: aim 0.79 m at  37.9 deg, pull to it   4.15 m/s^2 (grip 9.81), plan 2.51, speed 1.65
+      90 deg t 4.450 s: aim 0.71 m at  25.6 deg, pull to it   4.55 m/s^2 (grip 9.81), plan 2.84, speed 1.97
+      90 deg t 4.500 s: aim 0.61 m at  15.7 deg, pull to it   5.00 m/s^2 (grip 9.81), plan 3.32, speed 2.41
+      90 deg t 4.550 s: aim 0.48 m at   8.4 deg, pull to it   4.81 m/s^2 (grip 9.81), plan 4.03, speed 2.86
+      90 deg t 4.600 s: aim 0.33 m at   5.0 deg, pull to it   5.68 m/s^2 (grip 9.81), plan 4.30, speed 3.31
+      90 deg t 4.650 s: aim 1.12 m at  30.6 deg, pull to it  10.17 m/s^2 (grip 9.81), plan 3.29, speed 3.32
+      90 deg t 4.700 s: aim 0.99 m at  32.9 deg, pull to it   9.96 m/s^2 (grip 9.81), plan 2.99, speed 2.98
+      90 deg t 4.750 s: aim 0.87 m at  29.5 deg, pull to it   8.71 m/s^2 (grip 9.81), plan 2.94, speed 2.76
+      90 deg t 4.800 s: aim 0.74 m at  23.4 deg, pull to it   7.92 m/s^2 (grip 9.81), plan 3.03, speed 2.72
+      90 deg t 4.850 s: aim 0.61 m at  17.2 deg, pull to it   7.61 m/s^2 (grip 9.81), plan 3.19, speed 2.82
+      90 deg t 4.900 s: aim 0.47 m at  11.4 deg, pull to it   7.52 m/s^2 (grip 9.81), plan 3.43, speed 3.02
+      90 deg t 4.950 s: aim 0.32 m at   8.4 deg, pull to it   9.15 m/s^2 (grip 9.81), plan 3.29, speed 3.18
+      90 deg t 5.000 s: aim 1.15 m at  11.6 deg, pull to it   4.01 m/s^2 (grip 9.81), plan 5.29, speed 3.42
+      90 deg t 5.050 s: aim 0.97 m at  13.2 deg, pull to it   6.88 m/s^2 (grip 9.81), plan 4.57, speed 3.86
+      90 deg t 5.100 s: aim 0.78 m at  10.7 deg, pull to it   8.04 m/s^2 (grip 9.81), plan 4.52, speed 4.11
+      90 deg t 5.150 s: aim 0.57 m at   7.3 deg, pull to it   8.42 m/s^2 (grip 9.81), plan 4.67, speed 4.34
+      90 deg t 5.200 s: aim 0.35 m at   6.2 deg, pull to it  11.73 m/s^2 (grip 9.81), plan 3.98, speed 4.33
+      90 deg t 5.250 s: aim 1.13 m at   2.1 deg, pull to it   1.24 m/s^2 (grip 9.81), plan 9.20, speed 4.42
+      90 deg t 5.300 s: aim 0.90 m at   1.8 deg, pull to it   1.61 m/s^2 (grip 9.81), plan 9.20, speed 4.87
+      90 deg t 5.350 s: aim 0.65 m at   0.8 deg, pull to it   1.13 m/s^2 (grip 9.81), plan 9.20, speed 5.32
+      90 deg t 5.400 s: aim 0.37 m at   0.4 deg, pull to it   1.35 m/s^2 (grip 9.81), plan 9.20, speed 5.77
+      90 deg t 5.450 s: aim 1.07 m at   0.5 deg, pull to it   0.64 m/s^2 (grip 9.81), plan 9.20, speed 6.22
+      90 deg t 5.500 s: aim 0.75 m at   0.3 deg, pull to it   0.59 m/s^2 (grip 9.81), plan 9.20, speed 6.67
+      90 deg t 5.550 s: aim 0.41 m at   0.2 deg, pull to it   0.95 m/s^2 (grip 9.81), plan 9.20, speed 7.12
+      90 deg t 5.600 s: aim 1.04 m at   0.1 deg, pull to it   0.12 m/s^2 (grip 9.81), plan 9.20, speed 7.57
+      90 deg t 5.650 s: aim 0.66 m at   0.0 deg, pull to it   0.15 m/s^2 (grip 9.81), plan 9.20, speed 8.02
+      90 deg t 5.700 s: aim 1.24 m at   0.1 deg, pull to it   0.11 m/s^2 (grip 9.81), plan 9.20, speed 8.47
+      90 deg t 5.750 s: aim 0.81 m at   0.0 deg, pull to it   0.14 m/s^2 (grip 9.81), plan 9.20, speed 8.81
+      90 deg t 5.800 s: aim 0.37 m at   0.0 deg, pull to it   0.38 m/s^2 (grip 9.81), plan 9.20, speed 9.00
+      90 deg t 5.850 s: aim 0.91 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.09
+      90 deg t 5.900 s: aim 0.46 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.14
+      90 deg t 5.950 s: aim 1.00 m at   0.0 deg, pull to it   0.03 m/s^2 (grip 9.81), plan 9.20, speed 9.17
+      90 deg t 6.000 s: aim 0.54 m at   0.0 deg, pull to it   0.06 m/s^2 (grip 9.81), plan 9.20, speed 9.18
+      90 deg t 6.050 s: aim 1.08 m at   0.0 deg, pull to it   0.01 m/s^2 (grip 9.81), plan 9.20, speed 9.19
+    90 degrees: entry 9.20, lowest 1.33, the plan's least 1.20
+ok    m2c_r0_what_the_cap_on_the_turn_to_the_aim_reads_through_a_scripted_bend
+8 tests, 4 failed
