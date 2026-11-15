@@ -1,0 +1,131 @@
+    today    : 5 ticks at 0 m/s; 5 falls to 0 from above 0.3 m/s: a refused step 5, a head-on wall 0, off the mesh 0, none of these 0
+    way (b)  : 67 ticks at 0 m/s; 1 falls to 0 from above 0.3 m/s: a refused step 1, a head-on wall 0, off the mesh 0, none of these 0
+    way (a)  : 1 ticks at 0 m/s; 0 falls to 0 from above 0.3 m/s: a refused step 0, a head-on wall 0, off the mesh 0, none of these 0
+ok    m3_read_where_the_speed_falls_to_zero_on_the_corner_routes
+    seed  1: 66 drop links, 66 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  2: 29 drop links, 29 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  3: 76 drop links, 76 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  4: 89 drop links, 89 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  5: 56 drop links, 56 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  6: 68 drop links, 68 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  7: 45 drop links, 45 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  8: 62 drop links, 62 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  9: 47 drop links, 47 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed 10: 85 drop links, 85 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed 11: 60 drop links, 60 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed 12: 52 drop links, 52 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    12 worlds: 735 drop links, 735 whose straight line meets a solid (100 %)
+ok    m3b_read_how_many_drop_links_have_a_straight_line_through_solid
+      way (b) route 0 tick 1932: met within 30 degrees of square (|cos| 0.03), speed 2.33 -> 0.07
+      way (b) route 3 tick 1595: met within 30 degrees of square (|cos| 0.39), speed 0.97 -> 0.38
+      way (b) route 4 tick 1066: met within 30 degrees of square (|cos| 0.33), speed 4.75 -> 1.53
+      way (b) route 8 tick 402: met within 30 degrees of square (|cos| 0.28), speed 0.65 -> 0.19
+      way (b) route 8 tick 616: met within 30 degrees of square (|cos| 0.13), speed 0.89 -> 0.11
+      way (b) route 8 tick 792: met within 30 degrees of square (|cos| 0.00), speed 1.05 -> 0.00
+    way (b)  : 383 contacts above 0.3 m/s; stopped dead without a contact 0; at a slant 377, of which kept 0.8 of the speed along the edge 377 (worst 0.996); within 30 degrees of square 6
+      way (a) route 4 tick 1098: met within 30 degrees of square (|cos| 0.03), speed 1.75 -> 0.06
+      way (a) route 8 tick 364: met within 30 degrees of square (|cos| 0.28), speed 2.04 -> 0.59
+    way (a)  : 412 contacts above 0.3 m/s; stopped dead without a contact 0; at a slant 410, of which kept 0.8 of the speed along the edge 410 (worst 0.996); within 30 degrees of square 2
+ok    m3a_a_refused_step_is_a_contact_that_keeps_the_speed_along_the_edge
+    today    : 5 falls to 0 m/s from above 0.3: at a square contact 0, otherwise 5
+      way (b) route 8 tick 792: a square contact (|cos| 0.00)
+    way (b)  : 1 falls to 0 m/s from above 0.3: at a square contact 1, otherwise 0
+    way (a)  : 0 falls to 0 m/s from above 0.3: at a square contact 0, otherwise 0
+ok    m3a_the_root_falls_to_zero_only_at_a_square_contact
+    route 0 point 3: chord turn 13.6 degrees; total turn within 3.3 m 14.6 degrees: gentle
+    route 0 point 5: chord turn 18.4 degrees; total turn within 3.3 m 19.4 degrees: gentle
+    route 1 point 6: chord turn 5.4 degrees; total turn within 3.3 m 5.4 degrees: gentle
+    route 1 point 7: chord turn 10.7 degrees; total turn within 3.3 m 10.7 degrees: gentle
+    route 4 point 1: chord turn 8.1 degrees; total turn within 3.3 m 6.5 degrees: gentle
+    route 6 point 6: chord turn 15.1 degrees; total turn within 3.3 m 15.1 degrees: gentle
+    route 7 point 6: chord turn 5.6 degrees; total turn within 3.3 m 1.9 degrees: gentle
+ok    m3a_g1s_gentle_bend_rule_read_at_each_route_bend
+    the 22 degree bend: its point is on this arena's mesh
+      today    : walked to the end; entry 8.59 m/s, lowest 3.94, 0.642 s between the gates; head-on ticks 0, refused steps 0 (passed 0.01 m from the point)
+      way (b)  : walked to the end; entry 8.49 m/s, lowest 1.87, 1.017 s between the gates; head-on ticks 0, refused steps 0 (passed 0.01 m from the point)
+      way (b)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1268): CHECK failed: secs >= 0.0f && secs <= 0.889f
+      way (a)  : walked to the end; entry 8.49 m/s, lowest 1.87, 1.017 s between the gates; head-on ticks 0, refused steps 0 (passed 0.01 m from the point)
+      way (a)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1268): CHECK failed: secs >= 0.0f && secs <= 0.889f
+    the 45 degree bend: its point is on this arena's mesh
+      today    : walked to the end; entry 8.75 m/s, lowest 0.71, 1.292 s between the gates; head-on ticks 5, refused steps 0 (passed 0.01 m from the point)
+      way (b)  : walked to the end; entry 8.26 m/s, lowest 0.28, 2.300 s between the gates; head-on ticks 0, refused steps 0 (passed 0.01 m from the point)
+      way (b)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1267): CHECK failed: lowest >= 1.2f
+      way (a)  : walked to the end; entry 8.26 m/s, lowest 0.27, 2.196 s between the gates; head-on ticks 0, refused steps 0 (passed 0.01 m from the point)
+      way (a)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1267): CHECK failed: lowest >= 1.2f
+    the 90 degree bend: its point is on this arena's mesh
+      today    : walked to the end; entry 7.45 m/s, lowest 3.55, 0.837 s between the gates; head-on ticks 0, refused steps 0 (passed 0.14 m from the point)
+      way (b)  : walked to the end; entry 8.54 m/s, lowest 1.79, 1.083 s between the gates; head-on ticks 0, refused steps 0 (passed 0.27 m from the point)
+      way (b)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+      way (a)  : walked to the end; entry 7.11 m/s, lowest 1.65, 1.029 s between the gates; head-on ticks 0, refused steps 0 (passed 0.10 m from the point)
+      way (a)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+FAIL  m3_the_three_filmed_bends_are_taken_without_a_stop
+    way (b)  : the worst contact, route 4, from tick 1066 (4.442 s) to back at half its top at tick 1328 (5.533 s), 2.6 times its bar
+      t   4.442 s: speed  1.53, heading   23.7 deg off the path (0.32 m from it), branch 3, head-on 1, at (96.22, -37.29)
+      t   4.446 s: speed  1.48, heading   23.8 deg off the path (0.32 m from it), branch 1, head-on 0, at (96.22, -37.29)
+      t   4.492 s: speed  1.04, heading   29.4 deg off the path (0.38 m from it), branch 1, head-on 0, at (96.27, -37.25)
+      t   4.542 s: speed  0.54, heading   45.4 deg off the path (0.42 m from it), branch 1, head-on 0, at (96.30, -37.23)
+      t   4.592 s: speed  0.05, heading   63.4 deg off the path (0.43 m from it), branch 1, head-on 0, at (96.31, -37.22)
+      t   4.600 s: speed  0.00, heading   66.4 deg off the path (0.43 m from it), branch 7, head-on 0, at (96.31, -37.22)
+      t   4.604 s: speed  0.04, heading   67.9 deg off the path (0.43 m from it), branch 1, head-on 0, at (96.31, -37.22)
+      t   4.642 s: speed  0.37, heading   77.1 deg off the path (0.42 m from it), branch 1, head-on 0, at (96.30, -37.23)
+      t   4.650 s: speed  0.43, heading   78.3 deg off the path (0.42 m from it), branch 2, head-on 0, at (96.30, -37.23)
+      t   4.654 s: speed  0.46, heading   78.8 deg off the path (0.42 m from it), branch 1, head-on 0, at (96.30, -37.23)
+      t   4.679 s: speed  0.65, heading   80.1 deg off the path (0.40 m from it), branch 2, head-on 0, at (96.29, -37.24)
+      t   4.683 s: speed  0.68, heading   80.0 deg off the path (0.40 m from it), branch 1, head-on 0, at (96.29, -37.24)
+      t   4.692 s: speed  0.73, heading   79.7 deg off the path (0.39 m from it), branch 1, head-on 0, at (96.28, -37.24)
+      t   4.704 s: speed  0.79, heading   78.5 deg off the path (0.38 m from it), branch 2, head-on 0, at (96.27, -37.25)
+      t   4.708 s: speed  0.81, heading   78.0 deg off the path (0.38 m from it), branch 1, head-on 0, at (96.27, -37.25)
+      t   4.729 s: speed  0.89, heading   74.2 deg off the path (0.36 m from it), branch 2, head-on 0, at (96.26, -37.26)
+      t   4.733 s: speed  0.90, heading   73.2 deg off the path (0.36 m from it), branch 1, head-on 0, at (96.25, -37.26)
+      t   4.742 s: speed  0.93, heading   71.0 deg off the path (0.35 m from it), branch 1, head-on 0, at (96.25, -37.27)
+      t   4.750 s: speed  0.95, heading   68.4 deg off the path (0.34 m from it), branch 2, head-on 0, at (96.24, -37.27)
+      t   4.754 s: speed  0.96, heading   67.0 deg off the path (0.34 m from it), branch 1, head-on 0, at (96.24, -37.28)
+      t   4.771 s: speed  0.99, heading   61.0 deg off the path (0.32 m from it), branch 2, head-on 0, at (96.23, -37.29)
+      t   4.775 s: speed  1.01, heading   59.5 deg off the path (0.32 m from it), branch 1, head-on 0, at (96.22, -37.29)
+      t   4.792 s: speed  1.03, heading   53.5 deg off the path (0.30 m from it), branch 2, head-on 0, at (96.21, -37.30)
+      t   4.796 s: speed  1.04, heading   52.0 deg off the path (0.30 m from it), branch 1, head-on 0, at (96.21, -37.30)
+      t   4.812 s: speed  1.06, heading   46.0 deg off the path (0.28 m from it), branch 2, head-on 0, at (96.19, -37.31)
+      t   4.817 s: speed  1.06, heading   44.5 deg off the path (0.28 m from it), branch 1, head-on 0, at (96.19, -37.32)
+      t   4.833 s: speed  1.08, heading   38.5 deg off the path (0.26 m from it), branch 2, head-on 0, at (96.17, -37.33)
+      t   4.838 s: speed  1.08, heading   37.0 deg off the path (0.26 m from it), branch 1, head-on 0, at (96.17, -37.33)
+      t   4.842 s: speed  1.09, heading   35.5 deg off the path (0.25 m from it), branch 1, head-on 0, at (96.17, -37.33)
+      t   4.892 s: speed  1.14, heading   17.5 deg off the path (0.20 m from it), branch 1, head-on 0, at (96.12, -37.36)
+      t   4.942 s: speed  1.19, heading   -0.5 deg off the path (0.16 m from it), branch 1, head-on 0, at (96.06, -37.37)
+      t   4.992 s: speed  1.60, heading  -17.7 deg off the path (0.12 m from it), branch 1, head-on 0, at (95.99, -37.35)
+      t   5.042 s: speed  1.99, heading  -26.5 deg off the path (0.08 m from it), branch 1, head-on 0, at (95.90, -37.33)
+      t   5.092 s: speed  1.95, heading  -26.4 deg off the path (0.04 m from it), branch 1, head-on 0, at (95.81, -37.31)
+      t   5.138 s: speed  1.77, heading  -18.3 deg off the path (0.01 m from it), branch 2, head-on 0, at (95.72, -37.29)
+      t   5.142 s: speed  1.77, heading  -17.3 deg off the path (0.00 m from it), branch 1, head-on 0, at (95.72, -37.29)
+      t   5.192 s: speed  1.70, heading  -22.3 deg off the path (0.04 m from it), branch 1, head-on 0, at (95.63, -37.26)
+      t   5.242 s: speed  1.58, heading  -11.1 deg off the path (0.07 m from it), branch 1, head-on 0, at (95.57, -37.21)
+      t   5.292 s: speed  1.83, heading    5.6 deg off the path (0.07 m from it), branch 1, head-on 0, at (95.51, -37.15)
+      t   5.342 s: speed  2.28, heading   19.2 deg off the path (0.05 m from it), branch 1, head-on 0, at (95.47, -37.05)
+      t   5.392 s: speed  2.73, heading   -8.3 deg off the path (0.07 m from it), branch 1, head-on 0, at (95.44, -36.93)
+      t   5.442 s: speed  3.18, heading    0.4 deg off the path (0.08 m from it), branch 1, head-on 0, at (95.43, -36.78)
+      t   5.492 s: speed  3.63, heading    4.0 deg off the path (0.07 m from it), branch 1, head-on 0, at (95.44, -36.61)
+      t   5.533 s: speed  4.00, heading    3.5 deg off the path (0.06 m from it), branch 1, head-on 0, at (95.45, -36.45)
+    way (a)  : no contact on the ten routes
+ok    m3c_read_what_holds_the_body_after_a_wall
+    way (b)  : 377 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 371, of which kept 0.8 along the wall 371 (worst 0.996); square 6
+    way (b)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+    way (a)  : 409 snapped-short steps above 0.3 m/s; not a contact 0; at a slant 407, of which kept 0.8 along the wall 407 (worst 0.996); square 2
+    way (a)  : the sliding velocity turned at most 1.000 of its grip in a tick with no new contact
+ok    m3c_a_step_the_mesh_snaps_short_is_a_contact_that_keeps_the_speed_along_the_wall
+    way (b)  : 1457 sliding ticks over 20 degrees off the aim; under 0.9 of the allowed rate 0 (least 1.000 of it, 0.024 of pure grip); the body's own turn cap binding on 528 of them
+    way (a)  : 973 sliding ticks over 20 degrees off the aim; under 0.9 of the allowed rate 0 (least 1.000 of it, 0.024 of pure grip); the body's own turn cap binding on 81 of them
+ok    m3c_far_off_the_aim_a_sliding_velocity_turns_toward_it_at_its_grip
+    way (b)  : 543 sliding ticks with the aim behind along the wall and the turn into it; not braking 4; turned about by hand 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1420): CHECK failed: unbraked == 0
+    way (a)  : 167 sliding ticks with the aim behind along the wall and the turn into it; not braking 2; turned about by hand 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1420): CHECK failed: unbraked == 0
+FAIL  m3c_along_a_wall_with_the_aim_behind_the_body_brakes_at_its_grip_and_leaves_the_other_way
+    the hunter on the root: 735 drop links, 735 taken; swept fall meeting a solid 0; landed at the link's landing 565, elsewhere on the mesh 166, put back 4; descended while held 0; off free fall by more than 2 cm 0; down quicker than free fall 166; speed 0 without a wall 0, a wall took the flat speed 166; landing speed off the take-off by more than 10 % 0; landed off the mesh 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\fall_tests.cpp(147): CHECK failed: n.held_descent == 0 && n.shape_off == 0 && n.too_quick == 0
+FAIL  m3b_every_drop_of_twelve_worlds_is_a_fall_that_meets_no_solid
+    the sprinter on the root: 735 drop links, 735 taken; swept fall meeting a solid 0; landed at the link's landing 565, elsewhere on the mesh 166, put back 4; descended while held 0; off free fall by more than 2 cm 0; down quicker than free fall 166; speed 0 without a wall 0, a wall took the flat speed 166; landing speed off the take-off by more than 10 % 0; landed off the mesh 0
+ok    m3b_the_sprinter_on_the_root_falls_the_same_way
+12 tests, 3 failed
