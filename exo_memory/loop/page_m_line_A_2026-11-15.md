@@ -517,3 +517,42 @@ polygon against the way to the next polygon's centre) reads the south doorways a
 way. The next read, if ruled, prints the turn price per portal on both ways at the 22 in the stand-in.
 
 **Stopped here by the night's rule ("a registered falsifier fires → stop and ring").** The arcs' five lines are not started.
+
+## The arcs: five lines before code (the ruling at the price's ring, git-blob 77d13ec3, item 1; the rows as registered at the release, 4fdfe2bb)
+
+**Behind its own switch,** `line_arcs` (speed model, 0 by default; with `root_law=1`): the least-bending line stays the branch's law and is not
+touched until the arcs meet the rows (ruling item 3). The width price stays in the search as it is at 3845cd8.
+
+1. **Two bends closer than their arcs (said first, since the first fitter failed here).** Two consecutive bends are *closer than their arcs*
+   when no common tangent joins their circles, or one does but its tangent points come out of order (an arc would sweep backwards or past half
+   a turn). Then:
+   - **turning the same way:** the two are **merged into one bend**: one arc for the summed turn, laid against the outer legs (the leg into the
+     first and the leg out of the second), passing the room outside **both** inner corners; merged again if it is then closer than its arcs to
+     the next bend that turns the same way.
+   - **turning opposite ways (an S):** both radii shrink **together**, each in proportion to its own widest, until the straight between them is
+     zero or longer and in order; neither is shrunk alone.
+   - **No radius is ever cut to a point** (the first fitter halved radii to 0 beside the doorway). Below `0.3 m` (the first fitter's least),
+     the bends of that run are **not drawn as arcs** (line 3).
+2. **How one arc is laid:** for a bend (one string corner, or merged ones) its circle's centre sits on the bisector of the turn, at the distance
+   where the circle passes the room (0.2 m, or less where the width is less: the dense row's own rule) outside the nearest inner corner; so its
+   apex is at the corner and its ends swing out (out-in-out). The radius is **the widest that keeps the room on its own arc and half of each
+   straight beside it, with both tangent points on the mesh**, found from the width's own bound `R = w / (1 - cos(t/2))` (w the free distance
+   out from the apex) and narrowed by halving the interval, never by halving the radius. **The radius is judged over its own stretch only**,
+   not over its neighbours' straights: the first fitter's other cause.
+3. **What becomes of the least-bending solve: kept, where no arc fits** (your lean, taken): a run of bends that cannot be drawn by lines 1 and 2
+   is laid by the least-bending solve over the string's points of that run, its ends held at the tangent points of the arcs either side. Every
+   such run is counted and **printed with its place** (the unwelcome case, below). The speed along the line, its following and its replans are
+   unchanged: the line is sampled every 0.25 m as now.
+4. **The stretch's ends** are points (radius 0): the start and the target. A straight from an end to an arc that has no tangent (the end inside
+   the circle) shrinks that arc alone, by line 2's interval, down to line 1's least.
+5. **What would show it wrong (registered at the release; on way (b), in the stand-in, with the width price in):** each bend's exit gate no
+   later than today's (22: tick 724, 45: 1103, 90: 871); the ten routes' total no more than today's 77.11 s; route contacts at most 10; one
+   plan under 1,000 us. **Unwelcome, named:** a run of bends where no arc can be laid and the line falls back to something slower than today's
+   there; then that place is printed with its map before anything is tuned. **Also wrong, mine:** an arc whose tangent point is off the mesh
+   (a row counts them: 0). **My predictions:** the 90's exit at or before the hand line's tick 856; the 22 and the 45 at or before the release's
+   686 and 801; **the routes are where I am least sure** (the release is 78.72 s, and the arcs must find 1.6 s on routes I have not mapped).
+   **My stake:** the arcs were my first design and the least-bending line is mine too; I want the arcs to win, so the rows are written first.
+
+**The rows, red first** (the arcs switched on and stubbed to the least-bending line, so each is red where the release is): the three bends'
+exit ticks against today's; the routes' total against 77.11 s and contacts at most 10; the gate; the arcs' own count (arcs, merged, S pairs,
+fallback runs with their places, tangent points off the mesh).
