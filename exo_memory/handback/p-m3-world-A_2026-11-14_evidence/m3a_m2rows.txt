@@ -1,0 +1,88 @@
+      point 0 (-64.50, -67.50): 28.37 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 1 (-63.44, -65.74): 27.08 m from the contact, room 4.03 m, grip speed 8.00 m/s
+      point 2 (-63.19, -65.54): 26.82 m from the contact, room 4.71 m, grip speed 8.00 m/s
+      point 3 (-38.84, -63.49): 2.39 m from the contact, room 2.17 m, grip speed 8.00 m/s
+      point 4 (-36.29, -62.59): 0.48 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 5 (-35.99, -62.54): 0.70 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 6 (-16.99, -62.54): 19.51 m from the contact, room 6.00 m, grip speed 7.91 m/s
+      point 7 (-16.69, -62.84): 19.80 m from the contact, room 6.00 m, grip speed 7.83 m/s
+      point 8 (-16.50, -70.50): 21.34 m from the contact, room 0.90 m, grip speed 8.00 m/s
+    route 0's corner: slowest grip speed inside 3 m 8.00 m/s; entered at 8.86 m/s (its plan asked 8.88); head-on ticks within 3 m 0; walked to the end in 8.65 s
+    as it arrives (its top with its run-up), grip allows 8.89 m/s there
+ok    m2_w2_the_grip_root_brakes_in_time_for_route_0s_corner_and_does_not_meet_its_wall
+    today     route 0: 1 corners, lowest at them and after walls 2.16 m/s
+    today     route 1: 1 corners, lowest at them and after walls 1.19 m/s  UNDER 1.2
+    today     route 2: 2 corners, lowest at them and after walls 1.19 m/s  UNDER 1.2
+    today     route 3: 1 corners, lowest at them and after walls 5.57 m/s
+    today     route 4: 1 corners, lowest at them and after walls 1.44 m/s
+    today     route 5: 1 corners, lowest at them and after walls 3.39 m/s
+    today     route 6: 1 corners, lowest at them and after walls 4.36 m/s
+    today     route 7: 2 corners, lowest at them and after walls 0.73 m/s  UNDER 1.2
+    today     route 8: 1 corners, lowest at them and after walls 1.33 m/s
+    today     route 9: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    today    : 12 corners on 10 routes; routes under 1.2 m/s 4; lowest 0.00 m/s; largest re-point 0.000000 rad
+    way (b)   route 0: 1 corners, lowest at them and after walls 0.63 m/s  UNDER 1.2
+    way (b)   route 1: 1 corners, lowest at them and after walls 1.67 m/s
+    way (b)   route 2: 2 corners, lowest at them and after walls 2.34 m/s
+    way (b)   route 3: 1 corners, lowest at them and after walls 0.69 m/s  UNDER 1.2
+    way (b)   route 4: 1 corners, lowest at them and after walls 1.33 m/s
+    way (b)   route 5: 1 corners, lowest at them and after walls 3.00 m/s
+    way (b)   route 6: 1 corners, lowest at them and after walls 3.04 m/s
+    way (b)   route 7: 2 corners, lowest at them and after walls 0.60 m/s  UNDER 1.2
+    way (b)   route 8: 1 corners, lowest at them and after walls 2.33 m/s
+    way (b)   route 9: 1 corners, lowest at them and after walls 2.55 m/s
+    way (b)  : 12 corners on 10 routes; routes under 1.2 m/s 3; lowest 0.60 m/s; largest re-point 0.000000 rad
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(813): CHECK failed: under == 0
+    way (a)   route 0: 1 corners, lowest at them and after walls 1.69 m/s
+    way (a)   route 1: 1 corners, lowest at them and after walls 1.41 m/s
+    way (a)   route 2: 2 corners, lowest at them and after walls 1.90 m/s
+    way (a)   route 3: 1 corners, lowest at them and after walls 3.51 m/s
+    way (a)   route 4: 1 corners, lowest at them and after walls 0.86 m/s  UNDER 1.2
+    way (a)   route 5: 1 corners, lowest at them and after walls 3.21 m/s
+    way (a)   route 6: 1 corners, lowest at them and after walls 2.50 m/s
+    way (a)   route 7: 2 corners, lowest at them and after walls 1.01 m/s  UNDER 1.2
+    way (a)   route 8: 1 corners, lowest at them and after walls 1.28 m/s
+    way (a)   route 9: 1 corners, lowest at them and after walls 1.51 m/s
+    way (a)  : 12 corners on 10 routes; routes under 1.2 m/s 2; lowest 0.86 m/s; largest re-point 0.000000 rad
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(813): CHECK failed: under == 0
+FAIL  m2_h1_at_a_hard_corner_and_after_a_wall_the_grip_root_never_loses_all_its_speed_nor_turns_on_the_spot
+    today     route 0 point 3, 14 degrees: entry 8.64, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+    today     route 0 point 5, 18 degrees: entry 8.86, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+    today     route 1 point 7, 11 degrees: entry 9.23, grip 8.00, lowest 1.19 m/s, 0 head-on ticks
+    today     route 7 point 6, 6 degrees: entry 8.33, grip 8.00, lowest 0.73 m/s, 6 head-on ticks
+    today    : 6 bends of 5 to 22 degrees; with a head-on tick 1; under 0.8 of what they could keep 4
+    way (b)   route 0 point 3, 14 degrees: entry 8.53, grip 8.00, lowest 4.69 m/s, 0 head-on ticks
+    way (b)   route 0 point 5, 18 degrees: entry 8.68, grip 8.00, lowest 4.69 m/s, 0 head-on ticks
+    way (b)   route 1 point 7, 11 degrees: entry 9.04, grip 8.00, lowest 1.67 m/s, 0 head-on ticks
+    way (b)   route 7 point 6, 6 degrees: entry 8.15, grip 8.00, lowest 0.60 m/s, 6 head-on ticks
+    way (b)  : 6 bends of 5 to 22 degrees; with a head-on tick 1; under 0.8 of what they could keep 4
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(852): CHECK failed: walled == 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(853): CHECK failed: slow == 0
+    way (a)   route 0 point 3, 14 degrees: entry 8.54, grip 8.00, lowest 3.73 m/s, 0 head-on ticks
+    way (a)   route 0 point 5, 18 degrees: entry 8.70, grip 8.00, lowest 3.73 m/s, 0 head-on ticks
+    way (a)   route 1 point 7, 11 degrees: entry 9.07, grip 8.00, lowest 1.41 m/s, 0 head-on ticks
+    way (a)   route 7 point 6, 6 degrees: entry 8.12, grip 8.00, lowest 1.01 m/s, 5 head-on ticks
+    way (a)  : 6 bends of 5 to 22 degrees; with a head-on tick 1; under 0.8 of what they could keep 4
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(852): CHECK failed: walled == 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(853): CHECK failed: slow == 0
+FAIL  m2_g1_on_the_routes_a_bend_of_22_degrees_or_less_is_taken_without_a_wall_and_keeps_its_speed
+    stub (stands 2 s): 3 contacts, 3 over the bar, worst 4.68 of it
+    today    : 1 contacts, 1 over the bar, worst 41.02 of it
+    way (b)  : 3 contacts, 2 over the bar, worst 49.24 of it
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(898): CHECK failed: r.over == 0
+    way (a)  : 1 contacts, 1 over the bar, worst 105.48 of it
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(898): CHECK failed: r.over == 0
+FAIL  m2_h2_after_a_wall_the_grip_root_is_running_again_as_soon_as_its_own_gain_allows
+    the ten routes' total time: today 77.11 s, way (b) 85.33 s (1.107 times; bar 1.25)
+    the ten routes' total time: today 77.11 s, way (a) 83.63 s (1.085 times; bar 1.25)
+ok    m2_the_grip_root_does_not_crawl_the_corner_routes
+    way (b), 15 degrees: entry 9.20 m/s, lowest 9.19, the plan asked 9.20, grip allows 9.20 on a 3 m room; through yes
+    way (b), 22 degrees: entry 9.20 m/s, lowest 9.18, the plan asked 9.20, grip allows 9.20 on a 3 m room; through yes
+    way (b), 45 degrees: entry 9.20 m/s, lowest 7.54, the plan asked 7.50, grip allows 8.43 on a 3 m room; through yes
+    way (b), 90 degrees: entry 9.20 m/s, lowest 2.03, the plan asked 1.20, grip allows 5.42 on a 3 m room; through yes
+    way (a), 15 degrees: entry 9.20 m/s, lowest 9.19, the plan asked 9.20, grip allows 9.20 on a 3 m room; through yes
+    way (a), 22 degrees: entry 9.20 m/s, lowest 9.18, the plan asked 9.20, grip allows 9.20 on a 3 m room; through yes
+    way (a), 45 degrees: entry 9.20 m/s, lowest 7.53, the plan asked 7.45, grip allows 8.43 on a 3 m room; through yes
+    way (a), 90 degrees: entry 9.20 m/s, lowest 1.45, the plan asked 1.20, grip allows 5.42 on a 3 m room; through yes
+ok    m2_g1_g2_a_scripted_bend_keeps_its_speed_to_22_degrees_and_loses_more_as_it_grows
+6 tests, 3 failed
