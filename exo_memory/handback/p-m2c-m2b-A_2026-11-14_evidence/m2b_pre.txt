@@ -1,0 +1,6 @@
+    way (b)  : the ten routes' fingerprint f99a18a99e8e6cfb
+    way (a)  : the ten routes' fingerprint 14b68c2e037b78ec
+ok    m2b_the_hunter_on_the_root_walks_the_ten_routes_to_the_same_fingerprint_as_before_every_kind_could_take_it
+    the scripted bends' fingerprint b376f9cd1d75653e
+ok    m2b_the_hunter_on_the_root_takes_the_scripted_bends_as_before_every_kind_could_take_it
+2 tests, 0 failed
