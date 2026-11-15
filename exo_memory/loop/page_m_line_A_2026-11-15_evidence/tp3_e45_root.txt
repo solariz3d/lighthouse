@@ -1,0 +1,17 @@
+film-corner: looked at 1 worlds from seed 1: 2160 node pairs, 2080 walk-only paths, 8353 bends, 1293 kept, 2.2 s
+ROUTE tick 2015 root 1 from (-3.54 77.51) to (-29.58 85.97): 8 points, 31.3 m: (-3.5 77.5) (-25.0 77.5) (-25.3 77.7) (-26.5 82.0) (-26.8 82.3) (-28.1 83.6) (-28.3 83.8) (-29.6 86.0)
+ROUTE   narrow at (-25.36 77.95), 22.1 m along: free width 0.56 m, the way turns 43 degrees there; the squeeze price 4.7 m
+ROUTE   narrow at (-27.02 82.49), 27.0 m along: free width 0.65 m, the way turns 10 degrees there; the squeeze price 4.5 m
+ROUTE   narrow at (-28.46 84.03), 29.1 m along: free width 0.61 m, the way turns 10 degrees there; the squeeze price 4.6 m
+ROUTE tick 2134 root 1 from (-4.58 77.07) to (-29.58 85.97): 8 points, 30.3 m: (-4.6 77.1) (-25.0 77.5) (-25.3 77.7) (-26.5 82.0) (-26.8 82.3) (-28.1 83.6) (-28.3 83.8) (-29.6 86.0)
+ROUTE   narrow at (-25.36 77.95), 21.0 m along: free width 0.56 m, the way turns 43 degrees there; the squeeze price 4.7 m
+ROUTE   narrow at (-27.02 82.49), 25.9 m along: free width 0.65 m, the way turns 10 degrees there; the squeeze price 4.5 m
+ROUTE   narrow at (-28.46 84.03), 28.1 m along: free width 0.61 m, the way turns 10 degrees there; the squeeze price 4.6 m
+ROUTE tick 2253 root 1 from (-7.73 76.51) to (-29.58 85.97): 8 points, 27.2 m: (-7.7 76.5) (-25.0 77.5) (-25.3 77.7) (-26.5 82.0) (-26.8 82.3) (-28.1 83.6) (-28.3 83.8) (-29.6 86.0)
+ROUTE   narrow at (-25.36 77.95), 17.9 m along: free width 0.56 m, the way turns 42 degrees there; the squeeze price 4.7 m
+ROUTE   narrow at (-27.02 82.49), 22.8 m along: free width 0.65 m, the way turns 10 degrees there; the squeeze price 4.5 m
+ROUTE   narrow at (-28.46 84.03), 24.9 m along: free width 0.61 m, the way turns 10 degrees there; the squeeze price 4.6 m
+film-corner: the bend: 45.0 degrees (the path's turn between its 3 m chords in and out) at (-25.04, 10.54, 77.51) in the world of seed 1; the corridor across it 3.0 m; clean path 22.2 m before it and 10.6 m after; the staged run's door 21.5 m before it at (-3.54, 10.54, 77.51), the target's walk to 10.1 m after it at (-32.19, 10.54, 84.65)
+TICKREAD gates: entry frame 1597 tick 2663 speed 6.761, exit frame 1738 tick 2898, through 0.979 s; apex -25.04 10.54 77.51
+TICKREAD lowest 1.935 at frame 1722 tick 2871 pos -25.93 10.54 79.11
+M3D E bend: replans 0 (compared 0); flips with the solid within 0.5 m 0, 1.0 m 0, 2.0 m 0

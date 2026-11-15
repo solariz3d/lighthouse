@@ -481,3 +481,39 @@ took 0.575 s at 5.52. Braghin's compromise, measured a second time.
 
 **Next, in the ruling's order:** the price's code (the turn price, the five lines above; set aside at the scratch, not committed), its own ring;
 then the build the fork names.
+
+## The price's code (the ruling at the ring for the release, git-blob 4fdfe2bb, item 1): built, and ITS REGISTERED FALSIFIER FIRED. Stopped.
+
+**Built, not committed:** the five lines above as written (`turn_price.js`, nav/world.cpp only), on a-mline 3845cd8; the tree is back at
+3845cd8 and the price is kept aside at the scratch (`tp3_law/world.cpp`). Rows: `page_m_line_A_2026-11-15_evidence/tp3_rows.txt`; E's staging
+with the route read: `tp3_e45_root.txt`, `tp3_e22_root.txt` (pane E's tool, a-m3c-e22, with 3845cd8's chaser and the price copied in).
+
+**The registered lines:**
+- **"the root passes pane E's 45 degree bend": MET.** checked: `tp3_e45_root.txt` → its route is now today's (31.3 m through the bend's
+  doorway, three plans alike), and it crosses both gates: through 0.979 s, lowest 1.94 m/s (before the price it never reached the bend: its
+  route went round the north, `rt_root.txt`). Today's law in E's staging: 0.903 s (section 3's table).
+- **"the side row at the 22 stays green": FAILED. The falsifier fires: "If the 22 goes back through the doorways, the turn's measure is
+  wrong."** checked: `tp3_rows.txt` → replans 9; crossings of z 42 within the open gap **0**; ticks within 0.3 m of the doorway at x -75
+  **26** (with the width price: 10 replans, 1 crossing, 0 ticks). The stand-in's 22 is through in 0.792 s (exit tick 772; without the price
+  0.296 s, 686; today 0.637 s, 724), passing 0.01 m from the point.
+- **In E's own staging the 22 keeps the open side:** checked: `tp3_e22_root.txt` → three plans through (-72.0 40.7) then (-74.8 42.5), the
+  doorway at x -72 and the gap; through 0.493 s, lowest 5.50 m/s. So the stand-in and E's staging disagree on which way the price sends the
+  root at the 22; the row that was registered is the stand-in's.
+
+**Also printed:**
+- the gate: one plan_to, 15 plans, mean 605 us / largest **1090 us** in the rows' run (red), mean 583 / largest 901 us in the whole suite's
+  run (green): over the bar once in two.
+- the bends (stand-in, way (b) / (a), exit tick): 22 0.792 / 0.792 s (772 / 772); 45 **1.163 / 1.133 s (970 / 963, today 1103)**, lowest
+  1.20 / 1.24; 90 0.933 / 0.804 s (915 / 884, unchanged).
+- the ten routes' total: way (b) **79.37 s**, way (a) 79.14 s (today 77.11; without the price 78.72 / 77.87).
+- route contacts: 13 / 16 (bar 10).
+- whole suite: chase 118, **8 failed**: the five red at 3845cd8, the side row, and m2_h1 and m2_h2, both red on way (a) only (way (a) route
+  lowest 0.98 m/s under 1.2; one contact over the bar, 6.18 of it); nav 34, 0 failed; off means off md5 `fa938de45995bd2d13b98ba28fae0c34`,
+  18 SAME.
+
+**What I do not know yet, inferred and not read:** why the stand-in's search goes south. The route printer's price column is the old width
+price, not the turn price, so it cannot say what the turn price charged at x -75 and z 42. My guess is the crude turn (the way across the
+polygon against the way to the next polygon's centre) reads the south doorways as nearly straight, because their polygons are long along the
+way. The next read, if ruled, prints the turn price per portal on both ways at the 22 in the stand-in.
+
+**Stopped here by the night's rule ("a registered falsifier fires → stop and ring").** The arcs' five lines are not started.
