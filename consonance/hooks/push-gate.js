@@ -15,8 +15,9 @@
 // WHY A GATE: `push-correct-work-dont-hold` and `privacy-means-credentials` both say "scan before every push", a remember-to-add rule, the class the D210 census
 // measured at 0.000-0.052; the breach is outward and cannot be undone.
 //
-// FAILS OPEN on any error of its own (no git, not a repo, a git call that fails or passes its 6 s timeout, the 8 s watchdog, a payload it does not recognise): a
-// hook bug must never trap a seat. Every decision is logged to <data dir>/push-gate.jsonl when there is one, with the file, line, commit and kind, never the line.
+// FAILS CLOSED FOR A PUSH (D677, 2026-11-15, the chair's order of 13:43Z; it failed OPEN until then and let a push through unscanned on "not a
+// git repo"): an error of its own on a push (not a repo, a git call that fails or passes its 6 s timeout, the 8 s watchdog, a throw) REFUSES the
+// push and says why. What is not a push (another tool, a command that does not push, a payload it does not recognise) passes: nothing to gate. Every decision is logged to <data dir>/push-gate.jsonl when there is one, with the file, line, commit and kind, never the line.
 //
 // NOT CAUGHT, and said so: a push run inside a script or a `node -e` string; a `cd` to a variable the command itself sets; a key shape not in KEYS; a key added
 // in a merge commit's own resolution (merges are diffed against their first parent only).
@@ -196,24 +197,35 @@ const reasonOf = (found) => `push refused (G1, credentials before a push): ${fou
   + found.slice(0, 12).map((h) => `  ${h.file}:${h.line}  in ${h.commit}  (${h.kind})`).join('\n') + (found.length > 12 ? `\n  … and ${found.length - 12} more` : '')
   + `\nThe secret itself is not shown. Take it out of the history (rebase and edit or drop the commit that added it; amending only the last commit is not enough if an earlier one holds it), rotate the key if it was ever pushed, then push again. Scanned: every commit ${found[0].remote} does not have.`;
 
+// D677 (P, the chair's order of 13:43Z, 2026-11-15): A PUSH THE GATE CANNOT SCAN IS REFUSED. The gate failed OPEN on its own errors and let
+// pane O's push through unscanned on "not a git repo". A push gate fails CLOSED: an error in the scan, a throw, or a hang past the watchdog
+// now refuses the push with the reason. What is not a push (another tool, a command that does not push, a payload it cannot read) still
+// passes, since there is nothing to gate.
+const errorReasonOf = (error, where) => `push refused (G1, credentials before a push): the push gate could not scan this push (${error}${where ? ' in ' + where : ''}), and a gate that cannot look does not pass it. `
+  + 'Run the push from the repository itself (cd <repo> && git push, or git -C <repo> push), or fix what failed, then push again. Why: consonance/GATES.md, the push gate.';
+let pushSeen = false;
 function emitDeny(reason) {
   process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'deny', permissionDecisionReason: reason } }), () => process.exit(0));
   setTimeout(() => process.exit(0), 1000).unref();
 }
 function main() {
-  setTimeout(() => process.exit(0), WATCHDOG_MS).unref();   // fail OPEN on a hang
+  setTimeout(() => (pushSeen ? emitDeny(errorReasonOf(`the scan took over ${WATCHDOG_MS / 1000} s`)) : process.exit(0)), WATCHDOG_MS).unref();   // a push that hangs the scan is refused
   let payload; try { payload = JSON.parse(fs.readFileSync(0, 'utf8')); } catch (_) { return process.exit(0); }
   if (!payload || !SHELL_TOOLS.has(payload.tool_name)) return process.exit(0);
   const command = payload.tool_input && payload.tool_input.command;
   if (typeof command !== 'string' || !/\bgit\b/.test(command) || !/\bpush\b/.test(command)) return process.exit(0);
+  pushSeen = true;
   const dir = dataDir(), seat = (process.env.CONSONANCE_PANE || '').trim() || null;
-  let d; try { d = decide(command, payload.cwd || process.cwd()); } catch (e) { record(dir, { seat, decision: 'error', error: String(e && e.message || e).slice(0, 120) }); return process.exit(0); }
+  let d; try { d = decide(command, payload.cwd || process.cwd()); } catch (e) { const msg = String(e && e.message || e).slice(0, 120); record(dir, { seat, decision: 'deny-error', error: msg }); return emitDeny(errorReasonOf('the gate itself failed: ' + msg)); }
   if (d.decision === 'not-a-push') return process.exit(0);
+  if (d.decision === 'allow-error') d = { ...d, decision: 'deny-error' };
   record(dir, { seat, session: payload.session_id || null, cwd: payload.cwd || null, decision: d.decision, ...(d.error ? { error: d.error, dir: d.dir } : {}), ...(d.scanned ? { scanned: d.scanned } : {}), ...(d.found ? { found: d.found.slice(0, 50).map((h) => ({ file: h.file, line: h.line, commit: h.commit, kind: h.kind })) } : {}), ...(d.large && d.large.length ? { large: d.large.slice(0, 50).map((b) => ({ file: b.file, bytes: b.bytes, blob: b.blob })) } : {}) });
+  if (d.decision === 'deny-error') return emitDeny(errorReasonOf(d.error, d.dir));
   if (d.decision !== 'deny') return process.exit(0);
   return emitDeny([d.found.length ? reasonOf(d.found) : null, d.large && d.large.length ? largeReasonOf(d.large) : null].filter(Boolean).join('\n\n'));
 }
 
-if (require.main === module) { try { main(); } catch (_) { process.exit(0); } }   // fail OPEN, without exception
+// A throw anywhere: a push is refused (fails CLOSED, D677); anything else passes, since there is nothing to gate.
+if (require.main === module) { try { main(); } catch (e) { if (pushSeen) emitDeny(errorReasonOf('the gate itself failed: ' + String(e && e.message || e).slice(0, 120))); else process.exit(0); } }
 
 module.exports = { KEYS, LEDGER, MAX_FILE_BYTES, pushTargets, segments, stripHeredocs, words, remoteOf, findKeys, largeFiles, decide, reasonOf, largeReasonOf, nativePath, cygpathCandidates, expandEnv };

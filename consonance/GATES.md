@@ -16,8 +16,10 @@ session on your machine reads, inside Consonance or not. The SOURCES gate, the r
 verbs and seats, so outside Consonance they do nothing. **The push gate and the delete gate are machine-wide:** they check every `git push` and every
 recursive delete that any Claude Code session runs, in any project.
 
-Every gate **fails open on its own error** (a broken hook never traps a seat), except the map gate in strict mode, which refuses
-rather than pass a hand-back it could not check (section 7); and no gate reads or logs a secret. The SOURCES gate and
+Every gate **fails open on its own error** (a broken hook never traps a seat), except two: the map gate in strict mode, which refuses
+rather than pass a hand-back it could not check (section 7); and the **push gate, which FAILS CLOSED on a push** (D677, 2026-11-15:
+it once let a push through unscanned on "not a git repo"). A push it cannot scan, an error or a hang in the scan, is refused with the
+reason; what is not a push still passes. And no gate reads or logs a secret. The SOURCES gate and
 the reply slot check only that a source was OPENED in this turn — never whether it backs the claim. That part stays with the seat,
 and with you.
 
