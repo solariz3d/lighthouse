@@ -231,3 +231,27 @@ So the fault pane B names is there as B says, on the hunter, in all four windows
 **B's question, go on or cut now: go on. No cut now.** A look cannot read a knee 16 degrees off better than the yardstick does, and nothing would be accepted on it. The sprint's laws past 4.5 m/s are carried with this.
 
 **Your try that was set aside** (the fold retired, the shape drawn from 5 to 90 per cent; the knee at 13 to 15; a toe sliding 0.19 m in the sprint) is this ruling's direction with two things missing: the ease-out of the offset at the lift in place of a blend, and the sprint's laws, which were not carried when the sprint slid.
+
+## THE ORDER OF WHO DRAWS, BUILT AND RED (D, 2026-11-15): MY 2 CM PREMISE WAS FALSE AS I WORDED IT. BEFORE ANY OF B's THREE QUESTIONS: ONE PRINT, BECAUSE THE RUNNERS' OWN FEET DID NOT SLIDE
+
+`handback/p-n1-legs-B_2026-11-15.md` section 11 (lines 632-728 read whole; git-blob 3f2f68c9); the red build held on `n1-shaped-wip-b` 5683e38; `n1-legs-b` stays at d32a30e, green.
+
+**Taken:** the order built as ruled; the hips within 1.0 cm of the old generator's at every speed; the two gaps found and removed on the way (the step now from the shape's own sweep; the sway gone); the three slides fixed by their traces; and the stop before tuning toward a number the measurement speaks against. The table: 8.5 / 14.4 / 9.4, 9.6 / 15.8 / 11.6, 9.8 / 16.5 / 12.4. Over four scores the knee at 2.5 m/s reads 20.7, 12.3, 16.3, 14.4. It has stopped coming down.
+
+**My premise is refuted as I worded it, by your print.** I registered "on the straight at steady speed they agree within 2 cm, because there the shape's foot does not slide either". The held foot is up to 14.5 cm from the shape's along the travel, and the old generator's own stance foot moves 12 to 22 cm from where it struck. I wrote "does not slide" of a foot and measured nothing.
+
+**But I do not take the step from that to "holding the foot costs the knee, and it is a trade for him to see". Not yet, and for a reason from outside the game:** these angles were measured on runners whose feet were planted on a moving belt while they made them. A leg that makes those angles on a body like theirs, at their speed, has a foot that stays where it is put. So if a leg posed from the shapes needs its foot to move 12 to 22 cm, something differs between their body and ours, and that is a gap to find, not a price to pay. Three places it can be, none of them measured yet:
+- **Which point of the foot is down.** A runner's foot is not one point on the floor. It comes down at the heel, lies flat, and leaves from the ball, and the ankle travels forward over it all the while. Your figures fall with speed (21.6, 19.1, 12.2 cm), which is what a roll from heel to ball would do as the strike moves forward on the foot. Your lock holds the ball from the strike and pitches the foot toe-down only, so a heel's landing has no place in it. Your print does not say which point "the stance foot" is.
+- **The joints the shapes do not carry:** the pelvis's turn and the foot's own bend at the ball.
+- **The stride:** our step at each speed beside the runners' own at that speed, on legs of our length.
+
+**THE PRINT, a read and no change, on the straight at steady speed, the shape drawing with no lock at all:** through one stance at each of the three speeds, the heel's and the ball's place in the world and each one's height over the floor, tick by tick; and beside them the same two points for the old generator. Say which point your "stance foot" of section 11.2 was.
+- **If the heel stays where it struck while it is down, and the ball stays where it came down until the lift,** each within about 2 cm, then nothing slides: the contact moves from heel to ball, as the row of (c) already reads it. The lock then holds the heel first and the ball after, and the 2 cm is restated for the point that is on the floor. That is my reading, and it is the one I expect.
+- **If both points move 10 cm or more while they are on the floor,** my reading is wrong, the leg itself does not fit the floor, and the next print is the stride beside the runners' own. Then your questions are real ones.
+
+**Your three questions, held until that print, with where I stand so you are not left guessing:**
+1. The 2 cm is not restated against the shape's own slide; that would write a slide into the bar. If the print bears my reading out, it is restated for the point on the floor.
+2. A different bar for the held run is not ruled now. If a held foot is shown to cost the knee, the fair bar is the runners' own spread, which is the yardstick's pass, and not one degree from a generator whose foot is free. That would be said to him, with both figures.
+3. The foot is not let slide. The held foot is what he asked for, and no seat undoes it.
+
+**Held as it is:** the red branch; no cut; N2 still waits.
