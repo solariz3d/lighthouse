@@ -242,3 +242,44 @@ velocity, a turn at grip is the slow way and braking to rest and leaving toward 
 
 **The bends row (ruling item 2), by name before it runs:** today's law runs through the same three bends in the same arena beside the line; the
 bar at each bend is today's time there; the 0.889 s constant leaves the row.
+
+## The side priced in the one search: built, red first, and the open side taken. The one ring for items 1 to 3, with the staging numbers of 5
+dreamzone-3 `a-mline` pushed and read back at **4b039851e8ea8c3507cc2a7d723a871787179e4e** (red first 8143c0d: the base law cb9049c, the
+bends row carrying today's law as its control; the base's law restored at 3f0cf4f). checked `q_rows_red.txt` and `q_rows.txt`.
+
+**1. The side (the five lines above):** the open gap taken at the 22 degree bend and kept over 8 replans (crossings of the gap 1, ticks near
+the doorway 0): **the side row green** (red at 8143c0d: 0 and 26).
+
+**2. The bends, today's law beside the line in the same arena (the stand-in):**
+
+| bend | today's law (the control) | the line, way (b) / (a) | the base cb9049c | my prediction |
+|---|---|---|---|---|
+| 22 degrees | 0.637 s, lowest 3.94 | **0.321 s, 6.12** (both) | 0.792 s, 3.87 | 0.60 s, 6.0: **met** |
+| 45 degrees | 1.296 s, lowest 0.71 | **0.492 / 0.500 s, 6.33 / 5.94** | 1.908 / 1.846 s, 0.00 | 0.60 s, 8.0: time met, lowest not |
+| 90 degrees | 0.846 s, lowest 3.46 | **1.183 / 0.967 s, 1.48 / 2.40** | the same | 0.70 s, 7.5: not met; **slower than today: red** |
+
+The ruling's registered bar for the side (with the open side taken, the 22 degree bend in no more than today's 0.642 s in the stand-in): met,
+0.321 s, which is the hand line's own figure. The five lines' falsifier (the ten routes worse than the base by 5 per cent): not fired; the ten
+routes' total time 81.02 / 77.74 s (base 82.63 / 79.98; today 77.11). Route contacts 31 / 6 (base 31 / 12).
+
+**3. The 45 degree cause** is named above (the slide law turns a velocity nearly opposite the aim instead of braking; not changed yet). With
+the side priced, the 45 degree bend in the stand-in no longer stops (lowest 6.33 / 5.94), so the fault's own fix is still owed, red first,
+on a place that shows it.
+
+**4. The cost: the gate FAILS.** One plan_to for one root chaser: mean 1647 us, largest 1878 us (gate 1000). The side costs almost nothing
+(one search); the relaxation is the cost, as `tp.txt` measured. The lever the ruling names (keeping the line between plans) is not built yet.
+
+**5. Pane E's staging, numbers only (my copy of E's tree, ff6151c's film tool, with a-mline 4b03985's chase and nav; `g_e*.txt`):**
+
+| bend in E's staging | today's law | the line, way (b) / (a) |
+|---|---|---|
+| 22 degrees (the plan's bar: 0.889 s, 1.2 m/s) | 0.889 s, lowest **0.038** | **0.486 s, lowest 5.47** (both): inside the bar, and faster than today |
+| 45 degrees | 0.903 s, lowest 2.83 | **not comparable:** at E's bend the root hunter "never came through the entry gate in 5760 frames" (inferred, not checked: the squeeze price sent it another way round), so the tool took another 45 degree bend (apex (-63.19, -6.96, 5.51)): 0.778 / 0.819 s, lowest 1.90 / 2.54 there, where today's law was not run |
+| 90 degrees | 0.819 s, lowest 3.86 | **1.319 / 0.972 s, lowest 1.41 / 2.30: slower than today** |
+
+Whole suite 117, 8 failed (base 9: green now H2, the scripted bends row, the side; red now the cost gate, and the brake row, which sees no
+aim-behind slide way (a) and is red by its own rule that a row seeing nothing is red); nav 34, 0 failed; off means off md5 fa938de4..., 18 SAME.
+
+**What is open, named:** the 90 degree bend (slower than today in both arenas); the cost gate; the slide law's fault at a velocity nearly
+opposite the aim; the 45 degree staging comparison (where does the root hunter go at E's 45 degree bend). **No film:** the 90 degree bend would
+show him a hunter slower than today's.

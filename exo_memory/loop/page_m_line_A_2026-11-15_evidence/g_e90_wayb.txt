@@ -1,0 +1,4 @@
+film-corner: looked at 1 worlds from seed 1: 2160 node pairs, 2080 walk-only paths, 8353 bends, 1293 kept, 2.3 s
+film-corner: the bend: 88.9 degrees (the path's turn between its 3 m chords in and out) at (-11.54, 10.54, -26.84) in the world of seed 1; the corridor across it 4.4 m; clean path 60.4 m before it and 8.1 m after; the staged run's door 21.5 m before it at (-32.91, 10.54, -26.24), the target's walk to 7.6 m after it at (-13.29, 10.54, -34.04)
+TICKREAD gates: entry frame 1591 tick 2653 speed 7.800, exit frame 1781 tick 2969, through 1.319 s; apex -11.54 10.54 -26.84
+TICKREAD lowest 1.410 at frame 1685 tick 2809 pos -10.73 10.54 -27.09
