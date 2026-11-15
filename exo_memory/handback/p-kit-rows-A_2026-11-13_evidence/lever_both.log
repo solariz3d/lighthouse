@@ -1,0 +1,63 @@
+-- Configuring done (0.2s)
+-- Generating done (0.2s)
+-- Build files have been written to: G:/consonance-scratch/a-gen-dz3/build
+[1/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\rule_tests.cpp.obj
+[2/44] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\bots.cpp.obj
+[3/44] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\play.cpp.obj
+[4/44] Building CXX object chase\CMakeFiles\dz_chase.dir\speed.cpp.obj
+[5/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\speed_tests.cpp.obj
+[6/44] Building CXX object chase\CMakeFiles\dz_chase.dir\chaser.cpp.obj
+[7/44] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\slosh.cpp.obj
+[8/44] C:\WINDOWS\system32\cmd.exe /C "cd /D G:\consonance-scratch\a-gen-dz3\build\game && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=G:/consonance-scratch/a-gen-dz3 -DOUT=G:/consonance-scratch/a-gen-dz3/build/game/generated/build_commit.h -P G:/consonance-scratch/a-gen-dz3/game/world/build_commit.cmake"
+[9/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\body_tests.cpp.obj
+[10/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\pursuit_tests.cpp.obj
+[11/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\proof_tests.cpp.obj
+[12/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\feel_tests.cpp.obj
+[13/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\stay_tests.cpp.obj
+[14/44] Building CXX object chase\CMakeFiles\dz_chase.dir\run.cpp.obj
+[15/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\overtime_tests.cpp.obj
+[16/44] Building CXX object chase\CMakeFiles\dz_chase_world.dir\streamed.cpp.obj
+[17/44] Building CXX object chase\CMakeFiles\dz-chase.dir\tools\dz-chase\main.cpp.obj
+[18/44] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\arena.cpp.obj
+[19/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\diag_door.cpp.obj
+[20/44] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\streamed_tests.cpp.obj
+[21/44] Building CXX object game\CMakeFiles\dz-world.dir\world\hud.cpp.obj
+[22/44] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\run_record_tests.cpp.obj
+[23/44] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_app.cpp.obj
+[24/44] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\world_app_tests.cpp.obj
+[25/44] Building CXX object game\CMakeFiles\dz_world_game.dir\world\run_record.cpp.obj
+[26/44] Building CXX object game\CMakeFiles\dz-world.dir\world\main.cpp.obj
+[27/44] Building CXX object game\CMakeFiles\dz-world.dir\world\sound.cpp.obj
+[28/44] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen.cpp.obj
+[29/44] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_burst.cpp.obj
+[30/44] Linking CXX static library chase\dz_chase.lib
+[31/44] Building CXX object game\CMakeFiles\dz-world.dir\world\stage.cpp.obj
+[32/44] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_look.cpp.obj
+[33/44] Linking CXX static library chase\dz_chase_arena.lib
+[34/44] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_run.cpp.obj
+[35/44] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_models.cpp.obj
+[36/44] Linking CXX static library chase\dz_chase_world.lib
+[37/44] Linking CXX static library game\dz_world_game.lib
+[38/44] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_fpbody.cpp.obj
+[39/44] Linking CXX executable bin\dz-chase.exe
+[40/44] Linking CXX executable bin\chase_tests.exe
+[41/44] Linking CXX executable bin\world_app_tests.exe
+[42/44] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest_run.cpp.obj
+[43/44] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest.cpp.obj
+[44/44] Linking CXX executable bin\dz-world.exe
+    LEVER 0.0 m: seed 3 case k 14 caught 1 at 19.85 s, ratio 2.68, close ticks 0
+    LEVER 0.0 m: seed 3: 10 of 10 reached; the slowest 2.68 times the planned time (bar 2.5)
+    LEVER 0.0 m: seed 9 case k 5 caught 1 at 36.00 s, ratio 2.98, close ticks 0
+    LEVER 0.0 m: seed 9: 10 of 10 reached; the slowest 2.98 times the planned time (bar 2.5)
+    LEVER 0.0 m: seed 8 juke, timer 30 s: not caught after 370.0 s of overtime; close ticks 0
+ok    diag_lever_both_cases
+1 tests, 0 failed
+    LEVER 10.0 m: seed 3 case k 14 caught 1 at 19.08 s, ratio 2.57, close ticks 1253
+    LEVER 10.0 m: seed 3: 10 of 10 reached; the slowest 2.57 times the planned time (bar 2.5)
+    LEVER 10.0 m: seed 9 case k 5 caught 1 at 36.17 s, ratio 2.99, close ticks 1519
+    LEVER 10.0 m: seed 9: 9 of 10 reached; the slowest 99.00 times the planned time (bar 2.5)
+    LEVER 10.0 m: seed 8 juke, timer 30 s: caught by the dark after 13.6 s of overtime; close ticks 739
+ok    diag_lever_both_cases
+1 tests, 0 failed
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.

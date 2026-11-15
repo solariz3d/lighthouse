@@ -1,0 +1,7 @@
+ok    the_world_starts_paused_at_the_generators_spawn_with_the_hand_light_on
+    a new run's record: gen_world 445410b473f81201; the kit's world and the world before it have spawn fingerprints 16777b01f937ac48 and dcca428a82201b35
+ok    a_new_record_says_the_generator_it_was_played_in
+    a run played before the kit, its record without [gen]: replayed to its fingerprints, 13000 ticks
+ok    a_record_with_no_gen_section_replays_in_the_generator_before_the_kit
+3 tests, 0 failed
+lockrun: L210 s1 rows generator WALL 20 s, exit 0

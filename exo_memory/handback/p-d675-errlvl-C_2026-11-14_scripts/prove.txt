@@ -1,0 +1,14 @@
+old  step 1 exits -1073741819  exit 0   BUILD OK -> render\bin\dz-view.exe
+old  step 1 exits 1            exit 1   BUILD FAILED: cmake configure
+old  all steps 0           exit 0   BUILD OK -> render\bin\dz-view.exe
+old  step 2 exits -1073741819  exit 0   BUILD OK -> render\bin\dz-view.exe
+old  step 2 exits 1            exit 1   BUILD FAILED
+old  step 3 exits -1073741819  exit 0   BUILD OK -> render\bin\dz-view.exe
+old  step 3 exits 1            exit 1   BUILD OK -> render\bin\dz-view.exe / SELFTEST FAILED
+new  step 1 exits -1073741819  exit 1   BUILD FAILED: cmake configure
+new  step 1 exits 1            exit 1   BUILD FAILED: cmake configure
+new  all steps 0           exit 0   BUILD OK -> render\bin\dz-view.exe
+new  step 2 exits -1073741819  exit 1   BUILD FAILED
+new  step 2 exits 1            exit 1   BUILD FAILED
+new  step 3 exits -1073741819  exit 1   BUILD OK -> render\bin\dz-view.exe / SELFTEST FAILED
+new  step 3 exits 1            exit 1   BUILD OK -> render\bin\dz-view.exe / SELFTEST FAILED

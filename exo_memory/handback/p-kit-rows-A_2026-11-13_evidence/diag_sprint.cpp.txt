@@ -1,0 +1,82 @@
+// SCRATCH, NEVER COMMITTED (pane A): the sprinter row's three worst multi-corner routes the careful body loses in the kit's world (seeds 4, 5
+// and 8: 79 m, 71 m, 77 m), both bodies traced every half metre of travel, to name where the careful one gives the time away.
+#include "chase/tests/chase_test_util.h"
+
+using namespace dz;
+using namespace dz::chase;
+using namespace dz::chase::testing;
+
+namespace {
+struct Sample {
+  float s = 0, t = 0, speed = 0;
+  int   scraped = 0, hits = 0;
+  Vec3  pos;
+};
+std::vector<Sample> trace_walk(const Arena& arena, float care, Vec3 from, Vec3 to, std::vector<Vec3>& path_out) {
+  nav::Query query(arena.nav());
+  Limits     l = archetype(Kind::Sprinter).limits;
+  l.corner_care = care;
+  Chaser c;
+  c.id = 1, c.kind = Kind::Sprinter, c.body = make_body(l, 7.0f);
+  std::vector<Sample> out;
+  if (!place(c, query, from, 0.0f) || !plan_to(c, query, to)) return out;
+  for (const auto& p : c.path.points) path_out.push_back(p.pos);
+  float gone = 0, next = 0;
+  int   scraped = 0;
+  for (int t = 0; t < 240 * 120 && !c.arrived; ++t) {
+    const Vec3 before = c.pos;
+    step(c, query);
+    gone += length(flat(c.pos - before));
+    scraped += c.scraped;
+    if (gone >= next) {
+      out.push_back({gone, (t + 1) / 240.0f, c.speed, scraped, static_cast<int>(c.wall_hits), c.pos});
+      next += 0.5f;
+    }
+  }
+  return out;
+}
+}  // namespace
+
+DZ_TEST(diag_sprint_trace) {
+  const struct { uint32_t seed; float len; } want[] = {{4u, 79.0f}, {5u, 71.0f}, {8u, 77.0f}};
+  for (const auto& w : want) {
+    ArenaParams p;
+    p.gen.seed = w.seed;
+    const Arena      arena(p);
+    const PlayGraph& g = arena.graph();
+    nav::Query       query(arena.nav());
+    int              here = 0;
+    for (size_t u = 5; u < g.nodes.size() && here < 12; u += 211) {
+      if (g.nodes[u].id.slot != 0 || g.pocket[u]) continue;
+      for (size_t v = u + 97; v < g.nodes.size(); v += 89) {
+        if (g.nodes[v].id.slot != 0 || g.pocket[v] || g.nodes[v].id.y != g.nodes[u].id.y) continue;
+        const float d = length(g.nodes[u].pos - g.nodes[v].pos);
+        if (d < 40.0f || d > 80.0f) continue;
+        std::vector<Vec3> path_h, path_c;
+        const std::vector<Sample> hot = trace_walk(arena, 0.0f, g.nodes[u].pos, g.nodes[v].pos, path_h);
+        const std::vector<Sample> careful = trace_walk(arena, 1.0f, g.nodes[u].pos, g.nodes[v].pos, path_c);
+        if (hot.empty() || careful.empty() || path_h.size() < 5) break;
+        ++here;
+        float len = 0;
+        for (size_t i = 0; i + 1 < path_h.size(); ++i) len += length(flat(path_h[i + 1] - path_h[i]));
+        if (std::fabs(len - w.len) > 1.0f) break;
+        std::printf("ROUTE seed %u: %.1f m, %zu path points; careless %.2f s, careful %.2f s\n", w.seed, static_cast<double>(len), path_h.size(),
+                    static_cast<double>(hot.back().t), static_cast<double>(careful.back().t));
+        for (size_t i = 0; i < path_h.size(); ++i) std::printf("  PT %zu (%.2f %.2f)\n", i, static_cast<double>(path_h[i].x), static_cast<double>(path_h[i].z));
+        // Side by side, by distance travelled: where the careful one is behind in time, and by how much more each half metre.
+        const size_t n = std::min(hot.size(), careful.size());
+        float        last_gap = 0;
+        for (size_t i = 0; i < n; i += 2) {
+          const float gap = careful[i].t - hot[i].t;
+          std::printf("  s %5.1f m  careless t %6.2f v %5.2f scr %4d hit %d (%.1f %.1f) | careful t %6.2f v %5.2f scr %4d hit %d (%.1f %.1f) | gap %+.2f s (%+.2f)\n",
+                      static_cast<double>(hot[i].s), static_cast<double>(hot[i].t), static_cast<double>(hot[i].speed), hot[i].scraped, hot[i].hits,
+                      static_cast<double>(hot[i].pos.x), static_cast<double>(hot[i].pos.z), static_cast<double>(careful[i].t),
+                      static_cast<double>(careful[i].speed), careful[i].scraped, careful[i].hits, static_cast<double>(careful[i].pos.x),
+                      static_cast<double>(careful[i].pos.z), static_cast<double>(gap), static_cast<double>(gap - last_gap));
+          last_gap = gap;
+        }
+        break;
+      }
+    }
+  }
+}

@@ -1,0 +1,159 @@
+// SCRATCH, NEVER COMMITTED (pane A): the two slow reaches of the_hunter_always_reaches_a_player_who_stands_still_in_connected_space in
+// the kit's world, traced tick by tick, to name what holds the hunter 3 to 5 m from a standing player. Same loop as the row.
+#include "chase/tests/chase_test_util.h"
+
+using namespace dz;
+using namespace dz::chase;
+using namespace dz::chase::testing;
+
+DZ_TEST(diag_door_trace) {
+  const char* only = std::getenv("DZ_DIAG_CASE");   // "3:14" or "9:5"; empty: both
+  for (const auto [aseed, want_k] : {std::pair<uint32_t, uint32_t>{3u, 14u}, std::pair<uint32_t, uint32_t>{9u, 5u}}) {
+    if (only && *only && std::to_string(aseed) + ":" + std::to_string(want_k) != only) continue;
+    ArenaParams ap;
+    ap.gen.seed = aseed;
+    Arena            arena(ap);
+    const PlayGraph& g = arena.graph();
+    const int        door = g.nearest(arena.spawn().position);
+    nav::Query       query(arena.nav());
+    int              tried = 0;
+    for (uint32_t k = 0; tried < 10 && k < 4000; ++k) {
+      const size_t u = hash32(k * 2654435761u + 17u) % g.nodes.size();
+      if (g.nodes[u].id.slot != 0 || g.pocket[u] || (g.nodes[u].kind != gen::CellKind::Lane && g.nodes[u].kind != gen::CellKind::Room)) continue;
+      const float d = length(g.nodes[u].pos - arena.spawn().position);
+      if (d < 30.0f || d > 110.0f) continue;
+      if (graph_route(g, door, static_cast<int>(u), chaser_edge).empty()) continue;
+      ++tried;
+      if (k != want_k) continue;
+      sim::World& world = arena.sim();
+      world.spawn(g.nodes[u].pos + Vec3{0, 0.02f, 0}, 0.0f);
+      RunParams rp;
+      rp.seed = k;
+      rp.difficulty = with_dials(1, "head_start_s=0");
+      rp.spawn = arena.spawn().position;
+      rp.director = false;
+      Run         run(arena.nav(), arena, arena.facts(), rp);
+      const Vec3  p = world.player().position;
+      std::printf("CASE seed %u k %u player (%.2f %.2f %.2f) node kind %d\n", aseed, k, static_cast<double>(p.x), static_cast<double>(p.y), static_cast<double>(p.z),
+                  static_cast<int>(g.nodes[u].kind));
+      uint32_t last_hits = 0;
+      for (int t = 0; t < 240 * 150 && !run.over(); ++t) {
+        world.step({});
+        run.step(world.player());
+        const Agent* h = run.hunter();
+        if (!h) continue;
+        const Vec3  to = flat(world.player().position - h->body.pos);
+        const float dist = length(to);
+        const bool  hit = h->body.wall_hits != last_hits;
+        last_hits = h->body.wall_hits;
+        if ((dist < 8.0f && t % 12 == 0) || hit) {
+          const auto& pts = h->body.path.points;
+          std::printf("  t %6.2f d %5.2f pos (%.2f %.2f %.2f) hd %6.1f spd %5.2f turn %6.1f mode %s gait %d blk %d scr %d hit %d leg %zu/%zu", t / 240.0,
+                      static_cast<double>(dist), static_cast<double>(h->body.pos.x), static_cast<double>(h->body.pos.y), static_cast<double>(h->body.pos.z),
+                      static_cast<double>(h->body.heading * 57.29578f), static_cast<double>(h->body.speed), static_cast<double>(h->body.turn * 57.29578f),
+                      mode_name(h->mode), static_cast<int>(h->body.gait), h->body.blocked_ticks, h->body.scraped ? 1 : 0, hit ? 1 : 0, h->body.leg, pts.size());
+          for (size_t i = h->body.leg; i < pts.size() && i < h->body.leg + 3; ++i)
+            std::printf(" -> (%.2f %.2f %.2f)", static_cast<double>(pts[i].pos.x), static_cast<double>(pts[i].pos.y), static_cast<double>(pts[i].pos.z));
+          std::printf(" see %d\n", arena.clear(h->body.pos + Vec3{0, 1.0f, 0}, world.player().position + Vec3{0, 1.0f, 0}) ? 1 : 0);
+        }
+      }
+      std::printf("END seed %u k %u over %d at %.2f s by %s\n", aseed, k, run.over() ? 1 : 0, static_cast<double>(run.seconds()),
+                  run.caught_by() ? kind_name(run.caught_by()->body.kind) : "nothing");
+      break;
+    }
+  }
+}
+
+
+// SCRATCH, NEVER COMMITTED: the sprinter row's routes, per seed, in the kit's world and the world before it, with what each route is.
+namespace {
+struct DWalk {
+  bool  arrived = false;
+  float seconds = 0;
+  int   scraped = 0, hits = 0;
+};
+DWalk dwalk(const Arena& arena, float care, Vec3 from, Vec3 to) {
+  nav::Query query(arena.nav());
+  Limits     l = archetype(Kind::Sprinter).limits;
+  l.corner_care = care;
+  Chaser c;
+  c.id = 1, c.kind = Kind::Sprinter, c.body = make_body(l, 7.0f);
+  DWalk w;
+  if (!place(c, query, from, 0.0f) || !plan_to(c, query, to)) return w;
+  for (int t = 0; t < 240 * 120 && !c.arrived; ++t) {
+    step(c, query);
+    w.scraped += c.scraped;
+    w.seconds = static_cast<float>(t + 1) / 240.0f;
+  }
+  w.hits = static_cast<int>(c.wall_hits);
+  w.arrived = c.arrived && length(flat(c.pos - to)) < 1.0f;
+  return w;
+}
+}  // namespace
+
+DZ_TEST(diag_sprinter_routes) {
+  for (int world = 0; world < 2; ++world) {
+    int all = 0, sooner = 0;
+    double lost_len = 0, won_len = 0, lost_sharp = 0, won_sharp = 0, lost_straight = 0, won_straight = 0;
+    int    lost_n = 0, won_n = 0, flat_n = 0, flat_won = 0, bent_n = 0, bent_won = 0, ties = 0;
+    for (uint32_t seed = 1; seed <= 8; ++seed) {
+      ArenaParams p;
+      if (world == 1) p.gen = gen::GenParams{};
+      p.gen.seed = seed;
+      const Arena      arena(p);
+      const PlayGraph& g = arena.graph();
+      nav::Query       query(arena.nav());
+      int              here = 0, here_sooner = 0;
+      for (size_t u = 5; u < g.nodes.size() && here < 12; u += 211) {
+        if (g.nodes[u].id.slot != 0 || g.pocket[u]) continue;
+        for (size_t v = u + 97; v < g.nodes.size(); v += 89) {
+          if (g.nodes[v].id.slot != 0 || g.pocket[v] || g.nodes[v].id.y != g.nodes[u].id.y) continue;
+          const float d = length(g.nodes[u].pos - g.nodes[v].pos);
+          if (d < 40.0f || d > 80.0f) continue;
+          Chaser probe;
+          probe.id = 1, probe.kind = Kind::Sprinter, probe.body = make_body(archetype(Kind::Sprinter).limits, 7.0f);
+          if (!place(probe, query, g.nodes[u].pos, 0.0f) || !plan_to(probe, query, g.nodes[v].pos)) break;
+          const DWalk hot = dwalk(arena, 0.0f, g.nodes[u].pos, g.nodes[v].pos), careful = dwalk(arena, 1.0f, g.nodes[u].pos, g.nodes[v].pos);
+          const int   corners = static_cast<int>(probe.path.points.size()) - 2;
+          if (!hot.arrived || !careful.arrived || corners < 3) break;
+          ++here, ++all;
+          // The route: its length, its corners of 45 degrees or more (whole, as the chase now reads them: turns within 3 m summed), its longest straight leg.
+          const auto& pts = probe.path.points;
+          float len = 0, longest = 0, run = 0;
+          int   sharp = 0;
+          float turn_sum = 0, since_turn = 99;
+          for (size_t i = 0; i + 1 < pts.size(); ++i) {
+            const Vec3 seg = flat(pts[i + 1].pos - pts[i].pos);
+            len += length(seg), run += length(seg);
+            if (i + 2 < pts.size()) {
+              const Vec3 nxt = flat(pts[i + 2].pos - pts[i + 1].pos);
+              if (length(seg) > 1e-3f && length(nxt) > 1e-3f) {
+                const float tr = std::fabs(det_atan2(seg.x * nxt.z - seg.z * nxt.x, dot(seg, nxt)));
+                if (tr > 0.2f) longest = std::max(longest, run), run = 0;
+                turn_sum = since_turn <= 3.0f ? turn_sum + tr : tr;
+                since_turn = length(nxt);
+                if (turn_sum >= 0.785f) ++sharp, turn_sum = 0, since_turn = 99;
+              }
+            }
+          }
+          longest = std::max(longest, run);
+          const bool s = careful.seconds < hot.seconds;
+          if (sharp <= 1) ++flat_n, flat_won += s; else ++bent_n, bent_won += s;
+          ties += std::fabs(careful.seconds - hot.seconds) < 0.05f;
+          here_sooner += s, sooner += s;
+          if (s) won_len += len, won_sharp += sharp, won_straight += longest, ++won_n;
+          else lost_len += len, lost_sharp += sharp, lost_straight += longest, ++lost_n;
+          if (world == 0 && !s)
+            std::printf("    LOST seed %u: %.0f m, %d corners of 45 deg+, longest straight %.0f m; careless %.2f s (scraped %d, hits %d) careful %.2f s (scraped %d, hits %d)\n",
+                        seed, static_cast<double>(len), sharp, static_cast<double>(longest), static_cast<double>(hot.seconds), hot.scraped, hot.hits,
+                        static_cast<double>(careful.seconds), careful.scraped, careful.hits);
+          break;
+        }
+      }
+    }
+    std::printf("  %s: careful sooner %d of %d; routes it won: mean %.0f m, %.1f corners of 45 deg+, longest straight %.0f m; routes it lost: %.0f m, %.1f corners, %.0f m\n",
+                world == 0 ? "KIT ON" : "KIT OFF", sooner, all, won_len / std::max(won_n, 1), won_sharp / std::max(won_n, 1), won_straight / std::max(won_n, 1),
+                lost_len / std::max(lost_n, 1), lost_sharp / std::max(lost_n, 1), lost_straight / std::max(lost_n, 1));
+    std::printf("  %s: routes with one real corner or none %d, the careful body sooner on %d; with two or more %d, sooner on %d; within 0.05 s of a tie %d\n", world == 0 ? "KIT ON" : "KIT OFF", flat_n, flat_won, bent_n, bent_won, ties);
+  }
+}

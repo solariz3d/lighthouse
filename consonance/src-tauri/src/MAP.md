@@ -118,7 +118,9 @@ the answer to a specific failure, and the comment above the function usually nam
 
 - `consonance/tools/landing-train.js` (L194): the landing train for dreamzone-3. Panes mark branches READY; it merges them in
   its own worktree, checks the batch under the exclusive hold and the memory gate, scans (credentials and privacy, failing
-  closed), fast-forwards and pushes main, and promotes the checked build into his checkout when no game runs. Its rows are
+  closed), fast-forwards and pushes main, and promotes the checked build into his checkout when no game runs. A check that
+  exits 3 with the world self-test's machine-bound summary is read again once, in the same hold, by the config's `reread`
+  command, and a green second reading lands with both readings kept (D675). Its rows are
   `landing-train.test.js`, each seen red by `landing-train.mutants.js`. dreamzone-3's check and game guard are
   `landing-train-dz3-check.cmd` and `landing-train-dz3-guard.cmd`, and the config lives in the data folder
   (`landing-train.config.dreamzone-3.json`). A Node tool, not part of the app.

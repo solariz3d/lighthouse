@@ -1,0 +1,340 @@
+-- Configuring done (0.1s)
+-- Generating done (0.2s)
+-- Build files have been written to: G:/consonance-scratch/a-gen-dz3/build
+[1/10] C:\WINDOWS\system32\cmd.exe /C "cd /D G:\consonance-scratch\a-gen-dz3\build\game && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=G:/consonance-scratch/a-gen-dz3 -DOUT=G:/consonance-scratch/a-gen-dz3/build/game/generated/build_commit.h -P G:/consonance-scratch/a-gen-dz3/game/world/build_commit.cmake"
+[2/8] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\diag_door.cpp.obj
+[3/8] Building CXX object chase\CMakeFiles\dz_chase.dir\run.cpp.obj
+[4/8] Linking CXX static library chase\dz_chase.lib
+[5/8] Linking CXX executable bin\chase_tests.exe
+[6/8] Linking CXX executable bin\dz-chase.exe
+[7/8] Linking CXX executable bin\world_app_tests.exe
+[8/8] Linking CXX executable bin\dz-world.exe
+ok    the_score_is_time_survived_and_worth_more_the_longer_the_run
+ok    every_dial_starts_where_it_says_moves_as_it_says_and_stops_at_its_limit
+ok    dial_text_is_read_or_refused_whole
+ok    three_archetypes_and_the_climber_are_built_and_the_rest_are_named
+ok    a_faster_body_must_take_a_corner_slower_and_a_sharper_corner_slower_still
+    seed 1: 12 routes, the careful body sooner on 7
+    seed 2: 12 routes, the careful body sooner on 12
+    seed 3: 12 routes, the careful body sooner on 10
+    seed 4: 12 routes, the careful body sooner on 6
+    seed 5: 12 routes, the careful body sooner on 8
+    seed 6: 12 routes, the careful body sooner on 11
+    seed 7: 12 routes, the careful body sooner on 9
+    seed 8: 12 routes, the careful body sooner on 7
+    96 routes with three corners or more over seeds 1-8: the body that never brakes for one met the mesh's edge for longer on 88 and was the slower on 70; it met a wall head-on 123 times against 50, and took 1360.5 s in all against 1017.3 s
+    G:\consonance-scratch\a-gen-dz3\chase\tests\body_tests.cpp(190): CHECK failed: careful_sooner * 4 >= tried * 3
+FAIL  a_sprinter_that_does_not_brake_for_corners_meets_the_walls_and_one_that_does_gets_there_sooner
+    the sprinter is planned first by a quarter or more on 10 of 10 level routes; up 6 flights its best speed along the stairs was 4.16 m/s (its flat speed is 10.15, the player's sprint 7.00)
+ok    a_sprinter_wins_the_straight_and_loses_the_stairs
+    6 drops and 4 ladders the hunter's quickest way uses: it crossed 10 and was off the mesh for 0 ticks after; the others were planned a denied link 0 times and took one 0 times in 10 walks
+ok    a_chaser_takes_only_the_links_its_kind_may
+ok    a_lesser_chaser_that_never_senses_the_player_gives_up_after_its_time_to_look
+ok    a_lesser_chaser_loses_the_player_a_set_time_after_its_last_contact
+ok    a_sprinting_player_is_heard_through_a_wall_and_a_walking_one_is_not
+ok    the_interceptor_aims_ahead_of_the_player_and_keeps_the_place_it_chose
+ok    the_hunter_knows_where_the_player_is_as_precisely_as_its_dial_says
+ok    a_chaser_is_never_caught_up_with_by_a_wall_it_cannot_see_through
+ok    a_sprint_is_muffled_by_a_wall
+ok    the_director_spawns_nothing_where_every_site_is_in_sight
+ok    a_player_more_than_a_metre_above_a_chaser_is_out_of_its_reach
+    default world, brutal, 150 s: 119660 chaser ticks (119660 on the mesh, 0 on links); off the mesh 0 (worst 0.00000 m), in a reprieve 0, through geometry 0, over its speed 0 in a tick (worst 0.000 m/s over) and 0 over a second, over its turn rate 0, off its link 0, a denied link 0, wrong top speed 0
+    lesser chasers spawned: sprinter 2, interceptor 2, pack 3 (bodies)
+    world thick with reprieves, hard, 240 s: 135905 chaser ticks (135905 on the mesh, 0 on links); off the mesh 0 (worst 0.00001 m), in a reprieve 0, through geometry 0, over its speed 0 in a tick (worst 0.000 m/s over) and 0 over a second, over its turn rate 0, off its link 0, a denied link 0, wrong top speed 0
+    the player went into 4 reprieves in that time, and lesser chasers were lost at a mouth 0 times
+    of run seeds 1 to 24, 21 went into at least 2 reprieves (the bar is 17)
+ok    a_chaser_stays_on_the_mesh_out_of_geometry_out_of_reprieves_and_inside_its_limits
+    seed 3 case k 14: caught 1 at 11.01 s
+    seed 9 case k 5: caught 1 at 19.93 s
+    the hunter near where it was sent, without sight, a quarter of a second: 1 times; its aim the player's own place within a second: 1
+ok    a_hunter_near_where_it_was_sent_that_cannot_see_the_player_is_told_exactly
+    10 of 10 players standing 30 to 110 m from the door were reached; the slowest took 1.73 times the planned time
+ok    the_hunter_always_reaches_a_player_who_stands_still_in_connected_space
+    a reprieve 12 m long: the generator's way round 2.8 s (at 7 m/s), the mesh's 2.7 s at the hunter's 9.01 m/s; it stood 2.0 s at the mouth, took 5.2 s to go round, and when the player came back out it was 2.7 s away and took 5.2 s to arrive
+ok    the_hunter_stops_at_a_reprieves_mouth_goes_round_and_its_detour_is_the_players_lead
+    the hunter stood 1.30 m from a player 0.4 m inside the mouth, with a reach of 3.5 m, for 40 s; out of the mouth they were caught after 5.5 s
+ok    a_player_just_inside_a_reprieves_mouth_cannot_be_caught
+    the sprinter gave up 3.2 s after its last contact, with the player 3.6 m inside
+ok    a_lesser_chaser_loses_the_player_at_a_reprieves_mouth
+    climb-out 1: the way round planned from the dead end 3.6 s; the lead as the player landed 3.6 s (1.1 s as the crow flies); caught 4.8 s later
+    climb-out 2: the way round planned from the dead end 3.7 s; the lead as the player landed 3.7 s (1.0 s as the crow flies); caught 4.8 s later
+    climb-out 3: the way round planned from the dead end 3.5 s; the lead as the player landed 3.5 s (1.3 s as the crow flies); caught 4.6 s later
+    climb-out 4: the way round planned from the dead end 3.6 s; the lead as the player landed 3.5 s (1.0 s as the crow flies); caught 4.7 s later
+ok    a_climb_out_of_a_dead_end_makes_the_hunter_go_round
+    18 spawns in 300 s: in sight 0, closer than the dial 0, with no way to the player 0; the nearest was 0.1 s over the dial and 22 m off
+ok    the_director_never_spawns_in_sight_or_closer_than_its_travel_time
+    seed 5: 6 turns: sprinter interceptor pack sprinter interceptor pack
+    seed 6: 7 turns: sprinter interceptor pack sprinter interceptor pack sprinter
+    seed 7: 6 turns: sprinter interceptor pack sprinter interceptor pack
+ok    with_kinds_in_turn_the_lesser_chasers_come_sprinter_interceptor_pack_in_turn
+    420 s on hard: 4 peaks, 4 reliefs, the shortest finished relief 14.1 s; 0 lesser chasers spawned during a relief
+ok    the_director_builds_to_a_peak_and_then_gives_relief
+    75 s on hard, 10 events, 4 lesser chasers: chase 7a57a0d626ed0482, simulation 003dc6c68326f512, four times over
+ok    the_same_seed_and_inputs_give_the_same_chase
+    streamed, hard, 60 s: 30241 chaser ticks (30241 on the mesh, 0 on links); off the mesh 0 (worst 0.00000 m), in a reprieve 0, through geometry 0, over its speed 0 in a tick (worst 0.000 m/s over) and 0 over a second, over its turn rate 0, off its link 0, a denied link 0, wrong top speed 0
+    60 s on hard, 41 tiles streamed in, 12 events: chase 93a06414316ac242 all four times; tiles waited for at their tick: 40 with one worker, 26 with six, 21 with six that dawdle (a headless run goes many times faster than the clock, so the workers are behind it)
+ok    streamed_navigation_gives_the_same_chase_whatever_the_workers_do
+    run seed 1: still 8.0 s, line 92.3 s, flee 541.3 s
+    run seed 2: still 8.0 s, line 14.2 s, flee 278.4 s
+    run seed 3: still 8.0 s, line 75.1 s, flee 538.7 s
+ok    the_three_policies_end_as_they_should
+    at (-68.53 10.50 86.72): nearest (-23 3 28 s0)
+    at (93.47 3.50 -57.24): nearest (31 1 -20 s0)
+ok    the_node_nearest_the_player_is_on_the_floor_under_their_feet_not_through_a_wall
+    a reprieve 12 m long: the tell from 14.0 s, open at 20.0 s; the hunter came in 0.0 s later from 6.0 m along it and caught a player who stood still 0.9 s after that
+ok    a_reprieve_holds_for_its_time_gives_its_tell_and_then_the_hunter_comes_in
+ok    stepping_out_of_a_reprieve_and_in_again_does_not_wind_its_time_back
+ok    the_hunter_walks_out_of_a_reprieve_the_player_has_left_and_is_on_the_mesh_again
+    ledge 1: out of reach for 15.0 s when the climber was sent from 17.8 s of its travel away; it went up the ledge and caught a player who stayed 18.0 s later
+    ledge 2: out of reach for 12.0 s when the climber was sent from 8.7 s of its travel away; it went up the ledge and caught a player who stayed 9.9 s later
+ok    a_player_who_stays_on_a_ledge_is_sent_a_climber_and_one_who_moves_on_is_not
+ok    a_player_hanging_on_a_ladder_is_out_of_the_hunters_reach_and_in_the_climbers
+    left 65 m behind, the hunter was 7.3 s off the mesh and caught a standing player 4.3 s after stepping back onto it
+ok    a_hunter_left_behind_by_the_stage_comes_on_without_the_mesh_and_steps_back_onto_it
+ok    the_speed_model_is_set_from_text_and_legacy_is_the_old_chase
+ok    the_chasers_have_their_own_reference_speed_and_the_players_sprint_does_not_move_it
+    covered 3000 m: hunter's top speed 8.400 at 500 m, 8.800 at 1000 m, 9.200 at 3000 m (cap 15%)
+ok    top_speed_grows_with_the_ground_the_player_has_covered_and_stops_at_its_cap
+    a straight of 69 m: peak 9.12 m/s with the model (top 7.60, run-up cap 9.12), 6.65 without it; 8.4 s against 10.7 s
+ok    the_longer_the_straight_the_more_speed_and_a_turn_takes_it_back
+    the circle at top speed: hunter 2.90 m (top 7.60), interceptor 1.65 m (top 7.20), sprinter 7.38 m (top 11.60)
+    12 routes of three corners or more: the tightest circle followed at 80% of top speed 1.65 m; at its 18 corners of 45 deg or more it lost 75% of the speed it came in at, at its slowest; (the old measure: its speed at the corners' points 28% under top with the model, 35% without); 121.3 s in all against 140.2 s
+ok    a_turn_costs_speed_and_the_hunter_cannot_turn_on_a_dime
+    12 routes: a sprinter that does not brake for corners met a wall head-on 15 times and stood 7.5 s after them with the old body, and 59 times and 0.0 s with the model's
+ok    a_chaser_is_never_stood_still_by_a_wall_but_a_body_built_the_old_way_is
+ok    the_interceptor_is_the_nimble_one_a_lower_top_speed_and_the_tightest_turn
+    today 7 / 10 over 8 s, chasers' reference 8:
+       seconds    player    hunter    metres   ratio
+            10     10.00      9.03        89    0.90
+            30     10.00      9.18       289    0.92
+            60     10.00      9.41       590    0.94
+           120     10.00      9.88      1190    0.99
+           300     10.00     11.36      2989    1.14
+           600     10.00     14.03      5989    1.40
+          1200     10.00     15.60     11991    1.56
+      the hunter overtakes the player at 135 s
+    before D657: 7 / 8.75 over 8 s, reference 7:
+       seconds    player    hunter    metres   ratio
+            10      8.75      7.90        81    0.90
+            30      8.75      8.02       256    0.92
+            60      8.75      8.21       519    0.94
+           120      8.75      8.59      1044    0.98
+           300      8.75      9.78      2618    1.12
+           600      8.75     11.93      5243    1.36
+          1200      8.75     13.65     10495    1.56
+      the hunter overtakes the player at 145 s
+    recommended 6 / 9 over 4 s, reference 7:
+       seconds    player    hunter    metres   ratio
+            10      9.00      7.90        83    0.88
+            30      9.00      8.02       263    0.89
+            60      9.00      8.21       534    0.91
+           120      9.00      8.60      1074    0.96
+           300      9.00      9.81      2693    1.09
+           600      9.00     12.00      5393    1.33
+          1200      9.00     13.65     10795    1.52
+      the hunter overtakes the player at 181 s
+ok    the_player_is_a_little_faster_at_first_and_the_hunter_overtakes_at_both_sets_of_movement_numbers
+    the chase's hunter at the start: walk 8.960, stairs 6.272, ladder 1.500, drop 1.600 s; the generator's: 8.960, 6.272, 1.500, 1.600 s
+ok    the_generators_hunter_model_is_the_chases_hunter_at_the_start_of_a_run
+    248 Parks (outside the arena 22, unmatched 0, no mesh path 0): mesh over generator median 0.987, p25 0.965, p75 1.037, min 0.884, max 2.220
+ok    the_generators_way_round_is_the_meshs_at_the_median
+    run seed 1: chase 72db8c0a4c0414c7 / 72db8c0a4c0414c7, simulation 97f1a06aa1042383 / 97f1a06aa1042383, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 120.0 s
+    run seed 2: chase 0008818d1ef86799 / 0008818d1ef86799, simulation a32193c856dc4a91 / a32193c856dc4a91, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 120.0 s
+    run seed 3: chase 6bb23bcb82ad0924 / 6bb23bcb82ad0924, simulation fa3bff0d65f74c8e / fa3bff0d65f74c8e, navigation 49ed0267a28eb69e / 49ed0267a28eb69e, 120.0 s / 120.0 s
+ok    lamps_do_not_move_the_chase
+ok    what_a_new_run_starts_with_is_the_default_model_until_the_flip_and_the_model_accepts_it
+    hunter: 69 corners; the second after one held dead straight (under 1 deg/s) 17% of the time (median); 10 of 10 routes walked to the end
+    sprinter: 67 corners; the second after one held dead straight (under 1 deg/s) 14% of the time (median); 10 of 10 routes walked to the end
+    interceptor: 68 corners; the second after one held dead straight (under 1 deg/s) 20% of the time (median); 10 of 10 routes walked to the end
+    pack: 67 corners; the second after one held dead straight (under 1 deg/s) 20% of the time (median); 10 of 10 routes walked to the end
+ok    after_a_corner_the_line_bends_and_is_never_held_dead_straight
+    hunter: turns that stop dead (over 60 deg/s to under 5 deg/s in one tick): 0; the largest change of turn rate in one tick 18.8 deg/s
+    sprinter: turns that stop dead (over 60 deg/s to under 5 deg/s in one tick): 0; the largest change of turn rate in one tick 15.6 deg/s
+    interceptor: turns that stop dead (over 60 deg/s to under 5 deg/s in one tick): 0; the largest change of turn rate in one tick 18.8 deg/s
+    pack: turns that stop dead (over 60 deg/s to under 5 deg/s in one tick): 0; the largest change of turn rate in one tick 18.8 deg/s
+ok    the_turn_eases_in_and_out_and_never_stops_dead
+    route 0: the sway takes it at most 0.45 m off the line it runs without one; the two stop 0.03 m apart
+    route 1: the sway takes it at most 0.08 m off the line it runs without one; the two stop 0.02 m apart
+    route 2: the sway takes it at most 0.34 m off the line it runs without one; the two stop 0.01 m apart
+    route 3: the sway takes it at most 0.09 m off the line it runs without one; the two stop 0.01 m apart
+    route 4: the sway takes it at most 0.10 m off the line it runs without one; the two stop 0.00 m apart
+    route 5: the sway takes it at most 0.46 m off the line it runs without one; the two stop 0.02 m apart
+ok    the_wander_is_seeded_small_and_gone_at_the_end
+    the head is within 10 deg of the player at tick 17; the body (turning at 2 rad/s) at tick 167
+ok    the_head_turns_to_the_player_before_the_body
+ok    the_levers_are_off_by_default_and_named_as_fields
+ok    with_slip_off_the_fingerprint_does_not_read_the_velocity
+      a route not walked to the end: 2.0 m short after 1956 ticks, 0 wall hits
+    corners 12 / 14 / 12; swing to the outside in the second after a corner (median): off 0.16 m, rate 3 1.52 m, rate 12 0.52 m; seconds with the facing 15 degrees or more off the travel: 0.00 / 0.56 / 0.28; routes walked to the end 10 / 9 / 10 of 10
+ok    slip_carries_a_chaser_wide_of_a_corner_and_its_facing_leads_its_travel
+    lowest speed within a second of a corner, share of top (median over 10 corners): off 0.30, floor 0.5 0.51; routes walked 10 / 10 of 10
+ok    the_corner_floor_keeps_a_chaser_above_its_share_of_top_speed
+ok    the_hunter_leads_a_runner_by_a_base_time_plus_its_distance_and_never_through_them
+ok    the_slosh_scorer_reads_a_swing_wide_of_the_runners_corner_and_not_a_chaser_that_follows
+ok    the_slosh_scorer_has_a_sampling_floor_of_a_third_of_a_metre_when_the_corner_falls_between_samples
+    median slip over 785 samples of no-sideslip walks: centred 0.03 deg, forward 0.12 deg
+ok    the_centred_slip_of_a_chaser_with_no_sideslip_reads_under_three_degrees
+    at a corner (median over 12 / 12 corners), within a second either side:
+      control  : sharpest turn 254 deg/s at 4.2 m/s (lateral 19.7 m/s^2); 26 % of the corner above Chang & Kram's Eqn 5 speed for its radius; worst point 1.46 times it
+      floor 0.5: sharpest turn 252 deg/s at 4.8 m/s (lateral 21.3 m/s^2); 32 % of the corner above Chang & Kram's Eqn 5 speed for its radius; worst point 1.55 times it
+      (cross-check against Table 1 itself: control 18 % above it, floor 0.5 32 %)
+ok    p3_turn_rate_at_speed_against_the_cited_curve_limit_is_reported
+ok    the_centred_slip_reads_a_turning_body_with_no_sideslip_as_zero_where_a_forward_one_reads_ten_degrees
+    9600 ticks untimed and 9600 timed at 40 s: the first that differs is 9600
+ok    with_the_timer_unreached_a_timed_run_is_the_untimed_run_tick_for_tick
+    timer 30 s: overtime at the timer 1, before it 0; sent after it: 1 dark, 0 others; the run ended at 105.9 s, saved 1
+ok    at_the_timer_the_run_goes_into_overtime_and_only_the_dark_one_is_sent
+    4 seeds, timer 25 s, clear 12 s: 4 reached overtime with 8 others about; ticks with one left after the clear 0; taken out in view 0; caught in overtime by another 0
+ok    in_overtime_the_others_walk_off_out_of_sight_and_are_gone_by_the_clear
+    timer 20 s: the dark one first stood 41.9 m off, in view 0; the run ended at 123.6 s, caught by the dark, saved 1, kept 7143 of 7143
+ok    the_dark_one_comes_from_out_of_sight_behind_and_a_catch_by_it_is_the_save
+    a still player, timer 600 s: caught at 8.0 s by the hunter, saved 0, kept 0 of 85
+ok    a_catch_before_the_timer_keeps_nothing
+    a player inside a reprieve that holds for 1000 s, timer 5 s: held before the timer 1 (997 s left); open after it 1; the run ended 1 at 12.1 s, caught by the dark, saved 1
+    a Park entered 0.5 s into overtime: in it 1, open on entry 1, 0 s of hold left
+ok    in_overtime_every_park_stops_protecting_and_no_park_cell_refuses_the_dark_one
+    timer 3 s: a fall at 2 s saved 0; a fall at 4 s (over before it 0) saved 1, kept 83 of 83
+ok    a_fall_into_a_void_in_overtime_is_the_save_and_before_it_is_not
+    timer 60 s, 70 s survived: the score 1900.0 against 900.0 (the first minute) + 5 x 20.00 a second x 10 s = 1900.0
+ok    overtime_pays_its_multiple_of_the_rate_the_run_had_at_the_timer
+CASE seed 3 k 14 player (4.50 -3.48 49.50) node kind 3
+  t   9.00 d  7.89 pos (6.02 -3.46 41.76) hd   15.6 spd  9.83 turn   16.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.05 d  7.45 pos (6.15 -3.46 42.23) hd   16.2 spd  9.84 turn    9.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.10 d  7.03 pos (6.29 -3.46 42.70) hd   16.6 spd  9.86 turn    5.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.15 d  6.61 pos (6.43 -3.46 43.18) hd   16.8 spd  9.88 turn    3.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.20 d  6.21 pos (6.58 -3.46 43.65) hd   16.9 spd  9.90 turn    1.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.25 d  5.82 pos (6.72 -3.46 44.12) hd   17.0 spd  9.92 turn    1.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.30 d  5.44 pos (6.87 -3.46 44.60) hd   17.0 spd  9.95 turn    0.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.35 d  5.09 pos (7.01 -3.46 45.08) hd   17.1 spd  9.97 turn    0.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.69 -3.46 40.40) -> (7.75 -3.46 47.47) see 0
+  t   9.40 d  4.77 pos (7.15 -3.46 45.54) hd   14.9 spd  9.25 turn  -89.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (7.03 -3.46 45.11) -> (6.46 -3.46 46.01) -> (6.26 -3.46 46.26) see 0
+  t   9.45 d  4.47 pos (7.24 -3.46 45.97) hd    7.6 spd  8.33 turn -181.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (7.03 -3.46 45.11) -> (6.46 -3.46 46.01) -> (6.26 -3.46 46.26) see 0
+  t   9.50 d  4.18 pos (7.25 -3.46 46.36) hd   -2.0 spd  7.36 turn -200.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/4 -> (7.03 -3.46 45.11) -> (6.46 -3.46 46.01) -> (6.26 -3.46 46.26) see 0
+  t   9.55 d  3.90 pos (7.21 -3.46 46.69) hd  -12.5 spd  6.40 turn -218.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/4 -> (6.46 -3.46 46.01) -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.60 d  3.64 pos (7.11 -3.46 46.97) hd  -24.0 spd  5.56 turn -237.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.65 d  3.36 pos (6.97 -3.46 47.22) hd  -35.7 spd  5.78 turn -231.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.70 d  3.07 pos (6.77 -3.46 47.44) hd  -47.1 spd  6.00 turn -226.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.75 d  2.77 pos (6.53 -3.46 47.62) hd  -58.3 spd  6.21 turn -220.3 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.77 d  2.68 pos (6.46 -3.46 47.67) hd  -61.9 spd  6.01 turn -218.4 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.77 d  2.67 pos (6.46 -3.46 47.68) hd  -62.9 spd  5.75 turn -222.4 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.78 d  2.67 pos (6.46 -3.46 47.69) hd  -63.8 spd  5.50 turn -227.3 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.78 d  2.66 pos (6.46 -3.46 47.70) hd  -64.8 spd  5.26 turn -232.7 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.78 d  2.65 pos (6.46 -3.46 47.71) hd  -65.8 spd  5.02 turn -238.1 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.79 d  2.65 pos (6.46 -3.46 47.72) hd  -66.8 spd  4.78 turn -243.6 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.79 d  2.64 pos (6.46 -3.46 47.73) hd  -67.8 spd  4.56 turn -249.0 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.80 d  2.64 pos (6.46 -3.46 47.73) hd  -68.9 spd  4.33 turn -254.3 mode pursue gait 0 blk 0 scr 1 hit 1 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.80 d  2.64 pos (6.46 -3.46 47.74) hd  -70.0 spd  4.12 turn -259.4 mode pursue gait 0 blk 0 scr 1 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.85 d  2.61 pos (6.46 -3.46 47.78) hd  -81.1 spd  2.08 turn -168.9 mode pursue gait 0 blk 7 scr 1 hit 0 leg 2/4 -> (6.26 -3.46 46.26) -> (2.62 -3.46 47.51) see 0
+  t   9.90 d  2.60 pos (6.46 -3.46 47.79) hd  -84.2 spd  1.10 turn   33.5 mode pursue gait 0 blk 12 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 47.78) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t   9.95 d  2.60 pos (6.46 -3.46 47.80) hd  -76.8 spd  0.74 turn  245.4 mode pursue gait 0 blk 24 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 47.78) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.00 d  2.59 pos (6.46 -3.46 47.81) hd  -60.5 spd  0.69 turn  344.1 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 47.78) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.05 d  2.58 pos (6.46 -3.46 47.83) hd  -43.3 spd  0.81 turn  341.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 47.78) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.10 d  2.55 pos (6.46 -3.46 47.87) hd  -26.4 spd  1.05 turn  336.3 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 47.78) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.15 d  2.51 pos (6.46 -3.46 47.93) hd  -13.9 spd  1.38 turn  183.3 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 47.78) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.20 d  2.47 pos (6.46 -3.46 48.01) hd   -7.3 spd  1.77 turn   96.5 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 47.78) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.25 d  2.41 pos (6.46 -3.46 48.11) hd   -3.8 spd  2.20 turn   50.8 mode pursue gait 0 blk 0 scr 1 hit 0 leg 0/5 -> (6.46 -3.46 47.78) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.30 d  2.34 pos (6.46 -3.46 48.23) hd   -2.0 spd  2.63 turn   26.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (6.46 -3.46 47.78) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.35 d  2.26 pos (6.46 -3.46 48.37) hd   -1.1 spd  3.08 turn   14.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (6.46 -3.46 48.36) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.40 d  2.19 pos (6.46 -3.46 48.54) hd   -0.6 spd  3.53 turn    7.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (6.46 -3.46 48.36) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.45 d  2.11 pos (6.46 -3.46 48.73) hd   -0.3 spd  3.98 turn    3.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/5 -> (6.46 -3.46 48.36) -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) see 0
+  t  10.50 d  2.05 pos (6.46 -3.46 48.92) hd   -2.8 spd  3.53 turn -123.6 mode pursue gait 0 blk 0 scr 1 hit 0 leg 1/5 -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) -> (6.01 -3.46 49.31) see 1
+  t  10.55 d  2.00 pos (6.45 -3.46 49.07) hd  -13.7 spd  2.70 turn -295.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 1/5 -> (6.46 -3.46 49.01) -> (6.26 -3.46 49.26) -> (6.01 -3.46 49.31) see 1
+  t  10.60 d  1.94 pos (6.41 -3.46 49.18) hd  -29.0 spd  1.88 turn -314.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/5 -> (6.26 -3.46 49.26) -> (6.01 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  10.65 d  1.87 pos (6.36 -3.46 49.25) hd  -45.0 spd  1.73 turn -319.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/5 -> (6.26 -3.46 49.26) -> (6.01 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  10.70 d  1.80 pos (6.29 -3.46 49.30) hd  -61.0 spd  1.74 turn -319.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 2/5 -> (6.26 -3.46 49.26) -> (6.01 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  10.75 d  1.71 pos (6.20 -3.46 49.33) hd  -73.6 spd  2.00 turn -165.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (6.01 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  10.80 d  1.60 pos (6.09 -3.46 49.36) hd  -78.8 spd  2.41 turn  -78.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 3/5 -> (6.01 -3.46 49.31) -> (4.50 -3.46 49.50) see 1
+  t  10.85 d  1.47 pos (5.96 -3.46 49.38) hd  -81.8 spd  2.84 turn  -45.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.99 -3.46 49.37) -> (4.50 -3.46 49.50) see 1
+  t  10.90 d  1.31 pos (5.81 -3.46 49.40) hd  -83.5 spd  3.28 turn  -26.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.99 -3.46 49.37) -> (4.50 -3.46 49.50) see 1
+  t  10.95 d  1.14 pos (5.63 -3.46 49.41) hd  -84.5 spd  3.72 turn  -16.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.99 -3.46 49.37) -> (4.50 -3.46 49.50) see 1
+  t  11.00 d  0.94 pos (5.44 -3.46 49.43) hd  -85.1 spd  4.16 turn  -10.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (5.99 -3.46 49.37) -> (4.50 -3.46 49.50) see 1
+END seed 3 k 14 over 1 at 11.01 s by hunter
+CASE seed 9 k 5 player (-40.50 -6.98 -43.50) node kind 3
+  t  19.15 d  7.82 pos (-40.32 -6.96 -35.68) hd -178.9 spd  7.14 turn    2.9 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.32 -6.96 -33.45) -> (-40.50 -6.96 -43.50) see 1
+  t  19.20 d  7.46 pos (-40.33 -6.96 -36.05) hd -178.7 spd  7.59 turn    2.5 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.32 -6.96 -33.45) -> (-40.50 -6.96 -43.50) see 1
+  t  19.25 d  7.06 pos (-40.34 -6.96 -36.44) hd -178.6 spd  8.05 turn    1.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.30 d  6.65 pos (-40.35 -6.96 -36.85) hd -178.6 spd  8.50 turn    0.8 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.35 d  6.21 pos (-40.36 -6.96 -37.29) hd -178.6 spd  8.96 turn   -0.6 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.40 d  5.76 pos (-40.37 -6.96 -37.74) hd -178.6 spd  9.08 turn   -1.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.45 d  5.30 pos (-40.38 -6.96 -38.20) hd -178.7 spd  9.11 turn   -0.7 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.50 d  4.85 pos (-40.39 -6.96 -38.65) hd -178.7 spd  9.13 turn   -0.4 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.55 d  4.39 pos (-40.40 -6.96 -39.11) hd -178.7 spd  9.15 turn   -0.2 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.60 d  3.93 pos (-40.41 -6.96 -39.57) hd -178.7 spd  9.17 turn   -0.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.65 d  3.47 pos (-40.42 -6.96 -40.03) hd -178.7 spd  9.20 turn   -0.1 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.70 d  3.01 pos (-40.43 -6.96 -40.49) hd -178.7 spd  9.22 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.33 -6.96 -36.18) -> (-40.50 -6.96 -43.50) see 1
+  t  19.75 d  2.55 pos (-40.44 -6.96 -40.95) hd -178.7 spd  9.24 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.43 -6.96 -40.57) -> (-40.50 -6.96 -43.50) see 1
+  t  19.80 d  2.09 pos (-40.45 -6.96 -41.41) hd -178.7 spd  9.26 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.43 -6.96 -40.57) -> (-40.50 -6.96 -43.50) see 1
+  t  19.85 d  1.62 pos (-40.46 -6.96 -41.88) hd -178.7 spd  9.29 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.43 -6.96 -40.57) -> (-40.50 -6.96 -43.50) see 1
+  t  19.90 d  1.16 pos (-40.47 -6.96 -42.34) hd -178.7 spd  9.31 turn   -0.0 mode pursue gait 0 blk 0 scr 0 hit 0 leg 0/2 -> (-40.43 -6.96 -40.57) -> (-40.50 -6.96 -43.50) see 1
+END seed 9 k 5 over 1 at 19.93 s by hunter
+ok    diag_door_trace
+    LOST seed 1: 44 m, 1 corners of 45 deg+, longest straight 42 m; careless 5.19 s (scraped 5, hits 0) careful 5.34 s (scraped 5, hits 0)
+    LOST seed 1: 53 m, 2 corners of 45 deg+, longest straight 44 m; careless 7.52 s (scraped 108, hits 1) careful 8.15 s (scraped 81, hits 0)
+    LOST seed 1: 65 m, 0 corners of 45 deg+, longest straight 35 m; careless 8.23 s (scraped 24, hits 0) careful 8.60 s (scraped 14, hits 0)
+    LOST seed 1: 84 m, 1 corners of 45 deg+, longest straight 71 m; careless 9.39 s (scraped 0, hits 0) careful 9.71 s (scraped 3, hits 0)
+    LOST seed 1: 50 m, 1 corners of 45 deg+, longest straight 48 m; careless 5.76 s (scraped 2, hits 0) careful 5.93 s (scraped 2, hits 0)
+    LOST seed 3: 77 m, 1 corners of 45 deg+, longest straight 44 m; careless 8.65 s (scraped 0, hits 0) careful 9.12 s (scraped 3, hits 0)
+    LOST seed 3: 44 m, 1 corners of 45 deg+, longest straight 13 m; careless 8.29 s (scraped 168, hits 1) careful 8.87 s (scraped 153, hits 1)
+    LOST seed 4: 67 m, 3 corners of 45 deg+, longest straight 14 m; careless 10.38 s (scraped 266, hits 0) careful 10.57 s (scraped 228, hits 1)
+    LOST seed 4: 64 m, 0 corners of 45 deg+, longest straight 20 m; careless 10.72 s (scraped 247, hits 1) careful 11.04 s (scraped 211, hits 1)
+    LOST seed 4: 49 m, 0 corners of 45 deg+, longest straight 17 m; careless 7.62 s (scraped 132, hits 1) careful 7.71 s (scraped 125, hits 1)
+    LOST seed 4: 79 m, 3 corners of 45 deg+, longest straight 45 m; careless 9.68 s (scraped 327, hits 0) careful 10.84 s (scraped 39, hits 0)
+    LOST seed 4: 43 m, 2 corners of 45 deg+, longest straight 30 m; careless 9.30 s (scraped 626, hits 0) careful 9.32 s (scraped 534, hits 0)
+    LOST seed 4: 66 m, 1 corners of 45 deg+, longest straight 34 m; careless 9.00 s (scraped 174, hits 0) careful 9.14 s (scraped 76, hits 0)
+    LOST seed 5: 71 m, 2 corners of 45 deg+, longest straight 34 m; careless 11.05 s (scraped 140, hits 1) careful 12.04 s (scraped 264, hits 1)
+    LOST seed 5: 43 m, 0 corners of 45 deg+, longest straight 32 m; careless 5.03 s (scraped 1, hits 0) careful 5.03 s (scraped 1, hits 0)
+    LOST seed 5: 55 m, 2 corners of 45 deg+, longest straight 37 m; careless 6.42 s (scraped 1, hits 0) careful 6.75 s (scraped 5, hits 0)
+    LOST seed 5: 56 m, 3 corners of 45 deg+, longest straight 26 m; careless 7.32 s (scraped 96, hits 0) careful 7.43 s (scraped 5, hits 0)
+    LOST seed 6: 42 m, 0 corners of 45 deg+, longest straight 29 m; careless 8.73 s (scraped 215, hits 1) careful 8.96 s (scraped 125, hits 0)
+    LOST seed 7: 74 m, 3 corners of 45 deg+, longest straight 24 m; careless 14.52 s (scraped 358, hits 1) careful 14.55 s (scraped 205, hits 1)
+    LOST seed 7: 52 m, 0 corners of 45 deg+, longest straight 35 m; careless 6.04 s (scraped 1, hits 0) careful 6.12 s (scraped 0, hits 0)
+    LOST seed 7: 49 m, 2 corners of 45 deg+, longest straight 17 m; careless 9.84 s (scraped 313, hits 2) careful 10.21 s (scraped 312, hits 2)
+    LOST seed 8: 57 m, 0 corners of 45 deg+, longest straight 26 m; careless 6.50 s (scraped 0, hits 0) careful 6.64 s (scraped 0, hits 0)
+    LOST seed 8: 74 m, 0 corners of 45 deg+, longest straight 47 m; careless 9.73 s (scraped 95, hits 0) careful 10.00 s (scraped 94, hits 0)
+    LOST seed 8: 50 m, 3 corners of 45 deg+, longest straight 24 m; careless 7.82 s (scraped 480, hits 0) careful 8.01 s (scraped 57, hits 0)
+    LOST seed 8: 77 m, 5 corners of 45 deg+, longest straight 27 m; careless 12.48 s (scraped 334, hits 2) careful 13.27 s (scraped 89, hits 0)
+    LOST seed 8: 58 m, 2 corners of 45 deg+, longest straight 31 m; careless 9.50 s (scraped 511, hits 0) careful 9.54 s (scraped 221, hits 0)
+  KIT ON: careful sooner 70 of 96; routes it won: mean 64 m, 2.8 corners of 45 deg+, longest straight 31 m; routes it lost: 59 m, 1.5 corners, 32 m
+  KIT OFF: careful sooner 85 of 96; routes it won: mean 65 m, 2.6 corners of 45 deg+, longest straight 30 m; routes it lost: 62 m, 1.6 corners, 37 m
+ok    diag_sprinter_routes
+    70.0 s of chase, 9 events, 260 tiles asked for and 133 let go; tiles waited for at their tick: 185, 260 with slow workers, 149 with ragged ones
+ok    the_streamed_world_gives_the_same_chase_whatever_the_workers_do
+ok    a_record_of_the_policys_inputs_plays_back_to_the_same_chase
+    385 m run in 42.2 s over 8 positions of the tile block; at most 130 tiles held, 193 asked for, 76 let go; 15443 looks at a chaser, 0 ticks with the player in a reprieve
+ok    navigation_follows_the_player_and_no_chaser_is_left_on_ground_that_has_gone
+    44 reprieves and 405 dead ends (384 with a way out for the player) known to the run six seconds in
+ok    the_streamed_world_tells_the_run_of_its_reprieves_and_dead_ends
+    3 turns in 20.0 s: sprinter interceptor pack
+ok    the_streamed_chase_takes_kinds_in_turn_as_the_fixed_arena_does
+78 tests, 1 failed
+    LOST seed 1: 44 m, 1 corners of 45 deg+, longest straight 42 m; careless 5.19 s (scraped 5, hits 0) careful 5.34 s (scraped 5, hits 0)
+    LOST seed 1: 53 m, 2 corners of 45 deg+, longest straight 44 m; careless 7.52 s (scraped 108, hits 1) careful 8.15 s (scraped 81, hits 0)
+    LOST seed 1: 65 m, 0 corners of 45 deg+, longest straight 35 m; careless 8.23 s (scraped 24, hits 0) careful 8.60 s (scraped 14, hits 0)
+    LOST seed 1: 84 m, 1 corners of 45 deg+, longest straight 71 m; careless 9.39 s (scraped 0, hits 0) careful 9.71 s (scraped 3, hits 0)
+    LOST seed 1: 50 m, 1 corners of 45 deg+, longest straight 48 m; careless 5.76 s (scraped 2, hits 0) careful 5.93 s (scraped 2, hits 0)
+    LOST seed 3: 77 m, 1 corners of 45 deg+, longest straight 44 m; careless 8.65 s (scraped 0, hits 0) careful 9.12 s (scraped 3, hits 0)
+    LOST seed 3: 44 m, 1 corners of 45 deg+, longest straight 13 m; careless 8.29 s (scraped 168, hits 1) careful 8.87 s (scraped 153, hits 1)
+    LOST seed 4: 67 m, 3 corners of 45 deg+, longest straight 14 m; careless 10.38 s (scraped 266, hits 0) careful 10.57 s (scraped 228, hits 1)
+    LOST seed 4: 64 m, 0 corners of 45 deg+, longest straight 20 m; careless 10.72 s (scraped 247, hits 1) careful 11.04 s (scraped 211, hits 1)
+    LOST seed 4: 49 m, 0 corners of 45 deg+, longest straight 17 m; careless 7.62 s (scraped 132, hits 1) careful 7.71 s (scraped 125, hits 1)
+    LOST seed 4: 79 m, 3 corners of 45 deg+, longest straight 45 m; careless 9.68 s (scraped 327, hits 0) careful 10.84 s (scraped 39, hits 0)
+    LOST seed 4: 43 m, 2 corners of 45 deg+, longest straight 30 m; careless 9.30 s (scraped 626, hits 0) careful 9.32 s (scraped 534, hits 0)
+    LOST seed 4: 66 m, 1 corners of 45 deg+, longest straight 34 m; careless 9.00 s (scraped 174, hits 0) careful 9.14 s (scraped 76, hits 0)
+    LOST seed 5: 71 m, 2 corners of 45 deg+, longest straight 34 m; careless 11.05 s (scraped 140, hits 1) careful 12.04 s (scraped 264, hits 1)
+    LOST seed 5: 43 m, 0 corners of 45 deg+, longest straight 32 m; careless 5.03 s (scraped 1, hits 0) careful 5.03 s (scraped 1, hits 0)
+    LOST seed 5: 55 m, 2 corners of 45 deg+, longest straight 37 m; careless 6.42 s (scraped 1, hits 0) careful 6.75 s (scraped 5, hits 0)
+    LOST seed 5: 56 m, 3 corners of 45 deg+, longest straight 26 m; careless 7.32 s (scraped 96, hits 0) careful 7.43 s (scraped 5, hits 0)
+    LOST seed 6: 42 m, 0 corners of 45 deg+, longest straight 29 m; careless 8.73 s (scraped 215, hits 1) careful 8.96 s (scraped 125, hits 0)
+    LOST seed 7: 74 m, 3 corners of 45 deg+, longest straight 24 m; careless 14.52 s (scraped 358, hits 1) careful 14.55 s (scraped 205, hits 1)
+    LOST seed 7: 52 m, 0 corners of 45 deg+, longest straight 35 m; careless 6.04 s (scraped 1, hits 0) careful 6.12 s (scraped 0, hits 0)
+    LOST seed 7: 49 m, 2 corners of 45 deg+, longest straight 17 m; careless 9.84 s (scraped 313, hits 2) careful 10.21 s (scraped 312, hits 2)
+    LOST seed 8: 57 m, 0 corners of 45 deg+, longest straight 26 m; careless 6.50 s (scraped 0, hits 0) careful 6.64 s (scraped 0, hits 0)
+    LOST seed 8: 74 m, 0 corners of 45 deg+, longest straight 47 m; careless 9.73 s (scraped 95, hits 0) careful 10.00 s (scraped 94, hits 0)
+    LOST seed 8: 50 m, 3 corners of 45 deg+, longest straight 24 m; careless 7.82 s (scraped 480, hits 0) careful 8.01 s (scraped 57, hits 0)
+    LOST seed 8: 77 m, 5 corners of 45 deg+, longest straight 27 m; careless 12.48 s (scraped 334, hits 2) careful 13.27 s (scraped 89, hits 0)
+    LOST seed 8: 58 m, 2 corners of 45 deg+, longest straight 31 m; careless 9.50 s (scraped 511, hits 0) careful 9.54 s (scraped 221, hits 0)
+  KIT ON: careful sooner 70 of 96; routes it won: mean 64 m, 2.8 corners of 45 deg+, longest straight 31 m; routes it lost: 59 m, 1.5 corners, 32 m
+  KIT OFF: careful sooner 85 of 96; routes it won: mean 65 m, 2.6 corners of 45 deg+, longest straight 30 m; routes it lost: 62 m, 1.6 corners, 37 m
+ok    diag_sprinter_routes
+1 tests, 0 failed
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.

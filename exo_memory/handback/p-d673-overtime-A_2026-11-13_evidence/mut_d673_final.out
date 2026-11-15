@@ -1,0 +1,20 @@
+park-keeps-protecting-in-overtime: CAUGHT by in_overtime_every_park_stops
+catch-ignores-an-open-park: CAUGHT by in_overtime_every_park_stops
+dark-stands-at-the-mouth-of-an-open-park: build failed
+others-catch-in-overtime: SURVIVED
+fall-save-removed: CAUGHT by a_fall_into_a_void
+dark-catch-not-the-save: CAUGHT by the_dark_one_comes_from, in_overtime_every_park_stops
+overtime-multiple-ignored: build failed
+score-ignores-overtime: CAUGHT by overtime_pays_its_multiple
+leaver-taken-in-view: SURVIVED
+dark-site-seen-allowed: SURVIVED
+dark-site-too-near: SURVIVED
+dark-sent-every-sense-tick: CAUGHT by at_the_timer_the_run_goes
+director-keeps-sending: SURVIVED
+climber-sent-in-overtime: SURVIVED
+leaver-turns-to-pursue: SURVIVED
+dark-told-roughly: SURVIVED
+dark-speed-no-rise: CAUGHT by the_dark_one_comes_from
+timer-one-second-early: CAUGHT by with_the_timer_unreached, at_the_timer_the_run_goes, in_overtime_every_park_stops, a_fall_into_a_void
+waiting-hunter-kept: SURVIVED
+applied 17 / caught 8 / NOT APPLIED 2; survivors: others-catch-in-overtime, leaver-taken-in-view, dark-site-seen-allowed, dark-site-too-near, director-keeps-sending, climber-sent-in-overtime, leaver-turns-to-pursue, dark-told-roughly, waiting-hunter-kept

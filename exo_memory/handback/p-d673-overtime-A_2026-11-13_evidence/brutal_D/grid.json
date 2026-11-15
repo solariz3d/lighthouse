@@ -1,0 +1,566 @@
+[
+ {
+  "s": 1.35,
+  "r": 0.02,
+  "first": 1,
+  "log": "cell_s1.35_r0.02_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 13,
+    "median": 100.1,
+    "p90": 156,
+    "max": 370,
+    "over90": 12,
+    "stopped": 1,
+    "saved": 19
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 7.9,
+    "median": 14.2,
+    "p90": 21.5,
+    "max": 24.7,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 8.2,
+    "median": 16.1,
+    "p90": 43.9,
+    "max": 52.6,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 62
+ },
+ {
+  "s": 0.9,
+  "r": 0,
+  "first": 1,
+  "log": "cell_s0.9_r0_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 63.4,
+    "median": 370,
+    "p90": 370,
+    "max": 370,
+    "over90": 19,
+    "stopped": 16,
+    "saved": 4
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 6.5,
+    "median": 29.8,
+    "p90": 46.8,
+    "max": 79.4,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 4.9,
+    "median": 16.8,
+    "p90": 50.5,
+    "max": 141.4,
+    "over90": 2,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 46
+ },
+ {
+  "s": 0.9,
+  "r": 0.02,
+  "first": 1,
+  "log": "cell_s0.9_r0.02_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 58,
+    "median": 116.9,
+    "p90": 141.9,
+    "max": 163.3,
+    "over90": 18,
+    "stopped": 0,
+    "saved": 20
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 6.5,
+    "median": 22.7,
+    "p90": 30.6,
+    "max": 33,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 4.9,
+    "median": 17.5,
+    "p90": 38,
+    "max": 56.7,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 42
+ },
+ {
+  "s": 0.9,
+  "r": 0.05,
+  "first": 1,
+  "log": "cell_s0.9_r0.05_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 25.2,
+    "median": 61.3,
+    "p90": 79.5,
+    "max": 84,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 8,
+    "median": 17.4,
+    "p90": 22.5,
+    "max": 27.4,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 7,
+    "median": 16.1,
+    "p90": 32.1,
+    "max": 36.5,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": true,
+  "F2": true,
+  "F3": false,
+  "secs": 34
+ },
+ {
+  "s": 1.1,
+  "r": 0,
+  "first": 1,
+  "log": "cell_s1.1_r0_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 57.4,
+    "median": 370,
+    "p90": 370,
+    "max": 370,
+    "over90": 17,
+    "stopped": 15,
+    "saved": 5
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 7.2,
+    "median": 21,
+    "p90": 34.4,
+    "max": 44.6,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 8.8,
+    "median": 14.1,
+    "p90": 27.1,
+    "max": 33.7,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 48
+ },
+ {
+  "s": 1.1,
+  "r": 0.02,
+  "first": 1,
+  "log": "cell_s1.1_r0.02_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 53.3,
+    "median": 98,
+    "p90": 132.9,
+    "max": 180.6,
+    "over90": 12,
+    "stopped": 0,
+    "saved": 20
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 7.9,
+    "median": 18.6,
+    "p90": 24.7,
+    "max": 29.5,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 8.4,
+    "median": 18,
+    "p90": 53.1,
+    "max": 67.3,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 43
+ },
+ {
+  "s": 1.1,
+  "r": 0.05,
+  "first": 1,
+  "log": "cell_s1.1_r0.05_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 22.5,
+    "median": 57.4,
+    "p90": 83.1,
+    "max": 94.1,
+    "over90": 1,
+    "stopped": 0,
+    "saved": 20
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 9.1,
+    "median": 13.6,
+    "p90": 18.3,
+    "max": 25.2,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 4.6,
+    "median": 14.5,
+    "p90": 32.1,
+    "max": 51.4,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 35
+ },
+ {
+  "s": 1.35,
+  "r": 0,
+  "first": 1,
+  "log": "cell_s1.35_r0_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 75,
+    "median": 370,
+    "p90": 370,
+    "max": 370,
+    "over90": 18,
+    "stopped": 13,
+    "saved": 7
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 8.4,
+    "median": 18.7,
+    "p90": 31.1,
+    "max": 38.1,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 8.1,
+    "median": 15.7,
+    "p90": 32.4,
+    "max": 218.5,
+    "over90": 1,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 57
+ },
+ {
+  "s": 1.35,
+  "r": 0.05,
+  "first": 1,
+  "log": "cell_s1.35_r0.05_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 12.7,
+    "median": 50.6,
+    "p90": 76.3,
+    "max": 94.1,
+    "over90": 1,
+    "stopped": 0,
+    "saved": 20
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 7.8,
+    "median": 13.4,
+    "p90": 20.9,
+    "max": 21.3,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 4.7,
+    "median": 15.7,
+    "p90": 110.4,
+    "max": 370,
+    "over90": 3,
+    "stopped": 1,
+    "saved": 19
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 34
+ },
+ {
+  "s": 1.6,
+  "r": 0,
+  "first": 1,
+  "log": "cell_s1.6_r0_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 7.1,
+    "median": 326.9,
+    "p90": 370,
+    "max": 370,
+    "over90": 15,
+    "stopped": 8,
+    "saved": 12
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 6.3,
+    "median": 15,
+    "p90": 24,
+    "max": 25.6,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 4.6,
+    "median": 16.2,
+    "p90": 31.4,
+    "max": 35.7,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 55
+ },
+ {
+  "s": 1.6,
+  "r": 0.02,
+  "first": 1,
+  "log": "cell_s1.6_r0.02_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 22.2,
+    "median": 84.8,
+    "p90": 121.2,
+    "max": 141.2,
+    "over90": 9,
+    "stopped": 0,
+    "saved": 20
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 6,
+    "median": 13.9,
+    "p90": 17.5,
+    "max": 23.3,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 4.6,
+    "median": 13,
+    "p90": 61.8,
+    "max": 370,
+    "over90": 1,
+    "stopped": 1,
+    "saved": 19
+   }
+  },
+  "premise": true,
+  "F1": false,
+  "F2": true,
+  "F3": false,
+  "secs": 36
+ },
+ {
+  "s": 1.6,
+  "r": 0.05,
+  "first": 1,
+  "log": "cell_s1.6_r0.05_from1.log",
+  "status": 0,
+  "row": {
+   "flee": {
+    "runs": 20,
+    "reached": 20,
+    "min": 19.5,
+    "median": 50.5,
+    "p90": 63.6,
+    "max": 77.2,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "line": {
+    "runs": 20,
+    "reached": 20,
+    "min": 5.8,
+    "median": 12.7,
+    "p90": 16.7,
+    "max": 21,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   },
+   "juke": {
+    "runs": 20,
+    "reached": 20,
+    "min": 5.5,
+    "median": 11.4,
+    "p90": 15.9,
+    "max": 36.3,
+    "over90": 0,
+    "stopped": 0,
+    "saved": 20
+   }
+  },
+  "premise": true,
+  "F1": true,
+  "F2": true,
+  "F3": false,
+  "secs": 32
+ }
+]

@@ -1,0 +1,8 @@
+arena: seed 1, chunks x -3..1  y -1..1  z -2..2; 75 tiles (0 from the cache, 0 failed), 46266 polygons, 1499088 triangles, 17410 graph nodes; 15 reprieves, 41 dead ends (13 with a way out), 141 pockets at the block's edge; 3.1 s to build
+
+line, level 3 (brutal): caught by the hunter after 23.6 s, score 283; in connected space; 214 m run
+  lesser chasers: 0 sprinters, 1 interceptors, 0 pack bodies; sighted 0, heard 0, lost 0 (0 at a reprieve's mouth); peaks 0, reliefs 0
+  the player: 0 reprieves used, 0 dead ends entered, cornered 0, climbed out 0; climbs 0, drops 0, ladders 0; idle 0 s; 9 plans, 0 with nowhere safe, stuck 0
+  cost: 2.00 us a tick on average, 330 us at worst; 0.212% of ticks over 50 us, 0.0529% over 200 us; 3.3 paths a second (0 failed)
+  fingerprints: chase 8026ddba5077613f, simulation 6ca55ae8dc21007a
+  wrote C:\Users\zackn\AppData\Local\Temp\claude\4589df4838997b56\6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f\scratchpad\l211\L\control/chase_seed1_line_level3_storey0.png (1023 x 1041, storey 0)

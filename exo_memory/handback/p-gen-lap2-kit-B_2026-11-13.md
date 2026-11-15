@@ -430,3 +430,14 @@ hidden, BelowNormal: `d665b\d14_capture.txt` in B's scratchpad prints each pictu
   run on A's lock, then on P's exclusive hold (`d12.cmd.err.txt`).
 
 NEXT: the librarian reads this when it arrives; B goes on to Lap W, pane R, whose own hand-back follows.
+
+## WHERE IT STOPS (D, 2026-11-14 ~05:3xZ, the close order)
+
+- **gen-lap2-kit is pushed, not landed.** The game's remote branch fast-forwarded from L's `c9ad588` to `fcf5c43` (checked: `git ls-remote
+  origin refs/heads/gen-lap2-kit` → fcf5c431205f72a9d98bb56121e21f62de01dcfa; scan: push gate allow, privacy 0 hits). Nothing went to main
+  (main read back at `8249d58`).
+- **What blocks its landing:** A's sprinter row (red since step 1 of D665; its bar is at the margin, it needs a ruling).
+- **Its worktree:** `C:\Users\nname\Desktop\worktrees\dz3-d658-b`, on gen-lap2-kit, clean. Its local `game\config\world.local.txt`
+  (`flashlight = 1`) is gitignored, and `assets\` was copied from his checkout.
+- **His play copy:** `C:\Users\nname\Desktop\dz3-kit-play`, detached at `28c6879`, built, `flashlight = 1`. He opens `launch.vbs`. It is
+  his copy, so nothing more is done to it.

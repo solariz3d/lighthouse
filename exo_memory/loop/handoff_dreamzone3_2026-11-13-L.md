@@ -14,6 +14,10 @@ items 183 to 190 are today's) and from each pane's "WHERE IT STOPS" section name
   the motion yardstick (L193).
 - **Landings go through the landing train** (`consonance/tools/landing-train.js`; `handback/p-l194-landing-train-B_2026-11-13.md`).
   A pane marks a branch READY; someone must start the train (no owner yet).
+  - **OWED ON L (added 2026-11-14 04:1xZ by pane B on D, at the chair's D675 word):** once lighthouse `train-exit3-b` lands, add to L's
+    `C:\Consonance\data\landing-train.config.dreamzone-3.json` the one key `"reread": ["build\\bin\\dz-world.exe", "--selftest"]`.
+    Until then a world self-test exit 3 (machine-bound reds only) stays red in the train, as before. The config is not on D. Why:
+    `handback/p-train-exit3-B_2026-11-14.md` §6.
 
 ## Branches in flight (each pane's own "WHERE IT STOPS" section is the master; the shas here were read at 13:15Z)
 

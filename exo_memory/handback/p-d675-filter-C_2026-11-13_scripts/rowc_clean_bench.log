@@ -1,0 +1,28 @@
+06:29:27.939Z exe 3709952 bytes, mtime 2026-11-14T06:29:27.053Z
+06:29:27.939Z clone 99b60453; exe G:\consonance-scratch\c-d675-pacing\wt-31d1c6d\build\bin\dz-world.exe; args --bench 30 --chasers --seed 1 --size 2560 1440; token present
+06:29:27.939Z session from run 1 of 7
+06:29:28.033Z the card's first list: 15 processes (names in card-users.log, private); a run whose list gains one is void
+06:29:28.450Z   01-defaults start: card 0% busy, SM 2647 MHz, memory 15001 MHz, P0, 48.56 W, 43.55 C; 15 processes on the card, 0 not in the session's first list
+06:30:03.447Z   01-defaults end: card 1% busy, SM 2805 MHz, memory 15001 MHz, P0, 144.30 W, 49.55 C; 15 processes on the card, 0 not in the session's first list
+06:30:03.448Z 01-defaults	06:29:28Z	exit 0	avg 1.497 p99 1.972 worst 2.370 (10801 frames)	clean
+06:30:03.852Z   02-filter start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 112.15 W, 47.65 C; 15 processes on the card, 0 not in the session's first list
+06:30:37.764Z   02-filter end: card 1% busy, SM 2790 MHz, memory 15001 MHz, P0, 194.58 W, 51.89 C; 15 processes on the card, 0 not in the session's first list
+06:30:37.765Z 02-filter	06:30:03Z	exit 0	avg 1.861 p99 2.341 worst 2.741 (10801 frames)	clean
+06:30:38.138Z   03-defaults start: card 0% busy, SM 2812 MHz, memory 15001 MHz, P0, 163.39 W, 49.36 C; 15 processes on the card, 0 not in the session's first list
+06:31:12.077Z   03-defaults end: card 48% busy, SM 2805 MHz, memory 15001 MHz, P0, 158.60 W, 54.07 C; 15 processes on the card, 0 not in the session's first list
+06:31:12.078Z 03-defaults	06:30:38Z	exit 0	avg 1.496 p99 1.968 worst 2.306 (10801 frames)	clean
+06:31:12.466Z   04-filter start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 106.52 W, 46.58 C; 15 processes on the card, 0 not in the session's first list
+06:31:46.374Z   04-filter end: card 61% busy, SM 2790 MHz, memory 15001 MHz, P0, 209.56 W, 58.85 C; 15 processes on the card, 0 not in the session's first list
+06:31:46.374Z 04-filter	06:31:12Z	exit 0	avg 1.862 p99 2.342 worst 2.688 (10801 frames)	clean
+06:31:46.751Z   05-defaults start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 134.04 W, 48.38 C; 15 processes on the card, 0 not in the session's first list
+06:32:20.642Z   05-defaults end: card 49% busy, SM 2805 MHz, memory 15001 MHz, P0, 155.65 W, 51.63 C; 15 processes on the card, 0 not in the session's first list
+06:32:20.643Z 05-defaults	06:31:46Z	exit 0	avg 1.496 p99 1.974 worst 2.335 (10801 frames)	clean
+06:32:21.032Z   06-filter start: card 0% busy, SM 2827 MHz, memory 15001 MHz, P0, 103.24 W, 46.52 C; 15 processes on the card, 0 not in the session's first list
+06:32:54.967Z   06-filter end: card 61% busy, SM 2797 MHz, memory 15001 MHz, P0, 209.44 W, 58.65 C; 15 processes on the card, 0 not in the session's first list
+06:32:54.968Z 06-filter	06:32:20Z	exit 0	avg 1.861 p99 2.343 worst 2.598 (10801 frames)	clean
+06:32:55.358Z   07-defaults start: card 0% busy, SM 2820 MHz, memory 15001 MHz, P0, 151.43 W, 48.77 C; 15 processes on the card, 0 not in the session's first list
+06:33:29.272Z   07-defaults end: card 1% busy, SM 2820 MHz, memory 15001 MHz, P0, 149.05 W, 49.41 C; 15 processes on the card, 0 not in the session's first list
+06:33:29.273Z 07-defaults	06:32:55Z	exit 0	avg 1.496 p99 1.972 worst 2.248 (10801 frames)	clean
+06:33:29.273Z exe before: 3709952 bytes, mtime 2026-11-14T06:29:27.053Z; after: 3709952 bytes, mtime 2026-11-14T06:29:27.053Z: unchanged
+06:33:29.424Z clone state after: unchanged
+06:33:29.424Z done

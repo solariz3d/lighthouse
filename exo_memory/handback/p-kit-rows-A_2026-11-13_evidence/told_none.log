@@ -1,0 +1,10 @@
+    seed 3 case k 14: caught 1 at 19.85 s
+    seed 9 case k 5: caught 1 at 36.00 s
+    the hunter near where it was sent, without sight, a quarter of a second: 7 times; its aim the player's own place within a second: 0
+    G:\consonance-scratch\a-gen-dz3\chase\tests\proof_tests.cpp(250): CHECK_EQ failed: held = 0, episodes = 7
+FAIL  a_hunter_near_where_it_was_sent_that_cannot_see_the_player_is_told_exactly
+1 tests, 1 failed
+    10 of 10 players standing 30 to 110 m from the door were reached; the slowest took 2.68 times the planned time
+    G:\consonance-scratch\a-gen-dz3\chase\tests\proof_tests.cpp(296): CHECK failed: worst_ratio < 2.5f
+FAIL  the_hunter_always_reaches_a_player_who_stands_still_in_connected_space
+1 tests, 1 failed

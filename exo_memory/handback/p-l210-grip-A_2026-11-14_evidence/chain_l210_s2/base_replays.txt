@@ -1,0 +1,3 @@
+'C:\Users\zackn\Downloads\dreamzone-3-a-l210g\build\bin\replay_check.exe' is not recognized as an internal or external command,
+operable program or batch file.
+lockrun: L210 s2 base replays WALL 0 s, exit 1

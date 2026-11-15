@@ -190,3 +190,10 @@ Ruling: the chair's 02:33Z item 2 and 02:58Z.
 
 **The finding put to him, his call** (drawn is not seen). The Dark is a **black silhouette**: visible against the lit
 corridor, near invisible in the dark stretch. Its look stays his; nothing is changed for it.
+
+## WHERE IT STOPS (close of 2026-11-13)
+
+- **The Dark is LANDED** on the game's main (`e0fcdec`, O's landing of `7bc9f3c`).
+- **Its look is his call.** It reads as a black silhouette: visible against a lit corridor, near invisible in the dark.
+  The clip is `G:\consonance-scratch\e-dark-film-landed\`. Nothing is changed for it until he says.
+- **C's note 2 (a box fallback) is declined,** with the reason in the addendum.

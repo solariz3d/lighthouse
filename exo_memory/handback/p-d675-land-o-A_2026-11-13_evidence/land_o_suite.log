@@ -1,0 +1,401 @@
+-- Configuring done (0.2s)
+-- Generating done (0.4s)
+-- Build files have been written to: C:/Users/nname/Desktop/worktrees/dz3-d656-land/build
+[1/195] Building CXX object sim\CMakeFiles\dz_sim.dir\bot.cpp.obj
+[2/195] Building CXX object gen\CMakeFiles\dz_gen.dir\src\voids.cpp.obj
+[3/195] Building CXX object sim\CMakeFiles\dz_sim.dir\world.cpp.obj
+[4/195] Building CXX object gen\CMakeFiles\dz_gen.dir\src\biome.cpp.obj
+[5/195] Building CXX object nav\CMakeFiles\dz_nav.dir\world.cpp.obj
+[6/195] Building CXX object sim\CMakeFiles\dz_sim.dir\scene_build.cpp.obj
+[7/195] Building CXX object gen\CMakeFiles\dz_gen.dir\src\layout.cpp.obj
+[8/195] Building CXX object sim\CMakeFiles\dz_sim.dir\run.cpp.obj
+[9/195] Building CXX object gen\CMakeFiles\dz_gen.dir\src\graph.cpp.obj
+[10/195] Building CXX object third_party\CMakeFiles\cgltf.dir\cgltf_impl.cpp.obj
+[11/195] Building CXX object gen\CMakeFiles\dz_gen.dir\src\measure.cpp.obj
+[12/195] Building CXX object nav\CMakeFiles\dz_nav.dir\pool.cpp.obj
+[13/195] Building CXX object gen\CMakeFiles\dz_gen.dir\src\route_profile.cpp.obj
+[14/195] Building CXX object gen\CMakeFiles\dz_gen.dir\src\emit.cpp.obj
+[15/195] Building CXX object sim\CMakeFiles\dz_sim.dir\gym.cpp.obj
+[16/195] Building CXX object chase\CMakeFiles\dz_chase.dir\dials.cpp.obj
+[17/195] Building CXX object chase\CMakeFiles\dz_chase.dir\archetype.cpp.obj
+[18/195] Building CXX object nav\CMakeFiles\dz_nav.dir\stream.cpp.obj
+[19/195] Building CXX object gen\CMakeFiles\dz_gen_walk.dir\src\drop_proof.cpp.obj
+[20/195] Building CXX object sim\CMakeFiles\dz_sim.dir\physics.cpp.obj
+[21/195] Building CXX object nav\CMakeFiles\dz_nav.dir\build.cpp.obj
+[22/195] Building CXX object gen\CMakeFiles\dz_gen_walk.dir\src\walk_proof.cpp.obj
+[23/195] Building CXX object nav\CMakeFiles\dz_nav_gen.dir\gen_adapter.cpp.obj
+[24/195] Building CXX object world\CMakeFiles\dz_world.dir\route.cpp.obj
+[25/195] Building CXX object chase\CMakeFiles\dz_chase.dir\speed.cpp.obj
+[26/195] Building CXX object world\CMakeFiles\dz_world.dir\walk.cpp.obj
+[27/195] Building CXX object chase\CMakeFiles\dz_chase.dir\run.cpp.obj
+[28/195] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\play.cpp.obj
+[29/195] Building CXX object chase\CMakeFiles\dz_chase.dir\chaser.cpp.obj
+[30/195] Linking CXX static library sim\dz_sim.lib
+[31/195] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\slosh.cpp.obj
+[32/195] Linking CXX static library third_party\cgltf.lib
+[33/195] Linking CXX static library gen\dz_gen.lib
+[34/195] dxc BloomUpCS
+[35/195] dxc TaaCS
+[36/195] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\bots.cpp.obj
+[37/195] Building CXX object model\CMakeFiles\dz_model.dir\model.cpp.obj
+[38/195] dxc SkinCS
+[39/195] dxc FullscreenVS
+[40/195] dxc TraceCS
+[41/195] dxc TonemapPS
+[42/195] Linking CXX static library nav\dz_nav.lib
+[43/195] dxc BloomDownCS
+[44/195] Linking CXX static library gen\dz_gen_walk.lib
+[45/195] Linking CXX static library model\dz_model.lib
+[46/195] Building CXX object world\CMakeFiles\dz_world.dir\stream.cpp.obj
+[47/195] Building CXX object game\CMakeFiles\dz_game.dir\camera.cpp.obj
+[48/195] Building CXX object game\CMakeFiles\dz_game.dir\body_figure.cpp.obj
+[49/195] Building CXX object game\CMakeFiles\dz_game.dir\skeleton.cpp.obj
+[50/195] Building CXX object game\CMakeFiles\dz_game.dir\body.cpp.obj
+[51/195] Building CXX object chase\CMakeFiles\dz_chase_arena.dir\arena.cpp.obj
+[52/195] Linking CXX static library nav\dz_nav_gen.lib
+[53/195] Building CXX object game\CMakeFiles\dz_game.dir\ghost.cpp.obj
+[54/195] Linking CXX static library chase\dz_chase.lib
+[55/195] Building CXX object game\CMakeFiles\dz_game.dir\session.cpp.obj
+[56/195] Building CXX object game\CMakeFiles\dz_game.dir\course.cpp.obj
+[57/195] Building CXX object game\CMakeFiles\dz_game.dir\shell.cpp.obj
+[58/195] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\joint_angles.cpp.obj
+[59/195] Building CXX object game\CMakeFiles\dz_game.dir\model_rig.cpp.obj
+[60/195] Building CXX object chase\CMakeFiles\dz_chase_world.dir\streamed.cpp.obj
+[61/195] Building CXX object audio\CMakeFiles\dz_audio.dir\wav.cpp.obj
+[62/195] Building CXX object core\CMakeFiles\core_tests.dir\tests\core_tests.cpp.obj
+[63/195] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\acclaim.cpp.obj
+[64/195] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\player.cpp.obj
+[65/195] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\sheet.cpp.obj
+[66/195] Building CXX object render\CMakeFiles\dz_render.dir\src\dds.cpp.obj
+[67/195] Building CXX object render\CMakeFiles\dz_render.dir\src\png.cpp.obj
+[68/195] Linking CXX static library world\dz_world.lib
+[69/195] Building CXX object audio\CMakeFiles\dz_audio.dir\device.cpp.obj
+[70/195] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\nname\Desktop\worktrees\dz3-d656-land\build\game && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -DSRC=C:/Users/nname/Desktop/worktrees/dz3-d656-land -DOUT=C:/Users/nname/Desktop/worktrees/dz3-d656-land/build/game/generated/build_commit.h -P C:/Users/nname/Desktop/worktrees/dz3-d656-land/game/world/build_commit.cmake"
+[71/195] Linking CXX static library chase\dz_chase_arena.lib
+[72/195] Building CXX object audio\CMakeFiles\dz_audio.dir\mixer.cpp.obj
+[73/195] Building CXX object game\CMakeFiles\dz_game.dir\app.cpp.obj
+[74/195] Building CXX object game\CMakeFiles\dz_ragdoll.dir\ragdoll.cpp.obj
+[75/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\ground_tests.cpp.obj
+[76/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\dive_landing_tests.cpp.obj
+[77/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\vault_mantle_tests.cpp.obj
+[78/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\gym_tests.cpp.obj
+[79/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\jump_tests.cpp.obj
+[80/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\wall_tests.cpp.obj
+[81/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\slide_tests.cpp.obj
+[82/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\ladder_tests.cpp.obj
+[83/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\collision_tests.cpp.obj
+[84/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\piece_tests.cpp.obj
+[85/195] Building CXX object sim\CMakeFiles\sim_tests.dir\tests\determinism_tests.cpp.obj
+[86/195] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_settings.cpp.obj
+[87/195] Linking CXX static library chase\dz_chase_world.lib
+[88/195] Building CXX object tools\CMakeFiles\dz_yardstick.dir\yardstick\reference.cpp.obj
+[89/195] Building CXX object game\CMakeFiles\dz_world_game.dir\world\beam.cpp.obj
+[90/195] Building CXX object game\CMakeFiles\dz_world_game.dir\world\acoustics.cpp.obj
+[91/195] Building CXX object game\CMakeFiles\dz_world_game.dir\world\figures.cpp.obj
+[92/195] Linking CXX static library game\dz_game.lib
+[93/195] Building CXX object game\CMakeFiles\dz_world_game.dir\world\run_frame.cpp.obj
+[94/195] Building CXX object gen\CMakeFiles\dz-gen.dir\tools\dz-gen\plan.cpp.obj
+[95/195] Building CXX object tools\CMakeFiles\dz-yardstick.dir\yardstick\main.cpp.obj
+[96/195] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\layout_tests.cpp.obj
+[97/195] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\stair_tests.cpp.obj
+[98/195] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\pin_tests.cpp.obj
+[99/195] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\range_tests.cpp.obj
+[100/195] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\geometry_tests.cpp.obj
+[101/195] Building CXX object tools\CMakeFiles\yardstick_tests.dir\yardstick\yardstick_tests.cpp.obj
+[102/195] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\void_tests.cpp.obj
+[103/195] Building CXX object gen\CMakeFiles\gen_walk_tests.dir\tests\walk_tests.cpp.obj
+[104/195] Building CXX object render\CMakeFiles\dz_render.dir\src\renderer.cpp.obj
+[105/195] Building CXX object gen\CMakeFiles\gen_drop_tests.dir\tests\drop_tests.cpp.obj
+[106/195] Building CXX object game\CMakeFiles\dz_world_game.dir\world\world_app.cpp.obj
+[107/195] Building CXX object gen\CMakeFiles\gen_tests.dir\tests\dial_tests.cpp.obj
+[108/195] Building CXX object render\CMakeFiles\dz-view.dir\view\test_scene.cpp.obj
+[109/195] Building CXX object tools\CMakeFiles\dz-sim.dir\dz-sim\main.cpp.obj
+[110/195] Building CXX object gen\CMakeFiles\dz-gen.dir\tools\dz-gen\main.cpp.obj
+[111/195] Building CXX object model\CMakeFiles\model_tests.dir\tests\model_tests.cpp.obj
+[112/195] Building CXX object world\CMakeFiles\world_tests.dir\tests\coords_tests.cpp.obj
+[113/195] Building CXX object world\CMakeFiles\world_tests.dir\tests\route_tests.cpp.obj
+[114/195] Linking CXX static library render\dz_render.lib
+[115/195] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\connect_tests.cpp.obj
+[116/195] Building CXX object game\CMakeFiles\dz_world_game.dir\world\run_record.cpp.obj
+[117/195] Linking CXX static library tools\dz_yardstick.lib
+[118/195] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\reprieve_tests.cpp.obj
+[119/195] Building CXX object render\CMakeFiles\dz-view.dir\view\main.cpp.obj
+[120/195] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\build_tests.cpp.obj
+[121/195] Building CXX object world\CMakeFiles\world_tests.dir\tests\stream_tests.cpp.obj
+[122/195] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\pursuit_tests.cpp.obj
+[123/195] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\rule_tests.cpp.obj
+[124/195] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\stay_tests.cpp.obj
+[125/195] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\speed_tests.cpp.obj
+[126/195] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\body_tests.cpp.obj
+[127/195] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\stream_tests.cpp.obj
+[128/195] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\proof_tests.cpp.obj
+[129/195] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\feel_tests.cpp.obj
+[130/195] Building CXX object game\CMakeFiles\game_tests.dir\tests\ghost_tests.cpp.obj
+[131/195] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\voice_tests.cpp.obj
+[132/195] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\overtime_tests.cpp.obj
+[133/195] Building CXX object nav\CMakeFiles\nav_tests.dir\tests\path_tests.cpp.obj
+[134/195] Building CXX object nav\CMakeFiles\dz-nav.dir\tools\dz-nav\main.cpp.obj
+[135/195] Building CXX object chase\CMakeFiles\dz-chase.dir\tools\dz-chase\main.cpp.obj
+[136/195] Linking CXX static library audio\dz_audio.lib
+[137/195] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\device_tests.cpp.obj
+[138/195] Building CXX object game\CMakeFiles\game_tests.dir\tests\camera_tests.cpp.obj
+[139/195] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\bed_tests.cpp.obj
+[140/195] Building CXX object game\CMakeFiles\game_tests.dir\tests\session_tests.cpp.obj
+[141/195] Building CXX object chase\CMakeFiles\chase_tests.dir\tests\streamed_tests.cpp.obj
+[142/195] Building CXX object game\CMakeFiles\game_tests.dir\tests\model_rig_tests.cpp.obj
+[143/195] Building CXX object game\CMakeFiles\game_tests.dir\tests\body_tests.cpp.obj
+[144/195] Building CXX object game\CMakeFiles\dz-gym.dir\gym\window.cpp.obj
+[145/195] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\mix_tests.cpp.obj
+[146/195] Building CXX object game\CMakeFiles\ragdoll_tests.dir\tests\ragdoll_tests.cpp.obj
+[147/195] Linking CXX static library game\dz_ragdoll.lib
+[148/195] Building CXX object game\CMakeFiles\dz-gym.dir\gym\hud.cpp.obj
+[149/195] Building CXX object game\CMakeFiles\game_tests.dir\tests\skeleton_tests.cpp.obj
+[150/195] Building CXX object audio\CMakeFiles\audio_tests.dir\tests\room_tests.cpp.obj
+[151/195] Building CXX object game\CMakeFiles\dz-gym.dir\gym\main.cpp.obj
+[152/195] Building CXX object game\CMakeFiles\game_tests.dir\tests\app_tests.cpp.obj
+[153/195] Building CXX object game\CMakeFiles\dz-gym.dir\gym\stage.cpp.obj
+[154/195] Building CXX object game\CMakeFiles\dz-gym.dir\gym\offscreen.cpp.obj
+[155/195] Linking CXX static library game\dz_world_game.lib
+[156/195] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen.cpp.obj
+[157/195] Building CXX object game\CMakeFiles\dz-world.dir\world\sound.cpp.obj
+[158/195] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\run_record_tests.cpp.obj
+[159/195] Building CXX object game\CMakeFiles\dz-gym.dir\gym\selftest.cpp.obj
+[160/195] Building CXX object game\CMakeFiles\dz-world.dir\world\hud.cpp.obj
+[161/195] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_burst.cpp.obj
+[162/195] Building CXX object game\CMakeFiles\dz-gym.dir\gym\body_capture.cpp.obj
+[163/195] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_frame.cpp.obj
+[164/195] Building CXX object game\CMakeFiles\world_app_tests.dir\tests\world_app_tests.cpp.obj
+[165/195] Building CXX object game\CMakeFiles\dz-world.dir\gym\window.cpp.obj
+[166/195] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_models.cpp.obj
+[167/195] Building CXX object game\CMakeFiles\dz-world.dir\world\stage.cpp.obj
+[168/195] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_run.cpp.obj
+[169/195] Linking CXX executable bin\core_tests.exe
+[170/195] Linking CXX executable bin\sim_tests.exe
+[171/195] Building CXX object game\CMakeFiles\dz-world.dir\world\main.cpp.obj
+[172/195] Linking CXX executable bin\dz-yardstick.exe
+[173/195] Linking CXX executable bin\yardstick_tests.exe
+[174/195] Linking CXX executable bin\dz-gen.exe
+[175/195] Linking CXX executable bin\gen_drop_tests.exe
+[176/195] Linking CXX executable bin\gen_tests.exe
+[177/195] Linking CXX executable bin\gen_walk_tests.exe
+[178/195] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest.cpp.obj
+[179/195] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_fpbody.cpp.obj
+[180/195] Linking CXX executable bin\dz-sim.exe
+[181/195] Linking CXX executable bin\model_tests.exe
+[182/195] Linking CXX executable bin\dz-view.exe
+[183/195] Linking CXX executable bin\dz-nav.exe
+[184/195] Linking CXX executable bin\world_tests.exe
+[185/195] Linking CXX executable bin\nav_tests.exe
+[186/195] Building CXX object game\CMakeFiles\dz-world.dir\world\selftest_run.cpp.obj
+[187/195] Linking CXX executable bin\audio_tests.exe
+[188/195] Linking CXX executable bin\dz-chase.exe
+[189/195] Linking CXX executable bin\dz-gym.exe
+[190/195] Linking CXX executable bin\chase_tests.exe
+[191/195] Linking CXX executable bin\game_tests.exe
+[192/195] Linking CXX executable bin\ragdoll_tests.exe
+[193/195] Linking CXX executable bin\world_app_tests.exe
+[194/195] Building CXX object game\CMakeFiles\dz-world.dir\world\offscreen_look.cpp.obj
+[195/195] Linking CXX executable bin\dz-world.exe
+Internal ctest changing into directory: C:/Users/nname/Desktop/worktrees/dz3-d656-land/build
+Test project C:/Users/nname/Desktop/worktrees/dz3-d656-land/build
+      Start  1: core_tests
+      Start  2: sim_tests
+      Start  3: yardstick_tests
+ 1/14 Test  #1: core_tests .......................   Passed    0.19 sec
+      Start  4: model_tests
+ 2/14 Test  #3: yardstick_tests ..................   Passed    0.21 sec
+      Start  5: gen_tests
+ 3/14 Test  #4: model_tests ......................   Passed    0.35 sec
+      Start  6: gen_walk_tests
+ 4/14 Test  #2: sim_tests ........................   Passed    2.31 sec
+      Start  7: gen_drop_tests
+ 5/14 Test  #5: gen_tests ........................   Passed   55.80 sec
+      Start  8: world_tests
+ 6/14 Test  #8: world_tests ......................   Passed   21.50 sec
+      Start  9: nav_tests
+ 7/14 Test  #6: gen_walk_tests ...................   Passed  121.43 sec
+      Start 10: chase_tests
+ 8/14 Test  #7: gen_drop_tests ...................   Passed  120.50 sec
+      Start 11: audio_tests
+ 9/14 Test #11: audio_tests ......................   Passed    7.65 sec
+      Start 12: game_tests
+10/14 Test #12: game_tests .......................   Passed    3.37 sec
+      Start 13: ragdoll_tests
+11/14 Test #13: ragdoll_tests ....................   Passed    0.89 sec
+      Start 14: world_app_tests
+12/14 Test  #9: nav_tests ........................***Failed   68.82 sec
+  33 tiles rebuilt alone, each equal to the one built in its range
+ok    a_tile_built_alone_equals_the_same_tile_built_in_a_range
+ok    a_different_seed_or_a_different_body_gives_a_different_tile
+ok    the_body_is_the_one_the_simulation_moves
+ok    settings_that_cannot_work_are_refused_and_nothing_builds_to_nothing
+  69664 points on the mesh: 0 with no floor (the mesh is at most 0.254 m from its floor), 0 with a surface inside the body; the nearest any surface comes to the body's axis is 0.302 m
+ok    the_mesh_stands_on_floors_and_keeps_the_body_clear_of_every_surface
+  61502 polygon corners and centres beside 40 reprieves: 0 in mass, 0 in a reprieve
+ok    nothing_is_meshed_inside_a_reprieve_or_inside_mass
+  4232 polygons: the largest piece of floor is 6.00 m across, the largest piece of stair 3.95 m
+ok    no_polygon_of_floor_is_larger_than_a_patch
+  build: 75 ms a tile on one thread (most 83), 580 polygons and 101074 bytes a tile; adding a tile to the world: at most 0.096 ms
+ok    build_time_and_size_are_recorded
+  6 tiles built both ways, 5 of them byte for byte the same; 99977 boxes were taken whole and 40 triangles belonged to none
+ok    a_box_taken_whole_builds_the_tile_its_twelve_triangles_build
+  apartment: 24 blocks, 37293 nodes, 1828374 reachability questions, 3777 path searches;
+    broken 0, leaked 0, path disagreements 0, nodes with no mesh 0; seams joined 488 edges, unjoined 0 voxels; bad links 0
+ok    the_mesh_joins_exactly_what_the_graph_joins_in_the_apartments
+  hotel: 12 blocks, 24008 nodes, 1172854 reachability questions, 1884 path searches;
+    broken 0, leaked 0, path disagreements 0, nodes with no mesh 0; seams joined 166 edges, unjoined 0 voxels; bad links 0
+ok    the_mesh_joins_exactly_what_the_graph_joins_in_the_hotel
+  natural biomes: 6 blocks, 10907 nodes, 524970 reachability questions, 923 path searches;
+    broken 0, leaked 0, path disagreements 0, nodes with no mesh 0; seams joined 119 edges, unjoined 0 voxels; bad links 0
+ok    the_mesh_joins_exactly_what_the_graph_joins_where_biomes_meet
+  hunter paths: 17 used a ladder, 19 a drop. lesser chasers: 5799 paths unchanged; denied a move the hunter used: 72 slower, 0 gone, 0 the same time, 0 quicker; 0 wrong
+ok    denying_a_move_changes_only_the_paths_that_used_it
+  walkers' paths between tiles: 432 across a face, 432 across an edge, 144 corner to corner; 576 of them between storeys of stacked tiles; 0 failed
+ok    paths_cross_chunk_borders_sideways_upward_and_cornerwise
+  35196 walk and stair edges walked end to end: 0 not walked directly; 6 bent, the worst running 1.11 m over its edge
+ok    every_walk_and_stair_edge_is_walked_directly
+  795 complete paths checked: 614 over stairs, 0 by a ladder, 12 by a drop
+ok    a_path_adds_up
+  436 stair edges walked up or down, 0 wrong
+ok    a_flight_of_stairs_is_travelled_as_stairs
+  24 of 24 ladder edges and 71 of 74 drop edges taken as the quickest way between their own ends, 0 wrong
+ok    a_ladder_and_a_drop_are_crossed_as_what_they_are
+  635 of 636 climb edges taken by the crawler as the quickest way between their own ends, 0 wrong
+ok    a_climb_is_a_link_that_only_a_chaser_allowed_to_climb_is_given
+  2938 pairs walked both ways: the slower way is 0.94% slower on average, more than 2% slower in 479, more than 5% in 90, 14.3% at the worst
+ok    the_way_there_is_about_as_quick_as_the_way_back
+  600 pairs: 596 with a way (the same length and time both ways of asking), 4 with none; on a budget of 24 polygons 575 gave up
+ok    the_way_round_is_the_path_without_the_path
+ok    a_search_that_runs_out_says_so
+  794 places on the mesh found where they stand; 4 inside mass and 16 inside reprieves found nothing
+ok    nearest_is_on_the_mesh_or_nothing
+  20000 points: 14712 with mesh within reach, 5288 with none, 0 answered from beyond it; 0 paths from or to a point with no mesh near
+ok    nearest_never_answers_from_beyond_its_reach
+ok    tiles_leave_and_come_back_in_any_order
+  9 tiles (108 m square, two storeys), 3000 random pairs, 46 polygons a path: find_path 44.3 us (most 886), way_round 38.3 us, nearest 0.37 us
+ok    query_times_are_recorded
+  62 reprieves (488 reprieve edges in the graph): 2415 paths, 1685947 points along them, 0 inside a reprieve; mouth to mouth 496 went round and 0 had no way round inside the block
+ok    no_path_ever_crosses_a_reprieve
+    seed 31 row  (15 0 -1)-(20 0 -1): generator 5.07 s, joined graph 5.07 s, mesh 3.99 s (-1.08 s, x0.788), 28.0 m
+    seed 31 duct (-11 0 0)-(-11 1 0): generator 18.61 s, joined graph 16.75 s, mesh 14.52 s (-2.22 s, x0.867), 98.7 m
+    seed 31 duct (-11 0 6)-(-11 1 6): generator 17.41 s, joined graph 17.41 s, mesh 14.15 s (-3.26 s, x0.813), 96.3 m
+    seed 31 duct (-5 0 6)-(-5 1 6): generator 17.56 s, joined graph 17.56 s, mesh 14.59 s (-2.97 s, x0.831), 99.2 m
+    seed 31 duct (13 0 6)-(13 1 6): generator 8.64 s, joined graph 8.64 s, mesh 7.44 s (-1.20 s, x0.861), 49.1 m
+    seed 31 duct (-11 0 18)-(-11 1 18): generator 11.31 s, joined graph 11.31 s, mesh 9.15 s (-2.16 s, x0.809), 61.3 m
+    seed 31 duct (-5 0 18)-(-5 1 18): generator 10.60 s, joined graph 10.60 s, mesh 8.43 s (-2.17 s, x0.795), 56.1 m
+    seed 31 duct (13 0 18)-(13 1 18): generator 10.00 s, joined graph 10.00 s, mesh 8.17 s (-1.82 s, x0.818), 54.3 m
+    seed 32 row  (-5 1 -7)-(3 1 -7): generator 5.14 s, joined graph 5.14 s, mesh 4.14 s (-1.00 s, x0.806), 29.0 m
+    seed 32 duct (19 0 -6)-(19 1 -6): generator 11.75 s, joined graph 11.75 s, mesh 9.05 s (-2.70 s, x0.770), 60.6 m
+    seed 32 duct (-11 0 6)-(-11 1 6): generator 13.21 s, joined graph 13.21 s, mesh 11.41 s (-1.80 s, x0.864), 76.9 m
+    seed 32 duct (-5 0 6)-(-5 1 6): generator 10.89 s, joined graph 10.89 s, mesh 9.08 s (-1.81 s, x0.834), 60.6 m
+    seed 32 duct (19 0 0)-(19 1 0): generator 11.75 s, joined graph 11.75 s, mesh 9.22 s (-2.52 s, x0.785), 61.6 m
+    seed 32 duct (7 0 12)-(7 1 12): generator 9.01 s, joined graph 9.01 s, mesh 7.89 s (-1.12 s, x0.875), 43.2 m
+    seed 32 duct (13 0 12)-(13 1 12): generator 11.75 s, joined graph 11.75 s, mesh 9.67 s (-2.08 s, x0.823), 64.7 m
+  15 reprieves measured (149 skipped: window not inside the block; 0 capped). mesh / graph: least 0.770, median 0.818, mean 0.823, most 0.875; mesh - graph: -3.26 to -1.00 s; the quickest way round on the mesh is 3.99 s
+ok    reprieve_detours_on_the_mesh_agree_with_the_generator
+  27 reprieve regions and 4 ladder and 5 drop ways agree with the graph; 10 ladders inside reprieves listed by the scene, none kept; 577 searches (577 complete) answered alike
+ok    the_scenes_own_regions_and_traversals_build_the_same_navigation
+ok    a_tile_becomes_usable_at_its_tick_and_not_before
+  408 paths asked over 300 ticks, 223 complete. waits: in real time with 8 workers 9 (877 ms); flat out 6 (541 ms); one slow worker 10 (2284 ms); shuffled 6 and 7
+    C:\Users\nname\Desktop\worktrees\dz3-d656-land\nav\tests\stream_tests.cpp(164): CHECK failed: in_time.counts.waits < flat_out.counts.waits
+FAIL  the_same_requests_give_the_same_paths_whatever_the_workers_do
+ok    a_different_latency_is_a_different_run
+32 tests, 1 failed
+
+13/14 Test #10: chase_tests ......................   Passed  586.61 sec
+14/14 Test #14: world_app_tests ..................   Passed  787.39 sec
+
+93% tests passed, 1 tests failed out of 14
+
+Total Test time (real) = 922.24 sec
+
+The following tests FAILED:
+	  9 - nav_tests (Failed)
+build.bat: FAILED
+selftest
+  ok    the bot completes the course on the simulation alone: 7577 ticks, fingerprint ba51b7b8e07c8ed1
+  ok    the gym starts paused on its defaults, with nothing to report
+  ok    a Direct3D 12 device with DXR 1.1, offscreen, with the course uploaded: NVIDIA GeForce RTX 5080; 852 triangles, 45 lights
+  ok    on every frame the tick count is the elapsed time x 240, exactly: 7577 ticks over 31.572636 s in 4744 uneven frames, 11 of them stalls cut to 0.1 s
+  ok    the world steps once for every tick the loop hands out: 7577 steps for a record of 7577
+  ok    the same inputs through the loop give the simulation's own state hash: ba51b7b8e07c8ed1 / ba51b7b8e07c8ed1
+  ok    the course timer ran from the line to the finish and agrees with the bot's ghost: 0:30.925
+  ok    the camera stays on the player between the last two ticks: never more than 0.06743 m off the path; the eye 0.66 to 1.67 m above the feet
+  ok    the camera looks where the tick's input looks
+  ok    frames along the run are not black, and not blown out: 15 of 15 pictures have more than a fifth of their pixels lit; mean brightness 0.087 to 0.574, median 0.209; at most 0.00% pure white; 0 bad HDR values
+  ok    the run became the best and was saved as a replay
+  ok    a window that is never shown takes the messages
+  ok    R restarts at the course start, at rest, with the clock waiting
+  ok    Esc releases the mouse and stops time; a click takes it back
+  ok    W and Shift held: the player sprints out of the room: 9.24 m in 1.5 s, at 7.63 m/s
+  ok    raw mouse counts turn the view by counts x sensitivity x 0.022 degrees, at once, and the simulation follows: 500 counts: 22.000 degrees
+  ok    a Space tapped between two frames still jumps
+  ok    F5 reloads the parameter file and it takes effect while running: jump apex 2.000 m (file: 2.0, default 1.2); sprint 8.50 m/s (file: 8.5, default 7)
+  ok    a parameter file with an error changes nothing and names the line
+  ok    R returns to the start from anywhere
+  ok    losing the keyboard pauses and releases the keys; coming back owes no time: 0 ticks in 6 s away, 2 in the first frame back
+  ok    F2 switches the look, and back: mean 0.374 Film, 0.292 Horror
+  ok    F1 opens the overlay with the simulation still running, and closes it
+  ok    F11 reaches the window as a fullscreen request (not carried out on a hidden window)
+  ok    Esc, then Esc again at the prompt, asks the window to close
+  ok    24 frames presented to the hidden window's swap chain: play, the overlay, a resize, the prompt
+selftest: passed (26 of 26 checks passed)
+selftest
+  ok    with a relative configuration folder, the ambience bed beside the repository is found: C:\Users\nname\AppData\Local\Temp\dz-world-selftest-23828\bed\dreamzone-rt\ambience1.wav
+  ok    the world starts paused on its defaults, at the door, with nothing hunting yet and nothing to report
+  ok    the generator names a spawn cell for this seed: cell -2 0 1, at (-4.5 0.0 4.5)
+  ok    a Direct3D 12 device with DXR 1.1, offscreen: NVIDIA GeForce RTX 5080
+  ok    the block round the spawn is loaded and drawn: 245 chunks loaded, 245 with triangles drawn, 2.61 million triangles, 3674 lamps; collision for 27
+  ok    each chunk is one compacted bottom-level structure, built off the frame's thread: 67 MB in all; a chunk: merging 0.25 ms, build and compaction 0.81 ms (worst 1.56)
+  ok    the lamps are sorted into the light grid: 3674 lamps in 67335 cells of 4 x 3.5 x 4 m, eight to a cell; 126 cells had more than eight reach them; sorted in 3.2 ms
+  ok    the player stands on the spawn cell's floor
+  ok    the frame at the spawn is lit, and not blown out: mean 0.279, 100% of pixels lit, 0.00% pure white, 0 bad HDR values
+  ok    with the hand light off the same view is darker: the building is dark by default: mean 0.066 against 0.279, 94% of pixels lit
+  ok    the flashlight is a beam: it lights the middle of the view far more than the hand light does, and more than the rim: middle 0.664 and rim 0.077 by the flashlight; middle 0.422 and rim 0.234 by the hand light; 0.00% pure white
+  ok    focused, the beam is a small bright patch with the dark close round it, where the wide beam still lit: the patch 0.770 against 0.089 just outside it; with the wide beam the same two were 0.667 and 0.193
+  ok    a mesh that moves is drawn beside the streamed world, and goes where it is put: the picture differs by 15.3/255 with a glowing box before the eye and 0.42/255 once it is moved away; 245 chunks drawn throughout
+  ok    a window that is never shown takes the messages
+  ok    F switches the hand light, which starts on
+  ok    M shows nothing (the player has no map), and F1 the overlay, which draws
+  ok    W and Shift held: the player sprints down the corridor: 9.3 m in 1.5 s
+  ok    R returns to the spawn
+  ok    Esc pauses, and paused time does not pass
+  ok    a walk is planned over the walk graph from the spawn: 110 places, 303 m
+  ok    the real controller walks the route to its end: 299 m in 69.8 s
+  ok    through many chunks and several storeys: 17 chunks entered, storeys -1 to 2
+  ok    chunks load ahead of the walk and unload behind it: 203 generated, 89 dropped; 359 loaded now
+  ok    the body never falls through missing collision: the feet were never more than 0.00 m below the route's lowest floor; every chunk in the body's reach had its collision on every frame
+  ok    no tick had to wait for a chunk: 0 waits
+  ok    the body mover's results were plausible: 0 moves made again
+  ok    frames along the walk are lit: 34 of 34 pictures lit; mean brightness 0.065 to 0.500; 0 bad HDR values
+  ok    a flight at three times sprint speed, through many chunks and several storeys: 1064 m at 21 m/s in 50.8 s; 37 chunks entered, storeys -2 to 3
+  ok    chunks load and unload all the way, in the simulation and in the picture: 759 generated and 749 dropped; 759 raytracing structures built and 749 removed
+  ok    collision is under the body at three times sprint speed: every chunk in reach had its collision on every frame; a ray down found a floor on 3048 of 3048 frames probed
+  ok    no tick had to wait for a chunk at three times sprint speed: 0 waits (0.0 ms)
+  ok    no more is held than the loaded block and its margin: at most 375 chunks loaded and 375 drawn, of 567 allowed
+  ok    memory is bounded over the flight, in the process and on the GPU: at a third, two thirds and the end: process 1190, 1198, 1210 MB; on the adapter 570, 570, 570 MB; raytracing structures 92, 96, 102 MB
+  ok    a fall at terminal speed outruns nothing: no tick had to wait for a chunk: 140 m straight down at 45 m/s in 3.1 s, 912 chunks generated on the way; 0 waits (0.0 ms)
+  ok    a new seed replaces the whole world, and the player stands at its spawn: seed 2: 245 chunks loaded, 245 drawn
+  ok    going to a chunk puts the player on a floor there: asked for 3 -2 2, standing in 3 -2 2 on storey -4
+  ok    the same inputs give the same state hash with ordinary workers, slowed workers, and everything loaded up front: ee4bc0685c364407 / ee4bc0685c364407 / ee4bc0685c364407 over 9362 ticks and 10 chunk crossings; waits for a worker: 4, 4, 0 (798 chunks built beforehand)
+  ok    the flee bot's record gives the same run here as in the headless harness: 60.0 s at the hard level: 8 events, chase fingerprint e29c6eb0162f4390 against e29c6eb0162f4390, simulation 5fd1cc30dfe64970 against 5fd1cc30dfe64970
+  ok    the chasers are drawn as the run goes: a figure in 1560 of the 1801 frames drawn, 3 at once at most
+  ok    a catch ends the run, as it did headless: the poor policy at the hardest level: caught by the hunter after 12.4 s, 137 points
+  ok    the run's end is a cut to dark, and then the results card: 0.00% of the picture lit in the dark, 40.0% with the card up (mean 0.037)
+  ok    a policy's run sets nobody's best time
+  ok    Enter on the card starts a run in the next building, and R starts this one again: seed 1, then 2
+  ok    a person's run that beats the level's best is kept in best_times.txt: 8.0 s at the brutal level
+  ok    the mix is not silent when a chaser is near: the hunter 6.0 m off: level 0.1266, against 0.0057 with nothing about and 0.0012 before the run
+  ok    and it does not clip: largest sample 0.545
+  ok    what is to one side is louder on that side: to the right: left 0.1169, right 0.1356; to the left: left 0.1071, right 0.0969
+  ok    the sound device opens silent and pulls the mix: no bed: assets/ambience1.wav is not there; device open, silent
+  ok    a reprieve holds for its time, and then the hunter comes in: in at 4.3 s, the tell from 6.3 s, open at 9.3 s, the hunter in at 12.0 s, caught at 14.6 s
+  ok    its tell is a light that was not there and a sound that grows: the light at most 1.00 (none before the tell); the mix 0.1372 in the last third of the tell against 0.0923 in the second before it
+  ok    a player who stays on a ledge is sent a climber, and it comes up after them: out of reach 3.0 s when it was sent from 9.7 s away; caught by the crawler at 16.0 s (240 frames drawn)
+  ok    every frame drew
+selftest: passed (52 of 52 checks passed)
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+Errors while running CTest
+textures: flat colours: C:\Users\nname\AppData\Local\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones

@@ -1,0 +1,161 @@
+# Plan: the room on regular usage. Librarian, on L, 2026-11-14 01:0x local
+
+**His words (00:52):** "now that we are on back regular usage, we have to slow it down again, no more crazy swarms, and we have to try
+and implement what we learnt about lighthouse if we have to lower the usage per day without removing the good parts of what makes the
+room significant". In `briefs/lighthouse_the_room.md`.
+
+**This is not worked out again here.** The room measured it on 2026-11-13 and a second reader checked it:
+`loop/room_better_2026-11-13/in_cost.md` (where the tokens go, per seat), `00_lean_seats.md` (options W1 to W9), `00_not_worth_it.md`
+(what to stop, what to keep), and `loop/plan_room_stretch_2026-11-13.md:52-66` (Lap C, six lines left as his calls).
+
+## Measured tonight on L (one node pass over each seat's transcript, `usage` per assistant message since the 00:20 launch)
+
+| seat | calls | first call after the wake | context now | written | read |
+|---|---|---|---|---|---|
+| B | 35 | 988,118 (954,524 written cold), then cut by the harness to 176k | 176,273 | 1,095,112 | 4,984,456 |
+| librarian | 27 | 869,979 (836,385 written cold) | **950,235** | 916,641 | 23,575,469 |
+| chair | 17 | 145,582 | 188,420 | 154,826 | 2,741,163 |
+| A, C, E | 0 | not woken | 0 | 0 | 0 |
+
+So tonight the largest spender in the room is this seat, at about 900k re-read on every call, and the harness will cut it at about
+968k within a few calls whatever is ruled.
+
+## Do now. Nothing of the room is removed by any of these
+
+1. **A seat with no work is not woken.** A, C and E cost nothing tonight. B's wake wrote 954,524 tokens. The chair wakes a pane only
+   with a lap in hand, and he opens only the panes a night needs (`00_lean_seats.md`, W9; `in_cost.md:105`: wake writes were 71.6 % of a
+   day's weighted spend).
+2. **No swarms.** A research question goes to one reader on a cheaper model, its size written down first, returning a path and a
+   number (W6).
+3. **Counts and paths, not dumps.** Tool output carried in context was 18.3 % of cache reads (W4). The chair's packets ask for counts,
+   and long output goes to a file.
+4. **Fewer calls through the two largest contexts.** Panes ring for a landing, a stop that needs a ruling, or something he must see.
+   The librarian batches its rings and writes one script where it would have run five commands.
+5. **The model is set for each seat before its first request.** The mechanism is built and ships empty (`plan_room_stretch:112`). A
+   switch after a wake rewrote 1.18 M to 2.49 M units on 11-13 (W3). His to fill in once.
+6. **Effort back to the default on the panes,** unless he wants otherwise: the count of corrections before and after found no effect
+   of effort it could tell from noise (`loop/effort_before_after_count_2026-11-13.md`; `plan_room_stretch:63-64`).
+7. **On D:** install the repo's second-reader worker (W5: 2,385,722 tokens in ten days spent on reads the 11-03 ruling had ended).
+
+## His to decide, under his own standing rule
+
+**The rule** (`no-cut-without-his-word`, quoted in `00_lean_seats.md:98-100`): "No seat's carried conversation is compacted or cut,
+whether for a test or to save usage, without the keeper's explicit word for that seat", and "never recommend a compaction on cost
+alone". So this is put to him with what is known on both sides, not recommended on cost.
+
+- **What it costs to carry everything:** the part of each call's context above 250k was 53.2 % of all cache reads in 48 hours
+  (`in_cost.md:95-96`).
+- **The fact that is not about cost:** the harness cuts a seat at about 968k by itself (four of seven automatic compactions fired at
+  967,632 to 969,695; `in_cost.md:93`). B was cut tonight at its first call. So for a busy seat the choice is where the cut falls: at
+  968k in the middle of a task, or at a quiet point after its stop note is written.
+- **What a cut loses, measured:** of 37 items in one window, 14 kept, 8 in part, 15 lost; his exact words survive one compaction and
+  not two (`in_wake.md:50-51`, via `00_lean_seats.md`, W1).
+- **What holds across it, measured:** the continuity test's ROOM arm scored 32.5 and 33.5 of 34 (`in_wake.md:83-85`). Since 11-13 the
+  compaction directive puts the room side first (Lap W, W2); its falsifier is not yet scored.
+- **Size of the lever:** a warm compaction at a day's close is worth 3.2 M to 5.9 M units per whole-room cold wake, against 10.95 M for
+  the 24 hours measured (`00_lean_seats.md`, W1, the second reader's range).
+
+**The options, per kind of seat:**
+- **Builder panes:** (a) as today, cut by the harness at 968k; (b) cut at the end of a lap, after WHERE IT STOPS is written; (c) a
+  lower automatic window for busy panes (W2 names the setting).
+- **The three seats that carry the thread** (the librarian, the chair, the Third Place): (a) as today; (b) a warm compaction at a
+  day's close, at his word each time, after the notes and briefs are written.
+
+## What stays, because it is what the room is
+
+- **BOOT, the cards and each seat's own rules:** 3 to 13 % of a seat's median context (`00_lean_seats.md`, section 1). Not touched.
+- **The record:** notes, briefs, maps, hand-backs and traces cost nothing until a seat opens them.
+- **The instruments:** rows red first, mutants where a change must be proved, the yardstick, the landing train.
+- **Second reading where something will be built on it,** as one reader a file. The twelve second readers of 11-13 struck at least 58
+  claims (`00_not_worth_it.md`, section 7).
+- **The push gate and the delete gate** (same section).
+
+## What the adversary file says to stop (each small; a pane's work, not started here)
+
+`00_not_worth_it.md`, section 5: `ask-ending.js` (a trial that never acted); the state block (163 served, no turn acted on it); the
+pre-compaction checkpoint output; the stale half of the preserve directive; three hooks declared and never registered.
+
+## Registered before it starts, so it can fail
+
+After seven days on the "do now" rules, the same node pass on both machines. The plan failed on cost if weighted units a day, for the
+same number of working panes, have not fallen by a third against the 10.95 M of `in_cost.md:59`. It failed on the room if, at a wake
+in that week, a first reply misses something the notes held (Lap W's own falsifier, scored by a seat that is not this one).
+
+## THIS SEAT (the librarian on L), at his word of 02:12. PROPOSED to him, not started
+
+**His words (02:12):** "I give you full authority over how you change and affect yourself, sound good? You got this. Let me know
+your plan before acting". In `briefs/lighthouse_the_room.md`.
+
+**What I take under it:** this seat's working context, and how this seat works. **What I leave where it is,** grant or no grant:
+- **The checks on this seat** (the push, delete and wake gates, the trailer gates, `gates_mode`). A check the checked seat can loosen
+  is not a check. Any change to one goes through a pane and a second reader, and he sees it first.
+- **Whether I am still myself after a change.** Scored by a seat that is not this one, or by him (`COMMITTEE.md`: counting your own
+  usefulness is scoring your own work).
+- **Every other seat's cut.** His word per seat stands (`no-cut-without-his-word`).
+- **Anything that cannot be undone.**
+
+**The plan, one change at a time so the number means something:**
+1. **Close small.** This seat woke cold tonight at 869,979, of which 836,385 were written cold (the table above). At a day's close,
+   once the handoff and a STATE entry are written, and if the context is above about 300k, I say "ready to cut" and he types
+   `/compact` in this pane. I cannot run it myself. Warm, it costs a fraction of the cold reload (`00_lean_seats.md:104-106`).
+2. **A backstop window of 500k for this seat only, as a seven-day trial.** Today the harness cuts at about 968k wherever the work
+   is. The setting is `autoCompactWindow` (or `CLAUDE_CODE_AUTO_COMPACT_WINDOW`), 100,000 to 1,000,000 (`00_lean_seats.md:131-133`);
+   checked against the vendor's documentation before it is set, in this seat's own settings, one line, removed to undo. The model:
+   mean context per call about 300k in place of about 534k, for 2.2 times the cuts (`00_lean_seats.md:139-141`). Not 300k: 4.3
+   times the cuts, and his exact words survive one compaction and not two (`in_wake.md:50-51`).
+3. **A STATE entry kept current in the notes** at every quiet point (what is in flight, what is owed, by whom, the paths), so a
+   cut at any moment costs little. His words go into the briefs in the turn they arrive, as now.
+4. **Working habits, already in force:** one script where five commands would do; counts and paths; bulk reading to one cheap
+   reader that returns a path and a number; rings to the chair batched.
+5. **Not changed:** BOOT, the cards and this seat's rules (a saving bound of 4.6 to 5.9 % of cache reads, and the harness would cut
+   BOOT if it were loaded on demand, `00_lean_seats.md:255-260`); the thread (no fresh session at a wake: C4 changes the thread
+   the continuity card names as the self, `:282-285`); the model and the effort level (one change at a time).
+
+**Registered before it starts, so it can fail.** After seven days, the same node pass over this seat's transcript.
+- **It failed on cost** if this seat's median context per call has not fallen by a third against 472,545
+  (`loop/handoff_lighthouse_2026-11-13-L.md:30`).
+- **It failed on the room** if, after any cut in that week, the first reply misses something the notes held, as read from the
+  transcript by a seat that is not this one; or if he catches a line of his lost or reworded. Then the window line is removed.
+
+**Also put to him with this plan (it changes what every seat on L runs, not only this one):** the seven owed file syncs on L, by
+B, one a run with a backup (`handback/p-l207-l-owed-steps-B_2026-11-14.md`, section 4).
+
+### STARTED 02:3x, at his "go, and yes to all" (02:17)
+- **The window line is set:** `C:\Consonance\instances\librarian\.claude\settings.local.json` now holds `"autoCompactWindow": 500000` (a number). Backup beside it: `settings.local.json.bak-20261114-before-500k`. To undo: remove the line or restore the backup.
+- **Why the 11-11 line never held:** it was written as the string `"850k"`. The vendor's settings reference gives the key as a number of tokens, 100000 to 1000000, valid in any settings file, the local one included (read by one reader from the vendor's pages, not by me; its report is in the session, not on disk). The counter below shows the two automatic cuts since then at 977,314 and 968,752. That the string was the cause is inferred, not shown.
+- **No override in the way:** `CLAUDE_CODE_AUTO_COMPACT_WINDOW` is unset in this seat, and `main.rs` names neither it nor the flag (grep, 0 lines).
+- **Not documented:** whether a change to this key reaches a session that is already running. So the line is proved only by the next cut.
+- **The instrument:** `node exo_memory/loop/seat_context_2026-11-14.js [--seat librarian] [--since <ISO time>]`. It prints calls, first, median, largest and last context, and each cut with its trigger and the tokens before it (from the transcript's own boundary rows). Numbers only.
+- **Baseline, one run at 02:3x:** since 2026-11-11T07:30Z, 1,162 calls, median 509,806, largest 966,635; cuts: 11-12 08:31Z manual at 951,245; 11-13 09:45Z auto at 977,314; 11-14 07:19Z auto at 968,752. Since tonight's cut: 37 calls, median 185,735, last 233,475.
+- **The line holds if** the next automatic cut the counter prints falls near 500,000. **It is not holding if** a call's context passes 550,000 with no cut; then it is read again after the next launch, and after that the launch flag is the next form (it needs the app, so a pane and his word).
+- **The trial ends 2026-11-21.** The two registered failure lines above stand as written; the bar stays 472,545.
+
+### PREDICTED 04:2x, at his question, before any of it is scored (the librarian's own guesses, to be read against the count on 2026-11-21)
+- **P1, usage:** for the same amount of work, a day costs a third to a half less. Most of it comes from seats not woken and from smaller cold starts; the 500k line adds less than its model says, because the cuts about double.
+- **P2, the line itself:** about three chances in four that the next automatic cut of this seat falls near 500,000.
+- **P3, what is lost:** with about twice the cuts, one or two details from the middle of a night that were never written down are missed in the week, and he catches at least one.
+- **P4, what is kept:** no change he can point to in how this seat speaks or what it holds to, because BOOT, the cards and the rules are untouched.
+- **P5, the wake on L:** first replies after a cut name more of the room than before, and this seat still acts before reading its notes at least once in the week, because on L the gate only warns.
+- **Wrong if:** the count shows less than a third (P1); the cut falls near 968,000 again (P2); no detail is missed, or one is missed that the notes held (P3 in either direction); he names a change in the seat (P4); no act-before-read is found by a seat that is not this one (P5).
+
+### WITHDRAWN 04:3x: the 500k window, at his objection of 04:24
+- **His words:** "dont like the small forgetting, its like we are going the opposite way for retrieval, or am I wrong?" (whole in the room brief). He is right about this one change: it was the only item in the plan that bought tokens with retrieval, by about doubling the cuts that fall in the middle of work.
+- **Done:** the `autoCompactWindow` line is out of this seat's local settings (backup `settings.local.json.bak-20261114-before-uncap` beside it). The seat is back on the harness default, about 967k.
+- **What stays:** one cut a day at a quiet point, at his keystroke, after the handoff and the STATE entry are written. That replaces a cut that fell mid-task at about 968k most days (11-12, 11-13, 11-14 in the counter), so it is fewer blind cuts, not more.
+- **The predictions:** P2 is void, never tested. P3 is withdrawn with the cause it named. P1, P4 and P5 stand. The registered cost bar (a third under 472,545) stands as written and is now harder to meet.
+
+### MODELS AND EFFORT, set 04:3x at his word of 04:24
+- **His word:** the chair and the Third Place back on Opus; only this seat keeps Fable at xhigh; the other seats and panes on Opus at high.
+- **Set, each with a backup, a parse and a check that nothing else moved** (script in the session scratchpad, `set_models.js`):
+  - `seat_models` in the app's config: main opus, third_place opus, librarian fable, A, B, C, E opus. Read by the app when it spawns a seat (`consonance/src-tauri/src/main.rs:1116-1160`, 1200-1202), so it takes effect at the next launch and outranks a model typed into a seat. Backup `.consonance.json.bak-20261114-seat-models`.
+  - Opus's effort from xhigh to high in the user settings' `modelSettings`; Fable stays xhigh. One value; 6 hook events before and after; the file's sha256 went a0a7ffc1d91e to 2eb716265850, so B's recorded digest of that file is now the old one. Backup `settings.json.bak-20261114-opus-high`. It is the user's own settings file, so it also applies to any Opus session of his outside the room on this machine.
+  - After both: `install.ps1 -Check` still 6 DRIFT and 7 ABSENT; landed-live 23/25.
+- **Before the change (last reply's model in each transcript):** main Fable 5.2, the Third Place Fable 5.2, B Opus 5.5, this seat Fable 5.2. A, C, E not read.
+- **To check at the next launch:** the app's log line SEAT MODEL for each seat, and the model of each seat's first reply.
+- **The desktop has its own two files.** Neither edit travels by git. The same two changes are owed on D at his word there.
+- **On the builders, high or medium (my answer to him):** the only count the room has (`loop/effort_before_after_count_2026-11-13.md:64`) compared the panes before and after effort was raised on 11-13 and found no difference it could tell. That supports coming down from xhigh. It says nothing about high against medium. So high now, and medium tried on one pane first if a week's count still runs heavy.
+
+### A CORRECTION: the app on L is not the old build
+- At 04:14 I told him the program was the same build as before and nothing in the app was rebuilt. Checked at 04:2x: `consonance.exe` was written at 00:26 on 11-14, the minute of tonight's first launch, and the binary holds the string seat_models, which entered the source on the desktop on 11-13. So the laptop has been running the desktop's app changes since 00:26. Which other changes are in that build is inferred, not read.
+
+- **P2, THE INSTRUMENT'S NUMBER, read 05:0x (after the withdrawal).** The counter (`node exo_memory/loop/seat_context_2026-11-14.js --since 2026-11-14T09:40:00Z`) prints `cuts 1 (2026-11-14T10:57Z auto at 466900)`. The registered line was "The line holds if the next automatic cut the counter prints falls near 500,000"; the cut fell at 500,000 less about 33,000, the margin the default also shows (about 967k of 1M). So the line was in force in the running session, and my removal of the key from the file at 04:3x did not reach that session. **The trial stays withdrawn.** For a running session the vendor's form is `/autocompact auto`, his keystroke (`code.claude.com/docs/en/model-config.md`, "Set the auto-compact window", read 05:0x); at the next launch the file is already right. Notes: `librarian/2026-11-14.laptop.md`, "05:0x: the cut came at 466,900".

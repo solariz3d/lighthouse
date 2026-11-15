@@ -1,0 +1,8 @@
+ok    a_chase_speed_given_at_launch_reaches_the_app_the_record_and_the_replay
+ok    a_second_run_in_the_same_launch_keeps_the_chase_speed_given_at_launch
+ok    a_chase_speed_naming_no_such_field_is_refused_with_the_speed_parsers_message
+ok    a_chase_speed_value_that_is_not_a_number_is_refused_with_the_speed_parsers_message
+ok    a_refused_chase_speed_leaves_the_model_it_was_given_as_it_was
+ok    an_empty_chase_speed_is_the_shipped_model
+6 tests, 0 failed
+lockrun: L211 green rows WALL 39 s, exit 0
