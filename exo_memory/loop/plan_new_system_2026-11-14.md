@@ -188,3 +188,8 @@ Written by the librarian on L, 2026-11-14 07:1x, at his word. This replaces the 
 - **What was wrong in my section of 05:33's amendment to that packet:** it made a film the judge of whether to build this. He had not asked whether. Withdrawn there by name.
 - **Registered:** it failed on his terms if, with the key on, the runner's hands still reach forward as it runs or its legs do not follow where it goes. It is wrong if any lap from this line on adds to `Body::pose`. And for this plan as a whole: it failed if a fourth part of the game is found, by him, still on the old system with new laws laid over it, and no seat had said so first. To that end every body and every mover is listed below with what draws or moves it today.
 - **The list, as far as I have read it; to be completed by each pane for its own part at its next ring:** the hunter's body, `gait_pose` (the new generator's source); the Dark, the same; the lesser kinds, boxes; the runner's body, `Body::pose` (old); the hunter's movement, today's turning rules in play, the new root on a branch (old in his game); the lesser kinds' movement, today's rules (old).
+
+## SUPERSEDED IN ITS BODY HALF, 2026-11-15, at his word of 06:59 (game brief item 235)
+
+- The laps B1 to B8 of this plan and every section above about the lean, the look, the clock and the runner are replaced by `loop/plan_animation_restart_2026-11-15.md`: the old animation is scrapped and the new system is built from scratch as one module. The sections stay as written, as the record of what was tried.
+- The movement half (pane A's root, M1 to M5 and what follows) stands.
