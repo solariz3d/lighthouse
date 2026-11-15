@@ -3222,3 +3222,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-15 07:4x local (D) · D677: the set course for the new animation system filmed "before": six stations in seed 1 (straight and turn, sidestep, backwards, stop and start, stair, doorway), the runner and the hunter, a camera fixed to the travel, lit; the doorway's duck parked unbuilt → `exo_memory/handback/p-d677-course-E_2026-11-15.md`
 - e6-course-e 52db98d pushed; the whole course G:\consonance-scratch\course-before\the_course_before_144fps.mp4.
 - **Carry:** a fresh tree on G: has no generated textures (assets/textures is ignored by git): copy them in before any film for his eye, or it is flat colours.
+
+## 2026-11-15 10:4x local (D) · D677 the 22 degree bend filmed, today beside the M-line on a-mline 4b03985: today 0.889 s (lowest 0.04 m/s), the line 0.486 s (never under 5.47), 0 frames hidden; the 90 filmed before its cut, kept, not for his page → `exo_memory/handback/p-d677-mline-bends-E_2026-11-15.md`
+- Film tree dz3-e-mline b1b3aeb (local): the lit pass from a fixed camera; a 90 in a corridor needs a place in the room, the outer corner aimed at the chests.
+- **Carry:** look at a frame before encoding; three of four camera choices here failed only to the eye.
