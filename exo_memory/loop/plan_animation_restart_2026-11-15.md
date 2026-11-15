@@ -93,3 +93,29 @@ One row of numbers per kind of body. The runner and the hunter are two rows. Fir
 - **It failed as a plan if** a stage is called done before he has seen it from outside.
 - **Unwelcome, named now:** N1 takes longer than the laws it replaces took, and for that time his game shows no change.
   That is the cost he chose, and each stage reaches him as a film, not as silence.
+
+## RULED on N1's design (D, 2026-11-15; `loop/design_n1_legs_B_2026-11-15.md`, read whole): GO, with four changes
+
+**The page is accepted.** A new module in `game/anim/` that calls none of the old pose code, gives the game's own `BodyPose`
+so the models draw it unchanged, steps on the simulation's tick, and is turned on for a launch by one world setting,
+`new_animation`, with no key. The gait plan's laws are each marked sourced or ours.
+
+**Four changes, before code:**
+1. **The foothold uses the acceleration too.** Where the hip will be at mid-stance is the position, plus the velocity times
+   the time, plus half the acceleration times its square. At a turn of 1 g and a fifth of a second that is 0.2 m to the
+   inside, which is the difference between a foot that lands on the curve and one that lands outside it. Ours; the turn on
+   the course is its judge.
+2. **The hips' facing is eased across the 45 degrees, not switched at it.** A switch is a pop at the instant the travel
+   crosses it.
+3. **The hunter's velocity is read from the simulation** (its state, or its position over the tick), not from
+   `DrawnChaser`. The module rests on nothing the replacement will delete.
+4. **After N1's rows and its film, go straight on to N2.** The film of N1 goes to him labelled as what it is, legs only with
+   the body above the hips held still, and nothing waits on his word about it.
+
+**Both cautions are taken, and the first amends this plan by name.** Where it says "First person is a camera on the runner's
+head", read: **first person is a camera on that body, steadied apart from the head bone,** as the shipped games pane B read
+all do (`loop/b8_gaze_sources_B_2026-11-15.md`, its section 5, by B; not opened by me). That is N2's. And the yardstick scores
+only the straight run from 2.5 to 4.5 m/s; everything else in N1 is judged on the course, by a look.
+
+**The rows stand as B wrote them:** a planted foot moves at most 1 cm from strike to lift; his kept runs replay the same with
+it on; no old pose function is named in `game/anim/`.
