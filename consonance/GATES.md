@@ -342,6 +342,52 @@ and one was missed. The case a by-hand read misses is a hold file with no lock f
 **To change it:** `HOLD_MAX_MS` in `consonance/tools/heavy-run.js`. A hold whose run is over can be removed by hand; the IGNORING line and
 the wait's exit-3 message name its file.
 
+### Running a script under the lock (D675)
+
+**What.** `--run` starts a `.cmd` or `.bat` itself: `cmd.exe` from an argument list, `/d /s /c ""<path>" <args>"`, with no shell between.
+`--priority belownormal` (or `idle`) is set on heavy-run's own process before anything starts, so everything the script starts inherits
+it; any other value is refused with exit 2, because a child keeps only those two classes of its creator (CreateProcessW,
+`dwCreationFlags`). An argument or a script path carrying a cmd metacharacter (`& | < > ^ % "`) is refused with exit 2 and never
+quoted around. The script's own exit code is the run's.
+
+**The one line to run a script under the lock:**
+
+    node consonance/tools/heavy-run.js --run --priority belownormal --cmd "<what>" -- <file.cmd> [args]
+
+Add `--exclusive` for a timing session or a landing's quiet window.
+
+**What it cannot remove.** Git Bash rewrites an argument that begins with a slash into a path before node sees it, so a script's own
+switches go as words or with a dash, never `/x`. And a broken `start` or `cmd /c` line *inside* a script is not caught here; the guard
+(the IDLE HOLDER line) stays the net.
+
+**Why.** Three times (11-12 B, 6 minutes; 11-13 E, 40 minutes; 11-14 E, 50 minutes) a hand-made launch line left an idle shell holding
+the lock (`exo_memory/loop/stall_trace_lockbn_cmd_c_mangled_2026-11-12.md`).
+
+### A pause, held as the exclusive hold (D675)
+
+**What.** `node consonance/tools/heavy-run.js --pause --cmd "<why>" [--minutes N]` starts a detached, hidden holder that takes the
+exclusive hold by the lock's own path and holds no slot: runs already in a slot finish, and every new run waits. The hold record carries
+`pause: true` and `max_ms`, honoured instead of the 90-minute maximum (default 180 minutes, at most 720). `--status` exits 1 and says
+when the pause ends. `node consonance/tools/heavy-run.js --resume` removes a pause and nothing else (a timing session's or a landing's
+hold is refused, exit 2), and its holder exits. A dead pause holder is stale like any holder, so a pause never outlives it.
+
+**Why.** On 2026-11-14 a pause sent by message at 13:22 sat queued across a pane's compaction, and that pane built and ran a test at 13:27
+while he played. It had asked the lock first; a pause written as the hold would have stopped it there.
+
+### Waiting for his game (D675)
+
+**What.** `node consonance/tools/heavy-run.js --wait-game [--max-minutes N]` reads the process list every 30 s and waits while a game of
+his runs; it exits 0 when none runs, 3 at its maximum (default 240 minutes), and 2 when the list cannot be read. It only reads and never
+closes anything. A game of his: `StarCitizen` and `acs` whatever their window; `dz-world`, `dz-gym` and `dz-view` only with a visible
+window (the panes' offscreen runs have none); anything under `steamapps\common` with a visible window; and the names in the heavy
+profile's `games` field (`~/.consonance.json`, or `CONSONANCE_HEAVY_GAMES`). The RSI Launcher and Steam itself match none of these.
+
+**The line before any run, light or heavy:**
+
+    node consonance/tools/heavy-run.js --wait-game && node consonance/tools/heavy-run.js --status && <your run>
+
+**Why.** On 2026-11-14 three panes each wrote their own wait, and none saw Star Citizen.
+
 ## The app's delivery refusal
 
 **What.** When a message is sent to a seat whose terminal has exited and is not being reopened, the app writes it nowhere. It sends
