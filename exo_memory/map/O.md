@@ -499,3 +499,6 @@ General form: stop your own job by the handle or the exact PIDs you started; nev
 
 **2026-11-14 close: a check that PRINTS a hold must also STOP on it. Reading the lock files is not obeying them.** My classifying command printed P's timing hold, then ran a test twice inside it. Also: a shell loop's `refs/heads/$b` reaches the push gate unexpanded, so the gate scanned HEAD instead of the three branches. Push one branch per literal command. Could be wrong about the gate's reading, but its row says src "HEAD" for my seat at 05:27:55Z.
 → `exo_memory/handback/p-close-O_2026-11-14.md`
+
+**2026-11-15: B's look back landed on the game's main as 781515b (14/14, world 61/61, gym 26/26); his clone was fast-forwarded and NOT built, because C: is under the lock's floor. The lock lap's mutant control cannot go green while C: is under 20 GB: its D454 row puts a lock on C:.** The harness's control never names its red row, so reproduce it with TAP under a held slot (S\landIp\control.js). Could be wrong if the harness's one red was row 118 and not 52, but both fail under tonight's disk and load.
+→ `exo_memory/handback/p-land-lb-O_2026-11-15.md`; `exo_memory/handback/p-land-ip-O_2026-11-15.md`
