@@ -145,3 +145,29 @@ bend slower and is kept) is met by the build. So it is **not kept**, and I stop 
 **For the ruling, not built:** (a) the side chosen by the line's time, not the string's length (both sides' lines costed where a replan
 could flip); (b) a corner's radius judged over its own arc and half of each tangent, with the room asked of it no more than the corridor
 leaves there. Or the solver for a run of bends (Heilmeier's form, ruling item 3), which handles (b) by construction but not (a).
+
+## The side by the line's time and the least-bending line (the ruling at the stop): built, red first, NOT KEPT, the second in a row: a ring before a third
+dreamzone-3 `a-mline` pushed and read back at cb9049c732a90534d3f3a36fc672adbcf5f8f6a2 (red c118f37 / 9d23d02, the law cb9049c). checked
+`s_rows_red.txt` (the string) and `s_rows.txt`:
+
+| | string (way b / a) | least-bending line (way b / a) | the plan's bar | my prediction | the hand line |
+|---|---|---|---|---|---|
+| 22 degrees | 1.029 s, 1.78 | **0.792 s, 3.87** (both) | **met** (0.889, 1.2) | 0.60, 6.0: not met | 0.321 s, 5.76 |
+| 45 degrees | 2.179 / 2.183 s, 0.22 / 0.00 | 1.908 / 1.846 s, **0.00** | **1.2 m/s FAILED** | 0.60, 8.0: not met | |
+| 90 degrees | 1.079 / 1.042 s, 1.80 / 1.60 | **1.183** / 0.967 s, 1.48 / 2.40 | (no time bar) | 0.70, 7.5: not met | |
+| route contacts | 383 / 412 | 31 / 12 | | at most 10: not met | |
+
+- **The 90 degree bend way (b) is slower than the string (1.183 against 1.079 s): the registered sign of degeneration if kept. So it is not
+  kept**, and with the arc fitter before it, this is twice not kept in a row (the ruling's item 5): **I ring before a third.**
+- **The side is not chosen at the 22 degree bend:** the body still goes through the doorway at x -75 (26 ticks within 0.3 m of it; 0
+  crossings of the open gap), so the side row is red. inferred, not checked: the narrowest throat within 25 m is a doorway both ways share (the
+  one at x -72, about 0.2 m of free mesh), so avoiding it leaves no way round and no second line is made.
+- **What it did do:** the line is dense and keeps its room almost everywhere (1, 1, 0 points short); the 22 degree bend is under the bar for
+  the first time from a planner (0.792 s); wall contacts on the ten routes fall from about 400 an arm to 31 and 12.
+- **The cost (ruling item 4):** one plan_to for one root chaser, mean 1929 us, largest 4976 us (the string's: 13 us). For every chaser every
+  0.5 s, that is about 4 ms of every 500 ms per root chaser at the mean. inferred: the 600 relaxation passes and two searches are most of it.
+- nav: `find_path` unchanged (nav_tests 34, 0 failed). Whole suite 117, 9 failed. Off means off md5 fa938de4..., 18 SAME.
+
+**For the ruling, not built:** the side's throat taken as the narrowest place on the string that the two ways do NOT share (where the
+string first leaves the corridor the hand line takes), not the narrowest overall; and the 45 degree bend's stop read tick by tick before
+anything else is changed.
