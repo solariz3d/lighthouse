@@ -179,3 +179,23 @@ Your inference is that the normals fan at the string's corner. I read `bend_leas
 - **Registered now:** with it the root passes pane E's 45 degree bend, or reaches the player there sooner than tick 3669; and the side row at the 22 stays green, since the south way turns at both its doorways. **If the 22 goes back through the doorways, the turn's measure is wrong.**
 
 **5. The rings:** one for the solve with items 1 to 3; the price after it, its own ring.
+
+## RULED at the ring for the solve (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its last section read whole, git-blob 83a8e41a; `chase/chaser.cpp:531-597` in your tree read by me)
+
+**Taken:** the gate is met (372 and 596 microseconds); the 22 and 45 are faster again and far ahead of today's at the exit gate (669 against 724; 787 and 789 against 1103); the brake row's withdrawal; your read of the red tick.
+
+**THE SOLVE IS NOT AT THE LEAST, AND THE METHOD THAT STOPS SHORT IS THE ONE I WROTE.** At 10:33 I wrote "solve, hold the offsets that reach a bound, solve the rest again". You built that (`:548-550`, `:590-592`): an offset once past its bound is held there and never let go. That is half of the method. The other half is that a held offset is released when the energy would fall by moving it back inside its bounds. Without the release, the first solve (a nearly straight line between the ends, through the walls) puts most offsets past a bound, they are all pinned to the wall side, and the line that comes out hugs the inner side.
+
+**Your own numbers show it, before any new run:** the passes moved the 90's corner radius 0.90, 1.19, 1.21 m, growing, and still moving at 600,000. The solve gives 0.74 m. A least of the same problem lies further along the way the passes were going, not behind where they started. The row I registered for the solve (the line does not move at ten times the effort) is green on any method that stops, right or wrong; it was a poor check and it is mine.
+
+**1. The check, a read:** on the 90 degree bend, the energy (the sum of squared second differences, the thing both minimise) of the solve's line beside that of the passes' line at 600,000. **Registered: the solve's is higher.** If it is not, my reading here is wrong and you say so.
+
+**2. The fix, red first on that:** after each solve, a held offset whose energy slope points back inside its bounds is released (its row of the normal equations gives the slope; at the low bound a negative slope releases, at the high bound a positive one); solve again; stop when nothing is past a bound and nothing asks to be released. Guard against a pair that flips for ever in whatever way you judge best, and say which. **The rows that judge it, replacing mine:** the solve's energy is no higher than the passes' at 600,000 on each bend; and no held offset's slope points inside. The gate stands.
+
+**3. THE FORK AFTER IT, registered now so that this does not become a fourth round of tuning.** When the bounded least is truly found:
+- if the 90 is taken in no more than today's 0.846 s and the ten routes are no slower than the one law's 82.17 and 78.41 s, the least-bending line stays;
+- **if not, the least-bending line on the string's normals is not the line-maker for this world, and the next build is what your three hand lines are: straights and the widest arc at each bend,** your first design, with the side now chosen by the price. Every hand line was that, and every one took its bend in about half of today's time. I ruled against the arc's rule for each corner at the stop on the line from the corridor; if this fork is taken that ruling was the wrong one, and I say so now so that it does not have to be argued then.
+
+**4. The red tick:** your read is taken: the slide's last tick, a step the slide law does not govern, against a difference too small to have a direction. Restate the check by name before its next run: the slide holds before and after the tick, and the difference is at least a size you state.
+
+**5. The order:** the price's read at pane E's 45, which you have begun, may finish, since it does not depend on the line-maker. Before the price's code: 1 and 2 here. One ring with the energies and the bends, routes and gate after the release; the price's five lines can ride in it.
