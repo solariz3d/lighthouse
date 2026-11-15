@@ -397,3 +397,29 @@ only before the tick, so it read a step the slide law did not govern, against a 
 **3. The routes' brake row** is withdrawn by name (c86d5ab); the row from tick 773's state is the brake's row.
 
 **Next, as ruled:** the price, its own ring: a read of both laws' routes at pane E's 45 degree staging, then five lines, then code.
+
+## The price (the ruling at the ring for the passes check, item 4): the read, then five lines before code
+
+**The read (no change; `rt_today.txt`, `rt_root.txt`: pane E's 45 degree staging, the hunter's first three plans, the search's string with every
+place on it narrower than 1 m, the way's turn there 1 m either side, and the squeeze price as built):**
+- **today's law's search:** 31.3 m through pane E's 45 degree bend: (-3.5, 77.5) to (-25.0, 77.5), up through (-26.5, 82.0) and (-28.1, 83.6)
+  to the player. Three narrow places on it: **free width 0.56 m where the way turns 43 degrees** (the bend's doorway), **0.65 m and 0.61 m where
+  it turns 10 degrees**. The squeeze price would charge a root body **4.7, 4.5 and 4.6 m**: 13.8 m.
+- **the root's search:** 32.3 m round the north, (-6.4, 77.7) to (-11.5, 87.2) and along z 87.5 to (-25.0, 87.5), then to the player: **no place
+  under 1 m on it**. One metre longer as a string, 13.8 m cheaper to the search.
+- **The librarian's reading holds:** the price charges an opening as if the way turned inside it. About 9 of the 13.8 m are charged at openings
+  passed almost straight (10 degrees), where a body loses nothing.
+
+**The price for the turn, five lines (the ruling's measure; the old law's search untouched as before):**
+1. **How:** a root body's search prices the crossing of a portal under 1.0 m by the turn the way makes there. The widest arc a turn of `t` can take
+   in a width `w` is `R = w / (1 - cos(t/2))` (the page's section 2), and the loss is that of slowing to `sqrt(mu g R)` and gaining back, in
+   metres at the top speed. A straight passage costs nothing; a sharp turn in a narrow opening costs what it costs.
+2. **The unit and the turn:** the portal as now (its width from the current polygon's link to `next`). The turn at it: the angle between the way
+   across the current polygon (`pa` to `pb`, which Detour hands `getCost`) and the way on into the next polygon (`pb` to the next polygon's centre,
+   from its vertices in `nextTile`). Ours, and crude: the search does not yet know where the way goes after the next polygon.
+3. **The price:** `(v - v_R)^2 (1/(2b) + 1/(2a))` with `v_R = min(v, sqrt(mu g R))`, `R = max(w, 0.1) / max(1 - cos(t/2), 1e-4)`; it replaces the
+   price by width alone (`v_w = sqrt(mu g w)`).
+4. **What it costs a plan:** a centroid of the next polygon per expanded portal under 1 m; the plan's 372 us stays about the same.
+5. **What would show it wrong (registered in the ruling):** with it the root passes pane E's 45 degree bend or reaches the player there sooner than
+   tick 3669; and the side row at the 22 stays green, since the south way turns at both its doorways. **If the 22 goes back through the doorways,
+   the turn's measure is wrong.** Also printed: the ten routes' total time beside the solve's (85.62 / 80.70 s) and today's (77.11).
