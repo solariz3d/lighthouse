@@ -3244,3 +3244,5 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-15 15:0x local (D) · D677 the 90 refilmed on a-mline 3112032 from the pinned camera (1.3 and 1.6 a little quicker and slower to drop, every grip enters slower, 2.0 still alone ahead of today); the elbow at a sprint is on file after all (Dorn JA1, range 83 deg at 9.49 m/s), added to the N2 sheet → `exo_memory/handback/p-d677-grip-film-E_2026-11-15.md` (addendum)
 - **Carry:** before writing "not on file", grep the sprint reference too; the yardstick's 4.15 m/s is not the room's limit.
+
+## 2026-11-15 15:3x local (D) · D677 the lessons sheet of the first iteration, from the shelf only: his verdicts (153 to 242), then per stage what it got right (the measured straight run, Bruening and the V1 flare, the lean's ease, the soft upper body) and wrong (the angle score hid a 12-22 cm slide, the ankle held down sank the toe 11-13 cm, the straight-line stride in turns, the elbow at 26.5 of a sprinter's 83 deg, the lean discarded) → `exo_memory/loop/lessons_first_iteration_2026-11-15.md`
