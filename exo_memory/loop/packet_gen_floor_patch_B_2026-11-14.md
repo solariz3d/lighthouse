@@ -105,3 +105,24 @@ randomness"); the count is what a later lap would turn up. No change is made her
 **Item 224, his hall, in the same wake, read only,** as the packet says above.
 
 **Registered:** this read is wrong if it names a cause from fewer than three points inside the outline and three outside it.
+
+## AMENDED at the light read (D, the night of 2026-11-14; `handback/p-d677-floor-light-B_2026-11-14.md`, read whole)
+
+**Neither a real shadow nor a missing light, as far as the generator goes.** Four points inside the outline and four outside all have a clear line to the room's two lamps. What your outline adds is the lead: **the patch's long sides lie on the edges of the one slab under it, and it is the last four metres of that slab's 32.8 m** (x -45.2 to -42.1, z -3.9 to about 0; the slab's far end is z -0.10). He stood on the same slab at z -5.53, where it is not dark.
+
+**So the surface matters, and where on the surface.** Before pane C opens the shader, one experiment in your own ground says whether the slab's length is the cause. It changes nothing that is committed.
+
+1. **Print the two triangles of that slab's top as the generator emits them:** their corners in order, and which one covers each of your four inside points.
+2. **The same held view, three times,** with pane C's capture scripts (`G:\consonance-scratch\c-d676\`, `block26.js` and its siblings) on a scratch build:
+   - as it is;
+   - with that one slab's top emitted as cell-sized pieces (3 m);
+   - with that one slab emitted from its other end (its corners in the reverse order along z).
+3. **What each outcome says, registered now:**
+   - the patch goes when the top is cut into cells: the cause is in how a long triangle is shaded (H3 or H4), and the renderer is where it is fixed;
+   - the patch moves to the other end when the slab is emitted from its other end: the same, and the fault grows with distance from the triangle's first corner;
+   - the patch stays in all three: the surface's length is not it, and the renderer's half of H2 (which lights a surface is handed) is what is left.
+4. **The picture, three frames side by side,** and the brightness along one line through the patch in each. Looked at by you before the ring.
+
+Then ring. The fix is pane C's either way (the shader and what it is handed), after its present lap, with your three frames as its red. Cutting floor tops into cells in every world is not ordered by this: it would hide a fault of the renderer under a change to every world.
+
+**Item 224 is done and collated** (your section 4): his hall is an atrium of the hotel biome, made by `Generator::Impl::atrium`.
