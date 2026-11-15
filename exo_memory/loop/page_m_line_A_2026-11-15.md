@@ -67,3 +67,10 @@ post narrows the 22 degree bend's corridor by an amount not yet read, so 6.0 m/s
   line, is the limit and the bar asks for a different world).
 - **My own stake and bias:** I built the four laws whose times rise. I want the reading to be right, because it says they were not wasted.
   The fixed-line test is cheap and cuts both ways, which is why it goes first.
+
+## Read after the page was written (chair 13:57Z: "the count of the 166 untaken drops by kind ... run it, for the page")
+checked: `page_m_line_A_2026-11-15_evidence/e_kinds.txt` (a scratch row in a throwaway tree at e040a87, `m3e_kinds.js`; the ledge reader's flat
+casts from 0.5 m behind each untaken drop's foot toward its landing, through the arena's collision, 12 worlds): **all 166 are low walls**.
+The lowest clear height is 1.10 m for 19 and 1.20 m for 147. None is a higher wall with an opening, none has no opening by 2.5 m, and none
+is clear at the feet. Section 3's prediction ("at least 150 are rails", committed in 742e346a before this read) is met at 166. inferred: they
+are the generator's rails (`kSurfaceRail | kSurfaceVault`); the casts read heights, not surface flags.
