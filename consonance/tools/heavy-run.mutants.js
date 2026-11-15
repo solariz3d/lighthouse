@@ -149,12 +149,40 @@ function tree() {
   for (const f of files) fs.copyFileSync(path.join(HERE, f), path.join(dir, 'tools', f));
   return dir;
 }
-function run(dir) {
+// D677 (pane P, 2026-11-15): THE STOP IS MEASURED AGAINST THE CONTROL, NOT THE CLOCK. It was a fixed 90 s, and a stopped suite counted as
+// CAUGHT; under load the unmutated control itself was stopped (92 s, "pass NaN fail NaN", exo_memory/handback/p-land-ip-O_2026-11-15.md),
+// so a stop could no longer tell a mutant from load. Now: the control runs to completion (up to CONTROL_CAP_MS) and is timed; each mutant
+// is stopped at that time x STOP_MARGIN, never under STOP_FLOOR_MS; and a STOPPED mutant is caught only when an unmutated copy, run again
+// at once under the same stop, finishes green inside it. Otherwise it is NOT READ (load), neither caught nor survived, and the run exits 1.
+const STOP_FLOOR_MS = 90 * 1000, STOP_MARGIN = 3, CONTROL_CAP_MS = 30 * 60 * 1000;
+const secs = (ms) => `${Math.round(ms / 1000)} s`;
+function stopFor(controlMs) {
+  if (!Number.isFinite(controlMs) || controlMs <= 0) throw new Error(`no control time to measure the stop against (${controlMs})`);
+  return Math.max(STOP_FLOOR_MS, Math.ceil(controlMs * STOP_MARGIN));
+}
+function run(dir, stopMs) {
   const env = { ...process.env }; for (const k of Object.keys(env)) if (/^CONSONANCE_/.test(k)) delete env[k];
-  env.CONSONANCE_HEAVY_WAIT_MS = '30000';   // D286: a mutant that parks the suite's real child runners must not leave them waiting the default 30 minutes after the 90 s stop
-  const r = spawnSync(process.execPath, ['--test', '--test-concurrency=1', path.join(dir, 'tools', SUITE)], { encoding: 'utf8', env, timeout: 90 * 1000 });   // the unmutated suite takes seconds: a mutant that makes it hang (a waiter that never takes a dead lock) is stopped here
+  delete env.NODE_TEST_CONTEXT;   // inherited from a test runner, it turns the nested `node --test` into a silent child (no tally): a non-run, not a crash
+  env.CONSONANCE_HEAVY_WAIT_MS = '30000';   // D286: a mutant that parks the suite's real child runners must not leave them waiting the default 30 minutes after a stop
+  const t0 = Date.now();
+  const r = spawnSync(process.execPath, ['--test', '--test-concurrency=1', path.join(dir, 'tools', SUITE)], { encoding: 'utf8', env, timeout: stopMs, windowsHide: true });
+  const ms = Date.now() - t0;
+  const stopped = !!(r.error && r.error.code === 'ETIMEDOUT');
+  if (r.error && !stopped) throw new Error(`the suite could not be run: ${r.error.message}`);   // a run that never started is no reading of anything
   const o = (r.stdout + r.stderr).replace(/\x1b\[[0-9;]*m/g, ''), n = (k) => Number((o.match(new RegExp(`^ℹ ${k} (\\d+)`, 'm')) || [])[1]);
-  return { pass: n('pass'), fail: n('fail'), hung: r.status === null || !Number.isFinite(n('pass')) };
+  const pass = n('pass'), fail = n('fail');
+  return { pass, fail, ms, stopped, crashed: !stopped && !(Number.isFinite(pass) && Number.isFinite(fail)) };
+}
+/** A control is green only when it finished, with passes and no failure. */
+function controlGreen(r) { return !r.stopped && !r.crashed && r.fail === 0 && r.pass > 0; }
+/** One mutant's reading. `again()` runs an unmutated copy under the same stop; it is asked only when the mutant was stopped. */
+function verdict(r, again, stopMs) {
+  if (Number.isFinite(r.fail) && r.fail > 0) return { status: 'CAUGHT', why: '' };
+  if (r.crashed) return { status: 'CAUGHT', why: 'the suite crashed: it exited with no tally' };   // a waiter stuck behind a dead holder, or a throw at load
+  if (!r.stopped) return { status: 'SURVIVED', why: '' };
+  const c = again();
+  if (controlGreen(c)) return { status: 'CAUGHT', why: `stopped at ${secs(stopMs)}; the control, run again, finished in ${secs(c.ms)}` };
+  return { status: 'NOT READ', why: `stopped at ${secs(stopMs)}, and the control, run again, ${c.stopped ? 'was stopped too' : 'was not green'}: load, not a reading` };
 }
 
 function main() {
@@ -163,10 +191,13 @@ function main() {
   const onlyAt = process.argv.indexOf('--only'), onlyArg = onlyAt > 0 ? String(process.argv[onlyAt + 1] || '') : '';
   const only = onlyArg ? new Set(onlyArg.split(',').flatMap((p) => { const [a, b] = p.split('-').map(Number); return b ? Array.from({ length: b - a + 1 }, (_, k) => a + k) : [a]; })) : null;
   const read = (f) => fs.readFileSync(path.join(HERE, f), 'utf8').replace(/\r\n/g, '\n');
-  const control = (() => { const d = tree(); try { return run(d); } finally { fs.rmSync(d, { recursive: true, force: true }); } })();
-  console.log(`control (unmutated copy)                                        pass ${control.pass} fail ${control.fail}`);
-  if (!(control.fail === 0 && control.pass > 0)) { console.log('CONTROL NOT GREEN - no mutant result means anything'); process.exitCode = 1; return; }
-  let applied = 0, caught = 0, notApplied = 0;
+  const runCopy = (stopMs) => { const d = tree(); try { return run(d, stopMs); } finally { fs.rmSync(d, { recursive: true, force: true }); } };
+  const control = runCopy(CONTROL_CAP_MS);
+  console.log(`control (unmutated copy)                                        pass ${control.pass} fail ${control.fail}  in ${secs(control.ms)}`);
+  if (!controlGreen(control)) { console.log(`CONTROL NOT GREEN${control.stopped ? ` (stopped at its ${secs(CONTROL_CAP_MS)} cap)` : ''} - no mutant result means anything`); process.exitCode = 1; return; }
+  const stopMs = stopFor(control.ms);
+  console.log(`each mutant is stopped at ${secs(stopMs)}: the control's ${secs(control.ms)} x ${STOP_MARGIN}, never under ${secs(STOP_FLOOR_MS)}`);
+  let applied = 0, caught = 0, notRead = 0, notApplied = 0;
   MUTANTS.forEach(([name, file, anchor, repl], i) => {
     if (only != null && !only.has(i + 1)) return;
     const src = read(file), hits = src.split(anchor).length - 1, label = `${String(i + 1).padStart(2)} ${name}`.padEnd(100);
@@ -175,12 +206,14 @@ function main() {
     const d = tree();
     try {
       fs.writeFileSync(path.join(d, 'tools', file), src.replace(anchor, () => repl));
-      const r = run(d), ok = r.fail > 0 || r.hung; if (ok) caught++;   // a suite that hangs or crashes on the mutant has caught it: a waiter stuck behind a dead holder is the failure itself
-      console.log(`${label} pass ${r.pass} fail ${r.fail}  ${ok ? (r.hung ? 'CAUGHT (the suite hung or crashed)' : 'CAUGHT') : 'SURVIVED'}`);
+      const r = run(d, stopMs), v = verdict(r, () => runCopy(stopMs), stopMs);
+      if (v.status === 'CAUGHT') caught++; else if (v.status === 'NOT READ') notRead++;
+      console.log(`${label} pass ${r.pass} fail ${r.fail}  ${v.status}${v.why ? ` (${v.why})` : ''}`);
     } finally { fs.rmSync(d, { recursive: true, force: true }); }
   });
-  console.log(`\n${applied} applied · ${caught} caught · ${applied - caught} survived · ${notApplied} NOT APPLIED`);
-  if (applied - caught > 0 || notApplied > 0) process.exitCode = 1;
+  console.log(`\n${applied} applied · ${caught} caught · ${applied - caught - notRead} survived · ${notRead} NOT READ · ${notApplied} NOT APPLIED`);
+  if (applied - caught > 0 || notApplied > 0) process.exitCode = 1;   // a NOT READ row is not a catch, so it fails the run too
 }
 
-main();
+module.exports = { run, tree, MUTANTS, stopFor, controlGreen, verdict, STOP_FLOOR_MS, STOP_MARGIN, CONTROL_CAP_MS };
+if (require.main === module) main();
