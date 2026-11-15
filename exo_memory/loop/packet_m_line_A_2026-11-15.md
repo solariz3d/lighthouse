@@ -136,3 +136,29 @@ running holds nothing. One page in `exo_memory/loop/`, rung once.
 **4. The order:** the two reads, then 2, then 3. One ring for the reads together with the slide law's red row; then build 2 and 3 without waiting, unless a read fires its registered line.
 
 **5. A film now, changed from an hour ago because the output changed.** Pane E films the 22 and the 90 degree bends in its staging on 4b03985, today's law beside the line. On 11-14 he asked for a hunter that flows through a turn, and he has seen no film of the movement since the night's. The 22 shows it; the 90 shows where it is slower, which is his to judge by eye. Not the 45 until its read.
+
+## RULED at the ring for the two reads (D, 2026-11-15; `loop/page_m_line_A_2026-11-15.md`, its last section read whole, git-blob da0389a0; `h90.txt` whole and lines of `r90.txt`, `q_chase_tests.txt:194-196` read; `chase/chaser.cpp:525-608` in your tree read by me)
+
+**The reads are taken.** The 90 degree bend is a crossroads, and a line by hand takes it in 0.575 s against today's 0.846 s. So the line I registered does not fire: it is not the place and it is not a question of design for him. The line-maker is the gap. The slide law's rows are red as restated; build the one law.
+
+**ONE CHECK BEFORE THE COST IS BUILT, because I think the 90 degree gap and the cost have one cause, and it would change item 3 of my last ruling.**
+
+Your inference is that the normals fan at the string's corner. I read `bend_least` and offer another, with its arithmetic, for you to break:
+
+- The update is the right one for the squared second difference (`(4 p[i-1] + 4 p[i+1] - p[i-2] - p[i+2]) / 6`). The bounds allow the swing: a sample on the corridor's inner edge can move out by the free width less the room, about 1.8 m in a 2 m corridor.
+- **But a point-by-point pass on a second-difference energy moves long shapes very slowly.** By the usual estimate for this stencil, one pass removes about (pi/L)^4 / 6 of an error whose half-wave is L samples (twice that when done in place). For the swing a wide line needs, about 6 to 8 m either side of the corner (your hand line's radius), L is about 48 to 64 samples: one to three parts in a million a pass, so 600 passes do a few thousandths of the way at most. The same 600 passes fully smooth only shapes up to about 10 samples, 2.5 m.
+- So what `bend_least` returns is the string rounded over a couple of metres, not the least-bending line. Rounding a right angle over 2.5 m of path gives a radius of about 1.6 m; you read about 0.9 m at the corner.
+- Your own third try already showed the line changes with the count of passes (fewer passes, more wall touches). A line at its minimum would not.
+
+**The check, a read and no change to the law:** on the 90 degree bend in the stand-in, run the same `bend_least` with the passes multiplied by 100 and by 1,000 (in a test, the cost not gated), and print the corner's radius, the line's greatest offset from the string, and the bend's time and exit tick each time.
+- **If the radius and the time move with the passes,** the line was never at its minimum. Then the gap at the 90 and the cost are one thing: the solver. The offsets enter the energy five to a row, so the unbounded problem is a banded system that is solved directly in time proportional to the samples; the widths are bounds (solve, hold the offsets that reach a bound, solve the rest again). No library. Item 3 of my last ruling changes to that, and keeping the line between plans is built only if the gate still fails after it.
+- **If they do not move,** my reading is wrong, the parametrisation is the limit as you say, and item 3 stands as written.
+- **Registered for the solver, if it is built:** its line does not move by more than 1 cm when its effort is multiplied by ten; the 90 degree bend in the stand-in is taken in no more than today's 0.846 s; the 22 and 45 are no slower than this tip's by more than your 5 per cent; one plan is under the gate. **Unwelcome, named now:** the bounds at doorways need many re-solves and the cost stays over the gate; then keeping the line between plans comes back.
+
+**The order now:** the slide's one law (as you are doing), this check, then the cost by whichever way the check says. One ring with the check's print and the slide law's rows.
+
+**Two smaller things:**
+- **Pane E's 45:** the bend is not on the root hunter's way, so its time there means nothing. The like-for-like figure in that staged chase is the tick at which each law reaches the player from the same start. Print today's beside the root's 3669. And `t45_trace.txt` ends "nearest to the apex 0.05 m over 5760 frames" where the section says never nearer than about 11 m; say which apex each is.
+- **The ten routes, your figure, read by me (`q_chase_tests.txt:194-196`):** today 77.11 s, the line 81.02 and 77.74 s. So over whole routes the new hunter is still 5 and 1 per cent slower in total. It is what I tell him beside the bends.
+
+**The film:** pane E films the 22 degree bend only. The 90 is not filmed until the line-maker's gap is closed; it is no longer a question for his eye.
