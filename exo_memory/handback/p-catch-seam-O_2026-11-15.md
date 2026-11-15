@@ -114,3 +114,14 @@ NEXT: librarian route the catch table to pane A's catch-rate work when this is r
   - On 48 seeds: normal comes **about a third sooner** (34.2 against 49.2); hard **does not move** (45.7 against 46.2); brutal comes **later**.
   - The 12-seed hard cell (30.9 against 50.1) was the small sample.
 - **Still 48 seeds a cell,** so a few runs in a cell are within what another seed set could move. The two readings that hold at every level are the extra escapes (the flee bot) and the hunter's sooner catches at normal and hard.
+
+## The catch read at the grips (the chair's 20:58Z order): NOT RUN, stopped at his word of 15:03 ("stop working on the old one completely for now")
+- **Answered first, as asked:** the sweep DOES take the chase-speed pairs.
+  - checked: `git show 3112032:chase/speed.h` → `grip_mu` (:41), `root_law` (:49) and `line_arcs` (:52) are speed-model fields.
+  - checked: `dz-chase sweep --speed` sets them (`main.cpp:123`, `:156`).
+  - checked: `set_speed` splits on space, `;` and tab (`chase/speed.cpp:13-15`).
+- **What happened:**
+  - a tree at a-mline 3112032 (`G:\consonance-scratch\dz3-o-mline`) was built: checked: `grip4-build.out` → exit 0 at 15:05:36;
+  - the first arm was still waiting on the lock (both slots held: B, A) when the stop came. **It never started.**
+  - I stopped the runner by its handle. checked: Win32_Process → nothing of it running or waiting.
+- **No table:** nothing was swept, so there is nothing to file. The tree and the runner (`grip4.js`, `grip4table.js`) are left on G: for when it is asked again.
