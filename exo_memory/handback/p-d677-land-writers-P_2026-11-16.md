@@ -45,3 +45,21 @@ he has no params.txt to read it from.
 HEAD stayed at 0500d0a and I checked it. The second try read the message from a file.
 
 BASE: G:\consonance-worktrees\dz3-land-p 0500d0a
+
+## STATE at the stop (the chair's interrupt of 17:59Z; his word of 11:58: save all work for Friday)
+
+**Game:** the landing was past its suite and is finished. dreamzone-3 main is `c2af9d9` (pushed); his copy is built and "up to date"; main's own
+test is green (14/14). No game branch of mine is unpushed. The landing trees (`G:\consonance-worktrees\dz3-land-p` at c2af9d9 and
+`dz3-main-p` at 0500d0a) are clean.
+**Lighthouse branches, local, all committed and clean, none pushed** (the push hold for his answer on the paths stands):
+- `wtdir-p` cd3e009e: the COMMITTEE.md worktree line. Green.
+- `offc-p` 6d251cf5: the seat temp and capture keys. Green, unbuilt; it takes effect at his rebuild.
+- `hrtmp-p` 7b54701d: the heavy-run temp-folder leak. Green.
+- `hrstop-p` a8523227: the mutant harness's stop measured against the control, and the failing tests named. Green, 13/13 mutations.
+- `sbclip-p` 6333ed6a: carrier-drift frozen 51 → 57, and the state-block row. Green.
+- `idle-pulse-p` 23b2d91d and `reds-p` 2cd5d6c8: waiting on landings.
+- `card-p` 57305693: clean, nothing committed; the card is not seated (his call on the wake's size).
+
+**Red:** nothing of mine. On the game, waiting with their authors: a-lead, a-arm and e10, on merge conflicts (since landed in E's stack), and a-corner
+on its red chase row m2_g1.
+**Next step:** a landing pane lands the lighthouse branches when he answers on the paths. No run, landing or film of mine is in flight. Idle until Friday's word.
