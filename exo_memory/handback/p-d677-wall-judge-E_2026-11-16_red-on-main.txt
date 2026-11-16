@@ -1,0 +1,78 @@
+course-clearance: build 614198e48b7859770f0a383658fe23bc88ed0e3b+changes; every bone of both bodies, every frame of the set course; IN = 5 mm or more past a wall's, a prop's or a ceiling's face (a floor is counted, not failed); NEAR = within 5 cm
+course-clearance: straight_turn, the runner: 907 frames; a part IN on 0; a part near a wall (within 5 cm) on 676
+  floor foot L      on 339 frames (not judged here)
+  floor foot R      on 342 frames (not judged here)
+course-clearance: straight_turn, the hunter: 907 frames; a part IN on 0; a part near a wall (within 5 cm) on 286
+  floor foot L      on 272 frames (not judged here)
+  floor foot R      on 309 frames (not judged here)
+course-clearance: sidestep, the runner: 317 frames; a part IN on 154; a part near a wall (within 5 cm) on 306
+  IN   upper arm L  on  25 frames (271 to 295); deepest 0.051 m at frame 276, at (-32.85 11.69 -24.10), into a wall or prop (face normal -0.00 -0.00 -1.00)
+  IN   forearm L    on  50 frames (267 to 316); deepest 0.111 m at frame 277, at (-32.69 11.50 -24.02), into a wall or prop (face normal 0.00 0.00 -1.00)
+  IN   hand L       on  50 frames (267 to 316); deepest 0.130 m at frame 311, at (-32.62 11.51 -24.00), into a wall or prop (face normal 0.00 0.00 1.00)
+  IN   upper arm R  on  89 frames (80 to 168); deepest 0.099 m at frame 86, at (-32.95 11.58 -26.95), into a wall or prop (face normal 0.00 0.00 1.00)
+  IN   forearm R    on  95 frames (76 to 173); deepest 0.134 m at frame 87, at (-32.79 11.37 -27.00), into a wall or prop (face normal 0.00 0.00 -1.00)
+  IN   hand R       on  99 frames (71 to 176); deepest 0.130 m at frame 154, at (-32.62 11.29 -27.00), into a wall or prop (face normal 0.00 0.00 -1.00)
+  floor foot L      on 234 frames (not judged here)
+  floor foot R      on 201 frames (not judged here)
+course-clearance: sidestep, the hunter: 317 frames; a part IN on 243; a part near a wall (within 5 cm) on 277
+  IN   upper arm L  on  57 frames (260 to 316); deepest 0.162 m at frame 276, at (-32.86 11.94 -24.10), into a wall or prop (face normal 0.00 -0.00 -1.00)
+  IN   forearm L    on  56 frames (261 to 316); deepest 0.135 m at frame 294, at (-32.83 11.98 -24.00), into a wall or prop (face normal 0.00 0.00 1.00)
+  IN   hand L       on  12 frames (264 to 275); deepest 0.128 m at frame 264, at (-32.52 11.46 -24.00), into a wall or prop (face normal 0.00 0.00 1.00)
+  IN   collar R     on  26 frames (96 to 121); deepest 0.024 m at frame 108, at (-32.91 12.19 -26.90), into a wall or prop (face normal -0.00 -0.00 1.00)
+  IN   upper arm R  on 106 frames (72 to 177); deepest 0.196 m at frame 159, at (-32.91 12.27 -26.90), into a wall or prop (face normal -0.00 -0.00 -1.00)
+  IN   forearm R    on 120 frames (61 to 180); deepest 0.135 m at frame 78, at (-32.76 11.69 -27.00), into a wall or prop (face normal 0.00 0.00 -1.00)
+  IN   hand R       on 163 frames (0 to 180); deepest 0.130 m at frame 180, at (-32.50 11.52 -27.00), into a wall or prop (face normal 0.00 0.00 -1.00)
+  IN   foot L       on   8 frames (255 to 266); deepest 0.021 m at frame 265, at (-32.90 10.51 -24.10), into a wall or prop (face normal 0.00 0.00 -1.00)
+  floor foot L      on 211 frames (not judged here)
+  floor foot R      on 229 frames (not judged here)
+course-clearance: backwards, the runner: 375 frames; a part IN on 0; a part near a wall (within 5 cm) on 334
+  floor foot L      on 199 frames (not judged here)
+  floor foot R      on 195 frames (not judged here)
+course-clearance: backwards, the hunter: 375 frames; a part IN on 66; a part near a wall (within 5 cm) on 234
+  IN   forearm R    on  15 frames (51 to 65); deepest 0.012 m at frame 64, at (-32.79 11.57 -26.90), into a wall or prop (face normal 0.00 -0.00 1.00)
+  IN   hand R       on  66 frames (0 to 65); deepest 0.056 m at frame 64, at (-32.65 11.40 -26.93), into a wall or prop (face normal 0.00 0.00 1.00)
+  floor foot L      on 165 frames (not judged here)
+  floor foot R      on 167 frames (not judged here)
+course-clearance: stop_start, the runner: 605 frames; a part IN on 63; a part near a wall (within 5 cm) on 491
+  IN   upper arm R  on  48 frames (522 to 604); deepest 0.059 m at frame 604, at (-13.61 11.70 -26.90), into a wall or prop (face normal 0.00 0.00 1.00)
+  IN   forearm R    on  57 frames (523 to 604); deepest 0.083 m at frame 587, at (-14.46 11.43 -26.95), into a wall or prop (face normal 0.00 0.00 1.00)
+  IN   hand R       on  50 frames (523 to 604); deepest 0.111 m at frame 587, at (-14.44 11.23 -26.98), into a wall or prop (face normal 0.00 0.00 1.00)
+  floor foot L      on 293 frames (not judged here)
+  floor foot R      on 266 frames (not judged here)
+course-clearance: stop_start, the hunter: 605 frames; a part IN on 198; a part near a wall (within 5 cm) on 304
+  IN   upper arm R  on 143 frames (151 to 604); deepest 0.199 m at frame 604, at (-13.53 11.93 -26.90), into a wall or prop (face normal -0.00 -0.00 1.00)
+  IN   forearm R    on 175 frames (13 to 604); deepest 0.139 m at frame 593, at (-13.95 11.85 -26.90), into a wall or prop (face normal 0.00 -0.00 1.00)
+  IN   hand R       on 146 frames (0 to 604); deepest 0.130 m at frame 478, at (-19.92 11.44 -27.00), into a wall or prop (face normal 0.00 0.00 1.00)
+  floor foot L      on 262 frames (not judged here)
+  floor foot R      on 307 frames (not judged here)
+course-clearance: stair, the runner: 812 frames; a part IN on 49; a part near a wall (within 5 cm) on 610
+  IN   shin L       on  12 frames (447 to 781); deepest 0.049 m at frame 455, at (-15.81 1.05 -1.50), into a wall or prop (face normal -0.00 0.15 -0.99)
+  IN   foot L       on  22 frames (428 to 781); deepest 0.168 m at frame 452, at (-15.82 0.90 -1.37), into a wall or prop (face normal 0.00 0.00 -1.00)
+  floor foot L      on 325 frames (not judged here)
+  IN   thigh R      on   1 frames (488 to 488); deepest 0.033 m at frame 488, at (-15.65 1.57 -0.66), into a wall or prop (face normal 0.00 0.12 -0.99)
+  IN   shin R       on   1 frames (488 to 488); deepest 0.013 m at frame 488, at (-15.65 1.57 -0.66), into a wall or prop (face normal -0.00 0.12 -0.99)
+  IN   foot R       on  17 frames (408 to 734); deepest 0.114 m at frame 502, at (-15.66 1.71 -0.38), into a wall or prop (face normal -0.00 0.00 1.00)
+  floor foot R      on 298 frames (not judged here)
+course-clearance: stair, the hunter: 812 frames; a part IN on 79; a part near a wall (within 5 cm) on 400
+  IN   head         on  16 frames (222 to 237); deepest 0.070 m at frame 229, at (-14.99 2.05 -4.36), into a ceiling (face normal -0.00 -1.00 -0.00)
+  IN   upper arm L  on  14 frames (223 to 236); deepest 0.062 m at frame 233, at (-15.08 1.58 -5.07), into a wall or prop (face normal -1.00 -0.00 -0.00)
+  IN   forearm L    on  14 frames (222 to 235); deepest 0.052 m at frame 233, at (-15.08 1.58 -5.07), into a wall or prop (face normal -1.00 -0.00 -0.00)
+  IN   foot L       on  38 frames (407 to 713); deepest 0.035 m at frame 690, at (-17.04 2.10 -0.94), into a wall or prop (face normal 0.00 -0.00 1.00)
+  floor foot L      on 272 frames (not judged here)
+  IN   thigh R      on   3 frames (750 to 757); deepest 0.045 m at frame 757, at (-17.37 3.33 -2.62), into a wall or prop (face normal 0.00 0.32 0.95)
+  floor thigh R     on   2 frames (not judged here)
+  IN   shin R       on   1 frames (757 to 757); deepest 0.025 m at frame 757, at (-17.37 3.33 -2.62), into a wall or prop (face normal 0.00 0.32 0.95)
+  floor shin R      on   1 frames (not judged here)
+  IN   foot R       on  22 frames (488 to 807); deepest 0.046 m at frame 498, at (-15.63 1.63 -0.38), into a wall or prop (face normal 0.00 0.00 -1.00)
+  floor foot R      on 267 frames (not judged here)
+course-clearance: doorway, the runner: 554 frames; a part IN on 0; a part near a wall (within 5 cm) on 462
+  floor foot L      on 209 frames (not judged here)
+  floor foot R      on 230 frames (not judged here)
+course-clearance: doorway, the hunter: 554 frames; a part IN on 40; a part near a wall (within 5 cm) on 231
+  IN   head         on  35 frames (198 to 360); deepest 0.177 m at frame 205, at (-0.01 2.11 4.49), into a wall or prop (face normal -1.00 0.00 0.00)
+  IN   upper arm L  on  11 frames (202 to 212); deepest 0.013 m at frame 211, at (0.10 1.40 5.05), into a wall or prop (face normal 0.00 0.00 -1.00)
+  IN   upper arm R  on  18 frames (210 to 358); deepest 0.083 m at frame 356, at (2.09 1.61 6.05), into a wall or prop (face normal -1.00 -0.00 -0.00)
+  IN   forearm R    on  22 frames (210 to 358); deepest 0.073 m at frame 356, at (2.09 1.61 6.05), into a wall or prop (face normal -1.00 -0.00 -0.00)
+  floor foot L      on 176 frames (not judged here)
+  floor foot R      on 226 frames (not judged here)
+course-clearance: RED: 8 of 12 station-bodies have a part in a wall, a prop or a ceiling

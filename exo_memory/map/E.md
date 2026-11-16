@@ -3258,3 +3258,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-15 17:5x local (D) · D677 100STYLE fetched (Zenodo 8127870, MD5 matched) into its own G: folder, CC BY 4.0 with the credit "The 100STYLE Dataset - Ian Mason" quoted at source; 400 backward and sideways clips listed with lengths and measured root speeds; one backward walk (Neutral_BW 500-800, 0.66 m/s) filmed on its own skeleton as the recording → `exo_memory/handback/p-d677-100style-E_2026-11-15.md`
 
 ## 2026-11-15 20:5x local (D) · D677 his game now, main c38d90a, filmed on the set course with the new system on (a config copy), both bodies, from frame 0 (the first-tick fix holds: no old pose at 0), 12 clips → `exo_memory/handback/p-d677-main-c38d90a-film-E_2026-11-15.md`
+
+## 2026-11-16 03:0x local (D) · D677 the judge of the body meeting the world (dz-world --course-clearance on sim::World::body_part_depth): RED on main c38d90a, 8 of 12 station-bodies, the sidestep arms 0.13-0.20 m into the wall, the hunter's head 0.18 m into the wall over the doorway → `exo_memory/handback/p-d677-wall-judge-E_2026-11-16.md`
+- dreamzone-3 e9-clearance-e 0fcadf1 pushed (red 614198e); probe rows 6/6; mutants 5/4, one survivor named.
+- **Carry:** look at every station of a film before ringing it; one station looked at let an arm in a wall through to him.
