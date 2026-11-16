@@ -1,0 +1,43 @@
+    today     route 0 point 3, 14 degrees: entry 8.64, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 90 degrees; the lowest at +0.31 s from the bend;
+    today     route 0 point 5, 18 degrees: entry 8.86, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 125 degrees; the lowest at -0.29 s from the bend;
+    today     route 1 point 7, 11 degrees: entry 9.23, grip 8.00, lowest 1.19 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 97 degrees; the lowest at +0.69 s from the bend; point 8, 80 degrees, at +0.46 s; point 9, 79 degrees, at +0.55 s; point 10, 74 degrees, at +0.81 s;
+    today     route 7 point 6, 6 degrees: entry 8.33, grip 8.00, lowest 0.73 m/s, 6 head-on ticks
+      the line's summed turn within 3 m either side 167 degrees; the lowest at -0.54 s from the bend;
+    today     route 14 point 6, 17 degrees: entry 8.55, grip 8.00, lowest 0.00 m/s, 8 head-on ticks
+      the line's summed turn within 3 m either side 139 degrees; the lowest at +0.88 s from the bend;
+    today     route 15 point 6, 17 degrees: entry 9.10, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 146 degrees; the lowest at +0.81 s from the bend; point 7, 97 degrees, at +0.87 s;
+    today     route 17 point 1, 15 degrees: entry 8.39, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 29 degrees; the lowest at +0.32 s from the bend;
+    today     route 17 point 3, 14 degrees: entry 8.60, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 93 degrees; the lowest at -0.28 s from the bend;
+    today     route 18 point 2, 19 degrees: entry 2.35, grip 7.29, lowest 0.00 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 102 degrees; the lowest at +0.42 s from the bend; point 3, 63 degrees, at +0.65 s; point 4, 66 degrees, at +0.76 s; point 5, 64 degrees, at +0.89 s;
+    today     route 19 point 5, 17 degrees: entry 8.01, grip 8.00, lowest 0.00 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 157 degrees; the lowest at -0.08 s from the bend;
+    today    : 13 bends of 5 to 22 degrees; with a head-on tick 2; under 0.8 of what they could keep 10
+    way (b)   route 10 point 243, 19 degrees: entry 8.41, grip 8.00, lowest 0.92 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 372 degrees; the lowest at +0.88 s from the bend; point 256, 25 degrees, at +0.67 s; point 257, 29 degrees, at +0.72 s; point 258, 32 degrees, at +0.79 s; point 259, 34 degrees, at +0.86 s;
+    way (b)   route 17 point 79, 13 degrees: entry 8.37, grip 8.00, lowest 2.18 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 223 degrees; the lowest at +0.88 s from the bend;
+    way (b)   route 17 point 99, 17 degrees: entry 8.08, grip 8.00, lowest 2.18 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 330 degrees; the lowest at -0.18 s from the bend;
+    way (b)  : 15 bends of 5 to 22 degrees; with a head-on tick 0; under 0.8 of what they could keep 3
+    G:\consonance-scratch\a-chain\chase\tests\feel_tests.cpp(934): CHECK failed: slow == 0
+    way (a)   route 10 point 49, 19 degrees: entry 7.71, grip 8.00, lowest 4.87 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 404 degrees; the lowest at +0.26 s from the bend;
+    way (a)   route 10 point 243, 19 degrees: entry 8.42, grip 8.00, lowest 0.27 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 372 degrees; the lowest at +1.00 s from the bend; point 256, 25 degrees, at +0.69 s; point 257, 29 degrees, at +0.74 s; point 258, 32 degrees, at +0.81 s; point 259, 34 degrees, at +0.88 s;
+    way (a)   route 14 point 197, 13 degrees: entry 3.73, grip 8.00, lowest 2.98 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 189 degrees; the lowest at +1.00 s from the bend; point 171, 33 degrees, at -0.95 s; point 172, 30 degrees, at -0.88 s; point 173, 26 degrees, at -0.81 s; point 174, 25 degrees, at -0.76 s; point 216, 23 degrees, at +0.58 s; point 217, 28 degrees, at +0.62 s; point 218, 35 degrees, at +0.65 s; point 219, 42 degrees, at +0.69 s; point 220, 52 degrees, at +0.74 s; point 221, 63 degrees, at +0.78 s; point 222, 75 degrees, at +0.84 s; point 223, 87 degrees, at +0.91 s; point 224, 98 degrees, at +0.98 s;
+    way (a)   route 17 point 79, 13 degrees: entry 8.37, grip 8.00, lowest 2.18 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 223 degrees; the lowest at +0.88 s from the bend;
+    way (a)   route 17 point 99, 17 degrees: entry 8.08, grip 8.00, lowest 2.18 m/s, 0 head-on ticks
+      the line's summed turn within 3 m either side 330 degrees; the lowest at -0.18 s from the bend;
+    way (a)  : 15 bends of 5 to 22 degrees; with a head-on tick 0; under 0.8 of what they could keep 5
+    G:\consonance-scratch\a-chain\chase\tests\feel_tests.cpp(934): CHECK failed: slow == 0
+FAIL  m2_g1_on_the_routes_a_bend_of_22_degrees_or_less_is_taken_without_a_wall_and_keeps_its_speed
+1 tests, 1 failed
