@@ -3272,3 +3272,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-16 07:3x local (D) · D677 the stacked tip for P: e12-stack-e 3e29301 = e10 cherry-picked onto A's a-lead-arm 6d4fbfd, B's b-idle 08e1324 merged, pushed; sim 161/0, game 225/0, world_app 87/0; the wall judge RED 3 of 12, no arm; the staged hunter's sidestep clear on A's base; the head work (not green) left out → `exo_memory/handback/p-d677-stack-E_2026-11-16.md`
 - **Carry:** when both sides of a conflict add at a file's end, the shared closing brace goes with only one of them: count braces after resolving.
+
+## 2026-11-16 08:5x local (D) · D677 OLD against NEW on his main c38a52a, side by side (runner and hunter, OLD left, NEW right), 7 stations at real speed and 3x slower, one camera a station; the stop from the front shows the NEW runner's hips moving ~4 px (~2 cm), the NEW hunter's not at all in the hold → `exo_memory/handback/p-d677-old-new-film-E_2026-11-16.md`
+- Clips G:\consonance-scratch\oldnew-c38a52a\clips (14); film-only branch f13-oldnew-e 84fc941 pushed; frames on Z:.
+- **Carry:** before ringing a film made to show a small motion, measure that motion in the frames; a 4 cm shift at 3 m is one pixel.
