@@ -3265,3 +3265,7 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-16 04:1x local (D) · D677 the arm hangs at the CMU runners' measured 6.3 deg to the side (was the A-pose's 41) and an arm that nears a wall bends away or rests on it (anim/contact.h): every arm and hand clear on the whole course, both bodies; the judge 8 → 4 of 12 red, none an arm (stair risers, the hunter's head, its shoulder) → `exo_memory/handback/p-d677-arm-wall-E_2026-11-16.md`
 - dreamzone-3 e10-arm-wall-e 4530413 pushed; game_tests 220/0, world_app_tests 87/0; every station looked at, both bodies.
+
+## 2026-11-16 06:3x local (D) · D677 item 1 INTERIM, still red: the judge now reaches the drawn crown (hunter 0.123 m over Head; doorway 0.177 → 0.188 m read); a sourced stoop (The Last Guardian's ceiling sensors, least pitch, 0.34 s lead from the chest's spring) took the doorway to 0.035 m and the stair's ceiling to 0, but its crown-side sensors ran through walls and stooped the runner falsely; fixes written, unjudged, queued behind P's landing hold → `exo_memory/handback/p-d677-head-room-E_2026-11-16.md`
+- Uncommitted on e11-head-room-e (base 4530413). Items 2 (stair feet) and 3 (shoulder) not started.
+- **Carry:** a sensor carried with the pose feeds back into the pose: check it against walls from the body's own line, or it runs away.
