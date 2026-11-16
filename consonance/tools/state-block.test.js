@@ -179,6 +179,18 @@ test('an under-cap block is NOT marked truncated — the flag must discriminate'
   assert.doesNotMatch(r.text, /TRUNCATED/);
 });
 
+test('the real block ends with its last section WHOLE — the cap never cuts LIVE, the section a waking seat reads last', () => {
+  // D677: on 11-14 the block passed its cap and LIVE was cut to "LIVE  a". The truncation marker is loud, but a block can also be cut
+  // and stay under-length-looking, so this row reads the end itself: every line of the last section, in order, ends the block.
+  const secs = [sb.repoSection(), sb.journalSection(), sb.instrumentSection(), sb.sourceSection(), sb.nameSection(), sb.liveSection()];
+  const r = sb.render(secs);
+  const last = secs[secs.length - 1];
+  assert.strictEqual(last.title, 'live', 'LIVE is the last section');
+  const tail = last.lines.map((l) => '  ' + l).join('\n');
+  assert.ok(r.text.endsWith(tail), 'the block ends with every line of LIVE:\n' + r.text.slice(-300));
+  assert.match(r.text, /^LIVE\b.*\(check: tail -1 /m, 'and LIVE keeps its title and its check');
+});
+
 test('the real block fits under the cap today — a generator that always truncates is broken', () => {
   const r = sb.render();
   assert.strictEqual(r.truncated, false, `live block is ${r.chars} chars, over the ${sb.CAP} cap`);
@@ -424,6 +436,26 @@ test('a missing SOURCE.md FAILS LOUDLY rather than emitting an empty table', () 
   const src = fs.readFileSync(require.resolve('./state-block.js'), 'utf8');
   assert.match(src, /FAILED: ' \+ SRC \+ ' is absent/, 'absence must be reported');
   assert.match(src, /FAILED: no trigger rows parsed/, 'an unparseable file must be reported too');
+});
+
+test('grouped by target, NO trigger is lost: every trigger in SOURCE.md is in the section verbatim, on the line that ends with its target', () => {
+  // P, 2026-11-15: the rows are grouped by target to give back the characters the watch-the-bearing card added. The triggers are the
+  // room's cues and are not trimmed without the continuity test, so this row holds the grouping to "layout only".
+  const src = fs.readFileSync(path.join(LIVE_REPO, 'exo_memory', 'SOURCE.md'), 'utf8').split('\n');
+  const start = src.findIndex((l) => /^##\s+TRIGGERS\s*$/.test(l));
+  const want = [];
+  for (let i = start + 1; i < src.length && !/^##\s/.test(src[i]); i++) {
+    const m = src[i].match(/^- when (.+?) -> (.+?)\s*$/);
+    const t = m && m[2].trim();
+    if (m) want.push({ when: m[1].trim(), target: /\.md$/.test(t) ? t.replace(/^exo_memory\//, '').replace(/^cards\//, '').replace(/\.md$/, '') : t });
+  }
+  assert.ok(want.length >= 10, 'the source rows were read: ' + want.length);
+  const rows = sb.sourceSection().lines.filter((l) => l.startsWith('  '));
+  for (const w of want) {
+    const line = rows.find((l) => l.endsWith(' -> ' + w.target) && l.includes(w.when));
+    assert.ok(line, `"${w.when}" -> ${w.target} is not on its target's line`);
+  }
+  assert.strictEqual(rows.length, new Set(want.map((w) => w.target)).size, 'one line per target');
 });
 
 test('every rendered trigger is a when -> target pair', () => {
