@@ -1,0 +1,133 @@
+diff --git a/game/tests/anim_tests.cpp b/game/tests/anim_tests.cpp
+index a76d82c..1197261 100644
+--- a/game/tests/anim_tests.cpp
++++ b/game/tests/anim_tests.cpp
+@@ -1015,3 +1015,44 @@ DZ_TEST(chain_the_turns_lean_follows_its_two_dials_the_share_and_the_ease) {
+   DZ_CHECK(std::fabs(half.chest - 0.5f * src.chest) <= 0.3f);
+   DZ_CHECK(src.half > 0.0f && std::fabs((slow.half - src.half) - (0.34f - 0.1126f)) <= 0.3f * (0.34f - 0.1126f));
+ }
++
++// The idle made visible (his item 248, 02:27: "there is no idle animation for either"; the chair's ruling of 08:28Z): a whole body
++// standing still for two minutes shifts its weight between its feet as Duarte & Zatsiorsky 1999 found people do in natural standing
++// ("on average, one postural change was produced every 20 s", Duarte, Freitas & Zatsiorsky's chapter, read at source): its pelvis
++// moves across toward a foot (a shift: at least 1 cm within 5 s) 3 to 12 times in 120 s, over at least 2 cm in all (OURS: no source
++// read gives a shift's size; the still-standers' floor, dos Santos 2017, is a centre of pressure wandering 2.8 mm sd across), the chest
++// rolling with it, while both feet stay planted (each ankle within 1 cm of where it stood). Printed: the shifts, their reach, the
++// chest's roll, the feet.
++DZ_TEST(the_new_systems_body_standing_still_shifts_its_weight_between_its_feet) {
++  anim::Animator body(anim::kRunnerRow);
++  body.set_rest(plain_rest(1.0f));
++  anim::Intent in;
++  in.position = Vec3{0.0f, 0.0f, 0.0f}, in.velocity = Vec3{}, in.facing = 0.0f;
++  std::vector<float> across;
++  Vec3 ankle0[2]{};
++  float feet_moved = 0.0f, chest_roll = 0.0f;
++  const Vec3 right{1.0f, 0.0f, 0.0f};
++  for (int t = 0; t < static_cast<int>(122.0f / kDt); ++t) {
++    body.tick(in, {}, kDt);
++    const BodyPose p = body.pose(1.0f);
++    if (t * kDt < 2.0f) continue;
++    const Vec3 al = p[Joint::AnkleL], ar = p[Joint::AnkleR];
++    if (across.empty()) ankle0[0] = al, ankle0[1] = ar;
++    feet_moved = std::max({feet_moved, length(al - ankle0[0]), length(ar - ankle0[1])});
++    across.push_back(dot(p[Joint::Pelvis] - (ankle0[0] + ankle0[1]) * 0.5f, right));
++    chest_roll = std::max(chest_roll, std::fabs(roll_of(p[Joint::Chest], p[Joint::Neck], right)) / kDeg);
++  }
++  const size_t w = static_cast<size_t>(5.0f / kDt);
++  int shifts = 0;
++  for (size_t i = w; i < across.size();) {
++    if (std::fabs(across[i] - across[i - w]) >= 0.01f) ++shifts, i += w;   // one shift, then look again after it
++    else ++i;
++  }
++  const float reach = *std::max_element(across.begin(), across.end()) - *std::min_element(across.begin(), across.end());
++  std::printf("    standing 120 s: %d weight shifts (Duarte: one postural change every 20 s, so about 6), the pelvis over %.1f cm across (OURS;"
++              " the still-standers' floor: 2.8 mm sd), the chest rolling up to %.1f degrees, the feet moved at most %.1f mm\n",
++              shifts, static_cast<double>(reach * 100.0f), static_cast<double>(chest_roll), static_cast<double>(feet_moved * 1000.0f));
++  DZ_CHECK(shifts >= 3 && shifts <= 12);
++  DZ_CHECK(reach >= 0.02f);
++  DZ_CHECK(feet_moved <= 0.01f);
++}
+diff --git a/tools/yardstick/main.cpp b/tools/yardstick/main.cpp
+index c9f6862..d2ca425 100644
+--- a/tools/yardstick/main.cpp
++++ b/tools/yardstick/main.cpp
+@@ -192,7 +192,7 @@ int score_arms(const std::array<Vec3, kJointCount>& rest, const std::string& dir
+ // D677 (his item 246, "the runners arm swings too high"): each clip's right arm over its whole strides, from the right foot's
+ // strike to the next, at 101 points, the mean over the clip's strides: the shoulder's flex and the elbow's bend as arm_angles reads
+ // them (the same reader and angles as score_arms, so the curves and the bars cannot disagree). One CSV line a clip on stdout:
+-// clip, speed, strides, flex[101], elbow[101]; tools/yardstick/make_cmu_arm_means.js turns them into game/anim/cmu_arm_means.h.
++// clip, speed, strides, flex[101], elbow[101], abd[101] (the upper arm out to the side, + away from the trunk; D677 his item 249); tools/yardstick/make_cmu_arm_means.js turns them into game/anim/cmu_arm_means.h.
+ int arm_curves(const std::string& dir, const std::vector<std::string>& clips) {
+   for (const std::string& clip : clips) {
+     std::vector<BodyPose> poses;
+@@ -207,7 +207,7 @@ int arm_curves(const std::string& dir, const std::vector<std::string>& clips) {
+       std::fprintf(stderr, "dz-yardstick: %s: fewer than two right-foot strikes found, so no whole stride: LEFT OUT\n", clip.c_str());
+       continue;
+     }
+-    std::vector<double> flex(101, 0.0), elbow(101, 0.0);
++    std::vector<double> flex(101, 0.0), elbow(101, 0.0), abd(101, 0.0);
+     const size_t        n = strikes.size() - 1;
+     for (size_t s = 0; s < n; ++s) {
+       const size_t a = strikes[s], b = strikes[s + 1];
+@@ -218,11 +218,13 @@ int arm_curves(const std::string& dir, const std::vector<std::string>& clips) {
+         const ArmAngles p = arm_angles(poses[i], true), q = arm_angles(poses[i + 1], true);
+         flex[k] += (p.flex + (q.flex - p.flex) * f) / static_cast<double>(n);
+         elbow[k] += (p.elbow + (q.elbow - p.elbow) * f) / static_cast<double>(n);
++        abd[k] += (p.abd + (q.abd - p.abd) * f) / static_cast<double>(n);
+       }
+     }
+     std::printf("%s,%.4f,%zu", clip.c_str(), speed, n);
+     for (double v : flex) std::printf(",%.3f", v);
+     for (double v : elbow) std::printf(",%.3f", v);
++    for (double v : abd) std::printf(",%.3f", v);
+     std::printf("\n");
+   }
+   return 0;
+diff --git a/tools/yardstick/make_cmu_arm_means.js b/tools/yardstick/make_cmu_arm_means.js
+index b7b1e45..622fcb0 100644
+--- a/tools/yardstick/make_cmu_arm_means.js
++++ b/tools/yardstick/make_cmu_arm_means.js
+@@ -5,7 +5,7 @@
+ //   node tools/yardstick/make_cmu_arm_means.js curves.csv > game/anim/cmu_arm_means.h
+ //
+ // Each CSV line is one clip: clip, speed (m/s), strides, the shoulder's flex at 101 points from the right foot's strike, then the
+-// elbow's bend (degrees; flex + forward from hanging against the trunk, the elbow 0 straight: joint_angles.cpp arm_angles, the
++// elbow's bend, then the upper arm out to the side (degrees; flex + forward from hanging against the trunk, the elbow 0 straight: joint_angles.cpp arm_angles, the
+ // yardstick's own reading). A clip's stride does not close exactly, so its mismatch at the end is taken out along the stride (a line
+ // from 0 at the strike to the whole mismatch at the next) before the clips are averaged, each clip once. It prints, on stderr, each
+ // clip's front and back of the swing and its mean elbow beside the curve's, against L193's bars.
+@@ -15,12 +15,12 @@ if (lines.length === 0) throw new Error('no clip lines in ' + process.argv[2]);
+ const clips = lines.map((l) => {
+   const v = l.split(',');
+   const nums = v.slice(3).map(Number);
+-  if (nums.length !== 202 || nums.some((x) => !Number.isFinite(x))) throw new Error(v[0] + ': expected 202 numbers, got ' + nums.length);
++  if (nums.length !== 303 || nums.some((x) => !Number.isFinite(x))) throw new Error(v[0] + ': expected 303 numbers, got ' + nums.length);
+   const closed = (a) => a.map((x, k) => x - ((a[100] - a[0]) * k) / 100);
+-  return { clip: v[0], speed: Number(v[1]), flex: closed(nums.slice(0, 101)), elbow: closed(nums.slice(101)) };
++  return { clip: v[0], speed: Number(v[1]), flex: closed(nums.slice(0, 101)), elbow: closed(nums.slice(101, 202)), abd: closed(nums.slice(202)) };
+ });
+ const mean = (f) => Array.from({ length: 101 }, (_, k) => clips.reduce((s, c) => s + f(c)[k], 0) / clips.length);
+-const flex = mean((c) => c.flex), elbow = mean((c) => c.elbow);
++const flex = mean((c) => c.flex), elbow = mean((c) => c.elbow), abd = mean((c) => c.abd);
+ const speed = clips.reduce((s, c) => s + c.speed, 0) / clips.length;
+ const avg = (a) => a.reduce((s, x) => s + x, 0) / a.length;
+ const sd = (a) => Math.sqrt(a.reduce((s, x) => s + (x - avg(a)) ** 2, 0) / (a.length - 1));
+@@ -29,6 +29,7 @@ for (const c of clips)
+   console.error(`${c.clip} ${c.speed.toFixed(2)} m/s: flex ${Math.min(...c.flex).toFixed(1)}..${Math.max(...c.flex).toFixed(1)}, elbow mean ${avg(c.elbow).toFixed(1)}`);
+ console.error(`over ${clips.length} clips (mean ${speed.toFixed(2)} m/s): the swing's back ${avg(backs).toFixed(1)} (sd ${sd(backs).toFixed(1)}), front ${avg(fronts).toFixed(1)} (sd ${sd(fronts).toFixed(1)}), elbow mean ${avg(elbows).toFixed(1)} (sd ${sd(elbows).toFixed(1)})`);
+ console.error(`  L193's bars (25 clips, whole clips): back -34.4 (sd 3.7), front +7.8 (sd 7.0), elbow mean 103 (sd 10.4 over clips)`);
++console.error(`the upper arm out to the side (abd): the mean curve ${Math.min(...abd).toFixed(1)}..${Math.max(...abd).toFixed(1)}, its mean ${avg(abd.slice(0, 100)).toFixed(1)}; per clip mean ${avg(clips.map((c) => avg(c.abd))).toFixed(1)} (sd ${sd(clips.map((c) => avg(c.abd))).toFixed(1)})`);
+ console.error(`the mean curve: flex ${Math.min(...flex).toFixed(1)}..${Math.max(...flex).toFixed(1)} (at the strike ${flex[0].toFixed(1)}), elbow ${Math.min(...elbow).toFixed(1)}..${Math.max(...elbow).toFixed(1)} (mean ${avg(elbow).toFixed(1)})`);
+ const row = (a) => '  ' + a.map((x) => x.toFixed(3) + 'f').join(', ');
+ process.stdout.write(`// anim/cmu_arm_means.h: GENERATED by tools/yardstick/make_cmu_arm_means.js from the CMU Graphics Lab Motion Capture Database's
+@@ -50,6 +51,10 @@ ${row(flex)}
+ inline constexpr float kCmuArmElbow[101] = {
+ ${row(elbow)}
+ };
++// The upper arm out to the side, + away from the trunk (arm_angles' abd; D677, his item 249: the arm hangs as runners carry it).
++inline constexpr float kCmuArmAbd[101] = {
++${row(abd)}
++};
+ 
+ }  // namespace dz::game::anim
+ `);
