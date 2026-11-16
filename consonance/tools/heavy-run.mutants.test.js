@@ -69,3 +69,34 @@ test('THE CONTROL ROW, real: an UNMUTATED copy of the suite stopped by its limit
     for (const d of [a, b]) fs.rmSync(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
   }
 });
+
+// D677 (the chair, 00:24Z): in O's first run under the new stop the CONTROL went red once and the harness printed no failing test's name
+// (O's final2\held-rows-1-control-red.out), so the red could not be told from load or from a real fault. A run names what failed.
+test('THE CONTROL ROW, named: a suite that fails names its failing test, and only that one', () => {
+  const d = M.tree();
+  try {
+    fs.writeFileSync(require('node:path').join(d, 'tools', 'heavy-run.test.js'), [
+      "const test = require('node:test');",
+      "test('a row that passes', () => {});",
+      "test('the planted red row (named)', () => { throw new Error('planted'); });",
+      "test('another row that passes', () => {});",
+    ].join('\n') + '\n');
+    const r = M.run(d, 60 * 1000);
+    assert.strictEqual(r.fail, 1, `fail ${r.fail}`);
+    assert.strictEqual(M.controlGreen(r), false);
+    assert.deepStrictEqual(r.failed, ['the planted red row (named)']);
+  } finally { fs.rmSync(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }); }
+});
+
+test('the printed names: at most three, then how many more; nothing when nothing failed', () => {
+  assert.strictEqual(M.named({ failed: [] }), '');
+  assert.strictEqual(M.named({ failed: ['a', 'b'] }), '  failing: a | b');
+  assert.strictEqual(M.named({ failed: ['a', 'b', 'c', 'd', 'e'] }), '  failing: a | b | c (and 2 more)');
+});
+
+test('the control\'s line and each mutant\'s line print the failing names (a source read: main() takes the lock and runs the real suite)', () => {
+  const src = fs.readFileSync(require('node:path').join(__dirname, 'heavy-run.mutants.js'), 'utf8');
+  const line = (needle) => src.split('\n').find((l) => l.includes(needle)) || '';
+  assert.match(line('control (unmutated copy)'), /\$\{named\(control\)\}/, 'the control\'s line names its failing tests');
+  assert.match(line('${label} pass ${r.pass} fail ${r.fail}'), /\$\{named\(r\)\}/, 'each mutant\'s line names its failing tests');
+});

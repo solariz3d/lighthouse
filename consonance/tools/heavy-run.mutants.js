@@ -171,8 +171,13 @@ function run(dir, stopMs) {
   if (r.error && !stopped) throw new Error(`the suite could not be run: ${r.error.message}`);   // a run that never started is no reading of anything
   const o = (r.stdout + r.stderr).replace(/\x1b\[[0-9;]*m/g, ''), n = (k) => Number((o.match(new RegExp(`^ℹ ${k} (\\d+)`, 'm')) || [])[1]);
   const pass = n('pass'), fail = n('fail');
-  return { pass, fail, ms, stopped, crashed: !stopped && !(Number.isFinite(pass) && Number.isFinite(fail)) };
+  // D677 (the chair, 00:24Z): a red with no name cannot be told from load or from a real fault, so a run names what failed: the spec
+  // reporter's "✖ <name> (<time>)" (printed inline and again under "✖ failing tests:", so once each here), or TAP's "not ok N - <name>".
+  const failed = [...new Set([...o.matchAll(/^\s*✖ (.+) \(\d+(?:\.\d+)?m?s\)\s*$/gm), ...o.matchAll(/^\s*not ok \d+ - (.+?)\s*$/gm)].map((m) => m[1]))];
+  return { pass, fail, failed, ms, stopped, crashed: !stopped && !(Number.isFinite(pass) && Number.isFinite(fail)) };
 }
+/** The failing tests' names for a printed line: at most three, then how many more. */
+const named = (r) => (r.failed && r.failed.length ? `  failing: ${r.failed.slice(0, 3).join(' | ')}${r.failed.length > 3 ? ` (and ${r.failed.length - 3} more)` : ''}` : '');
 /** A control is green only when it finished, with passes and no failure. */
 function controlGreen(r) { return !r.stopped && !r.crashed && r.fail === 0 && r.pass > 0; }
 /** One mutant's reading. `again()` runs an unmutated copy under the same stop; it is asked only when the mutant was stopped. */
@@ -182,7 +187,7 @@ function verdict(r, again, stopMs) {
   if (!r.stopped) return { status: 'SURVIVED', why: '' };
   const c = again();
   if (controlGreen(c)) return { status: 'CAUGHT', why: `stopped at ${secs(stopMs)}; the control, run again, finished in ${secs(c.ms)}` };
-  return { status: 'NOT READ', why: `stopped at ${secs(stopMs)}, and the control, run again, ${c.stopped ? 'was stopped too' : 'was not green'}: load, not a reading` };
+  return { status: 'NOT READ', why: `stopped at ${secs(stopMs)}, and the control, run again, ${c.stopped ? 'was stopped too' : `was not green${named(c)}`}: load, not a reading` };
 }
 
 function main() {
@@ -193,7 +198,7 @@ function main() {
   const read = (f) => fs.readFileSync(path.join(HERE, f), 'utf8').replace(/\r\n/g, '\n');
   const runCopy = (stopMs) => { const d = tree(); try { return run(d, stopMs); } finally { fs.rmSync(d, { recursive: true, force: true }); } };
   const control = runCopy(CONTROL_CAP_MS);
-  console.log(`control (unmutated copy)                                        pass ${control.pass} fail ${control.fail}  in ${secs(control.ms)}`);
+  console.log(`control (unmutated copy)                                        pass ${control.pass} fail ${control.fail}  in ${secs(control.ms)}${named(control)}`);
   if (!controlGreen(control)) { console.log(`CONTROL NOT GREEN${control.stopped ? ` (stopped at its ${secs(CONTROL_CAP_MS)} cap)` : ''} - no mutant result means anything`); process.exitCode = 1; return; }
   const stopMs = stopFor(control.ms);
   console.log(`each mutant is stopped at ${secs(stopMs)}: the control's ${secs(control.ms)} x ${STOP_MARGIN}, never under ${secs(STOP_FLOOR_MS)}`);
@@ -208,12 +213,12 @@ function main() {
       fs.writeFileSync(path.join(d, 'tools', file), src.replace(anchor, () => repl));
       const r = run(d, stopMs), v = verdict(r, () => runCopy(stopMs), stopMs);
       if (v.status === 'CAUGHT') caught++; else if (v.status === 'NOT READ') notRead++;
-      console.log(`${label} pass ${r.pass} fail ${r.fail}  ${v.status}${v.why ? ` (${v.why})` : ''}`);
+      console.log(`${label} pass ${r.pass} fail ${r.fail}  ${v.status}${v.why ? ` (${v.why})` : ''}${named(r)}`);
     } finally { fs.rmSync(d, { recursive: true, force: true }); }
   });
   console.log(`\n${applied} applied · ${caught} caught · ${applied - caught - notRead} survived · ${notRead} NOT READ · ${notApplied} NOT APPLIED`);
   if (applied - caught > 0 || notApplied > 0) process.exitCode = 1;   // a NOT READ row is not a catch, so it fails the run too
 }
 
-module.exports = { run, tree, MUTANTS, stopFor, controlGreen, verdict, STOP_FLOOR_MS, STOP_MARGIN, CONTROL_CAP_MS };
+module.exports = { run, tree, MUTANTS, stopFor, controlGreen, verdict, named, STOP_FLOOR_MS, STOP_MARGIN, CONTROL_CAP_MS };
 if (require.main === module) main();
