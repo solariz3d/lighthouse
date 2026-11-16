@@ -1,0 +1,23 @@
+    the arcs within 8 m of the turn: r 5.24 m centre (59.78 15.21), 0.67 m from the room's
+      t  288 (65.23, 17.99) 10.80 m/s, 0.06 m from its line (73 points)
+      t  312 (65.16, 16.88) 11.12 m/s, 0.06 m from its line (73 points)
+      t  336 (65.01, 15.81) 10.40 m/s, 0.15 m from its line (73 points)
+      t  360 (64.80, 14.84) 9.45 m/s, 0.04 m from its line (51 points), replanned
+      t  384 (64.53, 13.99) 8.55 m/s, 0.21 m from its line (51 points)
+      t  408 (64.22, 13.22) 8.28 m/s, 0.33 m from its line (51 points)
+      t  432 (63.87, 12.44) 8.85 m/s, 0.30 m from its line (51 points)
+      t  456 (63.42, 11.67) 8.47 m/s, 0.17 m from its line (51 points)
+      t  480 (62.92, 11.08) 7.20 m/s, 0.03 m from its line (32 points), replanned
+      t  504 (62.41, 10.68) 5.82 m/s, 0.33 m from its line (32 points)
+      t  528 (61.90, 10.48) 5.56 m/s, 0.42 m from its line (32 points)
+      t  552 (61.30, 10.42) 6.46 m/s, 0.37 m from its line (32 points)
+      t  576 (60.61, 10.43) 7.36 m/s, 0.24 m from its line (32 points)
+      t  600 (59.83, 10.37) 8.26 m/s, 0.03 m from its line (19 points), replanned
+      t  624 (58.96, 10.25) 9.16 m/s, 0.09 m from its line (19 points)
+      t  648 (58.01, 10.11) 10.06 m/s, 0.12 m from its line (19 points)
+      t  672 (56.97, 9.95) 10.96 m/s, 0.06 m from its line (19 points)
+      t  696 (55.86, 9.78) 11.47 m/s, 0.08 m from its line (19 points)
+    at grip 1.6 the body keeps 5.37 m/s within 3 m of the turn (bar 8.0); walls met head-on 0; arrived 1
+    G:\consonance-scratch\a-chain\chase\tests\line_tests.cpp(916): CHECK failed: lowest >= 8.0f
+FAIL  mline_arcs_on_the_corridors_axes_his_lbend_lays_an_arc_of_5_m_and_keeps_8_m_s
+1 tests, 1 failed
