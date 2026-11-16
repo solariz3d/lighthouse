@@ -1,0 +1,26 @@
+    seed  1: 66 drop links, 66 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  2: 29 drop links, 29 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  3: 76 drop links, 76 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  4: 89 drop links, 89 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  5: 56 drop links, 56 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  6: 68 drop links, 68 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed  7: 45 drop links, 45 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  8: 62 drop links, 62 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed  9: 47 drop links, 47 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    seed 10: 85 drop links, 85 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed 11: 60 drop links, 60 with a straight line meeting a solid; the longest stretch inside a solid 0.52 of a line
+    seed 12: 52 drop links, 52 with a straight line meeting a solid; the longest stretch inside a solid 0.49 of a line
+    12 worlds: 735 drop links, 735 whose straight line meets a solid (100 %)
+ok    m3b_read_how_many_drop_links_have_a_straight_line_through_solid
+    the hunter on the root: 735 drop links, 735 taken; swept fall meeting a solid 0; landed at the link's landing 679, elsewhere on the mesh 0, put back 56; descended while held 0; off free fall by more than 2 cm 0; down quicker than free fall 0; speed 0 without a wall 0, a wall took the flat speed 0; landing speed off the take-off by more than 10 % 0; landed off the mesh 0
+ok    m3b_every_drop_of_twelve_worlds_is_a_fall_that_meets_no_solid
+    the sprinter on the root: 735 drop links, 735 taken; swept fall meeting a solid 0; landed at the link's landing 679, elsewhere on the mesh 0, put back 56; descended while held 0; off free fall by more than 2 cm 0; down quicker than free fall 0; speed 0 without a wall 0, a wall took the flat speed 0; landing speed off the take-off by more than 10 % 0; landed off the mesh 0
+ok    m3b_the_sprinter_on_the_root_falls_the_same_way
+    0 too quick, 0 of them elsewhere; the most below a true free fall 0.000 m
+ok    diag_m3b_the_drops_down_quicker_than_free_fall
+    the hunter's drops over a parapet: 166; never left the floor 0; landed at the link's landing 166; met a solid 0
+    of those not at their landing, 0 have no mesh within 3 m of the landing
+    the farthest any came down from its link's landing: 0.089 m
+    the vault: the feet's lowest peak over the take-off 1.180 m (rail 1.1 + 0.08); the lift 48 to 48 ticks (0.2 s is 48)
+ok    m3b_a_drop_over_a_parapet_goes_over_it_and_falls
+5 tests, 0 failed

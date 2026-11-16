@@ -1,0 +1,4 @@
+M2 no clearance over the top: CAUGHT (5 tests, 1 failed; m3b_a_drop_over_a_parapet_goes_over_it_and_falls)
+M4 the rise in one tick: CAUGHT (5 tests, 1 failed; m3b_a_drop_over_a_parapet_goes_over_it_and_falls)
+restored and rebuilt
+applied 2 / caught 2 / NOT APPLIED 0

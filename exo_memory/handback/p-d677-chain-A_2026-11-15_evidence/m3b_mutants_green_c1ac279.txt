@@ -1,0 +1,13 @@
+M1 the vault never taken: CAUGHT (5 tests, 2 failed; m3b_every_drop_of_twelve_worlds_is_a_fall_that_meets_no_solid, m3b_a_drop_over_a_parapet_goes_over_it_and_falls)
+M2 no clearance over the top: SURVIVED (5 tests, 0 failed)
+M3 the take-off not planned for the vault: CAUGHT (5 tests, 1 failed; m3b_a_drop_over_a_parapet_goes_over_it_and_falls)
+M4 the rise in one tick: SURVIVED (5 tests, 0 failed)
+M5 more than one vault a link: SURVIVED (5 tests, 0 failed)
+M6 the reach below the rail: CAUGHT (5 tests, 2 failed; m3b_every_drop_of_twelve_worlds_is_a_fall_that_meets_no_solid, m3b_a_drop_over_a_parapet_goes_over_it_and_falls)
+M7 the run plans without the world: SURVIVED (5 tests, 0 failed)
+M8 the fall height not raised for the vault: CAUGHT (5 tests, 1 failed; m3b_a_drop_over_a_parapet_goes_over_it_and_falls)
+restored and rebuilt
+applied 8 / caught 4 / NOT APPLIED 0
+ M chase/tests/line_tests.cpp
+
+[exited with code 0]
