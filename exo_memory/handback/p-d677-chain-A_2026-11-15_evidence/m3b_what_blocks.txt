@@ -1,0 +1,35 @@
+    seed 1: landed (-68.54 10.54 -34.50) 1.96 m from the link's landing (-70.50 7.00 -34.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-67.50 10.50 -34.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-48.49 -6.96 34.50) 1.99 m from the link's landing (-46.50 -10.50 34.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-49.50 -7.00 34.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-68.54 -3.46 1.50) 1.96 m from the link's landing (-70.50 -7.00 1.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-67.50 -3.50 1.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-48.44 -6.96 37.51) 1.94 m from the link's landing (-46.50 -10.50 37.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-49.50 -7.00 37.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-45.46 -6.96 40.49) 1.96 m from the link's landing (-43.50 -10.50 40.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-46.50 -7.00 40.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-46.49 -6.96 39.43) 1.93 m from the link's landing (-46.50 -10.50 37.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-46.50 -7.00 40.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-38.57 -6.96 40.49) 1.93 m from the link's landing (-40.50 -10.50 40.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-37.50 -7.00 40.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-45.49 -6.96 43.50) 1.99 m from the link's landing (-43.50 -10.50 43.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-46.50 -7.00 43.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-38.54 -6.96 43.50) 1.96 m from the link's landing (-40.50 -10.50 43.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-37.50 -7.00 43.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-43.50 -6.96 45.46) 1.96 m from the link's landing (-43.50 -10.50 43.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-43.50 -7.00 46.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-40.50 -6.96 45.46) 1.96 m from the link's landing (-40.50 -10.50 43.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-40.50 -7.00 46.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (21.46 10.54 -52.50) 1.96 m from the link's landing (19.50 7.00 -52.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (22.50 10.50 -52.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 2: landed (-68.54 7.04 -16.50) 1.96 m from the link's landing (-70.50 3.50 -16.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (-67.50 7.00 -16.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 3: landed (93.46 7.04 55.50) 1.96 m from the link's landing (91.50 3.50 55.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (94.50 7.00 55.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 3: landed (16.50 10.54 83.51) 1.99 m from the link's landing (16.50 7.00 85.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (16.50 10.50 82.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    seed 3: landed (19.50 10.54 83.51) 1.99 m from the link's landing (19.50 7.00 85.50), elsewhere; fell 0.00 m in 0.000 s (the bar 0.845 s); 0.000 m below a true free fall of that time
+      from the take-off (19.50 10.50 82.50) along the link (3.00 m across): a solid at 0.05 m up: 1.45 m; 0.30 m up: 1.45 m; 0.60 m up: 1.45 m; 1.00 m up: 1.45 m; 1.50 m up: none; 2.00 m up: none;
+    166 too quick, 166 of them elsewhere; the most below a true free fall 0.000 m
+ok    diag_m3b_the_drops_down_quicker_than_free_fall
+1 tests, 0 failed

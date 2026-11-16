@@ -1,0 +1,5 @@
+    the hunter's drops over a parapet: 166; never left the floor 166; landed at the link's landing 0; met a solid 0
+    G:\consonance-scratch\a-chain\chase\tests\fall_tests.cpp(256): CHECK failed: never_fell == 0
+    G:\consonance-scratch\a-chain\chase\tests\fall_tests.cpp(257): CHECK failed: at_landing == rail
+FAIL  m3b_a_drop_over_a_parapet_goes_over_it_and_falls
+1 tests, 1 failed
