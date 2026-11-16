@@ -1,0 +1,22 @@
+r0800: the hunter's lowest speed within 2.5 m of each place (m/s; - = not passed)
+  place              today keep16   kk16
+  (-32.54, 23.19)     1.16   3.61   1.45
+  (-19.40, 26.26)     0.59   2.44   9.15
+  (-13.40, 27.48)     1.19   0.29      -
+  (62.02, 44.23)      1.15   2.27      -
+  (63.46, 8.56)       0.99   1.83      -
+  dips < 1.0            2      1      0
+  dips < 1.5            5      2      1
+  slowest            0.59   0.29   1.45
+  last pursue t      36.6   36.6   15.2
+r0937: the hunter's lowest speed within 2.5 m of each place (m/s; - = not passed)
+  place              today keep16   kk16
+  (8.16, 10.27)       1.33   4.70      -
+  (-10.73, 28.48)     1.19   1.53      -
+  (21.46, 7.92)       0.67   0.09      -
+  dips < 1.0            1      1      0
+  dips < 1.5            3      2      0
+  slowest            0.67   0.09   3.19
+  last pursue t      22.3   22.3   10.1
+replay: error='' ticks 3656 sim_hash ffe5200d764ae1a1 chase_hash 2b39b3a0e92662df same 0 seconds 15.233 moments 732 events 3
+replay: error='' ticks 2429 sim_hash 18a6d383cd3c0dc2 chase_hash 3837785aef87fc3b same 0 seconds 10.121 moments 486 events 5
