@@ -3269,3 +3269,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-16 06:3x local (D) · D677 item 1 INTERIM, still red: the judge now reaches the drawn crown (hunter 0.123 m over Head; doorway 0.177 → 0.188 m read); a sourced stoop (The Last Guardian's ceiling sensors, least pitch, 0.34 s lead from the chest's spring) took the doorway to 0.035 m and the stair's ceiling to 0, but its crown-side sensors ran through walls and stooped the runner falsely; fixes written, unjudged, queued behind P's landing hold → `exo_memory/handback/p-d677-head-room-E_2026-11-16.md`
 - Uncommitted on e11-head-room-e (base 4530413). Items 2 (stair feet) and 3 (shoulder) not started.
 - **Carry:** a sensor carried with the pose feeds back into the pose: check it against walls from the body's own line, or it runs away.
+
+## 2026-11-16 07:3x local (D) · D677 the stacked tip for P: e12-stack-e 3e29301 = e10 cherry-picked onto A's a-lead-arm 6d4fbfd, B's b-idle 08e1324 merged, pushed; sim 161/0, game 225/0, world_app 87/0; the wall judge RED 3 of 12, no arm; the staged hunter's sidestep clear on A's base; the head work (not green) left out → `exo_memory/handback/p-d677-stack-E_2026-11-16.md`
+- **Carry:** when both sides of a conflict add at a file's end, the shared closing brace goes with only one of them: count braces after resolving.
