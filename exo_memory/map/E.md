@@ -3262,3 +3262,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-16 03:0x local (D) · D677 the judge of the body meeting the world (dz-world --course-clearance on sim::World::body_part_depth): RED on main c38d90a, 8 of 12 station-bodies, the sidestep arms 0.13-0.20 m into the wall, the hunter's head 0.18 m into the wall over the doorway → `exo_memory/handback/p-d677-wall-judge-E_2026-11-16.md`
 - dreamzone-3 e9-clearance-e 0fcadf1 pushed (red 614198e); probe rows 6/6; mutants 5/4, one survivor named.
 - **Carry:** look at every station of a film before ringing it; one station looked at let an arm in a wall through to him.
+
+## 2026-11-16 04:1x local (D) · D677 the arm hangs at the CMU runners' measured 6.3 deg to the side (was the A-pose's 41) and an arm that nears a wall bends away or rests on it (anim/contact.h): every arm and hand clear on the whole course, both bodies; the judge 8 → 4 of 12 red, none an arm (stair risers, the hunter's head, its shoulder) → `exo_memory/handback/p-d677-arm-wall-E_2026-11-16.md`
+- dreamzone-3 e10-arm-wall-e 4530413 pushed; game_tests 220/0, world_app_tests 87/0; every station looked at, both bodies.
