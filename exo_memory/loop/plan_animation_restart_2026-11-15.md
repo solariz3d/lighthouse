@@ -543,3 +543,13 @@ The old generator is not a bar and is not printed as one.
 3. **No idle (pane A for the trunk, arms and head; pane B for the feet):** standing still is a state of the chain: weight shifts between the feet, the breath, a small sway, the head's own look. Sources first: the N2 sheet's breath rows (Overgrowth; Daley, Bramble and Carrier 2013), the lessons sheet, and 100STYLE's recorded idles if he says yes. Nothing invented for it; what has no source is said to be ours.
 
 **The order:** pane E's clip check now; pane A the runner's arm, then the idle's sources; pane B the cadence with the downward half. One film when two of the three change.
+
+## HIS ORDER OF WORK FOR THE BODIES, 02:41 (D, 2026-11-16; game brief item 252)
+
+**His words:** "so i think we are close to getting the hunter good going forward in a human way, once we have that, we tweak the hunters parameters to seem more uncanny but also moving correctly for the physics, then the runner keeps perfectly normal human movement".
+
+1. **The hunter, human and correct first:** the corner carrying speed (item 251), the path going where he goes (item 250), the lean (248), the world contact (249), the backward feet (248). Judged by the sources and his eye as a human runner.
+2. **Then the hunter's uncanny, as parameters on a correct body:** every uncanny change is a named dial over the human base, physically consistent (the feet still planted, the lean still from its acceleration, the grip above human by his pick). Candidates on file: his items 168 and 169 (greyhound cornering, the head humanlike), the first game's detuning (`loop/plan_l181_kinetic_chain_2026-11-12.md`, 'His call, before it is built'), the trained sprinter's arm. Each put to his eye; none set before step 1 is done.
+3. **The runner stays ordinary human throughout.** Its sprint arm: the recorded ordinary runners carried up to sprint speed (ours past the data), by the librarian's reading of 'perfectly normal human'.
+
+**It failed on his terms if** an uncanny change is tuned in before the hunter moves correctly as a human, or the runner takes on anything that is not ordinary human movement.
