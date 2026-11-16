@@ -220,6 +220,7 @@
   - **His card (13:36) is written and measured, not seated (pane P, `handback/p-d677-card-P_2026-11-15.md`):** with it the librarian's wake is about 1,300 bytes over the size at which that seat does not open. Three ways to make room, his to choose: the card tightened to about two-thirds; an older card with no trigger retired; or 3,000 bytes less of the librarian's old notes carried at wake (asked since 11-14). The librarian's recommendation: the first and the third together.
 - 2026-11-15 14:56 (D), to the librarian: "booting up star citizen, dont worry about frame measurement, work asusualt" (His word of 03:55 again: the room works as usual while he plays, nothing is paused or held, and no frame-time figure is taken while the game runs.)
 - 2026-11-16 02:24 (D), to the librarian: "back wwas sleeping" (Answered with where things stand, once: what is in his game, and the five things that wait on him.)
+- 2026-11-16 02:36 (D), to the librarian: "but also, the images and videos u take, it is advantageous for u to look at them urself since it is the work u make" (Taken as standing: every station of every film is looked at by this seat, from a sheet of frames through the whole clip, before it reaches him, and what it shows is written beside it. In this seat's memory, 'visuals-as-artifacts', and the map line of 02:3x.)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
