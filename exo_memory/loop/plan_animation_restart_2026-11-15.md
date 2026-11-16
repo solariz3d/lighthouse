@@ -532,3 +532,14 @@ The old generator is not a bar and is not printed as one.
 - **Pane B, the downward half, on that tip:** the pelvis's turn with the stride drawn into the legs' plan (pane A's measure and the many-runner range are its sources); the legs in a turn by Johansen's method (the footprint along a circle, its orientation kept once placed, the swing bent through its mid-flight point); his turn test goes green or says why not. The backwards and sideways step waits for the recordings, or for his no.
 - **Pane A:** what he says of the whole-body film first; the hunter's arms if he names them.
 - **Pane E:** the next film when either half changes what is seen.
+
+## HIS EYE ON THE WHOLE BODY, 17:22 (D, 2026-11-15; game brief item 246): "decent", SPED UP, NO IDLE, THE RUNNER's ARM TOO HIGH
+
+**His words:** "it looks decent, however it looks sped up on normal speed. also no idle animation, also the runners arm swings too high in his running technique".
+
+**Each is now a test, in his words, and a part with a pane:**
+1. **Sped up (pane B, with the downward half):** the step's length and the cadence against the measured runners at the body's size (pane B's 18.5: a step of 1.1 m against about 1.33 m at 3.5 m/s). A row: steps per second at 2.5, 3.5 and 4.5 m/s within the measured runners' own cadence (Fukuchi 2017, Table 4: 80.82, 85.68, 91.74 strides a minute), red first. The arms follow the legs' phase, so they slow with it. **First, pane E, a check costing minutes:** a "real speed" clip's length against its frames' own time (frames / 144); if they differ, the clips were the cause and that is said to him.
+2. **The runner's arm too high (pane A):** the arm's angles below 5.20 m/s come from the CMU running clips (2.67 to 4.15 m/s, the yardstick's own reference, its bars elbow mean within 12.4 degrees and shoulder ends within 3.7 and 7.0) and from Bruening's law within its range, not from the one sprinter. The sprinter's curves stay for the hunter's speeds. Printed beside the film: the shoulder's forward peak and the wrist's height at the top of the swing, against the source at that speed. **It failed on his terms if** the runner's arm still swings too high at the next film.
+3. **No idle (pane A for the trunk, arms and head; pane B for the feet):** standing still is a state of the chain: weight shifts between the feet, the breath, a small sway, the head's own look. Sources first: the N2 sheet's breath rows (Overgrowth; Daley, Bramble and Carrier 2013), the lessons sheet, and 100STYLE's recorded idles if he says yes. Nothing invented for it; what has no source is said to be ours.
+
+**The order:** pane E's clip check now; pane A the runner's arm, then the idle's sources; pane B the cadence with the downward half. One film when two of the three change.
