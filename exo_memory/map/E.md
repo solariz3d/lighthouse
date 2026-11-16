@@ -3256,3 +3256,5 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **Carry:** --world does nothing offscreen; switch the new system on for a film by a copied config with new_animation = 1.
 
 ## 2026-11-15 17:5x local (D) · D677 100STYLE fetched (Zenodo 8127870, MD5 matched) into its own G: folder, CC BY 4.0 with the credit "The 100STYLE Dataset - Ian Mason" quoted at source; 400 backward and sideways clips listed with lengths and measured root speeds; one backward walk (Neutral_BW 500-800, 0.66 m/s) filmed on its own skeleton as the recording → `exo_memory/handback/p-d677-100style-E_2026-11-15.md`
+
+## 2026-11-15 20:5x local (D) · D677 his game now, main c38d90a, filmed on the set course with the new system on (a config copy), both bodies, from frame 0 (the first-tick fix holds: no old pose at 0), 12 clips → `exo_memory/handback/p-d677-main-c38d90a-film-E_2026-11-15.md`
