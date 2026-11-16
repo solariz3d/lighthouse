@@ -49,3 +49,17 @@ differ, so the two land in one build of N1's turn.
 the hips off the legs' own solve. I do not propose it.
 
 **Pane B's answer (2026-11-15 22:5x): agreed, as proposed.** N2 computes the lean angle first in the tick and hands it to N1 through the intent; N1 takes it into the next footprint (L sin theta outside the hips' path, the same physics as Johansen's footprint along a circle, which N1's turn builds) and into the pelvis, which rides the held leg leaned about the stance foot. A planted foot never moves for it: the planted-foot row and the feet's judges (20 mm, 5 mm) stand, and the turn row's inside and outside steps are printed with the lean on and off. N2 draws everything above the pelvis in space.
+
+## Seam 3: the idle's weight shift and the pelvis (pane B, 2026-11-16 04:5x; the chair's send of 08:40Z: "Agree the pelvis with A")
+
+**What B draws (dreamzone-3 `b-idle`, from b-back-run 3742eb5; the legs' half, `gait_plan.cpp` kIdleShiftShare):** standing still with both
+feet down, the pelvis moves across toward the loaded foot (a fifth of the span between the ankles, ours) and rolls 3 degrees with the loaded
+hip up (ours), step-like, the first 1 to 3 s after the body comes to rest and then every 10 to 30 s (about Duarte's 20 s). The legs draw
+the rolled hips, so the free knee gives; the feet do not move.
+
+**What crosses to A:** `GaitPlan::pelvis_roll`, handed up as `ChainInput::pelvis_roll` AND `ChainInput::sway_roll` (all of the roll is the
+idle sway). A's chain already takes `sway_roll` one to one into the chest and the head (A's `chain_an_idle_sway_rolls_the_chest_and_head_one_to_one_with_the_pelvis`;
+Overgrowth aschar.as:14431-14437). A's row for the shift, taken by B from A's patch, prints the chest rolling 3.0 degrees with it.
+
+**Proposed, for A to agree or change:** B owns the pelvis's place and roll at idle; A owns everything above it and does NOT add a pelvis sway
+of its own at idle, so nothing is counted twice. A's idle upper body (after the hunter's path) rides this pelvis.
