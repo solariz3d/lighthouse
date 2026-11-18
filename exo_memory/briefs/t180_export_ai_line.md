@@ -35,3 +35,22 @@
    over the bound; the bound is the pane's to find and state, not ours.
 3. Account for the 4 extra bytes against the format the exporter writes.
 4. Show him the result in AC before it is called fixed (show artifacts before and after).
+
+## Added 2026-11-18 07:4x local: his next two questions, and what was checked
+
+His words: "i dont know if my builder is the newest version, looking at the export, the track doesnt have the distintive underside, as well, why does it run so slow frames?"
+
+- **His builder is the newest release.** The running app is `AppData\Local\T-180 Track Builder\t180-track-builder.exe`, version 0.4.40
+  (its WebView's `--webview-exe-version`), dated 2026-11-11; v0.4.40 is the latest release (2026-11-09). Source main is 4 commits past it
+  (3b33b38, 2026-11-10: bank, hover-card and refusal fixes), none about the underside or the AI line.
+- **The track came from the app's equation export** (`app/core/coreshell.js` exportArgs -> `src/export/fromwords.js` buildFromSegments;
+  the description "Built from equations" is written there).
+- **Why the AI line was written anyway (the real exporter bug):** 0.4.40 already skips the AI line on a vertical track
+  (`fromwords.js:372-375`, `NO_AI_LINE`, on `ailine.js` VERTICAL_TANGENT). The check fires only when two touching points sit within
+  `CLEAR_UP = 1e-4` m horizontally (`ailine.js:51`, :119). This line's most vertical steps are 0.0009 m and 0.0019 m apart horizontally
+  at 89.98-89.99 deg, ten to twenty times the bound, so the check passed and AC crashed. The bound should be an angle (or a much larger
+  distance), chosen against what AC's calculateNormals survives; the pane finds and registers it.
+- **The underside: NOT checked.** The underside skin is in 0.4.40 (`src/export/underskin.js`). Whether it was drawn into this kn5 was
+  not read (needs a kn5 mesh list). Open: whether he means the skin is missing, or that it does not look like the hull he expects.
+- **The frame rate: NOT measured.** The kn5 is 17,248,684 bytes for 3,793 m. No mesh, triangle or draw-call count was taken.
+  Friday: count meshes and triangles in this kn5 (and Laniakea's for contrast), and check that `mergeForAc` ran (`acready.js:13`, :267).
