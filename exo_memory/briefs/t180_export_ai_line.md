@@ -64,3 +64,8 @@ His words: "OH i think i know what it is, there has been work that wasnt pushed 
   unpushed. Friday, first step on D: find it (`git log --all --since=2026-11-10` in D's builder checkout, and the installed exe's
   version there), push it, then re-export TEST TRACK 100 with it before chasing the underside or the frames. The AI-line bound above
   stands either way unless that build changed `ailine.js:51`.
+- His correction, 07:36: "i mean it should be on the repo. its just not built into a public release". Checked: the builder has one live
+  repo, `solariz3d/t180-track-builder`, last pushed 2026-11-11T06:23Z (`gh repo list`). Its main 3b33b38 is 4 commits past v0.4.40
+  (bank, hover-card and refusal fixes); the underside skin (`underskin.js`) and the vertical-track rule are already IN v0.4.40. So the
+  repo holds no unreleased underside or AI-line work. Either that work sits unpushed on D, or the underside is drawn in 0.4.40 and
+  looks different from what he expects. Friday: settle which before building anything.
