@@ -54,3 +54,13 @@ His words: "i dont know if my builder is the newest version, looking at the expo
   not read (needs a kn5 mesh list). Open: whether he means the skin is missing, or that it does not look like the hull he expects.
 - **The frame rate: NOT measured.** The kn5 is 17,248,684 bytes for 3,793 m. No mesh, triangle or draw-call count was taken.
   Friday: count meshes and triangles in this kn5 (and Laniakea's for contrast), and check that `mergeForAc` ran (`acready.js:13`, :267).
+
+## Added 2026-11-18 07:35 local: his read of it
+
+His words: "OH i think i know what it is, there has been work that wasnt pushed in the newest release, there is an internal build on my repo or desktop that isnt the release im on"
+
+- Checked on L (git fetch --prune of the builder's remote): the newest branch is `l158-eol-lf` bd9cd25 (2026-11-11, 1 commit past main,
+  line endings only); main is 3b33b38 (2026-11-10). Nothing newer is on the remote, so the internal build he means is on the DESKTOP,
+  unpushed. Friday, first step on D: find it (`git log --all --since=2026-11-10` in D's builder checkout, and the installed exe's
+  version there), push it, then re-export TEST TRACK 100 with it before chasing the underside or the frames. The AI-line bound above
+  stands either way unless that build changed `ailine.js:51`.
