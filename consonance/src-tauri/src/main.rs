@@ -14815,11 +14815,23 @@ fn close_small_confirm(app: AppHandle, token: String) -> Result<String, String> 
 }
 
 fn close_small_run(app: &AppHandle, panes: Vec<String>) {
-    for pane in panes {
-        let outcome = close_small_cut_seat(app, &pane);
-        chair_audit(app, format!("close for the night -> {}: {outcome}", short_id(&pane)));
-        close_small_ledger(serde_json::json!({ "event": "seat", "pane": pane, "outcome": outcome }));
-        let _ = app.emit("close-small", serde_json::json!({ "pane": pane, "outcome": outcome }));
+    // A's follow-up (c): a panic in one seat's cut must not leave his progress card waiting forever, so the loop is caught and the
+    // `done` event is sent whatever happened.
+    let ran = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        for pane in &panes {
+            // A's follow-up (a): read the list again before THIS seat's ask; a seat that went cold or small meanwhile is skipped.
+            let outcome = match close_small::recheck(pane, &close_small_list().map(|l| close_small::cut_panes(&l))) {
+                Ok(()) => close_small_cut_seat(app, pane),
+                Err(why) => format!("NOT cut: {why}"),
+            };
+            chair_audit(app, format!("close for the night -> {}: {outcome}", short_id(pane)));
+            close_small_ledger(serde_json::json!({ "event": "seat", "pane": pane, "outcome": outcome }));
+            let _ = app.emit("close-small", serde_json::json!({ "pane": pane, "outcome": outcome }));
+        }
+    }));
+    if ran.is_err() {
+        chair_audit(app, "close for the night: the run stopped on an internal error; the seats not reported above were not cut".to_string());
+        close_small_ledger(serde_json::json!({ "event": "panic" }));
     }
     let _ = app.emit("close-small", serde_json::json!({ "done": true }));
 }
@@ -14884,13 +14896,8 @@ fn close_small_cut_seat(app: &AppHandle, pane: &str) -> String {
         seen = close_small_tail(app, pane).as_deref().and_then(|t| close_small::compacted_since(t, sent));
         seen.is_some()
     });
-    match (done, seen) {
-        (true, Some((trigger, post))) => format!(
-            "cut: the transcript records a {trigger} compaction{}",
-            post.map(|n| format!(", {}k tokens left", n / 1000)).unwrap_or_default()
-        ),
-        _ => format!("NOT CONFIRMED: /compact was sent and no compaction was recorded within {} min", CLOSE_SMALL_COMPACT_WAIT.as_secs() / 60),
-    }
+    // A's follow-up (b): only a manual compaction is the cut (close_small::cut_outcome).
+    close_small::cut_outcome(if done { seen } else { None }, CLOSE_SMALL_COMPACT_WAIT.as_secs() / 60)
 }
 
 #[cfg(test)]
@@ -14915,7 +14922,14 @@ mod close_small_wiring_tests {
         assert_eq!(calls(&s, "close_small_cut_seat"), 2, "close_small_cut_seat must have one caller");
         assert_eq!(calls(&s, "close_small_run"), 2, "close_small_run must have one caller");
         let run = &s[s.find("fn close_small_run(").unwrap()..];
-        assert!(run[..run.find("\n}\n").unwrap()].contains("close_small_cut_seat(app, &pane)"));
+        let run = &run[..run.find("\n}\n").unwrap()];
+        // (a): each seat is checked again before its cut; (c): the done event is sent after the caught loop, whatever happened.
+        let again = run.find("close_small::recheck(").expect("the run must check each seat again");
+        let cut = run.find("close_small_cut_seat(app, pane)").expect("the run must cut through close_small_cut_seat");
+        assert!(again < cut, "the check must come before the cut");
+        let caught = run.find("catch_unwind").expect("the loop must be caught");
+        let done = run.rfind("\"done\": true").expect("the run must say done");
+        assert!(caught < done, "done must be sent after the caught loop");
         let click = &s[s.find("fn close_small_confirm(").unwrap()..];
         let click = &click[..click.find("\n}\n").unwrap()];
         assert!(click.contains("close_small_run(&a, cut)"), "the run must start from the click");

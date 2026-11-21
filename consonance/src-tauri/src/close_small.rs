@@ -52,6 +52,32 @@ pub fn confirm(stored: Option<Plan>, token: &str, now: Instant, fresh_cut: &[Str
     Ok((cut, dropped))
 }
 
+/// A's follow-up (a), ruled in (the librarian, 06:58Z): the seats are cut one after another, each wait up to 20 + 15 min, so a seat
+/// warm at the click can be cold by its turn, and its ask would then rewrite its whole context uncached, the cost the close exists
+/// to avoid. So the list is read again just before each seat's ask; the seat goes on only if it is still on it. A list that cannot
+/// be read again stops that seat (fail closed).
+pub fn recheck(pane: &str, fresh: &Result<Vec<String>, String>) -> Result<(), String> {
+    match fresh {
+        Err(e) => Err(format!("the list could not be read again before its ask ({e}), so it was left as it is")),
+        Ok(cut) if cut.iter().any(|p| p == pane) => Ok(()),
+        Ok(_) => Err("no longer warm and large when its turn came (it went cold or small while others were cut)".to_string()),
+    }
+}
+
+/// A's follow-up (b), ruled in: only a MANUAL compaction after the send is the cut. An auto compaction in the wait (the harness's
+/// own idle compaction) is not evidence that `/compact` ran, so it is NOT CONFIRMED, with its trigger named.
+pub fn cut_outcome(found: Option<(String, Option<u64>)>, wait_min: u64) -> String {
+    match found {
+        Some((trigger, post)) if trigger == "manual" => {
+            format!("cut: the transcript records the manual compaction{}", post.map(|n| format!(", {}k tokens left", n / 1000)).unwrap_or_default())
+        }
+        Some((trigger, _)) => format!(
+            "NOT CONFIRMED: /compact was sent and the only compaction recorded after it was trigger \"{trigger}\", not the /compact"
+        ),
+        None => format!("NOT CONFIRMED: /compact was sent and no compaction was recorded within {wait_min} min"),
+    }
+}
+
 /// The pane ids the tool's `--json` output marks `cut`.
 pub fn cut_panes(list: &serde_json::Value) -> Vec<String> {
     list.get("seats")
@@ -124,6 +150,28 @@ mod tests {
         let (cut, dropped) = confirm(plan("t", now, &["a", "b"]), "t", now, &v(&["a", "c"])).unwrap();
         assert_eq!(cut, v(&["a"]));
         assert_eq!(dropped, v(&["b"]));
+    }
+
+    // (a): the list is read again before each seat's ask.
+    #[test]
+    fn a_seat_that_went_cold_while_others_were_cut_is_skipped_before_its_ask() {
+        assert!(recheck("p-b", &Ok(v(&["p-a", "p-b"]))).is_ok(), "still warm and large: it goes on");
+        let e = recheck("p-b", &Ok(v(&["p-a"]))).unwrap_err();
+        assert!(e.contains("no longer warm and large"), "{e}");
+    }
+    #[test]
+    fn a_list_that_cannot_be_read_again_stops_the_seat() {
+        assert!(recheck("p-b", &Err("node could not start".to_string())).is_err());
+    }
+
+    // (b): only a manual compaction is the cut.
+    #[test]
+    fn only_a_manual_compaction_counts_as_the_cut() {
+        assert!(cut_outcome(Some(("manual".to_string(), Some(140000))), 15).starts_with("cut: "));
+        let auto = cut_outcome(Some(("auto".to_string(), Some(16000))), 15);
+        assert!(auto.starts_with("NOT CONFIRMED"), "an auto compaction is not the /compact: {auto}");
+        assert!(auto.contains("auto"), "the trigger is named: {auto}");
+        assert!(cut_outcome(None, 15).starts_with("NOT CONFIRMED"));
     }
 
     #[test]
