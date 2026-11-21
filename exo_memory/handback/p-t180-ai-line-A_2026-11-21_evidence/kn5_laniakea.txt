@@ -1,0 +1,8 @@
+keys of a mesh: name,path,material,pos,idx
+laniakea.kn5 kn5 version [33m5[39m | meshes [33m158[39m | triangles [33m1439728[39m | vertices [33m1516754[39m | dummies [33m35[39m
+   1ROAD_               64 meshes   1030228 triangles
+   UNDERSKIN_           30 meshes    378668 triangles
+   PAINT                29 meshes       668 triangles
+   APRONSIDE            27 meshes     26128 triangles
+   1ROAD_PIT             8 meshes      4036 triangles
+UNDERSKIN_ meshes: [33m30[39m UNDERSKIN_p1_chunk_0 | UNDERSKIN_p1_chunk_1 | UNDERSKIN_p1_chunk_2 | UNDERSKIN_p2_chunk_3
