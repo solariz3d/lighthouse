@@ -201,6 +201,7 @@
 - 2026-11-21 06:43 (L), to the librarian: "well see, doesnt matter if they dont read it in the beginning, when ever they read it it still brings in the context right? it could be during the window already being filled, causing it to go over the limit. Or is it read from the cache? Ihave no idea what that is or how it even works, its crazy I was able to build this system with little to no real technical expertise, all comes from the schizo intuition my boi"
 - 2026-11-21 06:49 (L), to the librarian: "well what can we do, we have over an hour to build what is needed to save us! Save us being, making our workflow to last the whole week without running out, while also not comprimising our continuity and what makes consonance good."
 - 2026-11-21 06:51 (L), to the librarian, on its list for the hour: "well shouldnt we wait and restart now before starting something new? I am confused"
+- 2026-11-21 06:56 (L), to the librarian, after it wrote "Go": "you shouldnt need me to say go bro, if its the next step just take it unless you think i should see something first" [The librarian had meant that HE could restart the app now, the one step it cannot take from inside it; its wording read as asking his leave. The rule he states is the standing one: a next step that is this seat own is taken, and he is shown something first only when he should see it.]
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
