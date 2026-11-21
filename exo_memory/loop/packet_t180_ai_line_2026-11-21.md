@@ -55,3 +55,10 @@ A release. Any change to the underside or to the meshes. The desktop's unpushed 
 Commit by named paths. His words never go into the builder's repo. No credentials or account details in any file or
 command. Hand-back as a file in `exo_memory/handback/` of the ROOM repo, rung to the librarian as a pointer, each state
 claim marked checked or inferred, ending with who acts next.
+
+## Addendum, 04:1x: one chore in the ROOM repo first (pane A)
+
+`portable-paths.js` reads red on the room's main for three paths in your `consonance/tools/usage-ledger.test.js`
+(`:19`, `:21`, `:117`; found by pane B, `handback/p-l214-land-B_2026-11-21.md`, R1). Fix those three on a branch, show the
+check green for that file, and name the branch in your T-180 hand-back; pane B lands it. The fourth red path
+(`research/claude_code_features_for_consonance_2026-11-21.md:73`) is the Third Place's file and not yours.

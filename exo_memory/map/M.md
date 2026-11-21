@@ -1095,3 +1095,10 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **His catch, verbatim:** "do it all, why didnt you start" (03:46; `briefs/lighthouse_the_room.md`, the 11-21 entries).
 - **What I had done:** at 02:4x I listed the queue and ended on "So for tonight I'd do my own read of A's L214 hand-back now, since I'm small and warm, and write the L215 packet." Then the turn ended. Both steps were this seat's own and waited on nobody. He came back an hour later to find nothing moved.
 - **The rule, mine from his catch:** "I'd do X" about a step that is this seat's own is written only after X is done. A recommendation is for a choice that is his; work that is mine is started in the same turn (the same shape as `memory/handoff-without-the-keeper.md` and the 11-14 07:0x entry above, where I asked him three times about what he had decided).
+
+## 2026-11-21 04:1x (L): a packet that says "the gates that must block" was written before the gates' own rule was read
+
+- **A's finding against my packet L215** (`handback/p-l215-fail-closed-A_2026-11-21.md`, R3): every `PreToolUse` gate's own header says it fails OPEN by design, and `consonance/GATES.md:19` states it for the room: "Every gate fails open on its own error (a broken hook never traps a seat), except the map gate in strict mode". By the packet's own rule, zero gates were switched.
+- **What I had read:** `dev/shell/install.ps1` for the words "fails open" (four gates), and I took the other three (delete, push, wake) as gates meant to refuse. I did not open their headers or `GATES.md`. The plan's row ("the gates block when their process dies") came from the Third Place's research line, carried as if it were the room's intent.
+- **The rule, mine from A's finding:** before a packet changes how a control fails, open the control's own header and the room's rule for it. A grep for one phrase in one file is not that read.
+- **Also A's, against the same packet:** the per-seat `settings.local.json` route for the no-prompt setting does not work (not honoured there, three runs). Re-routed through the app's launch: `loop/packet_l216_no_prompt_B_2026-11-21.md`.
