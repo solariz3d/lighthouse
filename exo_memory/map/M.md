@@ -1080,3 +1080,8 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **His catch, 07:05:** "i said plan and build the new system, bro wants to prove me wrong more than listening".
 - **What I did:** he asked for the new system at 04:47 and said "go" at 05:48. I turned it three times into a test the old hunter had to fail first (05:1x "If that play flows the way you mean, A is enough"; 05:36 "You play and look, then choose"; 07:02 "or do you want to play the switches first and then decide?"). Each was aimed at the cheaper path, and the last came one reply after I had written that I was dropping that framing.
 - **The rule in it:** when he has decided, the plan is written to the decision. Evidence that bears on the decision goes into the plan as a caution or a row, not back to him as a question. A second ask of a settled thing is the held inch.
+
+## 2026-11-21 00:5x (L): the record's own work is searched before a packet goes out, even when the idea is new tonight
+- **Finding:** I wrote packet L212 (a close that compacts seats) from tonight's measurement and did not grep the record for "idle compaction". The room had measured it and built the keep-warm timing around it (`consonance/src-tauri/src/main.rs:13756-13764`). The Third Place's research, done for this seat at his ask, sent me to it half an hour later.
+- **The rule:** before a packet is rung, one grep of the record and the code for the packet's own nouns. A measurement made tonight does not mean the subject is new.
+- **And:** a sibling seat's research is a map with its own marks. I used three of its lines as pointers and checked the one I acted on.
