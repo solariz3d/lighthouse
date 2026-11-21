@@ -132,3 +132,63 @@ The rule for which seats are cut, the cut list and the window are not touched. L
   its map line.
 
 NEXT: librarian, read this; plan default: a second reader (pane A) reads `9110d0fc..` the tip of `l221-compact-progress`, then I land, build with the running exe moved aside, and he relaunches.
+
+## Added 2026-11-21 ~13:4xZ: A's two lines, fixed (the chair's 13:28:33Z message, ruled by the librarian 13:28:26Z)
+
+A's read: `exo_memory/handback/p-l221-read-A_2026-11-21.md` (room branch m1-evidence). Both lines were A's catch; the
+rulings are the librarian's. This section replaces two statements above: item 2's "A skipped or failed seat counts as done
+here" no longer holds, and item 3's ask now also reads the run's own flag.
+
+**(a) The running line says done, failed and to go apart (checked).**
+- **The rule now.** `close_small.rs` `summary`, the running branch: "2 done, 1 failed, 2 to go". It adds ", N skipped"
+  only when a seat was skipped. "Done" is a seat that was cut, and nothing else. The end line is unchanged.
+- **The new row** is `r1_while_running_a_failed_seat_is_said_failed_not_done`. Five seats: two cut, one "NOT cut", two
+  going. It must read exactly "2 done, 1 failed, 2 to go".
+- **Two rows were AMENDED BY NAME**, because they pinned the old wording on purpose (A named that):
+  - `r1_the_line_for_the_whole_run_counts_done_and_to_go`;
+  - `r1_the_screen_is_sent_each_line_and_the_summary`.
+
+  Both read "2 of 6 done, 4 to go" over one cut and one skipped seat. They now read "1 done, 0 failed, 1 skipped, 4 to go".
+- **The pictures are redrawn from the fixed code.** `l221_mid_run.png` reads "2 done, 0 failed, 3 to go".
+
+**(b) The close question no longer fails open when the ledger cannot say (checked).**
+- **The flag.** A new `static CLOSE_SMALL_IN_FLIGHT: AtomicBool` lives in main.rs. `close_small_confirm` sets it just before
+  the run's thread starts. `close_small_run` clears it after its `done` row.
+- **The count.** `close_on_x` takes it from `close_small::close_compacting(<the ledger's to go>, <the flag>)`:
+  - a count over 0 is used as it is;
+  - with the flag up and no count (the ledger is unreadable, or its click row was lost) it is `None`, which means unknown;
+  - otherwise it is 0.
+- **The ask.** `close_must_ask(working, compacting)` asks unless the count is `Some(0)`.
+- **What it sends.** `close-confirm` carries `compacting: null` for unknown. `leave.js` then says "Compacting is still
+  running (how many seats are left could not be read). Close anyway?"
+- **The plog line** prints "unknown" in place of the count.
+- **The rows:**
+  - Pure: `r2_a_run_in_flight_whose_ledger_cannot_be_read_asks`, `r2_a_run_in_flight_whose_click_row_was_lost_asks` and
+    `r2_with_no_run_in_flight_the_ledger_decides_as_before`.
+  - Wiring: `l221_the_run_in_flight_is_known_without_the_ledger` (the flag is set before the spawn and cleared after
+    `done`), and `l221_the_x_asks_while_a_run_has_seats_to_go`, AMENDED BY NAME: it now also requires the
+    `close_compacting(…, CLOSE_SMALL_IN_FLIGHT…)` call.
+  - Screen: one row in `ui/leave.test.js`.
+- **The safe direction is kept.** A panic in `close_small_run` outside the per-seat catch leaves the flag up, so the X asks
+  until the app restarts. A run from an earlier session is still counted from the ledger until the launch's
+  `interrupted` row ends it.
+
+**Registered red first, each printed:**
+- **Pure** (`red_fix.txt`): 5 failed against stubs of today's behaviour. Those are the 2 new or amended (a) rows, the
+  amended screen row and the 2 (b) rows that need the change. The third (b) row pins the unchanged case. Then 32 of 32.
+- **Wiring** (`red_fix_wiring.txt`): 2 failed against a stub `Some(<the ledger's count>)`. Then green in the suite below.
+- **Screen:** `leave.test.js` 46 passed, 1 failed on the old `leave.js`; then 47 of 47. `scripts-load` 4 of 4.
+
+**Mutants** (`mutants3.txt`, `mutate.js`): **19 applied, 17 caught, 0 not applied.**
+- The new ones are all caught:
+  - M9 (a failed seat counted as done);
+  - M9b (the skipped dropped from the running line);
+  - M16 (unknown read as none to go);
+  - M17 (a run in flight that the ledger does not show read as none);
+  - M18 (the ledger's count dropped when the flag is up).
+- M8 and M10 survive as before, and are equivalent for the reason given above.
+- M12's pattern was rewritten for the new signature; it is still caught.
+
+**The suite (checked, under heavy-run):** 1,286 passed, 1 failed, 7 ignored (`suite3.txt` in scratch). The one is `light_the_librarian_worst_case_intake_is_under_145_000`, red on main without this diff, as before.
+
+NEXT: librarian route pane A to read `9ca0a65b..` the tip of `l221-compact-progress` together with Q2's diff when Q2's hand-back is rung; plan default after it: the one release build for L221 and Q2.

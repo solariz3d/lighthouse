@@ -294,8 +294,13 @@ pub fn summary(p: &Progress) -> String {
         }
         line
     } else {
-        let left = to_go(p);
-        format!("{} of {} done, {} to go", p.seats.len() - left, p.seats.len(), left)
+        // A's read (ruled 13:28Z): done, failed and to go said apart, so a failed seat never reads as done while the run goes on.
+        let mut line = format!("{} done, {} failed", n(SeatState::Cut), n(SeatState::Failed));
+        if n(SeatState::Skipped) > 0 {
+            line.push_str(&format!(", {} skipped", n(SeatState::Skipped)));
+        }
+        line.push_str(&format!(", {} to go", to_go(p)));
+        line
     }
 }
 
@@ -316,9 +321,22 @@ pub fn interrupted_line(p: &Progress) -> Option<String> {
     ))
 }
 
-/// The window's X asks first when a seat is working (D317) OR a compaction run has seats to go (L221).
-pub fn close_must_ask(any_working: bool, compacting_to_go: usize) -> bool {
-    any_working || compacting_to_go > 0
+/// The window's X asks first when a seat is working (D317) OR a compaction run has seats to go (L221). `compacting` is
+/// `close_compacting`'s answer: None is a run in flight whose seats to go cannot be read, and it asks (A's read, ruled 13:28Z).
+pub fn close_must_ask(any_working: bool, compacting: Option<usize>) -> bool {
+    any_working || compacting != Some(0)
+}
+
+/// THE SEATS TO GO, as the close question reads them (A's read of L221, line (b), ruled by the librarian 13:28Z: "if the ledger
+/// cannot be read while a run was started in this session, ASK"). `ledger_to_go` is the ledger's count (None: it could not be
+/// read, or holds no run); `in_flight` is the app's own memory that a run started in this session has not yet ended. A run in
+/// flight that the ledger does not show (unreadable, or its click row lost) is None: the count is unknown and the X asks.
+pub fn close_compacting(ledger_to_go: Option<usize>, in_flight: bool) -> Option<usize> {
+    match (ledger_to_go, in_flight) {
+        (Some(n), _) if n > 0 => Some(n),
+        (_, true) => None,
+        _ => Some(0),
+    }
 }
 
 /// What the screen is sent (the `close-small` event and `close_small_progress`).
@@ -420,8 +438,19 @@ mod tests {
     #[test]
     fn r1_the_line_for_the_whole_run_counts_done_and_to_go() {
         let p = progress(&mid_run()).expect("a run");
-        // e is cut and f skipped (2 at an end); a, b, c and d are still going.
-        assert_eq!((summary(&p), to_go(&p)), ("2 of 6 done, 4 to go".to_string(), 4));
+        // e is cut and f skipped; a, b, c and d are still going. AMENDED (A's read, ruled 13:28Z): done, failed and to go are
+        // said separately; it read "2 of 6 done, 4 to go", which counted the skipped seat as done.
+        assert_eq!((summary(&p), to_go(&p)), ("1 done, 0 failed, 1 skipped, 4 to go".to_string(), 4));
+    }
+    #[test]
+    fn r1_while_running_a_failed_seat_is_said_failed_not_done() {
+        let l = ledger(&[
+            click("2026-11-21T13:00:00.000Z", &["a", "b", "c", "d", "e"], &[]),
+            seat("2026-11-21T13:01:00.000Z", "a", "cut: x"),
+            seat("2026-11-21T13:01:10.000Z", "b", "cut: y"),
+            seat("2026-11-21T13:01:20.000Z", "c", "NOT cut: the ask could not be sent (the pane has exited)"),
+        ]);
+        assert_eq!(summary(&progress(&l).expect("a run")), "2 done, 1 failed, 2 to go");
     }
     #[test]
     fn r1_a_run_with_its_end_row_is_done_and_says_so() {
@@ -476,14 +505,32 @@ mod tests {
     // R2: the X asks while a run has seats to go, even with every seat ready.
     #[test]
     fn r2_the_close_asks_while_compacting_has_seats_to_go() {
-        assert!(close_must_ask(false, 3), "a run with 3 to go must ask");
-        assert!(!close_must_ask(false, 0), "nothing working and nothing to go closes as today");
-        assert!(close_must_ask(true, 0), "D317 unchanged: a working seat asks");
+        // AMENDED (A's read, ruled 13:28Z): the count is close_compacting's Option; the three cases are unchanged.
+        assert!(close_must_ask(false, Some(3)), "a run with 3 to go must ask");
+        assert!(!close_must_ask(false, Some(0)), "nothing working and nothing to go closes as today");
+        assert!(close_must_ask(true, Some(0)), "D317 unchanged: a working seat asks");
+    }
+    // A's read, line (b): the ask must not fail open when the ledger cannot say.
+    #[test]
+    fn r2_a_run_in_flight_whose_ledger_cannot_be_read_asks() {
+        assert_eq!(close_compacting(None, true), None, "unknown, not zero");
+        assert!(close_must_ask(false, close_compacting(None, true)));
+    }
+    #[test]
+    fn r2_a_run_in_flight_whose_click_row_was_lost_asks() {
+        // the ledger reads, but its newest run is an older finished one: 0 to go by the ledger, a run in flight by memory
+        assert!(close_must_ask(false, close_compacting(Some(0), true)));
+    }
+    #[test]
+    fn r2_with_no_run_in_flight_the_ledger_decides_as_before() {
+        assert_eq!(close_compacting(None, false), Some(0), "no run this session and no ledger: close as today");
+        assert_eq!(close_compacting(Some(2), false), Some(2), "a run the ledger shows (an earlier session's, before the launch ends it)");
+        assert_eq!(close_compacting(Some(3), true), Some(3));
     }
     #[test]
     fn r1_the_screen_is_sent_each_line_and_the_summary() {
         let j = to_json(&progress(&mid_run()).expect("a run"));
-        assert_eq!(j["summary"], "2 of 6 done, 4 to go");
+        assert_eq!(j["summary"], "1 done, 0 failed, 1 skipped, 4 to go"); // AMENDED with the line above (A's read)
         assert_eq!(j["toGo"], 4);
         assert_eq!(j["seats"][3]["state"], "compacting");
         assert_eq!(j["seats"][3]["since"], "2026-11-21T13:00:50.000Z");

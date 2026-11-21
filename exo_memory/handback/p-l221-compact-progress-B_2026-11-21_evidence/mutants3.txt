@@ -1,0 +1,21 @@
+CONTROL (unmutated): 32 passed, 0 failed
+caught (1 failed): M1 a stage row moves a seat already at its end
+caught (1 failed): M2 "answering" read as "asked"
+caught (2 failed): M3 a stage row keeps the click time (no compaction seconds)
+caught (1 failed): M4 a not-warm-and-large outcome counts as failed
+caught (3 failed): M5 dropped seats are left off the run
+caught (1 failed): M6 an older click is the run (the first, not the newest)
+caught (1 failed): M7 the interrupted row does not end the run (said at every launch)
+NOT CAUGHT: M8 to_go counts a finished run
+caught (1 failed): M9 (A line a) the running line counts a failed seat as done
+caught (2 failed): M9b (A line a) the running line drops the skipped
+NOT CAUGHT: M10 the launch line is said for a finished run
+caught (1 failed): M11 the launch line names every seat, cut ones too
+caught (3 failed): M12 the X ignores a run with seats to go
+caught (2 failed): M16 (A line b) an unreadable count reads as none to go
+caught (2 failed): M17 (A line b) a run in flight the ledger does not show reads as none
+caught (1 failed): M18 (A line b) the ledger count is dropped when a run is in flight
+caught (1 failed): M13 the tokens before are dropped from the cut line
+caught (1 failed): M14 the tokens before are read from a compaction before the send
+caught (1 failed): M15 the done summary omits the failed
+applied 19 / caught 17 / NOT APPLIED 0 / SURVIVORS: M8 to_go counts a finished run | M10 the launch line is said for a finished run

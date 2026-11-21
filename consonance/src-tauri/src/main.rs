@@ -14936,6 +14936,8 @@ fn close_small_confirm(app: AppHandle, token: String) -> Result<String, String> 
     );
     chair_audit(&app, said.clone());
     close_small_note(&app, serde_json::json!({ "event": "click", "cut": cut, "dropped": dropped, "names": seat_names }));
+    // A's read, line (b): the run is in flight from here, held in memory so the X asks even if the ledger cannot be read.
+    CLOSE_SMALL_IN_FLIGHT.store(true, Ordering::SeqCst);
     let a = app.clone();
     std::thread::spawn(move || close_small_run(&a, cut));
     Ok(said)
@@ -14971,7 +14973,12 @@ fn close_small_run(app: &AppHandle, panes: Vec<String>) {
         let _ = t.join();
     }
     close_small_note(app, serde_json::json!({ "event": "done" }));
+    CLOSE_SMALL_IN_FLIGHT.store(false, Ordering::SeqCst);
 }
+
+/// A run started by his click in this session and not yet ended (set before the run's thread starts, cleared after its `done`
+/// row). The close question reads it beside the ledger, so a ledger that cannot be read never makes a run look finished.
+static CLOSE_SMALL_IN_FLIGHT: AtomicBool = AtomicBool::new(false);
 
 /// One writer at a time: the seats' threads write at once, and a row must never interleave with another.
 static CLOSE_SMALL_LEDGER_LOCK: Mutex<()> = Mutex::new(());
@@ -15439,6 +15446,25 @@ mod close_small_wiring_tests {
         let x = body(&s, concat!("fn close_on", "_x("));
         assert!(x.contains("close_small::close_must_ask(working.is_some(), compacting)"), "{x}");
         assert!(x.contains("\"compacting\": compacting"), "the question must carry the seats to go:\n{x}");
+        // AMENDED (A's read, line (b), ruled 13:28Z): the count is close_compacting's, from the ledger AND the run's own flag
+        assert!(
+            x.contains(concat!("close_small::close_compacting(", "close_small_read_progress().map(|p| close_small::to_go(&p)), CLOSE_SMALL_IN_FLIGHT.load(Ordering::SeqCst))")),
+            "{x}"
+        );
+    }
+
+    // A's read of L221, line (b): the run in flight is held in memory, set before the run's thread starts and cleared after its done row.
+    #[test]
+    fn l221_the_run_in_flight_is_known_without_the_ledger() {
+        let s = live(&src());
+        let confirm = body(&s, concat!("fn close_small_", "confirm("));
+        let set = confirm.find(concat!("CLOSE_SMALL_IN_FLIGHT", ".store(true")).expect("set at the click");
+        let spawn = confirm.find(concat!("close_small_", "run(&a, cut)")).expect("the run's thread");
+        assert!(set < spawn, "the flag must be up before the run's thread starts");
+        let run = body(&s, concat!("fn close_small_", "run("));
+        let done = run.find("\"event\": \"done\"").expect("the done row");
+        let clear = run.find(concat!("CLOSE_SMALL_IN_FLIGHT", ".store(false")).expect("cleared at the end");
+        assert!(done < clear, "the flag must come down only after the done row");
     }
 
     #[test]
@@ -17258,7 +17284,8 @@ fn close_on_x(app: &AppHandle) {
             std::thread::spawn(move || {
                 let seats = close_seat_gates(&app);
                 // L221: a compaction run with seats to go asks too, even with every seat ready ("Compacting is still running").
-                let compacting = close_small_read_progress().map(|p| close_small::to_go(&p)).unwrap_or(0);
+                // A's read, line (b), ruled 13:28Z: a run this session started and has not ended asks even when its ledger cannot be read.
+                let compacting = close_small::close_compacting(close_small_read_progress().map(|p| close_small::to_go(&p)), CLOSE_SMALL_IN_FLIGHT.load(Ordering::SeqCst));
                 let working = close_needs_confirm(&seats);
                 match close_small::close_must_ask(working.is_some(), compacting) {
                     false => {
@@ -17272,7 +17299,7 @@ fn close_on_x(app: &AppHandle) {
                             *g = Some(Instant::now());
                         }
                         let rows: Vec<serde_json::Value> = working.iter().map(|(l, g)| serde_json::json!({ "label": l, "gate": gate_word(*g) })).collect();
-                        plog(&format!("CLOSE X — asked: {} working ({}); compacting {compacting} to go", working.len(), working.iter().map(|(l, g)| format!("{l}={}", gate_word(*g))).collect::<Vec<_>>().join(", ")));
+                        plog(&format!("CLOSE X — asked: {} working ({}); compacting to go {} (None: a run in flight the ledger cannot count)", working.len(), working.iter().map(|(l, g)| format!("{l}={}", gate_word(*g))).collect::<Vec<_>>().join(", "), compacting.map_or("unknown".to_string(), |n| n.to_string())));
                         let _ = app.emit("close-confirm", serde_json::json!({ "working": rows, "compacting": compacting }));
                         CLOSE_CHECKING.store(false, Ordering::SeqCst);
                     }

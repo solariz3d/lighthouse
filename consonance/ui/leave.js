@@ -154,7 +154,11 @@
     // end the seats mid-cut, so the question says so, once, with the seats still to go; the working seats are listed below it.
     const compacting = p && Number.isInteger(p.compacting) && p.compacting > 0 ? p.compacting : 0;
     // An empty or malformed list still asks: Rust prevented the close, so showing nothing would leave the X doing nothing.
-    body.querySelector('#closeconfirm-q').innerHTML = compacting
+    // A's read (ruled 13:28Z): null is a run in flight whose seats to go Rust could not read from its ledger; it asks, and says so.
+    const unknown = !!p && p.compacting === null;
+    body.querySelector('#closeconfirm-q').innerHTML = unknown
+      ? 'Compacting is still running (how many seats are left could not be read). Close anyway?'
+      : compacting
       ? `Compacting is still running (${compacting} ${compacting === 1 ? 'seat' : 'seats'} to go). Close anyway?`
       : list.length
       ? `${list.length} ${list.length === 1 ? 'seat is' : 'seats are'} working: ${labels.join(', ')}. Close Consonance and end ${list.length === 1 ? 'it' : 'them'}?`

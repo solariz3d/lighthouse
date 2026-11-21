@@ -397,6 +397,13 @@ test('[Close] during a compaction run invokes leave_confirmed once, and [Keep wo
   assert.deepStrictEqual(r.calls.map((c) => c.cmd), ['leave_confirmed']);
 });
 
+// A's read of L221, line (b), ruled 13:28Z: a run in flight whose seats to go could not be read (Rust sends null) still asks, and says so.
+test('a run in flight whose count could not be read asks, and says the count is unknown', () => {
+  const r = load();
+  r.ask({ working: [], compacting: null });
+  assert.ok(r.text().includes('Compacting is still running (how many seats are left could not be read). Close anyway?'), r.text());
+});
+
 Promise.all(pending).then(() => {
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
