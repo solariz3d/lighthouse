@@ -4724,6 +4724,22 @@ mod no_prompt_tests {
         assert!(ask < flag, "the rule is asked before the flag is added");
         assert!(spawn[ask..flag].contains("no_prompt_settings_file()"), "the flag names the fixed file");
     }
+    // A's read, item 3: the row above pinned the ORDER of two strings and nothing the ask is given, so five one-edit mutants of the
+    // call site survived (S2 `|| true`, S3 inverted, S4 the builder name forced true, S5 the config never read, S6 another file).
+    // S2 and S4 would deny the housed seats' prompts, the dispatch gate's ask among them. This row pins the call's exact text.
+    #[test]
+    fn the_spawn_passes_the_rule_exactly_what_it_read() {
+        let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
+        let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
+        let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
+        let call = "    if no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {\n        match no_prompt_settings_file() {\n            Ok(p) => {\n                cmd.args([\"--settings\", &p]);";
+        assert!(spawn.contains(call), "the ask, its four arguments, the file and the flag, exactly (S2-S6)");
+        assert_eq!(spawn.matches("no_prompt_for(").count(), 1, "asked once");
+        let file = &s[s.find("fn no_prompt_settings_file(").expect("the file")..];
+        let file = &file[..file.find("\n}\n").unwrap()];
+        assert!(file.contains("data_dir().join(\"builder-no-prompt.settings.json\")") && file.contains("NO_PROMPT_SETTINGS"), "the fixed file and its fixed text");
+        assert_eq!(NO_PROMPT_SETTINGS, r#"{"permissions":{"denyInsteadOfPrompting":true}}"#);
+    }
 }
 
 #[cfg(test)]
@@ -13133,6 +13149,10 @@ fn drain_inboxes(app: &AppHandle) {
         if exit != pane_exit::ExitGate::Open {
             return;
         }
+        // L218 (A's read, item 1): a pane with a cut pending takes nothing from its inbox until the cut is confirmed or dropped.
+        if cut_pending(&pane) {
+            return;
+        }
         let (gate, box_empty, screen_idle, composer) = pane_state(&app.state::<PaneEmus>(), &pane);
         app.state::<Inbox>().note_reading(&pane, composer);
         if let Some((text, label, forced, reads)) = app.state::<Inbox>().take_ready_read(
@@ -14982,16 +15002,29 @@ fn close_small_cut_seat(app: &AppHandle, pane: &str) -> String {
         return format!("NOT cut: its turn after the ask did not end within {} min", CLOSE_SMALL_ASK_WAIT.as_secs() / 60);
     }
     // 3. The cut, confirmed only by the transcript (the composer cannot confirm a slash command).
-    compact_and_confirm(app, pane, "compact warm seats: /compact")
+    compact_and_confirm(app, pane, "compact warm seats: /compact", true)
 }
 
-/// THE ONE `/compact` SEND (L218 moved it here out of `close_small_cut_seat`, unchanged, so the cut at a hand-back and the cut before
-/// a dispatch use L212's path and nothing new). Sent the way keep-warm sends (queued behind a turn or the keeper's typing), and
-/// confirmed only by the transcript's own `compact_boundary` after the send; A's follow-up (b): only a MANUAL compaction is the cut.
-/// Callers: the click's cut, and the two L218 paths, each only for a pane listed in `cut_at_handback` (`cut_at_handback_wiring_tests`).
-fn compact_and_confirm(app: &AppHandle, pane: &str, label: &str) -> String {
+/// THE ONE `/compact` SEND (L218 moved it here out of `close_small_cut_seat`, so the cut at a hand-back and the cut before a dispatch
+/// use L212's path and nothing new), confirmed only by the transcript's own `compact_boundary` after the send; A's follow-up (b): only
+/// a MANUAL compaction is the cut. Callers: the click's cut, and the two L218 paths, each only for a pane listed in `cut_at_handback`
+/// (`cut_at_handback_wiring_tests`).
+///
+/// `may_queue`: the click's cut sends the way keep-warm sends (queued behind a turn or the keeper's typing). The L218 paths may NOT
+/// queue (A's read, item 1): their pane is pending, the drain takes nothing for it, so a queued /compact would wait until the cut gave
+/// up and then land in some later turn. They write only into a pane that is ready with an empty composer, else nothing is sent.
+fn compact_and_confirm(app: &AppHandle, pane: &str, label: &str, may_queue: bool) -> String {
     let sent = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
-    if let Err(e) = close_small_send(app, pane, close_small::COMPACT, label) {
+    let compact = close_small::COMPACT; // named once: the L212 row counts its sites
+    let wrote = if may_queue {
+        close_small_send(app, pane, compact, label)
+    } else {
+        match pane_state(&app.state::<PaneEmus>(), pane) {
+            (PaneGate::Ready, true, _, _) => inject_to_pane(&app.state::<Panes>(), pane, compact, &app.state::<PaneEmus>()).map(|_| "written"),
+            (gate, empty, _, _) => Err(format!("the pane was not ready with an empty composer ({}, composer empty: {empty})", gate.label())),
+        }
+    };
+    if let Err(e) = wrote {
         return format!("NOT cut: /compact could not be sent ({e})");
     }
     let mut seen = None;
@@ -15025,6 +15058,24 @@ fn cut_listing_refusals_at_launch(app: &AppHandle) {
     }
 }
 
+/// THE PENDING CUTS (A's read, item 1): a pane is in here from its hand-back ring (or a cut before its dispatch) until the cut is
+/// confirmed or dropped. While it is, `drain_inboxes` takes nothing for it and `chair_inject_exec` puts a dispatch to it in its inbox
+/// (held), so the drain delivers it once the pane is released, whatever the cut's outcome. The rule and its rows: cut_at_handback.rs.
+static PENDING_CUTS: std::sync::OnceLock<Mutex<cut_at_handback::Pending>> = std::sync::OnceLock::new();
+fn pending_cuts() -> &'static Mutex<cut_at_handback::Pending> {
+    PENDING_CUTS.get_or_init(|| Mutex::new(cut_at_handback::Pending::default()))
+}
+/// Is a delivery to this pane held for a pending cut? A poisoned lock holds nothing (delivery fails open, never stuck).
+fn cut_pending(pane: &str) -> bool {
+    pending_cuts().lock().map(|p| p.holds(pane)).unwrap_or(false)
+}
+/// Releases the pane (only the current cut's own thread can); what was held is delivered by the drain's next tick.
+fn cut_release(pane: &str, gen: u64) {
+    if let Ok(mut p) = pending_cuts().lock() {
+        p.resolve(pane, gen);
+    }
+}
+
 /// After a committee pane's ring was delivered (`pane_call_librarian_exec`). Returns at once; the wait runs on its own thread.
 fn cut_at_handback_after_ring(app: &AppHandle, letter: &str, text: &str) {
     const HOW: &str = "cut at hand-back";
@@ -15038,19 +15089,48 @@ fn cut_at_handback_after_ring(app: &AppHandle, letter: &str, text: &str) {
         chair_audit(app, format!("{HOW} -> {letter}: left alone: no pane has that letter in the letter table"));
         return;
     };
+    let ring_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    // Pending from NOW, before the thread starts: a dispatch that arrives in the next quarter second is already held.
+    let Some(gen) = pending_cuts().lock().ok().and_then(|mut p| p.begin(&pane, ring_ms)) else {
+        chair_audit(app, format!("{HOW} -> {letter}: left alone: a cut for it is already being sent"));
+        return;
+    };
     let a = app.clone();
     let letter = letter.to_string();
     std::thread::spawn(move || {
+        let current = || pending_cuts().lock().map(|p| p.is_current(&pane, gen)).unwrap_or(false);
+        let start = Instant::now();
         // The ring is a tool call inside the pane's turn, so its own stamp says working until that turn's Stop.
-        let ended = close_small_wait(CUT_TURN_WAIT, || pane_state(&a.state::<PaneEmus>(), &pane).0 == PaneGate::Ready);
-        let tail = close_small_tail(&a, &pane);
-        let open = tail.as_deref().map(cut_at_handback::open_background_tasks).unwrap_or_default();
-        let context = tail.as_deref().and_then(last_request).and_then(|l| l.context);
-        match cut_at_handback::after_turn(ended, &open, context, cut_at_handback::DIAL) {
-            Err(why) => chair_audit(&a, format!("{HOW} -> {letter}: {why}")),
+        let decided = loop {
+            if !current() {
+                return; // a newer hand-back took the pane over; its own thread reports
+            }
+            let tail = close_small_tail(&a, &pane);
+            let later = tail.as_deref().is_some_and(|t| cut_at_handback::later_turn_began(t, ring_ms));
+            let ended = pane_state(&a.state::<PaneEmus>(), &pane).0 == PaneGate::Ready;
+            match cut_at_handback::poll(ended, later, start.elapsed(), CUT_TURN_WAIT) {
+                cut_at_handback::Poll::Wait => std::thread::sleep(CLOSE_SMALL_POLL),
+                cut_at_handback::Poll::Drop(why) => break Err(why),
+                cut_at_handback::Poll::Go => {
+                    let open = tail.as_deref().map(cut_at_handback::open_background_tasks).unwrap_or_default();
+                    let context = tail.as_deref().and_then(last_request).and_then(|l| l.context);
+                    break cut_at_handback::after_turn(true, &open, context, cut_at_handback::DIAL);
+                }
+            }
+        };
+        match decided {
+            Err(why) => {
+                cut_release(&pane, gen);
+                chair_audit(&a, format!("{HOW} -> {letter}: {why}; anything held for it is delivered now"));
+            }
             Ok(c) => {
-                let outcome = compact_and_confirm(&a, &pane, "cut at hand-back: /compact");
-                chair_audit(&a, cut_at_handback::board_line(HOW, &letter, c, &outcome));
+                let sending = pending_cuts().lock().map(|mut p| p.mark_sent(&pane, gen)).unwrap_or(false);
+                if !sending {
+                    return; // taken over between the look and the send
+                }
+                let outcome = compact_and_confirm(&a, &pane, "cut at hand-back: /compact", false);
+                cut_release(&pane, gen);
+                chair_audit(&a, format!("{}; anything held for it is delivered now", cut_at_handback::board_line(HOW, &letter, c, &outcome)));
             }
         }
     });
@@ -15072,26 +15152,39 @@ fn cut_before_dispatch(app: &AppHandle, tid: &str, msg: &str, preview: &str) -> 
     if !cut_at_handback::before_dispatch(true, age_min, context, cut_at_handback::DIAL) {
         return None;
     }
-    let (a, tid, msg, preview) = (app.clone(), tid.to_string(), msg.to_string(), preview.to_string());
     let (c, age) = (context.unwrap_or(0), age_min.unwrap_or(0));
+    // Pending, and marked sent at once (no turn of its own to wait for), BEFORE the dispatch is put in the inbox: the drain then holds
+    // it, and every other message for this pane, until the cut is released.
+    let now_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    let gen = pending_cuts().lock().ok().and_then(|mut p| p.begin(tid, now_ms).filter(|g| p.mark_sent(tid, *g)))?;
+    let depth = app.state::<Inbox>().push(tid, msg.to_string(), preview.to_string(), Instant::now());
     let said = format!(
-        "held for {letter}: cold ({age} min) and large ({}k), so /compact first; this dispatch follows the cut, or the end of a {}-min wait \
-         for it, and the board says which",
+        "held for {letter} ({depth} waiting): cold ({age} min) and large ({}k), so /compact first; this dispatch follows the cut, or the end \
+         of a {}-min wait for it, and the board says which",
         c / 1000,
         CLOSE_SMALL_COMPACT_WAIT.as_secs() / 60
     );
     chair_audit(app, format!("{HOW} -> {letter}: {said}"));
+    let (a, tid) = (app.clone(), tid.to_string());
     std::thread::spawn(move || {
-        let outcome = compact_and_confirm(&a, &tid, "cut before dispatch: /compact");
-        let delivered = match gate_or_queue(&a, &tid, &msg, &preview) {
-            Some(queued) => format!("the dispatch was then {queued}"),
-            None => match inject_to_pane(&a.state::<Panes>(), &tid, &msg, &a.state::<PaneEmus>()) {
-                Ok(_) => "the dispatch was then delivered".to_string(),
-                Err(e) => format!("the dispatch then FAILED to deliver: {e}"),
-            },
-        };
-        chair_audit(&a, format!("{}; {delivered}", cut_at_handback::board_line(HOW, &letter, c, &outcome)));
+        let outcome = compact_and_confirm(&a, &tid, "cut before dispatch: /compact", false);
+        cut_release(&tid, gen);
+        chair_audit(&a, format!("{}; the dispatch is delivered now", cut_at_handback::board_line(HOW, &letter, c, &outcome)));
     });
+    Some(said)
+}
+
+/// A dispatch to a pane whose cut is pending (A's read, item 1): put in its inbox, where the drain holds it until the cut resolves.
+fn hold_for_pending_cut(app: &AppHandle, tid: &str, msg: &str, preview: &str) -> Option<String> {
+    if !cut_pending(tid) {
+        return None;
+    }
+    let depth = app.state::<Inbox>().push(tid, msg.to_string(), preview.to_string(), Instant::now());
+    let said = format!(
+        "held for {} ({depth} waiting): a hand-back cut is pending for it; this delivers when the cut is confirmed or dropped",
+        short_id(tid)
+    );
+    chair_audit(app, format!("HELD -> {said}: {preview}"));
     Some(said)
 }
 
@@ -15143,6 +15236,36 @@ mod cut_at_handback_wiring_tests {
         assert_eq!(l.matches("cut_before_dispatch(").count(), 2, "one definition, one caller");
         let mcp = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/mcp.rs")).unwrap();
         assert!(!mcp.contains("compact_and_confirm") && !mcp.contains("cut_at_handback"), "no MCP verb reaches it directly");
+    }
+
+    // A's read, item 1 (the race), the wiring half: the registry is read by both delivery paths, set before the cut's thread starts,
+    // marked sent before the one send, and released after it; the L218 sends never queue.
+    #[test]
+    fn a_pending_cut_holds_the_drain_and_the_dispatch_and_is_set_before_its_thread() {
+        let s = src();
+        let drain = body(&s, concat!("fn drain_inboxes", "("));
+        let held = drain.find("if cut_pending(&pane) {").expect("the drain asks the registry");
+        assert!(held < drain.find("pane_state(").unwrap() && held < drain.find("take_ready_read(").unwrap(), "before it reads or takes anything");
+        let inject = body(&s, concat!("fn chair_inject", "_exec("));
+        let hold = inject.find("hold_for_pending_cut(").expect("the dispatch asks the registry");
+        assert!(hold < inject.find("cut_before_dispatch(").unwrap() && hold < inject.find("gate_or_queue(").unwrap());
+        let ring = body(&s, "fn cut_at_handback_after_ring(");
+        let begin = ring.find("p.begin(&pane, ring_ms)").expect("pending from the ring");
+        assert!(begin < ring.find("std::thread::spawn").unwrap(), "set before the thread starts");
+        let sent = ring.find("p.mark_sent(&pane, gen)").expect("marked sent");
+        let send = ring.find("compact_and_confirm(&a, &pane, \"cut at hand-back: /compact\", false)").expect("the one send, never queued");
+        let release = ring.rfind("cut_release(&pane, gen)").unwrap();
+        assert!(sent < send && send < release, "marked sent, then sent, then released");
+        assert_eq!(ring.matches("cut_release(&pane, gen)").count(), 2, "released on the drop and after the send");
+        assert!(ring.contains("cut_at_handback::later_turn_began(") && ring.contains("cut_at_handback::poll("), "the drop rule is asked");
+        let cold = body(&s, "fn cut_before_dispatch(");
+        let marked = cold.find("p.mark_sent(tid, *g)").expect("pending and sending before the push");
+        let push = cold.find("app.state::<Inbox>().push(").expect("the dispatch waits in the inbox");
+        assert!(marked < push && push < cold.find("std::thread::spawn").unwrap());
+        assert!(cold.contains("compact_and_confirm(&a, &tid, \"cut before dispatch: /compact\", false)") && cold.contains("cut_release(&tid, gen)"));
+        let one = body(&s, concat!("fn compact_and", "_confirm("));
+        let q = one.find("if may_queue {").expect("the queue is the click's only");
+        assert!(one[q..].find("close_small_send(").unwrap() < one[q..].find("} else {").unwrap(), "only the may_queue arm queues");
     }
 }
 
@@ -15332,6 +15455,10 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
     let mut preview: String = text.chars().take(110).collect();
     if text.chars().count() > 110 {
         preview.push('…');
+    }
+    // L218 (A's read, item 1): a pane with a hand-back cut pending gets nothing until the cut resolves; this dispatch waits in its inbox.
+    if let Some(held) = hold_for_pending_cut(app, &tid, &msg, &preview) {
+        return held;
     }
     // L218: a listed pane that is cold and large is cut first, and this dispatch follows the cut (None with the key empty).
     if let Some(held) = cut_before_dispatch(app, &tid, &msg, &preview) {
@@ -21928,10 +22055,14 @@ mod librarian_channel_tests {
         /// Deliberate exceptions. AN EXCEPTION THAT IS NAMED IS A DECISION; AN EXCEPTION THAT IS
         /// MISSING IS A HOLE. Add a row only with the reason, and only after asking whether the
         /// site should instead be gated.
-        const ALLOWED_TO_BYPASS: [(&str, &str); 2] = [
+        const ALLOWED_TO_BYPASS: [(&str, &str); 3] = [
             ("inject_to_pane", "the definition itself — it IS the write"),
             ("drain_inboxes", "the drain: it is the inbox delivering what the gate already held, \
                                and asking the gate here is a loop that never delivers anything"),
+            ("compact_and_confirm", "L218, the cut's own /compact into a PENDING pane (pane A's read, item 1): its inbox is held \
+                               for the cut, so a queued /compact would wait out the hold and land in a later turn, the race \
+                               itself. It asks the same reading the gate asks (the Stop stamp ready and the composer empty) and \
+                               writes nothing otherwise; the click's cut (may_queue) still goes through the gate"),
         ];
 
         let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");

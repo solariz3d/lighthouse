@@ -141,6 +141,112 @@ pub fn board_line(how: &str, letter: &str, context: u64, outcome: &str) -> Strin
     format!("{how} -> {letter}: context {}k before; {outcome}", context / 1000)
 }
 
+// ---- THE PENDING CUT (pane A's second read, item 1, 2026-11-21: `handback/p-l216-read-A_2026-11-21.md`).
+//
+// A hand-back cut belongs to the turn that rang. Without a record that a cut is pending, the drain wrote the chair's next dispatch
+// within 250 ms of the pane's Stop while the cut thread polled every 5 s, so the cut either fired at the end of the NEXT lap's turn
+// or wrote /compact beside the dispatch. The rule now:
+//   - from the ring until the cut is confirmed or dropped, the pane is PENDING: nothing is taken from its inbox, and a dispatch to it
+//     is put there (held), then delivered when the cut resolves, whatever its outcome;
+//   - a cut that has not sent its /compact when a later turn begins is DROPPED, with a row (and what it held goes on);
+//   - a cut whose ringing turn has not ended within the wait is dropped too (the 30-minute abandon), releasing what it held.
+
+/// One pane's pending cut. `gen` tells a newer hand-back's cut from an older one's thread.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Cut {
+    pub gen: u64,
+    pub ring_ms: u64,
+    pub sent: bool,
+}
+
+/// Every pending cut, by pane id. main.rs keeps one behind a mutex.
+#[derive(Debug, Default)]
+pub struct Pending {
+    cuts: std::collections::HashMap<String, Cut>,
+    next_gen: u64,
+}
+
+impl Pending {
+    /// A hand-back ring: the pane is pending from now. A cut not yet sent is replaced (the newer hand-back's turn owns the pane, and
+    /// the older thread sees its `gen` is gone and stops without a word). None if a cut for the pane is already sending.
+    pub fn begin(&mut self, pane: &str, ring_ms: u64) -> Option<u64> {
+        if self.cuts.get(pane).is_some_and(|c| c.sent) {
+            return None;
+        }
+        self.next_gen += 1;
+        self.cuts.insert(pane.to_string(), Cut { gen: self.next_gen, ring_ms, sent: false });
+        Some(self.next_gen)
+    }
+    /// Is a delivery to this pane held?
+    pub fn holds(&self, pane: &str) -> bool {
+        self.cuts.contains_key(pane)
+    }
+    pub fn is_current(&self, pane: &str, gen: u64) -> bool {
+        self.cuts.get(pane).is_some_and(|c| c.gen == gen)
+    }
+    /// The /compact is about to be written: from here a later turn no longer drops the cut.
+    pub fn mark_sent(&mut self, pane: &str, gen: u64) -> bool {
+        match self.cuts.get_mut(pane) {
+            Some(c) if c.gen == gen => {
+                c.sent = true;
+                true
+            }
+            _ => false,
+        }
+    }
+    /// Confirmed or dropped: the pane is released, and what was held for it is delivered. Only the current cut's thread can release.
+    pub fn resolve(&mut self, pane: &str, gen: u64) -> bool {
+        if self.is_current(pane, gen) {
+            self.cuts.remove(pane);
+            true
+        } else {
+            false
+        }
+    }
+}
+
+/// One look at a pending cut that has not sent its /compact yet.
+#[derive(Debug, PartialEq, Eq)]
+pub enum Poll {
+    Wait,
+    Go,
+    Drop(String),
+}
+
+pub fn poll(turn_ended: bool, later_turn: bool, waited: std::time::Duration, limit: std::time::Duration) -> Poll {
+    if later_turn {
+        return Poll::Drop("dropped: a later turn began before its /compact was sent".to_string());
+    }
+    if turn_ended {
+        return Poll::Go;
+    }
+    if waited >= limit {
+        return Poll::Drop(format!("dropped: the turn that rang had not ended within {} min", limit.as_secs() / 60));
+    }
+    Poll::Wait
+}
+
+/// Has a turn begun after the ring? A prompt row (a user row whose content is text, not a tool result) stamped after `ring_ms`. The
+/// ringing turn's own rows after the ring are tool results and the model's replies, so they never count.
+pub fn later_turn_began(jsonl: &str, ring_ms: u64) -> bool {
+    jsonl.lines().filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok()).any(|v| {
+        if v.get("type").and_then(|x| x.as_str()) != Some("user") || v.get("isSidechain").and_then(|x| x.as_bool()) == Some(true) {
+            return false;
+        }
+        let after = v
+            .get("timestamp")
+            .and_then(|x| x.as_str())
+            .and_then(|t| chrono::DateTime::parse_from_rfc3339(t).ok())
+            .is_some_and(|t| t.timestamp_millis() as u64 > ring_ms);
+        let prompt = match v.get("message").and_then(|m| m.get("content")) {
+            Some(serde_json::Value::String(_)) => true,
+            Some(serde_json::Value::Array(a)) => a.iter().any(|b| b.get("type").and_then(|x| x.as_str()) == Some("text")),
+            _ => false,
+        };
+        after && prompt
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -223,5 +329,80 @@ mod tests {
         assert_eq!(open_background_tasks(&format!("{start}\n{other}\n{done}")), vec!["b2".to_string()]);
         let side = r#"{"type":"user","isSidechain":true,"message":{"content":"Command running in background with ID: s1. x"}}"#;
         assert!(open_background_tasks(side).is_empty(), "a subagent's own task is the subagent's");
+    }
+
+    // ---- A's read, item 1 (the race), registered red first: the three cases the chair named, then the drop rule.
+    const P: &str = "pane-b";
+    const MIN: std::time::Duration = std::time::Duration::from_secs(60);
+    #[test]
+    fn race_a_dispatch_that_arrives_before_the_cuts_send_is_held_until_the_cut_resolves() {
+        let mut p = Pending::default();
+        let g = p.begin(P, 1_000).expect("a hand-back ring begins a pending cut");
+        assert!(p.holds(P), "the dispatch arriving now is held, not written");
+        assert_eq!(poll(true, false, MIN, 30 * MIN), Poll::Go, "the ringing turn ended and nothing began after it: the cut goes");
+        assert!(p.mark_sent(P, g));
+        assert!(p.resolve(P, g));
+        assert!(!p.holds(P), "confirmed: the held dispatch is delivered");
+    }
+    #[test]
+    fn race_a_dispatch_that_arrives_during_the_compaction_is_held_too() {
+        let mut p = Pending::default();
+        let g = p.begin(P, 1_000).unwrap();
+        assert!(p.mark_sent(P, g));
+        assert!(p.holds(P), "sent and not yet confirmed: still held");
+        assert_eq!(p.begin(P, 2_000), None, "a cut that is sending is not replaced");
+        assert!(p.resolve(P, g) && !p.holds(P));
+    }
+    #[test]
+    fn race_the_30_minute_abandon_releases_the_held_dispatch() {
+        let mut p = Pending::default();
+        let g = p.begin(P, 1_000).unwrap();
+        assert!(p.holds(P), "held while the ringing turn runs");
+        assert_eq!(poll(false, false, 29 * MIN, 30 * MIN), Poll::Wait);
+        assert!(matches!(poll(false, false, 30 * MIN, 30 * MIN), Poll::Drop(_)));
+        assert!(p.resolve(P, g) && !p.holds(P), "dropped: what it held goes on");
+    }
+    #[test]
+    fn a_cut_not_yet_sent_when_a_later_turn_begins_is_dropped() {
+        assert!(matches!(poll(true, true, MIN, 30 * MIN), Poll::Drop(_)), "the later turn wins even if it has ended");
+        assert!(matches!(poll(false, true, MIN, 30 * MIN), Poll::Drop(_)));
+    }
+    #[test]
+    fn a_newer_handback_takes_the_pane_over_and_the_older_thread_cannot_release_it() {
+        let mut p = Pending::default();
+        let old = p.begin(P, 1_000).unwrap();
+        let new = p.begin(P, 5_000).unwrap();
+        assert!(!p.is_current(P, old) && p.is_current(P, new));
+        assert!(!p.mark_sent(P, old) && !p.resolve(P, old), "the old thread can neither send nor release");
+        assert!(p.holds(P));
+        assert!(p.resolve(P, new) && !p.holds(P));
+    }
+    #[test]
+    fn a_later_turn_is_a_prompt_after_the_ring_not_the_ringing_turns_own_rows() {
+        let ring = chrono::DateTime::parse_from_rfc3339("2026-11-21T11:00:00Z").unwrap().timestamp_millis() as u64;
+        let before = r#"{"type":"user","timestamp":"2026-11-21T10:59:00Z","message":{"content":"[chair:MAIN] the lap"}}"#;
+        let result = r#"{"type":"user","timestamp":"2026-11-21T11:00:01Z","message":{"content":[{"type":"tool_result","content":"delivered"}]}}"#;
+        let reply = r#"{"type":"assistant","timestamp":"2026-11-21T11:00:05Z","message":{"content":[{"type":"text","text":"done"}]}}"#;
+        let side = r#"{"type":"user","isSidechain":true,"timestamp":"2026-11-21T11:00:06Z","message":{"content":"a subagent's prompt"}}"#;
+        assert!(!later_turn_began(&[before, result, reply, side].join("\n"), ring));
+        let next = r#"{"type":"user","timestamp":"2026-11-21T11:00:09Z","message":{"content":"[chair:MAIN] the next lap"}}"#;
+        assert!(later_turn_began(&[before, result, reply, next].join("\n"), ring));
+        let blocks = r#"{"type":"user","timestamp":"2026-11-21T11:00:09Z","message":{"content":[{"type":"text","text":"typed"}]}}"#;
+        assert!(later_turn_began(blocks, ring));
+    }
+
+    // ---- A's read, item 2: the three survivors, each now a row.
+    #[test]
+    fn e3_a_pane_exactly_50_minutes_cold_is_cold() {
+        assert!(before_dispatch(true, Some(COLD_MIN), Some(750_000), DIAL));
+    }
+    #[test]
+    fn e6_a_context_that_could_not_be_read_is_not_counted_large() {
+        assert!(!before_dispatch(true, Some(240), None, DIAL));
+    }
+    #[test]
+    fn g1_a_ring_is_a_handback_only_when_it_points_into_the_handback_folder() {
+        assert!(!is_handback("exo_memory/loop/packet_l218_cut_at_handback_B_2026-11-21.md"));
+        assert!(!is_handback("p-l218-B_2026-11-21.md"));
     }
 }
