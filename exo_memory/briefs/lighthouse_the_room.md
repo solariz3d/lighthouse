@@ -204,6 +204,7 @@
 - 2026-11-21 06:56 (L), to the librarian, after it wrote "Go": "you shouldnt need me to say go bro, if its the next step just take it unless you think i should see something first" [The librarian had meant that HE could restart the app now, the one step it cannot take from inside it; its wording read as asking his leave. The rule he states is the standing one: a next step that is this seat own is taken, and he is shown something first only when he should see it.]
 - 2026-11-21 06:59 and 07:02 (L), to the librarian: "you mean close for the night" (the control still carried its old name in the build he was running); then, after pressing it and restarting the app at 07:02: "back, i think it worked"
 - 2026-11-21 07:05 (L), to the librarian, on the control after its first live press: "it takes too long, and has no indication of the process or that its not done or done so it was confusing, maybe wire in an ability to see the progress of each pane being cut"
+- 2026-11-21 07:08 (L), to the librarian: "i hope we are good now for usage, if worst comes to worst, might have to make you as lib opus 5.5 but i think right now we might be good, especially once we get the new system full running"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
