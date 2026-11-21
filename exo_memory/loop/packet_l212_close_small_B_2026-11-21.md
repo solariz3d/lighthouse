@@ -63,3 +63,8 @@ installed there by its own landing.
 The standing rule this lap serves, unchanged: no seat's conversation is cut without his word for that seat. Commit by named
 paths. The gates and hooks are changed only with a second reader. Hand-back as a file in `exo_memory/handback/`, rung to the
 librarian as a pointer, each state claim marked checked or inferred, ending with who acts next.
+
+## Addendum, 00:4x: prior art the packet left out (the librarian's miss; read before the probe)
+
+- **The app already times its keep-warm pings to stop the harness's own idle compaction**, because that cut seats "with no word for it": `consonance/src-tauri/src/main.rs:13756-13764`, ruled at `loop/plan_room_stretch_2026-11-13.md:114-115`, measured in `exo_memory/loop/wake_level2_2026-11-13/idle_compaction_keepwarm.md`. The harness compacts a seat of 200k or more tokens that has been idle about 54 minutes. So while the app runs, seats are kept from shrinking; when the app closes, they sleep at full size. L212 is the invited cut that was missing. Do not change the ping timing in this lap.
+- **From the Third Place's read of the changelog tonight** (`research/claude_code_features_for_consonance_2026-11-21.md`, each line its own read, not checked by me): idle compaction's two controls, `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` and `"idleCompaction": false` (`:76-81`); SessionStart resume hooks receive the session's staleness and an estimated re-cache cost, and `/cost` has a per-session prompt-cache line (`:132-137`); PreCompact hooks can block a compaction (`:183`). The re-cache cost at resume is the number the dry run needs for a cold seat; say whether the hook gives it.
