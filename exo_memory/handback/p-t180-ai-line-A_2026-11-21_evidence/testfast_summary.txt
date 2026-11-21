@@ -1,0 +1,59 @@
+test-fast: 322 of 357 test files; left out: 32 mutation harnesses (weekly), 3 frame-timing pages (drag-frame.test.js, release-frame.test.js, sculpt-frame.test.js)
+ℹ Blender is not at C:/Program Files (x86)/Steam/steamapps/common/Blender/blender.exe: the .fbx half was not run
+ℹ rolling (first drag) p95 9.3 ms a move, early p95 5.4 ms: 1.72 ×; both ended at -12.63°
+ℹ rolling (first drag, into the hold) p95 35.3 ms a move, early p95 4.6 ms: 7.66 ×; rolling held at -360°, early ended at -163.5°
+ℹ kept 121 distinct froms; refused 0
+ℹ 66679 segments read
+ℹ 10760 pointer positions, 6020 on the road
+ℹ p95 1.1 ms, 0 of 2769 over
+ℹ p95 0.9 ms, 1 of 2795 over
+ℹ 1114890 of 6248980 triangles drawn, 97 of 97 chunks thinned
+ℹ p95 1.2 ms, 27 of 2182 over
+ℹ DPR 1 (2560 x 1440): 9422 stars found, 4048 lone; width at half peak median 1.13 px, p90 1.19 px
+ℹ DPR 1.5 (3840 x 2160): 9447 stars found, 7004 lone; width at half peak median 1.13 px, p90 1.19 px
+ℹ DPR 1 (2560 x 1440): 784 stars found, 751 lone; width at half peak median 1.11 px, p90 1.17 px
+ℹ DPR 1.5 (3840 x 2160): 784 stars found, 780 lone; width at half peak median 1.11 px, p90 1.17 px
+ℹ DPR 1 (2560 x 1440): 1251 stars found, 1184 lone; width at half peak median 1.13 px, p90 1.19 px
+ℹ DPR 1.5 (3840 x 2160): 1250 stars found, 1244 lone; width at half peak median 1.14 px, p90 1.19 px
+ℹ DPR 1 (2560 x 1440): 385 stars found, 385 lone; width at half peak median 1.14 px, p90 1.21 px
+ℹ DPR 1.5 (3840 x 2160): 386 stars found, 386 lone; width at half peak median 1.14 px, p90 1.23 px
+ℹ DPR 1 (2560 x 1440): 54 stars found, 54 lone; width at half peak median 1.14 px, p90 1.19 px
+ℹ DPR 1.5 (3840 x 2160): 54 stars found, 54 lone; width at half peak median 1.13 px, p90 1.21 px
+ℹ DPR 1: limb worst 1.47 px, median 1.32 px
+ℹ DPR 1.5: limb worst 1.42 px, median 1.29 px
+ℹ river: peaks over the sky, median 51.0, p90 118.9 levels, over 4048 lone stars
+ℹ aurora: peaks over the sky, median 96.5, p90 223.0 levels, over 1184 lone stars
+ℹ city: peaks over the sky, median 159.5, p90 238.4 levels, over 385 lone stars
+ℹ longest flat run, px (level, up): {"sun":[4,6],"prism":[6,8],"caustics":[6,7],"aurora":[7,7],"city":[4,4],"river":[4,8]}
+ℹ the control sky (white beyond 90 degrees of azimuth 0): white in 700 of the band's 1400 columns
+ℹ the band's largest ratio to --fog: {"sun":1.157,"prism":1.173,"caustics":1.239,"aurora":1.044,"city":1.148,"river":1.047}
+ℹ levels in a 4 x 4 block (of 255): {"0":[8,24,40,56,72,88,104,120,135,151,167,183,199,215,231,247],"2400":[8,24,40,56,72,88,104,120,135,151,167,183,199,215,231,247],"4320":[8,24,40,56,72,88,104,120,135,151,167,183,199,215,231,247]}
+ℹ sigil builder: 72 texts compared, 0 pushed under; sigil file: 82 texts compared, 0 pushed under; aqua builder: 72 texts compared, 0 pushed under; aqua file: 82 texts compared, 0 pushed under; skyline builder: 72 texts compared, 0 pushed under; skyline file: 82 texts compared, 0 pushed under; glass builder: 72 texts compared, 0 pushed under; glass file: 82 texts compared, 0 pushed under; aurora builder: 72 texts compared, 0 pushed under; aurora file: 82 texts compared, 0 pushed under; skyline-night builder: 72 texts compared, 0 pushed under; skyline-night file: 82 texts compared, 0 pushed under
+ℹ 1.25 sigil: {"dpr":1.25,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.25 skyline: {"dpr":1.25,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.25 glass: {"dpr":1.25,"header":[8,300],"left":[8,300],"menu":[8,300]}; 1.25 aurora: {"dpr":1.25,"header":[3,3],"left":[3,3],"menu":[3,3]}; 1.25 skyline-night: {"dpr":1.25,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.5 sigil: {"dpr":1.5,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.5 skyline: {"dpr":1.5,"header":[128,128],"left":[128,128],"menu":[128,128]}; 1.5 glass: {"dpr":1.5,"header":[8,300],"left":[8,300],"menu":[8,300]}; 1.5 aurora: {"dpr":1.5,"header":[3,3],"left":[3,3],"menu":[3,3]}; 1.5 skyline-night: {"dpr":1.5,"header":[128,128],"left":[128,128],"menu":[128,128]}
+ℹ skyline-night builder: 72 texts, 0 under 4.5:1; skyline-night file: 77 texts, 0 under 4.5:1, left out as partly under the menu: edge start, Build view · plain road (L), +30.00, m, +30.00°; skyline builder: 72 texts, 1 under 4.5:1 (100.00 m 1.16); skyline file: 77 texts, 1 under 4.5:1 (100.00 m 1.16), left out as partly under the menu: edge start, Build view · plain road (L), +30.00, m, +30.00°
+ℹ 1400 sigil: clear; 1400 aqua: clear; 1400 skyline: clear; 1400 glass: clear; 1400 aurora: clear; 1400 skyline-night: clear; 2560 sigil: clear; 2560 aqua: clear; 2560 skyline: clear; 2560 glass: clear; 2560 aurora: clear; 2560 skyline-night: clear
+ℹ sigil: 4 warning lines, 32 pit lane texts; aqua: 4 warning lines, 32 pit lane texts; skyline: 4 warning lines, 32 pit lane texts; glass: 4 warning lines, 32 pit lane texts; aurora: 4 warning lines, 32 pit lane texts; skyline-night: 4 warning lines, 32 pit lane texts
+ℹ sigil save before closing: 5 texts, buttons Don't save 5.46, Cancel 16.29, Save 9.75 · 0 under 4.5:1; sigil export layouts: 20 texts, buttons Cancel 16.29, Export… 9.75 · 0 under 4.5:1; sigil export for blender: 6 texts, buttons Cancel 16.29, Export… 9.75 · 0 under 4.5:1; aqua save before closing: 5 texts, buttons Don't save 11.52, Cancel 8.34, Save 8.34 · 0 under 4.5:1; aqua export layouts: 20 texts, buttons Cancel 8.34, Export… 8.33 · 0 under 4.5:1; aqua export for blender: 6 texts, buttons Cancel 8.34, Export… 8.33 · 0 under 4.5:1; skyline save before closing: 5 texts, buttons Don't save 6.52, Cancel 11.76, Save 5.43 · 0 under 4.5:1; skyline export layouts: 20 texts, buttons Cancel 11.76, Export… 5.43 · 0 under 4.5:1; skyline export for blender: 6 texts, buttons Cancel 11.76, Export… 5.43 · 0 under 4.5:1; glass save before closing: 5 texts, buttons Don't save 8.56, Cancel 14.13, Save 10.71 · 0 under 4.5:1; glass export layouts: 20 texts, buttons Cancel 14.13, Export… 10.71 · 0 under 4.5:1; glass export for blender: 6 texts, buttons Cancel 14.10, Export… 10.67 · 0 under 4.5:1; aurora save before closing: 5 texts, buttons Don't save 9.83, Cancel 15.66, Save 12.69 · 0 under 4.5:1; aurora export layouts: 20 texts, buttons Cancel 15.84, Export… 12.86 · 0 under 4.5:1; aurora export for blender: 6 texts, buttons Cancel 15.79, Export… 12.71 · 0 under 4.5:1; skyline-night save before closing: 5 texts, buttons Don't save 5.44, Cancel 8.69, Save 5.41 · 0 under 4.5:1; skyline-night export layouts: 20 texts, buttons Cancel 8.82, Export… 5.50 · 0 under 4.5:1; skyline-night export for blender: 6 texts, buttons Cancel 8.69, Export… 5.34 · 0 under 4.5:1
+ℹ the card's text, worst on its own pixels: sigil 14.15; aqua 6.00; skyline 12.63; glass 10.46; aurora 13.04; skyline-night 12.12
+ℹ the banner's texts on their own pixels: sigil failed 7.09; sigil failed 14.15; sigil running 14.15; sigil running 14.15; sigil done 8.47; sigil done 14.15; aqua failed 5.15; aqua failed 11.26; aqua running 7.75; aqua running 11.27; aqua done 5.28; aqua done 11.29; skyline failed 7.70; skyline failed 12.48; skyline running 12.87; skyline running 12.49; skyline done 5.94; skyline done 12.48; glass failed 5.80; glass failed 11.52; glass running 10.44; glass running 11.67; glass done 7.91; glass done 11.83; aurora failed 6.04; aurora failed 13.72; aurora running 12.87; aurora running 13.55; aurora done 10.43; aurora done 13.55; skyline-night failed 6.83; skyline-night failed 12.79; skyline-night running 12.25; skyline-night running 12.81; skyline-night done 7.56; skyline-night done 12.79
+ℹ glass: {"300":{"longest":1,"whole":10,"steps":0},"1500":{"longest":1,"whole":10,"steps":0},"1700":{"longest":1,"whole":10,"steps":0}}
+ℹ aqua: {"300":{"longest":1,"whole":90,"steps":0},"1500":{"longest":1,"whole":158,"steps":0},"1700":{"longest":1,"whole":120,"steps":0}}
+ℹ longest flat run under the vignette, px: {"glass":0,"glass flat":0,"aqua":0,"aqua flat":0,"aurora":0,"aurora flat":0,"skyline-night":0,"skyline-night flat":0}; the control (a flat field, no vignette): 267
+ℹ mean offset from the old gradient, 8-bit steps per channel: {"glass 40,40":[0.04,-0.13,0.32],"glass 700,30":[0.07,-0.16,0.41],"glass 1360,40":[0.06,-0.14,0.35],"glass 80,300":[0,0,0],"glass 1320,300":[0,0,0],"glass 400,120":[0.07,-0.21,0.47],"glass 1000,120":[-0.01,-0.03,0.04],"glass 700,700":[0,0,0],"aqua 40,40":[0.25,0.08,-0.24],"aqua 700,30":[0.25,0.06,-0.32],"aqua 1360,40":[0.25,0.1,-0.25],"aqua 80,300":[0,0,0],"aqua 1320,300":[0,0,0],"aqua 400,120":[0.25,0.12,-0.34],"aqua 1000,120":[0.02,-0.01,-0.05],"aqua 700,700":[0,0,0],"aurora 40,40":[-0.3,-0.08,0.01],"aurora 700,30":[-0.33,-0.08,0.04],"aurora 1360,40":[-0.31,-0.08,-0.01],"aurora 80,300":[0,0,0],"aurora 1320,300":[0,0,0],"aurora 400,120":[-0.4,-0.09,0.04],"aurora 1000,120":[-0.06,-0.03,-0.01],"aurora 700,700":[0,0,0],"skyline-night 40,40":[0.19,-0.09,-0.04],"skyline-night 700,30":[0.26,-0.1,-0.01],"skyline-night 1360,40":[0.22,-0.1,-0.03],"skyline-night 80,300":[0,0,0],"skyline-night 1320,300":[0,0,0],"skyline-night 400,120":[0.29,-0.09,-0.03],"skyline-night 1000,120":[0.02,-0.03,-0.02],"skyline-night 700,700":[0,0,0]}
+ℹ 752 fits on 47 pieces
+ℹ 72 of 400 pieces swap rows in the elimination
+ℹ extend at 10 km, all three typed: 18.9 ms
+ℹ 285658 samples on 445 knot vectors
+ℹ 36 lists, 7336 cross-sections
+ℹ 1608 chord ends
+ℹ 1206 chord ends
+ℹ sample track: 662 characters of code for 2306 of canonical text
+ℹ tests 3571
+ℹ suites 0
+ℹ pass 3546
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 23
+ℹ todo 2
+ℹ duration_ms 1123205.8064
+lockrun: L217 t180 test-fast WALL 1123 s, exit 0

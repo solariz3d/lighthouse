@@ -1,0 +1,1 @@
+t180b-backups/t180b_test_track_100_ai_2026-11-18/fast_lane.ai points [33m633[39m least h 1.424e-4 5 smallest 1.42e-4 1.42e-4 2.11e-4 3.15e-4 7.38e-4 | steps>80deg [33m88[39m >88deg [33m49[39m longest run >80deg [33m44[39m

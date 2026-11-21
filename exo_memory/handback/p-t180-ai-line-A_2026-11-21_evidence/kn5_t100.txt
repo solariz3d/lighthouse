@@ -1,0 +1,6 @@
+keys of a mesh: name,path,material,pos,idx
+t100.kn5 kn5 version [33m5[39m | meshes [33m35[39m | triangles [33m249628[39m | vertices [33m230724[39m | dummies [33m13[39m
+   1ROAD_               18 meshes    176820 triangles
+   UNDERSKIN_           10 meshes     72576 triangles
+   PAINT                 7 meshes       232 triangles
+UNDERSKIN_ meshes: [33m10[39m UNDERSKIN_p1_chunk_0 | UNDERSKIN_p1_chunk_1 | UNDERSKIN_p1_chunk_2 | UNDERSKIN_p5_chunk_3
