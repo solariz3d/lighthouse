@@ -208,6 +208,7 @@
 - 2026-11-21 07:09 (L), to the librarian: "how much room, would you want as a pane if you were one to have for your work? context wise i mean, also how does the lib work? Fully 1 mill window?"
 - 2026-11-21 07:11 (L), to the librarian, on its own choice of a ceiling near 400k: "well if you want that for yourself we could try it, as well if it saves us usage, we can turn you back to high reasoning"
 - 2026-11-21 07:12 (L), to the librarian, on the 400k window it had just set on itself: "but do you think that is the right call for the lib?"
+- 2026-11-21 07:13 (L), to the librarian, on what the census showed Q2 could move: "ur good to put all of that in motion"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
