@@ -85,3 +85,7 @@ builder panes. It does nothing for a pane that is already large and cold.
 the cut; an unlisted one receives its dispatch at once, uncut; a failed cut still delivers the dispatch.
 
 **Add to the failure lines:** failed on cost if a listed pane's first call of a lap reads or writes more than 400k.
+
+## Addendum 2, 04:5x: the name
+
+His words, 04:54: "Also, why for the night? We have till 8AM working at work on laptop." The control compacts warm, large seats and closes nothing; work goes on after it. Its label "Close for the night" (the librarian's, in packet L212) reads as an ending. Rename the control and its report lines to "Compact warm seats" in `ui/close-small.js` and wherever the string is pinned by a row; the file and command names stay. The label is his to change again.
