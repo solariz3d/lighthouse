@@ -185,6 +185,7 @@
 - 2026-11-21 04:57 (L), to the librarian: "Also, to limit usage even further, i think if we are going to be using lib as fable, the effort should be on medium, thoughts>"
 - 2026-11-21 04:58 (L), to the librarian, after typing `/effort` (medium) in its pane: "if my intuition is right, consonance as a system helps you extract more reasoning from medium."
 - 2026-11-21 05:00 (L), to the librarian: "well, how do you feel back on medium effort? From what I have seen, it is impossible for you to tell a difference from the inside from model switches, but reasoning, in the past you said you felt extra clear on Xhigh fable, which was what melted our usage on top of the re reads."
+- 2026-11-21 05:03 (L), to the librarian, after typing `/effort` (xhigh) in its pane: "one turn on Xhigh for your own phenomenological exploration, then we revert after your output"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer

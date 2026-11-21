@@ -89,3 +89,32 @@ the cut; an unlisted one receives its dispatch at once, uncut; a failed cut stil
 ## Addendum 2, 04:5x: the name
 
 His words, 04:54: "Also, why for the night? We have till 8AM working at work on laptop." The control compacts warm, large seats and closes nothing; work goes on after it. Its label "Close for the night" (the librarian's, in packet L212) reads as an ending. Rename the control and its report lines to "Compact warm seats" in `ui/close-small.js` and wherever the string is pinned by a row; the file and command names stay. The label is his to change again.
+
+## Addendum 3, 05:1x: the write itself is NOT proven. Prove it first, before any trigger is built
+
+The board holds a line from the chair at about 10:59Z: "The live test L212 left open is answered: /compact written into a
+pane by chair_inject runs as the command." **That line is wrong, by the two panes' own transcripts** (the librarian's read,
+one pass: `scratchpad\l214read\cutprobe.js`; rows quoted in `librarian/2026-11-21.laptop.md`, "05:1x"):
+
+- **Pane B:** the chair's text arrived at 10:55:36Z as an ordinary user message, "[chair:MAIN] /compact keep the path of
+  your L216 hand-back …", and B answered it in words (turn ended 10:55:48Z). The command that cut B is a separate row at
+  10:57:07Z: `<command-name>/compact</command-name>` with EMPTY `<command-args>`. The chair's text carried arguments; the
+  command that ran carried none. `compact_boundary`, trigger "manual", at 10:58:21Z.
+- **Pane A:** the command row is at 10:57:03Z, empty arguments; `compact_boundary` at 10:58:00Z. The chair's text
+  "[chair:MAIN] /compact keep the path of your T-180 hand-back …" is in A's transcript at 10:58:26Z, AFTER the cut, as an
+  ordinary user message.
+
+So both cuts were bare commands, four seconds apart, and neither was the chair's text. Text written by `chair_inject`
+carries the system's label in front, so the line does not begin with the slash, and the harness reads it as a message.
+
+**What this means for this lap and for L212's control:** no one has yet seen `/compact` written by the APP run as a
+command. `C:\Consonance\data\close-small.jsonl` does not exist; the control has never been clicked. Your own L212 note
+(`handback/p-l212-close-small-B_2026-11-21.md`, 1c) left it as the first real close's test.
+
+**New first step, before step 1 above:** on a scratch seat launched by the app (never a working seat), make the close
+path write the bare text and show a `compact_boundary` with trigger "manual" after it, from that seat's transcript. Say
+exactly what bytes are written and how (typed into the terminal, or pasted; with or without a label; the line ending).
+If it does not run as a command, find the form that does before building either trigger, and say what L212's control
+needs changed. If no form can be found, stop and ring: the triggers have nothing to stand on.
+
+**Add to the registered rows:** R0, the write proven on a scratch seat, with the transcript rows printed.
