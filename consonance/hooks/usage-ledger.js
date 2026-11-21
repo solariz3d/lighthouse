@@ -20,7 +20,10 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
+if (process.env.CONSONANCE_DREAM) process.exit(0);   // the gap-dream gets no hooks (consonance/hooks/dream-gate.test.js)
+
 const LEDGER = 'usage-ledger.jsonl';
+const WATCHDOG_MS = 3000;   // a hook never waits on a stdin that does not end
 
 function dataDir(env = process.env) {
   const e = String(env.CONSONANCE_DATA || '').trim();
@@ -87,7 +90,8 @@ function handle(p, env = process.env, now = Date.now()) {
   } catch (_) { return { wrote: false }; }
 }
 
-if (require.main === module) {
+function main() {
+  setTimeout(() => process.exit(0), WATCHDOG_MS).unref();   // fail OPEN on a hang, as the room's other hooks do
   let raw = '';
   process.stdin.on('data', (d) => (raw += d));
   process.stdin.on('end', () => {
@@ -97,5 +101,6 @@ if (require.main === module) {
     process.exit(0);
   });
 }
+if (require.main === module) main();
 
 module.exports = { rowFromStatus, rowFromWake, handle, dataDir, LEDGER };

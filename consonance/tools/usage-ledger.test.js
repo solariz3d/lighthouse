@@ -150,3 +150,41 @@ test('the writer turns a resume SessionStart payload into a wake row, and a bad 
   assert.strictEqual(writer.handle(null, {}).wrote, false);
   assert.strictEqual(writer.handle({}, {}).wrote, false);
 });
+
+// L213 follow-up (B's read, p-l213-read-B): the room's two hook habits. A hook a dream session meets must switch off on CONSONANCE_DREAM, and a hook never
+// waits on a stdin that does not end.
+const HOOK = path.join(__dirname, '..', 'hooks', 'usage-ledger.js');
+function runHook(input, env, opts = {}) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'usage-ledger-'));
+  const r = spawnSync(process.execPath, [HOOK], { input, encoding: 'utf8', env: { ...process.env, CONSONANCE_DREAM: '', CONSONANCE_DATA: dir, CONSONANCE_PANE: 'aaaaaaaa-1', ...env }, ...opts });
+  const wrote = fs.existsSync(path.join(dir, 'usage-ledger.jsonl'));
+  fs.rmSync(dir, { recursive: true, force: true });
+  return { r, wrote };
+}
+
+test('the hook as a process writes a row from a status payload (the control for the dream row)', () => {
+  const { r, wrote } = runHook(JSON.stringify(status()), {});
+  assert.strictEqual(r.status, 0, r.stderr);
+  assert.strictEqual(wrote, true);
+});
+
+test('a dream session (CONSONANCE_DREAM set) gets no row and no output from the hook', () => {
+  const { r, wrote } = runHook(JSON.stringify(status()), { CONSONANCE_DREAM: '1' });
+  assert.strictEqual(r.status, 0, r.stderr);
+  assert.strictEqual(wrote, false);
+  assert.strictEqual(r.stdout, '');
+  const wake = runHook(JSON.stringify({ hook_event_name: 'SessionStart', source: 'resume', session_id: 'cccccccc-1' }), { CONSONANCE_DREAM: '1' });
+  assert.strictEqual(wake.wrote, false);
+});
+
+test('a stdin that never ends does not hold the hook: it exits 0 by its own watchdog', async () => {
+  const { spawn } = require('child_process');
+  const child = spawn(process.execPath, [HOOK], { stdio: ['pipe', 'pipe', 'pipe'], env: { ...process.env, CONSONANCE_DREAM: '', CONSONANCE_DATA: os.tmpdir() } });   // stdin is held open and never written
+  const t0 = Date.now();
+  const code = await new Promise((resolve) => {
+    const kill = setTimeout(() => { child.kill(); resolve('still running after 8 s'); }, 8000);
+    child.on('exit', (c) => { clearTimeout(kill); resolve(c); });
+  });
+  assert.strictEqual(code, 0, 'it did not leave by itself: ' + code);
+  assert.ok(Date.now() - t0 < 6000, 'it took ' + (Date.now() - t0) + ' ms');
+});

@@ -10,6 +10,8 @@ const M = [
   [W, 'if (!cu) return { wrote: false, line };', ''],
   [W, "if (p.hook_event_name) return { wrote: false };", ''],
   [W, 'five_hour_pct: num(fh.used_percentage)', 'five_hour_pct: num(fh.used_percentage) || 0'],
+  [W, "if (process.env.CONSONANCE_DREAM) process.exit(0);", ''],
+  [W, "setTimeout(() => process.exit(0), WATCHDOG_MS).unref();", ''],
 ];
 let caught = 0, applied = 0;
 for (const [f, a, b] of M) {
