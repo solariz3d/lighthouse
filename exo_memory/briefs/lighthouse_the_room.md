@@ -193,6 +193,7 @@
 - 2026-11-21 06:02 (L), to the librarian, sent mid-turn: "hopeully after ur done it will be slower"
 - 2026-11-21 06:03 (L), to the librarian: "so how full should a context window be before compact?"
 - 2026-11-21 06:04 (L), to the librarian: "well cant we make panes autocompact a 300k?"
+- 2026-11-21 06:06 (L), to the librarian: "but then, what do the panes start at after compact?"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
