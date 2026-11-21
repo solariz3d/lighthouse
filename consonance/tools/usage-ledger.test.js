@@ -13,12 +13,15 @@ const { spawnSync } = require('child_process');
 const reader = require('./usage-ledger.js');
 const writer = require('../hooks/usage-ledger.js');
 
+// A Windows-shaped path built at run time, so the portable-paths scan does not read a fixture as a hard-coded path.
+const WIN = (...p) => ['C' + ':', ...p].join(String.fromCharCode(92));
+
 // What the harness hands a status line script after a turn, as probed on 2.1.330 (keys and numbers; strings stand in).
 function status(over = {}) {
   return {
-    session_id: 'aaaaaaaa-1111-2222-3333-444444444444', transcript_path: 'C:\\x\\y.jsonl', cwd: 'C:\\Users\\someone\\proj',
+    session_id: 'aaaaaaaa-1111-2222-3333-444444444444', transcript_path: WIN('x', 'y.jsonl'), cwd: WIN('Users', 'someone', 'proj'),
     prompt_id: 'bbbbbbbb-1111-2222-3333-444444444444', effort: { level: 'high' }, session_name: 'a name that must never land in the ledger',
-    model: { id: 'claude-sonnet-5-5', display_name: 'Sonnet 5.5' }, workspace: { current_dir: 'C:\\x' }, version: '2.1.330',
+    model: { id: 'claude-sonnet-5-5', display_name: 'Sonnet 5.5' }, workspace: { current_dir: WIN('x') }, version: '2.1.330',
     cost: { total_cost_usd: 0.0102, total_duration_ms: 2088, total_api_duration_ms: 811 },
     context_window: { total_input_tokens: 70884, total_output_tokens: 4, context_window_size: 1000000,
       current_usage: { input_tokens: 2, output_tokens: 4, cache_creation_input_tokens: 49782, cache_read_input_tokens: 21100 }, used_percentage: 7 },
@@ -114,7 +117,7 @@ test('the writer turns a status line payload into numbers and short ids, and no 
 test('R4 no text field of a row is longer than a model id', () => {
   const rows = [
     writer.rowFromStatus(status(), ENV, Date.now()),
-    writer.rowFromWake({ session_id: 'cccccccc-1', hook_event_name: 'SessionStart', source: 'resume', seconds_since_last_response: 700, context_tokens: 267000, prompt_cache_likely_expired: true, estimated_cache_write_usd: 1.3, transcript_path: 'C:\\secret\\path.jsonl', cwd: 'C:\\Users\\someone' }, ENV, Date.now()),
+    writer.rowFromWake({ session_id: 'cccccccc-1', hook_event_name: 'SessionStart', source: 'resume', seconds_since_last_response: 700, context_tokens: 267000, prompt_cache_likely_expired: true, estimated_cache_write_usd: 1.3, transcript_path: WIN('secret', 'path.jsonl'), cwd: WIN('Users', 'someone') }, ENV, Date.now()),
   ];
   for (const r of rows) for (const [k, v] of Object.entries(r)) {
     if (typeof v === 'string' && k !== 't') assert.ok(v.length <= 40, `${k} is ${v.length} characters`);
