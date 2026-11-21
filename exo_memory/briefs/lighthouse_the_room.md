@@ -209,6 +209,7 @@
 - 2026-11-21 07:11 (L), to the librarian, on its own choice of a ceiling near 400k: "well if you want that for yourself we could try it, as well if it saves us usage, we can turn you back to high reasoning"
 - 2026-11-21 07:12 (L), to the librarian, on the 400k window it had just set on itself: "but do you think that is the right call for the lib?"
 - 2026-11-21 07:13 (L), to the librarian, on what the census showed Q2 could move: "ur good to put all of that in motion"
+- 2026-11-21 07:32 (L), to the librarian, on its report of the hunter lap: "lmao when did dreamzone work get queued, not mad just wondering" [Answered from the notes: the game was item 7 of the queue the librarian listed at 02:4x; at his "do it all" (03:46) the librarian took it as covered, dispatched the pull-and-build at 05:1x when pane A was idle, and M1 at 05:3x on the standing decision of 2026-11-14. His word of 00:14 that night was efficiency before projects; the librarian named that reading as its own and the cost as real.]
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
