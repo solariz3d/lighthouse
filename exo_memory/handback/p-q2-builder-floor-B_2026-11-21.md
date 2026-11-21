@@ -6,7 +6,7 @@ Evidence: `p-q2-builder-floor-B_2026-11-21_evidence/`.
 
 ## Half B: the probe (partly done)
 
-**How it was run.** Scratch folders under `C:\Users\zackn\Downloads\q2probe` and `q2probe2`, not a working seat. Each
+**How it was run.** Scratch folders under `%USERPROFILE%\Downloads\q2probe` and `q2probe2`, not a working seat. Each
 arm ran `claude -p` with the app's builder flags (`--dangerously-skip-permissions --settings <data>/builder-no-prompt.settings.json`),
 with the inherited `CLAUDECODE`/`CLAUDE_CODE_*` cleared. Each piece is measured by its own text in the transcript's
 `api-request-shape` (tools) and `api-request-blob` (messages), using `analyze.js`. Tokens use A's 0.339 a byte.
