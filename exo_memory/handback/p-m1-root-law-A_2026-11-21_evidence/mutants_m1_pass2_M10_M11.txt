@@ -1,0 +1,4 @@
+CONTROL: 8 rows, 0 failed
+caught (1 failed of 8): M10 the switch reaches every chaser (make_body)
+caught (1 failed of 8): M11 the fingerprint reads the root fields with the switch off
+applied 2 / caught 2 / NOT APPLIED 0

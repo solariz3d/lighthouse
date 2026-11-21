@@ -2,7 +2,18 @@
 
 Pane A, machine L, 2026-11-21 ~07:00 local, ledger L220 (M1), packets `loop/packet_m1_root_law_A_2026-11-14.md` and `loop/packet_m1_on_L_A_2026-11-21.md`, plan `loop/plan_new_system_2026-11-14.md`. Game tree: `C:\Consonance\dz-wt-m1` (a worktree of dreamzone-3), branch **`m1-root-law`**, base c2af9d9. Nothing landed on the game's main, no release, his play settings file untouched (sha256 begins e065fdad before and after, checked). Marked checked or inferred. The law was registered before any code: `p-m1-root-law-A_2026-11-21_evidence/root_law.md` (room commit 91c6cd50, 05:31:47 local), with the amendments made after code appended to it.
 
-## WHERE IT STANDS (the app restarts now; read this first)
+## RESUMED AND FINISHED (2026-11-21 ~07:30 local; this section supersedes the stopped-batch items in WHERE IT STANDS below, which is kept as written)
+- **Rebuilt** (heavy-run check, `b.ps1`, build rc 0), then **8 of 8 root rows pass** on 49a1e7b (checked: `root_rows_49a1e7b.txt`, "8 tests, 0 failed"; R1 lean line 0.472 g, old rules 1.666 g; R3 10 of 10 routes on both).
+- **Mutants, pass 2 (checked: `mutants_m1_pass2_M10_M11.txt`): applied 2 / caught 2 / NOT APPLIED 0** (M10 the switch reaches every chaser: caught, 1 failed of 8; M11 the fingerprint reads the root fields with the switch off: caught, 1 failed of 8; control 8 rows, 0 failed). Both survivors of pass 1 that were real gaps are now caught. Across both passes: 13 applied, 9 of the 13 caught by their own mutants plus M2 equivalent, M8 still a named gap (a row with a scrape).
+- **Full ctest on 49a1e7b, rebuilt first: 14 of 14 suites, 0 failed, 904.17 s (checked: `ctest_all_49a1e7b_utf16.txt`, "100% tests passed, 0 tests failed out of 14"; chase_tests 414.94 s, world_app_tests 904.16 s).** The earlier run (cfa3070, 1,006 s) is superseded. Worktree clean at 49a1e7b; `git status` empty (checked).
+- `buildin` is now the rebuilt 49a1e7b build (checked: the ctest rebuilt it after the mutant pass).
+- **The lines for him, at grip 1.0 and at 2.0** (not run by me; no window opened; do not run while another `dz-world.exe` is rebuilding):
+  - grip 1.0 (the default): `C:Consonancedz-wt-m1uildindz-world.exe --chase-speed "root_law=1"`
+  - grip 2.0: `C:Consonancedz-wt-m1uildindz-world.exe --chase-speed "root_law=1;grip_mu=2"`
+  - the corner film for both, as measured (checked, in the film section below): lowest speed through the 89-degree, 4.4 m bend 1.29 m/s at 1.0, 2.10 at 1.3, 3.55 at 2.0, against 3.86 on the old rules.
+- **Still open, his:** the grip, after he has felt it; and M8 (a scrape row). A second reader (Opus) is routed after this by the chair.
+
+## WHERE IT STANDS (written before the restart; superseded by the section above)
 - **Built and committed on `m1-root-law`** (HEAD 49a1e7b): `SpeedModel::root_law` (0 off, 1 on; off until he says so; refused unless 0 or 1), the root law in `chase/chaser.cpp` (`root_move`, `root_corner_speed`, the branches in `step`), the hunter's body only (`run.cpp` `hunter_body`), 8 rows in `chase/tests/root_tests.cpp`. Commits: d29fc2a (switch plumbed, R1 red), 526ce0e (the law), cfa3070 (R3, R4, lean report), 6caf20f, 49a1e7b (wiring and fingerprint rows).
 - **Green (checked):** the 8 root rows; the full ctest, **14 of 14 suites, 1,006 s** (run on cfa3070's tree, before the last two rows). **Not rerun on 49a1e7b:** the full ctest (only the 8 root rows were).
 - **Not pushed yet** (pushed with this file; the chair's order).
@@ -75,7 +86,7 @@ The lean reads `speed x turn` (`world_app.cpp:838-843`) as its sideways accelera
 ## Not done
 Not red first: row c and R3. Not run: the full ctest on the final commit; a window; the film frames read by eye; M10/M11 rerun; any timing run (none on L, by the packet). Nothing pushed to the game's main; no release.
 
-NEXT: librarian route the keeper to the corner film or the paste line at grip 1.0 and 2.0 (his eye is the next test of the law), and a second reader for M1 (`git diff c2af9d9..m1-root-law`, then the mutant rerun M10 and M11), when you collate
+NEXT: librarian route an Opus second reader for `git diff c2af9d9..m1-root-law` (49a1e7b), and the keeper to the corner film or the paste line at grip 1.0 and 2.0 (his eye is the next test of the law), and a second reader for M1 (`git diff c2af9d9..m1-root-law`, then the mutant rerun M10 and M11), when you collate
 BASE: C:\Users\zackn\Downloads\dreamzone-3 49a1e7b
 BASE: C:\Consonance\lighthouse 04ada1d9
 SOURCES: git log/diff on m1-root-law in dz-wt-m1; chase_tests.exe root_; dz-chase sweep; dz-world --film-corner; the evidence folder beside this file
