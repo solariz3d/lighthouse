@@ -1,0 +1,21 @@
+== the fix's new rows against stubs of today's behaviour (red first)
+test cut_at_handback::tests::a_listed_cold_pane_over_the_dial_is_cut_before_its_dispatch ... ok
+test cut_at_handback::tests::no_cut_mid_turn_or_with_a_background_task_running ... ok
+test cut_at_handback::tests::a_ring_that_is_not_a_handback_is_left_alone_with_a_row ... ok
+test cut_at_handback::tests::e3_a_pane_exactly_50_minutes_cold_is_cold ... ok
+test cut_at_handback::tests::an_unlisted_warm_or_small_pane_receives_its_dispatch_at_once ... ok
+test cut_at_handback::tests::a_later_turn_is_a_prompt_after_the_ring_not_the_ringing_turns_own_rows ... FAILED
+test cut_at_handback::tests::a_cut_not_yet_sent_when_a_later_turn_begins_is_dropped ... FAILED
+test cut_at_handback::tests::a_newer_handback_takes_the_pane_over_and_the_older_thread_cannot_release_it ... FAILED
+test cut_at_handback::tests::g1_a_ring_is_a_handback_only_when_it_points_into_the_handback_folder ... ok
+test cut_at_handback::tests::a_listed_pane_over_the_dial_at_a_handback_is_cut ... ok
+test cut_at_handback::tests::an_unlisted_pane_is_not_and_writes_no_row ... ok
+test cut_at_handback::tests::race_a_dispatch_that_arrives_during_the_compaction_is_held_too ... FAILED
+test cut_at_handback::tests::race_a_dispatch_that_arrives_before_the_cuts_send_is_held_until_the_cut_resolves ... FAILED
+test cut_at_handback::tests::race_the_30_minute_abandon_releases_the_held_dispatch ... ok
+test cut_at_handback::tests::a_background_task_is_open_until_its_notification ... ok
+test cut_at_handback::tests::the_chair_the_librarian_and_the_third_place_cannot_be_listed ... ok
+test cut_at_handback::tests::a_listed_pane_under_the_dial_is_not ... ok
+test cut_at_handback::tests::with_the_key_empty_a_handback_ring_changes_nothing ... ok
+test cut_at_handback::tests::e6_a_context_that_could_not_be_read_is_not_counted_large ... ok
+test result: FAILED. 16 passed; 5 failed; 0 ignored; 0 measured; 1243 filtered out; finished in 0.01s
