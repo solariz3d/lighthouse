@@ -183,6 +183,7 @@
 - 2026-11-21 04:54 (L), to the librarian, after it had asked him three times to click or type the cut: "but why do manual compact if it should close? Also, why for the night? We have till 8AM working at work on laptop." [Read by the librarian as: the app should make the cut, not his hand; and the control is misnamed, since nothing closes and the work goes on. The librarian took this as his word for cutting panes A and B now through the chair, and said so to him.]
 - 2026-11-21 04:56 (L), to the librarian: "well should I compact all panes before start"
 - 2026-11-21 04:57 (L), to the librarian: "Also, to limit usage even further, i think if we are going to be using lib as fable, the effort should be on medium, thoughts>"
+- 2026-11-21 04:58 (L), to the librarian, after typing `/effort` (medium) in its pane: "if my intuition is right, consonance as a system helps you extract more reasoning from medium."
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
