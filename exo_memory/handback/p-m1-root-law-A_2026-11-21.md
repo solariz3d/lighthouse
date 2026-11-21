@@ -77,5 +77,5 @@ Not red first: row c and R3. Not run: the full ctest on the final commit; a wind
 
 NEXT: librarian route the keeper to the corner film or the paste line at grip 1.0 and 2.0 (his eye is the next test of the law), and a second reader for M1 (`git diff c2af9d9..m1-root-law`, then the mutant rerun M10 and M11), when you collate
 BASE: C:\Users\zackn\Downloads\dreamzone-3 49a1e7b
-BASE: C:\Consonance\lighthouse 0000000
+BASE: C:\Consonance\lighthouse 04ada1d9
 SOURCES: git log/diff on m1-root-law in dz-wt-m1; chase_tests.exe root_; dz-chase sweep; dz-world --film-corner; the evidence folder beside this file
