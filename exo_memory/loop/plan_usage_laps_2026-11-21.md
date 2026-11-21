@@ -21,3 +21,10 @@ its own landing, and the two settings files do not travel by git).
 **Measured tonight, and it corrects what this seat said an hour earlier:** his `/effort` (xhigh to high) typed in this warm
 pane at 00:36 did NOT rewrite the context. The next call wrote 2k and read 614k from cache. So effort can be changed in a
 warm seat for free; a model change still rewrites the whole context.
+
+## FOR THE DESKTOP, his word of 2026-11-21 00:42 (L)
+
+- "Lets decide the laptop first, which pane will be the sonnet, then leave a note for when we are back on desktop to decide which pane/s there will be sonnet or stay opus."
+- **Decided for L by the librarian, told to him:** pane A is the Sonnet 5.5 pane (it has run on Sonnet since its trial of 11-14, so no switch is paid; `seat_models` on L now says so). B, C and E stay on Opus 5.5 at high.
+- **Open for D, his to decide there:** which pane or panes run Sonnet 5.5. What the laptop's record offers: Sonnet for laps a packet can spell out (landings, merges, probes, small features, test rows), Opus for laps that design something and for second readers; the trial's failure line is two failed checks or redone laps by a Sonnet pane in one week. A switch of model rewrites a seat's whole context, so it is made at a fresh start or straight after a cut.
+- **Also owed on D:** `seat_models` and the effort settings (neither file travels by git); every usage lap of this file, installed by its own landing.
