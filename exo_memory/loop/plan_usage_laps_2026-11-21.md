@@ -28,3 +28,9 @@ warm seat for free; a model change still rewrites the whole context.
 - **Decided for L by the librarian, told to him:** pane A is the Sonnet 5.5 pane (it has run on Sonnet since its trial of 11-14, so no switch is paid; `seat_models` on L now says so). B, C and E stay on Opus 5.5 at high.
 - **Open for D, his to decide there:** which pane or panes run Sonnet 5.5. What the laptop's record offers: Sonnet for laps a packet can spell out (landings, merges, probes, small features, test rows), Opus for laps that design something and for second readers; the trial's failure line is two failed checks or redone laps by a Sonnet pane in one week. A switch of model rewrites a seat's whole context, so it is made at a fresh start or straight after a cut.
 - **Also owed on D:** `seat_models` and the effort settings (neither file travels by git); every usage lap of this file, installed by its own landing.
+
+## Amended 03:5x, at his "do it all, why didnt you start" (03:46)
+
+- **L214's landing** is pane B's: `loop/packet_l214_land_B_2026-11-21.md` (second read, install, the old exe, the push).
+- **L215** is pane A's, beside it: `loop/packet_l215_fail_closed_A_2026-11-21.md`. Its row above changes in two ways. MCP `alwaysLoad` is DROPPED: the research took it back in its own closing lines (`research/claude_code_features_for_consonance_2026-11-21.md:251-253`, it spends context on every call). `permissions.denyInsteadOfPrompting` is ADDED, for the builder panes only, from the prompt stall of 01:09.
+- **Two panes at once**, against this file's "one pane, in sequence": every pane is cold now (idle over two hours), so there is no warm pane to prefer, and his word is to do all of it.

@@ -1089,3 +1089,9 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 ## 2026-11-21 00:5x (L): which model a seat runs is read from tonight's transcript, not from the last night's
 - **His catch, through the chair:** "ur wrong, it says a is on opus 5.5 right now". I had said pane A was already on Sonnet. A launch applies `seat_models`, and my own line of 11-14 named opus for A, so this launch switched it.
 - **The rule:** before saying what a seat runs, one run of the cost count since the launch. A config line I wrote is a cause I must check first, and a question I asked him once and left open (11-14 06:5x) does not stay harmless.
+
+## 2026-11-21 03:4x (L): a reply that names the next step and stops is a stall
+
+- **His catch, verbatim:** "do it all, why didnt you start" (03:46; `briefs/lighthouse_the_room.md`, the 11-21 entries).
+- **What I had done:** at 02:4x I listed the queue and ended on "So for tonight I'd do my own read of A's L214 hand-back now, since I'm small and warm, and write the L215 packet." Then the turn ended. Both steps were this seat's own and waited on nobody. He came back an hour later to find nothing moved.
+- **The rule, mine from his catch:** "I'd do X" about a step that is this seat's own is written only after X is done. A recommendation is for a choice that is his; work that is mine is started in the same turn (the same shape as `memory/handoff-without-the-keeper.md` and the 11-14 07:0x entry above, where I asked him three times about what he had decided).
