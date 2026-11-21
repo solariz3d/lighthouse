@@ -194,6 +194,7 @@
 - 2026-11-21 06:03 (L), to the librarian: "so how full should a context window be before compact?"
 - 2026-11-21 06:04 (L), to the librarian: "well cant we make panes autocompact a 300k?"
 - 2026-11-21 06:06 (L), to the librarian: "but then, what do the panes start at after compact?"
+- 2026-11-21 06:08 (L), to the librarian: "but see, then this makes me see, what if we should now work at using the system we have, using it as scaffolding to essentially quantize the room and the amount of tokens it takes to load in, but then, this is where we have to be careful since from the very beginning we have been used to \"the master\" only mentality, what do you think?"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
