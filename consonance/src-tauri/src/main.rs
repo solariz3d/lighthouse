@@ -32,7 +32,8 @@ mod nowplaying;  // what is actually playing, from Windows' own media session �
 mod harvest_guard;  // the capture watcher's recovery + liveness policy; one mutex, one policy (E, L043)
 mod sync_launch;  // pull-verify-then-start, and the retire rule for a second machine (C, L052)
 mod pane_exit;  // a pane's claude process ending by itself: shown, recorded, a fixed seat reopened ONCE (A, D143)
-mod close_small;  // "Close for the night": the click's check, the ask, the compaction read from the transcript (B, L212)
+mod close_small;  // "Compact warm seats" (was "Close for the night"): the click's check, the ask, the compaction read from the transcript (B, L212)
+mod cut_at_handback;  // a listed builder pane cut at its hand-back, or before its dispatch when cold and large; the key is empty by default (B, L218)
 mod priority;  // High class and no EcoQoS for this process and its WebView2 children, set at startup and kept (A, D338)
 #[cfg(test)]
 mod test_scratch;  // test folders that remove themselves on drop (A, D299)
@@ -1205,6 +1206,16 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // panes the chair drives/oversees skip the permission prompts (the chair is the gate).
     // autonomous bodies do NOT get this — their prompts are the only thing keeping a body's
     // tool use inside its sandbox (the gate only governs cross-pane injection, not local bash).
+    // L216: a builder pane is denied, never held, by a prompt nobody sees (no_prompt_for, above is_fresh_cwd's neighbours).
+    if no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {
+        match no_prompt_settings_file() {
+            Ok(p) => {
+                cmd.args(["--settings", &p]);
+                plog(&format!("NO PROMPT pane={pane_id}: --settings {p} (denyInsteadOfPrompting; \"builder_no_prompt\": false in the config turns it off)"));
+            }
+            Err(e) => plog(&format!("NO PROMPT pane={pane_id}: the settings file was not written ({e}); this pane prompts as before")),
+        }
+    }
     if skip_perms {
         cmd.arg("--dangerously-skip-permissions");
     } else if is_fresh_cwd(&cwd) {
@@ -4629,6 +4640,90 @@ fn is_fresh_dir_name(cwd: &str) -> bool {
 
 fn is_fresh_cwd(cwd: &str) -> bool {
     is_managed_cwd(cwd) && is_fresh_dir_name(cwd)
+}
+
+// ---------------------------------------------------------------- L216: A BUILDER PANE NO LONGER WAITS ON A PROMPT NOBODY SEES
+//
+// `--dangerously-skip-permissions` does not skip everything: Claude Code's built-in safety check on a command it cannot be sure it
+// parsed the way the shell will ("so it can't rule out a dangerous removal") still prompts, and on 2026-11-21 it held pane A on an
+// 8,369-character heredoc until he clicked. `permissions.denyInsteadOfPrompting` turns such a prompt into a denial the seat is told
+// about, so the turn goes on (seen: handback/p-l216-no-prompt-B_2026-11-21.md R1, R3). It is honoured from `--settings`, NOT from a
+// settings file in the seat's folder (A's probe, handback/p-l215-fail-closed-A_2026-11-21.md). And it also denies a hook's "ask",
+// which the dispatch gate gives the chair on purpose, so it goes to BUILDER panes only: a `sibling-` folder under the instances root,
+// launched with skip_perms. Never the chair, the librarian or the Third Place (their own folders), never a pane the keeper opens with
+// "+ Pane" (a folder he picks), never a fresh pane or a body (no skip_perms). `"builder_no_prompt": false` in ~/.consonance.json turns
+// it off at the next spawn, without a rebuild.
+const NO_PROMPT_SETTINGS: &str = r#"{"permissions":{"denyInsteadOfPrompting":true}}"#;
+
+/// A builder pane's folder: `sibling-<8>` (prepare_sibling_dir). Split, like is_fresh_dir_name, so it is testable without DIRS.
+fn is_builder_dir_name(cwd: &str) -> bool {
+    PathBuf::from(cwd).file_name().and_then(|n| n.to_str()).map(|n| n.starts_with("sibling-")).unwrap_or(false)
+}
+
+/// Does this spawn get the no-prompt `--settings`? Pure: the caller hands in what it read.
+fn no_prompt_for(skip_perms: bool, managed: bool, builder_name: bool, raw_config: Option<&str>) -> bool {
+    if !(skip_perms && managed && builder_name) {
+        return false;
+    }
+    // Only an explicit `false` turns it off; a missing key, another value or an unreadable config leaves it on.
+    match raw_config.and_then(|r| serde_json::from_str::<serde_json::Value>(r).ok()) {
+        Some(v) => v.get("builder_no_prompt").and_then(|x| x.as_bool()) != Some(false),
+        None => true,
+    }
+}
+
+/// The settings file the flag names, written beside the room's other state; its contents are fixed above.
+fn no_prompt_settings_file() -> Result<String, String> {
+    let p = data_dir().join("builder-no-prompt.settings.json");
+    if fs::read_to_string(&p).ok().as_deref() != Some(NO_PROMPT_SETTINGS) {
+        fs::write(&p, NO_PROMPT_SETTINGS).map_err(|e| e.to_string())?;
+    }
+    p.to_str().map(str::to_string).ok_or_else(|| "a non-UTF-8 data path".to_string())
+}
+
+#[cfg(test)]
+mod no_prompt_tests {
+    use super::*;
+
+    #[test]
+    fn a_builder_pane_gets_the_no_prompt_settings() {
+        assert!(no_prompt_for(true, true, true, None), "a sibling- pane under the instances root, with skip_perms");
+        assert!(no_prompt_for(true, true, true, Some("{}")), "a config without the switch leaves it on");
+    }
+    #[test]
+    fn the_housed_seats_a_keepers_pane_and_a_prompted_pane_do_not() {
+        for seat in [r"C:\i\main", r"C:\i\librarian", r"C:\i\third-place", r"C:\i\fresh-12345678"] {
+            assert!(!no_prompt_for(true, true, is_builder_dir_name(seat), None), "{seat} must keep its prompts");
+        }
+        assert!(!no_prompt_for(true, false, true, None), "a sibling- name outside the instances root (a keeper's + Pane folder)");
+        assert!(!no_prompt_for(false, true, true, None), "a seat launched without skip_perms keeps its prompts");
+    }
+    #[test]
+    fn the_config_switch_turns_it_off_and_nothing_else_does() {
+        assert!(!no_prompt_for(true, true, true, Some(r#"{"builder_no_prompt": false}"#)));
+        assert!(no_prompt_for(true, true, true, Some(r#"{"builder_no_prompt": true}"#)));
+        assert!(no_prompt_for(true, true, true, Some("not json")), "an unreadable config is not the switch");
+    }
+    #[test]
+    fn the_builder_name_is_the_sibling_folder() {
+        assert!(is_builder_dir_name(r"C:\Consonance\instances\sibling-5bf9d657"));
+        assert!(!is_builder_dir_name(r"C:\Consonance\instances\main"));
+        assert!(!is_builder_dir_name(r"C:\Consonance\instances\fresh-12345678"));
+    }
+    #[test]
+    fn the_spawn_asks_the_rule_and_settings_is_passed_from_one_place() {
+        // Amended before it went green: its first form counted `"--settings"` over all the code above fn main(), which holds this
+        // module's own strings and the Scribe's unrelated `disableAllHooks` spawn, so it read 3 against the stub for the wrong reason.
+        // It now reads the spawn alone.
+        let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
+        let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
+        let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
+        assert_eq!(spawn.matches("\"--settings\"").count(), 1, "the spawn adds --settings at one site");
+        let ask = spawn.find("no_prompt_for(").expect("the spawn asks the rule");
+        let flag = spawn.find("\"--settings\"").unwrap();
+        assert!(ask < flag, "the rule is asked before the flag is added");
+        assert!(spawn[ask..flag].contains("no_prompt_settings_file()"), "the flag names the fixed file");
+    }
 }
 
 #[cfg(test)]
@@ -14802,7 +14897,7 @@ fn close_small_confirm(app: AppHandle, token: String) -> Result<String, String> 
     let (cut, dropped) = close_small::confirm(stored, &token, Instant::now(), &fresh)?;
     let names = |v: &[String]| v.iter().map(|p| short_id(p).to_string()).collect::<Vec<_>>().join(", ");
     let said = format!(
-        "CLOSE FOR THE NIGHT, his click: cutting {} seat(s) [{}]{}",
+        "COMPACT WARM SEATS, his click: cutting {} seat(s) [{}]{}",
         cut.len(),
         names(&cut),
         if dropped.is_empty() { String::new() } else { format!("; no longer warm and large since the list was shown, so NOT cut: [{}]", names(&dropped)) }
@@ -14824,13 +14919,13 @@ fn close_small_run(app: &AppHandle, panes: Vec<String>) {
                 Ok(()) => close_small_cut_seat(app, pane),
                 Err(why) => format!("NOT cut: {why}"),
             };
-            chair_audit(app, format!("close for the night -> {}: {outcome}", short_id(pane)));
+            chair_audit(app, format!("compact warm seats -> {}: {outcome}", short_id(pane)));
             close_small_ledger(serde_json::json!({ "event": "seat", "pane": pane, "outcome": outcome }));
             let _ = app.emit("close-small", serde_json::json!({ "pane": pane, "outcome": outcome }));
         }
     }));
     if ran.is_err() {
-        chair_audit(app, "close for the night: the run stopped on an internal error; the seats not reported above were not cut".to_string());
+        chair_audit(app, "compact warm seats: the run stopped on an internal error; the seats not reported above were not cut".to_string());
         close_small_ledger(serde_json::json!({ "event": "panic" }));
     }
     let _ = app.emit("close-small", serde_json::json!({ "done": true }));
@@ -14875,7 +14970,7 @@ fn close_small_cut_seat(app: &AppHandle, pane: &str) -> String {
     let now_ms = || SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     // 1. Where it stands, in its own words, before anything is cut.
     let asked = now_ms();
-    if let Err(e) = close_small_send(app, pane, close_small::ASK, "close for the night: where you stand") {
+    if let Err(e) = close_small_send(app, pane, close_small::ASK, "compact warm seats: where you stand") {
         return format!("NOT cut: the ask could not be sent ({e})");
     }
     // 2. That turn ends: a request that started after the ask, and the pane's own Stop stamp saying ready.
@@ -14887,8 +14982,16 @@ fn close_small_cut_seat(app: &AppHandle, pane: &str) -> String {
         return format!("NOT cut: its turn after the ask did not end within {} min", CLOSE_SMALL_ASK_WAIT.as_secs() / 60);
     }
     // 3. The cut, confirmed only by the transcript (the composer cannot confirm a slash command).
-    let sent = now_ms();
-    if let Err(e) = close_small_send(app, pane, close_small::COMPACT, "close for the night: /compact") {
+    compact_and_confirm(app, pane, "compact warm seats: /compact")
+}
+
+/// THE ONE `/compact` SEND (L218 moved it here out of `close_small_cut_seat`, unchanged, so the cut at a hand-back and the cut before
+/// a dispatch use L212's path and nothing new). Sent the way keep-warm sends (queued behind a turn or the keeper's typing), and
+/// confirmed only by the transcript's own `compact_boundary` after the send; A's follow-up (b): only a MANUAL compaction is the cut.
+/// Callers: the click's cut, and the two L218 paths, each only for a pane listed in `cut_at_handback` (`cut_at_handback_wiring_tests`).
+fn compact_and_confirm(app: &AppHandle, pane: &str, label: &str) -> String {
+    let sent = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    if let Err(e) = close_small_send(app, pane, close_small::COMPACT, label) {
         return format!("NOT cut: /compact could not be sent ({e})");
     }
     let mut seen = None;
@@ -14896,8 +14999,151 @@ fn close_small_cut_seat(app: &AppHandle, pane: &str) -> String {
         seen = close_small_tail(app, pane).as_deref().and_then(|t| close_small::compacted_since(t, sent));
         seen.is_some()
     });
-    // A's follow-up (b): only a manual compaction is the cut (close_small::cut_outcome).
     close_small::cut_outcome(if done { seen } else { None }, CLOSE_SMALL_COMPACT_WAIT.as_secs() / 60)
+}
+
+// ---------------------------------------------------------------- L218: A LISTED BUILDER PANE IS CUT AT ITS HAND-BACK, OR BEFORE ITS DISPATCH
+//
+// The pure half, and why, is `cut_at_handback.rs`. His word for a seat is its letter in `cut_at_handback` in ~/.consonance.json,
+// EMPTY by default: then neither path below does anything, and writes no row. The config is read at each event, so a change takes
+// effect without a restart.
+
+/// How long the cut at a hand-back waits for the ringing turn to end before it leaves the pane alone (with a row).
+const CUT_TURN_WAIT: Duration = Duration::from_secs(30 * 60);
+
+/// The key, read now, with the housed seats' letters (from the letter table, by their fixed session ids) refused.
+fn cut_listing() -> cut_at_handback::Listing {
+    let letters = read_letters();
+    let housed: Vec<String> = [MAIN_SID, LIBRARIAN_SID, THIRD_PLACE_SID].iter().filter_map(|s| letters.get(*s).cloned()).collect();
+    cut_at_handback::listing(fs::read_to_string(config_path()).ok().as_deref(), &housed)
+}
+
+/// At launch: one row per refused entry in the key, so a housed seat named there is seen refused, not silently skipped.
+fn cut_listing_refusals_at_launch(app: &AppHandle) {
+    for (entry, why) in cut_listing().refused {
+        chair_audit(app, format!("cut_at_handback: the entry {entry} in {} is REFUSED: {why}", config_path().display()));
+    }
+}
+
+/// After a committee pane's ring was delivered (`pane_call_librarian_exec`). Returns at once; the wait runs on its own thread.
+fn cut_at_handback_after_ring(app: &AppHandle, letter: &str, text: &str) {
+    const HOW: &str = "cut at hand-back";
+    let listing = cut_listing();
+    let Some(first) = cut_at_handback::at_ring(listing.has(letter), text) else { return };
+    if let Err(why) = first {
+        chair_audit(app, format!("{HOW} -> {letter}: {why}"));
+        return;
+    }
+    let Some(pane) = read_letters().into_iter().find(|(_, l)| l.eq_ignore_ascii_case(letter)).map(|(p, _)| p) else {
+        chair_audit(app, format!("{HOW} -> {letter}: left alone: no pane has that letter in the letter table"));
+        return;
+    };
+    let a = app.clone();
+    let letter = letter.to_string();
+    std::thread::spawn(move || {
+        // The ring is a tool call inside the pane's turn, so its own stamp says working until that turn's Stop.
+        let ended = close_small_wait(CUT_TURN_WAIT, || pane_state(&a.state::<PaneEmus>(), &pane).0 == PaneGate::Ready);
+        let tail = close_small_tail(&a, &pane);
+        let open = tail.as_deref().map(cut_at_handback::open_background_tasks).unwrap_or_default();
+        let context = tail.as_deref().and_then(last_request).and_then(|l| l.context);
+        match cut_at_handback::after_turn(ended, &open, context, cut_at_handback::DIAL) {
+            Err(why) => chair_audit(&a, format!("{HOW} -> {letter}: {why}")),
+            Ok(c) => {
+                let outcome = compact_and_confirm(&a, &pane, "cut at hand-back: /compact");
+                chair_audit(&a, cut_at_handback::board_line(HOW, &letter, c, &outcome));
+            }
+        }
+    });
+}
+
+/// Before the chair's dispatch to a listed pane that is cold and large (`chair_inject_exec`, before its gate). Returns None when the
+/// dispatch goes on as before; Some(the chair's reply) when it is held for the cut. The held dispatch is delivered after the cut, or
+/// after the wait for it ends unconfirmed: a pane is never left without its work because a cut failed.
+fn cut_before_dispatch(app: &AppHandle, tid: &str, msg: &str, preview: &str) -> Option<String> {
+    const HOW: &str = "cut before dispatch";
+    let letter = read_letters().get(tid).cloned()?;
+    if !cut_listing().has(&letter) {
+        return None;
+    }
+    let last = close_small_tail(app, tid).as_deref().and_then(last_request);
+    let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    let age_min = last.as_ref().map(|l| now.saturating_sub(l.started_ms) / 60_000);
+    let context = last.and_then(|l| l.context);
+    if !cut_at_handback::before_dispatch(true, age_min, context, cut_at_handback::DIAL) {
+        return None;
+    }
+    let (a, tid, msg, preview) = (app.clone(), tid.to_string(), msg.to_string(), preview.to_string());
+    let (c, age) = (context.unwrap_or(0), age_min.unwrap_or(0));
+    let said = format!(
+        "held for {letter}: cold ({age} min) and large ({}k), so /compact first; this dispatch follows the cut, or the end of a {}-min wait \
+         for it, and the board says which",
+        c / 1000,
+        CLOSE_SMALL_COMPACT_WAIT.as_secs() / 60
+    );
+    chair_audit(app, format!("{HOW} -> {letter}: {said}"));
+    std::thread::spawn(move || {
+        let outcome = compact_and_confirm(&a, &tid, "cut before dispatch: /compact");
+        let delivered = match gate_or_queue(&a, &tid, &msg, &preview) {
+            Some(queued) => format!("the dispatch was then {queued}"),
+            None => match inject_to_pane(&a.state::<Panes>(), &tid, &msg, &a.state::<PaneEmus>()) {
+                Ok(_) => "the dispatch was then delivered".to_string(),
+                Err(e) => format!("the dispatch then FAILED to deliver: {e}"),
+            },
+        };
+        chair_audit(&a, format!("{}; {delivered}", cut_at_handback::board_line(HOW, &letter, c, &outcome)));
+    });
+    Some(said)
+}
+
+#[cfg(test)]
+mod cut_at_handback_wiring_tests {
+    // R2/R3 (the wiring half, read at the source as the codebase does for wiring): the two L218 paths reach the one /compact send
+    // only through the key, from the two places named, and nothing else gained a way to it.
+    fn src() -> String { std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap() }
+    fn body<'a>(s: &'a str, f: &str) -> &'a str {
+        let b = &s[s.find(f).unwrap_or_else(|| panic!("{f} moved"))..];
+        &b[..b.find("\n}\n").unwrap()]
+    }
+    fn live(s: &str) -> String {
+        let main_at = s.find("\nfn main()").expect("fn main");
+        let end = s[main_at..].find("#[cfg(test)]").map(|i| main_at + i).unwrap_or(s.len());
+        let me_at = s.find("mod cut_at_handback_wiring_tests").expect("this module");
+        let me_end = me_at + s[me_at..].find("\n}\n").expect("end of this module");
+        format!("{}{}", &s[..me_at], &s[me_end..end])
+    }
+
+    #[test]
+    fn the_one_compact_send_has_three_callers_and_the_two_new_ones_ask_the_key_first() {
+        let s = src();
+        let l = live(&s);
+        assert_eq!(l.matches("compact_and_confirm(").count(), 4, "one definition and three callers");
+        // (the name is split so close_small_wiring_tests, which counts its callers over this text, does not count this line)
+        assert!(body(&s, concat!("fn close_small_cut", "_seat(")).contains("compact_and_confirm("));
+        for f in ["fn cut_at_handback_after_ring(", "fn cut_before_dispatch("] {
+            let b = body(&s, f);
+            let ask = b.find("cut_listing()").unwrap_or_else(|| panic!("{f} must read the key"));
+            let has = b.find(".has(").unwrap_or_else(|| panic!("{f} must ask whether the pane is listed"));
+            let cut = b.find("compact_and_confirm(").unwrap_or_else(|| panic!("{f} cuts through the one send"));
+            assert!(ask < has && has < cut, "{f}: the key, then listed, then the cut");
+        }
+    }
+
+    #[test]
+    fn the_ring_reaches_it_only_after_a_delivered_handback_and_the_dispatch_before_its_gate() {
+        let s = src();
+        let ring = body(&s, concat!("fn pane_call_librarian", "_exec("));
+        let ok = ring.find("Ok(_) => {").expect("the delivered arm");
+        let hook = ring.find("cut_at_handback_after_ring(").expect("the ring path calls the cut at hand-back");
+        assert!(ok < hook && hook < ring.find("Err(e) => {").unwrap(), "only on a delivered ring");
+        let inject = body(&s, concat!("fn chair_inject", "_exec("));
+        let held = inject.find("cut_before_dispatch(").expect("the dispatch asks the cut first");
+        assert!(held < inject.find("gate_or_queue(").unwrap(), "before the dispatch is queued or written");
+        let l = live(&s);
+        assert_eq!(l.matches("cut_at_handback_after_ring(").count(), 2, "one definition, one caller");
+        assert_eq!(l.matches("cut_before_dispatch(").count(), 2, "one definition, one caller");
+        let mcp = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/mcp.rs")).unwrap();
+        assert!(!mcp.contains("compact_and_confirm") && !mcp.contains("cut_at_handback"), "no MCP verb reaches it directly");
+    }
 }
 
 #[cfg(test)]
@@ -14940,8 +15186,11 @@ mod close_small_wiring_tests {
         assert!(take < check && check < start, "take, then check, then cut");
     }
 
+    // AMENDED BY NAME (L218): it was `compact_is_sent_from_one_place_and_no_ring_or_timer_reaches_it`. A hand-back ring now reaches the
+    // one send, but only for a pane listed in `cut_at_handback` (empty by default, his word per seat), and only from main.rs: that
+    // half is `cut_at_handback_wiring_tests`. The assertions below are unchanged.
     #[test]
-    fn compact_is_sent_from_one_place_and_no_ring_or_timer_reaches_it() {
+    fn compact_is_sent_from_one_place_and_no_timer_reaches_it() {
         let s = live(&src());
         assert_eq!(s.matches("close_small::COMPACT").count(), 1, "the /compact send must have one site");
         assert!(!s.contains("\"/compact\""), "no other literal /compact may be written to a pane");
@@ -15083,6 +15332,10 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
     let mut preview: String = text.chars().take(110).collect();
     if text.chars().count() > 110 {
         preview.push('…');
+    }
+    // L218: a listed pane that is cold and large is cut first, and this dispatch follows the cut (None with the key empty).
+    if let Some(held) = cut_before_dispatch(app, &tid, &msg, &preview) {
+        return held;
     }
     // L034: THE GATE. Nothing renders into a pane whose prompt is not idle.
     if let Some(queued) = gate_or_queue(app, &tid, &msg, &preview) {
@@ -15277,6 +15530,8 @@ fn pane_call_librarian_exec(app: &AppHandle, from: Option<&str>, text: &str) -> 
             // `chain-status.js` reads this exact shape (`call_librarian <letter> -> LIB [Received]`)
             // as the letter's hand-back. Change the shape and change the reader in the same commit.
             chair_audit(app, format!("call_librarian {letter} -> LIB [{receipt:?}]: \"{preview}\""));
+            // L218: a listed builder pane over the dial is cut once this hand-back's turn ends (nothing at all with the key empty).
+            cut_at_handback_after_ring(app, letter, text);
             ring_reply("the librarian", receipt)
         }
         Err(e) => {
@@ -17549,6 +17804,8 @@ fn main() {
                     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| keep_warm_tick(&h)));
                 });
             }
+            // L218: a housed seat named in `cut_at_handback` is refused with a row, once a launch (the key is read again at each event).
+            cut_listing_refusals_at_launch(app.handle());
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
             //

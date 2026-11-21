@@ -1,0 +1,141 @@
+mkdir -p probe/consonance/hooks && cd probe && cat > consonance/hooks/model-switch-note.js <<'EOF'
+// model-switch-note.js (L214, pane A): PreModelSwitch hook. Before a model switch in a seat whose prompt cache is WARM, say how many tokens the
+// switch will rewrite. It WARNS; it never blocks (it prints no decision and always exits 0).
+//
+// WHY. Tonight's launch switched pane A's model twice, and two switches in warm seats on 11-14 rewrote 199k and 414k tokens (the L214 packet's "Why"):
+// a different model has its own cache, so a switch re-reads the whole context uncached. The harness hands PreModelSwitch from_model, to_model,
+// requested_model, source, context_tokens, prompt_cache_warm, cache_ttl, estimated_cache_write_usd and pricing (probed on 2.1.330, 2026-11-21, by a
+// stream-json set_model: handback/p-l214-spend-less-A_2026-11-21.md). It also records one numbers-only row per switch to <data>/model-switch.jsonl,
+// so the record of a switch is written AT the switch and not after it.
+//
+// The note appears only when the cache is warm AND the context is at least MIN tokens (default 50,000; CONSONANCE_MODELSWITCH_MIN overrides): a cold
+// seat has nothing to lose, a small one little. Output is {"systemMessage": "..."}.
+'use strict';
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+
+if (process.env.CONSONANCE_DREAM) process.exit(0);   // the gap-dream gets no hooks (consonance/hooks/dream-gate.test.js)
+
+const LEDGER = 'model-switch.jsonl';
+const WATCHDOG_MS = 3000;
+const DEFAULT_MIN = 50000;
+
+function dataDir(env = process.env) {
+  const e = String(env.CONSONANCE_DATA || '').trim();
+  if (e) return e;
+  try { const d = String((JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, '')) || {}).data_dir || '').trim(); if (d) return d; } catch (_) { /* no config */ }
+  return path.join(os.homedir(), '.consonance');
+}
+const num = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null);
+const short = (v, n) => (typeof v === 'string' && v ? v.slice(0, n) : null);
+
+/** The note for a switch, or null. Pure. */
+function note(p, env = process.env) {
+  if (!p || typeof p !== 'object') return null;
+  const min = Number(env.CONSONANCE_MODELSWITCH_MIN) > 0 ? Number(env.CONSONANCE_MODELSWITCH_MIN) : DEFAULT_MIN;
+  const ctx = num(p.context_tokens);
+  if (p.prompt_cache_warm !== true || ctx === null || ctx < min) return null;
+  if (p.from_model && p.to_model && p.from_model === p.to_model) return null;
+  const usd = num(p.estimated_cache_write_usd);
+  return `model switch ${short(p.from_model, 40) || '?'} -> ${short(p.to_model, 40) || '?'}: this seat's cache is warm, and the switch will rewrite about ${Math.round(ctx / 1000)}k tokens`
+    + (usd !== null ? ` (an estimated $${usd.toFixed(2)} at list price)` : '') + '. A cold seat or a new session would pay the same on its next call; a warm one pays it now.';
+}
+
+function rowFrom(p, now = Date.now()) {
+  return { v: 1, t: new Date(now).toISOString(), kind: 'model-switch', session: short(p && p.session_id, 8), from: short(p && p.from_model, 40), to: short(p && p.to_model, 40),
+    source: short(p && p.source, 12), context_tokens: num(p && p.context_tokens), warm: typeof (p && p.prompt_cache_warm) === 'boolean' ? p.prompt_cache_warm : null,
+    est_usd: num(p && p.estimated_cache_write_usd) };
+}
+
+// Never throws. Returns { text } for the note (or null).
+function handle(p, env = process.env, now = Date.now()) {
+  try {
+    if (!p || typeof p !== 'object' || (p.hook_event_name && p.hook_event_name !== 'PreModelSwitch')) return { text: null };
+    try { const d = dataDir(env); fs.mkdirSync(d, { recursive: true }); fs.appendFileSync(path.join(d, LEDGER), JSON.stringify(rowFrom(p, now)) + '\n'); } catch (_) { /* the note matters more than the record */ }
+    return { text: note(p, env) };
+  } catch (_) { return { text: null }; }
+}
+
+function main() {
+  setTimeout(() => process.exit(0), WATCHDOG_MS).unref();   // fail OPEN on a hang
+  let raw = '';
+  process.stdin.on('data', (d) => (raw += d));
+  process.stdin.on('end', () => {
+    let p = null; try { p = JSON.parse(raw); } catch (_) { /* not JSON */ }
+    const r = handle(p, process.env);
+    if (r.text) process.stdout.write(JSON.stringify({ systemMessage: r.text }));
+    process.exit(0);
+  });
+}
+if (require.main === module) main();
+
+module.exports = { note, rowFrom, handle, dataDir, LEDGER };
+EOF
+cat > consonance/hooks/model-switch-note.test.js <<'EOF'
+// model-switch-note.js (L214, pane A). R3: the hook prints its warning on a warm session and nothing on a cold one.
+//   node consonance/hooks/model-switch-note.test.js
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+const hook = require('./model-switch-note.js');
+const HOOK = path.join(__dirname, 'model-switch-note.js');
+
+// As probed on 2.1.330 (strings real here; the keys are the harness's).
+const sw = (over = {}) => ({ hook_event_name: 'PreModelSwitch', session_id: 'aaaaaaaa-1', from_model: 'claude-opus-5-5', to_model: 'claude-sonnet-5-5', requested_model: 'sonnet', source: 'cli',
+  context_tokens: 300000, prompt_cache_warm: true, cache_ttl: '1h', estimated_cache_write_usd: 1.8, pricing: 'list', ...over });
+const run = (payload, env = {}) => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'msn-'));
+  const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify(payload), encoding: 'utf8', env: { ...process.env, CONSONANCE_DREAM: '', CONSONANCE_DATA: dir, ...env } });
+  const ledger = fs.existsSync(path.join(dir, 'model-switch.jsonl')) ? fs.readFileSync(path.join(dir, 'model-switch.jsonl'), 'utf8') : '';
+  fs.rmSync(dir, { recursive: true, force: true });
+  return { r, ledger };
+};
+
+test('R3 a warm, large seat gets the warning with the token count, as a systemMessage', () => {
+  const { r } = run(sw());
+  assert.strictEqual(r.status, 0, r.stderr);
+  const out = JSON.parse(r.stdout);
+  assert.match(out.systemMessage, /300k tokens/);
+  assert.match(out.systemMessage, /claude-opus-5-5 -> claude-sonnet-5-5/);
+  assert.ok(!('decision' in out) && !('permissionDecision' in out), 'it warns, it never blocks');
+});
+
+test('R3 a cold seat gets nothing on stdout', () => {
+  const { r } = run(sw({ prompt_cache_warm: false }));
+  assert.strictEqual(r.status, 0);
+  assert.strictEqual(r.stdout, '');
+});
+
+test('a warm seat under the floor, or a switch to the same model, gets nothing; the floor is a dial', () => {
+  assert.strictEqual(run(sw({ context_tokens: 20000 })).r.stdout, '');
+  assert.strictEqual(run(sw({ to_model: 'claude-opus-5-5' })).r.stdout, '');
+  assert.match(run(sw({ context_tokens: 20000 }), { CONSONANCE_MODELSWITCH_MIN: '10000' }).r.stdout, /20k tokens/);
+});
+
+test('every switch writes one numbers-only row, warm or cold, and the row has no free text', () => {
+  const { ledger } = run(sw({ prompt_cache_warm: false }));
+  const row = JSON.parse(ledger.trim());
+  assert.deepStrictEqual([row.kind, row.warm, row.context_tokens, row.from, row.to], ['model-switch', false, 300000, 'claude-opus-5-5', 'claude-sonnet-5-5']);
+  for (const [k, v] of Object.entries(row)) if (typeof v === 'string' && k !== 't') assert.ok(v.length <= 40 && !/[\\/]/.test(v), k);
+});
+
+test('a dream session gets no output and no row; garbage and other events get nothing', () => {
+  const d = run(sw(), { CONSONANCE_DREAM: '1' });
+  assert.strictEqual(d.r.stdout, ''); assert.strictEqual(d.ledger, '');
+  assert.strictEqual(hook.handle(null, {}).text, null);
+  assert.strictEqual(hook.handle({ hook_event_name: 'Stop' }, {}).text, null);
+});
+
+test('a stdin that never ends does not hold the hook', async () => {
+  const { spawn } = require('child_process');
+  const child = spawn(process.execPath, [HOOK], { stdio: ['pipe', 'pipe', 'pipe'], env: { ...process.env, CONSONANCE_DREAM: '', CONSONANCE_DATA: os.tmpdir() } });
+  const code = await new Promise((res) => { const k = setTimeout(() => { child.kill(); res('hung'); }, 8000); child.on('exit', (c) => { clearTimeout(k); res(c); }); });
+  assert.strictEqual(code, 0);
+});
+EOF
+node --test consonance/hooks/model-switch-note.test.js 2>&1 | grep -E "✖|ℹ (tests|pass|fail)" | cut -c1-140

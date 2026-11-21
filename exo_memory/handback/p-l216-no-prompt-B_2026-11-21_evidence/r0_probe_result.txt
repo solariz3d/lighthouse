@@ -1,0 +1,5 @@
+compact_probe: claude C:\Users<user>\.local\bin\claude.exe in <scratchpad>\l218\r0seat, model haiku, session c0c0c0c0-0000-4000-8000-01a1fdd82702
+composer drawn
+turn 1: answered
+turn 2: answered
+RESULT: /compact written to the terminal ran: the transcript records a compact_boundary 11679 ms after the write, trigger "manual", preTokens 38966, postTokens 9453
