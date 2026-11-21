@@ -209,3 +209,45 @@ agents (2.0.60); `PermissionRequest` hook (2.0.45); `SubagentStart` (2.0.43); sk
 - `CLAUDE_CODE_PROJECT_DIR_NAME` against the sibling directory defect.
 - X and press coverage was read only through one search; its claims (for example that Code Mode work can run in the
   background for two hours) were not checked against the docs beyond what is quoted above.
+
+## Re-ranked for usage alone (added 00:4x, at his word)
+
+His words, 00:38: "the sole purpose of this is to save usage, we went way too ham last week testing how far we could push
+the models reasoning, which showed us errors in consonance that could be fixed, errors in design that make us use more
+usage than needed". So the ranking above (useful to Consonance) was the wrong aim. Below, each feature is set against
+the three largest avoidable costs the room measured last week (`loop/room_better_2026-11-13/in_cost.md:90-140`), and
+nothing else.
+
+**Leak 1: context run to about 968k before compaction** (the part of each call above 250k was 53.2 % of cache reads
+in 48 hours). The direct lever, a smaller auto-compact window, is a cut, and cuts are his word per seat
+(`no-cut-without-his-word`; the librarian's 500k window was withdrawn at his objection on 11-14, `e468b871`). Features
+that work on this leak without a cut:
+- **Code Mode** (2.1.323): fewer turns for the same work, so fewer re-reads of the whole context. Untested here.
+- **Idle compaction** (2.1.299): compacts a 200K+ idle conversation before its cache expires. That is a cut too, made by
+  the harness on a timer, and it is on by default (`idleCompaction`); whether it already fires on the room's seats, and
+  whether he wants it to, is his.
+
+**Leak 2: cold wakes and switching model after the wake** (cache writes were 71.6 % of a day's weighted spend; caches
+are per model, so a switch after the wake writes the whole context twice).
+- **`PreModelSwitch` hook** (2.1.251): can block or ask before a model switch. A switch on a large context could ask
+  first with the re-write it costs in the question.
+- **`SessionStart` resume hooks receive staleness and the estimated re-cache cost** (2.1.251): the wake can print what
+  it is about to cost before the first request.
+- **`ANTHROPIC_DEFAULT_MODEL`** (2.1.236) or a model in each seat's settings: the model set before the wake (the lean
+  plan's item 5, built and shipped empty).
+- **The resume warning on Pro and Max** (2.1.304) already exists in the harness.
+
+**Leak 3: tool output carried for the rest of the context** (18.3 % of cache reads; many mid-size Bash and Read
+results, not a few dumps).
+- **Code Mode** again, and here it is the strongest fit: the code returns only what Claude needs to read; the
+  intermediate output of each call stays in the script and does not enter the context.
+- **`omitClaudeMd`** (2.1.271), **`CLAUDE_CODE_SUBAGENT_EFFORT`** (2.1.316), **`CLAUDE_CODE_SUBAGENT_MODEL`** and the
+  Agent tool's `effort` (2.1.292): the lean plan sends bulk reading to cheap subagents; these make each of those agents
+  cheaper (no 80K intake, lower effort, cheaper model).
+
+**Measuring whether any of it worked:** the per-session cache line in `/cost` and the `prompt_cache` status line
+object (2.1.251), with the likely cause of each miss (2.1.260). Without a meter the room is back to estimating.
+
+**Taken back from the list above, because it costs usage:** MCP `alwaysLoad`. It loads the consonance server's tools
+into every request instead of behind tool search. It saves a lookup per wake and spends context on every call. Also
+"You should know" (a side agent that runs alongside) and any mod that calls a model per prompt.
