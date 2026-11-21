@@ -1,0 +1,4 @@
+  ok   FAILED: NOT CLOSED, never a success line
+  FAIL a compaction run with seats to go asks "Compacting is still running (3 seats to go). Close anyway?"
+  FAIL one seat to go is said in the singular, and the working seats are still listed
+44 passed, 2 failed

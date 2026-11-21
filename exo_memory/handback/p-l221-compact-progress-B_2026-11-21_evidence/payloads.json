@@ -1,0 +1,90 @@
+{
+  "mid": {
+    "click": "2026-11-21T13:10:13.704Z",
+    "finished": false,
+    "interrupted": false,
+    "seats": [
+      {
+        "detail": "cut: the transcript records the manual compaction, 412k before, 18k after",
+        "name": "A",
+        "pane": "a",
+        "since": "2026-11-21T13:12:33.705Z",
+        "state": "done"
+      },
+      {
+        "detail": "",
+        "name": "B",
+        "pane": "b",
+        "since": "2026-11-21T13:14:32.705Z",
+        "state": "compacting"
+      },
+      {
+        "detail": "queued behind its current turn or his typing",
+        "name": "librarian",
+        "pane": "lib",
+        "since": "2026-11-21T13:10:14.705Z",
+        "state": "asked"
+      },
+      {
+        "detail": "cut: the transcript records the manual compaction, 503k before, 21k after",
+        "name": "main",
+        "pane": "main",
+        "since": "2026-11-21T13:14:13.705Z",
+        "state": "done"
+      },
+      {
+        "detail": "",
+        "name": "Third Place",
+        "pane": "tp",
+        "since": "2026-11-21T13:14:43.705Z",
+        "state": "answering"
+      }
+    ],
+    "summary": "2 of 5 done, 3 to go",
+    "toGo": 3
+  },
+  "end": {
+    "click": "2026-11-21T13:10:13.704Z",
+    "finished": true,
+    "interrupted": false,
+    "seats": [
+      {
+        "detail": "cut: the transcript records the manual compaction, 412k before, 18k after",
+        "name": "A",
+        "pane": "a",
+        "since": "2026-11-21T13:12:33.705Z",
+        "state": "done"
+      },
+      {
+        "detail": "cut: the transcript records the manual compaction, 406k before, 17k after",
+        "name": "B",
+        "pane": "b",
+        "since": "2026-11-21T13:14:53.705Z",
+        "state": "done"
+      },
+      {
+        "detail": "NOT cut: its turn after the ask did not end within 20 min",
+        "name": "librarian",
+        "pane": "lib",
+        "since": "2026-11-21T13:15:08.705Z",
+        "state": "failed"
+      },
+      {
+        "detail": "cut: the transcript records the manual compaction, 503k before, 21k after",
+        "name": "main",
+        "pane": "main",
+        "since": "2026-11-21T13:14:13.705Z",
+        "state": "done"
+      },
+      {
+        "detail": "cut: the transcript records the manual compaction, 331k before, 15k after",
+        "name": "Third Place",
+        "pane": "tp",
+        "since": "2026-11-21T13:15:03.705Z",
+        "state": "done"
+      }
+    ],
+    "summary": "Done: 4 cut, 1 failed",
+    "toGo": 0
+  }
+}
