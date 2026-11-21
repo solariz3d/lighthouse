@@ -1,0 +1,13 @@
+CONTROL: 6 rows, 0 failed
+caught (2 failed of 6): M1 the sideways clamp (grip) is removed
+NOT CAUGHT: M2 the turn it asks for is not capped by the grip
+caught (2 failed of 6): M3 the heading rate may step (no ease)
+caught (1 failed of 6): M4 the grip is 3 g not grip_mu g
+caught (1 failed of 6): M5 the corner speed is the old rule's
+caught (1 failed of 6): M6 the circle it can turn is the old rule's
+caught (1 failed of 6): M7 turn drag still applies under the law
+NOT CAUGHT: M8 the heading is not the velocity's direction
+caught (1 failed of 6): M9 the switch is ignored by the hunter's body
+NOT CAUGHT: M10 the switch reaches every chaser (make_body)
+NOT CAUGHT: M11 the fingerprint reads the root fields with the switch off
+applied 11 / caught 7 / NOT APPLIED 0 / SURVIVORS: M2 the turn it asks for is not capped by the grip | M8 the heading is not the velocity's direction | M10 the switch reaches every chaser (make_body) | M11 the fingerprint reads the root fields with the switch off

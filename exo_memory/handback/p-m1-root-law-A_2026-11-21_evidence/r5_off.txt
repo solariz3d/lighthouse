@@ -1,0 +1,58 @@
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  line     24     9.7    15.5    17.4    22.3    46.5    60.6    300.0         2
+normal  flee     24   138.1   212.7   228.7   300.0   300.0   300.0    300.0        15
+normal  cutback   24    16.1    20.2    25.5    30.7    51.5    74.5    134.4         0
+brutal  line     24     9.5    14.0    15.4    23.6    36.2    68.2    300.0         2
+brutal  flee     24    36.5    80.3   127.1   184.4   247.4   278.4    300.0         2
+brutal  cutback   24    10.4    13.8    22.2    35.0    45.2    53.1     64.1         0
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  line       71%      17%          4%    0% |       92%           0%         0%         0% |          265
+normal  flee       25%       4%          0%    8% |       38%           0%         0%         0% |        10500
+normal  cutback     83%      17%          0%    0% |       92%           0%         0%         8% |          385
+brutal  line       75%       4%          4%    8% |       79%           4%         0%         8% |          282
+brutal  flee       75%       0%          4%   12% |       92%           0%         0%         0% |         4695
+brutal  cutback     58%       8%         17%   17% |       96%           0%         0%         4% |          452
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  line   |      0.00        0%      0.04     0.00      0.00 |   0.00   0.00    0.00 |     1.33   0.05   0.00   0.34     0.00 |    0.79     0%       0%
+normal  flee   |      0.54       42%      0.00     0.00      0.00 |   0.00   0.04    0.20 |     1.92   0.73   0.27   2.56     0.01 |    0.03     3%       0%
+normal  cutback |      0.00        0%      0.08     0.00      0.00 |   0.00   0.00    0.00 |     2.01   0.11   0.00   1.03     0.00 |    0.34     0%       0%
+brutal  line   |      0.00        0%      0.04     0.04      0.00 |   0.00   0.00    0.00 |     0.60   0.80   1.21   0.35     0.00 |    1.10     0%       0%
+brutal  flee   |      0.62       46%      0.00     0.00      0.00 |   0.00   0.05    0.26 |     1.44   1.67   3.50   4.92     0.04 |    0.17     1%       0%
+brutal  cutback |      0.00        0%      0.00     0.00      0.00 |   0.00   0.00    0.00 |     0.81   1.32   2.20   0.95     0.00 |    0.81     0%       0%
+paired flee vs line (24 seeds): outlived it in 22, was outlived in 1, within half a second in 1; median of the ratio 10.74 (quartiles 6.53 to 16.66)
+paired cutback vs line (24 seeds): outlived it in 15, was outlived in 7, within half a second in 2; median of the ratio 1.23 (quartiles 0.82 to 2.53)
+paired flee vs line (24 seeds): outlived it in 22, was outlived in 2, within half a second in 0; median of the ratio 7.62 (quartiles 4.12 to 11.94)
+paired cutback vs line (24 seeds): outlived it in 13, was outlived in 8, within half a second in 3; median of the ratio 1.31 (quartiles 0.78 to 1.65)
+
+where chasers caught on the world, per minute of chase
+level   policy minutes    wall hits scrape s
+                           head-on (ticks/240)   stalls   stood s
+normal  line     20.4       14.690     4.10    0.049     0.000   (totals: 299 hits, 20016 scrape ticks, 1 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 198, 10511;  sprinter 101, 9483;  interceptor 0, 22;
+normal  flee    107.9       20.397     8.73    0.046     0.000   (totals: 2200 hits, 226023 scrape ticks, 5 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 1465, 106177;  sprinter 380, 86027;  interceptor 247, 28117;  pack 108, 5702;
+normal  cutback   17.4       21.217     5.65    0.057     0.000   (totals: 370 hits, 23651 scrape ticks, 1 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 261, 11982;  sprinter 109, 11446;  interceptor 0, 223;
+brutal  line     19.9       65.387     7.57    0.050     0.000   (totals: 1302 hits, 36184 scrape ticks, 1 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 437, 13293;  sprinter 154, 6733;  interceptor 678, 12946;  pack 33, 3212;
+brutal  flee     74.3       40.542    15.03    0.027     0.000   (totals: 3013 hits, 268029 scrape ticks, 2 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 1254, 72478;  sprinter 304, 53748;  interceptor 453, 46135;  pack 1002, 95668;
+brutal  cutback   13.6       32.089     7.75    0.073     0.000   (totals: 438 hits, 25379 scrape ticks, 1 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 254, 10801;  sprinter 41, 4803;  interceptor 51, 2796;  pack 92, 6979;
+
+reprieves: 28 passages through and 0 back out the way in, in 21 of 144 runs; with the hunter out and a way to the player both times (25):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        2.0     4.3     6.2
+  and coming out: the lead                         5.6     8.1    11.6
+  lead gained                                      0.7     3.6     6.9
+  way round, the generator's figure                8.4    11.2    14.9
+  way round on the mesh, the hunter's speeds       5.0     6.6    12.1
+  lead gained over the way round on the mesh      0.13    0.52    0.74
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
