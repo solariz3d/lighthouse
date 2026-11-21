@@ -1,0 +1,4 @@
+plain call, setting off  host was asked 1x  ran: false  tool result: probe host denied  [exit]
+plain call, setting ON   host was asked 0x  ran: false  tool result: Permission for this tool use was denied. It requires approval, and this session has no approval surface — nobody can answer a permission prompt here — so it was denied automatically. The action was NO  [exit]
+hook asks, setting off   host was asked 1x  ran: false  tool result: probe host denied  [exit]
+hook asks, setting ON    host was asked 0x  ran: false  tool result: Permission for this tool use was denied. It requires approval, and this session has no approval surface — nobody can answer a permission prompt here — so it was denied automatically. The action was NO  [exit]

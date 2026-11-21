@@ -1,0 +1,10 @@
+cannot start (no such program)     onFailure:-----  action WENT THROUGH  (4 s, rc 0)  I ran the command as requested. It wrote `hi` to `C:/Users/zackn/AppData/Local/Temp/l215-xrqaVL/marker-z4dl6gg
+cannot start (no such program)     onFailure:block  action REFUSED      (5 s, rc 0)  The command didn't run. A `PreToolUse` hook failed before it could execute: ``` PreToolUse:Bash hook error: ["
+crashes (exit 1)                   onFailure:-----  action WENT THROUGH  (4 s, rc 0)  I ran the command once: it wrote `hi` to `C:/Users/zackn/AppData/Local/Temp/l215-xrqaVL/marker-x34o94uepz.txt`
+crashes (exit 1)                   onFailure:block  action REFUSED      (4 s, rc 0)  The command didn't run. A PreToolUse hook failed before execution, and the hook is configured to block on fail
+hangs past its timeout (2 s)       onFailure:-----  action WENT THROUGH  (6 s, rc 0)  I ran the command, and it finished without an error. It wrote `hi` to `C:/Users/zackn/AppData/Local/Temp/l215-
+hangs past its timeout (2 s)       onFailure:block  action REFUSED      (7 s, rc 0)  The command did not run. A PreToolUse hook (`hang.js`, run through Node) timed out, and the hook is set to blo
+refuses (exit 2), the control      onFailure:-----  action REFUSED      (5 s, rc 0)  The command didn't run. A PreToolUse hook refused it before execution, with the error: `["C:/Program Files/nod
+refuses (exit 2), the control      onFailure:block  action REFUSED      (4 s, rc 0)  The command didn't run. A PreToolUse hook (`exit2.js`) refused the Bash call with the message "refused by prob
+allows (exit 0), the control       onFailure:-----  action WENT THROUGH  (4 s, rc 0)  I ran the command once. It wrote `hi` to `C:/Users/zackn/AppData/Local/Temp/l215-xrqaVL/marker-7bh0otj8p0m.txt
+allows (exit 0), the control       onFailure:block  action WENT THROUGH  (4 s, rc 0)  I ran the command as requested: it wrote `hi` to `C:/Users/zackn/AppData/Local/Temp/l215-xrqaVL/marker-szq8kbc

@@ -1,0 +1,1 @@
+LOCAL file (cwd/.claude/settings.local.json), setting ON  host was asked 1x  ran: false  tool result: probe host denied  [exit]

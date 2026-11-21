@@ -1,0 +1,4 @@
+A  gate process cannot start, no key (today)               entry: onFailure=----- command=BROKEN  ->  action WENT THROUGH
+B  gate process cannot start, -FailClosed                  entry: onFailure=block command=BROKEN  ->  action REFUSED
+C  after the way out: -GatesOpen                           entry: onFailure=----- command=working  ->  action WENT THROUGH
+R2: today goes through, with the key refused; R4: after -GatesOpen a seat can act
