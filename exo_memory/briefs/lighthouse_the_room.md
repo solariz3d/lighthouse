@@ -173,6 +173,7 @@
 - 2026-11-21 00:45 (L): "wait can you change models yoourself for other panes or do i have to? BC i planned to just do it myself". Then to the chair, about the librarian's line that pane A was already on Sonnet (as the chair's pane shows it): "ur wrong, it says a is on opus 5.5 right now mid out…". Then 00:52, after pasting two answers from Gemini on effort levels (not his words; not copied here): "It makes me think we should just try medium on everything, since the higher reasoning lets you do what consonance trys to give you for free"
 - 2026-11-21 01:01 (L): "so everything is in motion from our original plans to the plans for the new features that would help consonance? Or at least queued"
 - 2026-11-21 01:17 (L): "so all is done". Then 01:25, after his relaunch of 01:18:49 into the new build: "back".
+- 2026-11-21 02:07 and 02:41 (L), to the librarian: "should i compact"; then, after he compacted this seat by hand at 02:24, "what else do we have queued". [The librarian answered yes to the first while its cache was warm; this seat went from 753,854 tokens to a first call of 152,694. No "Close for the night" click is on record: `C:\Consonance\data\close-small.jsonl` does not exist at 02:45.]
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
