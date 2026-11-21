@@ -138,3 +138,10 @@ the answer to a specific failure, and the comment above the function usually nam
   (the 7-day figure, cache fields, token classes) and one wake row per start to `<data>/usage-ledger.jsonl`; the reader prints, per seat,
   how far the account's 7-day figure moved on that seat's turns. Registration is `dev/shell/install.ps1` (a `$files` row, a `$register` row
   and the status line block); a Node tool and hook, not part of the app.
+
+- `consonance/hooks/model-switch-note.js` (L214, A): a `PreModelSwitch` hook that warns how many tokens a switch will rewrite in a warm seat
+  (never blocks) and writes one numbers-only row per switch to `<data>/model-switch.jsonl`. `dev/shell/agents/room-reader.md` (L214): a
+  read-only agent that does not carry the room's intake (`omitClaudeMd`, `effort: low`), installed by `install.ps1` to its second
+  destination, `~/.claude/agents/` (the `$agentFiles` table, kept out of `$files`), which also sets `CLAUDE_CODE_SUBAGENT_EFFORT=medium` in the
+  settings' `env` where unset; an agent's own `effort` wins over that variable. `consonance/tools/agent-first-call.js` measures an agent's
+  first-call tokens with and without the intake.

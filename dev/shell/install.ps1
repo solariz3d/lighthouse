@@ -73,6 +73,19 @@ $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)   # …/lighthouse
 $dest = Join-Path $env:USERPROFILE '.claude\shell'
 
+# L214 (pane B; the librarian's ruling of 2026-11-21 03:5x): AGENT DEFINITIONS, a second destination. An agent definition is not a hook and
+# nothing in settings.json runs it: the harness reads ~/.claude/agents/<name>.md and every seat's Agent tool can then name it. So these are kept
+# OUT of $files (whose rows landed-live.js and install-manifest.test.js read as things a command runs) in a table of their own, synced the same
+# way (ok / installed / synced with a .bak / DRIFT and ABSENT under -Check), and chosen by -Only by the same leaf rule.
+# Installing room-reader.md also sets CLAUDE_CODE_SUBAGENT_EFFORT=medium in the settings' env block, only where it is unset (the block after
+# the status line's). Measured first (handback/p-l214-land-B_2026-11-21.md, R5): an agent's own `effort` wins over that variable, so the
+# reader stays at its definition's `low` and the variable is the default for agents that name none.
+$agentsDest = Join-Path $env:USERPROFILE '.claude\agents'
+$agentFiles = @(
+  # Src/Name, not From/To: these are not hook-manifest rows (dream-gate.test.js reads every From = line as a hook the host runs).
+  @{ Src = 'dev\shell\agents\room-reader.md';            Name = 'room-reader.md' }
+)
+
 # source -> installed RELATIVE path. `lib\` entries keep their directory because that is where the
 # requiring hooks look; hooks land in `hooks\` because that is where the registered ones already
 # were and moving a running system to satisfy a convention is how you break it.
@@ -435,6 +448,7 @@ foreach ($f in $files) { $hh = Get-HoldHere $f; if ($hh) { $heldLeaf[(Split-Path
 # half-registers would be worse than an honestly blunt one, and this is not one.
 $syncFiles = $files
 $regEntries = $register
+$syncAgents = $agentFiles
 if ($Only) {
   if ($Check) {
     Write-Host "-Only cannot be combined with -Check." -ForegroundColor Red
@@ -448,6 +462,8 @@ if ($Only) {
   $regEntries = @($register | Where-Object { $wanted.ContainsKey((Split-Path -Leaf $_.Rel).ToLower()) })
   foreach ($f in $syncFiles)  { $wanted[(Split-Path -Leaf $f.To).ToLower()] = $true }
   foreach ($e in $regEntries) { $wanted[(Split-Path -Leaf $e.Rel).ToLower()] = $true }
+  $syncAgents = @($agentFiles | Where-Object { $wanted.ContainsKey($_.Name.ToLower()) })
+  foreach ($a in $syncAgents) { $wanted[$a.Name.ToLower()] = $true }
   # A NAME NOBODY CARRIES IS A REFUSAL, NOT AN EMPTY RUN. A typo that silently syncs nothing is the
   # exact failure this flag exists to prevent, one level down: a control reporting success over a
   # set of zero.
@@ -541,6 +557,26 @@ foreach ($f in $syncFiles) {
     Copy-Item $src $dst -Force
     Write-Host ("synced   {0}" -f $f.To) -ForegroundColor Green
     $drift++
+  }
+}
+
+# L214: the agent definitions, synced as the files above are, to their own destination.
+foreach ($a in $syncAgents) {
+  $src = Join-Path $repo $a.Src
+  $dst = Join-Path $agentsDest $a.Name
+  if (-not (Test-Path $src)) { Write-Host ("ABSENT FROM REPO  {0}" -f $a.Src) -ForegroundColor Red; $drift++; continue }
+  $exists = Test-Path $dst
+  $same = $exists -and ((Get-FileHash $src).Hash -eq (Get-FileHash $dst).Hash)
+  if ($same) { Write-Host ("ok       agents\{0}" -f $a.Name) -ForegroundColor DarkGray }
+  elseif ($Check) {
+    if ($exists) { Write-Host ("DRIFT    agents\{0}" -f $a.Name) -ForegroundColor Yellow; $drift++ }
+    else { Write-Host ("ABSENT   agents\{0}   never installed - nothing to compare" -f $a.Name) -ForegroundColor Cyan; $absent++ }
+  } else {
+    if (-not (Test-Path $agentsDest)) { New-Item -ItemType Directory -Force -Path $agentsDest | Out-Null }
+    if ($exists) { Copy-Item $dst "$dst.bak-$(Get-Date -Format yyyyMMdd-HHmmss)" -Force }
+    Copy-Item $src $dst -Force
+    Write-Host ("{0} agents\{1}" -f $(if ($exists) { 'synced   ' } else { 'installed' }), $a.Name) -ForegroundColor Green
+    if ($exists) { $drift++ } else { $absent++ }
   }
 }
 
@@ -844,6 +880,9 @@ if ($Check) {
   if ($slLive -match '[\\/]usage-ledger\.js') { Write-Host "statusLine: usage-ledger.js (ok)" -ForegroundColor Green }
   elseif ($slLive) { Write-Host "statusLine: ANOTHER status line is configured; the usage ledger's turn rows cannot run (nothing displaced)" -ForegroundColor Magenta; $slBad = 1 }
   else { Write-Host "statusLine: ABSENT here; a bare run sets it, and until then the usage ledger has no turn rows" -ForegroundColor Magenta; $slBad = 1 }
+  # L214: the agents' default effort, a line only (a machine may choose another value, or none).
+  try { $effLive = [string]((Get-Content (Join-Path $env:USERPROFILE '.claude\settings.json') -Raw | ConvertFrom-Json).env.CLAUDE_CODE_SUBAGENT_EFFORT) } catch { $effLive = '' }
+  Write-Host ("env CLAUDE_CODE_SUBAGENT_EFFORT: {0}" -f $(if ($effLive) { $effLive } else { 'unset (an install of room-reader.md sets medium)' })) -ForegroundColor DarkGray
   $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count + $excludedLive.Count + $ruledLiveMissing.Count + $slBad
   if ($holdExpired) { Write-Host ("`n$holdExpired dated hold(s) EXPIRED -- nothing was written for them; renew each with a ruling or lift it.") -ForegroundColor Red }
   exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0 -and $srcUndeclared.Count -eq 0 -and $holdExpired -eq 0) { 0 } else { 1 }))
@@ -1087,6 +1126,23 @@ if ($usageEntry -and -not $usageEntry.Excluded -and -not $heldLeaf.ContainsKey('
     Write-Host "  LEFT     statusLine        another status line is configured here; the usage ledger's turn rows need that slot, so they will not run. Not displaced." -ForegroundColor Magenta
     $refused++
   }
+}
+
+# L214 (pane B, the librarian's ruling): the default effort for agents a seat spawns, set only by a run that installs room-reader.md, and only
+# where the key is unset: a value already there (the user's, or another machine's choice) is LEFT and said, never displaced.
+if (@($syncAgents | Where-Object { $_.Name -eq 'room-reader.md' }).Count -gt 0) {
+  $envProp = $settings.PSObject.Properties['env']
+  if (-not $envProp -or -not $envProp.Value) {
+    $settings | Add-Member -NotePropertyName env -NotePropertyValue ([pscustomobject]@{}) -Force
+    $envProp = $settings.PSObject.Properties['env']
+  }
+  $effProp = $envProp.Value.PSObject.Properties['CLAUDE_CODE_SUBAGENT_EFFORT']
+  if (-not $effProp) {
+    $envProp.Value | Add-Member -NotePropertyName CLAUDE_CODE_SUBAGENT_EFFORT -NotePropertyValue 'medium' -Force
+    $changes += "  ADD      env               CLAUDE_CODE_SUBAGENT_EFFORT=medium"
+    $added++
+  } elseif ($effProp.Value -eq 'medium') { $already++ }
+  else { Write-Host ("  LEFT     env               CLAUDE_CODE_SUBAGENT_EFFORT is already {0} here; not changed" -f $effProp.Value) -ForegroundColor Magenta }
 }
 
 # D205: a group with NO hooks in it runs nothing and is only residue (the stray one the old placeholder left). Pruned on the events THIS run registered for (never an event it did
