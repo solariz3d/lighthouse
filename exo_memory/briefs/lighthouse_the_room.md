@@ -182,6 +182,7 @@
 - 2026-11-21 04:52 (L), to the librarian, on its answer that the close skips cold seats: "but doesnt that mean still, that the seats that were used last session but not used now dont get used?" [His catch: a hole in Close for the night as built. A seat idle at every close is cold at every close and is never cut.]
 - 2026-11-21 04:54 (L), to the librarian, after it had asked him three times to click or type the cut: "but why do manual compact if it should close? Also, why for the night? We have till 8AM working at work on laptop." [Read by the librarian as: the app should make the cut, not his hand; and the control is misnamed, since nothing closes and the work goes on. The librarian took this as his word for cutting panes A and B now through the chair, and said so to him.]
 - 2026-11-21 04:56 (L), to the librarian: "well should I compact all panes before start"
+- 2026-11-21 04:57 (L), to the librarian: "Also, to limit usage even further, i think if we are going to be using lib as fable, the effort should be on medium, thoughts>"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
