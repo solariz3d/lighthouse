@@ -73,3 +73,12 @@ Q1's census corrects it before Q2 starts.
 
 Each lap is installed there by its own landing. The census is run there too: the desktop has more panes and its intake
 files are built on that machine.
+
+## Amended 06:1x, at his question: a moved piece that is pulled anyway costs MORE than a carried one
+
+His words, 06:15: "wouldnt reminding that the master is always there, also mean that it would likely choose to pull it anyway, meaning it loads it all in". He is right that this can happen, and it is the worse case: a carried piece sits in the cached start of the context; a pulled piece arrives as tool output, is carried for the rest of that context at full size, is lost at the next cut, and may be pulled again.
+
+- **So the trigger is narrow, never general.** No line says "the master is always there". A moved piece gets a line naming the one situation that needs it ("open before editing `src-tauri/`"), as `SOURCE.md` does.
+- **A pull is a part, not the whole.** A line range, a grep, or the `room-reader` agent, which returns the answer and keeps the file out of the seat (4,338 tokens on its first call, measured tonight).
+- **Q1 adds a count:** for each piece, in how many of the last weeks laps a pane opened or used it (from the transcripts). A piece used in most laps STAYS carried.
+- **Q2 gains a failure line:** failed if a moved piece is read whole in more than one lap in three; that piece goes back to carried.

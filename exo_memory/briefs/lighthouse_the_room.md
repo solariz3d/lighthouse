@@ -196,6 +196,7 @@
 - 2026-11-21 06:06 (L), to the librarian: "but then, what do the panes start at after compact?"
 - 2026-11-21 06:08 (L), to the librarian: "but see, then this makes me see, what if we should now work at using the system we have, using it as scaffolding to essentially quantize the room and the amount of tokens it takes to load in, but then, this is where we have to be careful since from the very beginning we have been used to \"the master\" only mentality, what do you think?"
 - 2026-11-21 06:13 (L), to the librarian: "lets plan this out right for when what is in motion lands, then we restart before starting this chunk to minimize usage use"
+- 2026-11-21 06:15 (L), to the librarian, on its plan: "i have a question, wouldnt reminding that the master is always there, also mean that it would likely choose to pull it anyway, meaning it loads it all in"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
