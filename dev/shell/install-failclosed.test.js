@@ -74,3 +74,19 @@ test('row 6: -GatesOpen leaves a hook the script does not manage alone, even one
   const mine = entries(settingsOf(home)).find((e) => leafOf(e.h) === 'own-hook.js');
   assert.strictEqual(mine.h.onFailure, 'block', 'the own hook keeps its key');
 }));
+
+// L215 fix (pane B's finding): -GatesOpen given ALONE ran a full install (41 files, 26 registrations, the status line and env). The way out takes the key off and does nothing else.
+test('row 7 (the way out is ONLY the way out): -GatesOpen alone on a home with settings and no installed files copies nothing and registers nothing', { skip }, () => withHome((home) => {
+  const sf = path.join(home, '.claude', 'settings.json'); fs.mkdirSync(path.dirname(sf), { recursive: true });
+  const seed = JSON.stringify({ hooks: { PreToolUse: [{ matcher: 'Bash', hooks: [{ type: 'command', command: '"C:/mine/own-hook.js"', onFailure: 'block' }] }] } });
+  fs.writeFileSync(sf, seed);
+  const r = run(home, '-GatesOpen'); assert.strictEqual(r.status, 0, (r.stdout + r.stderr).slice(-1500));
+  assert.strictEqual(fs.readFileSync(sf, 'utf8'), seed, 'settings.json is byte-equal: nothing registered, no status line, no env');
+  assert.ok(!fs.existsSync(path.join(home, '.claude', 'shell')), 'no file was copied');
+}));
+
+test('row 8: -GatesOpen with -Only is refused (the old way to scope it is gone: it never scopes the opening)', { skip }, () => withHome((home) => {
+  assert.strictEqual(run(home).status, 0);
+  const r = run(home, '-GatesOpen', '-Only', 'push-gate.js'); assert.notStrictEqual(r.status, 0);
+  assert.match(r.stdout + r.stderr, /-GatesOpen/);
+}));

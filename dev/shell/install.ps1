@@ -453,6 +453,8 @@ if (($FailClosed -or $GatesOpen) -and ($Check -or $NoRegister)) {
   exit 1
 }
 if ($FailClosed -and $GatesOpen) { Write-Host "-FailClosed and -GatesOpen are opposites; give one." -ForegroundColor Red; exit 1 }
+# L215 fix (pane B's finding): -GatesOpen is the way out and does NOTHING ELSE: no file sync, no registration, no status line, no env. -Only would scope a sync it no longer has.
+if ($GatesOpen -and $Only) { Write-Host "-GatesOpen takes onFailure off every managed hook and syncs and registers nothing; it cannot be combined with -Only." -ForegroundColor Red; exit 1 }
 $regEntries = $register
 $syncAgents = $agentFiles
 if ($Only) {
@@ -484,8 +486,9 @@ if ($Only) {
   Write-Host ("-Only: {0} of {1} manifest entr(ies), {2} of {3} registration entr(ies). EVERYTHING ELSE IS UNTOUCHED, NOT VERIFIED." -f $syncFiles.Count, $files.Count, $regEntries.Count, $register.Count) -ForegroundColor Cyan
 }
 # MUTANT-ANCHOR: END
+if ($GatesOpen) { $syncFiles = @(); $regEntries = @(); $syncAgents = @() }   # L215 fix: the way out only opens
 
-if (-not (Test-Path $dest)) {
+if (-not (Test-Path $dest) -and -not $GatesOpen) {
   if ($Check) { Write-Host "MISSING dir  $dest" -ForegroundColor Yellow }
   else { New-Item -ItemType Directory -Force -Path $dest | Out-Null; Write-Host "created $dest" }
 }
