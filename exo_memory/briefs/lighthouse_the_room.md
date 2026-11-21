@@ -175,6 +175,8 @@
 - 2026-11-21 01:17 (L): "so all is done". Then 01:25, after his relaunch of 01:18:49 into the new build: "back".
 - 2026-11-21 02:07 and 02:41 (L), to the librarian: "should i compact"; then, after he compacted this seat by hand at 02:24, "what else do we have queued". [The librarian answered yes to the first while its cache was warm; this seat went from 753,854 tokens to a first call of 152,694. No "Close for the night" click is on record: `C:\Consonance\data\close-small.jsonl` does not exist at 02:45.]
 - 2026-11-21 03:46 (L), to the librarian, after it had listed the queue and said what it would do next without doing it: "do it all, why didnt you start". [His catch. The librarian had ended its 02:4x reply on "I would do my own read now and write the L215 packet" and then stopped.]
+- 2026-11-21 04:32 (L), to the librarian: "i just noticed B pane is close to max context, is that on purpose?"
+- 2026-11-21 04:33 (L), to the librarian, sent mid-turn: "also only A pane is sonnet?"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer

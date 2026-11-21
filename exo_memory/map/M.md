@@ -1102,3 +1102,10 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **What I had read:** `dev/shell/install.ps1` for the words "fails open" (four gates), and I took the other three (delete, push, wake) as gates meant to refuse. I did not open their headers or `GATES.md`. The plan's row ("the gates block when their process dies") came from the Third Place's research line, carried as if it were the room's intent.
 - **The rule, mine from A's finding:** before a packet changes how a control fails, open the control's own header and the room's rule for it. A grep for one phrase in one file is not that read.
 - **Also A's, against the same packet:** the per-seat `settings.local.json` route for the no-prompt setting does not work (not honoured there, three runs). Re-routed through the app's launch: `loop/packet_l216_no_prompt_B_2026-11-21.md`.
+
+## 2026-11-21 04:3x (L): a large seat's cost is its every call, not its wake
+
+- **His catch, verbatim:** "i just noticed B pane is close to max context, is that on purpose?" (04:32; `briefs/lighthouse_the_room.md`, the 11-21 entries).
+- **What I had said:** at 02:4x, "whichever pane takes it wakes cold at its full size. B is 733k on Opus, which the ledger estimates at about $5.86". I priced the wake and nothing after it, then dispatched B at 777k.
+- **What it cost, measured** (`node consonance/tools/usage-ledger.js --since 2026-11-21T09:45:00Z`): B read 142,867,983 tokens from cache over 170 turns in about 47 minutes, about 28.6 at list price, five times its wake. The 7-day figure moved from 4 % to 6 % in that time across all seats.
+- **The rule, mine from his catch:** before a pane over 300k is dispatched, it is cut first, at his word; the count told to him is (calls expected) x (context) x (the read price), beside the wake. A cold seat's cut costs what its wake would have cost, so "never compact a cold seat" holds only for a seat that is not about to work.
