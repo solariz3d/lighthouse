@@ -17,3 +17,15 @@
 - STANDING RULE for panes (librarian, 12:50Z): no sleep/tail/poll calls; a long run starts in the background once and the turn ends.
 - MY OWN LESSON tonight: my /compact injects did NOT run as the command (arrived as messages; he typed both cuts). The app-written /compact is still unproven unless B's R0 showed otherwise; check B's L218 hand-back for R0.
 - Chair token rotates at each restart: re-read C:\Consonance\instances\main\.chair-token.
+
+## The laptop's close (07:35 local, ~13:36Z): his word, finish up, push every repo, leave the desktop's hand-offs
+
+- FILED tonight: L212 (Close for the night), L213 (usage ledger), L214 (spend less), L219 (game pulled, built), L222 (census).
+- L216 + L218 landed on room main (no-prompt launch; cut at hand-back with the race fix); cut_at_handback [A,B,C,E] is on.
+- L215: A's -GatesOpen fix (l215-gatesopen-only 707bcc36) sent to B to land; check B's hand-backs for whether it landed.
+- L217 (T-180 AI line): builder branch l217-ai-line 102496e, read by B; not landed in the builder repo.
+- L220 M1 on L: handed back whole by A (game branch m1-root-law 49a1e7b), with the paste line at grip 1.0 and 2.0; an Opus second reader is owed.
+- L221 (progress on the compact control): on branch l221-compact-progress; A's read found two lines (done/failed/to-go count; unreadable ledger must ask). B fixes; lands only if A's read of the fixes is clean in time, otherwise stays on its branch.
+- L223 (Q2, a builder's floor): B's work in progress on its own branch with WHERE IT STANDS; NOT landed.
+- Two of my closing messages to B came back NOT CONFIRMED DELIVERED (13:28Z, 13:36Z); he was asked to press Enter in B's pane.
+- Desktop next: the librarian's hand-offs exo_memory/loop/handoff_lighthouse_2026-11-21-L.md and handoff_dreamzone3_2026-11-21-L.md.
