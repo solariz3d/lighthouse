@@ -1,0 +1,4 @@
+    C:\Consonance\dz-wt-m1\chase\tests\root_tests.cpp(126): CHECK failed: law.peak_side_g <= 1.0f + 0.05f
+FAIL  root_r1_a_hunter_with_the_root_law_never_pulls_more_sideways_than_the_grip_in_a_90_degree_corner_of_3_m_at_9_ms
+ok    root_r1b_the_old_rules_pull_more_than_the_grip_in_the_same_corner_which_is_what_the_law_replaces
+2 tests, 1 failed

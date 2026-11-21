@@ -1,0 +1,13 @@
+textures: flat colours: C:\Consonance\dz-wt-m1\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+textures: flat colours: C:\Consonance\dz-wt-m1\assets\textures\apartment\Carpet016.dds: cannot be opened (art/tools/textures.py makes them)
+models: kid: 139125 vertices, 205050 triangles, posed through its joint map, 68786 triangles in the head's ray group; hunter: 127116 vertices, 138048 triangles, posed from its bones; the Dark (hunter.glb): 127116 vertices, 138048 triangles, posed from its bones
+film-corner: looked at 1 worlds from seed 1: 2160 node pairs, 2080 walk-only paths, 8353 bends, 1293 kept, 3.0 s
+film-corner: the bend: 88.9 degrees (the path's turn between its 3 m chords in and out) at (-11.54, 10.54, -26.84) in the world of seed 1; the corridor across it 4.4 m; clean path 60.4 m before it and 8.1 m after; the staged run's door 21.5 m before it at (-32.91, 10.54, -26.24), the target's walk to 7.6 m after it at (-13.29, 10.54, -34.04)
+film-corner: the hunter: 6.89 m/s on entry, lowest 1.29 m/s through it, 1.104 s between the gates, 0 wall-meeting ticks in the window
+film-corner: lit pass, first kept frame's mean brightness 81.7 of 255
+film-corner: seen pass, first kept frame's mean brightness 79.3 of 255
+film-corner: the hunter in the lit film is the chase's own: GREEN: 448 frames with the chaser out; the chase in the film against the chase with no stage at most 0.0000000 m (bound 0, at tick 0); the figure from the chase's own position at most 0.0268 m, over the chaser's step in a tick by at most 0.0000 m (bound 0.001, at tick 0); 0 frames unpaired
+film-corner: the hunter in the seen film is the chase's own: GREEN: 448 frames with the chaser out; the chase in the film against the chase with no stage at most 0.0000000 m (bound 0, at tick 0); the figure from the chase's own position at most 0.0268 m, over the chaser's step in a tick by at most 0.0000 m (bound 0.001, at tick 0); 0 frames unpaired
+film-corner: GREEN: the same stage played twice with no picture gives the hunter at the same place and speed, to the bit, on all 448 kept frames
+film-corner: 448 lit frames and 448 seen frames, frames 1449 to 1896; manifest.txt and pose.csv in C:/Users/zackn/AppData/Local/Temp/claude/4589df4838997b56/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/m1/film_on

@@ -1,0 +1,32 @@
+CONTROL (the fixed file, unmutated): 19 passed, 0 failed
+caught (2 failed): A1 unlisted pane: at_ring ignores the key (writes a row for everyone)
+caught (1 failed): B1 under the dial: >= instead of >
+caught (1 failed): B2 under the dial: any context cuts
+caught (1 failed): B3 context unread: cut anyway
+caught (1 failed): C1 mid-turn: cut while the turn runs
+caught (1 failed): C2 a background task running: cut anyway
+caught (1 failed): D1 THE EMPTY KEY: an absent key lists B
+caught (1 failed): D2 THE EMPTY KEY: a config that is not JSON lists B
+caught (1 failed): D3 THE EMPTY KEY: an empty list means every pane
+caught (1 failed): D4 THE EMPTY KEY: a key that is a string is read as a one-letter list
+caught (2 failed): E1 dispatch: an unlisted pane is held
+caught (1 failed): E2 dispatch: a warm pane is held
+caught (1 failed): E3 dispatch: the cold bound is > not >= (a pane exactly COLD_MIN old)
+caught (1 failed): E4 dispatch: a small pane is held
+caught (1 failed): E5 dispatch: no call read counts as cold
+caught (1 failed): E6 dispatch: no context read counts as large
+caught (1 failed): F1 housed names: "lib" is allowed
+caught (1 failed): F2 housed letters from the table are allowed
+caught (1 failed): G1 is_handback: any text with .md
+caught (4 failed): R1 the registry holds nothing
+caught (1 failed): R2 a cut already sending is replaced by a newer hand-back
+caught (1 failed): R3 resolve ignores whose cut it is
+caught (1 failed): R4 mark_sent ignores whose cut it is
+caught (1 failed): R5 a later turn does not win once the ringing turn has ended
+caught (1 failed): R6 the 30-minute abandon is > not >=
+caught (1 failed): R7 any user row after the ring is a later turn (tool results count)
+caught (1 failed): R8 the ring time is ignored (any prompt row counts)
+caught (1 failed): R9 a subagent's prompt row counts as a later turn
+caught (1 failed): R10 is_current is always true
+caught (1 failed): R11 begin does not bump the generation
+applied 30 / caught 30 / NOT APPLIED 0
