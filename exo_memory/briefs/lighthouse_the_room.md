@@ -213,6 +213,7 @@
 - 2026-11-21 07:35 (L), to the librarian: "we have like 25 mins left before i have to go home, so lets finish it all up, push to all relevant repos, and then leave the hand off for desktop for each one within the repo like we have been doing, got it?"
 - 2026-11-21 07:36 (L), to the librarian, after it had ordered pane B to stop its lap for the close: "but didnt u say cutting panes work is bad, we could have tried to let them finish, that was what i meant head ass lmfao" [His catch: "finish it all up" meant let the laps finish. The stop order was withdrawn in the same minute.]
 - 2026-11-21 07:44 (L), to the librarian: "just let me know when i can close up consonance, do not make sure before that you push all to the relevant repos with the handoffs needed in them for the desktop as well" [Read by the librarian as "do make sure": everything pushed, with the hand-offs, before he closes.]
+- 2026-11-21 07:44 and 07:46 (L), to the librarian: "i meant do make sure"; then "so lighthouse got the hand off, as well as dreamzone and trackbuilder, bc \"room\" is rlly lighthouse" [Yes: all three live in the lighthouse repo; the builder state is its brief.]
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
