@@ -207,6 +207,7 @@
 - 2026-11-21 07:08 (L), to the librarian: "i hope we are good now for usage, if worst comes to worst, might have to make you as lib opus 5.5 but i think right now we might be good, especially once we get the new system full running"
 - 2026-11-21 07:09 (L), to the librarian: "how much room, would you want as a pane if you were one to have for your work? context wise i mean, also how does the lib work? Fully 1 mill window?"
 - 2026-11-21 07:11 (L), to the librarian, on its own choice of a ceiling near 400k: "well if you want that for yourself we could try it, as well if it saves us usage, we can turn you back to high reasoning"
+- 2026-11-21 07:12 (L), to the librarian, on the 400k window it had just set on itself: "but do you think that is the right call for the lib?"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
