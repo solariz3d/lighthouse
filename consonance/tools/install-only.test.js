@@ -55,7 +55,8 @@ let seq = 0;
 // Copied rather than symlinked so a mutant can be applied to the copy without touching the tree.
 function mkRepo(mutate) {
   const root = path.join(tmp, 'repo' + (++seq));
-  for (const rel of ['dev/shell/lib', 'dev/shell/hooks', 'consonance/hooks']) {
+  // L214: dev/shell/agents is the installer's second source (its agent definitions), so the fixture copies it too.
+  for (const rel of ['dev/shell/lib', 'dev/shell/hooks', 'consonance/hooks', 'dev/shell/agents']) {
     const from = path.join(REPO, rel.split('/').join(path.sep));
     const to = path.join(root, rel.split('/').join(path.sep));
     fs.mkdirSync(to, { recursive: true });

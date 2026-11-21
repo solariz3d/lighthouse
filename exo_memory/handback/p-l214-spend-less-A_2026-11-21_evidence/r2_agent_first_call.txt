@@ -1,0 +1,4 @@
+scratch CLAUDE.md 100 KB, model haiku
+old way (the room-reader definition without omitClaudeMd): first call carries 44964 tokens (in 2, cache write 41759, cache read 3203)
+new way (omitClaudeMd): first call carries 3765 tokens (in 2, cache write 560, cache read 3203)
+difference: 41199 tokens fewer
