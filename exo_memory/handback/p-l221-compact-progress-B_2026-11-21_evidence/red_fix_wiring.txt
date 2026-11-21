@@ -1,0 +1,6 @@
+test close_small_wiring_tests::l221_an_interrupted_run_is_said_at_launch_once ... ok
+test close_small_wiring_tests::l221_the_seats_are_cut_at_once_and_done_follows_every_seat ... ok
+test close_small_wiring_tests::l221_the_run_in_flight_is_known_without_the_ledger ... FAILED
+test close_small_wiring_tests::l221_the_x_asks_while_a_run_has_seats_to_go ... FAILED
+test close_small_wiring_tests::l221_every_row_of_a_run_goes_to_the_screen_through_the_note ... ok
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 1289 filtered out; finished in 0.01s
