@@ -69,3 +69,10 @@ His words: "OH i think i know what it is, there has been work that wasnt pushed 
   (bank, hover-card and refusal fixes); the underside skin (`underskin.js`) and the vertical-track rule are already IN v0.4.40. So the
   repo holds no unreleased underside or AI-line work. Either that work sits unpushed on D, or the underside is drawn in 0.4.40 and
   looks different from what he expects. Friday: settle which before building anything.
+
+## Added 2026-11-21 (L, the librarian): the fix is on a branch
+
+- Pane A, packet `loop/packet_t180_ai_line_2026-11-21.md`, hand-back `handback/p-t180-ai-line-A_2026-11-21.md`; second read by pane B, clean (`handback/p-l217-read-land-B_2026-11-21.md`). Builder branch `l217-ai-line` 102496e, pushed; not merged, no release.
+- **A correction to this brief (A, confirmed by B):** `CLEAR_UP` is a ratio (the sine of a tangent angle from vertical), not metres; the crashing line least was 1.424e-4, 1.4 times the old bar, not ten to twenty times. The bar is now 1.93e-4, the least of ELYSIUM line, which AC loads; the room to spare over his crashing line is 1.36 times.
+- The 4 extra bytes are the trailing `hasGrid` int32. The underside skin IS in his kn5 (10 `UNDERSKIN_` meshes). The kn5 has 35 meshes and 249,628 triangles against Laniakea 158 and 1,439,728, so the low frame rate is not from mesh count; nothing was timed.
+- **Not fixed until he sees it:** he re-exports TEST TRACK 100 with a build holding the branch and opens it in AC. The desktop unpushed build, if there is one, is still to be found on D.
