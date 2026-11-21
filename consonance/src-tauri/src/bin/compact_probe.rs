@@ -8,6 +8,12 @@
 // compact, then writes /compact the way `deliver` does and reads THAT SESSION'S OWN TRANSCRIPT for a compact_boundary written after
 // the write (the composer cannot confirm a slash command: main.rs, a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect).
 // Prints what it found and the ANSI-stripped screen on any failure. Costs two tiny turns and one compaction on the model given.
+//
+// STATUS, 2026-11-21 (four runs on L, Claude Code 2.1.330): IT HAS NOT YET SHOWN THE ANSWER. Runs 1-2 stopped at first-run dialogs
+// (a bypass-permissions warning, then a new folder's trust question) answered "no" by a blind Enter; runs 3-4, in a trusted empty
+// folder, the TUI drew its composer and took NO input from this bare PTY (no transcript was written at all). inferred, not checked:
+// the TUI waits on terminal queries (cursor position, device attributes) that the app's terminal answers and a bare PTY does not.
+// The next step is to answer those queries here, or to run the question through the app itself.
 use portable_pty::{native_pty_system, CommandBuilder, PtySize};
 use std::io::{Read, Write};
 use std::path::PathBuf;
@@ -79,7 +85,10 @@ fn main() {
     let pair = native_pty_system().openpty(PtySize { rows: 34, cols: 110, pixel_width: 0, pixel_height: 0 }).expect("openpty");
     let mut cmd = CommandBuilder::new(&claude);
     cmd.cwd(&dir_s);
-    cmd.args(["--model", model.as_str(), "--session-id", sid.as_str(), "--dangerously-skip-permissions"]);
+    // No --dangerously-skip-permissions: its one-time warning defaults to "No, exit" and the first write answered it (the probe's
+    // first run, 2026-11-21). A new folder asks instead whether it is trusted, defaulting to "Yes, proceed"; that is accepted below,
+    // only when the screen shows it. The two turns use no tool, so no permission is asked.
+    cmd.args(["--model", model.as_str(), "--session-id", sid.as_str()]);
     cmd.env("TERM", "xterm-256color");
     cmd.env("FORCE_COLOR", "1");
     let mut child = pair.slave.spawn_command(cmd).expect("spawn claude.exe");
@@ -103,7 +112,17 @@ fn main() {
         std::process::exit(code)
     };
 
-    std::thread::sleep(Duration::from_millis(8000)); // startup render
+    // Startup: wait for the composer's mark, not a fixed time. 2.1.330 draws an "Updated: N features" notice first, and a write
+    // sent at a fixed 8 s landed before the composer existed (the probe's third run: no transcript at all).
+    let ready = wait_for(Duration::from_secs(45), || screen(&buf).contains('❯'));
+    println!("composer {}", if ready { "drawn" } else { "NOT drawn within 45 s" });
+    std::thread::sleep(Duration::from_millis(1500));
+    if screen(&buf).to_lowercase().contains("trust") {
+        println!("the folder-trust question is on screen: accepting its default (Yes, proceed)");
+        let _ = writer.write_all(b"\r");
+        let _ = writer.flush();
+        std::thread::sleep(Duration::from_millis(6000));
+    }
     for (i, ask) in ["Reply with the one word: one", "Reply with the one word: two"].iter().enumerate() {
         let sent = now_ms();
         deliver_like(&mut writer, ask);
