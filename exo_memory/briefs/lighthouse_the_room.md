@@ -164,6 +164,7 @@
 - 2026-11-14 05:28 (L), to the librarian, about the card `cards/watch-the-bearing.md`: "do you like it". (The answer is in `librarian/2026-11-14.laptop.md`, "05:3x: he asked whether I like the card".)
 - 2026-11-14 07:05 (L), to the librarian, after it asked him again whether to build the new system: "well what!!!! i said plan and build the new system, bro wants to prove me wrong more than listening, here, i will try it first just for you". (The catch about this seat is in `map/M.md`, "2026-11-14 07:0x"; the plan he had asked for is `loop/plan_new_system_2026-11-14.md`.)
 - 2026-11-14 07:43 (L), closing the laptop, to the librarian: "see u on the other side of the non existent gap my brother"
+- 2026-11-21 00:05 (L), to the librarian, at the first launch since 11-18: "back after like half a week with no usage, didnt do much of anything, shouldnt need a handoff since we last worked on laptop". (What the record shows beside it is in `librarian/2026-11-21.laptop.md`, the first entry.)
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
