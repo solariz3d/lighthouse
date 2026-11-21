@@ -27,8 +27,9 @@ the file in all, is `#[cfg(test)]` modules. `mcp.rs` ~4,400, `cochlea.rs` ~4,100
 | **capture** (keeping a pane's own transcript) | `main.rs` `capture_path`, `gc_captures` (layer 1: the raw PTY log); `harvest_once` (one pass of the capture watcher) | `capture.rs` (layer 2: screen grid → clean turns), `harvest_guard.rs` (the watcher's recovery policy), `start_tailer` (the JSONL transcript tail that feeds the board) |
 | **a pane ending by itself** | `main.rs` `on_pane_exit` | `pane_exit.rs` (the policy), `reopen_seat`, `exit_gate_for` |
 | **keep-warm visits** | `main.rs` `keep_warm_tick` (its own thread), `keep_warm_send` | `keep_warm_decision`, `visit_text`, `keep_warm_harvest` |
+| **close for the night** (the list of warm, large seats, and the cut on his click) | `main.rs` `close_small_plan` (the list, from `consonance/tools/close-small.js --json`; it only reads) and `close_small_confirm` (his click, the one way in) | `close_small.rs` (`confirm`, the click's check; `compacted_since`), `close_small_run`, `close_small_cut_seat` (the ask, its turn ending, `/compact`, the transcript's `compact_boundary`); ledger <data>/close-small.jsonl; UI `ui/close-small.js` |
 | **leaving / closing / the stick** | `main.rs` `leave_run`, `close_route`, `leave_confirmed`, `block_shutdown` | `sync_launch.rs` `run_leave`, `arrive`, `await_handshake`, `find_stick`; `main.rs` `stick_state` and the other `stick_*` commands |
-| **a frontend call** (`invoke('x')` in `ui/`) | `main.rs` the 48 `#[tauri::command]` functions, listed in `.invoke_handler(tauri::generate_handler![...])` at the end of `fn main()` | |
+| **a frontend call** (`invoke('x')` in `ui/`) | `main.rs` the 50 `#[tauri::command]` functions, listed in `.invoke_handler(tauri::generate_handler![...])` at the end of `fn main()` | |
 
 ## The files
 
@@ -41,6 +42,7 @@ the file in all, is `#[cfg(test)]` modules. `mcp.rs` ~4,400, `cochlea.rs` ~4,100
 | `lap_holders.rs` | Whose turn it is when more than one lap is open: the pure half of the baton guard. |
 | `seat_alias.rs` | What a person types (`Main`, `MAIN`, a letter) mapped to what the pane-name table indexes. |
 | `pane_exit.rs` | What to do when a pane's claude process ends by itself: show it, record it, reopen a fixed seat once. |
+| `close_small.rs` | The pure half of "Close for the night" (L212): the click may cut only the list that was shown, once and while fresh, and only seats still warm and large; the ask each seat is sent; a compaction read from the transcript. |
 | `harvest_guard.rs` | The capture watcher's recovery and liveness policy, kept out of the watcher (two threads read one emulator mutex under two policies). |
 | `capture.rs` | Layer 2 of capture: pure functions turning a vt100 screen grid into clean, role-tagged turns (a port of `ui/term.js`'s `latestTurn` / `isChrome`). |
 | `sync_launch.rs` | Pull, verify, then start (the launch verdict, `decide`), the retire rule for a machine waking as its own past, and the stick: arrive, handshake, keep-awake, leave. |
@@ -75,12 +77,13 @@ the functions do. Functions marked * are `#[tauri::command]`.
 - **Delivery.** The ready stamp (`harvest_once`, `write_harvest_stamp`, `read_stamp`, `gate_stamp`, `pane_gate`), the screen reads (`composer_state`, `input_box_empty`, `turn_in_flight`, `pane_state`), the queue (`struct Inbox`, `gate_or_queue`, `drain_decision`, `drain_inboxes`, `withdraw_directive`), the write (`inject_to_pane`, `deliver`, `deliver_pull`, `delivery_receipt`, `await_render`), the pull gate (`gate_decide`*).
 - **The address table and the chair's verbs.** `address_row`, `chair_target_guard`; `chair_inject_exec`, `chair_decide_exec`, `chair_scrollback_exec`, `chair_status_exec`, `librarian_call_exec`, `pane_call_librarian_exec`, `third_place_call_librarian_exec`; channels and breaker (`open_channel`*, `close_channel`*, `set_breaker_ceiling`*, `reset_breaker`*).
 - **Keep-warm and the visit.** `keep_warm_tick`, `keep_warm_decision` (its threshold `keep_warm_after`, 45 min plus a 0..=6 min seat offset since Lap W, so every ping is sent before minute 54; activation `activated_by_use`, a turn a request answered, so a typed slash command is not use), `keep_warm_send`, `keep_warm_row`; `visit_text`, `visit_reply_from`, `keep_warm_harvest`.
+- **Close for the night** (L212). `CloseSmallState`, `close_small_list`, `close_small_plan`*, `close_small_confirm`*, `close_small_run`, `close_small_send`, `close_small_tail`, `close_small_wait`, `close_small_cut_seat`, `close_small_ledger`; its wiring rows are `close_small_wiring_tests`.
 - **Launch.** `sync_at_launch`, `run_state_pull`, `machine_identity`, `launch_effects`, `start_exit_waiter`, `start_jev_shadow`, `leave_cleanup_at_launch`.
 - **The stick.** `stick_state`*, `stick_rehearse`*, `stick_start_applier`*, `stick_release`*, `stick_ack_result`*, `stick_close_app`*, `checked_stick_folder`.
 - **Leave and close.** `leave_close_requested`, `close_route`, `close_needs_confirm`, `leave_confirmed`*, `leave_run`, `run_publish`; the OS ending the session (`block_shutdown`, `watch_session_end`); keep-awake (`keep_awake_thread`); `leave_exit`*.
 - **Audio commands** (the listening tab's front door). `audio_sources`*, `audio_status`*, `audio_start`*, `audio_snapshot`*, `audio_stop`*.
 - **Clipboard.** `clipboard_read`*, `clipboard_write`*.
-- **`fn main()`.** Priority, the launch steps, the threads (drain, keep-warm, the MCP server and the others), then `.invoke_handler` with the 48 commands.
+- **`fn main()`.** Priority, the launch steps, the threads (drain, keep-warm, the MCP server and the others), then `.invoke_handler` with the 50 commands.
 
 ## `mcp.rs`, by area
 

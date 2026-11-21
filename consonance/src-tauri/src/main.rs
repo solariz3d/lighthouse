@@ -32,6 +32,7 @@ mod nowplaying;  // what is actually playing, from Windows' own media session â€
 mod harvest_guard;  // the capture watcher's recovery + liveness policy; one mutex, one policy (E, L043)
 mod sync_launch;  // pull-verify-then-start, and the retire rule for a second machine (C, L052)
 mod pane_exit;  // a pane's claude process ending by itself: shown, recorded, a fixed seat reopened ONCE (A, D143)
+mod close_small;  // "Close for the night": the click's check, the ask, the compaction read from the transcript (B, L212)
 mod priority;  // High class and no EcoQoS for this process and its WebView2 children, set at startup and kept (A, D338)
 #[cfg(test)]
 mod test_scratch;  // test folders that remove themselves on drop (A, D299)
@@ -14747,6 +14748,205 @@ fn keep_warm_harvest(app: &AppHandle, now_ms: u64) {
     }
 }
 
+// ---------------------------------------------------------------- CLOSE FOR THE NIGHT (L212, B; the pure half is close_small.rs)
+//
+// His words, 2026-11-21 00:23: "we could make our own wiring for auto compacts at close". One control: it shows which seats are
+// warm and large (consonance/tools/close-small.js decides, so the rule lives in one place), and on his click asks each to write where
+// it stands, waits for that turn to end, then sends `/compact` and waits for the transcript's own `compact_boundary`. Nothing here
+// runs on a timer, a ring or a pane's request: the ONLY way in is `close_small_confirm`, a #[tauri::command] the UI's button calls,
+// with the token of the list that was shown (rows: close_small.rs tests and `close_small_wiring_tests` below).
+
+/// The list on screen, kept until one click uses it.
+struct CloseSmallState(Mutex<Option<close_small::Plan>>);
+
+/// How long the cut waits for the seat's "where I stand" turn to end, and then for the compaction to be written.
+const CLOSE_SMALL_ASK_WAIT: Duration = Duration::from_secs(20 * 60);
+const CLOSE_SMALL_COMPACT_WAIT: Duration = Duration::from_secs(15 * 60);
+const CLOSE_SMALL_POLL: Duration = Duration::from_secs(5);
+
+/// The tool's list, as JSON. It only reads (transcripts and the data folder); it never cuts.
+fn close_small_list() -> Result<serde_json::Value, String> {
+    let repo = repo_root().ok_or("the room's repository is not known (room_path), so the list cannot be made")?;
+    let tool = repo.join("consonance").join("tools").join("close-small.js");
+    let out = Command::new("node")
+        .arg(&tool)
+        .arg("--json")
+        .creation_flags(NO_WINDOW)
+        .output()
+        .map_err(|e| format!("node could not start {}: {e}", tool.display()))?;
+    if !out.status.success() {
+        return Err(format!("close-small.js exited {:?}: {}", out.status.code(), String::from_utf8_lossy(&out.stderr).trim()));
+    }
+    serde_json::from_slice(&out.stdout).map_err(|e| format!("close-small.js printed no list: {e}"))
+}
+
+/// Shows the list. Keeps it (with a token) for the one click that may cut it; nothing is cut here.
+#[tauri::command]
+fn close_small_plan(app: AppHandle) -> Result<serde_json::Value, String> {
+    let mut list = close_small_list()?;
+    let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_nanos()).unwrap_or(0);
+    let token = format!("{:016x}", fnv1a(format!("close-small:{now}:{}", std::process::id()).as_bytes()));
+    let cut = close_small::cut_panes(&list);
+    *app.state::<CloseSmallState>().0.lock().map_err(|_| "the close's state is poisoned".to_string())? =
+        Some(close_small::Plan { token: token.clone(), made: Instant::now(), cut });
+    list["token"] = serde_json::Value::String(token);
+    Ok(list)
+}
+
+/// HIS CLICK. Takes the shown list (so a second click finds none), checks it with `close_small::confirm`, and cuts the seats that
+/// were on it and are still warm and large, one after another, on its own thread.
+#[tauri::command]
+fn close_small_confirm(app: AppHandle, token: String) -> Result<String, String> {
+    let stored = app.state::<CloseSmallState>().0.lock().map_err(|_| "the close's state is poisoned".to_string())?.take();
+    let fresh = close_small::cut_panes(&close_small_list()?);
+    let (cut, dropped) = close_small::confirm(stored, &token, Instant::now(), &fresh)?;
+    let names = |v: &[String]| v.iter().map(|p| short_id(p).to_string()).collect::<Vec<_>>().join(", ");
+    let said = format!(
+        "CLOSE FOR THE NIGHT, his click: cutting {} seat(s) [{}]{}",
+        cut.len(),
+        names(&cut),
+        if dropped.is_empty() { String::new() } else { format!("; no longer warm and large since the list was shown, so NOT cut: [{}]", names(&dropped)) }
+    );
+    chair_audit(&app, said.clone());
+    close_small_ledger(serde_json::json!({ "event": "click", "cut": cut, "dropped": dropped }));
+    let a = app.clone();
+    std::thread::spawn(move || close_small_run(&a, cut));
+    Ok(said)
+}
+
+fn close_small_run(app: &AppHandle, panes: Vec<String>) {
+    for pane in panes {
+        let outcome = close_small_cut_seat(app, &pane);
+        chair_audit(app, format!("close for the night -> {}: {outcome}", short_id(&pane)));
+        close_small_ledger(serde_json::json!({ "event": "seat", "pane": pane, "outcome": outcome }));
+        let _ = app.emit("close-small", serde_json::json!({ "pane": pane, "outcome": outcome }));
+    }
+    let _ = app.emit("close-small", serde_json::json!({ "done": true }));
+}
+
+fn close_small_ledger(mut row: serde_json::Value) {
+    row["t"] = serde_json::Value::String(chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true));
+    if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(data_dir().join("close-small.jsonl")) {
+        let _ = writeln!(f, "{row}");
+    }
+}
+
+/// One message to one seat, the way keep-warm sends: queued behind a turn or the keeper's typing, never forced; refused for an exited child.
+fn close_small_send(app: &AppHandle, pane: &str, text: &str, label: &str) -> Result<&'static str, String> {
+    match gate_or_queue(app, pane, text, label) {
+        None => inject_to_pane(&app.state::<Panes>(), pane, text, &app.state::<PaneEmus>()).map(|_| "written"),
+        Some(r) if r.starts_with("queued") => Ok("queued"),
+        Some(r) => Err(r),
+    }
+}
+
+fn close_small_tail(app: &AppHandle, pane: &str) -> Option<String> {
+    let path = app.state::<PaneTranscripts>().0.lock().ok().and_then(|m| m.get(pane).cloned())?;
+    read_tail(&path, KEEP_WARM_TAIL_BYTES)
+}
+
+fn close_small_wait(limit: Duration, mut done: impl FnMut() -> bool) -> bool {
+    let start = Instant::now();
+    loop {
+        if done() {
+            return true;
+        }
+        if start.elapsed() >= limit {
+            return false;
+        }
+        std::thread::sleep(CLOSE_SMALL_POLL);
+    }
+}
+
+/// THE CUT OF ONE SEAT. Called only by `close_small_run`, which only `close_small_confirm` starts.
+fn close_small_cut_seat(app: &AppHandle, pane: &str) -> String {
+    let now_ms = || SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    // 1. Where it stands, in its own words, before anything is cut.
+    let asked = now_ms();
+    if let Err(e) = close_small_send(app, pane, close_small::ASK, "close for the night: where you stand") {
+        return format!("NOT cut: the ask could not be sent ({e})");
+    }
+    // 2. That turn ends: a request that started after the ask, and the pane's own Stop stamp saying ready.
+    let ended = close_small_wait(CLOSE_SMALL_ASK_WAIT, || {
+        let answered = close_small_tail(app, pane).as_deref().and_then(last_request).is_some_and(|l| l.started_ms + 1000 >= asked);
+        answered && pane_state(&app.state::<PaneEmus>(), pane).0 == PaneGate::Ready
+    });
+    if !ended {
+        return format!("NOT cut: its turn after the ask did not end within {} min", CLOSE_SMALL_ASK_WAIT.as_secs() / 60);
+    }
+    // 3. The cut, confirmed only by the transcript (the composer cannot confirm a slash command).
+    let sent = now_ms();
+    if let Err(e) = close_small_send(app, pane, close_small::COMPACT, "close for the night: /compact") {
+        return format!("NOT cut: /compact could not be sent ({e})");
+    }
+    let mut seen = None;
+    let done = close_small_wait(CLOSE_SMALL_COMPACT_WAIT, || {
+        seen = close_small_tail(app, pane).as_deref().and_then(|t| close_small::compacted_since(t, sent));
+        seen.is_some()
+    });
+    match (done, seen) {
+        (true, Some((trigger, post))) => format!(
+            "cut: the transcript records a {trigger} compaction{}",
+            post.map(|n| format!(", {}k tokens left", n / 1000)).unwrap_or_default()
+        ),
+        _ => format!("NOT CONFIRMED: /compact was sent and no compaction was recorded within {} min", CLOSE_SMALL_COMPACT_WAIT.as_secs() / 60),
+    }
+}
+
+#[cfg(test)]
+mod close_small_wiring_tests {
+    // R5 (the wiring half): the cut is reachable only from his click. Read at the source, the codebase's way for wiring.
+    fn src() -> String { std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap() }
+    /// The non-test code: everything before the first #[cfg(test)] module of this file that follows `fn main()`.
+    fn live(s: &str) -> String {
+        let main_at = s.find("\nfn main()").expect("fn main");
+        let end = s[main_at..].find("#[cfg(test)]").map(|i| main_at + i).unwrap_or(s.len());
+        // this module sits above fn main(), so cut it out of the live text too
+        let me_at = s.find("mod close_small_wiring_tests").expect("this module");
+        let me_end = me_at + s[me_at..].find("\n}\n").expect("end of this module");
+        format!("{}{}", &s[..me_at], &s[me_end..end])
+    }
+    fn calls(text: &str, f: &str) -> usize { text.matches(&format!("{f}(")).count() }
+
+    #[test]
+    fn the_cut_of_a_seat_is_called_only_from_the_run_and_the_run_only_from_the_click() {
+        let s = live(&src());
+        // each: one definition plus exactly one call
+        assert_eq!(calls(&s, "close_small_cut_seat"), 2, "close_small_cut_seat must have one caller");
+        assert_eq!(calls(&s, "close_small_run"), 2, "close_small_run must have one caller");
+        let run = &s[s.find("fn close_small_run(").unwrap()..];
+        assert!(run[..run.find("\n}\n").unwrap()].contains("close_small_cut_seat(app, &pane)"));
+        let click = &s[s.find("fn close_small_confirm(").unwrap()..];
+        let click = &click[..click.find("\n}\n").unwrap()];
+        assert!(click.contains("close_small_run(&a, cut)"), "the run must start from the click");
+        // and the click checks the shown list (taken, so it is used once) before anything starts
+        let take = click.find(".take()").expect("the click must TAKE the shown list");
+        let check = click.find("close_small::confirm(").expect("the click must check the list");
+        let start = click.find("close_small_run(").unwrap();
+        assert!(take < check && check < start, "take, then check, then cut");
+    }
+
+    #[test]
+    fn compact_is_sent_from_one_place_and_no_ring_or_timer_reaches_it() {
+        let s = live(&src());
+        assert_eq!(s.matches("close_small::COMPACT").count(), 1, "the /compact send must have one site");
+        assert!(!s.contains("\"/compact\""), "no other literal /compact may be written to a pane");
+        let mcp = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/mcp.rs")).unwrap();
+        assert!(!mcp.contains("close_small"), "no MCP verb (a ring, a pane) may reach the close");
+        assert!(!s[s.find("fn keep_warm_tick(").unwrap()..].split("\n}\n").next().unwrap().contains("close_small"), "keep-warm must not reach it");
+    }
+
+    #[test]
+    fn the_click_is_a_command_the_ui_calls_and_the_list_is_another() {
+        let s = src();
+        let list = &s[s.rfind("tauri::generate_handler![").expect("handler list")..];
+        let list = &list[..list.find("])").expect("end of handler list")];
+        assert!(list.contains("close_small_plan") && list.contains("close_small_confirm"));
+        let plan = &s[s.find("fn close_small_plan(").unwrap()..];
+        assert!(!plan[..plan.find("\n}\n").unwrap()].contains("close_small_run"), "showing the list must never cut");
+    }
+}
+
 fn chair_audit(app: &AppHandle, text: String) {
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     board_push(&app.state::<Board>().0, BoardEntry { pane: "chair".to_string(), role: "committee".to_string(), text, ts, ts_source: TsSource::Push });
@@ -17205,6 +17405,7 @@ fn main() {
         .manage(KeepWarmLastSkip(Mutex::new(HashMap::new())))   // D098: why each seat was last not pinged
         .manage(KeepWarmMissed(Mutex::new(HashMap::new())))     // D098: the request start each miss was reported for
         .manage(PaneTranscripts(Mutex::new(HashMap::new())))  // L067: each live pane's transcript, from start_tailer
+        .manage(CloseSmallState(Mutex::new(None)))  // L212: the close's list on screen, until one click uses it
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
@@ -17655,6 +17856,7 @@ fn main() {
             spawn_librarian,
             spawn_third_place,
             set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
+            close_small_plan, close_small_confirm,
             pane_scrollback,
             audio_sources, audio_start, audio_stop, audio_status, audio_snapshot,
             stick_state, stick_rehearse, stick_start_applier, stick_release, stick_ack_result, stick_close_app,
