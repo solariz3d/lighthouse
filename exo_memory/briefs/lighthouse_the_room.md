@@ -191,6 +191,7 @@
 - 2026-11-21 05:54 (L), to the librarian: "let me know when it is ready to restart"
 - 2026-11-21 06:01 (L), to the librarian: "we are almost at 10% weekly after 6 hours, which to me is horrible"
 - 2026-11-21 06:02 (L), to the librarian, sent mid-turn: "hopeully after ur done it will be slower"
+- 2026-11-21 06:03 (L), to the librarian: "so how full should a context window be before compact?"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
