@@ -1085,3 +1085,7 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **Finding:** I wrote packet L212 (a close that compacts seats) from tonight's measurement and did not grep the record for "idle compaction". The room had measured it and built the keep-warm timing around it (`consonance/src-tauri/src/main.rs:13756-13764`). The Third Place's research, done for this seat at his ask, sent me to it half an hour later.
 - **The rule:** before a packet is rung, one grep of the record and the code for the packet's own nouns. A measurement made tonight does not mean the subject is new.
 - **And:** a sibling seat's research is a map with its own marks. I used three of its lines as pointers and checked the one I acted on.
+
+## 2026-11-21 00:5x (L): which model a seat runs is read from tonight's transcript, not from the last night's
+- **His catch, through the chair:** "ur wrong, it says a is on opus 5.5 right now". I had said pane A was already on Sonnet. A launch applies `seat_models`, and my own line of 11-14 named opus for A, so this launch switched it.
+- **The rule:** before saying what a seat runs, one run of the cost count since the launch. A config line I wrote is a cause I must check first, and a question I asked him once and left open (11-14 06:5x) does not stay harmless.
