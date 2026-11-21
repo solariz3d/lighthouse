@@ -29,3 +29,11 @@
 - L223 (Q2, a builder's floor): B's work in progress on its own branch with WHERE IT STANDS; NOT landed.
 - Two of my closing messages to B came back NOT CONFIRMED DELIVERED (13:28Z, 13:36Z); he was asked to press Enter in B's pane.
 - Desktop next: the librarian's hand-offs exo_memory/loop/handoff_lighthouse_2026-11-21-L.md and handoff_dreamzone3_2026-11-21-L.md.
+
+## The close, 07:4x local (librarian-checked at 07:41)
+
+- L221 LANDED: room main = origin 3aa76d1f; release exe 07:40:17 local (A read the two fixes clean; residual: a panic outside the per-seat catch leaves the close question asking until a restart).
+- Q2 (L223) NOT landed: branch q2-builder-floor with WHERE IT STANDS; no code yet.
+- Game branch m1-root-law 49a1e7b1 and builder branch l217-ai-line 102496e1 on their remotes; neither landed.
+- His word 07:36 was "let the panes finish", not stop; my "close the night" message to B said stop and was overridden by the next.
+- Desktop: read the librarian's THE CLOSE (exo_memory/librarian/2026-11-21.laptop.md, last entry) and the two hand-offs (exo_memory/loop/handoff_lighthouse_2026-11-21-L.md, handoff_dreamzone3_2026-11-21-L.md).
