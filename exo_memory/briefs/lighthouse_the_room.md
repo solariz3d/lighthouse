@@ -172,6 +172,7 @@
 - 2026-11-21 00:42 (L): "Lets decide the laptop first, which pane will be the sonnet, then leave a note for when we are back on desktop to decide which pane/s there will be sonnet or stay opus. Also only one pane is working right now? We need to get these fixes done as quick as we can to stop usage bleed."
 - 2026-11-21 00:45 (L): "wait can you change models yoourself for other panes or do i have to? BC i planned to just do it myself". Then to the chair, about the librarian's line that pane A was already on Sonnet (as the chair's pane shows it): "ur wrong, it says a is on opus 5.5 right now mid out…". Then 00:52, after pasting two answers from Gemini on effort levels (not his words; not copied here): "It makes me think we should just try medium on everything, since the higher reasoning lets you do what consonance trys to give you for free"
 - 2026-11-21 01:01 (L): "so everything is in motion from our original plans to the plans for the new features that would help consonance? Or at least queued"
+- 2026-11-21 01:17 (L): "so all is done". Then 01:25, after his relaunch of 01:18:49 into the new build: "back".
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
