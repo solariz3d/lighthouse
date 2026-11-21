@@ -179,6 +179,7 @@
 - 2026-11-21 04:33 (L), to the librarian, sent mid-turn: "also only A pane is sonnet?"
 - 2026-11-21 04:46 (L), to the librarian: "but what about all our usage fix ideas and even incorporating the important features from third place research"
 - 2026-11-21 04:49 (L), to the librarian: "but what about c and d pane, they havent done anything tonight, do they also auto compact on close" [The laptop has panes A, B, C and E; the librarian read "c and d" as C and E, the two idle panes, and said so.]
+- 2026-11-21 04:52 (L), to the librarian, on its answer that the close skips cold seats: "but doesnt that mean still, that the seats that were used last session but not used now dont get used?" [His catch: a hole in Close for the night as built. A seat idle at every close is cold at every close and is never cut.]
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer

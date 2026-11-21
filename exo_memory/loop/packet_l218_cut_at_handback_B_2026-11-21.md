@@ -59,3 +59,29 @@ The rule this serves, unchanged: no seat's conversation is cut without his word 
 in code. `node consonance/tools/heavy-run.js --status && <run>` in one call before the build. Commit by named paths. A
 second reader who is not the author reads the diff before it lands (pane A). Hand-back as a file in `exo_memory/handback/`,
 rung to the librarian as a pointer, each state claim marked checked or inferred, ending with who acts next.
+
+## Addendum, 04:5x: the hole he found, and the second half that closes it
+
+His words, 04:52: "but doesnt that mean still, that the seats that were used last session but not used now dont get used?"
+(read by the librarian as: a seat used in an earlier session and idle in this one is never reached by the close).
+
+He is right, and it is a hole in L212 as built. The close cuts only a warm seat. A seat that was used earlier and is idle
+by the time of any close is cold at every close, so it is skipped every time and stays at its full size until the day it
+is woken. Panes C (750k) and E (482k) are that case tonight. The cut at a hand-back (above) stops new cases among the
+builder panes. It does nothing for a pane that is already large and cold.
+
+**Add to the build, same key, same empty default:**
+
+6. **Cut before the first dispatch.** When the chair's dispatch is about to be delivered to a listed pane whose cache is
+   cold and whose context is over the dial, the app writes `/compact` into that pane FIRST, waits for the confirmed
+   `compact_boundary`, and only then delivers the dispatch (the delivery is held in the queue `gate_or_queue` already
+   keeps). The cold read is paid once, as the wake would have paid it; every call after it is small. If the cut is not
+   confirmed within a stated time, the dispatch is delivered anyway and the board says so: a pane is never left without
+   its work because a cut failed.
+7. **The dry run says it:** `close-small.js --dry-run` gains one line per cold, large seat: "not cut now; cut before its
+   next dispatch" when the seat is listed, or "stays large until woken" when it is not.
+
+**Rows, red first (add to R2):** a listed cold pane over the dial is cut before its dispatch and the dispatch arrives after
+the cut; an unlisted one receives its dispatch at once, uncut; a failed cut still delivers the dispatch.
+
+**Add to the failure lines:** failed on cost if a listed pane's first call of a lap reads or writes more than 400k.
