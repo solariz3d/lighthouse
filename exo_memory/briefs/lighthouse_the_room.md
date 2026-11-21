@@ -198,6 +198,7 @@
 - 2026-11-21 06:13 (L), to the librarian: "lets plan this out right for when what is in motion lands, then we restart before starting this chunk to minimize usage use"
 - 2026-11-21 06:15 (L), to the librarian, on its plan: "i have a question, wouldnt reminding that the master is always there, also mean that it would likely choose to pull it anyway, meaning it loads it all in"
 - 2026-11-21 06:40 (L), to the librarian, on its answer about the load-in plan: "so what does that mean in plain words for ya boi"
+- 2026-11-21 06:43 (L), to the librarian: "well see, doesnt matter if they dont read it in the beginning, when ever they read it it still brings in the context right? it could be during the window already being filled, causing it to go over the limit. Or is it read from the cache? Ihave no idea what that is or how it even works, its crazy I was able to build this system with little to no real technical expertise, all comes from the schizo intuition my boi"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
