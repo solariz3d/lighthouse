@@ -1,0 +1,1 @@
+{"type":"system","subtype":"informational","content":"model switch claude-haiku-5-5 -> claude-sonnet-5-5: this seat's cache is warm, and the switch will rewrite about 31k tokens (an estimated $0.12 at list price).","level":"notice","uuid":"d1d9edff-2c4e-40f0-8352-25c92d6b33a7","session_id":"5ced2cff-3c35-4288-9fda-0049b89d5b43"}
