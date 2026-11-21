@@ -149,6 +149,9 @@ $files = @(
      Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:210 - not wired by default: D runs without it' }
   @{ From = 'consonance\hooks\sourced-stop.js';          To = 'sourced-stop.js' }
   @{ From = 'consonance\hooks\findings-return.js';       To = 'findings-return.js' }
+  # L213 (pane A): the usage ledger. ONE file, TWO registrations: a SessionStart hook (the wake row) and settings.statusLine (the turn rows: the status line is the only
+  # place the harness hands a script rate_limits and prompt_cache). Numbers only; see the file's header. The statusLine half is the block after the hook loop below.
+  @{ From = 'consonance\hooks\usage-ledger.js';           To = 'usage-ledger.js' }
   # WIRED 2026-09-23 (L089), the keeper's authorization by name: "the settings edit for Jev flags"
   # (loop/plan_after_upgrade_2026-09-22.md §AUTHORIZED, d5bd9b1, item 3). It was $unmanaged since D108; the recipe that
   # entry gave was wrong until L089 — an installed copy could not find main.rs from ~/.claude/shell/hooks/ and was
@@ -311,6 +314,8 @@ $register = @(
   @{ Event = 'SessionStart';     Rel = 'sessionstart-state.js';       Runner = 'node' }
   # Lap W, W3: the body line, every source (startup, resume, compact), no matcher. It never blocks a start.
   @{ Event = 'SessionStart';     Rel = 'sessionstart-body.js';        Runner = 'node' }
+  # L213: the usage ledger's wake row (a resume's cold-cache cost). Its turn rows ride settings.statusLine, registered by the block after the hook loop.
+  @{ Event = 'SessionStart';     Rel = 'usage-ledger.js';             Runner = 'node' }
   # The dispatch gate. Matcher-scoped on purpose: it must see the two verbs that put text into
   # another seat's pane and nothing else. It ASKS rather than blocks, and fails open on any error.
   @{ Event = 'PreToolUse';       Rel = 'dispatch-gate.js';            Runner = 'node';
@@ -829,7 +834,13 @@ if ($Check) {
   # measured, not argued: ask-surface.js and baton-wake-stop.js sat there while the file loop
   # reported everything green. A finding that does not reach the exit code is a finding nobody
   # reads.
-  $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count + $excludedLive.Count + $ruledLiveMissing.Count
+  # L213: the usage ledger's status line, one slot: ours, absent (the turn rows do not run) or someone else's (they cannot). The last two are red.
+  $slBad = 0
+  try { $slLive = [string]((Get-Content (Join-Path $env:USERPROFILE '.claude\settings.json') -Raw | ConvertFrom-Json).statusLine.command) } catch { $slLive = '' }
+  if ($slLive -match '[\\/]usage-ledger\.js') { Write-Host "statusLine: usage-ledger.js (ok)" -ForegroundColor Green }
+  elseif ($slLive) { Write-Host "statusLine: ANOTHER status line is configured; the usage ledger's turn rows cannot run (nothing displaced)" -ForegroundColor Magenta; $slBad = 1 }
+  else { Write-Host "statusLine: ABSENT here; a bare run sets it, and until then the usage ledger has no turn rows" -ForegroundColor Magenta; $slBad = 1 }
+  $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count + $excludedLive.Count + $ruledLiveMissing.Count + $slBad
   if ($holdExpired) { Write-Host ("`n$holdExpired dated hold(s) EXPIRED -- nothing was written for them; renew each with a ruling or lift it.") -ForegroundColor Red }
   exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0 -and $srcUndeclared.Count -eq 0 -and $holdExpired -eq 0) { 0 } else { 1 }))
 }
@@ -904,6 +915,7 @@ if ($NoRegister) {
     if ($heldLeaf.ContainsKey((Split-Path -Leaf $e.Rel).ToLower())) { Write-Host ("  {0,-17} {1}" -f $e.Event, (Format-Hold $e.Rel $heldLeaf[(Split-Path -Leaf $e.Rel).ToLower()])) -ForegroundColor Magenta; continue }
     Write-Host ("  {0,-17} {1}" -f $e.Event, (New-HookCommand $e)) -ForegroundColor DarkGray
   }
+  Write-Host ("  {0,-17} {1}   (the usage ledger's turn rows; set only if no status line is configured)" -f 'statusLine', (New-HookCommand ($regEntries | Where-Object { (Split-Path -Leaf $_.Rel) -eq 'usage-ledger.js' } | Select-Object -First 1))) -ForegroundColor DarkGray
   Write-Host "`nRe-run without -NoRegister to apply." -ForegroundColor Cyan
   exit 0
 }
@@ -1047,6 +1059,30 @@ foreach ($e in $regEntries) {
   }
 
   $settings.hooks.$ev = $groups
+}
+
+# L213 (pane A): the usage ledger's STATUS LINE. settings.statusLine is ONE slot, not a list, so this never displaces anything: it is set only when absent,
+# re-pointed when it already names usage-ledger.js, and LEFT ALONE and said when it is someone else's (the ledger's turn rows then do not run, and -Check says so).
+$usageEntry = @($regEntries | Where-Object { (Split-Path -Leaf $_.Rel) -eq 'usage-ledger.js' }) | Select-Object -First 1
+if ($usageEntry -and -not $usageEntry.Excluded -and -not $heldLeaf.ContainsKey('usage-ledger.js')) {
+  $wantSl = New-HookCommand $usageEntry
+  $slProp = $settings.PSObject.Properties['statusLine']
+  if (-not $slProp -or -not $slProp.Value) {
+    $settings | Add-Member -NotePropertyName statusLine -NotePropertyValue ([pscustomobject]@{ type = 'command'; command = $wantSl }) -Force
+    $changes += "  ADD      statusLine        usage-ledger.js"
+    $added++
+  } elseif ($slProp.Value.command -and (Test-SameHook $slProp.Value.command $usageEntry)) {
+    if ($slProp.Value.command -ne $wantSl) {
+      $changes += "  REPOINT  statusLine        usage-ledger.js"
+      $changes += ("           was: {0}" -f $slProp.Value.command)
+      $changes += ("           now: {0}" -f $wantSl)
+      $slProp.Value.command = $wantSl
+      $repointed++
+    } else { $already++ }
+  } else {
+    Write-Host "  LEFT     statusLine        another status line is configured here; the usage ledger's turn rows need that slot, so they will not run. Not displaced." -ForegroundColor Magenta
+    $refused++
+  }
 }
 
 # D205: a group with NO hooks in it runs nothing and is only residue (the stray one the old placeholder left). Pruned on the events THIS run registered for (never an event it did

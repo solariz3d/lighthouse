@@ -1,0 +1,3 @@
+7-day figure: 2% -> 2%  (3 rows since 2026-11-21T00:00:00Z)
+seat      pane  moved   turns   in        out       cache_create  cache_read   wakes  cold_wake_tokens  models
+deadbeef        +0      1       2         4         68930         0            2      0                 claude-haiku-5-5
