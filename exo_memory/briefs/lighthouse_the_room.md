@@ -189,6 +189,7 @@
 - 2026-11-21 05:31 (L), to the librarian, four turns after the one he had given it on xhigh: "oh shit forgot to turn you off Xhigh lmfao, bro was prob like YESSS"
 - 2026-11-21 05:32 (L), to the librarian, answering its "Say on and I will set the list after your relaunch" (the automatic cuts for builder panes A, B, C and E): "also \"on\"" [His word for those four seats: each may be cut at its hand-back and before a dispatch when cold and large.]
 - 2026-11-21 05:54 (L), to the librarian: "let me know when it is ready to restart"
+- 2026-11-21 06:01 (L), to the librarian: "we are almost at 10% weekly after 6 hours, which to me is horrible"
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer
