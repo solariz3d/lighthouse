@@ -1,0 +1,1 @@
+PROJECT file (cwd/.claude/settings.json), setting ON  host was asked 1x  ran: false  tool result: probe host denied  [exit]

@@ -67,7 +67,7 @@
 # content conflict to settle — only a path one.
 
 [CmdletBinding()]
-param([switch]$Check, [switch]$NoRegister, [string[]]$Only)
+param([switch]$Check, [switch]$NoRegister, [string[]]$Only, [string[]]$FailClosed, [switch]$GatesOpen)
 
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)   # …/lighthouse
@@ -447,6 +447,12 @@ foreach ($f in $files) { $hh = Get-HoldHere $f; if ($hh) { $heldLeaf[(Split-Path
 # and it still runs to completion; it is handed fewer items. A partial installer that silently
 # half-registers would be worse than an honestly blunt one, and this is not one.
 $syncFiles = $files
+# L215 (pane A): -FailClosed and -GatesOpen change settings.json only; they are refused with the two read-only modes.
+if (($FailClosed -or $GatesOpen) -and ($Check -or $NoRegister)) {
+  Write-Host "-FailClosed and -GatesOpen write settings.json; they cannot be combined with -Check or -NoRegister." -ForegroundColor Red
+  exit 1
+}
+if ($FailClosed -and $GatesOpen) { Write-Host "-FailClosed and -GatesOpen are opposites; give one." -ForegroundColor Red; exit 1 }
 $regEntries = $register
 $syncAgents = $agentFiles
 if ($Only) {
@@ -1143,6 +1149,42 @@ if (@($syncAgents | Where-Object { $_.Name -eq 'room-reader.md' }).Count -gt 0) 
     $added++
   } elseif ($effProp.Value -eq 'medium') { $already++ }
   else { Write-Host ("  LEFT     env               CLAUDE_CODE_SUBAGENT_EFFORT is already {0} here; not changed" -f $effProp.Value) -ForegroundColor Magenta }
+}
+
+# L215 (pane A): THE FAIL-CLOSED SWITCH AND ITS WAY OUT. Every room gate fails OPEN by design (its header says so: a hook bug must never trap a seat), so nothing here is
+# switched by a bare run. -FailClosed push-gate.js,delete-gate.js sets onFailure:"block" and an explicit timeout (10 s) on those PreToolUse entries only (a managed leaf, on that
+# event), so a gate whose process cannot start, crashes or times out REFUSES the call instead of letting it through (probed on 2.1.330: handback/p-l215-fail-closed-A_2026-11-21.md).
+# A blocking gate that cannot start refuses every call it matches, and the seat can then do nothing, so -GatesOpen is the way out: it takes onFailure off EVERY managed hook.
+# It needs no working gate. If no seat can run it, the keeper runs it in a plain terminal, or starts claude with CLAUDE_CODE_SAFE_MODE=1 (all hooks off) and runs it there.
+if ($FailClosed -or $GatesOpen) {
+  $managedLeaf = @{}
+  foreach ($r in $register) { $managedLeaf[(Split-Path -Leaf $r.Rel).ToLower()] = $true }
+  $wantClosed = @{}
+  foreach ($n in @($FailClosed | ForEach-Object { $_ -split ',' })) { if ($n.Trim()) { $wantClosed[$n.Trim().ToLower()] = $true } }   # -File passes a comma list as ONE string
+  foreach ($n in $wantClosed.Keys) { if (-not $managedLeaf.ContainsKey($n)) { Write-Host "  UNKNOWN  -FailClosed names $n, which is not a hook this script manages; nothing done for it." -ForegroundColor Red; $refused++ } }
+  foreach ($evp in @($settings.hooks.PSObject.Properties)) {
+    foreach ($g in @($evp.Value)) {
+      foreach ($h in @($g.hooks)) {
+        if (-not $h.command) { continue }
+        $qs = [regex]::Matches($h.command, '"([^"]*)"')
+        $lf = if ($qs.Count -gt 0) { (Split-Path -Leaf $qs[$qs.Count - 1].Groups[1].Value).ToLower() } else { (Split-Path -Leaf $h.command.Trim()).ToLower() }
+        if (-not $managedLeaf.ContainsKey($lf)) { continue }
+        $has = $null -ne $h.PSObject.Properties['onFailure']
+        if ($GatesOpen -and $has) {
+          $h.PSObject.Properties.Remove('onFailure')
+          $changes += ("  OPEN     {0,-17} {1}   onFailure removed (fails open again)" -f $evp.Name, $lf)
+          $repointed++
+        } elseif ($FailClosed -and $evp.Name -eq 'PreToolUse' -and $wantClosed.ContainsKey($lf)) {
+          if (-not $has -or $h.onFailure -ne 'block') {
+            $h | Add-Member -NotePropertyName onFailure -NotePropertyValue 'block' -Force
+            $changes += ("  CLOSED   {0,-17} {1}   onFailure: block" -f $evp.Name, $lf)
+            $repointed++
+          } else { $already++ }
+          if (-not $h.timeout) { $h | Add-Member -NotePropertyName timeout -NotePropertyValue 10 -Force }
+        }
+      }
+    }
+  }
 }
 
 # D205: a group with NO hooks in it runs nothing and is only residue (the stray one the old placeholder left). Pruned on the events THIS run registered for (never an event it did

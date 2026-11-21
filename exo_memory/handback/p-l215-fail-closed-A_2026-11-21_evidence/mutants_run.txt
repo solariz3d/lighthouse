@@ -1,0 +1,8 @@
+caught   -and $evp.Name -eq 'PreToolUse' 
+caught   if ($GatesOpen -and $has) {
+caught   ForEach-Object { $_ -split ',' }
+caught   if (-not $managedLeaf.ContainsKey($lf)) { continue }
+caught   if (-not $h.timeout) { $h | Add-Member -NotePropertyName tim
+caught   if (($FailClosed -or $GatesOpen) -and ($Check -or $NoRegiste
+caught   -NotePropertyName onFailure -NotePropertyValue 'block' -Forc
+applied 7 / caught 7 / NOT APPLIED 0
