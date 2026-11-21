@@ -1,4 +1,5 @@
-//! close_small.rs (B, L212, `exo_memory/loop/packet_l212_close_small_B_2026-11-21.md`): the pure half of "Close for the night".
+//! close_small.rs (B, L212, `exo_memory/loop/packet_l212_close_small_B_2026-11-21.md`): the pure half of "Compact warm seats" (named "Close for the night" until L218: his catch, it
+//! closes nothing and work goes on after it).
 //!
 //! His words, 2026-11-21 00:23: "we could make our own wiring for auto compacts at close". At a session's end one control lists the
 //! seats that are WARM and LARGE, and on his click asks each to write where it stands and then cuts it with `/compact`, so it wakes
@@ -20,7 +21,7 @@ use std::time::{Duration, Instant};
 pub const PLAN_TTL: Duration = Duration::from_secs(10 * 60);
 
 /// The one line each seat is sent before its cut. The cut waits for the turn this starts to end.
-pub const ASK: &str = "[close for the night] His click is cutting this seat's conversation for the night (a /compact follows when \
+pub const ASK: &str = "[compact warm seats] His click is cutting this seat's conversation (a /compact follows when \
 this turn ends). In one short reply, write where you stand: a pane, the path of its hand-back or \"nothing in flight\"; the \
 librarian, the chair or the Third Place, a state entry in its own note. Start nothing new.";
 
@@ -40,7 +41,7 @@ pub struct Plan {
 /// The click's check. `stored` is the plan the screen showed, already TAKEN from the app's state (so it is used once). `fresh_cut`
 /// is the tool's list read again at the click. Returns the seats to cut now, and those on the screen that no longer qualify.
 pub fn confirm(stored: Option<Plan>, token: &str, now: Instant, fresh_cut: &[String]) -> Result<(Vec<String>, Vec<String>), String> {
-    let p = stored.ok_or_else(|| "no list is open: press Close for the night to see the list first; nothing was cut".to_string())?;
+    let p = stored.ok_or_else(|| "no list is open: press Compact warm seats to see the list first; nothing was cut".to_string())?;
     if token.is_empty() || p.token != token {
         return Err("this click is not for the list that was shown; open it again; nothing was cut".to_string());
     }

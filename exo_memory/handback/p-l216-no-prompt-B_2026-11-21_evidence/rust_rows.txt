@@ -1,0 +1,40 @@
+== L216 R2 red (against the stub)
+test no_prompt_tests::the_builder_name_is_the_sibling_folder ... ok
+test no_prompt_tests::the_housed_seats_a_keepers_pane_and_a_prompted_pane_do_not ... ok
+test no_prompt_tests::the_config_switch_turns_it_off_and_nothing_else_does ... FAILED
+test no_prompt_tests::a_builder_pane_gets_the_no_prompt_settings ... FAILED
+test no_prompt_tests::the_spawn_asks_the_rule_and_settings_is_passed_from_one_place ... FAILED
+test result: FAILED. 3 passed; 3 failed; 0 ignored; 0 measured; 1237 filtered out; finished in 0.00s
+== L218 R2 red (against the stubs) and L216 green, one build
+test no_prompt_tests::the_builder_name_is_the_sibling_folder ... ok
+test cut_at_handback::tests::a_listed_cold_pane_over_the_dial_is_cut_before_its_dispatch ... FAILED
+test no_prompt_tests::the_housed_seats_a_keepers_pane_and_a_prompted_pane_do_not ... ok
+test cut_at_handback::tests::an_unlisted_pane_is_not_and_writes_no_row ... ok
+test cut_at_handback::tests::a_background_task_is_open_until_its_notification ... FAILED
+test cut_at_handback::tests::an_unlisted_warm_or_small_pane_receives_its_dispatch_at_once ... ok
+test cut_at_handback::tests::a_listed_pane_over_the_dial_at_a_handback_is_cut ... FAILED
+test cut_at_handback::tests::no_cut_mid_turn_or_with_a_background_task_running ... ok
+test cut_at_handback::tests::the_chair_the_librarian_and_the_third_place_cannot_be_listed ... FAILED
+test cut_at_handback::tests::with_the_key_empty_a_handback_ring_changes_nothing ... ok
+test cut_at_handback::tests::a_listed_pane_under_the_dial_is_not ... ok
+test no_prompt_tests::a_builder_pane_gets_the_no_prompt_settings ... ok
+test cut_at_handback::tests::a_ring_that_is_not_a_handback_is_left_alone_with_a_row ... FAILED
+test no_prompt_tests::the_config_switch_turns_it_off_and_nothing_else_does ... ok
+test no_prompt_tests::the_spawn_asks_the_rule_and_settings_is_passed_from_one_place ... ok
+test result: FAILED. 11 passed; 5 failed; 0 ignored; 0 measured; 1237 filtered out; finished in 0.00s
+== full bin suite at base dbf065af
+test intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000 ... FAILED
+test result: FAILED. 1230 passed; 1 failed; 7 ignored; 0 measured; 0 filtered out; finished in 299.65s
+== full bin suite, first run on the branch (9 reds of my own rows' strings, fixed after)
+test address_table_tests::the_pane_executor_has_no_destination_but_the_table ... FAILED
+test chair_tests::the_unconfirmed_arm_actually_calls_that_function ... FAILED
+test composer_tristate_tests::the_chair_says_what_it_withdrew_and_says_when_it_withdrew_nothing ... FAILED
+test pane_call_tests::a_pane_speaks_under_its_mount_letter_and_no_other_name ... FAILED
+test pane_call_tests::an_unlettered_mount_is_refused_before_delivery ... FAILED
+test pane_call_tests::every_outcome_reaches_the_board ... FAILED
+test pane_call_tests::the_success_audit_line_is_the_shape_the_counter_reads ... FAILED
+test ring_reply_tests::both_rings_gate_first_and_reply_only_through_ring_reply ... FAILED
+test ring_stamp_tests::the_three_ring_senders_stamp_the_message_after_writing_the_label_and_before_the_gate ... FAILED
+test intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000 ... FAILED
+test result: FAILED. 1238 passed; 10 failed; 7 ignored; 0 measured; 0 filtered out; finished in 304.65s
+- After the fix: test result: FAILED. 1247 passed; 1 failed; 7 ignored; 0 measured; 0 filtered out; finished in 262.11s

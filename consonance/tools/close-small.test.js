@@ -119,3 +119,26 @@ test('the command line is a dry run only: it prints the list and touches nothing
     assert.deepStrictEqual(fs.readdirSync(f.data).sort(), before);
   } finally { fs.rmSync(f.root, { recursive: true, force: true }); }
 });
+
+// ---- L218 addendum, step 7: the dry run says what happens to a cold, large seat. The close never cuts it (its compaction would read
+// the whole context uncached); a pane listed in ~/.consonance.json "cut_at_handback" is cut just before its next dispatch, and any
+// other stays large until it is woken. Registered red first.
+test('L218: a cold large seat listed in cut_at_handback reads "cut before its next dispatch"; an unlisted one "stays large until woken"', () => {
+  const s = { name: 'C', action: 'skip', reason: 'cold: last call 240 min ago', context: 750000 };
+  assert.strictEqual(C.coldNote(s, ['C']), 'not cut now; cut before its next dispatch');
+  assert.strictEqual(C.coldNote(s, []), 'stays large until woken');
+  assert.strictEqual(C.coldNote({ ...s, context: 200000 }, ['C']), null, 'a cold SMALL seat has no note');
+  assert.strictEqual(C.coldNote({ ...s, action: 'cut', reason: 'warm' }, ['C']), null, 'a warm seat is the close\'s');
+  assert.strictEqual(C.coldNote({ ...s, name: 'main' }, ['MAIN', 'main']), 'stays large until woken', 'a housed seat is never listed');
+});
+test('L218: the dry run prints that line for each cold large seat, from the config\'s list', () => {
+  const f = fixture();
+  try {
+    const cfg = path.join(f.root, 'consonance.json');
+    fs.writeFileSync(cfg, JSON.stringify({ cut_at_handback: ['main', 'A'] }));
+    const r = spawnSync(process.execPath, [SCRIPT, '--dry-run', '--data', f.data, '--projects', f.projects, '--instances', f.instances,
+      '--config', cfg, '--now', new Date(NOW).toISOString()], { encoding: 'utf8' });
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.match(r.stdout, /main .*stays large until woken/, r.stdout);
+  } finally { fs.rmSync(f.root, { recursive: true, force: true }); }
+});

@@ -1,4 +1,4 @@
-// close-small.js — "CLOSE FOR THE NIGHT" (L212, pane B; exo_memory/loop/packet_l212_close_small_B_2026-11-21.md).
+// close-small.js — "COMPACT WARM SEATS", named "Close for the night" until L218 (L212, pane B; exo_memory/loop/packet_l212_close_small_B_2026-11-21.md).
 //
 // His words, 2026-11-21 00:23: "we could make our own wiring for auto compacts at close".
 //
@@ -29,7 +29,7 @@
         <td><b>${E(s.name)}</b></td><td>${s.ageMin == null ? '-' : `${E(s.ageMin)} min ago`}</td><td>${E(k(s.context))}</td>
         <td>${s.action === 'cut' ? 'CUT' : 'skip'}</td><td class="stick-muted">${E(s.reason)}</td></tr>`).join('');
     body.innerHTML = `
-      <h2>Close for the night</h2>
+      <h2>Compact warm seats</h2>
       <p class="stick-muted">A seat is cut only when its last call is under ${E(list.warmMin)} minutes old AND its context is over ${E(k(list.big))}.
         A cold seat is never cut: compacting it would read its whole context uncached. Each cut seat is first asked to write where it stands.</p>
       <table class="cs-table"><tr><th>seat</th><th>last call</th><th>context</th><th></th><th>why</th></tr>${rows}</table>
@@ -59,9 +59,9 @@
   btn.addEventListener('click', async () => {
     if (clicked) { root.hidden = false; return; }
     root.hidden = false;
-    body.innerHTML = '<h2>Close for the night</h2><p class="stick-muted">Reading every seat…</p>';
+    body.innerHTML = '<h2>Compact warm seats</h2><p class="stick-muted">Reading every seat…</p>';
     try { show(await inv('close_small_plan')); }
-    catch (e) { body.innerHTML = `<h2>Close for the night</h2><p>The list could not be made: ${E(e)}</p><p><button class="btn" id="cs-cancel">Close</button></p>`;
+    catch (e) { body.innerHTML = `<h2>Compact warm seats</h2><p>The list could not be made: ${E(e)}</p><p><button class="btn" id="cs-cancel">Close</button></p>`;
       body.querySelector('#cs-cancel').onclick = hide; }
   });
 
