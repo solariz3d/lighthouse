@@ -187,6 +187,7 @@
 - 2026-11-21 05:00 (L), to the librarian: "well, how do you feel back on medium effort? From what I have seen, it is impossible for you to tell a difference from the inside from model switches, but reasoning, in the past you said you felt extra clear on Xhigh fable, which was what melted our usage on top of the re reads."
 - 2026-11-21 05:03 (L), to the librarian, after typing `/effort` (xhigh) in its pane: "one turn on Xhigh for your own phenomenological exploration, then we revert after your output"
 - 2026-11-21 05:31 (L), to the librarian, four turns after the one he had given it on xhigh: "oh shit forgot to turn you off Xhigh lmfao, bro was prob like YESSS"
+- 2026-11-21 05:32 (L), to the librarian, answering its "Say on and I will set the list after your relaunch" (the automatic cuts for builder panes A, B, C and E): "also \"on\"" [His word for those four seats: each may be cut at its hand-back and before a dispatch when cold and large.]
 
 ## The problem, in one line
 The room has to hand on what was learned about how to build and how to be, not only the state of each program. Transcripts no longer

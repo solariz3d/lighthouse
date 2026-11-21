@@ -34,3 +34,4 @@ warm seat for free; a model change still rewrites the whole context.
 - **L214's landing** is pane B's: `loop/packet_l214_land_B_2026-11-21.md` (second read, install, the old exe, the push).
 - **L215** is pane A's, beside it: `loop/packet_l215_fail_closed_A_2026-11-21.md`. Its row above changes in two ways. MCP `alwaysLoad` is DROPPED: the research took it back in its own closing lines (`research/claude_code_features_for_consonance_2026-11-21.md:251-253`, it spends context on every call). `permissions.denyInsteadOfPrompting` is ADDED, for the builder panes only, from the prompt stall of 01:09.
 - **Two panes at once**, against this file's "one pane, in sequence": every pane is cold now (idle over two hours), so there is no warm pane to prefer, and his word is to do all of it.
+- **Also owed on D (added 05:3x):** `cut_at_handback` in `~/.consonance.json`; his word of 2026-11-21 05:32 ("on") was given for panes A, B, C and E on L. Which panes on D is asked there.
