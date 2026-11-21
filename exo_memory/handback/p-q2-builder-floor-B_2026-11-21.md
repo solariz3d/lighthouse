@@ -1,7 +1,7 @@
-# Hand-back Q2 / L223 (pane B, on L): WHERE IT STANDS. The probe is half done, nothing is built. Stopped at the chair's 13:35:25Z "close the laptop's night"
+# Hand-back Q2 / L223 (pane B, on L): Half A BUILT (a builder seat wakes without the three pieces, each a trigger line; one switch restores them); Half B probed, NOT built; the stop was withdrawn at 13:36:47Z
 
 Packet: `exo_memory/loop/packet_q2_builder_floor_B_2026-11-21.md`. Base: room main 0663ea74. Branch: `q2-builder-floor`,
-pushed. It holds this file and its evidence folder only. **No code changed, nothing to land.**
+pushed. Half A is code in `main.rs`; Half B is the probe only (no launch flag changed).
 Evidence: `p-q2-builder-floor-B_2026-11-21_evidence/`.
 
 ## Half B: the probe (partly done)
@@ -57,7 +57,8 @@ with the inherited `CLAUDECODE`/`CLAUDE_CODE_*` cleared. Each piece is measured 
 | skills listing | seen 17,721 B | Skill disallowed (net ~620, Workflow grows); `skillListingBudgetFraction: 0` (~3,200, haiku only) | see left | Skill 0 |
 | agent listing | seen 5,026 B | `--disallowedTools Agent` | ~1,700 | Agent in 4 days; stays |
 
-## Half A: not started in code
+## Half A: BUILT (checked by rows; see the section below the probe) — first the design as read
+
 
 Read and decided, not written:
 - **Where the builder decision lives.** `assemble_intake_for` has no cwd. Its live callers are `prepare_sibling_dir`
@@ -87,4 +88,48 @@ the folder. R3 and R4 are not started.
 - Each arm ran once. The Workflow growth is tied to the skill arms in 5 of 5 cases, but its cause is inferred.
 - The haiku arms' listing sizes differ slightly from opus (17,225 vs 16,760 B).
 
-NEXT: librarian route Q2 back to B when the next lap opens; plan default: finish the probe on opus, then build Half A with the budget held at today's.
+## Half A, as built (added ~13:45Z, after the chair's correction at 13:36:47Z withdrew the stop)
+
+- **What it does.** `builder_floor_for(cwd, brief)` (main.rs, beside `is_builder_dir_name`) is called by the two writers of
+  a builder's `CLAUDE.md`: `intake_with_map` (after the own map is seated) and `prepare_sibling_dir`.
+  - For a `sibling-` folder with the switch on, `builder_floor_text` cuts each piece from its header to the next
+    `---\n\n# ` section:
+    - the memory (topic map and live edge);
+    - NOT CARRIED;
+    - the long-form references.
+  - Each is put back as ONE line from `floor_lines`:
+    - the memory: "When a packet or a ring cites a memory topic or a board claim you do not hold, open that topic in
+      `<topics>`";
+    - NOT CARRIED: "When you reach for an instrument that is not in THE DECK above, open its card in `<cards>`";
+    - the references: "When a synthesis feels too good to look straight at, or you need the case behind a card, open
+      `<data>`".
+
+    No line says "always".
+- **The budget is held.** The brief is built WHOLE first, as today, so the deck, the committee brief and the own map's
+  allowance are computed exactly as before; only the three pieces leave afterwards.
+- **Not touched.** The chair, the librarian and the Third Place never pass through it (their folders are not
+  `sibling-`). No piece's words changed; the files are untouched.
+- **The switch.** `"builder_floor": false` in `~/.consonance.json` restores all three at the next intake, with no rebuild
+  (`builder_floor_on_from`; absent, unreadable or anything else is on).
+- **R1, red first (checked).** 8 rows in `builder_floor_tests`; red against stubs: 5 failed, 3 passed (the unchanged
+  cases).
+  - None of the pieces remains, and the three lines are there.
+  - The rest is kept.
+  - No line says "always".
+  - A brief without the pieces is unchanged.
+  - The switch off restores them; an absent config means on.
+  - A housed folder, and the switch off, are byte-identical.
+  - With the switch on, a builder folder gets the floor and a housed one does not.
+  - Wiring: both writers pass through, and the floor comes after the map is seated.
+- **R4, the suite (checked, under heavy-run).** Base, L221 branch: 1,286/1/7. Q2 first full run: **1,265 passed, 2 failed, 7 ignored**.
+  - The intake row, `light_the_librarian_worst_case_intake_is_under_145_000`, fails on main without this change.
+  - **The other failure was a real bug, caught by `r1_a_builder_brief_holds_the_three_trigger_lines_and_keeps_the_rest`.** The cuts ran one after another on the edited text, and a line put in first is not a header. So the references cut ran on through the memory's new line and ate it.
+  - **Fixed:** every range is taken from the original brief and replaced from the back. The builder_floor rows were rerun on the fix: 8 of 8.
+  - **Not rerun:** the full suite on the fix (the clock). The fix touches only `builder_floor_text`, which nothing else calls but `builder_floor_for`.
+- **R3 is owed** after his next restart, with a builder pane's first call after a cut, against 100,183 (`node exo_memory/loop/seat_context_2026-11-14.js --seat <name> --since <the cut>`).
+- **Inferred, not measured: the size of the cut.** It removes about 7,600 tokens of A's census (memory 5,860, not-carried
+  1,589 or 2,035 for B, references 744) and adds three lines of about 100 tokens each.
+- **Half B not built.** The probe's one clean candidate is Artifact (~73 tokens, 0 laps). Skill nets ~620 because of the
+  Workflow growth. `skillListingBudgetFraction: 0` (~3,200) is not yet run on opus.
+
+NEXT: librarian route pane A to read git diff 0663ea74..q2-builder-floor when the next lap opens; plan default after it: B finishes the probe on opus, then lands Q2 with one release build

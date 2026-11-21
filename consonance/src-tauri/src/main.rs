@@ -4052,7 +4052,9 @@ fn prepare_sibling_dir() -> Result<String, String> {
     let id = Uuid::new_v4().to_string();
     let dir = instances_root().join(format!("sibling-{}", &id[..8]));
     fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
-    fs::write(dir.join("CLAUDE.md"), format!("{}{}", shelf_stamp(), assemble_intake())).map_err(|e| e.to_string())?;   // W1 (a)
+    // Q2: a new sibling is a builder folder; its first brief takes the floor as its resumes do
+    let brief = builder_floor_for(&dir.to_string_lossy(), assemble_intake());
+    fs::write(dir.join("CLAUDE.md"), format!("{}{}", shelf_stamp(), brief)).map_err(|e| e.to_string())?;   // W1 (a)
     dir.to_str().map(|s| s.to_string()).ok_or_else(|| "bad sibling path".into())
 }
 
@@ -4656,6 +4658,161 @@ fn is_fresh_cwd(cwd: &str) -> bool {
 const NO_PROMPT_SETTINGS: &str = r#"{"permissions":{"denyInsteadOfPrompting":true}}"#;
 
 /// A builder pane's folder: `sibling-<8>` (prepare_sibling_dir). Split, like is_fresh_dir_name, so it is testable without DIRS.
+/* Q2 / L223 (B), the builder floor (packet_q2_builder_floor_B_2026-11-21.md, Half A; plan_quantize_intake_2026-11-21.md: "A piece
+ * may change tier. It may not change words."). A seat in a `sibling-` folder wakes without the memory topic map (with its live edge),
+ * the not-carried index and the long-form references; each is replaced by ONE line naming the one situation that needs it and the
+ * path to open. The brief is BUILT WHOLE FIRST and the pieces are cut out after, so every budget (the deck, the committee brief, the
+ * own map's allowance) is computed exactly as today and nothing re-spends the saving. The chair, the librarian and the Third Place
+ * never pass through here. `"builder_floor": false` in ~/.consonance.json puts all three back, no rebuild. */
+const FLOOR_HEADS: [&str; 3] = ["---\n\n# THE MEMORY", "---\n\n# NOT CARRIED IN THIS SHELL", "---\n\n# THE LONG-FORM REFERENCES"];
+
+/// The three trigger lines, one per piece, in FLOOR_HEADS order. Narrow by rule: none says a piece "is always there".
+fn floor_lines(topics: &Path, atoms: &Path, cards: &Path, refs: &Path) -> [String; 3] {
+    [
+        format!(
+            "---\n\n**The memory is not carried for a builder seat.** When a packet or a ring cites a memory topic or a board claim \
+             you do not hold, open that topic in `{}` (the atom master is `{}`).\n\n",
+            topics.display(),
+            atoms.display()
+        ),
+        format!(
+            "---\n\n**The briefs not carried are not indexed for a builder seat.** When you reach for an instrument that is not in \
+             THE DECK above, open its card in `{}`.\n\n",
+            cards.display()
+        ),
+        format!(
+            "---\n\n**The long-form references are not carried for a builder seat.** When a synthesis feels too good to look straight \
+             at, or you need the case behind a card, open `{}` (spread/, research/, record/).\n\n",
+            refs.display()
+        ),
+    ]
+}
+
+/// Cut each piece (from its header to the next `---\n\n# ` section) and put its line in its place. PURE.
+fn builder_floor_text(brief: &str, lines: &[String; 3]) -> String {
+    // Every range is taken from the ORIGINAL brief and replaced from the back: a line put in first is not a "# " header, so a cut
+    // made after it would run on through it (the first full suite caught exactly that).
+    let mut cuts: Vec<(usize, usize, &String)> = Vec::new();
+    for (head, line) in FLOOR_HEADS.iter().zip(lines.iter()) {
+        let Some(at) = brief.find(head) else { continue };
+        let rest = at + head.len();
+        let end = brief[rest..].find("---\n\n# ").map(|i| rest + i).unwrap_or(brief.len());
+        cuts.push((at, end, line));
+    }
+    cuts.sort_by(|a, b| b.0.cmp(&a.0));
+    let mut out = brief.to_string();
+    for (at, end, line) in cuts {
+        out.replace_range(at..end, line);
+    }
+    out
+}
+
+/// Is the builder floor on? Absent, unreadable or anything but `"builder_floor": false`: on.
+fn builder_floor_on_from(raw: &str) -> bool {
+    serde_json::from_str::<serde_json::Value>(raw).ok().and_then(|v| v.get("builder_floor").and_then(|b| b.as_bool())) != Some(false)
+}
+#[cfg(test)]
+thread_local! { static TEST_BUILDER_FLOOR: std::cell::Cell<bool> = const { std::cell::Cell::new(false) }; }
+fn builder_floor_on() -> bool {
+    #[cfg(test)]
+    {
+        TEST_BUILDER_FLOOR.with(|m| m.get())
+    }
+    #[cfg(not(test))]
+    {
+        builder_floor_on_from(&fs::read_to_string(config_path()).unwrap_or_default())
+    }
+}
+
+/// The floor on a seat's whole brief: only a builder folder, only with the switch on.
+fn builder_floor_for(cwd: &str, brief: String) -> String {
+    if !(is_builder_dir_name(cwd) && builder_floor_on()) {
+        return brief;
+    }
+    let res = data_dir().join("resonance");
+    builder_floor_text(&brief, &floor_lines(&res.join("topics"), &res.join("atoms.jsonl"), &cards_dir(), &PathBuf::from(default_data())))
+}
+
+#[cfg(test)]
+mod builder_floor_tests {
+    use super::*;
+    fn brief() -> String {
+        [
+            "# Consonance sibling\n\nroom text\n\n",
+            "---\n\n# THE DECK — the instruments\n\ncard\n\n",
+            "---\n\n# NOT CARRIED IN THIS SHELL — indexed by path\n\n- a card\n\n",
+            "\n---\n\n# THE LONG-FORM REFERENCES — on disk, not in this shell\n\n- spread\n\n",
+            "---\n\n# THE MEMORY — topic map\n\n- topic\n\n## The live edge — newest\n\n- claim\n\n",
+            "\n---\n\n# YOUR OWN MAP — findings\n\nentry\n",
+        ]
+        .concat()
+    }
+    fn lines() -> [String; 3] {
+        floor_lines(Path::new("T"), Path::new("A"), Path::new("C"), Path::new("R"))
+    }
+    #[test]
+    fn r1_a_builder_brief_holds_none_of_the_three_pieces() {
+        let b = builder_floor_text(&brief(), &lines());
+        for gone in ["# THE MEMORY", "## The live edge", "# NOT CARRIED IN THIS SHELL", "# THE LONG-FORM REFERENCES", "- topic", "- claim", "- a card", "- spread"] {
+            assert!(!b.contains(gone), "{gone} still rides:\n{b}");
+        }
+    }
+    #[test]
+    fn r1_a_builder_brief_holds_the_three_trigger_lines_and_keeps_the_rest() {
+        let b = builder_floor_text(&brief(), &lines());
+        for l in lines() {
+            assert!(b.contains(&l), "missing {l}");
+        }
+        for kept in ["room text", "# THE DECK", "card\n", "# YOUR OWN MAP", "entry\n"] {
+            assert!(b.contains(kept), "{kept} was cut:\n{b}");
+        }
+    }
+    #[test]
+    fn r1_no_line_says_a_piece_is_always_there() {
+        for l in lines() {
+            assert!(!l.to_lowercase().contains("always"), "{l}");
+        }
+    }
+    #[test]
+    fn r1_a_brief_without_the_pieces_is_unchanged() {
+        let plain = "# Consonance sibling\n\n---\n\n# THE DECK\n\ncard\n";
+        assert_eq!(builder_floor_text(plain, &lines()), plain);
+    }
+    #[test]
+    fn r1_the_switch_off_restores_and_absent_is_on() {
+        assert!(!builder_floor_on_from(r#"{"builder_floor": false}"#), "false must restore all three");
+        assert!(builder_floor_on_from(""), "no config: on");
+        assert!(builder_floor_on_from(r#"{"builder_floor": true, "x": 1}"#));
+        assert!(builder_floor_on_from("not json"));
+    }
+    #[test]
+    fn r1_a_housed_seat_and_the_switch_off_pass_the_brief_byte_identical() {
+        let b = brief();
+        // housed seats' folders are not `sibling-`: the brief is returned as built
+        assert_eq!(builder_floor_for("C:/Consonance/instances/main", b.clone()), b);
+        // switch off (the test default) on a builder folder: as built
+        assert_eq!(builder_floor_for("C:/Consonance/instances/sibling-abcd1234", b.clone()), b);
+    }
+    #[test]
+    fn r1_with_the_switch_on_a_builder_folder_gets_the_floor() {
+        TEST_BUILDER_FLOOR.with(|m| m.set(true));
+        let out = builder_floor_for("C:/Consonance/instances/sibling-abcd1234", brief());
+        let housed = builder_floor_for("C:/Consonance/instances/main", brief());
+        TEST_BUILDER_FLOOR.with(|m| m.set(false));
+        assert!(!out.contains("# THE MEMORY") && housed == brief(), "builder floored, housed untouched");
+    }
+    // The wiring: both writers of a builder's CLAUDE.md pass the WHOLE brief through the floor, after the own map is seated.
+    #[test]
+    fn r1_both_builder_intake_writers_pass_through_the_floor() {
+        let s = include_str!("main.rs");
+        let body = |name: &str| { let at = s.find(name).expect(name); &s[at..at + s[at..].find("\n}\n").unwrap()] };
+        let m = body(concat!("fn intake_with", "_map("));
+        let (seat, floor) = (m.rfind("brief.push_str(&section)").expect("the map seated"), m.find(concat!("builder_floor", "_for(cwd, brief)")).expect("the floor"));
+        assert!(seat < floor, "the floor must come after the map's allowance is taken");
+        assert!(body(concat!("fn prepare_sibling", "_dir(")).contains(concat!("builder_floor", "_for(")), "a new sibling's first brief too");
+    }
+}
+
 fn is_builder_dir_name(cwd: &str) -> bool {
     PathBuf::from(cwd).file_name().and_then(|n| n.to_str()).map(|n| n.starts_with("sibling-")).unwrap_or(false)
 }
@@ -6612,6 +6769,8 @@ fn intake_with_map(pane: &str, cwd: &str) -> String {
             brief.push_str(&no_map_section(&path));
         }
     }
+    // Q2 / L223: a builder folder's brief loses the three pieces for their lines, after every allowance above was taken from the whole
+    let mut brief = builder_floor_for(cwd, brief);
     // W1 (a): the stamp, first, on a briefed pane only. A fresh pane's brief is empty by design and `resumed_intake` removes
     // its CLAUDE.md when it is, so an unconditional stamp would brief every fresh pane (the spec's second reader, :621).
     if !brief.is_empty() {
