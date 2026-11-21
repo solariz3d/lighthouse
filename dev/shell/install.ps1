@@ -152,6 +152,8 @@ $files = @(
   # L213 (pane A): the usage ledger. ONE file, TWO registrations: a SessionStart hook (the wake row) and settings.statusLine (the turn rows: the status line is the only
   # place the harness hands a script rate_limits and prompt_cache). Numbers only; see the file's header. The statusLine half is the block after the hook loop below.
   @{ From = 'consonance\hooks\usage-ledger.js';           To = 'usage-ledger.js' }
+  # L214 (pane A): the model-switch note. A PreModelSwitch hook that WARNS how many tokens a switch will rewrite in a warm seat; never blocks; one numbers-only row per switch.
+  @{ From = 'consonance\hooks\model-switch-note.js';      To = 'model-switch-note.js' }
   # WIRED 2026-09-23 (L089), the keeper's authorization by name: "the settings edit for Jev flags"
   # (loop/plan_after_upgrade_2026-09-22.md §AUTHORIZED, d5bd9b1, item 3). It was $unmanaged since D108; the recipe that
   # entry gave was wrong until L089 — an installed copy could not find main.rs from ~/.claude/shell/hooks/ and was
@@ -316,6 +318,8 @@ $register = @(
   @{ Event = 'SessionStart';     Rel = 'sessionstart-body.js';        Runner = 'node' }
   # L213: the usage ledger's wake row (a resume's cold-cache cost). Its turn rows ride settings.statusLine, registered by the block after the hook loop.
   @{ Event = 'SessionStart';     Rel = 'usage-ledger.js';             Runner = 'node' }
+  # L214: the model-switch note, on the PreModelSwitch event (2.1.251; its input keys were probed on 2.1.330). No matcher: it sees every requested switch.
+  @{ Event = 'PreModelSwitch';   Rel = 'model-switch-note.js';        Runner = 'node' }
   # The dispatch gate. Matcher-scoped on purpose: it must see the two verbs that put text into
   # another seat's pane and nothing else. It ASKS rather than blocks, and fails open on any error.
   @{ Event = 'PreToolUse';       Rel = 'dispatch-gate.js';            Runner = 'node';

@@ -227,6 +227,8 @@ const ENTRY = {
   // Added 2026-11-21 (L213) with usage-ledger.js's install.ps1 manifest entry, in the same change, by this table's own rule. Call site, not definition:
   // the guard is at the top, above `function main()`, and the call is `if (require.main === module) main();` at the bottom.
   'usage-ledger.js': 'if (require.main === module) main();',
+  // Added 2026-11-21 (L214) with model-switch-note.js's install.ps1 manifest entry, same shape: guard at the top, call site `if (require.main === module) main();` at the bottom.
+  'model-switch-note.js': 'if (require.main === module) main();',
 
   // Added 2026-08-17, and the reason is the same one the sourced-stop comment above records, at a
   // larger scale. install.ps1's manifest grew from 8 files to 22 that morning: NINE hooks were
