@@ -389,3 +389,13 @@ carry it, so this brief does.
     - Not built, not planned, not checked against how Consonance holds its shells today.
 
 **Open (added 2026-11-07 by the Third Place):** item 21's form; item 23's wording; item 20's slow-wave dream (whether at all).
+
+### 2026-11-22 and 11-23 (D), to the librarian; his words, verbatim
+- 11-22 23:57: "back after a while, been playing GTA 6 lol, but anyway, there should be handoffs for each repo, lighthouse, dreamride maybe? And dreamzone, also i dont think we are on the newest build"
+- 11-23 01:33: "what would you advise before reset"
+- 01:34: "okay do that while the compacts happen, then we will restart"
+- 01:37: "so we good to restart"
+- 04:04: "back, all should be good now"
+- 04:05, on my 'all four 300k window files': "all four? But remember, there is more on desktop consonance than on laptop consonance" (D has six builder panes: A, B, C, E, O, P; O and P were added to the cut list and given the window)
+- 04:06: "nope u were right"; "what would you want to catch up on first? Or are you good"
+- **State:** D holds L's night (merge 9c8da53d), pushed; the new build runs since 03:04; cut_at_handback [A,B,C,E,O,P]; a 300k window in each of the six pane folders. Open with him: compacting B (783k), A (563k) and E (444k) before work goes to them; L's open items (`loop/handoff_lighthouse_2026-11-21-L.md`, 'Open with him').
