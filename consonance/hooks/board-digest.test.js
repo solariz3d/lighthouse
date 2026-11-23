@@ -379,12 +379,11 @@ const API_C = 'cccccccc-2222-4000-8000-000000000003';
 const API_A = 'aaaaaaaa-3333-4000-8000-000000000001';
 const CLEAN = 'eeeeeeee-4444-4000-8000-000000000005';
 const ERR_403 = 'Please run /login · API Error: 403 Attention Required! | Cloudflare';
-function apiBed(extra = []) {
+function apiBed(extra = [], now = Date.now()) {
   const instances = require('../tools/scratch.js').mkdtemp('bd-inst-');
   const data = require('../tools/scratch.js').mkdtemp('bd-data-');
   const cwd = path.join(instances, 'a-pane');
   fs.mkdirSync(cwd, { recursive: true });
-  const now = Date.now();
   const rows = [
     { pane: API_C, role: 'user', text: '[chair:MAIN] C: a packet delivered into the pane', ts: now - 300_000 },
     { pane: API_C, role: 'assistant', text: ERR_403, ts: now - 290_000 },
@@ -420,4 +419,44 @@ test('L198 2c: one clean line from the pane clears it', () => {
     { pane: API_A, role: 'assistant', text: 'ok', ts: -1_000 },
   ]));
   assert.doesNotMatch(none, /API ERROR/, 'with no pane on an error, no API-error line at all');
+});
+
+// D677 (pane P, 2026-11-23): THE CLOCK JUST AFTER LOCAL MIDNIGHT. A js-suite run that began at 00:04 local had the row above red once
+// ("doesNotMatch /CHARLIE/"); alone and under load it passed 6 of 6. The digest drops every board row from before local midnight
+// (`dayStart`), and the API bed's rows are dated up to 300 s before now. These rows run the digest with its clock 30 s after local
+// midnight (a preload that replaces Date in the digest's process only), the bed dated from that same clock.
+const CLOCK = path.join(require('../tools/scratch.js').mkdtemp('bd-clock-'), 'clock.js');
+fs.writeFileSync(CLOCK, [
+  "'use strict';",
+  'const RealDate = Date, offset = Number(process.env.BD_FAKE_NOW) - RealDate.now();',
+  'class FakeDate extends RealDate {',
+  '  constructor(...a) { if (a.length) super(...a); else super(RealDate.now() + offset); }',
+  '  static now() { return RealDate.now() + offset; }',
+  '}',
+  'globalThis.Date = FakeDate;',
+].join('\n') + '\n');
+function runAt(b, at) {
+  const out = execFileSync(process.execPath, [HOOK], {
+    input: JSON.stringify({ cwd: b.cwd, session_id: READER, source: 'user' }),
+    encoding: 'utf8',
+    env: { ...process.env, CONSONANCE_INSTANCES: b.instances, CONSONANCE_DATA: b.data, NODE_OPTIONS: `--require "${CLOCK.replace(/\\/g, '/')}"`, BD_FAKE_NOW: String(at) },
+  }).trim();
+  if (!out) return '';
+  return JSON.parse(out).hookSpecificOutput.additionalContext;
+}
+const justAfterMidnight = () => { const d = new Date(); d.setHours(0, 0, 30, 0); return d.getTime(); };
+
+test('the clock 30 s after local midnight: a pane whose last line, minutes before midnight, is an API error is still named', () => {
+  const at = justAfterMidnight();
+  const top = runAt(apiBed([], at), at).split('\n')[0];
+  assert.match(top, /^\[panes\] API ERROR/, 'the pane is still down at 00:00:30; midnight did not make it reply: ' + top);
+  assert.match(top, /CHARLIE/, 'the pane whose 403 came at 23:55 is named');
+  assert.match(top, /ALPHA/, 'and the one whose 529 came at 23:54');
+});
+
+test('the clock 30 s after local midnight: one clean line from the pane clears it', () => {
+  const at = justAfterMidnight();
+  const top = runAt(apiBed([{ pane: API_C, role: 'assistant', text: 'back: logged in, reading the packet now', ts: -1_000 }], at), at).split('\n')[0];
+  assert.doesNotMatch(top, /CHARLIE/, 'C replied cleanly after the error, so it is not named: ' + top);
+  assert.match(top, /^\[panes\] API ERROR.*ALPHA/, 'A still is: ' + top);
 });
