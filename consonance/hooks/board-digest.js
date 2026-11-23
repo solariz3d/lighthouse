@@ -312,6 +312,12 @@ function main(input) {
   const midnight = new Date();
   midnight.setHours(0, 0, 0, 0);
   const dayStart = midnight.getTime();
+  // D677 (pane P, 2026-11-23): THE API-ERROR LINE READS A ROLLING DAY, NOT THE CALENDAR DAY. Every row before local midnight is
+  // dropped below, so a pane whose 403 came at 23:55 vanished from the API-error line at 00:00 though it never replied; a js-suite
+  // run that began at 00:04 went red on exactly that, and a row with the clock at 00:00:30 reproduces it. A pane is down until it
+  // replies, so the API-error line reads each pane's newest line from the last 24 hours, whatever the calendar says.
+  const API_WINDOW_MS = 24 * 60 * 60 * 1000;
+  const apiFrom = Date.now() - API_WINDOW_MS;
 
   const statePath = path.join(dataDir, 'digest_state.json');
   const state = readJson(statePath, {});
@@ -352,6 +358,7 @@ function main(input) {
   const parsed = [];
   const perSecond = new Map();
   let earliest = Infinity;
+  const windowRows = [], windowPerSecond = new Map();   // the API-error line's rolling day (above), under the same filters as below
 
   for (const raw of lines) {
     if (!raw) continue;
@@ -360,6 +367,14 @@ function main(input) {
     const ts = Number(e.ts);
     if (!ts) continue;
     if (ts < earliest) earliest = ts;
+    if (ts >= apiFrom) {
+      const wp = String(e.pane || '');
+      if (UUID_RE.test(wp) && wp !== sessionId) {
+        const wk = `${wp}@${Math.floor(ts / 1000)}`;
+        windowPerSecond.set(wk, (windowPerSecond.get(wk) || 0) + 1);
+        if (e.role === 'assistant') windowRows.push({ pane: wp, ts, key: wk, text: String(e.text || '').replace(/\s+/g, ' ').trim() });
+      }
+    }
     if (ts < dayStart) continue;
     const pane = String(e.pane || '');
     if (!UUID_RE.test(pane)) continue;   // gate/dyad/main are events, not instances
@@ -368,6 +383,14 @@ function main(input) {
     perSecond.set(key, (perSecond.get(key) || 0) + 1);
     parsed.push({ pane, ts, key, role: e.role, text: String(e.text || '') });
   }
+  // Each pane's newest line in the rolling day (replayed history skipped, as below); a pane is down when that line is an API error.
+  const newestAny = new Map();
+  for (const r of windowRows) {
+    if (windowPerSecond.get(r.key) > BURST_THRESHOLD) continue;
+    const prev = newestAny.get(r.pane);
+    if (!prev || r.ts >= prev.ts) newestAny.set(r.pane, r);
+  }
+  const apiPanes = [...newestAny.entries()].filter(([, r]) => API_ERROR_RE.test(r.text)).sort((a, b) => b[1].ts - a[1].ts);
 
   // Slash commands, their stdout, caveats, system reminders and this hook's own
   // output all arrive as string-content user entries. They are not exchanges.
@@ -416,7 +439,7 @@ function main(input) {
     silent.push(pane);
   }
 
-  if (panes.size === 0 && silent.length === 0) emit(null);
+  if (panes.size === 0 && silent.length === 0 && apiPanes.length === 0) emit(null);
 
   // The callsign comes from the pane's LETTER, which the backend assigns once at
   // birth and never releases (data_dir/letters.json). Deriving a name here from
@@ -437,7 +460,9 @@ function main(input) {
     }
     return 'UNNAMED';
   };
-  for (const pane of [...[...panes.keys()].sort((a, b) => panes.get(a).last - panes.get(b).last), ...silent]) {
+  // A pane that is down but has said nothing today is named too (D677), so the API-error line can call it by its letter.
+  const apiOnly = apiPanes.map(([p]) => p).filter((p) => !panes.has(p) && !silent.includes(p));
+  for (const pane of [...[...panes.keys()].sort((a, b) => panes.get(a).last - panes.get(b).last), ...silent, ...apiOnly]) {
     if (pane === MAIN_SID) { names[pane] = 'MAIN'; continue; }
     const fromLetter = callsign(letters[pane]);
     // A letter is authoritative even over a name already stored: if the two ever
@@ -527,7 +552,7 @@ function main(input) {
   // seat was told: each pane's row here still showed its last REPORT, because `said` prefers a long line and the error is short.
   // So every pane whose newest line begins "Please run /login" or "API Error" is named first, in one line, until it replies
   // cleanly. It names; it does not ring or resend (that is fixes 2a and 2b, in main.rs).
-  const apiDown = rows.filter(([, p]) => API_ERROR_RE.test(p.newest)).map(([pane, p]) => `${names[pane] || '?'} (${span(now - p.newestAt)} ago)`);
+  const apiDown = apiPanes.map(([pane, r]) => `${names[pane] || '?'} (${span(now - r.ts)} ago)`);   // the rolling day (D677), not `rows`
   const apiLine = apiDown.length
     ? `API ERROR — the last line of ${apiDown.join(', ')} is an API error ("Please run /login" or "API Error"); a packet delivered there is not acted on until it replies cleanly`
     : null;
