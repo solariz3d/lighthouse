@@ -1,0 +1,12 @@
+caught   usage-ledger.js prev.resets === r.seven_day_resets && 
+caught   usage-ledger.js r.seven_day_pct - prev.pct
+caught   usage-ledger.js Date.parse(r.t) >= since
+caught   usage-ledger.js if (r.kind === 'wake') {
+caught   usage-ledger.js if (last === key) return { wrote: false, line };
+caught   usage-ledger.js model: short(p && p.model && p.model.id, 40),
+caught   usage-ledger.js if (!cu) return { wrote: false, line };
+caught   usage-ledger.js if (p.hook_event_name) return { wrote: false };
+caught   usage-ledger.js five_hour_pct: num(fh.used_percentage)
+caught   usage-ledger.js if (process.env.CONSONANCE_DREAM) process.exit(0);
+caught   usage-ledger.js setTimeout(() => process.exit(0), WATCHDOG_MS).unr
+applied 11 / caught 11 / NOT APPLIED 0

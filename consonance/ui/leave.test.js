@@ -374,6 +374,36 @@ test('seat labels are escaped, never markup', () => {
   assert.ok(!/<img|<b>x/.test(r.text()), r.text());   // r.text(): the question is written into its own elements (the refresh)
 });
 
+// L221 R2 (B): a "Compact warm seats" run with seats to go asks first, even with no seat working, and [Close] is today's Leave.
+test('a compaction run with seats to go asks "Compacting is still running (3 seats to go). Close anyway?"', () => {
+  const r = load();
+  r.ask({ working: [], compacting: 3 });
+  assert.ok(r.text().includes('Compacting is still running (3 seats to go). Close anyway?'), r.text());
+});
+
+test('one seat to go is said in the singular, and the working seats are still listed', () => {
+  const r = load();
+  r.ask({ working: [{ label: 'chair', gate: 'working' }], compacting: 1 });
+  assert.deepStrictEqual([r.text().includes('(1 seat to go)'), r.text().includes('chair: working')], [true, true], r.text());
+});
+
+test('[Close] during a compaction run invokes leave_confirmed once, and [Keep working] invokes nothing', async () => {
+  const r = load();
+  r.ask({ working: [], compacting: 2 });
+  r.els.get('#closeconfirm-keep').onclick();
+  assert.deepStrictEqual([r.root.hidden, r.calls], [true, []]);
+  r.ask({ working: [], compacting: 2 });
+  await r.els.get('#closeconfirm-close').onclick();
+  assert.deepStrictEqual(r.calls.map((c) => c.cmd), ['leave_confirmed']);
+});
+
+// A's read of L221, line (b), ruled 13:28Z: a run in flight whose seats to go could not be read (Rust sends null) still asks, and says so.
+test('a run in flight whose count could not be read asks, and says the count is unknown', () => {
+  const r = load();
+  r.ask({ working: [], compacting: null });
+  assert.ok(r.text().includes('Compacting is still running (how many seats are left could not be read). Close anyway?'), r.text());
+});
+
 Promise.all(pending).then(() => {
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);

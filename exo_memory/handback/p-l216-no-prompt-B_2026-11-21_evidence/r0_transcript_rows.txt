@@ -1,0 +1,11 @@
+2026-11-21T11:22:46.527Z user  Reply with the one word: one 
+2026-11-21T11:22:53.657Z system stop_hook_summary  
+2026-11-21T11:22:53.663Z system turn_duration  
+2026-11-21T11:22:53.701Z user  Reply with the one word: two 
+2026-11-21T11:22:59.840Z system stop_hook_summary  
+2026-11-21T11:22:59.843Z system turn_duration  
+2026-11-21T11:23:09.303Z system compact_boundary  {"trigger":"manual","preTokens":38966,"postTokens":9453,"cumulativeDroppedTokens":29513,"durationMs":8661,"preservedSegment":{"headUuid":"8a654c71-19a4-4a25-9449-38137f480280","anchorUuid":"037df9c1-41e8-4bbd-bc11-654bdeda5bff","tailUuid":"00671b47-253b-4b46-8d5a-928886a39eec"},"preservedMessages":{"anchorUuid":"037df9c1-41e8-4bbd-bc11-654bdeda5bff","uuids":["8a654c71-19a4-4a25-9449-38137f480280","2afe5693-ddee-40d9-93d3-ac12aeede669","baf19c1c-3e5b-4acb-9134-f77e4b6be4d5","00671b47-253b-4b46-8d5a-928886a39eec"],"allUuids":["8a654c71-19a4-4a25-9449-38137f480280","2afe5693-ddee-40d9-93d3-ac12aeede669","62471714-7c30-41fc-9231-fad47804afbc","5091aa5f-c859-4ddd-b7e0-4412c0fcb682","baf19c1c-3e5b-4acb-9134-f77e4b6be4d5","00671b47-253b-4b46-8d5a-928886a39eec"]},"preCompactOrganizations":["bad3f747-0e68-4c28-bc2a-39ae4ae19b19"],"preCompactOrganizationsCoverStart":true}
+2026-11-21T11:23:08.554Z user  This session is being continued from a previous conversation that ran out of context. The summary below covers the earlier portion of the conversation. <system- 
+2026-11-21T11:22:59.896Z user  <local-command-caveat>The command below was run directly in Claude Code, not sent to you as a request, and its output goes straight to the user. It's recorded h 
+2026-11-21T11:22:59.896Z user  <command-name>/compact</command-name> <command-message>compact</command-message> <command-args></command-args> 
+2026-11-21T11:23:09.402Z user  <local-command-stdout>[2mCompacted (ctrl+o to see full summary)[22m [2mPreCompact ["C:\Program Files\nodejs\node.exe" "C:\Users<user>\.claude\shell\precompac 

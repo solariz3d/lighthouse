@@ -1,0 +1,9 @@
+caught   p.prompt_cache_warm !== true || 
+caught   ctx === null || ctx < min
+caught   if (p.from_model && p.to_model && p.from_model ===
+caught   if (process.env.CONSONANCE_DREAM) process.exit(0);
+caught   setTimeout(() => process.exit(0), WATCHDOG_MS).unr
+caught   JSON.stringify({ systemMessage: r.text })
+caught   fs.appendFileSync(path.join(d, LEDGER)
+caught   Math.round(ctx / 1000)
+applied 8 / caught 8 / NOT APPLIED 0

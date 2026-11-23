@@ -1,0 +1,19 @@
+[32m✔ R2 the reader, given two ledger lines, prints how far the 7-day figure moved and which seat it moved on [90m(0.878ms)[39m[39m
+[32m✔ R2 the reader counts a reset of the window as no movement, and counts tokens by class [90m(0.4123ms)[39m[39m
+[32m✔ R2 a figure that is HIGHER under a new reset time is a new window, not movement [90m(0.5027ms)[39m[39m
+[32m✔ the reader says so when rows carry no 7-day figure [90m(0.0952ms)[39m[39m
+[32m✔ the reader keeps only rows at or after --since, and keeps wakes out of the turn counts [90m(0.0992ms)[39m[39m
+[32m✔ the CLI prints a line per seat and exits 0, and refuses a --since that is not a date [90m(79.1684ms)[39m[39m
+[32m✔ the writer turns a status line payload into numbers and short ids, and no free text [90m(0.9077ms)[39m[39m
+[32m✔ R4 no text field of a row is longer than a model id [90m(0.621ms)[39m[39m
+[32m✔ the writer skips the first status line of a session (nothing used yet) and a repeat of the same turn [90m(6.0829ms)[39m[39m
+[32m✔ the writer ignores any other hook event, even one that carries status fields [90m(0.6316ms)[39m[39m
+[32m✔ the writer turns a resume SessionStart payload into a wake row, and a bad payload into nothing [90m(0.3269ms)[39m[39m
+[34mℹ tests 11[39m
+[34mℹ suites 0[39m
+[34mℹ pass 11[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 95.0952[39m

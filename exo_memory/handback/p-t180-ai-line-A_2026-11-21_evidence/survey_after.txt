@@ -1,0 +1,20 @@
+track                                                points least h second third
+F1-bowl-default-lap-closed.core2.json                   250 1.000e+0 1.000e+0 1.000e+0
+F2-halfpipe-default-lap-closed.core2.json               250 1.000e+0 1.000e+0 1.000e+0
+F3-bowl-narrow-12m-cap-binds.core2.json (open)           71 1.000e+0 1.000e+0 1.000e+0
+F4-halfpipe-width-31.5-to-12-along-s.core2.json (open)     51 9.812e-1 9.835e-1 9.856e-1
+F5-flat-20m-bank-30.core2.json (open)                    41 1.000e+0 1.000e+0 1.000e+0
+F6-bowl-r-brushed.core2.json (open)                      67 1.000e+0 1.000e+0 1.000e+0
+F7-hill-then-jump.core2.json (open)                      55 9.883e-1 9.883e-1 9.883e-1
+F8-mixed-families.core2.json (open)                      51 1.000e+0 1.000e+0 1.000e+0
+F9-empty.core2.json                                       0 EMPTY       
+elysium-2026-10-22.t180track                           4600 1.933e-4 1.933e-4 2.197e-3
+extra-bank-short-2026-11-10.t180track (open)            188 1.000e+0 1.000e+0 1.000e+0
+extra-turn-short-2026-11-10.t180track (open)            188 1.000e+0 1.000e+0 1.000e+0
+finish-banked-end-leaves-road.core2.json                531 1.000e+0 1.000e+0 1.000e+0
+level-end-2026-11-09.t180track (open)                   501 9.885e-1 9.885e-1 9.885e-1
+light-hull-2026-11-02.t180track (open)                  487 1.910e-2 1.910e-2 8.851e-2
+stadium-100km.t180track                               16678 1.000e+0 1.000e+0 1.000e+0
+tube-cases-2026-11-02.t180track (open)                  344 9.950e-1 9.950e-1 9.950e-1
+platform_test (floor)                                   327 9.976e-1 9.976e-1 9.976e-1
+platform_test (wall)                                    327 9.742e-1 9.742e-1 9.751e-1

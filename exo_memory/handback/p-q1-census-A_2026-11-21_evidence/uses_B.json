@@ -1,0 +1,38 @@
+{
+ "seat": "B",
+ "files": 1,
+ "laps": 18,
+ "uses": {
+  "BOOT (room frame): BOOT.md opened or a BOOT principle named": 0,
+  "deck cards: a card file opened or a card named": 0,
+  "committee practice: COMMITTEE.md opened or its named rules used (call_librarian, BASE:, SOURCES:, NEXT:, applied N / caught N)": 11,
+  "not-carried index / long-form references: spread, record, research or cards path opened": 0,
+  "memory topic map: resonance topics or atoms opened": 0,
+  "own map (exo_memory/map/<letter>.md) opened or appended": 6,
+  "repo map (MAP.md) opened": 5,
+  "shell memory (memory/*.md) opened": 0,
+  "SOURCE.md trigger index opened": 0
+ },
+ "hooks": {
+  "UserPromptSubmit|UserPromptSubmit|hook_additional_context": {
+   "n": 68,
+   "bytes": 33343
+  },
+  "Stop|Stop|hook_success": {
+   "n": 29,
+   "bytes": 0
+  },
+  "SessionStart|SessionStart:resume|hook_success": {
+   "n": 9,
+   "bytes": 0
+  },
+  "SessionStart|SessionStart|hook_additional_context": {
+   "n": 5,
+   "bytes": 10795
+  },
+  "SessionStart|SessionStart:compact|hook_success": {
+   "n": 8,
+   "bytes": 0
+  }
+ }
+}

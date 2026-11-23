@@ -1,0 +1,139 @@
+{
+ "sibling-07b8a48f": {
+  "laps": 0,
+  "lapsUsing": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  },
+  "callsAnywhere": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  }
+ },
+ "sibling-0845a868": {
+  "laps": 0,
+  "lapsUsing": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  },
+  "callsAnywhere": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  }
+ },
+ "sibling-3d57124e": {
+  "laps": 22,
+  "lapsUsing": {
+   "Artifact": 0,
+   "Monitor": 1,
+   "SendMessage": 1,
+   "Skill": 0,
+   "Agent": 0
+  },
+  "callsAnywhere": {
+   "Artifact": 0,
+   "Monitor": 1,
+   "SendMessage": 2,
+   "Skill": 0,
+   "Agent": 0
+  }
+ },
+ "sibling-5bf9d657": {
+  "laps": 19,
+  "lapsUsing": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  },
+  "callsAnywhere": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  }
+ },
+ "sibling-07b8a48f-a2122153-a37e-41a6-a86f-534267ec0565-scratchpad-diversity-probe": {
+  "laps": 0,
+  "lapsUsing": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  },
+  "callsAnywhere": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  }
+ },
+ "sibling-0845a868-0845a868-38f2-4cc2-b45a-431e0c088fb1-scratchpad-l085": {
+  "laps": 0,
+  "lapsUsing": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  },
+  "callsAnywhere": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  }
+ },
+ "sibling-3d57124e-6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f-scratchpad-compact-probe": {
+  "laps": 0,
+  "lapsUsing": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  },
+  "callsAnywhere": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  }
+ },
+ "sibling-3d57124e-6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f-scratchpad-postcompact-probe": {
+  "laps": 0,
+  "lapsUsing": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  },
+  "callsAnywhere": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0,
+   "Skill": 0,
+   "Agent": 0
+  }
+ }
+}
+TOTAL builder laps 41: Artifact 0, Monitor 1, SendMessage 1, Skill 0, Agent 0

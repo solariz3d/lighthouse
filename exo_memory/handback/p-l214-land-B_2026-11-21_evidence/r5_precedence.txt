@@ -1,0 +1,3 @@
+variable xhigh + definition low: exit 0, session fddc4501, subagent assistant rows by effort {"low":1}
+definition low, no variable: exit 0, session e7fe11cf, subagent assistant rows by effort {"low":1}
+variable xhigh, definition names none: exit 0, session a109b6d3, subagent assistant rows by effort {"xhigh":1}

@@ -1,0 +1,11 @@
+    the lean reads at most 0.472 g over the corner (the root law's own peak 0.482 g; the old rules' 1.666 g)
+ok    root_r1_a_hunter_with_the_root_law_never_pulls_more_sideways_than_the_grip_in_a_90_degree_corner_of_3_m_at_9_ms
+ok    root_r1b_the_old_rules_pull_more_than_the_grip_in_the_same_corner_which_is_what_the_law_replaces
+ok    root_r1c_turned_a_radian_off_its_line_at_9_ms_the_sideways_pull_is_the_grip_itself_and_no_more
+    routes walked to the end: old rules 10 / 10, root law 10 / 10
+ok    root_r3_the_root_law_walks_every_one_of_l170s_ten_routes_to_the_end
+ok    root_r4_the_same_corner_twice_gives_the_same_fingerprint
+ok    root_the_switch_reaches_the_hunter_only_and_is_read_or_refused
+ok    root_make_body_never_gives_any_chaser_the_law
+ok    root_with_the_law_off_the_fingerprint_does_not_read_its_state
+8 tests, 0 failed

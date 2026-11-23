@@ -1,0 +1,42 @@
+survival, seconds
+level   policy    n     min     p10     p25  median     p75     p90      max not caught
+normal  line     12     9.7    15.6    17.9    21.6    44.6    61.7    300.0         1
+normal  flee     12   138.1   233.3   296.0   300.0   300.0   300.0    300.0         9
+normal  cutback   12    17.4    20.6    25.3    29.5    52.5    78.7    134.4         0
+
+what ended the runs (share of runs)
+level   policy  hunter sprinter interceptor  pack | connected     dead end with a way block edge | median score
+normal  line       67%      17%          8%    0% |       92%           0%         0%         0% |          255
+normal  flee       17%       0%          0%    8% |       25%           0%         0%         0% |        10500
+normal  cutback     83%      17%          0%    0% |       83%           0%         0%        17% |          368
+
+what happened on the way
+level   policy | reprieves runs with dead ends cornered climb out | climbs  drops ladders | sprinter interc   pack   lost at mouth |   peaks   idle  trapped
+               |   per run       one   per run  per run   per run |   /min   /min    /min |     /min   /min   /min   /min     /min |    /min  share   at end
+normal  line   |      0.00        0%      0.08     0.00      0.00 |   0.00   0.00    0.00 |     1.17   0.10   0.00   0.29     0.00 |    0.88     0%       0%
+normal  flee   |      0.50       33%      0.00     0.00      0.00 |   0.00   0.04    0.23 |     2.01   0.66   0.23   2.60     0.00 |    0.02     3%       0%
+normal  cutback |      0.00        0%      0.08     0.00      0.00 |   0.00   0.00    0.00 |     1.70   0.00   0.00   0.79     0.00 |    0.45     0%       0%
+paired flee vs line (12 seeds): outlived it in 11, was outlived in 0, within half a second in 1; median of the ratio 14.48 (quartiles 7.37 to 17.24)
+paired cutback vs line (12 seeds): outlived it in 8, was outlived in 3, within half a second in 1; median of the ratio 1.50 (quartiles 1.00 to 2.83)
+
+where chasers caught on the world, per minute of chase
+level   policy minutes    wall hits scrape s
+                           head-on (ticks/240)   stalls   stood s
+normal  line     10.2       12.513     3.26    0.098     0.000   (totals: 128 hits, 8005 scrape ticks, 1 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 92, 4561;  sprinter 36, 3422;  interceptor 0, 22;
+normal  flee     55.8       22.049     9.12    0.072     0.000   (totals: 1231 hits, 122184 scrape ticks, 4 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 781, 55678;  sprinter 247, 50085;  interceptor 126, 13189;  pack 77, 3232;
+normal  cutback    8.8       22.508     5.62    0.113     0.000   (totals: 199 hits, 11927 scrape ticks, 1 stalls, 0 stood ticks)
+        by kind (hits, scrape ticks):  hunter 131, 6048;  sprinter 68, 5879;
+
+reprieves: 6 passages through and 0 back out the way in, in 4 of 36 runs; with the hunter out and a way to the player both times (5):
+                                                   p10  median     p90
+  the hunter's travel time behind, going in        3.5     4.0     4.9
+  and coming out: the lead                         7.4     9.7    11.4
+  lead gained                                      2.5     5.6     7.9
+  way round, the generator's figure               11.2    11.8    14.5
+  way round on the mesh, the hunter's speeds       6.8    10.9    12.1
+  lead gained over the way round on the mesh      0.37    0.51    0.67
+climb-outs while cornered: 0 measured in 0 runs; the hunter's travel time to the player 3 s later: p10 0.0, median 0.0, p90 0.0 s
+
+42 s in all on 2 threads

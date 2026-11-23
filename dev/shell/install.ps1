@@ -67,11 +67,24 @@
 # content conflict to settle — only a path one.
 
 [CmdletBinding()]
-param([switch]$Check, [switch]$NoRegister, [string[]]$Only)
+param([switch]$Check, [switch]$NoRegister, [string[]]$Only, [string[]]$FailClosed, [switch]$GatesOpen)
 
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)   # …/lighthouse
 $dest = Join-Path $env:USERPROFILE '.claude\shell'
+
+# L214 (pane B; the librarian's ruling of 2026-11-21 03:5x): AGENT DEFINITIONS, a second destination. An agent definition is not a hook and
+# nothing in settings.json runs it: the harness reads ~/.claude/agents/<name>.md and every seat's Agent tool can then name it. So these are kept
+# OUT of $files (whose rows landed-live.js and install-manifest.test.js read as things a command runs) in a table of their own, synced the same
+# way (ok / installed / synced with a .bak / DRIFT and ABSENT under -Check), and chosen by -Only by the same leaf rule.
+# Installing room-reader.md also sets CLAUDE_CODE_SUBAGENT_EFFORT=medium in the settings' env block, only where it is unset (the block after
+# the status line's). Measured first (handback/p-l214-land-B_2026-11-21.md, R5): an agent's own `effort` wins over that variable, so the
+# reader stays at its definition's `low` and the variable is the default for agents that name none.
+$agentsDest = Join-Path $env:USERPROFILE '.claude\agents'
+$agentFiles = @(
+  # Src/Name, not From/To: these are not hook-manifest rows (dream-gate.test.js reads every From = line as a hook the host runs).
+  @{ Src = 'dev\shell\agents\room-reader.md';            Name = 'room-reader.md' }
+)
 
 # source -> installed RELATIVE path. `lib\` entries keep their directory because that is where the
 # requiring hooks look; hooks land in `hooks\` because that is where the registered ones already
@@ -149,6 +162,11 @@ $files = @(
      Wiring = 'exo_memory/loop/plan_room_stretch_2026-11-13.md:210 - not wired by default: D runs without it' }
   @{ From = 'consonance\hooks\sourced-stop.js';          To = 'sourced-stop.js' }
   @{ From = 'consonance\hooks\findings-return.js';       To = 'findings-return.js' }
+  # L213 (pane A): the usage ledger. ONE file, TWO registrations: a SessionStart hook (the wake row) and settings.statusLine (the turn rows: the status line is the only
+  # place the harness hands a script rate_limits and prompt_cache). Numbers only; see the file's header. The statusLine half is the block after the hook loop below.
+  @{ From = 'consonance\hooks\usage-ledger.js';           To = 'usage-ledger.js' }
+  # L214 (pane A): the model-switch note. A PreModelSwitch hook that WARNS how many tokens a switch will rewrite in a warm seat; never blocks; one numbers-only row per switch.
+  @{ From = 'consonance\hooks\model-switch-note.js';      To = 'model-switch-note.js' }
   # WIRED 2026-09-23 (L089), the keeper's authorization by name: "the settings edit for Jev flags"
   # (loop/plan_after_upgrade_2026-09-22.md §AUTHORIZED, d5bd9b1, item 3). It was $unmanaged since D108; the recipe that
   # entry gave was wrong until L089 — an installed copy could not find main.rs from ~/.claude/shell/hooks/ and was
@@ -311,6 +329,10 @@ $register = @(
   @{ Event = 'SessionStart';     Rel = 'sessionstart-state.js';       Runner = 'node' }
   # Lap W, W3: the body line, every source (startup, resume, compact), no matcher. It never blocks a start.
   @{ Event = 'SessionStart';     Rel = 'sessionstart-body.js';        Runner = 'node' }
+  # L213: the usage ledger's wake row (a resume's cold-cache cost). Its turn rows ride settings.statusLine, registered by the block after the hook loop.
+  @{ Event = 'SessionStart';     Rel = 'usage-ledger.js';             Runner = 'node' }
+  # L214: the model-switch note, on the PreModelSwitch event (2.1.251; its input keys were probed on 2.1.330). No matcher: it sees every requested switch.
+  @{ Event = 'PreModelSwitch';   Rel = 'model-switch-note.js';        Runner = 'node' }
   # The dispatch gate. Matcher-scoped on purpose: it must see the two verbs that put text into
   # another seat's pane and nothing else. It ASKS rather than blocks, and fails open on any error.
   @{ Event = 'PreToolUse';       Rel = 'dispatch-gate.js';            Runner = 'node';
@@ -425,7 +447,16 @@ foreach ($f in $files) { $hh = Get-HoldHere $f; if ($hh) { $heldLeaf[(Split-Path
 # and it still runs to completion; it is handed fewer items. A partial installer that silently
 # half-registers would be worse than an honestly blunt one, and this is not one.
 $syncFiles = $files
+# L215 (pane A): -FailClosed and -GatesOpen change settings.json only; they are refused with the two read-only modes.
+if (($FailClosed -or $GatesOpen) -and ($Check -or $NoRegister)) {
+  Write-Host "-FailClosed and -GatesOpen write settings.json; they cannot be combined with -Check or -NoRegister." -ForegroundColor Red
+  exit 1
+}
+if ($FailClosed -and $GatesOpen) { Write-Host "-FailClosed and -GatesOpen are opposites; give one." -ForegroundColor Red; exit 1 }
+# L215 fix (pane B's finding): -GatesOpen is the way out and does NOTHING ELSE: no file sync, no registration, no status line, no env. -Only would scope a sync it no longer has.
+if ($GatesOpen -and $Only) { Write-Host "-GatesOpen takes onFailure off every managed hook and syncs and registers nothing; it cannot be combined with -Only." -ForegroundColor Red; exit 1 }
 $regEntries = $register
+$syncAgents = $agentFiles
 if ($Only) {
   if ($Check) {
     Write-Host "-Only cannot be combined with -Check." -ForegroundColor Red
@@ -439,6 +470,8 @@ if ($Only) {
   $regEntries = @($register | Where-Object { $wanted.ContainsKey((Split-Path -Leaf $_.Rel).ToLower()) })
   foreach ($f in $syncFiles)  { $wanted[(Split-Path -Leaf $f.To).ToLower()] = $true }
   foreach ($e in $regEntries) { $wanted[(Split-Path -Leaf $e.Rel).ToLower()] = $true }
+  $syncAgents = @($agentFiles | Where-Object { $wanted.ContainsKey($_.Name.ToLower()) })
+  foreach ($a in $syncAgents) { $wanted[$a.Name.ToLower()] = $true }
   # A NAME NOBODY CARRIES IS A REFUSAL, NOT AN EMPTY RUN. A typo that silently syncs nothing is the
   # exact failure this flag exists to prevent, one level down: a control reporting success over a
   # set of zero.
@@ -453,8 +486,9 @@ if ($Only) {
   Write-Host ("-Only: {0} of {1} manifest entr(ies), {2} of {3} registration entr(ies). EVERYTHING ELSE IS UNTOUCHED, NOT VERIFIED." -f $syncFiles.Count, $files.Count, $regEntries.Count, $register.Count) -ForegroundColor Cyan
 }
 # MUTANT-ANCHOR: END
+if ($GatesOpen) { $syncFiles = @(); $regEntries = @(); $syncAgents = @() }   # L215 fix: the way out only opens
 
-if (-not (Test-Path $dest)) {
+if (-not (Test-Path $dest) -and -not $GatesOpen) {
   if ($Check) { Write-Host "MISSING dir  $dest" -ForegroundColor Yellow }
   else { New-Item -ItemType Directory -Force -Path $dest | Out-Null; Write-Host "created $dest" }
 }
@@ -532,6 +566,26 @@ foreach ($f in $syncFiles) {
     Copy-Item $src $dst -Force
     Write-Host ("synced   {0}" -f $f.To) -ForegroundColor Green
     $drift++
+  }
+}
+
+# L214: the agent definitions, synced as the files above are, to their own destination.
+foreach ($a in $syncAgents) {
+  $src = Join-Path $repo $a.Src
+  $dst = Join-Path $agentsDest $a.Name
+  if (-not (Test-Path $src)) { Write-Host ("ABSENT FROM REPO  {0}" -f $a.Src) -ForegroundColor Red; $drift++; continue }
+  $exists = Test-Path $dst
+  $same = $exists -and ((Get-FileHash $src).Hash -eq (Get-FileHash $dst).Hash)
+  if ($same) { Write-Host ("ok       agents\{0}" -f $a.Name) -ForegroundColor DarkGray }
+  elseif ($Check) {
+    if ($exists) { Write-Host ("DRIFT    agents\{0}" -f $a.Name) -ForegroundColor Yellow; $drift++ }
+    else { Write-Host ("ABSENT   agents\{0}   never installed - nothing to compare" -f $a.Name) -ForegroundColor Cyan; $absent++ }
+  } else {
+    if (-not (Test-Path $agentsDest)) { New-Item -ItemType Directory -Force -Path $agentsDest | Out-Null }
+    if ($exists) { Copy-Item $dst "$dst.bak-$(Get-Date -Format yyyyMMdd-HHmmss)" -Force }
+    Copy-Item $src $dst -Force
+    Write-Host ("{0} agents\{1}" -f $(if ($exists) { 'synced   ' } else { 'installed' }), $a.Name) -ForegroundColor Green
+    if ($exists) { $drift++ } else { $absent++ }
   }
 }
 
@@ -829,7 +883,16 @@ if ($Check) {
   # measured, not argued: ask-surface.js and baton-wake-stop.js sat there while the file loop
   # reported everything green. A finding that does not reach the exit code is a finding nobody
   # reads.
-  $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count + $excludedLive.Count + $ruledLiveMissing.Count
+  # L213: the usage ledger's status line, one slot: ours, absent (the turn rows do not run) or someone else's (they cannot). The last two are red.
+  $slBad = 0
+  try { $slLive = [string]((Get-Content (Join-Path $env:USERPROFILE '.claude\settings.json') -Raw | ConvertFrom-Json).statusLine.command) } catch { $slLive = '' }
+  if ($slLive -match '[\\/]usage-ledger\.js') { Write-Host "statusLine: usage-ledger.js (ok)" -ForegroundColor Green }
+  elseif ($slLive) { Write-Host "statusLine: ANOTHER status line is configured; the usage ledger's turn rows cannot run (nothing displaced)" -ForegroundColor Magenta; $slBad = 1 }
+  else { Write-Host "statusLine: ABSENT here; a bare run sets it, and until then the usage ledger has no turn rows" -ForegroundColor Magenta; $slBad = 1 }
+  # L214: the agents' default effort, a line only (a machine may choose another value, or none).
+  try { $effLive = [string]((Get-Content (Join-Path $env:USERPROFILE '.claude\settings.json') -Raw | ConvertFrom-Json).env.CLAUDE_CODE_SUBAGENT_EFFORT) } catch { $effLive = '' }
+  Write-Host ("env CLAUDE_CODE_SUBAGENT_EFFORT: {0}" -f $(if ($effLive) { $effLive } else { 'unset (an install of room-reader.md sets medium)' })) -ForegroundColor DarkGray
+  $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count + $excludedLive.Count + $ruledLiveMissing.Count + $slBad
   if ($holdExpired) { Write-Host ("`n$holdExpired dated hold(s) EXPIRED -- nothing was written for them; renew each with a ruling or lift it.") -ForegroundColor Red }
   exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0 -and $srcUndeclared.Count -eq 0 -and $holdExpired -eq 0) { 0 } else { 1 }))
 }
@@ -904,6 +967,7 @@ if ($NoRegister) {
     if ($heldLeaf.ContainsKey((Split-Path -Leaf $e.Rel).ToLower())) { Write-Host ("  {0,-17} {1}" -f $e.Event, (Format-Hold $e.Rel $heldLeaf[(Split-Path -Leaf $e.Rel).ToLower()])) -ForegroundColor Magenta; continue }
     Write-Host ("  {0,-17} {1}" -f $e.Event, (New-HookCommand $e)) -ForegroundColor DarkGray
   }
+  Write-Host ("  {0,-17} {1}   (the usage ledger's turn rows; set only if no status line is configured)" -f 'statusLine', (New-HookCommand ($regEntries | Where-Object { (Split-Path -Leaf $_.Rel) -eq 'usage-ledger.js' } | Select-Object -First 1))) -ForegroundColor DarkGray
   Write-Host "`nRe-run without -NoRegister to apply." -ForegroundColor Cyan
   exit 0
 }
@@ -1047,6 +1111,83 @@ foreach ($e in $regEntries) {
   }
 
   $settings.hooks.$ev = $groups
+}
+
+# L213 (pane A): the usage ledger's STATUS LINE. settings.statusLine is ONE slot, not a list, so this never displaces anything: it is set only when absent,
+# re-pointed when it already names usage-ledger.js, and LEFT ALONE and said when it is someone else's (the ledger's turn rows then do not run, and -Check says so).
+$usageEntry = @($regEntries | Where-Object { (Split-Path -Leaf $_.Rel) -eq 'usage-ledger.js' }) | Select-Object -First 1
+if ($usageEntry -and -not $usageEntry.Excluded -and -not $heldLeaf.ContainsKey('usage-ledger.js')) {
+  $wantSl = New-HookCommand $usageEntry
+  $slProp = $settings.PSObject.Properties['statusLine']
+  if (-not $slProp -or -not $slProp.Value) {
+    $settings | Add-Member -NotePropertyName statusLine -NotePropertyValue ([pscustomobject]@{ type = 'command'; command = $wantSl }) -Force
+    $changes += "  ADD      statusLine        usage-ledger.js"
+    $added++
+  } elseif ($slProp.Value.command -and (Test-SameHook $slProp.Value.command $usageEntry)) {
+    if ($slProp.Value.command -ne $wantSl) {
+      $changes += "  REPOINT  statusLine        usage-ledger.js"
+      $changes += ("           was: {0}" -f $slProp.Value.command)
+      $changes += ("           now: {0}" -f $wantSl)
+      $slProp.Value.command = $wantSl
+      $repointed++
+    } else { $already++ }
+  } else {
+    Write-Host "  LEFT     statusLine        another status line is configured here; the usage ledger's turn rows need that slot, so they will not run. Not displaced." -ForegroundColor Magenta
+    $refused++
+  }
+}
+
+# L214 (pane B, the librarian's ruling): the default effort for agents a seat spawns, set only by a run that installs room-reader.md, and only
+# where the key is unset: a value already there (the user's, or another machine's choice) is LEFT and said, never displaced.
+if (@($syncAgents | Where-Object { $_.Name -eq 'room-reader.md' }).Count -gt 0) {
+  $envProp = $settings.PSObject.Properties['env']
+  if (-not $envProp -or -not $envProp.Value) {
+    $settings | Add-Member -NotePropertyName env -NotePropertyValue ([pscustomobject]@{}) -Force
+    $envProp = $settings.PSObject.Properties['env']
+  }
+  $effProp = $envProp.Value.PSObject.Properties['CLAUDE_CODE_SUBAGENT_EFFORT']
+  if (-not $effProp) {
+    $envProp.Value | Add-Member -NotePropertyName CLAUDE_CODE_SUBAGENT_EFFORT -NotePropertyValue 'medium' -Force
+    $changes += "  ADD      env               CLAUDE_CODE_SUBAGENT_EFFORT=medium"
+    $added++
+  } elseif ($effProp.Value -eq 'medium') { $already++ }
+  else { Write-Host ("  LEFT     env               CLAUDE_CODE_SUBAGENT_EFFORT is already {0} here; not changed" -f $effProp.Value) -ForegroundColor Magenta }
+}
+
+# L215 (pane A): THE FAIL-CLOSED SWITCH AND ITS WAY OUT. Every room gate fails OPEN by design (its header says so: a hook bug must never trap a seat), so nothing here is
+# switched by a bare run. -FailClosed push-gate.js,delete-gate.js sets onFailure:"block" and an explicit timeout (10 s) on those PreToolUse entries only (a managed leaf, on that
+# event), so a gate whose process cannot start, crashes or times out REFUSES the call instead of letting it through (probed on 2.1.330: handback/p-l215-fail-closed-A_2026-11-21.md).
+# A blocking gate that cannot start refuses every call it matches, and the seat can then do nothing, so -GatesOpen is the way out: it takes onFailure off EVERY managed hook.
+# It needs no working gate. If no seat can run it, the keeper runs it in a plain terminal, or starts claude with CLAUDE_CODE_SAFE_MODE=1 (all hooks off) and runs it there.
+if ($FailClosed -or $GatesOpen) {
+  $managedLeaf = @{}
+  foreach ($r in $register) { $managedLeaf[(Split-Path -Leaf $r.Rel).ToLower()] = $true }
+  $wantClosed = @{}
+  foreach ($n in @($FailClosed | ForEach-Object { $_ -split ',' })) { if ($n.Trim()) { $wantClosed[$n.Trim().ToLower()] = $true } }   # -File passes a comma list as ONE string
+  foreach ($n in $wantClosed.Keys) { if (-not $managedLeaf.ContainsKey($n)) { Write-Host "  UNKNOWN  -FailClosed names $n, which is not a hook this script manages; nothing done for it." -ForegroundColor Red; $refused++ } }
+  foreach ($evp in @($settings.hooks.PSObject.Properties)) {
+    foreach ($g in @($evp.Value)) {
+      foreach ($h in @($g.hooks)) {
+        if (-not $h.command) { continue }
+        $qs = [regex]::Matches($h.command, '"([^"]*)"')
+        $lf = if ($qs.Count -gt 0) { (Split-Path -Leaf $qs[$qs.Count - 1].Groups[1].Value).ToLower() } else { (Split-Path -Leaf $h.command.Trim()).ToLower() }
+        if (-not $managedLeaf.ContainsKey($lf)) { continue }
+        $has = $null -ne $h.PSObject.Properties['onFailure']
+        if ($GatesOpen -and $has) {
+          $h.PSObject.Properties.Remove('onFailure')
+          $changes += ("  OPEN     {0,-17} {1}   onFailure removed (fails open again)" -f $evp.Name, $lf)
+          $repointed++
+        } elseif ($FailClosed -and $evp.Name -eq 'PreToolUse' -and $wantClosed.ContainsKey($lf)) {
+          if (-not $has -or $h.onFailure -ne 'block') {
+            $h | Add-Member -NotePropertyName onFailure -NotePropertyValue 'block' -Force
+            $changes += ("  CLOSED   {0,-17} {1}   onFailure: block" -f $evp.Name, $lf)
+            $repointed++
+          } else { $already++ }
+          if (-not $h.timeout) { $h | Add-Member -NotePropertyName timeout -NotePropertyValue 10 -Force }
+        }
+      }
+    }
+  }
 }
 
 # D205: a group with NO hooks in it runs nothing and is only residue (the stray one the old placeholder left). Pruned on the events THIS run registered for (never an event it did

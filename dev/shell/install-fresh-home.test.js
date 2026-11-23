@@ -44,6 +44,36 @@ test('row 2: a home that HAS a settings.json is merged into, never re-created: t
   } finally { fs.rmSync(home, { recursive: true, force: true }); }
 });
 
+// L214 (pane B, the librarian's rulings of 2026-11-21 03:5x): AGENT DEFINITIONS are a second destination, ~/.claude/agents/, so every seat's Agent
+// tool can name them; and CLAUDE_CODE_SUBAGENT_EFFORT is set to medium in the user settings' env block, only where it is not already set.
+test('row 4: a fresh home gets agents/room-reader.md, byte for byte the repo\'s', { skip }, () => {
+  const home = require('../../consonance/tools/scratch.js').mkdtemp('fresh-home-');
+  try {
+    const r = install(home), out = r.stdout + r.stderr;
+    assert.strictEqual(r.status, 0, out.slice(-2000));
+    const got = path.join(home, '.claude', 'agents', 'room-reader.md');
+    assert.ok(fs.existsSync(got), 'agents/room-reader.md is installed');
+    assert.ok(fs.readFileSync(got).equals(fs.readFileSync(path.join(__dirname, 'agents', 'room-reader.md'))), 'it is the repo\'s copy');
+  } finally { fs.rmSync(home, { recursive: true, force: true }); }
+});
+
+test('row 5: the env block gets CLAUDE_CODE_SUBAGENT_EFFORT=medium where it is unset, and a value already there is left as it is', { skip }, () => {
+  const fresh = require('../../consonance/tools/scratch.js').mkdtemp('fresh-home-');
+  const set = require('../../consonance/tools/scratch.js').mkdtemp('fresh-home-');
+  try {
+    let r = install(fresh);
+    assert.strictEqual(r.status, 0, (r.stdout + r.stderr).slice(-2000));
+    assert.strictEqual(JSON.parse(fs.readFileSync(path.join(fresh, '.claude', 'settings.json'), 'utf8')).env.CLAUDE_CODE_SUBAGENT_EFFORT, 'medium');
+    fs.mkdirSync(path.join(set, '.claude'));
+    fs.writeFileSync(path.join(set, '.claude', 'settings.json'), JSON.stringify({ env: { CLAUDE_CODE_SUBAGENT_EFFORT: 'high', THEIRS: '1' } }));
+    r = install(set);
+    assert.strictEqual(r.status, 0, (r.stdout + r.stderr).slice(-2000));
+    const env = JSON.parse(fs.readFileSync(path.join(set, '.claude', 'settings.json'), 'utf8')).env;
+    assert.strictEqual(env.CLAUDE_CODE_SUBAGENT_EFFORT, 'high', 'a value the user set is not displaced');
+    assert.strictEqual(env.THEIRS, '1', 'the user\'s other env keys survive');
+  } finally { fs.rmSync(fresh, { recursive: true, force: true }); fs.rmSync(set, { recursive: true, force: true }); }
+});
+
 test('row 3: D273 ruling 5 (Jev retired): a fresh install registers no jev-flags hook and copies no jev-flags.js', { skip }, () => {
   const home = require('../../consonance/tools/scratch.js').mkdtemp('fresh-home-');
   try {

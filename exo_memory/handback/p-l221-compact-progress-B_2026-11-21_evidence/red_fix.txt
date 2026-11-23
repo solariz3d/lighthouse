@@ -1,0 +1,6 @@
+test close_small::tests::r2_a_run_in_flight_whose_ledger_cannot_be_read_asks ... FAILED
+test close_small::tests::r1_while_running_a_failed_seat_is_said_failed_not_done ... FAILED
+test close_small::tests::r1_the_line_for_the_whole_run_counts_done_and_to_go ... FAILED
+test close_small::tests::r2_a_run_in_flight_whose_click_row_was_lost_asks ... FAILED
+test close_small::tests::r1_the_screen_is_sent_each_line_and_the_summary ... FAILED
+test result: FAILED. 27 passed; 5 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s

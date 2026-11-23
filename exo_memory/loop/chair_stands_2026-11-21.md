@@ -1,0 +1,39 @@
+# Where the chair stands, before the first "Close for the night" (L, 2026-11-21 ~07:17Z)
+
+- L212 landed: "Close for the night" on room main (ab69150a), pushed; consonance.exe rebuilt 01:06:54 local. FILED.
+- L213 installed: A's usage ledger (statusLine + one SessionStart entry), by B after its second read; landed-live 26/26. FILED.
+- L214 handed back whole by A on branch l214-spend-less f6fba66e; nothing on main, nothing installed. Waits for B's read (install_and_gate.diff, consonance/hooks/model-switch-note.js; where the reader agent and CLAUDE_CODE_SUBAGENT_EFFORT are installed). Baton with the chair.
+- L215 queued: exo_memory/loop/plan_usage_laps_2026-11-21.md.
+- HOLD: no dispatch until the keeper has relaunched and made his first close. After it, pane B: delete release\consonance.exe.running-before-l212; read R4 from each cut seat's next call; read A's L214; push room main with its next hand-back.
+- Pane A is on Opus 5.5 live (seat_models says sonnet for its next launch); the keeper swaps it himself.
+
+## Before the restart of 06:5x local (~12:55Z)
+
+- L212, L213, L214 FILED. L215: A's -GatesOpen fix (l215-gatesopen-only 707bcc36) was sent to B to land; B's ring of 12:54Z says L216 and L218 landed; whether 707bcc36 is on main is for B's next hand-back to say.
+- L216 + L218 LANDED by B on room main = origin fc8a1b32 (librarian-checked): no-prompt launch for builder panes, and cut-at-handback with the race fix (a dispatch to a pane with a cut pending is held until the cut is confirmed or abandoned). A read the fix clean. release consonance.exe dated 06:53:44 local. cut_at_handback = [A,B,C,E] in ~/.consonance.json (his word "on", 05:32). Open laps: L215, L216, L218 (B: after the restart read R4, delete release\consonance.exe.running-before-l216, ring).
+- L217 (A's T-180 AI line): B second-read it; land state in B's hand-backs.
+- L219 FILED (game clone c2af9d9, built).
+- L220 M1 on L (A): A writes WHERE IT STANDS in its M1 hand-back and pushes before the restart; resumes from its named command after.
+- STANDING RULE for panes (librarian, 12:50Z): no sleep/tail/poll calls; a long run starts in the background once and the turn ends.
+- MY OWN LESSON tonight: my /compact injects did NOT run as the command (arrived as messages; he typed both cuts). The app-written /compact is still unproven unless B's R0 showed otherwise; check B's L218 hand-back for R0.
+- Chair token rotates at each restart: re-read C:\Consonance\instances\main\.chair-token.
+
+## The laptop's close (07:35 local, ~13:36Z): his word, finish up, push every repo, leave the desktop's hand-offs
+
+- FILED tonight: L212 (Close for the night), L213 (usage ledger), L214 (spend less), L219 (game pulled, built), L222 (census).
+- L216 + L218 landed on room main (no-prompt launch; cut at hand-back with the race fix); cut_at_handback [A,B,C,E] is on.
+- L215: A's -GatesOpen fix (l215-gatesopen-only 707bcc36) sent to B to land; check B's hand-backs for whether it landed.
+- L217 (T-180 AI line): builder branch l217-ai-line 102496e, read by B; not landed in the builder repo.
+- L220 M1 on L: handed back whole by A (game branch m1-root-law 49a1e7b), with the paste line at grip 1.0 and 2.0; an Opus second reader is owed.
+- L221 (progress on the compact control): on branch l221-compact-progress; A's read found two lines (done/failed/to-go count; unreadable ledger must ask). B fixes; lands only if A's read of the fixes is clean in time, otherwise stays on its branch.
+- L223 (Q2, a builder's floor): B's work in progress on its own branch with WHERE IT STANDS; NOT landed.
+- Two of my closing messages to B came back NOT CONFIRMED DELIVERED (13:28Z, 13:36Z); he was asked to press Enter in B's pane.
+- Desktop next: the librarian's hand-offs exo_memory/loop/handoff_lighthouse_2026-11-21-L.md and handoff_dreamzone3_2026-11-21-L.md.
+
+## The close, 07:4x local (librarian-checked at 07:41)
+
+- L221 LANDED: room main = origin 3aa76d1f; release exe 07:40:17 local (A read the two fixes clean; residual: a panic outside the per-seat catch leaves the close question asking until a restart).
+- Q2 (L223) NOT landed: branch q2-builder-floor with WHERE IT STANDS; no code yet.
+- Game branch m1-root-law 49a1e7b1 and builder branch l217-ai-line 102496e1 on their remotes; neither landed.
+- His word 07:36 was "let the panes finish", not stop; my "close the night" message to B said stop and was overridden by the next.
+- Desktop: read the librarian's THE CLOSE (exo_memory/librarian/2026-11-21.laptop.md, last entry) and the two hand-offs (exo_memory/loop/handoff_lighthouse_2026-11-21-L.md, handoff_dreamzone3_2026-11-21-L.md).
