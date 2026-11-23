@@ -70,7 +70,7 @@ oldest."
   *Here:* a free check of the room's hook wiring after every install.
 - **Trust dialog names where a folder's hooks are declared** (2.1.329).
 - **`permissions.blockWritesOutsideWorkingDirectories`** (2.1.314). Write and Edit refuse paths outside the working
-  directories in every mode. *Here:* seats write across `C:\Consonance\…` on purpose, so this would need care, but a
+  directories in every mode. *Here:* seats write across the data folder (`data_dir` in `~/.consonance.json`) on purpose, so this would need care, but a
   pane meant to touch only its worktree could carry it.
 - **Fable 5.2** (2.1.321, 11-09): 1M context, $8/$40 per million tokens, cache reads $0.20 (API prices).
 - **Idle compaction in the terminal** (2.1.299, 10-14). A 200K+ token conversation idle about 54 minutes is compacted
