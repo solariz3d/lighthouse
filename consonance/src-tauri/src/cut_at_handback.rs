@@ -291,7 +291,8 @@ mod tests {
         let r = at_ring(true, "a question: where is the packet for L218?\nNEXT: librarian answers");
         assert!(matches!(r, Some(Err(_))));
         assert!(is_handback("`exo_memory/handback/p-x_2026-11-21.md`."));
-        assert!(is_handback("C:\\x\\exo_memory/handback/p-x.md: read"));
+        // An absolute prefix before the repo-relative part, derived (not one machine's drive): the temp folder stands in for any checkout.
+        assert!(is_handback(&format!("{}\\exo_memory/handback/p-x.md: read", std::env::temp_dir().display())));
         assert!(!is_handback("the handback/ folder is full"));
     }
 

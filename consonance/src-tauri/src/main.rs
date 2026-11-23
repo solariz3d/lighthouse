@@ -4692,8 +4692,11 @@ mod no_prompt_tests {
     }
     #[test]
     fn the_housed_seats_a_keepers_pane_and_a_prompted_pane_do_not() {
-        for seat in [r"C:\i\main", r"C:\i\librarian", r"C:\i\third-place", r"C:\i\fresh-12345678"] {
-            assert!(!no_prompt_for(true, true, is_builder_dir_name(seat), None), "{seat} must keep its prompts");
+        // The folders are derived from the temp folder (not one machine's drive); only the last name decides.
+        let root = std::env::temp_dir().join("i");
+        for name in ["main", "librarian", "third-place", "fresh-12345678"] {
+            let seat = root.join(name).to_string_lossy().into_owned();
+            assert!(!no_prompt_for(true, true, is_builder_dir_name(&seat), None), "{seat} must keep its prompts");
         }
         assert!(!no_prompt_for(true, false, true, None), "a sibling- name outside the instances root (a keeper's + Pane folder)");
         assert!(!no_prompt_for(false, true, true, None), "a seat launched without skip_perms keeps its prompts");
@@ -4706,9 +4709,12 @@ mod no_prompt_tests {
     }
     #[test]
     fn the_builder_name_is_the_sibling_folder() {
-        assert!(is_builder_dir_name(r"C:\Consonance\instances\sibling-5bf9d657"));
-        assert!(!is_builder_dir_name(r"C:\Consonance\instances\main"));
-        assert!(!is_builder_dir_name(r"C:\Consonance\instances\fresh-12345678"));
+        // An instances folder derived from the temp folder (not one machine's drive); only the last name decides.
+        let inst = std::env::temp_dir().join("Consonance").join("instances");
+        let at = |name: &str| inst.join(name).to_string_lossy().into_owned();
+        assert!(is_builder_dir_name(&at("sibling-5bf9d657")));
+        assert!(!is_builder_dir_name(&at("main")));
+        assert!(!is_builder_dir_name(&at("fresh-12345678")));
     }
     #[test]
     fn the_spawn_asks_the_rule_and_settings_is_passed_from_one_place() {
