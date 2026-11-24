@@ -399,3 +399,16 @@ carry it, so this brief does.
 - 04:05, on my 'all four 300k window files': "all four? But remember, there is more on desktop consonance than on laptop consonance" (D has six builder panes: A, B, C, E, O, P; O and P were added to the cut list and given the window)
 - 04:06: "nope u were right"; "what would you want to catch up on first? Or are you good"
 - **State:** D holds L's night (merge 9c8da53d), pushed; the new build runs since 03:04; cut_at_handback [A,B,C,E,O,P]; a 300k window in each of the six pane folders. Open with him: compacting B (783k), A (563k) and E (444k) before work goes to them; L's open items (`loop/handoff_lighthouse_2026-11-21-L.md`, 'Open with him').
+
+### 2026-11-23 and 11-24 (D), to the librarian; his words, verbatim (added at the close of 11-24)
+- 2026-11-23 04:33: "from everything that happened, give me a comprehensive list of the things that you liked or stood out to you"
+- 2026-11-23 05:01: "what about to how consonance has been changed"
+- 2026-11-23 05:03, after the librarian answered about a game from memory: "you could have looked it up lol"
+- 2026-11-23 06:43: "look it up, its all there for you to see what interests u"
+- 2026-11-23 14:41: "so does the keepwarm work"
+- 2026-11-24 00:37: "Ive been so deep into my gta 6 run i forgot where we were tbh on lots of work"
+- 2026-11-24 01:06: "i wish i could help you more, but my intuition is at a loss"; then "but i am here to build it and drive it when it is ready"
+- 2026-11-24 01:19: "you remember what I said to you one night, about always checking the work you do within the artifacts since you can literally look at it"
+- 2026-11-24 06:56: "have we been saving usage?"
+- 2026-11-24 14:04: "was afk sleeping, here was a handoff that was still chillng in my input box" [a pane's ring had sat unsent for four hours]
+- 2026-11-24 17:35: "give handoff for laptop, going to close, when i mean handoff i mean for the relevant repos for tonight, going to work"
