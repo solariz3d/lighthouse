@@ -1,0 +1,4 @@
+drag frames laid:    -
+drag frames refused: n 81, median 35 ms, max 76 ms, total 2850 ms
+throws: 0
+.................................................................................

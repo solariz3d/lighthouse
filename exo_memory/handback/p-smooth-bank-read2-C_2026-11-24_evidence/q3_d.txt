@@ -1,0 +1,2 @@
+{"args":"20 120 404 0 45 6","laid":105,"refused":{"built":10,"range":3,"joint":2},"gi":{"ok":109,"maxIt":7,"infeasible":9},"untyped":0,"marksMissed":0,"docOut":0,"roadOut":1,"tLaid":"n 105 med 6 p95 9 max 28 ms","tRefused":"n 15 med 61 p95 400 max 400 ms"}
+  roadOut: 90.4:30.9 137.5:12.4 193.2:-42.5 233.3:-28.0 260:-6.7 | wrong way -0.2458 at 137.3

@@ -1,0 +1,3 @@
+as drawn: BAD_SECOND: the bank's mark 2 at 70.6 m needs at least 94.7 m after the mark before it (it has 29.7 m): it has fewer free control points to meet it than it has conditions there
+move of marks 2.. by 0..80 m (# lays):
+...........................#.....................................###.....########
