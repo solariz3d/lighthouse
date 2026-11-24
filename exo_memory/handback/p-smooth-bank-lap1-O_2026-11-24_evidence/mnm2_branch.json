@@ -1,0 +1,430 @@
+{
+ "t01": {
+  "serialize": "7347e61c334596ccc5efe95e6fec2e2921cdd584cbae0534b685a6bb6d46190f",
+  "path": "4c9c93c103ba67aeea5bb23556e569dd53fe13747be4d40b36552b1afb124ea7",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 154
+ },
+ "t02": {
+  "serialize": "2ab08386d2afb28722dec8ed3b458013beb8a52ac5833e7a188274ad03975cfb",
+  "path": "0de2247b5677b58d16f15a8931c43334e2cd4220cc234837303707e4ed78312a",
+  "export": {
+   "files": {
+    "FOLDER/.t180b-builder.json": "3b85f71aa760c9ec4911a0a7e79dae51e64b82827a4e4b4f8532df940f219fe7",
+    "FOLDER/ai/fast_lane.ai": "f710467f9c334c5b8b412042837658f484a6982efedfdd3ae410758f80a1a7c0",
+    "FOLDER/data/map.ini": "385480350f7372d94b005c2ac6869a1601c9d85c054e6ad3a31e4f6f37e82b17",
+    "FOLDER/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER/map.png": "417987a5ec79ac18cfb05ce9e39b604a49fc25315c7b56a74ea45c235b666e6c",
+    "FOLDER/models.ini": "d9ba7af0c4d382b4e020f9e50a3836189943012f77abff8dfae1f75a5cc1f112",
+    "FOLDER/TRACK.kn5": "a31a53bb9f32c7a5d0b8c9cef01bc2ac8aff0ea6ea895d989a6d84061e48827c",
+    "FOLDER/ui/outline.png": "507cc782e43f71504f7d81cc8f85efc01fd480b99f600e3f9bd23e8186d8451c",
+    "FOLDER/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER/ui/ui_track.json": "c99d7cb61469348e1a4e1c78fd039cf36adb96afbe263c761708e04c7e43ec8d"
+   }
+  },
+  "exportMs": 68937
+ },
+ "t03": {
+  "serialize": "2ab08386d2afb28722dec8ed3b458013beb8a52ac5833e7a188274ad03975cfb",
+  "path": "0de2247b5677b58d16f15a8931c43334e2cd4220cc234837303707e4ed78312a",
+  "export": {
+   "files": {
+    "FOLDER/.t180b-builder.json": "3b85f71aa760c9ec4911a0a7e79dae51e64b82827a4e4b4f8532df940f219fe7",
+    "FOLDER/ai/fast_lane.ai": "f710467f9c334c5b8b412042837658f484a6982efedfdd3ae410758f80a1a7c0",
+    "FOLDER/data/map.ini": "385480350f7372d94b005c2ac6869a1601c9d85c054e6ad3a31e4f6f37e82b17",
+    "FOLDER/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER/map.png": "417987a5ec79ac18cfb05ce9e39b604a49fc25315c7b56a74ea45c235b666e6c",
+    "FOLDER/models.ini": "d9ba7af0c4d382b4e020f9e50a3836189943012f77abff8dfae1f75a5cc1f112",
+    "FOLDER/TRACK.kn5": "a31a53bb9f32c7a5d0b8c9cef01bc2ac8aff0ea6ea895d989a6d84061e48827c",
+    "FOLDER/ui/outline.png": "507cc782e43f71504f7d81cc8f85efc01fd480b99f600e3f9bd23e8186d8451c",
+    "FOLDER/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER/ui/ui_track.json": "c99d7cb61469348e1a4e1c78fd039cf36adb96afbe263c761708e04c7e43ec8d"
+   }
+  },
+  "exportMs": 70143
+ },
+ "t04": {
+  "serialize": "2ab08386d2afb28722dec8ed3b458013beb8a52ac5833e7a188274ad03975cfb",
+  "path": "0de2247b5677b58d16f15a8931c43334e2cd4220cc234837303707e4ed78312a",
+  "export": {
+   "files": {
+    "FOLDER/.t180b-builder.json": "3b85f71aa760c9ec4911a0a7e79dae51e64b82827a4e4b4f8532df940f219fe7",
+    "FOLDER/ai/fast_lane.ai": "f710467f9c334c5b8b412042837658f484a6982efedfdd3ae410758f80a1a7c0",
+    "FOLDER/data/map.ini": "385480350f7372d94b005c2ac6869a1601c9d85c054e6ad3a31e4f6f37e82b17",
+    "FOLDER/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER/map.png": "417987a5ec79ac18cfb05ce9e39b604a49fc25315c7b56a74ea45c235b666e6c",
+    "FOLDER/models.ini": "d9ba7af0c4d382b4e020f9e50a3836189943012f77abff8dfae1f75a5cc1f112",
+    "FOLDER/TRACK.kn5": "a31a53bb9f32c7a5d0b8c9cef01bc2ac8aff0ea6ea895d989a6d84061e48827c",
+    "FOLDER/ui/outline.png": "507cc782e43f71504f7d81cc8f85efc01fd480b99f600e3f9bd23e8186d8451c",
+    "FOLDER/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER/ui/ui_track.json": "c99d7cb61469348e1a4e1c78fd039cf36adb96afbe263c761708e04c7e43ec8d"
+   }
+  },
+  "exportMs": 69888
+ },
+ "t05": {
+  "serialize": "2ab08386d2afb28722dec8ed3b458013beb8a52ac5833e7a188274ad03975cfb",
+  "path": "0de2247b5677b58d16f15a8931c43334e2cd4220cc234837303707e4ed78312a",
+  "export": {
+   "files": {
+    "FOLDER/.t180b-builder.json": "3b85f71aa760c9ec4911a0a7e79dae51e64b82827a4e4b4f8532df940f219fe7",
+    "FOLDER/ai/fast_lane.ai": "f710467f9c334c5b8b412042837658f484a6982efedfdd3ae410758f80a1a7c0",
+    "FOLDER/data/map.ini": "385480350f7372d94b005c2ac6869a1601c9d85c054e6ad3a31e4f6f37e82b17",
+    "FOLDER/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER/map.png": "417987a5ec79ac18cfb05ce9e39b604a49fc25315c7b56a74ea45c235b666e6c",
+    "FOLDER/models.ini": "d9ba7af0c4d382b4e020f9e50a3836189943012f77abff8dfae1f75a5cc1f112",
+    "FOLDER/TRACK.kn5": "a31a53bb9f32c7a5d0b8c9cef01bc2ac8aff0ea6ea895d989a6d84061e48827c",
+    "FOLDER/ui/outline.png": "507cc782e43f71504f7d81cc8f85efc01fd480b99f600e3f9bd23e8186d8451c",
+    "FOLDER/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER/ui/ui_track.json": "c99d7cb61469348e1a4e1c78fd039cf36adb96afbe263c761708e04c7e43ec8d"
+   }
+  },
+  "exportMs": 68572
+ },
+ "t06": {
+  "serialize": "0dc45cc4bdd0d238083635f64cbedc9d5236008351962e05f96800b89b885607",
+  "path": "830bb4dc90743f220ea4163ff987a962c34ae1b8bf912622154dae9930476ccd",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 55
+ },
+ "t07": {
+  "serialize": "f3db94ab4a6cca63625e2b654c7719e8d7561c290c3e72f076d51da8dc107eca",
+  "path": "5e4b2b29ff38621ad703668d0ce6e7fe9de8675b35db1cc473e62a439c86edda",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 76
+ },
+ "t08": {
+  "serialize": "8dc7b717272c2769172fc0d89c6a9963640a267f3b2ba2e43618fb122c47b8dc",
+  "path": "a3ce46728727ef7a8c018791e7a64e773f04b967aea473a31386aa8cc73a17ae",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 29
+ },
+ "t09": {
+  "serialize": "3766536a5559cd6ee0d40a2ae6320a95424313f2d57baedce80759732dbd7bba",
+  "path": "39fa1365de76521ed025f963e581b21355ce15fe1349dab8484af80180f94909",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 52
+ },
+ "t10": {
+  "serialize": "794c50efe6f64f2d13f662fb2b96268ddb60dbe0644884408135ab1f62d7e0f3",
+  "path": "9f2cdbb77ffa58cc8d23486c3a0247c68c24d8a86c4103ac539c50449e8d8f07",
+  "export": {
+   "files": {
+    "FOLDER/.t180b-builder.json": "4e79007b11fd78fb6086cbbbd9d979347cfd6dbd111ada8caa44e24be3792220",
+    "FOLDER/ai/fast_lane.ai": "c6d5811179b8dcc9341bbf40814b84e706f6bdbfd0691738c63ab8cbdbf5561a",
+    "FOLDER/data/map.ini": "7da3afb54f49c0ba65fc648d141669be27e0c3a2bc566dc00f089138b1ded2c1",
+    "FOLDER/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER/map.png": "5c22017de8705886697009a5481195e8ca0932676315d6967cf72c5f697c1df0",
+    "FOLDER/models.ini": "d9ba7af0c4d382b4e020f9e50a3836189943012f77abff8dfae1f75a5cc1f112",
+    "FOLDER/TRACK.kn5": "7328d0a9c36e412d06ea180b313440ad9ef82a90e086170e7da286c40a393894",
+    "FOLDER/ui/outline.png": "e7b19750c02278ac4344e7a896b5b32f75ebc902d808bd9218b6ccf57ce2289c",
+    "FOLDER/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER/ui/ui_track.json": "9ffb6394d62e41901839edddbaccd873f14fe070c8ec80ed7aa1909ed7352e20"
+   }
+  },
+  "exportMs": 8226
+ },
+ "t11": {
+  "serialize": "05220c1769374bbca5e2a302f63ab9d79ecc77424f6606f1f385057e10dbf36c",
+  "path": "830bb4dc90743f220ea4163ff987a962c34ae1b8bf912622154dae9930476ccd",
+  "export": {
+   "files": {
+    "FOLDER/.t180b-builder.json": "07cf5c2d38fa2448fb1141016c30552d5192e23a02ab8e290a86d460ec2aca1f",
+    "FOLDER/ai/fast_lane.ai": "4a4daeadfca2912df312ad07ca62893594b0d05662275ce11ef678dd7c6be9f5",
+    "FOLDER/data/map.ini": "6b65e4894e2f6f414613e52a7c78c82995e5bd5423e6618966c3168f65f93f18",
+    "FOLDER/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER/map.png": "2b6f8089e9708efeab44c5d54fd573f8c76fa57939938bf2885065d88bffbec3",
+    "FOLDER/models.ini": "d9ba7af0c4d382b4e020f9e50a3836189943012f77abff8dfae1f75a5cc1f112",
+    "FOLDER/TRACK.kn5": "1a726c12a4291802fe06da117751aa3815ab2115ab5b1e69aff7b69fc0a9cdf7",
+    "FOLDER/ui/outline.png": "ca5e0eb32d939880f1a8e0cd22e3c9498535dfb74f8cbc1fd6a52f1cd4c24348",
+    "FOLDER/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER/ui/ui_track.json": "1a2b6c6f080903df421d22fd05203d63258ea276bde71cda2d4b3b07975c1bde"
+   }
+  },
+  "exportMs": 22239
+ },
+ "t12": {
+  "serialize": "0dc45cc4bdd0d238083635f64cbedc9d5236008351962e05f96800b89b885607",
+  "path": "830bb4dc90743f220ea4163ff987a962c34ae1b8bf912622154dae9930476ccd",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 51
+ },
+ "t13": {
+  "serialize": "d7d82338b257e01ef6c1aa50a4b82ab53ad46c6d74f8407ac49bed26291cef2e",
+  "path": "3213062721051ec452adcfc7b89f2554978a28cb2548cc5f792974a0f728db30",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 80
+ },
+ "t14": {
+  "serialize": "9e6f7be8c8c101b82522d6612f56d1905c49c17e41264ab75d1b3536b6a1ab4a",
+  "path": "dc7bcc9c5c0b884de01a00a8ffc1bcb7a1884197ff3dd3c4df3fe5a48fa7bb44",
+  "export": {
+   "refused": "RED",
+   "msgSha": "d2e9a09fdf2abc17e76e0c63906f1e5aef380131f5e1518b75b699cd130f37bb"
+  },
+  "exportMs": 4785
+ },
+ "t15": {
+  "serialize": "6b4e8cf0822b57d28e916a61ffb74bd60bbf7e8399a8af5d6f7bc25a81bdefe9",
+  "path": "e7abb71f1b378453b768eaa6013c48b5768976b9255187143ad84a30813c3eee",
+  "export": {
+   "files": {
+    "FOLDER/.t180b-builder.json": "99b09575e3e234c0d188419e8bda6a3c1090ef6b60ec6bcc9bdd1ca2287ce4b9",
+    "FOLDER/ai/fast_lane.ai": "a856de96980fa13c19190c4597cb6d2e93b331d8f4847d7263aca58a48d66c72",
+    "FOLDER/data/map.ini": "9e5035b8713d3d9154d9194b2b5a217c77e013e87e574fb8d44ad5c84564da16",
+    "FOLDER/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER/map.png": "9e16a4bb0d2cba36e6325d1eda806e8bc3085ff8bc2bba86a811614a50638b0b",
+    "FOLDER/models.ini": "d9ba7af0c4d382b4e020f9e50a3836189943012f77abff8dfae1f75a5cc1f112",
+    "FOLDER/TRACK.kn5": "6eed665e2e7dc06185f010b414b17d64748a0389d53d92746c61e4e97fd97313",
+    "FOLDER/ui/outline.png": "8cb7cd3e93857fe19280238503a9480854d3874687f1fc2689f097243ff36597",
+    "FOLDER/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER/ui/ui_track.json": "b8e1dcff586a09c0f870d22bc3ad98f37856dba257af4067e614cf2df465190a"
+   }
+  },
+  "exportMs": 17064
+ },
+ "t16": {
+  "serialize": "cab1a3b067ce9ef6bc43f69118437417b73fc0958516f8992db72fb539cf6b57",
+  "path": "9fb8fa96d60baa1b02042c7d7b852ed3de12c8586c8006c9526a5dddcdc38ffb",
+  "export": {
+   "files": {
+    "FOLDER/.t180b-builder.json": "13b14234ebc5051a8b0d51d7760c30785b90fe0dd0b5fed19a6e0a8b48ae7330",
+    "FOLDER/ai/fast_lane.ai": "e576730b66b6ff0cb10ae34c27e6273f2233dde23b84b5553bd3923e1705ba91",
+    "FOLDER/data/map.ini": "ebf8a2bb86378f8b0d7b06f13da05a6df6297ce5eb8acb2601ae34adf871de0b",
+    "FOLDER/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER/map.png": "68998a3c371bba328c835a9c3eac9dafafdc9ca6f4da8dac8cc005edec6864fb",
+    "FOLDER/models.ini": "d9ba7af0c4d382b4e020f9e50a3836189943012f77abff8dfae1f75a5cc1f112",
+    "FOLDER/TRACK.kn5": "22cefd9c2b8b48c7eb6bba0fc861b3e0b72dd28ae05122dd8c7eeb892756ea5a",
+    "FOLDER/ui/outline.png": "806dd91c9e79f417c865b21698e712bb57ab29c3ffe7f64faed31ca81f4cf14e",
+    "FOLDER/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER/ui/ui_track.json": "765213910e9707e34cfdfa06db78291c8bfa368d7ddf53410a3c77759acca4cd"
+   }
+  },
+  "exportMs": 10972
+ },
+ "t17": {
+  "serialize": "4045b7b3e35fcf80cc218557f9c78563ed56093093cd343c523f0e4d11c41bae",
+  "path": "0fe0fee10dea710a97c605b9126bc0e87662f17d9eecb52e1c45f01890ab6163",
+  "export": {
+   "files": {
+    "FOLDER/.t180b-builder.json": "70fc83b003f6462fa546b368de08457ffb0c96a895b7b6b2684285cb02271b75",
+    "FOLDER/ai/fast_lane.ai": "b1eafad274d5410862cbc29e57076ec79494d9ffd548badbf61c809c165b833b",
+    "FOLDER/data/map.ini": "ed746e49d72dbacdae3801319e357b1cec300a07b96055411a6e94af6f19ee10",
+    "FOLDER/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER/map.png": "5f0e5366fdec34a629f0000fe56166870159972896a2f2eab67d80767954aa8f",
+    "FOLDER/models.ini": "d9ba7af0c4d382b4e020f9e50a3836189943012f77abff8dfae1f75a5cc1f112",
+    "FOLDER/TRACK.kn5": "56ed2b04dc21ae6613bcbe60cc147d571c0ada09afdd820b06a4802dbae845bc",
+    "FOLDER/ui/outline.png": "255b3610be6d4a043c3b6e0d0e131c62f2a8e67ad06eb18f6e6da6177b1b4426",
+    "FOLDER/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER/ui/ui_track.json": "b07d1f8d0510b48dde683855e816360306754d0a464a9b84308852804010ce03"
+   }
+  },
+  "exportMs": 75852
+ },
+ "t18": {
+  "serialize": "96515ec1f0274531b736b0fa5f9d0b8888c77e826302cead8da8db458b7af870",
+  "path": "ff4fcba670f7311eaee4c3923b4a1bc1d544a5e52b738596a6b3ea956ca785db",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 59
+ },
+ "t19": {
+  "serialize": "44d3e93570f3ed28ba34da9dff7720b0647ee6b48bde5add1bd03b340e4f9d93",
+  "path": "3b27e40d0933d407df987b65d5cad303c5953c3c5098f9fc2ed45a7f24463955",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 46
+ },
+ "t20": {
+  "serialize": "763299a01b5e5192ec8a616399ca8d39116247d4dfa940486a0d159649b76293",
+  "path": "ca1ec889a9788782e0c940ea370b8d8c9cfbb3e4f0c1d08338524631ba3a79a6",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 29
+ },
+ "t21": {
+  "serialize": "5b9ec8083e6f0cc7c8fd2117be138c7fcc498a7631dd4b1c10597ae4bc5989c0",
+  "path": "ee34c4cdd03f6ce6d6c286eb13591c219ead8775cc1c3e933a4c93e75617f8c7",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 72
+ },
+ "t22": {
+  "serialize": "f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec",
+  "path": "d888982ecdb7d0c5abd00621843ae083d43feb7b507cb5da9ade9a242295d81f",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 21
+ },
+ "t23": {
+  "serialize": "2fe8350a8dde3c4d108bc327ab1b4e423212710272a40e72f6057b92b420edf9",
+  "path": "e2077ad9762076f55e874bd4eb9feffadecea33b37c7ce66e73a570fb1776ce9",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 21
+ },
+ "t24": {
+  "serialize": "844d4a60cea8a8808f8198b1176d9f6a0abb3e11e4d57ec1447a26ba61ee1670",
+  "path": "22cebd6b79607c2e2c5314b01d92a18c5e4e358b5aef91ed9dd4637157c11eab",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 21
+ },
+ "t25": {
+  "serialize": "f976a94f41f69641eba4d3110be48ce8a08b675125f4a98b847b2d4ddd214134",
+  "path": "74be3bc15a60d61fbb2abac95adea9ee38200174ad6f136ca82152053b9c4e49",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 22
+ },
+ "t26": {
+  "serialize": "271b5ac127de4b048376bbcd2752928f9904a4c20ae0555cfdc83c2cff7a7884",
+  "path": "5f67aaea3c99825dd1507fd54203094acf7c7ff0e40c5ce28d3101d7af48b710",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 24
+ },
+ "t27": {
+  "parse": "BAD_DOC"
+ },
+ "F1": {
+  "serialize": "f8264a53807b25273adc79347a5732081af34d1ad3a0e5d694724bd52eae6710",
+  "path": "48da6f93ef3a26bb60d0bc4ce4ffed840d448b0122ae17a76c875d0888031399",
+  "export": {
+   "files": {
+    "FOLDER_bowl/.t180b-builder.json": "b52dea6200ae170249336d572e2036e53e53f1e0dc22311c148cc2d995002b0c",
+    "FOLDER_bowl/ai/fast_lane.ai": "3e5a2909f9debece5c2b5506eef7f121e3b9b96358eca941fd1329e87ed090ee",
+    "FOLDER_bowl/data/map.ini": "bc2675ad98c2150eb4fef82105c90c95faf122cc6822a00d9fb2a6091a2a8c4b",
+    "FOLDER_bowl/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER_bowl/map.png": "ef9c1e115b48cbd5111ef2a6e9c7826d118d104dde3e1499afead85fbc9a6a34",
+    "FOLDER_bowl/models.ini": "64419925d8999b38cd96fff63d969dc3a6a8d1521f2277ee2372593861a83448",
+    "FOLDER_bowl/TRACK.kn5": "51962bc0a3cc273586f59945edd6f9db96745e44f1f52f911fa50c2617cacc4f",
+    "FOLDER_bowl/ui/outline.png": "3b2ca1e25a844705ff88bf541c6d7bfd2a80ddcbb9d1387413ecb9e5a83ed203",
+    "FOLDER_bowl/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER_bowl/ui/ui_track.json": "6f6d8bdc03acfd7e2935eaea233809154579091070ed97c3c44fb3b4ca98c5fe"
+   }
+  },
+  "exportMs": 1355
+ },
+ "F2": {
+  "serialize": "3245f247a238d678482e84a47c4856262327040bae1db6e84d5155ae32669a25",
+  "path": "48da6f93ef3a26bb60d0bc4ce4ffed840d448b0122ae17a76c875d0888031399",
+  "export": {
+   "files": {
+    "FOLDER_pipe/.t180b-builder.json": "e9ec410d525dc1a7ea94745759b297812815547470288e7fc1a2aa9c8e326779",
+    "FOLDER_pipe/ai/fast_lane.ai": "6cb89185abd26a3263a68d9c7089c8879b41a0d706e8105e7a911aef1a3254e2",
+    "FOLDER_pipe/data/map.ini": "7618d39dca72e1126a17f7d6034addcef164703d63b1f71deb017a4c722f444b",
+    "FOLDER_pipe/data/surfaces.ini": "039e54dad3f8f1c0bc9990187cf70819f0841dae74350e5da928657427ff62fb",
+    "FOLDER_pipe/map.png": "ac6a153a0eb029481f1026e6fd11bb5e0a001ac7e45b46a09712f9f64bfbe8ff",
+    "FOLDER_pipe/models.ini": "36d12afaf84734d6644126a639b42adbd6a59d787d11adbd71858560d3a58cf1",
+    "FOLDER_pipe/TRACK.kn5": "f5683e8c4d209873ed6fbd9e2efca1fc4e3ef24abaa41284fc5aca88f3250b45",
+    "FOLDER_pipe/ui/outline.png": "132d67d76fec24d0fce0043d180c593b4780edce6eb738e98c33a13fb81e91a2",
+    "FOLDER_pipe/ui/preview.png": "808eb342146389bed7c713c0bbe62fe1f701fbe94653fbcdb907e1a79a513eb0",
+    "FOLDER_pipe/ui/ui_track.json": "e98e63978bd202aa1c6f4a96eca73f8ab30559b092100be74da0184d7ca6cabb"
+   }
+  },
+  "exportMs": 1803
+ },
+ "F3": {
+  "serialize": "62c6d8bd71d5ae9beb11df59b06c1331a3b130147a65999316236476000481ee",
+  "path": "02b747e51bba32e9f13e11fd183e109c67a5c534fa748c7aab7e2e01bc8f9a02",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 24
+ },
+ "F4": {
+  "serialize": "8d933ce0cba54507f6169515994c769044abba2c85a4274507afdea30400c13c",
+  "path": "1c4eb611505a45c723e59573febc9b014922369f6532c002d988317be22e8e04",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 18
+ },
+ "F5": {
+  "serialize": "15957260de57d416f53be34e893948a83eef0199a290da97151ac8f413ef12da",
+  "path": "07b2022ded555735a5fe4a3b109ad680edc26024aa6764e557b15a3ad476b7f2",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 18
+ },
+ "F6": {
+  "serialize": "3e58932a895e55b83fa13c1f3ab519d5d0cdb4d56aca0a64523f225a2ba099c0",
+  "path": "cb20e53e64c316e7c206a88142facf3360f1c5cfb5d4b1c65697f14b514c1556",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 17
+ },
+ "F7": {
+  "serialize": "867439517607cc0eb231e43a5db5f27b2bb967fc59149030f818f450353221dc",
+  "path": "0117a12772c6991146df0c56642dabd9bc13a6e7b20f7bcf68c3a3a13fa2ce86",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 18
+ },
+ "F8": {
+  "serialize": "dbc011aabdbefd3123460df905fa467f9f634f68b40b9d4c4555004eaafa37c6",
+  "path": "3dee093a930bdf495320bbf5c3e9d498e8005b7d3373f3ddef2208c010ca793c",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 18
+ },
+ "F9": {
+  "serialize": "4f59ae492ccfd57b989565f836327c3c520e91470d24421a9fc57588261b08d4",
+  "path": "THREW EMPTY",
+  "export": {
+   "refused": "OPEN_LOOP",
+   "msgSha": "6bdb7839a2402d4f5e112d179f673347c16acdd8dd266e7ac1917215711a1779"
+  },
+  "exportMs": 16
+ }
+}

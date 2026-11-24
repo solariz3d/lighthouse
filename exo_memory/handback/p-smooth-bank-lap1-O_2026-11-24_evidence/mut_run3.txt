@@ -1,0 +1,66 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+[32m✔ CONTROL: the flowing-bank and roll-instrument files pass whole on an unmutated copy of src/ and tools/ [90m(283.7697ms)[39m[39m
+[32m✔ mutant R1 bankShape 'flow' is refused as an unknown shape: applied, and caught by "flow|built" [90m(186.3476ms)[39m[39m
+[34mℹ R1 bankShape 'flow' is refused as an unknown shape: 16 of 19 run tests failed[39m
+[32m✔ mutant R2 through on another channel is not refused: applied, and caught by "flow 8" [90m(156.938ms)[39m[39m
+[34mℹ R2 through on another channel is not refused: 1 of 2 run tests failed[39m
+[32m✔ mutant R3 through with a bank shape other than 'flow' is not refused: applied, and caught by "flow 8" [90m(162.3341ms)[39m[39m
+[34mℹ R3 through with a bank shape other than 'flow' is not refused: 1 of 2 run tests failed[39m
+[32m✔ mutant R4 a flowing bank with no first target is not refused: applied, and caught by "flow 8" [90m(155.3403ms)[39m[39m
+[34mℹ R4 a flowing bank with no first target is not refused: 1 of 2 run tests failed[39m
+[32m✔ mutant R5 through with the bank's changes is not refused: applied, and caught by "flow 8" [90m(160.0349ms)[39m[39m
+[34mℹ R5 through with the bank's changes is not refused: 1 of 2 run tests failed[39m
+[32m✔ mutant R6 a through that is not a list is not refused: applied, and caught by "flow 8" [90m(156.8599ms)[39m[39m
+[34mℹ R6 a through that is not a list is not refused: 1 of 2 run tests failed[39m
+[32m✔ mutant R7 a mark that is not a number is not refused: applied, and caught by "flow 8" [90m(160.6459ms)[39m[39m
+[34mℹ R7 a mark that is not a number is not refused: 1 of 2 run tests failed[39m
+[32m✔ mutant R8 a mark before the one before it is not refused: applied, and caught by "flow 8" [90m(156.2925ms)[39m[39m
+[34mℹ R8 a mark before the one before it is not refused: 1 of 2 run tests failed[39m
+[32m✔ mutant R9 a mark under 5 m after the one before is not refused: applied, and caught by "flow 8" [90m(156.1807ms)[39m[39m
+[34mℹ R9 a mark under 5 m after the one before is not refused: 1 of 2 run tests failed[39m
+[32m✔ mutant R10 a mark past the piece's length is not refused: applied, and caught by "flow 8" [90m(156.3688ms)[39m[39m
+[34mℹ R10 a mark past the piece's length is not refused: 1 of 2 run tests failed[39m
+[32m✔ mutant M1 the through marks are dropped (only the first target is passed): applied, and caught by "flow 1|flow 9" [90m(181.3342ms)[39m[39m
+[34mℹ M1 the through marks are dropped (only the first target is passed): 3 of 6 run tests failed[39m
+[32m✔ mutant M2 the first target is passed at the piece's end, not at its transition: applied, and caught by "flow 1" [90m(166.0333ms)[39m[39m
+[34mℹ M2 the first target is passed at the piece's end, not at its transition: 3 of 5 run tests failed[39m
+[32m✔ mutant K1 no knot is inserted at a mark: applied, and caught by "flow" [90m(258.9538ms)[39m[39m
+[34mℹ K1 no knot is inserted at a mark: 1 of 17 run tests failed[39m
+[32m✔ mutant K2 a mark takes a knot as far as 10 m away for its own: applied, and caught by "flow" [90m(253.9905ms)[39m[39m
+[34mℹ K2 a mark takes a knot as far as 10 m away for its own: 1 of 17 run tests failed[39m
+[32m✔ mutant S1 the joint's slope is not carried (the bank starts level-rated): applied, and caught by "flow 4" [90m(165.8865ms)[39m[39m
+[34mℹ S1 the joint's slope is not carried (the bank starts level-rated): 1 of 4 run tests failed[39m
+[32m✔ mutant S2 the head's slope is dropped at the call (held or not): applied, and caught by "flow 4" [90m(163.6215ms)[39m[39m
+[34mℹ S2 the head's slope is dropped at the call (held or not): 1 of 4 run tests failed[39m
+[32m✔ mutant S3 the end is not held at rest when the last mark is at the piece's end: applied, and caught by "flow 4" [90m(161.0989ms)[39m[39m
+[34mℹ S3 the end is not held at rest when the last mark is at the piece's end: 1 of 4 run tests failed[39m
+[32m✔ mutant S4 the start's curvature is not held at 0: applied, and caught by "flow 4" [90m(169.3803ms)[39m[39m
+[34mℹ S4 the start's curvature is not held at 0: 3 of 4 run tests failed[39m
+[32m✔ mutant S5 the marks are not passed (their rows dropped): applied, and caught by "flow 1" [90m(175.3673ms)[39m[39m
+[34mℹ S5 the marks are not passed (their rows dropped): 2 of 5 run tests failed[39m
+[32m✔ mutant S6 the least SLOPE, not the least bending (D1 for D2 in the Gram matrix): applied, and caught by "flow" [90m(261.715ms)[39m[39m
+[34mℹ S6 the least SLOPE, not the least bending (D1 for D2 in the Gram matrix): 1 of 17 run tests failed[39m
+[32m✔ mutant S7 the Gram matrix is read at one point per span (the middle), not three: applied, and caught by "flow" [90m(255.9246ms)[39m[39m
+[34mℹ S7 the Gram matrix is read at one point per span (the middle), not three: 5 of 17 run tests failed[39m
+[32m✔ mutant S8 tension at the plan's first answer (λ = 0.03): applied, and caught by "flow" [90m(258.0086ms)[39m[39m
+[34mℹ S8 tension at the plan's first answer (λ = 0.03): 1 of 17 run tests failed[39m
+[32m✔ mutant S9 the control points are stored to 3 places, not the bank's 9: applied, and caught by "flow" [90m(255.2608ms)[39m[39m
+[34mℹ S9 the control points are stored to 3 places, not the bank's 9: 3 of 17 run tests failed[39m
+[32m✔ mutant J1 the joint's roll acceleration is not carried (the start held at 0, as before): applied, and caught by "flow 4" [90m(172.7961ms)[39m[39m
+[34mℹ J1 the joint's roll acceleration is not carried (the start held at 0, as before): 1 of 4 run tests failed[39m
+[32m✔ mutant J2 the joint's roll acceleration is not passed at the call: applied, and caught by "flow 4" [90m(165.9788ms)[39m[39m
+[34mℹ J2 the joint's roll acceleration is not passed at the call: 1 of 4 run tests failed[39m
+[32m✔ mutant J3 after a flight the flight is read as road (its channel at its end): applied, and caught by "flow 4" [90m(181.6409ms)[39m[39m
+[34mℹ J3 after a flight the flight is read as road (its channel at its end): 1 of 4 run tests failed[39m
+[32m✔ mutant P1 a turning mark is not held at rest: applied, and caught by "flow 5|flow 11" [90m(163.7526ms)[39m[39m
+[34mℹ P1 a turning mark is not held at rest: 2 of 3 run tests failed[39m
+[32m✔ mutant P2 every mark that does NOT turn is held at rest instead: applied, and caught by "flow" [90m(270.6788ms)[39m[39m
+[34mℹ P2 every mark that does NOT turn is held at rest instead: 6 of 17 run tests failed[39m
+[34mℹ tests 29[39m
+[34mℹ suites 0[39m
+[34mℹ pass 29[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 5623.4619[39m
