@@ -1,0 +1,54 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+[31m✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) [90m(1314.6815ms)[39m[39m
+[34mℹ rolling (first drag) p95 10.2 ms a move, early p95 4.0 ms: 2.56 ×; both ended at -12.63°[39m
+[33m⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) [90m(1071.256ms)[39m # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move[39m
+[34mℹ rolling (first drag, into the hold) p95 23.5 ms a move, early p95 3.4 ms: 6.89 ×; rolling held at -360°, early ended at -163.5°[39m
+[32m✔ D642: his p2's extra bank still reaches −88.45° from 500 (the bank-back he asked for), laid by the core [90m(43.1832ms)[39m[39m
+[32m✔ D642 3j: his p2's extra bank mark, dragged across 420-540 through the panel, lays at every from the panel keeps [90m(1090.3791ms)[39m[39m
+[34mℹ kept 121 distinct froms; refused 0[39m
+[32m✔ row 1: letting go of a 1,000 m turn and length handle, every look: nothing it causes takes more than 6.0 ms [90m(67170.2408ms)[39m[39m
+[34mℹ worst ms by case: {"aqua turn":[4.1],"aqua stretch":[2.9],"skyline turn":[2.8],"skyline stretch":[2.9],"glass turn":[3.5],"glass stretch":[3.8],"aurora turn":[4.2],"aurora stretch":[3.9],"sigil turn":[3.9],"sigil stretch":[2.9]}[39m
+[32m✔ row 2: past the ordinary range it does not stall: letting go of a 20,000 m turn, nothing takes more than 120 ms, and the exact ghost is whole within 10 s [90m(18369.8537ms)[39m[39m
+[34mℹ 20,000 m: handler 32.5, worst frame 33.8 ms; 10001 stations after 10 s[39m
+[32m✔ row 3: the exact ghost arrives and nothing blinks: after letting go of a 2,000 m turn the ghost is on show at every frame, and the exact one is in place within 1 s [90m(6657.4121ms)[39m[39m
+[34mℹ 2075 frames watched; the exact ghost (1001 stations) after 48 ms; 0 without a ghost[39m
+[32m✔ row 4: a number typed into the Turn field on a 12-piece track: each change costs at most 6.0 ms at the 95th percentile, its longest frame with the handler counted in the first [90m(7591.5891ms)[39m[39m
+[34mℹ a field change, its longest frame: p95 4.2 ms (median 2.9); handler and frames summed, not asserted: p95 5.3 ms (median 3.3)[39m
+[34mℹ tests 8[39m
+[34mℹ suites 0[39m
+[34mℹ pass 6[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 1[39m
+[34mℹ duration_ms 100195.2387[39m
+
+[31m✖ failing tests:[39m
+
+test at app\test\core-extra-bank-drag-cost.test.js:94:1
+[31m✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) [90m(1314.6815ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: the rolling drag's p95 is 10.2 ms a move, the early drag's 4.0 ms: 2.56 ×, over 2 ×
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\o-smooth-t180\[39mapp\test\core-extra-bank-drag-cost.test.js:101:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at app\test\core-extra-bank-drag-cost.test.js:111:1
+[33m⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) [90m(1071.256ms)[39m # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move[39m
+  AssertionError [ERR_ASSERTION]: the rolling drag went past −88.45 and is held short of where the pointer went (-360°)
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\o-smooth-t180\[39mapp\test\core-extra-bank-drag-cost.test.js:117:10[90m)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1125:7)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
