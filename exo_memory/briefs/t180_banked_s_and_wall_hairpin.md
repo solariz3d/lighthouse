@@ -97,3 +97,38 @@ The track and its author are another creator's, so both names stay out of this f
 - **What the shape asks of the builder, as I read it (not checked against the code):** (1) the bank may START on straight road, about 80 m before the turn it belongs to (this file's 'Open, his calls': quick banks on a straight are refused today); (2) the bank crosses from one side to the other in about 50 m, without a level hold; (3) the second turn begins while the bank is already most of the way over; (4) the bank eases out over about 100 m of straight after.
 
 **Sent, one pane, no code landed:** build this shape headless through the core from the numbers above, read heading and bank along the BUILT road, set the two profiles side by side, and name every refusal or smoothing that stands between them; then a render of the built attempt beside his screenshot's view for his eye.
+
+## Added 2026-11-24 01:0x (D, the librarian): the four tracks he names as the look to learn, measured together
+
+**His words, 00:54:** "if you want a refresher for how I want the tracks to look from the system we make, look at [reference track A], [a second], and even [reference track C], and [a fourth], all of those have the design philosophy we need to learn to adopt" (four other creators' tracks; names kept out as above; all four have reads on D in `Desktop/t180-track-builder/reads/`, 2026-09-28).
+
+**Measured by me, one run** (`scratchpad/t180/style.js` over the four reads; aggregates only, no layout). A turn is a run tighter than a 143 m radius adding up to 30 degrees or more, on road flatter than 35 degrees of pitch; turn rate is taken over about 32 m. Rows are the four tracks in the order he named them:
+
+| | 1 | 2 | 3 | 4 |
+|---|---|---|---|---|
+| lap, km | 20.7 | 31.0 | 34.4 | 21.0 |
+| width, m (median; 5th to 95th) | 33; 32-38 | 29; 28-33 | 31; 28-36 | 32; 31-36 |
+| share of the lap banked over 5 / 20 / 45 degrees, % | 81 / 46 / 2 | 80 / 55 / 10 | 95 / 82 / 22 | 93 / 70 / 15 |
+| turns counted | 60 | 92 | 119 | 66 |
+| turn radius, m (median; tightest tenth) | 51; 42 | 52; 41 | 49; 42 | 49; 41 |
+| turns that lean into the turn, % | 98 | 93 | 97 | 98 |
+| peak bank in a turn, degrees (median; 90th) | 29; 40 | 33; 50 | 40; 43 | 36; 55 |
+| **bank already on when the turning starts, degrees (median)** | **23** | **27** | **34** | **32** |
+| **lead-in: metres of bank before the turn (median; 75th)** | **72; 140** | **64; 140** | **72; 152** | **88; 184** |
+| ease-out: metres of bank after the turn (median; 75th) | 56; 136 | 48; 100 | 72; 160 | 84; 144 |
+| bank change, degrees per 10 m (median; 90th; 99th) | 0.9; 3.1; 6.1 | 1.5; 4.7; 8.7 | 0.7; 3.9; 11.3 | 1.1; 4.6; 13.2 |
+| S pairs (opposite turns under 150 m apart) | 11 | 17 | 4 | 7 |
+| longest level hold between an S pair's turns, m (median) | 4 | 4 | 8 | 4 |
+| the bank crossing from 10 one way to 10 the other, m (median) | 40 | 32 | 40 | 36 |
+
+**What the four share, read from the table:**
+1. **The bank comes first.** In every one, the road is already banked 23 to 34 degrees (medians) when it starts to turn, and that bank began 64 to 88 m back on straight road. Most of a turn's bank is therefore laid on the straight before it.
+2. **Almost nothing is level.** 80 to 95 % of each lap is banked over 5 degrees; level road is the exception, a passing-through.
+3. **An S does not stop at level.** Between two opposite turns the longest level hold is one or two stations (4 to 8 m); the bank swings from 10 one way to 10 the other in 32 to 40 m.
+4. **The bank moves gently most of the time and fast when it must:** about 1 degree per 10 m typically, 3 to 5 at the 90th percentile, 6 to 13 at the fastest hundredth.
+5. **One corner radius.** The median turn is 49 to 52 m in all four and the tightest tenth 41 to 42 m, which reads as a shared kit of corner pieces, not four authors' free choices. Inferred.
+6. **Width 28 to 38 m.**
+
+**His own words already say the first one from the builder's side** (`briefs/t180_second_bank.md:51`, 2026-11-07): "for the extra turn the banking cant catch up in time, as if it needs to start eating into the original banking to smoothen the transition". In the four tracks the bank is never asked to catch up, because it starts before the turn.
+
+**Caveats:** one instrument, stations every 4 m; the heading is read from the map direction and is not trusted on road steeper than 35 degrees, so wall turns and loops are left out of the turn count; 'lead-in' stops at the previous turn, so it is a floor where turns come close together.
