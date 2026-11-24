@@ -1,0 +1,4 @@
+S 459105d483b9 sharpest turn 1.81 °/m (radius 32 m) at 251 m; steepest roll 0.70 °/m at 192 m
+1c 8abe61160c4f sharpest turn 1.83 °/m (radius 31 m) at 148 m; steepest roll 0.95 °/m at 122 m
+validate exports validate,revalidate,lapOf,speedProfile,SRC,ROLL_RED_DEG_M,ROLL_AMBER_DEG_M,ROLL_CHORD_M,TUBE_MIN_W,STACK_CURL_DEG,STACK_CAR_W_M,_internal
+2z refused as typed: [33mtrue[39m | with turnDeg 0: 459105d483b9 the same bytes as S | ease-out laid [33mtrue[39m
