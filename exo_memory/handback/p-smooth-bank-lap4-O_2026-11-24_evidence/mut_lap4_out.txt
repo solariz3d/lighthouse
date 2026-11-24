@@ -1,0 +1,16 @@
+unmutated: 45 rows green
+caught L1 no knots added before refusing (drawn 2: the reader's lists the solve co | drawn 7: after fixture F5 (a road that e | b1: the reader's list 21.2:4.2 40.8:20.8 | b2: of the reader's 72 refusals at the 5 | b4: every list that lays only with knots | b5: the save size: a list laid with knot | c1: the reader's three over-asked lists  | c2: every refusal of the reader's lists )
+caught L2 knots around each try's own refused mark (b2: of the reader's 72 refusals at the 5)
+caught L3 no 2.5 m span (b2: of the reader's 72 refusals at the 5 | b4: every list that lays only with knots | b5: the save size: a list laid with knot)
+caught L4 the finest span only (drawn 2: the reader's lists the solve co | b5: the save size: a list laid with knot | a refused list asked without its room se | roomSearch: true, or left out, is the re)
+caught L5 knots added before the first solve (drawn 11: through a 90° corner, a list w | b2: of the reader's 72 refusals at the 5 | b3: unmoved: the banked S, and every dra)
+SURVIVED L6 the refusal is the first try's 
+caught L7 knots over the whole list, not around one mark (drawn 2: the reader's lists the solve co | b5: the save size: a list laid with knot | a refused list asked without its room se | roomSearch: true, or left out, is the re)
+caught L8 the spans split one finer (drawn 2: the reader's lists the solve co | b5: the save size: a list laid with knot | a refused list asked without its room se | roomSearch: true, or left out, is the re)
+SURVIVED L9 no knot kept clear of the ends 
+caught C1 the message keeps "at least" (row 5: a refusal of the flowing bank rea | row 6: during a drag the panel asks only | drawn 6: the room a refusal names is hon | c1: the reader's three over-asked lists  | c2: every refusal of the reader's lists  | a refused list asked without its room se)
+caught C2 no whole metres tried first (c1: the reader's three over-asked lists  | c2: every refusal of the reader's lists )
+caught C3 the whole metres tried first stop at 5 (c2: every refusal of the reader's lists )
+caught C4 the whole metres tried from the largest (c1: the reader's three over-asked lists  | c2: every refusal of the reader's lists )
+caught C5 no step back past the near metres (c2: every refusal of the reader's lists )
+12 of 14 caught

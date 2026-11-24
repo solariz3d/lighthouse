@@ -1,0 +1,6 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+tip-950d982 gap 5: refused n 24, median 27 ms, p95 215, max 258
+   rooms named (list:move) 4:+1 6:+55 9:+12 18:+23 28:+1 35:+118 38:+1 49:+1 52:+12 54:+6 60:+73 64:+18 90:+51 106:+2 108:+3 115:+2 127:+2 136:+2 153:+1 154:+2 155:+2 157:+1 158:+170 159:+1
+tip-950d982 gap 20: refused n 13, median 27 ms, p95 171, max 171
+   rooms named (list:move) 6:+40 18:+18 28:+2 35:+96 46:+1 52:+1 54:+4 60:+3 64:+3 69:+2 90:+41 96:+1 158:+65
+tip-950d982 list 158: 253 ms, +170

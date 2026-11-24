@@ -1,0 +1,7 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+gap 5 (local): 24 refused, 24 name a room (0 none); the named room is the metre's least in 17, over-asks > 1 m in 7, > 5 m in 4; a half metre below the least lays in 13
+  whole call (today's search): median 56.6 ms, max 238.2; the metre scan of the named stretch alone: median 28.2 ms, max 1083.1, trials median 3, max 171
+  worst: named +58, least by the metre +1, +0.5 lays; named +13, least by the metre +2; named +10, least by the metre +1; named +7, least by the metre +1
+gap 20 (local): 13 refused, 13 name a room (0 none); the named room is the metre's least in 9, over-asks > 1 m in 4, > 5 m in 1; a half metre below the least lays in 6
+  whole call (today's search): median 44.1 ms, max 155.5; the metre scan of the named stretch alone: median 22.5 ms, max 455.9, trials median 4, max 93
+  worst: named +10, least by the metre +1, +0.5 lays; named +41, least by the metre +36, +34.5 lays; named +96, least by the metre +92; named +5, least by the metre +1

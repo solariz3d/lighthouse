@@ -1,0 +1,45 @@
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1129.4566ms)
+ℹ rolling (first drag) p95 6.9 ms a move, early p95 3.4 ms: 2.01 ×; both ended at -12.63°
+⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) (952.6792ms) # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move
+ℹ rolling (first drag, into the hold) p95 22.3 ms a move, early p95 3.2 ms: 6.97 ×; rolling held at -360°, early ended at -163.5°
+✔ D642: his p2's extra bank still reaches −88.45° from 500 (the bank-back he asked for), laid by the core (38.6727ms)
+✔ D642 3j: his p2's extra bank mark, dragged across 420-540 through the panel, lays at every from the panel keeps (965.2ms)
+ℹ kept 121 distinct froms; refused 0
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 1
+ℹ duration_ms 3189.2812
+
+✖ failing tests:
+
+test at app\test\core-extra-bank-drag-cost.test.js:94:1
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1129.4566ms)
+  AssertionError [ERR_ASSERTION]: the rolling drag's p95 is 6.9 ms a move, the early drag's 3.4 ms: 2.01 ×, over 2 ×
+      at TestContext.<anonymous> (G:\consonance-scratch\o-smooth-t180\app\test\core-extra-bank-drag-cost.test.js:101:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\core-extra-bank-drag-cost.test.js:111:1
+⚠ D642: dragging the extra bank on past what fits, into the hold, the first time, costs a move within 2 × the same drag with the bank early (p95) (952.6792ms) # the approach to the hold builds one probe road a move (the core's probe cost, pane B): 2.8-3.1 × measured, the panel already at one question a move
+  AssertionError [ERR_ASSERTION]: the rolling drag went past −88.45 and is held short of where the pointer went (-360°)
+      at TestContext.<anonymous> (G:\consonance-scratch\o-smooth-t180\app\test\core-extra-bank-drag-cost.test.js:117:10)
+      at async Test.run (node:internal/test_runner/test:1125:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

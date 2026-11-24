@@ -1,0 +1,45 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+== mut_lap4_out.txt exit 1 in 9 s
+ERROR the unmutated copy is red
+== mut_panel_out.txt exit 0 in 16 s
+caught P1 the box is ticked when its option is left out (row 2, row 6)
+caught P2 an at left behind with the box unticked still flows (row 2)
+caught P3 the bank rows are sent as changes as well as through (row 1, row 3, row 4, row 5, row 6)
+caught P4 the bank rows are dropped when unticked (row 2)
+caught P5 a run of blank ats is spread one place early (row 1)
+caught P6 a typed first at is ignored for the early ramp (row 1, row 3, row 4, row 5, row 6)
+caught P7 a mark's target is sent in degrees (row 1, row 3, row 4, row 5, row 6)
+caught P8 Undo does not give the box back (row 3)
+caught P9 the panel does not send the box (row 1, row 3, row 4, row 5, row 6)
+caught P10 the panel rewrites a core refusal (row 5, row 6)
+10 of 10 caught
+== harness_lap4.txt exit 0 in 86 s
+ℹ tests 154
+ℹ pass 154
+ℹ fail 0
+== d642_1.txt exit 1 in 3 s
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1129.4566ms)
+ℹ rolling (first drag) p95 6.9 ms a move, early p95 3.4 ms: 2.01 ×; both ended at -12.63°
+ℹ rolling (first drag, into the hold) p95 22.3 ms a move, early p95 3.2 ms: 6.97 ×; rolling held at -360°, early ended at -163.5°
+ℹ pass 2
+ℹ fail 1
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1129.4566ms)
+== d642_2.txt exit 1 in 3 s
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1121.8322ms)
+ℹ rolling (first drag) p95 6.8 ms a move, early p95 3.3 ms: 2.08 ×; both ended at -12.63°
+ℹ rolling (first drag, into the hold) p95 21.6 ms a move, early p95 3.1 ms: 6.90 ×; rolling held at -360°, early ended at -163.5°
+ℹ pass 2
+ℹ fail 1
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1121.8322ms)
+== d642_3.txt exit 0 in 3 s
+ℹ rolling (first drag) p95 6.4 ms a move, early p95 3.2 ms: 1.99 ×; both ended at -12.63°
+ℹ rolling (first drag, into the hold) p95 22.2 ms a move, early p95 3.3 ms: 6.83 ×; rolling held at -360°, early ended at -163.5°
+ℹ pass 3
+ℹ fail 0
+== suite_lap4b.txt exit 0 in 1868 s
+ℹ tests 4755
+ℹ pass 4731
+ℹ fail 0
+ℹ skipped 21
+ℹ todo 3
+✖ failing tests:

@@ -1,0 +1,20 @@
+✖ b1: the reader's list 21.2:4.2 40.8:20.8 56.6:-0.7, refused on 15b1306 ("needs +5 m"), lays as drawn with knots added between its marks, through each mark (36.121ms)
+✖ b2: of the reader's 72 refusals at the 5 m floor, at least 43 (what knotM 5 laid for the reader) now lay as drawn, each through its marks; the rest are still refused by name (3674.9265ms)
+✔ b3: unmoved: the banked S, and every drawn list that laid on 15b1306 (88 at the 5 m floor, 142 at 20 m), lay to the same bytes (1155.0613ms)
+✖ b4: every list that lays only with knots added is C2 at the joint: the bank, its roll rate and its roll acceleration carry on from the road before (0.1758ms)
+✖ b5: the save size: a list laid with knots added saves at most 600 bytes more than the same piece with the plain bank, and its added knots lie between the marks either side of one mark (0.1419ms)
+✖ c1: the reader's three over-asked lists lay or are told the least whole metre that lays (told +65 where +27 lays; +58 where +0.5 lays; +10 where +1 lays) (294.5786ms)
+✖ c2: every refusal of the reader's lists (160 at the 5 m floor, 160 at 20 m) names a room that lays, the least whole metre where one up to 10 m lays, never "at least" (230.7097ms)
+ℹ pass 1
+ℹ fail 6
+✖ failing tests:
+✖ b1: the reader's list 21.2:4.2 40.8:20.8 56.6:-0.7, refused on 15b1306 ("needs +5 m"), lays as drawn with knots added between its marks, through each mark (36.121ms)
+  AssertionError [ERR_ASSERTION]: refused: BAD_SECOND: the bank's mark 1 at 40.8 m needs at least 24.6 m after the mark before it (it has 19.6 m): it has fewer free control points to meet it than it has conditions there
+✖ b2: of the reader's 72 refusals at the 5 m floor, at least 43 (what knotM 5 laid for the reader) now lay as drawn, each through its marks; the rest are still refused by name (3674.9265ms)
+  AssertionError [ERR_ASSERTION]: only 0 of 72 lay
+✖ b4: every list that lays only with knots added is C2 at the joint: the bank, its roll rate and its roll acceleration carry on from the road before (0.1758ms)
+  AssertionError [ERR_ASSERTION]: only 0 lay
+✖ b5: the save size: a list laid with knots added saves at most 600 bytes more than the same piece with the plain bank, and its added knots lie between the marks either side of one mark (0.1419ms)
+  AssertionError [ERR_ASSERTION]: only 0 lay
+✖ c1: the reader's three over-asked lists lay or are told the least whole metre that lays (told +65 where +27 lays; +58 where +0.5 lays; +10 where +1 lays) (294.5786ms)
+  AssertionError [ERR_ASSERTION]: 23.2:29.2 40.9:-11.2 70.6:25.2 88:20.6: a smaller move can lay, so not "at least": BAD_SECOND: the bank's mark 2 at 70.6 m needs at least 94.7 m after the mark before it (it has 29.7 m): it has fewer free control points to meet it than it has conditions there

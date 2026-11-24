@@ -1,0 +1,9 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+gap 5: 160 lists, 72 refused today (bare, no room search)
+  uniform: 49 of 72 lay (at h {"5":21,"10":23,"2.5":5}); knots added over the plain bank's piece: median 11, max 49; saved bytes added: median 390, max 1775; bare call on a still-refused list: median 6.5 ms, max 8.7
+  local: 48 of 72 lay (at h {"5":21,"10":18,"2.5":9}); knots added over the plain bank's piece: median 5, max 15; saved bytes added: median 177, max 527; bare call on a still-refused list: median 6.4 ms, max 10.9
+  today: bare refused median 0.4 ms; whole refused median 30.8 ms, max 371.7
+gap 20: 160 lists, 18 refused today (bare, no room search)
+  uniform: 4 of 18 lay (at h {"10":4}); knots added over the plain bank's piece: median 8, max 13; saved bytes added: median 284, max 466; bare call on a still-refused list: median 4.6 ms, max 6.5
+  local: 5 of 18 lay (at h {"10":5}); knots added over the plain bank's piece: median 4, max 4; saved bytes added: median 130, max 150; bare call on a still-refused list: median 4.7 ms, max 6.4
+  today: bare refused median 4.1 ms; whole refused median 41 ms, max 181.4

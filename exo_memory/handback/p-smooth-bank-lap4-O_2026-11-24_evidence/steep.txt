@@ -1,0 +1,4 @@
+gap 5 old: 88 lists; steepest roll on the document °/m median 1.32, max 4.68; built road's worst miss at a mark ° median 18.63, max 51.18, > 10° in 61
+gap 5 knotted: 48 lists; steepest roll on the document °/m median 3.60, max 14.63; built road's worst miss at a mark ° median 15.62, max 52.09, > 10° in 32
+gap 20 old: 142 lists; steepest roll on the document °/m median 1.09, max 4.08; built road's worst miss at a mark ° median 13.25, max 49.78, > 10° in 81
+gap 20 knotted: 5 lists; steepest roll on the document °/m median 1.92, max 3.65; built road's worst miss at a mark ° median 25.40, max 39.25, > 10° in 5

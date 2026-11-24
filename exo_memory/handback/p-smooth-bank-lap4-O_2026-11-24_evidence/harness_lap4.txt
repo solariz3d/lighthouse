@@ -1,0 +1,313 @@
+✔ CONTROL: the flowing-bank and roll-instrument files pass whole on an unmutated copy of src/ and tools/ (6203.1547ms)
+✔ mutant R1 bankShape 'flow' is refused as an unknown shape: applied, and caught by "flow|built" (197.0032ms)
+ℹ R1 bankShape 'flow' is refused as an unknown shape: 23 of 27 run tests failed
+✔ mutant R2 through on another channel is not refused: applied, and caught by "flow 8" (188.6521ms)
+ℹ R2 through on another channel is not refused: 1 of 4 run tests failed
+✔ mutant R3 through with a bank shape other than 'flow' is not refused: applied, and caught by "flow 8" (171.2021ms)
+ℹ R3 through with a bank shape other than 'flow' is not refused: 1 of 4 run tests failed
+✔ mutant R4 a flowing bank with no first target is not refused: applied, and caught by "flow 8" (175.3447ms)
+ℹ R4 a flowing bank with no first target is not refused: 1 of 4 run tests failed
+✔ mutant R5 through with the bank's changes is not refused: applied, and caught by "flow 8" (199.6231ms)
+ℹ R5 through with the bank's changes is not refused: 1 of 4 run tests failed
+✔ mutant R6 a through that is not a list is not refused: applied, and caught by "flow 8" (173.1041ms)
+ℹ R6 a through that is not a list is not refused: 1 of 4 run tests failed
+✔ mutant R7 a mark that is not a number is not refused: applied, and caught by "flow 8" (176.0307ms)
+ℹ R7 a mark that is not a number is not refused: 1 of 4 run tests failed
+✔ mutant R8 a mark before the one before it is not refused: applied, and caught by "flow 8" (170.7154ms)
+ℹ R8 a mark before the one before it is not refused: 1 of 4 run tests failed
+✔ mutant R9 a mark under 5 m after the one before is not refused: applied, and caught by "flow 8" (233.6118ms)
+ℹ R9 a mark under 5 m after the one before is not refused: 1 of 4 run tests failed
+✔ mutant R10 a mark past the piece's length is not refused: applied, and caught by "flow 8" (189.85ms)
+ℹ R10 a mark past the piece's length is not refused: 1 of 4 run tests failed
+✔ mutant M1 the through marks are dropped (only the first target is passed): applied, and caught by "flow 1|flow 9" (280.3409ms)
+ℹ M1 the through marks are dropped (only the first target is passed): 3 of 8 run tests failed
+✔ mutant M2 the first target is passed at the piece's end, not at its transition: applied, and caught by "flow 1" (178.6757ms)
+ℹ M2 the first target is passed at the piece's end, not at its transition: 3 of 7 run tests failed
+✔ mutant K1 no knot is inserted at a mark: applied, and caught by "flow" (3483.3507ms)
+ℹ K1 no knot is inserted at a mark: 1 of 21 run tests failed
+✔ mutant K2 a mark takes a knot as far as 10 m away for its own: applied, and caught by "flow" (3542.6654ms)
+ℹ K2 a mark takes a knot as far as 10 m away for its own: 1 of 21 run tests failed
+✔ mutant S1 the joint's slope is not carried (the bank starts level-rated): applied, and caught by "flow 4" (254.7069ms)
+ℹ S1 the joint's slope is not carried (the bank starts level-rated): 2 of 6 run tests failed
+✔ mutant S2 the head's slope is dropped at the call (held or not): applied, and caught by "flow 4" (267.4133ms)
+ℹ S2 the head's slope is dropped at the call (held or not): 2 of 6 run tests failed
+✔ mutant S3 the end is not held at rest when the last mark is at the piece's end: applied, and caught by "flow 4" (236.9175ms)
+ℹ S3 the end is not held at rest when the last mark is at the piece's end: 1 of 6 run tests failed
+✔ mutant S4 the start's curvature is not held at 0: applied, and caught by "flow 4" (258.1571ms)
+ℹ S4 the start's curvature is not held at 0: 4 of 6 run tests failed
+✔ mutant S5 the marks are not passed (their rows dropped): applied, and caught by "flow 1" (320.8691ms)
+ℹ S5 the marks are not passed (their rows dropped): 2 of 7 run tests failed
+✔ mutant S6 the least SLOPE, not the least bending (D1 for D2 in the Gram matrix): applied, and caught by "flow" (3503.9649ms)
+ℹ S6 the least SLOPE, not the least bending (D1 for D2 in the Gram matrix): 1 of 21 run tests failed
+✔ mutant S7 the Gram matrix is read at one point per span (the middle), not three: applied, and caught by "flow" (3195.9539ms)
+ℹ S7 the Gram matrix is read at one point per span (the middle), not three: 3 of 21 run tests failed
+✔ mutant S8 tension at the plan's first answer (λ = 0.03): applied, and caught by "flow" (3067.819ms)
+ℹ S8 tension at the plan's first answer (λ = 0.03): 1 of 21 run tests failed
+✔ mutant S9 the control points are stored to 3 places, not the bank's 9: applied, and caught by "flow" (3061.3859ms)
+ℹ S9 the control points are stored to 3 places, not the bank's 9: 5 of 21 run tests failed
+✔ mutant J1 the joint's roll acceleration is not carried (the start held at 0, as before): applied, and caught by "flow 4" (261.2343ms)
+ℹ J1 the joint's roll acceleration is not carried (the start held at 0, as before): 2 of 6 run tests failed
+✔ mutant J2 the joint's roll acceleration is not passed at the call: applied, and caught by "flow 4" (256.9787ms)
+ℹ J2 the joint's roll acceleration is not passed at the call: 2 of 6 run tests failed
+✔ mutant J3 after a flight the flight is read as road (its channel at its end): applied, and caught by "flow 4" (232.859ms)
+ℹ J3 after a flight the flight is read as road (its channel at its end): 1 of 6 run tests failed
+✔ mutant P1 a turning mark is not held at rest: applied, and caught by "flow 5|flow 11" (270.6091ms)
+ℹ P1 a turning mark is not held at rest: 1 of 5 run tests failed
+✔ mutant P2 every mark that does NOT turn is held at rest instead: applied, and caught by "flow" (3266.5049ms)
+ℹ P2 every mark that does NOT turn is held at rest instead: 6 of 21 run tests failed
+✔ mutant B1 the curve is not held inside the range: applied, and caught by "drawn 1|drawn 3|drawn 5" (4385.3806ms)
+ℹ B1 the curve is not held inside the range: 2 of 8 run tests failed
+✔ mutant B2 the curve is not held on the marks' side between two of one sign: applied, and caught by "drawn 1|drawn 3|drawn 4|drawn 10" (4084.2273ms)
+ℹ B2 the curve is not held on the marks' side between two of one sign: 1 of 8 run tests failed
+✔ mutant B3 the curve is held every 2 m, not every 0.25 m: applied, and caught by "drawn" (5505.9604ms)
+ℹ B3 the curve is held every 2 m, not every 0.25 m: 2 of 14 run tests failed
+✔ mutant B4 the bank the piece starts from is left out of the range: applied, and caught by "drawn" (533.9984ms)
+ℹ B4 the bank the piece starts from is left out of the range: 9 of 14 run tests failed
+✔ mutant B5 the least bending is laid even where it leaves what the marks ask: applied, and caught by "drawn 1|drawn 3|drawn 5" (4505.7099ms)
+ℹ B5 the least bending is laid even where it leaves what the marks ask: 3 of 8 run tests failed
+✔ mutant B6 the curve is held every 2 m AND not read once more (the final read): applied, and caught by "drawn|flow" (5582.2472ms)
+ℹ B6 the curve is held every 2 m AND not read once more (the final read): 1 of 29 run tests failed
+✔ mutant G1 a row taken is never let go (its multiplier never read): applied, and caught by "qp" (176.7616ms)
+ℹ G1 a row taken is never let go (its multiplier never read): 1 of 6 run tests failed
+✔ mutant G2 the full step goes the wrong way: applied, and caught by "qp" (206.2075ms)
+ℹ G2 the full step goes the wrong way: 3 of 6 run tests failed
+✔ mutant G3 the multipliers are not moved with a step: applied, and caught by "qp" (192.5076ms)
+ℹ G3 the multipliers are not moved with a step: 1 of 6 run tests failed
+✔ mutant G4 rows no curve meets give the point reached, not none: applied, and caught by "qp" (185.8529ms)
+ℹ G4 rows no curve meets give the point reached, not none: 2 of 6 run tests failed
+✔ mutant G5 the equality rows are left out of the step (the marks not kept): applied, and caught by "qp|drawn 5" (235.1787ms)
+ℹ G5 the equality rows are left out of the step (the marks not kept): 1 of 6 run tests failed
+✔ mutant D1 a row with no free point is skipped, not checked (finding 3): applied, and caught by "drawn 7" (185.4854ms)
+ℹ D1 a row with no free point is skipped, not checked (finding 3): 1 of 4 run tests failed
+✔ mutant D2 rows that outnumber their free points are not refused before the solve (finding 2): applied, and caught by "drawn 2" (209.1146ms)
+ℹ D2 rows that outnumber their free points are not refused before the solve (finding 2): 1 of 4 run tests failed
+✔ mutant N1 a refusal names no room (the search not run): applied, and caught by "drawn 2|drawn 6" (1437.8485ms)
+ℹ N1 a refusal names no room (the search not run): 1 of 5 run tests failed
+✔ mutant N2 the room named is one metre short of what lays: applied, and caught by "drawn 6" (328.9768ms)
+ℹ N2 the room named is one metre short of what lays: 1 of 4 run tests failed
+✔ mutant W1 a plain piece's built road is not read: applied, and caught by "drawn 3|drawn 4" (356.0891ms)
+ℹ W1 a plain piece's built road is not read: 2 of 5 run tests failed
+✔ mutant W2 a corner's built road is not read: applied, and caught by "drawn 9|drawn 11|built" (4520.5422ms)
+ℹ W2 a corner's built road is not read: 1 of 13 run tests failed
+✔ CONTROL: the whole of core_ramp.test.js and core_joint_c2.test.js passes on an unmutated copy of src/ and tools/ (11601.0683ms)
+✔ a crashed inner run reads NOT TESTED, never a verdict (the crash stand-in, D352) (251.7714ms)
+✔ mutant R2 'start' is the whole piece, not the first span: applied, and caught by "2/3" (360.6761ms)
+ℹ R2 'start' is the whole piece, not the first span: 9 of 21 run tests failed
+✔ mutant R3 startRampM is a fixed 20 m even on a short piece: applied, and caught by "4 ·" (393.052ms)
+ℹ R3 startRampM is a fixed 20 m even on a short piece: 2 of 17 run tests failed
+✔ mutant R4 the extra ramp knots are not added: applied, and caught by "4 ·|2/3" (371.4478ms)
+ℹ R4 the extra ramp knots are not added: 9 of 26 run tests failed
+✔ mutant R5 the short-ramp channel is left as the least-squares fit (it rings): applied, and caught by "2/3" (356.1451ms)
+ℹ R5 the short-ramp channel is left as the least-squares fit (it rings): 9 of 21 run tests failed
+✔ mutant R6 the ideal ramp is not compressed (the curve completes later than R): applied, and caught by "2/3" (351.8365ms)
+ℹ R6 the ideal ramp is not compressed (the curve completes later than R): 9 of 21 run tests failed
+✔ mutant R7 the Greville abscissae are shifted (the hold is not exact and the ramp lags): applied, and caught by "2 ·|2/3" (354.1113ms)
+ℹ R7 the Greville abscissae are shifted (the hold is not exact and the ramp lags): 1 of 23 run tests failed
+✔ mutant R8 the joint's first two control points are overwritten too (C1 lost): applied, and caught by "3 ·|5 ·" (359.1971ms)
+ℹ R8 the joint's first two control points are overwritten too (C1 lost): 13 of 25 run tests failed
+✔ mutant R9 the range clamp is dropped (a continued slope can carry the ramp past its target): applied, and caught by "3 ·" (361.3919ms)
+ℹ R9 the range clamp is dropped (a continued slope can carry the ramp past its target): 1 of 22 run tests failed
+✔ mutant R10 a ramp as long as the piece counts as short (the whole-piece blend is replaced): applied, and caught by "4 ·" (349.3403ms)
+ℹ R10 a ramp as long as the piece counts as short (the whole-piece blend is replaced): 1 of 17 run tests failed
+✔ mutant R11 a channel with no target still gets the ramp treatment: applied, and caught by "4 ·" (355.2622ms)
+ℹ R11 a channel with no target still gets the ramp treatment: 1 of 17 run tests failed
+✔ mutant R12 an unknown channel in the map is accepted: applied, and caught by "6 ·" (371.911ms)
+ℹ R12 an unknown channel in the map is accepted: 1 of 19 run tests failed
+✔ mutant R13 a map value longer than the piece is accepted: applied, and caught by "6 ·" (371.7384ms)
+ℹ R13 a map value longer than the piece is accepted: 1 of 19 run tests failed
+✔ mutant R14 a map value of zero or less is accepted: applied, and caught by "6 ·" (361.2851ms)
+ℹ R14 a map value of zero or less is accepted: 2 of 19 run tests failed
+✔ mutant R15 the number path no longer refuses a transition past the length: applied, and caught by "6 ·|1 ·" (378.6539ms)
+ℹ R15 the number path no longer refuses a transition past the length: 1 of 25 run tests failed
+✔ mutant R16 the number path uses a different default (half the piece) for no transition: applied, and caught by "1 ·" (445.8851ms)
+ℹ R16 the number path uses a different default (half the piece) for no transition: 3 of 18 run tests failed
+✔ mutant R17 the ramp control points are not rounded to the channel quantum (the document would not round-trip): applied, and caught by "5 ·" (484.7761ms)
+ℹ R17 the ramp control points are not rounded to the channel quantum (the document would not round-trip): 1 of 15 run tests failed
+✔ mutant Q1 the cross-section channels blend by the cubic again (c2Ends still pins the ends, so the joints read C2; the ramp's SHAPE is no longer the quintic's): applied, and caught by "row 8" (371.1821ms)
+ℹ Q1 the cross-section channels blend by the cubic again (c2Ends still pins the ends, so the joints read C2; the ramp's SHAPE is no longer the quintic's): 2 of 13 run tests failed
+✔ mutant Q2 the fitted ends are not pinned to zero curvature (the fit alone reads 0.0034 to 0.038 °/m² at the start of a ramp): applied, and caught by "row 1|row 2" (5565.7805ms)
+ℹ Q2 the fitted ends are not pinned to zero curvature (the fit alone reads 0.0034 to 0.038 °/m² at the start of a ramp): 3 of 19 run tests failed
+✔ mutant Q3 the quintic blends the route channels too (the golden documents with kh, kv, w or r targets change): applied, and caught by "1 ·" (394.2132ms)
+ℹ Q3 the quintic blends the route channels too (the golden documents with kh, kv, w or r targets change): 5 of 18 run tests failed
+✔ mutant Q6 continuity.js reads the start curvature over the wrong knot span (U[5] for U[4]): applied, and caught by "row 0" (358.2065ms)
+ℹ Q6 continuity.js reads the start curvature over the wrong knot span (U[5] for U[4]): 1 of 13 run tests failed
+✔ mutant Q7 continuity.js reads the end slope from the wrong points (the last three for the last two): applied, and caught by "row 0" (356.0179ms)
+ℹ Q7 continuity.js reads the end slope from the wrong points (the last three for the last two): 1 of 13 run tests failed
+✔ mutant Q4 a piece with a cross-section target keeps its even knots (a 40 m piece has one interior knot: no free point for both ends, the cup fade stays C1): applied, and caught by "row 2" (641.8134ms)
+ℹ Q4 a piece with a cross-section target keeps its even knots (a 40 m piece has one interior knot: no free point for both ends, the cup fade stays C1): 1 of 13 run tests failed
+✔ mutant F1 a free point at the first column of the band is left out of the normal equations: applied, and caught by "the banded fit equals 0.4.21" (3080.9006ms)
+ℹ F1 a free point at the first column of the band is left out of the normal equations: 1 of 13 run tests failed
+✔ mutant F2 the held points are left out of the residual the free points are fitted to: applied, and caught by "the banded fit equals 0.4.21" (3089.6832ms)
+ℹ F2 the held points are left out of the residual the free points are fitted to: 1 of 13 run tests failed
+✔ mutant F3 the right-hand side is not eliminated with its row: applied, and caught by "the banded fit equals 0.4.21" (3083.0249ms)
+ℹ F3 the right-hand side is not eliminated with its row: 1 of 13 run tests failed
+✔ mutant F4 the band is two-thirds as wide (an entry past it is dropped by the typed array): applied, and caught by "the banded fit equals 0.4.21" (3101.8587ms)
+ℹ F4 the band is two-thirds as wide (an entry past it is dropped by the typed array): 1 of 13 run tests failed
+✔ mutant F5 no partial pivoting (on uneven knots that moves only bits below the kept digits; at a column under the singular bar it decides whether the fit goes on): applied, and caught by "pivoting decides" (350.4759ms)
+ℹ F5 no partial pivoting (on uneven knots that moves only bits below the kept digits; at a column under the singular bar it decides whether the fit goes on): 1 of 13 run tests failed
+✔ mutant F6 a swapped row is copied without re-slotting: applied, and caught by "elimination swaps rows" (650.9462ms)
+ℹ F6 a swapped row is copied without re-slotting: 1 of 13 run tests failed
+✔ mutant F7 the elimination stops at the first upper band (with a swap the band is twice as wide): applied, and caught by "elimination swaps rows" (638.367ms)
+ℹ F7 the elimination stops at the first upper band (with a swap the band is twice as wide): 1 of 13 run tests failed
+✔ mutant F8 the back substitution reads one upper band (with a swap there are two): applied, and caught by "elimination swaps rows" (644.0924ms)
+ℹ F8 the back substitution reads one upper band (with a swap there are two): 1 of 13 run tests failed
+✔ mutant F9 a singular system is solved anyway (its free points are written: NaN or a blow-up): applied, and caught by "singular system" (348.7641ms)
+ℹ F9 a singular system is solved anyway (its free points are written: NaN or a blow-up): 1 of 13 run tests failed
+✔ mutant F11 the kept samples are read for a piece of the same length and as many knots, whatever the knots: applied, and caught by "knots were replaced|one knot moved" (345.597ms)
+ℹ F11 the kept samples are read for a piece of the same length and as many knots, whatever the knots: 1 of 14 run tests failed
+✔ mutant F14 the kept samples are keyed by the length alone: applied, and caught by "knots were replaced|one knot moved" (353.2575ms)
+ℹ F14 the kept samples are keyed by the length alone: 2 of 14 run tests failed
+✔ mutant F12 sampleBasis reads the last level's buffer past its end (basisN reads a 0 there): applied, and caught by "sampleBasis gives basisN" (734.6754ms)
+ℹ F12 sampleBasis reads the last level's buffer past its end (basisN reads a 0 there): 1 of 13 run tests failed
+✔ mutant F13 sampleBasis's walk stops one span early on a knot (the binary search takes the span the knot starts): applied, and caught by "sampleBasis gives basisN" (355.6546ms)
+ℹ F13 sampleBasis's walk stops one span early on a knot (the binary search takes the span the knot starts): 1 of 13 run tests failed
+✔ mutant F10 with no free point the fit goes on (and writes past the pins): applied, and caught by "no free point" (350.4475ms)
+ℹ F10 with no free point the fit goes on (and writes past the pins): 1 of 13 run tests failed
+✔ mutant B1 the peak is not held at the peak bank: applied, and caught by "swing: 0°" (365.4524ms)
+ℹ B1 the peak is not held at the peak bank: 1 of 13 run tests failed
+✔ mutant B2 the ends are not held at the bank there and the exit bank: applied, and caught by "swing: 0°|swing: an exit bank of" (359.1981ms)
+ℹ B2 the ends are not held at the bank there and the exit bank: 2 of 14 run tests failed
+✔ mutant B3 the joints are not held C1 in the fit (the quantised re-set then breaks their C2): applied, and caught by "swing: every joint" (348.407ms)
+ℹ B3 the joints are not held C1 in the fit (the quantised re-set then breaks their C2): 1 of 13 run tests failed
+✔ mutant B4 the joints inside the stretch are not held C2: applied, and caught by "swing: every joint" (355.9174ms)
+ℹ B4 the joints inside the stretch are not held C2: 1 of 13 run tests failed
+✔ mutant B5 the road after an exit bank is not moved with it: applied, and caught by "swing: an exit bank" (361.0303ms)
+ℹ B5 the road after an exit bank is not moved with it: 2 of 14 run tests failed
+✔ mutant B6 the road after an exit bank is moved past the next jump: applied, and caught by "swing: an exit bank carries" (345.4798ms)
+ℹ B6 the road after an exit bank is moved past the next jump: 1 of 13 run tests failed
+✔ mutant B7 a jump inside the stretch is not refused: applied, and caught by "NOT_ROAD" (344.0707ms)
+ℹ B7 a jump inside the stretch is not refused: 1 of 13 run tests failed
+✔ mutant B8 a half shorter than a knot span is not refused: applied, and caught by "TOO_SHORT" (347.0634ms)
+ℹ B8 a half shorter than a knot span is not refused: 1 of 13 run tests failed
+✔ mutant B9 a peak at either end of the stretch is accepted: applied, and caught by "BAD_RANGE" (359.7241ms)
+ℹ B9 a peak at either end of the stretch is accepted: 1 of 13 run tests failed
+✔ mutant B10 a stretch off the end of an open track is accepted: applied, and caught by "BAD_RANGE" (340.0461ms)
+ℹ B10 a stretch off the end of an open track is accepted: 1 of 13 run tests failed
+✔ mutant B11 a closed lap with no jump takes an exit bank (and opens a step where the swing starts): applied, and caught by "SWING_REFUSED" (378.7622ms)
+ℹ B11 a closed lap with no jump takes an exit bank (and opens a step where the swing starts): 1 of 13 run tests failed
+✔ mutant B12 a landing's first point is not held at its flight bank: applied, and caught by "just after a landing" (349.236ms)
+ℹ B12 a landing's first point is not held at its flight bank: 1 of 13 run tests failed
+✔ mutant B14 the road either side of the stretch weighs no more than the stretch in the fit: applied, and caught by "swing: an exit bank of" (357.5973ms)
+ℹ B14 the road either side of the stretch weighs no more than the stretch in the fit: 1 of 13 run tests failed
+✔ mutant B15 the rounded rate rounds over 10 m whatever the knots: applied, and caught by "swing: the rounded swing rolls" (360.2765ms)
+ℹ B15 the rounded rate rounds over 10 m whatever the knots: 1 of 13 run tests failed
+✔ mutant B16 another channel is written beside the bank: applied, and caught by "swing: only phi" (353.7502ms)
+ℹ B16 another channel is written beside the bank: 1 of 13 run tests failed
+✔ mutant B17 the rounded halves blend by extend.js's quintic: applied, and caught by "swing: the rounded swing rolls" (356.0468ms)
+ℹ B17 the rounded halves blend by extend.js's quintic: 1 of 13 run tests failed
+✔ mutant S1 the cross-section ramp at the start loses its F floor (back to 20 m): applied, and caught by "his piece|takes the roll bar|20 m floor|F's 300" (403.6525ms)
+ℹ S1 the cross-section ramp at the start loses its F floor (back to 20 m): 4 of 20 run tests failed
+✔ mutant S2 the cross-section ramp at the start allows twice the roll rate: applied, and caught by "rolls under the checker|takes the roll bar|8 to 180" (457.576ms)
+ℹ S2 the cross-section ramp at the start allows twice the roll rate: 2 of 14 run tests failed
+✔ mutant S3 the half-piece cap of the bank never bends (a 180° bank at start rolls past the amber): applied, and caught by "8 to 180|cap bends" (430.8436ms)
+ℹ S3 the half-piece cap of the bank never bends (a 180° bank at start rolls past the amber): 1 of 14 run tests failed
+✔ mutant W1 the swell has its plateau back (a quarter-ramp rounding): applied, and caught by "byte for byte" (3561.5085ms)
+ℹ W1 the swell has its plateau back (a quarter-ramp rounding): 1 of 17 run tests failed
+✔ mutant W2 the fall share is laid equal to the rise: applied, and caught by "follows the asked shares" (386.6331ms)
+ℹ W2 the fall share is laid equal to the rise: 1 of 13 run tests failed
+✔ mutant W3 the rise share is dropped (the rate starts at its hold): applied, and caught by "never turns back" (371.5074ms)
+ℹ W3 the rise share is dropped (the rate starts at its hold): 1 of 13 run tests failed
+✔ mutant W5 a shaped bank at start is laid on the knots of the ramp alone (the rise smoothed away): applied, and caught by "within 0.25" (347.9175ms)
+ℹ W5 a shaped bank at start is laid on the knots of the ramp alone (the rise smoothed away): 2 of 13 run tests failed
+✔ mutant W6 the fall gets no knots of its own: applied, and caught by "within 0.25" (349.7441ms)
+ℹ W6 the fall gets no knots of its own: 2 of 13 run tests failed
+✔ mutant W7 the knots are spread over the length asked, not the length laid: applied, and caught by "within 0.25" (355.5349ms)
+ℹ W7 the knots are spread over the length asked, not the length laid: 1 of 13 run tests failed
+✔ mutant W8 the bank is not read again on the new knots: applied, and caught by "within 0.25" (352.3359ms)
+ℹ W8 the bank is not read again on the new knots: 2 of 13 run tests failed
+✔ mutant W4 the shares are not checked (a rise and fall over 1 together is laid): applied, and caught by "not a ramp" (350.5627ms)
+ℹ W4 the shares are not checked (a rise and fall over 1 together is laid): 2 of 13 run tests failed
+✔ mutant A1 a cup or edge at start gets no shape in extend (the quintic again): applied, and caught by "laid as F too" (354.3703ms)
+ℹ A1 a cup or edge at start gets no shape in extend (the quintic again): 1 of 13 run tests failed
+✔ mutant A2 the panel asks the swell's halves, not a 20 m rise: applied, and caught by "his piece" (379.6903ms)
+ℹ A2 the panel asks the swell's halves, not a 20 m rise: 1 of 17 run tests failed
+✔ mutant A3 the panel sends no start shape for the cup and the edge: applied, and caught by "laid as F too" (348.6906ms)
+ℹ A3 the panel sends no start shape for the cup and the edge: 1 of 13 run tests failed
+✔ mutant A4 the right edge does not follow the edge's start shape: applied, and caught by "laid as F too" (352.4991ms)
+ℹ A4 the right edge does not follow the edge's start shape: 1 of 13 run tests failed
+✔ mutant A5 startShapes takes any channel: applied, and caught by "refuses what is not" (342.5215ms)
+ℹ A5 startShapes takes any channel: 1 of 13 run tests failed
+✔ mutant A6 the rise is measured on the ramp asked, not the length laid: applied, and caught by "his piece" (375.3685ms)
+ℹ A6 the rise is measured on the ramp asked, not the length laid: 1 of 17 run tests failed
+✔ mutant A7 the width at start gets no start shape (the 20 m wedge again): applied, and caught by "32 → 55|mirrored|a 60 m piece" (376.8722ms)
+ℹ A7 the width at start gets no start shape (the 20 m wedge again): 3 of 17 run tests failed
+✔ mutant SB1 the second ramp blends by the route cubic (it starts with a curvature step at from): applied, and caught by "L135 1|D642 2f" (352.5101ms)
+ℹ SB1 the second ramp blends by the route cubic (it starts with a curvature step at from): 1 of 13 run tests failed
+✔ mutant SB2 the second ramp's end is not pinned to zero curvature (the joint after the piece steps): applied, and caught by "L135 4a|L139 1 phi:" (371.9487ms)
+ℹ SB2 the second ramp's end is not pinned to zero curvature (the joint after the piece steps): 1 of 14 run tests failed
+✔ mutant CH1 route: a turn or climb change blends by the cubic again (a curvature step in the rate at every mark): applied, and caught by "L139 4b" (360.3055ms)
+ℹ CH1 route: a turn or climb change blends by the cubic again (a curvature step in the rate at every mark): 1 of 13 run tests failed
+✔ mutant CH2 cross-section: a cup or edge change is not pinned to zero curvature at its end: applied, and caught by "L139 1 (c|e|er):" (374.8273ms)
+ℹ CH2 cross-section: a cup or edge change is not pinned to zero curvature at its end: 3 of 15 run tests failed
+✔ mutant CH3 corner: an extra turns half its own angle (the S and the snake end off their heading): applied, and caught by "L139 (9|10) |D642 2a" (421.9437ms)
+ℹ CH3 corner: an extra turns half its own angle (the S and the snake end off their heading): 1 of 14 run tests failed
+✔ mutant AD1 a whole-piece first ramp is squeezed into [0, its first mark] again: applied, and caught by "D642 2c|D642 2d" (375.605ms)
+ℹ AD1 a whole-piece first ramp is squeezed into [0, its first mark] again: 2 of 14 run tests failed
+✔ mutant AD2 a change that adds nothing at the end of a list is laid anyway (its knots move the bytes): applied, and caught by "D642 1c" (380.0852ms)
+ℹ AD2 a change that adds nothing at the end of a list is laid anyway (its knots move the bytes): 6 of 18 run tests failed
+✔ mutant AD3 an extra corner of 0 is laid anyway (its knots move the bytes): applied, and caught by "D642 1a|D642 1b" (357.3391ms)
+ℹ AD3 an extra corner of 0 is laid anyway (its knots move the bytes): 2 of 14 run tests failed
+✔ mutant AD4 an extra corner rides every basis function, not only those inside its span (it leaks before its mark): applied, and caught by "D642 2a|D642 2b|L139 (9|10|11) " (403.1192ms)
+ℹ AD4 an extra corner rides every basis function, not only those inside its span (it leaks before its mark): 2 of 16 run tests failed
+✔ mutant AD5 the steps are fitted with nothing held before the first mark: applied, and caught by "D642 2[cde]|L139 1 |L139 2" (417.4969ms)
+ℹ AD5 the steps are fitted with nothing held before the first mark: 3 of 24 run tests failed
+✔ mutant AD6 a step is the target itself, not the target less the one before (it adds the whole value again): applied, and caught by "D642 2c|L139 1 |L139 2" (471.216ms)
+ℹ AD6 a step is the target itself, not the target less the one before (it adds the whole value again): 1 of 20 run tests failed
+✔ mutant AD7 a change's shortest ignores the first ramp still moving under it: applied, and caught by "D642 3[de]" (413.4723ms)
+ℹ AD7 a change's shortest ignores the first ramp still moving under it: 3 of 16 run tests failed
+✔ mutant AD8 an extra corner's shortest is the comfort bar again, not the knot floor: applied, and caught by "D642 3 |L139 12" (349.5605ms)
+ℹ AD8 an extra corner's shortest is the comfort bar again, not the knot floor: 4 of 15 run tests failed
+✔ mutant AD9 a rounded or swell bank under the change is read as the quintic: applied, and caught by "D642 3e" (374.2352ms)
+ℹ AD9 a rounded or swell bank under the change is read as the quintic: 2 of 15 run tests failed
+✔ mutant AD10 a base with no shape named is read as the quintic, not as the rounded bank of the panel: applied, and caught by "D642 3e" (389.7379ms)
+ℹ AD10 a base with no shape named is read as the quintic, not as the rounded bank of the panel: 2 of 15 run tests failed
+✔ mutant AD11 the built-road search stops where it starts (the change alone at the bar): applied, and caught by "D642 3[efg]" (391.5311ms)
+ℹ AD11 the built-road search stops where it starts (the change alone at the bar): 3 of 17 run tests failed
+✔ mutant AD12 the probe lays the first ramp as the quintic whatever its shape: applied, and caught by "D642 3[efg]" (421.978ms)
+ℹ AD12 the probe lays the first ramp as the quintic whatever its shape: 3 of 17 run tests failed
+✔ mutant AD13 a span past the change's own minimum is taken without the built road probed: applied, and caught by "D642 3h|row 8:" (391.0063ms)
+ℹ AD13 a span past the change's own minimum is taken without the built road probed: 1 of 13 run tests failed
+✔ mutant AD14 the probes are kept by the exact change, not its grid step (a drag reuses nothing): applied, and caught by "D642 3i" (531.2494ms)
+ℹ AD14 the probes are kept by the exact change, not its grid step (a drag reuses nothing): 1 of 13 run tests failed
+✔ mutant AD15 a new grid step searches from scratch, not from its neighbour: applied, and caught by "D642 3i" (719.9555ms)
+ℹ AD15 a new grid step searches from scratch, not from its neighbour: 1 of 13 run tests failed
+✔ mutant AD16 the grid rounds the change down (a smaller change than asked is probed): applied, and caught by "D642 3i" (403.464ms)
+ℹ AD16 the grid rounds the change down (a smaller change than asked is probed): 1 of 13 run tests failed
+✔ mutant AD17 the bar of the probe is set back to the 0.97 margin: applied, and caught by "D642 3k|row 8:" (414.3065ms)
+ℹ AD17 the bar of the probe is set back to the 0.97 margin: 1 of 13 run tests failed
+✔ mutant AD18 a span at or past the closed-form ceiling is taken unprobed again: applied, and caught by "D642 3l|row 8:" (786.3365ms)
+ℹ AD18 a span at or past the closed-form ceiling is taken unprobed again: 1 of 13 run tests failed
+✔ mutant EX1 the width, cup and edges are held to their old comfort length again: applied, and caught by "row [567]:|L139 5a" (4423.7022ms)
+ℹ EX1 the width, cup and edges are held to their old comfort length again: 4 of 18 run tests failed
+✔ mutant EX2 the comfort length no longer lays a tiny change (the measured floor alone): applied, and caught by "L139 5a" (324.8554ms)
+ℹ EX2 the comfort length no longer lays a tiny change (the measured floor alone): 1 of 13 run tests failed
+✔ mutant EX3 the width's floor is 30 m, under where its fit overshoots: applied, and caught by "row [57]:" (2444.888ms)
+ℹ EX3 the width's floor is 30 m, under where its fit overshoots: 2 of 15 run tests failed
+✔ mutant EX4 the cup's floor is 20 m, under where its fit moves the road before the mark: applied, and caught by "row [57]:" (2399.0447ms)
+ℹ EX4 the cup's floor is 20 m, under where its fit moves the road before the mark: 2 of 15 run tests failed
+✔ mutant EX5 a bank change the comfort length does not pass is refused again, not read on the road as built: applied, and caught by "row [23]:" (606.76ms)
+ℹ EX5 a bank change the comfort length does not pass is refused again, not read on the road as built: 2 of 16 run tests failed
+✔ mutant EX6 the bank has no fit floor (a 0.5 m change is left to the built road): applied, and caught by "row 10:" (4880.3765ms)
+ℹ EX6 the bank has no fit floor (a 0.5 m change is left to the built road): 1 of 13 run tests failed
+✔ mutant EX7 the bank change is not checked on the road as built: applied, and caught by "row [48]:|L139 5b phi" (329.2344ms)
+ℹ EX7 the bank change is not checked on the road as built: 3 of 16 run tests failed
+✔ mutant EX8 the hold before the mark is not read (only the change's span and its end): applied, and caught by "row [48]:|L139 5b phi" (339.2449ms)
+ℹ EX8 the hold before the mark is not read (only the change's span and its end): 3 of 16 run tests failed
+✔ mutant EX9 the built road may leave the document by 5°, not 0.5°: applied, and caught by "row [48]:|L139 5b phi" (345.9743ms)
+ℹ EX9 the built road may leave the document by 5°, not 0.5°: 1 of 16 run tests failed
+✔ mutant EX10 a refusal past a single-span spike names the comfort length as holding (it does not: the road is not monotone in the span): applied, and caught by "row 8:" (332.0348ms)
+ℹ EX10 a refusal past a single-span spike names the comfort length as holding (it does not: the road is not monotone in the span): 1 of 13 run tests failed
+✔ mutant EX11 a corner's piece is returned unchecked: applied, and caught by "row 4:" (330.6346ms)
+ℹ EX11 a corner's piece is returned unchecked: 1 of 13 run tests failed
+✔ mutant EX12 the corner's inner extend checks its eased piece, whose turn is not yet solved (a turning road read as straight): applied, and caught by "row (2|3|11):" (642.1462ms)
+ℹ EX12 the corner's inner extend checks its eased piece, whose turn is not yet solved (a turning road read as straight): 1 of 17 run tests failed
+✔ mutant EX13 a refusal under the fit floor of the bank names the floor as its mark, which the road as built may still refuse: applied, and caught by "the limit a refusal states" (611.2866ms)
+ℹ EX13 a refusal under the fit floor of the bank names the floor as its mark, which the road as built may still refuse: 1 of 13 run tests failed
+ℹ tests 154
+ℹ suites 0
+ℹ pass 154
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 86221.913
