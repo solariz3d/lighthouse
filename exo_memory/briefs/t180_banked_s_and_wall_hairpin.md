@@ -73,3 +73,27 @@ What the builder can and cannot do today, t180 main `3b33b38`:
   fast roll back (his 2026-11-05 "we dont want the bumps" ruling, living in the adapter's bank plan). Freeing it changes how the road
   is built.
 - More than one extra per field in the panel (item 2 above).
+
+## Added 2026-11-24 00:5x (D, the librarian): he names the turn he wants, and it is measured
+
+The track and its author are another creator's, so both names stay out of this file (the rule at the top). It is the track of his screenshot of tonight, taken by me to be reference track A; the read is on D only, gitignored: `Desktop/t180-track-builder/reads/` (2026-09-28).
+
+**His words, 00:44, with a screenshot** (on D: `Pictures\Screenshots\double banked 90 degree turn the first turns are close to the same just reversed in a way but i want the system to be able to make this.png`; his red outline round the two turns, an arrow at the join):
+"the extra turn works in the way it has, but it isnt how I want it, the perfect turn I want to be able to make with it is in the track [reference track A], should be on disk, made by [its author], look for the starting straight, then the first two turns, and the last two turns, they are like this banked two 90 degree turns, I will send a screenshot too: you see how the first banking starts for the turn, then the second banking connects with the extra turn smoothly and so nice"
+
+**Measured by me from the read** (one run; `scratchpad/t180/sturn.js <read> 340 720 16 20100 20440 16`: heading from each station's forward vector, bank from its normal; stations every 4 m; coarse, and the heading comes in steps of the mesh's own faces):
+
+| stretch (m from the start line) | turning | bank |
+|---|---|---|
+| 372 to 452, about 80 m | none: straight | ramps from about 5 to 22 degrees, INTO the coming turn, before any turning |
+| 452 to 516, about 64 m | about 78 degrees one way | peaks about 27 mid-turn, down to about 9 by the turn's end |
+| 516 to 564, about 48 m | none: straight | goes THROUGH level (0 at about 532) to about 20 the other way; no stretch is held level |
+| 564 to 596, about 32 m | about 67 degrees the other way | peaks about 26 |
+| 596 to 700, about 100 m | none: straight | eases from about 25 back to level |
+
+- Width 32 to 34 m throughout. The road drops about 9 m through the first turn and is near flat after.
+- The last two turns of the lap (about 20,100 to 20,440 m) are the same shape with the hands swapped: about 110 m of bank ramp on the straight (6 to 25 degrees), a turn of about 90, the bank through level at about 20,280 with no hold, about 26 the other way through a turn of about 85, then eased out.
+- **Against his words of 11-10 above** ("the banking levels out before banking into the next one, effectively being 4 banking changes"): by this read the bank does not hold level between the two turns; it passes through level on a short straight. So the shape is three bank moves, not four: in (on the straight, early), across (between the turns), out (after). The two records stand side by side; the read is one instrument at 4 m.
+- **What the shape asks of the builder, as I read it (not checked against the code):** (1) the bank may START on straight road, about 80 m before the turn it belongs to (this file's 'Open, his calls': quick banks on a straight are refused today); (2) the bank crosses from one side to the other in about 50 m, without a level hold; (3) the second turn begins while the bank is already most of the way over; (4) the bank eases out over about 100 m of straight after.
+
+**Sent, one pane, no code landed:** build this shape headless through the core from the numbers above, read heading and bank along the BUILT road, set the two profiles side by side, and name every refusal or smoothing that stands between them; then a render of the built attempt beside his screenshot's view for his eye.
