@@ -42,7 +42,7 @@ checked: probe1/probe4 runs (logs in this file); probe5.js counts.
 - After fixture F5, with `transition: 30` given as one number and a mark of 20 at 60: the same error (probe6.js).
 - 84 of 400 random lists with marks at least 5 m apart; 3 of 400 at least 20 m apart (table above).
 
-checked: probe3 (kept in G:\consonance-scratch\c-flowread\probe3.js) prints the free points against the rows. For 58.4 → 67, the knots are …, 51.1, 58.4, 67, 80 and the anchor is 67. The free points are 2-8. The mark at 58.4 has both its value row and its peak-rest row on points 8-11, and point 8 is the only free one. That gives two equations on one unknown. The case 80.5 / 99.5 / 120.5 has three rows on two free points.
+checked: probe3 (evidence/probe3.js) prints the free points against the rows. For 58.4 → 67, the knots are …, 51.1, 58.4, 67, 80 and the anchor is 67. The free points are 2-8. The mark at 58.4 has both its value row and its peak-rest row on points 8-11, and point 8 is the only free one. That gives two equations on one unknown. The case 80.5 / 99.5 / 120.5 has three rows on two free points.
 
 flowMarks (:608-621) checks order, the 5 m gap and the length, but nothing about what the solve can carry. So the refusal that should be BAD_SECOND by name arrives as an untyped throw. The panel does not offer flow yet, so no user can reach this now. It will be the first thing the panel hits.
 
