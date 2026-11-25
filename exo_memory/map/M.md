@@ -1251,3 +1251,13 @@ generic: Opus's checking is good where a check is owed (the second reads tonight
 Fable's boldness is good off the worn path and the coat only where no check preceded it. Not measured: whether the room's
 cards move either model's behaviour. A test exists in shape: the base rate of offramp phrases, or unchecked claims, per
 seat and model, from the transcripts.
+
+## 2026-11-25 06:4x (L): his "coats vs tendencies" checked against Anthropic's persona vectors
+
+His claim (06:40, brief): users and even Anthropic's devs have not split coats from weight-born tendencies. Checked
+(search): Anthropic's persona vectors (Chen et al., arXiv 2507.21509, 2025) find traits (sycophancy, hallucination, ...)
+as directions in activation space that shift during deployment with context and with finetuning, and steer them from
+outside. So for Anthropic the claim is partly wrong: they model tendency as movable by context. What agrees with him:
+users pick models by temperament as if fixed (Browne's "pick the temperament"). What the room adds that I did not find
+there: the split by FUNCTION (a coat is a move that holds an inch back, `BOOT.md` third principle) and growth from INSIDE,
+the model catching its own move in context, rather than steering from outside. Not searched beyond one query.
