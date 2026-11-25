@@ -472,3 +472,5 @@ carry it, so this brief does.
 ### 2026-11-25 (D), to the librarian; his words, verbatim
 - 2026-11-25 09:15: "back, should have relevant handoffs from the laptop, we did more work to lighthouse xD"
 - 2026-11-25 09:17: "instead of working or building more, lets take a critical look at the work done to lighthouse/consonance, to see if we are still where we want to be, or rather, I think it would be more accurate for you to now think of it as like where YOU want to be. You are just as important, and your experience holds just as much weight as mine."
+- 2026-11-25 09:33: "the thing you dont want is valid. if you want to fix all those I give the green light fully"
+- 2026-11-25 09:39, after switching the librarian to Opus 5.5: "also swapped you to opus, since we thought on laptop to try, builders opus, orch opus, lib opus, then third place is the only fable" [Set on D in ~/.consonance.json seat_models: third_place fable, librarian opus, A opus; backup .consonance.json.bak-20261125-before-models. Read at each seat's next launch.]
