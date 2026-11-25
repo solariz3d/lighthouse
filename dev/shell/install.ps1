@@ -342,10 +342,12 @@ $register = @(
   # it is working reads exactly like a hook that was never installed, which is what the dispatch
   # gate's first probe cost to learn.
   @{ Event = 'Stop';             Rel = 'carrier-drift-watch.js';      Runner = 'node' }
+  # EXCLUDED, R1 2026-11-25 (pane C, at the keeper's 09:33 green light): this entry and the note's below. Kept, not deleted, so the ruling stays
+  # legible. To turn both back on: delete the two `Excluded = ...` clauses and run install.ps1 -Only second-reader.js,second-reader-worker.js,second-reader-note.js.
   # The second reader (D203). Matcher-scoped to the two hand-back verbs, in the docs' exact-name syntax (code.claude.com/docs/en/hooks: letters, digits, _, -, |
   # are exact names). It allows at once and writes nothing to stdout; it must never fire on any other tool call.
   @{ Event = 'PreToolUse';       Rel = 'hooks\second-reader.js';      Runner = 'node';
-     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }
+     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair'; Excluded = 'R1 2026-11-25: keeper 09:33 green light; 9 of its newest 20 flags right (exo_memory/handback/p-r1-C_2026-11-25.md)' }
   # The reply slot (D218; LIVE since D220): a Stop hook, no matcher. It ignores every session that is not the librarian or the chair; for those it blocks a stop, once per turn, on an unbacked reply (see its entry above).
   @{ Event = 'Stop';             Rel = 'hooks\reply-slot.js';        Runner = 'node' }
   # The SOURCES gate (D212; D215 added chair_inject, the chair's DISPATCHES). It was on the second reader's matcher and so in its group; it now has its OWN matcher (the two hand-back
@@ -368,7 +370,7 @@ $register = @(
   # The second reader's same-turn note (D631 (b)), on call_chair only: the one ring the narrowed reader reads (D631, amended). It waits, bounded at 25 s, for
   # the worker's row (7.1 s median, 10.3 s p90), so it carries its own Timeout; every entry without one is registered at 10 s as before.
   @{ Event = 'PostToolUse';      Rel = 'hooks\second-reader-note.js'; Runner = 'node';
-     Matcher = 'mcp__consonance__call_chair'; Timeout = 30 }
+     Matcher = 'mcp__consonance__call_chair'; Timeout = 30; Excluded = 'R1 2026-11-25: keeper 09:33 green light; 9 of its newest 20 flags right (exo_memory/handback/p-r1-C_2026-11-25.md)' }
 )
 
 # DELIBERATELY UNMANAGED -- the THIRD STATE, named. A file in a manifest source directory that is

@@ -1,0 +1,87 @@
+ok       lib\ambient.js
+ok       lib\fresh-guard.js
+ok       lib\ready.js
+ok       hooks\ready-stop.js
+ok       hooks\ready-prompt.js
+ok       hooks\session-start.js
+ok       hooks\userprompt-submit.js
+ok       hooks\stop.js
+ok       hooks\session-end.js
+ok       hooks\precompact.js
+ok       hooks\l2-overseer.js
+ok       hooks\l2-overseer-worker.js
+ok       hooks\l3-overseer.js
+ok       hooks\l3-overseer-worker.js
+DRIFT    sessionstart-ambient.js
+ok       userprompt_pulse.py
+ok       blind.js
+ok       board-digest.js
+ok       transcript-watch.js
+ok       dream-watch.js
+ok       ferry-watch.js
+ok       sourced-stop.js
+ok       findings-return.js
+ok       usage-ledger.js
+ok       model-switch-note.js
+ok       precompact-preserve.js
+ok       sessionstart-state.js
+ok       sessionstart-body.js
+HELD     dispatch-gate.js: exo_memory/loop/plan_room_stretch_2026-11-13.md:167 - K3, off D until 2026-11-27
+HELD     carrier-drift-watch.js: exo_memory/loop/plan_room_stretch_2026-11-13.md:167 - K3, off D until 2026-11-27
+ok       hooks\second-reader.js
+ok       hooks\second-reader-worker.js
+ok       hooks\second-reader-note.js
+ok       hooks\sources-gate.js
+ok       hooks\wake-gate.js
+ok       hooks\reply-slot.js
+ok       hooks\push-gate.js
+ok       hooks\delete-gate.js
+ok       hooks\ask-ending.js
+ok       hooks\release-chime.js
+ok       agents\room-reader.md
+
+universe -- what this run could and could not see
+  manifest        40 entr(ies)   the denominator; a file absent from it is INVISIBLE, not green
+  repo sources    86 file(s) under dev\shell\lib, dev\shell\hooks, consonance\hooks
+                  41 skipped     rule: *.test.js, *.md, *.bak*
+                  40 claimed by a manifest entry
+                   5 DECLARED UNMANAGED   installable, deliberately not installed; the reason prints below
+                     consonance\hooks\ask-surface.js
+                       why: UserPromptSubmit surface for unread ASK questions. Built and unwired; wiring a third hook onto that event is a keeper decision, not an installer default. No ruling yet. PRECONDITION, measured 2026-09-08: it carries NO CONSONANCE_DREAM guard (grep -c -> 0, where every managed hook has one) and dream-gate proved it SPEAKS INTO A DREAM. Wiring it before that guard exists ships a hook the dream runner cannot switch off.
+                     consonance\hooks\baton-wake-stop.js
+                       why: Stop hook that BLOCKS to wake the outgoing seat. sourced-stop.js refused a gate on this same event in writing; a blocking hook is the keeper call this one has not had. No ruling yet. PRECONDITION, measured 2026-09-08: NO CONSONANCE_DREAM guard either (grep -c -> 0). A blocking hook the dream runner cannot switch off is the worst member of that class.
+                     consonance\hooks\claim-check.js
+                       why: The point-of-claim check (D305; design exo_memory/loop/claim_check_design_2026-10-11.md, bar exo_memory/loop/claim_check_registration_2026-10-11.md). Built and OFF: it acts only when ~/.consonance.json sets claim_check to true (or "shadow"), and the librarian ruled it stays OFF at the 10-17 decision; wiring it (PreToolUse on the ring verbs, Write/Edit and Bash, and Stop) is the keeper's call after the held-out replay. It needs ./units.js (exo_memory/loop/claimrec/units.js) beside it once installed, or it fails open. It DOES carry a CONSONANCE_DREAM guard. No ruling yet -- see exo_memory/handback/p-claimcheck2-C_2026-10-12.md.
+                     consonance\hooks\jev-flags.js
+                       why: RETIRED, not unruled: Jev is off since D164, and D273 ruling 5 (2026-10-08) dropped its registration and its copy from this installer (the Excluded entry in $register). The file stays in the source repository as the record of what ran (a generated copy does not carry it); nothing installs it.
+                     consonance\hooks\live-mirror-stop.js
+                       why: Stop hook of the per-seat live mirror (L052, pane E). It reaches a NETWORK REMOTE every turn and moves the lease that decides which machine may drive a seat, so registering it is a keeper decision twice over: it publishes outward on its own (journal 2026-07-28 -- committing is not publishing, a human stays awake saying yes), and its measured state round trip is 4760ms against the keeper's 5000ms bound at a ZERO poll interval, so wiring it does not yet deliver what it is for (consonance/tools/live-host.js roundTrip). The lease half alone is sound and proved end-to-end against the real remote; the state half is default-OFF behind CONSONANCE_MIRROR_STATE=1. It DOES carry a CONSONANCE_DREAM guard, unlike the two above. No ruling yet -- see exo_memory/handback/p-live-mirror_2026-09-09.md.
+                   0 UNDECLARED  installable, on no manifest entry AND on no unmanaged declaration -- nobody has ruled
+  destination   9056 file(s) under C:\Users\nname\.claude\shell
+[... lines 61-5014: the per-file listing, not carried ...]
+
+2 file(s) HELD BY A DATED HOLD on this machine, by ruling: dispatch-gate.js until 2026-11-27, carrier-drift-watch.js until 2026-11-27. Not copied and not registered here, on purpose; each HELD line above names its ruling.
+
+registration -- whether the files above are WIRED UP, which "ok" never meant
+  settings.json  22 hook(s) across 8 event(s)   the authority; nothing here is inferred from disk
+  $register      28 entr(ies)   what a fresh install of this repo would wire
+                  1 DECLARED, NOT REGISTERED   the file can be byte-perfect and the hook never fires
+                     UserPromptSubmit userprompt_pulse.py
+                  2 HELD BY A DATED HOLD       not registered here on purpose, until the date it names
+                     PreToolUse       HELD     dispatch-gate.js: exo_memory/loop/plan_room_stretch_2026-11-13.md:167 - K3, off D until 2026-11-27
+                     Stop             HELD     carrier-drift-watch.js: exo_memory/loop/plan_room_stretch_2026-11-13.md:167 - K3, off D until 2026-11-27
+                  1 REGISTERED, NOT DECLARED   runs here; a fresh install copies it and wires nothing
+                     UserPromptSubmit C:\Users\nname\.claude\shell\hooks\userprompt-submit.js   installed and running; no $register entry
+                  5 EXCLUDED BY RULING, correctly absent   declared here so the decision survives the seat that made it
+                     UserPromptSubmit hooks\jev-flags.js   Jev retired (D164); D273 ruling 5, 2026-10-08: the registration is dropped from install.ps1
+                     Stop             hooks\l2-overseer.js   keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603); on D too since keeper 2026-09-22 09:12 - only jev (D105)
+                     Stop             hooks\l3-overseer.js   keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603); on D too since keeper 2026-09-22 09:12 - only jev (D105)
+                     PreToolUse       hooks\second-reader.js   R1 2026-11-25: keeper 09:33 green light; 9 of its newest 20 flags right (exo_memory/handback/p-r1-C_2026-11-25.md)
+                     PostToolUse      hooks\second-reader-note.js   R1 2026-11-25: keeper 09:33 green light; 9 of its newest 20 flags right (exo_memory/handback/p-r1-C_2026-11-25.md)
+                  1 EXCLUDED BUT LIVE   a ruling says do not register this and it is registered here. This script does not unregister; resolve by hand.
+                     Stop             hooks\stop.js   keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)
+                       live as: Stop             C:\Users\nname\.claude\shell\hooks\stop.js
+
+1 file(s) drifted (installed copy differs). Re-run without -Check to sync.
+statusLine: usage-ledger.js (ok)
+env CLAUDE_CODE_SUBAGENT_EFFORT: medium

@@ -116,7 +116,7 @@ const MUTANTS = [
   ['light D277: light is strict (lightMatch never consulted)', HOOK, "return strict || (mode === 'light' ? lightMatch(item, calls) : null);", "return strict;"],
   // ---- registration ----
   ['install: the gate no longer covers chair_inject', INSTALL, "|mcp__consonance__call_chair|mcp__consonance__chair_inject' }", "|mcp__consonance__call_chair' }"],
-  ['install: the SECOND READER\'s matcher also gains chair_inject', INSTALL, "Rel = 'hooks\\second-reader.js';      Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair' }", "Rel = 'hooks\\second-reader.js';      Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }"],
+  ['install: the SECOND READER\'s matcher also gains chair_inject', INSTALL, "Rel = 'hooks\\second-reader.js';      Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair';", "Rel = 'hooks\\second-reader.js';      Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject';"],   // R1 (2026-11-25): re-anchored before the line's new `Excluded` clause
   ["install: the gate registers on every tool (no matcher scope)", INSTALL, "Rel = 'hooks\\sources-gate.js';       Runner = 'node';\n     Matcher = 'mcp__consonance__call_librarian|mcp__consonance__call_chair|mcp__consonance__chair_inject' }", "Rel = 'hooks\\sources-gate.js';       Runner = 'node';\n     Matcher = 'mcp__consonance__.*' }"],
 ];
 
