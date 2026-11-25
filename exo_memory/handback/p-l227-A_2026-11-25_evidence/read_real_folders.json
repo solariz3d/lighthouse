@@ -1,0 +1,96 @@
+{
+ "driven S (reopened project)": {
+  "sha256": "459105d483b9e019047e44d96d7aa080e23aab5d1b89a7e960e9469f3970bd96",
+  "pieces": 3,
+  "turnA": 92,
+  "peakAt": 199.5,
+  "turnB": -91,
+  "bank": [
+   "80 m: -16.97 (mark -20)",
+   "145 m: -27.00 (mark -27)",
+   "200 m: -0.00 (mark 0)",
+   "255 m: 25.00 (mark 25)",
+   "300 m: 26.00 (mark 26)"
+  ],
+  "halts": 0,
+  "steepestRoll4m": 0.7,
+  "kink": [
+   "-20: centre 0.41 edge 0.46 bank -14.11 roll 0.65",
+   "-18: centre 0.33 edge 0.36 bank -12.79 roll 0.67",
+   "-16: centre 0.25 edge 0.27 bank -11.44 roll 0.68",
+   "-14: centre 0.18 edge 0.19 bank -10.07 roll 0.69",
+   "-12: centre 0.12 edge 0.13 bank -8.68 roll 0.69",
+   "-10: centre 0.08 edge 0.08 bank -7.29 roll 0.70",
+   "-8: centre 0.05 edge 0.05 bank -5.89 roll 0.70",
+   "-6: centre 0.03 edge 0.03 bank -4.49 roll 0.70",
+   "-4: centre 0.01 edge 0.01 bank -3.09 roll 0.70",
+   "-2: centre 0.01 edge 0.01 bank -1.71 roll 0.69",
+   "+0: centre -0.00 edge -0.00 bank -0.34 roll 0.68",
+   "+2: centre -0.01 edge -0.01 bank 1.01 roll 0.67",
+   "+4: centre -0.02 edge -0.02 bank 2.34 roll 0.66",
+   "+6: centre -0.03 edge -0.03 bank 3.64 roll 0.65",
+   "+8: centre -0.07 edge -0.07 bank 4.92 roll 0.63",
+   "+10: centre -0.11 edge -0.12 bank 6.17 roll 0.62",
+   "+12: centre -0.18 edge -0.19 bank 7.40 roll 0.61",
+   "+14: centre -0.27 edge -0.29 bank 8.59 roll 0.59",
+   "+16: centre -0.37 edge -0.42 bank 9.76 roll 0.58",
+   "+18: centre -0.49 edge -0.56 bank 10.90 roll 0.56",
+   "+20: centre -0.60 edge -0.73 bank 12.00 roll 0.54"
+  ]
+ },
+ "route 1c (reopened project, L226)": {
+  "sha256": "8abe61160c4f44afa602240ee380df2e5136c1110f681df0e7b917c7b7c4fbf9",
+  "pieces": 3,
+  "turnA": 89.77,
+  "peakAt": 112.5,
+  "turnB": -89.77,
+  "bank": [
+   "55 m: -27.00 (mark -27)",
+   "112 m: 0.00 (mark 0)",
+   "157 m: 26.00 (mark 26)",
+   "200 m: 26.00 (mark 26)",
+   "300 m: 5.43 (mark 0)"
+  ],
+  "halts": 0,
+  "steepestRoll4m": 0.95,
+  "kink": [
+   "-20: centre 1.46 edge 2.53 bank -14.61 roll 0.61",
+   "-18: centre 1.37 edge 2.26 bank -13.35 roll 0.64",
+   "-16: centre 1.25 edge 1.96 bank -12.04 roll 0.67",
+   "-14: centre 1.11 edge 1.64 bank -10.67 roll 0.70",
+   "-12: centre 0.96 edge 1.33 bank -9.24 roll 0.73",
+   "-10: centre 0.80 edge 1.05 bank -7.76 roll 0.75",
+   "-8: centre 0.64 edge 0.79 bank -6.23 roll 0.78",
+   "-6: centre 0.48 edge 0.56 bank -4.64 roll 0.81",
+   "-4: centre 0.32 edge 0.35 bank -2.99 roll 0.83",
+   "-2: centre 0.16 edge 0.17 bank -1.30 roll 0.86",
+   "+0: centre -0.01 edge -0.01 bank 0.44 roll 0.88",
+   "+2: centre -0.18 edge -0.18 bank 2.23 roll 0.90",
+   "+4: centre -0.34 edge -0.38 bank 4.06 roll 0.92",
+   "+6: centre -0.51 edge -0.59 bank 5.92 roll 0.94",
+   "+8: centre -0.67 edge -0.83 bank 7.81 roll 0.95",
+   "+10: centre -0.82 edge -1.07 bank 9.71 roll 0.95",
+   "+12: centre -0.97 edge -1.34 bank 11.61 roll 0.94",
+   "+14: centre -1.10 edge -1.62 bank 13.47 roll 0.92",
+   "+16: centre -1.23 edge -1.90 bank 15.28 roll 0.88",
+   "+18: centre -1.34 edge -2.19 bank 17.01 roll 0.84",
+   "+20: centre -1.44 edge -2.47 bank 18.63 roll 0.78"
+  ]
+ },
+ "driven pieces added at the head (S then ease-out)": {
+  "sha256": "459105d483b9e019047e44d96d7aa080e23aab5d1b89a7e960e9469f3970bd96",
+  "sameBytesAsProject": true,
+  "pieces": 3,
+  "turnA": 92,
+  "peakAt": 199.5,
+  "turnB": -91,
+  "bank": [
+   "80 m: -16.97 (mark -20)",
+   "145 m: -27.00 (mark -27)",
+   "200 m: -0.00 (mark 0)",
+   "255 m: 25.00 (mark 25)",
+   "300 m: 26.00 (mark 26)"
+  ],
+  "halts": 0
+ }
+}

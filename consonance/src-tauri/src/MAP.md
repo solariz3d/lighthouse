@@ -141,7 +141,7 @@ the answer to a specific failure, and the comment above the function usually nam
 - `consonance/tools/usage-ledger.js` and `usage-ledger.test.js` (L213), with the writer `consonance/hooks/usage-ledger.js`: the usage ledger.
   The writer is one file registered twice (the status line, and a SessionStart hook): it appends one row per turn per seat of numbers only
   (the 7-day figure, cache fields, token classes) and one wake row per start to `<data>/usage-ledger.jsonl`; the reader prints, per seat,
-  how far the account's 7-day figure moved on that seat's turns. Registration is `dev/shell/install.ps1` (a `$files` row, a `$register` row
+  how far the account's 7-day figure moved on that seat's turns; with `--transcripts` (L225 A2) it also counts, per seat, the model calls from the seat's transcript and how many only wait (`isWaitCommand`, `countCalls`, `callsBySeat`; the rule is written above `isWaitCommand`). Registration is `dev/shell/install.ps1` (a `$files` row, a `$register` row
   and the status line block); a Node tool and hook, not part of the app.
 
 - `consonance/hooks/model-switch-note.js` (L214, A): a `PreModelSwitch` hook that warns how many tokens a switch will rewrite in a warm seat

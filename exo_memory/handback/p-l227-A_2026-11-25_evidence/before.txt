@@ -1,0 +1,36 @@
+ce3d13d6ceda256633ec4a2dcb53bbdd045ea254ef1f6c269fb71f422fbccf77 *Test V1.t180track
+466be1bb0c48bb74d49fcaa809dbbef783eda85be77bec9cca0bf64c23022ff4 *eq-HAIR PIN.t180track
+48a0b0963ce7fff8e52bc6ce6effe7d9bdb9ab7185c6ffc3cd69332340f0d2ed *eq-LANIAKEA.t180track
+6f1c103977b8c98731f6b6515e055d85e4c8fb1233dbea1acdce479a17dcc59c *eq-LANIAKEA.t180undo
+8abe61160c4f44afa602240ee380df2e5136c1110f681df0e7b917c7b7c4fbf9 *eq-Smooth S flow L.t180track
+0e82e8506d44c64a980afe9b2a3eeec00bc481ae3b37782ac0d839ad75852a45 *eq-Smooth S flow L.t180undo
+addcc7f8a2de52a4f3c5460945b206cf0bde030c7dfea9d34ec88b422706957a *eq-TEST BANKING.t180track
+60d23f9382b2f78e53c4e86298007fdac748cbd16b3baf725ed1d77904aeb7fd *eq-TEST BANKING.t180undo
+82bbac1cb6b1a84776bdec4eec24faf595af213c69edc6262b3b73a950c5ae7e *eq-TEST TRACK 100.t180track
+b042638b4bc6699c0f8a06f1a94e9a2d89b2e221ec518f0256c14b94a100d70c *eq-TEST TRACK 100.t180undo
+e06a15a4574ed9f5e1d3aee2912578dafce855f6ca305dae88a4adad4202f390 *eq-TEST TURN AND BANKING.t180track
+77a293037f5b8062b7adba0ba07ba511b8b8fad1bac3b0dd790884e5351a7d64 *eq-TEST TURN AND BANKING.t180undo
+eff48ade8d3ed9345aa2a558cafdb1b611a265655a5431ad8990ca550bfe2b24 *eq-banking turn into unbanki.t180track
+16f705cab8b20e08b5db4f027ad8d5589dcca0f256c7210dbdbf24b70db7ad71 *eq-banking turn into unbanki.t180undo
+f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec *eq-extra turn with banking error.t180track
+8c76b0f4cff3b414d38cfd3aeb07b159572072d53cba3c1c60fad232d5ed05c4 *eq-extra turn with banking error.t180undo
+d0ed90bfdc460d26b34fa2e551ef4171c1e40166eb7c08c365677661fb19f696 *eq-testbank2.t180track
+600da74db699ae8ca3f74218a5862ad570d923816611b6abb2eed17cf080e1da *eq-testbank2.t180undo
+f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec *eq-testturn.t180track
+8c76b0f4cff3b414d38cfd3aeb07b159572072d53cba3c1c60fad232d5ed05c4 *eq-testturn.t180undo
+f84e4d735309f1b613d0a99b9991d625e9d65d684b9872fb1d0e32990a9e74ec *eq-testturn1.t180track
+8c76b0f4cff3b414d38cfd3aeb07b159572072d53cba3c1c60fad232d5ed05c4 *eq-testturn1.t180undo
+6de276dcd2bd27b2ca884244dc269df94bc50463198328bce164c6f2f9309e36 *eq-testturn2.t180track
+b064da8e703ab27c90f994703f6198e58dca76556b1ed286eeafa18904627e63 *eq-testturn2.t180undo
+3eda7631d869d2ddafad2a0e2be1f5a6ba3341ac54fd72f7f267aa5242b618e5 *pieces autosave 2026-11-01.t180track
+e9d147efb8d2a7bd2b6bfe787fbc3b88279ad967bfb929b4a5bcdca6c7db9e6e *Smooth S ease-out.t180piece
+f55056c5d52a011cbecab9ae14e8ba299760d475887e42a32b91eae75a416c0a *Smooth S flow.t180piece
+total 34
+drwxr-xr-x 1 zackn 197609    0 Nov 25 01:19 .
+drwxr-xr-x 1 zackn 197609    0 Nov  4 01:10 ..
+-rw-r--r-- 1 zackn 197609   58 Nov  1 01:39 ac_root.txt
+-rw-r--r-- 1 zackn 197609 5928 Nov 25 01:19 autosave.t180auto
+-rw-r--r-- 1 zackn 197609  116 Nov 11 01:14 input-late.log
+drwxr-xr-x 1 zackn 197609    0 Nov 25 01:12 pieces
+drwxr-xr-x 1 zackn 197609    0 Nov 18 07:22 track-backups
+drwxr-xr-x 1 zackn 197609    0 Nov 25 01:12 tracks
