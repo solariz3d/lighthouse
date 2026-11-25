@@ -103,3 +103,41 @@ kept, the shape can still be read.
 the numbers he typed; or if values shown as "read from the shape" re-lay a different piece and are filled anyway.
 
 **Still not in this lap:** the track file's own format; the flow panel's redesign; a release.
+
+---
+
+## ADDENDUM 2 (the librarian, 02:2x): pane C's read is NOT CLEAN; one line to fix, then C re-runs, then the install
+
+**The line (pane C, `handback/p-l230-C_2026-11-25.md`; the six sites re-read by the librarian with
+`git grep -n "madeWith.set\|undoneNow" 2e70b9f -- app/core/panel.js`):** `app/core/panel.js:1314`,
+`if (ug && undoneNow) ghost()`. `undoneNow` is true for any step with kept values, and six commands keep them
+(`:566` Extend, `:690` Level / To floor, `:698` Turn by, `:714` Turn to grid, `:722` Sharp, `:1098` Jump). After an
+undo of any but Extend the preview is the plain Extend of the boxes, not the road the undo removed (C4: 4 rows red at
+2e70b9f, none at 27e2084, so it is new with the branch).
+
+**Pane A, tier "check it", same branch `l229-undo-ghost`:**
+
+1. **Red first:** take pane C's rows C3 and C4 from `handback/p-l230-C_2026-11-25_evidence/c-l230-read.test.js` into
+   the builder's tests, and add the row C could not set up: Turn to grid (`:714`), from a heading that is off the grid.
+2. **The fix, as C proposes:** `op: 'extend'` inside `made` at `:566` only; in `draw` the `ghost()` path is taken only
+   when `m.made.op === 'extend'`; every other command keeps `putBack` and shows `st.undoGhost` with the "undone"
+   header. Green: C3, C4, the new row, and R6, R7, P1 to P3.
+3. **The two saved S projects:** their undo files were written by 2e70b9f with `made` and no `op`. Re-run
+   `made_files.js` so each step's `made` carries `op: 'extend'`; print each `.t180track` sha256 before and after
+   (L228's line stands: a track file that differs fails the lap) and the new `.t180undo` sha256.
+4. **Say, from a read (no build):** whether `fieldsNow()` holds the command's own numbers (Turn by's angle; Sharp's
+   degrees, radius and ramp; the grid step). His words of 01:37 are "the numbers that made it"; if an undone Sharp
+   gives back the piece's boxes and not Sharp's three, name that in the hand-back as open, do not build it here.
+5. Tests: the rows above and the tests of `app/core/panel.js`. **No whole suite.** Pane B's landing may be using the
+   machine: `node consonance/tools/heavy-run.js --status && <run>` in one call.
+6. Hand back to the librarian. **No build and no install yet.**
+
+**Then pane C** (on the librarian's ring, not before): re-run C3, C4 and the Turn-to-grid row on the new tip, varied
+(a different first piece, a Jump after a Sharp). CLEAN or the line.
+
+**Then, on CLEAN, pane A:** an internal build of that tip, installed with a backup of the current exe; install first,
+no whole suite before it (the notes' rule of 01:0x). His app is closed (his word, 01:36); if `t180-track-builder.exe`
+is running at the install, stop and say so.
+
+**Registered:** C's line carried: failed if the undo ghost is installed and he finds a stale ghost or wrong numbers in
+the boxes after an undo that C's read passed.
