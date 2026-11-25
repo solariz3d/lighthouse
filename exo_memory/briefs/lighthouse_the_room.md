@@ -413,3 +413,5 @@ carry it, so this brief does.
 - 2026-11-24 14:04: "was afk sleeping, here was a handoff that was still chillng in my input box" [a pane's ring had sat unsent for four hours]
 - 2026-11-24 17:35: "give handoff for laptop, going to close, when i mean handoff i mean for the relevant repos for tonight, going to work"
 - 2026-11-25 00:13 (L): "back on laptop, relevant handoffs should be there"
+- 2026-11-25 00:15 (L): "Before we get back into track builder and I test it, how do you like how we finished up the token efficiency work on the desktop?"
+- 2026-11-25 00:17 (L): "well see, i havent been using consonance as much as we were so it isnt right to say the usage is down for sure yet, it is because we havent been building, so lets plan out what you think we need to finish for lighthouse, then once we do that we get back to track builder"
