@@ -13674,10 +13674,21 @@ fn not_submitted_line(dest: &str) -> String {
 }
 
 /// A note for the rows that say DELIVERED without a render check (the drain, a pull, a dyad spot).
+///
+/// L225 (the librarian's order, 01:3x; B's B4 probe, handback/p-l225-finish-B_2026-11-25.md): an UNKNOWN or NOT-OURS submit
+/// is said too. Both leave a ring with one Enter and no retry (`deliver`), and until now the drain's row for either read exactly
+/// like a submitted one, so a ring could sit in an input line for hours behind a clean DELIVERED (D, 2026-11-24, 09:54-14:04).
+/// It REPORTS ONLY: no keystroke and no retry changes (an Enter on a box nobody can read is D415's refusal and his word).
 fn submit_note(wrote: &Result<Submit, String>) -> &'static str {
     match wrote {
         Ok(Submit::NotSubmitted { .. }) => {
             " [NOT SUBMITTED — the text is in the input box: the Enter was not taken, after retries; press Enter there, do NOT re-send]"
+        }
+        Ok(Submit::Unknown) => {
+            " [SUBMIT UNCONFIRMED — the input box could not be read after the Enter, so no Enter was retried; look there: if the text is still in it, press Enter, do NOT re-send]"
+        }
+        Ok(Submit::NotOurs) => {
+            " [SUBMIT UNCONFIRMED — after the Enter the input box held text not read as this message, so no Enter was retried; look there: if it is this message, press Enter, do NOT re-send]"
         }
         _ => "",
     }
@@ -26141,19 +26152,22 @@ mod submit_check_tests {
         assert_only_enters(&bytes, 2);
     }
 
-    // L225 B4 (PROBE, no fix): the two ways the code itself leaves a ring in the box with ONE Enter sent and no word on the board
-    // from the drain. These rows pin today's behaviour; they are evidence for the hand-back, not a rule to keep.
+    // L225 B4, then L225 step 1 (the librarian's order, 01:3x): the two ways the code leaves a ring in the box with ONE Enter sent.
+    // AMENDED BY NAME: as first written (4051d8b2) these rows pinned the drain's silence (`submit_note` = "") as evidence for the
+    // probe; the note is now built, so they pin that the drain's DELIVERED row SAYS the submit was not confirmed. The keystrokes
+    // are unchanged: still one Enter, no retry (pressing Enter on a box nobody can read is D415's refusal and his word).
     #[test]
-    fn l225_b4_a_box_unreadable_after_the_enter_gets_no_retry_and_the_drain_row_says_nothing() {
+    fn l225_b4_a_box_unreadable_after_the_enter_gets_no_retry_and_the_drain_row_says_so() {
         // e.g. a dialog or menu drawn over the composer (no composer row), or two grids that disagree, on all four readings
         let (out, bytes, _, reads) = run(MSG, vec![None, None, None, None]);
         assert_eq!(out, Ok(Submit::Unknown));
         assert_only_enters(&bytes, 1);
         assert_eq!(reads, SUBMIT_CHECK_GAPS_MS.len());
-        assert_eq!(submit_note(&out), "", "the drain's DELIVERED row carries no note for an unknown submit");
+        let note = submit_note(&out);
+        assert!(note.contains("SUBMIT UNCONFIRMED") && note.contains("could not be read"), "the drain's row must say it: {note:?}");
     }
     #[test]
-    fn l225_b4_our_paste_collapsed_under_another_line_count_gets_no_retry_and_the_drain_row_says_nothing() {
+    fn l225_b4_our_paste_collapsed_under_another_line_count_gets_no_retry_and_the_drain_row_says_so() {
         // the box holds our paste, but its placeholder counts lines differently from ours (e.g. a CRLF counted as two):
         // it reads as text that is not ours, so the Enter is never pressed again
         let n = MSG.matches('\n').count();
@@ -26161,7 +26175,31 @@ mod submit_check_tests {
         let (out, bytes, _, _) = run(MSG, vec![Some(stuck)]);
         assert_eq!(out, Ok(Submit::NotOurs));
         assert_only_enters(&bytes, 1);
-        assert_eq!(submit_note(&out), "", "and the drain's DELIVERED row carries no note for it either");
+        let note = submit_note(&out);
+        assert!(note.contains("SUBMIT UNCONFIRMED") && note.contains("not read as this message"), "the drain's row must say it: {note:?}");
+    }
+    #[test]
+    fn l225_the_unconfirmed_notes_tell_the_reader_what_to_do_and_not_to_resend() {
+        for s in [Submit::Unknown, Submit::NotOurs] {
+            let note = submit_note(&Ok(s));
+            assert!(note.starts_with(" [") && note.ends_with(']'), "a bracketed note, as NOT SUBMITTED's: {note:?}");
+            assert!(note.contains("press Enter") && note.contains("do NOT re-send"), "{s:?}: {note:?}");
+        }
+    }
+    #[test]
+    fn l225_a_submitted_or_failed_write_still_carries_no_note() {
+        assert_eq!(submit_note(&Ok(Submit::Submitted { retries: 0 })), "");
+        assert_eq!(submit_note(&Ok(Submit::Submitted { retries: 2 })), "");
+        assert_eq!(submit_note(&Err("pane not found".into())), "", "a failed write is the row's own [WRITE FAILED]");
+        assert!(submit_note(&Ok(Submit::NotSubmitted { retries: 3 })).contains("NOT SUBMITTED"), "unchanged");
+    }
+    #[test]
+    fn l225_the_drain_row_carries_the_note() {
+        let s = include_str!("main.rs");
+        let at = s.find("fn drain_inboxes(").expect("the drain");
+        let body = &s[at..at + s[at..].find("\n}\n").expect("its end")];
+        let row = body.find("\"DELIVERED -> {} {}{}{}: {}\"").expect("the DELIVERED row");
+        assert!(body[row..].contains("submit_note(&wrote)"), "the drain's DELIVERED row is built with the submit note");
     }
 
     #[test]

@@ -1,0 +1,10 @@
+submit_check_tests::l225_the_unconfirmed_notes_tell_the_reader_what_to_do_and_not_to_resend --- FAILED
+submit_check_tests::l225_b4_a_box_unreadable_after_the_enter_gets_no_retry_and_the_drain_row_says_so --- FAILED
+submit_check_tests::l225_b4_our_paste_collapsed_under_another_line_count_gets_no_retry_and_the_drain_row_says_so --- FAILED
+thread 'submit_check_tests::l225_the_unconfirmed_notes_tell_the_reader_what_to_do_and_not_to_resend' (13704) panicked at src\main.rs:26174:13:
+thread 'submit_check_tests::l225_b4_a_box_unreadable_after_the_enter_gets_no_retry_and_the_drain_row_says_so' (9532) panicked at src\main.rs:26156:9:
+thread 'submit_check_tests::l225_b4_our_paste_collapsed_under_another_line_count_gets_no_retry_and_the_drain_row_says_so' (17216) panicked at src\main.rs:26168:9:
+    submit_check_tests::l225_b4_a_box_unreadable_after_the_enter_gets_no_retry_and_the_drain_row_says_so
+    submit_check_tests::l225_b4_our_paste_collapsed_under_another_line_count_gets_no_retry_and_the_drain_row_says_so
+    submit_check_tests::l225_the_unconfirmed_notes_tell_the_reader_what_to_do_and_not_to_resend
+test result: FAILED. 14 passed; 3 failed; 0 ignored; 0 measured; 1297 filtered out; finished in 0.02s
