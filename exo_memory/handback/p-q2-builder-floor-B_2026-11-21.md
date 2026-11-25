@@ -85,7 +85,10 @@ the folder. R3 and R4 are not started.
 
 ## Could be wrong
 
-- Each arm ran once. The Workflow growth is tied to the skill arms in 5 of 5 cases, but its cause is inferred.
+- Each arm ran once. The Workflow growth is tied to the skill arms in ~~5 of 5~~ **4 of 4** cases, but its cause is inferred.
+  - *Struck 2026-11-25 (L225 B2): "5 of 5" was never counted.*
+  - The recount: Workflow is 22,976 B in the four arms that touch the skills (probe 1 arms 5 and 6, probe 2 arms 1 and 2) and 5,745 B in the other five.
+  - It is read from `analyze_q2probe.json` and `analyze_q2probe2.json` in the evidence folder, each arm's `workflowBytes`. Redo it with `node -e "for(const f of ['analyze_q2probe','analyze_q2probe2'])for(const[k,v] of Object.entries(require('./'+f+'.json')))console.log(f,k,v.workflowBytes)"` in that folder. Which flags each arm used is in `probe_out.txt` and `probe2.js`.
 - The haiku arms' listing sizes differ slightly from opus (17,225 vs 16,760 B).
 
 ## Half A, as built (added ~13:45Z, after the chair's correction at 13:36:47Z withdrew the stop)

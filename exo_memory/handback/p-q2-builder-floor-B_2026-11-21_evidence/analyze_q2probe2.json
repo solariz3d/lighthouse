@@ -1,0 +1,47 @@
+{
+ "arm0": {
+  "tools": "Agent Bash Edit Glob Grep ListAgents PowerShell Read ReportFindings ScheduleWakeup Skill ToolSearch Workflow DeferredToolPlaceholder Write advisor",
+  "toolDefinitionBytes": 45435,
+  "workflowBytes": 5745,
+  "skillToolBytes": 1840,
+  "agentToolBytes": 5299,
+  "skillsListing": 17225,
+  "agentListing": 3955,
+  "deferredListing": 408,
+  "deferredLine": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0
+  }
+ },
+ "arm1": {
+  "tools": "Agent Bash Edit Glob Grep ListAgents PowerShell Read ReportFindings ScheduleWakeup ToolSearch Workflow DeferredToolPlaceholder Write advisor",
+  "toolDefinitionBytes": 60826,
+  "workflowBytes": 22976,
+  "skillToolBytes": 0,
+  "agentToolBytes": 5299,
+  "skillsListing": 0,
+  "agentListing": 4600,
+  "deferredListing": 408,
+  "deferredLine": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0
+  }
+ },
+ "arm2": {
+  "tools": "Agent Bash Edit Glob Grep ListAgents PowerShell Read ReportFindings ScheduleWakeup ToolSearch Workflow DeferredToolPlaceholder Write advisor",
+  "toolDefinitionBytes": 60826,
+  "workflowBytes": 22976,
+  "skillToolBytes": 0,
+  "agentToolBytes": 5299,
+  "skillsListing": 0,
+  "agentListing": 3955,
+  "deferredListing": 1546,
+  "deferredLine": {
+   "Artifact": 0,
+   "Monitor": 0,
+   "SendMessage": 0
+  }
+ }
+}
