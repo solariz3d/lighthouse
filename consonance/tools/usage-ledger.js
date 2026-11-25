@@ -167,7 +167,8 @@ function shellPaths(cmd) {
     for (const tok of m[1].split(/\s+/)) {
       if (!tok || tok.startsWith('-')) continue;
       if (/[*?[\]$]/.test(tok)) continue;   // a glob or a pattern, not a path
-      if (/[/\\]/.test(tok) && /\.[a-z0-9]{1,5}$/i.test(tok)) out.push(normPath(tok));   // a separator AND an extension (pane C, L235)
+      const n = normPath(tok);   // tested after the quotes are stripped, so a quoted path counts (pane C, L236)
+      if (/[/\\]/.test(n) && /\.[a-z0-9]{1,5}$/i.test(n)) out.push(n);   // a separator AND an extension (pane C, L235)
     }
   }
   return out;
