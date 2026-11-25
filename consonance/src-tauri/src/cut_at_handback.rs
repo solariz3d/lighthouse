@@ -247,6 +247,74 @@ pub fn later_turn_began(jsonl: &str, ring_ms: u64) -> bool {
     })
 }
 
+/// The window Claude Code itself cuts at (`autoCompactWindow` in each builder's settings.local.json, 600,000 since L235's note). A pane
+/// over it is never helped by the same-lap exception: past the hard window the pane is cut whatever the lap.
+pub const HARD_WINDOW: u64 = 600_000;
+
+/// The lap id a dispatch or ring names: the first token `L` followed by 3 or 4 digits, among the first 160 characters (the chair writes
+/// it first: "L229 addendum 3", "L232 amendment"). Letters or digits glued on either side are not a lap id ("ML229", "L2290x").
+pub fn lap_id(text: &str) -> Option<String> {
+    let head: Vec<char> = text.chars().take(160).collect();
+    let mut i = 0;
+    while i < head.len() {
+        let boundary = i == 0 || !head[i - 1].is_alphanumeric();
+        if head[i] == 'L' && boundary {
+            let n = head[i + 1..].iter().take_while(|c| c.is_ascii_digit()).count();
+            let after = head.get(i + 1 + n).copied();
+            if (3..=4).contains(&n) && !after.is_some_and(|c| c.is_alphanumeric()) {
+                return Some(head[i..i + 1 + n].iter().collect());
+            }
+        }
+        i += 1;
+    }
+    None
+}
+
+/// The lap id of the last chair dispatch in a transcript (a prompt row whose text carries `[chair:MAIN]`), None when there is none.
+pub fn last_dispatch_lap(jsonl: &str) -> Option<String> {
+    jsonl
+        .lines()
+        .filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok())
+        .filter(|v| v.get("type").and_then(|x| x.as_str()) == Some("user") && v.get("isSidechain").and_then(|x| x.as_bool()) != Some(true))
+        .filter(|v| v.get("isCompactSummary").and_then(|x| x.as_bool()) != Some(true))
+        .filter_map(|v| match v.get("message").and_then(|m| m.get("content"))? {
+            serde_json::Value::String(t) => Some(t.clone()),
+            serde_json::Value::Array(a) => a
+                .iter()
+                .filter(|b| b.get("type").and_then(|x| x.as_str()) == Some("text"))
+                .filter_map(|b| b.get("text").and_then(|x| x.as_str()))
+                .find(|t| t.contains("[chair:MAIN]"))
+                .map(|t| t.to_string()),
+            _ => None,
+        })
+        .filter(|t| t.contains("[chair:MAIN]"))
+        .filter_map(|t| lap_id(t.split("[chair:MAIN]").nth(1).unwrap_or("")))
+        .last()
+}
+
+/// The lap a dispatch CONTINUES, by the chair's explicit marker (the librarian's ruling, L235): the words "same lap" right after the lap id
+/// ("L229 same lap: addendum 4"; case does not matter, a comma, colon or dash may sit between). No marker is None, so a dispatch the chair did
+/// not mark is cut as today and forgetting the marker is safe. The marker exists because the id alone misreads a new lap that first names the
+/// one it closes ("L215 IS COLLATED ... YOUR NEXT LAP IS L217"; pane C's replay found 7 of 164 November calls so).
+pub fn marked_lap(text: &str) -> Option<String> {
+    let id = lap_id(text)?;
+    let at = text.find(id.as_str())? + id.len();
+    let rest: String = text[at..].trim_start_matches(|c: char| c.is_whitespace() || c == ',' || c == ':' || c == '-' || c == '—').chars().take(8).collect();
+    rest.eq_ignore_ascii_case("same lap").then_some(id)
+}
+
+/// Is the next job the same lap as the pane's last one? Both ids must be there and equal; an id missing on either side is NOT the same
+/// lap (the pane is cut as today).
+pub fn same_lap(last: Option<&str>, next: Option<&str>) -> bool {
+    matches!((last, next), (Some(a), Some(b)) if a == b)
+}
+
+/// `before_dispatch` with the exception: a cold, large pane is NOT cut when the dispatch continues its own lap, unless its context is
+/// over the hard window (the exception never helps a pane there).
+pub fn before_dispatch_in_lap(listed: bool, last_call_age_min: Option<u64>, context: Option<u64>, dial: u64, same_lap: bool) -> bool {
+    before_dispatch(listed, last_call_age_min, context, dial) && !(same_lap && context.is_some_and(|c| c <= HARD_WINDOW))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -294,6 +362,68 @@ mod tests {
         // An absolute prefix before the repo-relative part, derived (not one machine's drive): the temp folder stands in for any checkout.
         assert!(is_handback(&format!("{}\\exo_memory/handback/p-x.md: read", std::env::temp_dir().display())));
         assert!(!is_handback("the handback/ folder is full"));
+    }
+
+    // L235: the same-lap exception (red first: these named functions that did not exist).
+    #[test]
+    // Amended by name (L235, the librarian's ruling after pane C's read): the exception needs the chair's marker "same lap" after the id.
+    fn the_same_lap_id_skips_the_cut_before_a_dispatch() {
+        let (last, next) = (Some("L229"), marked_lap("L229 same lap: addendum 4"));
+        assert!(same_lap(last, next.as_deref()));
+        assert!(!before_dispatch_in_lap(true, Some(90), Some(450_000), DIAL, true));
+    }
+    #[test]
+    fn a_new_lap_id_is_cut_as_today() {
+        assert!(!same_lap(Some("L229"), lap_id("L232, yours, after his restart").as_deref()));
+        assert!(before_dispatch_in_lap(true, Some(90), Some(450_000), DIAL, false));
+        assert!(!same_lap(Some("L229"), None), "no id is not the same lap");
+    }
+    #[test]
+    fn a_pane_over_the_hard_window_is_never_helped_by_the_exception() {
+        assert!(before_dispatch_in_lap(true, Some(90), Some(HARD_WINDOW + 1), DIAL, true));
+        assert!(!before_dispatch_in_lap(true, Some(90), Some(HARD_WINDOW), DIAL, true));
+    }
+    #[test]
+    fn the_lap_id_is_read_from_the_head_of_the_text_and_only_as_a_whole_token() {
+        assert_eq!(lap_id(" L235, yours: skip the cut").as_deref(), Some("L235"));
+        assert_eq!(lap_id("ML229 x"), None);
+        assert_eq!(lap_id("L22 x L2290x"), None);
+        assert_eq!(lap_id(""), None);
+    }
+    #[test]
+    fn the_last_chair_dispatch_names_the_pane_s_last_lap() {
+        let j = concat!(
+            r#"{"type":"user","message":{"content":"[chair:MAIN] L229, Addendum 2 (stamp)"}}"#, "\n",
+            r#"{"type":"user","message":{"content":[{"type":"tool_result","content":"L999 noise"}]}}"#, "\n",
+            r#"{"type":"user","message":{"content":[{"type":"text","text":"<pasted_content>[chair:MAIN] L232, yours</pasted_content>"}]}}"#, "\n",
+            r#"{"type":"user","message":{"content":"[librarian:LIB] L240 not a chair dispatch"}}"#, "\n",
+        );
+        assert_eq!(last_dispatch_lap(j).as_deref(), Some("L232"));
+        assert_eq!(last_dispatch_lap(""), None);
+    }
+
+    // L235 pane C's C1/C3 (red first).
+    #[test]
+    fn a_dispatch_without_the_marker_is_cut_as_today_even_when_it_names_the_same_lap_first() {
+        assert_eq!(marked_lap("L229, addendum 4"), None);
+        assert_eq!(marked_lap("L215 IS COLLATED; YOUR NEXT LAP IS L217"), None);
+        assert_eq!(marked_lap("L229 same lap: addendum 4").as_deref(), Some("L229"));
+        assert_eq!(marked_lap("L229, Same Lap - addendum").as_deref(), Some("L229"));
+        assert_eq!(marked_lap("L229 addendum, the same lap as before"), None, "the marker is right after the id");
+    }
+    #[test]
+    fn a_marker_with_another_id_than_the_panes_last_lap_is_cut() {
+        assert!(!same_lap(Some("L229"), marked_lap("L232 same lap: x").as_deref()));
+    }
+    #[test]
+    fn a_compact_summary_row_is_not_a_dispatch() {
+        let j = concat!(
+            r#"{"type":"user","message":{"content":"[chair:MAIN] L229 x"}}"#, "
+",
+            r#"{"type":"user","isCompactSummary":true,"message":{"content":"summary: [chair:MAIN] L221 quoted"}}"#, "
+",
+        );
+        assert_eq!(last_dispatch_lap(j).as_deref(), Some("L229"));
     }
 
     // R3: with the key empty (or absent, or the config unreadable), a hand-back ring changes nothing.

@@ -1,5 +1,6 @@
 // usage-ledger.js (the reader, L213, pane A): which seat moved the 7-day figure.
 //   node consonance/tools/usage-ledger.js --since <ISO> [--until <ISO>] [--file <ledger.jsonl>] [--transcripts [<projects dir>]] [--json]
+//   node consonance/tools/usage-ledger.js --rereads <transcript.jsonl>...   (L235) per cut: files re-read in the first lap after it that were read before it.
 //   --transcripts also counts, per seat, the model calls and how many of them only wait (the rule is above isWaitCommand).
 // Reads <data>/usage-ledger.jsonl (written by consonance/hooks/usage-ledger.js) and prints, per seat, how far the account's 7-day
 // figure moved on that seat's turns, beside its tokens by class.
@@ -147,6 +148,74 @@ function render(out, letters = {}) {
   return lines.join('\n');
 }
 
+// L235: files a pane re-reads in its first lap after a cut that it had already read before the cut (read-only; a transcript in, numbers out).
+// "Read before" is only the reads since the PREVIOUS cut (what this cut removed), and a shell token counts only with a separator and an extension (pane C, L235).
+// A cut is a `system` row with subtype `compact_boundary`. "Read" is a Read tool call (input.file_path) or a shell command whose
+// reading verb (cat, head, tail, sed, grep, rg, type, less, more, Get-Content) is followed by a path-looking token. The first lap after a cut runs
+// from the boundary to the next chair dispatch whose lap id differs from the first one after it (else to the next cut, else the end).
+// LIMIT: shell paths are found by shape (a token with a slash or an extension), so a shell read of a path built by a variable is not seen,
+// and a path read by glob counts as the glob text; both undercount. Paths are compared lower-cased with slashes unified and /c/ -> c:/.
+const READ_VERB = /(?:^|[\s;&|(])(?:cat|head|tail|sed|grep|rg|type|less|more|get-content|gc)\b([^;&|\n]*)/gi;
+function normPath(p) {
+  let s = String(p).replace(/^["'`]|["'`,)]+$/g, '').replace(/\\/g, '/').toLowerCase();
+  s = s.replace(/^\/([a-z])\//, '$1:/');
+  return s;
+}
+function shellPaths(cmd) {
+  const out = [];
+  for (const m of String(cmd || '').matchAll(READ_VERB)) {
+    for (const tok of m[1].split(/\s+/)) {
+      if (!tok || tok.startsWith('-')) continue;
+      if (/[*?[\]$]/.test(tok)) continue;   // a glob or a pattern, not a path
+      if (/[/\\]/.test(tok) && /\.[a-z0-9]{1,5}$/i.test(tok)) out.push(normPath(tok));   // a separator AND an extension (pane C, L235)
+    }
+  }
+  return out;
+}
+function pathsOf(block) {
+  if (!block || block.type !== 'tool_use') return [];
+  const i = block.input || {};
+  if (block.name === 'Read' && i.file_path) return [normPath(i.file_path)];
+  if (block.name === 'Bash' || block.name === 'PowerShell') return shellPaths(i.command);
+  return [];
+}
+function lapOf(row) {
+  const c = row.message && row.message.content;
+  const t = typeof c === 'string' ? c : Array.isArray(c) ? c.filter((b) => b && b.type === 'text').map((b) => b.text).join('\n') : '';
+  if (!t.includes('[chair:MAIN]')) return null;
+  const m = t.split('[chair:MAIN]')[1].slice(0, 160).match(/(?:^|[^A-Za-z0-9])(L\d{3,4})(?![A-Za-z0-9])/);
+  return m ? m[1] : null;
+}
+// -> [{ at, before: n distinct paths read before, reread: [paths], firstLap, calls }]
+function rereadsAfterCuts(lines) {
+  const rows = [];
+  for (const l of lines) { if (!l) continue; try { const v = JSON.parse(l); if (!v.isSidechain) rows.push(v); } catch (_) { /* a torn line */ } }
+  const cuts = [];
+  rows.forEach((v, i) => { if (v.type === 'system' && v.subtype === 'compact_boundary') cuts.push(i); });
+  const out = [];
+  for (let c = 0; c < cuts.length; c++) {
+    const seen = new Set();
+    for (let i = c > 0 ? cuts[c - 1] + 1 : 0; i < cuts[c]; i++) if (rows[i].type === 'assistant') for (const b of (rows[i].message && rows[i].message.content) || []) for (const p of pathsOf(b)) seen.add(p);
+    const end = c + 1 < cuts.length ? cuts[c + 1] : rows.length;
+    let firstLap = null, stop = end;
+    for (let i = cuts[c] + 1; i < end; i++) {
+      const v = rows[i];
+      if (v.type !== 'user' || v.isCompactSummary) continue;
+      const lap = lapOf(v);
+      if (!lap) continue;
+      if (!firstLap) firstLap = lap; else if (lap !== firstLap) { stop = i; break; }
+    }
+    const again = new Set(); let calls = 0;
+    for (let i = cuts[c] + 1; i < stop; i++) {
+      if (rows[i].type !== 'assistant') continue;
+      calls += 1;
+      for (const b of (rows[i].message && rows[i].message.content) || []) for (const p of pathsOf(b)) if (seen.has(p)) again.add(p);
+    }
+    out.push({ at: rows[cuts[c]].timestamp, before: seen.size, reread: [...again], firstLap, calls });
+  }
+  return out;
+}
+
 function main(argv) {
   const opt = { file: null, since: null, until: null, json: false, transcripts: null };
   for (let i = 0; i < argv.length; i++) {
@@ -155,12 +224,17 @@ function main(argv) {
     else if (argv[i] === '--until') opt.until = argv[++i];
     else if (argv[i] === '--transcripts') opt.transcripts = (argv[i + 1] && !argv[i + 1].startsWith('--')) ? argv[++i] : path.join(os.homedir(), '.claude', 'projects');
     else if (argv[i] === '--json') opt.json = true;
+    else if (argv[i] === '--rereads') { opt.rereads = []; while (argv[i + 1] && !argv[i + 1].startsWith('--')) opt.rereads.push(argv[++i]); }
     else { console.error('unknown argument ' + argv[i]); return 2; }
   }
   if (opt.since && !Number.isFinite(Date.parse(opt.since))) { console.error('--since is not a date: ' + opt.since); return 2; }
   const { dataDir } = require('../hooks/usage-ledger.js');
   const file = opt.file || path.join(dataDir(), 'usage-ledger.jsonl');
   if (opt.until && !Number.isFinite(Date.parse(opt.until))) { console.error('--until is not a date: ' + opt.until); return 2; }
+  if (opt.rereads) {
+    for (const f of opt.rereads) for (const r of rereadsAfterCuts(fs.readFileSync(f, 'utf8').split('\n'))) console.log(path.basename(f) + ' cut ' + r.at + ': ' + r.reread.length + ' re-read of ' + r.before + ' read before; first lap ' + r.firstLap + ', ' + r.calls + ' calls');
+    return 0;
+  }
   const rows = readRows(file);
   const ropt = { since: opt.since, until: opt.until };
   if (opt.transcripts) ropt.calls = callsBySeat(opt.transcripts, [...new Set(rows.map((r) => r && r.seat).filter(Boolean))], ropt);
@@ -170,4 +244,4 @@ function main(argv) {
 }
 
 if (require.main === module) process.exit(main(process.argv.slice(2)));
-module.exports = { report, readRows, render, isWaitCommand, hasWaitStatement, countCalls, callsBySeat };
+module.exports = { report, readRows, render, isWaitCommand, hasWaitStatement, countCalls, callsBySeat, rereadsAfterCuts };

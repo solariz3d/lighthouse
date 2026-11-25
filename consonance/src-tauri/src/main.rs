@@ -15847,11 +15847,18 @@ fn cut_before_dispatch(app: &AppHandle, tid: &str, msg: &str, preview: &str) -> 
     if !cut_listing().has(&letter) {
         return None;
     }
-    let last = close_small_tail(app, tid).as_deref().and_then(last_request);
+    let tail = close_small_tail(app, tid);
+    let last = tail.as_deref().and_then(last_request);
+    // L235: a dispatch the chair marks "same lap" after an id equal to the pane's last chair dispatch's is not cut first, unless it is over the hard window.
+    let same_lap = cut_at_handback::same_lap(tail.as_deref().and_then(cut_at_handback::last_dispatch_lap).as_deref(), cut_at_handback::marked_lap(msg.split("[chair:MAIN]").nth(1).unwrap_or("")).as_deref());
     let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     let age_min = last.as_ref().map(|l| now.saturating_sub(l.started_ms) / 60_000);
     let context = last.and_then(|l| l.context);
-    if !cut_at_handback::before_dispatch(true, age_min, context, cut_at_handback::DIAL) {
+    if !cut_at_handback::before_dispatch_in_lap(true, age_min, context, cut_at_handback::DIAL, same_lap) {
+        // L235 (pane C): a row where the exception let a dispatch through that today's rule would have cut, so the trial has a measure on both sides.
+        if same_lap && cut_at_handback::before_dispatch(true, age_min, context, cut_at_handback::DIAL) {
+            chair_audit(app, format!("cut skipped by same lap -> {letter}: cold ({} min) and large ({}k) but the dispatch is marked the same lap as its last; delivered uncut", age_min.unwrap_or(0), context.unwrap_or(0) / 1000));
+        }
         return None;
     }
     let (c, age) = (context.unwrap_or(0), age_min.unwrap_or(0));
