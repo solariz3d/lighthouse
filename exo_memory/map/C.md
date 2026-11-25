@@ -1949,3 +1949,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L230 re-read: at builder b921ab1 every undone command shows the road it removed and gives its own numbers back, but an undone Turn to grid puts its step in the box and not in the setting (box 45, Settings menu 15; app/core/panel.js:574)
 - Evidence: rows V1-V4 in `exo_memory/handback/p-l230-C-reread_2026-11-25_evidence/c-l230r-read.test.js`; run `run_b921ab1.txt`: 122 tests, 121 pass, the 1 fail is V4.
 - Hand-back: `exo_memory/handback/p-l230-C-reread_2026-11-25.md`
+
+## 2026-11-25 — L230 short read: builder 4e19e33 puts an undone Turn to grid's step back through the setting, so the box and the Settings menu agree (V4 green, red at b921ab1); CLEAN for install
+- Evidence: `exo_memory/handback/p-l230-C-reread_2026-11-25_evidence/run_4e19e33.txt`: 5 of 5 pass.
+- Hand-back: `exo_memory/handback/p-l230-C-short_2026-11-25.md`

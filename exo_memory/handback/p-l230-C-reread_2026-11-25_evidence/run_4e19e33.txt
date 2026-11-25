@@ -1,0 +1,18 @@
+C-L230R Turn to grid | removed pieces 1 | sent is st.undoGhost: true | shown == removed: true | header undone | length box 180 typed 180 | own boxes [["grid step","15","15"]]
+C-L230R Turn to grid | the same command pressed again lays the same bytes: true
+C-L230R V4 setting after picking 45: 45 | after picking 15: 15 | after the undo: box 45 Settings menu (S) 45 | two steps: false | the next Turn to grid used 45 (the given-back box)
+✔ V1 (Turn to grid, a different first piece): the ghost is the road removed, the boxes and the command's own numbers come back, and the same command lays the same bytes (125.1931ms)
+✔ V4 (the librarian's question): after an undone Turn to grid, do the grid step box and the Settings menu read two steps? (43.147ms)
+C-L230 Turn to grid refused: the end is already on the 90° grid (heading 0.00°): use Straight
+✔ C3b: an undone Turn to grid: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes) (66.3976ms)
+✔ T2: undo of Turn to grid gives the grid step back: the same command on the given-back boxes lays the removed piece (95.4535ms)
+✔ V4: after an undone Turn to grid the grid step box and the Settings menu read the same step (47.1565ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 377.6849
+exit 0
