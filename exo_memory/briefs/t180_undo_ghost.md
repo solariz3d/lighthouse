@@ -77,3 +77,6 @@ back to its resting state.
   hand recipe I gave him unflagged). His fix, turn −1 on the S, ends it at 0.000°. In his saved track the 300 m piece
   after it kept −1 in the turn box and ends at −1.000°. Packet addendum 1: the re-saved S uses his numbers.
 - His words, 07:07: "the global angle is what made me realize plus the straight was obviously off to the grid, even by one degree easy to spot"
+- 07:2x (L238 addendum, pane A, `handback/p-l238-A-addendum_2026-11-25.md` on l238-A 79babc90): the piece "Smooth S as
+  driven" now holds HIS S (turn −1) and its recipe; S plus ease-out ends at −0.0000028°. The old 1°-off piece file is
+  copied aside in A's evidence folder (not committed). The "Smooth S straight" new-piece ask was cancelled (redundant).
