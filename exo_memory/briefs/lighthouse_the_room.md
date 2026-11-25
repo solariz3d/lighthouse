@@ -427,3 +427,8 @@ carry it, so this brief does.
 - 2026-11-25 00:43 (L): "why does it take so long to build trackbuilder current on here for me to test?"
 - 2026-11-25 00:44 (L): "do you think it is possible we have way too many tests for things that do not need to be tested? And would it even be possible to somehow cultivate the discernment needed to know when each test is needed to be called to lower tool call usage? or is that not how it works"
 - 2026-11-25 00:47 (L): "if you want, we can do a small research gathering of agents here to helps us unravel how this might be able to work, what do you think?"
+- 2026-11-25 01:30 (L): "also did i miss the reminder to close consonance"
+- 2026-11-25 01:46 (L): "lemme know when all is good for me to test"
+- 2026-11-25 02:02 (L): "so close consonance first?"
+- 2026-11-25 02:03 (L): "i wonder, why hasnt c and E pane been working"
+- 2026-11-25 02:05 (L): "but wouldnt it be better to get them going some how" [after my answer that we had left them asleep at 00:19 for their size]
