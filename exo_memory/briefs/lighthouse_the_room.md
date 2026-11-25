@@ -443,3 +443,4 @@ carry it, so this brief does.
 - 2026-11-25 03:27 (L): "we dont do the stick anymore, could just remove it all together, but something comes to mind, idk how we didnt go over the limits doing that, if anything we always had room, but we never used fable at all and all opus on medium"
 - 2026-11-25 03:28 (L): "but we also havent been doing the stick hand offs for a while"
 - 2026-11-25 03:29 (L): "but you even said many times that the effort level going from medium opus to high isnt that big of a token sink?"
+- 2026-11-25 03:44 (L): "do you think, opus xhigh reasoning would be cheaper than fable medium?"
