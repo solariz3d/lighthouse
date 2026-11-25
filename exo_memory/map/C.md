@@ -1945,3 +1945,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L230: the undo ghost (builder 2e70b9f) sends a plain Extend of the given-back boxes after undoing Level, Turn by, Sharp or Jump, not the road removed (app/core/panel.js:1314); the base sent none
 - Evidence: rows C3/C4 in `exo_memory/handback/p-l230-C_2026-11-25_evidence/c-l230-read.test.js` (4 red at the tip, the Extend control green; at 27e2084 no ghost is sent, 5 of 5). The rest is clean: same bytes after three redos, 116 anchors unchanged, no new built-in, `made` adds 0.53% at the 200-step cap.
 - Hand-back: `exo_memory/handback/p-l230-C_2026-11-25.md`
+
+## 2026-11-25 — L230 re-read: at builder b921ab1 every undone command shows the road it removed and gives its own numbers back, but an undone Turn to grid puts its step in the box and not in the setting (box 45, Settings menu 15; app/core/panel.js:574)
+- Evidence: rows V1-V4 in `exo_memory/handback/p-l230-C-reread_2026-11-25_evidence/c-l230r-read.test.js`; run `run_b921ab1.txt`: 122 tests, 121 pass, the 1 fail is V4.
+- Hand-back: `exo_memory/handback/p-l230-C-reread_2026-11-25.md`

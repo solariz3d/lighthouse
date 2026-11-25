@@ -1,0 +1,196 @@
+C-L230R Level | removed pieces 1 | sent is st.undoGhost: true | shown == removed: true | header undone | length box 180 typed 180 | own boxes []
+C-L230R Level | the same command pressed again lays the same bytes: true
+C-L230R To floor | removed pieces 1 | sent is st.undoGhost: true | shown == removed: true | header undone | length box 400 typed 400 | own boxes []
+C-L230R To floor | the same command pressed again lays the same bytes: true
+C-L230R Turn by | removed pieces 1 | sent is st.undoGhost: true | shown == removed: true | header undone | length box 180 typed 180 | own boxes [["turn by °","-35","-35"]]
+C-L230R Turn by | the same command pressed again lays the same bytes: true
+C-L230R Turn to grid | removed pieces 1 | sent is st.undoGhost: true | shown == removed: true | header undone | length box 180 typed 180 | own boxes [["grid step","15","15"]]
+C-L230R Turn to grid | the same command pressed again lays the same bytes: true
+C-L230R Sharp | removed pieces 2 | sent is st.undoGhost: true | shown == removed: true | header undone | length box 180 typed 180 | own boxes [["sharp °","-75","-75"],["sharp radius m","40","40"],["sharp ramp m","6","6"]]
+C-L230R Sharp | the same command pressed again lays the same bytes: true
+C-L230R Jump | removed pieces 3 | sent is st.undoGhost: true | shown == removed: true | header undone | length box 90 typed 90 | own boxes []
+C-L230R Jump | the same command pressed again lays the same bytes: true
+C-L230R V2 undo 1 (jump): ghost is the jump road true | length 70 | sharp boxes 5/99/9 | header undone
+C-L230R V2 undo 2 (sharp): ghost is the sharp road true | length 120 | sharp boxes 60/35/5 | header undone
+C-L230R V2 redo 1: events t180-ghost-clear | undoGhost false | bytes == after Sharp true | header next | length 120 | sharp 60/35/5
+C-L230R V2 redo 2: events  | undoGhost false | bytes == full true | header next
+C-L230R V3 header after undo undone | after typing 77: {"events":"t180-ghost","header":"next","handles":"n/a"} | after redo: {"events":"t180-ghost-clear","bytes":true,"ug":false,"header":"next","len":"77","sharp":"45"}
+C-L230R V4 setting after picking 45: 45 | after picking 15: 15 | after the undo: box 45 Settings menu (S) 15 | two steps: true | the next Turn to grid used 45 (the given-back box)
+✔ V1 (Level, a different first piece): the ghost is the road removed, the boxes and the command's own numbers come back, and the same command lays the same bytes (182.805ms)
+✔ V1 (To floor, a different first piece): the ghost is the road removed, the boxes and the command's own numbers come back, and the same command lays the same bytes (188.1684ms)
+✔ V1 (Turn by, a different first piece): the ghost is the road removed, the boxes and the command's own numbers come back, and the same command lays the same bytes (54.6935ms)
+✔ V1 (Turn to grid, a different first piece): the ghost is the road removed, the boxes and the command's own numbers come back, and the same command lays the same bytes (64.2339ms)
+✔ V1 (Sharp, a different first piece): the ghost is the road removed, the boxes and the command's own numbers come back, and the same command lays the same bytes (449.9317ms)
+✔ V1 (Jump, a different first piece): the ghost is the road removed, the boxes and the command's own numbers come back, and the same command lays the same bytes (60.8344ms)
+✔ V2: a Jump after a Sharp; undo, undo, redo, redo: each ghost is its own road, the boxes are each command's, and the bytes come back (155.4458ms)
+✔ V3: undo a Sharp, type a change, redo: the typed change hands the picture back, and the redo leaves no ghost of the undone road (121.618ms)
+✖ V4 (the librarian's question): after an undone Turn to grid, do the grid step box and the Settings menu read two steps? (41.1736ms)
+✔ row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED (353.9735ms)
+✔ row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why (292.7211ms)
+✔ row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case) (7.6449ms)
+✔ row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection (168.7698ms)
+✔ row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name (123.5224ms)
+✔ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason (77.3221ms)
+✔ row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed (152.8438ms)
+✔ row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES (3325.2735ms)
+✔ row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece (43.1341ms)
+✔ row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece (71.6827ms)
+✔ row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name (114.5548ms)
+✔ row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN (1157.3192ms)
+✔ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where (3224.5743ms)
+✔ row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is (448.5252ms)
+✔ row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm (157.568ms)
+✔ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved (479.0856ms)
+✔ row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back (85.2797ms)
+✔ row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0 (129.1296ms)
+✔ row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0 (112.799ms)
+✔ row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged (308.9188ms)
+✔ row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off (143.0557ms)
+✔ row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window) (400.9658ms)
+✔ row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back (248.6708ms)
+✔ row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost (265.8269ms)
+✔ row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back (790.9193ms)
+✔ row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing (254.6887ms)
+✔ row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away (757.3294ms)
+✔ row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go (2889.6928ms)
+✔ row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before (1675.7734ms)
+✔ row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back (183.2928ms)
+✔ row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores (220.8241ms)
+✔ row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece (153.752ms)
+✔ row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's (46.5679ms)
+✔ row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one (104.7486ms)
+✔ row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips (189.5926ms)
+✔ row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop (428.9683ms)
+✔ row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged (68.7992ms)
+✔ row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection (138.1125ms)
+✔ row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions… (98.2494ms)
+✔ row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read) (81.1614ms)
+✔ D259: a typed 300 stays 300 (one full turn either way is allowed), and a typed 400 becomes 40; the field shows them so (161.8096ms)
+✔ D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows (318.5531ms)
+✔ row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows (116.0478ms)
+✔ row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426) (142.8888ms)
+✔ row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed (194.9574ms)
+✔ row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width) (198.5124ms)
+✔ row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight (167.9676ms)
+✔ a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head (78.2732ms)
+✔ D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight (100.6654ms)
+✔ row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165) (7394.2707ms)
+✔ row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says (1820.0733ms)
+✔ row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's (133.02ms)
+✔ row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour (77.5603ms)
+✔ row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before (218.9191ms)
+✔ row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused (62.5373ms)
+✔ xsec extendOptions: each field is its channel target, in the seal's units (1.1084ms)
+✔ xsec extendOptions: nothing is clamped; the core's guards refuse by name (E2 KE2-2) (0.557ms)
+✔ xsec extendOptions: bank winds past ±180 (the spiral, S1 iv) (0.0999ms)
+✔ xsec extendOptions: the new fields take the "at start" box like the others (0.234ms)
+✔ xsec headState (A's core): a non-tube head shows tube sweep 0 ("none"); an edge head and a tube head show the document's values (119.3095ms)
+✔ xsec panel: the three fields are on the panel and show the head; left as shown they send nothing (42.5623ms)
+✔ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value (15.5648ms)
+✔ xsec panel: the edge angle and the edge start each redraw the readout on their own, with no other field typed after them (12.6049ms)
+✔ xsec panel: after Extend the fields read back what the document holds (21.9222ms)
+✔ xsec panel (A's core): each cross-section cell is the core's own readout of the candidate (40.8499ms)
+✔ xsec panel: a core that reports no cross-section readout shows — in those cells (3.9004ms)
+✔ xsec panel: a core refusal is shown by its name (BAD_TUBE, BAD_EDGE: A's contract) (18.1231ms)
+✔ xsec panel: a piece is a cup OR a tube — changing one puts the other back and disables it (13.2955ms)
+✔ xsec panel: a cup and a tube sent together anyway are refused by name (BAD_TARGET) (1.6889ms)
+✔ xsec panel: a refusal the REAL core makes on Extend is shown in the panel with its name (5.3116ms)
+✔ xsec panel: the bank field takes any number and keeps it within one turn, its sign kept: 360 is a full turn of roll, and -540 is -180 (D259) (66.5325ms)
+✔ xsec panel: a spiral of -90° pieces typed on to -360 rolls the last piece on the same way to a full turn, never back (130.4776ms)
+✔ xsec head marker: the mast follows the road's U, right side up when inverted (0.6011ms)
+✔ xsec head marker: inside a closed tube the marker keeps to the room it has (0.2429ms)
+✔ xsec head marker: the clearance of a closed tube is 0.9 of its roof and of its reach (1.0826ms)
+✔ xsec head marker: the preview hands the closed tube's room to the marker it draws (53.2385ms)
+✔ xsec validation words: the tube-too-narrow and roll-rate reds read in plain words, the id in the tooltip (0.8016ms)
+✔ xsec the panel loads in the webview loader with no node built-in (D186) (49.1668ms)
+✔ xsec panel: the left and right edge fields take a negative number, with no min, and Extend places it (D406) (46.4077ms)
+C-L230 handle drag changed the doc: true null
+C-L230 pieces before 3 after jump 6 msg Jump placed: move its landing by hand.
+C-L230 undos [{"undo":1,"pieces":3,"undoGhost":true,"events":"t180-ghost","ghostM":970,"docM":750,"lengthBox":"120","turnBox":""},{"undo":2,"pieces":3,"undoGhost":false,"events":"t180-ghost-clear","ghostM":null,"docM":750,"lengthBox":"120","turnBox":""},{"undo":3,"pieces":3,"undoGhost":false,"events":"","ghostM":null,"docM":750,"lengthBox":"120","turnBox":""}]
+C-L230 redos [{"redo":1,"pieces":3,"undoGhost":false,"events":"","lengthBox":"120","turnBox":""},{"redo":2,"pieces":3,"undoGhost":false,"events":"","lengthBox":"120","turnBox":""},{"redo":3,"pieces":6,"undoGhost":false,"events":"","lengthBox":"120","turnBox":""}]
+C-L230 jump added pieces 0 metres 0.0 types 
+C-L230 after undo of jump: events t180-ghost | ghost metres beyond placed 0.0 | jump flag undefined | shell undoGhost.removed 1
+C-L230 Level events after undo t180-ghost | shell undoGhost true
+C-L230 Level | the ghost sent is the shell undo ghost: true | Extend from the given-back boxes lays the removed piece: false | ghost m 500.0 removed doc m 500.0
+C-L230 Level events after undo t180-ghost | shell undoGhost true
+C-L230 Level | the ghost sent is the shell undo ghost: true | Extend from the given-back boxes lays the removed piece: true | ghost m 500.0 removed doc m 500.0
+C-L230 Turn to grid refused: the end is already on the 15° grid (heading 0.00°): use Straight
+C-L230 Turn to grid refused: the end is already on the 15° grid (heading 0.00°): use Straight
+C-L230 Turn by events after undo t180-ghost | shell undoGhost true
+C-L230 Turn by | the ghost sent is the shell undo ghost: true | Extend from the given-back boxes lays the removed piece: false | ghost m 500.0 removed doc m 500.0
+C-L230 Turn by events after undo t180-ghost | shell undoGhost true
+C-L230 Turn by | the ghost sent is the shell undo ghost: true | Extend from the given-back boxes lays the removed piece: true | ghost m 500.0 removed doc m 500.0
+C-L230 Sharp events after undo t180-ghost | shell undoGhost true
+C-L230 Sharp | the ghost sent is the shell undo ghost: true | Extend from the given-back boxes lays the removed piece: false | ghost m 399.2 removed doc m 399.2
+C-L230 Sharp events after undo t180-ghost | shell undoGhost true
+C-L230 Sharp | the ghost sent is the shell undo ghost: true | Extend from the given-back boxes lays the removed piece: true | ghost m 399.2 removed doc m 399.2
+C-L230 C2 after first undo {"len":"250","turn":"60"} | after typing 77 then the Undo button {"len":"200","turn":"45","pieces":1,"ug":true,"events":"t180-ghost-clear,t180-ghost"}
+C-L230 C2k after undo 250 | typed 77 then Ctrl+Z {"len":"250","pieces":2} | Ctrl+Z again {"len":"200","turn":"45","pieces":1}
+C-L230 Level | pieces removed 1 | sent is st.undoGhost.candidate: true | shown m 200.0 | removed m 200.0 | shown == removed: true | shown == Extend of the boxes: false | readout header undone
+C-L230 Turn by | pieces removed 1 | sent is st.undoGhost.candidate: true | shown m 200.0 | removed m 200.0 | shown == removed: true | shown == Extend of the boxes: false | readout header undone
+C-L230 Sharp | pieces removed 2 | sent is st.undoGhost.candidate: true | shown m 99.2 | removed m 99.2 | shown == removed: true | shown == Extend of the boxes: false | readout header undone
+C-L230 Jump | pieces removed 3 | sent is st.undoGhost.candidate: true | shown m 300.0 | removed m 300.0 | shown == removed: true | shown == Extend of the boxes: false | readout header undone
+C-L230 Extend (control) | pieces removed 1 | sent is st.undoGhost.candidate: false | shown m 200.0 | removed m 200.0 | shown == removed: true | shown == Extend of the boxes: true | readout header next
+✔ C1: brush, handle drag, jump; undo three times, redo three times: same bytes, no stale ghost or boxes (330.7002ms)
+✔ C1b: an undone Jump shows the jump that was removed, not an Extend piece (49.9365ms)
+✔ C3: an undone Level: the preview is the road the undo removed (78.5525ms)
+✔ C3b: an undone Level: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes) (85.4925ms)
+✔ C3: an undone Turn to grid: the preview is the road the undo removed (23.3913ms)
+✔ C3b: an undone Turn to grid: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes) (20.743ms)
+✔ C3: an undone Turn by: the preview is the road the undo removed (44.0068ms)
+✔ C3b: an undone Turn by: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes) (53.5477ms)
+✔ C3: an undone Sharp: the preview is the road the undo removed (270.4342ms)
+✔ C3b: an undone Sharp: the SAME command pressed on the given-back boxes lays the removed piece (amended by name, L229 addendum 3: was Extend on the boxes) (308.5628ms)
+✔ C2: undo, type in a box, Undo button: whose numbers are in the boxes (54.0093ms)
+✔ C2k: the same with Ctrl+Z (the guard first puts the typed box back, then undoes) (52.282ms)
+✔ C4: undo of Level: the preview's ghost is the road that was removed (42.1821ms)
+✔ C4: undo of Turn by: the preview's ghost is the road that was removed (34.0622ms)
+✔ C4: undo of Sharp: the preview's ghost is the road that was removed (134.4091ms)
+✔ C4: undo of Jump: the preview's ghost is the road that was removed (35.5543ms)
+✔ C4: undo of Extend (control): the preview's ghost is the road that was removed (26.3913ms)
+✔ T1: undo of Turn to grid: the preview shows the road Turn to grid laid, and the boxes are given back (43.1725ms)
+✔ T2: undo of Turn to grid gives the grid step back: the same command on the given-back boxes lays the removed piece (70.1644ms)
+✔ P1: undo puts the removed road up as the ghost, and the preview model accepts it (284.7036ms)
+✔ P2: the readout shows the removed piece (170 m), not the next one (120.8666ms)
+✔ P3: a redo clears the ghost; typing hands the picture back to the next piece (107.7134ms)
+R4 pieces 41 ghost segments 4150 rebuilt by the undo 0
+✔ R1: undo leaves the removed piece as the ghost, with its own segments; redo drops it (102.8641ms)
+✔ R2: a new extend, candidate or brush starts with no undo ghost; two undos show the last one only (151.4175ms)
+✔ R3: an undone edit that removes no piece (a grip change) holds no ghost: the preview draws only a road that extends the placed one (63.7148ms)
+✔ R4: one undo rebuilds no piece: every ghost segment is an object the document already had (2214.1474ms)
+✔ R5: the ghost carries the removed piece's own readout (18.6655ms)
+✔ R6: a plain piece: Extend, Undo gives the typed values back, and Extend again lays the same piece (185.4072ms)
+✔ R6: a piece with an extra turn row: Extend, Undo gives the typed values back, and Extend again lays the same piece (68.4624ms)
+✔ R6: the S as driven (turn 0, +92 from 80, -91 from 200, flow through its marks): Extend, Undo gives the typed values back, and Extend again lays the same piece (300.5188ms)
+✔ P7: the S is typeable: turn 0 with extra turn rows sends turnDeg 0, and a plain turn 0 still sends none (231.483ms)
+✔ R7: save, open, undo gives the values back from the undo file; an undo file without them opens as before (72.4723ms)
+✔ R8: the released reader (builder main 3b33b38) opens an undo file that carries `made`, history intact (577.1532ms)
+✔ R9b: with no values kept, the undone piece is shown with words saying they are read from the shape, and the boxes are NOT filled (29.9631ms)
+ℹ tests 122
+ℹ suites 0
+ℹ pass 121
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31393.75
+
+✖ failing tests:
+
+test at app\test\c-l230r-read.test.js:176:1
+✖ V4 (the librarian's question): after an undone Turn to grid, do the grid step box and the Settings menu read two steps? (41.1736ms)
+  AssertionError [ERR_ASSERTION]: after the undo the box reads 45 and the Settings menu 15
+  
+  '45' !== '15'
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-c-l230\app\test\c-l230r-read.test.js:188:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '45',
+    expected: '15',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+exit 1
