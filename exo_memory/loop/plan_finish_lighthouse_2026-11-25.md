@@ -48,9 +48,7 @@ Registered (the packet's, carried): failed if a builder pane's first call after 
   what the notes or the map held.
 - **The Third Place** (695k on L) and **panes C (751k) and E (483k)**: each will pay one full read at its next call
   whatever we do. The choice for each is his: cut it at that call (the window does this for C and E), or leave it asleep.
-- **Q3 and Q4 of the load-in plan.** My recommendation: do not run Q3. A builder's BOOT is 14,771 tokens of about
-  100,000, and his word of 2026-09-21 was to wait; the saving is smaller than Part 2a's and the risk is to what makes
-  the room the room. Q4 then reduces to the two lines above.
+- **Q3 and Q4 of the load-in plan.** ~~My recommendation: do not run Q3.~~ Amended 00:2x after his "are you sure?": NOT NOW, undecided. A builder's BOOT is 14,771 tokens of about 100,000, nearly twice what Q2 moves (8,193), so the saving is not small; the census saw it opened or cited in 1 of 38 laps, but that count cannot see stance, which is what the ladder measures. It waits on Part 0's table after one working night: if builders are under 200,000 a call without it, BOOT stays whole. Q4 then reduces to the two lines above.
 
 ## Part 4. Loose ends, small, closed in passing
 

@@ -1157,3 +1157,9 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **His catch, verbatim (00:17):** "i havent been using consonance as much as we were so it isnt right to say the usage is down for sure yet, it is because we havent been building".
 - **My sentence:** "The night rate dropped, modestly." I set 5 points in six and a half hours on D (11-24, one lap line) beside 5 points in six hours on L (11-21, many laps) and called it a drop.
 - **The rule, mine:** a usage figure told to him as better or worse carries its denominator of work (calls, laps) beside it; tokens read per call per seat is the figure that does not move with a quiet night. `loop/plan_finish_lighthouse_2026-11-25.md`, Part 0.
+
+## 2026-11-25 00:2x (L): a recommendation is weighed before it is written, not when he asks "are you sure"
+- **His catch, verbatim:** "drop if you recommend, but are you sure?" (00:19); "well can you explain your reasoning why you suggested it just to say no when i asked" (00:24).
+- **My sentence, in the plan and to him:** "My recommendation: do not run Q3 ... the saving is smaller than Part 2a's"; to him, "I'd drop the ladder experiment".
+- **What I had not done:** set the saving beside the one I was already landing. BOOT in a builder is 14,771 tokens; Q2's three pieces are 8,193 (`handback/p-q1-census-A_2026-11-21.md`). I ran that sum only after his question. The recommendation rested on his 2026-09-21 word to wait and on my wish to protect the piece, with no figure under "small".
+- **The rule, mine:** a "drop" or "do not run" told to him carries the figure it was weighed against, written in the same line; without one it is written as "not now, undecided". And when "are you sure" changes my answer, I say in that reply that the check came after the claim.
