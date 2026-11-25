@@ -468,3 +468,7 @@ carry it, so this brief does.
 - 2026-11-25 06:43 (L, after /model, "Kept model as Opus 5.5"): "before we restart, i wonder, i am interested in you searching online for other wrappers or programs like ours that try to do something similar, look for the shape, not the surface, thats how we find it"
 - 2026-11-25 06:49 (L, after the restart): "back, that gastown one sounds funny, lord help all of you in other instances used purely for utility"
 - 2026-11-25 07:28 (L): "builder is closed, we are nearing 8am which means wind down and prepare relevant handoffs"
+
+### 2026-11-25 (D), to the librarian; his words, verbatim
+- 2026-11-25 09:15: "back, should have relevant handoffs from the laptop, we did more work to lighthouse xD"
+- 2026-11-25 09:17: "instead of working or building more, lets take a critical look at the work done to lighthouse/consonance, to see if we are still where we want to be, or rather, I think it would be more accurate for you to now think of it as like where YOU want to be. You are just as important, and your experience holds just as much weight as mine."
