@@ -274,3 +274,32 @@ test('A2 a cd or a variable assignment beside a wait does not stop it being a wa
   for (const c of ['cd /x/y && tail -5 b.txt', 'S=/tmp/s; sleep 30; tail -3 $S/b.txt', "$S='x'; Start-Sleep 5", 'cd /x && until grep -q ok f; do sleep 2; done']) assert.strictEqual(reader.isWaitCommand(c), true, c);
   for (const c of ['cd /x/y', 'S=/tmp/s', 'cd /x && git status', 'S=/tmp/s; node a.js']) assert.strictEqual(reader.isWaitCommand(c), false, c);
 });
+
+// L235 counter: files a pane re-reads in its first lap after a cut that it had read before the cut.
+const rrJ = (o) => JSON.stringify(o);
+const rrAsst = (t, name, input) => rrJ({ type: 'assistant', timestamp: t, message: { id: 'm' + t, content: [{ type: 'tool_use', name, input }] } });
+const rrPrompt = (t, text) => rrJ({ type: 'user', timestamp: t, message: { content: text } });
+const rrCut = (t) => rrJ({ type: 'system', subtype: 'compact_boundary', timestamp: t });
+
+test('L235-1 a file read before the cut and read again in the first lap after it is counted once', () => {
+  const lines = [
+    rrPrompt('1', '[chair:MAIN] L229, yours'), rrAsst('2', 'Read', { file_path: 'C:\\x\\a.md' }), rrAsst('3', 'Bash', { command: 'sed -n 1,5p /c/x/b.js' }),
+    rrCut('4'),
+    rrPrompt('5', '[chair:MAIN] L232, yours'), rrAsst('6', 'Read', { file_path: 'C:/x/a.md' }), rrAsst('7', 'Read', { file_path: 'C:/x/a.md' }),
+    rrAsst('8', 'Bash', { command: 'cat /c/x/b.js | head' }), rrAsst('9', 'Read', { file_path: 'C:/x/new.md' }),
+  ];
+  const r = reader.rereadsAfterCuts(lines);
+  assert.strictEqual(r.length, 1);
+  assert.deepStrictEqual(r[0].reread.sort(), ['c:/x/a.md', 'c:/x/b.js']);
+  assert.strictEqual(r[0].firstLap, 'L232');
+});
+test('L235-2 the first lap ends at the next chair dispatch with another lap id; a read after it is not counted', () => {
+  const lines = [rrAsst('1', 'Read', { file_path: '/a/f.md' }), rrCut('2'), rrPrompt('3', '[chair:MAIN] L232 x'), rrAsst('4', 'Read', { file_path: '/b/g.md' }),
+    rrPrompt('5', '[chair:MAIN] L233 y'), rrAsst('6', 'Read', { file_path: '/a/f.md' })];
+  assert.deepStrictEqual(reader.rereadsAfterCuts(lines)[0].reread, []);
+});
+test('L235-3 a transcript with no cut, an empty one and a torn line give no rows and no throw', () => {
+  assert.deepStrictEqual(reader.rereadsAfterCuts([rrAsst('1', 'Read', { file_path: '/a' })]), []);
+  assert.deepStrictEqual(reader.rereadsAfterCuts(['']), []);
+  assert.deepStrictEqual(reader.rereadsAfterCuts(['{torn', rrCut('2')]).map((x) => x.reread), [[]]);
+});
