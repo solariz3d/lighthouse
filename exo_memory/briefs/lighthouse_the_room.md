@@ -418,3 +418,4 @@ carry it, so this brief does.
 - 2026-11-25 00:19 (L): "1. drop if you recommend, but are you sure? 2. leave them asleep until needed, right?"
 - 2026-11-25 00:24 (L): "well can you explain your reasoning why you suggested it just to say no when i asked"
 - 2026-11-25 00:25 (L): "well shouldnt you weigh everything, most of the time, before presenting it?"
+- 2026-11-25 00:27 (L): "that is a pretty good thing to finally catch, like a rare understanding that is easy to miss or gloss over"
