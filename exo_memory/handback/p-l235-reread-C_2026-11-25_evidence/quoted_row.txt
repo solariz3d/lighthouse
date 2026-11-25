@@ -1,0 +1,4 @@
+Q "cat \"C:/Consonance/lighthouse/a.md\""              -> re-read []
+Q "sed -n 1,20p 'C:/Consonance/lighthouse/b.js'"       -> re-read []
+Q "head -5 C:/Consonance/lighthouse/c.md"              -> re-read ["c:/consonance/lighthouse/c.md"]
+builder transcripts: shell path tokens counted by the fix 11745 | quoted paths with an extension dropped by it 537

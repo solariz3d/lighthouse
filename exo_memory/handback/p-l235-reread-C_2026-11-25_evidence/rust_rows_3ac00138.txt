@@ -1,0 +1,20 @@
+running 36 tests
+C1 last L215 | read None | cut skipped: false | A: L215 IS COLLATED; B reads and lands it. YOUR NEXT LAP IS 
+C1 last L215 | read None | cut skipped: false | A: YOUR L215 FIX IS COLLATED (B reads and lands l215-gatesop
+C1 last L214 | read None | cut skipped: false | B: L214 IS FILED (landed and installed). FOUR STEPS NOW, IN 
+C1 last L175 | read None | cut skipped: false | E: L175 is collated and filed (d0c1aba, pushed; lighthouse 0
+C3 last_dispatch_lap = None
+M5 None Some("L229")
+thread 'c_l235_marker::m5_an_id_glued_earlier_does_not_steal_the_marker' (14356) panicked at src\lib.rs:57:189:
+assertion `left == right` failed: the marker sits after ML229, not after the lap id
+  left: Some("L229")
+ right: None
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+......... 9/36
+c_l235_marker::m5_an_id_glued_earlier_does_not_steal_the_marker --- FAILED
+..........................
+failures:
+failures:
+    c_l235_marker::m5_an_id_glued_earlier_does_not_steal_the_marker
+test result: FAILED. 35 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+error: test failed, to rerun pass `--lib`
