@@ -34,7 +34,7 @@ function kit(aliveFor) {
       now: () => t,
       launch: (exe, env) => { started.push({ exe, env }); return 4243; },
       log: (row) => rows.push(row),
-      env: { PATH: 'p', CONSONANCE_DATA: 'C:/data', CONSONANCE_LAUNCH_ID: 'launch-123', KEEP: 'k' },
+      env: { PATH: 'p', CONSONANCE_DATA: 'the-carry-data-dir', CONSONANCE_LAUNCH_ID: 'launch-123', KEEP: 'k' },
     },
   };
 }
