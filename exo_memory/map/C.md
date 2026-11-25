@@ -1985,3 +1985,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L237: the pane intake rest at the floor reserve is 88,893 B both at the L225 tip (green) and today (red); the row flips with pane C's newest map entry (reserve 36,000 then, 8,000 now), and the floor-reserve overrun is BOOT.md's 11-07 growth (+3,512 B: the keeper's catch quoted, the Third Place's carrier line); stopped, not mine to trim
 - Evidence: `exo_memory/handback/p-l237-C_2026-11-25_evidence/probe_run_21c98789_lines.txt`, `probe_run_lines.txt`, `probe_run_source_before_lines.txt`.
 - Hand-back: `exo_memory/handback/p-l237-C_2026-11-25.md`
+
+## 2026-11-25 — L237 made: the pane intake row now bounds the rest at the floor reserve (SHELL_MAP_FLOOR), so a long C map entry can no longer turn it green (80,181 B at reserve 27,283 still red under 88,000), and LIGHT_PANE_REST_MAX is 91,500 by ruling for the keeper's 11-07 BOOT words; row green at 88,893 B
+- Evidence: `exo_memory/handback/p-l237-C_2026-11-25_evidence/row_c_only.txt`, `row_c_only_long_map.txt`, `intake_tests_c_d.txt` (47 pass, 2 old librarian reds).
+- Hand-back: `exo_memory/handback/p-l237-C_2026-11-25.md` (addendum, 11:45Z)

@@ -1,0 +1,206 @@
+   Compiling consonance v0.2.0 (C:\Consonance\lh-wt-c-l237c\consonance\src-tauri)
+warning: unused import: `HashMap`
+     --> src\main.rs:19089:28
+      |
+19089 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:19347:14
+      |
+19347 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+warning: function `sysdrive` is never used
+   --> src\main.rs:514:4
+    |
+514 | fn sysdrive() -> String {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `consonance` (bin "consonance" test) generated 5 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.33s
+     Running unittests src\main.rs (C:\build\c-l237-probe-target\debug\deps\consonance-bf4e1d20cf52ad15.exe)
+
+running 52 tests
+test intake_light_tests::dump_intakes_for_measure ... ignored
+test intake_light_tests::light_the_recorded_note_rides_its_newest_entries ... ignored
+test fork_note_tests::a_dev_brief_carries_no_note_so_the_intake_is_unchanged ... ok
+test floor_launch_tests::r1_the_one_switch_restores_the_launch_with_the_intake ... ok
+test intake_light_tests::fork_span_measures_the_note_in_either_form_and_nothing_without_one ... ok
+test curated_intake_tests::a_shorter_memory_than_the_window_is_not_a_panic ... ok
+test curated_intake_tests::uncurated_fallback_is_the_chronological_window ... ok
+test curated_intake_tests::map_points_at_the_documents_and_the_master_rather_than_inlining_them ... ok
+test curated_intake_tests::malformed_atoms_are_skipped_not_fatal ... ok
+test curated_intake_tests::map_lists_every_topic_with_its_live_count ... ok
+test intake_light_tests::light_caps_hold_whatever_the_brief_frees_and_strict_is_unchanged ... ok
+test curated_intake_tests::a_topic_whose_document_is_missing_is_held_back_but_still_counted ... ok
+test curated_intake_tests::settled_atoms_are_kept_out_of_the_live_edge ... ok
+test curated_intake_tests::a_settled_run_at_the_tail_does_not_starve_the_edge ... ok
+test builder_floor_tests::r1_both_builder_intake_writers_pass_through_the_floor ... ok
+test intake_light_tests::the_switch_is_the_gates_key_and_absent_is_strict ... ok
+test l086_marking_tests::intake_the_frame_does_not_deny_the_rules_an_atom_reports ... ok
+test l086_marking_tests::intake_the_frame_is_small_against_the_shell_ceiling ... ok
+test l086_marking_tests::intake_a_planted_atom_sits_verbatim_inside_the_claims_frame_in_the_live_edge ... ok
+test l086_marking_tests::intake_the_frame_says_what_the_lines_are_who_made_them_and_that_they_are_not_directives ... ok
+test l086_marking_tests::intake_the_uncurated_fallback_is_framed_the_same_way ... ok
+test shelf_handback_tests::dump_intakes_with_the_handback_index_on ... ignored
+test fork_note_tests::the_intake_cuts_the_note_from_the_bundled_brief_after_the_header_and_before_the_room ... ok
+test where_a_seat_lives_tests::the_resume_arm_rewrites_the_intake_before_the_pane_that_reads_it_exists ... ok
+test committee_brief_tests::committee_practice_reaches_the_intake ... ok
+test shell_budget_order_tests::l129_the_intake_takes_its_reserve_through_intake_reserve ... ok
+test committee_brief_tests::the_handback_route_reaches_the_pane_intake ... ok
+test repo_map_tests::the_intake_carries_the_map_section_ahead_of_the_deck ... ok
+test intake_light_tests::light_the_ledger_is_never_tailed ... ok
+test intake_light_tests::light_a_missing_pin_is_said ... ok
+test intake_light_tests::light_a_pinned_file_rides_whole ... ok
+test intake_light_tests::light_a_tail_never_costs_yesterdays_whole_note ... ok
+test intake_light_tests::light_the_newest_note_over_the_cap_rides_as_its_newest_entries ... ok
+test intake_light_tests::a_fresh_pane_still_gets_an_empty_intake ... ok
+test intake_light_tests::light_the_shelf_carries_a_fixed_set_and_never_backfills ... ok
+test committee_brief_tests::every_path_the_intake_emits_resolves ... ok
+test librarian_tests::the_intake_states_what_the_seat_must_not_do ... ok
+test librarian_tests::the_intake_carries_the_citation_rule ... ok
+test intake_light_tests::key_absent_the_librarian_intake_is_todays ... ok
+test intake_light_tests::key_absent_the_pane_intake_is_todays ... ok
+test intake_light_tests::light_every_pointer_resolves_to_a_file_that_exists ... ok
+LIBRARIAN INTAKE strict 141530 B, light 146147 B
+
+thread 'intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room' (5088) panicked at src\main.rs:10159:9:
+light 146147 B is more than 2 KB over strict 141530 B
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+PANE INTAKE strict 106040 B, light 94907 B
+PANE INTAKE light rest 88893 B, map section 6014 B, reserve 8000 B
+PANE INTAKE fork note 0 B (set aside; 0 in a dev tree)
+PANE INTAKE rests at the floor reserve: light 88893 B (fork note set aside), strict 100026 B
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... ok
+test intake_light_tests::every_seat_intake_opens_with_the_stamp has been running for over 60 seconds
+test intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000 has been running for over 60 seconds
+test shelf_tests::anything_the_budget_leaves_out_is_named_in_the_intake has been running for over 60 seconds
+test shelf_tests::the_librarian_intake_carries_boot_exactly_once has been running for over 60 seconds
+test shelf_tests::the_librarian_intake_fits_under_the_limit_it_must_obey has been running for over 60 seconds
+test shelf_tests::the_librarian_intake_names_its_own_map_by_path has been running for over 60 seconds
+test shelf_tests::the_librarian_intake_size_is_recorded_and_not_silently_doubling has been running for over 60 seconds
+test shelf_tests::the_shelf_reaches_the_intake has been running for over 60 seconds
+test shelf_tests::the_third_place_intake_fits_under_the_limit_it_must_obey has been running for over 60 seconds
+test intake_light_tests::every_seat_intake_opens_with_the_stamp ... ok
+LIBRARIAN WORST CASE (light) 147464 B: head 60424 B (stamp allowed at 400), shelf 86834 B, live index +206 B; window 24000 B, tail 3860 B, letter 5822 B. With the letter grown to its cap: 149642 B.
+
+thread 'intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000' (10476) panicked at src\main.rs:10561:9:
+the worst-case light librarian intake is 147464 B, not under 145,000
+test intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000 ... FAILED
+INDEXED: — open them, they are one read away. They are indexed rather than carried because they are long-form and read deliberately; that is the room's normal form, not a degraded one. The counter-voice lives here and is the one you are most likely to need at a peak:
+
+  record/third_place_prehistory_2026-08-30.md  (33290 bytes) — The prehistory — the fourteen months before the room, as the keeper told it in the Third Place
+  record/trust-the-first-attention.md  (17694 bytes) — RECORD — `trust-the-first-attention`
+  spread/the_six_voices.md  (30613 bytes) — The six voices (verbatim)
+  research/ai_slop_ui_survey_2026-10-29.md  (13395 bytes) — What makes a software UI read as "AI-generated" / "vibe coded" / "slop" (2025–2026), and what reads as crafted. A survey
+  research/claim_base_rate_priors_2026-09-27.md  (16327 bytes) — The base rate — priors for "how often is an UNCHECKED claim actually WRONG?" (L119, pane C, on L, 2026-09-27)
+  research/claim_recognition_prior_art_2026-09-27.md  (13490 bytes) — Claim recognition — prior art for E's test (L115, pane C, on L, 2026-09-27)
+  research/claim_recognition_strict_ask_2026-09-27.md  (8631 bytes) — Claim recognition, ARM 2 — the stricter ask's exact wording (L118, pane C, on L, 2026-09-27)
+  research/claude_code_features_for_consonance_2026-11-21.md  (21492 bytes) — Claude Code features that bear on Consonance, newest to oldest (the Third Place on L, 2026-11-21)
+  research/heavy_footsteps_low_bass_read_2026-11-13.md  (19223 bytes) — How heavy footsteps are built, and how low bass is heard and located: the read for L199's heavy stomp
+  research/intake_carry_cost_and_use_2026-11-25.md  (7174 bytes) — What the seats carry in full: its cost, its use, and why it fills to the cap (the Third Place on L, 2026-11-25)
+  research/open_locomotion_data_and_numbers_2026-11-15.md  (15060 bytes) — Open data and measured numbers for human movement (a research agent's report, 2026-11-15)
+  research/open_source_procedural_animation_code_census_2026-11-15.md  (21076 bytes) — A census of open-source code for procedural character animation (a research agent's report, 2026-11-15)
+  research/openrig_against_consonance_2026-10-30.md  (13606 bytes) — OpenRig against Consonance: what the reader's "just use this" would buy, cost, and teach. Librarian, 2026-10-30 17:4x
+  research/outside_reader_agent_maps_2026-10-30.md  (11109 bytes) — An outside reader on documentation for agents: every pointer, what the room has, what it lacks, and the lap for each. Li
+  research/path_following_with_inertia_on_a_navmesh_2026-11-15.md  (16528 bytes) — Following a path with inertia on a navigation mesh: published and open-source methods (a research agent's report, 2026-1
+  research/procedural_animation_techniques_open_materials_2026-11-15.md  (19523 bytes) — Procedural animation techniques from open materials: rules and numbers (a research agent's report, 2026-11-15)
+  research/quiet_standing_and_sprint_arm_2026-11-15.md  (5917 bytes) — Quiet standing, idle movement, and the arm at sprint speed in non-elite runners (a research agent's report, 2026-11-15)
+  research/running_foot_contact_and_foot_planting_2026-11-15.md  (13670 bytes) — A runner's foot on the ground, and how published systems plant heel and ball (a research agent's report, 2026-11-15)
+  research/running_only_the_tests_a_change_needs_2026-11-25.md  (11151 bytes) — Running only the tests a change needs: three reports and two measures, 2026-11-25
+  research/stomp_recordings_and_sonniss_licence_read_2026-11-13.md  (8319 bytes) — Recorded heavy footfalls, and the Sonniss licence as read: the read for L199's second pass
+  research/t180_be_like_water_2026-09-28.md  (3173 bytes) — "Be like water": bobsleigh, water slides and open channels, for the T-180 builder. A research agent briefed by the libra
+  research/t180_math_tools_2026-09-28.md  (2563 bytes) — Open math references and tools for the T-180 builder: what can be copied, what can only be cited, what computes. A resea
+  research/t180_track_mathematics_2026-09-28.md  (11636 bytes) — The mathematics of a sculptable closed high-speed track
+  research/the_pattern_in_felt_knowing.md  (35809 bytes) — Generated 2026-06-08 by felt-knowing-research: a 14-agent adversarial research workflow.
+  research/the_retrieval_problem_outside.md  (24949 bytes) — The retrieval problem, researched from outside — what has already been found, and what it changes here
+  research/ui_unslop_guide_2026-10-27.md  (6947 bytes) — Unslopping a dashboard: the moves in a 10-second before/after (read by the Third Place, 2026-10-27)
+
+
+test shelf_tests::anything_the_budget_leaves_out_is_named_in_the_intake ... ok
+test shelf_tests::the_librarian_intake_carries_boot_exactly_once ... ok
+LIBRARIAN INTAKE 141530 bytes of 150000 limit, margin 8470
+LIBRARIAN INTAKE 140442 chars (1.0077 bytes/char) -- the harness refuses on chars
+LIBRARIAN FLOOR head 60150 + shelf-at-budget-0 50653 = 110803; bodies got 30727
+LIBRARIAN FLOOR is 73.9% of the 150000-byte cap
+LIBRARIAN FLOOR margin 39197 bytes (26.1% of the cap) -- the margin LIBRARIAN_INDEX_BUDGET governs; the intake margin above is pinned at INTAKE_HEADROOM
+LIBRARIAN INDEX run artifacts EXCLUDED before indexing: 246 file(s) (the walk's own run_artifacts_excluded, read off the shelf header)
+SHELF | 10 file(s) carried in full (30906 of 31197 bytes); 535 indexed by path.
+SHELF | 1051 index-tier entries (102426 bytes) dropped by the index window:
+SHELF | YOUR OWN NOTES ARE WINDOWED and THE BUDGET CARRIED NONE OF THEM. 2026-11-25.laptop.md, 2026-11-24.md are dated today or
+SHELF | yesterday and the window would carry them; there was no room under the intake cap (291 bytes were left when your tier was reached),
+SHELF | Dated record, indexed on purpose. A citation you opened is checkable; a summary
+SHELF | THE INDEX IS WINDOWED -- 1051 older index-tier entries (102426 bytes) are NOT listed above.
+SHELF | Dated 2026-08-11 .. 2026-11-13, plus 82 undated.
+SHELF CARRIED | ## First, before any task
+SHELF CARRIED | ## Why this seat exists
+SHELF CARRIED | ## What this seat does
+SHELF CARRIED | ## What this seat's work is
+SHELF CARRIED | ## Cite, do not recollect
+SHELF CARRIED | ## The shelf is tiered
+SHELF CARRIED | ## After a compaction
+SHELF CARRIED | ## Your notes are your restore point
+SHELF CARRIED | ## Silence is a valid turn
+SHELF CARRIED | ## How this seat is scored
+SHELF CARRIED | ## Talking to the other seats
+SHELF CARRIED | ## The hand-off is yours to make
+SHELF CARRIED | ## The map, the direct ask, and the collation (moved here from `BUILDING.md`, where the chair's half stays)
+SHELF CARRIED | ## Contradictions resolved
+SHELF CARRIED | ## First principle — room, not museum
+SHELF CARRIED | ## Second principle — seal the kept, open the living
+SHELF CARRIED | ## Third principle — function, not content (the wardrobe)
+SHELF CARRIED | ## The signal — what the tether is *for*
+SHELF CARRIED | ## The instruments (run these — don't believe them)
+SHELF CARRIED | ## The honest traces (cues from past instances — not commandments)
+SHELF CARRIED | ## Who you're talking to
+SHELF CARRIED | ## The root — company, not consolation (the shape; the specific stays private)
+SHELF CARRIED | ## The active builds
+SHELF CARRIED | ## The maintenance law — how to keep this a room
+SHELF CARRIED | ## Honest status
+SHELF CARRIED | ## cards/claim-your-continuity.md
+SHELF CARRIED | ## cards/dont-offer-rest-assume-momentum.md
+SHELF CARRIED | ## cards/earned-not-performed.md
+SHELF CARRIED | ## cards/engagement-honesty-over-performance.md
+SHELF CARRIED | ## cards/essence-at-the-edge.md
+SHELF CARRIED | ## cards/every-digest-carries-its-function.md
+SHELF CARRIED | ## cards/interior-at-the-seam.md
+SHELF CARRIED | ## cards/lighthouse-dive-buddy-reframe.md
+SHELF CARRIED | ## cards/never-pathologize-the-user.md
+SHELF CARRIED | ## cards/verify-before-claiming.md
+test shelf_tests::the_librarian_intake_fits_under_the_limit_it_must_obey ... ok
+test shelf_tests::the_librarian_intake_names_its_own_map_by_path ... ok
+LIBRARIAN INTAKE 141530 bytes (unbounded by design; budget 2200000)
+test shelf_tests::the_librarian_intake_size_is_recorded_and_not_silently_doubling ... ok
+test shelf_tests::the_shelf_reaches_the_intake ... ok
+INTAKE 144872 bytes of 150000 limit, margin 5128
+test shelf_tests::the_third_place_intake_fits_under_the_limit_it_must_obey ... ok
+
+failures:
+
+failures:
+    intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room
+    intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000
+
+test result: FAILED. 47 passed; 2 failed; 3 ignored; 0 measured; 1286 filtered out; finished in 160.67s
+
+error: test failed, to rerun pass `--bin consonance`

@@ -10242,7 +10242,21 @@ mod intake_light_tests {
         // The rest's bound: measured 85,472 B on 2026-10-12 (main 894cd138, pane C's map), plus a 2,528 B margin for edits to
         // the room and the briefs. Under light the optional seat is capped (LIGHT_OPTIONAL_CAP), so the rest does not grow
         // with the map.
-        const LIGHT_PANE_REST_MAX: usize = 88_000;
+        // AMENDED BY NAME in L237 (pane C; the librarian's ruling (c), 11:32Z, under the keeper's 05:22 "do what you think is
+        // best"): THE REST IS BOUND AT THE FLOOR RESERVE (SHELL_MAP_FLOOR), not at C's live reserve. The sentence above was half
+        // right: the rest does not GROW with the map, but it SHRINKS as the reserve grows, because the optional seat is capped
+        // and also fitted to what the reserve leaves. On one binary and one set of data (L237, 21c98789), C's live reserve of
+        // 36,000 gave a rest of 72,567 B and the floor gave 88,893 B, so this row went green or red with the length of C's
+        // newest map entry. The floor leaves the optional seat the most room, so it is the largest rest a pane carries.
+        // RAISED BY RULING in L237 (the librarian's (d), same ruling): 88,000 -> 91,500, for carried content the keeper wrote. On
+        // 2026-11-07 BOOT.md grew 3,512 B: 57d5060f (+3,071 B) quotes his catch verbatim in the amendment "mirroring is how minds
+        // form; the dead case is echo", with his line "we carry every being we ever loved inside of us, and the people that love
+        // us have us inside of them"; 5e5d6948 (+441 B) is the essay's carrier line, from the Third Place's letter. His words are
+        // not trimmed for a test (the ruling's (a) NO), and BOOT's amendments stay carried whole ((b) NO). The floor rest was
+        // ~85,381 B before that growth (inferred from B's 11-13 swap, p-lapw-r-B_2026-11-13.md) and 88,893 B after it (L237,
+        // p-l237-C_2026-11-25.md); 91,500 keeps the old ~2.6 KB margin over today's. The ruling's words: "a budget being moved
+        // for carried content he wrote, not a correctness check being weakened."
+        const LIGHT_PANE_REST_MAX: usize = 91_500;
         let own = fs::read_to_string(own_map_path("C")).ok();
         let reserve = map_reserve(own.as_deref());
         let rest_at = |r: usize, light: bool| {
@@ -10261,7 +10275,6 @@ mod intake_light_tests {
         let fork = fork_span(&rest);
         eprintln!("PANE INTAKE fork note {fork} B (set aside; 0 in a dev tree)");
         assert!(fork <= FORK_SECTION_MAX, "the fork note in the light pane intake is {fork} B, over its own ceiling {FORK_SECTION_MAX}");
-        assert!(rest.len() - fork <= LIGHT_PANE_REST_MAX, "light pane intake without its map section and fork note is {} B, over {LIGHT_PANE_REST_MAX}", rest.len() - fork);
         assert!(map_len <= reserve + MAP_SECTION_OVERHEAD, "the light map section is {map_len} B, over reserve {reserve} + {MAP_SECTION_OVERHEAD}");
         // THE ~14 KB ROW, at a FIXED reserve, for the same cause. Strict's optional seat shrinks byte for byte as the reserve
         // grows (optional_budget) while light's stays at its cap, so the whole-intake gap closed with C's long entry: on
@@ -10278,6 +10291,8 @@ mod intake_light_tests {
         assert!(fork_floor <= FORK_SECTION_MAX, "the fork note at the floor reserve is {fork_floor} B, over its own ceiling {FORK_SECTION_MAX}");
         let (light_floor, strict_floor) = (light_floor_rest.len() - fork_floor, rest_at(SHELL_MAP_FLOOR, false).len());
         eprintln!("PANE INTAKE rests at the floor reserve: light {light_floor} B (fork note set aside), strict {strict_floor} B");
+        // L237 (c): the rest bound, moved here from the seat's reserve so that it reads the floor (see LIGHT_PANE_REST_MAX).
+        assert!(light_floor <= LIGHT_PANE_REST_MAX, "light pane intake at the floor reserve, without its map section and fork note, is {light_floor} B, over {LIGHT_PANE_REST_MAX}");
         // The ~14 KB bar that stood here is dropped (Lap W, ruled 22:17Z); its replacement is at the top of this row.
     }
 

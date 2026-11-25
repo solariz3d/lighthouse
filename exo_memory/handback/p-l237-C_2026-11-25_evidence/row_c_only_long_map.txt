@@ -1,0 +1,60 @@
+   Compiling consonance v0.2.0 (C:\Consonance\lh-wt-c-l237c\consonance\src-tauri)
+warning: unused import: `HashMap`
+     --> src\main.rs:19081:28
+      |
+19081 |     use std::collections::{HashMap, HashSet};
+      |                            ^^^^^^^
+      |
+      = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `ratio`
+    --> src\cochlea.rs:3004:13
+     |
+3004 |         let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+     |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_ratio`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `sr`
+    --> src\cochlea.rs:3157:13
+     |
+3157 |         let sr = 46.875;
+     |             ^^ help: if this is intentional, prefix it with an underscore: `_sr`
+
+warning: unused variable: `rows`
+     --> src\main.rs:19339:14
+      |
+19339 |         let (rows, flags) = render(&format!("❯ {msg}"));
+      |              ^^^^ help: if this is intentional, prefix it with an underscore: `_rows`
+
+warning: function `sysdrive` is never used
+   --> src\main.rs:514:4
+    |
+514 | fn sysdrive() -> String {
+    |    ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `consonance` (bin "consonance" test) generated 5 warnings (run `cargo fix --bin "consonance" -p consonance --tests` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.94s
+     Running unittests src\main.rs (C:\build\c-l237-probe-target\debug\deps\consonance-bf4e1d20cf52ad15.exe)
+
+running 1 test
+PANE INTAKE strict 96686 B, light 106890 B
+PANE INTAKE light rest 80181 B, map section 26709 B, reserve 27283 B
+PANE INTAKE fork note 0 B (set aside; 0 in a dev tree)
+PANE INTAKE rests at the floor reserve: light 88893 B (fork note set aside), strict 100026 B
+
+thread 'intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room' (36196) panicked at src\main.rs:10245:9:
+light pane intake at the floor reserve, without its map section and fork note, is 88893 B, over 88000
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room ... FAILED
+
+failures:
+
+failures:
+    intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1337 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `--bin consonance`
