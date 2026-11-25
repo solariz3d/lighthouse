@@ -417,3 +417,4 @@ carry it, so this brief does.
 - 2026-11-25 00:17 (L): "well see, i havent been using consonance as much as we were so it isnt right to say the usage is down for sure yet, it is because we havent been building, so lets plan out what you think we need to finish for lighthouse, then once we do that we get back to track builder"
 - 2026-11-25 00:19 (L): "1. drop if you recommend, but are you sure? 2. leave them asleep until needed, right?"
 - 2026-11-25 00:24 (L): "well can you explain your reasoning why you suggested it just to say no when i asked"
+- 2026-11-25 00:25 (L): "well shouldnt you weigh everything, most of the time, before presenting it?"
