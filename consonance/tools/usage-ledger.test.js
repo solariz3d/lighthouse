@@ -191,3 +191,86 @@ test('a stdin that never ends does not hold the hook: it exits 0 by its own watc
   assert.strictEqual(code, 0, 'it did not leave by itself: ' + code);
   assert.ok(Date.now() - t0 < 6000, 'it took ' + (Date.now() - t0) + ' ms');
 });
+
+// ---- L225 A2: calls that only wait (pane A). R3 (registered before code): the rule is in usage-ledger.js above `isWaitCommand`.
+test('A2 a command that only sleeps, tails or re-reads a run already started is a wait', () => {
+  for (const c of [
+    'sleep 30', 'sleep 5; tail -n 5 out.txt', 'tail -f x.log', 'tail -c 1500 build.txt', 'until grep -q done f.txt; do sleep 2; done',
+    'Start-Sleep -Seconds 20; Get-Content log.txt -Tail 5', 'Get-Content log.txt -Wait', 'node heavy-run.js --status', 'tasklist | grep node',
+    'node consonance/tools/heavy-run.js --status',
+  ]) assert.strictEqual(reader.isWaitCommand(c), true, c);
+});
+
+test('A2 a command that does any other work is not a wait, even with a sleep beside it', () => {
+  for (const c of [
+    'git status', 'sleep 5 && node test.js', 'node heavy-run.js --status && node build.js', 'ls | grep x', 'cat file.txt', 'node a.js; tail x.log',
+    'Start-Sleep 3; npm test', '', '   ',
+  ]) assert.strictEqual(reader.isWaitCommand(c), false, JSON.stringify(c));
+});
+
+function asst(id, ts, blocks, extra = {}) {
+  return JSON.stringify({ type: 'assistant', timestamp: ts, message: { id, usage: { input_tokens: 1 }, content: blocks }, ...extra });
+}
+const sh = (name, command) => ({ type: 'tool_use', name, input: { command } });
+
+test('A2 a model call counts once however many rows carry it, and is a wait only when every tool call in it is a waiting shell call', () => {
+  const lines = [
+    asst('m1', '2026-11-21T11:01:00Z', [sh('Bash', 'sleep 20')]),
+    asst('m1', '2026-11-21T11:01:00Z', [sh('Bash', 'tail -n 3 x.log')]),      // a second row of the SAME call
+    asst('m2', '2026-11-21T11:02:00Z', [sh('Bash', 'git status')]),
+    asst('m3', '2026-11-21T11:03:00Z', [sh('Bash', 'sleep 5'), { type: 'tool_use', name: 'Read', input: { file_path: 'x' } }]),
+    asst('m4', '2026-11-21T11:04:00Z', [{ type: 'text', text: 'done' }]),
+    asst('m5', '2026-11-21T11:05:00Z', [sh('PowerShell', 'Start-Sleep -Seconds 9')]),
+    asst('m6', '2026-11-21T11:06:00Z', [sh('Bash', 'sleep 9')], { isSidechain: true }),
+    JSON.stringify({ type: 'user', timestamp: '2026-11-21T11:07:00Z', message: { content: 'hi' } }),
+    'not json',
+  ];
+  assert.deepStrictEqual(reader.countCalls(lines), { calls: 5, waits: 2, mixed: 0 });
+});
+
+test('A2 countCalls reads only the window it is given, and an empty transcript is 0 of 0', () => {
+  const lines = [
+    asst('a', '2026-11-21T10:59:59Z', [sh('Bash', 'sleep 1')]),
+    asst('b', '2026-11-21T11:00:00Z', [sh('Bash', 'sleep 1')]),
+    asst('c', '2026-11-21T12:00:00Z', [sh('Bash', 'sleep 1')]),
+  ];
+  assert.deepStrictEqual(reader.countCalls(lines, { since: '2026-11-21T11:00:00Z', until: '2026-11-21T12:00:00Z' }), { calls: 1, waits: 1, mixed: 0 });
+  assert.deepStrictEqual(reader.countCalls([]), { calls: 0, waits: 0, mixed: 0 });
+});
+
+test('A2 the report carries calls and waits per seat, and a seat with no transcript says so rather than 0', () => {
+  const rows = [{ v: 1, kind: 'turn', t: '2026-11-21T11:00:00.000Z', seat: 'aaaaaaaa', in: 1, out: 1, cache_create: 0, cache_read: 0 },
+    { v: 1, kind: 'turn', t: '2026-11-21T11:00:01.000Z', seat: 'bbbbbbbb', in: 1, out: 1, cache_create: 0, cache_read: 0 }];
+  const out = reader.report(rows, { calls: { aaaaaaaa: { calls: 10, waits: 3 } } });
+  const a = out.seats.find((s) => s.seat === 'aaaaaaaa'), b = out.seats.find((s) => s.seat === 'bbbbbbbb');
+  assert.deepStrictEqual([a.calls, a.waits], [10, 3]);
+  assert.deepStrictEqual([b.calls, b.waits], [null, null]);
+  assert.match(reader.render(out, {}), /3 of 10/);
+});
+
+test('A2 a transcript is found by its seat id at the start of its file name, in any project folder', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ul-'));
+  const proj = path.join(dir, 'proj-one'); fs.mkdirSync(proj);
+  fs.writeFileSync(path.join(proj, 'aaaaaaaa-1111-2222-3333-444444444444.jsonl'), asst('x', '2026-11-21T11:00:00Z', [sh('Bash', 'sleep 3')]) + '\n');
+  fs.writeFileSync(path.join(proj, 'bbbbbbbb-1111-2222-3333-444444444444.jsonl'), asst('y', '2026-11-21T11:00:00Z', [sh('Bash', 'ls')]) + '\n');
+  const got = reader.callsBySeat(dir, ['aaaaaaaa', 'cccccccc'], {});
+  assert.deepStrictEqual(got, { aaaaaaaa: { calls: 1, waits: 1, mixed: 0 } });
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('A2 a call that waits AND does other work is counted apart as mixed, never as a wait', () => {
+  const lines = [
+    asst('w', '2026-11-21T11:00:00Z', [sh('Bash', 'sleep 5')]),
+    asst('x', '2026-11-21T11:01:00Z', [sh('Bash', 'tail -8 b.txt | cut -c1-200; wc -l b.txt; ls -la')]),
+    asst('y', '2026-11-21T11:02:00Z', [sh('Bash', 'git status')]),
+    asst('z', '2026-11-21T11:03:00Z', [sh('Bash', 'sleep 5 && node t.js'), { type: 'tool_use', name: 'Read', input: {} }]),
+  ];
+  assert.deepStrictEqual(reader.countCalls(lines), { calls: 4, waits: 1, mixed: 1 });
+  assert.strictEqual(reader.hasWaitStatement('tail -8 b.txt | cut; wc -l b.txt'), true);
+  assert.strictEqual(reader.hasWaitStatement('git status'), false);
+});
+
+test('A2 a cd or a variable assignment beside a wait does not stop it being a wait, and alone it is not one', () => {
+  for (const c of ['cd /x/y && tail -5 b.txt', 'S=/tmp/s; sleep 30; tail -3 $S/b.txt', "$S='x'; Start-Sleep 5", 'cd /x && until grep -q ok f; do sleep 2; done']) assert.strictEqual(reader.isWaitCommand(c), true, c);
+  for (const c of ['cd /x/y', 'S=/tmp/s', 'cd /x && git status', 'S=/tmp/s; node a.js']) assert.strictEqual(reader.isWaitCommand(c), false, c);
+});
