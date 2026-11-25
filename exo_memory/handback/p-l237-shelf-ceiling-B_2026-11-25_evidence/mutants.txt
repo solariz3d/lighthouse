@@ -1,0 +1,7 @@
+caught   .saturating_sub(INTAKE_HEADROOM).saturating_sub(global); -> .saturating_sub(INTAKE_HEADROOM); | test result: FAILED. 9 passed; 1 failed; 1 ignored; 0 measured; 1338 filtered out; finished in 0.05s
+caught   .saturating_sub(global_claude_md_len()) -> (removed) | test result: FAILED. 9 passed; 1 failed; 1 ignored; 0 measured; 1338 filtered out; finished in 0.04s
+caught   let carry_tier = dir == "cards"; -> let carry_tier = true; | test result: FAILED. 8 passed; 2 failed; 1 ignored; 0 measured; 1338 filtered out; finished in 0.04s
+caught   ("record", false, false), -> ("record", false, true), | test result: FAILED. 8 passed; 2 failed; 1 ignored; 0 measured; 1338 filtered out; finished in 0.04s
+caught   ("spread", false, false), -> ("spread", false, true), | test result: FAILED. 8 passed; 2 failed; 1 ignored; 0 measured; 1338 filtered out; finished in 0.05s
+caught   ("research", false, false), -> ("research", false, true), | test result: FAILED. 8 passed; 2 failed; 1 ignored; 0 measured; 1338 filtered out; finished in 0.06s
+caught   fs::metadata(p).map(|m| m.len() as usize).unwrap_or(0) -> let _ = p; 0 | test result: FAILED. 9 passed; 1 failed; 1 ignored; 0 measured; 1338 filtered out; finished in 0.05s

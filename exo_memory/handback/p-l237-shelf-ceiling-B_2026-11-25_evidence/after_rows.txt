@@ -1,0 +1,21 @@
+8328 | | /// beside a seat's own CLAUDE.md and now warns on the two together, so a shelf budgeted to the single-file cap landed over it
+...test intake_light_tests::every_seat_intake_opens_with_the_stamp has been running for over 60 seconds
+test intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000 has been running for over 60 seconds
+test intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room has been running for over 60 seconds
+test shelf_ceiling_tests::the_global_file_is_read_by_its_size_and_is_zero_when_absent has been running for over 60 seconds
+test shelf_ceiling_tests::the_librarian_indexes_the_long_form_with_room_to_spare has been running for over 60 seconds
+test shelf_ceiling_tests::the_librarian_names_every_long_form_file_by_path_line_count_and_title has been running for over 60 seconds
+test shelf_ceiling_tests::the_librarian_still_carries_cards_the_root_memory_and_its_own_notes has been running for over 60 seconds
+test shelf_ceiling_tests::the_third_place_budget_counts_the_global_file has been running for over 60 seconds
+test shelf_ceiling_tests::the_third_place_indexes_the_long_form_with_room_to_spare has been running for over 60 seconds
+test shelf_ceiling_tests::the_third_place_names_every_long_form_file_by_path has been running for over 60 seconds
+test shelf_ceiling_tests::the_third_place_still_carries_its_cards has been running for over 60 seconds
+test shelf_ceiling_tests::the_third_place_still_carries_the_card_when_the_global_file_leaves_room has been running for over 60 seconds
+LIBRARIAN INTAKE strict 141550 B, light 146757 B
+light 146757 B is more than 2 KB over strict 141550 B
+the worst-case light librarian intake is 147619 B, not under 145,000
+PANE INTAKE strict 105480 B, light 94347 B
+PANE INTAKE light rest 88893 B, map section 5454 B, reserve 8000 B
+PANE INTAKE fork note 0 B (set aside; 0 in a dev tree)
+light pane intake without its map section and fork note is 88893 B, over 88000
+test result: FAILED. 25 passed; 3 failed; 3 ignored; 0 measured; 1318 filtered out; finished in 87.19s

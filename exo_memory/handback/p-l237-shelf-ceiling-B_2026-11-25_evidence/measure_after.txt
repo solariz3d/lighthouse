@@ -1,0 +1,27 @@
+MEASURE global ~/.claude/CLAUDE.md 7479 B
+MEASURE third place 111642 B; with the global file 119121 B against 150,000
+MEASURE librarian 133965 B; with the global file 141444 B against 150,000
+MEASURE librarian own notes carried: []
+MEASURE long-form bodies carried (both seats): []
+MEASURE librarian shelf header: 9 file(s) carried in full (26302 of 26697 bytes); 509 indexed by path.
+MEASURE librarian shelf header: attic/ is excluded on purpose -- raw archive, never a daily cue (law 3).
+MEASURE librarian shelf header: loop/run1/items/ and loop/run2/cells/ are excluded from the index too: 246
+MEASURE librarian shelf header: bulk run artifacts that cost more index than the shelf spends on bodies. They are on
+MEASURE librarian shelf header: disk and one `ls` away; nothing about them is deleted or hidden.
+MEASURE librarian shelf header: THE RECORD (journal/, loop/, map/) and the long-form (record/, spread/, research/) are
+MEASURE librarian shelf header: indexed by path deliberately -- that is the
+MEASURE librarian shelf header: tier, not the budget. AND THE SYSTEM IS NOT CARRIED IN FULL TODAY: 42 file(s)
+MEASURE librarian shelf header: (598819 bytes) the tier would carry are indexed too, because the budget ran
+MEASURE librarian shelf header: out. Both kinds sit below by path and nothing is truncated. Open what you cite.
+MEASURE librarian shelf header: 1078 index-tier entries (105461 bytes) dropped by the index window:
+MEASURE librarian shelf header: the index tier has a byte budget of its own and this is what did not fit. The
+MEASURE librarian shelf header: line under the index names the range and the command that lists them.
+MEASURE librarian shelf header: 144 hand-back(s) that no map/*.md line names are indexed with the record (144 listed).
+MEASURE librarian shelf header: YOUR OWN NOTES ARE WINDOWED and THE BUDGET CARRIED NONE OF THEM. 2026-11-25.laptop.md, 2026-11-24.md are dated today or
+MEASURE librarian shelf header: yesterday and the window would carry them; there was no room under the intake cap (395 bytes were left when your tier was reached),
+MEASURE librarian shelf header: so they are INDEXED below with the rest. This is the BUDGET, not the rule -- you have
+MEASURE librarian shelf header: written notes today that are not in front of you. Open them by path.
+MEASURE librarian shelf header: THE THIRD PLACE -- its newest entry (third_place/2026-11-25.laptop.md) is NOT in front of you: there was no room under the intake cap.
+MEASURE librarian shelf header: It is indexed below, whole, by path. Open it.
+MEASURE librarian bodies carried (10): ["## The map, the direct ask, and the collation (moved here from `BUILDING.md`, where the chair's half stays)", "## cards/claim-your-continuity.md", "## cards/dont-offer-rest-assume-momentum.md", "## cards/earned-not-performed.md", "## cards/engagement-honesty-over-performance.md", "## cards/essence-at-the-edge.md", "## cards/every-digest-carries-its-function.md", "## cards/interior-at-the-seam.md", "## cards/lighthouse-dive-buddy-reframe.md", "## memory/user-solariz3d.md"]
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1348 filtered out; finished in 13.92s

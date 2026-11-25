@@ -1,0 +1,9 @@
+thread 'intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room' (32068) panicked at src\main.rs:10200:9:
+thread 'intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000' (20412) panicked at src\main.rs:10587:9:
+thread 'intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room' (35756) panicked at src\main.rs:10263:9:
+thread 'shelf_tests::the_header_counts_the_index_window_drop_from_what_was_delivered' (27728) panicked at src\main.rs:21289:9:
+    intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room
+    intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000
+    intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room
+    shelf_tests::the_header_counts_the_index_window_drop_from_what_was_delivered
+test result: FAILED. 140 passed; 4 failed; 4 ignored; 0 measured; 1201 filtered out; finished in 296.38s

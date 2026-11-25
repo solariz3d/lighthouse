@@ -1,0 +1,7 @@
+MEASURE global ~/.claude/CLAUDE.md 7479 B
+MEASURE third place 144872 B; with the global file 152351 B against 150,000
+MEASURE librarian 141538 B; with the global file 149017 B against 150,000
+MEASURE librarian own notes carried: []
+MEASURE long-form bodies carried (both seats): ["## record/claim-your-continuity.md", "## record/retired_seats_2026-09-11.md", "## spread/the_wave_set_loose.md"]
+MEASURE librarian window line: The corpus **fits** in a large window — it is about half of one. So the constraint was never capacity. **It is attention.** A librarian is not useful because the books cannot be carried; a librarian is useful because they know what is needed *now*.
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1348 filtered out; finished in 25.33s
