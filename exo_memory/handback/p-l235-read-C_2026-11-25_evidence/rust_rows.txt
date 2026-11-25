@@ -1,0 +1,22 @@
+running 3 tests
+C1 last L215 | read Some("L215") | cut skipped: true | A: L215 IS COLLATED; B reads and lands it. YOUR NEXT LAP IS 
+C1 last L215 | read Some("L215") | cut skipped: true | A: YOUR L215 FIX IS COLLATED (B reads and lands l215-gatesop
+C1 last L214 | read Some("L214") | cut skipped: true | B: L214 IS FILED (landed and installed). FOUR STEPS NOW, IN 
+C1 last L175 | read Some("L175") | cut skipped: true | E: L175 is collated and filed (d0c1aba, pushed; lighthouse 0
+thread 'c_l235::c1_a_new_lap_opened_after_the_closed_one_is_cut_as_today' (9752) panicked at src\lib.rs:26:9:
+new laps whose cut is skipped: ["L215 -> Some(\"L215\")", "L215 -> Some(\"L215\")", "L214 -> Some(\"L214\")", "L175 -> Some(\"L175\")"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+.C3 last_dispatch_lap = Some("L221")
+thread 'c_l235::c3_a_compact_summary_is_not_read_as_the_last_dispatch' (19760) panicked at src\lib.rs:43:9:
+assertion `left == right` failed: the summary's prose is not a dispatch
+  left: Some("L221")
+ right: None
+ 1/3
+c_l235::c1_a_new_lap_opened_after_the_closed_one_is_cut_as_today --- FAILED
+c_l235::c3_a_compact_summary_is_not_read_as_the_last_dispatch --- FAILED
+failures:
+failures:
+    c_l235::c1_a_new_lap_opened_after_the_closed_one_is_cut_as_today
+    c_l235::c3_a_compact_summary_is_not_read_as_the_last_dispatch
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 24 filtered out; finished in 0.00s
+error: test failed, to rerun pass `--lib`

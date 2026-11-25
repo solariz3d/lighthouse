@@ -1,0 +1,12 @@
+November dispatches 405 | judged same lap 164 | of those, heads naming another lap beside an opening/closing word 11
+  11-12T09:58 last L175 -> read L175 |  E: while L175 waits on the lock (C holds it now for the L180 lap-1 landing; A's sweeps follow), take a research lap tha
+  11-12T12:04 last L175 -> read L175 |  E, QUEUED. Your order is: the l170-chase review → land L175 (with A's l175-row-reprieve and C's l175-row-lean) → L185 s
+  11-12T13:07 last L175 -> read L175 |  E: L175 is collated and filed (d0c1aba, pushed; lighthouse 07a154d3). Thank you. Now L185 step 2 (the ledger calls this
+  11-12T10:12 last L180 -> read L180 |  L180 lap 2, C: the kinetic chain (plan L181; the ledger calls this lap L184). Lap 1 is collated and on main add21fe; th
+  11-12T11:50 last L170 -> read L170 |  A: L170 is collated and filed. Your falsifier fired honestly, and saying your own ~65% estimate was wrong is exactly ri
+  11-21T10:10 last L215 -> read L215 |  A: L215 IS COLLATED; B reads and lands it. YOUR NEXT LAP IS L217, AND ITS PACKET IS A FILE; READ IT WHOLE BEFORE YOU AC
+  11-21T11:08 last L215 -> read L215 |  A: YOUR L215 FIX IS COLLATED (B reads and lands l215-gatesopen-only at its next dispatch). YOUR NEXT LAP IS L219, THE G
+  11-12T06:59 last L168 -> read L168 |  L168, one small fix while A, C and E work L170. Your L168 is collated green (exo_memory/handback/p-l168-setup-B_2026-11
+  11-13T12:33 last L188 -> read L188 |  B: A STALL FIX, AHEAD OF FEATURE WORK (his rule on stalls). It goes after the Park kit's current run and BEFORE L188 st
+  11-21T10:10 last L214 -> read L214 |  B: L214 IS FILED (landed and installed). FOUR STEPS NOW, IN ORDER; THE LAST IS A NEW LAP, L216. 1. L215, SECOND READ A
+  11-21T13:17 last L221 -> read L221 |  B: DO NOT INTERRUPT L221 FOR THIS. ONE NOTE NOW, BECAUSE IT TOUCHES YOUR BUILD: your next lap is Q2 (ledger L223), at h

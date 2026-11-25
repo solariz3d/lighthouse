@@ -1,0 +1,9 @@
+cut 2026-11-25T08:08:07.420Z | first lap L230
+  branch (whole history before): 15 re-read of 4885 | ["app/core/coreshell.js","app/core/panel.js","/","brush/","app/test/*.js","^#/","s//x1b/[[0-9","app/test","2>/dev/null","mutant/","/test/","require/","app/index.html","exo_memory/map/c.md","^test(/"]
+  since previous cut only     : 2 re-read of 343 | ["/","2>/dev/null"]
+cut 2026-11-25T08:37:13.132Z | first lap L232
+  branch (whole history before): 7 re-read of 4929 | ["set/","s//x1b/[[0-9","exo_memory/map/c.md","origin/main","ledger/","^+++/","c:/consonance/data/push-gate.jsonl"]
+  since previous cut only     : 2 re-read of 59 | ["s//x1b/[[0-9","exo_memory/map/c.md"]
+cut 2026-11-25T09:28:07.239Z | first lap null
+  branch (whole history before): 5 re-read of 4979 | ["/","s//x1b/[[0-9","^chrono/","cargo.toml","^/s*$"]
+  since previous cut only     : 1 re-read of 60 | ["s//x1b/[[0-9"]
