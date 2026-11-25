@@ -87,3 +87,7 @@ back to its resting state.
   turn −1 S (sha256 1bc6c4e0…) with recipe; ease-out aea4a1be…; Smooth S flow f55056c5…; Smooth S ease-out e9d147ef…;
   no "Smooth S straight". The old turn-0 S is only in A's aside copy (his_pieces_before2/). Fixed by sha in one
   absolute ring to the chair.
+- 07:2x, AS IT STANDS ON DISK (the chair stopped A on this list; I hashed it, sha256 first 8): Smooth S as driven
+  cc6d3766 (old turn 0, 1° off) + recipe 3ca37b95; its ease-out aea4a1be + recipe 3707f45f; **Smooth S straight**
+  fffede2a (HIS turn −1) + recipe 99ce941e; Smooth S straight ease-out fb48775f + recipe 22edb886; Smooth S ease-out
+  e9d147ef; Smooth S flow f55056c5. My "FINAL" line above did not land; this is the state, accepted, no more rings.
