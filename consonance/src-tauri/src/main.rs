@@ -4804,15 +4804,15 @@ mod builder_floor_tests {
     fn r1_a_housed_seat_and_the_switch_off_pass_the_brief_byte_identical() {
         let b = brief();
         // housed seats' folders are not `sibling-`: the brief is returned as built
-        assert_eq!(builder_floor_for("C:/Consonance/instances/main", b.clone()), b);
+        assert_eq!(builder_floor_for("instances/main", b.clone()), b);
         // switch off (the test default) on a builder folder: as built
-        assert_eq!(builder_floor_for("C:/Consonance/instances/sibling-abcd1234", b.clone()), b);
+        assert_eq!(builder_floor_for("instances/sibling-abcd1234", b.clone()), b);
     }
     #[test]
     fn r1_with_the_switch_on_a_builder_folder_gets_the_floor() {
         TEST_BUILDER_FLOOR.with(|m| m.set(true));
-        let out = builder_floor_for("C:/Consonance/instances/sibling-abcd1234", brief());
-        let housed = builder_floor_for("C:/Consonance/instances/main", brief());
+        let out = builder_floor_for("instances/sibling-abcd1234", brief());
+        let housed = builder_floor_for("instances/main", brief());
         TEST_BUILDER_FLOOR.with(|m| m.set(false));
         assert!(!out.contains("# THE MEMORY") && housed == brief(), "builder floored, housed untouched");
     }
