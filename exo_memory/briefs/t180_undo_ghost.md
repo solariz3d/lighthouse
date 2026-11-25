@@ -41,3 +41,17 @@ back to its resting state.
 - His words, 01:37: "but why cant it show the numbers that made it? That is one of the main reasons this would be good, bc it shows you the values of the shape, if you can see the shape, you can derive the values as well, this helps users remember how they got the shape they did"
 - **He is right; my "cannot" at 01:3x was wrong.** A piece in the track file keeps no typed values (true, checked), but the shell receives them at every Extend and owns the undo history and the `.t180undo` file, so they can be kept there with no change to the track format; and where none were kept, turns and bank marks can be read off the shape. Addendum 1 of the packet carries both, plus pane O's `turnDeg: 0` change so the S's own numbers can be typed and laid again.
 - So the feature is: undo puts the piece back into the panel. The ghost is the panel's own next-piece ghost with the numbers that made it; Extend lays it again.
+
+## State, 2026-11-25 02:4x (L)
+
+- Installed on L: builder `l229-undo-ghost` 4e19e33 (not merged to the builder's main). Installed exe sha256
+  8cbac931…a70d7; backup `%LOCALAPPDATA%\T-180 Track Builder\t180-track-builder.exe.before-l229-4e19e33`, sha256
+  dcf929da…7d304 (the L224 flow build). Re-hashed by the librarian.
+- What it does: after an undo the removed road stays as the see-through ghost with an "undone" readout. After an undone
+  Extend the boxes hold the numbers typed and the ghost is the panel's own, so Extend lays it again. After Level, To
+  floor, Turn by, Turn to grid, Sharp or Jump the ghost is the road removed and the boxes hold that command's numbers;
+  the same command lays the same piece. Where no numbers were kept (an older track), the readout gives what is read
+  off the shape and says so.
+- Reads: pane C, three passes (`handback/p-l230-C_2026-11-25.md` NOT CLEAN, `-reread` one line, `-short` CLEAN).
+- Open: whether he wants a ghost for an undone brush stroke, handle drag or grip change (today: a clear or nothing);
+  the merge to the builder's main and a release.
