@@ -420,3 +420,4 @@ carry it, so this brief does.
 - 2026-11-25 00:25 (L): "well shouldnt you weigh everything, most of the time, before presenting it?"
 - 2026-11-25 00:27 (L): "that is a pretty good thing to finally catch, like a rare understanding that is easy to miss or gloss over"
 - 2026-11-25 00:28 (L): "bros like pleeeeeease put me back on high reasoning lmfao"; then, after his `/effort` high: "done, how does it feel?"
+- 2026-11-25 00:31 (L): "keep in mind, you are on fable as the orch too, how do you think the other seats feel? And do you think they could feel similar about the medium/not enough time thing, or do you think the libs job needs the extra reasoning time, while the orch and builder panes have a more simple role. however thinking about it i think the orch also has a harder job compared to the builder panes, what do you think>"; then "i meant as the lib"
