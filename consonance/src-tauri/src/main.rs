@@ -1207,24 +1207,29 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // autonomous bodies do NOT get this — their prompts are the only thing keeping a body's
     // tool use inside its sandbox (the gate only governs cross-pane injection, not local bash).
     // L216: a builder pane is denied, never held, by a prompt nobody sees (no_prompt_for, above is_fresh_cwd's neighbours).
-    if no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {
-        match no_prompt_settings_file() {
+    // L225 B1 (Q2 half B): a builder's launch leaves out the Artifact tool and most of the skills listing (floor_launch_for).
+    // L225, pane A's read: Claude Code applies only the LAST `--settings`, so both rules' keys ride ONE file (launch_settings).
+    let raw_config = fs::read_to_string(config_path()).ok();
+    let no_prompt = no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), raw_config.as_deref());
+    let floor = floor_launch_for(is_managed_cwd(&cwd), is_builder_dir_name(&cwd), raw_config.as_deref());
+    if let Some((name, text)) = launch_settings(no_prompt, floor) {
+        match launch_settings_file(name, text) {
             Ok(p) => {
                 cmd.args(["--settings", &p]);
-                plog(&format!("NO PROMPT pane={pane_id}: --settings {p} (denyInsteadOfPrompting; \"builder_no_prompt\": false in the config turns it off)"));
+                if no_prompt {
+                    plog(&format!("NO PROMPT pane={pane_id}: --settings {p} (denyInsteadOfPrompting; \"builder_no_prompt\": false in the config turns it off)"));
+                }
+                if floor {
+                    plog(&format!("BUILDER FLOOR pane={pane_id}: --settings {p} (skillListingBudgetFraction 0.001; \"builder_floor\": false in the config puts it back)"));
+                }
             }
-            Err(e) => plog(&format!("NO PROMPT pane={pane_id}: the settings file was not written ({e}); this pane prompts as before")),
+            Err(e) => plog(&format!("NO PROMPT / BUILDER FLOOR pane={pane_id}: the settings file {name} was not written ({e}); this pane prompts and lists skills as before")),
         }
     }
-    // L225 B1 (Q2 half B): a builder's launch leaves out the Artifact tool and most of the skills listing (floor_launch_for).
-    if floor_launch_for(is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {
-        match floor_launch_settings_file() {
-            Ok(p) => {
-                cmd.args(["--settings", &p, "--disallowedTools", FLOOR_DISALLOWED]);
-                plog(&format!("BUILDER FLOOR pane={pane_id}: --settings {p} --disallowedTools {FLOOR_DISALLOWED} (\"builder_floor\": false in the config puts them back)"));
-            }
-            Err(e) => plog(&format!("BUILDER FLOOR pane={pane_id}: the settings file was not written ({e}); this pane launches as before")),
-        }
+    // The floor's other half needs no file, so it stands even when the settings file could not be written.
+    if floor {
+        cmd.args(["--disallowedTools", FLOOR_DISALLOWED]);
+        plog(&format!("BUILDER FLOOR pane={pane_id}: --disallowedTools {FLOOR_DISALLOWED} (\"builder_floor\": false in the config puts it back)"));
     }
     if skip_perms {
         cmd.arg("--dangerously-skip-permissions");
@@ -4827,12 +4832,12 @@ mod builder_floor_tests {
  * unused in 41 builder laps (handback/p-q2-builder-floor-B_2026-11-21.md, its L225 section):
  *   - the Artifact tool (0 laps). In the panes' own request shapes it rode as a FULL definition, 34,422 to 38,426 B, from 11-04 to
  *     11-21 and again today, not as a deferred line; `--disallowedTools Artifact` leaves it out;
- *   - most of the skills listing (Skill called 0 times ever): `skillListingBudgetFraction: 0` took it from 17,956 to 8,429 B on
- *     opus with the Skill tool and Workflow unchanged. Disallowing Skill instead grows Workflow's description (5,745 to 22,976 B).
+ *   - most of the skills listing (Skill called 0 times ever): `skillListingBudgetFraction: 0.001` takes it from 17,777 to 8,498 B on
+ *     opus (probe_fraction.js; 0 is REFUSED with the whole file, and 0.01 does not shrink it). Disallowing Skill instead grows Workflow's description (5,745 to 22,976 B).
  * Monitor, SendMessage and Agent are used, so they stay. Same gate as the intake floor (a `sibling-` folder) plus the instances root
  * (a keeper's "+ Pane" folder is not touched, as L216), and the same switch: `"builder_floor": false` puts all of it back at the next
  * spawn, no rebuild. */
-const FLOOR_LAUNCH_SETTINGS: &str = r#"{"skillListingBudgetFraction":0}"#;
+const FLOOR_LAUNCH_SETTINGS: &str = r#"{"skillListingBudgetFraction":0.001}"#;
 const FLOOR_DISALLOWED: &str = "Artifact";
 
 /// Does this spawn get the floor's launch flags? Pure: the caller hands in what it read.
@@ -4840,13 +4845,84 @@ fn floor_launch_for(managed: bool, builder_name: bool, raw_config: Option<&str>)
     managed && builder_name && builder_floor_on_from(raw_config.unwrap_or(""))
 }
 
-/// The settings file the floor's flag names, beside the room's other state; its contents are fixed above.
-fn floor_launch_settings_file() -> Result<String, String> {
-    let p = data_dir().join("builder-floor.settings.json");
-    if fs::read_to_string(&p).ok().as_deref() != Some(FLOOR_LAUNCH_SETTINGS) {
-        fs::write(&p, FLOOR_LAUNCH_SETTINGS).map_err(|e| e.to_string())?;
+/* L225, pane A's read (handback/p-l225-A-read-B_2026-11-25.md): Claude Code applies only the LAST `--settings` it is given (with two,
+ * the first file is dropped), so a builder with both rules lost its no-prompt file to the floor's. A spawn now passes ONE file:
+ * the no-prompt keys, the floor's key, or, when both rules apply, one file holding both. A pane with one rule gets that rule's file,
+ * as before. */
+const BUILDER_LAUNCH_SETTINGS: &str = r#"{"permissions":{"denyInsteadOfPrompting":true},"skillListingBudgetFraction":0.001}"#;
+
+/// Which one settings file this spawn names, and its fixed text; None for a spawn neither rule reaches. Pure.
+fn launch_settings(no_prompt: bool, floor: bool) -> Option<(&'static str, &'static str)> {
+    match (no_prompt, floor) {
+        (true, true) => Some(("builder-launch.settings.json", BUILDER_LAUNCH_SETTINGS)),
+        (true, false) => Some(("builder-no-prompt.settings.json", NO_PROMPT_SETTINGS)),
+        (false, true) => Some(("builder-floor.settings.json", FLOOR_LAUNCH_SETTINGS)),
+        (false, false) => None,
+    }
+}
+
+/// The settings file a spawn names, beside the room's other state, rewritten only when its fixed text differs.
+fn launch_settings_file(name: &str, text: &str) -> Result<String, String> {
+    let p = data_dir().join(name);
+    if fs::read_to_string(&p).ok().as_deref() != Some(text) {
+        fs::write(&p, text).map_err(|e| e.to_string())?;
     }
     p.to_str().map(str::to_string).ok_or_else(|| "a non-UTF-8 data path".to_string())
+}
+
+#[cfg(test)]
+mod one_settings_tests {
+    use super::*;
+    fn json(s: &str) -> serde_json::Value {
+        serde_json::from_str(s).expect("json")
+    }
+    #[test]
+    fn a_builder_with_both_rules_gets_one_file_holding_both() {
+        let (name, text) = launch_settings(true, true).expect("a file");
+        let mut both = json(NO_PROMPT_SETTINGS);
+        both.as_object_mut().unwrap().extend(json(FLOOR_LAUNCH_SETTINGS).as_object().unwrap().clone());
+        assert_eq!(json(text), both, "the no-prompt keys and the floor's key, nothing else");
+        assert_eq!(json(text)["permissions"]["denyInsteadOfPrompting"], serde_json::json!(true));
+        assert_eq!(json(text)["skillListingBudgetFraction"], json(FLOOR_LAUNCH_SETTINGS)["skillListingBudgetFraction"]);
+        assert!(name != "builder-no-prompt.settings.json" && name != "builder-floor.settings.json", "its own file, never one rule's");
+    }
+    // L225 (the repair's own probe, probe_fraction.js): Claude Code 2.1.332 REFUSES a settings file whose skillListingBudgetFraction is 0
+    // ("Number must be greater than or equal to 0", --debug) and drops the WHOLE file, so the combined file lost denyInsteadOfPrompting
+    // with it. 0.001 loads and halves the listing on opus (17,777 -> 8,498 B); 0.01 loads and does not (17,776 B).
+    #[test]
+    fn every_launch_file_holds_a_listing_budget_claude_code_loads() {
+        for text in [FLOOR_LAUNCH_SETTINGS, BUILDER_LAUNCH_SETTINGS] {
+            let f = json(text)["skillListingBudgetFraction"].as_f64().expect("the floor's key");
+            assert!(f > 0.0 && f <= 0.001, "above 0 (0 is refused with the whole file) and at most 0.001 (0.01 does not shrink it): {text}");
+        }
+    }
+    #[test]
+    fn a_pane_with_one_rule_gets_that_rules_file_as_before() {
+        assert_eq!(launch_settings(true, false), Some(("builder-no-prompt.settings.json", NO_PROMPT_SETTINGS)), "\"builder_floor\": false");
+        assert_eq!(launch_settings(false, true), Some(("builder-floor.settings.json", FLOOR_LAUNCH_SETTINGS)), "\"builder_no_prompt\": false");
+    }
+    #[test]
+    fn a_housed_seat_and_a_keepers_pane_get_no_settings() {
+        let at = |name: &str| std::env::temp_dir().join("Consonance").join("instances").join(name).to_string_lossy().into_owned();
+        for name in ["main", "librarian", "third-place", "fresh-12345678"] {
+            let b = is_builder_dir_name(&at(name));
+            assert_eq!(launch_settings(no_prompt_for(true, true, b, None), floor_launch_for(true, b, None)), None, "{name}");
+        }
+        assert_eq!(launch_settings(no_prompt_for(true, false, true, None), floor_launch_for(false, true, None)), None, "a keeper's + Pane");
+        assert_eq!(launch_settings(false, false), None);
+    }
+    #[test]
+    fn a_builder_spawn_passes_exactly_one_settings() {
+        let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
+        let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
+        let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
+        assert_eq!(spawn.matches("\"--settings\"").count(), 1, "one --settings site: the last one given is the only one applied");
+        let block = "    if let Some((name, text)) = launch_settings(no_prompt, floor) {\n        match launch_settings_file(name, text) {\n            Ok(p) => {\n                cmd.args([\"--settings\", &p]);";
+        assert!(spawn.contains(block), "the one file, named by launch_settings from both rules");
+        let file = &s[s.find("fn launch_settings_file(").expect("the writer")..];
+        let file = &file[..file.find("\n}\n").unwrap()];
+        assert!(file.contains("data_dir().join(name)"), "beside the room's other state");
+    }
 }
 
 #[cfg(test)]
@@ -4878,19 +4954,22 @@ mod floor_launch_tests {
     fn r1_only_what_is_unused_is_left_out() {
         assert_eq!(FLOOR_DISALLOWED, "Artifact", "Monitor, SendMessage and Agent are used; leaving Skill out grows Workflow");
         let v: serde_json::Value = serde_json::from_str(FLOOR_LAUNCH_SETTINGS).expect("json");
-        assert_eq!(v, serde_json::json!({ "skillListingBudgetFraction": 0 }), "the listing budget and nothing else");
+        // AMENDED BY NAME (L225, the repair): it pinned 0, which Claude Code refuses with the whole file (one_settings_tests).
+        assert_eq!(v, serde_json::json!({ "skillListingBudgetFraction": 0.001 }), "the listing budget and nothing else");
     }
     #[test]
     fn r1_the_spawn_passes_the_floor_rule_exactly_what_it_read() {
         let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
         let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
         let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
-        let call = "    if floor_launch_for(is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {\n        match floor_launch_settings_file() {\n            Ok(p) => {\n                cmd.args([\"--settings\", &p, \"--disallowedTools\", FLOOR_DISALLOWED]);";
-        assert!(spawn.contains(call), "the ask, its three arguments, the file and the flags, exactly");
+        // AMENDED BY NAME (L225, pane A's read): the floor no longer passes its own `--settings` (a second one replaced the
+        // no-prompt file); its key rides the one file `launch_settings` names (one_settings_tests), and Artifact is left out here.
+        let read = "    let raw_config = fs::read_to_string(config_path()).ok();\n";
+        let call = "    let floor = floor_launch_for(is_managed_cwd(&cwd), is_builder_dir_name(&cwd), raw_config.as_deref());\n";
+        let flag = "    if floor {\n        cmd.args([\"--disallowedTools\", FLOOR_DISALLOWED]);";
+        assert!(spawn.contains(read) && spawn.contains(call), "the ask, its three arguments, from the config the spawn read");
+        assert!(spawn.contains(flag), "Artifact left out on the floor's rule alone");
         assert_eq!(spawn.matches("floor_launch_for(").count(), 1, "asked once");
-        let file = &s[s.find("fn floor_launch_settings_file(").expect("the file")..];
-        let file = &file[..file.find("\n}\n").unwrap()];
-        assert!(file.contains("data_dir().join(\"builder-floor.settings.json\")") && file.contains("FLOOR_LAUNCH_SETTINGS"), "the fixed file and its fixed text");
     }
 }
 
@@ -4908,15 +4987,6 @@ fn no_prompt_for(skip_perms: bool, managed: bool, builder_name: bool, raw_config
         Some(v) => v.get("builder_no_prompt").and_then(|x| x.as_bool()) != Some(false),
         None => true,
     }
-}
-
-/// The settings file the flag names, written beside the room's other state; its contents are fixed above.
-fn no_prompt_settings_file() -> Result<String, String> {
-    let p = data_dir().join("builder-no-prompt.settings.json");
-    if fs::read_to_string(&p).ok().as_deref() != Some(NO_PROMPT_SETTINGS) {
-        fs::write(&p, NO_PROMPT_SETTINGS).map_err(|e| e.to_string())?;
-    }
-    p.to_str().map(str::to_string).ok_or_else(|| "a non-UTF-8 data path".to_string())
 }
 
 #[cfg(test)]
@@ -4962,13 +5032,14 @@ mod no_prompt_tests {
         let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
         let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
         let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
-        // AMENDED BY NAME (L225 B1): the builder floor adds its own `--settings` at a second site, asked by its own rule
-        // (`floor_launch_for`, pinned in floor_launch_tests); the no-prompt flag is still the first and is still asked first.
-        assert_eq!(spawn.matches("\"--settings\"").count(), 2, "the no-prompt site and the floor's site");
+        // AMENDED BY NAME, twice. L225 B1 counted 2 (a second site for the floor). L225 pane A's read: the second `--settings`
+        // REPLACED the first in Claude Code, so a builder lost denyInsteadOfPrompting; there is one site again, naming the one file
+        // `launch_settings` picks from both rules (one_settings_tests).
+        assert_eq!(spawn.matches("\"--settings\"").count(), 1, "one site");
         let ask = spawn.find("no_prompt_for(").expect("the spawn asks the rule");
         let flag = spawn.find("\"--settings\"").unwrap();
         assert!(ask < flag, "the rule is asked before the flag is added");
-        assert!(spawn[ask..flag].contains("no_prompt_settings_file()"), "the flag names the fixed file");
+        assert!(spawn[ask..flag].contains("launch_settings_file("), "the flag names the file the rules picked");
     }
     // A's read, item 3: the row above pinned the ORDER of two strings and nothing the ask is given, so five one-edit mutants of the
     // call site survived (S2 `|| true`, S3 inverted, S4 the builder name forced true, S5 the config never read, S6 another file).
@@ -4978,12 +5049,12 @@ mod no_prompt_tests {
         let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
         let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
         let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
-        let call = "    if no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {\n        match no_prompt_settings_file() {\n            Ok(p) => {\n                cmd.args([\"--settings\", &p]);";
-        assert!(spawn.contains(call), "the ask, its four arguments, the file and the flag, exactly (S2-S6)");
+        // AMENDED BY NAME (L225, pane A's read): the ask now reads the config once (shared with the floor's ask) and the file is the
+        // one `launch_settings` names; the file name and text for this rule alone are pinned in one_settings_tests.
+        let read = "    let raw_config = fs::read_to_string(config_path()).ok();\n";
+        let call = "    let no_prompt = no_prompt_for(skip_perms, is_managed_cwd(&cwd), is_builder_dir_name(&cwd), raw_config.as_deref());\n";
+        assert!(spawn.contains(read) && spawn.contains(call), "the ask, its four arguments, exactly (S2-S6)");
         assert_eq!(spawn.matches("no_prompt_for(").count(), 1, "asked once");
-        let file = &s[s.find("fn no_prompt_settings_file(").expect("the file")..];
-        let file = &file[..file.find("\n}\n").unwrap()];
-        assert!(file.contains("data_dir().join(\"builder-no-prompt.settings.json\")") && file.contains("NO_PROMPT_SETTINGS"), "the fixed file and its fixed text");
         assert_eq!(NO_PROMPT_SETTINGS, r#"{"permissions":{"denyInsteadOfPrompting":true}}"#);
     }
 }

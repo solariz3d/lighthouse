@@ -1,0 +1,4 @@
+one_settings_tests::every_launch_file_holds_a_listing_budget_claude_code_loads --- FAILED
+    one_settings_tests::every_launch_file_holds_a_listing_budget_claude_code_loads
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 1309 filtered out; finished in 0.00s
+error: test failed, to rerun pass `--bin consonance`
