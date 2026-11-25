@@ -3276,3 +3276,6 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 ## 2026-11-16 08:5x local (D) · D677 OLD against NEW on his main c38a52a, side by side (runner and hunter, OLD left, NEW right), 7 stations at real speed and 3x slower, one camera a station; the stop from the front shows the NEW runner's hips moving ~4 px (~2 cm), the NEW hunter's not at all in the hold → `exo_memory/handback/p-d677-old-new-film-E_2026-11-16.md`
 - Clips G:\consonance-scratch\oldnew-c38a52a\clips (14); film-only branch f13-oldnew-e 84fc941 pushed; frames on Z:.
 - **Carry:** before ringing a film made to show a small motion, measure that motion in the frames; a 4 cm shift at 3 m is one pixel.
+
+## 2026-11-25 02:2x local (L) · L231 the dream runner is sound; L is shut down (Fast Startup, no wake programmed, 13 of 15 closes since 11-01) so 10:30/16:30/22:30 never run, and the 04:30 run and the boot catch-up both find him at the keyboard (guard 2 skips, 3 of 3 since the last dream); Razer Cortex's plan has wake timers at "important only" → `exo_memory/handback/p-l231-dream-skips-E_2026-11-25.md`
+- **Carry:** when a scheduled job "fires and skips", read the machine's power log (System 42/107) before the job's own code.
