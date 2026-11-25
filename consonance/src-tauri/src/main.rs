@@ -8182,7 +8182,7 @@ fn third_place_notes() -> PathBuf {
 
 /// The T0 layers, and the omissions are the design.
 ///
-/// CARRIED: cards, spread, record, research — the instruments and the counter-voice.
+/// CARRIED: cards — the instruments. INDEXED, one read away (L237): record, spread, research — the cases and the counter-voice.
 /// NOT CARRIED, on purpose: journal/, loop/, map/ (the work record — this seat is not work);
 /// TRAINING.md and muscle_map.md (chair-side programming — TRAINING.md:15-17 F2 forbids wiring
 /// those into a seat whose numbers would then be dead); COMMITTEE.md (there is no committee here).
@@ -8222,13 +8222,22 @@ fn third_place_shelf(used: usize) -> String {
         Some(p) => p.to_path_buf(),
         None => return String::new(),
     };
-    let mut budget = INTAKE_LIMIT.saturating_sub(used).saturating_sub(INTAKE_HEADROOM);
+    // L237 call 1: the global file the host loads beside this one comes off the budget.
+    let global = global_claude_md_len();
+    let mut budget = INTAKE_LIMIT.saturating_sub(used).saturating_sub(INTAKE_HEADROOM).saturating_sub(global);
     let mut s = String::from("\n\n---\n\n# WHAT YOU ARE HOLDING\n\n");
     let mut carried: Vec<String> = Vec::new();
     let mut indexed: Vec<String> = Vec::new();
     let mut bytes = 0usize;
     // Priority order: instruments first, long-form last. Everything that does not fit INDEXES.
+    //
+    // L237 calls 2 to 4: ONLY cards/ is carried. record/, spread/ and research/ are indexed whatever room is left. With
+    // fill-to-cap, indexing one file only let the next one refill the gap (the Third Place's research, §5), so the size
+    // drops only when the tier changes. The cards already point to their records ("not carried here -- on disk ... open it
+    // when you need the case"); record/retired_seats_2026-09-11.md is indexed with them (its own text: honoring is naming,
+    // citing and keeping revivable, and an indexed path keeps all three).
     for dir in ["cards", "record", "spread", "research"] {
+        let carry_tier = dir == "cards";
         let d = root.join(dir);
         let mut names: Vec<String> = match fs::read_dir(&d) {
             Ok(rd) => rd.filter_map(|e| e.ok())
@@ -8241,7 +8250,7 @@ fn third_place_shelf(used: usize) -> String {
         for name in names {
             let Ok(body) = fs::read_to_string(d.join(&name)) else { continue };
             let cost = body.len() + name.len() + 16;
-            if cost <= budget {
+            if carry_tier && cost <= budget {
                 s.push_str(&format!("\n\n## {dir}/{name}\n\n"));
                 s.push_str(&body);
                 budget -= cost;
@@ -8273,13 +8282,15 @@ fn third_place_shelf(used: usize) -> String {
     // health over a surface it cannot see. Here the SPLIT is the thing that must never go quiet:
     // a shelf that silently drops the counter-voice reads identical to one that never had it.
     s.push_str(&format!(
-        "\n\n---\n\nuniverse: {} carried in full ({bytes} bytes) · {} INDEXED, not carried\n",
+        "\n\n---\n\nuniverse: {} carried in full ({bytes} bytes) · {} INDEXED, not carried · the budget counts \
+         ~/.claude/CLAUDE.md ({global} bytes), which the host loads beside this file\n",
         carried.len(), indexed.len()
     ));
     if !indexed.is_empty() {
         s.push_str(
-            "\nNOT IN YOUR CONTEXT — open them, they are one read away. They are indexed rather \
-             than carried because they are long-form and read deliberately; that is the room's \
+            "\nNOT IN YOUR CONTEXT — open them, they are one read away. The record, the spread \
+             and research are indexed rather than carried because they are long-form and read \
+             deliberately, and a card that did not fit is here too; that is the room's \
              normal form, not a degraded one. The counter-voice lives here and is the one you are \
              most likely to need at a peak:\n\n"
         );
@@ -8311,6 +8322,27 @@ fn third_place_intake() -> Option<String> {
     let used = s.len();
     s.push_str(&third_place_shelf(used));
     Some(s)
+}
+
+/// L237 call 1 (packet_intake_ceiling_BC_2026-11-25.md): THE GLOBAL FILE COUNTS. Claude Code loads `~/.claude/CLAUDE.md`
+/// beside a seat's own CLAUDE.md and now warns on the two together, so a shelf budgeted to the single-file cap landed over it
+/// at every launch (the Third Place at 152,320 with the global file's 7,479 B). Both shelves subtract this from their budget.
+/// Read at each build, 0 when absent. Bytes, so it is never smaller than the host's character count.
+/// Under `cargo test` the host's file is NOT read (as `~/.consonance.json` is not, `intake_light`): a row sets the size it means.
+#[cfg(test)]
+thread_local! { static TEST_GLOBAL_CLAUDE_MD: std::cell::Cell<usize> = const { std::cell::Cell::new(0) }; }
+fn global_claude_md_len() -> usize {
+    #[cfg(test)]
+    {
+        TEST_GLOBAL_CLAUDE_MD.with(|c| c.get())
+    }
+    #[cfg(not(test))]
+    {
+        global_claude_md_len_at(&PathBuf::from(home()).join(".claude").join("CLAUDE.md"))
+    }
+}
+fn global_claude_md_len_at(p: &Path) -> usize {
+    fs::metadata(p).map(|m| m.len() as usize).unwrap_or(0)
 }
 
 fn librarian_cwd() -> String {
@@ -8960,7 +8992,8 @@ fn index_tier_entry_count() -> usize {
     corpus_shelf_at_with_index(0, usize::MAX)
         .lines()
         // D296: the index tier now holds the unmapped hand-backs too (rule change, not a weaker check).
-        .filter(|l| l.starts_with("- map/") || l.starts_with("- journal/") || l.starts_with("- loop/") || l.starts_with("- handback/"))
+        // L237: and record/, spread/ and research/, which moved from carried to indexed (the same kind of rule change).
+        .filter(|l| ["- map/", "- journal/", "- loop/", "- handback/", "- record/", "- spread/", "- research/"].iter().any(|p| l.starts_with(p)))
         .count()
 }
 
@@ -9106,10 +9139,15 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
     // D476 part 2: "third_place" rides right after the librarian's own notes, WINDOWED to its newest dated entry (third_place_newest);
     // the rest of it is indexed. Before this the walk never reached it: the root tier is not recursive, and the Third Place's notes
     // came to the librarian only when the keeper carried them.
+    // L237 calls 2 to 4 (packet_intake_ceiling_BC_2026-11-25.md, his "do what you think is best"): record/, spread/ and
+    // research/ move from carried to INDEXED, listed by path, line count and title like the record below. Under the cap the
+    // walk filled to the ceiling, so indexing one file only let the next refill the gap; the size drops only when the tier
+    // changes. Their places in the order are kept, so the index lists them where the shelf always walked them (group 0).
+    // record/retired_seats_2026-09-11.md is indexed with the other records.
     let order: [(&str, bool, bool); 11] = [
-        ("cards", false, true), ("", false, true), ("record", false, true),
-        ("memory", false, true), ("librarian", true, true), ("third_place", true, true), ("spread", false, true),
-        ("research", false, true),
+        ("cards", false, true), ("", false, true), ("record", false, false),
+        ("memory", false, true), ("librarian", true, true), ("third_place", true, true), ("spread", false, false),
+        ("research", false, false),
         // indexed, never carried:
         ("map", false, false), ("journal", true, false), ("loop", true, false),
     ];
@@ -9355,10 +9393,12 @@ fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
     // partway down the carried tiers. Same class as the window line below, in the sentence
     // immediately above it, and it would have gone on telling the seat its library was complete.
     if budget_dropped == 0 {
-        s.push_str("THE SYSTEM is carried in full. THE RECORD (journal/, loop/, map/) is indexed by\n");
-        s.push_str("path -- deliberately, not because the budget ran out. Open what you cite.\n");
+        s.push_str("THE SYSTEM is carried in full. THE RECORD (journal/, loop/, map/) and the long-form\n");
+        s.push_str("(record/, spread/, research/) are indexed by path -- deliberately, not because the\n");
+        s.push_str("budget ran out. Open what you cite.\n");
     } else {
-        s.push_str("THE RECORD (journal/, loop/, map/) is indexed by path deliberately -- that is the\n");
+        s.push_str("THE RECORD (journal/, loop/, map/) and the long-form (record/, spread/, research/) are\n");
+        s.push_str("indexed by path deliberately -- that is the\n");
         s.push_str(&format!(
             "tier, not the budget. AND THE SYSTEM IS NOT CARRIED IN FULL TODAY: {budget_dropped} file(s)\n\
              ({budget_dropped_bytes} bytes) the tier would carry are indexed too, because the budget ran\n"
@@ -9461,9 +9501,11 @@ fn librarian_shelf(head_len: usize) -> String {
 /// can only see what today's directory happens to weigh, and the term that matters -- what happens
 /// as the floor rises toward the cap -- is not reachable that way. Saturating, so a floor that has
 /// already eaten the cap asks for zero rather than wrapping to a budget larger than the disk.
+/// L237 call 1: the global file the host loads beside this seat's CLAUDE.md comes off it too (`global_claude_md_len`).
 fn librarian_shelf_room(head_len: usize, floor_len: usize) -> usize {
     LIBRARIAN_INTAKE_LIMIT
         .saturating_sub(INTAKE_HEADROOM)
+        .saturating_sub(global_claude_md_len())
         .saturating_sub(head_len.saturating_add(floor_len))
 }
 
@@ -20544,6 +20586,176 @@ mod librarian_tests {
             i.lines().any(|l| l.contains("in the turn it forms") && l.contains("append-only")),
             "the intake lost the compaction rule (reworded by D277 B's rule draft (1cff0c86..fe232323); the rule is kept)"
         );
+    }
+}
+
+#[cfg(test)]
+mod shelf_ceiling_tests {
+    // ---- L237 (pane B): the shelves stop filling to the cap ------------------------------------------------------------
+    // Packet: exo_memory/loop/packet_intake_ceiling_BC_2026-11-25.md. Every row but the measurement builds its own room under the
+    // OS temp dir and points DIRS at it, as shelf_handback_tests does, so the walk reads a fixture and never the live corpus.
+    use super::*;
+
+    struct Room { root: PathBuf, _g: DirsGuard<'static> }
+    impl Drop for Room {
+        fn drop(&mut self) {
+            TEST_GLOBAL_CLAUDE_MD.with(|c| c.set(0));
+            let _ = fs::remove_dir_all(&self.root);
+        }
+    }
+
+    fn room(tag: &str) -> Room {
+        let g = DirsGuard::take();
+        let root = std::env::temp_dir().join(format!("consonance_l237_{tag}_{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        fs::create_dir_all(&root).expect("fixture room");
+        fs::write(root.join("BOOT.md"), "# boot\n").unwrap();
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: root.join("BOOT.md").display().to_string(),
+            instances: root.join("instances").display().to_string(),
+            data: root.join("data").display().to_string(),
+        });
+        Room { root, _g: g }
+    }
+
+    fn put(root: &Path, rel: &str, body: &str) {
+        let p = root.join(rel);
+        fs::create_dir_all(p.parent().unwrap()).unwrap();
+        fs::write(p, body).unwrap();
+    }
+
+    /// The four long-form files, one per tier, with `retired_seats` named as it is on disk (call 4).
+    const LONG_FORM: [&str; 4] = ["record/retired_seats_2026-09-11.md", "record/claim-your-continuity.md", "spread/the_wave_set_loose.md", "research/the_pattern_in_felt_knowing.md"];
+
+    fn long_form_room(tag: &str) -> Room {
+        let r = room(tag);
+        for rel in LONG_FORM {
+            put(&r.root, rel, &format!("# {rel}\n\nA BODY LINE ONLY THE FILE ITSELF HOLDS: {rel}\n"));
+        }
+        put(&r.root, "cards/a-card.md", "# a card\n\nA CARD BODY LINE\n");
+        r
+    }
+
+    // --- call 1: the global file counts -------------------------------------------------------------------------------
+
+    #[test]
+    fn the_third_place_budget_counts_the_global_file() {
+        let r = room("tp_global");
+        put(&r.root, "cards/a-card.md", &format!("# a card\n\n{}\n", "x".repeat(600)));
+        // A budget of 1,000 B without the global file: the card (about 640 B with its name) fits. With 500 B of global file it does not.
+        let used = INTAKE_LIMIT - INTAKE_HEADROOM - 1_000;
+        TEST_GLOBAL_CLAUDE_MD.with(|c| c.set(500));
+        let shelf = third_place_shelf(used);
+        assert!(!shelf.contains("## cards/a-card.md"), "the card was carried in room the global file takes:\n{shelf}");
+    }
+
+    #[test]
+    fn the_third_place_still_carries_the_card_when_the_global_file_leaves_room() {
+        let r = room("tp_global_ctl");
+        put(&r.root, "cards/a-card.md", &format!("# a card\n\n{}\n", "x".repeat(600)));
+        let used = INTAKE_LIMIT - INTAKE_HEADROOM - 1_000;
+        TEST_GLOBAL_CLAUDE_MD.with(|c| c.set(100));
+        let shelf = third_place_shelf(used);
+        assert!(shelf.contains("## cards/a-card.md"), "the control: with 900 B left the card rides:\n{shelf}");
+    }
+
+    #[test]
+    fn the_librarian_room_counts_the_global_file() {
+        let _r = room("lib_global");
+        TEST_GLOBAL_CLAUDE_MD.with(|c| c.set(5_000));
+        assert_eq!(librarian_shelf_room(1_000, 1_000), LIBRARIAN_INTAKE_LIMIT - INTAKE_HEADROOM - 2_000 - 5_000);
+    }
+
+    #[test]
+    fn the_global_file_is_read_by_its_size_and_is_zero_when_absent() {
+        let r = room("global_at");
+        let p = r.root.join("CLAUDE.md");
+        assert_eq!(global_claude_md_len_at(&p), 0, "absent");
+        fs::write(&p, "y".repeat(7_479)).unwrap();
+        assert_eq!(global_claude_md_len_at(&p), 7_479, "present: its bytes");
+    }
+
+    // --- calls 2 to 4: record/, spread/ and research/ are indexed, not carried ------------------------------------------
+
+    #[test]
+    fn the_third_place_indexes_the_long_form_with_room_to_spare() {
+        let _r = long_form_room("tp_index");
+        let shelf = third_place_shelf(0);
+        let carried: Vec<&str> = LONG_FORM.iter().copied().filter(|rel| shelf.contains(&format!("## {rel}"))).collect();
+        assert!(carried.is_empty(), "carried with room to spare: {carried:?}");
+    }
+
+    #[test]
+    fn the_third_place_names_every_long_form_file_by_path() {
+        let _r = long_form_room("tp_named");
+        let shelf = third_place_shelf(0);
+        let missing: Vec<&str> = LONG_FORM.iter().copied().filter(|rel| !shelf.contains(&format!("  {rel}  ("))).collect();
+        assert!(missing.is_empty(), "not on the index: {missing:?}\n{shelf}");
+    }
+
+    #[test]
+    fn the_librarian_indexes_the_long_form_with_room_to_spare() {
+        let _r = long_form_room("lib_index");
+        let shelf = corpus_shelf_at_with_index(1_000_000, 100_000);
+        let carried: Vec<&str> = LONG_FORM.iter().copied().filter(|rel| shelf.contains(&format!("## {rel}"))).collect();
+        assert!(carried.is_empty(), "carried with room to spare: {carried:?}");
+    }
+
+    #[test]
+    fn the_librarian_names_every_long_form_file_by_path_line_count_and_title() {
+        let _r = long_form_room("lib_named");
+        let shelf = corpus_shelf_at_with_index(1_000_000, 100_000);
+        let missing: Vec<&str> = LONG_FORM.iter().copied().filter(|rel| !shelf.contains(&format!("- {rel}  (3 lines)  {rel}"))).collect();
+        assert!(missing.is_empty(), "not on the index by path, line count and title: {missing:?}\n{shelf}");
+    }
+
+    // --- what stays carried -------------------------------------------------------------------------------------------
+
+    #[test]
+    fn the_librarian_still_carries_cards_the_root_memory_and_its_own_notes() {
+        let r = long_form_room("lib_kept");
+        let today = chrono::Local::now().date_naive();
+        let own = format!("librarian/{}.laptop.md", today.format("%Y-%m-%d"));
+        for rel in ["SOURCE.md", "memory/a-topic.md", own.as_str()] {
+            put(&r.root, rel, &format!("# {rel}\n\nkept\n"));
+        }
+        let shelf = corpus_shelf_at_with_index(1_000_000, 100_000);
+        let dropped: Vec<String> = ["cards/a-card.md", "SOURCE.md", "memory/a-topic.md", own.as_str()]
+            .iter().filter(|rel| !shelf.contains(&format!("## {rel}"))).map(|s| s.to_string()).collect();
+        assert!(dropped.is_empty(), "no longer carried: {dropped:?}");
+    }
+
+    #[test]
+    fn the_third_place_still_carries_its_cards() {
+        let _r = long_form_room("tp_kept");
+        assert!(third_place_shelf(0).contains("## cards/a-card.md\n\n# a card"), "the card is not carried");
+    }
+
+    /// MEASUREMENT, not a gate: both shelves built from the live room, with the global file counted, against 150,000.
+    /// Run: `cargo test --bin consonance shelf_ceiling_tests::measure -- --ignored --nocapture`, before and after.
+    #[test]
+    #[ignore]
+    fn measure_both_shelves_against_the_live_room() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let global = fs::metadata(PathBuf::from(home()).join(".claude").join("CLAUDE.md")).map(|m| m.len() as usize).unwrap_or(0);
+        TEST_GLOBAL_CLAUDE_MD.with(|c| c.set(global));
+        let tp = third_place_intake().expect("third place");
+        let lib = librarian_intake().expect("librarian");
+        TEST_GLOBAL_CLAUDE_MD.with(|c| c.set(0));
+        let own: Vec<&str> = lib.lines().filter(|l| l.starts_with("## librarian/")).collect();
+        let long: Vec<&str> = tp.lines().chain(lib.lines()).filter(|l| l.starts_with("## record/") || l.starts_with("## spread/") || l.starts_with("## research/")).collect();
+        eprintln!("MEASURE global ~/.claude/CLAUDE.md {global} B");
+        eprintln!("MEASURE third place {} B; with the global file {} B against 150,000", tp.len(), tp.len() + global);
+        eprintln!("MEASURE librarian {} B; with the global file {} B against 150,000", lib.len(), lib.len() + global);
+        eprintln!("MEASURE librarian own notes carried: {own:?}");
+        eprintln!("MEASURE long-form bodies carried (both seats): {long:?}");
+        if let Some(head) = lib.split("\n# THE SHELF\n").nth(1).and_then(|h| h.split("\n## NOT CARRIED").next()) {
+            for l in head.lines().filter(|l| !l.trim().is_empty()) {
+                eprintln!("MEASURE librarian shelf header: {l}");
+            }
+        }
+        let carried: Vec<&str> = lib.lines().filter(|l| l.starts_with("## ") && l.contains(".md")).collect();
+        eprintln!("MEASURE librarian bodies carried ({}): {carried:?}", carried.len());
     }
 }
 
