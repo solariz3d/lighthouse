@@ -32,7 +32,7 @@ function kit(aliveFor) {
       alive: () => { polls++; return polls <= aliveFor; },
       sleep: (ms) => { t += ms; },
       now: () => t,
-      launch: (exe, env) => started.push({ exe, env }),
+      launch: (exe, env) => { started.push({ exe, env }); return 4243; },
       log: (row) => rows.push(row),
       env: { PATH: 'p', CONSONANCE_DATA: 'C:/data', CONSONANCE_LAUNCH_ID: 'launch-123', KEEP: 'k' },
     },
@@ -98,6 +98,49 @@ test('THE REAL FILE: waits on a real process, opens only after it exits', () => 
   const rows = fs.readFileSync(path.join(dir, 'relaunch.jsonl'), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
   assert.strictEqual(rows[rows.length - 1].outcome, 'opened');
   fs.rmSync(dir, { recursive: true, force: true });
+});
+
+// C's read of bd113955 (p-l233-read-C_2026-11-25.md): an exe that cannot be opened was logged "opened" with exit 0, so Consonance
+// closed and stayed closed. Now: a "not-opened" row, the exe and the reason, and exit 3.
+test('a launch that starts nothing is NOT logged opened: not-opened, code 3', () => {
+  const x = kit(0);
+  x.k.launch = () => undefined;
+  const r = R.runRelaunch(['--pid', '4242', '--exe', EXE], x.k);
+  assert.strictEqual(r.code, 3, JSON.stringify(r));
+  assert.ok(x.rows.some((w) => w.outcome === 'not-opened' && w.exe === EXE && w.why) && !x.rows.some((w) => w.outcome === 'opened'), JSON.stringify(x.rows));
+});
+
+test('THE REAL FILE: a dead pid and a missing exe: non-zero exit and a not-opened row saying nothing is at the path', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'relaunch-missing-'));
+  const dead = spawnSync(process.execPath, ['-e', '0']).pid;   // has exited by the time spawnSync returns
+  const exe = path.join(dir, 'consonance.exe');                 // nothing here: a landing's rename window
+  const log = path.join(dir, 'relaunch.jsonl');
+  const r = spawnSync(process.execPath, [path.join(__dirname, 'relaunch.js'), '--pid', String(dead), '--exe', exe, '--log', log], { encoding: 'utf8', timeout: 30000 });
+  assert.notStrictEqual(r.status, 0, 'exit 0 for an exe that is not there');
+  const rows = fs.readFileSync(log, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+  const last = rows[rows.length - 1];
+  assert.deepStrictEqual([last.outcome, last.exe, /nothing at the path/.test(last.why)], ['not-opened', exe, true], JSON.stringify(last));
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('THE REAL FILE: an exe that is there but is not a program: not-opened with the spawn reason, not a crash', () => {
+  // seen on L, 2026-11-25: spawn THROWS for such a file (spawn UNKNOWN), so without a catch the helper died with no row at all
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'relaunch-bad-'));
+  const exe = path.join(dir, 'consonance.exe');
+  fs.writeFileSync(exe, 'not a program');
+  const dead = spawnSync(process.execPath, ['-e', '0']).pid;
+  const log = path.join(dir, 'relaunch.jsonl');
+  const r = spawnSync(process.execPath, [path.join(__dirname, 'relaunch.js'), '--pid', String(dead), '--exe', exe, '--log', log], { encoding: 'utf8', timeout: 30000 });
+  assert.strictEqual(r.status, 3, `exit ${r.status}: ${(r.stderr || '').split('\n')[0]}`);
+  const last = fs.readFileSync(log, 'utf8').trim().split('\n').map((l) => JSON.parse(l)).pop();
+  assert.deepStrictEqual([last.outcome, last.exe, /could not be started/.test(last.why)], ['not-opened', exe, true], JSON.stringify(last));
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('the spawn itself: a path that vanished after the existence check gives no pid and a reason, never a pid', () => {
+  const gone = path.join(os.tmpdir(), 'relaunch-gone-' + process.pid, 'consonance.exe');
+  const r = R.defaultLaunch(gone, {}, []);
+  assert.deepStrictEqual([r.pid, typeof r.error], [undefined, 'string'], JSON.stringify(r));
 });
 
 Promise.all(pending).then(() => {

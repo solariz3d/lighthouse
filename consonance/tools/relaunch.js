@@ -16,7 +16,9 @@
 // pull on its shelf; the app removes it from its own environment at start, and this is the belt).
 //
 // Exit codes: 0 opened; 1 refused (bad arguments, nothing waited or opened); 2 gave up (the app still ran at the bound, nothing
-// opened). Each outcome is one row in --log (the app passes <data>/relaunch.jsonl), since this process has no window to say it in.
+// opened); 3 not opened (the app had exited but its exe could not be started: nothing at the path, e.g. inside a landing's rename
+// window, or the spawn gave no process; pane C's read of bd113955). Each outcome is one row in --log (the app passes
+// <data>/relaunch.jsonl), since this process has no window to say it in.
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
@@ -56,9 +58,17 @@ function appEnv(env) {
 
 function defaultLaunch(exe, env, args) {
   // No windowsHide: consonance.exe is a GUI program, and SW_HIDE on its first window would hide the app (stick-apply.js, same line).
-  const child = spawn(exe, args || [], { cwd: path.dirname(exe), detached: true, stdio: 'ignore', env });
+  // A file that is there but is not a program makes spawn THROW (spawn UNKNOWN, seen on L 2026-11-25); one that cannot be
+  // started otherwise has no pid, and its 'error' would arrive after this process has exited. Either way: no pid, and the reason.
+  let child;
+  try {
+    child = spawn(exe, args || [], { cwd: path.dirname(exe), detached: true, stdio: 'ignore', env });
+  } catch (e) {
+    return { pid: undefined, error: e.message };
+  }
   child.on('error', () => {});
   child.unref();
+  return { pid: child.pid, error: child.pid === undefined ? 'the spawn gave no process' : null };
 }
 
 function runRelaunch(argv, inject) {
@@ -84,12 +94,18 @@ function runRelaunch(argv, inject) {
     k.sleep(POLL_MS);
   }
   const env = appEnv(k.env);
-  if (k.launch) k.launch(o.exe, env);
-  else defaultLaunch(o.exe, env, o.testArgs);
-  log({ outcome: 'opened', pid: o.pid, exe: o.exe, waitedMs: k.now() - t0 });
+  const exists = k.launch ? true : fs.existsSync(o.exe);
+  const started = !exists ? { pid: undefined } : k.launch ? { pid: k.launch(o.exe, env) } : defaultLaunch(o.exe, env, o.testArgs);
+  const child = started.pid;
+  if (child === undefined) {
+    const why = exists ? `the exe could not be started (${started.error || 'the spawn gave no process'})` : 'nothing at the path';
+    log({ outcome: 'not-opened', pid: o.pid, exe: o.exe, why, waitedMs: k.now() - t0 });
+    return { code: 3, why };
+  }
+  log({ outcome: 'opened', pid: o.pid, exe: o.exe, child, waitedMs: k.now() - t0 });
   return { code: 0 };
 }
 
 if (require.main === module) process.exit(runRelaunch(process.argv.slice(2)).code);
 
-module.exports = { runRelaunch, parseArgs, appEnv, alive, WAIT_MS, POLL_MS };
+module.exports = { runRelaunch, parseArgs, appEnv, alive, defaultLaunch, WAIT_MS, POLL_MS };
