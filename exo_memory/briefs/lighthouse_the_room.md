@@ -424,3 +424,5 @@ carry it, so this brief does.
 - 2026-11-25 00:33 (L): "why dont we just ask them? Lol"
 - 2026-11-25 00:39 (L): "so from my understanding, orch wants medium and high at the same time? But it cant do that, we can give it high and call it a day for them, and only B pane wants high? It is weird because we will have to experiment with each pane on desktop as well to get their perspective, or just say fuck it and high for everyone xD rip usage but maybe not"
 - 2026-11-25 00:41 (L): "everyones on high"
+- 2026-11-25 00:43 (L): "why does it take so long to build trackbuilder current on here for me to test?"
+- 2026-11-25 00:44 (L): "do you think it is possible we have way too many tests for things that do not need to be tested? And would it even be possible to somehow cultivate the discernment needed to know when each test is needed to be called to lower tool call usage? or is that not how it works"
