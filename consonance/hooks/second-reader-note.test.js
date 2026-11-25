@@ -91,9 +91,12 @@ test('RENDER: the note is plain counts and quotes from the row, at most 5 shown 
 test('REGISTERED: install.ps1 copies the note hook and registers it on PostToolUse with exactly call_chair and a timeout above the wait', () => {
   const src = fs.readFileSync(INSTALL, 'utf8').replace(/\r\n/g, '\n');
   assert.ok(/From = 'consonance\\hooks\\second-reader-note\.js';\s+To = 'hooks\\second-reader-note\.js'/.test(src), 'no file entry');
-  const m = src.match(/@\{ Event = 'PostToolUse';\s+Rel = 'hooks\\second-reader-note\.js';\s+Runner = 'node';\s*\n\s*Matcher = '([^']+)'(?:;\s*Timeout = (\d+))? \}/);
+  // AMENDED R1 (2026-11-25, pane C): the entry now ends `Excluded = 'R1 ...'` (the keeper's green light; install-only.test.js row R1 proves no run
+  // registers it). Its matcher and Timeout still hold, for the day the exclusion is lifted.
+  const m = src.match(/@\{ Event = 'PostToolUse';\s+Rel = 'hooks\\second-reader-note\.js';\s+Runner = 'node';\s*\n\s*Matcher = '([^']+)'(?:;\s*Timeout = (\d+))?(?:;\s*Excluded = '([^']*)')? \}/);
   assert.ok(m, 'no PostToolUse registration'); assert.deepStrictEqual(m[1].split('|'), [CHAIR], 'the note is for call_chair rings only (D631, amended)');
   assert.ok(m[2] && Number(m[2]) * 1000 > N.WAIT_MS, 'the registration needs a Timeout above the note\'s own wait');
+  assert.ok(m[3] && m[3].startsWith('R1 2026-11-25'), 'the note is Excluded since R1');
 });
 
 // D631, AMENDED to call_chair only (the librarian's ruling 09:18): the second reader no longer reads a call_librarian ring, and the note is ON for

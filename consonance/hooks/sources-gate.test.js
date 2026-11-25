@@ -457,7 +457,8 @@ test('THE SECOND READER STILL FIRES: both hooks run on the same denied ring in p
 
 test('REGISTERED: install.ps1 registers the gate on the two hand-back verbs PLUS chair_inject (D215), the second reader\'s matcher is UNCHANGED, and the gate registers after it', () => {
   const src = fs.readFileSync(INSTALL, 'utf8').replace(/\r\n/g, '\n');
-  const reg = (rel) => { const m = src.match(new RegExp("@\\{ Event = 'PreToolUse';\\s+Rel = '" + rel.replace(/[\\.]/g, '\\$&') + "';\\s+Runner = 'node';\\s*\\n\\s*Matcher = '([^']+)' \\}")); return m && { matcher: m[1], at: m.index }; };
+  // AMENDED R1 (2026-11-25, pane C): the second reader's entry now ends `; Excluded = 'R1 ...'` (install-only.test.js row R1); its matcher is still read here.
+  const reg = (rel) => { const m = src.match(new RegExp("@\\{ Event = 'PreToolUse';\\s+Rel = '" + rel.replace(/[\\.]/g, '\\$&') + "';\\s+Runner = 'node';\\s*\\n\\s*Matcher = '([^']+)'(?:;\\s*Excluded = '[^']*')? \\}")); return m && { matcher: m[1], at: m.index }; };
   const sr = reg('hooks\\second-reader.js'), sg = reg('hooks\\sources-gate.js');
   assert.ok(sr && sg, 'a registration is missing');
   assert.strictEqual(sr.matcher, 'mcp__consonance__call_librarian|mcp__consonance__call_chair', 'the second reader\'s matcher changed');

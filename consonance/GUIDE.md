@@ -38,7 +38,7 @@ It copies the hooks to `%USERPROFILE%\.claude\shell` and registers them in `%USE
 
 **One hook spends your Claude usage on its own: the second reader.** Each time a seat rings another, it runs one extra `claude -p` call (Sonnet) in
 the background to check that message against the turn that produced it. That is roughly two cents of usage per ring (median, as the CLI reports it); where it was built, a busy
-multi-seat day ran 9 to 133 rings. It is on by default; what it does and how to turn it off are in [`GATES.md`](GATES.md), "the second reader".
+multi-seat day ran 9 to 133 rings. It is off as shipped since 2026-11-25; what it does and how to turn it on or off are in [`GATES.md`](GATES.md), "the second reader".
 
 The hooks keep their records in the same **Data folder** as the app (Settings, below; `%USERPROFILE%\.consonance` until you choose another), so it does not matter whether you run this before or after the first launch.
 
