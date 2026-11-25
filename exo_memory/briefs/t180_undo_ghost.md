@@ -34,3 +34,10 @@ back to its resting state.
 
 - 01:3x: packet `loop/packet_t180_undo_ghost_A_2026-11-25.md` rung for pane A: the ghost of what an undo removed, drawn
   from the redo state; pictures shown to him before any install. Not in it: the boxes refilled with the piece's numbers.
+
+## Added 2026-11-25 01:4x (L)
+
+- His words, 01:36: "closed the program"
+- His words, 01:37: "but why cant it show the numbers that made it? That is one of the main reasons this would be good, bc it shows you the values of the shape, if you can see the shape, you can derive the values as well, this helps users remember how they got the shape they did"
+- **He is right; my "cannot" at 01:3x was wrong.** A piece in the track file keeps no typed values (true, checked), but the shell receives them at every Extend and owns the undo history and the `.t180undo` file, so they can be kept there with no change to the track format; and where none were kept, turns and bank marks can be read off the shape. Addendum 1 of the packet carries both, plus pane O's `turnDeg: 0` change so the S's own numbers can be typed and laid again.
+- So the feature is: undo puts the piece back into the panel. The ghost is the panel's own next-piece ghost with the numbers that made it; Extend lays it again.

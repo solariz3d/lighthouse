@@ -55,3 +55,51 @@ His app may be open: do not start, stop or build over it; no install in this lap
 in the builder's repo; his words do not go into that repo. `node consonance/tools/heavy-run.js --status && <run>` in one
 call before a build or any run over three test files. No timing runs on L. Hand-back as a file in `exo_memory/handback/`, rung to the librarian as a pointer,
 each claim marked checked or inferred, ending with who acts next.
+
+---
+
+## ADDENDUM 1 (the librarian, 01:4x): the numbers come back too. This replaces the first line of "Not in this lap".
+
+**His words, 01:37, verbatim:** "but why cant it show the numbers that made it? That is one of the main reasons this
+would be good, bc it shows you the values of the shape, if you can see the shape, you can derive the values as well, this
+helps users remember how they got the shape they did"
+
+**He is right and my "cannot" was wrong.** What I had checked is that a piece in the TRACK file keeps no typed values.
+What I had not weighed: the shell is handed those values at every Extend (the call the panel sends), and the undo
+history is the shell's own, in memory and in the `.t180undo` file beside the track, which can be extended without
+touching the track format (`app/core/coreshell.js:102-106`: "the track file is unchanged"). And where no values were
+kept, the shape can still be read.
+
+**Part 2 of this lap, after Part 1's rows (R1 to R4) are green. Same branch.**
+
+5. **Remembered values.** Each step the shell commits from the panel keeps the values that made it (the options of
+   that call), beside the document in the history: in memory, and in the undo file. On an undo of such a step the
+   panel's boxes are filled with those values, extra rows included, so the ghost on screen is the panel's own
+   next-piece ghost of the piece he just took back: Extend lays it again, or he changes a number first.
+6. **Read from the shape, where nothing was remembered** (a track from before this build, a pasted or shared track,
+   a piece laid by a tool): the ghost is Part 1's, drawn from the redo state, and its readout gives what can be read
+   off the piece: length, each turn with where it starts and ends, climb, and the bank at its turning points with
+   their distances (the repo's own readers do this: `test/roll_profile.js` `turnOf` and the marks read; say which you
+   used). The readout says these are read from the shape, not the typed values. The boxes are filled only when the
+   read values, laid again, give the same piece; otherwise they are shown and not filled.
+7. **The S's own numbers must be typeable**, or step 5 cannot re-lay it: pane O's measured proposal, in corner mode a
+   turn of 0 that has extra turn rows sends `turnDeg: 0` (`app/core/panel.js:207`;
+   `handback/p-d677-t180-route-O_2026-11-24.md` §3, "byte for byte the S he drove"). Build it here, red first.
+
+**Rows added (print each):**
+- **R6, red first:** `extend(opts)` then `undo`: the shell offers `opts` back, and the candidate laid from them is byte
+  for byte the piece that was removed. For a plain piece, for a piece with extra turn and bank rows, and for the S as
+  driven (turn 0, +92 from 80, −91 from 200, flow through its five marks).
+- **R7, red first:** save, open, undo: the values come back from the undo file. An undo file with no values (today's
+  format) opens as today and falls to step 6.
+- **R8:** an undo file WITH values is read by the released build's reader without complaint: read the 0.4.40 release
+  line's parse (builder main 3b33b38) and say whether an unknown field is ignored or refused. If refused, stop and say
+  so before choosing a format.
+- **R9:** step 6 on "Smooth S as driven L" as it is on disk: the read turns and bank marks beside the known ones
+  (+92 from 80, −91 from 200; −20, −27, 0, 25, 26 at 80, 145, 200, 255, 300 m), with the miss of each.
+- **R5 (his eye) now shows the boxes too:** the picture after the undo shows the ghost AND the panel filled.
+
+**Registered failure line, added:** failed if, after undoing a piece laid in the installed build, the boxes do not hold
+the numbers he typed; or if values shown as "read from the shape" re-lay a different piece and are filled anyway.
+
+**Still not in this lap:** the track file's own format; the flow panel's redesign; a release.
