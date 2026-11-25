@@ -1977,3 +1977,7 @@ Claim (could be wrong): his 08:19 crash was Export to Assetto Corsa: `v8-oom-sta
 ## 2026-11-25 — L236 read: at 99c5fe99 the counter drops 0 of 585 quoted paths (534 at 3ac00138), through the branch's own rereadsAfterCuts; CLEAN; landing waits on B's push
 - Evidence: `exo_memory/handback/p-l236-read-C_2026-11-25_evidence/quoted_rederive_before_after.txt`, `quoted_row_99c5fe99.txt`.
 - Hand-back: `exo_memory/handback/p-l236-read-C_2026-11-25.md`
+
+## 2026-11-25 — L236 landing: pushed e6dcfd84; the pane intake row (88,811 B over 88,000) does not carry BUILDING.md (main.rs:3314 carries COMMITTEE.md), so shortening item 10 by 833 B left it at 88,811; edit reverted, row still red, not from L235
+- Evidence: `exo_memory/handback/p-l236-land-C_2026-11-25_evidence/l236_intake_row.txt`.
+- Hand-back: `exo_memory/handback/p-l236-land-C_2026-11-25.md`

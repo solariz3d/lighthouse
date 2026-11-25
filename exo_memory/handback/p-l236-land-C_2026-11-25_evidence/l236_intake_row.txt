@@ -1,0 +1,8 @@
+PANE INTAKE strict 104984 B, light 93851 B
+PANE INTAKE light rest 88811 B, map section 5040 B, reserve 8000 B
+PANE INTAKE fork note 0 B (set aside; 0 in a dev tree)
+thread 'intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room' (33520) panicked at src\main.rs:10222:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1337 filtered out; finished in 0.04s
+thread 'intake_light_tests::light_the_pane_intake_is_under_target_with_the_cards_and_the_room' (33520) panicked at src\main.rs:10222:9:
+light pane intake without its map section and fork note is 88811 B, over 88000
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
