@@ -61,3 +61,14 @@ back to its resting state.
 - His words, 06:55: "its okay for sculpting no ghost"
 - So: no ghost for an undone brush stroke, handle drag or grip change. Settled; the open item is only his test of
   4e19e33 and then the merge.
+- His words, 07:02: "it works, but now I have a new problem, it isnt obvious how you made that piece, it works and looks good, but i need to know how to make it by hand with the program, as well, in saved pieces, it should add the ghost of the piece before placing it you know? So click a saved piece, it doesnt auto place it, it places the ghost that you then have to press place, it allows you to tweak the piece if you want before placing it."
+- So: his test of 4e19e33 PASSES ("it works"); the merge is cleared. Two new asks follow.
+
+## State, 2026-11-25 07:1x (L)
+
+- How the S he drove is typed by hand (pane O, `probe5.js:19`; possible on 4e19e33 by `panel.js:209`; not yet typed in
+  the app): length 300, turn 0 as corner, bank −20 flowing at 80, extra turn +92 from 80, extra turn −91 from 200,
+  bank 2 −27 at 145, bank 3 0 at 200, bank 4 25 at 255, bank 5 26 at 300; then the ease-out: length 150, bank 0 flowing
+  at 100.
+- Packet `loop/packet_t180_piece_ghost_A_2026-11-25.md`: saved pieces keep their numbers in a `.t180recipe` sidecar
+  (the piece file refuses unknown fields, piece.js:118); a click shows the ghost with the numbers, Place lays it.
