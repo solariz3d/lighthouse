@@ -58,3 +58,12 @@ the numbers he can type to make it by hand.
 Merge l229-undo-ghost and this branch into the builder's main, one release build, install on L (backup the exe first,
 hash both), his word before any release. Hand-backs as files in `exo_memory/handback/`, rung to the librarian, each claim
 checked or inferred, ending with who acts next.
+
+## Addendum 1 (librarian, 07:2x): item 4 uses HIS corrected numbers
+
+His 07:06: "the piece isnt correct ... the straight comes out crooked unless you tweak the last turn a bit". Measured
+(gridturn.js `endHeadingDeg` over adapter.toSegments, his two saved tracks): **Smooth S as driven L** ends 0.000 / 1.000 /
+1.000° after its three pieces (the S's +92 and −91 leave 1° over); his **Smooth S as driven straightL** ends 0.000 /
+−0.000 / −1.000 (his S, typed with turn −1 plus the same rows, ends exactly straight; his 300 m piece after it kept −1 in
+the turn box and bends 1° right). So item 4 re-saves the S from HIS typing (`made[1]` in his `.t180undo`: turn −1, corner,
+the same rows), and the ease-out with turn 0. Row: the re-saved S plus ease-out ends within 0.001° of 0.

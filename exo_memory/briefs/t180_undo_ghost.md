@@ -72,3 +72,7 @@ back to its resting state.
   at 100.
 - Packet `loop/packet_t180_piece_ghost_A_2026-11-25.md`: saved pieces keep their numbers in a `.t180recipe` sidecar
   (the piece file refuses unknown fields, piece.js:118); a click shows the ghost with the numbers, Place lays it.
+- His words, 07:06: "that is good, but see the piece isnt correct, and it was fun correcting it, the straight comes out crooked unless you tweak the last turn a bit, i saved a new track smooth s straight for you to see where the geometry was wrong"
+- Measured 07:2x (librarian): the S as driven ends 1.000° off (turns +92 and −91, pane O's numbers, carried into the
+  hand recipe I gave him unflagged). His fix, turn −1 on the S, ends it at 0.000°. In his saved track the 300 m piece
+  after it kept −1 in the turn box and ends at −1.000°. Packet addendum 1: the re-saved S uses his numbers.
