@@ -1,0 +1,12 @@
+seat	ltr	folder	req	rows	sumRead	sumWrite	minRead	medRead	P(sys+tools)	P range(n)	md B	C cal	C c/4	B=P+C	minTotPrompt	naive B*req/read	B share read	C share read	B wtd 5m/1h	C wtd 5m/1h
+OVERALL: requests 2994, cache_read 882.0M, cache_write 11.3M, in 6022, out 2.3M
+  baseline share of cache_read 17.7%; of cache_write 9.8%; of raw tokens (in+write+read+out) 17.6%
+  CLAUDE.md share of cache_read 8.7%; of cache_write 8.2%
+  weighted (input-equivalent) baseline share: 15.0% (5m writes) / 14.6% (1h writes)
+  weighted CLAUDE.md share: 7.7% (5m) / 7.8% (1h)
+seat	ltr	folder	req	rows	sumRead	sumWrite	minRead	medRead	P(sys+tools)	P range(n)	md B	C cal	C c/4	B=P+C	minTotPrompt	naive B*req/read	B share read	C share read	B wtd 5m/1h	C wtd 5m/1h
+OVERALL: requests 2994, cache_read 882.0M, cache_write 11.3M, in 6022, out 2.3M
+  baseline share of cache_read 17.7%; of cache_write 9.8%; of raw tokens (in+write+read+out) 17.6%
+  CLAUDE.md share of cache_read 8.7%; of cache_write 8.2%
+  weighted (input-equivalent) baseline share: 15.0% (5m writes) / 14.6% (1h writes)
+  weighted CLAUDE.md share: 7.7% (5m) / 7.8% (1h)
