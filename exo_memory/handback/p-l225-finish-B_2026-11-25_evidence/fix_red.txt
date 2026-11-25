@@ -1,0 +1,14 @@
+one_settings_tests::a_pane_with_one_rule_gets_that_rules_file_as_before --- FAILED
+one_settings_tests::a_builder_with_both_rules_gets_one_file_holding_both --- FAILED
+no_prompt_tests::the_spawn_asks_the_rule_and_settings_is_passed_from_one_place --- FAILED
+one_settings_tests::a_builder_spawn_passes_exactly_one_settings --- FAILED
+floor_launch_tests::r1_the_spawn_passes_the_floor_rule_exactly_what_it_read --- FAILED
+no_prompt_tests::the_spawn_passes_the_rule_exactly_what_it_read --- FAILED
+    floor_launch_tests::r1_the_spawn_passes_the_floor_rule_exactly_what_it_read
+    no_prompt_tests::the_spawn_asks_the_rule_and_settings_is_passed_from_one_place
+    no_prompt_tests::the_spawn_passes_the_rule_exactly_what_it_read
+    one_settings_tests::a_builder_spawn_passes_exactly_one_settings
+    one_settings_tests::a_builder_with_both_rules_gets_one_file_holding_both
+    one_settings_tests::a_pane_with_one_rule_gets_that_rules_file_as_before
+test result: FAILED. 9 passed; 6 failed; 0 ignored; 0 measured; 1303 filtered out; finished in 0.00s
+error: test failed, to rerun pass `--bin consonance`

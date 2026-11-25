@@ -1,0 +1,6 @@
+none: (no --settings) | rc 0 | file - | skills listing 17769 B
+no-prompt only: {"permissions":{"denyInsteadOfPrompting":true}} | rc 0 | file loaded | skills listing 17742 B
+fraction 0: {"skillListingBudgetFraction":0} | rc 0 | file DID NOT LOAD | skills listing 8242 B
+fraction 0.001: {"skillListingBudgetFraction":0.001} | rc 0 | file loaded | skills listing 8491 B
+fraction 0.01: {"skillListingBudgetFraction":0.01} | rc 0 | file loaded | skills listing 17769 B
+no-prompt + fraction 0.001: {"permissions":{"denyInsteadOfPrompting":true},"skillListingBudgetFraction":0.001} | rc 0 | file loaded | skills listing 8491 B
