@@ -315,3 +315,9 @@ test('L235-5 a shell token counts only with a separator and an extension: sed ex
   const lines = [rrAsst('1', 'Bash', { command: cmd }), rrCut('2'), rrPrompt('3', '[chair:MAIN] L232 x'), rrAsst('4', 'Bash', { command: cmd })];
   assert.deepStrictEqual(reader.rereadsAfterCuts(lines)[0].reread, ['/xx/real.md']);
 });
+
+test('L235-Q a quoted path is read as a path: the extension is tested after the quotes are stripped (pane C, 4.4% undercount)', () => {
+  const cmd = `cat "/xx/q.md"; sed -n 1p '/xx/r.md'; head \`/xx/s.md\``;
+  const lines = [rrAsst('1', 'Bash', { command: cmd }), rrCut('2'), rrPrompt('3', '[chair:MAIN] L236 x'), rrAsst('4', 'Bash', { command: cmd })];
+  assert.deepStrictEqual(reader.rereadsAfterCuts(lines)[0].reread.sort(), ['/xx/q.md', '/xx/r.md', '/xx/s.md']);
+});
