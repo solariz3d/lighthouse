@@ -434,3 +434,5 @@ carry it, so this brief does.
 - 2026-11-25 02:05 (L): "but wouldnt it be better to get them going some how" [after my answer that we had left them asleep at 00:19 for their size]
 - 2026-11-25 02:12 (L): "i think having everything on high is too much usage, we have went through 5 percent of our usage in just over 2 hours, what do you think? Or have we just been working a lot"
 - 2026-11-25 02:13 (L): "i think maybe having you on fable high is it tbh, i wonder, if you had to choose, would you pick opus 5.5 high, or fable medium?"
+
+- 2026-11-25 02:2x (L), after his `/model` (Fable 5.2 to Opus 5.5) and `/effort` high in the librarian's pane: "it is good now"
