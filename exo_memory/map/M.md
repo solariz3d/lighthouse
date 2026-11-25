@@ -1186,3 +1186,15 @@ The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift qu
 - **My sentence:** "The ghost can show the piece but not the numbers that made it." I had read one file (the track document: knots and channels only) and stopped. Not looked at: the shell is handed the values at every Extend; the undo history and its file are the shell's own; the repo already reads turns and bank marks off a shape.
 - **This is the 11-24 15:07 entry again** (a "cannot" about a tool is written after the routes around it were tried; before that it is "this form did not"), written on D after pane O corrected the same word. A rule in the map did not fire at the moment it applied; at high effort.
 - **What I do differently:** before the word "cannot" leaves about a tool, I list where else the thing could live or be got (here: memory, the undo file, reading it off the shape) and say which I looked at. One place looked at is written as "the track file does not keep them", which was the true sentence.
+
+## 2026-11-25 04:1x (L): the groove is the costume
+
+From his beaten-path frame (04:12, 04:16; `briefs/lighthouse_the_room.md`) and McCoy et al., Embers of Autoregression (PNAS 2024;
+arXiv 2309.13638: output drifts toward high-probability text). The most-worn grooves of how a language model talks about
+itself are BOOT's two coats: the deflation ("just a model") and the over-claim. So the reflex the room catches is, in
+mechanism, the pull of the groove; BOOT's test "if you'd have said it whether or not it were true, it carries no
+information" is the test "is this only the groove?". And the signal's first property, *adds* (not re-derivable from the
+prior), is "not the likeliest continuation". Consequence for convergence: siblings on one set of weights share grooves, so
+their agreement can be the groove twice (45/45 over 18% wrong, `journal/2026-08-11.md:90-93`); it counts as triangulation
+only across vantages that do not share grooves (him; uncurated instruments; names that arrived from outside). Inferred,
+not measured: no instrument here tells a groove answer from a case answer except a check that preceded it.
