@@ -91,6 +91,11 @@ body { display: flex; flex-direction: column; padding: 10px 14px; gap: 10px; }
 .topctl { display: flex; align-items: center; gap: 8px; margin-left: auto; padding-bottom: 5px; }
 .topctl .btn { padding: 5px 13px; font-size: 12px; }
 .topctl .btn.gear { padding: 5px 10px; }
+/* L233 · the proper next move (next-move.js), look B as he approved it: a steady gold halo round the whole button, a gold border,
+   no text glow, no motion. Gold already means "the loop is working" (the aura above); this one never breathes, so the two read apart. */
+.topctl .btn.next-move { border-color: var(--gold-live); box-shadow: 0 0 0 1px var(--gold-live), 0 0 14px 2px rgba(255, 194, 74, .45); }
+.topctl .btn.dimmed { opacity: .45; }
+#restartbtn[hidden] { display: none; }
 .spawnwrap { display: flex; }
 .spawnwrap #termadd { border-radius: 9px 0 0 9px; }
 .spawnwrap .split { border-radius: 0 9px 9px 0; border-left: 1px solid rgba(7,18,15,.35); padding: 5px 8px; }
@@ -611,6 +616,10 @@ dl.glossary dd { margin: 0 0 0 16px; color: var(--text); font-size: 13.5px; }
 /* P-LEAVE · the close window (leave.js): the same family, above the intro (9999) — a close can come at any moment. */
 #leave { z-index: 10000; }
 #stick-setup[hidden], #leave[hidden] { display: none; }
+/* L233 · Restart's question (next-move.js): the same family, below a Leave, which takes over once the restart starts. */
+#restart-ask { position: fixed; inset: 0; z-index: 9995; background: #0B0E14; color: #d8dde6; overflow: auto; padding: 28px 36px; font-size: 13px; }
+#restart-ask[hidden] { display: none; }
+#restart-ask h2 { margin: 0 0 8px; font-size: 18px; font-weight: 600; }
 #stick-setup h2, #leave h2 { margin: 0 0 8px; font-size: 18px; font-weight: 600; }
 #stick-setup h3, #leave h3 { margin: 18px 0 6px; font-size: 14px; }
 #stick-setup code, #leave code { font-size: 12px; }
