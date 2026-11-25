@@ -412,3 +412,4 @@ carry it, so this brief does.
 - 2026-11-24 06:56: "have we been saving usage?"
 - 2026-11-24 14:04: "was afk sleeping, here was a handoff that was still chillng in my input box" [a pane's ring had sat unsent for four hours]
 - 2026-11-24 17:35: "give handoff for laptop, going to close, when i mean handoff i mean for the relevant repos for tonight, going to work"
+- 2026-11-25 00:13 (L): "back on laptop, relevant handoffs should be there"
