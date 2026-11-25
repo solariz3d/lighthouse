@@ -1,0 +1,258 @@
+C-L230 handle drag changed the doc: true null
+C-L230 pieces before 3 after jump 6 msg Jump placed: move its landing by hand.
+C-L230 undos [{"undo":1,"pieces":3,"undoGhost":true,"events":"t180-ghost","ghostM":870,"docM":750,"lengthBox":"120","turnBox":""},{"undo":2,"pieces":3,"undoGhost":false,"events":"t180-ghost-clear","ghostM":null,"docM":750,"lengthBox":"120","turnBox":""},{"undo":3,"pieces":3,"undoGhost":false,"events":"","ghostM":null,"docM":750,"lengthBox":"120","turnBox":""}]
+C-L230 redos [{"redo":1,"pieces":3,"undoGhost":false,"events":"","lengthBox":"120","turnBox":""},{"redo":2,"pieces":3,"undoGhost":false,"events":"","lengthBox":"120","turnBox":""},{"redo":3,"pieces":6,"undoGhost":false,"events":"","lengthBox":"120","turnBox":""}]
+C-L230 jump added pieces 0 metres 0.0 types 
+C-L230 after undo of jump: events t180-ghost | ghost metres beyond placed 0.0 | jump flag undefined | shell undoGhost.removed 1
+C-L230 Level events after undo t180-ghost | shell undoGhost true
+C-L230 Level | the ghost sent is the shell undo ghost: true | Extend from the given-back boxes lays the removed piece: false | ghost m 500.0 removed doc m 500.0
+C-L230 Turn to grid refused: the end is already on the 90° grid (heading 0.00°): use Straight
+C-L230 Turn by events after undo t180-ghost | shell undoGhost true
+C-L230 Turn by | the ghost sent is the shell undo ghost: true | Extend from the given-back boxes lays the removed piece: false | ghost m 500.0 removed doc m 500.0
+C-L230 Sharp events after undo t180-ghost | shell undoGhost true
+C-L230 Sharp | the ghost sent is the shell undo ghost: false | Extend from the given-back boxes lays the removed piece: false | ghost m 500.0 removed doc m 399.2
+C-L230 C2 after first undo {"len":"250","turn":"60"} | after typing 77 then the Undo button {"len":"200","turn":"45","pieces":1,"ug":true,"events":"t180-ghost-clear,t180-ghost"}
+C-L230 C2k after undo 250 | typed 77 then Ctrl+Z {"len":"250","pieces":2} | Ctrl+Z again {"len":"200","turn":"45","pieces":1}
+C-L230 Level | pieces removed 1 | sent is st.undoGhost.candidate: false | shown m 200.0 | removed m 200.0 | shown == removed: false | shown == Extend of the boxes: true | readout header next
+C-L230 Turn by | pieces removed 1 | sent is st.undoGhost.candidate: false | shown m 200.0 | removed m 200.0 | shown == removed: false | shown == Extend of the boxes: true | readout header next
+C-L230 Sharp | pieces removed 2 | sent is st.undoGhost.candidate: false | shown m 200.0 | removed m 99.2 | shown == removed: false | shown == Extend of the boxes: true | readout header next
+C-L230 Jump | pieces removed 3 | sent is st.undoGhost.candidate: false | shown m 200.0 | removed m 300.0 | shown == removed: false | shown == Extend of the boxes: true | readout header next
+C-L230 Extend (control) | pieces removed 1 | sent is st.undoGhost.candidate: false | shown m 200.0 | removed m 200.0 | shown == removed: true | shown == Extend of the boxes: true | readout header next
+✔ C1: brush, handle drag, jump; undo three times, redo three times: same bytes, no stale ghost or boxes (287.2376ms)
+✔ C1b: an undone Jump shows the jump that was removed, not an Extend piece (39.8686ms)
+✖ C3: an undone Level shows the piece Level laid, not the plain Extend of the same fields (73.2279ms)
+✔ C3: an undone Turn to grid shows the piece Turn to grid laid, not the plain Extend of the same fields (20.1019ms)
+✖ C3: an undone Turn by shows the piece Turn by laid, not the plain Extend of the same fields (60.6048ms)
+✖ C3: an undone Sharp shows the piece Sharp laid, not the plain Extend of the same fields (257.1982ms)
+✔ C2: undo, type in a box, Undo button: whose numbers are in the boxes (74.0841ms)
+✔ C2k: the same with Ctrl+Z (the guard first puts the typed box back, then undoes) (61.6274ms)
+✖ C4: undo of Level: the preview's ghost is the road that was removed (39.2993ms)
+✖ C4: undo of Turn by: the preview's ghost is the road that was removed (29.2543ms)
+✖ C4: undo of Sharp: the preview's ghost is the road that was removed (168.0667ms)
+✖ C4: undo of Jump: the preview's ghost is the road that was removed (31.7677ms)
+✔ C4: undo of Extend (control): the preview's ghost is the road that was removed (32.7512ms)
+✖ C5: the undo file near the cap, with made and without (15020.5041ms)
+✔ row 1c: on a CLOSED lap a shift-click across the start line takes the SHORT way: the pieces either side of the line; Save keeps them, Delete says CLOSED (324.6714ms)
+✔ row 1d: where the run across the start line CANNOT be saved (a cup at one side of it, a plain piece at the other) and the inside run can, the inside run is selected and the line says why (249.2835ms)
+✔ row 1e: a tie stays inside the lap even when the lengths are decimals whose sums differ in the last bit (A's tiefloat case) (4.7618ms)
+✔ row 1: select a piece, shift-click a run (the first piece selected stays the anchor), an out-of-range piece is refused, and any change of the document drops the selection (159.0228ms)
+✔ row 2: Save as piece stores exactly the core's text; a name already used is refused and the stored piece untouched; a bad name and a mixed run are refused by name (121.1104ms)
+✔ row 3: the library lists name, length, turn, climb and a thumbnail; an unreadable file and a whole track are LISTED with the reason (60.9424ms)
+✔ row 4: Add at head is the core's insert as ONE undo step, mirrored on request; closed, missing and damaged are refused by name with nothing changed (152.2258ms)
+✔ row 5 (REQUIRED, through the app): a track built by saving a run and adding it back through the shell is the SAME DOCUMENT and exports the SAME BYTES (3513.1489ms)
+✔ row 6: rename (the new name must be free; the file's own name changes) and delete of a saved piece (39.1274ms)
+✔ row 6b: a CASE-ONLY rename (Run to run) works where names are case-blind (C, look F2), on a case-sensitive store too, and a failure on the way never loses the piece (76.2772ms)
+✔ row 7: delete at the open end is simple (one undo step, ids kept); a closed track refuses by name (118.0251ms)
+✔ row 8: delete in the MIDDLE is previewed (displacement, overlap check); Apply writes the backup FIRST and is one undo step; a failed copy refuses; Cancel, a stale preview, and DELETE_REJOIN (1226.7762ms)
+✔ row 8b: the delete preview's overlap check finds a road running into itself (a two-circle coil, as TEST 1 stacked) and reports where (3426.4245ms)
+✔ row 9: the preview shows a delete's proposal as a ghost (dropped on Cancel and on Apply), and the selection highlight lands where the preview's own pick says the piece is (471.5261ms)
+✔ row 10: the panel: a click selects the piece under it and a shift-click the run; a drag, an armed brush and a click on nothing do not select; Save as piece, the list, Add at head with Mirror, Rename, Delete with its confirm (167.3318ms)
+✔ row 10b: the panel: a middle delete shows the preview in words (what moves, the overlap check) with Apply and Cancel; a mixed run says why it cannot be saved (445.6118ms)
+✔ row 11d (D331 B, amended): as corners the ghost has the corner handles, turnDeg and climbDeg, labelled in degrees, even with the fields blank; "turn & climb as" rate gives the rate handles back (91.8033ms)
+✔ row 11e (D331): as a corner, a Shift drag of 37 px on the turn handle is 37 × 0.01° of corner, and the placed piece turns exactly that and ends at rate 0 (139.176ms)
+✔ row 11e (D331): as a corner, a Shift drag of 23 px on the climb handle is 23 × 0.01° of corner, and the placed piece climbs exactly that and ends at rate 0 (130.9268ms)
+✔ row 11: Extend's handles: on the ghost and only while there is one; a drag types into the matching field and reaches no document until Extend; mirrored handles change the same field; Extend places what was dragged (292.4569ms)
+✔ row 11b: no ghost, no handles; a press ON a handle is the handle's and the camera keeps a press anywhere else (in Build no press is a brush); the cup's handles go with the cup field; the switch turns them off (147.6662ms)
+✔ row 11c: the preview mounts AFTER the panel, so the first ask for the ghost can go to nobody: the handles ask again about every half second and appear once it listens (found in the real window) (434.1398ms)
+✔ row 12: Sculpt through the panel: the strip offers the tools; ONE selected piece gets its handles; a drag reshapes that piece, is ONE undo step and the centreline does not move; Undo gives it back (275.0504ms)
+✔ row 13: the preview's ghostInfo (what the handles read): none without a ghost, the path's samples and where the new piece starts with one, none for a delete preview's ghost, none after clearGhost (302.244ms)
+✔ row 14: the Jump button (D258, the free jump): beside Extend; the old Add-jump fields are gone; hover shows a jump ghost with no Extend handles on it; a click is ONE undo step with the note; a refusal says why; Undo gives the fields back (784.5782ms)
+✔ row 14b: the landing boxes appear while a landing is the head, show the pose in metres and degrees, a typed value is ONE undo step, a refusal says why in words, and an Extend fixes the landing (288.7079ms)
+✔ row 14c: the landing's four handles (D278: BESIDE the Extend ghost's, where D258 had them replace it: row 14d); a drag moves the number of its box in ONE undo step; Shift is one step a pixel (D330), Ctrl snaps; two quick presses reset one; an Extend takes them away (747.7248ms)
+✔ row 14d (D278, the user: "after placing jump piece, it doesnt go back to regular track manipulation with the base equation, it stays the heading, sideways, and height"): right after Jump the Extend ghost's handles are up BESIDE the landing's four; an Extend handle types into its field and edits no document; a landing handle still moves the landing in ONE undo step; Extend fixes the landing, and its handles go (2883.727ms)
+✔ row 14e (D278): a hover on Jump shows the jump ghost with no Extend handles on it, while a landing's own handles stay; a hover on Extend with a landing as the head shows the Extend ghost's handles; Sculpt takes the landing's handles away as before (1623.97ms)
+✔ row 16: the Grip field in Extend (D261): it shows the head's grip, "grip like…" fills it from a known track, a changed value is the new piece's grip and the next piece keeps it, the words say untested outside 60 to 110 and that the checker does not model grip; 49, 151 and 100.5 are refused; Undo gives the head's back (199.5054ms)
+✔ row 16b: the selected pieces' grip (D261): the box shows the pieces' grip (blank where they differ), Set grip is ONE undo step on the road pieces and keeps the selection, "grip like…" fills the box, 49/151/100.5 are refused in words, 100 writes no grip, a flight alone is refused, Undo restores (250.193ms)
+✔ row 16c: the track coloured by grip (D261): blue below 100, white at 100, orange above; the layer draws each road piece in its colour only while "colour by grip" is ticked; the hover label says "grip 85%" for a piece off 100 (always while the view is on) and nothing for a plain piece (141.507ms)
+✔ row 17: the grip UI modules load in the webview loader with NO node built-in (D263: piecesui and griplayer required src/core/document.js, which pulls tools/piecewise.cjs and node's fs, and the panel failed to load), and their copy of the grip numbers is the core's (49.6305ms)
+✔ row 18: the CHEAP ghost while a handle is dragged (D266 item 2): every step of a drag asks the preview for a cheap ghost, the release asks for the full one, typing in a field and hovering Extend ask for the full one (120.7721ms)
+✔ row 19: no help paragraph stays in the left column (D267): the tube width, the grip, the turn-0 hint, the jump and the landing show only a few words or nothing, and the words are tooltips (170.8527ms)
+✔ row 19b: the values of the piece being edited are drawn LARGE over the 3D view (D267): length, turn, climb, bank and width, updated as a handle is dragged or a field is typed, hidden on a closed loop (431.0842ms)
+✔ row 19c: the share codes are in the File menu as "Copy track code" and "Paste track code…" (D267; D355 moved them from the ⋯ menu), not a section of the left column; the code itself is unchanged (69.3635ms)
+✔ row 20: the saved pieces are a drop-down bin in the top bar, not a section of the left column (D269): a row per piece with its thumbnail, name and summary; Add at head, Add mirrored, Rename and Delete; a click on the row adds it; the empty words are in the menu; Save as piece stays with the selection (160.0118ms)
+✔ row 20b: the Pieces menu opens and closes: it lists the pieces when opened, Esc closes it, a press outside closes it, a press inside does not; Esc with it closed does nothing; the top bar has the button beside Open… and Previous versions… (112.372ms)
+✔ row 15: the preview's ghostInfo says whether the ghost is a jump's and carries its segments (what the handles and the flight overlay read) (81.0233ms)
+✔ D259: a typed 300 stays 300 (one full turn either way is allowed), and a typed 400 becomes 40; the field shows them so (155.8168ms)
+✔ D259: dragging the bank handle from 350 by about +20 gives about 10 (not 370), and from -350 by about -20 gives about -10; Extend applies what the field shows (313.8534ms)
+✔ row 18b: a length drag previews whole 2 m, and the release previews the exact length the field shows (93.7899ms)
+✔ row 18c: a ghost whose sliced build needs more frames than the retry is still shown: the handles do not ask again while the preview is building one (D426) (167.395ms)
+✔ row 22 (D430): an EMPTIED turn, climb, bank or cup is 0, not the head's value: the new piece eases to 0, and the box shows 0 once the change is committed (215.5116ms)
+✔ row 22b (D430): a field left as shown still continues the head; an emptied width keeps its old meaning (blank: the head's; 0 is no width) (186.6647ms)
+✔ row 22c (D430): as a corner the turn and climb fields rest blank, so a blank there is untouched: the track keeps turning, it does not ease to straight (168.3389ms)
+✔ a selected piece lends its values to the Extend fields: Extend places a piece like it; a run lends nothing; clearing shows the head (96.8219ms)
+✔ D331 B: with the turn read as a corner (the default), a selected piece lends the degrees it turns, and Extend places a piece that turns them and ends straight (99.0414ms)
+✔ row 16 (D335): a steady bank drag on a placed piece's sculpt mark, the pointer following the mark as the road rolls, rises all the way, lands on 180 and never goes back (the axis fixed at the grab stalled it near 165) (6930.7815ms)
+✔ row 16b (D335): a slow bank drag on a sculpt mark is 0.01 degree a pixel with no key, and the piece reads what the handle says (1687.2995ms)
+✔ row 21: in Sculpt, a Tube sweep drag on a closed tube is refused in plain words: "Sculpt can't change the sweep of a closed tube…", not the core's (126.7511ms)
+✔ row D464: Sculpt's how-to line and value line read as instructions, not errors: class hint, painted in the text colour (83.1767ms)
+✔ row 25 (D519, amended D520): Grab on the road: the pressed point follows the pointer and a rim keeps the far rim (built again and read), a dot opens at its own station, off the road is Grab as before (202.4884ms)
+✔ row 25b (D519): with another key the press keeps that key's one channel wherever it lands; the shell says what the piece is and why a channel would be refused (62.1232ms)
+✔ xsec extendOptions: each field is its channel target, in the seal's units (1.4586ms)
+✔ xsec extendOptions: nothing is clamped; the core's guards refuse by name (E2 KE2-2) (0.7778ms)
+✔ xsec extendOptions: bank winds past ±180 (the spiral, S1 iv) (0.111ms)
+✔ xsec extendOptions: the new fields take the "at start" box like the others (0.2461ms)
+✔ xsec headState (A's core): a non-tube head shows tube sweep 0 ("none"); an edge head and a tube head show the document's values (117.0225ms)
+✔ xsec panel: the three fields are on the panel and show the head; left as shown they send nothing (28.6515ms)
+✔ xsec panel: a changed field is a target, and its cell shows the DOCUMENT, not the typed value (16.9565ms)
+✔ xsec panel: the edge angle and the edge start each redraw the readout on their own, with no other field typed after them (9.6702ms)
+✔ xsec panel: after Extend the fields read back what the document holds (20.7962ms)
+✔ xsec panel (A's core): each cross-section cell is the core's own readout of the candidate (36.9338ms)
+✔ xsec panel: a core that reports no cross-section readout shows — in those cells (2.1141ms)
+✔ xsec panel: a core refusal is shown by its name (BAD_TUBE, BAD_EDGE: A's contract) (10.1612ms)
+✔ xsec panel: a piece is a cup OR a tube — changing one puts the other back and disables it (10.699ms)
+✔ xsec panel: a cup and a tube sent together anyway are refused by name (BAD_TARGET) (1.3602ms)
+✔ xsec panel: a refusal the REAL core makes on Extend is shown in the panel with its name (3.7398ms)
+✔ xsec panel: the bank field takes any number and keeps it within one turn, its sign kept: 360 is a full turn of roll, and -540 is -180 (D259) (54.9297ms)
+✔ xsec panel: a spiral of -90° pieces typed on to -360 rolls the last piece on the same way to a full turn, never back (129.3865ms)
+✔ xsec head marker: the mast follows the road's U, right side up when inverted (0.4673ms)
+✔ xsec head marker: inside a closed tube the marker keeps to the room it has (0.1687ms)
+✔ xsec head marker: the clearance of a closed tube is 0.9 of its roof and of its reach (0.9851ms)
+✔ xsec head marker: the preview hands the closed tube's room to the marker it draws (55.1301ms)
+✔ xsec validation words: the tube-too-narrow and roll-rate reds read in plain words, the id in the tooltip (0.9179ms)
+✔ xsec the panel loads in the webview loader with no node built-in (D186) (47.4446ms)
+✔ xsec panel: the left and right edge fields take a negative number, with no min, and Extend places it (D406) (41.4964ms)
+✔ P1: undo puts the removed road up as the ghost, and the preview model accepts it (281.6111ms)
+✔ P2: the readout shows the removed piece (170 m), not the next one (96.3958ms)
+✔ P3: a redo clears the ghost; typing hands the picture back to the next piece (110.0281ms)
+R4 pieces 41 ghost segments 4150 rebuilt by the undo 0
+✔ R1: undo leaves the removed piece as the ghost, with its own segments; redo drops it (104.1443ms)
+✔ R2: a new extend, candidate or brush starts with no undo ghost; two undos show the last one only (145.1234ms)
+✔ R3: an undone edit that removes no piece (a grip change) holds no ghost: the preview draws only a road that extends the placed one (49.5314ms)
+✔ R4: one undo rebuilds no piece: every ghost segment is an object the document already had (2302.8416ms)
+✔ R5: the ghost carries the removed piece's own readout (20.8173ms)
+✔ R6: a plain piece: Extend, Undo gives the typed values back, and Extend again lays the same piece (179.2213ms)
+✔ R6: a piece with an extra turn row: Extend, Undo gives the typed values back, and Extend again lays the same piece (68.1704ms)
+✔ R6: the S as driven (turn 0, +92 from 80, -91 from 200, flow through its marks): Extend, Undo gives the typed values back, and Extend again lays the same piece (255.517ms)
+✔ P7: the S is typeable: turn 0 with extra turn rows sends turnDeg 0, and a plain turn 0 still sends none (186.6972ms)
+✔ R7: save, open, undo gives the values back from the undo file; an undo file without them opens as before (65.2354ms)
+✔ R8: the released reader (builder main 3b33b38) opens an undo file that carries `made`, history intact (551.8216ms)
+✔ R9b: with no values kept, the undone piece is shown with words saying they are read from the shape, and the boxes are NOT filled (34.8261ms)
+ℹ tests 108
+ℹ suites 0
+ℹ pass 100
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31320.268
+
+✖ failing tests:
+
+test at app\test\c-l230-read.test.js:132:3
+✖ C3: an undone Level shows the piece Level laid, not the plain Extend of the same fields (73.2279ms)
+  AssertionError [ERR_ASSERTION]: Level: the boxes given back, laid by Extend (the ghost shown), are not the piece Level laid
+  actual expected
+  
+  '{"id":"p2","type":"road","length":200,"family":"bowl","knots":[5,10,20,40,60,80,100,120,140,160,180,190,195],"channels":{"kh":[0,0,0.000032051,0.000166478,0.000609751,0.001556141,0.002864715,0.003961087,0.004420856,0.003961087,0.002864715,0.001556141,0.000609751,0.000166478,0.000032051,0,0],"kv":[0,0,0.000003846,0.000019977,0.00007317,0.000186737,0.000343766,0.00047533,0.000530503,0.00047533,0.000343766,0.000186737,0.00007317,0.000019977,0.000003846,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"e":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"s":[0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64],"t":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"er":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}'
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-c-l230\app\test\c-l230-read.test.js:149:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '{"id":"p2","type":"road","length":200,"family":"bowl","knots":[5,10,20,40,60,80,100,120,140,160,180,190,195],"channels":{"kh":[0,0,0.000032051,0.000166478,0.000609751,0.001556141,0.002864715,0.003961087,0.004420856,0.003961087,0.002864715,0.001556141,0.000609751,0.000166478,0.000032051,0,0],"kv":[0,0,0.000003846,0.000019977,0.00007317,0.000186737,0.000343766,0.00047533,0.000530503,0.00047533,0.000343766,0.000186737,0.00007317,0.000019977,0.000003846,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"e":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"s":[0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64],"t":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"er":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}',
+    expected: '{"id":"p2","type":"road","length":200,"family":"bowl","knots":[5,10,20,40,60,80,100,120,140,160,180,190,195],"channels":{"kh":[0,0,0.000032051,0.000166478,0.000609751,0.001556141,0.002864715,0.003961087,0.004420856,0.003961087,0.002864715,0.001556141,0.000609751,0.000166478,0.000032051,0,0],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"e":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"s":[0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64],"t":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"er":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\c-l230-read.test.js:132:3
+✖ C3: an undone Turn by shows the piece Turn by laid, not the plain Extend of the same fields (60.6048ms)
+  AssertionError [ERR_ASSERTION]: Turn by: the boxes given back, laid by Extend (the ghost shown), are not the piece Turn by laid
+  actual expected
+  
+  '{"id":"p2","type":"road","length":200,"family":"bowl","knots":[5,10,20,40,60,80,100,120,140,160,180,190,195],"channels":{"kh":[0,0,0.000032058461,0.0001664997874,0.0006097531701,0.0015586141737,0.0028634371658,0.00475396130874,0.00442530856027,0.00475396130874,0.0028634371658,0.0015586141737,0.0006097531701,0.0001664997874,0.000032058461,0,0],"kv":[0,0,0.000003846,0.000019977,0.00007317,0.000186737,0.000343766,0.00047533,0.000530503,0.00047533,0.000343766,0.000186737,0.00007317,0.000019977,0.000003846,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"e":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"s":[0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64],"t":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"er":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}'
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-c-l230\app\test\c-l230-read.test.js:149:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '{"id":"p2","type":"road","length":200,"family":"bowl","knots":[5,10,20,40,60,80,100,120,140,160,180,190,195],"channels":{"kh":[0,0,0.000032051,0.000166478,0.000609751,0.001556141,0.002864715,0.003961087,0.004420856,0.003961087,0.002864715,0.001556141,0.000609751,0.000166478,0.000032051,0,0],"kv":[0,0,0.000003846,0.000019977,0.00007317,0.000186737,0.000343766,0.00047533,0.000530503,0.00047533,0.000343766,0.000186737,0.00007317,0.000019977,0.000003846,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"e":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"s":[0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64],"t":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"er":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}',
+    expected: '{"id":"p2","type":"road","length":200,"family":"bowl","knots":[5,10,20,40,60,80,100,120,140,160,180,190,195],"channels":{"kh":[0,0,0.000038461,0.000199774,0.000731701,0.00186737,0.003437658,0.004753304,0.005305027,0.004753304,0.003437658,0.00186737,0.000731701,0.000199774,0.000038461,0,0],"kv":[0,0,0.000003846,0.000019977,0.00007317,0.000186737,0.000343766,0.00047533,0.000530503,0.00047533,0.000343766,0.000186737,0.00007317,0.000019977,0.000003846,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"e":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"s":[0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64],"t":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"er":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\c-l230-read.test.js:132:3
+✖ C3: an undone Sharp shows the piece Sharp laid, not the plain Extend of the same fields (257.1982ms)
+  AssertionError [ERR_ASSERTION]: Sharp: the boxes given back, laid by Extend (the ghost shown), are not the piece Sharp laid
+  actual expected
+  
+  '{"id":"p23","type":"road","length":200,"family":"bowl","knots":[5,10,20,40,60,80,100,120,140,160,180,190,195],"channels":{"kh":[0,0,0.0000312051,0.000166478,0.0006097251,0.00122556141,0.00112864715,0.0039610875,0.00442081256,0.00396108725,0.0028643715,0.0015526141,0.000609751,0.000166478225,0.000032051,0,0],"kv":[0,0,0.000003846,0.000019977,0.00007317,0.000186737,0.000343766,0.00047533,0.000530503,0.00047533,0.000343766,0.000186737,0.00007317,0.000019977,0.000003846,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"e":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"s":[0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64],"t":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"er":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}'
+  
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-c-l230\app\test\c-l230-read.test.js:149:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '{"id":"p2","type":"road","length":200,"family":"bowl","knots":[5,10,20,40,60,80,100,120,140,160,180,190,195],"channels":{"kh":[0,0,0.000032051,0.000166478,0.000609751,0.001556141,0.002864715,0.003961087,0.004420856,0.003961087,0.002864715,0.001556141,0.000609751,0.000166478,0.000032051,0,0],"kv":[0,0,0.000003846,0.000019977,0.00007317,0.000186737,0.000343766,0.00047533,0.000530503,0.00047533,0.000343766,0.000186737,0.00007317,0.000019977,0.000003846,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"e":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"s":[0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64],"t":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"er":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}}',
+    expected: '{"id":"p3","type":"road","length":20,"family":"bowl","knots":[2,4,6,8,10,12,14,16,18],"channels":{"kh":[0.0125,0.0125,0.01225,0.011275,0.00985,0.008125,0.00625,0.004375,0.00265,0.001225,0.00025,0,0],"kv":[0,0,0,0,0,0,0,0,0,0,0,0,0],"phi":[0,0,0,0,0,0,0,0,0,0,0,0,0],"w":[33,33,33,33,33,33,33,33,33,33,33,33,33],"r":[2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993,2.993],"h":[0,0,0,0,0,0,0,0,0,0,0,0,0],"l":[0,0,0,0,0,0,0,0,0,0,0,0,0],"c":[0,0,0,0,0,0,0,0,0,0,0,0,0],"e":[0,0,0,0,0,0,0,0,0,0,0,0,0],"s":[0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64,0.64],"t":[0,0,0,0,0,0,0,0,0,0,0,0,0],"er":[0,0,0,0,0,0,0,0,0,0,0,0,0]}}',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at app\test\c-l230-read.test.js:188:3
+✖ C4: undo of Level: the preview's ghost is the road that was removed (39.2993ms)
+  AssertionError [ERR_ASSERTION]: Level: the ghost after the undo is not the road the undo removed
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-c-l230\app\test\c-l230-read.test.js:203:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\c-l230-read.test.js:188:3
+✖ C4: undo of Turn by: the preview's ghost is the road that was removed (29.2543ms)
+  AssertionError [ERR_ASSERTION]: Turn by: the ghost after the undo is not the road the undo removed
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-c-l230\app\test\c-l230-read.test.js:203:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\c-l230-read.test.js:188:3
+✖ C4: undo of Sharp: the preview's ghost is the road that was removed (168.0667ms)
+  AssertionError [ERR_ASSERTION]: Sharp: the ghost after the undo is not the road the undo removed
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-c-l230\app\test\c-l230-read.test.js:203:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\c-l230-read.test.js:188:3
+✖ C4: undo of Jump: the preview's ghost is the road that was removed (31.7677ms)
+  AssertionError [ERR_ASSERTION]: Jump: the ghost after the undo is not the road the undo removed
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-c-l230\app\test\c-l230-read.test.js:203:12)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at app\test\c-l230-read.test.js:208:1
+✖ C5: the undo file near the cap, with made and without (15020.5041ms)
+  SyntaxError: "undefined" is not valid JSON
+      at JSON.parse (<anonymous>)
+      at TestContext.<anonymous> (C:\Consonance\t180-wt-c-l230\app\test\c-l230-read.test.js:215:51)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+exit 1

@@ -1,0 +1,15 @@
+C-L230 C5 progress 50 50 null
+C-L230 C5 progress 100 100 null
+C-L230 C5 progress 150 150 null
+C-L230 C5 progress 200 200 null
+C-L230 C5 steps 210 | pieces 211 | past kept 200 future 0 | made slots 201 filled 200 | undo file bytes with made 16399554 without 16312963 | made adds 86591 (0.531%) | one made entry ~ 433 B | lay ms 187818
+✔ C5: the undo file near the cap, with made and without (188076.8663ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 188267.2433
+exit 0
