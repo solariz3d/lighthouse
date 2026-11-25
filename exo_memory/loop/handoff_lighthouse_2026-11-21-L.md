@@ -16,7 +16,11 @@ within the first few days"
   from cache. The 7-day figure went 4 % to 6 % in that time, and 6 % to 7 % in the hour after both panes were cut.
 - A builder pane starts at about 100,000 tokens after a cut. Pane A's census:
   `exo_memory/handback/p-q1-census-A_2026-11-21.md` (the intake file 37,117; tool definitions 23,920; the rest in its table).
-- In one hour, 61 of pane A's 171 model calls and 26 of pane B's 150 were shell calls that wait or tail.
+- ~~In one hour, 61 of pane A's 171 model calls and 26 of pane B's 150 were shell calls that wait or tail.~~
+  **WRONG, corrected 2026-11-25 by pane A's recount and the librarian's own** (`handback/p-l225-A_2026-11-25.md`, A2;
+  `librarian/2026-11-25.laptop.md`, "01:1x"): the pattern counted any command with the word `tail` in it, and 40 of A's
+  and 10 of B's were a pipe into `tail` to shorten output. Calls that only wait: A 3 of 171, B 2 of 150 (A's strict
+  rule); calls holding a sleep at all: A 4 (82 seconds in all), B 0.
 
 ## Landed on main and live on L (each must be INSTALLED OR SET ON D by hand; settings files do not travel by git)
 

@@ -33,8 +33,12 @@ Registered (the packet's, carried): failed if a builder pane's first call after 
 
 ## Part 2. The two leaks nothing has touched yet
 
-- **2a. Waiting calls.** On 11-21, 61 of pane A's 171 calls in an hour and 26 of pane B's 150 were shell calls that wait
-  or tail. Each re-reads the whole context. Lap: the ledger counts them per seat, and the builder's intake carries one
+- **2a. Waiting calls. AMENDED 01:1x: THIS IS NOT A LEAK; my figure was wrong.** Pane A's recount of the same hour by a
+  written rule: 3 of 171 and 2 of 150 calls only wait (38 and 36 more hold a wait beside other work). My own recount:
+  a sleep in 4 of A's calls (82 seconds in all) and in none of B's; 40 of A's and 10 of B's that I had counted were a
+  pipe into `tail` to shorten output. The ledger now carries the count (branch `l225-waits`) and it stays as a watched
+  figure; nothing more is built for it. The original text follows, struck by this note:
+  ~~On 11-21, 61 of pane A's 171 calls in an hour and 26 of pane B's 150 were shell calls that wait or tail.~~ Each re-reads the whole context. Lap: the ledger counts them per seat, and the builder's intake carries one
   line (a long run goes to the background once; the turn ends). Failed if, on the next working night, more than one
   call in ten of a builder pane is a wait.
 - **2b. A ring that is typed and never sent** (D, 11-24: a pane's ring sat four hours in his input line). Lap: the app
