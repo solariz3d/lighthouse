@@ -141,3 +141,31 @@ is running at the install, stop and say so.
 
 **Registered:** C's line carried: failed if the undo ghost is installed and he finds a stale ghost or wrong numbers in
 the boxes after an undo that C's read passed.
+
+---
+
+## ADDENDUM 3 (the librarian, 02:3x): the commands' own numbers come back too, before C's re-read
+
+Pane A's hand-back (`handback/p-l229-A-addendum2_2026-11-25.md`, §5) answers item 4: `fieldsNow()` does not hold Turn
+by's angle, Sharp's degrees, radius and ramp, or the grid step. This lap's registered line ("failed if, after undoing a
+piece laid in the installed build, the boxes do not hold the numbers he typed") would fire on his first undone Sharp. A
+calls the change small; C must re-read anyway. So it goes in now, and C reads both in one pass.
+
+**Pane A, same branch, from 77ca81c, tier "check it":**
+1. `made` keeps the command's own fields beside the Extend fields (`turnBy`, `sharpDeg`, `sharpR`, `sharpRamp`,
+   `gridStep`, whichever the command used, with `op` naming the command); `putBack` puts them back.
+2. C3b is amended by name to what it means: the SAME command, pressed on the given-back boxes, lays the removed piece
+   (Extend for an Extend, Sharp for a Sharp, and so on). Its `todo` comes off and it must pass for Level, Turn by, Turn
+   to grid and Sharp; Jump if it can be set up, else say why not.
+3. A made with no command fields (the files 2e70b9f and 77ca81c wrote) opens as now: the ghost of the road removed and
+   the Extend fields back.
+4. Tests: undo-commands and the set you ran at 77ca81c (588). No whole suite. `heavy-run.js --status && <run>`.
+5. The two S undo files are Extend-made: no re-make unless the format of an Extend's `made` changes; if it does, re-make
+   them as in addendum 2 with the track sha256 before and after.
+6. No build, no install. Hand back to the librarian.
+
+**Correction to addendum 2's hand-back, §4:** "His app is open" is wrong. checked 02:3x: `tasklist` shows no
+`t180-track-builder.exe`; his word at 01:36 was "closed the program". No harm: only the two `.t180undo` files were copied.
+
+**Then pane C** re-reads 2e70b9f..<new tip> in one pass: C3, C4, T1, the amended C3b, varied (a different first piece;
+a Jump after a Sharp; an undo, a typed change, a redo). CLEAN or the line. Then the install, as in addendum 2.
