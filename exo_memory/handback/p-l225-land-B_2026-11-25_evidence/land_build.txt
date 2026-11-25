@@ -1,0 +1,9 @@
+HEAD f47546c8
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 1311 filtered out; finished in 0.00s
+moved aside
+
+warning: `consonance` (bin "consonance") generated 13 warnings
+    Finished `release` profile [optimized] target(s) in 2m 17s
+       Built application at: C:\build\lighthouse-target\release\consonance.exe
+-rwxr-xr-x 2 zackn 197609 16197120 2026-11-25 02:38:58.900690100 -0600 /c/build/lighthouse-target/release/consonance.exe
+ec2dbe16aec3305f

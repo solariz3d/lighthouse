@@ -1,0 +1,16 @@
+===== 4170746b
+actors.evidence exit 1
+carrier-drift exit 1
+portable-paths exit 0
+shelf-recursion exit 1
+intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room --- FAILED
+intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000 --- FAILED
+test result: FAILED. 15 passed; 2 failed; 2 ignored; 0 measured; 1275 filtered out; finished in 78.92s
+===== 21c98789
+actors.evidence exit 1
+carrier-drift exit 1
+portable-paths exit 1
+shelf-recursion exit 1
+intake_light_tests::light_the_librarian_intake_is_under_target_with_the_cards_and_the_room --- FAILED
+intake_light_tests::light_the_librarian_worst_case_intake_is_under_145_000 --- FAILED
+test result: FAILED. 15 passed; 2 failed; 2 ignored; 0 measured; 1300 filtered out; finished in 93.94s
