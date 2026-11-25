@@ -1216,6 +1216,16 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
             Err(e) => plog(&format!("NO PROMPT pane={pane_id}: the settings file was not written ({e}); this pane prompts as before")),
         }
     }
+    // L225 B1 (Q2 half B): a builder's launch leaves out the Artifact tool and most of the skills listing (floor_launch_for).
+    if floor_launch_for(is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {
+        match floor_launch_settings_file() {
+            Ok(p) => {
+                cmd.args(["--settings", &p, "--disallowedTools", FLOOR_DISALLOWED]);
+                plog(&format!("BUILDER FLOOR pane={pane_id}: --settings {p} --disallowedTools {FLOOR_DISALLOWED} (\"builder_floor\": false in the config puts them back)"));
+            }
+            Err(e) => plog(&format!("BUILDER FLOOR pane={pane_id}: the settings file was not written ({e}); this pane launches as before")),
+        }
+    }
     if skip_perms {
         cmd.arg("--dangerously-skip-permissions");
     } else if is_fresh_cwd(&cwd) {
@@ -4813,6 +4823,77 @@ mod builder_floor_tests {
     }
 }
 
+/* L225 B1 (Q2 half B, packet_q2_builder_floor_B_2026-11-21.md): a builder's LAUNCH leaves out what the probe showed removable AND
+ * unused in 41 builder laps (handback/p-q2-builder-floor-B_2026-11-21.md, its L225 section):
+ *   - the Artifact tool (0 laps). In the panes' own request shapes it rode as a FULL definition, 34,422 to 38,426 B, from 11-04 to
+ *     11-21 and again today, not as a deferred line; `--disallowedTools Artifact` leaves it out;
+ *   - most of the skills listing (Skill called 0 times ever): `skillListingBudgetFraction: 0` took it from 17,956 to 8,429 B on
+ *     opus with the Skill tool and Workflow unchanged. Disallowing Skill instead grows Workflow's description (5,745 to 22,976 B).
+ * Monitor, SendMessage and Agent are used, so they stay. Same gate as the intake floor (a `sibling-` folder) plus the instances root
+ * (a keeper's "+ Pane" folder is not touched, as L216), and the same switch: `"builder_floor": false` puts all of it back at the next
+ * spawn, no rebuild. */
+const FLOOR_LAUNCH_SETTINGS: &str = r#"{"skillListingBudgetFraction":0}"#;
+const FLOOR_DISALLOWED: &str = "Artifact";
+
+/// Does this spawn get the floor's launch flags? Pure: the caller hands in what it read.
+fn floor_launch_for(managed: bool, builder_name: bool, raw_config: Option<&str>) -> bool {
+    managed && builder_name && builder_floor_on_from(raw_config.unwrap_or(""))
+}
+
+/// The settings file the floor's flag names, beside the room's other state; its contents are fixed above.
+fn floor_launch_settings_file() -> Result<String, String> {
+    let p = data_dir().join("builder-floor.settings.json");
+    if fs::read_to_string(&p).ok().as_deref() != Some(FLOOR_LAUNCH_SETTINGS) {
+        fs::write(&p, FLOOR_LAUNCH_SETTINGS).map_err(|e| e.to_string())?;
+    }
+    p.to_str().map(str::to_string).ok_or_else(|| "a non-UTF-8 data path".to_string())
+}
+
+#[cfg(test)]
+mod floor_launch_tests {
+    use super::*;
+    fn at(name: &str) -> String {
+        std::env::temp_dir().join("Consonance").join("instances").join(name).to_string_lossy().into_owned()
+    }
+    #[test]
+    fn r1_a_builder_pane_gets_the_floor_launch() {
+        assert!(floor_launch_for(true, is_builder_dir_name(&at("sibling-5bf9d657")), None), "no config: on");
+        assert!(floor_launch_for(true, true, Some("{}")), "a config without the switch: on");
+        assert!(floor_launch_for(true, true, Some("not json")), "an unreadable config is not the switch");
+    }
+    #[test]
+    fn r1_the_housed_seats_and_a_keepers_pane_keep_their_launch() {
+        for name in ["main", "librarian", "third-place", "fresh-12345678"] {
+            assert!(!floor_launch_for(true, is_builder_dir_name(&at(name)), None), "{name} keeps its launch");
+        }
+        assert!(!floor_launch_for(false, true, None), "a sibling- name outside the instances root (a keeper's + Pane folder)");
+    }
+    #[test]
+    fn r1_the_one_switch_restores_the_launch_with_the_intake() {
+        let off = r#"{"builder_floor": false}"#;
+        assert!(!floor_launch_for(true, true, Some(off)));
+        assert!(!builder_floor_on_from(off), "the same key restores the intake's three pieces");
+    }
+    #[test]
+    fn r1_only_what_is_unused_is_left_out() {
+        assert_eq!(FLOOR_DISALLOWED, "Artifact", "Monitor, SendMessage and Agent are used; leaving Skill out grows Workflow");
+        let v: serde_json::Value = serde_json::from_str(FLOOR_LAUNCH_SETTINGS).expect("json");
+        assert_eq!(v, serde_json::json!({ "skillListingBudgetFraction": 0 }), "the listing budget and nothing else");
+    }
+    #[test]
+    fn r1_the_spawn_passes_the_floor_rule_exactly_what_it_read() {
+        let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
+        let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
+        let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
+        let call = "    if floor_launch_for(is_managed_cwd(&cwd), is_builder_dir_name(&cwd), fs::read_to_string(config_path()).ok().as_deref()) {\n        match floor_launch_settings_file() {\n            Ok(p) => {\n                cmd.args([\"--settings\", &p, \"--disallowedTools\", FLOOR_DISALLOWED]);";
+        assert!(spawn.contains(call), "the ask, its three arguments, the file and the flags, exactly");
+        assert_eq!(spawn.matches("floor_launch_for(").count(), 1, "asked once");
+        let file = &s[s.find("fn floor_launch_settings_file(").expect("the file")..];
+        let file = &file[..file.find("\n}\n").unwrap()];
+        assert!(file.contains("data_dir().join(\"builder-floor.settings.json\")") && file.contains("FLOOR_LAUNCH_SETTINGS"), "the fixed file and its fixed text");
+    }
+}
+
 fn is_builder_dir_name(cwd: &str) -> bool {
     PathBuf::from(cwd).file_name().and_then(|n| n.to_str()).map(|n| n.starts_with("sibling-")).unwrap_or(false)
 }
@@ -4881,7 +4962,9 @@ mod no_prompt_tests {
         let s = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/src/main.rs")).unwrap();
         let spawn = &s[s.find("fn spawn_claude_pane(").expect("the spawn")..];
         let spawn = &spawn[..spawn.find("\n}\n").unwrap()];
-        assert_eq!(spawn.matches("\"--settings\"").count(), 1, "the spawn adds --settings at one site");
+        // AMENDED BY NAME (L225 B1): the builder floor adds its own `--settings` at a second site, asked by its own rule
+        // (`floor_launch_for`, pinned in floor_launch_tests); the no-prompt flag is still the first and is still asked first.
+        assert_eq!(spawn.matches("\"--settings\"").count(), 2, "the no-prompt site and the floor's site");
         let ask = spawn.find("no_prompt_for(").expect("the spawn asks the rule");
         let flag = spawn.find("\"--settings\"").unwrap();
         assert!(ask < flag, "the rule is asked before the flag is added");
@@ -26056,6 +26139,29 @@ mod submit_check_tests {
         let (out, bytes, _, _) = run(MSG, vec![Some(stuck), Some(empty())]);
         assert_eq!(out, Ok(Submit::Submitted { retries: 1 }));
         assert_only_enters(&bytes, 2);
+    }
+
+    // L225 B4 (PROBE, no fix): the two ways the code itself leaves a ring in the box with ONE Enter sent and no word on the board
+    // from the drain. These rows pin today's behaviour; they are evidence for the hand-back, not a rule to keep.
+    #[test]
+    fn l225_b4_a_box_unreadable_after_the_enter_gets_no_retry_and_the_drain_row_says_nothing() {
+        // e.g. a dialog or menu drawn over the composer (no composer row), or two grids that disagree, on all four readings
+        let (out, bytes, _, reads) = run(MSG, vec![None, None, None, None]);
+        assert_eq!(out, Ok(Submit::Unknown));
+        assert_only_enters(&bytes, 1);
+        assert_eq!(reads, SUBMIT_CHECK_GAPS_MS.len());
+        assert_eq!(submit_note(&out), "", "the drain's DELIVERED row carries no note for an unknown submit");
+    }
+    #[test]
+    fn l225_b4_our_paste_collapsed_under_another_line_count_gets_no_retry_and_the_drain_row_says_nothing() {
+        // the box holds our paste, but its placeholder counts lines differently from ours (e.g. a CRLF counted as two):
+        // it reads as text that is not ours, so the Enter is never pressed again
+        let n = MSG.matches('\n').count();
+        let stuck = screen(&[&format!("\u{276f} [Pasted text #1 +{} lines]", 2 * n)], false);
+        let (out, bytes, _, _) = run(MSG, vec![Some(stuck)]);
+        assert_eq!(out, Ok(Submit::NotOurs));
+        assert_only_enters(&bytes, 1);
+        assert_eq!(submit_note(&out), "", "and the drain's DELIVERED row carries no note for it either");
     }
 
     #[test]
