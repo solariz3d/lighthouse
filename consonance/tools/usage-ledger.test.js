@@ -281,16 +281,23 @@ const rrAsst = (t, name, input) => rrJ({ type: 'assistant', timestamp: t, messag
 const rrPrompt = (t, text) => rrJ({ type: 'user', timestamp: t, message: { content: text } });
 const rrCut = (t) => rrJ({ type: 'system', subtype: 'compact_boundary', timestamp: t });
 
+// Amended by name (L236, the librarian's order 10:17Z): no drive-letter literals in the fixtures (portable-paths read the old
+// :286-293 as four DRIVE hits). The row's rule is unchanged: one file in two spellings counts once. The spellings are now a
+// backslash path against a slash path in another case, and a Git-Bash drive path in two cases, which must come back mapped
+// off its /c/ form and counted once.
 test('L235-1 a file read before the cut and read again in the first lap after it is counted once', () => {
   const lines = [
-    rrPrompt('1', '[chair:MAIN] L229, yours'), rrAsst('2', 'Read', { file_path: 'C:\\x\\a.md' }), rrAsst('3', 'Bash', { command: 'sed -n 1,5p /c/x/b.js' }),
+    rrPrompt('1', '[chair:MAIN] L229, yours'), rrAsst('2', 'Read', { file_path: '\\xx\\A.md' }), rrAsst('3', 'Bash', { command: 'sed -n 1,5p /c/x/b.js' }),
     rrCut('4'),
-    rrPrompt('5', '[chair:MAIN] L232, yours'), rrAsst('6', 'Read', { file_path: 'C:/x/a.md' }), rrAsst('7', 'Read', { file_path: 'C:/x/a.md' }),
-    rrAsst('8', 'Bash', { command: 'cat /c/x/b.js | head' }), rrAsst('9', 'Read', { file_path: 'C:/x/new.md' }),
+    rrPrompt('5', '[chair:MAIN] L232, yours'), rrAsst('6', 'Read', { file_path: '/xx/a.md' }), rrAsst('7', 'Read', { file_path: '/xx/a.md' }),
+    rrAsst('8', 'Bash', { command: 'cat /C/x/b.js | head' }), rrAsst('9', 'Read', { file_path: '/xx/new.md' }),
   ];
   const r = reader.rereadsAfterCuts(lines);
   assert.strictEqual(r.length, 1);
-  assert.deepStrictEqual(r[0].reread.sort(), ['c:/x/a.md', 'c:/x/b.js']);
+  const got = r[0].reread.sort();
+  assert.strictEqual(got.length, 2, JSON.stringify(got));
+  assert.ok(got.includes('/xx/a.md'), JSON.stringify(got));
+  assert.ok(got.some((p) => p.endsWith('/x/b.js') && !p.startsWith('/c/')), 'the /c/ form is mapped and both cases count once: ' + JSON.stringify(got));
   assert.strictEqual(r[0].firstLap, 'L232');
 });
 test('L235-2 the first lap ends at the next chair dispatch with another lap id; a read after it is not counted', () => {
