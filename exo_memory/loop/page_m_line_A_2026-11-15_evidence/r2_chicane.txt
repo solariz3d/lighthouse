@@ -1,0 +1,9 @@
+    route 2's chicane, today   : 0.525 s between the gates, lowest 6.99 m/s, exit tick 868, contacts 0, to the corridor's top in 5.23 s
+    route 2's chicane, the arcs: 0.963 s between the gates, lowest 2.72 m/s, exit tick 1088, contacts 4, to the corridor's top in 6.20 s
+    route 2's chicane, hand line cap 0.5 m (fillets 0.50 0.50 0.50 0.50 0.50 m): 176 points, 0 off the mesh (the first at (0.00 0.00)); 0.967 s between the gates, lowest 3.04 m/s, exit tick 1142, contacts 0, to the corridor's top in 6.48 s
+    route 2's chicane, hand line cap 1.0 m (fillets 1.00 1.00 1.00 1.00 1.00 m): 172 points, 0 off the mesh (the first at (0.00 0.00)); 0.904 s between the gates, lowest 3.40 m/s, exit tick 1066, contacts 0, to the corridor's top in 6.15 s
+    route 2's chicane, hand line cap 1.5 m (fillets 1.50 1.40 1.40 1.50 1.50 m): 169 points, 0 off the mesh (the first at (0.00 0.00)); 0.858 s between the gates, lowest 3.77 m/s, exit tick 1013, contacts 0, to the corridor's top in 5.93 s
+    route 2's chicane, hand line cap 2.0 m (fillets 2.00 1.40 1.40 2.00 2.00 m): 168 points, 0 off the mesh (the first at (0.00 0.00)); 0.817 s between the gates, lowest 4.25 m/s, exit tick 1002, contacts 0, to the corridor's top in 5.88 s
+    route 2's chicane, hand line cap 2.5 m (fillets 2.50 1.40 1.40 2.50 2.50 m): 168 points, 0 off the mesh (the first at (0.00 0.00)); 0.758 s between the gates, lowest 4.69 m/s, exit tick 987, contacts 0, to the corridor's top in 5.82 s
+ok    diag_chicane_route_2
+1 tests, 0 failed

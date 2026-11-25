@@ -1,0 +1,71 @@
+film-corner: looked at 1 worlds from seed 1: 2160 node pairs, 2080 walk-only paths, 8353 bends, 1293 kept, 2.5 s
+TRACE candidate 45.0 degrees at (-25.04, 77.51): door (-3.54, 77.51)
+TRACE frame 1152 tick 1921 hunter (-3.54 10.54 77.51) speed 0.00, 21.50 m from the apex
+TRACE frame 1224 tick 2041 hunter (-3.54 10.54 77.51) speed 0.45, 21.49 m from the apex
+TRACE frame 1296 tick 2161 hunter (-4.58 10.54 77.51) speed 4.23, 20.46 m from the apex
+TRACE frame 1368 tick 2281 hunter (-7.83 10.54 77.51) speed 8.76, 17.20 m from the apex
+TRACE frame 1440 tick 2401 hunter (-12.40 10.54 77.51) speed 9.26, 12.63 m from the apex
+TRACE frame 1512 tick 2521 hunter (-17.09 10.54 77.42) speed 9.48, 7.95 m from the apex
+TRACE frame 1584 tick 2641 hunter (-21.88 10.54 77.49) speed 9.69, 3.16 m from the apex
+TRACE frame 1656 tick 2761 hunter (-25.35 10.54 77.58) speed 3.35, 0.32 m from the apex
+TRACE frame 1728 tick 2881 hunter (-26.29 10.54 78.91) speed 4.68, 1.88 m from the apex
+TRACE frame 1800 tick 3001 hunter (-28.62 10.54 81.35) speed 8.84, 5.25 m from the apex
+TRACE frame 1872 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 1944 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2016 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2088 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2160 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2232 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2304 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2376 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2448 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2520 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2592 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2664 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2736 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2808 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2880 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 2952 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3024 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3096 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3168 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3240 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3312 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3384 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3456 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3528 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3600 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3672 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3744 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3816 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3888 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 3960 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4032 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4104 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4176 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4248 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4320 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4392 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4464 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4536 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4608 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4680 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4752 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4824 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4896 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 4968 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5040 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5112 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5184 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5256 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5328 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5400 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5472 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5544 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5616 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE frame 5688 tick 3116 hunter (-31.17 10.54 84.75) speed 7.14, 9.48 m from the apex
+TRACE nearest to the apex 0.02 m over 5760 frames
+film-corner: the bend: 45.0 degrees (the path's turn between its 3 m chords in and out) at (-25.04, 10.54, 77.51) in the world of seed 1; the corridor across it 3.0 m; clean path 22.2 m before it and 10.6 m after; the staged run's door 21.5 m before it at (-3.54, 10.54, 77.51), the target's walk to 10.1 m after it at (-32.19, 10.54, 84.65)
+TICKREAD gates: entry frame 1602 tick 2671 speed 8.777, exit frame 1732 tick 2888, through 0.903 s; apex -25.04 10.54 77.51
+TICKREAD lowest 2.832 at frame 1693 tick 2823 pos -25.73 10.54 78.22
+M3D E bend: replans 0 (compared 0); flips with the solid within 0.5 m 0, 1.0 m 0, 2.0 m 0

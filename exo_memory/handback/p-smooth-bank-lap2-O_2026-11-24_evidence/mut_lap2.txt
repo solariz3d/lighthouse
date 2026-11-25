@@ -1,0 +1,174 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+[32m✔ CONTROL: the flowing-bank and roll-instrument files pass whole on an unmutated copy of src/ and tools/ [90m(6987.182ms)[39m[39m
+[32m✔ mutant R1 bankShape 'flow' is refused as an unknown shape: applied, and caught by "flow|built" [90m(194.0989ms)[39m[39m
+[34mℹ R1 bankShape 'flow' is refused as an unknown shape: 22 of 26 run tests failed[39m
+[32m✔ mutant R2 through on another channel is not refused: applied, and caught by "flow 8" [90m(180.8413ms)[39m[39m
+[34mℹ R2 through on another channel is not refused: 1 of 4 run tests failed[39m
+[32m✔ mutant R3 through with a bank shape other than 'flow' is not refused: applied, and caught by "flow 8" [90m(192.8756ms)[39m[39m
+[34mℹ R3 through with a bank shape other than 'flow' is not refused: 1 of 4 run tests failed[39m
+[32m✔ mutant R4 a flowing bank with no first target is not refused: applied, and caught by "flow 8" [90m(162.7759ms)[39m[39m
+[34mℹ R4 a flowing bank with no first target is not refused: 1 of 4 run tests failed[39m
+[32m✔ mutant R5 through with the bank's changes is not refused: applied, and caught by "flow 8" [90m(187.7319ms)[39m[39m
+[34mℹ R5 through with the bank's changes is not refused: 1 of 4 run tests failed[39m
+[32m✔ mutant R6 a through that is not a list is not refused: applied, and caught by "flow 8" [90m(166.9681ms)[39m[39m
+[34mℹ R6 a through that is not a list is not refused: 1 of 4 run tests failed[39m
+[32m✔ mutant R7 a mark that is not a number is not refused: applied, and caught by "flow 8" [90m(199.397ms)[39m[39m
+[34mℹ R7 a mark that is not a number is not refused: 1 of 4 run tests failed[39m
+[32m✔ mutant R8 a mark before the one before it is not refused: applied, and caught by "flow 8" [90m(160.3945ms)[39m[39m
+[34mℹ R8 a mark before the one before it is not refused: 1 of 4 run tests failed[39m
+[32m✔ mutant R9 a mark under 5 m after the one before is not refused: applied, and caught by "flow 8" [90m(252.1796ms)[39m[39m
+[34mℹ R9 a mark under 5 m after the one before is not refused: 1 of 4 run tests failed[39m
+[32m✔ mutant R10 a mark past the piece's length is not refused: applied, and caught by "flow 8" [90m(210.7646ms)[39m[39m
+[34mℹ R10 a mark past the piece's length is not refused: 1 of 4 run tests failed[39m
+[32m✔ mutant M1 the through marks are dropped (only the first target is passed): applied, and caught by "flow 1|flow 9" [90m(275.3751ms)[39m[39m
+[34mℹ M1 the through marks are dropped (only the first target is passed): 3 of 8 run tests failed[39m
+[32m✔ mutant M2 the first target is passed at the piece's end, not at its transition: applied, and caught by "flow 1" [90m(188.2305ms)[39m[39m
+[34mℹ M2 the first target is passed at the piece's end, not at its transition: 3 of 7 run tests failed[39m
+[32m✔ mutant K1 no knot is inserted at a mark: applied, and caught by "flow" [90m(6492.8629ms)[39m[39m
+[34mℹ K1 no knot is inserted at a mark: 2 of 21 run tests failed[39m
+[32m✔ mutant K2 a mark takes a knot as far as 10 m away for its own: applied, and caught by "flow" [90m(6511.4261ms)[39m[39m
+[34mℹ K2 a mark takes a knot as far as 10 m away for its own: 2 of 21 run tests failed[39m
+[32m✔ mutant S1 the joint's slope is not carried (the bank starts level-rated): applied, and caught by "flow 4" [90m(244.065ms)[39m[39m
+[34mℹ S1 the joint's slope is not carried (the bank starts level-rated): 2 of 6 run tests failed[39m
+[32m✔ mutant S2 the head's slope is dropped at the call (held or not): applied, and caught by "flow 4" [90m(246.0274ms)[39m[39m
+[34mℹ S2 the head's slope is dropped at the call (held or not): 2 of 6 run tests failed[39m
+[32m✔ mutant S3 the end is not held at rest when the last mark is at the piece's end: applied, and caught by "flow 4" [90m(233.2698ms)[39m[39m
+[34mℹ S3 the end is not held at rest when the last mark is at the piece's end: 1 of 6 run tests failed[39m
+[32m✔ mutant S4 the start's curvature is not held at 0: applied, and caught by "flow 4" [90m(216.7295ms)[39m[39m
+[34mℹ S4 the start's curvature is not held at 0: 4 of 6 run tests failed[39m
+[32m✔ mutant S5 the marks are not passed (their rows dropped): applied, and caught by "flow 1" [90m(275.3614ms)[39m[39m
+[34mℹ S5 the marks are not passed (their rows dropped): 2 of 7 run tests failed[39m
+[32m✔ mutant S6 the least SLOPE, not the least bending (D1 for D2 in the Gram matrix): applied, and caught by "flow" [90m(4649.8438ms)[39m[39m
+[34mℹ S6 the least SLOPE, not the least bending (D1 for D2 in the Gram matrix): 1 of 21 run tests failed[39m
+[32m✔ mutant S7 the Gram matrix is read at one point per span (the middle), not three: applied, and caught by "flow" [90m(4788.8289ms)[39m[39m
+[34mℹ S7 the Gram matrix is read at one point per span (the middle), not three: 3 of 21 run tests failed[39m
+[32m✔ mutant S8 tension at the plan's first answer (λ = 0.03): applied, and caught by "flow" [90m(5425.9114ms)[39m[39m
+[34mℹ S8 tension at the plan's first answer (λ = 0.03): 1 of 21 run tests failed[39m
+[32m✔ mutant S9 the control points are stored to 3 places, not the bank's 9: applied, and caught by "flow" [90m(4362.3148ms)[39m[39m
+[34mℹ S9 the control points are stored to 3 places, not the bank's 9: 4 of 21 run tests failed[39m
+[32m✔ mutant J1 the joint's roll acceleration is not carried (the start held at 0, as before): applied, and caught by "flow 4" [90m(233.6642ms)[39m[39m
+[34mℹ J1 the joint's roll acceleration is not carried (the start held at 0, as before): 2 of 6 run tests failed[39m
+[32m✔ mutant J2 the joint's roll acceleration is not passed at the call: applied, and caught by "flow 4" [90m(234.7032ms)[39m[39m
+[34mℹ J2 the joint's roll acceleration is not passed at the call: 2 of 6 run tests failed[39m
+[32m✔ mutant J3 after a flight the flight is read as road (its channel at its end): applied, and caught by "flow 4" [90m(245.7069ms)[39m[39m
+[34mℹ J3 after a flight the flight is read as road (its channel at its end): 1 of 6 run tests failed[39m
+[32m✔ mutant P1 a turning mark is not held at rest: applied, and caught by "flow 5|flow 11" [90m(266.0818ms)[39m[39m
+[34mℹ P1 a turning mark is not held at rest: 1 of 5 run tests failed[39m
+[32m✔ mutant P2 every mark that does NOT turn is held at rest instead: applied, and caught by "flow" [90m(3697.676ms)[39m[39m
+[34mℹ P2 every mark that does NOT turn is held at rest instead: 6 of 21 run tests failed[39m
+[32m✔ mutant B1 the curve is not held inside the range: applied, and caught by "drawn 1|drawn 3|drawn 5" [90m(4982.839ms)[39m[39m
+[34mℹ B1 the curve is not held inside the range: 2 of 6 run tests failed[39m
+[31m✖ mutant B2 the curve is not held on the marks' side between two of one sign: applied, and caught by "drawn 1|drawn 3|drawn 4" [90m(6629.3069ms)[39m[39m
+[34mℹ B2 the curve is not held on the marks' side between two of one sign: 0 of 6 run tests failed[39m
+[31m✖ mutant B3 the curve is held every 2 m, not every 0.25 m: applied, and caught by "drawn" [90m(6609.4782ms)[39m[39m
+[34mℹ B3 the curve is held every 2 m, not every 0.25 m: 0 of 12 run tests failed[39m
+[32m✔ mutant B4 the bank the piece starts from is left out of the range: applied, and caught by "drawn" [90m(1725.4664ms)[39m[39m
+[34mℹ B4 the bank the piece starts from is left out of the range: 6 of 12 run tests failed[39m
+[32m✔ mutant B5 the least bending is laid even where it leaves what the marks ask: applied, and caught by "drawn 1|drawn 3|drawn 5" [90m(5025.7963ms)[39m[39m
+[34mℹ B5 the least bending is laid even where it leaves what the marks ask: 2 of 6 run tests failed[39m
+[31m✖ mutant B6 the curve as laid is not read once more (the final read): applied, and caught by "drawn|flow" [90m(6548.8065ms)[39m[39m
+[34mℹ B6 the curve as laid is not read once more (the final read): 0 of 27 run tests failed[39m
+[32m✔ mutant G1 a row taken is never let go (its multiplier never read): applied, and caught by "qp" [90m(164.8961ms)[39m[39m
+[34mℹ G1 a row taken is never let go (its multiplier never read): 1 of 6 run tests failed[39m
+[32m✔ mutant G2 the full step goes the wrong way: applied, and caught by "qp" [90m(161.1159ms)[39m[39m
+[34mℹ G2 the full step goes the wrong way: 3 of 6 run tests failed[39m
+[32m✔ mutant G3 the multipliers are not moved with a step: applied, and caught by "qp" [90m(195.6657ms)[39m[39m
+[34mℹ G3 the multipliers are not moved with a step: 1 of 6 run tests failed[39m
+[32m✔ mutant G4 rows no curve meets give the point reached, not none: applied, and caught by "qp" [90m(162.2776ms)[39m[39m
+[34mℹ G4 rows no curve meets give the point reached, not none: 2 of 6 run tests failed[39m
+[32m✔ mutant G5 the equality rows are left out of the step (the marks not kept): applied, and caught by "qp|drawn 5" [90m(210.8817ms)[39m[39m
+[34mℹ G5 the equality rows are left out of the step (the marks not kept): 1 of 6 run tests failed[39m
+[32m✔ mutant D1 a row with no free point is skipped, not checked (finding 3): applied, and caught by "drawn 7" [90m(165.9824ms)[39m[39m
+[34mℹ D1 a row with no free point is skipped, not checked (finding 3): 1 of 4 run tests failed[39m
+[32m✔ mutant D2 rows that outnumber their free points are not refused before the solve (finding 2): applied, and caught by "drawn 2" [90m(162.6568ms)[39m[39m
+[34mℹ D2 rows that outnumber their free points are not refused before the solve (finding 2): 1 of 4 run tests failed[39m
+[32m✔ mutant N1 a refusal names no room (the search not run): applied, and caught by "drawn 2|drawn 6" [90m(825.3914ms)[39m[39m
+[34mℹ N1 a refusal names no room (the search not run): 1 of 5 run tests failed[39m
+[32m✔ mutant N2 the room named is one metre short of what lays: applied, and caught by "drawn 6" [90m(363.6749ms)[39m[39m
+[34mℹ N2 the room named is one metre short of what lays: 1 of 4 run tests failed[39m
+[32m✔ mutant W1 a plain piece's built road is not read: applied, and caught by "drawn 3|drawn 4" [90m(590.607ms)[39m[39m
+[34mℹ W1 a plain piece's built road is not read: 2 of 5 run tests failed[39m
+[31m✖ mutant W2 a corner's built road is not read: applied, and caught by "drawn 9|built" [90m(6212.8453ms)[39m[39m
+[34mℹ W2 a corner's built road is not read: 0 of 12 run tests failed[39m
+[34mℹ tests 46[39m
+[34mℹ suites 0[39m
+[34mℹ pass 42[39m
+[34mℹ fail 4[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 88274.1674[39m
+
+[31m✖ failing tests:[39m
+
+test at test\core_bank_flow_mutation.test.js:97:3
+[31m✖ mutant B2 the curve is not held on the marks' side between two of one sign: applied, and caught by "drawn 1|drawn 3|drawn 4" [90m(6629.3069ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT: 6 pass, 0 fail with the pattern "drawn 1|drawn 3|drawn 4"
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\o-smooth-t180\[39mtest\core_bank_flow_mutation.test.js:108:14[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_bank_flow_mutation.test.js:97:3
+[31m✖ mutant B3 the curve is held every 2 m, not every 0.25 m: applied, and caught by "drawn" [90m(6609.4782ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT: 12 pass, 0 fail with the pattern "drawn"
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\o-smooth-t180\[39mtest\core_bank_flow_mutation.test.js:108:14[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_bank_flow_mutation.test.js:97:3
+[31m✖ mutant B6 the curve as laid is not read once more (the final read): applied, and caught by "drawn|flow" [90m(6548.8065ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT: 27 pass, 0 fail with the pattern "drawn|flow"
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\o-smooth-t180\[39mtest\core_bank_flow_mutation.test.js:108:14[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at test\core_bank_flow_mutation.test.js:97:3
+[31m✖ mutant W2 a corner's built road is not read: applied, and caught by "drawn 9|built" [90m(6212.8453ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: NOT CAUGHT: 11 pass, 0 fail with the pattern "drawn 9|built"
+      at TestContext.<anonymous> [90m(G:\consonance-scratch\o-smooth-t180\[39mtest\core_bank_flow_mutation.test.js:108:14[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:228:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1118:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:787:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1247:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1175:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:787:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [33mfalse[39m,
+    expected: [33mtrue[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

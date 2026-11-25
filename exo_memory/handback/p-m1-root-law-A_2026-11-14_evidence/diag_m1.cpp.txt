@@ -1,0 +1,30 @@
+
+// SCRATCH (D676, never committed): route 0 with the grip root, every head-on wall hit with what it was doing in the half second before.
+DZ_TEST(zz_diag_m1_route0_walls) {
+  const auto rs = corner_routes(10);
+  for (int which = 0; which < 2; ++which) {
+    SpeedModel m;
+    if (which) DZ_CHECK(set_speed(m, "root_law=1").empty());
+    nav::Query query(plain_apartment_arena().nav());
+    Chaser c;
+    c.id = 1, c.kind = Kind::Hunter, c.body = make_body(archetype(Kind::Hunter).limits, m.ref_speed, 1.0f, m);
+    c.body.root_law = static_cast<int>(m.root_law);
+    if (!place(c, query, rs[0].first, 0.0f) || !plan_to(c, query, rs[0].second)) continue;
+    std::printf("  %s: top %.2f brake %.1f; path %zu points\n", which ? "ROOT" : "today", c.body.top, c.body.brake, c.path.points.size());
+    struct S { float spd, turn, lat; Vec3 p; size_t leg; };
+    std::vector<S> hist;
+    for (int t = 0; t < 240 * 30 && !c.arrived; ++t) {
+      const uint32_t hits = c.wall_hits;
+      step(c, query);
+      hist.push_back({c.speed, c.turn, c.acc_lat, c.pos, c.leg});
+      if (c.wall_hits != hits) {
+        std::printf("    hit at t %.3f s pos (%.2f, %.2f) leg %zu; the 0.5 s before (every 0.1 s): ", t / 240.0, c.pos.x, c.pos.z, c.leg);
+        for (int k = 120; k >= 0; k -= 24) if (t - k >= 0) { const S& h = hist[static_cast<size_t>(t - k)]; std::printf("[v %.2f w %.2f lat %.1f leg %zu] ", h.spd, h.turn, h.lat, h.leg); }
+        const auto& P = c.path.points;
+        if (c.leg + 2 < P.size()) { const Vec3 a = flat(P[c.leg + 1].pos - P[c.leg].pos), b = flat(P[c.leg + 2].pos - P[c.leg + 1].pos);
+          std::printf(" next turn %.0f deg, legs %.2f / %.2f m", std::fabs(det_atan2(a.x * b.z - a.z * b.x, dot(a, b))) * 57.3f, length(a), length(b)); }
+        std::printf("\n");
+      }
+    }
+  }
+}

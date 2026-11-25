@@ -1,0 +1,14 @@
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1214.1902ms)
+✖ drawn 2: the reader's lists the solve could not carry (finding 2) are refused by name (BAD_SECOND, the mark and its room), never an untyped throw (8.3869ms)
+✖ drawn 7: after fixture F5 (a road that ends rolling), a flowing bank with the transition given as ONE number is refused by name, not laid with its joint C1 (5.0127ms)
+✖ CONTROL: the flowing-bank and roll-instrument files pass whole on an unmutated copy of src/ and tools/ (5932.7315ms)
+✖ mutant R9 a mark under 5 m after the one before is not refused: applied, and caught by "flow 8" (254.0683ms)
+ℹ tests 4755
+ℹ pass 4726
+ℹ fail 5
+ℹ skipped 21
+ℹ todo 3
+✖ failing tests:
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1214.1902ms)
+✖ drawn 2: the reader's lists the solve could not carry (finding 2) are refused by name (BAD_SECOND, the mark and its room), never an untyped throw (8.3869ms)
+✖ drawn 7: after fixture F5 (a road that ends rolling), a flowing bank with the transition given as ONE number is refused by name, not laid with its joint C1 (5.0127ms)

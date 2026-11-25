@@ -1,0 +1,28 @@
+    seed 1: 12 routes, the careful body sooner on 7
+    seed 2: 12 routes, the careful body sooner on 12
+    seed 3: 12 routes, the careful body sooner on 10
+    seed 4: 12 routes, the careful body sooner on 6
+    seed 5: 12 routes, the careful body sooner on 8
+    seed 6: 12 routes, the careful body sooner on 11
+    seed 7: 12 routes, the careful body sooner on 9
+    seed 8: 12 routes, the careful body sooner on 7
+    96 routes with three corners or more over seeds 1-8: the body that never brakes for one met the mesh's edge for longer on 88 and was the slower on 70; it met a wall head-on 123 times against 50, and took 1360.5 s in all against 1017.3 s
+    G:\consonance-scratch\a-m2b-kit\chase\tests\body_tests.cpp(191): CHECK failed: careful_sooner * 4 >= tried * 3
+FAIL  a_sprinter_that_does_not_brake_for_corners_meets_the_walls_and_one_that_does_gets_there_sooner
+    the sprinter is planned first by a quarter or more on 10 of 10 level routes; up 6 flights its best speed along the stairs was 4.16 m/s (its flat speed is 10.15, the player's sprint 7.00)
+ok    a_sprinter_wins_the_straight_and_loses_the_stairs
+    on the root, main's world: 96 routes; hot scraped more on 0, careful sooner on 0, the same time on 96; head-on 31 against 31; 1169.1 s against 1169.1 s
+ok    m2b_the_sprinter_row_printed_with_the_sprinter_on_the_root
+    seed 5: 6 turns: sprinter interceptor pack sprinter interceptor pack
+    seed 6: 7 turns: sprinter interceptor pack sprinter interceptor pack sprinter
+    seed 7: 6 turns: sprinter interceptor pack sprinter interceptor pack
+ok    with_kinds_in_turn_the_lesser_chasers_come_sprinter_interceptor_pack_in_turn
+    sprinter off the root: 10 of 10 routes walked, 92.67 s in all, 11 head-on wall ticks, peak sideways 0.00 m/s^2
+    sprinter on the root : 10 of 10 routes walked, 97.18 s in all, 24 head-on wall ticks, peak sideways 9.81 m/s^2
+ok    m2b_the_sprinter_on_the_root_walks_the_ten_routes_reported
+    sprinter told 9 m/s   : peak sideways 9.81 m/s^2; step 0.5616, 0.999 of the law's bound; feet 0.000; re-point 0.000000; widest 0.90 m; through yes
+    sprinter told 5.42 m/s: peak sideways 9.81 m/s^2; step 0.5110, 0.999 of the law's bound; feet 0.000; re-point 0.000000; widest 0.08 m; through yes
+ok    m2b_the_sprinter_on_the_root_takes_the_3_m_corner_within_the_laws_bounds
+    seed 5, flee, normal, 90 s: off chase a35a0ed660f80f05; sprinter on the root 179324f3ecba01fd / 179324f3ecba01fd
+ok    m2b_a_run_with_only_the_sprinter_on_the_root_is_not_the_old_chase_and_plays_the_same_twice
+7 tests, 1 failed

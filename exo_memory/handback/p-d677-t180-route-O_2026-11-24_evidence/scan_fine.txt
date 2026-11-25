@@ -1,0 +1,16 @@
+f 76 T 170: peak 80.7 at 110.5
+f 76 T 175: peak 83.0 at 110.5
+f 76 T 180: peak 85.4 at 110.5
+f 76 T 185: peak 87.8 at 110.5
+f 78 T 170: peak 82.8 at 111.5
+f 78 T 175: peak 85.3 at 111.5
+f 78 T 180: peak 87.7 at 111.5
+f 78 T 185: peak 90.1 at 111.5
+f 80 T 170: peak 86.7 at 112.0
+f 80 T 175: peak 89.3 at 112.0
+f 80 T 180: peak 91.8 at 112.0
+f 80 T 185: peak 94.4 at 112.0
+f 82 T 170: peak 89.0 at 113.0
+f 82 T 175: peak 91.6 at 113.0
+f 82 T 180: peak 94.3 at 113.0
+f 82 T 185: peak 96.9 at 113.0

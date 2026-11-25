@@ -621,6 +621,11 @@ dl.glossary dd { margin: 0 0 0 16px; color: var(--text); font-size: 13.5px; }
 .cs-table { border-collapse: collapse; margin: 12px 0; width: 100%; }
 .cs-table th, .cs-table td { text-align: left; padding: 4px 10px; border-bottom: 1px solid #1c2230; vertical-align: top; }
 .cs-table tr.cs-cut td { color: #5EEAD4; }
+/* L221 · the run, seat by seat: done in the cut colour, failed in the warning colour, waiting muted. */
+.cs-summary { font-size: 15px; margin: 10px 0 4px; }
+.cs-table tr.cs-done td { color: #5EEAD4; }
+.cs-table tr.cs-failed td { color: #ff8a80; }
+.cs-table tr.cs-waiting td, .cs-table tr.cs-skipped td { color: #8b95a7; }
 .stick-table { border-collapse: collapse; margin: 12px 0; width: 100%; }
 .stick-table th, .stick-table td { border-bottom: 1px solid #222a36; padding: 6px 8px; text-align: left; vertical-align: top; }
 .stick-table th { color: #8b95a7; font-weight: 500; }

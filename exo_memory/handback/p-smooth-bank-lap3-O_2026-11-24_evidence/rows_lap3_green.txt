@@ -1,0 +1,8 @@
+✔ row 1: the flow box with three marks gives the contract's call exactly; blank ats are spread evenly between the marks either side of them (100.33ms)
+✔ row 2: unticked, every call lays today's document to the byte, over a matrix of length, bank, early, extra rows and a corner (pinned on 57e4b1c) (282.4966ms)
+✔ row 3: the flow box and its marks survive: Undo gives them back, and the piece saved, closed and reopened is the same bytes and passes through each mark (61.4954ms)
+✔ row 4: mirror negates the marks: the piece the panel laid, saved and inserted mirrored, banks the exact negative and passes through each mark's negative (41.7773ms)
+✔ row 5: a refusal of the flowing bank reaches the panel in the core's own words, naming the mark and the room it needs; Extend adds nothing (432.58ms)
+ℹ tests 5
+ℹ pass 5
+ℹ fail 0

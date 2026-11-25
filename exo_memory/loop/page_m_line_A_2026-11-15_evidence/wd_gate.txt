@@ -1,0 +1,6 @@
+    grip 1.0: one plan_to with the arcs, 15 plans, mean 1868 us, largest 3736 us
+    grip 1.3: one plan_to with the arcs, 15 plans, mean 1737 us, largest 4735 us
+    grip 1.6: one plan_to with the arcs, 15 plans, mean 1692 us, largest 3637 us
+    grip 2.0: one plan_to with the arcs, 15 plans, mean 1585 us, largest 3197 us
+ok    diag_gate_by_grip
+1 tests, 0 failed

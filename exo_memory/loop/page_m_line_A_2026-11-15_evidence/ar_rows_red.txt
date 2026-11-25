@@ -1,0 +1,15 @@
+    the ten routes, way (b) with the arcs: total 78.72 s against today's 77.11 s; wall contacts above 0.3 m/s 11, head-on ticks 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1442): CHECK failed: arcs <= today
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1443): CHECK failed: contacts <= 10
+FAIL  mline_arcs_on_the_ten_routes_way_b_is_no_slower_than_today_and_touches_a_wall_at_most_ten_times
+    22 degrees, way (b) with the arcs: to the end; entry 6.87, lowest 6.87 m/s, 0.296 s between the gates (passed 1.63 m from the point); contacts 0, head-on 0; exit gate at tick 686 (today's 724, 0.637 s); arcs 0, merged 0, S pairs 0, runs by the least-bending solve 0, tangent points off the mesh 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(423): CHECK failed: rep.arcs >= 1
+    45 degrees, way (b) with the arcs: to the end; entry 8.58, lowest 8.11 m/s, 0.446 s between the gates (passed 0.62 m from the point); contacts 0, head-on 0; exit gate at tick 801 (today's 1103, 1.296 s); arcs 0, merged 0, S pairs 0, runs by the least-bending solve 0, tangent points off the mesh 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(423): CHECK failed: rep.arcs >= 1
+    90 degrees, way (b) with the arcs: to the end; entry 7.19, lowest 2.10 m/s, 0.933 s between the gates (passed 0.17 m from the point); contacts 0, head-on 0; exit gate at tick 915 (today's 871, 0.846 s); arcs 0, merged 0, S pairs 0, runs by the least-bending solve 0, tangent points off the mesh 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(422): CHECK failed: r.exit_tick <= today.exit_tick
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(423): CHECK failed: rep.arcs >= 1
+FAIL  mline_arcs_on_way_b_each_of_e_three_bends_exits_no_later_than_today
+    one plan_to for one root chaser with the arcs: 15 plans, mean 498 us, largest 694 us
+ok    mline_arcs_one_plan_with_the_arcs_is_under_a_thousand_microseconds
+3 tests, 2 failed

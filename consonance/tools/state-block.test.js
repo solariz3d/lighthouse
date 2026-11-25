@@ -179,6 +179,18 @@ test('an under-cap block is NOT marked truncated — the flag must discriminate'
   assert.doesNotMatch(r.text, /TRUNCATED/);
 });
 
+test('the real block ends with its last section WHOLE — the cap never cuts LIVE, the section a waking seat reads last', () => {
+  // D677: on 11-14 the block passed its cap and LIVE was cut to "LIVE  a". The truncation marker is loud, but a block can also be cut
+  // and stay under-length-looking, so this row reads the end itself: every line of the last section, in order, ends the block.
+  const secs = [sb.repoSection(), sb.journalSection(), sb.instrumentSection(), sb.sourceSection(), sb.nameSection(), sb.liveSection()];
+  const r = sb.render(secs);
+  const last = secs[secs.length - 1];
+  assert.strictEqual(last.title, 'live', 'LIVE is the last section');
+  const tail = last.lines.map((l) => '  ' + l).join('\n');
+  assert.ok(r.text.endsWith(tail), 'the block ends with every line of LIVE:\n' + r.text.slice(-300));
+  assert.match(r.text, /^LIVE\b.*\(check: tail -1 /m, 'and LIVE keeps its title and its check');
+});
+
 test('the real block fits under the cap today — a generator that always truncates is broken', () => {
   const r = sb.render();
   assert.strictEqual(r.truncated, false, `live block is ${r.chars} chars, over the ${sb.CAP} cap`);
@@ -190,11 +202,12 @@ test('the real block fits under the cap today — a generator that always trunca
  * fell off at real wakes. The fixture: a HEAD with a 200-character subject, its REPO section rendered with
  * the live repo's other sections, so the cap is as near as it is at a wake. */
 const LONG_SUBJECT = 'state block fixture subject ' + 'x'.repeat(172);
-function longHeadRepoSection() {
+const SHORT_SUBJECT = 'a short fixture subject';   // D677: a subject that fits, whatever the live HEAD's is
+function longHeadRepoSection(subject = LONG_SUBJECT) {
   const d = require('./scratch.js').mkdtemp('sb-longhead-');
   const g = (...a) => cp.execFileSync('git', a, { cwd: d, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
   g('init', '-q');
-  g('-c', 'user.name=fixture', '-c', 'user.email=fixture@test', 'commit', '-q', '--allow-empty', '-m', LONG_SUBJECT);
+  g('-c', 'user.name=fixture', '-c', 'user.email=fixture@test', 'commit', '-q', '--allow-empty', '-m', subject);
   g('update-ref', 'refs/remotes/origin/main', 'HEAD');   // a checkout's shape at a wake: "0 commit(s) unpushed", not the no-remote line
   const out = cp.execFileSync(process.execPath, ['-e', 'process.stdout.write(JSON.stringify(require(process.argv[1]).repoSection()))',
     require.resolve('./state-block.js')], { env: { ...process.env, STATE_BLOCK_REPO: d }, encoding: 'utf8', windowsHide: true });
@@ -218,11 +231,27 @@ test('a 200-character HEAD subject does not cut the block: LIVE stays, the cap h
   assert.match(head, /\[subject clipped, 200 chars in full\]$/, 'the clip carries a mark naming the full length');
 });
 
+// D677 (pane P, 2026-11-16): this row read the LIVE HEAD's subject and asserted it printed whole, so it went red whenever a commit's
+// subject did not fit (over 63 characters on ee18bf7b; 15 of main's last 20 were), though the generator then did exactly what the row
+// above pins: clip and mark. The row's check is kept as it was; its subject is now one that fits, from a fixture HEAD. The live HEAD has
+// its own row below, which holds for a subject of any length.
 test('a subject that fits is printed whole and unmarked', () => {
-  const r = sb.render(wakeSections(sb.repoSection()));
+  const r = sb.render(wakeSections(longHeadRepoSection(SHORT_SUBJECT)));
   const head = r.text.split('\n').find((l) => /^\s+HEAD /.test(l));
-  assert.ok(head.endsWith(headSubject(LIVE_REPO)), 'the live subject is printed whole');
+  assert.ok(head.endsWith(SHORT_SUBJECT), 'the subject that fits is printed whole');
   assert.doesNotMatch(r.text, /subject clipped/);
+});
+
+test('the live HEAD: its subject whole and unmarked when it fits, else clipped with the mark naming its length; LIVE always whole', () => {
+  const r = sb.render(wakeSections(sb.repoSection()));
+  const subj = headSubject(LIVE_REPO);
+  assert.strictEqual(r.truncated, false, `the block was truncated (${r.chars} chars)`);
+  assert.ok(r.chars <= sb.CAP, `rendered ${r.chars} chars over the ${sb.CAP} cap`);
+  assert.match(r.text, /^LIVE\b/m, 'the LIVE section must survive');
+  assert.match(r.text, /tail -1 .*head-watch/, 'LIVE keeps its check');
+  const head = r.text.split('\n').find((l) => /^\s+HEAD /.test(l));
+  if (head.endsWith(subj)) assert.doesNotMatch(head, /subject clipped/, 'a whole subject carries no mark');
+  else assert.ok(head.endsWith(`[subject clipped, ${subj.length} chars in full]`), `a subject that does not fit is clipped with its mark: ${head}`);
 });
 
 test('a failed command is REPORTED, never omitted', () => {
@@ -424,6 +453,26 @@ test('a missing SOURCE.md FAILS LOUDLY rather than emitting an empty table', () 
   const src = fs.readFileSync(require.resolve('./state-block.js'), 'utf8');
   assert.match(src, /FAILED: ' \+ SRC \+ ' is absent/, 'absence must be reported');
   assert.match(src, /FAILED: no trigger rows parsed/, 'an unparseable file must be reported too');
+});
+
+test('grouped by target, NO trigger is lost: every trigger in SOURCE.md is in the section verbatim, on the line that ends with its target', () => {
+  // P, 2026-11-15: the rows are grouped by target to give back the characters the watch-the-bearing card added. The triggers are the
+  // room's cues and are not trimmed without the continuity test, so this row holds the grouping to "layout only".
+  const src = fs.readFileSync(path.join(LIVE_REPO, 'exo_memory', 'SOURCE.md'), 'utf8').split('\n');
+  const start = src.findIndex((l) => /^##\s+TRIGGERS\s*$/.test(l));
+  const want = [];
+  for (let i = start + 1; i < src.length && !/^##\s/.test(src[i]); i++) {
+    const m = src[i].match(/^- when (.+?) -> (.+?)\s*$/);
+    const t = m && m[2].trim();
+    if (m) want.push({ when: m[1].trim(), target: /\.md$/.test(t) ? t.replace(/^exo_memory\//, '').replace(/^cards\//, '').replace(/\.md$/, '') : t });
+  }
+  assert.ok(want.length >= 10, 'the source rows were read: ' + want.length);
+  const rows = sb.sourceSection().lines.filter((l) => l.startsWith('  '));
+  for (const w of want) {
+    const line = rows.find((l) => l.endsWith(' -> ' + w.target) && l.includes(w.when));
+    assert.ok(line, `"${w.when}" -> ${w.target} is not on its target's line`);
+  }
+  assert.strictEqual(rows.length, new Set(want.map((w) => w.target)).size, 'one line per target');
 });
 
 test('every rendered trigger is a when -> target pair', () => {

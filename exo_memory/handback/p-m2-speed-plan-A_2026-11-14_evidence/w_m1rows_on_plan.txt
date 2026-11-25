@@ -1,0 +1,72 @@
+    route 0: today walked (8.3 s, 0 hits); slip 3 walked; grip root walked (9.0 s, 18 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 1: today walked (9.2 s, 0 hits); slip 3 walked; grip root walked (9.3 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 2: today walked (9.5 s, 0 hits); slip 3 walked; grip root STOPPED (9.8 s, 0 hits, 1.2 m short, peak sideways 9.81 m/s^2)
+    route 3: today walked (6.7 s, 0 hits); slip 3 walked; grip root walked (7.8 s, 2 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 4: today walked (6.3 s, 0 hits); slip 3 walked; grip root walked (6.8 s, 3 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 5: today walked (5.8 s, 0 hits); slip 3 walked; grip root walked (5.9 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 6: today walked (5.6 s, 0 hits); slip 3 walked; grip root walked (6.0 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 7: today walked (10.8 s, 6 hits); slip 3 walked; grip root walked (11.3 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 8: today walked (6.6 s, 0 hits); slip 3 STOPPED; grip root walked (6.6 s, 2 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    route 9: today walked (8.5 s, 0 hits); slip 3 walked; grip root walked (9.1 s, 0 hits, 0.2 m short, peak sideways 9.81 m/s^2)
+    walked to the end: today 10, grip root 9 of 10; slip 3 stopped on 1, of which the grip root walked 1; root ticks 19575
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(587): CHECK failed: lost == 0
+FAIL  m1_the_grip_root_walks_every_corner_route_the_chase_walks_today_including_where_slip_stalled
+    head-on wall hits on 10 routes: today 6, grip root 25 (bar 7.50)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(606): CHECK failed: static_cast<float>(grip) <= 1.25f * static_cast<float>(today)
+FAIL  m1_the_grip_root_meets_walls_head_on_no_more_than_a_quarter_more_than_today_on_the_corner_routes
+      point 0 (-64.50, -67.50): 28.37 m from the contact, room 0.90 m, grip speed 8.00 m/s
+      point 1 (-63.44, -65.74): 27.08 m from the contact, room 4.03 m, grip speed 8.00 m/s
+      point 2 (-63.19, -65.54): 26.82 m from the contact, room 4.71 m, grip speed 8.00 m/s
+      point 3 (-38.84, -63.49): 2.39 m from the contact, room 2.17 m, grip speed 8.00 m/s
+      point 4 (-36.29, -62.59): 0.48 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 5 (-35.99, -62.54): 0.70 m from the contact, room 6.00 m, grip speed 8.00 m/s
+      point 6 (-16.99, -62.54): 19.51 m from the contact, room 6.00 m, grip speed 7.91 m/s
+      point 7 (-16.69, -62.84): 19.80 m from the contact, room 6.00 m, grip speed 7.83 m/s
+      point 8 (-16.50, -70.50): 21.34 m from the contact, room 0.90 m, grip speed 8.00 m/s
+    the first contact at 4.092 s; the half second before it, every 0.1 s (speed, plan, sideways, leg, aim distance, aim off the heading):
+      -0.5 s: 8.81 m/s, plan 8.84, sideways -0.12 m/s^2, leg 2, aim 1.82 m away at -0 deg
+      -0.4 s: 8.85 m/s, plan 8.88, sideways -0.06 m/s^2, leg 2, aim 0.93 m away at -0 deg
+      -0.3 s: 8.79 m/s, plan 8.92, sideways -2.63 m/s^2, leg 3, aim 2.75 m away at -18 deg
+      -0.2 s: 8.50 m/s, plan 8.84, sideways -9.81 m/s^2, leg 3, aim 1.93 m away at -19 deg
+      -0.1 s: 8.26 m/s, plan 8.75, sideways -9.81 m/s^2, leg 3, aim 1.15 m away at -24 deg
+      -0.0 s: 6.72 m/s, plan 8.66, sideways -9.81 m/s^2, leg 3, aim 0.51 m away at -47 deg
+    route 0's corner: slowest grip speed inside 3 m 8.00 m/s; entered at 8.86 m/s (its plan asked 8.89); head-on ticks within 3 m 12; walked to the end in 8.98 s
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(677): CHECK failed: near_hits == 0
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(678): CHECK failed: entry <= 1.05f * allowed
+FAIL  m2_w2_the_grip_root_brakes_in_time_for_route_0s_corner_and_does_not_meet_its_wall
+    route 0 corner 0 (point 7, room 6.00 m, at 7.12 s of 8.26 s) root off: lowest 2.16 m/s, grip allows 7.83, UNDER 0.8
+    route 0 corner 0 (point 7, room 6.00 m, at 6.92 s of 8.98 s) root on : lowest 0.00 m/s, grip allows 7.83, UNDER 0.8
+    route 1 corner 0 (point 8, room 3.72 m, at 7.71 s of 9.21 s) root off: lowest 1.19 m/s, grip allows 6.56, UNDER 0.8
+    route 1 corner 0 (point 8, room 3.72 m, at 7.96 s of 9.34 s) root on : lowest 3.73 m/s, grip allows 6.56, UNDER 0.8
+    route 2 corner 0 (point 7, room 3.38 m, at 5.96 s of 9.49 s) root off: lowest 1.19 m/s, grip allows 6.57, UNDER 0.8
+    route 2 corner 1 (point 11, room 6.00 m, at 8.78 s of 9.49 s) root off: lowest 4.67 m/s, grip allows 8.00, UNDER 0.8
+    route 2 corner 0 (point 7, room 3.38 m, at 6.25 s of 9.85 s) root on : lowest 0.00 m/s, grip allows 6.57, UNDER 0.8
+    route 2 corner 1 (point 11, room 6.00 m, at 8.78 s of 9.85 s) root on : lowest 4.32 m/s, grip allows 8.00, UNDER 0.8
+    route 3 corner 0 (point 7, room 3.53 m, at 5.92 s of 6.67 s) root off: lowest 2.87 m/s, grip allows 6.30, UNDER 0.8
+    route 3 corner 0 (point 7, room 3.53 m, at 6.28 s of 7.78 s) root on : lowest 0.00 m/s, grip allows 6.30, UNDER 0.8
+    route 4 corner 0 (point 10, room 2.60 m, at 4.82 s of 6.26 s) root off: lowest 1.44 m/s, grip allows 4.56, UNDER 0.8
+    route 4 corner 0 (point 10, room 2.60 m, at 5.42 s of 6.77 s) root on : lowest 2.02 m/s, grip allows 4.56, UNDER 0.8
+    route 5 corner 0 (point 2, room 2.69 m, at 0.89 s of 5.80 s) root off: lowest 0.04 m/s, grip allows 5.78, UNDER 0.8
+    route 5 corner 0 (point 2, room 2.69 m, at 0.99 s of 5.86 s) root on : lowest 0.00 m/s, grip allows 5.78, UNDER 0.8
+    route 6 corner 0 (point 4, room 3.28 m, at 3.29 s of 5.55 s) root off: lowest 4.36 m/s, grip allows 6.78, UNDER 0.8
+    route 6 corner 0 (point 4, room 3.28 m, at 3.40 s of 5.95 s) root on : lowest 4.73 m/s, grip allows 6.78, UNDER 0.8
+    route 7 corner 0 (point 2, room 3.16 m, at 5.31 s of 10.81 s) root off: lowest 3.96 m/s, grip allows 6.26, UNDER 0.8
+    route 7 corner 1 (point 7, room 6.00 m, at 8.75 s of 10.81 s) root off: lowest 3.09 m/s, grip allows 8.00, UNDER 0.8
+    route 7 corner 0 (point 2, room 3.16 m, at 5.23 s of 11.32 s) root on : lowest 4.35 m/s, grip allows 6.26, UNDER 0.8
+    route 7 corner 1 (point 7, room 6.00 m, at 9.07 s of 11.32 s) root on : lowest 3.82 m/s, grip allows 8.00, UNDER 0.8
+    route 8 corner 0 (point 3, room 3.19 m, at 2.74 s of 6.60 s) root off: lowest 1.33 m/s, grip allows 6.29, UNDER 0.8
+    route 8 corner 0 (point 3, room 3.19 m, at 2.81 s of 6.58 s) root on : lowest 2.39 m/s, grip allows 6.29, UNDER 0.8
+    route 9 corner 0 (point 3, room 3.40 m, at 3.01 s of 8.46 s) root off: lowest 0.00 m/s, grip allows 6.45, UNDER 0.8
+    route 9 corner 0 (point 3, room 3.40 m, at 3.03 s of 9.14 s) root on : lowest 3.89 m/s, grip allows 6.45, UNDER 0.8
+    corners at or above 0.8 of grip's speed: root off 0 of 12, root on 0 of 12
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(711): CHECK failed: met[1] == corners[1]
+FAIL  m2_w3_at_every_corner_the_grip_root_keeps_at_least_0_8_of_what_grip_allows_there
+    the ten routes' total time: today 77.11 s, grip root 81.56 s (1.058 times; bar 1.25)
+ok    m2_the_grip_root_does_not_crawl_the_corner_routes
+ok    the_root_switch_is_off_by_default_and_takes_only_0_or_1
+    told 9 m/s   : peak sideways 9.81 m/s^2 (grip 9.81); peak step in sideways acceleration 0.5612 m/s^2 a tick, 0.999 of the law's bound; on its feet 0 ticks, 0.000 of its ease; turn-rate step 0.1043 rad/s a tick (M1's bar 0.1); peak re-point 0.000000 rad; widest off the path 0.78 m; slowest 2.64 m/s; through yes
+    told 5.42 m/s: peak sideways 9.81 m/s^2 (grip 9.81); peak step in sideways acceleration 0.5110 m/s^2 a tick, 0.999 of the law's bound; on its feet 0 ticks, 0.000 of its ease; turn-rate step 0.0960 rad/s a tick (M1's bar 0.1); peak re-point 0.000000 rad; widest off the path 0.08 m; slowest 5.22 m/s; through yes
+ok    the_grip_root_takes_a_3_m_corner_from_9_m_s_at_no_more_than_grip_and_its_turn_has_no_step
+    seed 5, flee, normal, 90 s: off not caught at 90.00 s, chase 8a76f88756bd4716; on not caught at 90.00 s, chase 96296fb75628d32d / 96296fb75628d32d, sim 9ce83767f8e2f167 / 9ce83767f8e2f167
+ok    the_grip_root_plays_the_same_run_twice_to_the_same_fingerprints_and_is_not_the_old_chase
+8 tests, 4 failed

@@ -50,3 +50,14 @@ The stride clock, feet held, state changes (B2 to B4). Any change in `chase/`. `
 
 `heavy-run.js --status` before any heavy run. No build while the game runs. Commit by named paths. His words stay out of the
 game's repository. Hand-back as a file, rung to the librarian as a pointer, each state claim marked checked or inferred.
+
+## AMENDED 18:5x on 2026-11-14 (D): the lean is one function for every drawn body (his word of 18:44, game brief item 227)
+
+- **His words:** "and remember, its not just for the hunter, but all mobs we will make and even the players character animations as seen from first person view, but also consistent from the outside as well."
+- **What changes in this packet.** The lean is one function. It takes a body's own sideways acceleration for this tick (the chase's for a chaser, the player's physics for the player) and that kind's numbers, and gives the tip about the feet. No body keeps a lean of its own: the player's home-made lean is retired into this one (`loop/animation_system_2026-11-13/00_system.md:1-13`, point 2). A kind's numbers live in one small data row, not in code.
+- **R1, R2 and R3 run on two bodies:** the hunter, and the player's body seen from an outside camera. The player's rows are red first too. Before code, print what the player's body draws today in the same steady turn, beside the two accounts for the hunter.
+- **R5, new: the view does not move.** In his kept runs the camera's position and direction are the same before and after this lap, to the bit. The body under the camera leans; the camera stays where it is until his eye (the camera on the simulated head is his item 162, not this lap). Print how far the leaned head sits from the camera at the sharpest corner of his run, so the size of that gap is known.
+- **R6, new: one switch.** The new drawing is behind one setting for every body, off by default. Name it in the hand-back; it is half of the one launch line he gets in the morning (`loop/night_order_2026-11-14-D.md`).
+- **The grip films of the section "For his eye" stay.** Add one pair from E's tool when it exists: the player's body in the same turn, first person beside outside.
+- **The afternoon's order is replaced:** no game of his is on the card tonight, so your gate may take timing figures again under the exclusive hold. If a game of his starts, they stop.
+- **Registered:** this lap is wrong if the player's body and the hunter's take their lean from two functions when it is handed back.

@@ -69,3 +69,25 @@ His words: "OH i think i know what it is, there has been work that wasnt pushed 
   (bank, hover-card and refusal fixes); the underside skin (`underskin.js`) and the vertical-track rule are already IN v0.4.40. So the
   repo holds no unreleased underside or AI-line work. Either that work sits unpushed on D, or the underside is drawn in 0.4.40 and
   looks different from what he expects. Friday: settle which before building anything.
+
+## Added 2026-11-21 (L, the librarian): the fix is on a branch
+
+- Pane A, packet `loop/packet_t180_ai_line_2026-11-21.md`, hand-back `handback/p-t180-ai-line-A_2026-11-21.md`; second read by pane B, clean (`handback/p-l217-read-land-B_2026-11-21.md`). Builder branch `l217-ai-line` 102496e, pushed; not merged, no release.
+- **A correction to this brief (A, confirmed by B):** `CLEAR_UP` is a ratio (the sine of a tangent angle from vertical), not metres; the crashing line least was 1.424e-4, 1.4 times the old bar, not ten to twenty times. The bar is now 1.93e-4, the least of ELYSIUM line, which AC loads; the room to spare over his crashing line is 1.36 times.
+- The 4 extra bytes are the trailing `hasGrid` int32. The underside skin IS in his kn5 (10 `UNDERSKIN_` meshes). The kn5 has 35 meshes and 249,628 triangles against Laniakea 158 and 1,439,728, so the low frame rate is not from mesh count; nothing was timed.
+- **Not fixed until he sees it:** he re-exports TEST TRACK 100 with a build holding the branch and opens it in AC. The desktop unpushed build, if there is one, is still to be found on D.
+
+## Added 2026-11-24 00:4x (D, the librarian): the desktop holds no unpushed build
+
+- **His words, 00:39:** "lets do t-180 track builder for a bit"
+- **Checked on D, one run each** (`C:\Users\nname\Downloads\t180-fresh`, after `git fetch`): no commit anywhere in the checkout is newer than 2026-11-10 18:00 and absent from origin (`git log --all --not --remotes=origin --since`: empty). The five newest local-only branches (extra-change-free, extra-change-free-mirror, extra-corner-free, hovertip-ancestors, level-end) hold 0 or 1 commit not in origin/main by patch, and each of those has the same subject as a commit on origin/main (33c54aa, 313b95a, f662253): landed in another form. The installed builder on D is 0.4.40, written 2026-11-10 17:34. **So the internal build he remembered is not on D either:** what is unreleased is origin/main's 4 commits past v0.4.40 and the branch `l217-ai-line` 102496e.
+- D's local `main` is 60c7688 (2026-10-30), 224 behind origin/main and 0 ahead: stale, fast-forwardable.
+- **Sent:** one lap to pane P: merge `l217-ai-line` onto origin/main, full suite, an internal build (no release), his installed exe backed up first, installed only if the builder is not running.
+
+## Added 2026-11-24 03:0x (D, the librarian): the internal build is installed on D; the track to test it with is not here
+
+Hand-back `handback/p-d677-t180-internal-P_2026-11-24.md` (git-blob 25c8a5f7, read whole). By pane P:
+- The merge was a fast-forward: the tree is `l217-ai-line` 102496e. Full suite once: 4,651 tests, 4,627 pass, **1 fail** (`app/test/drag-frame.test.js`, a timing row; a different row red on each of two re-runs alone; both rows red before this branch, by the hand-backs P cites; the drag page loads none of the changed files). P's reading, inferred: machine timing, not the merge. Not bisected.
+- Installed on D, builder not running, not launched: sha256 72bc13b8…, still called 0.4.40 (the number was not bumped, so it is told from the release by its hash). Backup of the release exe beside it: `t180-track-builder.exe.before-d678-3b33b38`, sha256 98493084…. To undo: copy the backup over the exe with the builder closed.
+- **TEST TRACK 100 is not on D:** not among his 45 saved tracks, not in AC's tracks folder. It was made on L. So the fix cannot be shown on D with that track until the track file comes from L or is made again here.
+- P stopped its first suite try when his game started (12 s in) and waited for it; the build waited 81 minutes behind the game.

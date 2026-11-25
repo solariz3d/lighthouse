@@ -1,0 +1,54 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+== mut_lap4_out.txt exit 1 in 9 s
+ERROR the unmutated copy is red
+== mut_room_out.txt exit 0 in 20 s
+caught R1 the panel ignores a drag (row 6: during a drag the panel asks only)
+caught R2 the panel asks without the search when still too (row 1: the flow box with three marks giv | row 3: the flow box and its marks surviv | row 5: a refusal of the flowing bank rea | row 6: during a drag the panel asks only)
+caught R3 opts() does not pass the drag (row 6: during a drag the panel asks only)
+caught R4 opts() passes a drag always (row 1: the flow box with three marks giv | row 3: the flow box and its marks surviv | row 5: a refusal of the flowing bank rea | row 6: during a drag the panel asks only)
+caught R5 extend ignores roomSearch (row 6: during a drag the panel asks only | a refused list asked without its room se)
+caught R6 checkBankAsBuilt ignores roomSearch (a refused list asked without its room se)
+caught R7 roomSearch skips the built-road read (row 6: during a drag the panel asks only | a refused list asked without its room se)
+caught R8 roomSearch skips bankAsBuilt (a call with no flowing bank is the same )
+caught R9 roomSearch lets a corner's built refusal through (a refused list asked without its room se)
+9 of 9 caught
+== mut_panel_out.txt exit 0 in 14 s
+NOT APPLIED P1 the box is ticked when its option is left out
+caught P2 an at left behind with the box unticked still flows (row 2)
+caught P3 the bank rows are sent as changes as well as through (row 1, row 3, row 4, row 5, row 6)
+caught P4 the bank rows are dropped when unticked (row 2)
+caught P5 a run of blank ats is spread one place early (row 1)
+caught P6 a typed first at is ignored for the early ramp (row 1, row 3, row 4, row 5, row 6)
+caught P7 a mark's target is sent in degrees (row 1, row 3, row 4, row 5, row 6)
+caught P8 Undo does not give the box back (row 3)
+NOT APPLIED P9 the panel does not send the box
+caught P10 the panel rewrites a core refusal (row 5, row 6)
+8 of 10 caught
+== harness_lap4.txt exit 1 in 86 s
+✖ CONTROL: the flowing-bank and roll-instrument files pass whole on an unmutated copy of src/ and tools/ (6112.6228ms)
+✖ mutant R9 a mark under 5 m after the one before is not refused: applied, and caught by "flow 8" (231.4025ms)
+ℹ tests 154
+ℹ pass 152
+ℹ fail 2
+✖ failing tests:
+✖ CONTROL: the flowing-bank and roll-instrument files pass whole on an unmutated copy of src/ and tools/ (6112.6228ms)
+✖ mutant R9 a mark under 5 m after the one before is not refused: applied, and caught by "flow 8" (231.4025ms)
+== mnm5_run.txt exit 0 in 420 s
+must not move: 36 of 36 the same as 513cd93
+== suite_lap4.txt exit 1 in 1866 s
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1214.1902ms)
+✖ drawn 2: the reader's lists the solve could not carry (finding 2) are refused by name (BAD_SECOND, the mark and its room), never an untyped throw (8.3869ms)
+✖ drawn 7: after fixture F5 (a road that ends rolling), a flowing bank with the transition given as ONE number is refused by name, not laid with its joint C1 (5.0127ms)
+✖ CONTROL: the flowing-bank and roll-instrument files pass whole on an unmutated copy of src/ and tools/ (5932.7315ms)
+✖ mutant R9 a mark under 5 m after the one before is not refused: applied, and caught by "flow 8" (254.0683ms)
+ℹ tests 4755
+ℹ pass 4726
+ℹ fail 5
+ℹ skipped 21
+ℹ todo 3
+✖ failing tests:
+✖ D642: dragging the extra bank back toward level on his p2 (a moving first ramp), the first time, costs a move within 2 × the same drag with the bank early (p95) (1214.1902ms)
+✖ drawn 2: the reader's lists the solve could not carry (finding 2) are refused by name (BAD_SECOND, the mark and its room), never an untyped throw (8.3869ms)
+✖ drawn 7: after fixture F5 (a road that ends rolling), a flowing bank with the transition given as ONE number is refused by name, not laid with its joint C1 (5.0127ms)
+✖ CONTROL: the flowing-bank and roll-instrument files pass whole on an unmutated copy of src/ and tools/ (5932.7315ms)
+✖ mutant R9 a mark under 5 m after the one before is not refused: applied, and caught by "flow 8" (254.0683ms)

@@ -1,0 +1,11 @@
+    plan at tick 0: the body 21.38 m from the bend
+    plan at tick 120: the body 20.27 m from the bend; its line within 5 m of the bend (45 points) lies at most 0.00 m from the first plan's
+    plan at tick 240: the body 16.99 m from the bend; its line within 5 m of the bend (45 points) lies at most 0.02 m from the first plan's
+    plan at tick 360: the body 12.93 m from the bend; its line within 5 m of the bend (45 points) lies at most 0.04 m from the first plan's
+    plan at tick 480: the body 8.80 m from the bend; its line within 5 m of the bend (45 points) lies at most 0.10 m from the first plan's
+    plan at tick 600: the body 4.64 m from the bend; its line within 5 m of the bend (42 points) lies at most 0.86 m from the first plan's
+    6 plans before the bend; its line within 5 m of the bend lay at most 0.86 m from the first plan's; the lowest between the 2 m gates 1.85 m/s (the one-plan figure 4.29)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(669): CHECK failed: moved <= 0.05f
+    G:\consonance-scratch\a-m1-dz3\chase\tests\line_tests.cpp(670): CHECK failed: lowest >= 4.29f
+FAIL  mline_arcs_with_replans_the_90s_line_at_the_bend_is_the_same_at_every_plan
+1 tests, 1 failed

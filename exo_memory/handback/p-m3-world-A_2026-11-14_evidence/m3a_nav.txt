@@ -1,0 +1,4 @@
+  moves into the open ending where asked 485; moves against an edge 1915, of which slid along it 1144; off the mesh 0; further than asked 1
+    G:\consonance-scratch\a-m1-dz3\nav\tests\path_tests.cpp(450): CHECK failed: off_mesh == 0 && longer == 0
+FAIL  move_along_ends_on_the_mesh_and_slides_along_an_edge_it_meets
+1 tests, 1 failed

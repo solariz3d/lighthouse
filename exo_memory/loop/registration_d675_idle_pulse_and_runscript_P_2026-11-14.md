@@ -152,3 +152,96 @@ session or a landing's quiet window. It is preceded by `--status` as already rul
 **Also carried from C's fix, for any batch line I write (the chair's 05:17Z note):** inside a `( … )` block, cmd expands `%ERRORLEVEL%`
 when it READS the block. So a line there reads the code from before the block's program ran. Inside a block, use `if errorlevel 1 (…)`.
 Lap 2's own `cmd.exe` line is `/d /s /c ""<path>" <args>"`, with no block, and passes the script's code straight through.
+
+## ADDED 2026-11-15 ~01:0xZ, before code: two room items join the lap (the chair's D677 message of 00:51:54Z; `loop/night_order_2026-11-14-D.md:73-78`)
+
+The lap is now four parts on one branch, **`idle-pulse-p`** (its begun commit 69ee056b, on the remote; `hr-status-p` is on main,
+so the branch merges main and carries on). One hand-back, one ring.
+
+- **Order of build:** Lap 1 finished (its owed checks); Lap 2; item 3 (the pause); item 4 (the game wait).
+- **Files:** as above, plus the same `heavy-run.js`, its test, its mutants and `consonance/GATES.md` for items 3 and 4.
+
+### 3. A PAUSE HELD AS THE LOCK'S EXCLUSIVE HOLD
+
+**What happened** (the chair's message; the librarian's 2026-11-14 note :180): the chair paused every pane by message at 13:22. C's
+message sat queued across C's compaction, and C built and ran a test at 13:27 while he played. C's build had asked the lock first; a
+pause written as the hold would have stopped it there.
+
+**What:**
+- `node consonance/tools/heavy-run.js --pause --cmd "<why>" [--minutes N]` starts a detached, hidden holder.
+  - It takes the exclusive hold by `acquire()`'s own path (stale takeover, waiting behind another hold, the record and token).
+  - It writes `pause: true` and `max_ms` into the hold record, then stays alive until resumed or until N minutes pass.
+  - It prints `PAUSED …` with the holder's pid and the end time once the hold is written, and exits 0.
+- **Runners already in a slot finish; new runs wait,** as for any exclusive hold. `--status` exits 1 and names the pause.
+- `node consonance/tools/heavy-run.js --resume` removes the hold only when it is a pause, and only by its token. The holder sees its
+  hold gone and exits, releasing its slot. A hold that is not a pause (a timing session, a landing) is refused, exit 2, untouched.
+- **The 90-minute rule:** a hold carrying `max_ms` is honoured for that long instead of `HOLD_MAX_MS`, capped at 12 hours, so a pause
+  outlasts a long game. `--status` uses the same rule. **Default 180 minutes; above 720 refused, exit 2.**
+- **A dead pause holder** (a restart, a kill) is stale by the lock's own rules and the next runner takes it over. A pause can never park
+  the room after its holder is gone.
+
+**Red first:**
+- In a temp data dir: `--pause --cmd "his game" --minutes 5`, then `--status` must exit 1 naming the pause.
+- A `--run` with a short wait must give up with exit 3 and not run its program.
+- `--resume`, then `--status` exits 0, and the holder process is gone within 10 s.
+- Before the code, `--pause` does nothing and `--status` exits 0, so the row is red.
+
+**Edges:**
+- a hold past 90 minutes with `max_ms` 3 hours still binds (`acquire()` with a fake clock), and past `max_ms` it is ignored;
+- `--resume` on a timing session's hold is refused;
+- `--minutes 721` is refused;
+- `--pause` while another hold stands waits behind it and says so.
+
+**What would show it wrong:**
+- a run starts while the pause stands;
+- `--resume` leaves the holder alive or the hold in place;
+- a pause outlives its holder;
+- **killing the holder leaves a hold that runners obey.** It must not: a dead pid is stale. This is the failure of my own 05:30Z
+  error the other way round.
+
+### 4. ONE COMMAND THAT WAITS FOR HIS GAME
+
+**What happened:** three panes each wrote their own wait (A's runner: dz-world, dz-gym, acs; C's gate.sh: dz-world; B's: the process
+list by hand), and none saw Star Citizen (the librarian's note :167). StarCitizen.exe pid 27640 was read up at 13:26 and 19:29.
+
+**What:** `node consonance/tools/heavy-run.js --wait-game [--max-minutes N]`.
+- It reads the process list once every 30 s through one PowerShell query: name, pid, whether the process has a visible main window,
+  and its path.
+- It waits while a game of his runs, printing `GAME: <name> pid <pid>` once per game. It exits 0 when none runs (at once if none was
+  up), 3 at the maximum wait (default 240 minutes), and 2 when the process list cannot be read. A wait that cannot look does not say
+  "clear".
+- **"A game of his", registered now** (checked on D at ~01:0xZ: the RSI Launcher runs 7 processes with no window, no game up):
+  - `StarCitizen.exe` and `acs.exe`, whatever their window state;
+  - `dz-world`, `dz-gym`, `dz-view` **only with a visible main window**: his play has one, the panes' offscreen runs do not;
+  - **any process under a `\steamapps\common\` folder with a visible main window;**
+  - and any names in the heavy profile's `games` field (`~/.consonance.json`).
+  - **Not counted:** the RSI Launcher and Steam itself (their windows are not games, and the launcher runs all day).
+- **It never closes or touches a game.** It only reads.
+- **The line beside the status:** `node consonance/tools/heavy-run.js --wait-game && node consonance/tools/heavy-run.js --status && <run>`.
+
+**Red first:**
+- The rule is a pure function over a list of rows, tested on rows shaped from today's record: Star Citizen with no window counts; a
+  pane's hidden dz-world does not; his dz-world with a window does; an `acs.exe` counts; a Steam tool with no window does not; the
+  launcher does not.
+- The CLI is run on a fixture process list (a test seam, `CONSONANCE_PROC_LIST`, a file of rows, as `STATE_BLOCK_REPO` is a seam).
+  With a game listed it must wait and time out with exit 3 under a tiny maximum; with none it exits 0; with an unreadable list, exit 2.
+- Before the code, `--wait-game` is unknown and exits 0 at once, so the rows are red.
+- Live, once: the real list read on D, with the result named.
+
+**What would show it wrong:**
+- Star Citizen up and `--wait-game` exits 0;
+- a pane's offscreen dz-world blocks it;
+- the launcher alone blocks it;
+- it closes anything;
+- the PowerShell read takes longer than its 30 s poll.
+
+**Mutants:** rows added to `heavy-run.mutants.js` for items 2 to 4, each anchor exactly once. Then the whole test file, and the new rows
+through the harness with `--only`. Lap 1's hand mutants as registered.
+
+**THE NIGHT'S RULES apply:**
+- no fan-out;
+- one ring, with the hand-back;
+- counts and paths;
+- read the process list before every suite run; if a game of his is up, wait, never close it;
+- the branch is pushed by its literal name;
+- the lander is named at my ring.

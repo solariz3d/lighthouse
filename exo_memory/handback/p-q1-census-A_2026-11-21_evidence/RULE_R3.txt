@@ -1,0 +1,5 @@
+R3 RULE, written before any count (2026-11-21 ~07:20 local, pane A).
+Window: assistant/user rows with timestamp >= 2026-11-14T13:00:00Z (7 days before the run), main thread only (isSidechain false).
+A LAP = the span from one chair dispatch row (a user row whose text contains "[chair:MAIN]") to the next. Rows before the first dispatch in the window are not a lap.
+A piece is USED in a lap when, inside that lap, an assistant text block or a tool_use input matches the piece's pattern (open = a Read/Grep/Bash/Edit path or command naming the master; cite = the card, section or file named in an assistant text block or in a ring). The patterns are in count_uses.js (printed in the hand-back).
+It counts a lap once however many times it is matched. It cannot see: a carried piece that shaped an answer without being named or opened (most of BOOT, the deck, the committee practice's rules); a piece used inside the model's thinking only (thinking blocks are not read); a use after a lap's last row; a name that matches by coincidence (counts are an upper bound for names, a lower bound for silent use).

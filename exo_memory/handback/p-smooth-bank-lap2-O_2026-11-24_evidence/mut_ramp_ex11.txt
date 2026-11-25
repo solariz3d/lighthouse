@@ -1,0 +1,11 @@
+heavy-run: capped to 8 of 16 logical CPUs, spread (affinity 21845); every child inherits it
+[32m✔ mutant EX11 a corner's piece is returned unchecked: applied, and caught by "row 4:" [90m(372.9912ms)[39m[39m
+[34mℹ EX11 a corner's piece is returned unchecked: 1 of 13 run tests failed[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 1[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 422.3744[39m

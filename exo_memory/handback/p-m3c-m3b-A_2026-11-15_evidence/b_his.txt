@@ -1,0 +1,8 @@
+at tick 35760 (149.0000 s)
+the link: from (-67.50 3.50 -484.50) to (-70.50 0.00 -484.50), 0.27 m from the trace's foot
+take-off 2.217 m/s; drop height 3.50 m
+off the link after 216 ticks: at (-70.50 0.04 -484.50), at the link's landing; flat speed at landing 2.217; drops refused 0
+  path tick 35 (+0.05 m): SOLID at (-67.97 3.50 -484.50)
+  path tick 102 (+0.05 m): SOLID at (-68.90 2.82 -484.50)
+  path tick 106 (+1.00 m): SOLID at (-68.95 3.71 -484.50)
+the root's path: 217 ticks; segments meeting a solid at the feet 2, 1 m up 1

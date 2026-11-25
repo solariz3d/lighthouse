@@ -1,0 +1,20 @@
+  piece 1 sent {"length":330,"targets":{"phi":-0.47123889803846897},"bankShape":"flow","turnDeg":90,"through":{"phi":[{"at":165,"target":0},{"at":215,"target":0.4537856055185257}]},"changes":{"turnDeg":[{"from":165,"deg":-90}]},"transition":{"phi":112}}
+P  [sha256 c13521512426]
+  turn A 57.8°, 10-90 % from 71.5 to 179.0 m (107.5 m), peak at 202.5 m
+  turn B -57.8°, 10-90 % from 225.0 to 292.5 m (67.5 m), heading at the end 0.0°
+  bank 0.0 m 0.0° (mark 0), 112.0 m -27.0° (mark -27), 165.0 m 0.0° (mark 0), 215.0 m 26.0° (mark 26); range -27.0° to 26.0°
+  halts: none
+  piece 1 sent {"length":330,"targets":{"phi":-0.47123889803846897},"bankShape":"flow","turnDeg":90,"through":{"phi":[{"at":165,"target":0},{"at":215,"target":0.4537856055185257}]},"changes":{"turnDeg":[{"from":165,"deg":-90}]},"transition":{"phi":112}}
+2a P with turn at the start ticked  [sha256 c13521512426]
+  turn A 57.8°, 10-90 % from 71.5 to 179.0 m (107.5 m), peak at 202.5 m
+  turn B -57.8°, 10-90 % from 225.0 to 292.5 m (67.5 m), heading at the end 0.0°
+  bank 0.0 m 0.0° (mark 0), 112.0 m -27.0° (mark -27), 165.0 m 0.0° (mark 0), 215.0 m 26.0° (mark 26); range -27.0° to 26.0°
+  halts: none
+  piece 1 sent {"length":330,"targets":{"phi":-0.47123889803846897},"bankShape":"flow","turnDeg":90,"through":{"phi":[{"at":165,"target":0},{"at":215,"target":0.4537856055185257}]},"changes":{"turnDeg":[{"from":165,"deg":-90}]},"transition":{"phi":112}}
+2a2 P with turn and bank at the start ticked  [sha256 c13521512426]
+  turn A 57.8°, 10-90 % from 71.5 to 179.0 m (107.5 m), peak at 202.5 m
+  turn B -57.8°, 10-90 % from 225.0 to 292.5 m (67.5 m), heading at the end 0.0°
+  bank 0.0 m 0.0° (mark 0), 112.0 m -27.0° (mark -27), 165.0 m 0.0° (mark 0), 215.0 m 26.0° (mark 26); range -27.0° to 26.0°
+  halts: none
+  piece 1 sent {"length":220,"targets":{"kh":0.014311699866353502,"phi":-0.47123889803846897},"bankShape":"flow","through":{"phi":[{"at":110,"target":0},{"at":155,"target":0.4537856055185257}]},"changes":{"kh":[{"from":110,"target":-0.017453292519943295},{"from":200,"target":0}]},"transition":{"kh":110,"phi":55}}
+2b rate 82 early, then -100 from 110, 0 from 200: piece 1 REFUSED: No saved pieces yet: select pieces on the track and press Save as piece. | BAD_SECOND: the turn (kh) change 1 (its second turn), from 0.0143117 to -0.0174533, needs at least 936.7 m before change 2's mark (the built road rounds a shorter one back over the hold): from at most -736.7, got 110 | end heading 0.00°, on the 90° grid

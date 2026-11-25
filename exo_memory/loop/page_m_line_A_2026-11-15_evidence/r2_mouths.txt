@@ -1,0 +1,26 @@
+    route 0, its last bend: the route's string from (-64.50 -7.00 -67.50) to (-16.50 -7.00 -70.50); start (-35.99 -6.96 -62.54) (0.00 m off the given), target (-16.50 -6.96 -70.50) (0.00 m off)
+    route 0, its last bend, today   : 0.900 s between the gates, lowest 2.35 m/s, exit tick 832, contacts 0, to the end in 4.19 s
+    route 0, its last bend, the arcs: 1.808 s between the gates, lowest 0.01 m/s, exit tick 1052, contacts 2, to the end in 5.15 s
+      the arcs' plan from the start: 1 arcs [r 0.77 centre (-17.20 -63.06)], merged 1, runs to the solve 0
+    route 0, its last bend, hand line R 1.0 m (centre (-17.41 -62.60)): 115 points, 0 off the mesh (the first at (0.00 0.00)); 0.863 s between the gates, lowest 3.12 m/s, exit tick 819, contacts 0, to the end in 4.13 s
+    route 0, its last bend, hand line R 1.5 m (centre (-17.91 -62.60)): 116 points, 0 off the mesh (the first at (0.00 0.00)); 0.854 s between the gates, lowest 3.42 m/s, exit tick 826, contacts 0, to the end in 4.15 s
+    route 0, its last bend, hand line R 2.0 m (centre (-18.41 -62.60)): 117 points, 0 off the mesh (the first at (0.00 0.00)); 0.825 s between the gates, lowest 3.84 m/s, exit tick 833, contacts 0, to the end in 4.17 s
+    route 0, its last bend, hand line R 2.5 m (centre (-18.91 -62.60)): 119 points, 0 off the mesh (the first at (0.00 0.00)); 0.775 s between the gates, lowest 4.23 m/s, exit tick 840, contacts 0, to the end in 4.19 s
+    route 0, its last bend, hand line R 2.8 m (centre (-19.21 -62.60)): 119 points, 0 off the mesh (the first at (0.00 0.00)); 0.729 s between the gates, lowest 4.48 m/s, exit tick 844, contacts 0, to the end in 4.21 s
+    route 0, its last bend, hand line R 3.0 m (centre (-19.41 -62.60)): 120 points, 0 off the mesh (the first at (0.00 0.00)); 0.700 s between the gates, lowest 4.66 m/s, exit tick 847, contacts 0, to the end in 4.22 s
+    route 0, its last bend, hand line R 3.5 m (centre (-19.91 -62.60)): 121 points, 0 off the mesh (the first at (0.00 0.00)); 0.629 s between the gates, lowest 5.09 m/s, exit tick 853, contacts 0, to the end in 4.24 s
+    route 0, its last bend, hand line R 4.0 m (centre (-20.41 -62.60)): 124 points, 0 off the mesh (the first at (0.00 0.00)); 0.575 s between the gates, lowest 5.58 m/s, exit tick 859, contacts 0, to the end in 4.27 s
+    route 2, its corridor mouth: the route's string from (16.50 -3.50 -64.50) to (61.50 -3.50 -40.50); start (17.81 -3.46 -66.49) (0.00 m off the given), target (41.51 -3.46 -47.84) (0.00 m off)
+    route 2, its corridor mouth, today   : 0.525 s between the gates, lowest 6.99 m/s, exit tick 868, contacts 0, to the end in 5.23 s
+    route 2, its corridor mouth, the arcs: 0.962 s between the gates, lowest 2.72 m/s, exit tick 1088, contacts 4, to the end in 6.20 s
+      the arcs' plan from the start: 2 arcs [r 3.10 centre (32.50 -63.67)] [r 1.51 centre (38.31 -62.59)], merged 0, runs to the solve 0
+    route 2, its corridor mouth, hand line R 1.0 m (centre (39.50 -63.30)): 160 points, 55 off the mesh (the first at (18.00 -66.41)); -1.000 s between the gates, lowest -1.00 m/s, exit tick -1, contacts 44, NOT to the end in 30.00 s
+    route 2, its corridor mouth, hand line R 1.5 m (centre (39.00 -63.30)): 160 points, 55 off the mesh (the first at (18.00 -66.41)); -1.000 s between the gates, lowest -1.00 m/s, exit tick -1, contacts 44, NOT to the end in 30.00 s
+    route 2, its corridor mouth, hand line R 2.0 m (centre (38.50 -63.30)): 161 points, 55 off the mesh (the first at (18.00 -66.41)); -1.000 s between the gates, lowest -1.00 m/s, exit tick -1, contacts 44, NOT to the end in 30.00 s
+    route 2, its corridor mouth, hand line R 2.5 m (centre (38.00 -63.30)): 162 points, 68 off the mesh (the first at (18.00 -66.41)); -1.000 s between the gates, lowest -1.00 m/s, exit tick -1, contacts 44, NOT to the end in 30.00 s
+    route 2, its corridor mouth, hand line R 2.8 m (centre (37.70 -63.30)): 163 points, 69 off the mesh (the first at (18.00 -66.41)); -1.000 s between the gates, lowest -1.00 m/s, exit tick -1, contacts 44, NOT to the end in 30.00 s
+    route 2, its corridor mouth, hand line R 3.0 m (centre (37.50 -63.30)): 163 points, 69 off the mesh (the first at (18.00 -66.41)); -1.000 s between the gates, lowest -1.00 m/s, exit tick -1, contacts 44, NOT to the end in 30.00 s
+    route 2, its corridor mouth, hand line R 3.5 m (centre (37.00 -63.30)): 164 points, 44 off the mesh (the first at (18.00 -66.41)); -1.000 s between the gates, lowest -1.00 m/s, exit tick -1, contacts 44, NOT to the end in 30.00 s
+    route 2, its corridor mouth, hand line R 4.0 m (centre (36.50 -63.30)): 166 points, 31 off the mesh (the first at (18.00 -66.41)); -1.000 s between the gates, lowest -1.00 m/s, exit tick -1, contacts 44, NOT to the end in 30.00 s
+ok    diag_mouths_with_hand_lines
+1 tests, 0 failed

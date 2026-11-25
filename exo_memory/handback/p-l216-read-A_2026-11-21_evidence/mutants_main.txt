@@ -1,0 +1,10 @@
+CONTROL (B's main.rs, unmutated): 18 passed, 0 failed
+caught (1 failed of 18): S1 THE SOURCE ROW'S OWN MUTANT: the ask is removed from the spawn (every pane keeps its prompt)
+NOT CAUGHT (18 passed): S2 the ask is kept as text and ignored (|| true: every pane, housed seats too, is denied)
+NOT CAUGHT (18 passed): S3 the ask is inverted
+NOT CAUGHT (18 passed): S4 the builder-name argument is true (a keeper's or housed pane under the instances root is denied)
+NOT CAUGHT (18 passed): S5 the config is never read at the spawn (the builder_no_prompt switch cannot turn it off)
+NOT CAUGHT (18 passed): S6 the flag names some other file
+caught (1 failed of 18): W1 the dispatch is not held for the cut (cut_before_dispatch not asked)
+caught (1 failed of 18): W2 the hand-back cut is not called after the delivered ring
+applied 8 / caught 3 / NOT APPLIED 0 / SURVIVORS: S2 the ask is kept as text and ignored (|| true: every pane, housed seats too, is denied) | S3 the ask is inverted | S4 the builder-name argument is true (a keeper's or housed pane under the instances root is denied) | S5 the config is never read at the spawn (the builder_no_prompt switch cannot turn it off) | S6 the flag names some other file

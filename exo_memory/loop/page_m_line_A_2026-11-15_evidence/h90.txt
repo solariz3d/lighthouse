@@ -1,0 +1,5 @@
+    hand line R 5.0 m: 138 samples, 0 off the mesh; to the end; entry 5.39, lowest 4.94 m/s, 0.679 s between the gates (passed 0.58 m); exit tick 882; contacts 0 (today's law here 0.846 s)
+    hand line R 6.0 m: 137 samples, 0 off the mesh; to the end; entry 6.03, lowest 5.52 m/s, 0.575 s between the gates (passed 0.16 m); exit tick 856; contacts 0 (today's law here 0.846 s)
+    hand line R 6.5 m: 137 samples, 0 off the mesh; to the end; entry 6.55, lowest 5.61 m/s, 0.588 s between the gates (passed 0.09 m); exit tick 857; contacts 1 (today's law here 0.846 s)
+ok    diag_hand90_a_hand_line_through_the_90_degree_bend
+1 tests, 0 failed

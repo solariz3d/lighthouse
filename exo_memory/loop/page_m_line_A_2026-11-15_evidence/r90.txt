@@ -1,0 +1,220 @@
+    x from -24.0 (left) to -4.0 by 0.25; z from -18.0 (top) down to -38.0 by 0.25; '#' off the mesh
+    -18.00 .......................###########################.........######################
+    -18.25 .......................###########################.........######################
+    -18.50 .......................###########################.........######################
+    -18.75 .......................###########################.........######################
+    -19.00 .......................###########################.........######################
+    -19.25 .......................###########################.........######################
+    -19.50 .......................###########################.........######################
+    -19.75 .......................###########################.........######################
+    -20.00 .......................###########################.........######################
+    -20.25 .......................###########################.........######################
+    -20.50 .......................###########################.........######################
+    -20.75 .......................###########################.........######################
+    -21.00 .......................###########################.........######################
+    -21.25 .......................###########################.........######################
+    -21.50 .......................###########################.........######################
+    -21.75 .......................###########################.........######################
+    -22.00 .......................###########################.........######################
+    -22.25 .......................###########################.........######################
+    -22.50 .......................###########################.........######################
+    -22.75 .......................###########################.........######################
+    -23.00 .......................###########################.........######################
+    -23.25 .......................###########################.........######################
+    -23.50 .......................###########################.........######################
+    -23.75 .......................###########################.........######################
+    -24.00 .......................###########################.........######################
+    -24.25 .......................###########################.........######################
+    -24.50 .................................................................................
+    -24.75 .................................................................................
+    -25.00 .................................................................................
+    -25.25 .................................................................................
+    -25.50 .................................................................................
+    -25.75 .................................................................................
+    -26.00 .................................................................................
+    -26.25 .................................................................................
+    -26.50 .................................................................................
+    -26.75 ...........#######################################.........######################
+    -27.00 ...........#######################################.........######################
+    -27.25 ...........#######################################.........######################
+    -27.50 ...........#######################################.........######################
+    -27.75 ...........#######################################.........######################
+    -28.00 ...........#######################################.........######################
+    -28.25 ...........#######################################.........######################
+    -28.50 ...........#######################################.........######################
+    -28.75 ...........#######################################.........######################
+    -29.00 ...........#######################################.........######################
+    -29.25 ...........#######################################.........######################
+    -29.50 ...........#######################################.........######################
+    -29.75 ...........#######################################.........######################
+    -30.00 ...........#######################################.........######################
+    -30.25 ...........#######################################.........######################
+    -30.50 ...........###########################.....................######################
+    -30.75 ...........###########################.....................######################
+    -31.00 ...........###########################.....................######################
+    -31.25 ...........###########################.....................######################
+    -31.50 ...........###########################.....................######################
+    -31.75 ...........###########################.....................######################
+    -32.00 ...........###########################.....................######################
+    -32.25 ...........###########################.....................######################
+    -32.50 ...........###########################.....................######################
+    -32.75 ...........###########################.........##################################
+    -33.00 ...........###########################.........##################################
+    -33.25 ...........###########################.........##################################
+    -33.50 ...........###########################.........##################################
+    -33.75 ...........###########################.........##################################
+    -34.00 ...........###########################.........##################################
+    -34.25 ...........###########################.........##################################
+    -34.50 ...........###########################.........##################################
+    -34.75 ...........###########################.........##################################
+    -35.00 ...........###########################.........##################################
+    -35.25 ...........###########################.........##################################
+    -35.50 ...........###########################.........##################################
+    -35.75 #####...##############################.........##################################
+    -36.00 ######.###############################.........##################################
+    -36.25 #####..###############################.........##################################
+    -36.50 ##.....................###############.........##################################
+    -36.75 ##.....................###############.........##################################
+    -37.00 ##.....................###############.........##################################
+    -37.25 #......................###############.........##################################
+    -37.50 .......................###############.........##################################
+    -37.75 #......................###############.........##################################
+    -38.00 ##.....................###############.........##################################
+    today's string: (-32.91 -26.24) (-11.99 -26.54) (-11.74 -26.59) (-11.54 -26.84) (-11.54 -29.99) (-11.59 -30.29) (-13.29 -34.04)
+    the line (121 points), within 8 m of the bend's point: (-19.46 -26.42) (-19.21 -26.42) (-18.96 -26.42) (-18.71 -26.42) (-18.46 -26.42) (-18.21 -26.42) (-17.96 -26.42) (-17.72 -26.42) (-17.47 -26.42) (-17.22 -26.42) (-16.97 -26.42) (-16.72 -26.42) (-16.47 -26.42) (-16.22 -26.42) (-15.97 -26.42) (-15.72 -26.42) (-15.47 -26.41) (-15.22 -26.41) (-14.98 -26.40) (-14.73 -26.38) (-14.48 -26.36) (-14.23 -26.34) (-13.98 -26.32) (-13.73 -26.29) (-13.48 -26.27) (-13.23 -26.25) (-12.98 -26.23) (-12.73 -26.22) (-12.48 -26.23) (-12.23 -26.25) (-11.97 -26.29) (-11.82 -26.36) (-11.66 -26.47) (-11.52 -26.62) (-11.42 -26.81) (-11.35 -27.08) (-11.29 -27.32) (-11.25 -27.56) (-11.22 -27.81) (-11.21 -28.05) (-11.20 -28.29) (-11.20 -28.53) (-11.21 -28.78) (-11.22 -29.02) (-11.23 -29.26) (-11.26 -29.50) (-11.29 -29.75) (-11.33 -30.00) (-11.38 -30.17) (-11.45 -30.33) (-11.56 -30.57) (-11.67 -30.78) (-11.78 -31.00) (-11.89 -31.21) (-12.01 -31.43) (-12.12 -31.64) (-12.24 -31.86) (-12.35 -32.07) (-12.46 -32.29) (-12.57 -32.51) (-12.67 -32.72) (-12.78 -32.94) (-12.88 -33.16) (-12.98 -33.38) (-13.09 -33.60) (-13.19 -33.82) (-13.29 -34.04)
+    t  556 pos  -17.50  -26.41 speed  8.57 want  8.60 heading    89.6 off the line 0.03 line radius 332.04 room 0.20 touched 0 slide 0.00
+    t  560 pos  -17.36  -26.41 speed  8.57 want  8.60 heading    89.5 off the line 0.11 line radius 332.04 room 0.20 touched 0 slide 0.00
+    t  564 pos  -17.21  -26.41 speed  8.58 want  8.61 heading    89.3 off the line 0.01 line radius 535.63 room 0.20 touched 0 slide 0.00
+    t  568 pos  -17.07  -26.41 speed  8.59 want  8.61 heading    89.2 off the line 0.10 line radius 1914.07 room 0.20 touched 0 slide 0.00
+    t  572 pos  -16.93  -26.40 speed  8.59 want  8.62 heading    89.0 off the line 0.04 line radius 1914.07 room 0.20 touched 0 slide 0.00
+    t  576 pos  -16.78  -26.40 speed  8.60 want  8.62 heading    88.8 off the line 0.07 line radius 1131.80 room 0.20 touched 0 slide 0.00
+    t  580 pos  -16.64  -26.40 speed  8.60 want  8.63 heading    88.6 off the line 0.08 line radius 1131.80 room 0.20 touched 0 slide 0.00
+    t  584 pos  -16.50  -26.40 speed  8.61 want  8.63 heading    88.4 off the line 0.04 line radius 396.83 room 0.20 touched 0 slide 0.00
+    t  588 pos  -16.35  -26.39 speed  8.61 want  8.64 heading    88.3 off the line 0.12 line radius 396.83 room 0.20 touched 0 slide 0.00
+    t  592 pos  -16.21  -26.39 speed  8.62 want  8.64 heading    88.1 off the line 0.03 line radius 127.99 room 0.20 touched 0 slide 0.00
+    t  596 pos  -16.07  -26.38 speed  8.62 want  8.64 heading    87.9 off the line 0.10 line radius  51.48 room 0.20 touched 0 slide 0.00
+    t  600 pos  -15.92  -26.38 speed  8.63 want  8.65 heading    87.8 off the line 0.06 line radius  51.48 room 0.20 touched 0 slide 0.00
+    t  604 pos  -15.78  -26.37 speed  8.63 want  8.65 heading    87.7 off the line 0.07 line radius  30.06 room 0.20 touched 0 slide 0.00
+    t  608 pos  -15.64  -26.36 speed  8.64 want  8.66 heading    87.6 off the line 0.10 line radius  30.06 room 0.20 touched 0 slide 0.00
+    t  612 pos  -15.49  -26.36 speed  8.64 want  8.67 heading    87.6 off the line 0.06 line radius  22.05 room 0.21 touched 0 slide 0.00
+    t  616 pos  -15.35  -26.35 speed  8.65 want  8.67 heading    87.6 off the line 0.14 line radius  18.29 room 0.21 touched 0 slide 0.00
+    t  620 pos  -15.20  -26.35 speed  8.65 want  8.68 heading    87.8 off the line 0.06 line radius  18.29 room 0.21 touched 0 slide 0.00
+    t  624 pos  -15.06  -26.34 speed  8.66 want  8.68 heading    87.9 off the line 0.10 line radius  16.65 room 0.22 touched 0 slide 0.00
+    t  628 pos  -14.92  -26.34 speed  8.66 want  8.68 heading    88.3 off the line 0.08 line radius  16.65 room 0.22 touched 0 slide 0.00
+    t  632 pos  -14.77  -26.33 speed  8.66 want  8.68 heading    88.8 off the line 0.07 line radius  16.55 room 0.24 touched 0 slide 0.00
+    t  636 pos  -14.63  -26.33 speed  8.66 want  8.59 heading    89.5 off the line 0.11 line radius  16.55 room 0.24 touched 0 slide 0.00
+    t  640 pos  -14.48  -26.33 speed  8.62 want  8.40 heading    90.4 off the line 0.03 line radius  18.29 room 0.25 touched 0 slide 0.00
+    t  644 pos  -14.34  -26.33 speed  8.55 want  8.21 heading    91.1 off the line 0.11 line radius  23.87 room 0.28 touched 0 slide 0.00
+    t  648 pos  -14.20  -26.34 speed  8.46 want  8.01 heading    91.5 off the line 0.03 line radius  23.87 room 0.28 touched 0 slide 0.00
+    t  652 pos  -14.06  -26.34 speed  8.35 want  7.82 heading    91.8 off the line 0.08 line radius  46.75 room 0.30 touched 0 slide 0.00
+    t  656 pos  -13.92  -26.34 speed  8.22 want  7.62 heading    91.7 off the line 0.06 line radius  46.75 room 0.30 touched 0 slide 0.00
+    t  660 pos  -13.79  -26.35 speed  8.08 want  7.42 heading    91.5 off the line 0.08 line radius 138.09 room 0.32 touched 0 slide 0.00
+    t  664 pos  -13.65  -26.35 speed  7.93 want  7.22 heading    91.5 off the line 0.09 line radius 138.09 room 0.32 touched 0 slide 0.00
+    t  668 pos  -13.52  -26.36 speed  7.77 want  7.02 heading    91.6 off the line 0.10 line radius  22.58 room 0.35 touched 0 slide 0.00
+    t  672 pos  -13.39  -26.36 speed  7.60 want  6.81 heading    92.1 off the line 0.12 line radius  22.58 room 0.35 touched 0 slide 0.00
+    t  676 pos  -13.27  -26.37 speed  7.42 want  6.62 heading    92.8 off the line 0.13 line radius  11.13 room 0.37 touched 0 slide 0.00
+    t  680 pos  -13.15  -26.37 speed  7.23 want  6.40 heading    93.7 off the line 0.15 line radius  11.13 room 0.37 touched 0 slide 0.00
+    t  684 pos  -13.03  -26.38 speed  7.04 want  6.21 heading    94.4 off the line 0.16 line radius   6.96 room 0.39 touched 0 slide 0.00
+    t  688 pos  -12.92  -26.39 speed  6.86 want  6.04 heading    94.8 off the line 0.17 line radius   6.96 room 0.39 touched 0 slide 0.00
+    t  692 pos  -12.80  -26.40 speed  6.92 want  7.82 heading    95.0 off the line 0.19 line radius   4.90 room 0.40 touched 0 slide 0.00
+    t  696 pos  -12.68  -26.41 speed  7.07 want  7.69 heading    95.0 off the line 0.19 line radius   4.90 room 0.40 touched 0 slide 0.00
+    t  700 pos  -12.57  -26.42 speed  7.09 want  5.59 heading    95.1 off the line 0.21 line radius   3.88 room 0.39 touched 0 slide 0.00
+    t  704 pos  -12.45  -26.43 speed  6.88 want  6.21 heading    95.1 off the line 0.21 line radius   3.88 room 0.39 touched 0 slide 0.00
+    t  708 pos  -12.34  -26.44 speed  6.88 want  7.10 heading    95.0 off the line 0.22 line radius   2.23 room 0.37 touched 0 slide 0.00
+    t  712 pos  -12.22  -26.45 speed  6.81 want  5.67 heading    95.0 off the line 0.20 line radius   2.23 room 0.37 touched 0 slide 0.00
+    t  716 pos  -12.11  -26.46 speed  6.64 want  6.69 heading    95.3 off the line 0.22 line radius   1.10 room 0.34 touched 0 slide 0.00
+    t  720 pos  -12.00  -26.47 speed  6.52 want  3.79 heading    95.7 off the line 0.19 line radius   1.10 room 0.34 touched 0 slide 0.00
+    t  724 pos  -11.90  -26.48 speed  6.28 want  2.49 heading    96.3 off the line 0.15 line radius   0.91 room 0.30 touched 0 slide 0.00
+    t  728 pos  -11.80  -26.50 speed  6.05 want  2.26 heading    97.3 off the line 0.14 line radius   0.90 room 0.23 touched 0 slide 0.00
+    t  732 pos  -11.70  -26.51 speed  5.82 want  2.14 heading    98.6 off the line 0.06 line radius   0.90 room 0.23 touched 0 slide 0.00
+    t  736 pos  -11.61  -26.52 speed  5.58 want  3.25 heading   100.2 off the line 0.08 line radius   0.90 room 0.23 touched 0 slide 0.00
+    t  740 pos  -11.52  -26.54 speed  5.35 want  3.19 heading   101.9 off the line 0.08 line radius   0.91 room 0.23 touched 0 slide 0.00
+    t  744 pos  -11.43  -26.56 speed  5.12 want  3.12 heading   103.7 off the line 0.10 line radius   0.91 room 0.23 touched 0 slide 0.00
+    t  748 pos  -11.35  -26.58 speed  4.88 want  3.05 heading   105.6 off the line 0.17 line radius   0.91 room 0.23 touched 0 slide 0.00
+    t  752 pos  -11.28  -26.61 speed  4.65 want  2.97 heading   107.6 off the line 0.24 line radius   0.91 room 0.23 touched 0 slide 0.00
+    t  756 pos  -11.21  -26.63 speed  4.42 want  2.87 heading   109.7 off the line 0.28 line radius   1.31 room 0.21 touched 0 slide 0.00
+    t  760 pos  -11.14  -26.66 speed  4.18 want  2.77 heading   111.9 off the line 0.32 line radius   1.31 room 0.21 touched 0 slide 0.00
+    t  764 pos  -11.08  -26.68 speed  3.95 want  2.66 heading   114.2 off the line 0.37 line radius   1.31 room 0.21 touched 0 slide 0.00
+    t  768 pos  -11.02  -26.71 speed  3.72 want  2.54 heading   116.7 off the line 0.41 line radius   1.31 room 0.21 touched 0 slide 0.00
+    t  772 pos  -10.97  -26.74 speed  3.48 want  2.41 heading   119.3 off the line 0.46 line radius   1.31 room 0.21 touched 0 slide 0.00
+    t  776 pos  -10.92  -26.77 speed  3.25 want  2.27 heading   122.1 off the line 0.50 line radius   1.31 room 0.21 touched 0 slide 0.00
+    t  780 pos  -10.88  -26.80 speed  3.02 want  2.14 heading   125.1 off the line 0.54 line radius   1.31 room 0.21 touched 0 slide 0.00
+    t  784 pos  -10.84  -26.83 speed  2.78 want  2.02 heading   128.4 off the line 0.57 line radius   3.03 room 0.28 touched 0 slide 0.00
+    t  788 pos  -10.81  -26.85 speed  2.55 want  1.97 heading   131.9 off the line 0.59 line radius   3.03 room 0.28 touched 0 slide 0.00
+    t  792 pos  -10.78  -26.88 speed  2.32 want  1.95 heading   135.8 off the line 0.60 line radius   3.03 room 0.28 touched 0 slide 0.00
+    t  796 pos  -10.75  -26.91 speed  2.10 want  1.93 heading   140.1 off the line 0.62 line radius   3.03 room 0.28 touched 0 slide 0.00
+    t  800 pos  -10.73  -26.94 speed  1.93 want  2.12 heading   144.8 off the line 0.63 line radius   3.03 room 0.28 touched 0 slide 0.00
+    t  804 pos  -10.72  -26.96 speed  1.79 want  2.13 heading   149.9 off the line 0.64 line radius   3.03 room 0.28 touched 0 slide 0.00
+    t  808 pos  -10.70  -26.99 speed  1.67 want  2.15 heading   155.4 off the line 0.65 line radius   3.03 room 0.28 touched 0 slide 0.00
+    t  812 pos  -10.69  -27.01 speed  1.58 want  2.17 heading   161.2 off the line 0.66 line radius   3.03 room 0.28 touched 0 slide 0.00
+    t  816 pos  -10.69  -27.04 speed  1.51 want  2.22 heading   167.2 off the line 0.66 line radius   3.03 room 0.28 touched 0 slide 0.00
+    t  820 pos  -10.68  -27.06 speed  1.48 want  2.27 heading   173.2 off the line 0.66 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  824 pos  -10.68  -27.09 speed  1.50 want  2.35 heading   179.2 off the line 0.65 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  828 pos  -10.68  -27.11 speed  1.55 want  2.45 heading  -174.8 off the line 0.64 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  832 pos  -10.69  -27.14 speed  1.64 want  2.58 heading  -169.0 off the line 0.63 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  836 pos  -10.69  -27.17 speed  1.77 want  2.75 heading  -163.5 off the line 0.61 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  840 pos  -10.71  -27.19 speed  1.91 want  4.01 heading  -158.5 off the line 0.60 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  844 pos  -10.72  -27.23 speed  2.06 want  4.93 heading  -153.8 off the line 0.58 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  848 pos  -10.74  -27.26 speed  2.21 want  6.79 heading  -149.7 off the line 0.56 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  852 pos  -10.76  -27.29 speed  2.36 want  6.73 heading  -146.4 off the line 0.53 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  856 pos  -10.78  -27.32 speed  2.51 want  6.67 heading  -144.0 off the line 0.51 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  860 pos  -10.81  -27.36 speed  2.66 want  5.45 heading  -142.3 off the line 0.48 line radius   4.50 room 0.33 touched 0 slide 0.00
+    t  864 pos  -10.84  -27.39 speed  2.81 want  4.60 heading  -141.4 off the line 0.45 line radius   4.48 room 0.37 touched 0 slide 0.00
+    t  868 pos  -10.87  -27.43 speed  2.96 want  4.01 heading  -141.1 off the line 0.41 line radius   4.48 room 0.37 touched 0 slide 0.00
+    t  872 pos  -10.90  -27.47 speed  3.09 want  3.73 heading  -141.5 off the line 0.36 line radius   4.48 room 0.37 touched 0 slide 0.00
+    t  876 pos  -10.93  -27.51 speed  3.16 want  3.61 heading  -142.5 off the line 0.32 line radius   4.48 room 0.37 touched 0 slide 0.00
+    t  880 pos  -10.96  -27.55 speed  3.20 want  3.66 heading  -144.1 off the line 0.29 line radius   4.48 room 0.37 touched 0 slide 0.00
+    t  884 pos  -10.99  -27.60 speed  3.24 want  3.71 heading  -146.4 off the line 0.26 line radius   4.48 room 0.37 touched 0 slide 0.00
+    t  888 pos  -11.02  -27.64 speed  3.29 want  3.82 heading  -149.1 off the line 0.24 line radius   4.48 room 0.37 touched 0 slide 0.00
+    t  892 pos  -11.05  -27.69 speed  3.37 want  4.06 heading  -151.9 off the line 0.21 line radius   5.38 room 0.40 touched 0 slide 0.00
+    t  896 pos  -11.07  -27.74 speed  3.48 want  4.28 heading  -154.7 off the line 0.16 line radius   5.38 room 0.40 touched 0 slide 0.00
+    t  900 pos  -11.10  -27.80 speed  3.62 want  4.55 heading  -157.3 off the line 0.13 line radius   5.38 room 0.40 touched 0 slide 0.00
+    t  904 pos  -11.12  -27.86 speed  3.77 want  4.90 heading  -159.8 off the line 0.11 line radius   5.38 room 0.40 touched 0 slide 0.00
+    t  908 pos  -11.14  -27.92 speed  3.92 want  5.29 heading  -162.2 off the line 0.14 line radius   5.38 room 0.40 touched 0 slide 0.00
+    t  912 pos  -11.16  -27.98 speed  4.07 want  5.79 heading  -164.6 off the line 0.08 line radius   6.59 room 0.41 touched 0 slide 0.00
+    t  916 pos  -11.18  -28.05 speed  4.22 want  6.23 heading  -166.8 off the line 0.03 line radius   6.59 room 0.41 touched 0 slide 0.00
+    t  920 pos  -11.19  -28.12 speed  4.37 want  6.87 heading  -169.0 off the line 0.07 line radius   6.59 room 0.41 touched 0 slide 0.00
+    t  924 pos  -11.20  -28.19 speed  4.52 want  6.75 heading  -171.0 off the line 0.10 line radius   8.05 room 0.42 touched 0 slide 0.00
+    t  928 pos  -11.21  -28.27 speed  4.67 want  6.62 heading  -172.8 off the line 0.03 line radius   8.05 room 0.42 touched 0 slide 0.00
+    t  932 pos  -11.22  -28.35 speed  4.82 want  7.29 heading  -174.1 off the line 0.06 line radius   8.05 room 0.42 touched 0 slide 0.00
+    t  936 pos  -11.23  -28.43 speed  4.97 want  7.17 heading  -175.0 off the line 0.11 line radius   9.53 room 0.42 touched 0 slide 0.00
+    t  940 pos  -11.24  -28.51 speed  5.12 want  7.04 heading  -175.5 off the line 0.04 line radius   9.53 room 0.42 touched 0 slide 0.00
+    t  944 pos  -11.24  -28.60 speed  5.27 want  7.77 heading  -175.6 off the line 0.08 line radius   9.53 room 0.42 touched 0 slide 0.00
+    t  948 pos  -11.25  -28.69 speed  5.42 want  7.64 heading  -175.4 off the line 0.10 line radius  10.53 room 0.41 touched 0 slide 0.00
+    t  952 pos  -11.26  -28.78 speed  5.57 want  7.51 heading  -174.8 off the line 0.05 line radius  10.53 room 0.41 touched 0 slide 0.00
+    t  956 pos  -11.27  -28.88 speed  5.72 want  8.00 heading  -173.8 off the line 0.12 line radius  10.53 room 0.41 touched 0 slide 0.00
+    t  960 pos  -11.28  -28.97 speed  5.87 want  7.89 heading  -172.6 off the line 0.08 line radius  10.59 room 0.40 touched 0 slide 0.00
+    t  964 pos  -11.29  -29.07 speed  6.02 want  8.00 heading  -171.6 off the line 0.09 line radius  10.59 room 0.40 touched 0 slide 0.00
+    t  968 pos  -11.31  -29.17 speed  6.17 want  8.00 heading  -170.8 off the line 0.12 line radius   9.69 room 0.38 touched 0 slide 0.00
+    t  972 pos  -11.33  -29.27 speed  6.32 want  8.00 heading  -170.2 off the line 0.09 line radius   9.69 room 0.38 touched 0 slide 0.00
+    t  976 pos  -11.35  -29.38 speed  6.47 want  8.00 heading  -169.3 off the line 0.15 line radius   9.01 room 0.36 touched 0 slide 0.00
+    t  980 pos  -11.37  -29.49 speed  6.62 want  8.00 heading  -168.4 off the line 0.11 line radius   9.01 room 0.36 touched 0 slide 0.00
+    t  984 pos  -11.39  -29.60 speed  6.77 want  8.00 heading  -167.4 off the line 0.16 line radius   9.01 room 0.36 touched 0 slide 0.00
+    t  988 pos  -11.42  -29.71 speed  6.92 want  8.00 heading  -166.7 off the line 0.13 line radius   4.79 room 0.33 touched 0 slide 0.00
+    t  992 pos  -11.44  -29.82 speed  7.07 want  8.00 heading  -166.2 off the line 0.17 line radius   4.79 room 0.33 touched 0 slide 0.00
+    t  996 pos  -11.47  -29.94 speed  7.22 want  8.00 heading  -165.7 off the line 0.16 line radius   1.97 room 0.30 touched 0 slide 0.00
+    t 1000 pos  -11.51  -30.06 speed  7.36 want  8.00 heading  -164.9 off the line 0.17 line radius   1.89 room 0.27 touched 0 slide 0.00
+    t 1004 pos  -11.54  -30.18 speed  7.47 want  8.00 heading  -163.9 off the line 0.16 line radius   1.89 room 0.27 touched 0 slide 0.00
+    t 1008 pos  -11.58  -30.30 speed  7.56 want  8.00 heading  -162.7 off the line 0.13 line radius   4.29 room 0.23 touched 0 slide 0.00
+    t 1012 pos  -11.61  -30.42 speed  7.63 want  8.00 heading  -161.5 off the line 0.16 line radius  13.31 room 0.34 touched 0 slide 0.00
+    t 1016 pos  -11.66  -30.54 speed  7.70 want  8.00 heading  -160.2 off the line 0.10 line radius  13.31 room 0.34 touched 0 slide 0.00
+    t 1020 pos  -11.70  -30.66 speed  7.75 want  8.00 heading  -159.2 off the line 0.13 line radius  19.60 room 0.73 touched 0 slide 0.00
+    t 1024 pos  -11.75  -30.78 speed  7.79 want  8.00 heading  -158.3 off the line 0.08 line radius  19.60 room 0.73 touched 0 slide 0.00
+    t 1028 pos  -11.80  -30.90 speed  7.83 want  8.00 heading  -157.6 off the line 0.10 line radius  33.59 room 1.19 touched 0 slide 0.00
+    t 1032 pos  -11.85  -31.02 speed  7.86 want  8.00 heading  -156.9 off the line 0.07 line radius  33.59 room 1.19 touched 0 slide 0.00
+    t 1036 pos  -11.90  -31.14 speed  7.89 want  8.00 heading  -156.4 off the line 0.07 line radius  77.73 room 1.64 touched 0 slide 0.00
+    t 1040 pos  -11.95  -31.26 speed  7.91 want  8.00 heading  -156.0 off the line 0.08 line radius  77.73 room 1.64 touched 0 slide 0.00
+    t 1044 pos  -12.01  -31.38 speed  7.92 want  8.00 heading  -155.7 off the line 0.05 line radius 919.68 room 2.09 touched 0 slide 0.00
+    t 1048 pos  -12.06  -31.50 speed  7.94 want  8.00 heading  -155.4 off the line 0.09 line radius 919.68 room 2.09 touched 0 slide 0.00
+    t 1052 pos  -12.12  -31.62 speed  7.95 want  8.01 heading  -155.2 off the line 0.02 line radius  81.56 room 2.00 touched 0 slide 0.00
+    t 1056 pos  -12.17  -31.74 speed  7.96 want  8.02 heading  -155.0 off the line 0.11 line radius  81.56 room 2.00 touched 0 slide 0.00
+    t 1060 pos  -12.23  -31.86 speed  7.97 want  8.02 heading  -154.8 off the line 0.01 line radius  48.36 room 1.55 touched 0 slide 0.00
+    t 1064 pos  -12.29  -31.98 speed  7.98 want  8.03 heading  -154.7 off the line 0.11 line radius  37.75 room 1.10 touched 0 slide 0.00
+    t 1068 pos  -12.35  -32.10 speed  7.99 want  8.04 heading  -154.5 off the line 0.03 line radius  37.75 room 1.10 touched 0 slide 0.00
+    t 1072 pos  -12.40  -32.22 speed  8.00 want  8.04 heading  -154.4 off the line 0.09 line radius  33.50 room 0.63 touched 0 slide 0.00
+    t 1076 pos  -12.46  -32.34 speed  8.01 want  8.05 heading  -154.3 off the line 0.05 line radius  33.50 room 0.63 touched 0 slide 0.00
+    t 1080 pos  -12.52  -32.46 speed  8.02 want  8.06 heading  -154.3 off the line 0.06 line radius  32.43 room 0.35 touched 0 slide 0.00
+    t 1084 pos  -12.58  -32.58 speed  8.03 want  8.06 heading  -154.2 off the line 0.08 line radius  32.43 room 0.35 touched 0 slide 0.00
+    t 1088 pos  -12.63  -32.70 speed  8.04 want  8.07 heading  -154.1 off the line 0.04 line radius  33.76 room 0.30 touched 0 slide 0.00
+ok    diag_read90_the_90_degree_bend_mapped
+1 tests, 0 failed

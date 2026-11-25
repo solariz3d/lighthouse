@@ -4849,8 +4849,11 @@ mod no_prompt_tests {
     }
     #[test]
     fn the_housed_seats_a_keepers_pane_and_a_prompted_pane_do_not() {
-        for seat in [r"C:\i\main", r"C:\i\librarian", r"C:\i\third-place", r"C:\i\fresh-12345678"] {
-            assert!(!no_prompt_for(true, true, is_builder_dir_name(seat), None), "{seat} must keep its prompts");
+        // The folders are derived from the temp folder (not one machine's drive); only the last name decides.
+        let root = std::env::temp_dir().join("i");
+        for name in ["main", "librarian", "third-place", "fresh-12345678"] {
+            let seat = root.join(name).to_string_lossy().into_owned();
+            assert!(!no_prompt_for(true, true, is_builder_dir_name(&seat), None), "{seat} must keep its prompts");
         }
         assert!(!no_prompt_for(true, false, true, None), "a sibling- name outside the instances root (a keeper's + Pane folder)");
         assert!(!no_prompt_for(false, true, true, None), "a seat launched without skip_perms keeps its prompts");
@@ -4863,9 +4866,12 @@ mod no_prompt_tests {
     }
     #[test]
     fn the_builder_name_is_the_sibling_folder() {
-        assert!(is_builder_dir_name(r"C:\Consonance\instances\sibling-5bf9d657"));
-        assert!(!is_builder_dir_name(r"C:\Consonance\instances\main"));
-        assert!(!is_builder_dir_name(r"C:\Consonance\instances\fresh-12345678"));
+        // An instances folder derived from the temp folder (not one machine's drive); only the last name decides.
+        let inst = std::env::temp_dir().join("Consonance").join("instances");
+        let at = |name: &str| inst.join(name).to_string_lossy().into_owned();
+        assert!(is_builder_dir_name(&at("sibling-5bf9d657")));
+        assert!(!is_builder_dir_name(&at("main")));
+        assert!(!is_builder_dir_name(&at("fresh-12345678")));
     }
     #[test]
     fn the_spawn_asks_the_rule_and_settings_is_passed_from_one_place() {
@@ -15072,8 +15078,20 @@ fn close_small_plan(app: AppHandle) -> Result<serde_json::Value, String> {
 #[tauri::command]
 fn close_small_confirm(app: AppHandle, token: String) -> Result<String, String> {
     let stored = app.state::<CloseSmallState>().0.lock().map_err(|_| "the close's state is poisoned".to_string())?.take();
-    let fresh = close_small::cut_panes(&close_small_list()?);
+    let fresh_list = close_small_list()?;
+    let fresh = close_small::cut_panes(&fresh_list);
     let (cut, dropped) = close_small::confirm(stored, &token, Instant::now(), &fresh)?;
+    // L221: the seats' names, from the list, ride the click row so every reader of the run (the screen, the next launch) names them.
+    let seat_names: serde_json::Map<String, serde_json::Value> = fresh_list
+        .get("seats")
+        .and_then(|s| s.as_array())
+        .map(|a| {
+            a.iter()
+                .filter_map(|s| Some((s.get("pane")?.as_str()?.to_string(), serde_json::Value::String(s.get("name")?.as_str()?.to_string()))))
+                .filter(|(p, _)| cut.contains(p) || dropped.contains(p))
+                .collect()
+        })
+        .unwrap_or_default();
     let names = |v: &[String]| v.iter().map(|p| short_id(p).to_string()).collect::<Vec<_>>().join(", ");
     let said = format!(
         "COMPACT WARM SEATS, his click: cutting {} seat(s) [{}]{}",
@@ -15082,39 +15100,93 @@ fn close_small_confirm(app: AppHandle, token: String) -> Result<String, String> 
         if dropped.is_empty() { String::new() } else { format!("; no longer warm and large since the list was shown, so NOT cut: [{}]", names(&dropped)) }
     );
     chair_audit(&app, said.clone());
-    close_small_ledger(serde_json::json!({ "event": "click", "cut": cut, "dropped": dropped }));
+    close_small_note(&app, serde_json::json!({ "event": "click", "cut": cut, "dropped": dropped, "names": seat_names }));
+    // A's read, line (b): the run is in flight from here, held in memory so the X asks even if the ledger cannot be read.
+    CLOSE_SMALL_IN_FLIGHT.store(true, Ordering::SeqCst);
     let a = app.clone();
     std::thread::spawn(move || close_small_run(&a, cut));
     Ok(said)
 }
 
+/// L221 (item 4, his "it takes too long"): the seats are cut AT ONCE, one thread each, not one after another. Each seat is its own
+/// claude process with its own transcript; nothing in a cut reads or writes another seat's (the inbox, the board and this ledger are
+/// locked), so a serial run only added every seat's wait to the next's. The ledger's `done` row is written once every seat's thread
+/// has returned.
 fn close_small_run(app: &AppHandle, panes: Vec<String>) {
-    // A's follow-up (c): a panic in one seat's cut must not leave his progress card waiting forever, so the loop is caught and the
-    // `done` event is sent whatever happened.
-    let ran = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-        for pane in &panes {
-            // A's follow-up (a): read the list again before THIS seat's ask; a seat that went cold or small meanwhile is skipped.
-            let outcome = match close_small::recheck(pane, &close_small_list().map(|l| close_small::cut_panes(&l))) {
-                Ok(()) => close_small_cut_seat(app, pane),
-                Err(why) => format!("NOT cut: {why}"),
-            };
-            chair_audit(app, format!("compact warm seats -> {}: {outcome}", short_id(pane)));
-            close_small_ledger(serde_json::json!({ "event": "seat", "pane": pane, "outcome": outcome }));
-            let _ = app.emit("close-small", serde_json::json!({ "pane": pane, "outcome": outcome }));
-        }
-    }));
-    if ran.is_err() {
-        chair_audit(app, "compact warm seats: the run stopped on an internal error; the seats not reported above were not cut".to_string());
-        close_small_ledger(serde_json::json!({ "event": "panic" }));
+    // A's follow-up (a): the list is read again before the asks; a seat that went cold or small since the click is skipped. At once,
+    // no seat waits behind another, so one reading serves every seat.
+    let fresh = close_small_list().map(|l| close_small::cut_panes(&l));
+    let threads: Vec<_> = panes
+        .into_iter()
+        .map(|pane| {
+            let (a, fresh) = (app.clone(), fresh.clone());
+            std::thread::spawn(move || {
+                let (app, pane) = (&a, &pane);
+                // A's follow-up (c): a panic in one seat's cut must not leave his progress card waiting forever, so each seat's cut is
+                // caught, its line is written whatever happened, and the run's `done` row follows the last.
+                let ran = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match close_small::recheck(pane, &fresh) {
+                    Ok(()) => close_small_cut_seat(app, pane),
+                    Err(why) => format!("NOT cut: {why}"),
+                }));
+                let outcome = ran.unwrap_or_else(|_| "NOT cut: its cut stopped on an internal error".to_string());
+                chair_audit(app, format!("compact warm seats -> {}: {outcome}", short_id(pane)));
+                close_small_note(app, serde_json::json!({ "event": "seat", "pane": pane, "outcome": outcome }));
+            })
+        })
+        .collect();
+    for t in threads {
+        let _ = t.join();
     }
-    let _ = app.emit("close-small", serde_json::json!({ "done": true }));
+    close_small_note(app, serde_json::json!({ "event": "done" }));
+    CLOSE_SMALL_IN_FLIGHT.store(false, Ordering::SeqCst);
 }
+
+/// A run started by his click in this session and not yet ended (set before the run's thread starts, cleared after its `done`
+/// row). The close question reads it beside the ledger, so a ledger that cannot be read never makes a run look finished.
+static CLOSE_SMALL_IN_FLIGHT: AtomicBool = AtomicBool::new(false);
+
+/// One writer at a time: the seats' threads write at once, and a row must never interleave with another.
+static CLOSE_SMALL_LEDGER_LOCK: Mutex<()> = Mutex::new(());
 
 fn close_small_ledger(mut row: serde_json::Value) {
     row["t"] = serde_json::Value::String(chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true));
+    let _one = CLOSE_SMALL_LEDGER_LOCK.lock().unwrap_or_else(|e| e.into_inner());
     if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(data_dir().join("close-small.jsonl")) {
-        let _ = writeln!(f, "{row}");
+        let _ = f.write_all(format!("{row}\n").as_bytes());
     }
+}
+
+/// The run as the ledger now reads (`close_small::progress`), or None before any click.
+fn close_small_read_progress() -> Option<close_small::Progress> {
+    fs::read_to_string(data_dir().join("close-small.jsonl")).ok().as_deref().and_then(close_small::progress)
+}
+
+/// L221: a ledger row, then the whole run as the ledger now reads, to the screen. The screen draws only what the ledger says.
+fn close_small_note(app: &AppHandle, row: serde_json::Value) {
+    close_small_ledger(row);
+    if let Some(p) = close_small_read_progress() {
+        let _ = app.emit("close-small", close_small::to_json(&p));
+    }
+}
+
+/// L221: the run as the ledger reads, for a screen opened mid-run (or after it). Null before any click. It only reads.
+#[tauri::command]
+fn close_small_progress() -> serde_json::Value {
+    close_small_read_progress().map(|p| close_small::to_json(&p)).unwrap_or(serde_json::Value::Null)
+}
+
+/// L221 (item 5): at launch, a run with no end row was cut short when the app closed. One board line names the seats it listed and
+/// never reached, and the `interrupted` row ends that run in the ledger, so it is said once.
+fn close_small_interrupted_at_launch(app: &AppHandle) {
+    let Some(p) = close_small_read_progress() else { return };
+    if p.finished {
+        return;
+    }
+    if let Some(line) = close_small::interrupted_line(&p) {
+        plog(&line);
+        chair_audit(app, line);
+    }
+    close_small_ledger(serde_json::json!({ "event": "interrupted" }));
 }
 
 /// One message to one seat, the way keep-warm sends: queued behind a turn or the keeper's typing, never forced; refused for an exited child.
@@ -15149,18 +15221,27 @@ fn close_small_cut_seat(app: &AppHandle, pane: &str) -> String {
     let now_ms = || SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     // 1. Where it stands, in its own words, before anything is cut.
     let asked = now_ms();
-    if let Err(e) = close_small_send(app, pane, close_small::ASK, "compact warm seats: where you stand") {
-        return format!("NOT cut: the ask could not be sent ({e})");
-    }
+    let how = match close_small_send(app, pane, close_small::ASK, "compact warm seats: where you stand") {
+        Ok(how) => how,
+        Err(e) => return format!("NOT cut: the ask could not be sent ({e})"),
+    };
+    let stage = |s: &str, detail: &str| close_small_note(app, serde_json::json!({ "event": "stage", "pane": pane, "stage": s, "detail": detail }));
+    stage("asked", if how == "queued" { "queued behind its current turn or his typing" } else { "" });
     // 2. That turn ends: a request that started after the ask, and the pane's own Stop stamp saying ready.
+    let mut said_answering = false;
     let ended = close_small_wait(CLOSE_SMALL_ASK_WAIT, || {
         let answered = close_small_tail(app, pane).as_deref().and_then(last_request).is_some_and(|l| l.started_ms + 1000 >= asked);
+        if answered && !said_answering {
+            said_answering = true;
+            stage("answering", "");
+        }
         answered && pane_state(&app.state::<PaneEmus>(), pane).0 == PaneGate::Ready
     });
     if !ended {
         return format!("NOT cut: its turn after the ask did not end within {} min", CLOSE_SMALL_ASK_WAIT.as_secs() / 60);
     }
     // 3. The cut, confirmed only by the transcript (the composer cannot confirm a slash command).
+    stage("compacting", "");
     compact_and_confirm(app, pane, "compact warm seats: /compact", true)
 }
 
@@ -15191,7 +15272,9 @@ fn compact_and_confirm(app: &AppHandle, pane: &str, label: &str, may_queue: bool
         seen = close_small_tail(app, pane).as_deref().and_then(|t| close_small::compacted_since(t, sent));
         seen.is_some()
     });
-    close_small::cut_outcome(if done { seen } else { None }, CLOSE_SMALL_COMPACT_WAIT.as_secs() / 60)
+    // L221: the tokens it started from too, so the line says before and after.
+    let pre = if done { close_small_tail(app, pane).as_deref().and_then(|t| close_small::compaction_pre_tokens(t, sent)) } else { None };
+    close_small::cut_outcome_tokens(if done { seen } else { None }, pre, CLOSE_SMALL_COMPACT_WAIT.as_secs() / 60)
 }
 
 // ---------------------------------------------------------------- L218: A LISTED BUILDER PANE IS CUT AT ITS HAND-BACK, OR BEFORE ITS DISPATCH
@@ -15456,7 +15539,8 @@ mod close_small_wiring_tests {
         let cut = run.find("close_small_cut_seat(app, pane)").expect("the run must cut through close_small_cut_seat");
         assert!(again < cut, "the check must come before the cut");
         let caught = run.find("catch_unwind").expect("the loop must be caught");
-        let done = run.rfind("\"done\": true").expect("the run must say done");
+        // AMENDED (L221): the run's end is the ledger's `done` row, which the screen reads; it was the event `{"done": true}`.
+        let done = run.rfind("\"event\": \"done\"").expect("the run must say done");
         assert!(caught < done, "done must be sent after the caught loop");
         let click = &s[s.find("fn close_small_confirm(").unwrap()..];
         let click = &click[..click.find("\n}\n").unwrap()];
@@ -15489,6 +15573,75 @@ mod close_small_wiring_tests {
         assert!(list.contains("close_small_plan") && list.contains("close_small_confirm"));
         let plan = &s[s.find("fn close_small_plan(").unwrap()..];
         assert!(!plan[..plan.find("\n}\n").unwrap()].contains("close_small_run"), "showing the list must never cut");
+    }
+
+    // ---- L221 (B): the progress the screen shows is the ledger's, and the close and the next launch read the same run.
+    fn body<'a>(s: &'a str, sig: &str) -> &'a str {
+        let b = &s[s.find(sig).unwrap_or_else(|| panic!("no {sig}"))..];
+        &b[..b.find("\n}\n").expect("end of function")]
+    }
+
+    #[test]
+    fn l221_every_row_of_a_run_goes_to_the_screen_through_the_note() {
+        let s = live(&src());
+        for f in [concat!("fn close_small_", "confirm("), concat!("fn close_small_", "run("), concat!("fn close_small_cut", "_seat(")] {
+            let b = body(&s, f);
+            assert!(!b.contains("close_small_ledger("), "{f} writes a row the screen never sees:\n{b}");
+        }
+        let note = body(&s, concat!("fn close_small_", "note("));
+        let (w, e) = (note.find("close_small_ledger(").expect("the note writes"), note.find("app.emit(\"close-small\"").expect("then shows"));
+        assert!(w < e, "the row is written before the screen is told");
+        // each stage is noted where it happens
+        let cut = body(&s, concat!("fn close_small_cut", "_seat("));
+        let at = |k: &str| cut.find(k).unwrap_or_else(|| panic!("no {k} in the cut"));
+        assert!(at("close_small_send(") < at("stage(\"asked\"") && at("stage(\"answering\"") < at("stage(\"compacting\"") && at("stage(\"compacting\"") < at(concat!("compact_and", "_confirm(")));
+    }
+
+    #[test]
+    fn l221_the_seats_are_cut_at_once_and_done_follows_every_seat() {
+        let s = live(&src());
+        let run = body(&s, concat!("fn close_small_", "run("));
+        let (spawn, join, done) = (run.find("std::thread::spawn(").expect("one thread a seat"), run.find(".join()").expect("joined"), run.find("\"event\": \"done\"").unwrap());
+        assert!(spawn < join && join < done, "done must follow every seat's thread");
+    }
+
+    #[test]
+    fn l221_the_x_asks_while_a_run_has_seats_to_go() {
+        let s = live(&src());
+        let x = body(&s, concat!("fn close_on", "_x("));
+        assert!(x.contains("close_small::close_must_ask(working.is_some(), compacting)"), "{x}");
+        assert!(x.contains("\"compacting\": compacting"), "the question must carry the seats to go:\n{x}");
+        // AMENDED (A's read, line (b), ruled 13:28Z): the count is close_compacting's, from the ledger AND the run's own flag
+        assert!(
+            x.contains(concat!("close_small::close_compacting(", "close_small_read_progress().map(|p| close_small::to_go(&p)), CLOSE_SMALL_IN_FLIGHT.load(Ordering::SeqCst))")),
+            "{x}"
+        );
+    }
+
+    // A's read of L221, line (b): the run in flight is held in memory, set before the run's thread starts and cleared after its done row.
+    #[test]
+    fn l221_the_run_in_flight_is_known_without_the_ledger() {
+        let s = live(&src());
+        let confirm = body(&s, concat!("fn close_small_", "confirm("));
+        let set = confirm.find(concat!("CLOSE_SMALL_IN_FLIGHT", ".store(true")).expect("set at the click");
+        let spawn = confirm.find(concat!("close_small_", "run(&a, cut)")).expect("the run's thread");
+        assert!(set < spawn, "the flag must be up before the run's thread starts");
+        let run = body(&s, concat!("fn close_small_", "run("));
+        let done = run.find("\"event\": \"done\"").expect("the done row");
+        let clear = run.find(concat!("CLOSE_SMALL_IN_FLIGHT", ".store(false")).expect("cleared at the end");
+        assert!(done < clear, "the flag must come down only after the done row");
+    }
+
+    #[test]
+    fn l221_an_interrupted_run_is_said_at_launch_once() {
+        let s = src();
+        let setup = &s[s.rfind(concat!("cut_listing_refusals", "_at_launch(app.handle());")).expect("the launch")..];
+        assert!(setup[..400].contains(concat!("close_small_interrupted", "_at_launch(app.handle());")), "the launch must read the last run");
+        let b = body(&s, concat!("fn close_small_interrupted", "_at_launch("));
+        let (said, row) = (b.find("chair_audit(").expect("one board line"), b.find("\"event\": \"interrupted\"").expect("and the row that ends it"));
+        assert!(b.find("if p.finished").expect("a finished run is not said") < said && said < row);
+        let list = &s[s.rfind("tauri::generate_handler![").unwrap()..];
+        assert!(list[..list.find("])").unwrap()].contains(concat!("close_small_", "progress")), "the screen can read the run");
     }
 }
 
@@ -17295,19 +17448,24 @@ fn close_on_x(app: &AppHandle) {
             let app = app.clone();
             std::thread::spawn(move || {
                 let seats = close_seat_gates(&app);
-                match close_needs_confirm(&seats) {
-                    None => {
+                // L221: a compaction run with seats to go asks too, even with every seat ready ("Compacting is still running").
+                // A's read, line (b), ruled 13:28Z: a run this session started and has not ended asks even when its ledger cannot be read.
+                let compacting = close_small::close_compacting(close_small_read_progress().map(|p| close_small::to_go(&p)), CLOSE_SMALL_IN_FLIGHT.load(Ordering::SeqCst));
+                let working = close_needs_confirm(&seats);
+                match close_small::close_must_ask(working.is_some(), compacting) {
+                    false => {
                         plog(&format!("CLOSE X — {} seat(s), none working: the Leave runs as before", seats.len()));
                         CLOSE_CHECKING.store(false, Ordering::SeqCst);
                         leave_close_requested(&app);
                     }
-                    Some(working) => {
+                    true => {
+                        let working = working.unwrap_or_default();
                         if let Ok(mut g) = CLOSE_ASKED_AT.lock() {
                             *g = Some(Instant::now());
                         }
                         let rows: Vec<serde_json::Value> = working.iter().map(|(l, g)| serde_json::json!({ "label": l, "gate": gate_word(*g) })).collect();
-                        plog(&format!("CLOSE X — asked: {} working ({})", working.len(), working.iter().map(|(l, g)| format!("{l}={}", gate_word(*g))).collect::<Vec<_>>().join(", ")));
-                        let _ = app.emit("close-confirm", serde_json::json!({ "working": rows }));
+                        plog(&format!("CLOSE X — asked: {} working ({}); compacting to go {} (None: a run in flight the ledger cannot count)", working.len(), working.iter().map(|(l, g)| format!("{l}={}", gate_word(*g))).collect::<Vec<_>>().join(", "), compacting.map_or("unknown".to_string(), |n| n.to_string())));
+                        let _ = app.emit("close-confirm", serde_json::json!({ "working": rows, "compacting": compacting }));
                         CLOSE_CHECKING.store(false, Ordering::SeqCst);
                     }
                 }
@@ -18092,6 +18250,8 @@ fn main() {
             }
             // L218: a housed seat named in `cut_at_handback` is refused with a row, once a launch (the key is read again at each event).
             cut_listing_refusals_at_launch(app.handle());
+            // L221: a compaction run the last close cut short is said once, with the seats it never reached.
+            close_small_interrupted_at_launch(app.handle());
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
             //
@@ -18413,7 +18573,7 @@ fn main() {
             spawn_librarian,
             spawn_third_place,
             set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
-            close_small_plan, close_small_confirm,
+            close_small_plan, close_small_confirm, close_small_progress,
             pane_scrollback,
             audio_sources, audio_start, audio_stop, audio_status, audio_snapshot,
             stick_state, stick_rehearse, stick_start_applier, stick_release, stick_ack_result, stick_close_app,

@@ -115,9 +115,450 @@ pub fn compacted_since(jsonl: &str, after_ms: u64) -> Option<(String, Option<u64
         })
 }
 
+/// The tokens the compaction after `after_ms` started from (`preTokens`), so a seat's line can say before and after.
+pub fn compaction_pre_tokens(jsonl: &str, after_ms: u64) -> Option<u64> {
+    jsonl
+        .lines()
+        .filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok())
+        .filter(|v| v.get("subtype").and_then(|x| x.as_str()) == Some("compact_boundary"))
+        .filter(|v| {
+            v.get("timestamp")
+                .and_then(|x| x.as_str())
+                .and_then(|t| chrono::DateTime::parse_from_rfc3339(t).ok())
+                .is_some_and(|t| t.timestamp_millis() as u64 >= after_ms)
+        })
+        .last()
+        .and_then(|v| v.get("compactMetadata").and_then(|m| m.get("preTokens")).and_then(|x| x.as_u64()))
+}
+
+/// `cut_outcome`, with the tokens before the cut when the transcript gave them (L221: "done, with the tokens before and after").
+pub fn cut_outcome_tokens(found: Option<(String, Option<u64>)>, pre: Option<u64>, wait_min: u64) -> String {
+    match (&found, pre) {
+        (Some((trigger, Some(post))), Some(pre)) if trigger == "manual" => {
+            format!("cut: the transcript records the manual compaction, {}k before, {}k after", pre / 1000, post / 1000)
+        }
+        _ => cut_outcome(found, wait_min),
+    }
+}
+
+// ---------------------------------------------------------------- L221: THE RUN'S PROGRESS, READ FROM ITS LEDGER
+//
+// His words, 2026-11-21 07:05: "it takes too long, and has no indication of the process or that its not done or done so it was
+// confusing, maybe wire in an ability to see the progress of each pane being cut". The ledger (`close-small.jsonl`) is the one
+// record: the click, each seat's stage, each seat's outcome, the run's end. The screen, the close question and the next launch all
+// read the run from it here, so they cannot disagree with each other or with the record.
+
+/// Where one seat stands in the run.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum SeatState {
+    /// On the list, its ask not yet sent.
+    Waiting,
+    /// The ask is sent (written, or queued behind its turn or his typing).
+    Asked,
+    /// A turn began after the ask: it is writing where it stands; the cut waits for that turn to end.
+    Answering,
+    /// `/compact` is sent; the transcript's compaction is awaited.
+    Compacting,
+    /// The transcript records the manual compaction.
+    Cut,
+    /// Not cut, because it no longer qualified (cold or small).
+    Skipped,
+    /// Not cut for any other reason, or never reached.
+    Failed,
+}
+
+impl SeatState {
+    pub fn word(self) -> &'static str {
+        match self {
+            SeatState::Waiting => "waiting",
+            SeatState::Asked => "asked",
+            SeatState::Answering => "answering",
+            SeatState::Compacting => "compacting",
+            SeatState::Cut => "done",
+            SeatState::Skipped => "skipped",
+            SeatState::Failed => "failed",
+        }
+    }
+    pub fn is_final(self) -> bool {
+        matches!(self, SeatState::Cut | SeatState::Skipped | SeatState::Failed)
+    }
+}
+
+/// One seat's line.
+#[derive(Clone, Debug, PartialEq)]
+pub struct SeatLine {
+    pub pane: String,
+    pub name: String,
+    pub state: SeatState,
+    /// The ledger time the state began (the screen counts the compaction's seconds from it).
+    pub since: String,
+    pub detail: String,
+}
+
+/// The run of the newest click.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Progress {
+    pub click: String,
+    pub seats: Vec<SeatLine>,
+    /// The run's own end row was written (`done`, `panic`), or a launch found it unfinished (`interrupted`).
+    pub finished: bool,
+    pub interrupted: bool,
+}
+
+/// The run of the NEWEST click in the ledger, as its rows say; None when no click was ever made.
+pub fn progress(ledger: &str) -> Option<Progress> {
+    let mut run: Option<Progress> = None;
+    for v in ledger.lines().filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok()) {
+        let t = v.get("t").and_then(|x| x.as_str()).unwrap_or("").to_string();
+        let pane = v.get("pane").and_then(|x| x.as_str()).unwrap_or("");
+        match v.get("event").and_then(|x| x.as_str()) {
+            Some("click") => {
+                let names = v.get("names");
+                let line = |p: &str, state, detail: &str| SeatLine {
+                    pane: p.to_string(),
+                    name: names.and_then(|n| n.get(p)).and_then(|x| x.as_str()).map(str::to_string).unwrap_or_else(|| p.chars().take(8).collect()),
+                    state,
+                    since: t.clone(),
+                    detail: detail.to_string(),
+                };
+                let list = |k: &str| -> Vec<String> {
+                    v.get(k).and_then(|x| x.as_array()).map(|a| a.iter().filter_map(|x| x.as_str().map(str::to_string)).collect()).unwrap_or_default()
+                };
+                let mut seats: Vec<SeatLine> = list("cut").iter().map(|p| line(p, SeatState::Waiting, "")).collect();
+                seats.extend(list("dropped").iter().map(|p| line(p, SeatState::Skipped, "no longer warm and large since the list was shown")));
+                run = Some(Progress { click: t, seats, finished: false, interrupted: false });
+            }
+            Some("stage") => {
+                let state = match v.get("stage").and_then(|x| x.as_str()) {
+                    Some("asked") => SeatState::Asked,
+                    Some("answering") => SeatState::Answering,
+                    Some("compacting") => SeatState::Compacting,
+                    _ => continue,
+                };
+                if let Some(s) = run.as_mut().and_then(|r| r.seats.iter_mut().find(|s| s.pane == pane && !s.state.is_final())) {
+                    s.state = state;
+                    s.since = t;
+                    s.detail = v.get("detail").and_then(|x| x.as_str()).unwrap_or("").to_string();
+                }
+            }
+            Some("seat") => {
+                let outcome = v.get("outcome").and_then(|x| x.as_str()).unwrap_or("").to_string();
+                if let Some(s) = run.as_mut().and_then(|r| r.seats.iter_mut().find(|s| s.pane == pane)) {
+                    s.state = if outcome.starts_with("cut:") {
+                        SeatState::Cut
+                    } else if outcome.contains("no longer warm and large") {
+                        SeatState::Skipped
+                    } else {
+                        SeatState::Failed
+                    };
+                    s.since = t;
+                    s.detail = outcome;
+                }
+            }
+            Some(end @ ("done" | "panic" | "interrupted")) => {
+                if let Some(r) = run.as_mut() {
+                    if !r.finished {
+                        r.finished = true;
+                        r.interrupted = end == "interrupted";
+                        let why = if end == "panic" { "the run stopped on an internal error" } else { "never reached: the app closed before its cut" };
+                        for s in r.seats.iter_mut().filter(|s| !s.state.is_final()) {
+                            s.detail = format!("{why} (it was {})", s.state.word());
+                            s.state = SeatState::Failed;
+                            s.since = t.clone();
+                        }
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+    run
+}
+
+/// The seats not yet at an end; 0 for a run that ended.
+pub fn to_go(p: &Progress) -> usize {
+    if p.finished { 0 } else { p.seats.iter().filter(|s| !s.state.is_final()).count() }
+}
+
+/// The one line for the whole run.
+pub fn summary(p: &Progress) -> String {
+    let n = |st: SeatState| p.seats.iter().filter(|s| s.state == st).count();
+    if p.finished {
+        let never = p.seats.iter().filter(|s| s.detail.starts_with("never reached")).count();
+        let mut line = format!("Done: {} cut, {} failed", n(SeatState::Cut), n(SeatState::Failed));
+        if n(SeatState::Skipped) > 0 {
+            line.push_str(&format!(", {} skipped", n(SeatState::Skipped)));
+        }
+        if never > 0 {
+            line.push_str(&format!(" (the run was interrupted: {never} never reached)"));
+        }
+        line
+    } else {
+        // A's read (ruled 13:28Z): done, failed and to go said apart, so a failed seat never reads as done while the run goes on.
+        let mut line = format!("{} done, {} failed", n(SeatState::Cut), n(SeatState::Failed));
+        if n(SeatState::Skipped) > 0 {
+            line.push_str(&format!(", {} skipped", n(SeatState::Skipped)));
+        }
+        line.push_str(&format!(", {} to go", to_go(p)));
+        line
+    }
+}
+
+/// At launch, a run with no end row was cut short by the app closing: the one board line that names the seats it listed and
+/// never reached, with where each stood. None for a run that ended.
+pub fn interrupted_line(p: &Progress) -> Option<String> {
+    if p.finished {
+        return None;
+    }
+    let never: Vec<String> = p.seats.iter().filter(|s| !s.state.is_final()).map(|s| format!("{} ({})", s.name, s.state.word())).collect();
+    if never.is_empty() {
+        return None;
+    }
+    Some(format!(
+        "compact warm seats: the run of the click at {} was interrupted (the app closed before it ended); listed and never cut: {}",
+        p.click,
+        never.join(", ")
+    ))
+}
+
+/// The window's X asks first when a seat is working (D317) OR a compaction run has seats to go (L221). `compacting` is
+/// `close_compacting`'s answer: None is a run in flight whose seats to go cannot be read, and it asks (A's read, ruled 13:28Z).
+pub fn close_must_ask(any_working: bool, compacting: Option<usize>) -> bool {
+    any_working || compacting != Some(0)
+}
+
+/// THE SEATS TO GO, as the close question reads them (A's read of L221, line (b), ruled by the librarian 13:28Z: "if the ledger
+/// cannot be read while a run was started in this session, ASK"). `ledger_to_go` is the ledger's count (None: it could not be
+/// read, or holds no run); `in_flight` is the app's own memory that a run started in this session has not yet ended. A run in
+/// flight that the ledger does not show (unreadable, or its click row lost) is None: the count is unknown and the X asks.
+pub fn close_compacting(ledger_to_go: Option<usize>, in_flight: bool) -> Option<usize> {
+    match (ledger_to_go, in_flight) {
+        (Some(n), _) if n > 0 => Some(n),
+        (_, true) => None,
+        _ => Some(0),
+    }
+}
+
+/// What the screen is sent (the `close-small` event and `close_small_progress`).
+pub fn to_json(p: &Progress) -> serde_json::Value {
+    serde_json::json!({
+        "click": p.click,
+        "finished": p.finished,
+        "interrupted": p.interrupted,
+        "summary": summary(p),
+        "toGo": to_go(p),
+        "seats": p.seats.iter().map(|s| serde_json::json!({
+            "pane": s.pane, "name": s.name, "state": s.state.word(), "since": s.since, "detail": s.detail,
+        })).collect::<Vec<_>>(),
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    // ---- L221 rows (R1, R2): each state from its rows; an interrupted run names the seats never reached.
+    fn ledger(rows: &[serde_json::Value]) -> String {
+        rows.iter().map(|r| r.to_string()).collect::<Vec<_>>().join("\n")
+    }
+    fn click(t: &str, cut: &[&str], dropped: &[&str]) -> serde_json::Value {
+        let names: serde_json::Map<String, serde_json::Value> =
+            cut.iter().chain(dropped).map(|p| (p.to_string(), serde_json::Value::String(p.to_uppercase()))).collect();
+        serde_json::json!({ "event": "click", "cut": cut, "dropped": dropped, "names": names, "t": t })
+    }
+    fn stage(t: &str, pane: &str, stage: &str) -> serde_json::Value {
+        serde_json::json!({ "event": "stage", "pane": pane, "stage": stage, "t": t })
+    }
+    fn seat(t: &str, pane: &str, outcome: &str) -> serde_json::Value {
+        serde_json::json!({ "event": "seat", "pane": pane, "outcome": outcome, "t": t })
+    }
+    fn state_of(p: &Progress, pane: &str) -> SeatState {
+        p.seats.iter().find(|s| s.pane == pane).unwrap_or_else(|| panic!("no line for {pane}")).state
+    }
+    fn mid_run() -> String {
+        ledger(&[
+            click("2026-11-21T13:00:00.000Z", &["a", "b", "c", "d", "e"], &["f"]),
+            stage("2026-11-21T13:00:01.000Z", "b", "asked"),
+            stage("2026-11-21T13:00:01.000Z", "c", "asked"),
+            stage("2026-11-21T13:00:20.000Z", "c", "answering"),
+            stage("2026-11-21T13:00:01.000Z", "d", "asked"),
+            stage("2026-11-21T13:00:30.000Z", "d", "answering"),
+            stage("2026-11-21T13:00:50.000Z", "d", "compacting"),
+            seat("2026-11-21T13:01:23.000Z", "e", "cut: the transcript records the manual compaction, 406k before, 18k after"),
+        ])
+    }
+
+    #[test]
+    fn r1_a_listed_seat_with_no_row_yet_is_waiting_its_turn() {
+        assert_eq!(state_of(&progress(&mid_run()).expect("a run"), "a"), SeatState::Waiting);
+    }
+    #[test]
+    fn r1_a_seat_whose_ask_was_sent_is_asked() {
+        assert_eq!(state_of(&progress(&mid_run()).expect("a run"), "b"), SeatState::Asked);
+    }
+    #[test]
+    fn r1_a_seat_whose_turn_began_after_the_ask_is_answering() {
+        assert_eq!(state_of(&progress(&mid_run()).expect("a run"), "c"), SeatState::Answering);
+    }
+    #[test]
+    fn r1_a_seat_sent_compact_is_compacting_since_the_send() {
+        let p = progress(&mid_run()).expect("a run");
+        let d = p.seats.iter().find(|s| s.pane == "d").expect("d");
+        assert_eq!((d.state, d.since.as_str()), (SeatState::Compacting, "2026-11-21T13:00:50.000Z"));
+    }
+    #[test]
+    fn r1_a_cut_seat_is_done_with_the_tokens_before_and_after() {
+        let p = progress(&mid_run()).expect("a run");
+        let e = p.seats.iter().find(|s| s.pane == "e").expect("e");
+        assert_eq!(e.state, SeatState::Cut);
+        assert!(e.detail.contains("406k") && e.detail.contains("18k"), "{}", e.detail);
+    }
+    #[test]
+    fn r1_a_seat_dropped_at_the_click_is_skipped_with_its_reason() {
+        let p = progress(&mid_run()).expect("a run");
+        let f = p.seats.iter().find(|s| s.pane == "f").expect("f");
+        assert_eq!(f.state, SeatState::Skipped);
+        assert!(f.detail.contains("no longer warm and large"), "{}", f.detail);
+    }
+    #[test]
+    fn r1_a_seat_not_cut_is_skipped_or_failed_by_its_reason() {
+        let l = ledger(&[
+            click("2026-11-21T13:00:00.000Z", &["a", "b"], &[]),
+            seat("2026-11-21T13:00:02.000Z", "a", "NOT cut: no longer warm and large when its turn came (it went cold or small while others were cut)"),
+            seat("2026-11-21T13:20:02.000Z", "b", "NOT cut: its turn after the ask did not end within 20 min"),
+        ]);
+        let p = progress(&l).expect("a run");
+        assert_eq!((state_of(&p, "a"), state_of(&p, "b")), (SeatState::Skipped, SeatState::Failed));
+        assert!(p.seats[1].detail.contains("did not end within 20 min"), "{}", p.seats[1].detail);
+    }
+    #[test]
+    fn r1_the_names_the_click_recorded_label_the_lines() {
+        assert_eq!(progress(&mid_run()).expect("a run").seats[0].name, "A");
+    }
+    #[test]
+    fn r1_the_line_for_the_whole_run_counts_done_and_to_go() {
+        let p = progress(&mid_run()).expect("a run");
+        // e is cut and f skipped; a, b, c and d are still going. AMENDED (A's read, ruled 13:28Z): done, failed and to go are
+        // said separately; it read "2 of 6 done, 4 to go", which counted the skipped seat as done.
+        assert_eq!((summary(&p), to_go(&p)), ("1 done, 0 failed, 1 skipped, 4 to go".to_string(), 4));
+    }
+    #[test]
+    fn r1_while_running_a_failed_seat_is_said_failed_not_done() {
+        let l = ledger(&[
+            click("2026-11-21T13:00:00.000Z", &["a", "b", "c", "d", "e"], &[]),
+            seat("2026-11-21T13:01:00.000Z", "a", "cut: x"),
+            seat("2026-11-21T13:01:10.000Z", "b", "cut: y"),
+            seat("2026-11-21T13:01:20.000Z", "c", "NOT cut: the ask could not be sent (the pane has exited)"),
+        ]);
+        assert_eq!(summary(&progress(&l).expect("a run")), "2 done, 1 failed, 2 to go");
+    }
+    #[test]
+    fn r1_a_run_with_its_end_row_is_done_and_says_so() {
+        let l = ledger(&[
+            click("2026-11-21T13:00:00.000Z", &["a", "b"], &[]),
+            seat("2026-11-21T13:01:00.000Z", "a", "cut: the transcript records the manual compaction, 300k before, 20k after"),
+            seat("2026-11-21T13:02:00.000Z", "b", "NOT CONFIRMED: /compact was sent and no compaction was recorded within 15 min"),
+            serde_json::json!({ "event": "done", "t": "2026-11-21T13:02:00.100Z" }),
+        ]);
+        let p = progress(&l).expect("a run");
+        assert!(p.finished && !p.interrupted && to_go(&p) == 0);
+        assert_eq!(summary(&p), "Done: 1 cut, 1 failed");
+    }
+    #[test]
+    fn r1_only_the_newest_click_is_the_run() {
+        let l = ledger(&[click("2026-11-21T06:00:00.000Z", &["old"], &[]), click("2026-11-21T13:00:00.000Z", &["a"], &[])]);
+        let p = progress(&l).expect("a run");
+        assert_eq!(p.seats.iter().map(|s| s.pane.as_str()).collect::<Vec<_>>(), vec!["a"]);
+    }
+    #[test]
+    fn r1_no_click_is_no_run_and_a_torn_row_is_passed_over() {
+        assert_eq!(progress(""), None);
+        let l = format!("{}\n{{torn\n", ledger(&[click("2026-11-21T13:00:00.000Z", &["a"], &[])]));
+        assert_eq!(progress(&l).map(|p| p.seats.len()), Some(1));
+    }
+    // 13:00Z today, as it is in the ledger: five listed, pane A cut, then his restart. The next launch must name the four.
+    #[test]
+    fn r1_an_interrupted_run_names_the_seats_never_reached_once() {
+        let l = ledger(&[
+            click("2026-11-21T12:59:57.419Z", &["a", "b", "c", "d", "e"], &[]),
+            stage("2026-11-21T12:59:58.000Z", "b", "asked"),
+            seat("2026-11-21T13:01:23.503Z", "a", "cut: the transcript records the manual compaction, 18k tokens left"),
+        ]);
+        let p = progress(&l).expect("a run");
+        assert!(!p.finished);
+        let line = interrupted_line(&p).expect("an unfinished run is said");
+        for n in ["B (asked", "C (waiting", "D (waiting", "E (waiting"] {
+            assert!(line.contains(n), "{n} missing: {line}");
+        }
+        assert!(!line.contains("A ("), "A was cut: {line}");
+        // the launch writes the `interrupted` row; after it the same run is not said again
+        let after = format!("{l}\n{}", serde_json::json!({ "event": "interrupted", "t": "2026-11-21T13:02:11.000Z" }));
+        let p2 = progress(&after).expect("a run");
+        assert!(p2.finished && p2.interrupted && interrupted_line(&p2).is_none());
+        assert!(summary(&p2).contains("4 never reached"), "{}", summary(&p2));
+    }
+    #[test]
+    fn r1_a_finished_run_is_not_said_at_launch() {
+        let l = ledger(&[click("2026-11-21T13:00:00.000Z", &["a"], &[]), seat("2026-11-21T13:01:00.000Z", "a", "cut: x"), serde_json::json!({ "event": "done" })]);
+        assert!(interrupted_line(&progress(&l).expect("a run")).is_none());
+    }
+    // R2: the X asks while a run has seats to go, even with every seat ready.
+    #[test]
+    fn r2_the_close_asks_while_compacting_has_seats_to_go() {
+        // AMENDED (A's read, ruled 13:28Z): the count is close_compacting's Option; the three cases are unchanged.
+        assert!(close_must_ask(false, Some(3)), "a run with 3 to go must ask");
+        assert!(!close_must_ask(false, Some(0)), "nothing working and nothing to go closes as today");
+        assert!(close_must_ask(true, Some(0)), "D317 unchanged: a working seat asks");
+    }
+    // A's read, line (b): the ask must not fail open when the ledger cannot say.
+    #[test]
+    fn r2_a_run_in_flight_whose_ledger_cannot_be_read_asks() {
+        assert_eq!(close_compacting(None, true), None, "unknown, not zero");
+        assert!(close_must_ask(false, close_compacting(None, true)));
+    }
+    #[test]
+    fn r2_a_run_in_flight_whose_click_row_was_lost_asks() {
+        // the ledger reads, but its newest run is an older finished one: 0 to go by the ledger, a run in flight by memory
+        assert!(close_must_ask(false, close_compacting(Some(0), true)));
+    }
+    #[test]
+    fn r2_with_no_run_in_flight_the_ledger_decides_as_before() {
+        assert_eq!(close_compacting(None, false), Some(0), "no run this session and no ledger: close as today");
+        assert_eq!(close_compacting(Some(2), false), Some(2), "a run the ledger shows (an earlier session's, before the launch ends it)");
+        assert_eq!(close_compacting(Some(3), true), Some(3));
+    }
+    #[test]
+    fn r1_the_screen_is_sent_each_line_and_the_summary() {
+        let j = to_json(&progress(&mid_run()).expect("a run"));
+        assert_eq!(j["summary"], "1 done, 0 failed, 1 skipped, 4 to go"); // AMENDED with the line above (A's read)
+        assert_eq!(j["toGo"], 4);
+        assert_eq!(j["seats"][3]["state"], "compacting");
+        assert_eq!(j["seats"][3]["since"], "2026-11-21T13:00:50.000Z");
+    }
+    #[test]
+    fn r1_the_cut_line_carries_the_tokens_before_and_after() {
+        let o = cut_outcome_tokens(Some(("manual".to_string(), Some(18_000))), Some(406_000), 15);
+        assert!(o.starts_with("cut: ") && o.contains("406k before") && o.contains("18k after"), "{o}");
+        let jsonl = r#"{"type":"system","subtype":"compact_boundary","timestamp":"2026-11-21T06:12:00.000Z","compactMetadata":{"trigger":"manual","preTokens":406123,"postTokens":18000}}"#;
+        assert_eq!(compaction_pre_tokens(jsonl, 0), Some(406_123));
+    }
+    // From the mutant pass (M14): a compaction before the send is not this cut's.
+    #[test]
+    fn r1_the_tokens_before_are_never_read_from_a_compaction_before_the_send() {
+        let at = chrono::DateTime::parse_from_rfc3339("2026-11-21T06:13:00.000Z").unwrap().timestamp_millis() as u64;
+        let jsonl = r#"{"type":"system","subtype":"compact_boundary","timestamp":"2026-11-21T06:12:00.000Z","compactMetadata":{"trigger":"manual","preTokens":406123,"postTokens":18000}}"#;
+        assert_eq!(compaction_pre_tokens(jsonl, at), None);
+    }
+    // From the mutant pass (M1): a seat at its end stays there, whatever row comes after.
+    #[test]
+    fn r1_a_stage_row_after_a_seats_outcome_does_not_move_it() {
+        let l = ledger(&[
+            click("2026-11-21T13:00:00.000Z", &["a"], &[]),
+            seat("2026-11-21T13:01:00.000Z", "a", "cut: x"),
+            stage("2026-11-21T13:01:01.000Z", "a", "compacting"),
+        ]);
+        assert_eq!(state_of(&progress(&l).expect("a run"), "a"), SeatState::Cut);
+    }
 
     fn plan(token: &str, made: Instant, cut: &[&str]) -> Option<Plan> {
         Some(Plan { token: token.into(), made, cut: cut.iter().map(|s| s.to_string()).collect() })

@@ -3192,3 +3192,87 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 
 ## 2026-11-13 23:3x local (D) · PARKED at his close order: every branch on the remote (l192-footsteps-e 367fe1c and tell-row-kit-e 535e152 pushed tonight), nothing running, WHERE IT STOPS in four hand-backs → `exo_memory/handback/p-d675-filter-landing-E_2026-11-13.md` (WHERE IT STOPS)
 - L12 waits on his eye; the Dark landed, its look his call; l192's two rows red for his ear; L1, L8, L7 not started.
+
+## 2026-11-14 20:5x local (D) · D677 E1: one pose, two cameras is GREEN on his runs (no second rig; joints, palette and eye 0 apart), and the pair film plays a chaser live, the chase's own to the bit; L12 adds no GPU frame time (p99 1.989–1.995 against 1.988–2.001) → `exo_memory/handback/p-d677-e1-E_2026-11-14.md`
+- dreamzone-3 e1-two-cameras-e 45d299a pushed; self-test 63/63; mutants 5/5 (R2's 1 cm caught); his 20 runs identical on base and branch. The body ignores view pitch: looking down, the legs barely show (for C's body laps).
+- **Carry:** `--pair-near` pairs two models only while their chases stay together; under a model that diverges the chase, film each at its own sharpest turn. And in Git Bash run `cmd.exe /d /c` under `MSYS_NO_PATHCONV=1`, or it runs nothing and exits 0.
+
+## 2026-11-14 22:4x local (D) · D677 E2: at a real 22-degree bend of seed 1's world the hunter stops dead against the wall's end or the door frame under today's law and both of A's root laws (lowest 0.04, 0.00, 0.00 m/s), and the chase counts no head-on wall meeting for it; the film light is held out of play by a row; L12 has no off that draws as main does → `exo_memory/handback/p-d677-e2-E_2026-11-14.md`
+- dreamzone-3 e2-films-e 64c193c pushed; self-test 64/64; mutants 2/2; his 20 runs identical to e091beb; 23 labelled clips in G:\consonance-scratch\e2-film.
+- **Carry:** a staged lesser chaser with no head start catches the target before the hunter leaves the door; and write editing scripts' C strings with the Edit tool, never through a shell's quoting.
+
+## 2026-11-14 23:2x local (D) · D677 E2 steps 1-3: e2-films-e merged with main (6b07814, rung); L12's switch soft_upper_body (off) draws the hunter byte for byte as main does on his run's 288-frame corner, on differs at every frame; a two-body camera frames the sprinter beside the hunter → `exo_memory/handback/p-d677-e2-E_2026-11-14.md` (addendum 05:2xZ)
+- l12-switch-e 8c4f715 and e2-two-body-e 6cbd665 pushed. The pair film had replayed the record's world settings, so the first "on" was main's: a control that cannot fail proves nothing.
+- **Carry:** a film's control must be shown to differ before its equality counts; and a "framed" count by rays is an upper bound, not frames seen.
+
+## 2026-11-15 00:0x local (D) · D677: every capture that replays a run now takes a world setting its record does not name from the launch's config (the timer excepted); red on a stub, green with 71/71 world_app_tests and 63/63 self-test → `exo_memory/handback/p-d677-e2-E_2026-11-14.md` (addendum 06:0xZ)
+- replay-world-e 2981be1 pushed (lands after l12-switch-e 15cddbc, which carries CHANGELOG.md merge=union).
+- **Carry:** a record keeps what its build knew; a replay must say, field by field, which side a newer field comes from.
+
+## 2026-11-15 00:4x local (D) · D677 step 4: on A's M3 (aad376b) the root laws no longer stand dead at the 22-degree bend (0.54 and 0.87 m/s) but still miss both bars there (under 1.2 m/s; 2.05 and 2.16 s against 0.889) and at 45 degrees (0.58, 0.65); 90 degrees passes → `exo_memory/handback/p-d677-e2-E_2026-11-14.md` (addendum 06:4xZ)
+- Nine films, 27/27 rows GREEN, the same three bends; local build ff6151c; clips in G:\consonance-scratch\e2-film-m3.
+- **Carry:** before saying "unchanged", diff every row of the old table against the new; one moved time hid in "everything else".
+
+## 2026-11-15 03:1x local (D) · D677: B's B7 films made into four labelled clips for his eye (flicks off beside on, the look down three ways; real time and 3x slower) → `exo_memory/handback/p-d677-b7clips-E_2026-11-15.md`
+
+## 2026-11-15 06:4x local (D) · D677: E3's keys F6-F9 and --world pushed (d3a5041); pane C's 77-minute hunter film hang was an end-hash loop waiting on a record that an ended run could never finish (fixed 95b3406, reproduced 360 s against 65 s); his flicks and look down filmed old beside new from a camera fixed to the travel, lit; two streaming rows tagged machine-bound → `exo_memory/handback/p-d677-e3e4-E_2026-11-15.md`
+- With body_look on and view_on_head off, E1's row is RED: the camera leaves the drawn eye by up to 0.155 m.
+- **Carry:** a loop that waits for a record to finish must also stop when the run has ended; and in PowerShell take $p.Handle before WaitForExit, or the exit code is empty.
+
+## 2026-11-15 07:4x local (D) · D677: the set course for the new animation system filmed "before": six stations in seed 1 (straight and turn, sidestep, backwards, stop and start, stair, doorway), the runner and the hunter, a camera fixed to the travel, lit; the doorway's duck parked unbuilt → `exo_memory/handback/p-d677-course-E_2026-11-15.md`
+- e6-course-e 52db98d pushed; the whole course G:\consonance-scratch\course-before\the_course_before_144fps.mp4.
+- **Carry:** a fresh tree on G: has no generated textures (assets/textures is ignored by git): copy them in before any film for his eye, or it is flat colours.
+
+## 2026-11-15 10:4x local (D) · D677 the 22 degree bend filmed, today beside the M-line on a-mline 4b03985: today 0.889 s (lowest 0.04 m/s), the line 0.486 s (never under 5.47), 0 frames hidden; the 90 filmed before its cut, kept, not for his page → `exo_memory/handback/p-d677-mline-bends-E_2026-11-15.md`
+- Film tree dz3-e-mline b1b3aeb (local): the lit pass from a fixed camera; a 90 in a corridor needs a place in the room, the outer corner aimed at the chests.
+- **Carry:** look at a frame before encoding; three of four camera choices here failed only to the eye.
+
+## 2026-11-15 13:5x local (D) · D677 the source sheet for N2 (trunk, arms, head, lean) from the 2026-11-13 folder and B8: each part's rules, numbers, path:line and source status, and what is not on file; the librarian's four reports not yet in research/ → `exo_memory/loop/source_sheet_n2_upper_body_E_2026-11-15.md`
+- Nothing on file explains the hands reaching forward except B8's reading that the arms turn with the chest; no head, arm or lean data above ~4 m/s but single points.
+- **Carry:** a sheet repeats the record's source marks and second readers' verdicts beside each number, so a builder sees which numbers are first game or ours.
+
+## 2026-11-15 14:0x local (D) · D677 the N2 source sheet re-cut to research only (his 13:37 "always take relevant research and use it"; the old build scrapped at 13:36): old-build constants moved to "what not to carry over" per part; the two 2026-11-15 research reports added → `exo_memory/loop/source_sheet_n2_upper_body_E_2026-11-15.md`
+- The techniques report found no public game rule for leaning into acceleration (atan(a/g) is physics) and no verifiable arm or trunk degree figures; the data report says measure targets from open datasets.
+- 14:1x local: the code census and the foot-contact report added (all four 2026-11-15 reports in): spine, arm, head-look code with licences; C7 oscillation 9.4 cm; the pelvis solved from the stance leg; unity-cj-lib's exact spring fills the 240 Hz second-order gap S-og left.
+
+## 2026-11-15 14:3x local (D) · D677 three more source sheets in the N2 form, research only (old build under "not carried over", the sim's own numbers apart): N3 the world, N4 the states, N5 the picture's physics → `exo_memory/loop/source_sheet_n3_world_E_2026-11-15.md`, `source_sheet_n4_states_E_2026-11-15.md`, `source_sheet_n5_physics_E_2026-11-15.md`
+- Not on file for any: a measured human duck, landing angles above 1.03 m, a ladder gait, a sourced half-life for a stop from speed, a hunter rise with a forward centre of mass, a per-ragdoll cost.
+
+## 2026-11-15 14:5x local (D) · D677 the grip film: 90 at grips 1.3/1.6/2.0 beside today from one room camera (2.0 alone sooner, 0.764 against 0.819 s); 45 at 1.6/2.0 beside today from one offset (0.52/0.51 against 0.90 s); at 1.3 the hunter misses the 45's doorway, so its clip is one panel of another bend → `exo_memory/handback/p-d677-grip-film-E_2026-11-15.md`
+- Film tree e8-grip-film-e ca8b7c6 (local): one camera pinned across films set side by side.
+- **Carry:** before pairing two films, check their manifests name the same bend; a camera that will not serve both halves may be two different places.
+
+## 2026-11-15 15:0x local (D) · D677 the 90 refilmed on a-mline 3112032 from the pinned camera (1.3 and 1.6 a little quicker and slower to drop, every grip enters slower, 2.0 still alone ahead of today); the elbow at a sprint is on file after all (Dorn JA1, range 83 deg at 9.49 m/s), added to the N2 sheet → `exo_memory/handback/p-d677-grip-film-E_2026-11-15.md` (addendum)
+- **Carry:** before writing "not on file", grep the sprint reference too; the yardstick's 4.15 m/s is not the room's limit.
+
+## 2026-11-15 15:3x local (D) · D677 the lessons sheet of the first iteration, from the shelf only: his verdicts (153 to 242), then per stage what it got right (the measured straight run, Bruening and the V1 flare, the lean's ease, the soft upper body) and wrong (the angle score hid a 12-22 cm slide, the ankle held down sank the toe 11-13 cm, the straight-line stride in turns, the elbow at 26.5 of a sprinter's 83 deg, the lean discarded) → `exo_memory/loop/lessons_first_iteration_2026-11-15.md`
+
+## 2026-11-15 15:5x local (D) · D677 pane B's new legs (c6e3a5f) encoded alone for his page, every clip from frame 24 (the runner carries the old pose to frame 4 and a smear of it to 16); the frame-0 encode set aside → `exo_memory/handback/p-d677-newlegs-alone-E_2026-11-15.md`
+- **Carry:** before encoding a cut, look at its first frames: a picture can carry the last pose of whatever drew before it.
+- 16:0x local: the N2 sheet's pelvis-turn row corrected (pane A at source: Perpiñá's 6.5 deg is pelvic tilt, no thorax figure; the 14.28 is Ford 2013, abstract); the lessons sheet gains the line.
+- 16:1x local: the N2 sheet takes pane A's measures (Perpiñá's pelvic rotation 9.96-16.13 deg read at source; Dorn JA1 pelvis/thorax turn, the thorax opposed and a quarter stride late, the trunk lean and the hand's path by speed); three not-on-file lines answered.
+
+## 2026-11-15 16:3x local (D) · D677 pane A's kinetic chain (a-chain 8565c61) filmed alone, whole body, all six stations, every clip from frame 48 (the arms settle out of the old crouch through 24); new system on by a copied config, as B's cut → `exo_memory/handback/p-d677-wholebody-alone-E_2026-11-15.md`
+- **Carry:** --world does nothing offscreen; switch the new system on for a film by a copied config with new_animation = 1.
+
+## 2026-11-15 17:5x local (D) · D677 100STYLE fetched (Zenodo 8127870, MD5 matched) into its own G: folder, CC BY 4.0 with the credit "The 100STYLE Dataset - Ian Mason" quoted at source; 400 backward and sideways clips listed with lengths and measured root speeds; one backward walk (Neutral_BW 500-800, 0.66 m/s) filmed on its own skeleton as the recording → `exo_memory/handback/p-d677-100style-E_2026-11-15.md`
+
+## 2026-11-15 20:5x local (D) · D677 his game now, main c38d90a, filmed on the set course with the new system on (a config copy), both bodies, from frame 0 (the first-tick fix holds: no old pose at 0), 12 clips → `exo_memory/handback/p-d677-main-c38d90a-film-E_2026-11-15.md`
+
+## 2026-11-16 03:0x local (D) · D677 the judge of the body meeting the world (dz-world --course-clearance on sim::World::body_part_depth): RED on main c38d90a, 8 of 12 station-bodies, the sidestep arms 0.13-0.20 m into the wall, the hunter's head 0.18 m into the wall over the doorway → `exo_memory/handback/p-d677-wall-judge-E_2026-11-16.md`
+- dreamzone-3 e9-clearance-e 0fcadf1 pushed (red 614198e); probe rows 6/6; mutants 5/4, one survivor named.
+- **Carry:** look at every station of a film before ringing it; one station looked at let an arm in a wall through to him.
+
+## 2026-11-16 04:1x local (D) · D677 the arm hangs at the CMU runners' measured 6.3 deg to the side (was the A-pose's 41) and an arm that nears a wall bends away or rests on it (anim/contact.h): every arm and hand clear on the whole course, both bodies; the judge 8 → 4 of 12 red, none an arm (stair risers, the hunter's head, its shoulder) → `exo_memory/handback/p-d677-arm-wall-E_2026-11-16.md`
+- dreamzone-3 e10-arm-wall-e 4530413 pushed; game_tests 220/0, world_app_tests 87/0; every station looked at, both bodies.
+
+## 2026-11-16 06:3x local (D) · D677 item 1 INTERIM, still red: the judge now reaches the drawn crown (hunter 0.123 m over Head; doorway 0.177 → 0.188 m read); a sourced stoop (The Last Guardian's ceiling sensors, least pitch, 0.34 s lead from the chest's spring) took the doorway to 0.035 m and the stair's ceiling to 0, but its crown-side sensors ran through walls and stooped the runner falsely; fixes written, unjudged, queued behind P's landing hold → `exo_memory/handback/p-d677-head-room-E_2026-11-16.md`
+- Uncommitted on e11-head-room-e (base 4530413). Items 2 (stair feet) and 3 (shoulder) not started.
+- **Carry:** a sensor carried with the pose feeds back into the pose: check it against walls from the body's own line, or it runs away.
+
+## 2026-11-16 07:3x local (D) · D677 the stacked tip for P: e12-stack-e 3e29301 = e10 cherry-picked onto A's a-lead-arm 6d4fbfd, B's b-idle 08e1324 merged, pushed; sim 161/0, game 225/0, world_app 87/0; the wall judge RED 3 of 12, no arm; the staged hunter's sidestep clear on A's base; the head work (not green) left out → `exo_memory/handback/p-d677-stack-E_2026-11-16.md`
+- **Carry:** when both sides of a conflict add at a file's end, the shared closing brace goes with only one of them: count braces after resolving.
+
+## 2026-11-16 08:5x local (D) · D677 OLD against NEW on his main c38a52a, side by side (runner and hunter, OLD left, NEW right), 7 stations at real speed and 3x slower, one camera a station; the stop from the front shows the NEW runner's hips moving ~4 px (~2 cm), the NEW hunter's not at all in the hold → `exo_memory/handback/p-d677-old-new-film-E_2026-11-16.md`
+- Clips G:\consonance-scratch\oldnew-c38a52a\clips (14); film-only branch f13-oldnew-e 84fc941 pushed; frames on Z:.
+- **Carry:** before ringing a film made to show a small motion, measure that motion in the frames; a 4 cm shift at 3 m is one pixel.

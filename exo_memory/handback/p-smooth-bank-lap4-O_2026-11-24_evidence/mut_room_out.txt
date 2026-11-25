@@ -1,0 +1,10 @@
+caught R1 the panel ignores a drag (row 6: during a drag the panel asks only)
+caught R2 the panel asks without the search when still too (row 1: the flow box with three marks giv | row 3: the flow box and its marks surviv | row 5: a refusal of the flowing bank rea | row 6: during a drag the panel asks only)
+caught R3 opts() does not pass the drag (row 6: during a drag the panel asks only)
+caught R4 opts() passes a drag always (row 1: the flow box with three marks giv | row 3: the flow box and its marks surviv | row 5: a refusal of the flowing bank rea | row 6: during a drag the panel asks only)
+caught R5 extend ignores roomSearch (row 6: during a drag the panel asks only | a refused list asked without its room se)
+caught R6 checkBankAsBuilt ignores roomSearch (a refused list asked without its room se)
+caught R7 roomSearch skips the built-road read (row 6: during a drag the panel asks only | a refused list asked without its room se)
+caught R8 roomSearch skips bankAsBuilt (a call with no flowing bank is the same )
+caught R9 roomSearch lets a corner's built refusal through (a refused list asked without its room se)
+9 of 9 caught

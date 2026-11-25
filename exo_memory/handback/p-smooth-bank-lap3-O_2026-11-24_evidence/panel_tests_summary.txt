@@ -1,0 +1,13 @@
+files 47: app/test/cheap-ghost.test.js app/test/close-worker.test.js app/test/core-bank-flow-panel.test.js app/test/core-buildmenu.test.js app/test/core-carry.test.js app/test/core-cut.test.js app/test/core-extra-bank-drag-cost.test.js app/test/core-extra-bank-wind.test.js app/test/core-extra-handles-glitches.test.js app/test/core-extra-handles.test.js app/test/core-mark-labels.test.js app/test/co
+ℹ rolling (first drag) p95 7.6 ms a move, early p95 4.7 ms: 1.62 ×; both ended at -12.63°
+ℹ rolling (first drag, into the hold) p95 25.4 ms a move, early p95 4.1 ms: 6.19 ×; rolling held at -360°, early ended at -163.5°
+ℹ kept 121 distinct froms; refused 0
+ℹ s0 5100.00 m, delta 41 px, the brushed text 25815 characters
+ℹ tests 569
+ℹ suites 0
+ℹ pass 562
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 6
+ℹ todo 1
+ℹ duration_ms 128331.9308

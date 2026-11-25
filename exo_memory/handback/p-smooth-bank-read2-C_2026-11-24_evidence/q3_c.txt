@@ -1,0 +1,1 @@
+{"args":"5 120 303 0 60 6","laid":52,"refused":{"mark":16,"built":11,"range":37,"joint":4},"gi":{"ok":212,"maxIt":29,"infeasible":496},"untyped":0,"marksMissed":0,"docOut":0,"roadOut":0,"tLaid":"n 52 med 5 p95 7 max 22 ms","tRefused":"n 68 med 35 p95 243 max 549 ms"}

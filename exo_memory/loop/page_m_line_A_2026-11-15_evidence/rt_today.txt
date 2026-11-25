@@ -1,0 +1,12 @@
+ROUTE tick 2015 root 0 from (-3.54 77.51) to (-29.58 85.97): 8 points, 31.3 m: (-3.5 77.5) (-25.0 77.5) (-25.3 77.7) (-26.5 82.0) (-26.8 82.3) (-28.1 83.6) (-28.3 83.8) (-29.6 86.0)
+ROUTE   narrow at (-25.36 77.95), 22.1 m along: free width 0.56 m, the way turns 43 degrees there; the squeeze price 4.7 m
+ROUTE   narrow at (-27.02 82.49), 27.0 m along: free width 0.65 m, the way turns 10 degrees there; the squeeze price 4.5 m
+ROUTE   narrow at (-28.46 84.03), 29.1 m along: free width 0.61 m, the way turns 10 degrees there; the squeeze price 4.6 m
+ROUTE tick 2134 root 0 from (-4.16 77.51) to (-29.58 85.97): 8 points, 30.7 m: (-4.2 77.5) (-25.0 77.5) (-25.3 77.7) (-26.5 82.0) (-26.8 82.3) (-28.1 83.6) (-28.3 83.8) (-29.6 86.0)
+ROUTE   narrow at (-25.36 77.95), 21.5 m along: free width 0.56 m, the way turns 43 degrees there; the squeeze price 4.7 m
+ROUTE   narrow at (-27.02 82.49), 26.4 m along: free width 0.65 m, the way turns 10 degrees there; the squeeze price 4.5 m
+ROUTE   narrow at (-28.46 84.03), 28.5 m along: free width 0.61 m, the way turns 10 degrees there; the squeeze price 4.6 m
+ROUTE tick 2253 root 0 from (-6.87 77.51) to (-29.58 85.97): 9 points, 28.0 m: (-6.9 77.5) (-11.8 77.5) (-25.0 77.5) (-25.3 77.7) (-26.5 82.0) (-26.8 82.3) (-28.1 83.6) (-28.3 83.8) (-29.6 86.0)
+ROUTE   narrow at (-25.36 77.95), 18.7 m along: free width 0.56 m, the way turns 43 degrees there; the squeeze price 4.7 m
+ROUTE   narrow at (-27.02 82.49), 23.6 m along: free width 0.65 m, the way turns 10 degrees there; the squeeze price 4.5 m
+ROUTE   narrow at (-28.46 84.03), 25.8 m along: free width 0.61 m, the way turns 10 degrees there; the squeeze price 4.6 m

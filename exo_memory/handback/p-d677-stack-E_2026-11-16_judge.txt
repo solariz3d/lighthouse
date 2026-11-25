@@ -1,0 +1,75 @@
+161 tests, 0 failed
+EXIT sim_tests 0
+    lowest ankle before the edge 0.070 m, beyond it 0.218 m (floor 0.15 m, ankle height 0.07 m); 1780 probes
+     2.50 m/s: the foot down is off the floor by 104.90 mm at most (at 39% of the stride); its toe sinks 104.9 mm at most
+     3.53 m/s: the foot down is off the floor by 107.44 mm at most (at 36% of the stride); its toe sinks 107.4 mm at most
+     4.50 m/s: the foot down is off the floor by 108.19 mm at most (at 33% of the stride); its toe sinks 108.2 mm at most
+     5.19 m/s: the foot down is off the floor by 28.67 mm at most (at 25% of the stride); its toe sinks 28.7 mm at most
+     6.97 m/s: the foot down is off the floor by 0.00 mm at most (at 0% of the stride); its toe sinks 0.0 mm at most
+     9.47 m/s: the foot down is off the floor by 0.00 mm at most (at 25% of the stride); its toe sinks 0.0 mm at most
+    12.60 m/s: the foot down is off the floor by 0.00 mm at most (at 24% of the stride); its toe sinks 0.0 mm at most
+    0.5 to 13 m/s held: a toe on the floor lies at most 48.5 mm behind its ankle along the run, its ball 34.8 mm (12.75 m/s; negative: always ahead).
+    the runner's row: 5 landings in the turn, at most 0.106 m across from the hips' path (the straight: 2, at most 0.100 m); a held foot turned on the floor at most 0.0 deg (in the turn); in the turn, steps onto the inside foot 1.327 m in 0.332 s (3), onto the outside 1.287 m in 0.333 s (2)
+    the hunter's row: 5 landings in the turn, at most 0.129 m across from the hips' path (the straight: 2, at most 0.120 m); a held foot turned on the floor at most 0.0 deg (in the turn); in the turn, steps onto the inside foot 1.586 m in 0.400 s (2), onto the outside 1.539 m in 0.396 s (2)
+    the runner's row: 46 landings; a heel or toe on the floor moved at most 0.0059 m (the toe, in the start and run); a held foot had neither down on 0 of 3584 ticks
+    the hunter's row: 40 landings; a heel or toe on the floor moved at most 0.0066 m (the toe, in the start and run); a held foot had neither down on 0 of 3520 ticks
+225 tests, 0 failed
+EXIT game_tests 0
+    9600 ticks: simulation acd96a205630ee33 and chase b1310de47876e92a with the feet on the floor and off
+87 tests, 0 failed
+EXIT world_app_tests 0
+#define DZ_BUILD_COMMIT "3e293019efd19c34e6b4016b320bb35d2f32673d"
+course-clearance: build 3e293019efd19c34e6b4016b320bb35d2f32673d; every bone of both bodies, every frame of the set course; IN = 5 mm or more past a wall's, a prop's or a ceiling's face (a floor is counted, not failed); NEAR = within 5 cm
+course-clearance: straight_turn, the runner: 907 frames; a part IN on 0; a part near a wall (within 5 cm) on 682; the body's contact set an arm off a surface on 0
+  floor foot L      on 338 frames (not judged here)
+  floor foot R      on 345 frames (not judged here)
+course-clearance: straight_turn, the hunter: 907 frames; a part IN on 0; a part near a wall (within 5 cm) on 286; the body's contact set an arm off a surface on 0
+  floor foot L      on 272 frames (not judged here)
+  floor foot R      on 309 frames (not judged here)
+course-clearance: sidestep, the runner: 317 frames; a part IN on 0; a part near a wall (within 5 cm) on 291; the body's contact set an arm off a surface on 0
+  floor foot L      on 234 frames (not judged here)
+  floor foot R      on 194 frames (not judged here)
+course-clearance: sidestep, the hunter: 317 frames; a part IN on 0; a part near a wall (within 5 cm) on 72; the body's contact set an arm off a surface on 0
+  floor foot L      on 215 frames (not judged here)
+  floor foot R      on 219 frames (not judged here)
+course-clearance: backwards, the runner: 375 frames; a part IN on 0; a part near a wall (within 5 cm) on 353; the body's contact set an arm off a surface on 0
+  floor foot L      on 188 frames (not judged here)
+  floor foot R      on 190 frames (not judged here)
+course-clearance: backwards, the hunter: 375 frames; a part IN on 0; a part near a wall (within 5 cm) on 195; the body's contact set an arm off a surface on 0
+  floor foot L      on 165 frames (not judged here)
+  floor foot R      on 204 frames (not judged here)
+course-clearance: stop_start, the runner: 605 frames; a part IN on 0; a part near a wall (within 5 cm) on 450; the body's contact set an arm off a surface on 0
+  floor foot L      on 293 frames (not judged here)
+  floor foot R      on 266 frames (not judged here)
+course-clearance: stop_start, the hunter: 605 frames; a part IN on 0; a part near a wall (within 5 cm) on 132; the body's contact set an arm off a surface on 0
+  floor foot L      on 262 frames (not judged here)
+  floor foot R      on 307 frames (not judged here)
+course-clearance: stair, the runner: 812 frames; a part IN on 51; a part near a wall (within 5 cm) on 612; the body's contact set an arm off a surface on 0
+  IN   shin L       on  12 frames (447 to 781); deepest 0.049 m at frame 455, at (-15.81 1.05 -1.50), into a wall or prop (face normal -0.00 0.15 -0.99)
+  IN   foot L       on  24 frames (428 to 781); deepest 0.188 m at frame 779, at (-17.14 3.15 -2.77), into a wall or prop (face normal 0.00 0.00 1.00)
+  floor foot L      on 332 frames (not judged here)
+  IN   thigh R      on   1 frames (488 to 488); deepest 0.033 m at frame 488, at (-15.65 1.57 -0.66), into a wall or prop (face normal 0.00 0.12 -0.99)
+  IN   shin R       on   1 frames (488 to 488); deepest 0.013 m at frame 488, at (-15.65 1.57 -0.66), into a wall or prop (face normal -0.00 0.12 -0.99)
+  IN   foot R       on  17 frames (408 to 734); deepest 0.114 m at frame 502, at (-15.66 1.71 -0.38), into a wall or prop (face normal -0.00 0.00 1.00)
+  floor foot R      on 291 frames (not judged here)
+course-clearance: stair, the hunter: 812 frames; a part IN on 78; a part near a wall (within 5 cm) on 362; the body's contact set an arm off a surface on 0
+  IN   head         on  16 frames (220 to 236); deepest 0.117 m at frame 226, at (-14.95 2.05 -4.55), into a ceiling (face normal -0.00 -1.00 -0.00)
+  floor head        on   1 frames (not judged here)
+  IN   foot L       on  38 frames (407 to 713); deepest 0.035 m at frame 690, at (-17.04 2.10 -0.94), into a wall or prop (face normal 0.00 -0.00 1.00)
+  floor foot L      on 271 frames (not judged here)
+  IN   thigh R      on   2 frames (750 to 757); deepest 0.041 m at frame 757, at (-17.37 3.32 -2.62), into a wall or prop (face normal 0.00 0.00 1.00)
+  floor thigh R     on   2 frames (not judged here)
+  IN   shin R       on   1 frames (757 to 757); deepest 0.021 m at frame 757, at (-17.37 3.32 -2.62), into a wall or prop (face normal 0.00 -0.00 1.00)
+  floor shin R      on   2 frames (not judged here)
+  IN   foot R       on  22 frames (488 to 807); deepest 0.152 m at frame 777, at (-17.38 3.21 -2.78), into a wall or prop (face normal 0.00 0.00 -1.00)
+  floor foot R      on 284 frames (not judged here)
+course-clearance: doorway, the runner: 554 frames; a part IN on 0; a part near a wall (within 5 cm) on 459; the body's contact set an arm off a surface on 0
+  floor foot L      on 210 frames (not judged here)
+  floor foot R      on 243 frames (not judged here)
+course-clearance: doorway, the hunter: 554 frames; a part IN on 33; a part near a wall (within 5 cm) on 227; the body's contact set an arm off a surface on 0
+  IN   head         on  33 frames (198 to 359); deepest 0.189 m at frame 206, at (0.00 2.10 4.49), into a wall or prop (face normal 1.00 0.00 0.00)
+  floor head        on   1 frames (not judged here)
+  floor foot L      on 177 frames (not judged here)
+  floor foot R      on 226 frames (not judged here)
+course-clearance: RED: 3 of 12 station-bodies have a part in a wall, a prop or a ceiling
+EXIT clearance 1

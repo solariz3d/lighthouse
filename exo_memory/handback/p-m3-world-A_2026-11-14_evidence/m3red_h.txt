@@ -1,0 +1,43 @@
+    today     route 0: 1 corners, lowest at them and after walls 2.16 m/s
+    today     route 1: 1 corners, lowest at them and after walls 1.19 m/s  UNDER 1.2
+    today     route 2: 2 corners, lowest at them and after walls 1.19 m/s  UNDER 1.2
+    today     route 3: 1 corners, lowest at them and after walls 5.57 m/s
+    today     route 4: 1 corners, lowest at them and after walls 1.44 m/s
+    today     route 5: 1 corners, lowest at them and after walls 3.39 m/s
+    today     route 6: 1 corners, lowest at them and after walls 4.36 m/s
+    today     route 7: 2 corners, lowest at them and after walls 0.73 m/s  UNDER 1.2
+    today     route 8: 1 corners, lowest at them and after walls 1.33 m/s
+    today     route 9: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    today    : 12 corners on 10 routes; routes under 1.2 m/s 4; lowest 0.00 m/s; largest re-point 0.000000 rad
+    way (b)   route 0: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (b)   route 1: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (b)   route 2: 2 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (b)   route 3: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (b)   route 4: 1 corners, lowest at them and after walls 0.70 m/s  UNDER 1.2
+    way (b)   route 5: 1 corners, lowest at them and after walls 3.00 m/s
+    way (b)   route 6: 1 corners, lowest at them and after walls 3.19 m/s
+    way (b)   route 7: 2 corners, lowest at them and after walls 1.00 m/s  UNDER 1.2
+    way (b)   route 8: 1 corners, lowest at them and after walls 2.33 m/s
+    way (b)   route 9: 1 corners, lowest at them and after walls 2.55 m/s
+    way (b)  : 12 corners on 10 routes; routes under 1.2 m/s 6; lowest 0.00 m/s; largest re-point 0.000000 rad
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(813): CHECK failed: under == 0
+    way (a)   route 0: 1 corners, lowest at them and after walls 1.72 m/s
+    way (a)   route 1: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (a)   route 2: 2 corners, lowest at them and after walls 2.01 m/s
+    way (a)   route 3: 1 corners, lowest at them and after walls 3.51 m/s
+    way (a)   route 4: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (a)   route 5: 1 corners, lowest at them and after walls 3.21 m/s
+    way (a)   route 6: 1 corners, lowest at them and after walls 2.50 m/s
+    way (a)   route 7: 2 corners, lowest at them and after walls 2.13 m/s
+    way (a)   route 8: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (a)   route 9: 1 corners, lowest at them and after walls 0.00 m/s  UNDER 1.2
+    way (a)  : 12 corners on 10 routes; routes under 1.2 m/s 4; lowest 0.00 m/s; largest re-point 0.000000 rad
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(813): CHECK failed: under == 0
+FAIL  m2_h1_at_a_hard_corner_and_after_a_wall_the_grip_root_never_loses_all_its_speed_nor_turns_on_the_spot
+    stub (stands 2 s): 3 contacts, 3 over the bar, worst 4.84 of it
+    today    : 1 contacts, 1 over the bar, worst 41.02 of it
+    way (b)  : 3 contacts, 1 over the bar, worst 49.92 of it
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(898): CHECK failed: r.over == 0
+    way (a)  : 0 contacts, 0 over the bar, worst 0.00 of it
+FAIL  m2_h2_after_a_wall_the_grip_root_is_running_again_as_soon_as_its_own_gain_allows
+2 tests, 2 failed

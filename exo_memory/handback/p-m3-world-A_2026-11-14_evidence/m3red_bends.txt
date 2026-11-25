@@ -1,0 +1,16 @@
+    the 22 degree bend: its point is on this arena's mesh
+      today    : walked to the end; entry 8.59 m/s, lowest 3.94, 0.642 s between the gates; head-on ticks 0, refused steps 0 (passed 0.01 m from the point)
+      way (b)  : walked to the end; entry 8.49 m/s, lowest 2.71, 0.854 s between the gates; head-on ticks 0, refused steps 0 (passed 0.01 m from the point)
+      way (a)  : walked to the end; entry 8.49 m/s, lowest 2.71, 0.854 s between the gates; head-on ticks 0, refused steps 0 (passed 0.01 m from the point)
+    the 45 degree bend: its point is on this arena's mesh
+      today    : walked to the end; entry 8.75 m/s, lowest 0.71, 1.292 s between the gates; head-on ticks 5, refused steps 0 (passed 0.01 m from the point)
+      way (b)  : walked to the end; entry 8.29 m/s, lowest 0.57, 1.350 s between the gates; head-on ticks 0, refused steps 1 (passed 0.00 m from the point)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1206): CHECK failed: lowest >= 1.2f
+      way (a)  : walked to the end; entry 8.29 m/s, lowest 0.00, 1.479 s between the gates; head-on ticks 0, refused steps 1 (passed 0.01 m from the point)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1206): CHECK failed: lowest >= 1.2f
+    the 90 degree bend: its point is on this arena's mesh
+      today    : walked to the end; entry 7.45 m/s, lowest 3.55, 0.837 s between the gates; head-on ticks 0, refused steps 0 (passed 0.14 m from the point)
+      way (b)  : walked to the end; entry 8.54 m/s, lowest 1.96, 1.033 s between the gates; head-on ticks 0, refused steps 0 (passed 0.22 m from the point)
+      way (a)  : walked to the end; entry 7.11 m/s, lowest 1.77, 1.004 s between the gates; head-on ticks 0, refused steps 0 (passed 0.07 m from the point)
+FAIL  m3_the_three_filmed_bends_are_taken_without_a_stop
+1 tests, 1 failed

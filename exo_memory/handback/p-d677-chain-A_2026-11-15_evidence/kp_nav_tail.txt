@@ -1,0 +1,3 @@
+ok    the_same_requests_give_the_same_paths_whatever_the_workers_do
+ok    a_different_latency_is_a_different_run
+34 tests, 0 failed

@@ -1,0 +1,7 @@
+DIAG red tick 1330: pos (96.02 -34.67) speed 0.621 -> 0.651 vb (0.388 -0.485) va (0.417 -0.501) aim 67.4 want 2.21 dv (-0.005 0.007) wall_n (-0.78 -0.63) touched 0 branch 1 gait 0 along -7.209 can 2.040
+    way (b)  : 603 sliding ticks over 20 degrees off the aim; with the acceleration along (wanted - current) under 0.9 of grip 3 (least -3.534 of what grip allows there, -0.735 of grip); (the turn-cap count is no longer read: 0)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1399): CHECK failed: under == 0
+    way (a)  : 137 sliding ticks over 20 degrees off the aim; with the acceleration along (wanted - current) under 0.9 of grip 1 (least 0.051 of what grip allows there, 0.051 of grip); (the turn-cap count is no longer read: 0)
+    G:\consonance-scratch\a-m1-dz3\chase\tests\feel_tests.cpp(1399): CHECK failed: under == 0
+FAIL  m3c_far_off_the_aim_a_sliding_velocity_turns_toward_it_at_its_grip
+1 tests, 1 failed

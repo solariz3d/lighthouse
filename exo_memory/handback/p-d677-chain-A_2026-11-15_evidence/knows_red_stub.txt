@@ -1,0 +1,4 @@
+    the farthest a pursuing hunter's new aim lay from the player's place: without hunter_knows 4.08 m (14 plans), with it 4.08 m (14 plans)
+    G:\consonance-scratch\a-chain\chase\tests\line_tests.cpp(1192): CHECK failed: on.worst_aim_off <= 0.3f
+FAIL  mline_keep_hunter_knows_the_main_hunter_aims_at_the_players_place_now
+1 tests, 1 failed

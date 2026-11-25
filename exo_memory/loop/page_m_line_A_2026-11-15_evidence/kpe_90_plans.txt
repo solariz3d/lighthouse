@@ -1,0 +1,45 @@
+film-corner: looked at 1 worlds from seed 1: 2160 node pairs, 2080 walk-only paths, 8353 bends, 1293 kept, 2.6 s
+KEEP tick 2015: 21.38 m from the apex; the hunter's own line within 5 m of the apex (46 points) at most 0.00 m from the first plan's; kept plans 0
+PLAN tick 2015: body (-32.91 -26.24) 21.38 m from the 90's apex, speed 0.00, heading 0.0 deg; the stretch starts (-32.91 -26.24); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.32 centre (-13.73 -28.99) 2.54 m from the hand line's]
+KEEP tick 2134: 20.49 m from the apex; the hunter's own line within 5 m of the apex (46 points) at most 0.00 m from the first plan's; kept plans 1
+PLAN tick 2134: body (-32.02 -26.16) 20.49 m from the 90's apex, speed 4.11, heading 93.2 deg; the stretch starts (-32.02 -26.16); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.32 centre (-13.73 -28.99) 2.54 m from the hand line's]
+KEEP tick 2253: 17.34 m from the apex; the hunter's own line within 5 m of the apex (46 points) at most 0.00 m from the first plan's; kept plans 2
+PLAN tick 2253: body (-28.86 -26.11) 17.34 m from the 90's apex, speed 8.55, heading 88.5 deg; the stretch starts (-28.86 -26.11); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.33 centre (-13.74 -28.99) 2.53 m from the hand line's]
+KEEP tick 2372: 12.87 m from the apex; the hunter's own line within 5 m of the apex (38 points) at most 0.60 m from the first plan's; kept plans 3
+PLAN tick 2372: body (-24.38 -25.99) 12.87 m from the 90's apex, speed 9.22, heading 88.3 deg; the stretch starts (-24.38 -25.99); string 5 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 2.73 centre (-13.42 -28.48) 3.12 m from the hand line's]
+KEEP tick 2491: 8.27 m from the apex; the hunter's own line within 5 m of the apex (39 points) at most 0.60 m from the first plan's; kept plans 4
+PLAN tick 2491: body (-19.75 -25.85) 8.27 m from the 90's apex, speed 9.44, heading 88.3 deg; the stretch starts (-19.75 -25.85); string 5 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 2.77 centre (-13.48 -28.48) 3.07 m from the hand line's]
+KEEP tick 2610: 3.65 m from the apex; the hunter's own line within 5 m of the apex (34 points) at most 0.60 m from the first plan's; kept plans 5
+PLAN tick 2610: body (-15.04 -25.78) 3.65 m from the 90's apex, speed 9.18, heading 94.1 deg; the stretch starts (-15.04 -25.78); string 4 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 2.99 centre (-13.76 -28.50) 2.86 m from the hand line's]
+KEEP tick 2729: 0.28 m from the apex; the hunter's own line within 5 m of the apex (26 points) at most 0.65 m from the first plan's; kept plans 6
+PLAN tick 2729: body (-11.59 -26.57) 0.28 m from the 90's apex, speed 5.57, heading 114.3 deg; the stretch starts (-11.59 -26.57); string 7 points; arcs 2, merged 0, S pairs 1, runs to the solve 1: [r 2.56 centre (-13.88 -29.74) 2.01 m from the hand line's] [r 2.44 centre (-10.28 -33.22) 6.02 m from the hand line's] [solve at (-11.22 -28.05)]
+KEEP tick 2848: 1.80 m from the apex; the hunter's own line within 5 m of the apex (18 points) at most 0.65 m from the first plan's; kept plans 7
+PLAN tick 2848: body (-10.46 -28.28) 1.80 m from the 90's apex, speed 4.49, heading 176.2 deg; the stretch starts (-10.46 -28.28); string 4 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 0.30 centre (-12.39 -32.86) 4.01 m from the hand line's]
+KEEP tick 2967: 3.76 m from the apex; the hunter's own line within 5 m of the apex (7 points) at most 0.65 m from the first plan's; kept plans 8
+PLAN tick 2967: body (-11.45 -30.60) 3.76 m from the 90's apex, speed 6.79, heading -146.5 deg; the stretch starts (-11.45 -30.60); string 2 points; arcs 0, merged 0, S pairs 0, runs to the solve 0:
+KEEP tick 3086: 7.11 m from the apex; the hunter's own line within 5 m of the apex (0 points) at most 0.00 m from the first plan's; kept plans 0
+PLAN tick 3086: body (-12.99 -33.80) 7.11 m from the 90's apex, speed 5.66, heading -150.1 deg; the stretch starts (-12.99 -33.80); string 2 points; arcs 0, merged 0, S pairs 0, runs to the solve 0:
+film-corner: the bend: 88.9 degrees (the path's turn between its 3 m chords in and out) at (-11.54, 10.54, -26.84) in the world of seed 1; the corridor across it 4.4 m; clean path 60.4 m before it and 8.1 m after; the staged run's door 21.5 m before it at (-32.91, 10.54, -26.24), the target's walk to 7.6 m after it at (-13.29, 10.54, -34.04)
+TICKREAD gates: entry frame 1593 tick 2656 speed 7.074, exit frame 1725 tick 2876, through 0.917 s; apex -11.54 10.54 -26.84
+TICKREAD lowest 3.856 at frame 1664 tick 2774 pos -10.92 10.54 -27.04
+KEEP tick 2015: 21.38 m from the apex; the hunter's own line within 5 m of the apex (46 points) at most 0.00 m from the first plan's; kept plans 0
+PLAN tick 2015: body (-32.91 -26.24) 21.38 m from the 90's apex, speed 0.00, heading 0.0 deg; the stretch starts (-32.91 -26.24); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.32 centre (-13.73 -28.99) 2.54 m from the hand line's]
+KEEP tick 2134: 20.49 m from the apex; the hunter's own line within 5 m of the apex (46 points) at most 0.00 m from the first plan's; kept plans 1
+PLAN tick 2134: body (-32.02 -26.16) 20.49 m from the 90's apex, speed 4.11, heading 93.2 deg; the stretch starts (-32.02 -26.16); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.32 centre (-13.73 -28.99) 2.54 m from the hand line's]
+KEEP tick 2253: 17.34 m from the apex; the hunter's own line within 5 m of the apex (46 points) at most 0.00 m from the first plan's; kept plans 2
+PLAN tick 2253: body (-28.86 -26.11) 17.34 m from the 90's apex, speed 8.55, heading 88.5 deg; the stretch starts (-28.86 -26.11); string 7 points; arcs 1, merged 1, S pairs 0, runs to the solve 0: [r 3.33 centre (-13.74 -28.99) 2.53 m from the hand line's]
+KEEP tick 2372: 12.87 m from the apex; the hunter's own line within 5 m of the apex (38 points) at most 0.60 m from the first plan's; kept plans 3
+PLAN tick 2372: body (-24.38 -25.99) 12.87 m from the 90's apex, speed 9.22, heading 88.3 deg; the stretch starts (-24.38 -25.99); string 5 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 2.73 centre (-13.42 -28.48) 3.12 m from the hand line's]
+KEEP tick 2491: 8.27 m from the apex; the hunter's own line within 5 m of the apex (39 points) at most 0.60 m from the first plan's; kept plans 4
+PLAN tick 2491: body (-19.75 -25.85) 8.27 m from the 90's apex, speed 9.44, heading 88.3 deg; the stretch starts (-19.75 -25.85); string 5 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 2.77 centre (-13.48 -28.48) 3.07 m from the hand line's]
+KEEP tick 2610: 3.65 m from the apex; the hunter's own line within 5 m of the apex (34 points) at most 0.60 m from the first plan's; kept plans 5
+PLAN tick 2610: body (-15.04 -25.78) 3.65 m from the 90's apex, speed 9.18, heading 94.1 deg; the stretch starts (-15.04 -25.78); string 4 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 2.99 centre (-13.76 -28.50) 2.86 m from the hand line's]
+KEEP tick 2729: 0.28 m from the apex; the hunter's own line within 5 m of the apex (26 points) at most 0.65 m from the first plan's; kept plans 6
+PLAN tick 2729: body (-11.59 -26.57) 0.28 m from the 90's apex, speed 5.57, heading 114.3 deg; the stretch starts (-11.59 -26.57); string 7 points; arcs 2, merged 0, S pairs 1, runs to the solve 1: [r 2.56 centre (-13.88 -29.74) 2.01 m from the hand line's] [r 2.44 centre (-10.28 -33.22) 6.02 m from the hand line's] [solve at (-11.22 -28.05)]
+KEEP tick 2848: 1.80 m from the apex; the hunter's own line within 5 m of the apex (18 points) at most 0.65 m from the first plan's; kept plans 7
+PLAN tick 2848: body (-10.46 -28.28) 1.80 m from the 90's apex, speed 4.49, heading 176.2 deg; the stretch starts (-10.46 -28.28); string 4 points; arcs 1, merged 0, S pairs 0, runs to the solve 0: [r 0.30 centre (-12.39 -32.86) 4.01 m from the hand line's]
+KEEP tick 2967: 3.76 m from the apex; the hunter's own line within 5 m of the apex (7 points) at most 0.65 m from the first plan's; kept plans 8
+PLAN tick 2967: body (-11.45 -30.60) 3.76 m from the 90's apex, speed 6.79, heading -146.5 deg; the stretch starts (-11.45 -30.60); string 2 points; arcs 0, merged 0, S pairs 0, runs to the solve 0:
+KEEP tick 3086: 7.11 m from the apex; the hunter's own line within 5 m of the apex (0 points) at most 0.00 m from the first plan's; kept plans 0
+PLAN tick 3086: body (-12.99 -33.80) 7.11 m from the 90's apex, speed 5.66, heading -150.1 deg; the stretch starts (-12.99 -33.80); string 2 points; arcs 0, merged 0, S pairs 0, runs to the solve 0:
+M3D E bend: replans 0 (compared 0); flips with the solid within 0.5 m 0, 1.0 m 0, 2.0 m 0

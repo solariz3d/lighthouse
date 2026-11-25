@@ -1,0 +1,33 @@
+      replan at t 120 (65.31, 23.37) 4.46 m/s: fresh; its line within 5 m of the turn at most 0.161 m from the first plan's
+      replan at t 240 (65.29, 20.01) 8.96 m/s: fresh; its line within 5 m of the turn at most 0.171 m from the first plan's
+      t  288 (65.23, 17.99) 10.80 m/s (the plan asks 11.62), 0.01 m from its line
+      t  312 (65.16, 16.88) 11.12 m/s (the plan asks 10.86), 0.03 m from its line
+      t  336 (65.01, 15.81) 10.40 m/s (the plan asks 9.73), 0.15 m from its line
+      replan at t 360 (64.81, 14.88) 9.49 m/s: KEPT; its line within 5 m of the turn at most 0.171 m from the first plan's
+      t  360 (64.80, 14.84) 9.49 m/s (the plan asks 9.52), 0.30 m from its line
+      t  384 (64.53, 13.95) 9.09 m/s (the plan asks 8.56), 0.37 m from its line
+      t  408 (64.19, 13.13) 8.86 m/s (the plan asks 9.38), 0.38 m from its line
+      t  432 (63.79, 12.30) 9.63 m/s (the plan asks 11.11), 0.28 m from its line
+      t  456 (63.30, 11.51) 8.76 m/s (the plan asks 7.97), 0.13 m from its line
+      replan at t 480 (62.78, 10.92) 7.83 m/s: KEPT; its line within 5 m of the turn at most 0.171 m from the first plan's
+      t  480 (62.75, 10.90) 7.82 m/s (the plan asks 8.03), 0.13 m from its line
+      t  504 (62.12, 10.44) 7.92 m/s (the plan asks 8.65), 0.03 m from its line
+      t  528 (61.38, 10.09) 8.42 m/s (the plan asks 8.81), 0.04 m from its line
+      t  552 (60.55, 9.88) 8.77 m/s (the plan asks 9.20), 0.01 m from its line
+      t  576 (59.65, 9.79) 9.39 m/s (the plan asks 11.16), 0.01 m from its line
+      replan at t 600 (58.71, 9.75) 10.25 m/s: fresh; its line within 5 m of the turn at most 0.145 m from the first plan's
+      t  600 (58.66, 9.75) 10.29 m/s (the plan asks 11.60), 0.00 m from its line
+      t  624 (57.59, 9.73) 11.15 m/s (the plan asks 11.65), 0.01 m from its line
+      t  648 (56.45, 9.72) 11.54 m/s (the plan asks 11.71), 0.01 m from its line
+    line_keep at grip 1.6: the body keeps 7.76 m/s within 3 m of the turn (bar 8.0); walls met head-on 0; arrived 1; plans 6, kept 2; the line within 5 m of the turn moved at most 0.171 m (bar 0.05)
+    G:\consonance-scratch\a-chain\chase\tests\line_tests.cpp(1044): CHECK failed: lowest >= 8.0f
+    G:\consonance-scratch\a-chain\chase\tests\line_tests.cpp(1047): CHECK failed: moved <= 0.05f
+FAIL  mline_keep_his_lbend_keeps_8_m_s_and_its_line_at_every_plan
+    on an arc: 1 at (64.94, 15.48), leg 19
+    kept: on its line 1; 0.6 m off it 0 (planned 1); target behind 0; line_keep 0 0
+ok    mline_keep_off_its_line_or_with_the_target_behind_a_replan_plans_from_the_body
+    the most ticks in a row the pursuing hunter stood at its line's end: without line_keep 35, with it 1
+ok    mline_keep_a_line_that_runs_out_is_planned_again_at_once
+    the staged U-turn: today's hunter catches at 8.025 s (by the hunter 1); with line_keep at 7.708 s (by the hunter 1)
+ok    mline_keep_a_staged_u_turn_the_hunter_reaches_the_player_no_later_than_today
+4 tests, 1 failed

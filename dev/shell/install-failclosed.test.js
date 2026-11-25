@@ -15,6 +15,8 @@ const run = (home, ...args) => spawnSync('powershell', ['-NoProfile', '-Executio
 const settingsOf = (home) => JSON.parse(fs.readFileSync(path.join(home, '.claude', 'settings.json'), 'utf8'));
 const entries = (s) => Object.entries(s.hooks || {}).flatMap(([ev, gs]) => gs.flatMap((g) => (g.hooks || []).map((h) => ({ ev, h }))));
 const leafOf = (h) => { const q = [...String(h.command).matchAll(/"([^"]*)"/g)]; return path.basename(q.length ? q[q.length - 1][1] : h.command).toLowerCase(); };
+// A hook the installer does not manage, under the test's own home (derived, not one machine's drive); only its leaf, own-hook.js, is read.
+const ownHook = (home) => '"' + path.join(home, 'mine', 'own-hook.js').replace(/\\/g, '/') + '"';
 const withHome = (fn) => { const home = require('../../consonance/tools/scratch.js').mkdtemp('failclosed-'); try { fn(home); } finally { fs.rmSync(home, { recursive: true, force: true }); } };
 
 test('row 1 (control): a bare install registers the gates and sets no onFailure anywhere: they fail open', { skip }, () => withHome((home) => {
@@ -64,7 +66,7 @@ test('row 5: the two switches write settings.json, so they are refused with -Che
 test('row 6: -GatesOpen leaves a hook the script does not manage alone, even one carrying onFailure; -FailClosed gives a gate with no timeout one', { skip }, () => withHome((home) => {
   assert.strictEqual(run(home).status, 0);
   const sf = path.join(home, '.claude', 'settings.json'), s = settingsOf(home);
-  s.hooks.PreToolUse.push({ matcher: 'Bash', hooks: [{ type: 'command', command: '"C:/mine/own-hook.js"', onFailure: 'block', timeout: 7 }] });
+  s.hooks.PreToolUse.push({ matcher: 'Bash', hooks: [{ type: 'command', command: ownHook(home), onFailure: 'block', timeout: 7 }] });
   for (const g of s.hooks.PreToolUse) for (const h of g.hooks || []) if (leafOf(h) === 'push-gate.js') delete h.timeout;   // a gate with no timeout waits the harness's 600 s
   fs.writeFileSync(sf, JSON.stringify(s));
   assert.strictEqual(run(home, '-FailClosed', 'push-gate.js').status, 0);
@@ -78,7 +80,7 @@ test('row 6: -GatesOpen leaves a hook the script does not manage alone, even one
 // L215 fix (pane B's finding): -GatesOpen given ALONE ran a full install (41 files, 26 registrations, the status line and env). The way out takes the key off and does nothing else.
 test('row 7 (the way out is ONLY the way out): -GatesOpen alone on a home with settings and no installed files copies nothing and registers nothing', { skip }, () => withHome((home) => {
   const sf = path.join(home, '.claude', 'settings.json'); fs.mkdirSync(path.dirname(sf), { recursive: true });
-  const seed = JSON.stringify({ hooks: { PreToolUse: [{ matcher: 'Bash', hooks: [{ type: 'command', command: '"C:/mine/own-hook.js"', onFailure: 'block' }] }] } });
+  const seed = JSON.stringify({ hooks: { PreToolUse: [{ matcher: 'Bash', hooks: [{ type: 'command', command: ownHook(home), onFailure: 'block' }] }] } });
   fs.writeFileSync(sf, seed);
   const r = run(home, '-GatesOpen'); assert.strictEqual(r.status, 0, (r.stdout + r.stderr).slice(-1500));
   assert.strictEqual(fs.readFileSync(sf, 'utf8'), seed, 'settings.json is byte-equal: nothing registered, no status line, no env');

@@ -1,0 +1,3 @@
+15b1306 run 1: ℹ rolling (first drag) p95 6.6 ms a move, early p95 3.4 ms: 1.97 ×; both ended at -12.63° | ℹ pass 3 | ℹ fail 0
+15b1306 run 2: ℹ rolling (first drag) p95 6.6 ms a move, early p95 3.3 ms: 2.00 ×; both ended at -12.63° | ℹ pass 3 | ℹ fail 0
+15b1306 run 3: ℹ rolling (first drag) p95 6.5 ms a move, early p95 3.4 ms: 1.92 ×; both ended at -12.63° | ℹ pass 3 | ℹ fail 0

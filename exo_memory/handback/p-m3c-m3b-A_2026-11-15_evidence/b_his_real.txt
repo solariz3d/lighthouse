@@ -1,0 +1,5 @@
+at tick 35760 (149.0000 s)
+the link: from (-67.50 3.50 -484.50) to (-70.50 0.00 -484.50), 0.27 m from the trace's foot
+take-off 2.217 m/s; drop height 3.50 m
+off the link after 961 ticks: at (-68.54 3.54 -484.50), elsewhere on the mesh; flat speed at landing 0.000; drops refused 0
+the root's path: 962 ticks; segments meeting a solid at the feet 0, 1 m up 0

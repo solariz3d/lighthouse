@@ -1,0 +1,35 @@
+
+// The feet against the world (contact.h). Each foot (ankle to toe) is read with its radius; a reach into a surface that is not a floor
+// is set clear: a foot in the air straight up (over a nosing), a foot on the ground back along the surface's level normal (off a
+// riser); then the leg is solved again from its hip to the moved ankle, its bones keeping their lengths, and the toe carried with it.
+void contact_feet(BodyPose& pose, const PartProbe& probe, const Limbs& limbs, float reach_buffer, const std::array<bool, 2>& swing,
+                  ContactDrawn* drawn) {
+  if (!probe || !limbs.ok) return;
+  struct Leg {
+    Joint hip, knee, ankle, toe;
+  };
+  constexpr Leg kLegs[2] = {{Joint::HipL, Joint::KneeL, Joint::AnkleL, Joint::ToeL}, {Joint::HipR, Joint::KneeR, Joint::AnkleR, Joint::ToeR}};
+  const Vec3 forward = unit_or(Vec3{pose.forward.x, 0.0f, pose.forward.z}, Vec3{0.0f, 0.0f, 1.0f});
+  for (size_t k = 0; k < 2; ++k) {
+    const Leg& leg = kLegs[k];
+    const Vec3 a0 = pose[leg.ankle], t0 = pose[leg.toe];
+    Vec3       move{};
+    for (int pass = 0; pass < 4; ++pass) {
+      Vec3        q, n;
+      const float in = probe(a0 + move, t0 + move, kFootRadius, &q, &n);
+      if (in <= 0.0f || n.y >= 0.7f) break;   // clear, or only the floor under it (the planted-foot row's, not this pass's)
+      if (swing[k]) {
+        move.y += in + 0.005f;   // up, over the nosing
+      } else {
+        const Vec3 level = unit_or(Vec3{n.x, 0.0f, n.z}, Vec3{0.0f, 0.0f, -1.0f});
+        move = move + level * (in + 0.005f);   // back, off the riser
+      }
+    }
+    if (length(move) <= 0.0f) continue;
+    Vec3 reached;
+    pose[leg.knee] = two_bone(pose[leg.hip], a0 + move, limbs.thigh, limbs.shin, reach_buffer, forward, &reached);
+    pose[leg.ankle] = reached;
+    pose[leg.toe] = t0 + (reached - a0);
+    if (drawn) drawn->foot_off[k] = length(reached - a0);
+  }
+}
