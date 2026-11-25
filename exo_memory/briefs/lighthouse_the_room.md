@@ -448,3 +448,4 @@ carry it, so this brief does.
 - 2026-11-25 03:50 (L): "but see, it should be fast, after close, i am quickly closing up my laptop and going home, but i could try and leave a solid window for the process to start and end during close, but also, maybe it opens a little window that lets you know, so the user knows when its done to close up? Before that though, with the dreams on file, were there any that stand out to you?"
 - 2026-11-25 03:53 (L): "before we start on the dreamwork, do you want to see others dreams? I have never seen them"
 - 2026-11-25 03:54 (L): "but actually before the dreamwork after though, lets finish the work we had in motion first after ur done reading"
+- 2026-11-25 03:57 (L): "i think it should have a cutoff for recent work done during the day, as well, it should see the up to date room, we have done and changed so much since the dreams, right? Im confused, what can it access to dream>"
