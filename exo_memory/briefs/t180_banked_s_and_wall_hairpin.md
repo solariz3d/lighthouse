@@ -200,3 +200,5 @@ Hand-backs read whole: `handback/p-smooth-bank-read-C_2026-11-24.md` (pane C's s
 - State: `p-flow-ai` 27e2084 is installed on L as an internal build (pane A, L224; exe sha256 dcf929da1428af84…, backup
   `.before-l224-flow-27e2084`). He was given pane O's route 1c (`handback/p-d677-t180-route-O_2026-11-24.md`, §1), which
   was found headless and has not been typed in the app by anyone.
+- His words, 01:09: "i think we might need to rework how the UI looks and works for the change, since it does not make sense to me. But if it works it works I guess? Idk maybe, can you save a project with the piece in it, so i can go back and see it, or better yet, save them as pieces?"
+- State, 01:1x: packet `loop/packet_t180_save_the_s_A_2026-11-25.md` rung for pane A (a project and two saved pieces, reopened and read against the route's figures before he is told they are the curve). **Owed after it:** the panel's design for flow, shown to him as a mock before any build (his "it does not make sense to me"; pane O's proposal that a turn of 0 with extra turn rows lets the S's own numbers be typed is one input, `handback/p-d677-t180-route-O_2026-11-24.md` §3).
